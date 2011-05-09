@@ -29,8 +29,7 @@ $showUserMenu = ($g_user->hasPermission('ManageUsers')
     || $g_user->hasPermission('DeleteUsers')
     || $g_user->hasPermission('ManageSubscriptions')
     || $g_user->hasPermission('ManageUserTypes')
-    || $g_user->hasPermission('ManageReaders')
-    || $g_user->hasPermission('SyncPhorumUsers'));
+    || $g_user->hasPermission('ManageReaders'));
 
 $showAdminActions = (($g_user->hasPermission('ManageIssue') && $g_user->hasPermission('AddArticle'))
     || (CampCache::IsEnabled() && $g_user->hasPermission('ClearCache')));
@@ -502,13 +501,6 @@ if ($showUserMenu) {
             ),
         ),
     );
-
-    if ($g_user->hasPermission('SyncPhorumUsers')) {
-        $pages[4]['pages'][] = array(
-            'label' => getGS('Synchronize Newscoop and Phorum users'),
-            'uri' => $view->baseUrl('admin/?sync_users=yes'),
-        );
-    }
 
     if ($g_user->hasPermission('EditAuthors')) {
         $pages[4]['pages'][] = array(

@@ -756,7 +756,7 @@ CREATE TABLE `Events` (
 
 LOCK TABLES `Events` WRITE;
 /*!40000 ALTER TABLE `Events` DISABLE KEYS */;
-INSERT INTO `Events` VALUES (1,'Add Publication','N',1),(2,'Delete Publication','N',1),(11,'Add Issue','N',1),(12,'Delete Issue','N',1),(13,'Change Issue Template','N',1),(14,'Change issue status','N',1),(15,'Add Issue Translation','N',1),(21,'Add Section','N',1),(22,'Delete section','N',1),(31,'Add Article','Y',1),(32,'Delete article','N',1),(33,'Change article field','N',1),(34,'Change article properties','N',1),(35,'Change article status','Y',1),(41,'Add Image','Y',1),(42,'Delete image','N',1),(43,'Change image properties','N',1),(51,'Add User','N',1),(52,'Delete User','N',1),(53,'Changes Own Password','N',1),(54,'Change User Password','N',1),(55,'Change User Permissions','N',1),(56,'Change user information','N',1),(61,'Add article type','N',1),(62,'Delete article type','N',1),(71,'Add article type field','N',1),(72,'Delete article type field','N',1),(81,'Add dictionary class','N',1),(82,'Delete dictionary class','N',1),(91,'Add dictionary keyword','N',1),(92,'Delete dictionary keyword','N',1),(101,'Add language','N',1),(102,'Delete language','N',1),(103,'Modify language','N',1),(112,'Delete templates','N',1),(111,'Add templates','N',1),(121,'Add user type','N',1),(122,'Delete user type','N',1),(123,'Change user type','N',1),(3,'Change publication information','N',1),(36,'Change article template','N',1),(57,'Add IP Group','N',1),(58,'Delete IP Group','N',1),(131,'Add country','N',1),(132,'Add country translation','N',1),(133,'Change country name','N',1),(134,'Delete country','N',1),(4,'Add default subscription time','N',1),(5,'Delete default subscription time','N',1),(6,'Change default subscription time','N',1),(113,'Edit template','N',1),(114,'Create template','N',1),(115,'Duplicate template','N',1),(141,'Add topic','N',1),(142,'Delete topic','N',1),(143,'Update topic','N',1),(144,'Add topic to article','N',1),(145,'Delete topic from article','N',1),(151,'Add alias','N',1),(152,'Delete alias','N',1),(153,'Update alias','N',1),(154,'Duplicate section','N',1),(155,'Duplicate article','N',1),(161,'Sync campsite and phorum users','N',1),(171,'Change system preferences','N',1),(116,'Rename Template','N',1),(117,'Move Template','N',1),(37,'Edit article content','N',1),(38,'Add file to article','N',1),(39,'Delete file from article','N',1),(172,'Add Author','N',1),(173,'Edit Author','N',1),(174,'Delete Author','N',1),(175,'Add author type','N',1),(176,'Delete author type','N',1);
+INSERT INTO `Events` VALUES (1,'Add Publication','N',1),(2,'Delete Publication','N',1),(11,'Add Issue','N',1),(12,'Delete Issue','N',1),(13,'Change Issue Template','N',1),(14,'Change issue status','N',1),(15,'Add Issue Translation','N',1),(21,'Add Section','N',1),(22,'Delete section','N',1),(31,'Add Article','Y',1),(32,'Delete article','N',1),(33,'Change article field','N',1),(34,'Change article properties','N',1),(35,'Change article status','Y',1),(41,'Add Image','Y',1),(42,'Delete image','N',1),(43,'Change image properties','N',1),(51,'Add User','N',1),(52,'Delete User','N',1),(53,'Changes Own Password','N',1),(54,'Change User Password','N',1),(55,'Change User Permissions','N',1),(56,'Change user information','N',1),(61,'Add article type','N',1),(62,'Delete article type','N',1),(71,'Add article type field','N',1),(72,'Delete article type field','N',1),(81,'Add dictionary class','N',1),(82,'Delete dictionary class','N',1),(91,'Add dictionary keyword','N',1),(92,'Delete dictionary keyword','N',1),(101,'Add language','N',1),(102,'Delete language','N',1),(103,'Modify language','N',1),(112,'Delete templates','N',1),(111,'Add templates','N',1),(121,'Add user type','N',1),(122,'Delete user type','N',1),(123,'Change user type','N',1),(3,'Change publication information','N',1),(36,'Change article template','N',1),(57,'Add IP Group','N',1),(58,'Delete IP Group','N',1),(131,'Add country','N',1),(132,'Add country translation','N',1),(133,'Change country name','N',1),(134,'Delete country','N',1),(4,'Add default subscription time','N',1),(5,'Delete default subscription time','N',1),(6,'Change default subscription time','N',1),(113,'Edit template','N',1),(114,'Create template','N',1),(115,'Duplicate template','N',1),(141,'Add topic','N',1),(142,'Delete topic','N',1),(143,'Update topic','N',1),(144,'Add topic to article','N',1),(145,'Delete topic from article','N',1),(151,'Add alias','N',1),(152,'Delete alias','N',1),(153,'Update alias','N',1),(154,'Duplicate section','N',1),(155,'Duplicate article','N',1),(171,'Change system preferences','N',1),(116,'Rename Template','N',1),(117,'Move Template','N',1),(37,'Edit article content','N',1),(38,'Add file to article','N',1),(39,'Delete file from article','N',1),(172,'Add Author','N',1),(173,'Edit Author','N',1),(174,'Delete Author','N',1),(175,'Add author type','N',1),(176,'Delete author type','N',1);
 /*!40000 ALTER TABLE `Events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1334,8 +1334,11 @@ CREATE TABLE `Publications` (
   `comments_article_default_enabled` tinyint(1) NOT NULL DEFAULT '0',
   `comments_subscribers_moderated` tinyint(1) NOT NULL DEFAULT '0',
   `comments_public_moderated` tinyint(1) NOT NULL DEFAULT '0',
+  `comments_public_enabled` tinyint(1)  NOT NULL DEFAULT '0',  
   `comments_captcha_enabled` tinyint(1) NOT NULL DEFAULT '0',
   `comments_spam_blocking_enabled` tinyint(1) NOT NULL DEFAULT '0',
+  `comments_moderator_to` VARCHAR(255)  NOT NULL,
+  `comments_moderator_from` VARCHAR(255)  NOT NULL,
   `url_error_tpl_id` int(10) unsigned DEFAULT NULL,
   `seo` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`Id`),
@@ -2282,7 +2285,7 @@ CREATE TABLE `liveuser_rights` (
 
 LOCK TABLES `liveuser_rights` WRITE;
 /*!40000 ALTER TABLE `liveuser_rights` DISABLE KEYS */;
-INSERT INTO `liveuser_rights` VALUES (1,0,'AddArticle',1),(3,0,'AddFile',1),(4,0,'AddImage',1),(6,0,'AttachImageToArticle',1),(7,0,'AttachTopicToArticle',1),(8,0,'ChangeArticle',1),(9,0,'ChangeFile',1),(10,0,'ChangeImage',1),(11,0,'ChangeSystemPreferences',1),(12,0,'ClearCache',1),(13,0,'CommentEnable',1),(14,0,'CommentModerate',1),(15,0,'DeleteArticle',1),(16,0,'DeleteArticleTypes',1),(17,0,'DeleteCountries',1),(18,0,'DeleteFile',1),(19,0,'DeleteImage',1),(20,0,'DeleteIssue',1),(21,0,'DeleteLanguages',1),(22,0,'DeletePub',1),(23,0,'DeleteSection',1),(24,0,'DeleteTempl',1),(25,0,'DeleteUsers',1),(26,0,'EditorBold',1),(27,0,'EditorCharacterMap',1),(28,0,'EditorCopyCutPaste',1),(29,0,'EditorEnlarge',1),(30,0,'EditorFindReplace',1),(31,0,'EditorFontColor',1),(32,0,'EditorFontFace',1),(33,0,'EditorFontSize',1),(34,0,'EditorHorizontalRule',1),(35,0,'EditorImage',1),(36,0,'EditorIndent',1),(37,0,'EditorItalic',1),(38,0,'EditorLink',1),(39,0,'EditorListBullet',1),(40,0,'EditorListNumber',1),(41,0,'EditorSourceView',1),(42,0,'EditorStrikethrough',1),(43,0,'EditorSubhead',1),(44,0,'EditorSubscript',1),(45,0,'EditorSuperscript',1),(46,0,'EditorTable',1),(47,0,'EditorTextAlignment',1),(48,0,'EditorTextDirection',1),(49,0,'EditorUnderline',1),(50,0,'EditorUndoRedo',1),(51,0,'plugin_manager',1),(52,0,'MailNotify',1),(53,0,'ManageArticleTypes',1),(54,0,'ManageCountries',1),(55,0,'ManageIndexer',1),(56,0,'ManageIssue',1),(57,0,'ManageLanguages',1),(58,0,'ManageLocalizer',1),(59,0,'ManagePub',1),(60,0,'ManageReaders',1),(61,0,'ManageSection',1),(62,0,'ManageSubscriptions',1),(63,0,'ManageTempl',1),(64,0,'ManageTopics',1),(65,0,'ManageUserTypes',1),(66,0,'ManageUsers',1),(67,0,'MoveArticle',1),(68,0,'Publish',1),(69,0,'TranslateArticle',1),(70,0,'ViewLogs',1),(71,0,'SyncPhorumUsers',1),(72,0,'EditorStatusBar',1),(73,0,'EditorSpellcheckerEnabled',1),(74,0,'ManageBackup',1),(89,0,'plugin_interview_notify',1),(90,0,'plugin_interview_guest',1),(91,0,'plugin_interview_moderator',1),(92,0,'plugin_interview_admin',1),(97,0,'plugin_blog_admin',1),(98,0,'plugin_blog_moderator',1),(101,0,'plugin_poll',1),(103,0,'EditAuthors',1);
+INSERT INTO `liveuser_rights` VALUES (1,0,'AddArticle',1),(3,0,'AddFile',1),(4,0,'AddImage',1),(6,0,'AttachImageToArticle',1),(7,0,'AttachTopicToArticle',1),(8,0,'ChangeArticle',1),(9,0,'ChangeFile',1),(10,0,'ChangeImage',1),(11,0,'ChangeSystemPreferences',1),(12,0,'ClearCache',1),(13,0,'CommentEnable',1),(14,0,'CommentModerate',1),(15,0,'DeleteArticle',1),(16,0,'DeleteArticleTypes',1),(17,0,'DeleteCountries',1),(18,0,'DeleteFile',1),(19,0,'DeleteImage',1),(20,0,'DeleteIssue',1),(21,0,'DeleteLanguages',1),(22,0,'DeletePub',1),(23,0,'DeleteSection',1),(24,0,'DeleteTempl',1),(25,0,'DeleteUsers',1),(26,0,'EditorBold',1),(27,0,'EditorCharacterMap',1),(28,0,'EditorCopyCutPaste',1),(29,0,'EditorEnlarge',1),(30,0,'EditorFindReplace',1),(31,0,'EditorFontColor',1),(32,0,'EditorFontFace',1),(33,0,'EditorFontSize',1),(34,0,'EditorHorizontalRule',1),(35,0,'EditorImage',1),(36,0,'EditorIndent',1),(37,0,'EditorItalic',1),(38,0,'EditorLink',1),(39,0,'EditorListBullet',1),(40,0,'EditorListNumber',1),(41,0,'EditorSourceView',1),(42,0,'EditorStrikethrough',1),(43,0,'EditorSubhead',1),(44,0,'EditorSubscript',1),(45,0,'EditorSuperscript',1),(46,0,'EditorTable',1),(47,0,'EditorTextAlignment',1),(48,0,'EditorTextDirection',1),(49,0,'EditorUnderline',1),(50,0,'EditorUndoRedo',1),(51,0,'plugin_manager',1),(52,0,'MailNotify',1),(53,0,'ManageArticleTypes',1),(54,0,'ManageCountries',1),(55,0,'ManageIndexer',1),(56,0,'ManageIssue',1),(57,0,'ManageLanguages',1),(58,0,'ManageLocalizer',1),(59,0,'ManagePub',1),(60,0,'ManageReaders',1),(61,0,'ManageSection',1),(62,0,'ManageSubscriptions',1),(63,0,'ManageTempl',1),(64,0,'ManageTopics',1),(65,0,'ManageUserTypes',1),(66,0,'ManageUsers',1),(67,0,'MoveArticle',1),(68,0,'Publish',1),(69,0,'TranslateArticle',1),(70,0,'ViewLogs',1),(72,0,'EditorStatusBar',1),(73,0,'EditorSpellcheckerEnabled',1),(74,0,'ManageBackup',1),(89,0,'plugin_interview_notify',1),(90,0,'plugin_interview_guest',1),(91,0,'plugin_interview_moderator',1),(92,0,'plugin_interview_admin',1),(97,0,'plugin_blog_admin',1),(98,0,'plugin_blog_moderator',1),(101,0,'plugin_poll',1),(103,0,'EditAuthors',1);
 /*!40000 ALTER TABLE `liveuser_rights` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2494,571 +2497,6 @@ LOCK TABLES `liveuser_users_auth_user_id_seq` WRITE;
 /*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` DISABLE KEYS */;
 INSERT INTO `liveuser_users_auth_user_id_seq` VALUES (1);
 /*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `phorum_banlists`
---
-
-DROP TABLE IF EXISTS `phorum_banlists`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_banlists` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `forum_id` int(11) NOT NULL DEFAULT '0',
-  `type` tinyint(4) NOT NULL DEFAULT '0',
-  `pcre` tinyint(4) NOT NULL DEFAULT '0',
-  `string` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `forum_id` (`forum_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `phorum_banlists`
---
-
-LOCK TABLES `phorum_banlists` WRITE;
-/*!40000 ALTER TABLE `phorum_banlists` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_banlists` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `phorum_files`
---
-
-DROP TABLE IF EXISTS `phorum_files`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_files` (
-  `file_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `filename` varchar(255) NOT NULL DEFAULT '',
-  `filesize` int(11) NOT NULL DEFAULT '0',
-  `file_data` mediumtext,
-  `add_datetime` int(10) unsigned NOT NULL DEFAULT '0',
-  `message_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `link` varchar(10) NOT NULL DEFAULT '',
-  PRIMARY KEY (`file_id`),
-  KEY `add_datetime` (`add_datetime`),
-  KEY `message_id_link` (`message_id`,`link`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `phorum_files`
---
-
-LOCK TABLES `phorum_files` WRITE;
-/*!40000 ALTER TABLE `phorum_files` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_files` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `phorum_forum_group_xref`
---
-
-DROP TABLE IF EXISTS `phorum_forum_group_xref`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_forum_group_xref` (
-  `forum_id` int(11) NOT NULL DEFAULT '0',
-  `group_id` int(11) NOT NULL DEFAULT '0',
-  `permission` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`forum_id`,`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `phorum_forum_group_xref`
---
-
-LOCK TABLES `phorum_forum_group_xref` WRITE;
-/*!40000 ALTER TABLE `phorum_forum_group_xref` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_forum_group_xref` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `phorum_forums`
---
-
-DROP TABLE IF EXISTS `phorum_forums`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_forums` (
-  `forum_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL DEFAULT '',
-  `active` smallint(6) NOT NULL DEFAULT '0',
-  `description` text,
-  `template` varchar(50) NOT NULL DEFAULT '',
-  `folder_flag` tinyint(1) NOT NULL DEFAULT '0',
-  `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `list_length_flat` int(10) unsigned NOT NULL DEFAULT '0',
-  `list_length_threaded` int(10) unsigned NOT NULL DEFAULT '0',
-  `moderation` int(10) unsigned NOT NULL DEFAULT '0',
-  `threaded_list` tinyint(4) NOT NULL DEFAULT '0',
-  `threaded_read` tinyint(4) NOT NULL DEFAULT '0',
-  `float_to_top` tinyint(4) NOT NULL DEFAULT '0',
-  `check_duplicate` tinyint(4) NOT NULL DEFAULT '0',
-  `allow_attachment_types` varchar(100) NOT NULL DEFAULT '',
-  `max_attachment_size` int(10) unsigned NOT NULL DEFAULT '0',
-  `max_totalattachment_size` int(10) unsigned NOT NULL DEFAULT '0',
-  `max_attachments` int(10) unsigned NOT NULL DEFAULT '0',
-  `pub_perms` int(10) unsigned NOT NULL DEFAULT '0',
-  `reg_perms` int(10) unsigned NOT NULL DEFAULT '0',
-  `display_ip_address` smallint(5) unsigned NOT NULL DEFAULT '1',
-  `allow_email_notify` smallint(5) unsigned NOT NULL DEFAULT '1',
-  `language` varchar(100) NOT NULL DEFAULT 'english',
-  `email_moderators` tinyint(1) NOT NULL DEFAULT '0',
-  `message_count` int(10) unsigned NOT NULL DEFAULT '0',
-  `sticky_count` int(10) unsigned NOT NULL DEFAULT '0',
-  `thread_count` int(10) unsigned NOT NULL DEFAULT '0',
-  `last_post_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `display_order` int(10) unsigned NOT NULL DEFAULT '0',
-  `read_length` int(10) unsigned NOT NULL DEFAULT '0',
-  `vroot` int(10) unsigned NOT NULL DEFAULT '0',
-  `edit_post` tinyint(1) NOT NULL DEFAULT '1',
-  `template_settings` text,
-  `count_views` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `display_fixed` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `reverse_threading` tinyint(1) NOT NULL DEFAULT '0',
-  `inherit_id` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`forum_id`),
-  KEY `name` (`name`),
-  KEY `active` (`active`,`parent_id`),
-  KEY `group_id` (`parent_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `phorum_forums`
---
-
-LOCK TABLES `phorum_forums` WRITE;
-/*!40000 ALTER TABLE `phorum_forums` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_forums` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `phorum_groups`
---
-
-DROP TABLE IF EXISTS `phorum_groups`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_groups` (
-  `group_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL DEFAULT '0',
-  `open` tinyint(3) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `phorum_groups`
---
-
-LOCK TABLES `phorum_groups` WRITE;
-/*!40000 ALTER TABLE `phorum_groups` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_groups` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `phorum_messages`
---
-
-DROP TABLE IF EXISTS `phorum_messages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_messages` (
-  `message_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `forum_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `thread` int(10) unsigned NOT NULL DEFAULT '0',
-  `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `author` varchar(37) NOT NULL DEFAULT '',
-  `subject` varchar(255) NOT NULL DEFAULT '',
-  `body` text NOT NULL,
-  `email` varchar(100) NOT NULL DEFAULT '',
-  `ip` varchar(255) NOT NULL DEFAULT '',
-  `status` tinyint(4) NOT NULL DEFAULT '2',
-  `msgid` varchar(100) NOT NULL DEFAULT '',
-  `modifystamp` int(10) unsigned NOT NULL DEFAULT '0',
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `thread_count` int(10) unsigned NOT NULL DEFAULT '0',
-  `moderator_post` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `sort` tinyint(4) NOT NULL DEFAULT '2',
-  `datestamp` int(10) unsigned NOT NULL DEFAULT '0',
-  `meta` mediumtext NOT NULL,
-  `viewcount` int(10) unsigned NOT NULL DEFAULT '0',
-  `closed` tinyint(4) NOT NULL DEFAULT '0',
-  `thread_depth` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `thread_order` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`message_id`),
-  KEY `thread_message` (`thread`,`message_id`),
-  KEY `thread_forum` (`thread`,`forum_id`),
-  KEY `special_threads` (`sort`,`forum_id`),
-  KEY `status_forum` (`status`,`forum_id`),
-  KEY `list_page_float` (`forum_id`,`parent_id`,`modifystamp`),
-  KEY `list_page_flat` (`forum_id`,`parent_id`,`thread`),
-  KEY `post_count` (`forum_id`,`status`,`parent_id`),
-  KEY `dup_check` (`forum_id`,`author`,`subject`,`datestamp`),
-  KEY `forum_max_message` (`forum_id`,`message_id`,`status`,`parent_id`),
-  KEY `last_post_time` (`forum_id`,`status`,`modifystamp`),
-  KEY `next_prev_thread` (`forum_id`,`status`,`thread`),
-  KEY `user_id` (`user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `phorum_messages`
---
-
-LOCK TABLES `phorum_messages` WRITE;
-/*!40000 ALTER TABLE `phorum_messages` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_messages` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `phorum_pm_buddies`
---
-
-DROP TABLE IF EXISTS `phorum_pm_buddies`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_pm_buddies` (
-  `pm_buddy_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `buddy_user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`pm_buddy_id`),
-  UNIQUE KEY `userids` (`user_id`,`buddy_user_id`),
-  KEY `buddy_user_id` (`buddy_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `phorum_pm_buddies`
---
-
-LOCK TABLES `phorum_pm_buddies` WRITE;
-/*!40000 ALTER TABLE `phorum_pm_buddies` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_pm_buddies` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `phorum_pm_folders`
---
-
-DROP TABLE IF EXISTS `phorum_pm_folders`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_pm_folders` (
-  `pm_folder_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `foldername` varchar(20) NOT NULL DEFAULT '',
-  PRIMARY KEY (`pm_folder_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `phorum_pm_folders`
---
-
-LOCK TABLES `phorum_pm_folders` WRITE;
-/*!40000 ALTER TABLE `phorum_pm_folders` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_pm_folders` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `phorum_pm_messages`
---
-
-DROP TABLE IF EXISTS `phorum_pm_messages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_pm_messages` (
-  `pm_message_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `from_user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `from_username` varchar(50) NOT NULL DEFAULT '',
-  `subject` varchar(100) NOT NULL DEFAULT '',
-  `message` text NOT NULL,
-  `datestamp` int(10) unsigned NOT NULL DEFAULT '0',
-  `meta` mediumtext NOT NULL,
-  PRIMARY KEY (`pm_message_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `phorum_pm_messages`
---
-
-LOCK TABLES `phorum_pm_messages` WRITE;
-/*!40000 ALTER TABLE `phorum_pm_messages` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_pm_messages` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `phorum_pm_xref`
---
-
-DROP TABLE IF EXISTS `phorum_pm_xref`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_pm_xref` (
-  `pm_xref_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `pm_folder_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `special_folder` varchar(10) DEFAULT NULL,
-  `pm_message_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `read_flag` tinyint(1) NOT NULL DEFAULT '0',
-  `reply_flag` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`pm_xref_id`),
-  KEY `xref` (`user_id`,`pm_folder_id`,`pm_message_id`),
-  KEY `read_flag` (`read_flag`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `phorum_pm_xref`
---
-
-LOCK TABLES `phorum_pm_xref` WRITE;
-/*!40000 ALTER TABLE `phorum_pm_xref` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_pm_xref` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `phorum_search`
---
-
-DROP TABLE IF EXISTS `phorum_search`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_search` (
-  `message_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `forum_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `search_text` mediumtext NOT NULL,
-  PRIMARY KEY (`message_id`),
-  KEY `forum_id` (`forum_id`),
-  FULLTEXT KEY `search_text` (`search_text`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `phorum_search`
---
-
-LOCK TABLES `phorum_search` WRITE;
-/*!40000 ALTER TABLE `phorum_search` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_search` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `phorum_settings`
---
-
-DROP TABLE IF EXISTS `phorum_settings`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_settings` (
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `type` enum('V','S') NOT NULL DEFAULT 'V',
-  `data` text,
-  PRIMARY KEY (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `phorum_settings`
---
-
-LOCK TABLES `phorum_settings` WRITE;
-/*!40000 ALTER TABLE `phorum_settings` DISABLE KEYS */;
-INSERT INTO `phorum_settings` VALUES ('title','V','Phorum 5'),('cache','V','/tmp'),('session_timeout','V','30'),('short_session_timeout','V','60'),('tight_security','V','0'),('session_path','V','/'),('session_domain','V',''),('admin_session_salt','V','0.62629000 1146135136'),('cache_users','V','0'),('register_email_confirm','V','0'),('default_template','V','default'),('default_language','V','english'),('use_cookies','V','1'),('use_bcc','V','1'),('use_rss','V','1'),('internal_version','V','2006032300'),('PROFILE_FIELDS','S','a:1:{i:0;a:3:{s:4:\"name\";s:9:\"real_name\";s:6:\"length\";i:255;s:13:\"html_disabled\";i:1;}}'),('enable_pm','V','0'),('user_edit_timelimit','V','0'),('enable_new_pm_count','V','1'),('enable_dropdown_userlist','V','1'),('enable_moderator_notifications','V','1'),('show_new_on_index','V','1'),('dns_lookup','V','1'),('tz_offset','V','0'),('user_time_zone','V','1'),('user_template','V','0'),('registration_control','V','1'),('file_uploads','V','0'),('file_types','V',''),('max_file_size','V',''),('file_space_quota','V',''),('file_offsite','V','0'),('system_email_from_name','V',''),('hide_forums','V','1'),('track_user_activity','V','86400'),('html_title','V','Phorum'),('head_tags','V',''),('redirect_after_post','V','list'),('reply_on_read_page','V','1'),('status','V','normal'),('use_new_folder_style','V','1'),('default_forum_options','S','a:24:{s:8:\"forum_id\";i:0;s:10:\"moderation\";i:0;s:16:\"email_moderators\";i:0;s:9:\"pub_perms\";i:1;s:9:\"reg_perms\";i:15;s:13:\"display_fixed\";i:0;s:8:\"template\";s:7:\"default\";s:8:\"language\";s:7:\"english\";s:13:\"threaded_list\";i:0;s:13:\"threaded_read\";i:0;s:17:\"reverse_threading\";i:0;s:12:\"float_to_top\";i:1;s:16:\"list_length_flat\";i:30;s:20:\"list_length_threaded\";i:15;s:11:\"read_length\";i:30;s:18:\"display_ip_address\";i:0;s:18:\"allow_email_notify\";i:0;s:15:\"check_duplicate\";i:1;s:11:\"count_views\";i:2;s:15:\"max_attachments\";i:0;s:22:\"allow_attachment_types\";s:0:\"\";s:19:\"max_attachment_size\";i:0;s:24:\"max_totalattachment_size\";i:0;s:5:\"vroot\";i:0;}'),('hooks','S','a:1:{s:6:\"format\";a:2:{s:4:\"mods\";a:2:{i:0;s:7:\"smileys\";i:1;s:6:\"bbcode\";}s:5:\"funcs\";a:2:{i:0;s:18:\"phorum_mod_smileys\";i:1;s:14:\"phorum_bb_code\";}}}'),('mods','S','a:4:{s:4:\"html\";i:0;s:7:\"replace\";i:0;s:7:\"smileys\";i:1;s:6:\"bbcode\";i:1;}');
-/*!40000 ALTER TABLE `phorum_settings` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `phorum_subscribers`
---
-
-DROP TABLE IF EXISTS `phorum_subscribers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_subscribers` (
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `forum_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `sub_type` int(10) unsigned NOT NULL DEFAULT '0',
-  `thread` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_id`,`forum_id`,`thread`),
-  KEY `forum_id` (`forum_id`,`thread`,`sub_type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `phorum_subscribers`
---
-
-LOCK TABLES `phorum_subscribers` WRITE;
-/*!40000 ALTER TABLE `phorum_subscribers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_subscribers` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `phorum_user_custom_fields`
---
-
-DROP TABLE IF EXISTS `phorum_user_custom_fields`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_user_custom_fields` (
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `type` int(11) NOT NULL DEFAULT '0',
-  `data` text,
-  PRIMARY KEY (`user_id`,`type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `phorum_user_custom_fields`
---
-
-LOCK TABLES `phorum_user_custom_fields` WRITE;
-/*!40000 ALTER TABLE `phorum_user_custom_fields` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_user_custom_fields` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `phorum_user_group_xref`
---
-
-DROP TABLE IF EXISTS `phorum_user_group_xref`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_user_group_xref` (
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `group_id` int(11) NOT NULL DEFAULT '0',
-  `status` tinyint(3) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`user_id`,`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `phorum_user_group_xref`
---
-
-LOCK TABLES `phorum_user_group_xref` WRITE;
-/*!40000 ALTER TABLE `phorum_user_group_xref` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_user_group_xref` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `phorum_user_newflags`
---
-
-DROP TABLE IF EXISTS `phorum_user_newflags`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_user_newflags` (
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `forum_id` int(11) NOT NULL DEFAULT '0',
-  `message_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_id`,`forum_id`,`message_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `phorum_user_newflags`
---
-
-LOCK TABLES `phorum_user_newflags` WRITE;
-/*!40000 ALTER TABLE `phorum_user_newflags` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_user_newflags` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `phorum_user_permissions`
---
-
-DROP TABLE IF EXISTS `phorum_user_permissions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_user_permissions` (
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `forum_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `permission` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_id`,`forum_id`),
-  KEY `forum_id` (`forum_id`,`permission`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `phorum_user_permissions`
---
-
-LOCK TABLES `phorum_user_permissions` WRITE;
-/*!40000 ALTER TABLE `phorum_user_permissions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_user_permissions` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `phorum_users`
---
-
-DROP TABLE IF EXISTS `phorum_users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_users` (
-  `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `fk_campsite_user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `username` varchar(50) NOT NULL DEFAULT '',
-  `password` varchar(50) NOT NULL DEFAULT '',
-  `cookie_sessid_lt` varchar(50) NOT NULL DEFAULT '',
-  `sessid_st` varchar(50) NOT NULL DEFAULT '',
-  `sessid_st_timeout` int(10) unsigned NOT NULL DEFAULT '0',
-  `password_temp` varchar(50) NOT NULL DEFAULT '',
-  `email` varchar(100) NOT NULL DEFAULT '',
-  `email_temp` varchar(110) NOT NULL DEFAULT '',
-  `hide_email` tinyint(1) NOT NULL DEFAULT '0',
-  `active` tinyint(1) NOT NULL DEFAULT '0',
-  `user_data` text,
-  `signature` text,
-  `threaded_list` tinyint(4) NOT NULL DEFAULT '0',
-  `posts` int(10) NOT NULL DEFAULT '0',
-  `admin` tinyint(1) NOT NULL DEFAULT '0',
-  `threaded_read` tinyint(4) NOT NULL DEFAULT '0',
-  `date_added` int(10) unsigned NOT NULL DEFAULT '0',
-  `date_last_active` int(10) unsigned NOT NULL DEFAULT '0',
-  `last_active_forum` int(10) unsigned NOT NULL DEFAULT '0',
-  `hide_activity` tinyint(1) NOT NULL DEFAULT '0',
-  `show_signature` tinyint(1) NOT NULL DEFAULT '0',
-  `email_notify` tinyint(1) NOT NULL DEFAULT '0',
-  `pm_email_notify` tinyint(1) NOT NULL DEFAULT '1',
-  `tz_offset` tinyint(2) NOT NULL DEFAULT '-99',
-  `is_dst` tinyint(1) NOT NULL DEFAULT '0',
-  `user_language` varchar(100) NOT NULL DEFAULT '',
-  `user_template` varchar(100) NOT NULL DEFAULT '',
-  `moderator_data` text,
-  `moderation_email` tinyint(2) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `fk_campsite_user_id` (`fk_campsite_user_id`),
-  UNIQUE KEY `username` (`username`),
-  KEY `active` (`active`),
-  KEY `userpass` (`username`,`password`),
-  KEY `sessid_st` (`sessid_st`),
-  KEY `cookie_sessid_lt` (`cookie_sessid_lt`),
-  KEY `activity` (`date_last_active`,`hide_activity`,`last_active_forum`),
-  KEY `date_added` (`date_added`),
-  KEY `email_temp` (`email_temp`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `phorum_users`
---
-
-LOCK TABLES `phorum_users` WRITE;
-/*!40000 ALTER TABLE `phorum_users` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -3510,6 +2948,79 @@ CREATE TABLE IF NOT EXISTS `acl_rule` (
 -- Acl rules data
 INSERT INTO `acl_rule` (`id`, `type`, `role_id`, `resource`, `action`) VALUES
 (1, 'allow', 1, '', '');
+
+--
+-- Comment main table
+--
+
+DROP TABLE IF EXISTS `comment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE IF NOT EXISTS  `comment` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_comment_commenter_id` int(10) unsigned NOT NULL,
+  `fk_forum_id` int(10) unsigned NOT NULL,
+  `fk_thread_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_language_id` int(10) unsigned DEFAULT '0',  
+  `fk_parent_id` int(10) unsigned DEFAULT NULL,
+  `subject` varchar(140) NOT NULL DEFAULT '',
+  `message` text NOT NULL,
+  `thread_order` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `thread_level` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `ip` varchar(39) NOT NULL DEFAULT '',
+  `likes` tinyint(3) unsigned DEFAULT '0',
+  `dislikes` tinyint(3) unsigned DEFAULT '0',
+  `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  KEY `comments_users` (`fk_comment_commenter_id`),
+  KEY `publication` (`fk_forum_id`),
+  KEY `article` (`fk_thread_id`),
+  KEY `parent` (`fk_parent_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+--
+-- Comment Commenter main table
+--
+
+DROP TABLE IF EXISTS `comment_commenter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE  `comment_commenter` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_user_id` int(10) unsigned DEFAULT NULL,
+  `email` varchar(100) NOT NULL DEFAULT '',
+  `url` varchar(255) NOT NULL DEFAULT '',
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `ip` varchar(39) NOT NULL DEFAULT '',
+  `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+
+--
+-- Comment Acceptance main table
+--
+
+DROP TABLE IF EXISTS `comment_acceptance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE  `comment_acceptance` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `fk_forum_id` int(10) DEFAULT '0',
+  `for_column` tinyint(4) NOT NULL DEFAULT '0',
+  `type` tinyint(4) NOT NULL DEFAULT '0',
+  `search_type` tinyint(4) NOT NULL DEFAULT '0',
+  `search` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `fk_forum_id` (`fk_forum_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

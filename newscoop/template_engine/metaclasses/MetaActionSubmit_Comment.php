@@ -12,16 +12,7 @@ define('ACTION_SUBMIT_COMMENT_ERR_BANNED', 'action_comment_submit_err_banned');
 define('ACTION_SUBMIT_COMMENT_ERR_REJECTED', 'action_comment_submit_err_rejected');
 
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
-
-function getIp()
-{
-    if(!empty($_SERVER['HTTP_CLIENT_IP']))
-        return $_SERVER['HTTP_CLIENT_IP'];
-    elseif(!empty($_SERVER['HTTP_X_FORWARDED_FOR']))
-        return $_SERVER['HTTP_X_FORWARDED_FOR'];
-    else
-        return $_SERVER['REMOTE_ADDR'];
-}
+require_once($GLOBALS['g_campsiteDir'].'/include/get_ip.php');
 
 class MetaActionSubmit_Comment extends MetaAction
 {

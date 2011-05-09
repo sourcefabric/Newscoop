@@ -45,16 +45,6 @@ INSERT  IGNORE INTO `ArticleAuthors` VALUES (64,1,0,1),(64,1,3,1),(64,1,9,1),(64
 UNLOCK TABLES;
 
 --
--- Dumping data for table `ArticleComments`
---
-
-LOCK TABLES `ArticleComments` WRITE;
-/*!40000 ALTER TABLE `ArticleComments` DISABLE KEYS */;
-INSERT  IGNORE INTO `ArticleComments` VALUES (68,1,4,1),(68,1,6,0),(68,1,5,0),(68,1,7,0),(64,1,9,1),(64,1,10,0),(86,1,11,1),(86,1,12,0),(87,1,13,1),(87,1,14,0),(87,1,15,0),(77,1,16,1),(77,1,17,0),(76,1,18,1),(76,1,19,0),(87,1,20,0);
-/*!40000 ALTER TABLE `ArticleComments` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Dumping data for table `ArticleImages`
 --
 
@@ -254,7 +244,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `Locations` WRITE;
 /*!40000 ALTER TABLE `Locations` DISABLE KEYS */;
-INSERT  IGNORE INTO `Locations` VALUES (1,'\0\0\0\0\0\0\0õg?RDD@hÐÐ?ÁTÀ','point',0,'\0\0\0\0\0\0\0õg?RDD@hÐÐ?ÁTÀ',0,15,'2011-01-04 18:11:52'),(25,'\0\0\0\0\0\0\0,g~‘E@l[”Ù ƒ4@','point',0,'\0\0\0\0\0\0\0,g~‘E@l[”Ù ƒ4@',0,15,'2011-01-04 18:52:37'),(3,'\0\0\0\0\0\0\0:Xÿç0ãB@tÒûÆ×š^À','point',0,'\0\0\0\0\0\0\0:Xÿç0ãB@tÒûÆ×š^À',0,15,'2011-01-04 18:13:03'),(4,'\0\0\0\0\0\0\0Ô`\Z†¸B@\"«[=\'‰^À','point',0,'\0\0\0\0\0\0\0Ô`\Z†¸B@\"«[=\'‰^À',0,15,'2011-01-04 18:13:38'),(5,'\0\0\0\0\0\0\0Ûe6XK@ºk	ù G9@','point',0,'\0\0\0\0\0\0\0Ûe6XK@ºk	ù G9@',0,15,'2011-01-04 18:14:42'),(6,'\0\0\0\0\0\0\033333óJ@ÓŸýH‘;@','point',0,'\0\0\0\0\0\0\033333óJ@ÓŸýH‘;@',0,15,'2011-01-04 18:15:17'),(7,'\0\0\0\0\0\0\0³^åDI@îÎÚm×,@','point',0,'\0\0\0\0\0\0\0³^åDI@îÎÚm×,@',0,15,'2011-01-04 18:16:19'),(8,'\0\0\0\0\0\0\0lxz¥,c-@6v‰ê­q1À','point',0,'\0\0\0\0\0\0\0lxz¥,c-@6v‰ê­q1À',0,15,'2011-01-04 18:17:11'),(9,'\0\0\0\0\0\0\0úÕ ˜«@@lÏ,	P3F@','point',0,'\0\0\0\0\0\0\0úÕ ˜«@@lÏ,	P3F@',0,15,'2011-01-04 18:18:30'),(10,'\0\0\0\0\0\0\0õ-sºŒ?@%Ì´ý•R@','point',0,'\0\0\0\0\0\0\0õ-sºŒ?@%Ì´ý•R@',0,15,'2011-01-04 18:18:30'),(11,'\0\0\0\0\0\0\0‡Q…êXøD@ã¥½Ýù(@','point',0,'\0\0\0\0\0\0\0‡Q…êXøD@ã¥½Ýù(@',0,15,'2011-01-04 18:19:36'),(12,'\0\0\0\0\0\0\0®qaÜ›øD@¥½=ô(@','point',0,'\0\0\0\0\0\0\0®qaÜ›øD@¥½=ô(@',0,15,'2011-01-04 18:19:36'),(13,'\0\0\0\0\0\0\0mÅþ²{NAÀøˆ˜I0MÀ','point',0,'\0\0\0\0\0\0\0mÅþ²{NAÀøˆ˜I0MÀ',0,15,'2011-01-04 18:20:36'),(14,'\0\0\0\0\0\0\0„çÞÃ±D@Ú “ŒœE@','point',0,'\0\0\0\0\0\0\0„çÞÃ±D@Ú “ŒœE@',0,15,'2011-01-04 18:20:36'),(15,'\0\0\0\0\0\0\0Õ²µ¾HàK@æ\\Š«ÊÎB@','point',0,'\0\0\0\0\0\0\0Õ²µ¾HàK@æ\\Š«ÊÎB@',0,15,'2011-01-04 18:21:38'),(16,'\0\0\0\0\0\0\0&6×†òD@¥½Á÷(@','point',0,'\0\0\0\0\0\0\0&6×†òD@¥½Á÷(@',0,15,'2011-01-04 18:22:34'),(17,'\0\0\0\0\0\0\0OÙË[B@MÌä›ñ±À','point',0,'\0\0\0\0\0\0\0OÙË[B@MÌä›ñ±À',0,15,'2011-01-04 18:23:21'),(18,'\0\0\0\0\0\0\0šž^ýB@º½¤1Z·7@','point',0,'\0\0\0\0\0\0\0šž^ýB@º½¤1Z·7@',0,15,'2011-01-04 18:24:46'),(19,'\0\0\0\0\0\0\0ÈA	3m[D@u°þÏa€RÀ','point',0,'\0\0\0\0\0\0\0ÈA	3m[D@u°þÏa€RÀ',0,15,'2011-01-04 18:25:38'),(20,'\0\0\0\0\0\0\0UDÝ¬J@áE_AšÀ','point',0,'\0\0\0\0\0\0\0UDÝ¬J@áE_AšÀ',0,15,'2011-01-04 18:27:00'),(21,'\0\0\0\0\0\0\0s€`ŽCJ@Ã\røü0Ò*@','point',0,'\0\0\0\0\0\0\0s€`ŽCJ@Ã\røü0Ò*@',0,15,'2011-01-04 18:29:22'),(23,'\0\0\0\0\0\0\0!ÍX4ÙE@ÊTÁ¨¤ÚSÀ','point',0,'\0\0\0\0\0\0\0!ÍX4ÙE@ÊTÁ¨¤ÚSÀ',0,15,'2011-01-04 18:46:55'),(24,'\0\0\0\0\0\0\0@öz÷Ç3:ÀÞïU+<@','point',0,'\0\0\0\0\0\0\0@öz÷Ç3:ÀÞïU+<@',0,15,'2011-01-04 18:51:31'),(26,'\0\0\0\0\0\0\0’6?…’E@…óŠˆ4@','point',0,'\0\0\0\0\0\0\0’6?…’E@…óŠˆ4@',0,10,'2011-01-07 21:28:35'),(27,'\0\0\0\0\0\0\0g¸ŸÒD@ÌE|\'fÑD@','point',0,'\0\0\0\0\0\0\0g¸ŸÒD@ÌE|\'fÑD@',0,10,'2011-01-11 09:15:10'),(28,'\0\0\0\0\0\0\0pçüí~ÏD@XF|\'–ÎD@','point',0,'\0\0\0\0\0\0\0pçüí~ÏD@XF|\'–ÎD@',0,10,'2011-01-11 20:30:31'),(29,'\0\0\0\0\0\0\0 Ü¦;ÏD@çD|\'ËÕD@','point',0,'\0\0\0\0\0\0\0 Ü¦;ÏD@çD|\'ËÕD@',0,10,'2011-01-11 20:30:31'),(30,'\0\0\0\0\0\0\0¸J…«ÔD@}D|\'ÙÖD@','point',0,'\0\0\0\0\0\0\0¸J…«ÔD@}D|\'ÙÖD@',0,10,'2011-01-11 20:30:31'),(31,'\0\0\0\0\0\0\0Ô?3sÿÕD@©E|\'XÐD@','point',0,'\0\0\0\0\0\0\0Ô?3sÿÕD@©E|\'XÐD@',0,10,'2011-01-11 20:30:31'),(32,'\0\0\0\0\0\0\0\rvûuÖD@G|§ûÊD@','point',0,'\0\0\0\0\0\0\0\rvûuÖD@G|§ûÊD@',0,10,'2011-01-11 20:30:31'),(33,'\0\0\0\0\0\0\0R9ï“YÐD@îF|§íÉD@','point',0,'\0\0\0\0\0\0\0R9ï“YÐD@îF|§íÉD@',0,10,'2011-01-11 20:30:31');
+INSERT  IGNORE INTO `Locations` VALUES (1,'\0\0\0\0\0\0\0ï¿½g?RDD@hï¿½ï¿½?ï¿½Tï¿½','point',0,'\0\0\0\0\0\0\0ï¿½g?RDD@hï¿½ï¿½?ï¿½Tï¿½',0,15,'2011-01-04 18:11:52'),(25,'\0\0\0\0\0\0\0,g~ï¿½E@l[ï¿½ï¿½ ï¿½4@','point',0,'\0\0\0\0\0\0\0,g~ï¿½E@l[ï¿½ï¿½ ï¿½4@',0,15,'2011-01-04 18:52:37'),(3,'\0\0\0\0\0\0\0:Xï¿½ï¿½0ï¿½B@tï¿½ï¿½ï¿½×š^ï¿½','point',0,'\0\0\0\0\0\0\0:Xï¿½ï¿½0ï¿½B@tï¿½ï¿½ï¿½×š^ï¿½',0,15,'2011-01-04 18:13:03'),(4,'\0\0\0\0\0\0\0ï¿½`\Zï¿½ï¿½ï¿½B@\"ï¿½[=\'ï¿½^ï¿½','point',0,'\0\0\0\0\0\0\0ï¿½`\Zï¿½ï¿½ï¿½B@\"ï¿½[=\'ï¿½^ï¿½',0,15,'2011-01-04 18:13:38'),(5,'\0\0\0\0\0\0\0ï¿½e6XK@ï¿½k	ï¿½G9@','point',0,'\0\0\0\0\0\0\0ï¿½e6XK@ï¿½k	ï¿½G9@',0,15,'2011-01-04 18:14:42'),(6,'\0\0\0\0\0\0\033333ï¿½J@ÓŸï¿½Hï¿½;@','point',0,'\0\0\0\0\0\0\033333ï¿½J@ÓŸï¿½Hï¿½;@',0,15,'2011-01-04 18:15:17'),(7,'\0\0\0\0\0\0\0ï¿½^ï¿½DI@ï¿½ï¿½ï¿½mï¿½,@','point',0,'\0\0\0\0\0\0\0ï¿½^ï¿½DI@ï¿½ï¿½ï¿½mï¿½,@',0,15,'2011-01-04 18:16:19'),(8,'\0\0\0\0\0\0\0lxzï¿½,c-@6vï¿½ï¿½q1ï¿½','point',0,'\0\0\0\0\0\0\0lxzï¿½,c-@6vï¿½ï¿½q1ï¿½',0,15,'2011-01-04 18:17:11'),(9,'\0\0\0\0\0\0\0ï¿½ï¿½ ï¿½ï¿½@@lï¿½,	P3F@','point',0,'\0\0\0\0\0\0\0ï¿½ï¿½ ï¿½ï¿½@@lï¿½,	P3F@',0,15,'2011-01-04 18:18:30'),(10,'\0\0\0\0\0\0\0ï¿½-sï¿½ï¿½?@%Ì´ï¿½R@','point',0,'\0\0\0\0\0\0\0ï¿½-sï¿½ï¿½?@%Ì´ï¿½R@',0,15,'2011-01-04 18:18:30'),(11,'\0\0\0\0\0\0\0ï¿½Qï¿½ï¿½Xï¿½D@ï¿½ï¿½ï¿½ï¿½ï¿½(@','point',0,'\0\0\0\0\0\0\0ï¿½Qï¿½ï¿½Xï¿½D@ï¿½ï¿½ï¿½ï¿½ï¿½(@',0,15,'2011-01-04 18:19:36'),(12,'\0\0\0\0\0\0\0ï¿½qaÜ›ï¿½D@ï¿½ï¿½=ï¿½(@','point',0,'\0\0\0\0\0\0\0ï¿½qaÜ›ï¿½D@ï¿½ï¿½=ï¿½(@',0,15,'2011-01-04 18:19:36'),(13,'\0\0\0\0\0\0\0mï¿½ï¿½ï¿½{NAï¿½ï¿½I0Mï¿½','point',0,'\0\0\0\0\0\0\0mï¿½ï¿½ï¿½{NAï¿½ï¿½I0Mï¿½',0,15,'2011-01-04 18:20:36'),(14,'\0\0\0\0\0\0\0ï¿½ï¿½ï¿½ï¿½Ã±D@ï¿½ ï¿½ï¿½ï¿½E@','point',0,'\0\0\0\0\0\0\0ï¿½ï¿½ï¿½ï¿½Ã±D@ï¿½ ï¿½ï¿½ï¿½E@',0,15,'2011-01-04 18:20:36'),(15,'\0\0\0\0\0\0\0Õ²ï¿½ï¿½Hï¿½K@ï¿½\\ï¿½ï¿½ï¿½ï¿½B@','point',0,'\0\0\0\0\0\0\0Õ²ï¿½ï¿½Hï¿½K@ï¿½\\ï¿½ï¿½ï¿½ï¿½B@',0,15,'2011-01-04 18:21:38'),(16,'\0\0\0\0\0\0\0&6×†ï¿½D@ï¿½ï¿½ï¿½ï¿½ï¿½(@','point',0,'\0\0\0\0\0\0\0&6×†ï¿½D@ï¿½ï¿½ï¿½ï¿½ï¿½(@',0,15,'2011-01-04 18:22:34'),(17,'\0\0\0\0\0\0\0Oï¿½ï¿½[B@Mï¿½ï¿½ï¿½ï¿½','point',0,'\0\0\0\0\0\0\0Oï¿½ï¿½[B@Mï¿½ï¿½ï¿½ï¿½',0,15,'2011-01-04 18:23:21'),(18,'\0\0\0\0\0\0\0ï¿½ï¿½^ï¿½B@ï¿½ï¿½ï¿½1Zï¿½7@','point',0,'\0\0\0\0\0\0\0ï¿½ï¿½^ï¿½B@ï¿½ï¿½ï¿½1Zï¿½7@',0,15,'2011-01-04 18:24:46'),(19,'\0\0\0\0\0\0\0ï¿½A	3m[D@uï¿½ï¿½ï¿½aï¿½Rï¿½','point',0,'\0\0\0\0\0\0\0ï¿½A	3m[D@uï¿½ï¿½ï¿½aï¿½Rï¿½',0,15,'2011-01-04 18:25:38'),(20,'\0\0\0\0\0\0\0UDï¿½ï¿½J@ï¿½E_Aï¿½ï¿½','point',0,'\0\0\0\0\0\0\0UDï¿½ï¿½J@ï¿½E_Aï¿½ï¿½',0,15,'2011-01-04 18:27:00'),(21,'\0\0\0\0\0\0\0sï¿½`ï¿½CJ@ï¿½\rï¿½ï¿½0ï¿½*@','point',0,'\0\0\0\0\0\0\0sï¿½`ï¿½CJ@ï¿½\rï¿½ï¿½0ï¿½*@',0,15,'2011-01-04 18:29:22'),(23,'\0\0\0\0\0\0\0!ï¿½X4ï¿½ï¿½E@ï¿½Tï¿½ï¿½ï¿½ï¿½Sï¿½','point',0,'\0\0\0\0\0\0\0!ï¿½X4ï¿½ï¿½E@ï¿½Tï¿½ï¿½ï¿½ï¿½Sï¿½',0,15,'2011-01-04 18:46:55'),(24,'\0\0\0\0\0\0\0@ï¿½zï¿½ï¿½3:ï¿½ï¿½ï¿½U+<@','point',0,'\0\0\0\0\0\0\0@ï¿½zï¿½ï¿½3:ï¿½ï¿½ï¿½U+<@',0,15,'2011-01-04 18:51:31'),(26,'\0\0\0\0\0\0\0ï¿½6?ï¿½ï¿½E@ï¿½ï¿½ï¿½4@','point',0,'\0\0\0\0\0\0\0ï¿½6?ï¿½ï¿½E@ï¿½ï¿½ï¿½4@',0,10,'2011-01-07 21:28:35'),(27,'\0\0\0\0\0\0\0gï¿½ï¿½ï¿½D@ï¿½E|\'fï¿½D@','point',0,'\0\0\0\0\0\0\0gï¿½ï¿½ï¿½D@ï¿½E|\'fï¿½D@',0,10,'2011-01-11 09:15:10'),(28,'\0\0\0\0\0\0\0pï¿½ï¿½ï¿½~ï¿½D@XF|\'ï¿½ï¿½D@','point',0,'\0\0\0\0\0\0\0pï¿½ï¿½ï¿½~ï¿½D@XF|\'ï¿½ï¿½D@',0,10,'2011-01-11 20:30:31'),(29,'\0\0\0\0\0\0\0ï¿½ï¿½ï¿½;ï¿½D@ï¿½D|\'ï¿½ï¿½D@','point',0,'\0\0\0\0\0\0\0ï¿½ï¿½ï¿½;ï¿½D@ï¿½D|\'ï¿½ï¿½D@',0,10,'2011-01-11 20:30:31'),(30,'\0\0\0\0\0\0\0ï¿½Jï¿½ï¿½ï¿½ï¿½D@}D|\'ï¿½ï¿½D@','point',0,'\0\0\0\0\0\0\0ï¿½Jï¿½ï¿½ï¿½ï¿½D@}D|\'ï¿½ï¿½D@',0,10,'2011-01-11 20:30:31'),(31,'\0\0\0\0\0\0\0ï¿½?3sï¿½ï¿½D@ï¿½E|\'Xï¿½D@','point',0,'\0\0\0\0\0\0\0ï¿½?3sï¿½ï¿½D@ï¿½E|\'Xï¿½D@',0,10,'2011-01-11 20:30:31'),(32,'\0\0\0\0\0\0\0\rvï¿½uï¿½D@G|ï¿½ï¿½ï¿½D@','point',0,'\0\0\0\0\0\0\0\rvï¿½uï¿½D@G|ï¿½ï¿½ï¿½D@',0,10,'2011-01-11 20:30:31'),(33,'\0\0\0\0\0\0\0R9ï¿½Yï¿½D@ï¿½F|ï¿½ï¿½ï¿½D@','point',0,'\0\0\0\0\0\0\0R9ï¿½Yï¿½D@ï¿½F|ï¿½ï¿½ï¿½D@',0,10,'2011-01-11 20:30:31');
 /*!40000 ALTER TABLE `Locations` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -341,7 +331,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `Publications` WRITE;
 /*!40000 ALTER TABLE `Publications` DISABLE KEYS */;
-INSERT  IGNORE INTO `Publications` VALUES (2,'The Journal',1,'D',0.00,0.00,'',0,0,4,2,2,1,1,0,1,1,0,1220,'a:1:{s:4:\"name\";s:2:\"on\";}');
+INSERT  IGNORE INTO `Publications` VALUES (2,'The Journal',1,'D',0.00,0.00,'',0,0,4,2,2,1,1,1,0,1,1,0,'','',1220,'a:1:{s:4:\"name\";s:2:\"on\";}');
 /*!40000 ALTER TABLE `Publications` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -559,7 +549,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `liveuser_rights` WRITE;
 /*!40000 ALTER TABLE `liveuser_rights` DISABLE KEYS */;
-INSERT  IGNORE INTO `liveuser_rights` VALUES (1,0,'AddArticle',1),(3,0,'AddFile',1),(4,0,'AddImage',1),(6,0,'AttachImageToArticle',1),(7,0,'AttachTopicToArticle',1),(8,0,'ChangeArticle',1),(9,0,'ChangeFile',1),(10,0,'ChangeImage',1),(11,0,'ChangeSystemPreferences',1),(12,0,'ClearCache',1),(13,0,'CommentEnable',1),(14,0,'CommentModerate',1),(15,0,'DeleteArticle',1),(16,0,'DeleteArticleTypes',1),(17,0,'DeleteCountries',1),(18,0,'DeleteFile',1),(19,0,'DeleteImage',1),(20,0,'DeleteIssue',1),(21,0,'DeleteLanguages',1),(22,0,'DeletePub',1),(23,0,'DeleteSection',1),(24,0,'DeleteTempl',1),(25,0,'DeleteUsers',1),(26,0,'EditorBold',1),(27,0,'EditorCharacterMap',1),(28,0,'EditorCopyCutPaste',1),(29,0,'EditorEnlarge',1),(30,0,'EditorFindReplace',1),(31,0,'EditorFontColor',1),(32,0,'EditorFontFace',1),(33,0,'EditorFontSize',1),(34,0,'EditorHorizontalRule',1),(35,0,'EditorImage',1),(36,0,'EditorIndent',1),(37,0,'EditorItalic',1),(38,0,'EditorLink',1),(39,0,'EditorListBullet',1),(40,0,'EditorListNumber',1),(41,0,'EditorSourceView',1),(42,0,'EditorStrikethrough',1),(43,0,'EditorSubhead',1),(44,0,'EditorSubscript',1),(45,0,'EditorSuperscript',1),(46,0,'EditorTable',1),(47,0,'EditorTextAlignment',1),(48,0,'EditorTextDirection',1),(49,0,'EditorUnderline',1),(50,0,'EditorUndoRedo',1),(51,0,'plugin_manager',1),(52,0,'MailNotify',1),(53,0,'ManageArticleTypes',1),(54,0,'ManageCountries',1),(55,0,'ManageIndexer',1),(56,0,'ManageIssue',1),(57,0,'ManageLanguages',1),(58,0,'ManageLocalizer',1),(59,0,'ManagePub',1),(60,0,'ManageReaders',1),(61,0,'ManageSection',1),(62,0,'ManageSubscriptions',1),(63,0,'ManageTempl',1),(64,0,'ManageTopics',1),(65,0,'ManageUserTypes',1),(66,0,'ManageUsers',1),(67,0,'MoveArticle',1),(68,0,'Publish',1),(69,0,'TranslateArticle',1),(70,0,'ViewLogs',1),(71,0,'SyncPhorumUsers',1),(72,0,'EditorStatusBar',1),(73,0,'EditorSpellcheckerEnabled',1),(74,0,'ManageBackup',1),(82,0,'plugin_blog_moderator',1),(81,0,'plugin_blog_admin',1),(87,0,'plugin_poll',1),(93,0,'plugin_interview_notify',1),(94,0,'plugin_interview_guest',1),(95,0,'plugin_interview_moderator',1),(96,0,'plugin_interview_admin',1),(97,0,'EditAuthors',1);
+INSERT  IGNORE INTO `liveuser_rights` VALUES (1,0,'AddArticle',1),(3,0,'AddFile',1),(4,0,'AddImage',1),(6,0,'AttachImageToArticle',1),(7,0,'AttachTopicToArticle',1),(8,0,'ChangeArticle',1),(9,0,'ChangeFile',1),(10,0,'ChangeImage',1),(11,0,'ChangeSystemPreferences',1),(12,0,'ClearCache',1),(13,0,'CommentEnable',1),(14,0,'CommentModerate',1),(15,0,'DeleteArticle',1),(16,0,'DeleteArticleTypes',1),(17,0,'DeleteCountries',1),(18,0,'DeleteFile',1),(19,0,'DeleteImage',1),(20,0,'DeleteIssue',1),(21,0,'DeleteLanguages',1),(22,0,'DeletePub',1),(23,0,'DeleteSection',1),(24,0,'DeleteTempl',1),(25,0,'DeleteUsers',1),(26,0,'EditorBold',1),(27,0,'EditorCharacterMap',1),(28,0,'EditorCopyCutPaste',1),(29,0,'EditorEnlarge',1),(30,0,'EditorFindReplace',1),(31,0,'EditorFontColor',1),(32,0,'EditorFontFace',1),(33,0,'EditorFontSize',1),(34,0,'EditorHorizontalRule',1),(35,0,'EditorImage',1),(36,0,'EditorIndent',1),(37,0,'EditorItalic',1),(38,0,'EditorLink',1),(39,0,'EditorListBullet',1),(40,0,'EditorListNumber',1),(41,0,'EditorSourceView',1),(42,0,'EditorStrikethrough',1),(43,0,'EditorSubhead',1),(44,0,'EditorSubscript',1),(45,0,'EditorSuperscript',1),(46,0,'EditorTable',1),(47,0,'EditorTextAlignment',1),(48,0,'EditorTextDirection',1),(49,0,'EditorUnderline',1),(50,0,'EditorUndoRedo',1),(51,0,'plugin_manager',1),(52,0,'MailNotify',1),(53,0,'ManageArticleTypes',1),(54,0,'ManageCountries',1),(55,0,'ManageIndexer',1),(56,0,'ManageIssue',1),(57,0,'ManageLanguages',1),(58,0,'ManageLocalizer',1),(59,0,'ManagePub',1),(60,0,'ManageReaders',1),(61,0,'ManageSection',1),(62,0,'ManageSubscriptions',1),(63,0,'ManageTempl',1),(64,0,'ManageTopics',1),(65,0,'ManageUserTypes',1),(66,0,'ManageUsers',1),(67,0,'MoveArticle',1),(68,0,'Publish',1),(69,0,'TranslateArticle',1),(70,0,'ViewLogs',1),(72,0,'EditorStatusBar',1),(73,0,'EditorSpellcheckerEnabled',1),(74,0,'ManageBackup',1),(82,0,'plugin_blog_moderator',1),(81,0,'plugin_blog_admin',1),(87,0,'plugin_poll',1),(93,0,'plugin_interview_notify',1),(94,0,'plugin_interview_guest',1),(95,0,'plugin_interview_moderator',1),(96,0,'plugin_interview_admin',1),(97,0,'EditAuthors',1);
 /*!40000 ALTER TABLE `liveuser_rights` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -593,172 +583,6 @@ INSERT  IGNORE INTO `liveuser_users_auth_user_id_seq` VALUES (26);
 /*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` ENABLE KEYS */;
 UNLOCK TABLES;
 
---
--- Dumping data for table `phorum_banlists`
---
-
-LOCK TABLES `phorum_banlists` WRITE;
-/*!40000 ALTER TABLE `phorum_banlists` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_banlists` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `phorum_files`
---
-
-LOCK TABLES `phorum_files` WRITE;
-/*!40000 ALTER TABLE `phorum_files` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_files` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `phorum_forum_group_xref`
---
-
-LOCK TABLES `phorum_forum_group_xref` WRITE;
-/*!40000 ALTER TABLE `phorum_forum_group_xref` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_forum_group_xref` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `phorum_forums`
---
-
-LOCK TABLES `phorum_forums` WRITE;
-/*!40000 ALTER TABLE `phorum_forums` DISABLE KEYS */;
-INSERT  IGNORE INTO `phorum_forums` VALUES (2,'The Journal',1,NULL,'default',0,0,30,15,0,0,0,1,1,'',0,0,0,11,15,0,0,'english',0,16,0,6,1294152243,0,30,0,1,NULL,2,0,0,NULL);
-/*!40000 ALTER TABLE `phorum_forums` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `phorum_groups`
---
-
-LOCK TABLES `phorum_groups` WRITE;
-/*!40000 ALTER TABLE `phorum_groups` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_groups` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `phorum_messages`
---
-
-LOCK TABLES `phorum_messages` WRITE;
-/*!40000 ALTER TABLE `phorum_messages` DISABLE KEYS */;
-INSERT  IGNORE INTO `phorum_messages` VALUES (5,2,4,4,'Test Persona','Somethnig','Something\'s got me started','test@persona.com','79-101-185-177.dynamic.isp.telekom.rs',2,'73f1332149a6fa8059308798d114c797',0,0,4,0,2,1293701294,'',0,0,1,1),(7,2,4,4,'Joshua','Site comment','Well well, what you see is what you get, simple as that. An eam aliquam vulputate intellegebat, cu sea iudico suavitate, populo intellegat his ei. An vel laoreet molestiae. Est nobis eripuit probatus an, te his illum dicant. Eu dicit verterem assueverit duo, people!','jos@hua.com','79-101-185-177.dynamic.isp.telekom.rs',2,'1242f5147b4a376989060bbf03c03095',0,0,4,0,2,1293701916,'',0,0,1,3),(6,2,4,4,'Rio Ferdinand','Not ok','Ok, not ok, who knows? Lorem ipsum dolor sit amet, my friend.','rio@mutd.co.uk','79-101-185-177.dynamic.isp.telekom.rs',2,'41402c1da1ed26194062dceadc44de1b',0,0,4,0,2,1293701391,'',0,0,1,2),(4,2,4,0,'Anonymous User','Advertisers target online demographic','','','79-101-185-177.dynamic.isp.telekom.rs',2,'aeaf5a5a71005e999f33009bd4c7877b',1293701916,0,4,0,2,1293701294,'a:3:{s:11:\"recent_post\";a:3:{s:7:\"user_id\";s:1:\"0\";s:6:\"author\";s:6:\"Joshua\";s:10:\"message_id\";s:1:\"7\";}s:11:\"message_ids\";a:4:{i:0;i:4;i:1;i:5;i:2;i:6;i:3;i:7;}s:21:\"message_ids_moderator\";a:4:{i:0;i:4;i:1;i:5;i:2;i:6;i:3;i:7;}}',0,0,0,0),(9,2,9,0,'Anonymous User','European Council candidates set to be named','','','79-101-185-177.dynamic.isp.telekom.rs',2,'25d8c94999ff89592ac202309db035d8',1293711807,0,4,0,2,1293711807,'a:3:{s:11:\"recent_post\";a:3:{s:7:\"user_id\";s:1:\"0\";s:6:\"author\";s:10:\"Pia Zadora\";s:10:\"message_id\";s:2:\"10\";}s:11:\"message_ids\";a:2:{i:0;i:9;i:1;i:10;}s:21:\"message_ids_moderator\";a:2:{i:0;i:9;i:1;i:10;}}',0,0,0,0),(10,2,9,9,'Pia Zadora','Site comment','Congratulations to the Person!','pia@gmail.com','79-101-185-177.dynamic.isp.telekom.rs',2,'f0920600ded6ee5356ad8e119009efad',0,0,4,0,2,1293711807,'',0,0,1,1),(11,2,11,0,'Anonymous User','Online security risks exposed','','','79-101-185-177.dynamic.isp.telekom.rs',2,'7fa5b5bd9cc07c4dd8a507af91b32cf7',1293711884,0,4,0,2,1293711884,'a:3:{s:11:\"recent_post\";a:3:{s:7:\"user_id\";s:1:\"0\";s:6:\"author\";s:13:\"Twittermaniac\";s:10:\"message_id\";s:2:\"12\";}s:11:\"message_ids\";a:2:{i:0;i:11;i:1;i:12;}s:21:\"message_ids_moderator\";a:2:{i:0;i:11;i:1;i:12;}}',0,0,0,0),(12,2,11,11,'Twittermaniac','Site comment','Hi, I adore twitter and tweet all the time. Id electram forensibus definiebas his, percipit expetendis vix no.','ttm@gmail.com','79-101-185-177.dynamic.isp.telekom.rs',2,'46a92a36cdaec2f45a0154df2888ef56',0,0,4,0,2,1293711884,'',0,0,1,1),(13,2,13,0,'Anonymous User','New horizons for the browser','','','79-101-185-177.dynamic.isp.telekom.rs',2,'3fb1b8ff740340cecdeefb0832ef31dc',1294152243,0,4,0,2,1293711962,'a:3:{s:11:\"recent_post\";a:3:{s:7:\"user_id\";s:1:\"0\";s:6:\"author\";s:8:\"Winnetou\";s:10:\"message_id\";s:2:\"20\";}s:11:\"message_ids\";a:4:{i:0;i:13;i:1;i:14;i:2;i:15;i:3;i:20;}s:21:\"message_ids_moderator\";a:4:{i:0;i:13;i:1;i:14;i:2;i:15;i:3;i:20;}}',0,0,0,0),(14,2,13,13,'Joshua','Site comment','Karmakoma, honestatis, quidam repudiandae ius in. Cheers! :)','jos@hua.com','79-101-185-177.dynamic.isp.telekom.rs',2,'3249d9dd5d75884f158722ac1c8457fa',0,0,4,0,2,1293711962,'',0,0,1,1),(15,2,13,14,'Swen','Site comment','I agree and support.','swenge@gmail.com','79-101-185-177.dynamic.isp.telekom.rs',2,'c27c964eb777041e29c97043c4791a79',0,0,4,0,2,1293711997,'',0,0,2,2),(16,2,16,0,'Anonymous User','New Cannes winner a taste of paradise','','','79-101-185-177.dynamic.isp.telekom.rs',2,'467d4d9f6f44b466a77c995f806543bf',1293712092,0,4,0,2,1293712092,'a:3:{s:11:\"recent_post\";a:3:{s:7:\"user_id\";s:1:\"0\";s:6:\"author\";s:11:\"Papadopulos\";s:10:\"message_id\";s:2:\"17\";}s:11:\"message_ids\";a:2:{i:0;i:16;i:1;i:17;}s:21:\"message_ids_moderator\";a:2:{i:0;i:16;i:1;i:17;}}',0,0,0,0),(17,2,16,16,'Papadopulos','Site comment','Knows not where he\'s going to, but nevertheless...','pia@gmail.com','79-101-185-177.dynamic.isp.telekom.rs',2,'7631b144ef09ef2ac5f175a8871e0606',0,0,4,0,2,1293712092,'',0,0,1,1),(18,2,18,0,'Anonymous User','Berlin Film Festival unveils 2011 line-up','','','79-101-185-177.dynamic.isp.telekom.rs',2,'5055aa6f82ed97bb152173ad7f09f787',1293712295,0,4,0,2,1293712295,'a:3:{s:11:\"recent_post\";a:3:{s:7:\"user_id\";s:1:\"0\";s:6:\"author\";s:8:\"Brigitte\";s:10:\"message_id\";s:2:\"19\";}s:11:\"message_ids\";a:2:{i:0;i:18;i:1;i:19;}s:21:\"message_ids_moderator\";a:2:{i:0;i:18;i:1;i:19;}}',0,0,0,0),(19,2,18,18,'Brigitte','Site comment','Sit te possim tibique, eum an quando tibique praesent, munere maiorum deleniti sea eu. Having said that, I also have to say that Erroribus torquatos vel et, pri nostro causae gubergren id. Per ut cetero laoreet recteque, cetero lucilius phaedrum his at.','bri@gitte.de','79-101-185-177.dynamic.isp.telekom.rs',2,'48868c06654b697a2480b54b250007c9',0,0,4,0,2,1293712295,'',0,0,1,1),(20,2,13,13,'Winnetou','Site comment','Hi, cu mel quot instructior, cu has consul delenit senserit. Other than that - perfect!','winn@eto.uu','cable-94-189-197-96.dynamic.sbb.rs',2,'cee0e0e3b245e37a15b3a6fc2c797f66',0,0,4,0,2,1294152243,'',0,0,1,3);
-/*!40000 ALTER TABLE `phorum_messages` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `phorum_pm_buddies`
---
-
-LOCK TABLES `phorum_pm_buddies` WRITE;
-/*!40000 ALTER TABLE `phorum_pm_buddies` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_pm_buddies` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `phorum_pm_folders`
---
-
-LOCK TABLES `phorum_pm_folders` WRITE;
-/*!40000 ALTER TABLE `phorum_pm_folders` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_pm_folders` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `phorum_pm_messages`
---
-
-LOCK TABLES `phorum_pm_messages` WRITE;
-/*!40000 ALTER TABLE `phorum_pm_messages` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_pm_messages` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `phorum_pm_xref`
---
-
-LOCK TABLES `phorum_pm_xref` WRITE;
-/*!40000 ALTER TABLE `phorum_pm_xref` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_pm_xref` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `phorum_search`
---
-
-LOCK TABLES `phorum_search` WRITE;
-/*!40000 ALTER TABLE `phorum_search` DISABLE KEYS */;
-INSERT  IGNORE INTO `phorum_search` VALUES (6,2,'Rio Ferdinand | Not ok | Ok, not ok, who knows? Lorem ipsum dolor sit amet, my friend.'),(4,2,'Source Fabric | Markets mixed in early trading | '),(5,2,'Test Persona | Somethnig | Something\'s got me started'),(7,2,'Joshua | Site comment | Well well, what you see is what you get, simple as that. An eam aliquam vulputate intellegebat, cu sea iudico suavitate, populo intellegat his ei. An vel laoreet molestiae. Est nobis eripuit probatus an, te his illum dicant. Eu dicit verterem assueverit duo, people!'),(9,2,'Source Fabric | Time Person of the Year: Cowardice | '),(10,2,'Pia Zadora | Site comment | Congratulations to the Person!'),(11,2,'Source Fabric | Twitter 101: tips and tricks | '),(12,2,'Twittermaniac | Site comment | Hi, I adore twitter and tweet all the time. Id electram forensibus definiebas his, percipit expetendis vix no.'),(13,2,'Source Fabric | Chrome browser and its top add-ons | '),(14,2,'Joshua | Site comment | Karmakoma, honestatis, quidam repudiandae ius in. Cheers! :)'),(15,2,'Swen | Site comment | I agree and support.'),(16,2,'Source Fabric | Mrs. O, a trendy blog to follow | '),(17,2,'Papadopulos | Site comment | Knows not where he\'s going to, but nevertheless...'),(18,2,'Source Fabric | Berlin Film Festival unveils 2011 line-up | '),(19,2,'Brigitte | Site comment | Sit te possim tibique, eum an quando tibique praesent, munere maiorum deleniti sea eu. Having said that, I also have to say that Erroribus torquatos vel et, pri nostro causae gubergren id. Per ut cetero laoreet recteque, cetero lucilius phaedrum his at.'),(20,2,'Winnetou | Site comment | Hi, cu mel quot instructior, cu has consul delenit senserit. Other than that - perfect!');
-/*!40000 ALTER TABLE `phorum_search` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `phorum_settings`
---
-
-LOCK TABLES `phorum_settings` WRITE;
-/*!40000 ALTER TABLE `phorum_settings` DISABLE KEYS */;
-INSERT  IGNORE INTO `phorum_settings` VALUES ('title','V','Phorum 5'),('cache','V','/tmp'),('session_timeout','V','30'),('short_session_timeout','V','60'),('tight_security','V','0'),('session_path','V','/'),('session_domain','V',''),('admin_session_salt','V','0.62629000 1146135136'),('cache_users','V','0'),('register_email_confirm','V','0'),('default_template','V','default'),('default_language','V','english'),('use_cookies','V','1'),('use_bcc','V','1'),('use_rss','V','1'),('internal_version','V','2006032300'),('PROFILE_FIELDS','S','a:1:{i:0;a:3:{s:4:\"name\";s:9:\"real_name\";s:6:\"length\";i:255;s:13:\"html_disabled\";i:1;}}'),('enable_pm','V','0'),('user_edit_timelimit','V','0'),('enable_new_pm_count','V','1'),('enable_dropdown_userlist','V','1'),('enable_moderator_notifications','V','1'),('show_new_on_index','V','1'),('dns_lookup','V','1'),('tz_offset','V','0'),('user_time_zone','V','1'),('user_template','V','0'),('registration_control','V','1'),('file_uploads','V','0'),('file_types','V',''),('max_file_size','V',''),('file_space_quota','V',''),('file_offsite','V','0'),('system_email_from_name','V',''),('hide_forums','V','1'),('track_user_activity','V','86400'),('html_title','V','Phorum'),('head_tags','V',''),('redirect_after_post','V','list'),('reply_on_read_page','V','1'),('status','V','normal'),('use_new_folder_style','V','1'),('default_forum_options','S','a:24:{s:8:\"forum_id\";i:0;s:10:\"moderation\";i:0;s:16:\"email_moderators\";i:0;s:9:\"pub_perms\";i:1;s:9:\"reg_perms\";i:15;s:13:\"display_fixed\";i:0;s:8:\"template\";s:7:\"default\";s:8:\"language\";s:7:\"english\";s:13:\"threaded_list\";i:0;s:13:\"threaded_read\";i:0;s:17:\"reverse_threading\";i:0;s:12:\"float_to_top\";i:1;s:16:\"list_length_flat\";i:30;s:20:\"list_length_threaded\";i:15;s:11:\"read_length\";i:30;s:18:\"display_ip_address\";i:0;s:18:\"allow_email_notify\";i:0;s:15:\"check_duplicate\";i:1;s:11:\"count_views\";i:2;s:15:\"max_attachments\";i:0;s:22:\"allow_attachment_types\";s:0:\"\";s:19:\"max_attachment_size\";i:0;s:24:\"max_totalattachment_size\";i:0;s:5:\"vroot\";i:0;}'),('hooks','S','a:1:{s:6:\"format\";a:2:{s:4:\"mods\";a:2:{i:0;s:7:\"smileys\";i:1;s:6:\"bbcode\";}s:5:\"funcs\";a:2:{i:0;s:18:\"phorum_mod_smileys\";i:1;s:14:\"phorum_bb_code\";}}}'),('mods','S','a:4:{s:4:\"html\";i:0;s:7:\"replace\";i:0;s:7:\"smileys\";i:1;s:6:\"bbcode\";i:1;}'),('mod_emailcomments','S','a:2:{s:9:\"addresses\";a:1:{i:2;s:0:\"\";}s:14:\"from_addresses\";a:1:{i:2;s:0:\"\";}}');
-/*!40000 ALTER TABLE `phorum_settings` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `phorum_subscribers`
---
-
-LOCK TABLES `phorum_subscribers` WRITE;
-/*!40000 ALTER TABLE `phorum_subscribers` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_subscribers` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `phorum_user_custom_fields`
---
-
-LOCK TABLES `phorum_user_custom_fields` WRITE;
-/*!40000 ALTER TABLE `phorum_user_custom_fields` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_user_custom_fields` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `phorum_user_group_xref`
---
-
-LOCK TABLES `phorum_user_group_xref` WRITE;
-/*!40000 ALTER TABLE `phorum_user_group_xref` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_user_group_xref` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `phorum_user_newflags`
---
-
-LOCK TABLES `phorum_user_newflags` WRITE;
-/*!40000 ALTER TABLE `phorum_user_newflags` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_user_newflags` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `phorum_user_permissions`
---
-
-LOCK TABLES `phorum_user_permissions` WRITE;
-/*!40000 ALTER TABLE `phorum_user_permissions` DISABLE KEYS */;
-/*!40000 ALTER TABLE `phorum_user_permissions` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Dumping data for table `phorum_users`
---
-
-LOCK TABLES `phorum_users` WRITE;
-/*!40000 ALTER TABLE `phorum_users` DISABLE KEYS */;
-INSERT  IGNORE INTO `phorum_users` VALUES (10,1,'admin','b2d716fb2328a246e8285f47b1500ebcb349c187','','',0,'','localhost@localhost','',1,1,'','',0,0,0,0,1295958746,1295958746,0,0,0,0,1,-99,0,'','','',1),(20,26,'test','persona','','',0,'','test@persona.org','',1,1,'','',0,0,0,0,1299746753,1299746753,0,0,0,0,1,-99,0,'','','',1);
-/*!40000 ALTER TABLE `phorum_users` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Dumping data for table `plugin_blog_blog`
@@ -881,6 +705,58 @@ UNLOCK TABLES;
 LOCK TABLES `plugin_poll_section` WRITE;
 /*!40000 ALTER TABLE `plugin_poll_section` DISABLE KEYS */;
 /*!40000 ALTER TABLE `plugin_poll_section` ENABLE KEYS */;
+UNLOCK TABLES;
+
+-- Dumping data for table `comment`
+--
+LOCK TABLES `comment` WRITE;
+/*!40000 ALTER TABLE `comment` DISABLE KEYS */;
+INSERT IGNORE INTO `comment` (`id`, `fk_comment_commenter_id`, `fk_forum_id`, `fk_thread_id`, `fk_language_id`, `fk_parent_id`, `subject`, `message`, `thread_order`, `thread_level`, `status`, `ip`, `likes`, `dislikes`, `time_created`, `time_updated`) VALUES
+(1, 1, 2, 68, 1, NULL, 'Advertisers target online demographic', '', 0, 0, 0, '79.101.185.177', 0, 0, '2010-12-30 11:28:14', '2010-12-30 11:38:36'),
+(2, 2, 2, 68, 1, 1, 'Somethnig', 'Something''s got me started', 1, 1, 0, '79.101.185.177', 0, 0, '2010-12-30 11:28:14', '1970-01-01 02:00:00'),
+(3, 3, 2, 68, 1, 1, 'Not ok', 'Ok, not ok, who knows? Lorem ipsum dolor sit amet, my friend.', 2, 1, 0, '79.101.185.177', 0, 0, '2010-12-30 11:29:51', '1970-01-01 02:00:00'),
+(4, 4, 2, 68, 1, 1, 'Site comment', 'Well well, what you see is what you get, simple as that. An eam aliquam vulputate intellegebat, cu sea iudico suavitate, populo intellegat his ei. An vel laoreet molestiae. Est nobis eripuit probatus an, te his illum dicant. Eu dicit verterem assueverit duo, people!', 3, 1, 0, '79.101.185.177', 0, 0, '2010-12-30 11:38:36', '1970-01-01 02:00:00'),
+(5, 1, 2, 64, 1, NULL, 'European Council candidates set to be named', '', 0, 0, 0, '79.101.185.177', 0, 0, '2010-12-30 14:23:27', '2010-12-30 14:23:27'),
+(6, 5, 2, 64, 1, 5, 'Site comment', 'Congratulations to the Person!', 1, 1, 0, '79.101.185.177', 0, 0, '2010-12-30 14:23:27', '1970-01-01 02:00:00'),
+(7, 1, 2, 86, 1, NULL, 'Online security risks exposed', '', 0, 0, 0, '79.101.185.177', 0, 0, '2010-12-30 14:24:44', '2010-12-30 14:24:44'),
+(8, 6, 2, 86, 1, 7, 'Site comment', 'Hi, I adore twitter and tweet all the time. Id electram forensibus definiebas his, percipit expetendis vix no.', 1, 1, 0, '79.101.185.177', 0, 0, '2010-12-30 14:24:44', '1970-01-01 02:00:00'),
+(9, 1, 2, 87, 1, NULL, 'New horizons for the browser', '', 0, 0, 0, '79.101.185.177', 0, 0, '2010-12-30 14:26:02', '2011-01-04 16:44:03'),
+(10, 4, 2, 87, 1, 9, 'Site comment', 'Karmakoma, honestatis, quidam repudiandae ius in. Cheers! :)', 1, 1, 0, '79.101.185.177', 0, 0, '2010-12-30 14:26:02', '1970-01-01 02:00:00'),
+(11, 7, 2, 87, 1, 10, 'Site comment', 'I agree and support.', 2, 2, 0, '79.101.185.177', 0, 0, '2010-12-30 14:26:37', '1970-01-01 02:00:00'),
+(12, 1, 2, 77, 1, NULL, 'New Cannes winner a taste of paradise', '', 0, 0, 0, '79.101.185.177', 0, 0, '2010-12-30 14:28:12', '2010-12-30 14:28:12'),
+(13, 8, 2, 77, 1, 12, 'Site comment', 'Knows not where he''s going to, but nevertheless...', 1, 1, 0, '79.101.185.177', 0, 0, '2010-12-30 14:28:12', '1970-01-01 02:00:00'),
+(14, 1, 2, 76, 1, NULL, 'Berlin Film Festival unveils 2011 line-up', '', 0, 0, 0, '79.101.185.177', 0, 0, '2010-12-30 14:31:35', '2010-12-30 14:31:35'),
+(15, 9, 2, 76, 1, 14, 'Site comment', 'Sit te possim tibique, eum an quando tibique praesent, munere maiorum deleniti sea eu. Having said that, I also have to say that Erroribus torquatos vel et, pri nostro causae gubergren id. Per ut cetero laoreet recteque, cetero lucilius phaedrum his at.', 1, 1, 0, '79.101.185.177', 0, 0, '2010-12-30 14:31:35', '1970-01-01 02:00:00'),
+(16, 10, 2, 87, 1, 9, 'Site comment', 'Hi, cu mel quot instructior, cu has consul delenit senserit. Other than that - perfect!', 3, 1, 0, '94.189.197.96', 0, 0, '2011-01-04 16:44:03', '1970-01-01 02:00:00');
+/*!40000 ALTER TABLE `comment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `comment_acceptance`
+--
+LOCK TABLES `comment_acceptance` WRITE;
+/*!40000 ALTER TABLE `comment_acceptance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comment_acceptance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `comment_commenter`
+--
+
+LOCK TABLES `comment_commenter` WRITE;
+/*!40000 ALTER TABLE `comment_commenter` DISABLE KEYS */;
+INSERT IGNORE INTO `comment_commenter` (`id`, `fk_user_id`, `email`, `url`, `name`, `ip`, `time_created`, `time_updated`) VALUES
+(1, NULL, '', '', 'Anonymous User', '79.101.185.177', '2010-12-30 11:28:14', '2010-12-30 11:38:36'),
+(2, NULL, 'test@persona.com', '', 'Test Persona', '79.101.185.177', '2010-12-30 11:28:14', '1970-01-01 02:00:00'),
+(3, NULL, 'rio@mutd.co.uk', '', 'Rio Ferdinand', '79.101.185.177', '2010-12-30 11:29:51', '1970-01-01 02:00:00'),
+(4, NULL, 'jos@hua.com', '', 'Joshua', '79.101.185.177', '2010-12-30 11:38:36', '1970-01-01 02:00:00'),
+(5, NULL, 'pia@gmail.com', '', 'Pia Zadora', '79.101.185.177', '2010-12-30 14:23:27', '1970-01-01 02:00:00'),
+(6, NULL, 'ttm@gmail.com', '', 'Twittermaniac', '79.101.185.177', '2010-12-30 14:24:44', '1970-01-01 02:00:00'),
+(7, NULL, 'swenge@gmail.com', '', 'Swen', '79.101.185.177', '2010-12-30 14:26:37', '1970-01-01 02:00:00'),
+(8, NULL, 'pia@gmail.com', '', 'Papadopulos', '79.101.185.177', '2010-12-30 14:28:12', '1970-01-01 02:00:00'),
+(9, NULL, 'bri@gitte.de', '', 'Brigitte', '79.101.185.177', '2010-12-30 14:31:35', '1970-01-01 02:00:00'),
+(10, 1, 'winn@eto.uu', '', 'Winnetou', '94.189.197.96', '2011-01-04 16:44:03', '1970-01-01 02:00:00');
+/*!40000 ALTER TABLE `comment_commenter` DISABLE KEYS */;
 UNLOCK TABLES;
 
 --

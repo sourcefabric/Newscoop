@@ -86,12 +86,6 @@ if ($LiveUserAdmin->updateUser($liveUserValues, $editUser->getPermUserId()) === 
 $logtext = getGS('User account information changed for "$1"', $editUser->getUserName());
 Log::Message($logtext, $g_user->getUserId(), 56);
 
-// sync base data to the corresponding phorum user
-$isPhorumUser = Phorum_user::GetByUserName($editUser->getUserName());
-if($isPhorumUser) {
-    $editUser->syncPhorumUser();
-}
-
 if ($editUser->isAdmin() && $customizeRights && $canManage) {
 	$rightsFields = $editUser->GetDefaultConfig();
 	$permissions = array();
@@ -119,7 +113,7 @@ if ($editUser->isAdmin() && !$customizeRights && $canManage) {
 
 // unsubscribe
 $unsubscribe = Input::Get('unsubscribe', 'bool', false);
-if ($unsubscribe 
+if ($unsubscribe
     && ($canManage || $editUser->getUserId() == $g_user->getUserId())) {
     $editUser->setPermission('MailNotify', false);
 }

@@ -10,6 +10,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Country.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObject.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/get_ip.php');
 
 /**
  * @package Campsite
@@ -133,7 +134,12 @@ final class MetaUser extends MetaDbObject {
 
 
     protected function isBlockedFromComments() {
-        return (int)Phorum_user::IsBanned($this->m_dbObject->getRealName(), $this->m_dbObject->getEmail());
+        global $controller;
+        $publication_id = CampTemplate::singleton()->context()->publication->identifier;
+        $userIp = getIp();
+        $repositoryAcceptance = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment\Acceptance');
+        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+        return (int)$repositoryAcceptance->checkParamsBanned($this->m_dbObject->getRealName(), $this->m_dbObject->getEmail(), $userIp, $publication_id);
     }
 
 

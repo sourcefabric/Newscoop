@@ -126,18 +126,17 @@ if (!empty($f_comment_status)) {
     }
     // If status has changed, then you need to show/hide all the comments
     // as appropriate.
-    /**
-     * @todo get comments or something
     if ($articleObj->commentsEnabled() != $commentsEnabled) {
 	    $articleObj->setCommentsEnabled($commentsEnabled);
-		$comments = ArticleComment::GetArticleComments($f_article_number, $f_language_selected);
+		/**
+		 * @todo get comments and set status apropriately
 		if ($comments) {
 			foreach ($comments as $comment) {
-				$comment->setStatus($commentsEnabled?PHORUM_STATUS_APPROVED:PHORUM_STATUS_HIDDEN);
+				$comment->setStatus($commentsEnabled?STATUS_APPROVED:STATUS_HIDDEN);
 			}
 		}
+		*/
     }
-    */
     $articleObj->setCommentsLocked($f_comment_status == "locked");
 }
 
