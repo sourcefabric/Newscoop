@@ -182,9 +182,9 @@ $(function(){
 	    $(form).each(function(){
             this.reset();
         });
-	    td.find('.commentSubject,.commentBody').show("fast");
-	    td.find('.content-edit').hide("fast");
-	    td.find('.content-reply').hide("fast");
+	    td.find('.commentSubject,.commentBody').slideUp("fast");
+	    td.find('.content-edit').slideDown("fast");
+	    td.find('.content-reply').slideDown("fast");
 	});
     $('.dateCommentHolderEdit .edit-reply').live('click', function(){
         var el = $(this);
@@ -193,15 +193,16 @@ $(function(){
         $(form).each(function(){
             this.reset();
         });
-        td.find('.content-edit').hide("fast");
-        td.find('.content-reply').show("fast");
+        td.find('.content-edit').slideUp("fast");
+        td.find('.content-reply').slideDown("fast");
     });
 
 	$('.datatable .action-edit').live('click', function(){
 		 var el = $(this);
 		 var td = el.parents('td');
-		 td.find('.commentSubject,.commentBody').toggle("fast");
-		 td.find('.content-edit').toggle("fast");
+		 td.find('.commentSubject').s(true);
+		 td.find('.commentBody').slideToggle("fast");
+		 td.find('.content-edit').slideToggle("fast");
 	});
         // Dialog
         $('.dialogPopup').dialog({
