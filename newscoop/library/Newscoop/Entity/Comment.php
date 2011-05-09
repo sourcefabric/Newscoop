@@ -16,7 +16,7 @@ use DateTime,
 /**
  * Comment entity
  * @entity
- * @table(name="Comment")
+ * @table(name="comment")
  * @entity(repositoryClass="Newscoop\Entity\Repository\CommentRepository")
  */
 class Comment

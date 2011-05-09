@@ -463,7 +463,7 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
             $cmd_prefix .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
         }
         $cmd_prefix .= " " . escapeshellarg($p_dbName) . " < ";
-        $sql_scripts = array("tables.sql", "data-required.sql", "data-optional.sql");
+        $sql_scripts = array("tables.sql", "data-required.sql", "data-optional.sql", "tables-post.sql");
         foreach ($sql_scripts as $index=>$script) {
             if (!is_file($upgrade_dir . $script)) {
                 continue;

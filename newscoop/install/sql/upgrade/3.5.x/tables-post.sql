@@ -1,4 +1,5 @@
 -- Remove the phorum
+DROP TABLE IF EXISTS `ArticleComments`;
 DROP TABLE IF EXISTS `phorum_banlists`;
 DROP TABLE IF EXISTS `phorum_files`;
 DROP TABLE IF EXISTS `phorum_forum_group_xref`;

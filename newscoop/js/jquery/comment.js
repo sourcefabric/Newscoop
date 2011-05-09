@@ -182,9 +182,9 @@ $(function(){
 	    $(form).each(function(){
             this.reset();
         });
-	    td.find('.commentSubject,.commentBody').slideUp("fast");
-	    td.find('.content-edit').slideDown("fast");
-	    td.find('.content-reply').slideDown("fast");
+	    td.find('.commentSubject,.commentBody').slideDown("fast");
+	    td.find('.content-edit').slideUp("fast");
+	    td.find('.content-reply').slideUp("fast");
 	});
     $('.dateCommentHolderEdit .edit-reply').live('click', function(){
         var el = $(this);
@@ -200,7 +200,7 @@ $(function(){
 	$('.datatable .action-edit').live('click', function(){
 		 var el = $(this);
 		 var td = el.parents('td');
-		 td.find('.commentSubject').s(true);
+		 td.find('.commentSubject').slideToggle("fast");
 		 td.find('.commentBody').slideToggle("fast");
 		 td.find('.content-edit').slideToggle("fast");
 	});

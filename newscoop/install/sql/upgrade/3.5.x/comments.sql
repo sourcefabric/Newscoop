@@ -4,8 +4,8 @@ ALTER TABLE `newscoop`.`Publications`
  ADD COLUMN `comments_moderator_from` VARCHAR(255)  NOT NULL AFTER `comments_moderator_to`;
 
 -- Comment main table
-DROP TABLE IF EXISTS `Comment`;
-CREATE TABLE IF NOT EXISTS  `Comment` (
+DROP TABLE IF EXISTS `comment`;
+CREATE TABLE IF NOT EXISTS  `comment` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `fk_comment_commenter_id` int(10) unsigned NOT NULL,
   `fk_forum_id` int(10) unsigned NOT NULL,
@@ -30,8 +30,8 @@ CREATE TABLE IF NOT EXISTS  `Comment` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- Comment Commenter main table
-DROP TABLE IF EXISTS `CommentCommenter`;
-CREATE TABLE  `CommentCommenter` (
+DROP TABLE IF EXISTS `comment_commenter`;
+CREATE TABLE  `comment_commenter` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `fk_user_id` int(10) unsigned DEFAULT NULL,
   `email` varchar(100) NOT NULL DEFAULT '',
@@ -44,8 +44,8 @@ CREATE TABLE  `CommentCommenter` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- Comment Acceptance main table
-DROP TABLE IF EXISTS `CommentAcceptance`;
-CREATE TABLE  `CommentAcceptance` (
+DROP TABLE IF EXISTS `comment_acceptance`;
+CREATE TABLE  `comment_acceptance` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `fk_forum_id` int(10) NOT NULL DEFAULT '0',
   `for_column` tinyint(4) NOT NULL DEFAULT '0',
@@ -58,8 +58,8 @@ CREATE TABLE  `CommentAcceptance` (
 
 /*
 -- Comment Preference per Publication
-DROP TABLE IF EXISTS `CommentPreferencePublication`;
-CREATE TABLE  `CommentPreferencePublication` (
+DROP TABLE IF EXISTS `comment_preference_publication`;
+CREATE TABLE  `comment_preference_publication` (
   `fk_forum_id` int(10) unsigned NOT NULL DEFAULT '0',
   `enabled` tinyint(1) NOT NULL DEFAULT '0',
   `article_default_enabled` tinyint(1) NOT NULL DEFAULT '0',
@@ -74,8 +74,8 @@ CREATE TABLE  `CommentPreferencePublication` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Comment Preference per Article
-DROP TABLE IF EXISTS `CommentPreferenceArticle`;
-CREATE TABLE  `CommentPrefenceArticle` (
+DROP TABLE IF EXISTS `comment_preference_article`;
+CREATE TABLE  `comment_preference_article` (
   `fk_thread_id` int(10) unsigned NOT NULL DEFAULT '0',
   `fk_language_id` int(10) unsigned NOT NULL DEFAULT '0',
   `enabled` tinyint(1) NOT NULL DEFAULT '0',
@@ -84,8 +84,8 @@ CREATE TABLE  `CommentPrefenceArticle` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- Comment Preference per Article Type
-DROP TABLE IF EXISTS `CommentPreferenceArticleType`;
-CREATE TABLE  `CommentPrefenceArticleType` (
+DROP TABLE IF EXISTS `comment_preference_article_type`;
+CREATE TABLE  `comment_preference_article_type` (
   `type_name` varchar(166) NOT NULL DEFAULT '',
   `field_name` varchar(166) NOT NULL DEFAULT 'NULL',
   `enabled` tinyint(1) NOT NULL DEFAULT '0', 

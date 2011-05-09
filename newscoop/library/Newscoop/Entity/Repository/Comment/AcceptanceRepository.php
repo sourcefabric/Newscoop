@@ -139,28 +139,6 @@ class AcceptanceRepository extends DatatableSource
     }
 
     /**
-     * Method that search for if a coomenter is banned
-     *
-     * @param array $p_params
-     */
-    public function wasBannned(array $p_params)
-    {
-        foreach($p_params as $key => $value)
-        {
-            $value = array(
-                'forum' => $p_forum,
-                'search' => $value,
-                'for_column' => $key,
-                'type' => 'deny',
-                'search_type' => 'normal'
-            );
-            if($this->matched($p_params))
-                return true;
-        }
-        return false;
-    }
-
-    /**
      * Method that search for if a params are banned
      *
      * @param $p_name

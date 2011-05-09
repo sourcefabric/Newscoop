@@ -13,7 +13,7 @@ use DateTime,
 /**
  * Commenter entity
  * @entity
- * @table(name="CommentCommenter")
+ * @table(name="comment_commenter")
  * @entity(repositoryClass="Newscoop\Entity\Repository\Comment\CommenterRepository")
  */
 class Commenter

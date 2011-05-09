@@ -10,9 +10,9 @@ namespace Newscoop\Entity\Comment\Preference;
 /**
  * Article entity
  * @entity
- * @table(name="Articles")
+ * @table(name="Article")
  * @entity(repositoryClass="Newscoop\Entity\Repository\Comment\Preference\ArticleRepository")
- * @Table(name="CommentPreferenceArticle")
+ * @Table(name="comment_preference_article")
  */
 class Article
 {

@@ -12,7 +12,7 @@ use Newscoop\Entity\Publication;
 /**
  * Acceptance entity
  * @entity
- * @table(name="CommentAcceptance")
+ * @table(name="comment_acceptance")
  * @entity(repositoryClass="Newscoop\Entity\Repository\Comment\AcceptanceRepository")
  */
 class Acceptance
