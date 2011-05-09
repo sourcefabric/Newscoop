@@ -10,7 +10,7 @@
  * @link http://www.sourcefabric.org
  */
 
-global $Campsite;
+global $Campsite, $ADMIN;
 
 $Campsite['APACHE_USER'] = 'www-data';
 $Campsite['APACHE_GROUP'] = 'www-data';
