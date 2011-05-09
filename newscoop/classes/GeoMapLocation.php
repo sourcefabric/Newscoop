@@ -845,10 +845,18 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
                 if ($mc_polygon && (3 <= count($mc_polygon))) {
                     $area_cons_res = Geo_MapLocation::GetGeoSearchSQLCons($mc_polygon, "polygon", "l");
+                    $area_cons_res_finer = Geo_MapLocation::GetGeoSearchPointInPolygon($mc_polygon, "l");
+
                     if (!$area_cons_res["error"]) {
-                        $mc_areas_list[] = $area_cons_res["cons"];
+                        $one_area_cons = $area_cons_res["cons"];
+
+                        if (!$area_cons_res_finer["error"]) {
+                            $one_area_cons = "($one_area_cons AND " . $area_cons_res_finer["cons"] . ")";
+                        }
+
+                        $mc_areas_list[] = $one_area_cons;
                         $article_mcons = true;
-                    }    
+                    }
                 }
             }
 
@@ -1148,10 +1156,10 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
      *    An array of coordinate lon/lat pairs
      * @param string $p_polygonType
      *    Polygon type: rectangle (two corners), or polygons with clockwise or counterclockwise corners
-     * @param integer $p_tableAlias
+     * @param string $p_tableAlias
      *    Table prefix for the SQL query
      *
-     * @return string
+     * @return mixed
      */
     public static function GetGeoSearchSQLCons($p_coordinates, $p_polygonType = "rectangle", $p_tableAlias = "l")
     {
@@ -1273,6 +1281,76 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
         return array("error" => false, "cons" => $queryCons);
     } // fn GetGeoSearchSQLCons
+
+
+    /**
+     * Returns SQL query for limiting POIs on a given polygon by a previously defined stored function
+     *
+     * @param mixed $p_coordinates
+     *    An array of coordinate lon/lat pairs
+     * @param string $p_tableAlias
+     *    Table prefix for the SQL query
+     *
+     * @return mixed
+     */
+    public static function GetGeoSearchPointInPolygon($p_coordinates, $p_tableAlias = "l")
+    {
+        if (is_object($p_coordinates)) {
+            $p_coordinates = get_object_vars($p_coordinates);
+        }
+
+        $paramError = false;
+
+        $min_val = -9000; // reasonable limit is -180
+        $max_val = 9000; // reasonable limit is 180
+
+        $p_count = count($p_coordinates);
+        $sql_part = 'CheckPolygonPoint(' . $p_tableAlias . '.poi_location, 20, ' . $p_count . ', "';
+
+
+        foreach ($p_coordinates as $corner) {
+            if (is_object($corner)) {
+                $corner = get_object_vars($corner);
+            }
+
+            $one_lon = $corner["longitude"];
+            $one_lat = $corner["latitude"];
+            if ((!is_numeric($one_lon)) || (!is_numeric($one_lat))) {
+                $paramError = true;
+                break;
+            }
+
+            $one_lon = 0 + $one_lon;
+            $one_lat = 0 + $one_lat;
+
+            $correct = true;
+            if (($one_lon < $min_val) || ($one_lon > $max_val)) {
+                $correct = false;
+            }
+            if (($one_lat < $min_val) || ($one_lat > $max_val)) {
+                $correct = false;
+            }
+            if (!$correct) {
+                $paramError = true;
+                break;
+            }
+
+            $lat_part = str_pad(trim(substr(sprintf("%1.13f\n", $one_lat), 0, 19)) . ",", 20, " ");
+            $lon_part = str_pad(trim(substr(sprintf("%1.13f\n", $one_lon), 0, 19)) . ",", 20, " ");
+
+            $sql_part .= $lat_part . $lon_part;
+
+        }
+
+        $sql_part .= '")';
+
+        if ($paramError) {
+            $sql_part = "1";
+        }
+
+        return array("error" => $paramError, "cons" => $sql_part);
+
+    } // fn GetGeoSearchPointInPolygon
 
 
 } // class Geo_MapLocation
