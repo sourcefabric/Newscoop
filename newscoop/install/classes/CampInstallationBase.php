@@ -20,6 +20,7 @@ require_once('adodb/adodb.inc.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampRequest.php');
 require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallationView.php');
+require_once($GLOBALS['g_campsiteDir'].'/install/scripts/SQLImporting.php');
 
 
 /**
@@ -142,7 +143,6 @@ class CampInstallationBase
 
     private function license() {}
 
-
     /**
      *
      */
@@ -252,6 +252,11 @@ class CampInstallationBase
             $g_db->Execute("ALTER TABLE `$table` ENABLE KEYS");
         }
 
+        { // installing the stored function for 'point in polygon' checking
+            $sqlFile = CS_INSTALL_DIR . DIR_SEP . 'sql' . DIR_SEP . "checkpp.sql";
+            importCheckPointPolygon($g_db, $sqlFile);
+        }
+
         $this->m_config['database'] = array(
                                             'hostname' => $db_hostname,
                                             'hostport' => $db_hostport,
@@ -262,7 +267,6 @@ class CampInstallationBase
 
         return true;
     } // fn databaseConfiguration
-
 
     /**
      *
