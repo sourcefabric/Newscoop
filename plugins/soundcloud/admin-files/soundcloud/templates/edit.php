@@ -16,7 +16,7 @@
         <fieldset class="upload-field clearfix">
            <ul class="form-group">
               <li class="width-1-1"><label><? putGS('Title') ?></label>
-              <input type="text" autocomplete="off" value="<?= @$track['title'] ?>" class="input_text" size="45" name="title" />
+              <input type="text" autocomplete="off" value="<?= htmlentities(@$track['title']) ?>" class="input_text" size="45" name="title" />
               </li>
           </ul>
         </fieldset>
@@ -30,7 +30,7 @@
                 <input type="file" name="artwork_data" class="input_text" size="40"/>
                 </li>
               <li class="sc_description"><label><? putGS('Description') ?></label>
-                <textarea class="input_text_area" rows="5" name="description"><?= @$track['description'] ?></textarea>
+                <textarea class="input_text_area" rows="5" name="description"><?= htmlentities(@$track['description']) ?></textarea>
               </li>
               <li class="group-holder_260">
               <ul class="vertical-group">
@@ -58,7 +58,7 @@
           </ul>
             <ul class="form-group">
               <li class="width-1-1"><label><? putGS('Tags') ?><span><? putGS('A space separated list of tags') ?></span></label>
-              <input type="text" autocomplete="off" value="<?= @$track['tag_list'] ?>" class="input_text" size="45" name="tag_list">
+              <input type="text" autocomplete="off" value="<?= htmlentities(@$track['tag_list']) ?>" class="input_text" size="45" name="tag_list">
               </li>
            </ul>
           <div class="clear" style="margin-top:16px;"></div>
@@ -66,21 +66,21 @@
           <div id="edit-div-more-options" class="upload-more-options clearfix">
                 <ul class="form-group">
                   <li class="width-1-3_fixed"><label><? putGS('Label') ?></label>
-                    <input type="text" value="<?= @$track['label_name'] ?>" class="input_text" size="45" name="label_name">
+                    <input type="text" value="<?= htmlentities(@$track['label_name']) ?>" class="input_text" size="45" name="label_name">
                   </li>
                   <li><label><? putGS('Release date') ?></label>
-                    <input type="text" value="<?= @$track['release_date'] ?>" class="input_text1 date" size="25" name="release_date">
+                    <input type="text" value="<?= htmlentities(@$track['release_date']) ?>" class="input_text1 date" size="25" name="release_date">
                   </li>
                </ul>
                 <ul class="form-group">
                   <li class="width-1-3_fixed"><label><? putGS('Release/catalogue number') ?></label>
-                    <input type="text" value="<?= @$track['release'] ?>" class="input_text" size="45" name="release">
+                    <input type="text" value="<?= htmlentities(@$track['release']) ?>" class="input_text" size="45" name="release">
                   </li>
                   <li class="width-1-3_fixed"><label><? putGS('ISRC') ?></label>
-                    <input type="text" value="<?= @$track['isrc'] ?>" class="input_text" size="45" name="isrc">
+                    <input type="text" value="<?= htmlentities(@$track['isrc']) ?>" class="input_text" size="45" name="isrc">
                   </li>
                   <li class="width-1-3_fixed"><label><? putGS('Bpm') ?></label>
-                    <input type="text" value="<?= @$track['bpm'] ?>" class="input_text" size="45" name="bpm">
+                    <input type="text" value="<?= htmlentities(@$track['bpm']) ?>" class="input_text" size="45" name="bpm">
                   </li>
                   <li class="width-1-3_fixed"><label><? putGS('Key signature') ?></label>
                     <select class="input_select" name="key_signature">
@@ -93,10 +93,10 @@
                </ul>
                <ul class="form-group">
                   <li class="width-2-3_fixed"><label><? putGS('Buy link') ?><span><? putGS('Find out how to sell your tracks on other platforms easily using SoundCloud in our App Gallery') ?></span></label>
-                    <input type="text" value="<?= @$track['purchase_url'] ?>" class="input_text" size="45" name="purchase_url">
+                    <input type="text" value="<?= htmlentities(@$track['purchase_url']) ?>" class="input_text" size="45" name="purchase_url">
                   </li>
                   <li class="width-2-3_fixed"><label><? putGS('Video link') ?><span><? putGS('Youtube, Vimeo, Dailymotion and Viddler videos will appear in an on-site player') ?></span></label>
-                    <input type="text" value="<?= @$track['video_url'] ?>" class="input_text" size="45" name="video_url">
+                    <input type="text" value="<?= htmlentities(@$track['video_url']) ?>" class="input_text" size="45" name="video_url">
                   </li>
                </ul>
           </div>
