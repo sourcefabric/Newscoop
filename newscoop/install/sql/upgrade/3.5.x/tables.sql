@@ -33,6 +33,6 @@ ALTER TABLE `liveuser_groups` CHANGE `group_id` `group_id` int(11) NOT NULL AUTO
 DROP TABLE IF EXISTS `ArticleAudioclips`;
 DROP TABLE IF EXISTS `AudioclipMetadata`;
 
-source checkpp.sql
+system php ./checkpp.php
 
 
