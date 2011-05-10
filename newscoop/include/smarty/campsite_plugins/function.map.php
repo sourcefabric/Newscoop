@@ -105,8 +105,9 @@ function smarty_function_map($p_params, &$p_smarty)
     $width = isset($p_params['width']) ? (int) $p_params['width'] : 0;
     $height = isset($p_params['height']) ? (int) $p_params['height'] : 0;
 
-    $width_large = isset($p_params['popup_width']) ? (int) $p_params['width_popup'] : 800;
-    $height_large = isset($p_params['popup_height']) ? (int) $p_params['height_popup'] : 600;
+    $width_large = isset($p_params['popup_width']) ? (int) $p_params['popup_width'] : 800;
+    $height_large = isset($p_params['popup_height']) ? (int) $p_params['popup_height'] : 600;
+    $max_zoom = isset($p_params['max_zoom']) ? (int) $p_params['max_zoom'] : null;
 
     // if we shall display a multi-map
     if ((!is_null($campsite->map_dynamic_points_raw)) || (!is_null($campsite->map_dynamic_constraints))) {
@@ -132,6 +133,7 @@ function smarty_function_map($p_params, &$p_smarty)
         $multi_map_label = $campsite->map_dynamic_map_label;
 
         $multi_options = array();
+        $multi_options["max_zoom"] = $max_zoom;
         $multi_options["load_common"] = $map_load_common_header;
         $multi_options["pois_retrieved"] = false;
 
@@ -214,6 +216,7 @@ function smarty_function_map($p_params, &$p_smarty)
     // get core pieces to display the map
     $map_options = array();
     $map_options["auto_focus"] = $auto_focus;
+    $map_options["max_zoom"] = $max_zoom;
     $map_options["load_common"] = $map_load_common_header;
 
     $map_options["large_map_on_click"] = $openMapOnClick;

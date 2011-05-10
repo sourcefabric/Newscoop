@@ -100,6 +100,7 @@ function smarty_function_set_map($p_params, &$p_smarty)
     $con_date = array();
     $con_areas = array();
     $con_match_any_area = array();
+    $con_exact_area = array();
     $con_icons = array();
 
     if (isset($p_params['label'])) {
@@ -298,6 +299,20 @@ function smarty_function_set_map($p_params, &$p_smarty)
         }
     }
 
+    if (isset($p_params['area_exact'])) {
+
+        $area_exact_val = $p_params['area_exact'];
+        if (is_string($area_exact_val)) {
+            $area_exact_val = strtolower($area_exact_val);
+            if ("false" == $area_exact_val) {$con_exact_area[0] = false;}
+            if ("true" == $area_exact_val) {$con_exact_area[0] = true;}
+        }
+        else {
+            if ($area_exact_val) {$con_exact_area[0] = true;}
+            else {$con_exact_area[0] = false;}
+        }
+    }
+
     if (isset($p_params['icons'])) {
         $icons_val = trim($p_params['icons']);
         foreach (explode(",", $icons_val) as $cur_icon) {
@@ -409,6 +424,14 @@ function smarty_function_set_map($p_params, &$p_smarty)
     if (0 < count($con_match_any_area)) {
         $leftOperand = 'matchanyarea';
         $rightOperand = $con_match_any_area[0];
+        $operator = new Operator('is', 'sql');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+    }
+
+    if (0 < count($con_exact_area)) {
+        $leftOperand = 'exactarea';
+        $rightOperand = $con_exact_area[0];
         $operator = new Operator('is', 'sql');
         $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
         $parameters[] = $constraint;

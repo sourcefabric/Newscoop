@@ -1772,11 +1772,15 @@ $header_part = '
         $tag_string_fin = "";
 
         $auto_focus = null;
+        $max_zoom = null;
         $load_common = true;
 
         if (is_array($p_options)) {
             if (array_key_exists("auto_focus", $p_options)) {
                 $auto_focus = $p_options["auto_focus"];
+            }
+            if (array_key_exists("max_zoom", $p_options)) {
+                $max_zoom = $p_options["max_zoom"];
             }
             if (array_key_exists("load_common", $p_options)) {
                 $load_common = $p_options["load_common"];
@@ -1855,6 +1859,10 @@ $header_part = '
         if (null !== $auto_focus)
         {
             $geo_focus_info["json_obj"]["auto_focus"] = $auto_focus;
+        }
+        if (null !== $max_zoom)
+        {
+            $geo_focus_info["json_obj"]["max_zoom"] = $max_zoom;
         }
         $geo_focus_json = "";
         $geo_focus_json .= json_encode($geo_focus_info["json_obj"]);
@@ -2306,11 +2314,15 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         $points = null;
 
         $pois_loaded = false;
+        $max_zoom = null;
         $load_common = true;
 
         if (is_array($p_options)) {
             if (array_key_exists("pois_retrieved", $p_options)) {
                 $pois_loaded = $p_options["pois_retrieved"];
+            }
+            if (array_key_exists("max_zoom", $p_options)) {
+                $max_zoom = $p_options["max_zoom"];
             }
             if (array_key_exists("load_common", $p_options)) {
                 $load_common = $p_options["load_common"];
@@ -2436,6 +2448,10 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 
         {
             $geo_focus_info["json_obj"]["auto_focus"] = true;
+        }
+        if (null !== $max_zoom)
+        {
+            $geo_focus_info["json_obj"]["max_zoom"] = $max_zoom;
         }
         $geo_focus_json = "";
         $geo_focus_json .= json_encode($geo_focus_info["json_obj"]);

@@ -342,6 +342,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $mc_multimedia = array();
         $mc_areas = array();
         $mc_areas_matchall = false;
+        $mc_areas_exact = true;
         $mc_dates = array();
         $mc_icons = array();
 
@@ -433,6 +434,10 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     break;
                 case 'matchanyarea':
                     $mc_areas_matchall = !$param->getRightOperand();
+                    //$mc_mapCons = true;
+                    break;
+                case 'exactarea':
+                    $mc_areas_exact = $param->getRightOperand();
                     //$mc_mapCons = true;
                     break;
                 case 'date':
@@ -527,6 +532,8 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             $paramsArray_arr["topics_matchall"] = $mc_topics_matchall;
             $paramsArray_arr["multimedia"] = $mc_multimedia;
             $paramsArray_arr["areas"] = $mc_areas;
+            $paramsArray_arr["areas_matchall"] = $mc_areas_matchall;
+            $paramsArray_arr["areas_exact"] = $mc_areas_exact;
             $paramsArray_arr["dates"] = $mc_dates;
             $paramsArray_arr["icons"] = $mc_icons;
 
@@ -845,12 +852,16 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
                 if ($mc_polygon && (3 <= count($mc_polygon))) {
                     $area_cons_res = Geo_MapLocation::GetGeoSearchSQLCons($mc_polygon, "polygon", "l");
-                    $area_cons_res_finer = Geo_MapLocation::GetGeoSearchPointInPolygon($mc_polygon, "l");
+
+                    $area_cons_res_finer = null;
+                    if ($mc_areas_exact) {
+                        $area_cons_res_finer = Geo_MapLocation::GetGeoSearchPointInPolygon($mc_polygon, "l");
+                    }
 
                     if (!$area_cons_res["error"]) {
                         $one_area_cons = $area_cons_res["cons"];
 
-                        if (!$area_cons_res_finer["error"]) {
+                        if ($mc_areas_exact && (!$area_cons_res_finer["error"])) {
                             $one_area_cons = "($one_area_cons AND " . $area_cons_res_finer["cons"] . ")";
                         }
 
@@ -1282,7 +1293,6 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         return array("error" => false, "cons" => $queryCons);
     } // fn GetGeoSearchSQLCons
 
-
     /**
      * Returns SQL query for limiting POIs on a given polygon by a previously defined stored function
      *
@@ -1301,45 +1311,51 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 
         $paramError = false;
 
-        $min_val = -9000; // reasonable limit is -180
-        $max_val = 9000; // reasonable limit is 180
+        // reasonable limit is +/-180 (used as lat/lon in degrees), but let it work even for intentionally larger (say +-1000 spaced) polygons
+        $min_val = -9000;
+        $max_val = 9000;
 
         $p_count = count($p_coordinates);
         $sql_part = 'CheckPolygonPoint(' . $p_tableAlias . '.poi_location, 20, ' . $p_count . ', "';
 
+        if (1000 < $p_count) {
+            $paramError = true;
+        }
 
-        foreach ($p_coordinates as $corner) {
-            if (is_object($corner)) {
-                $corner = get_object_vars($corner);
+        if (!$paramError) {
+            foreach ($p_coordinates as $corner) {
+                if (is_object($corner)) {
+                    $corner = get_object_vars($corner);
+                }
+    
+                $one_lon = $corner["longitude"];
+                $one_lat = $corner["latitude"];
+                if ((!is_numeric($one_lon)) || (!is_numeric($one_lat))) {
+                    $paramError = true;
+                    break;
+                }
+    
+                $one_lon = 0 + $one_lon;
+                $one_lat = 0 + $one_lat;
+    
+                $correct = true;
+                if (($one_lon < $min_val) || ($one_lon > $max_val)) {
+                    $correct = false;
+                }
+                if (($one_lat < $min_val) || ($one_lat > $max_val)) {
+                    $correct = false;
+                }
+                if (!$correct) {
+                    $paramError = true;
+                    break;
+                }
+    
+                $lat_part = str_pad(trim(substr(sprintf("%1.13f\n", $one_lat), 0, 19)) . ",", 20, " ");
+                $lon_part = str_pad(trim(substr(sprintf("%1.13f\n", $one_lon), 0, 19)) . ",", 20, " ");
+    
+                $sql_part .= $lat_part . $lon_part;
+    
             }
-
-            $one_lon = $corner["longitude"];
-            $one_lat = $corner["latitude"];
-            if ((!is_numeric($one_lon)) || (!is_numeric($one_lat))) {
-                $paramError = true;
-                break;
-            }
-
-            $one_lon = 0 + $one_lon;
-            $one_lat = 0 + $one_lat;
-
-            $correct = true;
-            if (($one_lon < $min_val) || ($one_lon > $max_val)) {
-                $correct = false;
-            }
-            if (($one_lat < $min_val) || ($one_lat > $max_val)) {
-                $correct = false;
-            }
-            if (!$correct) {
-                $paramError = true;
-                break;
-            }
-
-            $lat_part = str_pad(trim(substr(sprintf("%1.13f\n", $one_lat), 0, 19)) . ",", 20, " ");
-            $lon_part = str_pad(trim(substr(sprintf("%1.13f\n", $one_lon), 0, 19)) . ",", 20, " ");
-
-            $sql_part .= $lat_part . $lon_part;
-
         }
 
         $sql_part .= '")';
@@ -1351,7 +1367,6 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         return array("error" => $paramError, "cons" => $sql_part);
 
     } // fn GetGeoSearchPointInPolygon
-
 
 } // class Geo_MapLocation
 

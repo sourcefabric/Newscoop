@@ -1,9 +1,9 @@
 DELIMITER //
 DROP FUNCTION IF EXISTS CheckPolygonPoint //
-CREATE FUNCTION CheckPolygonPoint(point GEOMETRY, spacing INT, length INT, polygon VARCHAR(16384))
+CREATE FUNCTION CheckPolygonPoint(point GEOMETRY, spacing INT, length INT, polygon VARCHAR(20100))
 RETURNS INT DETERMINISTIC
 -- RETURNS TEXT DETERMINISTIC
--- the tret variable return is used for debugging
+-- the tret return variable can be used for debugging
     ppfound:BEGIN
 
     DECLARE lat, lon REAL;

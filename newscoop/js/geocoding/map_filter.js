@@ -381,6 +381,7 @@ this.report = function(event) {
         var vert_arr = [];
 
         var is_convex = true;
+        var within_datelines = true;
         var dp_positive = 0;
         var dp_negative = 0;
 
@@ -418,15 +419,22 @@ this.report = function(event) {
                 max_lat = point.lat;
             }
 
+            if ((-180 > point.lon) || (180 < point.lon)) {
+                within_datelines = false;
+            }
         }
         cons_pol += "</div>";
 
         if ((0 < dp_positive) && (0 < dp_negative)) {is_convex = false;}
 
-        var polygon_geometry_class = "geo_polygon_type_convex";
+        //var polygon_geometry_class = "geo_polygon_type_convex";
         //if (!is_convex) {
         //    polygon_geometry_class = "geo_polygon_type_concave";
         //}
+        var polygon_geometry_class = "geo_polygon_type_within_dl";
+        if (!within_datelines) {
+            polygon_geometry_class = "geo_polygon_type_over_dl";
+        }
 
         info_text += "<div class='geo_polygon_info'><div class='geo_polygon_labels'>";
         info_text += "<div class='geo_polygon_remove'><a href='#' onclick='" + this.obj_name + ".remove_polygon(" + find + "); return false;'><span class=\"ui-icon ui-icon-closethick\"></span></a></div>\n";
@@ -492,6 +500,7 @@ this.main_init = function(map_div_name)
             this.display_strings.google_map,
             {}
         );
+        map_gsm.wrapDateLine = false; // so that over-dateline polygons can be drawn
 
         this.map_view_layer_names_all[google_label] = map_gsm.name;
         if (google_label == this.map_view_layer_default)
@@ -507,7 +516,7 @@ this.main_init = function(map_div_name)
             //"MapQuest Map"
             this.display_strings.mapquest_map
         );
-        map_mqm.wrapDateLine = true;
+        map_mqm.wrapDateLine = false; // so that over-dateline polygons can be drawn
         map_mqm.displayOutsideMaxExtent = true;
         map_mqm.transitionEffect = 'resize';
 
@@ -525,7 +534,7 @@ this.main_init = function(map_div_name)
             //"OpenStreet Map"
             this.display_strings.openstreet_map
         );
-        map_osm.wrapDateLine = true;
+        map_osm.wrapDateLine = false; // so that over-dateline polygons can be drawn
         map_osm.displayOutsideMaxExtent = true;
         map_osm.transitionEffect = 'resize';
 

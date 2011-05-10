@@ -92,6 +92,14 @@
     color: #ff0000;
 }
 
+.geo_polygon_type_within_dl {
+    color: #000000;
+}
+
+.geo_polygon_type_over_dl {
+    color: #ff0000;
+}
+
 .geo_add_polygon {
     float: left;
 }
