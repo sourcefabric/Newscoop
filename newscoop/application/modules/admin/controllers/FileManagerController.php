@@ -6,6 +6,7 @@
  */
 
 /**
+ * @Acl(resource="template", action="manage")
  */
 class Admin_FileManagerController extends Zend_Controller_Action
 {
@@ -44,6 +45,31 @@ class Admin_FileManagerController extends Zend_Controller_Action
         $this->view->nav = new Zend_Navigation($pages);
         $this->view->dateFormat = 'Y-m-d H:i';
         $this->view->separator = self::SEPARATOR;
+    }
+
+    public function uploadAction()
+    {
+        $path = $this->parsePath($this->_getParam('path', ''));
+        $plupload = $this->getHelper('plupload');
+
+        $form = new Admin_Form_Upload;
+        $form->setAction('')->setMethod('post');
+
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $files = $plupload->getUploadedFiles();
+            foreach ($files as $basename => $tmp) {
+                rename($tmp, "$this->root/$path/$basename");
+            }
+
+            $this->_helper->flashMessenger($this->formatMessage($files, getGS('uploaded')));
+            $this->_helper->redirector('index', 'file-manager', 'admin', array(
+                'path' => $this->_getParam('path'),
+            ));
+        }
+
+        $this->view->form = $form;
+        $this->view->destination = new SplFileInfo("$this->root/$path");
     }
 
     public function editAction()
@@ -155,6 +181,24 @@ class Admin_FileManagerController extends Zend_Controller_Action
         }
 
         return new SplFileInfo($realpath);
+    }
+
+    /**
+     * Format message
+     *
+     * @param array|string $files
+     * @param string $action
+     * @return string
+     */
+    private function formatMessage($files, $action)
+    {
+        $files = (array) $files;
+        $count = sizeof($files);
+        if ($count == 1) {
+            return getGS("'$1' $2", current(array_keys($files)), $action);
+        }
+
+        return getGS("$1 files $2", $count, $action);
     }
 }
 

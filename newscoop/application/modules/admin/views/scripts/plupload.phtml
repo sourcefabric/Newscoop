@@ -1,0 +1,57 @@
+<div id="uploader"></div>
+
+<script type="text/javascript" src="<?php echo $this->baseUrl('/js/plupload/js/plupload.full.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl('/js/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js'); ?>"></script>
+
+<script type="text/javascript">
+$(function() {
+    var form = $('form');
+    var uploader = $('#uploader');
+    var dd = $('<dd class="plupload" />').prependTo($('dl.zend_form', form));
+
+    uploader.prependTo(dd).pluploadQueue({
+        runtimes : "gears, flash, silverlight, html5, html4",
+        unique_names : true,
+        max_file_size: '2mb',
+        chunk_size: '500kb',
+
+        url : "<?php echo $this->url(array(
+            'plupload' => '1',
+        )); ?>",
+
+        flash_swf_url: "<?php echo $this->baseUrl('/js/plupload/js/plupload.flash.swf'); ?>",
+        silverlight_xap_url: "<?php echo $this->baseUrl('/js/plupload/js/plupload.silverlight.xap'); ?>",
+
+        filters: [
+            {title : "Templates", extensions : "tpl"},
+            {title : "Image files", extensions : "jpg,gif,png"},
+            {title : "CSS files", extensions : "css"},
+            {title : "PHP files", extensions : "php"},
+            {title : "Javascript files", extensions : "js"}
+        ],
+    });
+
+    // Client side form validation
+    $('form').submit(function(e) {
+        var uploader = $('#uploader').pluploadQueue();
+
+        // Validate number of uploaded files
+        if (uploader.total.uploaded == 0) {
+            // Files in queue upload them first
+            if (uploader.files.length > 0) {
+                // When all files are uploaded submit form
+                uploader.bind('UploadProgress', function() {
+                    if (uploader.files.uploaded == uploader.files.length) {
+                        $('form').submit();
+                    }
+                });
+                uploader.start();
+            } else {
+                alert(<?php echo json_encode(getGS('You must at least upload one file.')); ?>);
+            }
+
+            e.preventDefault();
+        }
+    });
+});
+</script>

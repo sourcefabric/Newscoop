@@ -1,5 +1,9 @@
 <?php $this->placeholder('title')->set(getGS('File manager')); ?>
 
+<h2><a href="<?php echo $this->url(array(
+    'action' => 'upload',
+)); ?>"><?php putGS('Upload'); ?></a></h2>
+
 <table class="files">
     <?php if (empty($this->path)) { ?>
     <caption><?php putGS('Templates'); ?></caption>

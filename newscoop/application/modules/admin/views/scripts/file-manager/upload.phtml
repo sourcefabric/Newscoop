@@ -1,0 +1,8 @@
+<?php $this->placeholder('title')->set(getGS('Upload')); ?>
+
+<?php if (!$this->destination->isWritable()) {
+    echo $this->renderError(getGS("'$1' is not writable", $this->destination->getRealpath()));
+    return;
+} ?>
+
+<?php $this->plupload($this->form); ?>
