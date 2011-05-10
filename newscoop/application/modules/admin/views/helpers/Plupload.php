@@ -8,22 +8,18 @@ class Admin_View_Helper_Plupload extends Zend_View_Helper_Abstract
     /**
      * Render Plupload script
      *
-     * @param Zend_Form $form
+     * @param string $form
      * @return void
      */
-    public function plupload(Zend_Form $form)
+    public function plupload($form = '', array $config = array())
     {
-        $formId = $form->getAttrib('id');
-        if (empty($formId)) {
-            $formId = 'plupload-form';
-            $form->setAttrib('id', $formId);
-        }
+        $this->view->plupload = (object) array_merge(array(
+            'form' => $form,
+            'url' => $this->view->url(array(
+                'plupload' => 1,
+            )),
+        ), $config);
 
-        $this->view->plupload = (object) array(
-            'formId' => $formId,
-        );
-
-        echo $form;
         echo $this->view->render('plupload.phtml');
     }
 }
