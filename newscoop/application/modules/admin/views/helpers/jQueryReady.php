@@ -26,30 +26,31 @@ class Admin_View_Helper_JQueryReady extends Zend_View_Helper_Placeholder_Contain
     protected $_scriptFormat = '<script>jQuery( function() { %s } )</script>';
 
     /**
+     * This helper add a document.ready script type for jquery
      * Retrieve placeholder for title element and optionally add new script
-     *
+     * 
      * @param  string $script
      * @return Admin_View_Helper_JQueryReady
      */
-    public function jQueryReady( $script = null  )
+    public function jQueryReady( $script = null )
     {
         if( is_string( $script ) ) {
             $this->append( $script );
         }
         return $this;
     }
-    
+
     /**
      * Turn helper into string
      *
      * @return string
      */
-    public function toString( )
+    public function toString()
     {
         foreach( $this as $item ) {
             $output .= $item;
         }
-
+        
         $output = ( $this->_autoEscape ) ? $this->_escape( $output ) : $output;
         return sprintf( $this->_scriptFormat, $output );
     }

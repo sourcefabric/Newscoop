@@ -72,7 +72,7 @@ class Admin_AclController extends Zend_Controller_Action
 
     public function editAction()
     {
-        $this->view->jQueryReady( "$.registry('test','test');" );
+//        $this->view->jQueryReady( "$.registry.set('test','test');" );
         
         $role = $this->_helper->entity->get(new Role, 'role');
         $resources = array('' => getGS('Global'));

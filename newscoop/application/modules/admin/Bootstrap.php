@@ -173,8 +173,8 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 
         $view->addHelperPath( APPLICATION_PATH . "/modules/admin/views/helpers", "Admin_View_Helper" );
         $jsPlaceholder = $view->getHelper( 'JQueryReady' );
-        $view->getHelper( 'JQueryUtils' )->set;
-        var_dump( ReflectionObject::export($view) );
+        $view->getHelper( 'JQueryUtils' )->setPlaceholder( $jsPlaceholder );
+        
     }
 
     /**

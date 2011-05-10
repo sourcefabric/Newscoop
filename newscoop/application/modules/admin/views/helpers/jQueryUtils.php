@@ -18,9 +18,14 @@ class Admin_View_Helper_JQueryUtils
     protected $_placeholder = null;
 
     /**
+     * @var array
+     */
+    private $_repo = array();
+    
+    /**
      * @return Admin_View_Helper_JQueryUtils
      */
-    public function jQueryUtils(  )
+    public function jQueryUtils()
     {
         return $this;
     }
@@ -33,21 +38,60 @@ class Admin_View_Helper_JQueryUtils
     {
         $this->_placeholder = $placeholder;
     } 
+
+    /**
+     * uses $.registry to store variables on namespace
+     * @param string $var switch to val if $var null
+     * @param string $val 
+     */
+    public function registerVar( $var, $val=null, $placement=null )
+    {
+        !$var ? ( $this->_repo[] = $val ) : ( $this->_repo[ $var ] = $val );
+        switch( $placement )
+        {
+            case Zend_View_Helper_Placeholder_Container::PREPEND :
+                $placeMe = 'prepend';
+                break;
+            case Zend_View_Helper_Placeholder_Container::SET :
+                $placeMe = 'set';
+                break;
+            default :
+                $placeMe = 'append';                
+        }
+        $this->_placeholder->$placeMe( " jQuery.registry.set( '$var', '$val' ); " );
+    }
+
+    /**
+     * 
+     * @uses Admin_View_Helper_JQueryUtils::registerVar() with $placement null
+     * @param string $var
+     * @param string $val
+     */
+    public function  __set( $var, $val )
+    {
+        $this->registerVar( $var, $val );
+    }
     
+    /**
+     * get variable
+     * @param string $var
+     */
+    public function __get( $var )
+    {
+        return @$this->_repo[$var];
+    }
     
     /**
      * Turn helper into string
      *
      * @return string
      */
-    public function toString( )
+    public function __toString()
     {
-        /*foreach( $this as $item ) {
-            $output .= $item;
-        }
-
-        $output = ( $this->_autoEscape ) ? $this->_escape( $output ) : $output;
-        return sprintf( $this->_scriptFormat, $output );
-        */
+        $x = '';
+        foreach( $this->_repo as $key => $val ) { 
+            $x .= " $key : $val ;"; 
+        };
+        return $x;
     }
 }
