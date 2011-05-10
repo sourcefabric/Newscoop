@@ -13,14 +13,20 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 /**
  * @package Campsite
  */
-class UserType extends DatabaseObject {
-    var $m_dbTableName = 'liveuser_groups';
+class UserType extends DatabaseObject
+{
+    const TABLE = 'liveuser_groups';
+
+    var $m_dbTableName = self::TABLE;
     var $m_keyColumnNames = array('group_id');
     var $m_keyIsAutoIncrement = false;
     var $m_config = array();
-    var $m_columnNames = array('group_id',
-                               'group_type',
-                               'group_define_name');
+    var $m_columnNames = array(
+        'group_id',
+        'group_type',
+        'group_define_name',
+        'role_id',
+    );
     var $m_exists = false;
 
 
@@ -43,49 +49,7 @@ class UserType extends DatabaseObject {
         }
     } // constructor
 
-
-    /**
-     * Get the user type from LiveUserAdmin.
-     *
-     * @return void
-     */
-    public function fetch()
-    {
-        global $g_ado_db, $LiveUserAdmin;
-
-        // get the group data
-        $filter = array('filters' => array('group_id' => $this->m_data['group_id']));
-        $group = $LiveUserAdmin->perm->getGroups($filter);
-        if (!is_array($group) || sizeof($group) < 1) {
-            return false;
-        }
-        // populate m_data
-        foreach ($group[0] as $columnName => $value) {
-            if (in_array($columnName, $this->m_columnNames)) {
-                $this->m_data[$columnName] = $value;
-            }
-        }
-        $this->m_exists = true;
-
-        // get the permissions config
-        $queryStr = 'SELECT r.right_id as value, '
-                          .'r.right_define_name as varname '
-                   .'FROM liveuser_groups as g, '
-                        .'liveuser_rights as r, '
-                        .'liveuser_grouprights as l '
-                   .'WHERE g.group_id=l.group_id AND '
-                         .'r.right_id=l.right_id AND '
-                         .'g.group_id='.$this->m_data['group_id'];
-        $config = $g_ado_db->GetAll($queryStr);
-        if ($config) {
-            // Make m_config an associative array
-            foreach ($config as $value) {
-                $this->m_config[$value['varname']] = $value['value'];
-            }
-        }
-    } // fn fetch
-
-
+    
     /**
      * Whether the user type exists or not
      *
@@ -224,25 +188,23 @@ class UserType extends DatabaseObject {
      */
     public function setValue($p_varName, $p_value)
     {
-        global $g_ado_db, $LiveUserAdmin;
+        global $g_ado_db;
 
-        // get the id for the given right name
-        $filter = array('filters' => array('right_define_name' => $p_varName));
-        $right = $LiveUserAdmin->perm->getRights($filter);
-        if (!is_array($right) || sizeof($right) < 1) {
-            return;
-        }
-        $rightId = $right[0]['right_id'];
-        $params = array('right_id' => $rightId,
-                        'group_id' => $this->m_data['group_id']);
-        // revoke or grant the given right
-        if (isset($this->m_config[$p_varName])) {
-            if (!$p_value) {
-                $LiveUserAdmin->perm->revokeGroupRight($params);
-            }
-        } elseif ($p_value) {
-            $LiveUserAdmin->perm->grantGroupRight($params);
-        }
+        // translate to resource/action
+        require_once dirname(__FILE__) . '/../library/Newscoop/Utils/PermissionToAcl.php';
+        list($resource, $action) = Newscoop\Utils\PermissionToAcl::translate($p_varName);
+
+        // get type
+        $type = $p_value ? 'allow' : 'deny';
+
+        // get role id
+        $role = (int) $this->m_data['role_id'];
+
+        // store
+        $sql = "INSERT IGNORE
+                INTO acl_rule (`type`, `role_id`, `resource`, `action`)
+                VALUES ('$type', $role, '$resource', '$action')";
+        $g_ado_db->Execute($sql);
     } // fn setValue
 
 

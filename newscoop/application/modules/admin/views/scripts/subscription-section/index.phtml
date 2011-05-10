@@ -1,0 +1,30 @@
+<?php $this->placeholder('title')->set(getGS('Subscribed sections: $1', $this->subscription->getPublicationName())); ?>
+
+<?php $this->renderActions(); ?>
+
+<table>
+<tr>
+    <th><?php putGS('Section'); ?></th>
+    <th><?php putGS('Language'); ?></th>
+    <th><?php putGS('Start Date'); ?></th>
+    <th><?php putGS('Days'); ?></th>
+    <th><?php putGS('Paid Days'); ?></th>
+    <th><?php putGS('Delete'); ?></th>
+</tr>
+<?php foreach ($this->subscription->getSections() as $section) { ?>
+<tr>
+    <td><a href="<?php echo $this->url(array(
+        'action' => 'edit',
+        'section' => $section->getId(),
+    )); ?>"><?php echo $section->getSectionName(); ?></a></td>
+    <td><?php echo $section->getLanguageName() ?: getGS('All languages'); ?></td>
+    <td><?php echo $section->getStartDate()->format('Y-m-d'); ?></td>
+    <td><?php echo $section->getDays(); ?></td>
+    <td><?php echo $section->getPaidDays(); ?></td>
+    <td><a href="<?php echo $this->url(array(
+        'action' => 'delete',
+        'section' => $section->getId(),
+    )); ?>"><?php putGS('Delete'); ?></a></td>
+</tr>
+<?php } ?>
+</table>

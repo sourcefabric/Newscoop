@@ -8,8 +8,9 @@
 namespace Newscoop\Log;
 
 use DateTime,
-    Doctrine\ORM\EntityManager,
+    Zend_Registry,
     Zend_Log_Writer_Abstract,
+    Doctrine\ORM\EntityManager,
     Newscoop\Entity\Log,
     Newscoop\Entity\User;
 
@@ -62,8 +63,15 @@ class Writer extends Zend_Log_Writer_Abstract
         $log->setTimeCreated(new DateTime($event['timestamp']))
             ->setText($event['message'])
             ->setPriority($event['priority'])
-            ->setUser($event['user'])
             ->setClientIP($ip ?: '');
+
+        if (!empty($event['user'])) { // set user
+            if (is_numeric($event['user'])) {
+                $event['user'] = $this->em->find('Newscoop\Entity\User\Staff', (int) $event['user']);
+            }
+            $log->setUser($event['user']);
+        }
+
 
         // store
         $this->em->persist($log);

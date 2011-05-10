@@ -1,0 +1,106 @@
+<?php $this->placeholder('title')->set(getGS('File manager')); ?>
+
+<table class="files">
+    <?php if (empty($this->path)) { ?>
+    <caption><?php putGS('Templates'); ?></caption>
+    <?php } else { ?>
+    <caption><a href="<?php echo $this->url(array(
+        'path' => NULL,
+    )); ?>"><?php putGS('Templates'); ?></a> / <?php echo $this->navigation()->breadcrumbs()
+        ->setContainer($this->nav)
+        ->setMinDepth(0)
+        ->setSeparator(' / ');
+    ?></caption>
+    <?php } ?>
+<thead>
+<tr>
+    <th class="id"><input type="checkbox" name="toggle" class="all" /></th>
+    <th><?php putGS('File name'); ?></th>
+    <th><?php putGS('Template Id'); ?></th>
+    <th class="size"><?php putGS('File size'); ?></th>
+    <th><?php putGS('Last modified'); ?></th>
+    <th></th>
+</tr>
+</thead>
+
+<tbody>
+<?php if (!empty($this->path)) { ?>
+<tr class="parent">
+    <td class="id"></td>
+    <td><a href="<?php echo $this->url(array(
+        'path' => $this->parent,
+    )); ?>" title="<?php putGS('Parent folder'); ?>"><strong>..</strong></a></td>
+    <td></td>
+    <td></td>
+    <td></td> 
+    <td></td>
+</tr>
+<?php } ?>
+
+<?php foreach ($this->manager as $file) { ?>
+<tr class="<?php echo $file->isDir() ? 'dir' : 'file'; ?>">
+    <td class="id"><input type="checkbox" name="file[]" value="<?php echo $file->getPath(); ?>" /></td>
+
+    <?php if ($file->isDir()) { ?>
+    <td><a href="<?php echo $this->url(array(
+        'path' => ltrim($this->path . $this->separator . $file->getBasename(), $this->separator),
+    )); ?>" title="<?php echo $file; ?>"><?php echo $file; ?></a></td>
+    <td></td>
+    <td></td>
+    <td></td>
+
+    <?php } else { ?>
+    <td><a href="<?php echo $this->url(array(
+        'action' => 'edit',
+        'path' => $this->path,
+        'file' => $file->getBasename(),
+    )); ?>" title="<?php echo $file; ?>"><?php echo $file; ?></a></td>
+    <td><?php echo $file->getId(); ?></td>
+    <td class="size"><?php echo $this->formatBytes($file->getSize()); ?></td>
+    <td><?php echo date($this->dateFormat, $file->getCTime()); ?></td>
+    <?php } ?>
+
+    <td class="actions"><ul class="actions">
+        <li><a href="<?php echo $this->url(array(
+            'action' => 'move',
+            'path' => $this->path,
+            'file' => $file->getBasename(),
+        )); ?>">Move</a></li>
+
+        <li><a href="<?php echo $this->url(array(
+            'action' => 'rename',
+            'path' => $this->path,
+            'file' => $file->getBasename(),
+        )); ?>">Rename</a></li>
+
+        <li><a href="<?php echo $this->url(array(
+            'action' => 'copy',
+            'path' => $this->path,
+            'file' => $file->getBasename(),
+        )); ?>">Copy</a></li>
+
+        <li><a href="<?php echo $this->url(array(
+            'action' => 'delete',
+            'path' => $this->path,
+            'file' => $file->getBasename(),
+        )); ?>">Delete</a></li>
+    </ul></td>
+
+</tr>
+<?php } ?>
+</tbody>
+</table>
+
+<?php return; // disable datatable ?>
+<script type="text/javascript">
+$(function() {
+    $('table.files').dataTable({
+        'aoColumnDefs': [
+            { 'bSortable': false, 'aTargets': [0] }
+        ],
+        'sDom': 't',
+        'bPaginate': false,
+        'bJQueryUI': true
+    });
+});
+</script>

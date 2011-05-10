@@ -1,7 +1,5 @@
 <?php
 
-use Newscoop\Log\Writer;
-
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     /**
@@ -9,6 +7,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     protected function _initAutoloader()
     {
+        global $g_campsiteDir;
+
+        $g_campsiteDir = realpath(APPLICATION_PATH . '/../');
+
         set_include_path(implode(PATH_SEPARATOR, array(
             realpath(APPLICATION_PATH . '/../classes/'),
             realpath(APPLICATION_PATH . '/../classes/Extension/'),
@@ -25,29 +27,54 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             return;
         }, 'ADO');
 
+        // init session before loading plugins to prevent session start errors
+        $this->bootstrap('session');
+
+        // plugin include paths
+        $includePaths = array(
+            'classes',
+            'template_engine/classes',
+            'template_engine/metaclasses',
+        );
+
+        // add plugins to path
+        foreach (CampPlugin::GetPluginsInfo(true) as $info) {
+            $name = $info['name'];
+            foreach ($includePaths as $path) {
+                $includePath = "$g_campsiteDir/plugins/$name/$path";
+                if (file_exists($includePath)) {
+                    set_include_path(implode(PATH_SEPARATOR, array(
+                        $includePath,
+                        get_include_path(),
+                    )));
+                }
+            }
+        }
+
         return $autoloader;
     }
 
     /**
-     * Init Log
+     * Init session
      */
-    protected function _initLog()
+    protected function _initSession()
     {
-        global $g_user;
+        $options = $this->getOptions();
+        $name = isset($options['session']['name']) ? $options['session']['name'] : session_name();
 
-        // get entity manager
-        $this->bootstrap('doctrine');
-        $em = $this->getResource('doctrine')
-            ->getEntityManager();
+        Zend_Session::setOptions(array(
+            'name' => $name,
+        ));
 
-        // create logger
-        $writer = new Writer($em);
-        $logger = new Zend_Log($writer);
+        Zend_Session::start();
+    }
 
-        if (isset($g_user)) {
-            $logger->setEventItem('user', $g_user);
-        }
-
-        return $logger;
+    /**
+     * Init bootstrap plugin
+     */
+    protected function _initBootstrapPlugin()
+    {
+        $front = Zend_Controller_Front::getInstance();
+        $front->registerPlugin(new Application_Plugin_Bootstrap($this->getOptions()));
     }
 }

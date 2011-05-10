@@ -3,6 +3,8 @@
  * @package Campsite
  */
 
+use Newscoop\Entity\User\Subscriber;
+
 /**
  * Includes
  */
@@ -10,7 +12,6 @@ require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/UserType.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
-require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
 
 
 /**
@@ -69,9 +70,6 @@ class User extends DatabaseObject {
 
     private static $m_defaultConfig = array();
 
-    var $m_liveUserData = array();
-
-
     /**
      * A user of the system is a frontend reader or a 'admin' user, meaning
      * they have login rights to the backend.
@@ -101,42 +99,36 @@ class User extends DatabaseObject {
      */
     public function create($p_values = null)
     {
-        global $LiveUserAdmin;
+        global $controller;
 
         if (is_array($p_values)) {
             $p_values['time_created'] = strftime("%Y-%m-%d %H:%M:%S", time());
         }
+
         foreach ($p_values as $key => $value) {
             if ($key == 'UName') {
                 $key = 'handle';
             }
             $values[$key] = $value;
         }
+
         $values['perm_type'] = 1;
 
-        if ($permUserId = $LiveUserAdmin->addUser($values)) {
-            $filter = array('container' => 'perm',
-                            'filters' => array('perm_user_id' => $permUserId));
-            $user = $LiveUserAdmin->getUsers($filter);
-            $p_values['Id'] = $user[0]['auth_user_id'];
-	    $p_values['Password'] = $user[0]['passwd'];
-            $this->fetch($p_values);
+        try {
+            $subscriber = new Subscriber;
+            $repository = $controller->getHelper('entity')->getRepository($subscriber);
+            $repository->save($subscriber, $values);
+            $controller->getHelper('entity')->flushManager();
+
             if (function_exists("camp_load_translation_strings")) {
                 camp_load_translation_strings("api");
             }
-            $logtext = getGS('User account "$1" ($2) created', $this->m_data['Name'], $this->m_data['UName']);
+            $logtext = getGS('User account "$1" ($2) created', $subscriber->getName(), $subscriber->getUsername());
             Log::Message($logtext, null, 51);
-
-            if ($user['0']['reader'] == 'N') {
-                // add default widgets
-                require_once dirname(__FILE__) . '/Extension/WidgetManager.php';
-                WidgetManager::SetDefaultWidgets($p_values['Id']);
-            }
-
             return true;
+        } catch (Exception $e) {
+            return false;
         }
-
-        return false;
     } // fn create
 
 
@@ -185,49 +177,11 @@ class User extends DatabaseObject {
      */
     public function fetch($p_recordSet = null)
     {
-        global $g_ado_db, $LiveUserAdmin;
+        global $g_ado_db;
 
         $success = parent::fetch($p_recordSet);
         if ($success) {
-            // find out LiveUser perm and auth identifiers
-            $param = array('filters' => array('handle' => $this->m_data['UName']));
-            $liveUserData = $LiveUserAdmin->auth->getUsers($param);
-            if (is_array($liveUserData) && sizeof($liveUserData) > 0) {
-                $this->m_liveUserData['auth_user_id'] = $liveUserData[0]['auth_user_id'];
-                $params = array('filters' => array('auth_user_id' => $this->m_liveUserData['auth_user_id']));
-                $permData = $LiveUserAdmin->perm->getUsers($params);
-		if (is_array($permData) && sizeof($permData) > 0) {
-		  $this->m_liveUserData['perm_user_id'] = $permData[0]['perm_user_id'];
-		}
-            }
-
-            // fetch the permissions for this user
-            if ($this->getUserType()) {
-                $userType = new UserType($this->getUserType());
-                if ($userType) {
-                    $this->m_config = $userType->getConfig();
-		    $this->m_exists = true;
-                }
-            } elseif ($this->getPermUserId()) {
-                $queryStr = 'SELECT r.right_id as value, '
-                                  .'r.right_define_name as varname '
-                           .'FROM liveuser_users as u, '
-                                .'liveuser_rights as r, '
-                                .'liveuser_perm_users p, '
-                                .'liveuser_userrights as l '
-                           .'WHERE u.Id=p.auth_user_id AND '
-                                .'p.perm_user_id=l.perm_user_id AND '
-                                .'r.right_id=l.right_id AND '
-                                .'p.perm_user_id='.$this->getPermUserId();
-                $config = $g_ado_db->GetAll($queryStr);
-                if ($config) {
-                    // make m_config an associative array
-                    foreach ($config as $value) {
-                        $this->m_config[$value['varname']] = $value['value'];
-                    }
-                }
-		$this->m_exists = true;
-            }
+            $this->m_exists = true;
         }
     } // fn fetch
 

@@ -1,17 +1,13 @@
-<h1><?php putGS('Languages'); ?></h1>
+<?php $this->placeholder('title')->set(getGS('Languages')); ?>
 
-<?php
-$this->renderActions(array(
-    $this->url(array('action' => 'add')) => getGS('Add new Language'),
-));
+<?php $this->renderActions(); ?>
 
-if (empty($this->languages)) { // no languages
+<?php if (empty($this->languages)) { // no languages
     $this->renderMessage(getGS('No languages.'));
     return;
 } ?>
 
 <table class="languages">
-    <caption><?php putGS('Languages'); ?></caption>
     <tr>
         <th><?php putGS('Language'); ?></th>
         <th><?php putGS('Native name'); ?></th>

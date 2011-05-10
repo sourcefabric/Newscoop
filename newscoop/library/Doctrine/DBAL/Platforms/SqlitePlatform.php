@@ -300,18 +300,8 @@ class SqlitePlatform extends AbstractPlatform
     /**
      * {@inheritdoc}
      */
-    public function getVarcharTypeDeclarationSQL(array $field)
+    protected function getVarcharTypeDeclarationSQLSnippet($length, $fixed)
     {
-        if ( ! isset($field['length'])) {
-            if (array_key_exists('default', $field)) {
-                $field['length'] = $this->getVarcharDefaultLength();
-            } else {
-                $field['length'] = false;
-            }
-        }
-        $length = ($field['length'] <= $this->getVarcharMaxLength()) ? $field['length'] : false;
-        $fixed = (isset($field['fixed'])) ? $field['fixed'] : false;
-
         return $fixed ? ($length ? 'CHAR(' . $length . ')' : 'CHAR(255)')
                 : ($length ? 'VARCHAR(' . $length . ')' : 'TEXT');
     }
@@ -326,12 +316,12 @@ class SqlitePlatform extends AbstractPlatform
         return "SELECT sql FROM sqlite_master WHERE type='index' AND tbl_name = '$table' AND sql NOT NULL ORDER BY name";
     }
 
-    public function getListTableColumnsSQL($table)
+    public function getListTableColumnsSQL($table, $currentDatabase = null)
     {
         return "PRAGMA table_info($table)";
     }
 
-    public function getListTableIndexesSQL($table)
+    public function getListTableIndexesSQL($table, $currentDatabase = null)
     {
         return "PRAGMA index_list($table)";
     }

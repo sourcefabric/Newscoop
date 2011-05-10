@@ -8,7 +8,9 @@
 namespace Newscoop\Entity\User;
 
 use DateTime,
+    Zend_Registry,
     Doctrine\Common\Collections\ArrayCollection,
+    Newscoop\Utils\PermissionToAcl,
     Newscoop\Entity\User,
     Newscoop\Entity\Acl\Role;
 
@@ -16,7 +18,7 @@ use DateTime,
  * Staff entity
  * @entity(repositoryClass="Newscoop\Entity\Repository\User\StaffRepository")
  */
-class Staff extends User
+class Staff extends User implements \Zend_Acl_Role_Interface
 {
     /**
      * @manyToMany(targetEntity="Newscoop\Entity\User\Group")
@@ -65,16 +67,6 @@ class Staff extends User
     }
 
     /**
-     * Get role
-     *
-     * @return Newscoop\Entity\Acl\Role
-     */
-    public function getRole()
-    {
-        return $this->role;
-    }
-
-    /**
      * Get role id
      *
      * @return int
@@ -85,6 +77,16 @@ class Staff extends User
     }
 
     /**
+     * Get roles
+     *
+     * @return array
+     */
+    public function getParents()
+    {
+        return $this->getGroups();
+    }
+
+    /**
      * Check permissions
      *
      * @param string $permission
@@ -92,7 +94,13 @@ class Staff extends User
      */
     public function hasPermission($permission)
     {
-        // @todo check with Acl helper
-        return true;
+        $acl = Zend_Registry::get('acl')->getAcl($this);
+
+        try {
+            list($resource, $action) = PermissionToAcl::translate($permission);
+            return $acl->isAllowed($this, strtolower($resource), strtolower($action));
+        } catch (Exception $e) {
+            return false;
+        }
     }
 }
