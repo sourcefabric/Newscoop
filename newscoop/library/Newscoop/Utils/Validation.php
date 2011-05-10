@@ -27,7 +27,7 @@ class Validation
 	public static function notNull($parameter, $name='unknown')
 	{
 		if(is_null($parameter)){
-			throw new \InvalidArgumentException("Please provide a value for the parameter '$name'.");
+			throw new \Exception("Please provide a value for the parameter '$name'.");
 		}
 	}
 
@@ -44,12 +44,11 @@ class Validation
 	public static function notEmpty($parameter, $name='unknown')
 	{
 		if(is_null($parameter)){
-			throw new \InvalidArgumentException("Please provide a value for the parameter '$name'.");
+			throw new \Exception("Please provide a value for the parameter '$name'.");
 		} else if(is_string($parameter) && trim($parameter) == ''){
-			throw new \InvalidArgumentException("Please provide a none empty value for the parameter '$name'.");
+			throw new \Exception("Please provide a none empty value for the parameter '$name'.");
 		}
 	}
-
 
 	/* --------------------------------------------------------------- */
 

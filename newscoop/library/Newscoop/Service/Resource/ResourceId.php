@@ -13,19 +13,21 @@ use Newscoop\Utils\Validation;
 /**
  * Provides the id for resource identification.
  */
-class ResourceId {
+class ResourceId
+{
 
 	const TYPE_ROOT = 'root';
 	const TYPE_SERVICE = 'service';
-	
+	const TYPE_PROPERTIES = 'properties';
+
 	/* --------------------------------------------------------------- */
-	
+
 	/** @var Newscoop\Service\Resource\ResourceId  */
 	private $parent;
 
 	/** @var string  */
 	private $id;
-	
+
 	/** @var string  */
 	private $type;
 
@@ -36,15 +38,17 @@ class ResourceId {
 	 *
 	 * @param string $id
 	 *		The id of the theme, must not be null or empty.
+	 * @param string $type|ResourceId::TYPE_ROOT
+	 *		The type of the id.
 	 */
-	public function __construct($id) 
+	public function __construct($id, $type = ResourceId::TYPE_ROOT)
 	{
 		Validation::notEmpty($id, 'id');
 		$this->id = $id;
-		$this->type = ResourceId::TYPE_ROOT;
+		$this->type = $type;
 		$this->parent = NULL;
 	}
-	
+
 	/* --------------------------------------------------------------- */
 
 	/**
@@ -74,7 +78,7 @@ class ResourceId {
 	}
 
 	/* --------------------------------------------------------------- */
-	
+
 	/**
 	 * Provides the type of the resource, please check the contstants on this class to see what are the posible types.
 	 *
@@ -85,29 +89,39 @@ class ResourceId {
 	{
 		return $this->type;
 	}
-	
+
 	/* --------------------------------------------------------------- */
 
 	/**
-	 * Provides the service for the requested name.
-	 * The id should not be provided as a plain string it should be the actuall simple
+	 * Provides the service for the requested service name.
+	 * The id should not be provided as a plain string it should be the actuall
 	 * class name ot the service API beeing requested. As a convention
 	 * this id should be obtain from the NAME contstant of a interface (ex: IThemeService::NAME),
-	 * if apllicable.
+	 * where NAME is defined in the interface as 'const NAME = __CLASS__', if apllicable.
 	 *
 	 * @param string $serviceName
-	 *		The simple class name of the interface beeing requested, must not be null or empty.
+	 *		The class name of the interface beeing requested, must not be null or empty.
 	 *
 	 * @return mixed
 	 *		The resource id obtained for this service request.
 	 */
-	public function service($serviceName)
+	public function getService($serviceName)
 	{
 		Validation::notEmpty($serviceName, "serviceName");
-		$serviceId = new ResourceId($serviceName);
-		$serviceId->type = ResourceId::TYPE_SERVICE;
+		$serviceId = new ResourceId($serviceName, ResourceId::TYPE_SERVICE);
 		$serviceId->parent = $this;
 		return ResourceRepository::getInstance()->getResourceFor($serviceId);
+	}
+
+	/**
+	 * Provides the properties for the current resource id.
+	 *
+	 * @return array
+	 *		The array containing all the properties, not null can be empty.
+	 */
+	public function getProperties()
+	{
+		return ResourceRepository::getInstance()->getResourceFor($this);
 	}
 
 }

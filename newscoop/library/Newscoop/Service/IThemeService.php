@@ -8,10 +8,13 @@
 
 namespace Newscoop\Service;
 
+use Newscoop\Entity\Theme;
+use Newscoop\Service\IEntityService;
+
 /**
  * Provides the services for the themes.
  */
-interface IThemeService {
+interface IThemeService extends IEntityService{
 
 	/**
 	 * Provides the class name as a constant. 
@@ -20,5 +23,14 @@ interface IThemeService {
 	
 	/* --------------------------------------------------------------- */
 	
-	public function getMsg();
+	/**
+	 * Provides the array of ThemeResources that contain the images that provide the theme presentation.
+	 *
+	 * @param Newscoop\Entity\Theme $theme
+	 *		The theme to find the presentation resources for, not null.
+	 *
+	 * @return array
+	 *		The array containing the Newscoop\Entity\Theme\Resource, not null might be empty.
+	 */
+	function getPresentationImages(Theme $theme);
 }

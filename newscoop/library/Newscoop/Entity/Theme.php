@@ -7,186 +7,174 @@
 
 namespace Newscoop\Entity;
 
-use Newscoop\Version;
+use Newscoop\Utils\Validation;
+use Newscoop\Entity\Entity;
 
 /**
- * @Entity(repositoryClass="Newscoop\Entity\Repository\ThemeRepository")
+ * Provides the container of the theme data.
  */
-class Theme
+class Theme extends Entity
 {
-    /**
-     * @Id @GeneratedValue
-     * @Column(type="integer")
-     * @var int
-     */
-    private $id;
 
-    /**
-     * @Column(length="80")
-     * @var string
-     */
-    private $offset;
+	/** @var string  */
+	private $name;
 
-    /**
-     * @Column(length="20")
-     * @var string
-     */
-    private $version;
+	/** @var string  */
+	private $designer;
 
-    /** @var SimpleXmlElement */
-    private $config;
+	/** @var string  */
+	private $version;
 
-    /**
-     * @param string $offset
-     * @param SimpleXmlElement $config
-     */
-    public function __construct($offset, \SimpleXmlElement $config)
-    {
-        $this->offset = (string) $offset;
-        $this->config = $config;
-    }
+	/** @var string  */
+	private $minorNewscoopVersion;
 
-    /**
-     * Set id
-     *
-     * @param int $id
-     * @return Newscoop\Entity\Theme
-     */
-    public function setId($id)
-    {
-        $this->id = (int) $id;
-        return $this;
-    }
+	/** @var string  */
+	private $description;
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return (int) $this->id;
-    }
+	/* --------------------------------------------------------------- */
 
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return (string) $this->config['name'];
-    }
+	/**
+	 * Provides the name of the theme, must be a user frendly name used for displaying it on the UI.
+	 *
+	 * @return string
+	 *		The name of the theme.
+	 */
+	public function getName()
+	{
+		return $this->name;
+	}
 
-    /**
-     * Get offset
-     *
-     * @return string
-     */
-    public function getOffset()
-    {
-        return (string) $this->offset;
-    }
+	/**
+	 * Set the name of the theme, must be a user frendly name used for displaying it on the UI.
+	 *
+	 * @param string $name
+	 *		The name of the theme, must not be null or empty.
+	 *
+	 * @return Newscoop\Entity\Theme
+	 *		This object for chaining purposes.
+	 */
+	public function setName($name)
+	{
+		Validation::notEmpty($name, 'name');
+		$this->name = $name;
+		return $this;
+	}
 
-    /**
-     * Get version
-     *
-     * @return string
-     */
-    public function getVersion()
-    {
-        return (string) $this->config['version'];
-    }
+	/* --------------------------------------------------------------- */
 
-    /**
-     * Get publisher
-     *
-     * @return string
-     */
-    public function getPublisher()
-    {
-        return (string) $this->config['publisher'];
-    }
+	/**
+	 * Provides the designer name of the theme.
+	 *
+	 * @return string
+	 *		The designer name of the theme.
+	 */
+	public function getDesigner()
+	{
+		return $this->designer;
+	}
 
-    /**
-     * Set installed version
-     *
-     * @param string $version
-     * @return Newscoop\Entity\Theme
-     */
-    public function setInstalledVersion($version = null)
-    {
-        if ($version === null) {
-            $version = $this->getVersion();
-        }
+	/**
+	 * Set the designer name of the theme.
+	 *
+	 * @param string $designer
+	 *		The designer name of the theme, must not be null or empty.
+	 *
+	 * @return Newscoop\Entity\Theme
+	 *		This object for chaining purposes.
+	 */
+	public function setDesigner($designer)
+	{
+		Validation::notEmpty($designer, 'designer');
+		$this->designer = $designer;
+		return $this;
+	}
 
-        $this->version = (string) $version;
-        return $this;
-    }
+	/* --------------------------------------------------------------- */
 
-    /**
-     * Get installed version
-     *
-     * @return string
-     */
-    public function getInstalledVersion()
-    {
-        return (string) $this->version;
-    }
+	/**
+	 * Provides the version of the theme, this has to be a whell formated version name like '1.3'.
+	 *
+	 * @return string
+	 *		The version of the theme.
+	 */
+	public function getVersion()
+	{
+		return $this->version;
+	}
 
-    /**
-     * Get is installed
-     *
-     * @return bool
-     */
-    public function isInstalled()
-    {
-        return !empty($this->version);
-    }
+	/**
+	 * Set the version of the theme, this has to be a whell formated version name like '1.3'.
+	 *
+	 * @param string $version
+	 *		TThe version of the theme, must not be null or empty.
+	 *
+	 * @return Newscoop\Entity\Theme
+	 *		This object for chaining purposes.
+	 */
+	public function setVersion($version)
+	{
+		Validation::notEmpty($version, 'version');
+		$this->version = $version;
+		return $this;
+	}
 
-    /**
-     * Get newscoop required version
-     *
-     * @return string
-     */
-    public function getNewscoopVersion()
-    {
-        return (string) $this->config['newscoop'];
-    }
+	/* --------------------------------------------------------------- */
 
-    /**
-     * Get is compatible
-     *
-     * @return string
-     */
-    public function isCompatible()
-    {
-        return Version::compare($this->getVersion()) <= 0;
-    }
+	/**
+	 * Provides the minimum newscoop version for this theme, this has to be a whell formated version name like '3.6'.
+	 *
+	 * @return string
+	 *		The minimum newscoop version of the theme.
+	 */
+	public function getMinorNewscoopVersion()
+	{
+		return $this->minorNewscoopVersion;
+	}
 
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return (string) $this->config->description;
-    }
+	/**
+	 * Set the minimum newscoop version for this theme, this has to be a whell formated version name like '3.6'.
+	 *
+	 * @param string $minorNewscoopVersion
+	 *		The minimum newscoop version of the theme, must not be null or empty.
+	 *
+	 * @return Newscoop\Entity\Theme
+	 *		This object for chaining purposes.
+	 */
+	public function setMinorNewscoopVersion($minorNewscoopVersion)
+	{
+		Validation::notEmpty($minorNewscoopVersion, 'minorNewscoopVersion');
+		$this->minorNewscoopVersion = $minorNewscoopVersion;
+		return $this;
+	}
 
-    /**
-     * Get images
-     *
-     * @return array
-     */
-    public function getImages()
-    {
-        $images = array();
-        foreach ($this->config->img as $image) {
-            $image['src'] = $this->offset . '/' . $image['src'];
-            $images[] = $image;
-        }
+	/* --------------------------------------------------------------- */
 
-        return $images;
-    }
+	/**
+	 * Provides the desciption of the theme.
+	 *
+	 * @return string
+	 *		The description of the theme.
+	 */
+	public function getDescription()
+	{
+		return $this->description;
+	}
+
+	/**
+	 * Set the desciption of the theme.
+	 *
+	 * @param string $description
+	 *		The description of the theme, must not be null or empty.
+	 *
+	 * @return Newscoop\Entity\Theme
+	 *		This object for chaining purposes.
+	 */
+	public function setDescription($description)
+	{
+		$this->description = $description;
+		return $this;
+	}
+	
+	/* --------------------------------------------------------------- */
+
 }

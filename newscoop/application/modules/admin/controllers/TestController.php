@@ -1,5 +1,7 @@
 <?php
 
+use Newscoop\Entity\Theme;
+use Newscoop\Service\Model\SearchTheme;
 use Newscoop\Service\Resource\ResourceId;
 use Newscoop\Service\IThemeService;
 
@@ -13,7 +15,7 @@ class Admin_TestController extends Zend_Controller_Action
 	private $themeService = NULL;
 
 	public function init(){
-		
+
 	}
 
 	/* --------------------------------------------------------------- */
@@ -39,7 +41,7 @@ class Admin_TestController extends Zend_Controller_Action
 	 */
 	public function getThemeService(){
 		if ($this->themeService === NULL) {
-			$this->themeService = $this->getResourceId()->service(IThemeService::NAME);
+			$this->themeService = $this->getResourceId()->getService(IThemeService::NAME);
 		}
 		return $this->themeService;
 	}
@@ -49,11 +51,22 @@ class Admin_TestController extends Zend_Controller_Action
 
 	public function indexAction()
 	{
+		$search = new SearchTheme();
+		$search->NAME->orderDescending();
+
 		try{
-			$this->view->name = $this->getThemeService()->getMsg();
-			//service(IThemeService::NAME);
+			$themes = $this->getThemeService()->getEntities($search);
+			$text = 'MUCUALIT   --->><br/>'.count($themes).'<br/>';
+				
+			foreach ($themes as $theme){
+				/* @var $theme Newscoop\Entity\Theme */
+				$text = $text.$theme->getName().'<br/>';
+			}
+				
+			$this->view->text = $text;
+				
 		}catch (\Exception $e){
-			$this->view->name=$e->getMessage();
+			$this->view->name = $e->getMessage();
 		}
 	}
 }
