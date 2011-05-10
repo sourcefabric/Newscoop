@@ -1,5 +1,6 @@
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/comments.css')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/comment.js')); ?>
+<?php $this->placeholder('title')->set(getGS('Comments')); ?>
 <script>
 function putGS(str) {
     return serverObj.language[str];

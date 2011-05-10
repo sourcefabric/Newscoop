@@ -73,7 +73,7 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
     /**
      * Set Datasource
      *
-     * @param IDatatableSource $p_dataSource
+     * @param Newscoop\Datatable\ISource $p_dataSource
      * @return Action_Helper_Datatable
      */
     public function setDataSource($p_dataSource)

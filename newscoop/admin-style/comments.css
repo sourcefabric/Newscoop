@@ -265,15 +265,16 @@ select.actions {
 }
 
 .dateCommentHolder h4 span,.dateCommentHolder h4 span.date,.dateCommentHolderEdit h4 span,.dateCommentHolderEdit h4 span.date
-    {
+{
     color: #858585;
     font-weight: normal;
 }
 
 .dateCommentHolder h4 span.commentSubject, .dateCommentHolderEdit h4 span.commentSubject
-    {
+{
     font-weight: bold;
     color: #000000;
+    margin-right: 21px;
 }
 
 .dateCommentHolderEdit h4 span.commentSubject

@@ -43,9 +43,11 @@ class AcceptanceRepository extends DatatableSource
             $forum = $p_values['forum'];
         $p_acceptance->setSearch($p_values['search'])
                      ->setSearchType($p_values['search_type'])
-                     ->setForum($forum)
                      ->setType($p_values['type'])
                      ->setForColumn($p_values['for_column']);
+        if(!is_null($forum)) {
+            $p_acceptance->setForum($forum);
+        }
         $em->persist($p_acceptance);
     }
 
@@ -120,7 +122,7 @@ class AcceptanceRepository extends DatatableSource
             $rev = array_flip(Acceptance::$search_type_enum);
             $p_params['search_type'] = $rev[$p_params['search_type']];
         }
-        if(!is_numeric($p_params['forum']))
+        if(!is_numeric($p_params['forum']) && !is_null($p_params['forum']))
         {
             $p_params['forum'] = $p_params['forum']->getId();
         }

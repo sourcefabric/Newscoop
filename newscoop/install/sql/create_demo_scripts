@@ -61,6 +61,9 @@ TABLES="
  Xlink\
  Xnews\
  Xpage\
+ comment\
+ comment_commenter\
+ comment_acceptance\
  liveuser_grouprights\
  liveuser_groups\
  liveuser_groups_group_id_seq\
