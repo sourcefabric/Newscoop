@@ -10,18 +10,19 @@
  */
 
 /**
- * Imports the stored function for 'Point in Polygon' checking
+ * Imports the stored function, e.g. for 'Point in Polygon' checking
  *
  * @param string $p_fileName
  *
- * @return void
+ * @return bool
  */
-function importCheckPointPolygon ($p_db, $p_fileName) {
-    //echo "\n<br>\nthe sql file: $p_fileName\n<br>\n";
+function importSqlStoredProgram ($p_db, $p_fileName) {
+    $was_correct = true;
 
-    //global $g_db;
-
-    $fc = file($p_fileName);
+    $fc = @file($p_fileName);
+    if (!$fc) {
+        return false;
+    }
 
     $delimiter = ";";
 
@@ -85,8 +86,8 @@ function importCheckPointPolygon ($p_db, $p_fileName) {
         }
 
         foreach ($sql_commands as $one_sql_query) {
-            //echo "\n<br>\na sql command: $one_sql_query\n<br>\n";
             if ($p_db->Execute($one_sql_query) == false) {
+                $was_correct = false;
                 //echo "\n<br>\nproblems with $one_sql_query: " . $p_db->ErrorMsg() . "\n<br>\n";
             }
         }
@@ -95,6 +96,8 @@ function importCheckPointPolygon ($p_db, $p_fileName) {
 
     $p_db->multiQuery = $last_multi_query;
 
-} // fn importCheckPointPolygon
+    return $was_correct;
+
+} // fn importSqlStoredProgram
 
 ?>

@@ -254,7 +254,7 @@ class CampInstallationBase
 
         { // installing the stored function for 'point in polygon' checking
             $sqlFile = CS_INSTALL_DIR . DIR_SEP . 'sql' . DIR_SEP . "checkpp.sql";
-            importCheckPointPolygon($g_db, $sqlFile);
+            importSqlStoredProgram($g_db, $sqlFile);
         }
 
         $this->m_config['database'] = array(
