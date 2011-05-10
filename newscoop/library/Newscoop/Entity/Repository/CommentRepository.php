@@ -41,6 +41,27 @@ class CommentRepository extends DatatableSource
             $this->setCommentStatus($this->find($comment_id), $p_status);
     }
 
+    /**
+     * Method for setting status per article
+     *
+     * @param int $p_article
+     * @param string $p_status
+     * @return void
+     */
+    public function setArticleStatus($p_article, $p_language, $p_status)
+    {
+        $em = $this->getEntityManager();
+        $params = array('thread' => $p_article, 'language' => $p_language);
+        if($p_status == 'hidden')
+            $params['status'] = 0;
+        elseif($p_status == 'approved')
+            $params['status'] = 2;
+        $comments = $this->findBy($params);
+        foreach($comments as $comment) {
+            $this->setCommentStatus($comment, $p_status);
+        }
+
+    }
 
     /**
      * Method for setting status for a comment

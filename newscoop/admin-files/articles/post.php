@@ -1,5 +1,7 @@
 <?php
 header('Content-Type: application/json');
+define("STATUS_APPROVED","approved");
+define("STATUS_HIDDEN","hidden");
 
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
 
@@ -128,14 +130,10 @@ if (!empty($f_comment_status)) {
     // as appropriate.
     if ($articleObj->commentsEnabled() != $commentsEnabled) {
 	    $articleObj->setCommentsEnabled($commentsEnabled);
-		/**
-		 * @todo get comments and set status apropriately
-		if ($comments) {
-			foreach ($comments as $comment) {
-				$comment->setStatus($commentsEnabled?STATUS_APPROVED:STATUS_HIDDEN);
-			}
-		}
-		*/
+        global $controller;
+        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+	    $repository->setArticleStatus($f_article_number, $f_language_selected, $commentsEnabled?STATUS_APPROVED:STATUS_HIDDEN);
+	    $repository->flush();
     }
     $articleObj->setCommentsLocked($f_comment_status == "locked");
 }

@@ -361,6 +361,19 @@ class Admin_CommentController extends Zend_Controller_Action
     }
 
     /**
+     * Method for setting a status
+     * for comments that are associated with an article
+     */
+    public function statusArticleAction()
+    {
+        $article = $this->getRequest()->getParam('article');
+        $language = $this->getRequest()->getParam('language');
+        $this->repository->setArticleStatus($article, $language, "hidden");
+        $this->repository->flush();
+        $this->getHelper('viewRenderer')->setNoRender();
+    }
+
+    /**
      * Method for saving a comment
      *
      * @param ZendForm $p_form
