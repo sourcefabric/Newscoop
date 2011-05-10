@@ -111,6 +111,8 @@ class Admin_StaffController extends Zend_Controller_Action
         $staff = $this->_helper->entity(new Staff, 'user');
         $this->view->staff = $staff;
 
+        $this->view->jQueryReady( "$.registry('another','test');" );
+        
         $this->_helper->actionStack('edit', 'acl', 'admin', array(
             'role' => $staff->getRoleId(),
             'user' => $staff->getId(),
