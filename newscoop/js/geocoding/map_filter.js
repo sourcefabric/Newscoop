@@ -703,6 +703,8 @@ this.main_init = function(map_div_name)
             OpenLayers.HooksLocal.on_layer_switch(geo_obj.map);
         }
     });
+
+    setInterval("try {" + this.obj_name + ".map.updateSize();} catch(e) {}", 1000); // the map needs to know about div changes, e.g. when a slider comes in/out
 };
 
 this.insert_polygon = function(parsed_points, layer) {
