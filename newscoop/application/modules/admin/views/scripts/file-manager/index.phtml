@@ -79,7 +79,7 @@
 
 <?php foreach ($this->templates as $file) { ?>
 <tr class="template">
-    <td class="id"><input type="checkbox" name="file[]" value="<?php echo $file->getPath(); ?>" /></td>
+    <td class="id"><input type="checkbox" name="file[]" value="<?php echo $file->getBasename(); ?>" /></td>
     <td><a href="<?php echo $this->url(array(
         'action' => 'edit',
         'path' => $this->path,
@@ -87,7 +87,7 @@
     )); ?>" title="<?php echo $file; ?>"><?php echo $file; ?></a></td>
     <td><?php echo $file->getId(); ?></td>
     <td class="size"><?php echo $this->formatBytes($file->getSize()); ?></td>
-    <td><?php echo date($this->dateFormat, $file->getCTime()); ?></td>
+    <td><?php echo $file->getChangeTime()->format($this->dateFormat); ?></td>
 
     <td class="actions"><ul class="actions" style="font-size:0.8em">
         <li><a href="<?php echo $this->url(array(

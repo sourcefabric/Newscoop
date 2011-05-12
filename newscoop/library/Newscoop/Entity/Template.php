@@ -32,8 +32,10 @@ class Template
      */
     private $cache_lifetime;
 
-    /** @var array */
-    private $metadata = array();
+    /**
+     * @var SplFileInfo
+     */
+    private $fileInfo;
 
     /**
      * @param string $key
@@ -42,6 +44,7 @@ class Template
     public function __construct($key)
     {
         $this->key = (string) $key;
+        $this->cache_lifetime = 0;
     }
 
     /**
@@ -50,19 +53,6 @@ class Template
     public function __toString()
     {
         return $this->getBasename();
-    }
-
-    /**
-     * @param string $name
-     * @param array $args
-     */
-    public function __call($name, array $args)
-    {
-        if (!method_exists($this->fileInfo, $name)) {
-            throw \BadMethodCallException($name);
-        }
-
-        return call_user_func_array(array($this->fileInfo, $name), $args);
     }
 
     /**
@@ -86,18 +76,6 @@ class Template
     }
 
     /**
-     * Set file info
-     *
-     * @param SplFileInfo $fileInfo
-     * @return Newscoop\Entity\Template
-     */
-    public function setFileInfo(\SplFileInfo $fileInfo)
-    {
-        $this->fileInfo = $fileInfo;
-        return $this;
-    }
-
-    /**
      * Set cache lifetime
      *
      * @param int $lifetime
@@ -117,5 +95,47 @@ class Template
     public function getCacheLifetime()
     {
         return (int) $this->cache_lifetime;
+    }
+
+    /**
+     * Set file info
+     *
+     * @param SplFileInfo $fileInfo
+     * @return Newscoop\Entity\Template
+     */
+    public function setFileInfo(\SplFileInfo $fileInfo)
+    {
+        $this->fileInfo = $fileInfo;
+        return $this;
+    }
+
+    /**
+     * Get basename
+     *
+     * @return string
+     */
+    public function getBasename()
+    {
+        return $this->fileInfo->getBasename();
+    }
+
+    /**
+     * Get size
+     *
+     * @return int
+     */
+    public function getSize()
+    {
+        return $this->fileInfo->getSize();
+    }
+
+    /**
+     * Get change time
+     *
+     * @return DateTime
+     */
+    public function getChangeTime()
+    {
+        return new \DateTime('@' . $this->fileInfo->getCTime());
     }
 }
