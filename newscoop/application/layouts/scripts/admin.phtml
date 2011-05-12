@@ -43,7 +43,7 @@
     <script type="text/javascript" src="<?php echo $this->baseUrl('/js/admin.js'); ?>"></script>
 
     <script type="text/javascript"><!--
-        <?php if (strpos($_SERVER['HTTP_REFERER'], 'login.php') !== FALSE) { ?>
+        <?php if (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'login.php') !== FALSE) { ?>
         // close window after relogin
         if (opener && !opener.closed && opener.setSecurityToken) {
             opener.setSecurityToken(g_security_token);

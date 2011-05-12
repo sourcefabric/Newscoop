@@ -1,10 +1,21 @@
 <?php $this->placeholder('title')->set(getGS('File manager')); ?>
 
-<h2><a href="<?php echo $this->url(array(
-    'action' => 'upload',
-)); ?>"><?php putGS('Upload'); ?></a></h2>
+<ul class="actions" style="font-size:1.3em;margin:0;">
+    <li><a href="<?php echo $this->url(array(
+        'action' => 'upload',
+    )); ?>"><?php putGS('Upload'); ?></a></li>
 
-<table class="files">
+    <li><a href="<?php echo $this->url(array(
+        'action' => 'create-folder',
+    )); ?>"><?php putGS('Create folder'); ?></a></li>
+
+    <li><a href="<?php echo $this->url(array(
+        'action' => 'create-file',
+    )); ?>"><?php putGS('Create file'); ?></a></li>
+</ul>
+<div style="clear:both"></div>
+
+<table class="templates">
     <?php if (empty($this->path)) { ?>
     <caption><?php putGS('Templates'); ?></caption>
     <?php } else { ?>
@@ -33,7 +44,7 @@
     <td class="id"></td>
     <td><a href="<?php echo $this->url(array(
         'path' => $this->parent,
-    )); ?>" title="<?php putGS('Parent folder'); ?>"><strong>..</strong></a></td>
+    )); ?>" title="<?php putGS('Parent folder'); ?>">&uarr; <?php putGS('Go to parent'); ?></a></td>
     <td></td>
     <td></td>
     <td></td> 
@@ -41,19 +52,34 @@
 </tr>
 <?php } ?>
 
-<?php foreach ($this->manager as $file) { ?>
-<tr class="<?php echo $file->isDir() ? 'dir' : 'file'; ?>">
-    <td class="id"><input type="checkbox" name="file[]" value="<?php echo $file->getPath(); ?>" /></td>
-
-    <?php if ($file->isDir()) { ?>
+<?php foreach ($this->folders as $folder) { ?>
+<tr class="collection">
+    <td class="id"><input type="checkbox" name="file[]" value="<?php echo $folder; ?>" /></td>
     <td><a href="<?php echo $this->url(array(
-        'path' => ltrim($this->path . $this->separator . $file->getBasename(), $this->separator),
-    )); ?>" title="<?php echo $file; ?>"><?php echo $file; ?></a></td>
+        'path' => ltrim($this->path . $this->separator . $folder, $this->separator),
+    )); ?>" title="<?php echo $folder; ?>"><?php echo $folder; ?></a></td>
     <td></td>
     <td></td>
     <td></td>
 
-    <?php } else { ?>
+    <td class="actions"><ul class="actions" style="font-size:0.8em">
+        <li><a href="<?php echo $this->url(array(
+            'action' => 'move',
+            'path' => $this->path,
+            'file' => $folder,
+        )); ?>">Move</a></li>
+
+        <li><a href="<?php echo $this->url(array(
+            'action' => 'delete',
+            'path' => $this->path,
+            'file' => $folder,
+        )); ?>">Delete</a></li>
+</tr>
+<?php } ?>
+
+<?php foreach ($this->templates as $file) { ?>
+<tr class="template">
+    <td class="id"><input type="checkbox" name="file[]" value="<?php echo $file->getPath(); ?>" /></td>
     <td><a href="<?php echo $this->url(array(
         'action' => 'edit',
         'path' => $this->path,
@@ -62,20 +88,13 @@
     <td><?php echo $file->getId(); ?></td>
     <td class="size"><?php echo $this->formatBytes($file->getSize()); ?></td>
     <td><?php echo date($this->dateFormat, $file->getCTime()); ?></td>
-    <?php } ?>
 
-    <td class="actions"><ul class="actions">
+    <td class="actions"><ul class="actions" style="font-size:0.8em">
         <li><a href="<?php echo $this->url(array(
             'action' => 'move',
             'path' => $this->path,
             'file' => $file->getBasename(),
         )); ?>">Move</a></li>
-
-        <li><a href="<?php echo $this->url(array(
-            'action' => 'rename',
-            'path' => $this->path,
-            'file' => $file->getBasename(),
-        )); ?>">Rename</a></li>
 
         <li><a href="<?php echo $this->url(array(
             'action' => 'copy',
@@ -89,7 +108,6 @@
             'file' => $file->getBasename(),
         )); ?>">Delete</a></li>
     </ul></td>
-
 </tr>
 <?php } ?>
 </tbody>

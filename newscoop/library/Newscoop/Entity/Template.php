@@ -24,7 +24,7 @@ class Template
      * @Column(length="255", name="Name")
      * @var string
      */
-    private $root_path;
+    private $key;
 
     /**
      * @Column(type="integer", name="CacheLifetime")
@@ -32,17 +32,16 @@ class Template
      */
     private $cache_lifetime;
 
-    /** @var SplFileInfo */
-    private $file;
+    /** @var array */
+    private $metadata = array();
 
     /**
-     * @param SplFileInfo $file
-     * @param string $root
+     * @param string $key
+     * @param array $metadata
      */
-    public function __construct($file, $root)
+    public function __construct($key)
     {
-        $this->file = $file;
-        $this->root_path = str_replace("$root/", '', $file->getPathname());
+        $this->key = (string) $key;
     }
 
     /**
@@ -59,11 +58,11 @@ class Template
      */
     public function __call($name, array $args)
     {
-        if (!method_exists($this->file, $name)) {
+        if (!method_exists($this->fileInfo, $name)) {
             throw \BadMethodCallException($name);
         }
 
-        return call_user_func_array(array($this->file, $name), $args);
+        return call_user_func_array(array($this->fileInfo, $name), $args);
     }
 
     /**
@@ -77,40 +76,25 @@ class Template
     }
 
     /**
-     * Set file
-     *
-     * @param SplFileInfo $file
-     * @return Newscoop\Entity\Template
-     */
-    public function setFile(\SplFileInfo $file)
-    {
-        $this->file = $file;
-        return $this;
-    }
-
-    /**
-     * Set content
-     *
-     * @param string $content
-     * @return Newscoop\Entity\Template
-     */
-    public function setContent($content)
-    {
-        if ($this->isWritable()) {
-            file_put_contents($this->getRealpath(), (string) $content);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Get content
+     * Get key
      *
      * @return string
      */
-    public function getContent()
+    public function getKey()
     {
-        return file_get_contents($this->getRealpath());
+        return $this->key;
+    }
+
+    /**
+     * Set file info
+     *
+     * @param SplFileInfo $fileInfo
+     * @return Newscoop\Entity\Template
+     */
+    public function setFileInfo(\SplFileInfo $fileInfo)
+    {
+        $this->fileInfo = $fileInfo;
+        return $this;
     }
 
     /**
