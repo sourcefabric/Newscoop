@@ -72,7 +72,7 @@ class Admin_CommentController extends Zend_Controller_Action
     {
         $view = $this->view;
         $table = $this->getHelper('datatable');
-
+        /* @var $table Action_Helper_Datatable */
         $table->setDataSource($this->repository);
 
         $table->setCols(array(

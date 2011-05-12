@@ -185,10 +185,12 @@ class Admin_CommentCommenterController extends Zend_Controller_Action
     private function handleBanForm(Zend_Form $p_form, $p_commenter, $p_publication)
     {
         if ($this->getRequest()->isPost() && $p_form->isValid($_POST)) {
-            $values = $p_form->getValues();
-            $this->acceptanceRepository->saveBanned($p_commenter, $p_publication, $values);
-            $this->acceptanceRepository->flush();
-            $this->_helper->flashMessenger(getGS('Ban for commenter "$1" saved.',$p_commenter->getName()));
+            if($p_form->submit->isChecked()) {
+                $values = $p_form->getValues();
+                $this->acceptanceRepository->saveBanned($p_commenter, $p_publication, $values);
+                $this->acceptanceRepository->flush();
+                $this->_helper->flashMessenger(getGS('Ban for commenter "$1" saved.',$p_commenter->getName()));
+            }
             $this->_helper->redirector->gotoSimple('index','comment');
         }
     }

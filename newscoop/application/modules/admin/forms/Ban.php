@@ -25,6 +25,14 @@ class Admin_Form_Ban extends Zend_Form
      */
     private $ip;
 
+
+    /**
+     * Where is keept the input of if it is required to delete the comments
+     *
+     * @var Zend_Form_Element_Checkbox
+     */
+    private $deleteComments;
+
     public function init()
     {
         $this->name = new Zend_Form_Element_Checkbox('name');
@@ -47,6 +55,14 @@ class Admin_Form_Ban extends Zend_Form
                    ->setRequired(false);
 
         $this->addElement($this->ip);
+
+        $this->deleteComments = new Zend_Form_Element_Checkbox('delete_comments');
+        $this->deleteComments->setLabel(getGS('Delete Comments?').":")
+                   ->setOrder(40)
+                   ->setRequired(false);
+
+        $this->addElement($this->deleteComments);
+
         /*
         $this->addDisplayGroup(array(
             'name',
@@ -58,11 +74,15 @@ class Admin_Form_Ban extends Zend_Form
             'order' => 70,
         ));
         */
+        $this->addElement('submit', 'cancel', array(
+            'label' => getGS('Cancel'),
+            'order' => 98,
+        ));
+
         $this->addElement('submit', 'submit', array(
             'label' => getGS('Save'),
             'order' => 99,
         ));
-
     }
 
     /**
