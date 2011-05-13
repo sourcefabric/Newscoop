@@ -16,7 +16,6 @@ use Newscoop\Service\Model\Search\ColumnOrder;
  */
 class SearchTheme extends Search
 {
-
 	/**
 	 * (DO NOT CHANGE)
 	 *

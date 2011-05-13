@@ -11,7 +11,8 @@ use Newscoop\Utils\Validation;
 use Newscoop\Entity\Entity;
 
 /**
- * Provides the container of the theme data.
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\ThemeRepository")
+ * @Table(name="Theme")
  */
 class Theme extends Entity
 {
@@ -177,4 +178,13 @@ class Theme extends Entity
 	
 	/* --------------------------------------------------------------- */
 
+	public function isInstalled()
+	{
+	    return true;
+	}
+	
+    public function getInstalledVersion()
+	{
+	    return 1;
+	}
 }
