@@ -1,0 +1,136 @@
+<?php
+
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
+
+namespace Newscoop\Service;
+
+use Newscoop\Service\Model\SearchTheme;
+
+use Newscoop\Entity\OutputSettings;
+use Newscoop\Entity\Output;
+use Newscoop\Entity\Publication;
+use Newscoop\Entity\Theme;
+
+/**
+ * Provides the management services for the themes.
+ */
+interface IThemeManagementService extends IThemeService
+{
+
+	/**
+	 * Provides the class name as a constant.
+	 */
+	const NAME_1 = __CLASS__;
+
+	/* --------------------------------------------------------------- */
+	
+	/**
+	 * Provides the themes that are unassigned to any publication.
+	 *
+	 * @param Newscoop\Service\Model\Search\SearchTheme $search
+	 *		The search criteria, not null.
+	 *
+	 * @param int|0 $offset
+	 *	 	The offset from where to retrieve the entities, if an offset is specified 
+	 *		than also a limit must be specified in order for the offset to take effect.
+	 *
+	 * @param int $limit
+	 *		The limit of entities to fetch, negaive value will fetch all entities found.
+	 *
+	 * @return array of Newscoop\Entity\Theme
+	 * 		The array containing all the unassigned Themes, not null migh be empty.
+	 */
+	function getUnassignedThemes(SearchTheme $search = NULL, $offset = 0, $limit = -1);
+
+	/**
+	 * Provides the themes that are assigned to the publication.
+	 *
+	 * @param Publication $publication
+	 * 		The publication to retrieve the themes for, not null.
+	 * 
+	 * @param Newscoop\Service\Model\Search\SearchTheme $search
+	 *		The search criteria, not null.
+	 *
+	 * @param int|0 $offset
+	 *	 	The offset from where to retrieve the entities, if an offset is specified 
+	 *		than also a limit must be specified in order for the offset to take effect.
+	 *
+	 * @param int $limit
+	 *		The limit of entities to fetch, negaive value will fetch all entities found.
+	 *
+	 * @return array of Newscoop\Entity\Theme
+	 * 		The array containing all the Themes assigned to the provided publication, not null migh be empty.
+	 */
+	function getThemes(Publication $publication, SearchTheme $search = NULL, $offset = 0, $limit = -1);
+
+	/**
+	 * Provides the all template resources (.tpl) files found for the theme.
+	 *
+	 * @param Theme $theme
+	 * 		The theme to retrieve the template resource for, not null.
+	 *
+	 * @return array of Newscoop\Entity\Resource
+	 * 		The array containing all the template resources assigned to the provided theme, not null migh be empty.
+	 */
+	function getTemplates(Theme $theme);
+
+	/**
+	 * Provides the output setting for the provided theme and ouput.
+	 *
+	 * @param Theme $theme
+	 * 		The theme to retrieve the output setting for, not null.
+	 * @param Output $output
+	 * 		The output, not null.
+	 *
+	 * @return array of Newscoop\Entity\OutputSettings
+	 * 		The output setting, null if none found for the theme and output.
+	 */
+	function findOutputSetting(Theme $theme, Output $output);
+
+	/**
+	 * Provides the all output setting found for the theme.
+	 *
+	 * @param Theme $theme
+	 * 		The theme to retrieve the output setting  for, not null.
+	 *
+	 * @return array of Newscoop\Entity\OutputSettings
+	 * 		The array containing all the OutputSettings assigned to the provided theme, not null migh be empty.
+	 */
+	function getOutputSettings(Theme $theme);
+
+	/* --------------------------------------------------------------- */
+
+	/**
+	 * Updates the theme.
+	 * 
+	 * @param Theme $theme
+	 * 		The theme to be updated, not null.
+	 */
+	function updateTheme(Theme $theme);
+
+	/**
+	 * Assign the theme to the publication.
+	 * 
+	 * @param Theme $theme
+	 * 		The theme to be assigned, not null.
+	 * 
+	 * @param Publication $publication
+	 * 		The publication to be assigned the theme for, not null.
+	 */
+	function assignTheme(Theme $theme, Publication $publication);
+
+	/**
+	 * Assign the output settings to the theme.
+	 * 
+	 * @param OutputSettings $outputSettings
+	 * 		The output settings to be assigned to the theme.
+	 * @param Theme $theme
+	 * 		The theme to be assigned to, not null.
+	 */
+	function assignOutputSetting(OutputSettings $outputSettings, Theme $theme);
+
+}

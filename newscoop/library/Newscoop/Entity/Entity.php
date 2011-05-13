@@ -15,7 +15,11 @@ use Newscoop\Utils\Validation;
  */
 class Entity {
 
-	/** @Id @Column(type="integer") */
+	/**
+	 * @id @generatedValue
+	 * @column(name="Id", type="integer")
+	 * @var int
+	 */
 	private $id;
 
 	/* --------------------------------------------------------------- */

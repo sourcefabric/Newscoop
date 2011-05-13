@@ -11,10 +11,14 @@ use Newscoop\Utils\Validation;
 use Newscoop\Entity\Entity;
 
 /**
- * Provides the container of the theme data.
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\ThemeRepository")
+ * @Table(name="Theme")
  */
 class Theme extends Entity
 {
+
+	/** @var string  */
+	private $path;
 
 	/** @var string  */
 	private $name;
@@ -30,6 +34,35 @@ class Theme extends Entity
 
 	/** @var string  */
 	private $description;
+
+	/* --------------------------------------------------------------- */
+
+	/**
+	 * Provides the path of the theme.
+	 *
+	 * @return string
+	 *		The path of the theme.
+	 */
+	public function getPath()
+	{
+		return $this->path;
+	}
+
+	/**
+	 * Set the path of the theme.
+	 *
+	 * @param string $path
+	 *		The path of the theme, must not be null or empty.
+	 *
+	 * @return Newscoop\Entity\Theme
+	 *		This object for chaining purposes.
+	 */
+	public function setPath($path)
+	{
+		Validation::notEmpty($path, 'path');
+		$this->path = $path;
+		return $this;
+	}
 
 	/* --------------------------------------------------------------- */
 
@@ -174,7 +207,16 @@ class Theme extends Entity
 		$this->description = $description;
 		return $this;
 	}
-	
+
 	/* --------------------------------------------------------------- */
 
+	public function isInstalled()
+	{
+	    return true;
+	}
+	
+    public function getInstalledVersion()
+	{
+	    return 1;
+	}
 }

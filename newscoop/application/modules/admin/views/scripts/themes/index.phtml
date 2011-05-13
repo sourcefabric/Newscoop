@@ -1,36 +1,158 @@
-<ul style="font-size: 1.2em">
-    <?php foreach ($this->themes as $theme) { ?>
-    <li>
-        <h2><?php echo $theme->getName(); ?> <em>by <?php echo $theme->getPublisher(); ?></em></h2>
-        <p><?php echo $this->escape($theme->getDescription()); ?></p>
 
-        <dl>
-            <dt>version:</dt>
-            <dd><?php echo $theme->getVersion(); ?></dd>
-        </dl>
+<div class="ui-widget-content small-block themesListHolder">
+	<div class="tabs">
+    	<ul class="themesListTabsBtns">
+        	<li><a href="#tabs-1">Available themes</a></li>
+            <li><a href="#tabs-2">Publication one</a></li>
+            <li><a href="#tabs-3">Publication two</a></li>
+            <li><a href="#tabs-4">Publication three</a></li>
+		</ul>
+        <a href="#" id="addNewPublication">Add new Publication</a>
+        <div id="tabs-1">
+		
+            <?php echo $this->mytable; ?>
+		
+		</div>
+	</div>
+</div>	
 
-        <?php if ($theme->isInstalled()) { ?>
-        installed version: <?php echo $theme->getInstalledVersion(); ?>
-        <a href="<?php echo $this->url(array(
-            'action' => 'uninstall',
-            'id' => $theme->getId(),
-        )); ?>">Uninstall</a>
+<script id="datatableTmpl_0" type="text/x-jQuery-tmpl">
+<div>
+	<div class="DataTables_sort_wrapper">
+    	<input class="toggle-checkbox" type="checkbox">
+        <span></span>
+	</div>
+</div>
+</script>
 
-        <?php } elseif ($theme->isCompatible()) { ?>
-        <a href="<?php echo $this->url(array(
-            'action' => 'install',
-            'offset' => $theme->getOffset(),
-        )); ?>">Install</a>
+<script id="datatableTmpl_1" type="text/x-jQuery-tmpl">
+	<div class="ui-tabs-hide id="themesListTabD">
+    	<a id="example1" href="${image}">
+			<img src="${image}" alt="${image}" />
+		</a>
+	</div>
+</script>
 
-        <?php } else { ?>
-        <p>This theme requires <strong>Newscoop <?php echo $theme->getNewscoopVersion(); ?></strong>. Please upgrade.</p>
-        <?php } ?>
+<script id="datatableTmpl_2" type="text/x-jQuery-tmpl">
+<div>
+	<div class="themesListTabs ui-tabs">
+	
+<div class="ui-tabs-hide" id="themesListTab1">
+                                	<a id="example1" href="themes-list-img-1.jpg"><img src="themes-list-img-1.jpg" alt="" /></a>
+                                </div>
+                            	<div class="ui-tabs-hide" id="themesListTab2">
+                                	<a id="example2" href="themes-list-img-2.jpg"><img src="themes-list-img-2.jpg" alt="" /></a>
+                                </div>
+                            	<div class="ui-tabs-hide" id="themesListTab3">
+                                	<a id="example3" href="themes-list-img-3.jpg"><img src="themes-list-img-3.jpg" alt="" /></a>
+                                </div>
+		<h3>${title} <span>// <?php echo getGS( 'version' ) ?> ${version}</span></h3>
+        <p><i><b><?php echo getGS( 'Design' ) ?>:</b> ${designer}</i></p>
+		<ul>
+            <li>
+				<a href="#themesListTab1">
+                    <?php echo getGS( 'Issue page' ) ?>
+					<span><?php echo getGS( 'Click to enlarge' ) ?></span>
+				</a>
+			</li>
+            <li>
+				<a href="#themesListTab2">
+					<?php echo getGS( 'Section page' ); ?>
+					<span><?php echo getGS( 'Click to enlarge' ) ?></span>
+				</a>
+			</li>
+        	<li>
+				<a href="#themesListTab3">
+                    <?php echo getGS( 'Article page' ) ?>
+					<span><?php echo getGS( 'Click to enlarge' ) ?></span>
+				</a>
+			</li>
+    	</ul>
+	</div>
+</div>
+</script>
 
-        <ul>
-            <?php foreach ($theme->getImages() as $image) { ?>
-            <li><img src="<?php echo $this->baseUrl('templates/' . $image['src']); ?>" alt="<?php $image['alt']; ?>" width="100" /></li>
-            <?php } ?>
-        </ul>
-    </li>
-    <?php } ?>
-</ul>
+<script id="datatableTmpl_3" type="text/x-jQuery-tmpl">
+<div>
+	<span class="compatibilityTitle">${compat}</span>
+	<i>${text}</i>
+</div>
+</script>
+
+<script id="datatableTmpl_4" type="text/x-jQuery-tmpl">
+<div>
+	<ul class="actionDropDown">
+    	<li>
+        	<a href="#">Actions</a>
+			<ul class="block-shadow">
+				<li>
+					<a href="#" class="add"><span>Add to publication</span></a>
+					<ul class="block-shadow">
+						<li><a href="#">Publication One</a></li>
+						<li><a href="#">Publication Two</a></li>
+                		<li><a href="#">Publication Three</a></li>
+					</ul>
+				</li>
+            	<li><a href="#" class="delete">Delete</a></li>
+			</ul>
+		</li>
+	</ul>
+</div>
+</script>
+
+<script type="text/javascript">
+function log( x ){ console.log( x ); };
+newscoopDatatables =
+{
+	callbackRow : function( node, strings, dispIndex, theIndex )
+	{
+		for( i in strings )
+		{
+			if( $.trim( strings[i] ) == "" ) continue;
+			
+			eval( "var theData = " + strings[i] );
+			//console.log( "var theData = " + strings[i]  );
+			try
+			{
+				var theTd = $( node ).children().eq( i ).html( "" );
+				$( "#datatableTmpl_" + i ).tmpl( theData ).appendTo( theTd );
+			}
+			catch( e ){ console.log( e ); }
+		}
+		return node;
+	},
+	callbackDraw : function()
+	{
+		$('.themesListTabs').tabs({event: 'mouseover'});
+		console.log( $('.themesListTabs') );
+		$(".themesListTabs div a").fancybox();
+	}
+}
+$( function()
+{
+	$('.tabs').tabs();
+	$('.tabs').tabs('select', '#tabs-1');
+
+	$('.themesListTabs').tabs({event: 'mouseover'});
+
+	$(".themesListTabs div a").fancybox();
+
+	$(".actionDropDown li").hover(function()
+	{
+		$(this).children("ul").css("display","block");
+		$(this).children("a").addClass("active");
+	}, function() 
+	{
+		$(this).children("ul").css("display","none");
+		$(this).children("a").removeClass("active");
+	});
+	$(".actionDropDown li ul li").hover(function()
+	{
+		$(this).children("ul").css("display","block");
+	}, function() 
+	{
+		$(this).childer("ul").css("display","none");
+	});
+});
+</script>
+ 

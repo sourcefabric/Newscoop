@@ -14,14 +14,14 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @Entity(repositoryClass="Newscoop\Entity\Repository\PublicationRepository")
  * @Table(name="Publications")
  */
-class Publication
+class Publication extends Entity
 {
-    /**
-     * @Id @GeneratedValue
-     * @Column(type="integer", name="Id")
-     * @var int
-     */
-    private $id;
+	/**
+	 * Provides the class name as a constant. 
+	 */
+	const NAME = __CLASS__;
+	
+	/* --------------------------------------------------------------- */
 
     /**
      * @Column(name="Name")
@@ -40,16 +40,6 @@ class Publication
     public function __construct()
     {
         $this->issues = new ArrayCollection;
-    }
-
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
     }
 
     /**

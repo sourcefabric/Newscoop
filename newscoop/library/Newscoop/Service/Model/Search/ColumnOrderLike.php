@@ -22,7 +22,8 @@ class ColumnOrderLike extends ColumnOrder
 	/* --------------------------------------------------------------- */
 
 	/**
-	 * Set the search criteria on this column to be like the provided text.
+	 * Set the search criteria on this column to be like the provided text, the text needs to have specified the place holders
+	 * ex: '%right%' or '%rat%tuil'.
 	 *
 	 * @param string $like
 	 *		The text to be used for the like comparison, if null or empty will

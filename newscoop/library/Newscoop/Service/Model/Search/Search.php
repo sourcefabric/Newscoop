@@ -15,14 +15,14 @@ use Newscoop\Service\Model\Search\Column;
  * Provides the container for the search functionality.
  *
  */
-abstract class Search
+class Search
 {
 
 	/** @var array **/
-	private $allColumns;
+	private $allColumns = array();
 
 	/** @var array **/
-	private $orderBy;
+	private $orderBy = array();
 
 	/* --------------------------------------------------------------- */
 
@@ -44,7 +44,20 @@ abstract class Search
 
 		return $column;
 	}
-	
+
+	/* --------------------------------------------------------------- */
+
+	/**
+	 * Provides all the columns registered in this search.
+	 *
+	 * @return array
+	 * 		The arrays containing all the Columns registered.
+	 */
+	public function getAllColumns()
+	{
+		return $this->allColumns;
+	}
+
 	/* --------------------------------------------------------------- */
 
 	/**
@@ -63,16 +76,15 @@ abstract class Search
 	/**
 	 * Provides the columns to be ordered by in this search.
 	 * The order in the array will be the order in which the columns have been specified for ordering.
-	 * 
-	 * @return array 
-	 * 		The arrays containing as a key the Column to be ordered and as a value a boolean flag indicating if the order
-	 * 		should be ascending (true) or descending (false).
+	 *
+	 * @return array
+	 * 		The arrays containing the Columns to be ordered by.
 	 */
 	public function getOrderedBy()
 	{
 		return $this->orderBy;
 	}
-	
+
 	/* --------------------------------------------------------------- */
 
 }

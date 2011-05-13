@@ -34,7 +34,8 @@ class Application_Plugin_Auth extends Zend_Controller_Plugin_Abstract
 
         // filter logged
         $auth = Zend_Auth::getInstance();
-        if ($auth->hasIdentity()) {
+        if ($auth->hasIdentity()) 
+        {
             $doctrine = $this->getResource('doctrine');
             $user = $doctrine->getEntityManager()
                 ->find('Newscoop\Entity\User\Staff', $auth->getIdentity());
