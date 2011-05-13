@@ -27,13 +27,6 @@ class LegacyController extends Zend_Controller_Action
         $local_path = dirname(__FILE__) . '/include';
         set_include_path($local_path . PATH_SEPARATOR . get_include_path());
 
-        // goes to install process if configuration files does not exist yet
-        if (!file_exists(CS_PATH_CONFIG.DIR_SEP.'configuration.php')
-            || !file_exists(CS_PATH_CONFIG.DIR_SEP.'database_conf.php')) {
-            header('Location: '.$Campsite['SUBDIR'].'/install/');
-            exit(0);
-        }
-
         require_once(CS_PATH_INCLUDES.DIR_SEP.'campsite_init.php');
 
         if (file_exists(CS_PATH_SITE . DIR_SEP . 'reset_cache')) {
