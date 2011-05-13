@@ -274,7 +274,8 @@ select.actions {
 {
     font-weight: bold;
     color: #000000;
-    margin-right: 21px;
+    padding-right: 53px;
+	display: inline;
 }
 
 .dateCommentHolderEdit h4 span.commentSubject

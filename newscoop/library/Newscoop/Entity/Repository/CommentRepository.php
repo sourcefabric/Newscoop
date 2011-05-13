@@ -72,11 +72,11 @@ class CommentRepository extends DatatableSource
     private function setCommentStatus(Comment $p_comment, $p_status)
     {
         $em = $this->getEntityManager();
-        if($p_status == 'deleted')
+        /*if($p_status == 'deleted')
         {
             $em->remove($p_comment);
         }
-        else
+        else*/
         {
             $p_comment->setStatus($p_status);
             $em->persist($p_comment);
@@ -320,6 +320,13 @@ class CommentRepository extends DatatableSource
         return $and;
     }
 
+    /**
+     *
+     * Delete article comments
+     *
+     * @param Newscoop\Entity\Article $p_article
+     * @param Newscoop\Entity\Language $p_language
+     */
     public function deleteArticle($p_article, $p_language = null)
     {
         $em = $this->getEntityManager();
@@ -329,6 +336,21 @@ class CommentRepository extends DatatableSource
         $comments = $this->findBy($params);
         foreach($comments as $comment)
             $this->setCommentStatus($comment,'deleted');
+    }
+
+    /**
+     *
+     * Delete commenter commnets
+     *
+     * @param Newscoop\Entity\Commenter $p_commenter
+     */
+    public function deleteCommenter($p_commenter)
+    {
+        $em = $this->getEntityManager();
+        $comments = $this->findByCommenter($p_commenter->getId());
+        foreach($comments as $comment) {
+            $this->setCommentStatus($comment,'deleted');
+        }
     }
 
     /**

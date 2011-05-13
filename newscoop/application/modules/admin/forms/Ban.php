@@ -5,64 +5,52 @@
 class Admin_Form_Ban extends Zend_Form
 {
     /**
-     * Where is keept the input of the name
+     * Getter for the submit button
      *
-     * @var Zend_Form_Element_Checkbox
+	 * @return Zend_Form_Element_Submit
      */
-    private $name;
+    public function getSubmit()
+    {
+        return $this->submit;
+    }
 
     /**
-     * Where is keept the input of the email
+     * Getter for the delete comments
      *
-     * @var Zend_Form_Element_Checkbox
+	 * @return Zend_Form_Element_Checkbox
      */
-    private $email;
-
-    /**
-     * Where is keept the input of the ip
-     *
-     * @var Zend_Form_Element_Checkbox
-     */
-    private $ip;
-
-
-    /**
-     * Where is keept the input of if it is required to delete the comments
-     *
-     * @var Zend_Form_Element_Checkbox
-     */
-    private $deleteComments;
+    public function getDeleteComments()
+    {
+        return $this->delete_comments;
+    }
 
     public function init()
     {
-        $this->name = new Zend_Form_Element_Checkbox('name');
-        $this->name->setLabel(getGS('Name').":")
-                   ->setOrder(10)
-                   ->setRequired(false);
 
-        $this->addElement($this->name);
+        $this->addElement('checkbox', 'name', array(
+            'label' => getGS(getGS('Name').":"),
+            'required' => false,
+            'order' => 10,
+        ));
 
-        $this->email = new Zend_Form_Element_Checkbox('email');
-        $this->email->setLabel(getGS('Email').":")
-                   ->setOrder(20)
-                   ->setRequired(false);
+        $this->addElement('checkbox', 'email', array(
+            'label' => getGS(getGS('Email').":"),
+            'required' => false,
+            'order' => 20,
+        ));
 
-        $this->addElement($this->email);
+        $this->addElement('checkbox', 'ip', array(
+            'label' => getGS(getGS('Ip').":"),
+            'required' => false,
+            'order' => 30,
+        ));
 
-        $this->ip = new Zend_Form_Element_Checkbox('ip');
-        $this->ip->setLabel(getGS('Ip').":")
-                   ->setOrder(30)
-                   ->setRequired(false);
 
-        $this->addElement($this->ip);
-
-        $this->deleteComments = new Zend_Form_Element_Checkbox('delete_comments');
-        $this->deleteComments->setLabel(getGS('Delete Comments?').":")
-                   ->setOrder(40)
-                   ->setRequired(false);
-
-        $this->addElement($this->deleteComments);
-
+        $this->addElement('checkbox', 'delete_comments', array(
+            'label' => getGS(getGS('Delete commenter comments?').":"),
+            'required' => false,
+            'order' => 40,
+        ));
         /*
         $this->addDisplayGroup(array(
             'name',

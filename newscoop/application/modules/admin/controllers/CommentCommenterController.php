@@ -29,6 +29,11 @@ class Admin_CommentCommenterController extends Zend_Controller_Action
     private $articleRepository;
 
     /**
+     * @var IComment
+     */
+    private $commentRepository;
+
+    /**
      * @var IPublication
      */
     private $publicationRepository;
@@ -53,6 +58,9 @@ class Admin_CommentCommenterController extends Zend_Controller_Action
 
         // get publication repository
         $this->publicationRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Publication');
+
+        // get comment repository
+        $this->commentRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment');
 
         $this->getHelper('contextSwitch')
             ->addActionContext('index', 'json')
@@ -182,14 +190,18 @@ class Admin_CommentCommenterController extends Zend_Controller_Action
      * @param ZendForm $p_form
      * @param ICommenter $p_commenter
      */
-    private function handleBanForm(Zend_Form $p_form, $p_commenter, $p_publication)
+    private function handleBanForm(Admin_Form_Ban $p_form, $p_commenter, $p_publication)
     {
         if ($this->getRequest()->isPost() && $p_form->isValid($_POST)) {
-            if($p_form->submit->isChecked()) {
+            if($p_form->getSubmit()->isChecked()) {
                 $values = $p_form->getValues();
                 $this->acceptanceRepository->saveBanned($p_commenter, $p_publication, $values);
                 $this->acceptanceRepository->flush();
                 $this->_helper->flashMessenger(getGS('Ban for commenter "$1" saved.',$p_commenter->getName()));
+                if($p_form->getDeleteComments()->isChecked()) {
+                    $this->commentRepository->deleteCommenter($p_commenter);
+                    $this->commentRepository->flush();
+                }
             }
             $this->_helper->redirector->gotoSimple('index','comment');
         }

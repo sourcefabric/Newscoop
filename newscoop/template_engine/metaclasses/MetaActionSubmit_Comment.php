@@ -125,18 +125,17 @@ class MetaActionSubmit_Comment extends MetaAction
         {
             if(!$publicationObj->getPublicComments())
             {
-                if (!isset($this->m_properties['reader_email']))
-                {
-                    $this->m_error = new PEAR_Error('You must be a registered user in order to submit a comment. Please subscribe or log in if you already have a subscription.',
-                    ACTION_SUBMIT_COMMENT_ERR_NO_PUBLIC);
-                    return false;
-                }
+                $this->m_error = new PEAR_Error('You must be a registered user in order to submit a comment. Please subscribe or log in if you already have a subscription.',
+                ACTION_SUBMIT_COMMENT_ERR_NO_PUBLIC);
+                return false;
             }
             else
             {
-                $this->m_error = new PEAR_Error('EMail field is empty. You must fill in your EMail address.',
-                ACTION_SUBMIT_COMMENT_ERR_NO_EMAIL);
-                return false;
+                if (!isset($this->m_properties['reader_email'])) {
+                    $this->m_error = new PEAR_Error('EMail field is empty. You must fill in your EMail address.',
+                    ACTION_SUBMIT_COMMENT_ERR_NO_EMAIL);
+                    return false;
+                }
             }
             $userId = null;
             $userEmail = $this->m_properties['reader_email'];
