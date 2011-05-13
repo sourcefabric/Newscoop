@@ -30,6 +30,13 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
         $this->assertType('int', $this->template->getId());
     }
 
+    public function testSetKey()
+    {
+        $key = uniqid();
+        $this->template->setKey($key);
+        $this->assertEquals($key, $this->template->getKey());
+    }
+
     public function testGetKey()
     {
         $this->assertEquals($this->key, $this->template->getKey());
@@ -56,5 +63,17 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertType('DateTime', $this->template->getChangeTime());
         $this->assertEquals(filectime(__FILE__), $this->template->getChangeTime()->getTimestamp());
+    }
+
+    public function testType()
+    {
+        $template = new Template('test.jpg');
+        $this->assertEquals('jpg', $template->getType());
+
+        $template = new Template('t/test.png');
+        $this->assertEquals('png', $template->getType());
+
+        $template = new Template('test');
+        $this->assertEquals('file', $template->getType());
     }
 }

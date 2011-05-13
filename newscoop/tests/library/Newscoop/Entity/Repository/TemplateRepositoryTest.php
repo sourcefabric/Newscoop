@@ -78,4 +78,20 @@ class TemplateRepositoryTest extends \RepositoryTestCase
         $templates = $this->repository->findAll();
         $this->assertTrue(empty($templates));
     }
+
+    public function testUpdateKey()
+    {
+        $templates = $this->repository->findAll();
+        $this->assertTrue(empty($templates));
+
+        $template = $this->repository->getTemplate('new/template');
+        $id = $template->getId();
+
+        $this->repository->updateKey('new/template', 'newtemplate');
+        $template = $this->repository->findOneBy(array(
+            'key' => 'newtemplate',
+        ));
+
+        $this->assertEquals($id, $template->getId());
+    }
 }

@@ -120,26 +120,70 @@ class LocalStorageTest extends \PHPUnit_Framework_TestCase
 
     public function testMoveItem()
     {
-        // invalid to invalid
+        // invalid from
         $this->assertFalse($this->storage->moveItem('from', 'to'));
 
-        // valid to valid
-        $this->storage->storeItem('from', 'data');
-        $this->assertTrue($this->storage->moveItem('from', 'to'));
-        $this->assertEquals('data', $this->storage->fetchItem('to'));
+        $this->storage->storeItem('item', 'data');
 
-        // valid to invalid
-        $this->assertFalse($this->storage->moveItem('to', '../'));
+        // invalid to
+        $this->assertFalse($this->storage->moveItem('item', '../'));
 
-        // valid to subfolder
-        $this->assertTrue($this->storage->moveItem('to', 'test/subdir'));
+        // file to file
+        $this->assertTrue($this->storage->moveItem('item', 'file'));
+        $this->assertTrue($this->storage->moveItem('file', 'dir/file'));
+        $this->assertTrue($this->storage->moveItem('dir/file', 'item'));
+
+        // file to folder
+        $this->assertTrue($this->storage->moveItem('item', 'dir'));
+        $this->assertTrue($this->storage->moveItem('dir/item', ''));
+        $this->assertEquals('data', $this->storage->fetchItem('item'));
+
+        // dir to dir
+        $this->storage->storeItem('dir2/placeholder', 'data');
+        $this->assertTrue($this->storage->moveItem('dir', 'newdir'));
+        $this->assertTrue($this->storage->moveItem('newdir', 'dir2'));
+
+        // dir to file
+        $this->assertFalse($this->storage->moveItem('dir2', 'item'));
 
         // valid to self
-        $this->assertTrue($this->storage->moveItem('test/subdir', 'test/subdir'));
+        $this->assertTrue($this->storage->moveItem('item', 'item'));
 
-        // tree
         $this->storage->storeItem('from', 'data');
+
+        // invalid tree (file/...)
         $this->assertFalse($this->storage->moveItem('from', 'from/to'));
+    }
+
+    public function testRenameItem()
+    {
+        // invalid from
+        $this->assertFalse($this->storage->renameItem('invalid', ''));
+
+        $this->storage->storeItem('item', 'data');
+
+        // invalid to
+        $this->assertFalse($this->storage->renameItem('item', ''));
+        $this->assertFalse($this->storage->renameItem('item', '../'));
+
+        // file to dir
+        $this->assertFalse($this->storage->renameItem('item', 'dir/item'));
+
+        // file to file
+        $this->assertTrue($this->storage->renameItem('item', 'newitem'));
+        $this->assertEquals('data', $this->storage->fetchItem('newitem'));
+
+        $this->storage->storeItem('dir/item', 'data');
+
+        // dir to dir
+        $this->assertTrue($this->storage->renameItem('dir', 'newdir'));
+        $this->assertEquals('data', $this->storage->fetchItem('newdir/item'));
+
+        $this->storage->storeItem('dir/item', 'data');
+        $this->assertFalse($this->storage->renameItem('newdir', 'dir'));
+
+        // dir to file
+        $this->assertFalse($this->storage->moveItem('newdir', 'newitem'));
     }
 
     public function testListItems()
