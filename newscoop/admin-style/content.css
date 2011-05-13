@@ -158,3 +158,7 @@ ul.edit li a.delete {
     margin-top: 8px;
     font-weight: normal;
 }
+
+table.files ul.actions {
+    font-size: 0.8em;
+}

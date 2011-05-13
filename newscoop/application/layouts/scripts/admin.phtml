@@ -24,6 +24,8 @@
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/sidebar.css'); ?>" />
     <?php } ?>
 
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/js/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css'); ?>" />
+
 	<!--[if IE 6]>
 	<style type="text/css">
 		.fg-menu-ipod .fg-menu li { width: 95%; }
@@ -45,7 +47,7 @@
 	<?php echo $this->headScript(); ?>
 
     <script type="text/javascript"><!--
-        <?php if (strpos($_SERVER['HTTP_REFERER'], 'login.php') !== FALSE) { ?>
+        <?php if (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'login.php') !== FALSE) { ?>
         // close window after relogin
         if (opener && !opener.closed && opener.setSecurityToken) {
             opener.setSecurityToken(g_security_token);

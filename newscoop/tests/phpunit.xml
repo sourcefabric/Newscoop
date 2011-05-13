@@ -1,0 +1,27 @@
+<phpunit bootstrap="./application/bootstrap.php" colors="true" backupGlobals="false">
+
+    <testsuite name="Application">
+        <directory>./library</directory>
+    </testsuite>
+
+    <filter>
+        <whitelist>
+            <directory suffix=".php">../application</directory>
+            <directory suffix=".php">../library</directory>
+            <exclude>
+                <directory suffix=".phtml">../application</directory>
+                <directory suffix=".php">../library/Doctrine</directory>
+                <directory suffix=".php">../library/Symfony</directory>
+                <directory suffix=".php">../library/Zend</directory>
+                <directory suffix=".php">../library/Newscoop/Entity/Proxy</directory>
+                <file>../application/Bootstrap.php</file>
+                <file>../application/modules/admin/Bootstrap.php</file>
+            </exclude>
+        </whitelist>
+    </filter>
+
+    <logging>
+        <log type="coverage-html" target="./report" charset="UTF-8" you="true" hightlight="true" lowUpperBound="50" highLowerBound="80" />
+        <log type="testdox-html" target="./report/testdox.html" />
+    </logging>
+</phpunit>

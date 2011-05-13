@@ -10,26 +10,43 @@
  */
 class Admin_FileManagerController extends Zend_Controller_Action
 {
-    const SEPARATOR = ':'; // can't user / in url, so replacing with :
+    const SEPARATOR = ':'; // can't use / in url, thus replace with :
 
     /** @var string */
     private $root;
 
     /** @var Newscoop\Entity\Repository\TemplateRepository */
-    private $repo;
+    private $repository;
+
+    /** @var Newscoop\Storage\LocalStorage */
+    private $storage;
 
     public function init()
     {
         $this->root = realpath(APPLICATION_PATH . '/../templates');
-        $this->repo = $this->_helper->entity->getRepository('Newscoop\Entity\Template');
+        $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\Template');
+        $this->storage = new Newscoop\Storage\LocalStorage($this->root);
     }
 
     public function indexAction()
     {
         $path = $this->parsePath($this->_getParam('path', ''));
-        $manager = new Newscoop\File\Manager\LocalManager($path, $this->root,
-            $this->_helper->entity->getRepository('Newscoop\Entity\Template'));
-        $this->view->manager = $manager;
+
+        $folders = $templates = array();
+        foreach ($this->storage->listItems($path) as $key) {
+            $fileInfo = new SplFileInfo("$this->root/$path/$key");
+            if ($fileInfo->isDir()) {
+                $folders[] = $key;
+                continue;
+            }
+
+            $template = $this->repository->getTemplate("$path/$key");
+            $template->setFileInfo($fileInfo);
+            $templates[] = $template;
+        }
+
+        $this->view->folders = $folders;
+        $this->view->templates = $templates;
 
         // set current path
         $this->view->path = $this->formatPath($path);
@@ -59,7 +76,7 @@ class Admin_FileManagerController extends Zend_Controller_Action
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $files = $plupload->getUploadedFiles();
             foreach ($files as $basename => $tmp) {
-                rename($tmp, "$this->root/$path/$basename");
+                $this->storage->storeItem("$path/$basename", file_get_contents($tmp));
             }
 
             $this->_helper->flashMessenger($this->formatMessage($files, getGS('uploaded')));
@@ -74,15 +91,24 @@ class Admin_FileManagerController extends Zend_Controller_Action
 
     public function editAction()
     {
-        $fileinfo = $this->getFileInfo();
-        $template = $this->repo->getTemplate($fileinfo, $this->root);
+        $path = $this->parsePath();
+        $file = $this->_getParam('file');
+        $key = "$path/$file";
+        $fileInfo = new \SplFileInfo("$this->root/$key");
+        $template = $this->repository->getTemplate($key);
+        $template->setFileInfo($fileInfo);
 
         $form = new Admin_Form_Template;
         $form->setAction('')->setMethod('post');
-        $form->setDefaultsFromTemplate($template);
+        $form->setDefaults(array(
+            'content' => $this->storage->fetchItem($key),
+            'cache_lifetime' => $template->getCacheLifetime(),
+        ));
 
         if ($this->getRequest()->isPost() && $form->isValid($_POST)) {
-            $this->repo->save($template, $form->getValues());
+            $values = $form->getValues();
+            $this->storage->storeItem($key, $values['content']);
+            $this->repository->save($template, $values);
             $this->_helper->entity->flushManager();
 
             $this->_helper->flashMessenger(getGS('Template $1', getGS('saved')));
@@ -93,25 +119,74 @@ class Admin_FileManagerController extends Zend_Controller_Action
         }
 
         $this->view->form = $form;
-        $this->view->file = $template;
+        $this->view->template = $template;
     }
 
-    public function deleteAction()
+    public function moveAction()
     {
-        $fileinfo = $this->getFileInfo();
-        $template = $this->repo->getTemplate($fileinfo, $this->root);
+        $path = $this->parsePath();
+        $file = $this->_getParam('file');
+
+        $this->storage->moveItem("$path/$file", "$path/" . uniqid("move_{$file}_"));
+        $this->_helper->redirector('index', 'file-manager', 'admin', array(
+            'path' => $this->_getParam('path'),
+        ));
+    }
+
+    public function copyAction()
+    {
+        $path = $this->parsePath();
+        $file = $this->_getParam('file');
 
         try {
-            $this->repo->delete($template, $this->root);
-            $this->_helper->entity->flushManager();
-        } catch (InvalidArgumentException $e) {
-            $this->_helper->flashMessenger('e:' . getGS("Can't delete '$1'", $e->getMessage()));
+            $this->storage->copyItem("$path/$file", "$path/" . uniqid("copy_{$file}_"));
+            $this->_helper->redirector('index', 'file-manager', 'admin', array(
+                'path' => $this->_getParam('path'),
+            ));
+        } catch (Exception $e) {
+            $this->_helper->flashMessenger(getGS("Can't copy directory '$1'", $file));
             $this->_helper->redirector('index', 'file-manager', 'admin', array(
                 'path' => $this->_getParam('path'),
             ));
         }
+    }
 
-        $this->_helper->flashMessenger(getGS("'$1' $2", $fileinfo->getBasename(), getGS('deleted')));
+    public function deleteAction()
+    {
+        $path = $this->parsePath();
+        $file = $this->_getParam('file');
+        $key = "$path/$file";
+
+        $this->storage->deleteItem($key);
+        $this->repository->delete($key);
+        $this->_helper->entity->flushManager();
+
+        $this->_helper->flashMessenger(getGS("'$1' $2", $file, getGS('deleted')));
+        $this->_helper->redirector('index', 'file-manager', 'admin', array(
+            'path' => $this->_getParam('path'),
+        ));
+    }
+
+    public function createFolderAction()
+    {
+        $path = $this->parsePath();
+        $new = uniqid();
+
+        $this->storage->storeItem("/$path/$new/placeholder", '');
+        $this->storage->deleteItem("/$path/$new/placeholder");
+        $this->_helper->flashMessenger(getGS("'$1' $2", $new, getGS('created')));
+        $this->_helper->redirector('index', 'file-manager', 'admin', array(
+            'path' => $this->_getParam('path'),
+        ));
+    }
+
+    public function createFileAction()
+    {
+        $path = $this->parsePath();
+        $new = uniqid();
+
+        $this->storage->storeItem("$path/$new", '');
+        $this->_helper->flashMessenger(getGS("'$1' $2", $new, getGS('created')));
         $this->_helper->redirector('index', 'file-manager', 'admin', array(
             'path' => $this->_getParam('path'),
         ));
@@ -160,8 +235,12 @@ class Admin_FileManagerController extends Zend_Controller_Action
      * @param string $path
      * @return string
      */
-    private function parsePath($path)
+    private function parsePath($path = NULL)
     {
+        if ($path === NULL) {
+            $path = $this->_getParam('path', '');
+        }
+
         return str_replace(self::SEPARATOR, '/', $path);
     }
 
@@ -201,4 +280,3 @@ class Admin_FileManagerController extends Zend_Controller_Action
         return getGS("$1 files $2", $count, $action);
     }
 }
-

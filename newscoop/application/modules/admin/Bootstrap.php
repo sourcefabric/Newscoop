@@ -10,12 +10,16 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
      */
     protected function _initNewscoop()
     {
-        global $ADMIN_DIR, $ADMIN, $g_user, $prefix;
+        global $ADMIN_DIR, $ADMIN, $g_user, $prefix, $Campsite;
 
         header("Content-Type: text/html; charset=UTF-8");
 
-        define('WWW_DIR', realpath(APPLICATION_PATH . '/../'));
-        define('LIBS_DIR', WWW_DIR . '/admin-files/libs');
+        defined('WWW_DIR')
+            || define('WWW_DIR', realpath(APPLICATION_PATH . '/../'));
+
+        defined('LIBS_DIR')
+            || define('LIBS_DIR', WWW_DIR . '/admin-files/libs');
+
         $GLOBALS['g_campsiteDir'] = WWW_DIR;
 
         require_once $GLOBALS['g_campsiteDir'] . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'campsite_constants.php';
@@ -52,12 +56,13 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         include_once 'HTML/QuickForm/RuleRegistry.php';
         include_once 'HTML/QuickForm/group.php';
 
-        set_error_handler(function($p_number, $p_string, $p_file, $p_line) {
-            global $ADMIN_DIR, $Campsite;
-
-            require_once $Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/bug_handler_main.php";
-            camp_bug_handler_main($p_number, $p_string, $p_file, $p_line);
-        }, E_ALL);
+        if (!defined('IN_PHPUNIT')) {
+            set_error_handler(function($p_number, $p_string, $p_file, $p_line) {
+                global $ADMIN_DIR, $Campsite;
+                require_once $Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/bug_handler_main.php";
+                camp_bug_handler_main($p_number, $p_string, $p_file, $p_line);
+            }, E_ALL);
+        }
 
         camp_load_translation_strings("api");
         $plugins = CampPlugin::GetEnabled(true);
@@ -68,7 +73,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         // Load common translation strings
         camp_load_translation_strings('globals');
 
-        require_once $Campsite['HTML_DIR'] . "/$ADMIN_DIR/init_content.php";
+        require_once APPLICATION_PATH . "/../$ADMIN_DIR/init_content.php";
 
         if (file_exists($Campsite['HTML_DIR'] . '/reset_cache')) {
             CampCache::singleton()->clear('user');
@@ -146,12 +151,11 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         $view->helpUrl = $Campsite['site']['help_url'];
 
         // set locale
-        $locale = $_COOKIE['TOL_Language'] ?: 'en';
+        $locale = isset($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
         $locale_fix = array(
             'cz' => 'cs',
         );
-        $view->locale = $locale_fix[$locale] ?: $locale;
-        
+        $view->locale = isset($locale_fix[$locale]) ? $locale_fix[$locale] : $locale;
     }
 
     /**

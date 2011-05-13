@@ -30,6 +30,9 @@
             <controllerFile controllerName="UserTypes">
               <actionMethod actionName="index"/>
             </controllerFile>
+            <controllerFile controllerName="FileManager">
+              <actionMethod actionName="index"/>
+            </controllerFile>
           </controllersDirectory>
           <formsDirectory enabled="false"/>
           <layoutsDirectory enabled="false"/>
@@ -43,6 +46,9 @@
                 <viewScriptFile forActionName="index"/>
               </viewControllerScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="UserTypes">
+                <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="FileManager">
                 <viewScriptFile forActionName="index"/>
               </viewControllerScriptsDirectory>
             </viewScriptsDirectory>
@@ -93,10 +99,19 @@
       <testApplicationDirectory>
         <testApplicationBootstrapFile filesystemName="bootstrap.php"/>
         <testApplicationControllerDirectory>
-          <testApplicationControllerFile filesystemName="LogsControllerTest.php"/>
-          <testApplicationControllerFile filesystemName="ErrorControllerTest.php"/>
-          <testApplicationControllerFile filesystemName="UserTypesControllerTest.php"/>
+          <testApplicationControllerFile/>
+          <testApplicationControllerFile/>
+          <testApplicationControllerFile/>
         </testApplicationControllerDirectory>
+        <testApplicationModulesDirectory>
+          <testApplicationModuleDirectory forModuleName="admin">
+            <testApplicationControllerDirectory>
+              <testApplicationControllerFile forControllerName="FileManager">
+                <testApplicationActionMethod forActionName="index"/>
+              </testApplicationControllerFile>
+            </testApplicationControllerDirectory>
+          </testApplicationModuleDirectory>
+        </testApplicationModulesDirectory>
       </testApplicationDirectory>
       <testLibraryDirectory>
         <testLibraryBootstrapFile filesystemName="bootstrap.php"/>

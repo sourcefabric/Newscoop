@@ -61,6 +61,9 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
             'password' => $Campsite['DATABASE_PASSWORD'],
         );
 
+        if (isset($options['database'])) {
+            $database = $options['database'];
+        }
 
         $this->em = Doctrine\ORM\EntityManager::create($database, $config);
         return $this->em;
