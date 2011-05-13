@@ -15,6 +15,14 @@ set_include_path(implode(PATH_SEPARATOR, array(
     '/usr/share/php/libzend-framework-php',
 )));
 
+// goes to install process if configuration files does not exist yet
+if (!file_exists(APPLICATION_PATH . '/../system_preferences.php')
+    || !file_exists(APPLICATION_PATH . '/../conf/database_conf.php')) {
+    $subdir = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/', -2));
+    header("Location: $subdir/install/");
+    exit;
+}
+
 /** Zend_Application */
 require_once 'Zend/Application.php';
 
