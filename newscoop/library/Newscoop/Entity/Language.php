@@ -11,10 +11,17 @@ namespace Newscoop\Entity;
 /**
  * Language entity
  * @entity(repositoryClass="Newscoop\Entity\Repository\LanguageRepository")
- * @table(name="Languages_Tmp")
+ * @table(name="Languages")
  */
 class Language 
 {
+	/**
+	 * Provides the class name as a constant. 
+	 */
+	const NAME = __CLASS__;
+	
+	/* --------------------------------------------------------------- */
+	
     /**
      * @id @generatedValue
      * @column(name="Id", type="integer")

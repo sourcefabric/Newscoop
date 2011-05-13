@@ -14,7 +14,8 @@ use Newscoop\Service\IEntityService;
 /**
  * Provides the services for the themes.
  */
-interface IThemeService extends IEntityService{
+interface IThemeService extends IEntityService
+{
 
 	/**
 	 * Provides the class name as a constant. 
@@ -30,7 +31,7 @@ interface IThemeService extends IEntityService{
 	 *		The theme to find the presentation resources for, not null.
 	 *
 	 * @return array
-	 *		The array containing the Newscoop\Entity\Theme\Resource, not null might be empty.
+	 *		The array containing the Newscoop\Entity\Resource, not null might be empty.
 	 */
 	function getPresentationImages(Theme $theme);
 }

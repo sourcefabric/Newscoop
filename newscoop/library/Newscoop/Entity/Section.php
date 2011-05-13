@@ -12,10 +12,9 @@ namespace Newscoop\Entity;
  * @Entity(repositoryClass="Newscoop\Entity\Repository\SectionRepository")
  * @Table(name="Sections")
  */
-class Section
+class Section extends Entity
 {
     /**
-     * @Id
      * @ManyToOne(targetEntity="Newscoop\Entity\Publication")
      * @JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
@@ -23,15 +22,13 @@ class Section
     private $publication;
 
     /**
-     * @Id
      * @ManyToOne(targetEntity="Newscoop\Entity\Issue")
-     * @JoinColumn(name="NrIssue", referencedColumnName="Number")
+     * @JoinColumn(name="fk_issue_id", referencedColumnName="id")
      * @var Newscoop\Entity\Issue
      */
     private $issue;
 
     /**
-     * @Id
      * @ManyToOne(targetEntity="Newscoop\Entity\Language")
      * @JoinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
@@ -39,7 +36,6 @@ class Section
     private $language;
 
     /**
-     * @Id
      * @Column(type="integer", name="Number")
      * @var int
      */

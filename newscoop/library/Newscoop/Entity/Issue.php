@@ -12,12 +12,11 @@ use Doctrine\ORM\Collections\ArrayCollection;
 /**
  * Issue entity
  * @Entity
- * @Table(name="Issues")
+ * @Table(name="Issues", {@UniqueConstraint(name="issues_unique",columns={"IdPublication", "Number", "Language"})})
  */
-class Issue
+class Issue extends Entity
 {
     /**
-     * @Id
      * @ManyToOne(targetEntity="Newscoop\Entity\Publication")
      * @JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
@@ -25,14 +24,12 @@ class Issue
     private $publication;
 
     /**
-     * @Id
      * @Column(type="integer", name="Number")
      * @var int
      */
     private $number;
 
     /**
-     * @Id
      * @ManyToOne(targetEntity="Newscoop\Entity\Language")
      * @JoinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language

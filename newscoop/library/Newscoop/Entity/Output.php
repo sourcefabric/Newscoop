@@ -5,23 +5,33 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\Entity\Theme;
+namespace Newscoop\Entity;
 
 use Newscoop\Utils\Validation;
 use Newscoop\Entity\Entity;
 use Newscoop\Entity\Theme;
 
 /**
- * Provides the container of the theme data.
+ * Provides the output based on the client agent.
+ * 
+ * @Entity
+ * @Table(name="output")
  */
-class Resource extends Entity
+class Output extends Entity
 {
 
-	/** @var string  */
+	/**
+	 * Provides the class name as a constant. 
+	 */
+	const NAME = __CLASS__;
+	
+	/* --------------------------------------------------------------- */
+	
+	/**
+	 * @Column(name="name", unique=TRUE, nullable=FALSE)
+	 * @var string
+	 */
 	private $name;
-
-	/** @var string  */
-	private $path;
 
 	/* --------------------------------------------------------------- */
 
@@ -52,32 +62,4 @@ class Resource extends Entity
 		return $this;
 	}
 
-	/* --------------------------------------------------------------- */
-
-	/**
-	 * Provides the path of the resource.
-	 *
-	 * @return string
-	 *		The path of the resource.
-	 */
-	public function getPath()
-	{
-		return $this->path;
-	}
-
-	/**
-	 * Set the path of the resource.
-	 *
-	 * @param string $path
-	 *		The path of the resource.
-	 *
-	 * @return Newscoop\Entity\Theme\Resource
-	 *		This object for chaining purposes.
-	 */
-	public function setPath($path)
-	{
-		Validation::notEmpty($path, 'path');
-		$this->path = $path;
-		return $this;
-	}
 }

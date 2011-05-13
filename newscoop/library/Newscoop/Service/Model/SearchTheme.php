@@ -18,6 +18,13 @@ class SearchTheme extends Search
 {
 
 	/**
+	 * Provides the class name as a constant. 
+	 */
+	const NAME = __CLASS__;
+	
+	/* --------------------------------------------------------------- */
+	
+	/**
 	 * (DO NOT CHANGE)
 	 *
 	 *  @var Newscoop\Service\Model\Search\ColumnOrder

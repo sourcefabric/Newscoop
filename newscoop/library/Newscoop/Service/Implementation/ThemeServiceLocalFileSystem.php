@@ -8,7 +8,7 @@
 
 namespace Newscoop\Service\Implementation;
 
-use Newscoop\Entity\Theme\Resource;
+use Newscoop\Entity\Resource;
 use Newscoop\Entity\Theme;
 use Newscoop\Utils\Validation;
 use Newscoop\Service\IThemeService;
@@ -34,7 +34,7 @@ class ThemeServiceLocalFileSystem implements IThemeService
 
 
 	/**
-	 * Construvt the service base d on the provided resource id.
+	 * Construct the service based on the provided resource id.
 	 * @param ResourceId $id
 	 * 		The resource id, not null not empty
 	 */
@@ -48,6 +48,7 @@ class ThemeServiceLocalFileSystem implements IThemeService
 
 	function getById($id)
 	{
+		Validation::notEmpty($id, 'id');
 		$theme = $this->findById($id);
 		if(is_null($theme)){
 			throw new \Exception("There is no theme for id '$id'.");
@@ -58,10 +59,12 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	function findById($id)
 	{
 		Validation::notEmpty($id, 'id');
+		$themesConfigs = $this->findAllThemesConfigPaths();
 
-		$path = $this->themesFolder.$id;
-		if(file_exists($path)){
-			return $this->loadTheme($this->loadXML($path), $id);
+		if($id > 0 && $id <= count($themesConfigs)){
+			$rpath = $themesConfigs[$id - 1];
+			$path = $this->themesFolder.$rpath;
+			return $this->loadTheme($this->loadXML($path), $id, $rpath);
 		}
 		return NULL;
 	}
@@ -69,8 +72,11 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	function getCount(Search $search = NULL)
 	{
 		$themesConfigs = $this->findAllThemesConfigPaths();
-		if(search === NULL){
+		if($search === NULL){
 			return count($themesConfigs);
+		}
+		if(!($search instanceof SearchTheme)){
+			throw new \Exception("The search needs to be a SearchTheme instance.");
 		}
 		$themes = $this->loadThemes($themesConfigs);
 		$themes = $this->filterThemes($search, $themes);
@@ -81,14 +87,13 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	{
 		$themes = $this->loadThemes($this->findAllThemesConfigPaths());
 		if($search !== NULL){
+			if(!($search instanceof SearchTheme)){
+				throw new \Exception("The search needs to be a SearchTheme instance.");
+			}
 			$themes = $this->filterThemes($search, $themes);
 		}
-		$themes = array_slice($themes, $offset);
-		if($limit >= 0){
-			$themes = array_slice($themes, 0, $limit);
-		}
-
-		return $themes;
+		
+		return $this->trim($themes, $offset, $limit);
 	}
 
 	/* --------------------------------------------------------------- */
@@ -97,14 +102,13 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	{
 		Validation::notEmpty($theme, 'theme');
 
-		$xml = $this->loadXML($this->themesFolder.$theme->getId());
+		$xml = $this->loadXML($this->themesFolder.$theme->getPath().$this->themeConfigFileName);
 
-		$path = $this->extractRelativePathFrom($theme->getId());
 		$presentResources = array();
 		foreach ($xml->children() as $node){
 			/* @var $node \SimpleXMLElement */
 			if($node->getName() === 'presentation-img'){
-				$presentResources[] = $this->loadResource($node, $path);
+				$presentResources[] = $this->loadResource($node, $theme->getPath());
 			}
 		}
 
@@ -124,11 +128,20 @@ class ThemeServiceLocalFileSystem implements IThemeService
 		$themesConfigs = array();
 		if (is_dir($this->themesFolder)) {
 			if ($dh = opendir($this->themesFolder)) {
-				while (($file = readdir($dh)) !== false) {
-					if ($file != "." && $file != ".."){
-						$filePath = $file.'/'.$this->themeConfigFileName;
-						if(file_exists($this->themesFolder.$filePath)){
-							$themesConfigs[] = $filePath;
+				while (($dir = readdir($dh)) !== false) {
+					$folder = $this->themesFolder.$dir;
+					if ($dir != "." && $dir != ".." && is_dir($folder)){
+						// Reading the subdirectories which contain the themes
+						if($subDh = opendir($folder)){
+							while (($file = readdir($subDh)) !== false) {
+								if ($file != "." && $file != ".."){
+									$filePath = $dir.DIR_SEP.$file.DIR_SEP.$this->themeConfigFileName;
+									if(file_exists($this->themesFolder.$filePath)){
+										$themesConfigs[] = $filePath;
+									}
+								}
+							}
+							closedir($subDh);
 						}
 					}
 				}
@@ -151,10 +164,11 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	protected function loadThemes($themesConfigs)
 	{
 		$themes = array();
-		foreach ($themesConfigs as $id){
-			$path = $this->themesFolder.$id;
+		$id = 1;
+		foreach ($themesConfigs as $rpath){
+			$path = $this->themesFolder.$rpath;
 			if(file_exists($path)){
-				$themes[] = $this->loadTheme($this->loadXML($path), $id);
+				$themes[] = $this->loadTheme($this->loadXML($path), $id++, $rpath);
 			}
 		}
 		return $themes;
@@ -176,25 +190,65 @@ class ThemeServiceLocalFileSystem implements IThemeService
 
 		foreach ($search->getOrderedBy() as $column){
 			if($column === $search->NAME){
-				//TODO: continue implementation
-				if($column->isOrderAscending()){
-					usort($filtered, function($a, $b) {
-						return strcmp($b->getName(), $a->getName());
-					});
-				} else {
-					usort($filtered, function($a, $b) {
-						return strcmp($a->getName(), $b->getName());
-					});
-				}
+				$filtered = $this->sort($filtered, 'getName', $column->isOrderAscending());
+			}
+			else if($column === $search->DESIGNER){
+				$filtered = $this->sort($filtered, 'getDesigner', $column->isOrderAscending());
 			}
 			else if($column === $search->VERSION){
-				usort($filtered, function($a, $b) {
-					return strcmp($a->getVersion(), $b->getVersion());
-				});
+				$filtered = $this->sort($filtered, 'getVersion', $column->isOrderAscending());
+			}
+			else if($column === $search->MINOR_NEWSCOOP_VERSION){
+				$filtered = $this->sort($filtered, 'getMinorNewscoopVersion', $column->isOrderAscending());
 			}
 		}
 
 		return $filtered;
+	}
+
+	/**
+	 * Sort the array.
+	 *
+	 * @param array $array
+	 * 		The array of elements to be sorted.
+	 * @param string $property
+	 * 		The method name that provides the sorting key.
+	 * @param bool $asscending
+	 * 		True if the sort is ascending, false for descending.
+	 * @return array
+	 * 		The sorted array.
+	 */
+	protected function sort($array, $property, $asscending)
+	{
+		usort($array, function($a, $b) use ($property, $asscending) {
+			if($asscending){
+				return strcmp($a->$property(), $b->$property());
+			} else {
+				return strcmp($b->$property(), $a->$property());
+			}
+		});
+		return $array;
+	}
+
+	/**
+	 * Trims the array based on the offset and limit.
+	 * 
+	 * @param array $array
+	 * 		The array to be trimed, not null.
+	 * @param int $offset
+	 * 		The offset.
+	 * @param int $limit
+	 * 		The limit.
+	 * @return array
+	 * 		The trimed array.
+	 */
+	protected function trim($array, $offset, $limit)
+	{
+		$array = array_slice($array, $offset);
+		if($limit >= 0){
+			$array = array_slice($array, 0, $limit);
+		}
+		return $array;
 	}
 
 	/* --------------------------------------------------------------- */
@@ -206,11 +260,13 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	 * 		The root Theme XML element, *(not null not empty).
 	 * @param string $id
 	 * 		The id of the loaded Theme, *(not null not empty).
+	 * @param string $themeConfig
+	 * 		The path of the Theme XML file in order to extract the theme path, *(not null not empty).
 	 *
 	 * @return Newscoop\Entity\Theme
 	 * 		The loaded theme object.
 	 */
-	protected function loadTheme(\SimpleXMLElement $root, $id)
+	protected function loadTheme(\SimpleXMLElement $root, $id, $themeConfig)
 	{
 		if($root->getName() !== 'theme'){
 			throw new \Exception("Invalid XML cannot locate the 'theme' root.");
@@ -218,6 +274,7 @@ class ThemeServiceLocalFileSystem implements IThemeService
 
 		$theme = new Theme();
 		$theme->setId($id);
+		$theme->setPath($this->extractRelativePathFrom($themeConfig));
 		$theme->setName($root['name']);
 		$theme->setDesigner($root['designer']);
 		$theme->setVersion($root['version']);
@@ -237,13 +294,12 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	 * @param string $path
 	 * 		The relative path where the images are located, *(not null not empty).
 	 *
-	 * @return Newscoop\Entity\Theme\Resource
+	 * @return Newscoop\Entity\Resource
 	 * 		The loaded resource object.
 	 */
 	protected function loadResource(\SimpleXMLElement $root, $path)
 	{
 		$rsc = new Resource();
-		$rsc->setId($path.$root['src']);
 		$rsc->setName($root['name']);
 		$rsc->setPath($path.$root['src']);
 
