@@ -18,7 +18,10 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
     /** @var array */
     private $cols;
 
-    /** @var Closure */
+    /** 
+     * @todo "Anonymous functions are currently implemented using the Closure class. This is an implementation detail and should not be relied upon." - php.net
+     * @var Closure 
+     */
     private $handle;
 
     /**
@@ -34,6 +37,13 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
         return $this;
     }
 
+    /*
+    public function setAdapter()
+    {
+        
+    }
+    */
+    
     /**
      * Set entity
      *
