@@ -27,21 +27,4 @@ class Admin_Form_Template extends Zend_Form
             'ignore' => TRUE,
         ));
     }
-
-    public function setDefaultsFromTemplate(Template $template)
-    {
-        $this->setDefaults(array(
-            'content' => $template->getContent(),
-            'cache_lifetime' => $template->getCacheLifetime(),
-        ));
-
-        if (!$template->isWritable()) {
-            $this->getElement('content')
-                ->setRequired(FALSE)
-                ->setAttribs(array(
-                    'readonly' => TRUE,
-                    'disabled' => TRUE,
-                ));
-        }
-    }
 }

@@ -18,34 +18,24 @@ class TemplateRepository extends EntityRepository
     /**
      * Get template entity for given file
      *
-     * @param SplFileInfo $file
-     * @param string $root
+     * @param string $key
+     * @param SplFileInfo $fileInfo
      * @param bool $autopersist
      * @return Newscoop\Entity\Template
      */
-    public function getTemplate(\SplFileInfo $file, $root, $autopersist = TRUE)
+    public function getTemplate($key)
     {
-        if ($file->isDir()) { // don't manage dirs
-            return new Template($file, $root);
-        }
-
         $template = $this->findOneBy(array(
-            'root_path' => str_replace("$root/", '', $file->getPathname()),
+            'key' => $key,
         ));
 
-        if (!empty($template)) { // managed template
-            $template->setFile($file);
-            return $template;
+        if (empty($template)) {
+            $template = new Template($key);
         }
 
-        $template = new Template($file, $root);
-
-        // start manage template
-        if ($autopersist) {
-            $em = $this->getEntityManager();
-            $em->persist($template);
-            $em->flush();
-        }
+        $em = $this->getEntityManager();
+        $em->persist($template);
+        $em->flush();
 
         return $template;
     }
@@ -60,7 +50,6 @@ class TemplateRepository extends EntityRepository
     public function save(Template $template, array $values)
     {
         $template
-            ->setContent($values['content'])
             ->setCacheLifetime((int) $values['cache_lifetime']);
 
         $em = $this->getEntityManager();
@@ -70,33 +59,17 @@ class TemplateRepository extends EntityRepository
     /**
      * Delete template
      *
-     * @param \SplFileInfo $file
+     * @param string $key
      * @param string $root
      * @return void
      */
-    public function delete(Template $template, $root)
+    public function delete($key)
     {
-        if (!$template->isWritable()) {
-            throw new \InvalidArgumentException($template->getRealpath());
-        }
+        $template = $this->findOneBy(array(
+            'key' => $key,
+        ));
 
-        if ($template->isDir()) { // delete directory
-            foreach (new \DirectoryIterator($template->getRealPath()) as $file) {
-                if ($file->isDot()) {
-                    continue; // ingore dots
-                }
-
-                $this->delete($this->getTemplate($file, $root, FALSE), $root);
-            }
-
-            // delete current dir at last
-            rmdir($template->getRealPath());
-            return;
-        }
-
-        // remove file
-        unlink($template->getRealpath());
-        if ($template->getId()) {
+        if (!empty($template)) {
             $em = $this->getEntityManager();
             $em->remove($template);
         }
