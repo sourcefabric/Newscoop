@@ -8,6 +8,8 @@ use Newscoop\Utils\PermissionToAcl;
 require_once dirname(__FILE__) . '/../../../../db_connect.php';
 require_once dirname(__FILE__) . '/../../../../library/Newscoop/Utils/PermissionToAcl.php';
 
+global $g_ado_db;
+
 $roleId = 1;
 $rules = array();
 
