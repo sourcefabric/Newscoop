@@ -126,6 +126,17 @@ abstract class AEntityServiceDoctrine implements IEntityService
 
 	/* --------------------------------------------------------------- */
 
+	/**
+	 * Provides the resource id.
+	 *
+	 * @return Newscoop\Services\Resource\ResourceId
+	 *		The resource id.
+	 */
+	protected function getResourceId()
+	{
+		return $this->id;
+	}
+	
 	/** Provides the dictrine entity manager.
 	 *
 	 * @return Doctrine\ORM\EntityManager

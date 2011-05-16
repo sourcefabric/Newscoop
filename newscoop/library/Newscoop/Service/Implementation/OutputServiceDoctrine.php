@@ -8,8 +8,8 @@
 
 namespace Newscoop\Service\Implementation;
 
+use Newscoop\Utils\Validation;
 use Newscoop\Service\IOutputService;
-
 use Newscoop\Entity\Output;
 use Newscoop\Service\Model\Search\Search;
 use Newscoop\Service\Model\Search\Column;
@@ -32,7 +32,11 @@ class OutputServiceDoctrine extends AEntityServiceDoctrine implements IOutputSer
 	{
 		Validation::notEmpty($name, 'name');
 		$em = $this->getEntityManager();
-		return $em->getRepository($this->entityClassName)->findByName($name);
+		$outputs = $em->getRepository($this->entityClassName)->findByName($name);
+		if(isset($outputs) && count($outputs) > 0){
+			return $outputs[0];
+		}
+		return NULL;
 	}
 
 	/* --------------------------------------------------------------- */

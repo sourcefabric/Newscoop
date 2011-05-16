@@ -1,5 +1,6 @@
 <?php
 
+use Newscoop\Entity\OutputSettings;
 use Newscoop\Service\IThemeManagementService;
 use Newscoop\Entity\Resource;
 use Newscoop\Service\IOutputService;
@@ -124,7 +125,7 @@ class Admin_TestController extends Zend_Controller_Action
 
 	public function indexAction()
 	{
-		$this->test4();
+		$this->test6();
 	}
 
 	protected function test1()
@@ -222,12 +223,60 @@ class Admin_TestController extends Zend_Controller_Action
 					/* @var $img Resource */
 					$text = $text.'              '.$tpl->getName().'  -  '.$tpl->getId().'  -  '.$tpl->getPath().'<br/>';
 				}
+				$this->getThemeManagementService()->getPresentationImages($theme);
 			}
 
 			$this->view->text = $text;
 
 		}catch (\Exception $e){
 			$this->view->text = $e->getMessage();
+		}
+	}
+
+	protected function test5()
+	{
+		$search = new SearchTheme();
+		$search->NAME->orderAscending();
+
+
+		try{
+			$themes = $this->getThemeManagementService()->getThemes($this->getPublicationService()->findById(2));
+			$text = '---><br/>';
+
+			foreach($themes as $theme){
+				/* @var $theme Theme */
+				$text = $text.$theme->getName().'  -  '.$theme->getId().'  -  '.$theme->getPath().'<br/>';
+				$outputs = $this->getThemeManagementService()->getOutputSettings($theme);
+				foreach($outputs as $out){
+					/* @var $out OutputSettings */
+					$text = $text.$out->getOutput()->getName().'------------------<br/>';
+					$text = $text.$out->getFrontPage()->getPath().'<br/>';
+					$text = $text.$out->getSectionPage()->getPath().'<br/>';
+					$text = $text.$out->getArticlePage()->getPath().'<br/>';
+					$text = $text.$out->getErrorPage()->getPath().'<br/>';
+				}
+			}
+
+			$this->view->text = $text;
+
+		}catch (\Exception $e){
+			$this->view->text = $e->getMessage();
+		}
+	}
+
+	protected function test6()
+	{
+		try{
+			$theme1 = $this->getThemeManagementService()->getById(3);
+			$pub = $this->getPublicationService()->findById(2);
+			
+			$this->getThemeManagementService()->assignTheme($theme1, $pub);
+			$text = '---><br/>';
+
+			$this->view->text = $text;
+
+		}catch (\Exception $e){
+			$this->view->text = 'errror<br/>'.$e.'</br>'.$e->getMessage();
 		}
 	}
 
