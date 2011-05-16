@@ -974,6 +974,9 @@ function camp_split_sql($p_sqlFileName)
         if (0 === strpos($one_row, "#")) {continue;}
         if ("" == $one_row) {continue;}
 
+        $one_row_arr = explode("--", $one_row);
+        $one_row = $one_row_arr[0];
+
         // we need to end 'system php ...' commands with semicolons
         $one_row_arr = array();
         foreach (explode(" ", $one_row) as $one_row_token) {
