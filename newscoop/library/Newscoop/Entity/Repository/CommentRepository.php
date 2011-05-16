@@ -72,11 +72,11 @@ class CommentRepository extends DatatableSource
     private function setCommentStatus(Comment $p_comment, $p_status)
     {
         $em = $this->getEntityManager();
-        /*if($p_status == 'deleted')
+        if($p_status == 'deleted')
         {
             $em->remove($p_comment);
         }
-        else*/
+        else
         {
             $p_comment->setStatus($p_status);
             $em->persist($p_comment);

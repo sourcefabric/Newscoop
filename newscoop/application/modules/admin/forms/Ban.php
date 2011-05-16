@@ -51,17 +51,7 @@ class Admin_Form_Ban extends Zend_Form
             'required' => false,
             'order' => 40,
         ));
-        /*
-        $this->addDisplayGroup(array(
-            'name',
-            'email',
-            'ip'
-        ), 'commenter_ban', array(
-            'legend' => getGS('Show commenter details'),
-            'class' => 'toggle',
-            'order' => 70,
-        ));
-        */
+
         $this->addElement('submit', 'cancel', array(
             'label' => getGS('Cancel'),
             'order' => 98,

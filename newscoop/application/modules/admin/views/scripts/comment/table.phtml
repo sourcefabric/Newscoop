@@ -3,14 +3,20 @@
 <?php $this->placeholder('title')->set(getGS('Comments')); ?>
 <script>
 function putGS(str) {
-    return serverObj.language[str];
+    var msg = serverObj.language[str];
+    for(i in arguments) {
+    	msg = msg.replace(new RegExp("\\$"+i,"g"),arguments[i]);
+    }
+    return msg;
 }
 var serverObj = {};
 serverObj.security = {};
 serverObj.security = {<?php echo SecurityToken::JsParameter();?>};
 
 serverObj.language = {};
+serverObj.language['Comment updated.'] = '<?php putGS('Comment updated.');?>';
 serverObj.language['Comments updated.'] = '<?php putGS('Comments updated.');?>';
+serverObj.language['Comment(s) status change to $1.'] = '<?php putGS('Comment(s) status change to $1.');?>';
 serverObj.language['Unable to reach Newscoop. Please check your internet connection.']
                    = '<?php putGS('Unable to reach Campsite. Please check your internet connection.');?>';
 </script>

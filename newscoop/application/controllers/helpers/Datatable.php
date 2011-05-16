@@ -47,7 +47,7 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
             'bJQueryUI' => true,
             'bAutoWidth' => true,
             'bSaveState' => true,
-            'iDisplayLength' => 25,
+            'iDisplayLength' => 10,
             'bLengthChange' => true,
             'sPaginationType' => 'full_numbers',
             'bPaginate' => true,

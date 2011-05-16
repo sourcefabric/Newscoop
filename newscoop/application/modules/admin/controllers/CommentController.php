@@ -131,22 +131,25 @@ class Admin_CommentController extends Zend_Controller_Action
                 $comment = $this->repository->find($id);
                 if($status == "deleted")
                 {
-                    $this->_helper->log(
-                        getGS('Comment delete by $1 from the article $2 ($3)',
+                    $msg = getGS('Comment delete by $1 from the article $2 ($3)',
                             Zend_Registry::get('user')->getName(),
                             $comment->getThread()->getName(),
                             $comment->getLanguage()->getCode()
-                    ));
+                    );
+                    $this->_helper->log($msg);
+                    $this->_helper->flashMessenger($msg);
+
                 }
                 else
                 {
-                    $this->_helper->log(
-                        getGS('Comment $4 by $1 in the article $2 ($3)',
+                    $msg = getGS('Comment $4 by $1 in the article $2 ($3)',
                             Zend_Registry::get('user')->getName(),
                             $comment->getThread()->getName(),
                             $comment->getLanguage()->getCode(),
                             $status
-                    ));
+                    );
+                    $this->_helper->log($msg);
+                    $this->_helper->flashMessenger($msg);
                 }
             }
             $this->repository->setStatus($comments, $status);

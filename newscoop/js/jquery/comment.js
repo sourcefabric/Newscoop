@@ -107,7 +107,7 @@ $(function(){
                    "status": status                   
                 },serverObj.security),
                 success: function(data) {
-                    flashMessage(putGS('Comments updated.'));
+                    flashMessage(putGS('Comment(s) status change to $1.',$status));
                 	datatable.fnDraw();
                 },
                 error: function (rq, status, error) {
