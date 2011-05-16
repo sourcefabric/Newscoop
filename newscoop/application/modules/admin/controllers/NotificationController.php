@@ -40,6 +40,7 @@ class Admin_NotificationController extends Zend_Controller_Action
          * @todo these two lines can be processed at script setup time (e.g., config.inc or similar)
          */
         try {
+            /*
             $configMail = array( 'auth' => 'login',
                                  'username' => 'user@gmail.com',
                                  'password' => 'password',
@@ -51,15 +52,19 @@ class Admin_NotificationController extends Zend_Controller_Action
             $moderatorTo = $comment->getForum()->getModeratorTo();
             $moderatorFrom = $comment->getForum()->getModeratorFrom();
 
-            $body = $this->view->moderateBodyComment($comment);
+            $message = $this->view->moderateBodyComment($comment);
             $subject = $this->view->moderateSubjectComment($comment);
             $mail = new Zend_Mail();
-            $mail->setBodyText($body);
+            $mail->setBodyText($message);
             $mail->setFrom($moderatorFrom);
             $mail->addTo($moderatorTo);
             $mail->setSubject($subject);
-            $mail->send();
-            //mail()
+            //$mail->send();
+            */
+            $headers = 'From: ' . $moderatorFrom. "\r\n" .
+                'Reply-To: ' . $moderatorFrom . "\r\n";
+            mail($moderatorTo, $subject, $message, $headers);
+
         } catch (Zend_Exception $e) {
             echo $e->getMessage();
         }

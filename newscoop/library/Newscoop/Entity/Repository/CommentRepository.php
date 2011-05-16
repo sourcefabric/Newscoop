@@ -354,6 +354,24 @@ class CommentRepository extends DatatableSource
     }
 
     /**
+     *
+     * Delete commenter commnets
+     *
+     * @param array $p_commenters
+     */
+    public function deleteCommenters(array $p_commenters)
+    {
+        $em = $this->getEntityManager();
+        foreach($p_commenters as $commenter)
+        {
+            $comments = $this->findByCommenter($p_commenter->getId());
+            foreach($comments as $comment) {
+                $this->setCommentStatus($comment,'deleted');
+            }
+        }
+    }
+
+    /**
      * Flush method
      */
     public function flush()
