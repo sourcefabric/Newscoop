@@ -38,5 +38,10 @@ WHERE fk_widget_id NOT IN (
 -- only if the default is used otherwise the preference should be kept
 UPDATE `SystemPreferences` SET `value` = '/js/geocoding/markers/' WHERE `varname` = 'MapMarkerDirectory' AND `value` = '/javascript/geocoding/markers/';
 
+-- Remove the sync phorum user from sql 
+DELETE FROM `liveuser_grouprights` WHERE `right_id` IN (SELECT `right_id` FROM `liveuser_rights` WHERE `right_define_name` = 'SyncPhorumUsers');
+DELETE FROM `liveuser_userrights` WHERE `right_id` IN (SELECT `right_id` FROM `liveuser_rights` WHERE `right_define_name` = 'SyncPhorumUsers');
+DELETE FROM `liveuser_rights` WHERE `right_define_name` = 'SyncPhorumUsers';
+
 system php ./acl.php
 system php ./transfer_phorum.php

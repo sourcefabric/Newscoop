@@ -1,6 +1,3 @@
--- Remove the sync phorum user from sql 
-DELETE FROM `liveuser_rights` WHERE `right_define_name` = 'SyncPhorumUsers';
-
 -- Remove the phorum
 DROP TABLE IF EXISTS `ArticleComments`;
 DROP TABLE IF EXISTS `phorum_banlists`;
