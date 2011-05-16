@@ -8,7 +8,9 @@
  *
  */
 use Newscoop\Entity\Comment\Commenter;
+
 /**
+ * @Acl(resource="comment", action="moderate")
  */
 class Admin_CommentCommenterController extends Zend_Controller_Action
 {
