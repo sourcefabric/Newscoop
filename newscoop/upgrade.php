@@ -82,11 +82,19 @@ $step = $install->execute();
 
 CampTemplate::singleton()->clearCache();
 
+// replace javascript by js in .htaccess file
+$htaccesspath = $g_documentRoot . '/.htaccess';
+if (upgrade_htaccess($htaccesspath) == false) {
+    display_upgrade_error('Could not write .htaccess file.<br />Please read the '
+        . 'UPGRADE.txt file in this same directory to see what changes need to '
+        . 'be apply for this specific version of Newscoop.', FALSE);
+}
+
 if (file_exists(__FILE__)) {
     @unlink(__FILE__);
 }
 
-function display_upgrade_error($p_errorMessage) {
+function display_upgrade_error($p_errorMessage, $exit = TRUE) {
     $template = CS_SYS_TEMPLATES_DIR.DIR_SEP.'_campsite_error.tpl';
     $templates_dir = CS_TEMPLATES_DIR;
     $params = array('context' => null,
@@ -96,8 +104,23 @@ function display_upgrade_error($p_errorMessage) {
     );
     $document = CampSite::GetHTMLDocumentInstance();
     $document->render($params);
-    exit(0);
+    if ($exit) exit(0);
+}
+
+function upgrade_htaccess($htaccesspath)
+{
+    if (!file_exists($htaccesspath)) {
+        return false;
+    }
+    if (!($htaccess = @file_get_contents($htaccesspath))) {
+        return false;
+    }
+    $htaccess = str_replace('+javascript', '+js', $htaccess);
+    if (@file_put_contents($htaccesspath, $htaccess) === false) {
+        return false;
+    }
+    return true;
 }
 
 ?>
-finished<p><a href="<?php echo "/$ADMIN";?>">Administration</a></p>
+<p>finished<br/><a href="<?php echo "/$ADMIN";?>">Administration</a></p>
