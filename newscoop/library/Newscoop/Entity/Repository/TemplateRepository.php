@@ -25,6 +25,8 @@ class TemplateRepository extends EntityRepository
      */
     public function getTemplate($key)
     {
+        $key = ltrim($key, '/');
+
         $template = $this->findOneBy(array(
             'key' => $key,
         ));
@@ -66,12 +68,42 @@ class TemplateRepository extends EntityRepository
     public function delete($key)
     {
         $template = $this->findOneBy(array(
-            'key' => $key,
+            'key' => ltrim($key, '/'),
         ));
 
         if (!empty($template)) {
             $em = $this->getEntityManager();
             $em->remove($template);
         }
+    }
+
+    /**
+     * Update key
+     *
+     * @param string $old
+     * @param string $new
+     * @return void
+     */
+    public function updateKey($old, $new)
+    {
+        $em = $this->getEntityManager();
+
+        $old = ltrim($old, '/');
+        $new = ltrim($new, '/');
+
+        $templates = $this->createQueryBuilder('t')
+            ->where("t.key LIKE ?1")
+            ->setParameter(1, "$old%")
+            ->getQuery()
+            ->getResult();
+
+        foreach ($templates as $template) {
+            if (strpos($template->getKey(), $old) === 0) {
+                $template->setKey(str_replace($old, $new, $template->getKey()));
+                $em->persist($template);
+            }
+        }
+
+        $em->flush();
     }
 }

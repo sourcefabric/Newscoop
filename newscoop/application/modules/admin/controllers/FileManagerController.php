@@ -30,6 +30,17 @@ class Admin_FileManagerController extends Zend_Controller_Action
 
     public function indexAction()
     {
+        $form = $this->getIndexForm();
+        $form->setAction('')->setMethod('post');
+        $this->view->dialogForm = $form;
+
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $values = $form->getValues();
+            $this->_forward($values['action']);
+            return;
+        }
+
         $path = $this->parsePath($this->_getParam('path', ''));
 
         $folders = $templates = array();
@@ -126,8 +137,39 @@ class Admin_FileManagerController extends Zend_Controller_Action
     {
         $path = $this->parsePath();
         $file = $this->_getParam('file');
+        $name = $this->_getParam('name');
 
-        $this->storage->moveItem("$path/$file", "$path/" . uniqid("move_{$file}_"));
+        $next = "$path/$name";
+        if (is_dir("$this->root/$next")) {
+            $next .= '/' . $file; // when moving into dir, it will be name/file instead of name
+        }
+
+        if ($this->storage->moveItem("$path/$file", "$path/$name")) {
+
+            $this->repository->updateKey("$path/$file", $next);
+            $this->_helper->flashMessenger(getGS("'$1' $2", $file, getGS('moved')));
+        } else {
+            $this->_helper->flashMessenger(getGS("'$1' can't be $2", $file, getGS('moved')));
+        }
+
+        $this->_helper->redirector('index', 'file-manager', 'admin', array(
+            'path' => $this->_getParam('path'),
+        ));
+    }
+
+    public function renameAction()
+    {
+        $path = $this->parsePath();
+        $file = $this->_getParam('file');
+        $name = $this->_getParam('name');
+
+        if ($this->storage->renameItem("$path/$file", "$path/$name")) {
+            $this->repository->updateKey("$path/$file", "$path/$name");
+            $this->_helper->flashMessenger(getGS("'$1' $2", $file, getGS('renamed')));
+        } else {
+            $this->_helper->flashMessenger(getGS("'$1' can't be $2", $file, getGS('renamed')));
+        }
+
         $this->_helper->redirector('index', 'file-manager', 'admin', array(
             'path' => $this->_getParam('path'),
         ));
@@ -137,18 +179,17 @@ class Admin_FileManagerController extends Zend_Controller_Action
     {
         $path = $this->parsePath();
         $file = $this->_getParam('file');
+        $name = $this->_getParam('name');
 
-        try {
-            $this->storage->copyItem("$path/$file", "$path/" . uniqid("copy_{$file}_"));
-            $this->_helper->redirector('index', 'file-manager', 'admin', array(
-                'path' => $this->_getParam('path'),
-            ));
-        } catch (Exception $e) {
-            $this->_helper->flashMessenger(getGS("Can't copy directory '$1'", $file));
-            $this->_helper->redirector('index', 'file-manager', 'admin', array(
-                'path' => $this->_getParam('path'),
-            ));
+        if ($this->storage->copyItem("$path/$file", "$path/$name")) {
+            $this->_helper->flashMessenger(getGS("'$1' $2", $file, getGS('copied')));
+        } else {
+            $this->_helper->flashMessenger(getGS("'$1' can't be $2", $file, getGS('copied')));
         }
+
+        $this->_helper->redirector('index', 'file-manager', 'admin', array(
+            'path' => $this->_getParam('path'),
+        ));
     }
 
     public function deleteAction()
@@ -170,11 +211,11 @@ class Admin_FileManagerController extends Zend_Controller_Action
     public function createFolderAction()
     {
         $path = $this->parsePath();
-        $new = uniqid();
+        $name = $this->_getParam('name');
 
-        $this->storage->storeItem("/$path/$new/placeholder", '');
-        $this->storage->deleteItem("/$path/$new/placeholder");
-        $this->_helper->flashMessenger(getGS("'$1' $2", $new, getGS('created')));
+        $this->storage->storeItem("/$path/$name/placeholder", '');
+        $this->storage->deleteItem("/$path/$name/placeholder");
+        $this->_helper->flashMessenger(getGS("'$1' $2", $name, getGS('created')));
         $this->_helper->redirector('index', 'file-manager', 'admin', array(
             'path' => $this->_getParam('path'),
         ));
@@ -183,10 +224,10 @@ class Admin_FileManagerController extends Zend_Controller_Action
     public function createFileAction()
     {
         $path = $this->parsePath();
-        $new = uniqid();
+        $name = $this->_getParam('name');
 
-        $this->storage->storeItem("$path/$new", '');
-        $this->_helper->flashMessenger(getGS("'$1' $2", $new, getGS('created')));
+        $this->storage->storeItem("$path/$name", '');
+        $this->_helper->flashMessenger(getGS("'$1' $2", $name, getGS('created')));
         $this->_helper->redirector('index', 'file-manager', 'admin', array(
             'path' => $this->_getParam('path'),
         ));
@@ -241,7 +282,7 @@ class Admin_FileManagerController extends Zend_Controller_Action
             $path = $this->_getParam('path', '');
         }
 
-        return str_replace(self::SEPARATOR, '/', $path);
+        return rtrim(str_replace(self::SEPARATOR, '/', $path), '/');
     }
 
     /**
@@ -278,5 +319,26 @@ class Admin_FileManagerController extends Zend_Controller_Action
         }
 
         return getGS("$1 files $2", $count, $action);
+    }
+
+    /**
+     * Get index form
+     *
+     * @return Zend_Form
+     */
+    private function getIndexForm()
+    {
+        $form = new Zend_Form;
+
+        $form->addElement('hash', 'csrf');
+        $form->addElement('hidden', 'action');
+        $form->addElement('hidden', 'file');
+
+        $form->addElement('text', 'name', array(
+            'label' => getGS('Name'),
+            'required' => true,
+        ));
+
+        return $form;
     }
 }

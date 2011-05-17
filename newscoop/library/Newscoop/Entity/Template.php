@@ -66,6 +66,18 @@ class Template
     }
 
     /**
+     * Set key
+     *
+     * @param string $key
+     * @return Newscoop\Entity\Template
+     */
+    public function setKey($key)
+    {
+        $this->key = (string) $key;
+        return $this;
+    }
+
+    /**
      * Get key
      *
      * @return string
@@ -137,5 +149,20 @@ class Template
     public function getChangeTime()
     {
         return new \DateTime('@' . $this->fileInfo->getCTime());
+    }
+
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        $pieces = explode('.', $this->key);
+        if (sizeof($pieces) > 1) {
+            return array_pop($pieces);
+        }
+
+        return 'file';
     }
 }

@@ -8,8 +8,8 @@
 
 namespace Newscoop\Service;
 
+use Newscoop\Service\Exception\DuplicateNameException;
 use Newscoop\Service\Model\SearchTheme;
-
 use Newscoop\Entity\OutputSettings;
 use Newscoop\Entity\Output;
 use Newscoop\Entity\Publication;
@@ -109,6 +109,10 @@ interface IThemeManagementService extends IThemeService
 	 * 
 	 * @param Theme $theme
 	 * 		The theme to be updated, not null.
+	 * 
+	 * @throws DuplicateNameException
+	 * 		Thrown when the theme has the same name as another theme in the same scope (for instance 2 themes
+	 * 		belong to the same publication and you try to rename 1 theme to have the same name as the other). 
 	 */
 	function updateTheme(Theme $theme);
 
@@ -120,6 +124,9 @@ interface IThemeManagementService extends IThemeService
 	 * 
 	 * @param Publication $publication
 	 * 		The publication to be assigned the theme for, not null.
+	 * 
+	 * @throws DuplicateNameException
+	 * 		Thrown when there is already another theme with the same name under the publication. 
 	 */
 	function assignTheme(Theme $theme, Publication $publication);
 

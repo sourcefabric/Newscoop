@@ -160,6 +160,49 @@ class LocalStorage implements Storage
             return FALSE;
         }
 
+        $realpath = realpath($toPath);
+        if (is_dir($realpath)) { // move into dir
+            $toPath .= '/' . basename($fromPath);
+        } elseif ($realpath && is_dir($fromPath)) { // folder to file
+            return FALSE;
+        }
+
+        return rename($fromPath, $toPath);
+    }
+
+    /**
+     * Rename item
+     *
+     * @param string $form
+     * @param string $to
+     * @return bool
+     */
+    public function renameItem($from, $to)
+    {
+        $fromPath = $this->getPath($from, TRUE);
+        if (!$fromPath) {
+            return FALSE;
+        }
+
+        $toPath = $this->getPath($to);
+        if (!$toPath) {
+            return FALSE;
+        }
+
+        $realpath = realpath($toPath);
+
+        if (!is_dir($fromPath) && is_dir($toPath)) { // file to dir
+            return FALSE;
+        }
+
+        if (is_dir($fromPath) && $realpath) { // dir to dir
+            return FALSE;
+        }
+
+        if (!realpath(dirname($toPath))) {
+            return FALSE;
+        }
+
         return rename($fromPath, $toPath);
     }
 

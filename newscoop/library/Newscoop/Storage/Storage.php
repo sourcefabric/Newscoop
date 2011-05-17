@@ -56,6 +56,15 @@ interface Storage
     public function moveItem($from, $to);
 
     /**
+     * Rename item
+     *
+     * @param string $from
+     * @param string $to
+     * @return bool
+     */
+    public function renameItem($from, $to);
+
+    /**
      * List items
      *
      * @param string $path
