@@ -118,6 +118,7 @@ var set_local_strings = function()
 
     local_strings_nam["cc"] = "+";
     local_strings_nam["city"] = "<?php putGS("center city"); ?>";
+    local_strings_nam["add_city"] = "<?php putGS("add location to map"); ?>";
     local_strings_nam["no_city_was_found"] = "<?php putGS("sorry, no city was found"); ?>";
 
     geo_names.set_display_strings(local_strings_nam);
@@ -427,20 +428,23 @@ var map_show_preview = function()
 <div class="map_menubar">
     <fieldset class="plain">
     <ul>
-    	<li>
+        <li>
+            <label><span class="map_search_label"><?php putGS("Search for city or coordinate"); ?></span></label>
+        </li>
+        <li>
+        <form class="map_geo_city_search" onSubmit="findLocation(); return false;">
+          <input class="map_geo_cityname input_text" id="search-city" type="text"><a href="#" class="ui-state-default icon-button no-text" onClick="findLocation(true); return false;"><span class="ui-icon ui-icon-search"></span></a><span id="map_geo_showhide" class=""><a href="#" id="showhide_link" class="round-delete map_hidden" onclick="showhideLocation(); return false;"></a></span>
+        </form>
+        </li>
+        <li>
 <select class="input_select map_geo_ccselect" id="search-country" name="geo_cc" onChange="findLocation(); return false;">
-<option value="" selected="true"><?php putGS("any country"); ?></option>
+<option value="" selected="true"><?php putGS("Specify country (optional)"); ?></option>
 <?php
 foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
     echo '<option value="' . $cc_value . '">' . $cc_name . '</option>' . "\n";
 }
 ?>
 </select>
-        </li>
-    	<li>
-        <form class="map_geo_city_search" onSubmit="findLocation(); return false;">
-          <input class="map_geo_cityname input_text" id="search-city" type="text"><a href="#" class="ui-state-default icon-button no-text" onClick="findLocation(true); return false;"><span class="ui-icon ui-icon-triangle-1-e"></span></a><span id="map_geo_showhide" class=""><a href="#" id="showhide_link" class="round-delete map_hidden" onclick="showhideLocation(); return false;"></a></span>
-        </form>
         </li>
     </ul>
     </fieldset>
@@ -457,13 +461,14 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
       <a class="ui-state-default text-button" href="#" onClick="geo_locations.map_showview(); return false;"><?php putGS("Last Saved Map View"); ?></a> </div>
 <!-- end of map initview -->
 <div class="map_resizing">
-          <a href="#" class="ui-state-default icon-button no-text right-floated clear-margin" onClick="geo_locations.map_height_change(10); return false;"><span class="ui-icon ui-icon-triangle-1-e"></span></a>
+          <a href="#" class="ui-state-default icon-button no-text right-floated clear-margin" onClick="geo_locations.map_height_change(10); return false;"><span class="ui-icon ui-icon-plus"></span></a>
           <div class="resize-label"><span class="geo_resize_hor ui-icon ui-icon-arrowthick-2-n-s">V</span></div>
-          <a href="#" class="ui-state-default icon-button no-text right-floated clear-margin" onClick="geo_locations.map_height_change(-10); return false;"><span class="ui-icon ui-icon-triangle-1-w"></span></a>
+          <a href="#" class="ui-state-default icon-button no-text right-floated clear-margin" onClick="geo_locations.map_height_change(-10); return false;"><span class="ui-icon ui-icon-minus"></span></a>
           <div id="map_view_size" class="map-resizing-text">600 x 400</div>
-          <a href="#" class="ui-state-default icon-button no-text right-floated clear-margin" onClick="geo_locations.map_width_change(10); return false;"><span class="ui-icon ui-icon-triangle-1-e"></span></a>
+          <a href="#" class="ui-state-default icon-button no-text right-floated clear-margin" onClick="geo_locations.map_width_change(10); return false;"><span class="ui-icon ui-icon-plus"></span></a>
           <div class="resize-label"><span class="geo_resize_ver ui-icon ui-icon-arrowthick-2-e-w">H</span></div>
-          <a href="#" class="ui-state-default icon-button no-text right-floated" onClick="geo_locations.map_width_change(-10); return false;"><span class="ui-icon ui-icon-triangle-1-w"></span></a>
+          <a href="#" class="ui-state-default icon-button no-text right-floated" onClick="geo_locations.map_width_change(-10); return false;"><span class="ui-icon ui-icon-minus"></span></a>
+    <div class="map-resizing-text map_resizing_label"><?php putGS("Map size"); ?>:</div>
 </div><!-- end of map resizing -->
 <div id="map_mapedit" class="map_mapedit map_hidden">
     <div class="map_editinner">
@@ -527,7 +532,7 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                     <input id="point_image" name="point_image" class="text" type="text" onChange="geo_locations.store_point_property('image_source', this.value); return false;" />
                     </li>
 
-                    <li class="edit_label_long map_poi_edit_intro_sub"><?php putGS("display size"); ?></li>
+                    <li class="edit_label_long map_poi_edit_intro_sub"><?php putGS("Change image display size"); ?>.</li>
 
                     <li>
                     <label class="edit_label" for="point_image_height"><?php putGS("width"); ?>:</label>
@@ -559,7 +564,7 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                     <input id="point_video" name="point_video" class="text" type="text" onChange="geo_locations.store_point_property('video_id', this.value); return false;" />
                     </li>
 
-                    <li class="edit_label_long map_poi_edit_intro_sub"><?php putGS("display size"); ?></li>
+                    <li class="edit_label_long map_poi_edit_intro_sub"><?php putGS("Change video display size"); ?>.</li>
 
                     <li>
                     <label class="edit_label" for="point_video_width"><?php putGS("width"); ?>:</label>

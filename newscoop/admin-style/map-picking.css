@@ -46,6 +46,12 @@ a.map_name_display:hover {
 	font-size:12px;
 }
 
+.map_resizing_label {
+    float: right;
+	color:#727272;
+	font-size:15px;
+}
+
 .geo_resize_hor {
     float: left;
     margin-left: 4px;
@@ -99,6 +105,10 @@ a.map_name_display:hover {
 }
 .search_res_cc_header {
     width: 25px;
+}
+.search_res_cc_header_inner {
+    float: left;
+    margin-left: 10px;
 }
 .search_res_city_header {
     width: 95px;
@@ -520,3 +530,6 @@ a.edit_marker_one_choice_link {
     margin-left: 30px;
 }
 
+.map_search_label {
+    font-size: 12px;
+}

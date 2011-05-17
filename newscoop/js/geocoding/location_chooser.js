@@ -1156,6 +1156,7 @@ this.main_openlayers_init = function(map_div_name, descs_name)
     var lswitch = new OpenLayers.Control.LayerSwitcher();
 
     this.map.addControl(lswitch);
+    lswitch.maximizeControl();
 
     // an initial center point, set via parameters
     var cen_ini_longitude = this.map_view_layer_center_ini["longitude"];
