@@ -1,11 +1,15 @@
 
 <div class="ui-widget-content small-block themesListHolder">
-	<div class="tabs">
-    	<ul class="themesListTabsBtns">
-        	<li><a href="#tabs-1">Available themes</a></li>
-            <li><a href="#tabs-2">Publication one</a></li>
-            <li><a href="#tabs-3">Publication two</a></li>
-            <li><a href="#tabs-4">Publication three</a></li>
+	<div class="tabs ui-tabs ui-widget ui-widget-content ui-corner-all">
+    	<ul class="themesListTabsBtns ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+        	<li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active">
+        		<a href="javascript:void(0)">Available themes</a>
+        	</li>
+        	<?php foreach( $this->publications as $pub ) : ?>
+        		<li class="ui-state-default ui-corner-top">
+        		    <a href="javascript:void(0)" pub-id="<?php echo $pub->getId(); ?>"><?php echo $pub->getName(); ?></a>
+        		</li> 
+        	<?php endforeach; ?>
 		</ul>
         <a href="#" id="addNewPublication">Add new Publication</a>
         <div id="tabs-1">
@@ -26,7 +30,7 @@
 </script>
 
 <script id="datatableTmpl_1" type="text/x-jQuery-tmpl">
-	<div class="ui-tabs-hide id="themesListTabD">
+	<div class="imageItem ui-tabs-hide" id="themesListTabD">
     	<a id="example1" href="${image}">
 			<img src="${image}" alt="${image}" />
 		</a>
@@ -34,42 +38,32 @@
 </script>
 
 <script id="datatableTmpl_2" type="text/x-jQuery-tmpl">
-<div>
+
 	<div class="themesListTabs ui-tabs">
-	
-<div class="ui-tabs-hide" id="themesListTab1">
-                                	<a id="example1" href="themes-list-img-1.jpg"><img src="themes-list-img-1.jpg" alt="" /></a>
-                                </div>
-                            	<div class="ui-tabs-hide" id="themesListTab2">
-                                	<a id="example2" href="themes-list-img-2.jpg"><img src="themes-list-img-2.jpg" alt="" /></a>
-                                </div>
-                            	<div class="ui-tabs-hide" id="themesListTab3">
-                                	<a id="example3" href="themes-list-img-3.jpg"><img src="themes-list-img-3.jpg" alt="" /></a>
-                                </div>
 		<h3>${title} <span>// <?php echo getGS( 'version' ) ?> ${version}</span></h3>
         <p><i><b><?php echo getGS( 'Design' ) ?>:</b> ${designer}</i></p>
-		<ul>
-            <li>
-				<a href="#themesListTab1">
+		<ul class="imageCtrls ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+            <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active">
+				<a href="javascript:void(0)">
                     <?php echo getGS( 'Issue page' ) ?>
 					<span><?php echo getGS( 'Click to enlarge' ) ?></span>
 				</a>
 			</li>
-            <li>
-				<a href="#themesListTab2">
+            <li class="ui-state-default ui-corner-top">
+				<a href="javascript:void(0)">
 					<?php echo getGS( 'Section page' ); ?>
 					<span><?php echo getGS( 'Click to enlarge' ) ?></span>
 				</a>
 			</li>
-        	<li>
-				<a href="#themesListTab3">
+        	<li class="ui-state-default ui-corner-top">
+				<a href="javascript:void(0)">
                     <?php echo getGS( 'Article page' ) ?>
 					<span><?php echo getGS( 'Click to enlarge' ) ?></span>
 				</a>
 			</li>
     	</ul>
 	</div>
-</div>
+
 </script>
 
 <script id="datatableTmpl_3" type="text/x-jQuery-tmpl">
@@ -88,9 +82,11 @@
 				<li>
 					<a href="#" class="add"><span>Add to publication</span></a>
 					<ul class="block-shadow">
-						<li><a href="#">Publication One</a></li>
-						<li><a href="#">Publication Two</a></li>
-                		<li><a href="#">Publication Three</a></li>
+						<?php foreach( $this->publications as $pub ) : ?>
+						<li>
+        		    		<a href="javascript:void(0)" pub-id="<?php echo $pub->getId(); ?>"><?php echo $pub->getName(); ?></a>
+        				</li> 
+        	            <?php endforeach; ?>
 					</ul>
 				</li>
             	<li><a href="#" class="delete">Delete</a></li>
@@ -101,7 +97,7 @@
 </script>
 
 <script type="text/javascript">
-function log( x ){ console.log( x ); };
+function log( x ){ console.log( x ); }
 newscoopDatatables =
 {
 	callbackRow : function( node, strings, dispIndex, theIndex )
@@ -111,7 +107,6 @@ newscoopDatatables =
 			if( $.trim( strings[i] ) == "" ) continue;
 			
 			eval( "var theData = " + strings[i] );
-			//console.log( "var theData = " + strings[i]  );
 			try
 			{
 				var theTd = $( node ).children().eq( i ).html( "" );
@@ -123,36 +118,56 @@ newscoopDatatables =
 	},
 	callbackDraw : function()
 	{
-		$('.themesListTabs').tabs({event: 'mouseover'});
-		console.log( $('.themesListTabs') );
+		//$('.themesListTabs').tabs({event: 'mouseover'});
+		$('.themesListTabs li a').mouseover( function()
+		{
+			var parentLi = $(this).parent( 'li' );
+			parentLi.siblings().removeClass( 'ui-tabs-selected ui-state-active' );
+			parentLi.addClass( 'ui-tabs-selected ui-state-active' );
+
+			var idx = parentLi.parent('ul').find( 'li' ).index( parentLi );
+			var imgs = $(this).parents( 'td' ).eq(0).prev().find( 'div' );
+			imgs.addClass( 'ui-tabs-hide' ).eq( idx ).removeClass( 'ui-tabs-hide' );
+		});
+
 		$(".themesListTabs div a").fancybox();
+		
+		$(".actionDropDown li").hover(function()
+		{
+			$(this).children("ul").css("display","block");
+			$(this).children("a").addClass("active");
+		}, function() 
+		{
+			$(this).children("ul").css("display","none");
+			$(this).children("a").removeClass("active");
+		});
+		$(".actionDropDown li ul li").hover(function()
+		{
+			$(this).children("ul").css("display","block");
+		}, function() 
+		{
+			$(this).childer("ul").css("display","none");
+		});
 	}
 }
 $( function()
 {
-	$('.tabs').tabs();
-	$('.tabs').tabs('select', '#tabs-1');
+	$('.themesListHolder .themesListTabsBtns li a').click( function()
+	{
+		var parentLi = $(this).parent();
+		parentLi.siblings().removeClass( 'ui-tabs-selected ui-state-active' );
+		parentLi.addClass('ui-tabs-selected ui-state-active');
 
-	$('.themesListTabs').tabs({event: 'mouseover'});
-
-	$(".themesListTabs div a").fancybox();
-
-	$(".actionDropDown li").hover(function()
-	{
-		$(this).children("ul").css("display","block");
-		$(this).children("a").addClass("active");
-	}, function() 
-	{
-		$(this).children("ul").css("display","none");
-		$(this).children("a").removeClass("active");
-	});
-	$(".actionDropDown li ul li").hover(function()
-	{
-		$(this).children("ul").css("display","block");
-	}, function() 
-	{
-		$(this).childer("ul").css("display","none");
-	});
+		var datatable = $( document.body ).data( 'newscoop.themesDatatable' );
+		var pubId 	  = $(this).attr( 'pub-id' );
+		if( pubId )
+			datatable.fnFilter( pubId, 4 );
+		else
+		{
+			datatable.fnSettings().aoPreSearchCols[4].sSearch = ""; // hacked
+			datatable.fnFilter( "" );
+		}
+	})
 });
 </script>
  

@@ -56,7 +56,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         include_once 'HTML/QuickForm/RuleRegistry.php';
         include_once 'HTML/QuickForm/group.php';
 
-        if (!defined('IN_PHPUNIT')) {
+        if (!defined('IN_PHPUNIT') && !getenv('PLZSTOPTHISERRORHANDLERBIZNIS') ) {
             set_error_handler(function($p_number, $p_string, $p_file, $p_line) {
                 global $ADMIN_DIR, $Campsite;
                 require_once $Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/bug_handler_main.php";

@@ -22,7 +22,7 @@
 			height:13px; 
 			padding-left:14px;
 			color:#007FB3;
-			background:url(../admin-style/images/small_add.png) 0 3px  no-repeat;
+			background:url(images/small_add.png) 0 3px  no-repeat;
 			}
 			#addNewPublication:hover {
 				text-decoration:underline;
@@ -97,7 +97,7 @@
 								margin:0px 0 15px 0;
 								}
 							.themesListTabs ul {
-								position:absolute; right:0px; bottom:0px;
+								right:0px; bottom:0px;
 								margin:0px !important; padding:0px !important; 
 								width:236px; !Important;
 								background:none !important;

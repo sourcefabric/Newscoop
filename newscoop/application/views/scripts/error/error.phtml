@@ -13,6 +13,8 @@
   <h3>Exception information:</h3>
   <p>
       <b>Message:</b> <?php echo $this->exception->getMessage() ?>
+      <br />
+      <b>File:</b> <?php echo $this->exception->getFile() ?> <b>:</b> <?php echo $this->exception->getLine() ?>
   </p>
 
   <h3>Stack trace:</h3>
