@@ -247,6 +247,7 @@ legend {
 	font-size: 12px;
 	font-weight: bold;
 	line-height: 20px;
+    float: left;
 }
 
 label.block-label {
@@ -275,7 +276,22 @@ label.block-label {
     float: left;
     width: 10em;
     margin-right: 1em;
-	color: #666666;
+    color: #666666;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 0 0;
+}
+
+a.edit_label_link {
+    color: #666666;
+}
+
+.edit_label_long {
+    float: left;
+    width: 85%;
+    margin-right: 1em;
+    color: #999999;
     float: left;
     font-size: 12px;
     font-weight: bold;
@@ -416,14 +432,20 @@ a.map_save_on {
 
 }
 
-.edit_marker_selected {
+.edit_marker_selected_src {
     float: left;
-
 }
+
+.edit_marker_icons_all {
+    width: 90%;
+    margin-left: 10px; 
+}
+
 .edit_marker_choices {
     margin-top: 20px;
     overflow: auto;
 	height:200px;
+    width: 500px;
 	padding:10px;
 	border:1px solid #CCC;
 }
@@ -477,3 +499,24 @@ a.edit_marker_one_choice_link {
     font-size: 1em;
     line-height: 140%;
 }
+
+.map_poi_edit_intro {
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
+.map_poi_edit_intro_popup {
+    margin-left: 30px;
+    margin-bottom: 5px;
+}
+
+.map_poi_edit_intro_icon {
+    margin-left: 30px;
+    margin-bottom: 20px;
+}
+
+.map_poi_edit_intro_sub {
+    margin-top: 0px;
+    margin-left: 30px;
+}
+

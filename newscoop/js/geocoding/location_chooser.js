@@ -30,7 +30,7 @@ this.display_strings = {
     really_to_delete_the_point: "Really to delete the point?",
     the_removal_is_from_all_languages: "The removal is from all language versions of the article.",
     point_number: "Point no.",
-    fill_in_the_point_description: "fill in the point description",
+    fill_in_the_point_description: "Describe the location...",
     edit: "edit",
     center: "center",
     enable: "enable",
@@ -1599,6 +1599,13 @@ this.store_point_property = function(property, value)
     }
     attrs[poi_property] = value;
 
+    if ("perex" == property) {
+        var perex_view_obj = document.getElementById ? document.getElementById('point_perex_view') : null;
+        if (perex_view_obj) {
+            perex_view_obj.innerHTML = value;
+        }
+    }
+
     if ("image" == property.substr(0, 5))
     {
         GeoPopups.set_image_tag(attrs, this);
@@ -1640,6 +1647,13 @@ this.load_point_properties = function()
         var one_value = cur_marker.attributes[poi_property];
         if (!one_value) {one_value = "";}
         div_obj.value = one_value;
+
+        if ('perex' == one_name) {
+            var perex_view_obj = document.getElementById ? document.getElementById('point_perex_view') : null;
+            if (perex_view_obj) {
+                perex_view_obj.innerHTML = one_value;
+            }
+        }
     }
 
     var video_type_names = {'none': 0, 'youtube': 1, 'vimeo': 2, 'flash': 3, 'flv': 4};
@@ -1797,7 +1811,7 @@ this.set_edit_direct = function()
     if (direct_usage)
     {
         $("#edit_part_text").addClass("map_hidden");
-        if ('edit' == this.edit_view_mode)
+        //if ('edit' == this.edit_view_mode) // edit an view modes concurrent now, see edit_set_mode below
         {
             $("#edit_part_content").removeClass("map_hidden");
         }
@@ -1805,7 +1819,7 @@ this.set_edit_direct = function()
     else
     {
         $("#edit_part_content").addClass("map_hidden");
-        if ('edit' == this.edit_view_mode)
+        //if ('edit' == this.edit_view_mode) // edit an view modes concurrent now, see edit_set_mode below
         {
             $("#edit_part_text").removeClass("map_hidden");
         }
@@ -1816,6 +1830,8 @@ this.set_edit_direct = function()
 // adjusting text/preview at point editing
 this.edit_set_mode = function(mode)
 {
+    return; // the both text-edit and popup-view are now concurrently visible at their respective tabs
+
     var edit_obj = document.getElementById ? document.getElementById("point_edit_mode_edit") : null;
     var view_obj = document.getElementById ? document.getElementById("point_edit_mode_view") : null;
 
