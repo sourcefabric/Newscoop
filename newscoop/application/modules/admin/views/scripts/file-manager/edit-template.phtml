@@ -1,9 +1,13 @@
-<?php $this->placeholder('title')->set(getGS("Edit template '$1'", $this->template->getKey())); ?>
-
 <?php
-$this->form->getElement('content')->setAttrib('id', 'template-edit-area');
-echo $this->form;
+$this->placeholder('title')->set(getGS("Edit template: $1 (Template ID: $2)", $this->template->getBasename(), $this->template->getId()));
+$this->form->content->setAttrib('id', 'template-edit-area');
 ?>
+
+<div class="template">
+    <?php echo $this->replaceForm->setAttrib('class', 'right-floated'); ?>
+
+    <?php echo $this->form; ?>
+</div>
 
 <script type="text/javascript" src="<?php echo $this->baseUrl('/js/editarea/edit_area/edit_area_full.js'); ?>"></script>
 <script type="text/javascript">

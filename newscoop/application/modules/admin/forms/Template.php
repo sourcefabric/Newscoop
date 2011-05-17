@@ -13,7 +13,10 @@ class Admin_Form_Template extends Zend_Form
 {
     public function init()
     {
+        $this->addElement('hash', 'csrf');
+
         $this->addElement('textarea', 'content', array(
+            'label' => getGS('Edit template'),
             'required' => TRUE,
         ));
 

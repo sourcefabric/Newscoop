@@ -1,14 +1,14 @@
 <?php $this->placeholder('title')->set(getGS('File manager')); ?>
 
-<ul class="actions" style="font-size:1.3em;margin:0;">
-    <li><a href="<?php echo $this->url(array(
-        'action' => 'upload',
-    )); ?>"><?php putGS('Upload'); ?></a></li>
+<?php $this->renderActions(); ?>
 
-    <li><a href="#create-folder"><?php putGS('Create folder'); ?></a></li>
-    <li><a href="#create-file"><?php putGS('Create file'); ?></a></li>
-</ul>
-<div style="clear:both"></div>
+<form id="actions-form" action="<?php echo $this->form->getAction(); ?>" method="<?php echo $this->form->getMethod(); ?>">
+<dl class="zend_form filter">
+    <?php echo $this->form->csrf; ?>
+    <?php echo $this->form->action; ?>
+    <?php echo $this->form->name; ?>
+    <?php echo $this->form->multiaction; ?>
+</dl>
 
 <table class="themeTemplatesTable templates">
     <?php if (empty($this->path)) { ?>
@@ -69,11 +69,7 @@
         <li><a href="#"><?php putGS('Actions'); ?></a><ul>
             <li><a href="#rename" class="rename">Rename</a></li>
             <li><a href="#move" class="duplicate">Move</a></li>
-            <li><a href="<?php echo $this->url(array(
-                'action' => 'delete',
-                'path' => $this->path,
-                'file' => $folder,
-            )); ?>" class="delete">Delete</a></li>
+            <li><a href="#delete" class="delete">Delete</a></li>
         </ul></li>
     </ul></td>
 </tr>
@@ -98,11 +94,7 @@
             <li><a href="#rename" class="rename">Rename</a></li>
             <li><a href="#move" class="duplicate">Move</a></li>
             <li><a href="#copy" class="duplicate">Copy</a></li>
-            <li><a href="<?php echo $this->url(array(
-                'action' => 'delete',
-                'path' => $this->path,
-                'file' => $file->getBasename(),
-            )); ?>" class="delete">Delete</a></li>
+            <li><a href="#delete" class="delete">Delete</a></li>
         </ul></li>
     </ul></td>
 </tr>
@@ -110,8 +102,12 @@
 </tbody>
 </table>
 
+</form>
+
+
 <div class="dialogPopup" title="<?php putGS('New name'); ?>">
-<?php echo $this->dialogForm; ?>
+    <input type="text" name="name" />
+    <?php echo $this->moveForm->name; ?>
 </div>
 
 <script type="text/javascript">
@@ -120,10 +116,10 @@ $(function() {
 	$(".actionDropDown li").hover(function(){
 		$(this).children("ul").css("display","block");
 		$(this).children("a").addClass("active");
-		}, function() {
+	}, function() {
 		$(this).children("ul").css("display","none");
 		$(this).children("a").removeClass("active");
-		});
+	});
 
 	$(".actionDropDown li ul li").hover(function(){
 		$(this).children("ul").css("display","block");
@@ -140,42 +136,45 @@ $(function() {
 		position:'center',
 		buttons: {
             <?php echo json_encode(getGS('Save')); ?>: function() { 
-                var form = $('form', $(this));
-                var name = $('input[name="name"]', form).val();
+                var name = $('[name="name"]', $(this)).not(':hidden').val();
                 if (!name.length) {
                     alert(<?php echo json_encode(getGS("Name can't be empty")); ?>);
                     return;
                 }
 
+                var form = $('#actions-form');
+                $('input[name="name"]', form).val(name);
                 form.submit();
 			}, 
             <?php echo json_encode(getGS('Cancel')); ?>: function() { 
 				$(this).dialog("close"); 
-			} 
+			}
         }
 	});
-				
-	// edit dialog
+
+    // table row action
 	$('table.templates a[href^="#"]').click(function() {
+        var form = $('#actions-form');
+        var table = $('table', form);
         var action = $(this).attr('href').substr(1);
-        $('form input[name="action"]', $('.dialogPopup')).val(action);
 
-        var file = $('td.id input[name^="file"]', $(this).closest('tr')).val();
-        $('form input[name="file"]', $('.dialogPopup')).val(file);
+        // set action
+        $('input[name="action"]', form).val(action);
 
-		$('.dialogPopup').dialog('open');
-		return false;
+        // uncheck files
+        $('tbody input:checkbox:checked', table).each(function() {
+            $(this).attr('checked', false);
+        });
+
+        // check current file
+        $('input:checkbox', $(this).closest('tr')).each(function() {
+            $(this).attr('checked', true);
+        });
+
+        form.submit();
 	});
 
-    // create dialog
-    $('.actions a[href^="#"]').click(function() {
-        var action = $(this).attr('href').substr(1);
-        $('form input[name="action"]', $('.dialogPopup')).val(action);
-
-		$('.dialogPopup').dialog('open');
-		return false;
-    });
-
+    // datatable
     $('table.templates').dataTable({
         'aoColumnDefs': [
             { 'bSortable': false, 'aTargets': [0, -1] },
@@ -185,6 +184,86 @@ $(function() {
         'sDom': 't',
         'bPaginate': false,
         'bJQueryUI': true
+    });
+
+    // check/uncheck all items
+    $('thead input:checkbox').change(function() {
+        var checked = $(this).attr("checked");
+        var table = $(this).closest('table');
+        $('tbody input:checkbox', table).each(function() {
+            $(this).attr("checked", checked);
+        });
+    });
+
+    // update check all checkbox on item change
+    $('tbody input:checkbox').change(function() {
+        var table = $(this).closest('table');
+        if ($('tbody input:checkbox', table).size() == $('tbody input:checkbox:checked', table).size()) { // all checked
+            $('thead input:checkbox', table).attr("checked", true);
+        } else {
+            $('thead input:checkbox', table).attr("checked", false);
+        }
+    });
+
+    // check item on line click
+    $('tbody td').click(function(e) {
+        if (e.target.type == 'checkbox' || e.target.href) {
+            return;
+        }
+
+        var checkbox = $('input:checkbox', $(this).closest('tr'));
+        checkbox.attr('checked', !checkbox.attr('checked'));
+        checkbox.change();
+    });
+
+    // create name dialog
+    $('.content .navigation a[href^="#create"]').click(function() {
+        var action = $(this).attr('href').substr(1);
+        $('#actions-form input[name="action"]').val(action);
+        $('#actions-form').submit();
+		return false;
+    });
+
+    // multiaction submit
+    $('select[name="multiaction"]').change(function() {
+        if (!$(this).val().length) {
+            return;
+        }
+
+        if (!$('tbody input:checkbox:checked').size()) {
+            $(this).val('');
+            alert(<?php echo json_encode(getGS("You must select at least one template to perform an action.")); ?>);
+            return;
+        }
+
+        var form = $(this).closest('form');
+        $('input[name="action"]', form).val($(this).val());
+        form.submit();
+    });
+
+    // submit actions form - ask for name if needed
+    $('#actions-form').submit(function() {
+        var action = $('input[name="action"]', $(this)).val();
+        var name = $('input[name="name"]', $(this)).val();
+
+        if (!action.length) {
+            return false;
+        }
+
+        if (action != 'delete' && !name.length) {
+            if (action == 'move') {
+                $('#ui-dialog-title-1').html(<?php echo json_encode(getGS('Choose destination')); ?>);
+                $('.dialogPopup select').show();
+                $('.dialogPopup input').hide();
+            } else {
+                $('#ui-dialog-title-1').html(<?php echo json_encode(getGS('Set new name')); ?>);
+                $('.dialogPopup select').hide();
+                $('.dialogPopup input').show();
+            }
+
+		    $('.dialogPopup').dialog('open');
+            return false;
+        }
     });
 });
 </script>
