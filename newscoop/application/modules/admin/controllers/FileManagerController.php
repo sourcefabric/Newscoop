@@ -100,14 +100,17 @@ class Admin_FileManagerController extends Zend_Controller_Action
                 'module' => 'admin',
                 'controller' => 'file-manager',
                 'action' => 'upload',
+                'class' => 'upload',
             ),
             array(
                 'label' => getGS('Create folder'),
                 'uri' => '#create-folder',
+                'class' => 'add',
             ),
             array(
                 'label' => getGS('Create file'),
                 'uri' => '#create-file',
+                'class' => 'add',
             ),
         );
     }
@@ -326,6 +329,7 @@ class Admin_FileManagerController extends Zend_Controller_Action
             $this->repository->updateKey("$path/$file", "$path/$name");
             $this->clearCompiledTemplate("$path/$file");
             $this->findReplace("$path/$file", "$path/$name");
+		    $this->_helper->flashMessenger(getGS('Template object $1 was renamed to $2', $file, $name));
         } else {
             $this->_helper->flashMessenger(getGS('The template object $1 could not be renamed.', "<strong>$name</strong>"));
         }

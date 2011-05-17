@@ -1,7 +1,7 @@
 <?php $this->placeholder('title')->set(getGS("Edit template: $1 (Template ID: $2)", $this->template->getBasename(), $this->template->getId())); ?>
 
-<div class="template">
-    <?php echo $this->replaceForm; ?>
+<div class="template ui-widget-content small-block block-shadow theme-edit">
+    <?php echo $this->replaceForm->setAttrib('class', 'replace'); ?>
 
     <div class="image">
         <img src="<?php echo $this->baseUrl('templates/' . $this->template->getKey() . '?time=' . time()); ?>" alt="<?php echo $this->template->getKey(); ?>" />

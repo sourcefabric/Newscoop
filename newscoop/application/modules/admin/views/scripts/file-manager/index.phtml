@@ -1,9 +1,24 @@
 <?php $this->placeholder('title')->set(getGS('File manager')); ?>
 
+<div class="currentDirectory">
+    <strong><?php putGS('Current directory:'); ?></strong>
+    <?php if (empty($this->path)) { ?>
+    <?php putGS('Templates'); ?>
+    <?php } else { ?>
+    <a href="<?php echo $this->url(array(
+        'path' => NULL,
+    )); ?>"><?php putGS('Templates'); ?></a> / <?php echo $this->navigation()->breadcrumbs()
+        ->setContainer($this->nav)
+        ->setMinDepth(0)
+        ->setSeparator(' / ');
+    ?>
+    <?php } ?>
+</div>
+
 <?php $this->renderActions(); ?>
 
 <form id="actions-form" action="<?php echo $this->form->getAction(); ?>" method="<?php echo $this->form->getMethod(); ?>">
-<dl class="zend_form filter">
+<dl>
     <?php echo $this->form->csrf; ?>
     <?php echo $this->form->action; ?>
     <?php echo $this->form->name; ?>
@@ -11,18 +26,6 @@
 </dl>
 
 <table class="themeTemplatesTable templates">
-    <?php if (empty($this->path)) { ?>
-    <caption><?php putGS('Templates'); ?></caption>
-    <?php } else { ?>
-    <caption><a href="<?php echo $this->url(array(
-        'path' => NULL,
-    )); ?>"><?php putGS('Templates'); ?></a> / <?php echo $this->navigation()->breadcrumbs()
-        ->setContainer($this->nav)
-        ->setMinDepth(0)
-        ->setSeparator(' / ');
-    ?></caption>
-    <?php } ?>
-
 <thead>
 <tr>
     <th class="id"><input type="checkbox" name="toggle" class="all" /></th>
@@ -68,7 +71,6 @@
     <td class="menu"><ul class="actionDropDown">
         <li><a href="#"><?php putGS('Actions'); ?></a><ul>
             <li><a href="#rename" class="rename">Rename</a></li>
-            <li><a href="#move" class="duplicate">Move</a></li>
             <li><a href="#delete" class="delete">Delete</a></li>
         </ul></li>
     </ul></td>

@@ -3,8 +3,8 @@ $this->placeholder('title')->set(getGS("Edit template: $1 (Template ID: $2)", $t
 $this->form->content->setAttrib('id', 'template-edit-area');
 ?>
 
-<div class="template">
-    <?php echo $this->replaceForm->setAttrib('class', 'right-floated'); ?>
+<div class="template ui-widget-content small-block block-shadow theme-edit">
+    <?php echo $this->replaceForm->setAttrib('class', 'replace'); ?>
 
     <?php echo $this->form; ?>
 </div>
