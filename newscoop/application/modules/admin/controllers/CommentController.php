@@ -78,20 +78,54 @@ class Admin_CommentController extends Zend_Controller_Action
         $table->setDataSource($this->repository);
 
         $table->setCols(array(
-            'id' => $view->toggleCheckbox(),
-            'user' => getGS('Author'),
-            'action' => '',
-            'time_created' => getGS('Date').' / '.getGS('Comment'),
+            'index' => $view->toggleCheckbox(),
+            'commenter' => getGS('Author'),
+            'comment' => getGS('Date').' / '.getGS('Comment'),
             'thread' => getGS('Article')
-        ), array('id' => false));
+        ), array('index' => false));
 
-        $table->setHandle(function($comment) use ($view) {
+        $index = 1;
+        $table->setHandle(function($comment) use ($view, &$index) {
+            $commenter = $comment->getCommenter();
+            $thread = $comment->getThread();
             return array(
-                $view->commentIndex($comment),
-                $view->commentCommenter($comment->getCommenter()),
-                $view->commentAction($comment),
-                $view->commentMessage($comment),
-                $view->commentArticle($comment->getThread())
+                'index'      => $index++,
+                'commenter'  => array(
+                    'username'    => $commenter->getUsername(),
+                    'name'        => $commenter->getName(),
+                    'email'       => $commenter->getEmail(),
+                    'avatar'      => $commenter->getEmail(),
+                    'ip'          => $commenter->getIp(),
+                    'url'         => $commenter->getUrl(),
+                    'banurl'      => $view->url(array(
+                                        'controller' => 'comment-commenter',
+                                        'action' => 'toggle-ban',
+                                        'commenter'=> $commenter->getId(),
+                                        'forum' => $thread->getId()
+                                     ))
+                ),
+                'comment'    => array(
+                    'id'           => $comment->getId(),
+                    'created'      => array(
+                    	'date'         => $comment->getTimeCreated()->format('Y.i.d'),
+                    	'time'         => $comment->getTimeCreated()->format('H:i:s')
+                    ),
+                    'subject'      => $comment->getSubject(),
+                    'message'      => $comment->getMessage(),
+                    'likes'        => '',
+                    'dislikes'     => '',
+                    'action'       => array(
+                        'update'       => $view->url(array('action' => 'update', 'format' => 'json')),
+                        'reply'        => $view->url(array('action' => 'reply', 'format' => 'json'))
+                    )
+                ),
+                'thread'     => array(
+                    'name'         => $thread->getName(),
+                    'link'         => array(
+                        'edit'         => $view->baseUrl("admin/articles/edit.php?",$view->linkArticle($thread)),
+                        'get'          => $view->baseUrl("admin/articles/get.php?",$view->linkArticle($thread))
+                    )
+                ),
             );
         });
 
@@ -99,12 +133,17 @@ class Admin_CommentController extends Zend_Controller_Action
               ->setOption('fnServerData', 'datatableCallback.addServerData')
               ->setStripClasses()
               ->toggleAutomaticWidth(false)
+              ->setDataProp(array(
+                'index'       => 'index',
+                'commenter'   => 'commenter.name',
+                'comment'     => 'comment.message',
+                'thread'      => 'thread.name'
+              ))
               ->setClasses(array(
-                'id'   => 'commentId',
-                'user' => 'commentUser',
-                'action' => 'commentAction',
-                'time_created' => 'commentTimeCreated',
-                'thread' => 'commentThread'));
+                'index'       => 'commentId',
+                'commenter'   => 'commentUser',
+                'comment'     => 'commentTimeCreated',
+                'thread'      => 'commentThread'));
         $table->dispatch();
     }
 

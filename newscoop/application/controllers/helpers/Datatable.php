@@ -178,6 +178,20 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
         return $this;
     }
 
+    public function setDataProp(array $p_values = array())
+    {
+        if(count($p_values))
+        {
+            foreach($p_values as $key => $value) {
+                if(is_string($key))
+                    $key = $this->colsIndex[$key];
+                $this->iOptions['aoColumns'][$key]['mDataProp'] = $value;
+            }
+        }
+        // return this for chaining mechanism
+        return $this;
+    }
+
     /**
      * Set header properties
      *

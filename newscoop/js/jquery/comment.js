@@ -1,47 +1,25 @@
 var statusMap ={ 'pending': 'status_new', 'hidden': 'status_hidden', 'deleted': 'status_deleted', 'approved': 'status_approved' };
 var datatableCallback = {
-	serverData: {},
-	row: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-	    that = datatableCallback;
-        var tr = $('<tr></tr>');
-        tr.hover(function() {
-        	   $(this).find(".commentBtns").css("visibility","visible");
-            },function() {
-            	$(this).find(".commentBtns").css("visibility","hidden");
-        });/*
-        .click(function(e){
-            //$(this).find(".action-edit").click();
-            e.preventDefault();
-        	return false;
-        });
-        */
-        var td = $('<td></td>');
-        td.attr('colspan',5);
-        nRow = $(nRow);
-        tr.addClass(statusMap[nRow.find('.status-code').val()]);
-        actions = nRow.find('.commentAction').first();
-        nRow.find('.commentTimeCreated').removeClass('commentTimeCreated').addClass('commentMessage');
-        nActions = actions.clone();
-        actions.hide();
-        td.append($('<table cellspacing="0" cellpadding="0">').append(nRow));
-        td.append(nActions.html());
-        jRow = tr.append(td);
-        that.rowIndex++;
-        return jRow.get(0);
+    serverData: {},
+    commentTmpl: function(){},
+    row: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+        nRow.innerHTML = datatableCallback.commentTmpl(aData);
+        return nRow;
     },
     addServerData: function ( sSource, aoData, fnCallback ) {
-    	that = datatableCallback;
+        that = datatableCallback;
         for(i in that.serverData) {
             if(that.serverData[i])
                 aoData.push({"name": "sFilter[status][]", "value": i});
         }
-    	$.getJSON( sSource, aoData, function (json) {
-    		fnCallback(json);
-    	});
+        $.getJSON( sSource, aoData, function (json) {
+            fnCallback(json);
+        });
     }
 };
 $(function(){
-    // Tabs
+    datatableCallback.commentTmpl = doT.template($('#comment-tmpl').html());
+    
     $('.tabs').tabs();
     $('.tabs').tabs('select', '#tabs-1');
     var commentFilterTriggerCount = 0;
@@ -58,10 +36,12 @@ $(function(){
     });
 
     $(".commentsHolder table tbody tr").hover(function() {
+        console.log('over');
         $(this).find(".commentBtns").css("visibility","visible");
     },function() {
+        console.log('nover');
         $(this).find(".commentBtns").css("visibility","hidden");
-           });
+    });
 
     $(".addFilterBtn").click(function () {$('#commentFilterSearch fieldset ul').append('<li><select class="input_select"><option>1</option><option>2</option></select><input type="text" class="input_text" /></li>'); return false; $("#commentFilterSearch").css("height","500px");});
 
@@ -108,7 +88,7 @@ $(function(){
                 },serverObj.security),
                 success: function(data) {
                     flashMessage(putGS('Comment(s) status change to $1.',$status));
-                	datatable.fnDraw();
+                    datatable.fnDraw();
                 },
                 error: function (rq, status, error) {
                     if (status == 0 || status == -1) {
@@ -133,11 +113,11 @@ $(function(){
         }
         dir.removeClass("ui-icon-carat-2-n-s");
     });
-	$('.datatable .action').live('click',function(){
-	    var el = $(this);
-	    var id = el.attr('id');
-	    var ids = [id.match(/\d+/)[0]];
-	    var status = id.match(/[^_]+/)[0];
+    $('.datatable .action').live('click',function(){
+        var el = $(this);
+        var id = el.attr('id');
+        var ids = [id.match(/\d+/)[0]];
+        var status = id.match(/[^_]+/)[0];
         $.ajax({
             type: 'POST',
             url: 'comment/set-status/format/json',
@@ -156,9 +136,9 @@ $(function(){
             }
         });
 
-	});
-	$('.dateCommentHolderEdit form').live('submit', function(){
-	    var that = this;
+    });
+    $('.dateCommentHolderEdit form').live('submit', function(){
+        var that = this;
         $.ajax({
             type: 'POST',
             url: $(this).attr('action'),
@@ -174,18 +154,18 @@ $(function(){
             }
         });
         return false;
-	});
-	$('.dateCommentHolderEdit .edit-cancel,.dateCommentHolderEdit .reply-cancel').live('click', function(){
-	    var el = $(this);
-	    var td = el.parents('td');
-	    var form = el.parents('form');
-	    $(form).each(function(){
+    });
+    $('.dateCommentHolderEdit .edit-cancel,.dateCommentHolderEdit .reply-cancel').live('click', function(){
+        var el = $(this);
+        var td = el.parents('td');
+        var form = el.parents('form');
+        $(form).each(function(){
             this.reset();
         });
-	    td.find('.commentSubject,.commentBody').slideDown("fast");
-	    td.find('.content-edit').slideUp("fast");
-	    td.find('.content-reply').slideUp("fast");
-	});
+        td.find('.commentSubject,.commentBody').slideDown("fast");
+        td.find('.content-edit').slideUp("fast");
+        td.find('.content-reply').slideUp("fast");
+    });
     $('.dateCommentHolderEdit .edit-reply').live('click', function(){
         var el = $(this);
         var td = el.parents('td');
@@ -197,13 +177,13 @@ $(function(){
         td.find('.content-reply').slideDown("fast");
     });
 
-	$('.datatable .action-edit').live('click', function(){
-		 var el = $(this);
-		 var td = el.parents('td');
-		 td.find('.commentSubject').slideToggle("fast");
-		 td.find('.commentBody').slideToggle("fast");
-		 td.find('.content-edit').slideToggle("fast");
-	});
+    $('.datatable .action-edit').live('click', function(){
+         var el = $(this);
+         var td = el.parents('td');
+         td.find('.commentSubject').slideToggle("fast");
+         td.find('.commentBody').slideToggle("fast");
+         td.find('.content-edit').slideToggle("fast");
+    });
         // Dialog
         $('.dialogPopup').dialog({
             autoOpen: false,
@@ -226,8 +206,8 @@ $(function(){
                       var content = '<h3><a href="#">'+$(that).html()+'</a></h3>';
                       for(i in data)
                       {
-                    	  content+='<h4>'+i+'</h4>';
-                    	  content+='<p>'+data[i]+'</p>';
+                          content+='<h4>'+i+'</h4>';
+                          content+='<p>'+data[i]+'</p>';
                       }
                       $('.dialogPopup').html(content);
                       $('.dialogPopup').dialog('open');

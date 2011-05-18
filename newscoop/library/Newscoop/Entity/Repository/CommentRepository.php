@@ -224,14 +224,18 @@ class CommentRepository extends DatatableSource
             $dir = $p_params["sSortDir_0"] ?: 'asc';
             switch($sortBy)
             {
-                case 'user':
+                case 'commenter':
                     $qb->orderBy("c.name", $dir);
                     break;
                 case 'thread':
                     $qb->orderBy("a.name", $dir);
                     break;
-                case 'action':
+                case 'thread_order':
                     $qb->orderBy("e.thread_order", $dir);
+                    break;
+                case 'comment':
+                case 'index':
+                    $qb->orderBy("e.time_created", $dir);
                     break;
                 default:
                     $qb->orderBy("e.".$sortBy, $dir);

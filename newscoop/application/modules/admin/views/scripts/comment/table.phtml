@@ -1,11 +1,12 @@
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/comments.css')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/doT.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/comment.js')); ?>
 <?php $this->placeholder('title')->set(getGS('Comments')); ?>
 <script>
 function putGS(str) {
-    var msg = serverObj.language[str];
+    var msg = serverObj.translateObj[serverObj.languageObj.indexOf(str)]
     for(i in arguments) {
-    	msg = msg.replace(new RegExp("\\$"+i,"g"),arguments[i]);
+        msg = msg.replace(new RegExp("\\$"+i,"g"),arguments[i]);
     }
     return msg;
 }
@@ -13,12 +14,24 @@ var serverObj = {};
 serverObj.security = {};
 serverObj.security = {<?php echo SecurityToken::JsParameter();?>};
 
-serverObj.language = {};
-serverObj.language['Comment updated.'] = '<?php putGS('Comment updated.');?>';
-serverObj.language['Comments updated.'] = '<?php putGS('Comments updated.');?>';
-serverObj.language['Comment(s) status change to $1.'] = '<?php putGS('Comment(s) status change to $1.');?>';
-serverObj.language['Unable to reach Newscoop. Please check your internet connection.']
-                   = '<?php putGS('Unable to reach Campsite. Please check your internet connection.');?>';
+serverObj.languageObj = [
+    'Comments updated.',
+    'Comments deleted.',
+    'Comments status change to $1.',
+    'Comment updated.',
+    'Comment deleted.',
+    'Comment status change to $1.',
+    'Unable to reach Newscoop. Please check your internet connection.'
+];
+serverObj.translateObj = [
+    '<?php putGS('Comments updated.');?>',
+    '<?php putGS('Comments deleted.');?>',
+    '<?php putGS('Comments status change to $1.');?>',
+    '<?php putGS('Comment updated.');?>',
+    '<?php putGS('Comment deleted.');?>',
+    '<?php putGS('Comment status change to $1.');?>',
+    '<?php putGS('Unable to reach Campsite. Please check your internet connection.');?>'
+];
 </script>
 <div class="wrapper">
 <div class="ui-widget-content small-block block-shadow commentsHolder">
@@ -49,7 +62,93 @@ serverObj.language['Unable to reach Newscoop. Please check your internet connect
 </ul>
 </fieldset>
 </div>
+<script id="comment-tmpl" type="text/html">
+<td colspan="4">
+<table cellspacing="0" cellpadding="0">
+    <tbody><tr>
+        <td class="commentId sorting_1">
+            <input type="checkbox" name="index[]" value="{{comment.id}}" class="table-checkbox">
+            <span class="index">{{index}}.</span>
+        </td>
+        <td class="commentUser">
+            <div class="commentUserHolder">
+                <div><img src="{{commenter.avatar}}"></div>
+                <p>
+                    <b>{{commenter.username}}</b><br>
+                    {{commenter.name}}<br>
+                    <a href="#">{{commenter.ip}}</a><br>
+                    <a href="#">{{commenter.email}}</a><br>
+                    <a href="#">{{commenter.url}}</a>
+                </p>
+            </div>
+        </td>
+        <td class="commentMessage">
+            <div class="dateCommentHolder">
+            <h4>
+                <span>{{comment.created.date}} <?php putGS('at');?> {{comment.created.time}}</span>
+                <span class="commentSubject">{{comment.subject}}</span>
+            </h4>
+            <div class="ratingHolder">
+                <span class="thumbs up">{{comment.likes}}</span>
+                <span class="thumbs down">{{comment.dislikes}}</span> </div>
+            <p class="commentBody">{{comment.message}}</p>
+            </div>
 
+            <div class="dateCommentHolderEdit">
+            <fieldset class="content-edit" style="display:none;">
+                <form action="{{comment.action.update}}">
+                <label>{{comment.subject}}</label>
+                <input type="hidden" name="comment" value="{{comment.id}}" />
+                <?php echo SecurityToken::FormParameter();?>
+                <input type="text" name="subject" class="input_text" value="{{comment.subject}}">
+                <label><?php putGS('Comment');?></label>
+                <textarea name="message" class="input_text_area">{{comment.subject}}</textarea>
+            <div class="buttonBar">
+                <input type="button" value="<?php putGS('Cancel');?>" class="button edit-cancel">
+                <input type="button" value="<?php putGS('Reply');?>" class="button edit-reply">
+                <input type="submit" value="<?php putGS('Update comment');?>" class="save-button-small update">
+                </form>
+            </div>
+            </fieldset>
+
+            <fieldset class="content-reply" style="display:none;">
+                <form action="{{comment.action.update}}">
+                <input type="hidden" name="parent" value="{{comment.id}}" />
+                <?php echo SecurityToken::FormParameter();?>
+                <h3>Reply to comment</h3>
+                <label><?php putGS('Subject');?></label>
+                <input name="subject" type="text" class="input_text">
+                <label><?php putGS('Comment');?></label>
+                <textarea name="message" class="input_text_area"></textarea>
+            <div class="buttonBar">
+                <input type="button" value="<?php putGS('Cancel');?>" class="button reply-cancel">
+                <input type="submit" value="<?php putGS('Submit');?>'" class="button">
+                </form>
+            </div>
+            </fieldset>
+            </div>
+		</td>
+        <td>Article</td>
+        </tr></tbody>
+</table>
+<div class="commentBtns">
+    <ul>
+        <li><a href="javascript:;" id="pending_{{comment.id}}" class="action new"><?php putGS('New');?></a></li>
+        <li><a href="javascript:;" id="approved_{{comment.id}}" class="action approved"><?php putGS('Approved');?></a></li>
+        <li><a href="javascript:;" id="hidden_{{comment.id}}" class="action hidden"><?php putGS('Hidden');?></a></li>
+        <li><a href="javascript:;" id="deleted_{{comment.id}}" class="action deleted"><?php putGS('Delete');?></a></li>
+        <li><a href="javascript:;" class="action-edit link icon-link"><span class="icon ui-icon-pencil"></span><?php putGS('Quick edit');?></a></li>
+        <li><a href="javascript:;" class="action-rating link icon-link"><span class="icon ui-icon-star"></span><?php putGS('Add rating');?></a></li>
+        <li class="last">
+            <a href="{{commenter.banurl}}" class="banUser"><span><?php putGS('Ban user');?></span></a>
+        </li>
+    </ul>
+</div>
+</td>
+<td style="display:none;"></td>
+<td style="display:none;"></td>
+<td style="display:none;"></td>
+</script>
 <div id="actionExpand" class="dataTables_actions">
 <fieldset><select class="input_select actions">
     <option value=""><?php putGS('Actions');?></option>
