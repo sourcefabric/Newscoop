@@ -42,3 +42,4 @@ UPDATE `SystemPreferences` SET `value` = '/js/geocoding/markers/' WHERE `varname
 INSERT INTO SystemPreferences (varname, value) VALUES ('CollectStatistics', 'Y');
 
 system php ./acl.php
+system php ./javascript_js_cleanup.php
