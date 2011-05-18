@@ -45,3 +45,4 @@ DELETE FROM `liveuser_rights` WHERE `right_define_name` = 'SyncPhorumUsers';
 
 system php ./acl.php
 system php ./transfer_phorum.php
+system php ./javascript_js_cleanup.php
