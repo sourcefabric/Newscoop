@@ -33,3 +33,22 @@ please read the manual.
 
 The template language is fully backward compatible with the older 3.x
 versions.
+
+
+Troubleshooting
+
+In version 3.5.3 the "javascript" directoy was renamed to "js" due to
+naming issues with the specific implementation of Apache in Ubuntu. As a
+consequence you can experiment some mis-behaviors like the TinyMCE editor
+not loading in the Article edit screen. For this to be fixed, the .htaccess
+file must be upgraded. The automatic upgrade script tries to modify the
+file for you, it only works though if .htaccess is writable, otherwise you
+must edit it by yourself. All what you need to do is to change the
+following line:
+
+RewriteCond %{REQUEST_URI} !(/+plugins/[^/]*)?/+javascript
+
+by
+
+RewriteCond %{REQUEST_URI} !(/+plugins/[^/]*)?/+js
+
