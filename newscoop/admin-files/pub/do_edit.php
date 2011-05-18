@@ -25,7 +25,11 @@ $f_name = trim(Input::Get('f_name'));
 $f_default_alias = Input::Get('f_default_alias', 'int');
 $f_language = Input::Get('f_language', 'int');
 $f_url_type = Input::Get('f_url_type', 'int');
+
+
 $f_url_error_tpl_id = Input::Get('f_url_error_tpl_id', 'int', null);
+
+
 $f_time_unit = Input::Get('f_time_unit');
 $f_unit_cost = trim(Input::Get('f_unit_cost', 'float', '0.0'));
 $f_unit_cost_all_lang = trim(Input::Get('f_unit_cost_all_lang', 'float', '0.0'));

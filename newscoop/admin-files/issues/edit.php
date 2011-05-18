@@ -166,7 +166,9 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 				</A>
 			</TD>
 		</TR>
-
+		<?php
+			if(SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
+		?>
 		<TR>
 			<TD COLSPAN="2" style="padding-top: 20px;">
 				<B><?php  putGS("Default templates"); ?></B>
@@ -214,7 +216,9 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 				</SELECT>
 			</TD>
 		</TR>
-
+		<?php
+			}
+		?>
 		<TR>
 			<TD COLSPAN="2" align="center" style="padding-top: 15px;">
 				<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">

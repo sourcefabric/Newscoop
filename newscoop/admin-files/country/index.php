@@ -3,6 +3,10 @@ require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/country/country_common.php"
 require_once($GLOBALS['g_campsiteDir']. "/classes/SimplePager.php");
 camp_load_translation_strings("api");
 
+if (!$g_user->hasPermission('ManageCountries') && !$g_user->hasPermission('DeleteCountries')) {
+	camp_html_goto_page("/$ADMIN/");
+}
+
 $f_country_language_selected = camp_session_get('f_country_language_selected', '');
 $f_country_offset = camp_session_get('f_country_offset', 0);
 if (empty($f_country_language_selected)) {

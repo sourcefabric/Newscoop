@@ -123,6 +123,7 @@ function onCommentsModerated(p_checkbox)
                 <?php  putGS("Article topics"); ?>
             </TD>
         </TR>
+
         <TR>
         	<TD ALIGN="RIGHT"><?php  putGS("Invalid URL Template"); ?>:</TD>
         	<TD>

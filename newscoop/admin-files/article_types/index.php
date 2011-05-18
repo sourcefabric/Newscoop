@@ -3,6 +3,10 @@ camp_load_translation_strings("article_types");
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
 
+if (!$g_user->hasPermission('ManageArticleTypes') && !$g_user->hasPermission('DeleteArticleTypes')) {
+	camp_html_goto_page("/$ADMIN/");
+}
+
 $articleTypes = ArticleType::GetArticleTypes(true);
 // return value is sorted by language
 $allLanguages = Language::GetLanguages(null, null, null, array(), array(), true);

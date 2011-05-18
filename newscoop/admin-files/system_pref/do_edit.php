@@ -15,38 +15,76 @@ if (!$g_user->hasPermission('ChangeSystemPreferences')) {
     exit;
 }
 
+if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+	$f_cache_engine = Input::Get('f_cache_engine');
+	$f_template_cache_handler = Input::Get('f_template_cache_handler');
+	$f_smtp_host = strip_tags(Input::Get('f_smtp_host'));
+	$f_smtp_port = Input::Get('f_smtp_port', 'int');
+	$f_editor_image_ratio = Input::Get('f_editor_image_ratio', 'int', null, true);
+	$f_editor_image_width = Input::Get('f_editor_image_width', 'int', null, true);
+	$f_editor_image_height = Input::Get('f_editor_image_height', 'int', null, true);
+	$f_editor_image_zoom = Input::Get('f_editor_image_zoom');
+	$f_external_subs_management = Input::Get('f_external_subs_management');
+
+	$f_use_replication = Input::Get('f_use_replication');
+	$f_db_repl_host = strip_tags(Input::Get('f_db_repl_host'));
+	$f_db_repl_user = strip_tags(Input::Get('f_db_repl_user'));
+	$f_db_repl_pass = strip_tags(Input::Get('f_db_repl_pass'));
+	$f_db_repl_port = Input::Get('f_db_repl_port', 'int');
+
+	$f_template_filter = Input::Get('f_template_filter', '', 'string', true);
+	$f_external_cron_management = Input::Get('f_external_cron_management');
+
+} else {
+	$f_cache_engine = SystemPref::Get('DBCacheEngine');
+	$f_template_cache_handler = SystemPref::Get('TemplateCacheHandler');
+	$f_smtp_host = SystemPref::Get("SMTPHost");
+	$f_smtp_port = SystemPref::Get("SMTPPort");
+	$f_editor_image_ratio = SystemPref::Get("EditorImageRatio");
+	$f_editor_image_width = SystemPref::Get("EditorImageResizeWidth");
+	$f_editor_image_height = SystemPref::Get("EditorImageResizeHeight");
+	$f_editor_image_zoom = SystemPref::Get("EditorImageZoom");
+	$f_external_subs_management = SystemPref::Get("ExternalSubscriptionManagement");
+
+	$f_use_replication = SystemPref::Get("UseDBReplication");
+	$f_db_repl_host = SystemPref::Get("DBReplicationHost");
+	$f_db_repl_user = SystemPref::Get("DBReplicationUser");
+	$f_db_repl_pass = SystemPref::Get("DBReplicationPass");
+	$f_db_repl_port = SystemPref::Get("DBReplicationPort");
+
+	$f_template_filter = SystemPref::Get("TemplateFilter");
+	$f_external_cron_management = SystemPref::Get("ExternalCronManagement");
+}
+
+
 $f_campsite_online = Input::Get('f_campsite_online');
 $f_site_title = strip_tags(Input::Get('f_site_title'));
 $f_site_metakeywords = strip_tags(Input::Get('f_site_metakeywords'));
 $f_site_metadescription = strip_tags(Input::Get('f_site_metadescription'));
 $f_time_zone = Input::Get('f_time_zone');
-$f_cache_engine = Input::Get('f_cache_engine');
-$f_template_cache_handler = Input::Get('f_template_cache_handler');
+
+
 $f_secret_key = strip_tags(Input::Get('f_secret_key'));
 $f_session_lifetime = Input::Get('f_session_lifetime', 'int');
 $f_imagecache_lifetime = Input::Get('f_imagecache_lifetime', 'int');
 $f_keyword_separator = strip_tags(Input::Get('f_keyword_separator'));
 $f_login_num = Input::Get('f_login_num', 'int');
 $f_max_upload_filesize = strip_tags(Input::Get('f_max_upload_filesize'));
-$f_smtp_host = strip_tags(Input::Get('f_smtp_host'));
-$f_smtp_port = Input::Get('f_smtp_port', 'int');
-$f_editor_image_ratio = Input::Get('f_editor_image_ratio', 'int', null, true);
-$f_editor_image_width = Input::Get('f_editor_image_width', 'int', null, true);
-$f_editor_image_height = Input::Get('f_editor_image_height', 'int', null, true);
-$f_editor_image_zoom = Input::Get('f_editor_image_zoom');
-$f_use_replication = Input::Get('f_use_replication');
-$f_db_repl_host = strip_tags(Input::Get('f_db_repl_host'));
-$f_db_repl_user = strip_tags(Input::Get('f_db_repl_user'));
-$f_db_repl_pass = strip_tags(Input::Get('f_db_repl_pass'));
-$f_db_repl_port = Input::Get('f_db_repl_port', 'int');
-$f_external_subs_management = Input::Get('f_external_subs_management');
+
+
+
+
+
+
+
 $f_password_recovery = Input::Get('f_password_recovery');
 $f_password_recovery_from = Input::Get('f_password_recovery_from');
+
 if ($f_external_subs_management != 'Y' && $f_external_subs_management != 'N') {
     $f_external_subs_management = SystemPref::Get('ExternalSubscriptionManagement');
 }
-$f_template_filter = Input::Get('f_template_filter', '', 'string', true);
-$f_external_cron_management = Input::Get('f_external_cron_management');
+
+
 if ($f_external_cron_management != 'Y' && $f_external_cron_management != 'N') {
     $f_external_cron_management = SystemPref::Get('ExternalCronManagement');
 }
@@ -60,24 +98,24 @@ $f_geo = array(
     'map_center_latitude_default' => Input::Get('f_map_center_latitude_default', 'float'),
     'map_center_longitude_default' => Input::Get('f_map_center_longitude_default', 'float'),
     'map_display_resolution_default' => Input::Get('f_map_display_resolution_default', 'int'),
-    'map_view_width_default' => Input::Get('f_map_view_width_default', 'int', 600, true),
-    'map_view_height_default' => Input::Get('f_map_view_height_default', 'int', 400, true),
+    'map_view_width_default' => SaaS::singleton()->hasPermission('ManageSystemPreferences') ? Input::Get('f_map_view_width_default', 'int', 600, true) : SystemPref::Get('MapViewWidthDefault'),
+    'map_view_height_default' => SaaS::singleton()->hasPermission('ManageSystemPreferences') ? Input::Get('f_map_view_height_default', 'int', 400, true) : SystemPref::Get('MapViewHeightDefault'),
     'map_provider_available_google_v3' => Input::Get('f_map_provider_available_google_v3', 'int', 0, true),
     'map_provider_available_map_quest' => Input::Get('f_map_provider_available_map_quest', 'int', 0, true),
     'map_provider_available_oSM' => Input::Get('f_map_provider_available_oSM', 'int', 0, true),
     'map_provider_default' => Input::Get('f_map_provider_default', 'string'),
-    'map_marker_directory' => Input::Get('f_map_marker_directory', 'string'),
+    'map_marker_directory' => SaaS::singleton()->hasPermission('ManageSystemPreferences') ? Input::Get('f_map_marker_directory', 'string') : SystemPref::Get('MapMarkerDirectory'),
     'map_marker_source_default' => Input::Get('f_map_marker_source_default', 'string'),
-    'map_popup_width_min' => Input::Get('f_map_popup_width_min', 'int'),
-    'map_popup_height_min' => Input::Get('f_map_popup_height_min', 'int'),
-    'map_video_width_you_tube' => Input::Get('f_map_video_width_you_tube', 'int'),
-    'map_video_height_you_tube' => Input::Get('f_map_video_height_you_tube', 'int'),
-    'map_video_width_vimeo' => Input::Get('f_map_video_width_vimeo', 'int'),
-    'map_video_height_vimeo' => Input::Get('f_map_video_height_vimeo', 'int'),
-    'map_video_width_flash' => Input::Get('f_map_video_width_flash', 'int'),
-    'map_video_height_flash' => Input::Get('f_map_video_height_flash', 'int'),
-    'flash_server' => Input::Get('f_flash_server', 'string'),
-    'flash_directory' => Input::Get('f_flash_directory', 'string'),
+    'map_popup_width_min' => SaaS::singleton()->hasPermission('ManageSystemPreferences') ? Input::Get('f_map_popup_width_min', 'int') : SystemPref::Get('MapPopupWidthMin'),
+    'map_popup_height_min' => SaaS::singleton()->hasPermission('ManageSystemPreferences') ? Input::Get('f_map_popup_height_min', 'int') : SystemPref::Get('MapPopupHeightMin'),
+    'map_video_width_you_tube' => SaaS::singleton()->hasPermission('ManageSystemPreferences') ? Input::Get('f_map_video_width_you_tube', 'int') : SystemPref::Get('MapVideoWidthYouTube'),
+    'map_video_height_you_tube' => SaaS::singleton()->hasPermission('ManageSystemPreferences') ? Input::Get('f_map_video_height_you_tube', 'int') : SystemPref::Get('MapVideoHeightYouTube'),
+    'map_video_width_vimeo' => SaaS::singleton()->hasPermission('ManageSystemPreferences') ? Input::Get('f_map_video_width_vimeo', 'int') : SystemPref::Get('MapVideoWidthVimeo'),
+    'map_video_height_vimeo' => SaaS::singleton()->hasPermission('ManageSystemPreferences') ? Input::Get('f_map_video_height_vimeo', 'int') : SystemPref::Get('MapVideoHeightVimeo'),
+    'map_video_width_flash' => SaaS::singleton()->hasPermission('ManageSystemPreferences') ? Input::Get('f_map_video_width_flash', 'int') : SystemPref::Get('MapVideoWidthFlash'),
+    'map_video_height_flash' => SaaS::singleton()->hasPermission('ManageSystemPreferences') ? Input::Get('f_map_video_height_flash', 'int') : SystemPref::Get('MapVideoHeightFlash'),
+    'flash_server' => SaaS::singleton()->hasPermission('ManageSystemPreferences') ? Input::Get('f_flash_server', 'string') : SystemPref::Get('FlashServer'),
+    'flash_directory' => SaaS::singleton()->hasPermission('ManageSystemPreferences') ? Input::Get('f_flash_directory', 'string') : SystemPref::Get('FlashDirectory'),
 );
 
 if (!Input::IsValid()) {

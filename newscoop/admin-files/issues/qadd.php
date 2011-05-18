@@ -1,6 +1,10 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
 
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
+
 // Check permissions
 if (!$g_user->hasPermission('ManageIssue')) {
 	camp_html_display_error(getGS('You do not have the right to add issues.'));
@@ -31,6 +35,9 @@ camp_html_content_top(getGS('Add new issue'), array('Pub' => $publicationObj), t
 		<LI><?php  putGS('Copy the entire structure in all languages from the previous issue except for content.'); ?><LI><?php  putGS('You may modify it later if you wish.'); ?></LI>
 	</TD>
 <TR>
+<?php
+	if (SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
+?>
 <TR>
 	<TD VALIGN="TOP"><A HREF="add_new.php?Pub=<?php  p($Pub); ?>"><IMG SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/tol.gif" BORDER="0"></A></TD>
 	<TD><B><A HREF="add_new.php?Pub=<?php  p($Pub); ?>"><?php  putGS('Create a new structure'); ?></A></B></TD>
@@ -41,6 +48,9 @@ camp_html_content_top(getGS('Add new issue'), array('Pub' => $publicationObj), t
 		<LI><?php  putGS('Create a complete new structure.'); ?><LI><?php  putGS('You must define an issue type for each language and then sections for them.'); ?></LI>
 	</TD>
 <TR>
+<?php
+	}
+?>
 </TABLE>
 <P>
 <?php camp_html_copyright_notice(); ?>

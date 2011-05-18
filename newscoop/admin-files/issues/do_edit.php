@@ -2,6 +2,9 @@
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Template.php');
 
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
     exit;
@@ -19,9 +22,19 @@ $f_current_language_id = Input::Get('f_current_language_id', 'int');
 $f_issue_name = trim(Input::Get('f_issue_name'));
 $f_new_language_id = Input::Get('f_new_language_id', 'int');
 $f_publication_date = Input::Get('f_publication_date', 'string', '', true);
-$f_issue_template_id = Input::Get('f_issue_template_id', 'int');
-$f_section_template_id = Input::Get('f_section_template_id', 'int');
-$f_article_template_id = Input::Get('f_article_template_id', 'int');
+
+
+if(SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
+	$f_issue_template_id = Input::Get('f_issue_template_id', 'int');
+	$f_section_template_id = Input::Get('f_section_template_id', 'int');
+	$f_article_template_id = Input::Get('f_article_template_id', 'int');
+} else {
+	$issueObj = new Issue($f_publication_id, $f_current_language_id, $f_issue_number);
+	$f_issue_template_id = $issueObj->getIssueTemplateId() > 0 ? $issueObj->getIssueTemplateId() : 0;
+	$f_section_template_id = $issueObj->getSectionTemplateId() > 0 ? $issueObj->getSectionTemplateId() : 0;
+	$f_article_template_id = $issueObj->getArticleTemplateId() > 0 ? $issueObj->getArticleTemplateId() : 0;
+}
+
 $f_url_name = trim(Input::Get('f_url_name'));
 
 if (!Input::IsValid()) {

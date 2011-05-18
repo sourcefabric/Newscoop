@@ -1,4 +1,5 @@
 <?PHP
+
 camp_load_translation_strings("user_subscriptions");
 require_once($GLOBALS['g_campsiteDir']. '/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/Subscription.php');

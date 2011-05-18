@@ -11,7 +11,7 @@ if (!SecurityToken::isValid()) {
 }
 
 // Check permissions
-if (!$g_user->hasPermission('ManagePub')) {
+if (!$g_user->hasPermission('ManagePub')  || !SaaS::singleton()->hasPermission("AddPub")) {
 	camp_html_display_error(getGS("You do not have the right to add publications."));
 	exit;
 }

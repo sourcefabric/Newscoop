@@ -86,6 +86,9 @@ editor_load_tinymce('cDescription', $g_user, 0, $editorLanguage, 'section');
     <input type="text" class="input_text" name="cShortName" size="32" value="<?php p(htmlspecialchars($sectionObj->getUrlName())); ?>" />
   </td>
 </tr>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSectionSubscriptions')) {
+?>
 <tr>
   <td align="right"><?php putGS("Subscriptions"); ?>:</td>
   <td>
@@ -96,6 +99,9 @@ editor_load_tinymce('cDescription', $g_user, 0, $editorLanguage, 'section');
     </select>
   </td>
 </tr>
+<?php
+	}
+?>
 <tr>
   <td align="right" valign="top"><?php putGS("Description"); ?>:</td>
   <td>
@@ -103,6 +109,9 @@ editor_load_tinymce('cDescription', $g_user, 0, $editorLanguage, 'section');
     rows="20" cols="80"><?php p($sectionObj->getDescription()); ?></textarea>
   </td>
 </tr>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSectionTemplates')) {
+?>
 <tr>
   <td colspan="2" style="padding-top:20px;">
     <b><?php putGS("Default templates"); ?></b>
@@ -135,6 +144,9 @@ editor_load_tinymce('cDescription', $g_user, 0, $editorLanguage, 'section');
     </select>
   </td>
 </tr>
+<?php
+	}
+?>
 <tr>
   <td colspan="2" align="center">
     <input type="hidden" name="Pub" value="<?php p($Pub); ?>" />

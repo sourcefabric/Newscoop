@@ -96,6 +96,9 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         </select>
     </td>
 </tr>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+?>
 <tr>
     <td align="left" width="400px">
         <?php putGS("Database Cache Engine:") ?>
@@ -112,6 +115,12 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         </select>
     </td>
 </tr>
+<?php
+	}
+?>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+?>
 <tr>
     <td align="left" width="400px">
         <?php putGS("Template Cache Handler:") ?>
@@ -128,6 +137,9 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         </select>
     </td>
 </tr>
+<?php
+	}
+?>
 <tr>
     <td align="left" width="400px">
         <?php putGS("Imagecache Lifetime:") ?>
@@ -222,6 +234,9 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_max_upload_filesize" value="<?php p(SystemPref::Get("MaxUploadFileSize")); ?>" maxlenght="12" size="14" class="input_text" alt="blank" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("Max Upload File Size")); ?>" />
     </td>
 </tr>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+?>
 <tr>
     <td align="left" width="400px">
         <?php putGS("SMTP Host:"); ?>
@@ -230,6 +245,12 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_smtp_host" value="<?php p(SystemPref::Get("SMTPHost")); ?>" maxlength="100" size="40" class="input_text" alt="blank" emsg="<?php putGS("SMTP Host must be at least four character."); ?>" />
     </td>
 </tr>
+<?php
+	}
+?>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+?>
 <tr>
     <td align="left" width="400px">
         <?php putGS("SMTP Port:"); ?>
@@ -238,14 +259,21 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_smtp_port" value="<?php p(SystemPref::Get("SMTPPort")); ?>" maxlength="6" size="8" class="input_text" alt="number|0|0" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("SMTP Port")); ?>" />
     </td>
 </tr>
+<?php
+	}
+?>
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+?>
 <tr>
     <td colspan="2" align="left">
         <strong><?php putGS("Editor Settings"); ?></strong>
     </td>
 </tr>
+
 <tr>
     <td align="left" width="400px">
         <?php putGS("Image Resizing Ratio:"); ?>
@@ -254,6 +282,12 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_editor_image_ratio" value="<?php p(SystemPref::Get("EditorImageRatio")); ?>" maxlength="3" size="8" class="input_text" alt="number|0|1|100|bok" emsg="<?php putGS("Please enter a valid value (1 - 100) for the '$1' field.", getGS("Image Resizing Ratio")); ?>" />&nbsp;&#37;
     </td>
 </tr>
+<?php
+	}
+?>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+?>
 <tr>
     <td align="left" width="400px">
         <?php putGS("Image Resizing Width:"); ?>
@@ -262,6 +296,12 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_editor_image_width" value="<?php p(SystemPref::Get("EditorImageResizeWidth")); ?>" maxlength="6" size="8" class="input_text" alt="number|0|0|bok" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("Image Resizing Width")); ?>" />&nbsp;pixels
     </td>
 </tr>
+<?php
+	}
+?>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+?>
 <tr>
     <td align="left" width="400px">
         <?php putGS("Image Resizing Height:"); ?>
@@ -270,6 +310,12 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_editor_image_height" value="<?php p(SystemPref::Get("EditorImageResizeHeight")); ?>" maxlength="6" size="8" class="input_text" alt="number|0|0|bok" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("Image Resizing Height")); ?>" />&nbsp;pixels
     </td>
 </tr>
+<?php
+	}
+?>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+?>
 <tr>
     <td align="left" width="400px">
         <?php putGS("Zoom enabled for images in article content?"); ?>
@@ -279,9 +325,16 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="radio" name="f_editor_image_zoom" value="N" <?php if (SystemPref::Get("EditorImageZoom") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
     </td>
 </tr>
+
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
+<?php
+	}
+?>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+?>
 <tr>
     <td colspan="2" align="left">
         <?php putGS("Reader subscriptions managed externally?"); ?>
@@ -289,9 +342,16 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="radio" name="f_external_subs_management" value="N" <?php if (SystemPref::Get("ExternalSubscriptionManagement") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
     </td>
 </tr>
+
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
+<?php
+	}
+?>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+?>
 <tr>
     <td colspan="2" align="left">
         <?php putGS("Setting up a Newscoop Replication Server?"); ?>
@@ -342,9 +402,16 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         </table>
     </td>
 </tr>
+
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
+<?php
+	}
+?>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+?>
 <tr>
     <td align="left">
         <?php putGS("Templates filter mask (separated by comma)"); ?>
@@ -353,9 +420,16 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_template_filter" value="<?php p(SystemPref::Get("TemplateFilter")) ?>" maxlenght="50" size="30" class="input_text"/>
     </td>
 </tr>
+
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
+<?php
+	}
+?>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+?>
 <tr>
     <td colspan="2" align="left">
         <?php putGS("Run scheduled tasks externally?"); ?>
@@ -366,6 +440,9 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
+<?php
+	}
+?>
 <tr>
     <td colspan="2" align="left">
         <strong><?php putGS("Geolocation Settings"); ?></strong>
@@ -395,6 +472,9 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_map_display_resolution_default" value="<?php p(SystemPref::Get('MapDisplayResolutionDefault')); ?>" maxlength="2" size="4" class="input_text" />
     </td>
 </tr>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+?>
 <tr>
     <td align="left" width="400px">
         <?php putGS("Map Default Width:"); ?>
@@ -403,6 +483,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_map_view_width_default" value="<?php p(SystemPref::Get('MapViewWidthDefault')); ?>" maxlength="3" size="4" class="input_text" />
     </td>
 </tr>
+
 <tr>
     <td align="left" width="400px">
         <?php putGS("Map Default Height:"); ?>
@@ -411,6 +492,9 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_map_view_height_default" value="<?php p(SystemPref::Get('MapViewHeightDefault')); ?>" maxlength="3" size="4" class="input_text" />
     </td>
 </tr>
+<?php
+	}
+?>
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
@@ -455,6 +539,9 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+?>
 <tr>
     <td align="left" width="400px">
         <?php putGS("Map Marker Directory:"); ?>
@@ -463,6 +550,9 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_map_marker_directory" value="<?php p(SystemPref::Get('MapMarkerDirectory')); ?>" maxlength="80" size="40" class="input_text" />
     </td>
 </tr>
+<?php
+	}
+?>
 <tr>
     <td align="left" width="400px">
         <?php putGS("Map Marker Default:"); ?>
@@ -491,6 +581,9 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+?>
 <tr>
     <td align="left" width="400px">
         <?php putGS("Map Popup Minimal Width:"); ?>
@@ -510,6 +603,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
+
 <tr>
     <td align="left" width="400px">
         <?php putGS("Youtube Default Width:"); ?>
@@ -529,6 +623,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
+
 <tr>
     <td align="left" width="400px">
         <?php putGS("Vimeo Default Width:"); ?>
@@ -545,6 +640,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_map_video_height_vimeo" value="<?php p(SystemPref::Get('MapVideoHeightVimeo')); ?>" maxlength="3" size="4" class="input_text" />
     </td>
 </tr>
+
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
@@ -564,6 +660,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_map_video_height_flash" value="<?php p(SystemPref::Get('MapVideoHeightFlash')); ?>" maxlength="3" size="4" class="input_text" />
     </td>
 </tr>
+
 <tr>
     <td align="left" width="400px">
         <?php putGS("Local Flash Server:"); ?>
@@ -580,9 +677,13 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_flash_directory" value="<?php p(SystemPref::Get('FlashDirectory')); ?>" maxlength="80" size="40" class="input_text" />
     </td>
 </tr>
+
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
+<?php
+	}
+?>
 <?php CampPlugin::PluginAdminHooks(__FILE__); ?>
 <tr>
     <td colspan="2" align="center" style="padding-top: 10px;">
