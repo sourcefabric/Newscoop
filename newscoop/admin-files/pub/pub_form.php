@@ -124,6 +124,10 @@ function onCommentsModerated(p_checkbox)
             </TD>
         </TR>
 
+		<?php
+			if( Saas::singleton()->hasPermission("ManagePubInvalidUrlTemplate") ) {
+		?>
+
         <TR>
         	<TD ALIGN="RIGHT"><?php  putGS("Invalid URL Template"); ?>:</TD>
         	<TD>
@@ -138,6 +142,7 @@ function onCommentsModerated(p_checkbox)
 				</SELECT>
         	</TD>
         </TR>
+        <?php } ?>
 
         <tr><td colspan="2"><HR NOSHADE SIZE="1" COLOR="BLACK"></td></tr>
 

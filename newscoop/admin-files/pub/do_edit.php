@@ -26,8 +26,15 @@ $f_default_alias = Input::Get('f_default_alias', 'int');
 $f_language = Input::Get('f_language', 'int');
 $f_url_type = Input::Get('f_url_type', 'int');
 
+if( Saas::singleton()->hasPermission("ManagePubInvalidUrlTemplate") ) {
+	$f_url_error_tpl_id = Input::Get('f_url_error_tpl_id', 'int', null);
+} else {
+	$publicationObj = new Publication($f_publication_id);
+	$defaultTemplateId = isset($publicationObj) ? $publicationObj->getProperty('url_error_tpl_id') : null;
+	$f_url_error_tpl_id = $defaultTemplateId;
+}
 
-$f_url_error_tpl_id = Input::Get('f_url_error_tpl_id', 'int', null);
+
 
 
 $f_time_unit = Input::Get('f_time_unit');
