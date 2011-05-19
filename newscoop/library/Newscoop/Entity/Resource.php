@@ -51,7 +51,7 @@ class Resource extends Entity
 	{
 		return $this->name;
 	}
-
+	
 	/**
 	 * Set the name of the theme resource, must be a user frendly name used for displaying it on the UI.
 	 *

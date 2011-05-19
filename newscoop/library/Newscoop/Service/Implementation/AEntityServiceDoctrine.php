@@ -32,7 +32,7 @@ abstract class AEntityServiceDoctrine implements IEntityService
 	/** @var Newscoop\Service\Resource\ResourceId */
 	private $id;
 	/** @var Doctrine\ORM\EntityManager */
-	private $em;
+	private $em = NULL;
 
 	/* ------------------------------- */
 
@@ -52,9 +52,6 @@ abstract class AEntityServiceDoctrine implements IEntityService
 	{
 		Validation::notEmpty($id, 'id');
 		$this->id = $id;
-
-		$doctrine = \Zend_Registry::get('doctrine');
-		$this->em = $doctrine->getEntityManager();
 
 		$this->_init_();
 
@@ -136,7 +133,7 @@ abstract class AEntityServiceDoctrine implements IEntityService
 	{
 		return $this->id;
 	}
-	
+
 	/** Provides the dictrine entity manager.
 	 *
 	 * @return Doctrine\ORM\EntityManager
@@ -144,6 +141,10 @@ abstract class AEntityServiceDoctrine implements IEntityService
 	 */
 	protected function getEntityManager()
 	{
+		if($this->em === NULL){
+			$doctrine = \Zend_Registry::get('doctrine');
+			$this->em = $doctrine->getEntityManager();
+		}
 		return $this->em;
 	}
 

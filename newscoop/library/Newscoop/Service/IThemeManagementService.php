@@ -115,6 +115,17 @@ interface IThemeManagementService extends IThemeService
 	 * 		belong to the same publication and you try to rename 1 theme to have the same name as the other). 
 	 */
 	function updateTheme(Theme $theme);
+	
+	/**
+	 * Delete the theme and all coresponding connections.
+	 * 
+	 * @param Theme $theme
+	 * 		The theme to be deleted, not null.
+	 * 
+	 * @return bool
+	 * 		TRUE if the theme was succesfully deleted, FLASE if the theme is in use and cannot be removed.
+	 */
+	function deleteTheme(Theme $theme);
 
 	/**
 	 * Assign the theme to the publication.

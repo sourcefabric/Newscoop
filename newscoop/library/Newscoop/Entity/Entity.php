@@ -17,7 +17,7 @@ class Entity {
 
 	/**
 	 * @id @generatedValue
-	 * @column(name="Id", type="integer")
+	 * @column(name="id", type="integer")
 	 * @var int
 	 */
 	private $id;

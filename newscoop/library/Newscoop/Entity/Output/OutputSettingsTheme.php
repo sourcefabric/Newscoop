@@ -8,8 +8,10 @@
 
 namespace Newscoop\Entity\Output;
 
+use Newscoop\Entity\Resource;
+use Newscoop\Entity\Publication;
 use Newscoop\Entity\PublicationTheme;
-use Newscoop\Entity\OutputSetting;
+use Newscoop\Entity\OutputSettings;
 use Newscoop\Utils\Validation;
 use Newscoop\Entity\Entity;
 use Newscoop\Entity\Theme;
@@ -18,10 +20,17 @@ use Newscoop\Entity\Theme;
  * Provides the settings for an output for a theme.
  *
  * @Entity
- * @Table(name="output_theme", uniqueConstraints={@UniqueConstraint(name="publication_themes_idx", columns={"fk_output_id", "fk_publication_id", "fk_theme_path_id"})
+ * @Table(name="output_theme", uniqueConstraints={@UniqueConstraint(name="publication_themes_idx", columns={"fk_output_id", "fk_publication_id", "fk_theme_path_id"})})
  */
 class OutputSettingsTheme extends OutputSettings
 {
+	
+	/**
+	 * Provides the class name as a constant. 
+	 */
+	const NAME = __CLASS__;
+	
+	/* --------------------------------------------------------------- */
 
 	/**
 	 * @ManyToOne(targetEntity="Newscoop\Entity\Publication")

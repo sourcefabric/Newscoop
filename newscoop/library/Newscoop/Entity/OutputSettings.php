@@ -21,7 +21,7 @@ class OutputSettings extends Entity
 
 	/**
 	 * @ManyToOne(targetEntity="Newscoop\Entity\Output")
-	 * @JoinColumn(name="fk_output_id", referencedColumnName="id")
+	 * @JoinColumn(name="fk_output_id", referencedColumnName="id", nullable=FALSE)
 	 * @var Newscoop\Entity\Output
 	 */
 	private $output;
@@ -62,7 +62,7 @@ class OutputSettings extends Entity
 	 * @return Newscoop\Entity\Output
 	 *		The output that is the owner of this settings.
 	 */
-	public function getOutput()
+	function getOutput()
 	{
 		return $this->output;
 	}
@@ -76,7 +76,7 @@ class OutputSettings extends Entity
 	 * @return Newscoop\Entity\OutputSetting
 	 *		This object for chaining purposes.
 	 */
-	public function setOutput(Output $output)
+	function setOutput(Output $output)
 	{
 		Validation::notEmpty($output, 'output');
 		$this->output = $output;
@@ -91,7 +91,7 @@ class OutputSettings extends Entity
 	 * @return Newscoop\Entity\Resource
 	 *		The front page template resource.
 	 */
-	public function getFrontPage()
+	function getFrontPage()
 	{
 		return $this->frontPage;
 	}
@@ -105,7 +105,7 @@ class OutputSettings extends Entity
 	 * @return Newscoop\Entity\OutputSetting
 	 *		This object for chaining purposes.
 	 */
-	public function setFrontPage(Resource $frontPage)
+	function setFrontPage(Resource $frontPage)
 	{
 		Validation::notEmpty($frontPage, 'frontPage');
 		$this->frontPage = $frontPage;
@@ -120,7 +120,7 @@ class OutputSettings extends Entity
 	 * @return Newscoop\Entity\Resource
 	 *		The section page template resource.
 	 */
-	public function getSectionPage()
+	function getSectionPage()
 	{
 		return $this->sectionPage;
 	}
@@ -134,7 +134,7 @@ class OutputSettings extends Entity
 	 * @return Newscoop\Entity\OutputSetting
 	 *		This object for chaining purposes.
 	 */
-	public function setSectionPage(Resource $sectionPage)
+	function setSectionPage(Resource $sectionPage)
 	{
 		Validation::notEmpty($sectionPage, 'sectionPage');
 		$this->sectionPage = $sectionPage;
@@ -149,7 +149,7 @@ class OutputSettings extends Entity
 	 * @return Newscoop\Entity\Resource
 	 *		The article page template resource.
 	 */
-	public function getArticlePage()
+	function getArticlePage()
 	{
 		return $this->articlePage;
 	}
@@ -163,7 +163,7 @@ class OutputSettings extends Entity
 	 * @return Newscoop\Entity\OutputSetting
 	 *		This object for chaining purposes.
 	 */
-	public function setArticlePage(Resource $articlePage)
+	function setArticlePage(Resource $articlePage)
 	{
 		Validation::notEmpty($articlePage, 'articlePage');
 		$this->articlePage = $articlePage;
@@ -178,7 +178,7 @@ class OutputSettings extends Entity
 	 * @return Newscoop\Entity\Resource
 	 *		The article page template resource.
 	 */
-	public function getErrorPage()
+	function getErrorPage()
 	{
 		return $this->errorPage;
 	}
@@ -192,11 +192,12 @@ class OutputSettings extends Entity
 	 * @return Newscoop\Entity\OutputSetting
 	 *		This object for chaining purposes.
 	 */
-	public function setErrorPage(Resource $errorPage)
+	function setErrorPage(Resource $errorPage)
 	{
 		Validation::notEmpty($errorPage, 'errorPage');
 		$this->errorPage = $errorPage;
 		return $this;
 	}
+
 
 }

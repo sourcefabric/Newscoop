@@ -30,15 +30,15 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	const ATTR_THEME_DESIGNER = 'designer';
 	const ATTR_THEME_VERSION = 'version';
 	const ATTR_THEME_NEWSCOOP_VERSION = 'require';
-	
+
 	const TAG_DESCRIPTION = 'description';
-	
+
 	const TAG_PRESENT = 'presentation-img';
 	const ATTR_PRESENT_NAME = 'name';
 	const ATTR_PRESENT_SRC = 'src';
-	
+
 	/* --------------------------------------------------------------- */
-	
+
 	/** @var Newscoop\Service\Resource\ResourceId */
 	private $id;
 	/** @var Newscoop\Service\IErrorHandler */
@@ -85,11 +85,11 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	function findById($id)
 	{
 		Validation::notEmpty($id, 'id');
-		$themesConfigs = $this->findAllThemesConfigPaths();
 
-		if($id > 0 && $id <= count($themesConfigs)){
-			$rpath = $themesConfigs[$id];
-			$path = $this->themesFolder.$rpath;
+		$themesConfigs = $this->findAllThemesConfigPaths();
+		$rpath = $themesConfigs[$id];
+		if(isset($rpath)){
+			$path = $this->toFullPath($rpath);
 			$xml = $this->loadXML($path);
 			if($xml != NULL){
 				return $this->loadTheme($xml, $id, $rpath);
@@ -135,17 +135,16 @@ class ThemeServiceLocalFileSystem implements IThemeService
 
 		$presentResources = array();
 		if($xml != NULL){
-			foreach ($xml->children() as $node){
+			$nodes = $this->getNodes($xml, self::TAG_PRESENT);
+			foreach ($nodes as $node){
 				/* @var $node \SimpleXMLElement */
-				if($node->getName() === self::TAG_PRESENT){
-					$rsc = new Resource();
-					try{
-						$rsc->setName($this->readAttribute($node, self::ATTR_PRESENT_NAME));
-						$rsc->setPath($theme->getPath().$this->readAttribute($node, self::ATTR_PRESENT_SRC));
-						$presentResources[] = $rsc;
-					}catch(XMLMissingAttribueException $e){
-						$this->getErrorHandler()->error(ThemeErrors::XML_MISSING_ATTRIBUTE, $e->getAttributeName(), $node->getName());
-					}
+				$rsc = new Resource();
+				try{
+					$rsc->setName($this->readAttribute($node, self::ATTR_PRESENT_NAME));
+					$rsc->setPath($theme->getPath().$this->readAttribute($node, self::ATTR_PRESENT_SRC));
+					$presentResources[] = $rsc;
+				}catch(XMLMissingAttribueException $e){
+					$this->getErrorHandler()->error(ThemeErrors::XML_MISSING_ATTRIBUTE, $e->getAttributeName(), $node->getName());
 				}
 			}
 		}
@@ -187,13 +186,13 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	 * Finds all paths to the configurations XML files for themes, that are located in the theme folder.
 	 *
 	 * @return array
-	 * 		The array containing as key the id of the theme config (index) and as a value the relative 
+	 * 		The array containing as key the id of the theme config and as a value the relative
 	 * 		path of the theme configuration XML file in escaped form.
+	 * 		The id of a theme is formed based on the publication path with the crec32 applied.
 	 */
 	protected function findAllThemesConfigPaths()
 	{
 		if($this->cacheThemeConfigs === NULL){
-			$id = 1;
 			$this->cacheThemeConfigs = array();
 			if (is_dir($this->themesFolder)) {
 				if ($dh = opendir($this->themesFolder)) {
@@ -206,7 +205,8 @@ class ThemeServiceLocalFileSystem implements IThemeService
 									if ($file != "." && $file != ".."){
 										$filePath = $dir.DIR_SEP.$file.DIR_SEP.$this->themeConfigFileName;
 										if(file_exists($this->themesFolder.$filePath)){
-											$this->cacheThemeConfigs[$id++] = $this->escapePath($filePath);
+											$escapedPath = $this->escapePath($filePath);
+											$this->cacheThemeConfigs[crc32($escapedPath)] = $escapedPath;
 										}
 									}
 								}
@@ -306,7 +306,7 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	 * Loads the provided theme configuration files.
 	 *
 	 * @param array $themesConfigs
-	 * 		The array containing as key the ide of the theme config (index) and as a value the relative 
+	 * 		The array containing as key the ide of the theme config (index) and as a value the relative
 	 * 		path of the theme configuration XML file, *(not null not empty).
 	 * @return array
 	 * 		The array containing all the loaded themes.
@@ -315,7 +315,7 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	{
 		$themes = array();
 		foreach ($themesConfigs as $id => $rpath){
-			$path = $this->themesFolder.$rpath;
+			$path = $this->toFullPath($rpath);
 			if(file_exists($path)){
 				$xml = $this->loadXML($path);
 				if($xml != NULL){
@@ -327,44 +327,6 @@ class ThemeServiceLocalFileSystem implements IThemeService
 			}
 		}
 		return $themes;
-	}
-
-	/**
-	 * Loads the theme object.
-	 *
-	 * @param \SimpleXMLElement $root
-	 * 		The root Theme XML element, *(not null not empty).
-	 * @param string $id
-	 * 		The id of the loaded Theme, *(not null not empty).
-	 * @param string $themeConfig
-	 * 		The path of the Theme XML file in order to extract the theme path, *(not null not empty).
-	 *
-	 * @return Newscoop\Entity\Theme
-	 * 		The loaded theme object, NULL if there was an issue.
-	 */
-	protected function loadTheme(\SimpleXMLElement $root, $id, $themeConfig)
-	{
-		if($root->getName() !== self::TAG_THEME){
-			$this->getErrorHandler()->error(ThemeErrors::XML_NO_ROOT);
-			return NULL;
-		}
-
-		$theme = new Theme();
-		$theme->setId($id);
-		$theme->setPath($this->extractRelativePathFrom($themeConfig));
-
-		try{
-			$theme->setName($this->readAttribute($root, self::ATTR_THEME_NAME));
-			$theme->setDesigner($this->readAttribute($root, self::ATTR_THEME_DESIGNER));
-			$theme->setVersion($this->readAttribute($root, self::ATTR_THEME_VERSION));
-			$theme->setMinorNewscoopVersion($this->readAttribute($root, self::ATTR_THEME_NEWSCOOP_VERSION));
-			$theme->setDescription($root->{self::TAG_DESCRIPTION}->__toString());
-		}catch(XMLMissingAttribueException $e){
-			$this->getErrorHandler()->error(ThemeErrors::XML_MISSING_ATTRIBUTE, $e->getAttributeName(), $root->getName());
-			return NULL;
-		}
-
-		return $theme;
 	}
 
 	/* --------------------------------------------------------------- */
@@ -398,6 +360,44 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	}
 
 	/**
+	 * Loads the theme object.
+	 *
+	 * @param \SimpleXMLElement $nodeTheme
+	 * 		The node Theme XML element, *(not null not empty).
+	 * @param string $id
+	 * 		The id of the loaded Theme, *(not null not empty).
+	 * @param string $themeConfig
+	 * 		The path of the Theme XML file in order to extract the theme path, *(not null not empty).
+	 *
+	 * @return Newscoop\Entity\Theme
+	 * 		The loaded theme object, NULL if there was an issue.
+	 */
+	protected function loadTheme(\SimpleXMLElement $nodeTheme, $id, $themeConfig)
+	{
+		if($nodeTheme->getName() !== self::TAG_THEME){
+			$this->getErrorHandler()->error(ThemeErrors::XML_NO_ROOT);
+			return NULL;
+		}
+
+		$theme = new Theme();
+		$theme->setId($id);
+		$theme->setPath($this->extractRelativePathFrom($themeConfig));
+
+		try{
+			$theme->setName($this->readAttribute($nodeTheme, self::ATTR_THEME_NAME));
+			$theme->setDesigner($this->readAttribute($nodeTheme, self::ATTR_THEME_DESIGNER));
+			$theme->setVersion($this->readAttribute($nodeTheme, self::ATTR_THEME_VERSION));
+			$theme->setMinorNewscoopVersion($this->readAttribute($nodeTheme, self::ATTR_THEME_NEWSCOOP_VERSION));
+			$theme->setDescription($nodeTheme->{self::TAG_DESCRIPTION}->__toString());
+		}catch(XMLMissingAttribueException $e){
+			$this->getErrorHandler()->error(ThemeErrors::XML_MISSING_ATTRIBUTE, $e->getAttributeName(), $nodeTheme->getName());
+			return NULL;
+		}
+
+		return $theme;
+	}
+
+	/**
 	 * Convienient method for read an attribute from a node.
 	 * This method will throw an exception in case the attribute is not specified.
 	 *
@@ -420,6 +420,38 @@ class ThemeServiceLocalFileSystem implements IThemeService
 		return $value;
 	}
 
+	/**
+	 * Finds all the childrens from the provided node that have the provided tag name
+	 *
+	 * @param \SimpleXMLElement $node
+	 * 		The node in which to search the childrens, not null.
+	 * @param string $tagName
+	 * 		The tag name for the childrens to find, not null.
+	 * @param string $attribute
+	 * 		Optional attribute name to search the kids by, beside the tag name.
+	 * @param $value
+	 * 		Optional but if $attribute is specified than specify also the value of the attribute to find by.
+	 * @return array
+	 * 		an array containing all the found nodes, not null can be empty.
+	 */
+	protected function getNodes(\SimpleXMLElement $node, $tagName, $attribute = NULL, $value = '')
+	{
+		$found = array();
+		foreach ($node->children() as $kid){
+			/* @var $kid \SimpleXMLElement */
+			if($kid->getName() === $tagName){
+				if($attribute != NULL){
+					if($kid[$attribute] == $value){
+						$found[] = $kid;
+					}
+				}else{
+					$found[] = $kid;
+				}
+			}
+		}
+		return $found;
+	}
+
 	/* --------------------------------------------------------------- */
 
 	/**
@@ -436,7 +468,7 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	}
 
 	/**
-	 * Extracts from a provided file path the path where that file is located, attention the path needs 
+	 * Extracts from a provided file path the path where that file is located, attention the path needs
 	 * to be in the escaped form.
 	 *
 	 * @param string $path
@@ -457,15 +489,18 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	/**
 	 * Provides the full path for a theme.
 	 *
-	 * @param Theme $theme
-	 * 		The theme, *(not null not empty).
+	 * @param Theme|string $theme
+	 * 		The Theme or path, *(not null not empty).
 	 * @param string $file
 	 * 		Optional a file to be appended to the path.
 	 * @return string
 	 * 		The full path to the theme and file if is the case.
 	 */
-	protected function toFullPath(Theme $theme, $file = '')
+	protected function toFullPath($theme, $file = '')
 	{
-		return $this->themesFolder.$theme->getPath().$file;
+		if($theme instanceof Theme){
+			return $this->themesFolder.$theme->getPath().$file;
+		}
+		return $this->themesFolder.$theme.$file;
 	}
 }
