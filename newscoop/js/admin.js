@@ -181,21 +181,6 @@ $(function() {
         return confirm(localizer.confirm + ' ' + title + '?');
     });
 
-    // add plus icons
-    $('a.add').each(function() {
-        $(this).addClass('ui-icon-wrapper');
-        $('<span />').addClass('ui-icon ui-icon-plus')
-            .prependTo($(this));
-    });
-
-    // add cross icon for delete
-    $('a.delete.icon').each(function() {
-        $(this).html('');
-        $('<span />')
-            .addClass('ui-icon ui-icon-closethick')
-            .prependTo($(this));
-    });
-
     // zend_form utils
     $('dl.zend_form').each(function() {
         var form = $(this);
@@ -206,13 +191,17 @@ $(function() {
             var dt = dd.prev('dt');
             var errors = $('ul.errors', dd);
 
-            dt.hide().detach().appendTo(form);
+            if (dt.html() == '') { // if empty
+                dt.hide().detach().appendTo(form);
+            }
 
             if (errors.length > 0) { // keep dd for errors
                 return;
             }
 
-            dd.hide().detach().appendTo(form);
+            if ($('*', dd).size() == $('input:hidden', dd).size()) { // if contains only hiddens
+                dd.hide().detach().appendTo(form);
+            }
         });
 
         // hide fieldsets dt

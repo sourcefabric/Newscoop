@@ -21,7 +21,7 @@ if (!SecurityToken::isValid()) {
 
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
-$f_topic_ids = Input::Get('f_topic_ids', 'array', null, true);
+$f_topic_ids = Input::Get('f_topic_ids', 'array', array(), true);
 $articleTopics = ArticleTopic::GetArticleTopics($f_article_number);
 
 if (!Input::IsValid()) {

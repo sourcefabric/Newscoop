@@ -45,6 +45,10 @@ body.with-sidebar dl.zend_form {
     width: 50%;
 }
 
+.zend_form dd input[type=text].short {
+    width: 8%;
+}
+
 .zend_form dd input[type=text]:focus {
     border-color: #cce5f0;
 }
@@ -153,3 +157,5 @@ body.with-sidebar dl.zend_form {
 .filter dl.zend_form dd * {
     width: auto;
 }
+
+dt#csrf-label { display: none; }

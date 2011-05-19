@@ -43,6 +43,27 @@ class Issue extends Entity
     private $sections;
 
     /**
+     * @ManyToOne(targetEntity="Newscoop\Entity\Template")
+     * @JoinColumn(name="IssueTplId", referencedColumnName="Id")
+     * @var Newscoop\Entity\Template"
+     */
+    private $template;
+
+    /**
+     * @ManyToOne(targetEntity="Newscoop\Entity\Template")
+     * @JoinColumn(name="SectionTplId", referencedColumnName="Id")
+     * @var Newscoop\Entity\Template"
+     */
+    private $sectionTemplate;
+
+    /**
+     * @ManyToOne(targetEntity="Newscoop\Entity\Template")
+     * @JoinColumn(name="ArticleTplId", referencedColumnName="Id")
+     * @var Newscoop\Entity\Template"
+     */
+    private $articleTemplate;
+
+    /**
      */
     public function __construct()
     {
