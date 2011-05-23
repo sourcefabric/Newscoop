@@ -108,6 +108,9 @@ function smarty_function_map($p_params, &$p_smarty)
     $width_large = isset($p_params['popup_width']) ? (int) $p_params['popup_width'] : 800;
     $height_large = isset($p_params['popup_height']) ? (int) $p_params['popup_height'] : 600;
     $max_zoom = isset($p_params['max_zoom']) ? (int) $p_params['max_zoom'] : null;
+    $map_margin = isset($p_params['map_margin']) ? (int) $p_params['map_margin'] : null;
+
+    $area_show = isset($p_params['area_show']) ? (string) $p_params['area_show'] : null;
 
     // if we shall display a multi-map
     if ((!is_null($campsite->map_dynamic_points_raw)) || (!is_null($campsite->map_dynamic_constraints))) {
@@ -134,6 +137,7 @@ function smarty_function_map($p_params, &$p_smarty)
 
         $multi_options = array();
         $multi_options["max_zoom"] = $max_zoom;
+        $multi_options["map_margin"] = $map_margin;
         $multi_options["load_common"] = $map_load_common_header;
         $multi_options["pois_retrieved"] = false;
 
@@ -142,6 +146,16 @@ function smarty_function_map($p_params, &$p_smarty)
         $multi_options["large_map_width"] = $width_large;
         $multi_options["large_map_height"] = $height_large;
         $multi_options["large_map_label"] = $multi_map_label;
+
+        if ($campsite->map_dynamic_areas) {
+            if ("focus" == strtolower($area_show)) {
+                $multi_options["area_points"] = $campsite->map_dynamic_areas;
+            }
+            if ("focus_empty" == strtolower($area_show)) {
+                $multi_options["area_points"] = $campsite->map_dynamic_areas;
+                $multi_options["area_points_empty_only"] = true;
+            }
+        }
 
         if ($multi_map_points) {
             $multi_options["pois_retrieved"] = true;
@@ -217,6 +231,7 @@ function smarty_function_map($p_params, &$p_smarty)
     $map_options = array();
     $map_options["auto_focus"] = $auto_focus;
     $map_options["max_zoom"] = $max_zoom;
+    $map_options["map_margin"] = $map_margin;
     $map_options["load_common"] = $map_load_common_header;
 
     $map_options["large_map_on_click"] = $openMapOnClick;

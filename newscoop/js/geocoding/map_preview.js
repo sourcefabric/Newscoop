@@ -299,6 +299,65 @@ this.set_map_large = function(params) {
     this.map_is_popup = true;
 };
 
+this.set_area_constraints = function(areas, params) {
+    //return;
+    if (!areas) {return;}
+
+    var empty_only = false;
+    if (params) {
+        if ("empty_only" in params) {
+            empty_only = params["empty_only"];
+        }
+    }
+
+    var area_cons = {
+        lat_min: null,
+        lat_max: null,
+        lon_min: null,
+        lon_max: null
+    };
+    var got_some_point = false;
+
+    var areas_count = areas.length;
+    for (var aind = 0; aind < areas_count; aind++) {
+        var one_area = areas[aind];
+
+        for (var one_area_type in one_area) {
+            var one_area_spec = one_area[one_area_type];
+
+            var one_area_spec_len = one_area_spec.length;
+            for (var pind = 0; pind < one_area_spec_len; pind++) {
+
+                var cur_poi = one_area_spec[pind];
+                var cur_lat = parseFloat("" + cur_poi.latitude);
+                var cur_lon = parseFloat("" + cur_poi.longitude);
+
+                if ((!got_some_point) || (area_cons.lat_min > cur_lat)) {
+                    area_cons.lat_min = cur_lat;
+                }
+                if ((!got_some_point) || (area_cons.lat_max < cur_lat)) {
+                    area_cons.lat_max = cur_lat;
+                }
+                if ((!got_some_point) || (area_cons.lon_min > cur_lon)) {
+                    area_cons.lon_min = cur_lon;
+                }
+                if ((!got_some_point) || (area_cons.lon_max < cur_lon)) {
+                    area_cons.lon_max = cur_lon;
+                }
+
+                got_some_point = true;
+            }
+        }
+    }
+
+    if (got_some_point) {
+        this.area_cons = area_cons;
+    }
+    this.area_cons_empty_only = empty_only;
+
+    return;
+};
+
 this.set_action_subst = function(action) {
     this.action_substitute = null;
     if (action) {
@@ -578,6 +637,61 @@ this.got_load_data = function (load_data, is_obj) {
 
     var features_to_add = [];
 
+    var poi_count = received_obj.pois.length;
+
+    var focus_area_cons = false;
+    if (this.area_cons) {
+        if (!this.area_cons_empty_only) {
+            focus_area_cons = true;
+        } else {
+            if (0 == poi_count) {
+                focus_area_cons = true;
+            }
+        }
+    }
+
+    if (focus_area_cons) {
+
+        var lonlat_cons_min = new OpenLayers.LonLat(this.area_cons.lon_min, this.area_cons.lat_min).transform(
+            new OpenLayers.Projection("EPSG:4326"),
+            this.map.getProjectionObject()
+        );
+        var lonlat_cons_max = new OpenLayers.LonLat(this.area_cons.lon_max, this.area_cons.lat_max).transform(
+            new OpenLayers.Projection("EPSG:4326"),
+            this.map.getProjectionObject()
+        );
+
+        pos_lon_min = this.area_cons.lon_min;
+        pos_lon_max = this.area_cons.lon_max;
+        pos_lat_min = this.area_cons.lat_min;
+        pos_lat_max = this.area_cons.lat_max;
+
+        poi_lon_min = lonlat_cons_min.lon;
+        poi_lon_max = lonlat_cons_max.lon;
+        poi_lat_min = lonlat_cons_min.lat;
+        poi_lat_max = lonlat_cons_max.lat;
+
+        tos_lon_min = (0 <= this.area_cons.lon_min) ? this.area_cons.lon_min : (this.area_cons.lon_min + 360);
+        tos_lon_max = (0 <= this.area_cons.lon_max) ? this.area_cons.lon_max : (this.area_cons.lon_max + 360);
+        tos_lat_min = this.area_cons.lat_min;
+        tos_lat_max = this.area_cons.lat_max;
+
+        var lonlat_cons_min_shift = new OpenLayers.LonLat(tos_lon_min, tos_lat_min).transform(
+            new OpenLayers.Projection("EPSG:4326"),
+            this.map.getProjectionObject()
+        );
+        var lonlat_cons_max_shift = new OpenLayers.LonLat(tos_lon_max, tos_lat_max).transform(
+            new OpenLayers.Projection("EPSG:4326"),
+            this.map.getProjectionObject()
+        );
+
+        toi_lon_min = lonlat_cons_min_shift.lon;
+        toi_lon_max = lonlat_cons_max_shift.lon;
+        toi_lat_min = lonlat_cons_min_shift.lat;
+        toi_lat_max = lonlat_cons_max_shift.lat;
+
+    }
+
 /*
     // if we used poi grouping
     this.poi_groups = null;
@@ -602,7 +716,6 @@ this.got_load_data = function (load_data, is_obj) {
     var shift_count = shifts.length;
     for (var sind = 0; sind < shift_count; sind++) {
 
-    var poi_count = received_obj.pois.length;
     for (var pind = 0; pind < poi_count; pind++)
     {
         var one_marker = {};
@@ -779,7 +892,7 @@ this.got_load_data = function (load_data, is_obj) {
     this.descs_count = poi_count;
     this.descs_count_inc = poi_count;
 
-    if (this.auto_focus && (0 < poi_count))
+    if (true && this.auto_focus && ((0 < poi_count) || focus_area_cons))
     {
         if ((poi_lon_max - poi_lon_min) > (toi_lon_max - toi_lon_min))
         {
@@ -843,7 +956,7 @@ this.got_load_data = function (load_data, is_obj) {
             }
         }
 
-        if (zoom_out && (1 < poi_count))
+        if (zoom_out && ((1 < poi_count) || focus_area_cons))
         {
             if (0 < zoom_use) {zoom_use -= 1;}
         }
@@ -851,6 +964,7 @@ this.got_load_data = function (load_data, is_obj) {
         received_obj.map.lon = (pos_lon_min + pos_lon_max) / 2.0;
         if (180 < received_obj.map.lon) {received_obj.map.lon -= 360;}
         if (-180 > received_obj.map.lon) {received_obj.map.lon += 360;}
+
         received_obj.map.lat = (pos_lat_min + pos_lat_max) / 2.0;
         received_obj.map.res = "" + zoom_use;
 

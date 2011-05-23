@@ -35,6 +35,9 @@
     areas="polygon 50.096534 14.827194; 50.077589 14.927444; 50.004826 14.975509; 50.011004 14.820327;"
     areas="polygon 50.118553 14.814148; 49.946978 14.814147; 50.026887 14.968643; 49.979223 15.018081; 49.912943 15.022201; 49.920017 15.228195; 50.100057 15.235061; 50.097855 15.099792; 50.032180 15.024948; 50.080234 14.907532;"
     areas="polygon 50.118553 14.814148; 49.946978 14.814147; 50.026887 14.968643; 49.979223 15.018081; 49.912943 15.022201; 50.100057 15.235061; 50.097855 15.099792; 50.032180 15.024948;"
+    areas="polygon 50.118553 14.814148; 49.946978 14.814147; 50.026887 14.968643; 49.979223 15.018081; 49.912943 15.022201; 50.100057 15.235061; 50.097855 15.099792; 50.032180 15.024948;"
+    areas="polygon 21.980235 103.105774; 23.520174 106.972961; 21.162898 107.060852; 20.176114 104.863586;"
+    areas="polygon 50.118553 14.814148; 49.946978 14.814147; 50.026887 14.968643; 49.979223 15.018081; 49.912943 15.022201; 50.100057 15.235061; 50.097855 15.099792; 50.032180 15.024948; polygon 21.980235 103.105774; 23.520174 106.972961; 21.162898 107.060852; 20.176114 104.863586;"
     area_exact=true
     area_exact=false
     date="2010-12-24"
@@ -44,16 +47,31 @@
     area_match="intersection"
     icons="marker-green.png, marker-blue.png"
     has_multimedia=true
+
+    area_show="focus"
+    area_show="focus_empty"
 >
 
 {{ set_map
     label="some display string"
-    areas="polygon 50.118553 14.814148; 49.946978 14.814147; 50.026887 14.968643; 49.979223 15.018081; 49.912943 15.022201; 50.100057 15.235061; 50.097855 15.099792; 50.032180 15.024948;"
+    areas="polygon 21.980235 103.105774; 23.520174 106.972961; 21.162898 107.060852; 20.176114 104.863586;"
     area_exact=true
     max_points=1000
 }}
 
-{{ map show_locations_list=true show_reset_link="Show initial Map" width="300" height="450" show_open_link="Pop-up the map" open_map_on_click=false popup_width="1000" popup_height="750" max_zoom=15 }}
+{{ map
+    show_locations_list=true
+    show_reset_link="Show initial Map"
+    width="300"
+    height="450"
+    show_open_link="Pop-up the map"
+    open_map_on_click=false
+    popup_width="1000"
+    popup_height="750"
+    max_zoom=15
+    map_margin=20
+    area_show="focus_empty"
+}}
 
 <div class="dynamic_map_articles_list">
 <ul>Map Articles

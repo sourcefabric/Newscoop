@@ -22,6 +22,7 @@ function smarty_function_unset_map($p_params, &$p_smarty)
     $campsite = $p_smarty->get_template_vars('gimme');
 
     $campsite->map_dynamic_constraints = null;
+    $campsite->map_dynamic_areas = null;
     $campsite->map_dynamic_max_points = 0;
     $campsite->map_dynamic_tot_points = 0;
     $campsite->map_dynamic_points_raw = null;

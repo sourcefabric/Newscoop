@@ -429,8 +429,33 @@ OpenLayers.HooksPopups.on_feature_unselect = function(evt, geo_obj)
     }
 };
 
+OpenLayers.HooksPopups.on_feature_select_edit = function(evt, geo_obj)
+{
+    if (geo_obj.show_edit_on_select) {
+
+        var feature = null;
+    
+        if (evt)
+        {
+            feature = evt.feature;
+        }
+    
+        if (!feature) {return;}
+    
+        var attrs = feature.attributes;
+        if (!attrs) {return;}
+
+        geo_obj.edit_poi(attrs.m_rank);
+    }
+}
+
 OpenLayers.HooksPopups.on_feature_select = function(evt, geo_obj, avoid_rec)
 {
+    if (geo_obj.ignore_select_event) {
+        geo_obj.select_control.unselect(evt.feature);
+        return;
+    }
+
     var feature = null;
 
     if (evt)

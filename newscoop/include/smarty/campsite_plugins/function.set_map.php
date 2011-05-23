@@ -464,6 +464,12 @@ function smarty_function_set_map($p_params, &$p_smarty)
     }
 
     $campsite->map_dynamic_constraints = $parameters;
+    if (!empty($con_areas)) {
+        $campsite->map_dynamic_areas = json_encode($con_areas);
+    }
+    else {
+        $campsite->map_dynamic_areas = null;
+    }
     $campsite->map_dynamic_map_label = $map_label;
 
     // to retrieve the points for next usage

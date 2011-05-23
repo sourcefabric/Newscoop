@@ -244,6 +244,7 @@ final class CampContext
 
         // initialize geo-map holders
         $this->m_properties['map_dynamic_constraints'] = null;
+        $this->m_properties['map_dynamic_areas'] = null;
         $this->m_properties['map_dynamic_max_points'] = 0;
         $this->m_properties['map_dynamic_tot_points'] = 0;
         $this->m_properties['map_dynamic_points_raw'] = null;

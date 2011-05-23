@@ -533,3 +533,10 @@ a.edit_marker_one_choice_link {
 .map_search_label {
     font-size: 12px;
 }
+
+.map_button_edit_on_click {
+    color:#666666;
+    margin-right: 20px;
+    font-size: 14px;
+    float: right;
+}

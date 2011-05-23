@@ -1773,6 +1773,7 @@ $header_part = '
 
         $auto_focus = null;
         $max_zoom = null;
+        $map_margin = null;
         $load_common = true;
 
         if (is_array($p_options)) {
@@ -1781,6 +1782,9 @@ $header_part = '
             }
             if (array_key_exists("max_zoom", $p_options)) {
                 $max_zoom = $p_options["max_zoom"];
+            }
+            if (array_key_exists("map_margin", $p_options)) {
+                $map_margin = $p_options["map_margin"];
             }
             if (array_key_exists("load_common", $p_options)) {
                 $load_common = $p_options["load_common"];
@@ -1863,6 +1867,10 @@ $header_part = '
         if (null !== $max_zoom)
         {
             $geo_focus_info["json_obj"]["max_zoom"] = $max_zoom;
+        }
+        if (null !== $map_margin)
+        {
+            $geo_focus_info["json_obj"]["border"] = $map_margin;
         }
         $geo_focus_json = "";
         $geo_focus_json .= json_encode($geo_focus_info["json_obj"]);
@@ -2315,7 +2323,10 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 
         $pois_loaded = false;
         $max_zoom = null;
+        $map_margin = null;
         $load_common = true;
+        $area_points = null;
+        $area_points_empty_only = "false";
 
         if (is_array($p_options)) {
             if (array_key_exists("pois_retrieved", $p_options)) {
@@ -2324,8 +2335,19 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
             if (array_key_exists("max_zoom", $p_options)) {
                 $max_zoom = $p_options["max_zoom"];
             }
+            if (array_key_exists("map_margin", $p_options)) {
+                $map_margin = $p_options["map_margin"];
+            }
             if (array_key_exists("load_common", $p_options)) {
                 $load_common = $p_options["load_common"];
+            }
+            if (array_key_exists("area_points", $p_options)) {
+                $area_points = $p_options["area_points"];
+            }
+            if (array_key_exists("area_points_empty_only", $p_options)) {
+                if ($p_options["area_points_empty_only"]) {
+                    $area_points_empty_only = "true";
+                }
             }
         }
 
@@ -2452,6 +2474,10 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         if (null !== $max_zoom)
         {
             $geo_focus_info["json_obj"]["max_zoom"] = $max_zoom;
+        }
+        if (null !== $map_margin)
+        {
+            $geo_focus_info["json_obj"]["border"] = $map_margin;
         }
         $geo_focus_json = "";
         $geo_focus_json .= json_encode($geo_focus_info["json_obj"]);
@@ -2613,6 +2639,12 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
     $tag_string_mid .= "\n";
     $tag_string_mid .= "geo_object$map_suffix.set_display_strings($local_strings_json);";
     $tag_string_mid .= "\n";
+
+    if ($area_points) {
+        $tag_string_mid .= "geo_object$map_suffix.set_area_constraints($area_points, {\"empty_only\":$area_points_empty_only});";
+        $tag_string_mid .= "\n";
+    }
+
     if ($large_map_on_click) {
         $tag_string_mid .= "if (typeof(window.map_popup_win) == \"undefined\") {\n";
         $tag_string_mid .= "    geo_object$map_suffix.set_action_subst(function(params) {";

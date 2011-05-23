@@ -237,6 +237,8 @@ var hideLocation = function()
 
     $("#map_geo_showhide .round-delete").removeClass("map_hidden");
     $("#map_geo_showhide .round-delete").addClass("round-plus");
+
+    $(showhide_link).attr("title", "<?php putGS("Show search results"); ?>");
 };
 
 // shows the city search results box
@@ -258,6 +260,8 @@ var showLocation = function()
 
     $("#map_geo_showhide .round-delete").removeClass("map_hidden");
     $("#map_geo_showhide .round-delete").removeClass("round-plus");
+
+    $(showhide_link).attr("title", "<?php putGS("Hide search results"); ?>");
 };
 
 // if some search term initially provided, do the search
@@ -271,6 +275,18 @@ var init_search = function ()
 };
 
 var map_close_question = "<?php p(getGS("Are you sure you want to quit without saving your changes?")); ?>";
+
+var set_pois_action = function(value)
+{
+    if ("on" == value) {
+        geo_locations.ignore_select_event = true;
+        geo_locations.show_edit_on_select = true;
+    }
+    else {
+        geo_locations.ignore_select_event = false;
+        geo_locations.show_edit_on_select = false;
+    }
+};
 
 var on_load_proc = function()
 {
@@ -291,6 +307,13 @@ var on_load_proc = function()
     //setTimeout(function() {
     useSystemParameters();
     geo_locations.main_openlayers_init('map_mapcanvas', 'map_sidedescs');
+
+    set_pois_action("on");
+    var poi_act_sel = document.getElementById ? document.getElementById("map_button_edit_on_click") : null;
+    if (poi_act_sel) {
+        poi_act_sel.checked = true;
+    }
+
     init_search();
     //}, 1000);
     window.focus();
@@ -415,7 +438,10 @@ var map_show_preview = function()
         <input id="map_button_preview" type="submit" onClick="map_show_preview(); return false;" class="default-button" value="<?php putGS("Preview"); ?>" name="preview" disabled="disabled" />
         <input id="map_button_close" type="submit" onClick="on_close_request(); return false;" class="default-button" value="<?php putGS("Close"); ?>" name="close" />
     </div>
-	<div id="map_save_info" class="map_save_info">
+    <div class="map_button_edit_on_click">
+        <input id="map_button_edit_on_click" title="<?php putGS("Edit location instead of showing location bubble"); ?>" type="checkbox" onClick="set_pois_action(this.value);" checked><span><?php putGS("Edit location on click"); ?><span>
+    </div>
+    <div id="map_save_info" class="map_save_info">
       <a href="#" class="map_name_display" id="map_name_display" onClick="geo_locations.map_edit_name(); return false;" title="<?php putGS("Setting the map name helps with map search"); ?>"><?php putGS("fill in map name"); ?></a>
         <input id="map_name_input" class="map_name_input map_hidden" type="text" size="40" maxlength="255" onChange="geo_locations.map_save_name(); return false;" onBlur="geo_locations.map_display_name(); return false;">
      </div>
@@ -433,7 +459,7 @@ var map_show_preview = function()
         </li>
         <li>
         <form class="map_geo_city_search" onSubmit="findLocation(); return false;">
-          <input class="map_geo_cityname input_text" id="search-city" type="text"><a href="#" class="ui-state-default icon-button no-text" onClick="findLocation(true); return false;"><span class="ui-icon ui-icon-search"></span></a><span id="map_geo_showhide" class=""><a href="#" id="showhide_link" class="round-delete map_hidden" onclick="showhideLocation(); return false;"></a></span>
+          <input class="map_geo_cityname input_text" id="search-city" type="text"><a href="#" title="<?php putGS("Search for city or coordinate"); ?>" class="ui-state-default icon-button no-text" onClick="findLocation(true); return false;"><span class="ui-icon ui-icon-search"></span></a><span id="map_geo_showhide" class=""><a href="#" id="showhide_link" title="<?php putGS("Hide search results"); ?>" class="round-delete map_hidden" onclick="showhideLocation(); return false;"></a></span>
         </form>
         </li>
         <li>

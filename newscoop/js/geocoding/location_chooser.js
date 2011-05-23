@@ -1265,8 +1265,10 @@ this.main_openlayers_init = function(map_div_name, descs_name)
     this.map.addControl(this.select_control);
     this.select_control.activate();
 
+    geo_obj.ignore_select_event = true;
+    geo_obj.show_edit_on_select = true;
     this.layer.events.on({
-        'featureselected': function(evt) {OpenLayers.HooksPopups.on_feature_select(evt, geo_obj);},
+        'featureselected': function(evt) {OpenLayers.HooksPopups.on_feature_select_edit(evt, geo_obj); OpenLayers.HooksPopups.on_feature_select(evt, geo_obj);},
         'featureunselected': function(evt) {OpenLayers.HooksPopups.on_feature_unselect(evt, geo_obj);}
     });
 
