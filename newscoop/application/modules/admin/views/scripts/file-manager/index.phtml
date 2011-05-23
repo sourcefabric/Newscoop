@@ -33,6 +33,7 @@
     <th><?php putGS('Template Id'); ?></th>
     <th><?php putGS('Type'); ?></th>
     <th class="size"><?php putGS('File size'); ?></th>
+    <th><?php putGS('Cache Lifetime'); ?></th>
     <th><?php putGS('Last modified'); ?></th>
     <th></th><!-- size in bytes for sorting -->
     <th></th>
@@ -44,6 +45,7 @@
     <td><a href="<?php echo $this->url(array(
         'path' => $this->parent,
     )); ?>" class="upOneLevel" title="<?php putGS('Go to parent'); ?>"><?php putGS('Go to parent'); ?></a></td>
+    <td></td>
     <td></td>
     <td></td>
     <td></td>
@@ -64,6 +66,7 @@
     )); ?>" class="folder" title="<?php putGS("Go to '$1'", $folder); ?>"><?php echo $folder; ?></a></td>
     <td></td>
     <td>dir</td>
+    <td></td>
     <td></td>
     <td></td>
     <td>-1</td>
@@ -88,6 +91,7 @@
     <td><?php echo $file->getId(); ?></td>
     <td><?php echo $file->getType(); ?></td>
     <td class="size"><?php echo $this->formatBytes($file->getSize()); ?></td>
+    <td><?php echo $file->getCacheLifetime(); ?></td>
     <td><?php echo $file->getChangeTime()->format($this->dateFormat); ?></td>
     <td><?php echo $file->getSize(); ?></td>
 
@@ -181,7 +185,7 @@ $(function() {
         'aoColumnDefs': [
             { 'bSortable': false, 'aTargets': [0, -1] },
             { 'bVisible': false, 'aTargets': [-2] },
-            { 'iDataSort': [6], 'aTargets': [4] }
+            { 'iDataSort': [7], 'aTargets': [5] }
         ],
         'sDom': 't',
         'bPaginate': false,

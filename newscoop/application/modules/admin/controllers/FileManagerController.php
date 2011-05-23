@@ -344,7 +344,7 @@ class Admin_FileManagerController extends Zend_Controller_Action
         $path = $this->parsePath();
 
         $files = $this->_getParam('file', array());
-        foreach ($files as $file) {
+        foreach ((array) $files as $file) {
             $key = "$path/$file";
             $fileInfo = $this->getFileInfo($key);
 
