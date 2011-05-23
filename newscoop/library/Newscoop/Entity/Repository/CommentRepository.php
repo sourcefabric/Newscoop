@@ -72,11 +72,11 @@ class CommentRepository extends DatatableSource
     private function setCommentStatus(Comment $p_comment, $p_status)
     {
         $em = $this->getEntityManager();
-        if($p_status == 'deleted')
+        /*if($p_status == 'deleted')
         {
             $em->remove($p_comment);
         }
-        else
+        else*/
         {
             $p_comment->setStatus($p_status);
             $em->persist($p_comment);
@@ -203,7 +203,7 @@ class CommentRepository extends DatatableSource
      *
      * @param array $p_params
      * @param array $cols
-     * @return array
+     * @return Comment[]
      */
     public function getData(array $p_params, array $p_cols)
     {
@@ -230,7 +230,7 @@ class CommentRepository extends DatatableSource
                 case 'thread':
                     $qb->orderBy("a.name", $dir);
                     break;
-                case 'thread_order':
+                case 'threadorder':
                     $qb->orderBy("e.thread_order", $dir);
                     break;
                 case 'comment':

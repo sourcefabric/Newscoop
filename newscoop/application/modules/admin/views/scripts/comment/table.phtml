@@ -128,11 +128,22 @@ serverObj.translateObj = [
             </fieldset>
             </div>
 		</td>
-        <td>Article</td>
+        <td>
+            <div class="commentArticleHolder">
+            <p>
+                <a href="{{thread.link.get}}" class="articleLink">{{thread.name}}</a>
+                <br>
+                <span>{{thread.forum.name}}; <b>Section</b> {{thread.section.name}}</span>
+            </p>
+            <a class="goToArticle" href="{{thread.link.edit}}">Go to article page</a> </div>
+        </td>
         </tr></tbody>
 </table>
 <div class="commentBtns">
     <ul>
+		{% for(i in comment.actions) %}
+			<li><a href="javascript:;" id="">{{comment.actions[i]}}</a></li>
+		{% endfor %}
         <li><a href="javascript:;" id="pending_{{comment.id}}" class="action new"><?php putGS('New');?></a></li>
         <li><a href="javascript:;" id="approved_{{comment.id}}" class="action approved"><?php putGS('Approved');?></a></li>
         <li><a href="javascript:;" id="hidden_{{comment.id}}" class="action hidden"><?php putGS('Hidden');?></a></li>

@@ -178,16 +178,51 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
         return $this;
     }
 
-    public function setDataProp(array $p_values = array())
+    /**
+     * Set body properties
+     *
+     * @param string $p_columnProperty
+     * @param array $p_values
+     * @return Action_Helper_Datatable
+     */
+    public function setBody($p_columnProperty, array $p_values = array())
     {
         if(count($p_values))
         {
-            foreach($p_values as $key => $value) {
+            foreach($p_values as $key => $value)
+            {
                 if(is_string($key))
                     $key = $this->colsIndex[$key];
-                $this->iOptions['aoColumns'][$key]['mDataProp'] = $value;
+                $this->iOptions['aoColumns'][$key][$p_columnProperty] = $value;
             }
         }
+        // return this for chaining mechanism
+        return $this;
+    }
+
+
+    /**
+     * Set visibility
+     *
+     * @param array|bool $p_value
+     * @return Action_Helper_Datatable
+     */
+    public function setVisible(array $p_values = array())
+    {
+        $this->setBody('bVisible', $p_values);
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Set custom widths
+     *
+     * @param array|bool $p_value
+     * @return Action_Helper_Datatable
+     */
+    public function setDataProp(array $p_values = array())
+    {
+        $this->setBody('mDataProp', $p_values);
         // return this for chaining mechanism
         return $this;
     }

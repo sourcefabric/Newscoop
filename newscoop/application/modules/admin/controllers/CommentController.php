@@ -17,10 +17,10 @@ class Admin_CommentController extends Zend_Controller_Action
 {
 
     /**
-     * @var ICommentRepository
+     * @var Newscoop\Entity\Repository\CommentRepository
      *
      */
-    private $repository;
+    private $commentRepository;
 
     /**
      * @var IArticleRepository
@@ -50,7 +50,7 @@ class Admin_CommentController extends Zend_Controller_Action
     public function init()
     {
         // get comment repository
-        $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment');
+        $this->commentRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment');
         // get article repository
         $this->articleRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Article');
         // get language repository
@@ -75,26 +75,30 @@ class Admin_CommentController extends Zend_Controller_Action
         $view = $this->view;
         $table = $this->getHelper('datatable');
         /* @var $table Action_Helper_Datatable */
-        $table->setDataSource($this->repository);
+        $table->setDataSource($this->commentRepository);
 
         $table->setCols(array(
             'index' => $view->toggleCheckbox(),
             'commenter' => getGS('Author'),
             'comment' => getGS('Date').' / '.getGS('Comment'),
-            'thread' => getGS('Article')
+            'thread' => getGS('Article'),
+            'threadorder' => '',
         ), array('index' => false));
 
         $index = 1;
         $table->setHandle(function($comment) use ($view, &$index) {
+            /* var Newscoop\Entity\Comment\Commenter */
             $commenter = $comment->getCommenter();
             $thread = $comment->getThread();
+            $forum  = $comment->getForum();
+            //$avatar = 'http://www.gravatar.com/avatar/'.md5(strtolower(trim($commenter->getEmail()))).'?s=50&d=wavatar';
             return array(
                 'index'      => $index++,
                 'commenter'  => array(
                     'username'    => $commenter->getUsername(),
                     'name'        => $commenter->getName(),
                     'email'       => $commenter->getEmail(),
-                    'avatar'      => $commenter->getEmail(),
+                    'avatar'      => (string)$view->getAvatar($commenter->getEmail(), array('img_size' => 50, 'default_img' => 'wavatar')),
                     'ip'          => $commenter->getIp(),
                     'url'         => $commenter->getUrl(),
                     'banurl'      => $view->url(array(
@@ -105,6 +109,7 @@ class Admin_CommentController extends Zend_Controller_Action
                                      ))
                 ),
                 'comment'    => array(
+                    'actions'      => array(1,2,4),
                     'id'           => $comment->getId(),
                     'created'      => array(
                     	'date'         => $comment->getTimeCreated()->format('Y.i.d'),
@@ -114,6 +119,7 @@ class Admin_CommentController extends Zend_Controller_Action
                     'message'      => $comment->getMessage(),
                     'likes'        => '',
                     'dislikes'     => '',
+                    'status'       => $comment->getStatus(),
                     'action'       => array(
                         'update'       => $view->url(array('action' => 'update', 'format' => 'json')),
                         'reply'        => $view->url(array('action' => 'reply', 'format' => 'json'))
@@ -122,14 +128,21 @@ class Admin_CommentController extends Zend_Controller_Action
                 'thread'     => array(
                     'name'         => $thread->getName(),
                     'link'         => array(
-                        'edit'         => $view->baseUrl("admin/articles/edit.php?",$view->linkArticle($thread)),
-                        'get'          => $view->baseUrl("admin/articles/get.php?",$view->linkArticle($thread))
+                        'edit'         => $view->baseUrl("admin/articles/edit.php?").$view->linkArticle($thread),
+                        'get'          => $view->baseUrl("admin/articles/get.php?").$view->linkArticle($thread)
+                    ),
+                    'forum'        => array(
+                        'name'         => $forum->getName()
+                    ),
+                    'section'	   => array(
+                        'name'         => ''
                     )
                 ),
             );
         });
 
-        $table->setOption('fnRowCallback','datatableCallback.row')
+        $table->setOption('fnDrawCallback','datatableCallback.draw')
+              ->setOption('fnRowCallback','datatableCallback.row')
               ->setOption('fnServerData', 'datatableCallback.addServerData')
               ->setStripClasses()
               ->toggleAutomaticWidth(false)
@@ -137,7 +150,11 @@ class Admin_CommentController extends Zend_Controller_Action
                 'index'       => 'index',
                 'commenter'   => 'commenter.name',
                 'comment'     => 'comment.message',
-                'thread'      => 'thread.name'
+                'thread'      => 'thread.name',
+                'threadorder' => null
+              ))
+              ->setVisible(array(
+                'threadorder' => false
               ))
               ->setClasses(array(
                 'index'       => 'commentId',
@@ -169,7 +186,7 @@ class Admin_CommentController extends Zend_Controller_Action
                 $comments = array($comments);
             foreach($comments as $id)
             {
-                $comment = $this->repository->find($id);
+                $comment = $this->commentRepository->find($id);
                 if($status == "deleted")
                 {
                     $msg = getGS('Comment delete by $1 from the article $2 ($3)',
@@ -193,8 +210,8 @@ class Admin_CommentController extends Zend_Controller_Action
                     $this->_helper->flashMessenger($msg);
                 }
             }
-            $this->repository->setStatus($comments, $status);
-            $this->repository->flush();
+            $this->commentRepository->setStatus($comments, $status);
+            $this->commentRepository->flush();
         }
         catch(Exception $e)
         {
@@ -233,8 +250,8 @@ class Admin_CommentController extends Zend_Controller_Action
         }
         try
         {
-            $comment = $this->repository->save($comment, $values);
-            $this->repository->flush();
+            $comment = $this->commentRepository->save($comment, $values);
+            $this->commentRepository->flush();
         }
         catch(Exception $e)
         {
@@ -278,7 +295,8 @@ class Admin_CommentController extends Zend_Controller_Action
         $params = array(
             'sFilter'        => $filter
         );
-        $comments = $this->repository->getData($params, $cols);
+        /* var Comment[]*/
+        $comments = $this->commentRepository->getData($params, $cols);
         $result = array();
         foreach($comments as $comment) {
             $commenter = $comment->getCommenter();
@@ -305,13 +323,13 @@ class Admin_CommentController extends Zend_Controller_Action
             ->addActionContext('update', 'json')
             ->initContext();
         $values = $this->getRequest()->getParams();
-        $comment = $this->repository->find($values['comment']);
+        $comment = $this->commentRepository->find($values['comment']);
         if ($this->getRequest()->isPost() && $comment) {
             $values['time_updated'] = new DateTime;
             try
             {
-                $comment = $this->repository->update($comment, $values);
-                $this->repository->flush();
+                $comment = $this->commentRepository->update($comment, $values);
+                $this->commentRepository->flush();
             }
             catch(Exception $e)
             {
@@ -357,8 +375,8 @@ class Admin_CommentController extends Zend_Controller_Action
             $values['status'] = 'approved';
             try
             {
-                $comment = $this->repository->save($comment, $values);
-                $this->repository->flush();
+                $comment = $this->commentRepository->save($comment, $values);
+                $this->commentRepository->flush();
             }
             catch(Exception $e)
             {
@@ -399,8 +417,8 @@ class Admin_CommentController extends Zend_Controller_Action
     public function deleteArticleAction()
     {
         $article = $this->getRequest()->getParam('article');
-        $this->repository->deleteArticle($article);
-        $this->repository->flush();
+        $this->commentRepository->deleteArticle($article);
+        $this->commentRepository->flush();
         $this->getHelper('viewRenderer')->setNoRender();
     }
 
@@ -412,8 +430,8 @@ class Admin_CommentController extends Zend_Controller_Action
     {
         $article = $this->getRequest()->getParam('article');
         $language = $this->getRequest()->getParam('language');
-        $this->repository->setArticleStatus($article, $language, "hidden");
-        $this->repository->flush();
+        $this->commentRepository->setArticleStatus($article, $language, "hidden");
+        $this->commentRepository->flush();
         $this->getHelper('viewRenderer')->setNoRender();
     }
 
@@ -430,8 +448,8 @@ class Admin_CommentController extends Zend_Controller_Action
             $values['ip'] = $request->getClientIp();
             $values['status'] = 'hidden';
             $values['time_created'] = new DateTime;
-            $this->repository->save($p_comment, $values);
-            $this->repository->flush();
+            $this->commentRepository->save($p_comment, $values);
+            $this->commentRepository->flush();
             $this->_helper->flashMessenger(getGS('Comment "$1" saved.',$p_comment->getSubject()));
             $this->_helper->redirector->gotoSimple('index');
         }

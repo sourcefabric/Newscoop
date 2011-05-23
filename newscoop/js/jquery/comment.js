@@ -1,11 +1,7 @@
-var statusMap ={ 'pending': 'status_new', 'hidden': 'status_hidden', 'deleted': 'status_deleted', 'approved': 'status_approved' };
+var statusMap ={ 'pending': 'new', 'hidden': 'hidden', 'deleted': 'deleted', 'approved': 'approved' };
 var datatableCallback = {
     serverData: {},
     commentTmpl: function(){},
-    row: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-        nRow.innerHTML = datatableCallback.commentTmpl(aData);
-        return nRow;
-    },
     addServerData: function ( sSource, aoData, fnCallback ) {
         that = datatableCallback;
         for(i in that.serverData) {
@@ -15,6 +11,18 @@ var datatableCallback = {
         $.getJSON( sSource, aoData, function (json) {
             fnCallback(json);
         });
+    },
+    row: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+        nRow.innerHTML = datatableCallback.commentTmpl(aData);
+        nRow.className = 'status_'+statusMap[aData.comment.status];
+        return nRow;
+    },
+    draw: function() {
+        $(".commentsHolder table tbody tr").hover(function() {
+            $(this).find(".commentBtns").css("visibility","visible");
+        },function() {
+            $(this).find(".commentBtns").css("visibility","hidden");
+        });        
     }
 };
 $(function(){
@@ -33,14 +41,6 @@ $(function(){
             $(this).removeClass("collapsed");
             commentFilterTriggerCount = 0;
         }
-    });
-
-    $(".commentsHolder table tbody tr").hover(function() {
-        console.log('over');
-        $(this).find(".commentBtns").css("visibility","visible");
-    },function() {
-        console.log('nover');
-        $(this).find(".commentBtns").css("visibility","hidden");
     });
 
     $(".addFilterBtn").click(function () {$('#commentFilterSearch fieldset ul').append('<li><select class="input_select"><option>1</option><option>2</option></select><input type="text" class="input_text" /></li>'); return false; $("#commentFilterSearch").css("height","500px");});
@@ -87,7 +87,7 @@ $(function(){
                    "status": status                   
                 },serverObj.security),
                 success: function(data) {
-                    flashMessage(putGS('Comment(s) status change to $1.',$status));
+                    flashMessage(putGS('Comments status change to $1.',statusMap[status]));
                     datatable.fnDraw();
                 },
                 error: function (rq, status, error) {
@@ -104,12 +104,12 @@ $(function(){
         {
             dir.removeClass("ui-icon-triangle-1-n");
             dir.addClass('ui-icon-triangle-1-s');
-            datatable.fnSort( [ [2,'asc'] ] );
+            datatable.fnSort( [ [4,'asc'] ] );
         }
         else {
             dir.removeClass("ui-icon-triangle-1-s");
             dir.addClass('ui-icon-triangle-1-n');
-            datatable.fnSort( [ [2,'desc'] ] );
+            datatable.fnSort( [ [4,'desc'] ] );
         }
         dir.removeClass("ui-icon-carat-2-n-s");
     });
@@ -126,8 +126,11 @@ $(function(){
                "status": status
             },serverObj.security),
             success: function(data) {
+                if('deleted' == status)
+                    flashMessage(putGS('Comment deleted.'));
+                else
+                    flashMessage(putGS('Comment status change to $1.',statusMap[status]));
                 datatable.fnDraw();
-                flashMessage(putGS('Comments updated.'));
             },
             error: function (rq, status, error) {
                 if (status == 0 || status == -1) {

@@ -43,8 +43,9 @@
                 .replace(c.encode, function(match, code) {
                     return "';out+=(" + code.replace(/\\'/g, "'").replace(/\\\\/g, "\\").replace(/[\r\t\n]/g, ' ') + ").toString().replace(/&(?!\\w+;)/g, '&#38;').split('<').join('&#60;').split('>').join('&#62;').split('" + '"' + "').join('&#34;').split(" + '"' + "'" + '"' + ").join('&#39;').split('/').join('&#x2F;');out+='";
                 })
-                .replace(c.ends,'}')
                 .replace(c.evaluate, function(match, code) {
+                    if(c.ends.test(code))
+                        return "';" + code.replace(c.ends,'}').replace(/\\'/g, "'").replace(/\\\\/g,"\\").replace(/[\r\t\n]/g, ' ') + "out+='";
                     return "';" + code.replace(/\\'/g, "'").replace(/\\\\/g,"\\").replace(/[\r\t\n]/g, ' ') + "{out+='";
                 })
                 + "';return out;}")
@@ -53,8 +54,6 @@
                 .replace(/\r/g, '\\r')
                 .split("out+='';").join('')
                 .split('var out="";out+=').join('var out=');
-        //alert(str);
-        //str = str+ "with("+c.varname+"){"+str+"}";
         try {
             return new Function(c.varname, str);
         } catch (e) {
