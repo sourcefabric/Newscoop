@@ -126,7 +126,9 @@ final class CampConfig
     public static function TranslateSettingName($p_varName)
     {
         $settingVar = null;
-        @list($namespace, $varname) = explode('.', $p_varName);
+        if (strpos($p_varName, '.') !== FALSE) {
+            @list($namespace, $varname) = explode('.', $p_varName);
+        }
         if (!empty($namespace) && !empty($varname)) {
             $settingVar['namespace'] = $namespace;
             $settingVar['varname'] = $varname;

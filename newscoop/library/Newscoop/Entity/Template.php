@@ -158,11 +158,16 @@ class Template
      */
     public function getType()
     {
+        $type = 'file';
         $pieces = explode('.', $this->key);
         if (sizeof($pieces) > 1) {
-            return array_pop($pieces);
+            $type = strtolower(array_pop($pieces));
         }
 
-        return 'file';
+        if ($type == 'jpeg') {
+            $type = 'jpg';
+        }
+
+        return $type;
     }
 }

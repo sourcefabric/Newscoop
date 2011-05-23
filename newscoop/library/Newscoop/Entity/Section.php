@@ -48,6 +48,20 @@ class Section extends Entity
     private $name;
 
     /**
+     * @ManyToOne(targetEntity="Newscoop\Entity\Template")
+     * @JoinColumn(name="SectionTplId", referencedColumnName="Id")
+     * @var Newscoop\Entity\Template"
+     */
+    private $template;
+
+    /**
+     * @ManyToOne(targetEntity="Newscoop\Entity\Template")
+     * @JoinColumn(name="ArticleTplId", referencedColumnName="Id")
+     * @var Newscoop\Entity\Template"
+     */
+    private $articleTemplate;
+
+    /**
      * Get language
      *
      * @return Newscoop\Entity\Language

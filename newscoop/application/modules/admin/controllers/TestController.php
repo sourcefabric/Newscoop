@@ -125,7 +125,7 @@ class Admin_TestController extends Zend_Controller_Action
 
 	public function indexAction()
 	{
-		$this->test6();
+		$this->test7();
 	}
 
 	protected function test1()
@@ -133,9 +133,7 @@ class Admin_TestController extends Zend_Controller_Action
 		$search = new SearchPublication();
 		$search->NAME->orderAscending();
 
-
 		try{
-
 			$outputs = $this->getOutputService()->getEntities();
 			$text = '---><br/>';//.$this->getLanguageService()->getCount();
 
@@ -267,10 +265,28 @@ class Admin_TestController extends Zend_Controller_Action
 	protected function test6()
 	{
 		try{
-			$theme1 = $this->getThemeManagementService()->getById(3);
+			$theme1 = $this->getThemeManagementService()->getById(1356059962);
 			$pub = $this->getPublicationService()->findById(2);
 			
 			$this->getThemeManagementService()->assignTheme($theme1, $pub);
+			$text = '---><br/>';
+
+			$this->view->text = $text;
+
+		}catch (\Exception $e){
+			$this->view->text = 'errror<br/>'.$e.'</br>'.$e->getMessage();
+		}
+	}
+	
+	protected function test7()
+	{
+		try{
+			$theme = $this->getThemeManagementService()->getById(1721544697);
+			$outss = $this->getThemeManagementService()->getOutputSettings($theme);
+				
+			$outs = $outss[0];
+						
+			$this->getThemeManagementService()->assignOutputSetting($outs, $theme);
 			$text = '---><br/>';
 
 			$this->view->text = $text;

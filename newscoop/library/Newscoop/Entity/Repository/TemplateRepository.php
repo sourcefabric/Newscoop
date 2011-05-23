@@ -106,4 +106,38 @@ class TemplateRepository extends EntityRepository
 
         $em->flush();
     }
+
+    /**
+     * Test template is used
+     *
+     * @param Newscoop\Entity\Template $template
+     * @return bool
+     */
+    public function isUsed(Template $template)
+    {
+        $em = $this->getEntityManager();
+
+        $dql = "SELECT COUNT(i.number)
+                FROM Newscoop\Entity\Issue i
+                WHERE i.template = ?1
+                    OR i.sectionTemplate = ?1
+                    OR i.articleTemplate = ?1";
+        $query = $em->createQuery($dql);
+        $query->setParameter(1, $template);
+        if ($query->getSingleScalarResult()) {
+            return true;
+        }
+
+        $dql = "SELECT COUNT(s.number)
+                FROM Newscoop\Entity\Section s
+                WHERE s.template = ?1
+                    OR s.articleTemplate = ?1";
+        $query = $em->createQuery($dql);
+        $query->setParameter(1, $template);
+        if ($query->getSingleScalarResult()) {
+            return true;
+        }
+
+        return false;
+    }
 }

@@ -8,6 +8,9 @@
 
 namespace Newscoop\Service\Implementation;
 
+use Newscoop\Utils\Validation;
+use Newscoop\Service\Model\Search\Column;
+use Newscoop\Service\Model\Search\Search;
 use Newscoop\Entity\Resource;
 use Newscoop\Service\Model\SearchResource;
 use Newscoop\Service\ISyncResourceService;
@@ -30,17 +33,22 @@ class SyncResourceServiceDoctrine extends AEntityServiceDoctrine implements ISyn
 	{
 		Validation::notEmpty($resource, 'resource');
 		Validation::notEmpty($resource->getPath(), 'resource.path');
-		
+
 		$em = $this->getEntityManager();
 		if($resource->getId() === NULL){
-			$dbRsc = $em->getRepository($this->entityClassName)->findByPath($resource->getPath());
-			if($dbRsc !== NULL){
-				return $dbRsc;
+			$resources = $em->getRepository($this->entityClassName)->findByPath($resource->getPath());
+			if(isset($resources) && count($resources) > 0){
+				return $resources[0];
 			}
 			$em->persist($resource);
+			$em->flush();
 			return $resource;
 		}
-		return $em->getRepository($this->entityClassName)->findByName($name);
+		$resources = $em->getRepository($this->entityClassName)->findByName($name);
+		if(isset($resources) && count($resources) > 0){
+			return $resources[0];
+		}
+		return NULL;
 	}
 
 	/* --------------------------------------------------------------- */
