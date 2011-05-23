@@ -891,13 +891,13 @@ a.clear-margin:hover, .icon-button:hover  {
 .date-created {
 	color:#858585;
 }
-.map_sidepan .input_select, .map_sidepan .input_text {
-	width:100%;
+.map_sidepan .input_select {
+    width: 162px;
+    margin-right:0px;
 }
-
 .map_sidepan .input_text {
-	width:148px;
-	margin-right:0px;
+    width:160px;
+    margin-right:0px;
 }
 .map_sidepan .icon-button {
 	margin-left:6px;

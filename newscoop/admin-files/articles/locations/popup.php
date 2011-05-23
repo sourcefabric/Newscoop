@@ -278,7 +278,7 @@ var map_close_question = "<?php p(getGS("Are you sure you want to quit without s
 
 var set_pois_action = function(value)
 {
-    if ("on" == value) {
+    if (value) {
         geo_locations.ignore_select_event = true;
         geo_locations.show_edit_on_select = true;
     }
@@ -287,6 +287,14 @@ var set_pois_action = function(value)
         geo_locations.show_edit_on_select = false;
     }
 };
+
+window.point_perex_focus = function()
+{
+    var point_perex = document.getElementById ? document.getElementById("point_perex") : null;
+    if (point_perex) {
+        point_perex.focus();
+    }
+}
 
 var on_load_proc = function()
 {
@@ -308,7 +316,7 @@ var on_load_proc = function()
     useSystemParameters();
     geo_locations.main_openlayers_init('map_mapcanvas', 'map_sidedescs');
 
-    set_pois_action("on");
+    set_pois_action(true);
     var poi_act_sel = document.getElementById ? document.getElementById("map_button_edit_on_click") : null;
     if (poi_act_sel) {
         poi_act_sel.checked = true;
@@ -439,7 +447,7 @@ var map_show_preview = function()
         <input id="map_button_close" type="submit" onClick="on_close_request(); return false;" class="default-button" value="<?php putGS("Close"); ?>" name="close" />
     </div>
     <div class="map_button_edit_on_click">
-        <input id="map_button_edit_on_click" title="<?php putGS("Edit location instead of showing location bubble"); ?>" type="checkbox" onClick="set_pois_action(this.value);" checked><span><?php putGS("Edit location on click"); ?><span>
+        <input id="map_button_edit_on_click" title="<?php putGS("Edit location instead of showing location bubble"); ?>" type="checkbox" onClick="set_pois_action(this.checked);" checked><span><?php putGS("Edit location on click"); ?><span>
     </div>
     <div id="map_save_info" class="map_save_info">
       <a href="#" class="map_name_display" id="map_name_display" onClick="geo_locations.map_edit_name(); return false;" title="<?php putGS("Setting the map name helps with map search"); ?>"><?php putGS("fill in map name"); ?></a>
@@ -459,10 +467,11 @@ var map_show_preview = function()
         </li>
         <li>
         <form class="map_geo_city_search" onSubmit="findLocation(); return false;">
-          <input class="map_geo_cityname input_text" id="search-city" type="text"><a href="#" title="<?php putGS("Search for city or coordinate"); ?>" class="ui-state-default icon-button no-text" onClick="findLocation(true); return false;"><span class="ui-icon ui-icon-search"></span></a><span id="map_geo_showhide" class=""><a href="#" id="showhide_link" title="<?php putGS("Hide search results"); ?>" class="round-delete map_hidden" onclick="showhideLocation(); return false;"></a></span>
+          <input class="map_geo_cityname input_text" id="search-city" type="text"><a href="#" title="<?php putGS("Search for city or coordinate"); ?>" class="ui-state-default icon-button no-text" onClick="findLocation(true); return false;"><span class="ui-icon ui-icon-search"></span></a>
         </form>
         </li>
         <li>
+<div id="map_geo_showhide" class="map_geo_showhide"><a href="#" id="showhide_link" title="<?php putGS("Hide search results"); ?>" class="round-delete map_hidden" onclick="showhideLocation(); return false;"></a></div>
 <select class="input_select map_geo_ccselect" id="search-country" name="geo_cc" onChange="findLocation(); return false;">
 <option value="" selected="true"><?php putGS("Specify country (optional)"); ?></option>
 <?php
@@ -531,20 +540,20 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                     <option value="1"><?php putGS("html content"); ?></option>
                     </select>
                     <div id="edit_part_text" class="">
-                    <textarea rows="5" cols="40" id="point_descr" name="point_descr" class="text" type="text" onChange="geo_locations.store_point_property('text', this.value); return false;" onClick="if(local_strings_map['fill_in_the_point_description'] == this.value) {this.value = ''; geo_locations.store_point_property('text', this.value);}">
+                    <textarea rows="5" cols="40" id="point_descr" name="point_descr" class="text geo_edit_textarea_text" type="text" onChange="geo_locations.store_point_property('text', this.value); return false;" onClick="if(local_strings_map['fill_in_the_point_description'] == this.value) {this.value = ''; geo_locations.store_point_property('text', this.value);}">
 </textarea>
                     </div>
                     <div id="edit_part_content" class="map_hidden">
-                    <textarea rows="5" cols="40" id="point_content" name="point_content" class="text" type="text" onChange="geo_locations.store_point_property('content', this.value); return false;">
+                    <textarea rows="5" cols="40" id="point_content" name="point_content" class="text geo_edit_textarea_perex" type="text" onChange="geo_locations.store_point_property('content', this.value); return false;">
 </textarea>
                     </div>
                     </li>
 
                     <li>
-                    <label class="edit_label" for="point_perex"><a class="edit_label_link" title="<?php putGS("click to edit"); ?>" href="#" onClick="$('#point_perex').removeClass('map_hidden'); $('#point_perex_view').addClass('map_hidden'); point_perex.focus(); return false;"><?php putGS("Full location title"); ?></a>:</label>
+                    <label class="edit_label" for="point_perex"><a class="edit_label_link" title="<?php putGS("click to edit"); ?>" href="#" onClick="$('#point_perex').removeClass('map_hidden'); $('#point_perex_view').addClass('map_hidden'); point_perex_focus(); return false;"><?php putGS("Full location title"); ?></a>:</label>
                     <textarea rows="2" cols="40" id="point_perex" name="point_perex" class="text map_hidden" type="text" onChange="geo_locations.store_point_property('perex', this.value); return false;" onBlur="$('#point_perex').addClass('map_hidden'); $('#point_perex_view').removeClass('map_hidden'); return false;">
 </textarea>
-                    <a title="<?php putGS("click to edit"); ?>" id="point_perex_view" class="" href="#" onClick="$('#point_perex').removeClass('map_hidden'); $('#point_perex_view').addClass('map_hidden'); point_perex.focus(); return false;">&nbsp;</a>
+                    <a title="<?php putGS("click to edit"); ?>" id="point_perex_view" class="" href="#" onClick="$('#point_perex').removeClass('map_hidden'); $('#point_perex_view').addClass('map_hidden'); point_perex_focus(); return false;">&nbsp;</a>
                     </li>
 
                     </ol>
@@ -606,12 +615,17 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                             <div class="edit_label_long map_poi_edit_intro_icon"><?php putGS("Change icon of this location"); ?>.</div>
 
                         <div class="edit_marker_icons_all">
-                            <div id="edit_marker_selected" class="edit_marker_selected">
-                            <?php putGS("selected marker icon"); ?>:&nbsp;
-                            <img id="edit_marker_selected_src" src="">
-                            </div>
-
-                            <div class="edit_marker_choices"><div id="edit_marker_choices">&nbsp;</div></div>
+                        <ol>
+                            <li>
+                                <div id="edit_marker_selected" class="edit_marker_selected">
+                                <?php putGS("selected marker icon"); ?>:&nbsp;
+                                <img id="edit_marker_selected_src" src="">
+                                </div>
+                            </li>
+                            <li>
+                                <div class="edit_marker_choices" id="edit_marker_choices">&nbsp;</div>
+                            </li>
+                        </ol>
                         </div>
 
                         </div>

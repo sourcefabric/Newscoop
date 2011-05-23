@@ -150,7 +150,6 @@ a.map_name_display:hover {
     margin-left: 2px;
 }
 .map_geo_ccselect {
-
 }
 .map_geo_cityname {
     width: 200;
@@ -452,12 +451,11 @@ a.map_save_on {
 }
 
 .edit_marker_choices {
-    margin-top: 20px;
     overflow: auto;
-	height:200px;
+    height:170px;
     width: 500px;
-	padding:10px;
-	border:1px solid #CCC;
+    padding:10px;
+    border:1px solid #CCC;
 }
 .edit_marker_one_choice {
     border: 1px solid #9d9d9d;
@@ -538,5 +536,17 @@ a.edit_marker_one_choice_link {
     color:#666666;
     margin-right: 20px;
     font-size: 14px;
+    float: right;
+}
+
+.geo_edit_textarea_text {
+    height: 80px;
+}
+
+.geo_edit_textarea_perex {
+}
+.map_geo_showhide {
+    margin-left: 0px;
+    margin-right: 13px;
     float: right;
 }
