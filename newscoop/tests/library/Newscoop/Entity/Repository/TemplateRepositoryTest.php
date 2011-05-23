@@ -1,18 +1,28 @@
 <?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
 namespace Newscoop\Entity\Repository;
 
 use Newscoop\Entity\Template;
 
+/**
+ */
 class TemplateRepositoryTest extends \RepositoryTestCase
 {
-    private $repository;
+    /** @var string */
+    protected $entity = 'Newscoop\Entity\Template';
+
+    /** @var Newscoop\Entity\Repository\TemplateRepository */
+    protected $repository;
 
     public function setUp()
     {
-        parent::setUp();
-
-        $this->repository = $this->em->getRepository('Newscoop\Entity\Template');
+        parent::setUp($this->entity);
+        $this->repository = $this->em->getRepository($this->entity);
     }
 
     public function testTemplateRepository()
