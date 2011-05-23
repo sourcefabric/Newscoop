@@ -53,3 +53,4 @@ WHERE fk_widget_id NOT IN (
 UPDATE `SystemPreferences` SET `value` = '/js/geocoding/markers/' WHERE `varname` = 'MapMarkerDirectory' AND `value` = '/javascript/geocoding/markers/';
 
 system php ./acl.php
+system php ./javascript_js_cleanup.php
