@@ -69,7 +69,7 @@ class Theme extends AAdapter
 
         $retThemes = array();
         if( is_null( $dataCollection ) )
-            $dataCollection = $this->_service->getEntities( $this->getSearchObject() );
+            $dataCollection = $this->_service->getUnassignedThemes( $this->getSearchObject() );
             
         foreach( $dataCollection as $theme )
         {
@@ -79,6 +79,7 @@ class Theme extends AAdapter
             }     
             $retThemes[] = array
             ( 
+                'id'          => (string) $theme->getId(),
             	'title'       => (string) $theme->getName(),
                 'designer'    => (string) $theme->getDesigner(),
                 'version'     => (string) $theme->getVersion(),

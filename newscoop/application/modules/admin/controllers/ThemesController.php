@@ -4,21 +4,29 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-use Newscoop\Service\IPublicationService;
-use Newscoop\Service\IThemeManagementService;
 use Newscoop\Controller\Action\Helper\Datatable\Adapter\Theme,
-    Newscoop\Entity\Theme\Loader\LocalLoader, 
+    Newscoop\Controller\Action\Helper\Datatable\Adapter\ThemeFiles,
+    Newscoop\Service\IPublicationService,
+    Newscoop\Service\IThemeManagementService,
     Newscoop\Service\Resource\ResourceId, 
     Newscoop\Service\IThemeService, 
     Newscoop\Service\Model\SearchTheme,
-    Newscoop\Service\PublicationServiceDoctrine;
+    Newscoop\Service\PublicationServiceDoctrine,
+    Newscoop\Entity\Theme\Loader\LocalLoader,
+    Newscoop\Service\IOutputService
+    ;
 
 /**
+ * Themes Controller
  */
 class Admin_ThemesController extends Zend_Controller_Action
 {
 
-    private $repository;
+    /**
+     * No idea what this should be
+     * @var unknown_type
+     */
+    private $_repository;
 
     /** 
      * @var Newscoop\Services\Resource\ResourceId 
@@ -34,6 +42,16 @@ class Admin_ThemesController extends Zend_Controller_Action
      * @var Newscoop\Service\IPublicationService 
      */
     private $_publicationService = NULL;
+    
+    /** 
+     * @var Newscoop\Service\ThemeServiceLocalFileSystem 
+     */
+    private $_themeFileService = NULL;
+    
+    /**
+     * @var Newscoop\Service\IOutputService 
+     */
+    private $_outputService = NULL;
     
     /**
      * Provides the controller resource id.
@@ -66,6 +84,34 @@ class Admin_ThemesController extends Zend_Controller_Action
 	/**
      * Provides the publication service
      *
+     * @return Newscoop\Service\ThemeServiceLocalFileSystem
+     * The publication service to be used by this controller.
+     */
+    public function getThemeFileService( )
+    {
+        if( $this->_themeFileService === NULL ) {
+            $this->_themeFileService = $this->getResourceId()->getService( IThemeService::NAME );
+        }
+        return $this->_themeFileService;
+    }
+    
+	/**
+	 * Provides the ouput service.
+	 *
+	 * @return Newscoop\Service\IOutputService
+	 *		The service service to be used by this controller.
+	 */
+	public function getOutputService()
+	{
+		if ($this->_outputService === NULL) {
+			$this->_outputService = $this->getResourceId()->getService( IOutputService::NAME );
+		}
+		return $this->_outputService;
+	}
+	
+	/**
+     * Provides the publication service
+     *
      * @return Newscoop\Service\IPublicationService
      * The publication service to be used by this controller.
      */
@@ -85,6 +131,9 @@ class Admin_ThemesController extends Zend_Controller_Action
         $this->_helper->contextSwitch
             ->addActionContext( 'index', 'json' )
             ->initContext();
+        $this->_helper->ajaxContext
+            ->addActionContext( 'assign-to-publication-action', 'json' )
+            ->initContext();
     }
     
 
@@ -98,7 +147,7 @@ class Admin_ThemesController extends Zend_Controller_Action
         $datatable->setAdapter( $datatableAdapter )->setOutputObject( $this->view );
 
         $view = $this->view;
-        $datatable
+        $datatable            // setting options for the datatable
             ->setCols( array
             (
                 'checkbox'	   => '',
@@ -119,26 +168,29 @@ class Admin_ThemesController extends Zend_Controller_Action
             	'iDisplayLength' => 25,
             	'bLengthChange'  => false,
                 'fnRowCallback'	 => "newscoopDatatables.callbackRow",
-                'fnDrawCallback' => "newscoopDatatables.callbackDraw"
+                'fnDrawCallback' => "newscoopDatatables.callbackDraw",
+                'fnInitComplete' => "newscoopDatatables.callbackInit"
             ) )
             ->setWidths( array( 'checkbox' => 20, 'image' => 215, 'name' => 235, 'description' => 280, 'actions' => 115 ) )
             ->setRowHandler
             ( 
                 function( $theme, $index = null ) use ($view)
                 {
-                    $processed[] = "null"; 
-                    $imgArr = array();
-
+                    $id = json_encode( array( "id" => $theme['id'] ) );
+                    $processed[] = $id; 
+                    
+                    /*$imgArr = array();
                     if( @is_array( $theme['images'] ) ) {
                         foreach( $theme['images'] as $img ) {
                             $imgArr[] = " { image : " . json_encode( $img ) . " } ";
                         }
                     }
-                    $processed[] = " [ " . implode( ",", $imgArr ) . " ] ";
-
-                    $processed[] = json_encode( array( array( 'title' => $theme['title'], 'designer' => $theme['designer'], 'version' => $theme['version'] ) ) );
-                    $processed[] = json_encode( array( array( 'compat' => $theme['subTitle'], 'text' => $theme['description'] ) ) );
-                    $processed[] = "null"; 
+                    $processed[] = " [ " . implode( ",", $imgArr ) . " ] ";*/
+                    
+                    $processed[] = json_encode( array( 'images' => $theme['images'] ) );
+                    $processed[] = json_encode( array( 'title' => $theme['title'], 'designer' => $theme['designer'], 'version' => $theme['version'] ) );
+                    $processed[] = json_encode( array( 'compat' => $theme['subTitle'], 'text' => $theme['description'] ) );
+                    $processed[] = $id; 
                     return $processed;
                 } 
             )
@@ -158,10 +210,58 @@ class Admin_ThemesController extends Zend_Controller_Action
             ) );
         }
     }
+    
+    function editAction()
+    {
+        $themeId = $this->_request->getParam( 'id' );
+        $thmServ = $this->getThemeService();
+        $theme   = $thmServ->findById( $themeId );
+        $outServ = $this->getOutputService();
+        foreach( ( $outputs = $outServ->getEntities() ) as $k => $output )
+            $outSets[] = $thmServ->findOutputSetting( $theme, $output ); // ->toObject()
+        
+        $themeForm = new Admin_Form_Theme();
+        $themeForm->populate( array
+        ( 
+        	"theme-version"    => (string) $theme->getVersion(),
+        	"required-version" => (string) $theme->getMinorNewscoopVersion() 
+        ) );
+        
+        
+        $this->view->headLink( array
+        ( 
+        	'type'  =>'text/css', 
+        	'href'  => $this->view->baseUrl('/admin-style/common.css'),
+            'media'	=> 'screen',
+            'rel'	=> 'stylesheet'
+        ) );
+        
+        $this->view->themeForm      = $themeForm;
+        $this->view->theme          = $theme->toObject();
+        $this->view->outputs        = $outputs;
+        $this->view->outputSettings = $outSets;
+    }
+    
+    function filesAction()
+    {
+        $datatable = $this->_helper->genericDatatable; 
+        $datatable->setAdapter
+        ( 
+            new ThemeFiles( $this->getThemeFileService(), $this->_request->getParam( 'id' ) ) 
+        )->setOutputObject( $this->view );
+    }
+    
+    function assignToPublicationAction()
+    {
+        $theme  = $this->getThemeManagementService()->getById( $this->_request->getParam( 'theme-id' ) );
+		$pub    = $this->getPublicationService()->findById( $this->_request->getParam( 'pub-id' ) );
+			
+		$this->view->response = $this->getThemeService()->assignTheme( $theme, $pub );
+    }
 
     public function installAction()
     {
-        $this->repository->install( $this->_getParam( 'offset' ) );
+        $this->_repository->install( $this->_getParam( 'offset' ) );
         $this->_helper->entity->flushManager();
         
         $this->_helper->flashMessenger( getGS( 'Theme $1', getGS( 'installed' ) ) );
@@ -170,7 +270,7 @@ class Admin_ThemesController extends Zend_Controller_Action
 
     public function uninstallAction()
     {
-        $this->repository->uninstall( $this->_getParam( 'id' ) );
+        $this->_repository->uninstall( $this->_getParam( 'id' ) );
         $this->_helper->entity->flushManager();
         
         $this->_helper->flashMessenger( getGS( 'Theme $1', getGS( 'deleted' ) ) );

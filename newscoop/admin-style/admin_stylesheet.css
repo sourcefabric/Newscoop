@@ -1812,6 +1812,9 @@ ul#edit-files h2 {
 
 
 /*--//////////////////////////////////////// 12.05.2011 ////////////////////////////////////////--*/
+
+	
+	
 	.versionHolder {
 		padding-bottom:0px;
 		}
@@ -1831,17 +1834,23 @@ ul#edit-files h2 {
 					}
 			.versionHolder dl dd {
 				float:left;
-				width:434px;
+				/*width:434px;*/
+				height: 25px;
+				width:400px;
 				margin-bottom:12px;
 				}
 				.versionHolder dl dd input {
 					float:left;
-					width:40px; height:23px;
+					width:40px !important; height:23px;
 					margin-right:10px !important;
 					}
-				.versionHolder dl dd span {
+				.versionHolder dl dd span, .versionHolder dl dd p {
 					font-size:12px; font-style:italic; line-height:25px;
+					margin-top: 0;
 					}
+	.theme-settings {
+	    width: 800px;
+	}
 	.themeSettingsTabs {
 		position:relative;
 		}
@@ -2049,6 +2058,9 @@ ul#edit-files h2 {
 							}
 						.actionDropDown li ul li a.delete {
 							background:url(images/topics_delete.png) 5px 6px no-repeat #ffffff
+							}
+						.actionDropDown li ul li a.edit {
+							background:url(images/topics_edit.png) 5px 6px no-repeat #ffffff
 							}
 						.actionDropDown li ul li a:hover {
 							color:#007fb3 !important; text-decoration:none !important;

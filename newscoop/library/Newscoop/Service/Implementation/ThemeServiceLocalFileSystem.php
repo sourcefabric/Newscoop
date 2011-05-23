@@ -380,7 +380,7 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	 */
 	protected function loadXML($path)
 	{
-		$xml = $this->cacheXMLEmelemt[$path];
+		$xml = @$this->cacheXMLEmelemt[$path];
 		if(!isset($xml)){
 			try{
 				$xml = simplexml_load_file($path);

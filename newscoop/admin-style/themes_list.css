@@ -75,17 +75,26 @@
 							vertical-align:top;
 							}
 						.themesListTabs {
-							width:460px; position:relative; overflow:hidden;
+							 position:relative; overflow:hidden;
 							}
 							.ui-tabs .ui-tabs-hide {
 								display: none;
 								}
-							.themesListTabs div {
+							.themesListTabs div, .themesListTabs li {
 								float:left !important; overflow:hidden; 
 								width:210px !important; height:129px !important;
 								margin-right:16px;
 								border:1px solid #9d9d9d !important;
 								}
+							.themesListTabs .imageCtrls ul, .themesListTabs .imageCtrls li
+							{
+								width: 300px !important;
+							}
+							.themesListTabs ul
+							{
+								width: 210px !important;
+								border: none !important;	
+							}
 							.themesListTabs h3 {
 								padding-bottom:0;
 								color:#3399c2;
