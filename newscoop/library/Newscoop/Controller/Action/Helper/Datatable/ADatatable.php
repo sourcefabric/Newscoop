@@ -41,7 +41,7 @@ abstract class ADatatable extends Zend_Controller_Action_Helper_Abstract
     /**
      * Paramenters for the data fetching
      * Get them from the request object for example
-     * @var array
+     * @var array (search,sort)
      */
     protected $_params = array();
     
@@ -178,7 +178,7 @@ abstract class ADatatable extends Zend_Controller_Action_Helper_Abstract
     {
         if( is_null( $this->_adapter ) )
             throw new \Exception( 'No adapter' );
-            
+
         $rows       = array();
         $rowHandler = $this->_rowHandler;
         foreach

@@ -30,6 +30,7 @@ $(function()
         (
             <?php echo $this->jsonified( $this->options, array( 'fnRowCallback', 'fnDrawCallback', 'fnServerData') );?>
         );
+	$( document.body ).data( "newscoop.themesDatatable", datatable )
 });
 </script>
 

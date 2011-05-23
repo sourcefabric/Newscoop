@@ -1,0 +1,5 @@
+- Bootstrapping resources implemented wrong
+- ACL object - instances itself on every call to resource
+- Salt user passwords
+- Abstract ActionController or more general use plugins for accessibility 
+- Error handler - currently redirecting nervously throughout the application.. 

@@ -219,4 +219,19 @@ class Theme extends Entity
 	{
 	    return 1;
 	}
+	
+	public function toObject()
+	{
+	    return (object) array
+	    ( 
+	    	"id"          => (int) $this->getId(), 
+	        "name"        => (string) $this->getName(), 
+	        "description" => (string) $this->getDescription(), 
+	        "designer"    => (string) $this->getDesigner(), 
+	        "path"        => (string) $this->getPath(),
+	        "version"	  => (string) $this->getVersion(),
+	        "minorNewscoopVersion" => (string) $this->getMinorNewscoopVersion(),
+	        "installedVersion" => (string) $this->getInstalledVersion()
+	    );
+	}
 }

@@ -43,12 +43,36 @@ class Action_Helper_GenericDatatable extends ADatatable
         $req = $this->getRequest();
         $this->_isDispatched = true;
         if( $req->getParam( 'format' ) == 'json' ) {
-            return $this->dispatchData( $p_params, $p_cols );
+            $this->dispatchData( $p_params, $p_cols );
+            return false;
         }
         $this->dispatchMedatata( $p_params, $p_options );
         return $this->_outputObject->render( $this->viewPath );
     }
 
+    public function setParams( $p_params )
+    {
+        if( @is_array( $p_params ) ) 
+        {
+            $sort = array();
+            foreach( $p_params as $k => $v ) 
+            {
+                if( strpos( $k , 'iSortCol' ) !== false ) {
+                    $sort[ $v ] = $p_params[ str_replace( 'iSortCol', 'sSortDir', $k ) ];
+                }
+                if( strpos( $k, 'sSearch' ) !== false ) {
+                    $searchCol = ( $colIdxPosMark = strrpos( $k, '_' ) ) ? substr( $k, strrpos( $k, '_' )+1 ) : -1;
+                    $search[ $searchCol ] = $v;                    
+                }
+            }
+        }
+        parent::setParams( array
+        ( 
+        	'search' => @$search,
+            'sort'	 => @$sort,
+        ) );        
+    }
+    
     /**
      * Set header properties
      * @param string $p_columnProperty
@@ -117,5 +141,10 @@ class Action_Helper_GenericDatatable extends ADatatable
         //$this->toggleAutomaticWidth( false );
         $this->setHeader( 'sWidth', $p_widths );
         return $this;
+    }
+    
+    public function __toString()
+    {
+        return '';
     }
 }
