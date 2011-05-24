@@ -1,4 +1,6 @@
 <?php 
+regGS("Newscoop", "");
+regGS("Campsite", "");
 regGS("Password recovery request for $1", "");
 regGS("Your password has been reset.", "");
 regGS("Proceed to login.", "");
@@ -57,7 +59,6 @@ regGS("Backup list is empty.", "Záložní seznam je prázdný.");
 regGS("Are you sure you want to restore the file $1?", "Jste si jisti, že chcete obnovit soubor $1?");
 regGS("Are you sure you want to make new backup?", "Jste si jisti, že chcete vytvořit nový záložní soubor?");
 regGS("Are you sure you want to delete the file $1?", "Jste si jisti, že chcete vymazat soubor $1?");
-regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.", "Váš prohlížeč nepodporuje Javascript nebo (je více pravděpobné) máte Javascript vypnutý. Po zapnutí Javascript budete moci Campsite používat. ");
 regGS("Import XML", "Importujte XML");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "Musíte mít povolení přidat/změnit vydání a články, aby bylo možné určit autora pro všechny články.");
 regGS("Select the field from which to generate the author", "Vyberte pole, z kterého se bude vybírat autor.");
@@ -71,7 +72,6 @@ regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.",
 regGS("Clear system cache", "Vymazat system cache");
 regGS("The system was unable to upload the file '$1'. ", "Systém byl neschopen nahrát soubor '$1'. ");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Prosím, zkontrolujte soubor, který se snažíte nahrát zda není poškozený. ");
-regGS("Connection refused", "Spojení odmítnuto");
 regGS("An error occured in session management. Please reload the login page.", "Objevila se chyba v session managementu. Prosime znovu si nahrajte přihlašovací stránku.");
 regGS("This file is stored on disk as '$1'.", "Tento soubor je uložen na disku jako '$1'. ");
 regGS("The system is unable to write to the directory '$1'.", "Systém není schopen psát do adresáře '$1'. ");

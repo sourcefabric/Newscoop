@@ -1,4 +1,6 @@
 <?php 
+regGS("Newscoop", "");
+regGS("Campsite", "");
 regGS("Password recovery request for $1", "");
 regGS("Your password has been reset.", "");
 regGS("Proceed to login.", "");
@@ -57,7 +59,6 @@ regGS("Backup list is empty.", "Η λίστα του αντιγράφου ασφ
 regGS("Are you sure you want to restore the file $1?", "Είστε σίγουρος/η ότι θέλετε να επαναφέρετε το αρχείο $1;");
 regGS("Are you sure you want to make new backup?", "Είστε σίγουρος/η ότι θέλετε να δημιουργήσετε νέο αντίγραφο ασφαλείας;");
 regGS("Are you sure you want to delete the file $1?", "Είστε σίγουρος/η ότι θέλετε να διαγράψετε το αρχείο $1;");
-regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.", "To πρόγραμμα περιήγησής σας δεν υποστηρίζει την Javascript ή (πιθανότερα) την έχετε απενεργοποιημένη. Παρακαλούμε ενεργοποιήστε την, για να μπορέσετε να χρησιμοποιήσετε το Campsite.");
 regGS("Import XML", "Εισαγωγή XML");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "Πρέπει να έχετε την άδεια για προσθήκη/αλλαγή τευχών και άρθρων για να ρυθμίσετε τον συγγραφέα όλων των άρθρων.");
 regGS("Select the field from which to generate the author", "Επιλέξτε το πεδίο, από το οποίο θα δημιουργήσετε τον συγγραφέα");
@@ -71,7 +72,6 @@ regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.",
 regGS("Clear system cache", "Εκκαθάριση προσωρινής μνήμης");
 regGS("The system was unable to upload the file '$1'. ", "Το σύστημα δεν μπόρεσε να ανεβάσει το αρχείο '$1'.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Παρακαλούμε ελέγξτε το αρχείο που προσπαθείτε να ανεβάσετε, γιατί μπορεί να είναι κατεστραμένο.");
-regGS("Connection refused", "Άρνηση σύνδεσης");
 regGS("An error occured in session management. Please reload the login page.", "Παρουσιάστηκε σφάλμα στην διαχείρηση συνόδου. Παρακαλούμε επαναφορτώστε την σελίδα εισόδου.");
 regGS("This file is stored on disk as '$1'.", "Το αρχείο είναι αποθηκευμένο στον δίσκο ως '$1'.");
 regGS("The system is unable to write to the directory '$1'.", "Το σύστημα δεν μπορεί να γράψει στον κατάλογο '$1'.");
