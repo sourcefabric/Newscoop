@@ -300,7 +300,6 @@ this.set_map_large = function(params) {
 };
 
 this.set_area_constraints = function(areas, params) {
-    //return;
     if (!areas) {return;}
 
     var empty_only = false;
