@@ -13,7 +13,8 @@ use Newscoop\Controller\Action\Helper\Datatable\Adapter\Theme,
     Newscoop\Service\Model\SearchTheme,
     Newscoop\Service\PublicationServiceDoctrine,
     Newscoop\Entity\Theme\Loader\LocalLoader,
-    Newscoop\Service\IOutputService
+    Newscoop\Service\IOutputService,
+    Newscoop\Service\Exception\DuplicateNameException
     ;
 
 /**
@@ -257,7 +258,15 @@ class Admin_ThemesController extends Zend_Controller_Action
 		    $pub    = $this->getPublicationService()->findById( $this->_request->getParam( 'pub-id' ) );
     		$this->view->response = $this->getThemeService()->assignTheme( $theme, $pub );
         }
-        catch( \Exception $e ){}
+        catch( DuplicateNameException $e )
+        {
+            $this->view->exception = array( "code" => $e->getCode(), "message" => getGS( 'Duplicate assignation' ) );
+        }
+        catch( \Exception $e )
+        {
+            $this->view->exception = array( "code" => $e->getCode(), "message" => getGS( 'Something broke' ) );
+        }
+        
     }
 
     public function installAction()

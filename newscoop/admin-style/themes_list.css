@@ -3,6 +3,9 @@
 	background:none !important;
 	border:none !important;
 	}
+	.themesListHolder td{
+		vertical-align: top;
+	}
 	.themesListHolder div {
 		position:relative;
 		padding:0px !important;
@@ -206,4 +209,8 @@
 												width:140px !important;
 												padding:0 10px !important;
 												background-image:none !important;
+												}
+												.actionMessage{
+													height: 14px; line-height: 14px;
+													font-size: 11px; color: #d50;
 												}

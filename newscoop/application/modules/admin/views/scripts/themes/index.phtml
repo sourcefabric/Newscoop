@@ -80,6 +80,7 @@
 
 <script id="datatableTmpl_4" type="text/x-jQuery-tmpl">
 <div>
+	<div class="actionMessage"></div>
 	<ul class="actionDropDown">
     	<li>
         	<a href="#">Actions</a>
@@ -227,7 +228,16 @@ $( function()
 
 	$('.assign-ctrl').live( 'click', function( evt )
 	{
-		$.ajax({ url : $(this).attr('href')+'/format/json' })
+		var thisA = $(this)
+		$.ajax
+		({ 
+			url : $(this).attr('href')+'/format/json',
+			success : function( data )
+			{
+				var msgCon = thisA.parents('ul.actionDropDown').prev('div').show().text( data.exception.message );
+				msgCon.delay(3000).fadeTo( 'fast', 0.01, function(){ $(this).html( '' ); })
+			}
+		})
 		evt.preventDefault()
 	})
 });

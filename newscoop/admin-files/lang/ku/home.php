@@ -1,4 +1,6 @@
 <?php 
+regGS("Newscoop", "");
+regGS("Campsite", "");
 regGS("Password recovery request for $1", "");
 regGS("Your password has been reset.", "");
 regGS("Proceed to login.", "");
@@ -57,7 +59,6 @@ regGS("Backup list is empty.", "");
 regGS("Are you sure you want to restore the file $1?", "");
 regGS("Are you sure you want to make new backup?", "");
 regGS("Are you sure you want to delete the file $1?", "");
-regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.", "");
 regGS("Import XML", "هاورد ه ی ئیکس ئێم ئێڵ");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "تۆ ئه بێ مافی زیاد کرد ن / گۆڕانکاری بابه ت و بابه تی بڵاو کراوه ت هه بێ به مه به ستی د ه سنیشا نکرد نی نوسه ر بۆ هه مو بابه ته کان");
 regGS("Select the field from which to generate the author", "ئه و زه مینه هه ڵبژێره که ئه کرێ له ڕێگه یه وه نوسه ر بخوڵقێ نی");
@@ -71,7 +72,6 @@ regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.",
 regGS("Clear system cache", "سڕینه وه ی هه ڵگره کانی سیسته م");
 regGS("The system was unable to upload the file '$1'. ", "سیسته مه که نیتوانی فایلی  '$1' به رز کاته وه ");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "تکایه د ڵنیا به له و فایله ی که ئه ته وێ به رزی بکه یته وه ، له وا نه یه شکا بێت");
-regGS("Connection refused", "په یوه ند ی  ڕه د کرایه وه");
 regGS("An error occured in session management. Please reload the login page.", "هه ڵه یه ك د ه ر که وت له ماوه ی به ڕێوه برد ن ، تکایه دوباره په ڕه ی چۆنه ژووره وه بکه وه");
 regGS("This file is stored on disk as '$1'.", "ئه م فایله له د یسکا خه زن کرا وه ك '$1'.خ ");
 regGS("The system is unable to write to the directory '$1'.", "سیسته مه که ناتوانێ بنوسێ له د ایرێکتۆری '$1'.خ ");
