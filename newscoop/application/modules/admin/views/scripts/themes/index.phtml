@@ -234,7 +234,10 @@ $( function()
 			url : $(this).attr('href')+'/format/json',
 			success : function( data )
 			{
-				var msgCon = thisA.parents('ul.actionDropDown').prev('div').show().text( data.exception.message );
+				console.log( 'x' )
+				var msgCon = thisA.parents('ul.actionDropDown').prev('div')
+								.fadeTo( 'fast', 1 )
+								.text( data.exception.message );
 				msgCon.delay(3000).fadeTo( 'fast', 0.01, function(){ $(this).html( '' ); })
 			}
 		})
