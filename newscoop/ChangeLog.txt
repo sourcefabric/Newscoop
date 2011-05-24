@@ -1,3 +1,44 @@
+3.5.3 (May 19, 2011)
+  Tasks
+  -----
+  * [CS-2961] Remove integration with Airtime
+
+  Bug Fixes
+  ---------
+  * [CS-2890] TinyMCE "HTML" button is cleaning embedded code
+  * [CS-2955] During *upgrade* the existing htaccess file is modified to original
+  * [CS-3104] Upgrading to 3.5.3 creates an error in the TinyMCE editor
+  * [CS-2984] Staff management list contains maximum 20 staff (with no option to view any entries beyond this)
+  * [CS-3036] Article list page -> select some articles->choose an action-> it doesnt actually get applied even though it said it did
+  * [CS-2946] ReCaptcha for Subscription system
+  * [CS-2986] Actions not available to user still appear in Article List 'select action' dropdown
+  * [CS-2865] Restore password is completly unusable
+  * [CS-2947] Template cache cleaning doesn't work (in artcile destructor the g_ado_db object is destroyed already)
+  * [CS-3041] Backup manager dosen't show correctly the file size in 64-bit environment
+  * [CS-3021] tinyMCE content not saved under certain circumstances
+  * [CS-3035] Article list page -> select some articles->choose an action you do not have rights for->get booted back to dashboard
+  * [CS-3032] Articles not showing up in the section listing
+  * [CS-2989] Search not returning any results from translated issues
+  * [CS-2980] Article ordering can be done without having the proper permissions
+  * [CS-2958] Localizer -> Globals asks to translate Campsite instead of Newscoop
+  * [CS-2951] Universal list
+  * [CS-2940] Blog listings (blogs, entries, comments) has no a pagination. Blog menu has no a link to blog entries list (missed from 3.5.0)
+  * [CS-2652] Translation of an article and creation of a new Issue, has wrong breadcrumbs and UI error
+  * [CS-3020] Article "edit" button is enabled for users without edit right
+  * [CS-3017] Can not delete unwanted author
+  * [CS-2976] sourcefabric.org RSS feed - change title
+  * [CS-2987] password length limit same in install and admin interface
+  * [CS-2476] Issue Publishing Schedule can be set to the past
+  * [CS-2486] Template "Replace current with" does not work
+  * [CS-2949] Style info missing in "Change User Type" page
+  * [CS-3039] Inconsistent language on login screen
+  * [CS-3031] Notice during upgrade from backup file restore
+  * [CS-2967] No way to re-login after session expired when already re-logged in at a different page
+  * [CS-2972] Specifying multiple types in the articles list returns an empty list
+  * [CS-2981] Locale files are not removed on Language deletion
+  * [CS-2474] Editing comments in the article editor, makes the page scroll to the top of the page
+  * [CS-3110] Crash in the article topics list when no topic was selected
+
 3.5.2 (March 15, 2011)
   New Features
   ------------
