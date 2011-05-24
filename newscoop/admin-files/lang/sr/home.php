@@ -1,4 +1,6 @@
 <?php 
+regGS("Newscoop", "");
+regGS("Campsite", "");
 regGS("Password recovery request for $1", "");
 regGS("Your password has been reset.", "");
 regGS("Proceed to login.", "");
@@ -57,7 +59,6 @@ regGS("Backup list is empty.", "Листа бекапова је празна");
 regGS("Are you sure you want to restore the file $1?", "Да ли сте сигурни да желите да вратите фајл $1?");
 regGS("Are you sure you want to make new backup?", "Да ли сте сигурни да желите да направите нови бекап?");
 regGS("Are you sure you want to delete the file $1?", "Да ли сте сигурни да желите да обришете фајл $1?");
-regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.", "Ваш претраживач не подржава Javascript или вам је (што је вероватније) Javascript подршка искључена. Молимо средите то да бисте могли да користите Кемпсајт.");
 regGS("Import XML", "Увези XML");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "Морате имати одобрења за додавање/мењање издања и текстова да бисте били у могућности да подешавате аутора свих текстова.");
 regGS("Select the field from which to generate the author", "Изаберите поље из кога ће се генерисати аутор");
@@ -71,7 +72,6 @@ regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.",
 regGS("Clear system cache", "Обриши системски кеш");
 regGS("The system was unable to upload the file '$1'. ", "Систем није био у могуности да аплоудује фајл '$1'.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Проверите фајл који покушавате да аплоудујете, могуће је да је оштећен.");
-regGS("Connection refused", "Конекција је одбијена");
 regGS("An error occured in session management. Please reload the login page.", "Дошло је до грешке у сесији. Молимо Вас учитајте поново страницу за пријављивање.");
 regGS("This file is stored on disk as '$1'.", "Фајл је спремљен на диску као '$1'.");
 regGS("The system is unable to write to the directory '$1'.", "Систем није у могућности да уписује у директоријум '$1'.");
