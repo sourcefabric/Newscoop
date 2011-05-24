@@ -743,13 +743,23 @@ dl.inline-list dd {
 	font-style:italic;
 	color:#7c7c7c;
 }
+.map-thumb_cont {
+	float:left;
+	width:128px;
+}
 .map-thumb {
 	margin:0;
 	padding:0;
 	width:128px;
 	float:left;
-	border:1px solid #9d9d9d;
+	border-top:1px solid #cdcdcd;
+	border-right:1px solid #9d9d9d;
+	border-left:1px solid #9d9d9d;
+	border-bottom:1px solid #9d9d9d;
 	background:#9d9d9d;
+}
+.map-thumb_tab {
+	border-top:1px solid #9d9d9d;
 }
 .map-thumb:hover {
 	border:1px solid #007eb1;
