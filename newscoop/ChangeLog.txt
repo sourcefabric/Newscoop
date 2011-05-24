@@ -6,6 +6,7 @@
   Bug Fixes
   ---------
   * [CS-2890] TinyMCE "HTML" button is cleaning embedded code
+  * [CS-2955] During *upgrade* the existing htaccess file is modified to original
   * [CS-3104] Upgrading to 3.5.3 creates an error in the TinyMCE editor
   * [CS-2984] Staff management list contains maximum 20 staff (with no option to view any entries beyond this)
   * [CS-3036] Article list page -> select some articles->choose an action-> it doesnt actually get applied even though it said it did
@@ -31,12 +32,12 @@
   * [CS-2486] Template "Replace current with" does not work
   * [CS-2949] Style info missing in "Change User Type" page
   * [CS-3039] Inconsistent language on login screen
-  * [CS-2955] During *upgrade* the existing htaccess file is modified to original
   * [CS-3031] Notice during upgrade from backup file restore
   * [CS-2967] No way to re-login after session expired when already re-logged in at a different page
   * [CS-2972] Specifying multiple types in the articles list returns an empty list
   * [CS-2981] Locale files are not removed on Language deletion
   * [CS-2474] Editing comments in the article editor, makes the page scroll to the top of the page
+  * [CS-3110] Crash in the article topics list when no topic was selected
 
 3.5.2 (March 15, 2011)
   New Features

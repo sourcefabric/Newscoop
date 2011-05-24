@@ -1,4 +1,6 @@
 <?php 
+regGS("Newscoop", "");
+regGS("Campsite", "");
 regGS("Password recovery request for $1", "");
 regGS("Your password has been reset.", "");
 regGS("Proceed to login.", "");
@@ -57,7 +59,6 @@ regGS("Backup list is empty.", "Lista bekapova je prazna");
 regGS("Are you sure you want to restore the file $1?", "Da li ste sigurni da želite da vratite fajl $1?");
 regGS("Are you sure you want to make new backup?", "Da li ste sigurni da želite da napravite novi bekap?");
 regGS("Are you sure you want to delete the file $1?", "Da li ste sigurni da želite da obrišete fajl $1?");
-regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.", "Vaš pretraživač ne podržava Javascript ili vam je (što je verovatnije) Javascript podrška isključena. Molimo sredite to da biste mogli da koristite Kempsajt.");
 regGS("Import XML", "Uvezi XML");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "Morate imati odobrenja za dodavanje/menjanje izdanja i tekstova da biste bili u mogućnosti da podešavate autora svih tekstova.");
 regGS("Select the field from which to generate the author", "Izaberite polje iz koga će se generisati autor");
@@ -71,7 +72,6 @@ regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.",
 regGS("Clear system cache", "Obriši sistemski keš");
 regGS("The system was unable to upload the file '$1'. ", "Sistem nije bio u stanju da uploaduje fajl '$1'. ");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Proverite fajl koji pokušavate da uploadujete, moguće je da je oštećen.");
-regGS("Connection refused", "Konekcija je odbijena");
 regGS("An error occured in session management. Please reload the login page.", "Došlo je do greške u sesiji. Molimo Vas učitajte ponovo stranicu za prijavljivanje.");
 regGS("This file is stored on disk as '$1'.", "Fajl je spremljen na disku kao '$1'.");
 regGS("The system is unable to write to the directory '$1'.", "Sistem nije u stanju da upisuje u direktorijum '$1'.");
