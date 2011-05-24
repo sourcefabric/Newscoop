@@ -1,4 +1,4 @@
-var statusMap ={ 'pending': 'new', 'hidden': 'hidden', 'deleted': 'deleted', 'approved': 'approved' };
+var statusMap ={'pending': 'new', 'hidden': 'hidden', 'deleted': 'deleted', 'approved': 'approved'};
 var datatableCallback = {
     serverData: {},
     commentTmpl: function(){},
@@ -13,8 +13,11 @@ var datatableCallback = {
         });
     },
     row: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-        nRow.innerHTML = datatableCallback.commentTmpl(aData);
-        nRow.className = 'status_'+statusMap[aData.comment.status];
+        //nRow.innerHTML = datatableCallback.commentTmpl(aData);
+        //nRow.className = 'status_'+statusMap[aData.comment.status];
+        $(nRow)
+            .tmpl('#comment-tmpl',aData)
+            .addClass('status_'+statusMap[aData.comment.status]);
         return nRow;
     },
     draw: function() {
@@ -22,12 +25,10 @@ var datatableCallback = {
             $(this).find(".commentBtns").css("visibility","visible");
         },function() {
             $(this).find(".commentBtns").css("visibility","hidden");
-        });        
+        });
     }
 };
 $(function(){
-    datatableCallback.commentTmpl = doT.template($('#comment-tmpl').html());
-    
     $('.tabs').tabs();
     $('.tabs').tabs('select', '#tabs-1');
     var commentFilterTriggerCount = 0;
@@ -43,7 +44,7 @@ $(function(){
         }
     });
 
-    $(".addFilterBtn").click(function () {$('#commentFilterSearch fieldset ul').append('<li><select class="input_select"><option>1</option><option>2</option></select><input type="text" class="input_text" /></li>'); return false; $("#commentFilterSearch").css("height","500px");});
+    $(".addFilterBtn").click(function () {$('#commentFilterSearch fieldset ul').append('<li><select class="input_select"><option>1</option><option>2</option></select><input type="text" class="input_text" /></li>');return false;$("#commentFilterSearch").css("height","500px");});
 
     /**
      * Action to fire
@@ -62,7 +63,7 @@ $(function(){
         datatable.fnDraw();
         evt.preventDefault();
     });
-    
+
     /**
      * Action to fire
      * when action select is triggered
@@ -84,7 +85,7 @@ $(function(){
                 url: 'comment/set-status/format/json',
                 data: $.extend({
                    "comment": ids,
-                   "status": status                   
+                   "status": status
                 },serverObj.security),
                 success: function(data) {
                     flashMessage(putGS('Comments status change to $1.',statusMap[status]));

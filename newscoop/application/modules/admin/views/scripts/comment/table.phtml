@@ -141,14 +141,15 @@ serverObj.translateObj = [
 </table>
 <div class="commentBtns">
     <ul>
-		{% for(i in comment.actions) %}
-			<li><a href="javascript:;" id="">{{comment.actions[i]}}</a></li>
-		{% endfor %}
         <li><a href="javascript:;" id="pending_{{comment.id}}" class="action new"><?php putGS('New');?></a></li>
+        {% if(can.enable) %}
         <li><a href="javascript:;" id="approved_{{comment.id}}" class="action approved"><?php putGS('Approved');?></a></li>
         <li><a href="javascript:;" id="hidden_{{comment.id}}" class="action hidden"><?php putGS('Hidden');?></a></li>
         <li><a href="javascript:;" id="deleted_{{comment.id}}" class="action deleted"><?php putGS('Delete');?></a></li>
+        {% endif %}
+        {% if(can.edit) %}
         <li><a href="javascript:;" class="action-edit link icon-link"><span class="icon ui-icon-pencil"></span><?php putGS('Quick edit');?></a></li>
+        {% endif %}
         <li><a href="javascript:;" class="action-rating link icon-link"><span class="icon ui-icon-star"></span><?php putGS('Add rating');?></a></li>
         <li class="last">
             <a href="{{commenter.banurl}}" class="banUser"><span><?php putGS('Ban user');?></span></a>

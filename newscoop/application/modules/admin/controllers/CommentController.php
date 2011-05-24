@@ -76,7 +76,6 @@ class Admin_CommentController extends Zend_Controller_Action
         $table = $this->getHelper('datatable');
         /* @var $table Action_Helper_Datatable */
         $table->setDataSource($this->commentRepository);
-
         $table->setCols(array(
             'index' => $view->toggleCheckbox(),
             'commenter' => getGS('Author'),
@@ -86,14 +85,17 @@ class Admin_CommentController extends Zend_Controller_Action
         ), array('index' => false));
 
         $index = 1;
-        $table->setHandle(function($comment) use ($view, &$index) {
+        $acl = array();
+        $acl['edit'] = $this->_helper->acl->isAllowed('comment','edit');
+        $acl['enable'] = $this->_helper->acl->isAllowed('comment','enable');
+        $table->setHandle(function($comment) use ($view, $acl, &$index) {
             /* var Newscoop\Entity\Comment\Commenter */
             $commenter = $comment->getCommenter();
             $thread = $comment->getThread();
             $forum  = $comment->getForum();
-            //$avatar = 'http://www.gravatar.com/avatar/'.md5(strtolower(trim($commenter->getEmail()))).'?s=50&d=wavatar';
             return array(
                 'index'      => $index++,
+                'can'        => array( 'enable' => $acl['enable'], 'edit' => $acl['edit']),
                 'commenter'  => array(
                     'username'    => $commenter->getUsername(),
                     'name'        => $commenter->getName(),
@@ -109,7 +111,6 @@ class Admin_CommentController extends Zend_Controller_Action
                                      ))
                 ),
                 'comment'    => array(
-                    'actions'      => array(1,2,4),
                     'id'           => $comment->getId(),
                     'created'      => array(
                     	'date'         => $comment->getTimeCreated()->format('Y.i.d'),
@@ -170,6 +171,7 @@ class Admin_CommentController extends Zend_Controller_Action
     public function setStatusAction()
     {
 
+        
         $this->getHelper('contextSwitch')
             ->addActionContext('set-status', 'json')
             ->initContext();
