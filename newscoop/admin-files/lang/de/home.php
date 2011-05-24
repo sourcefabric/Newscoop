@@ -1,4 +1,6 @@
 <?php 
+regGS("Newscoop", "");
+regGS("Campsite", "");
 regGS("Password recovery request for $1", "");
 regGS("Your password has been reset.", "");
 regGS("Proceed to login.", "");
@@ -57,7 +59,6 @@ regGS("Backup list is empty.", "Leere Backupliste");
 regGS("Are you sure you want to restore the file $1?", "Sind Sie sicher, dass Sie die Datei $1 wiederherstellen möchten?");
 regGS("Are you sure you want to make new backup?", "Sind Sie sicher, dass Sie ein neues Backup machen wollen?");
 regGS("Are you sure you want to delete the file $1?", "Sind Sie sicher, dass Sie die Datei $1 löschen möchten?");
-regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.", "Ihr Browser unterstützt kein Javascript oder Sie haben Javascript nicht aktiviert (das ist wahrscheinlicher). Bitte überpüfen Sie Ihre Einstellungen, um Newscoop nutzen zu können. ");
 regGS("Import XML", "XML importieren");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "Sie benötigen die Erlaubnis, Ausgaben und Artikel hinzuzufügen/zu verändern, um die Autoren/innen für alle Artikel einzugeben.");
 regGS("Select the field from which to generate the author", "Wählen Sie ein Feld zur Erstellung von Autor/in.");
@@ -71,7 +72,6 @@ regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.",
 regGS("Clear system cache", "System-Cache leeren");
 regGS("The system was unable to upload the file '$1'. ", "Das System konnte die Datei '$1' nicht hochladen.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Die Datei, die Sie hochladen möchten, könnte beschädigt sein.");
-regGS("Connection refused", "Verbindung verweigert");
 regGS("An error occured in session management. Please reload the login page.", "Fehler im Sitzungsmanagement. Bitte aktualisieren Sie die Login-Seite.");
 regGS("This file is stored on disk as '$1'.", "Diese Datei ist als '$1' gespeichert.");
 regGS("The system is unable to write to the directory '$1'.", "Das System konnte nicht auf das Verzeichnis '$1' zugreifen.");
