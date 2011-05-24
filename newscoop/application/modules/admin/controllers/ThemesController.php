@@ -130,9 +130,7 @@ class Admin_ThemesController extends Zend_Controller_Action
         $this->view->placeholder( 'title' )->set( getGS( 'Theme management' ) );
         $this->_helper->contextSwitch
             ->addActionContext( 'index', 'json' )
-            ->initContext();
-        $this->_helper->ajaxContext
-            ->addActionContext( 'assign-to-publication-action', 'json' )
+            ->addActionContext( 'assign-to-publication', 'json' )
             ->initContext();
     }
     
@@ -253,10 +251,13 @@ class Admin_ThemesController extends Zend_Controller_Action
     
     function assignToPublicationAction()
     {
-        $theme  = $this->getThemeManagementService()->getById( $this->_request->getParam( 'theme-id' ) );
-		$pub    = $this->getPublicationService()->findById( $this->_request->getParam( 'pub-id' ) );
-			
-		$this->view->response = $this->getThemeService()->assignTheme( $theme, $pub );
+        try
+        {
+            $theme  = $this->getThemeService()->getById( $this->_request->getParam( 'theme-id' ) );
+		    $pub    = $this->getPublicationService()->findById( $this->_request->getParam( 'pub-id' ) );
+    		$this->view->response = $this->getThemeService()->assignTheme( $theme, $pub );
+        }
+        catch( \Exception $e ){}
     }
 
     public function installAction()
