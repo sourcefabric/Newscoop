@@ -1,4 +1,6 @@
 <?php 
+regGS("Newscoop", "");
+regGS("Campsite", "");
 regGS("Password recovery request for $1", "");
 regGS("Your password has been reset.", "");
 regGS("Proceed to login.", "");
@@ -57,7 +59,6 @@ regGS("Backup list is empty.", "");
 regGS("Are you sure you want to restore the file $1?", "");
 regGS("Are you sure you want to make new backup?", "");
 regGS("Are you sure you want to delete the file $1?", "");
-regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.", "");
 regGS("Import XML", "");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "");
 regGS("Select the field from which to generate the author", "");
@@ -71,7 +72,6 @@ regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.",
 regGS("Clear system cache", "");
 regGS("The system was unable to upload the file '$1'. ", "");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "");
-regGS("Connection refused", "");
 regGS("An error occured in session management. Please reload the login page.", "");
 regGS("This file is stored on disk as '$1'.", "");
 regGS("The system is unable to write to the directory '$1'.", "System kunde inte skriva till katalogen '$1'.");
