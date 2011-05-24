@@ -1,12 +1,14 @@
 <?php 
-regGS("Password recovery request for $1", "");
-regGS("Your password has been reset.", "");
-regGS("Proceed to login.", "");
-regGS("Hi, \n\nfor password recovery, please follow this link: $1", "");
-regGS("Go to login", "");
-regGS("Back to login.", "");
-regGS("Back to login", "");
-regGS("An email with instructions on how to recover you password has been sent to your inbox.", "");
+regGS("Newscoop", "Newscoop");
+regGS("Campsite", "Campsite");
+regGS("Password recovery request for $1", "Запрос восстановления пароля для $1");
+regGS("Your password has been reset.", "Ваш пароль переустановлен.");
+regGS("Proceed to login.", "Войти.");
+regGS("Hi, \n\nfor password recovery, please follow this link: $1", "Добрый день, \n\n для восстановления пароля, следуйте по ссылке: $1");
+regGS("Go to login", "На страницу входа.");
+regGS("Back to login.", "Вернуться на страницу входа.");
+regGS("Back to login", "Вернуться на страницу входа");
+regGS("An email with instructions on how to recover you password has been sent to your inbox.", "Сообщение с инструкциями о том, как восстановить Ваш пароль был выслан на Ваш почтовый ящик.");
 regGS("Session expired.", "Сессия окончена.");
 regGS("Processing...", "Обработка...");
 regGS("Please", "Пожалуйста");
@@ -57,7 +59,6 @@ regGS("Backup list is empty.", "Список пуст.");
 regGS("Are you sure you want to restore the file $1?", "Вы уверены, что желаете восстановить $1?");
 regGS("Are you sure you want to make new backup?", "Вы уверены, что желаете создать новую резервную копию?");
 regGS("Are you sure you want to delete the file $1?", "Вы уверены, что хотите удалить файл $1?");
-regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.", "Ваш браузер не поддерживает Javascript или (что более вероятно) это указано в его настройках. Пожалуйста, исправьте настройки браузера, чтобы использовать сервисы системы.");
 regGS("Import XML", "Импорт XML");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "У Вас должны быть права пользователя для добавления/изменения выпусков и статей для того, чтобы установить автора для статей.");
 regGS("Select the field from which to generate the author", "Выберите поле из списка для генерации поля автор");
@@ -71,7 +72,6 @@ regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.",
 regGS("Clear system cache", "Очистить систему кеширования");
 regGS("The system was unable to upload the file '$1'. ", "Система не может загрузить файл '$1'.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Пожалуйста проверьте, какой файл Вы пытаетесь загрузить. Файл может быть запорчен.");
-regGS("Connection refused", "Соединение сброшено");
 regGS("An error occured in session management. Please reload the login page.", "Произошла ошибка в управлении БД. Пожалуйста, перезагрузите страницу.");
 regGS("This file is stored on disk as '$1'.", "Этот файл сохранен на диске как '$1'.");
 regGS("The system is unable to write to the directory '$1'.", "Система не может записать в папку '$1'.");
