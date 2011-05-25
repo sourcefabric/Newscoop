@@ -550,3 +550,27 @@ a.edit_marker_one_choice_link {
     margin-right: 13px;
     float: right;
 }
+
+.geo_edit_popup_top {
+    width: 17px;
+    height: 17px;
+    position: absolute;
+    z-index: 1;
+    right: 5px;
+    top: 8px; 
+}
+
+.geo_close_edit_window {
+    position:absolute;
+    top:16px;
+    right:16px;
+    z-index:3000;
+}
+.geo_preview_edit_window {
+    position:absolute;
+    top:16px;
+    right:42px;
+    z-index:3000;"
+}
+
+

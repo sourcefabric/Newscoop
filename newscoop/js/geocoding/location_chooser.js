@@ -155,6 +155,9 @@ this.ignore_click = false;
 // the used pop-up window
 this.popup = null;
 
+// for the accordion purposes
+this.list_shown_header = 0;
+
 // setting the localized strings
 this.set_display_strings = function(local_strings)
 {
@@ -448,12 +451,33 @@ this.update_poi_position = function(index, coordinate, value, input)
     OpenLayers.HooksLocal.map_check_pois(this);
 };
 
+// closes (pre)view popup, if of specified poi
+this.close_popup = function(index)
+{
+    if (this.popup)
+    {
+        var m_rank = this.popup.m_rank;
+        if ((undefined !== m_rank) && (index == m_rank)) {
+            // this pop-up removal seems to be sometimes strange
+            try {
+                this.popup.feature.popup = null;
+                this.map.removePopup(this.popup);
+                this.popup.destroy();
+            }
+            catch (e) {}
+            this.popup = null;
+        }
+    }
+};
+
 // setting the edit window for the requested POI (bound on the 'edit' link)
 this.edit_poi = function(index)
 {
     this.edited_point = index;
     this.load_point_data();
     this.open_edit_window();
+
+    this.close_popup(index);
 
     return;
 };
@@ -648,6 +672,24 @@ this.remove_poi = function(index)
     this.update_poi_descs();
 };
 
+this.preview_edited = function()
+{
+    var index = this.edited_point;
+    this.close_popup(index);
+    this.center_poi(index);
+    OpenLayers.HooksPopups.on_map_feature_select(this, index);
+};
+
+this.select_poi_on_list = function(index)
+{
+    if (index != this.list_shown_header) {
+        return;
+    }
+
+    this.center_poi(index);
+    OpenLayers.HooksPopups.on_map_feature_select(this, index);
+};
+
 // updates the permuation of POIs (via UI 'sortable', or after a POI removal)
 this.poi_order_update = function(poi_order_new)
 {
@@ -696,6 +738,8 @@ this.poi_order_revert = function(index)
 // for updating the side-bar with POI links
 this.update_poi_descs = function(active, index_type)
 {
+    this.list_shown_header = 0;
+
     var geo_obj = this;
     var obj_name = this.get_obj_name();
 
@@ -717,6 +761,7 @@ this.update_poi_descs = function(active, index_type)
     {
         view_index = this.display_index(active);
     }
+    this.list_shown_header = view_index;
 
     var max_ind = this.poi_order_user.length - 1;
 
@@ -762,7 +807,7 @@ this.update_poi_descs = function(active, index_type)
 
         descs_inner += "<div id=\"poi_seq_" + pind + "\">";
         descs_inner += "<h3 class=\"" + use_class + class_show + " map_poi_side_one\">";
-        descs_inner += "<a href=\"#\" class='poi_name'>" + disp_index + cur_label_sep + cur_label + "</a></h3>";
+        descs_inner += "<a href=\"#\" class='poi_name' onClick='" + obj_name + ".select_poi_on_list(" + pind + "); return false;'>" + disp_index + cur_label_sep + cur_label + "</a></h3>";
         descs_inner += "<div class='poi_actions_all'>";
 
         var disable_value = "";
@@ -832,7 +877,7 @@ this.update_poi_descs = function(active, index_type)
             }
         });
 
-        $("#map_poi_side_list").accordion({animated: false, autoHeight: false, active: view_index, header: "> div > h3"}).sortable({axis: "y", handle: "h3", stop: function() {stop = true;} });
+        $("#map_poi_side_list").accordion({animated: false, autoHeight: false, active: view_index, header: "> div > h3", change: function(event, ui) {geo_obj.on_accordion_change(event, ui);} }).sortable({axis: "y", handle: "h3", stop: function() {stop = true;} });
 
         $("#map_poi_side_list").bind( "sortupdate", function(event, ui) {
             var poi_order = $(this).sortable('toArray');
@@ -850,6 +895,24 @@ this.update_poi_descs = function(active, index_type)
 
     });
     this.map_update_side_desc_height();
+};
+
+// for keeping track of the displayed accordion part
+this.on_accordion_change = function(event, ui)
+{
+    this.list_shown_header = -1;
+
+    try {
+        var index_html = this.obj_name + ".select_poi_on_list";
+        var header_html = ui.newHeader[0].innerHTML;
+        var index_start = header_html.search(index_html);
+        if (0 <= index_start) {
+            var rank_start = index_start + index_html.length + 1;
+            var rank = parseFloat(header_html.substring(rank_start));
+            this.list_shown_header = rank.toFixed();
+        }
+    }
+    catch (exc) {}
 };
 
 // sets the height of the side-bar part with POIs, so that it fits into the rest of the side-bar
@@ -1407,6 +1470,9 @@ this.map_position_changed = function ()
     }
 
     OpenLayers.HooksLocal.map_check_pois(this);
+
+    this.restart_select_control();
+
 };
 
 // map zoom is set automatically on map layer change
@@ -1424,6 +1490,22 @@ this.map_zoom_changed = function ()
     }
 
     OpenLayers.HooksLocal.map_check_pois(this);
+
+    this.restart_select_control();
+
+};
+
+// ol loose the select control for f*cking many times
+this.restart_select_control = function()
+{
+    var geo_obj = this;
+    var map = geo_obj.map;
+    if (geo_obj.select_control) {
+        geo_obj.select_control.destroy();
+    }
+    geo_obj.select_control = new OpenLayers.Control.SelectFeature(geo_obj.layer);
+    map.addControl(map.geo_obj.select_control);
+    geo_obj.select_control.activate();
 };
 
 // changing the size for the map div for the reader view
@@ -1571,6 +1653,17 @@ this.store_point_property = function(property, value)
 {
     this.set_save_state(true);
 
+    if ("video_id" == property) {
+        var vid_pattern = /http\:\/\/youtu\.be\/([^\/?\s]+)/g;
+        var vid_match = "";
+        if (vid_match = vid_pattern.exec(value)) {
+            try {
+                value = vid_match[1];
+            }
+            catch(exc) {};
+        }
+    }
+
     var use_index = this.display_index(this.edited_point);
     var cur_marker = this.layer.features[use_index];
 
@@ -1641,7 +1734,7 @@ this.load_point_properties = function()
     poi_prop_names['video_width'] = "point_video_width";
     poi_prop_names['video_height'] = "point_video_height";
 
-    for (one_name in poi_prop_names)
+    for (var one_name in poi_prop_names)
     {
         var div_name = poi_prop_names[one_name];
         var div_obj = document.getElementById ? document.getElementById(div_name) : null;
@@ -1773,6 +1866,8 @@ this.load_point_direct = function()
 // updating the preview view at point editing
 this.update_edit_preview = function()
 {
+    return;
+
     var use_index = this.display_index(this.edited_point);
     if (this.layer && this.layer.features && this.layer.features[use_index])
     {
@@ -2253,7 +2348,7 @@ this.set_save_content_on_poi = function(save_obj, poi_attrs, marker_info)
     poi_prop_names['video_width'] = "video_width";
     poi_prop_names['video_height'] = "video_height";
 
-    for (one_name in poi_prop_names)
+    for (var one_name in poi_prop_names)
     {
         var poi_property = "m_" + one_name;
         var obj_property = poi_prop_names[one_name];

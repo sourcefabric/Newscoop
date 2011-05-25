@@ -447,7 +447,16 @@ OpenLayers.HooksPopups.on_feature_select_edit = function(evt, geo_obj)
 
         geo_obj.edit_poi(attrs.m_rank);
     }
-}
+};
+
+OpenLayers.HooksPopups.on_feature_edit_disp = function(geo_obj, index)
+{
+    geo_obj.ignore_edit_click = true;
+    geo_obj.edit_poi(index);
+
+    var restor_str = '' + geo_obj.obj_name + '.ignore_edit_click = false;';
+    setTimeout(restor_str, 500);
+};
 
 OpenLayers.HooksPopups.on_feature_select = function(evt, geo_obj, avoid_rec)
 {
@@ -491,11 +500,16 @@ OpenLayers.HooksPopups.on_feature_select = function(evt, geo_obj, avoid_rec)
     var pop_info = GeoPopups.create_popup_content(feature, geo_obj);
     var pop_text = pop_info['inner_html'];
 
+    var edit_link = "";
+    if (geo_obj.editing) {
+        edit_link ='<div class="geo_edit_popup_top"><a href="#" class="link icon-link" onClick="OpenLayers.HooksPopups.on_feature_edit_disp(' + geo_obj.obj_name + ', ' + attrs.m_rank + '); return false;"><span class="icon ui-icon-pencil"><!--edit--></span></a></div> ';
+    }
+
     geo_obj.cur_pop_rank += 1;
     geo_obj.popup = new OpenLayers.Popup.FramedCloud("featurePopup_" + geo_obj.cur_pop_rank,
         feature.geometry.getBounds().getCenterLonLat(),
         new OpenLayers.Size(geo_obj.popup_width,geo_obj.popup_height),
-        pop_text,
+        edit_link + pop_text,
         null, true, function(evt) {OpenLayers.HooksPopups.on_popup_close(evt, geo_obj);});
 
     var min_width = pop_info['min_width'];
@@ -505,6 +519,7 @@ OpenLayers.HooksPopups.on_feature_select = function(evt, geo_obj, avoid_rec)
 
     feature.popup = geo_obj.popup;
     geo_obj.popup.feature = feature;
+    geo_obj.popup.m_rank = attrs.m_rank;
     geo_obj.map.addPopup(geo_obj.popup);
 
     if (!avoid_rec)
@@ -614,7 +629,9 @@ OpenLayers.HooksLocal.new_poi_on_map_click = function(evt, map) {
         return true;
     }
 
-	if (evt.onControlDiv) {return true;}
+    if (geo_obj.ignore_edit_click) {return true;}
+
+    if (evt.onControlDiv) {return true;}
 
     if (evt['cancelBubble']) {return true;}
 

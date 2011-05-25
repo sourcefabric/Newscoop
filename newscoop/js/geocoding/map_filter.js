@@ -451,12 +451,12 @@ this.report = function(event) {
     if (this.last_info_string == info_text) {return;}
     this.last_info_string = info_text;
 
-    this.mbr.removeFeatures(this.mbr.features);
+    //this.mbr.removeFeatures(this.mbr.features);
 
-    var brecs_count = brecs.length;
-    for (var brind = 0; brind < brecs_count; brind++) {
-        this.add_polygon(brecs[brind], this.mbr);
-    }
+    //var brecs_count = brecs.length;
+    //for (var brind = 0; brind < brecs_count; brind++) {
+    //    this.add_polygon(brecs[brind], this.mbr);
+    //}
 
     info_obj.innerHTML = info_text;
 
@@ -573,23 +573,24 @@ this.main_init = function(map_div_name)
     OpenLayers.Feature.Vector.style['default']['fillColor'] = '#0080ff';
     this.vectors = new OpenLayers.Layer.Vector("Polygon Layer");
 
-    var mbr_style_map = new OpenLayers.StyleMap({
-            strokeWidth: 2,
-            strokeOpacity: 0.8,
-            strokeColor: "#000000",
-            fillOpacity: 0.25,
-            fillColor: "#0040ff"
-    });
+    //var mbr_style_map = new OpenLayers.StyleMap({
+    //        strokeWidth: 2,
+    //        strokeOpacity: 0.8,
+    //        strokeColor: "#000000",
+    //        fillOpacity: 0.25,
+    //        fillColor: "#0040ff"
+    //});
 
-    this.mbr = new OpenLayers.Layer.Vector(
-        "Bounding Rectangles",
-        {
-            styleMap: mbr_style_map,
-            isBaseLayer: false
-        }
-    );
+    //this.mbr = new OpenLayers.Layer.Vector(
+    //    "Bounding Rectangles",
+    //    {
+    //        styleMap: mbr_style_map,
+    //        isBaseLayer: false
+    //    }
+    //);
 
-    geo_obj.map.addLayers([geo_obj.mbr, geo_obj.vectors]);
+    //geo_obj.map.addLayers([geo_obj.mbr, geo_obj.vectors]);
+    geo_obj.map.addLayers([geo_obj.vectors]);
 
     geo_obj.controls = {
         polygon: new OpenLayers.Control.DrawFeature(geo_obj.vectors,

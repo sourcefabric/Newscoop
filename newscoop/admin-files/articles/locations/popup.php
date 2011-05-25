@@ -316,12 +316,14 @@ var on_load_proc = function()
     useSystemParameters();
     geo_locations.main_openlayers_init('map_mapcanvas', 'map_sidedescs');
 
+    set_pois_action(false);
+/*
     set_pois_action(true);
     var poi_act_sel = document.getElementById ? document.getElementById("map_button_edit_on_click") : null;
     if (poi_act_sel) {
         poi_act_sel.checked = true;
     }
-
+*/
     init_search();
     //}, 1000);
     window.focus();
@@ -446,9 +448,6 @@ var map_show_preview = function()
         <input id="map_button_preview" type="submit" onClick="map_show_preview(); return false;" class="default-button" value="<?php putGS("Preview"); ?>" name="preview" disabled="disabled" />
         <input id="map_button_close" type="submit" onClick="on_close_request(); return false;" class="default-button" value="<?php putGS("Close"); ?>" name="close" />
     </div>
-    <div class="map_button_edit_on_click">
-        <input id="map_button_edit_on_click" title="<?php putGS("Edit location instead of showing location bubble"); ?>" type="checkbox" onClick="set_pois_action(this.checked);" checked><span><?php putGS("Edit location on click"); ?><span>
-    </div>
     <div id="map_save_info" class="map_save_info">
       <a href="#" class="map_name_display" id="map_name_display" onClick="geo_locations.map_edit_name(); return false;" title="<?php putGS("Setting the map name helps with map search"); ?>"><?php putGS("fill in map name"); ?></a>
         <input id="map_name_input" class="map_name_input map_hidden" type="text" size="40" maxlength="255" onChange="geo_locations.map_save_name(); return false;" onBlur="geo_locations.map_display_name(); return false;">
@@ -507,7 +506,8 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 </div><!-- end of map resizing -->
 <div id="map_mapedit" class="map_mapedit map_hidden">
     <div class="map_editinner">
-        <a onclick="geo_locations.close_edit_window(); return false;" href="#" class="ui-state-default icon-button no-text" style="position:absolute; top:16px; right:16px; z-index:3000;" ><span class="ui-icon ui-icon-closethick"></span></a>
+        <a onclick="geo_locations.close_edit_window(); return false;" href="#" class="ui-state-default icon-button no-text geo_close_edit_window"><span class="ui-icon ui-icon-closethick"></span></a>
+        <a onclick="geo_locations.close_edit_window(); geo_locations.preview_edited(); return false;" href="#" class="ui-state-default icon-button button geo_preview_edit_window"><span class=""><?php putGS("Preview"); ?></span></a>
         <div class="map_editpart1">
             <form action="#" onSubmit="return false;">
               <fieldset>
@@ -518,7 +518,6 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                     <li><a href="#edit_image" id="image_edit_part"><?php putGS("image"); ?></a></li>
                     <li><a href="#edit_video" id="video_edit_part"><?php putGS("video"); ?></a></li>
                     <li><a href="#edit_marker"><?php putGS("icon"); ?></a></li>
-                    <li><a href="#edit_view"><?php putGS("preview"); ?></a></li>
                 </ul>
                 <div id="edit_basic" class="edit_tabs">
                     <div class="edit_label_long map_poi_edit_intro"><?php putGS("Name and describe this location"); ?>.</div>
@@ -629,20 +628,6 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                         </div>
 
                         </div>
-
-                        <div id="edit_view" class="edit_tabs">
-                    <ol>
-                    <div class="edit_label_long map_poi_edit_intro_popup"><?php putGS("Pop-up content"); ?>.</div>
-
-                    <li>
-                    <div id="edit_part_text" class="">
-                    <div id="edit_part_preview_outer" class="">
-                    <div class="popup_preview" id="edit_part_preview"> </div>
-                    </div>
-                    </li>
-                    </ol>
-                        </div>
-
                 </div>
               </fieldset>
             </form>
