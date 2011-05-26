@@ -14,7 +14,8 @@ use Newscoop\Controller\Action\Helper\Datatable\Adapter\Theme,
     Newscoop\Service\PublicationServiceDoctrine,
     Newscoop\Entity\Theme\Loader\LocalLoader,
     Newscoop\Service\IOutputService,
-    Newscoop\Service\Exception\DuplicateNameException
+    Newscoop\Service\Exception\DuplicateNameException,
+    Newscoop\Entity\Output
     ;
 
 /**
@@ -70,9 +71,8 @@ class Admin_ThemesController extends Zend_Controller_Action
 
     /**
      * Provides the theme service.
-     *
+     * 
      * @return Newscoop\Service\IThemeManagementService
-     * The theme service to be used by this controller.
      */
     public function getThemeService()
     {
@@ -243,7 +243,17 @@ class Admin_ThemesController extends Zend_Controller_Action
         $this->view->outputSettings = $outSets;
     }
     
-    function filesAction()
+    public function outputEditAction()
+    {
+        $themeId = $this->_request->getParam( 'id' );
+        $thmServ = $this->getThemeService();
+        $theme   = $thmServ->findById( $themeId );
+        $output  = $this->getOutputService()->getById( $this->_request->getParam( 'output-id' ) );
+        $this->_themeService->findOutputSetting( $theme, $output );
+        //$this->view->outputForm = new Admin_Form_Theme_OutputSettings();
+    }
+    
+    public function filesAction()
     {
         $datatable = $this->_helper->genericDatatable; 
         $datatable->setAdapter

@@ -24,13 +24,21 @@
 
                     <ul class="themeSettingsTabsNav">
                         <?php foreach( $this->outputs as $k => $out ) : ?>
-                    		<li><a href="#themeSettingsTab<?php echo $k+1 ?>"><?php echo $out->getName() ?></a></li>
+                    		<li>
+                    			<a theme-id="<?php echo $this->theme->id ?>"
+                    				out-id="<?php echo $out->getId() ?>" 
+                    				href="#themeSettingsTab<?php echo $k+1 ?>">
+                    			    <?php echo $out->getName() ?>
+                    			</a>
+                    		</li>
                         <?php endforeach; ?>
                     </ul>
 
 					<div id="themeSettingsTab1">
-
-						<fieldset class="templateSettings"><legend>Template settings</legend> <!-- dl class="zend_form">
+						<fieldset class="templateSettings">
+							<legend>Template settings</legend>
+							
+							 <!-- dl class="zend_form">
                                 	<dt><label>Front page template:</label></dt>
                                 	<dd><select class="input_select">
                                 		<option>front.tpl</option>
@@ -46,7 +54,8 @@
                                 		<option>article.tpl</option>
                                 		<option>2</option>
                                 	</select></dd>
-                                </dl --></fieldset>
+                                </dl -->
+						</fieldset>
 
 
 						<fieldset><legend>Match article types</legend>

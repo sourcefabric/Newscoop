@@ -23,7 +23,8 @@ require_once 'Zend/Application.php';
 require_once dirname(__FILE__) . '/../RepositoryTestCase.php';
 
 // Create application, bootstrap, and run
-$application = new Zend_Application(
+$application = new Zend_Application
+(
     APPLICATION_ENV,
     APPLICATION_PATH . '/configs/application.ini'
 );
