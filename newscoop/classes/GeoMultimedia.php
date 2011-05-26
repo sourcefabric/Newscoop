@@ -287,7 +287,7 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
 */
 
         // ad B 1)
-        $queryStr_med_id = "SELECT fk_multimedia_id AS med FROM " . self::TABLE_JOIN . " WHERE id = ?";
+        $queryStr_med_id = "SELECT id AS med FROM " . self::TABLE_JOIN . " WHERE fk_maplocation_id = ? AND fk_multimedia_id = ?";
         // ad B 2)
 
 		$queryStr_med_in = "INSERT INTO " . self::TABLE . " (media_type, media_spec, media_src, media_width, media_height, IdUser) VALUES (";
@@ -303,6 +303,9 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
 
         // ad B 1)
 
+        $loc_id = $poi["location_id"];
+        if (!$loc_id) {return;}
+
         $mm_id = null;
         $mm_spec = "";
         $mm_src = "";
@@ -311,7 +314,6 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
         $mm_insert = false;
         if ("image" == $mm_type)
         {
-            //print_r($poi);
             $mm_id = $poi["image_mm"];
             $mm_spec = "";
             $mm_src = $poi["image_src"];
@@ -337,6 +339,7 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
             {
                 $mapmed_sel_params = array();
 
+                $mapmed_sel_params[] = $loc_id;
                 $mapmed_sel_params[] = $mm_id;
 
                 $rows = $g_ado_db->GetAll($queryStr_med_id, $mapmed_sel_params);
@@ -400,7 +403,7 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
             {
                 $map_up_params = array();
                 $map_up_params[] = $med_new_id;
-                $map_up_params[] = $mm_id;
+                $map_up_params[] = $med_old_id;
 
                 $success = $g_ado_db->Execute($queryStr_map_up, $map_up_params);
             }
@@ -411,7 +414,7 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
             {
                 // ad B 4) deleting the old connector;
                 $map_rm_params = array();
-                $map_rm_params[] = $mm_id;
+                $map_rm_params[] = $med_old_id;
 
                 $success = $g_ado_db->Execute($queryStr_map_rm, $map_rm_params);
             }
@@ -421,8 +424,8 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
         try
         {
             $med_rm_params = array();
-            $med_rm_params[] = $med_old_id;
-            $med_rm_params[] = $med_old_id;
+            $med_rm_params[] = $mm_id;
+            $med_rm_params[] = $mm_id;
 
             $success = $g_ado_db->Execute($queryStr_med_rm, $med_rm_params);
         }
