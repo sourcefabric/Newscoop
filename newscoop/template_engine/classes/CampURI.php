@@ -985,7 +985,7 @@ abstract class CampURI
             case 'articleattachment':
                 $context = CampTemplate::singleton()->context();
                 $attachment = new Attachment($context->attachment->identifier);
-                $this->m_buildPath = $attachment->getAttachmentUrl();
+                $this->m_buildPath = $attachment->getAttachmentUri();
                 $this->m_buildQueryArray = array();
                 $p_params = array();
                 break;
