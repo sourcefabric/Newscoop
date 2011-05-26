@@ -39,7 +39,9 @@ this.display_strings = {
     longitude: "longitude",
     latitude: "latitude",
     locations_updated: "Locations updated",
-    not_filled: "Some locations do not have filled description!"
+    not_filled: "Some locations do not have filled description!",
+    save_anyway: "Save anyway",
+    back_to_editing: "Back to editing"
 };
 
 // flag saved state
@@ -180,7 +182,9 @@ this.set_display_strings = function(local_strings)
         "longitude",
         "latitude",
         "locations_updated",
-        "not_filled"
+        "not_filled",
+        "save_anyway",
+        "back_to_editing"
     ];
 
     var str_count = display_string_names.length;
@@ -2457,28 +2461,46 @@ this.check_points_filled = function()
     var poi_count = features.length;
 
     for (var pind = 0; pind < poi_count; pind++) {
+        var one_filled = false;
+
         var cur_attrs = features[pind].attributes;
-        var v_direct = cur_attrs.m_direct;
-        var v_text = cur_attrs.m_text;
-        var v_html = cur_attrs.m_content;
-        if (!v_direct) {
-            if ("" == v_text) {filled = false;}
+
+        if (!cur_attrs.m_direct) {
+            if ("" != cur_attrs.m_text) {one_filled = true;}
         } else {
-            if ("" == v_html) {filled = false;}
+            if ("" != cur_attrs.m_content) {one_filled = true;}
         }
-        if (!filled) {break;}
+
+        if (!one_filled) {
+            if (cur_attrs.m_image_source) {one_filled = true;}
+            if (cur_attrs.m_video_id && cur_attrs.m_video_type) {one_filled = true;}
+        }
+
+        if (!one_filled) {
+            filled = false;
+            break;
+        }
     }
 
     return filled;
 }
 
 // saving data, on the main 'save' user action; do ajax here
-this.map_save_all = function(script_dir)
+this.map_save_all = function(script_dir, force_save)
 {
     if (!this.something_to_save) {return;}
 
-    if (!this.check_points_filled()) {
-        alert(this.display_strings.not_filled);
+    var geo_obj = this;
+
+    if ((!force_save) && (!this.check_points_filled())) {
+
+        $("#save_empty_dialog").dialog("open");
+
+        //var proc_anyway = confirm(this.display_strings.not_filled);
+        //if (!proc_anyway) {
+        //    return;
+        //}
+
         return;
     }
 

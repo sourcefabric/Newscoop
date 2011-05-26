@@ -111,7 +111,6 @@ var set_local_strings = function()
     local_strings_map["longitude"] = "<?php putGS("Longitude"); ?>";
     local_strings_map["latitude"] = "<?php putGS("Latitude"); ?>";
     local_strings_map["locations_updated"] = "<?php putGS("List of locations updated"); ?>";
-    local_strings_map["not_filled"] = "<?php putGS("Some locations do not have filled description!"); ?>";
 
     geo_locations.set_display_strings(local_strings_map);
 
@@ -359,6 +358,27 @@ var on_load_proc = function()
 
     var opener_sets = self.setInterval("set_to_opener()", 1000);
 */
+
+
+    $("#save_empty_dialog").dialog({
+        modal: true,
+        draggable: false,
+        zIndex: 10000,
+        width: 400,
+        height: 160,
+        autoOpen: false
+    });
+
+    $("#save_empty_dialog").dialog('option', 'buttons', {
+        "<?php putGS("Save anyway"); ?>": function() {
+            $(this).dialog("close");
+            geo_locations.map_save_all(null, true);
+        },
+        "<?php putGS("Back to editing"); ?>": function() {
+            $(this).dialog("close");
+        }
+    });
+
 };
 
 on_close_request = function()
@@ -641,5 +661,8 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 <div id="map_mapcanvas" class="map_mapcanvas geo_map_mapcanvas"></div>
 </div><!-- end of map_mappart -->
 </div><!-- end of map_editor -->
+
+<div id="save_empty_dialog" class="save_empty_dialog map_hidden" title="<?php putGS("Save empty locations?"); ?>"><?php putGS("Some locations have filled neither description nor multimedia"); ?>!</div>
+
 </body>
 </html>

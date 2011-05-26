@@ -570,4 +570,6 @@ a.edit_marker_one_choice_link {
     z-index:3000;"
 }
 
-
+.save_empty_dialog {
+    z-index:10000;
+}
