@@ -730,6 +730,7 @@ OpenLayers.HooksLocal.map_check_pois = function(geo_obj) {
         {
             var feature = features[find];
             var cur_poi_info = geo_obj.poi_markers[find];
+            if (!cur_poi_info) {continue;}
 
             var inf_lon = cur_poi_info['lon'];
             var inf_lat = cur_poi_info['lat'];

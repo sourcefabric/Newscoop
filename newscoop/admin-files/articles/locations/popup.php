@@ -100,7 +100,7 @@ var set_local_strings = function()
     local_strings_map["point_markers"] = "<?php putGS("Point markers"); ?>";
     local_strings_map["this_should_not_happen_now"] = "<?php putGS("problem at point processing, please send error report"); ?>";
     local_strings_map["really_to_delete_the_point"] = "<?php putGS("Really to delete the point?"); ?>";
-    local_strings_map["the_removal_is_from_all_languages"] = "<?php putGS("The removal is from all language versions of the article."); ?>";
+    local_strings_map["the_removal_is_from_all_languages"] = "<?php putGS("The point will be removed from all translations of the article."); ?>";
     local_strings_map["point_number"] = "<?php putGS("Point no."); ?>";
     local_strings_map["fill_in_the_point_description"] = "<?php putGS("Describe the location..."); ?>";
     local_strings_map["edit"] = "<?php putGS("Edit"); ?>";
@@ -359,6 +359,12 @@ var on_load_proc = function()
     var opener_sets = self.setInterval("set_to_opener()", 1000);
 */
 
+    // to put dialog prep into $(window).load ? ... not shown at some Chrome
+    prepare_save_empty_dialog();
+};
+
+var prepare_save_empty_dialog = function()
+{
 
     $("#save_empty_dialog").dialog({
         modal: true,
@@ -378,6 +384,8 @@ var on_load_proc = function()
             $(this).dialog("close");
         }
     });
+
+    $("#save_empty_dialog").removeClass("map_hidden");
 
 };
 
