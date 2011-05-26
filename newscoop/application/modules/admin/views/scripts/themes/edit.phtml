@@ -26,7 +26,7 @@
                         <?php foreach( $this->outputs as $k => $out ) : ?>
                     		<li>
                     			<a theme-id="<?php echo $this->theme->id ?>"
-                    				out-id="<?php echo $out->getId() ?>" 
+                    				output-id="<?php echo $out->getId() ?>" 
                     				href="#themeSettingsTab<?php echo $k+1 ?>">
                     			    <?php echo $out->getName() ?>
                     			</a>
@@ -34,10 +34,11 @@
                         <?php endforeach; ?>
                     </ul>
 
-					<div id="themeSettingsTab1">
+					<div id="themeSettingsTab">
 						<fieldset class="templateSettings">
 							<legend>Template settings</legend>
-							
+							<div class="form-container"></div>
+							 
 							 <!-- dl class="zend_form">
                                 	<dt><label>Front page template:</label></dt>
                                 	<dd><select class="input_select">
@@ -56,8 +57,9 @@
                                 	</select></dd>
                                 </dl -->
 						</fieldset>
+					</div>
 
-
+					<div>
 						<fieldset><legend>Match article types</legend>
 
 							<div class="themeArticleType">
@@ -335,81 +337,4 @@
 </div>
 
 
-<script type="text/javascript">    
-$(function()
-{
 
-	// Tabs
-	$('.tabs, .themeSettingsTabs').tabs();
-	$('.tabs').tabs('select', '#tabs-1');
-    // BUTTONS
-    $('.fg-button').hover
-   	(
-    	function(){ $(this).removeClass('ui-state-default').addClass('ui-state-focus'); },
-    	function(){ $(this).removeClass('ui-state-focus').addClass('ui-state-default'); }
-	);
-	$('.icon-button').hover
-	(
-		function() { $(this).addClass('ui-state-hover'); }, 
-		function() { $(this).removeClass('ui-state-hover'); }
-	);
-	$('.text-button').hover
-	(
-		function() { $(this).addClass('ui-state-hover'); }, 
-		function() { $(this).removeClass('ui-state-hover'); }
-	);
-	$(".actionDropDown li").hover(function()
-	{
-		$(this).children("ul").css("display","block");
-		$(this).children("a").addClass("active");
-	}, function() 
-	{
-		$(this).children("ul").css("display","none");
-		$(this).children("a").removeClass("active");
-	});
-	$(".actionDropDown li ul li").hover(function()
-	{
-		$(this).children("ul").css("display","block");
-	}, function() 
-	{
-		$(this).childer("ul").css("display","none");
-	});
-		
-	$('.matchWithExisting ul li div input').click(function()
-	{
-		if (this.checked) 
-		{
-			$(this).parent().parent().find("div").removeClass('active');
-			$(this).parent().addClass('active');
-			$(this).parent().parent().find("select").attr('disabled', 'disabled');
-			$(this).parent().parent().find("div input").attr('checked', false);
-			$(this).attr('checked', true);
-		} 
-		else 
-		{
-			$(this).parent().removeClass('active');
-			$(this).parent().parent().find("select").removeAttr('disabled');
-		}
-	}) 
-});
-</script>
-
-<script type="text/javascript">
-$(document).ready(function()
-{
-	$('.toggle-button').click(function() 
-	{
-		$('.closeable').toggle('fast');
-		$(this).toggleClass("closed");
-		return false;
-	}).next().hide();
-	$('.toggle-link').click(function() 
-	{
-		$('.more-options').toggle('fast');
-		$(this).toggleClass("opened");
-		return false;
-	}).next().hide();
-});
-
-
-</script>

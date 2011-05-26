@@ -1,6 +1,9 @@
 $(function()
 {
-	$.registry = 
+	/**
+	 * @todo should have this inside the view helper
+	 */
+	jQuery.registry = 
 	{
 		_ns 	: "customRegistry"
 	,	get		: function( arg )

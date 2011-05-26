@@ -4,6 +4,7 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+use Newscoop\Entity\Resource;
 use Newscoop\Controller\Action\Helper\Datatable\Adapter\Theme,
     Newscoop\Controller\Action\Helper\Datatable\Adapter\ThemeFiles,
     Newscoop\Service\IPublicationService,
@@ -132,6 +133,7 @@ class Admin_ThemesController extends Zend_Controller_Action
         $this->_helper->contextSwitch
             ->addActionContext( 'index', 'json' )
             ->addActionContext( 'assign-to-publication', 'json' )
+            ->addActionContext( 'output-edit', 'json' )
             ->initContext();
     }
     
@@ -139,6 +141,8 @@ class Admin_ThemesController extends Zend_Controller_Action
     public function indexAction()
     {
         $datatableAdapter = new Theme( $this->getThemeService() );
+        // really wierd way to bind some filtering logic right here
+        // basically this is the column index we are going to look for filtering requests
         $datatableAdapter->setPublicationFilterColumn(4);
         
         $datatable = $this->_helper->genericDatatable;
@@ -237,6 +241,19 @@ class Admin_ThemesController extends Zend_Controller_Action
             'rel'	=> 'stylesheet'
         ) );
         
+        $this->view->jQueryUtils()
+            ->registerVar
+            ( 
+                'load-output-settings-url', 
+                $this->_helper->url->url( array
+                ( 
+                	'action' => 'output-edit', 
+                	'controller' => 'themes',
+                    'module' => 'admin', 
+                    'themeid' => '$1', 
+                    'outputid' => '$2'  
+                ), null, true, false ) 
+            );
         $this->view->themeForm      = $themeForm;
         $this->view->theme          = $theme->toObject();
         $this->view->outputs        = $outputs;
@@ -245,12 +262,73 @@ class Admin_ThemesController extends Zend_Controller_Action
     
     public function outputEditAction()
     {
-        $themeId = $this->_request->getParam( 'id' );
-        $thmServ = $this->getThemeService();
-        $theme   = $thmServ->findById( $themeId );
-        $output  = $this->getOutputService()->getById( $this->_request->getParam( 'output-id' ) );
-        $this->_themeService->findOutputSetting( $theme, $output );
-        //$this->view->outputForm = new Admin_Form_Theme_OutputSettings();
+        $thmServ    = $this->getThemeService();
+        
+        // getting the theme entity
+        $themeId    = $this->_request->getParam( 'themeid' );        
+        $theme      = $thmServ->findById( $themeId );
+        
+        // getting selected output 
+        $outputId   = $this->_request->getParam( 'outputid' );
+        $output     = $this->getOutputService()->getById( $outputId );
+        /* @var $settings Newscoop\Entity\Output */
+        
+        // getting all available templates
+        $templates  = array();
+        foreach( $thmServ->getTemplates($theme) as $tpl )
+            $templates[ $tpl->getPath() ] = $tpl->getName();
+            
+        // making the form 
+        $outputForm = new Admin_Form_Theme_OutputSettings();
+        $outputForm->setAction( $this->_helper->url( 'output-edit' ) );
+         
+        // getting theme's output settings
+        $settings   = $thmServ->findOutputSetting( $theme, $output );
+        /* @var $settings Newscoop\Entity\OutputSettings */
+        $settingVals= array
+        ( 
+        	"frontpage"   => $settings->getFrontPage(),
+        	"articlepage" => $settings->getArticlePage(),
+        	"sectionpage" => $settings->getSectionPage(),
+        	"errorpage"   => $settings->getErrorPage(),
+            "outputid"	  => $outputId,
+            "themeid"	  => $themeId
+        );
+        $outputForm->setValues( $templates, $settingVals );
+        
+        try // @todo maybe implement this a little smarter, little less code?  
+        {
+            if( $this->_request->isPost() ) {
+                if( $outputForm->isValid( $this->_request->getPost() ) )
+                {
+                    $settings->setFrontPage( new Resource( $outputForm->getValue( 'frontpage' ) ) );
+                    $settings->setSectionPage( new Resource( $outputForm->getValue( 'sectionpage' ) ) );
+                    $settings->setArticlePage( new Resource( $outputForm->getValue( 'articlepage' ) ) );
+                    $settings->setErrorPage( new Resource( $outputForm->getValue( 'errorpage' ) ) );
+                    $this->getThemeService()->assignOutputSetting( $settings, $theme );
+                    
+                    $this->_helper->flashMessenger( ( $this->view->success = getGS( 'Settings saved.' ) ) );
+                }
+                else
+                {
+                    throw new \Exception();
+                }
+            }
+        }
+        catch( \Exception $e )
+        {
+            $this->_helper->flashMessenger( ( $this->view->error = getGS( 'Saving settings failed.' ) ) );
+        }
+        $this->view->outputForm = $outputForm;
+        
+        // disabling layout for ajax and hide the submit button
+        if( $this->_request->isXmlHttpRequest() )
+        {
+            $this->_helper->layout->disableLayout();
+            $outputForm->getElement( 'submit' )
+                ->clearDecorators()
+                ->setAttrib( 'style', 'display:none' );
+        }
     }
     
     public function filesAction()

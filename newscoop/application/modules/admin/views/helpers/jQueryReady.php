@@ -23,7 +23,7 @@ class Admin_View_Helper_JQueryReady extends Zend_View_Helper_Placeholder_Contain
      * 
      * @var string
      */
-    protected $_scriptFormat = '<script>jQuery( function() { %s } )</script>';
+    protected $_scriptFormat = 'jQuery( function() { %s } )';
 
     /**
      * This helper add a document.ready script type for jquery
@@ -47,6 +47,7 @@ class Admin_View_Helper_JQueryReady extends Zend_View_Helper_Placeholder_Contain
      */
     public function toString()
     {
+        $output = '';
         foreach( $this as $item ) {
             $output .= $item;
         }
