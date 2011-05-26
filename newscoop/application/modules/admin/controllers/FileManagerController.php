@@ -43,6 +43,10 @@ class Admin_FileManagerController extends Zend_Controller_Action
         $this->root = realpath(APPLICATION_PATH . '/../templates');
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\Template');
         $this->storage = new Newscoop\Storage\LocalStorage($this->root);
+
+        $this->_helper->contextSwitch
+            ->addActionContext('get-items', 'json')
+            ->initContext();
     }
 
     public function indexAction()
@@ -101,6 +105,7 @@ class Admin_FileManagerController extends Zend_Controller_Action
                 'controller' => 'file-manager',
                 'action' => 'upload',
                 'class' => 'upload',
+                'reset_params' => false,
             ),
             array(
                 'label' => getGS('Create folder'),
@@ -113,6 +118,22 @@ class Admin_FileManagerController extends Zend_Controller_Action
                 'class' => 'add',
             ),
         );
+    }
+
+    public function getItemsAction()
+    {
+        $path = $this->parsePath();
+
+        $items = array();
+        foreach ($this->storage->listItems($path) as $item) {
+            $fileInfo = new SplFileInfo("$this->root/$path/$item");
+            $items[] = (object) array(
+                'name' => basename($item),
+                'isDir' => $fileInfo->isDir(),
+            );
+        }
+
+        $this->view->items = $items;
     }
 
     public function uploadAction()

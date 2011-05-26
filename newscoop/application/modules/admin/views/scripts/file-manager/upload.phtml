@@ -8,3 +8,37 @@
 <?php echo $this->form; ?>
 
 <?php $this->plupload(); ?>
+
+<script type="text/javascript">
+$(function() {
+    // get existing files for given path
+    var items = [];
+    $.getJSON('<?php echo $this->url(array(
+        'action' => 'get-items',
+        'format' => 'json',
+    )); ?>', function(data) {
+        items = data.items;
+    });
+
+    // ask for confirmation if file would override existing
+    uploader = $('#uploader').pluploadQueue();
+    uploader.bind('FilesAdded', function(up, files) {
+        for (i in files) {
+            var file = files[i];
+            for (j in items) {
+                var item = items[j];
+                if (item.name == file.name) { // conflict
+                    if (item.isDir) {
+                        alert("<?php putGS("Can't override directory '$1'.", '" + item.name + "'); ?>");
+                        up.removeFile(file);
+                    } else if (!confirm("<?php putGS("Do you want to override '$1'?", '" + file.name + "'); ?>")) {
+                        up.removeFile(file);
+                    }
+
+                    break;
+                }
+            }
+        }
+    });
+});
+</script>
