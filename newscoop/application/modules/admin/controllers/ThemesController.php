@@ -173,26 +173,28 @@ class Admin_ThemesController extends Zend_Controller_Action
             ->setWidths( array( 'checkbox' => 20, 'image' => 215, 'name' => 235, 'description' => 280, 'actions' => 115 ) )
             ->setRowHandler
             ( 
-                function( $theme, $index = null ) use ($view)
+                function( $theme, $index = null )
                 {
-                    $id = json_encode( array( "id" => $theme['id'] ) );
-                    $processed[] = $id; 
-                    
-                    /*$imgArr = array();
-                    if( @is_array( $theme['images'] ) ) {
-                        foreach( $theme['images'] as $img ) {
-                            $imgArr[] = " { image : " . json_encode( $img ) . " } ";
-                        }
-                    }
-                    $processed[] = " [ " . implode( ",", $imgArr ) . " ] ";*/
-                    
-                    $processed[] = json_encode( array( 'images' => $theme['images'] ) );
-                    $processed[] = json_encode( array( 'title' => $theme['title'], 'designer' => $theme['designer'], 'version' => $theme['version'] ) );
-                    $processed[] = json_encode( array( 'compat' => $theme['subTitle'], 'text' => $theme['description'] ) );
-                    $processed[] = $id; 
-                    return $processed;
+                    return array
+                    ( 
+                    	"id"       => $theme['id'], 
+                    	"images"   => $theme['images'],
+                        "title"    => $theme['title'], 
+                        "designer" => $theme['designer'], 
+                        "version"  => $theme['version'],
+                    	"compat"   => $theme['subTitle'],
+                    	"text"     => $theme['description']   
+                    );
                 } 
             )
+            ->setDataMap( array
+            (
+                "checkbox"     => null,
+            	'image'        => null,
+                'name'         => null,
+                'description'  => null,
+                'actions'      => null,
+            ))
             ->setParams( $this->_request->getParams() );
             
         if( ( $this->view->mytable = $datatable->dispatch() ) )

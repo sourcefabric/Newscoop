@@ -93,6 +93,27 @@ class Action_Helper_GenericDatatable extends ADatatable
         }
         return $this;
     }
+    
+    /**
+	 * Set body properties
+	 *
+	 * @param string $p_columnProperty
+	 * @param array $p_values
+	 * @return Action_Helper_GenericDatatable
+	 */
+    public function setBody( $p_columnProperty, array $p_values = array() )
+    {
+        if( count( $p_values ) )
+        {
+            foreach( $p_values as $key => $value )
+            {
+                if( is_string( $key ) )
+                    $key = $this->_colsIndex[$key];
+                $this->_options['aoColumns'][$key][$p_columnProperty] = $value;
+            }
+        }
+        return $this;
+    }
 
     /**
      * N-a sti nimeni
@@ -140,6 +161,18 @@ class Action_Helper_GenericDatatable extends ADatatable
     {
         //$this->toggleAutomaticWidth( false );
         $this->setHeader( 'sWidth', $p_widths );
+        return $this;
+    }
+    
+	/**
+	 * Set data mapping
+	 *
+	 * @param array|bool $p_values
+	 * @return Action_Helper_GenericDatatable
+	 */
+    public function setDataMap( array $p_values = array() )
+    {
+        $this->setBody( 'mDataProp', $p_values );
         return $this;
     }
     

@@ -21,29 +21,26 @@
 </div>	
 
 <script id="datatableTmpl_0" type="text/x-jQuery-tmpl">
-<div>
 	<div class="DataTables_sort_wrapper">
     	<input class="toggle-checkbox" type="checkbox" value="{{id}}">
         <span></span>
 	</div>
-</div>
 </script>
 
 <script id="datatableTmpl_1" type="text/x-jQuery-tmpl">
-<ul class="themesListTabs ui-tabs ui-widget ui-corner-all">
-	{% for( i in images ) %}
-	<li class="imageItem ui-tabs-panel ui-widget-content ui-corner-bottom 
+	<ul class="themesListTabs ui-tabs ui-widget ui-corner-all">
+		{% for( i in images ) %}
+		<li class="imageItem ui-tabs-panel ui-widget-content ui-corner-bottom 
 			{% if( i > 0 ) %}ui-tabs-hide{% endif %}" id="themesListTabD">
-    	<a id="example1" href="{{images[i]}}">
-			<img src="<?php echo $this->url() ?>{{images[i]}}" alt="{{images[i]}}" />
-		</a>
-	</li>
-	{% endfor %}
-</ul>
+    		<a id="example1" href="{{images[i]}}">
+				<img src="<?php echo $this->url() ?>{{images[i]}}" alt="{{images[i]}}" />
+			</a>
+		</li>
+		{% endfor %}
+	</ul>
 </script>
 
 <script id="datatableTmpl_2" type="text/x-jQuery-tmpl">
-
 	<div class="themesListTabs ui-tabs">
 		<h3>{{title}} <span>// <?php echo getGS( 'version' ) ?> {{version}}</span></h3>
         <p><i><b><?php echo getGS( 'Design' ) ?>:</b> {{designer}}</i></p>
@@ -68,18 +65,16 @@
 			</li>
     	</ul>
 	</div>
-
 </script>
 
 <script id="datatableTmpl_3" type="text/x-jQuery-tmpl">
-<div>
-	<span class="compatibilityTitle">{{compat}}</span>
-	<i>{{text}}</i>
-</div>
+	<div>	
+		<span class="compatibilityTitle">{{compat}}</span>
+		<i>{{text}}</i>
+	</div>
 </script>
 
 <script id="datatableTmpl_4" type="text/x-jQuery-tmpl">
-<div>
 	<div class="actionMessage"></div>
 	<ul class="actionDropDown">
     	<li>
@@ -118,37 +113,25 @@
 			</ul>
 		</li>
 	</ul>
-</div>
 </script>
 
 <script type="text/javascript">
-function log( x ){ console.log( x ); }
 newscoopDatatables =
 {
-	callbackRow : function( node, strings, dispIndex, theIndex )
+	callbackRow : function( row, data, displayIndex, displayIndexFull )
 	{
-		for( i in strings )
+		$(row).children().each( function( idx ) 
 		{
-			if( $.trim( strings[i] ) == "" ) continue;
-			
-			eval( "var theData = " + strings[i] );
 			try
 			{
-				//console.log( newscoopDatatables.templates[i] )
-				//$( "#datatableTmpl_" + i ).tmpl( theData )
-				//var x = dooTz.template( $( "#datatableTmpl_" + i ).html() );
-				//console.log( x(theData) );
-				//$( theTd ).html( $( "#datatableTmpl_" + i ).tmpl( theData ) );
-				var theTd = $( node ).children().eq( i ).html( "" );
-				$( theTd ).html( newscoopDatatables.templates[i]( theData ) ); 
+				$( this ).tmpl( '#datatableTmpl_'+idx, data ); 
 			}
-			catch( e ){ console.log( e ); }
-		}
-		return node;
+			catch( e ){ if( console ) console.log( e ); }
+		});
+		return row;
 	},
 	callbackDraw : function()
 	{
-		//$('.themesListTabs').tabs({event: 'mouseover'});
 		$('.themesListTabs li a').mouseover( function()
 		{
 			var parentLi = $(this).parent( 'li' );
@@ -218,13 +201,6 @@ $( function()
 			});
 		}
 	})
-	// store the processed templates
-	var templates = [];
-	$('script[type=text/x-jQuery-tmpl]').each( function()
-	{
-		templates.push( $(this).template() );
-	})
-	newscoopDatatables.templates = templates;
 
 	$('.assign-ctrl').live( 'click', function( evt )
 	{
@@ -234,7 +210,6 @@ $( function()
 			url : $(this).attr('href')+'/format/json',
 			success : function( data )
 			{
-				console.log( 'x' )
 				var msgCon = thisA.parents('ul.actionDropDown').prev('div')
 								.fadeTo( 'fast', 1 )
 								.text( data.exception.message );
