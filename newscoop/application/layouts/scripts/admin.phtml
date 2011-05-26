@@ -43,8 +43,14 @@
     <script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/jquery.widgets.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/fancybox/jquery.fancybox-1.3.4.pack.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo $this->baseUrl('/js/admin.js'); ?>"></script>
-	
-	<?php echo $this->headScript(); ?>
+    
+    <script type="text/javascript" src="<?php echo $this->baseUrl('/js/application/shared.js')?>"></script>
+    <script type="text/javascript" src="<?php echo $this->baseUrl('/js/application/admin/shared.js')?>"></script>
+    <?php 
+    	echo $this->headStyle();
+   		echo $this->headScript();
+   		echo $this->jQueryReady();
+	?>
 
     <script type="text/javascript"><!--
         <?php if (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'login.php') !== FALSE) { ?>

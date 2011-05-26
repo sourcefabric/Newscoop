@@ -108,9 +108,13 @@ class Admin_StaffController extends Zend_Controller_Action
 
     public function editAccessAction()
     {
+//        $this->view->jQueryUtils()->token = 'sdfhgfgthrgesrefwrtgdtgsvet@#$RWESDFC@#4erws';
+        
         $staff = $this->_helper->entity(new Staff, 'user');
         $this->view->staff = $staff;
 
+//        $this->view->jQueryReady( "$.registry.set('another','test');" );
+        
         $this->_helper->actionStack('edit', 'acl', 'admin', array(
             'role' => $staff->getRoleId(),
             'user' => $staff->getId(),

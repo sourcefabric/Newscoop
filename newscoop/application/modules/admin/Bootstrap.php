@@ -5,6 +5,13 @@ use Newscoop\Log\Writer;
 
 class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 {
+    
+    /**
+     * @param Zend_View
+     */
+    protected $_view;
+    
+    
     /**
      * Legacy admin bootstrap
      */
@@ -178,10 +185,13 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
     protected function _initFlashMessenger()
     {
         $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
-        if ($flashMessenger->hasMessages()) {
+        if ($flashMessenger->hasMessages()) 
+        {
             $view = $this->getResource('view');
             $view->messages = $flashMessenger->getMessages();
         }
+
+        //$view->getHelper( 'FlashMsg' )->setAdapter( Zend_Controller_Action_HelperBroker::getStaticHelper( 'FlashMessenger' ) );
     }
 
     /**
@@ -205,7 +215,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
     protected function _initPlaceholders()
     {
         $this->bootstrap('view');
-        $view = $this->getResource('view');
+        $this->_view = $view = $this->getResource('view');
 
         // content title
         $view->placeholder('title')
@@ -216,6 +226,13 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         // not using prefix/postfix to detect if is empty
         $view->placeholder('sidebar')
             ->setSeparator('</div><div class="sidebar">' . "\n");
+        
+        Zend_Controller_Front::getInstance()->registerPlugin( new \Newscoop\Controller\Plugin\Js( $this->getOptions() ) );
+
+        $view->addHelperPath( APPLICATION_PATH . "/modules/admin/views/helpers", "Admin_View_Helper" );
+        $jsPlaceholder = $view->getHelper( 'JQueryReady' );
+        $view->getHelper( 'JQueryUtils' )->setPlaceholder( $jsPlaceholder );
+        
     }
 
     /**
@@ -250,4 +267,11 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 
         Zend_Form::setDefaultTranslator($translate);
     }
+    
+    /*protected function _initView()
+    {
+        // setup layout
+        $this->bootstrap( "Layout" );
+       	$layout = $this->getResource( "layout" );
+    }*/
 }
