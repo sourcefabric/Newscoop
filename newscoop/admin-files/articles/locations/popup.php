@@ -111,6 +111,7 @@ var set_local_strings = function()
     local_strings_map["longitude"] = "<?php putGS("Longitude"); ?>";
     local_strings_map["latitude"] = "<?php putGS("Latitude"); ?>";
     local_strings_map["locations_updated"] = "<?php putGS("List of locations updated"); ?>";
+    local_strings_map["not_filled"] = "<?php putGS("Some locations do not have filled description!"); ?>";
 
     geo_locations.set_display_strings(local_strings_map);
 
@@ -539,18 +540,18 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                     <option value="1"><?php putGS("html content"); ?></option>
                     </select>
                     <div id="edit_part_text" class="">
-                    <textarea rows="5" cols="40" id="point_descr" name="point_descr" class="text geo_edit_textarea_text" type="text" onChange="geo_locations.store_point_property('text', this.value); return false;" onClick="if(local_strings_map['fill_in_the_point_description'] == this.value) {this.value = ''; geo_locations.store_point_property('text', this.value);}">
+                    <textarea rows="5" cols="40" id="point_descr" name="point_descr" class="text geo_edit_textarea_text" type="text" title="<?php putGS("Describe the location..."); ?>" onChange="geo_locations.store_point_property('text', this.value); return false;" onClick="if(local_strings_map['fill_in_the_point_description'] == this.value) {this.value = '';}" onBlur="if ('' == this.value) {this.value = local_strings_map['fill_in_the_point_description'];}">
 </textarea>
                     </div>
                     <div id="edit_part_content" class="map_hidden">
-                    <textarea rows="5" cols="40" id="point_content" name="point_content" class="text geo_edit_textarea_perex" type="text" onChange="geo_locations.store_point_property('content', this.value); return false;">
+                    <textarea rows="5" cols="40" id="point_content" name="point_content" class="text geo_edit_textarea_text" type="text" title="<?php putGS("Describe the location..."); ?>" onChange="geo_locations.store_point_property('content', this.value); return false;">
 </textarea>
                     </div>
                     </li>
 
                     <li>
                     <label class="edit_label" for="point_perex"><a class="edit_label_link" title="<?php putGS("click to edit"); ?>" href="#" onClick="$('#point_perex').removeClass('map_hidden'); $('#point_perex_view').addClass('map_hidden'); point_perex_focus(); return false;"><?php putGS("Full location title"); ?></a>:</label>
-                    <textarea rows="2" cols="40" id="point_perex" name="point_perex" class="text map_hidden" type="text" onChange="geo_locations.store_point_property('perex', this.value); return false;" onBlur="$('#point_perex').addClass('map_hidden'); $('#point_perex_view').removeClass('map_hidden'); return false;">
+                    <textarea rows="2" cols="40" id="point_perex" name="point_perex" class="text geo_edit_textarea_perex map_hidden" type="text" onChange="geo_locations.store_point_property('perex', this.value); return false;" onBlur="$('#point_perex').addClass('map_hidden'); $('#point_perex_view').removeClass('map_hidden'); return false;">
 </textarea>
                     <a title="<?php putGS("click to edit"); ?>" id="point_perex_view" class="" href="#" onClick="$('#point_perex').removeClass('map_hidden'); $('#point_perex_view').addClass('map_hidden'); point_perex_focus(); return false;">&nbsp;</a>
                     </li>

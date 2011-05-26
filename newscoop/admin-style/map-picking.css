@@ -544,6 +544,7 @@ a.edit_marker_one_choice_link {
 }
 
 .geo_edit_textarea_perex {
+    height: 32px;
 }
 .map_geo_showhide {
     margin-left: 0px;
@@ -552,12 +553,8 @@ a.edit_marker_one_choice_link {
 }
 
 .geo_edit_popup_top {
-    width: 17px;
-    height: 17px;
-    position: absolute;
-    z-index: 1;
-    right: 5px;
-    top: 8px; 
+    text-align: right;
+    padding: 0 10px 0 0;
 }
 
 .geo_close_edit_window {

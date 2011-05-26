@@ -38,7 +38,8 @@ this.display_strings = {
     remove: "remove",
     longitude: "longitude",
     latitude: "latitude",
-    locations_updated: "Locations updated"
+    locations_updated: "Locations updated",
+    not_filled: "Some locations do not have filled description!"
 };
 
 // flag saved state
@@ -178,7 +179,8 @@ this.set_display_strings = function(local_strings)
         "remove",
         "longitude",
         "latitude",
-        "locations_updated"
+        "locations_updated",
+        "not_filled"
     ];
 
     var str_count = display_string_names.length;
@@ -1049,7 +1051,8 @@ this.insert_poi = function(coor_type, lonlat_ini, longitude, latitude, label)
     vector.attributes.m_direct = false;
     vector.attributes.m_content = "";
     vector.attributes.m_link = "";
-    vector.attributes.m_text = this.display_strings.fill_in_the_point_description;
+    vector.attributes.m_text = "";
+    //vector.attributes.m_text = this.display_strings.fill_in_the_point_description;
     vector.attributes.m_image_mm = 0;
     vector.attributes.m_image_source = "";
     vector.attributes.m_image_width = "";
@@ -1217,6 +1220,7 @@ this.main_openlayers_init = function(map_div_name, descs_name)
 
     // for switching between maps
     var lswitch = new OpenLayers.Control.LayerSwitcher();
+    lswitch.roundedCornerColor = "#464646";
 
     this.map.addControl(lswitch);
     lswitch.maximizeControl();
@@ -1653,14 +1657,29 @@ this.store_point_property = function(property, value)
 {
     this.set_save_state(true);
 
+    if ("text" == property) {
+        if (value == this.display_strings.fill_in_the_point_description) {
+            value = "";
+        }
+    }
+
     if ("video_id" == property) {
-        var vid_pattern = /http\:\/\/youtu\.be\/([^\/?\s]+)/g;
+        var vid_patterns = [/(.*)youtu\.be\/([^\/\?\&\s]+)/, /(.*)youtube\.com\/watch\?v\=([^\/\?\&\s]+)/, /(.*)vimeo\.com\/([^\/\?\&\s]+)/];
+        var vid_patterns_count = vid_patterns.length;
         var vid_match = "";
-        if (vid_match = vid_pattern.exec(value)) {
-            try {
-                value = vid_match[1];
+        for (var vid = 0; vid < vid_patterns_count; vid++) {
+            var vid_pat = vid_patterns[vid];
+            vid_match = "";
+            if (vid_match = vid_pat.exec(value)) {
+                try {
+                    var value_test = vid_match[2];
+                    if (value_test) {
+                        value = value_test;
+                    }
+                }
+                catch(exc) {continue;};
+                break;
             }
-            catch(exc) {};
         }
     }
 
@@ -1742,6 +1761,11 @@ this.load_point_properties = function()
         var poi_property = "m_" + one_name;
         var one_value = cur_marker.attributes[poi_property];
         if (!one_value) {one_value = "";}
+
+        if (("point_descr" == div_name) && ("" == one_value)) {
+            one_value = this.display_strings.fill_in_the_point_description;
+        }
+
         div_obj.value = one_value;
 
         if ('perex' == one_name) {
@@ -2425,10 +2449,39 @@ this.put_into_poi_contents = function(storage, index)
 
 };
 
+this.check_points_filled = function()
+{
+    var filled = true;
+
+    var features = this.layer.features;
+    var poi_count = features.length;
+
+    for (var pind = 0; pind < poi_count; pind++) {
+        var cur_attrs = features[pind].attributes;
+        var v_direct = cur_attrs.m_direct;
+        var v_text = cur_attrs.m_text;
+        var v_html = cur_attrs.m_content;
+        if (!v_direct) {
+            if ("" == v_text) {filled = false;}
+        } else {
+            if ("" == v_html) {filled = false;}
+        }
+        if (!filled) {break;}
+    }
+
+    return filled;
+}
+
 // saving data, on the main 'save' user action; do ajax here
 this.map_save_all = function(script_dir)
 {
     if (!this.something_to_save) {return;}
+
+    if (!this.check_points_filled()) {
+        alert(this.display_strings.not_filled);
+        return;
+    }
+
     this.set_save_state(false);
 
     var cur_marker = null;
