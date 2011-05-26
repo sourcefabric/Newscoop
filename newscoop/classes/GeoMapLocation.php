@@ -681,9 +681,13 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             $queryStr_start .= "m.id AS m_id, m.IdUser AS m_user, m.fk_article_number AS art_number, GROUP_CONCAT(DISTINCT m.fk_article_number ORDER BY m.fk_article_number DESC) AS art_numbers, ";
         }
 
+        $multimedia_def = "CONCAT(mu.id, \"-\", mlmu.id)";
+        if ($mc_mapCons) {
+            $multimedia_def = "mu.id";
+        }
 
-        $queryStr_start .= "(SELECT mu.id FROM MapLocationMultimedia AS mlmu INNER JOIN Multimedia AS mu ON mlmu.fk_multimedia_id = mu.id WHERE mlmu.fk_maplocation_id = ml.id AND mu.media_type = 'image' ORDER BY mu.id LIMIT 1) AS image_mm, ";
-        $queryStr_start .= "(SELECT mu.id FROM MapLocationMultimedia AS mlmu INNER JOIN Multimedia AS mu ON mlmu.fk_multimedia_id = mu.id WHERE mlmu.fk_maplocation_id = ml.id AND mu.media_type = 'video' ORDER BY mu.id LIMIT 1) AS video_mm, ";
+        $queryStr_start .= "(SELECT $multimedia_def FROM MapLocationMultimedia AS mlmu INNER JOIN Multimedia AS mu ON mlmu.fk_multimedia_id = mu.id WHERE mlmu.fk_maplocation_id = ml.id AND mu.media_type = 'image' ORDER BY mu.id LIMIT 1) AS image_mm, ";
+        $queryStr_start .= "(SELECT $multimedia_def FROM MapLocationMultimedia AS mlmu INNER JOIN Multimedia AS mu ON mlmu.fk_multimedia_id = mu.id WHERE mlmu.fk_maplocation_id = ml.id AND mu.media_type = 'video' ORDER BY mu.id LIMIT 1) AS video_mm, ";
 
         $queryStr_start .= "c.IdUser AS c_user, c.time_updated AS c_updated, ";
 
@@ -971,6 +975,9 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         //    }
         //}
 
+$fh = fopen("/tmp/m000.txt", "a");
+fwrite($fh, json_encode($queryStr));
+fclose($fh);
 		$rows = $g_ado_db->GetAll($queryStr);
 		if (is_array($rows)) {
             $p_count = count($rows);
@@ -1020,9 +1027,24 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 $tmp_video = null;
 
                 if ($row['image_mm']) {
-                    $tmpPoint['image_mm'] = $row['image_mm'];
+                    $multimedia_spec = $row['image_mm'];
+                    $multimedia_link = $multimedia_spec;
+$fh = fopen("/tmp/m001.txt", "a");
+fwrite($fh, json_encode($multimedia_spec));
+fclose($fh);
+                    // the dynamic maps (i.e. with mc_mapCons) have grouping by multimedia,
+                    // while article maps have all multimedia separated (and read with concat)
+                    if (!$mc_mapCons) {
+                        $multimedia_spec_arr = explode("-", $multimedia_spec);
+                        if (2 == count($multimedia_spec_arr)) {
+                            $multimedia_spec = 0 + $multimedia_spec_arr[0];
+                            $multimedia_link = 0 + $multimedia_spec_arr[1];
+                        }
+                    }
 
-                    $tmp_image = new Geo_Multimedia($row['image_mm']);
+                    $tmpPoint['image_mm'] = $multimedia_link;
+
+                    $tmp_image = new Geo_Multimedia($multimedia_spec);
                     if ($tmp_image) {
                         $tmpPoint['image_src'] = $tmp_image->getSrc();
                         $tmpPoint['image_width'] = $tmp_image->getWidth();
@@ -1037,9 +1059,21 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 				$tmpPoint['video_height'] = "";
 
                 if ($row['video_mm']) {
-                    $tmpPoint['video_mm'] = $row['video_mm'];
+                    $multimedia_spec = $row['video_mm'];
+                    $multimedia_link = $multimedia_spec;
+                    // the dynamic maps (i.e. with mc_mapCons) have grouping by multimedia,
+                    // while article maps have all multimedia separated (and read with concat)
+                    if (!$mc_mapCons) {
+                        $multimedia_spec_arr = explode("-", $multimedia_spec);
+                        if (2 == count($multimedia_spec_arr)) {
+                            $multimedia_spec = 0 + $multimedia_spec_arr[0];
+                            $multimedia_link = 0 + $multimedia_spec_arr[1];
+                        }
+                    }
 
-                    $tmp_video = new Geo_Multimedia($row['video_mm']);
+                    $tmpPoint['video_mm'] = $multimedia_link;
+
+                    $tmp_video = new Geo_Multimedia($multimedia_spec);
                     if ($tmp_video) {
                         $tmpPoint['video_id'] = $tmp_video->getSrc();
                         $tmpPoint['video_type'] = $tmp_video->getSpec();
