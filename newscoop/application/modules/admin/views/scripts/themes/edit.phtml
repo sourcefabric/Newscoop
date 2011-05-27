@@ -20,9 +20,9 @@
 
 				<div class="themeSettingsTabs">
 					
-					<a href="#" class="addNewOutput">Add new output</a>
+					<a href="#" class="addNewOutput" style="display:none">Add new output</a>
 
-                    <ul class="themeSettingsTabsNav">
+                    <ul class="themeSettingsTabsNav" style="display:none">
                         <?php foreach( $this->outputs as $k => $out ) : ?>
                     		<li>
                     			<a theme-id="<?php echo $this->theme->id ?>"
@@ -34,10 +34,10 @@
                         <?php endforeach; ?>
                     </ul>
 
-					<div id="themeSettingsTab">
+					<div id="themeSettingsTab" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
 						<fieldset class="templateSettings">
 							<legend>Template settings</legend>
-							<div class="form-container"></div>
+							<div class="form-container">Loading...</div>
 							 
 							 <!-- dl class="zend_form">
                                 	<dt><label>Front page template:</label></dt>

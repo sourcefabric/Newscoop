@@ -98,7 +98,7 @@ class Resource extends Entity
 	}
 	
 	/**
-	 * @param string $path
+	 * @param string $path Should be id..
 	 */
 	public function __construct( $path = null )
 	{

@@ -276,9 +276,9 @@ class Admin_ThemesController extends Zend_Controller_Action
         /* @var $settings Newscoop\Entity\Output */
         
         // getting all available templates
-        $templates  = array( "" => "---" );
-        foreach( $thmServ->getTemplates($theme) as $tpl )
-            $templates[ $tpl->getPath() ] = $tpl->getName();
+        foreach( $thmServ->getTemplates( $theme ) as $tpl )
+        /* @var $tpl Newscoop\Entity\Resource */
+            $templates[ $tpl->getId() ] = $tpl->getName();
             
         // making the form 
         $outputForm = new Admin_Form_Theme_OutputSettings();
@@ -308,6 +308,9 @@ class Admin_ThemesController extends Zend_Controller_Action
                     $settings->setSectionPage( new Resource( $outputForm->getValue( 'sectionpage' ) ) );
                     $settings->setArticlePage( new Resource( $outputForm->getValue( 'articlepage' ) ) );
                     $settings->setErrorPage( new Resource( $outputForm->getValue( 'errorpage' ) ) );
+                    
+                    var_dump( $outputId, $settings, $theme );
+                    
                     $this->getThemeService()->assignOutputSetting( $settings, $theme );
                     
                     $this->_helper->flashMessenger( ( $this->view->success = getGS( 'Settings saved.' ) ) );

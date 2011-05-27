@@ -1893,10 +1893,11 @@ ul#edit-files h2 {
 				float:left;
 				width:320px;
 				font-weight:bold; line-height:25px;
+				color: #444444	
 				}
 		.templateSettings dl dd {
 			float:left;
-			width:434px;
+			width:400px;
 			margin-bottom:12px;
 			}
 			.templateSettings dl dd select {
