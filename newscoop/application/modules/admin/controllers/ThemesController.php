@@ -191,6 +191,7 @@ class Admin_ThemesController extends Zend_Controller_Action
                     );
                 } 
             )
+            /*
             ->setDataMap( array
             (
                 "checkbox"     => null,
@@ -199,6 +200,7 @@ class Admin_ThemesController extends Zend_Controller_Action
                 'description'  => null,
                 'actions'      => null,
             ))
+            */
             ->setParams( $this->_request->getParams() );
             
         if( ( $this->view->mytable = $datatable->dispatch() ) )
