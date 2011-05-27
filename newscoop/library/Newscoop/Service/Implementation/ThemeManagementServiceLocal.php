@@ -172,7 +172,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 			}
 		}
 
-		return NULL;
+		return new OutputSettings();
 	}
 
 	function getOutputSettings(Theme $theme)

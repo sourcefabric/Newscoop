@@ -276,7 +276,7 @@ class Admin_ThemesController extends Zend_Controller_Action
         /* @var $settings Newscoop\Entity\Output */
         
         // getting all available templates
-        $templates  = array();
+        $templates  = array( "" => "---" );
         foreach( $thmServ->getTemplates($theme) as $tpl )
             $templates[ $tpl->getPath() ] = $tpl->getName();
             
@@ -287,7 +287,8 @@ class Admin_ThemesController extends Zend_Controller_Action
         // getting theme's output settings
         $settings   = $thmServ->findOutputSetting( $theme, $output );
         /* @var $settings Newscoop\Entity\OutputSettings */
-        $settingVals= array
+        
+        $settingVals = array
         ( 
         	"frontpage"   => $settings->getFrontPage(),
         	"articlepage" => $settings->getArticlePage(),
