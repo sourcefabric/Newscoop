@@ -65,7 +65,7 @@ geomap_popup_show = function (edit) {
   <div class="collapsible">
     <h3 class="head ui-accordion-header ui-helper-reset ui-state-default ui-widget">
     <span class="ui-icon"></span>
-    <a href="#" tabindex="-1"><?php putGS('Locations'); ?></a></h3>
+    <a href="#" tabindex="-1"><?php putGS('Geolocation'); ?></a></h3>
   </div>
   <div class="padded">
   <?php

@@ -39,7 +39,8 @@ this.display_strings = {
     longitude: "longitude",
     latitude: "latitude",
     locations_updated: "Locations updated",
-    not_filled: "Some locations do not have filled description!",
+    not_filled: "Some locations do not have filled description",
+    empty_label_show: "Fill in location label",
     save_anyway: "Save anyway",
     back_to_editing: "Back to editing"
 };
@@ -183,6 +184,7 @@ this.set_display_strings = function(local_strings)
         "latitude",
         "locations_updated",
         "not_filled",
+        "empty_label_show",
         "save_anyway",
         "back_to_editing"
     ];
@@ -686,6 +688,14 @@ this.remove_poi = function(index)
     this.update_poi_descs();
 };
 
+this.set_inline_label_name = function(index)
+{
+        var label_edit_elm = document.getElementById ? document.getElementById('geo_edit_label_inline') : null;
+        if (label_edit_elm) {
+            label_edit_elm.value = this.poi_label_value;
+        }
+};
+
 this.preview_edited = function()
 {
     var index = this.edited_point;
@@ -1146,6 +1156,8 @@ this.main_openlayers_init = function(map_div_name, descs_name)
         this.set_save_state(true);
         this.map_spec_changed = true;
         this.main_page_upload = true;
+
+        this.map_update_name_state();
     }
 
     this.pzb_ctrl = new OpenLayers.Control.PanZoomBarMod();

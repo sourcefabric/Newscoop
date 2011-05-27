@@ -63,6 +63,7 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-picking.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/js/geocoding/styles/map-info.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/js/geocoding/openlayers/theme/default/style.css" />
 
 <?php
     $include_files = Geo_Preferences::GetIncludeCSS($cnf_html_dir, $cnf_website_url);
@@ -111,6 +112,7 @@ var set_local_strings = function()
     local_strings_map["longitude"] = "<?php putGS("Longitude"); ?>";
     local_strings_map["latitude"] = "<?php putGS("Latitude"); ?>";
     local_strings_map["locations_updated"] = "<?php putGS("List of locations updated"); ?>";
+    local_strings_map["empty_label_show"] = "<?php putGS("Fill in location label"); ?>";
 
     geo_locations.set_display_strings(local_strings_map);
 

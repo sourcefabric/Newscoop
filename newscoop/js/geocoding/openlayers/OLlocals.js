@@ -515,6 +515,12 @@ OpenLayers.HooksPopups.on_feature_select = function(evt, geo_obj, avoid_rec)
     var min_width = pop_info['min_width'];
     var min_height = pop_info['min_height'];
 
+    // for a safe setting of input value on inline poi label editing
+    if (geo_obj.editing) {
+        geo_obj.poi_label_value = pop_info.poi_label;
+        setTimeout(geo_obj.obj_name + ".set_inline_label_name(" + attrs.m_rank + ");", 10);
+    }
+
     geo_obj.popup.minSize = new OpenLayers.Size(min_width, min_height);
 
     feature.popup = geo_obj.popup;
