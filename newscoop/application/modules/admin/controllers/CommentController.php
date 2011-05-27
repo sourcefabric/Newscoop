@@ -16,36 +16,23 @@ use Newscoop\Entity\Comment;
 class Admin_CommentController extends Zend_Controller_Action
 {
 
-    /**
-     * @var Newscoop\Entity\Repository\CommentRepository
-     *
-     */
+    /** @var Newscoop\Entity\Repository\CommentRepository*/
     private $commentRepository;
 
-    /**
-     * @var IArticleRepository
-     *
-     */
+    /** @var Newscoop\Entity\Repository\ArticleRepository */
     private $articleRepository;
 
-    /**
-     * @var ILanguageRepository
-     *
-     */
+    /** @var Newscoop\Entity\Repository\LanguageRepository */
     private $languageRepository;
 
-    /**
-     * @var IAcceptanceRepository
-     *
-     */
+    /** @var Newscoop\Entity\Repository\Comment\AcceptanceRepository */
     private $acceptanceRepository;
 
-    /**
-     *
-     * @var Admin_Form_Comment
-     */
+    /** @var Admin_Form_Comment */
     private $form;
 
+    /** @var Admin_Form_Comment_EditForm */
+    private $editForm;
 
     public function init()
     {
@@ -57,7 +44,8 @@ class Admin_CommentController extends Zend_Controller_Action
         $this->languageRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Language');
 
         $this->form = new Admin_Form_Comment;
-        $this->form->setMethod('post');
+
+        $this->editForm = new Admin_Form_Comment_EditForm;
 
         return $this;
     }
@@ -94,20 +82,23 @@ class Admin_CommentController extends Zend_Controller_Action
             $thread = $comment->getThread();
             $forum  = $comment->getForum();
             return array(
-                'index'      => $index++,
-                'can'        => array( 'enable' => $acl['enable'], 'edit' => $acl['edit']),
-                'commenter'  => array(
-                    'username'    => $commenter->getUsername(),
-                    'name'        => $commenter->getName(),
-                    'email'       => $commenter->getEmail(),
-                    'avatar'      => (string)$view->getAvatar($commenter->getEmail(), array('img_size' => 50, 'default_img' => 'wavatar')),
-                    'ip'          => $commenter->getIp(),
-                    'url'         => $commenter->getUrl(),
-                    'banurl'      => $view->url(array(
-                                        'controller' => 'comment-commenter',
-                                        'action' => 'toggle-ban',
-                                        'commenter'=> $commenter->getId(),
-                                        'forum' => $thread->getId()
+                'index'     => $index++,
+                'can'       => array( 'enable' => $acl['enable'], 'edit' => $acl['edit']),
+                'commenter' => array(
+                    'username'      => $commenter->getUsername(),
+                    'name'          => $commenter->getName(),
+                    'email'         => $commenter->getEmail(),
+                    'avatar'        => (string)$view->getAvatar(
+                            $commenter->getEmail(),
+                            array('img_size' => 50,
+                                'default_img' => 'wavatar')),
+                    'ip'            => $commenter->getIp(),
+                    'url'           => $commenter->getUrl(),
+                    'banurl'        => $view->url(array(
+                                        'controller'    => 'comment-commenter',
+                                        'action'        => 'toggle-ban',
+                                        'commenter'     => $commenter->getId(),
+                                        'forum'         => $thread->getId()
                                      ))
                 ),
                 'comment'    => array(
@@ -171,7 +162,7 @@ class Admin_CommentController extends Zend_Controller_Action
     public function setStatusAction()
     {
 
-        
+
         $this->getHelper('contextSwitch')
             ->addActionContext('set-status', 'json')
             ->initContext();
@@ -317,6 +308,15 @@ class Admin_CommentController extends Zend_Controller_Action
     }
 
     /**
+     * Action for Editing a Comment
+     */
+    public function editAction()
+    {
+        $form = new Admin_Form_Comment_EditForm;
+        $this->view->form = $form;
+    }
+
+    /**
      * Action for Updateing a Comment
      */
     public function updateAction()
@@ -324,12 +324,11 @@ class Admin_CommentController extends Zend_Controller_Action
         $this->getHelper('contextSwitch')
             ->addActionContext('update', 'json')
             ->initContext();
-        $values = $this->getRequest()->getParams();
-        $comment = $this->commentRepository->find($values['comment']);
-        if ($this->getRequest()->isPost() && $comment) {
-            $values['time_updated'] = new DateTime;
+        if ($this->editForm->isValid($_POST)) {
             try
             {
+                $values = $this->editForm->getValues();
+                $comment = $this->commentRepository->find($values['comment']);
                 $comment = $this->commentRepository->update($comment, $values);
                 $this->commentRepository->flush();
             }
@@ -339,8 +338,6 @@ class Admin_CommentController extends Zend_Controller_Action
                 $this->view->message = $e->getMessage();
                 return;
             }
-            $article = $this->articleRepository->find($values['thread']);
-            $language = $this->languageRepository->find($values['language']);
             $this->_helper->log(
                 getGS('Comment updated by $1 to the article $2 ($3)',
                 Zend_Registry::get('user')->getName(),
@@ -351,7 +348,6 @@ class Admin_CommentController extends Zend_Controller_Action
             $this->view->message = "succcesful";
             $this->view->comment = $comment->getId();
         }
-        $this->view->comment = $comment;
     }
 
     /**

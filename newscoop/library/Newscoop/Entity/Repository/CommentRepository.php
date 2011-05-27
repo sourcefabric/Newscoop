@@ -96,7 +96,7 @@ class CommentRepository extends DatatableSource
         $em = $this->getEntityManager();
         $p_entity->setSubject($p_values['subject'])
                  ->setMessage($p_values['message'])
-                 ->setTimeUpdated($p_values['time_updated']);
+                 ->setTimeUpdated(new \DateTime);
         $em->persist($p_entity);
         return $p_entity;
     }

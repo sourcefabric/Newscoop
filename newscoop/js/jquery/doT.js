@@ -74,7 +74,7 @@
                                                     .replace(/\\'/g, "'")
                                                     .replace(/\\\\/g, "\\")
                                                     .replace(/[\r\t\n]/g,
-                                                            ' ') + (c.ends.test(code)? "{":"")+"out+='";
+                                                            ' ') +(c.ends.test(code)?"":"{") +"out+='";
                                 }) + "';return out;}").replace(/\n/g, '\\n')
                 .replace(/\t/g, '\\t').replace(/\r/g, '\\r').split("out+='';")
                 .join('').split('var out="";out+=').join('var out=');

@@ -102,7 +102,7 @@ serverObj.translateObj = [
                 <?php echo SecurityToken::FormParameter();?>
                 <input type="text" name="subject" class="input_text" value="{{comment.subject}}">
                 <label><?php putGS('Comment');?></label>
-                <textarea name="message" class="input_text_area">{{comment.subject}}</textarea>
+                <textarea name="message" class="input_text_area">{{comment.message}}</textarea>
             <div class="buttonBar">
                 <input type="button" value="<?php putGS('Cancel');?>" class="button edit-cancel">
                 <input type="button" value="<?php putGS('Reply');?>" class="button edit-reply">
@@ -133,9 +133,9 @@ serverObj.translateObj = [
             <p>
                 <a href="{{thread.link.get}}" class="articleLink">{{thread.name}}</a>
                 <br>
-                <span>{{thread.forum.name}}; <b>Section</b> {{thread.section.name}}</span>
+                <span>{{thread.forum.name}}; <b><?php putGS('Section');?></b> {{thread.section.name}}</span>
             </p>
-            <a class="goToArticle" href="{{thread.link.edit}}">Go to article page</a> </div>
+            <a class="goToArticle" href="{{thread.link.edit}}"><?php putGS('Go to article page');?></a> </div>
         </td>
         </tr></tbody>
 </table>

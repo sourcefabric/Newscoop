@@ -7,6 +7,7 @@ class Admin_Form_Comment extends Zend_Form
 {
     public function init()
     {
+        $this->setMethod('post');
         /*$user = new Zend_Form_Element_Select('user');
         $user->setLabel(getGS('Username'))
             ->setRequired(false)

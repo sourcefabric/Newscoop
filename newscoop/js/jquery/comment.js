@@ -13,8 +13,6 @@ var datatableCallback = {
         });
     },
     row: function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-        //nRow.innerHTML = datatableCallback.commentTmpl(aData);
-        //nRow.className = 'status_'+statusMap[aData.comment.status];
         $(nRow)
             .tmpl('#comment-tmpl',aData)
             .addClass('status_'+statusMap[aData.comment.status]);
