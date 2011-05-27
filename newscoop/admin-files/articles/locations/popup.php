@@ -96,7 +96,7 @@ var local_strings_map = {};
 var set_local_strings = function()
 {
 
-    local_strings_map["fill_in_map_name"] = "<?php putGS("fill in map name"); ?>";
+    local_strings_map["fill_in_map_name"] = "&nbsp;<?php putGS("fill in map name"); ?>&nbsp;";
     local_strings_map["point_markers"] = "<?php putGS("Point markers"); ?>";
     local_strings_map["this_should_not_happen_now"] = "<?php putGS("problem at point processing, please send error report"); ?>";
     local_strings_map["really_to_delete_the_point"] = "<?php putGS("Really to delete the point?"); ?>";
@@ -474,12 +474,12 @@ var map_show_preview = function()
 
     <div class="save-button-bar">
         <input id="map_button_save" type="submit" onclick="geo_locations.map_save_all(); try {parent.$.fancybox.reload = true;} catch (e) {} return false;" class="save-button-small" disabled="disabled" value="<?php putGS("Save"); ?>" name="save" />
-        <input id="map_button_preview" type="submit" onClick="map_show_preview(); return false;" class="default-button" value="<?php putGS("Preview"); ?>" name="preview" disabled="disabled" />
+        <input id="map_button_preview" type="submit" onClick="geo_locations.map_save_all(); try {parent.$.fancybox.reload = true;} catch (e) {} map_show_preview(); return false;" class="default-button" value="<?php putGS("Save"); ?> &amp; <?php putGS("Preview"); ?>" name="preview" disabled="disabled" />
         <input id="map_button_close" type="submit" onClick="on_close_request(); return false;" class="default-button" value="<?php putGS("Close"); ?>" name="close" />
     </div>
     <div id="map_save_info" class="map_save_info">
-      <a href="#" class="map_name_display" id="map_name_display" onClick="geo_locations.map_edit_name(); return false;" title="<?php putGS("Setting the map name helps with map search"); ?>"><?php putGS("fill in map name"); ?></a>
-        <input id="map_name_input" class="map_name_input map_hidden" type="text" size="40" maxlength="255" onChange="geo_locations.map_save_name(); return false;" onBlur="geo_locations.map_display_name(); return false;">
+      <a href="#" class="map_name_display inline_editable" id="map_name_display" onClick="geo_locations.map_edit_name(); return false;" title="<?php putGS("Setting the map name helps with map search"); ?>"><?php putGS("fill in map name"); ?></a>
+        <input id="map_name_input" class="map_name_input map_hidden" type="text" size="40" maxlength="255" onChange="geo_locations.map_save_name(); return false;" onBlur="geo_locations.map_display_name(); return false;" onKeyUp="geo_locations.map_update_name_state(this.value); return true;">
      </div>
     <!-- end of map_save_part -->
 

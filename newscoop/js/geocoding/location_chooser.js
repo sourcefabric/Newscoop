@@ -460,17 +460,25 @@ this.update_poi_position = function(index, coordinate, value, input)
 // closes (pre)view popup, if of specified poi
 this.close_popup = function(index)
 {
+    var geo_obj = this;
+
     if (this.popup)
     {
+        var feature = (this.popup.feature) ? this.popup.feature : null;
         var m_rank = this.popup.m_rank;
         if ((undefined !== m_rank) && (index == m_rank)) {
             // this pop-up removal seems to be sometimes strange
             try {
-                this.popup.feature.popup = null;
-                this.map.removePopup(this.popup);
-                this.popup.destroy();
+                geo_obj.select_control.unselect(geo_obj.popup.feature);
+                if (feature) {
+                    feature.popup = null;
+                }
+                if (this.popup) {
+                    this.map.removePopup(this.popup);
+                    this.popup.destroy();
+                }
             }
-            catch (e) {}
+            catch (e) {alert(JSON.stringify(e));}
             this.popup = null;
         }
     }
@@ -479,11 +487,11 @@ this.close_popup = function(index)
 // setting the edit window for the requested POI (bound on the 'edit' link)
 this.edit_poi = function(index)
 {
+    this.close_popup(index);
+
     this.edited_point = index;
     this.load_point_data();
     this.open_edit_window();
-
-    this.close_popup(index);
 
     return;
 };
@@ -688,9 +696,9 @@ this.preview_edited = function()
 
 this.select_poi_on_list = function(index)
 {
-    if (index != this.list_shown_header) {
-        return;
-    }
+    //if (index != this.list_shown_header) {
+    //    return;
+    //}
 
     this.center_poi(index);
     OpenLayers.HooksPopups.on_map_feature_select(this, index);
@@ -1036,7 +1044,8 @@ this.insert_poi = function(coor_type, lonlat_ini, longitude, latitude, label)
         );
     }
 
-    var poi_title = this.display_strings.point_number + " " + (this.descs_count_inc + 1);
+    //var poi_title = this.display_strings.point_number + " " + (this.descs_count_inc + 1);
+    var poi_title = "";
 
     if (undefined !== label)
     {
@@ -1047,6 +1056,8 @@ this.insert_poi = function(coor_type, lonlat_ini, longitude, latitude, label)
     var features = [];
     var point = new OpenLayers.Geometry.Point(lonlat.lon, lonlat.lat);
     var vector = new OpenLayers.Feature.Vector(point, {type: (2 * this.marker_src_default_ind)});
+
+    var poi_index = this.descs_count;
 
     this.poi_rank_out = this.descs_count;
     vector.attributes.m_rank = this.descs_count;
@@ -1103,10 +1114,20 @@ this.insert_poi = function(coor_type, lonlat_ini, longitude, latitude, label)
     this.descs_count += 1;
     this.descs_count_inc += 1;
 
+    this.view_newly_edited(poi_index);
+
     OpenLayers.HooksLocal.map_check_pois(this);
 
     return true;
 };
+
+this.view_newly_edited = function(index)
+{
+    //this.close_popup(index);
+    //this.center_poi(index);
+    OpenLayers.HooksPopups.on_map_feature_select(this, index);
+};
+
 
 this.main_openlayers_init = function(map_div_name, descs_name)
 {
@@ -1618,20 +1639,28 @@ this.load_point_data = function()
 };
 
 // storing POI's visible name
-this.store_point_label = function()
+this.store_point_label = function(value, index)
 {
     this.set_save_state(true);
 
     var label_obj = document.getElementById ? document.getElementById("point_label") : null;
+    var label_value = label_obj.value;
+    if (undefined !== value) {
+        label_value = value;
+    }
 
     var use_index = this.display_index(this.edited_point);
+    if (undefined !== index) {
+        use_index = index;
+    }
+
     var cur_marker = this.layer.features[use_index];
     var cur_poi_info = this.poi_markers[use_index];
 
     var update_preview = false;
     if (cur_poi_info.in_db)
     {
-        if (label_obj.value != cur_marker.attributes.m_title)
+        if (label_value != cur_marker.attributes.m_title)
         {
             cur_poi_info.content_changed = true;
             cur_poi_info.text_changed = true;
@@ -1639,7 +1668,7 @@ this.store_point_label = function()
             this.main_page_upload = true;
         }
     }
-    cur_marker.attributes.m_title = label_obj.value;
+    cur_marker.attributes.m_title = label_value;
     if (update_preview) {this.update_edit_preview();}
 
     this.update_poi_descs(this.edited_point);
@@ -2100,6 +2129,30 @@ this.map_pois_load = function(script_dir)
         });
 };
 
+this.map_update_name_state = function(value, input_name)
+{
+    var map_name_value = this.map_label_name;
+
+    if ((undefined !== value) && (null !== value)) {
+        map_name_value = value;
+    }
+    if ((undefined !== input_name) && (null !== input_name)) {
+        var input_obj = document.getElementById ? document.getElementById(input_name) : null;
+        if (input_obj) {
+            map_name_value = input_obj.value;
+        }
+    }
+
+    if ("" == map_name_value) {
+        $("#map_name_display").addClass("map_text_lack");
+        $("#map_name_input").addClass("map_text_lack");
+    } else {
+        $("#map_name_display").removeClass("map_text_lack");
+        $("#map_name_input").removeClass("map_text_lack");
+    }
+
+};
+
 // setting the map for editing its name
 this.map_edit_name = function()
 {
@@ -2108,6 +2161,8 @@ this.map_edit_name = function()
 
     var input_obj = document.getElementById ? document.getElementById("map_name_input") : null;
     input_obj.focus();
+
+    this.map_update_name_state();
 };
 
 // setting the map for displaying its name
@@ -2118,6 +2173,7 @@ this.map_display_name = function()
     $("#map_name_display").removeClass("map_hidden");
     $("#map_name_input").addClass("map_hidden");
 
+    this.map_update_name_state();
 };
 
 // saving the name of the map
@@ -2127,7 +2183,7 @@ this.map_save_name = function()
     var display_obj = document.getElementById ? document.getElementById("map_name_display") : null;
 
     var name_value = input_obj.value;
-    if ("" != name_value)
+    //if ("" != name_value)
     {
         var map_name_disp_str = name_value;
         map_name_disp_str = map_name_disp_str.replace(/&/gi, "&amp;");
@@ -2139,6 +2195,11 @@ this.map_save_name = function()
         {
             map_name_disp_str = map_name_disp_str.substr(0, max_len) + "...";
         }
+
+        if ("" == map_name_disp_str) {
+            map_name_disp_str = this.display_strings.fill_in_map_name;
+        }
+
         display_obj.innerHTML = map_name_disp_str;
 
         if (name_value != this.map_label_name)
@@ -2174,10 +2235,13 @@ this.map_load_name = function()
             map_name_disp_str = map_name_disp_str.substr(0, max_len) + "...";
         }
         display_obj.innerHTML = map_name_disp_str;
+
+        $(display_obj).removeClass("map_text_lack");
     }
     else
     {
         display_obj.innerHTML = this.display_strings.fill_in_map_name;
+        $(display_obj).addClass("map_text_lack");
     }
 
 };
@@ -2492,6 +2556,7 @@ this.map_save_all = function(script_dir, force_save)
 
     var geo_obj = this;
 
+/*
     if ((!force_save) && (!this.check_points_filled())) {
 
         $("#save_empty_dialog").dialog("open");
@@ -2503,6 +2568,7 @@ this.map_save_all = function(script_dir, force_save)
 
         return;
     }
+*/
 
     this.set_save_state(false);
 

@@ -752,10 +752,7 @@ dl.inline-list dd {
 	padding:0;
 	width:128px;
 	float:left;
-	border-top:1px solid #cdcdcd;
-	border-right:1px solid #9d9d9d;
-	border-left:1px solid #9d9d9d;
-	border-bottom:1px solid #9d9d9d;
+	border:1px solid #9d9d9d;
 	background:#9d9d9d;
 }
 .map-thumb_tab {

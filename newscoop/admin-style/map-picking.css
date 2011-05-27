@@ -573,3 +573,9 @@ a.edit_marker_one_choice_link {
 .save_empty_dialog {
     z-index:10000;
 }
+
+.map_text_lack {
+    background: #ffe0c0;
+/*    width: 90%;*/
+    font-size: 20px;
+}
