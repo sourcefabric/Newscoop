@@ -248,8 +248,21 @@ class Attachment extends DatabaseObject {
         global $Campsite;
         $attachmentUrl = $Campsite['WEBSITE_URL'] . '/attachment/' . $this->m_data['id']
             . '/' . $this->m_data['file_name'];
-        return $attachmentUrl;
-        } // fn getAttachmentUrl
+            return $attachmentUrl;
+    } // fn getAttachmentUrl
+
+
+    /**
+     * Return the full URL to the attached image.
+     * @return string
+     */
+    public function getAttachmentUri()
+    {
+    	global $Campsite;
+    	$attachmentUri = '/attachment/' . $this->m_data['id']
+    	. '/' . $this->m_data['file_name'];
+    	return $attachmentUri;
+    } // fn getAttachmentUri
 
 
     /**

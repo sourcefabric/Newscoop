@@ -1,7 +1,7 @@
 <?php 
-regGS("Pending Article", "");
-regGS("Overwrite articles with matching names", "");
-regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");
+regGS("Pending Article", "Статьи в статусе \"Отправленные\"");
+regGS("Overwrite articles with matching names", "Переписать статьи с соответствующими именами");
+regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "Статья \"<i>$1</i>\" уже существует и не была перезаписана. <br />");
 regGS("Files", "Файлы");
 regGS("Select section:", "Выберите раздел");
 regGS("Add another author", "Добавить автора");
@@ -54,10 +54,7 @@ regGS("Saved", "Сохранено");
 regGS("Save All", "Сохранить все");
 regGS("Online Server: On", "Сервер он-лайн: включен");
 regGS("Online Server: Off", "Сервер он-лайн: выключен");
-regGS("Title", "Заголовок");
-regGS("Length", "Длина");
 regGS("Download", "Загрузка");
-regGS("Creator", "Автор");
 regGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.", "Вы не можете иметь две статьи в одной рубрике с одинаковым названием. Указанное название уже используется статьей '$1'.");
 regGS("Visible to non-subscribers", "Видно не только подписчикам");
 regGS("The article could not be published.", "Статья не может быть опубликована.");
@@ -149,4 +146,7 @@ regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 min
 regGS("Back to article details", "Назад к подробностям статьи");
 regGS("Article automatic publishing schedule", "Расписание автоматической публикации статей");
 regGS("Are you sure you want to delete this scheduled action?", "Вы уверены, что хотитее удалить эту запланированную операцию");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Вы уверены, что хотите удалить тему \\'$1\\' из статьи?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Вы уверены, что хотите удалить файл \\'$1\\' из статьи?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Вы уверены, что хотите удалить изображение \\'$1\\' из статьи?");
 ?>
