@@ -1,10 +1,6 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
 
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
-
-
 // Check permissions
 if (!$g_user->hasPermission('ManageIssue')) {
 	camp_html_display_error(getGS('You do not have the right to add issues.'));
