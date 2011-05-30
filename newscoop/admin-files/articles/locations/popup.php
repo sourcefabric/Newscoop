@@ -477,12 +477,12 @@ var map_show_preview = function()
 
     <div class="save-button-bar">
         <input id="map_button_save" type="submit" onclick="geo_locations.map_save_all(); try {parent.$.fancybox.reload = true;} catch (e) {} return false;" class="save-button-small" disabled="disabled" value="<?php putGS("Save"); ?>" name="save" />
-        <input id="map_button_preview" type="submit" onClick="geo_locations.map_save_all(); try {parent.$.fancybox.reload = true;} catch (e) {} map_show_preview(); return false;" class="default-button" value="<?php putGS("Save"); ?> &amp; <?php putGS("Preview"); ?>" name="preview" />
+        <input id="map_button_preview" type="submit" onClick="geo_locations.map_save_all(); try {parent.$.fancybox.reload = true;} catch (e) {} map_show_preview(); return false;" class="default-button" value="<?php putGS("Save"); ?> &amp; <?php putGS("Preview"); ?>" name="preview" disabled="disabled" />
         <input id="map_button_close" type="submit" onClick="on_close_request(); return false;" class="default-button" value="<?php putGS("Close"); ?>" name="close" />
     </div>
     <div id="map_save_info" class="map_save_info">
       <a href="#" class="map_name_display inline_editable" id="map_name_display" onClick="geo_locations.map_edit_name(); return false;" title="<?php putGS("Setting the map name helps with map search"); ?>"><?php putGS("fill in map name"); ?></a>
-        <input id="map_name_input" class="map_name_input map_hidden" type="text" size="40" maxlength="255" onChange="geo_locations.map_save_name(); return false;" onBlur="geo_locations.map_display_name(); return false;" onKeyUp="geo_locations.map_update_name_state(this.value); return true;">
+        <input id="map_name_input" class="map_name_input map_hidden" type="text" size="40" maxlength="255" onChange="geo_locations.map_save_name(); return false;" onBlur="geo_locations.map_display_name(); return false;" onKeyUp="geo_locations.map_save_name(); geo_locations.map_update_name_state(this.value); return true;">
      </div>
     <!-- end of map_save_part -->
 
@@ -556,25 +556,25 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                     <ol>
                     <li class="edit_label_top">
                     <label class="edit_label" for="point_label"><?php putGS("Location label"); ?>:</label>
-                    <input id="point_label" name="point_label" class="text" type="text" onChange="geo_locations.store_point_label(); return false;" />
+                    <input id="point_label" name="point_label" class="text" type="text" onChange="geo_locations.store_point_label(); return false;" onKeyUp="geo_locations.store_point_label(); return true;" />
                     </li>
                     <li id="edit_part_link" class="">
                     <label class="edit_label" for="point_link"><?php putGS("Label url"); ?>:</label>
-                    <input id="point_link" name="point_link" class="text" type="text" onChange="geo_locations.store_point_property('link', this.value); return false;" />
+                    <input id="point_link" name="point_link" class="text" type="text" onChange="geo_locations.store_point_property('link', this.value); return false;" onKeyUp="geo_locations.store_point_property('link', this.value); return true;" />
                     </li>
 
                     <li>
                     <label class="edit_label" for="point_descr"><?php putGS("Location description:"); ?></label>
-                    <select class="text" id="point_predefined" name="point_predefined" onChange="geo_locations.store_point_direct(this.options[this.selectedIndex].value); return false;">
+                    <select class="text" id="point_predefined" name="point_predefined" onChange="geo_locations.store_point_direct(this.options[this.selectedIndex].value); return false;" onKeyUp="geo_locations.store_point_direct(this.options[this.selectedIndex].value); return true;">
                     <option value="0" selected="true"><?php putGS("plain text"); ?></option>
                     <option value="1"><?php putGS("html content"); ?></option>
                     </select>
                     <div id="edit_part_text" class="">
-                    <textarea rows="5" cols="40" id="point_descr" name="point_descr" class="text geo_edit_textarea_text" type="text" title="<?php putGS("Describe the location..."); ?>" onChange="geo_locations.store_point_property('text', this.value); return false;" onClick="if(local_strings_map['fill_in_the_point_description'] == this.value) {this.value = '';}" onBlur="if ('' == this.value) {this.value = local_strings_map['fill_in_the_point_description'];}">
+                    <textarea rows="5" cols="40" id="point_descr" name="point_descr" class="text geo_edit_textarea_text" type="text" title="<?php putGS("Describe the location..."); ?>" onChange="geo_locations.store_point_property('text', this.value); return false;" onKeyUp="geo_locations.store_point_property('text', this.value); return true;" onClick="if(local_strings_map['fill_in_the_point_description'] == this.value) {this.value = '';}" onBlur="if ('' == this.value) {this.value = local_strings_map['fill_in_the_point_description'];}">
 </textarea>
                     </div>
                     <div id="edit_part_content" class="map_hidden">
-                    <textarea rows="5" cols="40" id="point_content" name="point_content" class="text geo_edit_textarea_text" type="text" title="<?php putGS("Describe the location..."); ?>" onChange="geo_locations.store_point_property('content', this.value); return false;">
+                    <textarea rows="5" cols="40" id="point_content" name="point_content" class="text geo_edit_textarea_text" type="text" title="<?php putGS("Describe the location..."); ?>" onChange="geo_locations.store_point_property('content', this.value); return false;"  onKeyUp="geo_locations.store_point_property('content', this.value); return true;">
 </textarea>
                     </div>
                     </li>
@@ -583,7 +583,7 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 <!--
                     <li>
                     <label class="edit_label" for="point_perex"><a class="edit_label_link" title="<?php putGS("click to edit"); ?>" href="#" onClick="$('#point_perex').removeClass('map_hidden'); $('#point_perex_view').addClass('map_hidden'); point_perex_focus(); return false;"><?php putGS("Full location title"); ?></a>:</label>
-                    <textarea rows="2" cols="40" id="point_perex" name="point_perex" class="text geo_edit_textarea_perex map_hidden" type="text" onChange="geo_locations.store_point_property('perex', this.value); return false;" onBlur="$('#point_perex').addClass('map_hidden'); $('#point_perex_view').removeClass('map_hidden'); return false;">
+                    <textarea rows="2" cols="40" id="point_perex" name="point_perex" class="text geo_edit_textarea_perex map_hidden" type="text" onChange="geo_locations.store_point_property('perex', this.value); return false;" onKeyUp="geo_locations.store_point_property('perex', this.value); return true;" onBlur="$('#point_perex').addClass('map_hidden'); $('#point_perex_view').removeClass('map_hidden'); return false;">
 </textarea>
                     <a title="<?php putGS("click to edit"); ?>" id="point_perex_view" class="" href="#" onClick="$('#point_perex').removeClass('map_hidden'); $('#point_perex_view').addClass('map_hidden'); point_perex_focus(); return false;">&nbsp;</a>
                     </li>
@@ -595,12 +595,12 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                         <div id="edit_image" class="edit_tabs">
                             <div class="edit_label_long map_poi_edit_intro"><?php putGS("Add an image to this location"); ?>.</div>
 <?php
-    $image_desc_other = getGS("Put here image link, e.g.") . " " . getGS("http://kosmoblog.com/get_img?ImageId=328");
+    $image_desc_other = getGS("Put here image link, e.g.") . " " . getGS("http://www.example.net/image.png");
 ?>
                     <ol>
                     <li class="edit_label_top">
                     <label class="edit_label" for="point_image"><?php putGS("Image URL"); ?>:</label>
-                    <input id="point_image" name="point_image" class="text" type="text" onChange="geo_locations.store_point_property('image_source', this.value); return false;" title="<?php echo $image_desc_other; ?>" />
+                    <input id="point_image" name="point_image" class="text" type="text" onChange="geo_locations.store_point_property('image_source', this.value); return false;" onKeyUp="geo_locations.store_point_property('image_source', this.value); return true;" title="<?php echo $image_desc_other; ?>" />
                     <span id="geo_image_desc" class="geo_image_desc"><?php echo $image_desc_other; ?></span>
                     </li>
 
@@ -608,11 +608,11 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 
                     <li>
                     <label class="edit_label" for="point_image_height"><?php putGS("width"); ?>:</label>
-                    <input id="point_image_width" name="point_image_height" class="text" type="text" onChange="geo_locations.store_point_property('image_width', this.value); return false;" />
+                    <input id="point_image_width" name="point_image_height" class="text" type="text" onChange="geo_locations.store_point_property('image_width', this.value); return false;" onKeyUp="geo_locations.store_point_property('image_width', this.value); return true;" />
                     </li>
                     <li>
                     <label class="edit_label" for="point_image_height"><?php putGS("height"); ?>:</label>
-                    <input id="point_image_height" name="point_image_height" class="text" type="text" onChange="geo_locations.store_point_property('image_height', this.value); return false;" />
+                    <input id="point_image_height" name="point_image_height" class="text" type="text" onChange="geo_locations.store_point_property('image_height', this.value); return false;" onKeyUp="geo_locations.store_point_property('image_height', this.value); return true;" />
                     </li>
                     </ol>
                         </div>
@@ -633,12 +633,12 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
     $video_desc_other = getGS("Put here video ID, link or file name");
     $video_desc_youtube = getGS("Put here youtube ID or link, e.g.") . " " . getGS("http://youtu.be/c9WzlvLn3X0");
     $video_desc_vimeo = getGS("Put here vimeo ID or link, e.g") . " " .getGS("http://vimeo.com/21757310");
-    $video_desc_local_swf = getGS("Put here local swf flash file name or link, e.g.") . " " . getGS("http://www.swftools.org/flash/penguins.swf");
+    $video_desc_local_swf = getGS("Put here local swf flash file name or link, e.g.") . " " . getGS("http://www.example.net/video.swf");
     $video_desc_local_flv = getGS("Put here local flv flash file name or link, e.g.") . " " . getGS("example.flv");
 ?>
                     <li class="edit_label">
                     <label class="edit_label" for="point_video"><span id="video_file_label_id"><?php putGS("Video ID"); ?>:</span><span id="video_file_label_file" class="map_hidden"><?php putGS("Video file"); ?>:</span></label>
-                    <input id="point_video" name="point_video" class="text" type="text" onChange="geo_locations.store_point_property('video_id', this.value); return false;" title="<?php echo $video_desc_other; ?>" />
+                    <input id="point_video" name="point_video" class="text" type="text" onChange="geo_locations.store_point_property('video_id', this.value); return false;" onKeyUp="geo_locations.store_point_property('video_id', this.value); return true;" title="<?php echo $video_desc_other; ?>" />
                     <span id="geo_video_desc_other" class="geo_video_desc"><?php echo $video_desc_other; ?></span>
                     <span id="geo_video_desc_youtube" class="geo_video_desc map_hidden"><?php echo $video_desc_youtube; ?></span>
                     <span id="geo_video_desc_vimeo" class="geo_video_desc map_hidden"><?php echo $video_desc_vimeo; ?></span>
@@ -650,11 +650,11 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 
                     <li>
                     <label class="edit_label" for="point_video_width"><?php putGS("width"); ?>:</label>
-                    <input id="point_video_width" name="point_video_width" class="text" type="text" onChange="geo_locations.store_point_property('video_width', this.value); return false;" />
+                    <input id="point_video_width" name="point_video_width" class="text" type="text" onChange="geo_locations.store_point_property('video_width', this.value); return false;" onKeyUp="geo_locations.store_point_property('video_width', this.value); return true;" />
                     </li>
                     <li>
                     <label class="edit_label" for="point_video_height"><?php putGS("height"); ?>:</label>
-                    <input id="point_video_height" name="point_video_height" class="text" type="text" onChange="geo_locations.store_point_property('video_height', this.value); return false;" />
+                    <input id="point_video_height" name="point_video_height" class="text" type="text" onChange="geo_locations.store_point_property('video_height', this.value); return false;" onKeyUp="geo_locations.store_point_property('video_height', this.value); return true;" />
                     </li>
                     </ol>
                         </div>

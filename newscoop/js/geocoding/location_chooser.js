@@ -162,6 +162,11 @@ this.popup = null;
 // for the accordion purposes
 this.list_shown_header = 0;
 
+// for inline editing purposes
+this.poi_label_value_inline = null;
+this.poi_content_value_inline = null;
+this.poi_text_value_inline = null;
+
 // setting the localized strings
 this.set_display_strings = function(local_strings)
 {
@@ -688,12 +693,76 @@ this.remove_poi = function(index)
     this.update_poi_descs();
 };
 
-this.set_inline_label_name = function(index)
+this.set_inline_label_value = function(index)
 {
-        var label_edit_elm = document.getElementById ? document.getElementById('geo_edit_label_inline') : null;
-        if (label_edit_elm) {
-            label_edit_elm.value = this.poi_label_value;
+    var geo_obj = this;
+    var erase_inline_value = false;
+
+    var label_edit_elm = document.getElementById ? document.getElementById('geo_edit_label_inline') : null;
+    if (label_edit_elm) {
+        if (null !== this.poi_label_value_inline) {
+            label_edit_elm.value = this.poi_label_value_inline;
         }
+        erase_inline_value = true;
+    } else {
+        if (this.popup) {
+            setTimeout(geo_obj.obj_name + ".set_inline_label_value(" + index + ");", 100);
+        } else {
+            erase_inline_value = true;
+        }
+    }
+
+    if (erase_inline_value) {
+        this.poi_label_value_inline = null;
+    }
+
+};
+
+this.set_inline_desc_value = function(form, index)
+{
+    var geo_obj = this;
+    var erase_inline_value = false;
+
+    var dom_elm_name = "";
+    var known_dom_names = {"content": "geo_edit_content_inline", "text": "geo_edit_text_inline"};
+    if (form in known_dom_names) {
+        dom_elm_name = known_dom_names[form];
+    } else {
+        return;
+    }
+
+    var desc_value = null;
+    if ("content" == form) {
+        desc_value = this.poi_content_value_inline;
+    }
+    if ("text" == form) {
+        desc_value = this.poi_text_value_inline;
+    }
+
+    var desc_edit_elm = document.getElementById ? document.getElementById(dom_elm_name) : null;
+    if (desc_edit_elm) {
+        if (null !== desc_value) {
+            desc_edit_elm.value = desc_value;
+        }
+        erase_inline_value = true;
+    } else {
+        if (this.popup) {
+            setTimeout(geo_obj.obj_name + ".set_inline_desc_value(\"" + form + "\", " + index + ");", 100);
+        } else {
+            erase_inline_value = true;
+        }
+    }
+
+    if (erase_inline_value) {
+        this.poi_label_value_inline = null;
+        if ("content" == form) {
+            this.poi_content_value_inline = null;
+        }
+        if ("text" == form) {
+            this.poi_text_value_inline = null;
+        }
+    }
+
 };
 
 this.preview_edited = function()
@@ -1653,10 +1722,13 @@ this.load_point_data = function()
 // storing POI's visible name
 this.store_point_label = function(value, index)
 {
-    this.set_save_state(true);
+    //this.set_save_state(true);
 
+    var label_value = "";
     var label_obj = document.getElementById ? document.getElementById("point_label") : null;
-    var label_value = label_obj.value;
+    if (label_obj) {
+        label_value = label_obj.value;
+    }
     if (undefined !== value) {
         label_value = value;
     }
@@ -1674,6 +1746,8 @@ this.store_point_label = function(value, index)
     {
         if (label_value != cur_marker.attributes.m_title)
         {
+            this.set_save_state(true); // if a new poi, the state is already set to true
+
             cur_poi_info.content_changed = true;
             cur_poi_info.text_changed = true;
             update_preview = true;
@@ -1683,7 +1757,7 @@ this.store_point_label = function(value, index)
     cur_marker.attributes.m_title = label_value;
     if (update_preview) {this.update_edit_preview();}
 
-    this.update_poi_descs(this.edited_point);
+    this.update_poi_descs(use_index);
 };
 
 // loading POI's visible name
@@ -1698,9 +1772,9 @@ this.load_point_label = function()
 };
 
 // storing POI's specified property
-this.store_point_property = function(property, value)
+this.store_point_property = function(property, value, index)
 {
-    this.set_save_state(true);
+    //this.set_save_state(true);
 
     if ("text" == property) {
         if (value == this.display_strings.fill_in_the_point_description) {
@@ -1711,14 +1785,14 @@ this.store_point_property = function(property, value)
     var video_source = null;
 
     if ("video_id" == property) {
-        var vid_patterns = [/(.*)youtu\.be\/([^\/\?\&\s]+)/, /(.*)youtube\.com\/watch\?v\=([^\/\?\&\s]+)/, /(.*)vimeo\.com\/([^\/\?\&\s]+)/];
+        var vid_patterns = [/(.*)youtu\.be\/([^\/\?\&\s]+)/i, /(.*)youtube\.com\/watch\?v\=([^\/\?\&\s]+)/i, /(.*)vimeo\.com\/([^\/\?\&\s]+)/i];
         var vid_type_sources = ["youtube", "youtube", "vimeo"];
         var vid_patterns_count = vid_patterns.length;
         var vid_match = "";
         for (var vid = 0; vid < vid_patterns_count; vid++) {
             var vid_pat = vid_patterns[vid];
             vid_match = "";
-            if (vid_match = vid_pat.exec(value.toLowerCase())) {
+            if (vid_match = vid_pat.exec(value)) {
                 try {
                     var value_test = vid_match[2];
                     if (value_test) {
@@ -1732,16 +1806,22 @@ this.store_point_property = function(property, value)
         }
 
         if (!video_source) {
-            if (-1 < value.toLowerCase().indexOf(".flv")) {
+            var value_test = value;
+            value_test = value_test.toLowerCase();
+            if (-1 < value_test.indexOf(".flv")) {
                 video_source = "flv";
             }
-            if (-1 < value.toLowerCase().indexOf(".swf")) {
+            if (-1 < value_test.indexOf(".swf")) {
                 video_source = "flash";
             }
         }
     }
 
     var use_index = this.display_index(this.edited_point);
+    if (undefined !== index) {
+        use_index = index;
+    }
+
     var cur_marker = this.layer.features[use_index];
 
     var poi_property = "m_" + property;
@@ -1754,6 +1834,8 @@ this.store_point_property = function(property, value)
     {
         if (value != attrs[poi_property])
         {
+            this.set_save_state(true); // if a new poi, the state is already set to true
+
             cur_poi_info.content_changed = true;
             update_preview = true;
             if ("image" == property.substr(0, 5))

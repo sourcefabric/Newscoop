@@ -517,8 +517,18 @@ OpenLayers.HooksPopups.on_feature_select = function(evt, geo_obj, avoid_rec)
 
     // for a safe setting of input value on inline poi label editing
     if (geo_obj.editing) {
-        geo_obj.poi_label_value = pop_info.poi_label;
-        setTimeout(geo_obj.obj_name + ".set_inline_label_name(" + attrs.m_rank + ");", 10);
+        geo_obj.poi_label_value_inline = pop_info.poi_label;
+        setTimeout(geo_obj.obj_name + ".set_inline_label_value(" + attrs.m_rank + ");", 10);
+
+        geo_obj.poi_content_value_inline = pop_info.poi_content;
+        if (null !== geo_obj.poi_content_value_inline) {
+            setTimeout(geo_obj.obj_name + ".set_inline_desc_value(\"content\", " + attrs.m_rank + ");", 10);
+        }
+        geo_obj.poi_text_value_inline = pop_info.poi_text;
+        if (null !== geo_obj.poi_text_value_inline) {
+            setTimeout(geo_obj.obj_name + ".set_inline_desc_value(\"text\", " + attrs.m_rank + ");", 10);
+        }
+
     }
 
     geo_obj.popup.minSize = new OpenLayers.Size(min_width, min_height);
