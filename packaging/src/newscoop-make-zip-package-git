@@ -54,17 +54,20 @@ mv ./plugins/* ./newscoop/plugins
 rm -fr ./newscoop/tests
 find ./newscoop -name placeholder -exec rm -f {} \;
 
-package_name="newscoop-$version.zip"
+package_name="newscoop-$version"
+package_filename="newscoop-$version.zip"
 
-zip -qr $package_name ./newscoop
+cp -a ./newscoop ./$package_name
+zip -qr $package_filename ./$package_name
 res=$?
 
+rm -rf ./$package_name
 mv ./newscoop/plugins .
 
 if [ $res -eq 0 ]; then
-    echo "package $package_name prepared successfully"
+    echo "package $package_filename prepared successfully"
 else
-    echo "error creating package $package_name"
+    echo "error creating package $package_filename"
     exit 1
 fi
 
