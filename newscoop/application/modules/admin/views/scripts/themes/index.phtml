@@ -104,8 +104,11 @@
 				<li>
 					<a href="<?php echo $this->url( array
     				    ( 
-    				    	'action' => 'edit', 'controller' => 'themes', 'module' => 'admin', 'id' => '{{id}}' 
-    				    ), null, null, false )  ?>" class="edit">
+    				    	'action'     => 'advanced-theme-settings', 
+    				    	'controller' => 'themes', 
+    				    	'module'     => 'admin', 
+    				    	'id'         => '{{id}}' 
+    				    ), null, null, false )  ?>" class="edit" style="display:none">
 						Edit	
 					</a>
 				</li>
@@ -187,6 +190,7 @@ $( function()
 			$( document.body ).data( 'newscoop.themesDatatable.oneFilterCallback', function()
 			{ 
 				$('.copy-to-avail-themes').show();
+				$('.actionDropDown .edit:parent').show();
 				$('.actions-publications li a[pub-id='+pubId+']').parent().hide();
 			});
 		}
@@ -198,6 +202,7 @@ $( function()
 			{ 
 				$('.actions-publications li a[pub-id]:parent').show()
 				$('.copy-to-avail-themes').hide();
+				$('.actionDropDown .edit:parent').hide();
 			});
 		}
 	})

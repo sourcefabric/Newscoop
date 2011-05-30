@@ -44,8 +44,7 @@ class Js extends Zend_Controller_Plugin_Abstract
                          . DIR_SEP 
                          . trim( $p_opts["resources"]["layout"]["jsUrl"], DIR_SEP ) 
                          . DIR_SEP;
-        $this->view = \Zend_Registry::get( 'view' );
-        
+        $this->view      = \Zend_Registry::get( 'view' );
     }
 
     public function postDispatch( Zend_Controller_Request_Abstract $p_request )
@@ -57,7 +56,7 @@ class Js extends Zend_Controller_Plugin_Abstract
             .   $this->_sharedFileName 
             .	".{$this->_fileSuffix}" 
             )
-            ->appendScript( $this->view->jQueryReady()->__toString() )
+            ->appendScript( $this->view->jQueryReady()->toString() )
             ->appendFile // controller shared
             (
                 $this->_basePath 

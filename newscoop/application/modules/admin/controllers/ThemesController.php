@@ -130,13 +130,41 @@ class Admin_ThemesController extends Zend_Controller_Action
     {
         $this->getThemeService();
         $this->view->placeholder( 'title' )->set( getGS( 'Theme management' ) );
+        
+        // TODO move this + callbacks from here to a higher level
+        if( !$this->_helper->contextSwitch->hasContext( 'adv' ) ) 
+        {
+            $this->_helper->contextSwitch->addContext( 'adv', array
+            ( 
+            	'suffix' => 'adv',
+                'callbacks' => array
+                ( 
+                	'init' => array( $this, 'initAdvContext' ),
+                	'post' => array( $this, 'postAdvContext' )
+                ) 
+            ) );
+        }
+    
         $this->_helper->contextSwitch
             ->addActionContext( 'index', 'json' )
             ->addActionContext( 'assign-to-publication', 'json' )
             ->addActionContext( 'output-edit', 'json' )
+            ->addActionContext( 'wizard-theme-settings', 'adv' )
+            ->addActionContext( 'wizard-theme-template-settings', 'adv' )
+            ->addActionContext( 'wizard-theme-article-types', 'adv' )
+            ->addActionContext( 'wizard-theme-theme-files', 'adv' )
             ->initContext();
     }
     
+    public function initAdvContext()
+    {
+        $this->_helper->layout()->enableLayout();
+    }
+    
+    public function postAdvContext()
+    {
+        
+    }
 
     public function indexAction()
     {
@@ -218,7 +246,64 @@ class Admin_ThemesController extends Zend_Controller_Action
         }
     }
     
-    function editAction()
+    public function wizardThemeSettingsAction()
+    {
+        $theme = $this->getThemeService()->findById( $this->_request->getParam( 'id' ) );
+        // setup the theme settings form
+        $themeForm = new Admin_Form_Theme();
+        $themeForm->populate( array
+        ( 
+        	"theme-version"    => (string) $theme->getVersion(),
+        	"required-version" => (string) $theme->getMinorNewscoopVersion() 
+        ) );
+        $this->view->themeForm = $themeForm;
+    } 
+    
+    public function wizardThemeTemplateSettingsAction()
+    {
+        $themeId = $this->_request->getParam( 'id' );
+        $thmServ = $this->getThemeService();
+        $theme   = $thmServ->findById( $themeId );
+        $outServ = $this->getOutputService();
+        foreach( ( $outputs = $outServ->getEntities() ) as $k => $output )
+            $outSets[] = $thmServ->findOutputSetting( $theme, $output );
+            
+        $this->view->jQueryUtils()
+            ->registerVar
+            ( 
+                'load-output-settings-url', 
+                $this->_helper->url->url( array
+                ( 
+                	'action' => 'output-edit', 
+                	'controller' => 'themes',
+                    'module' => 'admin', 
+                    'themeid' => '$1', 
+                    'outputid' => '$2'  
+                ), null, true, false ) 
+            );
+        $this->view->theme          = $theme->toObject();
+        $this->view->outputs        = $outputs;
+        $this->view->outputSettings = $outSets;
+    }
+
+    public function wizardThemeArticleTypesAction()
+    {
+        $themeId = $this->_request->getParam( 'id' );
+        
+    }
+
+    public function wizardThemeFilesAction()
+    {
+        $themeId = $this->_request->getParam( 'id' );
+        
+    } 
+    
+    public function advancedThemeSettingsAction()
+    {
+        $this->view->themeId = $this->_request->getParam( 'id' );
+    }
+    
+    public function editAction()
     {
         $themeId = $this->_request->getParam( 'id' );
         $thmServ = $this->getThemeService();
@@ -339,11 +424,11 @@ class Admin_ThemesController extends Zend_Controller_Action
     
     public function filesAction()
     {
-        $datatable = $this->_helper->genericDatatable; 
+        /*$datatable = $this->_helper->genericDatatable; 
         $datatable->setAdapter
         ( 
             new ThemeFiles( $this->getThemeFileService(), $this->_request->getParam( 'id' ) ) 
-        )->setOutputObject( $this->view );
+        )->setOutputObject( $this->view );*/
     }
     
     function assignToPublicationAction()
