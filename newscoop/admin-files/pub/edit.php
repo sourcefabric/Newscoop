@@ -52,7 +52,7 @@ echo camp_html_content_top(getGS("Configure publication"), array("Pub" => $publi
 </TABLE>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-bottom: 1em;">
 <TR>
-<?php  if ($g_user->hasPermission("ManagePub")) { ?>    <P>
+<?php  if ($g_user->hasPermission("ManagePub") && SaaS::singleton()->hasPermission("AddPub")) { ?>    <P>
 	<TD>
 		<A HREF="/<?php echo $ADMIN; ?>/pub/add.php?Back=<?php p(urlencode($_SERVER['REQUEST_URI'])); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
 	</TD>
