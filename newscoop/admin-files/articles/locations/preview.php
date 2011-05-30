@@ -14,6 +14,8 @@ if (0 == $f_language_id) {
 }
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 
+$loaded_from = Input::Get('loader', 'string', 'map', true);
+
 $f_focus = Input::Get('focus', 'string', 'default', true);
 $focus_default = true;
 if ('revert' == $f_focus) {$focus_default = false;}
@@ -132,8 +134,12 @@ echo Geo_Map::GetMapTagHeader($f_article_number, $f_language_id, $map_width, $ma
   $canEdit = $g_user->hasPermission('ChangeArticle');
   if ($canEdit)
   {
+        $edit_str = getGS("Edit");
+        if ("map" == strtolower($loaded_from)) {
+            $edit_str = getGS("Return to edit");
+        }
 ?>
-        <input id="map_button_edit" type="submit" onClick="map_show_edit(); return false;" class="default-button" value="<?php putGS("Edit"); ?>" name="edit" />
+        <input id="map_button_edit" type="submit" onClick="map_show_edit(); return false;" class="default-button" value="<?php echo $edit_str; ?>" name="edit" />
 <?php
   }
 ?>

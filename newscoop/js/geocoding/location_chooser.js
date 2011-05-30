@@ -27,17 +27,17 @@ this.display_strings = {
     fill_in_map_name: "fill in map name",
     point_markers: "Point markers",
     this_should_not_happen_now: "problem at point processing, please send error report",
-    really_to_delete_the_point: "Really to delete the point?",
+    really_to_delete_the_point: "Really delete this point?",
     the_removal_is_from_all_languages: "The removal is from all language versions of the article.",
     point_number: "Point no.",
     fill_in_the_point_description: "Describe the location...",
-    edit: "edit",
-    center: "center",
-    enable: "enable",
-    disable: "disable",
-    remove: "remove",
-    longitude: "longitude",
-    latitude: "latitude",
+    edit: "Edit",
+    center: "Center",
+    enable: "Show",
+    disable: "Hide",
+    remove: "Delete",
+    longitude: "Longitude",
+    latitude: "Latitude",
     locations_updated: "Locations updated",
     not_filled: "Some locations do not have filled description",
     empty_label_show: "Fill in location label",
@@ -1708,22 +1708,35 @@ this.store_point_property = function(property, value)
         }
     }
 
+    var video_source = null;
+
     if ("video_id" == property) {
         var vid_patterns = [/(.*)youtu\.be\/([^\/\?\&\s]+)/, /(.*)youtube\.com\/watch\?v\=([^\/\?\&\s]+)/, /(.*)vimeo\.com\/([^\/\?\&\s]+)/];
+        var vid_type_sources = ["youtube", "youtube", "vimeo"];
         var vid_patterns_count = vid_patterns.length;
         var vid_match = "";
         for (var vid = 0; vid < vid_patterns_count; vid++) {
             var vid_pat = vid_patterns[vid];
             vid_match = "";
-            if (vid_match = vid_pat.exec(value)) {
+            if (vid_match = vid_pat.exec(value.toLowerCase())) {
                 try {
                     var value_test = vid_match[2];
                     if (value_test) {
                         value = value_test;
+                        video_source = vid_type_sources[vid];
                     }
                 }
                 catch(exc) {continue;};
                 break;
+            }
+        }
+
+        if (!video_source) {
+            if (-1 < value.toLowerCase().indexOf(".flv")) {
+                video_source = "flv";
+            }
+            if (-1 < value.toLowerCase().indexOf(".swf")) {
+                video_source = "flash";
             }
         }
     }
@@ -1759,12 +1772,15 @@ this.store_point_property = function(property, value)
     }
     attrs[poi_property] = value;
 
+/*
+    // perex not used now
     if ("perex" == property) {
         var perex_view_obj = document.getElementById ? document.getElementById('point_perex_view') : null;
         if (perex_view_obj) {
             perex_view_obj.innerHTML = value;
         }
     }
+*/
 
     if ("image" == property.substr(0, 5))
     {
@@ -1778,6 +1794,18 @@ this.store_point_property = function(property, value)
     }
     if (update_preview) {this.update_edit_preview();}
 
+    if (null !== video_source) {
+        var video_source_types = {"youtube":1, "vimeo":2, "flash":3, "flv":4};
+        if (video_source in video_source_types) {
+            var video_source_rank = video_source_types[video_source];
+            var video_type_obj = document.getElementById ? document.getElementById("point_video_type") : null;
+            if (video_type_obj) {
+                video_type_obj.selectedIndex = video_source_rank;
+                this.store_point_property("video_type", video_source);
+            }
+        }
+    }
+
 };
 
 // loading POI's properties
@@ -1787,7 +1815,7 @@ this.load_point_properties = function()
     var cur_marker = this.layer.features[use_index];
 
     var poi_prop_names = {};
-    poi_prop_names['perex'] = "point_perex";
+    // poi_prop_names['perex'] = "point_perex"; // perex not used now
     poi_prop_names['text'] = "point_descr";
     poi_prop_names['link'] = "point_link";
     poi_prop_names['content'] = "point_content";
@@ -1797,6 +1825,8 @@ this.load_point_properties = function()
     poi_prop_names['video_id'] = "point_video";
     poi_prop_names['video_width'] = "point_video_width";
     poi_prop_names['video_height'] = "point_video_height";
+
+    var video_type = cur_marker.attributes['m_video_type'];
 
     for (var one_name in poi_prop_names)
     {
@@ -1811,19 +1841,31 @@ this.load_point_properties = function()
             one_value = this.display_strings.fill_in_the_point_description;
         }
 
+        if (("video_id" == one_name) && one_value && (0 < one_value.length)) {
+            if ("youtube" == video_type) {
+                one_value = "http://youtu.be/" + one_value;
+            }
+            if ("vimeo" == video_type) {
+                one_value = "http://vimeo.com/" + one_value;
+            }
+        }
+
         div_obj.value = one_value;
 
+/*
+        // perex not used now
         if ('perex' == one_name) {
             var perex_view_obj = document.getElementById ? document.getElementById('point_perex_view') : null;
             if (perex_view_obj) {
                 perex_view_obj.innerHTML = one_value;
             }
         }
+*/
     }
 
     var video_type_names = {'none': 0, 'youtube': 1, 'vimeo': 2, 'flash': 3, 'flv': 4};
 
-    var video_type = cur_marker.attributes['m_video_type'];
+    //var video_type = cur_marker.attributes['m_video_type'];
     if (!video_type) {video_type = "none";}
     var video_index = video_type_names[video_type];
     if (!video_index) {video_index = 0;}
@@ -1849,6 +1891,22 @@ this.update_video_label = function()
         $("#video_file_label_id").removeClass("map_hidden");
         $("#video_file_label_file").addClass("map_hidden");
     }
+
+    var desc_ids = ["geo_video_desc_other", "geo_video_desc_youtube", "geo_video_desc_vimeo", "geo_video_desc_local_swf", "geo_video_desc_local_flv"];
+    var desc_ids_count = desc_ids.length;
+    if ((0 > video_index) || (desc_ids_count <= video_index)) {
+        video_index = 0;
+    }
+
+    for (var vind = 0; vind < desc_ids_count; vind++) {
+        var one_desc_id = desc_ids[vind];
+        if (vind == video_index) {
+            $("#" + one_desc_id + "").removeClass("map_hidden");
+        } else {
+            $("#" + one_desc_id + "").addClass("map_hidden");
+        }
+    }
+
 };
 
 // loading POI's marker icon

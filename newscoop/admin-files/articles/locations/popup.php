@@ -100,15 +100,15 @@ var set_local_strings = function()
     local_strings_map["fill_in_map_name"] = "&nbsp;<?php putGS("fill in map name"); ?>&nbsp;";
     local_strings_map["point_markers"] = "<?php putGS("Point markers"); ?>";
     local_strings_map["this_should_not_happen_now"] = "<?php putGS("problem at point processing, please send error report"); ?>";
-    local_strings_map["really_to_delete_the_point"] = "<?php putGS("Really to delete the point?"); ?>";
+    local_strings_map["really_to_delete_the_point"] = "<?php putGS("Really delete this point?"); ?>";
     local_strings_map["the_removal_is_from_all_languages"] = "<?php putGS("The point will be removed from all translations of the article."); ?>";
     local_strings_map["point_number"] = "<?php putGS("Point no."); ?>";
     local_strings_map["fill_in_the_point_description"] = "<?php putGS("Describe the location..."); ?>";
     local_strings_map["edit"] = "<?php putGS("Edit"); ?>";
     local_strings_map["center"] = "<?php putGS("Center"); ?>";
-    local_strings_map["enable"] = "<?php putGS("Enable"); ?>";
-    local_strings_map["disable"] = "<?php putGS("Disable"); ?>";
-    local_strings_map["remove"] = "<?php putGS("Remove"); ?>";
+    local_strings_map["enable"] = "<?php putGS("Show"); ?>";
+    local_strings_map["disable"] = "<?php putGS("Hide"); ?>";
+    local_strings_map["remove"] = "<?php putGS("Delete"); ?>";
     local_strings_map["longitude"] = "<?php putGS("Longitude"); ?>";
     local_strings_map["latitude"] = "<?php putGS("Latitude"); ?>";
     local_strings_map["locations_updated"] = "<?php putGS("List of locations updated"); ?>";
@@ -119,9 +119,9 @@ var set_local_strings = function()
     local_strings_nam = {};
 
     local_strings_nam["cc"] = "+";
-    local_strings_nam["city"] = "<?php putGS("center city"); ?>";
+    local_strings_nam["city"] = "<?php putGS("Center map on location"); ?>";
     local_strings_nam["add_city"] = "<?php putGS("add location to map"); ?>";
-    local_strings_nam["no_city_was_found"] = "<?php putGS("sorry, no city was found"); ?>";
+    local_strings_nam["no_city_was_found"] = "<?php putGS("Sorry, that place was not found. Check your spelling or search again."); ?>";
 
     geo_names.set_display_strings(local_strings_nam);
 
@@ -429,6 +429,7 @@ var map_show_preview = function()
 
     var cur_location = window.location.href;
     var new_location = cur_location.replace("popup.php", "preview.php");
+    var new_location = new_location.replace("loader=article", "loader=map");
     new_location += "&focus=default";
     try {
     window.location.replace(new_location);
@@ -476,7 +477,7 @@ var map_show_preview = function()
 
     <div class="save-button-bar">
         <input id="map_button_save" type="submit" onclick="geo_locations.map_save_all(); try {parent.$.fancybox.reload = true;} catch (e) {} return false;" class="save-button-small" disabled="disabled" value="<?php putGS("Save"); ?>" name="save" />
-        <input id="map_button_preview" type="submit" onClick="geo_locations.map_save_all(); try {parent.$.fancybox.reload = true;} catch (e) {} map_show_preview(); return false;" class="default-button" value="<?php putGS("Save"); ?> &amp; <?php putGS("Preview"); ?>" name="preview" disabled="disabled" />
+        <input id="map_button_preview" type="submit" onClick="geo_locations.map_save_all(); try {parent.$.fancybox.reload = true;} catch (e) {} map_show_preview(); return false;" class="default-button" value="<?php putGS("Save"); ?> &amp; <?php putGS("Preview"); ?>" name="preview" />
         <input id="map_button_close" type="submit" onClick="on_close_request(); return false;" class="default-button" value="<?php putGS("Close"); ?>" name="close" />
     </div>
     <div id="map_save_info" class="map_save_info">
@@ -493,11 +494,11 @@ var map_show_preview = function()
     <fieldset class="plain">
     <ul>
         <li>
-            <label><span class="map_search_label"><?php putGS("Search for city or coordinate"); ?></span></label>
+            <label><span class="map_search_label"><?php putGS("Search for place or coordinate"); ?></span></label>
         </li>
         <li>
         <form class="map_geo_city_search" onSubmit="findLocation(); return false;">
-          <input class="map_geo_cityname input_text" id="search-city" type="text"><a href="#" title="<?php putGS("Search for city or coordinate"); ?>" class="ui-state-default icon-button no-text" onClick="findLocation(true); return false;"><span class="ui-icon ui-icon-search"></span></a>
+          <input class="map_geo_cityname input_text" id="search-city" type="text"><a href="#" title="<?php putGS("Search for place or coordinate"); ?>" class="ui-state-default icon-button no-text" onClick="findLocation(true); return false;"><span class="ui-icon ui-icon-search"></span></a>
         </form>
         </li>
         <li>
@@ -537,8 +538,7 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 </div><!-- end of map resizing -->
 <div id="map_mapedit" class="map_mapedit map_hidden">
     <div class="map_editinner">
-        <a onclick="geo_locations.close_edit_window(); return false;" href="#" class="ui-state-default icon-button no-text geo_close_edit_window"><span class="ui-icon ui-icon-closethick"></span></a>
-        <a onclick="geo_locations.close_edit_window(); geo_locations.preview_edited(); return false;" href="#" class="ui-state-default icon-button button geo_preview_edit_window"><span class=""><?php putGS("Preview"); ?></span></a>
+        <a onclick="geo_locations.close_edit_window(); geo_locations.preview_edited(); return false;" href="#" class="ui-state-default icon-button button geo_close_edit_window"><span class=""><?php putGS("OK"); ?></span></a>
         <div class="map_editpart1">
             <form action="#" onSubmit="return false;">
               <fieldset>
@@ -578,23 +578,30 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 </textarea>
                     </div>
                     </li>
-
+<?php
+/*
+<!--
                     <li>
                     <label class="edit_label" for="point_perex"><a class="edit_label_link" title="<?php putGS("click to edit"); ?>" href="#" onClick="$('#point_perex').removeClass('map_hidden'); $('#point_perex_view').addClass('map_hidden'); point_perex_focus(); return false;"><?php putGS("Full location title"); ?></a>:</label>
                     <textarea rows="2" cols="40" id="point_perex" name="point_perex" class="text geo_edit_textarea_perex map_hidden" type="text" onChange="geo_locations.store_point_property('perex', this.value); return false;" onBlur="$('#point_perex').addClass('map_hidden'); $('#point_perex_view').removeClass('map_hidden'); return false;">
 </textarea>
                     <a title="<?php putGS("click to edit"); ?>" id="point_perex_view" class="" href="#" onClick="$('#point_perex').removeClass('map_hidden'); $('#point_perex_view').addClass('map_hidden'); point_perex_focus(); return false;">&nbsp;</a>
                     </li>
-
+-->
+*/
+?>
                     </ol>
                         </div>
                         <div id="edit_image" class="edit_tabs">
                             <div class="edit_label_long map_poi_edit_intro"><?php putGS("Add an image to this location"); ?>.</div>
-
+<?php
+    $image_desc_other = getGS("Put here image link, e.g.") . " " . getGS("http://kosmoblog.com/get_img?ImageId=328");
+?>
                     <ol>
                     <li class="edit_label_top">
                     <label class="edit_label" for="point_image"><?php putGS("Image URL"); ?>:</label>
-                    <input id="point_image" name="point_image" class="text" type="text" onChange="geo_locations.store_point_property('image_source', this.value); return false;" />
+                    <input id="point_image" name="point_image" class="text" type="text" onChange="geo_locations.store_point_property('image_source', this.value); return false;" title="<?php echo $image_desc_other; ?>" />
+                    <span id="geo_image_desc" class="geo_image_desc"><?php echo $image_desc_other; ?></span>
                     </li>
 
                     <li class="edit_label_long map_poi_edit_intro_sub"><?php putGS("Change image display size"); ?>.</li>
@@ -611,7 +618,6 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                         </div>
                         <div id="edit_video" class="edit_tabs">
                             <div class="edit_label_long map_poi_edit_intro"><?php putGS("Add a video to this location"); ?>.</div>
-
                     <ol>
                     <li>
                     <label class="edit_label edit_label_top" for="point_video_type"><?php putGS("Video source"); ?>:</label>
@@ -623,10 +629,21 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                     <option value="flv">Flash (flv)</option>
                     </select>
                     </li>
-
+<?php
+    $video_desc_other = getGS("Put here video ID, link or file name");
+    $video_desc_youtube = getGS("Put here youtube ID or link, e.g.") . " " . getGS("http://youtu.be/c9WzlvLn3X0");
+    $video_desc_vimeo = getGS("Put here vimeo ID or link, e.g") . " " .getGS("http://vimeo.com/21757310");
+    $video_desc_local_swf = getGS("Put here local swf flash file name or link, e.g.") . " " . getGS("http://www.swftools.org/flash/penguins.swf");
+    $video_desc_local_flv = getGS("Put here local flv flash file name or link, e.g.") . " " . getGS("example.flv");
+?>
                     <li class="edit_label">
                     <label class="edit_label" for="point_video"><span id="video_file_label_id"><?php putGS("Video ID"); ?>:</span><span id="video_file_label_file" class="map_hidden"><?php putGS("Video file"); ?>:</span></label>
-                    <input id="point_video" name="point_video" class="text" type="text" onChange="geo_locations.store_point_property('video_id', this.value); return false;" />
+                    <input id="point_video" name="point_video" class="text" type="text" onChange="geo_locations.store_point_property('video_id', this.value); return false;" title="<?php echo $video_desc_other; ?>" />
+                    <span id="geo_video_desc_other" class="geo_video_desc"><?php echo $video_desc_other; ?></span>
+                    <span id="geo_video_desc_youtube" class="geo_video_desc map_hidden"><?php echo $video_desc_youtube; ?></span>
+                    <span id="geo_video_desc_vimeo" class="geo_video_desc map_hidden"><?php echo $video_desc_vimeo; ?></span>
+                    <span id="geo_video_desc_local_swf" class="geo_video_desc map_hidden"><?php echo $video_desc_local_swf; ?></span>
+                    <span id="geo_video_desc_local_flv" class="geo_video_desc map_hidden"><?php echo $video_desc_local_flv; ?></span>
                     </li>
 
                     <li class="edit_label_long map_poi_edit_intro_sub"><?php putGS("Change video display size"); ?>.</li>

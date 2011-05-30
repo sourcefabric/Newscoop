@@ -3,9 +3,9 @@ var geo_names = {};
 
 geo_names.display_strings = {
     cc: "+",
-    city: "center city",
+    city: "Center map on location",
     add_city: "add location to map",
-    no_city_was_found: "sorry, no city was found"
+    no_city_was_found: "Sorry, that place was not found. Check your spelling or search again."
 };
 
 geo_names.set_display_strings = function(local_strings)
