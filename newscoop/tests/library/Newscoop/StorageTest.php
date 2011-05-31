@@ -5,37 +5,39 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\Storage;
+namespace Newscoop;
 
 /**
  */
-class LocalStorageTest extends \PHPUnit_Framework_TestCase
+class StorageTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var string */
     protected $root;
+
+    /** @var Newscoop\Storage */
     protected $storage;
 
     public function setUp()
     {
-        $this->root = sys_get_temp_dir() . '/' . uniqid('phpunit_');
+        $this->root = sys_get_temp_dir() . '/' . uniqid('phpunit_', TRUE);
         mkdir($this->root);
-        $this->storage = new LocalStorage($this->root);
+        $this->storage = new Storage($this->root);
     }
 
     public function tearDown()
     {
-        $this->rmDir($this->root);
+        exec("rm -r $this->root");
     }
 
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testLocalStorage()
+    public function testStorage()
     {
-        $storage = new LocalStorage(sys_get_temp_dir());
-        $this->assertType('Newscoop\Storage\LocalStorage', $storage);
+        $storage = new Storage('/');
+        $this->assertInstanceOf('Newscoop\Storage', $storage);
 
-        // throws
-        new LocalStorage(uniqid());
+        new Storage('abc');
     }
 
     public function testStoreItem()
@@ -66,7 +68,7 @@ class LocalStorageTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($this->storage->storeItem('.', 'data'));
 
         // test without permissions
-        $storage = new LocalStorage('/dev');
+        $storage = new Storage('/dev');
         $this->assertFalse($storage->storeItem('sub/dir', 'data'));
     }
 
@@ -197,40 +199,87 @@ class LocalStorageTest extends \PHPUnit_Framework_TestCase
     {
         // test empty
         $items = $this->storage->listItems('');
-        $this->assertEquals(array(), $items);
+        $this->assertEmpty($items);
 
-        // test bad
-        $items = $this->storage->listItems('nonsense');
-        $items = $this->storage->listItems('./../');
-
-        // test file
-        $this->storage->storeItem('file', 'data');
-        $this->assertEquals(array(), $this->storage->listItems('file'));
-
-        // test one
-        $this->assertEquals(array('file'), $this->storage->listItems(''));
-
-        // test more
         $this->storage->storeItem('dir/file', 'data');
-        $items = $this->storage->listItems('');
-        $this->assertEquals(2, sizeof($items));
-        $this->assertContains('file', $items);
-        $this->assertContains('dir', $items);
+        $this->assertEquals(array(), $this->storage->listItems('dir/file'));
 
-        // test subdir
-        $this->assertEquals(array('file'), $this->storage->listItems('dir'));
+        $items = $this->storage->listItems('dir');
+        $this->assertEquals(1, sizeof($items));
+        $item = current($items);
+        $this->assertInstanceOf('Newscoop\Storage\Item', current($items));
+        $this->assertEquals('dir/file', current($items)->getKey());
     }
 
-    protected function rmDir($dir)
+    public function testIsDir()
     {
-        foreach (glob("$dir/*") as $file) {
-            if (is_dir($file)) {
-                $this->rmDir($file);
-            } else {
-                unlink($file);
-            }
-        }
+        $this->storage->storeItem('dir/file', 'data');
+        $this->assertFalse($this->storage->isDir('dir/file'));
+        $this->assertTrue($this->storage->isDir('dir'));
+    }
 
-        rmdir($dir);
+    public function testFetchMetadata()
+    {
+        $ctime = time();
+        $this->storage->storeItem('key', 'data');
+        $metadata = $this->storage->fetchMetadata('key');
+        $this->assertInternalType('array', $metadata);
+        $this->assertEquals(4, $metadata['size']);
+        $this->assertLessThan(2, $metadata['change_time'] - $ctime);
+    }
+
+    public function testIsWritable()
+    {
+        $this->assertTrue($this->storage->isWritable('/'));
+
+        $storage = new Storage('/dev');
+        $this->assertFalse($storage->isWritable('/'));
+    }
+
+    public function testCreateDir()
+    {
+        $this->assertFalse(is_dir("$this->root/newdir"));
+        $this->storage->createDir('newdir');
+        $this->assertTrue(is_dir("$this->root/newdir"));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testCreateDirException()
+    {
+        $this->storage->createDir('newdir');
+        $this->storage->createDir('newdir');
+    }
+
+    public function testCreateFile()
+    {
+        $this->assertFalse(realpath("$this->root/newfile"));
+        $this->storage->createFile('newfile');
+        $this->assertTrue(is_file("$this->root/newfile"));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testCreateFileException()
+    {
+        $this->storage->createFile('newfile');
+        $this->storage->createFile('newfile');
+    }
+
+    public function testIsUsed()
+    {
+        $this->assertFalse($this->storage->isUsed('key.tpl'));
+
+        $this->storage->storeItem('item', 'key.tpl');
+        $this->assertFalse($this->storage->isUsed('key.tpl'));
+
+        $this->storage->storeItem('item.tpl', 'key.tpl');
+        $this->assertTrue($this->storage->isUsed('key.tpl'));
+
+        chmod("$this->root/item.tpl", 0204);
+        $this->assertEquals(CAMP_ERROR_READ_FILE, $this->storage->isUsed('key.tpl'));
+        chmod("$this->root/item.tpl", 0644);
     }
 }

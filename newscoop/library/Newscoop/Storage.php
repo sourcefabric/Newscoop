@@ -5,12 +5,14 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\Storage;
+namespace Newscoop;
+
+use Newscoop\Storage\Item;
 
 /**
- * Local Storage
+ * Storage
  */
-class LocalStorage implements Storage
+class Storage
 {
     const MODE = 0700; // mode for created directories
 
@@ -24,8 +26,7 @@ class LocalStorage implements Storage
     {
         $this->root = realpath($root);
         if (!$this->root) {
-            throw new \InvalidArgumentException("'$root' not found");
-        }
+            throw new \InvalidArgumentException("'$root' not found"); }
     }
 
     /**
@@ -91,9 +92,10 @@ class LocalStorage implements Storage
         }
 
         if (is_dir($path)) {
-            foreach ($this->listItems($key) as $subkey) {
-                $this->deleteItem("$key/$subkey");
+            foreach ($this->listItems($key) as $item) {
+                $this->deleteItem($item->getKey());
             }
+
             rmdir($path);
         } else {
             unlink($path);
@@ -215,20 +217,119 @@ class LocalStorage implements Storage
     public function listItems($key)
     {
         $path = $this->getPath($key, TRUE);
-        if (!$path) {
-            return array();
-        }
-
-        if (!is_dir($path)) {
+        if (!$path || !is_dir($path)) {
             return array();
         }
 
         $items = array();
         foreach (glob("$path/*") as $file) {
-            $items[] = basename($file);
+            $key = trim(str_replace($this->root, '', $file), '/');
+            $items[] = new Item($key, $this);
         }
 
         return $items;
+    }
+
+    /**
+     * Test if item is dir
+     *
+     * @param string $key
+     * @return bool
+     */
+    public function isDir($key)
+    {
+        return is_dir("$this->root/$key");
+    }
+
+    /**
+     * Fetch item metadata
+     *
+     * @param string $key
+     * @return array
+     */
+    public function fetchMetadata($key)
+    {
+        $info = new \SplFileInfo("$this->root/$key");
+        return array(
+            'size' => $info->getSize(),
+            'change_time' => $info->getCTime(),
+        );
+    }
+
+    /**
+     * Test is writable
+     *
+     * @param string $key
+     * @return bool
+     */
+    public function isWritable($key)
+    {
+        $info = new \SplFileInfo("$this->root/$key");
+        return $info->isWritable();
+    }
+
+    /**
+     * Create dir
+     *
+     * @param string $key
+     * @return void
+     * @throws InvalidArgumentException
+     */
+    public function createDir($key)
+    {
+        $path = $this->getPath($key);
+        if (realpath($path) || !mkdir($path, self::MODE)) {
+            throw new \InvalidArgumentException($key);
+        }
+    }
+
+    /**
+     * Create file
+     *
+     * @param string $key
+     * @return void
+     * @throws InvalidArgumentException
+     */
+    public function createFile($key)
+    {
+        $path = $this->getPath($key);
+        if (realpath($path) || !touch($path)) {
+            throw new \InvalidArgumentException($key);
+        }
+    }
+
+    /**
+     * Test is used
+     *
+     * @param string $key
+     * @param object $searchEngine
+     * @return mixed
+     */
+    public function isUsed($key, $searchEngine = null)
+    {
+        if (!isset($searchEngine)) {
+            $searchEngine = new \FileTextSearch();
+        }
+
+        $searchEngine->setExtensions(array('tpl', 'css'));
+        $searchEngine->setSearchKey($key);
+
+        $result = $searchEngine->findReplace($this->root);
+        if (is_array($result) && sizeof($result) > 0) {
+            return $result[0];
+        }
+
+        if (pathinfo($key, PATHINFO_EXTENSION) == 'tpl') {
+            $key = " $key";
+        }
+
+        $searchEngine->setSearchKey($key);
+        $result = $searchEngine->findReplace($this->root);
+        if (is_array($result) && sizeof($result) > 0) {
+            return $result[0];
+        }
+
+        return $searchEngine->m_totalFound > 0;
     }
 
     /**
