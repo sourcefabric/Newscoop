@@ -142,14 +142,29 @@ GeoPopups.show_inline_label_change = function(geo_obj, rank, value) {
 
 };
 
+GeoPopups.show_inline_label_edit_focus = function() {
+    var edit_elm = document.getElementById ? document.getElementById('geo_edit_label_inline') : null;
+    if (edit_elm) {
+        try {
+            edit_elm.focus();
+        } catch (exc) {
+            alert("bad msie - label");
+        }
+    }
+};
+
 GeoPopups.show_inline_label_edit = function(geo_obj, rank) {
     $('#geo_edit_label_inline').removeClass('map_hidden');
     $('#geo_show_label_inline').addClass('map_hidden');
 
+    setTimeout("GeoPopups.show_inline_label_edit_focus();", 100);
+
+/*
     var edit_elm = document.getElementById ? document.getElementById('geo_edit_label_inline') : null;
     if (edit_elm) {
-        edit_elm.focus();
+        //edit_elm.focus();
     }
+*/
 };
 
 GeoPopups.show_inline_content_view = function(geo_obj, rank) {
@@ -222,7 +237,18 @@ GeoPopups.show_inline_content_edit = function(geo_obj, rank) {
 
     var edit_elm = document.getElementById ? document.getElementById('geo_edit_content_inline') : null;
     if (edit_elm) {
-        edit_elm.focus();
+        //edit_elm.focus();
+    }
+};
+
+GeoPopups.show_inline_text_edit_focus = function() {
+    var edit_elm = document.getElementById ? document.getElementById('geo_edit_text_inline') : null;
+    if (edit_elm) {
+        try {
+            edit_elm.focus();
+        } catch (exc) {
+            alert("bad msie - text");
+        }
     }
 };
 
@@ -230,10 +256,7 @@ GeoPopups.show_inline_text_edit = function(geo_obj, rank) {
     $('#geo_edit_text_inline').removeClass('map_hidden');
     $('#geo_show_text_inline').addClass('map_hidden');
 
-    var edit_elm = document.getElementById ? document.getElementById('geo_edit_text_inline') : null;
-    if (edit_elm) {
-        edit_elm.focus();
-    }
+    setTimeout("GeoPopups.show_inline_text_edit_focus();", 100);
 };
 
 
@@ -398,6 +421,10 @@ GeoPopups.create_popup_content = function(feature, geo_obj) {
         pop_text += "<div class='article_backlinks'> " + geo_obj.display_strings.articles + ": <a href=\"" + attrs.m_backlink + "\" target=\"_blank\">" + "1" + "</a></div>";
     }
 
+    if (editing) {
+        pop_text += "<div class='poi_removal_inline'><a href='#' onClick=\"" + geo_obj.obj_name + ".remove_poi(" + rank + ");return false;\" title=\"" + geo_obj.display_strings.remove + "\">" + geo_obj.display_strings.remove + "</a></div>";
+    }
+
     var min_width = geo_obj.popup_width;
     var min_height = geo_obj.popup_height;
     if (with_embed) {
@@ -405,6 +432,13 @@ GeoPopups.create_popup_content = function(feature, geo_obj) {
         var min_height_embed = feature.attributes.m_embed_height + 100;
         if (min_width_embed > min_width) {min_width = min_width_embed;}
         if (min_height_embed > min_height) {min_height = min_height_embed;}
+    }
+
+    if (editing) {
+        var min_height_edit = 200;
+        var min_width_edit = 250;
+        if (min_height_edit > min_height) {min_height = min_height_edit;}
+        if (min_width_edit > min_width) {min_width = min_width_edit;}
     }
 
     return {'inner_html': pop_text, 'min_width': min_width, 'min_height': min_height, 'poi_label': poi_label_value, 'poi_content': poi_content_value, 'poi_text': poi_text_value};
