@@ -148,7 +148,7 @@ GeoPopups.show_inline_label_edit_focus = function() {
         try {
             edit_elm.focus();
         } catch (exc) {
-            alert("bad msie - label");
+            //alert("bad msie - label");
         }
     }
 };
@@ -187,7 +187,6 @@ GeoPopups.show_inline_content_view = function(geo_obj, rank) {
 };
 
 GeoPopups.show_inline_text_view = function(geo_obj, rank) {
-
     $('#geo_edit_text_inline').addClass('map_hidden');
     $('#geo_show_text_inline').removeClass('map_hidden');
 
@@ -237,7 +236,9 @@ GeoPopups.show_inline_content_edit = function(geo_obj, rank) {
 
     var edit_elm = document.getElementById ? document.getElementById('geo_edit_content_inline') : null;
     if (edit_elm) {
-        //edit_elm.focus();
+        try {
+            edit_elm.focus();
+        } catch (exc) {}
     }
 };
 
@@ -247,7 +248,7 @@ GeoPopups.show_inline_text_edit_focus = function() {
         try {
             edit_elm.focus();
         } catch (exc) {
-            alert("bad msie - text");
+            //alert("bad msie - text");
         }
     }
 };
@@ -258,7 +259,6 @@ GeoPopups.show_inline_text_edit = function(geo_obj, rank) {
 
     setTimeout("GeoPopups.show_inline_text_edit_focus();", 100);
 };
-
 
 // preparing html content for a popup
 GeoPopups.create_popup_content = function(feature, geo_obj) {
@@ -300,17 +300,17 @@ GeoPopups.create_popup_content = function(feature, geo_obj) {
 
             poi_label_value = pop_title_orig;
 
-            pop_text += "<input id='geo_edit_label_inline' class='map_hidden " + label_class_add + "' type='text' value='' onBlur=\"GeoPopups.show_inline_label_view(" + geo_obj.obj_name + ", " + rank + "); return false;\" onChange='GeoPopups.show_inline_label_change(" + geo_obj.obj_name + ", " + rank + ", this.value); return false;' onKeyUp='GeoPopups.show_inline_label_change(" + geo_obj.obj_name + ", " + rank + ", this.value); return true;'>";
+            pop_text += "<input id='geo_edit_label_inline' class='map_hidden " + label_class_add + "' type='text' value='' onBlur=\"GeoPopups.show_inline_label_view(" + geo_obj.obj_name + ", " + rank + "); return false;\" onChange='GeoPopups.show_inline_label_change(" + geo_obj.obj_name + ", " + rank + ", this.value); return false;' onKeyUp='GeoPopups.show_inline_label_change(" + geo_obj.obj_name + ", " + rank + ", this.value); return true;' />\n";
             pop_text += "<h3 class='popup_title' id='geo_show_label_inline'>";
 
             if ((!pop_link) || ("" == pop_link)) {
                 pop_link = "#";
             }
             pop_text += "<a href=\"" + pop_link + "\" target=\"_blank\" class='inline_editable' onClick=\"GeoPopups.show_inline_label_edit(" + geo_obj.obj_name + ", " + rank + "); return false;\">";
-            pop_text += "<span id='label_inner_edit_value' class='" + label_class_add + "'>" + pop_title_show; + "</span>";
+            pop_text += "<span id='label_inner_edit_value' class='" + label_class_add + "'>" + pop_title_show + "</span>";
 
             pop_text += "</a>";
-            pop_text += "</h3>";
+            pop_text += "</h3>\n";
 
         } else {
 
@@ -393,14 +393,14 @@ GeoPopups.create_popup_content = function(feature, geo_obj) {
                 text_view = geo_obj.display_strings.fill_in_the_point_description;
             }
 
-            pop_text += "<div class='popup_text'>";
+            pop_text += "<div class='popup_text'><p>";
             pop_text += "<a href='#' id='geo_show_text_inline' class='inline_editable' onClick=\"GeoPopups.show_inline_text_edit(" + geo_obj.obj_name + ", " + rank + "); return false;\">";
-            pop_text += "<span id='text_inner_edit_value' class='" + text_class_add + "'>" + text_view + "</span></div>";
+            pop_text += "<span id='text_inner_edit_value' class='" + text_class_add + "'>" + text_view + "</span></a>";
 
             pop_text += "<textarea id='geo_edit_text_inline' class='map_hidden " + text_class_add + "' rows=4 cols=20 onBlur=\"GeoPopups.show_inline_text_view(" + geo_obj.obj_name + ", " + rank + "); return false;\" onChange='GeoPopups.show_inline_text_change(" + geo_obj.obj_name + ", " + rank + ", this.value); return false;' onKeyUp='GeoPopups.show_inline_text_change(" + geo_obj.obj_name + ", " + rank + ", this.value); return true;'>";
             pop_text += "</textarea>";
 
-            pop_text += "</div>";
+            pop_text += "</p></div>";
         } else {
             pop_text += "<div class='popup_text'><p>" + plain_text + "</p></div>";
         }

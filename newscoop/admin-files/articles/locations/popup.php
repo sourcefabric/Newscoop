@@ -436,6 +436,11 @@ on_close_request = function()
 
 var map_show_preview = function()
 {
+    if (geo_locations.something_to_save) {
+        geo_locations.map_save_all(); 
+    }
+
+
     if (!geo_locations.map_id) {return;}
 
     if (geo_locations.something_to_save)
@@ -498,7 +503,7 @@ var map_show_preview = function()
 
     <div class="save-button-bar">
         <input id="map_button_save" type="submit" onclick="geo_locations.map_save_all(); try {parent.$.fancybox.reload = true;} catch (e) {} return false;" class="save-button-small" disabled="disabled" value="<?php putGS("Save"); ?>" name="save" />
-        <input id="map_button_preview" type="submit" onClick="geo_locations.map_save_all(); try {parent.$.fancybox.reload = true;} catch (e) {} map_show_preview(); return false;" class="default-button" value="<?php putGS("Save"); ?> &amp; <?php putGS("Preview"); ?>" name="preview" disabled="disabled" />
+        <input id="map_button_preview" type="submit" onClick="try {parent.$.fancybox.reload = true;} catch (e) {} map_show_preview(); return false;" class="default-button" value="<?php putGS("Save"); ?> &amp; <?php putGS("Preview"); ?>" name="preview" disabled="disabled" />
         <input id="map_button_close" type="submit" onClick="on_close_request(); return false;" class="default-button" value="<?php putGS("Close"); ?>" name="close" />
     </div>
     <div id="map_save_info" class="map_save_info">

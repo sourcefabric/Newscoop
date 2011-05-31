@@ -21,12 +21,12 @@
 }
 
 .popup_title {
-    font-size: 20px;
-    margin-top: 3px;
-    margin-bottom: 10px;
+    font-size: 17px;
+    margin: 3px 0 10px 0;
     background-color: #fffffa;
     color: #202000;
-    width: 180px;
+	padding:0;
+	min-height:25px;
 }
 .popup_video {
 
@@ -36,13 +36,11 @@
 }
 .popup_text {
     font-size: 14px;
-    margin-top: 10px;
-    width: 180px;
 }
 .popup_content {
     font-size: 14px;
     margin-top: 10px;
-    width: 180px;
+
 
 }
 
@@ -55,3 +53,28 @@
     color: #000040;
 }
 
+
+.olFramedCloudPopupContent input[type="text"] {
+    border: 1px solid #9D9D9D;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 16px;
+    height: 23px;
+    margin: 3px 0 10px;
+    padding: 0;
+    text-indent: 3px;
+	font-size:17px;
+	width:100%;
+}
+
+.olFramedCloudPopupContent textarea {
+    border: 1px solid #9D9D9D;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;
+    font-family: Arial,Helvetica,sans-serif;
+    margin: 0;
+    padding: 0;
+	font-size:14px;
+	width:100%;
+	color:#444;
+}
+	
