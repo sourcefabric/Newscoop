@@ -4,6 +4,9 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+use Newscoop\Service\IArticleTypeService;
+use Newscoop\Entity\Repository\ArticleTypeRepository;
+use Newscoop\Entity\ArticleType;
 use Newscoop\Entity\Resource;
 use Newscoop\Controller\Action\Helper\Datatable\Adapter\Theme,
     Newscoop\Controller\Action\Helper\Datatable\Adapter\ThemeFiles,
@@ -55,6 +58,12 @@ class Admin_ThemesController extends Zend_Controller_Action
      * @var Newscoop\Service\IOutputService 
      */
     private $_outputService = NULL;
+    
+    /**
+     * @var Newscoop\Service\IArticleTypeService 
+     */
+    private $_articleTypeService = NULL;
+    
     
     /**
      * Provides the controller resource id.
@@ -123,6 +132,19 @@ class Admin_ThemesController extends Zend_Controller_Action
             $this->_publicationService = $this->getResourceId()->getService( IPublicationService::NAME );
         }
         return $this->_publicationService;
+    }
+    
+	/**
+     * Provides the theme service.
+     * 
+     * @return Newscoop\Service\IArticleTypeService
+     */
+    public function getArticleTypeService()
+    {
+        if( $this->_articleTypeService === NULL ) {
+            $this->_articleTypeService = $this->getResourceId()->getService( IArticleTypeService::NAME );
+        }
+        return $this->_articleTypeService;
     }
 
     public $instId = null;
@@ -450,6 +472,21 @@ class Admin_ThemesController extends Zend_Controller_Action
         
     }
 
+    public function testAction()
+    {
+        $artServ = $this->getArticleTypeService();
+        var_dump( $artServ->findTypeByName( 'news' ) );
+        /*$k=1;
+        foreach( $artServ->findAllTypes() as $at )
+        {
+            echo $at->getName(),($k++)," <br />";
+            foreach( $artServ->findFields( $at ) as $af )
+            
+              echo $af->getName(), " type: ", $at->getName(), " ~= type from field: ", $af->getType()->getName(), "<br />";
+        } */       
+        die;
+    }
+    
     public function installAction()
     {
         $this->_repository->install( $this->_getParam( 'offset' ) );
@@ -467,5 +504,6 @@ class Admin_ThemesController extends Zend_Controller_Action
         $this->_helper->flashMessenger( getGS( 'Theme $1', getGS( 'deleted' ) ) );
         $this->_helper->redirector( 'index' );
     }
+    
 }
 
