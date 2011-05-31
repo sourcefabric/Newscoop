@@ -62,6 +62,16 @@ class Section extends Entity
     private $articleTemplate;
 
     /**
+     * @param int $number
+     * @param string $name
+     */
+    public function __construct($number, $name)
+    {
+        $this->number = (int) $number;
+        $this->name = (string) $name;
+    }
+
+    /**
      * Get language
      *
      * @return Newscoop\Entity\Language
@@ -109,5 +119,29 @@ class Section extends Entity
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set template
+     *
+     * @param Newscoop\Entity\Template $template
+     * @return Newscoop\Entity\Section
+     */
+    public function setTemplate(Template $template)
+    {
+        $this->template = $template;
+        return $this;
+    }
+
+    /**
+     * Set article template
+     *
+     * @param Newscoop\Entity\Template $template
+     * @return Newscoop\Entity\Section
+     */
+    public function setArticleTemplate(Template $template)
+    {
+        $this->articleTemplate = $template;
+        return $this;
     }
 }

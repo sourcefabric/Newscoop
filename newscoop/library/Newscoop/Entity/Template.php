@@ -33,11 +33,6 @@ class Template
     private $cache_lifetime;
 
     /**
-     * @var SplFileInfo
-     */
-    private $fileInfo;
-
-    /**
      * @param string $key
      * @param array $metadata
      */
@@ -45,14 +40,6 @@ class Template
     {
         $this->key = (string) $key;
         $this->cache_lifetime = 0;
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->getBasename();
     }
 
     /**
@@ -95,7 +82,7 @@ class Template
      */
     public function setCacheLifetime($lifetime)
     {
-        $this->cache_lifetime = (int) $lifetime;
+        $this->cache_lifetime = abs((int) $lifetime);
         return $this;
     }
 
@@ -107,67 +94,5 @@ class Template
     public function getCacheLifetime()
     {
         return (int) $this->cache_lifetime;
-    }
-
-    /**
-     * Set file info
-     *
-     * @param SplFileInfo $fileInfo
-     * @return Newscoop\Entity\Template
-     */
-    public function setFileInfo(\SplFileInfo $fileInfo)
-    {
-        $this->fileInfo = $fileInfo;
-        return $this;
-    }
-
-    /**
-     * Get basename
-     *
-     * @return string
-     */
-    public function getBasename()
-    {
-        return $this->fileInfo->getBasename();
-    }
-
-    /**
-     * Get size
-     *
-     * @return int
-     */
-    public function getSize()
-    {
-        return $this->fileInfo->getSize();
-    }
-
-    /**
-     * Get change time
-     *
-     * @return DateTime
-     */
-    public function getChangeTime()
-    {
-        return new \DateTime('@' . $this->fileInfo->getCTime());
-    }
-
-    /**
-     * Get type
-     *
-     * @return string
-     */
-    public function getType()
-    {
-        $type = 'file';
-        $pieces = explode('.', $this->key);
-        if (sizeof($pieces) > 1) {
-            $type = strtolower(array_pop($pieces));
-        }
-
-        if ($type == 'jpeg') {
-            $type = 'jpg';
-        }
-
-        return $type;
     }
 }

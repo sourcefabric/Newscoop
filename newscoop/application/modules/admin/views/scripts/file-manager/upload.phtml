@@ -1,6 +1,6 @@
 <?php $this->placeholder('title')->set(getGS('Upload')); ?>
 
-<?php if (!$this->destination->isWritable()) {
+<?php if (!$this->isWritable) {
     echo $this->renderError(getGS("'$1' is not writable", $this->destination->getRealpath()));
     return;
 } ?>
@@ -28,7 +28,7 @@ $(function() {
             for (j in items) {
                 var item = items[j];
                 if (item.name == file.name) { // conflict
-                    if (item.isDir) {
+                    if (!item.id) { // dir
                         alert("<?php putGS("Can't override directory '$1'.", '" + item.name + "'); ?>");
                         up.removeFile(file);
                     } else if (!confirm("<?php putGS("Do you want to override '$1'?", '" + file.name + "'); ?>")) {

@@ -60,10 +60,10 @@
 
 <?php foreach ($this->folders as $folder) { ?>
 <tr class="collection">
-    <td class="id"><input type="checkbox" name="file[]" value="<?php echo $folder; ?>" /></td>
+    <td class="id"><input type="checkbox" name="file[]" value="<?php echo $folder->name; ?>" /></td>
     <td><a href="<?php echo $this->url(array(
-        'path' => ltrim($this->path . $this->separator . $folder, $this->separator),
-    )); ?>" class="folder" title="<?php putGS("Go to '$1'", $folder); ?>"><?php echo $folder; ?></a></td>
+        'path' => ltrim($this->path . $this->separator . $folder->name, $this->separator),
+    )); ?>" class="folder" title="<?php putGS("Go to '$1'", $folder->name); ?>"><?php echo $folder->name; ?></a></td>
     <td></td>
     <td>dir</td>
     <td></td>
@@ -82,18 +82,18 @@
 
 <?php foreach ($this->templates as $file) { ?>
 <tr class="template">
-    <td class="id"><input type="checkbox" name="file[]" value="<?php echo $file->getBasename(); ?>" /></td>
+    <td class="id"><input type="checkbox" name="file[]" value="<?php echo $file->name; ?>" /></td>
     <td><a href="<?php echo $this->url(array(
         'action' => 'edit',
         'path' => $this->path,
-        'file' => $file->getBasename(),
-    )); ?>" class="file" title="<?php putGS("Edit '$1'", $file); ?>"><?php echo $file; ?></a></td>
-    <td><?php echo $file->getId(); ?></td>
-    <td><?php echo $file->getType(); ?></td>
-    <td class="size"><?php echo $this->formatBytes($file->getSize()); ?></td>
-    <td><?php echo $file->getCacheLifetime(); ?></td>
-    <td><?php echo $file->getChangeTime()->format($this->dateFormat); ?></td>
-    <td><?php echo $file->getSize(); ?></td>
+        'file' => $file->name,
+    )); ?>" class="file" title="<?php putGS("Edit '$1'", $file->name); ?>"><?php echo $file->name; ?></a></td>
+    <td><?php echo $file->id; ?></td>
+    <td><?php echo $file->type; ?></td>
+    <td class="size"><?php echo $this->formatBytes($file->size); ?></td>
+    <td><?php echo $file->ttl; ?></td>
+    <td><?php echo date($this->dateFormat, $file->ctime); ?></td>
+    <td><?php echo $file->size; ?></td>
 
     <td class="menu"><ul class="actionDropDown">
         <li><a href="#"><?php putGS('Actions'); ?></a><ul>
