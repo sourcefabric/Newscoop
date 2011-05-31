@@ -141,7 +141,7 @@ select {
 	text-decoration:underline;
 }
 .link .icon {
-	background-image:url(custom-theme/images/ui-icons_007fb3_256x240.png);
+	background-image:url(images/ui-icons_007fb3_256x240.png);
 	background-repeat:no-repeat;
 	width:16px;
 	height:16px;
@@ -475,7 +475,7 @@ input.next-to-field {
 }
 .collapsible .ui-state-hover .ui-icon,
 .collapsible .ui-state-active .ui-icon {
-	background-image:url(custom-theme/images/ui-icons_666666_256x240.png);
+	background-image:url(images/ui-icons_666666_256x240.png);
 }
 .collapsible .ui-state-default .ui-icon,
 .collapsible .ui-state-hover .ui-icon {
@@ -582,10 +582,10 @@ fieldset.plain select.right-floated, fieldset.plain input.right-floated {
 	text-decoration:none;
 }
 .corner-button .ui-icon {
-	background-image:url(custom-theme/images/ui-icons_007fb3_256x240.png);
+	background-image:url(images/ui-icons_007fb3_256x240.png);
 }
 .corner-button:hover .ui-icon-closethick {
-	background-image:url(custom-theme/images/ui-icons_d00000_256x240.png);
+	background-image:url(images/ui-icons_d00000_256x240.png);
 }
 .frame {
 	padding:8px;
@@ -979,10 +979,10 @@ a.clear-margin:hover, .icon-button:hover  {
 	padding-right: 0;
 }
 .map_mapedit .ui-state-default .ui-icon {
-	background-image: url(custom-theme/images/ui-icons_007fb3_256x240.png);
+	background-image: url(images/ui-icons_007fb3_256x240.png);
 }
 .map_mapedit .ui-state-hover .ui-icon {
-	background-image: url(custom-theme/images/ui-icons_ffffff_256x240.png);
+	background-image: url(images/ui-icons_ffffff_256x240.png);
 }
 /*---- END Geolocation ----*/
 

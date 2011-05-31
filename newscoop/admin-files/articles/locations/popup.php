@@ -233,9 +233,6 @@ var hideLocation = function()
 
     $("#search_results").addClass("map_hidden");
 
-    //var showhide_link = document.getElementById ? document.getElementById("showhide_link") : null;
-    //showhide_link.innerHTML = "+";
-
     $("#map_geo_showhide").removeClass("map_hidden");
     $("#map_geo_showhide").addClass("toggle_link_block");
 
@@ -263,9 +260,6 @@ var showLocation = function()
     $("#map_sidedescs").addClass("map_hidden");
 
     $("#search_results").removeClass("map_hidden");
-
-    //var showhide_link = document.getElementById ? document.getElementById("showhide_link") : null;
-    //showhide_link.innerHTML = "x";
 
     $("#map_geo_showhide").removeClass("map_hidden");
     $("#map_geo_showhide").addClass("toggle_link_block");
@@ -434,12 +428,15 @@ on_close_request = function()
     return;
 }
 
-var map_show_preview = function()
+var map_show_preview = function(forced)
 {
-    if (geo_locations.something_to_save) {
-        geo_locations.map_save_all(); 
+    if (!forced) {
+        if (geo_locations.something_to_save) {
+            geo_locations.go_to_preview_page = true; 
+            geo_locations.map_save_all(); 
+            return;
+        }
     }
-
 
     if (!geo_locations.map_id) {return;}
 
@@ -503,7 +500,7 @@ var map_show_preview = function()
 
     <div class="save-button-bar">
         <input id="map_button_save" type="submit" onclick="geo_locations.map_save_all(); try {parent.$.fancybox.reload = true;} catch (e) {} return false;" class="save-button-small" disabled="disabled" value="<?php putGS("Save"); ?>" name="save" />
-        <input id="map_button_preview" type="submit" onClick="try {parent.$.fancybox.reload = true;} catch (e) {} map_show_preview(); return false;" class="default-button" value="<?php putGS("Save"); ?> &amp; <?php putGS("Preview"); ?>" name="preview" disabled="disabled" />
+        <input id="map_button_preview" type="submit" onClick="try {parent.$.fancybox.reload = true;} catch (e) {} map_show_preview(); return false;" class="default-button" value="<?php putGS("Save"); ?> &amp; <?php putGS("Preview"); ?>" name="preview" />
         <input id="map_button_close" type="submit" onClick="on_close_request(); return false;" class="default-button" value="<?php putGS("Close"); ?>" name="close" />
     </div>
     <div id="map_save_info" class="map_save_info">

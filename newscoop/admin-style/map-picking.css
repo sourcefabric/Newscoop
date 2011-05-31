@@ -431,7 +431,6 @@ a.map_save_on {
 
 .edit_marker_icons_all {
     width: 90%;
-    margin-left: 10px; 
 }
 
 .edit_marker_choices {
@@ -442,12 +441,12 @@ a.map_save_on {
     border:1px solid #CCC;
 }
 .edit_marker_one_choice {
-    border: 1px solid #9d9d9d;
+    border: 1px solid #fff;
     margin: 4px 4px 1px 1px;
 	padding:3px;
 }
 .edit_marker_one_choice:hover {
-    border: 1px solid #4f5253;
+    border: 1px solid #007FB3;
 }
 a.edit_marker_one_choice_link {
     border-width: 0px;
@@ -492,9 +491,10 @@ a.edit_marker_one_choice_link {
     line-height: 140%;
 }
 
-.map_poi_edit_intro {
-    margin-left: 30px;
+.map_poi_edit_intro, .map_poi_edit_intro_icon, .map_poi_edit_intro_sub {
     margin-bottom: 20px;
+	font-size:15px;
+	font-weight:normal;
 }
 
 .map_poi_edit_intro_popup {
@@ -502,14 +502,9 @@ a.edit_marker_one_choice_link {
     margin-bottom: 5px;
 }
 
-.map_poi_edit_intro_icon {
-    margin-left: 30px;
-    margin-bottom: 20px;
-}
-
 .map_poi_edit_intro_sub {
     margin-top: 0px;
-    margin-left: 30px;
+    margin-bottom: 0;
 }
 
 .map_search_label {
@@ -559,7 +554,7 @@ a.edit_marker_one_choice_link {
 }
 
 .map_text_lack {
-    background: #ffe5e5;
+    background: #ffebeb;
 /*    width: 90%;*/
 
 }
@@ -614,15 +609,15 @@ a.edit_marker_one_choice_link {
 	color: #696969;
     font-size: 12px;
     line-height: 140%;
-/*	display:block;*/
 	margin-bottom:6px;
-}
-.toggle_link_block {
-	display:block;
 }
 .toggle_link:hover {
 	color: #007FB3;
 }
+.toggle_link_block {
+	display:block;
+}
+
 .toggle_link .ui-icon, legend .ui-icon {
     float: left;
 }
@@ -644,5 +639,54 @@ fieldset .poi_coors_all {
 }
 .ui-accordion-icons .ui-accordion-header a.corner-button .ui-icon {
 	left: 0.4em;
+}
 
+.ui-state-hover .corner-button .ui-icon-closethick {
+    background-image: url(images/ui-icons_ffffff_256x240.png);
+}
+
+.ui-state-hover .corner-button:hover .ui-icon-closethick {
+    background-image: url(images/ui-icons_d00000_256x240.png);
+}
+
+.geo_edit_popup_top .icon-link {
+	margin-left:6px;
+}
+.map_editinner input[type="text"] {
+    border: 1px solid #9D9D9D;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 23px;
+    margin: 0;
+    padding: 0;
+    text-indent: 3px;
+	color:#444;
+}
+.map_editinner input[type="text"]:focus {
+    border: 1px solid #00B5F1;
+}
+
+.map_editinner input[type="select"] {
+    background-color: #FFFFFF;
+    border: 1px solid #9D9D9D;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 25px;
+    margin: 0;
+    padding: 2px 2px 2px 0;
+    vertical-align: top;
+}
+
+.geo_video_desc, geo_image_desc { 
+	font-size:11px;
+	font-weight:normal;
+	font-style:italic;
+	padding: 0 0 0 6px;
+	color:#999999;
+}
+
+.inline_link_like {
+    cursor: pointer;
+    color: #007FB3;
 }

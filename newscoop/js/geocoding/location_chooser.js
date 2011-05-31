@@ -167,6 +167,8 @@ this.list_shown_header = 0;
 this.poi_label_value_inline = null;
 this.poi_content_value_inline = null;
 this.poi_text_value_inline = null;
+// for the save-and-preview as one action
+this.go_to_preview_page = false;
 
 // setting the localized strings
 this.set_display_strings = function(local_strings)
@@ -934,7 +936,6 @@ this.update_poi_descs = function(active, index_type)
             rem_class += " map_hidden";
         }
 
-        //var prop_ids = '["' + lon_id + '", "' + lat_id + '", "' + dis_id + '", "' + ena_id + '", "' + voi_id + '", "' + rem_id + '"]';
         var prop_ids = '["' + lon_id + '", "' + lat_id + '", "' + dis_id + '", "' + ena_id + '"]';
 
         descs_inner += "<div class='poi_actions clearfix'>";
@@ -957,11 +958,6 @@ this.update_poi_descs = function(active, index_type)
         descs_inner += "</div>";
         descs_inner += "</fieldset>";
 
-        //descs_inner += "<div class='poi_actions poi_removal'>";
-        //descs_inner += "<div id='" + rem_id + "' class='" + rem_class + "'>&nbsp;<a href='#' onclick='" + obj_name + ".remove_poi(" + pind + ");return false;' class='ui-state-default icon-button left-floated'><span class='ui-icon ui-icon-closethick'></span>" + this.display_strings.remove + "</a></div>";
-        //descs_inner += "<div id='" + voi_id + "' class='" + voi_class + "'>&nbsp;<a href='#' onclick='" + obj_name + ".remove_poi(" + pind + ");return false;' class='ui-state-default icon-button left-floated'><span class='ui-icon ui-icon-closethick'></span>" + this.display_strings.remove + "</a></div>";
-
-        //descs_inner += "</div>";
         descs_inner += "</div>";
         descs_inner += "</div>";
 
@@ -2578,6 +2574,11 @@ this.got_load_data = function (received_obj)
     }
 
     OpenLayers.HooksLocal.map_check_pois(this);
+
+    if (this.go_to_preview_page) {
+        this.go_to_preview_page = false;
+        window.map_show_preview(true);
+    }
 
 };
 
