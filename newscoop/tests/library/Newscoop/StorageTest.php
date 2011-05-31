@@ -22,6 +22,8 @@ class StorageTest extends \PHPUnit_Framework_TestCase
         $this->root = sys_get_temp_dir() . '/' . uniqid('phpunit_', TRUE);
         mkdir($this->root);
         $this->storage = new Storage($this->root);
+
+        $this->storage->createDir('dir');
     }
 
     public function tearDown()
@@ -29,186 +31,242 @@ class StorageTest extends \PHPUnit_Framework_TestCase
         exec("rm -r $this->root");
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
     public function testStorage()
     {
         $storage = new Storage('/');
         $this->assertInstanceOf('Newscoop\Storage', $storage);
+    }
 
+    /**
+     * @expectedException InvalidArgumentException abc
+     */
+    public function testStorageNotFound()
+    {
         new Storage('abc');
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testStorageNotDir()
+    {
+        $this->storage->storeItem('file', 'data');
+        new Storage("$this->root/file");
     }
 
     public function testStoreItem()
     {
         // test valid
-        $this->assertTrue($this->storage->storeItem('test', 'data'));
+        $this->assertEquals(4, $this->storage->storeItem('test', 'data'));
         $this->assertEquals('data', $this->storage->fetchItem('test'));
+    }
 
-        // test newdir/file
-        $this->assertTrue($this->storage->storeItem('testdir/first', 'data'));
-        $this->assertEquals('data', $this->storage->fetchItem('testdir/first'));
+    /**
+     * @expectedException InvalidArgumentException dir
+     */
+    public function testStoreItemInvalidDestIsDir()
+    {
+        $this->storage->storeItem('dir', 'data');
+    }
 
-        // test olddir/file
-        $this->assertTrue($this->storage->storeItem('testdir/second', 'data'));
-        $this->assertEquals('data', $this->storage->fetchItem('testdir/second'));
-
-        // test file/file
-        $this->assertFalse($this->storage->storeItem('test/test', 'data'));
-
-        // test outside
-        $this->assertFalse($this->storage->storeItem('../out', 'data'));
-
-        // test inside
-        $this->assertTrue($this->storage->storeItem('./in', 'data'));
-        $this->assertEquals('data', $this->storage->fetchItem('test'));
-
-        // test root
-        $this->assertFalse($this->storage->storeItem('.', 'data'));
-
-        // test without permissions
-        $storage = new Storage('/dev');
-        $this->assertFalse($storage->storeItem('sub/dir', 'data'));
+    /**
+     * @expectedException InvalidArgumentException notfound
+     */
+    public function testStoreItemDirNotFound()
+    {
+        $this->storage->storeItem('notfound/item', 'data');
     }
 
     public function testFetchItem()
     {
-        $this->assertFalse($this->storage->fetchItem('empty'));
-        $this->assertFalse($this->storage->fetchItem('.'));
-        $this->storage->storeItem('full', 'data');
-        $this->assertEquals('data', $this->storage->fetchItem('full'));
+        $this->assertNull($this->storage->fetchItem('not-found'));
+
+        $this->storage->storeItem('item', 'data');
+        $this->assertEquals('data', $this->storage->fetchItem('item'));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException invalid
+     */
+    public function testFetchItemException()
+    {
+        $this->storage->fetchItem('../invalid');
+    }
+
+    /**
+     * @expectedException InvalidArgumentException dir
+     */
+    public function testFetchItemDir()
+    {
+        $this->storage->fetchItem('dir');
     }
 
     public function testDeleteItem()
     {
-        // test invalid
-        $this->assertFalse($this->storage->deleteItem('empty'));
-        $this->assertFalse($this->storage->deleteItem('../test'));
-        $this->assertFalse($this->storage->deleteItem('.'));
+        $this->storage->storeItem('item', 'data');
+        $this->assertFileExists("$this->root/item");
+        $this->storage->deleteItem('item');
+        $this->assertFileNotExists("$this->root/item");
 
-        // test valid
-        $this->storage->storeItem('test', 'data');
-        $this->assertTrue($this->storage->deleteItem('test'));
-        $this->assertFalse($this->storage->fetchItem('test'));
+        $this->assertFileExists("$this->root/dir");
+        $this->storage->deleteItem('dir');
+        $this->assertFileNotExists("$this->root/dir");
+    }
 
-        // test dir
-        $this->storage->storeItem('test/first/file', 'data');
-        $this->storage->storeItem('test/second/file', 'data');
-        $this->assertTrue($this->storage->deleteItem('test'));
-        $this->assertFalse($this->storage->fetchItem('test/first/file'));
-        $this->assertFalse($this->storage->fetchItem('test/second/file'));
+    /**
+     * @expectedException InvalidArgumentException dir
+     */
+    public function testDeleteDirNotEmpty()
+    {
+        $this->storage->storeItem('dir/item', 'data');
+        $this->storage->deleteItem('dir');
+    }
+
+    /**
+     * @expectedException InvalidArgumentException notfound
+     */
+    public function testDeleteNotFound()
+    {
+        $this->storage->deleteItem('notfound');
+    }
+
+    /**
+     * @expectedException InvalidArgumentException notfound
+     */
+    public function testCopyItemNotFound()
+    {
+        $this->storage->copyItem('notfound', 'dest');
+    }
+
+    /**
+     * @expectedException InvalidArgumentException dir
+     */
+    public function testCopyItemDir()
+    {
+        $this->storage->copyItem('dir', 'dest');
+    }
+
+    /**
+     * @expectedException InvalidArgumentException item
+     */
+    public function testCopyItemConflict()
+    {
+        $this->storage->storeItem('item', 'data');
+        $this->storage->copyItem('item', 'item');
     }
 
     public function testCopyItem()
     {
-        // invalid to invalid
-        $this->assertFalse($this->storage->copyItem('from', 'to'));
+        $this->storage->storeItem('item', 'data');
+        $this->storage->copyItem('item', 'copy');
+        $this->assertEquals('data', $this->storage->fetchItem('copy'));
+        $this->assertEquals('data', $this->storage->fetchItem('item'));
+    }
 
-        // valid to valid
-        $this->storage->storeItem('from', 'data');
-        $this->assertTrue($this->storage->copyItem('from', 'to'));
-        $this->assertEquals('data', $this->storage->fetchItem('to'));
+    /**
+     * @expectedException InvalidArgumentException notfound
+     */
+    public function testMoveItemSrcNotFound()
+    {
+        $this->storage->moveItem('notfound', 'dest');
+    }
 
-        // valid to invalid
-        $this->assertFalse($this->storage->copyItem('to', '../'));
+    /**
+     * @expectedException InvalidArgumentException dir
+     */
+    public function testMoveItemSrcIsDir()
+    {
+        $this->storage->storeItem('dir/file', 'data');
+        $this->storage->moveItem('dir', 'dest');
+    }
 
-        // valid to subfolder
-        $this->assertTrue($this->storage->copyItem('to', 'test/subdir'));
+    /**
+     * @expectedException InvalidArgumentException notfound
+     */
+    public function testMoveItemDestNotFound()
+    {
+        $this->storage->storeItem('file', 'data');
+        $this->storage->moveItem('file', 'notfound');
+    }
 
-        // folder to valid
-        $this->assertFalse($this->storage->copyItem('test', 'folder'));
-
-        // valid to self
-        $this->assertTrue($this->storage->copyItem('to', 'to'));
-
-        // tree
-        $this->storage->storeItem('from', 'data');
-        $this->assertFalse($this->storage->copyItem('from', 'from/to'));
+    /**
+     * @expectedException InvalidArgumentException dir/file
+     */
+    public function testMoveItemConflict()
+    {
+        $this->storage->storeItem('dir/file', 'data');
+        $this->storage->moveItem('dir/file', 'dir');
     }
 
     public function testMoveItem()
     {
-        // invalid from
-        $this->assertFalse($this->storage->moveItem('from', 'to'));
+        $this->storage->storeItem('src.tpl', 'srcdata');
+        $this->storage->storeItem('dir/placeholder.tpl', 'src.tpl');
+        $this->storage->moveItem('src.tpl', 'dir');
 
+        $this->assertEquals('srcdata', $this->storage->fetchItem('dir/src.tpl'));
+
+        // test replace
+        $this->assertEquals('dir/src.tpl', $this->storage->fetchItem('dir/placeholder.tpl'));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException notfound
+     */
+    public function testRenameItemNotFound()
+    {
+        $this->storage->renameItem('notfound', 'new');
+    }
+
+    /**
+     * @expectedException InvalidArgumentException dir
+     */
+    public function testRenameItemDir()
+    {
+        $this->storage->renameItem('dir', 'newdir');
+    }
+
+    /**
+     * @expectedException InvalidArgumentException item
+     */
+    public function testRenameItemConflict()
+    {
         $this->storage->storeItem('item', 'data');
-
-        // invalid to
-        $this->assertFalse($this->storage->moveItem('item', '../'));
-
-        // file to file
-        $this->assertTrue($this->storage->moveItem('item', 'file'));
-        $this->assertTrue($this->storage->moveItem('file', 'dir/file'));
-        $this->assertTrue($this->storage->moveItem('dir/file', 'item'));
-
-        // file to folder
-        $this->assertTrue($this->storage->moveItem('item', 'dir'));
-        $this->assertTrue($this->storage->moveItem('dir/item', ''));
-        $this->assertEquals('data', $this->storage->fetchItem('item'));
-
-        // dir to dir
-        $this->storage->storeItem('dir2/placeholder', 'data');
-        $this->assertTrue($this->storage->moveItem('dir', 'newdir'));
-        $this->assertTrue($this->storage->moveItem('newdir', 'dir2'));
-
-        // dir to file
-        $this->assertFalse($this->storage->moveItem('dir2', 'item'));
-
-        // valid to self
-        $this->assertTrue($this->storage->moveItem('item', 'item'));
-
-        $this->storage->storeItem('from', 'data');
-
-        // invalid tree (file/...)
-        $this->assertFalse($this->storage->moveItem('from', 'from/to'));
+        $this->storage->renameItem('item', 'item');
     }
 
     public function testRenameItem()
     {
-        // invalid from
-        $this->assertFalse($this->storage->renameItem('invalid', ''));
-
         $this->storage->storeItem('item', 'data');
-
-        // invalid to
-        $this->assertFalse($this->storage->renameItem('item', ''));
-        $this->assertFalse($this->storage->renameItem('item', '../'));
-
-        // file to dir
-        $this->assertFalse($this->storage->renameItem('item', 'dir/item'));
-
-        // file to file
-        $this->assertTrue($this->storage->renameItem('item', 'newitem'));
-        $this->assertEquals('data', $this->storage->fetchItem('newitem'));
-
-        $this->storage->storeItem('dir/item', 'data');
-
-        // dir to dir
-        $this->assertTrue($this->storage->renameItem('dir', 'newdir'));
-        $this->assertEquals('data', $this->storage->fetchItem('newdir/item'));
-
-        $this->storage->storeItem('dir/item', 'data');
-        $this->assertFalse($this->storage->renameItem('newdir', 'dir'));
-
-        // dir to file
-        $this->assertFalse($this->storage->moveItem('newdir', 'newitem'));
+        $this->storage->renameItem('item', 'renamed');
+        $this->assertEquals('data', $this->storage->fetchItem('renamed'));
     }
 
     public function testListItems()
     {
         // test empty
+        $this->assertEmpty($this->storage->listItems('dir'));
+
         $items = $this->storage->listItems('');
-        $this->assertEmpty($items);
-
-        $this->storage->storeItem('dir/file', 'data');
-        $this->assertEquals(array(), $this->storage->listItems('dir/file'));
-
-        $items = $this->storage->listItems('dir');
         $this->assertEquals(1, sizeof($items));
-        $item = current($items);
-        $this->assertInstanceOf('Newscoop\Storage\Item', current($items));
-        $this->assertEquals('dir/file', current($items)->getKey());
+        $this->assertEquals('dir', current($items));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException item
+     */
+    public function testListItemsNotDir()
+    {
+        $this->storage->storeItem('item', 'data');
+        $this->storage->listItems('item');
+    }
+
+    /**
+     * @expectedException InvalidArgumentException notfound
+     */
+    public function testListItemsNotFound()
+    {
+        $this->storage->listItems('notfound');
     }
 
     public function testIsDir()
@@ -266,6 +324,26 @@ class StorageTest extends \PHPUnit_Framework_TestCase
     {
         $this->storage->createFile('newfile');
         $this->storage->createFile('newfile');
+    }
+
+    /**
+     * @expectedExceptio InvalidArgumentException
+     */
+    public function testGetItemException()
+    {
+        $this->storage->getItem('key');
+    }
+
+    public function testGetItem()
+    {
+        $item = $this->storage->getItem('dir');
+        $this->assertInstanceOf('Newscoop\Storage\Item', $item);
+    }
+
+    public function testGetMimeType()
+    {
+        $mime = $this->storage->getMimeType('dir');
+        $this->assertEquals('directory', $mime);
     }
 
     public function testIsUsed()

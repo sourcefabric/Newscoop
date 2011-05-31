@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Collections\ArrayCollection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Issue entity
@@ -64,9 +64,11 @@ class Issue extends Entity
     private $articleTemplate;
 
     /**
+     * @param int $number
      */
-    public function __construct()
+    public function __construct($number)
     {
+        $this->number = (int) $number;
         $this->sections = new ArrayCollection;
     }
 
@@ -88,6 +90,42 @@ class Issue extends Entity
     public function getSections()
     {
         return $this->sections;
+    }
+
+    /**
+     * Set template
+     *
+     * @param Newscoop\Entity\Template $template
+     * @return Newscoop\Entity\Issue
+     */
+    public function setTemplate(Template $template)
+    {
+        $this->template = $template;
+        return $this;
+    }
+
+    /**
+     * Set section template
+     *
+     * @param Newscoop\Entity\Template $template
+     * @return Newscoop\Entity\Issue
+     */
+    public function setSectionTemplate(Template $template)
+    {
+        $this->sectionTemplate = $template;
+        return $this;
+    }
+
+    /**
+     * Set article template
+     *
+     * @param Newscoop\Entity\Template $template
+     * @return Newscoop\Entity\Issue
+     */
+    public function setArticleTemplate(Template $template)
+    {
+        $this->articleTemplate = $template;
+        return $this;
     }
 }
 

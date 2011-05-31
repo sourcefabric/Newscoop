@@ -16,16 +16,14 @@ use Doctrine\ORM\EntityRepository,
 class TemplateRepository extends EntityRepository
 {
     /**
-     * Get template entity for given file
+     * Get template for given key
      *
      * @param string $key
-     * @param SplFileInfo $fileInfo
-     * @param bool $autopersist
      * @return Newscoop\Entity\Template
      */
     public function getTemplate($key)
     {
-        $key = ltrim($key, '/');
+        $key = trim($key, '/');
 
         $template = $this->findOneBy(array(
             'key' => $key,
@@ -33,11 +31,10 @@ class TemplateRepository extends EntityRepository
 
         if (empty($template)) {
             $template = new Template($key);
+            $em = $this->getEntityManager();
+            $em->persist($template);
+            $em->flush();
         }
-
-        $em = $this->getEntityManager();
-        $em->persist($template);
-        $em->flush();
 
         return $template;
     }
@@ -108,14 +105,22 @@ class TemplateRepository extends EntityRepository
     }
 
     /**
-     * Test template is used
+     * Test is used
      *
-     * @param Newscoop\Entity\Template $template
+     * @param string $key
      * @return bool
      */
-    public function isUsed(Template $template)
+    public function isUsed($key)
     {
         $em = $this->getEntityManager();
+
+        $template = $this->findOneBy(array(
+            'key' => $key,
+        ));
+
+        if (!$template) {
+            return false;
+        }
 
         $dql = "SELECT COUNT(i.number)
                 FROM Newscoop\Entity\Issue i

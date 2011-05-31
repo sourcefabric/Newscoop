@@ -33,16 +33,13 @@ class TemplateRepositoryTest extends \RepositoryTestCase
 
     public function testGetTemplate()
     {
-        $templates = $this->repository->findAll();
-        $this->assertTrue(empty($templates));
+        $this->assertEmpty($this->repository->findAll());
 
-        $template = $this->repository->getTemplate("new");
+        $template = $this->repository->getTemplate('key');
         $this->assertGreaterThan(0, $template->getId());
+        $this->assertEquals(1, sizeof($this->repository->findAll()));
 
-        $templates = $this->repository->findAll();
-        $this->assertFalse(empty($templates));
-
-        $copy = $this->repository->getTemplate("new");
+        $copy = $this->repository->getTemplate('key');
         $this->assertEquals($template->getId(), $copy->getId());
     }
 

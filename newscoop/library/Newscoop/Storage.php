@@ -14,44 +14,57 @@ use Newscoop\Storage\Item;
  */
 class Storage
 {
-    const MODE = 0700; // mode for created directories
+    // mode for created directories
+    const MODE = 0700;
+
+    // error codes
+    const ERROR_NOT_FOUND = 1;
+    const ERROR_NOT_DIR = 2;
+    const ERROR_NOT_FILE = 3;
+    const ERROR_NOT_EMPTY = 4;
+    const ERROR_CONFLICT = 5;
+    const ERROR_KEY_INVALID = 6;
 
     /** @var string */
-    private $root;
-
+    private $root; 
     /**
      * @param string $root
      */
     public function __construct($root)
     {
         $this->root = realpath($root);
+
         if (!$this->root) {
-            throw new \InvalidArgumentException("'$root' not found"); }
+            throw new \InvalidArgumentException($root, self::ERROR_NOT_FOUND);
+        }
+
+        if (!is_dir($this->root)) {
+            throw new \InvalidArgumentException($root, self::ERROR_NOT_DIR);
+        }
     }
 
     /**
      * Store item
      *
-     * @param string $key
+     * @param string $dest
      * @param string $data
-     * @return bool
+     * @return int
+     * @throws InvalidArgumentException
      */
-    public function storeItem($key, $data)
+    public function storeItem($dest, $data)
     {
-        $path = $this->getPath($key);
-        if (!$path) {
-            return FALSE;
+        $path = $this->getPath($dest);
+        $realpath = realpath($path);
+        if ($realpath && !is_file($realpath)) {
+            throw new \InvalidArgumentException($dest, self::ERROR_NOT_FILE);
         }
 
-        if (!$this->buildTree($path)) {
-            return FALSE;
+        $dir = dirname($path);
+        if (!is_dir($dir)) {
+            throw new \InvalidArgumentException(dirname($dest), self::ERROR_NOT_DIR);
         }
 
-        if (is_dir($path)) {
-            return FALSE;
-        }
-
-        return (bool) file_put_contents($path, $data);
+        return file_put_contents($path, $data);
     }
 
     /**
@@ -64,11 +77,11 @@ class Storage
     {
         $path = $this->getPath($key, TRUE);
         if (!$path) {
-            return FALSE;
+            return null;
         }
 
         if (is_dir($path)) {
-            return FALSE;
+            throw new \InvalidArgumentException($key, self::ERROR_NOT_FILE);
         }
 
         return file_get_contents($path);
@@ -78,134 +91,110 @@ class Storage
      * Delete item
      *
      * @param string $key
-     * @return bool
+     * @return void
+     * @throws InvalidArgumentException
      */
     public function deleteItem($key)
     {
         $path = $this->getPath($key, TRUE);
         if (!$path) {
-            return FALSE;
-        }
-
-        if ($path == $this->root) {
-            return FALSE;
+            throw new \InvalidArgumentException($key, self::ERROR_NOT_FOUND);
         }
 
         if (is_dir($path)) {
             foreach ($this->listItems($key) as $item) {
-                $this->deleteItem($item->getKey());
+                throw new \InvalidArgumentException($key, self::ERROR_NOT_EMPTY);
             }
 
             rmdir($path);
         } else {
             unlink($path);
         }
-
-        return TRUE;
     }
 
     /**
      * Copy item
      *
-     * @param string $from
-     * @param string $to
+     * @param string $src
+     * @param string $dest
      * @return bool
      */
-    public function copyItem($from, $to)
+    public function copyItem($src, $dest)
     {
-        $fromPath = $this->getPath($from, TRUE);
-        if (!$fromPath) {
-            return FALSE;
+        $srcPath = $this->getPath($src, TRUE);
+        if (!$srcPath) {
+            throw new \InvalidArgumentException($src, self::ERROR_NOT_FOUND);
         }
 
-        if (is_dir($fromPath)) {
-            return FALSE;
+        if (is_dir($srcPath)) {
+            throw new \InvalidArgumentException($src, self::ERROR_NOT_FILE);
         }
 
-        $toPath = $this->getPath($to);
-        if (!$toPath) {
-            return FALSE;
+        $dir = dirname($srcPath);
+        $destPath = "$dir/" . basename($dest);
+        if (realpath($destPath)) {
+            throw new \InvalidArgumentException($dest, self::ERROR_CONFLICT);
         }
 
-        $realpath = realpath($toPath);
-        if ($realpath && $fromPath == $realpath) { // copy to self
-            return TRUE;
-        }
-
-        if (!$this->buildTree($toPath)) {
-            return FALSE;
-        }
-
-        return copy($fromPath, $toPath);
+        return copy($srcPath, $destPath);
     }
 
     /**
      * Move item
      *
-     * @param string $from
-     * @param string $to
-     * @return bool
+     * @param string $src
+     * @param string $dest
+     * @return void
+     * @throws InvalidArgumentException
      */
-    public function moveItem($from, $to)
+    public function moveItem($src, $dest)
     {
-        $fromPath = $this->getPath($from, TRUE);
-        if (!$fromPath) {
-            return FALSE;
+        $srcPath = $this->getPath($src, TRUE);
+        if (!$srcPath || !is_file($srcPath)) { // src not found or !file
+            throw new \InvalidArgumentException($src);
         }
 
-        $toPath = $this->getPath($to);
-        if (!$toPath) {
-            return FALSE;
+        $destPath = $this->getPath($dest, TRUE);
+        if (!$destPath || !is_dir($destPath)) { // dest not found or !dir
+            throw new \InvalidArgumentException($dest);
         }
 
-        if (!$this->buildTree($toPath)) {
-            return FALSE;
+        $name = basename($srcPath);
+        $destName = "$destPath/$name";
+        if (realpath($destName)) { // dest/name exists
+            throw new \InvalidArgumentException("$dest/$name");
         }
 
-        $realpath = realpath($toPath);
-        if (is_dir($realpath)) { // move into dir
-            $toPath .= '/' . basename($fromPath);
-        } elseif ($realpath && is_dir($fromPath)) { // folder to file
-            return FALSE;
-        }
-
-        return rename($fromPath, $toPath);
+        rename($srcPath, $destName);
+        $this->replace($src, "$dest/$name");
     }
 
     /**
      * Rename item
      *
-     * @param string $form
-     * @param string $to
-     * @return bool
+     * @param string $src
+     * @param string $dest
+     * @return void
+     * @throws InvalidArgumentException
      */
-    public function renameItem($from, $to)
+    public function renameItem($src, $dest)
     {
-        $fromPath = $this->getPath($from, TRUE);
-        if (!$fromPath) {
-            return FALSE;
+        $srcPath = $this->getPath($src, TRUE);
+        if (!$srcPath) {
+            throw new \InvalidArgumentException($src, self::ERROR_NOT_FOUND);
         }
 
-        $toPath = $this->getPath($to);
-        if (!$toPath) {
-            return FALSE;
+        if (!is_file($srcPath)) {
+            throw new \InvalidArgumentException($src, self::ERROR_NOT_FILE);
         }
 
-        $realpath = realpath($toPath);
-
-        if (!is_dir($fromPath) && is_dir($toPath)) { // file to dir
-            return FALSE;
+        $dir = dirname($srcPath);
+        $destPath = "$dir/" . basename($dest);
+        if (realpath($destPath)) {
+            throw new \InvalidArgumentException($dest, self::ERROR_CONFLICT);
         }
 
-        if (is_dir($fromPath) && $realpath) { // dir to dir
-            return FALSE;
-        }
-
-        if (!realpath(dirname($toPath))) {
-            return FALSE;
-        }
-
-        return rename($fromPath, $toPath);
+        rename($srcPath, $destPath);
     }
 
     /**
@@ -217,14 +206,17 @@ class Storage
     public function listItems($key)
     {
         $path = $this->getPath($key, TRUE);
-        if (!$path || !is_dir($path)) {
-            return array();
+        if (!$path) {
+            throw new \InvalidArgumentException($key, self::ERROR_NOT_FOUND);
+        }
+
+        if (!is_dir($path)) {
+            throw new \InvalidArgumentException($key, self::ERROR_NOT_DIR);
         }
 
         $items = array();
         foreach (glob("$path/*") as $file) {
-            $key = trim(str_replace($this->root, '', $file), '/');
-            $items[] = new Item($key, $this);
+            $items[] = basename($file);
         }
 
         return $items;
@@ -333,6 +325,30 @@ class Storage
     }
 
     /**
+     * Get storage item
+     *
+     * @param string $key
+     * @return Newscoop\StorageItem
+     */
+    public function getItem($key)
+    {
+        return new Item($key, $this);
+    }
+
+    /**
+     * Get mime type
+     *
+     * @param string $key
+     * @return string
+     */
+    public function getMimeType($key)
+    {
+        $realpath = realpath("$this->root/$key");
+        $finfo = new \finfo(FILEINFO_MIME);
+        return $finfo->file($realpath);
+    }
+
+    /**
      * Get path
      *
      * @param string $key
@@ -342,7 +358,7 @@ class Storage
     private function getPath($key, $isRealpath = FALSE)
     {
         if (preg_match('#\.\.(/|$)#', $key)) {
-            return FALSE;
+            throw new \InvalidArgumentException($key, self::ERROR_KEY_INVALID);
         }
 
         $rootpath = "$this->root/$key";
@@ -361,22 +377,33 @@ class Storage
     }
 
     /**
-     * Build tree for path
+     * Replace key in storage
      *
-     * @param string $path
-     * @return bool
+     * @param string $old
+     * @param string $new
+     * @param object $replaceEngine
+     * @return void
      */
-    private function buildTree($path)
+    private function replace($old, $new, $replaceEngine = null)
     {
-        $dirname = dirname($path);
-        if (!file_exists($dirname)) {
-            if (!is_writable($this->root) || !mkdir($dirname, self::MODE, TRUE)) {
-                return FALSE;
-            }
-        } elseif (!is_dir($dirname)) {
-            return FALSE;
+        if (!isset($replaceEngine)) {
+		    $replaceEngine = new \FileTextSearch();
         }
 
-        return TRUE;
+		$replaceEngine->setExtensions(array('tpl', 'css'));
+		$replaceEngine->setSearchKey($old);
+		$replaceEngine->setReplacementKey($new);
+		$replaceEngine->findReplace($this->root);
+
+		$tpl1_name = $old;
+		$tpl2_name = $new;
+		if (pathinfo($old, PATHINFO_EXTENSION) == 'tpl') {
+			$tpl1_name = ' ' . $old;
+			$tpl2_name = ' ' . $new;
+		}
+
+		$replaceEngine->setSearchKey($tpl1_name);
+		$replaceEngine->setReplacementKey($tpl2_name);
+		$replaceEngine->findReplace($this->root);
     }
 }
