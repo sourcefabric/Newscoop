@@ -1893,10 +1893,11 @@ ul#edit-files h2 {
 				float:left;
 				width:320px;
 				font-weight:bold; line-height:25px;
+				color: #444444	
 				}
 		.templateSettings dl dd {
 			float:left;
-			width:434px;
+			width:400px;
 			margin-bottom:12px;
 			}
 			.templateSettings dl dd select {
@@ -2035,7 +2036,6 @@ ul#edit-files h2 {
 					border:1px solid #9d9d9d;
 					}
 					.actionDropDown li ul li {
-						height:25px;
 						border-bottom:1px solid #e5e5e5;
 						}
 					.actionDropDown li ul li a, .actionDropDown li ul li a.active {

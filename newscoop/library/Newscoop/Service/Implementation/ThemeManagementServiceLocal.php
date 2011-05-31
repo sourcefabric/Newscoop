@@ -130,11 +130,13 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 		$resources = array();
 		$folder = $this->toFullPath($theme);
 		if (is_dir($folder)) {
-			if($dh = opendir($folder)){
+			if( $dh = opendir($folder) ) {
+			    $k = 0;
 				while (($file = readdir($dh)) !== false) {
 					if ($file != "." && $file != ".."){
 						if(pathinfo($file, PATHINFO_EXTENSION) === self::FILE_TEMPLATE_EXTENSION){
 							$rsc = new Resource();
+							$rsc->setId( $theme->getId() + $k++ );
 							$rsc->setName($file);
 							$rsc->setPath($theme->getPath().$file);
 							$resources[] = $rsc;
@@ -160,10 +162,9 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 				/* @var $node \SimpleXMLElement */
 				try{
 					$outputName = $this->readAttribute($node, self::ATTR_OUTPUT_NAME);
-					if($output->getName() == $outputName){
+					if($output->getName() == $outputName) {
 						$oset = $this->loadOutputSetting($node, $theme->getPath());
 						$oset->setOutput($output);
-
 						return $oset;
 					}
 				}catch(FailedException $e){

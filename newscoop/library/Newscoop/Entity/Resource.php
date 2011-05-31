@@ -96,6 +96,14 @@ class Resource extends Entity
 		$this->path = $path;
 		return $this;
 	}
+	
+	/**
+	 * @param string $path Should be id..
+	 */
+	public function __construct( $path = null )
+	{
+	    if( !is_null( $path ) ) $this->setPath( $path );
+	} 
 
 	/* --------------------------------------------------------------- */
 

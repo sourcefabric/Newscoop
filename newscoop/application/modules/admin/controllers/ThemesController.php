@@ -4,6 +4,7 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+use Newscoop\Entity\Resource;
 use Newscoop\Controller\Action\Helper\Datatable\Adapter\Theme,
     Newscoop\Controller\Action\Helper\Datatable\Adapter\ThemeFiles,
     Newscoop\Service\IPublicationService,
@@ -14,7 +15,8 @@ use Newscoop\Controller\Action\Helper\Datatable\Adapter\Theme,
     Newscoop\Service\PublicationServiceDoctrine,
     Newscoop\Entity\Theme\Loader\LocalLoader,
     Newscoop\Service\IOutputService,
-    Newscoop\Service\Exception\DuplicateNameException
+    Newscoop\Service\Exception\DuplicateNameException,
+    Newscoop\Entity\Output
     ;
 
 /**
@@ -70,9 +72,8 @@ class Admin_ThemesController extends Zend_Controller_Action
 
     /**
      * Provides the theme service.
-     *
+     * 
      * @return Newscoop\Service\IThemeManagementService
-     * The theme service to be used by this controller.
      */
     public function getThemeService()
     {
@@ -129,16 +130,47 @@ class Admin_ThemesController extends Zend_Controller_Action
     {
         $this->getThemeService();
         $this->view->placeholder( 'title' )->set( getGS( 'Theme management' ) );
+        
+        // TODO move this + callbacks from here to a higher level
+        if( !$this->_helper->contextSwitch->hasContext( 'adv' ) ) 
+        {
+            $this->_helper->contextSwitch->addContext( 'adv', array
+            ( 
+            	'suffix' => 'adv',
+                'callbacks' => array
+                ( 
+                	'init' => array( $this, 'initAdvContext' ),
+                	'post' => array( $this, 'postAdvContext' )
+                ) 
+            ) );
+        }
+    
         $this->_helper->contextSwitch
             ->addActionContext( 'index', 'json' )
             ->addActionContext( 'assign-to-publication', 'json' )
+            ->addActionContext( 'output-edit', 'json' )
+            ->addActionContext( 'wizard-theme-settings', 'adv' )
+            ->addActionContext( 'wizard-theme-template-settings', 'adv' )
+            ->addActionContext( 'wizard-theme-article-types', 'adv' )
+            ->addActionContext( 'wizard-theme-theme-files', 'adv' )
             ->initContext();
     }
     
+    public function initAdvContext()
+    {
+        $this->_helper->layout()->enableLayout();
+    }
+    
+    public function postAdvContext()
+    {
+        
+    }
 
     public function indexAction()
     {
         $datatableAdapter = new Theme( $this->getThemeService() );
+        // really wierd way to bind some filtering logic right here
+        // basically this is the column index we are going to look for filtering requests
         $datatableAdapter->setPublicationFilterColumn(4);
         
         $datatable = $this->_helper->genericDatatable;
@@ -173,26 +205,30 @@ class Admin_ThemesController extends Zend_Controller_Action
             ->setWidths( array( 'checkbox' => 20, 'image' => 215, 'name' => 235, 'description' => 280, 'actions' => 115 ) )
             ->setRowHandler
             ( 
-                function( $theme, $index = null ) use ($view)
+                function( $theme, $index = null )
                 {
-                    $id = json_encode( array( "id" => $theme['id'] ) );
-                    $processed[] = $id; 
-                    
-                    /*$imgArr = array();
-                    if( @is_array( $theme['images'] ) ) {
-                        foreach( $theme['images'] as $img ) {
-                            $imgArr[] = " { image : " . json_encode( $img ) . " } ";
-                        }
-                    }
-                    $processed[] = " [ " . implode( ",", $imgArr ) . " ] ";*/
-                    
-                    $processed[] = json_encode( array( 'images' => $theme['images'] ) );
-                    $processed[] = json_encode( array( 'title' => $theme['title'], 'designer' => $theme['designer'], 'version' => $theme['version'] ) );
-                    $processed[] = json_encode( array( 'compat' => $theme['subTitle'], 'text' => $theme['description'] ) );
-                    $processed[] = $id; 
-                    return $processed;
+                    return array
+                    ( 
+                    	"id"       => $theme['id'], 
+                    	"images"   => $theme['images'],
+                        "title"    => $theme['title'], 
+                        "designer" => $theme['designer'], 
+                        "version"  => $theme['version'],
+                    	"compat"   => $theme['subTitle'],
+                    	"text"     => $theme['description']   
+                    );
                 } 
             )
+            /*
+            ->setDataMap( array
+            (
+                "checkbox"     => null,
+            	'image'        => null,
+                'name'         => null,
+                'description'  => null,
+                'actions'      => null,
+            ))
+            */
             ->setParams( $this->_request->getParams() );
             
         if( ( $this->view->mytable = $datatable->dispatch() ) )
@@ -210,7 +246,64 @@ class Admin_ThemesController extends Zend_Controller_Action
         }
     }
     
-    function editAction()
+    public function wizardThemeSettingsAction()
+    {
+        $theme = $this->getThemeService()->findById( $this->_request->getParam( 'id' ) );
+        // setup the theme settings form
+        $themeForm = new Admin_Form_Theme();
+        $themeForm->populate( array
+        ( 
+        	"theme-version"    => (string) $theme->getVersion(),
+        	"required-version" => (string) $theme->getMinorNewscoopVersion() 
+        ) );
+        $this->view->themeForm = $themeForm;
+    } 
+    
+    public function wizardThemeTemplateSettingsAction()
+    {
+        $themeId = $this->_request->getParam( 'id' );
+        $thmServ = $this->getThemeService();
+        $theme   = $thmServ->findById( $themeId );
+        $outServ = $this->getOutputService();
+        foreach( ( $outputs = $outServ->getEntities() ) as $k => $output )
+            $outSets[] = $thmServ->findOutputSetting( $theme, $output );
+            
+        $this->view->jQueryUtils()
+            ->registerVar
+            ( 
+                'load-output-settings-url', 
+                $this->_helper->url->url( array
+                ( 
+                	'action' => 'output-edit', 
+                	'controller' => 'themes',
+                    'module' => 'admin', 
+                    'themeid' => '$1', 
+                    'outputid' => '$2'  
+                ), null, true, false ) 
+            );
+        $this->view->theme          = $theme->toObject();
+        $this->view->outputs        = $outputs;
+        $this->view->outputSettings = $outSets;
+    }
+
+    public function wizardThemeArticleTypesAction()
+    {
+        $themeId = $this->_request->getParam( 'id' );
+        
+    }
+
+    public function wizardThemeFilesAction()
+    {
+        $themeId = $this->_request->getParam( 'id' );
+        
+    } 
+    
+    public function advancedThemeSettingsAction()
+    {
+        $this->view->themeId = $this->_request->getParam( 'id' );
+    }
+    
+    public function editAction()
     {
         $themeId = $this->_request->getParam( 'id' );
         $thmServ = $this->getThemeService();
@@ -235,19 +328,107 @@ class Admin_ThemesController extends Zend_Controller_Action
             'rel'	=> 'stylesheet'
         ) );
         
+        $this->view->jQueryUtils()
+            ->registerVar
+            ( 
+                'load-output-settings-url', 
+                $this->_helper->url->url( array
+                ( 
+                	'action' => 'output-edit', 
+                	'controller' => 'themes',
+                    'module' => 'admin', 
+                    'themeid' => '$1', 
+                    'outputid' => '$2'  
+                ), null, true, false ) 
+            );
         $this->view->themeForm      = $themeForm;
         $this->view->theme          = $theme->toObject();
         $this->view->outputs        = $outputs;
         $this->view->outputSettings = $outSets;
     }
     
-    function filesAction()
+    public function outputEditAction()
     {
-        $datatable = $this->_helper->genericDatatable; 
+        $thmServ    = $this->getThemeService();
+        
+        // getting the theme entity
+        $themeId    = $this->_request->getParam( 'themeid' );        
+        $theme      = $thmServ->findById( $themeId );
+        
+        // getting selected output 
+        $outputId   = $this->_request->getParam( 'outputid' );
+        $output     = $this->getOutputService()->getById( $outputId );
+        /* @var $settings Newscoop\Entity\Output */
+        
+        // getting all available templates
+        foreach( $thmServ->getTemplates( $theme ) as $tpl )
+        /* @var $tpl Newscoop\Entity\Resource */
+            $templates[ $tpl->getId() ] = $tpl->getName();
+            
+        // making the form 
+        $outputForm = new Admin_Form_Theme_OutputSettings();
+        $outputForm->setAction( $this->_helper->url( 'output-edit' ) );
+         
+        // getting theme's output settings
+        $settings   = $thmServ->findOutputSetting( $theme, $output );
+        /* @var $settings Newscoop\Entity\OutputSettings */
+        
+        $settingVals = array
+        ( 
+        	"frontpage"   => $settings->getFrontPage(),
+        	"articlepage" => $settings->getArticlePage(),
+        	"sectionpage" => $settings->getSectionPage(),
+        	"errorpage"   => $settings->getErrorPage(),
+            "outputid"	  => $outputId,
+            "themeid"	  => $themeId
+        );
+        $outputForm->setValues( $templates, $settingVals );
+        
+        try // @todo maybe implement this a little smarter, little less code?  
+        {
+            if( $this->_request->isPost() ) {
+                if( $outputForm->isValid( $this->_request->getPost() ) )
+                {
+                    $settings->setFrontPage( new Resource( $outputForm->getValue( 'frontpage' ) ) );
+                    $settings->setSectionPage( new Resource( $outputForm->getValue( 'sectionpage' ) ) );
+                    $settings->setArticlePage( new Resource( $outputForm->getValue( 'articlepage' ) ) );
+                    $settings->setErrorPage( new Resource( $outputForm->getValue( 'errorpage' ) ) );
+                    
+                    var_dump( $outputId, $settings, $theme );
+                    
+                    $this->getThemeService()->assignOutputSetting( $settings, $theme );
+                    
+                    $this->_helper->flashMessenger( ( $this->view->success = getGS( 'Settings saved.' ) ) );
+                }
+                else
+                {
+                    throw new \Exception();
+                }
+            }
+        }
+        catch( \Exception $e )
+        {
+            $this->_helper->flashMessenger( ( $this->view->error = getGS( 'Saving settings failed.' ) ) );
+        }
+        $this->view->outputForm = $outputForm;
+        
+        // disabling layout for ajax and hide the submit button
+        if( $this->_request->isXmlHttpRequest() )
+        {
+            $this->_helper->layout->disableLayout();
+            $outputForm->getElement( 'submit' )
+                ->clearDecorators()
+                ->setAttrib( 'style', 'display:none' );
+        }
+    }
+    
+    public function filesAction()
+    {
+        /*$datatable = $this->_helper->genericDatatable; 
         $datatable->setAdapter
         ( 
             new ThemeFiles( $this->getThemeFileService(), $this->_request->getParam( 'id' ) ) 
-        )->setOutputObject( $this->view );
+        )->setOutputObject( $this->view );*/
     }
     
     function assignToPublicationAction()

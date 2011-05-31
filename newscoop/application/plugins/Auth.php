@@ -37,8 +37,7 @@ class Application_Plugin_Auth extends Zend_Controller_Plugin_Abstract
         if ($auth->hasIdentity()) 
         {
             $doctrine = $this->getResource('doctrine');
-            $user = $doctrine->getEntityManager()
-                ->find('Newscoop\Entity\User\Staff', $auth->getIdentity());
+            $user = $doctrine->getEntityManager()->find( 'Newscoop\Entity\User\Staff', $auth->getIdentity() );
 
             // set user for application
             $g_user = $user;

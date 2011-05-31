@@ -12,112 +12,105 @@
 				<div class="clear"></div>
 	
 	
-					<fieldset class="versionHolder">
+				<fieldset class="versionHolder">
+				
+					<?php echo $this->themeForm ?>
 					
-						<?php echo $this->themeForm ?>
-						
-                    </fieldset>
+                </fieldset>
 
 				<div class="themeSettingsTabs">
 					
-					<a href="#" class="addNewOutput">Add new output</a>
+					<a href="#" class="addNewOutput" style="display:none">Add new output</a>
 
-                    <ul class="themeSettingsTabsNav">
+                    <ul class="themeSettingsTabsNav" style="display:none">
                         <?php foreach( $this->outputs as $k => $out ) : ?>
-                    		<li><a href="#themeSettingsTab<?php echo $k+1 ?>"><?php echo $out->getName() ?></a></li>
+                    		<li>
+                    			<a theme-id="<?php echo $this->theme->id ?>"
+                    				output-id="<?php echo $out->getId() ?>" 
+                    				href="#themeSettingsTab<?php echo $k+1 ?>">
+                    			    <?php echo $out->getName() ?>
+                    			</a>
+                    		</li>
                         <?php endforeach; ?>
                     </ul>
 
-					<div id="themeSettingsTab1">
+					<div id="themeSettingsTab" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+						<fieldset class="templateSettings">
+							<legend>Template settings</legend>
+							<div class="form-container">Loading...</div>
+						</fieldset>
+					</div>
 
-						<fieldset class="templateSettings"><legend>Template settings</legend> <!-- dl class="zend_form">
-                                	<dt><label>Front page template:</label></dt>
-                                	<dd><select class="input_select">
-                                		<option>front.tpl</option>
-                                		<option>2</option>
-                                	</select></dd>
-                                	<dt><label>Section page template:</label></dt>
-                                	<dd><select class="input_select">
-                                		<option>section.tpl</option>
-                                		<option>2</option>
-                                	</select></dd>
-                                	<dt><label>Article page template:</label></dt>
-                                	<dd><select class="input_select">
-                                		<option>article.tpl</option>
-                                		<option>2</option>
-                                	</select></dd>
-                                </dl --></fieldset>
-
-
+					<div>
 						<fieldset><legend>Match article types</legend>
 
 							<div class="themeArticleType">
 
-<h4>Theme article types</h4>
-
-<span>News</span>
-<ul>
-	<li>Deck (single line, 100 characters)</li>
-	<li>Body (Multiline)</li>
-</ul>
-
-<span>Quotes</span>
-<ul>
-	<li>Deck (single line)</li>
-	<li>Body (multiline)</li>
-</ul>
-
-</div>
-
-<div class="matchWithExisting">
-
-<h4>Match with existing</h4>
-
-<ul>
-	<li>
-	<div><input type="checkbox"> <label>Do nothing</label></div>
-	<div><input type="checkbox"> <label>Create article type</label></div>
-	<select class="input_select">
-		<option>1</option>
-		<option>2</option>
-	</select></li>
-	<li class="withPadding">
-	<div><input type="checkbox"> <label>Do nothing</label></div>
-	<div><input type="checkbox"> <label>Create article type</label></div>
-	<select class="input_select">
-		<option>1</option>
-		<option>2</option>
-	</select></li>
-	<li class="withPadding">
-	<div><input type="checkbox"> <label>Do nothing</label></div>
-	<div><input type="checkbox"> <label>Create article type</label></div>
-	<select class="input_select">
-		<option>1</option>
-		<option>2</option>
-	</select></li>
-	<li>
-	<div><input type="checkbox"> <label>Do nothing</label></div>
-	<div><input type="checkbox"> <label>Create article type</label></div>
-	<select class="input_select">
-		<option>1</option>
-		<option>2</option>
-	</select></li>
-	<li class="withPadding">
-	<div><input type="checkbox"> <label>Do nothing</label></div>
-	<div><input type="checkbox"> <label>Create article type</label></div>
-	<select class="input_select">
-		<option>1</option>
-		<option>2</option>
-	</select></li>
-	<li class="withPadding">
-	<div><input type="checkbox"> <label>Do nothing</label></div>
-	<div><input type="checkbox"> <label>Create article type</label></div>
-	<select class="input_select">
-		<option>1</option>
-		<option>2</option>
-	</select></li>
-</ul>
-</div>
+                                <h4>Theme article types</h4>
+                                
+                                <span>News</span>
+                                <ul>
+                                	<li>Deck (single line, 100 characters)</li>
+                                	<li>Body (Multiline)</li>
+                                </ul>
+                                
+                                <span>Quotes</span>
+                                <ul>
+                                	<li>Deck (single line)</li>
+                                	<li>Body (multiline)</li>
+                                </ul>
+                                
+                           </div>
+                                
+                                <div class="matchWithExisting">
+                                
+                                <h4>Match with existing</h4>
+                                
+                                <ul>
+                                	<li>
+                                	<div><input type="checkbox"> <label>Do nothing</label></div>
+                                	<div><input type="checkbox"> <label>Create article type</label></div>
+                                	<select class="input_select">
+                                		<option>1</option>
+                                		<option>2</option>
+                                	</select></li>
+                                	<li class="withPadding">
+                                	<div><input type="checkbox"> <label>Do nothing</label></div>
+                                	<div><input type="checkbox"> <label>Create article type</label></div>
+                                	<select class="input_select">
+                                		<option>1</option>
+                                		<option>2</option>
+                                	</select></li>
+                                	<li class="withPadding">
+                                	<div><input type="checkbox"> <label>Do nothing</label></div>
+                                	<div><input type="checkbox"> <label>Create article type</label></div>
+                                	<select class="input_select">
+                                		<option>1</option>
+                                		<option>2</option>
+                                	</select></li>
+                                	<li>
+                                	<div><input type="checkbox"> <label>Do nothing</label></div>
+                                	<div><input type="checkbox"> <label>Create article type</label></div>
+                                	<select class="input_select">
+                                		<option>1</option>
+                                		<option>2</option>
+                                	</select></li>
+                                	<li class="withPadding">
+                                	<div><input type="checkbox"> <label>Do nothing</label></div>
+                                	<div><input type="checkbox"> <label>Create article type</label></div>
+                                	<select class="input_select">
+                                		<option>1</option>
+                                		<option>2</option>
+                                	</select></li>
+                                	<li class="withPadding">
+                                	<div><input type="checkbox"> <label>Do nothing</label></div>
+                                	<div><input type="checkbox"> <label>Create article type</label></div>
+                                	<select class="input_select">
+                                		<option>1</option>
+                                		<option>2</option>
+                                	</select></li>
+                                </ul>
+                                </div>
 </fieldset>
 <input type="submit" name="submit" class="button themeSettingsBtn"
 	value="Save All"></div>
@@ -326,81 +319,4 @@
 </div>
 
 
-<script type="text/javascript">    
-$(function()
-{
 
-	// Tabs
-	$('.tabs, .themeSettingsTabs').tabs();
-	$('.tabs').tabs('select', '#tabs-1');
-    // BUTTONS
-    $('.fg-button').hover
-   	(
-    	function(){ $(this).removeClass('ui-state-default').addClass('ui-state-focus'); },
-    	function(){ $(this).removeClass('ui-state-focus').addClass('ui-state-default'); }
-	);
-	$('.icon-button').hover
-	(
-		function() { $(this).addClass('ui-state-hover'); }, 
-		function() { $(this).removeClass('ui-state-hover'); }
-	);
-	$('.text-button').hover
-	(
-		function() { $(this).addClass('ui-state-hover'); }, 
-		function() { $(this).removeClass('ui-state-hover'); }
-	);
-	$(".actionDropDown li").hover(function()
-	{
-		$(this).children("ul").css("display","block");
-		$(this).children("a").addClass("active");
-	}, function() 
-	{
-		$(this).children("ul").css("display","none");
-		$(this).children("a").removeClass("active");
-	});
-	$(".actionDropDown li ul li").hover(function()
-	{
-		$(this).children("ul").css("display","block");
-	}, function() 
-	{
-		$(this).childer("ul").css("display","none");
-	});
-		
-	$('.matchWithExisting ul li div input').click(function()
-	{
-		if (this.checked) 
-		{
-			$(this).parent().parent().find("div").removeClass('active');
-			$(this).parent().addClass('active');
-			$(this).parent().parent().find("select").attr('disabled', 'disabled');
-			$(this).parent().parent().find("div input").attr('checked', false);
-			$(this).attr('checked', true);
-		} 
-		else 
-		{
-			$(this).parent().removeClass('active');
-			$(this).parent().parent().find("select").removeAttr('disabled');
-		}
-	}) 
-});
-</script>
-
-<script type="text/javascript">
-$(document).ready(function()
-{
-	$('.toggle-button').click(function() 
-	{
-		$('.closeable').toggle('fast');
-		$(this).toggleClass("closed");
-		return false;
-	}).next().hide();
-	$('.toggle-link').click(function() 
-	{
-		$('.more-options').toggle('fast');
-		$(this).toggleClass("opened");
-		return false;
-	}).next().hide();
-});
-
-
-</script>

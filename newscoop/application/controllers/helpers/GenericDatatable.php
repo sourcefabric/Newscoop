@@ -26,6 +26,12 @@ class Action_Helper_GenericDatatable extends ADatatable
     protected $_outputObject;
 
     /**
+     * Inner flag for data mapping columns set/unset
+     * @var bool
+     */
+    protected $_hasDataMap = false;
+    
+    /**
      * Init
      *
      * @return Action_Helper_GenericDatatable
@@ -41,6 +47,8 @@ class Action_Helper_GenericDatatable extends ADatatable
     public function dispatch( $p_params = null, $p_cols = null, $p_options = null )
     {
         $req = $this->getRequest();
+        if( !$this->_hasDataMap )
+            $this->setDataMap();
         $this->_isDispatched = true;
         if( $req->getParam( 'format' ) == 'json' ) {
             $this->dispatchData( $p_params, $p_cols );
@@ -93,6 +101,27 @@ class Action_Helper_GenericDatatable extends ADatatable
         }
         return $this;
     }
+    
+    /**
+	 * Set body properties
+	 *
+	 * @param string $p_columnProperty
+	 * @param array $p_values
+	 * @return Action_Helper_GenericDatatable
+	 */
+    public function setBody( $p_columnProperty, array $p_values = array() )
+    {
+        if( count( $p_values ) )
+        {
+            foreach( $p_values as $key => $value )
+            {
+                if( is_string( $key ) )
+                    $key = $this->_colsIndex[$key];
+                $this->_options['aoColumns'][$key][$p_columnProperty] = $value;
+            }
+        }
+        return $this;
+    }
 
     /**
      * N-a sti nimeni
@@ -140,6 +169,26 @@ class Action_Helper_GenericDatatable extends ADatatable
     {
         //$this->toggleAutomaticWidth( false );
         $this->setHeader( 'sWidth', $p_widths );
+        return $this;
+    }
+    
+	/**
+	 * Set data mapping
+	 *
+	 * @param array|bool $p_values
+	 * @return Action_Helper_GenericDatatable
+	 */
+    public function setDataMap( array $p_values = array() )
+    {
+        if( !count( $p_values ) ) {
+            foreach( $this->_colsIndex as $k => $v ) {
+                $p_values[$k] = null;
+            }
+        }
+        
+        $this->setBody( 'mDataProp', $p_values );
+        $this->_hasDataMap = true;
+        
         return $this;
     }
     

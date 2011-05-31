@@ -79,12 +79,12 @@ class Doctrine extends AAdapter
         return $this->_queryObject->getQuery()->getResult();
     }
 
-    public function search( string $query, array $cols )
+    public function search( $query, array $cols = null )
     {
         $this->_queryObject->where( $this->buildWhere( $cols, $query ) );
     }
     
-    public function sort( array $p_params, array $p_cols )
+    public function sort( array $p_cols )
     {
         foreach( array_keys( $p_cols ) as $id => $property ) {
             if( !is_string( $property ) ) { // not sortable
