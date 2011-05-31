@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Newscoop
  * @subpackage Subscriptions
@@ -7,35 +8,27 @@
  *
  *
  */
-
 use Newscoop\Entity\Comment;
 
 /**
  * @Acl(resource="comment", action="moderate")
  */
-class Admin_CommentController extends Zend_Controller_Action
-{
+class Admin_CommentController extends Zend_Controller_Action {
 
-    /** @var Newscoop\Entity\Repository\CommentRepository*/
+    /** @var Newscoop\Entity\Repository\CommentRepository */
     private $commentRepository;
-
     /** @var Newscoop\Entity\Repository\ArticleRepository */
     private $articleRepository;
-
     /** @var Newscoop\Entity\Repository\LanguageRepository */
     private $languageRepository;
-
     /** @var Newscoop\Entity\Repository\Comment\AcceptanceRepository */
     private $acceptanceRepository;
-
     /** @var Admin_Form_Comment */
     private $form;
-
     /** @var Admin_Form_Comment_EditForm */
     private $editForm;
 
-    public function init()
-    {
+    public function init() {
         // get comment repository
         $this->commentRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment');
         // get article repository
@@ -50,16 +43,14 @@ class Admin_CommentController extends Zend_Controller_Action
         return $this;
     }
 
-    public function indexAction()
-    {
+    public function indexAction() {
         $this->_forward('table');
     }
 
     /**
      * Action to make the table
      */
-    public function tableAction()
-    {
+    public function tableAction() {
         $view = $this->view;
         $table = $this->getHelper('datatable');
         /* @var $table Action_Helper_Datatable */
@@ -67,121 +58,117 @@ class Admin_CommentController extends Zend_Controller_Action
         $table->setCols(array(
             'index' => $view->toggleCheckbox(),
             'commenter' => getGS('Author'),
-            'comment' => getGS('Date').' / '.getGS('Comment'),
+            'comment' => getGS('Date') . ' / ' . getGS('Comment'),
             'thread' => getGS('Article'),
             'threadorder' => '',
-        ), array('index' => false));
+                ), array('index' => false));
 
         $index = 1;
         $acl = array();
-        $acl['edit'] = $this->_helper->acl->isAllowed('comment','edit');
-        $acl['enable'] = $this->_helper->acl->isAllowed('comment','enable');
+        $acl['edit'] = $this->_helper->acl->isAllowed('comment', 'edit');
+        $acl['enable'] = $this->_helper->acl->isAllowed('comment', 'enable');
         $table->setHandle(function($comment) use ($view, $acl, &$index) {
-            /* var Newscoop\Entity\Comment\Commenter */
-            $commenter = $comment->getCommenter();
-            $thread = $comment->getThread();
-            $forum  = $comment->getForum();
-            return array(
-                'index'     => $index++,
-                'can'       => array( 'enable' => $acl['enable'], 'edit' => $acl['edit']),
-                'commenter' => array(
-                    'username'      => $commenter->getUsername(),
-                    'name'          => $commenter->getName(),
-                    'email'         => $commenter->getEmail(),
-                    'avatar'        => (string)$view->getAvatar(
-                            $commenter->getEmail(),
-                            array('img_size' => 50,
+                    /* var Newscoop\Entity\Comment\Commenter */
+                    $commenter = $comment->getCommenter();
+                    $thread = $comment->getThread();
+                    $forum = $comment->getForum();
+                    return array(
+                        'index' => $index++,
+                        'can' => array('enable' => $acl['enable'], 'edit' => $acl['edit']),
+                        'commenter' => array(
+                            'username' => $commenter->getUsername(),
+                            'name' => $commenter->getName(),
+                            'email' => $commenter->getEmail(),
+                            'avatar' => (string) $view->getAvatar(
+                                    $commenter->getEmail(),
+                                    array('img_size' => 50,
                                 'default_img' => 'wavatar')),
-                    'ip'            => $commenter->getIp(),
-                    'url'           => $commenter->getUrl(),
-                    'banurl'        => $view->url(array(
-                                        'controller'    => 'comment-commenter',
-                                        'action'        => 'toggle-ban',
-                                        'commenter'     => $commenter->getId(),
-                                        'forum'         => $thread->getId()
-                                     ))
-                ),
-                'comment'    => array(
-                    'id'           => $comment->getId(),
-                    'created'      => array(
-                    	'date'         => $comment->getTimeCreated()->format('Y.i.d'),
-                    	'time'         => $comment->getTimeCreated()->format('H:i:s')
-                    ),
-                    'subject'      => $comment->getSubject(),
-                    'message'      => $comment->getMessage(),
-                    'likes'        => '',
-                    'dislikes'     => '',
-                    'status'       => $comment->getStatus(),
-                    'action'       => array(
-                        'update'       => $view->url(array('action' => 'update', 'format' => 'json')),
-                        'reply'        => $view->url(array('action' => 'reply', 'format' => 'json'))
-                    )
-                ),
-                'thread'     => array(
-                    'name'         => $thread->getName(),
-                    'link'         => array(
-                        'edit'         => $view->baseUrl("admin/articles/edit.php?").$view->linkArticle($thread),
-                        'get'          => $view->baseUrl("admin/articles/get.php?").$view->linkArticle($thread)
-                    ),
-                    'forum'        => array(
-                        'name'         => $forum->getName()
-                    ),
-                    'section'	   => array(
-                        'name'         => ''
-                    )
-                ),
-            );
-        });
+                            'ip' => $commenter->getIp(),
+                            'url' => $commenter->getUrl(),
+                            'banurl' => $view->url(array(
+                                'controller' => 'comment-commenter',
+                                'action' => 'toggle-ban',
+                                'commenter' => $commenter->getId(),
+                                'forum' => $thread->getId()
+                            ))
+                        ),
+                        'comment' => array(
+                            'id' => $comment->getId(),
+                            'created' => array(
+                                'date' => $comment->getTimeCreated()->format('Y.i.d'),
+                                'time' => $comment->getTimeCreated()->format('H:i:s')
+                            ),
+                            'subject' => $comment->getSubject(),
+                            'message' => $comment->getMessage(),
+                            'likes' => '',
+                            'dislikes' => '',
+                            'status' => $comment->getStatus(),
+                            'action' => array(
+                                'update' => $view->url(array('action' => 'update', 'format' => 'json')),
+                                'reply' => $view->url(array('action' => 'reply', 'format' => 'json'))
+                            )
+                        ),
+                        'thread' => array(
+                            'name' => $thread->getName(),
+                            'link' => array(
+                                'edit' => $view->baseUrl("admin/articles/edit.php?") . $view->linkArticle($thread),
+                                'get' => $view->baseUrl("admin/articles/get.php?") . $view->linkArticle($thread)
+                            ),
+                            'forum' => array(
+                                'name' => $forum->getName()
+                            ),
+                            'section' => array(
+                                'name' => ''
+                            )
+                        ),
+                    );
+                });
 
-        $table->setOption('fnDrawCallback','datatableCallback.draw')
-              ->setOption('fnRowCallback','datatableCallback.row')
-              ->setOption('fnServerData', 'datatableCallback.addServerData')
-              ->setStripClasses()
-              ->toggleAutomaticWidth(false)
-              ->setDataProp(array(
-                'index'       => 'index',
-                'commenter'   => 'commenter.name',
-                'comment'     => 'comment.message',
-                'thread'      => 'thread.name',
-                'threadorder' => null
-              ))
-              ->setVisible(array(
-                'threadorder' => false
-              ))
-              ->setClasses(array(
-                'index'       => 'commentId',
-                'commenter'   => 'commentUser',
-                'comment'     => 'commentTimeCreated',
-                'thread'      => 'commentThread'));
+        $table->setOption('fnDrawCallback', 'datatableCallback.draw')
+                ->setOption('fnRowCallback', 'datatableCallback.row')
+                ->setOption('fnServerData', 'datatableCallback.addServerData')
+                ->setStripClasses()
+                ->toggleAutomaticWidth(false)
+                ->setDataProp(array(
+                    'index' => 'index',
+                    'commenter' => 'commenter.name',
+                    'comment' => 'comment.message',
+                    'thread' => 'thread.name',
+                    'threadorder' => null
+                ))
+                ->setVisible(array(
+                    'threadorder' => false
+                ))
+                ->setClasses(array(
+                    'index' => 'commentId',
+                    'commenter' => 'commentUser',
+                    'comment' => 'commentTimeCreated',
+                    'thread' => 'commentThread'));
         $table->dispatch();
     }
 
     /**
      * Action for setting a status
      */
-    public function setStatusAction()
-    {
+    public function setStatusAction() {
 
 
         $this->getHelper('contextSwitch')
-            ->addActionContext('set-status', 'json')
-            ->initContext();
+                ->addActionContext('set-status', 'json')
+                ->initContext();
         if (!SecurityToken::isValid()) {
             $this->view->status = 401;
             $this->view->message = getGS('Invalid security token!');
             return;
         }
-        try
-        {
+        try {
             $comments = $this->getRequest()->getParam('comment');
             $status = $this->getRequest()->getParam('status');
-            if(!is_array($comments))
+            if (!is_array($comments))
                 $comments = array($comments);
-            foreach($comments as $id)
-            {
+            foreach ($comments as $id) {
                 $comment = $this->commentRepository->find($id);
-                if($status == "deleted")
-                {
+                if ($status == "deleted") {
                     $msg = getGS('Comment delete by $1 from the article $2 ($3)',
                             Zend_Registry::get('user')->getName(),
                             $comment->getThread()->getName(),
@@ -189,15 +176,11 @@ class Admin_CommentController extends Zend_Controller_Action
                     );
                     $this->_helper->log($msg);
                     $this->_helper->flashMessenger($msg);
-
-                }
-                else
-                {
+                } else {
                     $msg = getGS('Comment $4 by $1 in the article $2 ($3)',
                             Zend_Registry::get('user')->getName(),
                             $comment->getThread()->getName(),
-                            $comment->getLanguage()->getCode(),
-                            $status
+                            $comment->getLanguage()->getCode(), $status
                     );
                     $this->_helper->log($msg);
                     $this->_helper->flashMessenger($msg);
@@ -205,9 +188,7 @@ class Admin_CommentController extends Zend_Controller_Action
             }
             $this->commentRepository->setStatus($comments, $status);
             $this->commentRepository->flush();
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             $this->view->status = $e->getCode();
             $this->view->message = $e->getMessage();
             return;
@@ -219,11 +200,10 @@ class Admin_CommentController extends Zend_Controller_Action
     /**
      *
      */
-    public function addToArticleAction()
-    {
-       $this->getHelper('contextSwitch')
-            ->addActionContext('add-to-article', 'json')
-            ->initContext();
+    public function addToArticleAction() {
+        $this->getHelper('contextSwitch')
+                ->addActionContext('add-to-article', 'json')
+                ->initContext();
         $comment = new Comment;
         $request = $this->getRequest();
         $values['user'] = Zend_Registry::get('user');
@@ -231,7 +211,7 @@ class Admin_CommentController extends Zend_Controller_Action
         $values['subject'] = $request->getParam('subject');
         $values['message'] = $request->getParam('message');
         $values['language'] = $request->getParam('language');
-        $values['thread'] =  $request->getParam('article');
+        $values['thread'] = $request->getParam('article');
         $values['ip'] = $request->getClientIp();
         $values['status'] = 'approved';
         $values['time_created'] = new DateTime;
@@ -241,23 +221,20 @@ class Admin_CommentController extends Zend_Controller_Action
             $this->view->message = getGS('Invalid security token!');
             return;
         }
-        try
-        {
+        try {
             $comment = $this->commentRepository->save($comment, $values);
             $this->commentRepository->flush();
-        }
-        catch(Exception $e)
-        {
+        } catch (Exception $e) {
             $this->view->status = $e->getCode();
             $this->view->message = $e->getMessage();
             return;
         }
         $this->_helper->log(
-            getGS('Comment added by $1 to the article $2 ($3)',
-                Zend_Registry::get('user')->getName(),
-                $comment->getThread()->getName(),
-                $comment->getLanguage()->getCode()
-        ));
+                getGS('Comment added by $1 to the article $2 ($3)',
+                        Zend_Registry::get('user')->getName(),
+                        $comment->getThread()->getName(),
+                        $comment->getLanguage()->getCode()
+                ));
         $this->view->status = 200;
         $this->view->message = "succcesful";
         $this->view->comment = $comment->getId();
@@ -266,39 +243,39 @@ class Admin_CommentController extends Zend_Controller_Action
     /*
      * Action for listing the comments per article
      */
-    public function listAction()
-    {
+
+    public function listAction() {
         $this->getHelper('contextSwitch')
-            ->addActionContext('list', 'json')
-            ->initContext();
+                ->addActionContext('list', 'json')
+                ->initContext();
 
         $cols = array('thread_order' => 'default');
         $article = $this->getRequest()->getParam('article');
         $language = $this->getRequest()->getParam('language');
         $comment = $this->getRequest()->getParam('comment');
-        if($article)
+        if ($article)
             $filter = array(
-                'thread'   => $article,
+                'thread' => $article,
                 'language' => $language,
             );
-        elseif($comment)
+        elseif ($comment)
             $filter = array(
                 'id' => $comment,
             );
         $params = array(
-            'sFilter'        => $filter
+            'sFilter' => $filter
         );
-        /* var Comment[]*/
+        /* var Comment[] */
         $comments = $this->commentRepository->getData($params, $cols);
         $result = array();
-        foreach($comments as $comment) {
+        foreach ($comments as $comment) {
             $commenter = $comment->getCommenter();
             $result[] = array(
-                "name"    => $commenter->getName(),
-                "email"   => $commenter->getEmail(),
-                "ip"      => $commenter->getIp(),
-                "id"      => $comment->getId(),
-                "status"  => $comment->getStatus(),
+                "name" => $commenter->getName(),
+                "email" => $commenter->getEmail(),
+                "ip" => $commenter->getIp(),
+                "id" => $comment->getId(),
+                "status" => $comment->getStatus(),
                 "subject" => $comment->getSubject(),
                 "message" => $comment->getMessage(),
                 "time_created" => $comment->getTimeCreated()->format('Y-i-d H:i:s'),
@@ -310,40 +287,40 @@ class Admin_CommentController extends Zend_Controller_Action
     /**
      * Action for Editing a Comment
      */
-    public function editAction()
-    {
+    public function editAction() {
         $form = new Admin_Form_Comment_EditForm;
+        $form->setAction($this->_helper->url('update'));
         $this->view->form = $form;
     }
 
     /**
      * Action for Updateing a Comment
      */
-    public function updateAction()
-    {
+    public function updateAction() {
+        $this->editForm->isValid($this->_request->getPost());
+        $vals = $this->editForm->getValues();
+        print_r($vals);
+        die();
         $this->getHelper('contextSwitch')
-            ->addActionContext('update', 'json')
-            ->initContext();
+                ->addActionContext('update', 'json')
+                ->initContext();
         if ($this->editForm->isValid($_POST)) {
-            try
-            {
+            try {
                 $values = $this->editForm->getValues();
                 $comment = $this->commentRepository->find($values['comment']);
                 $comment = $this->commentRepository->update($comment, $values);
                 $this->commentRepository->flush();
-            }
-            catch(Exception $e)
-            {
+            } catch (Exception $e) {
                 $this->view->status = $e->getCode();
                 $this->view->message = $e->getMessage();
                 return;
             }
             $this->_helper->log(
-                getGS('Comment updated by $1 to the article $2 ($3)',
-                Zend_Registry::get('user')->getName(),
-                $comment->getThread()->getName(),
-                $comment->getLanguage()->getCode()
-            ));
+                    getGS('Comment updated by $1 to the article $2 ($3)',
+                            Zend_Registry::get('user')->getName(),
+                            $comment->getThread()->getName(),
+                            $comment->getLanguage()->getCode()
+                    ));
             $this->view->status = 200;
             $this->view->message = "succcesful";
             $this->view->comment = $comment->getId();
@@ -353,11 +330,10 @@ class Admin_CommentController extends Zend_Controller_Action
     /**
      * Action for Replying to a Comment
      */
-    public function replyAction()
-    {
+    public function replyAction() {
         $this->getHelper('contextSwitch')
-            ->addActionContext('reply', 'json')
-            ->initContext();
+                ->addActionContext('reply', 'json')
+                ->initContext();
 
         if (!SecurityToken::isValid()) {
             $this->view->status = 401;
@@ -371,23 +347,20 @@ class Admin_CommentController extends Zend_Controller_Action
             $values['time_created'] = new DateTime;
             $values['ip'] = $this->getRequest()->getClientIp();
             $values['status'] = 'approved';
-            try
-            {
+            try {
                 $comment = $this->commentRepository->save($comment, $values);
                 $this->commentRepository->flush();
-            }
-            catch(Exception $e)
-            {
+            } catch (Exception $e) {
                 $this->view->status = $e->getCode();
                 $this->view->message = $e->getMessage();
                 return;
             }
             $this->_helper->log(
-                getGS('Comment added by $1 to the article $2 ($3)',
-                Zend_Registry::get('user')->getName(),
-                $comment->getThread()->getName(),
-                $comment->getLanguage()->getCode()
-            ));
+                    getGS('Comment added by $1 to the article $2 ($3)',
+                            Zend_Registry::get('user')->getName(),
+                            $comment->getThread()->getName(),
+                            $comment->getLanguage()->getCode()
+                    ));
             $this->view->status = 200;
             $this->view->message = "succcesful";
             $this->view->comment = $comment->getId();
@@ -398,8 +371,7 @@ class Admin_CommentController extends Zend_Controller_Action
     /**
      * Action for Adding a Comment
      */
-    public function addAction()
-    {
+    public function addAction() {
         $comment = new Comment;
 
         $this->handleForm($this->form, $comment);
@@ -412,8 +384,7 @@ class Admin_CommentController extends Zend_Controller_Action
      * Method for deleting a comment
      *
      */
-    public function deleteArticleAction()
-    {
+    public function deleteArticleAction() {
         $article = $this->getRequest()->getParam('article');
         $this->commentRepository->deleteArticle($article);
         $this->commentRepository->flush();
@@ -424,8 +395,7 @@ class Admin_CommentController extends Zend_Controller_Action
      * Method for setting a status
      * for comments that are associated with an article
      */
-    public function statusArticleAction()
-    {
+    public function statusArticleAction() {
         $article = $this->getRequest()->getParam('article');
         $language = $this->getRequest()->getParam('language');
         $this->commentRepository->setArticleStatus($article, $language, "hidden");
@@ -439,8 +409,7 @@ class Admin_CommentController extends Zend_Controller_Action
      * @param ZendForm $p_form
      * @param IComment $p_comment
      */
-    private function handleForm(Zend_Form $p_form, Comment $p_comment)
-    {
+    private function handleForm(Zend_Form $p_form, Comment $p_comment) {
         if ($this->getRequest()->isPost() && $p_form->isValid($_POST)) {
             $values = $p_form->getValues();
             $values['ip'] = $request->getClientIp();
@@ -448,10 +417,10 @@ class Admin_CommentController extends Zend_Controller_Action
             $values['time_created'] = new DateTime;
             $this->commentRepository->save($p_comment, $values);
             $this->commentRepository->flush();
-            $this->_helper->flashMessenger(getGS('Comment "$1" saved.',$p_comment->getSubject()));
+            $this->_helper->flashMessenger(getGS('Comment "$1" saved.',
+                            $p_comment->getSubject()));
             $this->_helper->redirector->gotoSimple('index');
         }
     }
-
 
 }
