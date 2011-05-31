@@ -61,7 +61,7 @@ geo_names.askForCityLocation = function(city_name, country_code, script_dir, res
 // the main action on ajax data retrieval for cities search
 geo_names.gotSearchData = function (cities, results_div)
 {
-    found_locs = '<table class="geonames_result_table" id="geonames_result_table">';
+    found_locs = '<table class="geonames_result_table" id="geonames_result_table" cellspacing="0" cellpadding="0">';
     found_locs += '<thead><tr>';
     found_locs += '<th class="search_res_cc_header"><span class="ui-icon ui-icon-pin-w search_res_cc_header_inner">' + this.display_strings.cc + '</span></th>'
     found_locs += '<th class="search_res_city_header">' + this.display_strings.city + '</th>';
@@ -112,7 +112,7 @@ geo_names.gotSearchData = function (cities, results_div)
         var city_name = one_city.name.replace(/'/gi,"\\'");
         var city_name = city_name.replace(/\"/gi,"\\'");
         var country_link = "<a href=\"#\" title=\"" + this.display_strings.add_city + " - " + city_name + " - " + pop_show + " - " + country_name + "\" onClick=\"geo_locations.center_lonlat('" + one_city.longitude + "', '" + one_city.latitude + "'); geo_locations.insert_poi('EPSG:4326', null, '" + one_city.longitude + "', '" + one_city.latitude + "', '" + city_name + "'); return false;\"><span class=\"geores_cc_icon ui-icon ui-icon-plus\"></span><span class=\"geores_cc_text\">" + one_city.country.toLowerCase() + "</span></a>";
-        var city_link = "<a href=\"#\" title=\"" + this.display_strings.city + " - " + city_name + " - " + pop_show + " - " + country_name + "\" onClick=\"geo_locations.center_lonlat('" + one_city.longitude + "', '" + one_city.latitude + "'); return false;\"><span class=\"geores_city_text\">" + one_city.name + "</span></a>";
+        var city_link = "<a href=\"#\" title=\"" + this.display_strings.city + " - " + city_name + " - " + pop_show + " - " + country_name + "\" onClick=\"geo_locations.center_lonlat('" + one_city.longitude + "', '" + one_city.latitude + "'); return false;\" class=\"geores_city_text\">" + one_city.name + "</a>";
         
         found_locs += "<tr>";
         found_locs += "<td>" + country_link + "</td>";

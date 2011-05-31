@@ -278,12 +278,12 @@ GeoPopups.create_popup_content = function(feature, geo_obj) {
             poi_label_value = pop_title_orig;
 
             pop_text += "<input id='geo_edit_label_inline' class='map_hidden " + label_class_add + "' type='text' value='' onBlur=\"GeoPopups.show_inline_label_view(" + geo_obj.obj_name + ", " + rank + "); return false;\" onChange='GeoPopups.show_inline_label_change(" + geo_obj.obj_name + ", " + rank + ", this.value); return false;' onKeyUp='GeoPopups.show_inline_label_change(" + geo_obj.obj_name + ", " + rank + ", this.value); return true;'>";
-            pop_text += "<h3 class='popup_title inline_editable' id='geo_show_label_inline'>";
+            pop_text += "<h3 class='popup_title' id='geo_show_label_inline'>";
 
             if ((!pop_link) || ("" == pop_link)) {
                 pop_link = "#";
             }
-            pop_text += "<a href=\"" + pop_link + "\" target=\"_blank\" onClick=\"GeoPopups.show_inline_label_edit(" + geo_obj.obj_name + ", " + rank + "); return false;\">";
+            pop_text += "<a href=\"" + pop_link + "\" target=\"_blank\" class='inline_editable' onClick=\"GeoPopups.show_inline_label_edit(" + geo_obj.obj_name + ", " + rank + "); return false;\">";
             pop_text += "<span id='label_inner_edit_value' class='" + label_class_add + "'>" + pop_title_show; + "</span>";
 
             pop_text += "</a>";
@@ -325,7 +325,9 @@ GeoPopups.create_popup_content = function(feature, geo_obj) {
         if (!content) {content = "";}
         var content_orig = content;
 
-        if (editing) {
+        // the direct-html part can not be done clickable reasonably,
+        // thus just the plain-text case is inline editable
+        if (false && editing) {
             poi_content_value = content_orig;
             var content_class_add = "";
             var content_view = content;
