@@ -2,7 +2,6 @@
 
     <testsuite name="Application">
         <directory>./library</directory>
-        <directory>./application</directory>
     </testsuite>
 
     <filter>
