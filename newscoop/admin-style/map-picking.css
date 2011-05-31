@@ -220,8 +220,7 @@ a.map-no-link {
 fieldset {
 
 }
-
-
+/*
 legend {
     width: 30px;
     margin-left: 550px;
@@ -232,6 +231,7 @@ legend {
     float: right;
     text-align: right;
 }
+*/
 .edit_tabs {
 	padding:25px 10px 10px 10px;
 	height:290px;
@@ -579,3 +579,8 @@ a.edit_marker_one_choice_link {
 /*    width: 90%;*/
     font-size: 20px;
 }
+
+.show_hide_coordinates {
+     float: left;
+}
+

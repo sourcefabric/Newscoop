@@ -36,6 +36,7 @@ this.display_strings = {
     enable: "Show",
     disable: "Hide",
     remove: "Delete",
+    coordinates: "Coordinates",
     longitude: "Longitude",
     latitude: "Latitude",
     locations_updated: "Locations updated",
@@ -185,6 +186,7 @@ this.set_display_strings = function(local_strings)
         "enable",
         "disable",
         "remove",
+        "coordinates",
         "longitude",
         "latitude",
         "locations_updated",
@@ -938,7 +940,9 @@ this.update_poi_descs = function(active, index_type)
         descs_inner += "<a href='#' class='link icon-link right-floated' onclick='" + obj_name + ".edit_poi(" + pind + ");return false;'><span class='icon ui-icon-pencil'></span><strong>" + this.display_strings.edit + "</strong></a>";
         descs_inner += "</div>";
 
-        descs_inner += "<div class='poi_coors_all'>";
+        descs_inner += "<form class='coordinates_form'><fieldset class='poi_coors_all_set toggle closed'>";
+        descs_inner += "<legend class='poi_coors_all_legend'><a href='#' onClick=\"$('.poi_coors_all').toggleClass('map_hidden'); $('.poi_coors_all_set').toggleClass('closed'); return false;\"><span class='show_hide_coordinates ui-icon ui-icon-triangle-2-n-s'></span>" + this.display_strings.coordinates + "</a></legend>";
+        descs_inner += "<div class='poi_coors_all map_hidden'>";
         descs_inner += "<div class='poi_coors'>";
         descs_inner += "<label>" + this.display_strings.latitude + "</label><input id='" + lat_id + "' class='poi_coors_input' size='9' onChange='" + obj_name + ".update_poi_position(" + pind + ", \"latitude\", this.value, this); return false;' name='poi_latitude_" + pind + "' value='" + cur_poi.lat.toFixed(6) + "'" + disable_value + ">";
         descs_inner += "</div>";
@@ -946,6 +950,7 @@ this.update_poi_descs = function(active, index_type)
         descs_inner += "<label>" + this.display_strings.longitude + "</label><input id='" + lon_id + "' class='poi_coors_input' size='9' onChange='" + obj_name + ".update_poi_position(" + pind + ", \"longitude\", this.value, this); return false;' name='poi_longitude_" + pind + "'  value='" + cur_poi.lon.toFixed(6) + "'" + disable_value + ">";
         descs_inner += "</div>";
         descs_inner += "</div>";
+        descs_inner += "</fieldset></form>";
 
         descs_inner += "<div class='poi_actions poi_removal'>";
         descs_inner += "<div id='" + rem_id + "' class='" + rem_class + "'>&nbsp;<a href='#' onclick='" + obj_name + ".remove_poi(" + pind + ");return false;' class='ui-state-default icon-button left-floated'><span class='ui-icon ui-icon-closethick'></span>" + this.display_strings.remove + "</a></div>";
@@ -988,6 +993,9 @@ this.update_poi_descs = function(active, index_type)
 
     });
     this.map_update_side_desc_height();
+
+    //setTimeout("window.formize();", 100);
+
 };
 
 // for keeping track of the displayed accordion part

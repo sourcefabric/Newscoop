@@ -62,6 +62,7 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
         <?php include dirname(__FILE__) . '/../../html_head.php'; ?>
 
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-picking.css" />
+	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/form.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/js/geocoding/styles/map-info.css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/js/geocoding/openlayers/theme/default/style.css" />
 
@@ -91,6 +92,64 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery.dataTables.min.js"></script>
 
 	<script type="text/javascript">
+
+
+window.formize = function() {
+
+    $('dl.zend_form').each(function() {
+        var form = $(this);
+/*
+        // hide hidden fields
+        $('input:hidden', form).each(function() {
+            var dd = $(this).closest('dd');
+            var dt = dd.prev('dt');
+            var errors = $('ul.errors', dd);
+
+            dt.hide().detach().appendTo(form);
+
+            if (errors.length > 0) { // keep dd for errors
+                return;
+            }
+
+            dd.hide().detach().appendTo(form);
+        });
+
+        // hide fieldsets dt
+        $('fieldset', form).each(function() {
+            $(this).closest('dd').prev('dt').hide();
+        });
+
+        // hide submit dt
+        $('input:submit', form).each(function() {
+            $(this).closest('dd').addClass('buttons').prev('dt').hide();
+        });
+*/
+/**/
+        // toogle fieldsets
+        $('fieldset.toggle legend', form).click(function() {
+            $(this).closest('fieldset').toggleClass('closed');
+            $('+ dl', $(this)).toggle();
+        }).each(function() {
+            $(this).css('cursor', 'pointer');
+            $('<span />').addClass('ui-icon ui-icon-triangle-2-n-s').prependTo($(this));
+
+            // toggle on load if not contain errors
+            if (!$('ul.errors', $(this).closest('fieldset')).size()) {
+                $(this).click();
+            }
+        });
+/**/
+/*
+        // acl rule type colours switch
+        $('input:radio.acl.type', form).change(function() {
+            if ($(this).attr('checked')) {
+                $(this).closest('label').addClass('checked').siblings('label').removeClass('checked');
+            }
+        }).change();
+*/
+    });
+};
+
 // prepare localized strings
 var local_strings_map = {};
 
@@ -109,6 +168,7 @@ var set_local_strings = function()
     local_strings_map["enable"] = "<?php putGS("Show"); ?>";
     local_strings_map["disable"] = "<?php putGS("Hide"); ?>";
     local_strings_map["remove"] = "<?php putGS("Delete"); ?>";
+    local_strings_map["coordinates"] = "<?php putGS("Coordinates"); ?>";
     local_strings_map["longitude"] = "<?php putGS("Longitude"); ?>";
     local_strings_map["latitude"] = "<?php putGS("Latitude"); ?>";
     local_strings_map["locations_updated"] = "<?php putGS("List of locations updated"); ?>";
