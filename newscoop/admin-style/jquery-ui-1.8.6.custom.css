@@ -207,7 +207,7 @@
 	background-image: url(images/ui-icons_666666_256x240.png);
 }
 .ui-widget-content .ui-icon {
-	background-image: url(images/ui-icons_ff0084_256x240.png);
+	background-image: url(images/ui-icons_666666_256x240.png);
 }
 .ui-widget-header .ui-icon {
 	background-image: url(images/ui-icons_007fb3_256x240.png);
@@ -818,6 +818,7 @@
 	opacity: .50;
 	filter:Alpha(Opacity=50);
 }
+
 .ui-widget-shadow {
 	margin: -6px 0 0 -6px;
 	padding: 6px;
@@ -1127,9 +1128,10 @@ padding: 0;
  */
 .ui-dialog {
 	position: absolute;
-	padding: .2em;
+	padding: .4em;
 	width: 300px;
 	overflow: hidden;
+	border-width:3px;
 }
 .ui-dialog .ui-dialog-titlebar {
 	padding: 6px 8px 6px 8px;
@@ -1166,9 +1168,11 @@ padding: 0;
 .ui-dialog .ui-dialog-buttonpane {
 	text-align: left;
 	border-width: 1px 0 0 0;
+	border-color:#dedede;
 	background-image: none;
-	margin: .5em 0 0 0;
-	padding: .3em 1em .5em .4em;
+	margin: .3em -0.4em 0 -0.4em;
+	padding: .3em 1em 0em .4em;
+
 }
 .ui-dialog .ui-dialog-buttonpane .ui-dialog-buttonset {
 	float: right;
@@ -1180,6 +1184,7 @@ padding: 0;
 .ui-dialog .ui-resizable-se {
 	width: 14px;
 	height: 14px;
+
 	right: 3px;
 	bottom: 3px;
 }

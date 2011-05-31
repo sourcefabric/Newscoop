@@ -94,6 +94,22 @@ GeoPopups.set_embed_tag = function(attrs, geo_obj)
 
 };
 
+GeoPopups.escape_desc_text = function(text) {
+    text = text.replace(/&/gi, "&amp;");
+    text = text.replace(/>/gi, "&gt;");
+    text = text.replace(/</gi, "&lt;");
+    text = text.replace(/\r\n/gi, "</p><p>");
+    text = text.replace(/\n/gi, "</p><p>");
+    text = text.replace(/\r/gi, "</p><p>");
+    return text;
+};
+
+GeoPopups.escape_label_text = function(text) {
+    text = text.replace(/&/gi, "&amp;");
+    text = text.replace(/>/gi, "&gt;");
+    text = text.replace(/</gi, "&lt;");
+    return text;
+};
 
 GeoPopups.show_inline_label_view = function(geo_obj, rank) {
     $('#geo_edit_label_inline').addClass('map_hidden');
@@ -104,9 +120,8 @@ GeoPopups.show_inline_label_view = function(geo_obj, rank) {
         var label_value = edit_elm.value;
         geo_obj.store_point_label(label_value, rank);
         var show_elm = document.getElementById ? document.getElementById('label_inner_edit_value') : null;
-        label_value_show = label_value;
-        if ("" == label_value) {
-            //label_value_show = "&nbsp;" + geo_obj.display_strings.empty_label_show + "&nbsp;";
+        var label_value_show = GeoPopups.escape_label_text(label_value);
+        if ("" == label_value_show) {
             label_value_show = geo_obj.display_strings.empty_label_show;
         }
         show_elm.innerHTML = label_value_show;
@@ -137,26 +152,22 @@ GeoPopups.show_inline_label_edit = function(geo_obj, rank) {
     }
 };
 
-// TODO: deal with text-desc escaping for these inline functions
 GeoPopups.show_inline_content_view = function(geo_obj, rank) {
 
     $('#geo_edit_content_inline').addClass('map_hidden');
     $('#geo_show_content_inline').removeClass('map_hidden');
 
-/**/
     var edit_elm = document.getElementById ? document.getElementById('geo_edit_content_inline') : null;
     if (edit_elm) {
         var content_value = edit_elm.value;
         geo_obj.store_point_property("content", content_value, rank);
         var show_elm = document.getElementById ? document.getElementById('content_inner_edit_value') : null;
-        content_value_show = content_value;
+        var content_value_show = content_value;
         if ("" == content_value) {
-            //content_value_show = "&nbsp;" + geo_obj.display_strings.fill_in_the_point_description + "&nbsp;";
             content_value_show = geo_obj.display_strings.fill_in_the_point_description;
         }
         show_elm.innerHTML = content_value_show;
     }
-/**/
 
 };
 
@@ -165,20 +176,17 @@ GeoPopups.show_inline_text_view = function(geo_obj, rank) {
     $('#geo_edit_text_inline').addClass('map_hidden');
     $('#geo_show_text_inline').removeClass('map_hidden');
 
-/**/
     var edit_elm = document.getElementById ? document.getElementById('geo_edit_text_inline') : null;
     if (edit_elm) {
         var text_value = edit_elm.value;
         geo_obj.store_point_property("text", text_value, rank);
         var show_elm = document.getElementById ? document.getElementById('text_inner_edit_value') : null;
-        text_value_show = text_value;
+        var text_value_show = GeoPopups.escape_desc_text(text_value);
         if ("" == text_value) {
-            //text_value_show = "&nbsp;" + geo_obj.display_strings.fill_in_the_point_description + "&nbsp;";
             text_value_show = geo_obj.display_strings.fill_in_the_point_description;
         }
         show_elm.innerHTML = text_value_show;
     }
-/**/
 
 };
 
@@ -254,16 +262,16 @@ GeoPopups.create_popup_content = function(feature, geo_obj) {
         var pop_link = attrs.m_link;
         var pop_title = "" + feature.attributes.m_title;
         var pop_title_orig = pop_title;
-        pop_title = pop_title.replace(/&/gi, "&amp;");
-        pop_title = pop_title.replace(/>/gi, "&gt;");
-        pop_title = pop_title.replace(/</gi, "&lt;");
+        //pop_title = pop_title.replace(/&/gi, "&amp;");
+        //pop_title = pop_title.replace(/>/gi, "&gt;");
+        //pop_title = pop_title.replace(/</gi, "&lt;");
+        pop_title = GeoPopups.escape_label_text(pop_title);
 
         if (editing) {
             var pop_title_show = pop_title;
             var label_class_add = "";
             if ("" == pop_title) {
                 label_class_add = "map_text_lack";
-                //pop_title_show = "&nbsp;" + geo_obj.display_strings.empty_label_show + "&nbsp;";
                 pop_title_show = geo_obj.display_strings.empty_label_show;
             }
 

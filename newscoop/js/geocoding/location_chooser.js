@@ -902,7 +902,10 @@ this.update_poi_descs = function(active, index_type)
 
         descs_inner += "<div id=\"poi_seq_" + pind + "\">";
         descs_inner += "<h3 class=\"" + use_class + class_show + " map_poi_side_one\">";
-        descs_inner += "<a href=\"#\" class='poi_name' onClick='" + obj_name + ".select_poi_on_list(" + pind + "); return false;'>" + disp_index + cur_label_sep + cur_label + "</a></h3>";
+        descs_inner += "<a href=\"#\" class='poi_name' onClick='" + obj_name + ".select_poi_on_list(" + pind + "); return false;'>" + disp_index + cur_label_sep + cur_label + "</a>";
+        descs_inner += "<a onclick='" + obj_name + ".remove_poi(" + pind + ");return false;' href=\"#\" class=\"corner-button\" title=\"" + this.display_strings.remove + "\"><span class=\"ui-icon ui-icon-closethick\"></span></a>";
+        descs_inner += "</h3>";
+
         descs_inner += "<div class='poi_actions_all'>";
 
         var disable_value = "";
@@ -931,17 +934,19 @@ this.update_poi_descs = function(active, index_type)
             rem_class += " map_hidden";
         }
 
-        var prop_ids = '["' + lon_id + '", "' + lat_id + '", "' + dis_id + '", "' + ena_id + '", "' + voi_id + '", "' + rem_id + '"]';
+        //var prop_ids = '["' + lon_id + '", "' + lat_id + '", "' + dis_id + '", "' + ena_id + '", "' + voi_id + '", "' + rem_id + '"]';
+        var prop_ids = '["' + lon_id + '", "' + lat_id + '", "' + dis_id + '", "' + ena_id + '"]';
 
         descs_inner += "<div class='poi_actions clearfix'>";
         descs_inner += "<a href='#' class='link left-floated' onclick='" + obj_name + ".center_poi(" + pind + ");return false;'>" + this.display_strings.center + "</a>";
+
         descs_inner += "<span id='" + ena_id + "' class='" + ena_class + "'><a href='#' class='link left-floated' onclick='" + obj_name + ".set_usage_poi(" + pind + ", true, " + prop_ids + ");return false;'>" + this.display_strings.enable + "</a></span>";
         descs_inner += "<span id='" + dis_id + "' class='" + dis_class + "'><a href='#' class='link left-floated' onclick='" + obj_name + ".set_usage_poi(" + pind + ", false, " + prop_ids + ");return false;'>" + this.display_strings.disable + "</a></span>";
         descs_inner += "<a href='#' class='link icon-link right-floated' onclick='" + obj_name + ".edit_poi(" + pind + ");return false;'><span class='icon ui-icon-pencil'></span><strong>" + this.display_strings.edit + "</strong></a>";
         descs_inner += "</div>";
 
-        descs_inner += "<form class='coordinates_form'><fieldset class='poi_coors_all_set toggle closed'>";
-        descs_inner += "<legend class='poi_coors_all_legend'><a href='#' onClick=\"$('.poi_coors_all').toggleClass('map_hidden'); $('.poi_coors_all_set').toggleClass('closed'); return false;\"><span class='show_hide_coordinates ui-icon ui-icon-triangle-2-n-s'></span>" + this.display_strings.coordinates + "</a></legend>";
+        descs_inner += "<fieldset class='poi_coors_all_set toggle closed'>";
+        descs_inner += "<legend class='poi_coors_all_legend' style='cursor: pointer;' onClick=\"$('.poi_coors_all').toggleClass('map_hidden'); $('.poi_coors_all_set').toggleClass('closed'); return false;\"><span class='show_hide_coordinates ui-icon ui-icon-triangle-2-n-s'></span>" + this.display_strings.coordinates + "</legend>";
         descs_inner += "<div class='poi_coors_all map_hidden'>";
         descs_inner += "<div class='poi_coors'>";
         descs_inner += "<label>" + this.display_strings.latitude + "</label><input id='" + lat_id + "' class='poi_coors_input' size='9' onChange='" + obj_name + ".update_poi_position(" + pind + ", \"latitude\", this.value, this); return false;' name='poi_latitude_" + pind + "' value='" + cur_poi.lat.toFixed(6) + "'" + disable_value + ">";
@@ -950,13 +955,13 @@ this.update_poi_descs = function(active, index_type)
         descs_inner += "<label>" + this.display_strings.longitude + "</label><input id='" + lon_id + "' class='poi_coors_input' size='9' onChange='" + obj_name + ".update_poi_position(" + pind + ", \"longitude\", this.value, this); return false;' name='poi_longitude_" + pind + "'  value='" + cur_poi.lon.toFixed(6) + "'" + disable_value + ">";
         descs_inner += "</div>";
         descs_inner += "</div>";
-        descs_inner += "</fieldset></form>";
+        descs_inner += "</fieldset>";
 
-        descs_inner += "<div class='poi_actions poi_removal'>";
-        descs_inner += "<div id='" + rem_id + "' class='" + rem_class + "'>&nbsp;<a href='#' onclick='" + obj_name + ".remove_poi(" + pind + ");return false;' class='ui-state-default icon-button left-floated'><span class='ui-icon ui-icon-closethick'></span>" + this.display_strings.remove + "</a></div>";
-        descs_inner += "<div id='" + voi_id + "' class='" + voi_class + "'>&nbsp;<a href='#' onclick='" + obj_name + ".remove_poi(" + pind + ");return false;' class='ui-state-default icon-button left-floated'><span class='ui-icon ui-icon-closethick'></span>" + this.display_strings.remove + "</a></div>";
+        //descs_inner += "<div class='poi_actions poi_removal'>";
+        //descs_inner += "<div id='" + rem_id + "' class='" + rem_class + "'>&nbsp;<a href='#' onclick='" + obj_name + ".remove_poi(" + pind + ");return false;' class='ui-state-default icon-button left-floated'><span class='ui-icon ui-icon-closethick'></span>" + this.display_strings.remove + "</a></div>";
+        //descs_inner += "<div id='" + voi_id + "' class='" + voi_class + "'>&nbsp;<a href='#' onclick='" + obj_name + ".remove_poi(" + pind + ");return false;' class='ui-state-default icon-button left-floated'><span class='ui-icon ui-icon-closethick'></span>" + this.display_strings.remove + "</a></div>";
 
-        descs_inner += "</div>";
+        //descs_inner += "</div>";
         descs_inner += "</div>";
         descs_inner += "</div>";
 
@@ -993,8 +998,6 @@ this.update_poi_descs = function(active, index_type)
 
     });
     this.map_update_side_desc_height();
-
-    //setTimeout("window.formize();", 100);
 
 };
 

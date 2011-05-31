@@ -93,70 +93,13 @@ $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 
 	<script type="text/javascript">
 
-
-window.formize = function() {
-
-    $('dl.zend_form').each(function() {
-        var form = $(this);
-/*
-        // hide hidden fields
-        $('input:hidden', form).each(function() {
-            var dd = $(this).closest('dd');
-            var dt = dd.prev('dt');
-            var errors = $('ul.errors', dd);
-
-            dt.hide().detach().appendTo(form);
-
-            if (errors.length > 0) { // keep dd for errors
-                return;
-            }
-
-            dd.hide().detach().appendTo(form);
-        });
-
-        // hide fieldsets dt
-        $('fieldset', form).each(function() {
-            $(this).closest('dd').prev('dt').hide();
-        });
-
-        // hide submit dt
-        $('input:submit', form).each(function() {
-            $(this).closest('dd').addClass('buttons').prev('dt').hide();
-        });
-*/
-/**/
-        // toogle fieldsets
-        $('fieldset.toggle legend', form).click(function() {
-            $(this).closest('fieldset').toggleClass('closed');
-            $('+ dl', $(this)).toggle();
-        }).each(function() {
-            $(this).css('cursor', 'pointer');
-            $('<span />').addClass('ui-icon ui-icon-triangle-2-n-s').prependTo($(this));
-
-            // toggle on load if not contain errors
-            if (!$('ul.errors', $(this).closest('fieldset')).size()) {
-                $(this).click();
-            }
-        });
-/**/
-/*
-        // acl rule type colours switch
-        $('input:radio.acl.type', form).change(function() {
-            if ($(this).attr('checked')) {
-                $(this).closest('label').addClass('checked').siblings('label').removeClass('checked');
-            }
-        }).change();
-*/
-    });
-};
-
 // prepare localized strings
 var local_strings_map = {};
 
 var set_local_strings = function()
 {
 
-    local_strings_map["fill_in_map_name"] = "&nbsp;<?php putGS("fill in map name"); ?>&nbsp;";
+    local_strings_map["fill_in_map_name"] = "<?php putGS("fill in map name"); ?>";
     local_strings_map["point_markers"] = "<?php putGS("Point markers"); ?>";
     local_strings_map["this_should_not_happen_now"] = "<?php putGS("problem at point processing, please send error report"); ?>";
     local_strings_map["really_to_delete_the_point"] = "<?php putGS("Really delete this point?"); ?>";
@@ -167,7 +110,7 @@ var set_local_strings = function()
     local_strings_map["center"] = "<?php putGS("Center"); ?>";
     local_strings_map["enable"] = "<?php putGS("Show"); ?>";
     local_strings_map["disable"] = "<?php putGS("Hide"); ?>";
-    local_strings_map["remove"] = "<?php putGS("Delete"); ?>";
+    local_strings_map["remove"] = "<?php putGS("Delete location"); ?>";
     local_strings_map["coordinates"] = "<?php putGS("Coordinates"); ?>";
     local_strings_map["longitude"] = "<?php putGS("Longitude"); ?>";
     local_strings_map["latitude"] = "<?php putGS("Latitude"); ?>";
@@ -290,17 +233,26 @@ var hideLocation = function()
 
     $("#search_results").addClass("map_hidden");
 
-    var showhide_link = document.getElementById ? document.getElementById("showhide_link") : null;
-    showhide_link.innerHTML = "+";
+    //var showhide_link = document.getElementById ? document.getElementById("showhide_link") : null;
+    //showhide_link.innerHTML = "+";
 
     $("#map_geo_showhide").removeClass("map_hidden");
+    $("#map_geo_showhide").addClass("toggle_link_block");
 
     geo_locations.map_update_side_desc_height();
 
     $("#map_geo_showhide .round-delete").removeClass("map_hidden");
     $("#map_geo_showhide .round-delete").addClass("round-plus");
 
-    $(showhide_link).attr("title", "<?php putGS("Show search results"); ?>");
+    $("#showhide_link").attr("title", "<?php putGS("Show search results"); ?>");
+    $("#showhide_link").removeClass("map_hidden");
+    $("#showhide_link").addClass("toggle_link_block");
+
+    var showhide_link_label = document.getElementById ? document.getElementById("showhide_link_label") : null;
+    if (showhide_link_label) {
+        showhide_link_label.innerHTML = "<?php putGS("Show search results"); ?>";
+    }
+
 };
 
 // shows the city search results box
@@ -312,10 +264,11 @@ var showLocation = function()
 
     $("#search_results").removeClass("map_hidden");
 
-    var showhide_link = document.getElementById ? document.getElementById("showhide_link") : null;
-    showhide_link.innerHTML = "x";
+    //var showhide_link = document.getElementById ? document.getElementById("showhide_link") : null;
+    //showhide_link.innerHTML = "x";
 
     $("#map_geo_showhide").removeClass("map_hidden");
+    $("#map_geo_showhide").addClass("toggle_link_block");
 
     geo_locations.map_update_side_desc_height();
     $("#map_sidedescs").removeClass("map_hidden");
@@ -323,7 +276,15 @@ var showLocation = function()
     $("#map_geo_showhide .round-delete").removeClass("map_hidden");
     $("#map_geo_showhide .round-delete").removeClass("round-plus");
 
-    $(showhide_link).attr("title", "<?php putGS("Hide search results"); ?>");
+    $("#showhide_link").attr("title", "<?php putGS("Hide search results"); ?>");
+    $("#showhide_link").removeClass("map_hidden");
+    $("#showhide_link").addClass("toggle_link_block");
+
+    var showhide_link_label = document.getElementById ? document.getElementById("showhide_link_label") : null;
+    if (showhide_link_label) {
+        showhide_link_label.innerHTML = "<?php putGS("Hide search results"); ?>";
+    }
+
 };
 
 // if some search term initially provided, do the search
@@ -562,7 +523,9 @@ var map_show_preview = function()
         </form>
         </li>
         <li>
+<!--
 <div id="map_geo_showhide" class="map_geo_showhide"><a href="#" id="showhide_link" title="<?php putGS("Hide search results"); ?>" class="round-delete map_hidden" onclick="showhideLocation(); return false;"></a></div>
+-->
 <select class="input_select map_geo_ccselect" id="search-country" name="geo_cc" onChange="findLocation(); return false;">
 <option value="" selected="true"><?php putGS("Specify country (optional)"); ?></option>
 <?php
@@ -576,6 +539,10 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
     </fieldset>
 </div><!-- end of map_menubar -->
 <div id="side_info" class="side_info">
+
+<a class="toggle_link map_hidden" onclick="showhideLocation(); return false;" title="" id="showhide_link" href="#">
+<span class="ui-icon ui-icon-triangle-2-n-s"></span>
+<span id="showhide_link_label"><?php putGS("Hide search results"); ?></span></a>
 <div id="search_results" class="search_results map_hidden">&nbsp;</div>
 <div id="map_sidedescs" class="map_sidedescs">&nbsp;</div>
 </div><!--end of side_info -->
