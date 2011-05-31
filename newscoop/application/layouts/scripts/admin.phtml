@@ -117,8 +117,13 @@
 <?php if (!empty($this->messages)) { ?>
 <script type="text/javascript"><!--
 $(function() {
-    <?php foreach ($this->messages as $message) { ?>
-    flashMessage(<?php echo json_encode($message); ?>);
+    <?php foreach ($this->messages as $message) {
+        if (is_array($message)) {
+            list($type, $message) = array_values($message);
+        } else {
+            $type = 'highlight';
+        } ?>
+        flashMessage(<?php echo json_encode($message); ?>, <?php echo json_encode($type); ?>);
     <?php } ?>
 });
 //--></script>

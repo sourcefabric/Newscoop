@@ -12,8 +12,6 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
     {
         global $ADMIN_DIR, $ADMIN, $g_user, $prefix, $Campsite;
 
-        header("Content-Type: text/html; charset=UTF-8");
-
         defined('WWW_DIR')
             || define('WWW_DIR', realpath(APPLICATION_PATH . '/../'));
 
