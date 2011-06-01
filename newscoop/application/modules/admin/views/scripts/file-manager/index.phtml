@@ -1,4 +1,4 @@
-<?php $this->placeholder('title')->set(getGS('File manager')); ?>
+<?php $this->placeholder('title')->set(getGS('Templates')); ?>
 
 <div class="currentDirectory">
     <strong><?php putGS('Current directory:'); ?></strong>
@@ -56,8 +56,8 @@
 <?php } ?>
 
 </thead>
-<tbody>
 
+<tbody>
 <?php foreach ($this->folders as $folder) { ?>
 <tr class="collection">
     <td class="id"><input type="checkbox" name="file[]" value="<?php echo $folder->name; ?>" /></td>
@@ -73,7 +73,6 @@
 
     <td class="menu"><ul class="actionDropDown">
         <li><a href="#"><?php putGS('Actions'); ?></a><ul>
-            <li><a href="#rename" class="rename">Rename</a></li>
             <li><a href="#delete" class="delete">Delete</a></li>
         </ul></li>
     </ul></td>

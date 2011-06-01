@@ -74,6 +74,7 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('key', $items[0]);
         $this->assertObjectHasAttribute('name', $items[0]);
         $this->assertObjectHasAttribute('type', $items[0]);
+        $this->assertObjectHasAttribute('realpath', $items[0]);
 
         $this->assertObjectHasAttribute('key', $items[1]);
         $this->assertObjectHasAttribute('name', $items[1]);
@@ -82,6 +83,20 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('ctime', $items[1]);
         $this->assertObjectHasAttribute('id', $items[1]);
         $this->assertObjectHasAttribute('ttl', $items[1]);
+        $this->assertObjectHasAttribute('realpath', $items[1]);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException notfound
+     */
+    public function testListItemsException()
+    {
+        $this->storage->expects($this->once())
+            ->method('listItems')
+            ->with('notfound')
+            ->will($this->throwException(new \InvalidArgumentException));
+
+        $this->service->listItems('notfound');
     }
 
     public function testFetchItem()
@@ -373,6 +388,36 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
         $file->expects($this->once())
             ->method('getMimeType')
             ->will($this->returnValue('text/plain'));
+
+        $filename = sys_get_temp_dir() . '/' . uniqid('phpunit_', TRUE);
+        file_put_contents($filename, 'data');
+
+        $file->expects($this->once())
+            ->method('getFileName')
+            ->will($this->returnValue($filename));
+
+        $this->storage->expects($this->once())
+            ->method('storeItem')
+            ->with('key', 'data');
+
+        $this->service->replaceItem('key', $file);
+        unlink($filename);
+    }
+
+    public function testReplaceItemCharset()
+    {
+        $this->storage->expects($this->once())
+            ->method('getMimeType')
+            ->with('key')
+            ->will($this->returnValue('text/html'));
+
+        $file = $this->getMockBuilder('Zend_Form_Element_File')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $file->expects($this->once())
+            ->method('getMimeType')
+            ->will($this->returnValue('text/plain; charset=utf-8'));
 
         $filename = sys_get_temp_dir() . '/' . uniqid('phpunit_', TRUE);
         file_put_contents($filename, 'data');

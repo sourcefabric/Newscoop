@@ -11,8 +11,6 @@ class Admin_Form_ReplaceTemplate extends Zend_Form
 {
     public function init()
     {
-        $this->addElement('hash', 'csrf');
-
         $this->addElement('file', 'file', array(
             'label' => getGS('Replace with'),
             'required' => TRUE,

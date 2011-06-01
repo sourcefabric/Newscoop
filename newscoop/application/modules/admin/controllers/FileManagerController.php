@@ -36,18 +36,23 @@ class Admin_FileManagerController extends Zend_Controller_Action
         $form->setMethod('post');
         $this->view->form = $form;
 
-        // get items
-        $path = $this->parsePath();
-        $folders = $templates = array();
-        foreach ($this->service->listItems($path) as $item) {
-            $form->file->addMultioption($item->name, $item->name); // add possible files
+        try {
+            // get items
+            $path = $this->parsePath();
+            $folders = $templates = array();
+            foreach ($this->service->listItems($path) as $item) {
+                $form->file->addMultioption($item->name, $item->name); // add possible files
 
-            if (!isset($item->id)) {
-                $folders[] = $item;
-                continue;
+                if (!isset($item->id)) {
+                    $folders[] = $item;
+                    continue;
+                }
+
+                $templates[] = $item;
             }
-
-            $templates[] = $item;
+        } catch (\InvalidArgumentException $e) {
+            $this->_helper->flashMessenger(array('error', $e->getMessage()));
+            $this->_helper->redirector('index');
         }
 
         $this->view->folders = $folders;
@@ -117,7 +122,7 @@ class Admin_FileManagerController extends Zend_Controller_Action
                 $this->service->storeItem("$path/$basename", file_get_contents($tmp));
             }
 
-            $this->_helper->flashMessenger($this->formatMessage($files, getGS('uploaded')));
+            $this->_helper->flashMessenger($this->formatMessage(array_keys($files), getGS('uploaded')));
             $this->_helper->redirector('index', 'file-manager', 'admin', array(
                 'path' => $this->_getParam('path'),
             ));
@@ -132,6 +137,8 @@ class Admin_FileManagerController extends Zend_Controller_Action
         $key = $this->getKey();
         $item = $this->service->fetchMetadata($key);
         $this->view->item = $item;
+        $this->view->placeholder('title')
+            ->set(getGS("Edit template: $1 (Template ID: $2)", $item->name, $item->id));
 
         switch ($item->type) {
             case 'jpg':
@@ -156,8 +163,9 @@ class Admin_FileManagerController extends Zend_Controller_Action
         $form->setMethod('post')->setAttrib('enctype', 'multipart/form-data');
 
         $request = $this->getRequest();
-        if ($request->isPost() && $form->isValid($request->getPost())) {
+        if ($request->isPost() && $request->getParam('file', false) && $form->isValid($request->getPost())) {
             try {
+                $form->getValues(); // upload
                 $this->service->replaceItem($key, $form->file);
 	            $this->_helper->flashMessenger(getGS('File "$1" replaced.', basename($key)));
             } catch (\InvalidArgumentException $e) {
@@ -204,7 +212,7 @@ class Admin_FileManagerController extends Zend_Controller_Action
     public function editImageAction()
     {
         $key = $this->getKey();
-        $this->view->src = "$this->root/$key";
+        $this->view->item = $this->service->fetchMetadata($key);
     }
 
     public function editOtherAction()
@@ -302,7 +310,7 @@ class Admin_FileManagerController extends Zend_Controller_Action
         $name = $this->formatName($this->_getParam('name'));
 
         try {
-            $this->service->createFolder("$path/$name");
+            $this->service->createFolder(ltrim("$path/$name", ' /'));
 		    $this->_helper->flashMessenger(getGS("Directory $1 created.", "<strong>$name</strong>"));
         } catch (\InvalidArgumentException $e) {
 	        $this->_helper->flashMessenger(array('error', $e->getMessage()));
@@ -319,7 +327,7 @@ class Admin_FileManagerController extends Zend_Controller_Action
         $name = $this->formatName($this->_getParam('name'));
 
         try {
-            $this->service->createFile("$path/$name");
+            $this->service->createFile(ltrim("$path/$name", ' /'));
 	        $this->_helper->flashMessenger(getGS('New template $1 created', "<strong>$name</strong>"));
         } catch (\InvalidArgumentException $e) {
             $this->_helper->flashMessenger(array('error', $e->getMessage()));

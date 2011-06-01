@@ -349,6 +349,17 @@ class Storage
     }
 
     /**
+     * Get realpath
+     *
+     * @param string $key
+     * @return string
+     */
+    public function getRealpath($key)
+    {
+        return realpath("$this->root/$key");
+    }
+
+    /**
      * Get path
      *
      * @param string $key
@@ -357,6 +368,7 @@ class Storage
      */
     private function getPath($key, $isRealpath = FALSE)
     {
+        $key = ltrim($key, ' /');
         if (preg_match('#\.\.(/|$)#', $key)) {
             throw new \InvalidArgumentException($key, self::ERROR_KEY_INVALID);
         }
