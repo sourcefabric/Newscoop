@@ -11,7 +11,7 @@ function onLicensePage()
 function toggleNextButton() 
 {
 	if(! $('#license_agreement').attr('checked')) {
-		$("#license_error_message").html("<p>Error: You must accept the terms of the License Information</p>");
+		$("#license_error_message").html("<p>You must accept the terms of the License Agreement!</p>");
 	} else {
 		$("#license_error_message").html("<p></p>");
 	}
@@ -29,7 +29,7 @@ function submitForm(frm, step)
 		    frm.submit();
 		} else {
 			//show error message
-			$("#license_error_message").html("<p>You must accept the terms of the License Information!</p>");
+			$("#license_error_message").html("<p>You must accept the terms of the License Agreement!</p>");
 		}
 	} else {
 		frm.step.value = step;
