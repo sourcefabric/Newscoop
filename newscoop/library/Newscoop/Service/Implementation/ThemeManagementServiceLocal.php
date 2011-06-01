@@ -141,13 +141,11 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 		$resources = array();
 		$folder = $this->toFullPath($theme);
 		if (is_dir($folder)) {
-			if( $dh = opendir($folder) ) {
-			    $k = 0;
+			if($dh = opendir($folder)){
 				while (($file = readdir($dh)) !== false) {
 					if ($file != "." && $file != ".."){
 						if(pathinfo($file, PATHINFO_EXTENSION) === self::FILE_TEMPLATE_EXTENSION){
 							$rsc = new Resource();
-							$rsc->setId( $theme->getId() + $k++ );
 							$rsc->setName($file);
 							$rsc->setPath($theme->getPath().$file);
 							$resources[] = $rsc;
@@ -173,9 +171,10 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 				/* @var $node \SimpleXMLElement */
 				try {
 					$outputName = $this->readAttribute($node, self::ATTR_OUTPUT_NAME);
-					if($output->getName() == $outputName) {
+					if($output->getName() == $outputName){
 						$oset = $this->loadOutputSetting($node, $theme->getPath());
 						$oset->setOutput($output);
+
 						return $oset;
 					}
 				}catch(FailedException $e){
@@ -313,12 +312,12 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
 			// We need to persist the theme ouput setting for the new publication theme
 			$em = $this->getEntityManager();
-			$syncRsc = $this->getSyncResourceService();
+
 
 			$pathRsc = new Resource();
 			$pathRsc->setName(self::THEME_PATH_RSC_NAME);
 			$pathRsc->setPath($themeFolder);
-			$pathRsc = $syncRsc->getSynchronized($pathRsc);
+			$pathRsc = $this->getSyncResourceService()->getSynchronized($pathRsc);
 
 			// Persist the coresponding ouput settings theme to the database
 			$outSets = $this->loadOutputSettings($themeFolder);
@@ -327,12 +326,8 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 				$outTh = new OutputSettingsTheme();
 				$outTh->setPublication($publication);
 				$outTh->setThemePath($pathRsc);
-
 				$outTh->setOutput($outSet->getOutput());
-				$outTh->setFrontPage($syncRsc->getSynchronized($outSet->getFrontPage()));
-				$outTh->setSectionPage($syncRsc->getSynchronized($outSet->getSectionPage()));
-				$outTh->setArticlePage($syncRsc->getSynchronized($outSet->getArticlePage()));
-				$outTh->setErrorPage($syncRsc->getSynchronized($outSet->getErrorPage()));
+				$this->syncOutputSettings($outTh, $outSet);
 
 				$em->persist($outTh);
 			}
@@ -392,18 +387,38 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 		$q = $em->createQueryBuilder();
 		$q->select('ost')->from(OutputSettingsTheme::NAME, 'ost');
 		$q->leftJoin('ost.themePath', 'rsc');
+		$q->andWhere('rsc.path = ?1');
+		$q->setParameter(1, $theme->getPath());
 
-		$q->where('ost.output = ?1');
-		$q->andWhere('rsc.path = ?2');
-
-		$q->setParameter(1, $outputSettings->getOutput());
-		$q->setParameter(2, $theme->getPath());
-
-		echo $q->getQuery()->getSQL();
 		$result = $q->getQuery()->getResult();
-		//TODO remove
-		echo count($result);
-		//var_dump($result);
+		// If there are results than it means that the theme belongs to a publication
+		if(count($result) > 0){
+			$updated = FALSE;
+			foreach ($result as $outTh){
+				/* @var $outTh Newscoop\Entity\Output\OutputSettingsTheme */
+				if($outTh->getOutput() == $outputSettings->getOutput()){
+					$this->syncOutputSettings($outTh, $outputSettings);
+					$em->persist($outTh);
+					$updated = TRUE;
+					break;
+				}
+			}
+			if(!$updated){
+				$pathRsc = new Resource();
+				$pathRsc->setName(self::THEME_PATH_RSC_NAME);
+				$pathRsc->setPath($themeFolder);
+				$pathRsc = $this->getSyncResourceService()->getSynchronized($pathRsc);
+
+				$outTh = new OutputSettingsTheme();
+				$outTh->setPublication($result[0]->getPublication());
+				$outTh->setThemePath($pathRsc);
+
+				$outTh->setOutput($outputSettings->getOutput());
+				$this->syncOutputSettings($outTh, $outputSettings);
+
+				$em->persist($outTh);
+			}
+		}
 	}
 
 	/* --------------------------------------------------------------- */
@@ -638,6 +653,25 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 	/* --------------------------------------------------------------- */
 
 	/**
+	 * Copies from the from output settings to the to output settings all the pages (front, article ...).
+	 * @param Newscoop\Entity\OutputSettings $to
+	 * 		The output setting to copy to, *(not null not empty).
+	 * @param Newscoop\Entity\OutputSettings $from
+	 * 		The output setting to copy from, *(not null not empty).
+	 */
+	protected function syncOutputSettings(OutputSettings $to, OutputSettings $from)
+	{
+		$syncRsc = $this->getSyncResourceService();
+
+		$to->setFrontPage($syncRsc->getSynchronized($from->getFrontPage()));
+		$to->setSectionPage($syncRsc->getSynchronized($from->getSectionPage()));
+		$to->setArticlePage($syncRsc->getSynchronized($from->getArticlePage()));
+		$to->setErrorPage($syncRsc->getSynchronized($from->getErrorPage()));
+	}
+
+	/* --------------------------------------------------------------- */
+
+	/**
 	 * Copies recursivelly the folder content from src to destination.
 	 *
 	 * @param string $src
@@ -648,7 +682,8 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 	protected function copy($src, $dst)
 	{
 		$dir = opendir($src);
-		@mkdir($dst);
+                if(!file_exists($dst))
+                    mkdir($dst);
 		while(false !== ( $file = readdir($dir)) ) {
 			if (( $file != '.' ) && ( $file != '..' )) {
 				if ( is_dir($src . '/' . $file) ) {

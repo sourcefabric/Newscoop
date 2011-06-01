@@ -320,7 +320,7 @@ class StorageTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException InvalidArgumentException
      */
-    public function testCreateFileException()
+    public function testCreateFileSame()
     {
         $this->storage->createFile('newfile');
         $this->storage->createFile('newfile');
@@ -359,5 +359,10 @@ class StorageTest extends \PHPUnit_Framework_TestCase
         chmod("$this->root/item.tpl", 0204);
         $this->assertEquals(CAMP_ERROR_READ_FILE, $this->storage->isUsed('key.tpl'));
         chmod("$this->root/item.tpl", 0644);
+    }
+
+    public function testGetRealpath()
+    {
+        $this->assertEquals(realpath("$this->root/dir"), $this->storage->getRealpath('dir'));
     }
 }

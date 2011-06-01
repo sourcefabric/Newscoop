@@ -54,12 +54,16 @@ class Template
      */
     public function listItems($path)
     {
-        $items = array();
-        foreach ($this->storage->listItems($path) as $file) {
-            $items[] = $this->fetchMetadata("$path/$file");
-        }
+        try {
+            $items = array();
+            foreach ($this->storage->listItems($path) as $file) {
+                $items[] = $this->fetchMetadata("$path/$file");
+            }
 
-        return $items;
+            return $items;
+        } catch (\InvalidArgumentException $e) {
+            throw new \InvalidArgumentException(getGS("'$1' not found", $path), $e->getCode(), $e);
+        }
     }
 
     /**
@@ -84,24 +88,25 @@ class Template
     public function fetchMetadata($key)
     {
         $item = $this->storage->getItem($key);
-        if ($item->isDir()) {
-            return (object) array(
-                'key' => $item->getKey(),
-                'name' => $item->getName(),
-                'type' => $item->getType(),
-            );
-        }
-
-        $template = $this->repository->getTemplate($key);
-        return (object) array(
+        $metadata = array(
             'key' => $item->getKey(),
             'name' => $item->getName(),
             'type' => $item->getType(),
-            'size' => $item->getSize(),
-            'ctime' => $item->getChangeTime(),
-            'id' => $template->getId(),
-            'ttl' => $template->getCacheLifetime(),
+            'realpath' => $this->storage->getRealpath($key),
         );
+
+        if (!$item->isDir()) {
+            $template = $this->repository->getTemplate($key);
+            $metadata += array(
+                'size' => $item->getSize(),
+                'ctime' => $item->getChangeTime(),
+
+                'id' => $template->getId(),
+                'ttl' => $template->getCacheLifetime(),
+            );
+        }
+
+        return (object) $metadata;
     }
 
     /**
@@ -137,14 +142,13 @@ class Template
      */
     public function replaceItem($key, \Zend_Form_Element_File $file)
     {
-        $oldMime = $this->storage->getMimeType($key);
-        $newMime = $file->getMimeType();
+        $oldMime = current(explode(';', $this->storage->getMimeType($key)));
+        $newMime = current(explode(';', $file->getMimeType()));
 
         if ($oldMime != $newMime && !(in_array($oldMime, self::$equivalentMimeTypes) && in_array($newMime, self::$equivalentMimeTypes))) {
             throw new \InvalidArgumentException(getGS('You can only replace a file with a file of the same type.  The original file is of type "$1", and the file you uploaded was of type "$2".', $oldMime, $newMime));
         }
 
-        $file->recieve();
         $this->storage->storeItem($key, file_get_contents($file->getFileName()));
     }
 
