@@ -6,7 +6,7 @@
     <table class="header" cellspacing="0" cellpadding="0">
     <tr>
       <td width="50%">
-        <div class="title">License Information</div>        
+        <div class="title">License Agreement</div>        
       </td>
       <td width="50%">
         <div class="navigate"><input
