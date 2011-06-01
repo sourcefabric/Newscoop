@@ -262,7 +262,8 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
 		mkdir($themeFullFolder);
 
-		try{
+		try
+                {
 			$this->copy($this->toFullPath($theme), $themeFullFolder);
 
 			// Reset the theme configs cache so also the new theme will be avaialable
@@ -606,7 +607,6 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 	protected function syncOutputSettings(OutputSettings $to, OutputSettings $from)
 	{
 		$syncRsc = $this->getSyncResourceService();
-
 		$to->setFrontPage($syncRsc->getSynchronized($from->getFrontPage()));
 		$to->setSectionPage($syncRsc->getSynchronized($from->getSectionPage()));
 		$to->setArticlePage($syncRsc->getSynchronized($from->getArticlePage()));

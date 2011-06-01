@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Newscoop
  * @copyright 2011 Sourcefabric o.p.s.
@@ -16,12 +17,19 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Publication extends Entity
 {
-	/**
-	 * Provides the class name as a constant. 
-	 */
-	const NAME = __CLASS__;
-	
-	/* --------------------------------------------------------------- */
+    /**
+     * Provides the class name as a constant.
+     */
+    const NAME = __CLASS__;
+
+    /* --------------------------------------------------------------- */
+
+    /**
+     * @id @generatedValue
+     * @Column(name="Id", type="integer")
+     * @var int
+     */
+    protected $id;
 
     /**
      * @Column(name="Name")
@@ -34,6 +42,7 @@ class Publication extends Entity
      * @var array
      */
     private $issues;
+
 
     /**
      */
@@ -99,5 +108,6 @@ class Publication extends Entity
 
         return $sections;
     }
+
 }
 

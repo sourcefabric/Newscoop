@@ -24,18 +24,18 @@ use Newscoop\Entity\Theme;
  */
 class OutputSettingsTheme extends OutputSettings
 {
-	
+
 	/**
-	 * Provides the class name as a constant. 
+	 * Provides the class name as a constant.
 	 */
 	const NAME = __CLASS__;
-	
+
 	/* --------------------------------------------------------------- */
 
 	/**
 	 * @ManyToOne(targetEntity="Newscoop\Entity\Publication")
-	 * @JoinColumn(name="fk_publication_id", referencedColumnName="id")
-	 *  @var Newscoop\Entity\Publication  
+	 * @JoinColumn(name="fk_publication_id", referencedColumnName="Id")
+	 *  @var Newscoop\Entity\Publication
 	 */
 	private $publication;
 
@@ -45,7 +45,7 @@ class OutputSettingsTheme extends OutputSettings
 	 * @var Newscoop\Entity\Resource
 	 */
 	private $themePath;
-	
+
 
 	/* --------------------------------------------------------------- */
 

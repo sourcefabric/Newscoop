@@ -3,4 +3,4 @@ RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule . 404.js [L]
 
-# ErrorDocument 404 "void(0)" 
+# ErrorDocument 404 "void(0)"
