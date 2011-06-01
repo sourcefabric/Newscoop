@@ -532,6 +532,7 @@ OpenLayers.HooksPopups.on_feature_select = function(evt, geo_obj, avoid_rec)
     }
 
     geo_obj.popup.minSize = new OpenLayers.Size(min_width, min_height);
+    geo_obj.popup.updateSize();
 
     feature.popup = geo_obj.popup;
     geo_obj.popup.feature = feature;

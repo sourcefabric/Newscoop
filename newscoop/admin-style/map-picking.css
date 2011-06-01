@@ -645,6 +645,10 @@ fieldset .poi_coors_all {
     background-image: url(images/ui-icons_ffffff_256x240.png);
 }
 
+.ui-state-active .corner-button .ui-icon-closethick {
+    background-image: url(images/ui-icons_808080_256x240.png);
+}
+
 .ui-state-hover .corner-button:hover .ui-icon-closethick {
     background-image: url(images/ui-icons_d00000_256x240.png);
 }
@@ -689,4 +693,33 @@ fieldset .poi_coors_all {
 .inline_link_like {
     cursor: pointer;
     color: #007FB3;
+}
+
+.poi_removal_inline {
+    margin-left: 22px;
+    margin-top: 5px;
+}
+
+.poi_image_edit_link_desc {
+    float: left;
+    color: #888888;
+    margin-left: 305px;
+    margin-top: 40px;
+    position: absolute;
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+    width: 230px;
+}
+
+.poi_video_edit_link_desc {
+    float: left;
+    color: #888888;
+    margin-left: 305px;
+    margin-top: 76px;
+    position: absolute;
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+    width: 230px;
 }
