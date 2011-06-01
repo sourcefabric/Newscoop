@@ -6,22 +6,22 @@
 	<presentation-img src="article.jpg" name="Article" />
 
 	<output name="Web">
-		<front-page src="front.tpl" />
-		<section-page src="section.tpl" />
-		<article-page src="article.tpl" />
-		<error-page src="404.tpl" />
+		<frontPage src="front.tpl" />
+		<sectionPage src="section.tpl" />
+		<articlePage src="article.tpl" />
+		<errorPage src="404.tpl" />
 	</output>
 
 	<!-- =============================== -->
 
-	<article-type name="Blog">
+	<articleType name="Blog">
 		<field name="Title" type="singleline" length="255" />
 		<field name="Post" type="multiline" />
-	</article-type>
+	</articleType>
 
-	<article-type name="Static">
+	<articleType name="Static">
 		<field name="Title" type="singleline" length="255" />
 		<field name="Post" type="multiline" />
-	</article-type>
+	</articleType>
 
 </theme>

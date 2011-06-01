@@ -20,14 +20,14 @@
         <template src="article.tpl" />
     </article>
     
-    <article-type name="Blog">
+    <articleType name="Blog">
         <field name="Title" type="singleline" length="255" />
         <field name="Post" type="multiline" />
-    </article-type>
+    </articleType>
     
-    <article-type name="Static">
+    <articleType name="Static">
         <field name="Title" type="singleline" length="255" />
         <field name="Post" type="multiline" />
-    </article-type>
+    </articleType>
     
 </theme>

@@ -2,6 +2,14 @@
 	<legend>Match article types</legend>
 	<div class="themeArticleType">
         <h4>Theme article types</h4>
+        <?php foreach ( $this->articleTypes as $typeName => $typeFields ) : ?>
+        	<span><?php echo $typeName ?><</span>
+        	<ul>
+        	<?php foreach ( $typeFields as $fieldName => $fieldProps ) : ?>
+    			<li><?php echo $fieldName ?> (<?php echo $fieldProps->name ?> <?php echo $fieldProps->length ?>)</li>
+        	<?php endforeach; ?>
+        	</ul>
+        <?php endforeach; ?>
         <span>News</span>
         <ul>
         	<li>Deck (single line, 100 characters)</li>

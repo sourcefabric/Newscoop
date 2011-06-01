@@ -125,7 +125,7 @@ class Admin_TestController extends Zend_Controller_Action
 
 	public function indexAction()
 	{
-		$this->test7();
+		$this->test6();
 	}
 
 	protected function test1()
@@ -267,7 +267,7 @@ class Admin_TestController extends Zend_Controller_Action
 		try{
 			$theme1 = $this->getThemeManagementService()->getById(1356059962);
 			$pub = $this->getPublicationService()->findById(2);
-			
+
 			$this->getThemeManagementService()->assignTheme($theme1, $pub);
 			$text = '---><br/>';
 
@@ -277,15 +277,15 @@ class Admin_TestController extends Zend_Controller_Action
 			$this->view->text = 'errror<br/>'.$e.'</br>'.$e->getMessage();
 		}
 	}
-	
+
 	protected function test7()
 	{
 		try{
 			$theme = $this->getThemeManagementService()->getById(1721544697);
 			$outss = $this->getThemeManagementService()->getOutputSettings($theme);
-				
+
 			$outs = $outss[0];
-						
+
 			$this->getThemeManagementService()->assignOutputSetting($outs, $theme);
 			$text = '---><br/>';
 
