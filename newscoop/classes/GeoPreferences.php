@@ -436,12 +436,14 @@ public static function GetPopupsInfo($p_htmlDir, $p_websiteUrl)
 
     $size_info = array("width" => $popup_width, "height" => $popup_height);
 
-    $video_names_arr = array("YouTube", "Vimeo", "Flash", "Flv");
+    //$video_names_arr = array("YouTube", "Vimeo", "Flash", "Flv");
+    $video_names_arr = array("YouTube", "Vimeo", "Flash");
     $video_names_info = array();
-    $video_names_info["YouTube"] = array("width" => '425', "height" => '350');
-    $video_names_info["Vimeo"] = array("width" => '400', "height" => '225');
-    $video_names_info["Flash"] = array("width" => '300', "height" => '200');
-    $video_names_info["Flv"] = array("width" => '300', "height" => '280');
+
+    $video_names_info["YouTube"] = array("width" => '320', "height" => '240'); // array("width" => '425', "height" => '350');
+    $video_names_info["Vimeo"] = array("width" => '320', "height" => '180'); // array("width" => '400', "height" => '225');
+    $video_names_info["Flash"] = array("width" => '320', "height" => '240'); // array("width" => '300', "height" => '200');
+    // $video_names_info["Flv"] = array("width" => '320', "height" => '240'); // array("width" => '300', "height" => '280');
 
     foreach ($video_names_arr as $one_video_label)
     {
@@ -514,7 +516,8 @@ public static function GetPopupsInfo($p_htmlDir, $p_websiteUrl)
         $cur_info = $video_names_info["Flash"];
 
         $video_names_usage[] = array("label" => "Flash", "source" => $flash_src_default, "width" => $cur_info['width'], "height" => $cur_info['height'], "path" => $flash_path);
-        $cur_info = $video_names_info["Flv"];
+        //$cur_info = $video_names_info["Flv"];
+        $cur_info = $video_names_info["Flash"];
 
         $video_names_usage[] = array("label" => "Flv", "source" => $flv_src_default, "width" => $cur_info['width'], "height" => $cur_info['height'], "path" => $flash_path);
     }
