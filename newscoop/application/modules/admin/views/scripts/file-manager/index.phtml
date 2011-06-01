@@ -41,17 +41,9 @@
 
 <?php if (!empty($this->path)) { ?>
 <tr class="parent">
-    <td class="id"></td>
-    <td><a href="<?php echo $this->url(array(
+    <td colspan="9"><a href="<?php echo $this->url(array(
         'path' => $this->parent,
     )); ?>" class="upOneLevel" title="<?php putGS('Go to parent'); ?>"><?php putGS('Go to parent'); ?></a></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
 </tr>
 <?php } ?>
 
