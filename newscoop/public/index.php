@@ -16,7 +16,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
 )));
 
 // goes to install process if configuration files does not exist yet
-if (!file_exists(APPLICATION_PATH . '/../system_preferences.php')
+if (!file_exists(APPLICATION_PATH . '/../conf/configuration.php')
     || !file_exists(APPLICATION_PATH . '/../conf/database_conf.php')) {
     $subdir = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/', -2));
     header("Location: $subdir/install/");
