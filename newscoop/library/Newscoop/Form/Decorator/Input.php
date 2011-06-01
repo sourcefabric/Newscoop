@@ -27,6 +27,7 @@ class Input extends Zend_Form_Decorator_Abstract
         echo "gete:";
         echo get_class($element);
         echo "instance: ",var_dump(is_a($element,'Zend_Form'));
+
         /*
         $name = htmlentities($element->getFullyQualifiedName());
         $label = htmlentities($element->getLabel());
@@ -37,7 +38,7 @@ class Input extends Zend_Form_Decorator_Abstract
         return $markup;
          *
          */
-        return $content;
+        return '<form>'.$content.'</form>';
     }
 
 }

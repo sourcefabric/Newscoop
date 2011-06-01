@@ -46,7 +46,7 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
         }
 
         // get height from cookie
-        $height = (int) $_COOKIE[$this->getId() . '_height'];
+        $height = (int) isset($_COOKIE[$this->getId() . '_height'])?$_COOKIE[$this->getId() . '_height']:0;
         if (empty($height)) {
             $height = 100;
         }

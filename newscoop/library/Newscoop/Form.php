@@ -9,8 +9,7 @@
 
 namespace Newscoop;
 
-use
-    Newscoop\Form\Decorator,
+use Newscoop\Form\Decorator,
     Zend_Form;
 
 class Form extends Zend_Form
@@ -31,14 +30,17 @@ class Form extends Zend_Form
     public function setAjax()
     {
         $decorator = new Decorator\Input();
-        $this->setDecorators(array($decorator));
-        /*
-        $this->setElementDecorators(array(
-            array('ViewHelper'),
-            array('Label'),
-            array('Errors'),
-                //array('Submit'),
+        $this->setDecorators(array(
+            'FormElements',
+            array($decorator)
         ));
+        /*
+          $this->setElementDecorators(array(
+          array('ViewHelper'),
+          array('Label'),
+          array('Errors'),
+          //array('Submit'),
+          ));
          */
     }
 
