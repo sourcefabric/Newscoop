@@ -27,11 +27,14 @@ class GroupRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
 
-        $role = new Role;
         $group->setName($values['name']);
-        $group->setRole($role);
 
-        $em->persist($role);
+        if (!$group->getRoleId()) {
+            $role = new Role;
+            $em->persist($role);
+            $group->setRole($role);
+        }
+
         $em->persist($group);
         $em->flush();
     }

@@ -64,7 +64,13 @@ foreach ($dbColumns as $dbColumn) {
         $dbColumnParam = $dbColumn->getName();
     }
     if (isset($_REQUEST[$dbColumnParam])) {
-        $articleFields[$dbColumn->getName()] = trim(Input::Get($dbColumnParam));
+        if($dbColumn->getType() == ArticleTypeField::TYPE_TEXT
+            && $dbColumn->getMaxSize()!=0
+            && $dbColumn->getMaxSize()!='') {
+                $articleFields[$dbColumn->getName()] = substr(trim(Input::Get($dbColumnParam)), 0, $dbColumn->getMaxSize());
+            }
+        else
+            $articleFields[$dbColumn->getName()] = trim(Input::Get($dbColumnParam));
     } else {
         unset($articleFields[$dbColumn->getName()]); // ignore if not set
     }

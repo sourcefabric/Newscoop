@@ -6,7 +6,7 @@
     <table class="header" cellspacing="0" cellpadding="0">
     <tr>
       <td width="50%">
-        <div class="title">License Information</div>
+        <div class="title">License Agreement</div>        
       </td>
       <td width="50%">
         <div class="navigate"><input
@@ -14,7 +14,7 @@
         onclick="submitForm( install_form, 'precheck' );" /> &nbsp;
         <input
         class="nav_button" type="button" value="Next &#155;"
-        onclick="submitForm( install_form, 'database' );" /></div>
+        onclick="submitForm( install_form, 'database' );" id="nav_button_next"/></div>
       </td>
     </tr>
     </table>
@@ -25,7 +25,10 @@
         <table width="100%" cellspacing="0" cellpadding="0">
         <tr>
           <td colspan="2">
-            <div class="subtitle"><h2>GNU/GPL Free Software License:</h2></div>
+            <div class="subtitle">
+            	<h2>GNU/GPL Free Software License:</h2>
+            	<div class="message" id="license_error_message"><p>{{ $message }}</p></div>
+            </div>
           </td>
         </tr>
         <tr>
@@ -34,6 +37,16 @@
               <iframe src="include/gpl.txt" class="license" frameborder="0" marginwidth="25px" scrolling="auto"></iframe>
             </div>
           </td>
+        </tr>
+        <tr>
+        	<td>
+        		<div class="subtitle">
+        			<div class="form_field">
+	        			<input class="inputbox" type="checkbox" name="license_agreement" value="1" id="license_agreement"/>
+	        			<label for="license_agreement">I accept the terms of the License Agreement</label>
+	        		</div>
+        		</div>
+        	</td>
         </tr>
         </table>
       </td>

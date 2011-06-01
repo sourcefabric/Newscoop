@@ -1,2 +1,7 @@
 <?php $this->placeholder('title')
-->set(getGS('Edit Access: $1', $this->group)); ?>
+->set(getGS('Edit User Type: $1', $this->group)); ?>
+
+<?php $this->placeholder('sidebar')->captureStart(); ?>
+<h3 class="label"><?php putGS('Rename User Type'); ?></h3>
+<?php echo $this->form; ?>
+<?php $this->placeholder('sidebar')->captureEnd(); ?>
