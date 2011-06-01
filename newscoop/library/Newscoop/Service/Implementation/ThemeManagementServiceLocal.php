@@ -284,7 +284,6 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 				$outTh = new OutputSettingsTheme();
 				$outTh->setPublication($publication);
 				$outTh->setThemePath($pathRsc);
-
 				$outTh->setOutput($outSet->getOutput());
 				$this->syncOutputSettings($outTh, $outSet);
 
@@ -367,7 +366,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 				$pathRsc->setName(self::THEME_PATH_RSC_NAME);
 				$pathRsc->setPath($themeFolder);
 				$pathRsc = $this->getSyncResourceService()->getSynchronized($pathRsc);
-					
+
 				$outTh = new OutputSettingsTheme();
 				$outTh->setPublication($result[0]->getPublication());
 				$outTh->setThemePath($pathRsc);
@@ -627,7 +626,8 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 	protected function copy($src, $dst)
 	{
 		$dir = opendir($src);
-		mkdir($dst);
+                if(!file_exists($dst))
+                    mkdir($dst);
 		while(false !== ( $file = readdir($dir)) ) {
 			if (( $file != '.' ) && ( $file != '..' )) {
 				if ( is_dir($src . '/' . $file) ) {

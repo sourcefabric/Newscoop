@@ -342,8 +342,7 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	 */
 	protected function loadXML($path)
 	{
-		$xml = @$this->cacheXMLEmelemt[$path];
-		if(!isset($xml)){
+		if(!isset($this->cacheXMLEmelemt[$path])){
 			try{
 				$xml = simplexml_load_file($path);
 			}catch (\Exception $e){
@@ -355,7 +354,9 @@ class ThemeServiceLocalFileSystem implements IThemeService
 			}
 			$this->cacheXMLEmelemt[$path] = $xml;
 
-		}
+		} else {
+                    $xml = $this->cacheXMLEmelemt[$path];
+                }
 		return $xml;
 	}
 
