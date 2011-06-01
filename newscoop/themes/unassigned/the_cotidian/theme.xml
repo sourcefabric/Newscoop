@@ -1,27 +1,26 @@
 <theme name="The Cotidian" designer="Sourcefabric o.p.s." version="1.0" require="3.5">
     <description>The Cotidian theme description</description>
-    
-	<presentation-img src="front.jpg" name="Front page" />
-	<presentation-img src="section.jpg" name="Section page" />
-	<presentation-img src="article.jpg" name="Article" />
+
+	<presentation-img src="front.jpg" name="Front page"/>
+	<presentation-img src="section.jpg" name="Section page"/>
+	<presentation-img src="article.jpg" name="Article"/>
 
 	<output name="Web">
-		<front-page src="front.tpl" />
-		<section-page src="section.tpl" />
-		<article-page src="article.tpl" />
-		<error-page src="404.tpl" />
-	</output>
+
+
+
+
+	<frontPage src="front.tpl"/><sectionPage src="section.tpl"/><articlePage src="article.tpl"/><errorPage src="404.tpl"/></output>
 
 	<!-- =============================== -->
 
 	<article-type name="Blog">
-		<field name="Title" type="singleline" length="255" />
-		<field name="Post" type="multiline" />
+		<field name="Title" type="singleline" length="255"/>
+		<field name="Post" type="multiline"/>
 	</article-type>
 
 	<article-type name="Static">
-		<field name="Title" type="singleline" length="255" />
-		<field name="Post" type="multiline" />
+		<field name="Title" type="singleline" length="255"/>
+		<field name="Post" type="multiline"/>
 	</article-type>
-
 </theme>
