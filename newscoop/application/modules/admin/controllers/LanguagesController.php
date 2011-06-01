@@ -95,6 +95,10 @@ class Admin_LanguagesController extends Zend_Controller_Action
     public function deleteAction()
     {
         $language = $this->getLanguage();
+        if ($language->getCode() === 'en') {
+            $this->_helper->flashMessenger->addMessage(getGS('English language cannot be removed.'));
+            $this->_helper->redirector('index', 'languages', 'admin');
+        }
 
         Localizer::DeleteLanguageFiles($language->getCode());
         $this->repository->delete($language->getId());
