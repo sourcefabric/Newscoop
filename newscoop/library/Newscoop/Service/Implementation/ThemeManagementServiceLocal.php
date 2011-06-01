@@ -9,7 +9,6 @@
 namespace Newscoop\Service\Implementation;
 
 use Doctrine\ORM\Query;
-
 use Newscoop\Service\ISyncResourceService;
 use Newscoop\Entity\Output\OutputSettingsTheme;
 use Newscoop\Service\Exception\DuplicateNameException;
@@ -25,6 +24,7 @@ use Newscoop\Entity\Output;
 use Newscoop\Entity\Theme;
 use Newscoop\Entity\Publication;
 use Newscoop\Service\IThemeManagementService;
+use Newscoop\Service\IArticleTypeService;
 use Newscoop\Utils\Validation;
 
 /**
@@ -59,6 +59,8 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 	 */
 	const THEME_PATH_RSC_NAME = 'theme-path';
 
+	const TAG_ROOT = 'theme';
+
 	const TAG_OUTPUT = 'output';
 	const ATTR_OUTPUT_NAME = 'name';
 
@@ -66,6 +68,13 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 	const TAG_PAGE_SECTION = 'sectionPage';
 	const TAG_PAGE_ARTICLE = 'articlePage';
 	const TAG_PAGE_ERROR = 'errorPage';
+
+	const TAG_ARTICLE_TYPE = 'articleType';
+	const ATTR_ARTICLE_TYPE_NAME = 'name';
+	const ATTR_ARTICLE_TYPE_FILED_NAME = 'name';
+    const ATTR_ARTICLE_TYPE_FILED_TYPE = 'type';
+	const ATTR_ARTICLE_TYPE_FILED_LENGTH = 'length';
+
 	const ATTR_PAGE_SRC = 'src';
 
 	/* --------------------------------------------------------------- */
@@ -76,6 +85,8 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 	private $outputService = NULL;
 	/** @var Newscoop\Service\ISyncResourceService */
 	private $syncResourceService = NULL;
+	/** @var Newscoop\Service\IArticleTypeService */
+	private $articleTypeService = NULL;
 
 	/* --------------------------------------------------------------- */
 
@@ -156,9 +167,9 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 		$xml = $this->loadXML($this->toFullPath($theme, $this->themeConfigFileName));
 		if($xml != NULL){
 			$nodes = $this->getNodes($xml, self::TAG_OUTPUT);
-			foreach ($nodes as $node){
+			foreach ($nodes as $node) {
 				/* @var $node \SimpleXMLElement */
-				try{
+				try {
 					$outputName = $this->readAttribute($node, self::ATTR_OUTPUT_NAME);
 					if($output->getName() == $outputName){
 						$oset = $this->loadOutputSetting($node, $theme->getPath());
@@ -180,6 +191,37 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 		Validation::notEmpty($theme, 'theme');
 
 		return $this->loadOutputSettings($theme->getPath());
+	}
+
+	/**
+	 * @author mihaibalaceanu
+	 * @param \Newscoop\Entity\Theme $theme
+	 */
+	function getArticleTypes(Theme $theme)
+	{
+        Validation::notEmpty($theme, 'theme');
+        $xml = $this->loadXML($this->toFullPath($theme, $this->themeConfigFileName));
+        $ret = array();
+        // getting the article types
+        foreach( $xml->xpath( '/'.self::TAG_ROOT.'/'.self::TAG_ARTICLE_TYPE ) as $artType )
+        {
+            // set article type name on return array
+            $ret[ ( $artTypeName = (string) $this->readAttribute($artType, self::ATTR_OUTPUT_NAME) ) ] = array();
+            // getting the article type fields
+            foreach( $xml->xpath( '/'.self::TAG_ROOT.'/'.self::TAG_ARTICLE_TYPE.'[@'.self::ATTR_ARTICLE_TYPE_NAME.'=(\''.$artTypeName.'\')]/*' ) as $artTypeField )
+            {
+                try
+                {
+                    $ret[$artTypeName][(string) $artTypeField[self::ATTR_ARTICLE_TYPE_FILED_NAME]] = (object) array
+                    (
+                        self::ATTR_ARTICLE_TYPE_FILED_TYPE   => (string) $artTypeField[self::ATTR_ARTICLE_TYPE_FILED_TYPE],
+                        self::ATTR_ARTICLE_TYPE_FILED_LENGTH => (string) $artTypeField[self::ATTR_ARTICLE_TYPE_FILED_LENGTH],
+                    );
+                }
+                catch (\Exception $e){}
+            }
+        }
+        return $ret;
 	}
 
 	/* --------------------------------------------------------------- */
@@ -424,6 +466,20 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 		}
 		return $this->syncResourceService;
 	}
+
+	/**
+	 * Provides the article type service.
+	 *
+	 * @return Newscoop\Service\IArticleTypeService
+	 *
+	 */
+    public function getArticleTypeService()
+    {
+        if( $this->articleTypeService === NULL ) {
+            $this->articleTypeService = $this->getResourceId()->getService(IArticleTypeService::NAME);
+        }
+        return $this->articleTypeService;
+    }
 
 	/* --------------------------------------------------------------- */
 

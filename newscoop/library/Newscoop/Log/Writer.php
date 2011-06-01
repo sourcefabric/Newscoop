@@ -53,9 +53,13 @@ class Writer extends Zend_Log_Writer_Abstract
             }
         }
 
-        if (empty($event['user'])) { // Can't store without user
-            //FIXME: the user class is abstract cannot create instance $event['user'] = new User;
-            $event['user'] = new User;
+        // set user if any
+        if (!isset($event['user'])) {
+            $event['user'] = null;
+            $auth = \Zend_Auth::getInstance();
+            if ($auth->hasIdentity()) {
+                $event['user'] = $this->em->getReference('Newscoop\Entity\User\Staff', $auth->getIdentity());
+            }
         }
 
         // create log entity
@@ -63,15 +67,8 @@ class Writer extends Zend_Log_Writer_Abstract
         $log->setTimeCreated(new DateTime($event['timestamp']))
             ->setText($event['message'])
             ->setPriority($event['priority'])
-            ->setClientIP($ip ?: '');
-
-        if (!empty($event['user'])) { // set user
-            if (is_numeric($event['user'])) {
-                $event['user'] = $this->em->find('Newscoop\Entity\User\Staff', (int) $event['user']);
-            }
-            $log->setUser($event['user']);
-        }
-
+            ->setClientIP(isset($ip) ? $ip : '')
+            ->setUser($event['user']);
 
         // store
         $this->em->persist($log);
