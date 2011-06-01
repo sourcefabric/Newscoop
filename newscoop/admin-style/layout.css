@@ -24,9 +24,10 @@ body > .content {
 }
 
 .content-sidebar .sidebar {
-    float: left;
+    float: right;
+    clear: right;
     width: 320px;
-    margin: 22px 0 0 41px;
+    margin: 22px 15px 0 0;
     background-color: #fff;
     border: 1px solid #a9a9a9;
     -mozilla-box-shadow: 1px 1px 1px #ccc;
