@@ -43,9 +43,7 @@ class Action_Helper_Log extends Zend_Controller_Action_Helper_Abstract
     public function getLogger()
     {
         if ($this->logger === NULL) {
-            $controller = $this->getActionController();
-            $bootstrap = $controller->getInvokeArg('bootstrap');
-            $this->setLogger($bootstrap->getResource('Log'));
+            $this->setLogger(\Zend_Registry::get('log'));
         }
 
         return $this->logger;
