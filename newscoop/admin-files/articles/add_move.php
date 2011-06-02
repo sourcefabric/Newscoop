@@ -103,9 +103,9 @@ if (sizeof($allArticleTypes) == 0) {
 	<td valign="top">
 		<table>
 		<tr>
-			<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
+			<TD ALIGN="RIGHT" ><?php  putGS("Title"); ?>:</TD>
 			<TD>
-			<INPUT TYPE="TEXT" NAME="f_article_name" SIZE="40" MAXLENGTH="140" class="input_text countable" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', getGS('Name')); ?>" value="<?php echo htmlspecialchars($f_article_name); ?>">
+			<INPUT TYPE="TEXT" NAME="f_article_name" SIZE="40" MAXLENGTH="140" class="input_text countable" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', getGS('Title')); ?>" value="<?php echo htmlspecialchars($f_article_name); ?>">
 			</TD>
 		</TR>
 		<TR>
