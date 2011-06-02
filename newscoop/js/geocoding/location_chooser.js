@@ -171,6 +171,8 @@ this.poi_content_value_inline = null;
 this.poi_text_value_inline = null;
 // for the save-and-preview as one action
 this.go_to_preview_page = false;
+// whether to show coordinates at poi listing
+this.coordinates_to_show = false;
 
 // setting the localized strings
 this.set_display_strings = function(local_strings)
@@ -773,11 +775,36 @@ this.set_inline_desc_value = function(form, index)
 
 };
 
+this.is_poi_visible = function(index)
+{
+    var poi_visible = false;
+
+    if (this.poi_markers && this.poi_markers[index])
+    {
+        var cur_poi_info = this.poi_markers[index];
+        var longitude = cur_poi_info['map_lon'];
+        var latitude = cur_poi_info['map_lat'];
+        var poi_lonlat = new OpenLayers.LonLat(longitude, latitude);
+
+        var view_box = this.map.calculateBounds();
+        if (view_box.containsLonLat(poi_lonlat, false)) {
+            poi_visible = true;
+        }
+    }
+
+    return poi_visible;
+};
+
 this.preview_edited = function()
 {
     var index = this.edited_point;
     this.close_popup(index);
-    this.center_poi(index);
+
+    var poi_visible = this.is_poi_visible(index);
+    if (!poi_visible) {
+        this.center_poi(index);
+    }
+
     OpenLayers.HooksPopups.on_map_feature_select(this, index);
 };
 
@@ -787,7 +814,11 @@ this.select_poi_on_list = function(index)
     //    return;
     //}
 
-    this.center_poi(index);
+    var poi_visible = this.is_poi_visible(index);
+    if (!poi_visible) {
+        this.center_poi(index);
+    }
+
     OpenLayers.HooksPopups.on_map_feature_select(this, index);
 };
 
@@ -950,9 +981,16 @@ this.update_poi_descs = function(active, index_type)
         descs_inner += "<a href='#' class='link icon-link right-floated' onclick='" + obj_name + ".edit_poi(" + pind + ");return false;'><span class='icon ui-icon-pencil'></span><strong>" + this.display_strings.edit + "</strong></a>";
         descs_inner += "</div>";
 
-        descs_inner += "<fieldset class='poi_coors_all_set toggle closed'>";
-        descs_inner += "<legend class='poi_coors_all_legend' style='cursor: pointer;' onClick=\"$('.poi_coors_all').toggleClass('map_hidden'); $('.poi_coors_all_set').toggleClass('closed'); return false;\"><span class='show_hide_coordinates ui-icon ui-icon-triangle-2-n-s'></span>" + this.display_strings.coordinates + "</legend>";
-        descs_inner += "<div class='poi_coors_all map_hidden'>";
+        var coor_class_show = " map_hidden";
+        var fset_class_show = " closed";
+        if (this.coordinates_to_show) {
+            coor_class_show = "";
+            fset_class_show = "";
+        }
+
+        descs_inner += "<fieldset class='poi_coors_all_set toggle " + fset_class_show + "'>";
+        descs_inner += "<legend class='poi_coors_all_legend' style='cursor: pointer;' onClick=\"$('.poi_coors_all').toggleClass('map_hidden'); $('.poi_coors_all_set').toggleClass('closed'); " + obj_name + ".coordinates_to_show = !" + obj_name + ".coordinates_to_show; return false;\"><span class='show_hide_coordinates ui-icon ui-icon-triangle-2-n-s'></span>" + this.display_strings.coordinates + "</legend>";
+        descs_inner += "<div class='poi_coors_all " + coor_class_show + "'>";
         descs_inner += "<div class='poi_coors'>";
         descs_inner += "<label>" + this.display_strings.latitude + "</label><input id='" + lat_id + "' class='poi_coors_input' size='9' onChange='" + obj_name + ".update_poi_position(" + pind + ", \"latitude\", this.value, this); return false;' name='poi_latitude_" + pind + "' value='" + cur_poi.lat.toFixed(6) + "'" + disable_value + ">";
         descs_inner += "</div>";
@@ -1221,6 +1259,8 @@ this.view_newly_edited = function(index)
 
 this.main_openlayers_init = function(map_div_name, descs_name)
 {
+    this.coordinates_to_show = false;
+
     this.descs_elm = document.getElementById ? document.getElementById(descs_name) : null;
     this.descs_elm_name = descs_name;
 
@@ -1584,9 +1624,24 @@ this.map_position_changed = function ()
         var current_map_center = this.map.getCenter();
         if ((current_map_center.lon != this.map_view_layer_center.lon) || (current_map_center.lat != this.map_view_layer_center.lat))
         {
-            this.map_view_layer_center = current_map_center;
-            this.set_save_state(true);
-            this.map_spec_changed = true;
+            var old_pos = new OpenLayers.LonLat(this.map_view_layer_center.lon, this.map_view_layer_center.lat).transform(
+                this.map.getProjectionObject(),
+                new OpenLayers.Projection("EPSG:4326")
+            );
+            var new_pos = new OpenLayers.LonLat(current_map_center.lon, current_map_center.lat).transform(
+                this.map.getProjectionObject(),
+                new OpenLayers.Projection("EPSG:4326")
+            );
+
+            var min_dif = 0.0000001;
+            var lon_dif = Math.abs(new_pos.lon - old_pos.lon);
+            var lat_dif = Math.abs(new_pos.lat - old_pos.lat);
+
+            if ((min_dif < lon_dif) || (min_dif < lat_dif)) {
+                this.map_view_layer_center = current_map_center;
+                this.set_save_state(true);
+                this.map_spec_changed = true;
+            }
         }
     }
 

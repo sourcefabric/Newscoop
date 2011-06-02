@@ -467,6 +467,8 @@ OpenLayers.HooksPopups.on_feature_select = function(evt, geo_obj, avoid_rec)
 
     var feature = null;
 
+    geo_obj.close_edit_window();
+
     if (evt)
     {
         feature = evt.feature;
