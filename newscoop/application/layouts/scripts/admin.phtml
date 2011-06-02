@@ -6,6 +6,32 @@
 
     <meta http-equiv="Expires" content="now" />
 
+    <script type="text/javascript"><!--
+        <?php if (strpos($_SERVER['HTTP_REFERER'], 'login.php') !== FALSE) { ?>
+        // close window after relogin
+        if (opener && !opener.closed && opener.setSecurityToken) {
+            opener.setSecurityToken(g_security_token);
+            opener.focus();
+            window.close();
+        }
+        <?php } ?>
+
+        // set vars
+        var popupFlash = false;
+        var website_url = '<?php echo $this->baseUrl(); ?>';
+        var g_admin_url = '<?php echo $this->baseUrl('admin'); ?>';
+        var g_admin_img = '<?php echo $this->baseUrl('admin-style/images'); ?>';
+        var g_security_token = '<?php echo SecurityToken::GetToken(); ?>';
+
+        var localizer = localizer || {
+            processing: '<?php putGS('Processing...'); ?>',
+            session_expired: '<?php putGS('Session expired.'); ?>',
+            please: '<?php putGS('Please'); ?>',
+            login: '<?php putGS('login'); ?>',
+            confirm: '<?php putGS('Are you sure you want to'); ?>'
+        };
+    //--></script>
+
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/jquery-ui-1.8.6.custom.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/admin_stylesheet_new.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/admin_stylesheet.css'); ?>" />
@@ -40,38 +66,6 @@
     <script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/fancybox/jquery.fancybox-1.3.4.pack.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo $this->baseUrl('/js/admin.js'); ?>"></script>
 
-    <script type="text/javascript"><!--
-        <?php if (strpos($_SERVER['HTTP_REFERER'], 'login.php') !== FALSE) { ?>
-        // close window after relogin
-        if (opener && !opener.closed && opener.setSecurityToken) {
-            opener.setSecurityToken(g_security_token);
-            opener.focus();
-            window.close();
-        }
-        <?php } ?>
-
-        // set vars
-        var popupFlash = false;
-        var website_url = '<?php echo $this->baseUrl(); ?>';
-        var g_admin_url = '<?php echo $this->baseUrl('admin'); ?>';
-        var g_admin_img = '<?php echo $this->baseUrl('admin-style/images'); ?>';
-        var g_security_token = '<?php echo SecurityToken::GetToken(); ?>';
-                
-        var localizer = localizer || {
-            processing: '<?php putGS('Processing...'); ?>',
-            session_expired: '<?php putGS('Session expired.'); ?>',
-            please: '<?php putGS('Please'); ?>',
-            login: '<?php putGS('login'); ?>',
-            confirm: '<?php putGS('Are you sure you want to'); ?>'
-        };
-
-        $(function() {
-            <?php if ($this->locale != 'en') { ?>
-            // init datepicker
-            $.datepicker.setDefaults( $.datepicker.regional['<?php echo $this->locale; ?>'] );
-            <?php } ?>
-        });
-    //--></script>
 </head>
 <body<?php echo $this->placeholder('sidebar') != '' ? ' class="with-sidebar"' : ''; ?>>
 <div class="meta-bar">
@@ -121,5 +115,15 @@ $(function() {
 <?php if (!$this->legacy) {
     camp_html_copyright_notice();
 } ?>
+
+<script type="text/javascript"><!--
+    $(function() {
+        <?php if ($this->locale != 'en') { ?>
+        // init datepicker
+        $.datepicker.setDefaults($.datepicker.regional['<?php echo $this->locale; ?>']);
+        <?php } ?>
+    });
+//--></script>
+
 </body>
 </html>
