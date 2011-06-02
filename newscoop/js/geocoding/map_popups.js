@@ -303,6 +303,7 @@ GeoPopups.create_popup_content = function(feature, geo_obj) {
             if ((!pop_link) || ("" == pop_link)) {
                 pop_link = "#";
             }
+
             pop_text += "<a href=\"" + pop_link + "\" target=\"_blank\" class='inline_editable' onClick=\"GeoPopups.show_inline_label_edit(" + geo_obj.obj_name + ", " + rank + "); return false;\">";
             pop_text += "<span id='label_inner_edit_value' class='" + label_class_add + "'>" + pop_title_show + "</span>";
 
@@ -415,10 +416,6 @@ GeoPopups.create_popup_content = function(feature, geo_obj) {
     }
     else if (attrs.m_backlink) {
         pop_text += "<div class='article_backlinks'> " + geo_obj.display_strings.articles + ": <a href=\"" + attrs.m_backlink + "\" target=\"_blank\">" + "1" + "</a></div>";
-    }
-
-    if (editing) {
-        pop_text += "<div class='poi_removal_inline'><a href='#' onClick=\"" + geo_obj.obj_name + ".remove_poi(" + rank + ");return false;\" title=\"" + geo_obj.display_strings.remove + "\">" + geo_obj.display_strings.remove + "</a></div>";
     }
 
     var min_width = geo_obj.popup_width;

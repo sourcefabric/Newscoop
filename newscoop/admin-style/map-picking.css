@@ -232,6 +232,12 @@ a.map-no-link {
     width: 500px;
 	font-size:12px;
     padding-bottom: 1em;
+	
+    font-size: 1em;
+    line-height: 140%;
+	position: relative;
+	width:99%;
+	margin:0;
 }
 .edit_marker_selected {
     padding: 2px 10px 5px 0;
@@ -489,9 +495,14 @@ a.edit_marker_one_choice_link {
 .map_mapedit fieldset li {
     font-size: 1em;
     line-height: 140%;
+	position: relative;
+/*
+	width:99%;
+*/
+	margin:0;
 }
 
-.map_poi_edit_intro, .map_poi_edit_intro_icon, .map_poi_edit_intro_sub {
+.map_poi_edit_intro, .map_poi_edit_intro_icon, .map_poi_edit_intro_sub, li.map_poi_edit_intro_sub {
     margin-bottom: 20px;
 	font-size:15px;
 	font-weight:normal;
@@ -625,7 +636,9 @@ a.edit_marker_one_choice_link {
 	margin:0;
 	padding:8px;
 }
-
+.poi_actions_all fieldset.closed {
+	padding-left:9px;
+}
 fieldset .poi_coors_all {
     border: none;
     margin-bottom: 0;
@@ -645,10 +658,6 @@ fieldset .poi_coors_all {
     background-image: url(images/ui-icons_ffffff_256x240.png);
 }
 
-.ui-state-active .corner-button .ui-icon-closethick {
-    background-image: url(images/ui-icons_808080_256x240.png);
-}
-
 .ui-state-hover .corner-button:hover .ui-icon-closethick {
     background-image: url(images/ui-icons_d00000_256x240.png);
 }
@@ -666,6 +675,7 @@ fieldset .poi_coors_all {
     padding: 0;
     text-indent: 3px;
 	color:#444;
+	width:180px;
 }
 .map_editinner input[type="text"]:focus {
     border: 1px solid #00B5F1;
@@ -682,6 +692,17 @@ fieldset .poi_coors_all {
     vertical-align: top;
 }
 
+.map_editinner textarea {
+    border: 1px solid #9D9D9D;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;
+    color: #444444;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 0 0 0 3px;
+    width: 100%;
+}
+
 .geo_video_desc, geo_image_desc { 
 	font-size:11px;
 	font-weight:normal;
@@ -690,20 +711,34 @@ fieldset .poi_coors_all {
 	color:#999999;
 }
 
+.poi_edit_description {
+    color: #999999;
+    float: left;
+    font-size: 11px;
+    font-style: italic;
+    font-weight: normal;
+    left: 320px;
+    line-height: 14px;
+    margin-left: 305px;
+    margin-top: 76px;
+    position: absolute;
+    top: 0;
+    width: 230px;
+}
+
+.ui-state-active .corner-button .ui-icon-closethick {
+    background-image: url(images/ui-icons_808080_256x240.png);
+}
+
 .inline_link_like {
     cursor: pointer;
     color: #007FB3;
 }
 
-.poi_removal_inline {
-    margin-left: 22px;
-    margin-top: 5px;
-}
-
 .poi_image_edit_link_desc {
     float: left;
     color: #888888;
-    margin-left: 305px;
+    margin-left: 330px;
     margin-top: 40px;
     position: absolute;
     font-size: 12px;
@@ -715,7 +750,7 @@ fieldset .poi_coors_all {
 .poi_video_edit_link_desc {
     float: left;
     color: #888888;
-    margin-left: 305px;
+    margin-left: 325px;
     margin-top: 76px;
     position: absolute;
     font-size: 12px;
@@ -723,3 +758,4 @@ fieldset .poi_coors_all {
     font-style: normal;
     width: 230px;
 }
+

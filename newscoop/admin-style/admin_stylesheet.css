@@ -1544,10 +1544,11 @@ fieldset.filters a.reset {
 /*---  Topics Popup ---*/
 .pop-up h1 {
 	padding:0 0 0 20px;
-}
-
-.pop-up h1 {
-	padding:0 0 0 20px;
+	margin: 10px 0 0;
+	background:none;
+    border-bottom: none;
+    box-shadow:none;
+	float:none;
 }
 body.pop-up {
 	margin-top:120px;
