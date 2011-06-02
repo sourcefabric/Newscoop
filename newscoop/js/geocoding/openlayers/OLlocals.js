@@ -503,7 +503,7 @@ OpenLayers.HooksPopups.on_feature_select = function(evt, geo_obj, avoid_rec)
     var edit_link = "";
     if (geo_obj.editing) {
         edit_link = '<div class="geo_edit_popup_top">';
-        edit_link += "<a href='#' class='link icon-link' onClick=\"" + geo_obj.obj_name + ".remove_poi(" + attrs.rank + ");return false;\" title=\"" + geo_obj.display_strings.remove + "\"><span class='icon ui-icon-closethick'></span><strong>" + geo_obj.display_strings.remove_short + "</strong></a>";
+        edit_link += "<a href='#' class='link icon-link' onClick=\"" + geo_obj.obj_name + ".remove_poi(" + attrs.m_rank + ");return false;\" title=\"" + geo_obj.display_strings.remove + "\"><span class='icon ui-icon-closethick'></span><strong>" + geo_obj.display_strings.remove_short + "</strong></a>";
         edit_link += '<a href="#" class="link icon-link" onClick="OpenLayers.HooksPopups.on_feature_edit_disp(' + geo_obj.obj_name + ', ' + attrs.m_rank + '); return false;" title="' + geo_obj.display_strings.edit_advanced + '"><span class="icon ui-icon-pencil"></span><strong>' + geo_obj.display_strings.edit + '</strong></a></div> ';
     }
 
