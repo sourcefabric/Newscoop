@@ -3,23 +3,13 @@
 	<div class="themeArticleType">
         <h4>Theme article types</h4>
         <?php foreach ( $this->articleTypes as $typeName => $typeFields ) : ?>
-        	<span><?php echo $typeName ?><</span>
+        	<span><?php echo $typeName ?></span>
         	<ul>
         	<?php foreach ( $typeFields as $fieldName => $fieldProps ) : ?>
-    			<li><?php echo $fieldName ?> (<?php echo $fieldProps->name ?> <?php echo $fieldProps->length ?>)</li>
+    			<li><?php echo $fieldName ?> (<?php echo $fieldProps->type ?> <?php echo $fieldProps->length ?>)</li>
         	<?php endforeach; ?>
         	</ul>
         <?php endforeach; ?>
-        <span>News</span>
-        <ul>
-        	<li>Deck (single line, 100 characters)</li>
-        	<li>Body (Multiline)</li>
-        </ul>
-        <span>Quotes</span>
-        <ul>
-        	<li>Deck (single line)</li>
-        	<li>Body (multiline)</li>
-        </ul>
    </div>
    <div class="matchWithExisting">
 		<h4>Match with existing</h4>
