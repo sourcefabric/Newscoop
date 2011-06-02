@@ -158,7 +158,7 @@ function translationForm($p_request)
 				<table>
 				<tr>
 					<td>
-						<?php putGS('Screen:'); ?>
+						<?php putGS('Area to localize'); ?>:
 					</td>
 				</tr>
 				<tr>

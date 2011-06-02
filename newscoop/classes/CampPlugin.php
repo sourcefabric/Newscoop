@@ -368,7 +368,7 @@ class CampPlugin extends DatabaseObject
         foreach ($plugin_infos as $info) {
         	if (isset($info['menu']['permission']) && $g_user->hasPermission($info['menu']['permission'])) {
         		$root_menu = true;
-        	} elseif (is_array($info['menu']['sub'])) {
+            } elseif (isset($info['menu']['sub']) && is_array($info['menu']['sub'])) {
         		foreach ($info['menu']['sub'] as $menu_info) {
         			if ($g_user->hasPermission($menu_info['permission'])) {
         				$root_menu = true;

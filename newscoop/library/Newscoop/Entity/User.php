@@ -28,6 +28,12 @@ abstract class User
     private $id;
 
     /**
+     * @column(type="integer", name="KeyId")
+     * @var int
+     */
+    private $token;
+
+    /**
      * @column(name="Name")
      * @var string
      */
@@ -157,6 +163,7 @@ abstract class User
     public function __construct()
     {
         $this->timeCreated = new DateTime('now');
+        $this->token = mt_rand((int) "1 000 000 000", (int) "9 999 999 999");
     }
 
     /**
@@ -178,6 +185,16 @@ abstract class User
     public function getUserId()
     {
         return $this->getId();
+    }
+
+    /**
+     * Get key id
+     *
+     * @return string
+     */
+    public function getKeyId()
+    {
+        return $this->token;
     }
 
     /**

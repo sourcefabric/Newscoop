@@ -96,6 +96,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
 	  <a class="ui-state-default icon-button" href="#" onclick="window.open('<?php echo $previewLinkURL; ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=780, height=660'); return false;"><span class="ui-icon ui-icon-extlink"></span><?php putGS('Preview'); ?></a>
 	  <?php } ?>
     </div>
+    <div class="j-countable" id="f_article_count">&nbsp;</div>
   </div>
   <!-- END Article Title and Saving buttons bar //-->
 
@@ -177,9 +178,14 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
               type="text"
               size="45"
               value="<?php print htmlspecialchars($articleData->getProperty($dbColumn->getName())); ?>"
-              class="input_text"
               autocomplete="off"
               style="width:70%;"
+              <?php if($dbColumn->getMaxSize()!=0 && $dbColumn->getMaxSize()!=''): ?>
+              	maxlength="<?php echo $dbColumn->getMaxSize(); ?>"
+              	class="input_text countableft"
+             <?php else: ?>
+              class="input_text"
+             <?php endif; ?>
               <?php print $spellcheck ?> />
             <?php } else {
                 print htmlspecialchars($articleData->getProperty($dbColumn->getName()));
