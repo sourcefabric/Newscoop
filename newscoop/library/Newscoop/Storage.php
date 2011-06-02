@@ -14,9 +14,6 @@ use Newscoop\Storage\Item;
  */
 class Storage
 {
-    // mode for created directories
-    const MODE = 0700;
-
     // error codes
     const ERROR_NOT_FOUND = 1;
     const ERROR_NOT_DIR = 2;
@@ -270,7 +267,7 @@ class Storage
     public function createDir($key)
     {
         $path = $this->getPath($key);
-        if (realpath($path) || !mkdir($path, self::MODE)) {
+        if (realpath($path) || !mkdir($path)) {
             throw new \InvalidArgumentException($key);
         }
     }
