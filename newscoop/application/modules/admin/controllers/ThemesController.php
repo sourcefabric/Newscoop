@@ -318,10 +318,12 @@ class Admin_ThemesController extends Zend_Controller_Action
         $articleTypes = new \stdClass;
         foreach( $this->getArticleTypeService()->findAllTypes() as $at )
         {
-            $articleTypes->{$at->getName()} = new \stdClass;
+            $atName = $at->getName();
+            $articleTypes->$atName = new \stdClass;
             foreach( $this->getArticleTypeService()->findFields( $at ) as $atf )
-                $at->{$atf->getName()} = $atf->getType();
+                $articleTypes->$atName->{$atf->getName()} = $atf->getType();
         }
+        $this->view->jQueryUtils()->registerVar( 'articleTypes', $articleTypes );
     }
 
     public function wizardThemeFilesAction()
@@ -481,12 +483,10 @@ class Admin_ThemesController extends Zend_Controller_Action
     		    throw new Exception();
 		    }
         }
-        catch( DuplicateNameException $e )
-        {
+        catch( DuplicateNameException $e ) {
             $this->view->exception = array( "code" => $e->getCode(), "message" => getGS( 'Duplicate assignation' ) );
         }
-        catch( \Exception $e )
-        {
+        catch( \Exception $e ) {
             $this->view->exception = array( "code" => $e->getCode(), "message" => getGS( 'Something broke' ) );
         }
 

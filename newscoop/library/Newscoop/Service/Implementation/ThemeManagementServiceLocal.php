@@ -305,7 +305,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 		mkdir($themeFullFolder);
 
 		try
-                {
+        {
 			$this->copy($this->toFullPath($theme), $themeFullFolder);
 
 			// Reset the theme configs cache so also the new theme will be avaialable
@@ -333,7 +333,14 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 				$em->persist($outTh);
 			}
 			$em->flush();
-		} catch(\Exception $e){
+        }
+        catch( \PDOException $e )
+        {
+            if( $e->getCode() != 23000 ) // TODO Duplicate key in db.. does not need removing of folder structure
+                throw $e;
+		}
+		catch(\Exception $e)
+		{
 			$this->rrmdir($themeFullFolder);
 			throw $e;
 		}
