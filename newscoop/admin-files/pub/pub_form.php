@@ -30,7 +30,13 @@ function onCommentsModerated(p_checkbox)
 <tr>
     <td>
         <!-- Begin left column -->
-        <table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-left: 10px; padding-right: 10px; border-right: 1px solid black;">
+        <table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-left: 10px; padding-right: 10px;
+		<?php
+			if( Saas::singleton()->hasPermission("ManagePublicationSubscriptions")) {
+				echo 'border-right: 1px solid black;';
+			}
+		?>
+		">
         <tr>
             <td colspan="2">
                 <font size="+1"><b><?php putGS("General attributes"); ?></b></font>
@@ -236,7 +242,9 @@ function onCommentsModerated(p_checkbox)
         </table>
         <!-- END left column -->
     </td>
-
+	<?php
+		if( Saas::singleton()->hasPermission("ManagePublicationSubscriptions")) {
+	?>
     <!-- BEGIN right column -->
     <td style="" valign="top">
         <table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-top: 0.5em; padding-left: 10px; padding-right: 10px;">
@@ -312,6 +320,9 @@ function onCommentsModerated(p_checkbox)
         </TABLE>
     </td>
     <!-- END right column -->
+    <?php
+		}
+    ?>
 </tr>
 
 <?php CampPlugin::PluginAdminHooks(__FILE__); ?>

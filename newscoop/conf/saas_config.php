@@ -27,6 +27,19 @@
 		'plugin_interview_moderator',
 		'plugin_interview_admin',
 
+		/*plugin recaptcha*/
+		'plugin_recaptcha_admin',
+
+		/*plugin soundclound*/
+		'plugin_soundcloud_preferences',
+		'plugin_soundcloud_browser',
+		'plugin_soundcloud_upload',
+		'plugin_soundcloud_update',
+		'plugin_soundcloud_delete',
+
+
+
+
 		/*countries*/
 		'ManageCountries',
 		'DeleteCountries',
@@ -45,6 +58,8 @@
 		//'ManagePub',
 		'AddPub',
 		'ManagePubInvalidUrlTemplate',
+		'DeletePub',
+		'ManagePublicationSubscriptions',
 
 		/*system preferences*/
 		'ManageSystemPreferences'

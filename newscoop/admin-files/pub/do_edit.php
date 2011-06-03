@@ -26,23 +26,41 @@ $f_default_alias = Input::Get('f_default_alias', 'int');
 $f_language = Input::Get('f_language', 'int');
 $f_url_type = Input::Get('f_url_type', 'int');
 
+$publicationObj = new Publication($f_publication_id);
+
 if( Saas::singleton()->hasPermission("ManagePubInvalidUrlTemplate") ) {
 	$f_url_error_tpl_id = Input::Get('f_url_error_tpl_id', 'int', null);
 } else {
-	$publicationObj = new Publication($f_publication_id);
+
 	$defaultTemplateId = isset($publicationObj) ? $publicationObj->getProperty('url_error_tpl_id') : null;
 	$f_url_error_tpl_id = $defaultTemplateId;
 }
 
 
-
-
-$f_time_unit = Input::Get('f_time_unit');
-$f_unit_cost = trim(Input::Get('f_unit_cost', 'float', '0.0'));
-$f_unit_cost_all_lang = trim(Input::Get('f_unit_cost_all_lang', 'float', '0.0'));
-$f_currency = trim(Input::Get('f_currency'));
-$f_paid = Input::Get('f_paid', 'int');
-$f_trial = Input::get('f_trial', 'int');
+if( Saas::singleton()->hasPermission("ManagePublicationSubscriptions") ) {
+	$f_time_unit = Input::Get('f_time_unit');
+	$f_unit_cost = trim(Input::Get('f_unit_cost', 'float', '0.0'));
+	$f_unit_cost_all_lang = trim(Input::Get('f_unit_cost_all_lang', 'float', '0.0'));
+	$f_currency = trim(Input::Get('f_currency'));
+	$f_paid = Input::Get('f_paid', 'int');
+	$f_trial = Input::get('f_trial', 'int');
+} else {
+	if (isset($publicationObj)) {
+    	$f_time_unit = $publicationObj->getTimeUnit();
+		$f_unit_cost = p($publicationObj->getUnitCost());
+		$f_unit_cost_all_lang = p($publicationObj->getUnitCostAllLang());
+		$f_currency = p(htmlspecialchars($publicationObj->getCurrency()));
+		$f_paid = p($publicationObj->getPaidTime());
+		$f_trial = p($publicationObj->getTrialTime());
+    } else {
+		$f_time_unit = 'D';
+		$f_unit_cost = '';
+		$f_unit_cost_all_lang = '';
+		$f_currency	= '';
+		$f_paid = '';
+		$f_trial = '';
+    }
+}
 $f_comments_enabled = Input::Get('f_comments_enabled', 'checkbox', 'numeric');
 $f_comments_article_default = Input::Get('f_comments_article_default', 'checkbox', 'numeric');
 $f_comments_public_enabled = Input::Get('f_comments_public_enabled', 'checkbox', 'numeric');

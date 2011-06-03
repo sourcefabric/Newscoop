@@ -169,7 +169,7 @@ if ($g_user->hasPermission('ManageTempl') ) {
 	);
 }
 
-if ($g_user->hasPermission('ManagePub')) {
+if ($g_user->hasPermission('ManagePub') && Saas::singleton()->hasPermission('AddPub')) {
 	$pages[2]['pages'][] = array(
 	    'label' => getGS('Add new publication'),
 	    'module' => 'admin',
