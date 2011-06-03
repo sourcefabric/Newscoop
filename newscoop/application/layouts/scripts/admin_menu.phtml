@@ -532,15 +532,14 @@ if (!empty($plugin_pages)) {
     );
 }
 
-// set navigation
-$navigation = new Zend_Navigation($pages);
-$view->navigation()->menu()->setContainer($navigation);
-$view->navigation()->breadcrumbs()->setContainer($navigation);
-$view->navigation()->breadcrumbs()->setRenderInvisible(true);
-
-if (defined('IN_BUG_HANDLE')) { // prevent navigation causing another error
-    return;
+// set menu classes to speed up loading
+foreach ($pages as $i => $page) {
+    $pages[$i]['class'] = 'fg-button ui-widget fg-button-icon-right fg-button-ui-state-default fg-button-ui-corner-all';
 }
+
+// set navigation
+$nav = new Zend_Navigation($pages);
+$view->navigation()->menu()->setContainer($nav);
 ?>
 
 <div class="main-menu-bar">
@@ -548,8 +547,20 @@ if (defined('IN_BUG_HANDLE')) { // prevent navigation causing another error
     <?php echo $view->navigation(); ?>
 </div>
 
-<?php if (!$this->legacy) { // zend framework only ?>
+<?php if (!$this->legacy) { // zend framework only
+// remove top menu classes for breadcrumbs
+foreach ($pages as $i => $page) {
+    unset($pages[$i]['class']);
+}
+
+$nav = new Zend_Navigation($pages);
+$view->navigation()->breadcrumbs()
+    ->setContainer($nav)
+    ->setRenderInvisible(true);
+?>
+
 <div class="breadcrumb-bar zend clearfix">
     <?php echo $this->navigation()->breadcrumbs(); ?>
 </div>
+
 <?php } ?>

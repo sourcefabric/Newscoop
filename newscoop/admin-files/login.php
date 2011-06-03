@@ -129,15 +129,17 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
     };
 
     // store request post data into form fields
-    foreach ($_POST as $name => $value) {
-        if (is_array($value)) {
-            foreach ($value as $arrayValue) {
-                $printHidden("{$name}[]", $arrayValue);
-            } 
-        } else {
-            $printHidden($name, $value);
-        }
-    }
+	if (strlen($error_code) == 0) {
+		foreach ($_POST as $name => $value) {
+			if (is_array($value)) {
+				foreach ($value as $arrayValue) {
+					$printHidden("{$name}[]", $arrayValue);
+				} 
+			} else {
+				$printHidden($name, $value);
+			}
+		}
+	}
 } ?>
 
 <?php if ($error_code == "upgrade") { ?>
