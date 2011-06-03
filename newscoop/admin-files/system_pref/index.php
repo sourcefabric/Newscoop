@@ -244,7 +244,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
     </td>
     <td align="left" valign="top">
         <input type="radio" name="f_collect_statistics" value="Y" <?php if (SystemPref::Get("CollectStatistics") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
-        <input type="radio" name="f_collect_statistics" value="N" <?php if (SystemPref::Get("CollectStatistics") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
+        <input type="radio" name="f_collect_statistics" value="N" <?php if (SystemPref::Get("CollectStatistics") != 'Y') p("checked"); ?> /> <?php putGS("No"); ?>
     </td>
 </tr>
 <tr>
