@@ -168,10 +168,9 @@ class CommentRepository extends DatatableSource
         {
             $articleRepository = $em->getRepository('Newscoop\Entity\Article');
             $thread = $articleRepository->find($p_values['thread']);
-            if(!isset($p_values['language']))
+            if (!isset($p_values['language'])) {
                 $language = $thread->getLanguage();
-            else
-            {
+            } else {
                 $languageRepository = $em->getRepository('Newscoop\Entity\Language');
                 $language = $languageRepository->find($p_values['language']);
             }
