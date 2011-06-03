@@ -210,6 +210,42 @@ class Article extends DatabaseObject {
         return $res;
     }
 
+    /**
+     * Check if an article with the same name exists in the translation destination
+     *
+     * @param string $p_translation_title
+     *      the desired title for the translated article
+     * @param int $p_translation_language
+     * 		the id of the translation language
+     *
+     * @return boolean
+     *      TRUE if an article with the same name exists, FALSE otherwise
+     */
+    public function translationTitleExists($p_translation_title, $p_translation_language)
+    {
+    	global $g_ado_db;
+
+		$idPublication =  $this->m_data['IdPublication'];
+		$nrIssue = $this->m_data['NrIssue'];
+		$nrSection = $this->m_data['NrSection'];
+
+
+        $where = " WHERE IdPublication = $idPublication AND NrIssue = $nrIssue"
+                    . " AND NrSection = $nrSection"
+                    . " AND IdLanguage = $p_translation_language"
+                    . " AND Name = '$p_translation_title'";
+
+        $queryStr = "SELECT Number FROM Articles$where";
+
+        $articleNumber = $g_ado_db->GetOne($queryStr);
+
+        if ( $articleNumber > 0 ) {
+        	return TRUE;
+        } else {
+        	return FALSE;
+        }
+    }
+
 
     /**
      * A way for internal functions to call the superclass create function.
