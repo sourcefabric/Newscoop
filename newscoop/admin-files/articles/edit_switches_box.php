@@ -1,5 +1,5 @@
 <div class="articlebox" title="<?php putGS('Switches'); ?>"><div>
-    <form id="article-switches" action="post.php" method="POST">
+<form id="article-switches" action="/<?php echo $ADMIN; ?>/articles/post.php" method="POST">
 
     <ul class="check-list padded">
       <li><input type="checkbox" name="f_on_front_page" id="f_on_front_page"

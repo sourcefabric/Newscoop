@@ -38,7 +38,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 
 <?php camp_html_display_msgs(); ?>
 
-<form action="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" method="POST">
+<form action="/<?php echo $ADMIN; ?>/system_pref/do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" method="POST">
 <?php echo SecurityToken::FormParameter(); ?>
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>

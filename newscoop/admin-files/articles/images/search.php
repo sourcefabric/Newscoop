@@ -39,7 +39,7 @@ $NumImagesFound = $imageSearch->getNumImagesFound();
 
 ?>
 
-<form method="POST" action="popup.php">
+    <form method="POST" action="/<?php echo $ADMIN; ?>/articles/images/popup.php">
 <input type="hidden" name="f_order_direction" value="<?php echo $f_order_direction; ?>">
 <input type="hidden" name="f_image_offset" value="0">
 <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
@@ -67,7 +67,7 @@ $NumImagesFound = $imageSearch->getNumImagesFound();
 				</select>
 			</td>
 			<td>
-				<a href="popup.php?f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>&f_article_number=<?php p($f_article_number); ?>&f_order_direction=<?php p($ReverseOrderDirection); ?>"><?php p($OrderSign); ?></a>
+                <a href="/<?php echo $ADMIN; ?>/articles/images/popup.php?f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>&f_article_number=<?php p($f_article_number); ?>&f_order_direction=<?php p($ReverseOrderDirection); ?>"><?php p($OrderSign); ?></a>
 			</td>
 		</tr>
 		</table>
@@ -118,7 +118,7 @@ foreach ($imageData as $image) {
         <?php
         if ($articleObj->userCanModify($g_user)) { ?>
             <TD ALIGN="CENTER">
-    		<form method="POST" action="do_link.php">
+            <form method="POST" action="/<?php echo $ADMIN; ?>/articles/images/do_link.php">
 			<?php echo SecurityToken::FormParameter(); ?>
 			<input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
 			<input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>">

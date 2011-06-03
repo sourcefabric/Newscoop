@@ -55,7 +55,7 @@ echo $breadcrumbs;
 
 </dl>
 
-<form name="edit" method="POST" action="do_edit-attachment.php">
+<form name="edit" method="POST" action="/<?php echo $ADMIN; ?>/media-archive/do_edit-attachment.php">
     <?php echo SecurityToken::FormParameter(); ?>
     <input type="hidden" name="f_attachment_id" value="<?php echo $object->getAttachmentId(); ?>" />
 

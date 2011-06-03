@@ -89,7 +89,7 @@ if (sizeof($allArticleTypes) == 0) {
 	camp_html_display_msgs();
 ?>
 <P>
-<FORM NAME="add_article" METHOD="GET" ACTION="add_move.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<FORM NAME="add_article" METHOD="GET" ACTION="" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
