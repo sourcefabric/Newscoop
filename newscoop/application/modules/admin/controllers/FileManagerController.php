@@ -151,6 +151,7 @@ class Admin_FileManagerController extends Zend_Controller_Action
             case 'tpl':
             case 'css':
             case 'txt':
+            case 'html':
             case 'js':
                 $this->_forward('edit-template');
                 break;
