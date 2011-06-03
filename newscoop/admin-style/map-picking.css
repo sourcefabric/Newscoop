@@ -496,13 +496,10 @@ a.edit_marker_one_choice_link {
     font-size: 1em;
     line-height: 140%;
 	position: relative;
-/*
-	width:99%;
-*/
 	margin:0;
 }
 
-.map_poi_edit_intro, .map_poi_edit_intro_icon, .map_poi_edit_intro_sub, li.map_poi_edit_intro_sub {
+.map_poi_edit_intro, .map_poi_edit_intro_icon, .map_poi_edit_intro_sub, .map_mapedit fieldset li.map_poi_edit_intro_sub {
     margin-bottom: 20px;
 	font-size:15px;
 	font-weight:normal;
@@ -513,7 +510,7 @@ a.edit_marker_one_choice_link {
     margin-bottom: 5px;
 }
 
-.map_poi_edit_intro_sub {
+.map_poi_edit_intro_sub, .map_mapedit fieldset li.map_poi_edit_intro_sub {
     margin-top: 0px;
     margin-bottom: 0;
 }
@@ -571,8 +568,7 @@ a.edit_marker_one_choice_link {
 }
 
 .dataTables_scrollBody {
-	border:1px solid #9D9D9D;
-	border-width:0 1px 1px 1px;
+	border:none;
 }
 .geonames_result_table {
 	font-size:12px;
@@ -583,18 +579,24 @@ a.edit_marker_one_choice_link {
 
 }
 
+
 .geonames_result_table td {
 	padding:3px 0 3px;
 	border-bottom:1px solid #ebebeb;
 }
+.geonames_result_table tr:last-child td {
+	border-bottom:none;
+}
 
-.search_res_cc_header.ui-state-default {
-	border-right:none;
+.geonames_result_table th.ui-state-default {
+	border-width: 0 0 1px 0;
 }
 .search_res_city_column {
 	 border-left:1px solid #ebebeb;
 }
-
+.geonames_result_table th.search_res_city_header {
+	 border-left:1px solid #ebebeb;
+}
 .inline_editable {
 	background-image:url(images/icon_edit_l.png);
 	background-repeat:no-repeat;
@@ -681,7 +683,7 @@ fieldset .poi_coors_all {
     border: 1px solid #00B5F1;
 }
 
-.map_editinner input[type="select"] {
+.map_editinner select {
     background-color: #FFFFFF;
     border: 1px solid #9D9D9D;
     font-family: Arial,Helvetica,sans-serif;
@@ -700,7 +702,10 @@ fieldset .poi_coors_all {
     font-size: 14px;
     margin: 0;
     padding: 0 0 0 3px;
-    width: 100%;
+}
+
+.map_editinner select#point_predefined {
+	margin-bottom:6px;
 }
 
 .geo_video_desc, geo_image_desc { 
@@ -717,10 +722,8 @@ fieldset .poi_coors_all {
     font-size: 11px;
     font-style: italic;
     font-weight: normal;
-    left: 320px;
+    left: 325px;
     line-height: 14px;
-    margin-left: 305px;
-    margin-top: 76px;
     position: absolute;
     top: 0;
     width: 230px;
@@ -757,5 +760,11 @@ fieldset .poi_coors_all {
     font-weight: normal;
     font-style: normal;
     width: 230px;
+}
+
+#geolocation .dataTables_wrapper {
+    margin: 0 0 8px;
+	border:1px solid #9D9D9D;
+	border-width: 1px;
 }
 

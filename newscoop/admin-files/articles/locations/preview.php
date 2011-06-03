@@ -156,16 +156,19 @@ echo Geo_Map::GetMapTagHeader($f_article_number, $f_language_id, $map_width, $ma
   </div>
 <!--END Toolbar-->
 </div>
+<div class="clear" style="height:10px;"></div>
 <!-- Map Preview Begin -->
 <div class="geomap_container">
   <div class="geomap_locations">
     <?php echo Geo_Map::GetMapTagList($f_article_number, $f_language_id); ?>
   </div>
   <div class="geomap_menu">
-    <a href="#" onClick="<?php echo Geo_Map::GetMapTagCenter($f_article_number, $f_language_id); ?> return false;"><?php putGS("show initial map view"); ?></a>
+    <a href="#" class="ui-state-default text-button" onClick="<?php echo Geo_Map::GetMapTagCenter($f_article_number, $f_language_id); ?> return false;"><?php putGS("show initial map view"); ?></a>
   </div>
   <div class="geomap_map">
-    <?php echo Geo_Map::GetMapTagBody($f_article_number, $f_language_id); ?>
+    <div class="geomap_menu">
+        <?php echo Geo_Map::GetMapTagBody($f_article_number, $f_language_id); ?>
+    </div>
   </div>
 </div>
 <div style="clear:both" ></div>

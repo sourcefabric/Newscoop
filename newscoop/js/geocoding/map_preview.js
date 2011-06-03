@@ -400,7 +400,10 @@ this.proc_subst_action = function(params) {
     }
 
     if (null !== select_poi) {
-        this.center_poi(select_poi);
+        if (!this.is_poi_visible(index)) {
+            this.center_poi(select_poi);
+        }
+
         window.OpenLayers.HooksPopups.on_map_feature_select(geo_obj, select_poi);
     }
 }
@@ -449,6 +452,26 @@ this.center_poi = function(index)
 
 };
 
+this.is_poi_visible = function(index)
+{
+    var poi_visible = false;
+
+    if (this.poi_markers && this.poi_markers[index])
+    {
+        var cur_poi_info = this.poi_markers[index];
+        var longitude = cur_poi_info['map_lon'];
+        var latitude = cur_poi_info['map_lat'];
+        var poi_lonlat = new OpenLayers.LonLat(longitude, latitude);
+
+        var view_box = this.map.calculateBounds();
+        if (view_box.containsLonLat(poi_lonlat, false)) {
+            poi_visible = true;
+        }
+    }
+
+    return poi_visible;
+};
+
 // opens POI buble if at a clickable map, otherwise just centers the POI
 this.select_poi = function(index)
 {
@@ -456,7 +479,9 @@ this.select_poi = function(index)
     var mlat = this.poi_markers[index].map_lat;
     var lonLat = new OpenLayers.LonLat(mlon, mlat);
 
-    this.map.setCenter (lonLat);
+    if (!this.is_poi_visible(index)) {
+        this.map.setCenter (lonLat);
+    }
 
     if (!this.action_substitute) {
         OpenLayers.HooksPopups.on_map_feature_select(this, index);

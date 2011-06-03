@@ -628,11 +628,11 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
 <?php
     $image_desc_other = getGS("Fill in image link, like") . " " . "http://www.example.net/image.png";
 ?>
-                    <div class="poi_image_edit_link_desc" id="geo_image_desc" class="geo_image_desc"><?php echo $image_desc_other; ?></div>
                     <ol>
                     <li class="edit_label_top">
                     <label class="edit_label" for="point_image"><?php putGS("Image URL"); ?>:</label>
                     <input id="point_image" name="point_image" class="text" type="text" onChange="geo_locations.store_point_property('image_source', this.value); return false;" onKeyUp="geo_locations.store_point_property('image_source', this.value); return true;" title="<?php echo $image_desc_other; ?>" />
+                    <div class="poi_edit_description" id="geo_image_desc"><?php echo $image_desc_other; ?></div>
                     </li>
 
                     <li class="edit_label_long map_poi_edit_intro_sub"><?php putGS("Change image display size"); ?>.</li>
@@ -656,11 +656,6 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
     $video_desc_local_swf = getGS("Fill in local swf flash file name or link, e.g.") . " " . "http://www.example.net/video.swf";
     $video_desc_local_flv = getGS("Fill in local flv flash file name or link, e.g.") . " " . "example.flv";
 ?>
-                    <div id="geo_video_desc_other" class="geo_video_desc poi_video_edit_link_desc"><?php echo $video_desc_other; ?></div>
-                    <div id="geo_video_desc_youtube" class="geo_video_desc map_hidden poi_video_edit_link_desc"><?php echo $video_desc_youtube; ?></div>
-                    <div id="geo_video_desc_vimeo" class="geo_video_desc map_hidden poi_video_edit_link_desc"><?php echo $video_desc_vimeo; ?></div>
-                    <div id="geo_video_desc_local_swf" class="geo_video_desc map_hidden poi_video_edit_link_desc"><?php echo $video_desc_local_swf; ?></div>
-                    <div id="geo_video_desc_local_flv" class="geo_video_desc map_hidden poi_video_edit_link_desc"><?php echo $video_desc_local_flv; ?></div>
                     <ol>
                     <li>
                     <label class="edit_label edit_label_top" for="point_video_type"><?php putGS("Video source"); ?>:</label>
@@ -676,6 +671,11 @@ foreach ($country_codes_alpha_2 as $cc_name => $cc_value) {
                     <li class="edit_label">
                     <label class="edit_label" for="point_video"><span id="video_file_label_id"><?php putGS("Video ID"); ?>:</span><span id="video_file_label_file" class="map_hidden"><?php putGS("Video file"); ?>:</span></label>
                     <input id="point_video" name="point_video" class="text" type="text" onChange="geo_locations.store_point_property('video_id', this.value); return false;" onKeyUp="geo_locations.store_point_property('video_id', this.value); return true;" title="<?php echo $video_desc_other; ?>" />
+                    <div id="geo_video_desc_other" class="poi_edit_description"><?php echo $video_desc_other; ?></div>
+                    <div id="geo_video_desc_youtube" class="map_hidden poi_edit_description"><?php echo $video_desc_youtube; ?></div>
+                    <div id="geo_video_desc_vimeo" class="map_hidden poi_edit_description"><?php echo $video_desc_vimeo; ?></div>
+                    <div id="geo_video_desc_local_swf" class="map_hidden poi_edit_description"><?php echo $video_desc_local_swf; ?></div>
+                    <div id="geo_video_desc_local_flv" class="map_hidden poi_edit_description"><?php echo $video_desc_local_flv; ?></div>
                     </li>
 
                     <li class="edit_label_long map_poi_edit_intro_sub"><?php putGS("Change video display size"); ?>.</li>
