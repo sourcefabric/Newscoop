@@ -109,7 +109,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
 
   <!-- START Main form //-->
   <div class="main-content-wrapper">
-    <form id="article-main" action="post.php" method="POST">
+  <form id="article-main" action="/<?php echo $ADMIN; ?>/articles/post.php" method="POST">
         <?php echo SecurityToken::formParameter(); ?>
         <?php
             $hiddens = array(

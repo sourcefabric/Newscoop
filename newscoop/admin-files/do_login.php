@@ -97,7 +97,9 @@ if ($auth->hasIdentity()) {
         if (!empty($_POST['_next']) && $_POST['_next'] == 'post') { // forward POST request
             $this->_forward($this->_getParam('action'), $this->_getParam('controller'), 'admin');
         } else { // redirect GET request
-            $this->_helper->redirector->gotoSimple($this->_getParam('action'), $this->_getParam('controller'), 'admin');
+            $this->_redirect($_SERVER['REQUEST_URI'], array(
+                'prependBase' => false,
+            ));
         }
 
         return;

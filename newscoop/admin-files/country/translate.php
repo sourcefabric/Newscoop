@@ -21,7 +21,7 @@ echo camp_html_breadcrumbs($crumbs);
 
 ?>
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_translate.php"  >
+<FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/country/do_translate.php"  >
 <?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" CLASS="table_input">
 <TR>

@@ -38,7 +38,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 
 <?php camp_html_display_msgs(); ?>
 
-<form action="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" method="POST">
+<form action="/<?php echo $ADMIN; ?>/system_pref/do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" method="POST">
 <?php echo SecurityToken::FormParameter(); ?>
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
@@ -244,7 +244,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
     </td>
     <td align="left" valign="top">
         <input type="radio" name="f_collect_statistics" value="Y" <?php if (SystemPref::Get("CollectStatistics") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
-        <input type="radio" name="f_collect_statistics" value="N" <?php if (SystemPref::Get("CollectStatistics") == 'N') p("checked"); ?> /> <?php putGS("No"); ?>
+        <input type="radio" name="f_collect_statistics" value="N" <?php if (SystemPref::Get("CollectStatistics") != 'Y') p("checked"); ?> /> <?php putGS("No"); ?>
     </td>
 </tr>
 <tr>
