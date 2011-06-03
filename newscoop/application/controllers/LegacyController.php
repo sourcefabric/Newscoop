@@ -48,6 +48,12 @@ class LegacyController extends Zend_Controller_Action
             exit(0);
         }
 
+        $stats_only = false;
+        Statistics::ProcessStats($stats_only);
+        if ($stats_only) {
+            exit(0);
+        }
+
         // initiates the context
         $campsite->init();
 

@@ -25,7 +25,7 @@ class InvalidUserId extends Exception {
 }
 
 class SessionRequest {
-    public static function Create($p_sessionId, &$p_objectId, $p_objectTypeId = null, $p_userId = null) {
+    public static function Create($p_sessionId, &$p_objectId, $p_objectTypeId = null, $p_userId = null, $p_updateStats = false) {
         if (empty($p_sessionId)) {
             throw new SessionIdNotSet();
         }
@@ -54,19 +54,44 @@ class SessionRequest {
             throw new ObjectIdNotSet();
         }
 
+        if ($p_updateStats) {
+            self::UpdateStats($p_sessionId, $p_objectId);
+        }
+    } // fn Create
+
+    /**
+     * Writes the statistics (when article read).
+     *
+     * @param int $p_sessionId
+     *      used for not writing the stats multiple times
+     * @param int $p_objectId
+     *      the article object whose stats shall be updated
+     * @return bool
+     */
+    public static function UpdateStats($p_sessionId, $p_objectId) {
+        if ((!$p_sessionId) || (!$p_objectId)) {
+            return false;
+        }
+
         $request = new Request($p_sessionId, $p_objectId);
         if (!$request->exists()) {
             $request->create();
         }
+
         if (!$request->isInStats()) {
-        	$requestStats = new RequestStats($p_objectId);
-        	if (!$requestStats->exists()) {
-        		$requestStats->create();
-        	}
-        	$requestStats->incrementRequestCount();
+            $requestStats = new RequestStats($p_objectId);
+            if (!$requestStats->exists()) {
+                $requestStats->create();
+            }
+            $requestStats->incrementRequestCount();
             $request->setLastStatsUpdate();
+
+            return true;
         }
-    }
+
+        return false;
+    } // fn UpdateStats
+
 }
 
 ?>
