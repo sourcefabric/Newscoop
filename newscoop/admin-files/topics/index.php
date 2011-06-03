@@ -26,7 +26,7 @@ echo camp_html_breadcrumbs($crumbs);
 camp_html_display_msgs("0.5em", 0);
 ?>
 
-<form action="index.php" method="post">
+<form action="" method="post">
 <fieldset class="controls">
     <legend><?php putGS("Show languages"); ?></legend>
     <div class="buttons">
@@ -49,7 +49,7 @@ camp_html_display_msgs("0.5em", 0);
 </fieldset>
 
 <?php  if ($g_user->hasPermission('ManageTopics')) { ?>
-<form method="post" action="do_add.php" onsubmit="return validate(this);">
+<form method="post" action="/<?php echo $ADMIN; ?>/topics/do_add.php" onsubmit="return validate(this);">
 <?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="f_topic_parent_id" value="0" />
 <fieldset class="controls">
@@ -119,7 +119,7 @@ foreach ($topics as $topicPath) {
                 <strong><?php echo htmlspecialchars($topicName); ?></strong>
             </span>
 
-            <form method="post" action="do_edit.php" onsubmit="return validate(this);">
+            <form method="post" action="/<?php echo $ADMIN; ?>/topics/do_edit.php" onsubmit="return validate(this);">
                 <?php echo SecurityToken::FormParameter(); ?>
 	            <input type="hidden" name="f_topic_edit_id" value="<?php echo $topicId; ?>" />
 	            <input type="hidden" name="f_topic_language_id" value="<?php  echo $topicLanguageId; ?>" />
@@ -131,7 +131,7 @@ foreach ($topics as $topicPath) {
             </fieldset>
             </form>
 
-            <form method="post" action="do_add.php" onsubmit="return validate(this);">
+            <form method="post" action="/<?php echo $ADMIN; ?>/topics/do_add.php" onsubmit="return validate(this);">
                 <?php echo SecurityToken::FormParameter(); ?>
                 <input type="hidden" name="f_topic_parent_id" value="<?php p($currentTopic->getTopicId()); ?>" />
                 <input type="hidden" name="f_topic_language_id" value="<?php p($topicLanguageId); ?>" />
@@ -148,7 +148,7 @@ foreach ($topics as $topicPath) {
             <?php if ($isFirstTranslation) {
                 $isFirstTranslation = false;
             ?>
-            <form method="post" action="do_add.php" onsubmit="return validate(this);">
+                <form method="post" action="/<?php echo $ADMIN; ?>/topics/do_add.php" onsubmit="return validate(this);">
                 <?php echo SecurityToken::FormParameter(); ?>
                 <input type="hidden" name="f_topic_id" value="<?php p($currentTopic->getTopicId()); ?>" />
 
@@ -175,7 +175,7 @@ foreach ($topics as $topicPath) {
 echo str_repeat('</li></ul>', $level);
 ?>
 
-<form method="post" action="do_order.php">
+    <form method="post" action="/<?php echo $ADMIN; ?>/topics/do_order.php">
     <?php echo SecurityToken::FormParameter(); ?>
     <input type="hidden" name="languages" value="<?php echo implode('_', $f_show_languages); ?>" />
 <fieldset class="buttons">
@@ -269,7 +269,7 @@ $('input:reset').click(function() {
 });
 
 // save
-$('form[action^=do_order]').submit(function(e) {
+$('form[action*=do_order]').submit(function(e) {
     e.preventDefault();
     callServer(['Topic', 'UpdateOrder'], [
         orderChanges,

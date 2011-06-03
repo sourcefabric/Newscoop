@@ -260,7 +260,7 @@ echo camp_html_breadcrumbs($crumbs);
 <?php camp_html_display_msgs(); ?>
 
 <p>
-<form name="import_archive" enctype="multipart/form-data" method="POST" action="la_import.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<form name="import_archive" enctype="multipart/form-data" method="POST" action="/<?php echo $ADMIN; ?>/articles/la_import.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
 
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">

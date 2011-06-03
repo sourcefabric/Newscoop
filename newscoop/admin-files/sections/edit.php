@@ -47,19 +47,19 @@ editor_load_tinymce('cDescription', $g_user, 0, $editorLanguage, 'section');
 <p>
 <table border="0" cellspacing="0" cellpadding="1" class="action_buttons">
 <tr>
-  <td><a href="add.php?<?php p($url_args1); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0" /></a></td>
-  <td><a href="add.php?<?php p($url_args1); ?>"><b><?php putGS("Add new section"); ?></b></a></td>
-  <td style="padding-left: 20px;"><a href="duplicate.php?<?php p($url_args2); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/duplicate.png" border="0" /></a></td>
-  <td><a href="duplicate.php?<?php p($url_args2); ?>" ><b><?php putGS("Duplicate"); ?></b></a></td>
-  <td style="padding-left: 20px;"><a href="del.php?<?php p($url_args2); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" /></a></td>
-  <td><a href="del.php?<?php p($url_args2); ?>" ><b><?php putGS("Delete"); ?></b></a></td>
+  <td><a href="/<?php echo $ADMIN; ?>/sections/add.php?<?php p($url_args1); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0" /></a></td>
+  <td><a href="/<?php echo $ADMIN; ?>/sections/add.php?<?php p($url_args1); ?>"><b><?php putGS("Add new section"); ?></b></a></td>
+  <td style="padding-left: 20px;"><a href="/<?php echo $ADMIN; ?>/sections/duplicate.php?<?php p($url_args2); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/duplicate.png" border="0" /></a></td>
+  <td><a href="/<?php echo $ADMIN; ?>/sections/duplicate.php?<?php p($url_args2); ?>" ><b><?php putGS("Duplicate"); ?></b></a></td>
+  <td style="padding-left: 20px;"><a href="/<?php echo $ADMIN; ?>/sections/del.php?<?php p($url_args2); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" /></a></td>
+  <td><a href="/<?php echo $ADMIN; ?>/sections/del.php?<?php p($url_args2); ?>" ><b><?php putGS("Delete"); ?></b></a></td>
 </tr>
 </table>
 
 <?php camp_html_display_msgs(); ?>
 
 <p>
-<form name="section_edit" method="POST" action="do_edit.php">
+    <form name="section_edit" method="POST" action="/<?php echo $ADMIN; ?>/sections/do_edit.php">
 <?php echo SecurityToken::FormParameter(); ?>
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
