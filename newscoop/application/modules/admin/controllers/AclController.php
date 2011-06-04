@@ -125,7 +125,7 @@ class Admin_AclController extends Zend_Controller_Action
             'module' => 'admin',
             'controller' => 'acl',
             'action' => 'form',
-        ));
+        ), true);
     }
 
     public function deleteAction()

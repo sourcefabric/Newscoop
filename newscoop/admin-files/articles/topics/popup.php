@@ -37,7 +37,7 @@ foreach ($articleTopics as $topic) {
 </head>
 <body class="pop-up">
 <?php if (count($topics) > 0) { ?>
-<form action="<?php p("/$ADMIN/articles/topics/do_edit.php"); ?>" method="post">
+<form action="/<?php echo $ADMIN; ?>/articles/topics/do_edit.php" method="post">
 <?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>" />
 <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />

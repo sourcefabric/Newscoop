@@ -21,7 +21,7 @@ $crumbs[] = array(getGS("Merge article type"), "");
 echo camp_html_breadcrumbs($crumbs);
 ?>
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="merge2.php">
+<FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/article_types/merge2.php">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>
 	<TD COLSPAN="2">

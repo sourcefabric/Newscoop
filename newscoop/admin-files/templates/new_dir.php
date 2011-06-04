@@ -32,7 +32,7 @@ camp_html_display_msgs();
 ?>
 
 <P>
-<FORM NAME="directory_add" METHOD="POST" ACTION="do_new_dir.php"  >
+<FORM NAME="directory_add" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/templates/do_new_dir.php"  >
 <?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>

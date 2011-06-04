@@ -62,7 +62,7 @@ if ($f_publication_id > 0) {
 <IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>">
 </div>
 <p>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_edit.php" >
+<FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/images/do_edit.php" >
 <?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>

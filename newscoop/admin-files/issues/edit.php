@@ -71,14 +71,14 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 	<TD><A HREF="<?php p($url_add); ?>?<?php p($url_args1); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
 	<TD><A HREF="<?php p($url_add); ?>?<?php p($url_args1); ?>" ><B><?php  putGS("Add new issue"); ?></B></A></TD>
 
-	<TD style="padding-left: 20px;"><A HREF="" ONCLICK="window.open('preview.php?<?php p($url_args2); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false;"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0"></A></TD>
-	<TD><A HREF="" ONCLICK="window.open('preview.php?<?php p($url_args2); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false;"><B><?php  putGS("Preview"); ?></B></A></TD>
+    <TD style="padding-left: 20px;"><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/issues/preview.php?<?php p($url_args2); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false;"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0"></A></TD>
+    <TD><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/issues/preview.php?<?php p($url_args2); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false;"><B><?php  putGS("Preview"); ?></B></A></TD>
 
-	<TD style="padding-left: 20px;"><A HREF="translate.php?<?php p($url_args2); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate.png" BORDER="0"></A></TD>
-	<TD><A HREF="translate.php?<?php p($url_args2); ?>" ><B><?php  putGS("Translate"); ?></B></A></TD>
+    <TD style="padding-left: 20px;"><A HREF="/<?php echo $ADMIN; ?>/issues/translate.php?<?php p($url_args2); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate.png" BORDER="0"></A></TD>
+    <TD><A HREF="/<?php echo $ADMIN; ?>/issues/translate.php?<?php p($url_args2); ?>" ><B><?php  putGS("Translate"); ?></B></A></TD>
 
-	<TD style="padding-left: 20px;"><A HREF="delete.php?<?php p($url_args3); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></A></TD>
-	<TD><A HREF="delete.php?<?php p($url_args3); ?>"><B><?php  putGS("Delete"); ?></B></A></TD>
+    <TD style="padding-left: 20px;"><A HREF="/<?php echo $ADMIN; ?>/issues/delete.php?<?php p($url_args3); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></A></TD>
+    <TD><A HREF="/<?php echo $ADMIN; ?>/issues/delete.php?<?php p($url_args3); ?>"><B><?php  putGS("Delete"); ?></B></A></TD>
 </TR>
 </TABLE>
 
@@ -88,7 +88,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 <table>
 <tr>
 	<td valign="top">
-		<FORM name="issue_edit" METHOD="POST" ACTION="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+        <FORM name="issue_edit" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/issues/do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 		<?php echo SecurityToken::FormParameter(); ?>
 		<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($Pub); ?>">
 		<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php p($Issue); ?>">
@@ -288,7 +288,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 		</TR>
 		</table>
 
-		<FORM NAME="dialog" METHOD="POST" ACTION="autopublish_do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+        <FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/issues/autopublish_do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 		<?php echo SecurityToken::FormParameter(); ?>
         <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php echo $Pub; ?>">
         <INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php echo $Issue; ?>">

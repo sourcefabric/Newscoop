@@ -140,7 +140,18 @@ class CampInstallationBase
     private function preInstallationCheck() {}
 
 
-    private function license() {}
+    private function license()
+    {
+
+    	$license_agreement = Input::Get('license_agreement', 'int', 0);
+    	if($license_agreement < 1) {
+    		$this->m_step = 'license';
+			$this->m_message = 'You must accept the terms of the License Agreement!';
+			return FALSE;
+    	} else {
+    		return TRUE;
+    	}
+    }
 
 
     /**

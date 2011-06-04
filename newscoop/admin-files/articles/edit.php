@@ -1,6 +1,7 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/editor_load_tinymce.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/editor_load_countable.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/DbReplication.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticlePublish.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
@@ -46,6 +47,7 @@ if (!$articleObj->exists()) {
 $articleData = $articleObj->getArticleData();
 // Get article type fields.
 $dbColumns = $articleData->getUserDefinedColumns(FALSE, TRUE);
+
 $articleType = new ArticleType($articleObj->getType());
 
 $articleImages = ArticleImage::GetImagesByArticleNumber($f_article_number);

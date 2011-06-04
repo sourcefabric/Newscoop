@@ -59,15 +59,24 @@ function UpdateArticleFieldContext() {
         ToggleRowVisibility('precision');
         ToggleBoolValue('show_precision');
     }
+
+    var show_maxsize = my_form.elements["show_maxsize"].value
+    if ((show_maxsize == "true" && field_type != "text")
+            || (show_maxsize == "false" && field_type == "text")) {
+        ToggleRowVisibility('maxsize');
+        ToggleBoolValue('show_maxsize');
+    }
+
 }
 </script>
 
 <P>
-<FORM NAME="add_field_form" METHOD="POST" ACTION="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<FORM NAME="add_field_form" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/article_types/fields/do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="is_topic" id="is_topic" value="false">
 <input type="hidden" name="show_is_content" id="show_is_content" value="false">
 <input type="hidden" name="show_precision" id="show_precision" value="false">
+<input type="hidden" name="show_maxsize" id="show_maxsize" value="true">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR><TD COLSPAN="2"><?php putGS('The template name may only contain letters and the underscore (_) character.'); ?></TD></TR>
 <TR>
@@ -117,12 +126,18 @@ foreach ($topics as $topicPath) {
 	</td>
 </tr>
 <tr style="display: none;" id="is_content">
-    <td><?php putGS('Is Content'); ?>:</td>
+    <td align="right"><?php putGS('Is Content'); ?>:</td>
     <td><input type="checkbox" name="f_is_content"></td>
 </tr>
 <tr style="display: none;" id="precision">
-    <td><?php putGS('Precision'); ?>:</td>
-    <td><input type="text" class="input_select" size="2" maxlength="2" name="f_precision"></td>
+    <td align="right"><?php putGS('Precision'); ?>:</td>
+    <td><input type="text" class="input_text" size="2" maxlength="2" name="f_precision" emsg="<?php putGS('You must input a number greater than $1 and less than $2 into the $3 field.', 0, 99, getGS('Precision')); ?>" alt="number|0|0|99|bok" ></td>
+</tr>
+<tr style="display: table-row;" id="maxsize">
+    <td align="right"><?php putGS('Characters limit'); ?>:</td>
+    <td>
+        <input type="text" class="input_text" size="3" maxlength="3" name="f_maxsize" emsg="<?php putGS('You must input a number greater than $1 and less than $2 into the $3 field.', 0, 999, getGS('Characters limit')); ?>" alt="number|0|0|999|bok" >
+    </td>
 </tr>
 <TR>
 	<TD COLSPAN="2">

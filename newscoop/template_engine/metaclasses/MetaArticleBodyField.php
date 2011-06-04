@@ -148,6 +148,8 @@ final class MetaArticleBodyField {
      */
     private function getContent(array $p_subtitles = array())
     {
+        global $Campsite;
+
         $printAll = count($p_subtitles) == 0;
         $content = '';
         foreach ($this->m_subtitles as $index=>$subtitle) {
@@ -163,10 +165,66 @@ final class MetaArticleBodyField {
             $requestObjectId = $this->m_parent_article->getProperty('object_id');
             $updateArticle = empty($requestObjectId);
             try {
-                SessionRequest::Create(session_id(), $requestObjectId,
-                                       $objectType->getObjectTypeId(), $userId);
+                // note that SessionRequest::Create() is called at the js-based stats now, at CampSite::writeStats();
                 if ($updateArticle) {
                     $this->m_parent_article->setProperty('object_id', $requestObjectId);
+                }
+
+                // statistics shall be only gathered if the site admin set it on (and not for editor previews)
+                $context = CampTemplate::singleton()->context();
+                if ((SystemPref::CollectStatistics()) && (!$context->preview)) {
+                    $stat_web_url = $Campsite['WEBSITE_URL'];
+                    if ("/" != $stat_web_url[strlen($stat_web_url)-1]) {
+                        $stat_web_url .= "/";
+                    }
+                    $article_number = $this->m_parent_article->getProperty('Number');
+                    $language_obj = new MetaLanguage($this->m_parent_article->getProperty('IdLanguage'));
+                    $language_code = $language_obj->Code;
+                    $name_spec = '_' . $article_number . '_' . $language_code;
+
+                    $content .= '
+                        <script type="text/javascript">
+                        var stats_getHTTPObject' . $name_spec . ' = function () {
+                            var xhr = false;
+                            if (window.XMLHttpRequest) {
+                                xhr = new XMLHttpRequest();
+                            } else if (window.ActiveXObject) {
+                                try {
+                                    xhr = new ActiveXObject("Msxml2.XMLHTTP");
+                                } catch(e) {
+                                    try {
+                                        xhr = new ActiveXObject("Microsoft.XMLHTTP");
+                                    } catch(e) {
+                                        xhr = false;
+                                    }
+                                }
+                            }
+                            return xhr;
+                        };
+
+                        var stats_submit' . $name_spec . ' = function () {
+                            var stats_request = stats_getHTTPObject' . $name_spec . '();
+                            stats_request.onreadystatechange = function() {};
+    
+                            var read_date = new Date();
+                            var read_path = "_statistics/reader/article/";
+                            var request_randomizer = "" + read_date.getTime() + Math.random();
+                            var stats_url = "' . $stat_web_url . '" + read_path + "' . $article_number . '/' . $language_code . '/";
+                            try {
+                                stats_request.open("GET", stats_url + "?randomizer=" + request_randomizer, true);
+                                stats_request.send(null);
+                                /* not everybody has jquery installed
+                                $.ajax({
+                                    url: stats_url,
+                                    data: {randomizer: request_randomizer},
+                                    success: function() {}
+                                });
+                                */
+                            } catch (e) {}
+                        };
+                        stats_submit' . $name_spec . '();
+                        </script>
+                    ';
                 }
             } catch (Exception $ex) {
                 $content .= "<p><strong><font color=\"red\">INTERNAL ERROR! " . $ex->getMessage()

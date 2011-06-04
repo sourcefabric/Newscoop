@@ -170,6 +170,17 @@ class SystemPref {
     	}
     	return true;
     }
+
+    /**
+     * Return whether statistics collecting was set on.
+     *
+     * @return bool
+     */
+    public static function CollectStatistics()
+    {
+        return (self::Get("CollectStatistics") == 'Y');
+    } // fn CollectStatistics
+
 } // class SystemPref
 
 ?>

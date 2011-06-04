@@ -145,6 +145,20 @@ final class MetaUser extends MetaDbObject {
         }
         return new MetaSubscription($subscriptions[0]->getSubscriptionId());
     }
-} // class MetaUser
 
-?>
+    /**
+     * Check user token
+     *
+     * @param string
+     * @return bool
+     */
+    public function checkToken($token)
+    {
+         $return = $token == $this->m_dbObject->getKeyId();
+         if ($return) { // change key
+             $this->m_dbObject->initLoginKey();
+         }
+
+         return $return;
+    }
+}

@@ -38,7 +38,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 
 <?php camp_html_display_msgs(); ?>
 
-<form action="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" method="POST">
+<form action="/<?php echo $ADMIN; ?>/system_pref/do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" method="POST">
 <?php echo SecurityToken::FormParameter(); ?>
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
@@ -236,6 +236,15 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
     </td>
     <td align="left" valign="top">
         <input type="text" name="f_smtp_port" value="<?php p(SystemPref::Get("SMTPPort")); ?>" maxlength="6" size="8" class="input_text" alt="number|0|0" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("SMTP Port")); ?>" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Collect statistics:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="radio" name="f_collect_statistics" value="Y" <?php if (SystemPref::Get("CollectStatistics") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
+        <input type="radio" name="f_collect_statistics" value="N" <?php if (SystemPref::Get("CollectStatistics") != 'Y') p("checked"); ?> /> <?php putGS("No"); ?>
     </td>
 </tr>
 <tr>
