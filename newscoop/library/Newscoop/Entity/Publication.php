@@ -30,6 +30,13 @@ class Publication
     private $name;
 
     /**
+     * @OneToOne(targetEntity="Newscoop\Entity\Language")
+     * @JoinColumn(name="IdDefaultLanguage", referencedColumnName="Id")
+     * @var Newscoop\Entity\Language
+     */
+    private $language;
+
+    /**
      * @OneToMany(targetEntity="Newscoop\Entity\Issue", mappedBy="publication")
      * @var array
      */
@@ -60,6 +67,16 @@ class Publication
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get language
+     *
+     * @return Newscoop\Entity\Language
+     */
+    public function getLanguage()
+    {
+        return $this->language;
     }
 
     /**

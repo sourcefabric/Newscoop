@@ -100,6 +100,11 @@ class Admin_LanguagesController extends Zend_Controller_Action
             $this->_helper->redirector('index', 'languages', 'admin');
         }
 
+        if ($this->repository->isUsed($language)) {
+            $this->_helper->flashMessenger->addMessage(getGS('Language is in use and cannot be removed.'));
+            $this->_helper->redirector('index', 'languages', 'admin');
+        }
+
         Localizer::DeleteLanguageFiles($language->getCode());
         $this->repository->delete($language->getId());
         $this->_helper->flashMessenger->addMessage(getGS('Language removed.'));
@@ -122,4 +127,4 @@ class Admin_LanguagesController extends Zend_Controller_Action
 
         return $language;
     }
- }
+}

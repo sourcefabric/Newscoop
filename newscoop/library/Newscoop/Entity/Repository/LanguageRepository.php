@@ -102,4 +102,52 @@ class LanguageRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * Test is used
+     *
+     * @param Language $language
+     * @return bool
+     */
+    public function isUsed(Language $language)
+    {
+        $em = $this->getEntityManager();
+
+        $dql = "SELECT COUNT(p.id) FROM Newscoop\Entity\Publication p WHERE p.language = ?1";
+        $query = $em->createQuery($dql);
+        $query->setParameter(1, $language);
+        if ($query->getSingleScalarResult()) {
+            return true;
+        }
+
+        $dql = "SELECT COUNT(i.number) FROM Newscoop\Entity\Issue i WHERE i.language = ?1";
+        $query = $em->createQuery($dql);
+        $query->setParameter(1, $language);
+        if ($query->getSingleScalarResult()) {
+            return true;
+        }
+
+        $dql = "SELECT COUNT(s.number) FROM Newscoop\Entity\Section s WHERE s.language = ?1";
+        $query = $em->createQuery($dql);
+        $query->setParameter(1, $language);
+        if ($query->getSingleScalarResult()) {
+            return true;
+        }
+
+        $dql = "SELECT COUNT(a.number) FROM Newscoop\Entity\Article a WHERE a.language = ?1";
+        $query = $em->createQuery($dql);
+        $query->setParameter(1, $language);
+        if ($query->getSingleScalarResult()) {
+            return true;
+        }
+
+        $dql = "SELECT COUNT(c.code) FROM Newscoop\Entity\Country c WHERE c.language = ?1";
+        $query = $em->createQuery($dql);
+        $query->setParameter(1, $language);
+        if ($query->getSingleScalarResult()) {
+            return true;
+        }
+
+        return false;
+    }
 }
