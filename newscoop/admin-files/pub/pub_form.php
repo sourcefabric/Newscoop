@@ -123,20 +123,6 @@ function onCommentsModerated(p_checkbox)
                 <?php  putGS("Article topics"); ?>
             </TD>
         </TR>
-        <TR>
-        	<TD ALIGN="RIGHT"><?php  putGS("Invalid URL Template"); ?>:</TD>
-        	<TD>
- 				<SELECT NAME="f_url_error_tpl_id" class="input_select">
-				<OPTION VALUE="0">---</OPTION>
-				<?php
-				$defaultTemplateId = isset($publicationObj) ? $publicationObj->getProperty('url_error_tpl_id') : null;
-				foreach ($allTemplates as $template) {
-					camp_html_select_option($template->getTemplateId(), $defaultTemplateId, $template->getName());
-				}
-				?>
-				</SELECT>
-        	</TD>
-        </TR>
 
         <tr><td colspan="2"><HR NOSHADE SIZE="1" COLOR="BLACK"></td></tr>
 
