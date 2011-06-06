@@ -77,11 +77,12 @@
 			array('resource'=>'country', 'privilege'=>'delete'),
 			array('resource'=>'localizer', 'privilege'=>'manage'),
 			array('resource'=>'plugin', 'privilege'=>'manage'),
-			array('resource'=>'pluginblog', 'privilege'=>'admin'),
-			array('resource'=>'pluginblog', 'privilege'=>'moderator'),
-			array('resource'=>'plugininterview', 'privilege'=>'notify'),
-			array('resource'=>'plugininterview', 'privilege'=>'admin'),
-			array('resource'=>'plugininterview', 'privilege'=>'guest'),
+			array('resource'=>'plugin-blog', 'privilege'=>'admin'),
+			array('resource'=>'plugin-blog', 'privilege'=>'moderator'),
+			array('resource'=>'plugin-interview', 'privilege'=>'notify'),
+			array('resource'=>'plugin-interview', 'privilege'=>'admin'),
+			array('resource'=>'plugin-interview', 'privilege'=>'guest'),
+			array('resource'=>'plugin-recaptcha', 'privilege'=>'admin'),
 
 		)
 	);
