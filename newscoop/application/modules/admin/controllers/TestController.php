@@ -13,288 +13,427 @@ use Newscoop\Entity\Theme;
 use Newscoop\Service\Model\SearchTheme;
 use Newscoop\Service\Resource\ResourceId;
 use Newscoop\Service\IThemeService;
-
+use Newscoop\Service\IOutputSettingSectionService;
+use Newscoop\Service\IOutputSettingIssueService;
+use Newscoop\Service\IIssueService;
+use Newscoop\Entity\Output\OutputSettingsIssue;
+use Newscoop\Service\ISyncResourceService;
 
 class Admin_TestController extends Zend_Controller_Action
 {
 
-	/** @var Newscoop\Services\Resource\ResourceId */
-	private $resourceId = NULL;
-	/** @var Newscoop\Service\IThemeService */
-	private $themeService = NULL;
-	/** @var Newscoop\Service\IThemeManagementService */
-	private $themeManagementService = NULL;
-	/** @var Newscoop\Service\IPublicationService */
-	private $publicationService = NULL;
-	/** @var Newscoop\Service\ILanguageService */
-	private $languageService = NULL;
-	/** @var Newscoop\Service\IOutputService */
-	private $outputService = NULL;
+    /** @var Newscoop\Services\Resource\ResourceId */
+    private $resourceId = NULL;
+    /** @var Newscoop\Service\IThemeService */
+    private $themeService = NULL;
+    /** @var Newscoop\Service\IThemeManagementService */
+    private $themeManagementService = NULL;
+    /** @var Newscoop\Service\IPublicationService */
+    private $publicationService = NULL;
+    /** @var Newscoop\Service\ILanguageService */
+    private $languageService = NULL;
+    /** @var Newscoop\Service\IIssueService */
+    private $issueService = NULL;
+    /** @var Newscoop\Service\IOutputService */
+    private $outputService = NULL;
+    /** @var Newscoop\Service\IOutputSettingSectionService */
+    private $outputSettingSectionService = NULL;
+    /** @var Newscoop\Service\IOutputSettingIssueService */
+    private $outputSettingIssueService = NULL;
+    /** @var Newscoop\Service\ISyncResourceService */
+    private $syncResourceService = NULL;
 
-	public function init(){
+    public function init()
+    {
 
-	}
+    }
 
-	/* --------------------------------------------------------------- */
+    /* --------------------------------------------------------------- */
 
-	/**
-	 * Provides the controller resource id.
-	 *
-	 * @return Newscoop\Services\Resource\ResourceId
-	 *		The controller resource id.
-	 */
-	public function getResourceId()
-	{
-		if ($this->resourceId === NULL) {
-			$this->resourceId = new ResourceId(__CLASS__);
-		}
-		return $this->resourceId;
-	}
+    /**
+     * Provides the controller resource id.
+     *
+     * @return Newscoop\Services\Resource\ResourceId
+     * 		The controller resource id.
+     */
+    public function getResourceId()
+    {
+        if ($this->resourceId === NULL) {
+            $this->resourceId = new ResourceId(__CLASS__);
+        }
+        return $this->resourceId;
+    }
 
-	/**
-	 * Provides the ouput service.
-	 *
-	 * @return Newscoop\Service\IOutputService
-	 *		The service service to be used by this controller.
-	 */
-	public function getOutputService()
-	{
-		if ($this->outputService === NULL) {
-			$this->outputService = $this->getResourceId()->getService(IOutputService::NAME);
-		}
-		return $this->outputService;
-	}
+    /**
+     * Provides the ouput service.
+     *
+     * @return Newscoop\Service\IOutputService
+     * 		The service service to be used by this controller.
+     */
+    public function getOutputService()
+    {
+        if ($this->outputService === NULL) {
+            $this->outputService = $this->getResourceId()->getService(IOutputService::NAME);
+        }
+        return $this->outputService;
+    }
 
-	/**
-	 * Provides the language service.
-	 *
-	 * @return Newscoop\Service\ILanguageService
-	 *		The language service to be used by this controller.
-	 */
-	public function getLanguageService()
-	{
-		if ($this->languageService === NULL) {
-			$this->languageService = $this->getResourceId()->getService(ILanguageService::NAME);
-		}
-		return $this->languageService;
-	}
+    /**
+     * Provides the language service.
+     *
+     * @return Newscoop\Service\ILanguageService
+     * 		The language service to be used by this controller.
+     */
+    public function getLanguageService()
+    {
+        if ($this->languageService === NULL) {
+            $this->languageService = $this->getResourceId()->getService(ILanguageService::NAME);
+        }
+        return $this->languageService;
+    }
 
-	/**
-	 * Provides the publications service.
-	 *
-	 * @return Newscoop\Service\IPublicationService
-	 *		The publication service to be used by this controller.
-	 */
-	public function getPublicationService()
-	{
-		if ($this->publicationService === NULL) {
-			$this->publicationService = $this->getResourceId()->getService(IPublicationService::NAME);
-		}
-		return $this->publicationService;
-	}
+    /**
+     * Provides the publications service.
+     *
+     * @return Newscoop\Service\IPublicationService
+     * 		The publication service to be used by this controller.
+     */
+    public function getPublicationService()
+    {
+        if ($this->publicationService === NULL) {
+            $this->publicationService = $this->getResourceId()->getService(IPublicationService::NAME);
+        }
+        return $this->publicationService;
+    }
 
-	/**
-	 * Provides the theme service.
-	 *
-	 * @return Newscoop\Service\IThemeService
-	 *		The theme service to be used by this controller.
-	 */
-	public function getThemeService()
-	{
-		if ($this->themeService === NULL) {
-			$this->themeService = $this->getResourceId()->getService(IThemeService::NAME);
-		}
-		return $this->themeService;
-	}
+    /**
+     * Provides the theme service.
+     *
+     * @return Newscoop\Service\IThemeService
+     * 		The theme service to be used by this controller.
+     */
+    public function getThemeService()
+    {
+        if ($this->themeService === NULL) {
+            $this->themeService = $this->getResourceId()->getService(IThemeService::NAME);
+        }
+        return $this->themeService;
+    }
 
-	/**
-	 * Provides the theme management service.
-	 *
-	 * @return Newscoop\Service\IThemeManagementService
-	 *		The theme management service to be used by this controller.
-	 */
-	public function getThemeManagementService()
-	{
-		if ($this->themeManagementService === NULL) {
-			$this->themeManagementService = $this->getResourceId()->getService(IThemeManagementService::NAME_1);
-		}
-		return $this->themeManagementService;
-	}
+    /**
+     * Provides the theme management service.
+     *
+     * @return Newscoop\Service\IThemeManagementService
+     * 		The theme management service to be used by this controller.
+     */
+    public function getThemeManagementService()
+    {
+        if ($this->themeManagementService === NULL) {
+            $this->themeManagementService = $this->getResourceId()->getService(IThemeManagementService::NAME_1);
+        }
+        return $this->themeManagementService;
+    }
 
-	/* --------------------------------------------------------------- */
+    /**
+     * Provides the Output  setting service.
+     *
+     * @return Newscoop\Service\IOutputSettingSectionService
+     * 		The output setting section service to be used by this controller.
+     */
+    public function getOutputSettingSectionService()
+    {
+        if ($this->outputSettingSectionService === NULL) {
+            $this->outputSettingSectionService = $this->getResourceId()->getService(IOutputSettingSectionService::NAME);
+        }
+        return $this->outputSettingSectionService;
+    }
 
-	public function indexAction()
-	{
-		$this->test6();
-	}
+    /**
+     * Provides the Output setting issue service.
+     *
+     * @return Newscoop\Service\IOutputSettingIssueService
+     * 		The output setting issue service to be used by this controller.
+     */
+    public function getOutputSettingIssueService()
+    {
+        if ($this->outputSettingIssueService === NULL) {
+            $this->outputSettingIssueService = $this->getResourceId()->getService(IOutputSettingIssueService::NAME);
+        }
+        return $this->outputSettingIssueService;
+    }
 
-	protected function test1()
-	{
-		$search = new SearchPublication();
-		$search->NAME->orderAscending();
+    /**
+     * Provides the Issue service.
+     *
+     * @return Newscoop\Service\IIssueService
+     * 		The issue service to be used by this controller.
+     */
+    public function getIssueService()
+    {
+        if ($this->issueService === NULL) {
+            $this->issueService = $this->getResourceId()->getService(IIssueService::NAME);
+        }
+        return $this->issueService;
+    }
 
-		try{
-			$outputs = $this->getOutputService()->getEntities();
-			$text = '---><br/>';//.$this->getLanguageService()->getCount();
+    /**
+     * Provides the sync resource service.
+     *
+     * @return Newscoop\Service\ISyncResourceService
+     * 		The sync resource service to be used.
+     */
+    protected function getSyncResourceService()
+    {
+        if ($this->syncResourceService === NULL) {
+            $this->syncResourceService = $this->getResourceId()->getService(ISyncResourceService::NAME);
+        }
+        return $this->syncResourceService;
+    }
 
-			foreach($outputs as $out){
-				/* @var $lang Language */
-				$text = $text.$out->getName().'<br/>';
-			}
+    /* --------------------------------------------------------------- */
 
-			$this->view->text = $text;
+    public function indexAction()
+    {
+        $this->test2();
+    }
 
-		}catch (\Exception $e){
-			$this->view->text = $e->getMessage();
-		}
-	}
+    protected function test1()
+    {
+        $search = new SearchPublication();
+        $search->NAME->orderAscending();
 
-	protected function test2()
-	{
-		$search = new SearchTheme();
-		$search->NAME->orderAscending();
+        try {
+            $outputs = $this->getOutputService()->getEntities();
+            $text = '---><br/>'; //.$this->getLanguageService()->getCount();
 
+            foreach ($outputs as $out) {
+                /* @var $lang Language */
+                $text = $text . $out->getName() . '<br/>';
+            }
 
-		try{
-			$themes = $this->getThemeService()->getEntities();
-			$text = '---><br/>';
+            $this->view->text = $text;
+        } catch (\Exception $e) {
+            $this->view->text = $e->getMessage();
+        }
+    }
 
-			foreach($themes as $theme){
-				/* @var $theme Theme */
-				$text = $text.$theme->getName().'  -  '.$theme->getId().'  -  '.$theme->getPath().'<br/>';
-				$imgs = $this->getThemeService()->getPresentationImages($theme);
-				foreach($imgs as $img){
-					/* @var $img Resource */
-					$text = $text.'              '.$img->getName().'  -  '.$img->getId().'  -  '.$img->getPath().'<br/>';
-				}
-			}
-
-			$this->view->text = $text;
-
-		}catch (\Exception $e){
-			$this->view->text = $e->getMessage();
-		}
-	}
-
-	protected function test3()
-	{
-		$search = new SearchTheme();
-		$search->NAME->orderAscending();
-
-
-		try{
-			$themes = $this->getThemeManagementService()->getUnassignedThemes();
-			$text = '---><br/>';
-
-			foreach($themes as $theme){
-				/* @var $theme Theme */
-				$text = $text.$theme->getName().'  -  '.$theme->getId().'  -  '.$theme->getPath().'<br/>';
-				$imgs = $this->getThemeService()->getPresentationImages($theme);
-				foreach($imgs as $img){
-					/* @var $img Resource */
-					$text = $text.'              '.$img->getName().'  -  '.$img->getId().'  -  '.$img->getPath().'<br/>';
-				}
-			}
-
-			$this->view->text = $text;
-
-		}catch (\Exception $e){
-			$this->view->text = $e->getMessage();
-		}
-	}
-
-	protected function test4()
-	{
-		$search = new SearchTheme();
-		$search->NAME->orderAscending();
-
-
-		try{
-			$themes = $this->getThemeManagementService()->getThemes($this->getPublicationService()->findById(2));
-			$text = '---><br/>';
-
-			foreach($themes as $theme){
-				/* @var $theme Theme */
-				$text = $text.$theme->getName().'  -  '.$theme->getId().'  -  '.$theme->getPath().'<br/>';
-				$tpls = $this->getThemeManagementService()->getTemplates($theme);
-				foreach($tpls as $tpl){
-					/* @var $img Resource */
-					$text = $text.'              '.$tpl->getName().'  -  '.$tpl->getId().'  -  '.$tpl->getPath().'<br/>';
-				}
-				$this->getThemeManagementService()->getPresentationImages($theme);
-			}
-
-			$this->view->text = $text;
-
-		}catch (\Exception $e){
-			$this->view->text = $e->getMessage();
-		}
-	}
-
-	protected function test5()
-	{
-		$search = new SearchTheme();
-		$search->NAME->orderAscending();
+    protected function test2()
+    {
+        $search = new SearchTheme();
+        $search->NAME->orderAscending();
 
 
-		try{
-			$themes = $this->getThemeManagementService()->getThemes($this->getPublicationService()->findById(2));
-			$text = '---><br/>';
+        try {
+            $themes = $this->getThemeService()->getEntities();
+            $text = '---><br/>';
 
-			foreach($themes as $theme){
-				/* @var $theme Theme */
-				$text = $text.$theme->getName().'  -  '.$theme->getId().'  -  '.$theme->getPath().'<br/>';
-				$outputs = $this->getThemeManagementService()->getOutputSettings($theme);
-				foreach($outputs as $out){
-					/* @var $out OutputSettings */
-					$text = $text.$out->getOutput()->getName().'------------------<br/>';
-					$text = $text.$out->getFrontPage()->getPath().'<br/>';
-					$text = $text.$out->getSectionPage()->getPath().'<br/>';
-					$text = $text.$out->getArticlePage()->getPath().'<br/>';
-					$text = $text.$out->getErrorPage()->getPath().'<br/>';
-				}
-			}
+            foreach ($themes as $theme) {
+                /* @var $theme Theme */
+                $text = $text . $theme->getName() . '  -  ' . $theme->getId() . '  -  ' . $theme->getPath() . '<br/>';
+                $imgs = $this->getThemeService()->getPresentationImages($theme);
+                foreach ($imgs as $img) {
+                    /* @var $img Resource */
+                    $text = $text . '              ' . $img->getName() . '  -  ' . $img->getId() . '  -  ' . $img->getPath() . '<br/>';
+                }
+            }
 
-			$this->view->text = $text;
+            $this->view->text = $text;
+        } catch (\Exception $e) {
+            $this->view->text = $e->getMessage();
+        }
+    }
 
-		}catch (\Exception $e){
-			$this->view->text = $e->getMessage();
-		}
-	}
+    protected function test3()
+    {
+        $search = new SearchTheme();
+        $search->NAME->orderAscending();
 
-	protected function test6()
-	{
-		try{
-			$theme1 = $this->getThemeManagementService()->getById(1356059962);
-			$pub = $this->getPublicationService()->findById(2);
 
-			$this->getThemeManagementService()->assignTheme($theme1, $pub);
-			$text = '---><br/>';
+        try {
+            $themes = $this->getThemeManagementService()->getUnassignedThemes();
+            $text = '---><br/>';
 
-			$this->view->text = $text;
+            foreach ($themes as $theme) {
+                /* @var $theme Theme */
+                $text = $text . $theme->getName() . '  -  ' . $theme->getId() . '  -  ' . $theme->getPath() . '<br/>';
+                $imgs = $this->getThemeService()->getPresentationImages($theme);
+                foreach ($imgs as $img) {
+                    /* @var $img Resource */
+                    $text = $text . '              ' . $img->getName() . '  -  ' . $img->getId() . '  -  ' . $img->getPath() . '<br/>';
+                }
+            }
 
-		}catch (\Exception $e){
-			$this->view->text = 'errror<br/>'.$e.'</br>'.$e->getMessage();
-		}
-	}
+            $this->view->text = $text;
+        } catch (\Exception $e) {
+            $this->view->text = $e->getMessage();
+        }
+    }
 
-	protected function test7()
-	{
-		try{
-			$theme = $this->getThemeManagementService()->getById(1721544697);
-			$outss = $this->getThemeManagementService()->getOutputSettings($theme);
+    protected function test4()
+    {
+        $search = new SearchTheme();
+        $search->NAME->orderAscending();
 
-			$outs = $outss[0];
 
-			$this->getThemeManagementService()->assignOutputSetting($outs, $theme);
-			$text = '---><br/>';
+        try {
+            $themes = $this->getThemeManagementService()->getThemes($this->getPublicationService()->findById(2));
+            $text = '---><br/>';
 
-			$this->view->text = $text;
+            foreach ($themes as $theme) {
+                /* @var $theme Theme */
+                $text = $text . $theme->getName() . '  -  ' . $theme->getId() . '  -  ' . $theme->getPath() . '<br/>';
+                $tpls = $this->getThemeManagementService()->getTemplates($theme);
+                foreach ($tpls as $tpl) {
+                    /* @var $img Resource */
+                    $text = $text . '              ' . $tpl->getName() . '  -  ' . $tpl->getId() . '  -  path:' . $tpl->getPath() . '<br/>';
+                }
+                $this->getThemeManagementService()->getPresentationImages($theme);
+            }
 
-		}catch (\Exception $e){
-			$this->view->text = 'errror<br/>'.$e.'</br>'.$e->getMessage();
-		}
-	}
+            $this->view->text = $text;
+        } catch (\Exception $e) {
+            $this->view->text = $e->getMessage();
+        }
+    }
+
+    protected function test5()
+    {
+        $search = new SearchTheme();
+        $search->NAME->orderAscending();
+
+
+        try {
+            $themes = $this->getThemeManagementService()->getThemes($this->getPublicationService()->findById(2));
+            $text = '---><br/>';
+
+            foreach ($themes as $theme) {
+                /* @var $theme Theme */
+                $text = $text . $theme->getName() . '  -  ' . $theme->getId() . '  -  ' . $theme->getPath() . '<br/>';
+                $outputs = $this->getThemeManagementService()->getOutputSettings($theme);
+                foreach ($outputs as $out) {
+                    /* @var $out OutputSettings */
+                    $text = $text . $out->getOutput()->getName() . '------------------<br/>';
+                    $text = $text . $out->getFrontPage()->getPath() . '<br/>';
+                    $text = $text . $out->getSectionPage()->getPath() . '<br/>';
+                    $text = $text . $out->getArticlePage()->getPath() . '<br/>';
+                    $text = $text . $out->getErrorPage()->getPath() . '<br/>';
+                }
+            }
+
+            $this->view->text = $text;
+        } catch (\Exception $e) {
+            $this->view->text = $e->getMessage();
+        }
+    }
+
+    protected function test6()
+    {
+        try {
+            $theme1 = $this->getThemeManagementService()->getById(1356059962);
+            $pub = $this->getPublicationService()->findById(2);
+
+            $this->getThemeManagementService()->assignTheme($theme1, $pub);
+            $text = '---><br/>';
+
+            $this->view->text = $text;
+        } catch (\Exception $e) {
+            $this->view->text = 'errror<br/>' . $e . '</br>' . $e->getMessage();
+        }
+    }
+
+    protected function test7()
+    {
+        try {
+            $theme = $this->getThemeManagementService()->getById(1721544697);
+            $outss = $this->getThemeManagementService()->getOutputSettings($theme);
+
+            $outs = $outss[0];
+
+            $this->getThemeManagementService()->assignOutputSetting($outs,
+                    $theme);
+            $text = '---><br/>';
+
+            $this->view->text = $text;
+        } catch (\Exception $e) {
+            $this->view->text = 'errror<br/>' . $e . '</br>' . $e->getMessage();
+        }
+    }
+
+    /**
+     * Insert output setting issue Test service
+     */
+    public function test8Action()
+    {
+        $this->getHelper('viewRenderer')->setNoRender();
+        try {
+            $output = $this->getOutputService()->findByName('Web');
+
+            /* @var $issue \Newscoop\Entity\Issue */
+            $issue = $this->getIssueService()->findById(1);
+
+
+            $frontRsc = new Resource();
+            $frontRsc->setName('register.tpl');
+            $frontRsc->setPath('publication_2/theme_1/register.tpl');
+            $frontRsc = $this->getSyncResourceService()->getSynchronized($frontRsc);
+
+            $outputSettingsIssue = new OutputSettingsIssue;
+
+            /* @var $theme \Newscoop\Entity\Theme */
+            $theme = $this->getThemeManagementService()->getById(1721544697);
+
+            $themeRsc = new Resource();
+            $themeRsc->setName('theme-path');
+            $themeRsc->setPath($theme->getPath());
+            $themeRsc = $this->getSyncResourceService()->getSynchronized($themeRsc);
+
+            $outputSettingsIssue->setThemePath($themeRsc)
+                    ->setIssue($issue)
+                    ->setOutput($output)
+                    ->setFrontPage($frontRsc);
+
+            $this->getOutputSettingIssueService()->insert($outputSettingsIssue);
+        } catch (\Exception $e) {
+            echo 'errror<br/>' . $e . '</br>' . $e->getMessage();
+        }
+    }
+
+    /**
+     * list output setting issue by issue test service
+     */
+    public function test9Action()
+    {
+        $this->getHelper('viewRenderer')->setNoRender();
+        try {
+            $output = $this->getOutputService()->findByName('Web');
+            /* @var $issue \Newscoop\Entity\Issue */
+            $issue = $this->getIssueService()->findById(1);
+            $results = $this->getOutputSettingIssueService()->findbyIssue($issue);
+            if (count($results)) {
+                foreach ($results as $outputSettingIssue) {
+                    /* @var $outputSettingIssue OutputSettingsIssue */
+                    echo $outputSettingIssue->getOutput()->getName(), '---';
+                    echo "<br/>";
+                }
+            }
+        } catch (\Exception $e) {
+            echo 'errror<br/>' . $e . '</br>' . $e->getMessage();
+        }
+    }
+
+    /**
+     * Delete output setting issue by issue test service
+     */
+    public function test10Action()
+    {
+        $this->getHelper('viewRenderer')->setNoRender();
+        try {
+            $outputSetting = $this->getOutputSettingIssueService()->findById(1);
+            $this->getOutputSettingIssueService()->delete($outputSetting);
+        } catch (\Exception $e) {
+            echo 'errror<br/>' . $e . '</br>' . $e->getMessage();
+        }
+    }
 
 }
 

@@ -19,6 +19,11 @@ use Newscoop\Entity\Theme;
 class OutputSettings extends Entity
 {
 
+    	/**
+	 * Provides the class name as a constant.
+	 */
+	const NAME = __CLASS__;
+
 	/**
 	 * @ManyToOne(targetEntity="Newscoop\Entity\Output")
 	 * @JoinColumn(name="fk_output_id", referencedColumnName="id", nullable=FALSE)

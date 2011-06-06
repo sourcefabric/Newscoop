@@ -27,12 +27,6 @@ class NewscoopEntityPublicationProxy extends \Newscoop\Entity\Publication implem
     }
 
     
-    public function getId()
-    {
-        $this->_load();
-        return parent::getId();
-    }
-
     public function getName()
     {
         $this->_load();
@@ -55,6 +49,18 @@ class NewscoopEntityPublicationProxy extends \Newscoop\Entity\Publication implem
     {
         $this->_load();
         return parent::getSections();
+    }
+
+    public function getId()
+    {
+        $this->_load();
+        return parent::getId();
+    }
+
+    public function setId($id)
+    {
+        $this->_load();
+        return parent::setId($id);
     }
 
 
