@@ -454,4 +454,23 @@ class ArticleAuthor extends DatabaseObject
         return $order;
     }
 
+    public static function BuildAuthorIdsQuery(array $p_names) {
+        $authors_query = false;
+        $author_names = array();
+
+        foreach ($p_names as $one_name) {
+            $one_name = str_replace('"', '""', trim($one_name));
+            if (0 < strlen($one_name)) {
+                $author_names[] = $one_name;
+            }
+        }
+
+        if (0 < count($author_names)) {
+            $authors_str = '"' . implode('", "', $author_names) . '"';
+            $authors_query = "SELECT DISTINCT id FROM Authors WHERE trim(concat(first_name, \" \", last_name)) IN ($authors_str) OR trim(concat(last_name, \" \", first_name) IN ($authors_str))";
+        }
+
+        return $authors_query;
+    } // fn BuildAuthorIdsQuery
+
 }

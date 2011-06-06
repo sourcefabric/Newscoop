@@ -140,6 +140,26 @@ class AuthorAlias extends DatabaseObject
         $g_ado_db->Execute($queryStr);
     } // fn OnAuthorDelete
 
+    public static function BuildAuthorIdsQuery(array $p_aliases) {
+        $authors_query = false;
+        $author_aliases = array();
+
+        foreach ($p_aliases as $one_alias) {
+            $one_alias = str_replace('"', '""', trim($one_alias));
+            if (0 < strlen($one_alias)) {
+                $author_aliases[] = $one_alias;
+            }
+        }
+
+        if (0 < count($author_aliases)) {
+            $aliases_str = '"' . implode('", "', $author_aliases) . '"';
+            $authors_query = "SELECT DISTINCT id FROM AuthorAliases WHERE trim(alias) IN ($aliases_str)";
+
+        }
+
+        return $authors_query;
+    } // fn BuildAuthorIdsQuery
+
 } // class AuthorAlias
 
 ?>

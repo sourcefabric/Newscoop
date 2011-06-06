@@ -32,3 +32,8 @@ ALTER TABLE `liveuser_groups` CHANGE `group_id` `group_id` int(11) NOT NULL AUTO
 -- Remove article audioclips tables
 DROP TABLE IF EXISTS `ArticleAudioclips`;
 DROP TABLE IF EXISTS `AudioclipMetadata`;
+
+-- Importing the stored function for 'Point in Polygon' checking
+system php ./checkpp.php
+
+

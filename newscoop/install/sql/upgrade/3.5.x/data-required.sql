@@ -1,9 +1,39 @@
+
+-- Map setting
+-- should be geo-points autofocused
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapAutoFocusDefault', '1');
+-- maximal map zoom for map autofocusing
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapAutoFocusMaxZoom','10');
+-- map border spaces for autofocusing
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapAutoFocusBorder','50');
+-- css file to be included for map views
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapAutoCSSFile','/js/geocoding/styles/map-info.css');
+
+-- set lesser default sizes for location popups and videos
+UPDATE SystemPreferences SET value = 200 WHERE varname = "MapPopupWidthMin" AND value = 300;
+UPDATE SystemPreferences SET value = 150 WHERE varname = "MapPopupHeightMin" AND value = 200;
+UPDATE SystemPreferences SET value = 320 WHERE varname = "MapVideoWidthYouTube" AND value = 425;
+UPDATE SystemPreferences SET value = 240 WHERE varname = "MapVideoHeightYouTube" AND value = 350;
+UPDATE SystemPreferences SET value = 320 WHERE varname = "MapVideoWidthVimeo" AND value = 400;
+UPDATE SystemPreferences SET value = 180 WHERE varname = "MapVideoHeightVimeo" AND value = 225;
+UPDATE SystemPreferences SET value = 320 WHERE varname = "MapVideoWidthFlash" AND value = 425;
+UPDATE SystemPreferences SET value = 240 WHERE varname = "MapVideoHeightFlash" AND value = 350;
+UPDATE SystemPreferences SET value = 320 WHERE varname = "MapVideoWidthFlv" AND value = 300;
+UPDATE SystemPreferences SET value = 240 WHERE varname = "MapVideoHeightFlv" AND value = 280;
+-- remove poi unfilled descriptions and try to copy from perex if was filled
+UPDATE LocationContents SET poi_text = "" WHERE poi_text = "fill in the point description (*)";
+UPDATE LocationContents SET poi_text = "" WHERE poi_text = "fill in the point description";
+UPDATE LocationContents SET poi_text = poi_perex WHERE poi_text = "" AND poi_perex != "";
+
 -- remove Campcaster related preferences
 DELETE FROM `SystemPreferences` WHERE `varname` ='UseCampcasterAudioclips';
 DELETE FROM `SystemPreferences` WHERE `varname` ='CampcasterHostName';
 DELETE FROM `SystemPreferences` WHERE `varname` ='CampcasterHostPort';
 DELETE FROM `SystemPreferences` WHERE `varname` ='CampcasterXRPCPath';
 DELETE FROM `SystemPreferences` WHERE `varname` ='CampcasterXRPCFile';
+
+-- Index on icons, they can be used for multi-map constraints
+ALTER TABLE MapLocations ADD INDEX map_locations_poi_style_idx(poi_style(64));
 
 -- Fix references to duplicated widgets
 UPDATE `WidgetContext_Widget`
