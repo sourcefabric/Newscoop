@@ -6,6 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+use Newscoop\Entity\ArticleTypeField;
 namespace Newscoop\Service\Implementation;
 
 use Doctrine\ORM\Query;
@@ -196,6 +197,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 	/**
 	 * @author mihaibalaceanu
 	 * @param \Newscoop\Entity\Theme $theme
+	 * @return object
 	 */
 	function getArticleTypes(Theme $theme)
 	{
@@ -428,6 +430,90 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 				$em->persist($outTh);
 			}
 		}
+	}
+
+	/**
+	 * @param $articleTypes an array of mapping new values to old ones
+	 * 		( OldTypeName => (
+	 * 			name = OldTypeName,
+	 * 			ignore => boolean,
+	 * 			fields' => ( OldFieldName = ( name => New/OldType, parentType => ExistingType, ignore = boolean ), [...] )
+	 * 			)
+	 * 		, [...] )
+	 * 	parentType => ExistingType will be used for getting it's other props from db
+	 */
+	function assignArticleTypes($articleTypes, Theme $theme)
+	{
+	    Validation::notEmpty($articleTypes, 'articleTypes');
+		Validation::notEmpty($theme, 'theme');
+
+		$xml = $this->loadXML( ( $xmlFileName = $this->toFullPath($theme, $this->themeConfigFileName ) ) );
+		if($xml == NULL){
+			throw new \Exception("Unknown theme path '.$theme->gePath().' to assign to.");
+		}
+
+		$artServ = $this->getArticleTypeService();
+
+        $artCache = array();
+        /**
+         * function purpose: not to make so many calls to db
+         * @param string $parentType article type name
+         * @param string $fieldName field name doh
+         * @return ArticleTypeField|null
+         */
+		$getFieldByName = function( $parentType, $fieldName ) use( $artServ, &$artCache )
+	    {
+	        if( !isset( $artCache[ $parentType.$fieldName ] ) )
+	        {
+                $artType = $artServ->findTypeByName( $parentType );
+                if( $artType ) {
+                    $artCache[ $parentType.$fieldName ] = $artServ->findFieldByName( $artType, $fieldName );
+                }
+	        }
+            return $artCache[ $parentType.$fieldName ];
+	    };
+
+
+	    // parse the mapping array
+		foreach( $articleTypes as $typeName => $type )
+		{
+		    $articleXPath = '/'.self::TAG_ROOT.'/'.self::TAG_ARTICLE_TYPE.'[@'.self::ATTR_ARTICLE_TYPE_NAME.'=(\''.$typeName.'\')]';
+
+		    $fieldNodes = $xml->xpath("$articleXPath/*");
+
+            if( count($fieldNodes) )
+            {
+                foreach( $fieldNodes as $fieldNode )
+                {
+                    if( !( $updateField = $type['fields'][ (string) $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_NAME] ] )
+                        || $updateField['ignore'] == true )
+                        continue;
+
+                    $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_NAME] = $updateField['name'];
+
+                    $theField = $getFieldByName( $updateField['parentType'], $updateField['name'] );
+                    /* @var $theField ArticleTypeField */
+                    if( $theField )
+                    {
+                        $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_LENGTH] = $theField->getLength();
+                        $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_TYPE] = $theField->getFieldType();
+                    }
+                }
+            }
+
+            if( $type['ignore'] ) {
+		        continue;
+            }
+		    // set new article type node
+            $typeNode = $xml->xpath( $articleXPath );
+            if( !( $typeNode = current( $typeNode ) ) ) {
+                continue;
+            }
+            /* @var $typeNode SimpleXMLElement */
+            $typeNode[self::ATTR_ARTICLE_TYPE_NAME] = $type['name'];
+		}
+
+		return $xml->asXML( $xmlFileName );
 	}
 
 	/* --------------------------------------------------------------- */

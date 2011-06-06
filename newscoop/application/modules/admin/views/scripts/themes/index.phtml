@@ -32,8 +32,8 @@
 		{% for( i in images ) %}
 		<li class="imageItem ui-tabs-panel ui-widget-content ui-corner-bottom
 			{% if( i > 0 ) %} ui-tabs-hide {% endif %}" id="themesListTabD">
-    		<a id="example1" href="{{images[i]}}">
-				<img src="<?php echo $this->url() ?>{{images[i]}}" alt="{{images[i]}}" />
+    		<a id="example1" href="<?php echo $this->themesPath ?>/{{images[i]}}">
+				<img src="<?php echo $this->themesPath ?>/{{images[i]}}" alt="{{images[i]}}" />
 			</a>
 		</li>
 		{% endfor %}
