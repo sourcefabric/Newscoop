@@ -5,7 +5,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Template.php');
 //@New theme management
 use Newscoop\Service\Resource\ResourceId;
 use Newscoop\Service\IThemeManagementService;
-//use Newscoop\Service\IOutputSettingIssueService;
+use Newscoop\Service\IOutputSettingIssueService;
 //@New theme management
 camp_load_translation_strings("articles");
 camp_load_translation_strings("logs");
@@ -61,12 +61,12 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 }
 
 //@New theme management
-//$resourceId = new ResourceId('Publication/Edit');
-//$themeManagementService = $resourceId->getService(IThemeManagementService::NAME_1);
-//$outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
+$resourceId = new ResourceId('Publication/Edit');
+$themeManagementService = $resourceId->getService(IThemeManagementService::NAME_1);
+$outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
 
-$outSetIssues = array();//$outputSettingIssueService->findByIssue($issueObj->getIssueId());
-if(len($outSetIssues) > 0){
+$outSetIssues = $outputSettingIssueService->findByIssue($issueObj->getIssueId());
+if(count($outSetIssues) > 0){
 	$outSetIssue = $outSetIssues[0];
 	$themePath = $outSetIssue->getThemePath()->getPath();
 	$tplFrontPath = $outSetIssue->getFrontPage()->getPath();
@@ -79,10 +79,10 @@ if(len($outSetIssues) > 0){
 	$tplArticlePath = null;
 }
 
-$publicationThemes = array();//$themeManagementService->getThemes($publicationObj->getPublicationId());
+$publicationThemes = $themeManagementService->getThemes($publicationObj->getPublicationId());
 
 if($themePath != null){
-	$allTemplates = array();//$themeManagementService->getTemplates($themePath);
+	$allTemplates = $themeManagementService->getTemplates($themePath);
 } else {
 	$allTemplates = array();
 }
