@@ -104,18 +104,17 @@ class LocalizerFileFormat_GS extends LocalizerFileFormat {
         // Write data to the file
         if (!file_exists($filePath)) {
         	if (is_writable($dirName)) {
-		        File::write($filePath, $data, FILE_MODE_WRITE);
+                file_put_contents($filePath, $data);
 	        } else {
 	        	return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_FILE, $filePath), CAMP_ERROR_WRITE_FILE);
 	        }
         } else {
 	        if (is_writable($filePath)) {
-		        File::write($filePath, $data, FILE_MODE_WRITE);
+                file_put_contents($filePath, $data);
 	        } else {
 	        	return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_FILE, $filePath), CAMP_ERROR_WRITE_FILE);
 	        }
         }
-        File::close($filePath, FILE_MODE_WRITE);
         return CAMP_SUCCESS;
     } // fn save
 
