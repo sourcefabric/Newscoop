@@ -108,7 +108,10 @@ public static function GetMapInfo($p_htmlDir = "", $p_websiteUrl = "", $p_mapPro
     }
 
     $map_prov_includes = array();
+    $map_prov_includes_async = array();
     $map_prov_info_arr = array();
+    $map_prov_gv3_async = false;
+    $map_prov_gv3_async_method = "";
 
     $known_providers = array("googlev3" => false, "osm" => false);
     $sys_pref_names = array("googlev3" => "GoogleV3", "osm" => "OSM", "mapquest" => "MapQuest");
@@ -130,9 +133,13 @@ public static function GetMapInfo($p_htmlDir = "", $p_websiteUrl = "", $p_mapPro
         }
 
         $one_prov_include = "";
+        $one_prov_include_async = "";
         if ("googlev3" == $one_prov_name)
         {
             $one_prov_include = "http://maps.google.com/maps/api/js?v=3.2&sensor=false";
+            $one_prov_include_async = "http://maps.google.com/maps/api/js?v=3.2&sensor=false&callback=initialize_gv3async";
+            $map_prov_gv3_async_method = "initialize_gv3async";
+            $map_prov_gv3_async = true;
         }
 /*
         if ("mapquest" == $one_prov_name)
@@ -149,6 +156,10 @@ public static function GetMapInfo($p_htmlDir = "", $p_websiteUrl = "", $p_mapPro
         if ($one_prov_include && ("" != $one_prov_include))
         {
             $map_prov_includes[] = $one_prov_include;
+        }
+        if ($one_prov_include_async && ("" != $one_prov_include_async))
+        {
+            $map_prov_includes_async[] = $one_prov_include_async;
         }
 
         if ("" == $map_prov_first) {$map_prov_first = $one_prov_label;}
@@ -172,6 +183,9 @@ public static function GetMapInfo($p_htmlDir = "", $p_websiteUrl = "", $p_mapPro
 
         $map_prov_default = "googlev3";
         $map_prov_includes[] = "http://maps.google.com/maps/api/js?v=3.2&sensor=false";
+        $map_prov_includes_async[] = "http://maps.google.com/maps/api/js?v=3.2&sensor=false&callback=initialize_gv3async";
+        $map_prov_gv3_async_method = "initialize_gv3async";
+        $map_prov_gv3_async = true;
 
     }
 
@@ -190,7 +204,7 @@ public static function GetMapInfo($p_htmlDir = "", $p_websiteUrl = "", $p_mapPro
     $res_map_info["width"] = $map_width;
     $res_map_info["height"] = $map_height;
 
-    return array("json_obj" => $res_map_info, "incl_obj" => $map_prov_includes);
+    return array("json_obj" => $res_map_info, "incl_obj" => $map_prov_includes, "incl_obj_async" => $map_prov_includes_async, "incl_gv3" => $map_prov_gv3_async, "incl_gv3_init" => $map_prov_gv3_async_method);
 } // fn GetMapInfo
 
 
@@ -422,12 +436,14 @@ public static function GetPopupsInfo($p_htmlDir, $p_websiteUrl)
 
     $size_info = array("width" => $popup_width, "height" => $popup_height);
 
-    $video_names_arr = array("YouTube", "Vimeo", "Flash", "Flv");
+    //$video_names_arr = array("YouTube", "Vimeo", "Flash", "Flv");
+    $video_names_arr = array("YouTube", "Vimeo", "Flash");
     $video_names_info = array();
-    $video_names_info["YouTube"] = array("width" => '425', "height" => '350');
-    $video_names_info["Vimeo"] = array("width" => '400', "height" => '225');
-    $video_names_info["Flash"] = array("width" => '300', "height" => '200');
-    $video_names_info["Flv"] = array("width" => '300', "height" => '280');
+
+    $video_names_info["YouTube"] = array("width" => '320', "height" => '240'); // array("width" => '425', "height" => '350');
+    $video_names_info["Vimeo"] = array("width" => '320', "height" => '180'); // array("width" => '400', "height" => '225');
+    $video_names_info["Flash"] = array("width" => '320', "height" => '240'); // array("width" => '300', "height" => '200');
+    // $video_names_info["Flv"] = array("width" => '320', "height" => '240'); // array("width" => '300', "height" => '280');
 
     foreach ($video_names_arr as $one_video_label)
     {
@@ -500,7 +516,8 @@ public static function GetPopupsInfo($p_htmlDir, $p_websiteUrl)
         $cur_info = $video_names_info["Flash"];
 
         $video_names_usage[] = array("label" => "Flash", "source" => $flash_src_default, "width" => $cur_info['width'], "height" => $cur_info['height'], "path" => $flash_path);
-        $cur_info = $video_names_info["Flv"];
+        //$cur_info = $video_names_info["Flv"];
+        $cur_info = $video_names_info["Flash"];
 
         $video_names_usage[] = array("label" => "Flv", "source" => $flv_src_default, "width" => $cur_info['width'], "height" => $cur_info['height'], "path" => $flash_path);
     }
@@ -578,6 +595,93 @@ public static function GetIconsFiles($p_htmlDir = "", $p_websiteUrl = "")
 } // fn GetIconsFiles
 
 	/**
+	 * Gets info on map auto-focusing
+	 *
+	 * @param string $p_htmlDir
+	 * @param string $p_websiteUrl
+	 *
+	 * @return array
+	 */
+public static function GetFocusInfo($p_htmlDir = "", $p_websiteUrl = "")
+{
+    $focus_default = SystemPref::Get("MapAutoFocusDefault");
+    if (!$focus_default) {$focus_default = false;}
+    else {$focus_default = true;}
+
+    $focus_maxzoom = SystemPref::Get("MapAutoFocusMaxZoom");
+    if (!$focus_maxzoom) {$focus_maxzoom = 18;}
+
+    $focus_border = SystemPref::Get("MapAutoFocusBorder");
+    if (!$focus_border) {$focus_border = 100;}
+
+    $res_focus_info = array("auto_focus" => $focus_default, "max_zoom" => $focus_maxzoom, "border" => $focus_border);
+    return array("json_obj" => $res_focus_info);
+} // fn GetFocusInfo
+
+
+	/**
+	 * Gets CSS file(s) to be included for map (pre)view
+	 *
+	 * @param string $p_htmlDir
+	 * @param string $p_websiteUrl
+	 *
+	 * @return array
+	 */
+public static function GetIncludeCSS($p_htmlDir = "", $p_websiteUrl = "")
+{
+    global $Campsite;
+    $cnf_html_dir = $Campsite['HTML_DIR'];
+    $cnf_website_url = $Campsite['WEBSITE_URL'];
+
+    if ("" != $p_htmlDir) {$cnf_html_dir = $p_htmlDir;}
+    if ("" != $p_websiteUrl) {$cnf_website_url = $p_websiteUrl;}
+
+    $css_files = array();
+
+    $css_map_file = SystemPref::Get("MapAutoCSSFile");
+    if ($css_map_file)
+    {
+        $css_map_file = "" . $css_map_file;
+        if (0 < strlen($css_map_file))
+        {
+            if (0 != strpos($css_map_file, "/")) {$css_map_file = "/" . $css_map_file;}
+            $css_files[] = $p_websiteUrl . $css_map_file;
+        }
+    }
+
+    return array("css_files" => $css_files);
+} // fn GetIncludeCSS
+
+
+	/**
+	 * Gets icons directory for map (pre)view
+	 *
+	 * @param string $p_htmlDir
+	 * @param string $p_websiteUrl
+	 *
+	 * @return string
+	 */
+public static function GetIconsWebDir($p_htmlDir = "", $p_websiteUrl = "")
+{
+    global $Campsite;
+    $cnf_html_dir = $Campsite['HTML_DIR'];
+    $cnf_website_url = $Campsite['WEBSITE_URL'];
+
+    if ("" != $p_htmlDir) {$cnf_html_dir = $p_htmlDir;}
+    if ("" != $p_websiteUrl) {$cnf_website_url = $p_websiteUrl;}
+
+    $icons_subpath = SystemPref::Get("MapMarkerDirectory");
+    if (!$icons_subpath)
+    {
+        $icons_subpath = "/javascript/geocoding/markers";
+    }
+
+    $icons_webdir = $cnf_website_url . $icons_subpath;
+    return $icons_webdir;
+
+} // GetIconsWebDir
+
+	/**
 	 * Gets translated strings for the geo-map templates
 	 * This is used for having translated those strings, even when they are not used via this function
 	 * Look at include/smarty/plugins/function.math.php for the usage
@@ -587,10 +691,11 @@ public static function GetIconsFiles($p_htmlDir = "", $p_websiteUrl = "")
 public static function TemplateGeoStrings()
 {
     $show_original_map = getGS('Show original map');
+    $open_large_map = getGS('Open large map');
     $map = getGS('Map');
     $center = getGS('Center');
 
-    return array('show_original_map' => $show_original_map, 'map' => $map, 'center' => $center);
+    return array('show_original_map' => $show_original_map, 'open_large_map' => $open_large_map, 'map' => $map, 'center' => $center);
 
 } // fn TemplateGeoStrings
 

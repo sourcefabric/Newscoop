@@ -1,0 +1,118 @@
+.map_filter_toolbar {
+    background: #ffffff;
+    width: 1020px;
+    margin: 0px auto;
+    height: 0px;
+    padding: 9px 8px 0px 14px;
+}
+
+.map_filter_info {
+    margin-left: 2px;
+    margin-top: 2px;
+    margin-bottom: 4px;
+    height: 24px;
+    font-size: 18px;
+}
+
+.map_show_filter {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    width: 800px;
+}
+
+.geo_filter_map_actions {
+    float: right;
+}
+
+.map_hidden {
+    display: none;
+}
+
+.geo_map_show_initial {
+    font-size: 12px;
+}
+.geo_filter_polygon_actions {
+    font-size: 14px;
+    color: #000000;
+}
+.geo_filter_unselected {
+    /*color: #666666;*/
+    /*background: #666666;*/
+}
+.geo_filter_selected {
+    /*color: #666666;*/
+    /*background: #d0d0ff;*/
+    /*color: #000088;*/
+    color: #663300;
+}
+.polygon_info {
+    margin-top: 5px;
+    font-size: 12px;
+}
+.polygon_info_label {
+    font-size: 14px;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.geo_polygon_labels {
+    height: 18px;
+}
+
+.geo_polygon_type_info {
+    float: left;
+    margin-left: 10px;
+}
+.geo_polygon_remove {
+    float:left;
+}
+
+.geo_polkygon_info {
+    width: 800px;
+    height: 100%;
+}
+
+.geo_polygon_info_std {
+    float:left;
+    color: #000000;
+    width: 800px;
+}
+.geo_polygon_info_edited {
+    float:left;
+    color: #663300;
+    width: 800px;
+}
+
+.geo_polygon_type_convex {
+    color: #000000;
+}
+
+.geo_polygon_type_concave {
+    color: #ff0000;
+}
+
+.geo_polygon_type_within_dl {
+    color: #000000;
+}
+
+.geo_polygon_type_over_dl {
+    color: #ff0000;
+}
+
+.geo_add_polygon {
+    float: left;
+}
+
+.geo_polygon_new {
+    border: 2px solid #fffff0;
+}
+
+.polygon_append {
+    width: 800px;
+    margin-bottom: 10px;
+}
+.geo_filter_polygon_spacer {
+    width: 800px;
+}
+

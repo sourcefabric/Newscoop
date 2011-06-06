@@ -113,6 +113,46 @@ class TopicName extends DatabaseObject {
 	    return $this->setProperty('name', $p_name);
 	} // fn setName
 
-} // class TopicName
+	public static function BuildTopicIdsQuery($p_topicNames)
+	{
+        $topics_query = false;
+        $topic_names = array();
+        $topic_names_full = array();
+
+        foreach ($p_topicNames as $one_name) {
+            $one_name = str_replace('"', '""', trim($one_name));
+            $one_name_parts = explode(":", $one_name);
+            if (2 <= count($one_name_parts)) {
+                $topic_name = $one_name_parts[0];
+                $topic_lang = $one_name_parts[1];
+                $topic_names_full[] = "(name = \"$topic_name\" AND fk_language_id IN (SELECT Id FROM Languages WHERE Code = \"$topic_lang\"))";
+            }
+            elseif (0 < strlen($one_name)) {
+                $topic_names[] = $one_name;
+            }
+        }
+
+        if ((0 == $topic_names) && ($topic_names_full)) {
+            return $topics_query;
+        }
+
+        $names_str = 'trim(name) IN ("' . implode('", "', $topic_names) . '") ';
+        $names_str_full = '(' . implode(' OR ', $topic_names_full) . ') ';
+        $topics_query = "SELECT DISTINCT fk_topic_id AS id FROM TopicNames WHERE ";
+
+        $continuing = "";
+        if (0 < count($topic_names)) {
+            $topics_query .= $names_str;
+            $continuing = "OR ";
+        }
+        if (0 < count($topic_names_full)) {
+            $topics_query .= $continuing;
+            $topics_query .= $names_str_full;
+        }
+
+        return $topics_query;
+    }
+
+} // class BuildTopicIdsQuery
 
 ?>

@@ -73,12 +73,20 @@ if ($auth->hasIdentity()) {
             $method = 'redirect';
         }
 
-        // fix csfr protection
-        if (!empty($_POST['csrf'])) {
+        // fix zend csrf protection
+        foreach ($_POST as $key => $value) {
+            if (strpos($key, 'csrf') === FALSE) {
+                continue;
+            }
             $form = new Zend_Form;
-            $form->addElement('hash', 'csrf');
-            $csrf = $form->getElement('csrf');
-            $_POST['csrf'] = $csrf->getHash();
+            $form->addElement('hash', $key);
+            $element = $form->getElement($key);
+            $session = $element->getSession();
+            $request = $this->getRequest();
+
+            $session->hash = $element->getHash();
+            $_POST['csrf'] = $element->getHash();
+            $request->setPost($key, $element->getHash());
         }
 
         // fix legacy cs

@@ -49,7 +49,7 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 	/**
      * @param mixed $arg
 	 */
-    public function __construct($arg = NULL)
+    public function __construct($arg = NULL, $p_forceExists = false)
     {
         parent::__construct($this->m_columnNames);
 
@@ -57,7 +57,7 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
         	$this->m_data['id'] = (int) $arg;
         	$this->fetch();
         } else {
-        	$this->fetch($arg);
+        	$this->fetch($arg, $p_forceExists);
         }
     }
 
@@ -71,12 +71,12 @@ class Geo_Location extends DatabaseObject implements IGeoLocation
 	 * @return boolean
 	 *		TRUE on success, FALSE on failure
 	 */
-    public function fetch($arg = null)
+    public function fetch($arg = null, $p_forceExists = false)
     {
     	global $g_ado_db;
 
         if (is_array($arg)) {
-        	return parent::fetch($arg);
+        	return parent::fetch($arg, $p_forceExists);
         }
 
         if (!$this->keyValuesExist()) {

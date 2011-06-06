@@ -2,24 +2,28 @@
 /**
  * Image Manager configuration file.
  * @author $Author: holman $
+ * @author $Author: vlad $
  * @package ImageManager
  */
 $GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
-require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
 
-// Only logged in admin users allowed
-if (!$LiveUser->isLoggedIn()) {
-    header("Location: /$ADMIN/login.php");
-    exit(0);
-} else {
-    $userId = $LiveUser->getProperty('auth_user_id');
-    $userTmp = new User($userId);
-    if (!$userTmp->exists() || !$userTmp->isAdmin()) {
-        header("Location: /$ADMIN/login.php");
-        exit(0);
-    }
-    unset($userTmp);
+
+include_once("Zend/Auth.php");
+include_once("Zend/Auth/Storage/Session.php");
+
+// setup the correct namespace for the zend auth session
+Zend_Auth::getInstance()->setStorage(new Zend_Auth_Storage_Session( 'Zend_Auth_Admin' ) );
+$userId = Zend_Auth::getInstance()->getIdentity();
+
+
+$userTmp = new User($userId);
+if (!$userTmp->exists() || !$userTmp->isAdmin()) {
+	header("Location: /$ADMIN/login.php");
+	exit(0);
 }
+unset($userTmp);
+
 
 require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
 

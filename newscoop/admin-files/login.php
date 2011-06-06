@@ -135,6 +135,10 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
     );
 
     $printHidden = function($name, $value) use ($view) {
+        if (is_array($value)) {
+            return; // can't handle
+        }
+
         echo '<input type="hidden" name="', $name, '" value="', $view->escape($value), '" />';
     };
 

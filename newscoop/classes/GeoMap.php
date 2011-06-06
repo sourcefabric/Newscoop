@@ -12,6 +12,10 @@ require_once dirname(__FILE__) . '/GeoMultimedia.php';
 require_once dirname(__FILE__) . '/GeoPreferences.php';
 require_once dirname(__FILE__) . '/IGeoMap.php';
 
+require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
+require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/ComparisonOperation.php');
+camp_load_translation_strings("globals");
+
 /**
  * @package Campsite
  */
@@ -700,8 +704,44 @@ class Geo_Map extends DatabaseObject implements IGeoMap
      */
 	public static function LoadMapData($p_mapId, $p_languageId, $p_articleNumber, $p_preview = false, $p_textOnly = false)
 	{
+        $poi_count = 0;
+
+        $p_constraints = array();
+
+        $leftOperand = 'as_array';
+        $rightOperand = true;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'active_only';
+        $rightOperand = $p_preview;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'text_only';
+        $rightOperand = $p_textOnly;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'language';
+        $rightOperand = $p_languageId;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'map';
+        $rightOperand = $p_mapId;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $pois = array();
+        $poi_objs = Geo_MapLocation::GetListExt($p_constraints, (array) null, 0, 0, $poi_count, false, $pois);
         return array(
-            'pois' => Geo_Map::ReadMapPoints((int) $p_mapId, (int) $p_languageId, $p_preview, $p_textOnly),
+            'pois' => $pois,
             'map' => Geo_Map::ReadMapInfo('map', (int) $p_mapId),
         );
     } // fn LoadMapData
@@ -892,8 +932,42 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
         $geo_map_usage = Geo_Map::ReadMapInfo("map", $p_mapId);
 
+        $poi_count = 0;
 
-        $found_list = Geo_Map::ReadMapPoints($p_mapId, $p_languageId);
+        $p_constraints = array();
+
+        $leftOperand = 'as_array';
+        $rightOperand = true;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'preview';
+        $rightOperand = false;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'text_only';
+        $rightOperand = false;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'language';
+        $rightOperand = $p_languageId;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $leftOperand = 'map';
+        $rightOperand = $p_mapId;
+        $operator = new Operator('is', 'php');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $p_constraints[] = $constraint;
+
+        $found_list = array();
+        $found_objs = Geo_MapLocation::GetListExt($p_constraints, (array) null, 0, 0, $poi_count, false, $found_list);
 
         $res_array = array("status" => "200", "pois" => $found_list, "map" => $geo_map_usage);
 
@@ -963,163 +1037,23 @@ class Geo_Map extends DatabaseObject implements IGeoMap
     } // fn ReadMapInfo
 
 
-    /**
-     * Provides information on map's points
-     *
-     * @param int $p_mapId
-     * @param int $p_languageId
-     * @param bool $p_preview
-     * @param bool $p_textOnly
-     *
-     * @return array
-     */
-	public static function ReadMapPoints($p_mapId, $p_languageId, $p_preview = false, $p_textOnly = false)
+	public static function ReadMultiMapInfo()
 	{
-        if (0 == $p_mapId) {return array();}
+        $geo_map_info = Geo_Preferences::GetMapInfo();
+        $map_data = $geo_map_info["json_obj"];
 
-		global $g_ado_db;
+        $map_info = array();
+        $map_info["id"] = 0;
+        $map_info["lon"] = $map_data["longitude"];
+        $map_info["lat"] = $map_data["latitude"];
+        $map_info["res"] = $map_data["resolution"];
+        $map_info["prov"] = $map_data["default"];
+        $map_info["width"] = $map_data["width"];
+        $map_info["height"] = $map_data["height"];
+        $map_info["name"] = "Multimap";
 
-		$sql_params = array($p_mapId, $p_languageId);
-
-        $list_fill = "%%id_list%%";
-
-		$queryStr = "SELECT ml.id AS ml_id, mll.id as mll_id, ml.fk_location_id AS loc_id, mll.fk_content_id AS con_id, ";
-        $queryStr .= "ml.poi_style AS poi_style, ml.rank AS rank, mll.poi_display AS poi_display, ";
-
-        $queryStr .= "AsText(l.poi_location) AS loc, l.poi_type AS poi_type, l.poi_type_style AS poi_type_style, ";
-
-        $queryStr .= "c.poi_name AS poi_name, c.poi_link AS poi_link, c.poi_perex AS poi_perex, ";
-        $queryStr .= "c.poi_content_type AS poi_content_type, c.poi_content AS poi_content, c.poi_text AS poi_text ";
-
-        $queryStr .= "FROM MapLocations AS ml INNER JOIN MapLocationLanguages AS mll ON ml.id = mll.fk_maplocation_id ";
-        $queryStr .= "INNER JOIN Locations AS l ON l.id = ml.fk_location_id ";
-        $queryStr .= "INNER JOIN LocationContents AS c ON c.id = mll.fk_content_id ";
-
-        $queryStr .= "WHERE ml.fk_map_id = ? AND mll.fk_language_id = ? ";
-
-        if ($p_preview)
-        {
-            $queryStr .= "AND mll.poi_display = 1 ";
-        }
-
-        $queryStr .= "ORDER BY ml.rank, ml.id, mll.id";
-
-        $queryStr_mm = "SELECT m.id AS m_id, mlm.id AS mlm_id, ml.id AS ml_id, ";
-        $queryStr_mm .= "m.media_type AS media_type, m.media_spec AS media_spec, ";
-        $queryStr_mm .= "m.media_src AS media_src, m.media_height AS media_height, m.media_width AS media_width ";
-        $queryStr_mm .= "FROM Multimedia AS m INNER JOIN MapLocationMultimedia AS mlm ON m.id = mlm.fk_multimedia_id ";
-        $queryStr_mm .= "INNER JOIN MapLocations AS ml ON ml.id = mlm.fk_maplocation_id ";
-        $queryStr_mm .= "WHERE ml.id IN ($list_fill)";
-
-		$dataArray = array();
-        $maploc_ids = array();
-
-		$rows = $g_ado_db->GetAll($queryStr, $sql_params);
-
-		if (is_array($rows)) {
-			foreach ($rows as $row) {
-                $tmp_loc = trim(strtolower($row['loc']));
-                $loc_matches = array();
-                if (!preg_match('/^point\((?P<latitude>[\d.-]+)\s(?P<longitude>[\d.-]+)\)$/', $tmp_loc, $loc_matches)) {continue;}
-                $tmp_latitude = $loc_matches['latitude'];
-                $tmp_longitude = $loc_matches['longitude'];
-
-                $tmpPoint = array();
-				$tmpPoint['latitude'] = $tmp_latitude;
-				$tmpPoint['longitude'] = $tmp_longitude;
-
-                $tmpPoint['loc_id'] = $row['ml_id'];
-                $tmpPoint['con_id'] = $row['mll_id'];
-
-                $tmpPoint['style'] = $row['poi_style'];
-                $tmpPoint['rank'] = $row['rank'];
-                $tmpPoint['display'] = $row['poi_display'];
-
-				$tmpPoint['title'] = $row['poi_name'];
-				$tmpPoint['link'] = $row['poi_link'];
-
-				$tmpPoint['perex'] = $row['poi_perex'];
-				$tmpPoint['content_type'] = $row['poi_content_type'];
-				$tmpPoint['content'] = $row['poi_content'];
-				$tmpPoint['text'] = $row['poi_text'];
-
-				$tmpPoint['image_mm'] = 0;
-				$tmpPoint['image_src'] = "";
-				$tmpPoint['image_width'] = "";
-				$tmpPoint['image_height'] = "";
-
-				$tmpPoint['video_mm'] = 0;
-				$tmpPoint['video_id'] = "";
-				$tmpPoint['video_type'] = "";
-				$tmpPoint['video_width'] = "";
-				$tmpPoint['video_height'] = "";
-
-                $dataArray[] = $tmpPoint;
-
-                $maploc_ids[] = $row['ml_id'];
-            }
-        }
-
-        if (0 == count($maploc_ids)) {return $dataArray;}
-        if ($p_textOnly) {return $dataArray;}
-
-        $loc_ids_list = implode(", ", $maploc_ids);
-
-        $queryStr_mm = str_replace($list_fill, $loc_ids_list, $queryStr_mm);
-
-        $imagesArray = array();
-        $videosArray = array();
-
-		$rows = $g_ado_db->GetAll($queryStr_mm);
-
-		if (is_array($rows)) {
-			foreach ($rows as $row) {
-                $tmpPoint = array();
-                $tmpPoint["m_id"] = $row["m_id"];
-                $tmpPoint["mlm_id"] = $row["mlm_id"];
-                $tmpPoint["ml_id"] = $row["ml_id"];
-                $tmpPoint["type"] = $row["media_type"];
-                $tmpPoint["spec"] = $row["media_spec"];
-                $tmpPoint["src"] = $row["media_src"];
-                $tmpPoint["width"] = $row["media_width"];
-                $tmpPoint["height"] = $row["media_height"];
-
-                $tmp_id = $row["ml_id"];
-                $tmp_type = $row["media_type"];
-                if ("image" == $tmp_type)
-                {
-                    $imagesArray[$tmp_id] = $tmpPoint;
-                }
-                if ("video" == $tmp_type)
-                {
-                    $videosArray[$tmp_id] = $tmpPoint;
-                }
-            }
-        }
-
-        foreach ($dataArray AS $index => $poi)
-        {
-            $ml_id = $poi["loc_id"];
-            if (array_key_exists($ml_id, $imagesArray))
-            {
-                $dataArray[$index]["image_mm"] = $imagesArray[$ml_id]["mlm_id"];
-                $dataArray[$index]["image_src"] = $imagesArray[$ml_id]["src"];
-                $dataArray[$index]["image_width"] = $imagesArray[$ml_id]["width"];
-                $dataArray[$index]["image_height"] = $imagesArray[$ml_id]["height"];
-            }
-            if (array_key_exists($ml_id, $videosArray))
-            {
-                $dataArray[$index]["video_mm"] = $videosArray[$ml_id]["mlm_id"];
-                $dataArray[$index]["video_id"] = $videosArray[$ml_id]["src"];
-                $dataArray[$index]["video_type"] = $videosArray[$ml_id]["spec"];
-                $dataArray[$index]["video_width"] = $videosArray[$ml_id]["width"];
-                $dataArray[$index]["video_height"] = $videosArray[$ml_id]["height"];
-            }
-        }
-
-		return $dataArray;
-
-	} // fn ReadMapPoints
+        return $map_info;
+    }
 
     /**
      * Gives languages used at the map text contents
@@ -1685,19 +1619,206 @@ class Geo_Map extends DatabaseObject implements IGeoMap
     // presentation functions
 
     /**
+     * Gives the large map opener part of the header part for all the presentation maps
+     *
+     * @param string $p_mapSuffix
+     * @param int $p_widthLargeMap
+     * @param int $p_heightLargeMap
+     * @param string $p_labelLargeMap
+     * @param string $p_tagStringPrev
+     * @param string $p_tagStringBody
+     *
+     * @return string
+     */
+    private static function GetLargeMapOpener($p_mapSuffix, $p_widthLargeMap, $p_heightLargeMap, $p_labelLargeMap, $p_tagStringPrev, $p_tagStringBody)
+    {
+        $tag_string_fin = "";
+
+        $tag_string_fin .= '
+<script>
+window.map_win_popup = null;
+window.geo_open_large_map' . $p_mapSuffix . ' = function(params)
+{
+    window.deferred_poi_select = null;
+    var select_poi = null;
+    if (undefined !== params) {
+        if (undefined !== params["select_poi"]) {
+            select_poi = params["select_poi"];
+            window.deferred_poi_select = select_poi;
+        }
+    }
+
+    var already_focused = false;
+    try {
+        if (window.map_win_popup) {
+            if ("' . $p_mapSuffix . '" == window.map_win_popup.map_obj_specifier) {
+                setTimeout("try {window.map_win_popup.focus();} catch(e) {}", 0);
+                if (null !== select_poi) {
+                    window.point_large_map_center' . $p_mapSuffix . '(select_poi, true);
+                }
+                already_focused = true;
+            }
+        }
+    } catch (e) {already_focused = false;}
+
+    if (window.map_win_popup && window.map_win_popup.closed) {
+        already_focused = false;
+    }
+
+    if (already_focused) {return;}
+
+    window.map_win_popup = window.open("", "map_win_popup", "width=' . $p_widthLargeMap . ', height=' . $p_heightLargeMap . ',directories=0,location=0,menubar=0,toolbar=0,resizable=1");
+
+    window.map_win_popup.document.write("<!DOCTYPE HTML PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">\n");
+    window.map_win_popup.document.write("<html xmlns=\"http://www.w3.org/1999/xhtml\">\n");
+    window.map_win_popup.document.write("<head profile=\"http://gmpg.org/xfn/11\">\n");
+    window.map_win_popup.document.write("<title>' . $p_labelLargeMap . '</title>\n");
+    window.map_win_popup.document.write("<" + "script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js\"><" + "/script>\n");
+    window.map_win_popup.document.write("\n");
+    window.map_win_popup.document.write("\n");
+';
+
+$header_part = '
+        <script type="text/javascript">
+        window.set_map_popup_at_opener = function () {
+            if (window.opener && (undefined !== window.opener.map_win_popup) && (!window.opener.map_win_popup)) {
+                window.opener.map_win_popup = window;
+            }
+        };
+        setInterval ("window.set_map_popup_at_opener();", 1000);
+        //setInterval ("window.set_map_popup_at_opener();", 500);
+        </script>
+';
+
+        foreach (explode("\n", $header_part) as $tag_string_line) {
+            $tag_string_line = str_replace("\\", "\\\\", trim($tag_string_line));
+            $tag_string_line = str_replace("\"", "\\\"", trim($tag_string_line));
+            $tag_string_line = str_replace("<script", "<\" + \"script", trim($tag_string_line));
+            $tag_string_line = str_replace("</script", "<\" + \"/script", trim($tag_string_line));
+            $tag_string_fin .= 'window.map_win_popup.document.write("' . $tag_string_line . '" + "\n");' . "\n";
+        }
+
+        $tag_string_fin .= '
+';
+
+        $tag_string_fin .= 'window.map_win_popup.document.write("<script type=\"text/javascript\">" + "\n")' . "\n";
+        $tag_string_fin .= 'window.map_win_popup.document.write("window.map_prepared = false;\n");' . "\n";
+        $tag_string_fin .= 'window.map_win_popup.document.write("window.map_popup_win = true;\n");' . "\n";
+        $tag_string_fin .= 'window.map_win_popup.document.write("window.map_obj_specifier = \"' . $p_mapSuffix . '\";\n");' . "\n";
+        $tag_string_fin .= 'window.map_win_popup.document.write("window.onunload = function () {window.map_obj_specifier = null; window.map_prepared = false;}\n");' . "\n";
+
+        $tag_string_fin .= 'window.map_win_popup.document.write("window.deferred_action = function() {if (null !== window.opener.deferred_poi_select) {window.geo_object' . $p_mapSuffix . '.proc_subst_action({select_poi: window.opener.deferred_poi_select});}}\n");' . "\n";
+
+        $tag_string_fin .= 'window.map_win_popup.document.write("<" + "/script>" + "\n");' . "\n";
+
+        foreach (explode("\n", $p_tagStringPrev) as $tag_string_line) {
+            $tag_string_line = str_replace("\\", "\\\\", trim($tag_string_line));
+            $tag_string_line = str_replace("\"", "\\\"", trim($tag_string_line));
+            $tag_string_line = str_replace("<script", "<\" + \"script", trim($tag_string_line));
+            $tag_string_line = str_replace("</script", "<\" + \"/script", trim($tag_string_line));
+            $tag_string_fin .= 'window.map_win_popup.document.write("' . $tag_string_line . '" + "\n");' . "\n";
+        }
+
+        $tag_string_fin .= "\n";
+
+        $tag_string_fin .= 'window.map_win_popup.document.write("<script type=\"text/javascript\">" + "\n")' . "\n";
+        $tag_string_fin .= 'window.map_win_popup.document.write("setInterval(\"geo_object' . $p_mapSuffix . '.try_size_updated()\", 1000);\n");' . "\n";
+        $tag_string_fin .= 'window.map_win_popup.document.write("<" + "/script>" + "\n");' . "\n";
+
+        $tag_string_fin .= '
+    window.map_win_popup.document.write("</head>\n");
+    window.map_win_popup.document.write("<body>\n");
+';
+
+        $tag_string_fin .= 'window.map_win_popup.document.write("<div id=\"map_body_holder\" class=\"geomap_body_holder\">\n");';
+        foreach (explode("\n", $p_tagStringBody) as $tag_string_line) {
+            $tag_string_line = str_replace("\\", "\\\\", trim($tag_string_line));
+            $tag_string_line = str_replace("\"", "\\\"", trim($tag_string_line));
+            $tag_string_line = str_replace("<script", "<\" + \"script", trim($tag_string_line));
+            $tag_string_line = str_replace("</script", "<\" + \"/script", trim($tag_string_line));
+            $tag_string_fin .= 'window.map_win_popup.document.write("' . $tag_string_line . '" + "\n");' . "\n";
+        }
+        $tag_string_fin .= 'window.map_win_popup.document.write("</div>\n");';
+
+        $tag_string_fin .= '
+    window.map_win_popup.document.write("</body></html>");
+    window.map_win_popup.document.close();
+}
+</script>
+';
+
+        return $tag_string_fin;
+    } // fn GetLargeMapOpener
+
+    /**
      * Gives the header part for the map front end presentation
      *
      * @param int $p_articleNumber
      * @param int $p_languageId
      * @param int $p_mapWidth
      * @param int $p_mapHeight
+     * @param array $p_options
      *
      * @return string
      */
-    public static function GetMapTagHeader($p_articleNumber, $p_languageId, $p_mapWidth = 0, $p_mapHeight = 0)
+    public static function GetMapTagHeader($p_articleNumber, $p_languageId, $p_mapWidth = 0, $p_mapHeight = 0, $p_options = null)
     {
         global $Campsite;
         $tag_string = "";
+        $tag_string_top = "";
+        $tag_string_gv3_async = false;
+        $tag_string_ini = "";
+        $tag_string_mid = "";
+        $tag_string_fin = "";
+
+        $auto_focus = null;
+        $max_zoom = null;
+        $map_margin = null;
+        $load_common = true;
+
+        if (is_array($p_options)) {
+            if (array_key_exists("auto_focus", $p_options)) {
+                $auto_focus = $p_options["auto_focus"];
+            }
+            if (array_key_exists("max_zoom", $p_options)) {
+                $max_zoom = $p_options["max_zoom"];
+            }
+            if (array_key_exists("map_margin", $p_options)) {
+                $map_margin = $p_options["map_margin"];
+            }
+            if (array_key_exists("load_common", $p_options)) {
+                $load_common = $p_options["load_common"];
+            }
+        }
+
+        $large_map_on_click = false;
+        $open_large_map = false;
+        $width_large_map = 800;
+        $height_large_map = 600;
+        $label_large_map = "";
+        if (is_array($p_options)) {
+            if (array_key_exists("large_map_on_click", $p_options)) {
+                $large_map_on_click = $p_options["large_map_on_click"];
+            }
+            if (array_key_exists("large_map_open", $p_options)) {
+                $open_large_map = $p_options["large_map_open"];
+            }
+            if ($large_map_on_click && (!$open_large_map)) {
+                $open_large_map = true;
+            }
+            if (array_key_exists("large_map_width", $p_options)) {
+                $width_large_map_param = 0 + $p_options["large_map_width"];
+                if (0 < $width_large_map_param) {
+                    $width_large_map = $width_large_map_param;
+                }
+            }
+            if (array_key_exists("large_map_height", $p_options)) {
+                $height_large_map_param = 0 + $p_options["large_map_height"];
+                if (0 < $height_large_map_param) {
+                    $height_large_map = $height_large_map_param;
+                }
+            }
+        }
 
         $f_article_number = $p_articleNumber;
         $f_language_id = $p_languageId;
@@ -1708,13 +1829,14 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $cnf_website_url = $Campsite['WEBSITE_URL'];
 
         $geo_map_usage = Geo_Map::ReadMapInfo("article", $f_article_number);
-        if (0 < $p_mapWidth)
-        {
+        if (0 < $p_mapWidth) {
             $geo_map_usage['width'] = $p_mapWidth;
         }
-        if (0 < $p_mapHeight)
-        {
+        if (0 < $p_mapHeight) {
             $geo_map_usage['height'] = $p_mapHeight;
+        }
+        if ($geo_map_usage['name']) {
+            $label_large_map = $geo_map_usage['name'];
         }
 
         $geo_map_usage_json = "";
@@ -1722,6 +1844,10 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
         $geo_map_info = Geo_Preferences::GetMapInfo($cnf_html_dir, $cnf_website_url, $geo_map_usage['prov']);
         $geo_map_incl = Geo_Preferences::PrepareMapIncludes($geo_map_info["incl_obj"]);
+        $geo_map_incl_async_arr = $geo_map_info["incl_obj_async"];
+        $geo_map_incl_async_init = $geo_map_info["incl_gv3_init"];
+
+        $tag_string_gv3_async = $geo_map_info["incl_gv3"];
         $geo_map_json = "";
         $geo_map_json .= json_encode($geo_map_info["json_obj"]);
 
@@ -1733,6 +1859,22 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         $geo_popups_json = "";
         $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
 
+        $geo_focus_info = Geo_Preferences::GetFocusInfo($cnf_html_dir, $cnf_website_url);
+        if (null !== $auto_focus)
+        {
+            $geo_focus_info["json_obj"]["auto_focus"] = $auto_focus;
+        }
+        if (null !== $max_zoom)
+        {
+            $geo_focus_info["json_obj"]["max_zoom"] = $max_zoom;
+        }
+        if (null !== $map_margin)
+        {
+            $geo_focus_info["json_obj"]["border"] = $map_margin;
+        }
+        $geo_focus_json = "";
+        $geo_focus_json .= json_encode($geo_focus_info["json_obj"]);
+        
         $map_id = Geo_Map::GetMapIdByArticle($f_article_number);
 
         $preview = true;
@@ -1743,51 +1885,188 @@ class Geo_Map extends DatabaseObject implements IGeoMap
 
         $geocodingdir = $Campsite['WEBSITE_URL'] . '/js/geocoding/';
 
+        // map-provider specific includes shall be taken for all maps, since those maps can use different map providers
+        $tag_string_top .= $geo_map_incl;
+        $tag_string_top .= "\n";
 
-        $tag_string .= $geo_map_incl;
-        $tag_string .= "\n";
+        $check_gv3 = "false";
+        if ($tag_string_gv3_async) {
+            $check_gv3 = "true";
+        }
+        $check_gv3_init = "false";
+        if ("" != $geo_map_incl_async_init) {
+            $check_gv3_init = "true";
+        }
 
-        $tag_string .= '
+        $include_files_tags = "";
+        if (true) {
 
+            $include_files = Geo_Preferences::GetIncludeCSS($cnf_html_dir, $cnf_website_url);
+            $include_files_css = $include_files["css_files"];
+            foreach ($include_files_css as $css_file)
+            {
+                $include_files_tags .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"$css_file\" />\n";
+            }
+
+        }
+
+        $tag_string_ini .= $include_files_tags;
+
+        if (true) {
+
+            $tag_string_ini .= '
+
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/map_popups.js"></script>
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/openlayers/OpenLayers.js"></script>
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/openlayers/OLlocals.js"></script>
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/map_preview.js"></script>
+';
 
+        }
+
+        $tag_string_mid .= '
 <script type="text/javascript">
+    window.map_prepared = false;
+
+';
+
+        if ("" != $geo_map_incl_async_init) {
+        $tag_string_mid .= '
+if (undefined === window.' . $geo_map_incl_async_init . ') {
+    window.' . $geo_map_incl_async_init . ' = function () {
+        window.gv3_maps_loaded = true;
+    };
+}
+';
+        }
+
+        $tag_string_mid .= '
+
     geo_object'. $map_suffix .' = new geo_locations();
 
-var geo_use_system_parameters_map' . $map_suffix . ' = function()
+window.center_large_map' . $map_suffix . ' = function () {
+    try {
+        if (window.map_win_popup && window.map_win_popup.map_prepared) {
+            if ("' . $map_suffix . '" == window.map_win_popup.map_obj_specifier) {
+                window.map_win_popup.geo_object' . $map_suffix . '.map_showview();
+            }
+        }
+    } catch (e) {}
+};
+
+window.point_large_map_center' . $map_suffix . ' = function (index, select) {
+    try {
+        if (window.map_win_popup && window.map_win_popup.map_prepared) {
+            if ("' . $map_suffix . '" == window.map_win_popup.map_obj_specifier) {
+                window.map_win_popup.geo_object' . $map_suffix . '.center_poi(index);
+                if (select) {
+                    window.map_win_popup.OpenLayers.HooksPopups.on_map_feature_select(window.map_win_popup.geo_object' . $map_suffix . ', index);
+                }
+            }
+        }
+    } catch (e) {}
+};
+
+window.geo_on_load_proc_check_async_map' . $map_suffix . ' = function()
 {
+
+    var async_loaded = true;
+    if (' . $check_gv3 . ') {
+        var loaded_gv3 = false;
+        if ((undefined !== window.google) && (undefined !== window.google.maps) && (undefined !== window.google.maps.event)) {
+            loaded_gv3 = true;
+        }
+
+        if (' . $check_gv3_init . ') {
+            if ((undefined === window.gv3_maps_loaded) || (!window.gv3_maps_loaded)) {
+                loaded_gv3 = false;
+            }
+        }
+
+        if (!loaded_gv3) {async_loaded = false;}
+    }
+
+    if (0 < window.count_to_async_load' . $map_suffix . ') {
+        async_loaded = false;
+    }
+
+    if (async_loaded) {
+        setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
+        return;
+    }
+
+    setTimeout("geo_on_load_proc_check_async_map' . $map_suffix . '();", 250);
+
+}
+
+var geo_on_load_proc_map' . $map_suffix . ' = function()
+{
+    var map_obj = document.getElementById ? document.getElementById("geo_map_mapcanvas' . $map_suffix . '") : null;
+    if (map_obj)
+    {
+        if (typeof(window.map_popup_win) == "undefined") {
+            map_obj.style.width = "' . $geo_map_usage["width"] . 'px";
+            map_obj.style.height = "' . $geo_map_usage["height"] . 'px";
+        } else {
+            // not setting the map size for the large map
+        }
+
 ';
 
     $article_spec_arr = array("language_id" => $f_language_id, "article_number" => $f_article_number);
     $article_spec = json_encode($article_spec_arr);
 
-    $tag_string .= "\n";
-    $tag_string .= "geo_object$map_suffix.set_article_spec($article_spec);";
-    $tag_string .= "\n";
-    $tag_string .= "geo_object$map_suffix.set_map_info($geo_map_json);";
-    $tag_string .= "\n";
-    $tag_string .= "geo_object$map_suffix.set_map_usage($geo_map_usage_json);";
-    $tag_string .= "\n";
-    $tag_string .= "geo_object$map_suffix.set_icons_info($geo_icons_json);";
-    $tag_string .= "\n";
-    $tag_string .= "geo_object$map_suffix.set_popups_info($geo_popups_json);";
-    $tag_string .= "\n";
+    $tag_string_mid .= "\n";
+    $tag_string_mid .= "geo_object$map_suffix.set_article_spec($article_spec);";
+    $tag_string_mid .= "\n";
+    $tag_string_mid .= "geo_object$map_suffix.set_auto_focus($geo_focus_json);";
+    $tag_string_mid .= "\n";
+    $tag_string_mid .= "geo_object$map_suffix.set_map_info($geo_map_json);";
+    $tag_string_mid .= "\n";
+    $tag_string_mid .= "geo_object$map_suffix.set_map_usage($geo_map_usage_json);";
+    $tag_string_mid .= "\n";
+    $tag_string_mid .= "geo_object$map_suffix.set_icons_info($geo_icons_json);";
+    $tag_string_mid .= "\n";
+    $tag_string_mid .= "geo_object$map_suffix.set_popups_info($geo_popups_json);";
+    $tag_string_mid .= "\n";
+    if ($large_map_on_click) {
+        $tag_string_mid .= "if (typeof(window.map_popup_win) == \"undefined\") {\n";
+        $tag_string_mid .= "    geo_object$map_suffix.set_action_subst(function(params) {";
+        $tag_string_mid .= "        " . self::GetMapTagOpen($p_articleNumber, $p_languageId, "open_form") . "(params);\n";
+        $tag_string_mid .= "    });\n";
+        $tag_string_mid .= "}\n";
+        $tag_string_mid .= "\n";
+    }
+    $tag_string_mid .= "if (typeof(window.map_popup_win) != \"undefined\") {\n";
+    $tag_string_mid .= "    geo_object$map_suffix.set_map_large({width:$width_large_map,height:$height_large_map,map_holder:\"map_body_holder\"});\n";
+    $tag_string_mid .= "}\n";
+    $tag_string_mid .= "\n";
 
+        $tag_string_mid .= '
 
-        $tag_string .= '
-};
-var geo_on_load_proc_map' . $map_suffix . ' = function()
-{
+        if (true && (typeof(window.map_popup_win) != "undefined")) {
+';
 
-    var map_obj = document.getElementById ? document.getElementById("geo_map_mapcanvas' . $map_suffix . '") : null;
-    if (map_obj)
-    {
-        map_obj.style.width = "' . $geo_map_usage["width"] . 'px";
-        map_obj.style.height = "' . $geo_map_usage["height"] . 'px";
-        geo_main_selecting_locations(geo_object' . $map_suffix . ', "' . $geocodingdir. '", "geo_map_mapcanvas' . $map_suffix. '", "map_sidedescs", "", "", true);
-        geo_use_system_parameters_map' . $map_suffix . '();
+        $tag_async_load_bunch = "";
+        $count_to_async_load = 0;
+        foreach ($geo_map_incl_async_arr as $one_async_scr) {
+            if (!empty($one_async_scr)) {
+                $count_to_async_load += 1;
+                $tag_async_load_bunch .= '$.getScript("' . $one_async_scr . '", function() {window.count_to_async_load' . $map_suffix . ' -= 1;});';
+            }
+        }
+
+        $tag_string_mid .= '
+            window.count_to_async_load' . $map_suffix . ' = ' . $count_to_async_load . ';
+            window.gv3_maps_loaded = false;
+
+            ' . $tag_async_load_bunch . '
+
+            if (true) {
+                setTimeout("geo_on_load_proc_check_async_map' . $map_suffix . '();", 250);
+                return;
+            }
+        }
 
         setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
         return;
@@ -1796,18 +2075,25 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
 
 var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 {
-        var res_state = null;
+        var res_state = false;
         try {
-            res_state = geo_main_openlayers_init(geo_object' . $map_suffix . ', "geo_map_mapcanvas' . $map_suffix. '");
-        } catch (e) {res_state = "not_yet";}
+            res_state = OpenLayers.Util.test_ready();
+        } catch (e) {res_state = false;}
 
-        if ("ok" != res_state)
+        if (!res_state)
         {
             setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
             return;
         }
 
+        geo_object' . $map_suffix . '.main_openlayers_init("geo_map_mapcanvas' . $map_suffix. '");
         geo_object' . $map_suffix . '.got_load_data(' . $poi_info_json . ', true);
+
+        window.map_prepared = true;
+
+        if (undefined !== window.deferred_action) {
+            try {window.deferred_action();} catch (e) {}
+        }
 
 };
 
@@ -1818,7 +2104,19 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 </script>
 ';
 
-        return $tag_string;
+        // should we provide js for large-map openning
+        if ($open_large_map) {
+
+            $tag_string_fin .= self::GetLargeMapOpener($map_suffix, $width_large_map, $height_large_map, $label_large_map, $tag_string_ini . $tag_string_mid, self::GetMapTagBody($p_articleNumber, $p_languageId, true));
+
+        }
+
+        $tag_string .= $tag_string_top;
+        if ($load_common) {
+            $tag_string .= $tag_string_ini;
+        }
+
+        return $tag_string . $tag_string_mid . $tag_string_fin;
 
     } // fn GetMapTagHeader
 
@@ -1830,7 +2128,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      *
      * @return string
      */
-    public static function GetMapTagBody($p_articleNumber, $p_languageId)
+    public static function GetMapTagBody($p_articleNumber, $p_languageId, $p_largeMap = false)
     {
         global $Campsite;
         $tag_string = "";
@@ -1840,10 +2138,43 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 
         $map_suffix = "_" . $f_article_number . "_" . $f_language_id;
 
-        $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\"></div>\n";
+        if ($p_largeMap) {
+            $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\" class=\"geo_map_mapcanvas_large\"></div>\n";
+        }
+        else {
+            $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\" class=\"geo_map_mapcanvas\"></div>\n";
+        }
 
         return $tag_string;
     } // fn GetMapTagBody
+
+    /**
+     * Gives the body open-large-map link part for the article-map front end presentation
+     *
+     * @param int $p_articleNumber
+     * @param int $p_languageId
+     *
+     * @return string
+     */
+    public static function GetMapTagOpen($p_articleNumber, $p_languageId, $p_specifier)
+    {
+        global $Campsite;
+        $tag_string = "";
+
+        $f_article_number = $p_articleNumber;
+        $f_language_id = $p_languageId;
+
+        $map_suffix = "_" . $f_article_number . "_" . $f_language_id;
+
+        if ("open_form" == $p_specifier) {
+            $tag_string .= "geo_open_large_map$map_suffix";
+        }
+        else {
+            $tag_string .= "if (window.map_prepared) {geo_open_large_map$map_suffix();} ";
+        }
+
+        return $tag_string;
+    } // fn GetMapTagOpen
 
     /**
      * Gives the body map-centering (js call) part for the map front end presentation
@@ -1863,7 +2194,8 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 
         $map_suffix = "_" . $f_article_number . "_" . $f_language_id;
 
-        $tag_string .= "geo_object" . $map_suffix . ".map_showview();";
+        $tag_string .= "if (window.map_prepared) {geo_object" . $map_suffix . ".map_showview();} ";
+        $tag_string .= "window.center_large_map" . $map_suffix . "(); ";
 
         return $tag_string;
     } // fn GetMapTagCenter
@@ -1890,9 +2222,10 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         foreach ($poi_info["pois"] as $rank => $poi) {
             $cur_lon = $poi["longitude"];
             $cur_lat = $poi["latitude"];
-            $center = "geo_object$map_suffix.center_lonlat($cur_lon, $cur_lat);";
-            $poi_info["pois"][$rank]["center"] = $center;
-            $poi_info["pois"][$rank]["open"] = "geo_hook_on_map_feature_select(geo_object$map_suffix, $pind);";
+            $center_poi = "if (window.map_prepared) {geo_object$map_suffix.center_lonlat($cur_lon, $cur_lat);} point_large_map_center" . $map_suffix . "($pind, false);";
+            $select_poi = "if (window.map_prepared) {geo_object$map_suffix.select_poi($pind);} point_large_map_center" . $map_suffix . "($pind, true);";
+            $poi_info["pois"][$rank]["center"] = $center_poi;
+            $poi_info["pois"][$rank]["open"] = $select_poi;
             $pind += 1;
         }
         return (array) $poi_info;
@@ -1908,6 +2241,8 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         $geo = self::GetMapTagListData((int) $p_articleNumber, (int) $p_languageId);
         $map = $geo['map'];
         $pois = $geo['pois'];
+
+        $icons_dir = Geo_Preferences::GetIconsWebDir();
 
         $map_name = $map['name'];
         $map_name = str_replace("&", "&amp;", $map_name);
@@ -1937,7 +2272,10 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
             $poi_perex = str_replace("<", "&lt;", $poi_perex);
             $poi_perex = str_replace(">", "&gt;", $poi_perex);
 
+            $poi_icon = $poi['style'];
+
             $html .= '<div id="poi_seq_' . $poiIdx . '">
+                <a class="geomap_poi_icon_link" href="#" onClick="' . $poi['open'] . ' return false;"><img class="geomap_poi_icon" src="' . $icons_dir . '/' . $poi_icon . '" /></a>
                 <a class="geomap_poi_name" href="#" onClick="'
                 . $poi['open'] . ' return false;">' . $poi_title . '</a>
                 <div class="geomap_poi_perex">' . $poi_perex . '</div>
@@ -1953,6 +2291,840 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         $html .= '</div>';
         return $html;
     } // fn GetMapTagList
+
+    // multi-map functions
+
+    /**
+     * Gives the header part for the multi-map front end presentation
+     *
+     * @param int $p_languageId
+     * @param array $p_constarints
+     * @param array $p_options
+     * @param int $p_offset
+     * @param int $p_limit
+     * @param int $p_mapWidth
+     * @param int $p_mapHeight
+     * @param int $p_rank
+     *    The rank of the current multi-map, used to make unique ids
+     *
+     * @return string
+     */
+    public static function GetMultiMapTagHeader($p_languageId, $p_constraints, $p_options, $p_offset, $p_limit, $p_mapWidth, $p_mapHeight, $p_rank = 0)
+    {
+        global $Campsite;
+        $tag_string = "";
+        $tag_string_top = "";
+        $tag_string_gv3_async = false;
+        $tag_string_ini = "";
+        $tag_string_mid = "";
+        $tag_string_fin = "";
+
+        $points = null;
+
+        $pois_loaded = false;
+        $max_zoom = null;
+        $map_margin = null;
+        $load_common = true;
+        $area_points = null;
+        $area_points_empty_only = "false";
+
+        if (is_array($p_options)) {
+            if (array_key_exists("pois_retrieved", $p_options)) {
+                $pois_loaded = $p_options["pois_retrieved"];
+            }
+            if (array_key_exists("max_zoom", $p_options)) {
+                $max_zoom = $p_options["max_zoom"];
+            }
+            if (array_key_exists("map_margin", $p_options)) {
+                $map_margin = $p_options["map_margin"];
+            }
+            if (array_key_exists("load_common", $p_options)) {
+                $load_common = $p_options["load_common"];
+            }
+            if (array_key_exists("area_points", $p_options)) {
+                $area_points = $p_options["area_points"];
+            }
+            if (array_key_exists("area_points_empty_only", $p_options)) {
+                if ($p_options["area_points_empty_only"]) {
+                    $area_points_empty_only = "true";
+                }
+            }
+        }
+
+        $large_map_on_click = false;
+        $open_large_map = false;
+        $width_large_map = 800;
+        $height_large_map = 600;
+        $label_large_map = "";
+        if (is_array($p_options)) {
+            if (array_key_exists("large_map_on_click", $p_options)) {
+                $large_map_on_click = $p_options["large_map_on_click"];
+            }
+            if (array_key_exists("large_map_open", $p_options)) {
+                $open_large_map = $p_options["large_map_open"];
+            }
+            if ($large_map_on_click && (!$open_large_map)) {
+                $open_large_map = true;
+            }
+            if (array_key_exists("large_map_width", $p_options)) {
+                $width_large_map_param = 0 + $p_options["large_map_width"];
+                if (0 < $width_large_map_param) {
+                    $width_large_map = $width_large_map_param;
+                }
+            }
+            if (array_key_exists("large_map_height", $p_options)) {
+                $height_large_map_param = 0 + $p_options["large_map_height"];
+                if (0 < $height_large_map_param) {
+                    $height_large_map = $height_large_map_param;
+                }
+            }
+            if (array_key_exists("large_map_label", $p_options)) {
+                $label_large_map_param = "" . $p_options["large_map_label"];
+                if ("" != $label_large_map_param) {
+                    $label_large_map = $label_large_map_param;
+                }
+            }
+        }
+
+        if (!$pois_loaded) {
+
+            $leftOperand = 'as_array';
+            $rightOperand = true;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+    
+            $leftOperand = 'active_only';
+            $rightOperand = true;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+    
+            $leftOperand = 'text_only';
+            $rightOperand = false;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+    
+            $leftOperand = 'language';
+            $rightOperand = $p_languageId;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+    
+            $leftOperand = 'constrained';
+            $rightOperand = true;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+    
+            $poi_count = 0;
+            $points = array();
+            $point_objs = Geo_MapLocation::GetListExt($p_constraints, (array) null, $p_offset, $p_limit, $poi_count, false, $points);
+
+        }
+        else {
+
+            $points = $p_constraints;
+
+        }
+
+        $f_language_id = $p_languageId;
+
+        $map_suffix = "_" . "multimap" . "_" . $f_language_id . "_" . $p_rank;
+
+        $cnf_html_dir = $Campsite['HTML_DIR'];
+        $cnf_website_url = $Campsite['WEBSITE_URL'];
+        
+        $geo_map_usage = Geo_Map::ReadMultiMapInfo();
+        if (0 < $p_mapWidth)
+        {
+            $geo_map_usage['width'] = $p_mapWidth;
+        }
+        if (0 < $p_mapHeight)
+        {
+            $geo_map_usage['height'] = $p_mapHeight;
+        }
+
+        $geo_map_usage_json = "";
+        $geo_map_usage_json .= json_encode($geo_map_usage);
+
+        $geo_map_info = Geo_Preferences::GetMapInfo($cnf_html_dir, $cnf_website_url, $geo_map_usage['prov']);
+        $geo_map_incl = Geo_Preferences::PrepareMapIncludes($geo_map_info["incl_obj"]);
+        $geo_map_incl_async_arr = $geo_map_info["incl_obj_async"];
+        $geo_map_incl_async_init = $geo_map_info["incl_gv3_init"];
+
+        $tag_string_gv3_async = $geo_map_info["incl_gv3"];
+        $geo_map_json = "";
+        $geo_map_json .= json_encode($geo_map_info["json_obj"]);
+
+        $geo_icons_info = Geo_Preferences::GetIconsInfo($cnf_html_dir, $cnf_website_url);
+        $geo_icons_json = "";
+        $geo_icons_json .= json_encode($geo_icons_info["json_obj"]);
+        
+        $geo_popups_info = Geo_Preferences::GetPopupsInfo($cnf_html_dir, $cnf_website_url);
+        $geo_popups_json = "";
+        $geo_popups_json .= json_encode($geo_popups_info["json_obj"]);
+
+        $geo_focus_info = Geo_Preferences::GetFocusInfo($cnf_html_dir, $cnf_website_url);
+
+        {
+            $geo_focus_info["json_obj"]["auto_focus"] = true;
+        }
+        if (null !== $max_zoom)
+        {
+            $geo_focus_info["json_obj"]["max_zoom"] = $max_zoom;
+        }
+        if (null !== $map_margin)
+        {
+            $geo_focus_info["json_obj"]["border"] = $map_margin;
+        }
+        $geo_focus_json = "";
+        $geo_focus_json .= json_encode($geo_focus_info["json_obj"]);
+        
+        $preview = true;
+        $poi_info = array('pois' => $points, 'map' => $geo_map_usage);
+        
+        //$poi_info_json = str_replace("'", "\\'", json_encode($poi_info));
+        $poi_info_json = json_encode($poi_info);
+        
+        $geocodingdir = $Campsite['WEBSITE_URL'] . '/js/geocoding/';
+
+        // map-provider specific includes shall be taken for all maps, since those maps can use different map providers
+        $tag_string_top .= $geo_map_incl;
+        $tag_string_top .= "\n";
+
+        $check_gv3 = "false";
+        if ($tag_string_gv3_async) {
+            $check_gv3 = "true";
+        }
+        $check_gv3_init = "false";
+        if ("" != $geo_map_incl_async_init) {
+            $check_gv3_init = "true";
+        }
+
+        $include_files_tags = "";
+        if (true) {
+            $include_files = Geo_Preferences::GetIncludeCSS($cnf_html_dir, $cnf_website_url);
+            $include_files_css = $include_files["css_files"];
+            foreach ($include_files_css as $css_file)
+            {
+                $include_files_tags .= "<link rel=\"stylesheet\" type=\"text/css\" href=\"$css_file\" />\n";
+            }
+        }
+
+        $tag_string_ini .= $include_files_tags;
+
+        if (true) {
+
+            $tag_string_ini .= '
+
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/map_popups.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/openlayers/OpenLayers.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/openlayers/OLlocals.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/map_preview.js"></script>
+
+';
+        }
+
+        $tag_string_mid .= '
+
+<script type="text/javascript">
+    window.map_prepared = false;
+
+';
+
+        if ("" != $geo_map_incl_async_init) {
+        $tag_string_mid .= '
+if (undefined === window.' . $geo_map_incl_async_init . ') {
+    window.' . $geo_map_incl_async_init . ' = function () {
+        window.gv3_maps_loaded = true;
+    };
+}
+';
+        }
+
+        $tag_string_mid .= '
+
+    geo_object'. $map_suffix .' = new geo_locations();
+
+window.center_large_map' . $map_suffix . ' = function () {
+    try {
+        if (window.map_win_popup && window.map_win_popup.map_prepared) {
+            if ("' . $map_suffix . '" == window.map_win_popup.map_obj_specifier) {
+                window.map_win_popup.geo_object' . $map_suffix . '.map_showview();
+            }
+        }
+    } catch (e) {}
+};
+
+window.point_large_map_center' . $map_suffix . ' = function (index, select) {
+    try {
+        if (window.map_win_popup && window.map_win_popup.map_prepared) {
+            if ("' . $map_suffix . '" == window.map_win_popup.map_obj_specifier) {
+                window.map_win_popup.geo_object' . $map_suffix . '.center_poi(index);
+                if (select) {
+                    window.map_win_popup.OpenLayers.HooksPopups.on_map_feature_select(window.map_win_popup.geo_object' . $map_suffix . ', index);
+                }
+            }
+        }
+    } catch (e) {}
+};
+
+window.geo_on_load_proc_check_async_map' . $map_suffix . ' = function()
+{
+
+    var async_loaded = true;
+    if (' . $check_gv3 . ') {
+        var loaded_gv3 = false;
+        if ((undefined !== window.google) && (undefined !== window.google.maps) && (undefined !== window.google.maps.event)) {
+            loaded_gv3 = true;
+        }
+
+        if (' . $check_gv3_init . ') {
+            if ((undefined === window.gv3_maps_loaded) || (!window.gv3_maps_loaded)) {
+                loaded_gv3 = false;
+            }
+        }
+
+        if (!loaded_gv3) {async_loaded = false;}
+    }
+
+    if (0 < window.count_to_async_load' . $map_suffix . ') {
+        async_loaded = false;
+    }
+
+    if (async_loaded) {
+        setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
+        return;
+    }
+
+    setTimeout("geo_on_load_proc_check_async_map' . $map_suffix . '();", 250);
+
+}
+
+var geo_on_load_proc_map' . $map_suffix . ' = function()
+{
+
+    var map_obj = document.getElementById ? document.getElementById("geo_map_mapcanvas' . $map_suffix . '") : null;
+    if (map_obj)
+    {
+        if (typeof(window.map_popup_win) == "undefined") {
+            map_obj.style.width = "' . $geo_map_usage["width"] . 'px";
+            map_obj.style.height = "' . $geo_map_usage["height"] . 'px";
+        } else {
+            // not setting the map size for the large map
+        }
+';
+
+    $article_spec_arr = array("language_id" => $f_language_id, "article_number" => 0);
+    $article_spec = json_encode($article_spec_arr);
+
+    $local_strings = array();
+    $local_strings["articles"] = getGS('Articles');
+    $local_strings_json = json_encode($local_strings);
+
+    $tag_string_mid .= "\n";
+    $tag_string_mid .= "geo_object$map_suffix.set_article_spec($article_spec);";
+    $tag_string_mid .= "\n";
+    $tag_string_mid .= "geo_object$map_suffix.set_auto_focus($geo_focus_json);";
+    $tag_string_mid .= "\n";
+    $tag_string_mid .= "geo_object$map_suffix.set_map_info($geo_map_json);";
+    $tag_string_mid .= "\n";
+    $tag_string_mid .= "geo_object$map_suffix.set_map_usage($geo_map_usage_json);";
+    $tag_string_mid .= "\n";
+    $tag_string_mid .= "geo_object$map_suffix.set_icons_info($geo_icons_json);";
+    $tag_string_mid .= "\n";
+    $tag_string_mid .= "geo_object$map_suffix.set_popups_info($geo_popups_json);";
+    $tag_string_mid .= "\n";
+    $tag_string_mid .= "geo_object$map_suffix.set_display_strings($local_strings_json);";
+    $tag_string_mid .= "\n";
+
+    if ($area_points) {
+        $tag_string_mid .= "geo_object$map_suffix.set_area_constraints($area_points, {\"empty_only\":$area_points_empty_only});";
+        $tag_string_mid .= "\n";
+    }
+
+    if ($large_map_on_click) {
+        $tag_string_mid .= "if (typeof(window.map_popup_win) == \"undefined\") {\n";
+        $tag_string_mid .= "    geo_object$map_suffix.set_action_subst(function(params) {";
+        $tag_string_mid .= "        " . self::GetMultiMapTagOpen($p_languageId, $p_rank, "open_form") . "(params);\n";
+        $tag_string_mid .= "    });\n";
+        $tag_string_mid .= "}\n";
+        $tag_string_mid .= "\n";
+    }
+    $tag_string_mid .= "if (typeof(window.map_popup_win) != \"undefined\") {\n";
+    $tag_string_mid .= "    geo_object$map_suffix.set_map_large({width:$width_large_map,height:$height_large_map,map_holder:\"map_body_holder\"});\n";
+    $tag_string_mid .= "}\n";
+    $tag_string_mid .= "\n";
+
+        $tag_string_mid .= '
+
+        if (true && (typeof(window.map_popup_win) != "undefined")) {
+';
+
+        $tag_async_load_bunch = "";
+        $count_to_async_load = 0;
+        foreach ($geo_map_incl_async_arr as $one_async_scr) {
+            if (!empty($one_async_scr)) {
+                $count_to_async_load += 1;
+                $tag_async_load_bunch .= '$.getScript("' . $one_async_scr . '", function() {window.count_to_async_load' . $map_suffix . ' -= 1;});';
+            }
+        }
+
+        $tag_string_mid .= '
+            window.count_to_async_load' . $map_suffix . ' = ' . $count_to_async_load . ';
+            window.gv3_maps_loaded = false;
+
+            ' . $tag_async_load_bunch . '
+
+            if (true) {
+                setTimeout("geo_on_load_proc_check_async_map' . $map_suffix . '();", 250);
+                return;
+            }
+        }
+
+        setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
+        return;
+    }
+};
+
+var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
+{
+        var res_state = false;
+        try {
+            res_state = OpenLayers.Util.test_ready();
+        } catch (e) {res_state = false;}
+
+        if (!res_state)
+        {
+            setTimeout("geo_on_load_proc_phase2_map' . $map_suffix . '();", 250);
+            return;
+        }
+
+        geo_object' . $map_suffix . '.main_openlayers_init("geo_map_mapcanvas' . $map_suffix. '");
+        geo_object' . $map_suffix . '.got_load_data(' . $poi_info_json . ', true);
+
+        window.map_prepared = true;
+
+        if (undefined !== window.deferred_action) {
+            try {window.deferred_action();} catch (e) {}
+        }
+};
+
+    $(document).ready(function()
+    {
+        setTimeout("geo_on_load_proc_map' . $map_suffix . '();", 0);
+    });
+</script>
+';
+
+        // should we provide js for large-map openning
+        if ($open_large_map) {
+
+            $tag_string_fin .= self::GetLargeMapOpener($map_suffix, $width_large_map, $height_large_map, $label_large_map, $tag_string_ini . $tag_string_mid, self::GetMultiMapTagBody($p_languageId, $p_rank, true));
+
+        }
+
+        $tag_string .= $tag_string_top;
+        if ($load_common) {
+            $tag_string .= $tag_string_ini;
+        }
+
+        return $tag_string . $tag_string_mid . $tag_string_fin;
+
+    } // fn GetMultiMapTagHeader
+
+    /**
+     * Gives the body map-placement part for the map front end presentation
+     *
+     * @param int $p_languageId
+     * @param int $p_rank
+     *    The rank of the current multi-map, used to make unique ids
+     *
+     * @return string
+     */
+    public static function GetMultiMapTagBody($p_languageId, $p_rank = 0, $p_largeMap = false)
+    {
+        global $Campsite;
+        $tag_string = "";
+
+        $f_language_id = $p_languageId;
+
+        $map_suffix = "_" . "multimap" . "_" . $f_language_id . "_" . $p_rank;
+
+        if ($p_largeMap) {
+            $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\" class=\"geo_map_mapcanvas_large\"></div>\n";
+        }
+        else {
+            $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\" class=\"geo_map_mapcanvas\"></div>\n";
+        }
+
+        return $tag_string;
+    } // fn GetMultiMapTagBody
+
+    /**
+     * Gives the body open-large-map link part for the multi-map front end presentation
+     *
+     * @param int $p_languageId
+     * @param int $p_rank
+     *    The rank of the current multi-map, used to make unique ids
+     *
+     * @return string
+     */
+    public static function GetMultiMapTagOpen($p_languageId, $p_rank = 0, $p_specifier)
+    {
+        global $Campsite;
+        $tag_string = "";
+
+        $f_language_id = $p_languageId;
+
+        $map_suffix = "_" . "multimap" . "_" . $f_language_id . "_" . $p_rank;
+
+        if ("open_form" == $p_specifier) {
+            $tag_string .= "geo_open_large_map$map_suffix";
+        }
+        else {
+            $tag_string .= "if (window.map_prepared) {geo_open_large_map$map_suffix();} ";
+        }
+
+        return $tag_string;
+    } // fn GetMultiMapTagOpen
+
+    /**
+     * Gives the body map-centering (js call) part for the map front end presentation
+     *
+     * @param int $p_articleNumber
+     * @param int $p_languageId
+     *
+     * @return string
+     */
+    public static function GetMultiMapTagCenter($p_languageId, $p_rank = 0)
+    {
+        global $Campsite;
+        $tag_string = "";
+
+        $f_language_id = $p_languageId;
+
+        $map_suffix = "_" . "multimap" . "_" . $f_language_id . "_" . $p_rank;
+
+        $tag_string .= "if (window.map_prepared) {geo_object" . $map_suffix . ".map_showview();} ";
+        $tag_string .= "window.center_large_map" . $map_suffix . "(); ";
+
+        return $tag_string;
+    } // fn GetMultiMapTagCenter
+
+    /**
+     * Gives the body map-info and point-list part for the map front end presentation
+     *
+     * @param int $p_languageId
+     * @param array $p_constraints
+     * @param array $p_options
+     * @param int $p_offset
+     * @param int $p_limit
+     * @param int $p_rank
+     *    The rank of the current multi-map, used to make unique ids
+     *
+     * @return array
+     */
+    public static function GetMultiMapTagListData($p_languageId, $p_constraints, $p_options, $p_offset, $p_limit, $p_rank = 0)
+    {
+        $f_language_id = (int) $p_languageId;
+        $map_suffix = "_" . "multimap" . "_" . $f_language_id . "_" . $p_rank;
+        $preview = true;
+        $text_only = true;
+
+        $geo_map_usage = Geo_Map::ReadMultiMapInfo();
+
+        $points = null;
+
+        $pois_loaded = false;
+
+        if (is_array($p_options)) {
+            if (array_key_exists("pois_retrieved", $p_options)) {
+                $pois_loaded = $p_options["pois_retrieved"];
+            }
+        }
+
+        if (!$pois_loaded) {
+
+            $leftOperand = 'as_array';
+            $rightOperand = true;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+    
+            $leftOperand = 'active_only';
+            $rightOperand = true;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+    
+            $leftOperand = 'text_only';
+            $rightOperand = true;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+    
+            $leftOperand = 'language';
+            $rightOperand = $p_languageId;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+    
+            $leftOperand = 'constrained';
+            $rightOperand = true;
+            $operator = new Operator('is', 'php');
+            $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+            $p_constraints[] = $constraint;
+
+            $poi_count = 0;
+            $points = array();
+            $point_objs = Geo_MapLocation::GetListExt($p_constraints, (array) null, $p_offset, $p_limit, $poi_count, false, $points);
+
+        }
+        else {
+
+            $points = $p_constraints;
+
+        }
+
+        $poi_info = array('pois' => $points, 'map' => $geo_map_usage);
+
+        $pind = 0;
+        foreach ($poi_info["pois"] as $rank => $poi) {
+            $cur_lon = $poi["longitude"];
+            $cur_lat = $poi["latitude"];
+            $center_poi = "if (window.map_prepared) {geo_object$map_suffix.center_lonlat($cur_lon, $cur_lat);} point_large_map_center" . $map_suffix . "($pind, false);";
+            $select_poi = "if (window.map_prepared) {geo_object$map_suffix.select_poi($pind);} point_large_map_center" . $map_suffix . "($pind, true);";
+            $poi_info["pois"][$rank]["center"] = $center_poi;
+            $poi_info["pois"][$rank]["open"] = $select_poi;
+            $pind += 1;
+        }
+        return (array) $poi_info;
+    } // fn GetMultiMapTagListData
+
+    /**
+     * @param int $p_languageId
+     * @param array $p_constraints
+     * @param array $p_options
+     * @param string $p_label
+     * @param int $p_offset
+     * @param int $p_limit
+     * @param int $p_rank
+     *    The rank of the current multi-map, used to make unique ids
+     *
+     * @return string
+     */
+    public static function GetMultiMapTagList($p_languageId, $p_constraints, $p_options, $p_label, $p_offset, $p_limit, $p_rank = 0)
+    {
+
+        $geo = self::GetMultiMapTagListData((int) $p_languageId, $p_constraints, $p_options, $p_offset, $p_limit, $p_rank);
+        $map = $geo['map'];
+        $pois = $geo['pois'];
+
+        $icons_dir = Geo_Preferences::GetIconsWebDir();
+
+        //$map_name = $map['name'];
+        $map_name = $p_label;
+        $map_name = str_replace("&", "&amp;", $map_name);
+        $map_name = str_replace("<", "&lt;", $map_name);
+        $map_name = str_replace(">", "&gt;", $map_name);
+
+        if (0 < strlen($map_name)) {
+            $html = '
+            <div class="geomap_info">
+              <dl class="geomap_map_name">
+                <dt class="geomap_map_name_label">' .
+                  getGS('Map') . ':
+                </dt>
+                <dd class="geomap_map_name_value">' .
+                  $map_name . '
+                </dd>
+              </dl>
+            </div>';
+        }
+
+        $html .= '
+            <div id="side_info" class="geo_side_info">';
+        $poiIdx = 0;
+        foreach ($pois as $poi) {
+            $poi_title = $poi['title'];
+            $poi_title = str_replace("&", "&amp;", $poi_title);
+            $poi_title = str_replace("<", "&lt;", $poi_title);
+            $poi_title = str_replace(">", "&gt;", $poi_title);
+            $poi_perex = $poi['perex'];
+            $poi_perex = str_replace("&", "&amp;", $poi_perex);
+            $poi_perex = str_replace("<", "&lt;", $poi_perex);
+            $poi_perex = str_replace(">", "&gt;", $poi_perex);
+
+            $poi_icon = $poi['style'];
+
+            $html .= '<div id="poi_seq_' . $poiIdx . '">
+                <a class="geomap_poi_icon_link" href="#" onClick="' . $poi['open'] . ' return false;"><img class="geomap_poi_icon" src="' . $icons_dir . '/' . $poi_icon . '" /></a>
+                <a class="geomap_poi_name" href="#" onClick="'
+                . $poi['open'] . ' return false;">' . $poi_title . '</a>
+                <div class="geomap_poi_perex">' . $poi_perex . '</div>
+                <div class="geomap_poi_center">
+                    <a href="#" onClick="' . $poi['center'] . ' return false;">'
+                        . getGS('Center') . '
+                    </a>
+                </div>
+                <div class="geomap_poi_spacer">&nbsp;</div>
+            </div>';
+            $poiIdx += 1;
+        }
+        $html .= '</div>';
+        return $html;
+    } // fn GetMultiMapTagList
+
+    // filter functions
+
+    /**
+     * Gives the name of the javascript object used for the map filtering
+     *
+     * @return string
+     */
+    public static function GetMapFilterObjName()
+    {
+        $map_suffix = "_filter";
+        return "geo_object" . $map_suffix;
+    } // fn GetMapFilterObjName
+
+    /**
+     * Gives the header part for the map filtering
+     *
+     * @param int $p_mapWidth
+     * @param int $p_mapHeight
+     *
+     * @return string
+     */
+    public static function GetMapFilterHeader($p_mapWidth = 0, $p_mapHeight = 0)
+    {
+        global $Campsite;
+        $tag_string = "";
+
+        $map_suffix = "_filter";
+
+        $cnf_html_dir = $Campsite['HTML_DIR'];
+        $cnf_website_url = $Campsite['WEBSITE_URL'];
+
+        $geo_map_info = Geo_Preferences::GetMapInfo($cnf_html_dir, $cnf_website_url);
+        if (0 < $p_mapWidth)
+        {
+            $geo_map_info['width'] = $p_mapWidth;
+        }
+        if (0 < $p_mapHeight)
+        {
+            $geo_map_info['height'] = $p_mapHeight;
+        }
+
+        $geo_map_incl = Geo_Preferences::PrepareMapIncludes($geo_map_info["incl_obj"]);
+        $geo_map_json = "";
+        $geo_map_json .= json_encode($geo_map_info["json_obj"]);
+
+        $geocodingdir = $Campsite['WEBSITE_URL'] . '/js/geocoding/';
+
+
+        $tag_string .= $geo_map_incl;
+        $tag_string .= "\n";
+
+        $tag_string .= '
+
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/openlayers/OpenLayers.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/openlayers/OLlocals.js"></script>
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/map_filter.js"></script>
+
+<script type="text/javascript">
+
+    geo_object'. $map_suffix .' = new geo_locations_filter();
+
+var on_load_proc_filter = function()
+{
+    var res_state = false;
+    try {
+        res_state = OpenLayers.Util.test_ready();
+    } catch (e) {res_state = false;}
+
+    if (!res_state)
+    {
+        setTimeout("on_load_proc_filter();", 250);
+        return;
+    }
+
+    var map_obj = document.getElementById ? document.getElementById("geo_map_mapcanvas' . $map_suffix . '") : null;
+    if (map_obj)
+    {
+        map_obj.style.width = "' . $geo_map_info["width"] . 'px";
+        map_obj.style.height = "' . $geo_map_info["height"] . 'px";
+';
+    $loc_strings = json_encode(array(
+        "corners" => getGS("vertices"),
+        "pan_map" => getGS("Pan Map"),
+        "edit_polygon" => getGS("Edit Polygon"),
+        "create_polygon" => getGS("Create Polygon"),
+    ));
+    $img_dir = $Campsite['ADMIN_STYLE_URL'] . "/images/";
+
+    $tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_map_info($geo_map_json);";
+    $tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_obj_name('geo_object$map_suffix');";
+    $tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_display_strings($loc_strings);";
+    $tag_string .= "\n";
+    $tag_string .= "geo_object$map_suffix.set_img_dir('$img_dir');";
+    $tag_string .= "\n";
+
+    $tag_string .= '
+        geo_object' . $map_suffix . '.main_init("geo_map_mapcanvas' . $map_suffix. '");
+
+    }
+};
+    $(document).ready(function()
+    {
+        on_load_proc_filter();
+    });
+</script>
+';
+
+        return $tag_string;
+
+    } // fn GetMapFilterHeader
+
+    /**
+     * Gives the body map-placement part for the map filtering
+     *
+     * @return string
+     */
+    public static function GetMapFilterBody()
+    {
+        global $Campsite;
+        $tag_string = "";
+
+        $map_suffix = "_filter";
+
+        $tag_string .= "<div id=\"geo_map_mapcanvas$map_suffix\"></div>\n";
+
+        return $tag_string;
+    } // fn GetMapFilterBody
+
+    /**
+     * Gives the body map-centering (js call) part for the map filtering
+     *
+     * @return string
+     */
+    public static function GetMapFilterCenter()
+    {
+        global $Campsite;
+        $tag_string = "";
+
+        $map_suffix = "_filter";
+
+        $tag_string .= "geo_object" . $map_suffix . ".map_showview();";
+
+        return $tag_string;
+    } // fn GetMapFilterCenter
 
     // search functions
 
@@ -2004,6 +3176,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
 
         $tag_string .= '
 
+	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/map_popups.js"></script>
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/openlayers/OpenLayers.js"></script>
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/openlayers/OLlocals.js"></script>
 	<script type="text/javascript" src="' . $Campsite["WEBSITE_URL"] . '/js/geocoding/map_search.js"></script>
@@ -2110,54 +3283,17 @@ var on_load_proc = function()
         $queryStr .= "SELECT DISTINCT m.fk_article_number AS Number FROM Maps AS m INNER JOIN MapLocations AS ml ON m.id = ml.fk_map_id INNER JOIN ";
         $queryStr .= "Locations AS l ON ml.fk_location_id = l.id WHERE ";
 
-        $queryStr_1 .= "MBRIntersects(GeomFromText('Polygon((%%x0%% %%y0%%,%%x0%% %%y1%%,%%x1%% %%y1%%,%%x1%% %%y0%%,%%x0%% %%y0%%))'),l.poi_location) ";
-        $queryStr_2 .= "MBRIntersects(GeomFromText('MultiPolygon(((%%x0%% %%y0%%,%%x0%% 180,%%x1%% 180,%%x1%% %%y0%%,%%x0%% %%y0%%)),((%%x0%% -180,%%x0%% %%y1%%,%%x1%% %%y1%%,%%x1%% -180,%%x0%% -180)))'),l.poi_location) ";
+        $cons_res = Geo_MapLocation::GetGeoSearchSQLCons($p_coordinates, "rectangle", "l");
+        if ($cons_res["error"]) {return "";}
+
+        $queryStr .= $cons_res["cons"];
 
         $queryStr_end .= "AND m.fk_article_number != 0";
-
-        $loc_left = $p_coordinates[0];
-        $loc_right = $p_coordinates[1];
-
-        $left_lon = "" . $loc_left["longitude"];
-        $left_lat = "" . $loc_left["latitude"];
-        $right_lon = "" . $loc_right["longitude"];
-        $right_lat = "" . $loc_right["latitude"];
-
-        if (!is_numeric($left_lon)) {$left_lon = "0";}
-        if (!is_numeric($left_lat)) {$left_lat = "0";}
-        if (!is_numeric($right_lon)) {$right_lon = "0";}
-        if (!is_numeric($right_lat)) {$right_lat = "0";}
-
-        $south_lat = $right_lat;
-        $north_lat = $left_lat;
-        if ($south_lat > $north_lat)
-        {
-            $south_lat = $left_lat;
-            $north_lat = $right_lat;
-        }
-
-        $east_lon = $left_lon;
-        $west_lon = $right_lon;
-
-        if ($east_lon > $west_lon)
-        {
-            $queryStr .= $queryStr_2;
-        }
-        else
-        {
-            $queryStr .= $queryStr_1;
-        }
         $queryStr .= $queryStr_end;
 
-        $queryStr = str_replace("%%y0%%", $east_lon, $queryStr);
-        $queryStr = str_replace("%%y1%%", $west_lon, $queryStr);
-        $queryStr = str_replace("%%x0%%", $south_lat, $queryStr);
-        $queryStr = str_replace("%%x1%%", $north_lat, $queryStr);
-
         return $queryStr;
+
     } // fn GetGeoSearchSQLQuery
-
-
 
 } // class Geo_Map
 
