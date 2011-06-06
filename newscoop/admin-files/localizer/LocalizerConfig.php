@@ -8,8 +8,8 @@
  * we must use our own package.  The package has a bug fix applied
  * that is required for the Localizer XML files to work.
  */
-require_once("XML/Serializer.php");
-require_once("XML/Unserializer.php");
+require_once('XML/Serializer.php');
+require_once('XML/Unserializer.php');
 
 global $g_localizerConfig;
 
@@ -58,43 +58,76 @@ $g_localizerConfig['FILE_TYPES'] = array('xml', 'gs');
 $g_localizerConfig['LOADED_FILES'] = array();
 
 // Map of prefixes to directory names.
-$mapPrefixToDir = array();
-$mapPrefixToDir[""] = null;
-$mapPrefixToDir["globals"] = null;
-$mapPrefixToDir["home"] = "/admin-files/";
-$mapPrefixToDir["api"] = "/classes/*";
-$mapPrefixToDir["library"] = "/admin-files/libs/*";
-$mapPrefixToDir["pub"] = "/admin-files/pub";
-$mapPrefixToDir["issues"] = "/admin-files/issues";
-$mapPrefixToDir["sections"] = "/admin-files/sections";
-$mapPrefixToDir["articles"] = "/admin-files/articles";
-$mapPrefixToDir["article_images"] = "/admin-files/articles/images";
-$mapPrefixToDir["article_files"] = "/admin-files/articles/files";
-$mapPrefixToDir["article_topics"] = "/admin-files/articles/topics";
-$mapPrefixToDir["article_comments"] = "/admin-files/articles/comments";
-$mapPrefixToDir["media_archive"] = "/admin-files/media-archive";
-$mapPrefixToDir["geolocation"] = "/admin-files/articles/locations";
-$mapPrefixToDir["comments"] = "/admin-files/comments";
-$mapPrefixToDir["system_pref"] = "/admin-files/system_pref";
-$mapPrefixToDir["templates"] = "/admin-files/templates";
-$mapPrefixToDir["article_types"] = "/admin-files/article_types";
-$mapPrefixToDir["article_type_fields"] = "/admin-files/article_types/fields";
-$mapPrefixToDir["topics"] = "/admin-files/topics";
-$mapPrefixToDir["languages"] = "/admin-files/languages";
-$mapPrefixToDir["country"] = "/admin-files/country";
-$mapPrefixToDir["localizer"] = "/admin-files/localizer";
-$mapPrefixToDir["logs"] = "/admin-files/logs";
-$mapPrefixToDir["users"] = "/admin-files/users";
-$mapPrefixToDir["user_subscriptions"] = "/admin-files/users/subscriptions";
-$mapPrefixToDir["user_subscription_sections"] = "/admin-files/users/subscriptions/sections";
-$mapPrefixToDir["user_types"] = "/admin-files/user_types";
-$mapPrefixToDir["bug_reporting"] = "/admin-files/bugreporter";
-$mapPrefixToDir["feedback"] = "/admin-files/feedback";
-$mapPrefixToDir["preview"] = "/template_engine/classes";
-$mapPrefixToDir["tiny_media_plugin"] = "/js/tinymce/plugins/campsitemedia";
-$mapPrefixToDir["plugins"] = "/admin-files/plugins";
-$mapPrefixToDir["extensions"] = "/extensions/*";
-$mapPrefixToDir["authors"] = "/admin-files/users/authors_ajax";
+$mapPrefixToDir = array(
+    '' => null,
+    'globals' => null,
+    'home' => '/admin-files/',
+    'api' => '/classes/*',
+    'library' => '/admin-files/libs/*',
+    'pub' => '/admin-files/pub',
+    'issues' => '/admin-files/issues',
+    'sections' => '/admin-files/sections',
+    'articles' => '/admin-files/articles',
+    'article_images' => '/admin-files/articles/images',
+    'article_files' => '/admin-files/articles/files',
+    'article_topics' => '/admin-files/articles/topics',
+    'article_comments' => '/admin-files/articles/comments',
+    'media_archive' => '/admin-files/media-archive',
+    'geolocation' => '/admin-files/articles/locations',
+    'comments' => '/admin-files/comments',
+    'system_pref' => '/admin-files/system_pref',
+    'templates' => '/admin-files/templates',
+    'article_types' => '/admin-files/article_types',
+    'article_type_fields' => '/admin-files/article_types/fields',
+    'topics' => '/admin-files/topics',
+    'languages' => array(
+        '/admin-files/languages',
+        '/application/modules/admin/controllers/LanguagesController.php',
+        '/application/modules/admin/views/scripts/languages',
+    ),
+    'country' => '/admin-files/country',
+    'localizer' => '/admin-files/localizer',
+    'logs' => array(
+        '/admin-files/logs',
+        '/application/modules/admin/controllers/LogController.php',
+        '/application/modules/admin/views/scripts/log',
+    ),
+    'users' => array(
+        '/admin-files/users',
+        '/application/modules/admin/controllers/StaffController.php',
+        '/application/modules/admin/controllers/AuthController.php',
+        '/application/modules/admin/views/scripts/staff',
+        '/application/modules/admin/views/scripts/auth',
+    ),
+    'user_subscriptions' => array(
+        '/admin-files/users/subscriptions',
+        '/application/modules/admin/controllers/SubscriptionController.php',
+        '/application/modules/admin/controllers/SubscriberController.php',
+        '/application/modules/admin/controllers/SubscriptionIpController.php',
+        '/application/modules/admin/views/scripts/subscription',
+        '/application/modules/admin/views/scripts/subscriber',
+        '/application/modules/admin/views/scripts/subscription-ip',
+    ),
+    'user_subscription_sections' => array(
+        '/admin-files/users/subscriptions/sections',
+        '/application/modules/admin/controllers/SubscriptionSectionController.php',
+        '/application/modules/admin/views/scripts/subscription-section',
+    ),
+    'user_types' => array(
+        '/admin-files/user_types',
+        '/application/modules/admin/controllers/UserGroupController.php',
+        '/application/modules/admin/controllers/AclController.php',
+        '/application/modules/admin/views/scripts/user-group',
+        '/application/modules/admin/views/scripts/acl',
+    ),
+    'bug_reporting' => '/admin-files/bugreporter',
+    'feedback' => '/admin-files/feedback',
+    'preview' => '/template_engine/classes',
+    'tiny_media_plugin' => '/js/tinymce/plugins/campsitemedia',
+    'plugins' => '/admin-files/plugins',
+    'extensions' => '/extensions/*',
+    'authors' => '/admin-files/users/authors_ajax',
+);
 
 foreach (CampPlugin::GetPluginsInfo(true) as $info) {
 	if (array_key_exists('localizer', $info) && is_array($info['localizer'])) {
@@ -102,7 +135,7 @@ foreach (CampPlugin::GetPluginsInfo(true) as $info) {
 	}
 }
 
-$g_localizerConfig["MAP_PREFIX_TO_DIR"] = $mapPrefixToDir;
+$g_localizerConfig['MAP_PREFIX_TO_DIR'] = $mapPrefixToDir;
 unset($mapPrefixToDir);
 
 ?>
