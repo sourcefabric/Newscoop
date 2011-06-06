@@ -281,6 +281,9 @@ class Admin_ThemesController extends Zend_Controller_Action
         $this->view->themeForm = $themeForm;
     }
 
+    /**
+     * see Admin_ThemesController::outputEditAction()
+     */
     public function wizardThemeTemplateSettingsAction()
     {
         $themeId = $this->_request->getParam( 'id' );
@@ -312,6 +315,15 @@ class Admin_ThemesController extends Zend_Controller_Action
     {
         $theme = $this->getThemeService()->findById( $this->_request->getParam( 'id' ) );
         $this->view->articleTypes = $this->getThemeService()->getArticleTypes( $theme );
+        $articleTypes = new \stdClass;
+        foreach( $this->getArticleTypeService()->findAllTypes() as $at )
+        {
+            $atName = $at->getName();
+            $articleTypes->$atName = new \stdClass;
+            foreach( $this->getArticleTypeService()->findFields( $at ) as $atf )
+                $articleTypes->$atName->{$atf->getName()} = $atf->getType();
+        }
+        $this->view->jQueryUtils()->registerVar( 'articleTypes', $articleTypes );
     }
 
     public function wizardThemeFilesAction()
@@ -369,6 +381,10 @@ class Admin_ThemesController extends Zend_Controller_Action
         $this->view->outputSettings = $outSets;
     }
 
+    /**
+     *
+     * called by wizard template action
+     */
     public function outputEditAction()
     {
         $thmServ    = $this->getThemeService();
@@ -383,9 +399,10 @@ class Admin_ThemesController extends Zend_Controller_Action
         /* @var $settings Newscoop\Entity\Output */
 
         // getting all available templates
-        foreach( $thmServ->getTemplates( $theme ) as $tpl )
-        /* @var $tpl Newscoop\Entity\Resource */
-            $templates[ $tpl->getId() ] = $tpl->getName();
+        foreach( $thmServ->getTemplates( $theme ) as $tpl ) {
+        	/* @var $tpl Newscoop\Entity\Resource */
+            $templates[ $tpl->getPath() ] = $tpl->getName(); // couldn't get id cause it's null :) :) :)
+        }
 
         // making the form
         $outputForm = new Admin_Form_Theme_OutputSettings();
@@ -459,14 +476,17 @@ class Admin_ThemesController extends Zend_Controller_Action
         {
             $theme  = $this->getThemeService()->getById( $this->_request->getParam( 'theme-id' ) );
 		    $pub    = $this->getPublicationService()->findById( $this->_request->getParam( 'pub-id' ) );
-    		$this->view->response = $this->getThemeService()->assignTheme( $theme, $pub );
+
+		    if( $this->getThemeService()->assignTheme( $theme, $pub ) ) {
+		        $this->view->response =  getGS( 'Assigned successfully' );
+		    } else {
+    		    throw new Exception();
+		    }
         }
-        catch( DuplicateNameException $e )
-        {
+        catch( DuplicateNameException $e ) {
             $this->view->exception = array( "code" => $e->getCode(), "message" => getGS( 'Duplicate assignation' ) );
         }
-        catch( \Exception $e )
-        {
+        catch( \Exception $e ) {
             $this->view->exception = array( "code" => $e->getCode(), "message" => getGS( 'Something broke' ) );
         }
 

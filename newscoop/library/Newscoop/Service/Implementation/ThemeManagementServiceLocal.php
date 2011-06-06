@@ -201,18 +201,18 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 	{
         Validation::notEmpty($theme, 'theme');
         $xml = $this->loadXML($this->toFullPath($theme, $this->themeConfigFileName));
-        $ret = array();
+        $ret = new \stdClass;
         // getting the article types
         foreach( $xml->xpath( '/'.self::TAG_ROOT.'/'.self::TAG_ARTICLE_TYPE ) as $artType )
         {
             // set article type name on return array
-            $ret[ ( $artTypeName = (string) $this->readAttribute($artType, self::ATTR_OUTPUT_NAME) ) ] = array();
+            $ret->{( $artTypeName = (string) $this->readAttribute($artType, self::ATTR_OUTPUT_NAME) )} = new \stdClass;
             // getting the article type fields
             foreach( $xml->xpath( '/'.self::TAG_ROOT.'/'.self::TAG_ARTICLE_TYPE.'[@'.self::ATTR_ARTICLE_TYPE_NAME.'=(\''.$artTypeName.'\')]/*' ) as $artTypeField )
             {
                 try
                 {
-                    $ret[$artTypeName][(string) $artTypeField[self::ATTR_ARTICLE_TYPE_FILED_NAME]] = (object) array
+                    $ret->{$artTypeName}->{(string) $artTypeField[self::ATTR_ARTICLE_TYPE_FILED_NAME]} = (object) array
                     (
                         self::ATTR_ARTICLE_TYPE_FILED_TYPE   => (string) $artTypeField[self::ATTR_ARTICLE_TYPE_FILED_TYPE],
                         self::ATTR_ARTICLE_TYPE_FILED_LENGTH => (string) $artTypeField[self::ATTR_ARTICLE_TYPE_FILED_LENGTH],
@@ -305,7 +305,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 		mkdir($themeFullFolder);
 
 		try
-                {
+        {
 			$this->copy($this->toFullPath($theme), $themeFullFolder);
 
 			// Reset the theme configs cache so also the new theme will be avaialable
@@ -333,10 +333,18 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 				$em->persist($outTh);
 			}
 			$em->flush();
-		} catch(\Exception $e){
+        }
+        catch( \PDOException $e )
+        {
+            if( $e->getCode() != 23000 ) // TODO Duplicate key in db.. does not need removing of folder structure
+                throw $e;
+		}
+		catch(\Exception $e)
+		{
 			$this->rrmdir($themeFullFolder);
 			throw $e;
 		}
+		return true;
 	}
 
 	function assignOutputSetting(OutputSettings $outputSettings, Theme $theme)

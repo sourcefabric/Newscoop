@@ -1,6 +1,6 @@
 <?php
 /**
- * 
+ *
  * @package Newscoop
  * @author mihaibalaceanu
  * @uses Zend_Controller_Plugin_Abstract
@@ -8,6 +8,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+use Doctrine\DBAL\Types\BooleanType;
 class Admin_View_Helper_JQueryReady extends Zend_View_Helper_Placeholder_Container_Standalone
 {
 
@@ -18,17 +19,23 @@ class Admin_View_Helper_JQueryReady extends Zend_View_Helper_Placeholder_Contain
     protected $_regKey = 'Newscoop_View_Helper_JQueryReady';
 
     /**
-     * 
+     *
      * the code formatting for document load ready around the scripts to be rendered
-     * 
+     *
      * @var string
      */
     protected $_scriptFormat = 'jQuery( function() { %s } )';
 
     /**
+     * Override this cause we need some other escaping like json encode for variables
+     * @var bool
+     */
+    protected $_autoEscape = false;
+
+    /**
      * This helper add a document.ready script type for jquery
      * Retrieve placeholder for title element and optionally add new script
-     * 
+     *
      * @param  string $script
      * @return Admin_View_Helper_JQueryReady
      */
@@ -51,7 +58,7 @@ class Admin_View_Helper_JQueryReady extends Zend_View_Helper_Placeholder_Contain
         foreach( $this as $item ) {
             $output .= $item;
         }
-        
+
         $output = ( $this->_autoEscape ) ? $this->_escape( $output ) : $output;
         return sprintf( $this->_scriptFormat, $output );
     }

@@ -33,7 +33,12 @@ jQuery( function()
 		})
 		evt.preventDefault();
 	})
+	$('.versionHolder form').submit( function(){ return false; })
 	
+	$('#submit-settings-ctrl').click( function()
+	{
+		$('form').trigger('submit');
+	});
 	
 	// Tabs
 	$('.tabs, .themeSettingsTabs').tabs();

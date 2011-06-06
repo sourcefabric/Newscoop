@@ -74,11 +74,11 @@ class Action_Helper_GenericDatatable extends ADatatable
                 }
             }
         }
-        parent::setParams( array
-        ( 
-        	'search' => @$search,
-            'sort'	 => @$sort,
-        ) );        
+
+        parent::setParams(array(
+            'search' => isset($search) ? $search : NULL,
+            'sort'	 => isset($sort) ? $sort : NULL,
+        ));
     }
     
     /**
