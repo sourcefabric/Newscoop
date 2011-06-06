@@ -49,8 +49,8 @@ interface IThemeManagementService extends IThemeService
 	/**
 	 * Provides the themes that are assigned to the publication.
 	 *
-	 * @param Publication $publication
-	 * 		The publication to retrieve the themes for, not null.
+	 * @param Publication|int $publication
+	 * 		The publication to retrieve the themes for or the publication id, not null.
 	 * 
 	 * @param Newscoop\Service\Model\Search\SearchTheme $search
 	 *		The search criteria, not null.
@@ -65,18 +65,19 @@ interface IThemeManagementService extends IThemeService
 	 * @return array of Newscoop\Entity\Theme
 	 * 		The array containing all the Themes assigned to the provided publication, not null migh be empty.
 	 */
-	function getThemes(Publication $publication, SearchTheme $search = NULL, $offset = 0, $limit = -1);
+	function getThemes($publication, SearchTheme $search = NULL, $offset = 0, $limit = -1);
 
 	/**
 	 * Provides the all template resources (.tpl) files found for the theme.
 	 *
-	 * @param Theme $theme
-	 * 		The theme to retrieve the template resource for, not null.
+	 * @param Theme|string $theme
+	 * 		The theme to retrieve the template resource for
+	 * 		can be the Theme object or the theme path, not null.
 	 *
 	 * @return array of Newscoop\Entity\Resource
 	 * 		The array containing all the template resources assigned to the provided theme, not null migh be empty.
 	 */
-	function getTemplates(Theme $theme);
+	function getTemplates($theme);
 
 	/**
 	 * Provides the output setting for the provided theme and ouput.
