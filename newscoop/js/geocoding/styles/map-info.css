@@ -27,6 +27,12 @@
     color: #202000;
 	padding:0;
 	min-height:25px;
+	max-width:200px;
+
+}
+
+.popup_title.edit_mode, .popup_text.edit_mode, .popup_content.edit_mode {
+	max-width:260px;
 }
 .popup_video {
 
@@ -36,11 +42,13 @@
 }
 .popup_text {
     font-size: 14px;
+	max-width:200px;
+
 }
 .popup_content {
     font-size: 14px;
     margin-top: 10px;
-
+	max-width:200px;
 
 }
 
