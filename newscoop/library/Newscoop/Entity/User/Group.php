@@ -7,7 +7,8 @@
 
 namespace Newscoop\Entity\User;
 
-use Newscoop\Entity\Acl\Role;
+use Newscoop\Entity\Acl\Role,
+    Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * User Group entity
@@ -36,14 +37,17 @@ class Group implements \Zend_Acl_Role_Interface
     private $role;
     
     /**
-     * @manyToMany(targetEntity="Newscoop\Entity\User\Staff")
-     * @joinTable(name="liveuser_groupusers",
-     *      joinColumns={@joinColumn(name="group_id", referencedColumnName="group_id")},
-     *      inverseJoinColumns={@joinColumn(name="perm_user_id", referencedColumnName="Id")}
-     *      )
+     * @manyToMany(targetEntity="Newscoop\Entity\User\Staff", mappedBy="groups")
      */
     private $users;
 
+    /**
+     */
+    public function __construct()
+    {
+        $this->users = new ArrayCollection;
+    }
+    
     /**
      * Get id
      *
@@ -115,8 +119,7 @@ class Group implements \Zend_Acl_Role_Interface
      */
     public function getUsers()
     {
-        if ($this->users) return($this->users);
-        else return(array());
+        return($this->users);
     }
 
     /**
