@@ -400,13 +400,13 @@ this.proc_subst_action = function(params) {
     }
 
     if (null !== select_poi) {
-        if (!this.is_poi_visible(index)) {
+        if (!this.is_poi_visible(select_poi)) {
             this.center_poi(select_poi);
         }
-
-        window.OpenLayers.HooksPopups.on_map_feature_select(geo_obj, select_poi);
     }
-}
+
+    window.OpenLayers.HooksPopups.on_map_feature_select(geo_obj, select_poi);
+};
 
 this.try_size_updated = function() {
     if (this.map_is_popup) {
