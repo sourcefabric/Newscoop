@@ -167,10 +167,13 @@ class Admin_ThemesController extends Zend_Controller_Action
             ) );
         }
 
+        // init ajax contexts.. actually json contexts
+        // TODO see why ajax context is not working
         $this->_helper->contextSwitch
             ->addActionContext( 'index', 'json' )
             ->addActionContext( 'assign-to-publication', 'json' )
             ->addActionContext( 'output-edit', 'json' )
+            ->addActionContext( 'article-types-edit', 'json' )
             ->addActionContext( 'wizard-theme-settings', 'adv' )
             ->addActionContext( 'wizard-theme-template-settings', 'adv' )
             ->addActionContext( 'wizard-theme-article-types', 'adv' )
@@ -241,22 +244,12 @@ class Admin_ThemesController extends Zend_Controller_Action
                     );
                 }
             )
-            /*
-            ->setDataMap( array
-            (
-                "checkbox"     => null,
-            	'image'        => null,
-                'name'         => null,
-                'description'  => null,
-                'actions'      => null,
-            ))
-            */
             ->setParams( $this->_request->getParams() );
 
         if( ( $this->view->mytable = $datatable->dispatch() ) )
         {
             $this->view->publications  = $this->getPublicationService()->getEntities();
-
+            $this->view->themesPath    = $this->view->baseUrl( '/themes' );
             $this->view->headScript()->appendFile( $this->view->baseUrl( "/js/jquery/jquery.tmpl.js" ) );
             $this->view->headLink( array
             (
@@ -281,6 +274,9 @@ class Admin_ThemesController extends Zend_Controller_Action
         $this->view->themeForm = $themeForm;
     }
 
+    /**
+     * see Admin_ThemesController::outputEditAction()
+     */
     public function wizardThemeTemplateSettingsAction()
     {
         $themeId = $this->_request->getParam( 'id' );
@@ -311,7 +307,23 @@ class Admin_ThemesController extends Zend_Controller_Action
     public function wizardThemeArticleTypesAction()
     {
         $theme = $this->getThemeService()->findById( $this->_request->getParam( 'id' ) );
-        $this->view->articleTypes = $this->getThemeService()->getArticleTypes( $theme );
+        $themeArticleTypes = $this->getThemeService()->getArticleTypes( $theme );
+        $this->view->themeArticleTypes = $themeArticleTypes;
+        $articleTypes = array();
+        foreach( $this->getArticleTypeService()->findAllTypes() as $at )
+        {
+            $atName = $at->getName();
+            $articleTypes[$atName] = array();
+            foreach( $this->getArticleTypeService()->findFields( $at ) as $atf )
+                $articleTypes[$atName][] = $atf->getName();
+        }
+
+        $this->view->theme            = $theme->toObject();
+        $this->view->articleTypes     = (object) $articleTypes;
+        $this->view->articleTypeNames = array_keys( $articleTypes );
+
+        $this->view->jQueryUtils()->registerVar( 'articleTypes', $articleTypes );
+        $this->view->jQueryUtils()->registerVar( 'themeArticleTypes', $themeArticleTypes );
     }
 
     public function wizardThemeFilesAction()
@@ -323,25 +335,6 @@ class Admin_ThemesController extends Zend_Controller_Action
     public function advancedThemeSettingsAction()
     {
         $this->view->themeId = $this->_request->getParam( 'id' );
-    }
-
-    public function editAction()
-    {
-        $themeId = $this->_request->getParam( 'id' );
-        $thmServ = $this->getThemeService();
-        $theme   = $thmServ->findById( $themeId );
-        $outServ = $this->getOutputService();
-        foreach( ( $outputs = $outServ->getEntities() ) as $k => $output )
-            $outSets[] = $thmServ->findOutputSetting( $theme, $output ); // ->toObject()
-
-        $themeForm = new Admin_Form_Theme();
-        $themeForm->populate( array
-        (
-        	"theme-version"    => (string) $theme->getVersion(),
-        	"required-version" => (string) $theme->getMinorNewscoopVersion()
-        ) );
-
-
         $this->view->headLink( array
         (
         	'type'  =>'text/css',
@@ -349,26 +342,12 @@ class Admin_ThemesController extends Zend_Controller_Action
             'media'	=> 'screen',
             'rel'	=> 'stylesheet'
         ) );
-
-        $this->view->jQueryUtils()
-            ->registerVar
-            (
-                'load-output-settings-url',
-                $this->_helper->url->url( array
-                (
-                	'action' => 'output-edit',
-                	'controller' => 'themes',
-                    'module' => 'admin',
-                    'themeid' => '$1',
-                    'outputid' => '$2'
-                ), null, true, false )
-            );
-        $this->view->themeForm      = $themeForm;
-        $this->view->theme          = $theme->toObject();
-        $this->view->outputs        = $outputs;
-        $this->view->outputSettings = $outSets;
     }
 
+    /**
+     *
+     * called by wizard template action
+     */
     public function outputEditAction()
     {
         $thmServ    = $this->getThemeService();
@@ -383,9 +362,10 @@ class Admin_ThemesController extends Zend_Controller_Action
         /* @var $settings Newscoop\Entity\Output */
 
         // getting all available templates
-        foreach( $thmServ->getTemplates( $theme ) as $tpl )
-        /* @var $tpl Newscoop\Entity\Resource */
-            $templates[ $tpl->getId() ] = $tpl->getName();
+        foreach( $thmServ->getTemplates( $theme ) as $tpl ) {
+        	/* @var $tpl Newscoop\Entity\Resource */
+            $templates[ $tpl->getPath() ] = $tpl->getName(); // couldn't get id cause it's null :) :) :)
+        }
 
         // making the form
         $outputForm = new Admin_Form_Theme_OutputSettings();
@@ -416,8 +396,6 @@ class Admin_ThemesController extends Zend_Controller_Action
                     $settings->setArticlePage( new Resource( $outputForm->getValue( 'articlepage' ) ) );
                     $settings->setErrorPage( new Resource( $outputForm->getValue( 'errorpage' ) ) );
 
-                    //var_dump( $outputId, $settings, $theme );
-
                     $this->getThemeService()->assignOutputSetting( $settings, $theme );
 
                     $this->_helper->flashMessenger( ( $this->view->success = getGS( 'Settings saved.' ) ) );
@@ -444,6 +422,96 @@ class Admin_ThemesController extends Zend_Controller_Action
         }
     }
 
+    public function articleTypesEditAction()
+    {
+        $thmServ                = $this->getThemeService();
+
+        // getting the theme entity
+        $themeId                = $this->_request->getParam( 'id' );
+        $theme                  = $thmServ->findById( $themeId );
+
+        $updateArticleTypes     = array(); // for xml updating
+        $createArticleTypes     = array(); // for db updating
+
+        // process the request matching
+        $articleTypeIgnore      = $this->_request->getPost( 'articleTypeIgnore' );
+        $articleTypeCreate      = $this->_request->getPost( 'articleTypeCreate' );
+        $articleTypeFieldIgnore = $this->_request->getPost( 'articleTypeFieldIgnore' );
+        $articleTypeFieldCreate = $this->_request->getPost( 'articleTypeFieldCreate' );
+
+        $articleTypes           = $this->_request->getPost( 'articleTypes' );
+        $articleTypeFields      = $this->_request->getPost( 'articleTypeFields' );
+        $themeArticleTypeFields = $this->_request->getPost( 'themeArticleTypeFields' );
+        $themeArticleTypes      = $this->_request->getPost( 'themeArticleTypes' );
+
+        foreach( $themeArticleTypeFields as $typeName => $fields )
+        {
+            $updateArticleTypes[ $typeName ] = array( 'name' => '', 'ignore' => false, 'fields' => array() );
+
+            if( intval( $articleTypeIgnore[ $typeName ] ) == 0 ) // replace type with new one
+            {
+                if( isset( $articleTypes[ $typeName ] ) ) // type from db system to xml
+                {
+                    $updateArticleTypes[ $typeName ]['name'] = $articleTypes[ $typeName ];
+                }
+                if( intval( $articleTypeCreate[ $typeName ] ) == 1 ) // create article type in the system
+                {
+                    $createArticleTypes[ $typeName ]['name'] =
+                        $updateArticleTypes[ $typeName ]['name'] = $typeName;
+                }
+            }
+            else // leave it as it is
+            {
+                $updateArticleTypes[ $typeName ] = array( 'name' => $typeName, 'ignore' => true, 'fields' => array() );
+            }
+
+            foreach( $fields as $fieldName ) // process fields, same as above
+            {
+                // need to pass article type value for matching with the system
+                if( intval( $articleTypeFieldIgnore[ $typeName ][ $fieldName ] ) == 0 )
+                {
+                    if( isset( $articleTypeFields[ $typeName ][ $fieldName ] ) )
+                    {
+                        $updateArticleTypes[ $typeName ]['fields'][$fieldName] =
+                            array
+                            (
+                            	'name' => $articleTypeFields[ $typeName ][ $fieldName ],
+                            	'parentType' => $articleTypes[ $typeName ],
+                            	'ignore' => false
+                            );
+                    }
+                    if( intval( $articleTypeFieldCreate[ $typeName ][ $fieldName ] ) == 1 )
+                    {
+                        $updateArticleTypes[ $typeName ]['fields'][$fieldName] =
+                            $createArticleTypes[ $typeName ]['fields'][] =
+                                array
+                                (
+                                	'name' => $fieldName,
+                                	'parentType' => $articleTypes[ $typeName ],
+                                	'ignore' => false
+                                );
+                    }
+                }
+                else
+                {
+                    $updateArticleTypes[ $typeName ][ 'fields' ][$fieldName]
+                        = array( 'name' => $fieldName, 'parentType' => $articleTypes[ $typeName ], 'ignore' => true );
+                }
+            }
+
+        }
+        /*
+        print '===create===';
+        var_dump( $createArticleTypes );
+
+        print '===update===';
+        var_dump( $updateArticleTypes );
+		*/
+
+        $this->view->response = $thmServ->assignArticleTypes( $updateArticleTypes, $theme );
+
+    }
+
     public function filesAction()
     {
         /*$datatable = $this->_helper->genericDatatable;
@@ -459,14 +527,17 @@ class Admin_ThemesController extends Zend_Controller_Action
         {
             $theme  = $this->getThemeService()->getById( $this->_request->getParam( 'theme-id' ) );
 		    $pub    = $this->getPublicationService()->findById( $this->_request->getParam( 'pub-id' ) );
-    		$this->view->response = $this->getThemeService()->assignTheme( $theme, $pub );
+
+		    if( $this->getThemeService()->assignTheme( $theme, $pub ) ) {
+		        $this->view->response =  getGS( 'Assigned successfully' );
+		    } else {
+    		    throw new Exception();
+		    }
         }
-        catch( DuplicateNameException $e )
-        {
+        catch( DuplicateNameException $e ) {
             $this->view->exception = array( "code" => $e->getCode(), "message" => getGS( 'Duplicate assignation' ) );
         }
-        catch( \Exception $e )
-        {
+        catch( \Exception $e ) {
             $this->view->exception = array( "code" => $e->getCode(), "message" => getGS( 'Something broke' ) );
         }
 
@@ -474,6 +545,7 @@ class Admin_ThemesController extends Zend_Controller_Action
 
     public function testAction()
     {
+        return ;
         $theme = $this->getThemeService()->findById( $this->_request->getParam( 'id' ) );
         //$this->getThemeFileService();
         var_dump( $this->getThemeService()->getArticleTypes($theme ) );die;

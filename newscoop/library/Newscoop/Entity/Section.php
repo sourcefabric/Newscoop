@@ -14,6 +14,11 @@ namespace Newscoop\Entity;
  */
 class Section extends Entity
 {
+        /**
+     * Provides the class name as a constant.
+     */
+    const NAME = __CLASS__;
+
     /**
      * @ManyToOne(targetEntity="Newscoop\Entity\Publication")
      * @JoinColumn(name="IdPublication", referencedColumnName="Id")

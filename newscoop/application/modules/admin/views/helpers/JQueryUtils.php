@@ -1,6 +1,6 @@
 <?php
 /**
- * 
+ *
  * @package Newscoop
  * @author mihaibalaceanu
  * @uses Zend_Controller_Plugin_Abstract
@@ -21,7 +21,7 @@ class Admin_View_Helper_JQueryUtils
      * @var array
      */
     private $_repo = array();
-    
+
     /**
      * @return Admin_View_Helper_JQueryUtils
      */
@@ -29,20 +29,20 @@ class Admin_View_Helper_JQueryUtils
     {
         return $this;
     }
-    
+
     /**
-     * @param Admin_View_Helper_JQueryReady $placeholder 
+     * @param Admin_View_Helper_JQueryReady $placeholder
      * @return Admin_View_Helper_JQueryUtils
      */
     public function setPlaceholder( $placeholder )
     {
         $this->_placeholder = $placeholder;
-    } 
+    }
 
     /**
      * uses $.registry to store variables on namespace
      * @param string $var switch to val if $var null
-     * @param string $val 
+     * @param string $val
      */
     public function registerVar( $var, $val=null, $placement=null )
     {
@@ -56,13 +56,17 @@ class Admin_View_Helper_JQueryUtils
                 $placeMe = 'set';
                 break;
             default :
-                $placeMe = 'append';                
+                $placeMe = 'append';
         }
-        $this->_placeholder->$placeMe( " jQuery.registry.set( '$var', '$val' ); " );
+        $this->_placeholder->$placeMe
+        (
+        	" jQuery.registry.set( '$var', "
+        .   ( is_array($val) || is_object($val) ? json_encode( $val ) : ( is_string($val) ? "'$val'" : $val ) )
+        .	" ); " );
     }
 
     /**
-     * 
+     *
      * @uses Admin_View_Helper_JQueryUtils::registerVar() with $placement null
      * @param string $var
      * @param string $val
@@ -71,7 +75,7 @@ class Admin_View_Helper_JQueryUtils
     {
         $this->registerVar( $var, $val );
     }
-    
+
     /**
      * get variable
      * @param string $var
@@ -80,7 +84,7 @@ class Admin_View_Helper_JQueryUtils
     {
         return @$this->_repo[$var];
     }
-    
+
     /**
      * Turn helper into string
      *
@@ -89,8 +93,8 @@ class Admin_View_Helper_JQueryUtils
     public function __toString()
     {
         $x = '';
-        foreach( $this->_repo as $key => $val ) { 
-            $x .= " $key : $val ;"; 
+        foreach( $this->_repo as $key => $val ) {
+            $x .= " $key : $val ;";
         };
         return $x;
     }

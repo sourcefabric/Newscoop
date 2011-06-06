@@ -38,5 +38,11 @@ WHERE fk_widget_id NOT IN (
 -- only if the default is used otherwise the preference should be kept
 UPDATE `SystemPreferences` SET `value` = '/js/geocoding/markers/' WHERE `varname` = 'MapMarkerDirectory' AND `value` = '/javascript/geocoding/markers/';
 
+UPDATE `Sections` s
+JOIN `Issues` AS i ON
+i.`IdPublication` = s.`IdPublication` AND i.`Number` = s.`NrIssue` AND i.`IdLanguage` = s.`IdLanguage`
+SET `fk_issue_id` = i.`id`
+
 system php ./acl.php
 system php ./javascript_js_cleanup.php
+

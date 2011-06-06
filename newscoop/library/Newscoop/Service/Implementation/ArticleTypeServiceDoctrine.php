@@ -97,6 +97,31 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
         return $results;
     }
 
+    public function findFieldByName(ArticleType $type, $name)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb ->select( self::ALIAS )
+            ->from( '\Newscoop\Entity\ArticleTypeField', self::ALIAS )
+            ->where
+            (
+                self::ALIAS . '.typeHack = ?1' . ' AND '
+            .   self::ALIAS . '.name IS NOT NULL' . ' AND '
+            .   self::ALIAS . ".name <> 'NULL' AND "
+            .   self::ALIAS . '.name = ?2'
+            )
+            ->setParameter( 1, $type )
+            ->setParameter( 2, $name );
+
+        /**
+         * @todo at refactor @see hack from \Newscoop\Entity\ArticleTypeField
+         */
+        $atf = current( $qb->getQuery()->getResult() );
+        if( !$atf )
+            return null;
+        $atf->setType( $type );
+        return $atf;
+    }
+
     public function findTypeByName($name)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();

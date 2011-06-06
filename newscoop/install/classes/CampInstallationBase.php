@@ -9,7 +9,7 @@
  * @version $Revision$
  * @link http://www.sourcefabric.org
  */
-
+ 
 global $g_db;
 
 /**

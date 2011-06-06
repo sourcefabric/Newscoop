@@ -27,7 +27,7 @@ interface IThemeManagementService extends IThemeService
 	const NAME_1 = __CLASS__;
 
 	/* --------------------------------------------------------------- */
-	
+
 	/**
 	 * Provides the themes that are unassigned to any publication.
 	 *
@@ -35,7 +35,7 @@ interface IThemeManagementService extends IThemeService
 	 *		The search criteria, not null.
 	 *
 	 * @param int|0 $offset
-	 *	 	The offset from where to retrieve the entities, if an offset is specified 
+	 *	 	The offset from where to retrieve the entities, if an offset is specified
 	 *		than also a limit must be specified in order for the offset to take effect.
 	 *
 	 * @param int $limit
@@ -56,7 +56,7 @@ interface IThemeManagementService extends IThemeService
 	 *		The search criteria, not null.
 	 *
 	 * @param int|0 $offset
-	 *	 	The offset from where to retrieve the entities, if an offset is specified 
+	 *	 	The offset from where to retrieve the entities, if an offset is specified
 	 *		than also a limit must be specified in order for the offset to take effect.
 	 *
 	 * @param int $limit
@@ -107,22 +107,22 @@ interface IThemeManagementService extends IThemeService
 
 	/**
 	 * Updates the theme.
-	 * 
+	 *
 	 * @param Theme $theme
 	 * 		The theme to be updated, not null.
-	 * 
+	 *
 	 * @throws DuplicateNameException
 	 * 		Thrown when the theme has the same name as another theme in the same scope (for instance 2 themes
-	 * 		belong to the same publication and you try to rename 1 theme to have the same name as the other). 
+	 * 		belong to the same publication and you try to rename 1 theme to have the same name as the other).
 	 */
 	function updateTheme(Theme $theme);
-	
+
 	/**
 	 * Delete the theme and all coresponding connections.
-	 * 
+	 *
 	 * @param Theme $theme
 	 * 		The theme to be deleted, not null.
-	 * 
+	 *
 	 * @return bool
 	 * 		TRUE if the theme was succesfully deleted, FLASE if the theme is in use and cannot be removed.
 	 */
@@ -130,26 +130,36 @@ interface IThemeManagementService extends IThemeService
 
 	/**
 	 * Assign the theme to the publication.
-	 * 
+	 *
 	 * @param Theme $theme
 	 * 		The theme to be assigned, not null.
-	 * 
+	 *
 	 * @param Publication $publication
 	 * 		The publication to be assigned the theme for, not null.
-	 * 
+	 *
 	 * @throws DuplicateNameException
-	 * 		Thrown when there is already another theme with the same name under the publication. 
+	 * 		Thrown when there is already another theme with the same name under the publication.
 	 */
 	function assignTheme(Theme $theme, Publication $publication);
 
 	/**
 	 * Assign the output settings to the theme.
-	 * 
+	 *
 	 * @param OutputSettings $outputSettings
 	 * 		The output settings to be assigned to the theme.
 	 * @param Theme $theme
 	 * 		The theme to be assigned to, not null.
 	 */
 	function assignOutputSetting(OutputSettings $outputSettings, Theme $theme);
+
+	/**
+	 * Assign the article types to the theme.
+	 *
+	 * @param object|array $outputSettings
+	 * 		The article types to be assigned to the theme.
+	 * @param Theme $theme
+	 * 		The theme to be assigned to, not null.
+	 */
+	function assignArticleTypes($articleTypes, Theme $theme);
 
 }

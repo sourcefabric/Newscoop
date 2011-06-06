@@ -9,19 +9,23 @@
 namespace Newscoop\Entity\Output;
 
 use Newscoop\Entity\Issue;
-use Newscoop\Entity\OutputSetting;
+use Newscoop\Entity\OutputSettings;
 use Newscoop\Utils\Validation;
 use Newscoop\Entity\Entity;
 use Newscoop\Entity\Theme;
-
+use Newscoop\Entity\Resource;
 /**
  * Provides the settings for an output for an issue.
  *
  * @Entity
- * @Table(name="output_issue", uniqueConstraints={@UniqueConstraint(name="publication_themes_idx", columns={"fk_output_id", "fk_issue_id"})
+ * @Table(name="output_issue", uniqueConstraints={@UniqueConstraint(name="publication_themes_idx", columns={"fk_output_id", "fk_issue_id"})})
  */
 class OutputSettingsIssue extends OutputSettings
 {
+        /**
+	 * Provides the class name as a constant.
+	 */
+	const NAME_1 = __CLASS__;
 
 	/**
 	 * @ManyToOne(targetEntity="Newscoop\Entity\Issue")
