@@ -298,7 +298,7 @@ GeoPopups.create_popup_content = function(feature, geo_obj) {
             poi_label_value = pop_title_orig;
 
             pop_text += "<input id='geo_edit_label_inline' class='map_hidden " + label_class_add + "' type='text' value='' onBlur=\"GeoPopups.show_inline_label_view(" + geo_obj.obj_name + ", " + rank + "); return false;\" onChange='GeoPopups.show_inline_label_change(" + geo_obj.obj_name + ", " + rank + ", this.value); return false;' onKeyUp='GeoPopups.show_inline_label_change(" + geo_obj.obj_name + ", " + rank + ", this.value); return true;' />\n";
-            pop_text += "<h3 class='popup_title' id='geo_show_label_inline'>";
+            pop_text += "<h3 class='popup_title edit_mode' id='geo_show_label_inline'>";
 
             if ((!pop_link) || ("" == pop_link)) {
                 pop_link = "#";
@@ -390,7 +390,7 @@ GeoPopups.create_popup_content = function(feature, geo_obj) {
                 text_view = geo_obj.display_strings.fill_in_the_point_description;
             }
 
-            pop_text += "<div class='popup_text'>";
+            pop_text += "<div class='popup_text edit_mode'>";
             pop_text += "<div href='#' id='geo_show_text_inline' class='inline_editable inline_link_like' onClick=\"GeoPopups.show_inline_text_edit(" + geo_obj.obj_name + ", " + rank + "); return false;\">";
             pop_text += "<div id='text_inner_edit_value' class='" + text_class_add + "'><p>" + text_view + "</p></div></div>";
 

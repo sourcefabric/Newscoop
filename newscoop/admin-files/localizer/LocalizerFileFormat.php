@@ -211,8 +211,7 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
     	$p_localizerLanguage->setMode('xml');
         $filePath = LocalizerFileFormat_XML::GetFilePath($p_localizerLanguage);
         if (file_exists($filePath)) {
-            $xml = File::readAll($filePath);
-            File::close($filePath, FILE_MODE_READ);
+            $xml = file_get_contents($filePath);
 	        $unserializer = new XML_Unserializer($this->m_unserializeOptions);
 	        $unserializer->unserialize($xml);
 	        $translationArray = $unserializer->getUnserializedData();
@@ -269,12 +268,11 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
         $filePath = LocalizerFileFormat_XML::GetFilePath($p_localizerLanguage);
         // write data to file
         if (is_writable($filePath)) {
-        	File::write($filePath, $xml, FILE_MODE_WRITE);
+            file_put_contents($filePath, $xml);
         } else {
         	return CAMP_ERROR_WRITE_FILE;
         }
 
-        File::close($filePath, FILE_MODE_WRITE);
         return CAMP_SUCCESS;
 	} // fn save
 
@@ -305,8 +303,7 @@ class LocalizerFileFormat_XML extends LocalizerFileFormat {
 	    $fileName = $g_localizerConfig['TRANSLATION_DIR']
 	               .$g_localizerConfig['LANGUAGE_METADATA_FILENAME'];
     	if (file_exists($fileName)) {
-    		$xml = File::readAll($path);
-    		File::rewind($path, FILE_MODE_READ);
+            $xml = file_get_contents($path);
     		$handle = new XML_Unserializer($this->m_unserializeOptions);
         	$handle->unserialize($xml);
         	$arr = $handle->getUnserializedData();
