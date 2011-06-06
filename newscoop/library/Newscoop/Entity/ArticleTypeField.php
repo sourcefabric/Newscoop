@@ -13,17 +13,17 @@ use Doctrine\ORM\Collections\ArrayCollection;
  * Issue entity
  * @Entity
  * @Table(name="ArticleTypeMetadata",{@UniqueConstraint(name="PRIMARY",columns={"type_name","filed_name"})})
- * 
+ *
  * @todo check for performance issues
  */
 class ArticleTypeField
 {
-    /** 
-     * @Id 
-     * @Column(type="string",name="field_name") 
+    /**
+     * @Id
+     * @Column(type="string",name="field_name")
      */
     private $name;
-    
+
     /**
 	 * @Transient
 	 * @var Newscoop\Entity\ArticleType
@@ -38,15 +38,26 @@ class ArticleTypeField
      * @todo hack used for getting the parent article type from same table, which we will set later on into self::$type.
      */
     private $typeHack;
-    
+
     /**
+     * @Column(type="integer",name="max_size")
+     */
+    private $length;
+
+    /**
+     * @Column(type="string",name="field_type")
+     */
+    private $fieldType;
+
+    /**
+     * Get the article type
      * @return \Newscoop\Entity\ArticleType
      */
     public function getType()
     {
         return $this->type;
     }
-    
+
 	/**
      * @return \Newscoop\Entity\ArticleType
      */
@@ -55,13 +66,29 @@ class ArticleTypeField
         $this->type = $type;
         return $this;
     }
-    
+
 	/**
      * @return string
      */
     public function getName()
     {
         return $this->name;
+    }
+
+	/**
+     * @return int
+     */
+    public function getLength()
+    {
+        return $this->length;
+    }
+
+	/**
+     * @return string
+     */
+    public function getFieldType()
+    {
+        return $this->fieldType;
     }
 }
 
