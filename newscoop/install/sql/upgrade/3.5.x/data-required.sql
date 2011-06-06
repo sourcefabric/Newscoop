@@ -5,7 +5,7 @@ INSERT INTO SystemPreferences (varname, value) VALUES ('MapAutoFocusDefault', '1
 -- maximal map zoom for map autofocusing
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapAutoFocusMaxZoom','10');
 -- map border spaces for autofocusing
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapAutoFocusBorder','100');
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapAutoFocusBorder','50');
 -- css file to be included for map views
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapAutoCSSFile','/js/geocoding/styles/map-info.css');
 
