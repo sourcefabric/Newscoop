@@ -51,8 +51,7 @@ final class MetaMapLocation extends MetaDbObject
      */
     protected function getName()
     {
-        $poi_name = !is_null($this->m_content) ? $this->m_content->getName() : null;
-        return $poi_name;
+        return (!is_null($this->m_content)) ? $this->m_content->getName() : null;
     }
 
     /**
@@ -90,8 +89,7 @@ final class MetaMapLocation extends MetaDbObject
      */
     protected function getText()
     {
-        $poi_text = !is_null($this->m_content) ? $this->m_content->getText() : null;
-        return $poi_text;
+        return (!is_null($this->m_content)) ? $this->m_content->getText() : null;
     }
 
     /**

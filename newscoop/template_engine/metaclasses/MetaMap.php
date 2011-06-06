@@ -91,10 +91,10 @@ final class MetaMap extends MetaDbObject
      * @return string
      */
     public static function GetMapTagHeader($p_articleNumber, $p_languageId,
-                                           $p_mapWidth = 0, $p_mapHeight = 0)
+                                           $p_mapWidth = 0, $p_mapHeight = 0, $p_autoFocus = null)
     {
         return Geo_Map::GetMapTagHeader((int) $p_articleNumber, (int) $p_languageId,
-                                        (int) $p_mapWidth, (int) $p_mapHeight);
+                                        (int) $p_mapWidth, (int) $p_mapHeight, $p_autoFocus);
     }
 
     /**

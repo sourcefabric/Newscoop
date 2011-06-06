@@ -424,6 +424,41 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
     <td colspan="2"><hr /></td>
 </tr>
 <tr>
+    <td align="left">
+        <?php putGS("Include CSS file for map view"); ?>
+    </td>
+    <td>
+        <input type="text" name="f_map_auto_cSS_file" value="<?php p(SystemPref::Get("MapAutoCSSFile")) ?>" maxlength="80" size="40" class="input_text"/>
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Map auto-focusing as the default behavior:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="checkbox" name="f_map_auto_focus_default" value="1" <?php echo SystemPref::Get('MapAutoFocusDefault') > 0 ? 'checked="checked"' : '';  ?> class="input_checkbox" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Maximal zoom for auto-focusing:"); ?> (0-18)
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_auto_focus_max_zoom" value="<?php p(SystemPref::Get('MapAutoFocusMaxZoom')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td align="left" width="400px">
+        <?php putGS("Map border for auto-focusing:"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_map_auto_focus_border" value="<?php p(SystemPref::Get('MapAutoFocusBorder')); ?>" maxlength="3" size="4" class="input_text" />
+    </td>
+</tr>
+<tr>
+    <td colspan="2"><hr /></td>
+</tr>
+<tr>
     <td align="left" width="400px">
         <?php putGS("Allow Google Streets Map Provider:"); ?>
     </td>
@@ -454,9 +489,9 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
     <td align="left" valign="top">
         <select name="f_map_provider_default" class="input_select">
             <?php
-            camp_html_select_option('GoogleV3', SystemPref::Get('MapProviderDefault'), getGS('Google Streets Map'));
-            camp_html_select_option('MapQuest', SystemPref::Get('MapProviderDefault'), getGS('MapQuest Map'));
-            camp_html_select_option('OSM', SystemPref::Get('MapProviderDefault'), getGS('OpenStreet Map'));
+            camp_html_select_option('GoogleV3', SystemPref::Get('MapProviderDefault'), 'Google Maps');
+            camp_html_select_option('MapQuest', SystemPref::Get('MapProviderDefault'), 'MapQuest Open');
+            camp_html_select_option('OSM', SystemPref::Get('MapProviderDefault'), 'OpenStreetMap');
             ?>
         </select>
     </td>

@@ -37,17 +37,20 @@ class Geo_MapLocationContent extends DatabaseObject implements IGeoMapLocationCo
      * @param IGeoMapLocation $mapLocation
      * @param int $languageId
 	 */
-	public function __construct(IGeoMapLocation $mapLocation = NULL, $languageId = 0)
+	public function __construct(IGeoMapLocation $mapLocation = NULL, IGeoMapLocationLanguage $locationLanguage = NULL, array $p_contentSource = NULL, $p_forceExists = false)
 	{
         global $g_ado_db;
 
         parent::__construct($this->m_columnNames);
 
-        if ($mapLocation === NULL || $languageId == 0) {
+        if ($p_contentSource) {
+            $this->fetch($p_contentSource, $p_forceExists);
             return;
         }
 
-        $locationLanguage = new Geo_MapLocationLanguage($mapLocation, $languageId);
+        if ($mapLocation === NULL || $locationLanguage == NULL) {
+            return;
+        }
 
         if ($locationLanguage->exists()) {
         	$this->m_data['id'] = $locationLanguage->getContentId();
