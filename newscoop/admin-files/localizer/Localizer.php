@@ -265,29 +265,47 @@ class Localizer {
     {
         global $g_localizerConfig;
 
-        if (($pos = strpos($p_directory, '*')) === false) {
-            $startDirectory = $p_directory;
-            $deepth = 1;  /* 1 means no subdirectories! */
-        } else {
-            $startDirectory = substr($p_directory, 0, $pos-1);
-            $deepth = substr_count($p_directory, '*') + 1;
+        if (!is_array($p_directory)) {
+            $p_directory = array($p_directory);
         }
+
+        // scan for files
+        $files = array();
+        $root = rtrim($g_localizerConfig['BASE_DIR'], '/');
+        foreach ($p_directory as $dir) {
+            if (strpos($dir, '*') !== FALSE) { // loads subdirectories /*/*.php
+                $files = array_merge($files, glob("$root/$dir/*.*"));
+                $dir = rtrim($dir, '*');
+            }
+
+            $realpath = realpath("$root/$dir");
+            if (!$realpath) { // not found
+                continue;
+            }
+
+            if (!is_dir($realpath)) { // add file if specified
+                $files[] = $realpath;
+                continue;
+            }
+
+            $files = array_merge($files, glob("$realpath/*.*"));
+        }
+
+        // extensions filter
+        $extensions = array('php', 'phtml');
+        $filelist = array_filter($files, function($file) use ($extensions) {
+            return in_array(pathinfo($file, PATHINFO_EXTENSION), $extensions);
+        });
 
         // like get GS('edit "$1"', ...);  '
         $functPattern1 = '/(put|get)gs( )*\(( )*\'([^\']*)\'/iU';
         // like get GS("edit '$1'", ...);
         $functPattern2 = '/(put|get)gs( )*\(( )*"([^"]*)"/iU';
 
-        // Get all files in this directory
-        $files = File_Find::mapTreeMultiple($g_localizerConfig['BASE_DIR'].$startDirectory, $deepth);
-
-        // Get all the PHP files
-        $filelist = self::CompilePhpFileList($files);
-
 		// Read in all the PHP files.
 		$data = array();
-        foreach ($filelist as $name) {
-            $data = array_merge($data, file($g_localizerConfig['BASE_DIR'].$startDirectory.'/'.$name));
+        foreach ($filelist as $file) {
+            $data = array_merge($data, file($file));
         }
 
        	// Collect all matches
