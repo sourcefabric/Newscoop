@@ -34,6 +34,15 @@ class Group implements \Zend_Acl_Role_Interface
      * @var Newscoop\Entity\Acl\Role
      */
     private $role;
+    
+    /**
+     * @manyToMany(targetEntity="Newscoop\Entity\User\Staff")
+     * @joinTable(name="liveuser_groupusers",
+     *      joinColumns={@joinColumn(name="group_id", referencedColumnName="group_id")},
+     *      inverseJoinColumns={@joinColumn(name="perm_user_id", referencedColumnName="Id")}
+     *      )
+     */
+    private $users;
 
     /**
      * Get id
@@ -97,6 +106,17 @@ class Group implements \Zend_Acl_Role_Interface
     public function getRoleRules()
     {
         return $this->role ? $this->role->getRules() : array();
+    }
+    
+    /**
+     * Get users
+     *
+     * @return array
+     */
+    public function getUsers()
+    {
+        if ($this->users) return($this->users);
+        else return(array());
     }
 
     /**
