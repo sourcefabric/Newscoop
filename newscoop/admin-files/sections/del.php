@@ -24,7 +24,7 @@ camp_html_content_top(getGS('Delete section'), $topArray);
 
 ?>
 <P>
-<FORM METHOD="POST" ACTION="do_del.php">
+<FORM METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/sections/do_del.php">
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <?php echo SecurityToken::FormParameter(); ?>
 <TR>

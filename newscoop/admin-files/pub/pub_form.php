@@ -299,7 +299,7 @@ function onCommentsModerated(p_checkbox)
         <?php if (isset($publicationObj)) { ?>
         <tr>
             <td colspan="2" align="center" style="padding-top: 1em;">
-                <a href="deftime.php?Pub=<?php echo $f_publication_id; ?>&Language=<?php p($publicationObj->getDefaultLanguageId()); ?>"><?php putGS("Set subscription settings by country"); ?></a>
+                <a href="/<?php echo $ADMIN; ?>/pub/deftime.php?Pub=<?php echo $f_publication_id; ?>&Language=<?php p($publicationObj->getDefaultLanguageId()); ?>"><?php putGS("Set subscription settings by country"); ?></a>
             </td>
         </tr>
         <?php } ?>

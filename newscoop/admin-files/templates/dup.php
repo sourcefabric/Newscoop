@@ -32,7 +32,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 ?>
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="do_dup.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/templates/do_dup.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>

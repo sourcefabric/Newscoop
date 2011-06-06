@@ -23,7 +23,7 @@ camp_html_content_top(getGS("Add new alias"), array("Pub" => $publicationObj), t
 camp_html_display_msgs();
 ?>
 <P>
-<FORM NAME="add_alias" METHOD="POST" ACTION="do_add_alias.php">
+<FORM NAME="add_alias" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/pub/do_add_alias.php">
 <?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>

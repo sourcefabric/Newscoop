@@ -1,5 +1,6 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/editor_load_countable.php");
 require_once($GLOBALS['g_campsiteDir']. "/classes/ArticleType.php");
 
 global $Campsite;
@@ -81,7 +82,7 @@ if (sizeof($allArticleTypes) == 0) {
 	camp_html_display_msgs();
 ?>
 <P>
-<FORM NAME="add_article" METHOD="GET" ACTION="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<FORM NAME="add_article" METHOD="GET" ACTION="/<?php echo $ADMIN; ?>/articles/do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
 <?php if ($f_publication_id > 0) { ?>
 <INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($f_publication_id); ?>">
@@ -108,7 +109,7 @@ if (sizeof($allArticleTypes) == 0) {
 		<tr>
 			<TD ALIGN="RIGHT" ><?php  putGS("Name"); ?>:</TD>
 			<TD>
-			<INPUT TYPE="TEXT" NAME="f_article_name" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', getGS('Name')); ?>" value="<?php echo htmlspecialchars($f_article_name); ?>">
+			<INPUT TYPE="TEXT" NAME="f_article_name" SIZE="40" MAXLENGTH="140" class="input_text countable" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', getGS('Name')); ?>" value="<?php echo htmlspecialchars($f_article_name); ?>">
 			</TD>
 		</TR>
 		<TR>

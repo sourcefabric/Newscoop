@@ -32,11 +32,11 @@ camp_html_content_top(getGS('Issue List'), array('Pub' => $publicationObj));
 if ($g_user->hasPermission('ManageIssue')) {
 	if (Issue::GetNumIssues($Pub) <= 0) {
 		?>
-			<TD style="padding-left: 20px;"><A HREF="add_new.php?Pub=<?php p($Pub); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-			<TD><A HREF="add_new.php?Pub=<?php p($Pub); ?>"><B><?php  putGS("Add new issue"); ?></B></A></TD>
+            <TD style="padding-left: 20px;"><A HREF="/<?php echo $ADMIN; ?>/issues/add_new.php?Pub=<?php p($Pub); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+            <TD><A HREF="/<?php echo $ADMIN; ?>/issues/add_new.php?Pub=<?php p($Pub); ?>"><B><?php  putGS("Add new issue"); ?></B></A></TD>
 	<?php  } else { ?>
-			<TD style="padding-left: 20px;"><A HREF="qadd.php?Pub=<?php p($Pub); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-			<TD><A HREF="qadd.php?Pub=<?php p($Pub); ?>"><B><?php  putGS("Add new issue"); ?></B></A></TD>
+            <TD style="padding-left: 20px;"><A HREF="/<?php echo $ADMIN; ?>/issues/qadd.php?Pub=<?php p($Pub); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+            <TD><A HREF="/<?php echo $ADMIN; ?>/issues/qadd.php?Pub=<?php p($Pub); ?>"><B><?php  putGS("Add new issue"); ?></B></A></TD>
 	<?php  }
 }
 ?>
