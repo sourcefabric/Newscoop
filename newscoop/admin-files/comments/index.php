@@ -130,7 +130,7 @@ if (is_object($pager)) {
 <table width="100%" style="padding-top: 2px;">
 <tr>
     <td style="padding-left: 13px;">
-        <form method="POST">
+    <form action="/<?php echo $ADMIN; ?>/comments/" method="POST">
         <table cellpadding="0" cellspacing="0">
         <tr>
             <td <?php if (!empty($pagerStr)) { ?>style="padding-right: 15px;"<?php } ?>>
@@ -249,7 +249,7 @@ function onSummaryClick(p_messageId)
 
     <td style="border-left: 1px solid #777;" valign="top">
         <!-- The column where you can edit the comments -->
-        <form action="do_edit.php" method="POST">
+        <form action="/<?php echo $ADMIN; ?>/comments/do_edit.php" method="POST">
 		<?php echo SecurityToken::FormParameter(); ?>
         <table border="0" cellpadding="0" cellspacing="0" class="box_table">
         <?php

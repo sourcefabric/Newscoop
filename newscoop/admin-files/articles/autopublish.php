@@ -76,7 +76,7 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 </head>
 <body>
 
-<FORM NAME="autopublish" METHOD="POST" ACTION="autopublish_do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<FORM NAME="autopublish" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/autopublish_do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
 <INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php echo $f_publication_id; ?>">
 <INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php echo $f_issue_number; ?>">

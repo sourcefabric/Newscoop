@@ -210,7 +210,7 @@ class Language extends DatabaseObject {
 	    $selectClauseObj = new SQLSelectClause();
 	    $tmpLanguage = new Language();
 	    $selectClauseObj->setTable($tmpLanguage->getDbTableName());
-        
+
 	    if (!is_null($p_id)) {
 	    	$selectClauseObj->addWhere('Id = ' . (int)$p_id);
 	    }
@@ -283,4 +283,25 @@ class Language extends DatabaseObject {
         }
         return $order;
     }
-}
+
+
+	/**
+	 * Returns language id for the provided language code
+	 *
+	 */
+	public static function GetLanguageIdByCode($p_languageCode)
+	{
+	    global $g_ado_db;
+
+        $queryStr = "SELECT Id FROM Languages WHERE Code = ? LIMIT 1";
+        $queryParams = array($p_languageCode);
+
+        $result = $g_ado_db->GetAll($queryStr, $queryParams);
+
+        if ((!$result) || (1 > count($result))) {return null;}
+
+        return $result[0]['Id'];
+    } // fn GetLanguageIdByCode
+
+
+} // class Language

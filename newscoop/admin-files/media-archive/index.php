@@ -21,7 +21,7 @@ camp_html_content_top(getGS('Media Archive'), NULL);
 
     <?php if ($g_user->hasPermission('AddImage')) { ?>
     <p class="actions">
-        <a href="./add.php" title="<?php putGS('Add new image'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new image'); ?>"><?php putGS('Add new image'); ?></a>
+        <a href="/<?php echo $ADMIN; ?>/media-archive/add.php" title="<?php putGS('Add new image'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new image'); ?>"><?php putGS('Add new image'); ?></a>
     </p>
     <?php } ?>
 
@@ -41,7 +41,7 @@ camp_html_content_top(getGS('Media Archive'), NULL);
 <div id="files">
     <?php if ($g_user->hasPermission('AddFile')) { ?>
     <p class="actions">
-        <a href="./add_file.php" title="<?php putGS('Add new file'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new file'); ?>"><?php putGS('Add new file'); ?></a>
+        <a href="/<?php echo $ADMIN; ?>/media-archive/add_file.php" title="<?php putGS('Add new file'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new file'); ?>"><?php putGS('Add new file'); ?></a>
     </p>
     <script type="text/javascript"><!--
         $(document).ready(function() {

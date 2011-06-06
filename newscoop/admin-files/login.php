@@ -124,20 +124,35 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
 <?php if (!empty($_POST['_next'])) {
     // print hidden field function
     $view = $this->view;
+    $ignored = array(
+        'f_is_encrypted',
+        'f_user_name',
+        'f_password',
+        'f_login_language',
+        'f_captcha_code',
+        'Login',
+        'f_xorkey',
+    );
+
     $printHidden = function($name, $value) use ($view) {
         echo '<input type="hidden" name="', $name, '" value="', $view->escape($value), '" />';
     };
 
-    // store request post data into form fields
-    foreach ($_POST as $name => $value) {
-        if (is_array($value)) {
-            foreach ($value as $arrayValue) {
-                $printHidden("{$name}[]", $arrayValue);
-            } 
-        } else {
-            $printHidden($name, $value);
-        }
-    }
+    if (!empty($_POST)) {
+        foreach ($_POST as $name => $value) {
+            if (in_array($name, $ignored)) {
+                continue;
+            }
+
+			if (is_array($value)) {
+				foreach ($value as $arrayValue) {
+					$printHidden("{$name}[]", $arrayValue);
+				} 
+			} else {
+				$printHidden($name, $value);
+			}
+		}
+	}
 } ?>
 
 <?php if ($error_code == "upgrade") { ?>

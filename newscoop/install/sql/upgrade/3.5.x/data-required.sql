@@ -49,5 +49,8 @@ WHERE fk_widget_id NOT IN (
 -- only if the default is used otherwise the preference should be kept
 UPDATE `SystemPreferences` SET `value` = '/js/geocoding/markers/' WHERE `varname` = 'MapMarkerDirectory' AND `value` = '/javascript/geocoding/markers/';
 
+-- whether we shall use internal statistics on article reading
+INSERT INTO SystemPreferences (varname, value) VALUES ('CollectStatistics', 'Y');
+
 system php ./acl.php
 system php ./javascript_js_cleanup.php

@@ -13,7 +13,7 @@ global $ADMIN;
     <td rowspan="2" valign="top">
         <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/campsite.js"></script>
 
-        <form name="dialog" method="POST" action="<?php echo "/$ADMIN/bugreporter/"; ?>senderrorform.php" />
+        <form name="dialog" method="POST" action="/<?php echo $ADMIN; ?>/bugreporter/senderrorform.php" />
 
         <input type="hidden" name="f_is_post_from_bugreporter" value="1">
         <input type="hidden" name="f_str" value="<?php echo htmlspecialchars($reporter->getStr()); ?>">
