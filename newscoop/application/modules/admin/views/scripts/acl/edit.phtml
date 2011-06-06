@@ -11,7 +11,12 @@
 <dl class="resource">
     <dt><?php echo $name; ?></dt>
 
-    <?php foreach ((array) $this->rulesParents[$resource] as $rule) { ?>
+    <?php
+    if (!isset($this->rulesParents[$resource])) {
+        $this->rulesParents[$resource] = array();
+    }
+
+    foreach ($this->rulesParents[$resource] as $rule) { ?>
     <dd class="<?php echo $rule->class; ?> inherited"><strong><?php echo $rule->type; ?></strong> <?php echo $rule->action ?: getGS('Any action'); ?></dd>
     <?php } ?>
 

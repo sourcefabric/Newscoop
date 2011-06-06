@@ -53,12 +53,17 @@ final class CampContext
 	                         				   'url_id'=>'sec'),
 	                         'articles'=>array('class'=>'Articles', 'list'=>'articles',
 	                         				   'url_id'=>'art'),
+	                         'maparticles'=>array('class'=>'MapArticles', 'list'=>'map_articles',
+	                         				   'url_id'=>'mart'),
 	                         'articleauthors'=>array('class'=>'ArticleAuthors',
 	                                                 'list'=>'article_authors',
 	                                                 'url_id'=>'aas'),
 	                         'articlelocations'=>array('class'=>'ArticleLocations',
 	                                                'list'=>'article_locations',
 	                                                'url_id'=>'alc'),
+	                         'maplocations'=>array('class'=>'MapLocations',
+	                                                'list'=>'map_locations',
+	                                                'url_id'=>'mlc'),
     						 'articleimages'=>array('class'=>'ArticleImages',
 	                                                'list'=>'article_images',
 	                                                'url_id'=>'aim'),
@@ -236,6 +241,19 @@ final class CampContext
                 $plugin_init($this);
             }
         }
+
+        // initialize geo-map holders
+        $this->m_properties['map_dynamic_constraints'] = null;
+        $this->m_properties['map_dynamic_areas'] = null;
+        $this->m_properties['map_dynamic_max_points'] = 0;
+        $this->m_properties['map_dynamic_tot_points'] = 0;
+        $this->m_properties['map_dynamic_points_raw'] = null;
+        $this->m_properties['map_dynamic_points_objects'] = null;
+        $this->m_properties['map_dynamic_meta_article_objects'] = null;
+        $this->m_properties['map_dynamic_map_label'] = "";
+        $this->m_properties['map_dynamic_id_counter'] = 0;
+        $this->m_properties['map_common_header_set'] = false;
+
     } // fn __construct
 
 

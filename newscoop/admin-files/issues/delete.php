@@ -24,7 +24,7 @@ camp_html_content_top(getGS('Delete issue'), array('Pub' => $publicationObj, 'Is
 
 ?>
 <P>
-<FORM METHOD="POST" ACTION="do_del.php">
+<FORM METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/issues/do_del.php">
 <?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
 <TR>

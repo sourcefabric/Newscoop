@@ -12,7 +12,7 @@ if (!$g_user->hasPermission('CommentModerate')) {
 }
 ?>
 
-<form id="comments-moderate" action="comments/do_moderate.php" method="POST">
+    <form id="comments-moderate" action="/<?php echo $ADMIN; ?>/articles/comments/do_moderate.php" method="POST">
 <?php
 // add token
 echo SecurityToken::FormParameter();

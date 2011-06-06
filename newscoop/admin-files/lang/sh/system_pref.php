@@ -1,4 +1,8 @@
 <?php 
+regGS("Include CSS file for map view", "");
+regGS("Maximal zoom for auto-focusing:", "");
+regGS("Map border for auto-focusing:", "");
+regGS("Map auto-focusing as the default behavior:", "");
 regGS("Run scheduled tasks externally?", "Eksterno pokretanje planiranih akcija?");
 regGS("Setting up a Newscoop Replication Server?", "Podešavanje Newscoop replikacionog servera?");
 regGS("Newscoop Online Server Database", "Newscoop baza podataka na onlajn serveru");

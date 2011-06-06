@@ -30,7 +30,7 @@ $editorLanguage = camp_session_get('TOL_Language', $languageObj->getCode());
 editor_load_tinymce('f_description', $g_user, 0, $editorLanguage, 'section');
 ?>
 <p>
-<form name="section_add" method="POST" action="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<form name="section_add" method="POST" action="/<?php echo $ADMIN; ?>/sections/do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>

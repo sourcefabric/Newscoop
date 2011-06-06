@@ -138,6 +138,17 @@ if ($f_publication_id > 0) {
 	}
 }
 
+if( $articleObj->translationTitleExists( $f_translation_title, $f_translation_language))
+{
+	camp_html_add_msg(getGS("There already is an article with the same name. Please change the name and try again."), "ok");
+	camp_html_goto_page($backLink);
+	exit();
+}
+
+
+
+
+
 $articleCopy = $articleObj->createTranslation($f_translation_language, $g_user->getUserId(), $f_translation_title);
 
 camp_html_add_msg(getGS("Article translation created."), "ok");
