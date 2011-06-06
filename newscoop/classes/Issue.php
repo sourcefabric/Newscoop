@@ -24,6 +24,7 @@ class Issue extends DatabaseObject {
 	var $m_dbTableName = 'Issues';
 	var $m_keyColumnNames = array('IdPublication', 'Number', 'IdLanguage');
 	var $m_columnNames = array(
+		'id',
 		'IdPublication',
 		'Number',
 		'IdLanguage',
@@ -200,6 +201,14 @@ class Issue extends DatabaseObject {
 	    }
 	} // fn copy
 
+	/**
+	 * Return the issue ID.
+	 * @return int
+	 */
+	public function getIssueId()
+	{
+		return $this->m_data['id'];
+	} // fn getId
 
 	/**
 	 * Return the publication ID of the publication that contains this issue.

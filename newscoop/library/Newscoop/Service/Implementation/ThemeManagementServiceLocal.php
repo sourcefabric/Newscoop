@@ -6,9 +6,9 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Newscoop\Entity\ArticleTypeField;
 namespace Newscoop\Service\Implementation;
 
+use Newscoop\Entity\ArticleTypeField;
 use Doctrine\ORM\Query;
 use Newscoop\Service\ISyncResourceService;
 use Newscoop\Entity\Output\OutputSettingsTheme;

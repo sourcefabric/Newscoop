@@ -39,7 +39,7 @@ class OutputSettingIssueServiceDoctrine extends AEntityBaseServiceDoctrine
      */
     public function findByIssue($issue)
     {
-        if (method_exists($issue, 'getId')) {
+        if ($issue instanceof Issue) {
             $issue = $issue->getId();
         }
         $em = $this->getEntityManager();
