@@ -14,34 +14,8 @@ use Newscoop\Service\Model\Search\Search;
  * Provides generic services for entities.
  */
 
-interface IEntityService
+interface IEntityService extends IEntityBaseService
 {
-
-	/**
-	 * Provides the entity that has the provided id.
-	 *
-	 * @param mixed $id
-	 *		The id to be searched, not null, not empty.
-	 *
-	 * @return Newscoop\Entity
-	 *		The entity, not null.
-	 * @throws InvalidArgumentException
-	 * 		If for the provided id no entity could be found.
-	 */
-	function getById($id);
-
-	/**
-	 * Provides the entity that has the provided id.
-	 *
-	 * @param mixed $id
-	 *		The id to be searched, not null, not empty.
-	 *
-	 * @return Newscoop\Entity
-	 *		The entity, null if no entities could be found for the provided id.
-	 */
-	function findById($id);
-
-	/* --------------------------------------------------------------- */
 
 	/**
 	 * Provides the count of the entities that can be associated with the provided search.
@@ -61,7 +35,7 @@ interface IEntityService
 	 *		The search criteria, not null.
 	 *
 	 * @param int|0 $offset
-	 *	 	The offset from where to retrieve the entities, if an offset is specified 
+	 *	 	The offset from where to retrieve the entities, if an offset is specified
 	 *		than also a limit must be specified in order for the offset to take effect.
 	 *
 	 * @param int $limit

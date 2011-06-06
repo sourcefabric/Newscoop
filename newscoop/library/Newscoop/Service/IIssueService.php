@@ -11,9 +11,9 @@ namespace Newscoop\Service;
 use Newscoop\Service\IEntityService;
 
 /**
- * Provides the services for the Issues.
+ * Provides the services for the Publications.
  */
-interface IPublicationService extends IEntityService
+interface IIssueService extends IEntityService
 {
 
 	/**

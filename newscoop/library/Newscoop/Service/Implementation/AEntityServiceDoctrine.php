@@ -17,27 +17,14 @@ use Newscoop\Utils\Validation;
 use Newscoop\Service\Resource\ResourceId;
 use Newscoop\Service\Model\Search\Column;
 use Newscoop\Service\Model\Search\Search;
-
+use Newscoop\Service\Implementation\AEntityBaseServiceDoctrine;
 
 /**
  * Provides the services implementation for the themes.
  */
-abstract class AEntityServiceDoctrine implements IEntityService
+abstract class AEntityServiceDoctrine extends AEntityBaseServiceDoctrine implements IEntityService
 {
 
-	const ALIAS = 'en';
-
-	/* --------------------------------------------------------------- */
-
-	/** @var Newscoop\Service\Resource\ResourceId */
-	private $id;
-	/** @var Doctrine\ORM\EntityManager */
-	private $em = NULL;
-
-	/* ------------------------------- */
-
-	/** @var string */
-	protected $entityClassName;
 	/** @var string */
 	protected $searchClassName;
 
@@ -50,37 +37,14 @@ abstract class AEntityServiceDoctrine implements IEntityService
 	 */
 	function __construct(ResourceId $id)
 	{
-		Validation::notEmpty($id, 'id');
-		$this->id = $id;
-
-		$this->_init_();
-
-		if(is_null($this->entityClassName)){
-			throw \Exception("Please provide a entitity class name to be used");
-		}
-		if(is_null($this->searchClassName)){
+            parent::__construct($id);
+            if(is_null($this->searchClassName)){
 			throw \Exception("Please provide a search class name to be used.");
 		}
 	}
 
 	/* --------------------------------------------------------------- */
 
-	function getById($id)
-	{
-		Validation::notEmpty($id, 'id');
-		$entity = $this->findById($id);
-		if($entity === NULL){
-			throw \Exception("Cannot locate '$this->entityClassName' for id '$id'.");
-		}
-		return $entity;
-	}
-
-	function findById($id)
-	{
-		Validation::notEmpty($id, 'id');
-		$em = $this->getEntityManager();
-		return $em->find($this->entityClassName, $id);
-	}
 
 	function getCount(Search $search = NULL)
 	{
@@ -123,32 +87,6 @@ abstract class AEntityServiceDoctrine implements IEntityService
 
 	/* --------------------------------------------------------------- */
 
-	/**
-	 * Provides the resource id.
-	 *
-	 * @return Newscoop\Services\Resource\ResourceId
-	 *		The resource id.
-	 */
-	protected function getResourceId()
-	{
-		return $this->id;
-	}
-
-	/** Provides the dictrine entity manager.
-	 *
-	 * @return Doctrine\ORM\EntityManager
-	 * 		The doctrine entity manager.
-	 */
-	protected function getEntityManager()
-	{
-		if($this->em === NULL){
-			$doctrine = \Zend_Registry::get('doctrine');
-			$this->em = $doctrine->getEntityManager();
-		}
-		return $this->em;
-	}
-
-	/* --------------------------------------------------------------- */
 
 	/**
 	 * Builds on to the provided query builder the interogations that will reflect the provided search object.
@@ -203,11 +141,6 @@ abstract class AEntityServiceDoctrine implements IEntityService
 	}
 
 	/* --------------------------------------------------------------- */
-
-	/**
-	 * Provides aditional initialization for the service.
-	 */
-	protected abstract function _init_();
 
 	/**
 	 * Maps a search column to an actual doctrine field name.

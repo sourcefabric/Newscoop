@@ -17,6 +17,11 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Issue extends Entity
 {
     /**
+     * Provides the class name as a constant.
+     */
+    const NAME = __CLASS__;
+
+    /**
      * @ManyToOne(targetEntity="Newscoop\Entity\Publication")
      * @JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
@@ -35,6 +40,12 @@ class Issue extends Entity
      * @var Newscoop\Entity\Language
      */
     private $language;
+
+    /**
+     * @Column(name="Name")
+     * @var string
+     */
+    private $name;
 
     /**
      * @OneToMany(targetEntity="Newscoop\Entity\Section", mappedBy="issue")
@@ -62,6 +73,12 @@ class Issue extends Entity
      * @var Newscoop\Entity\Template"
      */
     private $articleTemplate;
+
+    /**
+     * @Column(name="ShortName")
+     * @var string
+     */
+    private $shortName;
 
     /**
      * @param int $number
@@ -126,6 +143,26 @@ class Issue extends Entity
     {
         $this->articleTemplate = $template;
         return $this;
+    }
+
+    /**
+     * Get name of the issue
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Get short name of the issue
+     *
+     * @return string
+     */
+    public function getShortName()
+    {
+        return $this->shortName;
     }
 }
 
