@@ -9,14 +9,10 @@
 namespace Newscoop\Service\Implementation;
 
 use Newscoop\Utils\Validation;
-use Newscoop\Service\IOutputService;
-use Newscoop\Service\IOutputSettingSectionService;
 use Newscoop\Service\IOutputSettingIssueService;
+use Newscoop\Service\Implementation\AEntityBaseServiceDoctrine;
 use Newscoop\Entity\Output\OutputSettingsIssue;
 use Newscoop\Entity\Issue;
-use Newscoop\Service\Model\Search\Search;
-use Newscoop\Service\Model\Search\Column;
-use Newscoop\Service\Model\SearchOutput;
 
 /**
  * Provides the services implementation for the Outputs.
@@ -33,11 +29,13 @@ class OutputSettingIssueServiceDoctrine extends AEntityBaseServiceDoctrine
     /* --------------------------------------------------------------- */
 
     /**
-     * Get the output setting issue only for the issue specified
-     *      can be given integer or Issue
+     * Provides the Output Settings Issue for the provided issue
      *
      * @param Issue|int $issue
-     * @return array
+     * 		The issue to be searched, not null, not empty.
+     *
+     * @return array Newscoop\Entity\Output\OutputSettingsIssue
+     * 		The Output Setting, empty array if no Output Setting could be found for the provided issue.
      */
     public function findByIssue($issue)
     {
@@ -50,7 +48,7 @@ class OutputSettingIssueServiceDoctrine extends AEntityBaseServiceDoctrine
         if (isset($resources) && count($resources) > 0) {
             return $resources;
         }
-        return NULL;
+        return array();
     }
 
     /**

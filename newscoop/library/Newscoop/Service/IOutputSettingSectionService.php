@@ -8,38 +8,52 @@
 
 namespace Newscoop\Service;
 
-use Newscoop\Entity\Output;
 use Newscoop\Entity\Section;
-use Newscoop\Service\IEntityService;
+use Newscoop\Entity\Output\OutputSettingsSection;
+use Newscoop\Service\IEntityBaseService;
 
 /**
- * Provides the services for the Outputs.
+ * Provides the services for the Output Setting.
  */
-interface IOutputSettingSectionService extends IEntityService
+interface IOutputSettingSectionService extends IEntityBaseService
 {
+    /**
+     * Provides the class name as a constant.
+     */
+    const NAME = __CLASS__;
 
-	/**
-	 * Provides the class name as a constant.
-	 */
-	const NAME = __CLASS__;
+    /* --------------------------------------------------------------- */
 
-	/* --------------------------------------------------------------- */
+    /**
+     * Provides the Output Settings that has the provided Section.
+     *
+     * @param Section|int $section
+     * 		The section to be searched, not null, not empty.
+     *
+     * @return Newscoop\Entity\OutputSettingsSection
+     * 		The Output Setting, empty array if no Output Setting could be found for the provided section.
+     */
 
-	/**
-	 * Provides the Output that has the provided name.
-	 *
-	 * @param string $name
-	 *		The name to be searched, not null, not empty.
-	 *
-	 * @return Newscoop\Entity\Output
-	 *		The Output, null if no Output could be found for the provided name.
-	 */
-	function findBySection(Section $name);
+    function findBySection($section);
 
-        function update();
+    /**
+     * Update an ouput setting section
+     *
+     * @param OutputSettingsSection $outputSettingsSection
+     */
+    function update(OutputSettingsSection $outputSettingsSection);
 
-        function insert();
+    /**
+     * Inserts an ouput setting section
+     *
+     * @param OutputSettingsSection $outputSettingsSection
+     */
+    function insert(OutputSettingsSection $outputSettingsSection);
 
-        function delete();
-
+    /**
+     * Delete an ouput setting section
+     *
+     * @param OutputSettingsSection $outputSettingsSection
+     */
+    function delete(OutputSettingsSection $outputSettingsSection);
 }

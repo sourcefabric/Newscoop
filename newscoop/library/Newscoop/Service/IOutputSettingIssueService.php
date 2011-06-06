@@ -8,42 +8,51 @@
 
 namespace Newscoop\Service;
 
-use Newscoop\Entity\Output;
 use Newscoop\Entity\Issue;
 use Newscoop\Entity\Output\OutputSettingsIssue;
-use Newscoop\Service\IEntityService;
-
+use Newscoop\Service\IEntityBaseService;
 
 /**
  * Provides the services for the Outputs.
  */
 interface IOutputSettingIssueService extends IEntityBaseService
 {
+    /**
+     * Provides the class name as a constant.
+     */
+    const NAME = __CLASS__;
 
-	/**
-	 * Provides the class name as a constant.
-	 */
-	const NAME = __CLASS__;
+    /* --------------------------------------------------------------- */
 
-	/* --------------------------------------------------------------- */
+    /**
+     * Provides the Output Settings Issue for the provided issue
+     *
+     * @param Issue|int $issue
+     * 		The issue to be searched, not null, not empty.
+     *
+     * @return array Newscoop\Entity\Output\OutputSettingsIssue
+     * 		The Output Setting, empty array if no Output Setting could be found for the provided issue.
+     */
+    function findByIssue($issue);
 
-	/**
-	 * Provides the Output that has the provided name.
-	 *
-	 * @param Issue $issue
-	 *		The issue to be searched, not null, not empty.
-	 *
-	 * @return Newscoop\Entity\Output
-	 *		The Output, null if no Output could be found for the provided name.
-	 */
-	function findByIssue($issue);
+    /**
+     * Update an ouput setting issue
+     *
+     * @param OutputSettingsIssue $outputSettingsIssue
+     */
+    function update(OutputSettingsIssue $outputSettingsIssue);
 
-        /**
-         * Update
-         */
-        //function update(OutputSettingsIssue $outputSettingsIssue);
+    /**
+     * Inserts an ouput setting issue
+     *
+     * @param OutputSettingsIssue $outputSettingsIssue
+     */
+    function insert(OutputSettingsIssue $outputSettingsIssue);
 
-        function insert(OutputSettingsIssue $outputSettingsIssue);
-
-        //function delete(OutputSettingsIssue $outputSettingsIssue);
+    /**
+     * Delete an ouput setting issue
+     *
+     * @param OutputSettingsIssue $outputSettingsIssue
+     */
+    function delete(OutputSettingsIssue $outputSettingsIssue);
 }

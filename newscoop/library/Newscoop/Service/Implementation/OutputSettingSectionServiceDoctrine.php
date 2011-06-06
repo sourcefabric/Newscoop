@@ -9,50 +9,83 @@
 namespace Newscoop\Service\Implementation;
 
 use Newscoop\Utils\Validation;
-use Newscoop\Service\IOutputService;
 use Newscoop\Service\IOutputSettingSectionService;
-use Newscoop\Entity\Output;
-use Newscoop\Service\Model\Search\Search;
-use Newscoop\Service\Model\Search\Column;
-use Newscoop\Service\Model\SearchOutput;
+use Newscoop\Service\Implementation\AEntityBaseServiceDoctrine;
+use Newscoop\Entity\Output\OutputSettingsSection;
+use Newscoop\Entity\Section;
 
 /**
  * Provides the services implementation for the Outputs.
  */
-class OutputSettingSectionServiceDoctrine extends AEntityServiceDoctrine implements IOutputSettingSectionService
+class OutputSettingSectionServiceDoctrine extends AEntityBaseServiceDoctrine
+        implements IOutputSettingSectionService
 {
 
-	protected function _init_(){
-		$this->entityClassName = Output::NAME;
-		$this->searchClassName = SearchOutput::NAME;
-	}
+    protected function _init_()
+    {
+        $this->entityClassName = OutputSettingsSection::NAME_1;
+    }
 
-	/* --------------------------------------------------------------- */
+    /* --------------------------------------------------------------- */
 
-	function findByName($name)
-	{
-		Validation::notEmpty($name, 'name');
-		$em = $this->getEntityManager();
-		$outputs = $em->getRepository($this->entityClassName)->findByName($name);
-		if(isset($outputs) && count($outputs) > 0){
-			return $outputs[0];
-		}
-		return NULL;
-	}
+    /**
+     * Provides the Output Settings that has the provided Section.
+     *
+     * @param Section|int $section
+     * 		The section to be searched, not null, not empty.
+     *
+     * @return Newscoop\Entity\OutputSettingsSection
+     * 		The Output Setting, empty array if no Output Setting could be found for the provided section.
+     */
+    public function findBySection($section)
+    {
+        if (method_exists($section, 'getId')) {
+            $section = $section->getId();
+        }
+        $em = $this->getEntityManager();
+        $repository = $em->getRepository($this->entityClassName);
+        $resources = $repository->findBySection($section);
+        if (isset($resources) && count($resources) > 0) {
+            return $resources;
+        }
+        return array();
+    }
 
-	/* --------------------------------------------------------------- */
+    /**
+     * Update an ouput setting section
+     *
+     * @param OutputSettingsSection $outputSettingsSection
+     */
+    public function update(OutputSettingsSection $outputSettingsSection)
+    {
+        $em = $this->getEntityManager();
+        $em->persist($outputSettingsSection);
+        $em->flush();
+    }
 
-	protected function map(Search $search, Column $column)
-	{
-		return $this->_map($search, $column);
-	}
+    /**
+     * Inserts an ouput setting section
+     *
+     * @param OutputSettingsSection $outputSettingsSection
+     */
+    public function insert(OutputSettingsSection $outputSettingsSection)
+    {
+        $em = $this->getEntityManager();
+        $em->persist($outputSettingsSection);
+        $em->flush();
+    }
 
-	protected function _map(SearchOutput $s, Column $col)
-	{
-		if($s->NAME === $col){
-			return 'name';
-		}
-		throw new \Exception("Unknown column provided.");
-	}
+    /**
+     * Delete an ouput setting section
+     *
+     * @param OutputSettingsSection $outputSettingsSection
+     */
+    public function delete(OutputSettingsSection $outputSettingsSection)
+    {
+        $em = $this->getEntityManager();
+        $em->remove($outputSettingsSection);
+        $em->flush();
+    }
+
 
 }

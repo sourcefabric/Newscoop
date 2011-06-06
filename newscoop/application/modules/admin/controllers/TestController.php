@@ -1,23 +1,26 @@
 <?php
 
-use Newscoop\Entity\OutputSettings;
 use Newscoop\Service\IThemeManagementService;
-use Newscoop\Entity\Resource;
 use Newscoop\Service\IOutputService;
+use Newscoop\Service\ILanguageService;
+use Newscoop\Service\ISyncResourceService;
+use Newscoop\Service\IPublicationService;
+use Newscoop\Service\IThemeService;
+use Newscoop\Service\IOutputSettingIssueService;
+use Newscoop\Service\IOutputSettingSectionService;
+use Newscoop\Service\IIssueService;
+use Newscoop\Service\ISectionService;
+
+use Newscoop\Entity\Publication;
+use Newscoop\Entity\Theme;
+use Newscoop\Entity\Resource;
+use Newscoop\Entity\OutputSettings;
+use Newscoop\Entity\Output\OutputSettingsIssue;
+use Newscoop\Entity\Output\OutputSettingsSection;
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\Model\SearchTheme;
 use Newscoop\Service\Model\SearchPublication;
 use Newscoop\Service\Model\SearchLanguage;
-use Newscoop\Service\ILanguageService;
-use Newscoop\Entity\Publication;
-use Newscoop\Service\IPublicationService;
-use Newscoop\Entity\Theme;
-use Newscoop\Service\Model\SearchTheme;
-use Newscoop\Service\Resource\ResourceId;
-use Newscoop\Service\IThemeService;
-use Newscoop\Service\IOutputSettingSectionService;
-use Newscoop\Service\IOutputSettingIssueService;
-use Newscoop\Service\IIssueService;
-use Newscoop\Entity\Output\OutputSettingsIssue;
-use Newscoop\Service\ISyncResourceService;
 
 class Admin_TestController extends Zend_Controller_Action
 {
@@ -34,6 +37,8 @@ class Admin_TestController extends Zend_Controller_Action
     private $languageService = NULL;
     /** @var Newscoop\Service\IIssueService */
     private $issueService = NULL;
+    /** @var Newscoop\Service\ISectionService */
+    private $sectionService = NULL;
     /** @var Newscoop\Service\IOutputService */
     private $outputService = NULL;
     /** @var Newscoop\Service\IOutputSettingSectionService */
@@ -174,6 +179,20 @@ class Admin_TestController extends Zend_Controller_Action
             $this->issueService = $this->getResourceId()->getService(IIssueService::NAME);
         }
         return $this->issueService;
+    }
+
+    /**
+     * Provides the Section service.
+     *
+     * @return Newscoop\Service\ISectionService
+     * 		The section service to be used by this controller.
+     */
+    public function getSectionService()
+    {
+        if ($this->sectionService === NULL) {
+            $this->sectionService = $this->getResourceId()->getService(ISectionService::NAME);
+        }
+        return $this->sectionService;
     }
 
     /**
@@ -369,7 +388,7 @@ class Admin_TestController extends Zend_Controller_Action
             $output = $this->getOutputService()->findByName('Web');
 
             /* @var $issue \Newscoop\Entity\Issue */
-            $issue = $this->getIssueService()->findById(1);
+            $issue = $this->getIssueService()->getById(1);
 
 
             $frontRsc = new Resource();
@@ -399,9 +418,51 @@ class Admin_TestController extends Zend_Controller_Action
     }
 
     /**
-     * list output setting issue by issue test service
+     * Update output setting issue by issue test service
      */
     public function test9Action()
+    {
+        $this->getHelper('viewRenderer')->setNoRender();
+        try {
+            $output = $this->getOutputService()->findByName('Web');
+
+            /* @var $issue \Newscoop\Entity\Issue */
+            $issue = $this->getIssueService()->findById(1);
+
+
+            $frontRsc = new Resource();
+            $frontRsc->setName('register.tpl');
+            $frontRsc->setPath('publication_2/theme_1/register.tpl');
+            $frontRsc = $this->getSyncResourceService()->getSynchronized($frontRsc);
+
+            $outputSettingsIssue = $this->getOutputSettingIssueService()->findById(2);
+            if (is_null($outputSettingsIssue)) {
+                echo 'errror<br/404></br>Not found';
+                return;
+            }
+            /* @var $theme \Newscoop\Entity\Theme */
+            $theme = $this->getThemeManagementService()->getById(1721544697);
+
+            $themeRsc = new Resource();
+            $themeRsc->setName('theme-path');
+            $themeRsc->setPath($theme->getPath());
+            $themeRsc = $this->getSyncResourceService()->getSynchronized($themeRsc);
+
+            $outputSettingsIssue->setThemePath($themeRsc)
+                    ->setIssue($issue)
+                    ->setOutput($output)
+                    ->setFrontPage($frontRsc);
+
+            $this->getOutputSettingIssueService()->update($outputSettingsIssue);
+        } catch (\Exception $e) {
+            echo 'errror<br/>' . $e . '</br>' . $e->getMessage();
+        }
+    }
+
+    /**
+     * List output setting issue by issue test service
+     */
+    public function test10Action()
     {
         $this->getHelper('viewRenderer')->setNoRender();
         try {
@@ -424,12 +485,125 @@ class Admin_TestController extends Zend_Controller_Action
     /**
      * Delete output setting issue by issue test service
      */
-    public function test10Action()
+    public function test11Action()
     {
         $this->getHelper('viewRenderer')->setNoRender();
         try {
             $outputSetting = $this->getOutputSettingIssueService()->findById(1);
             $this->getOutputSettingIssueService()->delete($outputSetting);
+        } catch (\Exception $e) {
+            echo 'errror<br/>' . $e . '</br>' . $e->getMessage();
+        }
+    }
+
+    /**
+     * Insert output setting section Test service
+     */
+    public function test12Action()
+    {
+        $this->getHelper('viewRenderer')->setNoRender();
+        try {
+            $output = $this->getOutputService()->findByName('Web');
+
+            /* @var $section \Newscoop\Entity\Section */
+            $section = $this->getSectionService()->findById(1);
+
+            $frontRsc = new Resource();
+            $frontRsc->setName('register.tpl');
+            $frontRsc->setPath('publication_2/theme_1/register.tpl');
+            $frontRsc = $this->getSyncResourceService()->getSynchronized($frontRsc);
+
+            $outputSettingsSection = new OutputSettingsSection;
+
+            /* @var $theme \Newscoop\Entity\Theme */
+            $theme = $this->getThemeManagementService()->getById(1721544697);
+
+            $themeRsc = new Resource();
+            $themeRsc->setName('theme-path');
+            $themeRsc->setPath($theme->getPath());
+            $themeRsc = $this->getSyncResourceService()->getSynchronized($themeRsc);
+
+            $outputSettingsSection
+                    ->setSection($section)
+                    ->setOutput($output)
+                    ->setFrontPage($frontRsc);
+
+            $this->getOutputSettingSectionService()->insert($outputSettingsSection);
+        } catch (\Exception $e) {
+            echo 'errror<br/>' . $e . '</br>' . $e->getMessage();
+        }
+    }
+
+    /**
+     * Update output setting section by section test service
+     */
+    public function test13Action()
+    {
+        $this->getHelper('viewRenderer')->setNoRender();
+        try {
+            $output = $this->getOutputService()->findByName('Web');
+
+            /* @var $section \Newscoop\Entity\Section */
+            $section = $this->getSectionService()->findById(3);
+
+            $frontRsc = new Resource();
+            $frontRsc->setName('register.tpl');
+            $frontRsc->setPath('publication_2/theme_1/register.tpl');
+            $frontRsc = $this->getSyncResourceService()->getSynchronized($frontRsc);
+
+            $outputSettingsSection = $this->getOutputSettingSectionService()->getById(1);
+
+            /* @var $theme \Newscoop\Entity\Theme */
+            $theme = $this->getThemeManagementService()->getById(1721544697);
+
+            $themeRsc = new Resource();
+            $themeRsc->setName('theme-path');
+            $themeRsc->setPath($theme->getPath());
+            $themeRsc = $this->getSyncResourceService()->getSynchronized($themeRsc);
+
+            $outputSettingsSection
+                    ->setSection($section)
+                    ->setOutput($output)
+                    ->setFrontPage($frontRsc);
+
+            $this->getOutputSettingSectionService()->insert($outputSettingsSection);
+        } catch (\Exception $e) {
+            echo 'errror<br/>' . $e . '</br>' . $e->getMessage();
+        }
+    }
+
+    /**
+     * List output setting issue by section test service
+     */
+    public function test14Action()
+    {
+        $this->getHelper('viewRenderer')->setNoRender();
+        try {
+            $output = $this->getOutputService()->findByName('Web');
+            /* @var $issue \Newscoop\Entity\Issue */
+            $section = $this->getSectionService()->findById(1);
+            $results = $this->getOutputSettingSectionService()->findbySection($section);
+            if (count($results)) {
+                foreach ($results as $result) {
+                    /* @var $result OutputSettingsSection */
+                    echo $result->getOutput()->getName(), '---';
+                    echo "<br/>";
+                }
+            }
+        } catch (\Exception $e) {
+            echo 'errror<br/>' . $e . '</br>' . $e->getMessage();
+        }
+    }
+
+    /**
+     * Delete output setting section by issue test service
+     */
+    public function test15Action()
+    {
+        $this->getHelper('viewRenderer')->setNoRender();
+        try {
+            $outputSetting = $this->getOutputSettingSectionService()->findById(1);
+            $this->getOutputSettingSectionService()->delete($outputSetting);
         } catch (\Exception $e) {
             echo 'errror<br/>' . $e . '</br>' . $e->getMessage();
         }
