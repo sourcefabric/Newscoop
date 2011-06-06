@@ -63,15 +63,15 @@ echo camp_html_content_top(getGS("Configure publication"), array("Pub" => $publi
 <?php
 if ($g_user->hasPermission("DeletePub")) {
 ?>
-	<TD style="padding-left: 10px;"><A HREF="do_del.php?Pub=<?php p($f_publication_id); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the publication $1?', htmlspecialchars($publicationObj->getName())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></A></TD>
-	<TD><A HREF="do_del.php?Pub=<?php p($f_publication_id); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the publication $1?', htmlspecialchars($publicationObj->getName())); ?>');"><B><?php  putGS("Delete"); ?></B></A></TD>
+    <TD style="padding-left: 10px;"><A HREF="/<?php echo $ADMIN; ?>/pub/do_del.php?Pub=<?php p($f_publication_id); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the publication $1?', htmlspecialchars($publicationObj->getName())); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></A></TD>
+    <TD><A HREF="/<?php echo $ADMIN; ?>/pub/do_del.php?Pub=<?php p($f_publication_id); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to delete the publication $1?', htmlspecialchars($publicationObj->getName())); ?>');"><B><?php  putGS("Delete"); ?></B></A></TD>
 <?php } ?>
 </TR>
 </TABLE>
 
 <?php camp_html_display_msgs(0); ?>
 
-<FORM METHOD="POST" ACTION="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<FORM METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/pub/do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
 <?php include("pub_form.php"); ?>
 </FORM>

@@ -65,7 +65,7 @@ class ArticleList extends BaseList
             'Number' => NULL,
             'Language' => getGS('Language'),
             'Order' => getGS('Order'),
-            'Name' => getGS('Name'),
+            'Name' => getGS('Title'),
             'Type' => getGS('Type'),
             'Created' => getGS('Created by'),
             'Author' => getGS('Author'),

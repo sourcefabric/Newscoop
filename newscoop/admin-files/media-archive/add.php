@@ -45,7 +45,7 @@ camp_html_display_msgs();
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/plupload/js/jquery.plupload.queue.min.js"></script>
 
 <br />
-<form method="POST" action="do_upload.php" enctype="multipart/form-data">
+    <form method="POST" action="/<?php echo $ADMIN; ?>/media-archive/do_upload.php" enctype="multipart/form-data">
 <?php echo SecurityToken::FormParameter(); ?>
 <div id="uploader"></div>
 <div id="uploader_error"></div>

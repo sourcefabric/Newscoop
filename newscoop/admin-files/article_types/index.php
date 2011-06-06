@@ -43,11 +43,11 @@ if ($g_user->hasPermission("ManageArticleTypes")) { ?>
 	<P>
 	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
 	<TR>
-		<TD><A HREF="add.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-		<TD><B><A HREF="add.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><?php  putGS("Add new article type"); ?></A></B></TD>
+        <TD><A HREF="/<?php echo $ADMIN; ?>/article_types/add.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+        <TD><B><A HREF="/<?php echo $ADMIN; ?>/article_types/add.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><?php  putGS("Add new article type"); ?></A></B></TD>
 		<TD><DIV STYLE="width:15px;"></DIV></TD>
-		<TD><A HREF="merge.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/merge.png" BORDER="0"></A></TD>
-		<TD><B><A HREF="merge.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><?php  putGS("Merge types"); ?></A></B></TD>
+        <TD><A HREF="/<?php echo $ADMIN; ?>/article_types/merge.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/merge.png" BORDER="0"></A></TD>
+        <TD><B><A HREF="/<?php echo $ADMIN; ?>/article_types/merge.php?Back=<?php  print urlencode($_SERVER['REQUEST_URI']); ?>" ><?php  putGS("Merge types"); ?></A></B></TD>
 		<TD><DIV STYLE="width:15px;"></DIV></TD>
 		<TD><A HREF="javascript: void(0);"
                ONCLICK="if (allShown == 0) {
@@ -179,7 +179,7 @@ foreach ($articleTypes as $articleType) {
 
     	<tr>
     	<td colspan="2">
-    		<FORM method="POST" action="do_translate.php">
+        <FORM method="POST" action="/<?php echo $ADMIN; ?>/article_types/do_translate.php">
 			<?php echo SecurityToken::FormParameter(); ?>
     		<input type="hidden" name="f_type_id" value="<?php p($articleType); ?>">
     		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid #CFC467; border-bottom: 1px solid #CFC467; background-color: #FFFCDF ; padding-left: 5px; padding-right: 5px;" width="100%">
