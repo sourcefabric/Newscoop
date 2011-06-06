@@ -31,4 +31,8 @@ WHERE fk_widget_id NOT IN (
 -- only if the default is used otherwise the preference should be kept
 UPDATE `SystemPreferences` SET `value` = '/js/geocoding/markers/' WHERE `varname` = 'MapMarkerDirectory' AND `value` = '/javascript/geocoding/markers/';
 
+UPDATE `Languages` SET `CodePage` = 'ko' WHERE `Name` = 'Korean';
+UPDATE `Languages` SET `CodePage` = 'be' WHERE `Name` = 'Belarus';
+UPDATE `Languages` SET `CodePage` = 'ka' WHERE `Name` = 'Georgian';
+
 system php ./javascript_js_cleanup.php
