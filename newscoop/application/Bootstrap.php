@@ -66,7 +66,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         ));
 
         Zend_Session::start();
-        Zend_Session::rememberMe((int) SystemPref::Get("SiteSessionLifeTime"));
     }
 
     /**
