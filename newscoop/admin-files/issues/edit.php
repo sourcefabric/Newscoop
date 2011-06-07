@@ -66,20 +66,29 @@ $themeManagementService = $resourceId->getService(IThemeManagementService::NAME_
 $outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
 
 $outSetIssues = $outputSettingIssueService->findByIssue($issueObj->getIssueId());
+$themePath = null;
+$tplFrontPath = null;
+$tplSectionPath = null;
+$tplArticlePath = null;
 if(count($outSetIssues) > 0){
 	$outSetIssue = $outSetIssues[0];
 	$themePath = $outSetIssue->getThemePath()->getPath();
-	$tplFrontPath = $outSetIssue->getFrontPage()->getPath();
-	$tplSectionPath = $outSetIssue->getSectionPage()->getPath();
-	$tplArticlePath = $outSetIssue->getArticlePage()->getPath();
-} else {
-	$themePath = null;
-	$tplFrontPath = null;
-	$tplSectionPath = null;
-	$tplArticlePath = null;
+	if($outSetIssue->getFrontPage() != null){
+		$tplFrontPath = $outSetIssue->getFrontPage()->getPath();
+	}
+	if($outSetIssue->getSectionPage() != null){
+		$tplSectionPath = $outSetIssue->getSectionPage()->getPath();
+	}
+	if($outSetIssue->getArticlePage() != null){
+		$tplArticlePath = $outSetIssue->getArticlePage()->getPath();
+	}
 }
 
 $publicationThemes = $themeManagementService->getThemes($publicationObj->getPublicationId());
+$publicationHasThemes = count($publicationThemes) > 0;
+if($themePath == null && $publicationHasThemes){
+	$themePath = $publicationThemes[0]->getPath();
+}
 
 if($themePath != null){
 	$allTemplates = $themeManagementService->getTemplates($themePath);
@@ -171,6 +180,7 @@ if($themePath != null){
 			</TD>
 		</TR>
 
+		<?php if($publicationHasThemes){?>
 		<TR>
 			<TD ALIGN="RIGHT"><?php  putGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?>:</TD>
 			<TD>
@@ -199,18 +209,18 @@ if($themePath != null){
 				</A>
 			</TD>
 		</TR>
-
+		<?php } ?>
 		<TR>
 			<TD COLSPAN="2" style="padding-top: 20px;">
 				<B><?php  putGS("Default templates"); ?></B>
 				<HR NOSHADE SIZE="1" COLOR="BLACK">
 			</TD>
 		</TR>
+		<?php if($publicationHasThemes){?>
 		<TR>
 			<TD ALIGN="RIGHT"><?php  putGS("Issue Theme"); ?>:</TD>
 			<TD>
 				<SELECT ID="f_theme_id" NAME="f_theme_id" class="input_select">
-				<OPTION VALUE="0">---</OPTION>
 				<?php
 				foreach ($publicationThemes as $theme) {
 					camp_html_select_option($theme->getPath(), $themePath, $theme->getName());
@@ -223,7 +233,7 @@ if($themePath != null){
 			<TD ALIGN="RIGHT"><?php  putGS("Front Page Template"); ?>:</TD>
 			<TD>
 				<SELECT ID="f_issue_template_id" NAME="f_issue_template_id" class="input_select">
-				<OPTION VALUE="0">---</OPTION>
+				<OPTION VALUE="0">&lt;<?php  putGS("default"); ?>&gt;</OPTION>
 				<?php
 				foreach ($allTemplates as $template) {
 					camp_html_select_option($template->getPath(), $tplFrontPath, $template->getName());
@@ -237,7 +247,7 @@ if($themePath != null){
 			<TD ALIGN="RIGHT"><?php  putGS("Section Template"); ?>:</TD>
 			<TD>
 				<SELECT ID="f_section_template_id" NAME="f_section_template_id" class="input_select">
-				<OPTION VALUE="0">---</OPTION>
+				<OPTION VALUE="0">&lt;<?php  putGS("default"); ?>&gt;</OPTION>
 				<?php
 				foreach ($allTemplates as $template) {
 					camp_html_select_option($template->getPath(), $tplSectionPath, $template->getName());
@@ -251,7 +261,7 @@ if($themePath != null){
 			<TD ALIGN="RIGHT"><?php  putGS("Article Template"); ?>:</TD>
 			<TD>
 				<SELECT ID="f_article_template_id" NAME="f_article_template_id" class="input_select">
-				<OPTION VALUE="0">---</OPTION>
+				<OPTION VALUE="0">&lt;<?php  putGS("default"); ?>&gt;</OPTION>
 				<?php
 				foreach ($allTemplates as $template) {
 					camp_html_select_option($template->getPath(), $tplArticlePath, $template->getName());
@@ -260,7 +270,21 @@ if($themePath != null){
 				</SELECT>
 			</TD>
 		</TR>
-
+		<?php } else {?>
+		<TR>
+			<INPUT TYPE="hidden" NAME="f_theme_id" VALUE="0"/>
+			<INPUT TYPE="hidden" NAME="f_issue_template_id" VALUE="0"/>
+			<INPUT TYPE="hidden" NAME="f_section_template_id" VALUE="0"/>
+			<INPUT TYPE="hidden" NAME="f_article_template_id" VALUE="0"/>
+			<TD ALIGN="LEFT" colspan="2" style="color: red;">
+			<?php putGS("Please assign at least one theme to the publication");?>
+			<br/>
+			<?php putGS("in order to be able to assigned to the issue.");?>
+			<br/>
+			<?php putGS("Only than the issue can be published");?>
+			</TD>
+		</TR>
+		<?php }?>
 		<TR>
 			<TD COLSPAN="2" align="center" style="padding-top: 15px;">
 				<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
@@ -340,6 +364,7 @@ if($themePath != null){
         <INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php echo $Issue; ?>">
         <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php echo $Language; ?>">
         <p>
+        <?php if($publicationHasThemes){ ?>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 		<TR>
 			<TD COLSPAN="2">
@@ -386,6 +411,7 @@ if($themePath != null){
 			</TD>
 		</TR>
 		</TABLE>
+		<?php } ?>
 		</FORM>
 	</td>
 </tr>
@@ -408,7 +434,7 @@ $(function() {
 			   			$('select[name=f_article_template_id]')];
 			for(i = 0; i < selects.length; i++){
 				select = selects[i];
-				select.empty().append('<option selected value="0">---</option>');
+				select.empty().append('<option selected value="0">&lt;<?php  putGS("default"); ?>&gt;</option>');
 				$.each(data, function(key, value) { 
 					select.append('<option value="' + key + '">' + value + '</option>');
 				});

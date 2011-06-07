@@ -110,9 +110,8 @@ class OutputSettings extends Entity
 	 * @return Newscoop\Entity\OutputSetting
 	 *		This object for chaining purposes.
 	 */
-	function setFrontPage(Resource $frontPage)
+	function setFrontPage(Resource $frontPage = null)
 	{
-		Validation::notEmpty($frontPage, 'frontPage');
 		$this->frontPage = $frontPage;
 		return $this;
 	}
@@ -139,9 +138,8 @@ class OutputSettings extends Entity
 	 * @return Newscoop\Entity\OutputSetting
 	 *		This object for chaining purposes.
 	 */
-	function setSectionPage(Resource $sectionPage)
+	function setSectionPage(Resource $sectionPage = null)
 	{
-		Validation::notEmpty($sectionPage, 'sectionPage');
 		$this->sectionPage = $sectionPage;
 		return $this;
 	}
@@ -168,9 +166,8 @@ class OutputSettings extends Entity
 	 * @return Newscoop\Entity\OutputSetting
 	 *		This object for chaining purposes.
 	 */
-	function setArticlePage(Resource $articlePage)
+	function setArticlePage(Resource $articlePage = null)
 	{
-		Validation::notEmpty($articlePage, 'articlePage');
 		$this->articlePage = $articlePage;
 		return $this;
 	}
@@ -197,12 +194,24 @@ class OutputSettings extends Entity
 	 * @return Newscoop\Entity\OutputSetting
 	 *		This object for chaining purposes.
 	 */
-	function setErrorPage(Resource $errorPage)
+	function setErrorPage(Resource $errorPage = null)
 	{
-		Validation::notEmpty($errorPage, 'errorPage');
 		$this->errorPage = $errorPage;
 		return $this;
 	}
 
+	/* --------------------------------------------------------------- */
+	
+	/**
+	 * Copies the cvcontent from this object to the provided object.
+	 */
+	function copyTo($outputSetting)
+	{
+		$outputSetting->setOutput($this->getOutput());
+		$outputSetting->setFrontPage($this->getFrontPage());
+		$outputSetting->setSectionPage($this->getSectionPage());
+		$outputSetting->setArticlePage($this->getArticlePage());
+		$outputSetting->setErrorPage($this->getErrorPage());
+	}
 
 }

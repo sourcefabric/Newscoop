@@ -55,11 +55,6 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 	 */
 	const FILE_TEMPLATE_EXTENSION = 'tpl';
 
-	/**
-	 * Provides the name to be used on resources that contain theme path.
-	 */
-	const THEME_PATH_RSC_NAME = 'theme-path';
-
 	const TAG_ROOT = 'theme';
 
 	const TAG_OUTPUT = 'output';
@@ -328,10 +323,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 			$em = $this->getEntityManager();
 
 
-			$pathRsc = new Resource();
-			$pathRsc->setName(self::THEME_PATH_RSC_NAME);
-			$pathRsc->setPath($themeFolder);
-			$pathRsc = $this->getSyncResourceService()->getSynchronized($pathRsc);
+			$pathRsc = $this->getSyncResourceService()->getThemePath($themeFolder);
 
 			// Persist the coresponding ouput settings theme to the database
 			$outSets = $this->loadOutputSettings($themeFolder);

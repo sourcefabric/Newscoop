@@ -59,6 +59,7 @@ class OutputSettingIssueServiceDoctrine extends AEntityBaseServiceDoctrine
     public function insert(OutputSettingsIssue $outputSettingsIssue)
     {
         $em = $this->getEntityManager();
+        $outputSettingsIssue->setId(null);
         $em->persist($outputSettingsIssue);
         $em->flush();
     }

@@ -39,7 +39,7 @@ class OutputSettingSectionServiceDoctrine extends AEntityBaseServiceDoctrine
      */
     public function findBySection($section)
     {
-        if (method_exists($section, 'getId')) {
+    	if ($section instanceof Section) {
             $section = $section->getId();
         }
         $em = $this->getEntityManager();
