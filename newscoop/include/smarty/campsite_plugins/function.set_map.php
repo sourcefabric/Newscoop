@@ -15,7 +15,7 @@
 function aux_parser_set_map_area($p_areaSpec, &$p_areaCons)
 {
     $area_val = strtolower(str_replace('"', '""', trim($p_areaSpec)));
-    $area_val_tmp = explode(" ", $area_val);
+    $area_val_tmp = explode(' ', $area_val);
     $area_val_arr = array();
     foreach ($area_val_tmp as $area_part) {
         $area_part = strtolower(trim($area_part));
@@ -24,16 +24,16 @@ function aux_parser_set_map_area($p_areaSpec, &$p_areaCons)
         }
     }
 
-    $parsed_polygon_name = "";
+    $parsed_polygon_name = '';
     $parsed_polygon_values = array();
     $inside_area = false;
 
-    $known_area_types = array("rectangle" => true, "polygon" => true);
-    $cur_corner = array("latitude" => "", "longitude" => "");
-    $cur_corner_stage = "latitude";
+    $known_area_types = array('rectangle' => true, 'polygon' => true);
+    $cur_corner = array('latitude' => '', 'longitude' => '');
+    $cur_corner_stage = 'latitude';
 
     foreach ($area_val_arr as $area_token) {
-        $area_token = trim($area_token, ",;:");
+        $area_token = trim($area_token, ',;:');
         if (array_key_exists($area_token, $known_area_types)) {
             if ($inside_area) {
                 $p_areaCons[] = array($parsed_polygon_name => $parsed_polygon_values);
@@ -41,17 +41,17 @@ function aux_parser_set_map_area($p_areaSpec, &$p_areaCons)
             $inside_area = true;
             $parsed_polygon_values = array();
             $parsed_polygon_name = $area_token;
-            $cur_corner_stage = "latitude";
+            $cur_corner_stage = 'latitude';
             continue;
         }
         if (!$inside_area) {break;} // wrong area spec.
 
         $cur_corner[$cur_corner_stage] = $area_token;
-        if ("latitude" == $cur_corner_stage) {
-            $cur_corner_stage = "longitude";
+        if ('latitude' == $cur_corner_stage) {
+            $cur_corner_stage = 'longitude';
         }
         else {
-            $cur_corner_stage = "latitude";
+            $cur_corner_stage = 'latitude';
             $parsed_polygon_values[] = $cur_corner;
         }
     }
@@ -82,9 +82,9 @@ function smarty_function_set_map($p_params, &$p_smarty)
     $run_language = $campsite->language;
 
     $parameters = array();
-    $running = "_current";
+    $running = '_current';
 
-    $map_label = "";
+    $map_label = '';
     $map_max_points = 0;
 
     $con_authors = array();
@@ -104,18 +104,18 @@ function smarty_function_set_map($p_params, &$p_smarty)
     $con_icons = array();
 
     if (isset($p_params['label'])) {
-        $map_label = trim("" . $p_params['label']);
+        $map_label = trim('' . $p_params['label']);
     }
     if (isset($p_params['max_points'])) {
-        $map_max_points = trim("" . $p_params['max_points']);
+        $map_max_points = trim('' . $p_params['max_points']);
         if (!is_numeric($map_max_points)) { $map_max_points = 0; }
         $map_max_points = 0 + $map_max_points;
     }
     $campsite->map_dynamic_max_points = $map_max_points;
 
     if (isset($p_params['authors'])) {
-        foreach (explode(",", $p_params['authors']) as $one_author) {
-            $one_author = trim("" . $one_author);
+        foreach (explode(',', $p_params['authors']) as $one_author) {
+            $one_author = trim('' . $one_author);
             if (0 < strlen($one_author)) {
                 if ($running == $one_author) {
                     if ($run_article) {
@@ -133,8 +133,8 @@ function smarty_function_set_map($p_params, &$p_smarty)
     }
 
     if (isset($p_params['articles'])) {
-        foreach (explode(",", "" . $p_params['articles']) as $one_article) {
-            $one_article = trim("" . $one_article);
+        foreach (explode(',', '' . $p_params['articles']) as $one_article) {
+            $one_article = trim('' . $one_article);
             if (is_numeric($one_article)) {
                 $con_articles[] = $one_article;
             }
@@ -142,8 +142,8 @@ function smarty_function_set_map($p_params, &$p_smarty)
     }
 
     if (isset($p_params['issues'])) {
-        foreach (explode(",", $p_params['issues']) as $one_issue) {
-            $one_issue = trim("" . $one_issue);
+        foreach (explode(',', $p_params['issues']) as $one_issue) {
+            $one_issue = trim('' . $one_issue);
             if ($running == $one_issue) {
                 if ($run_article) {
                     $run_issue = $run_article->issue;
@@ -161,8 +161,8 @@ function smarty_function_set_map($p_params, &$p_smarty)
     }
 
     if (isset($p_params['sections'])) {
-        foreach (explode(",", $p_params['sections']) as $one_section) {
-            $one_section = trim("" . $one_section);
+        foreach (explode(',', $p_params['sections']) as $one_section) {
+            $one_section = trim('' . $one_section);
             if ($running == $one_section) {
                 if ($run_article) {
                     $run_section = $run_article->section;
@@ -182,14 +182,14 @@ function smarty_function_set_map($p_params, &$p_smarty)
     }
 
     if (isset($p_params['topics'])) {
-        foreach (explode(",", $p_params['topics']) as $one_topic) {
-            $one_topic = trim("" . $one_topic);
+        foreach (explode(',', $p_params['topics']) as $one_topic) {
+            $one_topic = trim('' . $one_topic);
             if (0 < strlen($one_topic)) {
                 if ($running == $one_topic) {
                     if ($run_article) {
                         $run_topics = $run_article->topics;
                         foreach ($run_topics as $art_topic) {
-                            $con_topics[] = $art_topic . ":" . $run_language->code;
+                            $con_topics[] = $art_topic . ':' . $run_language->code;
                         }
                     }
                 }
@@ -201,8 +201,8 @@ function smarty_function_set_map($p_params, &$p_smarty)
         }
     }
 
-    $values_known_yes = array("true" => true, "yes" => true);
-    $values_known_no = array("false" => true, "no" => true);
+    $values_known_yes = array('true' => true, 'yes' => true);
+    $values_known_no = array('false' => true, 'no' => true);
 
     if (isset($p_params['match_all_topics'])) {
         $match_all_topics_val = $p_params['match_all_topics'];
@@ -232,7 +232,7 @@ function smarty_function_set_map($p_params, &$p_smarty)
         $has_multimedia_val = $p_params['has_multimedia'];
         if (is_bool($has_multimedia_val)) {
             if ($has_multimedia_val) {
-                $con_has_multimedia[0] = "any";
+                $con_has_multimedia[0] = 'any';
             }
             else {
                 $con_has_multimedia = array();
@@ -240,10 +240,10 @@ function smarty_function_set_map($p_params, &$p_smarty)
         }
         elseif (is_string($has_multimedia_val)) {
             $has_multimedia_val = trim(strtolower($has_multimedia_val));
-            if (array_key_exists($has_multimedia_val, $values_known_yes)) {$con_has_multimedia[0] = "any";}
+            if (array_key_exists($has_multimedia_val, $values_known_yes)) {$con_has_multimedia[0] = 'any';}
             if (array_key_exists($has_multimedia_val, $values_known_no)) {$con_has_multimedia = array();}
-            if ("video" == $has_multimedia_val) {$con_has_multimedia[0] = "video";};
-            if ("image" == $has_multimedia_val) {$con_has_multimedia[0] = "image";};
+            if ('video' == $has_multimedia_val) {$con_has_multimedia[0] = 'video';};
+            if ('image' == $has_multimedia_val) {$con_has_multimedia[0] = 'image';};
         }
     }
 
@@ -294,8 +294,8 @@ function smarty_function_set_map($p_params, &$p_smarty)
         $area_match_val = $p_params['area_match'];
         if (is_string($area_match_val)) {
             $area_match_val = strtolower($area_match_val);
-            if ("intersection" == $area_match_val) {$con_match_any_area[0] = false;}
-            if ("union" == $area_match_val) {$con_match_any_area[0] = true;}
+            if ('intersection' == $area_match_val) {$con_match_any_area[0] = false;}
+            if ('union' == $area_match_val) {$con_match_any_area[0] = true;}
         }
     }
 
@@ -304,8 +304,8 @@ function smarty_function_set_map($p_params, &$p_smarty)
         $area_exact_val = $p_params['area_exact'];
         if (is_string($area_exact_val)) {
             $area_exact_val = strtolower($area_exact_val);
-            if ("false" == $area_exact_val) {$con_exact_area[0] = false;}
-            if ("true" == $area_exact_val) {$con_exact_area[0] = true;}
+            if ('false' == $area_exact_val) {$con_exact_area[0] = false;}
+            if ('true' == $area_exact_val) {$con_exact_area[0] = true;}
         }
         else {
             if ($area_exact_val) {$con_exact_area[0] = true;}
@@ -315,7 +315,7 @@ function smarty_function_set_map($p_params, &$p_smarty)
 
     if (isset($p_params['icons'])) {
         $icons_val = trim($p_params['icons']);
-        foreach (explode(",", $icons_val) as $cur_icon) {
+        foreach (explode(',', $icons_val) as $cur_icon) {
             $cur_icon = str_replace('"', '""', trim($cur_icon));
             if (0 < strlen($cur_icon)) {
                 $con_icons[] = $cur_icon;
@@ -521,9 +521,9 @@ function smarty_function_set_map($p_params, &$p_smarty)
         for ($poi_idx = 0; $poi_idx < $poi_retrieved_count; $poi_idx++) {
             $poi_arts = array();
 
-            $articleNos = $poi_array[$poi_idx]["art_numbers"];
+            $articleNos = $poi_array[$poi_idx]['art_numbers'];
             if (0 < strlen($articleNos)) {
-                foreach (explode(",", $articleNos) as $one_art) {
+                foreach (explode(',', $articleNos) as $one_art) {
                     $one_art = trim($one_art);
                     if (0 == strlen($one_art)) {continue;}
                     if (!is_numeric($one_art)) {continue;}
@@ -535,7 +535,7 @@ function smarty_function_set_map($p_params, &$p_smarty)
             }
 
             if (0 == count($poi_arts)) {
-                $articleNo = $poi_array[$poi_idx]["art_number"];
+                $articleNo = $poi_array[$poi_idx]['art_number'];
                 if (is_numeric($articleNo)) {
                     $articleNo = 0 + $articleNo;
                     if (0 < $articleNo) {
@@ -570,7 +570,7 @@ function smarty_function_set_map($p_params, &$p_smarty)
                 $curr_back_list[] = $art_backlinks[$one_art_id];
             }
             if (0 < count($curr_back_list)) {
-                $poi_array[$poi_idx]["backlinks"] = $curr_back_list;
+                $poi_array[$poi_idx]['backlinks'] = $curr_back_list;
             }
 
         }
