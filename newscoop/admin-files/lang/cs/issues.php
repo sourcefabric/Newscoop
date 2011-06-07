@@ -1,4 +1,5 @@
 <?php 
+regGS("The publishing schedule can not be set in in the past", "Publikační plán nemůže být nastaven pro čas, který už uplynul");
 regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "Plánovaná činnost odstraněna z vydání #$1: \"$2\" (Publikace: $3)");
 regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "Plánovaná činnost $1 pro vydání #$2: \"$3\" (Publikace: $4)");
 regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "Vydání \"$1\" ($2) aktualizováno v publikaci \"$3\"");

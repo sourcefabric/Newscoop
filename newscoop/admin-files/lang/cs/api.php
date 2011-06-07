@@ -1,7 +1,8 @@
 <?php 
-regGS("Version", "");
-regGS("License", "");
-regGS("Homepage", "");
+regGS("Loading...", "Nahrává se...");
+regGS("Version", "Verze");
+regGS("License", "Licence");
+regGS("Homepage", "Domovská stránka");
 regGS("Show original map", "Ukázat původní rozdělení");
 regGS("The uploaded archive does not contain an valid newscoop plugin.", "Nahraný archiv neobsahuje platný plugin Newscoopu.");
 regGS("Map", "Rozdělení");
@@ -73,11 +74,8 @@ regGS("* Marked fields are mandatory.", "* Označená pole jsou povinná.");
 regGS("$1 is of type $2", "$1 je typu $2");
 regGS("Invalid resize width/height.", "Neplatná změna velikosti šířka/výška.");
 regGS("Image type $1 is not supported.", "Typ obrázku $1 není podporován.");
-regGS("There was a problem trying to execute the XML RPC function.", "Vyskytl se problém při pokusu o provedení XML RPC funkce.");
 regGS("Template $1 was moved to $2", "Šablona $1 byla přesunuta do $2");
 regGS("Template $1 was deleted", "Šablona $1 byla odstraněna");
-regGS("File $1 does not exist", "Soubor $1 neexistuje");
-regGS("Communication error: ", "Komunikační eror:");
 regGS("Template $1 no longer exists!", "Šablona $1 již neexistuje!");
 regGS("The file uploaded is not an image.", "Nahraný soubor není obrázek.");
 regGS("Could not delete record from the database.", "Nezdařilo se odstranit záznam z databáze.");
@@ -98,4 +96,7 @@ regGS("Country name $1 changed", "Název země $1 byl změněn");
 regGS("Template $1 uploaded", "Šablona $1 byla nahrána");
 regGS("URL \"$1\" is invalid or is not an image.", "URL \"$1\" není platné, nebo se nejedná o obrázek.");
 regGS("URL \"$1\" is not an image.", "URL \"$1\" není obrázek");
+regGS("There was a problem trying to execute the XML RPC function.", "Vyskytl se problém při pokusu o provedení XML RPC funkce.");
+regGS("File $1 does not exist", "Soubor $1 neexistuje");
+regGS("Communication error: ", "Komunikační eror:");
 ?>

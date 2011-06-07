@@ -1,4 +1,6 @@
 <?php 
+regGS("Please enter password recovery from email.", "Vložte prosím obnovovací heslo, které Vám došlo v e-mailu");
+regGS("From email address:", "Z e-mailové adresy:");
 regGS("Run scheduled tasks externally?", "Spouštět naplánované úlohy navenek?");
 regGS("Setting up a Newscoop Replication Server?", "Nastavit Newscoop Replication Server?");
 regGS("Newscoop Online Server Database", "Online Server Databáze Newscoopu");
@@ -60,15 +62,11 @@ regGS("SMTP Port", "SMTP Port");
 regGS("SMTP Host:", "SMTP Host:");
 regGS("SMTP Host must be at least four character.", "SMTP Host: musí mít alespoň čtyři znaky.");
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "Vložte hodnotu mezi 0 a $1 (maximální hodnota lze nastavit v 'php.ini' ). Prosím použíjte 'K' pro kilobyty, 'M' pro megabyty a 'G' pro gigabyty(bez mezer). Např. '3M'.");
-regGS("XML RPC Path:", "XML RPC Cesta:");
-regGS("XML RPC File:", "XML RPC Soubor:");
 regGS("System preferences updated", "Systémové předvolby aktualizovány");
 regGS("Reader subscriptions managed externally?", "Spravovat čtenářské předplatné externě?");
-regGS("Port:", "Port:");
 regGS("Maximum upload file size:", "Maximální velikost uploadovaného souboru:");
 regGS("Max Upload File Size", "Maximální Velikost Uploadovaného Souboru");
 regGS("Invalid Max Upload File Size value submitted", "Zadána neplatná maximální velikost uploadovaného souboru");
-regGS("Hostname / IP Address:", "Hostname / IP Adresa:");
 regGS("General Settings", "Obecné Nastavení");
 regGS("Database Replication data incomplete", "Database Replication data neúplná");
 regGS("Database Replication User:", "Database Replication uživatel:");
@@ -84,4 +82,8 @@ regGS("Number of failed login attempts before showing CAPTCHA :", "Počet neúsp
 regGS("Keyword separator:", "Klíčový oddělovač:");
 regGS("Time Zone:", "Časové pásmo:");
 regGS("disabled", "vypnuto");
+regGS("XML RPC Path:", "XML RPC Cesta:");
+regGS("XML RPC File:", "XML RPC Soubor:");
+regGS("Port:", "Port:");
+regGS("Hostname / IP Address:", "Hostname / IP Adresa:");
 ?>

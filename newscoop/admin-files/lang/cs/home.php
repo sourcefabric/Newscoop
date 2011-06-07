@@ -1,14 +1,15 @@
 <?php 
-regGS("Newscoop", "");
-regGS("Campsite", "");
-regGS("Password recovery request for $1", "");
-regGS("Your password has been reset.", "");
-regGS("Proceed to login.", "");
+regGS("User name", "Jméno uživatele");
+regGS("Newscoop", "Newscoop");
+regGS("Campsite", "Campsite");
+regGS("Password recovery request for $1", "Požadavek na obnovení hesla pro $1");
+regGS("Your password has been reset.", "Vaše heslo bylo obnoveno");
+regGS("Proceed to login.", "Pokračujte na přihlášení se do systému.");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "");
-regGS("Go to login", "");
-regGS("Back to login.", "");
-regGS("Back to login", "");
-regGS("An email with instructions on how to recover you password has been sent to your inbox.", "");
+regGS("Go to login", "Jděte na přihlášení se do systému.");
+regGS("Back to login.", "Zpět na přihlášení se do systému.");
+regGS("Back to login", "Zpět na přihlášení se do systému");
+regGS("An email with instructions on how to recover you password has been sent to your inbox.", "Byl zaslán e-mail s pokyny na obnovení Vašeho hesla.");
 regGS("Session expired.", "Relace je ukončena.");
 regGS("Processing...", "Zpracovávám...");
 regGS("Please", "Prosíme");
@@ -98,4 +99,5 @@ regGS("Login failed", "Přihlášení neproběhlo");
 regGS("Please make sure that you typed the correct user name and password.", "Zkontrolujte, zda jste správně zadali uživatelské jméno a heslo");
 regGS("If your problem persists please contact the site administrator $1", "Pokud vaše problémy přetrvávají, prosím kontaktujte administrátora");
 regGS("Backup/Restore", "Zálohovat/Obnovit");
+regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Nazdárek, \\n\\nfor obnovení hesla, prosím mrkněte se na link: $1");
 ?>

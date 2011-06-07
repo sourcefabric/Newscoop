@@ -1,7 +1,8 @@
 <?php 
-regGS("Pending Article", "");
-regGS("Overwrite articles with matching names", "");
-regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");
+regGS("Newscoop", "Newscoop");
+regGS("Pending Article", "Nevyřízený článek");
+regGS("Overwrite articles with matching names", "Přepsat články odpovídajícími názvy");
+regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "Článek \"<i>$1</i>\" již existuje, a nebyl přepsán. <br />");
 regGS("Files", "Soubory");
 regGS("Select section:", "Vybrat rubriku:");
 regGS("Add another author", "Přidat dalšího autora");
@@ -22,7 +23,7 @@ regGS("No subtopics available", "Nejsou k dispozici žádná dílčí témata");
 regGS("Newscoop Subhead", "Podnadpis Newscoopu");
 regGS("Media", "Média");
 regGS("Last modified", "Naposledy změněno");
-regGS("Keywords &amp; Topics", "Klíčová slova &amp; Témata");
+regGS("Keywords &amp; Topics", "Klíčová slova & Témata");
 regGS("Info", "Info");
 regGS("Go to live article", "Jděte na nyní publikovaný článek");
 regGS("Created", "Vytvořeno");
@@ -140,4 +141,7 @@ regGS("This article cannot be previewed. Please make sure it has the front page 
 regGS("No such article.", "Článek neexistuje");
 regGS("No such section.", "Rubrika neexistuje.");
 regGS("Are you sure you want to delete this scheduled action?", "");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit téma \\'$1\\' z článku?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit soubor \\'$1\\' z článku?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Opravdu chcete obrázek \\'$1\\' z článku odstranit?");
 ?>

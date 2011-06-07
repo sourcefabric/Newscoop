@@ -1,4 +1,13 @@
 <?php 
+regGS("Article status set to '$1' for $2 articles", "Stav článku je nastaven '$1' na $2 článků");
+regGS("Article status not set to '$1' for $2 articles", "Stav článku není nastaven '$1' na $2 článků");
+regGS("$1 toggled for $2 articles.", "$1 byl přepnut na $2 články");
+regGS("$1 not toggled for $2 articles.", "$1 nebyl přepnut na $2 články");
+regGS("$1 not toggled for $2  articles.", "$1 nebyl přepnut na $2 články");
+regGS("$1 articles have not been removed", "$1 článků nebylo odstraněno");
+regGS("$1 Article(s) unlocked", "$1 článků bylo zpřístupněno");
+regGS("$1 Article(s) not unlocked", "$1 článků nebylo zpřístupněno");
+regGS("$1 Article(s) duplicated", "$1 článků bylo duplikováno");
 regGS("Download file", "Stáhnout soubor");
 regGS("You do not have the right to delete articles.", "Nemáte oprávnění odstraňovat články.");
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "Nemáte oprávnění měnit status článku. Jednou již odeslaný článek může být změněn pouze autorizovanými uživateli.");
@@ -43,9 +52,6 @@ regGS("Duplicate to another section", "Duplikovat do jiné rubriky");
 regGS("Display _MENU_ records", "Zobrazit _MENU_ záznamy");
 regGS("Creator", "Vytvořil");
 regGS("Create Date", "Datum Vytvoření");
-regGS("Articles updated.", "Články nahrány.");
-regGS("Article(s) unlocked", "Článek(y) odemčen(y)");
-regGS("Article(s) duplicated", "Článek(y) duplikován");
 regGS("Article status set to '$1'", "Status článku je nastaven na '$1'");
 regGS("Are you sure you want to delete selected articles?", "Opravdu chcete vymazat vybrané články?");
 regGS("All Sections", "Všechny Rubriky");
@@ -56,4 +62,7 @@ regGS("Access denied.", "Vstup odepřen.");
 regGS("$1 toggled.", "$1 přepnut.");
 regGS("$1 articles have been removed", "$1 článků bylo odstraněno");
 regGS(" - filtering from _MAX_ records", "- filtrováno z _MAX_ záznamů");
+regGS("Articles updated.", "Články nahrány.");
+regGS("Article(s) unlocked", "Článek(y) odemčen(y)");
+regGS("Article(s) duplicated", "Článek(y) duplikován");
 ?>

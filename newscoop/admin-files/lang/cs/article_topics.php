@@ -1,5 +1,5 @@
 <?php 
-regGS("No topics have been created yet.", "");
+regGS("No topics have been created yet.", "Žádná témata ještě nebyla vytvořena.");
 regGS("Topics updated.", "Téma aktulizováno.");
 regGS("Topic does not exist.", "Téma neexistuje.");
 regGS("The topic '$1' has been removed from article.", "Téma '$1' bylo odstraněno z článku.");

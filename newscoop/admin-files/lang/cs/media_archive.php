@@ -1,12 +1,12 @@
 <?php 
-regGS("You do not have the right to add files.", "");
-regGS("Should this file only be available for this translation of the article, or for all translations?", "");
-regGS("Please enter a description for the file: '$1'.", "");
-regGS("Only this translation", "");
-regGS("No files for multi editing.", "");
-regGS("Edit files", "");
-regGS("Change file information", "");
-regGS("All translations", "");
+regGS("You do not have the right to add files.", "Nemáte oprávění přidávat články.");
+regGS("Should this file only be available for this translation of the article, or for all translations?", "Měla by být tato složka zpřístupněna pro tento překlad nebo pro všechny překlady?");
+regGS("Please enter a description for the file: '$1'.", "Prosím zadejte popis složky: '$1'.");
+regGS("Only this translation", "Pouze tento překlad");
+regGS("No files for multi editing.", "Nejsou zde žádné složky pro multi-editaci.");
+regGS("Edit files", "Editovat složky");
+regGS("Change file information", "Změnit informace o složce");
+regGS("All translations", "Všechny překlady");
 regGS("Save All", "Uložit vše");
 regGS("Files", "Soubory");
 regGS("You can't delete used files.", "Nemůžete odstranit použité soubory.");

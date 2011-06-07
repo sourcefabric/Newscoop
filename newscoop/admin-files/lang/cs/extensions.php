@@ -1,6 +1,6 @@
 <?php 
-regGS("Wikipedia Search", "");
-regGS("Files", "");
+regGS("Wikipedia Search", "Hledat ve Wikipedii");
+regGS("Files", "Složky");
 regGS("Sourcefabric.org newsletter subscription", "Předplatné informačních bulletinů na Sourcefabric.org");
 regGS("Maps search", "Hledat v mapách");
 regGS("Default location", "Výchozí lokalita");

@@ -1,6 +1,6 @@
 <?php 
-regGS("The country \"$1\" could not be created.", "");
-regGS("Country with code \"$1\" exists already.", "");
+regGS("The country \"$1\" could not be created.", "Země \"$1\" nemohla být vytvořena.");
+regGS("Country with code \"$1\" exists already.", "Země s označením  \"$1\" již existuje.");
 regGS("You do not have the right to add countries.", "Nemáte právo přidat zemi");
 regGS("Delete country", "Smazat zemi");
 regGS("You do not have the right to delete countries.", "Nemáte právo smazat zemi");
