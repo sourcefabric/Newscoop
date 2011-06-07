@@ -12,7 +12,7 @@ use Doctrine\ORM\Collections\ArrayCollection;
 /**
  * Issue entity
  * @Entity
- * @Table(name="ArticleTypeMetadata",{@UniqueConstraint(name="PRIMARY",columns={"type_name","filed_name"})})
+ * @Table(name="ArticleTypeMetadata")
  *
  * @todo check for performance issues
  */
@@ -31,7 +31,7 @@ class ArticleTypeField
 	 * (at) JoinColumn( name="type_id", referencedColumnName="id", nullable=FALSE )
 	 * @todo hack
      */
-    private $type;
+    private $articleType;
 
     /**
      * @Column(type="string",name="type_name")
@@ -47,23 +47,32 @@ class ArticleTypeField
     /**
      * @Column(type="string",name="field_type")
      */
-    private $fieldType;
+    private $type;
 
     /**
      * Get the article type
      * @return \Newscoop\Entity\ArticleType
      */
-    public function getType()
+    public function getArticleType()
     {
-        return $this->type;
+        return $this->articleType;
     }
 
 	/**
-     * @return \Newscoop\Entity\ArticleType
+     * @return \Newscoop\Entity\ArticleTypeField
      */
-    public function setType( ArticleType $type )
+    public function setArticleType( ArticleType $type )
     {
-        $this->type = $type;
+        $this->articleType = $this->typeHack = $type;
+        return $this;
+    }
+
+	/**
+     * @return \Newscoop\Entity\ArticleTypeField
+     */
+    public function setName( $name )
+    {
+        $this->name = $name;
         return $this;
     }
 
@@ -84,11 +93,29 @@ class ArticleTypeField
     }
 
 	/**
+     * @return \Newscoop\Entity\ArticleTypeField
+     */
+    public function setLength( $val )
+    {
+        $this->length = $val;
+        return $this;
+    }
+
+	/**
      * @return string
      */
-    public function getFieldType()
+    public function getType()
     {
-        return $this->fieldType;
+        return $this->type;
+    }
+
+	/**
+     * @return \Newscoop\Entity\ArticleTypeField
+     */
+    public function setType( $val )
+    {
+        $this->type = $val;
+        return $this;
     }
 }
 

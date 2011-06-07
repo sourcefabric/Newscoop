@@ -21,6 +21,23 @@ class OutputSettingSectionServiceDoctrine extends AEntityBaseServiceDoctrine
         implements IOutputSettingSectionService
 {
 
+    /** @var Newscoop\Service\IOutputService */
+    private $outputService = NULL;
+
+    /**
+     * Provides the ouput service.
+     *
+     * @return Newscoop\Service\IOutputService
+     * 		The service service to be used by this controller.
+     */
+    public function getOutputService()
+    {
+        if ($this->outputService === NULL) {
+            $this->outputService = $this->getResourceId()->getService(IOutputService::NAME);
+        }
+        return $this->outputService;
+    }
+
     protected function _init_()
     {
         $this->entityClassName = OutputSettingsSection::NAME_1;
@@ -33,13 +50,45 @@ class OutputSettingSectionServiceDoctrine extends AEntityBaseServiceDoctrine
      *
      * @param Section|int $section
      * 		The section to be searched, not null, not empty.
+     * @param Output|int|string $output
+     *
+     * @return Newscoop\Entity\OutputSettingsSection
+     * 		The Output Setting, NULL if no Output Setting could be found for the provided section.
+     */
+    public function findBySectionAndOutput($issue, $output)
+    {
+        if ($section instanceof Section) {
+            $section = $section->getId();
+        }
+        if (!($output instanceof Output)) {
+            if (is_int($output)) {
+                $output = $this->getOutputService()->findById($output);
+            } else {
+                $output = $this->getOutputService()->findByName($output);
+            }
+        }
+
+        $em = $this->getEntityManager();
+        $repository = $em->getRepository($this->entityClassName);
+        $resources = $repository->findBy(array('section' => $section, 'output' => $output));
+        if (isset($resources) && count($resources) > 0) {
+            return $resources;
+        }
+        return NULL;
+    }
+
+    /**
+     * Provides the Output Settings that has the provided Section.
+     *
+     * @param Section|int $section
+     * 		The section to be searched, not null, not empty.
      *
      * @return Newscoop\Entity\OutputSettingsSection
      * 		The Output Setting, empty array if no Output Setting could be found for the provided section.
      */
     public function findBySection($section)
     {
-    	if ($section instanceof Section) {
+       if ($section instanceof Section) {
             $section = $section->getId();
         }
         $em = $this->getEntityManager();
@@ -86,6 +135,5 @@ class OutputSettingSectionServiceDoctrine extends AEntityBaseServiceDoctrine
         $em->remove($outputSettingsSection);
         $em->flush();
     }
-
 
 }

@@ -138,13 +138,13 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 	function getTemplates($theme)
 	{
 		Validation::notEmpty($theme, 'theme');
-		
+
 		if($theme instanceof Theme){
 			$themePath = $theme->getPath();
 		} else {
 			$themePath = $theme;
 		}
-		
+
 		$resources = array();
 		$folder = $this->toFullPath($themePath);
 		if (is_dir($folder)) {
@@ -213,8 +213,15 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         // getting the article types
         foreach( $xml->xpath( '/'.self::TAG_ROOT.'/'.self::TAG_ARTICLE_TYPE ) as $artType )
         {
+
+            $artTypeName = (string) $this->readAttribute($artType, self::ATTR_ARTICLE_TYPE_NAME);
+/*            if( isset( $ret->$artTypeName ) ) {
+                $artTypeName .= "_";
+                var_dump( $artType->{self::ATTR_ARTICLE_TYPE_NAME} );
+            }
+*/
             // set article type name on return array
-            $ret->{( $artTypeName = (string) $this->readAttribute($artType, self::ATTR_OUTPUT_NAME) )} = new \stdClass;
+            $ret->$artTypeName = new \stdClass;
             // getting the article type fields
             foreach( $xml->xpath( '/'.self::TAG_ROOT.'/'.self::TAG_ARTICLE_TYPE.'[@'.self::ATTR_ARTICLE_TYPE_NAME.'=(\''.$artTypeName.'\')]/*' ) as $artTypeField )
             {
@@ -436,14 +443,18 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 	}
 
 	/**
+	 * Adds new mapping in the theme xml
+	 *
 	 * @param $articleTypes an array of mapping new values to old ones
-	 * 		( OldTypeName => (
-	 * 			name = OldTypeName,
-	 * 			ignore => boolean,
-	 * 			fields' => ( OldFieldName = ( name => New/OldType, parentType => ExistingType, ignore = boolean ), [...] )
-	 * 			)
-	 * 		, [...] )
-	 * 	parentType => ExistingType will be used for getting it's other props from db
+	 * 		[ oldTypeName => [
+	 * 			name : newTypeName,
+	 * 			ignore : boolean,
+	 * 			fields' : [ OldFieldName : [ name : new/oldType, parentType : existingSysType, ignore : boolean ], [...] ]
+	 * 			]
+	 * 		, [...] ]
+	 * 	parentType => existingSysType will be used for getting it's other props from db
+	 *
+	 * @return string the generated xml
 	 */
 	function assignArticleTypes($articleTypes, Theme $theme)
 	{
@@ -499,7 +510,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
                     if( $theField )
                     {
                         $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_LENGTH] = $theField->getLength();
-                        $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_TYPE] = $theField->getFieldType();
+                        $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_TYPE] = $theField->getType();
                     }
                 }
             }

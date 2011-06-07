@@ -9,6 +9,7 @@
 namespace Newscoop\Service;
 
 use Newscoop\Entity\Issue;
+use Newscoop\Entity\Output;
 use Newscoop\Entity\Output\OutputSettingsIssue;
 use Newscoop\Service\IEntityBaseService;
 
@@ -34,6 +35,20 @@ interface IOutputSettingIssueService extends IEntityBaseService
      * 		The Output Setting, empty array if no Output Setting could be found for the provided issue.
      */
     function findByIssue($issue);
+
+    /**
+     * Provides the Output Settings Issue for the provided issue and output
+     *
+     * @param Issue|int $issue
+     * 		The issue to be searched, not null, not empty.
+
+     * @param Output|string $output
+     * 		The output to be searched, not null, not empty.
+     *
+     * @return array Newscoop\Entity\Output\OutputSettingsIssue
+     * 		The Output Setting, empty array if no Output Setting could be found for the provided issue.
+     */
+    function findByIssueAndOutput($issue, $output);
 
     /**
      * Update an ouput setting issue
