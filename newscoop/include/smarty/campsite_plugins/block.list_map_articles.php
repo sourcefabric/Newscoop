@@ -35,24 +35,24 @@ function smarty_block_list_map_articles($p_params, $p_content, &$p_smarty, &$p_r
         if ($mapArticlesList->isEmpty()) {
             $campContext->setCurrentList($mapArticlesList, array());
             $campContext->resetCurrentList();
-        	$p_repeat = false;
+            $p_repeat = false;
             return null;
         }
-    	$campContext->setCurrentList($mapArticlesList, array('publication', 'language',
-    	                                                  'issue', 'section', 'article',
-    	                                                  'image', 'attachment', 'comment',
-    	                                                  'audioclip', 'subtitle'));
-    	$campContext->article = $campContext->current_map_articles_list->current;
-    	$p_repeat = true;
+        $campContext->setCurrentList($mapArticlesList, array('publication', 'language',
+                                                          'issue', 'section', 'article',
+                                                          'image', 'attachment', 'comment',
+                                                          'audioclip', 'subtitle'));
+        $campContext->article = $campContext->current_map_articles_list->current;
+        $p_repeat = true;
     } else {
         $campContext->current_map_articles_list->defaultIterator()->next();
-    	if (!is_null($campContext->current_map_articles_list->current)) {
-    	    $campContext->article = $campContext->current_map_articles_list->current;
-    	    $p_repeat = true;
-    	} else {
-    	    $campContext->resetCurrentList();
+        if (!is_null($campContext->current_map_articles_list->current)) {
+            $campContext->article = $campContext->current_map_articles_list->current;
+            $p_repeat = true;
+        } else {
+            $campContext->resetCurrentList();
             $p_repeat = false;
-    	}
+        }
     }
 
     return $p_content;

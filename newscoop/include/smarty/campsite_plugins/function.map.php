@@ -128,37 +128,37 @@ function smarty_function_map($p_params, &$p_smarty)
         $map_language = (int) $campsite->language->number;
 
         $multi_map_part = "<!-- Begin Map //-->\n";
-        $multi_map_body = "";
-        $multi_map_header = "";
-        $multi_poi_list = "";
+        $multi_map_body = '';
+        $multi_map_header = '';
+        $multi_poi_list = '';
 
         $multi_map_points = $campsite->map_dynamic_points_raw;
         $multi_map_label = $campsite->map_dynamic_map_label;
 
         $multi_options = array();
-        $multi_options["max_zoom"] = $max_zoom;
-        $multi_options["map_margin"] = $map_margin;
-        $multi_options["load_common"] = $map_load_common_header;
-        $multi_options["pois_retrieved"] = false;
+        $multi_options['max_zoom'] = $max_zoom;
+        $multi_options['map_margin'] = $map_margin;
+        $multi_options['load_common'] = $map_load_common_header;
+        $multi_options['pois_retrieved'] = false;
 
-        $multi_options["large_map_on_click"] = $openMapOnClick;
-        $multi_options["large_map_open"] = $showOpenLink;
-        $multi_options["large_map_width"] = $width_large;
-        $multi_options["large_map_height"] = $height_large;
-        $multi_options["large_map_label"] = $multi_map_label;
+        $multi_options['large_map_on_click'] = $openMapOnClick;
+        $multi_options['large_map_open'] = $showOpenLink;
+        $multi_options['large_map_width'] = $width_large;
+        $multi_options['large_map_height'] = $height_large;
+        $multi_options['large_map_label'] = $multi_map_label;
 
         if ($campsite->map_dynamic_areas) {
-            if ("focus" == strtolower($area_show)) {
-                $multi_options["area_points"] = $campsite->map_dynamic_areas;
+            if ('focus' == strtolower($area_show)) {
+                $multi_options['area_points'] = $campsite->map_dynamic_areas;
             }
-            if ("focus_empty" == strtolower($area_show)) {
-                $multi_options["area_points"] = $campsite->map_dynamic_areas;
-                $multi_options["area_points_empty_only"] = true;
+            if ('focus_empty' == strtolower($area_show)) {
+                $multi_options['area_points'] = $campsite->map_dynamic_areas;
+                $multi_options['area_points_empty_only'] = true;
             }
         }
 
         if ($multi_map_points) {
-            $multi_options["pois_retrieved"] = true;
+            $multi_options['pois_retrieved'] = true;
 
             $multi_map_header = Geo_Map::GetMultiMapTagHeader($map_language, $multi_map_points, $multi_options, $offset, $limit, $width, $height, $multi_map_rank);
             $multi_poi_list = Geo_Map::GetMultiMapTagList($map_language, $multi_map_points, $multi_options, $multi_map_label, $offset, $limit, $multi_map_rank);
@@ -229,15 +229,15 @@ function smarty_function_map($p_params, &$p_smarty)
 
     // get core pieces to display the map
     $map_options = array();
-    $map_options["auto_focus"] = $auto_focus;
-    $map_options["max_zoom"] = $max_zoom;
-    $map_options["map_margin"] = $map_margin;
-    $map_options["load_common"] = $map_load_common_header;
+    $map_options['auto_focus'] = $auto_focus;
+    $map_options['max_zoom'] = $max_zoom;
+    $map_options['map_margin'] = $map_margin;
+    $map_options['load_common'] = $map_load_common_header;
 
-    $map_options["large_map_on_click"] = $openMapOnClick;
-    $map_options["large_map_open"] = $showOpenLink;
-    $map_options["large_map_width"] = $width_large;
-    $map_options["large_map_height"] = $height_large;
+    $map_options['large_map_on_click'] = $openMapOnClick;
+    $map_options['large_map_open'] = $showOpenLink;
+    $map_options['large_map_width'] = $width_large;
+    $map_options['large_map_height'] = $height_large;
 
     $mapHeader = MetaMap::GetMapTagHeader($article, $language, $width, $height, $map_options);
     $mapMain = MetaMap::GetMapTagBody($article, $language);

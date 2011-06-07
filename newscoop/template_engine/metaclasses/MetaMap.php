@@ -19,15 +19,15 @@ final class MetaMap extends MetaDbObject
         'number' => 'id',
         'name' => 'MapName',
         'provider' => 'MapProvider',
-	);
+    );
 
     /**
      * @var array
      */
-	private static $m_defaultCustomProperties = array(
+    private static $m_defaultCustomProperties = array(
         'locations' => 'getLocations',
         'is_enabled' => 'isEnabled',
-	);
+    );
 
     /**
      * @var array of MetaMapLocation
@@ -42,9 +42,9 @@ final class MetaMap extends MetaDbObject
         $this->m_properties = self::$m_baseProperties;
         $this->m_customProperties = self::$m_defaultCustomProperties;
         if (!is_null($p_dbObject)) {
-        	$this->m_dbObject = $p_dbObject;
+            $this->m_dbObject = $p_dbObject;
         } else {
-        	$this->m_dbObject = new Geo_Map();
+            $this->m_dbObject = new Geo_Map();
         }
     }
 
