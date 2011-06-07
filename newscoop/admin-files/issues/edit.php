@@ -2,6 +2,11 @@
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/IssuePublish.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Template.php');
+//@New theme management
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\IThemeManagementService;
+use Newscoop\Service\IOutputSettingIssueService;
+//@New theme management
 camp_load_translation_strings("articles");
 camp_load_translation_strings("logs");
 
@@ -36,7 +41,6 @@ $allLanguages = Language::GetLanguages(null, null, null, array(), array(), true)
 $issueTranslations = Issue::GetIssues($Pub, null, $Issue, null, null, false, null, true);
 $excludeLanguageIds = DbObjectArray::GetColumn($issueTranslations, 'IdLanguage');
 
-$allTemplates = Template::GetAllTemplates(null, true, true, true);
 $allEvents = IssuePublish::GetIssueEvents($Pub, $Issue, $Language);
 
 $publish_date = date("Y-m-d");
@@ -55,6 +59,35 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 } else {
 	$url_add = "qadd.php";
 }
+
+//@New theme management
+$resourceId = new ResourceId('Publication/Edit');
+$themeManagementService = $resourceId->getService(IThemeManagementService::NAME_1);
+$outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
+
+$outSetIssues = $outputSettingIssueService->findByIssue($issueObj->getIssueId());
+if(count($outSetIssues) > 0){
+	$outSetIssue = $outSetIssues[0];
+	$themePath = $outSetIssue->getThemePath()->getPath();
+	$tplFrontPath = $outSetIssue->getFrontPage()->getPath();
+	$tplSectionPath = $outSetIssue->getSectionPage()->getPath();
+	$tplArticlePath = $outSetIssue->getArticlePage()->getPath();
+} else {
+	$themePath = null;
+	$tplFrontPath = null;
+	$tplSectionPath = null;
+	$tplArticlePath = null;
+}
+
+$publicationThemes = $themeManagementService->getThemes($publicationObj->getPublicationId());
+
+if($themePath != null){
+	$allTemplates = $themeManagementService->getTemplates($themePath);
+} else {
+	$allTemplates = array();
+}
+
+//@New theme management
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
@@ -174,13 +207,26 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 			</TD>
 		</TR>
 		<TR>
+			<TD ALIGN="RIGHT"><?php  putGS("Issue Theme"); ?>:</TD>
+			<TD>
+				<SELECT ID="f_theme_id" NAME="f_theme_id" class="input_select">
+				<OPTION VALUE="0">---</OPTION>
+				<?php
+				foreach ($publicationThemes as $theme) {
+					camp_html_select_option($theme->getPath(), $themePath, $theme->getName());
+				}
+				?>
+				</SELECT>
+			</TD>
+		</TR>
+		<TR>
 			<TD ALIGN="RIGHT"><?php  putGS("Front Page Template"); ?>:</TD>
 			<TD>
-				<SELECT NAME="f_issue_template_id" class="input_select">
+				<SELECT ID="f_issue_template_id" NAME="f_issue_template_id" class="input_select">
 				<OPTION VALUE="0">---</OPTION>
 				<?php
 				foreach ($allTemplates as $template) {
-					camp_html_select_option($template->getTemplateId(), $issueObj->getIssueTemplateId(), $template->getName());
+					camp_html_select_option($template->getPath(), $tplFrontPath, $template->getName());
 				}
 				?>
 				</SELECT>
@@ -190,11 +236,11 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 		<TR>
 			<TD ALIGN="RIGHT"><?php  putGS("Section Template"); ?>:</TD>
 			<TD>
-				<SELECT NAME="f_section_template_id" class="input_select">
+				<SELECT ID="f_section_template_id" NAME="f_section_template_id" class="input_select">
 				<OPTION VALUE="0">---</OPTION>
 				<?php
 				foreach ($allTemplates as $template) {
-					camp_html_select_option($template->getTemplateId(), $issueObj->getSectionTemplateId(), $template->getName());
+					camp_html_select_option($template->getPath(), $tplSectionPath, $template->getName());
 				}
 				?>
 				</SELECT>
@@ -204,11 +250,11 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 		<TR>
 			<TD ALIGN="RIGHT"><?php  putGS("Article Template"); ?>:</TD>
 			<TD>
-				<SELECT NAME="f_article_template_id" class="input_select">
+				<SELECT ID="f_article_template_id" NAME="f_article_template_id" class="input_select">
 				<OPTION VALUE="0">---</OPTION>
 				<?php
 				foreach ($allTemplates as $template) {
-					camp_html_select_option($template->getTemplateId(), $issueObj->getArticleTemplateId(), $template->getName());
+					camp_html_select_option($template->getPath(), $tplArticlePath, $template->getName());
 				}
 				?>
 				</SELECT>
@@ -347,4 +393,31 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 <script>
 document.forms.issue_edit.f_issue_name.focus();
 </script>
+
+<script type="text/javascript">
+
+$(function() {
+    // list templates per theme
+    $('select[name=f_theme_id]').change(function() {
+        var themePath = $(this).val();
+        $.getJSON('get_templates.php', {
+            'themePath': themePath
+        }, function(data) {
+			var selects = [$('select[name=f_issue_template_id]'),
+			   			$('select[name=f_section_template_id]'),
+			   			$('select[name=f_article_template_id]')];
+			for(i = 0; i < selects.length; i++){
+				select = selects[i];
+				select.empty().append('<option selected value="0">---</option>');
+				$.each(data, function(key, value) { 
+					select.append('<option value="' + key + '">' + value + '</option>');
+				});
+	        }
+        });
+    });
+
+});
+
+</script>
+
 <?php camp_html_copyright_notice(); ?>

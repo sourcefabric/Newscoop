@@ -11,7 +11,8 @@ namespace Newscoop\Service\Implementation;
 use Newscoop\Service\IArticleTypeService,
     Newscoop\Entity\ArticleType,
     Newscoop\Utils\Validation,
-    Newscoop\Service\Resource\ResourceId;
+    Newscoop\Service\Resource\ResourceId,
+    Newscoop\Entity\ArticleTypeField;
 
 class ArticleTypeServiceDoctrine implements IArticleTypeService
 {
@@ -92,7 +93,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
          * @todo at refactor @see hack from \Newscoop\Entity\ArticleTypeField
          */
         foreach(( $results = $qb->getQuery()->getResult() ) as $atf) {
-            $atf->setType( $type );
+            $atf->setArticleType( $type );
         }
         return $results;
     }
@@ -118,7 +119,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
         $atf = current( $qb->getQuery()->getResult() );
         if( !$atf )
             return null;
-        $atf->setType( $type );
+        $atf->setArticleType( $type );
         return $atf;
     }
 
@@ -136,20 +137,119 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
         return $res;
     }
 
-    public function getCount(Search $search = NULL)
+    /**
+     * Creates an article type
+     * @param string $name the name of the new article type, not null
+     * @return Newscoop\Entity\ArticleType
+     * @throws PDOException probably if duplicate values
+     */
+    public function create( $name )
     {
-        $qb = $this->getEntityManager()->createQueryBuilder();
+        $ret = $this->_create( $name );
+        $this->getEntityManager()->flush();
+        return $ret;
+    }
 
-        $qb->select( 'COUNT(' . self::ALIAS . ')' )->from( $this->entityClassName, self::ALIAS );
+    /**
+     * @see Newscoop\Service\Implementation\ArticleTypeServiceDoctrine::create()
+     */
+    private function _create( $name )
+    {
+        Validation::notEmpty( $name, 'name' );
 
-        if ($search !== NULL) {
-            if (get_class( $search ) !== $this->searchClassName) {
-                throw new \Exception( "The search needs to be a ' . $this->searchClassName . ' instance." );
+        $artType = new ArticleType();
+        $artType->setName( $name );
+
+        $em = $this->getEntityManager();
+        $em->persist( $artType );
+
+        return $artType;
+    }
+
+	/**
+     * Creates a field
+     *
+     * @param string $name the name of the article type field, not null
+     *
+     * @param Newscoop\Entity\ArticleType $name
+     * 		the name of the article type field, not null
+     *
+     * @param array $props properies of the field
+     * 		@see Newscoop\Entity\ArticleType
+     *
+     * @return Newscoop\Entity\ArticleTypeField
+     * @throws PDOException probably if duplicate values
+     */
+    public function createField( $name, ArticleType $type, $props = null )
+    {
+        $ret = $this->createField( $name, $type, $props );
+        $this->getEntityManager()->flush();
+        return $ret;
+    }
+
+    /**
+     * @see Newscoop\Service\Implementation\ArticleTypeServiceDoctrine::createField()
+     */
+    private function _createField( $name, ArticleType $type, $props = null )
+    {
+        Validation::notEmpty( $name, 'name' );
+
+        $artField = new ArticleTypeField();
+        $artField->setArticleType($type)->setName($name);
+        if( is_array( $props ) ) {
+            foreach( $props as $prop => $val )
+            {
+                $setProp = "set".ucfirst( $prop );
+                $artField->$setProp( $val );
             }
-            $this->processInterogation( $search, $qb );
         }
 
-        $result = $qb->getQuery()->getResult();
-        return (int) $result[0][1];
+        $em = $this->getEntityManager();
+        $em->persist( $artField );
+
+        return $artField;
+    }
+
+    /**
+     * Creates more article types
+     * @param array $articleTypes the array of types, optionally with fields
+     * 		[ [ name : typeName, fields : [ name : fieldName, parentType : typeName, ignore : bool ], [...] ], [...] ]
+     * @see self::create()
+     */
+    public function createMany( $articleTypes )
+    {
+
+        Validation::notEmpty( $articleTypes, 'articleTypes' );
+
+        foreach( $articleTypes as $type )
+        {
+            $artType = $this->_create( $type['name'] );
+            if( is_array( $type['fields'] ) ) {
+                foreach( $type['fields'] as $field ) {
+                    $this->_createField( $field['name'], $artType );
+                }
+            }
+        }
+
+        try
+        {
+            $this->getEntityManager()->flush();
+        }
+        catch( \PDOException $e )
+        {
+            if( $e->getCode( ) == 23000 ) // duplicate keys
+                return false;
+            throw $e;
+        }
+        catch( \Exception $e )
+        {
+            throw $e;
+        }
+        return true;
+    }
+
+    public function getCount(Search $search = NULL)
+    {
+        return null;
     }
 }

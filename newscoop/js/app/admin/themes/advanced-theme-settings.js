@@ -31,7 +31,7 @@ jQuery( function()
 			dataType : 'json',
 			success : function( data )
 			{
-				if( data.success ) void(0);
+				$('#submit-settings-ctrl').trigger( 'form-submitted.newscoop' );
 			}
 		})
 		evt.preventDefault();
@@ -44,7 +44,17 @@ jQuery( function()
 	
 	$('#submit-settings-ctrl').click( function()
 	{
-		$('.templateSettings form,.versionHolder form, .articleTypes form').trigger('submit');
+		$('.templateSettings form, .versionHolder form, .articleTypes form').trigger('submit');
+		$(this).val( $(this).attr( 'alt' ) );
+		// set reload on all ajax completed
+		$(this).data( 'form-submitted', 2 );
+		$(this).bind( 'form-submitted.newscoop', function()
+		{ 
+			var frmSub = $(this).data( 'form-submitted' );
+			if( frmSub == 1 )
+				location.reload();
+			$(this).data( 'form-submitted', frmSub-1 );
+		} )
 	});
 	
 	/**

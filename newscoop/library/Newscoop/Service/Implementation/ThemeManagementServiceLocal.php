@@ -6,9 +6,9 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Newscoop\Entity\ArticleTypeField;
 namespace Newscoop\Service\Implementation;
 
+use Newscoop\Entity\ArticleTypeField;
 use Doctrine\ORM\Query;
 use Newscoop\Service\ISyncResourceService;
 use Newscoop\Entity\Output\OutputSettingsTheme;
@@ -73,7 +73,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 	const TAG_ARTICLE_TYPE = 'articleType';
 	const ATTR_ARTICLE_TYPE_NAME = 'name';
 	const ATTR_ARTICLE_TYPE_FILED_NAME = 'name';
-    const ATTR_ARTICLE_TYPE_FILED_TYPE = 'type';
+	const ATTR_ARTICLE_TYPE_FILED_TYPE = 'type';
 	const ATTR_ARTICLE_TYPE_FILED_LENGTH = 'length';
 
 	const ATTR_PAGE_SRC = 'src';
@@ -111,15 +111,20 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 		return $this->trim($themes, $offset, $limit);
 	}
 
-	function getThemes(Publication $publication, SearchTheme $search = NULL, $offset = 0, $limit = -1)
+	function getThemes($publication, SearchTheme $search = NULL, $offset = 0, $limit = -1)
 	{
 		Validation::notEmpty($publication, 'publication');
-		Validation::notEmpty($publication->getId(), 'publication.id');
+		if($publication instanceof Publication){
+			Validation::notEmpty($publication->getId(), 'publication.id');
+			$publicationId = $publication->getId();
+		} else  {
+			$publicationId = $publication;
+		}
 
 		$allConfigs = $this->findAllThemesConfigPaths();
 		$configs = array();
 
-		$pubFolder = self::FOLDER_PUBLICATION_PREFIX.$publication->getId();
+		$pubFolder = self::FOLDER_PUBLICATION_PREFIX.$publicationId;
 		$length = strlen($pubFolder);
 		foreach ($allConfigs as $id => $config){
 			if(strncmp($config, $pubFolder, $length) == 0){
@@ -135,12 +140,18 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 		return $this->trim($themes, $offset, $limit);
 	}
 
-	function getTemplates(Theme $theme)
+	function getTemplates($theme)
 	{
 		Validation::notEmpty($theme, 'theme');
 
+		if($theme instanceof Theme){
+			$themePath = $theme->getPath();
+		} else {
+			$themePath = $theme;
+		}
+
 		$resources = array();
-		$folder = $this->toFullPath($theme);
+		$folder = $this->toFullPath($themePath);
 		if (is_dir($folder)) {
 			if($dh = opendir($folder)){
 				while (($file = readdir($dh)) !== false) {
@@ -148,7 +159,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 						if(pathinfo($file, PATHINFO_EXTENSION) === self::FILE_TEMPLATE_EXTENSION){
 							$rsc = new Resource();
 							$rsc->setName($file);
-							$rsc->setPath($theme->getPath().$file);
+							$rsc->setPath($themePath.$file);
 							$resources[] = $rsc;
 						}
 					}
@@ -207,8 +218,15 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         // getting the article types
         foreach( $xml->xpath( '/'.self::TAG_ROOT.'/'.self::TAG_ARTICLE_TYPE ) as $artType )
         {
+
+            $artTypeName = (string) $this->readAttribute($artType, self::ATTR_ARTICLE_TYPE_NAME);
+/*            if( isset( $ret->$artTypeName ) ) {
+                $artTypeName .= "_";
+                var_dump( $artType->{self::ATTR_ARTICLE_TYPE_NAME} );
+            }
+*/
             // set article type name on return array
-            $ret->{( $artTypeName = (string) $this->readAttribute($artType, self::ATTR_OUTPUT_NAME) )} = new \stdClass;
+            $ret->$artTypeName = new \stdClass;
             // getting the article type fields
             foreach( $xml->xpath( '/'.self::TAG_ROOT.'/'.self::TAG_ARTICLE_TYPE.'[@'.self::ATTR_ARTICLE_TYPE_NAME.'=(\''.$artTypeName.'\')]/*' ) as $artTypeField )
             {
@@ -433,14 +451,18 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 	}
 
 	/**
+	 * Adds new mapping in the theme xml
+	 *
 	 * @param $articleTypes an array of mapping new values to old ones
-	 * 		( OldTypeName => (
-	 * 			name = OldTypeName,
-	 * 			ignore => boolean,
-	 * 			fields' => ( OldFieldName = ( name => New/OldType, parentType => ExistingType, ignore = boolean ), [...] )
-	 * 			)
-	 * 		, [...] )
-	 * 	parentType => ExistingType will be used for getting it's other props from db
+	 * 		[ oldTypeName => [
+	 * 			name : newTypeName,
+	 * 			ignore : boolean,
+	 * 			fields' : [ OldFieldName : [ name : new/oldType, parentType : existingSysType, ignore : boolean ], [...] ]
+	 * 			]
+	 * 		, [...] ]
+	 * 	parentType => existingSysType will be used for getting it's other props from db
+	 *
+	 * @return string the generated xml
 	 */
 	function assignArticleTypes($articleTypes, Theme $theme)
 	{
@@ -496,7 +518,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
                     if( $theField )
                     {
                         $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_LENGTH] = $theField->getLength();
-                        $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_TYPE] = $theField->getFieldType();
+                        $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_TYPE] = $theField->getType();
                     }
                 }
             }
@@ -567,13 +589,13 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 	 * @return Newscoop\Service\IArticleTypeService
 	 *
 	 */
-    public function getArticleTypeService()
-    {
-        if( $this->articleTypeService === NULL ) {
-            $this->articleTypeService = $this->getResourceId()->getService(IArticleTypeService::NAME);
-        }
-        return $this->articleTypeService;
-    }
+	public function getArticleTypeService()
+	{
+		if( $this->articleTypeService === NULL ) {
+			$this->articleTypeService = $this->getResourceId()->getService(IArticleTypeService::NAME);
+		}
+		return $this->articleTypeService;
+	}
 
 	/* --------------------------------------------------------------- */
 
@@ -776,8 +798,8 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 	protected function copy($src, $dst)
 	{
 		$dir = opendir($src);
-                if(!file_exists($dst))
-                    mkdir($dst);
+		if(!file_exists($dst))
+		mkdir($dst);
 		while(false !== ( $file = readdir($dir)) ) {
 			if (( $file != '.' ) && ( $file != '..' )) {
 				if ( is_dir($src . '/' . $file) ) {

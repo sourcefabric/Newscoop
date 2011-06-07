@@ -137,7 +137,7 @@ class Admin_ThemesController extends Zend_Controller_Action
 	/**
      * Provides the theme service.
      *
-     * @return Newscoop\Service\IArticleTypeService
+     * @return Newscoop\Service\Implementation\ArticleTypeServiceDoctrine
      */
     public function getArticleTypeService()
     {
@@ -500,13 +500,34 @@ class Admin_ThemesController extends Zend_Controller_Action
             }
 
         }
-        /*
-        print '===create===';
-        var_dump( $createArticleTypes );
 
-        print '===update===';
-        var_dump( $updateArticleTypes );
-		*/
+        //print '===create===';
+        //var_dump( $createArticleTypes );
+
+        $artServ = $this->getArticleTypeService();
+        $themeArticleTypes = (array) $this->getThemeService()->getArticleTypes( $theme );
+        foreach( $createArticleTypes as $typeName => $type )
+        {
+            // TODO pass if not found in xml?
+            if( !isset($themeArticleTypes[$typeName]) )
+            {
+                unset( $createArticleTypes[$typeName] );
+                continue;
+            }
+            if( isset( $type['fields'] ) && is_array( $type['fields'] ) ) {
+                foreach( $type['fields'] as $k => $field )
+                {
+                    $createArticleTypes[$typeName]['fields'][$k]['props']
+                        = (array) $themeArticleTypes[$typeName]->{$field['name']};
+                }
+            }
+        }
+
+        $artServ->createMany( $createArticleTypes );
+
+        //print '===update===';
+        //var_dump( $updateArticleTypes );
+        //exit;
 
         $this->view->response = $thmServ->assignArticleTypes( $updateArticleTypes, $theme );
 
@@ -545,7 +566,6 @@ class Admin_ThemesController extends Zend_Controller_Action
 
     public function testAction()
     {
-        return ;
         $theme = $this->getThemeService()->findById( $this->_request->getParam( 'id' ) );
         //$this->getThemeFileService();
         var_dump( $this->getThemeService()->getArticleTypes($theme ) );die;

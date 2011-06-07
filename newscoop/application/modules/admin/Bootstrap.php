@@ -5,13 +5,13 @@ use Newscoop\Log\Writer;
 
 class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 {
-    
+
     /**
      * @param Zend_View
      */
     protected $_view;
-    
-    
+
+
     /**
      * Legacy admin bootstrap
      */
@@ -85,9 +85,9 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
             unlink($GLOBALS['g_campsiteDir'] . '/reset_cache');
         }
     }
-    
+
 	/**
-	 * @todo tried refactoring the view init but there's an user object 
+	 * @todo tried refactoring the view init but there's an user object
  	 * assigned to the view from some legacy code that messes up everything...
  	 * I think really needs to be revised, because it's not a good practice to insert complex objects in the view
  	 * @author mihaibalaceanu
@@ -102,23 +102,23 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         $view->addScriptPath( APPLICATION_PATH . '/modules/admin/views/partials' );
 
         global $Campsite;
-        
+
         // set doctype
         $view->doctype('HTML5');
-        
+
         $view->helpUrl = $Campsite['site']['help_url'];
         $locale = $_COOKIE['TOL_Language'] ?: 'en';
         $locale_fix = array(
             'cz' => 'cs',
         );
         $view->locale = $locale_fix[$locale] ?: $locale;
-        
-        // set title 
+
+        // set title
         $title = !empty($Campsite['site']['title']) ? htmlspecialchars($Campsite['site']['title']) : getGS('Newscoop') . $Campsite['VERSION'];
 
         $view->headTitle($title . ' (powered by Zend)')
             ->setSeparator(' - ');
-            
+
         // set placeholders
         $view->placeholder('title')->setPrefix('<h1>')->setPostfix('</h1>');
 
@@ -126,18 +126,18 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         // not using prefix/postfix to detect if is empty
         $view->placeholder('sidebar')
             ->setSeparator('</div><div class="sidebar">' . "\n");
-        
+
         // flash messenger
         $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
         if ($flashMessenger->hasMessages()) {
             $view = $this->getResource('view');
             $view->messages = $flashMessenger->getMessages();
-        } 
-        
+        }
+
         return $viewResource;
     }
- 	*/   
-    
+ 	*/
+
     /**
      * Init doctype & view - first function using it
      */
@@ -183,7 +183,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
     protected function _initFlashMessenger()
     {
         $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
-        if ($flashMessenger->hasMessages()) 
+        if ($flashMessenger->hasMessages())
         {
             $view = $this->getResource('view');
             $view->messages = $flashMessenger->getMessages();
@@ -227,13 +227,13 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         // not using prefix/postfix to detect if is empty
         $view->placeholder('sidebar')
             ->setSeparator('</div><div class="sidebar">' . "\n");
-        
+
         Zend_Controller_Front::getInstance()->registerPlugin( new \Newscoop\Controller\Plugin\Js( $this->getOptions() ) );
 
         $view->addHelperPath(APPLICATION_PATH . '/modules/admin/views/helpers', 'Admin_View_Helper');
         $jsPlaceholder = $view->getHelper('JQueryReady');
         $view->getHelper('JQueryUtils')->setPlaceholder($jsPlaceholder);
-        
+
     }
 
     /**
@@ -268,7 +268,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 
         Zend_Form::setDefaultTranslator($translate);
     }
-    
+
     /*protected function _initView()
     {
         // setup layout
