@@ -10,7 +10,7 @@ use Newscoop\Service\IOutputSettingIssueService;
 use Newscoop\Service\IOutputSettingSectionService;
 use Newscoop\Service\IIssueService;
 use Newscoop\Service\ISectionService;
-
+use Newscoop\Service\ITemplateSearchService;
 use Newscoop\Entity\Publication;
 use Newscoop\Entity\Theme;
 use Newscoop\Entity\Resource;
@@ -45,6 +45,8 @@ class Admin_TestController extends Zend_Controller_Action
     private $outputSettingSectionService = NULL;
     /** @var Newscoop\Service\IOutputSettingIssueService */
     private $outputSettingIssueService = NULL;
+    /** @var Newscoop\Service\ITemplateSearchService */
+    private $templateSearchService = NULL;
     /** @var Newscoop\Service\ISyncResourceService */
     private $syncResourceService = NULL;
 
@@ -193,6 +195,20 @@ class Admin_TestController extends Zend_Controller_Action
             $this->sectionService = $this->getResourceId()->getService(ISectionService::NAME);
         }
         return $this->sectionService;
+    }
+
+    /**
+     * Provides the Template search service.
+     *
+     * @return Newscoop\Service\ITemplateSearchService
+     * 		The section service to be used by this controller.
+     */
+    public function getTemplateSearchService()
+    {
+        if ($this->templateSearchService === NULL) {
+            $this->templateSearchService = $this->getResourceId()->getService(ITemplateSearchService::NAME);
+        }
+        return $this->templateSearchService;
     }
 
     /**
@@ -604,6 +620,24 @@ class Admin_TestController extends Zend_Controller_Action
         try {
             $outputSetting = $this->getOutputSettingSectionService()->findById(1);
             $this->getOutputSettingSectionService()->delete($outputSetting);
+        } catch (\Exception $e) {
+            echo 'errror<br/>' . $e . '</br>' . $e->getMessage();
+        }
+    }
+
+    /**
+     * Search by an issue test service
+     */
+    public function test16Action()
+    {
+        $this->getHelper('viewRenderer')->setNoRender();
+        try {
+            $output = $this->getOutputService()->findByName('Web');
+
+            /* @var $issue \Newscoop\Entity\Issue */
+            $issue = $this->getIssueService()->findById(1);
+
+            $return = $this->getTemplateSearchService()->getFrontPage($issue,                            $output);
         } catch (\Exception $e) {
             echo 'errror<br/>' . $e . '</br>' . $e->getMessage();
         }

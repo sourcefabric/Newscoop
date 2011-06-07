@@ -51,7 +51,7 @@ abstract class AEntityBaseServiceDoctrine
         $this->_init_();
 
         if (is_null($this->entityClassName)) {
-            throw \Exception("Please provide a entitity class name to be used");
+            throw  new \Exception("Please provide a entitity class name to be used");
         }
     }
 

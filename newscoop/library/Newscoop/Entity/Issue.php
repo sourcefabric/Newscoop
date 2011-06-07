@@ -100,6 +100,25 @@ class Issue extends Entity
     }
 
     /**
+     * Get publication
+     *
+     * @return Publication
+     */
+    public function getPublication()
+    {
+        return $this->publication;
+    }
+
+    /**
+     * Get publication Id
+     *
+     * @return int
+     */
+    public function getPublicationId()
+    {
+        return $this->publication->getId();
+    }
+    /**
      * Get sections
      *
      * @return array
