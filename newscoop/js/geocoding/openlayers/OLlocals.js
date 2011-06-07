@@ -89,7 +89,7 @@ OpenLayers.Layer.MapQuest = OpenLayers.Class(OpenLayers.Layer.OSMMod, {
 
 // solving issues on Google v3 things
 OpenLayers.Layer.GoogleMod = OpenLayers.Class(OpenLayers.Layer.Google, {
-	// just added the modRepositionMapElements call at the end
+    // just added the modRepositionMapElements call at the end
     initialize: function(name, options) {
         options = options || {};
         if(!options.version) {
@@ -117,15 +117,15 @@ OpenLayers.Layer.GoogleMod = OpenLayers.Class(OpenLayers.Layer.Google, {
             OpenLayers.Util.extend(this, OpenLayers.Layer.SphericalMercator);
             this.initMercatorParameters();
         }
-		this.modRepositionMapElements();
+        this.modRepositionMapElements();
     },
     'numZoomLevels': 20,
     'sphericalMercator': true,
-	'modRepositionMapElements': function () {
-	// we need to change it here, otherwise the old repositionMapElements function would be used
-		this.repositionMapElements = this.repositionMapElementsMod;
+    'modRepositionMapElements': function () {
+    // we need to change it here, otherwise the old repositionMapElements function would be used
+        this.repositionMapElements = this.repositionMapElementsMod;
     },
-	'repositionMapElementsMod' : function () {
+    'repositionMapElementsMod' : function () {
         google.maps.event.trigger(this.mapObject, "resize");
         var div = this.mapObject.getDiv().firstChild;
         if (!div || div.childNodes.length < 3) {
@@ -192,7 +192,6 @@ OpenLayers.Control.Click = OpenLayers.Class(OpenLayers.Control, {
         'stopSingle': false,
         'stopDouble': false,
         'projection': new OpenLayers.Projection("EPSG:900913"),
-        //'displayProjection': new OpenLayers.Projection("EPSG:4326"),
         'displayProjection': new OpenLayers.Projection("EPSG:900913"),
         'triggerAction': function(evt, map) {}
     },
@@ -277,18 +276,18 @@ OpenLayers.Control.PanZoomMod = OpenLayers.Class(OpenLayers.Control.PanZoom, {
 OpenLayers.Control.PanZoomBarMod = OpenLayers.Class(OpenLayers.Control.PanZoomBar, {
     // msie does not stops the event, and does not preserves its properties either
     divClick: function (evt) {
-		//if (undefined === evt.stopPropagation) {evt.stopPropagation = null;}
+        //if (undefined === evt.stopPropagation) {evt.stopPropagation = null;}
 
-		if (!OpenLayers.Event.isLeftClick(evt)) {
-			return;
-		}
-		var levels = evt.xy.y / this.zoomStopHeight;
-		if (this.forceFixedZoomLevel || !this.map.fractionalZoom) {
-			levels = Math.floor(levels);
-		}
-		var zoom = this.map.getNumZoomLevels() - 1 - levels;
-		zoom = Math.min(Math.max(zoom, 0), this.map.getNumZoomLevels() - 1);
-		this.map.zoomTo(zoom);
+        if (!OpenLayers.Event.isLeftClick(evt)) {
+            return;
+        }
+        var levels = evt.xy.y / this.zoomStopHeight;
+        if (this.forceFixedZoomLevel || !this.map.fractionalZoom) {
+            levels = Math.floor(levels);
+        }
+        var zoom = this.map.getNumZoomLevels() - 1 - levels;
+        zoom = Math.min(Math.max(zoom, 0), this.map.getNumZoomLevels() - 1);
+        this.map.zoomTo(zoom);
 
         var stop_event = OpenLayers.Hooks.PanZoomBar.divClick(this);
         if (stop_event)
@@ -296,7 +295,7 @@ OpenLayers.Control.PanZoomBarMod = OpenLayers.Class(OpenLayers.Control.PanZoomBa
             OpenLayers.Event.stop(evt);
         }
 
-	},
+    },
 
     buttonDown: function(evt) {
         if (!OpenLayers.Event.isLeftClick(evt)) {
@@ -484,22 +483,6 @@ OpenLayers.HooksPopups.on_feature_select = function(evt, geo_obj, avoid_rec)
     if (geo_obj.popup) {
         geo_obj.select_control.unselect(geo_obj.popup.feature);
     }
-
-/* 
-    //if we would use a poi grouping
-    var pop_info_stack = [];
-    if (geo_obj.do_grouping) {
-        var feature_reank = feature.attributes.m_rank;
-        var group_rank = geo_obj.group_links[feature_reank];
-        var feature_group = geo_obj.poi_groups[group_rank];
-        var feature_count = feature_group.length;
-        for (var find = 1; find < feature_count; find++) {
-            var cur_feature = feature_group[find];
-            var cur_content = GeoPopups.create_popup_content(cur_feature, geo_obj)
-            alert(cur_content['inner_html']);
-        }
-    }
-*/
 
     var pop_info = GeoPopups.create_popup_content(feature, geo_obj);
     var pop_text = pop_info['inner_html'];

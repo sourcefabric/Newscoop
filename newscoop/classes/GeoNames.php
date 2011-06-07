@@ -13,10 +13,10 @@ class Geo_Names extends DatabaseObject
     const LOCATIONS_LIMIT = 20;
 
     /** @var array */
-	public $m_keyColumnNames = array('id');
+    public $m_keyColumnNames = array('id');
 
     /** @var string */
-	public $m_dbTableName = 'CityLocations cl INNER JOIN CityNames cs ON cl.id = cs.fk_citylocations_id';
+    public $m_dbTableName = 'CityLocations cl INNER JOIN CityNames cs ON cl.id = cs.fk_citylocations_id';
 
     /** @var array */
     public $m_columnNames = array(
@@ -37,26 +37,26 @@ class Geo_Names extends DatabaseObject
     {
     }
 
-	/**
-	 * Finds cities on given name and country
-	 *
-	 * @param string $p_cityName
-	 * @param string $p_countryCode
-	 *
-	 * @return array
-	 */
-	public function FindCitiesByName($p_cityName, $p_countryCode = '')
-	{
-		global $g_ado_db;
+    /**
+     * Finds cities on given name and country
+     *
+     * @param string $p_cityName
+     * @param string $p_countryCode
+     *
+     * @return array
+     */
+    public function FindCitiesByName($p_cityName, $p_countryCode = '')
+    {
+        global $g_ado_db;
 
-		$cityName_changed = str_replace(' ', '%', trim($p_cityName));
-		$is_exact = !strchr($p_cityName, '%');
+        $cityName_changed = str_replace(' ', '%', trim($p_cityName));
+        $is_exact = !strchr($p_cityName, '%');
 
         $queryStr = 'SELECT DISTINCT id, city_name as name, country_code as country, population, X(position) AS latitude, Y(position) AS longitude
             FROM ' . $this->m_dbTableName . ' WHERE city_name LIKE ?';
 
         if (!empty($p_countryCode)) {
-			$queryStr .= ' AND cl.country_code = ?';
+            $queryStr .= ' AND cl.country_code = ?';
         }
 
         $sql_params = array(
@@ -65,7 +65,7 @@ class Geo_Names extends DatabaseObject
             $cityName_changed . '%',
             '%' . $cityName_changed . '%',
         );
-		$queryStr .= ' GROUP BY id ORDER BY population DESC, id LIMIT 100';
+        $queryStr .= ' GROUP BY id ORDER BY population DESC, id LIMIT 100';
 
         $cities = array();
         foreach ($sql_params as $param) {
@@ -77,27 +77,27 @@ class Geo_Names extends DatabaseObject
 
             foreach ((array) $rows as $row) {
                 $cities[] = (array) $row;
-			}
+            }
 
             if (!empty($cities)) {
                 break;
             }
-		}
+        }
 
-		return $cities;
-	} // fn FindCitiesByName
+        return $cities;
+    } // fn FindCitiesByName
 
-	/**
-	 * Finds cities on given position
-	 *
-	 * @param string $p_longitude
-	 * @param string $p_latitude
-	 *
-	 * @return array
-	 */
-	public function FindCitiesByPosition($p_longitude, $p_latitude)
-	{
-		global $g_ado_db;
+    /**
+     * Finds cities on given position
+     *
+     * @param string $p_longitude
+     * @param string $p_latitude
+     *
+     * @return array
+     */
+    public function FindCitiesByPosition($p_longitude, $p_latitude)
+    {
+        global $g_ado_db;
 
         $lon = (float) $p_longitude;
         $lat = (float) $p_latitude;
@@ -122,11 +122,11 @@ class Geo_Names extends DatabaseObject
                     $used[$row['id']] = true;
                     $cities[] = (array) $row;
                 }
-			}
+            }
 
             if (sizeof($cities) >= self::LOCATIONS_LIMIT) {
                 return $cities;
             }
-		}
-	} // fn FindCitiesByPosition
+        }
+    } // fn FindCitiesByPosition
 } // class Geo_Names
