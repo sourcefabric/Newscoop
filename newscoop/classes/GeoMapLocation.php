@@ -414,11 +414,9 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     break;
                 case 'matchalltopics':
                     $mc_topics_matchall = $param->getRightOperand();
-                    //$mc_mapCons = true;
                     break;
                 case 'matchanytopic':
                     $mc_topics_matchall = !$param->getRightOperand();
-                    //$mc_mapCons = true;
                     break;
                 case 'multimedia':
                     $mc_multimedia[] = $param->getRightOperand();
@@ -430,15 +428,12 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     break;
                 case 'matchallareas':
                     $mc_areas_matchall = $param->getRightOperand();
-                    //$mc_mapCons = true;
                     break;
                 case 'matchanyarea':
                     $mc_areas_matchall = !$param->getRightOperand();
-                    //$mc_mapCons = true;
                     break;
                 case 'exactarea':
                     $mc_areas_exact = $param->getRightOperand();
-                    //$mc_mapCons = true;
                     break;
                 case 'date':
                     $mc_dates[$param->getOperator()->getName()] = $param->getRightOperand();
@@ -909,22 +904,6 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 $article_mcons = true;
            }
 
-/*
-            // mysql can not work with image_mm, video_mm columns at the WHERE part, thus done via subselects above
-            if ($mc_filter_image) {
-                $query_mcons .= "image_mm IS NOT NULL AND ";
-                $article_mcons = true;
-            }
-            if ($mc_filter_video) {
-                $query_mcons .= "video_mm IS NOT NULL AND ";
-                $article_mcons = true;
-            }
-            if ($mc_filter_mm) {
-                $query_mcons .= "(image_mm IS NOT NULL OR video_mm IS NOT NULL) AND ";
-                $article_mcons = true;
-            }
-*/
-
             $queryStr .= "WHERE ";
 
             if ($article_mcons) {
@@ -966,18 +945,6 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         }
         $queryStr .= "ml.rank, ml.id, mll.id";
 
-        //if ($mc_limit)
-        //{
-        //    $queryStr .= " LIMIT $mc_limit";
-        //    if ($mc_start)
-        //    {
-        //        $queryStr .= " OFFSET $mc_start";
-        //    }
-        //}
-
-$fh = fopen("/tmp/m000.txt", "a");
-fwrite($fh, json_encode($queryStr));
-fclose($fh);
 		$rows = $g_ado_db->GetAll($queryStr);
 		if (is_array($rows)) {
             $p_count = count($rows);
@@ -1029,9 +996,7 @@ fclose($fh);
                 if ($row['image_mm']) {
                     $multimedia_spec = $row['image_mm'];
                     $multimedia_link = $multimedia_spec;
-$fh = fopen("/tmp/m001.txt", "a");
-fwrite($fh, json_encode($multimedia_spec));
-fclose($fh);
+
                     // the dynamic maps (i.e. with mc_mapCons) have grouping by multimedia,
                     // while article maps have all multimedia separated (and read with concat)
                     if (!$mc_mapCons) {

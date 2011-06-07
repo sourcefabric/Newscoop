@@ -141,12 +141,6 @@ public static function GetMapInfo($p_htmlDir = "", $p_websiteUrl = "", $p_mapPro
             $map_prov_gv3_async_method = "initialize_gv3async";
             $map_prov_gv3_async = true;
         }
-/*
-        if ("mapquest" == $one_prov_name)
-        {
-            $one_prov_include = $p_websiteUrl . "/js/geocoding/openlayers/OLlocals.js";
-        }
-*/
 
         // up to now, we know how to deal with just a few map providers
         $one_prov_label = strtolower($one_prov_name);
@@ -390,7 +384,7 @@ public static function GetSearchInfo($p_htmlDir, $p_websiteUrl)
     $icon_filename = "search.png";
 
     $icons_subdir = $cnf_html_dir . $icons_subpath;
-    //echo $icons_subdir;
+
     $icons_webdir = $cnf_website_url . $icons_subpath;
 
     $icons_default_name = "search";
@@ -436,14 +430,12 @@ public static function GetPopupsInfo($p_htmlDir, $p_websiteUrl)
 
     $size_info = array("width" => $popup_width, "height" => $popup_height);
 
-    //$video_names_arr = array("YouTube", "Vimeo", "Flash", "Flv");
     $video_names_arr = array("YouTube", "Vimeo", "Flash");
     $video_names_info = array();
 
     $video_names_info["YouTube"] = array("width" => '320', "height" => '240'); // array("width" => '425', "height" => '350');
     $video_names_info["Vimeo"] = array("width" => '320', "height" => '180'); // array("width" => '400', "height" => '225');
     $video_names_info["Flash"] = array("width" => '320', "height" => '240'); // array("width" => '300', "height" => '200');
-    // $video_names_info["Flv"] = array("width" => '320', "height" => '240'); // array("width" => '300', "height" => '280');
 
     foreach ($video_names_arr as $one_video_label)
     {
