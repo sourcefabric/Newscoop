@@ -3,28 +3,28 @@
  * @package Newscoop
  */
 $locations = array();
-$map_name = "";
-$map_name_title = "";
+$map_name = '';
+$map_name_title = '';
 $map = $articleObj->getMap();
 if (is_object($map) && $map->exists()) {
     $locations = $map->getLocations();
     $map_name = $map->getName();
     if (0 < strlen($map_name)) {
         $map_name_title = $map_name;
-        $map_name_title = str_replace("&", "&amp;", $map_name_title);
-        $map_name_title = str_replace("<", "&lt;", $map_name_title);
-        $map_name_title = str_replace(">", "&gt;", $map_name_title);
-        $map_name_title = str_replace("\\", "&#92;", $map_name_title);
-        $map_name_title = str_replace("'", "&#39;", $map_name_title);
+        $map_name_title = str_replace("&", '&amp;', $map_name_title);
+        $map_name_title = str_replace("<", '&lt;', $map_name_title);
+        $map_name_title = str_replace(">", '&gt;', $map_name_title);
+        $map_name_title = str_replace("\\", '&#92;', $map_name_title);
+        $map_name_title = str_replace("'", '&#39;', $map_name_title);
         $map_name_title = " title='$map_name_title'";
     }
     $map_name_max_len = 20;
     if ($map_name_max_len < strlen($map_name)) {
         $map_name = substr($map_name, 0, $map_name_max_len) . "...";
     }
-    $map_name = str_replace("&", "&amp;", $map_name);
-    $map_name = str_replace("<", "&lt;", $map_name);
-    $map_name = str_replace(">", "&gt;", $map_name);
+    $map_name = str_replace("&", '&amp;', $map_name);
+    $map_name = str_replace("<", '&lt;', $map_name);
+    $map_name = str_replace(">", '&gt;', $map_name);
 }
 $detachMapUrl = "/$ADMIN/articles/locations/do_unlink.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_language_selected=$f_language_selected&f_language_id=$f_language_id&".SecurityToken::URLParameter();
 
@@ -34,33 +34,6 @@ if (0 == $map_language_used) {
 }
 $map_article_spec = '' . $f_article_number . '_' . $map_language_used;
 ?>
-<script type="text/javascript">
-geomap_popup_editing = null;
-geomap_art_spec_popup = "";
-geomap_art_spec_main = "" + '<?php echo $map_article_spec; ?>';
-geomap_popup_show = function (edit) {
-    var geomap_force_new = true;
-    try {
-        if ((!geomap_popup_editing) || geomap_popup_editing.closed) {geomap_art_spec_popup = "";}
-    } catch(e) { geomap_art_spec_popup = ""; }
-    try {
-        if (geomap_art_spec_main == geomap_art_spec_popup) {
-            geomap_popup_editing.focus();
-            geomap_force_new = false;
-        }
-    } catch (e) { geomap_force_new = true; }
-    if (geomap_force_new) {
-        if (edit) {
-            geomap_popup_editing = window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "locations/popup.php"); ?>', 'geomap_edit_window', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=1100, height=660, top=200, left=200');
-        } else {
-            geomap_popup_editing = window.open('<?php echo camp_html_article_url($articleObj, $f_language_id, "locations/preview.php"); ?>', 'geomap_edit_window', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=1100, height=660, top=200, left=200');
-        }
-        try {
-            geomap_popup_editing.focus();
-        } catch (e) {}
-    };
-}
-</script>
 <div id="locations_box" class="ui-widget-content small-block block-shadow locations-box">
   <div class="collapsible">
     <h3 class="head ui-accordion-header ui-helper-reset ui-state-default ui-widget">
@@ -73,21 +46,9 @@ geomap_popup_show = function (edit) {
   if ($map->exists()) {
   ?>
     <?php if ($canEdit) { ?>
-<?php
-/*
-    <div class="map-thumb_cont">
-    <a href="<?php echo camp_html_article_url($articleObj, $f_language_id, 'locations/popup.php'); ?>"
-      target="_blank" class="map-thumb map-thumb_tab"><span class=""><?php putGS('Edit'); echo " - "; putGS('in new tab'); ?></span></a>
-*/
-?>
     <a href="<?php echo camp_html_article_url($articleObj, $f_language_id, 'locations/popup.php'); ?>"
       class="iframe map-thumb"><img
       src="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/map_thumb.png" alt="<?php putGS('Edit'); ?>" title="<?php putGS('Edit'); ?>" /><span><?php putGS('Edit'); ?></span></a>
-<?php
-/*
-    </div>
-*/
-?>
     <a class="ui-state-default icon-button right-floated"
       href="<?php p($detachMapUrl); ?>" onclick="return confirm('<?php putGS("Are you sure you want to remove the map from the article?"); ?>'); return false;" style="margin-bottom:8px;"><span
       class="ui-icon ui-icon-closethick"></span><?php putGS('Remove'); ?></a>
@@ -106,13 +67,6 @@ geomap_popup_show = function (edit) {
     <a class="iframe ui-state-default icon-button right-floated"
       href="<?php echo camp_html_article_url($articleObj, $f_language_id, 'locations/popup.php'); ?>"><span
       class="ui-icon ui-icon-plusthick"></span><?php putGS('Add'); ?></a>
-<?php
-/*
-    <a class="ui-state-default icon-button right-floated"
-      href="<?php echo camp_html_article_url($articleObj, $f_language_id, 'locations/popup.php'); ?>" target="_blank"><span
-      class="ui-icon ui-icon-plusthick"></span><?php putGS('Add'); echo " - "; putGS('in new tab'); ?></a>
-*/
-?>
   <?php } ?>
   <?php if ($map->exists()) { ?>
     <h4 class="geo_map_name"<?php echo $map_name_title; ?>>
@@ -133,9 +87,9 @@ geomap_popup_show = function (edit) {
         if ($poi_name_max_len < strlen($poi_name)) {
             $poi_name = substr($poi_name, 0, $poi_name_max_len) . "...";
         }
-        $poi_name = str_replace("&", "&amp;", $poi_name);
-        $poi_name = str_replace("<", "&lt;", $poi_name);
-        $poi_name = str_replace(">", "&gt;", $poi_name);
+        $poi_name = str_replace("&", '&amp;', $poi_name);
+        $poi_name = str_replace("<", '&lt;', $poi_name);
+        $poi_name = str_replace(">", '&gt;', $poi_name);
         if ($location->isEnabled($language_usage)) {
             echo '<li class="geomap_list_location_enabled">' . $poi_name . '</li>';
         } else {

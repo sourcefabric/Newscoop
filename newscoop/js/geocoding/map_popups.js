@@ -348,26 +348,7 @@ GeoPopups.create_popup_content = function(feature, geo_obj) {
 
         // the direct-html part can not be done clickable reasonably,
         // thus just the plain-text case is inline editable
-        if (false && editing) {
-            poi_content_value = content_orig;
-            var content_class_add = "";
-            var content_view = content;
-            if ("" == content_view) {
-                content_class_add = "map_text_lack";
-                content_view = geo_obj.display_strings.fill_in_the_point_description;
-            }
-
-            pop_text += "<div class='popup_content'>";
-            pop_text += "<a href='#' id='geo_show_content_inline' class='inline_editable' onClick=\"GeoPopups.show_inline_content_edit(" + geo_obj.obj_name + ", " + rank + "); return false;\">";
-            pop_text += "<span id='content_inner_edit_value' class='" + content_class_add + "'>" + content_view + "</span></div>";
-
-            pop_text += "<textarea id='geo_edit_content_inline' class='map_hidden " + content_class_add + "' rows=4 cols=20 onBlur=\"GeoPopups.show_inline_content_view(" + geo_obj.obj_name + ", " + rank + "); return false;\" onChange='GeoPopups.show_inline_content_change(" + geo_obj.obj_name + ", " + rank + ", this.value); return false;' onKeyUp='GeoPopups.show_inline_content_change(" + geo_obj.obj_name + ", " + rank + ", this.value); return true;'>";
-            pop_text += "</textarea>";
-
-            pop_text += "</div>";
-        } else {
-            pop_text += "<div class='popup_content'>" + content + "</div>";
-        }
+        pop_text += "<div class='popup_content'>" + content + "</div>";
 
     }
     else
@@ -375,10 +356,6 @@ GeoPopups.create_popup_content = function(feature, geo_obj) {
         var plain_text = feature.attributes.m_text;
         var plain_text_orig = plain_text;
 
-        //var escape_soft_mode = false;
-        //if (editing) {
-        //    escape_soft_mode = true;
-        //}
         plain_text = GeoPopups.escape_desc_text(plain_text, false);
 
         if (editing) {

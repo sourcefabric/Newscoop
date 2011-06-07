@@ -233,8 +233,6 @@ this.map_limit_height_view = 1200;
 // setting the map width
 this.set_map_width = function(width, set_view)
 {
-    //var width_changed = false;
-    //if (set_view) {width_changed = true;}
 
     var partial_change = false;
     if (this.map_limit_width_display > this.map_art_view_width)
@@ -259,8 +257,6 @@ this.set_map_width = function(width, set_view)
 // setting the map height
 this.set_map_height = function(height, set_view)
 {
-    //var height_changed = false;
-    //if (set_view) {height_changed = true;}
 
     var partial_change = false;
     if (this.map_limit_height_display > this.map_art_height_width)
@@ -298,9 +294,6 @@ this.set_map_info = function(params)
 
     this.map_art_view_width_default = parseInt(params.width);
     this.map_art_view_height_default = parseInt(params.height);
-
-    //this.set_map_width(this.map_art_view_width_default);
-    //this.set_map_height(this.map_art_view_height_default);
 
 };
 
@@ -810,10 +803,6 @@ this.preview_edited = function()
 
 this.select_poi_on_list = function(index)
 {
-    //if (index != this.list_shown_header) {
-    //    return;
-    //}
-
     var poi_visible = this.is_poi_visible(index);
     if (!poi_visible) {
         this.center_poi(index);
@@ -1065,11 +1054,9 @@ this.map_update_side_desc_height = function()
 
     var sidedesc_obj = document.getElementById ? document.getElementById("map_sidedescs") : null;
 
-    //var old_height = sidedesc_obj.offsetHeight;
     var new_height = 480 - height_taken;
     if ((!new_height) || (250 > new_height)) {new_height = 250;}
 
-    //if (old_height > new_height)
     {
         sidedesc_obj.style.height = new_height + "px";
     }
@@ -1172,7 +1159,6 @@ this.insert_poi = function(coor_type, lonlat_ini, longitude, latitude, label)
         );
     }
 
-    //var poi_title = this.display_strings.point_number + " " + (this.descs_count_inc + 1);
     var poi_title = "";
 
     if (undefined !== label)
@@ -1195,7 +1181,6 @@ this.insert_poi = function(coor_type, lonlat_ini, longitude, latitude, label)
     vector.attributes.m_content = "";
     vector.attributes.m_link = "";
     vector.attributes.m_text = "";
-    //vector.attributes.m_text = this.display_strings.fill_in_the_point_description;
     vector.attributes.m_image_mm = 0;
     vector.attributes.m_image_source = "";
     vector.attributes.m_image_width = "";
@@ -1251,8 +1236,6 @@ this.insert_poi = function(coor_type, lonlat_ini, longitude, latitude, label)
 
 this.view_newly_edited = function(index)
 {
-    //this.close_popup(index);
-    //this.center_poi(index);
     OpenLayers.HooksPopups.on_map_feature_select(this, index);
 };
 
@@ -1286,9 +1269,6 @@ this.main_openlayers_init = function(map_div_name, descs_name)
         controls: [
             new OpenLayers.Control.Navigation(),
             this.pzb_ctrl,
-            //new OpenLayers.Control.Permalink('permalink'),
-            //new OpenLayers.Control.MousePosition(),
-            //new OpenLayers.Control.OverviewMap(),
             new OpenLayers.Control.ScaleLine()
         ],
         numZoomLevels: 20
@@ -1393,8 +1373,6 @@ this.main_openlayers_init = function(map_div_name, descs_name)
     var zoom = this.map_view_layer_zoom;
 
     var style_map = new OpenLayers.StyleMap({
-                //fillOpacity: 1.0,
-                //pointRadius: 10,
                 cursor: "pointer",
                 graphicZIndex: 10
     });
@@ -1462,7 +1440,6 @@ this.main_openlayers_init = function(map_div_name, descs_name)
         if (poi_hover) {
             if (null !== poi_hover.attributes.m_rank) {
                 map.geo_obj.poi_rank_out = poi_hover.attributes.m_rank;
-                //$("#map_poi_side_list").accordion("activate", geo_locations.display_index(geo_locations.poi_rank_out));
                 map.geo_obj.update_poi_descs(map.geo_obj.poi_rank_out);
             }
         }
@@ -1654,7 +1631,6 @@ this.map_position_changed = function ()
 // map zoom is set automatically on map layer change
 this.map_zoom_changed = function ()
 {
-    //if (this.map_view_layer_zoom)
     {
         var current_map_zoom = this.map.getZoom();
         if (current_map_zoom != this.map_view_layer_zoom)
@@ -1671,7 +1647,7 @@ this.map_zoom_changed = function ()
 
 };
 
-// ol loose the select control for f*cking many times
+// ol loose the select control for many times
 this.restart_select_control = function()
 {
     var geo_obj = this;
@@ -1788,8 +1764,6 @@ this.load_point_data = function()
 // storing POI's visible name
 this.store_point_label = function(value, index)
 {
-    //this.set_save_state(true);
-
     var label_value = "";
     var label_obj = document.getElementById ? document.getElementById("point_label") : null;
     if (label_obj) {
@@ -1840,8 +1814,6 @@ this.load_point_label = function()
 // storing POI's specified property
 this.store_point_property = function(property, value, index)
 {
-    //this.set_save_state(true);
-
     if ("text" == property) {
         if (value == this.display_strings.fill_in_the_point_description) {
             value = "";
@@ -1920,16 +1892,6 @@ this.store_point_property = function(property, value, index)
     }
     attrs[poi_property] = value;
 
-/*
-    // perex not used now
-    if ("perex" == property) {
-        var perex_view_obj = document.getElementById ? document.getElementById('point_perex_view') : null;
-        if (perex_view_obj) {
-            perex_view_obj.innerHTML = value;
-        }
-    }
-*/
-
     if ("image" == property.substr(0, 5))
     {
         GeoPopups.set_image_tag(attrs, this);
@@ -1963,7 +1925,6 @@ this.load_point_properties = function()
     var cur_marker = this.layer.features[use_index];
 
     var poi_prop_names = {};
-    // poi_prop_names['perex'] = "point_perex"; // perex not used now
     poi_prop_names['text'] = "point_descr";
     poi_prop_names['link'] = "point_link";
     poi_prop_names['content'] = "point_content";
@@ -1999,21 +1960,10 @@ this.load_point_properties = function()
         }
 
         div_obj.value = one_value;
-
-/*
-        // perex not used now
-        if ('perex' == one_name) {
-            var perex_view_obj = document.getElementById ? document.getElementById('point_perex_view') : null;
-            if (perex_view_obj) {
-                perex_view_obj.innerHTML = one_value;
-            }
-        }
-*/
     }
 
     var video_type_names = {'none': 0, 'youtube': 1, 'vimeo': 2, 'flash': 3, 'flv': 4};
 
-    //var video_type = cur_marker.attributes['m_video_type'];
     if (!video_type) {video_type = "none";}
     var video_index = video_type_names[video_type];
     if (!video_index) {video_index = 0;}
@@ -2135,7 +2085,6 @@ this.load_point_direct = function()
 
     this.update_edit_preview();
     this.set_edit_direct();
-    this.edit_set_mode();
 };
 
 // updating the preview view at point editing
@@ -2184,7 +2133,6 @@ this.set_edit_direct = function()
     if (direct_usage)
     {
         $("#edit_part_text").addClass("map_hidden");
-        //if ('edit' == this.edit_view_mode) // edit an view modes concurrent now, see edit_set_mode below
         {
             $("#edit_part_content").removeClass("map_hidden");
         }
@@ -2192,54 +2140,9 @@ this.set_edit_direct = function()
     else
     {
         $("#edit_part_content").addClass("map_hidden");
-        //if ('edit' == this.edit_view_mode) // edit an view modes concurrent now, see edit_set_mode below
         {
             $("#edit_part_text").removeClass("map_hidden");
         }
-    }
-
-};
-
-// adjusting text/preview at point editing
-this.edit_set_mode = function(mode)
-{
-    return; // the both text-edit and popup-view are now concurrently visible at their respective tabs
-
-    var edit_obj = document.getElementById ? document.getElementById("point_edit_mode_edit") : null;
-    var view_obj = document.getElementById ? document.getElementById("point_edit_mode_view") : null;
-
-    if ('view' == mode)
-    {
-        this.edit_view_mode = 'view';
-        $("#edit_part_content").addClass("map_hidden");
-
-        $("#edit_part_text").addClass("map_hidden");
-
-        $("#edit_part_preview").removeClass("map_hidden");
-        $("#edit_part_preview_outer").removeClass("map_hidden");
-
-        edit_obj.checked = false;
-        view_obj.checked = true;
-
-        this.update_edit_preview();
-
-    }
-    else
-    {
-        this.edit_view_mode = 'edit';
-        if ('html' == this.edit_text_mode)
-        {
-            $("#edit_part_content").removeClass("map_hidden");
-        }
-        else
-        {
-            $("#edit_part_text").removeClass("map_hidden");
-        }
-        $("#edit_part_preview").addClass("map_hidden");
-        $("#edit_part_preview_outer").addClass("map_hidden");
-
-        view_obj.checked = false;
-        edit_obj.checked = true;
     }
 
 };
@@ -2401,7 +2304,6 @@ this.map_save_name = function()
     var display_obj = document.getElementById ? document.getElementById("map_name_display") : null;
 
     var name_value = input_obj.value;
-    //if ("" != name_value)
     {
         var map_name_disp_str = name_value;
         map_name_disp_str = map_name_disp_str.replace(/&/gi, "&amp;");
@@ -2779,20 +2681,6 @@ this.map_save_all = function(script_dir, force_save)
 
     var geo_obj = this;
 
-/*
-    if ((!force_save) && (!this.check_points_filled())) {
-
-        $("#save_empty_dialog").dialog("open");
-
-        //var proc_anyway = confirm(this.display_strings.not_filled);
-        //if (!proc_anyway) {
-        //    return;
-        //}
-
-        return;
-    }
-*/
-
     this.set_save_state(false);
 
     var cur_marker = null;
@@ -2939,18 +2827,6 @@ this.map_save_all = function(script_dir, force_save)
     if (this.main_page_upload)
     {
         this.main_page_upload = false;
-        try {
-/* the article editing page has changed
-            if (window.opener.geomap_art_spec_main == window.geomap_art_spec_popup)
-            {
-                window.opener.document.forms.article_edit.f_message.value = this.display_strings["locations_updated"];
-                window.opener.document.forms.article_edit.submit();
-            }
-*/
-        }
-        catch (e)
-        {
-        }
     }
 };
 
