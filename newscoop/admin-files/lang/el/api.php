@@ -1,7 +1,8 @@
 <?php 
-regGS("Version", "");
-regGS("License", "");
-regGS("Homepage", "");
+regGS("Loading...", "Φόρτωση...");
+regGS("Version", "Εκδοχή");
+regGS("License", "Άδεια");
+regGS("Homepage", "Αρχική σελίδα");
 regGS("Show original map", "Εμφάνιση αρχικού χάρτη");
 regGS("The uploaded archive does not contain an valid newscoop plugin.", "Το ανεβασμένο αρχείο δεν περιέχει έγκυρο πρόσθετο του newscoop.");
 regGS("Map", "Χάρτης");
@@ -73,11 +74,8 @@ regGS("* Marked fields are mandatory.", "Τα πεδία που επισημάν
 regGS("$1 is of type $2", "$1 είναι τύπου $2");
 regGS("Invalid resize width/height.", "Μη έγκυρη αλλαγή πλάτους/ύψους.");
 regGS("Image type $1 is not supported.", "Ο τύπος εικόνας $1 δεν υποστηρίζεται.");
-regGS("There was a problem trying to execute the XML RPC function.", "Υπήρξε ένα πρόβλημα κατά τη προσπάθεια εκτέλεσης της λειτουργίας XML RPC.");
 regGS("Template $1 was moved to $2", "Το πρότυπο $1 μετακινήθηκε σε $2");
 regGS("Template $1 was deleted", "Το πρότυπο $1 διαγράφτηκε");
-regGS("File $1 does not exist", "Το αρχείο $1 δεν υπάρχει");
-regGS("Communication error: ", "Σφάλμα επικοινωνίας:");
 regGS("Template $1 no longer exists!", "Το πρότυπο $1 πλέον δεν υπάρχει!");
 regGS("The file uploaded is not an image.", "Το αρχείο που ανέβηκε δεν αποτελεί εικόνα.");
 regGS("Could not delete record from the database.", "Δεν ήταν δυνατή η διαγραφή της εγγραφής από τη βάση δεδομένων.");

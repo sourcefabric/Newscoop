@@ -1,4 +1,5 @@
 <?php 
+regGS("Loading...", "");
 regGS("Version", "");
 regGS("License", "");
 regGS("Homepage", "");
@@ -73,11 +74,8 @@ regGS("* Marked fields are mandatory.", "ئه و زه مینه نیشان کرا
 regGS("$1 is of type $2", " جۆری $1  بۆ جۆری $2");
 regGS("Invalid resize width/height.", "پا نی و درێژی یه که ی با یه خدار نی یه");
 regGS("Image type $1 is not supported.", "جۆری وێنه ی  $1 پشتی وا نی لێ نا کرێت");
-regGS("There was a problem trying to execute the XML RPC function.", "هه ڵه یه ك هه بووله قرتا ندنی XML RPC کرد ه ی ");
 regGS("Template $1 was moved to $2", "شیرا زه ی $1 جو ڵا بۆ $2");
 regGS("Template $1 was deleted", "شیرا زه ی $1  سڕا یه وه");
-regGS("File $1 does not exist", "فایلی  $1 بوونی نی یه");
-regGS("Communication error: ", "هه ڵه ی په یوه ندی");
 regGS("Template $1 no longer exists!", "شیرا زه ی $1 ئیتر بوو نی نی یه");
 regGS("The file uploaded is not an image.", "ئه و فا یله ی به رز کرا یه وه وێنه نی یه");
 regGS("Could not delete record from the database.", "ناتوانرێت ریکۆرده کانی ده یتا به یس بسڕێ درێته وه");

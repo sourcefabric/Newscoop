@@ -1,12 +1,12 @@
 <?php 
-regGS("You do not have the right to add files.", "");
-regGS("Should this file only be available for this translation of the article, or for all translations?", "");
-regGS("Please enter a description for the file: '$1'.", "");
-regGS("Only this translation", "");
-regGS("No files for multi editing.", "");
-regGS("Edit files", "");
-regGS("Change file information", "");
-regGS("All translations", "");
+regGS("You do not have the right to add files.", "Δεν έχετε το δικαίωμα να προσθέσετε αρχεία.");
+regGS("Should this file only be available for this translation of the article, or for all translations?", "Αυτό το αρχείο να είναι διαθέσιμο μόνο για αυτή τη μετάφραση του άρθρου, ή για όλες τις μεταφράσεις;");
+regGS("Please enter a description for the file: '$1'.", "Παρακαλούμε εισάγετε μια περιγραφή για το αρχείο: '$1'.");
+regGS("Only this translation", "Μόνο αυτή η μετάφραση");
+regGS("No files for multi editing.", "Δεν υπάρχουν αρχεία για πολλαπλή επεξεργασία.");
+regGS("Edit files", "Επεξεργασία αρχείων");
+regGS("Change file information", "Αλλαγή πληροφοριών αρχείου");
+regGS("All translations", "Όλες οι μεταφράσεις");
 regGS("Save All", "Αποθήκευση όλων");
 regGS("Files", "Αρχεία");
 regGS("You can't delete used files.", "Δεν μπορείτε να διαγράψετε χρησιμοποιημένα αρχεία.");

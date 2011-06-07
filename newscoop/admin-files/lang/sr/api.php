@@ -1,4 +1,5 @@
 <?php 
+regGS("Loading...", "");
 regGS("Version", "");
 regGS("License", "");
 regGS("Homepage", "");
@@ -73,11 +74,8 @@ regGS("* Marked fields are mandatory.", "Поља означена са * су �
 regGS("$1 is of type $2", "$1 је за тип $2");
 regGS("Invalid resize width/height.", "Неисправне вредности за промену димензија ширина/висина");
 regGS("Image type $1 is not supported.", "Тип слике $1 није подржан");
-regGS("There was a problem trying to execute the XML RPC function.", "Дошло је до проблема при извршавању XML RPC функције.");
 regGS("Template $1 was moved to $2", "Шаблон $1 је премештен на $2");
 regGS("Template $1 was deleted", "Шаблон $1 је обрисан");
-regGS("File $1 does not exist", "Фајл $1 не постоји");
-regGS("Communication error: ", "Грешка у комуникацији:");
 regGS("Template $1 no longer exists!", "Шаблон $1 више не постоји");
 regGS("The file uploaded is not an image.", "Аплоудовани фајл није слика.");
 regGS("Could not delete record from the database.", "Није могуће обрисати запис из базе.");

@@ -1,4 +1,6 @@
 <?php 
+regGS("Please enter password recovery from email.", "");
+regGS("From email address:", "");
 regGS("Run scheduled tasks externally?", "Geplante Aufgaben extern ausführen?");
 regGS("Setting up a Newscoop Replication Server?", "Newscoop Replication Server erstellen?");
 regGS("Newscoop Online Server Database", "Newscoop Online Server Datenbank");
@@ -60,15 +62,11 @@ regGS("SMTP Port", "SMTP Port");
 regGS("SMTP Host:", "SMTP Host:");
 regGS("SMTP Host must be at least four character.", "SMTP Host muss aus mindestens 4 Zeichen bestehen.");
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "Einen Wert zwischen 0 und $1 eingeben (maximale Größe ist in 'php.ini' festgelegt). Bitte 'K' für Kilobytes, 'M' für Megabytes und 'G' für Gigabytes benutzen, ohne Leerstelle zwischen Wert und Buchstabe, z. B.: '3M'.");
-regGS("XML RPC Path:", "XML RPC Pfad:");
-regGS("XML RPC File:", "XML RPC Datei:");
 regGS("System preferences updated", "System Voreinstellungen aktualisiert.");
 regGS("Reader subscriptions managed externally?", "Abonnements extern verwalten?");
-regGS("Port:", "Port:");
 regGS("Maximum upload file size:", "Maximale Dateigröße zum Hochladen:");
 regGS("Max Upload File Size", "Maximale Dateigröße zum Hochladen");
 regGS("Invalid Max Upload File Size value submitted", "Ungültiger Wert für maximale Dateigröße zum Hochladen eingegeben.");
-regGS("Hostname / IP Address:", "Hostname / IP Adresse:");
 regGS("General Settings", "Allgemeine Einstellungen");
 regGS("Database Replication data incomplete", "Daten für Datenbankreplikation unvollständig");
 regGS("Database Replication User:", "User Datenbankreplikation:");

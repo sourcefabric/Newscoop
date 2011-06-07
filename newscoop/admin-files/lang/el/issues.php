@@ -1,4 +1,5 @@
 <?php 
+regGS("The publishing schedule can not be set in in the past", "Το πρόγραμμα δημοσίευσης δεν μπορεί να ρυθμιστεί στο παρελθόν");
 regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "Η προγραμματισμένη ενέργεια διαγράφτηκε από το τεύχος #$1: \"$2\" (Δημοσίευση: $3)");
 regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "Προγραμματισμένη ενέργεια $1 για το τεύχος #$2: \"$3\" (Δημοσίευση: $4)");
 regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "Το τεύχος \"$1\" ($2) ανανεώθηκε στην δημοσίευση \"$3\"");

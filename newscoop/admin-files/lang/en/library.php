@@ -1,4 +1,13 @@
 <?php 
+regGS("Article status set to '$1' for $2 articles", "Article status set to '$1' for $2 articles");
+regGS("Article status not set to '$1' for $2 articles", "Article status not set to '$1' for $2 articles");
+regGS("$1 toggled for $2 articles.", "$1 toggled for $2 articles.");
+regGS("$1 not toggled for $2 articles.", "$1 not toggled for $2 articles.");
+regGS("$1 not toggled for $2  articles.", "$1 not toggled for $2  articles.");
+regGS("$1 articles have not been removed", "$1 articles have not been removed");
+regGS("$1 Article(s) unlocked", "$1 Article(s) unlocked");
+regGS("$1 Article(s) not unlocked", "$1 Article(s) not unlocked");
+regGS("$1 Article(s) duplicated", "$1 Article(s) duplicated");
 regGS("Download file", "Download file");
 regGS("You do not have the right to delete articles.", "You do not have the right to delete articles.");
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.");
@@ -43,9 +52,6 @@ regGS("Duplicate to another section", "Duplicate to another section");
 regGS("Display _MENU_ records", "Display _MENU_ records");
 regGS("Creator", "Creator");
 regGS("Create Date", "Create Date");
-regGS("Articles updated.", "Articles updated.");
-regGS("Article(s) unlocked", "Article(s) unlocked");
-regGS("Article(s) duplicated", "Article(s) duplicated");
 regGS("Article status set to '$1'", "Article status set to '$1'");
 regGS("Are you sure you want to delete selected articles?", "Are you sure you want to delete selected articles?");
 regGS("All Sections", "All Sections");

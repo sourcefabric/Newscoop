@@ -1,6 +1,7 @@
 <?php 
-regGS("Newscoop", "");
-regGS("Campsite", "");
+regGS("User name", "Όνομα Χρήστη");
+regGS("Newscoop", "Newscoop");
+regGS("Campsite", "Campsite");
 regGS("Password recovery request for $1", "");
 regGS("Your password has been reset.", "");
 regGS("Proceed to login.", "");
@@ -98,4 +99,5 @@ regGS("Login failed", "Η είσοδος απέτυχε");
 regGS("Please make sure that you typed the correct user name and password.", "Παρακαλούμε επιβεβαιωθείτε ότι πληκτρολογήσατε το σωστό όνομα χρήστη και κωδικό πρόσβασης.");
 regGS("If your problem persists please contact the site administrator $1", "Αν το πρόβλημα παραμένει, παρακαλούμε επικοινωνήστε με τον διαχειριστή του ιστοτόπου $1");
 regGS("Backup/Restore", "Αντίγραφο ασφαλείας/ Επαναφορά");
+regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "");
 ?>

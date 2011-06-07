@@ -1,4 +1,13 @@
 <?php 
+regGS("Article status set to '$1' for $2 articles", "");
+regGS("Article status not set to '$1' for $2 articles", "");
+regGS("$1 toggled for $2 articles.", "");
+regGS("$1 not toggled for $2 articles.", "");
+regGS("$1 not toggled for $2  articles.", "");
+regGS("$1 articles have not been removed", "");
+regGS("$1 Article(s) unlocked", "");
+regGS("$1 Article(s) not unlocked", "");
+regGS("$1 Article(s) duplicated", "");
 regGS("Download file", "Datei herunterladen");
 regGS("You do not have the right to delete articles.", "Sie haben kein Zugangsrecht zum Löschen von Artikeln.");
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "Sie haben kein Zugangsrecht zum Ändern des Artikelstatus. Ein eingepflegter Artikel kann nur von autorisierten Usern geändert werden.");
@@ -43,9 +52,6 @@ regGS("Duplicate to another section", "In eine andere Rubrik duplizieren");
 regGS("Display _MENU_ records", "Anzeigen _MENU_ Einträge");
 regGS("Creator", "Erstellt von");
 regGS("Create Date", "Datum erstellen");
-regGS("Articles updated.", "Artikel aktualisiert");
-regGS("Article(s) unlocked", "Artikel entsperrt");
-regGS("Article(s) duplicated", "Artikel dupliziert");
 regGS("Article status set to '$1'", "Artikelstatus auf '$1' gesetzt.");
 regGS("Are you sure you want to delete selected articles?", "Ausgewählte Artikel wirklich löschen?");
 regGS("All Sections", "Alle Rubriken");

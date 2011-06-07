@@ -1,4 +1,5 @@
 <?php 
+regGS("Newscoop", "Newscoop");
 regGS("Pending Article", "");
 regGS("Overwrite articles with matching names", "");
 regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");
@@ -139,4 +140,7 @@ regGS("This article cannot be previewed. Please make sure it has the article tem
 regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Η προεπισκόπιση του άρθρου δεν ήταν δυνατή. Παρακαλούμε βεβαιωθείτε ότι έχει επιλεγεί το πρότυπο της αρχικής σελίδας.");
 regGS("No such article.", "Δεν υπάρχει τέτοιο άρθρο.");
 regGS("No such section.", "Δεν υπάρχει τέτοια ενότητα.");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε το θέμα \\'$1\\' από το άρθρο;");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε το αρχείο \\'$1\\' από το άρθρο;");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε την εικόνα \\'$1\\' από το άρθρο;");
 ?>

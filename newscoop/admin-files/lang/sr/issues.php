@@ -1,4 +1,5 @@
 <?php 
+regGS("The publishing schedule can not be set in in the past", "");
 regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "Заказана акција обрисана из издања #$1: \"$2\" (Публикација: $3)");
 regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "Заказана акција $1 за издање #$2: \"$3\" (Публикација: $4)");
 regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "Издање \"$1\" ($2) измењено у публикацији \"$3\"");

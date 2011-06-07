@@ -1,4 +1,5 @@
 <?php 
+regGS("Loading...", "");
 regGS("Version", "");
 regGS("License", "");
 regGS("Homepage", "");

@@ -1,5 +1,5 @@
 <?php 
-regGS("No topics have been created yet.", "");
+regGS("No topics have been created yet.", "Δεν έχουν δημιουργηθεί ακόμη θέματα.");
 regGS("Topics updated.", "Τα θέματα ανανεώθηκαν.");
 regGS("Topic does not exist.", "Το θέμα δεν υπάρχει.");
 regGS("The topic '$1' has been removed from article.", "Το θέμα '$1' αφαιρέθηκε από το άρθρο.");

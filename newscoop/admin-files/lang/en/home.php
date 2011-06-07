@@ -1,4 +1,5 @@
 <?php 
+regGS("User name", "User name");
 regGS("Newscoop", "Newscoop");
 regGS("Campsite", "Campsite");
 regGS("Password recovery request for $1", "Password recovery request for $1");

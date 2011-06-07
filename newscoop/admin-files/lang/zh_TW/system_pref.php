@@ -1,4 +1,6 @@
 <?php 
+regGS("Please enter password recovery from email.", "");
+regGS("From email address:", "");
 regGS("Run scheduled tasks externally?", "");
 regGS("Setting up a Newscoop Replication Server?", "");
 regGS("Newscoop Online Server Database", "");

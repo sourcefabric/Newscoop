@@ -1,4 +1,5 @@
 <?php 
+regGS("Loading...", "Loading...");
 regGS("Version", "Version");
 regGS("License", "License");
 regGS("Homepage", "Homepage");
@@ -73,11 +74,8 @@ regGS("* Marked fields are mandatory.", "* Marked fields are mandatory.");
 regGS("$1 is of type $2", "$1 is of type $2");
 regGS("Invalid resize width/height.", "Invalid resize width/height.");
 regGS("Image type $1 is not supported.", "Image type $1 is not supported.");
-regGS("There was a problem trying to execute the XML RPC function.", "There was a problem trying to execute the XML RPC function.");
 regGS("Template $1 was moved to $2", "Template $1 was moved to $2");
 regGS("Template $1 was deleted", "Template $1 was deleted");
-regGS("File $1 does not exist", "File $1 does not exist");
-regGS("Communication error: ", "Communication error: ");
 regGS("Template $1 no longer exists!", "Template $1 no longer exists!");
 regGS("The file uploaded is not an image.", "The file uploaded is not an image.");
 regGS("Could not delete record from the database.", "Could not delete record from the database.");

@@ -1,4 +1,5 @@
 <?php 
+regGS("The publishing schedule can not be set in in the past", "");
 regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "Se eliminó la acción programada de la edición #$1: \"$2\" (Publicación: $3)");
 regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "Acción programada $1 para la edición #$2: \"$3\" (Publicación: $4)");
 regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "Edición \"$1\" ($2) actualizada en la publicación \"$3\"");

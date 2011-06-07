@@ -1,8 +1,8 @@
 <?php 
-regGS("login", "");
-regGS("Session expired.", "");
-regGS("Processing...", "");
-regGS("Please", "");
+regGS("login", "είσοδος");
+regGS("Session expired.", "Η συνεδρία έληξε.");
+regGS("Processing...", "Φόρτωση...");
+regGS("Please", "Παρακαλούμε");
 regGS("Are you sure you want to quit without saving your changes?", "Είστε σίγουρος/η ότι θέλετε να παραιτηθείτε χωρίς να αποθηκεύσετε τις αλλαγές σας;");
 regGS("center city", "κέντρο πόλης");
 regGS("Map preview", "Προεπισκόπηση χάρτη");

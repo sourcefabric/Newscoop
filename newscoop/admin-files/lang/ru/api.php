@@ -1,4 +1,5 @@
 <?php 
+regGS("Loading...", "Загрузка...");
 regGS("Version", "Версия");
 regGS("License", "Лицензия");
 regGS("Homepage", "Главная");
@@ -73,11 +74,8 @@ regGS("* Marked fields are mandatory.", "* Отмеченные поля обя�
 regGS("$1 is of type $2", "$1 имеет тип $2");
 regGS("Invalid resize width/height.", "Невозможно изменить длину/ширину.");
 regGS("Image type $1 is not supported.", "Тип картинки $1 не поддерживается.");
-regGS("There was a problem trying to execute the XML RPC function.", "Возникла проблема попытки выполнения функции XML RPC");
 regGS("Template $1 was moved to $2", "Шаблон $1 был перемещен в $2");
 regGS("Template $1 was deleted", "Шаблон $1 был удален");
-regGS("File $1 does not exist", "Файл $1 не существует");
-regGS("Communication error: ", "Ошибка соединения:");
 regGS("Template $1 no longer exists!", "Шаблон $1 больше не существует!");
 regGS("The file uploaded is not an image.", "Загруженный файл не является изображением.");
 regGS("Could not delete record from the database.", "Не удалось удалить запись из базы данных.");

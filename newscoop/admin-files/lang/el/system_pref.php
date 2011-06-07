@@ -1,4 +1,6 @@
 <?php 
+regGS("Please enter password recovery from email.", "");
+regGS("From email address:", "");
 regGS("Run scheduled tasks externally?", "Εκτέλεση προγραμματισμένων εργασιών εξωτερικά;");
 regGS("Setting up a Newscoop Replication Server?", "Ρύθμιση Αντιγράφου του Διακομιστή Newscoop;");
 regGS("Newscoop Online Server Database", "Βάση Δεδομένων του Online Διακομιστή Newscoop ");
@@ -60,15 +62,11 @@ regGS("SMTP Port", "Θύρα SMTP");
 regGS("SMTP Host:", "SMTP Κόμβος:");
 regGS("SMTP Host must be at least four character.", "Ο SMTP Κόμβος πρέπει να αποτελείται τουλάχιστον από τέσσερεις χαρακτήρες.");
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "Εισάγετε μια τιμή μεταξύ 0 και $1 (το μέγιστο μέγεθος έχει οριστεί σε 'php.ini'). Παρακαλούμε χρησιμοποιήστε 'Κ' για kilobytes, 'Μ' για megabytes και 'G' για gigabytes, χωρίς κενά διαστήματα μεταξύ τιμής και αντίστοιχου γράμματος, π.χ. '3Μ'.  ");
-regGS("XML RPC Path:", "Διαδρομή XML RPC:");
-regGS("XML RPC File:", "Αρχείο XML RPC:");
 regGS("System preferences updated", "Οι προτιμήσεις συστήματος ενημερώθηκαν");
 regGS("Reader subscriptions managed externally?", "Οι αναγνώστες (συνδρομητές) να διαχειρίζονται εξωτερικά;");
-regGS("Port:", "Θύρα");
 regGS("Maximum upload file size:", "Μέγιστο μέγεθος αρχείου για ανέβασμα:");
 regGS("Max Upload File Size", "Μέγιστο Μέγεθος Αρχείου για Ανέβασμα");
 regGS("Invalid Max Upload File Size value submitted", "Υποβλήθηκε μη έγκυρη τιμή μέγιστου επιτρεπόμενου μεγέθους αρχείου");
-regGS("Hostname / IP Address:", "Όνομα Κόμβου / Διεύθυνση IP");
 regGS("General Settings", "Γενικές Ρυθμίσεις");
 regGS("Database Replication data incomplete", "Τα Δεδομένα Αντιγράφου Βάσης Δεδομένων είναι ελλειπή");
 regGS("Database Replication User:", "Χρήστης Αντιγράφου Βάσης Δεδομένων: ");

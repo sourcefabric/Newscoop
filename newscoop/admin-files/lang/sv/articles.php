@@ -1,4 +1,5 @@
 <?php 
+regGS("Newscoop", "");
 regGS("Pending Article", "");
 regGS("Overwrite articles with matching names", "");
 regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");

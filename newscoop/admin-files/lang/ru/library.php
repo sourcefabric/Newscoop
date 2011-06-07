@@ -1,4 +1,13 @@
 <?php 
+regGS("Article status set to '$1' for $2 articles", "Статус статьи '$1' установлен для $2 статей");
+regGS("Article status not set to '$1' for $2 articles", "Статус статьи '$1' не установлен для $2 статей");
+regGS("$1 toggled for $2 articles.", "$1включен для $2 статей.");
+regGS("$1 not toggled for $2 articles.", "$1не включен для $2 статей.");
+regGS("$1 not toggled for $2  articles.", "$1не включен для $2 статей.");
+regGS("$1 articles have not been removed", "$1 статей не были удалены");
+regGS("$1 Article(s) unlocked", "$1 статья(и) разблокированы");
+regGS("$1 Article(s) not unlocked", "$1 статья(и) не разблокированы");
+regGS("$1 Article(s) duplicated", "$1 статья(и) дублированы.");
 regGS("Download file", "Загрузить файл");
 regGS("You do not have the right to delete articles.", "У Вас нет прав доступа для удаления статей.");
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "У Вас нет прав доступа для смены статуса статьи. Созданная и утвержденная статья может быть изменена только авторизованным пользователем.");
@@ -43,9 +52,6 @@ regGS("Duplicate to another section", "Дублировать в другую р
 regGS("Display _MENU_ records", "Отобразить _MENU_ записи");
 regGS("Creator", "Создатель");
 regGS("Create Date", "Дата создания");
-regGS("Articles updated.", "Статья обновлена.");
-regGS("Article(s) unlocked", "Статья(и) разблокированы");
-regGS("Article(s) duplicated", "Статья(и) дублированы");
 regGS("Article status set to '$1'", "Статус статьи установлен на '$1'");
 regGS("Are you sure you want to delete selected articles?", "Вы уверены, что хотите удалить выбранные файлы?");
 regGS("All Sections", "Все рубрики");

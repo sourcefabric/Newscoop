@@ -1,4 +1,5 @@
 <?php 
+regGS("The publishing schedule can not be set in in the past", "Невозможно планирование прошедшей датой");
 regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "Запланированное действие удалено из выпуска #$1: \"$2\" (Издание: $3)");
 regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "Запланированное действие $1 для выпуска #$2: \"$3\" (Издание: $4)");
 regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "Выпуск \"$1\" ($2) обновлено в издании \"$3\"");

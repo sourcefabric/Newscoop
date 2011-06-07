@@ -1,4 +1,5 @@
 <?php 
+regGS("Loading...", "");
 regGS("Version", "");
 regGS("License", "");
 regGS("Homepage", "");
@@ -73,11 +74,8 @@ regGS("* Marked fields are mandatory.", "Polja označena * su obavezna");
 regGS("$1 is of type $2", "$1 je za tip $2");
 regGS("Invalid resize width/height.", "Neispravne vrednosti za promenu dimenzija širina/visina");
 regGS("Image type $1 is not supported.", "Tip slike $1 nije podržan");
-regGS("There was a problem trying to execute the XML RPC function.", "došlo je do problema pri izvršavanju XML RPC funkcije.");
 regGS("Template $1 was moved to $2", "Šablon $1 je premešten na $2");
 regGS("Template $1 was deleted", "Šablon $1 je obrisan");
-regGS("File $1 does not exist", "Fajl $1 ne postoji");
-regGS("Communication error: ", "Greška u komunikaciji:");
 regGS("Template $1 no longer exists!", "Šablon $1 više ne postoji!");
 regGS("The file uploaded is not an image.", "Uploadovani fajl nije slika.");
 regGS("Could not delete record from the database.", "Nije moguće obrisati zapis iz baze.");

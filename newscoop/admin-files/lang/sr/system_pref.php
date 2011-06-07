@@ -1,4 +1,6 @@
 <?php 
+regGS("Please enter password recovery from email.", "");
+regGS("From email address:", "");
 regGS("Run scheduled tasks externally?", "Екстерно покретање планираних акција?");
 regGS("Setting up a Newscoop Replication Server?", "Подешавање Newscoop репликационог сервера?");
 regGS("Newscoop Online Server Database", "Newscoop база података на онлајн серверу");
@@ -60,15 +62,11 @@ regGS("SMTP Port", "СМТП порт");
 regGS("SMTP Host:", "СМТП хост:");
 regGS("SMTP Host must be at least four character.", "СМТП хост мора имати најмање четири карактера");
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "Унесите вредност измњђу 0 и $1 (максимална вредност је дефинисана у 'php.ini'). Користите 'К' за килобајте, 'М' за мегабајте и Ѓ'за гигабајте, без размака између вредности и одговарајућег слова (нпр '3М')");
-regGS("XML RPC Path:", "Путања до XML RPC:");
-regGS("XML RPC File:", "XML RPC фајл:");
 regGS("System preferences updated", "Поставке система измењене");
 regGS("Reader subscriptions managed externally?", "Корисничке претплате се уређују екстерно?");
-regGS("Port:", "Порт:");
 regGS("Maximum upload file size:", "Максимална величина фајла за аплоуд:");
 regGS("Max Upload File Size", "Максимална величина фајла за аплоуд");
 regGS("Invalid Max Upload File Size value submitted", "Унесена је погрешна максимална величина фајла за аплоуд");
-regGS("Hostname / IP Address:", "Hostname / ИП адреса:");
 regGS("General Settings", "Основне поставке");
 regGS("Database Replication data incomplete", "Датум репликације базе података је некомплетан");
 regGS("Database Replication User:", "Корисничко име за базу репликационог сервера:");

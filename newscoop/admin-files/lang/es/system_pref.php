@@ -1,4 +1,6 @@
 <?php 
+regGS("Please enter password recovery from email.", "");
+regGS("From email address:", "");
 regGS("Run scheduled tasks externally?", "¿Correr tareas programads de forma externa?");
 regGS("Setting up a Newscoop Replication Server?", "¿Desea configurar un servidor de replicación para Newscoop?");
 regGS("Newscoop Online Server Database", "Base de datos del servidor en línea de Newscoop");
@@ -60,15 +62,11 @@ regGS("SMTP Port", "Puerto SMTP:");
 regGS("SMTP Host:", "Anfitrión SMTP:");
 regGS("SMTP Host must be at least four character.", "El anfitrión SMTP debe tener por lo menos 4 caracteres.");
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "Ingrese un valor entre 0 y $1 (el tamaño máximo está especificado en 'pho.ini'). Por favor utilize 'K' para kilobatios, 'M' para megabytes y 'G' para gigabytes, sin espacio entre los valores y la letra correspondiente, por ejemplo '3M'.");
-regGS("XML RPC Path:", "Recorrido XML RPC:");
-regGS("XML RPC File:", "Archivo XML RPC:");
 regGS("System preferences updated", "Las preferencias del sistema han sido actualizadas.");
 regGS("Reader subscriptions managed externally?", "¿Desea administrar externamente las subscripciones?");
-regGS("Port:", "Puerto:");
 regGS("Maximum upload file size:", "Tamaño mázximo para cargar un archivo:");
 regGS("Max Upload File Size", "Tamaño mázximo para cargar un archivo:");
 regGS("Invalid Max Upload File Size value submitted", "Ingresó un valor del tamaño del archivo inválido");
-regGS("Hostname / IP Address:", "Nombre de anfitrión/ Dirección IP:");
 regGS("General Settings", "Ajustes generales");
 regGS("Database Replication data incomplete", "Replicación de datos incompleta.");
 regGS("Database Replication User:", "Usuario de la base de datos réplica:");

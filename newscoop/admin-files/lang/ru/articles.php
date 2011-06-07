@@ -1,4 +1,5 @@
 <?php 
+regGS("Newscoop", "Newscoop");
 regGS("Pending Article", "Статьи в статусе \"Отправленные\"");
 regGS("Overwrite articles with matching names", "Переписать статьи с соответствующими именами");
 regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "Статья \"<i>$1</i>\" уже существует и не была перезаписана. <br />");

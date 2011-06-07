@@ -1,4 +1,5 @@
 <?php 
+regGS("Loading...", "");
 regGS("Version", "");
 regGS("License", "");
 regGS("Homepage", "");
@@ -73,11 +74,8 @@ regGS("* Marked fields are mandatory.", "");
 regGS("$1 is of type $2", "");
 regGS("Invalid resize width/height.", "");
 regGS("Image type $1 is not supported.", "");
-regGS("There was a problem trying to execute the XML RPC function.", "");
 regGS("Template $1 was moved to $2", "");
 regGS("Template $1 was deleted", "");
-regGS("File $1 does not exist", "");
-regGS("Communication error: ", "");
 regGS("The file uploaded is not an image.", "Den uppladdade filen är inte en bild.");
 regGS("Could not delete record from the database.", "Kunde inte radera posten från databasen.");
 regGS("template path", "mallsökväg");

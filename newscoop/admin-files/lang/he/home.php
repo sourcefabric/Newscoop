@@ -1,4 +1,5 @@
 <?php 
+regGS("User name", "");
 regGS("Newscoop", "");
 regGS("Campsite", "");
 regGS("Password recovery request for $1", "בקשת שיחזור סיסמא ל-$1");
