@@ -57,5 +57,14 @@ class ArticleType
 		$this->name = $name;
 		return $this;
 	}
+
+	/**
+	 * Used for update and stuff
+	 * @return string
+	 */
+	public function __toString()
+	{
+	    return $this->getName();
+	}
 }
 

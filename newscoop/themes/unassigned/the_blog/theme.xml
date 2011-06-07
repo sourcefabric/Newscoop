@@ -19,7 +19,7 @@
 		<field name="Post" type="multiline" />
 	</articleType>
 
-	<articleType name="Static">
+	<articleType name="News">
 		<field name="Title" type="singleline" length="255" />
 		<field name="Post" type="multiline" />
 	</articleType>
