@@ -13,24 +13,24 @@ use Doctrine\Common\Collections\ArrayCollection,
 /**
  * Issue entity
  * @Entity
- * @Table(name="ArticleTypeMetadata",{@UniqueConstraint(name="PRIMARY",columns={"type_name","filed_name"})})
+ * @Table(name="ArticleTypeMetadata")
  */
 class ArticleType
 {
-    /** 
-     * @Id 
+    /**
+     * @Id
      * @Column(type="string",unique=true,name="type_name")
      */
     private $name;
 
-    /** 
-     * @Id 
+    /**
+     * @Id
      * @Column(type="string",unique=true,name="field_name")
-     * 
+     *
      * TODO MASSIVE ALERT HERE! WE HAVE THE STRING: NULL FOR NULL VALUES FROM LEGACY!!!...
      */
-    private $fieldName;
-    
+    private $fieldName = 'NULL';
+
 	/**
 	 * Provides the name of the article type, must be a user frendly name used for displaying it on the UI.
 	 *
@@ -41,12 +41,12 @@ class ArticleType
     {
         return $this->name;
     }
-    
+
 	/**
 	 * Set the name of the article type, must be a user frendly name used for displaying it on the UI.
 	 *
 	 * @param string $name
-	 *		The name of the theme, must not be null or empty.
+	 *		The name of the article type, must not be null or empty.
 	 *
 	 * @return Newscoop\Entity\ArticleType
 	 *		This object for chaining purposes.
