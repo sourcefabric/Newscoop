@@ -1880,7 +1880,6 @@ $header_part = '
         $preview = true;
         $poi_info = Geo_Map::LoadMapData($map_id, $f_language_id, $f_article_number, $preview);
 
-        //$poi_info_json = str_replace("'", "\\'", json_encode($poi_info));
         $poi_info_json = json_encode($poi_info);
 
         $geocodingdir = $Campsite['WEBSITE_URL'] . '/js/geocoding/';
@@ -2485,7 +2484,6 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         $preview = true;
         $poi_info = array('pois' => $points, 'map' => $geo_map_usage);
         
-        //$poi_info_json = str_replace("'", "\\'", json_encode($poi_info));
         $poi_info_json = json_encode($poi_info);
         
         $geocodingdir = $Campsite['WEBSITE_URL'] . '/js/geocoding/';
@@ -2621,7 +2619,7 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
     $article_spec = json_encode($article_spec_arr);
 
     $local_strings = array();
-    $local_strings["articles"] = getGS('Articles');
+    $local_strings['articles'] = getGS('Articles');
     $local_strings_json = json_encode($local_strings);
 
     $tag_string_mid .= "\n";
@@ -3059,10 +3057,10 @@ var on_load_proc_filter = function()
         map_obj.style.height = "' . $geo_map_info["height"] . 'px";
 ';
     $loc_strings = json_encode(array(
-        "corners" => getGS("vertices"),
-        "pan_map" => getGS("Pan Map"),
-        "edit_polygon" => getGS("Edit Polygon"),
-        "create_polygon" => getGS("Create Polygon"),
+        'corners' => getGS('vertices'),
+        'pan_map' => getGS('Pan Map'),
+        'edit_polygon' => getGS('Edit Polygon'),
+        'create_polygon' => getGS('Create Polygon'),
     ));
     $img_dir = $Campsite['ADMIN_STYLE_URL'] . "/images/";
 
@@ -3297,17 +3295,3 @@ var on_load_proc = function()
 
 } // class Geo_Map
 
-/* testing:
-    // going east to west over the 180/-180, and south to north
-    $p_coordinates = array();
-    $p_coordinates[] = array("longitude" => "150", "latitude" => "20");
-    $p_coordinates[] = array("longitude" => "40", "latitude" => "60");
-
-    // going directly west to east, and north to south
-    $p_coordinates = array();
-    $p_coordinates[] = array("longitude" => "-10", "latitude" => "60");
-    $p_coordinates[] = array("longitude" => "40", "latitude" => "-20");
-
-    $query = Geo_Map::GetGeoSearchSQLQuery($p_coordinates);
-    echo $query;
-*/
