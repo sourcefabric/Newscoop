@@ -303,9 +303,6 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
 
         // ad B 1)
 
-        //$loc_id = $poi["location_id"];
-        //if (!$loc_id) {return;}
-
         $mm_id = null;
         $mm_spec = "";
         $mm_src = "";
@@ -413,7 +410,6 @@ class Geo_Multimedia extends DatabaseObject implements IGeoMultimedia
             {
                 // ad B 4) deleting the old connector;
                 $map_rm_params = array();
-                //$map_rm_params[] = $med_old_id;
                 $map_rm_params[] = $mm_id;
 
                 $success = $g_ado_db->Execute($queryStr_map_rm, $map_rm_params);
