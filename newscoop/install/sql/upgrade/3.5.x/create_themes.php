@@ -168,14 +168,35 @@ class ThemeUpgrade
 //			$this->createTheme($themePath);
 //		}
 
-		$newscoopVersion = new CampVersion();
-
 		$themes = $this->getThemeService()->getEntities();
 		foreach ($themes as $theme) {
 			$theme->setName($this->createName(basename($theme->getPath())));
-//			$theme->setMinorNewscoopVersion($newscoopVersion->getVersion());
-//			$theme->setVersion('1.0');
 			$this->getThemeService()->updateTheme($theme);
+		}
+	}
+
+
+	public function setThemeOutputSettings(Theme $theme)
+	{
+		global $g_ado_db;
+
+		$sql = "SELECT DISTINCT iss.IdPublication
+FROM Issues AS iss
+    LEFT JOIN Templates AS tpl_f ON iss.IssueTplId = tpl_f.Id
+    LEFT JOIN Templates AS tpl_s ON iss.SectionTplId = tpl_s.Id
+    LEFT JOIN Templates AS tpl_a ON iss.ArticleTplId = tpl_a.Id";
+		$publicationIds = $g_ado_db->GetAll($sql);
+		foreach ($publicationIds as $publicationId) {
+			$sql = "SELECT IssueTplId, SectionTplId, ArticleTplId, pub.url_error_tpl_id
+FROM Issues AS iss LEFT JOIN Publications AS pub ON iss.IdPublication = pub.Id
+WHERE IdPublication = $publicationId AND IssueTplId > 0 AND SectionTplId > 0 AND ArticleTplId > 0
+ORDER BY Number DESC
+LIMIT 0, 1";
+			$outSettings = $g_ado_db->GetAll($sql);
+			$frontTemplateId = $outSettings['IssueTplId'];
+			$sectionTemplateId = $outSettings['SectionTplId'];
+			$articleTemplateId = $outSettings['ArticleTplId'];
+			$errorTemplateId = $outSettings['url_error_tpl_id'];
 		}
 	}
 
@@ -190,7 +211,7 @@ class ThemeUpgrade
 	public function createTheme($themeSrcDir)
 	{
 		$srcPath = $this->templatesPath . (empty($themeSrcDir) ? '' : '/' . $themeSrcDir);
-		$dstPath = $this->themesPath . (empty($themeSrcDir) ? '' : '/' . $themeSrcDir);
+		$dstPath = $this->themesPath . (empty($themeSrcDir) ? '/default' : '/' . $themeSrcDir);
 
 		mkdir($dstPath);
 		copy(dirname(__FILE__) . '/' . $this->themeXMLFile, "$dstPath/$this->themeXMLFile");
