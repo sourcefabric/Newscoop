@@ -636,8 +636,11 @@ class Admin_TestController extends Zend_Controller_Action
 
             /* @var $issue \Newscoop\Entity\Issue */
             $issue = $this->getIssueService()->findById(1);
-
-            $return = $this->getTemplateSearchService()->getFrontPage($issue,                            $output);
+            /* @var $section \Newscoop\Entity\Section */
+            $section = $this->getSectionService()->findById($id);
+            
+            $return = $this->getTemplateSearchService()->getFrontPage($issue, $output);
+            var_dump($return);
         } catch (\Exception $e) {
             echo 'errror<br/>' . $e . '</br>' . $e->getMessage();
         }
