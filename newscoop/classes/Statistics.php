@@ -21,10 +21,8 @@ class Statistics {
         $p_statsOnly = false;
         $output_html = ' ';
 
-        /*
-            looking whether the request is of form used for statistics, i.e.
-            http(s)://newscoop_domain/(newscoop_dir/)_statistics(/...)(?...)
-        */
+        //looking whether the request is of form used for statistics, i.e.
+        //http(s)://newscoop_domain/(newscoop_dir/)_statistics(/...)(?...)
 
         $path_request_parts = explode('?', $_SERVER['REQUEST_URI']);
         $path_request = strtolower($path_request_parts[0]);
@@ -32,9 +30,11 @@ class Statistics {
             $path_request .= '/';
         }
 
+        $campsite_subdir = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/', -2));
+
         // the path prefix that should be considered when checking the statistics directory
         // it is an empty string for domain based installations
-        $stat_start = strtolower($Campsite['SUBDIR']);
+        $stat_start = strtolower($campsite_subdir);
         if (('' == $stat_start) || ('/' != $stat_start[strlen($stat_start)-1])) {
             $stat_start .= '/';
         }
@@ -66,8 +66,8 @@ class Statistics {
         $art_read_action = false;
 
         // for now, the only known action is to update statistics on article readering, i.e. for
-        // uri path of form (/newscoop_path)/statistics/reader/article/article_number/language_code/?...
-        if (4 <= count($stat_info_arr)) {
+        // uri path of form (/newscoop_path)/statistics/reader/article/object_id/?...
+        if (3 <= count($stat_info_arr)) {
             if (('reader' == $stat_info_arr[0]) && ('article' == $stat_info_arr[1])) {
                 $art_read_action =  true;
             }
@@ -79,11 +79,10 @@ class Statistics {
 
         // if the article was read by a user (incl. an anonymous one)
         if ($art_read_action) {
-            $article_number = (int) $stat_info_arr[2];
-            $language_code = $stat_info_arr[3];
+            $object_id = (int) $stat_info_arr[2];
 
-            $written = self::WriteStats($article_number, $language_code);
-            if (!$written) {
+            $correct = self::WriteStats('article', $object_id);
+            if (!$correct) {
                 return false;
             }
         } // end of the stats action on article reading
@@ -99,60 +98,169 @@ class Statistics {
     /**
      * Writes the statistics for the request.
      *
-     * @param int $p_articleNumber
-     *      number of article whose stats shall be updated
-     * @param string $p_languageCode
-     *      language of article whose stats shall be updated
+     * @param string $p_type
+     *      article or, for future, other types
+     * @param int $p_specifier
+     *      object_id of the read article
      * @return bool
      */
-    private static function WriteStats($p_articleNumber, $p_languageCode)
+    public static function WriteStats($p_type, $p_specifier)
     {
-        if ((!$p_articleNumber) || (!$p_languageCode)) {
+        if ('article' != $p_type) {
             return false;
         }
+        $object_id = 0 + $p_specifier;
 
-        // taking the language id, if it exists
-        $language_id = Language::GetLanguageIdByCode($p_languageCode);
-        if (!$language_id) {
-            return false;
+        global $Campsite;
+        if (empty($Campsite)) {
+            $Campsite = array('db' => array());
         }
 
-        // taking the article object, if it exists
-        $art_obj = new Article($language_id, $p_articleNumber);
-        if ((!$art_obj) || (!$art_obj->exists())) {
-            return false;
-        }
+        $newscoop_path = dirname(dirname(__FILE__));
+        require_once($newscoop_path . '/conf/database_conf.php');
 
-        // no new stats for non-published articles
-        if (!$art_obj->isPublished()) {
-            return false;
-        }
+        $dbAccess = $Campsite['db'];
 
-        // session used for stats writing (not to take an article reading more than once per session)
-        // session may be new when reading an externally cached article, thus not checking sessions here
+        $db_host = $dbAccess['host'];
+        $db_port = $dbAccess['port'];
+        $db_user = $dbAccess['user'];
+        $db_pwd = $dbAccess['pass'];
+        $db_name = $dbAccess['name'];
+
+        $application_path = $newscoop_path . '/application';
+        $config = parse_ini_file($application_path . '/configs/application.ini');
+        $session_name = $config['resources.session.name'];
+
+        session_start($session_name);
         $session_id = session_id();
 
-        // taking user id (article not public) from CampURI that is contained via an URIInstance
-        $user_id = 0;
-        $uri_inst = CampSite::GetURIInstance();
+        $sqlReqSel1 = 'SELECT last_stats_update FROM Requests WHERE session_id = :session_id AND object_id = :object_id LIMIT 1';
+        $sqlReqIns1 = 'INSERT INTO Requests (session_id, object_id, last_stats_update) VALUES (:session_id, :object_id, :last_stats_update)';
 
-        $meta_user = $uri_inst->user;
-        if ($meta_user) {
-            $user_id = $meta_user->identifier;
+        $sqlReqSel2 = 'SELECT request_count FROM RequestStats WHERE object_id = :object_id AND date = :date AND hour = :hour';
+        $sqlReqIns2 = 'INSERT INTO RequestStats (object_id, date, hour, request_count) VALUES (:object_id, :date, :hour, 1)';
+        $sqlReqUpd2 = 'UPDATE RequestStats SET request_count = :request_count WHERE (object_id, date, hour) = (:object_id, :date, :hour)';
+
+        $dbh = null;
+        $sth = null;
+
+        try {
+            $dbh = new PDO(
+                "mysql:host=$db_host;port=$db_port;dbname=$db_name", 
+                "$db_user",
+                "$db_pwd",
+                array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8')
+            );
+        }
+        catch (Exception $exc) {
+            return false;
         }
 
-        // the object_id is used for actual statistics
-        $objId = $art_obj->getProperty('object_id');
-        // if no object_id on the article, then no statistics
-        if ($objId) {
-            // the stats writing itself; going through session checking/creation for situations when a cached article was read
-            // thus calling SessionRequest::Create() instead of doing direct statistics updates via SessionRequest::UpdateStats()
-            $objectType = new ObjectType('article');
-            SessionRequest::Create($session_id, $objId, $objectType->getObjectTypeId(), $user_id, true);
+        $last_stats_update = null;
+
+        // does the user already read this article
+        try {
+            $sth = $dbh->prepare($sqlReqSel1);
+            $sth->bindValue(':session_id', (string) $session_id, PDO::PARAM_STR);
+            $sth->bindValue(':object_id', (string) $object_id, PDO::PARAM_INT);
+
+            $res = $sth->execute();
+            if (!$res) {
+                return false;
+            }
+
+            while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+                $last_stats_update = $row['last_stats_update'];
+            }
+
+            $sth = null;
+        }
+        catch (Exception $exc) {
+            return false;
+        }
+
+        // stop here if already read that
+        if (!empty($last_stats_update)) {
+            return true;
+        }
+
+        $last_stats_update = date('Y-m-d G:i:s');
+        $current_date = date('Y-m-d');
+        $current_hour = 0 + date('H');
+
+        // save that the user has read the article
+        try {
+            $sth = $dbh->prepare($sqlReqIns1);
+            $sth->bindValue(':session_id', (string) $session_id, PDO::PARAM_STR);
+            $sth->bindValue(':object_id', (string) $object_id, PDO::PARAM_INT);
+            $sth->bindValue(':last_stats_update', (string) $last_stats_update, PDO::PARAM_STR);
+
+            $res = $sth->execute();
+            if (!$res) {
+                return false;
+            }
+
+            $sth = null;
+        }
+        catch (Exception $exc) {
+            return false;
+        }
+
+        $request_count = 0;
+        $request_count_update = false;
+
+        // how many has read this article this hour
+        try {
+            $sth = $dbh->prepare($sqlReqSel2);
+            $sth->bindValue(':object_id', (string) $object_id, PDO::PARAM_INT);
+            $sth->bindValue(':date', (string) $current_date, PDO::PARAM_STR);
+            $sth->bindValue(':hour', (string) $current_hour, PDO::PARAM_INT);
+
+            $res = $sth->execute();
+            if (!$res) {
+                return false;
+            }
+
+            while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+                $request_count = $row['request_count'];
+                $request_count_update = true;
+            }
+
+            $sth = null;
+        }
+        catch (Exception $exc) {
+            return false;
+        }
+
+        // the user has read it
+        $request_count += 1;
+
+        // save the (increased) count of read access
+        try {
+            if ($request_count_update) {
+                $sth = $dbh->prepare($sqlReqUpd2);
+                $sth->bindValue(':request_count', (string) $request_count, PDO::PARAM_INT);
+            } else {
+                $sth = $dbh->prepare($sqlReqIns2);
+            }
+            $sth->bindValue(':object_id', (string) $object_id, PDO::PARAM_INT);
+            $sth->bindValue(':date', (string) $current_date, PDO::PARAM_STR);
+            $sth->bindValue(':hour', (string) $current_hour, PDO::PARAM_INT);
+
+            $res = $sth->execute();
+            if (!$res) {
+                return false;
+            }
+
+            $sth = null;
+        }
+        catch (Exception $exc) {
+            return false;
         }
 
         return true;
-    } // fn WriteStats
 
+    } // WriteStats
 
 } // class Statistics
+
