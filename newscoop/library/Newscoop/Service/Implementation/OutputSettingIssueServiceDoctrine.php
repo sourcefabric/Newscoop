@@ -12,6 +12,7 @@ use Newscoop\Utils\Validation;
 use Newscoop\Service\IOutputSettingIssueService;
 use Newscoop\Service\Implementation\AEntityBaseServiceDoctrine;
 use Newscoop\Entity\Output\OutputSettingsIssue;
+use Newscoop\Entity\Output;
 use Newscoop\Entity\Issue;
 
 /**
@@ -23,6 +24,7 @@ class OutputSettingIssueServiceDoctrine extends AEntityBaseServiceDoctrine
 
     /** @var Newscoop\Service\IOutputService */
     private $outputService = NULL;
+
     /**
      * Provides the ouput service.
      *
@@ -41,7 +43,6 @@ class OutputSettingIssueServiceDoctrine extends AEntityBaseServiceDoctrine
     {
         $this->entityClassName = OutputSettingsIssue::NAME_1;
     }
-
 
     /* --------------------------------------------------------------- */
 
@@ -82,22 +83,25 @@ class OutputSettingIssueServiceDoctrine extends AEntityBaseServiceDoctrine
      */
     public function findByIssueAndOutput($issue, $output)
     {
-        if ($issue instanceof Issue) {
-            $issue = $issue->getId();
+        /** Get the id if an Output object is supplied */
+        /* @var $output Output */
+        $outputId = $output;
+        if ($output instanceof Output) {
+            $outputId = $output->getId();
         }
-        if (!($output instanceof Output)) {
-            if (is_int($output)) {
-                $output = $this->getOutputService()->findById($output);
-            } else {
-                $output = $this->getOutputService()->findByName($output);
-            }
+
+        /** Get the id if an Issue object is supplied */
+        /* @var $issue Issue */
+        $issueId = $issue;
+        if ($issue instanceof Issue) {
+            $issueId = $issue->getId();
         }
 
         $em = $this->getEntityManager();
         $repository = $em->getRepository($this->entityClassName);
-        $resources = $repository->findBy(array('issue' => $issue, 'output' => $output));
-        if (isset($resources) && count($resources) > 0) {
-            return $resources;
+        $resources = $repository->findBy(array('issue' => $issueId, 'output' => $outputId));
+        if (!empty($resources)) {
+            return $resources[0];
         }
         return NULL;
     }

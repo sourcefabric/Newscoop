@@ -10,6 +10,9 @@ namespace Newscoop\Service\Implementation;
 
 use Doctrine\ORM\Query;
 use Newscoop\Service\ITemplateSearchService;
+use Newscoop\Service\IOutputSettingIssueService;
+use Newscoop\Service\IOutputSettingSectionService;
+use Newscoop\Service\ISectionService;
 use Newscoop\Entity\Issue;
 use Newscoop\Entity\Section;
 use Newscoop\Entity\Resource;
@@ -39,7 +42,10 @@ class TemplateSearchServiceDoctrine extends AEntityBaseServiceDoctrine
     private $outputSettingIssueService = NULL;
 
     /* --------------------------------------------------------------- */
+    /** @var string */
+    public $themesFolder;
 
+    /* --------------------------------------------------------------- */
     protected function _init_()
     {
         $this->entityClassName = OutputSettingsTheme::NAME;
@@ -107,7 +113,7 @@ class TemplateSearchServiceDoctrine extends AEntityBaseServiceDoctrine
         $issueId = $issue;
         if ($issue instanceof Issue) {
             $issueId = $issue->getId();
-        } elseif (is_int($issue)) {
+        } else {
             $issue = $this->getIssueService()->getById($issueId);
         }
         $publicationId = $issue->getPublicationId();
@@ -162,7 +168,7 @@ class TemplateSearchServiceDoctrine extends AEntityBaseServiceDoctrine
         $issueId = $issue;
         if ($issue instanceof Issue) {
             $issueId = $issue->getId();
-        } elseif (is_int($issue)) {
+        } else {
             $issue = $this->getIssueService()->getById($issueId);
         }
         $publicationId = $issue->getPublicationId();
@@ -215,40 +221,37 @@ class TemplateSearchServiceDoctrine extends AEntityBaseServiceDoctrine
      */
     public function getSectionPage($section, $output)
     {
-
-        if (!($outoput instanceof Output)) {
-            if (is_int($output)) {
-                $output = $this->getOutputService()->findById($output);
-            } else {
-                $output = $this->getOutputService()->findByName($output);
-            }
+        /** Get the id if an Output object tis supplied */
+        /* @var $output Output */
+        $outputId = $output;
+        if ($output instanceof Output) {
+            $outputId = $output->getId();
         }
 
+        /** Get the id if an Section object tis supplied */
         /* @var $section Section */
-        if (!($section instanceof Section)) {
-            $section = $this->getSectionService()->findById($section);
+        $sectionId = $section;
+        if ($section instanceof Section) {
+            $sectionId = $section->getId();
         }
 
         /* @var $outputSettingSection OutputSettingsSection */
-        $outputSettingSection = $this->getOutputSettingSectionService()->findBySectionAndOutput($section,
-                        $outoput);
+        $outputSettingSection = $this->getOutputSettingSectionService()->findBySectionAndOutput($sectionId,
+                        $outputId);
 
-        if (!is_null($resource = $outputSettingSection->getSectionPage())) {
+        if (!is_null($outputSettingSection) && !is_null($resource = $outputSettingSection->getSectionPage())) {
             return $this->getResourceFullPath($resource);
         }
 
+        if (!($section instanceof Section))
+            $section = $this->getSectionService()->findById($section);
+
         /* @var $issue Issue */
         $issue = $section->getIssue();
+        $issueId = $issue->getId();
+        $publicationId = $issue->getPublicationId();
 
         $em = $this->getEntityManager();
-        //
-
-
-        $publicationId = $issue->getPublicationId();
-        $issueId = $issue->getId();
-        $outputId = $output->getId();
-
-
         $q = $em->createQueryBuilder();
         $q->select(array('oi', 'ot'))
                 ->from(OutputSettingsTheme::NAME, 'ot')
@@ -291,39 +294,37 @@ class TemplateSearchServiceDoctrine extends AEntityBaseServiceDoctrine
      */
     public function getArticlePage($section, $output)
     {
-        if (!($outoput instanceof Output)) {
-            if (is_int($output)) {
-                $output = $this->getOutputService()->findById($output);
-            } else {
-                $output = $this->getOutputService()->findByName($output);
-            }
+        /** Get the id if an Output object tis supplied */
+        /* @var $output Output */
+        $outputId = $output;
+        if ($output instanceof Output) {
+            $outputId = $output->getId();
         }
 
+        /** Get the id if an Section object tis supplied */
         /* @var $section Section */
-        if (!($section instanceof Section)) {
-            $section = $this->getSectionService()->findById($section);
+        $sectionId = $section;
+        if ($section instanceof Section) {
+            $sectionId = $section->getId();
         }
 
         /* @var $outputSettingSection OutputSettingsSection */
-        $outputSettingSection = $this->getOutputSettingSectionService()->findBySectionAndOutput($section,
-                        $outoput);
+        $outputSettingSection = $this->getOutputSettingSectionService()->findBySectionAndOutput($sectionId,
+                        $outputId);
 
-        if (!is_null($resource = $outputSettingSection->getArticlePage())) {
+        if (!is_null($outputSettingSection) && !is_null($resource = $outputSettingSection->getArticlePage())) {
             return $this->getResourceFullPath($resource);
         }
 
+        if (!($section instanceof Section))
+            $section = $this->getSectionService()->findById($section);
+
         /* @var $issue Issue */
         $issue = $section->getIssue();
+        $issueId = $issue->getId();
+        $publicationId = $issue->getPublicationId();
 
         $em = $this->getEntityManager();
-        //
-
-
-        $publicationId = $issue->getPublicationId();
-        $issueId = $issue->getId();
-        $outputId = $output->getId();
-
-
         $q = $em->createQueryBuilder();
         $q->select(array('oi', 'ot'))
                 ->from(OutputSettingsTheme::NAME, 'ot')
@@ -360,7 +361,7 @@ class TemplateSearchServiceDoctrine extends AEntityBaseServiceDoctrine
      */
     protected function getResourceFullPath(Resource $resource)
     {
-        return $resource->getPath();
+        return $this->themesFolder.$resource->getPath();
     }
 
 }

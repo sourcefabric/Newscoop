@@ -35,7 +35,7 @@ interface IOutputSettingSectionService extends IEntityBaseService
      * @return Newscoop\Entity\OutputSettingsSection
      * 		The Output Setting, empty array if no Output Setting could be found for the provided section.
      */
-    function findBySectionAndOutput();
+    function findBySectionAndOutput($section, $output);
 
     /**
      * Provides the Output Settings that has the provided Section.

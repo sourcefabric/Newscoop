@@ -10,9 +10,11 @@ namespace Newscoop\Service\Implementation;
 
 use Newscoop\Utils\Validation;
 use Newscoop\Service\IOutputSettingSectionService;
+use Newscoop\Service\IOutputService;
 use Newscoop\Service\Implementation\AEntityBaseServiceDoctrine;
 use Newscoop\Entity\Output\OutputSettingsSection;
 use Newscoop\Entity\Section;
+use Newscoop\Entity\Output;
 
 /**
  * Provides the services implementation for the Outputs.
@@ -55,24 +57,27 @@ class OutputSettingSectionServiceDoctrine extends AEntityBaseServiceDoctrine
      * @return Newscoop\Entity\OutputSettingsSection
      * 		The Output Setting, NULL if no Output Setting could be found for the provided section.
      */
-    public function findBySectionAndOutput($issue, $output)
+    public function findBySectionAndOutput($section, $output)
     {
-        if ($section instanceof Section) {
-            $section = $section->getId();
+        /** Get the id if an Output object is supplied */
+        /* @var $output Output */
+        $outputId = $output;
+        if ($output instanceof Output) {
+            $outputId = $output->getId();
         }
-        if (!($output instanceof Output)) {
-            if (is_int($output)) {
-                $output = $this->getOutputService()->findById($output);
-            } else {
-                $output = $this->getOutputService()->findByName($output);
-            }
+
+        /** Get the id if an Section object is supplied */
+        /* @var $section Section */
+        $sectionId = $section;
+        if ($section instanceof Section) {
+            $sectionId = $section->getId();
         }
 
         $em = $this->getEntityManager();
         $repository = $em->getRepository($this->entityClassName);
-        $resources = $repository->findBy(array('section' => $section, 'output' => $output));
-        if (isset($resources) && count($resources) > 0) {
-            return $resources;
+        $resources = $repository->findBy(array('section' => $sectionId, 'output' => $outputId));
+        if (!empty($resources)) {
+            return $resources[0];
         }
         return NULL;
     }
@@ -88,7 +93,7 @@ class OutputSettingSectionServiceDoctrine extends AEntityBaseServiceDoctrine
      */
     public function findBySection($section)
     {
-       if ($section instanceof Section) {
+        if ($section instanceof Section) {
             $section = $section->getId();
         }
         $em = $this->getEntityManager();
