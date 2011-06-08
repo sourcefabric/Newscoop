@@ -3,8 +3,11 @@
 use Symfony\Component\Console\Input,
 	Doctrine\DBAL\Types,
 	Newscoop\Storage,
-	Newscoop\Entity;
+	Newscoop\Entity,
+	Newscoop\Service\IThemeManagementService,
+	Newscoop\Service\Resource;
 
+require_once dirname(__FILE__) . '/../../../../conf/configuration.php';
 require_once dirname(__FILE__) . '/../../../../db_connect.php';
 
 global $g_ado_db;
@@ -69,6 +72,11 @@ class ThemeUpgrade
 	 */
 	private $themeService;
 
+	/**
+	 * @var string
+	 */
+	private $themeXMLFile = 'theme.xml';
+
 
 	public function __construct($templatesPath, $themesPath)
 	{
@@ -86,7 +94,7 @@ class ThemeUpgrade
     public function getResourceId()
     {
         if ($this->resourceId === NULL) {
-            $this->resourceId = new ResourceId(__CLASS__);
+            $this->resourceId = new Newscoop\Service\Resource\ResourceId(__CLASS__);
         }
         return $this->resourceId;
     }
@@ -101,7 +109,7 @@ class ThemeUpgrade
     public function getThemeService()
     {
         if ($this->themeService === NULL) {
-            $this->themeService = $this->getResourceId()->getService(IThemeManagementService::NAME);
+            $this->themeService = $this->getResourceId()->getService(IThemeManagementService::NAME_1);
         }
         return $this->themeService;
     }
@@ -156,24 +164,24 @@ class ThemeUpgrade
 	 */
 	public function createThemes()
 	{
-		foreach ($this->themesList() as $themePath=>$themeName) {
-			$this->createTheme($themePath);
-		}
+//		foreach ($this->themesList() as $themePath=>$themeName) {
+//			$this->createTheme($themePath);
+//		}
 
 		$newscoopVersion = new CampVersion();
 
 		$themes = $this->getThemeService()->getEntities();
 		foreach ($themes as $theme) {
-			$theme->setName($this->createName($theme->getPath()));
-			$theme->setMinorNewscoopVersion($newscoopVersion->getVersion());
-			$theme->setVersion('1.0');
-			$this->getThemeService()->update($theme);
+			$theme->setName($this->createName(basename($theme->getPath())));
+//			$theme->setMinorNewscoopVersion($newscoopVersion->getVersion());
+//			$theme->setVersion('1.0');
+			$this->getThemeService()->updateTheme($theme);
 		}
 	}
 
 
     /**
-	 * Moves a group of templates from their directory to the new theme structure, creating the themes
+	 * Moves a group of templates from their directory to the new theme structure, creating the theme
 	 *
 	 * @param string $themeSrcDir
 	 * @return bool
@@ -182,40 +190,43 @@ class ThemeUpgrade
 	public function createTheme($themeSrcDir)
 	{
 		$srcPath = $this->templatesPath . (empty($themeSrcDir) ? '' : '/' . $themeSrcDir);
-		copy(dirname(__FILE__) . '/theme.xml', $this->themesPath);
-		return $this->moveFile($srcPath, $this->themesPath);
+		$dstPath = $this->themesPath . (empty($themeSrcDir) ? '' : '/' . $themeSrcDir);
+
+		mkdir($dstPath);
+		copy(dirname(__FILE__) . '/' . $this->themeXMLFile, "$dstPath/$this->themeXMLFile");
+		return $this->copyPath($srcPath, $dstPath);
 	}
 
 
 	/**
-	 * Moves the content of the source directory to the destination directory.
+	 * Copies the given file or directory to the destination path.
 	 *
-	 * @param string $srcDir
+	 * @param string $srcPath
 	 *
-	 * @param string $dstDir
+	 * @param string $dstPath
 	 *
 	 * @return bool
 	 */
-	private function moveFile($srcPath, $dstPath)
+	private function copyPath($srcPath, $dstPath)
 	{
 		if (is_dir($srcPath)) {
-			$dstPath .= '/' . basename($srcPath);
 			echo "<p>creating $dstPath</p>\n";
-			mkdir($dstPath);
+			if (!is_dir($dstPath)) {
+				mkdir($dstPath);
+			}
 			$files = array_merge(glob($srcPath . "/*"), glob($srcPath . "/.*"));
 			foreach ($files as $filePath) {
 				if (basename($filePath) == '.' || basename($filePath) == '..') {
 					continue;
 				}
-				if (!$this->moveFile($filePath, $dstPath)) {
+				if (!$this->copyPath($filePath, $dstPath . '/' . basename($filePath))) {
 					return false;
 				}
 			}
 			return true;
 		} elseif (is_file($srcPath)) {
 			echo "<p>moving $srcPath to $dstPath</p>\n";
-			return true;
-			return move($srcPath, $dstPath);
+			return copy($srcPath, $dstPath);
 		}
 		return false;
 	}

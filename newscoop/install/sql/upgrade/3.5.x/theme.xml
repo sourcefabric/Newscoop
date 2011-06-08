@@ -18,15 +18,4 @@
     <article>
         <template src="article.tpl" />
     </article>
-    
-    <articleType name="Blog">
-        <field name="Title" type="singleline" length="255" />
-        <field name="Post" type="multiline" />
-    </articleType>
-    
-    <articleType name="Static">
-        <field name="Title" type="singleline" length="255" />
-        <field name="Post" type="multiline" />
-    </articleType>
-    
 </theme>
