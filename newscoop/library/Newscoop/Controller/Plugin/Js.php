@@ -49,7 +49,8 @@ class Js extends Zend_Controller_Plugin_Abstract
     public function postDispatch( Zend_Controller_Request_Abstract $p_request )
     {
         // stick the baseUrl to the basePath because we have a dispatched request now
-        $this->_basePath = DIR_SEP . trim( Zend_Controller_Front::getInstance()->getBaseUrl() . $this->_basePath, DIR_SEP ) . DIR_SEP;
+        $this->_basePath = DIR_SEP . trim( Zend_Controller_Front::getInstance()->getBaseUrl(), DIR_SEP )
+                         . trim( $this->_basePath, DIR_SEP ) . DIR_SEP;
         $this->view->headScript()
             ->appendFile // adding the shared file first for utils
             (
