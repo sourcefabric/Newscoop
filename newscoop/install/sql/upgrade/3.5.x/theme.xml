@@ -1,0 +1,21 @@
+<theme name="default" designer="default" version="1.0" require="3.5">
+    <description></description>
+    
+    <presentation-img src="front.jpg" name="Front page" />
+    <presentation-img src="section.jpg" name="Section page" />
+    <presentation-img src="article.jpg" name="Article" />
+    
+    <!-- =============================== -->
+    
+    <front>
+        <template src="front.tpl" />
+    </front>
+    
+    <section>
+        <template src="section.tpl" />
+    </section>
+    
+    <article>
+        <template src="article.tpl" />
+    </article>
+</theme>
