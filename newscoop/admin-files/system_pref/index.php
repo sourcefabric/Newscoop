@@ -6,7 +6,6 @@ require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Input.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Log.php");
 require_once(dirname(dirname(dirname(__FILE__))).'/classes/cache/CacheEngine.php');
-
 require_once($GLOBALS['g_campsiteDir']."/classes/GeoPreferences.php");
 
 if (!$g_user->hasPermission('ChangeSystemPreferences')) {
@@ -115,12 +114,6 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         </select>
     </td>
 </tr>
-<?php
-	}
-?>
-<?php
-	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
-?>
 <tr>
     <td align="left" width="400px">
         <?php putGS("Template Cache Handler:") ?>
@@ -245,12 +238,6 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_smtp_host" value="<?php p(SystemPref::Get("SMTPHost")); ?>" maxlength="100" size="40" class="input_text" alt="blank" emsg="<?php putGS("SMTP Host must be at least four character."); ?>" />
     </td>
 </tr>
-<?php
-	}
-?>
-<?php
-	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
-?>
 <tr>
     <td align="left" width="400px">
         <?php putGS("SMTP Port:"); ?>
@@ -282,12 +269,6 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_editor_image_ratio" value="<?php p(SystemPref::Get("EditorImageRatio")); ?>" maxlength="3" size="8" class="input_text" alt="number|0|1|100|bok" emsg="<?php putGS("Please enter a valid value (1 - 100) for the '$1' field.", getGS("Image Resizing Ratio")); ?>" />&nbsp;&#37;
     </td>
 </tr>
-<?php
-	}
-?>
-<?php
-	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
-?>
 <tr>
     <td align="left" width="400px">
         <?php putGS("Image Resizing Width:"); ?>
@@ -296,12 +277,6 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_editor_image_width" value="<?php p(SystemPref::Get("EditorImageResizeWidth")); ?>" maxlength="6" size="8" class="input_text" alt="number|0|0|bok" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("Image Resizing Width")); ?>" />&nbsp;pixels
     </td>
 </tr>
-<?php
-	}
-?>
-<?php
-	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
-?>
 <tr>
     <td align="left" width="400px">
         <?php putGS("Image Resizing Height:"); ?>
@@ -310,12 +285,6 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <input type="text" name="f_editor_image_height" value="<?php p(SystemPref::Get("EditorImageResizeHeight")); ?>" maxlength="6" size="8" class="input_text" alt="number|0|0|bok" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("Image Resizing Height")); ?>" />&nbsp;pixels
     </td>
 </tr>
-<?php
-	}
-?>
-<?php
-	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
-?>
 <tr>
     <td align="left" width="400px">
         <?php putGS("Zoom enabled for images in article content?"); ?>
@@ -329,12 +298,6 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
-<?php
-	}
-?>
-<?php
-	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
-?>
 <tr>
     <td colspan="2" align="left">
         <?php putGS("Reader subscriptions managed externally?"); ?>
@@ -346,12 +309,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
-<?php
-	}
-?>
-<?php
-	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
-?>
+
 <tr>
     <td colspan="2" align="left">
         <?php putGS("Setting up a Newscoop Replication Server?"); ?>
@@ -406,12 +364,6 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
-<?php
-	}
-?>
-<?php
-	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
-?>
 <tr>
     <td align="left">
         <?php putGS("Templates filter mask (separated by comma)"); ?>
@@ -424,12 +376,6 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 <tr>
     <td colspan="2"><hr /></td>
 </tr>
-<?php
-	}
-?>
-<?php
-	if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
-?>
 <tr>
     <td colspan="2" align="left">
         <?php putGS("Run scheduled tasks externally?"); ?>

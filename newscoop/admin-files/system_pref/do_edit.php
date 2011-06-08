@@ -25,16 +25,13 @@ if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
 	$f_editor_image_height = Input::Get('f_editor_image_height', 'int', null, true);
 	$f_editor_image_zoom = Input::Get('f_editor_image_zoom');
 	$f_external_subs_management = Input::Get('f_external_subs_management');
-
 	$f_use_replication = Input::Get('f_use_replication');
 	$f_db_repl_host = strip_tags(Input::Get('f_db_repl_host'));
 	$f_db_repl_user = strip_tags(Input::Get('f_db_repl_user'));
 	$f_db_repl_pass = strip_tags(Input::Get('f_db_repl_pass'));
 	$f_db_repl_port = Input::Get('f_db_repl_port', 'int');
-
 	$f_template_filter = Input::Get('f_template_filter', '', 'string', true);
 	$f_external_cron_management = Input::Get('f_external_cron_management');
-
 } else {
 	$f_cache_engine = SystemPref::Get('DBCacheEngine');
 	$f_template_cache_handler = SystemPref::Get('TemplateCacheHandler');
@@ -45,46 +42,30 @@ if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
 	$f_editor_image_height = SystemPref::Get("EditorImageResizeHeight");
 	$f_editor_image_zoom = SystemPref::Get("EditorImageZoom");
 	$f_external_subs_management = SystemPref::Get("ExternalSubscriptionManagement");
-
 	$f_use_replication = SystemPref::Get("UseDBReplication");
 	$f_db_repl_host = SystemPref::Get("DBReplicationHost");
 	$f_db_repl_user = SystemPref::Get("DBReplicationUser");
 	$f_db_repl_pass = SystemPref::Get("DBReplicationPass");
 	$f_db_repl_port = SystemPref::Get("DBReplicationPort");
-
 	$f_template_filter = SystemPref::Get("TemplateFilter");
 	$f_external_cron_management = SystemPref::Get("ExternalCronManagement");
 }
-
-
 $f_campsite_online = Input::Get('f_campsite_online');
 $f_site_title = strip_tags(Input::Get('f_site_title'));
 $f_site_metakeywords = strip_tags(Input::Get('f_site_metakeywords'));
 $f_site_metadescription = strip_tags(Input::Get('f_site_metadescription'));
 $f_time_zone = Input::Get('f_time_zone');
-
-
 $f_secret_key = strip_tags(Input::Get('f_secret_key'));
 $f_session_lifetime = Input::Get('f_session_lifetime', 'int');
 $f_imagecache_lifetime = Input::Get('f_imagecache_lifetime', 'int');
 $f_keyword_separator = strip_tags(Input::Get('f_keyword_separator'));
 $f_login_num = Input::Get('f_login_num', 'int');
 $f_max_upload_filesize = strip_tags(Input::Get('f_max_upload_filesize'));
-
-
-
-
-
-
-
 $f_password_recovery = Input::Get('f_password_recovery');
 $f_password_recovery_from = Input::Get('f_password_recovery_from');
-
 if ($f_external_subs_management != 'Y' && $f_external_subs_management != 'N') {
     $f_external_subs_management = SystemPref::Get('ExternalSubscriptionManagement');
 }
-
-
 if ($f_external_cron_management != 'Y' && $f_external_cron_management != 'N') {
     $f_external_cron_management = SystemPref::Get('ExternalCronManagement');
 }

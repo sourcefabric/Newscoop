@@ -2,8 +2,6 @@
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Template.php');
 
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
 
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));

@@ -25,20 +25,15 @@ $f_name = trim(Input::Get('f_name'));
 $f_default_alias = Input::Get('f_default_alias', 'int');
 $f_language = Input::Get('f_language', 'int');
 $f_url_type = Input::Get('f_url_type', 'int');
-
 $publicationObj = new Publication($f_publication_id);
-
 if( Saas::singleton()->hasPermission("ManagePubInvalidUrlTemplate") ) {
 	$f_url_error_tpl_id = Input::Get('f_url_error_tpl_id', 'int', null);
 } else {
-
 	$defaultTemplateId = isset($publicationObj) ? $publicationObj->getProperty('url_error_tpl_id') : null;
 	$f_url_error_tpl_id = $defaultTemplateId;
 }
-
-
 if( Saas::singleton()->hasPermission("ManagePublicationSubscriptions") ) {
-	$f_time_unit = Input::Get('f_time_unit');
+    $f_time_unit = Input::Get('f_time_unit');
 	$f_unit_cost = trim(Input::Get('f_unit_cost', 'float', '0.0'));
 	$f_unit_cost_all_lang = trim(Input::Get('f_unit_cost_all_lang', 'float', '0.0'));
 	$f_currency = trim(Input::Get('f_currency'));
@@ -73,7 +68,7 @@ $f_comments_moderator_from = Input::Get('f_comments_moderator_from', 'text', 'st
 $f_seo = Input::Get('f_seo', 'array', array(), true);
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
+    camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
 	exit;
 }
 
@@ -81,7 +76,7 @@ $backLink = "/$ADMIN/pub/edit.php?Pub=$f_publication_id";
 $errorMsgs = array();
 $updated = false;
 if (empty($f_name)) {
-	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'));
+    camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>'));
 }
 if (empty($f_default_alias)) {
 	camp_html_add_msg(getGS('You must fill in the $1 field.','<B>'.getGS('Site').'</B>'));
@@ -113,7 +108,7 @@ $publicationObj->setPublicComments($f_comments_public_enabled);
 
 $setting = new Phorum_setting('mod_emailcomments', 'S');
 if (!$setting->exists()) {
-	$setting->create();
+    $setting->create();
 }
 $setting->update(array('addresses' => array($forum->getForumId() => $f_comments_moderator_to)));
 $setting->update(array('from_addresses' => array($forum->getForumId() => $f_comments_moderator_from)));
