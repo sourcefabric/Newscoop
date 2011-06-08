@@ -63,4 +63,14 @@ class OutputSettingsSection extends OutputSettings
         return $this;
     }
 
+	/* --------------------------------------------------------------- */
+	
+	/**
+	 * Copies the cvcontent from this object to the provided object.
+	 */
+	function copyTo($outputSetting)
+	{
+		parent::copyTo($outputSetting);
+		$outputSetting->setSection($this->getSection());
+	}
 }

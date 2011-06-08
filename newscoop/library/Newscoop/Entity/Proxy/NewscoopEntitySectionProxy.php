@@ -57,10 +57,34 @@ class NewscoopEntitySectionProxy extends \Newscoop\Entity\Section implements \Do
         return parent::getName();
     }
 
+    public function setTemplate(\Newscoop\Entity\Template $template)
+    {
+        $this->_load();
+        return parent::setTemplate($template);
+    }
+
+    public function setArticleTemplate(\Newscoop\Entity\Template $template)
+    {
+        $this->_load();
+        return parent::setArticleTemplate($template);
+    }
+
+    public function getId()
+    {
+        $this->_load();
+        return parent::getId();
+    }
+
+    public function setId($id)
+    {
+        $this->_load();
+        return parent::setId($id);
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'publication', 'issue', 'language', 'number', 'name');
+        return array('__isInitialized__', 'publication', 'issue', 'language', 'number', 'name', 'template', 'articleTemplate', 'id');
     }
 
     public function __clone()

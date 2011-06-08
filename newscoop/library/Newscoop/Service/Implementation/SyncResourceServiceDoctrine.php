@@ -22,6 +22,13 @@ use Newscoop\Service\ISyncResourceService;
 class SyncResourceServiceDoctrine extends AEntityServiceDoctrine implements ISyncResourceService
 {
 
+	/**
+	 * Provides the name to be used on resources that contain theme path.
+	 */
+	const THEME_PATH_RSC_NAME = 'theme-path';
+	
+	/* --------------------------------------------------------------- */
+	
 	protected function _init_(){
 		$this->entityClassName = Resource::NAME;
 		$this->searchClassName = SearchResource::NAME;
@@ -49,6 +56,27 @@ class SyncResourceServiceDoctrine extends AEntityServiceDoctrine implements ISyn
 			return $resources[0];
 		}
 		return NULL;
+	}
+	
+	function getResource($name, $path)
+	{
+		Validation::notEmpty($name, 'name');
+		Validation::notEmpty($path, 'path');
+		
+		$pathRsc = new Resource();
+		$pathRsc->setName($name);
+		$pathRsc->setPath($path);
+		return $this->getSynchronized($pathRsc);
+	}
+	
+	function getThemePath($themePath)
+	{
+		Validation::notEmpty($themePath, 'themePath');
+		
+		$pathRsc = new Resource();
+		$pathRsc->setName(self::THEME_PATH_RSC_NAME);
+		$pathRsc->setPath($themePath);
+		return $this->getSynchronized($pathRsc);
 	}
 
 	/* --------------------------------------------------------------- */

@@ -46,7 +46,6 @@ class Entity {
 	 */
 	public function setId($id)
 	{
-		Validation::notEmpty($id, 'id');
 		$this->id = $id;
 		return $this;
 	}

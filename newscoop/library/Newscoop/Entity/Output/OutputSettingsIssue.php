@@ -98,4 +98,16 @@ class OutputSettingsIssue extends OutputSettings
 		$this->themePath = $themePath;
 		return $this;
 	}
+	
+	/* --------------------------------------------------------------- */
+	
+	/**
+	 * Copies the cvcontent from this object to the provided object.
+	 */
+	function copyTo($outputSetting)
+	{
+		parent::copyTo($outputSetting);
+		$outputSetting->setIssue($this->getIssue());
+		$outputSetting->setThemePath($this->getThemePath());
+	}
 }

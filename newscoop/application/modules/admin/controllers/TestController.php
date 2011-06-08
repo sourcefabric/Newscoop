@@ -57,6 +57,7 @@ class Admin_TestController extends Zend_Controller_Action
 
     /* --------------------------------------------------------------- */
 
+    
     /**
      * Provides the controller resource id.
      *
