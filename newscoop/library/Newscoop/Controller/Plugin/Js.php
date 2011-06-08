@@ -42,18 +42,14 @@ class Js extends Zend_Controller_Plugin_Abstract
     public function __construct( $p_opts )
     {
         // base path from options - incomplete
-        $this->_basePath = DIR_SEP
-                         . trim( $p_opts["resources"]["layout"]["jsUrl"], DIR_SEP )
-                         . DIR_SEP;
+        $this->_basePath = trim( $p_opts["resources"]["layout"]["jsUrl"], DIR_SEP ) . DIR_SEP;
         $this->view      = \Zend_Registry::get( 'view' );
     }
 
     public function postDispatch( Zend_Controller_Request_Abstract $p_request )
     {
         // stick the baseUrl to the basePath because we have a dispatched request now
-        $this->_basePath = DIR_SEP .
-            trim( Zend_Controller_Front::getInstance()->getBaseUrl(), DIR_SEP ) .
-            $this->_basePath;
+        $this->_basePath = DIR_SEP . trim( Zend_Controller_Front::getInstance()->getBaseUrl() . $this->_basePath, DIR_SEP ) . DIR_SEP;
         $this->view->headScript()
             ->appendFile // adding the shared file first for utils
             (
