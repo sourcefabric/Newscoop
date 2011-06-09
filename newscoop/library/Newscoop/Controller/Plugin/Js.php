@@ -20,6 +20,12 @@ class Js extends Zend_Controller_Plugin_Abstract
      * ! will be incomplete after constructor, full in postDispatch
      * @var string
      */
+    private $_baseUrn = null;
+
+    /**
+     * physical path, if you don't set this you need to have a 404 handler with .htaccess, like originally designed
+     * @var string
+     */
     private $_basePath = null;
 
     /**
@@ -39,10 +45,15 @@ class Js extends Zend_Controller_Plugin_Abstract
      */
     private $_sharedFileName = "_shared";
 
+    /**
+     * jsPath is for those who don't have a propper server config in the js folder
+     * @param array $p_opts {..., layout : { jsUrl : string, [ jsPath : string ] }, ... }
+     */
     public function __construct( $p_opts )
     {
         // base path from options - incomplete
-        $this->_basePath = trim( $p_opts["resources"]["layout"]["jsUrl"], DIR_SEP ) . DIR_SEP;
+        $this->_baseUrn = trim( $p_opts["resources"]["layout"]["jsUrl"], DIR_SEP ) . DIR_SEP;
+        $this->_basePath = ( $p = $p_opts["resources"]["layout"]["jsPath"] ) ? $p . DIR_SEP : false;
         $this->view      = \Zend_Registry::get( 'view' );
     }
 
@@ -51,32 +62,52 @@ class Js extends Zend_Controller_Plugin_Abstract
         // stick the baseUrl to the basePath because we have a dispatched request now
         // and format those god damn slashes!!
         $baseUrl = trim( Zend_Controller_Front::getInstance()->getBaseUrl(), DIR_SEP );
-        $this->_basePath = ( $baseUrl != "" ? DIR_SEP . $baseUrl : "" )
+        $this->_baseUrn = ( $baseUrl != "" ? DIR_SEP . $baseUrl : "" )
                          . DIR_SEP
-                         . trim( $this->_basePath, DIR_SEP )
+                         . trim( $this->_baseUrn, DIR_SEP )
                          . DIR_SEP;
 
-        $this->view->headScript()
-            ->appendFile // adding the shared file first for utils
+        $filesToAppend = array
+        (
+            "{$this->_basePath}{$this->_sharedFileName}.{$this->_fileSuffix}" => // adding the shared file first for utils
+            	"{$this->_baseUrn}{$this->_sharedFileName}.{$this->_fileSuffix}",
+            'script' => $this->view->jQueryReady()->toString(),
+            "{$this->_basePath}{$p_request->getControllerName()}.{$this->_fileSuffix}" => // controller shared
+                "{$this->_baseUrn}{$p_request->getControllerName()}.{$this->_fileSuffix}",
+            "{$this->_basePath}{$p_request->getControllerName()}".DIR_SEP."{$p_request->getActionName()}.{$this->_fileSuffix}" => // action specific
+            	"{$this->_baseUrn}{$p_request->getControllerName()}".DIR_SEP."{$p_request->getActionName()}.{$this->_fileSuffix}"
+        );
+
+        foreach( $filesToAppend as $path => $urn )
+        {
+            if( $path == 'script' ) {
+                $this->view->headScript()->appendScript( $urn );
+            }
+            if( $this->_basePath && file_exists( $path ) ) {
+                 $this->view->headScript()->appendFile( $urn );
+            }
+        }
+       /* $this->view->headScript()
+            ->appendFile
             (
-                $this->_basePath
+                $this->_baseUrn
             .   $this->_sharedFileName
             .	".{$this->_fileSuffix}"
             )
             ->appendScript( $this->view->jQueryReady()->toString() )
-            ->appendFile // controller shared
+            ->appendFile
             (
-                $this->_basePath
+                $this->_baseUrn
             .   $p_request->getControllerName()
             .	".{$this->_fileSuffix}"
             )
-            ->appendFile // action specific
+            ->appendFile
             (
-                $this->_basePath
+                $this->_baseUrn
             .   $p_request->getControllerName()
             .   DIR_SEP
             .   $p_request->getActionName()
             .	".{$this->_fileSuffix}"
-            );
+            );*/
     }
 }
