@@ -58,31 +58,43 @@ jQuery( function()
 	});
 	
 	/**
-	 * change article type selects handler
+	 * change article type select's handler
 	 */
 	$('select.articleType').change( function()
 	{
-		var typesSelect = $(this).siblings( 'ul' ).find( 'select' ).html( '' );
+		var fieldsSelect = $(this).siblings( 'ul' ).find( 'select' ).html( '' );
 		var articleTypes = $.registry.get( 'articleTypes' )[$(this).val()];
 		var themeArticleTypes = $.registry.get( 'themeArticleTypes' );
 		
-		/*
-		var searchArticleTypes = null;
-		
-		for( i in themeArticleTypes ) // test match article type with theme type 
+		var typeIndex = $(this).parents('li:eq(0)').index(  );
+
+		var i = 0, found = 0;
+		var foundFields = [];
+		for( k in themeArticleTypes ) // find matching fields
 		{
-			if(	i.toLowerCase() == $(this).attr( 'name' ).match( /\[(.+)\]/ )[1].toLowerCase() 
-				&& $(this).val().toLowerCase() == i.toLowerCase() ) {
-				searchArticleTypes = themeArticleTypes[i];
+			if( i++ == typeIndex ) 
+			{
+				found = themeArticleTypes[k];
+				for( j in found )
+					foundFields.push(j)
 			}
 		}
-		*/
-		
-		for( i in  articleTypes ) 
+		fieldsSelect.each( function( fieldsIdx )
 		{
-			var opt = $( '<option />' ).val( articleTypes[i] ).text( articleTypes[i].replace( '_', ' ' ).capitalize() );
-			typesSelect.append( opt ); 
-		}
+			var selectedVal = 0;
+			for( i in  articleTypes )  // put options on the selects
+			{
+				var opt = $( '<option />' )
+					.val( articleTypes[i] )
+					.text( articleTypes[i].replace( '_', ' ' ).capitalize() );
+				if( articleTypes[i] == foundFields[fieldsIdx] )	{
+					selectedVal = articleTypes[i]
+				}
+				$(this).append( opt );
+			}
+			$(this).val( selectedVal )
+		})
+		
 	}).trigger( 'change' );
 	
 	// Tabs

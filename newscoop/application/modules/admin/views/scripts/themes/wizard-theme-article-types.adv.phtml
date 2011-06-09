@@ -1,8 +1,11 @@
 <div class="articleTypes">
 <form id="" method="post"
 	action="<?php echo $this->url(array( 'action' => 'article-types-edit', 'controller' => 'themes', 'module' => 'admin' )) ?>">
+
 <?php echo $this->formHidden( 'themeId', $this->theme->id, array( 'id' => null ) ) ?>
+
 <fieldset>
+
 	<legend>Match article types</legend>
 	<div class="themeArticleType">
         <h4>Theme article types</h4>
@@ -24,6 +27,7 @@
        	<?php $allCount++; ?>
         <?php endforeach; ?>
    </div>
+
    <div class="matchWithExisting">
 		<h4>Match with existing</h4>
         <ul>
@@ -49,7 +53,6 @@
             	<ul>
             		<?php foreach( $typeFields as $typeFieldName =>  $typeFields ) : ?>
             		<li class="withPadding">
-
                 		<div>
                 			<?php echo $this->formCheckbox( "articleTypeFieldIgnore[$articleTypeName][$typeFieldName]" ) ?>
                 			<?php echo $this->formLabel( "articleTypeFieldIgnore[$articleTypeName][$typeFieldName]", "Do Nothing") ?>
@@ -68,6 +71,8 @@
         	<?php endforeach; ?>
         </ul>
 	</div>
+
 </fieldset>
+
 </form>
 </div>

@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Newscoop\Controller\Action\Helper\Datatable\Adapter;
 
@@ -16,36 +16,37 @@ class ThemeFiles extends AAdapter
      * @var Newscoop\Service\Implementation\ThemeServiceLocalFileSystem
      */
     private $_service;
-    
+
     /**
      * the theme entity
      * @var Newscoop\Entity\Theme
      */
     private $_theme;
-    
+
     public function __construct( IThemeService $service, $themeId )
     {
         $this->_service = $service;
         $this->_theme = $this->_service->getById( $themeId );
+
     }
-    
+
     public function getData( array $params, array $cols )
     {
-        $this->_theme->getPath();
+        var_dump( $this->_service->getFiles( $this->_theme ) );
     }
-    
+
     public function getCount( array $params = array(), array $cols = array() )
     {
-        
+
     }
-    
+
     public function sort( array $cols )
     {
-        
+
     }
-    
+
     public function search( $query, array $cols = null )
     {
-        
+
     }
 }

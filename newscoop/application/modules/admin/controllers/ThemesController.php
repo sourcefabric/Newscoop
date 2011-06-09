@@ -177,7 +177,7 @@ class Admin_ThemesController extends Zend_Controller_Action
             ->addActionContext( 'wizard-theme-settings', 'adv' )
             ->addActionContext( 'wizard-theme-template-settings', 'adv' )
             ->addActionContext( 'wizard-theme-article-types', 'adv' )
-            ->addActionContext( 'wizard-theme-theme-files', 'adv' )
+            ->addActionContext( 'wizard-theme-files', 'adv' )
             ->initContext();
     }
 
@@ -240,7 +240,8 @@ class Admin_ThemesController extends Zend_Controller_Action
                         "designer" => $theme['designer'],
                         "version"  => $theme['version'],
                     	"compat"   => $theme['subTitle'],
-                    	"text"     => $theme['description']
+                    	"text"     => $theme['description'],
+                        "pubId"	   => $theme['pubId']
                     );
                 }
             )
@@ -328,8 +329,73 @@ class Admin_ThemesController extends Zend_Controller_Action
 
     public function wizardThemeFilesAction()
     {
-        $themeId = $this->_request->getParam( 'id' );
+        $themeId          = $this->_request->getParam( 'id' );
+        $datatableAdapter = new ThemeFiles( $this->getThemeService(), $themeId );
+        $datatable        = $this->_helper->genericDatatable;
+        /* @var $datatable Action_Helper_GenericDatatable */
+        $datatable
+            ->setAdapter( $datatableAdapter )
+            ->setOutputObject( $this->view )
+            ->setCols( array
+            (
+                'checkbox'	=> '',
+                'name'      => getGS( 'Name' ),
+                'id'        => getGS( 'ID' ),
+                'type'	    => getGS( 'Type' ),
+                'cache'     => getGS( 'Cache lifetime, sec.' ),
+                'modified'	=> getGS( 'Modified' ),
+                'actions'	=> getGS( 'Action' )
+            ))
+            ->buildColumnDefs()
+            ->setOptions( array
+            (
+                'sAjaxSource' => $this->view->url( array( 'action' => 'wizard-theme-files', 'format' => 'json') ),
+            	'sPaginationType' => 'full_numbers',
+            	'bServerSide'    => true,
+            	'bJQueryUI'      => true,
+            	'bAutoWidth'     => false,
+                'sDom'		     => 'tiprl',
+            	'iDisplayLength' => 25,
+            	'bLengthChange'  => false,
+                'fnRowCallback'	 => "newscoopDatatables.callbackRow",
+                'fnDrawCallback' => "newscoopDatatables.callbackDraw",
+                'fnInitComplete' => "newscoopDatatables.callbackInit"
+            ) )
+            ->setWidths( array
+            (
+            	'checkbox'  => 20,
+            	'name'      => 150,
+            	'id'        => 150,
+            	'type'      => 150,
+                'cache'	    => 150,
+            	'modified'  => 150,
+                'actions'	=> 150
+            ) )
+            ->setRowHandler
+            (
+                function( $theme, $index = null )
+                {
+                    return array
+                    (
 
+                    );
+                }
+            )
+            ->setParams( $this->_request->getParams() );
+
+        if( ( $this->view->mytable = $datatable->dispatch() ) )
+        {
+            $this->view->publications  = $this->getPublicationService()->getEntities();
+            $this->view->themesPath    = $this->view->baseUrl( '/themes' );
+            $this->view->headScript()->appendFile( $this->view->baseUrl( "/js/jquery/jquery.tmpl.js" ) );
+            $this->view->headLink( array
+            (
+            	'type'  =>'text/css',
+            	'href'  => $this->view->baseUrl('/admin-style/themes_list.css'),
+                'media'	=> 'screen',
+                'rel'	=> 'stylesheet'
+            ) );
+        }
     }
 
     public function advancedThemeSettingsAction()
