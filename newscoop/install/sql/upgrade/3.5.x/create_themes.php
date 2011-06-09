@@ -8,12 +8,6 @@ use Symfony\Component\Console\Input,
 	Newscoop\Service\Resource,
 	Newscoop\Service\ISyncResourceService;
 
-require_once dirname(__FILE__) . '/../../../../conf/configuration.php';
-require_once dirname(__FILE__) . '/../../../../db_connect.php';
-
-global $g_ado_db;
-
-
 // Define path to application directory
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../../../../application'));
@@ -37,6 +31,10 @@ $application = new Zend_Application(
     APPLICATION_ENV,
     APPLICATION_PATH . '/configs/application.ini'
 );
+$application->bootstrap();
+
+
+global $g_ado_db;
 
 
 require 'Doctrine/Common/ClassLoader.php';
@@ -242,6 +240,7 @@ WHERE IssueTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
 		global $g_ado_db;
 
 		$themePath = basename($theme->getPath());
+		$prefix = dirname($theme->getPath()) . DIR_SEP;
 		if (empty($themePath)) {
 			$likeStr = '';
 		} else {
@@ -278,10 +277,10 @@ LIMIT 0, 1";
 		}
 		$outputSettings = array_shift($outputSettings);
 
-		$outputSettings->setFrontPage($this->getSyncResourceService()->getResource('frontPage', $outSettings['issue_template']));
-		$outputSettings->setFrontPage($this->getSyncResourceService()->getResource('sectionPage', $outSettings['section_template']));
-		$outputSettings->setFrontPage($this->getSyncResourceService()->getResource('articlePage', $outSettings['article_template']));
-		$outputSettings->setFrontPage($this->getSyncResourceService()->getResource('errorPage', $outSettings['error_template']));
+		$outputSettings->setFrontPage($this->getSyncResourceService()->getResource('frontPage', $prefix . $outSettings['issue_template']));
+		$outputSettings->setFrontPage($this->getSyncResourceService()->getResource('sectionPage', $prefix . $outSettings['section_template']));
+		$outputSettings->setFrontPage($this->getSyncResourceService()->getResource('articlePage', $prefix . $outSettings['article_template']));
+		$outputSettings->setFrontPage($this->getSyncResourceService()->getResource('errorPage', $prefix . $outSettings['error_template']));
 		return $this->getThemeService()->assignOutputSetting($outputSettings, $theme);
 	}
 
