@@ -33,6 +33,18 @@ class NewscoopEntityIssueProxy extends \Newscoop\Entity\Issue implements \Doctri
         return parent::getLanguage();
     }
 
+    public function getPublication()
+    {
+        $this->_load();
+        return parent::getPublication();
+    }
+
+    public function getPublicationId()
+    {
+        $this->_load();
+        return parent::getPublicationId();
+    }
+
     public function getSections()
     {
         $this->_load();

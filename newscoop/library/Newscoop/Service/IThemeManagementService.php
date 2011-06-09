@@ -106,6 +106,25 @@ interface IThemeManagementService extends IThemeService
 	/* --------------------------------------------------------------- */
 
 	/**
+	 * Export the theme.
+	 *
+	 * @param Theme|int $theme
+	 * 		The theme or theme id to be exported, not null.
+	 * @return the file name containing the exported archive.
+	 */
+	function exportTheme($theme);
+	
+	/**
+	 * Updates the theme.
+	 *
+	 * @param str $filePath
+	 * 		The file path to the zip containing the theme, not null.
+	 * @return bool
+	 * 		True if the theme was succesfully added, false otherwise.
+	 */
+	function installTheme($filePath);
+	
+	/**
 	 * Updates the theme.
 	 *
 	 * @param Theme $theme
@@ -118,15 +137,16 @@ interface IThemeManagementService extends IThemeService
 	function updateTheme(Theme $theme);
 
 	/**
-	 * Delete the theme and all coresponding connections.
+	 * Delete the theme and all coresponding connections. Please check the isUsedTheme method from
+	 * IOutputSettingIssueService before removing the theme.
 	 *
-	 * @param Theme $theme
-	 * 		The theme to be deleted, not null.
+	 * @param Theme|int $theme
+	 * 		The theme or theme id to be deleted, not null.
 	 *
 	 * @return bool
 	 * 		TRUE if the theme was succesfully deleted, FLASE if the theme is in use and cannot be removed.
 	 */
-	function deleteTheme(Theme $theme);
+	function removeTheme($theme);
 
 	/**
 	 * Assign the theme to the publication.

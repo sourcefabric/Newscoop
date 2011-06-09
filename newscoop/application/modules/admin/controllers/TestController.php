@@ -57,7 +57,7 @@ class Admin_TestController extends Zend_Controller_Action
 
     /* --------------------------------------------------------------- */
 
-    
+
     /**
      * Provides the controller resource id.
      *
@@ -230,7 +230,8 @@ class Admin_TestController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $this->test2();
+        $this->test8();
+        die;
     }
 
     protected function test1()
@@ -386,12 +387,21 @@ class Admin_TestController extends Zend_Controller_Action
             $outs = $outss[0];
 
             $this->getThemeManagementService()->assignOutputSetting($outs,
-                    $theme);
+            $theme);
             $text = '---><br/>';
 
             $this->view->text = $text;
         } catch (\Exception $e) {
             $this->view->text = 'errror<br/>' . $e . '</br>' . $e->getMessage();
+        }
+    }
+
+    protected function test8()
+    {
+        try {
+            echo $this->getThemeManagementService()->installTheme('C:\wamp\www\newscoop\themes\exports\The_Journal.zip');
+        } catch (\Exception $e) {
+            var_dump($e);
         }
     }
 
@@ -424,9 +434,9 @@ class Admin_TestController extends Zend_Controller_Action
             $themeRsc = $this->getSyncResourceService()->getSynchronized($themeRsc);
 
             $outputSettingsIssue->setThemePath($themeRsc)
-                    ->setIssue($issue)
-                    ->setOutput($output)
-                    ->setFrontPage($frontRsc);
+            ->setIssue($issue)
+            ->setOutput($output)
+            ->setFrontPage($frontRsc);
 
             $this->getOutputSettingIssueService()->insert($outputSettingsIssue);
         } catch (\Exception $e) {
@@ -466,9 +476,9 @@ class Admin_TestController extends Zend_Controller_Action
             $themeRsc = $this->getSyncResourceService()->getSynchronized($themeRsc);
 
             $outputSettingsIssue->setThemePath($themeRsc)
-                    ->setIssue($issue)
-                    ->setOutput($output)
-                    ->setFrontPage($frontRsc);
+            ->setIssue($issue)
+            ->setOutput($output)
+            ->setFrontPage($frontRsc);
 
             $this->getOutputSettingIssueService()->update($outputSettingsIssue);
         } catch (\Exception $e) {
@@ -541,9 +551,9 @@ class Admin_TestController extends Zend_Controller_Action
             $themeRsc = $this->getSyncResourceService()->getSynchronized($themeRsc);
 
             $outputSettingsSection
-                    ->setSection($section)
-                    ->setOutput($output)
-                    ->setFrontPage($frontRsc);
+            ->setSection($section)
+            ->setOutput($output)
+            ->setFrontPage($frontRsc);
 
             $this->getOutputSettingSectionService()->insert($outputSettingsSection);
         } catch (\Exception $e) {
@@ -579,9 +589,9 @@ class Admin_TestController extends Zend_Controller_Action
             $themeRsc = $this->getSyncResourceService()->getSynchronized($themeRsc);
 
             $outputSettingsSection
-                    ->setSection($section)
-                    ->setOutput($output)
-                    ->setFrontPage($frontRsc);
+            ->setSection($section)
+            ->setOutput($output)
+            ->setFrontPage($frontRsc);
 
             $this->getOutputSettingSectionService()->insert($outputSettingsSection);
         } catch (\Exception $e) {

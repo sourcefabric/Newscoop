@@ -78,6 +78,20 @@ class SyncResourceServiceDoctrine extends AEntityServiceDoctrine implements ISyn
 		$pathRsc->setPath($themePath);
 		return $this->getSynchronized($pathRsc);
 	}
+	
+	function clearAllFor($path)
+	{
+	    Validation::notEmpty($path, 'path');
+	    
+	    $em = $this->getEntityManager();
+	    $q = $em->createQueryBuilder();
+        $q->delete(Resource::NAME, 'rsc')
+        ->where('rsc.path like :path');
+        
+        $q->setParameter('path', $path.'%');
+        
+        $q->getQuery()->execute();
+	}
 
 	/* --------------------------------------------------------------- */
 

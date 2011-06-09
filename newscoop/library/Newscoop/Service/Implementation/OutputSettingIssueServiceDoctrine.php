@@ -18,7 +18,7 @@ use Newscoop\Entity\Issue;
  * Provides the services implementation for the Outputs.
  */
 class OutputSettingIssueServiceDoctrine extends AEntityBaseServiceDoctrine
-        implements IOutputSettingIssueService
+implements IOutputSettingIssueService
 {
 
     /** @var Newscoop\Service\IOutputService */
@@ -100,6 +100,28 @@ class OutputSettingIssueServiceDoctrine extends AEntityBaseServiceDoctrine
             return $resources;
         }
         return NULL;
+    }
+
+    function isThemeUsed($theme)
+    {
+        Validation::notEmpty($theme, 'theme');
+        if($theme instanceof Theme){
+            $themePath = $theme->getPath();
+        } else {
+            $themePath = $theme;
+        }
+        
+        
+        $em = $this->getEntityManager();
+        // we need to find if the theme is used by anyoane.
+        $q = $em->createQueryBuilder();
+        $q->select('count(osi)')
+        ->from(OutputSettingsIssue::NAME_1, 'osi')
+        ->join('osi.themePath', 'th')
+        ->where('th.path = :themePath');
+        
+        $q->setParameter('themePath', $themePath);
+        return $q->getQuery()->getSingleScalarResult() > 0;
     }
 
     /**

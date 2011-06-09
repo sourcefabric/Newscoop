@@ -64,4 +64,13 @@ interface ISyncResourceService extends IEntityService
 	 *		The synchronized Resource.
 	 */
 	function getThemePath($themePath);
+	
+	/* --------------------------------------------------------------- */
+	
+	/**
+	 * Clears all resources that are prefixed by the provided path.
+	 * @param str $path
+	 * 		The path for which all resources should be cleared has to end with a '/'.
+	 */
+	function clearAllFor($path);
 }

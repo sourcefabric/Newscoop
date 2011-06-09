@@ -49,6 +49,13 @@ interface IOutputSettingIssueService extends IEntityBaseService
      * 		The Output Setting, empty array if no Output Setting could be found for the provided issue.
      */
     function findByIssueAndOutput($issue, $output);
+    
+    /**
+     * Checks if the provided theme is used by any issue at this point.
+     * @param Theme|str $theme
+     * 		The theme or path to be checked if used.
+     */
+    function isThemeUsed($theme);
 
     /**
      * Update an ouput setting issue

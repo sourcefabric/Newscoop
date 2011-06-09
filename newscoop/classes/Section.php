@@ -14,10 +14,6 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
 
-use Newscoop\Service\Resource\ResourceId;
-use Newscoop\Service\IOutputSettingSectionService;
-use Newscoop\Service\ISectionService;
-use Newscoop\Entity\Output\OutputSettingsSection;
 /**
  * @package Campsite
  */
@@ -152,15 +148,6 @@ class Section extends DatabaseObject {
 			$dstSectionObj->create($sectionName, $shortName, $dstSectionCols);
 		}
 		
-		$section = $this->getSectionService()->findById($dstSectionObj->getSectionId());
-		$outputSettings = $this->getOutputSettingSectionService()->findBySection($this->getSectionId());
-		foreach ($outputSettings as $outSet){
-			$newOutSet = new OutputSettingsSection();
-			$outSet->copyTo($newOutSet);
-			$newOutSet->setSection($section);
-			$this->getOutputSettingSectionService()->insert($newOutSet);
-		}
-
 		// Copy all the articles.
 		if ($p_copyArticles) {
 			$srcSectionArticles = Article::GetArticles($this->m_data['IdPublication'],
@@ -380,59 +367,6 @@ class Section extends DatabaseObject {
 	{
 		return $this->setProperty('SectionTplId', $p_value);
 	} // fn setSectionTemplateId
-
-	/* --------------------------------------------------------------- */
-
-	/** @var Newscoop\Services\Resource\ResourceId */
-	private $resourceId = null;
-	/** @var Newscoop\Service\IOutputSettingSectionService */
-    private $outputSettingSectionService = NULL;
-	/** @var Newscoop\Service\ISectionService */
-    private $sectionService = NULL;
-    
-	/**
-	 * Provides the controller resource id.
-	 *
-	 * @return Newscoop\Services\Resource\ResourceId
-	 * 		The controller resource id.
-	 */
-	protected function getResourceId()
-	{
-		if ($this->resourceId === NULL) {
-			$this->resourceId = new ResourceId(__CLASS__);
-		}
-		return $this->resourceId;
-	}
-
-	/**
-     * Provides the Output  setting service.
-     *
-     * @return Newscoop\Service\IOutputSettingSectionService
-     * 		The output setting section service to be used by this controller.
-     */
-    public function getOutputSettingSectionService()
-    {
-        if ($this->outputSettingSectionService === NULL) {
-            $this->outputSettingSectionService = $this->getResourceId()->getService(IOutputSettingSectionService::NAME);
-        }
-        return $this->outputSettingSectionService;
-    }
-	
-	/**
-     * Provides the Section service.
-     *
-     * @return Newscoop\Service\ISectionService
-     * 		The section service to be used by this controller.
-     */
-    public function getSectionService()
-    {
-        if ($this->sectionService === NULL) {
-            $this->sectionService = $this->getResourceId()->getService(ISectionService::NAME);
-        }
-        return $this->sectionService;
-    }
-
-	/* --------------------------------------------------------------- */
     
 	/**
 	 * Return an array of sections in the given issue.
