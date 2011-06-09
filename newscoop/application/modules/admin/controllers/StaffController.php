@@ -198,6 +198,7 @@ class Admin_StaffController extends Zend_Controller_Action
                 'action' => 'add',
                 'resource' => 'user',
                 'privilege' => 'manage',
+                'class' => 'add',
             ),
         );
     }
