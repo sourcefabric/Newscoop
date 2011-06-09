@@ -8,6 +8,8 @@ $import_runner = $cs_dir . DIR_SEP . 'install' . DIR_SEP . 'scripts' . DIR_SEP .
 require_once($import_runner);
 
 $stored_definition = $cs_dir . DIR_SEP . 'install' . DIR_SEP . 'sql' . DIR_SEP . 'checkpp.sql';
+
+global $g_ado_db;
 importSqlStoredProgram($g_ado_db, $stored_definition);
 
 ?>

@@ -174,8 +174,8 @@ final class MetaArticleBodyField {
                 $context = CampTemplate::singleton()->context();
                 if ((SystemPref::CollectStatistics()) && (!$context->preview)) {
                     $stat_web_url = $Campsite['WEBSITE_URL'];
-                    if ("/" != $stat_web_url[strlen($stat_web_url)-1]) {
-                        $stat_web_url .= "/";
+                    if ('/' != $stat_web_url[strlen($stat_web_url)-1]) {
+                        $stat_web_url .= '/';
                     }
                     $article_number = $this->m_parent_article->getProperty('Number');
                     $language_obj = new MetaLanguage($this->m_parent_article->getProperty('IdLanguage'));
@@ -209,7 +209,7 @@ final class MetaArticleBodyField {
                             var read_date = new Date();
                             var read_path = "_statistics/reader/article/";
                             var request_randomizer = "" + read_date.getTime() + Math.random();
-                            var stats_url = "' . $stat_web_url . '" + read_path + "' . $article_number . '/' . $language_code . '/";
+                            var stats_url = "' . $stat_web_url . '" + read_path + "' . $requestObjectId . '/";
                             try {
                                 stats_request.open("GET", stats_url + "?randomizer=" + request_randomizer, true);
                                 stats_request.send(null);
