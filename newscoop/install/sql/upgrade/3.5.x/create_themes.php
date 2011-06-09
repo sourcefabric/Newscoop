@@ -168,14 +168,63 @@ class ThemeUpgrade
 //			$this->createTheme($themePath);
 //		}
 
-		$newscoopVersion = new CampVersion();
-
 		$themes = $this->getThemeService()->getEntities();
 		foreach ($themes as $theme) {
 			$theme->setName($this->createName(basename($theme->getPath())));
-//			$theme->setMinorNewscoopVersion($newscoopVersion->getVersion());
-//			$theme->setVersion('1.0');
 			$this->getThemeService()->updateTheme($theme);
+			$this->setThemeOutputSettings($theme);
+		}
+	}
+
+
+	public function setThemeOutputSettings(Newscoop\Entity\Theme $theme)
+	{
+		global $g_ado_db;
+
+		$themePath = basename($theme->getPath());
+		if (empty($themePath)) {
+			$substrPos = 0;
+			$likeStr = '';
+		} else {
+			$substrPos = strlen($themePath) + 1;
+			$likeStr = $g_ado_db->Escape($themePath) . '/';
+		}
+
+		$sql = "SELECT DISTINCT iss.IdPublication
+FROM Issues AS iss
+WHERE IssueTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
+    AND SectionTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
+    AND ArticleTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')";
+		$publicationIds = $g_ado_db->GetAll($sql);
+		foreach ($publicationIds as $publicationId) {
+			$publicationId = $publicationId['IdPublication'];
+			$sql = "SELECT tpl_i.Name AS issue_template,
+    tpl_s.Name AS section_template,
+    tpl_a.Name AS article_template,
+    tpl_e.Name AS error_template
+FROM Issues AS iss
+    LEFT JOIN Templates AS tpl_i ON iss.IssueTplId = tpl_i.Id
+    LEFT JOIN Templates AS tpl_s ON iss.SectionTplId = tpl_s.Id
+    LEFT JOIN Templates AS tpl_a ON iss.ArticleTplId = tpl_a.Id,
+    Publications AS pub
+    LEFT JOIN Templates AS tpl_e ON pub.url_error_tpl_id = tpl_e.Id
+WHERE iss.IdPublication = $publicationId
+    AND IssueTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
+    AND SectionTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
+    AND ArticleTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
+    AND pub.Id = $publicationId
+    AND pub.url_error_tpl_id IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
+ORDER BY Number DESC
+LIMIT 0, 1";
+			$outSettings = $g_ado_db->GetAll($sql);
+			if (count($outSettings) == 0) {
+				continue;
+			}
+			$outSettings = array_shift($outSettings);
+			$frontTemplate = substr($outSettings['issue_template'], $substrPos);
+			$sectionTemplate = substr($outSettings['section_template'], $substrPos);
+			$articleTemplate = substr($outSettings['article_template'], $substrPos);
+			$errorTemplate = substr($outSettings['error_template'], $substrPos);
 		}
 	}
 
@@ -190,7 +239,7 @@ class ThemeUpgrade
 	public function createTheme($themeSrcDir)
 	{
 		$srcPath = $this->templatesPath . (empty($themeSrcDir) ? '' : '/' . $themeSrcDir);
-		$dstPath = $this->themesPath . (empty($themeSrcDir) ? '' : '/' . $themeSrcDir);
+		$dstPath = $this->themesPath . (empty($themeSrcDir) ? '/default' : '/' . $themeSrcDir);
 
 		mkdir($dstPath);
 		copy(dirname(__FILE__) . '/' . $this->themeXMLFile, "$dstPath/$this->themeXMLFile");

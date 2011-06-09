@@ -1943,6 +1943,7 @@ ul#edit-files h2 {
 			}
 			.matchWithExisting ul li.withPadding {
 				padding-left:25px;
+				width: 415px;
 				background:url(images/theme-settings-dotted-line.png) 10px -5px no-repeat;
 				}
 			.matchWithExisting ul li div {

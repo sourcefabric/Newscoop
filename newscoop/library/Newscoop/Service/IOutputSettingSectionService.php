@@ -25,6 +25,19 @@ interface IOutputSettingSectionService extends IEntityBaseService
     /* --------------------------------------------------------------- */
 
     /**
+     * Provides the Output Settings that has the provided Section and Output.
+     *
+     * @param Section|int $section
+     * 		The section to be searched, not null, not empty.
+     * @param Output|string $output
+     * 		The output to be searched, not null, not empty.
+     *
+     * @return Newscoop\Entity\OutputSettingsSection
+     * 		The Output Setting, empty array if no Output Setting could be found for the provided section.
+     */
+    function findBySectionAndOutput($section, $output);
+
+    /**
      * Provides the Output Settings that has the provided Section.
      *
      * @param Section|int $section
@@ -33,7 +46,6 @@ interface IOutputSettingSectionService extends IEntityBaseService
      * @return Newscoop\Entity\OutputSettingsSection
      * 		The Output Setting, empty array if no Output Setting could be found for the provided section.
      */
-
     function findBySection($section);
 
     /**

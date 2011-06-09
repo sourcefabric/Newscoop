@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Newscoop\Controller\Action\Helper\Datatable\Adapter;
 
@@ -13,34 +13,34 @@ use Newscoop\Service\IThemeManagementService,
 class Theme extends AAdapter
 {
     /**
-     * 
+     *
      * Theme service
      * @var ThemeManagementServiceLocal
      */
     private $_service;
-    
+
     /**
      * The search object
      * @var SearchTheme
      */
     private $_search;
-    
+
     /**
      * Search column index used for filtering per publication
      * @var int $_pubColFilterIdx
      */
     private $_pubColFilterIdx;
-    
+
     public function __construct( IThemeManagementService $service )
     {
         $this->_service = $service;
     }
-    
+
     public function getData( array $p_params, array $p_cols )
     {
         $p_params = (object) $p_params;
         $dataCollection = null;
-        if( isset( $p_params->search ) ) 
+        if( isset( $p_params->search ) )
         {
             /*
              * some sort of search management
@@ -49,9 +49,9 @@ class Theme extends AAdapter
                 if( @trim( $searchVal ) != "" )
                     switch( $searchCol )
                     {
-                    };                
+                    };
             }
-            
+
             */
             if( @trim( $p_params->search[ $this->_pubColFilterIdx ] ) != "" )
             {
@@ -60,7 +60,7 @@ class Theme extends AAdapter
                 $dataCollection = $this->_service->getThemes( $p );
                 //var_dump( $dataCollection );
             }
-                         
+
             $this->search( $p_params->search );
         }
         if( isset( $p_params->sort ) ) {
@@ -70,28 +70,29 @@ class Theme extends AAdapter
         $retThemes = array();
         if( is_null( $dataCollection ) )
             $dataCollection = $this->_service->getUnassignedThemes( $this->getSearchObject() );
-            
+
         foreach( $dataCollection as $theme )
         {
             $images = array();
             foreach( $this->_service->getPresentationImages( $theme ) as $img ) {
                 $images[] = (string) $img->getPath(); // @todo some sorting
-            }     
+            }
             $retThemes[] = array
-            ( 
+            (
                 'id'          => (string) $theme->getId(),
             	'title'       => (string) $theme->getName(),
                 'designer'    => (string) $theme->getDesigner(),
                 'version'     => (string) $theme->getVersion(),
                 'subTitle'    => (string) $theme->getMinorNewscoopVersion(),
                 'description' => (string) $theme->getDescription(),
-                'images'	  => $images 
+                'images'	  => $images,
+                'pubId'       => isset( $p ) ? $p->getId() : null
             );
         }
-        
+
         return $retThemes;
     }
-    
+
     /**
      * Define in what column number to look for the publication filter search
      * @param int $column
@@ -99,14 +100,14 @@ class Theme extends AAdapter
     public function setPublicationFilterColumn( $column )
     {
         $this->_pubColFilterIdx = $column;
-        return $this;   
+        return $this;
     }
-    
+
     public function search( $query, array $cols = null )
     {
         return;
     }
-    
+
     public function sort( array $p_params )
     {
         $search = $this->getSearchObject();
@@ -114,29 +115,29 @@ class Theme extends AAdapter
         {
             switch( $k )
             {
-                case 1 : 
+                case 1 :
                 case 2 : $colName = 'NAME'; break;
                 case 3 : $colName = 'MINOR_NEWSCOOP_VERSION'; break;
                 default : continue 2;
             }
             $sortMethod = ( $v == 'asc' ? 'orderAscending' : 'orderDescending' );
-            $search->$colName->$sortMethod();   
+            $search->$colName->$sortMethod();
         }
     }
-    
+
     public function getCount( array $params = array(), array $cols = array() )
     {
         $search = $this->getSearchObject();
-        try 
+        try
         {
-            return $this->_service->getCount( $search ); 
+            return $this->_service->getCount( $search );
         }
         catch( \Exception $e )
         {
             return 0;
         }
     }
-    
+
     /**
      * Get/set search object
      * @return SearchTheme
@@ -146,5 +147,5 @@ class Theme extends AAdapter
         if( is_null( $this->_search ) )
             $this->_search = new SearchTheme;
         return $this->_search;
-    } 
+    }
 }

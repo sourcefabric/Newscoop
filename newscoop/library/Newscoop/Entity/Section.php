@@ -149,4 +149,14 @@ class Section extends Entity
         $this->articleTemplate = $template;
         return $this;
     }
+
+    /**
+     * Get the issue assigned to this section
+     *
+     * @return Newscoop\Entity\Issue
+     */
+    public function getIssue()
+    {
+        return $this->issue;
+    }
 }
