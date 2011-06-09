@@ -228,7 +228,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
         ?>
           <li>
             <label><?php echo htmlspecialchars($dbColumn->getDisplayName()); ?></label>
-            <div class="tinyMCEHolder">
+            <div class="tinyMCEHolder" style="overflow: auto; min-width: 670px; <?php echo $inEditMode ? '' : 'width: 74%'; ?>">
             <?php
             if ($inEditMode) {
                 $textAreaId = $dbColumn->getName() . '_' . $f_article_number;
