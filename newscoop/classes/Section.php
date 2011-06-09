@@ -14,6 +14,10 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
 
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\IOutputSettingSectionService;
+use Newscoop\Service\ISectionService;
+use Newscoop\Entity\Output\OutputSettingsSection;
 /**
  * @package Campsite
  */
@@ -25,6 +29,7 @@ class Section extends DatabaseObject {
 		'IdLanguage',
 		'Number');
 	var $m_columnNames = array(
+		'id',
 		'IdPublication',
 		'NrIssue',
 		'IdLanguage',
@@ -71,6 +76,15 @@ class Section extends DatabaseObject {
 		$p_columns['ShortName'] = $p_shortName;
 		$success = parent::create($p_columns);
 		if ($success) {
+			global $g_ado_db;
+			$sql = "UPDATE `Sections` s".
+			" JOIN `Issues` AS i ON i.`IdPublication` = s.`IdPublication` AND i.`Number` = s.`NrIssue` AND i.`IdLanguage` = s.`IdLanguage`".
+			" SET `fk_issue_id` = i.`id` WHERE ".
+			" s.`IdPublication` = ".$this->m_data['IdPublication'].
+			" AND s.`NrIssue` = ".$this->m_data['NrIssue'].
+			" AND s.`Number` = ".$this->m_data['Number'].
+			" AND s.`IdLanguage` = ".$this->m_data['IdLanguage'];
+			$g_ado_db->Execute($sql);
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
@@ -137,6 +151,15 @@ class Section extends DatabaseObject {
 		if (!$dstSectionObj->exists()) {
 			$dstSectionObj->create($sectionName, $shortName, $dstSectionCols);
 		}
+		
+		$section = $this->getSectionService()->findById($dstSectionObj->getSectionId());
+		$outputSettings = $this->getOutputSettingSectionService()->findBySection($this->getSectionId());
+		foreach ($outputSettings as $outSet){
+			$newOutSet = new OutputSettingsSection();
+			$outSet->copyTo($newOutSet);
+			$newOutSet->setSection($section);
+			$this->getOutputSettingSectionService()->insert($newOutSet);
+		}
 
 		// Copy all the articles.
 		if ($p_copyArticles) {
@@ -195,11 +218,23 @@ class Section extends DatabaseObject {
 					 $tmpData['Name'], $tmpData['Number'],
 					 $tmpData['IdPublication'], $tmpData['NrIssue']);
 			Log::Message($logtext, null, 22);
+			$outputSettingSections = $this->getOutputSettingSectionService()->findBySection($tmpData['id']);
+			foreach($outputSettingSections as $outputSet){
+				$this->getOutputSettingSectionService()->delete($outputSet);
+			}
 		}
 		return $numArticlesDeleted;
 	} // fn delete
 
-
+	/**
+	 * Return the section ID.
+	 * @return int
+	 */
+	public function getSectionId()
+	{
+		return $this->m_data['id'];
+	} // fn getId
+	
 	/**
 	 * @return int
 	 */
@@ -346,7 +381,59 @@ class Section extends DatabaseObject {
 		return $this->setProperty('SectionTplId', $p_value);
 	} // fn setSectionTemplateId
 
+	/* --------------------------------------------------------------- */
 
+	/** @var Newscoop\Services\Resource\ResourceId */
+	private $resourceId = null;
+	/** @var Newscoop\Service\IOutputSettingSectionService */
+    private $outputSettingSectionService = NULL;
+	/** @var Newscoop\Service\ISectionService */
+    private $sectionService = NULL;
+    
+	/**
+	 * Provides the controller resource id.
+	 *
+	 * @return Newscoop\Services\Resource\ResourceId
+	 * 		The controller resource id.
+	 */
+	protected function getResourceId()
+	{
+		if ($this->resourceId === NULL) {
+			$this->resourceId = new ResourceId(__CLASS__);
+		}
+		return $this->resourceId;
+	}
+
+	/**
+     * Provides the Output  setting service.
+     *
+     * @return Newscoop\Service\IOutputSettingSectionService
+     * 		The output setting section service to be used by this controller.
+     */
+    public function getOutputSettingSectionService()
+    {
+        if ($this->outputSettingSectionService === NULL) {
+            $this->outputSettingSectionService = $this->getResourceId()->getService(IOutputSettingSectionService::NAME);
+        }
+        return $this->outputSettingSectionService;
+    }
+	
+	/**
+     * Provides the Section service.
+     *
+     * @return Newscoop\Service\ISectionService
+     * 		The section service to be used by this controller.
+     */
+    public function getSectionService()
+    {
+        if ($this->sectionService === NULL) {
+            $this->sectionService = $this->getResourceId()->getService(ISectionService::NAME);
+        }
+        return $this->sectionService;
+    }
+
+	/* --------------------------------------------------------------- */
+    
 	/**
 	 * Return an array of sections in the given issue.
 	 * @param int $p_publicationId

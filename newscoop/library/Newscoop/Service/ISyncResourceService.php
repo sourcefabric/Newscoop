@@ -37,4 +37,31 @@ interface ISyncResourceService extends IEntityService
 	 *		The synchronized Resource.
 	 */
 	function getSynchronized(Resource $resource);
+	
+	/**
+	 * Provides the synchronized Resource based on the provided name and path.
+	 * The synchronization of a resource means the association of that resource with the database.
+	 *
+	 * @param string $name
+	 *		The name of the Resource to be synchronized, not null, not empty.
+	 *
+	 * @param string $path
+	 *		The path of the Resource to be synchronized, not null, not empty.
+	 *
+	 * @return Resource
+	 *		The synchronized Resource.
+	 */
+	function getResource($name, $path);
+	
+	/**
+	 * Provides the synchronized Resource based on the provided theme path.
+	 * The synchronization of a resource means the association of that resource with the database.
+	 *
+	 * @param str $themePath
+	 *		The theme path to be synchronized, not null, not empty.
+	 *
+	 * @return Resource
+	 *		The synchronized Resource.
+	 */
+	function getThemePath($themePath);
 }

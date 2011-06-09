@@ -41,7 +41,7 @@ UPDATE `SystemPreferences` SET `value` = '/js/geocoding/markers/' WHERE `varname
 UPDATE `Sections` s
 JOIN `Issues` AS i ON
 i.`IdPublication` = s.`IdPublication` AND i.`Number` = s.`NrIssue` AND i.`IdLanguage` = s.`IdLanguage`
-SET `fk_issue_id` = i.`id`
+SET `fk_issue_id` = i.`id`;
 
 system php ./acl.php
 system php ./javascript_js_cleanup.php

@@ -57,6 +57,7 @@ class Admin_TestController extends Zend_Controller_Action
 
     /* --------------------------------------------------------------- */
 
+
     /**
      * Provides the controller resource id.
      *
@@ -636,8 +637,11 @@ class Admin_TestController extends Zend_Controller_Action
 
             /* @var $issue \Newscoop\Entity\Issue */
             $issue = $this->getIssueService()->findById(1);
+            /* @var $section \Newscoop\Entity\Section */
+            $section = $this->getSectionService()->findById(10);
 
-            $return = $this->getTemplateSearchService()->getFrontPage($issue,                            $output);
+            $return = $this->getTemplateSearchService()->getArticlePage($section, $output);
+            var_dump($return);
         } catch (\Exception $e) {
             echo 'errror<br/>' . $e . '</br>' . $e->getMessage();
         }
