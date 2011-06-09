@@ -93,7 +93,7 @@ class Admin_StaffController extends Zend_Controller_Action
 
         $this->view->actions = array(
             array(
-                'label' => getGS('Edit access'),
+                'label' => getGS('Permissions'),
                 'module' => 'admin',
                 'controller' => 'staff',
                 'action' => 'edit-access',
