@@ -5,7 +5,8 @@ use Symfony\Component\Console\Input,
 	Newscoop\Storage,
 	Newscoop\Entity,
 	Newscoop\Service\IThemeManagementService,
-	Newscoop\Service\Resource;
+	Newscoop\Service\Resource,
+	Newscoop\Service\ISyncResourceService;
 
 require_once dirname(__FILE__) . '/../../../../conf/configuration.php';
 require_once dirname(__FILE__) . '/../../../../db_connect.php';
@@ -42,6 +43,7 @@ require 'Doctrine/Common/ClassLoader.php';
 $classLoader = new \Doctrine\Common\ClassLoader('Newscoop', realpath(APPLICATION_PATH . '/../library'));
 $classLoader->register(); // register on SPL autoload stack
 
+
 $templatesPath = realpath(APPLICATION_PATH . '/../templates');
 $themesPath = realpath(APPLICATION_PATH . '/../themes/unassigned');
 
@@ -68,9 +70,14 @@ class ThemeUpgrade
 	private $resourceId;
 
 	/**
-	 * @var Newscoop\Service\IThemeService
+	 * @var Newscoop\Service\IThemeManagementService
 	 */
 	private $themeService;
+
+	/**
+	 * @var Newscoop\Service\ISyncResourceService
+	 */
+	private $syncResourceService;
 
 	/**
 	 * @var string
@@ -103,7 +110,7 @@ class ThemeUpgrade
     /**
      * Provides the theme service.
      *
-     * @return Newscoop\Service\IThemeService
+     * @return Newscoop\Service\IThemeManagementService
      * 		The theme service to be used by this controller.
      */
     public function getThemeService()
@@ -115,7 +122,22 @@ class ThemeUpgrade
     }
 
 
-	/**
+    /**
+     * Provides the sync resources service.
+     *
+     * @return Newscoop\Service\ISyncResourceService
+     * 		The sync resource service to be used by this controller.
+     */
+    public function getSyncResourceService()
+    {
+        if ($this->syncResourceService === NULL) {
+            $this->syncResourceService = $this->getResourceId()->getService(ISyncResourceService::NAME);
+        }
+        return $this->syncResourceService;
+    }
+
+
+    /**
 	 * Returns an array of themes (theme path)
 	 *
 	 * @return array
@@ -164,6 +186,7 @@ class ThemeUpgrade
 	 */
 	public function createThemes()
 	{
+		// TODO decomment when committing
 //		foreach ($this->themesList() as $themePath=>$themeName) {
 //			$this->createTheme($themePath);
 //		}
@@ -172,21 +195,26 @@ class ThemeUpgrade
 		foreach ($themes as $theme) {
 			$theme->setName($this->createName(basename($theme->getPath())));
 			$this->getThemeService()->updateTheme($theme);
-			$this->setThemeOutputSettings($theme);
+			$this->assignTheme($theme);
 		}
 	}
 
 
-	public function setThemeOutputSettings(Newscoop\Entity\Theme $theme)
+	/**
+	 * Assign the theme to the publications that use it.
+	 *
+	 * @param $theme
+	 *
+	 * @return bool
+	 */
+	public function assignTheme(Newscoop\Entity\Theme $theme)
 	{
 		global $g_ado_db;
 
 		$themePath = basename($theme->getPath());
 		if (empty($themePath)) {
-			$substrPos = 0;
 			$likeStr = '';
 		} else {
-			$substrPos = strlen($themePath) + 1;
 			$likeStr = $g_ado_db->Escape($themePath) . '/';
 		}
 
@@ -198,7 +226,29 @@ WHERE IssueTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
 		$publicationIds = $g_ado_db->GetAll($sql);
 		foreach ($publicationIds as $publicationId) {
 			$publicationId = $publicationId['IdPublication'];
-			$sql = "SELECT tpl_i.Name AS issue_template,
+			$this->assignThemeToPublication($theme, $publicationId);
+		}
+	}
+
+
+	/**
+	 * Assign the theme to the given publication if the publication issues used templates from this theme.
+	 * @param Newscoop\Entity\Theme $theme
+	 * @param int $publicationId
+	 * @return bool
+	 */
+	public function assignThemeToPublication(Newscoop\Entity\Theme $theme, $publicationId)
+	{
+		global $g_ado_db;
+
+		$themePath = basename($theme->getPath());
+		if (empty($themePath)) {
+			$likeStr = '';
+		} else {
+			$likeStr = $g_ado_db->Escape($themePath) . '/';
+		}
+
+		$sql = "SELECT tpl_i.Name AS issue_template,
     tpl_s.Name AS section_template,
     tpl_a.Name AS article_template,
     tpl_e.Name AS error_template
@@ -216,16 +266,37 @@ WHERE iss.IdPublication = $publicationId
     AND pub.url_error_tpl_id IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
 ORDER BY Number DESC
 LIMIT 0, 1";
-			$outSettings = $g_ado_db->GetAll($sql);
-			if (count($outSettings) == 0) {
-				continue;
-			}
-			$outSettings = array_shift($outSettings);
-			$frontTemplate = substr($outSettings['issue_template'], $substrPos);
-			$sectionTemplate = substr($outSettings['section_template'], $substrPos);
-			$articleTemplate = substr($outSettings['article_template'], $substrPos);
-			$errorTemplate = substr($outSettings['error_template'], $substrPos);
+		$outSettings = $g_ado_db->GetAll($sql);
+		if (count($outSettings) == 0) {
+			return false;
 		}
+		$outSettings = array_shift($outSettings);
+
+		$outputSettings = $this->getThemeService()->getOutputSettings($theme);
+		if (count($outputSettings) == 0) {
+			return false;
+		}
+		$outputSettings = array_shift($outputSettings);
+
+		$outputSettings->setFrontPage($this->getSyncResourceService()->getResource('frontPage', $outSettings['issue_template']));
+		$outputSettings->setFrontPage($this->getSyncResourceService()->getResource('sectionPage', $outSettings['section_template']));
+		$outputSettings->setFrontPage($this->getSyncResourceService()->getResource('articlePage', $outSettings['article_template']));
+		$outputSettings->setFrontPage($this->getSyncResourceService()->getResource('errorPage', $outSettings['error_template']));
+		return $this->getThemeService()->assignOutputSetting($outputSettings, $theme);
+	}
+
+
+	/**
+	 * Assignes the theme to all issues using this theme and sets custom output settings if needed
+	 *
+	 * @param int $publicationId
+	 *
+	 * @param Newscoop\Entity\Theme $theme
+	 *
+	 * @return bool
+	 */
+	public function assignIssuesOutputSettings($publicationId, Newscoop\Entity\Theme $theme)
+	{
 	}
 
 
