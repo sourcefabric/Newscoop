@@ -265,7 +265,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         if ($zip->open($zipFilePath, \ZIPARCHIVE::CREATE) !== TRUE) {
             die ("Could not open archive");
         }
-         
+
 
         $themePath = $this->toFullPath($theme->getPath());
         $lenght = strlen($themePath);
@@ -402,7 +402,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
             $this->rrmdir($themeFullFolder);
             throw $e;
         }
-        return true;
+        return $this->loadThemeByPath($themeFolder);
     }
 
     function assignOutputSetting(OutputSettings $outputSettings, Theme $theme)

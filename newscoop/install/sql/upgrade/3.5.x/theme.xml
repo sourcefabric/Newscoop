@@ -7,15 +7,10 @@
     
     <!-- =============================== -->
     
-    <front>
-        <template src="front.tpl" />
-    </front>
-    
-    <section>
-        <template src="section.tpl" />
-    </section>
-    
-    <article>
-        <template src="article.tpl" />
-    </article>
+	<output name="Web">
+		<frontPage src="front.tpl" />
+		<sectionPage src="section.tpl" />
+		<articlePage src="article.tpl" />
+		<errorPage src="404.tpl" />
+	</output>
 </theme>

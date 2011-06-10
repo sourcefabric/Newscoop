@@ -93,7 +93,7 @@ class Resource extends Entity
     function setPath($path)
     {
         Validation::notEmpty($path, 'path');
-        $this->path = $path;
+		$this->path = str_replace('\\', '/', $path);
         return $this;
     }
 
