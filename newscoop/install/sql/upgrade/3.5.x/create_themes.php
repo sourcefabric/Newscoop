@@ -3,9 +3,10 @@
 use Symfony\Component\Console\Input,
 	Doctrine\DBAL\Types,
 	Newscoop\Storage,
-	Newscoop\Entity,
+	Newscoop\Entity\Resource,
+	Newscoop\Entity\Output\OutputSettingsIssue,
 	Newscoop\Service\IThemeManagementService,
-	Newscoop\Service\Resource,
+	Newscoop\Service\IOutputService,
 	Newscoop\Service\ISyncResourceService,
 	Newscoop\Service\IPublicationService,
 	Newscoop\Service\IIssueService,
@@ -84,7 +85,10 @@ class ThemeUpgrade
 	 * @var Newscoop\Service\IIssueService
 	 */
 	private $issueService;
-
+    /** @var Newscoop\Service\IOutputService */
+    private $outputService = NULL;
+    /** @var Newscoop\Service\IOutputSettingIssueService */
+    private $outputSettingIssueService = NULL;
 	/**
 	 * @var Newscoop\Service\ISyncResourceService
 	 */
@@ -162,7 +166,34 @@ class ThemeUpgrade
         return $this->issueService;
     }
 
+	/**
+     * Provides the ouput service.
+     *
+     * @return Newscoop\Service\IOutputService
+     * 		The service service to be used by this controller.
+     */
+    public function getOutputService()
+    {
+        if ($this->outputService === NULL) {
+            $this->outputService = $this->getResourceId()->getService(IOutputService::NAME);
+        }
+        return $this->outputService;
+    }
 
+	/**
+     * Provides the Output setting issue service.
+     *
+     * @return Newscoop\Service\IOutputSettingIssueService
+     * 		The output setting issue service to be used by this controller.
+     */
+    public function getOutputSettingIssueService()
+    {
+        if ($this->outputSettingIssueService === NULL) {
+            $this->outputSettingIssueService = $this->getResourceId()->getService(IOutputSettingIssueService::NAME);
+        }
+        return $this->outputSettingIssueService;
+    }
+    
     /**
      * Provides the sync resources service.
      *
@@ -251,7 +282,6 @@ class ThemeUpgrade
 	public function assignTheme(Newscoop\Entity\Theme $theme)
 	{
 		global $g_ado_db;
-
 		$themePath = basename($theme->getPath());
 		if (empty($themePath)) {
 			$likeStr = '';
@@ -273,7 +303,7 @@ WHERE IssueTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
 				if (is_null($publicationTheme)) {
 					continue;
 				}
-				$this->setIssuesTheme($publicationId, $publicationTheme);
+				$this->setIssuesTheme($publicationId, $theme, $publicationTheme);
 			}
 			catch (InvalidArgumentException $ex) {
 			}
@@ -290,11 +320,9 @@ WHERE IssueTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
 	 *
 	 * @return bool
 	 */
-	public function setIssuesTheme($publicationId, Newscoop\Entity\Theme $theme)
+	public function setIssuesTheme($publicationId, Newscoop\Entity\Theme $theme, Newscoop\Entity\Theme $publicationTheme)
 	{
 		global $g_ado_db;
-
-		$outputSettingIssueService = $this->getResourceId()->getService(IOutputSettingIssueService::NAME);
 
 		$sql = $this->buildIssuesQuery($publicationId, $theme->getPath());
 		$issuesList = $g_ado_db->GetAll($sql);
@@ -304,35 +332,61 @@ WHERE IssueTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
 			if (is_null($issue)) {
 				continue;
 			}
-			$outSetIssues = $outputSettingIssueService->findByIssue($issueData['id']);
+			$outSetIssues = $this->getOutputSettingIssueService()->findByIssue($issueData['id']);
+			$newOutputSetting = false;
 			if (count($outSetIssues) > 0) {
 				$outSetIssue = $outSetIssues[0];
 			} else {
 				$outSetIssue = new OutputSettingsIssue();
-				$outSetIssue->setOutput($outputService->findByName('Web'));
-				$outSetIssue->setIssue($issueService->getById($issueData['id']));
+				$outSetIssue->setOutput($this->getOutputService()->findByName('Web'));
+				$outSetIssue->setIssue($this->getIssueService()->getById($issueData['id']));
 				$newOutputSetting = true;
 			}
-			$outSetIssue->setThemePath($this->getSyncResourceService()->getThemePath($f_theme_id));
+			$outTh = $this->getThemeService()->getOutputSettings($publicationTheme);
+    		if (count($outTh) == 0) {
+    			return false;
+    		}
+    		$outTh = array_shift($outTh);
+    		
+			$outSetIssue->setThemePath($this->getSyncResourceService()->getThemePath($publicationTheme->getPath()));
+			
 			if (!empty($issueData['issue_template'])) {
-				$outSetIssue->setFrontPage($this->getSyncResourceService()->getResource('frontPage', $issueData['issue_template']));
+			    $rscPath = $publicationTheme->getPath().basename($issueData['issue_template']);
+			    if($rscPath != $outTh->getFrontPage()->getPath()){
+			        $outSetIssue->setFrontPage($this->getSyncResourceService()->getResource('frontPage', $rscPath));
+			    }else {
+			        $outSetIssue->setFrontPage(null);
+			    }
 			} else {
-				$outSetIssue->setFrontPage(null);
+			    $outSetIssue->setFrontPage(null);
 			}
+				
 			if (!empty($issueData['section_template'])) {
-				$outSetIssue->setSectionPage($this->getSyncResourceService()->getResource('sectionPage', $issueData['section_template']));
+			    $rscPath = $publicationTheme->getPath().basename($issueData['section_template']);
+			    if($rscPath != $outTh->getSectionPage()->getPath()){
+			        $outSetIssue->setSectionPage($this->getSyncResourceService()->getResource('sectionPage',$rscPath));
+			    }else {
+			        $outSetIssue->setSectionPage(null);
+			    }
 			} else {
-				$outSetIssue->setSectionPage(null);
+			    $outSetIssue->setSectionPage(null);
 			}
+			
 			if (!empty($issueData['article_template'])) {
-				$outSetIssue->setArticlePage($this->getSyncResourceService()->getResource('articlePage', $issueData['article_template']));
+			    $rscPath = $publicationTheme->getPath().basename($issueData['article_template']);
+			    if($rscPath != $outTh->getArticlePage()->getPath()){
+			        $outSetIssue->setArticlePage($this->getSyncResourceService()->getResource('articlePage', $rscPath));
+			    }else {
+			        $outSetIssue->setSectionPage(null);
+			    }
 			} else {
-				$outSetIssue->setArticlePage(null);
+			    $outSetIssue->setArticlePage(null);
 			}
+			
 			if ($newOutputSetting) {
-				$outputSettingIssueService->insert($outSetIssue);
+				$this->getOutputSettingIssueService()->insert($outSetIssue);
 			} else {
-				$outputSettingIssueService->update($outSetIssue);
+				$this->getOutputSettingIssueService()->update($outSetIssue);
 			}
 		}
 	}
@@ -363,13 +417,19 @@ WHERE IssueTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
 			return false;
 		}
 		$outputSettings = array_shift($outputSettings);
-
 		$prefix = dirname($theme->getPath()) . DIR_SEP;
-		$outputSettings->setFrontPage($this->getSyncResourceService()->getResource('frontPage', $prefix . $outSettings['issue_template']));
-		$outputSettings->setSectionPage($this->getSyncResourceService()->getResource('sectionPage', $prefix . $outSettings['section_template']));
-		$outputSettings->setArticlePage($this->getSyncResourceService()->getResource('articlePage', $prefix . $outSettings['article_template']));
-		$outputSettings->setErrorPage($this->getSyncResourceService()->getResource('errorPage', $prefix . $outSettings['error_template']));
+		$outputSettings->setFrontPage($this->getNonDbResource('frontPage', $prefix.$outSettings['issue_template']));
+		$outputSettings->setSectionPage($this->getNonDbResource('sectionPage', $prefix.$outSettings['section_template']));
+		$outputSettings->setArticlePage($this->getNonDbResource('articlePage', $prefix.$outSettings['article_template']));
+		$outputSettings->setErrorPage($this->getNonDbResource('errorPage', $prefix.$outSettings['error_template']));
 		return $this->getThemeService()->assignOutputSetting($outputSettings, $theme);
+	}
+	
+	public function getNonDbResource($name, $path){
+	    $rsc = new Resource();
+	    $rsc->setName($name);
+	    $rsc->setPath($path);
+	    return $rsc;
 	}
 
 
