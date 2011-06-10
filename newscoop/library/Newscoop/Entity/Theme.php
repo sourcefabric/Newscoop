@@ -60,7 +60,7 @@ class Theme extends Entity
 	public function setPath($path)
 	{
 		Validation::notEmpty($path, 'path');
-		$this->path = $path;
+		$this->path = str_replace('\\', '/', $path);
 		return $this;
 	}
 

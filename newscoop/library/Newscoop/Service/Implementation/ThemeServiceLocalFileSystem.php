@@ -329,6 +329,35 @@ class ThemeServiceLocalFileSystem implements IThemeService
 		return $themes;
 	}
 
+	/**
+	 * Load the theme from the provided relative path.
+	 *
+	 * @param str $themePath
+	 * 		The theme relative path.
+	 * @return Theme
+	 * 		The loaded theme.
+	 */
+	protected function loadThemeByPath($themePath)
+	{
+		$themePath .= $this->themeConfigFileName;
+		foreach ($this->findAllThemesConfigPaths() as $id => $rpath){
+			if($themePath == $rpath){
+				$path = $this->toFullPath($rpath);
+				if(file_exists($path)){
+					$xml = $this->loadXML($path);
+					if($xml != NULL){
+						$theme = $this->loadTheme($xml, $id, $rpath);
+						if($theme != NULL){
+							return $theme;
+						}
+					}
+				}
+				return null;
+			}
+		}
+		return null;
+	}
+
 	/* --------------------------------------------------------------- */
 
 	/**
@@ -355,8 +384,8 @@ class ThemeServiceLocalFileSystem implements IThemeService
 			$this->cacheXMLEmelemt[$path] = $xml;
 
 		} else {
-                    $xml = $this->cacheXMLEmelemt[$path];
-                }
+			$xml = $this->cacheXMLEmelemt[$path];
+		}
 		return $xml;
 	}
 
@@ -497,7 +526,7 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	 * @return string
 	 * 		The full path to the theme and file if is the case.
 	 */
-	protected function toFullPath($theme, $file = '')
+	public function toFullPath($theme, $file = '')
 	{
 		if($theme instanceof Theme){
 			return $this->themesFolder.$theme->getPath().$file;

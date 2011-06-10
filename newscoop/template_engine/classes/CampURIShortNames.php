@@ -52,7 +52,10 @@ class CampURIShortNames extends CampURI
             $this->m_validURI = false;
             $this->m_errorCode = $res->getCode();
             if (!is_null($this->m_publication)) {
-            	$tplId = CampSystem::GetInvalidURLTemplate($this->m_publication->identifier);
+            	$tplId = CampSystem::GetInvalidURLTemplate(
+                            $this->m_publication->identifier,
+                            $this->m_issue->identifier,
+                            $this->m_language->identifier);
             	$template = new MetaTemplate($tplId);
             	if ($template->defined()) {
             		$this->m_template = $template;
@@ -324,7 +327,7 @@ class CampURIShortNames extends CampURI
             $this->m_article = new MetaArticle($this->m_language->number,
             $articleObj->getArticleNumber());
         }
-
+        /** @todo add new resource */
         $templateId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
         $this->m_template = new MetaTemplate($this->getTemplate($templateId));
         if (!$this->m_template->defined()) {
@@ -395,6 +398,7 @@ class CampURIShortNames extends CampURI
                 break;
             case 'template':
                 $option = isset($p_params[0]) ? array_shift($p_params) : null;
+                /** @todo add new resource */
                 $template = new Template($option);
                 if (!is_null($option) && $template->exists()) {
                     $this->m_buildQueryArray[CampRequest::TEMPLATE_ID] = $template->getTemplateId();
@@ -428,10 +432,10 @@ class CampURIShortNames extends CampURI
             }
         }
 
+
         if (is_null($this->m_buildQuery)) {
             $this->m_buildQuery = CampURI::QueryArrayToString($this->m_buildQueryArray);
         }
-
         $this->validateCache(true);
     } // fn buildURI
 

@@ -407,7 +407,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
             $this->rrmdir($themeFullFolder);
             throw $e;
         }
-        return true;
+        return $this->loadThemeByPath($themeFolder);
     }
 
     function assignOutputSetting(OutputSettings $outputSettings, Theme $theme)
