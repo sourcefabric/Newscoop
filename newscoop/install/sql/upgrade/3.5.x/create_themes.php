@@ -278,9 +278,9 @@ LIMIT 0, 1";
 		$outputSettings = array_shift($outputSettings);
 
 		$outputSettings->setFrontPage($this->getSyncResourceService()->getResource('frontPage', $prefix . $outSettings['issue_template']));
-		$outputSettings->setFrontPage($this->getSyncResourceService()->getResource('sectionPage', $prefix . $outSettings['section_template']));
-		$outputSettings->setFrontPage($this->getSyncResourceService()->getResource('articlePage', $prefix . $outSettings['article_template']));
-		$outputSettings->setFrontPage($this->getSyncResourceService()->getResource('errorPage', $prefix . $outSettings['error_template']));
+		$outputSettings->setSectionPage($this->getSyncResourceService()->getResource('sectionPage', $prefix . $outSettings['section_template']));
+		$outputSettings->setArticlePage($this->getSyncResourceService()->getResource('articlePage', $prefix . $outSettings['article_template']));
+		$outputSettings->setErrorPage($this->getSyncResourceService()->getResource('errorPage', $prefix . $outSettings['error_template']));
 		return $this->getThemeService()->assignOutputSetting($outputSettings, $theme);
 	}
 
