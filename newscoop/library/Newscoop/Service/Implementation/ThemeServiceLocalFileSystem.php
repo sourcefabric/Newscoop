@@ -525,7 +525,7 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	 * @return string
 	 * 		The full path to the theme and file if is the case.
 	 */
-	protected function toFullPath($theme, $file = '')
+	public function toFullPath($theme, $file = '')
 	{
 		if($theme instanceof Theme){
 			return $this->themesFolder.$theme->getPath().$file;

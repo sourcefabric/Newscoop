@@ -1,5 +1,3 @@
-<?php $this->placeholder('title')->set(getGS('Templates')); ?>
-
 <div class="currentDirectory">
     <strong><?php putGS('Current directory:'); ?></strong>
     <?php if (empty($this->path)) { ?>
@@ -17,7 +15,11 @@
 
 <?php $this->renderActions(); ?>
 
-<form id="actions-form" action="<?php echo $this->form->getAction(); ?>" method="<?php echo $this->form->getMethod(); ?>">
+<form id="actions-form" action="<?php echo $this->url(array(
+    'controller' => 'template',
+    'action' => 'index',
+    'next' => urlencode($this->url()),
+)); ?>" method="<?php echo $this->form->getMethod(); ?>">
 <dl>
     <?php echo $this->form->csrf; ?>
     <?php echo $this->form->action; ?>
@@ -44,6 +46,7 @@
     <td colspan="9"><a href="<?php echo $this->url(array(
         'path' => $this->parent,
         'file' => null,
+        'next' => null,
     )); ?>" class="upOneLevel" title="<?php putGS('Go to parent'); ?>"><?php putGS('Go to parent'); ?></a></td>
 </tr>
 <?php } ?>
@@ -56,6 +59,8 @@
     <td class="id"><input type="checkbox" name="file[]" value="<?php echo $folder->name; ?>" /></td>
     <td><a href="<?php echo $this->url(array(
         'path' => ltrim($this->path . $this->separator . $folder->name, $this->separator),
+        'file' => null,
+        'next' => null,
     )); ?>" class="folder" title="<?php putGS("Go to '$1'", $folder->name); ?>"><?php echo $folder->name; ?></a></td>
     <td></td>
     <td>dir</td>
@@ -76,9 +81,11 @@
 <tr class="template">
     <td class="id"><input type="checkbox" name="file[]" value="<?php echo $file->name; ?>" /></td>
     <td><a href="<?php echo $this->url(array(
+        'controller' => 'template',
         'action' => 'edit',
         'path' => $this->path,
         'file' => $file->name,
+        'next' => urlencode($this->url()),
     )); ?>" class="file" title="<?php putGS("Edit '$1'", $file->name); ?>"><?php echo $file->name; ?></a></td>
     <td><?php echo $file->id; ?></td>
     <td><?php echo $file->type; ?></td>
@@ -101,7 +108,6 @@
 </table>
 
 </form>
-
 
 <div class="dialogPopup" title="<?php putGS('New name'); ?>">
     <input type="text" name="name" />
@@ -179,8 +185,13 @@ $(function() {
             { 'bVisible': false, 'aTargets': [-2] },
             { 'iDataSort': [7], 'aTargets': [5] }
         ],
+        'oLanguage': {
+            'sLoadingRecords': <?php echo json_encode(getGS('Directory is empty')); ?>,
+        },
         'sDom': 't',
         'bPaginate': false,
+        'bServerSide': false,
+        'bStateSave': true,
         'bJQueryUI': true
     });
 
