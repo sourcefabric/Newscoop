@@ -552,7 +552,7 @@ $view->navigation()->menu()->setContainer($nav);
     <?php echo $view->navigation(); ?>
 </div>
 
-<?php if (!$this->legacy) { // zend framework only
+<?php if (isset($this) && !$this->legacy) { // zend framework only
 // remove top menu classes for breadcrumbs
 foreach ($pages as $i => $page) {
     unset($pages[$i]['class']);

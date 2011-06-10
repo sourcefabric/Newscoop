@@ -161,6 +161,7 @@ class Admin_SubscriberController extends Zend_Controller_Action
                 'action' => 'add',
                 'resource' => 'subscriber',
                 'privilege' => 'manage',
+                'class' => 'add',
             ),
         );
     }

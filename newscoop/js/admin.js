@@ -179,14 +179,6 @@ $(function() {
         return confirm(localizer.confirm + ' ' + title + '?');
     });
 
-    // add plus icons
-    $('a.add').each(function() {
-        $(this).addClass('ui-icon-wrapper');
-        $('<span />').addClass('ui-icon ui-icon-plus')
-            .prependTo($(this));
-    });
-
-    // add cross icon for delete
     $('a.delete.icon').each(function() {
         $(this).html('');
         $('<span />')

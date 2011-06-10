@@ -98,6 +98,8 @@ $mapPrefixToDir = array(
         '/application/modules/admin/controllers/AuthController.php',
         '/application/modules/admin/views/scripts/staff',
         '/application/modules/admin/views/scripts/auth',
+        '/application/modules/admin/forms/User.php',
+        '/application/modules/admin/forms/Staff.php',
     ),
     'user_subscriptions' => array(
         '/admin-files/users/subscriptions',
@@ -107,11 +109,14 @@ $mapPrefixToDir = array(
         '/application/modules/admin/views/scripts/subscription',
         '/application/modules/admin/views/scripts/subscriber',
         '/application/modules/admin/views/scripts/subscription-ip',
+        '/application/modules/admin/forms/Subscriber.php',
+        '/application/modules/admin/forms/Subscription.php',
     ),
     'user_subscription_sections' => array(
         '/admin-files/users/subscriptions/sections',
         '/application/modules/admin/controllers/SubscriptionSectionController.php',
         '/application/modules/admin/views/scripts/subscription-section',
+        '/application/modules/admin/forms/Subscription/*',
     ),
     'user_types' => array(
         '/admin-files/user_types',
@@ -120,13 +125,18 @@ $mapPrefixToDir = array(
         '/application/modules/admin/views/scripts/user-group',
         '/application/modules/admin/views/scripts/acl',
     ),
-    'bug_reporting' => '/admin-files/bugreporter',
+    'bug_reporting' => array(
+        '/admin-files/bugreporter',
+        '/application/controllers/ErrorController.php',
+        '/application/views/scripts/error',
+    ),
     'feedback' => '/admin-files/feedback',
     'preview' => '/template_engine/classes',
     'tiny_media_plugin' => '/js/tinymce/plugins/campsitemedia',
     'plugins' => '/admin-files/plugins',
     'extensions' => '/extensions/*',
     'authors' => '/admin-files/users/authors_ajax',
+    'forms' => '/application/modules/admin/forms',
 );
 
 foreach (CampPlugin::GetPluginsInfo(true) as $info) {

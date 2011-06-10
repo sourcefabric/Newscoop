@@ -72,10 +72,10 @@ a.ui-icon-wrapper span {
     border-left: 1px solid #ccc;
 }
 
-.content .actions li:first-child {
+/*.content .actions li:first-child {
     border-left: 0;
     padding-left: 0;
-}
+}*/
 
 /** Acl resources */
 dl.resource {
