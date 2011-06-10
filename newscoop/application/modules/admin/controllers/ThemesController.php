@@ -408,6 +408,9 @@ class Admin_ThemesController extends Zend_Controller_Action
             'media'	=> 'screen',
             'rel'	=> 'stylesheet'
         ) );
+
+        $params = $this->getRequest()->getParams();
+        $this->view->templatesParams = $params;
     }
 
     /**

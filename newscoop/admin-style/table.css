@@ -58,3 +58,5 @@ table .id {
 table td.size {
     text-align: right;
 }
+
+.tabs table.templates { font-size: 1em; }

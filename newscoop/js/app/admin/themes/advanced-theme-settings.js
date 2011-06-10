@@ -98,8 +98,7 @@ jQuery( function()
 	}).trigger( 'change' );
 	
 	// Tabs
-	$('.tabs, .themeSettingsTabs').tabs();
-	$('.tabs').tabs('select', '#tabs-1');
+	$('.tabs, .themeSettingsTabs').tabs({ cookie: { expires: 30 }});
     // BUTTONS
     $('.fg-button').hover
    	(

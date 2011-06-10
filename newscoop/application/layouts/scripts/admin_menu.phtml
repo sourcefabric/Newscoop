@@ -24,7 +24,6 @@ $showPublishingEnvironmentMenu = ($g_user->hasPermission('ManageTempl')
 $showConfigureMenu = ($showPublishingEnvironmentMenu
     || $g_user->hasPermission('ManageLocalizer')
     || $g_user->hasPermission('ViewLogs'));
-
 $showUserMenu = ($g_user->hasPermission('ManageUsers')
     || $g_user->hasPermission('DeleteUsers')
     || $g_user->hasPermission('ManageSubscriptions')
@@ -161,7 +160,7 @@ $pages[2]['pages'][] = array(
 $pages[2]['pages'][] = array(
     'label' => getGS('Upload new template'),
     'module' => 'admin',
-    'controller' => 'file-manager',
+    'controller' => 'template',
     'action' => 'upload',
     'resource' => 'template',
     'privilege' => 'manage',
@@ -269,23 +268,24 @@ if ($showConfigureMenu) {
     );
 
     $pages[3]['pages'][] = array(
-        'label' => getGS('File manager'),
+        'label' => getGS('Templates'),
         'module' => 'admin',
-        'controller' => 'file-manager',
+        'controller' => 'template',
         'action' => 'index',
         'reset_params' => FALSE,
+        'visible' => FALSE,
         'pages' => array(
             array(
-                'label' => getGS('Edit template'),
+                'label' => getGS('Edit'),
                 'module' => 'admin',
-                'controller' => 'file-manager',
+                'controller' => 'template',
                 'action' => 'edit',
                 'visible' => FALSE,
             ),
             array(
                 'label' => getGS('Upload'),
                 'module' => 'admin',
-                'controller' => 'file-manager',
+                'controller' => 'template',
                 'action' => 'upload',
                 'visible' => FALSE,
             ),
@@ -307,6 +307,30 @@ if ($showConfigureMenu) {
         'controller' => 'themes',
         'resource' => 'template',
         'privilege' => 'manage',
+        'pages' => array(
+            array(
+                'label' => getGS('Settings'),
+                'module' => 'admin',
+                'controller' => 'themes',
+                'action' => 'advanced-theme-settings',
+                'visible' => false,
+                'reset_params' => false,
+                'pages' => array(
+                    array(
+                        'label' => getGS('Upload'),
+                        'module' => 'admin',
+                        'controller' => 'template',
+                        'action' => 'upload',
+                    ),
+                    array(
+                        'label' => getGS('Edit'),
+                        'module' => 'admin',
+                        'controller' => 'template',
+                        'action' => 'edit',
+                    ),
+                ),
+            ),
+        ),
     );
 
     $pages[3]['pages'][] = array(

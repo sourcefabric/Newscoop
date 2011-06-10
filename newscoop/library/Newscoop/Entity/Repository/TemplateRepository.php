@@ -15,6 +15,21 @@ use Doctrine\ORM\EntityRepository,
  */
 class TemplateRepository extends EntityRepository
 {
+    /** @var string */
+    private $basePath = '';
+
+    /**
+     * Set base path
+     *
+     * @param string $path
+     * @return Newscoop\Entity\Repository\TemplateRepository
+     */
+    public function setBasePath($path)
+    {
+        $this->basePath = trim($path, '/');
+        return $this;
+    }
+
     /**
      * Get template for given key
      *
@@ -23,7 +38,7 @@ class TemplateRepository extends EntityRepository
      */
     public function getTemplate($key)
     {
-        $key = trim($key, '/');
+        $key = $this->formatKey($key);
 
         $template = $this->findOneBy(array(
             'key' => $key,
@@ -65,7 +80,7 @@ class TemplateRepository extends EntityRepository
     public function delete($key)
     {
         $template = $this->findOneBy(array(
-            'key' => ltrim($key, '/'),
+            'key' => $this->formatKey($key),
         ));
 
         if (!empty($template)) {
@@ -85,8 +100,8 @@ class TemplateRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
 
-        $old = ltrim($old, '/');
-        $new = ltrim($new, '/');
+        $old = $this->formatKey($old);
+        $new = $this->formatKey($new);
 
         $templates = $this->createQueryBuilder('t')
             ->where("t.key LIKE ?1")
@@ -115,7 +130,7 @@ class TemplateRepository extends EntityRepository
         $em = $this->getEntityManager();
 
         $template = $this->findOneBy(array(
-            'key' => $key,
+            'key' => $this->formatKey($key),
         ));
 
         if (!$template) {
@@ -144,5 +159,17 @@ class TemplateRepository extends EntityRepository
         }
 
         return false;
+    }
+
+    /**
+     * Format key
+     *
+     * @param string $key
+     * @return string
+     */
+    public function formatKey($key)
+    {
+        $key = trim($key, '/');
+        return ltrim("{$this->basePath}/$key", '/');
     }
 }

@@ -6,12 +6,14 @@
  */
 
 use Newscoop\Service\Template,
-    Newscoop\Storage;
+    Newscoop\Storage,
+    Newscoop\Service\Resource\ResourceId,
+    Newscoop\Service\IThemeService;
 
 /**
  * @Acl(resource="template", action="manage")
  */
-class Admin_FileManagerController extends Zend_Controller_Action
+class Admin_TemplateController extends Zend_Controller_Action
 {
     const SEPARATOR = ':'; // can't use / in url, thus replace with :
 
@@ -20,13 +22,24 @@ class Admin_FileManagerController extends Zend_Controller_Action
 
     public function init()
     {
-        $repository = $this->_helper->entity->getRepository('Newscoop\Entity\Template');
-        $storage = new Storage(APPLICATION_PATH . '/../templates');
+        $resource = new ResourceId(__CLASS__);
+        $themeService = $resource->getService(IThemeService::NAME);
+        $theme = $themeService->findById($this->_getParam('id'));
+
+        $path = $theme->getPath();
+        $fullPath = $themeService->toFullPath($theme);
+        $root = str_replace($path, '', $fullPath);
+
+        $storage = new Storage($fullPath);
+        $repository = $this->_helper->entity->getRepository('Newscoop\Entity\Template')
+            ->setBasePath($path);
         $this->service = new Template($storage, $repository); 
 
         $this->_helper->contextSwitch
             ->addActionContext('get-items', 'json')
             ->initContext();
+
+        $this->view->basePath = $path;
     }
 
     public function indexAction()
@@ -59,7 +72,7 @@ class Admin_FileManagerController extends Zend_Controller_Action
         $this->view->templates = $templates;
 
         $request = $this->getRequest();
-        if ($request->isPost() && $form->isValid($request->getPost())) {
+        if ($request->isPost() && $form->isValid($_POST)) {
             $values = $form->getValues();
             $this->_forward($values['action']);
             return;
@@ -83,10 +96,13 @@ class Admin_FileManagerController extends Zend_Controller_Action
             array(
                 'label' => getGS('Upload'),
                 'module' => 'admin',
-                'controller' => 'file-manager',
+                'controller' => 'template',
                 'action' => 'upload',
                 'class' => 'upload',
                 'reset_params' => false,
+                'params' => array(
+                    'next' => urlencode($this->view->url()),
+                ),
             ),
             array(
                 'label' => getGS('Create folder'),
@@ -124,8 +140,8 @@ class Admin_FileManagerController extends Zend_Controller_Action
 
             $this->_helper->flashMessenger($this->formatMessage(array_keys($files), getGS('uploaded')));
             $this->_helper->log($this->formatMessage(array_keys($files), getGS('uploaded')));
-            $this->_helper->redirector('index', 'file-manager', 'admin', array(
-                'path' => $this->_getParam('path'),
+            $this->_redirect(urldecode($this->_getParam('next')), array(
+                'prependBase' => false,
             ));
         }
 
@@ -175,9 +191,11 @@ class Admin_FileManagerController extends Zend_Controller_Action
                 $this->_helper->flashMessenger(array('error', $e->getMessage()));
             }
 
-            $this->_helper->redirector('edit', 'file-manager', 'admin', array(
+            $this->_helper->redirector('edit', 'template', 'admin', array(
                 'path' => $this->_getParam('path'),
                 'file' => $this->_getParam('file'),
+                'next' => $this->_getParam('next'),
+                'id' => $this->_getParam('id'),
             ));
         }
 
@@ -205,9 +223,8 @@ class Admin_FileManagerController extends Zend_Controller_Action
 
             $this->_helper->flashMessenger(getGS("Template '$1' $2.", basename($key), getGS('updated')));
             $this->_helper->log(getGS("Template '$1' $2.", basename($key), getGS('updated')));
-            $this->_helper->redirector('edit', 'file-manager', 'admin', array(
-                'path' => $this->_getParam('path'),
-                'file' => $this->_getParam('file'),
+            $this->_redirect(urldecode($this->_getParam('next')), array(
+                'prependBase' => false,
             ));
         }
 
@@ -241,8 +258,8 @@ class Admin_FileManagerController extends Zend_Controller_Action
             $this->_helper->flashMessenger->addMessage(array('error', $e->getMessage()));
         }
 
-        $this->_helper->redirector('index', 'file-manager', 'admin', array(
-            'path' => $this->_getParam('path'),
+        $this->_redirect(urldecode($this->_getParam('next')), array(
+            'prependBase' => false,
         ));
     }
 
@@ -263,8 +280,8 @@ class Admin_FileManagerController extends Zend_Controller_Action
             $this->_helper->flashMessenger(array('error', $e->getMessage()));
         }
 
-        $this->_helper->redirector('index', 'file-manager', 'admin', array(
-            'path' => $this->_getParam('path'),
+        $this->_redirect(urldecode($this->_getParam('next')), array(
+            'prependBase' => false,
         ));
     }
 
@@ -286,8 +303,8 @@ class Admin_FileManagerController extends Zend_Controller_Action
             $this->_helper->flashMessenger(array('error', $e->getMessage()));
         }
 
-        $this->_helper->redirector('index', 'file-manager', 'admin', array(
-            'path' => $this->_getParam('path'),
+        $this->_redirect(urldecode($this->_getParam('next')), array(
+            'prependBase' => false,
         ));
     }
 
@@ -308,8 +325,8 @@ class Admin_FileManagerController extends Zend_Controller_Action
             $this->_helper->flashMessenger(array('error', $e->getMessage()));
         }
 
-        $this->_helper->redirector('index', 'file-manager', 'admin', array(
-            'path' => $this->_getParam('path'),
+        $this->_redirect(urldecode($this->_getParam('next')), array(
+            'prependBase' => false,
         ));
     }
 
@@ -326,8 +343,8 @@ class Admin_FileManagerController extends Zend_Controller_Action
 	        $this->_helper->flashMessenger(array('error', $e->getMessage()));
         }
 
-        $this->_helper->redirector('index', 'file-manager', 'admin', array(
-            'path' => $this->_getParam('path'),
+        $this->_redirect(urldecode($this->_getParam('next')), array(
+            'prependBase' => false,
         ));
     }
 
@@ -344,8 +361,8 @@ class Admin_FileManagerController extends Zend_Controller_Action
             $this->_helper->flashMessenger(array('error', $e->getMessage()));
         }
 
-        $this->_helper->redirector('index', 'file-manager', 'admin', array(
-            'path' => $this->_getParam('path'),
+        $this->_redirect(urldecode($this->_getParam('next')), array(
+            'prependBase' => false,
         ));
     }
 
@@ -480,8 +497,7 @@ class Admin_FileManagerController extends Zend_Controller_Action
             ),
         ));
 
-        $form->addElement('multiCheckbox', 'file', array(
-        ));
+        $form->addElement('multiCheckbox', 'file', array());
 
         return $form;
     }
