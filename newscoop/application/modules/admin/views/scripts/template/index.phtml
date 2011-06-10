@@ -59,6 +59,8 @@
     <td class="id"><input type="checkbox" name="file[]" value="<?php echo $folder->name; ?>" /></td>
     <td><a href="<?php echo $this->url(array(
         'path' => ltrim($this->path . $this->separator . $folder->name, $this->separator),
+        'file' => null,
+        'next' => null,
     )); ?>" class="folder" title="<?php putGS("Go to '$1'", $folder->name); ?>"><?php echo $folder->name; ?></a></td>
     <td></td>
     <td>dir</td>
@@ -106,7 +108,6 @@
 </table>
 
 </form>
-
 
 <div class="dialogPopup" title="<?php putGS('New name'); ?>">
     <input type="text" name="name" />
@@ -190,6 +191,7 @@ $(function() {
         'sDom': 't',
         'bPaginate': false,
         'bServerSide': false,
+        'bStateSave': true,
         'bJQueryUI': true
     });
 

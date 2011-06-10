@@ -381,9 +381,10 @@ class Admin_TemplateController extends Zend_Controller_Action
         return array(
             'label' => $pieces[$level],
             'module' => 'admin',
-            'controller' => 'file-manager',
-            'action' => 'index',
+            'controller' => $this->_getParam('controller'),
+            'action' => $this->_getParam('action'),
             'params' => array(
+                'id' => $this->_getParam('id'),
                 'path' => implode(self::SEPARATOR, array_slice($pieces, 0, $level + 1)),
             ),
             'pages' => array(
