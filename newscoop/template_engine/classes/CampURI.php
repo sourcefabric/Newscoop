@@ -162,6 +162,11 @@ abstract class CampURI
     protected $m_template = null;
 
     /**
+     * The theme path storage
+     */
+    protected $_themePath = null;
+
+    /**
      *
      * @var bool
      */
@@ -636,6 +641,14 @@ abstract class CampURI
     }
 
 
+    public function getThemePath()
+    {
+        if(is_null($this->_themePath))
+                $this->_themePath = CampSystem::GetThemePath($this->language->number,
+            $this->publication->identifier, $this->issue->number,
+            $this->section->number, $this->article->number);
+        return $this->_themePath;
+    }
     /**
      *
      */
@@ -646,7 +659,7 @@ abstract class CampURI
         }
 
         if (!empty($p_templateIdOrName)) {
-            $tplObj = new Template($p_templateIdOrName);
+            $tplObj = new MetaTemplate($p_templateIdOrName);
             if (!$tplObj->exists()) {
                 return null;
             }
@@ -658,7 +671,6 @@ abstract class CampURI
         } else {
             return null;
         }
-
         return $template;
     } // fn getTemplate
 

@@ -13,6 +13,7 @@ use Newscoop\Service\ITemplateSearchService;
 use Newscoop\Service\IOutputSettingIssueService;
 use Newscoop\Service\IOutputSettingSectionService;
 use Newscoop\Service\ISectionService;
+use Newscoop\Service\IIssueService;
 use Newscoop\Entity\Issue;
 use Newscoop\Entity\Section;
 use Newscoop\Entity\Resource;
@@ -361,7 +362,7 @@ class TemplateSearchServiceDoctrine extends AEntityBaseServiceDoctrine
      */
     protected function getResourceFullPath(Resource $resource)
     {
-        return $this->themesFolder.$resource->getPath();
+        return $resource->getPath();
     }
 
 }
