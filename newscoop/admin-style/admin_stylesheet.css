@@ -1520,6 +1520,27 @@ fieldset.filters a.reset {
 	font-size: 12px;
 	line-height:20px;
 }
+.upload-success, .upload-error {
+    padding: 0 0 0 10px;
+	font-size: 12px;
+	line-height:20px;
+}
+.upload-success {
+	border: 1px solid #65A539;
+    color: #65A539;
+    background-color: #EFF6EB;
+}
+.upload-error {
+	background:#fce5e5;
+	border: 1px solid #dd0000;
+	color:#dd0000;
+}
+
+/*--- popup upload ---*/
+.message-holder
+{
+	height: 26px;
+}
 
 /*---  System messages ---*/
 .info_message {

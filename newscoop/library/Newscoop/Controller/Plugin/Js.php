@@ -59,6 +59,11 @@ class Js extends Zend_Controller_Plugin_Abstract
 
     public function postDispatch( Zend_Controller_Request_Abstract $p_request )
     {
+        $x = '';
+        foreach( $p_request->getParams() as $k => $v )
+            if( is_string( $v ) )
+                $x .= "$k : $v, ";
+        syslog( LOG_WARNING, "!!!!". $x );
         // stick the baseUrl to the basePath because we have a dispatched request now
         // and format those god damn slashes!!
         $baseUrl = trim( Zend_Controller_Front::getInstance()->getBaseUrl(), DIR_SEP );

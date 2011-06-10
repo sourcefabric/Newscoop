@@ -256,7 +256,12 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         if(!($theme instanceof Theme)){
             $theme = $this->findById($theme);
         }
-        $zipFilePath = realpath($this->toFullPath(self::FOLDER_EXPORTS));
+
+        if( !file_exists( $xpth = $this->toFullPath(self::FOLDER_EXPORTS ) ) ) {
+            mkdir( $xpth );
+        }
+
+        $zipFilePath = realpath( $xpth );
         $zipFilePath = $zipFilePath.DIR_SEP.preg_replace('([^a-zA-Z0-9_\-.]+)', '_', $theme->getName()).'.zip';
 
         // create object
@@ -265,7 +270,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         if ($zip->open($zipFilePath, \ZIPARCHIVE::CREATE) !== TRUE) {
             die ("Could not open archive");
         }
-         
+
 
         $themePath = $this->toFullPath($theme->getPath());
         $lenght = strlen($themePath);
