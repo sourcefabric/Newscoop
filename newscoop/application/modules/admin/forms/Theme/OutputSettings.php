@@ -38,7 +38,7 @@ class Admin_Form_Theme_OutputSettings extends Zend_Form
             ))
             ->addElement( 'submit', 'submit', array
             (
-                'label'		=> 'Save',
+                'label'		=> 'Save'
             ) );
 
         // take out those decorators for the hidden elements
@@ -60,13 +60,13 @@ class Admin_Form_Theme_OutputSettings extends Zend_Form
     {
         foreach( $this->getElements() as $elem ) {
         	/* @var $elem Zend_Form_Element_Select */
-            if( $elem instanceof Zend_Form_Element_Select ) {
+            if( $elem instanceof Zend_Form_Element_Select )
+            {
                 $elem->addMultiOptions( $defaults )->setValue( $values[ $elem->getName() ] );
             }
-            else {
-                if( isset( $values[ $elem->getName() ] ) ) {
-                    $elem->setValue( $values[ $elem->getName() ] );
-                }
+            elseif(isset($values[ $elem->getName() ]))
+            {
+                $elem->setValue( $values[ $elem->getName() ] );
             }
         }
     }
