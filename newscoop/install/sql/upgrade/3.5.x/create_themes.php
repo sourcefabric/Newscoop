@@ -8,7 +8,8 @@ use Symfony\Component\Console\Input,
 	Newscoop\Service\Resource,
 	Newscoop\Service\ISyncResourceService,
 	Newscoop\Service\IPublicationService,
-	Newscoop\Service\IIssueService;
+	Newscoop\Service\IIssueService,
+	Newscoop\Service\IOutputSettingIssueService;
 
 // Define path to application directory
 defined('APPLICATION_PATH')
@@ -293,7 +294,7 @@ WHERE IssueTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
 	{
 		global $g_ado_db;
 
-		$outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
+		$outputSettingIssueService = $this->getResourceId()->getService(IOutputSettingIssueService::NAME);
 
 		$sql = $this->buildIssuesQuery($publicationId, $theme->getPath());
 		$issuesList = $g_ado_db->GetAll($sql);
@@ -442,6 +443,8 @@ LIMIT 0, 1";
 	 */
 	public function buildIssuesQuery($publicationId, $themePath)
 	{
+		global $g_ado_db;
+
 		$themePath = basename($themePath);
 		if (empty($themePath)) {
 			$likeStr = '';

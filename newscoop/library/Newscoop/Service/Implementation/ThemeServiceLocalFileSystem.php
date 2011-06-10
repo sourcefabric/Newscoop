@@ -339,6 +339,7 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	 */
 	protected function loadThemeByPath($themePath)
 	{
+		$themePath .= $this->themeConfigFileName;
 		foreach ($this->findAllThemesConfigPaths() as $id => $rpath){
 			if($themePath == $rpath){
 				$path = $this->toFullPath($rpath);
