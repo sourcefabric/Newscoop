@@ -26,7 +26,7 @@ function importSqlStoredProgram ($p_db, $p_fileName) {
 
     $delimiter = ";";
 
-    $last_multi_query = $p_db->multiQuery;
+    $last_multi_query = isset($p_db->multiQuery) ? $p_db->multiQuery : false;
     $p_db->multiQuery = true; // we define a stored function, but can not use the 'delimiter' command
 
     $one_comm_arr = array();

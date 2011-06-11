@@ -61,6 +61,8 @@ TABLES="
  Xlink\
  Xnews\
  Xpage\
+ acl_role\
+ acl_rule\
  comment\
  comment_commenter\
  comment_acceptance\

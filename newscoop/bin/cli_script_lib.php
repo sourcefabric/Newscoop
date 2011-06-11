@@ -1,5 +1,5 @@
 <?php
-require_once($GLOBALS['g_campsiteDir'].'/include/adodb/adodb.inc.php');
+require_once('adodb/adodb.inc.php');
 
 function camp_is_readable($p_fileName)
 {
@@ -1086,7 +1086,7 @@ function camp_import_dbfile($db_server, $db_username, $db_userpass, $db_database
             $db_conn->Close();
             $GLOBALS['g_ado_db']->Close();
             $GLOBALS['g_ado_db'] = camp_connect_to_adodb($db_server, $db_username, $db_userpass, $db_database);
-            
+
             require_once($command_path);
             $db_conn = camp_connect_to_adodb($db_server, $db_username, $db_userpass, $db_database);
             $GLOBALS['g_ado_db']->Close();

@@ -91,42 +91,6 @@ CREATE TABLE  `comment_acceptance` (
   KEY `fk_forum_id` (`fk_forum_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
-/*
--- Comment Preference per Publication
-DROP TABLE IF EXISTS `comment_preference_publication`;
-CREATE TABLE  `comment_preference_publication` (
-  `fk_forum_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `enabled` tinyint(1) NOT NULL DEFAULT '0',
-  `article_default_enabled` tinyint(1) NOT NULL DEFAULT '0',
-  `subscribers_moderated` tinyint(1) NOT NULL DEFAULT '0',
-  `public_moderated` tinyint(1) NOT NULL DEFAULT '0',
-  `public_enabled` tinyint(1) NOT NULL,  
-  `captcha_enabled` tinyint(1) NOT NULL DEFAULT '0',
-  `spam_blocking_enabled` tinyint(1) NOT NULL DEFAULT '0', 
-  `moderator_to` varchar(255) NOT NULL,
-  `moderator_from` varchar(255) NOT NULL,
-  PRIMARY KEY (`fk_forum_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- Comment Preference per Article
-DROP TABLE IF EXISTS `comment_preference_article`;
-CREATE TABLE  `comment_preference_article` (
-  `fk_thread_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `fk_language_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `enabled` tinyint(1) NOT NULL DEFAULT '0',
-  `locked` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`fk_thread_id`,`fk_language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-
--- Comment Preference per Article Type
-DROP TABLE IF EXISTS `comment_preference_article_type`;
-CREATE TABLE  `comment_preference_article_type` (
-  `type_name` varchar(166) NOT NULL DEFAULT '',
-  `field_name` varchar(166) NOT NULL DEFAULT 'NULL',
-  `enabled` tinyint(1) NOT NULL DEFAULT '0', 
-  PRIMARY KEY (`type_name`,`field_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-*/
 
 -- Importing the stored function for 'Point in Polygon' checking
 system php ./checkpp.php
