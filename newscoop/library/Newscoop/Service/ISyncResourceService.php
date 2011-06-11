@@ -49,6 +49,18 @@ interface ISyncResourceService extends IEntityService
     function findByPath($path);
 
     /**
+     * Provides the synchronized Resource based on the provided resource.
+     * The synchronization of a resource means the association of that resource with the database.
+     *
+     * @param string|int $pathOrID
+     * 		The Resource Path or Id to be synchronized, not null, not empty.
+     *
+     * @return Resource
+     * 		The synchronized Resource.
+     */
+    function findByPathOrId($pathOrId);
+    
+    /**
      * Provides the synchronized Resource based on the provided name and path.
      * The synchronization of a resource means the association of that resource with the database.
      *
