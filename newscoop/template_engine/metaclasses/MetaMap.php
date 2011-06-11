@@ -19,15 +19,15 @@ final class MetaMap extends MetaDbObject
         'number' => 'id',
         'name' => 'MapName',
         'provider' => 'MapProvider',
-	);
+    );
 
     /**
      * @var array
      */
-	private static $m_defaultCustomProperties = array(
+    private static $m_defaultCustomProperties = array(
         'locations' => 'getLocations',
         'is_enabled' => 'isEnabled',
-	);
+    );
 
     /**
      * @var array of MetaMapLocation
@@ -42,9 +42,9 @@ final class MetaMap extends MetaDbObject
         $this->m_properties = self::$m_baseProperties;
         $this->m_customProperties = self::$m_defaultCustomProperties;
         if (!is_null($p_dbObject)) {
-        	$this->m_dbObject = $p_dbObject;
+            $this->m_dbObject = $p_dbObject;
         } else {
-        	$this->m_dbObject = new Geo_Map();
+            $this->m_dbObject = new Geo_Map();
         }
     }
 
@@ -91,10 +91,10 @@ final class MetaMap extends MetaDbObject
      * @return string
      */
     public static function GetMapTagHeader($p_articleNumber, $p_languageId,
-                                           $p_mapWidth = 0, $p_mapHeight = 0)
+                                           $p_mapWidth = 0, $p_mapHeight = 0, $p_autoFocus = null)
     {
         return Geo_Map::GetMapTagHeader((int) $p_articleNumber, (int) $p_languageId,
-                                        (int) $p_mapWidth, (int) $p_mapHeight);
+                                        (int) $p_mapWidth, (int) $p_mapHeight, $p_autoFocus);
     }
 
     /**

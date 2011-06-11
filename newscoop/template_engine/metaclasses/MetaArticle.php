@@ -26,6 +26,7 @@ final class MetaArticle extends MetaDbObject {
 
     private static $m_baseProperties = array(
     'name'=>'Name',
+    'title'=>'Name',
     'number'=>'Number',
     'keywords'=>'Keywords',
     'type_name'=>'Type',

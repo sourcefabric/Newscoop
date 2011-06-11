@@ -127,3 +127,6 @@ CREATE TABLE  `comment_preference_article_type` (
   PRIMARY KEY (`type_name`,`field_name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 */
+
+-- Importing the stored function for 'Point in Polygon' checking
+system php ./checkpp.php

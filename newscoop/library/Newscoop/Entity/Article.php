@@ -9,9 +9,9 @@ namespace Newscoop\Entity;
 
 /**
  * Article entity
- * @entity
- * @table(name="Articles")
- * @entity(repositoryClass="Newscoop\Entity\Repository\ArticleRepository")
+ *
+ * @Entity
+ * @Table(name="Articles")
  */
 class Article
 {
@@ -23,21 +23,32 @@ class Article
     private $id;
 
     /**
-     * @manyToOne(targetEntity="Language")
-     * @joinColumn(name="IdLanguage", referencedColumnName="Id")
+     * @Id
+     * @ManyToOne(targetEntity="Newscoop\Entity\Language")
+     * @JoinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
     private $language;
 
     /**
-     * @ManyToOne(targetEntity="Publication")
+     * @Id
+     * @ManyToOne(targetEntity="Newscoop\Entity\Publication")
      * @JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
     private $publication;
 
     /**
-     * @ManyToOne(targetEntity="Section")
+     * @Id
+     * @ManyToOne(targetEntity="Newscoop\Entity\Issue")
+     * @JoinColumn(name="NrIssue", referencedColumnName="Number")
+     * @var Newscoop\Entity\Issue
+     */
+    private $issue;
+
+    /**
+     * @Id
+     * @ManyToOne(targetEntity="Newscoop\Entity\Section")
      * @JoinColumn(name="NrSection", referencedColumnName="Number")
      * @var Newscoop\Entity\Section
      */
@@ -56,7 +67,14 @@ class Article
     private $issueId;
 
     /**
-     * @column(name="Name")
+     * @Id
+     * @Column(type="integer", name="Number")
+     * @var int
+     */
+    private $number;
+
+    /**
+     * @Column(name="Name")
      * @var string
      */
     private $name;
@@ -190,4 +208,24 @@ class Article
         return $this->language->getId();
     }
 
+
+    /**
+     * Get number
+     *
+     * @return int
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string
+     */
+    public function getTitle()
+    {
+        return $this->name;
+    }
 }

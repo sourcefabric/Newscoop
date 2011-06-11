@@ -39,6 +39,12 @@ class NewscoopEntityPublicationProxy extends \Newscoop\Entity\Publication implem
         return parent::getName();
     }
 
+    public function getLanguage()
+    {
+        $this->_load();
+        return parent::getLanguage();
+    }
+
     public function getIssues()
     {
         $this->_load();
@@ -96,7 +102,7 @@ class NewscoopEntityPublicationProxy extends \Newscoop\Entity\Publication implem
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'default_language', 'issues', 'public_enabled', 'moderator_to', 'moderator_from');
+        return array('__isInitialized__', 'id', 'name', 'language', 'issues', 'public_enabled', 'moderator_to', 'moderator_from');
     }
 
     public function __clone()

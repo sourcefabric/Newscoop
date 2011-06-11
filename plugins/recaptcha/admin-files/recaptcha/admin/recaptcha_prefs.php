@@ -51,7 +51,7 @@ camp_html_display_msgs();
     <p><?php putGS('To use this plugin you need'); ?>:</p>
     <p>- <?php putGS('Enable it and input the reCAPTCHA key in the form below. If you do not have yet your key, you can create it'); ?> <a
         href="https://www.google.com/recaptcha/admin/create" target="_blank"><?php putGS('here'); ?></a>.</p>
-    <p>- <?php putGS('Add the {{ recaptcha }} tag to your template file containing the comments form'); ?>.</p>
+    <p>- <?php putGS('Add the {{ recaptcha }} tag to your template file containing the comments/subscription form'); ?>.</p>
   </td>
 </tr>
 </table>

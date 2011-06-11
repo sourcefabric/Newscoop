@@ -653,5 +653,28 @@ class Section extends DatabaseObject {
         return $comparisonOperation;
     } // fn ProcessListParameters
 
+    public static function BuildSectionIdsQuery(array $p_shortNames, int $p_publication = NULL) {
+        $sections_query = false;
+        $section_names = array();
+
+        foreach ($p_shortNames as $one_name) {
+            $one_name = str_replace('"', '""', trim($one_name));
+            if (0 < strlen($one_name)) {
+                $section_names[] = $one_name;
+            }
+        }
+
+        $pub_cons = "";
+        if ($p_publication && (is_numeric($p_publication))) {$pub_cons .= " AND IdPublication = $p_publication";}
+
+        if (0 < count($section_names)) {
+            $names_str = '"' . implode('", "', $section_names) . '"';
+            $sections_query = "SELECT Number AS id FROM Sections WHERE trim(ShortName) IN ($names_str)" . $pub_cons;
+
+        }
+
+        return $sections_query;
+    } // fn BuildSectionIdsQuery
+
 } // class Section
 ?>

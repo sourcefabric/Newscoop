@@ -101,7 +101,7 @@ if ($f_publication_id > 0) {
 
 <?php camp_html_display_msgs(); ?>
 <P>
-<FORM NAME="article_translate" METHOD="POST" ACTION="do_translate.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<FORM NAME="article_translate" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/do_translate.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
 <INPUT TYPE="HIDDEN" NAME="f_article_code" VALUE="<?php  p($f_article_code); ?>">
 <?php if ($f_publication_id > 0) { ?>
@@ -131,7 +131,7 @@ if ($f_publication_id > 0) {
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Language"); ?>:</TD>
 	<TD>
-	<SELECT NAME="f_translation_language" class="input_select" alt="select" <?php if ($f_publication_id > 0) { ?>ONCHANGE="this.form.action = 'translate.php'; this.form.submit();"<?php } ?> emsg="<?php putGS("You must choose a language"); ?>">
+    <SELECT NAME="f_translation_language" class="input_select" alt="select" <?php if ($f_publication_id > 0) { ?>ONCHANGE="this.form.action = '/<?php echo $ADMIN; ?>/articles/translate.php'; this.form.submit();"<?php } ?> emsg="<?php putGS("You must choose a language"); ?>">
 	<option></option>
 	<?php
 	// Show all the languages that have not yet been translated.

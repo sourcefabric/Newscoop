@@ -1,32 +1,28 @@
 <?php
 
-require_once($GLOBALS['g_campsiteDir']."/classes/GeoPreferences.php");
-require_once($GLOBALS['g_campsiteDir']."/classes/GeoMap.php");
+require_once($GLOBALS['g_campsiteDir'].'/classes/GeoPreferences.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMap.php');
 
-camp_load_translation_strings("api");
-camp_load_translation_strings("geolocation");
+camp_load_translation_strings('api');
+camp_load_translation_strings('geolocation');
 
-//header("Content-Type: text/html; charset=utf-8");
-?>
-<?php
-#echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' . "\n";
 ?>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<meta http-equiv="Expires" content="now" />
-	<title><?php putGS("Map Search Example"); ?></title>
+    <meta http-equiv="Expires" content="now" />
+    <title><?php putGS('Map Search Example'); ?></title>
 
     <?php include dirname(__FILE__) . '/../../html_head.php'; ?>
 
-	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-preview.css" />
-	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-popups.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-preview.css" />
+    <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/js/geocoding/styles/map-info.css" />
 
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/base64.js"></script>
-	<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/json2.js"></script>
+    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/base64.js"></script>
+    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/json2.js"></script>
 
 <?php
-    $bbox_divs = array("tl_lon" => 'top_left_longitude', "tl_lat" => 'top_left_latitude', "br_lon" => 'bottom_right_longitude', "br_lat" => 'bottom_right_latitude');
+    $bbox_divs = array('tl_lon' => 'top_left_longitude', 'tl_lat' => 'top_left_latitude', 'br_lon' => 'bottom_right_longitude', 'br_lat' => 'bottom_right_latitude');
 
     $map_width = 600;
     $map_height = 400;
@@ -39,7 +35,7 @@ camp_load_translation_strings("geolocation");
 <div class="map_mappart_outer_serach">
 <div class="map_mappart_serach">
 <div class="map_mapmenu_serach">
-<a href="#" onClick="<?php echo Geo_Map::GetMapSearchCenter(); ?> return false;"><?php putGS("show initial map view"); ?></a>
+<a href="#" onClick="<?php echo Geo_Map::GetMapSearchCenter(); ?> return false;"><?php putGS('show initial map view'); ?></a>
 </div><!-- end of map_mapmenu -->
 <?php echo Geo_Map::GetMapSearchBody(); ?>
 </div><!-- end of map_mappart -->

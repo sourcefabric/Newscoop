@@ -668,6 +668,18 @@ class Topic extends DatabaseObject {
         return $query;
 	}
 
+	public static function BuildAllSubtopicsQuery($p_parentId = 0, $p_order = false)
+	{
+        if (!is_numeric($p_parentId)) {return "";}
+
+        $parent = 0 + $p_parentId;
+        $query = "SELECT id FROM Topics WHERE node_left >= (SELECT node_left FROM Topics WHERE id = $parent) AND node_right <= (SELECT node_right FROM Topics WHERE id = $parent)";
+        if ($p_order) {
+            $query .= " ORDER BY id";
+        }
+
+        return $query;
+    }
 
 	/**
 	 * Returns an SQLSelectClause object that builds a query for retrieving the
