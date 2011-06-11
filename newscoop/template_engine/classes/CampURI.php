@@ -985,7 +985,16 @@ abstract class CampURI
         $parameter = strtolower(array_shift($p_params));
 
         switch ($parameter) {
-            case 'root_level':
+        	case 'static_file':
+        		$staticFile = isset($p_params[0]) ? array_shift($p_params) : null;
+        		$p_params = array();
+        		$this->m_buildQueryArray = array();
+        		if (empty($staticFile)) {
+        			$this->m_buildPath = '';
+        			break;
+        		}
+        		break;
+        	case 'root_level':
                 $this->m_buildPath = $this->m_config->getSetting('SUBDIR').'/';
                 if ($p_preview) {
                     $this->m_buildQueryArray = $this->getQueryArray(CampURI::$m_previewParameters);
