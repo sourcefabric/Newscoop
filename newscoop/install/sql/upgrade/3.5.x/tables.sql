@@ -1,6 +1,6 @@
 -- Alter log table
-ALTER TABLE `Log` ADD `id` int(10) NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY(`id`);
-ALTER TABLE `Log` ADD `priority` SMALLINT(1) NOT NULL DEFAULT '6';
+ALTER TABLE `Log` ADD `id` int(10) unsigned NOT NULL AUTO_INCREMENT FIRST, ADD PRIMARY KEY(`id`);
+ALTER TABLE `Log` ADD `priority` smallint(1) unsigned NOT NULL DEFAULT '6';
 ALTER TABLE `Log` CHANGE `user_ip` `user_ip` VARCHAR(39) NOT NULL DEFAULT '';
 ALTER TABLE `Log` DROP KEY `IdEvent`;
 ALTER TABLE `Log` ADD KEY `priority` (`priority`);
@@ -34,9 +34,9 @@ DROP TABLE IF EXISTS `ArticleAudioclips`;
 DROP TABLE IF EXISTS `AudioclipMetadata`;
 
 ALTER TABLE `Publications` 
- ADD COLUMN `comments_public_enabled` tinyint(1)  NOT NULL AFTER `comments_public_moderated`,
- ADD COLUMN `comments_moderator_to` VARCHAR(255)  NOT NULL AFTER `comments_spam_blocking_enabled`,
- ADD COLUMN `comments_moderator_from` VARCHAR(255)  NOT NULL AFTER `comments_moderator_to`;
+ ADD COLUMN `comments_public_enabled` tinyint(1)  NOT NULL DEFAULT '0' AFTER `comments_public_moderated`,
+ ADD COLUMN `comments_moderator_to` VARCHAR(255)  NOT NULL DEFAULT '' AFTER `comments_spam_blocking_enabled`,
+ ADD COLUMN `comments_moderator_from` VARCHAR(255)  NOT NULL DEFAULT '' AFTER `comments_moderator_to`;
 
 -- Comment main table
 DROP TABLE IF EXISTS `comment`;
@@ -90,6 +90,14 @@ CREATE TABLE  `comment_acceptance` (
   PRIMARY KEY (`id`),
   KEY `fk_forum_id` (`fk_forum_id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+-- Update SubsSections
+ALTER TABLE `SubsSections` MODIFY COLUMN `IdLanguage` INTEGER UNSIGNED NOT NULL DEFAULT 0,
+ ADD COLUMN `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT FIRST,
+ DROP PRIMARY KEY,
+ ADD PRIMARY KEY (`id`),
+ ADD UNIQUE (`IdSubscription`, `SectionNumber`, `IdLanguage`);
+
 
 
 -- Importing the stored function for 'Point in Polygon' checking

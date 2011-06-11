@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.49, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.1.54, for debian-linux-gnu (i686)
 --
--- Host: localhost    Database: newscoop35
+-- Host: localhost    Database: newscoop-devel
 -- ------------------------------------------------------
--- Server version	5.1.49-1ubuntu8.1
+-- Server version	5.1.54-1ubuntu4
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -88,33 +88,6 @@ CREATE TABLE `ArticleAuthors` (
 LOCK TABLES `ArticleAuthors` WRITE;
 /*!40000 ALTER TABLE `ArticleAuthors` DISABLE KEYS */;
 /*!40000 ALTER TABLE `ArticleAuthors` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `ArticleComments`
---
-
-DROP TABLE IF EXISTS `ArticleComments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ArticleComments` (
-  `fk_article_number` int(10) unsigned NOT NULL DEFAULT '0',
-  `fk_language_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `fk_comment_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `is_first` tinyint(1) NOT NULL DEFAULT '0',
-  KEY `fk_comment_id` (`fk_comment_id`),
-  KEY `article_index` (`fk_article_number`,`fk_language_id`),
-  KEY `first_message_index` (`fk_article_number`,`fk_language_id`,`is_first`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `ArticleComments`
---
-
-LOCK TABLES `ArticleComments` WRITE;
-/*!40000 ALTER TABLE `ArticleComments` DISABLE KEYS */;
-/*!40000 ALTER TABLE `ArticleComments` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -756,7 +729,7 @@ CREATE TABLE `Events` (
 
 LOCK TABLES `Events` WRITE;
 /*!40000 ALTER TABLE `Events` DISABLE KEYS */;
-INSERT INTO `Events` VALUES (1,'Add Publication','N',1),(2,'Delete Publication','N',1),(11,'Add Issue','N',1),(12,'Delete Issue','N',1),(13,'Change Issue Template','N',1),(14,'Change issue status','N',1),(15,'Add Issue Translation','N',1),(21,'Add Section','N',1),(22,'Delete section','N',1),(31,'Add Article','Y',1),(32,'Delete article','N',1),(33,'Change article field','N',1),(34,'Change article properties','N',1),(35,'Change article status','Y',1),(41,'Add Image','Y',1),(42,'Delete image','N',1),(43,'Change image properties','N',1),(51,'Add User','N',1),(52,'Delete User','N',1),(53,'Changes Own Password','N',1),(54,'Change User Password','N',1),(55,'Change User Permissions','N',1),(56,'Change user information','N',1),(61,'Add article type','N',1),(62,'Delete article type','N',1),(71,'Add article type field','N',1),(72,'Delete article type field','N',1),(81,'Add dictionary class','N',1),(82,'Delete dictionary class','N',1),(91,'Add dictionary keyword','N',1),(92,'Delete dictionary keyword','N',1),(101,'Add language','N',1),(102,'Delete language','N',1),(103,'Modify language','N',1),(112,'Delete templates','N',1),(111,'Add templates','N',1),(121,'Add user type','N',1),(122,'Delete user type','N',1),(123,'Change user type','N',1),(3,'Change publication information','N',1),(36,'Change article template','N',1),(57,'Add IP Group','N',1),(58,'Delete IP Group','N',1),(131,'Add country','N',1),(132,'Add country translation','N',1),(133,'Change country name','N',1),(134,'Delete country','N',1),(4,'Add default subscription time','N',1),(5,'Delete default subscription time','N',1),(6,'Change default subscription time','N',1),(113,'Edit template','N',1),(114,'Create template','N',1),(115,'Duplicate template','N',1),(141,'Add topic','N',1),(142,'Delete topic','N',1),(143,'Update topic','N',1),(144,'Add topic to article','N',1),(145,'Delete topic from article','N',1),(151,'Add alias','N',1),(152,'Delete alias','N',1),(153,'Update alias','N',1),(154,'Duplicate section','N',1),(155,'Duplicate article','N',1),(171,'Change system preferences','N',1),(116,'Rename Template','N',1),(117,'Move Template','N',1),(37,'Edit article content','N',1),(38,'Add file to article','N',1),(39,'Delete file from article','N',1),(172,'Add Author','N',1),(173,'Edit Author','N',1),(174,'Delete Author','N',1),(175,'Add author type','N',1),(176,'Delete author type','N',1);
+INSERT INTO `Events` VALUES (1,'Add Publication','N',1),(2,'Delete Publication','N',1),(11,'Add Issue','N',1),(12,'Delete Issue','N',1),(13,'Change Issue Template','N',1),(14,'Change issue status','N',1),(15,'Add Issue Translation','N',1),(21,'Add Section','N',1),(22,'Delete section','N',1),(31,'Add Article','Y',1),(32,'Delete article','N',1),(33,'Change article field','N',1),(34,'Change article properties','N',1),(35,'Change article status','Y',1),(41,'Add Image','Y',1),(42,'Delete image','N',1),(43,'Change image properties','N',1),(51,'Add User','N',1),(52,'Delete User','N',1),(53,'Changes Own Password','N',1),(54,'Change User Password','N',1),(55,'Change User Permissions','N',1),(56,'Change user information','N',1),(61,'Add article type','N',1),(62,'Delete article type','N',1),(71,'Add article type field','N',1),(72,'Delete article type field','N',1),(81,'Add dictionary class','N',1),(82,'Delete dictionary class','N',1),(91,'Add dictionary keyword','N',1),(92,'Delete dictionary keyword','N',1),(101,'Add language','N',1),(102,'Delete language','N',1),(103,'Modify language','N',1),(112,'Delete templates','N',1),(111,'Add templates','N',1),(121,'Add user type','N',1),(122,'Delete user type','N',1),(123,'Change user type','N',1),(3,'Change publication information','N',1),(36,'Change article template','N',1),(57,'Add IP Group','N',1),(58,'Delete IP Group','N',1),(131,'Add country','N',1),(132,'Add country translation','N',1),(133,'Change country name','N',1),(134,'Delete country','N',1),(4,'Add default subscription time','N',1),(5,'Delete default subscription time','N',1),(6,'Change default subscription time','N',1),(113,'Edit template','N',1),(114,'Create template','N',1),(115,'Duplicate template','N',1),(141,'Add topic','N',1),(142,'Delete topic','N',1),(143,'Update topic','N',1),(144,'Add topic to article','N',1),(145,'Delete topic from article','N',1),(151,'Add alias','N',1),(152,'Delete alias','N',1),(153,'Update alias','N',1),(154,'Duplicate section','N',1),(155,'Duplicate article','N',1),(161,'Sync campsite and phorum users','N',1),(171,'Change system preferences','N',1),(116,'Rename Template','N',1),(117,'Move Template','N',1),(37,'Edit article content','N',1),(38,'Add file to article','N',1),(39,'Delete file from article','N',1),(172,'Add Author','N',1),(173,'Edit Author','N',1),(174,'Delete Author','N',1),(175,'Add author type','N',1),(176,'Delete author type','N',1);
 /*!40000 ALTER TABLE `Events` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -987,7 +960,7 @@ CREATE TABLE `Languages` (
   `ShortWDay7` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `Name` (`Name`)
-) ENGINE=MyISAM AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -996,28 +969,8 @@ CREATE TABLE `Languages` (
 
 LOCK TABLES `Languages` WRITE;
 /*!40000 ALTER TABLE `Languages` DISABLE KEYS */;
-INSERT INTO `Languages` (`Id`, `Name`, `CodePage`, `OrigName`, `Code`, `Month1`, `Month2`, `Month3`, `Month4`, `Month5`, `Month6`, `Month7`, `Month8`, `Month9`, `Month10`, `Month11`, `Month12`, `WDay1`, `WDay2`, `WDay3`, `WDay4`, `WDay5`, `WDay6`, `WDay7`, `ShortMonth1`, `ShortMonth2`, `ShortMonth3`, `ShortMonth4`, `ShortMonth5`, `ShortMonth6`, `ShortMonth7`, `ShortMonth8`, `ShortMonth9`, `ShortMonth10`, `ShortMonth11`, `ShortMonth12`, `ShortWDay1`, `ShortWDay2`, `ShortWDay3`, `ShortWDay4`, `ShortWDay5`, `ShortWDay6`, `ShortWDay7`) VALUES
-(1, 'English', 'ISO_8859-1', 'English', 'en', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec', 'Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'),
-(5, 'German', 'ISO_8859-1', 'Deutsch', 'de', 'Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember', 'Sonntag', 'Montag', 'Dienstag', 'Mittwoch', 'Donnerstag', 'Freitag', 'Samstag', 'Jan', 'Feb', 'Mär', 'Apr', 'Mai', 'Jun', 'Jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dez', 'So', 'Mo', 'Di', 'Mi', 'Do', 'Fr', 'Sa'),
-(9, 'Portuguese', 'ISO_8859-1', 'Português', 'pt', 'Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro', 'Domingo', 'Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira', 'Sábado', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-(12, 'French', 'ISO_8859-1', 'Français', 'fr', 'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juli', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre', 'Dimanche', 'Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-(13, 'Spanish', 'ISO_8859-1', 'Español', 'es', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre', 'Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic', 'Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'),
-(2, 'Romanian', 'ISO_8859-2', 'Română', 'ro', 'Ianuarie', 'Februarie', 'Martie', 'Aprilie', 'Mai', 'Iunie', 'Iulie', 'August', 'Septembrie', 'Octombrie', 'Noiembrie', 'Decembrie', 'Duminică', 'Luni', 'Marţi', 'Miercuri', 'Joi', 'Vineri', 'Sâmbătă', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-(7, 'Croatian', 'ISO_8859-2', 'Hrvatski', 'hr', 'Siječanj', 'Veljača', 'Ožujak', 'Travanj', 'Svibanj', 'Lipanj', 'Srpanj', 'Kolovoz', 'Rujan', 'Listopad', 'Studeni', 'Prosinac', 'Nedjelja', 'Ponedjeljak', 'Utorak', 'Srijeda', 'Četvrtak', 'Petak', 'Subota', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-(8, 'Czech', 'ISO_8859-2', 'Český', 'cz', 'Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen', 'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec', 'Neděle', 'Pondělí', 'Úterý', 'Středa', 'Čtvrtek', 'Pátek', 'Sobota', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-(11, 'Serbo-Croatian', 'ISO_8859-2', 'Srpskohrvatski', 'sh', 'januar', 'februar', 'mart', 'april', 'maj', 'jun', 'jul', 'avgust', 'septembar', 'oktobar', 'novembar', 'decembar', 'nedelja', 'ponedeljak', 'utorak', 'sreda', 'četvrtak', 'petak', 'subota', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-(10, 'Serbian (Cyrillic)', 'ISO_8859-5', 'Српски (Ћирилица)', 'sr', 'јануар', 'фебруар', 'март', 'април', 'мај', 'јун', 'јул', 'август', 'септембар', 'октобар', 'новембар', 'децембар', 'недеља', 'понедељак', 'уторак', 'среда', 'четвртак', 'петак', 'субота', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-(15, 'Russian', 'ISO_8859-5', 'Русский', 'ru', 'январь', 'февраль', 'март', 'апрель', 'май', 'июнь', 'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь', 'воскресенье', 'понедельник', 'вторник', 'среда', 'четверг', 'пятница', 'суббота', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-(18, 'Swedish', '', 'Svenska', 'sv', 'januari', 'februari', 'mars', 'april', 'maj', 'juni', 'juli', 'augusti', 'september', 'oktober', 'november', 'december', 'söndag', 'måndag', 'tisdag', 'onsdag', 'torsdag', 'fredag', 'lördag', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-(16, 'Chinese (Simplified)', 'UTF-8', '中文', 'zh', '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月', '星期', '星期', '星期', '星期', '星期', '星期', '星期', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-(17, 'Arabic', 'UTF-8', 'عربي', 'ar', 'كانون الثاني', 'شباط', 'آذار', 'نيسان', 'آيار', 'حزيران', 'تموز', 'آب', 'أيلول', 'تشرين أول', 'تشرين الثاني', 'كانون أول', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-(19, 'Korean', '', '한국어', 'ko', '1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월', '일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-(20, 'Dutch', '', 'Nederlands', 'nl', 'januari', 'februari', 'maart', 'april', 'mei', 'juni', 'juli', 'augustus', 'september', 'oktober', 'november', 'december', 'zondag', 'maandag', 'dinsdag', 'woensdag', 'donderdag', 'vrijdag', 'zaterdag', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-(22, 'Belarus', '', 'Беларуская', 'be', 'студзеня', 'лютага', 'сакавiка', 'красавiка', 'мая', 'чэрвеня', 'лiпеня', 'жніўня', 'верасьня', 'кастрычнiка', 'сьнежня', 'студзеня', 'нядзеля', 'панядзелак', 'аўторак', 'серада', 'чацверг', 'пятнiца', 'субота', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-(23, 'Georgian', '', 'ქართული', 'ka', 'იანვარი', 'თებერვალი', 'მარტი', 'აპრილი', 'მაისი', 'ივნისი', 'ივლისი', 'აგვისტო', 'სექტემბერი', 'ოქტომბერი', 'ნოემბერი', 'დეკემბერი', 'კვირა', 'ორშაბათი', 'სამშაბათი', 'ოთხშაბათი', 'ხუთშაბათი', 'პარასკევი', 'შაბათი', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''),
-(24, 'Chinese (Traditional)', '', '繁體中文', 'zh_TW', '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月', '星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六', '一月', '二月', '三月', '四月', '五月', '六月', '七月', '八月', '九月', '十月', '十一月', '十二月', '星期日', '星期一', '星期二', '星期三', '星期四', '星期五', '星期六'),
-(25, 'Polish', '', 'Polski', 'pl', 'Styczeń', 'Luty', 'Marzec', 'Kwiecień', 'Maj', 'Czerwiec', 'Lipiec', 'Sierpień', 'Wrzesień', 'Październik', 'Listopad', 'Grudzień', 'Niedziela:', 'Poniedziałek', 'Wtorek:', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Sty:', 'Lt:', 'Mar:', 'Kw:', 'Ma:', 'Cz:', 'Lip:', 'Sier:', 'Wrz:', 'Paź:', 'Lis:', 'Gru:', 'Nd:', 'Pon:', 'Wt:', 'Śr:', 'Czw:', 'Pt:', 'Sob:'),
-(26, 'Greek', '', 'Ελληνικά', 'el', 'Ιανουάριος', 'Φεβρουάριος', 'Μάρτιος', 'Απρίλιος', 'Μάιος', 'Ιούνιος', 'Ιούλιος', 'Αύγουστος', 'Σεπτέμβριος', 'Οκτώβριος', 'Νοέμβριος', 'Δεκέμβριος', 'Κυριακή', 'Δευτέρα', 'Τρίτη', 'Τετάρτη', 'Πέπμτη', 'Παρασκευή', 'Σάββατο', 'Ιαν', 'Φεβ', 'Μαρ', 'Απρ', 'Μαϊ', 'Ιουν', 'Ιουλ', 'Αυγ', 'Σεπ', 'Οκτ', 'Νοε', 'Δεκ', 'Κυ', 'Δε', 'Τρ', 'Τε', 'Πε', 'Παρ', 'Σα:');
+INSERT INTO `Languages` VALUES (1,'English','ISO_8859-1','English','en','January','February','March','April','May','June','July','August','September','October','November','December','Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec','Su','Mo','Tu','We','Th','Fr','Sa'),(5,'German','ISO_8859-1','Deutsch','de','Januar','Februar','März','April','Mai','Juni','Juli','August','September','Oktober','November','Dezember','Sonntag','Montag','Dienstag','Mittwoch','Donnerstag','Freitag','Samstag','Jan','Feb','Mär','Apr','Mai','Jun','Jul','Aug','Sep','Okt','Nov','Dez','So','Mo','Di','Mi','Do','Fr','Sa'),(9,'Portuguese','ISO_8859-1','Português','pt','Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro','Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado','','','','','','','','','','','','','','','','','','',''),(12,'French','ISO_8859-1','Français','fr','Janvier','Février','Mars','Avril','Mai','Juin','Juli','Août','Septembre','Octobre','Novembre','Décembre','Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','','','','','','','','','','','','','','','','','','',''),(13,'Spanish','ISO_8859-1','Español','es','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre','Domingo','Lunes','Martes','Miércoles','Jueves','Viernes','Sábado','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic','Do','Lu','Ma','Mi','Ju','Vi','Sa'),(2,'Romanian','ISO_8859-2','Română','ro','Ianuarie','Februarie','Martie','Aprilie','Mai','Iunie','Iulie','August','Septembrie','Octombrie','Noiembrie','Decembrie','Duminică','Luni','Marţi','Miercuri','Joi','Vineri','Sâmbătă','','','','','','','','','','','','','','','','','','',''),(7,'Croatian','ISO_8859-2','Hrvatski','hr','Siječanj','Veljača','Ožujak','Travanj','Svibanj','Lipanj','Srpanj','Kolovoz','Rujan','Listopad','Studeni','Prosinac','Nedjelja','Ponedjeljak','Utorak','Srijeda','Četvrtak','Petak','Subota','','','','','','','','','','','','','','','','','','',''),(8,'Czech','ISO_8859-2','Český','cz','Leden','Únor','Březen','Duben','Květen','Červen','Červenec','Srpen','Září','Říjen','Listopad','Prosinec','Neděle','Pondělí','Úterý','Středa','Čtvrtek','Pátek','Sobota','','','','','','','','','','','','','','','','','','',''),(11,'Serbo-Croatian','ISO_8859-2','Srpskohrvatski','sh','januar','februar','mart','april','maj','jun','jul','avgust','septembar','oktobar','novembar','decembar','nedelja','ponedeljak','utorak','sreda','četvrtak','petak','subota','','','','','','','','','','','','','','','','','','',''),(10,'Serbian (Cyrillic)','ISO_8859-5','Српски (Ћирилица)','sr','јануар','фебруар','март','април','мај','јун','јул','август','септембар','октобар','новембар','децембар','недеља','понедељак','уторак','среда','четвртак','петак','субота','','','','','','','','','','','','','','','','','','',''),(15,'Russian','ISO_8859-5','Русский','ru','январь','февраль','март','апрель','май','июнь','июль','август','сентябрь','октябрь','ноябрь','декабрь','воскресенье','понедельник','вторник','среда','четверг','пятница','суббота','','','','','','','','','','','','','','','','','','',''),(18,'Swedish','','Svenska','sv','januari','februari','mars','april','maj','juni','juli','augusti','september','oktober','november','december','söndag','måndag','tisdag','onsdag','torsdag','fredag','lördag','','','','','','','','','','','','','','','','','','',''),(16,'Chinese (Simplified)','UTF-8','中文','zh','一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月','星期','星期','星期','星期','星期','星期','星期','','','','','','','','','','','','','','','','','','',''),(17,'Arabic','UTF-8','عربي','ar','كانون الثاني','شباط','آذار','نيسان','آيار','حزيران','تموز','آب','أيلول','تشرين أول','تشرين الثاني','كانون أول','الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت','','','','','','','','','','','','','','','','','','',''),(19,'Korean','ko','한국어','kr','1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월','일요일','월요일','화요일','수요일','목요일','금요일','토요일','','','','','','','','','','','','','','','','','','',''),(20,'Dutch','','Nederlands','nl','januari','februari','maart','april','mei','juni','juli','augustus','september','oktober','november','december','zondag','maandag','dinsdag','woensdag','donderdag','vrijdag','zaterdag','','','','','','','','','','','','','','','','','','',''),(22,'Belarus','be','Беларуская','by','студзеня','лютага','сакавiка','красавiка','мая','чэрвеня','лiпеня','жніўня','верасьня','кастрычнiка','сьнежня','студзеня','нядзеля','панядзелак','аўторак','серада','чацверг','пятнiца','субота','','','','','','','','','','','','','','','','','','',''),(23,'Georgian','ka','ქართული','ge','იანვარი','თებერვალი','მარტი','აპრილი','მაისი','ივნისი','ივლისი','აგვისტო','სექტემბერი','ოქტომბერი','ნოემბერი','დეკემბერი','კვირა','ორშაბათი','სამშაბათი','ოთხშაბათი','ხუთშაბათი','პარასკევი','შაბათი','','','','','','','','','','','','','','','','','','',''),(24,'Chinese (Traditional)','','繁體中文','zh_TW','一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月','星期日','星期一','星期二','星期三','星期四','星期五','星期六','一月','二月','三月','四月','五月','六月','七月','八月','九月','十月','十一月','十二月','星期日','星期一','星期二','星期三','星期四','星期五','星期六'),(25,'Polish','','Polski','pl','Styczeń','Luty','Marzec','Kwiecień','Maj','Czerwiec','Lipiec','Sierpień','Wrzesień','Październik','Listopad','Grudzień','Niedziela:','Poniedziałek','Wtorek:','Środa','Czwartek','Piątek','Sobota','Sty:','Lt:','Mar:','Kw:','Ma:','Cz:','Lip:','Sier:','Wrz:','Paź:','Lis:','Gru:','Nd:','Pon:','Wt:','Śr:','Czw:','Pt:','Sob:'),(26,'Greek','','Ελληνικά','el','Ιανουάριος','Φεβρουάριος','Μάρτιος','Απρίλιος','Μάιος','Ιούνιος','Ιούλιος','Αύγουστος','Σεπτέμβριος','Οκτώβριος','Νοέμβριος','Δεκέμβριος','Κυριακή','Δευτέρα','Τρίτη','Τετάρτη','Πέπμτη','Παρασκευή','Σάββατο','Ιαν','Φεβ','Μαρ','Απρ','Μαϊ','Ιουν','Ιουλ','Αυγ','Σεπ','Οκτ','Νοε','Δεκ','Κυ','Δε','Τρ','Τε','Πε','Παρ','Σα:');
+/*!40000 ALTER TABLE `Languages` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -1097,7 +1050,7 @@ CREATE TABLE `Log` (
   `user_ip` varchar(39) NOT NULL DEFAULT '',
   `priority` smallint(1) unsigned NOT NULL DEFAULT '6',
   PRIMARY KEY (`id`),
-  KEY (`priority`)
+  KEY `priority` (`priority`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1335,11 +1288,11 @@ CREATE TABLE `Publications` (
   `comments_article_default_enabled` tinyint(1) NOT NULL DEFAULT '0',
   `comments_subscribers_moderated` tinyint(1) NOT NULL DEFAULT '0',
   `comments_public_moderated` tinyint(1) NOT NULL DEFAULT '0',
-  `comments_public_enabled` tinyint(1)  NOT NULL DEFAULT '0',  
+  `comments_public_enabled` tinyint(1) NOT NULL DEFAULT '0',
   `comments_captcha_enabled` tinyint(1) NOT NULL DEFAULT '0',
   `comments_spam_blocking_enabled` tinyint(1) NOT NULL DEFAULT '0',
-  `comments_moderator_to` VARCHAR(255)  NOT NULL,
-  `comments_moderator_from` VARCHAR(255)  NOT NULL,
+  `comments_moderator_to` varchar(255) NOT NULL DEFAULT '',
+  `comments_moderator_from` varchar(255) NOT NULL DEFAULT '',
   `url_error_tpl_id` int(10) unsigned DEFAULT NULL,
   `seo` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`Id`),
@@ -1549,16 +1502,16 @@ DROP TABLE IF EXISTS `SubsSections`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SubsSections` (
-  `id` int(10) AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `IdSubscription` int(10) unsigned NOT NULL DEFAULT '0',
   `SectionNumber` int(10) unsigned NOT NULL DEFAULT '0',
-  `IdLanguage` int(10) NULL,
+  `IdLanguage` int(10) unsigned NOT NULL DEFAULT '0',
   `StartDate` date NOT NULL DEFAULT '0000-00-00',
   `Days` int(10) unsigned NOT NULL DEFAULT '0',
   `PaidDays` int(10) unsigned NOT NULL DEFAULT '0',
   `NoticeSent` enum('N','Y') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`id`),
-  UNIQUE (`IdSubscription`,`SectionNumber`,`IdLanguage`)
+  UNIQUE KEY `IdSubscription` (`IdSubscription`,`SectionNumber`,`IdLanguage`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1614,7 +1567,7 @@ CREATE TABLE `SystemPreferences` (
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   UNIQUE KEY `varname` (`varname`)
-) ENGINE=MyISAM AUTO_INCREMENT=61 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=66 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1623,7 +1576,7 @@ CREATE TABLE `SystemPreferences` (
 
 LOCK TABLES `SystemPreferences` WRITE;
 /*!40000 ALTER TABLE `SystemPreferences` DISABLE KEYS */;
-INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','2M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(18,'SiteCacheEnabled','Y','2010-07-28 16:17:03'),(22,'SiteMetaKeywords','Newscoop, Sourcefabric, enterprise content management, open source, media, journalism','2011-01-17 12:29:43'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Newscoop','2011-01-17 12:27:00'),(23,'SiteMetaDescription','Newscoop - The open content management system for professional journalists.','2011-01-17 12:29:43'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45'),(26,'DBCacheEngine',NULL,'2011-01-17 12:28:20'),(27,'EditorImageRatio','100','2009-06-15 17:21:08'),(28,'TemplateFilter','.*, CVS','2009-06-15 17:21:08'),(29,'ImagecacheLifetime','86400','2009-06-22 11:54:19'),(30,'EditorImageResizeWidth','','2010-06-29 20:31:14'),(31,'EditorImageResizeHeight','','2010-06-29 20:31:14'),(32,'EditorImageZoom','N','2010-06-29 20:31:14'),(33,'TimeZone',NULL,'2010-06-29 20:31:14'),(34,'ExternalCronManagement','Y','2010-06-29 20:31:14'),(35,'TemplateCacheHandler',NULL,'2011-01-17 12:28:20'),(36,'PasswordRecovery','Y','2011-01-17 12:28:20'),(37,'MapCenterLongitudeDefault','14.424133','2011-01-17 12:28:20'),(38,'MapCenterLatitudeDefault','50.089926','2011-01-17 12:28:20'),(39,'MapDisplayResolutionDefault','4','2011-01-17 12:28:20'),(40,'MapViewWidthDefault','600','2011-01-17 12:28:20'),(41,'MapViewHeightDefault','400','2011-01-17 12:28:20'),(42,'MapProviderAvailableGoogleV3','1','2011-01-17 12:28:20'),(43,'MapProviderAvailableMapQuest','1','2011-01-17 12:28:20'),(44,'MapProviderAvailableOSM','1','2011-01-17 12:28:20'),(45,'MapProviderDefault','GoogleV3','2011-01-17 12:28:20'),(46,'MapMarkerDirectory','/js/geocoding/markers/','2011-01-17 12:28:20'),(47,'MapMarkerSourceDefault','marker-gold.png','2011-01-17 12:28:20'),(48,'MapPopupWidthMin','200','2011-01-17 12:28:20'),(49,'MapPopupHeightMin','150','2011-01-17 12:28:20'),(50,'MapVideoWidthYouTube','320','2011-01-17 12:28:20'),(51,'MapVideoHeightYouTube','240','2011-01-17 12:28:20'),(52,'MapVideoWidthVimeo','320','2011-01-17 12:28:20'),(53,'MapVideoHeightVimeo','180','2011-01-17 12:28:20'),(54,'MapVideoWidthFlash','320','2011-01-17 12:28:20'),(55,'MapVideoHeightFlash','240','2011-01-17 12:28:20'),(56,'MapVideoWidthFlv','320','2011-01-17 12:28:20'),(57,'MapVideoHeightFlv','240','2011-01-17 12:28:20'),(58,'FlashServer','','2011-01-17 12:28:20'),(59,'FlashDirectory','videos/','2011-01-17 12:28:20'),(60,'CollectStatistics','Y','2011-04-06 10:38:54'),(62,'MapAutoFocusDefault','1','2011-02-01 12:23:43'),(63,'MapAutoFocusMaxZoom','10','2011-02-01 12:23:43'),(64,'MapAutoFocusBorder','50','2011-02-01 16:29:22'),(65,'MapAutoCSSFile','/js/geocoding/styles/map-info.css','2011-02-01 18:33:30');
+INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','2M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(65,'CollectStatistics','Y','2011-06-11 18:35:11'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(18,'SiteCacheEnabled','Y','2010-07-28 16:17:03'),(22,'SiteMetaKeywords','Newscoop, Sourcefabric, enterprise content management, open source, media, journalism','2011-01-17 12:29:43'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Newscoop','2011-01-17 12:27:00'),(23,'SiteMetaDescription','Newscoop - The open content management system for professional journalists.','2011-01-17 12:29:43'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45'),(26,'DBCacheEngine',NULL,'2011-01-17 12:28:20'),(27,'EditorImageRatio','100','2009-06-15 17:21:08'),(28,'TemplateFilter','.*, CVS','2009-06-15 17:21:08'),(29,'ImagecacheLifetime','86400','2009-06-22 11:54:19'),(30,'EditorImageResizeWidth','','2010-06-29 20:31:14'),(31,'EditorImageResizeHeight','','2010-06-29 20:31:14'),(32,'EditorImageZoom','N','2010-06-29 20:31:14'),(33,'TimeZone',NULL,'2010-06-29 20:31:14'),(34,'ExternalCronManagement','Y','2010-06-29 20:31:14'),(35,'TemplateCacheHandler',NULL,'2011-01-17 12:28:20'),(36,'PasswordRecovery','Y','2011-01-17 12:28:20'),(37,'MapCenterLongitudeDefault','14.424133','2011-01-17 12:28:20'),(38,'MapCenterLatitudeDefault','50.089926','2011-01-17 12:28:20'),(39,'MapDisplayResolutionDefault','4','2011-01-17 12:28:20'),(40,'MapViewWidthDefault','600','2011-01-17 12:28:20'),(41,'MapViewHeightDefault','400','2011-01-17 12:28:20'),(42,'MapProviderAvailableGoogleV3','1','2011-01-17 12:28:20'),(43,'MapProviderAvailableMapQuest','1','2011-01-17 12:28:20'),(44,'MapProviderAvailableOSM','1','2011-01-17 12:28:20'),(45,'MapProviderDefault','GoogleV3','2011-01-17 12:28:20'),(46,'MapMarkerDirectory','/js/geocoding/markers/','2011-06-11 18:35:11'),(47,'MapMarkerSourceDefault','marker-gold.png','2011-01-17 12:28:20'),(48,'MapPopupWidthMin','200','2011-06-11 18:35:11'),(49,'MapPopupHeightMin','150','2011-06-11 18:35:11'),(50,'MapVideoWidthYouTube','320','2011-06-11 18:35:11'),(51,'MapVideoHeightYouTube','240','2011-06-11 18:35:11'),(52,'MapVideoWidthVimeo','320','2011-06-11 18:35:11'),(53,'MapVideoHeightVimeo','180','2011-06-11 18:35:11'),(54,'MapVideoWidthFlash','320','2011-06-11 18:35:11'),(55,'MapVideoHeightFlash','240','2011-06-11 18:35:11'),(56,'MapVideoWidthFlv','320','2011-06-11 18:35:11'),(57,'MapVideoHeightFlv','240','2011-06-11 18:35:11'),(58,'FlashServer','','2011-01-17 12:28:20'),(59,'FlashDirectory','videos/','2011-01-17 12:28:20'),(61,'MapAutoFocusDefault','1','2011-06-11 18:35:11'),(62,'MapAutoFocusMaxZoom','10','2011-06-11 18:35:11'),(63,'MapAutoFocusBorder','50','2011-06-11 18:35:11'),(64,'MapAutoCSSFile','/js/geocoding/styles/map-info.css','2011-06-11 18:35:11');
 /*!40000 ALTER TABLE `SystemPreferences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1846,8 +1799,17 @@ CREATE TABLE `Widget` (
   `class` varchar(78) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`),
   UNIQUE KEY `path` (`path`,`class`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `Widget`
+--
+
+LOCK TABLES `Widget` WRITE;
+/*!40000 ALTER TABLE `Widget` DISABLE KEYS */;
+/*!40000 ALTER TABLE `Widget` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `WidgetContext`
@@ -1863,6 +1825,15 @@ CREATE TABLE `WidgetContext` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `WidgetContext`
+--
+
+LOCK TABLES `WidgetContext` WRITE;
+/*!40000 ALTER TABLE `WidgetContext` DISABLE KEYS */;
+/*!40000 ALTER TABLE `WidgetContext` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `WidgetContext_Widget`
@@ -1882,6 +1853,164 @@ CREATE TABLE `WidgetContext_Widget` (
   KEY `fk_user_id` (`fk_user_id`,`fk_widgetcontext_id`,`order`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `WidgetContext_Widget`
+--
+
+LOCK TABLES `WidgetContext_Widget` WRITE;
+/*!40000 ALTER TABLE `WidgetContext_Widget` DISABLE KEYS */;
+/*!40000 ALTER TABLE `WidgetContext_Widget` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `acl_role`
+--
+
+DROP TABLE IF EXISTS `acl_role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `acl_role` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `acl_role`
+--
+
+LOCK TABLES `acl_role` WRITE;
+/*!40000 ALTER TABLE `acl_role` DISABLE KEYS */;
+INSERT INTO `acl_role` VALUES (1),(2),(3),(4),(5),(6);
+/*!40000 ALTER TABLE `acl_role` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `acl_rule`
+--
+
+DROP TABLE IF EXISTS `acl_rule`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `acl_rule` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `type` enum('allow','deny') NOT NULL DEFAULT 'allow',
+  `role_id` int(10) NOT NULL,
+  `resource` varchar(80) NOT NULL DEFAULT '',
+  `action` varchar(80) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `role_id` (`role_id`,`resource`,`action`)
+) ENGINE=MyISAM AUTO_INCREMENT=190 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `acl_rule`
+--
+
+LOCK TABLES `acl_rule` WRITE;
+/*!40000 ALTER TABLE `acl_rule` DISABLE KEYS */;
+INSERT INTO `acl_rule` VALUES (1,'allow',1,'article','add'),(2,'allow',1,'audioclip','add'),(3,'allow',1,'file','add'),(4,'allow',1,'image','add'),(5,'allow',1,'audioclip','attach'),(6,'allow',1,'image','attach'),(7,'allow',1,'topic','attach'),(8,'allow',1,'article','edit'),(9,'allow',1,'file','edit'),(10,'allow',1,'image','edit'),(11,'allow',1,'system-preferences','edit'),(12,'allow',1,'cache','clear'),(13,'allow',1,'comment','enable'),(14,'allow',1,'comment','moderate'),(15,'allow',1,'article','delete'),(16,'allow',1,'article-type','delete'),(17,'allow',1,'country','delete'),(18,'allow',1,'file','delete'),(19,'allow',1,'image','delete'),(20,'allow',1,'issue','delete'),(21,'allow',1,'language','delete'),(22,'allow',1,'publication','delete'),(23,'allow',1,'section','delete'),(24,'allow',1,'template','delete'),(25,'allow',1,'user','delete'),(26,'allow',1,'editor','bold'),(27,'allow',1,'editor','charactermap'),(28,'allow',1,'editor','copycutpaste'),(29,'allow',1,'editor','enlarge'),(30,'allow',1,'editor','findreplace'),(31,'allow',1,'editor','fontcolor'),(32,'allow',1,'editor','fontface'),(33,'allow',1,'editor','fontsize'),(34,'allow',1,'editor','horizontalrule'),(35,'allow',1,'editor','image'),(36,'allow',1,'editor','indent'),(37,'allow',1,'editor','italic'),(38,'allow',1,'editor','link'),(39,'allow',1,'editor','listbullet'),(40,'allow',1,'editor','listnumber'),(41,'allow',1,'editor','sourceview'),(42,'allow',1,'editor','strikethrough'),(43,'allow',1,'editor','subhead'),(44,'allow',1,'editor','subscript'),(45,'allow',1,'editor','superscript'),(46,'allow',1,'editor','table'),(47,'allow',1,'editor','textalignment'),(48,'allow',1,'editor','textdirection'),(49,'allow',1,'editor','underline'),(50,'allow',1,'editor','undoredo'),(51,'allow',1,'plugin','manage'),(52,'allow',1,'article-type','manage'),(53,'allow',1,'country','manage'),(54,'allow',1,'issue','manage'),(55,'allow',1,'language','manage'),(56,'allow',1,'localizer','manage'),(57,'allow',1,'publication','manage'),(58,'allow',1,'subscriber','manage'),(59,'allow',1,'section','manage'),(60,'allow',1,'subscription','manage'),(61,'allow',1,'template','manage'),(62,'allow',1,'topic','manage'),(63,'allow',1,'user-group','manage'),(64,'allow',1,'user','manage'),(65,'allow',1,'article','move'),(66,'allow',1,'article','publish'),(67,'allow',1,'article','translate'),(68,'allow',1,'log','view'),(69,'allow',1,'editor','statusbar'),(70,'allow',1,'editor','spellcheckerenabled'),(71,'allow',1,'backup','manage'),(72,'allow',1,'plugin-interview','moderator'),(73,'allow',1,'plugin-interview','admin'),(74,'allow',1,'plugin-blog','admin'),(75,'allow',1,'plugin-blog','moderator'),(76,'allow',1,'pluginpoll','enable'),(77,'allow',1,'author','edit'),(78,'allow',2,'article','add'),(79,'allow',2,'audioclip','add'),(80,'allow',2,'file','add'),(81,'allow',2,'image','add'),(82,'allow',2,'audioclip','attach'),(83,'allow',2,'image','attach'),(84,'allow',2,'topic','attach'),(85,'allow',2,'article','edit'),(86,'allow',2,'file','edit'),(87,'allow',2,'image','edit'),(88,'allow',2,'cache','clear'),(89,'allow',2,'comment','enable'),(90,'allow',2,'comment','moderate'),(91,'allow',2,'article','delete'),(92,'allow',2,'country','delete'),(93,'allow',2,'file','delete'),(94,'allow',2,'image','delete'),(95,'allow',2,'publication','delete'),(96,'allow',2,'template','delete'),(97,'allow',2,'user','delete'),(98,'allow',2,'editor','bold'),(99,'allow',2,'editor','charactermap'),(100,'allow',2,'editor','copycutpaste'),(101,'allow',2,'editor','enlarge'),(102,'allow',2,'editor','findreplace'),(103,'allow',2,'editor','horizontalrule'),(104,'allow',2,'editor','image'),(105,'allow',2,'editor','indent'),(106,'allow',2,'editor','italic'),(107,'allow',2,'editor','link'),(108,'allow',2,'editor','listbullet'),(109,'allow',2,'editor','sourceview'),(110,'allow',2,'editor','strikethrough'),(111,'allow',2,'editor','subhead'),(112,'allow',2,'editor','subscript'),(113,'allow',2,'editor','superscript'),(114,'allow',2,'editor','textalignment'),(115,'allow',2,'editor','textdirection'),(116,'allow',2,'editor','underline'),(117,'allow',2,'indexer','manage'),(118,'allow',2,'language','manage'),(119,'allow',2,'publication','manage'),(120,'allow',2,'subscriber','manage'),(121,'allow',2,'template','manage'),(122,'allow',2,'user-group','manage'),(123,'allow',2,'user','manage'),(124,'allow',2,'article','move'),(125,'allow',2,'article','publish'),(126,'allow',2,'article','translate'),(127,'allow',2,'editor','spellcheckerenabled'),(128,'allow',2,'plugin-interview','moderator'),(129,'allow',2,'plugin-blog','moderator'),(130,'allow',2,'pluginpoll','enable'),(131,'allow',3,'article','add'),(132,'allow',3,'audioclip','add'),(133,'allow',3,'file','add'),(134,'allow',3,'image','add'),(135,'allow',3,'audioclip','attach'),(136,'allow',3,'image','attach'),(137,'allow',3,'topic','attach'),(138,'allow',3,'article','edit'),(139,'allow',3,'file','edit'),(140,'allow',3,'image','edit'),(141,'allow',3,'comment','moderate'),(142,'allow',3,'country','delete'),(143,'allow',3,'file','delete'),(144,'allow',3,'user','delete'),(145,'allow',3,'editor','bold'),(146,'allow',3,'editor','charactermap'),(147,'allow',3,'editor','copycutpaste'),(148,'allow',3,'editor','enlarge'),(149,'allow',3,'editor','horizontalrule'),(150,'allow',3,'editor','image'),(151,'allow',3,'editor','indent'),(152,'allow',3,'editor','italic'),(153,'allow',3,'editor','link'),(154,'allow',3,'editor','listbullet'),(155,'allow',3,'editor','strikethrough'),(156,'allow',3,'editor','superscript'),(157,'allow',3,'editor','table'),(158,'allow',3,'editor','textalignment'),(159,'allow',3,'editor','textdirection'),(160,'allow',3,'editor','underline'),(161,'allow',3,'user','manage'),(162,'allow',3,'article','publish'),(163,'allow',3,'editor','spellcheckerenabled'),(164,'allow',3,'pluginpoll','enable'),(165,'allow',4,'article','add'),(166,'allow',4,'audioclip','add'),(167,'allow',4,'file','add'),(168,'allow',4,'image','add'),(169,'allow',4,'audioclip','attach'),(170,'allow',4,'image','attach'),(171,'allow',4,'topic','attach'),(172,'allow',4,'file','edit'),(173,'allow',4,'image','edit'),(174,'allow',4,'editor','bold'),(175,'allow',4,'editor','charactermap'),(176,'allow',4,'editor','copycutpaste'),(177,'allow',4,'editor','enlarge'),(178,'allow',4,'editor','horizontalrule'),(179,'allow',4,'editor','indent'),(180,'allow',4,'editor','italic'),(181,'allow',4,'editor','link'),(182,'allow',4,'editor','listbullet'),(183,'allow',4,'editor','strikethrough'),(184,'allow',4,'editor','textdirection'),(185,'allow',4,'editor','underline'),(186,'allow',4,'article','publish'),(187,'allow',4,'editor','spellcheckerenabled'),(188,'allow',5,'publication','manage'),(189,'allow',5,'section','manage');
+/*!40000 ALTER TABLE `acl_rule` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `comment`
+--
+
+DROP TABLE IF EXISTS `comment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `comment` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_comment_commenter_id` int(10) unsigned NOT NULL,
+  `fk_forum_id` int(10) unsigned NOT NULL,
+  `fk_thread_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_language_id` int(10) unsigned DEFAULT '0',
+  `fk_parent_id` int(10) unsigned DEFAULT NULL,
+  `subject` varchar(140) NOT NULL DEFAULT '',
+  `message` text NOT NULL,
+  `thread_order` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `thread_level` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `ip` varchar(39) NOT NULL DEFAULT '',
+  `likes` tinyint(3) unsigned DEFAULT '0',
+  `dislikes` tinyint(3) unsigned DEFAULT '0',
+  `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  KEY `comments_users` (`fk_comment_commenter_id`),
+  KEY `publication` (`fk_forum_id`),
+  KEY `article` (`fk_thread_id`),
+  KEY `parent` (`fk_parent_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `comment`
+--
+
+LOCK TABLES `comment` WRITE;
+/*!40000 ALTER TABLE `comment` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comment` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `comment_acceptance`
+--
+
+DROP TABLE IF EXISTS `comment_acceptance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `comment_acceptance` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `fk_forum_id` int(10) DEFAULT '0',
+  `for_column` tinyint(4) NOT NULL DEFAULT '0',
+  `type` tinyint(4) NOT NULL DEFAULT '0',
+  `search_type` tinyint(4) NOT NULL DEFAULT '0',
+  `search` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `fk_forum_id` (`fk_forum_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `comment_acceptance`
+--
+
+LOCK TABLES `comment_acceptance` WRITE;
+/*!40000 ALTER TABLE `comment_acceptance` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comment_acceptance` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `comment_commenter`
+--
+
+DROP TABLE IF EXISTS `comment_commenter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `comment_commenter` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_user_id` int(10) unsigned DEFAULT NULL,
+  `email` varchar(100) NOT NULL DEFAULT '',
+  `url` varchar(255) NOT NULL DEFAULT '',
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `ip` varchar(39) NOT NULL DEFAULT '',
+  `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `comment_commenter`
+--
+
+LOCK TABLES `comment_commenter` WRITE;
+/*!40000 ALTER TABLE `comment_commenter` DISABLE KEYS */;
+/*!40000 ALTER TABLE `comment_commenter` ENABLE KEYS */;
+UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_applications`
@@ -2068,7 +2197,7 @@ CREATE TABLE `liveuser_grouprights` (
 
 LOCK TABLES `liveuser_grouprights` WRITE;
 /*!40000 ALTER TABLE `liveuser_grouprights` DISABLE KEYS */;
-INSERT INTO `liveuser_grouprights` VALUES (1,1,3),(1,3,3),(1,4,3),(1,6,3),(1,7,3),(1,8,3),(1,9,3),(1,10,3),(1,11,3),(1,12,3),(1,13,3),(1,14,3),(1,15,3),(1,16,3),(1,17,3),(1,18,3),(1,19,3),(1,20,3),(1,21,3),(1,22,3),(1,23,3),(1,24,3),(1,25,3),(1,26,3),(1,27,3),(1,28,3),(1,29,3),(1,30,3),(1,31,3),(1,32,3),(1,33,3),(1,34,3),(1,35,3),(1,36,3),(1,37,3),(1,38,3),(1,39,3),(1,40,3),(1,41,3),(1,42,3),(1,43,3),(1,44,3),(1,45,3),(1,46,3),(1,47,3),(1,48,3),(1,49,3),(1,50,3),(1,51,3),(1,53,3),(1,56,3),(1,57,3),(1,58,3),(1,59,3),(1,60,3),(1,61,3),(1,62,3),(1,63,3),(1,65,3),(1,64,3),(1,66,3),(1,67,3),(1,68,3),(1,69,3),(1,70,3),(1,71,3),(1,73,3),(2,1,3),(2,3,3),(2,4,3),(2,6,3),(2,7,3),(2,8,3),(2,9,3),(2,10,3),(2,12,3),(2,13,3),(2,14,3),(2,15,3),(2,17,3),(2,18,3),(2,19,3),(2,22,3),(2,24,3),(2,25,3),(2,26,3),(2,27,3),(2,28,3),(2,29,3),(2,30,3),(2,34,3),(2,35,3),(2,36,3),(2,37,3),(2,38,3),(2,39,3),(2,41,3),(2,42,3),(2,43,3),(2,44,3),(2,45,3),(2,47,3),(2,48,3),(2,49,3),(2,55,3),(2,57,3),(2,59,3),(2,60,3),(2,63,3),(2,65,3),(2,66,3),(2,67,3),(2,68,3),(2,69,3),(2,73,3),(3,1,3),(3,3,3),(3,4,3),(3,6,3),(3,7,3),(3,8,3),(3,9,3),(3,10,3),(3,14,3),(3,17,3),(3,18,3),(3,25,3),(3,26,3),(3,27,3),(3,28,3),(3,29,3),(3,34,3),(3,35,3),(3,36,3),(3,37,3),(3,38,3),(3,39,3),(3,42,3),(3,45,3),(3,46,3),(3,47,3),(3,48,3),(3,49,3),(3,66,3),(3,68,3),(3,73,3),(4,1,3),(4,3,3),(4,4,3),(4,6,3),(4,7,3),(4,9,3),(4,10,3),(4,26,3),(4,27,3),(4,28,3),(4,29,3),(4,34,3),(4,36,3),(4,37,3),(4,38,3),(4,39,3),(4,42,3),(4,48,3),(4,49,3),(4,68,3),(4,73,3),(5,59,3),(5,61,3),(1,54,3),(1,74,3),(1,72,3),(1,92,3),(1,91,3),(2,91,3),(1,97,3),(1,98,3),(2,98,3),(1,101,3),(2,101,3),(3,101,3),(1,103,3);
+INSERT INTO `liveuser_grouprights` VALUES (1,1,3),(1,2,3),(1,3,3),(1,4,3),(1,5,3),(1,6,3),(1,7,3),(1,8,3),(1,9,3),(1,10,3),(1,11,3),(1,12,3),(1,13,3),(1,14,3),(1,15,3),(1,16,3),(1,17,3),(1,18,3),(1,19,3),(1,20,3),(1,21,3),(1,22,3),(1,23,3),(1,24,3),(1,25,3),(1,26,3),(1,27,3),(1,28,3),(1,29,3),(1,30,3),(1,31,3),(1,32,3),(1,33,3),(1,34,3),(1,35,3),(1,36,3),(1,37,3),(1,38,3),(1,39,3),(1,40,3),(1,41,3),(1,42,3),(1,43,3),(1,44,3),(1,45,3),(1,46,3),(1,47,3),(1,48,3),(1,49,3),(1,50,3),(1,51,3),(1,53,3),(1,56,3),(1,57,3),(1,58,3),(1,59,3),(1,60,3),(1,61,3),(1,62,3),(1,63,3),(1,65,3),(1,64,3),(1,66,3),(1,67,3),(1,68,3),(1,69,3),(1,70,3),(1,73,3),(2,1,3),(2,2,3),(2,3,3),(2,4,3),(2,5,3),(2,6,3),(2,7,3),(2,8,3),(2,9,3),(2,10,3),(2,12,3),(2,13,3),(2,14,3),(2,15,3),(2,17,3),(2,18,3),(2,19,3),(2,22,3),(2,24,3),(2,25,3),(2,26,3),(2,27,3),(2,28,3),(2,29,3),(2,30,3),(2,34,3),(2,35,3),(2,36,3),(2,37,3),(2,38,3),(2,39,3),(2,41,3),(2,42,3),(2,43,3),(2,44,3),(2,45,3),(2,47,3),(2,48,3),(2,49,3),(2,55,3),(2,57,3),(2,59,3),(2,60,3),(2,63,3),(2,65,3),(2,66,3),(2,67,3),(2,68,3),(2,69,3),(2,73,3),(3,1,3),(3,2,3),(3,3,3),(3,4,3),(3,5,3),(3,6,3),(3,7,3),(3,8,3),(3,9,3),(3,10,3),(3,14,3),(3,17,3),(3,18,3),(3,25,3),(3,26,3),(3,27,3),(3,28,3),(3,29,3),(3,34,3),(3,35,3),(3,36,3),(3,37,3),(3,38,3),(3,39,3),(3,42,3),(3,45,3),(3,46,3),(3,47,3),(3,48,3),(3,49,3),(3,66,3),(3,68,3),(3,73,3),(4,1,3),(4,2,3),(4,3,3),(4,4,3),(4,5,3),(4,6,3),(4,7,3),(4,9,3),(4,10,3),(4,26,3),(4,27,3),(4,28,3),(4,29,3),(4,34,3),(4,36,3),(4,37,3),(4,38,3),(4,39,3),(4,42,3),(4,48,3),(4,49,3),(4,68,3),(4,73,3),(5,59,3),(5,61,3),(1,54,3),(1,74,3),(1,72,3),(1,92,3),(1,91,3),(2,91,3),(1,97,3),(1,98,3),(2,98,3),(1,101,3),(2,101,3),(3,101,3),(1,103,3);
 /*!40000 ALTER TABLE `liveuser_grouprights` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2086,7 +2215,7 @@ CREATE TABLE `liveuser_groups` (
   `role_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`group_id`),
   UNIQUE KEY `groups_define_name_i_idx` (`group_define_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -2095,7 +2224,7 @@ CREATE TABLE `liveuser_groups` (
 
 LOCK TABLES `liveuser_groups` WRITE;
 /*!40000 ALTER TABLE `liveuser_groups` DISABLE KEYS */;
-INSERT INTO `liveuser_groups` VALUES (1,0,'Administrator', 1),(2,0,'Chief Editor', 3),(3,0,'Editor', 4),(4,0,'Journalist', 5),(5,0,'Subscription manager', 6);
+INSERT INTO `liveuser_groups` VALUES (1,0,'Administrator',1),(2,0,'Chief Editor',2),(3,0,'Editor',3),(4,0,'Journalist',4),(5,0,'Subscription manager',5);
 /*!40000 ALTER TABLE `liveuser_groups` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2286,7 +2415,7 @@ CREATE TABLE `liveuser_rights` (
 
 LOCK TABLES `liveuser_rights` WRITE;
 /*!40000 ALTER TABLE `liveuser_rights` DISABLE KEYS */;
-INSERT INTO `liveuser_rights` VALUES (1,0,'AddArticle',1),(3,0,'AddFile',1),(4,0,'AddImage',1),(6,0,'AttachImageToArticle',1),(7,0,'AttachTopicToArticle',1),(8,0,'ChangeArticle',1),(9,0,'ChangeFile',1),(10,0,'ChangeImage',1),(11,0,'ChangeSystemPreferences',1),(12,0,'ClearCache',1),(13,0,'CommentEnable',1),(14,0,'CommentModerate',1),(15,0,'DeleteArticle',1),(16,0,'DeleteArticleTypes',1),(17,0,'DeleteCountries',1),(18,0,'DeleteFile',1),(19,0,'DeleteImage',1),(20,0,'DeleteIssue',1),(21,0,'DeleteLanguages',1),(22,0,'DeletePub',1),(23,0,'DeleteSection',1),(24,0,'DeleteTempl',1),(25,0,'DeleteUsers',1),(26,0,'EditorBold',1),(27,0,'EditorCharacterMap',1),(28,0,'EditorCopyCutPaste',1),(29,0,'EditorEnlarge',1),(30,0,'EditorFindReplace',1),(31,0,'EditorFontColor',1),(32,0,'EditorFontFace',1),(33,0,'EditorFontSize',1),(34,0,'EditorHorizontalRule',1),(35,0,'EditorImage',1),(36,0,'EditorIndent',1),(37,0,'EditorItalic',1),(38,0,'EditorLink',1),(39,0,'EditorListBullet',1),(40,0,'EditorListNumber',1),(41,0,'EditorSourceView',1),(42,0,'EditorStrikethrough',1),(43,0,'EditorSubhead',1),(44,0,'EditorSubscript',1),(45,0,'EditorSuperscript',1),(46,0,'EditorTable',1),(47,0,'EditorTextAlignment',1),(48,0,'EditorTextDirection',1),(49,0,'EditorUnderline',1),(50,0,'EditorUndoRedo',1),(51,0,'plugin_manager',1),(52,0,'MailNotify',1),(53,0,'ManageArticleTypes',1),(54,0,'ManageCountries',1),(55,0,'ManageIndexer',1),(56,0,'ManageIssue',1),(57,0,'ManageLanguages',1),(58,0,'ManageLocalizer',1),(59,0,'ManagePub',1),(60,0,'ManageReaders',1),(61,0,'ManageSection',1),(62,0,'ManageSubscriptions',1),(63,0,'ManageTempl',1),(64,0,'ManageTopics',1),(65,0,'ManageUserTypes',1),(66,0,'ManageUsers',1),(67,0,'MoveArticle',1),(68,0,'Publish',1),(69,0,'TranslateArticle',1),(70,0,'ViewLogs',1),(72,0,'EditorStatusBar',1),(73,0,'EditorSpellcheckerEnabled',1),(74,0,'ManageBackup',1),(89,0,'plugin_interview_notify',1),(90,0,'plugin_interview_guest',1),(91,0,'plugin_interview_moderator',1),(92,0,'plugin_interview_admin',1),(97,0,'plugin_blog_admin',1),(98,0,'plugin_blog_moderator',1),(101,0,'plugin_poll',1),(103,0,'EditAuthors',1);
+INSERT INTO `liveuser_rights` VALUES (1,0,'AddArticle',1),(2,0,'AddAudioclip',1),(3,0,'AddFile',1),(4,0,'AddImage',1),(5,0,'AttachAudioclipToArticle',1),(6,0,'AttachImageToArticle',1),(7,0,'AttachTopicToArticle',1),(8,0,'ChangeArticle',1),(9,0,'ChangeFile',1),(10,0,'ChangeImage',1),(11,0,'ChangeSystemPreferences',1),(12,0,'ClearCache',1),(13,0,'CommentEnable',1),(14,0,'CommentModerate',1),(15,0,'DeleteArticle',1),(16,0,'DeleteArticleTypes',1),(17,0,'DeleteCountries',1),(18,0,'DeleteFile',1),(19,0,'DeleteImage',1),(20,0,'DeleteIssue',1),(21,0,'DeleteLanguages',1),(22,0,'DeletePub',1),(23,0,'DeleteSection',1),(24,0,'DeleteTempl',1),(25,0,'DeleteUsers',1),(26,0,'EditorBold',1),(27,0,'EditorCharacterMap',1),(28,0,'EditorCopyCutPaste',1),(29,0,'EditorEnlarge',1),(30,0,'EditorFindReplace',1),(31,0,'EditorFontColor',1),(32,0,'EditorFontFace',1),(33,0,'EditorFontSize',1),(34,0,'EditorHorizontalRule',1),(35,0,'EditorImage',1),(36,0,'EditorIndent',1),(37,0,'EditorItalic',1),(38,0,'EditorLink',1),(39,0,'EditorListBullet',1),(40,0,'EditorListNumber',1),(41,0,'EditorSourceView',1),(42,0,'EditorStrikethrough',1),(43,0,'EditorSubhead',1),(44,0,'EditorSubscript',1),(45,0,'EditorSuperscript',1),(46,0,'EditorTable',1),(47,0,'EditorTextAlignment',1),(48,0,'EditorTextDirection',1),(49,0,'EditorUnderline',1),(50,0,'EditorUndoRedo',1),(51,0,'plugin_manager',1),(52,0,'MailNotify',1),(53,0,'ManageArticleTypes',1),(54,0,'ManageCountries',1),(55,0,'ManageIndexer',1),(56,0,'ManageIssue',1),(57,0,'ManageLanguages',1),(58,0,'ManageLocalizer',1),(59,0,'ManagePub',1),(60,0,'ManageReaders',1),(61,0,'ManageSection',1),(62,0,'ManageSubscriptions',1),(63,0,'ManageTempl',1),(64,0,'ManageTopics',1),(65,0,'ManageUserTypes',1),(66,0,'ManageUsers',1),(67,0,'MoveArticle',1),(68,0,'Publish',1),(69,0,'TranslateArticle',1),(70,0,'ViewLogs',1),(72,0,'EditorStatusBar',1),(73,0,'EditorSpellcheckerEnabled',1),(74,0,'ManageBackup',1),(89,0,'plugin_interview_notify',1),(90,0,'plugin_interview_guest',1),(91,0,'plugin_interview_moderator',1),(92,0,'plugin_interview_admin',1),(97,0,'plugin_blog_admin',1),(98,0,'plugin_blog_moderator',1),(101,0,'plugin_poll',1),(103,0,'EditAuthors',1);
 /*!40000 ALTER TABLE `liveuser_rights` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2473,7 +2602,7 @@ CREATE TABLE `liveuser_users` (
 
 LOCK TABLES `liveuser_users` WRITE;
 /*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
-INSERT INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','b2d716fb2328a246e8285f47b1500ebcb349c187','admin@email.addr','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2011-01-17 12:31:17','0000-00-00 00:00:00','2011-01-17 14:29:16',1,NULL,2);
+INSERT INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','d033e22ae348aeb5660fc2140aec35850c4da997','admin@email.addr','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2011-06-11 18:35:11','0000-00-00 00:00:00','2011-01-17 14:29:16',1,NULL,6);
 /*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2918,112 +3047,6 @@ LOCK TABLES `plugin_pollanswer_attachment` WRITE;
 /*!40000 ALTER TABLE `plugin_pollanswer_attachment` DISABLE KEYS */;
 /*!40000 ALTER TABLE `plugin_pollanswer_attachment` ENABLE KEYS */;
 UNLOCK TABLES;
-
--- Acl roles
-DROP TABLE IF EXISTS `acl_role`;
-CREATE TABLE IF NOT EXISTS `acl_role` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- Acl roles data
-INSERT INTO `acl_role` (`id`) VALUES
-(1),
-(2),
-(3),
-(4),
-(5),
-(6);
-
--- Acl rules
-DROP TABLE IF EXISTS `acl_rule`;
-CREATE TABLE IF NOT EXISTS `acl_rule` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `type` enum('allow','deny') NOT NULL DEFAULT 'allow',
-  `role_id` int(10) NOT NULL,
-  `resource` varchar(80) NOT NULL DEFAULT '',
-  `action` varchar(80) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
-
--- Acl rules data
-INSERT INTO `acl_rule` (`id`, `type`, `role_id`, `resource`, `action`) VALUES
-(1, 'allow', 1, '', '');
-
---
--- Comment main table
---
-
-DROP TABLE IF EXISTS `comment`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE IF NOT EXISTS  `comment` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `fk_comment_commenter_id` int(10) unsigned NOT NULL,
-  `fk_forum_id` int(10) unsigned NOT NULL,
-  `fk_thread_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `fk_language_id` int(10) unsigned DEFAULT '0',  
-  `fk_parent_id` int(10) unsigned DEFAULT NULL,
-  `subject` varchar(140) NOT NULL DEFAULT '',
-  `message` text NOT NULL,
-  `thread_order` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `thread_level` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `status` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `ip` varchar(39) NOT NULL DEFAULT '',
-  `likes` tinyint(3) unsigned DEFAULT '0',
-  `dislikes` tinyint(3) unsigned DEFAULT '0',
-  `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`),
-  KEY `comments_users` (`fk_comment_commenter_id`),
-  KEY `publication` (`fk_forum_id`),
-  KEY `article` (`fk_thread_id`),
-  KEY `parent` (`fk_parent_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-
---
--- Comment Commenter main table
---
-
-DROP TABLE IF EXISTS `comment_commenter`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE  `comment_commenter` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `fk_user_id` int(10) unsigned DEFAULT NULL,
-  `email` varchar(100) NOT NULL DEFAULT '',
-  `url` varchar(255) NOT NULL DEFAULT '',
-  `name` varchar(100) NOT NULL DEFAULT '',
-  `ip` varchar(39) NOT NULL DEFAULT '',
-  `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-
---
--- Comment Acceptance main table
---
-
-DROP TABLE IF EXISTS `comment_acceptance`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE  `comment_acceptance` (
-  `id` int(10) NOT NULL AUTO_INCREMENT,
-  `fk_forum_id` int(10) DEFAULT '0',
-  `for_column` tinyint(4) NOT NULL DEFAULT '0',
-  `type` tinyint(4) NOT NULL DEFAULT '0',
-  `search_type` tinyint(4) NOT NULL DEFAULT '0',
-  `search` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `fk_forum_id` (`fk_forum_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -3034,4 +3057,4 @@ CREATE TABLE  `comment_acceptance` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-01-17 14:49:45
+-- Dump completed on 2011-06-11 21:38:11

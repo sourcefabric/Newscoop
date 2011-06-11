@@ -15,7 +15,6 @@ TABLES="
  Aliases\
  ArticleAttachments\
  ArticleAuthors\
- ArticleComments\
  ArticleImages\
  ArticleIndex\
  ArticlePublish\
