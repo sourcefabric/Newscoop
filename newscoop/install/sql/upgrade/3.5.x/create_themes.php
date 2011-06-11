@@ -193,7 +193,7 @@ class ThemeUpgrade
         }
         return $this->outputSettingIssueService;
     }
-    
+
     /**
      * Provides the sync resources service.
      *
@@ -347,9 +347,9 @@ WHERE IssueTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
     			return false;
     		}
     		$outTh = array_shift($outTh);
-    		
+
 			$outSetIssue->setThemePath($this->getSyncResourceService()->getThemePath($publicationTheme->getPath()));
-			
+
 			if (!empty($issueData['issue_template'])) {
 			    $rscPath = $publicationTheme->getPath().basename($issueData['issue_template']);
 			    if($rscPath != $outTh->getFrontPage()->getPath()){
@@ -360,7 +360,7 @@ WHERE IssueTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
 			} else {
 			    $outSetIssue->setFrontPage(null);
 			}
-				
+
 			if (!empty($issueData['section_template'])) {
 			    $rscPath = $publicationTheme->getPath().basename($issueData['section_template']);
 			    if($rscPath != $outTh->getSectionPage()->getPath()){
@@ -371,7 +371,7 @@ WHERE IssueTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
 			} else {
 			    $outSetIssue->setSectionPage(null);
 			}
-			
+
 			if (!empty($issueData['article_template'])) {
 			    $rscPath = $publicationTheme->getPath().basename($issueData['article_template']);
 			    if($rscPath != $outTh->getArticlePage()->getPath()){
@@ -382,13 +382,48 @@ WHERE IssueTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
 			} else {
 			    $outSetIssue->setArticlePage(null);
 			}
-			
+
 			if ($newOutputSetting) {
 				$this->getOutputSettingIssueService()->insert($outSetIssue);
 			} else {
 				$this->getOutputSettingIssueService()->update($outSetIssue);
 			}
 		}
+	}
+
+
+	/**
+	 * Set the section output settings for the given publication
+	 *
+	 * @param $publicationId
+	 *
+	 * @param $theme
+	 *
+	 * @param $publicationTheme
+	 */
+	public function setSectionOutSettings($publicationId, Newscoop\Entity\Theme $theme, Newscoop\Entity\Theme $publicationTheme)
+	{
+		global $g_ado_db;
+
+		$themePath = basename($theme->getPath());
+		if (empty($themePath)) {
+			$likeStr = '';
+		} else {
+			$likeStr = $g_ado_db->Escape($themePath) . '/';
+		}
+
+		$sql = "SELECT tpl_s.Name AS section_template,
+    tpl_a.Name AS article_template,
+    sec.NrIssue, sec.Number, sec.IdLanguage, sec.id
+FROM Sections AS sec
+    LEFT JOIN Templates AS tpl_s ON sec.SectionTplId = tpl_s.Id
+    LEFT JOIN Templates AS tpl_a ON sec.ArticleTplId = tpl_a.Id
+WHERE sec.IdPublication = $publicationId
+	AND (SectionTplId > 0 OR ArticleTplId > 0)
+    AND (SectionTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
+    	OR ArticleTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%'))
+ORDER BY Number DESC";
+		$sectionsData = $g_ado_db->GetAll($sql);
 	}
 
 
@@ -424,7 +459,7 @@ WHERE IssueTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
 		$outputSettings->setErrorPage($this->getNonDbResource('errorPage', $prefix.$outSettings['error_template']));
 		return $this->getThemeService()->assignOutputSetting($outputSettings, $theme);
 	}
-	
+
 	public function getNonDbResource($name, $path){
 	    $rsc = new Resource();
 	    $rsc->setName($name);
