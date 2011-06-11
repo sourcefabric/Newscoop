@@ -382,20 +382,29 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
             $outSets = $this->loadOutputSettings($themeFolder);
             foreach($outSets as $outSet){
                 /* @var $outSet OutputSettings */
-                $outTh = new OutputSettingsTheme();
-                $outTh->setPublication($publication);
-                $outTh->setThemePath($pathRsc);
-                $outTh->setOutput($outSet->getOutput());
+                $qb = $em->createQueryBuilder();
+                $qb->select('th')->from(OutputSettingsTheme::NAME, 'th');
+                $qb->where('th.publication = :publication');
+                $qb->andWhere('th.themePath = :themePath');
+                $qb->andWhere('th.output = :output');
+                $qb->setParameter('publication', $publication);
+                $qb->setParameter('themePath', $pathRsc);
+                $qb->setParameter('output', $outSet->getOutput());
+                $result = $qb->getQuery()->getResult();
+                
+                if(count($result) > 0){
+                    $outTh = $result[0];
+                } else {
+                    $outTh = new OutputSettingsTheme();
+                    $outTh->setPublication($publication);
+                    $outTh->setThemePath($pathRsc);
+                    $outTh->setOutput($outSet->getOutput());
+                }
                 $this->syncOutputSettings($outTh, $outSet);
 
                 $em->persist($outTh);
             }
             $em->flush();
-        }
-        catch( \PDOException $e )
-        {
-            if( $e->getCode() != 23000 ) // TODO Duplicate key in db.. does not need removing of folder structure
-            throw $e;
         }
         catch(\Exception $e)
         {

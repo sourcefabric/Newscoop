@@ -5,12 +5,15 @@ use Symfony\Component\Console\Input,
 	Newscoop\Storage,
 	Newscoop\Entity\Resource,
 	Newscoop\Entity\Output\OutputSettingsIssue,
+	Newscoop\Entity\Output\OutputSettingsSection,
 	Newscoop\Service\IThemeManagementService,
 	Newscoop\Service\IOutputService,
 	Newscoop\Service\ISyncResourceService,
 	Newscoop\Service\IPublicationService,
 	Newscoop\Service\IIssueService,
-	Newscoop\Service\IOutputSettingIssueService;
+	Newscoop\Service\ISectionService,
+	Newscoop\Service\IOutputSettingIssueService,
+	Newscoop\Service\IOutputSettingSectionService;
 
 // Define path to application directory
 defined('APPLICATION_PATH')
@@ -85,10 +88,27 @@ class ThemeUpgrade
 	 * @var Newscoop\Service\IIssueService
 	 */
 	private $issueService;
-    /** @var Newscoop\Service\IOutputService */
+	
+    /** 
+     * @var Newscoop\Service\IOutputService 
+     */
     private $outputService = NULL;
-    /** @var Newscoop\Service\IOutputSettingIssueService */
+    
+    /** 
+     * @var Newscoop\Service\IOutputSettingIssueService 
+     */
     private $outputSettingIssueService = NULL;
+    
+    /** 
+     * @var Newscoop\Service\IOutputSettingSectionService 
+     */
+    private $outputSettingSectionService = NULL;
+    
+    /** 
+     * @var Newscoop\Service\ISectionService 
+     */
+    private $sectionService = NULL;
+    
 	/**
 	 * @var Newscoop\Service\ISyncResourceService
 	 */
@@ -193,7 +213,35 @@ class ThemeUpgrade
         }
         return $this->outputSettingIssueService;
     }
+    
+	/**
+     * Provides the Output  setting service.
+     *
+     * @return Newscoop\Service\IOutputSettingSectionService
+     * 		The output setting section service to be used by this controller.
+     */
+    public function getOutputSettingSectionService()
+    {
+        if ($this->outputSettingSectionService === NULL) {
+            $this->outputSettingSectionService = $this->getResourceId()->getService(IOutputSettingSectionService::NAME);
+        }
+        return $this->outputSettingSectionService;
+    }
 
+	/**
+     * Provides the Section service.
+     *
+     * @return Newscoop\Service\ISectionService
+     * 		The section service to be used by this controller.
+     */
+    public function getSectionService()
+    {
+        if ($this->sectionService === NULL) {
+            $this->sectionService = $this->getResourceId()->getService(ISectionService::NAME);
+        }
+        return $this->sectionService;
+    }
+    
     /**
      * Provides the sync resources service.
      *
@@ -259,9 +307,9 @@ class ThemeUpgrade
 	public function createThemes()
 	{
 		// TODO decomment when committing
-//		foreach ($this->themesList() as $themePath=>$themeName) {
-//			$this->createTheme($themePath);
-//		}
+		foreach ($this->themesList() as $themePath=>$themeName) {
+			$this->createTheme($themePath);
+		}
 
 		$themes = $this->getThemeService()->getEntities();
 		foreach ($themes as $theme) {
@@ -303,9 +351,14 @@ WHERE IssueTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
 				if (is_null($publicationTheme)) {
 					continue;
 				}
+				// TODO decomment when committing
 				$this->setIssuesTheme($publicationId, $theme, $publicationTheme);
+				$this->setSectionOutSettings($publicationId, $theme, $publicationTheme);
 			}
-			catch (InvalidArgumentException $ex) {
+			catch (\Exception $ex) {
+			    //TODO remove
+			    var_dump($ex);
+			    die;
 			}
 		}
 	}
@@ -339,7 +392,7 @@ WHERE IssueTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
 			} else {
 				$outSetIssue = new OutputSettingsIssue();
 				$outSetIssue->setOutput($this->getOutputService()->findByName('Web'));
-				$outSetIssue->setIssue($this->getIssueService()->getById($issueData['id']));
+				$outSetIssue->setIssue($issue);
 				$newOutputSetting = true;
 			}
 			$outTh = $this->getThemeService()->getOutputSettings($publicationTheme);
@@ -423,7 +476,42 @@ WHERE sec.IdPublication = $publicationId
     AND (SectionTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%')
     	OR ArticleTplId IN (SELECT Id FROM Templates WHERE Name LIKE '$likeStr%'))
 ORDER BY Number DESC";
-		$sectionsData = $g_ado_db->GetAll($sql);
+		$sectionsList = $g_ado_db->GetAll($sql);
+		
+	    foreach ($sectionsList as $sectionsData) {
+			$section = $this->getSectionService()->findById($sectionsData['id']);
+			if (is_null($section)) {
+				continue;
+			}
+			$outSetSections = $this->getOutputSettingSectionService()->findBySection($sectionsData['id']);
+			$newOutputSetting = false;
+			if (count($outSetSections) > 0) {
+				$outSetSection = $outSetSections[0];
+			} else {
+				$outSetSection = new OutputSettingsSection();
+				$outSetSection->setOutput($this->getOutputService()->findByName('Web'));
+				$outSetSection->setSection($section);
+				$newOutputSetting = true;
+			}
+			if (!empty($sectionsData['section_template'])) {
+			    $rscPath = $publicationTheme->getPath().basename($sectionsData['section_template']);
+			    $outSetSection->setSectionPage($this->getSyncResourceService()->getResource('sectionPage',$rscPath));
+			} else {
+			    $outSetSection->setSectionPage(null);
+			}
+
+			if (!empty($sectionsData['article_template'])) {
+			    $rscPath = $publicationTheme->getPath().basename($sectionsData['article_template']);
+			    $outSetSection->setArticlePage($this->getSyncResourceService()->getResource('articlePage', $rscPath));
+			} else {
+			    $outSetSection->setArticlePage(null);
+			}
+			if ($newOutputSetting) {
+				$this->getOutputSettingSectionService()->insert($outSetSection);
+			} else {
+				$this->getOutputSettingSectionService()->update($outSetSection);
+			}
+		}
 	}
 
 
@@ -568,21 +656,6 @@ WHERE iss.IdPublication = $publicationId
 ORDER BY Number DESC";
 		return $sql;
 	}
-
-
-	/**
-	 * Assignes the theme to all issues using this theme and sets custom output settings if needed
-	 *
-	 * @param int $publicationId
-	 *
-	 * @param Newscoop\Entity\Theme $theme
-	 *
-	 * @return bool
-	 */
-	public function assignIssuesOutputSettings($publicationId, Newscoop\Entity\Theme $theme)
-	{
-	}
-
 
     /**
 	 * Moves a group of templates from their directory to the new theme structure, creating the theme
