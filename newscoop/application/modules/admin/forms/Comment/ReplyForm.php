@@ -8,7 +8,7 @@
  */
 use Newscoop\Form;
 
-class Admin_Form_Comment_EditForm extends Form
+class Admin_Form_Comment_ReplyForm extends Form
 {
 
     public function init()

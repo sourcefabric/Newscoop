@@ -15,12 +15,6 @@ namespace Newscoop\Entity;
  */
 class Article
 {
-    /**
-     * @id @generatedValue
-     * @column(name="Number", type="integer")
-     * @var int
-     */
-    private $id;
 
     /**
      * @Id
@@ -87,7 +81,7 @@ class Article
      */
     public function setId($p_id)
     {
-        $this->id = $p_id;
+        $this->number = $p_id;
         // return this for chaining mechanism
         return $this;
     }
@@ -99,7 +93,7 @@ class Article
      */
     public function getId()
     {
-        return $this->id;
+        return $this->number;
     }
 
     /**

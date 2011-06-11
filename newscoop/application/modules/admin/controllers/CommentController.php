@@ -13,7 +13,8 @@ use Newscoop\Entity\Comment;
 /**
  * @Acl(resource="comment", action="moderate")
  */
-class Admin_CommentController extends Zend_Controller_Action {
+class Admin_CommentController extends Zend_Controller_Action
+{
 
     /** @var Newscoop\Entity\Repository\CommentRepository */
     private $commentRepository;
@@ -28,7 +29,8 @@ class Admin_CommentController extends Zend_Controller_Action {
     /** @var Admin_Form_Comment_EditForm */
     private $editForm;
 
-    public function init() {
+    public function init()
+    {
         // get comment repository
         $this->commentRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment');
         // get article repository
@@ -43,14 +45,16 @@ class Admin_CommentController extends Zend_Controller_Action {
         return $this;
     }
 
-    public function indexAction() {
+    public function indexAction()
+    {
         $this->_forward('table');
     }
 
     /**
      * Action to make the table
      */
-    public function tableAction() {
+    public function tableAction()
+    {
         $view = $this->view;
         $table = $this->getHelper('datatable');
         /* @var $table Action_Helper_Datatable */
@@ -145,12 +149,16 @@ class Admin_CommentController extends Zend_Controller_Action {
                     'comment' => 'commentTimeCreated',
                     'thread' => 'commentThread'));
         $table->dispatch();
+        $this->editForm->setSimpleDecorate()
+                ->setAction($this->_helper->url('update'));
+        $this->view->editForm = $this->editForm;
     }
 
     /**
      * Action for setting a status
      */
-    public function setStatusAction() {
+    public function setStatusAction()
+    {
 
 
         $this->getHelper('contextSwitch')
@@ -164,8 +172,9 @@ class Admin_CommentController extends Zend_Controller_Action {
         try {
             $comments = $this->getRequest()->getParam('comment');
             $status = $this->getRequest()->getParam('status');
-            if (!is_array($comments))
+            if (!is_array($comments)) {
                 $comments = array($comments);
+            }
             foreach ($comments as $id) {
                 $comment = $this->commentRepository->find($id);
                 if ($status == "deleted") {
@@ -200,7 +209,8 @@ class Admin_CommentController extends Zend_Controller_Action {
     /**
      *
      */
-    public function addToArticleAction() {
+    public function addToArticleAction()
+    {
         $this->getHelper('contextSwitch')
                 ->addActionContext('add-to-article', 'json')
                 ->initContext();
@@ -244,7 +254,8 @@ class Admin_CommentController extends Zend_Controller_Action {
      * Action for listing the comments per article
      */
 
-    public function listAction() {
+    public function listAction()
+    {
         $this->getHelper('contextSwitch')
                 ->addActionContext('list', 'json')
                 ->initContext();
@@ -253,15 +264,16 @@ class Admin_CommentController extends Zend_Controller_Action {
         $article = $this->getRequest()->getParam('article');
         $language = $this->getRequest()->getParam('language');
         $comment = $this->getRequest()->getParam('comment');
-        if ($article)
+        if ($article) {
             $filter = array(
                 'thread' => $article,
                 'language' => $language,
             );
-        elseif ($comment)
+        } elseif ($comment) {
             $filter = array(
                 'id' => $comment,
             );
+        }
         $params = array(
             'sFilter' => $filter
         );
@@ -287,50 +299,58 @@ class Admin_CommentController extends Zend_Controller_Action {
     /**
      * Action for Editing a Comment
      */
-    public function editAction() {
-        $form = new Admin_Form_Comment_EditForm;
-        $form->setAction($this->_helper->url('update'));
-        $this->view->form = $form;
+    public function editAction()
+    {
+        $this->editForm->setAction($this->_helper->url('update'));
+        $this->view->form = $this->editForm;
     }
 
     /**
      * Action for Updateing a Comment
      */
-    public function updateAction() {
-        $this->editForm->isValid($this->_request->getPost());
-        $vals = $this->editForm->getValues();
-        print_r($vals);
-        die();
-        $this->getHelper('contextSwitch')
-                ->addActionContext('update', 'json')
-                ->initContext();
-        if ($this->editForm->isValid($_POST)) {
-            try {
-                $values = $this->editForm->getValues();
-                $comment = $this->commentRepository->find($values['comment']);
-                $comment = $this->commentRepository->update($comment, $values);
-                $this->commentRepository->flush();
-            } catch (Exception $e) {
-                $this->view->status = $e->getCode();
-                $this->view->message = $e->getMessage();
-                return;
-            }
-            $this->_helper->log(
-                    getGS('Comment updated by $1 to the article $2 ($3)',
-                            Zend_Registry::get('user')->getName(),
-                            $comment->getThread()->getName(),
-                            $comment->getLanguage()->getCode()
-                    ));
-            $this->view->status = 200;
-            $this->view->message = "succcesful";
-            $this->view->comment = $comment->getId();
+    public function updateAction()
+    {
+        if (!$this->editForm->isValid($this->_getAllParams())) {
+            $return = array(
+                'status' => 101,
+                'message' => 'invalid',
+                'data' => $this->editForm->getMessages()
+            );
+            $this->_helper->json($return);
         }
+
+        try {
+            $values = $this->editForm->getValues();
+            $comment = $this->commentRepository->find($values['id']);
+            $comment = $this->commentRepository->update($comment, $values);
+            $this->commentRepository->flush();
+        } catch (Exception $e) {
+            $return = array(
+                'status' => $e->getCode(),
+                'message' => $e->getMessage(),
+                'data' => array()
+            );
+            $this->_helper->json($return);
+        }
+        $this->_helper->log(
+                getGS('Comment updated by $1 to the article $2 ($3)',
+                        Zend_Registry::get('user')->getName(),
+                        $comment->getThread()->getName(),
+                        $comment->getLanguage()->getCode()
+                ));
+        $return = array(
+            'status' => 100,
+            'message' => 'succesful',
+            'data' => array('comment' => $comment->getId())
+        );
+        $this->_helper->json($return);
     }
 
     /**
      * Action for Replying to a Comment
      */
-    public function replyAction() {
+    public function replyAction()
+    {
         $this->getHelper('contextSwitch')
                 ->addActionContext('reply', 'json')
                 ->initContext();
@@ -371,7 +391,8 @@ class Admin_CommentController extends Zend_Controller_Action {
     /**
      * Action for Adding a Comment
      */
-    public function addAction() {
+    public function addAction()
+    {
         $comment = new Comment;
 
         $this->handleForm($this->form, $comment);
@@ -384,7 +405,8 @@ class Admin_CommentController extends Zend_Controller_Action {
      * Method for deleting a comment
      *
      */
-    public function deleteArticleAction() {
+    public function deleteArticleAction()
+    {
         $article = $this->getRequest()->getParam('article');
         $this->commentRepository->deleteArticle($article);
         $this->commentRepository->flush();
@@ -395,7 +417,8 @@ class Admin_CommentController extends Zend_Controller_Action {
      * Method for setting a status
      * for comments that are associated with an article
      */
-    public function statusArticleAction() {
+    public function statusArticleAction()
+    {
         $article = $this->getRequest()->getParam('article');
         $language = $this->getRequest()->getParam('language');
         $this->commentRepository->setArticleStatus($article, $language, "hidden");
@@ -409,7 +432,8 @@ class Admin_CommentController extends Zend_Controller_Action {
      * @param ZendForm $p_form
      * @param IComment $p_comment
      */
-    private function handleForm(Zend_Form $p_form, Comment $p_comment) {
+    private function handleForm(Zend_Form $p_form, Comment $p_comment)
+    {
         if ($this->getRequest()->isPost() && $p_form->isValid($_POST)) {
             $values = $p_form->getValues();
             $values['ip'] = $request->getClientIp();

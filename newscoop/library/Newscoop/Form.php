@@ -10,7 +10,10 @@
 namespace Newscoop;
 
 use Newscoop\Form\Decorator,
-    Zend_Form;
+    Newscoop\Form\Element\OldHash,
+    SecurityToken,
+    Zend_Form,
+    Zend_Form_Decorator_Form;
 
 class Form extends Zend_Form
 {
@@ -24,46 +27,68 @@ class Form extends Zend_Form
         $this->addElement('hash', 'csrf',
                 array(
             'ignore' => true,
+            'salt' => 'unique'
         ));
     }
 
-    public function setAjax()
+    /**
+     * Add some security
+     * S
+     */
+    protected function addOldSecurity()
     {
-        $decorator = new Decorator\Input();
-        $this->setDecorators(array(
-            'FormElements',
-            array($decorator)
-        ));
-        /*
-          $this->setElementDecorators(array(
-          array('ViewHelper'),
-          array('Label'),
-          array('Errors'),
-          //array('Submit'),
-          ));
-         */
+        $security = new OldHash('csrf');
+        $this->addElement($security);
     }
 
-    public function setTable()
+    public function setSimpleDecorate()
     {
-        $this->setElementDecorators(array(
-            'viewHelper',
-            'Errors',
-            array(array('data' => 'HtmlTag'), array('tag' => 'td')),
-            array('Label', array('tag' => 'td')),
-            array(array('row' => 'HtmlTag'), array('tag' => 'tr'))
+
+
+        $htmlTag = new Decorator\HtmlTag(array('tag' => 'div'));
+        $label = new Decorator\Label();
+        $this->setDisplayGroupDecorators(array(
+            array('FormElements'),
+            $htmlTag
         ));
+
         $this->setDecorators(array(
             'FormElements',
-            array(array('data' => 'HtmlTag'), array('tag' => 'table')),
             'Form'
         ));
+        $this->setElementDecorators(array(
+            'ViewHelper',
+            'Errors',
+            $label,
+        ));
+        return $this;
+    }
+
+    /**
+     * Set the form for ajax template with the subObject namespace
+     *
+     * @param array $subObject
+     */
+    public function setTemplate($subObject = array())
+    {
+        $elements = $this->getElements();
+        foreach ($elements as $element) {
+            switch (get_class($element)) {
+                case 'Zend_Form_Element_Text':
+                case 'Zend_Form_Element_Textarea':
+                case 'Zend_Form_Element_Hidden':
+                    $prefix = count($subObject) ? implode('.', $subObject) . '.' : '';
+                    $element->setValue('{{' . $prefix . $element->getName() . '}}');
+                    break;
+            }
+        }
+        return $this;
     }
 
     public function init()
     {
         $this->setMethod('post');
-        $this->addSecurity();
+        $this->addOldSecurity();
     }
 
 }

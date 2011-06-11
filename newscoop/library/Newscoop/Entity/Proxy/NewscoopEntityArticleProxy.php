@@ -99,10 +99,22 @@ class NewscoopEntityArticleProxy extends \Newscoop\Entity\Article implements \Do
         return parent::getLanguageId();
     }
 
+    public function getNumber()
+    {
+        $this->_load();
+        return parent::getNumber();
+    }
+
+    public function getTitle()
+    {
+        $this->_load();
+        return parent::getTitle();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'language', 'publication', 'section', 'sectionId', 'issueId', 'name');
+        return array('__isInitialized__', 'language', 'publication', 'issue', 'section', 'sectionId', 'issueId', 'number', 'name');
     }
 
     public function __clone()

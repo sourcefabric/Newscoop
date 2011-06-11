@@ -33,13 +33,101 @@
         '<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>'
     ];
 </script>
+<script id="comment-tmpl" type="text/html">
+    <td colspan="4">
+        <table cellspacing="0" cellpadding="0">
+            <tbody><tr>
+                    <td class="commentId sorting_1">
+                        <input type="checkbox" name="index[]" value="{{comment.id}}" class="table-checkbox">
+                        <span class="index">{{index}}.</span>
+                    </td>
+                    <td class="commentUser">
+                        <div class="commentUserHolder">
+                            <div><img src="{{commenter.avatar}}"></div>
+                            <p>
+                                <b>{{commenter.username}}</b><br>
+                                {{commenter.name}}<br>
+                                <a href="#">{{commenter.ip}}</a><br>
+                                <a href="#">{{commenter.email}}</a><br>
+                                <a href="#">{{commenter.url}}</a>
+                            </p>
+                        </div>
+                    </td>
+                    <td class="commentMessage">
+                        <div class="dateCommentHolder">
+                            <h4>
+                                <span>{{comment.created.date}} <?php putGS('at'); ?> {{comment.created.time}}</span>
+                                <span class="commentSubject">{{comment.subject}}</span>
+                            </h4>
+                            <div class="ratingHolder">
+                                <span class="thumbs up">{{comment.likes}}</span>
+                                <span class="thumbs down">{{comment.dislikes}}</span> </div>
+                            <p class="commentBody">{{comment.message}}</p>
+                        </div>
+
+                        <div class="dateCommentHolderEdit">
+                            <fieldset class="content-edit" style="display:none;">
+                                <?php echo $this->editForm->setTemplate(array('comment')); ?>
+                            </fieldset>
+
+                            <fieldset class="content-reply" style="display:none;">
+                                <h3>Reply to comment</h3>
+                                <form action="{{comment.action.reply}}">
+                                    <input type="hidden" name="parent" value="{{comment.id}}" />
+                                    <?php echo SecurityToken::FormParameter(); ?>
+                                    <label><?php putGS('Subject'); ?></label>
+                                    <input name="subject" type="text" class="input_text">
+                                    <label><?php putGS('Comment'); ?></label>
+                                    <textarea name="message" class="input_text_area"></textarea>
+                                    <div class="buttonBar">
+                                        <input type="button" value="<?php putGS('Cancel'); ?>" class="button reply-cancel">
+                                        <input type="submit" value="<?php putGS('Submit'); ?>'" class="button">
+                                    </div>
+                                </form>
+                            </fieldset>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="commentArticleHolder">
+                            <p>
+                                <a href="{{thread.link.get}}" class="articleLink">{{thread.name}}</a>
+                                <br>
+                                <span>{{thread.forum.name}}; <b><?php putGS('Section'); ?></b> {{thread.section.name}}</span>
+                            </p>
+                            <a class="goToArticle" href="{{thread.link.edit}}"><?php putGS('Go to article page'); ?></a> </div>
+                    </td>
+                </tr></tbody>
+        </table>
+        <div class="commentBtns">
+            <ul>
+                <li><a href="javascript:;" id="pending_{{comment.id}}" class="action new"><?php putGS('New'); ?></a></li>
+                {% if(can.enable) %}
+                <li><a href="javascript:;" id="approved_{{comment.id}}" class="action approved"><?php putGS('Approved'); ?></a></li>
+                <li><a href="javascript:;" id="hidden_{{comment.id}}" class="action hidden"><?php putGS('Hidden'); ?></a></li>
+                <li><a href="javascript:;" id="deleted_{{comment.id}}" class="action deleted"><?php putGS('Delete'); ?></a></li>
+                {% endif %}
+                {% if(can.edit) %}
+                <li><a href="javascript:;" class="action-edit link icon-link"><span class="icon ui-icon-pencil"></span><?php putGS('Quick edit'); ?></a></li>
+                {% endif %}
+                <li><a href="javascript:;" class="action-rating link icon-link"><span class="icon ui-icon-star"></span><?php putGS('Add rating'); ?></a></li>
+                <li class="last">
+                    <a href="{{commenter.banurl}}" class="banUser"><span><?php putGS('Ban user'); ?></span></a>
+                </li>
+            </ul>
+        </div>
+    </td>
+    <td style="display:none;"></td>
+    <td style="display:none;"></td>
+    <td style="display:none;"></td>
+</script>
+
 <div class="wrapper">
     <div class="ui-widget-content small-block block-shadow commentsHolder">
         <div class="padded clearfix inner-tabs">
             <div class="tabs">
                 <ul>
                     <li><a href="#tabs-1">Comments</a></li>
-                    <li><a href="#tabs-2">Users</a></li>
+                    <!--<li><a href="#tabs-2">Users</a></li>-->
                 </ul>
                 <div id="tabs-1">
                     <div id="showComments">
@@ -62,107 +150,6 @@
                             </ul>
                         </fieldset>
                     </div>
-                    <script id="comment-tmpl" type="text/html">
-                        <td colspan="4">
-                            <table cellspacing="0" cellpadding="0">
-                                <tbody><tr>
-                                        <td class="commentId sorting_1">
-                                            <input type="checkbox" name="index[]" value="{{comment.id}}" class="table-checkbox">
-                                            <span class="index">{{index}}.</span>
-                                        </td>
-                                        <td class="commentUser">
-                                            <div class="commentUserHolder">
-                                                <div><img src="{{commenter.avatar}}"></div>
-                                                <p>
-                                                    <b>{{commenter.username}}</b><br>
-                                                    {{commenter.name}}<br>
-                                                    <a href="#">{{commenter.ip}}</a><br>
-                                                    <a href="#">{{commenter.email}}</a><br>
-                                                    <a href="#">{{commenter.url}}</a>
-                                                </p>
-                                            </div>
-                                        </td>
-                                        <td class="commentMessage">
-                                            <div class="dateCommentHolder">
-                                                <h4>
-                                                    <span>{{comment.created.date}} <?php putGS('at'); ?> {{comment.created.time}}</span>
-                                                    <span class="commentSubject">{{comment.subject}}</span>
-                                                </h4>
-                                                <div class="ratingHolder">
-                                                    <span class="thumbs up">{{comment.likes}}</span>
-                                                    <span class="thumbs down">{{comment.dislikes}}</span> </div>
-                                                <p class="commentBody">{{comment.message}}</p>
-                                            </div>
-
-                                            <div class="dateCommentHolderEdit">
-                                                <fieldset class="content-edit" style="display:none;">
-                                                    <?php echo $this->editForm; ?>
-                                                    <form action="{{comment.action.update}}">
-                                                        <input type="hidden" name="comment" value="{{comment.id}}" />
-                                                        <?php echo SecurityToken::FormParameter(); ?>
-                                                        <label><?php putGS('Subject'); ?></label>
-                                                        <input type="text" name="subject" class="input_text" value="{{comment.subject}}">
-                                                        <label><?php putGS('Comment'); ?></label>
-                                                        <textarea name="message" class="input_text_area">{{comment.message}}</textarea>
-                                                        <div class="buttonBar">
-                                                            <input type="button" value="<?php putGS('Cancel'); ?>" class="button edit-cancel">
-                                                            <input type="button" value="<?php putGS('Reply'); ?>" class="button edit-reply">
-                                                            <input type="submit" value="<?php putGS('Update comment'); ?>" class="save-button-small update">
-                                                        </div>
-                                                    </form>
-
-                                                </fieldset>
-
-                                                <fieldset class="content-reply" style="display:none;">
-                                                    <h3>Reply to comment</h3>
-                                                    <form action="{{comment.action.update}}">
-                                                        <input type="hidden" name="parent" value="{{comment.id}}" />
-                                                        <?php echo SecurityToken::FormParameter(); ?>
-                                                        <label><?php putGS('Subject'); ?></label>
-                                                        <input name="subject" type="text" class="input_text">
-                                                        <label><?php putGS('Comment'); ?></label>
-                                                        <textarea name="message" class="input_text_area"></textarea>
-                                                        <div class="buttonBar">
-                                                            <input type="button" value="<?php putGS('Cancel'); ?>" class="button reply-cancel">
-                                                            <input type="submit" value="<?php putGS('Submit'); ?>'" class="button">
-                                                        </div>
-                                                    </form>
-                                                </fieldset>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <div class="commentArticleHolder">
-                                                <p>
-                                                    <a href="{{thread.link.get}}" class="articleLink">{{thread.name}}</a>
-                                                    <br>
-                                                    <span>{{thread.forum.name}}; <b><?php putGS('Section'); ?></b> {{thread.section.name}}</span>
-                                                </p>
-                                                <a class="goToArticle" href="{{thread.link.edit}}"><?php putGS('Go to article page'); ?></a> </div>
-                                        </td>
-                                    </tr></tbody>
-                            </table>
-                            <div class="commentBtns">
-                                <ul>
-                                    <li><a href="javascript:;" id="pending_{{comment.id}}" class="action new"><?php putGS('New'); ?></a></li>
-                                    {% if(can.enable) %}
-                                    <li><a href="javascript:;" id="approved_{{comment.id}}" class="action approved"><?php putGS('Approved'); ?></a></li>
-                                    <li><a href="javascript:;" id="hidden_{{comment.id}}" class="action hidden"><?php putGS('Hidden'); ?></a></li>
-                                    <li><a href="javascript:;" id="deleted_{{comment.id}}" class="action deleted"><?php putGS('Delete'); ?></a></li>
-                                    {% endif %}
-                                    {% if(can.edit) %}
-                                    <li><a href="javascript:;" class="action-edit link icon-link"><span class="icon ui-icon-pencil"></span><?php putGS('Quick edit'); ?></a></li>
-                                    {% endif %}
-                                    <li><a href="javascript:;" class="action-rating link icon-link"><span class="icon ui-icon-star"></span><?php putGS('Add rating'); ?></a></li>
-                                    <li class="last">
-                                        <a href="{{commenter.banurl}}" class="banUser"><span><?php putGS('Ban user'); ?></span></a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </td>
-                        <td style="display:none;"></td>
-                        <td style="display:none;"></td>
-                        <td style="display:none;"></td>
-                        </script>
                         <div id="actionExpand" class="dataTables_actions">
                             <fieldset><select class="input_select actions">
                                     <option value=""><?php putGS('Actions'); ?></option>
@@ -201,4 +188,4 @@
                                                             id="fancybox-left-ico"></span></a><a href="javascript:;"
                                                  id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div>
     </div>
-    <div class="dialogPopup dialog-1" title="Full article"></div>
+    <div class="dialogPopup dialog-1" title="<?php putGS('Full article');?>"></div>
