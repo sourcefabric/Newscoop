@@ -176,7 +176,7 @@ abstract class CampSystem
         return $template->getTemplateId();
     }// fn GetTemplateIdByName
 
-    public static function GetInvalidURLTemplate($p_publicationId, $p_issNr, $p_lngId)
+    public static function GetInvalidURLTemplate($p_pubId, $p_issNr = NULL, $p_lngId = NULL)
     {
         global $g_ado_db;
         if (CampCache::IsEnabled()) {
@@ -190,8 +190,24 @@ abstract class CampSystem
         $resourceId = new ResourceId('template_engine/classes/CampSystem');
         /* @var $templateSearchService ITemplateSearchService */
         $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
+        if(is_null($p_lngId)){
+            $publication = new Publication($p_pubId);
+            if (!$publication->exists()) {
+                return null;
+            }
+            $p_lngId = $publication->getLanguageId();
+        }
+        if(is_null($p_issNr)){
+            $sql = 'SELECT MAX(Number) AS Number FROM Issues '
+                    . 'WHERE IdPublication = ' . $p_pubId
+                    . ' AND IdLanguage = ' . $p_lngId;
+            $data = $g_ado_db->GetOne($sql);
+            if (empty($data)) {
+                return null;
+            }
+            $p_issNr = $data;
+        }
         $outputService = $resourceId->getService(IOutputService::NAME);
-
         $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
         $data = $templateSearchService->getErrorPage($issueObj->getIssueId(),
                         $outputService->findByName('Web'));

@@ -4,11 +4,11 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-use Newscoop\Service\IArticleTypeService;
-use Newscoop\Entity\Repository\ArticleTypeRepository;
-use Newscoop\Entity\ArticleType;
-use Newscoop\Entity\Resource;
-use Newscoop\Controller\Action\Helper\Datatable\Adapter\Theme,
+use Newscoop\Service\IArticleTypeService,
+    Newscoop\Entity\Repository\ArticleTypeRepository,
+    Newscoop\Entity\ArticleType,
+    Newscoop\Entity\Resource,
+    Newscoop\Controller\Action\Helper\Datatable\Adapter\Theme,
     Newscoop\Controller\Action\Helper\Datatable\Adapter\ThemeFiles,
     Newscoop\Service\IPublicationService,
     Newscoop\Service\IThemeManagementService,
@@ -174,6 +174,7 @@ class Admin_ThemesController extends Zend_Controller_Action
             ->addActionContext( 'assign-to-publication', 'json' )
             ->addActionContext( 'output-edit', 'json' )
             ->addActionContext( 'article-types-edit', 'json' )
+            ->addActionContext( 'unassign', 'json' )
             ->addActionContext( 'wizard-theme-settings', 'adv' )
             ->addActionContext( 'wizard-theme-template-settings', 'adv' )
             ->addActionContext( 'wizard-theme-article-types', 'adv' )
@@ -251,11 +252,26 @@ class Admin_ThemesController extends Zend_Controller_Action
         {
             $this->view->publications  = $this->getPublicationService()->getEntities();
             $this->view->themesPath    = $this->view->baseUrl( '/themes' );
+
+            $uploadForm    = new Admin_Form_Theme_Upload();
+            $uploadForm // set some specific stuff for this page
+                ->setAction( $this->view->url( array( 'action' => 'upload' ) ) )
+                ->addElement( 'hidden', 'format', array( 'value' => 'json', 'decorators' => array( 'ViewHelper' ) ) )
+                ->getElement( 'submit-button' )->clearDecorators()->addDecorator( 'ViewHelper' )->setAttrib( 'style', 'display:none' );
+            $this->view->uploadForm = $uploadForm;
+
             $this->view->headScript()->appendFile( $this->view->baseUrl( "/js/jquery/jquery.tmpl.js" ) );
             $this->view->headLink( array
             (
             	'type'  =>'text/css',
             	'href'  => $this->view->baseUrl('/admin-style/themes_list.css'),
+                'media'	=> 'screen',
+                'rel'	=> 'stylesheet'
+            ) );
+            $this->view->headLink( array
+            (
+            	'type'  =>'text/css',
+            	'href'  => $this->view->baseUrl('/admin-style/action_buttons.css'),
                 'media'	=> 'screen',
                 'rel'	=> 'stylesheet'
             ) );
@@ -386,15 +402,9 @@ class Admin_ThemesController extends Zend_Controller_Action
         if( ( $this->view->mytable = $datatable->dispatch() ) )
         {
             $this->view->publications  = $this->getPublicationService()->getEntities();
+            $this->view->uploadForm    = new Admin_Form_Theme_Upload();
             $this->view->themesPath    = $this->view->baseUrl( '/themes' );
             $this->view->headScript()->appendFile( $this->view->baseUrl( "/js/jquery/jquery.tmpl.js" ) );
-            $this->view->headLink( array
-            (
-            	'type'  =>'text/css',
-            	'href'  => $this->view->baseUrl('/admin-style/themes_list.css'),
-                'media'	=> 'screen',
-                'rel'	=> 'stylesheet'
-            ) );
         }
     }
 
@@ -513,6 +523,7 @@ class Admin_ThemesController extends Zend_Controller_Action
         $themeArticleTypeFields = $this->_request->getPost( 'themeArticleTypeFields' );
         $themeArticleTypes      = $this->_request->getPost( 'themeArticleTypes' );
 
+        // complex logic for matching
         foreach( $themeArticleTypeFields as $typeName => $fields )
         {
             $updateArticleTypes[ $typeName ] = array( 'name' => '', 'ignore' => false, 'fields' => array() );
@@ -602,13 +613,54 @@ class Admin_ThemesController extends Zend_Controller_Action
 
     }
 
-    public function filesAction()
+    public function deleteAction()
     {
-        /*$datatable = $this->_helper->genericDatatable;
-        $datatable->setAdapter
-        (
-            new ThemeFiles( $this->getThemeFileService(), $this->_request->getParam( 'id' ) )
-        )->setOutputObject( $this->view );*/
+        $this->_forward( 'unassign' );
+    }
+
+    public function unassignAction()
+    {
+        if( ( $themeId = $this->_getParam( 'id', null ) ) ) {
+            $this->view->response = $this->getThemeService()->removeTheme($themeId);
+        }
+    }
+
+    public function uploadAction()
+    {
+        try
+        {
+            $this->view->response = $this->getThemeService()->installTheme( $_FILES['browse']['tmp_name'] );
+        }
+        catch( \Exception $e )
+        {
+            $this->view->response = false;
+        }
+        if( $this->_getParam( 'format' ) == 'json' )
+        {
+            $this->_helper->layout()->disableLayout();
+            $this->_helper->viewRenderer->setNoRender();
+            $vars = Zend_Json::encode($this->view->getVars());
+            $this->getResponse()->setBody($vars);
+        }
+    }
+
+    public function exportAction()
+    {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        if( ( $themeId = $this->_getParam( 'id', null ) ) )
+        {
+            $exportPath = $this->getThemeService()
+                ->exportTheme( ( $themeEntity = $this->getThemeService()->findById( $themeId ) ) );
+
+            $this->getResponse()
+                ->setHeader( 'Content-type', 'application/zip' )
+                ->setHeader( 'Content-Disposition', 'attachment; filename="'.$themeEntity->getName().'.zip"' )
+                ->setHeader( 'Content-length', filesize( $exportPath ) )
+                ->setHeader( 'Cache-control', 'private' );
+            readfile( $exportPath );
+            $this->getResponse()->sendResponse();
+        }
     }
 
     function assignToPublicationAction()

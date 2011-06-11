@@ -1,3 +1,12 @@
+<div class="actions">
+    <ul class="navigation">
+        <!-- li><a class="add" href="#" id="create">Create theme</a></li -->
+        <li><a class="upload" href="#" id="upload">Upload theme</a></li>
+        <!-- li><a class="download" href="#" id="download">Download theme</a></li -->
+        <!-- li><a class="duplicate" href="#" id="duplicate">Duplicate theme</a></li -->
+        <li><a class="add" href="<?php echo $this->url( array( 'action' => 'add.php', 'controller' => 'pub', 'module' => 'admin' ) )?>">Add new Publication</a></li> <!--  addNewPublication -->
+    </ul>
+</div>
 
 <div class="ui-widget-content small-block themesListHolder">
 	<div class="tabs ui-tabs ui-widget ui-widget-content ui-corner-all">
@@ -11,7 +20,6 @@
         		</li>
         	<?php endforeach; ?>
 		</ul>
-        <a href="#" id="addNewPublication">Add new Publication</a>
         <div id="tabs-1">
 
             <?php echo $this->mytable; ?>
@@ -19,6 +27,19 @@
 		</div>
 	</div>
 </div>
+
+<script id="popupTmpl" type="text/x-jQuery-tmpl" title="<?php echo getGS( 'Upload theme' ) ?>">
+	<div class="message-holder">
+		<div class="upload-error" style="display:none"><?php echo getGS( 'Upload failed!' ) ?></div>
+		<div class="upload-success" style="display:none"><?php echo getGS( 'Upload succeded!' ) ?></div>
+	</div>
+	<?php echo $this->uploadForm->setAttrib( 'target', 'upload-frame' ); ?>
+	<iframe frameborder="0" name="upload-frame" id="upload-frame" width="0" height="0"></iframe>
+</script>
+
+<script id="confirmDeleteTmpl" type="text/x-jQuery-tmpl" title="<?php echo getGS( 'Delete theme' ) ?>">
+	<?php echo getGS( 'Are you sure you want to delete this theme?' ) ?>
+</script>
 
 <script id="datatableTmpl_0" type="text/x-jQuery-tmpl">
 	<div class="DataTables_sort_wrapper">
@@ -78,10 +99,10 @@
 	<div class="actionMessage"></div>
 	<ul class="actionDropDown">
     	<li>
-        	<a href="#">Actions</a>
+        	<a href="#"><?php echo getGS( 'Actions' ) ?></a>
 			<ul class="block-shadow">
 				<li>
-					<a href="#" class="add"><span>Add to publication</span></a>
+					<a href="#" class="add"><span><?php echo getGS( 'Add to publication' ) ?></span></a>
 					<ul class="block-shadow actions-publications">
 						<?php foreach( $this->publications as $pub ) : ?>
 						<li>
@@ -107,10 +128,9 @@
     				    	'action'     => 'unassign',
     				    	'controller' => 'themes',
     				    	'module'     => 'admin',
-    				    	'pubid'      => '{{pubId}}',
     				    	'id'         => '{{id}}'
     				    ), null, null, false )  ?>" class="unassign" style="display:none">
-						Unassign
+						<?php echo getGS( 'Unassign' ) ?>
 					</a>
 				</li>
 				<li>
@@ -121,7 +141,18 @@
     				    	'module'     => 'admin',
     				    	'id'         => '{{id}}'
     				    ), null, null, false )  ?>" class="edit" style="display:none">
-						Edit
+						<?php echo getGS( 'Edit' ) ?>
+					</a>
+				</li>
+				<li>
+					<a href="<?php echo $this->url( array
+    				    (
+    				    	'action'     => 'export',
+    				    	'controller' => 'themes',
+    				    	'module'     => 'admin',
+    				    	'id'         => '{{id}}'
+    				    ), null, null, false )  ?>" class="download" style="display:none">
+						<?php echo getGS( 'Export' ) ?> (<?php echo getGS( 'zip' ) ?>)
 					</a>
 				</li>
             	<li>
@@ -132,15 +163,11 @@
     				    	'module'     => 'admin',
     				    	'id'         => '{{id}}'
     				    ), null, null, false )  ?>" class="delete">
-						Delete
+						<?php echo getGS( 'Delete' ) ?>
 					</a>
 				</li>
 			</ul>
 		</li>
 	</ul>
-</script>
-
-<script type="text/javascript">
-
 </script>
 

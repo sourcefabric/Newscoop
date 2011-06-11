@@ -34,7 +34,7 @@ final class MetaTemplate extends MetaDbObject
         $syncResourceService = $resourceId->getService(ISyncResourceService::NAME);
 
 
-        $this->m_dbObject = $syncResourceService->findByPath($p_templateIdOrName);
+        $this->m_dbObject = $syncResourceService->findByPathOrId($p_templateIdOrName);
 
         $this->m_customProperties['name'] = 'getValue';
         $this->m_customProperties['identifier'] = 'getId';

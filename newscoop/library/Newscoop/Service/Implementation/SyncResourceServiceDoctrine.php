@@ -65,6 +65,21 @@ class SyncResourceServiceDoctrine extends AEntityServiceDoctrine
         return NULL;
     }
 
+    function findByPathOrId($pathOrId)
+    {
+        Validation::notEmpty($pathOrId, 'path');
+        $em = $this->getEntityManager();
+        if (is_int($pathOrId)) {
+            $resources = $em->getRepository($this->entityClassName)->findById($pathOrId);
+        } else {
+            $resources = $em->getRepository($this->entityClassName)->findByPath($pathOrId);
+        }
+        if (isset($resources) && count($resources) > 0) {
+            return $resources[0];
+        }
+        return NULL;
+    }
+
     function getResource($name, $path)
     {
         Validation::notEmpty($name, 'name');
