@@ -3,7 +3,7 @@
 /*
  * This file is part of the Symfony package.
  *
- * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
+ * (c) Fabien Potencier <fabien@symfony.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,7 +14,7 @@ namespace Symfony\Component\Console\Helper;
 /**
  * The Formatter class provides helpers to format messages.
  *
- * @author Fabien Potencier <fabien.potencier@symfony-project.com>
+ * @author Fabien Potencier <fabien@symfony.com>
  */
 class FormatterHelper extends Helper
 {
@@ -41,9 +41,7 @@ class FormatterHelper extends Helper
      */
     public function formatBlock($messages, $style, $large = false)
     {
-        if (!is_array($messages)) {
-            $messages = array($messages);
-        }
+        $messages = (array) $messages;
 
         $len = 0;
         $lines = array();
@@ -74,7 +72,7 @@ class FormatterHelper extends Helper
      *
      * @return integer The length of the string
      */
-    protected function strlen($string)
+    private function strlen($string)
     {
         return function_exists('mb_strlen') ? mb_strlen($string) : strlen($string);
     }
