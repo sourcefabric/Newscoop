@@ -34,8 +34,8 @@ camp_html_content_top(getGS("Subscription Settings by Country"), array("Pub" => 
 <p>
 <TABLE class="action_buttons">
 <TR>
-	<TD><A HREF="countryadd.php?Pub=<?php p($Pub); ?>&Language=<?php p($Language); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-	<TD><A HREF="countryadd.php?Pub=<?php p($Pub); ?>&Language=<?php p($Language); ?>" ><B><?php  putGS("Set subscription settings for a country"); ?></B></A></TD>
+    <TD><A HREF="/<?php echo $ADMIN; ?>/pub/countryadd.php?Pub=<?php p($Pub); ?>&Language=<?php p($Language); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+    <TD><A HREF="/<?php echo $ADMIN; ?>/pub/countryadd.php?Pub=<?php p($Pub); ?>&Language=<?php p($Language); ?>" ><B><?php  putGS("Set subscription settings for a country"); ?></B></A></TD>
 </TR>
 </TABLE>
 

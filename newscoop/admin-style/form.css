@@ -14,8 +14,8 @@ body.with-sidebar dl.zend_form {
 }
 
 .zend_form dt {
-    margin: 9px 0 0;
-    padding: 0 2px;
+    padding: 12px 26px;
+    -position: absolute;
     font-weight: bold;
     color: #696969;
 }
@@ -32,21 +32,32 @@ body.with-sidebar dl.zend_form {
 .zend_form dd input[type=text], .zend_form dd input[type=password] {
     display: block;
     width: 80%;
-    margin: 0;
-    padding: 3px 5px;
     color: #333;
-    background-color: #fff;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #f5f5f5), color-stop(1, #fff));
-    background: -moz-linear-gradient(top, #f5f5f5, #fff);
-    border: 1px solid #9d9d9d;
+
+    background-color: #FFFFFF;
+    border: 1px solid #9D9D9D;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 23px;
+    margin: 0;
+    padding: 0;
+    text-indent: 3px;
+    -moz-box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.1);
 }
 
 .zend_form dd input[type=password] {
     width: 50%;
+	background-color: #F8F8F8;
+}
+
+.zend_form dd input[type=file] {
+    width: 80%;
 }
 
 .zend_form dd input[type=text]:focus {
-    border-color: #cce5f0;
+    border: 1px solid #00b5f1;
 }
 
 .zend_form dd select {
@@ -84,16 +95,26 @@ body.with-sidebar dl.zend_form {
     margin: 0;
     padding: 3px 12px 4px;
     color: #fff;
-    background-color: #1187b7;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #228fbc), color-stop(1, #007fb3));
+    background-color: #007fb3;
+    background: -moz-linear-gradient(top, #2390bd 0, #007fb3 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2390bd), color-stop(100%, #007fb3));
     border: 1px solid #007fb3;
     cursor: pointer;
+}
+
+.zend_form dd input[type=submit]:hover {
+    border: 1px solid #005e85;
+    background: #005e85;
+    background: -moz-linear-gradient(top, #409fc6 0, #007fb3 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #409fc6), color-stop(100%, #007fb3));
 }
 
 .zend_form dd.buttons {
     height: 1%;
     overflow: hidden;
     margin-top: 13px;
+    padding: 10px;
+    float: left;
 }
 
 .zend_form label {
@@ -152,4 +173,18 @@ body.with-sidebar dl.zend_form {
 
 .filter dl.zend_form dd * {
     width: auto;
+}
+
+.popup .zend_form { 
+    border: none;
+    padding: 0 0 12px 0;
+	box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+	margin:0;
+	width: 100%;
+}
+
+form.popup dd input[type="text"] {
+    width: 99%;
 }

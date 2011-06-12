@@ -14,13 +14,13 @@ require_once $GLOBALS['g_campsiteDir'] . '/classes/IGeoMapLocation.php';
 final class MetaMapLocationMultimedia extends MetaDbObject
 {
     /** @var array */
-	private static $m_defaultCustomProperties = array(
+    private static $m_defaultCustomProperties = array(
         'src' => 'getSrc',
         'type' => 'getType',
         'spec' => 'getSpec',
         'width' => 'getWidth',
         'height' => 'getHeight',
-	);
+    );
 
     /**
      * @param IGeoMultimedia $p_dbObject

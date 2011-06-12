@@ -4,9 +4,6 @@ require_once($GLOBALS['g_campsiteDir']."/classes/TimeUnit.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/UrlType.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Alias.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
-require_once($GLOBALS['g_campsiteDir']."/include/phorum_load.php");
-require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_forum.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_setting.php');
 
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
@@ -25,13 +22,8 @@ $f_name = trim(Input::Get('f_name'));
 $f_default_alias = Input::Get('f_default_alias', 'int');
 $f_language = Input::Get('f_language', 'int');
 $f_url_type = Input::Get('f_url_type', 'int');
+
 $publicationObj = new Publication($f_publication_id);
-if( Saas::singleton()->hasPermission("ManagePubInvalidUrlTemplate") ) {
-	$f_url_error_tpl_id = Input::Get('f_url_error_tpl_id', 'int', null);
-} else {
-	$defaultTemplateId = isset($publicationObj) ? $publicationObj->getProperty('url_error_tpl_id') : null;
-	$f_url_error_tpl_id = $defaultTemplateId;
-}
 if( Saas::singleton()->hasPermission("ManagePublicationSubscriptions") ) {
     $f_time_unit = Input::Get('f_time_unit');
 	$f_unit_cost = trim(Input::Get('f_unit_cost', 'float', '0.0'));
@@ -56,6 +48,7 @@ if( Saas::singleton()->hasPermission("ManagePublicationSubscriptions") ) {
 		$f_trial = '';
     }
 }
+
 $f_comments_enabled = Input::Get('f_comments_enabled', 'checkbox', 'numeric');
 $f_comments_article_default = Input::Get('f_comments_article_default', 'checkbox', 'numeric');
 $f_comments_public_enabled = Input::Get('f_comments_public_enabled', 'checkbox', 'numeric');
@@ -98,6 +91,7 @@ if (camp_html_has_msgs()) {
       camp_html_goto_page($backLink);
 }
 
+<<<<<<< HEAD
 $forum = new Phorum_forum($publicationObj->getForumId());
 if (!$forum->exists()) {
 	$forum = camp_forum_create($publicationObj);
@@ -112,12 +106,14 @@ if (!$setting->exists()) {
 }
 $setting->update(array('addresses' => array($forum->getForumId() => $f_comments_moderator_to)));
 $setting->update(array('from_addresses' => array($forum->getForumId() => $f_comments_moderator_from)));
+=======
+//$publicationObj->setPublicComments($f_comments_public_enabled);
+>>>>>>> devel
 
 $columns = array('Name' => $f_name,
 				 'IdDefaultAlias' => $f_default_alias,
 				 'IdDefaultLanguage' => $f_language,
 				 'IdURLType' => $f_url_type,
-				 'url_error_tpl_id' => $f_url_error_tpl_id,
                  'TimeUnit' => $f_time_unit,
 				 'PaidTime' => $f_paid,
 				 'TrialTime' => $f_trial,
@@ -128,9 +124,13 @@ $columns = array('Name' => $f_name,
 				 'comments_article_default_enabled'=> $f_comments_article_default,
 				 'comments_subscribers_moderated' => $f_comments_subscribers_moderated,
 				 'comments_public_moderated' => $f_comments_public_moderated,
+                 'comments_public_enabled' => $f_comments_public_enabled,
 				 'comments_captcha_enabled' => $f_comments_captcha_enabled,
 				 'comments_spam_blocking_enabled' => $f_comments_spam_blocking_enabled,
-                 'seo' => serialize($f_seo));
+                 'comments_moderator_to' => $f_comments_moderator_to,
+                 'comments_moderator_from' => $f_comments_moderator_from,
+                 'seo' => serialize($f_seo),
+            );
 
 $updated = $publicationObj->update($columns);
 if ($updated) {

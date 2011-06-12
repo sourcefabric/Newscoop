@@ -97,7 +97,7 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
 
     /**
      * Add role rules
-     * 
+     *
      * @param Zend_Acl $acl
      * @param Zend_Acl_Role_Interface $role
      * @return void
@@ -278,7 +278,7 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
 
                     $methodKey = $action;
                     $access[$controllerKey][$methodKey] = array();
-    
+
                     // process annotations
                     $annotation = $reader->getMethodAnnotation($method, self::ANNOTATION);
                     if ($annotation !== NULL) {

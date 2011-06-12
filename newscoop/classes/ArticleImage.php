@@ -70,7 +70,8 @@ class ArticleImage extends DatabaseObject {
 	 */
 	public function getImageId()
 	{
-		return $this->m_data['IdImage'];
+		if (in_array('IdImage', array_keys($this->m_data))) return $this->m_data['IdImage'];
+		else return false;
 	} // fn getImageId
 
 

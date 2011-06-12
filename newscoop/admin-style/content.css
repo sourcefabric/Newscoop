@@ -72,10 +72,10 @@ a.ui-icon-wrapper span {
     border-left: 1px solid #ccc;
 }
 
-.content .actions li:first-child {
+/*.content .actions li:first-child {
     border-left: 0;
     padding-left: 0;
-}
+}*/
 
 /** Acl resources */
 dl.resource {
@@ -91,8 +91,15 @@ dl.resource:first-child {
     margin-top: 0;
 }
 
+dl.resource dt, dl.resource dd {
+    margin: 0;
+    padding: 9px 11px;
+    -mozilla-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
 dl.resource dt {
-    margin: 0; padding: 9px 11px;
     font-weight: bold;
     color: #000;
     background-color: #fafafa;
@@ -100,8 +107,6 @@ dl.resource dt {
 }
 
 dl.resource dd {
-    margin: 0;
-    padding: 9px 11px;
     color: #444;
     background-color: #fff;
     border-top: 1px solid #a9a9a9;

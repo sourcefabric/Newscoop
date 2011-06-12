@@ -265,29 +265,47 @@ class Localizer {
     {
         global $g_localizerConfig;
 
-        if (($pos = strpos($p_directory, '*')) === false) {
-            $startDirectory = $p_directory;
-            $deepth = 1;  /* 1 means no subdirectories! */
-        } else {
-            $startDirectory = substr($p_directory, 0, $pos-1);
-            $deepth = substr_count($p_directory, '*') + 1;
+        if (!is_array($p_directory)) {
+            $p_directory = array($p_directory);
         }
+
+        // scan for files
+        $files = array();
+        $root = rtrim($g_localizerConfig['BASE_DIR'], '/');
+        foreach ($p_directory as $dir) {
+            if (strpos($dir, '*') !== FALSE) { // loads subdirectories /*/*.php
+                $files = array_merge($files, glob("$root/$dir/*.*"));
+                $dir = rtrim($dir, '*');
+            }
+
+            $realpath = realpath("$root/$dir");
+            if (!$realpath) { // not found
+                continue;
+            }
+
+            if (!is_dir($realpath)) { // add file if specified
+                $files[] = $realpath;
+                continue;
+            }
+
+            $files = array_merge($files, glob("$realpath/*.*"));
+        }
+
+        // extensions filter
+        $extensions = array('php', 'phtml');
+        $filelist = array_filter($files, function($file) use ($extensions) {
+            return in_array(pathinfo($file, PATHINFO_EXTENSION), $extensions);
+        });
 
         // like get GS('edit "$1"', ...);  '
         $functPattern1 = '/(put|get)gs( )*\(( )*\'([^\']*)\'/iU';
         // like get GS("edit '$1'", ...);
         $functPattern2 = '/(put|get)gs( )*\(( )*"([^"]*)"/iU';
 
-        // Get all files in this directory
-        $files = File_Find::mapTreeMultiple($g_localizerConfig['BASE_DIR'].$startDirectory, $deepth);
-
-        // Get all the PHP files
-        $filelist = self::CompilePhpFileList($files);
-
 		// Read in all the PHP files.
 		$data = array();
-        foreach ($filelist as $name) {
-            $data = array_merge($data, file($g_localizerConfig['BASE_DIR'].$startDirectory.'/'.$name));
+        foreach ($filelist as $file) {
+            $data = array_merge($data, file($file));
         }
 
        	// Collect all matches
@@ -650,35 +668,6 @@ class Localizer {
     } // fn GetAllLanguages
 
 
-    /**
-     * Get a list of all files matching the pattern given.
-     * Return an array of strings, each the full path name of a file.
-     * @param string $p_startdir
-     * @param string $p_pattern
-     * @return array
-     */
-    public static function SearchFilesRecursive($p_startdir, $p_pattern)
-    {
-        $structure = File_Find::mapTreeMultiple($p_startdir);
-
-        // Transform it into a flat structure.
-        $filelist = array();
-        foreach ($structure as $dir => $file) {
-        	// it's a directory
-            if (is_array($file)) {
-                $filelist = array_merge($filelist,
-                    Localizer::SearchFilesRecursive($p_startdir.'/'.$dir, $p_pattern));
-            } else {
-            	// it's a file
-                if (preg_match($p_pattern, $file)) {
-                    $filelist[] = $p_startdir.'/'.$file;
-                }
-            }
-        }
-        return $filelist;
-    } // fn SearchFilesRecursive
-
-
 	/**
      * Create a new directory to store the language files.
      * @param string $p_languageCode
@@ -719,17 +708,20 @@ class Localizer {
         if (!file_exists($langDir)) {
             return true;
         }
-        $files = File_Find::mapTreeMultiple($langDir, 1);
-        foreach ($files as $fileName) {
-            $pathname = $langDir . DIR_SEP . $fileName;
-            if (file_exists($pathname)) {
-            	if (is_writable($pathname)) {
-                	unlink($pathname);
-            	} else {
-            		return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $pathname), CAMP_ERROR_DELETE_FILE);
-            	}
+
+        $iterator = new DirectoryIterator($langDir);
+        foreach ($iterator as $file) {
+            if ($file->isDot()) { // ignore dots
+                continue;
             }
+
+            if (!$file->isWritable()) {
+                return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $file->getRealpath()), CAMP_ERROR_DELETE_FILE);
+            }
+
+            unlink($file->getRealpath());
         }
+
         @rmdir($langDir);
         return true;
     } // fn DeleteLanguageFiles
@@ -766,5 +758,4 @@ class Localizer {
         return array('all' => count($sourceStrings), 'translated' => $translated, 'untranslated' => $untranslated);
     }
 
-} // class Localizer
-?>
+}

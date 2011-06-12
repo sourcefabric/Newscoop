@@ -13,7 +13,7 @@ require_once $GLOBALS['g_campsiteDir'] . '/classes/GeoMapLocation.php';
 final class MetaMapLocation extends MetaDbObject
 {
     /** @var array */
-	private static $m_defaultCustomProperties = array(
+    private static $m_defaultCustomProperties = array(
         'name' => 'getName',
         'latitude' => 'getLatitude',
         'longitude' => 'getLongitude',
@@ -21,7 +21,7 @@ final class MetaMapLocation extends MetaDbObject
         'content' => 'getContent',
         'multimedia' => 'getMultimedia',
         'enabled' => 'isEnabled',
-	);
+    );
 
     /** @var IGeoMapLocationContent */
     private $m_content = NULL;
@@ -37,11 +37,11 @@ final class MetaMapLocation extends MetaDbObject
         $this->m_properties = array();
         $this->m_customProperties = self::$m_defaultCustomProperties;
         if (!is_null($p_dbObject)) {
-        	$this->m_dbObject = $p_dbObject;
-        	$languageId = (int) CampTemplate::singleton()->context()->language->number;
-        	$this->m_content = $this->m_dbObject->getContent($languageId);
+            $this->m_dbObject = $p_dbObject;
+            $languageId = (int) CampTemplate::singleton()->context()->language->number;
+            $this->m_content = $this->m_dbObject->getContent($languageId);
         } else {
-        	$this->m_dbObject = new Geo_MapLocation();
+            $this->m_dbObject = new Geo_MapLocation();
         }
     }
 
@@ -51,8 +51,7 @@ final class MetaMapLocation extends MetaDbObject
      */
     protected function getName()
     {
-        $poi_name = !is_null($this->m_content) ? $this->m_content->getName() : null;
-        return $poi_name;
+        return (!is_null($this->m_content)) ? $this->m_content->getName() : null;
     }
 
     /**
@@ -62,8 +61,8 @@ final class MetaMapLocation extends MetaDbObject
     protected function isEnabled()
     {
         $languageId = (int) CampTemplate::singleton()->context()->language->number;
-	if ($this->m_dbObject->isEnabled($languageId)) {return true;}
-	return false;
+        if ($this->m_dbObject->isEnabled($languageId)) {return true;}
+        return false;
     }
 
     /**
@@ -90,8 +89,7 @@ final class MetaMapLocation extends MetaDbObject
      */
     protected function getText()
     {
-        $poi_text = !is_null($this->m_content) ? $this->m_content->getText() : null;
-        return $poi_text;
+        return (!is_null($this->m_content)) ? $this->m_content->getText() : null;
     }
 
     /**

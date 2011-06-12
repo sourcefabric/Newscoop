@@ -8,7 +8,6 @@
  */
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/Exceptions.php');
 
-
 /**
  * @package Campsite
  */

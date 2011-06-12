@@ -1,0 +1,24 @@
+<?php
+$this->form->content->setAttrib('id', 'template-edit-area');
+?>
+
+<div class="template ui-widget-content small-block block-shadow theme-edit">
+    <?php echo $this->replaceForm->setAttrib('class', 'replace'); ?>
+    <?php echo $this->form; ?>
+</div>
+
+<script type="text/javascript" src="<?php echo $this->baseUrl('/js/editarea/edit_area/edit_area_full.js'); ?>"></script>
+<script type="text/javascript">
+$(function() {
+    editAreaLoader.init({
+        id : "template-edit-area",
+        start_highlight: true,
+        allow_toggle: true,
+        toolbar: "search, go_to_line, |, undo, redo, |, select_font, |, syntax_selection, highlight, reset_highlight, word_wrap, |, change_smooth_selection, fullscreen, |, help",
+        syntax: "smarty",
+        syntax_selection_allow: "css,html,js,php,smarty,xml",
+        is_editable: "true",
+        replace_tab_by_spaces: 2
+    });
+});
+</script>

@@ -1,0 +1,248 @@
+@charset "utf-8";
+/* CSS Document */
+
+ul.navigation {
+    margin: 0;
+    padding: 0;
+	display:block;
+	height:25px;
+}
+ul.navigation li {
+    float: left;
+	margin-right:10px;
+}
+.actions ul.navigation li {
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 120%;
+    list-style: none;
+    margin: 0 6px 0 0;
+    padding: 0;
+    position: relative;
+    text-decoration: none;
+    border: 1px solid #9D9D9D;
+    background-color: #f6f6f6;
+	display:block;
+    background: -moz-linear-gradient(top, #fafafa 0, #f6f6f6 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fafafa), color-stop(100%, #f6f6f6));
+	overflow:hidden;
+}
+.actions ul.navigation li:hover {
+    text-decoration: none;
+    border: 1px solid #007fb3;
+    color: #fff;
+    background-color: #007fb3;
+    background: -moz-linear-gradient(top, #409fc6 0, #007fb3 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #409fc6), color-stop(100%, #007fb3));
+}
+.actions ul.navigation li a {
+    padding: 4px 10px 5px 10px;
+	display:block;
+    color: #3B3B3B;
+}
+.actions ul.navigation li a:hover {
+    color: #fff;
+}
+.actions ul.navigation li a.upload, .actions ul.navigation li a.download, .actions ul.navigation li a.edit, .actions ul.navigation li a.add {
+    padding-left: 20px;
+	background-image:url(images/solo_icons.png);
+	background-repeat:no-repeat;
+}
+.actions ul.navigation li a.upload {
+	background-position: 5px 5px;
+}	
+.actions ul.navigation li a.upload:hover {
+	background-position: -395px 5px;
+}
+
+.actions ul.navigation li a.download {
+	background-position: 5px -24px;
+}	
+.actions ul.navigation li a.download:hover {
+	background-position: -395px -24px;
+}
+
+.actions ul.navigation li a.edit {
+	background-position: 5px -54px;
+}	
+.actions ul.navigation li a.edit:hover {
+	background-position: -395px -54px;
+}
+
+.actions ul.navigation li a.add {
+	background-position: 5px -85px;
+}	
+.actions ul.navigation li a.add:hover {
+	background-position: -395px -85px;
+}
+
+form dt {
+    font-weight: bold;
+    padding: 3px 5px 3px 2px;
+}
+
+dl.zend_form {
+    border: none !important;
+    -moz-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+	width: auto !important;
+}
+
+dl.zend_form dt {
+    margin-top: 8px;
+}
+
+dl.zend_form dt:first-child {
+    margin-top: 0;
+}
+form > dl.zend_form {
+	border:1px solid #9d9d9d;
+	padding-bottom:12px;
+}
+
+dl.zend_form dt:first-child {
+	margin-top:0;
+}
+
+dl.zend_form input[type="text"], dl.zend_form input[type="password"] {
+    background-color: #FFFFFF;
+    border: 1px solid #9D9D9D;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 23px;
+    margin: 0;
+    padding: 0;
+    text-indent: 3px;
+    -moz-box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0px 2px 2px rgba(0, 0, 0, 0.1);
+}
+dl.zend_form input[type="text"]:focus, dl.zend_form input[type="password"]:focus {
+    border: 1px solid #00b5f1;
+	/*-moz-box-shadow: 0px 0px 3px rgba(0, 180, 240, 0.3);
+    -webkit-box-shadow: 0px 0px 3px rgba(0, 180, 240, 0.3);
+    box-shadow: 0px 0px 3px rgba(0, 180, 240, 0.3);*/
+
+}
+dl.zend_form input[type="password"] {
+    background-color: #f8f8f8;
+}
+
+dl.zend_form input[type="submit"], dl.zend_form button  {
+    background: -moz-linear-gradient(center top , #fafafa 0pt, #f6f6f6 100%) repeat scroll 0 0 transparent;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fafafa), color-stop(100%, #f6f6f6));
+    border: 1px solid #9d9d9d;
+    color: #444444;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 17px;
+    margin: 0 6px 0 0;
+    outline: medium none;
+    padding: 3px 9px 3px;
+}
+
+dl.zend_form input[type="submit"]:hover, dl.zend_form .button:hover {
+	background: #007FB3;
+    background: -moz-linear-gradient(center top , #2390BD 0pt, #007FB3 100%) repeat scroll 0 0 transparent;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2390BD), color-stop(100%, #007FB3));
+    border: 1px solid #007FB3;
+    color: #FFFFFF;
+}
+
+dl.zend_form input[type="submit"]:disabled, dl.zend_form button:disabled, dl.zend_form input[type="submit"]:disabled:hover, dl.zend_form button:disabled:hover  {
+    background: -moz-linear-gradient(center top , #fdfdfd 0pt, #fbfbfb 100%) repeat scroll 0 0 transparent;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fdfdfd), color-stop(100%, #fbfbfb));
+    border: 1px solid #cecece;
+    color: #b2b3b2;
+}
+
+/** Forms theme */
+form dl {
+    margin: 1em 0;
+    padding: 8px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+form dt, form dd {
+    margin-left: 0;
+}
+
+form dt {
+    padding: 3px 5px;
+    font-weight: bold;
+}
+
+form dd input[type="text"] {
+    width: 30em;
+}
+form dd input[type="password"] {
+    width: 18em;
+}
+form dd input[type="text"]:focus, form dd input[type="password"]:focus {
+    border: 1px solid #00b5f1;
+}
+
+form dd ul.errors {
+    padding: 3px 8px;
+}
+
+form dd ul.errors li {
+    font-size: 1.1em;
+    color: #cc0000;
+}
+
+dl.zend_form dd#submit-element {
+	text-align:right
+}
+
+dl.zend_form dd#submit-element input[type="submit"], dl.zend_form dd#submit-element button  {
+    margin: 0 0 0 6px;
+}
+
+
+
+
+/** Actions theme */
+.content > .actions {
+    margin: 1em 0;
+    font-size: 1.2em;
+}
+
+.content > .actions ul {
+    margin: 0;
+    padding: 0;
+    height: 1%;
+    overflow: hidden;
+}
+
+.content > .actions li {
+    float: left;
+    margin: 0 0 0 5px;
+    padding: 0 0 0 5px;
+    border-left: 1px solid #ccc;
+}
+
+.content > .actions li:first-child {
+    border-left: 0;
+    padding-left: 0;
+}
+
+.filter .zend_form { width: 100%; }
+.tiny .zend_form { width: 25%; }
+.medium .zend_form { width: 620px; }
+
+.popup .zend_form { 
+    border: none;
+    padding: 0 0 12px 0;
+	box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+	margin:0;
+}
+
+form.popup dd input[type="text"] {
+    width: 99%;
+}

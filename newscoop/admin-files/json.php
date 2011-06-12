@@ -56,7 +56,6 @@ try {
     $serverRequest->allow('Article::setKeywords');
     $serverRequest->allow('Article::setIsLocked');
     $serverRequest->allow('ArticleData::setProperty');
-
     // execute
     echo json_encode($serverRequest->execute());
 } catch (Exception $e) {

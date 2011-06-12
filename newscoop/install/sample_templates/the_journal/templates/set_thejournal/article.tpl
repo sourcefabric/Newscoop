@@ -36,6 +36,8 @@
 {{ include file="set_thejournal/_tpl/_banner300x250.tpl" }}
 {{ /if }}
 
+{{ include file="set_thejournal/_tpl/dynamic-map.tpl" }}
+
     </div>
          
 {{ include file="set_thejournal/_tpl/sidebar-related.tpl" }}
@@ -43,7 +45,7 @@
 {{ include file="set_thejournal/_tpl/sidebar-pages.tpl" }}
     
 {{ include file="set_thejournal/_tpl/sidebar-blogroll.tpl" }}
-  
+
 </div>
 
 {{ else }}

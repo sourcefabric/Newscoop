@@ -120,7 +120,7 @@ class DatatableRepository
             if (!is_string($property)) { // not searchable
                 continue;
             }
-            
+
             $or->add($qb->expr()->like("e.$property", $qb->expr()->literal("%{$search}%")));
         }
 

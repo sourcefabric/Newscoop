@@ -94,7 +94,18 @@ class Admin_LanguagesController extends Zend_Controller_Action
      */
     public function deleteAction()
     {
+        $this->_helper->acl->check('language', 'delete');
+
         $language = $this->getLanguage();
+        if ($language->getCode() === 'en') {
+            $this->_helper->flashMessenger->addMessage(getGS('English language cannot be removed.'));
+            $this->_helper->redirector('index', 'languages', 'admin');
+        }
+
+        if ($this->repository->isUsed($language)) {
+            $this->_helper->flashMessenger->addMessage(getGS('Language is in use and cannot be removed.'));
+            $this->_helper->redirector('index', 'languages', 'admin');
+        }
 
         Localizer::DeleteLanguageFiles($language->getCode());
         $this->repository->delete($language->getId());
@@ -118,4 +129,4 @@ class Admin_LanguagesController extends Zend_Controller_Action
 
         return $language;
     }
- }
+}

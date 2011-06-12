@@ -24,9 +24,6 @@ if (!$editUser->exists()) {
 }
 $uName = $editUser->getUserName();
 $editUser->delete();
-if ($phorumUser = Phorum_user::GetByUserName($uName)) {
-	$phorumUser->delete();
-}
 reset_user_search_parameters();
 
 $typeParam = 'uType=' . urlencode($uType);

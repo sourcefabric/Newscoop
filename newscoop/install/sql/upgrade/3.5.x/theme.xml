@@ -1,0 +1,16 @@
+<theme name="default" designer="default" version="1.0" require="3.5">
+    <description></description>
+    
+    <presentation-img src="front.jpg" name="Front page" />
+    <presentation-img src="section.jpg" name="Section page" />
+    <presentation-img src="article.jpg" name="Article" />
+    
+    <!-- =============================== -->
+    
+	<output name="Web">
+		<frontPage src="front.tpl" />
+		<sectionPage src="section.tpl" />
+		<articlePage src="article.tpl" />
+		<errorPage src="404.tpl" />
+	</output>
+</theme>

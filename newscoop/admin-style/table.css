@@ -50,3 +50,13 @@ table tr:hover td {
 .content table.data {
     margin-bottom: 0;
 }
+
+table .id {
+    width: 1em;
+}
+
+table td.size {
+    text-align: right;
+}
+
+.tabs table.templates { font-size: 1em; }

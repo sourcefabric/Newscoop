@@ -53,20 +53,22 @@ class Writer extends Zend_Log_Writer_Abstract
             }
         }
 
+        // set user if any
+        if (!isset($event['user'])) {
+            $event['user'] = null;
+            $auth = \Zend_Auth::getInstance();
+            if ($auth->hasIdentity()) {
+                $event['user'] = $this->em->getReference('Newscoop\Entity\User\Staff', $auth->getIdentity());
+            }
+        }
+
         // create log entity
         $log = new Log;
         $log->setTimeCreated(new DateTime($event['timestamp']))
             ->setText($event['message'])
             ->setPriority($event['priority'])
-            ->setClientIP($ip ?: '');
-
-        if (!empty($event['user'])) { // set user
-            if (is_numeric($event['user'])) {
-                $event['user'] = $this->em->find('Newscoop\Entity\User\Staff', (int) $event['user']);
-            }
-            $log->setUser($event['user']);
-        }
-
+            ->setClientIP(isset($ip) ? $ip : '')
+            ->setUser($event['user']);
 
         // store
         $this->em->persist($log);

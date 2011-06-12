@@ -1,5 +1,13 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/sections/section_common.php");
+//@New theme management
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\ISectionService;
+use Newscoop\Service\IOutputService;
+use Newscoop\Service\ISyncResourceService;
+use Newscoop\Service\IOutputSettingSectionService;
+use Newscoop\Entity\Output\OutputSettingsSection;
+//@New theme management
 
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
@@ -32,17 +40,7 @@ if(SaaS::singleton()->hasPermission('ManageSectionTemplates')) {
 	$cArticleTplId = $sectionObj->getArticleTemplateId() > 0 ? $sectionObj->getArticleTemplateId() : 0;
 }
 
-
 $cName = Input::Get('cName');
-
-
-if ($cSectionTplId < 0) {
-    $cSectionTplId = 0;
-}
-
-if ($cArticleTplId < 0) {
-    $cArticleTplId = 0;
-}
 
 if (!Input::IsValid()) {
 	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
@@ -83,9 +81,39 @@ if (!camp_html_has_msgs()) {
 	$modified = true;
 	$modified &= $sectionObj->setName($cName);
 	$modified &= $sectionObj->setDescription($cDescription);
-	$modified &= $sectionObj->setSectionTemplateId($cSectionTplId);
-	$modified &= $sectionObj->setArticleTemplateId($cArticleTplId);
 
+	//@New theme management
+	$resourceId = new ResourceId('Section/Edit');
+	$outputSettingSectionService = $resourceId->getService(IOutputSettingSectionService::NAME);
+	$outputService = $resourceId->getService(IOutputService::NAME);
+	$sectionService = $resourceId->getService(ISectionService::NAME);
+	$syncRsc = $resourceId->getService(ISyncResourceService::NAME);
+	
+	$newOutputSetting = false;
+	
+	$dSection = $sectionService->getById($sectionObj->getSectionId());
+	$outSetSections = $outputSettingSectionService->findBySection($dSection);
+	if(count($outSetSections) > 0){
+		$outSetSection = $outSetSections[0];
+	} else {
+		$outSetSection = new OutputSettingsSection();
+		$outSetSection->setOutput($outputService->findByName('Web'));
+		$outSetSection->setSection($dSection);
+		$newOutputSetting = true;
+	}
+
+	if($cSectionTplId != null && $cSectionTplId != '0'){
+		$outSetSection->setSectionPage($syncRsc->getResource('sectionPage', $cSectionTplId));
+	} else {
+		$outSetSection->setSectionPage(null);
+	}
+	if($cArticleTplId != null && $cArticleTplId != '0'){
+		$outSetSection->setArticlePage($syncRsc->getResource('articlePage', $cArticleTplId));
+	} else {
+		$outSetSection->setArticlePage(null);
+	}
+	//@New theme management
+	
 	if ($cSubs == "a") {
 	$numSubscriptionsAdded = Subscription::AddSectionToAllSubscriptions($Pub, $Section);
 		if ($numSubscriptionsAdded < 0) {
@@ -114,6 +142,13 @@ if (!camp_html_has_msgs()) {
 		// getGS("The section could not be changed.");
 	} else {
 		$modified &= $sectionObj->setUrlName($cShortName);
+		//@New theme management
+		if($newOutputSetting){
+			$outputSettingSectionService->insert($outSetSection);
+		} else {
+			$outputSettingSectionService->update($outSetSection);
+		}
+		//@New theme management
 		camp_html_add_msg(getGS("Section updated"), "ok");
 	}
 	$logtext = getGS('Section "$1" ($2) updated. (Publication: $3, Issue: $4)',

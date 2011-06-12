@@ -84,7 +84,7 @@ if (count($errorArticles) > 0) {
 if (count($articles) > 0) {
 ?>
 <P>
-<FORM NAME="autopublish" METHOD="POST" ACTION="autopublish_do_add.php" >
+<FORM NAME="autopublish" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/autopublish_do_add.php" >
 <?php echo SecurityToken::FormParameter(); ?>
 <INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php echo $f_publication_id; ?>">
 <INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php echo $f_issue_number; ?>">

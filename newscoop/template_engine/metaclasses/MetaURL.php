@@ -32,7 +32,7 @@ final class MetaURL
     'type'=>'getURLType',
 	'request_uri'=>'getRequestURI'
 	);
-	
+
     /**
      * @var CampURI object
      */
@@ -148,8 +148,9 @@ final class MetaURL
      */
     private function getURI()
     {
-        return $this->m_uriObj->getURI($this->m_uri_parameter,
+        $string =  $this->m_uriObj->getURI($this->m_uri_parameter,
         CampTemplate::singleton()->context()->preview);
+        return $string;
     } // fn getURL
 
 

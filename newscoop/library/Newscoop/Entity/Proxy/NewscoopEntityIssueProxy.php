@@ -33,16 +33,70 @@ class NewscoopEntityIssueProxy extends \Newscoop\Entity\Issue implements \Doctri
         return parent::getLanguage();
     }
 
+    public function getPublication()
+    {
+        $this->_load();
+        return parent::getPublication();
+    }
+
+    public function getPublicationId()
+    {
+        $this->_load();
+        return parent::getPublicationId();
+    }
+
     public function getSections()
     {
         $this->_load();
         return parent::getSections();
     }
 
+    public function setTemplate(\Newscoop\Entity\Template $template)
+    {
+        $this->_load();
+        return parent::setTemplate($template);
+    }
+
+    public function setSectionTemplate(\Newscoop\Entity\Template $template)
+    {
+        $this->_load();
+        return parent::setSectionTemplate($template);
+    }
+
+    public function setArticleTemplate(\Newscoop\Entity\Template $template)
+    {
+        $this->_load();
+        return parent::setArticleTemplate($template);
+    }
+
+    public function getName()
+    {
+        $this->_load();
+        return parent::getName();
+    }
+
+    public function getShortName()
+    {
+        $this->_load();
+        return parent::getShortName();
+    }
+
+    public function getId()
+    {
+        $this->_load();
+        return parent::getId();
+    }
+
+    public function setId($id)
+    {
+        $this->_load();
+        return parent::setId($id);
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'publication', 'number', 'language', 'sections');
+        return array('__isInitialized__', 'publication', 'number', 'language', 'name', 'sections', 'template', 'sectionTemplate', 'articleTemplate', 'shortName', 'id');
     }
 
     public function __clone()

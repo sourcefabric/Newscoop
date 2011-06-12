@@ -24,10 +24,23 @@
             <controllerFile controllerName="Logs">
               <actionMethod actionName="index"/>
             </controllerFile>
+            <controllerFile controllerName="Comment">
+              <actionMethod actionName="index"/>
+              <actionMethod actionName="listUsers"/>
+            </controllerFile>
             <controllerFile controllerName="Error">
               <actionMethod actionName="index"/>
             </controllerFile>
             <controllerFile controllerName="UserTypes">
+              <actionMethod actionName="index"/>
+            </controllerFile>
+            <controllerFile controllerName="FileManager">
+              <actionMethod actionName="index"/>
+            </controllerFile>
+            <controllerFile controllerName="CommentAcceptances">
+              <actionMethod actionName="index"/>
+            </controllerFile>
+            <controllerFile controllerName="CommentAcceptance">
               <actionMethod actionName="index"/>
             </controllerFile>
           </controllersDirectory>
@@ -39,10 +52,23 @@
               <viewControllerScriptsDirectory forControllerName="Logs">
                 <viewScriptFile forActionName="index"/>
               </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="Comment">
+                <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="Error">
                 <viewScriptFile forActionName="index"/>
               </viewControllerScriptsDirectory>
               <viewControllerScriptsDirectory forControllerName="UserTypes">
+                <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
+<<<<<<< HEAD
+              <viewControllerScriptsDirectory forControllerName="FileManager">
+=======
+              <viewControllerScriptsDirectory forControllerName="CommentAcceptances">
+                <viewScriptFile forActionName="index"/>
+              </viewControllerScriptsDirectory>
+              <viewControllerScriptsDirectory forControllerName="CommentAcceptance">
+>>>>>>> devel
                 <viewScriptFile forActionName="index"/>
               </viewControllerScriptsDirectory>
             </viewScriptsDirectory>
@@ -58,6 +84,9 @@
           </viewControllerScriptsDirectory>
           <viewControllerScriptsDirectory forControllerName="Error">
             <viewScriptFile forActionName="error"/>
+          </viewControllerScriptsDirectory>
+          <viewControllerScriptsDirectory forControllerName="Comment">
+            <viewScriptFile forActionName="listUsers"/>
           </viewControllerScriptsDirectory>
         </viewScriptsDirectory>
         <viewHelpersDirectory/>
@@ -93,10 +122,28 @@
       <testApplicationDirectory>
         <testApplicationBootstrapFile filesystemName="bootstrap.php"/>
         <testApplicationControllerDirectory>
+<<<<<<< HEAD
+          <testApplicationControllerFile/>
+          <testApplicationControllerFile/>
+          <testApplicationControllerFile/>
+=======
           <testApplicationControllerFile filesystemName="LogsControllerTest.php"/>
+          <testApplicationControllerFile filesystemName="CommentControllerTest.php"/>
           <testApplicationControllerFile filesystemName="ErrorControllerTest.php"/>
           <testApplicationControllerFile filesystemName="UserTypesControllerTest.php"/>
+          <testApplicationControllerFile filesystemName="CommentAcceptancesControllerTest.php"/>
+          <testApplicationControllerFile filesystemName="CommentAcceptanceControllerTest.php"/>
+>>>>>>> devel
         </testApplicationControllerDirectory>
+        <testApplicationModulesDirectory>
+          <testApplicationModuleDirectory forModuleName="admin">
+            <testApplicationControllerDirectory>
+              <testApplicationControllerFile forControllerName="FileManager">
+                <testApplicationActionMethod forActionName="index"/>
+              </testApplicationControllerFile>
+            </testApplicationControllerDirectory>
+          </testApplicationModuleDirectory>
+        </testApplicationModulesDirectory>
       </testApplicationDirectory>
       <testLibraryDirectory>
         <testLibraryBootstrapFile filesystemName="bootstrap.php"/>

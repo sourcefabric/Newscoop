@@ -72,9 +72,9 @@ INSERT INTO SystemPreferences (varname, value) VALUES ('MapMarkerSourceDefault',
 
 -- Pop-up setting
 -- min. pop-up width
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupWidthMin', '300');
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupWidthMin', '200');
 -- min. pop-up width
-INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupHeightMin', '200');
+INSERT INTO SystemPreferences (varname, value) VALUES ('MapPopupHeightMin', '150');
 
 -- Pop-up multimedia content
 -- youtube wideo setting
@@ -108,17 +108,7 @@ INSERT INTO SystemPreferences (varname, value) VALUES ('FlashDirectory', 'videos
 -- INSERT INTO SystemPreferences (varname, value) VALUES ('MapAudioObject', '<object><param name="src" value="%%site%%%%track%%"><param name="autostart" value="%%auto%%"><param name="autoplay" value="%%auto%%"><param name="controller" value="true"><embed src="%%site%%%%track%%" controller="true" autoplay="%%auto%%" autostart="%%auto%%" type="%%type%%" /></object>');
 
 -- Geo Names
-TRUNCATE `CityNames`;
-TRUNCATE `CityLocations`;
-
-ALTER TABLE `CityNames` DISABLE KEYS;
-ALTER TABLE `CityLocations` DISABLE KEYS;
-
-LOAD DATA LOCAL INFILE '../../CityNames.csv' INTO TABLE `CityNames` FIELDS TERMINATED BY ';' ENCLOSED BY '"';
-LOAD DATA LOCAL INFILE '../../CityLocations.csv' INTO TABLE `CityLocations` FIELDS TERMINATED BY ';' ENCLOSED BY '"';
-
-ALTER TABLE `CityNames` ENABLE KEYS;
-ALTER TABLE `CityLocations` ENABLE KEYS;
+system php ./load_geonames_data.php
 
 -- Topics refactoring
 system php ./transfer_topics.php

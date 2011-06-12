@@ -15,6 +15,9 @@ class UserGroupsControllerTest extends PHPUnit_Framework_TestCase
         /* Tear Down Routine */
     }
 
-
+    public function testIndexAction()
+    {
+        $this->assertTrue( true );
+    }
 }
 

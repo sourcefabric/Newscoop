@@ -1,0 +1,77 @@
+/* 
+WOO CUSTOM STYLESHEET
+---------------------
+
+Instructions:
+
+Add your custom styles here instead of style.css so it 
+is easier to update the theme. Simply copy an existing 
+style from style.css to this file, and modify it to 
+your liking.
+
+*/
+
+div.thumbnail {
+  border: 5px solid #ccc!important;
+}
+
+div.poll-item {
+  width: 180px;
+  padding: 5px 0;
+  float: left;
+}
+
+#poll-button {
+  padding:5px;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size:11px;
+  border-style: solid;
+  border-width:1px;
+  text-transform:uppercase;
+  color: #fff;
+  background-color: #000;
+}
+
+/* container - info + map */
+div.geomap_container {
+  clear: both;
+  margin: 0 0 20px 0;
+} 
+
+div.geomap_locations {
+
+}
+
+div.geomap_info {
+  background: #eee;
+  clear: both;
+}
+
+dl.geomap_map_name {
+  line-height: 18px;
+  margin-left: 5px;
+}
+
+div.geo_side_info {
+clear: both;
+}
+
+.geo_side_info div {
+  margin: 2px 0;
+}
+
+.geo_side_info a {
+  float: left;
+  width: 150px;
+}
+
+div.geomap_map {
+  clear: both;
+}
+
+div.geomap_menu {
+  clear: both;
+  margin: 5px 0;
+  font-size: 12px;
+}
+
