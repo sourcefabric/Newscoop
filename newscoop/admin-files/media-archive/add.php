@@ -37,7 +37,7 @@ camp_html_display_msgs();
 ?>
 
 <br />
-<form method="POST" action="do_upload.php" enctype="multipart/form-data">
+    <form method="POST" action="/<?php echo $ADMIN; ?>/media-archive/do_upload.php" enctype="multipart/form-data">
 <?php echo SecurityToken::FormParameter(); ?>
 <div id="uploader"></div>
 <div id="uploader_error"></div>

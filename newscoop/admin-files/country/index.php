@@ -30,8 +30,8 @@ echo camp_html_breadcrumbs($crumbs);
 	<TD>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
-			<TD><A HREF="add.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-			<TD><A HREF="add.php"><B><?php  putGS("Add new country"); ?></B></A></TD>
+            <TD><A HREF="/<?php echo $ADMIN; ?>/country/add.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+            <TD><A HREF="/<?php echo $ADMIN; ?>/country/add.php"><B><?php  putGS("Add new country"); ?></B></A></TD>
 		</TR>
 		</TABLE>
 	</TD>
@@ -39,7 +39,7 @@ echo camp_html_breadcrumbs($crumbs);
 <?php  } ?>
 <TR>
 	<TD ALIGN="RIGHT">
-		<FORM METHOD="GET" ACTION="index.php" NAME="">
+		<FORM METHOD="GET" ACTION="" NAME="">
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="search_dialog">
 		<TR>
 			<TD><?php  putGS('Language') ?>:</TD>

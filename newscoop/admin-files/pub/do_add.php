@@ -1,9 +1,6 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Alias.php");
-require_once($GLOBALS['g_campsiteDir']."/include/phorum_load.php");
-require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_forum.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_setting.php');
 
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
@@ -79,24 +76,17 @@ $columns = array('Name' => $f_name,
 			     'comments_article_default_enabled'=> $f_comments_article_default,
 			     'comments_subscribers_moderated' => $f_comments_subscribers_moderated,
 			     'comments_public_moderated' => $f_comments_public_moderated,
+                 'comments_public_enabled' => $f_comments_public_enabled,
 			     'comments_captcha_enabled' => $f_comments_captcha_enabled,
 				 'comments_spam_blocking_enabled' => $f_comments_spam_blocking_enabled,
+                 'comments_moderator_to' => $f_comments_moderator_to,
+                 'comments_moderator_from' => $f_comments_moderator_from,
                  'seo' => serialize($f_seo));
 
 $created = $publicationObj->create($columns);
 if ($created) {
 	$alias->setPublicationId($publicationObj->getPublicationId());
-
-	$forum = camp_forum_create($publicationObj, $f_comments_public_enabled);
-	camp_forum_update($forum, $f_name, $f_comments_enabled, $f_comments_public_enabled);
-	$setting = new Phorum_setting('mod_emailcomments', 'S');
-	if (!$setting->exists()) {
-		$setting->create();
-	}
-	$setting->update(array('addresses' => array($forum->getForumId() => $f_comments_moderator_to)));
-	$setting->update(array('from_addresses' => array($forum->getForumId() => $f_comments_moderator_from)));
-
-	camp_html_add_msg("Publication created.", "ok");
+ 	camp_html_add_msg("Publication created.", "ok");
 	camp_html_goto_page("/$ADMIN/pub/edit.php?Pub=".$publicationObj->getPublicationId());
 } else {
 	$alias->delete();

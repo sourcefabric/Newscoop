@@ -93,7 +93,7 @@ echo camp_html_breadcrumbs($crumbs);
 camp_html_display_msgs();
 ?>
 <P>
-<FORM name="plugin_upload" action="manage.php" method='POST' enctype='multipart/form-data'>
+<FORM name="plugin_upload" action="/<?php echo $ADMIN; ?>/plugins/manage.php" method='POST' enctype='multipart/form-data'>
 <?php echo SecurityToken::FormParameter(); ?>
 <table cellpadding="0" cellspacing="0" class="action_buttons" style="padding-bottom: 5px;">
   <tr>
@@ -129,7 +129,7 @@ if ($success) {
 
 <P>
 <?php if (count($infos = CampPlugin::GetPluginsInfo()) > 0) { ?>
-<FORM name="plugins_enabled" action="manage.php">
+<FORM name="plugins_enabled" action="/<?php echo $ADMIN; ?>/plugins/manage.php">
 <?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" width="95%">
     <TR class="table_list_header">
@@ -167,7 +167,7 @@ if ($success) {
             </TD>
 
             <TD  width="80px" align="center">
-               <a href="manage.php?p_plugin=<?php p(htmlspecialchars($info['name']))?>&amp;p_uninstall=1&amp;<?php echo SecurityToken::URLParameter(); ?>" onClick="return confirm('<?php putGS('Please confirm the plugin $1 uninstall. All plugin data will be deleted!', $info['name']) ?>')">
+               <a href="/<?php echo $ADMIN; ?>/plugins/manage.php?p_plugin=<?php p(htmlspecialchars($info['name']))?>&amp;p_uninstall=1&amp;<?php echo SecurityToken::URLParameter(); ?>" onClick="return confirm('<?php putGS('Please confirm the plugin $1 uninstall. All plugin data will be deleted!', $info['name']) ?>')">
                  <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"] ?>/delete.png" BORDER="0" ALT="<?php putGS('Delete plugin')?>" TITLE="<?php putGS('Delete plugin') ?>">
                </a>
             </TD>

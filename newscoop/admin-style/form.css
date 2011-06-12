@@ -14,8 +14,8 @@ body.with-sidebar dl.zend_form {
 }
 
 .zend_form dt {
-    margin: 9px 0 0;
-    padding: 0 2px;
+    padding: 12px 26px;
+    -position: absolute;
     font-weight: bold;
     color: #696969;
 }
@@ -113,7 +113,8 @@ body.with-sidebar dl.zend_form {
     height: 1%;
     overflow: hidden;
     margin-top: 13px;
-	text-align:right;
+    padding: 10px;
+    float: left;
 }
 
 .zend_form label {

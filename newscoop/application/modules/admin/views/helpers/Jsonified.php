@@ -1,16 +1,16 @@
 <?php
 /**
-* Render actions view helper
-*/
+ * Render actions view helper
+ */
 class Admin_View_Helper_Jsonified extends Zend_View_Helper_Abstract
 {
     /**
-	 * Render actions
-	 *
-	 * @param array $p_inputs
-	 * @param array $p_methods default empty array
-	 * @return string 
-	 */
+     * Render actions
+     *
+     * @param array $p_inputs
+     * @param array $p_methods default empty array
+     * @return string
+     */
     public function jsonified(array $p_input, array $p_methods = array())
     {
         if(count($p_methods))

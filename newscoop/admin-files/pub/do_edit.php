@@ -4,9 +4,6 @@ require_once($GLOBALS['g_campsiteDir']."/classes/TimeUnit.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/UrlType.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Alias.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
-require_once($GLOBALS['g_campsiteDir']."/include/phorum_load.php");
-require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_forum.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_setting.php');
 
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
@@ -73,20 +70,7 @@ if (camp_html_has_msgs()) {
       camp_html_goto_page($backLink);
 }
 
-$forum = new Phorum_forum($publicationObj->getForumId());
-if (!$forum->exists()) {
-	$forum = camp_forum_create($publicationObj);
-}
-$forum->setName($f_name);
-$forum->setIsVisible($f_comments_enabled);
-$publicationObj->setPublicComments($f_comments_public_enabled);
-
-$setting = new Phorum_setting('mod_emailcomments', 'S');
-if (!$setting->exists()) {
-	$setting->create();
-}
-$setting->update(array('addresses' => array($forum->getForumId() => $f_comments_moderator_to)));
-$setting->update(array('from_addresses' => array($forum->getForumId() => $f_comments_moderator_from)));
+//$publicationObj->setPublicComments($f_comments_public_enabled);
 
 $columns = array('Name' => $f_name,
 				 'IdDefaultAlias' => $f_default_alias,
@@ -102,9 +86,13 @@ $columns = array('Name' => $f_name,
 				 'comments_article_default_enabled'=> $f_comments_article_default,
 				 'comments_subscribers_moderated' => $f_comments_subscribers_moderated,
 				 'comments_public_moderated' => $f_comments_public_moderated,
+                 'comments_public_enabled' => $f_comments_public_enabled,
 				 'comments_captcha_enabled' => $f_comments_captcha_enabled,
 				 'comments_spam_blocking_enabled' => $f_comments_spam_blocking_enabled,
-                 'seo' => serialize($f_seo));
+                 'comments_moderator_to' => $f_comments_moderator_to,
+                 'comments_moderator_from' => $f_comments_moderator_from,
+                 'seo' => serialize($f_seo),
+            );
 
 $updated = $publicationObj->update($columns);
 if ($updated) {

@@ -5,9 +5,6 @@ require_once($GLOBALS['g_campsiteDir']."/classes/UrlType.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Template.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Alias.php");
-require_once($GLOBALS['g_campsiteDir']."/include/phorum_load.php");
-require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_forum.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_setting.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/camp_html.php");
 camp_load_translation_strings("api");
 
@@ -41,7 +38,7 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 </TABLE>
 <?php camp_html_display_msgs(); ?>
 <p>
-<FORM NAME="publication_add" METHOD="POST" ACTION="do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<FORM NAME="publication_add" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/pub/do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
 <?php include("pub_form.php"); ?>
 </FORM>

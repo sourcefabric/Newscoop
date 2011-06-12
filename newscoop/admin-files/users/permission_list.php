@@ -42,7 +42,6 @@ function camp_get_permission_list()
 	'ManageReaders'=>getGS('User may add/change subscribers accounts and passwords'),
 	'ManageSubscriptions'=>getGS('User may manage user subscriptions'),
 	'ManageUserTypes'=>getGS('User may manage account types'),
-        'SyncPhorumUsers'=>getGS('User may synchronize Newscoop and Phorum users'),
          'EditAuthors'=>getGS('User may change authors')
         );
 

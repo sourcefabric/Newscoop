@@ -41,7 +41,7 @@ camp_html_display_msgs();
 
 <div class="ui-widget-content padded-strong block-shadow">
 
-<form name="image_multiedit" method="POST" action="do_multiedit.php" enctype="multipart/form-data">
+<form name="image_multiedit" method="POST" action="/<?php echo $ADMIN; ?>/media-archive/do_multiedit.php" enctype="multipart/form-data">
 
 <fieldset class="plain">
 

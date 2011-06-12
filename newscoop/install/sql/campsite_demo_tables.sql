@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.1.49, for debian-linux-gnu (i686)
+-- MySQL dump 10.13  Distrib 5.1.54, for debian-linux-gnu (i686)
 --
--- Host: localhost    Database: newscoop
+-- Host: localhost    Database: newscoop-devel
 -- ------------------------------------------------------
--- Server version	5.1.49-1ubuntu8.1
+-- Server version	5.1.54-1ubuntu4
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -60,24 +60,6 @@ CREATE TABLE `ArticleAuthors` (
   `fk_author_id` int(10) unsigned NOT NULL DEFAULT '0',
   `fk_type_id` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`fk_article_number`,`fk_language_id`,`fk_author_id`,`fk_type_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `ArticleComments`
---
-
-DROP TABLE IF EXISTS `ArticleComments`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `ArticleComments` (
-  `fk_article_number` int(10) unsigned NOT NULL DEFAULT '0',
-  `fk_language_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `fk_comment_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `is_first` tinyint(1) NOT NULL DEFAULT '0',
-  KEY `fk_comment_id` (`fk_comment_id`),
-  KEY `article_index` (`fk_article_number`,`fk_language_id`),
-  KEY `first_message_index` (`fk_article_number`,`fk_language_id`,`is_first`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -523,7 +505,7 @@ CREATE TABLE `Log` (
   `user_ip` varchar(39) NOT NULL DEFAULT '',
   `priority` smallint(1) unsigned NOT NULL DEFAULT '6',
   PRIMARY KEY (`id`),
-  KEY (`priority`)
+  KEY `priority` (`priority`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -578,7 +560,8 @@ CREATE TABLE `MapLocations` (
   `rank` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `map_locations_point_id` (`fk_location_id`),
-  KEY `map_locations_map_id` (`fk_map_id`)
+  KEY `map_locations_map_id` (`fk_map_id`),
+  KEY `map_locations_poi_style_idx` (`poi_style`(64))
 ) ENGINE=MyISAM AUTO_INCREMENT=55 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -686,8 +669,11 @@ CREATE TABLE `Publications` (
   `comments_article_default_enabled` tinyint(1) NOT NULL DEFAULT '0',
   `comments_subscribers_moderated` tinyint(1) NOT NULL DEFAULT '0',
   `comments_public_moderated` tinyint(1) NOT NULL DEFAULT '0',
+  `comments_public_enabled` tinyint(1) NOT NULL DEFAULT '0',
   `comments_captcha_enabled` tinyint(1) NOT NULL DEFAULT '0',
   `comments_spam_blocking_enabled` tinyint(1) NOT NULL DEFAULT '0',
+  `comments_moderator_to` varchar(255) NOT NULL DEFAULT '',
+  `comments_moderator_from` varchar(255) NOT NULL DEFAULT '',
   `url_error_tpl_id` int(10) unsigned DEFAULT NULL,
   `seo` varchar(128) DEFAULT NULL,
   PRIMARY KEY (`Id`),
@@ -795,17 +781,17 @@ DROP TABLE IF EXISTS `SubsSections`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `SubsSections` (
-  `id` int(10) AUTO_INCREMENT,
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `IdSubscription` int(10) unsigned NOT NULL DEFAULT '0',
   `SectionNumber` int(10) unsigned NOT NULL DEFAULT '0',
-  `IdLanguage` int(10) NULL,
+  `IdLanguage` int(10) unsigned NOT NULL DEFAULT '0',
   `StartDate` date NOT NULL DEFAULT '0000-00-00',
   `Days` int(10) unsigned NOT NULL DEFAULT '0',
   `PaidDays` int(10) unsigned NOT NULL DEFAULT '0',
   `NoticeSent` enum('N','Y') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`id`),
-  UNIQUE (`IdSubscription`,`SectionNumber`,`IdLanguage`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  UNIQUE KEY `IdSubscription` (`IdSubscription`,`SectionNumber`,`IdLanguage`)
+) ENGINE=MyISAM AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -960,6 +946,108 @@ CREATE TABLE `Xpage` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `acl_role`
+--
+
+DROP TABLE IF EXISTS `acl_role`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `acl_role` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `acl_rule`
+--
+
+DROP TABLE IF EXISTS `acl_rule`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `acl_rule` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `type` enum('allow','deny') NOT NULL DEFAULT 'allow',
+  `role_id` int(10) NOT NULL,
+  `resource` varchar(80) NOT NULL DEFAULT '',
+  `action` varchar(80) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `role_id` (`role_id`,`resource`,`action`)
+) ENGINE=MyISAM AUTO_INCREMENT=192 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `comment`
+--
+
+DROP TABLE IF EXISTS `comment`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `comment` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_comment_commenter_id` int(10) unsigned NOT NULL,
+  `fk_forum_id` int(10) unsigned NOT NULL,
+  `fk_thread_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `fk_language_id` int(10) unsigned DEFAULT '0',
+  `fk_parent_id` int(10) unsigned DEFAULT NULL,
+  `subject` varchar(140) NOT NULL DEFAULT '',
+  `message` text NOT NULL,
+  `thread_order` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `thread_level` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `status` tinyint(3) unsigned NOT NULL DEFAULT '0',
+  `ip` varchar(39) NOT NULL DEFAULT '',
+  `likes` tinyint(3) unsigned DEFAULT '0',
+  `dislikes` tinyint(3) unsigned DEFAULT '0',
+  `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  KEY `comments_users` (`fk_comment_commenter_id`),
+  KEY `publication` (`fk_forum_id`),
+  KEY `article` (`fk_thread_id`),
+  KEY `parent` (`fk_parent_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `comment_commenter`
+--
+
+DROP TABLE IF EXISTS `comment_commenter`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `comment_commenter` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_user_id` int(10) unsigned DEFAULT NULL,
+  `email` varchar(100) NOT NULL DEFAULT '',
+  `url` varchar(255) NOT NULL DEFAULT '',
+  `name` varchar(100) NOT NULL DEFAULT '',
+  `ip` varchar(39) NOT NULL DEFAULT '',
+  `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `comment_acceptance`
+--
+
+DROP TABLE IF EXISTS `comment_acceptance`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `comment_acceptance` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `fk_forum_id` int(10) DEFAULT '0',
+  `for_column` tinyint(4) NOT NULL DEFAULT '0',
+  `type` tinyint(4) NOT NULL DEFAULT '0',
+  `search_type` tinyint(4) NOT NULL DEFAULT '0',
+  `search` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `fk_forum_id` (`fk_forum_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `liveuser_grouprights`
 --
 
@@ -988,7 +1076,7 @@ CREATE TABLE `liveuser_groups` (
   `role_id` int(10) DEFAULT NULL,
   PRIMARY KEY (`group_id`),
   UNIQUE KEY `groups_define_name_i_idx` (`group_define_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1147,408 +1235,6 @@ CREATE TABLE `liveuser_users_auth_user_id_seq` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `phorum_banlists`
---
-
-DROP TABLE IF EXISTS `phorum_banlists`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_banlists` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `forum_id` int(11) NOT NULL DEFAULT '0',
-  `type` tinyint(4) NOT NULL DEFAULT '0',
-  `pcre` tinyint(4) NOT NULL DEFAULT '0',
-  `string` varchar(255) NOT NULL DEFAULT '',
-  PRIMARY KEY (`id`),
-  KEY `forum_id` (`forum_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `phorum_files`
---
-
-DROP TABLE IF EXISTS `phorum_files`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_files` (
-  `file_id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `filename` varchar(255) NOT NULL DEFAULT '',
-  `filesize` int(11) NOT NULL DEFAULT '0',
-  `file_data` mediumtext,
-  `add_datetime` int(10) unsigned NOT NULL DEFAULT '0',
-  `message_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `link` varchar(10) NOT NULL DEFAULT '',
-  PRIMARY KEY (`file_id`),
-  KEY `add_datetime` (`add_datetime`),
-  KEY `message_id_link` (`message_id`,`link`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `phorum_forum_group_xref`
---
-
-DROP TABLE IF EXISTS `phorum_forum_group_xref`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_forum_group_xref` (
-  `forum_id` int(11) NOT NULL DEFAULT '0',
-  `group_id` int(11) NOT NULL DEFAULT '0',
-  `permission` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`forum_id`,`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `phorum_forums`
---
-
-DROP TABLE IF EXISTS `phorum_forums`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_forums` (
-  `forum_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `name` varchar(50) NOT NULL DEFAULT '',
-  `active` smallint(6) NOT NULL DEFAULT '0',
-  `description` text,
-  `template` varchar(50) NOT NULL DEFAULT '',
-  `folder_flag` tinyint(1) NOT NULL DEFAULT '0',
-  `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `list_length_flat` int(10) unsigned NOT NULL DEFAULT '0',
-  `list_length_threaded` int(10) unsigned NOT NULL DEFAULT '0',
-  `moderation` int(10) unsigned NOT NULL DEFAULT '0',
-  `threaded_list` tinyint(4) NOT NULL DEFAULT '0',
-  `threaded_read` tinyint(4) NOT NULL DEFAULT '0',
-  `float_to_top` tinyint(4) NOT NULL DEFAULT '0',
-  `check_duplicate` tinyint(4) NOT NULL DEFAULT '0',
-  `allow_attachment_types` varchar(100) NOT NULL DEFAULT '',
-  `max_attachment_size` int(10) unsigned NOT NULL DEFAULT '0',
-  `max_totalattachment_size` int(10) unsigned NOT NULL DEFAULT '0',
-  `max_attachments` int(10) unsigned NOT NULL DEFAULT '0',
-  `pub_perms` int(10) unsigned NOT NULL DEFAULT '0',
-  `reg_perms` int(10) unsigned NOT NULL DEFAULT '0',
-  `display_ip_address` smallint(5) unsigned NOT NULL DEFAULT '1',
-  `allow_email_notify` smallint(5) unsigned NOT NULL DEFAULT '1',
-  `language` varchar(100) NOT NULL DEFAULT 'english',
-  `email_moderators` tinyint(1) NOT NULL DEFAULT '0',
-  `message_count` int(10) unsigned NOT NULL DEFAULT '0',
-  `sticky_count` int(10) unsigned NOT NULL DEFAULT '0',
-  `thread_count` int(10) unsigned NOT NULL DEFAULT '0',
-  `last_post_time` int(10) unsigned NOT NULL DEFAULT '0',
-  `display_order` int(10) unsigned NOT NULL DEFAULT '0',
-  `read_length` int(10) unsigned NOT NULL DEFAULT '0',
-  `vroot` int(10) unsigned NOT NULL DEFAULT '0',
-  `edit_post` tinyint(1) NOT NULL DEFAULT '1',
-  `template_settings` text,
-  `count_views` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `display_fixed` tinyint(1) unsigned NOT NULL DEFAULT '0',
-  `reverse_threading` tinyint(1) NOT NULL DEFAULT '0',
-  `inherit_id` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`forum_id`),
-  KEY `name` (`name`),
-  KEY `active` (`active`,`parent_id`),
-  KEY `group_id` (`parent_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `phorum_groups`
---
-
-DROP TABLE IF EXISTS `phorum_groups`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_groups` (
-  `group_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL DEFAULT '0',
-  `open` tinyint(3) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `phorum_messages`
---
-
-DROP TABLE IF EXISTS `phorum_messages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_messages` (
-  `message_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `forum_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `thread` int(10) unsigned NOT NULL DEFAULT '0',
-  `parent_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `author` varchar(37) NOT NULL DEFAULT '',
-  `subject` varchar(255) NOT NULL DEFAULT '',
-  `body` text NOT NULL,
-  `email` varchar(100) NOT NULL DEFAULT '',
-  `ip` varchar(255) NOT NULL DEFAULT '',
-  `status` tinyint(4) NOT NULL DEFAULT '2',
-  `msgid` varchar(100) NOT NULL DEFAULT '',
-  `modifystamp` int(10) unsigned NOT NULL DEFAULT '0',
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `thread_count` int(10) unsigned NOT NULL DEFAULT '0',
-  `moderator_post` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `sort` tinyint(4) NOT NULL DEFAULT '2',
-  `datestamp` int(10) unsigned NOT NULL DEFAULT '0',
-  `meta` mediumtext NOT NULL,
-  `viewcount` int(10) unsigned NOT NULL DEFAULT '0',
-  `closed` tinyint(4) NOT NULL DEFAULT '0',
-  `thread_depth` tinyint(3) unsigned NOT NULL DEFAULT '0',
-  `thread_order` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`message_id`),
-  KEY `thread_message` (`thread`,`message_id`),
-  KEY `thread_forum` (`thread`,`forum_id`),
-  KEY `special_threads` (`sort`,`forum_id`),
-  KEY `status_forum` (`status`,`forum_id`),
-  KEY `list_page_float` (`forum_id`,`parent_id`,`modifystamp`),
-  KEY `list_page_flat` (`forum_id`,`parent_id`,`thread`),
-  KEY `post_count` (`forum_id`,`status`,`parent_id`),
-  KEY `dup_check` (`forum_id`,`author`,`subject`,`datestamp`),
-  KEY `forum_max_message` (`forum_id`,`message_id`,`status`,`parent_id`),
-  KEY `last_post_time` (`forum_id`,`status`,`modifystamp`),
-  KEY `next_prev_thread` (`forum_id`,`status`,`thread`),
-  KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `phorum_pm_buddies`
---
-
-DROP TABLE IF EXISTS `phorum_pm_buddies`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_pm_buddies` (
-  `pm_buddy_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `buddy_user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`pm_buddy_id`),
-  UNIQUE KEY `userids` (`user_id`,`buddy_user_id`),
-  KEY `buddy_user_id` (`buddy_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `phorum_pm_folders`
---
-
-DROP TABLE IF EXISTS `phorum_pm_folders`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_pm_folders` (
-  `pm_folder_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `foldername` varchar(20) NOT NULL DEFAULT '',
-  PRIMARY KEY (`pm_folder_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `phorum_pm_messages`
---
-
-DROP TABLE IF EXISTS `phorum_pm_messages`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_pm_messages` (
-  `pm_message_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `from_user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `from_username` varchar(50) NOT NULL DEFAULT '',
-  `subject` varchar(100) NOT NULL DEFAULT '',
-  `message` text NOT NULL,
-  `datestamp` int(10) unsigned NOT NULL DEFAULT '0',
-  `meta` mediumtext NOT NULL,
-  PRIMARY KEY (`pm_message_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `phorum_pm_xref`
---
-
-DROP TABLE IF EXISTS `phorum_pm_xref`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_pm_xref` (
-  `pm_xref_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `pm_folder_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `special_folder` varchar(10) DEFAULT NULL,
-  `pm_message_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `read_flag` tinyint(1) NOT NULL DEFAULT '0',
-  `reply_flag` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`pm_xref_id`),
-  KEY `xref` (`user_id`,`pm_folder_id`,`pm_message_id`),
-  KEY `read_flag` (`read_flag`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `phorum_search`
---
-
-DROP TABLE IF EXISTS `phorum_search`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_search` (
-  `message_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `forum_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `search_text` mediumtext NOT NULL,
-  PRIMARY KEY (`message_id`),
-  KEY `forum_id` (`forum_id`),
-  FULLTEXT KEY `search_text` (`search_text`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `phorum_settings`
---
-
-DROP TABLE IF EXISTS `phorum_settings`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_settings` (
-  `name` varchar(255) NOT NULL DEFAULT '',
-  `type` enum('V','S') NOT NULL DEFAULT 'V',
-  `data` text,
-  PRIMARY KEY (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `phorum_subscribers`
---
-
-DROP TABLE IF EXISTS `phorum_subscribers`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_subscribers` (
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `forum_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `sub_type` int(10) unsigned NOT NULL DEFAULT '0',
-  `thread` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_id`,`forum_id`,`thread`),
-  KEY `forum_id` (`forum_id`,`thread`,`sub_type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `phorum_user_custom_fields`
---
-
-DROP TABLE IF EXISTS `phorum_user_custom_fields`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_user_custom_fields` (
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `type` int(11) NOT NULL DEFAULT '0',
-  `data` text,
-  PRIMARY KEY (`user_id`,`type`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `phorum_user_group_xref`
---
-
-DROP TABLE IF EXISTS `phorum_user_group_xref`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_user_group_xref` (
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `group_id` int(11) NOT NULL DEFAULT '0',
-  `status` tinyint(3) NOT NULL DEFAULT '1',
-  PRIMARY KEY (`user_id`,`group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `phorum_user_newflags`
---
-
-DROP TABLE IF EXISTS `phorum_user_newflags`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_user_newflags` (
-  `user_id` int(11) NOT NULL DEFAULT '0',
-  `forum_id` int(11) NOT NULL DEFAULT '0',
-  `message_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_id`,`forum_id`,`message_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `phorum_user_permissions`
---
-
-DROP TABLE IF EXISTS `phorum_user_permissions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_user_permissions` (
-  `user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `forum_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `permission` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`user_id`,`forum_id`),
-  KEY `forum_id` (`forum_id`,`permission`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Table structure for table `phorum_users`
---
-
-DROP TABLE IF EXISTS `phorum_users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `phorum_users` (
-  `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `fk_campsite_user_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `username` varchar(50) NOT NULL DEFAULT '',
-  `password` varchar(50) NOT NULL DEFAULT '',
-  `cookie_sessid_lt` varchar(50) NOT NULL DEFAULT '',
-  `sessid_st` varchar(50) NOT NULL DEFAULT '',
-  `sessid_st_timeout` int(10) unsigned NOT NULL DEFAULT '0',
-  `password_temp` varchar(50) NOT NULL DEFAULT '',
-  `email` varchar(100) NOT NULL DEFAULT '',
-  `email_temp` varchar(110) NOT NULL DEFAULT '',
-  `hide_email` tinyint(1) NOT NULL DEFAULT '0',
-  `active` tinyint(1) NOT NULL DEFAULT '0',
-  `user_data` text,
-  `signature` text,
-  `threaded_list` tinyint(4) NOT NULL DEFAULT '0',
-  `posts` int(10) NOT NULL DEFAULT '0',
-  `admin` tinyint(1) NOT NULL DEFAULT '0',
-  `threaded_read` tinyint(4) NOT NULL DEFAULT '0',
-  `date_added` int(10) unsigned NOT NULL DEFAULT '0',
-  `date_last_active` int(10) unsigned NOT NULL DEFAULT '0',
-  `last_active_forum` int(10) unsigned NOT NULL DEFAULT '0',
-  `hide_activity` tinyint(1) NOT NULL DEFAULT '0',
-  `show_signature` tinyint(1) NOT NULL DEFAULT '0',
-  `email_notify` tinyint(1) NOT NULL DEFAULT '0',
-  `pm_email_notify` tinyint(1) NOT NULL DEFAULT '1',
-  `tz_offset` tinyint(2) NOT NULL DEFAULT '-99',
-  `is_dst` tinyint(1) NOT NULL DEFAULT '0',
-  `user_language` varchar(100) NOT NULL DEFAULT '',
-  `user_template` varchar(100) NOT NULL DEFAULT '',
-  `moderator_data` text,
-  `moderation_email` tinyint(2) unsigned NOT NULL DEFAULT '1',
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `fk_campsite_user_id` (`fk_campsite_user_id`),
-  UNIQUE KEY `username` (`username`),
-  KEY `active` (`active`),
-  KEY `userpass` (`username`,`password`),
-  KEY `sessid_st` (`sessid_st`),
-  KEY `cookie_sessid_lt` (`cookie_sessid_lt`),
-  KEY `activity` (`date_last_active`,`hide_activity`,`last_active_forum`),
-  KEY `date_added` (`date_added`),
-  KEY `email_temp` (`email_temp`)
-) ENGINE=MyISAM AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1854,4 +1540,4 @@ CREATE TABLE `plugin_pollanswer_attachment` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-03-14 15:31:51
+-- Dump completed on 2011-06-11 22:31:33

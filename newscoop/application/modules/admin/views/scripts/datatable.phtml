@@ -1,4 +1,4 @@
-<table class="data">
+<table class="datatable" cellspacing="0" cellpadding="0">
 <thead>
 <tr>
     <?php foreach ($this->cols as $col) { ?>
@@ -12,23 +12,14 @@
 </tr>
 </tbody>
 </table>
-
 <script type="text/javascript">
+var datatable;
 $(function() {
-    $('table.data')
+    datatable = $('table.datatable')
         .wrap($('<div />').addClass('table')).wrap($('<div />').addClass('smartlist'))
         .css('position', 'relative').css('width', '100%')
-        .dataTable({
-            'sAjaxSource': '<?php echo $this->url(array('action' => 'index', 'format' => 'json')); ?>',
-            'bServerSide': true,
-            'bJQueryUI': true,
-            'bAutoWidth': true,
-            'iDisplayLength': 25,
-            'bLengthChange': false,
-            'sPaginationType': 'full_numbers',
-            'aoColumnDefs': [
-                { 'bSortable': false, 'aTargets': [-1] }
-            ]
-    });
+        .dataTable(
+            <?php echo $this->jsonified($this->iOptions, array('fnRowCallback', 'fnDrawCallback', 'fnServerData'));?>
+        );
 });
 </script>

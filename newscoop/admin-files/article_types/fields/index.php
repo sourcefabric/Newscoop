@@ -50,9 +50,9 @@ field_ids.push("translate_field_"+<?php p($i); ?>);
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
 <TR>
-	<TD><A HREF="add.php?f_article_type=<?php print urlencode($articleTypeName); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
+    <TD><A HREF="/<?php echo $ADMIN; ?>/article_types/fields/add.php?f_article_type=<?php print urlencode($articleTypeName); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A>
 	</TD>
-	<TD><B><A HREF="add.php?f_article_type=<?php print urlencode($articleTypeName); ?>" ><?php  putGS("Add new field"); ?></A></B>
+    <TD><B><A HREF="/<?php echo $ADMIN; ?>/article_types/fields/add.php?f_article_type=<?php print urlencode($articleTypeName); ?>" ><?php  putGS("Add new field"); ?></A></B>
 	</TD>
 	<TD><DIV STYLE="width:15px;"></DIV></TD>
 		<TD><A HREF="javascript: void(0);"
@@ -145,12 +145,12 @@ foreach ($fields as $field) {
 		<TABLE><TR>
 		<TD>
 		<DIV STYLE="width: 15px;">
-			<?php if (count($fields) > 1 && $i < count($fields) - 1) { ?><A HREF="do_reorder.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getPrintName(); ?>&f_move=down&<?php echo SecurityToken::URLParameter(); ?>"><IMG BORDER="0" SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/down_arrow.png"></A><?php } else { ?>&nbsp;<?php } ?>
+            <?php if (count($fields) > 1 && $i < count($fields) - 1) { ?><A HREF="/<?php echo $ADMIN; ?>/article_types/fields/do_reorder.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getPrintName(); ?>&f_move=down&<?php echo SecurityToken::URLParameter(); ?>"><IMG BORDER="0" SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/down_arrow.png"></A><?php } else { ?>&nbsp;<?php } ?>
 		</DIV>
 		</TD>
 		<TD>
 		<DIV STYLE="width: 15px;">
-			<?php if (count($fields) > 1 && $i != 0) { ?><A HREF="do_reorder.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getPrintName(); ?>&f_move=up&<?php echo SecurityToken::URLParameter(); ?>"><IMG BORDER="0" SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/up_arrow.png"></A><?php } else { ?>&nbsp;<?php } ?>
+            <?php if (count($fields) > 1 && $i != 0) { ?><A HREF="/<?php echo $ADMIN; ?>/article_types/fields/do_reorder.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getPrintName(); ?>&f_move=up&<?php echo SecurityToken::URLParameter(); ?>"><IMG BORDER="0" SRC="<?php echo $Campsite['ADMIN_IMAGE_BASE_URL']; ?>/up_arrow.png"></A><?php } else { ?>&nbsp;<?php } ?>
 		</DIV>
 		</TD>
 		</TR></TABLE>
@@ -158,12 +158,12 @@ foreach ($fields as $field) {
 
 	<TD>
         <?php if ($duplicateFieldName) { echo '<div class="failure_message">'; } ?>
-		<A HREF="rename.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getPrintName(); ?>"><?php  print htmlspecialchars($field->getPrintName()); ?></A>&nbsp;
+        <A HREF="/<?php echo $ADMIN; ?>/article_types/fields/rename.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getPrintName(); ?>"><?php  print htmlspecialchars($field->getPrintName()); ?></A>&nbsp;
 		<?php if ($duplicateFieldName) { echo '**</div>'; } ?>
 	</TD>
 
 	<TD>
-		<A HREF="retype.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getPrintName(); ?>"><?php print htmlspecialchars($field->getVerboseTypeName($languageObj->getLanguageId())); ?></A>
+        <A HREF="/<?php echo $ADMIN; ?>/article_types/fields/retype.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php print $field->getPrintName(); ?>"><?php print htmlspecialchars($field->getVerboseTypeName($languageObj->getLanguageId())); ?></A>
 	</TD>
 
 	<TD>
@@ -226,7 +226,7 @@ foreach ($fields as $field) {
 
     	<tr>
     	<td colspan="2">
-    		<FORM method="POST" action="do_translate.php?f_article_type=<?php p($articleTypeName); ?>" >
+            <FORM method="POST" action="/<?php echo $ADMIN; ?>/article_types/fields/do_translate.php?f_article_type=<?php p($articleTypeName); ?>" >
 			<?php echo SecurityToken::FormParameter(); ?>
     		<input type="hidden" name="f_field_id" value="<?php p($field->getPrintName()); ?>">
     		<table cellpadding="0" cellspacing="0" style="border-top: 1px solid #CFC467; border-bottom: 1px solid #CFC467; background-color: #FFFCDF ; padding-left: 5px; padding-right: 5px;" width="100%">

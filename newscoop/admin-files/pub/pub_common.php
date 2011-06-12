@@ -60,43 +60,4 @@ function camp_is_alias_conflicting($p_alias)
 		}
 	}
 }
-
-/**
- * Create a forum for a publication.
- *
- * @param Publication $p_publicationObj
- * @return Phorum_forum
- */
-function camp_forum_create($p_publicationObj)
-{
-	// create the phorum
-    $forum = new Phorum_forum();
-    $forum->create();
-    $p_publicationObj->setForumId($forum->getForumId());
-	return $forum;
-} // fn camp_forum_create
-
-
-/**
- * Update the forum config.
- *
- * @param Phorum_forum $p_forum
- * @param string $p_publicationName
- * @param boolean $p_enabled
- * @param boolean $p_publicPostingEnabled
- */
-function camp_forum_update($p_forum, $p_publicationName, $p_enabled, $p_publicPostingEnabled)
-{
-	$p_forum->setName($p_publicationName);
-	if ($p_publicPostingEnabled) {
-		$p_forum->setPublicPermissions($p_forum->getPublicPermissions()
-									 | PHORUM_USER_ALLOW_NEW_TOPIC
-									 | PHORUM_USER_ALLOW_REPLY);
-	} else {
-		$p_forum->setPublicPermissions($p_forum->getPublicPermissions()
-									 & !PHORUM_USER_ALLOW_NEW_TOPIC
-									 & !PHORUM_USER_ALLOW_REPLY);
-	}
-	$p_forum->setIsVisible($p_enabled);
-} // fn camp_forum_update
 ?>

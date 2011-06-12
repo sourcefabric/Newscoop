@@ -35,6 +35,7 @@ class Admin_SubscriptionController extends Zend_Controller_Action
                 'controller' => 'subscription',
                 'action' => 'add',
                 'reset_params' => false,
+                'class' => 'add',
                 'params' => array(
                     'next' => $next,
                 ),

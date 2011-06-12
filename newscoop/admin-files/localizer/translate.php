@@ -29,7 +29,7 @@ function LanguageMenu($p_languageMetadata, $p_selectedValue)
  */
 function translationForm($p_request)
 {
-    global $g_localizerConfig;
+    global $g_localizerConfig, $ADMIN;
 	$localizerTargetLanguage = camp_session_get('localizer_target_language', $g_localizerConfig['DEFAULT_LANGUAGE']);
 	$localizerSourceLanguage = camp_session_get('localizer_source_language', '');
 	if (empty($localizerSourceLanguage)) {
@@ -148,7 +148,7 @@ function translationForm($p_request)
 	<tr>
 		<td valign="top"> <!-- Begin top control panel -->
 
-        <form action="index.php" method="post">
+        <form action="/<?php echo $ADMIN; ?>/localizer/index.php" method="post">
 		<?php echo SecurityToken::FormParameter(); ?>
         <input type="hidden" name="localizer_lang_id" value="<?php echo $targetLang->getLanguageId(); ?>">
         <input type="hidden" name="search_string" value="<?php echo htmlspecialchars($searchString); ?>">
@@ -158,7 +158,7 @@ function translationForm($p_request)
 				<table>
 				<tr>
 					<td>
-						<?php putGS('Screen:'); ?>
+						<?php putGS('Area to localize'); ?>:
 					</td>
 				</tr>
 				<tr>
@@ -303,7 +303,7 @@ function translationForm($p_request)
 	<?PHP
 	if ((count($missingStrings) > 0)  && ($screenDropDownSelection != 'globals')) {
 		?>
-        <form action="do_add_missing_strings.php" method="post">
+            <form action="/<?php echo $ADMIN; ?>/localizer/do_add_missing_strings.php" method="post">
 		<?php echo SecurityToken::FormParameter(); ?>
         <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
         <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
@@ -336,7 +336,7 @@ function translationForm($p_request)
 
 	if ((count($unusedStrings) > 0) && ($screenDropDownSelection != 'globals')) {
 		?>
-        <form action="do_delete_unused_strings.php" method="post">
+            <form action="/<?php echo $ADMIN; ?>/localizer/do_delete_unused_strings.php" method="post">
 		<?php echo SecurityToken::FormParameter(); ?>
         <input type="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
         <input type="hidden" name="localizer_source_language" value="<?php echo $sourceLang->getLanguageId(); ?>">
@@ -368,7 +368,7 @@ function translationForm($p_request)
 	}
 	?>
 	<!-- Begin translated strings box -->
-    <form action="do_save.php" method="post">
+    <form action="/<?php echo $ADMIN; ?>/localizer/do_save.php" method="post">
 	<?php echo SecurityToken::FormParameter(); ?>
     <INPUT TYPE="hidden" name="prefix" value="<?php echo $screenDropDownSelection; ?>">
     <INPUT TYPE="hidden" name="localizer_target_language" value="<?php echo $targetLang->getLanguageId(); ?>">

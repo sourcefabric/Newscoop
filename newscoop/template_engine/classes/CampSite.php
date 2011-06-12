@@ -258,6 +258,6 @@ final class CampSite extends CampSystem
         }
 
         return $uriInstance;
-    }// fn GetURI
-}// class CampSite
-?>
+    } // fn GetURI
+
+} // class CampSite

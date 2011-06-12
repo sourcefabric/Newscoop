@@ -6,7 +6,7 @@
   </div>
   <div class="padded">
   <?php if ($inEditMode && $g_user->hasPermission('ChangeArticle')) { ?>
-    <form id="article-keywords" action="post.php" method="POST">
+  <form id="article-keywords" action="/<?php echo $ADMIN; ?>/articles/post.php" method="POST">
       <fieldset class="frame top-field">
         <label for="Keywords" class="block-label"><?php putGS('Keywords'); ?></label>
         <input type="text" name="Keywords" id="Keywords" size="45"
