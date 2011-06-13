@@ -1,0 +1,191 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/comments.css')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/doT.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/comment.js')); ?>
+<?php $this->placeholder('title')->set(getGS('Comments')); ?>
+<script>
+    function putGS(str) {
+        var msg = serverObj.translateObj[serverObj.languageObj.indexOf(str)]
+        for(i in arguments) {
+            msg = msg.replace(new RegExp("\\$"+i,"g"),arguments[i]);
+        }
+        return msg;
+    }
+    var serverObj = {};
+    serverObj.security = {};
+    serverObj.security = {<?php echo SecurityToken::JsParameter(); ?>};
+
+    serverObj.languageObj = [
+        'Comments updated.',
+        'Comments deleted.',
+        'Comments status change to $1.',
+        'Comment updated.',
+        'Comment deleted.',
+        'Comment status change to $1.',
+        'Unable to reach Newscoop. Please check your internet connection.'
+    ];
+    serverObj.translateObj = [
+        '<?php putGS('Comments updated.'); ?>',
+        '<?php putGS('Comments deleted.'); ?>',
+        '<?php putGS('Comments status change to $1.'); ?>',
+        '<?php putGS('Comment updated.'); ?>',
+        '<?php putGS('Comment deleted.'); ?>',
+        '<?php putGS('Comment status change to $1.'); ?>',
+        '<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>'
+    ];
+</script>
+<script id="comment-tmpl" type="text/html">
+    <td colspan="4">
+        <table cellspacing="0" cellpadding="0">
+            <tbody><tr>
+                    <td class="commentId sorting_1">
+                        <input type="checkbox" name="index[]" value="{{comment.id}}" class="table-checkbox">
+                        <span class="index">{{index}}.</span>
+                    </td>
+                    <td class="commentUser">
+                        <div class="commentUserHolder">
+                            <div><img src="{{commenter.avatar}}"></div>
+                            <p>
+                                <b>{{commenter.username}}</b><br>
+                                {{commenter.name}}<br>
+                                <a href="#">{{commenter.ip}}</a><br>
+                                <a href="#">{{commenter.email}}</a><br>
+                                <a href="#">{{commenter.url}}</a>
+                            </p>
+                        </div>
+                    </td>
+                    <td class="commentMessage">
+                        <div class="dateCommentHolder">
+                            <h4>
+                                <span>{{comment.created.date}} <?php putGS('at'); ?> {{comment.created.time}}</span>
+                                <span class="commentSubject">{{comment.subject}}</span>
+                            </h4>
+                            <div class="ratingHolder">
+                                <span class="thumbs up">{{comment.likes}}</span>
+                                <span class="thumbs down">{{comment.dislikes}}</span> </div>
+                            <p class="commentBody">{{comment.message}}</p>
+                        </div>
+
+                        <div class="dateCommentHolderEdit">
+                            <fieldset class="content-edit" style="display:none;">
+                                <?php echo $this->editForm->setTemplate(array('comment')); ?>
+                            </fieldset>
+
+                            <fieldset class="content-reply" style="display:none;">
+                                <h3>Reply to comment</h3>
+                                <form action="{{comment.action.reply}}">
+                                    <input type="hidden" name="parent" value="{{comment.id}}" />
+                                    <?php echo SecurityToken::FormParameter(); ?>
+                                    <label><?php putGS('Subject'); ?></label>
+                                    <input name="subject" type="text" class="input_text">
+                                    <label><?php putGS('Comment'); ?></label>
+                                    <textarea name="message" class="input_text_area"></textarea>
+                                    <div class="buttonBar">
+                                        <input type="button" value="<?php putGS('Cancel'); ?>" class="button reply-cancel">
+                                        <input type="submit" value="<?php putGS('Submit'); ?>'" class="button">
+                                    </div>
+                                </form>
+                            </fieldset>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="commentArticleHolder">
+                            <p>
+                                <a href="{{thread.link.get}}" class="articleLink">{{thread.name}}</a>
+                                <br>
+                                <span>{{thread.forum.name}}; <b><?php putGS('Section'); ?></b> {{thread.section.name}}</span>
+                            </p>
+                            <a class="goToArticle" href="{{thread.link.edit}}"><?php putGS('Go to article page'); ?></a> </div>
+                    </td>
+                </tr></tbody>
+        </table>
+        <div class="commentBtns">
+            <ul>
+                <li><a href="javascript:;" id="pending_{{comment.id}}" class="action new"><?php putGS('New'); ?></a></li>
+                {% if(can.enable) %}
+                <li><a href="javascript:;" id="approved_{{comment.id}}" class="action approved"><?php putGS('Approved'); ?></a></li>
+                <li><a href="javascript:;" id="hidden_{{comment.id}}" class="action hidden"><?php putGS('Hidden'); ?></a></li>
+                <li><a href="javascript:;" id="deleted_{{comment.id}}" class="action deleted"><?php putGS('Delete'); ?></a></li>
+                {% endif %}
+                {% if(can.edit) %}
+                <li><a href="javascript:;" class="action-edit link icon-link"><span class="icon ui-icon-pencil"></span><?php putGS('Quick edit'); ?></a></li>
+                {% endif %}
+                <li><a href="javascript:;" class="action-rating link icon-link"><span class="icon ui-icon-star"></span><?php putGS('Add rating'); ?></a></li>
+                <li class="last">
+                    <a href="{{commenter.banurl}}" class="banUser"><span><?php putGS('Ban user'); ?></span></a>
+                </li>
+            </ul>
+        </div>
+    </td>
+    <td style="display:none;"></td>
+    <td style="display:none;"></td>
+    <td style="display:none;"></td>
+</script>
+
+<div class="wrapper">
+    <div class="ui-widget-content small-block block-shadow commentsHolder">
+        <div class="padded clearfix inner-tabs">
+            <div class="tabs">
+                <ul>
+                    <li><a href="#tabs-1">Comments</a></li>
+                    <!--<li><a href="#tabs-2">Users</a></li>-->
+                </ul>
+                <div id="tabs-1">
+                    <div id="showComments">
+                        <fieldset><legend><?php putGS('Show'); ?></legend>
+                            <ul class="status_filter">
+                                <li class="published" style="display: none;"><input type="checkbox"
+                                                                                    id="show_published" value="approved"> <label for="show_published"><?php putGS('Published'); ?></label>
+                                </li>
+                                <li class="new"><input type="checkbox" id="show_new" value="pending"> <label
+                                        for="show_new"><?php putGS('New'); ?></label></li>
+                                <li class="approved"><input type="checkbox" id="show_approved"
+                                                            value="approved"> <label for="show_approved"><?php putGS('Approved'); ?></label>
+                                </li>
+                                <li class="hidden"><input type="checkbox" id="show_hidden"
+                                                          value="hidden"> <label for="show_hidden"><?php putGS('Hidden'); ?></label>
+                                </li>
+                                <li class="deleted"><input type="checkbox" id="show_deleted"
+                                                           value="deleted"> <label for="show_deleted"><?php putGS('Deleted'); ?></label>
+                                </li>
+                            </ul>
+                        </fieldset>
+                    </div>
+                        <div id="actionExpand" class="dataTables_actions">
+                            <fieldset><select class="input_select actions">
+                                    <option value=""><?php putGS('Actions'); ?></option>
+                                    <option value="pending"><?php putGS('New'); ?></option>
+                                    <option value="approved"><?php putGS('Approved'); ?></option>
+                                    <option value="hidden"><?php putGS('Hidden'); ?></option>
+                                    <option value="deleted"><?php putGS('Deleted'); ?></option>
+                                </select></fieldset>
+                            <a href="javascript:;" class="sort_tread"> <span
+                                    class="css_right ui-icon ui-icon-carat-2-n-s"></span> <?php putGS('Sort by Thread order'); ?>
+                            </a></div>
+                        <?php $this->renderDatatable(); ?></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="fancybox-tmp"></div>
+    <div id="fancybox-loading">
+        <div></div>
+    </div>
+    <div id="fancybox-overlay"></div>
+    <div id="fancybox-wrap">
+        <div id="fancybox-outer">
+            <div class="fancybox-bg" id="fancybox-bg-n"></div>
+            <div class="fancybox-bg" id="fancybox-bg-ne"></div>
+            <div class="fancybox-bg" id="fancybox-bg-e"></div>
+            <div class="fancybox-bg" id="fancybox-bg-se"></div>
+            <div class="fancybox-bg" id="fancybox-bg-s"></div>
+            <div class="fancybox-bg" id="fancybox-bg-sw"></div>
+            <div class="fancybox-bg" id="fancybox-bg-w"></div>
+            <div class="fancybox-bg" id="fancybox-bg-nw"></div>
+            <div id="fancybox-content"></div>
+            <a id="fancybox-close"></a>
+            <div id="fancybox-title"></div>
+            <a href="javascript:;" id="fancybox-left"><span class="fancy-ico"
+                                                            id="fancybox-left-ico"></span></a><a href="javascript:;"
+                                                 id="fancybox-right"><span class="fancy-ico" id="fancybox-right-ico"></span></a></div>
+    </div>
+    <div class="dialogPopup dialog-1" title="<?php putGS('Full article');?>"></div>

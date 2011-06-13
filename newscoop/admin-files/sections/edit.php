@@ -2,6 +2,12 @@
 require_once($GLOBALS['g_campsiteDir'] . "/$ADMIN_DIR/sections/section_common.php");
 require_once($GLOBALS['g_campsiteDir'] . "/$ADMIN_DIR/articles/editor_load_tinymce.php");
 require_once($GLOBALS['g_campsiteDir'] . '/classes/Template.php');
+//@New theme management
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\IThemeManagementService;
+use Newscoop\Service\IOutputSettingIssueService;
+use Newscoop\Service\IOutputSettingSectionService;
+//@New theme management
 
 if (!$g_user->hasPermission('ManageSection')) {
     camp_html_display_error(getGS("You do not have the right to modify sections."));
@@ -32,6 +38,41 @@ if (!is_object($languageObj)) {
 //$editorLanguage = camp_session_get('TOL_Language', $languageObj->getCode());
 $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageObj->getCode();
 editor_load_tinymce('cDescription', $g_user, 0, $editorLanguage, 'section');
+
+//@New theme management
+$resourceId = new ResourceId('Section/Edit');
+$themeManagementService = $resourceId->getService(IThemeManagementService::NAME_1);
+$outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
+$outputSettingSectionService = $resourceId->getService(IOutputSettingSectionService::NAME);
+
+$outSetIssues = $outputSettingIssueService->findByIssue($issueObj->getIssueId());
+
+$themePath = null;
+$tplSectionPath = null;
+$tplArticlePath = null;
+if(count($outSetIssues) > 0){
+	$outSetIssue = $outSetIssues[0];
+	$themePath = $outSetIssue->getThemePath()->getPath();
+	$outSetSections = $outputSettingSectionService->findBySection($sectionObj->getSectionId());
+	if(count($outSetSections) > 0){
+		$outSetSection = $outSetSections[0];
+		if($outSetSection->getSectionPage() != null){
+			$tplSectionPath = $outSetSection->getSectionPage()->getPath();
+		}
+		if($outSetSection->getArticlePage() != null){
+			$tplArticlePath = $outSetSection->getArticlePage()->getPath();
+		}
+	}
+}
+
+$issueHasTheme = $themePath != null;
+if($issueHasTheme){
+	$allTemplates = $themeManagementService->getTemplates($themePath);
+} else {
+	$allTemplates = array();
+}
+
+//@New theme management
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/campsite.js"></script>
 
@@ -86,6 +127,9 @@ editor_load_tinymce('cDescription', $g_user, 0, $editorLanguage, 'section');
     <input type="text" class="input_text" name="cShortName" size="32" value="<?php p(htmlspecialchars($sectionObj->getUrlName())); ?>" />
   </td>
 </tr>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSectionSubscriptions')) {
+?>
 <tr>
   <td align="right"><?php putGS("Subscriptions"); ?>:</td>
   <td>
@@ -96,6 +140,9 @@ editor_load_tinymce('cDescription', $g_user, 0, $editorLanguage, 'section');
     </select>
   </td>
 </tr>
+<?php
+	}
+?>
 <tr>
   <td align="right" valign="top"><?php putGS("Description"); ?>:</td>
   <td>
@@ -103,21 +150,25 @@ editor_load_tinymce('cDescription', $g_user, 0, $editorLanguage, 'section');
     rows="20" cols="80"><?php p($sectionObj->getDescription()); ?></textarea>
   </td>
 </tr>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSectionTemplates')) {
+?>
 <tr>
   <td colspan="2" style="padding-top:20px;">
     <b><?php putGS("Default templates"); ?></b>
     <hr noshade size="1" color="black" />
   </td>
 </tr>
+<?php if($issueHasTheme){ ?>
 <tr>
   <td align="right"><?php putGS("Section Template"); ?>:</td>
   <td>
     <select name="cSectionTplId" class="input_select">
-    <option value="0">---</option>
+    <option value="0">&lt;<?php  putGS("default"); ?>&gt;</option>
     <?php
-    foreach ($templates as $template) {
-        camp_html_select_option($template->getTemplateId(), $sectionObj->getSectionTemplateId(), $template->getName());
-    }
+	foreach ($allTemplates as $template) {
+		camp_html_select_option($template->getPath(), $tplSectionPath, $template->getName());
+	}
     ?>
     </select>
   </td>
@@ -126,15 +177,29 @@ editor_load_tinymce('cDescription', $g_user, 0, $editorLanguage, 'section');
   <td align="right"><?php putGS("Article Template"); ?>:</td>
   <td>
     <select name="cArticleTplId" class="input_select">
-    <option value="0">---</option>
+    <option value="0">&lt;<?php  putGS("default"); ?>&gt;</option>
     <?php
-    foreach ($templates as $template) {
-        camp_html_select_option($template->getTemplateId(), $sectionObj->getArticleTemplateId(), $template->getName());
-    }
+	foreach ($allTemplates as $template) {
+		camp_html_select_option($template->getPath(), $tplArticlePath, $template->getName());
+	}
     ?>
     </select>
   </td>
 </tr>
+<?php } else {?>
+<TR>
+	<TD ALIGN="LEFT" colspan="2" style="color: red;">
+	<INPUT TYPE="hidden" NAME="cSectionTplId" VALUE="0"/>
+	<INPUT TYPE="hidden" NAME="cArticleTplId" VALUE="0"/>
+	<?php putGS("You have to assign a theme to the issue");?>
+	<br/>
+	<?php putGS("before you can configure the section templates.");?>
+	</TD>
+</TR>
+<?php }?>
+<?php
+    }
+?>
 <tr>
   <td colspan="2" align="center">
     <input type="hidden" name="Pub" value="<?php p($Pub); ?>" />

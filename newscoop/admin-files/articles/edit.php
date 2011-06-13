@@ -80,20 +80,11 @@ if ($f_publication_id > 0) {
 }
 
 if ($showComments) {
-    require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleComment.php');
-    if (SystemPref::Get("UseDBReplication") == 'Y') {
-        $dbReplicationObj = new DbReplication();
-        $connectedToOnlineServer = $dbReplicationObj->connect();
-        if ($connectedToOnlineServer == true) {
-            // Fetch the comments attached to this article
-            // (from replication database)
-            $comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);
-        }
-    } else {
-        // Fetch the comments attached to this article
-        // (from local database)
-        $comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);
-    }
+//    $comments = array();
+
+    /**
+    * @todoget comments
+    */
 }
 
 // Automatically switch to "view" mode if user doesnt have permissions

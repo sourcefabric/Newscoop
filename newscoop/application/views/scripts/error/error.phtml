@@ -12,7 +12,13 @@
 
   <h3><?php putGS('Exception information:'); ?></h3>
   <p>
-      <b><?php putGS('Message:'); ?></b> <?php echo $this->exception->getMessage() ?>
+  		<b>Type:</b> <?php echo get_class( $this->exception ) ?>
+  		<br />
+  		<b>Code:</b> <?php echo $this->exception->getCode() ?>
+  		<br />
+      <b>Message:</b> <?php echo $this->exception->getMessage() ?>
+      <br />
+      <b>File:</b> <?php echo $this->exception->getFile() ?> <b>:</b> <?php echo $this->exception->getLine() ?>
   </p>
 
   <h3><?php putGS('Stack trace:'); ?></h3>

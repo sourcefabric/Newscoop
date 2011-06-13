@@ -1,0 +1,79 @@
+<script type="text/javascript" src="<?php echo $this->baseUrl('/js/plupload/js/plupload.full.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl('/js/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js'); ?>"></script>
+
+<script type="text/javascript">
+$(function() {
+    var form = $('form<?php echo $this->plupload->form; ?>');
+    var uploader = $('#uploader');
+
+    if ($('dl.zend_form', form).size() > 0) {
+        var dd = $('<dd class="plupload" />').prependTo($('dl.zend_form', form));
+        if (!uploader.size()) {
+            uploader = $('<div id="uploader" />');
+        }
+        uploader.prependTo(dd);
+    }
+
+    uploader.pluploadQueue({
+        runtimes : "gears, flash, silverlight, html5, html4",
+        unique_names : true,
+        max_file_size: '2mb',
+        chunk_size: '500kb',
+
+        url : <?php echo json_encode($this->plupload->url); ?>, 
+
+        flash_swf_url: "<?php echo $this->baseUrl('/js/plupload/js/plupload.flash.swf'); ?>",
+        silverlight_xap_url: "<?php echo $this->baseUrl('/js/plupload/js/plupload.silverlight.xap'); ?>",
+
+        <?php if (!empty($this->plupload->filters)) {
+            $first = true; ?>
+        filters: [
+            <?php foreach ($this->plupload->filters as $title => $extensions) {
+                if (!$first) {
+                    echo ',';
+                    $first = false;
+                }
+            ?>
+            {title: <?php echo json_encode($title); ?>, extensions : <?php echo json_encode($extensions); ?>}
+            <?php } ?>
+        ]
+        <?php } ?>
+    });
+
+    // Client side form validation
+    $('form<?php $this->plupload->form; ?>').submit(function(e) {
+        var uploader = $('#uploader').pluploadQueue();
+
+        // Validate number of uploaded files
+        if (uploader.total.uploaded == 0) {
+            // Files in queue upload them first
+            if (uploader.files.length > 0) {
+                // When all files are uploaded submit form
+                uploader.bind('UploadProgress', function() {
+                    if (uploader.files.uploaded == uploader.files.length) {
+                        $('form<?Php $this->plupload->form; ?>').submit();
+                    }
+                });
+                uploader.start();
+            } else {
+                alert(<?php echo json_encode(getGS('You must at least upload one file.')); ?>);
+            }
+
+            e.preventDefault();
+        }
+    });
+});
+
+plupload.addI18n({
+    'Select files' : '<?php putGS('Select files'); ?>',
+    'Add files to the upload queue and click the start button.' : '<?php putGS('Add files to the upload queue and click the start button.'); ?>',
+    'Filename' : '<?php putGS('Filename'); ?>',
+    'Status' : '<?php putGS('Status'); ?>',
+    'Size' : '<?php putGS('Size'); ?>',
+    'Add files' : '<?php putGS('Add files'); ?>',
+    'Start upload' : '<?php putGS('Start upload'); ?>',
+    'Stop current upload' : '<?php putGS('Stop current upload'); ?>',
+    'Start uploading queue' : '<?php putGS('Start uploading queue'); ?>',
+    'Drag files here.' : '<?php putGS('Drag files here.'); ?>'
+});
+</script>

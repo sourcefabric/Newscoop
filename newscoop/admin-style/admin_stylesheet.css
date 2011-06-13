@@ -1529,6 +1529,27 @@ fieldset.filters a.reset {
 	font-size: 12px;
 	line-height:20px;
 }
+.upload-success, .upload-error {
+    padding: 0 0 0 10px;
+	font-size: 12px;
+	line-height:20px;
+}
+.upload-success {
+	border: 1px solid #65A539;
+    color: #65A539;
+    background-color: #EFF6EB;
+}
+.upload-error {
+	background:#fce5e5;
+	border: 1px solid #dd0000;
+	color:#dd0000;
+}
+
+/*--- popup upload ---*/
+.message-holder
+{
+	height: 26px;
+}
 
 /*---  System messages ---*/
 .info_message {
@@ -1764,6 +1785,7 @@ button.fg-button {
 .fg-button-icon-right .fg-button-ui-icon { left: auto; right: .2em; margin-left: 0; }
 .fg-button-icon-solo { display:block; width:8px; text-indent: -9999px; }	 /* solo icon buttons must have block properties for the text-indent to work */
 .fg-button.ui-state-loading .fg-button-ui-icon { background: url(<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/fg-menu/spinner_bar.gif) no-repeat 0 0; }
+
 
 ul.navigation {
     margin: 0;
@@ -2207,6 +2229,61 @@ dl.right-floated {
 								padding:0 10px !important;
 								background-image:none !important;
 								}
+
+ul.navigation {
+    margin: 0;
+    padding: 0;
+}
+
+ul.navigation li {
+    float: left;
+}
+
+ul.navigation li:first-child a {
+    padding-right: 11px;
+}
+
+.content .pager {
+    margin: 8px 0;
+    font-size: 1.2em;
+}
+
+table + .pager {
+    margin-top: 0;
+}
+
+.content p {
+    font-size: 1.2em;
+}
+
+.content pre {
+    font-size: 12px;
+}
+
+/*--- Media Box ---*/
+div.image-thumbnail-container {
+    float:left;
+    width:80px;
+}
+
+ul#edit-files h2 {
+    margin: 0;
+    padding: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+.widget div.loading p {
+    font-size: 1.3em;
+    margin: 0;
+    padding: 0.5em;
+}
+
+.pager.indent {
+    padding: 3px;
+    font-size: 1.1em;
+}
 
 .main-menu-bar ul.navigation ul {
     display: none;

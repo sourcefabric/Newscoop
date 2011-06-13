@@ -1,4 +1,7 @@
 <?php
+// run zend
+require_once dirname(__FILE__) . '/public/index.php';
+
 /**
  * The main GUI for the ImageManager.
  * @author $Author: paul $
@@ -30,7 +33,6 @@ Zend_Auth::getInstance()->setStorage(new Zend_Auth_Storage_Session( 'Zend_Auth_A
         exit(0);
     }
     unset($userTmp);
-
 
 
 require_once('config.inc.php');

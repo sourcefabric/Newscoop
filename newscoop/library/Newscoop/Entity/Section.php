@@ -12,10 +12,14 @@ namespace Newscoop\Entity;
  * @Entity(repositoryClass="Newscoop\Entity\Repository\SectionRepository")
  * @Table(name="Sections")
  */
-class Section
+class Section extends Entity
 {
+        /**
+     * Provides the class name as a constant.
+     */
+    const NAME = __CLASS__;
+
     /**
-     * @Id
      * @ManyToOne(targetEntity="Newscoop\Entity\Publication")
      * @JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
@@ -23,15 +27,13 @@ class Section
     private $publication;
 
     /**
-     * @Id
      * @ManyToOne(targetEntity="Newscoop\Entity\Issue")
-     * @JoinColumn(name="NrIssue", referencedColumnName="Number")
+     * @JoinColumn(name="fk_issue_id", referencedColumnName="id")
      * @var Newscoop\Entity\Issue
      */
     private $issue;
 
     /**
-     * @Id
      * @ManyToOne(targetEntity="Newscoop\Entity\Language")
      * @JoinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
@@ -39,7 +41,6 @@ class Section
     private $language;
 
     /**
-     * @Id
      * @Column(type="integer", name="Number")
      * @var int
      */
@@ -50,6 +51,30 @@ class Section
      * @var string
      */
     private $name;
+
+    /**
+     * @ManyToOne(targetEntity="Newscoop\Entity\Template")
+     * @JoinColumn(name="SectionTplId", referencedColumnName="Id")
+     * @var Newscoop\Entity\Template"
+     */
+    private $template;
+
+    /**
+     * @ManyToOne(targetEntity="Newscoop\Entity\Template")
+     * @JoinColumn(name="ArticleTplId", referencedColumnName="Id")
+     * @var Newscoop\Entity\Template"
+     */
+    private $articleTemplate;
+
+    /**
+     * @param int $number
+     * @param string $name
+     */
+    public function __construct($number, $name)
+    {
+        $this->number = (int) $number;
+        $this->name = (string) $name;
+    }
 
     /**
      * Get language
@@ -99,5 +124,39 @@ class Section
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set template
+     *
+     * @param Newscoop\Entity\Template $template
+     * @return Newscoop\Entity\Section
+     */
+    public function setTemplate(Template $template)
+    {
+        $this->template = $template;
+        return $this;
+    }
+
+    /**
+     * Set article template
+     *
+     * @param Newscoop\Entity\Template $template
+     * @return Newscoop\Entity\Section
+     */
+    public function setArticleTemplate(Template $template)
+    {
+        $this->articleTemplate = $template;
+        return $this;
+    }
+
+    /**
+     * Get the issue assigned to this section
+     *
+     * @return Newscoop\Entity\Issue
+     */
+    public function getIssue()
+    {
+        return $this->issue;
     }
 }

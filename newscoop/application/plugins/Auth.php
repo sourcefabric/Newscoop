@@ -38,10 +38,12 @@ class Application_Plugin_Auth extends Zend_Controller_Plugin_Abstract
 
         // filter logged
         $auth = Zend_Auth::getInstance();
+
         if ($auth->hasIdentity()) {
             $doctrine = $this->getResource('doctrine');
-            $user = $doctrine->getEntityManager()
-                ->find('Newscoop\Entity\User\Staff', $auth->getIdentity());
+            $user = $doctrine->getEntityManager()->find( 'Newscoop\Entity\User\Staff', $auth->getIdentity() );
+
+            /* @var $user Newscoop\Entity\User\Staff */
 
             // set user for application
             $g_user = $user;
@@ -53,9 +55,17 @@ class Application_Plugin_Auth extends Zend_Controller_Plugin_Abstract
 
             // set view navigation acl
             $acl = $this->getResource('acl')->getAcl($user);
+            /* @var $acl Zend_Acl */
+
             $view->navigation()->setAcl($acl);
             $view->navigation()->setRole($user);
 
+			if( !\SaaS::singleton()->hasPrivilege( $request->getControllerName(), $request->getActionName() ) )
+			{
+				$redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
+				/* @var $redirector Zend_Controller_Action_Helper_Redirector */
+				$redirector->direct( "index", "index", "admin" );
+			}
             return;
         }
 

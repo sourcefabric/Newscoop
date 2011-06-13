@@ -1,0 +1,35 @@
+<?php $this->headLink( array( 'type' => 'text/css', 'href' => $this->baseUrl('/admin-style/common.css'), 'media' => 'screen', 'rel'	=> 'stylesheet' ) ); ?>
+
+<div class="ui-widget-content small-block block-shadow theme-settings">
+	<div class="padded clearfix inner-tabs">
+		<div class="tabs">
+			<ul>
+				<li><a href="#tabs-1">Theme settings</a></li>
+				<li><a href="#tabs-2">Theme templates</a></li>
+			</ul>
+			<div id="tabs-1">
+				<div class="clear"></div>
+
+				<?php echo $this->action( 'wizard-theme-settings', 'themes', 'admin', array( 'format' => 'adv', 'id' => $this->themeId ) ) ?>
+
+				<div class="themeSettingsTabs">
+
+					<?php echo $this->action( 'wizard-theme-template-settings', 'themes', 'admin', array( 'format' => 'adv', 'id' => $this->themeId ) ) ?>
+
+					<?php echo $this->action( 'wizard-theme-article-types', 'themes', 'admin', array( 'format' => 'adv', 'id' => $this->themeId ) ) ?>
+
+					<input type="button" name="submit" id="submit-settings-ctrl" class="button themeSettingsBtn" value="<?php echo getGS( 'Save All' ) ?>" alt="<?php echo getGS( 'Saving..' ) ?>">
+
+				</div>
+			</div>
+
+			<div id="tabs-2">
+
+                <?php echo $this->action('index', 'template', 'admin', $this->templatesParams); ?>
+
+				<div class="clear"></div>
+
+			</div>
+		</div>
+	</div>
+</div>

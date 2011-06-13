@@ -5,14 +5,11 @@ require_once($GLOBALS['g_campsiteDir']."/classes/UrlType.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Template.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Alias.php");
-require_once($GLOBALS['g_campsiteDir']."/include/phorum_load.php");
-require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_forum.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_setting.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/camp_html.php");
 camp_load_translation_strings("api");
 
 // Check permissions
-if (!$g_user->hasPermission('ManagePub')) {
+if (!$g_user->hasPermission('ManagePub') || !SaaS::singleton()->hasPermission("AddPub")) {
 	camp_html_display_error(getGS("You do not have the right to add publications."));
 	exit;
 }

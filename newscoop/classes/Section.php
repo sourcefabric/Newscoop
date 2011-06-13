@@ -25,6 +25,7 @@ class Section extends DatabaseObject {
 		'IdLanguage',
 		'Number');
 	var $m_columnNames = array(
+		'id',
 		'IdPublication',
 		'NrIssue',
 		'IdLanguage',
@@ -71,6 +72,15 @@ class Section extends DatabaseObject {
 		$p_columns['ShortName'] = $p_shortName;
 		$success = parent::create($p_columns);
 		if ($success) {
+			global $g_ado_db;
+			$sql = "UPDATE `Sections` s".
+			" JOIN `Issues` AS i ON i.`IdPublication` = s.`IdPublication` AND i.`Number` = s.`NrIssue` AND i.`IdLanguage` = s.`IdLanguage`".
+			" SET `fk_issue_id` = i.`id` WHERE ".
+			" s.`IdPublication` = ".$this->m_data['IdPublication'].
+			" AND s.`NrIssue` = ".$this->m_data['NrIssue'].
+			" AND s.`Number` = ".$this->m_data['Number'].
+			" AND s.`IdLanguage` = ".$this->m_data['IdLanguage'];
+			$g_ado_db->Execute($sql);
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
@@ -137,7 +147,7 @@ class Section extends DatabaseObject {
 		if (!$dstSectionObj->exists()) {
 			$dstSectionObj->create($sectionName, $shortName, $dstSectionCols);
 		}
-
+		
 		// Copy all the articles.
 		if ($p_copyArticles) {
 			$srcSectionArticles = Article::GetArticles($this->m_data['IdPublication'],
@@ -195,11 +205,23 @@ class Section extends DatabaseObject {
 					 $tmpData['Name'], $tmpData['Number'],
 					 $tmpData['IdPublication'], $tmpData['NrIssue']);
 			Log::Message($logtext, null, 22);
+			$outputSettingSections = $this->getOutputSettingSectionService()->findBySection($tmpData['id']);
+			foreach($outputSettingSections as $outputSet){
+				$this->getOutputSettingSectionService()->delete($outputSet);
+			}
 		}
 		return $numArticlesDeleted;
 	} // fn delete
 
-
+	/**
+	 * Return the section ID.
+	 * @return int
+	 */
+	public function getSectionId()
+	{
+		return $this->m_data['id'];
+	} // fn getId
+	
 	/**
 	 * @return int
 	 */
@@ -345,8 +367,7 @@ class Section extends DatabaseObject {
 	{
 		return $this->setProperty('SectionTplId', $p_value);
 	} // fn setSectionTemplateId
-
-
+    
 	/**
 	 * Return an array of sections in the given issue.
 	 * @param int $p_publicationId

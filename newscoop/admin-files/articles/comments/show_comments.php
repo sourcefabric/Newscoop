@@ -1,149 +1,159 @@
 <?php
-// check for comments
-$comments = (array) $comments;
-if (empty($comments)) {
-    echo '<p>', putGS('No comments posted.'), '</p>';
-    return;
-}
-
 // check permissions
 if (!$g_user->hasPermission('CommentModerate')) {
     return;
 }
 ?>
 
-    <form id="comments-moderate" action="/<?php echo $ADMIN; ?>/articles/comments/do_moderate.php" method="POST">
 <?php
 // add token
 echo SecurityToken::FormParameter();
 
 // add hidden inputs
 $hiddens = array(
-    'f_language_id',
-    'f_article_number',
-    'f_language_selected',
+    'f_language_id' => 'language_id',
+    'f_article_number' => 'article_id',
+    'f_language_selected' => 'language_selected_id',
 );
 foreach ($hiddens as $name) {
     echo '<input type="hidden" name="', $name;
     echo '" value="', $$name, '" />', "\n";
 }
 ?>
-
-<?php foreach ($comments as $comment) { ?>
-<fieldset class="plain comments-block">
-    <?php if ($inEditMode) { ?>
+<fieldset id="comment-prototype" class="plain comments-block" style="display:none">
+    <?php if ($inEditMode): ?>
     <ul class="action-list clearfix">
       <li>
-        <a class="ui-state-default icon-button right-floated" href="#"><span class="ui-icon ui-icon-disk"></span><?php putGS('Save'); ?></a>
+        <a class="ui-state-default icon-button right-floated" href="javascript:;"><span class="ui-icon ui-icon-disk"></span><?php putGS('Save'); ?></a>
       </li>
       <li>
-        <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="hide" class="input_radio" id="hidden_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() == PHORUM_STATUS_HIDDEN) { echo 'checked'; } ?> />
-        <label class="inline-style left-floated" for="hidden_<?php echo $comment->getMessageId(); ?>"><?php putGS('Hidden'); ?></label>
+        <input type="radio" name="comment_action_${id}" value="hidden" class="input_radio" id="hidden_${id}" ${hidden_checked}/>
+        <label class="inline-style left-floated" for="hidden_${id}"><?php putGS('Hidden'); ?></label>
       </li>
-      <?php if ($comment->getMessageId() != $comment->getThreadId()) { ?>
-      <li>
-        <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="delete" class="input_radio" id="delete_<?php echo $comment->getMessageId(); ?>" />
-        <label class="inline-style left-floated" for="delete_<?php echo $comment->getMessageId(); ?>"><?php putGS('Delete'); ?></label>
-      </li>
-      <?php } ?>
-      <li>
-      <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="approve" class="input_radio" id="approved_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() == PHORUM_STATUS_APPROVED) { echo 'checked'; } ?> />
-        <label class="inline-style left-floated" for="approved_<?php echo $comment->getMessageId(); ?>"><?php putGS('Approved'); ?></label>
-      </li>
-      <?php if ($publicationObj->commentsPublicModerated() || $publicationObj->commentsSubscribersModerated()) {?>
-      <li>
-      <input type="radio" name="comment_action_<?php echo $comment->getMessageId(); ?>" value="inbox" class="input_radio" id="inbox_<?php echo $comment->getMessageId(); ?>" <?php if ($comment->getStatus() == PHORUM_STATUS_HOLD) { echo 'checked'; } ?> />
-        <label class="inline-style left-floated" for="inbox_<?php echo $comment->getMessageId(); ?>"><?php putGS('New'); ?></label>
-      </li>
-      <?php } ?>
-    </ul>
-    <?php } ?>
 
+      <li>
+        <input type="radio" name="comment_action_${id}" value="deleted" class="input_radio" id="delete_${id}" ${deleted_checked}/>
+        <label class="inline-style left-floated" for="deleted_${id}"><?php putGS('Delete'); ?></label>
+      </li>
+
+      <li>
+      <input type="radio" name="comment_action_${id}" value="approved" class="input_radio" id="approved_${id}" ${approved_checked}/>
+        <label class="inline-style left-floated" for="approved_${id}"><?php putGS('Approved'); ?></label>
+      </li>
+
+      <li>
+      <input type="radio" name="comment_action_${id}" value="pending" class="input_radio" id="inbox_${id}" ${pending_checked}/>
+        <label class="inline-style left-floated" for="inbox_${id}"><?php putGS('New'); ?></label>
+      </li>
+    </ul>
+    <?php endif; //inEditMode?>
     <div class="frame clearfix">
       <dl class="inline-list">
         <dt><?php putGS('From'); ?></dt>
-        <dd><?php p(htmlspecialchars($comment->getAuthor())); ?> &lt;<?php p(htmlspecialchars($comment->getEmail())); ?>&gt; (<?php p($comment->getIpAddress()); ?>)</dd>
-
+        <dd><a href="mailto:${email}">"${name}" &lt;${email}&gt;</a> (${ip})</dd>
         <dt><?php putGS('Date'); ?></dt>
-        <dd><?php p(date('Y-m-d H:i:s', $comment->getCreationDate())); ?></dd>
+        <dd>${time_created}</dd>
         <dt><?php putGS('Subject'); ?></dt>
-        <dd><?php p(htmlspecialchars($comment->getSubject())); ?></dd>
+        <dd>${subject}</dd>
         <dt><?php putGS('Comment'); ?></dt>
-        <dd><?php p(htmlspecialchars($comment->getBody())); ?></dd>
-
-        <?php if ($inEditMode) { ?>
+        <dd>${message}</dd>
+        <?php if ($inEditMode): ?>
         <dt>&nbsp;</dt>
-        <dd class="buttons"><a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, 'comments/reply.php', '', '&f_comment_id='.$comment->getMessageId()); ?>" class="ui-state-default text-button clear-margin"><?php putGS('Reply to comment'); ?></a></dd>
-        <?php } ?>
+        <dd class="buttons">
+            <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, 'comments/reply.php', '', '&f_comment_id=${id}'); ?>" class="ui-state-default text-button clear-margin"><?php putGS('Reply to comment'); ?></a>
+        </dd>
+        <?php endif; //inEditMode?>
       </dl>
     </div>
 </fieldset>
-<?php } ?>
+<p style="display:none"><?php putGS('No comments posted.'); ?></p>
+<form id="comment-moderate" action="../comment/set-status/format/json" method="POST"></form>
+<script>
+function toggleCommentStatus() {
+    $('#comment-moderate .comments-block').each(function() {
+    	var statusClassMap = { 'hidden': 'hide', 'approved': 'approve', 'pending': 'inbox'};
+    	var block = $(this);
+        var status = $('input:radio:checked', block).val();
+        var cclass = 'comment_'+statusClassMap[status];
+        var button = $('dd.buttons', block);
 
-</form>
+        // set class
+        $('.frame', block).removeClass('comment_inbox comment_hide comment_approve')
+            .addClass(cclass);
 
-<script type="text/javascript">
-$(function() {
-    /**
-     * Toggles comment status
-     */
-    var toggleCommentStatus = function() {
-        $('#comments-moderate .comments-block').each(function() {
-            var block = $(this);
-            var status = $('input:radio:checked', block).val();
-            var cclass = 'comment_'+status;
-            var button = $('dd.buttons', block);
-
-            // set class
-            $('.frame', block).removeClass('comment_inbox comment_hide comment_approve')
-                .addClass(cclass);
-
-            // show/hide button
-            button.hide();
-            if (status == 'approve') {
-                button.show();
-            }
+        // show/hide button
+        button.hide();
+        if (status == 'approve') {
+            button.show();
+        }
+    });
+    //detach deleted
+    $('input[value=deleted]:checked', $('#comment-moderate')).each(function() {
+        $(this).closest('fieldset').slideUp(function() {
+            $(this).detach();
         });
-    };
-
-    // init
-    toggleCommentStatus();
-
-    // save via ajax
-    $('form#comments-moderate').submit(function() {
-        var form = $(this);
-        callServer('ping', [], function(json) {
-            $.ajax({
-                type: 'POST',
-                url: form.attr('action')+'?isAjax=1',
-                data: form.serialize(),
-                success: function(data, status, p) {
-                    flashMessage('<?php putGS('Comments updated.'); ?>');
-
-                    toggleCommentStatus();
-
-                    // detach deleted
-                    $('input[value=delete]:checked', form).each(function() {
-                        $(this).closest('fieldset').slideUp(function() {
-                            $(this).detach();
-                        });
-                    });
-                },
-                error: function (rq, status, error) {
-                    if (status == 0 || status == -1) {
-                        flashMessage('<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>', 'error');
+    });
+}
+function loadComments() {
+    $.ajax({
+        type: 'POST',
+        url: '../comment/list/format/json',
+        data: {
+            "article": "<?php echo $articleObj->getArticleNumber(); ?>",
+            "language": "<?php echo $f_language_selected; ?>"
+        },
+        success: function(data) {
+            $('#comment-moderate').empty();
+        	hasComents = false;
+            for(i in data.result) {
+                hasComment = true;
+                comment = data.result[i];
+                if(typeof(comment) == "function")
+                    continue;
+                template = $('#comment-prototype').html();
+                for(key in comment) {
+                    if(key == 'status') {
+                    	template = template.replace(new RegExp("\\$({|%7B)"+comment[key]+"_checked(}|%7D)","g"),'checked="true"');
+                    	template = template.replace(new RegExp("\\${[^_]*_checked}","g"),'');
                     }
+                	template = template.replace(new RegExp("\\$({|%7B)"+key+"(}|%7D)","g"),comment[key]);
                 }
-            });
-
-        });
-        return false;
+            	$('#comment-moderate').append('<fieldset class="plain comments-block">'+template+'</fieldset>');
+            }
+            if(!hasComment)
+                $('#no-comments').show();
+            toggleCommentStatus();
+        }
     });
-
-    // call form save on save button click
-    $('.comments-block .action-list a.icon-button').click(function() {
-        $(this).closest('form').submit();
-        return false;
-    });
+}
+$('.action-list a').live('click',function(){
+	var el = $(this).parents('ul').find('input:checked').first();
+	$.ajax({
+        type: 'POST',
+        url: '../comment/set-status/format/json',
+        data: {
+		   "comment": el.attr('id').match(/\d+/)[0],
+		   "status": el.val(),
+		   <?php echo SecurityToken::JsParameter();?>,
+		},
+		success: function(data) {
+		    if(data.status != 200) {
+		    	flashMessage(data.message);
+		    	return;
+		    }
+            flashMessage('<?php putGS('Comments updated.'); ?>');
+            toggleCommentStatus();
+		},
+        error: function (rq, status, error) {
+            if (status == 0 || status == -1) {
+                flashMessage('<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>', 'error');
+            }
+        }
+	});
+});
+</script>
+<script>
+$(function() {
+	loadComments();
 });
 </script>

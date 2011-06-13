@@ -189,20 +189,26 @@ $(function() {
     // zend_form utils
     $('dl.zend_form').each(function() {
         var form = $(this);
-
         // hide hidden fields
         $('input:hidden', form).each(function() {
+            var ischeckbox = $(this).next('input:checkbox');
+        	if(ischeckbox)
+        		return;
             var dd = $(this).closest('dd');
             var dt = dd.prev('dt');
             var errors = $('ul.errors', dd);
 
-            dt.hide().detach().appendTo(form);
+            if (dt.html() == '') { // if empty
+                dt.hide().detach().appendTo(form);
+            }
 
             if (errors.length > 0) { // keep dd for errors
                 return;
             }
 
-            dd.hide().detach().appendTo(form);
+            if ($('*', dd).size() == $('input:hidden', dd).size()) { // if contains only hiddens
+                dd.hide().detach().appendTo(form);
+            }
         });
 
         // hide fieldsets dt

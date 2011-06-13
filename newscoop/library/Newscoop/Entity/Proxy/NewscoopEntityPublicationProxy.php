@@ -27,16 +27,16 @@ class NewscoopEntityPublicationProxy extends \Newscoop\Entity\Publication implem
     }
 
     
-    public function getId()
-    {
-        $this->_load();
-        return parent::getId();
-    }
-
     public function getName()
     {
         $this->_load();
         return parent::getName();
+    }
+
+    public function getLanguage()
+    {
+        $this->_load();
+        return parent::getLanguage();
     }
 
     public function getIssues()
@@ -51,16 +51,64 @@ class NewscoopEntityPublicationProxy extends \Newscoop\Entity\Publication implem
         return parent::getLanguages();
     }
 
+    public function getDefaultLanguage()
+    {
+        $this->_load();
+        return parent::getDefaultLanguage();
+    }
+
+    public function getDefaultLanguageName()
+    {
+        $this->_load();
+        return parent::getDefaultLanguageName();
+    }
+
     public function getSections()
     {
         $this->_load();
         return parent::getSections();
     }
 
+    public function getId()
+    {
+        $this->_load();
+        return parent::getId();
+    }
+
+    public function setId($id)
+    {
+        $this->_load();
+        return parent::setId($id);
+    }
+
+    public function setModeratorTo($p_moderator_to)
+    {
+        $this->_load();
+        return parent::setModeratorTo($p_moderator_to);
+    }
+
+    public function getModeratorTo()
+    {
+        $this->_load();
+        return parent::getModeratorTo();
+    }
+
+    public function setModeratorFrom($p_moderator_from)
+    {
+        $this->_load();
+        return parent::setModeratorFrom($p_moderator_from);
+    }
+
+    public function getModeratorFrom()
+    {
+        $this->_load();
+        return parent::getModeratorFrom();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'issues');
+        return array('__isInitialized__', 'id', 'name', 'language', 'issues', 'public_enabled', 'moderator_to', 'moderator_from');
     }
 
     public function __clone()

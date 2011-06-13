@@ -1,0 +1,656 @@
+body#comments {
+}
+
+.commentsHolder {
+    width: 920px;
+}
+
+#showComments {
+}
+
+#showComments fieldset {
+    padding: 10px;
+}
+
+#showComments fieldset ul {
+    overflow: hidden;
+}
+
+#showComments fieldset ul li {
+    float: left;
+    height: 25px;
+    min-width: 100px;
+    margin-right: 8px;
+    padding: 0px 10px;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border--radius: 4px;
+    -khtml-border-radius: 4px;
+}
+
+#showComments fieldset ul li.published, #showComments fieldset ul li.approved  {
+    border: 1px solid #cccccc;
+    background: #fff;
+}
+
+#showComments fieldset ul li.new {
+    background: #eaf7da;
+    border: 1px solid #bee78d;
+}
+
+/*#showComments fieldset ul li.approved {
+    background: #ccecff;
+    border: 1px solid #7ac8ff;
+}*/
+
+#showComments fieldset ul li.hidden {
+    background: #f2f2f2;
+    border: 1px solid #cccccc;
+}
+
+#showComments fieldset ul li.deleted {
+    background: #ffd9da;
+    border: 1px solid #ffabad;
+}
+
+#showComments fieldset ul li input {
+    float: left;
+    margin: 6px 6px 0 0;
+}
+
+#showComments fieldset ul li label {
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    line-height: 25px;
+}
+
+#showComments fieldset ul li.published label, #showComments fieldset ul li.approved label {
+    color: #585858;
+}
+
+#showComments fieldset ul li.new label {
+    color: #006b0e;
+}
+
+/*#showComments fieldset ul li.approved label {
+    color: #004987;
+}*/
+
+#showComments fieldset ul li.hidden label {
+    color: #969696;
+}
+
+#showComments fieldset ul li.deleted label {
+    color: #9e0013;
+}
+
+.basic-search-holder {
+    margin-bottom: 8px;
+}
+
+#commentFilterSearchHolder {
+    position: relative;
+    padding: 0 0 20px;
+    margin-bottom: 15px;
+    border-top: 1px solid #cccccc;
+}
+
+#commentFilterSearch {
+    overflow: hidden;
+    display: none;
+}
+
+#commentFilterSearch fieldset {
+    margin: 0px;
+    border-top: none;
+}
+
+#commentFilterSearch fieldset ul li {
+    overflow: hidden;
+}
+
+#commentFilterSearch ul li select {
+    float: left;
+    width: 100px;
+    margin-right: 10px;
+}
+
+#commentFilterSearch ul li input {
+    float: left;
+    width: 200px;
+    margin-right: 10px;
+}
+
+#commentFilterSearch ul li a {
+    float: left;
+    height: 23px;
+    margin: 0px;
+    padding: 0px;
+}
+
+#commentFilterSearch ul li a span {
+    margin-top: 3px;
+}
+
+#commentFilterTrigger {
+    position: absolute;
+    right: 0px;
+    bottom: 0px;
+    display: block;
+    height: 20px;
+    padding: 0 10px 0 22px;
+    background: url("images/dropdown-arrow.png") no-repeat 8px 5px #ffffff;
+    border: 1px solid #cccccc;
+    border-top: none;
+    outline: none;
+}
+
+.collapsed {
+    background-image: url("images/dropdown-arrow-close.png") !important;
+}
+
+#actionExpand {
+    overflow: hidden;
+    margin-bottom: 8px;
+}
+
+#actionExpand fieldset {
+    float: left;
+    width: auto;
+    margin: 0px;
+    padding: 0px;
+    border: none;
+}
+
+#actionExpand fieldset.right {
+    float: right;
+}
+
+select.actions {
+    width: 100px;
+    margin-right: 10px;
+}
+
+#actionExpand fieldset a {
+    line-height: 24px;
+    color: #007FB3;
+}
+
+#actionExpand fieldset a:hover {
+    text-decoration: underline;
+}
+
+#actionExpand fieldset label {
+    margin-right: 10px;
+    line-height: 24px;
+}
+
+.commentsHolder table {
+    margin-bottom: 1px !important;
+}
+
+.commentsHolder table tbody tr:hover td {
+    background: none !important;
+}
+
+.commentsHolder table thead tr th {
+    text-align: left;
+}
+
+.commentsHolder table tbody tr td {
+    padding: 0px;
+}
+
+.commentsHolder table tbody tr td table {
+    border: none;
+}
+
+.commentsHolder .index {
+    padding-top: 7px;
+    text-align: center;
+    vertical-align: top;
+    border: 0px;    
+    display: block;
+    font-weight: normal;
+}
+
+.commentsHolder table tbody tr td table tbody tr td {
+    padding: 5px;
+    vertical-align: top;
+    border: 0px;
+}
+
+.commentUserHolder {
+    position: relative;
+    padding-left: 60px;
+}
+
+.commentUserHolder div {
+    position: absolute;
+    left: 0px;
+    top: 5px;
+    width: 50px;
+    height: 50px;
+    background: #e6e6e6;
+    border: 1px solid #a6a6a6;
+}
+
+.commentUserHolder p {
+    margin: 0px;
+    font-size: 12px;
+    color: #444444;
+    line-height: 17px;
+}
+
+.commentUserHolder p a {
+    color: #007FB3;
+}
+
+.commentUserHolder p a:hover {
+    text-decoration: underline;
+}
+
+.dateCommentHolder,.dateCommentHolderEdit {
+    position: relative;
+    padding-right: 12px;
+}
+
+.dateCommentHolder h4,.dateCommentHolderEdit h4 {
+    margin: 1px 0 4px 0;
+    font-style: italic;
+    font-weight: bold;
+    color: #000000;
+    font-size:12px;
+}
+
+.dateCommentHolder h4 span,.dateCommentHolder h4 span.date,.dateCommentHolderEdit h4 span,.dateCommentHolderEdit h4 span.date
+{
+    color: #858585;
+    font-weight: normal;
+}
+
+.dateCommentHolder h4 span.commentSubject, .dateCommentHolderEdit h4 span.commentSubject
+{
+    font-weight: bold;
+    color: #000000;
+    padding-right: 53px;
+	display: inline;
+}
+
+.dateCommentHolderEdit h4 span.commentSubject
+    {
+    display:none;
+}
+
+.ratingHolder {
+    position: absolute;
+    right: 12px;
+    top: 0px;
+}
+
+.ratingHolder .thumbs {
+    font-size: 11px;
+    border-left: 1px solid #ccc;
+    line-height: 16px;
+    background: url(images/thumbs_up-down.png) no-repeat;
+    padding-left: 20px;
+}
+
+.ratingHolder .thumbs:first-child {
+    border-left: none;
+    padding-right: 6px;
+}
+
+.ratingHolder .thumbs.up {
+    background-position: 6px 2px;
+    color: #008700;
+}
+
+.ratingHolder .thumbs.down {
+    background-position: 6px -28px;
+    color: #ad0000;
+}
+
+.dateCommentHolder p,.dateCommentHolderEdit p {
+    margin: 0px;
+    font-size:12px;
+}
+
+.dateCommentHolder fieldset,.dateCommentHolderEdit fieldset, .dateCommentHolder fieldset:first-child, .dateCommentHolderEdit fieldset:first-child {
+    padding: 0px;
+    margin: 0px;
+    border: none;
+    float: none;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.dateCommentHolder fieldset label,.dateCommentHolderEdit fieldset label
+    {
+    display: block;
+    margin-bottom: 5px;
+    color: #696969;
+    font-weight: bold;
+}
+
+.dateCommentHolder fieldset input,.dateCommentHolderEdit fieldset input
+    {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+}
+
+.dateCommentHolder fieldset textarea,.dateCommentHolderEdit fieldset textarea
+    {
+    width: 100%;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.dateCommentHolder fieldset div input,.dateCommentHolderEdit fieldset div input
+    {
+    float: left;
+    width: auto !important;
+}
+
+.dateCommentHolder h3,.dateCommentHolderEdit h3 {
+    padding: 20px 0 10px;
+}
+
+.commentArticleHolder {
+    
+}
+
+.commentArticleHolder p {
+    margin: 0px 0 20px;
+    line-height: 17px;
+}
+
+.commentArticleHolder p a {
+    text-decoration: none;
+    color: #007FB3;
+}
+
+.commentArticleHolder p a:hover {
+    text-decoration: underline;
+}
+
+.commentArticleHolder p span {
+    font-size: 11px;
+    font-style: italic;
+}
+
+.goToArticle {
+    display: inline-block;
+    padding-left: 14px;
+    color: #007FB3 !important;
+    font-size: 11px;
+    background: url(images/go-to-article.png) left center no-repeat;
+}
+
+.goToArticle:hover {
+    text-decoration: underline;
+}
+
+.commentBtns {
+    height: 30px;
+
+    background: rgba(212, 212, 212, 0.5);
+    visibility: hidden;
+}
+
+.commentBtns ul {
+    overflow: hidden;
+    padding-left: 280px;
+    margin: 0px;
+}
+
+.commentBtns ul li {
+    float: left;
+    height: 25px;
+    margin-right: 8px;
+    padding-top: 5px;
+}
+
+.commentBtns ul li.last {
+    float: right;
+}
+
+.commentBtns ul li a,.commentBtns ul li a.link {
+    display: block;
+    float: left;
+    height: 18px;
+    padding: 0 5px;
+    line-height: 18px;
+    color: #007FB3;
+}
+
+.commentBtns ul li a.link {
+    padding-left: 24px;
+    line-height: 20px;
+    line-height: 18px;
+    color: #007FB3;
+    border-left: 1px solid #cccccc;
+}
+
+.commentBtns ul li a.link .icon {
+    left: 6px;
+    margin: 0 3px 0 0;
+    overflow: hidden;
+    position: absolute;
+    top: 2px;
+    width: 16px;
+}
+
+.commentBtns ul li a.quickEditBtn {
+    padding-left: 25px;
+    line-height: 20px;
+    background: url(images/quick-edit-btn.png) 10px 4px no-repeat;
+    border-left: 1px solid #cccccc;
+}
+
+.commentBtns ul li a.addRatingBtn {
+    padding-left: 25px;
+    line-height: 20px;
+    background: url(images/add-rating-btn.png) 10px 4px no-repeat;
+    border-left: 1px solid #cccccc;
+}
+
+.commentBtns ul li a.new {
+    color: #006b0e;
+    background: #eaf7da;
+    border: 1px solid #bee78d;
+}
+
+.commentBtns ul li a.approved {
+    color: #585858;
+    background: #fff;
+    border: 1px solid #9D9D9D;
+}
+
+.commentBtns ul li a.hidden {
+    color: #969696;
+    background: #f2f2f2;
+    border: 1px solid #cccccc;
+}
+
+.commentBtns ul li a.deleted {
+    color: #9e0013;
+    background: #ffd9da;
+    border: 1px solid #ffabad;
+}
+
+.commentBtns ul li a.banUser {
+    color: #000000;
+    background-image: -moz-linear-gradient(100% 100% 90deg, #e3e3e3, #ffffff);
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#e3e3e3) );
+    border: 1px solid #999999;
+}
+
+.commentBtns ul li a.new:hover {
+    border: 1px solid #2a8921;
+}
+.commentBtns ul li a.approved:hover  {
+    border: 1px solid #5b5b5b;
+}
+.commentBtns ul li a.hidden:hover  {
+    border: 1px solid #838383;
+}
+.commentBtns ul li a.deleted:hover {
+    border: 1px solid #ce3843;
+}
+.commentBtns ul li a.banUser span {
+    display: block;
+    height: 18px;
+    padding-left: 20px;
+    background: url(images/ban-user-icon.png) left 3px no-repeat;
+}
+
+.commentBtns ul li a.banUser:hover {
+    border: 1px solid #656565;
+    background-image: -moz-linear-gradient(100% 100% 90deg, #d2d2d2, #ffffff);
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#ffffff), to(#d2d2d2) );
+}
+
+.dataTables_wrapper .commentId {
+    width: 3%;
+}
+
+.dataTables_wrapper .commentUser {
+    width: 27%;
+}
+
+.dataTables_wrapper .commentTimeCreated {
+    width: 305px;
+}
+
+.dataTables_wrapper .commentMessage {
+    width: 46%;
+}
+
+.dataTables_wrapper .commentThread {
+    width: 24%;
+}
+.dataTables_wrapper .commentThreadOrder {
+    width: 110px;
+}
+
+.commentsHolder .dataTables_wrapper {
+    margin: 0;
+}
+
+.commentsHolder p {
+    font-size:12px;
+}
+
+.hidden {
+    overflow: hidden !important;
+    position: inherit !important;
+    width: auto !important;
+    position:static!important;
+}
+
+
+.dataTables_filter input[type="text"] {
+    background:transparent url(images/searchfield_bg.png) no-repeat scroll 0 0;
+    border: 1px solid #9D9D9D;
+    float: none;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 23px;
+    margin: 0;
+    padding: 0;
+    text-indent: 3px;
+    width: 60%;
+    text-indent: 23px;
+}
+
+.datatable input[type="checkbox"] {
+    height:13px;
+    width:13px;
+}'
+
+.commentsHolder .smartlist .ui-widget-header {
+    background: none;
+    color: #444444;
+    font-weight: bold;
+}
+
+.commentsHolder .smartlist .ui-widget-header:first-child {
+    border-width: 0 0 1px 0;
+    padding:0;
+}
+    
+.commentsHolder .smartlist .ui-widget-header:last-child {
+    border-width: 0;
+    padding:6px 0;
+}
+.commentsHolder  .dataTables_filter {
+    clear:left;
+}
+.commentsHolder  .dataTables_length {
+    padding: 0 0 10px 0;
+    vertical-align: top;
+    float:right;
+    line-height:23px;
+}
+.commentsHolder .ui-widget-header select, .dataTables_actions .actions {
+    background-color: #FFFFFF;
+    border: 1px solid #9D9D9D;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px !important;
+    height: 25px;
+    margin: 0 0 0 6px !important;
+    min-width:60px;
+    padding: 2px 2px 2px 0;
+    vertical-align: top;
+}
+.commentsHolder .dataTables_actions {
+    padding: 0 0 10px 0;
+    vertical-align: top;
+    float:left;
+    line-height:21px;
+}
+
+.commentsHolder .dataTables_actions a {
+    font-size:12px;
+    color:#007fb3;
+    padding: 0;
+    margin: 0 0 0 10px;
+    line-height:23px;
+    font-weight:normal;
+    display:inline-block;
+    border: 0px solid black !important;
+    background: none !important;
+}
+.commentsHolder .dataTables_actions a span {
+    float:left;
+    margin-top:3px;
+    padding-right:2px;
+}
+.commentsHolder .dataTables_actions a:hover {
+    text-decoration:underline;
+}
+.commentsHolder .dataTables_actions select {
+    width: 180px;
+}
+
+/*---////////// Status Colors //////////---*/
+
+.datatable tr.status_approved {
+    background:#fff;
+}
+.datatable tr.status_new {
+    background:#f3fbeb;
+}
+.datatable tr.status_hidden {
+    background:#f8f8f8;
+}
+.datatable tr.status_deleted {
+    background:#fff4f4;
+}
+
+.commentAction {
+    display: none;
+}

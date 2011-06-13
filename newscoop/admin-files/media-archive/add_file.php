@@ -29,14 +29,6 @@ echo $breadcrumbs;
 camp_html_display_msgs();
 ?>
 
-<!-- Load Queue widget CSS and jQuery -->
-<style>
-@import url(<?php echo $Campsite['WEBSITE_URL']; ?>/js/plupload/css/plupload.queue.css);
-</style>
-<!-- Load plupload and all it's runtimes and the jQuery queue widget -->
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/plupload/js/plupload.full.min.js"></script>
-<script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/plupload/js/jquery.plupload.queue.min.js"></script>
-
 <br />
     <form method="POST" action="/<?php echo $ADMIN; ?>/media-archive/do_upload_file.php" enctype="multipart/form-data">
 <?php echo SecurityToken::FormParameter(); ?>
@@ -52,53 +44,8 @@ camp_html_display_msgs();
 </form>
 <p>&nbsp;</p>
 
-<script type="text/javascript">
-$(function() {
-    $("#uploader").pluploadQueue({
-        // General settings
-        runtimes : 'html5',
-        url : 'uploader_file.php',
-        unique_names : true
-    });
-
-    // Client side form validation
-    $('form').submit(function(e) {
-        var uploader = $('#uploader').pluploadQueue();
-        var url = $('#form-url').val();
-
-        // Validate number of uploaded files
-        if (uploader.total.uploaded == 0) {
-            // Files in queue upload them first
-            if (uploader.files.length > 0) {
-                // When all files are uploaded submit form
-                uploader.bind('UploadProgress', function() {
-                    if (uploader.total.uploaded == uploader.files.length) {
-                        $('form').submit();
-                    }
-                });
-                uploader.start();
-            } else if (url.length > 0) {
-                return;
-            } else {
-                alert('You must at least upload one file.');
-            }
-            e.preventDefault();
-        }
-    });
-});
-
-plupload.addI18n({
-    'Select files' : '<?php putGS('Select files'); ?>',
-    'Add files to the upload queue and click the start button.' : '<?php putGS('Add files to the upload queue and click the start button.'); ?>',
-    'Filename' : '<?php putGS('Filename'); ?>',
-    'Status' : '<?php putGS('Status'); ?>',
-    'Size' : '<?php putGS('Size'); ?>',
-    'Add files' : '<?php putGS('Add files'); ?>',
-    'Start upload' : '<?php putGS('Start upload'); ?>',
-    'Stop current upload' : '<?php putGS('Stop current upload'); ?>',
-    'Start uploading queue' : '<?php putGS('Start uploading queue'); ?>',
-    'Drag files here.' : '<?php putGS('Drag files here.'); ?>'
-});
-</script>
+<?php $this->view->plupload('', array(
+    'url' => './uploader_file.php',
+)); ?>
 
 <?php camp_html_copyright_notice(); ?>

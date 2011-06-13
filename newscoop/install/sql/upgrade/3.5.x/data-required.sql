@@ -73,8 +73,21 @@ WHERE fk_widget_id NOT IN (
 -- only if the default is used otherwise the preference should be kept
 UPDATE `SystemPreferences` SET `value` = '/js/geocoding/markers/' WHERE `varname` = 'MapMarkerDirectory' AND `value` = '/javascript/geocoding/markers/';
 
+-- Set the Sections new id field
+UPDATE `Sections` s
+JOIN `Issues` AS i ON
+i.`IdPublication` = s.`IdPublication` AND i.`Number` = s.`NrIssue` AND i.`IdLanguage` = s.`IdLanguage`
+SET `fk_issue_id` = i.`id`;
+
+-- Remove the sync phorum user from sql 
+DELETE FROM `liveuser_grouprights` WHERE `right_id` IN (SELECT `right_id` FROM `liveuser_rights` WHERE `right_define_name` = 'SyncPhorumUsers');
+DELETE FROM `liveuser_userrights` WHERE `right_id` IN (SELECT `right_id` FROM `liveuser_rights` WHERE `right_define_name` = 'SyncPhorumUsers');
+DELETE FROM `liveuser_rights` WHERE `right_define_name` = 'SyncPhorumUsers';
+
 -- whether we shall use internal statistics on article reading
 INSERT INTO SystemPreferences (varname, value) VALUES ('CollectStatistics', 'Y');
 
 system php ./acl.php
+system php ./transfer_phorum.php
 system php ./javascript_js_cleanup.php
+

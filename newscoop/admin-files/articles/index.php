@@ -4,7 +4,6 @@ require_once($GLOBALS['g_campsiteDir']. '/classes/DbObjectArray.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/ArticlePublish.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/ArticleImage.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/ArticleTopic.php');
-require_once($GLOBALS['g_campsiteDir']. '/classes/ArticleComment.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/SimplePager.php');
 
 require_once LIBS_DIR . '/ArticleList/ArticleList.php';
@@ -140,7 +139,7 @@ camp_html_content_top(getGS('Article List') . ': ' . $sectionObj->getName(), $to
     	$articlelist->setOrder(TRUE);
     }
     $articlelist->setSearch(TRUE);
-    
+
 
     $articlelist->renderActions();
     $articlelist->render();

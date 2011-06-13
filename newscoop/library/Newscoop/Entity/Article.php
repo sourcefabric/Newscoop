@@ -15,6 +15,15 @@ namespace Newscoop\Entity;
  */
 class Article
 {
+
+    /**
+     * @Id
+     * @ManyToOne(targetEntity="Newscoop\Entity\Language")
+     * @JoinColumn(name="IdLanguage", referencedColumnName="Id")
+     * @var Newscoop\Entity\Language
+     */
+    private $language;
+
     /**
      * @Id
      * @ManyToOne(targetEntity="Newscoop\Entity\Publication")
@@ -40,12 +49,16 @@ class Article
     private $section;
 
     /**
-     * @Id
-     * @ManyToOne(targetEntity="Newscoop\Entity\Language")
-     * @JoinColumn(name="IdLanguage", referencedColumnName="Id")
-     * @var Newscoop\Entity\Language
+     * @column(name="NrSection")
+     * @var int
      */
-    private $language;
+    private $sectionId;
+
+    /**
+     * @column(name="NrIssue")
+     * @var int
+     */
+    private $issueId;
 
     /**
      * @Id
@@ -61,6 +74,115 @@ class Article
     private $name;
 
     /**
+     * Set article id
+     *
+     * @param int $p_id
+     * @return Article
+     */
+    public function setId($p_id)
+    {
+        $this->number = $p_id;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get article id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->number;
+    }
+
+    /**
+     * Get article name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Set publication
+     *
+     * @param  Publication $p_publication
+     * @return Article
+     */
+    public function setPublication(Publication $p_publication)
+    {
+        $this->publication = $p_publication;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get publication
+     *
+     * @return Newscoop\Entity\Publication
+     */
+    public function getPublication()
+    {
+        return $this->publication;
+    }
+
+    /**
+     * Get publication id
+     *
+     * @return int
+     */
+    public function getPublicationId()
+    {
+        return $this->publication->getId();
+    }
+
+    /**
+     * Get section
+     *
+     * @return Newscoop\Entity\Section
+     */
+    public function getSection()
+    {
+        return $this->section;
+    }
+
+    /**
+     * Get section id
+     *
+     * @return int
+     */
+    public function getSectionId()
+    {
+        return $this->sectionId;
+    }
+
+    /**
+     * Get issue id
+     *
+     * @return int
+     */
+    public function getIssueId()
+    {
+        return $this->issueId;
+    }
+
+    /**
+     * Set language
+     *
+     * @param  Newscoop\Entity\Language $p_language
+     * @return Newscoop\Entity\Article
+     */
+    public function setLanguage(Language $p_language)
+    {
+        $this->language = $p_language;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
      * Get language
      *
      * @return Newscoop\Entity\Language
@@ -69,6 +191,17 @@ class Article
     {
         return $this->language;
     }
+
+    /**
+     * Get language id
+     *
+     * @return int
+     */
+    public function getLanguageId()
+    {
+        return $this->language->getId();
+    }
+
 
     /**
      * Get number

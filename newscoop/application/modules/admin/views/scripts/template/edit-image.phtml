@@ -1,0 +1,7 @@
+<div class="template ui-widget-content small-block block-shadow theme-edit">
+    <?php echo $this->replaceForm->setAttrib('class', 'replace'); ?>
+
+    <div class="image">
+        <img src="<?php echo $this->baseUrl('themes/' . $this->basePath . $this->item->key . '?time=' . time()); ?>" alt="<?php echo $this->item->id; ?>" />
+    </div>
+</div>

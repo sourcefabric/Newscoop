@@ -90,8 +90,9 @@ if (isset($_REQUEST['TOL_Language'])) {
 	$_REQUEST['TOL_Language'] = $defaultLanguage;
 }
 
-// Store request again.
-camp_session_set("request_$requestId", $request);
+if (isset($requestId)) { // Store request again
+    camp_session_set("request_$requestId", $request);
+}
 
 // Load the language files.
 camp_load_translation_strings("globals");
@@ -200,7 +201,7 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
 <tr>
     <td colspan="2"><strong class="light">
         <?php
-        if ($_GET['request'] == 'ajax' || $requestIsPost) {
+        if ((isset($_GET['request']) && $_GET['request'] == 'ajax') || !empty($requestIsPost)) {
             putGS('Your changes will be saved after login.');
             echo '<br />';
         }

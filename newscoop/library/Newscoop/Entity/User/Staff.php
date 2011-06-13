@@ -5,6 +5,7 @@
  * @license http://www.gnu.org/licenses/gpl.txt
  */
 
+
 namespace Newscoop\Entity\User;
 
 use DateTime,
@@ -14,10 +15,14 @@ use DateTime,
     Newscoop\Entity\User,
     Newscoop\Entity\Acl\Role;
 
+
+
 /**
  * Staff entity
  * @entity(repositoryClass="Newscoop\Entity\Repository\User\StaffRepository")
  */
+
+
 class Staff extends User implements \Zend_Acl_Role_Interface
 {
     /**
@@ -95,10 +100,13 @@ class Staff extends User implements \Zend_Acl_Role_Interface
     public function hasPermission($permission)
     {
         $acl = Zend_Registry::get('acl')->getAcl($this);
-
         try {
             list($resource, $action) = PermissionToAcl::translate($permission);
-            return $acl->isAllowed($this, strtolower($resource), strtolower($action));
+            if($acl->isAllowed($this, strtolower($resource), strtolower($action))) {
+				return \SaaS::singleton()->hasPermission($permission);
+            } else {
+            	return FALSE;
+            }
         } catch (Exception $e) {
             return false;
         }

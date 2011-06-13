@@ -1,0 +1,7 @@
+<div class="commentArticleHolder">
+<p>
+    <a href="<?php echo $this->baseUrl("admin/articles/get.php?".$this->linkArticle($this->article));?>" class="articleLink">
+        <?php echo $this->article->getName()?></a>
+    <br>
+<!-- <span>The custodian; <b>Section</b> Business</span></p> -->
+    <a class="goToArticle" href="<?php echo $this->baseUrl("admin/articles/edit.php?".$this->linkArticle($this->article));?>">Go to article page</a> </div>

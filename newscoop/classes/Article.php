@@ -661,14 +661,17 @@ class Article extends DatabaseObject {
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleIndex.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
-        require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleComment.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticlePublish.php');
 
         // Delete scheduled publishing
         ArticlePublish::OnArticleDelete($this->m_data['Number'], $this->m_data['IdLanguage']);
 
         // Delete Article Comments
-        ArticleComment::OnArticleDelete($this->m_data['Number'], $this->m_data['IdLanguage']);
+        // @todo change this with DOCTRINE2 CASCADE DELETE
+        global $controller;
+        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+        $repository->deleteArticle($this->m_data['Number'], $this->m_data['IdLanguage']);
+        $repository->flush();
 
         // is this the last translation?
         if (count($this->getLanguages()) <= 1) {
@@ -2921,21 +2924,23 @@ class Article extends DatabaseObject {
                     $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
                     break;
                 case 'bycomments':
-                    $dbField = 'comments_counter.comments_count';
-                    $joinTable = "(SELECT COUNT(*) AS comments_count, fk_article_number, fk_language_id \n"
-                               . "    FROM ArticleComments \n"
-                               . '    GROUP BY fk_article_number, fk_language_id)';
+                    //@todo change this with DOCTRINE2 when refactor
+		            $dbField = 'comments_counter.comments_count';
+                    $joinTable = "(SELECT COUNT(*) AS comments_count, `fk_thread_id` AS `fk_article_number`, fk_language_id \n"
+                               . "    FROM `Comment` `c` \n"
+                               . "    WHERE c.status = 0 \n"
+                               . '    GROUP BY fk_thread_id, fk_language_id)';
                     $p_otherTables[$joinTable] = array('__TABLE_ALIAS'=>'comments_counter',
                                                        'Number'=>'fk_article_number',
                                                        'IdLanguage'=>'fk_language_id');
                     break;
                 case 'bylastcomment':
-                    $dbField = 'comment_ids.last_comment_id';
-                    $joinTable = "(SELECT MAX(fk_comment_id) AS last_comment_id, fk_article_number, fk_language_id \n"
-                               . "    FROM ArticleComments AS ac LEFT JOIN phorum_messages AS pm \n"
-                               . "        ON ac.fk_comment_id = pm.message_id \n"
-                               . "    WHERE pm.status = 2 AND ac.is_first = false"
-                               . "    GROUP BY fk_article_number, fk_language_id)";
+                    //@todo change this with DOCTRINE2 when refactor
+        		    $dbField = 'comment_ids.last_comment_id';
+                    $joinTable = "(SELECT MAX(id) AS last_comment_id, `fk_thread_id` AS `fk_article_number`, fk_language_id \n"
+                               . "    FROM Comment c \n"
+                               . "    WHERE c.status = 0 \n"
+                               . "    GROUP BY fk_thread_id, fk_language_id)";
                     $p_otherTables[$joinTable] =  array('__TABLE_ALIAS'=>'comment_ids',
                                                         'Number'=>'fk_article_number',
                                                         'IdLanguage'=>'fk_language_id');

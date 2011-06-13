@@ -13,8 +13,15 @@ namespace Newscoop\Entity;
  * @entity(repositoryClass="Newscoop\Entity\Repository\LanguageRepository")
  * @table(name="Languages")
  */
-class Language 
+class Language
 {
+	/**
+	 * Provides the class name as a constant. 
+	 */
+	const NAME = __CLASS__;
+	
+	/* --------------------------------------------------------------- */
+	
     /**
      * @id @generatedValue
      * @column(name="Id", type="integer")

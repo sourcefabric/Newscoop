@@ -1,0 +1,222 @@
+.themesListHolder {
+	width:920px;
+	background:none !important;
+	border:none !important;
+	}
+	.themesListHolder td{
+		vertical-align: top;
+	}
+	.themesListHolder div {
+		position:relative;
+		padding:0px !important;
+		background:none !important;
+		border:none !important;
+		}
+		.themesListTabsBtns {
+			padding:0px !important; margin-bottom:20px !important;
+			background:none !important;
+			border:none !important; border-bottom:1px solid #9D9D9D !important;
+			}
+			.themesListTabsBtns .ui-tabs-selected {
+				background:#f6f6f6 !important;
+				}
+		#addNewPublication {
+			position:absolute; right:0px; top:8px; display:block;
+			height:13px; 
+			padding-left:14px;
+			color:#007FB3;
+			background:url(images/small_add.png) 0 3px  no-repeat;
+			}
+			#addNewPublication:hover {
+				text-decoration:underline;
+				}
+		#actionExpand {
+			overflow: hidden;
+			margin-bottom: 8px;
+			}
+			#actionExpand fieldset {
+				float: left;
+				width: auto;
+				margin: 0px;
+				padding: 0px;
+				border: none;
+				}
+			#actionExpand fieldset.right {
+				float: right;
+				}
+			select.actions {
+				width: 100px;
+				margin-right: 10px;
+				}
+			#actionExpand fieldset a {
+				line-height: 24px;
+				color: #007FB3;
+				}
+				#actionExpand fieldset a:hover {
+					text-decoration: underline;
+					}
+			#actionExpand fieldset label {
+				margin-right: 10px;
+				line-height: 24px;
+				}
+		.themesListHolder table {
+			}
+			.themesListHolder table thead tr th {
+				text-align:left;
+				}
+			.themesListHolder table tbody {
+				background:#ffffff;
+				}
+				.themesListHolder table tbody tr:hover td {
+					background:none !Important;
+					}
+					.themesListHolder table tbody tr td {
+						padding:10px 5px;
+						border:none; border-top:1px solid #cccccc;
+						}
+						.themesListHolder table tbody tr td.valignTop {
+							vertical-align:top;
+							}
+						.themesListTabs {
+							 position:relative; overflow:hidden;
+							}
+							.ui-tabs .ui-tabs-hide {
+								display: none;
+								}
+							.themesListTabs div, .themesListTabs li {
+								float:left !important; overflow:hidden; 
+								width:210px !important; height:129px !important;
+								margin-right:16px;
+								border:1px solid #9d9d9d !important;
+								}
+							.themesListTabs .imageCtrls ul, .themesListTabs .imageCtrls li
+							{
+								width: 300px !important;
+							}
+							.themesListTabs ul
+							{
+								width: 210px !important;
+								border: none !important;	
+							}
+							.themesListTabs h3 {
+								padding-bottom:0;
+								color:#3399c2;
+								}
+								.themesListTabs h3 span {
+									font-size:14px; color:#3b3b3b;
+									}
+							.themesListTabs p {
+								margin:0px 0 15px 0;
+								}
+							.themesListTabs ul {
+								right:0px; bottom:0px;
+								margin:0px !important; padding:0px !important; 
+								width:236px; !Important;
+								background:none !important;
+								border:none !important;
+								}
+								.themesListTabs ul li {
+									float:none !important;
+									height:25px !important;
+									margin:0px !Important; padding:0px !important;
+									background:none !Important;
+									border:none !important;
+									}
+									.themesListTabs ul li a {
+										display:block; position:relative;
+										width:216px; height:26px; 
+										padding:0px 0 0 20px !important;
+										line-height:26px;
+										background:url(images/themes-list-tabs-btn.png) left top no-repeat;
+										}
+									.themesListTabs ul li.ui-tabs-selected a {
+										background-position:0 -26px;
+										cursor:pointer !important;
+										}
+										.themesListTabs ul li a span {
+											position:absolute; right:10px; top:0px; display:none;
+											font-weight:normal; color:#9d9d9d; font-style:italic; font-size:11px;
+											}
+										.themesListTabs ul li.ui-tabs-selected a span {
+											display:block;
+											}
+						.compatibilityTitle {
+							display:block; 
+							margin-bottom:5px;
+							color:#000000;
+							}
+						.actionDropDown {
+							float:right;
+							margin:0px !important;
+							padding:10px 0 0 0px !important;
+							}
+							.actionDropDown li {
+								position:relative; float:right;
+								}
+								.actionDropDown li a {
+									display:block;
+									width:62px; height:18px; 
+									padding-left:8px;
+									line-height:18px; color:#007fb3;
+									background:url(images/actions-btn-bgr.png) 55px 0px no-repeat;
+									-moz-border-radius: 3px;
+									-webkit-border-radius: 3px;
+									}
+									.actionDropDown li a:hover, .actionDropDown li a.active {
+										color:#ffffff; 
+										background-position:55px -18px;
+										background-color:#9d9d9d;
+										}
+								.actionDropDown li ul {
+									display:none; position:absolute; top:15px; left:0px;
+									width:160px;
+									margin:0px !important;
+									padding:0px !important;
+									border:1px solid #9d9d9d;
+									}
+									.actionDropDown li ul li {
+										border-bottom:1px solid #e5e5e5;
+										}
+									.actionDropDown li ul li a, .actionDropDown li ul li a.active {
+										width:135px; height:25px;
+										padding:0 0 0 25px;
+										line-height:25px; color:#444444;
+										background-color:#ffffff;
+										}
+										.actionDropDown li ul li a.add {
+											background:url(images/solo_icons.png) 7px -84px no-repeat #ffffff;
+											}
+										.actionDropDown li ul li a.delete, .actionDropDown li ul li a.unassign {
+											background:url(images/topics_delete.png) 5px 6px no-repeat #ffffff
+											}
+										.actionDropDown li ul li a:hover {
+											color:#007fb3;
+											background-color:#f5f5f5;
+											}
+											.actionDropDown li ul li a span {
+												display:block;
+												width:135px; height:25px;
+												background:url(images/arrow-right.png) 120px 9px no-repeat;
+												}
+										.actionDropDown li ul li ul {
+											position:absolute; display:none; top:-1px; left:160px;
+											width:160px;
+											margin:0px !important;
+											padding:0px !important;
+											}
+											.actionDropDown li ul li ul li a, .actionDropDown li ul li ul li a.active {
+												width:140px !important;
+												padding:0 10px !important;
+												background-image:none !important;
+												}
+												.actionMessage{
+													height: 14px; line-height: 14px;
+													font-size: 11px; color: #d50;
+												}
+												
+												.actionDropDown li a.download
+												{
+													background-image:url(images/solo_icons.png);
+													background-repeat:no-repeat;
+													background-position: 5px -24px;	
+												}

@@ -635,7 +635,6 @@ abstract class User
     {
         return $this->position;
     }
-
     /**
      * To string strategy
      *
@@ -646,3 +645,4 @@ abstract class User
         return $this->getName();
     }
 }
+

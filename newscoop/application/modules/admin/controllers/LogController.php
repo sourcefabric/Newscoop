@@ -57,7 +57,7 @@ class Admin_LogController extends Zend_Controller_Action
 
         // fetch logs
         $limit = 15;
-        $offset = max(0, (int) $_GET['offset']);
+        $offset = max(0, isset($_GET['offset']) ? (int) $_GET['offset'] : 0);
         $this->view->logs = $this->logRepository->getLogs($offset, $limit, $priority);
 
         // set pager

@@ -1,0 +1,44 @@
+# There might be no access to apache config, set options here
+DirectoryIndex index.php index.html
+Options -Indexes FollowSymLinks -MultiViews
+
+AddType video/ogg .ogm
+AddType video/ogg .ogv
+AddType audio/ogg .ogg
+AddType video/mp4 .mp4
+AddType video/webm .webm
+
+# Options might not allowed here, use Rewrite rules instead
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    RewriteCond %{REQUEST_URI} /+get_img$
+    RewriteRule . get_img.php [L]
+
+    RewriteCond %{REQUEST_URI} /+attachment/+
+    RewriteRule . attachment.php [L]
+
+    RewriteCond %{REQUEST_URI} !\.php$
+    RewriteCond %{REQUEST_URI} !\.html$
+    RewriteCond %{REQUEST_URI} !\.css$
+    RewriteCond %{REQUEST_URI} !\.js$
+    RewriteCond %{REQUEST_URI} !\.ico$
+    RewriteCond %{REQUEST_URI} !/+admin
+    RewriteCond %{REQUEST_URI} !/+install
+    RewriteCond %{REQUEST_URI} !(/+plugins/[^/]*)?/+javascript
+    RewriteCond %{REQUEST_URI} !(/+plugins/[^/]*)?/+css
+    RewriteCond %{REQUEST_URI} !(/+plugins/[^/]*)?/+images
+    RewriteCond %{REQUEST_URI} !/+templates
+    RewriteCond %{REQUEST_URI} !/+videos
+    RewriteRule . index.php [L]
+
+    RewriteCond %{REQUEST_URI} .tpl$
+    RewriteRule . index.php [L]
+
+    RewriteCond %{REQUEST_URI} /+admin$|/+admin/+.*|/+admin-files
+    RewriteRule . admin.php [L]
+</IfModule>
+
+# Uncomment it for gui backup/restore process
+# NOTE: It can be incompatible on some shared hosting
+#php_value output_buffering Off

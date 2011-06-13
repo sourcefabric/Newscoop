@@ -2,7 +2,7 @@
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
 
 // Check permissions
-if (!$g_user->hasPermission('ManageIssue')) {
+if (!$g_user->hasPermission('ManageIssue') || !SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
 	camp_html_display_error(getGS('You do not have the right to add issues.'));
 	exit;
 }

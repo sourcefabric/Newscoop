@@ -9,7 +9,7 @@
  * @version $Revision$
  * @link http://www.sourcefabric.org
  */
-
+ 
 global $g_db;
 
 /**
@@ -697,11 +697,7 @@ class CampInstallationBaseHelper
             ."Password = SHA1('".$g_db->Escape($p_password)."'), "
             ."EMail = '".$g_db->Escape($p_email)."' "
             .'WHERE Id = 1';
-        $sqlQuery2 = 'UPDATE phorum_users SET '
-            ."password = SHA1('".$g_db->Escape($p_password)."'), "
-            ."email = '".$g_db->Escape($p_email)."' "
-            .'WHERE user_id = 1';
-        if (!$g_db->Execute($sqlQuery1) || !$g_db->Execute($sqlQuery2)) {
+        if (!$g_db->Execute($sqlQuery1)) {
             return false;
         }
 

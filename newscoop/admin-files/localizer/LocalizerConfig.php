@@ -61,7 +61,10 @@ $g_localizerConfig['LOADED_FILES'] = array();
 $mapPrefixToDir = array(
     '' => null,
     'globals' => null,
-    'home' => '/admin-files/',
+    'home' => array(
+        '/admin-files/',
+        '/application/layouts/scripts/',
+    ),
     'api' => '/classes/*',
     'library' => '/admin-files/libs/*',
     'pub' => '/admin-files/pub',
@@ -136,7 +139,6 @@ $mapPrefixToDir = array(
     'plugins' => '/admin-files/plugins',
     'extensions' => '/extensions/*',
     'authors' => '/admin-files/users/authors_ajax',
-    'forms' => '/application/modules/admin/forms',
 );
 
 foreach (CampPlugin::GetPluginsInfo(true) as $info) {

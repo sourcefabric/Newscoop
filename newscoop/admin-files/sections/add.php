@@ -63,12 +63,18 @@ editor_load_tinymce('f_description', $g_user, 0, $editorLanguage, 'section');
     <input type="text" class="input_text" name="f_url_name" SIZE="32" value="<?php p($newSectionNumber); ?>" alt="blank" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('URL Name')."'"); ?>">
   </td>
 </tr>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSectionSubscriptions')) {
+?>
 <tr>
   <td align="right"><?php putGS("Subscriptions"); ?>:</td>
   <td>
     <input type="checkbox" name="f_add_subscriptions" class="input_checkbox"> <?php  putGS("Add section to all subscriptions."); ?>
   </td>
 </tr>
+<?php
+	}
+?>
 <tr>
   <td colspan="2">
     <div align="center">
