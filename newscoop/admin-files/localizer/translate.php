@@ -168,7 +168,9 @@ function translationForm($p_request)
 						foreach ($mapPrefixToDisplay as $prefix => $displayStr) {
 						    if (!empty($prefix)) {
 						        $transl_status[$prefix] = Localizer::GetTranslationStatus($prefix, $localizerTargetLanguage);
-						    }
+                            } else {
+                                $transl_status[$prefix] = true;
+                            }
 						    camp_html_select_option($prefix, $screenDropDownSelection, $displayStr, $transl_status[$prefix]['untranslated'] ? array('style' => 'color:red') : array());
 						}
 						?>
@@ -222,6 +224,9 @@ function translationForm($p_request)
 				<tr>
 					<td>
 				        <?php
+                        $all = null;
+                        $transl = null;
+                        $untransl = null;
 				        if ($screenDropDownSelection) {
 				            $all = $transl_status[$screenDropDownSelection]['all'];
 				            $transl = $transl_status[$screenDropDownSelection]['translated'];
