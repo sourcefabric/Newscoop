@@ -9,6 +9,7 @@
  */
 
 require_once $GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php";
+camp_load_translation_strings("library");
 
 $f_language_selected = (int) camp_session_get('f_language_selected', 0);
 
