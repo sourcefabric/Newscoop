@@ -75,6 +75,10 @@ TABLES="
  liveuser_rights_right_id_seq\
  liveuser_users\
  liveuser_users_auth_user_id_seq\
+ output\
+ output_issue\
+ output_section\
+ output_theme\
  plugin_blog_blog\
  plugin_blog_comment\
  plugin_blog_entry\

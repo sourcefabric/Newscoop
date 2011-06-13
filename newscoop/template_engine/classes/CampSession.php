@@ -77,8 +77,10 @@ final class CampSession
      */
     function start()
     {
-        @session_cache_limiter('none');
-        @session_start();
+    	require_once 'Zend/Session.php';
+        Zend_Session::start();
+//        @session_cache_limiter('none');
+//        @session_start();
     } // fn start
 
 
