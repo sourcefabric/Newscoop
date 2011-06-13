@@ -196,7 +196,7 @@ class BaseList
      */
     public function setItems($items)
     {
-        if (is_array($items[0])) {
+        if (isset($items[0]) && is_array($items[0])) {
             $items = $items[0];
         }
         $this->items = array();

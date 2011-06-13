@@ -53,7 +53,7 @@ class PermissionToAcl
         'Get',
         'Publish',
         'Enable',
-        'Synchronize',
+        'Sync',
     );
 
     /** @var array */

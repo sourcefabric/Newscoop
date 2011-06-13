@@ -834,6 +834,7 @@ DROP TABLE IF EXISTS `Issues`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Issues` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `IdPublication` int(10) unsigned NOT NULL DEFAULT '0',
   `Number` int(10) unsigned NOT NULL DEFAULT '0',
   `IdLanguage` int(10) unsigned NOT NULL DEFAULT '0',
@@ -844,8 +845,9 @@ CREATE TABLE `Issues` (
   `SectionTplId` int(10) unsigned DEFAULT NULL,
   `ArticleTplId` int(10) unsigned DEFAULT NULL,
   `ShortName` varchar(32) NOT NULL DEFAULT '',
-  PRIMARY KEY (`IdPublication`,`Number`,`IdLanguage`),
-  UNIQUE KEY `ShortName` (`IdPublication`,`IdLanguage`,`ShortName`)
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `ShortName` (`IdPublication`,`IdLanguage`,`ShortName`),
+  UNIQUE KEY `issue_unique` (`IdPublication`,`Number`,`IdLanguage`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1397,6 +1399,8 @@ DROP TABLE IF EXISTS `Sections`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Sections` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_issue_id` int(10) unsigned NOT NULL,
   `IdPublication` int(10) unsigned NOT NULL DEFAULT '0',
   `NrIssue` int(10) unsigned NOT NULL DEFAULT '0',
   `IdLanguage` int(10) unsigned NOT NULL DEFAULT '0',
@@ -1406,9 +1410,10 @@ CREATE TABLE `Sections` (
   `Description` blob,
   `SectionTplId` int(10) unsigned DEFAULT NULL,
   `ArticleTplId` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`IdPublication`,`NrIssue`,`IdLanguage`,`Number`),
+  PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `IdPublication` (`IdPublication`,`NrIssue`,`IdLanguage`,`Name`),
-  UNIQUE KEY `ShortName` (`IdPublication`,`NrIssue`,`IdLanguage`,`ShortName`)
+  UNIQUE KEY `ShortName` (`IdPublication`,`NrIssue`,`IdLanguage`,`ShortName`),
+  UNIQUE KEY `section_unique` (`IdPublication`,`NrIssue`,`IdLanguage`,`Number`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1576,7 +1581,7 @@ CREATE TABLE `SystemPreferences` (
 
 LOCK TABLES `SystemPreferences` WRITE;
 /*!40000 ALTER TABLE `SystemPreferences` DISABLE KEYS */;
-INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','2M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(65,'CollectStatistics','Y','2011-06-11 18:35:11'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(18,'SiteCacheEnabled','Y','2010-07-28 16:17:03'),(22,'SiteMetaKeywords','Newscoop, Sourcefabric, enterprise content management, open source, media, journalism','2011-01-17 12:29:43'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Newscoop','2011-01-17 12:27:00'),(23,'SiteMetaDescription','Newscoop - The open content management system for professional journalists.','2011-01-17 12:29:43'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45'),(26,'DBCacheEngine',NULL,'2011-01-17 12:28:20'),(27,'EditorImageRatio','100','2009-06-15 17:21:08'),(28,'TemplateFilter','.*, CVS','2009-06-15 17:21:08'),(29,'ImagecacheLifetime','86400','2009-06-22 11:54:19'),(30,'EditorImageResizeWidth','','2010-06-29 20:31:14'),(31,'EditorImageResizeHeight','','2010-06-29 20:31:14'),(32,'EditorImageZoom','N','2010-06-29 20:31:14'),(33,'TimeZone',NULL,'2010-06-29 20:31:14'),(34,'ExternalCronManagement','Y','2010-06-29 20:31:14'),(35,'TemplateCacheHandler',NULL,'2011-01-17 12:28:20'),(36,'PasswordRecovery','Y','2011-01-17 12:28:20'),(37,'MapCenterLongitudeDefault','14.424133','2011-01-17 12:28:20'),(38,'MapCenterLatitudeDefault','50.089926','2011-01-17 12:28:20'),(39,'MapDisplayResolutionDefault','4','2011-01-17 12:28:20'),(40,'MapViewWidthDefault','600','2011-01-17 12:28:20'),(41,'MapViewHeightDefault','400','2011-01-17 12:28:20'),(42,'MapProviderAvailableGoogleV3','1','2011-01-17 12:28:20'),(43,'MapProviderAvailableMapQuest','1','2011-01-17 12:28:20'),(44,'MapProviderAvailableOSM','1','2011-01-17 12:28:20'),(45,'MapProviderDefault','GoogleV3','2011-01-17 12:28:20'),(46,'MapMarkerDirectory','/js/geocoding/markers/','2011-06-11 18:35:11'),(47,'MapMarkerSourceDefault','marker-gold.png','2011-01-17 12:28:20'),(48,'MapPopupWidthMin','200','2011-06-11 18:35:11'),(49,'MapPopupHeightMin','150','2011-06-11 18:35:11'),(50,'MapVideoWidthYouTube','320','2011-06-11 18:35:11'),(51,'MapVideoHeightYouTube','240','2011-06-11 18:35:11'),(52,'MapVideoWidthVimeo','320','2011-06-11 18:35:11'),(53,'MapVideoHeightVimeo','180','2011-06-11 18:35:11'),(54,'MapVideoWidthFlash','320','2011-06-11 18:35:11'),(55,'MapVideoHeightFlash','240','2011-06-11 18:35:11'),(56,'MapVideoWidthFlv','320','2011-06-11 18:35:11'),(57,'MapVideoHeightFlv','240','2011-06-11 18:35:11'),(58,'FlashServer','','2011-01-17 12:28:20'),(59,'FlashDirectory','videos/','2011-01-17 12:28:20'),(61,'MapAutoFocusDefault','1','2011-06-11 18:35:11'),(62,'MapAutoFocusMaxZoom','10','2011-06-11 18:35:11'),(63,'MapAutoFocusBorder','50','2011-06-11 18:35:11'),(64,'MapAutoCSSFile','/js/geocoding/styles/map-info.css','2011-06-11 18:35:11');
+INSERT INTO `SystemPreferences` VALUES (1,'ExternalSubscriptionManagement','N','2007-03-07 07:15:36'),(2,'KeywordSeparator',',','2007-03-07 07:15:36'),(3,'LoginFailedAttemptsNum','3','2007-06-16 04:52:31'),(4,'MaxUploadFileSize','2M','2007-10-04 22:16:54'),(5,'UseDBReplication','N','2007-03-07 07:15:36'),(6,'DBReplicationHost','','2007-03-07 07:15:36'),(7,'DBReplicationUser','','2007-03-07 07:15:36'),(8,'DBReplicationPass','','2007-03-07 07:15:36'),(9,'DBReplicationPort','3306','2007-03-07 07:15:36'),(65,'CollectStatistics','Y','2011-06-13 09:19:05'),(15,'SiteOnline','Y','2007-10-07 01:49:11'),(16,'SiteCharset','utf-8','2007-07-26 04:49:32'),(17,'SiteLocale','en-US','2007-07-26 04:49:56'),(18,'SiteCacheEnabled','Y','2010-07-28 16:17:03'),(22,'SiteMetaKeywords','Newscoop, Sourcefabric, enterprise content management, open source, media, journalism','2011-01-17 12:29:43'),(19,'SiteSecretKey','4b506c2968184be185f6282f5dcac832','2007-10-04 20:51:41'),(20,'SiteSessionLifeTime','1400','2007-10-04 20:51:51'),(21,'SiteTitle','Newscoop','2011-01-17 12:27:00'),(23,'SiteMetaDescription','Newscoop - The open content management system for professional journalists.','2011-01-17 12:29:43'),(24,'SMTPHost','localhost','2007-10-26 01:30:45'),(25,'SMTPPort','25','2007-10-26 01:30:45'),(26,'DBCacheEngine',NULL,'2011-01-17 12:28:20'),(27,'EditorImageRatio','100','2009-06-15 17:21:08'),(28,'TemplateFilter','.*, CVS','2009-06-15 17:21:08'),(29,'ImagecacheLifetime','86400','2009-06-22 11:54:19'),(30,'EditorImageResizeWidth','','2010-06-29 20:31:14'),(31,'EditorImageResizeHeight','','2010-06-29 20:31:14'),(32,'EditorImageZoom','N','2010-06-29 20:31:14'),(33,'TimeZone',NULL,'2010-06-29 20:31:14'),(34,'ExternalCronManagement','Y','2010-06-29 20:31:14'),(35,'TemplateCacheHandler',NULL,'2011-01-17 12:28:20'),(36,'PasswordRecovery','Y','2011-01-17 12:28:20'),(37,'MapCenterLongitudeDefault','14.424133','2011-01-17 12:28:20'),(38,'MapCenterLatitudeDefault','50.089926','2011-01-17 12:28:20'),(39,'MapDisplayResolutionDefault','4','2011-01-17 12:28:20'),(40,'MapViewWidthDefault','600','2011-01-17 12:28:20'),(41,'MapViewHeightDefault','400','2011-01-17 12:28:20'),(42,'MapProviderAvailableGoogleV3','1','2011-01-17 12:28:20'),(43,'MapProviderAvailableMapQuest','1','2011-01-17 12:28:20'),(44,'MapProviderAvailableOSM','1','2011-01-17 12:28:20'),(45,'MapProviderDefault','GoogleV3','2011-01-17 12:28:20'),(46,'MapMarkerDirectory','/js/geocoding/markers/','2011-06-13 09:19:05'),(47,'MapMarkerSourceDefault','marker-gold.png','2011-01-17 12:28:20'),(48,'MapPopupWidthMin','200','2011-06-13 09:19:05'),(49,'MapPopupHeightMin','150','2011-06-13 09:19:05'),(50,'MapVideoWidthYouTube','320','2011-06-13 09:19:05'),(51,'MapVideoHeightYouTube','240','2011-06-13 09:19:05'),(52,'MapVideoWidthVimeo','320','2011-06-13 09:19:05'),(53,'MapVideoHeightVimeo','180','2011-06-13 09:19:05'),(54,'MapVideoWidthFlash','320','2011-06-13 09:19:05'),(55,'MapVideoHeightFlash','240','2011-06-13 09:19:05'),(56,'MapVideoWidthFlv','320','2011-06-13 09:19:05'),(57,'MapVideoHeightFlv','240','2011-06-13 09:19:05'),(58,'FlashServer','','2011-01-17 12:28:20'),(59,'FlashDirectory','videos/','2011-01-17 12:28:20'),(61,'MapAutoFocusDefault','1','2011-06-13 09:19:05'),(62,'MapAutoFocusMaxZoom','10','2011-06-13 09:19:05'),(63,'MapAutoFocusBorder','50','2011-06-13 09:19:05'),(64,'MapAutoCSSFile','/js/geocoding/styles/map-info.css','2011-06-13 09:19:05');
 /*!40000 ALTER TABLE `SystemPreferences` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2602,7 +2607,7 @@ CREATE TABLE `liveuser_users` (
 
 LOCK TABLES `liveuser_users` WRITE;
 /*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
-INSERT INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','d033e22ae348aeb5660fc2140aec35850c4da997','admin@email.addr','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2011-06-11 18:35:11','0000-00-00 00:00:00','2011-01-17 14:29:16',1,NULL,6);
+INSERT INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','d033e22ae348aeb5660fc2140aec35850c4da997','admin@email.addr','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2011-06-13 09:19:05','0000-00-00 00:00:00','2011-01-17 14:29:16',1,NULL,6);
 /*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2627,6 +2632,120 @@ LOCK TABLES `liveuser_users_auth_user_id_seq` WRITE;
 /*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` DISABLE KEYS */;
 INSERT INTO `liveuser_users_auth_user_id_seq` VALUES (1);
 /*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `output`
+--
+
+DROP TABLE IF EXISTS `output`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `output` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `output`
+--
+
+LOCK TABLES `output` WRITE;
+/*!40000 ALTER TABLE `output` DISABLE KEYS */;
+INSERT INTO `output` VALUES (1,'Web');
+/*!40000 ALTER TABLE `output` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `output_issue`
+--
+
+DROP TABLE IF EXISTS `output_issue`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `output_issue` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_output_id` int(10) unsigned NOT NULL,
+  `fk_issue_id` int(10) unsigned NOT NULL,
+  `fk_theme_path_id` int(10) unsigned NOT NULL,
+  `fk_front_page_id` int(10) unsigned DEFAULT NULL,
+  `fk_section_page_id` int(10) unsigned DEFAULT NULL,
+  `fk_article_page_id` int(10) unsigned DEFAULT NULL,
+  `fk_error_page_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `fk_output_id` (`fk_output_id`,`fk_issue_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `output_issue`
+--
+
+LOCK TABLES `output_issue` WRITE;
+/*!40000 ALTER TABLE `output_issue` DISABLE KEYS */;
+/*!40000 ALTER TABLE `output_issue` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `output_section`
+--
+
+DROP TABLE IF EXISTS `output_section`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `output_section` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_output_id` int(10) unsigned NOT NULL,
+  `fk_section_id` int(10) unsigned NOT NULL,
+  `fk_front_page_id` int(10) unsigned DEFAULT NULL,
+  `fk_section_page_id` int(10) unsigned DEFAULT NULL,
+  `fk_article_page_id` int(10) unsigned DEFAULT NULL,
+  `fk_error_page_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `fk_output_id` (`fk_output_id`,`fk_section_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `output_section`
+--
+
+LOCK TABLES `output_section` WRITE;
+/*!40000 ALTER TABLE `output_section` DISABLE KEYS */;
+/*!40000 ALTER TABLE `output_section` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `output_theme`
+--
+
+DROP TABLE IF EXISTS `output_theme`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `output_theme` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_output_id` int(10) unsigned NOT NULL,
+  `fk_publication_id` int(10) unsigned NOT NULL,
+  `fk_theme_path_id` int(10) unsigned NOT NULL,
+  `fk_front_page_id` int(10) unsigned NOT NULL,
+  `fk_section_page_id` int(10) unsigned NOT NULL,
+  `fk_article_page_id` int(10) unsigned NOT NULL,
+  `fk_error_page_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `fk_output_id` (`fk_output_id`,`fk_publication_id`,`fk_theme_path_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `output_theme`
+--
+
+LOCK TABLES `output_theme` WRITE;
+/*!40000 ALTER TABLE `output_theme` DISABLE KEYS */;
+/*!40000 ALTER TABLE `output_theme` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -3047,6 +3166,31 @@ LOCK TABLES `plugin_pollanswer_attachment` WRITE;
 /*!40000 ALTER TABLE `plugin_pollanswer_attachment` DISABLE KEYS */;
 /*!40000 ALTER TABLE `plugin_pollanswer_attachment` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `resource`
+--
+
+DROP TABLE IF EXISTS `resource`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `resource` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  `path` varchar(200) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `path` (`path`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `resource`
+--
+
+LOCK TABLES `resource` WRITE;
+/*!40000 ALTER TABLE `resource` DISABLE KEYS */;
+/*!40000 ALTER TABLE `resource` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -3057,4 +3201,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-06-11 21:38:11
+-- Dump completed on 2011-06-13 12:28:31

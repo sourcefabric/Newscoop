@@ -417,6 +417,7 @@ DROP TABLE IF EXISTS `Issues`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Issues` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `IdPublication` int(10) unsigned NOT NULL DEFAULT '0',
   `Number` int(10) unsigned NOT NULL DEFAULT '0',
   `IdLanguage` int(10) unsigned NOT NULL DEFAULT '0',
@@ -427,9 +428,10 @@ CREATE TABLE `Issues` (
   `SectionTplId` int(10) unsigned DEFAULT NULL,
   `ArticleTplId` int(10) unsigned DEFAULT NULL,
   `ShortName` varchar(32) NOT NULL DEFAULT '',
-  PRIMARY KEY (`IdPublication`,`Number`,`IdLanguage`),
-  UNIQUE KEY `ShortName` (`IdPublication`,`IdLanguage`,`ShortName`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `ShortName` (`IdPublication`,`IdLanguage`,`ShortName`),
+  UNIQUE KEY `issue_unique` (`IdPublication`,`Number`,`IdLanguage`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -742,6 +744,8 @@ DROP TABLE IF EXISTS `Sections`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `Sections` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_issue_id` int(10) unsigned NOT NULL,
   `IdPublication` int(10) unsigned NOT NULL DEFAULT '0',
   `NrIssue` int(10) unsigned NOT NULL DEFAULT '0',
   `IdLanguage` int(10) unsigned NOT NULL DEFAULT '0',
@@ -751,10 +755,11 @@ CREATE TABLE `Sections` (
   `Description` blob,
   `SectionTplId` int(10) unsigned DEFAULT NULL,
   `ArticleTplId` int(10) unsigned DEFAULT NULL,
-  PRIMARY KEY (`IdPublication`,`NrIssue`,`IdLanguage`,`Number`),
+  PRIMARY KEY (`id`) USING BTREE,
   UNIQUE KEY `IdPublication` (`IdPublication`,`NrIssue`,`IdLanguage`,`Name`),
-  UNIQUE KEY `ShortName` (`IdPublication`,`NrIssue`,`IdLanguage`,`ShortName`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  UNIQUE KEY `ShortName` (`IdPublication`,`NrIssue`,`IdLanguage`,`ShortName`),
+  UNIQUE KEY `section_unique` (`IdPublication`,`NrIssue`,`IdLanguage`,`Number`)
+) ENGINE=MyISAM AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1238,6 +1243,83 @@ CREATE TABLE `liveuser_users_auth_user_id_seq` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `output`
+--
+
+DROP TABLE IF EXISTS `output`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `output` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `output_issue`
+--
+
+DROP TABLE IF EXISTS `output_issue`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `output_issue` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_output_id` int(10) unsigned NOT NULL,
+  `fk_issue_id` int(10) unsigned NOT NULL,
+  `fk_theme_path_id` int(10) unsigned NOT NULL,
+  `fk_front_page_id` int(10) unsigned DEFAULT NULL,
+  `fk_section_page_id` int(10) unsigned DEFAULT NULL,
+  `fk_article_page_id` int(10) unsigned DEFAULT NULL,
+  `fk_error_page_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `fk_output_id` (`fk_output_id`,`fk_issue_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `output_section`
+--
+
+DROP TABLE IF EXISTS `output_section`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `output_section` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_output_id` int(10) unsigned NOT NULL,
+  `fk_section_id` int(10) unsigned NOT NULL,
+  `fk_front_page_id` int(10) unsigned DEFAULT NULL,
+  `fk_section_page_id` int(10) unsigned DEFAULT NULL,
+  `fk_article_page_id` int(10) unsigned DEFAULT NULL,
+  `fk_error_page_id` int(10) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `fk_output_id` (`fk_output_id`,`fk_section_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `output_theme`
+--
+
+DROP TABLE IF EXISTS `output_theme`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `output_theme` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `fk_output_id` int(10) unsigned NOT NULL,
+  `fk_publication_id` int(10) unsigned NOT NULL,
+  `fk_theme_path_id` int(10) unsigned NOT NULL,
+  `fk_front_page_id` int(10) unsigned NOT NULL,
+  `fk_section_page_id` int(10) unsigned NOT NULL,
+  `fk_article_page_id` int(10) unsigned NOT NULL,
+  `fk_error_page_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `fk_output_id` (`fk_output_id`,`fk_publication_id`,`fk_theme_path_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `plugin_blog_blog`
 --
 
@@ -1540,4 +1622,4 @@ CREATE TABLE `plugin_pollanswer_attachment` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2011-06-11 22:31:33
+-- Dump completed on 2011-06-13 14:34:06
