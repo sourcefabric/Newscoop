@@ -48,13 +48,11 @@ require 'Doctrine/Common/ClassLoader.php';
 $classLoader = new \Doctrine\Common\ClassLoader('Newscoop', realpath(APPLICATION_PATH . '/../library'));
 $classLoader->register(); // register on SPL autoload stack
 
-
 $templatesPath = realpath(APPLICATION_PATH . '/../templates');
-$themesPath = realpath(APPLICATION_PATH . '/../themes/unassigned');
-
-$storage = new Storage($templatesPath);
-$items = $storage->listItems('');
-//print_r($items);
+$themesPath = CS_PATH_SITE . '/themes/unassigned';
+if (!is_dir($themesPath)) {
+	mkdir($themesPath);
+}
 
 
 class ThemeUpgrade
@@ -661,7 +659,7 @@ ORDER BY Number DESC";
         $srcPath = $this->templatesPath . (empty($themeSrcDir) ? '' : '/' . $themeSrcDir);
         $dstPath = $this->themesPath . (empty($themeSrcDir) ? '/default' : '/' . $themeSrcDir);
 
-        mkdir($dstPath);
+        mkdir($dstPath, 0777, true);
         copy(dirname(__FILE__) . '/' . $this->themeXMLFile, "$dstPath/$this->themeXMLFile");
         return $this->copyPath($srcPath, $dstPath);
     }
@@ -728,22 +726,22 @@ ORDER BY Number DESC";
      */
     function fixPathsInFile($filePath, $folder){
         $content = file_get_contents($filePath);
-         
+
         $replacer = function($match){
             return "\"{{ url static_file='".$match['path']."' }}\"";
         };
-         
+
         //Replace all of the gimme tag + relative path
         $pattern = '([\"\']+[\s]*[http\:\/\/\]?{\{[\s]*\$gimme\-\>publication\-\>site[\s]*\}\}\/templates/'.$folder.'\/(?<path>[^\"]+)[\"\']+)';
         $content = preg_replace_callback($pattern, $replacer, $content);
-         
+
         //Replace all of the relative path
         $pattern = '([\"\']+\/templates/'.$folder.'\/(?<path>[^\"]+)[\"\']+)';
         $content = preg_replace_callback($pattern, $replacer, $content);
-         
+
         //Replace all relatives to theme folder (this kind of risky but i just might doe everithing forgoted)
         $content = preg_replace('('.$folder.'\/)', '', $content);
-         
+
         $fh = fopen($filePath, 'w') or die("can't open file");
         fwrite($fh, $content);
         fclose($fh);
