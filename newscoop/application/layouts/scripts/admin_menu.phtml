@@ -302,19 +302,10 @@ if ($showConfigureMenu) {
     );
 
     $pages[3]['pages'][] = array(
-        'label' => getGS('Templates'),
-        'module' => 'admin',
-        'controller' => 'templates',
-        'action' => 'index.php',
-        'resource' => 'template',
-        'privilege' => 'manage',
-    );
-
-    $pages[3]['pages'][] = array(
         'label' => getGS('Themes'),
         'module' => 'admin',
         'controller' => 'themes',
-        'resource' => 'template',
+        'resource' => 'theme',
         'privilege' => 'manage',
         'pages' => array(
             array(

@@ -56,6 +56,10 @@ foreach ($users as $user) {
         $rightName = $right['right_define_name'];
         list($resource, $action) = PermissionToAcl::translate($rightName);
         $rules[] = array('allow', $roleId, strtolower($resource), strtolower($action));
+
+        if (strtolower($resource) == 'template' && strtolower($action) == 'manage') {
+            $rules[] = array('allow', $roleId, 'theme', 'manage');
+        }
     }
 
     $roleId++;

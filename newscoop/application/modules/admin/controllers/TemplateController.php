@@ -308,6 +308,9 @@ class Admin_TemplateController extends Zend_Controller_Action
         ));
     }
 
+    /**
+     * @Acl(action="delete")
+     */
     public function deleteAction()
     {
         $path = $this->parsePath();
