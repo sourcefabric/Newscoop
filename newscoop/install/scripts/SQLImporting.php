@@ -43,7 +43,7 @@ function importSqlStoredProgram ($p_db, $p_fileName) {
 
         // checking whether the line sets delimiter, and what is that delimiter
         if ("delimiter" == strtolower(substr($one_line, 0, strlen("delimiter")))) {
-            $delim_arr_ini = split(" ", $one_line);
+            $delim_arr_ini = explode(" ", $one_line);
             $delim_arr = array();
             foreach ($delim_arr_ini as $one_delim_part) {
                 $one_delim_part = trim($one_delim_part);
