@@ -76,7 +76,7 @@ class SoundcloudAPI
         $aResult = json_decode($result, true);
         if (empty($aResult['error']) && empty($aResult['errors']) && is_array($aResult)) {
             return $aResult;
-        } elseif (@$aResult['error'] == '401 - Unauthorized') {
+        } elseif (@$aResult['error'] == '401 - Unauthorized' || empty($aResult)) {
             $this->_token = null;
             return $this->trackSearch($aParams);
         }
@@ -101,7 +101,7 @@ class SoundcloudAPI
         $aResult = json_decode($result, true);
         if (empty($aResult['error']) && empty($aResult['errors']) && is_array($aResult)) {
             return $aResult;
-        } elseif (@$aResult['error'] == '401 - Unauthorized') {
+        } elseif (@$aResult['error'] == '401 - Unauthorized' || empty($aResult)) {
             $this->_token = null;
             return $this->trackLoad($id);
         }
@@ -127,7 +127,7 @@ class SoundcloudAPI
         $aResult = json_decode($result, true);
         if (empty($aResult['error']) && empty($aResult['errors']) && is_array($aResult)) {
             return $aResult;
-        } elseif (@$aResult['error'] == '401 - Unauthorized') {
+        } elseif (@$aResult['error'] == '401 - Unauthorized' || empty($aResult)) {
             $this->_token = null;
             return $this->trackDelete($id);
         }
@@ -153,7 +153,7 @@ class SoundcloudAPI
         if (empty($aResult['error']) && empty($aResult['errors']) && is_array($aResult)) {
             SystemPref::Set('PLUGIN_SOUNDCLOUD_USER_ID', $aResult['id']);
             return $aResult;
-        } elseif (@$aResult['error'] == '401 - Unauthorized') {
+        } elseif (@$aResult['error'] == '401 - Unauthorized' || empty($aResult)) {
             $this->_token = null;
             return $this->profile();
         }
@@ -184,7 +184,7 @@ class SoundcloudAPI
         $aResult = json_decode($result, true);
         if (empty($aResult['error']) && empty($aResult['errors']) && is_array($aResult)) {
             return $aResult;
-        } elseif (@$aResult['error'] == '401 - Unauthorized') {
+        } elseif (@$aResult['error'] == '401 - Unauthorized' || empty($aResult)) {
             $this->_token = null;
             return $this->trackUpload($aParams);
         }
@@ -214,7 +214,7 @@ class SoundcloudAPI
         $aResult = json_decode($result, true);
         if (empty($aResult['error']) && empty($aResult['errors']) && is_array($aResult)) {
             return $aResult;
-        } elseif (@$aResult['error'] == '401 - Unauthorized') {
+        } elseif (@$aResult['error'] == '401 - Unauthorized' || empty($aResult)) {
             $this->_token = null;
             return $this->trackUpdate($aParams);
         }
@@ -240,7 +240,7 @@ class SoundcloudAPI
         $aResult = json_decode($result, true);
         if (empty($aResult['error']) && empty($aResult['errors']) && is_array($aResult)) {
             return $aResult;
-        } elseif (@$aResult['error'] == '401 - Unauthorized') {
+        } elseif (@$aResult['error'] == '401 - Unauthorized' || empty($aResult)) {
             $this->_token = null;
             return $this->setList();
         }
@@ -265,7 +265,7 @@ class SoundcloudAPI
         $aResult = json_decode($result, true);
         if (empty($aResult['error']) && empty($aResult['errors']) && is_array($aResult)) {
             return $aResult;
-        } elseif (@$aResult['error'] == '401 - Unauthorized') {
+        } elseif (@$aResult['error'] == '401 - Unauthorized' || empty($aResult)) {
             $this->_token = null;
             return $this->setLoad($id);
         }
@@ -301,7 +301,7 @@ class SoundcloudAPI
         $aResult = json_decode($result, true);
         if (empty($aResult['error']) && empty($aResult['errors']) && is_array($aResult)) {
             return $aResult;
-        } elseif (@$aResult['error'] == '401 - Unauthorized') {
+        } elseif (@$aResult['error'] == '401 - Unauthorized' || empty($aResult)) {
             $this->_token = null;
             return $this->setUpdate($aParams);
         }
