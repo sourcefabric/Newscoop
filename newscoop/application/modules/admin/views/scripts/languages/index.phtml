@@ -17,9 +17,13 @@
     <?php foreach ($this->languages as $language) { ?>
     <tr>
         <td><a href="<?php echo $this->url(array('action' => 'edit', 'language' => $language->getId())); ?>"><?php echo $language->getName(); ?></a></td>
-        <td><?php echo $language->getNativeName(); ?></td>
+        <td><?php echo htmlspecialchars($language->getNativeName()); ?></td>
         <td class="text"><?php echo $language->getCode(); ?></td>
-        <td><a class="delete confirm" href="<?php echo $this->url(array('action' => 'delete', 'language' => $language->getId())); ?>">X</a></td>
+        <td>
+          <?php if ($language->getCode() !== 'en') { ?>
+          <a class="delete confirm" href="<?php echo $this->url(array('action' => 'delete', 'language' => $language->getId())); ?>"><?php putGS('Delete'); ?></a>
+          <?php } ?>
+        </td>
     </tr>
     <?php } ?>
 </table>

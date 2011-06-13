@@ -73,12 +73,20 @@ if ($auth->hasIdentity()) {
             $method = 'redirect';
         }
 
-        // fix csfr protection
-        if (!empty($_POST['csrf'])) {
+        // fix zend csrf protection
+        foreach ($_POST as $key => $value) {
+            if (strpos($key, 'csrf') === FALSE) {
+                continue;
+            }
             $form = new Zend_Form;
-            $form->addElement('hash', 'csrf');
-            $csrf = $form->getElement('csrf');
-            $_POST['csrf'] = $csrf->getHash();
+            $form->addElement('hash', $key);
+            $element = $form->getElement($key);
+            $session = $element->getSession();
+            $request = $this->getRequest();
+
+            $session->hash = $element->getHash();
+            $_POST['csrf'] = $element->getHash();
+            $request->setPost($key, $element->getHash());
         }
 
         // fix legacy cs
@@ -97,7 +105,9 @@ if ($auth->hasIdentity()) {
         if (!empty($_POST['_next']) && $_POST['_next'] == 'post') { // forward POST request
             $this->_forward($this->_getParam('action'), $this->_getParam('controller'), 'admin');
         } else { // redirect GET request
-            $this->_helper->redirector->gotoSimple($this->_getParam('action'), $this->_getParam('controller'), 'admin');
+            $this->_redirect($_SERVER['REQUEST_URI'], array(
+                'prependBase' => false,
+            ));
         }
 
         return;

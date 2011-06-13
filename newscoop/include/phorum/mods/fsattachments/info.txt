@@ -1,5 +1,0 @@
-hook:  file|fsattachments_file
-hook:  before_attach|fsattachments_before_attach
-hook:  after_attach|fsattachments_after_attach
-title: Filesystem Attachment Storage
-desc:  This module will allow you to store attachments in the filesystem rather than the database.

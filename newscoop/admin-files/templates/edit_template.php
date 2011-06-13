@@ -111,7 +111,7 @@ if (in_array($extension, $imageExtensions)) {
         <table class="box_table">
         <tr>
             <td align="left" colspan="2">
-                <form name="template_load" method="post" action="edit_template.php">
+            <form name="template_load" method="post" action="/<?php echo $ADMIN; ?>/templates/edit_template.php">
                 <?php echo SecurityToken::FormParameter(); ?>
                 <table >
                 <tr>
@@ -146,7 +146,7 @@ if (in_array($extension, $imageExtensions)) {
         <table class="box_table">
         <tr>
             <td align="left" colspan="2">
-                <form method="POST" action="do_replace.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" ENCTYPE="multipart/form-data" >
+                <form method="POST" action="/<?php echo $ADMIN; ?>/templates/do_replace.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" ENCTYPE="multipart/form-data" >
                 <?php echo SecurityToken::FormParameter(); ?>
                 <input type="hidden" name="f_path" value="<?php p(htmlspecialchars($f_path)); ?>">
                 <input type="hidden" name="f_old_name" value="<?php p(htmlspecialchars($f_name)); ?>">
@@ -170,7 +170,7 @@ if (in_array($extension, $imageExtensions)) {
     </table>
 
     <p>
-    <form name="template_edit" method="POST" action="do_edit.php"  >
+    <form name="template_edit" method="POST" action="/<?php echo $ADMIN; ?>/templates/do_edit.php"  >
     <?php echo SecurityToken::FormParameter(); ?>
     <input type="hidden" NAME="Path" VALUE="<?php  p($f_path); ?>">
     <input type="hidden" NAME="Name" VALUE="<?php  p($f_name); ?>">

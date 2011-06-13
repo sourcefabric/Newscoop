@@ -16,9 +16,10 @@ class Action_Helper_Sidebar extends Zend_Controller_Action_Helper_Abstract
      * Add sidebar
      *
      * @param array $config
+     * @param bool $prepend
      * @return void
      */
-    public function addSidebar(array $config)
+    public function addSidebar(array $config, $prepend = false)
     {
         // init
         $controller = $this->getActionController();
@@ -35,21 +36,24 @@ class Action_Helper_Sidebar extends Zend_Controller_Action_Helper_Abstract
         $params = $this->getRequest()->getParams();
         $config = array_merge($params, $config);
 
-        // render sidebar to placeholder
-        $view->placeholder(self::SIDEBAR)->captureStart();
+        ob_start();
         echo !empty($config['label']) ? '<h3 class="label">' . $config['label'] . "</h3>\n" : '';
         echo $view->action($config['action'], $config['controller'], $config['module'], $config);
-        $view->placeholder(self::SIDEBAR)->captureEnd();
+        $content = ob_get_clean();
+
+        $method = $prepend ? 'prepend' : 'append';
+        $view->placeholder(self::SIDEBAR)->$method($content);
     }
 
     /**
      * Direct strategy
      *
      * @param array $config
+     * @param bool $prepend
      * @return void
      */
-    public function direct(array $config)
+    public function direct(array $config, $prepend = false)
     {
-        $this->addSidebar($config);
+        $this->addSidebar($config, $prepend);
     }
 }

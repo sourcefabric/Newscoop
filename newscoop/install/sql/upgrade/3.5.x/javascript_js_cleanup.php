@@ -1,5 +1,7 @@
 <?php
 
+function upgrade_35x_javascript_js_cleanup() {
+
 $dependencies = array(
     'files' => array(
         'admin.js',
@@ -34,22 +36,24 @@ if ($handle = opendir(CS_PATH_JS)) {
     while (($item = readdir($handle)) !== FALSE) {
         if ($item != '.' && $item != '..') {
             $item = CS_PATH_JAVASCRIPT . DIRECTORY_SEPARATOR . $item;
-            remove_duplicate($item);
+            upgrade_35x_remove_duplicate($item);
         }
     }
     closedir($handle);
 }
 
-function remove_duplicate($item)
+} // fn upgrade_35x_javascript_js_cleanup
+
+function upgrade_35x_remove_duplicate($item)
 {
     if (is_file($item)) {
         @unlink($item);
     } elseif (is_dir($item)) {
-        @camp_remove_dir($item);
+        @upgrade_35x_camp_remove_dir($item);
     }
 }
 
-function camp_remove_dir($p_dirName)
+function upgrade_35x_camp_remove_dir($p_dirName)
 {
     $p_dirName = str_replace('//', '/', $p_dirName);
     $dirBaseName = trim($p_dirName, '/');
@@ -82,7 +86,7 @@ function camp_remove_dir($p_dirName)
         }
         $filePath = "$p_dirName/$file";
         if (is_dir($filePath)) {
-            camp_remove_dir($filePath);
+            upgrade_35x_camp_remove_dir($filePath);
             continue;
         }
         if (!unlink($filePath)) {
@@ -93,4 +97,8 @@ function camp_remove_dir($p_dirName)
         rmdir($p_dirName);
     }
 }
+
+// the (function) names defined here shall not clash with those defined at other places
+// since the new upgrade system works by calling 'require' on the respective php files
+upgrade_35x_javascript_js_cleanup();
 

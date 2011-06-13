@@ -38,11 +38,36 @@ class Publication extends Entity
     private $name;
 
     /**
+     * @OneToOne(targetEntity="Newscoop\Entity\Language")
+     * @JoinColumn(name="IdDefaultLanguage", referencedColumnName="Id")
+     * @var Newscoop\Entity\Language
+     */
+    private $language;
+
+    /**
      * @OneToMany(targetEntity="Newscoop\Entity\Issue", mappedBy="publication")
      * @var array
      */
     private $issues;
 
+
+    /**
+     * @column(name="comments_public_enabled")
+     * @var bool
+     */
+    private $public_enabled;
+
+    /**
+     * @Column(name="comments_moderator_to")
+     * @var string
+     */
+    private $moderator_to;
+
+    /**
+     * @Column(name="comments_moderator_from")
+     * @var string
+     */
+    private $moderator_from;
 
     /**
      */
@@ -59,6 +84,16 @@ class Publication extends Entity
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Get language
+     *
+     * @return Newscoop\Entity\Language
+     */
+    public function getLanguage()
+    {
+        return $this->language;
     }
 
     /**
@@ -87,6 +122,26 @@ class Publication extends Entity
     }
 
     /**
+     * Get default language of the publication
+     *
+     * @return Newscoop\Entity\Language
+     */
+    public function getDefaultLanguage()
+    {
+        return $this->default_language;
+    }
+
+    /**
+     * Get default language name of the publication
+     *
+     * @return string
+     */
+    public function getDefaultLanguageName()
+    {
+        return $this->default_language->getName();
+    }
+
+    /*
      * Get sections
      *
      * @return array
@@ -109,5 +164,56 @@ class Publication extends Entity
         return $sections;
     }
 
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    public function setId($id)
+    {
+        return $this->id = $id;
+    }
+
+    /**
+     * Set moderator to email address
+     *
+     * @param string $p_moderator_to
+     * @return Publication
+     */
+    public function setModeratorTo($p_moderator_to)
+    {
+        return $this->moderator_to = $p_moderator_to;
+    }
+
+    /**
+     * Get moderator to email address
+     *
+     * @return string
+     */
+    public function getModeratorTo()
+    {
+        return $this->moderator_to;
+    }
+
+    /**
+     * Set moderator from email address
+     *
+     * @param string $p_moderator_from
+     * @return Publication
+     */
+    public function setModeratorFrom($p_moderator_from)
+    {
+        return $this->moderator_to = $p_moderator_from;
+    }
+
+    /**
+     * Get moderator from email address
+     *
+     * @return string
+     */
+    public function getModeratorFrom()
+    {
+        return $this->moderator_from;
+    }
 }
 

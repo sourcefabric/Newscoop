@@ -3,7 +3,7 @@
 /*
  * This file is part of the Symfony package.
  *
- * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
+ * (c) Fabien Potencier <fabien@symfony.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -16,19 +16,18 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Output\StreamOutput;
 
 /**
- * @author Fabien Potencier <fabien.potencier@symfony-project.com>
+ * @author Fabien Potencier <fabien@symfony.com>
  */
 class ApplicationTester
 {
-    protected $application;
-    protected $display;
-    protected $input;
-    protected $output;
+    private $application;
+    private $input;
+    private $output;
 
     /**
      * Constructor.
      *
-     * @param Application $application A Application instance to test.
+     * @param Application $application An Application instance to test.
      */
     public function __construct(Application $application)
     {
@@ -46,6 +45,8 @@ class ApplicationTester
      *
      * @param array $input   An array of arguments and options
      * @param array $options An array of options
+     *
+     * @return integer The command exit code
      */
     public function run(array $input, $options = array())
     {
@@ -62,11 +63,7 @@ class ApplicationTester
             $this->output->setVerbosity($options['verbosity']);
         }
 
-        $this->application->run($this->input, $this->output);
-
-        rewind($this->output->getStream());
-
-        return $this->display = stream_get_contents($this->output->getStream());
+        return $this->application->run($this->input, $this->output);
     }
 
     /**
@@ -76,7 +73,9 @@ class ApplicationTester
      */
     public function getDisplay()
     {
-        return $this->display;
+        rewind($this->output->getStream());
+
+        return stream_get_contents($this->output->getStream());
     }
 
     /**

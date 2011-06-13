@@ -3,6 +3,10 @@ require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/country/country_common.php"
 require_once($GLOBALS['g_campsiteDir']. "/classes/SimplePager.php");
 camp_load_translation_strings("api");
 
+if (!$g_user->hasPermission('ManageCountries') && !$g_user->hasPermission('DeleteCountries')) {
+	camp_html_goto_page("/$ADMIN/");
+}
+
 $f_country_language_selected = camp_session_get('f_country_language_selected', '');
 $f_country_offset = camp_session_get('f_country_offset', 0);
 if (empty($f_country_language_selected)) {
@@ -30,8 +34,8 @@ echo camp_html_breadcrumbs($crumbs);
 	<TD>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1">
 		<TR>
-			<TD><A HREF="add.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-			<TD><A HREF="add.php"><B><?php  putGS("Add new country"); ?></B></A></TD>
+            <TD><A HREF="/<?php echo $ADMIN; ?>/country/add.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+            <TD><A HREF="/<?php echo $ADMIN; ?>/country/add.php"><B><?php  putGS("Add new country"); ?></B></A></TD>
 		</TR>
 		</TABLE>
 	</TD>
@@ -39,7 +43,7 @@ echo camp_html_breadcrumbs($crumbs);
 <?php  } ?>
 <TR>
 	<TD ALIGN="RIGHT">
-		<FORM METHOD="GET" ACTION="index.php" NAME="">
+		<FORM METHOD="GET" ACTION="" NAME="">
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="search_dialog">
 		<TR>
 			<TD><?php  putGS('Language') ?>:</TD>

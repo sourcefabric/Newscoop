@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Campsite
  *
@@ -9,25 +10,34 @@
  * @version $Revision$
  * @link http://www.sourcefabric.org
  */
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\ISyncResourceService;
+use Newscoop\Entity\Resource;
 
 /**
  * Includes
  */
-require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Issue.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Section.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Alias.php');
-require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampRequest.php');
-require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampURI.php');
-require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
+require_once($GLOBALS['g_campsiteDir'] . '/classes/Language.php');
+require_once($GLOBALS['g_campsiteDir'] . '/classes/Publication.php');
+require_once($GLOBALS['g_campsiteDir'] . '/classes/Issue.php');
+require_once($GLOBALS['g_campsiteDir'] . '/classes/Section.php');
+require_once($GLOBALS['g_campsiteDir'] . '/classes/Article.php');
+require_once($GLOBALS['g_campsiteDir'] . '/classes/Alias.php');
+require_once($GLOBALS['g_campsiteDir'] . '/template_engine/classes/CampRequest.php');
+require_once($GLOBALS['g_campsiteDir'] . '/template_engine/classes/CampURI.php');
+require_once($GLOBALS['g_campsiteDir'] . '/template_engine/classes/CampTemplate.php');
 
 /**
  * Class CampURIShortNames
  */
 class CampURIShortNames extends CampURI
 {
+
+    /**
+     * The theme path storage
+     */
+    protected $_themePath = null;
+
     /**
      * Parameters that are restricted to CampURIShortNames object use.
      *
@@ -52,19 +62,20 @@ class CampURIShortNames extends CampURI
             $this->m_validURI = false;
             $this->m_errorCode = $res->getCode();
             if (!is_null($this->m_publication)) {
-            	$tplId = CampSystem::GetInvalidURLTemplate($this->m_publication->identifier);
-            	$template = new MetaTemplate($tplId);
-            	if ($template->defined()) {
-            		$this->m_template = $template;
-            	}
+                $tplId = CampSystem::GetInvalidURLTemplate($this->m_publication->identifier);
+                $template = new MetaTemplate($tplId);
+                if ($template->defined()) {
+                    $this->m_template = $template;
+                }
             }
             CampTemplate::singleton()->trigger_error($res->getMessage());
         } else {
             $this->m_validURI = true;
         }
         $this->validateCache(false);
-    } // fn __construct
+    }
 
+// fn __construct
 
     /**
      * Gets the language URI path.
@@ -80,8 +91,9 @@ class CampURIShortNames extends CampURI
         }
 
         return $uriString;
-    } // fn getURILanguage
+    }
 
+// fn getURILanguage
 
     /**
      * Gets the issue URI path.
@@ -104,8 +116,9 @@ class CampURIShortNames extends CampURI
         }
 
         return $uriString;
-    } // fn getURIIssue
+    }
 
+// fn getURIIssue
 
     /**
      * Gets the section URI path.
@@ -128,8 +141,9 @@ class CampURIShortNames extends CampURI
         }
 
         return $uriString;
-    } // fn getURISection
+    }
 
+// fn getURISection
 
     /**
      * Gets the article URI path.
@@ -167,8 +181,9 @@ class CampURIShortNames extends CampURI
         }
 
         return $uriString;
-    } // fn getURIArticle
+    }
 
+// fn getURIArticle
 
     /**
      * @return array
@@ -176,8 +191,8 @@ class CampURIShortNames extends CampURI
      */
     public function getFormParameters()
     {
-        $baseParameters = array('IdLanguage','IdPublication',
-                                'NrIssue','NrSection','NrArticle');
+        $baseParameters = array('IdLanguage', 'IdPublication',
+            'NrIssue', 'NrSection', 'NrArticle');
         $parameters = array();
 
         $queryParameters = $this->getQueryArray();
@@ -189,8 +204,9 @@ class CampURIShortNames extends CampURI
         }
 
         return $parameters;
-    } // fn getFormParameters
+    }
 
+// fn getFormParameters
 
     /**
      * Returns true if the given parameter is restricted and can not
@@ -201,26 +217,26 @@ class CampURIShortNames extends CampURI
      */
     public function isRestrictedParameter($p_parameterName)
     {
-        return in_array($p_parameterName, CampURIShortNames::$m_restrictedParameters);
+        return in_array($p_parameterName,
+                CampURIShortNames::$m_restrictedParameters);
     }
-
 
     /**
      * Sets the URL values.
      *
      * Algorithm:
-	 * - identify object (e.g.: publication, language, issue, section, article)
-	 *     - object defined
-	 *         - valid object?
-	 *             - yes: set
-	 *             - no: return error
-	 *     - object undefined
-	 *         - has default value?
-	 *             - yes: set
-	 *             - no:
-	 *                 - object mandatory?
-	 *                     - yes: return error
-	 *                     - no: continue
+     * - identify object (e.g.: publication, language, issue, section, article)
+     *     - object defined
+     *         - valid object?
+     *             - yes: set
+     *             - no: return error
+     *     - object undefined
+     *         - has default value?
+     *             - yes: set
+     *             - no:
+     *                 - object mandatory?
+     *                     - yes: return error
+     *                     - no: continue
      *
      * @return PEAR_Error
      *
@@ -236,7 +252,8 @@ class CampURIShortNames extends CampURI
         $this->m_article = null;
 
         // gets the publication object based on site name (URI host)
-        $alias = preg_replace('/^'.$this->getScheme().':\/\//', '', $this->getBase());
+        $alias = preg_replace('/^' . $this->getScheme() . ':\/\//', '',
+                $this->getBase());
         $aliasObj = new Alias($alias);
         if ($aliasObj->exists()) {
             $this->m_publication = new MetaPublication($aliasObj->getPublicationId());
@@ -246,7 +263,8 @@ class CampURIShortNames extends CampURI
         }
 
         // reads parameters values if any
-        $params = str_replace($this->m_config->getSetting('SUBDIR'), '', $this->getPath());
+        $params = str_replace($this->m_config->getSetting('SUBDIR'), '',
+                $this->getPath());
         $cParams = explode('/', trim($params, '/'));
         $cParamsSize = sizeof($cParams);
         if ($cParamsSize >= 1) {
@@ -277,21 +295,22 @@ class CampURIShortNames extends CampURI
 
         // gets the issue number and sets the issue short name
         if (!empty($cIssueSName)) {
-        	$publishedOnly = !$this->m_preview;
+            $publishedOnly = !$this->m_preview;
             $issueArray = Issue::GetIssues($this->m_publication->identifier,
-            $this->m_language->number, null, $cIssueSName, null, $publishedOnly);
+                            $this->m_language->number, null, $cIssueSName, null,
+                            $publishedOnly);
             if (is_array($issueArray) && sizeof($issueArray) == 1) {
                 $this->m_issue = new MetaIssue($this->m_publication->identifier,
-                $this->m_language->number,
-                $issueArray[0]->getIssueNumber());
+                                $this->m_language->number,
+                                $issueArray[0]->getIssueNumber());
             } else {
                 return new PEAR_Error("Invalid issue identifier in URL.", self::INVALID_ISSUE);
-	        }
+            }
         } else {
             $issueObj = Issue::GetCurrentIssue($this->m_publication->identifier,
-            $this->m_language->number);
+                            $this->m_language->number);
             $this->m_issue = new MetaIssue($this->m_publication->identifier,
-            $this->m_language->number, $issueObj->getIssueNumber());
+                            $this->m_language->number, $issueObj->getIssueNumber());
             if (!$this->m_issue->defined()) {
                 return new PEAR_Error("No published issue was found.", self::INVALID_ISSUE);
             }
@@ -300,14 +319,13 @@ class CampURIShortNames extends CampURI
         // gets the section number and sets the section short name
         if (!empty($cSectionSName)) {
             $sectionArray = Section::GetSections($this->m_publication->identifier,
-            $this->m_issue->number,
-            $this->m_language->number,
-            $cSectionSName);
+                            $this->m_issue->number, $this->m_language->number,
+                            $cSectionSName);
             if (is_array($sectionArray) && sizeof($sectionArray) == 1) {
                 $this->m_section = new MetaSection($this->m_publication->identifier,
-                $this->m_issue->number,
-                $this->m_language->number,
-                $sectionArray[0]->getSectionNumber());
+                                $this->m_issue->number,
+                                $this->m_language->number,
+                                $sectionArray[0]->getSectionNumber());
             } else {
                 return new PEAR_Error("Invalid section identifier in URL.", self::INVALID_SECTION);
             }
@@ -322,20 +340,20 @@ class CampURIShortNames extends CampURI
                 return new PEAR_Error("Invalid article identifier in URL.", self::INVALID_ARTICLE);
             }
             $this->m_article = new MetaArticle($this->m_language->number,
-            $articleObj->getArticleNumber());
+                            $articleObj->getArticleNumber());
         }
-
         $templateId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
         $this->m_template = new MetaTemplate($this->getTemplate($templateId));
         if (!$this->m_template->defined()) {
             return new PEAR_Error("Invalid template in URL or no default template specified.",
-            self::INVALID_TEMPLATE);
+                    self::INVALID_TEMPLATE);
         }
 
         $this->m_validURI = true;
         $this->validateCache(false);
-    } // fn setURL
+    }
 
+// fn setURL
 
     /**
      * Sets the URI path and query values based on given parameters.
@@ -355,14 +373,14 @@ class CampURIShortNames extends CampURI
 
         $parameter = count($p_params) > 0 ? strtolower(array_shift($p_params)) : null;
 
-        switch($parameter) {
+        switch ($parameter) {
             case 'language':
             case 'publication':
                 $this->m_buildPath = $this->getURILanguage();
                 if ($p_preview) {
                     $this->m_buildQueryArray = $this->getQueryArray(CampURI::$m_previewParameters);
                 } else {
-                	$this->m_buildQueryArray = array();
+                    $this->m_buildQueryArray = array();
                 }
                 $p_params = array();
                 break;
@@ -395,9 +413,18 @@ class CampURIShortNames extends CampURI
                 break;
             case 'template':
                 $option = isset($p_params[0]) ? array_shift($p_params) : null;
-                $template = new Template($option);
-                if (!is_null($option) && $template->exists()) {
-                    $this->m_buildQueryArray[CampRequest::TEMPLATE_ID] = $template->getTemplateId();
+                if (is_null($this->_themePath)) {
+                    $this->_themePath = CampSystem::GetThemePath($this->m_language->number,
+                                    $this->m_publication->identifier,
+                                    $this->m_issue->number);
+                }
+                $pathRsc = new Resource();
+                $pathRsc->setName('buildPage');
+                $pathRsc->setPath($this->_themePath.$option);
+                $resourceId = new ResourceId('template_engine/classes/CampURIShortNames');
+                $pathRsc = $syncResourceService = $resourceId->getService(ISyncResourceService::NAME)->getSynchronized($pathRsc);
+                if (!is_null($option) && !is_null($pathRsc) && $pathRsc->exists()) {
+                    $this->m_buildQueryArray[CampRequest::TEMPLATE_ID] = $pathRsc->getId();
                 }
                 break;
             default:
@@ -428,13 +455,15 @@ class CampURIShortNames extends CampURI
             }
         }
 
+
         if (is_null($this->m_buildQuery)) {
             $this->m_buildQuery = CampURI::QueryArrayToString($this->m_buildQueryArray);
         }
-
         $this->validateCache(true);
-    } // fn buildURI
+    }
 
-} // class CampURIShortNames
+// fn buildURI
+}
 
+// class CampURIShortNames
 ?>

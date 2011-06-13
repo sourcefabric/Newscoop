@@ -131,7 +131,7 @@ camp_html_display_msgs();
 <?php if (!$inArchive) { ?>
 </div>
 <div id="existing-file">
-    <form action="do_add_existing.php" method="POST">
+<form action="/<?php echo $ADMIN; ?>/articles/files/do_add_existing.php" method="POST">
 
 <?php
 

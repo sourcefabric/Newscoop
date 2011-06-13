@@ -28,8 +28,7 @@ $showUserMenu = ($g_user->hasPermission('ManageUsers')
     || $g_user->hasPermission('DeleteUsers')
     || $g_user->hasPermission('ManageSubscriptions')
     || $g_user->hasPermission('ManageUserTypes')
-    || $g_user->hasPermission('ManageReaders')
-    || $g_user->hasPermission('SyncPhorumUsers'));
+    || $g_user->hasPermission('ManageReaders'));
 
 $showAdminActions = (($g_user->hasPermission('ManageIssue') && $g_user->hasPermission('AddArticle'))
     || (CampCache::IsEnabled() && $g_user->hasPermission('ClearCache')));
@@ -73,8 +72,8 @@ $pages[1]['pages'][] = array(
 $pages[1]['pages'][] = array(
     'label' => getGS('Comments'),
     'module' => 'admin',
-    'controller' => 'comments',
-    'action' => 'index.php',
+    'controller' => 'comment',
+    'action' => 'index',
     'resource' => 'comment',
     'privilege' => 'moderate',
 );
@@ -157,23 +156,27 @@ $pages[2]['pages'][] = array(
     'privilege' => 'add',
 );
 
-$pages[2]['pages'][] = array(
-    'label' => getGS('Upload new template'),
-    'module' => 'admin',
-    'controller' => 'template',
-    'action' => 'upload',
-    'resource' => 'template',
-    'privilege' => 'manage',
-);
+if ($g_user->hasPermission('ManageTempl') ) {
+	$pages[2]['pages'][] = array(
+	    'label' => getGS('Upload new template'),
+	    'module' => 'admin',
+	    'controller' => 'templates',
+	    'action' => 'upload_templ.php',
+	    'resource' => 'template',
+	    'privilege' => 'manage',
+	);
+}
 
-$pages[2]['pages'][] = array(
-    'label' => getGS('Add new publication'),
-    'module' => 'admin',
-    'controller' => 'pub',
-    'action' => 'add.php',
-    'resource' => 'publication',
-    'privilege' => 'add',
-);
+if ($g_user->hasPermission('ManagePub') && Saas::singleton()->hasPermission('AddPub')) {
+	$pages[2]['pages'][] = array(
+	    'label' => getGS('Add new publication'),
+	    'module' => 'admin',
+	    'controller' => 'pub',
+	    'action' => 'add.php',
+	    'resource' => 'publication',
+	    'privilege' => 'add',
+	);
+}
 
 $pages[2]['pages'][] = array(
     'label' => getGS('Add new staff member'),
@@ -184,14 +187,16 @@ $pages[2]['pages'][] = array(
     'privilege' => 'manage',
 );
 
-$pages[2]['pages'][] = array(
-    'label' => getGS('Add new subscriber'),
-    'module' => 'admin',
-    'controller' => 'subscriber',
-    'action' => 'add',
-    'resource' => 'user',
-    'privilege' => 'manage',
-);
+if ($g_user->hasPermission('ManageSubscriptions')) {
+	$pages[2]['pages'][] = array(
+	    'label' => getGS('Add new subscriber'),
+	    'module' => 'admin',
+	    'controller' => 'subscriber',
+	    'action' => 'add',
+	    'resource' => 'user',
+	    'privilege' => 'manage',
+	);
+}
 
 $pages[2]['pages'][] = array(
     'label' => getGS('Add new user type'),
@@ -202,23 +207,27 @@ $pages[2]['pages'][] = array(
     'privilege' => 'manage',
 );
 
-$pages[2]['pages'][] = array(
-    'label' => getGS('Add new article type'),
-    'module' => 'admin',
-    'controller' => 'article_types',
-    'action' => 'add.php',
-    'resource' => 'article-type',
-    'privilege' => 'manage',
-);
+if ($g_user->hasPermission('ManageArticleTypes')) {
+	$pages[2]['pages'][] = array(
+	    'label' => getGS('Add new article type'),
+	    'module' => 'admin',
+	    'controller' => 'article_types',
+	    'action' => 'add.php',
+	    'resource' => 'article-type',
+	    'privilege' => 'manage',
+	);
+}
 
-$pages[2]['pages'][] = array(
-    'label' => getGS('Add new country'),
-    'module' => 'admin',
-    'controller' => 'country',
-    'action' => 'add.php',
-    'resource' => 'country',
-    'privilege' => 'manage',
-);
+if ($g_user->hasPermission('ManageCountries')) {
+	$pages[2]['pages'][] = array(
+	    'label' => getGS('Add new country'),
+	    'module' => 'admin',
+	    'controller' => 'country',
+	    'action' => 'add.php',
+	    'resource' => 'country',
+	    'privilege' => 'manage',
+	);
+}
 
 $pages[2]['pages'][] = array(
     'label' => getGS('Change your password'),
@@ -334,13 +343,20 @@ if ($showConfigureMenu) {
     );
 
     $pages[3]['pages'][] = array(
-        'label' => getGS('Article Types'),
-        'module' => 'admin',
-        'controller' => 'article_types',
-        'action' => 'index.php',
-        'resource' => 'article-type',
-        'privilege' => 'manage',
+        'label' => getGS('Geo Filtering'),
+        'uri' => $view->baseUrl("admin/articles/locations/filter.php"),
     );
+
+    if ($g_user->hasPermission('ManageArticleTypes') || $g_user->hasPermission('DeleteArticleTypes')) {
+	    $pages[3]['pages'][] = array(
+	        'label' => getGS('Article Types'),
+	        'module' => 'admin',
+	        'controller' => 'article_types',
+	        'action' => 'index.php',
+	        'resource' => 'article-type',
+	        'privilege' => 'manage',
+	    );
+    }
 
     $pages[3]['pages'][] = array(
         'label' => getGS('Topics'),
@@ -544,7 +560,7 @@ if ($showUserMenu) {
         'pages' => array(
         array(
                 'label' => getGS('Add new user type'),
-                'module' => 'admin', 
+                'module' => 'admin',
                 'controller' => 'user-group',
                 'action' => 'add',
                 'visible' => false,
@@ -558,13 +574,6 @@ if ($showUserMenu) {
             ),
         ),
     );
-
-    if ($g_user->hasPermission('SyncPhorumUsers')) {
-        $pages[4]['pages'][] = array(
-            'label' => getGS('Synchronize Newscoop and Phorum users'),
-            'uri' => $view->baseUrl('admin/?sync_users=yes'),
-        );
-    }
 
     if ($g_user->hasPermission('EditAuthors')) {
         $pages[4]['pages'][] = array(
@@ -588,15 +597,14 @@ if (!empty($plugin_pages)) {
     );
 }
 
-// set navigation
-$navigation = new Zend_Navigation($pages);
-$view->navigation()->menu()->setContainer($navigation);
-$view->navigation()->breadcrumbs()->setContainer($navigation);
-$view->navigation()->breadcrumbs()->setRenderInvisible(true);
-
-if (defined('IN_BUG_HANDLE')) { // prevent navigation causing another error
-    return;
+// set menu classes to speed up loading
+foreach ($pages as $i => $page) {
+    $pages[$i]['class'] = 'fg-button ui-widget fg-button-icon-right fg-button-ui-state-default fg-button-ui-corner-all';
 }
+
+// set navigation
+$nav = new Zend_Navigation($pages);
+$view->navigation()->menu()->setContainer($nav);
 ?>
 
 <div class="main-menu-bar">
@@ -604,8 +612,20 @@ if (defined('IN_BUG_HANDLE')) { // prevent navigation causing another error
     <?php echo $view->navigation(); ?>
 </div>
 
-<?php if (!$this->legacy) { // zend framework only ?>
+<?php if (isset($this) && !$this->legacy) { // zend framework only
+// remove top menu classes for breadcrumbs
+foreach ($pages as $i => $page) {
+    unset($pages[$i]['class']);
+}
+
+$nav = new Zend_Navigation($pages);
+$view->navigation()->breadcrumbs()
+    ->setContainer($nav)
+    ->setRenderInvisible(true);
+?>
+
 <div class="breadcrumb-bar zend clearfix">
     <?php echo $this->navigation()->breadcrumbs(); ?>
 </div>
+
 <?php } ?>

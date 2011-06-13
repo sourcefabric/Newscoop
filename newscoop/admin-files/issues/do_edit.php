@@ -11,6 +11,7 @@ use Newscoop\Service\IOutputSettingIssueService;
 use Newscoop\Entity\Output\OutputSettingsIssue;
 //@New theme management
 
+
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
     exit;
@@ -29,10 +30,18 @@ $f_issue_name = trim(Input::Get('f_issue_name'));
 $f_new_language_id = Input::Get('f_new_language_id', 'int');
 $f_publication_date = Input::Get('f_publication_date', 'string', '', true);
 
-$f_theme_id = Input::Get('f_theme_id', 'string');
-$f_issue_template_id = Input::Get('f_issue_template_id', 'string');
-$f_section_template_id = Input::Get('f_section_template_id', 'string');
-$f_article_template_id = Input::Get('f_article_template_id', 'string');
+
+if(SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
+    $f_theme_id = Input::Get('f_theme_id', 'string');
+	$f_issue_template_id = Input::Get('f_issue_template_id', 'int');
+	$f_section_template_id = Input::Get('f_section_template_id', 'int');
+	$f_article_template_id = Input::Get('f_article_template_id', 'int');
+} else {
+	$issueObj = new Issue($f_publication_id, $f_current_language_id, $f_issue_number);
+	$f_issue_template_id = $issueObj->getIssueTemplateId() > 0 ? $issueObj->getIssueTemplateId() : 0;
+	$f_section_template_id = $issueObj->getSectionTemplateId() > 0 ? $issueObj->getSectionTemplateId() : 0;
+	$f_article_template_id = $issueObj->getArticleTemplateId() > 0 ? $issueObj->getArticleTemplateId() : 0;
+}
 
 $f_url_name = trim(Input::Get('f_url_name'));
 
@@ -124,11 +133,13 @@ if ($errorMsg = camp_is_issue_conflicting($f_publication_id, $f_issue_number, $f
 	$issueObj->setProperty('IdLanguage', $f_new_language_id, false);
 	$issueObj->commit();
 	//@New theme management
-	if($newOutputSetting){
-		$outputSettingIssueService->insert($outSetIssue);
-	} else {
-		$outputSettingIssueService->update($outSetIssue);
-	}
+    if(SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
+        if($newOutputSetting){
+            $outputSettingIssueService->insert($outSetIssue);
+        } else {
+            $outputSettingIssueService->update($outSetIssue);
+        }
+    }
 	//@New theme management
 	$link = "/$ADMIN/issues/edit.php?Pub=$f_publication_id&Issue=$f_issue_number&Language=".$issueObj->getLanguageId();
 	camp_html_add_msg(getGS('Issue updated'), "ok");

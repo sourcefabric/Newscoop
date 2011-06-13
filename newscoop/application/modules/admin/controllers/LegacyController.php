@@ -12,7 +12,8 @@ class Admin_LegacyController extends Zend_Controller_Action
 {
     public function indexAction()
     {
-        global $Campsite, $ADMIN_DIR, $ADMIN, $g_user, $g_ado_db, $prefix;
+        global $controller, $Campsite, $ADMIN_DIR, $ADMIN, $g_user, $g_ado_db, $prefix;
+        $controller = $this;
 
         $no_menu_scripts = array(
             $prefix . 'login.php',
@@ -86,6 +87,25 @@ class Admin_LegacyController extends Zend_Controller_Action
                     $plugin_path_name = dirname(APPLICATION_PATH) . '/'.$CampPlugin->getBasePath()."/$ADMIN_DIR/$call_script";
                     if (file_exists($plugin_path_name)) {
                         $path_name = $plugin_path_name;
+
+                        // possible plugin include paths
+                        $include_paths = array(
+                            '/classes',
+                            '/template_engine/classes',
+                            '/template_engine/metaclasses',
+                        );
+
+                        // set include paths for plugin
+                        foreach ($include_paths as $path) {
+                            $path = dirname(APPLICATION_PATH) . '/' . $CampPlugin->getBasePath() . $path;
+                            if (file_exists($path)) {
+                                set_include_path(implode(PATH_SEPARATOR, array(
+                                    realpath($path),
+                                    get_include_path(),
+                                )));
+                            }
+                        }
+
                         break;
                     }
                 }

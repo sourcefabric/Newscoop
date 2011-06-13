@@ -1,0 +1,10 @@
+<div class="commentUserHolder">
+    <div>
+        <?php echo $this->gravatar(strtolower($this->commenter->getEmail()),array('img_size'=>50, 'default_img'=>'identicon'));?>
+    </div>
+    <p><b><?php echo $this->commenter->getUserName();?></b><br>
+    <?php echo $this->commenter->getName();?><br>
+    <a href="#"><?php echo $this->commenter->getIp(); ?></a><br>
+    <a href="#"><?php echo $this->stringLimit($this->commenter->getEmail(), 25); ?></a><br>
+    <a href="<?php echo $this->commenter->getUrl();?>"><?php echo $this->commenter->getUrl();?></a></p>
+</div>

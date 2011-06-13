@@ -59,6 +59,11 @@ class Js extends Zend_Controller_Plugin_Abstract
 
     public function postDispatch( Zend_Controller_Request_Abstract $p_request )
     {
+//        $x = '';
+//        foreach ($p_request->getParams() as $k => $v)
+//            if (is_string($v))
+//                $x .= "$k : $v, ";
+//        syslog(LOG_WARNING, "!!!!" . $x);
         // stick the baseUrl to the basePath because we have a dispatched request now
         // and format those god damn slashes!!
         $baseUrl = trim( Zend_Controller_Front::getInstance()->getBaseUrl(), DIR_SEP );
@@ -87,27 +92,27 @@ class Js extends Zend_Controller_Plugin_Abstract
                  $this->view->headScript()->appendFile( $urn );
             }
         }
-       /* $this->view->headScript()
-            ->appendFile
-            (
-                $this->_baseUrn
-            .   $this->_sharedFileName
-            .	".{$this->_fileSuffix}"
-            )
-            ->appendScript( $this->view->jQueryReady()->toString() )
-            ->appendFile
-            (
-                $this->_baseUrn
-            .   $p_request->getControllerName()
-            .	".{$this->_fileSuffix}"
-            )
-            ->appendFile
-            (
-                $this->_baseUrn
-            .   $p_request->getControllerName()
-            .   DIR_SEP
-            .   $p_request->getActionName()
-            .	".{$this->_fileSuffix}"
-            );*/
+        /* $this->view->headScript()
+          ->appendFile
+          (
+          $this->_baseUrn
+          .   $this->_sharedFileName
+          .	".{$this->_fileSuffix}"
+          )
+          ->appendScript( $this->view->jQueryReady()->toString() )
+          ->appendFile
+          (
+          $this->_baseUrn
+          .   $p_request->getControllerName()
+          .	".{$this->_fileSuffix}"
+          )
+          ->appendFile
+          (
+          $this->_baseUrn
+          .   $p_request->getControllerName()
+          .   DIR_SEP
+          .   $p_request->getActionName()
+          .	".{$this->_fileSuffix}"
+          ); */
     }
 }

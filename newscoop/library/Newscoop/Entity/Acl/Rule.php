@@ -137,7 +137,7 @@ class Rule implements RuleInterface
     /**
      * Get action
      *
-     * @return Newscoop\Entity\Acl\Action
+     * @return string
      */
     public function getAction()
     {

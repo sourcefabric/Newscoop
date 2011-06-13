@@ -3,7 +3,7 @@
 /*
  * This file is part of the Symfony package.
  *
- * (c) Fabien Potencier <fabien.potencier@symfony-project.com>
+ * (c) Fabien Potencier <fabien@symfony.com>
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -14,11 +14,13 @@ namespace Symfony\Component\Yaml;
 /**
  * Yaml offers convenience methods to load and dump YAML.
  *
- * @author Fabien Potencier <fabien.potencier@symfony-project.com>
+ * @author Fabien Potencier <fabien@symfony.com>
+ *
+ * @api
  */
 class Yaml
 {
-    static protected $spec = '1.2';
+    static private $spec = '1.2';
 
     /**
      * Sets the YAML specification version to use.
@@ -63,13 +65,15 @@ class Yaml
      * @return array The YAML converted to a PHP array
      *
      * @throws \InvalidArgumentException If the YAML is not valid
+     *
+     * @api
      */
     public static function load($input)
     {
         $file = '';
 
         // if input is a file, process it
-        if (strpos($input, "\n") === false && is_file($input)) {
+        if (strpos($input, "\n") === false && is_file($input) && is_readable($input)) {
             $file = $input;
 
             ob_start();
@@ -106,6 +110,8 @@ class Yaml
      * @param integer $inline The level where you switch to inline YAML
      *
      * @return string A YAML string representing the original PHP array
+     *
+     * @api
      */
     public static function dump($array, $inline = 2)
     {

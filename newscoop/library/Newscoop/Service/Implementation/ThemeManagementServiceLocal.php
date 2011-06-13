@@ -256,7 +256,12 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         if(!($theme instanceof Theme)){
             $theme = $this->findById($theme);
         }
-        $zipFilePath = realpath($this->toFullPath(self::FOLDER_EXPORTS));
+
+        if( !file_exists( $xpth = $this->toFullPath(self::FOLDER_EXPORTS ) ) ) {
+            mkdir( $xpth );
+        }
+
+        $zipFilePath = realpath( $xpth );
         $zipFilePath = $zipFilePath.DIR_SEP.preg_replace('([^a-zA-Z0-9_\-.]+)', '_', $theme->getName()).'.zip';
 
         // create object
@@ -265,7 +270,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         if ($zip->open($zipFilePath, \ZIPARCHIVE::CREATE) !== TRUE) {
             die ("Could not open archive");
         }
-         
+
 
         $themePath = $this->toFullPath($theme->getPath());
         $lenght = strlen($themePath);
@@ -382,27 +387,36 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
             $outSets = $this->loadOutputSettings($themeFolder);
             foreach($outSets as $outSet){
                 /* @var $outSet OutputSettings */
-                $outTh = new OutputSettingsTheme();
-                $outTh->setPublication($publication);
-                $outTh->setThemePath($pathRsc);
-                $outTh->setOutput($outSet->getOutput());
+                $qb = $em->createQueryBuilder();
+                $qb->select('th')->from(OutputSettingsTheme::NAME, 'th');
+                $qb->where('th.publication = :publication');
+                $qb->andWhere('th.themePath = :themePath');
+                $qb->andWhere('th.output = :output');
+                $qb->setParameter('publication', $publication);
+                $qb->setParameter('themePath', $pathRsc);
+                $qb->setParameter('output', $outSet->getOutput());
+                $result = $qb->getQuery()->getResult();
+                
+                if(count($result) > 0){
+                    $outTh = $result[0];
+                } else {
+                    $outTh = new OutputSettingsTheme();
+                    $outTh->setPublication($publication);
+                    $outTh->setThemePath($pathRsc);
+                    $outTh->setOutput($outSet->getOutput());
+                }
                 $this->syncOutputSettings($outTh, $outSet);
 
                 $em->persist($outTh);
             }
             $em->flush();
         }
-        catch( \PDOException $e )
-        {
-            if( $e->getCode() != 23000 ) // TODO Duplicate key in db.. does not need removing of folder structure
-            throw $e;
-        }
         catch(\Exception $e)
         {
             $this->rrmdir($themeFullFolder);
             throw $e;
         }
-        return true;
+        return $this->loadThemeByPath($themeFolder);
     }
 
     function assignOutputSetting(OutputSettings $outputSettings, Theme $theme)

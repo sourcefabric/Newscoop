@@ -213,3 +213,10 @@
 													height: 14px; line-height: 14px;
 													font-size: 11px; color: #d50;
 												}
+												
+												.actionDropDown li a.download
+												{
+													background-image:url(images/solo_icons.png);
+													background-repeat:no-repeat;
+													background-position: 5px -24px;	
+												}

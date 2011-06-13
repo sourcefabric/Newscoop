@@ -30,7 +30,13 @@ function onCommentsModerated(p_checkbox)
 <tr>
     <td>
         <!-- Begin left column -->
-        <table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-left: 10px; padding-right: 10px; border-right: 1px solid black;">
+        <table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-left: 10px; padding-right: 10px;
+		<?php
+			if( Saas::singleton()->hasPermission("ManagePublicationSubscriptions")) {
+				echo 'border-right: 1px solid black;';
+			}
+		?>
+		">
         <tr>
             <td colspan="2">
                 <font size="+1"><b><?php putGS("General attributes"); ?></b></font>
@@ -186,28 +192,16 @@ function onCommentsModerated(p_checkbox)
                     <input type="checkbox" NAME="f_comments_spam_blocking_enabled" id="spam_blocking_enabled" class="input_checkbox" <?php if (!$commentsEnabled) {?> disabled<?php } ?> <?php if (isset($publicationObj) && $publicationObj->isSpamBlockingEnabled()) { ?>checked<?php } ?>>
                 	</TD>
                 </TR>-->
-
-                <?php
-                if (isset($forum) && is_object($forum)) {
-	                $setting = new Phorum_setting('mod_emailcomments', 'S');
-    	            $current = $setting->get();
-	                $address_to = $current['addresses'][$forum->getForumId()];
-	                $address_from = $current['from_addresses'][$forum->getForumId()];
-                } else {
-                	$address_to = '';
-                	$address_from = '';
-                }
-                ?>
                 <TR>
                 	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("Moderator Address"); ?>:</td>
                 	<td>
-                    <input type="text" class="input_text" NAME="f_comments_moderator_to" id="moderator_to" value="<?php echo $address_to ?>">
+                    <input type="text" class="input_text" NAME="f_comments_moderator_to" id="moderator_to" value="<?php echo isset($publicationObj)? $publicationObj->getCommentsModeratorTo(): ''; ?>">
                 	</TD>
                 </TR>
                 <TR>
                 	<TD ALIGN="left" style="padding-left: 20px;"><?php  putGS("From Address"); ?>:</td>
                 	<td>
-                    <input type="text" class="input_text" NAME="f_comments_moderator_from" id="moderator_from" value="<?php echo $address_from ?>">
+                    <input type="text" class="input_text" NAME="f_comments_moderator_from" id="moderator_from" value="<?php echo isset($publicationObj)? $publicationObj->getCommentsModeratorFrom(): ''; ?>">
                 	</TD>
                 </TR>
                 </table>
@@ -216,7 +210,9 @@ function onCommentsModerated(p_checkbox)
         </table>
         <!-- END left column -->
     </td>
-
+	<?php
+		if( Saas::singleton()->hasPermission("ManagePublicationSubscriptions")) {
+	?>
     <!-- BEGIN right column -->
     <td style="" valign="top">
         <table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-top: 0.5em; padding-left: 10px; padding-right: 10px;">
@@ -285,13 +281,16 @@ function onCommentsModerated(p_checkbox)
         <?php if (isset($publicationObj)) { ?>
         <tr>
             <td colspan="2" align="center" style="padding-top: 1em;">
-                <a href="deftime.php?Pub=<?php echo $f_publication_id; ?>&Language=<?php p($publicationObj->getDefaultLanguageId()); ?>"><?php putGS("Set subscription settings by country"); ?></a>
+                <a href="/<?php echo $ADMIN; ?>/pub/deftime.php?Pub=<?php echo $f_publication_id; ?>&Language=<?php p($publicationObj->getDefaultLanguageId()); ?>"><?php putGS("Set subscription settings by country"); ?></a>
             </td>
         </tr>
         <?php } ?>
         </TABLE>
     </td>
     <!-- END right column -->
+    <?php
+		}
+    ?>
 </tr>
 
 <?php CampPlugin::PluginAdminHooks(__FILE__); ?>

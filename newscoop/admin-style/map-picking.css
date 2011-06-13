@@ -12,7 +12,7 @@ a.map_name_display:visited {
 }
 a.map_name_display:hover {
     text-decoration: none;
-	background:#edf6f9;
+	background-color:#edf6f9;
 	color:#007fb3;
 }
 .map_name_input {
@@ -44,6 +44,12 @@ a.map_name_display:hover {
     float: right;
 	color:#727272;
 	font-size:12px;
+}
+
+.map_resizing_label {
+    float: right;
+	color:#727272;
+	font-size:15px;
 }
 
 .geo_resize_hor {
@@ -100,6 +106,10 @@ a.map_name_display:hover {
 .search_res_cc_header {
     width: 25px;
 }
+.search_res_cc_header_inner {
+    float: left;
+    margin-left: 10px;
+}
 .search_res_city_header {
     width: 95px;
 }
@@ -111,26 +121,24 @@ a.map_name_display:hover {
     float: left;
 }
 .geores_cc_text {
-    float: left;
     margin-top: 1px;
     font-weight: bold;
     font-size: 13px;
     color:#007fb3;
 }
 .geores_city_text {
-    float: left;
+
     margin-left: 6px;
     margin-top: 2px;
     font-weight: bold;
     font-size: 12px;
     color:#007fb3;
 }
-.search_res_city_column a {
-    color:#007fb3;
+.geores_city_text:hover {
+	text-decoration:underline;
 }
-.search_res_cc_column a {
-    color:#007fb3;
-}
+
+
 /*
 .hidden {
     display: none;
@@ -140,7 +148,6 @@ a.map_name_display:hover {
     margin-left: 2px;
 }
 .map_geo_ccselect {
-
 }
 .map_geo_cityname {
     width: 200;
@@ -208,21 +215,7 @@ a.map-no-link {
 
 /* point edit forms */
 
-fieldset {
 
-}
-
-
-legend {
-    width: 30px;
-    margin-left: 550px;
-    margin-right: auto;
-    color: #000000;
-    font-weight: bold;
-    padding: 0;
-    float: right;
-    text-align: right;
-}
 .edit_tabs {
 	padding:25px 10px 10px 10px;
 	height:290px;
@@ -239,6 +232,12 @@ legend {
     width: 500px;
 	font-size:12px;
     padding-bottom: 1em;
+	
+    font-size: 1em;
+    line-height: 140%;
+	position: relative;
+	width:99%;
+	margin:0;
 }
 .edit_marker_selected {
     padding: 2px 10px 5px 0;
@@ -247,6 +246,7 @@ legend {
 	font-size: 12px;
 	font-weight: bold;
 	line-height: 20px;
+    float: left;
 }
 
 label.block-label {
@@ -275,7 +275,22 @@ label.block-label {
     float: left;
     width: 10em;
     margin-right: 1em;
-	color: #666666;
+    color: #666666;
+    float: left;
+    font-size: 12px;
+    font-weight: bold;
+    padding: 2px 0 0;
+}
+
+a.edit_label_link {
+    color: #666666;
+}
+
+.edit_label_long {
+    float: left;
+    width: 85%;
+    margin-right: 1em;
+    color: #999999;
     float: left;
     font-size: 12px;
     font-weight: bold;
@@ -416,24 +431,28 @@ a.map_save_on {
 
 }
 
-.edit_marker_selected {
+.edit_marker_selected_src {
     float: left;
-
 }
+
+.edit_marker_icons_all {
+    width: 90%;
+}
+
 .edit_marker_choices {
-    margin-top: 20px;
     overflow: auto;
-	height:200px;
-	padding:10px;
-	border:1px solid #CCC;
+    height:170px;
+    width: 500px;
+    padding:10px;
+    border:1px solid #CCC;
 }
 .edit_marker_one_choice {
-    border: 1px solid #9d9d9d;
+    border: 1px solid #fff;
     margin: 4px 4px 1px 1px;
 	padding:3px;
 }
 .edit_marker_one_choice:hover {
-    border: 1px solid #4f5253;
+    border: 1px solid #007FB3;
 }
 a.edit_marker_one_choice_link {
     border-width: 0px;
@@ -476,4 +495,276 @@ a.edit_marker_one_choice_link {
 .map_mapedit fieldset li {
     font-size: 1em;
     line-height: 140%;
+	position: relative;
+	margin:0;
 }
+
+.map_poi_edit_intro, .map_poi_edit_intro_icon, .map_poi_edit_intro_sub, .map_mapedit fieldset li.map_poi_edit_intro_sub {
+    margin-bottom: 20px;
+	font-size:15px;
+	font-weight:normal;
+}
+
+.map_poi_edit_intro_popup {
+    margin-left: 30px;
+    margin-bottom: 5px;
+}
+
+.map_poi_edit_intro_sub, .map_mapedit fieldset li.map_poi_edit_intro_sub {
+    margin-top: 0px;
+    margin-bottom: 0;
+}
+
+.map_search_label {
+    font-size: 12px;
+}
+
+.map_button_edit_on_click {
+    color:#666666;
+    margin-right: 20px;
+    font-size: 14px;
+    float: right;
+}
+
+.geo_edit_textarea_text {
+    height: 80px;
+}
+
+.geo_edit_textarea_perex {
+    height: 32px;
+}
+.map_geo_showhide {
+    margin-left: 0px;
+    margin-right: 13px;
+    float: right;
+}
+
+.geo_edit_popup_top {
+    text-align: right;
+    padding: 0 10px 0 0;
+}
+
+.geo_close_edit_window {
+    position:absolute;
+    top:16px;
+    right:16px;
+    z-index:3000;
+}
+.geo_preview_edit_window {
+    position:absolute;
+    top:16px;
+    right:42px;
+    z-index:3000;"
+}
+
+.save_empty_dialog {
+    z-index:10000;
+}
+
+.map_text_lack {
+    background: #ffebeb;
+/*    width: 90%;*/
+
+}
+
+.dataTables_scrollBody {
+	border:none;
+}
+.geonames_result_table {
+	font-size:12px;
+	background:#fff;
+}
+.geonames_result_table th, .geonames_result_table td {
+	padding:3px 0 3px;
+
+}
+
+
+.geonames_result_table td {
+	padding:3px 0 3px;
+	border-bottom:1px solid #ebebeb;
+}
+.geonames_result_table tr:last-child td {
+	border-bottom:none;
+}
+
+.geonames_result_table th.ui-state-default {
+	border-width: 0 0 1px 0;
+}
+.search_res_city_column {
+	 border-left:1px solid #ebebeb;
+}
+.geonames_result_table th.search_res_city_header {
+	 border-left:1px solid #ebebeb;
+}
+.inline_editable {
+	background-image:url(images/icon_edit_l.png);
+	background-repeat:no-repeat;
+	background-position:4px 2px;
+	padding:0 4px 0 22px;
+}
+
+.map_save_info input[type="text"] {
+    border: 1px solid #9D9D9D;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 16px;
+    height: 23px;
+    margin: -2px 0 0 0;
+    padding: 0;
+    text-indent: 3px;
+}
+.map_save_info input[type="text"]:focus {
+    border: 1px solid #00B5F1;
+}
+
+.toggle_link {
+	color: #696969;
+    font-size: 12px;
+    line-height: 140%;
+	margin-bottom:6px;
+}
+.toggle_link:hover {
+	color: #007FB3;
+}
+.toggle_link_block {
+	display:block;
+}
+
+.toggle_link .ui-icon, legend .ui-icon {
+    float: left;
+}
+.poi_actions_all fieldset {
+	margin:0;
+	padding:8px;
+}
+.poi_actions_all fieldset.closed {
+	padding-left:9px;
+}
+fieldset .poi_coors_all {
+    border: none;
+    margin-bottom: 0;
+    padding: 0;
+}
+.ui-accordion-icons .ui-accordion-header a.corner-button {
+    padding: 4px;
+	display: block;
+	text-decoration: none;
+	top: 0;
+}
+.ui-accordion-icons .ui-accordion-header a.corner-button .ui-icon {
+	left: 0.4em;
+}
+
+.ui-state-hover .corner-button .ui-icon-closethick {
+    background-image: url(images/ui-icons_ffffff_256x240.png);
+}
+
+.ui-state-hover .corner-button:hover .ui-icon-closethick {
+    background-image: url(images/ui-icons_d00000_256x240.png);
+}
+
+.geo_edit_popup_top .icon-link {
+	margin-left:6px;
+}
+.map_editinner input[type="text"] {
+    border: 1px solid #9D9D9D;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 23px;
+    margin: 0;
+    padding: 0;
+    text-indent: 3px;
+	color:#444;
+	width:180px;
+}
+.map_editinner input[type="text"]:focus {
+    border: 1px solid #00B5F1;
+}
+
+.map_editinner select {
+    background-color: #FFFFFF;
+    border: 1px solid #9D9D9D;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 25px;
+    margin: 0;
+    padding: 2px 2px 2px 0;
+    vertical-align: top;
+}
+
+.map_editinner textarea {
+    border: 1px solid #9D9D9D;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;
+    color: #444444;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 14px;
+    margin: 0;
+    padding: 0 0 0 3px;
+}
+
+.map_editinner select#point_predefined {
+	margin-bottom:6px;
+}
+
+.geo_video_desc, geo_image_desc { 
+	font-size:11px;
+	font-weight:normal;
+	font-style:italic;
+	padding: 0 0 0 6px;
+	color:#999999;
+}
+
+.poi_edit_description {
+    color: #999999;
+    float: left;
+    font-size: 11px;
+    font-style: italic;
+    font-weight: normal;
+    left: 325px;
+    line-height: 14px;
+    position: absolute;
+    top: 0;
+    width: 230px;
+}
+
+.ui-state-active .corner-button .ui-icon-closethick {
+    background-image: url(images/ui-icons_808080_256x240.png);
+}
+
+.inline_link_like {
+    cursor: pointer;
+    color: #007FB3;
+}
+
+.poi_image_edit_link_desc {
+    float: left;
+    color: #888888;
+    margin-left: 330px;
+    margin-top: 40px;
+    position: absolute;
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+    width: 230px;
+}
+
+.poi_video_edit_link_desc {
+    float: left;
+    color: #888888;
+    margin-left: 325px;
+    margin-top: 76px;
+    position: absolute;
+    font-size: 12px;
+    font-weight: normal;
+    font-style: normal;
+    width: 230px;
+}
+
+#geolocation .dataTables_wrapper {
+    margin: 0 0 8px;
+	border:1px solid #9D9D9D;
+	border-width: 1px;
+}
+

@@ -36,7 +36,8 @@ class ArticleTypeField extends DatabaseObject {
         'fk_phrase_id',
         'field_type',
         'field_type_param',
-        'is_content_field');
+        'is_content_field',
+        'max_size');
     private $m_rootTopicId = null;
     private $m_precision = null;
 
@@ -167,6 +168,9 @@ class ArticleTypeField extends DatabaseObject {
 				if ($p_type == self::TYPE_NUMERIC && isset($p_params['precision'])) {
 					$data['field_type_param'] = 'precision=' . (int)$p_params['precision'];
 				}
+				if ($p_type == self::TYPE_TEXT && isset($p_params['maxsize'])) {
+                    $data['max_size'] = (int)$p_params['maxsize'];
+                }
 				$data['field_type'] = $p_type;
 				$data['field_weight'] = $this->getNextOrder();
 			}
@@ -372,6 +376,14 @@ class ArticleTypeField extends DatabaseObject {
 		return 'F'.$this->m_data['field_name'];
 	} // fn getName
 
+	/**
+     * Gets the maximum size of a article type
+	 * @return int
+	 */
+	public function getMaxSize()
+	{
+		return $this->m_data['max_size'];
+	} // fn getMaxSize
 
 	/**
 	 * @return string

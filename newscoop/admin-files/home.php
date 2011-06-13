@@ -39,13 +39,6 @@ if ((CampCache::IsEnabled() || CampTemplateCache::factory()) && ($clearCache == 
     $res = 'OK';
 }
 
-// sync phorum users
-$syncUsers = Input::Get('sync_users', 'string', 'no', true);
-if (($syncUsers == 'yes') && $g_user->hasPermission('SyncPhorumUsers')) {
-    require_once dirname(__FILE__) . '/users/sync_phorum_users.php';
-    $actionMsg = getGS('Newscoop and Phorum users were synchronized');
-    $res = 'OK';
-}
 ?>
 
 <?php if (!empty($actionMsg)) { ?>

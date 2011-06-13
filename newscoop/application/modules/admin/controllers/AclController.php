@@ -127,7 +127,7 @@ class Admin_AclController extends Zend_Controller_Action
             'module' => 'admin',
             'controller' => 'acl',
             'action' => 'form',
-        ));
+        ), true);
     }
 
     public function deleteAction()
@@ -147,7 +147,7 @@ class Admin_AclController extends Zend_Controller_Action
         $actions = array();
         $resource = $this->_getParam('resource', '');
         if (!empty($resource)) {
-            $actions = $this->acl->getActions($resource);
+            $actions = Saas::singleton()->filterPrivileges($resource, $this->acl->getActions($resource));
         }
 
         $this->view->actions = $actions;
@@ -210,7 +210,7 @@ class Admin_AclController extends Zend_Controller_Action
     {
         $params = $this->getRequest()->getParams();
         $entity = !empty($params['group']) ? 'group' : 'user';
-        
+
         $this->_helper->redirector('edit-access', $entity == 'group' ? 'user-group' : 'staff', 'admin', array(
             $entity => $params[$entity],
         ));

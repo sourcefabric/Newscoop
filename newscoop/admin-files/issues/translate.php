@@ -37,7 +37,7 @@ camp_html_content_top(getGS('Add new translation'), array('Pub' => $publicationO
 <?php camp_html_display_msgs(); ?>
 
 <P>
-<FORM NAME="issue_translate" METHOD="POST" ACTION="do_translate.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<FORM NAME="issue_translate" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/issues/do_translate.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="" CLASS="box_table">
 <TR>

@@ -19,9 +19,7 @@ $pager = new SimplePager($numPublications, $ItemsPerPage, "PubOffs", "index.php?
 
 camp_html_content_top(getGS('Publication List'), null);
 
-?>
-
-<?php  if ($g_user->hasPermission("ManagePub")) { ?>
+if ($g_user->hasPermission("ManagePub") && SaaS::singleton()->hasPermission("AddPub")) { ?>
 <P>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons">
 <TR>

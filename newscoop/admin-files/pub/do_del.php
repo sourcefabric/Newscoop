@@ -5,8 +5,6 @@ require_once($GLOBALS['g_campsiteDir']."/classes/Issue.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Alias.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Section.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Article.php");
-require_once($GLOBALS['g_campsiteDir']."/include/phorum_load.php");
-require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_forum.php');
 
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
@@ -56,8 +54,6 @@ if ($subscriptionsRemaining > 0) {
 }
 
 if ($doDelete) {
-	$forum = new Phorum_forum($publicationObj->getForumId());
-	$forum->delete();
 	$publicationObj->delete();
 	camp_html_goto_page("/$ADMIN/pub");
 } else {

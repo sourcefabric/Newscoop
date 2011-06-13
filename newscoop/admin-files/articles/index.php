@@ -4,7 +4,6 @@ require_once($GLOBALS['g_campsiteDir']. '/classes/DbObjectArray.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/ArticlePublish.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/ArticleImage.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/ArticleTopic.php');
-require_once($GLOBALS['g_campsiteDir']. '/classes/ArticleComment.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/SimplePager.php');
 
 require_once LIBS_DIR . '/ArticleList/ArticleList.php';
@@ -122,8 +121,8 @@ camp_html_content_top(getGS('Article List') . ': ' . $sectionObj->getName(), $to
 	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($f_publication_id); ?>&Issue=<?php p($f_issue_number); ?>&Language=<?php p($f_language_id); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
 	<TD><A HREF="/<?php echo $ADMIN; ?>/sections/?Pub=<?php p($f_publication_id); ?>&Issue=<?php p($f_issue_number); ?>&Language=<?php p($f_language_id); ?>"><B><?php  putGS("Section List"); ?></B></A></TD>
 	<?php if ($g_user->hasPermission('AddArticle')) { ?>
-	<TD style="padding-left: 20px;"><A HREF="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-	<TD><A HREF="add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><B><?php  putGS("Add new article"); ?></B></A></TD>
+    <TD style="padding-left: 20px;"><A HREF="/<?php echo $ADMIN; ?>/articles/add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+    <TD><A HREF="/<?php echo $ADMIN; ?>/articles/add.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_language_id=<?php p($f_language_id); ?>" ><B><?php  putGS("Add new article"); ?></B></A></TD>
 	<?php  } ?>
 </tr>
 </TABLE>
@@ -140,7 +139,7 @@ camp_html_content_top(getGS('Article List') . ': ' . $sectionObj->getName(), $to
     	$articlelist->setOrder(TRUE);
     }
     $articlelist->setSearch(TRUE);
-    
+
 
     $articlelist->renderActions();
     $articlelist->render();

@@ -88,19 +88,19 @@ if($issueHasTheme){
 <p>
 <table border="0" cellspacing="0" cellpadding="1" class="action_buttons">
 <tr>
-  <td><a href="add.php?<?php p($url_args1); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0" /></a></td>
-  <td><a href="add.php?<?php p($url_args1); ?>"><b><?php putGS("Add new section"); ?></b></a></td>
-  <td style="padding-left: 20px;"><a href="duplicate.php?<?php p($url_args2); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/duplicate.png" border="0" /></a></td>
-  <td><a href="duplicate.php?<?php p($url_args2); ?>" ><b><?php putGS("Duplicate"); ?></b></a></td>
-  <td style="padding-left: 20px;"><a href="del.php?<?php p($url_args2); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" /></a></td>
-  <td><a href="del.php?<?php p($url_args2); ?>" ><b><?php putGS("Delete"); ?></b></a></td>
+  <td><a href="/<?php echo $ADMIN; ?>/sections/add.php?<?php p($url_args1); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0" /></a></td>
+  <td><a href="/<?php echo $ADMIN; ?>/sections/add.php?<?php p($url_args1); ?>"><b><?php putGS("Add new section"); ?></b></a></td>
+  <td style="padding-left: 20px;"><a href="/<?php echo $ADMIN; ?>/sections/duplicate.php?<?php p($url_args2); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/duplicate.png" border="0" /></a></td>
+  <td><a href="/<?php echo $ADMIN; ?>/sections/duplicate.php?<?php p($url_args2); ?>" ><b><?php putGS("Duplicate"); ?></b></a></td>
+  <td style="padding-left: 20px;"><a href="/<?php echo $ADMIN; ?>/sections/del.php?<?php p($url_args2); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" border="0" /></a></td>
+  <td><a href="/<?php echo $ADMIN; ?>/sections/del.php?<?php p($url_args2); ?>" ><b><?php putGS("Delete"); ?></b></a></td>
 </tr>
 </table>
 
 <?php camp_html_display_msgs(); ?>
 
 <p>
-<form name="section_edit" method="POST" action="do_edit.php">
+    <form name="section_edit" method="POST" action="/<?php echo $ADMIN; ?>/sections/do_edit.php">
 <?php echo SecurityToken::FormParameter(); ?>
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
@@ -127,6 +127,9 @@ if($issueHasTheme){
     <input type="text" class="input_text" name="cShortName" size="32" value="<?php p(htmlspecialchars($sectionObj->getUrlName())); ?>" />
   </td>
 </tr>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSectionSubscriptions')) {
+?>
 <tr>
   <td align="right"><?php putGS("Subscriptions"); ?>:</td>
   <td>
@@ -137,6 +140,9 @@ if($issueHasTheme){
     </select>
   </td>
 </tr>
+<?php
+	}
+?>
 <tr>
   <td align="right" valign="top"><?php putGS("Description"); ?>:</td>
   <td>
@@ -144,6 +150,9 @@ if($issueHasTheme){
     rows="20" cols="80"><?php p($sectionObj->getDescription()); ?></textarea>
   </td>
 </tr>
+<?php
+	if(SaaS::singleton()->hasPermission('ManageSectionTemplates')) {
+?>
 <tr>
   <td colspan="2" style="padding-top:20px;">
     <b><?php putGS("Default templates"); ?></b>
@@ -188,6 +197,9 @@ if($issueHasTheme){
 	</TD>
 </TR>
 <?php }?>
+<?php
+    }
+?>
 <tr>
   <td colspan="2" align="center">
     <input type="hidden" name="Pub" value="<?php p($Pub); ?>" />

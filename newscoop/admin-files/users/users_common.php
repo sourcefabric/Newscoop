@@ -1,10 +1,8 @@
 <?php
 camp_load_translation_strings("users");
-require_once($GLOBALS['g_campsiteDir']. '/include/phorum_load.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/IPAccess.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/UserType.php');
-require_once($GLOBALS['g_campsiteDir']. '/classes/Phorum_user.php');
 require_once($GLOBALS['g_campsiteDir']. '/db_connect.php');
 
 function verify_user_type()

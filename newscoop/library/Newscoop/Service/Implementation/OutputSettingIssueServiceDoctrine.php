@@ -89,7 +89,6 @@ implements IOutputSettingIssueService
         if ($output instanceof Output) {
             $outputId = $output->getId();
         }
-
         /** Get the id if an Issue object is supplied */
         /* @var $issue Issue */
         $issueId = $issue;
@@ -114,8 +113,8 @@ implements IOutputSettingIssueService
         } else {
             $themePath = $theme;
         }
-        
-        
+
+
         $em = $this->getEntityManager();
         // we need to find if the theme is used by anyoane.
         $q = $em->createQueryBuilder();
@@ -123,7 +122,7 @@ implements IOutputSettingIssueService
         ->from(OutputSettingsIssue::NAME_1, 'osi')
         ->join('osi.themePath', 'th')
         ->where('th.path = :themePath');
-        
+
         $q->setParameter('themePath', $themePath);
         return $q->getQuery()->getSingleScalarResult() > 0;
     }

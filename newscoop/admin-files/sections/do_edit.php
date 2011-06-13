@@ -23,11 +23,23 @@ $Pub = Input::Get('Pub', 'int', 0);
 $Issue = Input::Get('Issue', 'int', 0);
 $Section = Input::Get('Section', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);
-$cSubs = Input::Get('cSubs', 'string', '', true);
+if(SaaS::singleton()->hasPermission('ManageSectionTemplates')) {
+	$cSubs = Input::Get('cSubs', 'string', '', true);
+} else {
+	$cSubs = 'n';
+}
 $cShortName = trim(Input::Get('cShortName', 'string'));
 $cDescription = trim(Input::Get('cDescription'));
-$cSectionTplId = Input::Get('cSectionTplId', 'string', '0');
-$cArticleTplId = Input::Get('cArticleTplId', 'string', '0');
+
+if(SaaS::singleton()->hasPermission('ManageSectionTemplates')) {
+	$cSectionTplId = Input::Get('cSectionTplId', 'int', 0);
+	$cArticleTplId = Input::Get('cArticleTplId', 'int', 0);
+} else {
+	$sectionObj = new Section($Pub, $Issue, $Language, $Section);
+	$cSectionTplId = $sectionObj->getSectionTemplateId() > 0 ? $sectionObj->getSectionTemplateId() : 0;
+	$cArticleTplId = $sectionObj->getArticleTemplateId() > 0 ? $sectionObj->getArticleTemplateId() : 0;
+}
+
 $cName = Input::Get('cName');
 
 if (!Input::IsValid()) {

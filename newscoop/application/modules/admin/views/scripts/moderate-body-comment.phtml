@@ -1,0 +1,8 @@
+<?php putGS('New comment added');?>
+
+<?php putGS('Time created');?>
+<?php echo $this->comment->getTimeCreated()->format('H:i:s');?>
+<?php putGS('Subject');?>:
+<?php echo $this->comment->getSubject(); ?>
+<?php putGS('Comment');?>
+<?php echo $this->comment->getMessage(); ?>

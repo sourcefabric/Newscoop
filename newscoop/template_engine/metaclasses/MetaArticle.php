@@ -26,6 +26,7 @@ final class MetaArticle extends MetaDbObject {
 
     private static $m_baseProperties = array(
     'name'=>'Name',
+    'title'=>'Name',
     'number'=>'Number',
     'keywords'=>'Keywords',
     'type_name'=>'Type',
@@ -486,8 +487,18 @@ final class MetaArticle extends MetaDbObject {
 
 
     protected function getCommentCount() {
-        return ArticleComment::GetArticleComments($this->m_dbObject->getArticleNumber(),
-        $this->m_dbObject->getLanguageId(), 'approved', true, false);
+        global $controller;
+        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+        $filter = array(
+            'status' => 'approved',
+            'thread' => $this->m_dbObject->getArticleNumber(),
+            'language' => $this->m_dbObject->getLanguageId(),
+        );
+        $params = array(
+            'sFilter' => $filter
+        );
+        $result = $repository->getCount($params);
+        return $result;
     }
 
 

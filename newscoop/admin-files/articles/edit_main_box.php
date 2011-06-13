@@ -14,7 +14,7 @@ $languageUrl = implode('&', array(
 
 <!-- BEGIN the article control bar -->
 <div class="ui-widget-content small-block block-shadow highlight-block padded">
-<form name="article_actions" action="do_article_action.php" method="POST">
+<form name="article_actions" action="/<?php echo $ADMIN; ?>/articles/do_article_action.php" method="POST">
 <?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="f_publication_id" id="f_publication_id" value="<?php p($f_publication_id); ?>" />
 <input type="hidden" name="f_issue_number" id="f_issue_number" value="<?php p($f_issue_number); ?>" />

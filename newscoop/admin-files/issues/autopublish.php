@@ -53,7 +53,7 @@ camp_html_content_top(getGS('Issue Publishing Schedule'), array('Pub' => $public
 </TABLE>
 
 <P>
-<FORM NAME="dialog" METHOD="POST" ACTION="autopublish_do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/issues/autopublish_do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 <TR>

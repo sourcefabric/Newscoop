@@ -409,6 +409,14 @@ class ArticleType {
 		return $this->m_metadata->getProperty('comments_enabled');
 	} // fn commentsEnabled
 
+	/**
+     * Gets the maximum size of a article type
+	 * @return int
+	 */
+	public function getMaxSize()
+	{
+		return $this->m_metadata->getProperty('max_size');
+	} // fn getMaxSize
 
 	/**
 	 * Return TRUE if comments are enabled for this article type.
