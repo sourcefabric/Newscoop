@@ -173,7 +173,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         $title = !empty($Campsite['site']['title']) ? htmlspecialchars($Campsite['site']['title']) : getGS('Newscoop') . $Campsite['VERSION'];
 
         $view = $this->getResource('view');
-        $view->headTitle($title . ' (powered by Zend)')
+        $view->headTitle($title)
             ->setSeparator(' - ');
     }
 
