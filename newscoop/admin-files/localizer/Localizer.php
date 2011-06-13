@@ -9,8 +9,6 @@
 /**
  * Includes
  */
-require_once('File.php');
-require_once('File/Find.php');
 require_once(dirname(__FILE__).'/LocalizerConfig.php');
 require_once(dirname(__FILE__).'/LocalizerLanguage.php');
 require_once(dirname(__FILE__).'/LanguageMetadata.php');
