@@ -21,7 +21,12 @@
     <dd class="<?php echo $rule->class; ?> inherited"><strong><?php echo $rule->type; ?></strong> <?php echo $rule->action ?: getGS('Any action'); ?></dd>
     <?php } ?>
 
-    <?php foreach ((array) $this->rules[$resource] as $rule) { ?>
+    <?php 
+    if (!isset($this->rules[$resource])) {
+        $this->rules[$resource] = array();
+    }
+        
+    foreach ($this->rules[$resource] as $rule) { ?>
     <dd class="<?php echo $rule->class; ?>">
         <a class="delete icon" href="<?php echo $this->url(array(
             'controller' => 'acl',
