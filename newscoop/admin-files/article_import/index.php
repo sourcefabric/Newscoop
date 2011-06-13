@@ -86,12 +86,12 @@ $issueLanguage = new Language($sLanguage);
 <table width="100%" border="0">
 <tr>
 	<td style="padding:20px;" align="center">
-		Here you can upload an article that has been written in Open Office (files with extension ".sxw").  Click <a href="CampsiteArticleTemplate.stw">here</a> to get the template.
+    Here you can upload an article that has been written in Open Office (files with extension ".sxw").  Click <a href="/<?php echo $ADMIN; ?>/article_import/CampsiteArticleTemplate.stw">here</a> to get the template.
 	</td>
 </tr>
 </table>
 
-<form method="POST" action="CommandProcessor.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" enctype="multipart/form-data">
+<form method="POST" action="/<?php echo $ADMIN; ?>/article_import/CommandProcessor.php" onsubmit="return <?php camp_html_fvalidate(); ?>;" enctype="multipart/form-data">
 <?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="MAX_FILE_SIZE" value="1000000" />
 <input type="hidden" name="form_name" value="upload_article_form">

@@ -148,7 +148,7 @@ if ($ok) {
 
         ?>
         <P>
-        <FORM NAME="dialog" METHOD="POST" ACTION="merge3.php?f_src=<?php print $f_src; ?>&f_dest=<?php print $f_dest; ?>">
+        <FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/article_types/merge3.php?f_src=<?php print $f_src; ?>&f_dest=<?php print $f_dest; ?>">
 		<?php echo SecurityToken::FormParameter(); ?>
         <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
         <TR>

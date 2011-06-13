@@ -90,8 +90,9 @@ if (isset($_REQUEST['TOL_Language'])) {
 	$_REQUEST['TOL_Language'] = $defaultLanguage;
 }
 
-// Store request again.
-camp_session_set("request_$requestId", $request);
+if (isset($requestId)) { // Store request again
+    camp_session_set("request_$requestId", $request);
+}
 
 // Load the language files.
 camp_load_translation_strings("globals");
@@ -124,20 +125,39 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
 <?php if (!empty($_POST['_next'])) {
     // print hidden field function
     $view = $this->view;
+    $ignored = array(
+        'f_is_encrypted',
+        'f_user_name',
+        'f_password',
+        'f_login_language',
+        'f_captcha_code',
+        'Login',
+        'f_xorkey',
+    );
+
     $printHidden = function($name, $value) use ($view) {
+        if (is_array($value)) {
+            return; // can't handle
+        }
+
         echo '<input type="hidden" name="', $name, '" value="', $view->escape($value), '" />';
     };
 
-    // store request post data into form fields
-    foreach ($_POST as $name => $value) {
-        if (is_array($value)) {
-            foreach ($value as $arrayValue) {
-                $printHidden("{$name}[]", $arrayValue);
-            } 
-        } else {
-            $printHidden($name, $value);
-        }
-    }
+    if (!empty($_POST)) {
+        foreach ($_POST as $name => $value) {
+            if (in_array($name, $ignored)) {
+                continue;
+            }
+
+			if (is_array($value)) {
+				foreach ($value as $arrayValue) {
+					$printHidden("{$name}[]", $arrayValue);
+				} 
+			} else {
+				$printHidden($name, $value);
+			}
+		}
+	}
 } ?>
 
 <?php if ($error_code == "upgrade") { ?>
@@ -181,7 +201,7 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
 <tr>
     <td colspan="2"><strong class="light">
         <?php
-        if ($_GET['request'] == 'ajax' || $requestIsPost) {
+        if ((isset($_GET['request']) && $_GET['request'] == 'ajax') || !empty($requestIsPost)) {
             putGS('Your changes will be saved after login.');
             echo '<br />';
         }

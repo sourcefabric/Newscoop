@@ -65,7 +65,7 @@ class ArticleList extends BaseList
             'Number' => NULL,
             'Language' => getGS('Language'),
             'Order' => getGS('Order'),
-            'Name' => getGS('Name'),
+            'Name' => getGS('Title'),
             'Type' => getGS('Type'),
             'Created' => getGS('Created by'),
             'Author' => getGS('Author'),
@@ -258,7 +258,11 @@ class ArticleList extends BaseList
 		$topicsNo = (int) ArticleTopic::GetArticleTopics($article->getArticleNumber(), true);
 		$commentsNo = '';
 		if ($article->commentsEnabled()) {
-			$commentsNo = (int) ArticleComment::GetArticleComments($article->getArticleNumber(), $article->getLanguageId(), null, true);
+            global $controller;
+            $repositoryComments = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+			$filter = array( 'thread' => $article->getArticleNumber(), 'language' => $article->getLanguageId());
+			$params = array( 'sFilter' => $filter);
+            $commentsNo = $repositoryComments->getCount($params);
 		} else {
 			$commentsNo = 'No';
 		}

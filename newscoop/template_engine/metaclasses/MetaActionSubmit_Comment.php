@@ -1,5 +1,4 @@
 <?php
-
 define('ACTION_SUBMIT_COMMENT_ERR_INTERNAL', 'action_comment_submit_err_internal');
 define('ACTION_SUBMIT_COMMENT_ERR_NO_SUBJECT', 'action_comment_submit_err_no_subject');
 define('ACTION_SUBMIT_COMMENT_ERR_NO_CONTENT', 'action_comment_submit_err_no_content');
@@ -13,8 +12,7 @@ define('ACTION_SUBMIT_COMMENT_ERR_BANNED', 'action_comment_submit_err_banned');
 define('ACTION_SUBMIT_COMMENT_ERR_REJECTED', 'action_comment_submit_err_rejected');
 
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
-require_once($GLOBALS['g_campsiteDir'].'/include/phorum_load.php');
-
+require_once($GLOBALS['g_campsiteDir'].'/include/get_ip.php');
 
 class MetaActionSubmit_Comment extends MetaAction
 {
@@ -57,7 +55,7 @@ class MetaActionSubmit_Comment extends MetaAction
      */
     private function _processCaptcha()
     {
-        @session_start();
+        //@session_start();
         $captchaHandler = CampRequest::GetVar('f_captcha_handler', '', 'POST');
         if (!empty($captchaHandler)) {
             $captcha = Captcha::factory($captchaHandler);
@@ -110,49 +108,38 @@ class MetaActionSubmit_Comment extends MetaAction
             return false;
         }
 
-        // Get the publication.
-        $publicationObj = new Publication($articleMetaObj->publication->identifier);
-        $forum = new Phorum_forum($publicationObj->getForumId());
-        if (!$forum->exists()) {
-            $forum->create();
-            $forum->setName($publicationObj->getName());
-            $publicationObj->setForumId($forum->getForumId());
-        }
-        $forumId = $forum->getForumId();
 
+        $publication_id =  $articleMetaObj->publication->identifier;
+
+        // Get the publication.
+        $publicationObj = new Publication($publication_id);
         $user = $p_context->user;
-        if ($user->defined) {
-            $phorumUser = Phorum_user::GetByUserName($user->uname);
-            if (is_null($phorumUser)) {
-                $phorumUser = new Phorum_user();
-            }
+        $userIp = getIp();
+        if ($user->defined)
+        {
             $userId = $user->identifier;
             $userEmail = $user->email;
             $userRealName = $user->name;
-            $userPasswd = $user->password_encrypted;
-            // Check if the phorum user existed or was created successfuly.
-            // If not, set the error code to 'internal error' and exit.
-            if (!Phorum_user::CampUserExists($userId)
-            && !$phorumUser->create($user->uname, $userPasswd, $userEmail, $userId)) {
-                $this->m_error = new PEAR_Error('There was an internal error when submitting the comment (code 1).',
-                ACTION_SUBMIT_COMMENT_ERR_INTERNAL);
+        }
+        else
+        {
+            if(!$publicationObj->getPublicComments())
+            {
+                $this->m_error = new PEAR_Error('You must be a registered user in order to submit a comment. Please subscribe or log in if you already have a subscription.',
+                ACTION_SUBMIT_COMMENT_ERR_NO_PUBLIC);
                 return false;
             }
-        } else {
-            if ($forum->getPublicPermissions() & (PHORUM_USER_ALLOW_NEW_TOPIC | PHORUM_USER_ALLOW_REPLY)) {
+            else
+            {
                 if (!isset($this->m_properties['reader_email'])) {
                     $this->m_error = new PEAR_Error('EMail field is empty. You must fill in your EMail address.',
                     ACTION_SUBMIT_COMMENT_ERR_NO_EMAIL);
                     return false;
                 }
-                $userId = null;
-                $userEmail = $this->m_properties['reader_email'];
-                $userRealName = $userEmail;
-            } else {
-                $this->m_error = new PEAR_Error('You must be a registered user in order to submit a comment. Please subscribe or log in if you already have a subscription.',
-                ACTION_SUBMIT_COMMENT_ERR_NO_PUBLIC);
-                return false;
             }
+            $userId = null;
+            $userEmail = $this->m_properties['reader_email'];
+            $userRealName = $this->m_properties['nickname'];
         }
 
         // Validate the CAPTCHA code if it was enabled for the current publication.
@@ -161,59 +148,66 @@ class MetaActionSubmit_Comment extends MetaAction
                 return FALSE;
             }
         }
-
         // Check if the reader was banned from posting comments.
-        if (Phorum_user::IsBanned($userRealName, $userEmail)) {
+        global $controller;
+        $repositoryAcceptance = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment\Acceptance');
+        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+        if ($repositoryAcceptance->checkParamsBanned($userRealName, $userEmail, $userIp, $publication_id))
+        {
             $this->m_error = new PEAR_Error('You are banned from submitting comments.',
             ACTION_SUBMIT_COMMENT_ERR_BANNED);
             return false;
         }
-
-        // Create the first post message (if needed)
+        // get the article object
         $articleObj = new Article($articleMetaObj->language->number, $articleMetaObj->number);
-        $firstPost = $this->CreateFirstComment($articleObj, $forumId);
-        if (is_null($firstPost)) {
-            $this->m_error = new PEAR_Error('There was an internal error when submitting the comment (code 2).',
-            ACTION_SUBMIT_COMMENT_ERR_INTERNAL);
-            return false;
-        }
 
         // Set the parent to the currently viewed comment if a certain existing
         // comment was selected. Otherwise, set the parent identifier to the root message.
-        $parentMessage = new Phorum_message($p_context->comment->identifier);
-        if (!$parentMessage->exists()) {
-            $parentMessage = $firstPost;
-        }
 
         // Create the comment. If there was an error creating the comment set the
         // error code to 'internal error' and exit.
-        $commentObj = new Phorum_message();
-        if (!$commentObj->create($forumId, $this->m_properties['subject'],
-        $this->m_properties['content'], $firstPost->getThreadId(),
-        $parentMessage->getMessageId(), $this->m_properties['nickname'], $userEmail,
-        is_null($userId) ? 0 : $userId)) {
-            $this->m_error = new PEAR_Error('There was an internal error when submitting the comment (code 3).',
-            ACTION_SUBMIT_COMMENT_ERR_INTERNAL);
-            return false;
-        }
+        $values = array(
+            'thread' => $articleMetaObj->number,
+            'language' => $articleMetaObj->language->number,
+            'name' => $userRealName,
+            'email'=> $userEmail,
+            'message' =>  $this->m_properties['content'],
+            'subject' => $this->m_properties['subject'],
+            'ip' => $userIp,
+            'time_created' => new DateTime
+        );
 
         // If the user was unknown (public comment) and public comments were moderated
         // or the user was known (subscriber comment) and subscriber comments were moderated
         // set the comment status to 'hold'. Otherwise, set the status to 'approved'.
         if ((!is_null($userId) && $publicationObj->commentsSubscribersModerated())
         || (is_null($userId) && $publicationObj->commentsPublicModerated())) {
-            $commentObj->setStatus(PHORUM_STATUS_HOLD);
+            $values['status'] = "pending";
         } else {
-            $commentObj->setStatus(PHORUM_STATUS_APPROVED);
+            $values['status'] = "approved";
         }
 
-        // Link the message to the current article.
-        $isFirstMessage = ($firstPost->getThreadId() == 0);
-        ArticleComment::Link($articleMetaObj->number, $articleMetaObj->language->number,
-        $commentObj->getMessageId(), $isFirstMessage);
+        // If the user was known set it
+        if(!is_null($userId))
+            $values['user'] = $userId;
 
-        $p_context->comment = new MetaComment($commentObj->getMessageId());
+        //If there is a comment idetifier set it the parent of the comment
+        if($p_context->comment->identifier)
+            $values['parent'] = $p_context->comment->identifier;
 
+        $commentObj = $repository->getPrototype();
+        $comment = $repository->save($commentObj,$values);
+        $repository->flush();
+        if (!$comment) {
+            $this->m_error = new PEAR_Error('There was an internal error when submitting the comment (code 3).',
+            ACTION_SUBMIT_COMMENT_ERR_INTERNAL);
+            return false;
+        }
+
+        $controller->getHelper('actionStack')->actionToStack("moderate-comment","notification","admin", array('comment'=>$comment->getId()));
+
+        $p_context->comment = new MetaComment($comment->getId());
+        $p_context->comment = new MetaComment($comment->getId());
         $p_context->default_url->reset_parameter('f_comment_reader_email');
         $p_context->default_url->reset_parameter('f_comment_subject');
         $p_context->default_url->reset_parameter('f_comment_content');
@@ -231,63 +225,4 @@ class MetaActionSubmit_Comment extends MetaAction
         return true;
     }
 
-
-    /**
-     * Create the first message for an article, which is a blank message
-     * with the title of the article as the subject.
-     *
-     * @param Article $p_article
-     * @param int $p_forumId
-     * @return mixed
-     * 		The comment created (or the one that already exists) on success,
-     *  	or false on error.
-     */
-    private function CreateFirstComment($p_article, $p_forumId)
-    {
-        // Check if the first post already exists.
-        $articleNumber = $p_article->getArticleNumber();
-        $languageId = $p_article->getLanguageId();
-        $firstPost = ArticleComment::GetCommentThreadId($articleNumber, $languageId);
-        if ($firstPost) {
-            return new Phorum_message($firstPost);
-        }
-
-        // Get article creator
-        $user = new User($p_article->getCreatorId());
-        if ($user->exists()) {
-            $userId = $user->getUserId();
-            $userEmail = $user->getEmail();
-            $userPasswd = $user->getPassword();
-            $userName = $user->getUserName();
-            $userRealName = $user->getRealName();
-
-            // Create phorum user if necessary
-            $phorumUser = Phorum_user::GetByUserName($userName);
-            if (!is_object($phorumUser)) {
-                $phorumUser = new Phorum_user();
-            }
-            if (!$phorumUser->CampUserExists($userId)
-            && !$phorumUser->create($userName, $userPasswd, $userEmail, $userId)) {
-                return null;
-            }
-        } else {
-            $userId = null;
-            $userEmail = '';
-            $userRealName = '';
-        }
-
-        // Create the comment.
-        $title = $p_article->getTitle();
-        $commentObj = new Phorum_message();
-        if ($commentObj->create($p_forumId, $title, '', 0, 0, $userRealName,
-        $userEmail, is_null($userId) ? 0 : $userId)) {
-            // Link the message to the current article.
-            ArticleComment::Link($articleNumber, $languageId, $commentObj->getMessageId(), true);
-            return $commentObj;
-        } else {
-            return null;
-        }
-    } // method CreateFirstComment
 }
-
-?>

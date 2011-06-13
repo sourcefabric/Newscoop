@@ -2,6 +2,11 @@
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/IssuePublish.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Template.php');
+//@New theme management
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\IThemeManagementService;
+use Newscoop\Service\IOutputSettingIssueService;
+//@New theme management
 camp_load_translation_strings("articles");
 camp_load_translation_strings("logs");
 
@@ -36,7 +41,6 @@ $allLanguages = Language::GetLanguages(null, null, null, array(), array(), true)
 $issueTranslations = Issue::GetIssues($Pub, null, $Issue, null, null, false, null, true);
 $excludeLanguageIds = DbObjectArray::GetColumn($issueTranslations, 'IdLanguage');
 
-$allTemplates = Template::GetAllTemplates(null, true, true, true);
 $allEvents = IssuePublish::GetIssueEvents($Pub, $Issue, $Language);
 
 $publish_date = date("Y-m-d");
@@ -55,6 +59,44 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 } else {
 	$url_add = "qadd.php";
 }
+
+//@New theme management
+$resourceId = new ResourceId('Publication/Edit');
+$themeManagementService = $resourceId->getService(IThemeManagementService::NAME_1);
+$outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
+
+$outSetIssues = $outputSettingIssueService->findByIssue($issueObj->getIssueId());
+$themePath = null;
+$tplFrontPath = null;
+$tplSectionPath = null;
+$tplArticlePath = null;
+if(count($outSetIssues) > 0){
+	$outSetIssue = $outSetIssues[0];
+	$themePath = $outSetIssue->getThemePath()->getPath();
+	if($outSetIssue->getFrontPage() != null){
+		$tplFrontPath = $outSetIssue->getFrontPage()->getPath();
+	}
+	if($outSetIssue->getSectionPage() != null){
+		$tplSectionPath = $outSetIssue->getSectionPage()->getPath();
+	}
+	if($outSetIssue->getArticlePage() != null){
+		$tplArticlePath = $outSetIssue->getArticlePage()->getPath();
+	}
+}
+
+$publicationThemes = $themeManagementService->getThemes($publicationObj->getPublicationId());
+$publicationHasThemes = count($publicationThemes) > 0;
+if($themePath == null && $publicationHasThemes){
+	$themePath = $publicationThemes[0]->getPath();
+}
+
+if($themePath != null){
+	$allTemplates = $themeManagementService->getTemplates($themePath);
+} else {
+	$allTemplates = array();
+}
+
+//@New theme management
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
@@ -71,14 +113,14 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 	<TD><A HREF="<?php p($url_add); ?>?<?php p($url_args1); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
 	<TD><A HREF="<?php p($url_add); ?>?<?php p($url_args1); ?>" ><B><?php  putGS("Add new issue"); ?></B></A></TD>
 
-	<TD style="padding-left: 20px;"><A HREF="" ONCLICK="window.open('preview.php?<?php p($url_args2); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false;"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0"></A></TD>
-	<TD><A HREF="" ONCLICK="window.open('preview.php?<?php p($url_args2); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false;"><B><?php  putGS("Preview"); ?></B></A></TD>
+    <TD style="padding-left: 20px;"><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/issues/preview.php?<?php p($url_args2); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false;"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0"></A></TD>
+    <TD><A HREF="" ONCLICK="window.open('/<?php echo $ADMIN; ?>/issues/preview.php?<?php p($url_args2); ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=yes, width=800, height=600'); return false;"><B><?php  putGS("Preview"); ?></B></A></TD>
 
-	<TD style="padding-left: 20px;"><A HREF="translate.php?<?php p($url_args2); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate.png" BORDER="0"></A></TD>
-	<TD><A HREF="translate.php?<?php p($url_args2); ?>" ><B><?php  putGS("Translate"); ?></B></A></TD>
+    <TD style="padding-left: 20px;"><A HREF="/<?php echo $ADMIN; ?>/issues/translate.php?<?php p($url_args2); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate.png" BORDER="0"></A></TD>
+    <TD><A HREF="/<?php echo $ADMIN; ?>/issues/translate.php?<?php p($url_args2); ?>" ><B><?php  putGS("Translate"); ?></B></A></TD>
 
-	<TD style="padding-left: 20px;"><A HREF="delete.php?<?php p($url_args3); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></A></TD>
-	<TD><A HREF="delete.php?<?php p($url_args3); ?>"><B><?php  putGS("Delete"); ?></B></A></TD>
+    <TD style="padding-left: 20px;"><A HREF="/<?php echo $ADMIN; ?>/issues/delete.php?<?php p($url_args3); ?>"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0"></A></TD>
+    <TD><A HREF="/<?php echo $ADMIN; ?>/issues/delete.php?<?php p($url_args3); ?>"><B><?php  putGS("Delete"); ?></B></A></TD>
 </TR>
 </TABLE>
 
@@ -88,7 +130,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 <table>
 <tr>
 	<td valign="top">
-		<FORM name="issue_edit" METHOD="POST" ACTION="do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+        <FORM name="issue_edit" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/issues/do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 		<?php echo SecurityToken::FormParameter(); ?>
 		<INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php p($Pub); ?>">
 		<INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php p($Issue); ?>">
@@ -138,6 +180,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 			</TD>
 		</TR>
 
+		<?php if($publicationHasThemes){?>
 		<TR>
 			<TD ALIGN="RIGHT"><?php  putGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>"); ?>:</TD>
 			<TD>
@@ -166,21 +209,37 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 				</A>
 			</TD>
 		</TR>
-
+		<?php
+            }
+			if(SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
+		?>
 		<TR>
 			<TD COLSPAN="2" style="padding-top: 20px;">
 				<B><?php  putGS("Default templates"); ?></B>
 				<HR NOSHADE SIZE="1" COLOR="BLACK">
 			</TD>
 		</TR>
+		<?php if($publicationHasThemes){?>
+		<TR>
+			<TD ALIGN="RIGHT"><?php  putGS("Issue Theme"); ?>:</TD>
+			<TD>
+				<SELECT ID="f_theme_id" NAME="f_theme_id" class="input_select">
+				<?php
+				foreach ($publicationThemes as $theme) {
+					camp_html_select_option($theme->getPath(), $themePath, $theme->getName());
+				}
+				?>
+				</SELECT>
+			</TD>
+		</TR>
 		<TR>
 			<TD ALIGN="RIGHT"><?php  putGS("Front Page Template"); ?>:</TD>
 			<TD>
-				<SELECT NAME="f_issue_template_id" class="input_select">
-				<OPTION VALUE="0">---</OPTION>
+				<SELECT ID="f_issue_template_id" NAME="f_issue_template_id" class="input_select">
+				<OPTION VALUE="0">&lt;<?php  putGS("default"); ?>&gt;</OPTION>
 				<?php
 				foreach ($allTemplates as $template) {
-					camp_html_select_option($template->getTemplateId(), $issueObj->getIssueTemplateId(), $template->getName());
+					camp_html_select_option($template->getPath(), $tplFrontPath, $template->getName());
 				}
 				?>
 				</SELECT>
@@ -190,11 +249,11 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 		<TR>
 			<TD ALIGN="RIGHT"><?php  putGS("Section Template"); ?>:</TD>
 			<TD>
-				<SELECT NAME="f_section_template_id" class="input_select">
-				<OPTION VALUE="0">---</OPTION>
+				<SELECT ID="f_section_template_id" NAME="f_section_template_id" class="input_select">
+				<OPTION VALUE="0">&lt;<?php  putGS("default"); ?>&gt;</OPTION>
 				<?php
 				foreach ($allTemplates as $template) {
-					camp_html_select_option($template->getTemplateId(), $issueObj->getSectionTemplateId(), $template->getName());
+					camp_html_select_option($template->getPath(), $tplSectionPath, $template->getName());
 				}
 				?>
 				</SELECT>
@@ -204,17 +263,34 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 		<TR>
 			<TD ALIGN="RIGHT"><?php  putGS("Article Template"); ?>:</TD>
 			<TD>
-				<SELECT NAME="f_article_template_id" class="input_select">
-				<OPTION VALUE="0">---</OPTION>
+				<SELECT ID="f_article_template_id" NAME="f_article_template_id" class="input_select">
+				<OPTION VALUE="0">&lt;<?php  putGS("default"); ?>&gt;</OPTION>
 				<?php
 				foreach ($allTemplates as $template) {
-					camp_html_select_option($template->getTemplateId(), $issueObj->getArticleTemplateId(), $template->getName());
+					camp_html_select_option($template->getPath(), $tplArticlePath, $template->getName());
 				}
 				?>
 				</SELECT>
 			</TD>
 		</TR>
-
+		<?php
+			}
+		?>
+		<?php } else {?>
+		<TR>
+			<INPUT TYPE="hidden" NAME="f_theme_id" VALUE="0"/>
+			<INPUT TYPE="hidden" NAME="f_issue_template_id" VALUE="0"/>
+			<INPUT TYPE="hidden" NAME="f_section_template_id" VALUE="0"/>
+			<INPUT TYPE="hidden" NAME="f_article_template_id" VALUE="0"/>
+			<TD ALIGN="LEFT" colspan="2" style="color: red;">
+			<?php putGS("Please assign at least one theme to the publication");?>
+			<br/>
+			<?php putGS("in order to be able to assigned to the issue.");?>
+			<br/>
+			<?php putGS("Only than the issue can be published");?>
+			</TD>
+		</TR>
+		<?php }?>
 		<TR>
 			<TD COLSPAN="2" align="center" style="padding-top: 15px;">
 				<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
@@ -288,12 +364,13 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 		</TR>
 		</table>
 
-		<FORM NAME="dialog" METHOD="POST" ACTION="autopublish_do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+        <FORM NAME="dialog" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/issues/autopublish_do_add.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 		<?php echo SecurityToken::FormParameter(); ?>
         <INPUT TYPE="HIDDEN" NAME="Pub" VALUE="<?php echo $Pub; ?>">
         <INPUT TYPE="HIDDEN" NAME="Issue" VALUE="<?php echo $Issue; ?>">
         <INPUT TYPE="HIDDEN" NAME="Language" VALUE="<?php echo $Language; ?>">
         <p>
+        <?php if($publicationHasThemes){ ?>
 		<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
 		<TR>
 			<TD COLSPAN="2">
@@ -340,6 +417,7 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 			</TD>
 		</TR>
 		</TABLE>
+		<?php } ?>
 		</FORM>
 	</td>
 </tr>
@@ -347,4 +425,31 @@ if (Issue::GetNumIssues($Pub) <= 0) {
 <script>
 document.forms.issue_edit.f_issue_name.focus();
 </script>
+
+<script type="text/javascript">
+
+$(function() {
+    // list templates per theme
+    $('select[name=f_theme_id]').change(function() {
+        var themePath = $(this).val();
+        $.getJSON('get_templates.php', {
+            'themePath': themePath
+        }, function(data) {
+			var selects = [$('select[name=f_issue_template_id]'),
+			   			$('select[name=f_section_template_id]'),
+			   			$('select[name=f_article_template_id]')];
+			for(i = 0; i < selects.length; i++){
+				select = selects[i];
+				select.empty().append('<option selected value="0">&lt;<?php  putGS("default"); ?>&gt;</option>');
+				$.each(data, function(key, value) { 
+					select.append('<option value="' + key + '">' + value + '</option>');
+				});
+	        }
+        });
+    });
+
+});
+
+</script>
+
 <?php camp_html_copyright_notice(); ?>

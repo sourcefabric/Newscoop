@@ -1,0 +1,278 @@
+<div class="currentDirectory">
+    <strong><?php putGS('Current directory:'); ?></strong>
+    <?php if (empty($this->path)) { ?>
+    <?php putGS('Templates'); ?>
+    <?php } else { ?>
+    <a href="<?php echo $this->url(array(
+        'path' => NULL,
+    )); ?>"><?php putGS('Templates'); ?></a> / <?php echo $this->navigation()->breadcrumbs()
+        ->setContainer($this->nav)
+        ->setMinDepth(0)
+        ->setSeparator(' / ');
+    ?>
+    <?php } ?>
+</div>
+
+<?php $this->renderActions(); ?>
+
+<form id="actions-form" action="<?php echo $this->url(array(
+    'controller' => 'template',
+    'action' => 'index',
+    'next' => urlencode($this->url()),
+)); ?>" method="<?php echo $this->form->getMethod(); ?>">
+<dl>
+    <?php echo $this->form->csrf; ?>
+    <?php echo $this->form->action; ?>
+    <?php echo $this->form->name; ?>
+    <?php echo $this->form->multiaction; ?>
+</dl>
+
+<table class="themeTemplatesTable templates">
+<thead>
+<tr>
+    <th class="id"><input type="checkbox" name="toggle" class="all" /></th>
+    <th><?php putGS('File name'); ?></th>
+    <th><?php putGS('Template Id'); ?></th>
+    <th><?php putGS('Type'); ?></th>
+    <th class="size"><?php putGS('File size'); ?></th>
+    <th><?php putGS('Cache Lifetime'); ?></th>
+    <th><?php putGS('Last modified'); ?></th>
+    <th></th><!-- size in bytes for sorting -->
+    <th></th>
+</tr>
+
+<?php if (!empty($this->path)) { ?>
+<tr class="parent">
+    <td colspan="9"><a href="<?php echo $this->url(array(
+        'path' => $this->parent,
+        'file' => null,
+        'next' => null,
+    )); ?>" class="upOneLevel" title="<?php putGS('Go to parent'); ?>"><?php putGS('Go to parent'); ?></a></td>
+</tr>
+<?php } ?>
+
+</thead>
+
+<tbody>
+<?php foreach ($this->folders as $folder) { ?>
+<tr class="collection">
+    <td class="id"><input type="checkbox" name="file[]" value="<?php echo $folder->name; ?>" /></td>
+    <td><a href="<?php echo $this->url(array(
+        'path' => ltrim($this->path . $this->separator . $folder->name, $this->separator),
+        'file' => null,
+        'next' => null,
+    )); ?>" class="folder" title="<?php putGS("Go to '$1'", $folder->name); ?>"><?php echo $folder->name; ?></a></td>
+    <td></td>
+    <td>dir</td>
+    <td></td>
+    <td></td>
+    <td></td>
+    <td>-1</td>
+
+    <td class="menu"><ul class="actionDropDown">
+        <li><a href="#"><?php putGS('Actions'); ?></a><ul>
+            <li><a href="#delete" class="delete">Delete</a></li>
+        </ul></li>
+    </ul></td>
+</tr>
+<?php } ?>
+
+<?php foreach ($this->templates as $file) { ?>
+<tr class="template">
+    <td class="id"><input type="checkbox" name="file[]" value="<?php echo $file->name; ?>" /></td>
+    <td><a href="<?php echo $this->url(array(
+        'controller' => 'template',
+        'action' => 'edit',
+        'path' => $this->path,
+        'file' => $file->name,
+        'next' => urlencode($this->url()),
+    )); ?>" class="file" title="<?php putGS("Edit '$1'", $file->name); ?>"><?php echo $file->name; ?></a></td>
+    <td><?php echo $file->id; ?></td>
+    <td><?php echo $file->type; ?></td>
+    <td class="size"><?php echo $this->formatBytes($file->size); ?></td>
+    <td><?php echo $file->ttl; ?></td>
+    <td><?php echo date($this->dateFormat, $file->ctime); ?></td>
+    <td><?php echo $file->size; ?></td>
+
+    <td class="menu"><ul class="actionDropDown">
+        <li><a href="#"><?php putGS('Actions'); ?></a><ul>
+            <li><a href="#rename" class="rename">Rename</a></li>
+            <li><a href="#move" class="duplicate">Move</a></li>
+            <li><a href="#copy" class="duplicate">Copy</a></li>
+            <li><a href="#delete" class="delete">Delete</a></li>
+        </ul></li>
+    </ul></td>
+</tr>
+<?php } ?>
+</tbody>
+</table>
+
+</form>
+
+<div class="dialogPopup" title="<?php putGS('New name'); ?>">
+    <input type="text" name="name" />
+    <?php echo $this->moveForm->name; ?>
+</div>
+
+<script type="text/javascript">
+$(function() {
+    // actions
+	$(".actionDropDown li").hover(function(){
+		$(this).children("ul").css("display","block");
+		$(this).children("a").addClass("active");
+	}, function() {
+		$(this).children("ul").css("display","none");
+		$(this).children("a").removeClass("active");
+	});
+
+	$(".actionDropDown li ul li").hover(function(){
+		$(this).children("ul").css("display","block");
+		}, function() {
+		$(this).childer("ul").css("display","none");
+	});
+
+    // dialog
+	$('.dialogPopup').dialog({
+		autoOpen: false,
+		width: 400,
+		resizable: false,
+		modal: true,
+		position:'center',
+		buttons: {
+            <?php echo json_encode(getGS('Save')); ?>: function() { 
+                var name = $('[name="name"]', $(this)).not(':hidden').val();
+                if (!name.length) {
+                    alert(<?php echo json_encode(getGS("Name can't be empty")); ?>);
+                    return;
+                }
+
+                var form = $('#actions-form');
+                $('input[name="name"]', form).val(name);
+                form.submit();
+			}, 
+            <?php echo json_encode(getGS('Cancel')); ?>: function() { 
+				$(this).dialog("close"); 
+			}
+        }
+	});
+
+    // table row action
+	$('table.templates a[href^="#"]').click(function() {
+        var form = $('#actions-form');
+        var table = $('table', form);
+        var action = $(this).attr('href').substr(1);
+
+        // set action
+        $('input[name="action"]', form).val(action);
+
+        // uncheck files
+        $('tbody input:checkbox:checked', table).each(function() {
+            $(this).attr('checked', false);
+        });
+
+        // check current file
+        $('input:checkbox', $(this).closest('tr')).each(function() {
+            $(this).attr('checked', true);
+        });
+
+        form.submit();
+	});
+
+    // datatable
+    $('table.templates').dataTable({
+        'aoColumnDefs': [
+            { 'bSortable': false, 'aTargets': [0, -1] },
+            { 'bVisible': false, 'aTargets': [-2] },
+            { 'iDataSort': [7], 'aTargets': [5] }
+        ],
+        'oLanguage': {
+            'sLoadingRecords': <?php echo json_encode(getGS('Directory is empty')); ?>,
+        },
+        'sDom': 't',
+        'bPaginate': false,
+        'bServerSide': false,
+        'bStateSave': true,
+        'bJQueryUI': true
+    });
+
+    // check/uncheck all items
+    $('thead input:checkbox').change(function() {
+        var checked = $(this).attr("checked");
+        var table = $(this).closest('table');
+        $('tbody input:checkbox', table).each(function() {
+            $(this).attr("checked", checked);
+        });
+    });
+
+    // update check all checkbox on item change
+    $('tbody input:checkbox').change(function() {
+        var table = $(this).closest('table');
+        if ($('tbody input:checkbox', table).size() == $('tbody input:checkbox:checked', table).size()) { // all checked
+            $('thead input:checkbox', table).attr("checked", true);
+        } else {
+            $('thead input:checkbox', table).attr("checked", false);
+        }
+    });
+
+    // check item on line click
+    $('tbody td').click(function(e) {
+        if (e.target.type == 'checkbox' || e.target.href) {
+            return;
+        }
+
+        var checkbox = $('input:checkbox', $(this).closest('tr'));
+        checkbox.attr('checked', !checkbox.attr('checked'));
+        checkbox.change();
+    });
+
+    // create name dialog
+    $('.content .navigation a[href^="#create"]').click(function() {
+        var action = $(this).attr('href').substr(1);
+        $('#actions-form input[name="action"]').val(action);
+        $('#actions-form').submit();
+		return false;
+    });
+
+    // multiaction submit
+    $('select[name="multiaction"]').change(function() {
+        if (!$(this).val().length) {
+            return;
+        }
+
+        if (!$('tbody input:checkbox:checked').size()) {
+            $(this).val('');
+            alert(<?php echo json_encode(getGS("You must select at least one template to perform an action.")); ?>);
+            return;
+        }
+
+        var form = $(this).closest('form');
+        $('input[name="action"]', form).val($(this).val());
+        form.submit();
+    });
+
+    // submit actions form - ask for name if needed
+    $('#actions-form').submit(function() {
+        var action = $('input[name="action"]', $(this)).val();
+        var name = $('input[name="name"]', $(this)).val();
+
+        if (!action.length) {
+            return false;
+        }
+
+        if (action != 'delete' && !name.length) {
+            if (action == 'move') {
+                $('#ui-dialog-title-1').html(<?php echo json_encode(getGS('Choose destination')); ?>);
+                $('.dialogPopup select').show();
+                $('.dialogPopup input').hide();
+            } else {
+                $('#ui-dialog-title-1').html(<?php echo json_encode(getGS('Set new name')); ?>);
+                $('.dialogPopup select').hide();
+                $('.dialogPopup input').show();
+            }
+
+		    $('.dialogPopup').dialog('open');
+            return false;
+        }
+    });
+});
+</script>

@@ -40,6 +40,7 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
                 'resource' => 'subscription',
                 'privilege' => 'manage',
                 'reset_params' => FALSE,
+                'class' => 'add',
             ),
             array(
                 'label' => getGS('Edit all sections'),

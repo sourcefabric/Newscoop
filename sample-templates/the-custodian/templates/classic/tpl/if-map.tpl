@@ -1,5 +1,10 @@
 {{ if $gimme->article->has_map }}
-    {{ map show_locations_list="true"
+    {{ map show_locations_list=true
+           auto_focus=true
+           width="550"
+           height="400"
+           show_open_link=true
+           open_map_on_click=false
            show_reset_link="Show initial Map" }}
 
     {{ if $gimme->language->name == "English" }}
@@ -15,7 +20,9 @@
     {{ /if }}
     <ul>
     {{ list_article_locations }}
-        <li>{{ $gimme->location->name }} ({{ $gimme->location->longitude }}, {{ $gimme->location->latitude }})</li>
+	{{ if $gimme->location->enabled}}
+        	<li>{{ $gimme->location->name }} ({{ $gimme->location->longitude }}, {{ $gimme->location->latitude }})</li>
+	{{ /if }}
     {{ /list_article_locations }}
     </ul>
 {{ /if }}

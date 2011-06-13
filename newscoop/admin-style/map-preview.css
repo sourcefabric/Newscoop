@@ -1,3 +1,11 @@
+.map_preview_toolbar {
+    background: #ffffff;
+    width: 1020px;
+    margin: 0px auto;
+    height: 0px;
+    padding: 9px 8px 0px 14px;
+}
+
 .map_preview_info {
     margin-left: 2px;
     margin-top: 2px;
@@ -5,17 +13,74 @@
     height: 24px;
     font-size: 18px;
 }
-
 .geomap_locations {
     float: left;
-    width: 150px;
+    width: 230px;
     margin-left: 20px;
-    font-size: 90%;
+    font-size: 12px;
 }
+
 .geomap_mappart {}
+
 .geomap_container {
-    width: 800px;
+    width: 850px;
     height: 500px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
+.map_hidden {
+    display: none;
+}
 
+.geomap_menu {
+    font-size: 12px;
+    height: 33px;
+    z-index: 5000;
+}
+
+.geomap_map {
+	float:right;
+}
+.geomap_locations dl {
+	display:block;
+	margin:0;
+	padding:0;
+	clear:left;
+	font-size:14px;
+	width:100%;
+}
+.geomap_locations dt {
+    clear: left;
+    color: #666666;
+    float: left;
+    font-weight: bold;
+    margin: 0;
+    padding: 4px 0;
+    text-align: left;
+}
+.geomap_locations dd {
+    float: left;
+    margin: 0;
+    padding: 4px 0 4px 15px;
+}
+.geomap_poi_icon_link {
+
+}
+.geomap_poi_icon_link img {
+	float:left;
+	margin-right:8px;
+}
+
+.geomap_info {
+	margin-bottom:20px;
+	min-height: 25px;
+}
+.geomap_poi_name {
+	font-size:13px;
+	font-weight:bold;
+}
+
+.geomap_poi_name:hover, .geomap_poi_center a:hover {
+	text-decoration:underline;
+}

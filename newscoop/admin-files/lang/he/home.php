@@ -1,4 +1,6 @@
 <?php 
+regGS("Newscoop", "");
+regGS("Campsite", "");
 regGS("Password recovery request for $1", "בקשת שיחזור סיסמא ל-$1");
 regGS("Your password has been reset.", "סיסמתך אופסה");
 regGS("Proceed to login.", "התקדם לכניסה");
@@ -57,7 +59,6 @@ regGS("Backup list is empty.", "");
 regGS("Are you sure you want to restore the file $1?", "");
 regGS("Are you sure you want to make new backup?", "");
 regGS("Are you sure you want to delete the file $1?", "");
-regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.", "");
 regGS("Import XML", "");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "");
 regGS("Select the field from which to generate the author", "");
@@ -73,7 +74,6 @@ regGS("Clear system cache", "");
 regGS("The system was unable to upload the file '$1'. ", "");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "בבקשה בדוק את הקובץ שהנך מנסה להעלות. יתכן שהוא לא תקין");
 regGS("Your user is not a valid Campcaster user", "");
-regGS("Connection refused", "חיבור נדחה");
 regGS("An error occured in session management. Please reload the login page.", "ארעה שגיאה. בבקשה טען מחדש את עמוד הכניסה למערכת");
 regGS("This file is stored on disk as '$1'.", "הקובץ נשמר בכונן בשם '$1'1");
 regGS("The system is unable to write to the directory '$1'.", "המערכת לא הצליחה לכתוב לתיקייה '$1'1");
@@ -99,6 +99,5 @@ regGS("You do not have the right to access this page.", "אין לך הרשאו�
 regGS("Login failed", "כניסה למערכת נכשלה");
 regGS("Please make sure that you typed the correct user name and password.", "בדוק אם הקלדת את שם המשתמש והסיסמא הנכונים");
 regGS("If your problem persists please contact the site administrator $1", "(אם הבעיה ממשיכה, צור קשר עם מנהל האתר (אדמיניסטרטור");
-regGS("Backup/Restore", "גיבוי\\שחזור");
-regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "שלום, לשיחזור סיסמא, לחץ על הקישור: $1");
+regGS("Backup/Restore", "גיבוי\שחזור");
 ?>

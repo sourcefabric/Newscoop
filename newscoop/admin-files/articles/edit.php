@@ -1,6 +1,7 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/editor_load_tinymce.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/editor_load_countable.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/DbReplication.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticlePublish.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
@@ -46,6 +47,7 @@ if (!$articleObj->exists()) {
 $articleData = $articleObj->getArticleData();
 // Get article type fields.
 $dbColumns = $articleData->getUserDefinedColumns(FALSE, TRUE);
+
 $articleType = new ArticleType($articleObj->getType());
 
 $articleImages = ArticleImage::GetImagesByArticleNumber($f_article_number);
@@ -78,20 +80,11 @@ if ($f_publication_id > 0) {
 }
 
 if ($showComments) {
-    require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleComment.php');
-    if (SystemPref::Get("UseDBReplication") == 'Y') {
-        $dbReplicationObj = new DbReplication();
-        $connectedToOnlineServer = $dbReplicationObj->connect();
-        if ($connectedToOnlineServer == true) {
-            // Fetch the comments attached to this article
-            // (from replication database)
-            $comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);
-        }
-    } else {
-        // Fetch the comments attached to this article
-        // (from local database)
-        $comments = ArticleComment::GetArticleComments($f_article_number, $f_language_id);
-    }
+//    $comments = array();
+
+    /**
+    * @todoget comments
+    */
 }
 
 // Automatically switch to "view" mode if user doesnt have permissions

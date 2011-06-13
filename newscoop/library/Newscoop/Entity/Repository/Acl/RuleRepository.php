@@ -2,18 +2,13 @@
 /**
  * @package Newscoop
  * @copyright 2011 Sourcefabric o.p.s.
- * @license http://www.gnu.org/licenses/gpl.txt
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 namespace Newscoop\Entity\Repository\Acl;
 
-use InvalidArgumentException,
-    Doctrine\ORM\EntityRepository,
-    Doctrine\ORM\QueryBuilder,
-    Newscoop\Entity\Acl\Rule,
-    Newscoop\Entity\Acl\Role,
-    Newscoop\Entity\Acl\Resource,
-    Newscoop\Entity\Acl\Action;
+use Doctrine\ORM\EntityRepository,
+    Newscoop\Entity\Acl\Rule;
 
 /**
  * Acl Rule repository

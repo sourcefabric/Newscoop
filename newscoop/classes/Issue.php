@@ -17,6 +17,10 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/IssuePublish.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
 
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\IOutputSettingIssueService;
+use Newscoop\Service\IIssueService;
+use Newscoop\Entity\Output\OutputSettingsIssue;
 /**
  * @package Campsite
  */
@@ -24,6 +28,7 @@ class Issue extends DatabaseObject {
 	var $m_dbTableName = 'Issues';
 	var $m_keyColumnNames = array('IdPublication', 'Number', 'IdLanguage');
 	var $m_columnNames = array(
+		'id',
 		'IdPublication',
 		'Number',
 		'IdLanguage',
@@ -43,7 +48,7 @@ class Issue extends DatabaseObject {
 	 * @param int $p_issueNumber
 	 */
 	public function Issue($p_publicationId = null, $p_languageId = null,
-	                      $p_issueNumber = null)
+	$p_issueNumber = null)
 	{
 		parent::DatabaseObject($this->m_columnNames);
 		$this->m_data['IdPublication'] = $p_publicationId;
@@ -63,21 +68,21 @@ class Issue extends DatabaseObject {
 	 */
 	public function create($p_shortName, $p_values = null)
 	{
-	    $tmpValues = array('ShortName' => $p_shortName);
-	    if (!is_null($p_values)) {
-	       $tmpValues = array_merge($p_values, $tmpValues);
-	    }
-	    $success = parent::create($tmpValues);
-	    if ($success) {
+		$tmpValues = array('ShortName' => $p_shortName);
+		if (!is_null($p_values)) {
+			$tmpValues = array_merge($p_values, $tmpValues);
+		}
+		$success = parent::create($tmpValues);
+		if ($success) {
 			if (function_exists("camp_load_translation_strings")) {
 				camp_load_translation_strings("api");
 			}
-	    	$logtext = getGS('Issue "$1" ($2) added in publication $3',
-				 $this->m_data['Name'], $this->m_data['Number'],
-				 $this->m_data['IdPublication']);
-    		Log::Message($logtext, null, 11);
-	    }
-	    return $success;
+			$logtext = getGS('Issue "$1" ($2) added in publication $3',
+			$this->m_data['Name'], $this->m_data['Number'],
+			$this->m_data['IdPublication']);
+			Log::Message($logtext, null, 11);
+		}
+		return $success;
 	} // fn create
 
 
@@ -90,31 +95,36 @@ class Issue extends DatabaseObject {
 	 */
 	public function delete($p_deleteSections = true, $p_deleteArticles = true)
 	{
-	    global $g_ado_db;
+		global $g_ado_db;
 
-	    // Delete all scheduled publishing events
-	    IssuePublish::OnIssueDelete($this->m_data['IdPublication'], $this->m_data['Number'], $this->m_data['IdLanguage']);
+		// Delete all scheduled publishing events
+		IssuePublish::OnIssueDelete($this->m_data['IdPublication'], $this->m_data['Number'], $this->m_data['IdLanguage']);
 
-	    $articlesDeleted = 0;
-	    if ($p_deleteSections) {
-	        $sections = Section::GetSections($this->m_data['IdPublication'], $this->m_data['Number'], $this->m_data['IdLanguage']);
-    		foreach ($sections as $section) {
-		    $articlesDeleted += $section->delete($p_deleteArticles);
-    		}
-	    }
-
-	    $tmpData = $this->m_data;
-	    $success = parent::delete();
-	    if ($success) {
-	        if (function_exists("camp_load_translation_strings")) {
-		    camp_load_translation_strings("api");
+		$articlesDeleted = 0;
+		if ($p_deleteSections) {
+			$sections = Section::GetSections($this->m_data['IdPublication'], $this->m_data['Number'], $this->m_data['IdLanguage']);
+			foreach ($sections as $section) {
+				$articlesDeleted += $section->delete($p_deleteArticles);
+			}
 		}
-	    	$logtext = getGS('Issue "$1" ($2) from publication $3 deleted',
-				 $tmpData['Name'], $tmpData['Number'],
-				 $tmpData['IdPublication']);
-		Log::Message($logtext, null, 12);
-	    }
-	    return $articlesDeleted;
+
+		$tmpData = $this->m_data;
+		$success = parent::delete();
+		if ($success) {
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
+			$logtext = getGS('Issue "$1" ($2) from publication $3 deleted',
+			$tmpData['Name'], $tmpData['Number'],
+			$tmpData['IdPublication']);
+			Log::Message($logtext, null, 12);
+			$outputSettingIssues = $this->getOutputSettingIssueService()->findByIssue($tmpData['id']);
+			foreach($outputSettingIssues as $outputSet){
+				$this->getOutputSettingIssueService()->delete($outputSet);
+			}
+		}
+
+		return $articlesDeleted;
 	} // fn delete
 
 
@@ -127,26 +137,40 @@ class Issue extends DatabaseObject {
 	 */
 	private function __copy($p_destPublicationId, $p_destIssueId, $p_destLanguageId)
 	{
-        // Copy the issue
-        $newIssue = new Issue($p_destPublicationId, $p_destLanguageId, $p_destIssueId);
-        $columns = array();
-        $columns['Name'] = mysql_real_escape_string($this->getName());
-    	$columns['IssueTplId'] = $this->m_data['IssueTplId'];
-    	$columns['SectionTplId'] = $this->m_data['SectionTplId'];
-    	$columns['ArticleTplId'] = $this->m_data['ArticleTplId'];
-        $created = $newIssue->create($p_destIssueId, $columns);
-        if ($created) {
-	    // Copy the sections in the issue
-            $sections = Section::GetSections($this->m_data['IdPublication'],
-                							 $this->m_data['Number'],
-                							 $this->m_data['IdLanguage']);
-            foreach ($sections as $section) {
-                $section->copy($p_destPublicationId, $p_destIssueId, $p_destLanguageId, null, false);
-            }
-            return $newIssue;
-        } else {
-            return null;
-        }
+		global $g_ado_db;
+		// Copy the issue
+		$newIssue = new Issue($p_destPublicationId, $p_destLanguageId, $p_destIssueId);
+		$columns = array();
+		$columns['Name'] = mysql_real_escape_string($this->getName());
+		$columns['IssueTplId'] = $this->m_data['IssueTplId'];
+		$columns['SectionTplId'] = $this->m_data['SectionTplId'];
+		$columns['ArticleTplId'] = $this->m_data['ArticleTplId'];
+		$created = $newIssue->create($p_destIssueId, $columns);
+		if ($created) {
+			// Copy the sections in the issue
+			$sections = Section::GetSections($this->m_data['IdPublication'],
+			$this->m_data['Number'],
+			$this->m_data['IdLanguage']);
+			
+			$queryStr = "SELECT id FROM Issues WHERE IdPublication=$p_destPublicationId AND Number=$p_destIssueId AND IdLanguage=$p_destLanguageId";
+			$issueId = $g_ado_db->GetOne($queryStr);
+			
+			$issue = $this->getIssueService()->findById($issueId);
+			$outputSettings = $this->getOutputSettingIssueService()->findByIssue($this->getIssueId());
+			foreach ($outputSettings as $outSet){
+				$newOutSet = new OutputSettingsIssue();
+				$outSet->copyTo($newOutSet);
+				$newOutSet->setIssue($issue);
+				$this->getOutputSettingIssueService()->insert($newOutSet);
+			}
+			
+			foreach ($sections as $section) {
+				$section->copy($p_destPublicationId, $p_destIssueId, $p_destLanguageId, null, false);
+			}
+			return $newIssue;
+		} else {
+			return null;
+		}
 	} // fn __copy
 
 
@@ -173,33 +197,41 @@ class Issue extends DatabaseObject {
 	 *		An array of Issues, a single Issue, or null on error.
 	 */
 	public function copy($p_destPublicationId = null, $p_destIssueId = null,
-	                     $p_destLanguageId = null)
+	$p_destLanguageId = null)
 	{
-	    global $g_ado_db;
-	    if (is_null($p_destPublicationId)) {
-	        $p_destPublicationId = $this->m_data['IdPublication'];
-	    }
-	    if (is_null($p_destIssueId)) {
-	        $p_destIssueId = Issue::GetUnusedIssueId($this->m_data['IdPublication']);
-	    }
-	    if (is_null($p_destLanguageId)) {
-            $queryStr = 'SELECT * FROM Issues '
-                        .' WHERE IdPublication='.$this->m_data['IdPublication']
-                        .' AND Number='.$this->m_data['Number'];
-            $srcIssues = DbObjectArray::Create('Issue', $queryStr);
+		global $g_ado_db;
+		if (is_null($p_destPublicationId)) {
+			$p_destPublicationId = $this->m_data['IdPublication'];
+		}
+		if (is_null($p_destIssueId)) {
+			$p_destIssueId = Issue::GetUnusedIssueId($this->m_data['IdPublication']);
+		}
+		if (is_null($p_destLanguageId)) {
+			$queryStr = 'SELECT * FROM Issues '
+			.' WHERE IdPublication='.$this->m_data['IdPublication']
+			.' AND Number='.$this->m_data['Number'];
+			$srcIssues = DbObjectArray::Create('Issue', $queryStr);
 
-            // Copy all translations of this issue.
-            $newIssues = array();
-            foreach ($srcIssues as $issue) {
-                $newIssues[] = $issue->__copy($p_destPublicationId, $p_destIssueId, $issue->getLanguageId());
-            }
-            return $newIssues;
-	    } else {
-	        // Translate the issue.
-	        return $this->__copy($p_destPublicationId, $p_destIssueId, $p_destLanguageId);
-	    }
+			// Copy all translations of this issue.
+			$newIssues = array();
+			foreach ($srcIssues as $issue) {
+				$newIssues[] = $issue->__copy($p_destPublicationId, $p_destIssueId, $issue->getLanguageId());
+			}
+			return $newIssues;
+		} else {
+			// Translate the issue.
+			return $this->__copy($p_destPublicationId, $p_destIssueId, $p_destLanguageId);
+		}
 	} // fn copy
 
+	/**
+	 * Return the issue ID.
+	 * @return int
+	 */
+	public function getIssueId()
+	{
+		return $this->m_data['id'];
+	} // fn getId
 
 	/**
 	 * Return the publication ID of the publication that contains this issue.
@@ -230,9 +262,9 @@ class Issue extends DatabaseObject {
 	{
 		global $g_ado_db;
 		$sql = "UPDATE Sections SET IdLanguage=$p_value"
-			  ." WHERE IdPublication=".$this->m_data['IdPublication']
-			  ." AND NrIssue=".$this->m_data['Number']
-			  ." AND IdLanguage=".$this->m_data['IdLanguage'];
+		." WHERE IdPublication=".$this->m_data['IdPublication']
+		." AND NrIssue=".$this->m_data['Number']
+		." AND IdLanguage=".$this->m_data['IdLanguage'];
 		$success = $g_ado_db->Execute($sql);
 		if ($success) {
 			$this->setProperty('IdLanguage', $p_value);
@@ -283,7 +315,7 @@ class Issue extends DatabaseObject {
 	 */
 	public function setName($p_value)
 	{
-	    return $this->setProperty('Name', $p_value);
+		return $this->setProperty('Name', $p_value);
 	} // fn setName
 
 
@@ -304,7 +336,7 @@ class Issue extends DatabaseObject {
 	 */
 	public function setUrlName($p_value)
 	{
-	    return $this->setProperty('ShortName', $p_value);
+		return $this->setProperty('ShortName', $p_value);
 	} // fn setUrlName
 
 
@@ -377,11 +409,11 @@ class Issue extends DatabaseObject {
 	} // fn setIssueTemplateId
 
 
-    /**
-     * Returns true if the issue was published
-     *
-     * @return boolean
-     */
+	/**
+	 * Returns true if the issue was published
+	 *
+	 * @return boolean
+	 */
 	public function isPublished() {
 		return $this->m_data['Published'] == 'Y';
 	}
@@ -438,17 +470,17 @@ class Issue extends DatabaseObject {
 			}
 
 			// Log message
-            if (function_exists("camp_load_translation_strings")) {
-                camp_load_translation_strings("api");
-            }
+			if (function_exists("camp_load_translation_strings")) {
+				camp_load_translation_strings("api");
+			}
 			if ($this->getWorkflowStatus() == 'Y') {
 				$status = getGS('Published');
 			} else {
 				$status = getGS('Not published');
 			}
 			$logtext = getGS('Issue $1 changed status to $2',
-					 $this->m_data['Number'].'. '.$this->m_data['Name'].' ('.$this->getLanguageName().')',
-					 $status);
+			$this->m_data['Number'].'. '.$this->m_data['Name'].' ('.$this->getLanguageName().')',
+			$status);
 			Log::Message($logtext, null, 14);
 		}
 	} // fn setWorkflowStatus
@@ -488,12 +520,12 @@ class Issue extends DatabaseObject {
 	 * @param boolean $p_excludeCurrent
 	 *      If true, exclude the current language from the list.
 	 * @param array $p_order
-     *      The array of order directives in the format:
-     *      array('field'=>field_name, 'dir'=>order_direction)
-     *      field_name can take one of the following values:
-     *        bynumber, byname, byenglish_name, bycode
-     *      order_direction can take one of the following values:
-     *        asc, desc
+	 *      The array of order directives in the format:
+	 *      array('field'=>field_name, 'dir'=>order_direction)
+	 *      field_name can take one of the following values:
+	 *        bynumber, byname, byenglish_name, bycode
+	 *      order_direction can take one of the following values:
+	 *        asc, desc
 	 * @param boolean $p_allIssues
 	 *      If true return all the languages in which all issues of the
 	 *      publication were translated.
@@ -508,44 +540,96 @@ class Issue extends DatabaseObject {
 		$columnNames = $tmpLanguage->getColumnNames(true);
 		if ($p_getUnusedLanguagesOnly) {
 			$queryStr = "SELECT ".implode(',', $columnNames)
-						." FROM Languages LEFT JOIN Issues "
-						." ON Issues.IdPublication = ".$this->m_data['IdPublication'];
-            if (!$p_allIssues) {
-                $queryStr .= " AND Issues.Number = ".$this->m_data['Number'];
-            }
-            if ($p_published) {
-                $queryStr .= " AND Issues.Published = 'Y'";
-            }
-            $queryStr .= " AND Issues.IdLanguage = Languages.Id "
-                      ." WHERE Issues.IdPublication IS NULL";
+			." FROM Languages LEFT JOIN Issues "
+			." ON Issues.IdPublication = ".$this->m_data['IdPublication'];
+			if (!$p_allIssues) {
+				$queryStr .= " AND Issues.Number = ".$this->m_data['Number'];
+			}
+			if ($p_published) {
+				$queryStr .= " AND Issues.Published = 'Y'";
+			}
+			$queryStr .= " AND Issues.IdLanguage = Languages.Id "
+			." WHERE Issues.IdPublication IS NULL";
 		} else {
 			$queryStr = "SELECT ".implode(',', $columnNames)
-						." FROM Languages, Issues "
-						." WHERE Issues.IdPublication = ".$this->m_data['IdPublication'];
-            if (!$p_allIssues) {
-                $queryStr .= " AND Issues.Number = ".$this->m_data['Number'];
-            }
-            $queryStr .= " AND Issues.IdLanguage = Languages.Id ";
-            if ($p_excludeCurrent) {
-                $queryStr .= " AND Languages.Id != " . $this->m_data['IdLanguage'];
-            }
-            if ($p_published) {
-                $queryStr .= " AND Issues.Published = 'Y'";
-            }
+			." FROM Languages, Issues "
+			." WHERE Issues.IdPublication = ".$this->m_data['IdPublication'];
+			if (!$p_allIssues) {
+				$queryStr .= " AND Issues.Number = ".$this->m_data['Number'];
+			}
+			$queryStr .= " AND Issues.IdLanguage = Languages.Id ";
+			if ($p_excludeCurrent) {
+				$queryStr .= " AND Languages.Id != " . $this->m_data['IdLanguage'];
+			}
+			if ($p_published) {
+				$queryStr .= " AND Issues.Published = 'Y'";
+			}
 		}
 		list($languagesKey) = $tmpLanguage->getKeyColumnNames();
 		$queryStr .= " GROUP BY $languagesKey";
-        $order = Issue::ProcessLanguageListOrder($p_order);
+		$order = Issue::ProcessLanguageListOrder($p_order);
 		foreach ($order as $orderDesc) {
-            $sqlOrder[] = $orderDesc['field'] . ' ' . $orderDesc['dir'];
-        }
-        if (count($sqlOrder) > 0) {
-            $queryStr .= ' ORDER BY ' . implode(', ', $sqlOrder);
-        }
+			$sqlOrder[] = $orderDesc['field'] . ' ' . $orderDesc['dir'];
+		}
+		if (count($sqlOrder) > 0) {
+			$queryStr .= ' ORDER BY ' . implode(', ', $sqlOrder);
+		}
 		$languages = DbObjectArray::Create('Language', $queryStr);
 		return $languages;
 	} // fn getLanguages
 
+	/* --------------------------------------------------------------- */
+
+	/** @var Newscoop\Services\Resource\ResourceId */
+	private $resourceId = null;
+	/** @var Newscoop\Service\IOutputSettingIssueService */
+	private $outputSettingIssueService = null;
+	/** @var Newscoop\Service\IIssueService */
+    private $issueService = NULL;
+    
+	/**
+	 * Provides the controller resource id.
+	 *
+	 * @return Newscoop\Services\Resource\ResourceId
+	 * 		The controller resource id.
+	 */
+	protected function getResourceId()
+	{
+		if ($this->resourceId === NULL) {
+			$this->resourceId = new ResourceId(__CLASS__);
+		}
+		return $this->resourceId;
+	}
+
+	/**
+	 * Provides the Output setting issue service.
+	 *
+	 * @return Newscoop\Service\IOutputSettingIssueService
+	 * 		The output setting issue service to be used by this controller.
+	 */
+	protected function getOutputSettingIssueService()
+	{
+		if ($this->outputSettingIssueService === NULL) {
+			$this->outputSettingIssueService = $this->getResourceId()->getService(IOutputSettingIssueService::NAME);
+		}
+		return $this->outputSettingIssueService;
+	}
+	
+	/**
+     * Provides the Issue service.
+     *
+     * @return Newscoop\Service\IIssueService
+     * 		The issue service to be used by this controller.
+     */
+    protected function getIssueService()
+    {
+        if ($this->issueService === NULL) {
+            $this->issueService = $this->getResourceId()->getService(IIssueService::NAME);
+        }
+        return $this->issueService;
+    }
+
+	/* --------------------------------------------------------------- */
 
 	/**
 	 * Get all the issues in the given publication as return them as an array
@@ -572,78 +656,78 @@ class Issue extends DatabaseObject {
 	 * @return array
 	 */
 	public static function GetIssues($p_publicationId = null,
-	                                 $p_languageId = null,
-	                                 $p_issueNumber = null,
-	                                 $p_urlName = null,
-	                                 $p_preferredLanguage = null,
-	                                 $p_publishedOnly = false,
-	                                 $p_sqlOptions = null, $p_skipCache = false)
+	$p_languageId = null,
+	$p_issueNumber = null,
+	$p_urlName = null,
+	$p_preferredLanguage = null,
+	$p_publishedOnly = false,
+	$p_sqlOptions = null, $p_skipCache = false)
 	{
-	    global $g_ado_db;
+		global $g_ado_db;
 
-	    if (!$p_skipCache && CampCache::IsEnabled()) {
-	    	$paramsArray['publication_id'] = (is_null($p_publicationId)) ? 'null' : $p_publicationId;
-	    	$paramsArray['language_id'] = (is_null($p_languageId)) ? 'null' : $p_languageId;
-	    	$paramsArray['issue_number'] = (is_null($p_issueNumber)) ? 'null' : $p_issueNumber;
-	    	$paramsArray['url_name'] = (is_null($p_urlName)) ? 'null' : $p_urlName;
-	    	$paramsArray['preferred_language'] = (is_null($p_preferredLanguage)) ? 'null' : $p_preferredLanguage;
-	    	$paramsArray['published_only'] = $p_publishedOnly ? 'true' : 'false';
-	    	$paramsArray['sql_options'] = (is_null($p_sqlOptions)) ? 'null' : $p_sqlOptions;
-	    	$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
-	    	$issuesList = $cacheListObj->fetchFromCache();
-	    	if ($issuesList !== false && is_array($issuesList)) {
-	    		return $issuesList;
-	    	}
-	    }
+		if (!$p_skipCache && CampCache::IsEnabled()) {
+			$paramsArray['publication_id'] = (is_null($p_publicationId)) ? 'null' : $p_publicationId;
+			$paramsArray['language_id'] = (is_null($p_languageId)) ? 'null' : $p_languageId;
+			$paramsArray['issue_number'] = (is_null($p_issueNumber)) ? 'null' : $p_issueNumber;
+			$paramsArray['url_name'] = (is_null($p_urlName)) ? 'null' : $p_urlName;
+			$paramsArray['preferred_language'] = (is_null($p_preferredLanguage)) ? 'null' : $p_preferredLanguage;
+			$paramsArray['published_only'] = $p_publishedOnly ? 'true' : 'false';
+			$paramsArray['sql_options'] = (is_null($p_sqlOptions)) ? 'null' : $p_sqlOptions;
+			$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
+			$issuesList = $cacheListObj->fetchFromCache();
+			if ($issuesList !== false && is_array($issuesList)) {
+				return $issuesList;
+			}
+		}
 
-	    $tmpIssue = new Issue();
-	    $columnNames = $tmpIssue->getColumnNames(true);
-	    $queryStr = 'SELECT '.implode(',', $columnNames);
-	    if (!is_null($p_preferredLanguage)) {
-	        $queryStr .= ", abs(IdLanguage-$p_preferredLanguage) as LanguageOrder";
-		$p_sqlOptions['ORDER BY'] = array('Number' => 'DESC', 'LanguageOrder' => 'ASC');
-	    }
-	    // We have to display the language name so oftern that we might
-	    // as well fetch it by default.
-	    $queryStr .= ', Languages.OrigName as LanguageName';
-	    $queryStr .= ' FROM Issues, Languages ';
-	    $whereClause = array();
-	    $whereClause[] = "Issues.IdLanguage=Languages.Id";
-	    if (!is_null($p_publicationId)) {
-	        $whereClause[] = "Issues.IdPublication=$p_publicationId";
-	    }
-	    if (!is_null($p_languageId)) {
-	        $whereClause[] = "Issues.IdLanguage=$p_languageId";
-	    }
-	    if (!is_null($p_issueNumber)) {
-	        $whereClause[] = "Issues.Number=$p_issueNumber";
-	    }
-	    if (!is_null($p_urlName)) {
-	        $whereClause[] = "Issues.ShortName='".$g_ado_db->escape($p_urlName)."'";
-	    }
-	    if ($p_publishedOnly) {
-	    	$whereClause[] = "Issues.Published = 'Y'";
-	    }
-	    if (count($whereClause) > 0) {
-	        $queryStr .= ' WHERE '.implode(' AND ', $whereClause);
-	    }
+		$tmpIssue = new Issue();
+		$columnNames = $tmpIssue->getColumnNames(true);
+		$queryStr = 'SELECT '.implode(',', $columnNames);
+		if (!is_null($p_preferredLanguage)) {
+			$queryStr .= ", abs(IdLanguage-$p_preferredLanguage) as LanguageOrder";
+			$p_sqlOptions['ORDER BY'] = array('Number' => 'DESC', 'LanguageOrder' => 'ASC');
+		}
+		// We have to display the language name so oftern that we might
+		// as well fetch it by default.
+		$queryStr .= ', Languages.OrigName as LanguageName';
+		$queryStr .= ' FROM Issues, Languages ';
+		$whereClause = array();
+		$whereClause[] = "Issues.IdLanguage=Languages.Id";
+		if (!is_null($p_publicationId)) {
+			$whereClause[] = "Issues.IdPublication=$p_publicationId";
+		}
+		if (!is_null($p_languageId)) {
+			$whereClause[] = "Issues.IdLanguage=$p_languageId";
+		}
+		if (!is_null($p_issueNumber)) {
+			$whereClause[] = "Issues.Number=$p_issueNumber";
+		}
+		if (!is_null($p_urlName)) {
+			$whereClause[] = "Issues.ShortName='".$g_ado_db->escape($p_urlName)."'";
+		}
+		if ($p_publishedOnly) {
+			$whereClause[] = "Issues.Published = 'Y'";
+		}
+		if (count($whereClause) > 0) {
+			$queryStr .= ' WHERE '.implode(' AND ', $whereClause);
+		}
 
-	    $queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
-	    $issues = array();
-	    $rows = $g_ado_db->GetAll($queryStr);
-	    if (is_array($rows)) {
-	    	foreach ($rows as $row) {
-	    		$tmpObj = new Issue();
-	    		$tmpObj->fetch($row);
-	    		$tmpObj->m_languageName = $row['LanguageName'];
-	    		$issues[] = $tmpObj;
-	    	}
-	    }
-	    if (!$p_skipCache && CampCache::IsEnabled()) {
-	        $cacheListObj->storeInCache($issues);
-	    }
+		$queryStr = DatabaseObject::ProcessOptions($queryStr, $p_sqlOptions);
+		$issues = array();
+		$rows = $g_ado_db->GetAll($queryStr);
+		if (is_array($rows)) {
+			foreach ($rows as $row) {
+				$tmpObj = new Issue();
+				$tmpObj->fetch($row);
+				$tmpObj->m_languageName = $row['LanguageName'];
+				$issues[] = $tmpObj;
+			}
+		}
+		if (!$p_skipCache && CampCache::IsEnabled()) {
+			$cacheListObj->storeInCache($issues);
+		}
 
-	    return $issues;
+		return $issues;
 	} // fn GetIssues
 
 
@@ -676,7 +760,7 @@ class Issue extends DatabaseObject {
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT MAX(Number) + 1 FROM Issues "
-		            ." WHERE IdPublication=$p_publicationId";
+		." WHERE IdPublication=$p_publicationId";
 		$number = $g_ado_db->GetOne($queryStr);
 		return $number;
 	} // fn GetUnusedIssueId
@@ -695,28 +779,28 @@ class Issue extends DatabaseObject {
 		global $g_ado_db;
 
 		if (CampCache::IsEnabled()) {
-		    $paramString = $p_publicationId . '_';
-		    $paramString.= (is_null($p_languageId)) ? 'null_' : $p_languageId . '_';
-		    $cacheKey = __CLASS__ . '_CurrentIssue_' . $paramString;
-		    $issue = CampCache::singleton()->fetch($cacheKey);
-		    if ($issue !== false && is_object($issue)) {
-		        return $issue;
-		    }
+			$paramString = $p_publicationId . '_';
+			$paramString.= (is_null($p_languageId)) ? 'null_' : $p_languageId . '_';
+			$cacheKey = __CLASS__ . '_CurrentIssue_' . $paramString;
+			$issue = CampCache::singleton()->fetch($cacheKey);
+			if ($issue !== false && is_object($issue)) {
+				return $issue;
+			}
 		}
 
 		$queryStr = "SELECT Number, IdLanguage FROM Issues WHERE Published = 'Y' AND "
-		    . "IdPublication = $p_publicationId";
+		. "IdPublication = $p_publicationId";
 		if (!is_null($p_languageId)) {
-		    $queryStr .= " AND IdLanguage = $p_languageId";
+			$queryStr .= " AND IdLanguage = $p_languageId";
 		}
 		$queryStr .= " ORDER BY Number DESC LIMIT 0, 1";
 		$result = $g_ado_db->GetRow($queryStr);
 		if (is_null($result)) {
-		    return null;
+			return null;
 		}
 		$issue = new Issue($p_publicationId, $result['IdLanguage'], $result['Number']);
 		if (CampCache::IsEnabled()) {
-		    CampCache::singleton()->store($cacheKey, $issue);
+			CampCache::singleton()->store($cacheKey, $issue);
 		}
 
 		return $issue;
@@ -736,7 +820,7 @@ class Issue extends DatabaseObject {
 		$queryStr = "SELECT MAX(Number) FROM Issues WHERE IdPublication=$p_publicationId";
 		$maxIssueNumber = $g_ado_db->GetOne($queryStr);
 		if (empty($maxIssueNumber)) {
-			 return null;
+			return null;
 		}
 		$queryStr = "SELECT IdLanguage FROM Issues WHERE IdPublication=$p_publicationId AND Number=$maxIssueNumber";
 		$idLanguage = $g_ado_db->GetOne($queryStr);
@@ -758,311 +842,311 @@ class Issue extends DatabaseObject {
 	 *      null if query does not match any issue
 	 */
 	public static function GetPublicationDates($p_publicationId,
-						   $p_languageId,
-						   $p_skipCache = false)
+	$p_languageId,
+	$p_skipCache = false)
 	{
-	    global $g_ado_db;
-	    $queryStr = 'SELECT Number FROM Issues '
-	        . 'WHERE IdPublication = ' . $p_publicationId . ' AND '
-	        . 'IdLanguage = ' . $p_languageId . " AND Published = 'Y'";
-	    $rows = $g_ado_db->GetAll($queryStr);
+		global $g_ado_db;
+		$queryStr = 'SELECT Number FROM Issues '
+		. 'WHERE IdPublication = ' . $p_publicationId . ' AND '
+		. 'IdLanguage = ' . $p_languageId . " AND Published = 'Y'";
+		$rows = $g_ado_db->GetAll($queryStr);
 
-	    $dates = array();
-	    if (is_array($rows)) {
-	    	foreach ($rows as $row) {
-		    $tmpObj = new Issue($p_publicationId, $p_languageId,
-					$row['Number']);
-		    if ($tmpObj->exists()) {
-		        $dates[] = $tmpObj->getPublicationDate();
-		    }
-	    	}
-	    }
-	    if (empty($dates)) {
-	        return null;
-	    }
+		$dates = array();
+		if (is_array($rows)) {
+			foreach ($rows as $row) {
+				$tmpObj = new Issue($p_publicationId, $p_languageId,
+				$row['Number']);
+				if ($tmpObj->exists()) {
+					$dates[] = $tmpObj->getPublicationDate();
+				}
+			}
+		}
+		if (empty($dates)) {
+			return null;
+		}
 
-	    return array_unique($dates);
+		return array_unique($dates);
 	} // fn GetPublicationDates
 
 
-    /**
-     * Gets an issues list based on the given parameters.
-     *
-     * @param array $p_parameters
-     *    An array of ComparisonOperation objects
-     * @param string $p_order
-     *    An array of columns and directions to order by
-     * @param integer $p_start
-     *    The record number to start the list
-     * @param integer $p_limit
-     *    The offset. How many records from $p_start will be retrieved.
-     * @param integer $p_count
-     *    The total count of the elements; this count is computed without
-     *    applying the start ($p_start) and limit parameters ($p_limit)
-     *
-     * @return array $issuesList
-     *    An array of Issue objects
-     */
-    public static function GetList(array $p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
-    {
-        global $g_ado_db;
+	/**
+	 * Gets an issues list based on the given parameters.
+	 *
+	 * @param array $p_parameters
+	 *    An array of ComparisonOperation objects
+	 * @param string $p_order
+	 *    An array of columns and directions to order by
+	 * @param integer $p_start
+	 *    The record number to start the list
+	 * @param integer $p_limit
+	 *    The offset. How many records from $p_start will be retrieved.
+	 * @param integer $p_count
+	 *    The total count of the elements; this count is computed without
+	 *    applying the start ($p_start) and limit parameters ($p_limit)
+	 *
+	 * @return array $issuesList
+	 *    An array of Issue objects
+	 */
+	public static function GetList(array $p_parameters, $p_order = null,
+	$p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
+	{
+		global $g_ado_db;
 
-        if (!$p_skipCache && CampCache::IsEnabled()) {
-        	$paramsArray['parameters'] = serialize($p_parameters);
-        	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
-        	$paramsArray['start'] = $p_start;
-        	$paramsArray['limit'] = $p_limit;
-        	$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
-        	$issuesList = $cacheListObj->fetchFromCache();
-        	if ($issuesList !== false && is_array($issuesList)) {
-        		return $issuesList;
-        	}
-        }
+		if (!$p_skipCache && CampCache::IsEnabled()) {
+			$paramsArray['parameters'] = serialize($p_parameters);
+			$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+			$paramsArray['start'] = $p_start;
+			$paramsArray['limit'] = $p_limit;
+			$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
+			$issuesList = $cacheListObj->fetchFromCache();
+			if ($issuesList !== false && is_array($issuesList)) {
+				return $issuesList;
+			}
+		}
 
-        $hasPublicationId = false;
-        $selectClauseObj = new SQLSelectClause();
-        $countClauseObj = new SQLSelectClause();
+		$hasPublicationId = false;
+		$selectClauseObj = new SQLSelectClause();
+		$countClauseObj = new SQLSelectClause();
 
-        // sets the where conditions
-        foreach ($p_parameters as $param) {
-            $comparisonOperation = self::ProcessListParameters($param);
-            if (empty($comparisonOperation)) {
-                break;
-            }
-            if (strpos($comparisonOperation['left'], 'IdPublication') !== false) {
-                $hasPublicationId = true;
-            }
+		// sets the where conditions
+		foreach ($p_parameters as $param) {
+			$comparisonOperation = self::ProcessListParameters($param);
+			if (empty($comparisonOperation)) {
+				break;
+			}
+			if (strpos($comparisonOperation['left'], 'IdPublication') !== false) {
+				$hasPublicationId = true;
+			}
 
-            $whereCondition = $comparisonOperation['left'] . ' '
-                . $comparisonOperation['symbol'] . " '"
-                . $g_ado_db->escape($comparisonOperation['right']) . "' ";
-            $selectClauseObj->addWhere($whereCondition);
-            $countClauseObj->addWhere($whereCondition);
-        }
+			$whereCondition = $comparisonOperation['left'] . ' '
+			. $comparisonOperation['symbol'] . " '"
+			. $g_ado_db->escape($comparisonOperation['right']) . "' ";
+			$selectClauseObj->addWhere($whereCondition);
+			$countClauseObj->addWhere($whereCondition);
+		}
 
-        // validates whether publication identifier was given
-        if ($hasPublicationId == false) {
-            CampTemplate::singleton()->trigger_error('missed parameter Publication '
-                .'Identifier in statement list_topics');
-            return;
-        }
+		// validates whether publication identifier was given
+		if ($hasPublicationId == false) {
+			CampTemplate::singleton()->trigger_error('missed parameter Publication '
+			.'Identifier in statement list_topics');
+			return;
+		}
 
-        // sets the columns to be fetched
-        $tmpIssue = new Issue();
+		// sets the columns to be fetched
+		$tmpIssue = new Issue();
 		$columnNames = $tmpIssue->getColumnNames(true);
-        foreach ($columnNames as $columnName) {
-            $selectClauseObj->addColumn($columnName);
-        }
-        $countClauseObj->addColumn('COUNT(*)');
+		foreach ($columnNames as $columnName) {
+			$selectClauseObj->addColumn($columnName);
+		}
+		$countClauseObj->addColumn('COUNT(*)');
 
-        // sets the main table for the query
-        $selectClauseObj->setTable($tmpIssue->getDbTableName());
-        $countClauseObj->setTable($tmpIssue->getDbTableName());
-        unset($tmpIssue);
+		// sets the main table for the query
+		$selectClauseObj->setTable($tmpIssue->getDbTableName());
+		$countClauseObj->setTable($tmpIssue->getDbTableName());
+		unset($tmpIssue);
 
-        if (is_array($p_order)) {
-            $order = Issue::ProcessListOrder($p_order);
-            // sets the order condition if any
-            foreach ($order as $orderDesc) {
-                $orderField = $orderDesc['field'];
-                $orderDirection = $orderDesc['dir'];
-                $selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
-            }
-        }
+		if (is_array($p_order)) {
+			$order = Issue::ProcessListOrder($p_order);
+			// sets the order condition if any
+			foreach ($order as $orderDesc) {
+				$orderField = $orderDesc['field'];
+				$orderDirection = $orderDesc['dir'];
+				$selectClauseObj->addOrderBy($orderField . ' ' . $orderDirection);
+			}
+		}
 
-        $selectClauseObj->addGroupField('Number');
-        $selectClauseObj->addGroupField('IdLanguage');
+		$selectClauseObj->addGroupField('Number');
+		$selectClauseObj->addGroupField('IdLanguage');
 
-        // sets the limit
-        $selectClauseObj->setLimit($p_start, $p_limit);
+		// sets the limit
+		$selectClauseObj->setLimit($p_start, $p_limit);
 
-        // builds the query and executes it
-        $selectQuery = $selectClauseObj->buildQuery();
-        $countQuery = $countClauseObj->buildQuery();
-        $issues = $g_ado_db->GetAll($selectQuery);
-        if (is_array($issues)) {
-        	$p_count = $g_ado_db->GetOne($countQuery);
+		// builds the query and executes it
+		$selectQuery = $selectClauseObj->buildQuery();
+		$countQuery = $countClauseObj->buildQuery();
+		$issues = $g_ado_db->GetAll($selectQuery);
+		if (is_array($issues)) {
+			$p_count = $g_ado_db->GetOne($countQuery);
 
-        	// builds the array of issue objects
-        	$issuesList = array();
-        	foreach ($issues as $issue) {
-        		$issObj = new Issue($issue['IdPublication'],
-        		$issue['IdLanguage'],
-        		$issue['Number']);
-        		if ($issObj->exists()) {
-        			$issuesList[] = $issObj;
-        		}
-        	}
-        } else {
-        	$issuesList = array();
-        	$p_count = 0;
-        }
-        if (!$p_skipCache && CampCache::IsEnabled()) {
-        	$cacheListObj->storeInCache($issuesList);
-        }
+			// builds the array of issue objects
+			$issuesList = array();
+			foreach ($issues as $issue) {
+				$issObj = new Issue($issue['IdPublication'],
+				$issue['IdLanguage'],
+				$issue['Number']);
+				if ($issObj->exists()) {
+					$issuesList[] = $issObj;
+				}
+			}
+		} else {
+			$issuesList = array();
+			$p_count = 0;
+		}
+		if (!$p_skipCache && CampCache::IsEnabled()) {
+			$cacheListObj->storeInCache($issuesList);
+		}
 
-        return $issuesList;
-    } // fn GetList
-
-
-    /**
-     * Processes a paremeter (condition) coming from template tags.
-     *
-     * @param array $p_param
-     *      The array of parameters
-     *
-     * @return array $comparisonOperation
-     *      The array containing processed values of the condition
-     */
-    private static function ProcessListParameters($p_param)
-    {
-        $comparisonOperation = array();
-
-        switch (strtolower($p_param->getLeftOperand())) {
-        case 'year':
-        case 'publish_year':
-            $comparisonOperation['left'] = 'YEAR(PublicationDate)';
-            break;
-        case 'mon_nr':
-        case 'publish_month':
-            $comparisonOperation['left'] = 'MONTH(PublicationDate)';
-            break;
-        case 'mday':
-        case 'publish_mday':
-            $comparisonOperation['left'] = 'DAYOFMONTH(PublicationDate)';
-            break;
-        case 'yday':
-            $comparisonOperation['left'] = 'DAYOFYEAR(PublicationDate)';
-            break;
-        case 'wday':
-            $comparisonOperation['left'] = 'DAYOFWEEK(PublicationDate)';
-            break;
-        case 'hour':
-            $comparisonOperation['left'] = 'HOUR(PublicationDate)';
-            break;
-        case 'min':
-            $comparisonOperation['left'] = 'MINUTE(PublicationDate)';
-            break;
-        case 'sec':
-            $comparisonOperation['left'] = 'SECOND(PublicationDate)';
-            break;
-        case 'name':
-            $comparisonOperation['left'] = 'Name';
-            break;
-        case 'number':
-            $comparisonOperation['left'] = 'Number';
-            break;
-        case 'publish_date':
-        case 'publicationdate':
-            $comparisonOperation['left'] = 'DATE(PublicationDate)';
-            break;
-        case 'idpublication':
-            $comparisonOperation['left'] = 'IdPublication';
-            break;
-        case 'idlanguage':
-            $comparisonOperation['left'] = 'IdLanguage';
-            break;
-        case 'published':
-            if (strtolower($p_param->getRightOperand()) == 'true') {
-                $comparisonOperation['left'] = 'Published';
-                $comparisonOperation['symbol'] = '=';
-                $comparisonOperation['right'] =  'Y';
-                return $comparisonOperation;
-            }
-            break;
-        }
-
-        if (isset($comparisonOperation['left'])) {
-            $operatorObj = $p_param->getOperator();
-            $comparisonOperation['right'] = $p_param->getRightOperand();
-            $comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
-        }
-
-        return $comparisonOperation;
-    } // fn ProcessListParameters
+		return $issuesList;
+	} // fn GetList
 
 
-    /**
-     * Processes an order directive coming from template tags.
-     *
-     * @param array $p_order
-     *      The array of order directives
-     *
-     * @return array
-     *      The array containing processed values of the condition
-     */
-    private static function ProcessListOrder(array $p_order)
-    {
-        $order = array();
-        foreach ($p_order as $orderDesc) {
-            $field = $orderDesc['field'];
-            $direction = $orderDesc['dir'];
-            $dbField = null;
-            switch (strtolower($field)) {
-                case 'bynumber':
-                    $dbField = 'Number';
-                    break;
-                case 'byname':
-                    $dbField = 'Name';
-                    break;
-                case 'bydate':
-                case 'bycreationdate':
-                case 'bypublishdate':
-                    $dbField = 'PublicationDate';
-                    break;
-            }
-            if (!is_null($dbField)) {
-                $direction = !empty($direction) ? $direction : 'asc';
-            }
-            $order[] = array('field'=>$dbField, 'dir'=>$direction);
-        }
-        return $order;
-    }
+	/**
+	 * Processes a paremeter (condition) coming from template tags.
+	 *
+	 * @param array $p_param
+	 *      The array of parameters
+	 *
+	 * @return array $comparisonOperation
+	 *      The array containing processed values of the condition
+	 */
+	private static function ProcessListParameters($p_param)
+	{
+		$comparisonOperation = array();
+
+		switch (strtolower($p_param->getLeftOperand())) {
+			case 'year':
+			case 'publish_year':
+				$comparisonOperation['left'] = 'YEAR(PublicationDate)';
+				break;
+			case 'mon_nr':
+			case 'publish_month':
+				$comparisonOperation['left'] = 'MONTH(PublicationDate)';
+				break;
+			case 'mday':
+			case 'publish_mday':
+				$comparisonOperation['left'] = 'DAYOFMONTH(PublicationDate)';
+				break;
+			case 'yday':
+				$comparisonOperation['left'] = 'DAYOFYEAR(PublicationDate)';
+				break;
+			case 'wday':
+				$comparisonOperation['left'] = 'DAYOFWEEK(PublicationDate)';
+				break;
+			case 'hour':
+				$comparisonOperation['left'] = 'HOUR(PublicationDate)';
+				break;
+			case 'min':
+				$comparisonOperation['left'] = 'MINUTE(PublicationDate)';
+				break;
+			case 'sec':
+				$comparisonOperation['left'] = 'SECOND(PublicationDate)';
+				break;
+			case 'name':
+				$comparisonOperation['left'] = 'Name';
+				break;
+			case 'number':
+				$comparisonOperation['left'] = 'Number';
+				break;
+			case 'publish_date':
+			case 'publicationdate':
+				$comparisonOperation['left'] = 'DATE(PublicationDate)';
+				break;
+			case 'idpublication':
+				$comparisonOperation['left'] = 'IdPublication';
+				break;
+			case 'idlanguage':
+				$comparisonOperation['left'] = 'IdLanguage';
+				break;
+			case 'published':
+				if (strtolower($p_param->getRightOperand()) == 'true') {
+					$comparisonOperation['left'] = 'Published';
+					$comparisonOperation['symbol'] = '=';
+					$comparisonOperation['right'] =  'Y';
+					return $comparisonOperation;
+				}
+				break;
+		}
+
+		if (isset($comparisonOperation['left'])) {
+			$operatorObj = $p_param->getOperator();
+			$comparisonOperation['right'] = $p_param->getRightOperand();
+			$comparisonOperation['symbol'] = $operatorObj->getSymbol('sql');
+		}
+
+		return $comparisonOperation;
+	} // fn ProcessListParameters
 
 
-    /**
-     * Processes an order directive for the issue translations list.
-     *
-     * @param array $p_order
-     *      The array of order directives in the format:
-     *      array('field'=>field_name, 'dir'=>order_direction)
-     *      field_name can take one of the following values:
-     *        bynumber, byname, byenglish_name, bycode
-     *      order_direction can take one of the following values:
-     *        asc, desc
-     *
-     * @return array
-     *      The array containing processed values of the condition
-     */
-    private static function ProcessLanguageListOrder(array $p_order)
-    {
-        $order = array();
-        foreach ($p_order as $orderDesc) {
-            $field = $orderDesc['field'];
-            $direction = $orderDesc['dir'];
-            $dbField = null;
-            switch (strtolower($field)) {
-                case 'bynumber':
-                    $dbField = 'Languages.Id';
-                    break;
-                case 'byname':
-                    $dbField = 'Languages.OrigName';
-                    break;
-                case 'byenglish_name':
-                    $dbField = 'Languages.Name';
-                    break;
-                case 'bycode':
-                    $dbField = 'Languages.Code';
-                    break;
-            }
-            if (!is_null($dbField)) {
-                $direction = !empty($direction) ? $direction : 'asc';
-            }
-            $order[] = array('field'=>$dbField, 'dir'=>$direction);
-        }
-        return $order;
-    }
+	/**
+	 * Processes an order directive coming from template tags.
+	 *
+	 * @param array $p_order
+	 *      The array of order directives
+	 *
+	 * @return array
+	 *      The array containing processed values of the condition
+	 */
+	private static function ProcessListOrder(array $p_order)
+	{
+		$order = array();
+		foreach ($p_order as $orderDesc) {
+			$field = $orderDesc['field'];
+			$direction = $orderDesc['dir'];
+			$dbField = null;
+			switch (strtolower($field)) {
+				case 'bynumber':
+					$dbField = 'Number';
+					break;
+				case 'byname':
+					$dbField = 'Name';
+					break;
+				case 'bydate':
+				case 'bycreationdate':
+				case 'bypublishdate':
+					$dbField = 'PublicationDate';
+					break;
+			}
+			if (!is_null($dbField)) {
+				$direction = !empty($direction) ? $direction : 'asc';
+			}
+			$order[] = array('field'=>$dbField, 'dir'=>$direction);
+		}
+		return $order;
+	}
+
+
+	/**
+	 * Processes an order directive for the issue translations list.
+	 *
+	 * @param array $p_order
+	 *      The array of order directives in the format:
+	 *      array('field'=>field_name, 'dir'=>order_direction)
+	 *      field_name can take one of the following values:
+	 *        bynumber, byname, byenglish_name, bycode
+	 *      order_direction can take one of the following values:
+	 *        asc, desc
+	 *
+	 * @return array
+	 *      The array containing processed values of the condition
+	 */
+	private static function ProcessLanguageListOrder(array $p_order)
+	{
+		$order = array();
+		foreach ($p_order as $orderDesc) {
+			$field = $orderDesc['field'];
+			$direction = $orderDesc['dir'];
+			$dbField = null;
+			switch (strtolower($field)) {
+				case 'bynumber':
+					$dbField = 'Languages.Id';
+					break;
+				case 'byname':
+					$dbField = 'Languages.OrigName';
+					break;
+				case 'byenglish_name':
+					$dbField = 'Languages.Name';
+					break;
+				case 'bycode':
+					$dbField = 'Languages.Code';
+					break;
+			}
+			if (!is_null($dbField)) {
+				$direction = !empty($direction) ? $direction : 'asc';
+			}
+			$order[] = array('field'=>$dbField, 'dir'=>$direction);
+		}
+		return $order;
+	}
 
 } // class Issue
 

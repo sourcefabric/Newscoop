@@ -1,61 +1,77 @@
 <?php
+
 /**
  * @package Campsite
  */
-
 /**
  * Includes
  */
-require_once($GLOBALS['g_campsiteDir'].'/classes/Template.php');
-require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObject.php');
+require_once($GLOBALS['g_campsiteDir'] . '/classes/Template.php');
+require_once($GLOBALS['g_campsiteDir'] . '/template_engine/metaclasses/MetaDbObject.php');
+
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\ISyncResourceService;
 
 /**
  * @package Campsite
  */
-final class MetaTemplate extends MetaDbObject {
+final class MetaTemplate extends MetaDbObject
+{
+
+    protected $_map = array();
 
     public function __construct($p_templateIdOrName = null)
     {
-        $this->m_dbObject = new Template($p_templateIdOrName);
-        if (!$this->m_dbObject->exists()) {
-            $this->m_dbObject = new Template();
-        }
+        $this->_map = array(
+            "frontPage" => "issue",
+            "errorPage" => "default",
+            "sectionPage" => "section",
+            "issuePage" => "issue",
+            "articlePage" => "article"
+        );
+        $resourceId = new ResourceId('template_engine/metaclasses/MetaTemplate');
+        /* @var $syncResourceService ISyncResourceService */
+        $syncResourceService = $resourceId->getService(ISyncResourceService::NAME);
 
-        $this->m_properties['name'] = 'Name';
-        $this->m_properties['identifier'] = 'Id';
 
-		$this->m_customProperties['type'] = 'getTemplateType';
+        $this->m_dbObject = $syncResourceService->findByPathOrId($p_templateIdOrName);
+
+        $this->m_customProperties['name'] = 'getValue';
+        $this->m_customProperties['identifier'] = 'getId';
+
+        $this->m_customProperties['type'] = 'getTemplateType';
         $this->m_customProperties['defined'] = 'defined';
-    } // fn __construct
-
+    }// fn __construct
 
     protected function getTemplateType()
     {
-    	global $g_ado_db;
+        if (isset($this->_map[$this->m_dbObject->getName()])) {
 
-    	$templateTypeId = $this->m_dbObject->getType();
-    	$query = "SELECT Name FROM TemplateTypes WHERE Id = $templateTypeId";
-    	return $g_ado_db->GetOne($query);
+            return $this->_map[$this->m_dbObject->getName()];
+        }
+        return 'default';
     }
-
 
     protected function getValue()
     {
-        return $this->m_dbObject->getName();
+        return $this->m_dbObject->getPath();
     }
-
 
     public function IsValid($p_value)
     {
-        $template = new Template($p_value);
-        return $template->exists();
+        return true;
     }
 
+    public function getId()
+    {
+        return $this->m_dbObject->getId();
+    }
 
     public static function GetTypeName()
     {
         return 'template';
     }
-} // class MetaTemplate
+
+}// class MetaTemplate
 
 ?>

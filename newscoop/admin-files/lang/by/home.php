@@ -1,4 +1,6 @@
 <?php 
+regGS("Newscoop", "");
+regGS("Campsite", "");
 regGS("Password recovery request for $1", "");
 regGS("Your password has been reset.", "");
 regGS("Proceed to login.", "");
@@ -57,7 +59,6 @@ regGS("Backup list is empty.", "Спіс пусты.");
 regGS("Are you sure you want to restore the file $1?", "Цi Вы ўпэўнены, што жадаеце аднавіць $1?");
 regGS("Are you sure you want to make new backup?", "Цi Вы ўпэўнены, што жадаеце стварыць рэзервную копію?");
 regGS("Are you sure you want to delete the file $1?", "Цi Вы ўпэўнены, што жадаеце выдалiць файл $1?");
-regGS("Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Campsite.", "Ваш браузэр не падтрымлівае Javascript ці мае спеціфічныя налады. Калі ласка, смяніце налады браузэра каб выкарыстовываць сервісы сістэмы Campsite.");
 regGS("Import XML", "Імпарт XML ");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "У вас павінны быць правы карыстальніка для дадавання/змянення выпускаў і артыкулаў для таго, каб вызначыць аўтара для артыкулаў.");
 regGS("Select the field from which to generate the author", "Выберыце поле са спісу для генерацыі поля аўтар");
@@ -71,7 +72,6 @@ regGS("Error setting the author \"$1\" for article no. $2 (\"$3\") of type $4.",
 regGS("Clear system cache", "Ачысьціць сыстэму кэшаваньня");
 regGS("The system was unable to upload the file '$1'. ", "Сыстэма ня можа загрузіць файл '$1'.");
 regGS("Please check the file you are trying to upload, it might be corrupted.", "Калі ласка  праверце, які файл Вы спрабуеце загрузіць. Файл можа быць сапсаваны.");
-regGS("Connection refused", "Злучэньне скінута");
 regGS("An error occured in session management. Please reload the login page.", "Адбылася памылка ў кiраваньнi БД. Калi ласка, перагрузiце старонку.");
 regGS("This file is stored on disk as '$1'.", "Гэты файл захаваны на дыску як '$1'.");
 regGS("The system is unable to write to the directory '$1'.", "Немагчыма запісаць у папку '$1'.");

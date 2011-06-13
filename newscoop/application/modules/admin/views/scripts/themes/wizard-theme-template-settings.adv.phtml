@@ -1,0 +1,21 @@
+<a href="#" class="addNewOutput" style="display:none">Add new output</a>
+<ul class="themeSettingsTabsNav" style="display:none">
+    <?php foreach( $this->outputs as $k => $out ) : ?>
+		<li>
+			<a  theme-id="<?php echo $this->theme->id ?>"
+				output-id="<?php echo $out->getId() ?>"
+				href="#themeSettingsTab<?php echo $k+1 ?>">
+			    <?php echo $out->getName() ?>
+			</a>
+		</li>
+    <?php endforeach; ?>
+</ul>
+<div id="themeSettingsTab" class="ui-tabs-panel ui-widget-content ui-corner-bottom">
+	<fieldset class="templateSettings">
+		<legend>Template settings</legend>
+
+		<!-- load from output-edit action -->
+		<div class="form-container">Loading...</div>
+
+	</fieldset>
+</div>

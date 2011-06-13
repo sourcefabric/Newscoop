@@ -321,7 +321,7 @@ div.olControlSaveFeaturesItemInactive {
 
 .olFramedCloudPopupContent {
     padding: 5px;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .olControlNoSelect {
@@ -377,7 +377,7 @@ div.olControlSaveFeaturesItemInactive {
     padding-left: 10px;
     padding-bottom: 5px;
     padding-right: 75px;
-    background-color: darkblue;
+    background-color: #464646;
     width: 100%;
     height: 100%;
 }

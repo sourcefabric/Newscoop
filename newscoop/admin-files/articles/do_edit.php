@@ -1,6 +1,7 @@
 <?php
+define("STATUS_APPROVED","approved");
+define("STATUS_HIDDEN","hidden");
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
-require_once($GLOBALS['g_campsiteDir']."/classes/ArticleComment.php");
 
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
@@ -55,7 +56,13 @@ foreach ($dbColumns as $dbColumn) {
         $dbColumnParam = $dbColumn->getName();
     }
     if (isset($_REQUEST[$dbColumnParam])) {
-    	$articleFields[$dbColumn->getName()] = trim(Input::Get($dbColumnParam));
+        if($dbColumn->getType() == ArticleTypeField::TYPE_TEXT
+            && $dbColumn->getMaxSize()!=0
+            && $dbColumn->getMaxSize()!='') {
+                $articleFields[$dbColumn->getName()] = substr(trim(Input::Get($dbColumnParam)), 0, $dbColumn->getMaxSize());
+            }
+        else
+    	    $articleFields[$dbColumn->getName()] = trim(Input::Get($dbColumnParam));
     } else {
     	$articleFields[$dbColumn->getName()] = null;
     }
@@ -80,15 +87,6 @@ if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedBy
 	camp_html_add_msg(getGS('Could not save the article. It has been locked by $1 $2 hours and $3 minutes ago.', $lockUser->getRealName(), $hours, $minutes));
 	camp_html_goto_page($BackLink);
 	exit;
-}
-
-// Update the first comment if the article title has changed
-if ($f_article_title != $articleObj->getTitle()) {
-	$firstPostId = ArticleComment::GetCommentThreadId($articleObj->getArticleNumber(), $articleObj->getLanguageId());
-	if ($firstPostId) {
-		$firstPost = new Phorum_message($firstPostId);
-		$firstPost->setSubject($f_article_title);
-	}
 }
 
 // Update the article author
@@ -132,12 +130,10 @@ if (!empty($f_comment_status)) {
     // as appropriate.
     if ($articleObj->commentsEnabled() != $commentsEnabled) {
 	    $articleObj->setCommentsEnabled($commentsEnabled);
-		$comments = ArticleComment::GetArticleComments($f_article_number, $f_language_selected);
-		if ($comments) {
-			foreach ($comments as $comment) {
-				$comment->setStatus($commentsEnabled?PHORUM_STATUS_APPROVED:PHORUM_STATUS_HIDDEN);
-			}
-		}
+        global $controller;
+        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+	    $repository->setArticleStatus($f_article_number, $f_language_selected, $commentsEnabled?STATUS_APPROVED:STATUS_HIDDEN);
+	    $repository->flush();
     }
     $articleObj->setCommentsLocked($f_comment_status == "locked");
 }

@@ -1,0 +1,37 @@
+<table class="datatable" style="position: relative; width: 100%;" cellspacing="0" cellpadding="0">
+	<thead>
+		<tr>
+            <?php foreach( $this->columns as $col ) : ?>
+    		<th><?php echo $col; ?></th>
+            <?php endforeach; ?>
+		</tr>
+	</thead>
+	<tbody>
+    	<tr>
+        	<td class="message" colspan="<?php echo sizeof( $this->cols ); ?>">
+        	    <?php putGS('Loading..'); ?>
+        	</td>
+    	</tr>
+	</tbody>
+</table>
+
+<script type="text/javascript">
+$(function() 
+{
+    var datatable = $( 'table.datatable' )
+        .wrap( $('<div />').addClass('table') )
+        .wrap( $('<div />').addClass('smartlist') )
+        .css
+        ({ 
+           	position : 'relative',
+        	width	 : '100%'
+        })
+        .dataTable
+        (
+            <?php echo $this->jsonified( $this->options, array( 'fnRowCallback', 'fnDrawCallback', 'fnServerData') );?>
+        );
+	$( document.body ).data( "newscoop.themesDatatable", datatable )
+});
+</script>
+
+

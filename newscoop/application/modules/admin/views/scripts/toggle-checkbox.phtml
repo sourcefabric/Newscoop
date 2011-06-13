@@ -1,0 +1,9 @@
+<input class="toggle-checkbox" type="checkbox">
+<script type="text/javascript">
+$('.toggle-checkbox').click(function(){
+    if($(this).is(':checked'))
+        $('.table-checkbox').attr('checked','checked');
+    else
+    	$('.table-checkbox').removeAttr('checked');
+});
+</script>

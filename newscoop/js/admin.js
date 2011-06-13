@@ -1,24 +1,22 @@
 var terms = [];
 $(function() {
     // main menu
-    $('.main-menu-bar ul.navigation ul').hide();
     $('.main-menu-bar ul.navigation > li > a').each(function(i) {
         var menu = $(this);
 
         // init menu for all but first
         if (i > 0) {
+            $('<span />').addClass('fg-button-ui-icon fg-button-ui-icon-triangle-1-s').prependTo(menu);
+
             menu.topmenu({
                 content: '<ul>' + menu.next('ul').html() + '</ul>',
                 flyOut: true,
                 showSpeed: 150
             });
-
-            $('<span />').addClass('fg-button-ui-icon fg-button-ui-icon-triangle-1-s') .prependTo(menu);
         }
 
         // add css/attributes to main links
         menu.attr('tabindex', i)
-            .addClass('fg-button ui-widget fg-button-icon-right fg-button-ui-state-default fg-button-ui-corner-all')
             .hover(function() {
                 $(this).removeClass('fg-button-ui-state-default')
                     .addClass('fg-button-ui-state-focus');
@@ -181,14 +179,6 @@ $(function() {
         return confirm(localizer.confirm + ' ' + title + '?');
     });
 
-    // add plus icons
-    $('a.add').each(function() {
-        $(this).addClass('ui-icon-wrapper');
-        $('<span />').addClass('ui-icon ui-icon-plus')
-            .prependTo($(this));
-    });
-
-    // add cross icon for delete
     $('a.delete.icon').each(function() {
         $(this).html('');
         $('<span />')
@@ -199,20 +189,26 @@ $(function() {
     // zend_form utils
     $('dl.zend_form').each(function() {
         var form = $(this);
-
         // hide hidden fields
         $('input:hidden', form).each(function() {
+            var ischeckbox = $(this).next('input:checkbox');
+        	if(ischeckbox)
+        		return;
             var dd = $(this).closest('dd');
             var dt = dd.prev('dt');
             var errors = $('ul.errors', dd);
 
-            dt.hide().detach().appendTo(form);
+            if (dt.html() == '') { // if empty
+                dt.hide().detach().appendTo(form);
+            }
 
             if (errors.length > 0) { // keep dd for errors
                 return;
             }
 
-            dd.hide().detach().appendTo(form);
+            if ($('*', dd).size() == $('input:hidden', dd).size()) { // if contains only hiddens
+                dd.hide().detach().appendTo(form);
+            }
         });
 
         // hide fieldsets dt

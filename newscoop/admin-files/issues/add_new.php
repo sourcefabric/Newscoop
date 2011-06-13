@@ -2,7 +2,7 @@
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
 
 // Check permissions
-if (!$g_user->hasPermission('ManageIssue')) {
+if (!$g_user->hasPermission('ManageIssue') || !SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
 	camp_html_display_error(getGS('You do not have the right to add issues.'));
 	exit;
 }
@@ -24,7 +24,7 @@ camp_html_display_msgs();
 ?>
 
 <P>
-<FORM name="issue_add" METHOD="POST" ACTION="do_add_new.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<FORM name="issue_add" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/issues/do_add_new.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" CLASS="box_table">
 <TR>

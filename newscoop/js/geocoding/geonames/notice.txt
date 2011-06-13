@@ -1,0 +1,2 @@
+The city search is based on data by GeoNames, see
+http://www.geonames.org/

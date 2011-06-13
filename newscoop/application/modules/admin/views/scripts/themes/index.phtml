@@ -1,0 +1,173 @@
+<div class="actions">
+    <ul class="navigation">
+        <!-- li><a class="add" href="#" id="create">Create theme</a></li -->
+        <li><a class="upload" href="#" id="upload">Upload theme</a></li>
+        <!-- li><a class="download" href="#" id="download">Download theme</a></li -->
+        <!-- li><a class="duplicate" href="#" id="duplicate">Duplicate theme</a></li -->
+        <li><a class="add" href="<?php echo $this->url( array( 'action' => 'add.php', 'controller' => 'pub', 'module' => 'admin' ) )?>">Add new Publication</a></li> <!--  addNewPublication -->
+    </ul>
+</div>
+
+<div class="ui-widget-content small-block themesListHolder">
+	<div class="tabs ui-tabs ui-widget ui-widget-content ui-corner-all">
+    	<ul class="themesListTabsBtns ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+        	<li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active">
+        		<a href="javascript:void(0)">Available themes</a>
+        	</li>
+        	<?php foreach( $this->publications as $pub ) : ?>
+        		<li class="ui-state-default ui-corner-top">
+        		    <a href="javascript:void(0)" pub-id="<?php echo $pub->getId(); ?>"><?php echo $pub->getName(); ?></a>
+        		</li>
+        	<?php endforeach; ?>
+		</ul>
+        <div id="tabs-1">
+
+            <?php echo $this->mytable; ?>
+
+		</div>
+	</div>
+</div>
+
+<script id="popupTmpl" type="text/x-jQuery-tmpl" title="<?php echo getGS( 'Upload theme' ) ?>">
+	<div class="message-holder">
+		<div class="upload-error" style="display:none"><?php echo getGS( 'Upload failed!' ) ?></div>
+		<div class="upload-success" style="display:none"><?php echo getGS( 'Upload succeded!' ) ?></div>
+	</div>
+	<?php echo $this->uploadForm->setAttrib( 'target', 'upload-frame' ); ?>
+	<iframe frameborder="0" name="upload-frame" id="upload-frame" width="0" height="0"></iframe>
+</script>
+
+<script id="confirmDeleteTmpl" type="text/x-jQuery-tmpl" title="<?php echo getGS( 'Delete theme' ) ?>">
+	<?php echo getGS( 'Are you sure you want to delete this theme?' ) ?>
+</script>
+
+<script id="datatableTmpl_0" type="text/x-jQuery-tmpl">
+	<div class="DataTables_sort_wrapper">
+    	<input class="toggle-checkbox" type="checkbox" value="{{id}}">
+        <span></span>
+	</div>
+</script>
+
+<script id="datatableTmpl_1" type="text/x-jQuery-tmpl">
+	<ul class="themesListTabs ui-tabs ui-widget ui-corner-all">
+		{% for( i in images ) %}
+		<li class="imageItem ui-tabs-panel ui-widget-content ui-corner-bottom
+			{% if( i > 0 ) %} ui-tabs-hide {% endif %}" id="themesListTabD">
+    		<a id="example1" href="<?php echo $this->themesPath ?>/{{images[i]}}">
+				<img src="<?php echo $this->themesPath ?>/{{images[i]}}" alt="{{images[i]}}" />
+			</a>
+		</li>
+		{% endfor %}
+	</ul>
+</script>
+
+<script id="datatableTmpl_2" type="text/x-jQuery-tmpl">
+	<div class="themesListTabs ui-tabs">
+		<h3>{{title}} <span>// <?php echo getGS( 'version' ) ?> {{version}}</span></h3>
+        <p><i><b><?php echo getGS( 'Design' ) ?>:</b> {{designer}}</i></p>
+		<ul class="imageCtrls ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
+            <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active">
+				<a href="javascript:void(0)">
+                    <?php echo getGS( 'Issue page' ) ?>
+					<span><?php echo getGS( 'Click to enlarge' ) ?></span>
+				</a>
+			</li>
+            <li class="ui-state-default ui-corner-top">
+				<a href="javascript:void(0)">
+					<?php echo getGS( 'Section page' ); ?>
+					<span><?php echo getGS( 'Click to enlarge' ) ?></span>
+				</a>
+			</li>
+        	<li class="ui-state-default ui-corner-top">
+				<a href="javascript:void(0)">
+                    <?php echo getGS( 'Article page' ) ?>
+					<span><?php echo getGS( 'Click to enlarge' ) ?></span>
+				</a>
+			</li>
+    	</ul>
+	</div>
+</script>
+
+<script id="datatableTmpl_3" type="text/x-jQuery-tmpl">
+	<div>
+		<span class="compatibilityTitle">{{compat}}</span>
+		<i>{{text}}</i>
+	</div>
+</script>
+
+<script id="datatableTmpl_4" type="text/x-jQuery-tmpl">
+	<div class="actionMessage"></div>
+	<ul class="actionDropDown">
+    	<li>
+        	<a href="#"><?php echo getGS( 'Actions' ) ?></a>
+			<ul class="block-shadow">
+				<li>
+					<a href="#" class="add"><span><?php echo getGS( 'Add to publication' ) ?></span></a>
+					<ul class="block-shadow actions-publications">
+						<?php foreach( $this->publications as $pub ) : ?>
+						<li>
+        		    		<a href="<?php echo $this->url( array
+        		    		(
+        		    			'action'     => 'assign-to-publication',
+        		    			'controller' => 'themes',
+        		    		    'module'     => 'admin',
+        		    		    'pub-id'     => $pub->getId(),
+        		    		    'theme-id'	 => '{{id}}'
+        		    		), null, null, false )?>"
+							pub-id="<?php echo $pub->getId(); ?>" class="assign-ctrl"><?php echo $pub->getName(); ?></a>
+        				</li>
+        	            <?php endforeach; ?>
+						<li class="copy-to-avail-themes" style="display:none">
+        		    		<a href="javascript:void(0)"><?php echo getGS( 'Copy to available themes' ); ?></a>
+        				</li>
+					</ul>
+				</li>
+				<li>
+					<a href="<?php echo $this->url( array
+    				    (
+    				    	'action'     => 'unassign',
+    				    	'controller' => 'themes',
+    				    	'module'     => 'admin',
+    				    	'id'         => '{{id}}'
+    				    ), null, null, false )  ?>" class="unassign" style="display:none">
+						<?php echo getGS( 'Unassign' ) ?>
+					</a>
+				</li>
+				<li>
+					<a href="<?php echo $this->url( array
+    				    (
+    				    	'action'     => 'advanced-theme-settings',
+    				    	'controller' => 'themes',
+    				    	'module'     => 'admin',
+    				    	'id'         => '{{id}}'
+    				    ), null, null, false )  ?>" class="edit" style="display:none">
+						<?php echo getGS( 'Edit' ) ?>
+					</a>
+				</li>
+				<li>
+					<a href="<?php echo $this->url( array
+    				    (
+    				    	'action'     => 'export',
+    				    	'controller' => 'themes',
+    				    	'module'     => 'admin',
+    				    	'id'         => '{{id}}'
+    				    ), null, null, false )  ?>" class="download" style="display:none">
+						<?php echo getGS( 'Export' ) ?> (<?php echo getGS( 'zip' ) ?>)
+					</a>
+				</li>
+            	<li>
+					<a href="<?php echo $this->url( array
+    				    (
+    				    	'action'     => 'delete',
+    				    	'controller' => 'themes',
+    				    	'module'     => 'admin',
+    				    	'id'         => '{{id}}'
+    				    ), null, null, false )  ?>" class="delete">
+						<?php echo getGS( 'Delete' ) ?>
+					</a>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</script>
+

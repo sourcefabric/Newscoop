@@ -1,9 +1,5 @@
 <?php
-require_once($GLOBALS['g_campsiteDir']."/include/phorum_load.php");
-require_once($GLOBALS['g_campsiteDir'].'/classes/DbReplication.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_message.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleComment.php');
 camp_load_translation_strings("globals");
 camp_load_translation_strings("articles");
 
@@ -34,19 +30,6 @@ $languageObj = new Language($articleObj->getLanguageId());
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
 				  'Section' => $sectionObj, 'Article'=>$articleObj);
 camp_html_content_top(getGS("Reply to comment"), $topArray);
-
-if (SystemPref::Get("UseDBReplication") == 'Y') {
-    $dbReplicationObj = new DbReplication();
-    $connectedToOnlineServer = $dbReplicationObj->connect();
-    if ($connectedToOnlineServer == false) {
-        camp_html_add_msg(getGS("Comments Disabled: you are either offline or not able to reach the Online server"));
-    } else {
-        $comment = new Phorum_message($f_comment_id);
-    }
-} else {
-    $comment = new Phorum_message($f_comment_id);
-}
-
 ?>
 <table cellpadding="1" cellspacing="0" class="action_buttons" style="padding-top: 10px;">
 <tr>
@@ -55,7 +38,7 @@ if (SystemPref::Get("UseDBReplication") == 'Y') {
 </tr>
 </table>
 <p>
-<table cellspacing="0" cellpadding="0" border="0" class="box_table">
+<table id="comment-reply-to" cellspacing="0" cellpadding="0" border="0" class="box_table" style="display:none;">
 <tr>
   <td colspan="2" style="padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid black;"">
     &nbsp;<b><?php putGS('Comment'); ?></b>
@@ -74,23 +57,23 @@ if (isset($connectedToOnlineServer)
 ?>
 <tr>
   <td align="right" valign="top" nowrap><?php putGS('From'); ?>:</td>
-  <td><?php p(htmlspecialchars($comment->getAuthor())); ?> &lt;<?php p(htmlspecialchars($comment->getEmail())); ?>&gt; (<?php p($comment->getIpAddress()); ?>)</td>
+  <td>${name} &lt;${email}&gt; (${ip})</td>
 </tr>
 <tr>
   <td align="right" valign="top" nowrap><?php putGS('Date'); ?>:</td>
-  <td><?php p(date('Y-m-d H:i:s', $comment->getCreationDate())); ?></td>
+  <td>${time_created}</td>
 </tr>
 <tr>
   <td align="right" valign="top" nowrap><?php putGS('Subject'); ?>:</td>
-  <td><?php p(htmlspecialchars($comment->getSubject())); ?></td>
+  <td>${subject}</td>
 </tr>
 <tr>
   <td align="right" valign="top" nowrap><?php putGS('Comment'); ?>:</td>
-  <td><?php p(htmlspecialchars($comment->getBody())); ?></td>
+  <td>${message}</td>
 </tr>
 </table>
 <p>
-<form action="/<?php p($ADMIN); ?>/articles/comments/do_add_comment.php" method="GET">
+<form id="comment-reply" action="../../comment/reply/format/json" method="POST">
 <?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>">
@@ -108,7 +91,7 @@ if (isset($connectedToOnlineServer)
     <?php putGS('Subject'); ?>:
   </td>
   <td>
-    <input type="text" name="f_comment_subject" value="" class="input_text" size="41" <?php print $spellcheck ?> >
+    <input id="comment_subject" type="text" name="f_comment_subject" value="" class="input_text" size="41" <?php print $spellcheck ?> >
   </td>
 </tr>
 <tr>
@@ -116,7 +99,7 @@ if (isset($connectedToOnlineServer)
     <?php putGS('Comment'); ?>:
   </td>
   <td>
-    <textarea name="f_comment_body" class="input_text_area" rows="10" cols="60" <?php print $spellcheck ?>></textarea>
+    <textarea id="comment_message" name="f_comment_body" class="input_text_area" rows="10" cols="60" <?php print $spellcheck ?>></textarea>
   </td>
 </tr>
 <tr>
@@ -126,6 +109,62 @@ if (isset($connectedToOnlineServer)
 </tr>
 </table>
 </form>
+<script>
+function replyComment() {
+	$('#comment-reply').submit(function(){
+        $.ajax({
+            type: 'POST',
+            url: '../../comment/reply/format/json',
+            data: {
+                "article": "<?php echo $f_article_number; ?>",
+                "language": "<?php echo $f_language_selected; ?>",
+                "parent": "<?php echo $f_comment_id; ?>",
+                "subject": $('#comment_subject').val(),
+                "message": $('#comment_message').val(),
+                <?php echo SecurityToken::JsParameter();?>,
+            },
+            success: function(data) {
+                if(data.status != 200) {
+                    flashMessage(data.message);
+                    return;
+                }
+            	window.location.href = "<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php"); ?>";
+            },
+            error: function (rq, status, error) {
+                if (status == 0 || status == -1) {
+                    flashMessage('<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>', 'error');
+                }
+            }
+        });
+        return false;
+
+	});
+}
+function loadComment() {
+    $.ajax({
+        type: 'POST',
+        url: '../../comment/list/format/json',
+        data: {
+            "comment": "<?php echo $f_comment_id; ?>",
+        },
+        success: function(data) {
+        	template = $('#comment-reply-to').html();
+            comment = data.result[0];
+            if(comment)
+                for(key in comment) {
+                    template = template.replace(new RegExp("\\$({|%7B)"+key+"(}|%7D)","g"),comment[key]);
+                }
+            $('#comment-reply-to').html(template).show();
+        }
+    });
+}
+</script>
+<script>
+$(function() {
+    loadComment();
+    replyComment();
+});
+</script>
 <?php } // if comment enabled ?>
 
 <?php camp_html_copyright_notice(); ?>

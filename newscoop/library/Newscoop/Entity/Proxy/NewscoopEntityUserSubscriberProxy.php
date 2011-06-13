@@ -63,6 +63,12 @@ class NewscoopEntityUserSubscriberProxy extends \Newscoop\Entity\User\Subscriber
         return parent::getUserId();
     }
 
+    public function getKeyId()
+    {
+        $this->_load();
+        return parent::getKeyId();
+    }
+
     public function setName($name)
     {
         $this->_load();
@@ -312,7 +318,7 @@ class NewscoopEntityUserSubscriberProxy extends \Newscoop\Entity\User\Subscriber
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name', 'username', 'password', 'email', 'timeCreated', 'phone', 'title', 'gender', 'age', 'city', 'streetAddress', 'postalCode', 'state', 'country', 'fax', 'contactPerson', 'phoneSecond', 'employer', 'employerType', 'position', 'subscriptions', 'ips');
+        return array('__isInitialized__', 'id', 'token', 'name', 'username', 'password', 'email', 'timeCreated', 'phone', 'title', 'gender', 'age', 'city', 'streetAddress', 'postalCode', 'state', 'country', 'fax', 'contactPerson', 'phoneSecond', 'employer', 'employerType', 'position', 'subscriptions', 'ips');
     }
 
     public function __clone()

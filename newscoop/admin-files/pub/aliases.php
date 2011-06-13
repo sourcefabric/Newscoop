@@ -19,8 +19,8 @@ if ($g_user->hasPermission("ManagePub")) { ?>
 <p>
 <TABLE class="action_buttons">
 <TR>
-	<TD><A HREF="add_alias.php?Pub=<?php p($Pub); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
-	<TD><A HREF="add_alias.php?Pub=<?php  p($Pub); ?>" ><B><?php  putGS("Add new alias"); ?></B></A></TD>
+    <TD><A HREF="/<?php echo $ADMIN; ?>/pub/add_alias.php?Pub=<?php p($Pub); ?>" ><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" BORDER="0"></A></TD>
+    <TD><A HREF="/<?php echo $ADMIN; ?>/pub/add_alias.php?Pub=<?php  p($Pub); ?>" ><B><?php  putGS("Add new alias"); ?></B></A></TD>
 </TR>
 </TABLE>
 <?php } ?>

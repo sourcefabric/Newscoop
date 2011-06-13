@@ -32,6 +32,7 @@ class Admin_SubscriptionIpController extends Zend_Controller_Action
                 'controller' => 'subscription-ip',
                 'action' => 'add',
                 'reset_params' => false,
+                'class' => 'add',
             ),
         );
     }

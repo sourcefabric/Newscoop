@@ -29,6 +29,11 @@ class ErrorController extends Zend_Controller_Action
         }
     }
 
+    public function init()
+    {
+        camp_load_translation_strings('bug_reporting');
+    }
+
     public function errorAction()
     {
         if (defined('APPLICATION_ENV') && APPLICATION_ENV == 'development') {
@@ -39,10 +44,9 @@ class ErrorController extends Zend_Controller_Action
         $request = $this->getRequest();
 
         if (!$errors) {
-            $this->view->message = 'You have reached the error page';
+            $this->view->message = getGS('You have reached the error page');
             return;
         }
-
         switch ($errors->type) {
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
@@ -50,27 +54,27 @@ class ErrorController extends Zend_Controller_Action
                 // 404 error -- controller or action not found
                 $this->getResponse()->setHttpResponseCode(404);
                 $priority = Zend_Log::NOTICE;
-                $this->view->message = 'Page not found';
+                $this->view->message = getGS('Page not found');
                 break;
             default:
                 // application error
                 $this->getResponse()->setHttpResponseCode(500);
                 $priority = Zend_Log::CRIT;
-                $this->view->message = 'Application error';
+                $this->view->message = getGS('Application error');
                 break;
         }
-        
+
         // Log exception, if logger available
         if ($log = $this->getLog()) {
             $log->log($this->view->message, $priority, $errors->exception);
             $log->log('Request Parameters', $priority, $request->getParams());
         }
-        
+
         // conditionally display exceptions
         if ($this->getInvokeArg('displayExceptions') == true) {
             $this->view->exception = $errors->exception;
         }
-        
+
         $this->view->request   = $errors->request;
     }
 

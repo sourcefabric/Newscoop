@@ -6,9 +6,7 @@
 /**
  * Includes
  */
-require_once($GLOBALS['g_campsiteDir'].'/classes/Phorum_message.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObject.php');
-require_once('Date.php');
 
 /**
  * @package Campsite
@@ -17,21 +15,23 @@ final class MetaComment extends MetaDbObject {
 
 	private $m_realName = false;
 
-
     public function __construct($p_messageId = null)
     {
-        $this->m_dbObject = new Phorum_message($p_messageId);
-        if (!$this->m_dbObject->exists() && !is_null($p_messageId)) {
-            $this->m_dbObject = new Phorum_message();
-        }
+        global $controller;
+        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+        if(is_null($p_messageId))
+            $this->m_dbObject = $repository->getPrototype();
+        else
+            $this->m_dbObject = $repository->find($p_messageId);
 
-        $this->m_properties['identifier'] = 'message_id';
-        $this->m_properties['nickname'] = 'author';
-        $this->m_properties['reader_email'] = 'email';
-        $this->m_properties['subject'] = 'subject';
-        $this->m_properties['content'] = 'body';
-        $this->m_properties['content_real'] = 'body';
-        $this->m_properties['level'] = 'thread_depth';
+        $this->m_properties['id'] = 'id';
+        $this->m_customProperties['level'] = 'getThreadDepth';
+        $this->m_customProperties['identifier'] = 'getId';
+        $this->m_customProperties['subject'] = 'getSubject';
+        $this->m_customProperties['content'] = 'getMessage';
+        $this->m_customProperties['content_real'] = 'getMessage';
+        $this->m_customProperties['nickname'] = 'getCommenter';
+        $this->m_customProperties['reader_email'] = 'getEmail';
 
         $this->m_customProperties['real_name'] = 'getRealName';
         $this->m_customProperties['anonymous_author'] = 'isAuthorAnonymous';
@@ -42,21 +42,33 @@ final class MetaComment extends MetaDbObject {
         $this->m_skipFilter = array('content_real');
     } // fn __construct
 
+    protected function getThreadDepth()
+    {
+        return $this->m_dbObject->getThreadLevel();
+    }
+
+    protected function getId()
+    {
+        return $this->m_dbObject->getId();
+    }
 
     protected function getRealName()
     {
     	if ($this->m_realName === false) {
-        	$userId = $this->m_dbObject->getUserId();
-            if ($userId > 0) {
-                $userObj = new User($userId);
-                $this->m_realName = $userObj->getRealName();
-            } else {
-            	$this->m_realName = null;
-            }
+            	$this->m_realName = $this->m_dbObject->getRealName();
     	}
     	return $this->m_realName;
     }
 
+    protected function getCommenter()
+    {
+        return $this->m_dbObject->getCommenter()->getName();
+    }
+
+    protected function getEmail()
+    {
+        return $this->m_dbObject->getCommenter()->getEmail();
+    }
 
     protected function isAuthorAnonymous()
     {
@@ -67,18 +79,22 @@ final class MetaComment extends MetaDbObject {
 
     protected function getSubmitDate()
     {
-        $date = new Date($this->m_dbObject->getCreationDate());
-        return $date->getDate();
+        return $this->m_dbObject->getTimeCreated()->format('Y-m-d H:i:s');
     }
 
+    protected function getSubject()
+    {
+        return $this->m_dbObject->getSubject();
+    }
+
+    protected function getMessage()
+    {
+        return $this->m_dbObject->getMessage();
+    }
 
     protected function getArticle()
     {
-    	$article = ArticleComment::GetArticleOf($this->m_dbObject->getMessageId());
-    	if (is_null($article)) {
-    		return new MetaArticle();
-    	}
-    	return new MetaArticle($article->getLanguageId(), $article->getArticleNumber());
+    	return new MetaArticle( $this->m_dbObject->getLanguage()->getId(), $this->m_dbObject->getThread()->getId() );
     }
 
 

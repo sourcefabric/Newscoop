@@ -21,8 +21,8 @@ camp_html_content_top(getGS('Search'), NULL);
 // set up
 $articlelist = new ArticleList();
 $articlelist->setPublication($f_publication_id);
-$articlelist->setIssue($f_issue_id);
-$articlelist->setSection($f_section_id);
+$articlelist->setIssue($f_issue_number);
+$articlelist->setSection($f_section_number);
 $articlelist->setLanguage($f_language_id);
 
 $articlelist->setColVis(TRUE);

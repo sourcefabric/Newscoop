@@ -69,7 +69,7 @@ switch ($action) {
             camp_html_goto_page("/$ADMIN/backup.php");
         }
         header('Content-Disposition: attachment; filename=' . basename($file));
-        header('Content-Length: ' . getRealSize($file));
+        header('Content-Length: ' . filesize($file));
         header('Content-Type: application/x-gzip');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Content-Transfer-Encoding: binary');

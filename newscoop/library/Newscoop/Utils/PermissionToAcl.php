@@ -20,7 +20,6 @@ class PermissionToAcl
         'MailNotify' => 'GetNotification',
         'Publish' => 'PublishArticle',
         'plugin_poll' => 'EnablePluginPoll',
-        'SyncPhorumUsers' => 'SynchronizePhorumUsers',
         'Change' => 'Edit',
         'Users' => 'User',
         'Topics' => 'Topic',
@@ -54,7 +53,7 @@ class PermissionToAcl
         'Get',
         'Publish',
         'Enable',
-        'Synchronize',
+        'Sync',
     );
 
     /** @var array */
@@ -65,7 +64,7 @@ class PermissionToAcl
 
     /**
      * Translate permission to resource - action pair
-     * 
+     *
      * @param string $perm
      * @return array
      * @throws InvalidArgumentException
@@ -78,7 +77,7 @@ class PermissionToAcl
         foreach (self::$filters as $search => $replace) {
             $perm = str_replace($search, $replace, $perm);
         }
-        
+
         // find plugins
         $perm_ary = explode('_', $perm);
         if (sizeof($perm_ary) == 3) {

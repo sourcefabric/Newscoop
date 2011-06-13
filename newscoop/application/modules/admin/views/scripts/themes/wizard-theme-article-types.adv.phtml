@@ -1,0 +1,78 @@
+<div class="articleTypes">
+<form id="" method="post"
+	action="<?php echo $this->url(array( 'action' => 'article-types-edit', 'controller' => 'themes', 'module' => 'admin' )) ?>">
+
+<?php echo $this->formHidden( 'themeId', $this->theme->id, array( 'id' => null ) ) ?>
+
+<fieldset>
+
+	<legend>Match article types</legend>
+	<div class="themeArticleType">
+        <h4>Theme article types</h4>
+        <?php $allCount = 0; ?>
+        <?php foreach ( $this->themeArticleTypes as $typeName => $typeFields ) : ?>
+        	<span>
+        	    <?php echo strtoupper( str_replace( "_", " ", $typeName ) ) ?>
+        		<?php echo $this->formHidden( 'themeArticleTypes[]', $typeName, array( 'id' => null ) ) ?>
+        	</span>
+        	<ul>
+        	<?php foreach ( $typeFields as $fieldName => $fieldProps ) : ?>
+    			<li>
+    			    <?php echo $this->camelize($fieldName) ?> (<?php echo $fieldProps->type ?> <?php echo $fieldProps->length ?>)
+    			    <?php echo $this->formHidden( "themeArticleTypeFields[$typeName][]", $fieldName, array( 'id' => null ) ) ?>
+    			</li>
+        	<?php $allCount++; ?>
+        	<?php endforeach; ?>
+        	</ul>
+       	<?php $allCount++; ?>
+        <?php endforeach; ?>
+   </div>
+
+   <div class="matchWithExisting">
+		<h4>Match with existing</h4>
+        <ul>
+        	<?php foreach( $this->themeArticleTypes as $articleTypeName => $typeFields ) : ?>
+        	<li>
+        		<div>
+        			<?php echo $this->formCheckbox( "articleTypeIgnore[$articleTypeName]" ) ?>
+        			<?php echo $this->formLabel( "articleTypeIgnore[$articleTypeName]", "Do Nothing") ?>
+        		</div>
+            	<div>
+            		<?php echo $this->formCheckbox( "articleTypeCreate[$articleTypeName]" ) ?>
+        			<?php echo $this->formLabel( "articleTypeCreate[$articleTypeName]", "Create article type") ?>
+            	</div>
+            	<select class="input_select articleType" name="articleTypes[<?php echo $articleTypeName ?>]">
+    			<?php foreach( $this->articleTypeNames as $atn ) : ?>
+					<option value="<?php echo $atn ?>"
+						<?php if( $this->camelize( $atn ) == $this->camelize( $articleTypeName ) ) : // strtolower( str_replace( "_", " ", $atn ) ) == strtolower( $articleTypeName ) ?>
+							selected="selected"
+						<?php endif; ?>>
+						<?php echo ucfirst( $atn ) ?></option>
+				<?php endforeach; ?>
+            	</select>
+            	<ul>
+            		<?php foreach( $typeFields as $typeFieldName =>  $typeFields ) : ?>
+            		<li class="withPadding">
+                		<div>
+                			<?php echo $this->formCheckbox( "articleTypeFieldIgnore[$articleTypeName][$typeFieldName]" ) ?>
+                			<?php echo $this->formLabel( "articleTypeFieldIgnore[$articleTypeName][$typeFieldName]", "Do Nothing") ?>
+                		</div>
+                    	<div>
+                    		<?php echo $this->formCheckbox( "articleTypeFieldCreate[$articleTypeName][$typeFieldName]" ) ?>
+                			<?php echo $this->formLabel( "articleTypeFieldCreate[$articleTypeName][$typeFieldName]", "Create field type") ?>
+                    	</div>
+                		<select class="input_select articleTypeFields" name="articleTypeFields[<?php echo $articleTypeName ?>][<?php echo $typeFieldName ?>]">
+
+                		</select>
+                	</li>
+                	<?php endforeach; ?>
+            	</ul>
+            </li>
+        	<?php endforeach; ?>
+        </ul>
+	</div>
+
+</fieldset>
+
+</form>
+</div>
