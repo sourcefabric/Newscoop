@@ -1083,19 +1083,14 @@ function camp_import_dbfile($db_server, $db_username, $db_userpass, $db_database
             $command_path = camp_combine_paths($command_path, $command_script);
 
             // we had some problems on wrongly initialized db connectors for the executed php files, thus doing this (re)openning
-            $db_conn->Close();
-            $GLOBALS['g_ado_db']->Close();
-            $GLOBALS['g_ado_db'] = camp_connect_to_adodb($db_server, $db_username, $db_userpass, $db_database);
+            camp_connect_to_adodb($db_server, $db_username, $db_userpass, $db_database);
 
             require_once($command_path);
-            $db_conn = camp_connect_to_adodb($db_server, $db_username, $db_userpass, $db_database);
-            $GLOBALS['g_ado_db']->Close();
-            $GLOBALS['g_ado_db'] = camp_connect_to_adodb($db_server, $db_username, $db_userpass, $db_database);
-
         }
     }
 
-    $db_conn->Close();
+    // keep connection for plugin upgrade
+    camp_connect_to_adodb($db_server, $db_username, $db_userpass, $db_database);
 
     return $errors;
 } // fn camp_import_dbfile
@@ -1136,6 +1131,9 @@ function camp_combine_paths($p_dirFirst, $p_dirSecond)
  */
 function camp_connect_to_adodb($db_host, $db_username, $db_userpass, $db_database = "")
 {
+    if (isset($GLOBALS['g_ado_db']) && $GLOBALS['g_ado_db']->isConnected()) {
+        return $GLOBALS['g_ado_db'];
+    }
 
     $db_conn = ADONewConnection('mysql');
     $db_conn->SetFetchMode(ADODB_FETCH_ASSOC);
@@ -1154,6 +1152,7 @@ function camp_connect_to_adodb($db_host, $db_username, $db_userpass, $db_databas
         $db_conn->Execute("SET NAMES 'utf8'");
     }
 
+    $GLOBALS['g_ado_db'] = $db_conn;
     return $db_conn;
 } // fn camp_connect_to_adodb
 
