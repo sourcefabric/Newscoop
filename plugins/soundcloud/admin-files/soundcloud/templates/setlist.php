@@ -8,10 +8,10 @@
           <div class="soundcloud-list-item">
             <div class="controls">
             <div class="buttons">
-            <? $tracks = array() ?>
-            <? foreach ($t['tracks'] as $value): ?>
-                <? $tracks[] = $value['id'] ?>
-            <? endforeach ?>
+            <? $tracks = array();
+               foreach ($t['tracks'] as $value):
+                   $tracks[] = $value['id'];
+               endforeach ?>
             <? if ($g_user->hasPermission('plugin_soundcloud_update')): ?>
                 <? $trackInSet = in_array($track, $tracks) ?>
                 <a id="<?= $t['id'] ?>" style="<?= !$trackInSet ? '' : 'display:none;' ?>" class="addtoset ui-state-default icon-button no-text" href=""><span class="ui-icon ui-icon-plusthick"></span></a>

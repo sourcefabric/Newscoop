@@ -1,5 +1,5 @@
 <link type="text/css" href="<?= $Campsite['SUBDIR'] ?>/plugins/soundcloud/css/soundcloud.css" rel="stylesheet" />
-<script src="<?= $Campsite['SUBDIR'] ?>/plugins/soundcloud/javascript/functions.js" type="text/javascript"></script>
+<script src="<?= $Campsite['SUBDIR'] ?>/plugins/soundcloud/js/functions.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 var localizer = localizer || {};
