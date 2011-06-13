@@ -1008,6 +1008,7 @@ abstract class CampURI
         			$this->m_buildPath = '';
         			break;
         		}
+        		$this->m_buildPath = $this->m_config->getSetting('SUBDIR') . '/themes/' . $this->getThemePath() . $staticFile;
         		break;
             case 'root_level':
                 $this->m_buildPath = $this->m_config->getSetting('SUBDIR') . '/';

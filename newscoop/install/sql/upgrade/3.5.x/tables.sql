@@ -185,5 +185,8 @@ ALTER TABLE `SubsSections` MODIFY COLUMN `IdLanguage` INTEGER UNSIGNED NOT NULL 
  ADD UNIQUE (`IdSubscription`, `SectionNumber`, `IdLanguage`);
 
 
+-- Upgrade templates to themes
+system php ./create_themes.php
+
 -- Importing the stored function for 'Point in Polygon' checking
 system php ./checkpp.php
