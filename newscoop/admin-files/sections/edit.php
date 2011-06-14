@@ -2,6 +2,7 @@
 require_once($GLOBALS['g_campsiteDir'] . "/$ADMIN_DIR/sections/section_common.php");
 require_once($GLOBALS['g_campsiteDir'] . "/$ADMIN_DIR/articles/editor_load_tinymce.php");
 require_once($GLOBALS['g_campsiteDir'] . '/classes/Template.php');
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 //@New theme management
 use Newscoop\Service\Resource\ResourceId;
 use Newscoop\Service\IThemeManagementService;
@@ -100,7 +101,7 @@ if($issueHasTheme){
 <?php camp_html_display_msgs(); ?>
 
 <p>
-    <form name="section_edit" method="POST" action="/<?php echo $ADMIN; ?>/sections/do_edit.php">
+    <form name="section_edit" method="POST" action="/<?php echo $ADMIN; ?>/sections/do_edit.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
@@ -124,7 +125,7 @@ if($issueHasTheme){
 <tr>
   <td align="right"><?php putGS("URL Name"); ?>:</td>
   <td>
-    <input type="text" class="input_text" name="cShortName" size="32" value="<?php p(htmlspecialchars($sectionObj->getUrlName())); ?>" />
+    <input type="text" class="input_text" name="cShortName" size="32" value="<?php p(htmlspecialchars($sectionObj->getUrlName())); ?>" alt="alnum|1|A|true|false|_" emsg="<?php putGS('The $1 field may only contain letters, digits and underscore (_) character.', "'" . getGS('URL Name') . "'"); ?>"/>
   </td>
 </tr>
 <?php

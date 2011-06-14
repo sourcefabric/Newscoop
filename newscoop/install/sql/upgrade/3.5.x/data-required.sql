@@ -87,6 +87,9 @@ DELETE FROM `liveuser_rights` WHERE `right_define_name` = 'SyncPhorumUsers';
 -- whether we shall use internal statistics on article reading
 INSERT INTO SystemPreferences (varname, value) VALUES ('CollectStatistics', 'Y');
 
+-- clean the Templates table
+DELETE FROM Templates;
+
 system php ./acl.php
 system php ./transfer_phorum.php
 system php ./javascript_js_cleanup.php
