@@ -55,6 +55,7 @@ function upgrade_35x_remove_duplicate($item)
 
 function upgrade_35x_camp_remove_dir($p_dirName)
 {
+    $p_skip = array();
     $p_dirName = str_replace('//', '/', $p_dirName);
     $dirBaseName = trim($p_dirName, '/');
     if ($p_dirName == "/" || $dirBaseName == ''

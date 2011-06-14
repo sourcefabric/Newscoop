@@ -7,7 +7,7 @@
 
 use Newscoop\Utils\PermissionToAcl;
 
-require_once dirname(__FILE__) . '/../library/Newscoop/Utils/PermissionToAcl.php';
+require_once(dirname(dirname(__FILE__)) . '/library/Newscoop/Utils/PermissionToAcl.php');
 
 global $g_ado_db, $LiveUserAdmin;
 
