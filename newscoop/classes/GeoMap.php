@@ -12,7 +12,7 @@ require_once dirname(__FILE__) . '/GeoMultimedia.php';
 require_once dirname(__FILE__) . '/GeoPreferences.php';
 require_once dirname(__FILE__) . '/IGeoMap.php';
 
-require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/lib_campsite.php");
+require_once($GLOBALS['g_campsiteDir']."/admin-files/lib_campsite.php");
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/ComparisonOperation.php');
 camp_load_translation_strings('globals');
 
