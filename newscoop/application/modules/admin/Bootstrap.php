@@ -42,13 +42,6 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
         require_once CS_PATH_SITE . DIR_SEP . 'include' . DIR_SEP . 'campsite_init.php';
         require_once CS_PATH_SITE . DIR_SEP . 'classes' . DIR_SEP . 'CampTemplateCache.php';
 
-        // check for upgrade
-        if (file_exists(CS_PATH_SITE . DIR_SEP . 'upgrade.php')) {
-            camp_display_message("Site is down for upgrade. Please initiate upgrade process.");
-            echo '<meta http-equiv="Refresh" content="10" />';
-            exit;
-        }
-
         // detect extended login/logout files
         $prefix = file_exists(CS_PATH_SITE . DIR_SEP . 'admin-files' . DIR_SEP . 'ext_login.php') ? '/ext_' : '/';
 

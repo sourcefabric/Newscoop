@@ -69,12 +69,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Session::start();
     }
 
-    /**
-     * Init bootstrap plugin
-     */
-    protected function _initBootstrapPlugin()
+    protected function _initPlugins()
     {
         $front = Zend_Controller_Front::getInstance();
+        $front->registerPlugin(new Application_Plugin_Upgrade());
         $front->registerPlugin(new Application_Plugin_Bootstrap($this->getOptions()));
     }
 }
