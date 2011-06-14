@@ -178,14 +178,18 @@ if ($g_user->hasPermission('ManagePub') && Saas::singleton()->hasPermission('Add
 	);
 }
 
-$pages[2]['pages'][] = array(
-    'label' => getGS('Add new staff member'),
-    'module' => 'admin',
-    'controller' => 'staff',
-    'action' => 'add',
-    'resource' => 'user',
-    'privilege' => 'manage',
-);
+if( Saas::singleton()->hasPrivilege('staff' , 'add') ) {
+    $pages[2]['pages'][] = array(
+	    'label' => getGS('Add new staff member'),
+	    'module' => 'admin',
+	    'controller' => 'staff',
+	    'action' => 'add',
+	    'resource' => 'user',
+	    'privilege' => 'manage',
+	);
+}
+
+
 
 if ($g_user->hasPermission('ManageSubscriptions')) {
 	$pages[2]['pages'][] = array(
