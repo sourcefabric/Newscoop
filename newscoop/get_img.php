@@ -13,6 +13,7 @@
  * Includes
  */
 $GLOBALS['g_campsiteDir'] = dirname(__FILE__);
+require_once($GLOBALS['g_campsiteDir'].'/include/campsite_init.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampRequest.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampGetImage.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
