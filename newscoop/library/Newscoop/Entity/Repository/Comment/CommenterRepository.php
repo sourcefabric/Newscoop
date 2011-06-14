@@ -31,6 +31,7 @@ class CommenterRepository extends DatatableSource
     {
 
         $keys = array('user','name','email');
+        $set = false;
         for($i=0;$i<count($keys);$i++)
             $set = $set || (isset($p_values[$keys[$i]]) && !empty($p_values[$keys[$i]]));
         if(!$set)
@@ -59,6 +60,8 @@ class CommenterRepository extends DatatableSource
         $acceptanceRepository = $em->getRepository('Newscoop\Entity\Comment\Acceptance');
         $acceptanceRepository->isBanned($p_entity);
         */
+        if(!isset($p_values['url']))
+            $p_values['url'] = '';
         $p_entity->setName($p_values['name'])
                  ->setEmail($p_values['email'])
                  ->setUrl($p_values['url'])
