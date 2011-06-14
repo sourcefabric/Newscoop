@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 class Admin_Form_Theme extends Zend_Form
 {
@@ -9,13 +9,15 @@ class Admin_Form_Theme extends Zend_Form
         (
             'label'       => getGS( 'Required Newscoop version' ),
             'description' => getGS( 'or higher' ),
+            'class'		  => 'small',
         	'required'    => true,
         ));
-        
+
         $this->addElement( 'text', 'theme-version', array
         (
-            'label'    => getGS( 'Theme version' ),
-        	'required' => true,
+            'label'       => getGS( 'Theme version' ),
+        	'class'		  => 'small',
+        	'required'    => true,
         ));
         $this->setAction('')->setMethod( Zend_Form::METHOD_POST );
     }
