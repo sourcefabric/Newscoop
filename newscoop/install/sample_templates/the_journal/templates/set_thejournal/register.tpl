@@ -1,9 +1,9 @@
-{{ include file="set_thejournal/_tpl/_html-head.tpl" }}
+{{ include file="_tpl/_html-head.tpl" }}
 
 <body class="single single-post custom gecko">
 <div id="wrap">
 
-{{ include file="set_thejournal/_tpl/top.tpl" }}
+{{ include file="_tpl/top.tpl" }}
 
     <div id="content" class="wrap"> 
     
@@ -15,12 +15,12 @@
                     <h2 class="post-title">Register/Modify user data</h2>
                     
             {{ if !$gimme->edit_user_action->defined && !$gimme->edit_subscription_action->defined }}
-              {{ include file="set_thejournal/_tpl/user-form.tpl" }}
+              {{ include file="_tpl/user-form.tpl" }}
             {{ /if }}
 
             {{ if $gimme->edit_user_action->defined && $gimme->edit_user_action->is_error }}
               <h5>Error registering an account: {{ $gimme->edit_user_action->error_message }}</h5>
-              {{ include file="set_thejournal/_tpl/user-form.tpl" }}
+              {{ include file="_tpl/user-form.tpl" }}
             {{ /if }}
             
             {{ if $gimme->edit_user_action->defined && $gimme->edit_user_action->ok }}
@@ -42,19 +42,19 @@
 
     <div class="sidebar-top">
     
-{{ include file="set_thejournal/_tpl/_banner300x250.tpl" }}
+{{ include file="_tpl/_banner300x250.tpl" }}
 
     </div>
         
-{{ include file="set_thejournal/_tpl/sidebar-pages.tpl" }}
+{{ include file="_tpl/sidebar-pages.tpl" }}
     
-{{ include file="set_thejournal/_tpl/sidebar-blogroll.tpl" }}
+{{ include file="_tpl/sidebar-blogroll.tpl" }}
   
 </div>
 
     </div><!-- Content Ends -->
     
-{{ include file="set_thejournal/_tpl/footer.tpl" }}
+{{ include file="_tpl/footer.tpl" }}
   
 </div>
 

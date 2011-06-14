@@ -10,9 +10,9 @@ defined('APPLICATION_ENV')
 
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
+    '/usr/share/php/libzend-framework-php',
     realpath(APPLICATION_PATH . '/../library'),
     get_include_path(),
-    '/usr/share/php/libzend-framework-php',
 )));
 
 // goes to install process if configuration files does not exist yet

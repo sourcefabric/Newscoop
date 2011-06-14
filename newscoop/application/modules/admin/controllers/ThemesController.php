@@ -4,6 +4,7 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+use Newscoop\Entity\OutputSettings;
 use Newscoop\Service\IArticleTypeService,
     Newscoop\Entity\Repository\ArticleTypeRepository,
     Newscoop\Entity\ArticleType,
@@ -332,8 +333,9 @@ class Admin_ThemesController extends Zend_Controller_Action
         {
             $atName = $at->getName();
             $articleTypes[$atName] = array();
-            foreach( $this->getArticleTypeService()->findFields( $at ) as $atf )
+            foreach( $this->getArticleTypeService()->findFields( $at ) as $atf ) {
                 $articleTypes[$atName][] = $atf->getName();
+            }
         }
 
         $this->view->theme            = $theme->toObject();
@@ -346,67 +348,7 @@ class Admin_ThemesController extends Zend_Controller_Action
 
     public function wizardThemeFilesAction()
     {
-        $themeId          = $this->_request->getParam( 'id' );
-        $datatableAdapter = new ThemeFiles( $this->getThemeService(), $themeId );
-        $datatable        = $this->_helper->genericDatatable;
-        /* @var $datatable Action_Helper_GenericDatatable */
-        $datatable
-            ->setAdapter( $datatableAdapter )
-            ->setOutputObject( $this->view )
-            ->setCols( array
-            (
-                'checkbox'	=> '',
-                'name'      => getGS( 'Name' ),
-                'id'        => getGS( 'ID' ),
-                'type'	    => getGS( 'Type' ),
-                'cache'     => getGS( 'Cache lifetime, sec.' ),
-                'modified'	=> getGS( 'Modified' ),
-                'actions'	=> getGS( 'Action' )
-            ))
-            ->buildColumnDefs()
-            ->setOptions( array
-            (
-                'sAjaxSource' => $this->view->url( array( 'action' => 'wizard-theme-files', 'format' => 'json') ),
-            	'sPaginationType' => 'full_numbers',
-            	'bServerSide'    => true,
-            	'bJQueryUI'      => true,
-            	'bAutoWidth'     => false,
-                'sDom'		     => 'tiprl',
-            	'iDisplayLength' => 25,
-            	'bLengthChange'  => false,
-                'fnRowCallback'	 => "newscoopDatatables.callbackRow",
-                'fnDrawCallback' => "newscoopDatatables.callbackDraw",
-                'fnInitComplete' => "newscoopDatatables.callbackInit"
-            ) )
-            ->setWidths( array
-            (
-            	'checkbox'  => 20,
-            	'name'      => 150,
-            	'id'        => 150,
-            	'type'      => 150,
-                'cache'	    => 150,
-            	'modified'  => 150,
-                'actions'	=> 150
-            ) )
-            ->setRowHandler
-            (
-                function( $theme, $index = null )
-                {
-                    return array
-                    (
 
-                    );
-                }
-            )
-            ->setParams( $this->_request->getParams() );
-
-        if( ( $this->view->mytable = $datatable->dispatch() ) )
-        {
-            $this->view->publications  = $this->getPublicationService()->getEntities();
-            $this->view->uploadForm    = new Admin_Form_Theme_Upload();
-            $this->view->themesPath    = $this->view->baseUrl( '/themes' );
-            $this->view->headScript()->appendFile( $this->view->baseUrl( "/js/jquery/jquery.tmpl.js" ) );
-        }
     }
 
     public function advancedThemeSettingsAction()
@@ -441,6 +383,7 @@ class Admin_ThemesController extends Zend_Controller_Action
         $output     = $this->getOutputService()->getById( $outputId );
         /* @var $settings Newscoop\Entity\Output */
 
+        $templates = array();
         // getting all available templates
         foreach( $thmServ->getTemplates( $theme ) as $tpl ) {
         	/* @var $tpl Newscoop\Entity\Resource */
@@ -457,13 +400,20 @@ class Admin_ThemesController extends Zend_Controller_Action
 
         $settingVals = array
         (
-        	"frontpage"   => $settings->getFrontPage(),
-        	"articlepage" => $settings->getArticlePage(),
-        	"sectionpage" => $settings->getSectionPage(),
-        	"errorpage"   => $settings->getErrorPage(),
+            "frontpage"	  => null,
+        	"articlepage" => null,
+        	"sectionpage" => null,
+        	"errorpage"	  => null,
             "outputid"	  => $outputId,
             "themeid"	  => $themeId
         );
+        if( $settings instanceof  OutputSettings )
+        {
+            $settingVals["frontpage"]  = $settings->getFrontPage();
+        	$settingVals["articlepage"] = $settings->getArticlePage();
+        	$settingVals["sectionpage"] = $settings->getSectionPage();
+        	$settingVals["errorpage"]   = $settings->getErrorPage();
+        }
         $outputForm->setValues( $templates, $settingVals );
 
         try // @todo maybe implement this a little smarter, little less code?

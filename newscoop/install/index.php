@@ -9,10 +9,21 @@
  * @link http://www.sourcefabric.org
  */
 
-$local_path = realpath(dirname(__FILE__) . '/../include');
-set_include_path(
-    '/usr/share/php/libzend-framework-php' . PATH_SEPARATOR .
-    $local_path . PATH_SEPARATOR . get_include_path());
+defined('APPLICATION_PATH')
+    || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
+
+// Ensure library/ is on include_path
+set_include_path(implode(PATH_SEPARATOR, array(
+    '/usr/share/php/libzend-framework-php',
+    realpath(APPLICATION_PATH . '/../library'),
+    realpath(dirname(__FILE__) . '/../include'),
+    get_include_path(),
+)));
+
+require_once 'Zend/Loader/Autoloader.php';
+
+$autoloader = Zend_Loader_Autoloader::getInstance();
+$autoloader->setFallbackAutoloader(TRUE);
 
 $GLOBALS['g_campsiteDir'] = dirname(dirname(__FILE__));
 require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');

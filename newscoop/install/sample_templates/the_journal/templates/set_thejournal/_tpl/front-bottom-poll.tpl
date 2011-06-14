@@ -23,7 +23,7 @@
 <div id="poll">
   <p class="question">{{ $gimme->poll->question }}</p>
   {{ if $gimme->poll->is_votable }}
-    {{ poll_form template="set_thejournal/_tpl/front-bottom-poll.tpl" submit_button=false }}
+    {{ poll_form template="_tpl/front-bottom-poll.tpl" submit_button=false }}
     {{ list_poll_answers }}
       <div class="poll-item">
         {{ pollanswer_edit }}{{ $gimme->pollanswer->answer }}<br />

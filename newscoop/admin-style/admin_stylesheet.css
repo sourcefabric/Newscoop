@@ -2190,7 +2190,6 @@ dl.right-floated {
 					border:1px solid #9d9d9d;
 					}
 					.actionDropDown li ul li {
-						height:25px;
 						border-bottom:1px solid #e5e5e5;
 						}
 					.actionDropDown li ul li a, .actionDropDown li ul li a.active {
@@ -2288,3 +2287,4 @@ ul#edit-files h2 {
 .main-menu-bar ul.navigation ul {
     display: none;
 }
+>>>>>>> devel

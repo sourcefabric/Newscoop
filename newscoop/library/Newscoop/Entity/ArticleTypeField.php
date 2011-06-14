@@ -63,7 +63,9 @@ class ArticleTypeField
      */
     public function setArticleType( ArticleType $type )
     {
-        $this->articleType = $this->typeHack = $type;
+        $this->articleType =
+        //$this->typeHack =
+            $type;
         return $this;
     }
 

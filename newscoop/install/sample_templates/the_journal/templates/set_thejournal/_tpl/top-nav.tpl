@@ -1,7 +1,7 @@
     <div id="top-nav" class="wrap">
         <div class="fl">
             <ul id="nav">
-                <li{{ if $gimme->template->name == "set_thejournal/front.tpl" }} class="current_page_item"{{ /if }}><a href="http://{{ $gimme->publication->site }}">Home</a></li>
+                <li{{ if $gimme->template->name == "front.tpl" }} class="current_page_item"{{ /if }}><a href="http://{{ $gimme->publication->site }}">Home</a></li>
                     
 {{ local }}
 {{ set_current_issue }}
@@ -14,5 +14,5 @@
 
             </ul>       
         </div>
-{{ include file="set_thejournal/_tpl/top-search-box.tpl" }}
+{{ include file="_tpl/top-search-box.tpl" }}
     </div><!-- /#nav -->

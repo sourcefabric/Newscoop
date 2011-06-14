@@ -732,7 +732,7 @@ ORDER BY Number DESC";
         };
 
         //Replace all of the gimme tag + relative path
-        $pattern = '([\"\']+[\s]*[http\:\/\/\]?{\{[\s]*\$gimme\-\>publication\-\>site[\s]*\}\}\/templates/'.$folder.'\/(?<path>[^\"]+)[\"\']+)';
+        $pattern = '([\"\']+[\s]*[http\:\/\/\]?{\{[\s]*\$gimme\-\>publication\-\>site[\s]*\}\}\/templates/'.$folder.'\/(?<path>[^\"\']+)[\"\']+)';
         $content = preg_replace_callback($pattern, $replacer, $content);
 
         //Replace all of the relative path

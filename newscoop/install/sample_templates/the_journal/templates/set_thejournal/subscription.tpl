@@ -1,9 +1,9 @@
-{{ include file="set_thejournal/_tpl/_html-head.tpl" }}
+{{ include file="_tpl/_html-head.tpl" }}
 
 <body class="single single-post custom gecko">
 <div id="wrap">
 
-{{ include file="set_thejournal/_tpl/top.tpl" }}
+{{ include file="_tpl/top.tpl" }}
 
     <div id="content" class="wrap"> 
     
@@ -32,7 +32,7 @@
 {{* no user form submitted, no subscription form submitted: display the user form *}}
 {{ if !$gimme->edit_user_action->defined
       && !$gimme->edit_subscription_action->defined }}
-          {{ include file="set_thejournal/_tpl/user-form.tpl" }}
+          {{ include file="_tpl/user-form.tpl" }}
 {{ /if }}
 
 {{* user form submitted with errors: display the error and the user form *}}
@@ -40,13 +40,13 @@
       && $gimme->edit_user_action->is_error }}
           <h5 style="margin-bottom: 20px">There was an error submitting the account creation form:
           {{ $gimme->edit_user_action->error_message }}</h5>
-          {{ include file="set_thejournal/_tpl/user-form.tpl" }}
+          {{ include file="_tpl/user-form.tpl" }}
 {{ /if }}
 
 {{* user form submitted ok: display the subscription form *}}
 {{ if $gimme->edit_user_action->defined
       && $gimme->edit_user_action->ok }}
-          {{ include file="set_thejournal/_tpl/subscription-form.tpl" }}
+          {{ include file="_tpl/subscription-form.tpl" }}
 {{ /if }}
 
 {{* subscription form submitted with errors: display the error and the submit form *}}
@@ -54,7 +54,7 @@
       && $gimme->edit_subscription_action->is_error }}
           <p style="margin: 15px 0">There was an error submitting the subscription form:
           {{ $gimme->edit_subscription_action->error_message }}</p>
-          {{ include file="set_thejournal/_tpl/subscription-form.tpl" }}
+          {{ include file="_tpl/subscription-form.tpl" }}
 {{ /if }}
 
 {{* subscription form submitted ok: display success message *}}
@@ -74,19 +74,19 @@
 
     <div class="sidebar-top">
     
-{{ include file="set_thejournal/_tpl/_banner300x250.tpl" }}
+{{ include file="_tpl/_banner300x250.tpl" }}
 
     </div>
         
-{{ include file="set_thejournal/_tpl/sidebar-pages.tpl" }}
+{{ include file="_tpl/sidebar-pages.tpl" }}
     
-{{ include file="set_thejournal/_tpl/sidebar-blogroll.tpl" }}
+{{ include file="_tpl/sidebar-blogroll.tpl" }}
   
 </div>
 
     </div><!-- Content Ends -->
     
-{{ include file="set_thejournal/_tpl/footer.tpl" }}
+{{ include file="_tpl/footer.tpl" }}
   
 </div>
 

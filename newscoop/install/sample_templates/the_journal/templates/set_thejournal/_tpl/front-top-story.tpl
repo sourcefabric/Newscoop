@@ -15,6 +15,6 @@
 {{ /list_articles }}
 {{ /local }}                
                 
-{{ include file="set_thejournal/_tpl/front-tabs.tpl" }}
+{{ include file="_tpl/front-tabs.tpl" }}
 
             </div>

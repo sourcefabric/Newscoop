@@ -1,4 +1,4 @@
-{{ subscription_form type="by_publication" template="set_thejournal/subscription.tpl" button_html_code="class=\"submitbutton\"" }}
+{{ subscription_form type="by_publication" template="subscription.tpl" button_html_code="class=\"submitbutton\"" }}
 <table class="userform">
   <tr>
     <td colspan="2"><p style="margin: 15px 0">Please fill in the following form in order to create the subscription.</p></td>

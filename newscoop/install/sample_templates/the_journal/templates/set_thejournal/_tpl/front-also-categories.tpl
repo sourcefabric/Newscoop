@@ -3,8 +3,8 @@
                <div id="also-header">
                   <h3>Also in this site...</h3>
                     <div class="carousel-nav">
-                      <img style="opacity: 0;" class="back" src="http://{{ $gimme->publication->site }}/templates/set_thejournal/_img/carousel_back_button.gif" alt="Previous Posts">
-                      <img style="opacity: 1;" class="next" src="http://{{ $gimme->publication->site }}/templates/set_thejournal/_img/carousel_next_button.gif" alt="Next Posts">
+                      <img style="opacity: 0;" class="back" src="{{ url static_file='_img/carousel_back_button.gif' }}" alt="Previous Posts">
+                      <img style="opacity: 1;" class="next" src="{{ url static_file='_img/carousel_next_button.gif' }}" alt="Next Posts">
                     </div>
                     <div class="fix"></div>
                 </div>

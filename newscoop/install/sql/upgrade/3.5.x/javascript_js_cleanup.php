@@ -53,7 +53,7 @@ function upgrade_35x_remove_duplicate($item)
     }
 }
 
-function upgrade_35x_camp_remove_dir($p_dirName)
+function upgrade_35x_camp_remove_dir($p_dirName, $p_msg = '', $p_skip = array())
 {
     $p_dirName = str_replace('//', '/', $p_dirName);
     $dirBaseName = trim($p_dirName, '/');

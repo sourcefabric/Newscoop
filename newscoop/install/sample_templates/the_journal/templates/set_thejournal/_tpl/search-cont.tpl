@@ -15,8 +15,8 @@
 {{ if $gimme->current_list->at_end }}                                                 
                                                     
                 <div class="more_entries">
-                    <div class="alignleft">{{ if $gimme->current_list->has_previous_elements }}<a href="{{ uripath options="template set_thejournal/search.tpl" }}?{{ urlparameters options="previous_items" }} ">&laquo; Newer Entries</a>{{ /if }}</div>
-                    <div class="alignright">{{ if $gimme->current_list->has_next_elements }}<a href="{{ uripath options="template set_thejournal/search.tpl" }}?{{ urlparameters options="next_items" }}">Older Entries &raquo;</a>{{ /if }}</div>
+                    <div class="alignleft">{{ if $gimme->current_list->has_previous_elements }}<a href="{{ uripath options="template search.tpl" }}?{{ urlparameters options="previous_items" }} ">&laquo; Newer Entries</a>{{ /if }}</div>
+                    <div class="alignright">{{ if $gimme->current_list->has_next_elements }}<a href="{{ uripath options="template search.tpl" }}?{{ urlparameters options="next_items" }}">Older Entries &raquo;</a>{{ /if }}</div>
                     <br class="fix" />
                      
                 </div>    

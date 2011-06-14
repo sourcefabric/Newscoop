@@ -1,9 +1,9 @@
-{{ include file="set_thejournal/_tpl/_html-head.tpl" }}
+{{ include file="_tpl/_html-head.tpl" }}
 
 <body class="single single-post custom gecko">
 <div id="wrap">
 
-{{ include file="set_thejournal/_tpl/top.tpl" }}
+{{ include file="_tpl/top.tpl" }}
 
     <div id="content" class="wrap">
     
@@ -14,11 +14,11 @@
 
                 <div class="post wrap">
 
-{{ include file="set_thejournal/_tpl/article-cont.tpl" }}
+{{ include file="_tpl/article-cont.tpl" }}
           
           <div id="comments">
             
-{{ include file="set_thejournal/_tpl/article-comments.tpl" }}
+{{ include file="_tpl/article-comments.tpl" }}
 
           </div>
                 </div>
@@ -31,32 +31,32 @@
     <div class="sidebar-top">
     
  {{ if $gimme->article->has_map }}     
-{{ include file="set_thejournal/_tpl/article-map.tpl" }}
+{{ include file="_tpl/article-map.tpl" }}
 {{ else }}
-{{ include file="set_thejournal/_tpl/_banner300x250.tpl" }}
+{{ include file="_tpl/_banner300x250.tpl" }}
 {{ /if }}
 
-{{ include file="set_thejournal/_tpl/dynamic-map.tpl" }}
+{{ include file="_tpl/dynamic-map.tpl" }}
 
     </div>
          
-{{ include file="set_thejournal/_tpl/sidebar-related.tpl" }}
+{{ include file="_tpl/sidebar-related.tpl" }}
         
-{{ include file="set_thejournal/_tpl/sidebar-pages.tpl" }}
+{{ include file="_tpl/sidebar-pages.tpl" }}
     
-{{ include file="set_thejournal/_tpl/sidebar-blogroll.tpl" }}
-
+{{ include file="_tpl/sidebar-blogroll.tpl" }}
+  
 </div>
 
 {{ else }}
 
-{{ include file="set_thejournal/_tpl/article-fullwidth.tpl" }}
+{{ include file="_tpl/article-fullwidth.tpl" }}
 
 {{ /if }}
 
     </div><!-- Content Ends -->
     
-{{ include file="set_thejournal/_tpl/footer.tpl" }}
+{{ include file="_tpl/footer.tpl" }}
   
 </div>
 
