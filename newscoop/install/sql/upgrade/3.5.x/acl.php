@@ -31,8 +31,12 @@ foreach ($groups as $group) {
     $rights = $g_ado_db->GetAll($sql);
     foreach ($rights as $right) {
         $rightName = $right['right_define_name'];
-        list($resource, $action) = PermissionToAcl::translate($rightName);
-        $rules[] = array('allow', $roleId, strtolower($resource), strtolower($action));
+        list($resource, $action) = array_map('strtolower', PermissionToAcl::translate($rightName));
+        $rules[] = array('allow', $roleId, $resource, $action);
+
+        if ($resource == 'template' && $action == 'manage') {
+            $rules[] = array('allow', $roleId, 'theme', 'manage');
+        }
     }
 
     $roleId++;
@@ -54,10 +58,10 @@ foreach ($users as $user) {
     $rights = $g_ado_db->GetAll($sql);
     foreach ($rights as $right) {
         $rightName = $right['right_define_name'];
-        list($resource, $action) = PermissionToAcl::translate($rightName);
-        $rules[] = array('allow', $roleId, strtolower($resource), strtolower($action));
+        list($resource, $action) = array_map('strtolower', PermissionToAcl::translate($rightName));
+        $rules[] = array('allow', $roleId, $resource, $action);
 
-        if (strtolower($resource) == 'template' && strtolower($action) == 'manage') {
+        if ($resource == 'template' && $action == 'manage') {
             $rules[] = array('allow', $roleId, 'theme', 'manage');
         }
     }
