@@ -186,6 +186,9 @@
 										.actionDropDown li ul li a.add {
 											background:url(images/solo_icons.png) 7px -84px no-repeat #ffffff;
 											}
+										.actionDropDown li ul li a.edit {
+											background:url(images/topics_edit.png) 5px 6px no-repeat #ffffff;
+											}
 										.actionDropDown li ul li a.delete, .actionDropDown li ul li a.unassign {
 											background:url(images/topics_delete.png) 5px 6px no-repeat #ffffff
 											}

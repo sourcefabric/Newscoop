@@ -92,7 +92,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
         /**
          * @todo at refactor @see hack from \Newscoop\Entity\ArticleTypeField
          */
-        foreach(( $results = $qb->getQuery()->getResult() ) as $atf) {
+        foreach(( $results = $qb->getQuery()->getResult() ) as $atf ) {
             $atf->setArticleType( $type );
         }
         return $results;
