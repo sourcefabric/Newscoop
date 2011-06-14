@@ -104,7 +104,7 @@ class LanguageRepository extends EntityRepository
     }
 
     /**
-     * Test is used
+     * Check if in use
      *
      * @param Language $language
      * @return bool

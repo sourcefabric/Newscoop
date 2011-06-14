@@ -24,6 +24,7 @@ use Newscoop\Service\IArticleTypeService,
 
 /**
  * Themes Controller
+ * @Acl(resource="theme", action="manage")
  */
 class Admin_ThemesController extends Zend_Controller_Action
 {

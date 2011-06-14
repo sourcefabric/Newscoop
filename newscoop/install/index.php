@@ -10,7 +10,9 @@
  */
 
 $local_path = realpath(dirname(__FILE__) . '/../include');
-set_include_path($local_path . PATH_SEPARATOR . get_include_path());
+set_include_path(
+    '/usr/share/php/libzend-framework-php' . PATH_SEPARATOR .
+    $local_path . PATH_SEPARATOR . get_include_path());
 
 $GLOBALS['g_campsiteDir'] = dirname(dirname(__FILE__));
 require_once($GLOBALS['g_campsiteDir'].'/include/campsite_constants.php');

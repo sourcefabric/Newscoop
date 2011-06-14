@@ -92,7 +92,8 @@ TABLES="
  plugin_poll_issue\
  plugin_poll_publication\
  plugin_poll_section\
- plugin_pollanswer_attachment"
+ plugin_pollanswer_attachment\
+ resource"
 
 mysqldump -u $DATABASE_USER $password_string -t --insert-ignore \
   $DATABASE_NAME $TABLES > campsite_demo_data.sql

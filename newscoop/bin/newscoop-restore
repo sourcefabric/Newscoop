@@ -356,11 +356,11 @@ $imagesSrcDir = "$tempDirName/images";
 $configDestDir = $ETC_DIR;
 $filesDestDir = $CAMPSITE_DIR.'/files';
 $imagesDestDir = $CAMPSITE_DIR.'/images';
-$templatesDirName = 'templates';
+$templatesDirName = 'templates'; // keep for gimme template upgrade
 $templatesDestDir = $CAMPSITE_DIR.'/'.$templatesDirName;
 $compiledTemplatesDir = $CAMPSITE_DIR.'/cache';
 
-$destDirs = array($templatesDestDir, $imagesDestDir, $filesDestDir, $compiledTemplatesDir);
+$destDirs = array("$CAMPSITE_DIR/themes", $imagesDestDir, $filesDestDir, $compiledTemplatesDir);
 
 foreach ($destDirs as $dir) {
     if (!file_exists($dir)) {
