@@ -36,8 +36,6 @@
 {{ include file="_tpl/_banner300x250.tpl" }}
 {{ /if }}
 
-{{ include file="_tpl/dynamic-map.tpl" }}
-
     </div>
          
 {{ include file="_tpl/sidebar-related.tpl" }}
