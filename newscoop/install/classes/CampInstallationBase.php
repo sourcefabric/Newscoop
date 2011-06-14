@@ -9,7 +9,12 @@
  * @version $Revision$
  * @link http://www.sourcefabric.org
  */
- 
+
+use Newscoop\Entity\Resource,
+	Newscoop\Service\IThemeManagementService,
+	Newscoop\Service\IPublicationService,
+	Newscoop\Service\Implementation\ThemeManagementServiceLocal;
+
 global $g_db;
 
 /**
@@ -355,7 +360,7 @@ class CampInstallationBase
 
         // copies template files to corresponding directory
         $source = CS_INSTALL_DIR.DIR_SEP.'sample_templates'.DIR_SEP.$template_name['loaddemo'].DIR_SEP.'templates';
-        $target = CS_PATH_TEMPLATES;
+        $target = CS_PATH_TEMPLATES.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED;
         if (CampInstallationBaseHelper::CopyFiles($source, $target) == false) {
             $this->m_step = 'loaddemo';
             $this->m_message = 'Error: Copying sample site files';
@@ -411,6 +416,15 @@ class CampInstallationBase
                 $this->m_message .= "<br>$query";
             }
             return false;
+        }
+
+        $resourceId = new Newscoop\Service\Resource\ResourceId(__CLASS__);
+        $themeService = $resourceId->getService(IThemeManagementService::NAME_1);
+        $publicationService = $resourceId->getService(IPublicationService::NAME);
+        foreach ($themeService->getUnassignedThemes() as $theme) {
+        	foreach ($publicationService->getEntities() as $publication) {
+        		$themeService->assignTheme($theme, $publication);
+        	}
         }
 
         return true;
