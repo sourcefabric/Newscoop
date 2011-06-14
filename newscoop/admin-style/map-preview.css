@@ -1,6 +1,6 @@
 .map_preview_toolbar {
     background: #ffffff;
-    width: 1020px;
+    /*width: 1020px;*/
     margin: 0px auto;
     height: 0px;
     padding: 9px 8px 0px 14px;
@@ -16,17 +16,17 @@
 .geomap_locations {
     float: left;
     width: 230px;
-    margin-left: 20px;
+    /*margin-left: 20px;*/
     font-size: 12px;
 }
 
 .geomap_mappart {}
 
 .geomap_container {
-    width: 850px;
+    /*width: 850px;*/
     height: 500px;
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 16px;
+    /*margin-right: auto;*/
 }
 
 .map_hidden {
@@ -40,7 +40,7 @@
 }
 
 .geomap_map {
-	float:right;
+	float:left;
 }
 .geomap_locations dl {
 	display:block;
