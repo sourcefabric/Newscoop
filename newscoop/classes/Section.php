@@ -12,7 +12,6 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
-require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
 
 /**
  * @package Campsite

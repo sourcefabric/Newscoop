@@ -9,6 +9,10 @@
  * @link http://www.campware.org
  */
 
+// Define application environment
+defined('APPLICATION_ENV')
+    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
+
 header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
 
@@ -69,9 +73,6 @@ foreach($template_files as $template_file) {
     $converter->write();
 }
 
-// sync phorum users
-User::SyncPhorumUsers();
-
 // update plugins
 CampPlugin::OnUpgrade();
 
@@ -95,6 +96,13 @@ if (file_exists(__FILE__)) {
 }
 
 function display_upgrade_error($p_errorMessage, $exit = TRUE) {
+    if (defined('APPLICATION_ENV') && APPLICATION_ENV == 'development') {
+        var_dump($p_errorMessage);
+        if ($exit) {
+            exit(1);
+        }
+    }
+
     $template = CS_SYS_TEMPLATES_DIR.DIR_SEP.'_campsite_error.tpl';
     $templates_dir = CS_TEMPLATES_DIR;
     $params = array('context' => null,

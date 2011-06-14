@@ -15,7 +15,6 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Section.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/IssuePublish.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
-require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampTemplate.php');
 
 use Newscoop\Service\Resource\ResourceId;
 use Newscoop\Service\IOutputSettingIssueService;
