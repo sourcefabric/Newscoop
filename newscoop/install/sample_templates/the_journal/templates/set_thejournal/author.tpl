@@ -1,9 +1,9 @@
-{{ include file="set_thejournal/_tpl/_html-head.tpl" }}
+{{ include file="_tpl/_html-head.tpl" }}
 
 <body class="archive custom gecko">
 <div id="wrap">
 
-{{ include file="set_thejournal/_tpl/top.tpl" }}
+{{ include file="_tpl/top.tpl" }}
     
 
     <!-- Content Starts -->
@@ -11,7 +11,7 @@
     <div class="col-left">
       <div id="main">
                                                                        
-{{ include file="set_thejournal/_tpl/author-cont.tpl" }} 
+{{ include file="_tpl/author-cont.tpl" }} 
                 
             </div><!-- main ends -->
         </div><!-- .col-left ends -->
@@ -21,20 +21,20 @@
 
     <div class="sidebar-top"> 
     
-{{ include file="set_thejournal/_tpl/_banner300x250.tpl" }}    
+{{ include file="_tpl/_banner300x250.tpl" }}    
 
     </div>
 
         
-{{ include file="set_thejournal/_tpl/sidebar-pages.tpl" }}
+{{ include file="_tpl/sidebar-pages.tpl" }}
 
-{{ include file="set_thejournal/_tpl/sidebar-blogroll.tpl" }}           
+{{ include file="_tpl/sidebar-blogroll.tpl" }}           
   
 </div>
 <!-- Sidebar Ends -->
     </div><!-- Content Ends -->
     
-{{ include file="set_thejournal/_tpl/footer.tpl" }}
+{{ include file="_tpl/footer.tpl" }}
   
 </div>
 

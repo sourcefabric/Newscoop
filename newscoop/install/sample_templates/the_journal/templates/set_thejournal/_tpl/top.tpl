@@ -33,22 +33,22 @@
                 <a href="http://{{ $gimme->publication->site }}/?tpl=1133">Subscribe RSS Feed</a>
             </div>
 
-{{ include file="set_thejournal/_tpl/top-login.tpl" }}
+{{ include file="_tpl/top-login.tpl" }}
 
         </div><!-- /#top-meta -->
          
-{{ include file="set_thejournal/_tpl/top-highlights.tpl" }}
+{{ include file="_tpl/top-highlights.tpl" }}
                  
         <div id="header">
             
             <div class="logo">
-              <a href="http://{{ $gimme->publication->site }}" title="The Journal"><img src="http://{{ $gimme->publication->site }}/templates/set_thejournal/_img/logo.png" alt=""></a>
+              <a href="http://{{ $gimme->publication->site }}" title="The Journal"><img src="{{ url static_file='_img/logo.png' }}" alt=""></a>
             </div>
                        
-{{ include file="set_thejournal/_tpl/top-recent-entries.tpl" }}
+{{ include file="_tpl/top-recent-entries.tpl" }}
             
         </div>
         
-{{ include file="set_thejournal/_tpl/top-nav.tpl" }}        
+{{ include file="_tpl/top-nav.tpl" }}        
 
     </div><!-- /#top -->

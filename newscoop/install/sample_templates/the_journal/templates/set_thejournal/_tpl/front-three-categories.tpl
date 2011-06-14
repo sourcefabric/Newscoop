@@ -13,6 +13,6 @@
 {{ /list_articles }}
 {{ /local }}              
                                                                
-    <p>Go to the <a href="{{ uri options="template set_thejournal/archive.tpl" }}">Archives</a> to see more entries</p>  
+    <p>Go to the <a href="{{ uri options="template archive.tpl" }}">Archives</a> to see more entries</p>  
                                             
 </div>

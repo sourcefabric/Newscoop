@@ -2,7 +2,7 @@
            <div class="archives">
                     <h3>Recent Entries</h3>
                          
-                    <p>Go to the <a href="{{ local }}{{ unset_section }}{{ uri options="template set_thejournal/archive.tpl" }}{{ /local }}">Archives</a> <br />
+                    <p>Go to the <a href="{{ local }}{{ unset_section }}{{ uri options="template archive.tpl" }}{{ /local }}">Archives</a> <br />
                   to see more entries</p>
                 </div><!-- /.archives -->
                 <ul>

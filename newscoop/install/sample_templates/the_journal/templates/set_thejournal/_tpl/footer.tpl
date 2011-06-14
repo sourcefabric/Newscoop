@@ -24,7 +24,7 @@
 {{ /list_articles }}      
 {{ unset_section }}
      
-      <li style="border: medium none;" class="page_item"><a href="{{ uri options="template set_thejournal/archive.tpl" }}" title="Archives">Archives</a></li>
+      <li style="border: medium none;" class="page_item"><a href="{{ uri options="template archive.tpl" }}" title="Archives">Archives</a></li>
 
 {{ /local }}       
       
@@ -33,6 +33,6 @@
         <div class="fix"></div>        
                 
     <div class="credits">
-      <p>&copy; 2011 The Journal. All Rights Reserved. Powered by <a href="http://newscoop.sourcefabric.org/" title="Newscoop">Newscoop</a>. Designed by <a href="http://www.woothemes.com/"><img src="http://{{ $gimme->publication->site }}/templates/set_thejournal/_img/woothemes.png" alt="Woo Themes" width="87" height="21"></a></p>
+      <p>&copy; 2011 The Journal. All Rights Reserved. Powered by <a href="http://newscoop.sourcefabric.org/" title="Newscoop">Newscoop</a>. Designed by <a href="http://www.woothemes.com/"><img src="{{ url static_file='_img/woothemes.png' }}" alt="Woo Themes" width="87" height="21"></a></p>
     </div>
   </div>

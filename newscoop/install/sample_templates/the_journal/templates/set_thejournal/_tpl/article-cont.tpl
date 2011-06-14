@@ -1,4 +1,4 @@
-{{ include file="set_thejournal/_tpl/article-author-popup.tpl" }}
+{{ include file="_tpl/article-author-popup.tpl" }}
 
                     <h2 class="post-title">{{ $gimme->article->name }}</h2>
                     <p class="post-details">Published on {{ $gimme->article->publish_date|camp_date_format:"%e %M %Y" }} in <a href="{{ uri options="section" }}" title="View all posts in {{ $gimme->section->name }}" rel="category tag">{{ $gimme->section->name }}</a><br />

@@ -1,4 +1,4 @@
-            {{ user_form template="set_thejournal/subscription.tpl" submit_button="submit" }}
+            {{ user_form template="subscription.tpl" submit_button="submit" }}
             <p style="margin: 15px 0">Please fill in the following form in order to create the subscription account.</p>
             <table id="contact" cellspacing="0" cellpadding="0">
               <tr>
@@ -45,6 +45,6 @@
                 {{ /user_form }}        
             </div> 
             
-{{ if $gimme->user->logged_in }}<p style="margin: 15px 0"> To change your password, go <a href="{{ uri options="template set_thejournal/user-chgpass.tpl" }}">here</a></p> 
+{{ if $gimme->user->logged_in }}<p style="margin: 15px 0"> To change your password, go <a href="{{ uri options="template user-chgpass.tpl" }}">here</a></p> 
 {{ /if }}                   
                        
