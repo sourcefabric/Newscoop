@@ -696,7 +696,7 @@ this.remove_poi = function(index)
     this.update_poi_descs();
 
     this.ignore_click = true;
-    setTimeout(geo_obj.obj_name + ".ignore_click = false;", 500);
+    setTimeout(this.obj_name + ".ignore_click = false;", 500);
 };
 
 this.set_inline_label_value = function(index)

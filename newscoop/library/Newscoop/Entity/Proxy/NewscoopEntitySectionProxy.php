@@ -69,6 +69,12 @@ class NewscoopEntitySectionProxy extends \Newscoop\Entity\Section implements \Do
         return parent::setArticleTemplate($template);
     }
 
+    public function getIssue()
+    {
+        $this->_load();
+        return parent::getIssue();
+    }
+
     public function getId()
     {
         $this->_load();
