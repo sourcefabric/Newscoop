@@ -91,24 +91,7 @@ if (camp_html_has_msgs()) {
       camp_html_goto_page($backLink);
 }
 
-<<<<<<< HEAD
-$forum = new Phorum_forum($publicationObj->getForumId());
-if (!$forum->exists()) {
-	$forum = camp_forum_create($publicationObj);
-}
-$forum->setName($f_name);
-$forum->setIsVisible($f_comments_enabled);
-$publicationObj->setPublicComments($f_comments_public_enabled);
-
-$setting = new Phorum_setting('mod_emailcomments', 'S');
-if (!$setting->exists()) {
-    $setting->create();
-}
-$setting->update(array('addresses' => array($forum->getForumId() => $f_comments_moderator_to)));
-$setting->update(array('from_addresses' => array($forum->getForumId() => $f_comments_moderator_from)));
-=======
 //$publicationObj->setPublicComments($f_comments_public_enabled);
->>>>>>> devel
 
 $columns = array('Name' => $f_name,
 				 'IdDefaultAlias' => $f_default_alias,
