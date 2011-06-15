@@ -66,18 +66,16 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
     /**
      * Check permissions and redirect to error screen if not allowed
      *
-     * @params string|NULL $resource
-     * @params string|NULL $action
+     * @params string $resource
+     * @params string $action
      * @return void
      */
-    public function check($resource, $action = NULL)
+    public function check($resource, $action)
     {
         if (!$this->isAllowed($resource, $action)) {
             $redirector = $this->getActionController()->getHelper('redirector');
             $redirector->gotoSimple('deny', 'error', 'admin', array(
-                'message' => getGS('You are not allowed to $1 $2.',
-                    $action ? $action : getGS('handle'),
-                    $resource ? $resource : getGS('any resource')),
+                'message' => getGS('You are not allowed to $1 $2.', $action, $resource),
             ));
         }
     }
