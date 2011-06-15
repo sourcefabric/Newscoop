@@ -314,7 +314,7 @@ used for automated conversion or learning the format.
         return $a;
     }
 
-    function &getPackageFile($config, $debug = false, $tmpdir = null)
+    function &getPackageFile($config, $debug = false)
     {
         if (!class_exists('PEAR_Common')) {
             require_once 'PEAR/Common.php';
@@ -322,7 +322,7 @@ used for automated conversion or learning the format.
         if (!class_exists('PEAR_PackageFile')) {
             require_once 'PEAR/PackageFile.php';
         }
-        $a = &new PEAR_PackageFile($config, $debug, $tmpdir);
+        $a = &new PEAR_PackageFile($config, $debug);
         $common = new PEAR_Common;
         $common->ui = $this->ui;
         $a->setLogger($common);
@@ -969,7 +969,9 @@ used for automated conversion or learning the format.
         }
 
         $tar = new Archive_Tar($params[0]);
-        $tmpdir = System::mktemp('-d pearsign');
+
+        $tmpdir = $this->config->get('temp_dir');
+        $tmpdir = System::mktemp(" -t $tmpdir -d pearsign");
         if (!$tar->extractList('package2.xml package.xml package.sig', $tmpdir)) {
             return $this->raiseError("failed to extract tar file");
         }

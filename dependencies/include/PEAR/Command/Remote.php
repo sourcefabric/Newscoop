@@ -144,7 +144,7 @@ version of DB is 1.6.5, the downloaded file will be DB-1.6.5.tgz.',
             'shortcut' => 'cc',
             'options' => array(),
             'doc' => '
-Clear the XML-RPC/REST cache.  See also the cache_ttl configuration
+Clear the REST cache. See also the cache_ttl configuration
 parameter.
 ',
             ),
@@ -776,6 +776,7 @@ parameter.
         if ($verbose >= 1) {
             $output .= "reading directory $cache_dir\n";
         }
+
         $num = 0;
         while ($ent = readdir($dp)) {
             if (preg_match('/rest.cache(file|id)\\z/', $ent)) {

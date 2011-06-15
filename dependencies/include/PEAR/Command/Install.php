@@ -730,7 +730,8 @@ Run post-installation scripts in package <package>, if any exist.
             if ($param->getPackageType() == 'extsrc' ||
                   $param->getPackageType() == 'extbin' ||
                   $param->getPackageType() == 'zendextsrc' ||
-                  $param->getPackageType() == 'zendextbin') {
+                  $param->getPackageType() == 'zendextbin'
+            ) {
                 $pkg = &$param->getPackageFile();
                 if ($instbin = $pkg->getInstalledBinary()) {
                     $instpkg = &$instreg->getPackage($instbin, $pkg->getChannel());
@@ -741,7 +742,8 @@ Run post-installation scripts in package <package>, if any exist.
                 foreach ($instpkg->getFilelist() as $name => $atts) {
                     $pinfo = pathinfo($atts['installed_as']);
                     if (!isset($pinfo['extension']) ||
-                          in_array($pinfo['extension'], array('c', 'h'))) {
+                          in_array($pinfo['extension'], array('c', 'h'))
+                    ) {
                         continue; // make sure we don't match php_blah.h
                     }
 

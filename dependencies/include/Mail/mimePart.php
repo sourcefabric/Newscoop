@@ -48,7 +48,7 @@
  * @author    Aleksander Machniak <alec@php.net>
  * @copyright 2003-2006 PEAR <pear-group@php.net>
  * @license   http://www.opensource.org/licenses/bsd-license.php BSD License
- * @version   CVS: $Id: mimePart.php 305690 2010-11-23 12:41:00Z alec $
+ * @version   CVS: $Id: mimePart.php 301061 2010-07-07 18:20:17Z alec $
  * @link      http://pear.php.net/package/Mail_mime
  */
 
@@ -141,19 +141,17 @@ class Mail_mimePart
     *     content_type      - The content type for this part eg multipart/mixed
     *     encoding          - The encoding to use, 7bit, 8bit,
     *                         base64, or quoted-printable
-    *     charset           - Content character set
     *     cid               - Content ID to apply
     *     disposition       - Content disposition, inline or attachment
     *     dfilename         - Filename parameter for content disposition
     *     description       - Content description
-    *     name_encoding     - Encoding of the attachment name (Content-Type)
+    *     charset           - Character set to use
+    *     name_encoding     - Encoding for attachment name (Content-Type)
     *                         By default filenames are encoded using RFC2231
     *                         Here you can set RFC2047 encoding (quoted-printable
     *                         or base64) instead
-    *     filename_encoding - Encoding of the attachment filename (Content-Disposition)
+    *     filename_encoding - Encoding for attachment filename (Content-Disposition)
     *                         See 'name_encoding'
-    *     headers_charset   - Charset of the headers e.g. filename, description.
-    *                         If not set, 'charset' will be used
     *     eol               - End of line sequence. Default: "\r\n"
     *     body_file         - Location of file with part's body (instead of $body)
     *
@@ -167,8 +165,14 @@ class Mail_mimePart
             $this->_eol = MAIL_MIMEPART_CRLF;
         }
 
+        $c_type = array();
+        $c_disp = array();
         foreach ($params as $key => $value) {
             switch ($key) {
+            case 'content_type':
+                $c_type['type'] = $value;
+                break;
+
             case 'encoding':
                 $this->_encoding = $value;
                 $headers['Content-Transfer-Encoding'] = $value;
@@ -176,6 +180,29 @@ class Mail_mimePart
 
             case 'cid':
                 $headers['Content-ID'] = '<' . $value . '>';
+                break;
+
+            case 'disposition':
+                $c_disp['disp'] = $value;
+                break;
+
+            case 'dfilename':
+                $c_disp['filename'] = $value;
+                $c_type['name'] = $value;
+                break;
+
+            case 'description':
+                $headers['Content-Description'] = $value;
+                break;
+
+            case 'charset':
+                $c_type['charset'] = $value;
+                $c_disp['charset'] = $value;
+                break;
+
+            case 'language':
+                $c_type['language'] = $value;
+                $c_disp['language'] = $value;
                 break;
 
             case 'location':
@@ -189,56 +216,53 @@ class Mail_mimePart
         }
 
         // Default content-type
-        if (empty($params['content_type'])) {
-            $params['content_type'] = 'text/plain';
+        if (empty($c_type['type'])) {
+            $c_type['type'] = 'text/plain';
         }
 
         // Content-Type
-        $headers['Content-Type'] = $params['content_type'];
-        if (!empty($params['charset'])) {
-            $charset = "charset={$params['charset']}";
-            // place charset parameter in the same line, if possible
-            if ((strlen($headers['Content-Type']) + strlen($charset) + 16) <= 76) {
-                $headers['Content-Type'] .= '; ';
-            } else {
-                $headers['Content-Type'] .= ';' . $this->_eol . ' ';
+        if (!empty($c_type['type'])) {
+            $headers['Content-Type'] = $c_type['type'];
+            if (!empty($c_type['charset'])) {
+                $charset = "charset={$c_type['charset']}";
+                // place charset parameter in the same line, if possible
+                if ((strlen($headers['Content-Type']) + strlen($charset) + 16) <= 76) {
+                    $headers['Content-Type'] .= '; ';
+                } else {
+                    $headers['Content-Type'] .= ';' . $this->_eol . ' ';
+                }
+                $headers['Content-Type'] .= $charset;
             }
-            $headers['Content-Type'] .= $charset;
-
-            // Default headers charset
-            if (!isset($params['headers_charset'])) {
-                $params['headers_charset'] = $params['charset'];
-            }
-        }
-        if (!empty($params['filename'])) {
-            $headers['Content-Type'] .= ';' . $this->_eol;
-            $headers['Content-Type'] .= $this->_buildHeaderParam(
-                'name', $params['filename'],
-                !empty($params['headers_charset']) ? $params['headers_charset'] : 'US-ASCII',
-                !empty($params['language']) ? $params['language'] : null,
-                !empty($params['name_encoding']) ? $params['name_encoding'] : null
-            );
-        }
-
-        // Content-Disposition
-        if (!empty($params['disposition'])) {
-            $headers['Content-Disposition'] = $params['disposition'];
-            if (!empty($params['filename'])) {
-                $headers['Content-Disposition'] .= ';' . $this->_eol;
-                $headers['Content-Disposition'] .= $this->_buildHeaderParam(
-                    'filename', $params['filename'],
-                    !empty($params['headers_charset']) ? $params['headers_charset'] : 'US-ASCII',
-                    !empty($params['language']) ? $params['language'] : null,
-                    !empty($params['filename_encoding']) ? $params['filename_encoding'] : null
+            if (!empty($c_type['name'])) {
+                $headers['Content-Type'] .= ';' . $this->_eol;
+                $headers['Content-Type'] .= $this->_buildHeaderParam(
+                    'name', $c_type['name'],
+                    isset($c_type['charset']) ? $c_type['charset'] : 'US-ASCII',
+                    isset($c_type['language']) ? $c_type['language'] : null,
+                    isset($params['name_encoding']) ?  $params['name_encoding'] : null
                 );
             }
         }
 
-        if (!empty($params['description'])) {
+        // Content-Disposition
+        if (!empty($c_disp['disp'])) {
+            $headers['Content-Disposition'] = $c_disp['disp'];
+            if (!empty($c_disp['filename'])) {
+                $headers['Content-Disposition'] .= ';' . $this->_eol;
+                $headers['Content-Disposition'] .= $this->_buildHeaderParam(
+                    'filename', $c_disp['filename'],
+                    isset($c_disp['charset']) ? $c_disp['charset'] : 'US-ASCII',
+                    isset($c_disp['language']) ? $c_disp['language'] : null,
+                    isset($params['filename_encoding']) ?  $params['filename_encoding'] : null
+                );
+            }
+        }
+
+        if (!empty($headers['Content-Description'])) {
             $headers['Content-Description'] = $this->encodeHeader(
-                'Content-Description', $params['description'],
-                !empty($params['headers_charset']) ? $params['headers_charset'] : 'US-ASCII',
-                !empty($params['name_encoding']) ? $params['name_encoding'] : 'quoted-printable',
+                'Content-Description', $headers['Content-Description'],
+                isset($c_type['charset']) ? $c_type['charset'] : 'US-ASCII',
+                isset($params['name_encoding']) ?  $params['name_encoding'] : 'quoted-printable',
                 $this->_eol
             );
         }

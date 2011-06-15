@@ -1036,25 +1036,10 @@ class PEAR_Installer extends PEAR_Downloader
     // }}}
     // {{{ _parsePackageXml()
 
-    function _parsePackageXml(&$descfile, &$tmpdir)
+    function _parsePackageXml(&$descfile)
     {
-        if (substr($descfile, -4) == '.xml') {
-            $tmpdir = false;
-        } else {
-            // {{{ Decompress pack in tmp dir -------------------------------------
-
-            // To allow relative package file names
-            $descfile = realpath($descfile);
-
-            if (PEAR::isError($tmpdir = System::mktemp('-d'))) {
-                return $tmpdir;
-            }
-            $this->log(3, '+ tmp dir created at ' . $tmpdir);
-            // }}}
-        }
-
         // Parse xml file -----------------------------------------------
-        $pkg = new PEAR_PackageFile($this->config, $this->debug, $tmpdir);
+        $pkg = new PEAR_PackageFile($this->config, $this->debug);
         PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
         $p = &$pkg->fromAnyFile($descfile, PEAR_VALIDATE_INSTALLING);
         PEAR::staticPopErrorHandling();
@@ -1135,17 +1120,20 @@ class PEAR_Installer extends PEAR_Downloader
             $pkg      = $pkgfile->getPackageFile();
             $pkgfile  = $pkg->getArchiveFile();
             $descfile = $pkg->getPackageFile();
-            $tmpdir   = dirname($descfile);
         } else {
             $descfile = $pkgfile;
-            $tmpdir   = '';
-            $pkg      = $this->_parsePackageXml($descfile, $tmpdir);
+            $pkg      = $this->_parsePackageXml($descfile);
             if (PEAR::isError($pkg)) {
                 return $pkg;
             }
         }
 
+        $tmpdir   = dirname($descfile);
         if (realpath($descfile) != realpath($pkgfile)) {
+            // Use the temp_dir since $descfile can contain the download dir path
+            $tmpdir = $this->config->get('temp_dir', null, 'pear.php.net');
+            $tmpdir = System::mktemp("-d -t $tmpdir");
+
             $tar = new Archive_Tar($pkgfile);
             if (!$tar->extract($tmpdir)) {
                 return $this->raiseError("unable to unpack $pkgfile");
@@ -1373,9 +1361,8 @@ class PEAR_Installer extends PEAR_Downloader
             }
         }
 
-        $tmp_path = dirname($descfile);
         if (substr($pkgfile, -4) != '.xml') {
-            $tmp_path .= DIRECTORY_SEPARATOR . $pkgname . '-' . $pkg->getVersion();
+            $tmpdir .= DIRECTORY_SEPARATOR . $pkgname . '-' . $pkg->getVersion();
         }
 
         $this->configSet('default_channel', $channel);
@@ -1401,9 +1388,9 @@ class PEAR_Installer extends PEAR_Downloader
         foreach ($filelist as $file => $atts) {
             $this->expectError(PEAR_INSTALLER_FAILED);
             if ($pkg->getPackagexmlVersion() == '1.0') {
-                $res = $this->_installFile($file, $atts, $tmp_path, $options);
+                $res = $this->_installFile($file, $atts, $tmpdir, $options);
             } else {
-                $res = $this->_installFile2($pkg, $file, $atts, $tmp_path, $options);
+                $res = $this->_installFile2($pkg, $file, $atts, $tmpdir, $options);
             }
             $this->popExpect();
 
