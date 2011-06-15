@@ -1,6 +1,12 @@
 <?php
+/*
+ * configuration file for the Saas feature
+ * to disable the Saas feature just rename the arrays inside the saasConfig array
+ * to something other than 'permissions' and 'privileges'
+ *
+*/
     $this->saasConfig = array(
-        'permissions' => array(
+        'permissions_disabled_for_the_360beta' => array(
         /*article types*/
         'ManageArticleTypes',
         'DeleteArticleTypes',
@@ -63,7 +69,7 @@
         'ManageSystemPreferences'
 
     ),
-    'privileges' =>
+    'privileges_disabled_for_the_360beta' =>
     array(
         array('resource' => 'staff', 'privilege' => 'add'),
         array('resource' => 'publication', 'privilege' => 'delete'),
