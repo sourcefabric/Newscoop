@@ -1,6 +1,8 @@
 <?php
+$GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
+
 // run zend
-require_once dirname(__FILE__) . '/public/index.php';
+require_once $GLOBALS['g_campsiteDir'] . '/public/index.php';
 
 /**
  * The main GUI for the ImageManager.
@@ -9,7 +11,6 @@ require_once dirname(__FILE__) . '/public/index.php';
  * @version $Id: manager.php 5087 2006-06-01 21:54:08Z paul $
  * @package ImageManager
  */
-$GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
 
 set_include_path(implode(PATH_SEPARATOR, array(
