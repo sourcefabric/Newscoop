@@ -133,7 +133,7 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
      *
      * @param string $controller
      * @param string $action
-     * @return array|NULL
+     * @return array (resource, action)
      */
     public function getAccess($controller, $action)
     {
@@ -145,7 +145,7 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
             return $this->access[$controller][$action];
         }
 
-        return NULL;
+        return array(null, null);
     }
 
     /**
@@ -277,7 +277,7 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
                     $target = $resource;
 
                     $methodKey = $action;
-                    $access[$controllerKey][$methodKey] = array();
+                    $access[$controllerKey][$methodKey] = array(null, null);
 
                     // process annotations
                     $annotation = $reader->getMethodAnnotation($method, self::ANNOTATION);
