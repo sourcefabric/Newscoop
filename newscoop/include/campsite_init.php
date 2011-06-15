@@ -21,7 +21,9 @@ if (!file_exists($GLOBALS['g_campsiteDir'].'/conf/configuration.php')
 }
 
 // set include path for local pear packages
-set_include_path('/usr/share/php/libzend-framework-php' . PATH_SEPARATOR .
+set_include_path(
+    $GLOBALS['g_campsiteDir'] . '/library' . PATH_SEPARATOR .
+    '/usr/share/php/libzend-framework-php' . PATH_SEPARATOR .
     get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
 
 require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
