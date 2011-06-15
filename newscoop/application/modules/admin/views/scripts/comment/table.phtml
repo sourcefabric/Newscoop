@@ -1,6 +1,12 @@
-<?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/comments.css')); ?>
+<?php
+    /* @var Zend_View_Helper_HeadLink */
+    $headStyle = $this->headLink();
+    $headStyle->appendStylesheet($this->baseUrl('/admin-style/comments.css'));
+    $headStyle->offsetSetStylesheet('table','');
+?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/doT.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/comment.js')); ?>
+
 <?php $this->placeholder('title')->set(getGS('Comments')); ?>
 <script>
     function putGS(str) {

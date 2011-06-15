@@ -150,10 +150,10 @@ class Issue extends DatabaseObject {
 			$sections = Section::GetSections($this->m_data['IdPublication'],
 			$this->m_data['Number'],
 			$this->m_data['IdLanguage']);
-			
+
 			$queryStr = "SELECT id FROM Issues WHERE IdPublication=$p_destPublicationId AND Number=$p_destIssueId AND IdLanguage=$p_destLanguageId";
 			$issueId = $g_ado_db->GetOne($queryStr);
-			
+
 			$issue = $this->getIssueService()->findById($issueId);
 			$outputSettings = $this->getOutputSettingIssueService()->findByIssue($this->getIssueId());
 			foreach ($outputSettings as $outSet){
@@ -162,7 +162,7 @@ class Issue extends DatabaseObject {
 				$newOutSet->setIssue($issue);
 				$this->getOutputSettingIssueService()->insert($newOutSet);
 			}
-			
+
 			foreach ($sections as $section) {
 				$section->copy($p_destPublicationId, $p_destIssueId, $p_destLanguageId, null, false);
 			}
@@ -567,7 +567,8 @@ class Issue extends DatabaseObject {
 		list($languagesKey) = $tmpLanguage->getKeyColumnNames();
 		$queryStr .= " GROUP BY $languagesKey";
 		$order = Issue::ProcessLanguageListOrder($p_order);
-		foreach ($order as $orderDesc) {
+		$sqlOrder = array();
+                foreach ($order as $orderDesc) {
 			$sqlOrder[] = $orderDesc['field'] . ' ' . $orderDesc['dir'];
 		}
 		if (count($sqlOrder) > 0) {
@@ -585,7 +586,7 @@ class Issue extends DatabaseObject {
 	private $outputSettingIssueService = null;
 	/** @var Newscoop\Service\IIssueService */
     private $issueService = NULL;
-    
+
 	/**
 	 * Provides the controller resource id.
 	 *
@@ -613,7 +614,7 @@ class Issue extends DatabaseObject {
 		}
 		return $this->outputSettingIssueService;
 	}
-	
+
 	/**
      * Provides the Issue service.
      *

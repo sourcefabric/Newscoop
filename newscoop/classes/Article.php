@@ -816,6 +816,7 @@ class Article extends DatabaseObject {
              $queryStr .= " AND Articles.Published = 'Y'";
          }
         $order = Article::ProcessLanguageListOrder($p_order);
+        $sqlOrder = array();
         foreach ($order as $orderDesc) {
             $sqlOrder[] = $orderDesc['field'] . ' ' . $orderDesc['dir'];
         }

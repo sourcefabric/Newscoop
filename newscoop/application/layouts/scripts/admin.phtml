@@ -46,13 +46,19 @@
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/sidebar.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/widgets.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/zend_admin_stylesheet.css'); ?>" />
-    <?php echo $this->headLink(); ?>
     <?php if (!$this->legacy) { ?>
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/form.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/layout.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/content.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/sidebar.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/table.css'); ?>" />
+    <?php
+        $headLink = $this->headLink();
+        if(!isset($headLink['table']))
+            $headLink->offsetSetStylesheet('table', $this->baseUrl('/admin-style/table.css'));
+        elseif(empty($headLink['table']))
+            unset($headLink['table']);
+        echo $headLink;
+    ?>
     <?php } ?>
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/js/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css'); ?>" />
 	<!--[if IE 6]>
@@ -72,12 +78,10 @@
     <script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/jquery.widgets.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/fancybox/jquery.fancybox-1.3.4.pack.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo $this->baseUrl('/js/admin.js'); ?>"></script>
-    
-    <?php 
-    	echo $this->headStyle();
-   		echo $this->headScript();
-	?>
-
+    <?php
+        echo $this->headStyle();
+        echo $this->headScript();
+    ?>
     <script type="text/javascript"><!--
         $(function() {
             <?php if ($this->locale != 'en') { ?>
