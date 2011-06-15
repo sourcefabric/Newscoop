@@ -418,6 +418,25 @@ class CampInstallationBase
             return false;
         }
 
+        // add session db settings into global Campsite
+        $keyMap = array(
+            'DATABASE_SERVER_ADDRESS' => 'hostname',
+            'DATABASE_NAME' => 'database',
+            'DATABASE_USER' => 'username',
+            'DATABASE_PASSWORD' => 'userpass',
+        );
+
+        if (!isset($GLOBALS['Campsite'])) {
+            $GLOBALS['Campsite'] = array();
+        }
+
+        foreach ($keyMap as $globalKey => $sessionKey) {
+            $GLOBALS['Campsite'][$globalKey] = $_SESSION['installation']['config.db'][$sessionKey];
+        }
+
+        // bootstrap doctrine
+        $GLOBALS['application']->bootstrap('doctrine');
+
         $resourceId = new Newscoop\Service\Resource\ResourceId(__CLASS__);
         $themeService = $resourceId->getService(IThemeManagementService::NAME_1);
         $publicationService = $resourceId->getService(IPublicationService::NAME);

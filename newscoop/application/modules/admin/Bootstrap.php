@@ -191,8 +191,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
     protected function _initLog()
     {
         // get entity manager
-        $this->bootstrap('doctrine');
-        $em = $this->getResource('doctrine')
+        $em = Zend_Registry::get('doctrine')
             ->getEntityManager();
 
         // create logger
@@ -233,8 +232,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
      */
     protected function _initAclStorage()
     {
-        $this->bootstrap('doctrine');
-        $doctrine = $this->getResource('doctrine');
+        $doctrine = Zend_Registry::get('doctrine');
 
         $this->bootstrap('acl');
         $acl = $this->getResource('acl');
