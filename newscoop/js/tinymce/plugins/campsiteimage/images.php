@@ -8,6 +8,10 @@
 $GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
 
+set_include_path(implode(PATH_SEPARATOR, array(
+    '/usr/share/php/libzend-framework-php',
+    get_include_path(),
+)));
 
 // function to escape javascript parameters in function called in attribute
 function escape_js_param($str) {
