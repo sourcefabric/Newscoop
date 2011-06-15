@@ -8,7 +8,7 @@
   <h2>{{ $gimme->article->comment_count }} Response(s) to &#8220;{{ $gimme->article->name }}&#8221;</h2>
   <ol class="commentlist">
 {{ /if }}
-  
+
    <li class="comment {{ if $gimme->current_list->column == "1" }}odd{{ else }}even{{ /if }}">
       <div class="comment-head cl">
          <div class="user-meta">
@@ -19,9 +19,9 @@
           <p>{{ $gimme->comment->content }}</p>
       </div>
    </li>
- 
-{{ if $gimme->current_list->at_end }}                 
-  </ol>    
+
+{{ if $gimme->current_list->at_end }}
+  </ol>
 {{ /if }}
 
 {{ /list_article_comments }}
@@ -44,7 +44,7 @@
         {{ if $gimme->publication->moderated_comments }}
             <div class="postinformation">Your comment has been sent for approval.</div>
         {{ /if }}
-    {{ /if }}   
+    {{ /if }}
 {{ /if }}
 
 {{* if $gimme->comment->defined }}
@@ -54,6 +54,7 @@
     <p>{{ $gimme->comment->content }}</p>
 {{ /if *}}
 
+{{ if !$gimme->article->comments_locked }}
 <h2>Leave a Reply</h2>
 
 <div class="cancel-comment-reply">
@@ -93,6 +94,7 @@
 </p>
 
 <p>{{ /comment_form }}</p>
+
 {{ /if }}
 
 {{ unset_comment }}
@@ -107,7 +109,7 @@
   <p>Please fill the required box or you can&rsquo;t comment at all. Please use kind words. Your e-mail address will not be published. </p>
   <p>You can use these HTML tags and attributes: &lt;a href="" title=""&gt; &lt;abbr title=""&gt; &lt;acronym title=""&gt; &lt;b&gt; &lt;blockquote cite=""&gt; &lt;cite&gt; &lt;code&gt; &lt;del datetime=""&gt; &lt;em&gt; &lt;i&gt; &lt;q cite=""&gt; &lt;strike&gt; &lt;strong&gt;</p>
 </div>
-
+{{ /if }}
 <div class="fix"></div>
 
 <div class="fix"></div>
