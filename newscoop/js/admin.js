@@ -1,5 +1,6 @@
 var terms = [];
 $(function() {
+	$('.flash ui-state-error').click(function(){ $(this).hide(); })
     // main menu
     $('.main-menu-bar ul.navigation > li > a').each(function(i) {
         var menu = $(this);
