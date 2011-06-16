@@ -5,6 +5,8 @@
     $headStyle->offsetSetStylesheet('table','');
 ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/doT.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/jquery.ba-iff.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/jquery.version.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/comment.js')); ?>
 
 <?php $this->placeholder('title')->set(getGS('Comments')); ?>
@@ -39,9 +41,14 @@
         '<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>'
     ];
 </script>
+<table>
+    <tr>
+  </tr>
+</table>
+
 <script id="comment-tmpl" type="text/html">
-    <td colspan="4">
-        <table cellspacing="0" cellpadding="0">
+<td colspan="4">
+    <table cellspacing="0" cellpadding="0" style="width:100%">
             <tbody><tr>
                     <td class="commentId sorting_1">
                         <input type="checkbox" name="index[]" value="{{comment.id}}" class="table-checkbox">
@@ -121,10 +128,10 @@
                 </li>
             </ul>
         </div>
-    </td>
-    <td style="display:none;"></td>
-    <td style="display:none;"></td>
-    <td style="display:none;"></td>
+</td>
+<td style="display: none;"></td>
+<td style="display: none;"></td>
+<td style="display: none;"></td>
 </script>
 
 <div class="wrapper">
