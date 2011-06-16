@@ -9,6 +9,12 @@
  * @link http://www.sourcefabric.org
  */
 
+set_include_path(implode(PATH_SEPARATOR, array(
+    '/usr/share/php/libzend-framework-php',
+    dirname(__FILE__) . '/library',
+    get_include_path(),
+)));
+
 /**
  * Includes
  */

@@ -53,6 +53,17 @@ if( date ("Y-m-d", time() ) == $publish_date ) {
 	}
 }
 
+$publish_time = $publish_date . " " . $publish_hour . ":" . $publish_min . ":00";
+
+// check publish/unpublish same time
+foreach( IssuePublish::GetIssueEvents($Pub, $Issue, $Language, false ) as $evt ) {
+    if( strtotime( $evt->m_data['time_action'] ) == strtotime( $publish_time )
+        && ( $action != $evt->m_data['publish_action'] ) ) {
+        $correct = false;
+        $conflicting_action = true;
+    }
+}
+
 if ($publish_articles != "Y" && $publish_articles != "N") {
 	$publish_articles = "N";
 }
@@ -60,7 +71,7 @@ if ($publish_articles != "Y" && $publish_articles != "N") {
 $created = 0;
 if ($correct) {
     $issuePublishExists = true;
-	$publish_time = $publish_date . " " . $publish_hour . ":" . $publish_min . ":00";
+
     $issuePublishObj = new IssuePublish($event_id);
 	if (!$issuePublishObj->exists()) {
 	    $issuePublishObj->create();
@@ -68,6 +79,7 @@ if ($correct) {
 	    $issuePublishObj->setIssueNumber($Issue);
 	    $issuePublishObj->setLanguageId($Language);
 	    $issuePublishExists = false;
+
 	}
     $issuePublishObj->setPublishAction($action);
     $issuePublishObj->setPublishArticlesAction($publish_articles);
@@ -112,9 +124,12 @@ camp_html_content_top(getGS("Scheduling a new publish action"), $crumbs);
     <?php }
 
 	if ($past_publish) {
-	?>	<LI><?php putGS('The publishing schedule can not be set in in the past'); ?></LI>
+	?>	<LI><?php putGS('The publishing schedule can not be set in the past'); ?></LI>
     <?php }
 
+    if ($conflicting_action) {
+	?>	<LI><?php putGS('The publishing/unpublishing can not be set the same time'); ?></LI>
+    <?php }
 
 	if ($correct) {
 		if (!$created) { ?>

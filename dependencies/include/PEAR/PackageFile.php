@@ -46,16 +46,19 @@ class PEAR_PackageFile
      */
     var $_config;
     var $_debug;
-    /**
-     * Temp directory for uncompressing tgz files.
-     * @var string|false
-     */
-    var $_tmpdir;
+
     var $_logger = false;
     /**
      * @var boolean
      */
     var $_rawReturn = false;
+
+    /**
+     * helper for extracting Archive_Tar errors
+     * @var array
+     * @access private
+     */
+    var $_extractErrors = array();
 
     /**
      *
@@ -64,11 +67,10 @@ class PEAR_PackageFile
      * @param   string @tmpdir Optional temporary directory for uncompressing
      *          files
      */
-    function PEAR_PackageFile(&$config, $debug = false, $tmpdir = false)
+    function PEAR_PackageFile(&$config, $debug = false)
     {
         $this->_config = $config;
         $this->_debug = $debug;
-        $this->_tmpdir = $tmpdir;
     }
 
     /**
@@ -349,20 +351,17 @@ class PEAR_PackageFile
             }
         }
 
-        if ($this->_tmpdir) {
-            $tmpdir = $this->_tmpdir;
-        } else {
-            $tmpdir = System::mkTemp(array('-t', $this->_config->get('temp_dir'), '-d', 'pear'));
-            if ($tmpdir === false) {
-                $ret = PEAR::raiseError("there was a problem with getting the configured temp directory");
-                return $ret;
-            }
-
-            PEAR_PackageFile::addTempFile($tmpdir);
+        $tmpdir = System::mktemp('-t ' . $this->_config->get('temp_dir') . ' -d pear');
+        if ($tmpdir === false) {
+            $ret = PEAR::raiseError("there was a problem with getting the configured temp directory");
+            return $ret;
         }
+
+        PEAR_PackageFile::addTempFile($tmpdir);
 
         $this->_extractErrors();
         PEAR::staticPushErrorHandling(PEAR_ERROR_CALLBACK, array($this, '_extractErrors'));
+
         if (!$xml || !$tar->extractList(array($xml), $tmpdir)) {
             $extra = implode("\n", $this->_extractErrors());
             if ($extra) {
@@ -379,13 +378,6 @@ class PEAR_PackageFile
         $ret = &PEAR_PackageFile::fromPackageFile("$tmpdir/$xml", $state, $origfile);
         return $ret;
     }
-
-    /**
-     * helper for extracting Archive_Tar errors
-     * @var array
-     * @access private
-     */
-    var $_extractErrors = array();
 
     /**
      * helper callback for extracting Archive_Tar errors

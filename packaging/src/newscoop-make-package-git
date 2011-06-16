@@ -7,12 +7,17 @@ exit_usage()
 	if [ "$1" = "ERROR" ]; then
 		echo "ERROR: Received invalid arguments!"
 	fi
-	echo "Arguments for creating the:"
-	echo -e "- package from a branch/tag/commit:"
-	echo -e "\t--what <branch_tag_comming_name> [<package_version>]"
+	echo "Arguments:"
+    echo -e "--what <branch_tag_comming_name> [<package_version>]"
+	echo -e "\tcreate the package from the given branch/tag/commit"
+    echo -e "--zip"
+    echo -e "\tpackage format zip (default)"
+    echo -e "--tar"
+    echo -e "\tpackage format tar"
 	exit 1
 }
 
+package_format="zip"
 revision=
 what=$1
 shift 1
@@ -32,6 +37,12 @@ case $what in
 -h)
 	exit_usage
 	;;
+--zip)
+    package_format="zip"
+    ;;
+--tar)
+    package_format="tar.gz"
+    ;;
 *)
 	exit_usage ERROR
 	;;
@@ -49,20 +60,35 @@ pushd ../..
 
 $cmd || exit 1
 
-mv ./plugins/* ./newscoop/plugins
+zend_path="/usr/share/php/libzend-framework-php/Zend"
+if [ ! -d "$zend_path" ]; then
+    zend_path="/usr/share/php/Zend"
+fi
 
+mv ./plugins/* ./newscoop/plugins
+cp -fr ./dependencies/include/* ./newscoop/include
+cp -fr "$zend_path" ./newscoop/library
 rm -fr ./newscoop/tests
 find ./newscoop -name placeholder -exec rm -f {} \;
 
 package_name="newscoop-$version"
-package_filename="newscoop-$version.zip"
-
+package_filename="newscoop-$version.$package_format"
 cp -a ./newscoop ./$package_name
-zip -qr $package_filename ./$package_name
-res=$?
+
+if [ "package_format" = "zip" ]; then
+    tar czf $package_filename ./$package_name
+    res=$?
+else
+    zip -qr $package_filename ./$package_name
+    res=$?
+fi
 
 rm -rf ./$package_name
 mv ./newscoop/plugins .
+rm -fr ./newscoop/include
+rm -fr ./newscoop/library/Zend
+
+$base_cmd -- .
 
 if [ $res -eq 0 ]; then
     echo "package $package_filename prepared successfully"
@@ -70,7 +96,5 @@ else
     echo "error creating package $package_filename"
     exit 1
 fi
-
-$base_cmd -- .
 
 popd

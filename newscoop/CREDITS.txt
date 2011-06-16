@@ -4,6 +4,30 @@ Copyright (C) 2002-2009 Media Development Loan Fund
 Newscoop Credits (by Version Number)
 
 ------------------------------------
+Newscoop 3.6.0-beta1 Credits
+------------------------------------
+Developers:
+- Andrey Podshivalov <andrey.podshivalov@sourcefabric.org>
+- Holman Romero <holman.romero@sourcefabric.org>
+- Gabriel Nistor <gabriel.nistor@sourcefabric.org>
+- Martin Saturka <martin.saturka@sourcefabric.org>
+- Mihai Balaceanu <mihai.balaceanu@sourcefabric.org>
+- Mihai Nistor <mihai.nistor@sourcefabric.org>
+- Mugur Rus <mugur.rus@sourcefabric.org>
+- Ozan Ozbek <ozan.ozbek@sourcefabric.org>
+- Petr Jašek <petr.jasek@sourcefabric.org>
+- Vlad Nicoara <vlad.nicoara@sourcefabric.org>
+
+User Interface:
+- Vladimir Stefanovic <vladimir.stefanovic@sourcefabric.org>
+
+QA / Testing
+- Ofir Gal <ofir.gal@sourcefabric.org>
+
+Project Management
+- Paul Baranowski <paul.baranowski@sourcefabric.org>
+
+------------------------------------
 Newscoop 3.5.3 Credits
 ------------------------------------
 Developers:
@@ -11,7 +35,7 @@ Developers:
 - Holman Romero <holman.romero@sourcefabric.org>
 - Martin Saturka <martin.saturka@sourcefabric.org>
 - Mihai Nistor <mihai.nistor@sourcefabric.org>
-- Mugurel Rus <mugur.rus@sourcefabric.org>
+- Mugur Rus <mugur.rus@sourcefabric.org>
 - Petr Jašek <petr.jasek@sourcefabric.org>
 - Vlad Nicoara <vlad.nicoara@sourcefabric.org>
 
@@ -32,7 +56,7 @@ Developers:
 - Holman Romero <holman.romero@sourcefabric.org>
 - Martin Saturka <martin.saturka@sourcefabric.org>
 - Mihai Nistor <mihai.nistor@sourcefabric.org>
-- Mugurel Rus <mugur.rus@sourcefabric.org>
+- Mugur Rus <mugur.rus@sourcefabric.org>
 - Petr Jašek <petr.jasek@sourcefabric.org>
 
 User Interface:
@@ -51,7 +75,7 @@ Developers:
 - Andrey Podshivalov <andrey.podshivalov@sourcefabric.org>
 - Holman Romero <holman.romero@sourcefabric.org>
 - Martin Saturka <martin.saturka@sourcefabric.org>
-- Mugurel Rus <mugur.rus@sourcefabric.org>
+- Mugur Rus <mugur.rus@sourcefabric.org>
 - Petr Jašek <petr.jasek@sourcefabric.org>
 
 User Interface:
@@ -73,7 +97,7 @@ Developers
 - Martin Saturka <martin.saturka@sourcefabric.org>
 - Andrey Podshivalov <andrey.podshivalov@sourcefabric.org>
 - Holman Romero <holman.romero@sourcefabric.org>
-- Mugurel Rus <mugur.rus@sourcefabric.org>
+- Mugur Rus <mugur.rus@sourcefabric.org>
 - Pavol Husar <phusar@gmail.com>
 
 User Interface:
@@ -94,7 +118,7 @@ Campsite 3.4.3 Credits
 ------------------------------------
 - Andrey Podshivalov (andrey.podshivalov@sourcefabric.org)
 - Holman Romero (holman.romero@sourcefabric.org)
-- Mugurel Rus (mugur.rus@sourcefabric.org)
+- Mugur Rus (mugur.rus@sourcefabric.org)
 
 User Interface:
 - Vladimir Stefanovic (vladimir.stefanovic@sourcefabric.org)
@@ -108,7 +132,7 @@ Campsite 3.4.2 Credits
 ------------------------------------
 - Andrey Podshivalov (andrey.podshivalov@sourcefabric.org)
 - Holman Romero (holman.romero@sourcefabric.org)
-- Mugurel Rus (mugur.rus@sourcefabric.org)
+- Mugur Rus (mugur.rus@sourcefabric.org)
 - Sebastian Goebel (sebastian.goebel@sourcefabric.org)
 
 Art work:
@@ -122,7 +146,7 @@ Bug fixing:
 Campsite 3.4.1 Credits
 ------------------------------------
 - Andrey Podshivalov (andrey.podshivalov@sourcefabric.org)
-- Mugurel Rus (mugur.rus@sourcefabric.org)
+- Mugur Rus (mugur.rus@sourcefabric.org)
 - Holman Romero (holman.romero@sourcefabric.org)
 
 Art work:
@@ -136,7 +160,7 @@ Bug fixing:
 Campsite 3.4.0 Credits
 ------------------------------------
 - Andrey Podshivalov (andrey.podshivalov@sourcefabric.org)
-- Mugurel Rus (mugur.rus@sourcefabric.org)
+- Mugur Rus (mugur.rus@sourcefabric.org)
 - Holman Romero (holman.romero@sourcefabric.org)
 
 Art work:
@@ -150,7 +174,7 @@ Bug fixing:
 ------------------------------------
 Campsite 3.3.6 Credits
 ------------------------------------
-- Mugurel Rus (mugur.rus@sourcefabric.org)
+- Mugur Rus (mugur.rus@sourcefabric.org)
 - Holman Romero (holman.romero@sourcefabric.org)
 - Sebastian Goebel (sebastian.goebel@sourcefabric.org)
 
@@ -159,7 +183,7 @@ Campsite 3.3.6 Credits
 Campsite 3.3.5 Credits
 ------------------------------------
 - Holman Romero (holman.romero@gmail.com)
-- Mugurel Rus (mugur.rus@gmail.com)
+- Mugur Rus (mugur.rus@gmail.com)
 - Sebastian Goebel (sebastian.goebel@web.de)
 
 Iconography:
@@ -170,7 +194,7 @@ Iconography:
 Campsite 3.3.4 Credits
 ------------------------------------
 - Holman Romero (holman.romero@gmail.com)
-- Mugurel Rus (mugur.rus@gmail.com)
+- Mugur Rus (mugur.rus@gmail.com)
 - Sebastian Goebel (sebastian.goebel@web.de)
 
 
@@ -178,7 +202,7 @@ Campsite 3.3.4 Credits
 Campsite 3.3.2, 3.3.3 Credits
 ------------------------------------
 - Holman Romero (holman.romero@gmail.com)
-- Mugurel Rus (mugur.rus@gmail.com)
+- Mugur Rus (mugur.rus@gmail.com)
 - Sebastian Goebel (sebastian.goebel@web.de)
 
 Translations:
@@ -189,7 +213,7 @@ Translations:
 Campsite 3.3.1 Credits
 ------------------------------------
 - Holman Romero (holman.romero@gmail.com)
-- Mugurel Rus (mugur.rus@gmail.com)
+- Mugur Rus (mugur.rus@gmail.com)
 - Sebastian Goebel (sebastian.goebel@web.de)
 
 Translations:
@@ -200,7 +224,7 @@ Translations:
 Campsite 3.3.0 Credits
 ------------------------------------
 - Holman Romero (holman.romero@gmail.com)
-- Mugurel Rus (mugur.rus@gmail.com)
+- Mugur Rus (mugur.rus@gmail.com)
 - Sebastian Goebel (sebastian.goebel@web.de)
 
 
@@ -208,14 +232,14 @@ Campsite 3.3.0 Credits
 Campsite 3.2.3 Credits
 ------------------------------------
 - Holman Romero (holman.romero@gmail.com)
-- Mugurel Rus (mugur.rus@gmail.com)
+- Mugur Rus (mugur.rus@gmail.com)
 
 
 ------------------------------------
 Campsite 3.2.2 Credits
 ------------------------------------
 - Holman Romero (holman.romero@gmail.com)
-- Mugurel Rus (mugur.rus@gmail.com)
+- Mugur Rus (mugur.rus@gmail.com)
 - Sebastian Goebel (sebastian.goebel@web.de)
 
 
@@ -223,7 +247,7 @@ Campsite 3.2.2 Credits
 Campsite 3.2.0, 3.2.1 Credits
 ------------------------------------
 - Holman Romero (holman.romero@gmail.com)
-- Mugurel Rus (mugur.rus@gmail.com)
+- Mugur Rus (mugur.rus@gmail.com)
 - Sebastian Goebel (sebastian.goebel@web.de)
 
 
@@ -231,7 +255,7 @@ Campsite 3.2.0, 3.2.1 Credits
 Campsite 3.1.2 Credits
 ------------------------------------
 - Holman Romero (holman.romero@gmail.com)
-- Mugurel Rus (mugur.rus@gmail.com)
+- Mugur Rus (mugur.rus@gmail.com)
 - Pavel Novitsky (mypadmail@gmail.com)
 - Sebastian Goebel (sebastian.goebel@web.de)
 
@@ -240,7 +264,7 @@ Campsite 3.1.2 Credits
 Campsite 3.1.1 Credits
 ------------------------------------
 - Holman Romero (holman.romero@gmail.com)
-- Mugurel Rus (mugur.rus@gmail.com)
+- Mugur Rus (mugur.rus@gmail.com)
 - Sebastian Goebel (sebastian.goebel@web.de)
 - Stanislau Skuba (skubass@gmail.com)
 
@@ -249,7 +273,7 @@ Campsite 3.1.1 Credits
 Campsite 3.1.0 Credits
 ------------------------------------
 - Holman Romero (holman.romero@gmail.com)
-- Mugurel Rus (mugur.rus@gmail.com)
+- Mugur Rus (mugur.rus@gmail.com)
 - Sebastian Goebel (sebastian.goebel@web.de)
 
 
@@ -257,26 +281,26 @@ Campsite 3.1.0 Credits
 Campsite 3.0.0-3.0.3 Credits
 ------------------------------------
 - Holman Romero (holman.romero@gmail.com)
-- Mugurel Rus (mugur.rus@gmail.com)
+- Mugur Rus (mugur.rus@gmail.com)
 
 
 ------------------------------------
 Campsite 2.7.0 Credits
 ------------------------------------
 - Holman Romero (holman.romero@gmail.com)
-- Mugurel Rus (mugur.rus@gmail.com)
+- Mugur Rus (mugur.rus@gmail.com)
 
 
 ------------------------------------
 Campsite 2.6.3-2.6.9 Credits
 ------------------------------------
-- Mugurel Rus (mugur.rus@gmail.com)
+- Mugur Rus (mugur.rus@gmail.com)
 - Holman Romero (holman.romero@gmail.com)
 
 -----------------------------
 Campsite 2.6.1, 2.6.2 Credits
 -----------------------------
-- Mugurel Rus
+- Mugur Rus
 - Paul Baranowski
 - Holman Romero 
 - Sava Tatic
@@ -292,7 +316,7 @@ Campsite 2.6 Credits
 --------------------
 Released July 10, 2006
 
-- Mugurel Rus
+- Mugur Rus
   Campsite parser, article comments, install scripts, documentation
 
 - Paul Baranowski
@@ -318,7 +342,7 @@ Campsite 2.5 Credits
 --------------------
 Released March 6, 2006
 
-- Mugurel Rus:
+- Mugur Rus:
   Subscribe by language, Campsite parser, database, admin interface,
   install scripts, documentation
 
@@ -335,7 +359,7 @@ Campsite 2.4 Credits
 --------------------
 Released January 10, 2006
 
-- Mugurel Rus:
+- Mugur Rus:
   Campsite parser, database, admin interface, install scripts,
   documentation
 
@@ -363,7 +387,7 @@ Campsite 2.3 Credits
 --------------------
 Released August 1, 2005
 
-- Mugurel Rus:
+- Mugur Rus:
   Campsite parser, database, admin interface, install scripts,
   documentation, Romanian localization
 
@@ -415,7 +439,7 @@ Campsite 2.2 Credits
 --------------------
 Released April 14, 2005
 
-- Mugurel Rus:
+- Mugur Rus:
   Campsite parser, database, admin interface, install scripts,
   documentation
 
@@ -461,7 +485,7 @@ Campsite 2.1 Credits
 --------------------
 Released November 10, 2002
 
-- Mugurel Rus:
+- Mugur Rus:
   Campsite server, database, admin interface, install scripts,
   documentation
 

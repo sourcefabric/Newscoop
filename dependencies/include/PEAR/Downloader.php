@@ -189,7 +189,8 @@ class PEAR_Downloader extends PEAR_Common
             require_once 'System.php';
         }
 
-        $tmp = System::mktemp(array('-d'));
+        $tmpdir = $this->config->get('temp_dir');
+        $tmp = System::mktemp("-d -t $tmpdir");
         $a   = $this->downloadHttp('http://' . $channel . '/channel.xml', $this->ui, $tmp, $callback, false);
         PEAR::popErrorHandling();
         if (PEAR::isError($a)) {
@@ -493,14 +494,13 @@ class PEAR_Downloader extends PEAR_Common
      */
     function analyzeDependencies(&$params, $force = false)
     {
-        $hasfailed = $failed = false;
         if (isset($this->_options['downloadonly'])) {
             return;
         }
 
         PEAR::staticPushErrorHandling(PEAR_ERROR_RETURN);
         $redo  = true;
-        $reset = false;
+        $reset = $hasfailed = $failed = false;
         while ($redo) {
             $redo = false;
             foreach ($params as $i => $param) {
@@ -698,6 +698,7 @@ class PEAR_Downloader extends PEAR_Common
                 }
             }
         }
+
         PEAR::staticPopErrorHandling();
         if ($hasfailed && (isset($this->_options['ignore-errors']) ||
               isset($this->_options['nodeps']))) {
@@ -718,6 +719,7 @@ class PEAR_Downloader extends PEAR_Common
         if (isset($this->_downloadDir)) {
             return $this->_downloadDir;
         }
+
         $downloaddir = $this->config->get('download_dir');
         if (empty($downloaddir) || (is_dir($downloaddir) && !is_writable($downloaddir))) {
             if  (is_dir($downloaddir) && !is_writable($downloaddir)) {
@@ -725,14 +727,17 @@ class PEAR_Downloader extends PEAR_Common
                     '" is not writeable.  Change download_dir config variable to ' .
                     'a writeable dir to avoid this warning');
             }
+
             if (!class_exists('System')) {
                 require_once 'System.php';
             }
+
             if (PEAR::isError($downloaddir = System::mktemp('-d'))) {
                 return $downloaddir;
             }
             $this->log(3, '+ tmp dir created at ' . $downloaddir);
         }
+
         if (!is_writable($downloaddir)) {
             if (PEAR::isError(System::mkdir(array('-p', $downloaddir))) ||
                   !is_writable($downloaddir)) {
@@ -741,6 +746,7 @@ class PEAR_Downloader extends PEAR_Common
                     'a writeable dir');
             }
         }
+
         return $this->_downloadDir = $downloaddir;
     }
 
@@ -771,27 +777,11 @@ class PEAR_Downloader extends PEAR_Common
         $this->_options = $options;
     }
 
-    // }}}
-    // {{{ setOptions()
     function getOptions()
     {
         return $this->_options;
     }
 
-    /**
-     * For simpler unit-testing
-     * @param PEAR_Config
-     * @param int
-     * @param string
-     */
-    function &getPackagefileObject(&$c, $d, $t = false)
-    {
-        if (!class_exists('PEAR_PackageFile')) {
-            require_once 'PEAR/PackageFile.php';
-        }
-        $a = &new PEAR_PackageFile($c, $d, $t);
-        return $a;
-    }
 
     /**
      * @param array output of {@link parsePackageName()}
@@ -1000,9 +990,20 @@ class PEAR_Downloader extends PEAR_Common
             }
             return $info;
         } elseif ($chan->supportsREST($this->config->get('preferred_mirror'))
-              && $base = $chan->getBaseURL('REST1.0', $this->config->get('preferred_mirror'))
+              &&
+                (
+                  ($base2 = $chan->getBaseURL('REST1.3', $this->config->get('preferred_mirror')))
+                    ||
+                  ($base = $chan->getBaseURL('REST1.0', $this->config->get('preferred_mirror')))
+                )
         ) {
-            $rest = &$this->config->getREST('1.0', $this->_options);
+            if ($base2) {
+                $base = $base2;
+                $rest = &$this->config->getREST('1.3', $this->_options);
+            } else {
+                $rest = &$this->config->getREST('1.0', $this->_options);
+            }
+
             $url = $rest->getDepDownloadURL($base, $xsdversion, $dep, $parr,
                     $state, $version, $chan->getName());
             if (PEAR::isError($url)) {
@@ -1707,6 +1708,10 @@ class PEAR_Downloader extends PEAR_Common
         }
 
         $dest_file = $save_dir . DIRECTORY_SEPARATOR . $save_as;
+        if (is_link($dest_file)) {
+            return PEAR::raiseError('SECURITY ERROR: Will not write to ' . $dest_file . ' as it is symlinked to ' . readlink($dest_file) . ' - Possible symlink attack');
+        }
+
         if (!$wp = @fopen($dest_file, 'wb')) {
             fclose($fp);
             if ($callback) {
@@ -1759,4 +1764,3 @@ class PEAR_Downloader extends PEAR_Common
         return $dest_file;
     }
 }
-// }}}

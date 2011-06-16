@@ -1376,6 +1376,8 @@ class PEAR_Downloader_Package
                     continue;
                 }
 
+                // FIXME do symlink check
+
                 fwrite($fp, $filecontents, strlen($filecontents));
                 fclose($fp);
                 if ($s = $params[$i]->explicitState()) {
@@ -1497,12 +1499,11 @@ class PEAR_Downloader_Package
      * @param int
      * @param string
      */
-    function &getPackagefileObject(&$c, $d, $t = false)
+    function &getPackagefileObject(&$c, $d)
     {
-        $a = &new PEAR_PackageFile($c, $d, $t);
+        $a = &new PEAR_PackageFile($c, $d);
         return $a;
     }
-
 
     /**
      * This will retrieve from a local file if possible, and parse out
@@ -1527,16 +1528,7 @@ class PEAR_Downloader_Package
             if (@is_file($param)) {
                 $this->_type = 'local';
                 $options = $this->_downloader->getOptions();
-                if (isset($options['downloadonly'])) {
-                    $pkg = &$this->getPackagefileObject($this->_config,
-                        $this->_downloader->_debug);
-                } else {
-                    if (PEAR::isError($dir = $this->_downloader->getDownloadDir())) {
-                        return $dir;
-                    }
-                    $pkg = &$this->getPackagefileObject($this->_config,
-                        $this->_downloader->_debug, $dir);
-                }
+                $pkg = &$this->getPackagefileObject($this->_config, $this->_downloader->_debug);
                 PEAR::pushErrorHandling(PEAR_ERROR_RETURN);
                 $pf = &$pkg->fromAnyFile($param, PEAR_VALIDATE_INSTALLING);
                 PEAR::popErrorHandling();
@@ -1608,15 +1600,7 @@ class PEAR_Downloader_Package
             }
 
             // whew, download worked!
-            if (isset($options['downloadonly'])) {
-                $pkg = &$this->getPackagefileObject($this->_config, $this->_downloader->debug);
-            } else {
-                $dir = $this->_downloader->getDownloadDir();
-                if (PEAR::isError($dir)) {
-                    return $dir;
-                }
-                $pkg = &$this->getPackagefileObject($this->_config, $this->_downloader->debug, $dir);
-            }
+            $pkg = &$this->getPackagefileObject($this->_config, $this->_downloader->debug);
 
             PEAR::pushErrorHandling(PEAR_ERROR_RETURN);
             $pf = &$pkg->fromAnyFile($file, PEAR_VALIDATE_INSTALLING);
