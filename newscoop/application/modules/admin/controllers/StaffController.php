@@ -109,12 +109,12 @@ class Admin_StaffController extends Zend_Controller_Action
     public function editAccessAction()
     {
 //        $this->view->jQueryUtils()->token = 'sdfhgfgthrgesrefwrtgdtgsvet@#$RWESDFC@#4erws';
-        
+
         $staff = $this->_helper->entity(new Staff, 'user');
         $this->view->staff = $staff;
 
 //        $this->view->jQueryReady( "$.registry.set('another','test');" );
-        
+
         $this->_helper->actionStack('edit', 'acl', 'admin', array(
             'role' => $staff->getRoleId(),
             'user' => $staff->getId(),
@@ -127,17 +127,15 @@ class Admin_StaffController extends Zend_Controller_Action
     public function deleteAction()
     {
         $this->_helper->acl->check('user', 'delete');
-        
+
         $staff = $this->_helper->entity->get(new Staff, 'user');
-        
-        if (Zend_Auth::getInstance()->getIdentity() == $staff->getId()) $permitted = false;
-        else $permitted = true;
-        
+
+        $permitted = Zend_Auth::getInstance()->getIdentity() != $staff->getId();
         if ($permitted) {
             $this->repository->delete($staff);
-    
+
             $this->_helper->entity->getManager()->flush();
-    
+
             $this->_helper->flashMessenger(getGS('Staff member deleted.'));
             $this->_helper->redirector->gotoSimple('index');
         }
