@@ -3,7 +3,7 @@
 
 require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
 
-if (!is_array($GLOBALS['argv']) && empty($options)) {
+if (empty($GLOBALS['argv']) && empty($options)) {
 	echo "\n";
 	echo "Can't read command line arguments\n";
 	echo "\n";
