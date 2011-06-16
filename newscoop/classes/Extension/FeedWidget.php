@@ -76,7 +76,7 @@ abstract class FeedWidget extends Widget
         $content = ob_get_clean();
 
         if (empty($content)) {
-            echo '<p>', getGS('No news.'), '</p>';
+            echo '<p>', getGS('No news available.'), '</p>';
             return;
         }
 

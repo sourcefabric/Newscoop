@@ -43,6 +43,7 @@ if (!$auth->hasIdentity()) {
     $result = $auth->authenticate($adapter);
 
     if ($result->getCode() != Zend_Auth_Result::SUCCESS) {
+        LoginAttempts::RecordLoginAttempt();
         return 'userpass';
     }
 }

@@ -59,6 +59,9 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
             'dbname' => $Campsite['DATABASE_NAME'],
             'user' => $Campsite['DATABASE_USER'],
             'password' => $Campsite['DATABASE_PASSWORD'],
+            'driverOptions' => array(
+                1002 => "SET NAMES 'UTF8'",
+            ),
         );
 
         if (isset($options['database'])) {

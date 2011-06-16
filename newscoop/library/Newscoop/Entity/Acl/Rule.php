@@ -101,6 +101,16 @@ class Rule implements RuleInterface
     }
 
     /**
+     * Get role id
+     *
+     * @return int
+     */
+    public function getRoleId()
+    {
+        return $this->role->getId();
+    }
+
+    /**
      * Set resource
      *
      * @param string $resource
