@@ -59,7 +59,6 @@ regGS("File #$1 \"$2\" deleted.", "فا یلی  #$1 \"$2\" سڕا یه وه");
 regGS("Field \"$1\" updated", "زه مینه ی \"$1\" نوێ بویه وه");
 regGS("Country \"$1\" ($2) deleted", "وڵا تی \"$1\" ($2) سڕا یه وه");
 regGS("Changed properties for image \"$1\" ($2)", "به سته ره کان گۆرد را له وێنه ی  \"$1\" ($2)خ");
-regGS("Base data synchronized to phorum user for \"$1\" ($2)", "داده سه ره کیه کان یه کسان کرا بۆ مه کۆ به کار هێنه ری  \"$1\" ($2)خ");
 regGS("Article type field \"$1\" deleted", "زه مینه ی با به تی جۆری \"$1\" سڕا یه وه");
 regGS("Article type field \"$1\" created", "زه مینه ی با به تی جۆری \"$1\" خوڵقێند را");
 regGS("Article type field \"$1\" changed", "زه مینه ی با به تی جۆری \"$1\" گۆڕ د را");

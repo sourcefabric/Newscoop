@@ -59,7 +59,6 @@ regGS("File #$1 \"$2\" deleted.", "File #$1 \"$2\" deleted.");
 regGS("Field \"$1\" updated", "Field \"$1\" updated");
 regGS("Country \"$1\" ($2) deleted", "Country \"$1\" ($2) deleted");
 regGS("Changed properties for image \"$1\" ($2)", "Changed properties for image \"$1\" ($2)");
-regGS("Base data synchronized to phorum user for \"$1\" ($2)", "Base data synchronized to phorum user for \"$1\" ($2)");
 regGS("Article type field \"$1\" deleted", "Article type field \"$1\" deleted");
 regGS("Article type field \"$1\" created", "Article type field \"$1\" created");
 regGS("Article type field \"$1\" changed", "Article type field \"$1\" changed");
