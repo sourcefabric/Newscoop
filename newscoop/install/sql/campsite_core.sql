@@ -1510,7 +1510,7 @@ CREATE TABLE `SubsSections` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `IdSubscription` int(10) unsigned NOT NULL DEFAULT '0',
   `SectionNumber` int(10) unsigned NOT NULL DEFAULT '0',
-  `IdLanguage` int(10) unsigned NOT NULL DEFAULT '0',
+  `IdLanguage` int(10) unsigned DEFAULT NULL,
   `StartDate` date NOT NULL DEFAULT '0000-00-00',
   `Days` int(10) unsigned NOT NULL DEFAULT '0',
   `PaidDays` int(10) unsigned NOT NULL DEFAULT '0',

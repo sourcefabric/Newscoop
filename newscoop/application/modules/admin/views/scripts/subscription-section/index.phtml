@@ -16,7 +16,7 @@
     <td><a href="<?php echo $this->url(array(
         'action' => 'edit',
         'section' => $section->getId(),
-    )); ?>"><?php echo $section->getSectionName(); ?></a></td>
+    )); ?>"><?php echo $this->sections[$section->getSectionNumber()]; ?></a></td>
     <td><?php echo $section->getLanguageName() ?: getGS('All languages'); ?></td>
     <td><?php echo $section->getStartDate()->format('Y-m-d'); ?></td>
     <td><?php echo $section->getDays(); ?></td>

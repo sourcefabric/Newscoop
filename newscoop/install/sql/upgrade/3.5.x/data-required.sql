@@ -90,6 +90,9 @@ INSERT INTO SystemPreferences (varname, value) VALUES ('CollectStatistics', 'Y')
 -- clean the Templates table
 DELETE FROM Templates;
 
+-- fix SubsSection language
+UPDATE `SubsSections` SET `IdLanguage` = NULL WHERE `IdLanguage` = 0;
+
 system php ./acl.php
 system php ./transfer_phorum.php
 system php ./javascript_js_cleanup.php
