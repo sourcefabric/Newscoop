@@ -655,7 +655,7 @@ abstract class CampURI
 
         if (!empty($p_templateIdOrName)) {
             $tplObj = new MetaTemplate($p_templateIdOrName);
-            if (!$tplObj->exists()) {
+            if (!$tplObj->defined()) {
                 return null;
             }
             $template = $tplObj->getName();
