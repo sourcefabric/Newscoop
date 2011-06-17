@@ -311,7 +311,8 @@ function callServer(p_callback, p_args, p_handle)
         'success': function(json) {
             flash.fadeOut();
 
-            if (json.error_code) {
+
+            if (json != undefined && json.error_code != undefined) {
                 flashMessage(json.error_message, 'error', true);
                 return;
             }
