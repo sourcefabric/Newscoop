@@ -134,10 +134,10 @@ class Admin_CommentController extends Zend_Controller_Action
                 ->setStripClasses()
                 ->toggleAutomaticWidth(false)
                 ->setDataProp(array(
-                    'index' => 'index',
-                    'commenter' => 'commenter.name',
-                    'comment' => 'comment.message',
-                    'thread' => 'thread.name',
+                    'index' => null,
+                    'commenter' => null,
+                    'comment' => null,
+                    'thread' => null,
                     'threadorder' => null
                 ))
                 ->setVisible(array(

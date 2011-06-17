@@ -95,7 +95,7 @@
 <div class="meta-bar">
     <ul>
         <li><a href="<?php echo $this->url(array('controller' => 'auth', 'action' => 'logout')); ?>"><?php putGS('Logout'); ?></a></li>
-        <li><a href="<?php echo $this->helpUrl; ?>" target="_blank"><?php putGS('Help'); ?></a></li>
+        <li><a href="<?php echo $this->url(array('controller' => 'application', 'action' => 'help')); ?>"><?php putGS('Help'); ?></a></li>
         <li><?php putGS("Signed in: $1", '<strong>' . $this->user->getRealName() . '</strong>'); ?></li>
     </ul>
 </div>

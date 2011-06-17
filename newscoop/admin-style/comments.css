@@ -210,7 +210,7 @@ select.actions {
     padding-top: 7px;
     text-align: center;
     vertical-align: top;
-    border: 0px;    
+    border: 0px;
     display: block;
     font-weight: normal;
 }
@@ -262,6 +262,7 @@ select.actions {
     font-weight: bold;
     color: #000000;
     font-size:12px;
+    -webkit-margin-end: 37px;
 }
 
 .dateCommentHolder h4 span,.dateCommentHolder h4 span.date,.dateCommentHolderEdit h4 span,.dateCommentHolderEdit h4 span.date
@@ -359,7 +360,7 @@ select.actions {
 }
 
 .commentArticleHolder {
-    
+
 }
 
 .commentArticleHolder p {
@@ -581,7 +582,7 @@ select.actions {
     border-width: 0 0 1px 0;
     padding:0;
 }
-    
+
 .commentsHolder .smartlist .ui-widget-header:last-child {
     border-width: 0;
     padding:6px 0;
