@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @package Newscoop
  * @copyright 2011 Sourcefabric o.p.s.
@@ -21,38 +22,39 @@ use DateTime,
  */
 class Comment
 {
+
     private $allowedTags = array(
-        'a'             => array('title','href'),
-        'abbr'          => array('title'),
-        'acronym'       => array('title'),
-        'b'             => array(),
-        'blockquote'    => array('cite'),
-        'cite'          => array(),
-        'code'          => array(),
-        'del'           => array('datetime'),
-        'em'            => array(),
-        'i'             => array(),
-        'q'             => array('cite'),
-        'strike'        => array(),
-        'strong'        => array()
+        'a' => array('title', 'href'),
+        'abbr' => array('title'),
+        'acronym' => array('title'),
+        'b' => array(),
+        'blockquote' => array('cite'),
+        'cite' => array(),
+        'code' => array(),
+        'del' => array('datetime'),
+        'em' => array(),
+        'i' => array(),
+        'q' => array('cite'),
+        'strike' => array(),
+        'strong' => array()
     );
     /**
      * Constants for status
 
-    const STATUS_APPROVED   = 0;
-    const STATUS_PENDING    = 1;
-    const STATUS_HIDDEN     = 2;
-    const STATUS_DELETED    = 3;
-    */
+      const STATUS_APPROVED   = 0;
+      const STATUS_PENDING    = 1;
+      const STATUS_HIDDEN     = 2;
+      const STATUS_DELETED    = 3;
+     */
     /**
      * @var string to code mapper for status
-    static $status_enum = array(
-        self::STATUS_APPROVED,
-        self::STATUS_PENDING,
-        self::STATUS_HIDDEN,
-        self::STATUS_DELETED
-    );
-    */
+      static $status_enum = array(
+      self::STATUS_APPROVED,
+      self::STATUS_PENDING,
+      self::STATUS_HIDDEN,
+      self::STATUS_DELETED
+      );
+     */
     /**
      * @var string to code mapper for status
      */
@@ -62,85 +64,72 @@ class Comment
         'hidden',
         'deleted'
     );
-
     /**
      * @id @generatedValue
      * @column(type="integer")
      * @var int
      */
     private $id;
-
     /**
      * @manyToOne(targetEntity="Newscoop\Entity\Comment\Commenter")
      * @joinColumn(name="fk_comment_commenter_id", referencedColumnName="id", onDelete="CASCADE")
      * @var Newscoop\Entity\Comment\Commenter
      */
     private $commenter;
-
     /**
      * @manyToOne(targetEntity="Publication")
      * @joinColumn(name="fk_forum_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
     private $forum;
-
     /**
      * @manyToOne(targetEntity="Comment")
      * @joinColumn(name="fk_parent_id", referencedColumnName="id")
      * @var Newscoop\Entity\Comment
      */
     private $parent;
-
     /**
      * @manyToOne(targetEntity="Article")
      * @joinColumn(name="fk_thread_id", referencedColumnName="Number")
      * @var Newscoop\Entity\Article
      */
     private $thread;
-
     /**
      * @manyToOne(targetEntity="Language")
      * @joinColumn(name="fk_language_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
     private $language;
-
     /**
      * @column(length=140)
      * @var string
      */
     private $subject;
-
     /**
      * @column
      * @var text
      */
     private $message;
-
     /**
      * @column(length=4)
      * @var int
      */
     private $thread_level;
-
     /**
      * @column(length=4)
      * @var int
      */
     private $thread_order;
-
     /**
      * @column(length=2)
      * @var int
      */
     private $status;
-
     /**
      * @column(length=39)
      * @var int
      */
     private $ip;
-
     /**
      * @column(type="datetime")
      * @var DateTime
@@ -152,13 +141,11 @@ class Comment
      * @var DateTime
      */
     private $time_updated;
-
     /**
      * @column(length=4)
      * @var int
      */
     private $likes;
-
     /**
      * @column(length=4)
      * @var int
@@ -263,8 +250,7 @@ class Comment
      */
     public function setMessage($p_message)
     {
-        $allowedTags = '<'.implode(array_keys($this->allowedTags),'><').'>';
-        $this->message = strip_tags((string) $p_message, $allowedTags);
+        $this->message = $this->formatMessage((string) $p_message);
         // return this for chaining mechanism
         return $this;
     }
@@ -285,7 +271,8 @@ class Comment
      * @param string $p_ip
      * @return Newscoop\Entity\Comment
      */
-    public function setIp($p_ip){
+    public function setIp($p_ip)
+    {
         // remove subnet & limit to IP_LENGTH
         $ip_array = explode('/', (string) $p_ip);
         $this->ip = substr($ip_array[0], 0, 39);
@@ -302,12 +289,11 @@ class Comment
     {
         if (is_numeric($this->ip)) { // try to use old format
             static $max = 0xffffffff; // 2^32
-            if($this->ip > 0 && $this->ip < $max)
-            {
+            if ($this->ip > 0 && $this->ip < $max) {
                 return long2ip($this->ip);
             }
         }
-        return (string)$this->ip;
+        return (string) $this->ip;
     }
 
     /**
@@ -560,7 +546,7 @@ class Comment
      */
     public function exists()
     {
-        return !is_null($this->id);
+        return!is_null($this->id);
     }
 
     /**
@@ -572,10 +558,107 @@ class Comment
      */
     public function getProperty($p_key)
     {
-        if(isset($this->$p_key))
+        if (isset($this->$p_key))
             return $this->$p_key;
         else
             return null;
-
     }
+
+    /**
+     * Method used to format message from comments
+     *
+     * @param string $str
+     * @return string
+     */
+    protected function formatMessage($str)
+    {
+        $parts = explode('<', $str);
+        /** @type array vector where the tag list are keeped*/
+        $tag = array();
+        $attrib = array();
+        $contentAfter = array(0 => $parts[0]);
+        for ($i = 1, $counti = count($parts); $i < $counti; $i++) {
+            $tagAndContent = explode('>', $parts[$i], 2);
+            $tagAndAttrib = explode(' ', $tagAndContent[0], 2);
+
+            if (isset($tagAndAttrib[1])) {
+                /**
+                 * @todo make a better attributes filter regex
+                 *      this is breaking on not quotes define attibutes
+                 *      ex: like checked=true for good parsing should be checked="true" or checked='true'
+                 */
+                preg_match_all("#([^=]+)=\s*(['\"])?([^\\2]*)\\2#iU",
+                        $tagAndAttrib[1], $rez);
+                if (isset($rez[1])) {
+                    for ($k = 0, $countk = count($rez[1]); $k < $countk; $k++) {
+                        $attrib[$i][] = array(strtolower(trim($rez[1][$k])), $rez[3][$k]);
+                    }
+                }
+            }
+            $tag[$i] = $tagAndAttrib[0];
+            $contentAfter[$i] = isset($tagAndContent[1]) ? $tagAndContent[1] : '';
+        }
+        $closed = $tag;
+        $return = '';
+        $allowedNameTags = array_keys($this->allowedTags);
+        for ($i = 0, $counti = count($tag); $i < $counti; $i++) {
+            $isClosed = isset($tag[$i]) ? (substr($tag[$i], 0, 1) == '/') : false;
+
+            if (isset($tag[$i]) && (in_array($tag[$i], $allowedNameTags))) {
+                unset($closed[$i]);
+                $good = array_search('/' . $tag[$i], $closed, true);
+                if ($good) {
+                    unset($closed[$good]);
+                    $composeTag = '<' . $tag[$i] . ' ';
+                    if (isset($attrib[$i])) {
+                        for ($j = 0, $countj = count($attrib[$i]); $j < $countj; $j++) {
+                            if (in_array($attrib[$i][$j][0],
+                                            $this->allowedTags[$tag[$i]])) {
+                                $composeTag.=$attrib[$i][$j][0] . '="' . $attrib[$i][$j][1] . '" ';
+                            }
+                        }
+                    }
+                    $return.=substr($composeTag, 0, -1) . '>' . $contentAfter[$i];
+                } else {
+                    $composeTag = '<' . $tag[$i] . ' ';
+                    $title = false;
+                    $cite = false;
+                    if (isset($attrib[$i])) {
+                        for ($j = 0, $countj = count($attrib[$i]); $j < $countj; $j++) {
+                            if (in_array($attrib[$i][$j][0], $this->allowedTags[$tag[$i]])) {
+                                if ($attrib[$i][$j][0] == 'title') {
+                                    $title = $attrib[$i][$j][0];
+                                } elseif ($attrib[$i][$j][0] == 'cite') {
+                                    $cite = $attrib[$i][$j][0];
+                                } else {
+                                    $composeTag.=$attrib[$i][$j][0] . '="' . $attrib[$i][$j][1] . '" ';
+                                }
+                            }
+                        }
+                    }
+                    // if title is set and is a broken tag use the title like inline text
+                    if ($title) {
+                        $return.=substr($composeTag, 0, -1) . '>' . $title . '</' . $tag[$i] . '>' . $contentAfter[$i];
+                    }
+                    // if cite is set and is a broken tag use the cite like inline text
+                    elseif ($cite) {
+                        $return.=substr($composeTag, 0, -1) . '>' . $cite . '</' . $tag[$i] . '>' . $contentAfter[$i];
+                    }
+                    // else use the text after
+                    else {
+                        $return.=substr($composeTag, 0, -1) . '>' . $contentAfter[$i] . '</' . $tag[$i] . '>';
+                    }
+                }
+            }
+            elseif (isset($tag[$i]) && $isClosed && in_array(substr($tag[$i], 1),
+                            $allowedNameTags)) {
+                unset($closed[$i]);
+                $return.='<' . $tag[$i] . '>' . $contentAfter[$i];
+            } else {
+                $return.=' ' . $contentAfter[$i];
+            }
+        }
+        return $return;
+    }
+
 }
