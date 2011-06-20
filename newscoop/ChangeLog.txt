@@ -1,3 +1,37 @@
+3.6.0-beta1 (June 15, 2011)
+  New Features/refactoring
+  ------------------------
+  * [CS-2810] Frontend themes support
+  * [CS-2857] Refactor Users with Zend/Doctrine
+  * [CS-1147] Rewrite the comments feature and remove Phorum from our code base
+  * [CS-2641] SaaS interface changes
+  * [CS-2856] Finish conversion of Logs to Zend/Doctrine
+  * [CS-2891] Refactor Languages with Zend/Doctrine
+  * [CS-2300] Data Import service
+
+  Improvements
+  ------------
+  * [CS-2435] POIs from multiple articles displayed on a single map
+  * [CS-702]  Upon publishing an uncatagorized article, system should prompt to categorize
+  * [CS-3082] Improve usability of geolocation tools in article edit screen
+  * [CS-3068] Implement service locator API and themes service API
+  * [CS-2948] Implement logging using Zend_Log class
+  * [CS-2661] Rename javascript folder to js to avoid conflict with predefined javascript alias
+  * [CS-3122] Add 'Edit' button to POI bubbles
+  * [CS-3081] Real polygonal point selection for dynamic maps
+  * [CS-2968] Map pop-up with a greater map.
+  * [CS-2864] Character limited article name field
+  * [CS-2863] Character limited fields
+  * [CS-2760] Installation and packaging
+  * [CS-2429] Automatically center POIs as the default behavior
+  * [CS-2334] Javascript-based Article Read Statistics
+  * [CS-3116] Add preview button to all article lists in the admin interface.
+  * [CS-3045] Change localizer wording. Screen > Area to localize
+  * [CS-2988] Rename 'Name' in article field to something else
+  * [CS-2728] Automatic inclusion of a specified CSS file for map display
+  * [CS-254]  Article Edit -> Duplicate -> Too many pubs/issues/sections may break this screen
+  * [CS-234]  ORDER BY in template directory structure
+
 3.5.3 (May 19, 2011)
   Tasks
   -----
