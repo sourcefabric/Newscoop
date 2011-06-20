@@ -199,7 +199,7 @@ final class CampInstallationView
 		$success = ($adoDb == 'Yes') ? $success : false;
         $libraryRequirements[] = array(
 			'tag' => 'AdoDB',
-			'exists' => $adoDB
+			'exists' => $adoDb
 		);
 		
 		$smarty = CampInstallationViewHelper::CheckSmarty();
