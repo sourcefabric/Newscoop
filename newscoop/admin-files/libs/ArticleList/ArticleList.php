@@ -81,6 +81,7 @@ class ArticleList extends BaseList
             'CreateDate' => getGS('Create Date'),
             'PublishDate' => getGS('Publish Date'),
             'LastModified' => getGS('Last Modified'),
+		    'Preview' => getGS('Preview')
 		);
 	}
 
@@ -214,6 +215,7 @@ class ArticleList extends BaseList
 		. '&amp;f_language_selected=' . $article->getLanguageId();
 		$articleLink = $Campsite['WEBSITE_URL'].'/admin/articles/edit.php' . $articleLinkParams;
 		$previewLink = $Campsite['WEBSITE_URL'].'/admin/articles/preview.php' . $articleLinkParams;
+		$htmlPreviewLink = '<a href="'.$previewLink.'" target="_blank" title="'.getGS('Preview').'">'.getGS('Preview').'</a>';
 
 		$lockInfo = '';
 		$lockHighlight = false;
@@ -294,6 +296,7 @@ class ArticleList extends BaseList
 		$article->getCreationDate(),
 		$article->getPublishDate(),
 		$article->getLastModified(),
+		$htmlPreviewLink,
 		);
 	}
 

@@ -59,7 +59,6 @@ regGS("File #$1 \"$2\" deleted.", "Файл #$1 \"$2\" удален");
 regGS("Field \"$1\" updated", "Поле \"$1\" обновлено");
 regGS("Country \"$1\" ($2) deleted", "Страна \"$1\" ($2) удалена");
 regGS("Changed properties for image \"$1\" ($2)", "Для изображения \"$1\" ($2) изменены свойства");
-regGS("Base data synchronized to phorum user for \"$1\" ($2)", "Исходные данные синхронизированы с пользователем форума для \"$1\" ($2) ");
 regGS("Article type field \"$1\" deleted", "Поле статьи \"$1\" удалено");
 regGS("Article type field \"$1\" created", "Поле статьи \"$1\" создано");
 regGS("Article type field \"$1\" changed", "Поле статьи \"$1\" изменено");

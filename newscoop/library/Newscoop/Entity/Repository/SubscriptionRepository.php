@@ -40,22 +40,25 @@ class SubscriptionRepository extends EntityRepository
 
         if (strtolower($values['sections']) == 'y') { // add sections
             $languages = array_map('intval', (array) $values['languages']);
+            if ($values['language_set'] == 'select' && empty($languages)) {
+                throw new \InvalidArgumentException('No languages specified');
+            }
+
             foreach ($publication->getSections() as $section) {
-                if (!empty($languages) && !in_array($section->getLanguageId(), $languages)) {
+                $subscriptionSection = new SubscriptionSection;
+
+                if ($values['language_set'] == 'select' && !in_array($section->getLanguageId(), $languages)) {
                     continue; // ignore by language if any
+                } elseif ($values['language_set'] == 'select') {
+                    $subscriptionSection->setLanguage($section->getLanguage());
                 }
 
-                $subscriptionSection = new SubscriptionSection;
                 $subscriptionSection
                         ->setSubscription($subscription)
-                        ->setSection($section)
+                        ->setSectionNumber($section->getNumber())
                         ->setStartDate(new \DateTime($values['start_date']))
                         ->setDays((int) $values['days'])
                         ->setPaidDays(in_array($values['type'], array('PN', 'T')) ? (int) $values['days'] : 0);
-
-                if (!empty($langauges)) {
-                    $subscriptionSection->setLanguage($section->getLanguage());
-                }
 
                 $em->persist($subscriptionSection);
             }
@@ -74,13 +77,17 @@ class SubscriptionRepository extends EntityRepository
         $em = $this->getEntityManager();
 
         if ($values['language'] == 'select') {
+            if (empty($values['sections_select'])) {
+                throw new \InvalidArgumentException('No sections specified');
+            }
+
             foreach ($values['sections_select'] as $num_lang) {
                 list($num, $lang) = explode('_', $num_lang);
 
                 $subscriptionSection = new SubscriptionSection;
                 $subscriptionSection
                     ->setSubscription($subscription)
-                    ->setSection($em->getReference('Newscoop\Entity\Section', $num))
+                    ->setSectionNumber($num)
                     ->setLanguage($em->getReference('Newscoop\Entity\Language', $lang))
                     ->setStartDate(new \DateTime($values['start_date']))
                     ->setDays($values['days'])
@@ -89,11 +96,15 @@ class SubscriptionRepository extends EntityRepository
                 $em->persist($subscriptionSection);
             }
         } else {
+            if (empty($values['sections_all'])) {
+                throw new \InvalidArgumentException('No sections specified');
+            }
+
             foreach ($values['sections_all'] as $num) {
                 $subscriptionSection = new SubscriptionSection;
                 $subscriptionSection
                     ->setSubscription($subscription)
-                    ->setSection($em->getReference('Newscoop\Entity\Section', $num))
+                    ->setSectionNumber($num)
                     ->setStartDate(new \DateTime($values['start_date']))
                     ->setDays($values['days'])
                     ->setPaidDays($values['days']);

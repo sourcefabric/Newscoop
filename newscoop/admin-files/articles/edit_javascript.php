@@ -5,8 +5,6 @@ var fullDate = '<?php p(date("Y-m-d H:i:s", $lastModified)); ?>';
 document.getElementById('info-text').innerHTML = '<?php putGS('Saved'); ?> ' + ' ' + dateTime;
 document.getElementById('date-last-modified').innerHTML = '<?php putGS('Last modified'); ?> ' + ': ' + fullDate;
 
-var ajax_forms = 0; // forms saving by ajax
-
 $(function() {
 
 // make breadcrumbs + save buttons sticky
@@ -100,14 +98,12 @@ $('form#article-main').submit(function() {
     } else {
     	 // ping for connection
         callServer('ping', [], function(json) {
-            ajax_forms++;
             $.ajax({
                 type: 'POST',
                 url: '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/articles/post.php',
                 data: form.serialize(),
                 success: function(data, status, p) {
                     flashMessage('<?php putGS('Article saved.'); ?>');
-                    ajax_forms--;
                     toggleComments();
                 },
                 error: function (rq, status, error) {
@@ -162,18 +158,11 @@ $('.save-button-bar input').click(function() {
 
     if ($(this).attr('id') == 'save_and_close') {
         unlockArticle();
-
-        if (ajax_forms == 0) { // nothing to save
+        $(this).ajaxStop(function() {
             close(1500);
-            return false;
-        }
-
-        $('body').ajaxSuccess(function(event, xhr, options) {
-            if (ajax_forms == 0) { // all saved, wait for messages to be displayed
-                close(1500);
-            }
         });
     }
+
     return false;
 });
 

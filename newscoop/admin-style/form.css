@@ -16,7 +16,7 @@ body.with-sidebar dl.zend_form {
 .zend_form dt {
     /*padding: 12px 26px;*/
     padding: 0;
-    -position: absolute;
+    position: relative;
     font-weight: bold;
     color: #696969;
 }

@@ -31,11 +31,10 @@ class SubscriptionSection
     private $subscription;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Section")
-     * @JoinColumn(name="SectionNumber", referencedColumnName="Number")
-     * @var Newscoop\Entity\Section
+     * @Column(type="integer", name="SectionNumber")
+     * @var int
      */
-    private $section;
+    private $sectionNumber;
 
     /**
      * @ManyToOne(targetEntity="Newscoop\Entity\Language")
@@ -91,35 +90,25 @@ class SubscriptionSection
     }
 
     /**
-     * Set section
+     * Set section number
      *
-     * @param Newscoop\Entity\Section $section
+     * @param int $number
      * @return Newscoop\Entity\SubscriptionSection
      */
-    public function setSection(Section $section)
+    public function setSectionNumber($number)
     {
-        $this->section = $section;
+        $this->sectionNumber = (int) $number;
         return $this;
     }
 
     /**
      * Get section number
      *
-     * @return int
+     * @return string
      */
     public function getSectionNumber()
     {
-        return $this->section->getNumber();
-    }
-
-    /**
-     * Get section name
-     *
-     * @return string
-     */
-    public function getSectionName()
-    {
-        return $this->section->getName();
+        return $this->sectionNumber;
     }
 
     /**

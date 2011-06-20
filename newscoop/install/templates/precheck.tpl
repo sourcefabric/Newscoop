@@ -100,6 +100,20 @@
               </td>
             </tr>
             {{ /foreach }}
+            
+            {{ foreach from=$library_requirements item="libreq" }}
+            <tr>
+              <td class="first">{{ $libreq.tag }}</td>
+              <td>&nbsp;</td>
+              <td align="center">
+              {{ if $libreq.exists == 'Yes' }}
+                <span class="success">Yes</span>
+              {{ elseif $libreq.exists == 'No' }}
+                <span class="error">No</span>
+              {{ /if }}
+              </td>
+            </tr>
+            {{ /foreach }}
 
             <tr>
               <td class="first"><strong>Recommended</strong></td>
