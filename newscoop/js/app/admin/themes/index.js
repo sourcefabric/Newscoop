@@ -10,6 +10,20 @@ newscoopDatatables =
 			}
 			catch( e ){ if( console ) console.log( e ); }
 		});
+		
+		$('.themesListTabs .imageItem', row ).each( function( i, e )
+		{
+			$( '.imageCtrls a', row ).eq(i).attr( 'href', $(e).find('a').attr('href') );
+		});
+
+		$( '.imageCtrls a', row ).fancybox
+		({
+			'transitionIn'	:	'elastic',
+			'transitionOut'	:	'elastic',
+			'speedIn'		:	600, 
+			'speedOut'		:	200
+		})  
+
 		return row;
 	},
 	callbackDraw : function()
@@ -198,33 +212,4 @@ $( function()
 			.dialog( 'open' );
 		
 	})
-	
-		/*
-		$('.duplicate-dialog').dialog({
-			autoOpen: false,
-			width: 400,
-			resizable: false,
-			modal: true,
-			position:'center',
-			buttons: {
-				"Duplicate": function() { 
-					$(this).dialog("close"); 
-				}, 
-				"Cancel": function() { 
-					$(this).dialog("close"); 
-				} 
-			}
-		});
-		
-		// Dialog Link
-		$('#upload').click(function() {
-			$('.upload-dialog').dialog('open');
-			return false;
-		});
-		
-		$('#duplicate').click(function() {
-			$('.duplicate-dialog').dialog('open');
-			return false;
-		});
-		*/
 });
