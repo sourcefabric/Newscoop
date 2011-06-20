@@ -90,7 +90,7 @@ if($themePath == null && $publicationHasThemes){
 	$themePath = $publicationThemes[0]->getPath();
 }
 
-if($themePath != null){
+if($themePath != null && $themePath != 0){
 	$allTemplates = $themeManagementService->getTemplates($themePath);
 } else {
 	$allTemplates = array();
@@ -274,9 +274,7 @@ if($themePath != null){
 			</TD>
 		</TR>
 		<?php
-			}
-		?>
-		<?php } else {?>
+			} else {?>
 		<TR>
 			<INPUT TYPE="hidden" NAME="f_theme_id" VALUE="0"/>
 			<INPUT TYPE="hidden" NAME="f_issue_template_id" VALUE="0"/>
@@ -290,7 +288,20 @@ if($themePath != null){
 			<?php putGS("Only than the issue can be published");?>
 			</TD>
 		</TR>
-		<?php }?>
+		<?php }
+			} else {
+				    $themePathSafe = strlen($themePath) ? $themePath : '0';
+				    $tplFrontPathSafe = strlen($tplFrontPath) ? $tplFrontPath : '0';
+				    $tplSectionPathSafe = strlen($tplSectionPath) ? $tplSectionPath : '0';
+				    $tplArticlePathSafe = strlen($tplArticlePath) ? $tplArticlePath : '0';
+				?>
+                <INPUT TYPE="hidden" NAME="f_theme_id" VALUE="<?php echo $publicationHasThemes ? $themePathSafe : '0'?>"/>
+	            <INPUT TYPE="hidden" NAME="f_issue_template_id" VALUE="<?php echo $publicationHasThemes ? $tplFrontPathSafe : '0'?>"/>
+	            <INPUT TYPE="hidden" NAME="f_section_template_id" VALUE="<?php echo $publicationHasThemes ? $tplSectionPathSafe : '0'?>"/>
+	            <INPUT TYPE="hidden" NAME="f_article_template_id" VALUE="<?php echo $publicationHasThemes ? $tplArticlePathSafe : '0'?>"/>
+				<?php
+			}
+		?>
 		<TR>
 			<TD COLSPAN="2" align="center" style="padding-top: 15px;">
 				<INPUT TYPE="submit" class="button" NAME="Save" VALUE="<?php  putGS('Save'); ?>">
@@ -441,7 +452,7 @@ $(function() {
 			for(i = 0; i < selects.length; i++){
 				select = selects[i];
 				select.empty().append('<option selected value="0">&lt;<?php  putGS("default"); ?>&gt;</option>');
-				$.each(data, function(key, value) { 
+				$.each(data, function(key, value) {
 					select.append('<option value="' + key + '">' + value + '</option>');
 				});
 	        }

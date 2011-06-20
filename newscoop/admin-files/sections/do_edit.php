@@ -31,14 +31,9 @@ if(SaaS::singleton()->hasPermission('ManageSectionTemplates')) {
 $cShortName = trim(Input::Get('cShortName', 'string'));
 $cDescription = trim(Input::Get('cDescription'));
 
-if(SaaS::singleton()->hasPermission('ManageSectionTemplates')) {
-	$cSectionTplId = Input::Get('cSectionTplId', 'int', 0);
-	$cArticleTplId = Input::Get('cArticleTplId', 'int', 0);
-} else {
-	$sectionObj = new Section($Pub, $Issue, $Language, $Section);
-	$cSectionTplId = $sectionObj->getSectionTemplateId() > 0 ? $sectionObj->getSectionTemplateId() : 0;
-	$cArticleTplId = $sectionObj->getArticleTemplateId() > 0 ? $sectionObj->getArticleTemplateId() : 0;
-}
+
+$cSectionTplId = Input::Get('cSectionTplId', 'int', 0);
+$cArticleTplId = Input::Get('cArticleTplId', 'int', 0);
 
 $cName = Input::Get('cName');
 
@@ -88,9 +83,9 @@ if (!camp_html_has_msgs()) {
 	$outputService = $resourceId->getService(IOutputService::NAME);
 	$sectionService = $resourceId->getService(ISectionService::NAME);
 	$syncRsc = $resourceId->getService(ISyncResourceService::NAME);
-	
+
 	$newOutputSetting = false;
-	
+
 	$dSection = $sectionService->getById($sectionObj->getSectionId());
 	$outSetSections = $outputSettingSectionService->findBySection($dSection);
 	if(count($outSetSections) > 0){
@@ -113,7 +108,7 @@ if (!camp_html_has_msgs()) {
 		$outSetSection->setArticlePage(null);
 	}
 	//@New theme management
-	
+
 	if ($cSubs == "a") {
 	$numSubscriptionsAdded = Subscription::AddSectionToAllSubscriptions($Pub, $Section);
 		if ($numSubscriptionsAdded < 0) {
