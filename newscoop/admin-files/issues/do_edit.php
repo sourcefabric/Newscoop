@@ -31,17 +31,11 @@ $f_new_language_id = Input::Get('f_new_language_id', 'int');
 $f_publication_date = Input::Get('f_publication_date', 'string', '', true);
 
 
-if(SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
-    $f_theme_id = Input::Get('f_theme_id', 'string');
-	$f_issue_template_id = Input::Get('f_issue_template_id', 'int');
-	$f_section_template_id = Input::Get('f_section_template_id', 'int');
-	$f_article_template_id = Input::Get('f_article_template_id', 'int');
-} else {
-	$issueObj = new Issue($f_publication_id, $f_current_language_id, $f_issue_number);
-	$f_issue_template_id = $issueObj->getIssueTemplateId() > 0 ? $issueObj->getIssueTemplateId() : 0;
-	$f_section_template_id = $issueObj->getSectionTemplateId() > 0 ? $issueObj->getSectionTemplateId() : 0;
-	$f_article_template_id = $issueObj->getArticleTemplateId() > 0 ? $issueObj->getArticleTemplateId() : 0;
-}
+$f_theme_id = Input::Get('f_theme_id', 'string');
+$f_issue_template_id = Input::Get('f_issue_template_id', 'int');
+$f_section_template_id = Input::Get('f_section_template_id', 'int');
+$f_article_template_id = Input::Get('f_article_template_id', 'int');
+
 
 $f_url_name = trim(Input::Get('f_url_name'));
 

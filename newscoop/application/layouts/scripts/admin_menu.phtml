@@ -293,7 +293,7 @@ if ($showConfigureMenu) {
             ),
         ),
     );
-
+if( Saas::singleton()->hasPrivilege('themes' , 'index') ) {
     $pages[3]['pages'][] = array(
         'label' => getGS('Themes'),
         'module' => 'admin',
@@ -325,6 +325,7 @@ if ($showConfigureMenu) {
             ),
         ),
     );
+}
 
     $pages[3]['pages'][] = array(
         'label' => getGS('Geo Filtering'),

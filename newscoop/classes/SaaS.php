@@ -14,7 +14,12 @@ class Saas
     // A private constructor; prevents direct creation of object
     private function __construct()
     {
-        require_once($GLOBALS['g_campsiteDir'] . '/conf/saas_config.php');
+        if ( file_exists( $GLOBALS['g_campsiteDir'] . '/conf/saas_config.php' )) {
+            require_once($GLOBALS['g_campsiteDir'] . '/conf/saas_config.php');
+        } else {
+        	$this->saasConfig = array();
+        }
+
     }
 
     // The singleton method
