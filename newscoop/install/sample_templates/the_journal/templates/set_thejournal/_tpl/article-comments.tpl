@@ -16,7 +16,7 @@
           </div>
       </div>
       <div class="comment-entry">
-          <p>{{ $gimme->comment->content }}</p>
+          <p>{{ $gimme->comment->content_real }}</p>
       </div>
    </li>
 
