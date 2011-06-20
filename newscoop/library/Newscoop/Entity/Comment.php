@@ -580,7 +580,7 @@ class Comment
         $tag = array();
         $attrib = array();
         $contentAfter = array(0 => $parts[0]);
-        for ($i = 1, $counti = count($parts); $i <= $counti; $i++) {
+        for ($i = 1, $counti = count($parts); $i < $counti; $i++) {
             $tagAndContent = explode('>', $parts[$i], 2);
             $tagAndAttrib = explode(' ', $tagAndContent[0], 2);
 
@@ -604,7 +604,7 @@ class Comment
         $closed = $tag;
         $return = '';
         $allowedNameTags = array_keys($this->allowedTags);
-        for ($i = 0, $counti = count($tag); $i <= $counti; $i++) {
+        for ($i = 0, $counti = count($content); $i < $counti; $i++) {
             $isClosed = isset($tag[$i]) ? (substr($tag[$i], 0, 1) == '/') : false;
 
             if (isset($tag[$i]) && (in_array($tag[$i], $allowedNameTags))) {
@@ -614,7 +614,9 @@ class Comment
                     unset($closed[$good]);
                     $composeTag = '<' . $tag[$i] . ' ';
                     if (isset($attrib[$i])) {
-                        for ($j = 0, $countj = count($attrib[$i]); $j <= $countj; $j++) {
+                        for ($j = 0, $countj = count($attrib[$i]); $j < $countj; $j++) {
+                            if($attrib[$i][$j][0]=='href')
+                                $attrib[$i][$j][1] = preg_replace('/(javascript[:]?)/i','', $attrib[$i][$j][1]);
                             if (in_array($attrib[$i][$j][0],
                                             $this->allowedTags[$tag[$i]])) {
                                 $composeTag.=$attrib[$i][$j][0] . '="' . $attrib[$i][$j][1] . '" ';
@@ -627,8 +629,10 @@ class Comment
                     $title = false;
                     $cite = false;
                     if (isset($attrib[$i])) {
-                        for ($j = 0, $countj = count($attrib[$i]); $j <= $countj; $j++) {
+                        for ($j = 0, $countj = count($attrib[$i]); $j < $countj; $j++) {
                             if (in_array($attrib[$i][$j][0], $this->allowedTags[$tag[$i]])) {
+                                if($attrib[$i][$j][0]=='href')
+                                    $attrib[$i][$j][1] = preg_replace('/(javascript[:]?)/i','', $attrib[$i][$j][1]);
                                 if ($attrib[$i][$j][0] == 'title') {
                                     $title = $attrib[$i][$j][0];
                                 } elseif ($attrib[$i][$j][0] == 'cite') {

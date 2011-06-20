@@ -36,7 +36,7 @@ class Label extends Zend_Form_Decorator_Label
         $separator = $this->getSeparator();
         $placement = $this->getPlacement();
         $tag       = $this->getTag();
-        $tagClass  = $this->getTagClass();
+        $tagClass  = method_exists($this,'getTagClass') ? $this->getTagClass():false;
         $id        = $this->getId();
         $class     = $this->getClass();
         $options   = $this->getOptions();
@@ -59,7 +59,7 @@ class Label extends Zend_Form_Decorator_Label
         if (null !== $tag) {
             require_once 'Zend/Form/Decorator/HtmlTag.php';
             $decorator = new Zend_Form_Decorator_HtmlTag();
-            if (null !== $this->_tagClass) {
+            if ($tagClass && null !== $this->_tagClass) {
                 $decorator->setOptions(array('tag'   => $tag,
                                              'id'    => $id . '-label',
                                              'class' => $tagClass));
