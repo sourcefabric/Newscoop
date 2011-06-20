@@ -43,7 +43,7 @@ $data->Results->f_publish_date = $f_publish_date;
 $data->Results->f_comment_status = $f_comment_status;
 
 if (!Input::IsValid()) {
-	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $BackLink);
+	camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), isset($BackLink) ? $Backlink : null);
 	exit;
 }
 

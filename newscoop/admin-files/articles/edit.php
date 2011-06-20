@@ -246,22 +246,30 @@ if ($inEditMode && $hasArticleBodyField) {
     editor_load_tinymce($dbColumns, $g_user, $f_article_number, $editorLanguage);
 }
 
+foreach (array('fCustomFields', 'fCustomSwitches', 'fCustomTextares') as $var) {
+    if (!isset($$var)) {
+        $$var = array();
+    }
+}
+
 $jsArrayFieldsStr = '';
-for($i = 0; $i < sizeof($fCustomFields); $i++) {
+for ($i = 0; $i < sizeof($fCustomFields); $i++) {
     $jsArrayFieldsStr .= "'" . addslashes($fCustomFields[$i]) . "'";
     if ($i + 1 < sizeof($fCustomFields)) {
         $jsArrayFieldsStr .= ',';
     }
 }
+
 $jsArraySwitchesStr = '';
-for($i = 0; $i < sizeof($fCustomSwitches); $i++) {
+for ($i = 0; $i < sizeof($fCustomSwitches); $i++) {
     $jsArraySwitchesStr .= "'" . addslashes($fCustomSwitches[$i]) . "'";
     if ($i + 1 < sizeof($fCustomSwitches)) {
         $jsArraySwitchesStr .= ',';
     }
 }
+
 $jsArrayTextareasStr = '';
-for($i = 0; $i < sizeof($fCustomTextareas); $i++) {
+for ($i = 0; $i < sizeof($fCustomTextareas); $i++) {
     $jsArrayTextareasStr .= "'" . addslashes($fCustomTextareas[$i]) . "'";
     if ($i + 1 < sizeof($fCustomTextareas)) {
         $jsArrayTextareasStr .= ',';
