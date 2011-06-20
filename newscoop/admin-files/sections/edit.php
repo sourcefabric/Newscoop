@@ -199,6 +199,13 @@ if($issueHasTheme){
 </TR>
 <?php }?>
 <?php
+    } else {
+    	$tplSectionPathSafe = strlen($tplSectionPath) ? $tplSectionPath : '0';
+    	$tplArticlePathSafe = strlen($tplArticlePath) ? $tplArticlePath : '0';
+    	?>
+            <INPUT TYPE="hidden" NAME="cSectionTplId" VALUE="<?php echo $issueHasTheme ? $tplSectionPathSafe : '0';?>"/>
+            <INPUT TYPE="hidden" NAME="cArticleTplId" VALUE="<?php echo $issueHasTheme ? $tplArticlePathSafe : '0';?>"/>
+    	<?php
     }
 ?>
 <tr>
