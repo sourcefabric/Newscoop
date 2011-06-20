@@ -396,7 +396,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
                 $qb->setParameter('themePath', $pathRsc);
                 $qb->setParameter('output', $outSet->getOutput());
                 $result = $qb->getQuery()->getResult();
-                
+
                 if(count($result) > 0){
                     $outTh = $result[0];
                 } else {
@@ -547,7 +547,6 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
             return $artCache[ $parentType.$fieldName ];
         };
 
-
         // parse the mapping array
         foreach( $articleTypes as $typeName => $type )
         {
@@ -559,8 +558,12 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
             {
                 foreach( $fieldNodes as $fieldNode )
                 {
-                    if( !( $updateField = $type['fields'][ (string) $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_NAME] ] )
-                    || $updateField['ignore'] == true )
+                    if
+                    (
+                        ( !isset( $type['fields'][ (string) $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_NAME] ] )
+                            || !( $updateField = $type['fields'][ (string) $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_NAME] ] ) )
+                        || $updateField['ignore'] == true
+                    )
                     continue;
 
                     $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_NAME] = $updateField['name'];
@@ -573,6 +576,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
                         $fieldNode[self::ATTR_ARTICLE_TYPE_FILED_TYPE] = $theField->getType();
                     }
                 }
+
             }
 
             if( $type['ignore'] ) {
@@ -585,8 +589,8 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
             }
             /* @var $typeNode SimpleXMLElement */
             $typeNode[self::ATTR_ARTICLE_TYPE_NAME] = $type['name'];
-        }
 
+        }
         return $xml->asXML( $xmlFileName );
     }
 

@@ -533,7 +533,8 @@ class Admin_ThemesController extends Zend_Controller_Action
         }
 
         //print '===create===';
-        //var_dump( $createArticleTypes );
+        //var_dump( $createArticleTypes['Blog'] );
+        //die;
 
         $artServ = $this->getArticleTypeService();
         $themeArticleTypes = (array) $this->getThemeService()->getArticleTypes( $theme );
@@ -557,7 +558,7 @@ class Admin_ThemesController extends Zend_Controller_Action
         $artServ->createMany( $createArticleTypes );
 
         //print '===update===';
-        //var_dump( $updateArticleTypes );
+        //var_dump( $createArticleTypes );
         //exit;
 
         $this->view->response = $thmServ->assignArticleTypes( $updateArticleTypes, $theme );
