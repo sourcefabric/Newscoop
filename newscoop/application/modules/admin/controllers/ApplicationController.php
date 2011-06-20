@@ -17,7 +17,9 @@ class Admin_ApplicationController extends Zend_Controller_Action
 
     public function helpAction()
     {
-        $this->view;
+        $newscoop = new CampVersion;
+        $this->view->version = $newscoop->getVersion();
+        $this->view->date = $newscoop->getReleaseDate();
     }
 }
 
