@@ -22,6 +22,9 @@ if (empty($options)) {
     $flush = true;
 }
 
+// prevent flush to fix conflict with zend session
+$flush = false;
+
 // define the cleanup function
 function __exit_cleanup()
 {

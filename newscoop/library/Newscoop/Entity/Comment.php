@@ -573,7 +573,10 @@ class Comment
     protected function formatMessage($str)
     {
         $parts = explode('<', $str);
-        /** @type array vector where the tag list are keeped*/
+        // if no < was found then return the original string
+        if (count($parts) === 1)
+            return $str;
+        /** @type array vector where the tag list are keeped */
         $tag = array();
         $attrib = array();
         $contentAfter = array(0 => $parts[0]);
@@ -601,7 +604,7 @@ class Comment
         $closed = $tag;
         $return = '';
         $allowedNameTags = array_keys($this->allowedTags);
-        for ($i = 0, $counti = count($tag); $i < $counti; $i++) {
+        for ($i = 0, $counti = count($contentAfter); $i < $counti; $i++) {
             $isClosed = isset($tag[$i]) ? (substr($tag[$i], 0, 1) == '/') : false;
 
             if (isset($tag[$i]) && (in_array($tag[$i], $allowedNameTags))) {
@@ -612,8 +615,10 @@ class Comment
                     $composeTag = '<' . $tag[$i] . ' ';
                     if (isset($attrib[$i])) {
                         for ($j = 0, $countj = count($attrib[$i]); $j < $countj; $j++) {
-                            if (in_array($attrib[$i][$j][0],
-                                            $this->allowedTags[$tag[$i]])) {
+                            if ($attrib[$i][$j][0] == 'href') {
+                                $attrib[$i][$j][1] = preg_replace('/(javascript[:]?)/i','', $attrib[$i][$j][1]);
+                            }
+                            if (in_array($attrib[$i][$j][0], $this->allowedTags[$tag[$i]])) {
                                 $composeTag.=$attrib[$i][$j][0] . '="' . $attrib[$i][$j][1] . '" ';
                             }
                         }
@@ -625,7 +630,11 @@ class Comment
                     $cite = false;
                     if (isset($attrib[$i])) {
                         for ($j = 0, $countj = count($attrib[$i]); $j < $countj; $j++) {
-                            if (in_array($attrib[$i][$j][0], $this->allowedTags[$tag[$i]])) {
+                            if (in_array($attrib[$i][$j][0],
+                                            $this->allowedTags[$tag[$i]])) {
+                                if ($attrib[$i][$j][0] == 'href') {
+                                    $attrib[$i][$j][1] = preg_replace('/(javascript[:]?)/i', '', $attrib[$i][$j][1]);
+                                }
                                 if ($attrib[$i][$j][0] == 'title') {
                                     $title = $attrib[$i][$j][0];
                                 } elseif ($attrib[$i][$j][0] == 'cite') {
@@ -649,9 +658,7 @@ class Comment
                         $return.=substr($composeTag, 0, -1) . '>' . $contentAfter[$i] . '</' . $tag[$i] . '>';
                     }
                 }
-            }
-            elseif (isset($tag[$i]) && $isClosed && in_array(substr($tag[$i], 1),
-                            $allowedNameTags)) {
+            } elseif (isset($tag[$i]) && $isClosed && in_array(substr($tag[$i], 1), $allowedNameTags)) {
                 unset($closed[$i]);
                 $return.='<' . $tag[$i] . '>' . $contentAfter[$i];
             } else {
