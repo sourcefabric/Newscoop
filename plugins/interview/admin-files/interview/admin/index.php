@@ -40,6 +40,9 @@ function ajax_action(action)
 
 <?php
 
+$is_admin = $is_moderator = $is_guest = false;
+$constraints = '';
+
 // User role depend on path to this file. Tricky: moderator and guest folders are just symlink to admin files!
 if (strpos($call_script, '/interview/admin/') !== false && $g_user->hasPermission('plugin_interview_admin')) {
     $is_admin = true;
