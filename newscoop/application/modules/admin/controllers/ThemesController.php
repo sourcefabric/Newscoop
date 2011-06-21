@@ -637,24 +637,6 @@ class Admin_ThemesController extends Zend_Controller_Action
 
     }
 
-    public function testAction()
-    {
-        $theme = $this->getThemeService()->findById( $this->_request->getParam( 'id' ) );
-        //$this->getThemeFileService();
-        var_dump( $this->getThemeService()->getArticleTypes($theme ) );die;
-        $artServ = $this->getArticleTypeService();
-        var_dump( $artServ->findTypeByName( 'news' ) );
-        /*$k=1;
-        foreach( $artServ->findAllTypes() as $at )
-        {
-            echo $at->getName(),($k++)," <br />";
-            foreach( $artServ->findFields( $at ) as $af )
-
-              echo $af->getName(), " type: ", $at->getName(), " ~= type from field: ", $af->getType()->getName(), "<br />";
-        } */
-        die;
-    }
-
     public function installAction()
     {
         $this->_repository->install( $this->_getParam( 'offset' ) );
