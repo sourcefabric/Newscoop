@@ -137,7 +137,7 @@ final class CampInstallation extends CampInstallationBase
         $session = CampSession::singleton();
         $config_db = $session->getData('config.db', 'installation');
         $files= array();
-        if ($handle = opendir('./sample_templates')) 
+        if ($handle = opendir('./sample_templates'))
         {
             while (false !== ($file = readdir($handle))) {
                 if ($file!= '.' && $file!='..' && is_dir('./sample_templates/' . $file))
@@ -148,7 +148,7 @@ final class CampInstallation extends CampInstallationBase
 
         $tpl->assign('sample_templates',$files);
         $tpl->assign('overwrite_db', $this->m_overwriteDb);
- 
+
         $database_conf = dirname(__FILE__) . '/../../conf/database_conf.php';
 
         if (!empty($config_db)) {
@@ -169,6 +169,8 @@ final class CampInstallation extends CampInstallationBase
                 'hostname' => 'localhost',
                 'username' => 'root',
                 'database' => 'newscoop',
+                'hostport' => '',
+                'userpass' => ''
             ));
         }
 
@@ -176,10 +178,16 @@ final class CampInstallation extends CampInstallationBase
         if (!empty($config_site)) {
             $tpl->assign('mc', $config_site);
         }
+        else {
+            $tpl->assign( 'mc', array( 'sitetitle' => '', 'adminemail' => '' ) );
+        }
 
         $config_demo = $session->getData('config.demo', 'installation');
         if (!empty($config_demo)) {
             $tpl->assign('dm', $config_demo);
+        }
+        else {
+            $tpl->assign( 'dm', array( 'loaddemo' => '' ) );
         }
 
         $view = new CampInstallationView($this->m_step);
