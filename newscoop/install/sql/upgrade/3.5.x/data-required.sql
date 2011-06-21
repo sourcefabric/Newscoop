@@ -1,9 +1,3 @@
--- fix CodePage values
-UPDATE `Languages` SET `CodePage` = 'ko' WHERE `Name` = 'Korean';
-UPDATE `Languages` SET `CodePage` = 'be' WHERE `Name` = 'Belarus';
-UPDATE `Languages` SET `CodePage` = 'ka' WHERE `Name` = 'Georgian';
-
-
 -- Map setting
 -- should be geo-points autofocused
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapAutoFocusDefault', '1');
