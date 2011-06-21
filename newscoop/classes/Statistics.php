@@ -68,7 +68,7 @@ class Statistics {
         // for now, the only known action is to update statistics on article readering, i.e. for
         // uri path of form (/newscoop_path)/statistics/reader/article/object_id/?...
         if (3 <= count($stat_info_arr)) {
-            if (('reader' == $stat_info_arr[0]) && ('article' == $stat_info_arr[1])) {
+            if (('reader' == $stat_info_arr[0]) && (is_numeric($stat_info_arr[1]))) {
                 $art_read_action =  true;
             }
         }
@@ -79,9 +79,10 @@ class Statistics {
 
         // if the article was read by a user (incl. an anonymous one)
         if ($art_read_action) {
+            $object_type_id = (int) $stat_info_arr[1];
             $object_id = (int) $stat_info_arr[2];
 
-            $correct = self::WriteStats('article', $object_id);
+            $correct = self::WriteStats($object_type_id, $object_id);
             if (!$correct) {
                 return false;
             }
@@ -94,23 +95,32 @@ class Statistics {
         // the return value not used actually anywhere now
         return true;
     } // fn ProcessStats
-
+ 
     /**
      * Writes the statistics for the request.
+     * This works according to SessionRequest::Create, just done directly to avoid Zend usage
+     * to make it as fast as possible. Note that it contains some apparently nonsensical processing
+     * that should be probably avoided, but it was at the original workflow and this is just a copy.
+     * I suppose that it would really like to have some workflow simplification.
      *
-     * @param string $p_type
-     *      article or, for future, other types
+     * @param int $p_type
+     *      type_id of article or, for future, other types
      * @param int $p_specifier
      *      object_id of the read article
      * @return bool
      */
     public static function WriteStats($p_type, $p_specifier)
     {
-        if ('article' != $p_type) {
-            return false;
-        }
+        // The main input info is object_type (e.g. article) and object_id (unique specifier)
+        // as for now, it shall be artycle_type and object_id of an article
+        // Note that the p_specifier shall be unique within all the type domains,
+        // while the current state is that the object_ids are taken unique just within articles.
+        // We shall think on it if trying to put other types (e.g. sections, issues) into stats.
+
+        $object_type_id = 0 + $p_type;
         $object_id = 0 + $p_specifier;
 
+        // taking db access info
         global $Campsite;
         if (empty($Campsite)) {
             $Campsite = array('db' => array());
@@ -127,6 +137,7 @@ class Statistics {
         $db_pwd = $dbAccess['pass'];
         $db_name = $dbAccess['name'];
 
+        // taking info on session name and its value
         $application_path = $newscoop_path . '/application';
         $config = parse_ini_file($application_path . '/configs/application.ini');
         $session_name = $config['resources.session.name'];
@@ -134,13 +145,24 @@ class Statistics {
         session_start($session_name);
         $session_id = session_id();
 
-        $sqlReqSel1 = 'SELECT last_stats_update FROM Requests WHERE session_id = :session_id AND object_id = :object_id LIMIT 1';
-        $sqlReqIns1 = 'INSERT INTO Requests (session_id, object_id, last_stats_update) VALUES (:session_id, :object_id, :last_stats_update)';
+        // sql commands used along the workflow
+        $sqlSessionSel = 'SELECT user_id FROM Sessions WHERE id = :session_id';
+        $sqlSessionIns = 'INSERT INTO Sessions (id, start_time) VALUES (:session_id, :start_time)';
 
-        $sqlReqSel2 = 'SELECT request_count FROM RequestStats WHERE object_id = :object_id AND date = :date AND hour = :hour';
-        $sqlReqIns2 = 'INSERT INTO RequestStats (object_id, date, hour, request_count) VALUES (:object_id, :date, :hour, 1)';
-        $sqlReqUpd2 = 'UPDATE RequestStats SET request_count = :request_count WHERE (object_id, date, hour) = (:object_id, :date, :hour)';
+        $sqlRequestObjectSel = 'SELECT object_id FROM RequestObjects WHERE object_id = :object_id';
+        $sqlRequestObjectIns = 'INSERT INTO RequestObjects (object_id, object_type_id) VALUES (:object_id, :object_type_id)';
+        $sqlRequestObjectUpd = 'UPDATE RequestObjects SET request_count = (request_count + 1) WHERE object_id = :object_id';
 
+        $sqlRequestSel = 'SELECT last_stats_update FROM Requests WHERE (session_id, object_id) = (:session_id, :object_id) LIMIT 1';
+        $sqlRequestIns = 'INSERT INTO Requests (session_id, object_id, last_stats_update) VALUES (:session_id, :object_id, :last_stats_update)';
+
+        // it looks that this table was used just for having daily/hourly statistics,
+        // but can not see where it is used now; was it finally abandoned?
+        $sqlRequestStatSel = 'SELECT request_count FROM RequestStats WHERE (object_id, date, hour) = (:object_id, :date, :hour)';
+        $sqlRequestStatIns = 'INSERT INTO RequestStats (object_id, date, hour, request_count) VALUES (:object_id, :date, :hour, 1)';
+        $sqlRequestStatUpd = 'UPDATE RequestStats SET request_count = (request_count + 1) WHERE (object_id, date, hour) = (:object_id, :date, :hour)';
+
+        // openning the db connection
         $dbh = null;
         $sth = null;
 
@@ -156,11 +178,93 @@ class Statistics {
             return false;
         }
 
-        $last_stats_update = null;
+        // the old processing read/created session info first
+        // it looks to me that we do not need this here, may be to abandon this at a refactoring
+        try {
+            $user_id = null;
+            $session_exists = false;
+
+            $sth = $dbh->prepare($sqlSessionSel);
+            $sth->bindValue(':session_id', (string) $session_id, PDO::PARAM_STR);
+
+            $res = $sth->execute();
+            if (!$res) {
+                return false;
+            }
+
+            while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+                $user_id = $row['user_id'];
+                $session_exists = true;
+            }
+
+            $sth = null;
+
+            if (!$session_exists) {
+                $sth = $dbh->prepare($sqlSessionIns);
+                $sth->bindValue(':session_id', (string) $session_id, PDO::PARAM_STR);
+                $sth->bindValue(':start_time', (string) strftime("%Y-%m-%d %T"), PDO::PARAM_STR);
+
+                $res = $sth->execute();
+                if (!$res) {
+                    return false;
+                }
+
+                $sth = null;
+            }
+
+        }
+        catch (Exception $exc) {
+            return false;
+        }
+
+        // we read the stats info from RequestObjects and create empty one, if none there
+        // note that RequestObjects and RequestStats contain apparently duplicated info,
+        // it shall be rationalized at some refactoring
+
+        try {
+            $request_object_exists = false;
+
+            $sth = $dbh->prepare($sqlRequestObjectSel);
+            $sth->bindValue(':object_id', (string) $object_id, PDO::PARAM_INT);
+
+            $res = $sth->execute();
+            if (!$res) {
+                return false;
+            }
+
+            while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
+                $request_object_exists = true;
+            }
+
+            $sth = null;
+
+            if (!$request_object_exists) {
+                $sth = $dbh->prepare($sqlRequestObjectIns);
+                $sth->bindValue(':object_id', (string) $object_id, PDO::PARAM_INT);
+                $sth->bindValue(':object_type_id', (string) $object_type_id, PDO::PARAM_INT);
+
+                $res = $sth->execute();
+                if (!$res) {
+                    return false;
+                }
+
+                $sth = null;
+            }
+
+        }
+        catch (Exception $exc) {
+            return false;
+        }
 
         // does the user already read this article
+        // in a distant past the page-reads were taken per user (i.e. session_id) and hour,
+        // for the current (and past) workflow a user (i.e. seesion_id) can be taken just once,
+        // i.e. either the row (on session_id and object_id) does exists or not at all
+
+        $last_stats_update = null;
+
         try {
-            $sth = $dbh->prepare($sqlReqSel1);
+            $sth = $dbh->prepare($sqlRequestSel);
             $sth->bindValue(':session_id', (string) $session_id, PDO::PARAM_STR);
             $sth->bindValue(':object_id', (string) $object_id, PDO::PARAM_INT);
 
@@ -190,7 +294,7 @@ class Statistics {
 
         // save that the user has read the article
         try {
-            $sth = $dbh->prepare($sqlReqIns1);
+            $sth = $dbh->prepare($sqlRequestIns);
             $sth->bindValue(':session_id', (string) $session_id, PDO::PARAM_STR);
             $sth->bindValue(':object_id', (string) $object_id, PDO::PARAM_INT);
             $sth->bindValue(':last_stats_update', (string) $last_stats_update, PDO::PARAM_STR);
@@ -206,12 +310,11 @@ class Statistics {
             return false;
         }
 
-        $request_count = 0;
         $request_count_update = false;
 
         // how many has read this article this hour
         try {
-            $sth = $dbh->prepare($sqlReqSel2);
+            $sth = $dbh->prepare($sqlRequestStatSel);
             $sth->bindValue(':object_id', (string) $object_id, PDO::PARAM_INT);
             $sth->bindValue(':date', (string) $current_date, PDO::PARAM_STR);
             $sth->bindValue(':hour', (string) $current_hour, PDO::PARAM_INT);
@@ -222,7 +325,6 @@ class Statistics {
             }
 
             while ($row = $sth->fetch(PDO::FETCH_ASSOC)) {
-                $request_count = $row['request_count'];
                 $request_count_update = true;
             }
 
@@ -232,16 +334,13 @@ class Statistics {
             return false;
         }
 
-        // the user has read it
-        $request_count += 1;
-
         // save the (increased) count of read access
+        // both into RequestStats and RequestObjects
         try {
             if ($request_count_update) {
-                $sth = $dbh->prepare($sqlReqUpd2);
-                $sth->bindValue(':request_count', (string) $request_count, PDO::PARAM_INT);
+                $sth = $dbh->prepare($sqlRequestStatUpd);
             } else {
-                $sth = $dbh->prepare($sqlReqIns2);
+                $sth = $dbh->prepare($sqlRequestStatIns);
             }
             $sth->bindValue(':object_id', (string) $object_id, PDO::PARAM_INT);
             $sth->bindValue(':date', (string) $current_date, PDO::PARAM_STR);
@@ -253,6 +352,17 @@ class Statistics {
             }
 
             $sth = null;
+
+            $sth = $dbh->prepare($sqlRequestObjectUpd);
+            $sth->bindValue(':object_id', (string) $object_id, PDO::PARAM_INT);
+
+            $res = $sth->execute();
+            if (!$res) {
+                return false;
+            }
+
+            $sth = null;
+
         }
         catch (Exception $exc) {
             return false;
