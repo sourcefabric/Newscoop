@@ -189,17 +189,19 @@ $(function() {
 
     // zend_form utils
     $('dl.zend_form').each(function() {
+        var emptyRegExp = /\S/;
         var form = $(this);
         // hide hidden fields
         $('input:hidden', form).each(function() {
-            var ischeckbox = $(this).next('input:checkbox');
-        	if(ischeckbox)
+            if ($(this).next('input:checkbox').size()) {
         		return;
+            }
+
             var dd = $(this).closest('dd');
             var dt = dd.prev('dt');
             var errors = $('ul.errors', dd);
 
-            if (dt.html() == '') { // if empty
+            if (emptyRegExp.test(dt.html())) { // remove if empty
                 dt.hide().detach().appendTo(form);
             }
 
