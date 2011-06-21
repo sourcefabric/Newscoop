@@ -22,6 +22,7 @@ $fieldType = trim(Input::Get('f_article_field_type'));
 $rootTopicId = Input::Get('f_root_topic_id', 'int', 0);
 $isContent = Input::Get('f_is_content');
 $precision = Input::Get('f_precision');
+$editorSize = Input::Get('f_editor_size');
 $maxsize = Input::Get('f_maxsize');
 
 $field = new ArticleTypeField($articleTypeName, $fieldName);
@@ -52,8 +53,8 @@ if ($article->has_property($fieldName) || method_exists($article, $fieldName)) {
 
 if ($correct) {
     $params = array('root_topic_id'=>$rootTopicId, 'is_content'=>strtolower($isContent) == 'on',
-	'precision'=>$precision, 'maxsize'=>$maxsize);
-    $field->create($fieldType, $params);
+	'precision'=>$precision, 'maxsize'=>$maxsize, 'editor_size' => $editorSize);
+	$field->create($fieldType, $params);
 	camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
 }
 

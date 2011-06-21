@@ -40,6 +40,7 @@ class ArticleTypeField extends DatabaseObject {
         'max_size');
     private $m_rootTopicId = null;
     private $m_precision = null;
+    private $m_editorSize = null;
 
 
 	public function __construct($p_articleTypeName = null, $p_fieldName = null)
@@ -121,6 +122,12 @@ class ArticleTypeField extends DatabaseObject {
 				$this->m_precision = (int) $params[1];
 			}
 		}
+		if ($success && $this->getType() == self::TYPE_BODY) {
+			$params = explode('=', $this->m_data['field_type_param']);
+			if (isset($params[0]) && $params[0] == 'editor_size') {
+				$this->m_editorSize = (int) $params[1];
+			}
+		}
 		return $success;
 	}
 
@@ -153,7 +160,7 @@ class ArticleTypeField extends DatabaseObject {
 				return false;
 			}
 		}
-
+		
 		if ($this->getPrintName() != 'NULL') {
 			$queryStr = "ALTER TABLE `X" . $this->m_data['type_name'] . "` ADD COLUMN `"
 			. $this->getName() . '` ' . $types[$p_type];
@@ -164,6 +171,9 @@ class ArticleTypeField extends DatabaseObject {
 			if ($this->getPrintName() != 'NULL') {
 				if ($p_type == self::TYPE_BODY && isset($p_params['is_content'])) {
                     $data['is_content_field'] = (int)$p_params['is_content'];
+				}
+				if ($p_type == self::TYPE_BODY && isset($p_params['editor_size'])) {
+                    $data['field_type_param'] = 'editor_size=' . $p_params['editor_size'];
 				}
 				if ($p_type == self::TYPE_NUMERIC && isset($p_params['precision'])) {
 					$data['field_type_param'] = 'precision=' . (int)$p_params['precision'];
