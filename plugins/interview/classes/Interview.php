@@ -1,4 +1,8 @@
 <?php
+
+use Newscoop\Utils\PermissionToAcl,
+    Newscoop\Entity\Acl\Rule;
+
 /**
  * @package Campsite
  */
@@ -596,15 +600,15 @@ class Interview extends DatabaseObject {
                 'element'   => 'f_guest_new_user_login',
                 'type'      => 'text',
                 'label'     => getGS('Guest Login'),
-                'default'   => $data['f_guest_new_user_login'],
-                'attributes' => $_REQUEST['f_guest_user_id'] == '__new__' ? null : array('disabled'),
+                'default'   => isset($data['f_guest_new_user_login']) ? $data['f_guest_new_user_login'] : '',
+                'attributes' => isset($_REQUEST['f_guest_user_id']) && $_REQUEST['f_guest_user_id'] == '__new__' ? null : array('disabled'),
             ),
             array(
                 'element'   => 'f_guest_new_user_email',
                 'type'      => 'text',
                 'label'     => getGS('Guest Email'),
-                'default'   => $data['f_guest_new_user_email'],
-                'attributes' => $_REQUEST['f_guest_user_id'] == '__new__' ? null : array('disabled'),
+                'default'   => isset($data['f_guest_new_user_email']) ? $data['f_guest_new_user_email'] : '',
+                'attributes' => isset($_REQUEST['f_guest_user_id']) && $_REQUEST['f_guest_user_id'] == '__new__' ? null : array('disabled'),
             ),
             array(
                 'element'   => 'f_title',
@@ -622,7 +626,7 @@ class Interview extends DatabaseObject {
                 'element'   => 'f_image_description',
                 'type'      => 'text',
                 'label'     => getGS('Image Description'),
-                'default'   => $image_description
+                'default'   => isset($image_description) ? $image_description : '',
             ),
             array(
                 'element'   => 'f_image_delete',
@@ -743,10 +747,12 @@ class Interview extends DatabaseObject {
 
     public function store($p_user_id = null)
     {
+        global $controller;
+
         require_once 'HTML/QuickForm.php';
 
-        $mask = self::getFormMask($p_owner, $p_admin);
-        $form = new html_QuickForm('interview', 'post', $p_target, null, null, true);
+        $mask = self::getFormMask();
+        $form = new html_QuickForm('interview', 'post', null, null, null, true);
         FormProcessor::parseArr2Form($form, $mask);
 
         if ($form->validate() && SecurityToken::isValid()) {
@@ -754,7 +760,7 @@ class Interview extends DatabaseObject {
 
             $image_id = $this->getProperty('fk_image_id');
 
-            if ($data['f_image_delete'] && $image_id) {
+            if (!empty($data['f_image_delete']) && $image_id) {
                 $Image = new Image($this->getProperty('fk_image_id'));
                 $Image->delete();
                 $image_id = null;
@@ -788,24 +794,33 @@ class Interview extends DatabaseObject {
                         'passwd' => $passwd,
                         'Reader' => 'N'
                     );
+
                     // create user
                     $editUser = new User();
-                    $phorumUser = new Phorum_user();
 
-                    if ($phorumUser->UserNameExists($fieldValues['UName']) || User::UserNameExists($fieldValues['UName'])) {
+                    if (User::UserNameExists($fieldValues['UName'])) {
                         return false;
                     }
 
-                    if (!$editUser->create($fieldValues)) {
+                    $uid = $editUser->create($fieldValues);
+                    if (!$uid) {
                         return false;
                     }
 
-                	$editUser->setUserType('Staff');
-                	$editUser->setPermission('plugin_interview_'.$type, true);
+                    $rule = new Rule();
+                    list($resource, $action) = PermissionToAcl::translate("plugin_interview_{$type}");
+                    $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Acl\Rule');
+                    $user = $controller->getHelper('entity')->find('Newscoop\Entity\User\Staff', $uid);
+                    $repository->save($rule, array(
+                        'role' => $user->getRoleId(),
+                        'type' => 'allow',
+                        'resource' => $resource,
+                        'action' => $action,
+                    ));
 
-                	$phorumUser->create($fieldValues['UName'], $passwd, $fieldValues['EMail'], $editUser->getUserId());
+                    $controller->getHelper('entity')->flushManager();
 
-                    $userid[$type] = $editUser->getUserId();
+                    $userid[$type] = $uid;
                 } else {
                      $userid[$type] = $data['f_'.$type.'_user_id'];
                 }
@@ -1376,15 +1391,25 @@ class Interview extends DatabaseObject {
 
     public function getUsersHavePermission($p_permission)
     {
-        $users = array();
+        global $controller;
 
-        foreach (User::getUsers() as $User) {
-            if ($User->hasPermission($p_permission)) {
-                $users[$User->m_data['Id']] = $User->m_data['Name'];
+        $acl = \Zend_Registry::get('acl');
+        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\User\Staff');
+
+        try {
+            list($resource, $action) = PermissionToAcl::translate($p_permission);
+        } catch (\InvalidArgumentException $e) {
+            return array();
+        }
+
+        $users = array();
+        foreach ($repository->findAll() as $user) {
+            if ($acl->isAllowed($user, $resource, $action)) {
+                $users[$user->getId()] = $user->getName();
             }
         }
-        return $users;
 
+        return $users;
     }
 
     public static function GetCampLanguagesList()

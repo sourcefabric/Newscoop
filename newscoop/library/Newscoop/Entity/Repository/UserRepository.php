@@ -15,6 +15,25 @@ use Doctrine\ORM\EntityRepository,
  */
 abstract class UserRepository extends EntityRepository
 {
+    /** @var array */
+    private static $defaults = array(
+        'phone' => '',
+        'title' => '',
+        'gender' => '',
+        'age' => '',
+        'city' => '',
+        'street_address' => '',
+        'postal_code' => '',
+        'state' => '',
+        'country' => '',
+        'fax' => '',
+        'contact_person' => '',
+        'phone_second' => '',
+        'employer' => '',
+        'employer_type' => '',
+        'position' => '',
+    );
+
     /**
      * Save user
      *
@@ -25,6 +44,7 @@ abstract class UserRepository extends EntityRepository
     public function save(User $user, array $values)
     {
         $em = $this->getEntityManager();
+        $values += self::$defaults;
 
         // check for unique email
         $query = $em->createQuery('SELECT u.id FROM Newscoop\Entity\User u WHERE u.email = ?1')
@@ -54,15 +74,17 @@ abstract class UserRepository extends EntityRepository
             ->setEmployerType($values['employer_type'])
             ->setPosition($values['position']);
 
+        if (!empty($values['username'])) {
+            $user->setUsername($values['username']);
+        }
+
         // set username/password
         if ($user->getId() > 0) { // update
             if (!empty($values['password'])) {
                 $user->setPassword($values['password']);
             }
-
         } else { // insert
-            $user->setUsername($values['username'])
-                ->setPassword($values['password']);
+            $user->setPassword($values['password']);
         }
 
         $em->persist($user);

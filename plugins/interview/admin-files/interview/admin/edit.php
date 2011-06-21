@@ -69,12 +69,13 @@ if (!Input::IsValid()) {
 
 $Interview = new Interview($f_interview_id);
 
-// new usernames may exist
+$error = false;
 foreach(array('guest') as $type) {
-    if ($_REQUEST['f_'.$type.'_user_id'] == '__new__') {
+    $key = "f_{$type}_user_id";
+    if (isset($_REQUEST[$key]) && $_REQUEST[$key] == '__new__') {
         require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/users/users_common.php");
     
-        if (User::UserNameExists($_REQUEST['f_'.$type.'_new_user_login']) || Phorum_user::UserNameExists($_REQUEST['f_'.$type.'_new_user_login'])) {
+        if (User::UserNameExists($_REQUEST['f_'.$type.'_new_user_login'])) {
             $errorMsg = getGS('User name $1 already exists, please choose a different login name.', $_REQUEST['f_'.$type.'_new_user_login']);
             camp_html_add_msg($errorMsg);
             $error = true;
