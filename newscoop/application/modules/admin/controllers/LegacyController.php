@@ -57,7 +57,7 @@ class Admin_LegacyController extends Zend_Controller_Action
         $GLOBALS['call_script'] = $call_script;
 
         // detect extended login/logout files
-        if ($call_script == '/logout.php') $call_script = $prefix . 'logout.php';
+        if ($call_script == '/login.php') $call_script = $prefix . 'login.php';
 
         $extension = '';
         if (($extension_start = strrpos($call_script, '.')) !== false) {
