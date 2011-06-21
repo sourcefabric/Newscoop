@@ -165,7 +165,7 @@ final class MetaArticleBodyField {
             $requestObjectId = $this->m_parent_article->getProperty('object_id');
             $updateArticle = empty($requestObjectId);
             try {
-                // note that SessionRequest::Create() is called at the js-based stats now, at CampSite::writeStats();
+                // note that an analogy to SessionRequest::Create() is run at the js-based stats now, at Statistics::WriteStats();
                 if ($updateArticle) {
                     $this->m_parent_article->setProperty('object_id', $requestObjectId);
                 }
@@ -181,6 +181,7 @@ final class MetaArticleBodyField {
                     $language_obj = new MetaLanguage($this->m_parent_article->getProperty('IdLanguage'));
                     $language_code = $language_obj->Code;
                     $name_spec = '_' . $article_number . '_' . $language_code;
+                    $object_type_id = $objectType->getObjectTypeId();
 
                     $content .= '
                         <script type="text/javascript">
@@ -207,7 +208,7 @@ final class MetaArticleBodyField {
                             stats_request.onreadystatechange = function() {};
     
                             var read_date = new Date();
-                            var read_path = "_statistics/reader/article/";
+                            var read_path = "_statistics/reader/' . $object_type_id . '/";
                             var request_randomizer = "" + read_date.getTime() + Math.random();
                             var stats_url = "' . $stat_web_url . '" + read_path + "' . $requestObjectId . '/";
                             try {

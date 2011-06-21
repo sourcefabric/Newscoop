@@ -195,7 +195,8 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
         Validation::notEmpty( $name, 'name' );
 
         $artField = new ArticleTypeField();
-        $artField->setArticleType($type)->setName($name);
+        // TODO hack hack hack
+        $artField->setArticleType($type)->setArticleTypeHack($type)->setName($name);
         if( is_array( $props ) ) {
             foreach( $props as $prop => $val )
             {
@@ -213,7 +214,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
     /**
      * Creates more article types
      * @param array $articleTypes the array of types, optionally with fields
-     * 		[ [ name : typeName, fields : [ name : fieldName, parentType : typeName, ignore : bool ], [...] ], [...] ]
+     * 		[ typeName => [ fields : [ name : fieldName, parentType : typeName, ignore : bool ], [...] ], [...] ]
      * @see self::create()
      */
     public function createMany( $articleTypes )
@@ -221,9 +222,9 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
 
         Validation::notEmpty( $articleTypes, 'articleTypes' );
 
-        foreach( $articleTypes as $type )
+        foreach( $articleTypes as $typeName => $type )
         {
-            $artType = $this->_create( $type['name'] );
+            $artType = $this->_create( $typeName );
             if( is_array( $type['fields'] ) ) {
                 foreach( $type['fields'] as $field ) {
                     $this->_createField( $field['name'], $artType );
@@ -237,8 +238,10 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
         }
         catch( \PDOException $e )
         {
-            if( $e->getCode( ) == 23000 ) // duplicate keys
-                return false;
+            // duplicate keys, no worries
+            if( $e->getCode() == 23000 && strpos( $e->getMessage(), 'Duplicate' ) !== false ) {
+                return true;
+            }
             throw $e;
         }
         catch( \Exception $e )

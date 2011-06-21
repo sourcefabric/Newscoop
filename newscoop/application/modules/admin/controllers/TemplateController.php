@@ -194,7 +194,7 @@ class Admin_TemplateController extends Zend_Controller_Action
             $this->_helper->redirector('edit', 'template', 'admin', array(
                 'path' => $this->_getParam('path'),
                 'file' => $this->_getParam('file'),
-                'next' => $this->_getParam('next'),
+                'next' => urlencode($this->_getParam('next')),
                 'id' => $this->_getParam('id'),
             ));
         }
