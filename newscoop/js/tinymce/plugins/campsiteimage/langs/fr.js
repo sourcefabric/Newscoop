@@ -59,6 +59,7 @@ left:"Left",
 right:"Right",
 middle:"Middle",
 resizeratio:"Resizing Ratio",
+resizenotice:"Ratio de redimensionnement est écrasée par les paramètres de largeur / hauteur"
 resizewidth:"Resizing Width",
 resizeheight:"Resizing Height",
 edit:"Edit",
