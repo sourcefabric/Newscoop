@@ -112,61 +112,70 @@ final class CampInstallationView
 
         return $success;
     } // fn sysCheck
-    
+
     private function librariesCheck()
     {
         $success = true;
         $libraryRequirements = array();
-        
+
+/*        $autoloadCallback = function( $class )
+        {
+            TODO some code here to check pear classes
+        };
+
+        $autoloader = Zend_Loader_Autoloader::getInstance();
+        $autoloader->pushAutoloader( $autoloadCallback );
+*/
+
         $pear = CampInstallationViewHelper::CheckPear();
         $success = ($pear == 'Yes') ? $success : false;
         $libraryRequirements[] = array(
 			'tag' => 'PEAR',
 			'exists' => $pear
 		);
-		
+
 		$pearDate = CampInstallationViewHelper::CheckPearDate();
         $success = ($pearDate == 'Yes') ? $success : false;
         $libraryRequirements[] = array(
 			'tag' => 'PEAR/Date',
 			'exists' => $pearDate
 		);
-		
+
 		$pearArchiveTar = CampInstallationViewHelper::CheckPearArchiveTar();
         $success = ($pearArchiveTar == 'Yes') ? $success : false;
         $libraryRequirements[] = array(
 			'tag' => 'PEAR/Archive',
 			'exists' => $pearArchiveTar
 		);
-		
+
 		$pearEventDispatcher = CampInstallationViewHelper::CheckPearEventDispatcher();
         $success = ($pearEventDispatcher == 'Yes') ? $success : false;
         $libraryRequirements[] = array(
 			'tag' => 'PEAR/Event Dispatcher',
 			'exists' => $pearEventDispatcher
 		);
-		
+
 		$pearMail = CampInstallationViewHelper::CheckPearMail();
         $success = ($pearMail == 'Yes') ? $success : false;
         $libraryRequirements[] = array(
 			'tag' => 'PEAR/Mail',
 			'exists' => $pearMail
 		);
-		
+
 		$pearMailMime = CampInstallationViewHelper::CheckPearMailMime();
         $success = ($pearMailMime == 'Yes') ? $success : false;
         $libraryRequirements[] = array(
 			'tag' => 'PEAR/Mail_mime',
 			'exists' => $pearMailMime
 		);
-		
+
 		$pearXmlSerializer = CampInstallationViewHelper::CheckPearXmlSerializer();
         $success = ($pearXmlSerializer == 'Yes') ? $success : false;
         $libraryRequirements[] = array(
 			'tag' => 'PEAR/XML_Serializer',
 			'exists' => $pearXmlSerializer
 		);
-		
+
 		$pearXmlParser = CampInstallationViewHelper::CheckPearXmlParser();
         $success = ($pearXmlParser == 'Yes') ? $success : false;
         $libraryRequirements[] = array(
@@ -180,21 +189,21 @@ final class CampInstallationView
 			'tag' => 'PEAR/HTML_Common',
 			'exists' => $pearHtmlCommon
 		);
-        
+
         $zendFramework = CampInstallationViewHelper::CheckZendFramework();
         $success = ($zendFramework == 'Yes') ? $success : false;
         $libraryRequirements[] = array(
 			'tag' => 'Zend Framework',
 			'exists' => $zendFramework
 		);
-		
+
 		$adoDb = CampInstallationViewHelper::CheckAdoDb();
 		$success = ($adoDb == 'Yes') ? $success : false;
         $libraryRequirements[] = array(
 			'tag' => 'AdoDB',
 			'exists' => $adoDb
 		);
-		
+
 		$smarty = CampInstallationViewHelper::CheckSmarty();
         $success = ($smarty == 'Yes') ? $success : false;
         $libraryRequirements[] = array(
@@ -203,6 +212,12 @@ final class CampInstallationView
 		);
 
         $this->m_lists['libraryRequirements'] = $libraryRequirements;
+
+        /*
+         * remove autoloader like so
+        $autoloader->removeAutoloader( $autoloadCallback );
+		*/
+
         return $success;
     } // fn librariesCheck
 
@@ -326,14 +341,14 @@ final class CampInstallationViewHelper
 {
     public static function CheckPear()
     {
-        return (class_exists('PEAR_Common')) ? 'Yes' : 'No';
+        return (class_exists('System')||class_exists('PEAR')||class_exists('PEAR_Common')) ? 'Yes' : 'No';
     } // fn checkPear
-    
+
     public static function CheckPearDate()
     {
         return (class_exists('Date_Calc')) ? 'Yes' : 'No';
     } // fn checkPearDate
-    
+
     public static function CheckPearArchiveTar()
     {
         return (class_exists('Archive_Tar')) ? 'Yes' : 'No';
@@ -343,22 +358,22 @@ final class CampInstallationViewHelper
     {
         return (class_exists('Event_Dispatcher')) ? 'Yes' : 'No';
     } // fn checkPearEventDispatcher
-    
+
     public static function CheckPearMail()
     {
         return (class_exists('Mail_mail')) ? 'Yes' : 'No';
     } // fn checkPearMail
-    
+
     public static function CheckPearMailMime()
     {
         return (class_exists('Mail_mime')) ? 'Yes' : 'No';
     } // fn checkPearMailMime
-    
+
     public static function CheckPearXmlSerializer()
     {
         return (class_exists('XML_Serializer')) ? 'Yes' : 'No';
     } // fn checkPearXmlSerializer
-    
+
     public static function CheckPearXmlParser()
     {
         return (class_exists('XML_Parser')) ? 'Yes' : 'No';
@@ -368,22 +383,22 @@ final class CampInstallationViewHelper
     {
         return (class_exists('HTML_Common')) ? 'Yes' : 'No';
     } // fn checkPearHtmlCommon
-    
+
     public static function CheckZendFramework()
     {
         return (class_exists('Zend_Application')) ? 'Yes' : 'No';
     } // fn checkZendFramework
-    
+
     public static function CheckAdoDb()
     {
         return (class_exists('ADOFieldObject')) ? 'Yes' : 'No';
     } // fn checkAdoDb
-    
+
     public static function CheckSmarty()
     {
         return (class_exists('Smarty')) ? 'Yes' : 'No';
     } // fn checkSmarty
-    
+
     public static function CheckPHPVersion()
     {
         return (phpversion() > '5.2') ? 'Yes' : 'No';
