@@ -13,21 +13,27 @@ fValidate.prototype.number = function( type, lb, ub )
 {
 	if ( this.typeMismatch( 'text' ) ) return;
 	var num  = ( type == 0 ) ? parseInt( this.elem.value, 10 ) : parseFloat( this.elem.value );
-	lb       = this.setArg( lb, 0 );
-	ub       = this.setArg( ub, Number.infinity );
-	if ( lb > ub )
-	{
-		this.devError( [lb, ub, this.elem.name] );
-		return;
-	}
+	lb       = this.setArg( lb, false );
+	ub       = this.setArg( ub, false );
 	var fail = Boolean( isNaN( num ) || num != this.elem.value );
 	if ( !fail )
 	{
 		switch( true )
 		{
-			case ( lb != false && ub != false ) : fail = !Boolean( lb <= num && num <= ub ); break;
-			case ( lb != false ) : fail = Boolean( num < lb ); break;
-			case ( ub != false ) : fail = Boolean( num > ub ); break;
+			case ( lb !== false && ub !== false ) :
+                            if ( lb > ub )
+                            {
+                                    this.devError( [lb, ub, this.elem.name] );
+                                    return;
+                            }
+                            fail = !Boolean( lb <= num && num <= ub );
+                        break;
+			case ( lb !== false ) :
+                            fail = Boolean( num < lb );
+                        break;
+			case ( ub !== false ) :
+                            fail = Boolean( num > ub );
+                       break;
 		}
 	}
 	if ( fail )
@@ -70,7 +76,7 @@ fValidate.prototype.length = function( len, maxLen )
 	if ( len > parseInt( vlen, 10 ) )
 	{
 		this.throwError( [this.elem.fName, len] );
-	}	
+	}
 	if ( vlen > maxLen )
 	{
 		this.throwError( [this.elem.fName, maxLen, vlen], 1 );
@@ -83,14 +89,14 @@ fValidate.prototype.alnum = function( minLen, tCase, numbers, spaces, puncs )
 	if ( this.typeMismatch( 'text' ) ) return;
 
 	tCase = this.setArg( tCase, "a" );
-	
+
 	//alert( [minLen,tCase,numbers,spaces,puncs] );
 
 	numbers = ( numbers == "true" || numbers == "1" );
 	spaces = ( spaces == "true" || spaces == "1" );
 
 	//alert( [minLen,tCase,numbers,spaces,puncs] );
-		
+
 	var okChars = "",
 		arrE	= ['None','Any','No','No','Any'];
 
@@ -119,7 +125,7 @@ fValidate.prototype.alnum = function( minLen, tCase, numbers, spaces, puncs )
 			break;
 		default:
 			okChars += 'a-zA-Z';
-			break;		
+			break;
 	}
 
 	if ( numbers == true )
@@ -140,7 +146,7 @@ fValidate.prototype.alnum = function( minLen, tCase, numbers, spaces, puncs )
 	{
 		arrE[4] = "None";
 	}
-	else 
+	else
 	{
 		puncs = puncs.replace( /pipe/g, "|" );
 		okChars += puncs;
@@ -152,7 +158,7 @@ fValidate.prototype.alnum = function( minLen, tCase, numbers, spaces, puncs )
 	var regex = ( puncs == "any" ) ?
 		new RegExp( "^([" + okChars + "]|[^a-zA-Z0-9\\s])" + length + "$" ):
 		new RegExp( "^[" + okChars + "]" + length + "$" );
-	
+
 	if ( !regex.test( this.elem.value ) )
 	{
 		this.throwError( [this.elem.value, this.elem.fName, arrE[0], arrE[1], arrE[2], arrE[3], arrE[4]] );
@@ -170,7 +176,7 @@ fValidate.prototype.equalto = function( oName )
 	var otherElem = this.form.elements[oName];
 	if ( this.elem.value != otherElem.value )
 	{
-		this.throwError( [this.elem.fName,otherElem.fName] );			
+		this.throwError( [this.elem.fName,otherElem.fName] );
 	}
 }
 /*/>*/
@@ -202,7 +208,7 @@ fValidate.prototype.selectm = function( minS, maxS )
 	}
 	if ( maxS == 999 || maxS == '*' || typeof maxS == 'undefined' || maxS > this.elem.length ) maxS = this.elem.length;
 
-	var count = 0;	
+	var count = 0;
 	for ( var opt, i = 0; ( opt = this.elem.options[i] ); i++ )
 	{
 		if ( opt.selected ) count++;
@@ -217,7 +223,7 @@ fValidate.prototype.selectm = function( minS, maxS )
 /*< selecti controls *******************************************************************/
 fValidate.prototype.selecti = function( indexes )
 {
-	
+
 	if ( this.typeMismatch( 's1' ) ) return;
 	if ( typeof indexes == 'undefined' )
 	{
@@ -304,8 +310,8 @@ fValidate.prototype.email = function( level )
 	if ( ! emailPatterns[level].test( this.elem.value ) )
 	{
 		this.throwError();
-	}	
-}	
+	}
+}
 /*/>*/
 /*< url web *******************************************************************/
 fValidate.prototype.url = function( hosts, hostOptional, allowQS )
@@ -313,18 +319,18 @@ fValidate.prototype.url = function( hosts, hostOptional, allowQS )
 	if ( this.typeMismatch( 'text' ) ) return;
 
 	this.setArg( hosts, "http" );
-	
+
 	var front = "^(?:(" + hosts.replace( /\,/g, "|" ) + ")\\:\\/\\/)";
 	var end   = ( Boolean( allowQS ) == true ) ? "(\\?.*)?$" : "$";
 
 	if ( Boolean( hostOptional ) == true ) front += "?";
 	var regex = new RegExp( front + "([\\w\\d-]+\\.?)+" + end );
-	
+
 	if ( !regex.test( this.elem.value ) )
 	{
 		this.throwError( [this.elem.fName] );
 	}
-}	
+}
 /*/>*/
 /*< ip web *******************************************************************/
 fValidate.prototype.ip = function( portMin, portMax )
@@ -363,22 +369,22 @@ fValidate.prototype.decimal = function( lval, rval )
 	var regex = '', elem = this.elem;
 	if ( lval != '*' ) lval = parseInt( lval, 10 );
 	if ( rval != '*' ) rval = parseInt( rval, 10 );
-	
+
 	if ( lval == 0 )
-		regex = "^\\.[0-9]{" + rval + "}$";	
+		regex = "^\\.[0-9]{" + rval + "}$";
 	else if ( lval == '*' )
 		regex = "^[0-9]*\\.[0-9]{" + rval + "}$";
 	else if ( rval == '*' )
 		regex = "^[0-9]{" + lval + "}\\.[0-9]+$";
 	else
 		regex = "^[0-9]{" + lval + "}\\.[0-9]{" + rval + "}$";
-		
+
 	regex = new RegExp( regex );
 
 	if ( !regex.test( elem.value ) )
 	{
 		this.throwError( [elem.value,elem.fName] );
-	}	
+	}
 }
 /*/>*/
 /*< decimalr numbers *******************************************************************/
@@ -446,7 +452,7 @@ fValidate.prototype.date = function( formatStr, delim, code, specDate )
 	var format  = formatStr.split( "/" );
 	var compare = this.elem.value.split( delim );
 	var order   = new Object();
-	
+
 	for ( var i = 0; i < format.length; i++ )
 	{
 		switch( format[i].charAt( 0 ).toLowerCase() )
@@ -463,13 +469,13 @@ fValidate.prototype.date = function( formatStr, delim, code, specDate )
 		}
 	}
 	var thisDate = new Date( compare[order.years], compare[order.months]-1, compare[order.days] );
-	
+
 	if ( isNaN( thisDate ) || thisDate.getDate() != compare[order.days] || thisDate.getMonth() != compare[order.months]-1 || thisDate.getFullYear().toString().length != formatStr.match( /y/g ).length )
 	{
 		this.throwError( error );
 		return;
 	}
-	
+
 	var compareElem = this.form.elements[specDate];
 	if ( typeof compareElem != 'undefined' )
 	{
@@ -482,10 +488,10 @@ fValidate.prototype.date = function( formatStr, delim, code, specDate )
 	compareDate.setMinutes(0);
 	compareDate.setSeconds(0);
 	compareDate.setMilliseconds(0);
-	
+
 	var timeDiff = compareDate.getTime() - thisDate.getTime();
 	var dateOk   = false;
-	
+
 	switch ( parseInt( code ) ) {
 		case 1 :	// Before specDate
 			dateOk	= Boolean( timeDiff > 0 );
@@ -510,19 +516,19 @@ fValidate.prototype.date = function( formatStr, delim, code, specDate )
 		this.throwError( [specDate], error );
 	}
 	this.elem.validDate = thisDate.toString();
-}	
+}
 /*/>*/
 /*< money ecommerce *******************************************************************/
 fValidate.prototype.money = function( ds, grp, dml )
 {
 	if ( this.typeMismatch( 'text' ) ) return;
-	
+
 	ds  = ( ds == ' ' )  ? false : ds.toPattern();
 	grp = ( grp == ' ' ) ? false : grp.toPattern();
 	dml = ( dml == ' ' ) ? false : dml.toPattern();
-	
+
 	var moneySyntax, pattern;
-	
+
 	switch( true )
 	{
 		case Boolean( ds && grp && dml ):		// Dollar sign, grouping, and decimal
@@ -557,7 +563,7 @@ fValidate.prototype.money = function( ds, grp, dml )
 			pattern		="^.?(?:(?:[0-9]{1,3}.?)(?:[0-9]{3}.?)*[0-9]{3}|[0-9]{1,3})(.[0-9]{2})?$";
 			moneySyntax ="[?]XX[?]XXX[?XX]";
 	}
-			
+
 	var regex = new RegExp( pattern );
 	if ( !regex.test( this.elem.value ) )
 	{
@@ -583,7 +589,7 @@ fValidate.prototype.checkbox = function( minC, maxC )
 		this.elem = this.form.elements[this.elem.name];
 		var len   = this.elem.length;
 		var count = 0;
-		
+
 		if ( maxC == 999 || maxC == '*' || typeof maxC == 'undefined' || maxC > this.elem.length )
 		{
 			maxC == len;
@@ -599,7 +605,7 @@ fValidate.prototype.checkbox = function( minC, maxC )
 		if ( count < minC || count > maxC )
 		{
 			this.throwError( [minC, maxC, this.elem[0].fName, count] );
-		}			
+		}
 	}
 }
 /*/>*/
@@ -614,7 +620,7 @@ fValidate.prototype.radio = function()
 	else
 	{
 		this.elem = this.form.elements[this.elem.name];
-		
+
 		for ( var i = 0; i < this.elem.length; i++ )
 		{
 			if ( this.elem.item( i ).checked )
@@ -643,11 +649,11 @@ fValidate.prototype.eitheror = function()
 	var arg, i  = 0,
 		fields  = new Array(),
 		field,
-		nbCount = 0,		
-		args    = arguments[1].split( arguments[0] );		
+		nbCount = 0,
+		args    = arguments[1].split( arguments[0] );
 
 	this.elem.fields = new Array();
-	
+
 	while ( arg = args[i++] )
 	{
 		field = this.form.elements[arg];
@@ -691,7 +697,7 @@ fValidate.prototype.atleast = function()
 		args    = arguments[2].split( arguments[1] );
 
 	this.elem.fields = new Array();
-	
+
 	while ( arg = args[i++] )
 	{
 		field = this.form.elements[arg];
@@ -728,7 +734,7 @@ fValidate.prototype.allornone = function()
 		field,
 		nbCount = 0,
 		args    = arguments[1].split( arguments[0] );
-	
+
 	this.elem.fields = new Array();
 
 	while ( arg = args[i++] )
@@ -758,7 +764,7 @@ fValidate.prototype.comparison = function( field1, operator, field2 )
 		value2	= this.getValue( elem2 );
 		i18n	= this.i18n.comparison;
 		i		= -1;
-	
+
 	var operators =
 	[
 		['>',	i18n.gt],
@@ -802,7 +808,7 @@ fValidate.prototype.custom = function( flags, reverseTest )
 	if ( !regex.test( this.elem.value ) )
 	{
 		this.throwError( [this.elem.fName] );
-	}	
+	}
 }
 /*/>*/
 /*< cc ecommerce *******************************************************************/
@@ -822,7 +828,7 @@ fValidate.prototype.cc = function()
 		'VISA'    : /^4\d{12}(\d{3})?$/,
 		'MC'      : /^5[1-5]\d{14}$/,
 		'DISC'    : /^6011\d{12}$/,
-		'AMEX'    : /^3[4|7]\d{13}$/,        
+		'AMEX'    : /^3[4|7]\d{13}$/,
 		'DINERS'  : /^3[0|6|8]\d{12}$/,
 		'ENROUTE' : /^2[014|149]\d{11}$/,
 		'JCB'     : /^3[088|096|112|158|337|528]\d{12}$/,

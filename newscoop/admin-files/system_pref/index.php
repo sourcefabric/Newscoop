@@ -122,7 +122,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <select name="f_template_cache_handler" class="input_select">
         <?php
         $templateCacheHandler = SystemPref::Get('TemplateCacheHandler');
-        camp_html_select_option('', $TemplateCacheHandler, getGS('disabled'));
+        camp_html_select_option('', $templateCacheHandler, getGS('disabled'));
         foreach ($availableTemplateCacheHandlers as $handler => $value) {
             camp_html_select_option($handler, $templateCacheHandler, $handler);
         }
