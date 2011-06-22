@@ -27,6 +27,7 @@ $application = new Zend_Application(
 
 $application->bootstrap();
 
+Zend_Auth::getInstance()->setStorage(new Zend_Auth_Storage_Session( 'Zend_Auth_Admin' ));
 $userId = Zend_Auth::getInstance()->getIdentity();
 
 $userTmp = new User($userId);
