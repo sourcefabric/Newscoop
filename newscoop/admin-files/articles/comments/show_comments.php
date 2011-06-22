@@ -23,6 +23,7 @@ foreach ($hiddens as $name) {
     echo '<input type="hidden" name="', $name;
     echo '" value="', $$name, '" />', "\n";
 }
+/** @todo Replace this basic template with a doT template from jquery*/
 ?>
 <fieldset id="comment-prototype" class="plain comments-block" style="display:none">
     <?php if ($inEditMode): ?>
@@ -74,6 +75,7 @@ foreach ($hiddens as $name) {
 <form id="comment-moderate" action="../comment/set-status/format/json" method="POST"></form>
 <script>
 function toggleCommentStatus() {
+    var commentSetting = $('input:radio[name^="f_comment"]:checked').val();
     $('#comment-moderate .comments-block').each(function() {
     	var statusClassMap = { 'hidden': 'hide', 'approved': 'approve', 'pending': 'inbox'};
     	var block = $(this);
@@ -84,10 +86,9 @@ function toggleCommentStatus() {
         // set class
         $('.frame', block).removeClass('comment_inbox comment_hide comment_approve')
             .addClass(cclass);
-
         // show/hide button
         button.hide();
-        if (status == 'approve') {
+        if ((status == 'approved') && (commentSetting != 'locked')) {
             button.show();
         }
     });
