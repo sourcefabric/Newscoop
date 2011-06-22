@@ -580,8 +580,10 @@ OpenLayers.HooksLocal.redraw_times = {
 
 OpenLayers.HooksLocal.map_center_update = function (geo_obj)
 {
-    var new_center = geo_obj.map.center.clone();
-    geo_obj.map.setCenter(new_center);
+    if (geo_obj && geo_obj.map && geo_obj.map.center) {
+        var new_center = geo_obj.map.center.clone();
+        geo_obj.map.setCenter(new_center);
+    }
 
     try {
         geo_obj.select_control.destroy();

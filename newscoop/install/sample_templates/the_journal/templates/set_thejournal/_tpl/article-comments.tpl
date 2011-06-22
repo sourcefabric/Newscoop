@@ -88,10 +88,12 @@
 {{ camp_edit object="comment" attribute="content" html_code="id=\"comment\" rows=\"5\" tabindex=\"4\"" }}
 </p>
 
+{{ if $gimme->publication->captcha_enabled }}
 <p>
 <img src="{{ captcha_image_link }}"><br />
 <label for="f_captcha_code"><small>Enter the code:</small></label>{{ camp_edit object="captcha" attribute="code" html_code="id=\"comment-code\" tabindex=\"5\"" }}
 </p>
+{{ /if }}
 
 <p>{{ /comment_form }}</p>
 

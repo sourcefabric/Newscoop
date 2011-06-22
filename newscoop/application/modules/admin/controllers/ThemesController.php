@@ -533,7 +533,8 @@ class Admin_ThemesController extends Zend_Controller_Action
         }
 
         //print '===create===';
-        //var_dump( $createArticleTypes );
+        //var_dump( $createArticleTypes['Blog'] );
+        //die;
 
         $artServ = $this->getArticleTypeService();
         $themeArticleTypes = (array) $this->getThemeService()->getArticleTypes( $theme );
@@ -557,7 +558,7 @@ class Admin_ThemesController extends Zend_Controller_Action
         $artServ->createMany( $createArticleTypes );
 
         //print '===update===';
-        //var_dump( $updateArticleTypes );
+        //var_dump( $createArticleTypes );
         //exit;
 
         $this->view->response = $thmServ->assignArticleTypes( $updateArticleTypes, $theme );
@@ -634,24 +635,6 @@ class Admin_ThemesController extends Zend_Controller_Action
             $this->view->exception = array( "code" => $e->getCode(), "message" => getGS( 'Something broke' ) );
         }
 
-    }
-
-    public function testAction()
-    {
-        $theme = $this->getThemeService()->findById( $this->_request->getParam( 'id' ) );
-        //$this->getThemeFileService();
-        var_dump( $this->getThemeService()->getArticleTypes($theme ) );die;
-        $artServ = $this->getArticleTypeService();
-        var_dump( $artServ->findTypeByName( 'news' ) );
-        /*$k=1;
-        foreach( $artServ->findAllTypes() as $at )
-        {
-            echo $at->getName(),($k++)," <br />";
-            foreach( $artServ->findFields( $at ) as $af )
-
-              echo $af->getName(), " type: ", $at->getName(), " ~= type from field: ", $af->getType()->getName(), "<br />";
-        } */
-        die;
     }
 
     public function installAction()

@@ -1842,61 +1842,6 @@ ul#edit-files h2 {
     font-size: 1.1em;
 }
 
-dl.resource {
-    width: 21em;
-    font-size: 1.3em;
-}
-
-dl.resource dt {
-    margin: 0 0 3px;
-    padding: 5px;
-    background-color: #fff;
-    font-weight: bold;
-    -moz-box-shadow: 3px 3px 3px #ccc;
-    -webkit-box-shadow: 3px 3px 3px #ccc;
-    box-shadow: 3px 3px 3px #ccc;
-}
-
-dl.resource dd {
-    margin: 5px 0 0 13px;
-    padding: 5px;
-    background-color: #fff;
-    -moz-box-shadow: 3px 3px 3px #ccc;
-    -webkit-box-shadow: 3px 3px 3px #ccc;
-    box-shadow: 3px 3px 3px #ccc;
-}
-
-dl.resource dd.allow strong {
-    color: #3d8215;
-}
-
-dl.resource dd.deny strong {
-    color: #cc3333;
-}
-
-dl.resource dd a.delete {
-    float: right;
-}
-
-dl.resource dd.inherited {
-    opacity: 0.7;
-}
-
-dl.zend_form {
-    border: none;
-    -moz-box-shadow: 3px 3px 3px #ccc;
-    -webkit-box-shadow: 3px 3px 3px #ccc;
-    box-shadow: 3px 3px 3px #ccc;
-}
-
-dl.zend_form dt {
-    margin-top: 8px;
-}
-
-dl.zend_form dt:first-child {
-    margin-top: 0;
-}
-
 ul.edit {
     margin: 0;
     padding: 0;
@@ -2287,4 +2232,3 @@ ul#edit-files h2 {
 .main-menu-bar ul.navigation ul {
     display: none;
 }
->>>>>>> devel
