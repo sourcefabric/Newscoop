@@ -243,12 +243,34 @@ if (message) {
 }); // /document.ready
 
 /**
+ * Check for unsaved changes in tinymce editors
+ * @return bool
+ */
+function editorsChanged()
+{
+    var editor_rank = 0;
+    while (true) {
+        var editor_obj = tinyMCE.get(editor_rank);
+        if (!editor_obj) {
+            break;
+        }
+        if (editor_obj.isDirty()) {
+            return true;
+        }
+        editor_rank += 1;
+    }
+
+    return false;
+};
+
+/**
  * Check for unsaved changes in main/boxes forms
  * @return bool
  */
 function checkChanged()
 {
-    if ($('form.changed').size() == 0) {
+
+    if ((!editorsChanged()) && ($('form.changed').size() == 0)) {
         return true; // continue
     }
 
