@@ -119,6 +119,13 @@ final class CampContext
      */
     private $m_savedContext = array();
 
+    /**
+     * Stores the list count for each list type for the current request
+     *
+     * @var array
+     */
+    private $m_list_count = array();
+
 
     private static $m_nullMetaArticle = null;
 
@@ -562,9 +569,15 @@ final class CampContext
 
         $p_list->setId($this->next_list_id($listObjectName));
 
+        $listName = $this->m_listObjects[$objectName]['list'];
+        if (!isset($this->m_list_count[$listName.'_lists'])) {
+        	$this->m_list_count[$listName.'_lists'] = 1;
+        } else {
+        	$this->m_list_count[$listName.'_lists']++;
+        }
+
    	    $this->SaveProperties($p_savePropertiesList);
 
-   	    $listName = $this->m_listObjects[$objectName]['list'];
    	    $this->m_readonlyProperties['lists'][] =& $p_list;
    	    $this->m_readonlyProperties['current_list'] =& $p_list;
    	    $this->m_readonlyProperties[$listName.'_lists'][] =& $p_list;
@@ -628,10 +641,10 @@ final class CampContext
         }
         $listName = $this->m_listObjects[$objectName]['list'];
         $prefix = 'ls-'.$this->m_listObjects[$objectName]['url_id'];
-        if (!isset($this->m_readonlyProperties[$listName.'_lists'])) {
+        if (!isset($this->m_list_count[$listName.'_lists'])) {
             return $prefix . '0';
         }
-        return $prefix . count($this->m_readonlyProperties[$listName.'_lists']);
+        return $prefix . $this->m_list_count[$listName.'_lists'];
     }
 
 
