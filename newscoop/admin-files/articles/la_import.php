@@ -5,7 +5,7 @@ require_once($GLOBALS['g_campsiteDir']."/classes/ArticleType.php");
 
 global $Campsite;
 
-if ($_POST['f_save'] && !SecurityToken::isValid()) {
+if ( isset($_POST['f_save']) && !SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
     exit;
 }
@@ -379,7 +379,7 @@ echo camp_html_breadcrumbs($crumbs);
 </tr>
 </table><br />
 
-<?php if (sizeof($errorMessages) > 0) { ?>
+<?php if ( isset($errorMessages) && sizeof($errorMessages) > 0) { ?>
 <table border="0" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
   <td>

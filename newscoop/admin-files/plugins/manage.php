@@ -108,7 +108,7 @@ camp_html_display_msgs();
 </FORM>
 
 <?php
-if ($success) {
+if ( isset( $success ) ) {
     ?>
     <table cellpadding="0" cellspacing="0" class="action_buttons" style="padding-bottom: 5px;">
       <tr>
@@ -116,7 +116,7 @@ if ($success) {
       </tr>
    </table>
    <?php
-} else {
+} elseif( isset( $error ) ) {
     ?>
     <table cellpadding="0" cellspacing="0" class="action_buttons" style="padding-bottom: 5px;">
       <tr>
