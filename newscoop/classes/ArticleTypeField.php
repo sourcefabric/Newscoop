@@ -24,6 +24,10 @@ class ArticleTypeField extends DatabaseObject {
 
     const NUMERIC_DEFAULT_DIGITS = 65;
     const NUMERIC_DEFAULT_PRECISION = 2;
+    
+    const BODY_ROWS_SMALL = 12;
+    const BODY_ROWS_MEDIUM = 20;
+    const BODY_ROWS_LARGE = 40;
 
     var $m_dbTableName = 'ArticleTypeMetadata';
 	var $m_keyColumnNames = array('type_name', 'field_name');
