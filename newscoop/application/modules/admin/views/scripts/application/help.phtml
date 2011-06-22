@@ -1,16 +1,31 @@
 <?php $this->placeholder('title')->set(getGS('Help')); ?>
 
-<img src="/admin-style/images/newscoop_logo_bigblue.png" />
+<img src="/admin-style/images/newscoop_logo_big.png" style="float:left;">
 
-<ul>
-  <li><?php putGS('Version'); ?>: <?php echo $this->version; ?></li>
-  <li><?php putGS('Release date'); ?>: <?php echo $this->date; ?></li>
-</ul>
+<dl class="metadata">
+  <dt><?php putGS('Version'); ?>:</dt> <dd><?php echo $this->version; ?></dd>
+  <dt><?php putGS('Release date'); ?>:</dt> <dd><?php echo $this->date; ?></dd>
+</dl>
 
-<ul class="help">
-  <ol><?php putGS('Check the manual. Seriously, <a href="http://manuals.sourcefabric.org/" target="_blank">our manuals</a> are great and chances are you’ll find the answers to your questions in them. Not there? Read on...'); ?></ol>
-  <ol><?php putGS('Post to the forum. <a href="https://login.sourcefabric.org/" target="_blank">Join the Sourcefabric community</a> (it takes two seconds and you can sign-up with an existing Twitter, Google or Facebook account) and post your support query in the Newscoop forum. Minutes later (timezone/caffeine level dependent), a Sourcefabric angel will answer your prayers. If they couldn\'t, continue reading...'); ?></ol>
-  <ol><?php putGS('Report a bug. Congratulations! You found a bug! These creatures are not as illusory as we\'d like them to be. Reporting them takes seconds. <a href="http://dev.sourcefabric.org/" target="_blank">Visit our bug tracker</a> and create a bug report by selecting Create Issue, then Newscoop and Bug. You can also suggest improvements and new features here.'); ?></ol>
-  <ol><?php putGS('When you\'ve exhausted all possibilities, <a href="contact@sourcefabric.org">feel free to write to us</a>. The technical knowledge is all in the manuals and forums, but we\'ll at least be able to point you in the right direction.'); ?></ol>
-</ul>
+<div class="clear"></div>
+
+<ol class="help">
+  <li><h3>Check the manual.</h3>
+  <p>Seriously, <a href="http://manuals.sourcefabric.org/" target="_blank">our manuals</a> are great and chances are you’ll find the answers to your questions in them. Not there? Read on... (*)</p></li>
+  <li><h3>Post to the forum.</h3>
+
+  <p><a href="https://login.sourcefabric.org/" target="_blank">Join the Sourcefabric community</a>
+ (it takes two seconds and you can sign-up with an existing Twitter, 
+Google or Facebook account) and post your support query in the Newscoop 
+forum. Minutes later (timezone/caffeine level dependent), a Sourcefabric
+ angel will answer your prayers. If they couldn't, continue reading... 
+(*)</p></li>
+  <li><h3>Report a bug.</h3>
+  <p>Congratulations! You found a bug! These creatures 
+are not as illusory as we'd like them to be. Reporting them takes 
+seconds. <a href="http://dev.sourcefabric.org/" target="_blank">Visit our bug tracker</a>
+ and create a bug report by selecting Create Issue, then Newscoop and 
+Bug. You can also suggest improvements and new features here. (*)</p></li>
+  <li><p>When you've exhausted all possibilities, <a href="http://172.16.0.4/admin/application/contact@sourcefabric.org">feel free to write to us</a>. The technical knowledge is all in the manuals and forums, but we'll at least be able to point you in the right direction. (*)</p></li>
+</ol>
 

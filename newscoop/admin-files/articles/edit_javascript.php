@@ -108,7 +108,7 @@ $('form#article-main').submit(function() {
                 },
                 error: function (rq, status, error) {
                     if (status == 0 || status == -1) {
-                        flashMessage('<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>', 'error');
+                        flashMessage('<?php putGS('Unable to reach Newscoop. Please check your internet connection.'); ?>', 'error');
                     }
                 }
             });

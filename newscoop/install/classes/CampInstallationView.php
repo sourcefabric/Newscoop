@@ -182,14 +182,7 @@ final class CampInstallationView
 			'tag' => 'PEAR/XML_Parser',
 			'exists' => $pearXmlParser
 		);
-
-		$pearFile = CampInstallationViewHelper::CheckPearFile();
-        $success = ($pearFile == 'Yes') ? $success : false;
-        $libraryRequirements[] = array(
-			'tag' => 'PEAR/File',
-			'exists' => $pearFile
-		);
-
+		
 		$pearHtmlCommon = CampInstallationViewHelper::CheckPearHtmlCommon();
         $success = ($pearHtmlCommon == 'Yes') ? $success : false;
         $libraryRequirements[] = array(
@@ -385,12 +378,7 @@ final class CampInstallationViewHelper
     {
         return (class_exists('XML_Parser')) ? 'Yes' : 'No';
     } // fn checkPearXmlParser
-
-    public static function CheckPearFile()
-    {
-        return (class_exists('File_Util')) ? 'Yes' : 'No';
-    } // fn checkPearFile
-
+    
     public static function CheckPearHtmlCommon()
     {
         return (class_exists('HTML_Common')) ? 'Yes' : 'No';
