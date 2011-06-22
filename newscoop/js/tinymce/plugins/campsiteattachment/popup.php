@@ -1,20 +1,41 @@
 <?php
 $GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
-require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
 
-// Only logged in admin users allowed
-if (!$LiveUser->isLoggedIn()) {
-    header("Location: /$ADMIN/login.php");
-    exit(0);
-} else {
-    $userId = $LiveUser->getProperty('auth_user_id');
-    $userTmp = new User($userId);
-    if (!$userTmp->exists() || !$userTmp->isAdmin()) {
-        header("Location: /$ADMIN/login.php");
-        exit(0);
-    }
-    unset($userTmp);
+// Define path to application directory
+defined('APPLICATION_PATH')
+    || define('APPLICATION_PATH', realpath(dirname(dirname(dirname(dirname(__FILE__)))) . '/../application'));
+
+// Define application environment
+defined('APPLICATION_ENV')
+    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
+
+// Ensure library/ is on include_path
+set_include_path(implode(PATH_SEPARATOR, array(
+    '/usr/share/php/libzend-framework-php',
+    realpath(APPLICATION_PATH . '/../library'),
+    get_include_path(),
+)));
+
+/** Zend_Application */
+require_once 'Zend/Application.php';
+
+// Create application, bootstrap, and run
+$application = new Zend_Application(
+    APPLICATION_ENV,
+    APPLICATION_PATH . '/configs/application.ini'
+);
+
+$application->bootstrap();
+
+Zend_Auth::getInstance()->setStorage(new Zend_Auth_Storage_Session( 'Zend_Auth_Admin' ));
+$userId = Zend_Auth::getInstance()->getIdentity();
+
+$userTmp = new User($userId);
+if (!$userTmp->exists() || !$userTmp->isAdmin()) {
+	header("Location: /$ADMIN/login.php");
+	exit(0);
 }
+unset($userTmp);
 
 require_once('config.inc.php');
 
