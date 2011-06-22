@@ -1,4 +1,4 @@
-/***************************************************	
+/***************************************************
 
 	fValidate
 	Copyright (c) 2000-2003
@@ -25,21 +25,27 @@ fValidate.prototype.number = function( type, lb, ub )
 {
 	if ( this.typeMismatch( 'text' ) ) return;
 	var num  = ( type == 0 ) ? parseInt( this.elem.value, 10 ) : parseFloat( this.elem.value );
-	lb       = this.setArg( lb, 0 );
-	ub       = this.setArg( ub, Number.infinity );
-	if ( lb > ub )
-	{
-		this.devError( [lb, ub, this.elem.name] );
-		return;
-	}
+	lb       = this.setArg( lb, false );
+	ub       = this.setArg( ub, false );
 	var fail = Boolean( isNaN( num ) || num != this.elem.value );
 	if ( !fail )
 	{
 		switch( true )
 		{
-			case ( lb != false && ub != false ) : fail = !Boolean( lb <= num && num <= ub ); break;
-			case ( lb != false ) : fail = Boolean( num < lb ); break;
-			case ( ub != false ) : fail = Boolean( num > ub ); break;
+			case ( lb !== false && ub !== false ) :
+                            if ( lb > ub )
+                            {
+                                    this.devError( [lb, ub, this.elem.name] );
+                                    return;
+                            }
+                            fail = !Boolean( lb <= num && num <= ub );
+                        break;
+			case ( lb !== false ) :
+                            fail = Boolean( num < lb );
+                        break;
+			case ( ub !== false ) :
+                            fail = Boolean( num > ub );
+                       break;
 		}
 	}
 	if ( fail )
@@ -72,22 +78,22 @@ fValidate.prototype.decimal = function( lval, rval )
 	var regex = '', elem = this.elem;
 	if ( lval != '*' ) lval = parseInt( lval, 10 );
 	if ( rval != '*' ) rval = parseInt( rval, 10 );
-	
+
 	if ( lval == 0 )
-		regex = "^\\.[0-9]{" + rval + "}$";	
+		regex = "^\\.[0-9]{" + rval + "}$";
 	else if ( lval == '*' )
 		regex = "^[0-9]*\\.[0-9]{" + rval + "}$";
 	else if ( rval == '*' )
 		regex = "^[0-9]{" + lval + "}\\.[0-9]+$";
 	else
 		regex = "^[0-9]{" + lval + "}\\.[0-9]{" + rval + "}$";
-		
+
 	regex = new RegExp( regex );
 
 	if ( !regex.test( elem.value ) )
 	{
 		this.throwError( [elem.value,elem.fName] );
-	}	
+	}
 }
 
 fValidate.prototype.decimalr = function( lmin, lmax, rmin, rmax )

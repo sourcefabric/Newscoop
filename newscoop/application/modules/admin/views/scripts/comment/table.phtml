@@ -13,7 +13,7 @@
 <script>
     function putGS(str) {
         var msg = serverObj.translateObj[serverObj.languageObj.indexOf(str)]
-        for(i in arguments) {
+        for(i=1, counti=arguments.length; i<counti; i++) {
             msg = msg.replace(new RegExp("\\$"+i,"g"),arguments[i]);
         }
         return msg;
