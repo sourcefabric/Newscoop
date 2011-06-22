@@ -16,6 +16,10 @@ $hiddens = array(
     'f_language_selected' => 'language_selected_id',
 );
 foreach ($hiddens as $name) {
+    if (!isset($$name)) {
+        $$name = '';
+    }
+
     echo '<input type="hidden" name="', $name;
     echo '" value="', $$name, '" />', "\n";
 }

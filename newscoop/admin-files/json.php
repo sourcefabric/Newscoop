@@ -25,8 +25,7 @@ require_once WWW_DIR . '/classes/ArticleData.php';
 
 try {
     // init request
-    $serverRequest = new ServerRequest($_POST['callback'],
-        (array) $_POST['args']);
+    $serverRequest = new ServerRequest($_POST['callback'], isset($_POST['args']) ? $_POST['args'] : array());
 
     // set permissions
     $serverRequest->allow('ping');
@@ -62,6 +61,8 @@ try {
     echo json_encode(array(
         'error_code' => $e->getCode(),
         'error_message' => getGS('Error') . ': ' . $e->getMessage(),
+        'error_file' => $e->getFile(),
+        'error_line' => $e->getLine(),
     ));
 }
 

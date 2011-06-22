@@ -82,7 +82,7 @@
         {
             return new Function( c.varname, str );
             //return [ c.varname, str ];
-        } 
+        }
         catch (e)
         {
             if (typeof console !== 'undefined')
@@ -95,12 +95,12 @@
 (function($)
 {
     $.fn.extend
-    ({      
+    ({
         tmpl : function(selector, data)
         {
-          return this.each(function() { 
-            this.innerHTML = $.tmpl(selector, data);
-          });  
+          return this.each(function() {
+            $(this).html($.tmpl(selector, data));
+          });
         }
     });
     $.extend
@@ -109,7 +109,7 @@
         tmpl : function(tmpl, data)
         {
             if('function' != typeof $.tmplData[tmpl])
-              $.tmplData[tmpl] = doT.template( $(tmpl).html() )  
+              $.tmplData[tmpl] = doT.template( $(tmpl).html() )
             return $.tmplData[tmpl](data);
         }
     });

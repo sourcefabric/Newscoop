@@ -59,7 +59,6 @@ regGS("File #$1 \"$2\" deleted.", "Soubor #$1 \"$2\" odstraněn.");
 regGS("Field \"$1\" updated", "Pole \"$1\" aktualizováno");
 regGS("Country \"$1\" ($2) deleted", "Země  \"$1\" ($2) odstraněna");
 regGS("Changed properties for image \"$1\" ($2)", "Změnit valstnosti obrázku \"$1\" ($2)");
-regGS("Base data synchronized to phorum user for \"$1\" ($2)", "Základní data synchronizována s uživatelem fóra pro \"$1\" ($2)");
 regGS("Article type field \"$1\" deleted", "Pole typu článku \"$1\" odstraněno");
 regGS("Article type field \"$1\" created", "Pole typu článku \"$1\" vytvořeno");
 regGS("Article type field \"$1\" changed", "Pole typu článku \"$1\" změněno");

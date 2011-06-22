@@ -51,6 +51,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/layout.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/content.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/sidebar.css'); ?>" />
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/misc-pages.css'); ?>" />
     <?php
         $headLink = $this->headLink();
         if(!isset($headLink['table']))
@@ -67,7 +68,7 @@
 		.fg-menu-ipod .ui-widget-content { border:0; }
 	</style> <![endif]-->
 
-    <script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/jquery-1.4.2.min.js'); ?>"></script>
+    <script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/jquery-1.6.1.min.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/jquery-ui-1.8.6.custom.min.js'); ?>"></script>
     <script type="text/javasctipt" src="<?php echo $this->baseUrl('/js/jquery/i18n/jquery.ui.datepicker-' . $this->locale . '.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/jquery-ui-timepicker-addon.min.js'); ?>"></script>
@@ -95,7 +96,7 @@
 <div class="meta-bar">
     <ul>
         <li><a href="<?php echo $this->url(array('controller' => 'auth', 'action' => 'logout')); ?>"><?php putGS('Logout'); ?></a></li>
-        <li><a href="<?php echo $this->helpUrl; ?>" target="_blank"><?php putGS('Help'); ?></a></li>
+        <li><a href="<?php echo $this->url(array('controller' => 'application', 'action' => 'help')); ?>"><?php putGS('Help'); ?></a></li>
         <li><?php putGS("Signed in: $1", '<strong>' . $this->user->getRealName() . '</strong>'); ?></li>
     </ul>
 </div>

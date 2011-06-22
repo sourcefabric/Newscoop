@@ -6,7 +6,7 @@ var statusMap = {
 };
 var datatableCallback = {
     serverData: {},
-    commentTmpl: function () {},
+    loading: false,
     addServerData: function (sSource, aoData, fnCallback) {
         that = datatableCallback;
         for (i in that.serverData) {
@@ -20,7 +20,9 @@ var datatableCallback = {
         });
     },
     row: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-        $(nRow).tmpl('#comment-tmpl', aData).addClass('status_' + statusMap[aData.comment.status]);
+        $(nRow)
+            .addClass('status_' + statusMap[aData.comment.status])
+            .tmpl('#comment-tmpl', aData);
         return nRow;
     },
     draw: function () {
@@ -29,6 +31,7 @@ var datatableCallback = {
         }, function () {
             $(this).find(".commentBtns").css("visibility", "hidden");
         });
+        datatableCallback.loading = false;
     }
 };
 $(function () {
@@ -57,16 +60,23 @@ $(function () {
      * Action to fire
      * when header filter buttons are triggresd
      */
-    $('.status_filter li').click(function (evt) {
-        var ck = $(this).find('input[type="checkbox"]');
-        var checked = true;
-        if (ck.attr("checked")) {
-            checked = false;
-            ck.removeAttr("checked");
-        } else ck.attr("checked", "checked");
-        datatableCallback.serverData[ck.val()] = checked;
-        datatable.fnDraw();
-        evt.preventDefault();
+    $('.status_filter li')
+    .click(function (evt) {
+        $(this).find('input').click().iff($.versionBetween(false,'1.6.0')).change();
+    })
+    .find('input')
+        .click(function(evt){
+            evt.stopPropagation();
+        })
+        .change(function(evt){
+            if(!datatableCallback.loading) {
+                datatableCallback.loading = true;
+                datatableCallback.serverData[$(this).val()] = $(this).is(':checked');
+                datatable.fnDraw();
+            } else
+                return false;
+    }).end().find('label').click(function(evt){
+        evt.stopPropagation();
     });
 
     /**

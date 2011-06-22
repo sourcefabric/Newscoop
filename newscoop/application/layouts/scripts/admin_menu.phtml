@@ -156,17 +156,6 @@ $pages[2]['pages'][] = array(
     'privilege' => 'add',
 );
 
-if ($g_user->hasPermission('ManageTempl') ) {
-	$pages[2]['pages'][] = array(
-	    'label' => getGS('Upload new template'),
-	    'module' => 'admin',
-	    'controller' => 'templates',
-	    'action' => 'upload_templ.php',
-	    'resource' => 'template',
-	    'privilege' => 'manage',
-	);
-}
-
 if ($g_user->hasPermission('ManagePub') && Saas::singleton()->hasPermission('AddPub')) {
 	$pages[2]['pages'][] = array(
 	    'label' => getGS('Add new publication'),
@@ -304,7 +293,7 @@ if ($showConfigureMenu) {
             ),
         ),
     );
-
+if( Saas::singleton()->hasPrivilege('themes' , 'index') ) {
     $pages[3]['pages'][] = array(
         'label' => getGS('Themes'),
         'module' => 'admin',
@@ -336,6 +325,7 @@ if ($showConfigureMenu) {
             ),
         ),
     );
+}
 
     $pages[3]['pages'][] = array(
         'label' => getGS('Geo Filtering'),

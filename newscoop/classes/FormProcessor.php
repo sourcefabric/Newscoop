@@ -36,13 +36,26 @@ class FormProcessor
     static public function ParseArr2Form(&$form, &$mask, $side='client')
     {
         foreach($mask as $k=>$v) {
-           if (!is_array($v['attributes'])) {
-                $v['attributes'] = array();
-            }
+            $v += array(
+                'groupit' => false,
+                'label' => '',
+                'required' => false,
+                'rule' => '',
+                'group' => '',
+                'multiple' => array(),
+                'text' => '',
+                'attributes' => array(),
+                'type' => '',
+                'element' => '',
+                'name' => '',
+                'seperator' => '',
+                'appendName' => '',
+                'grouprule' => '',
+            );
 
             ## set default classes for form elements #######
             $class = '';
-            if (strlen($v['attributes']['class'])) {
+            if (!empty($v['attributes']['class'])) {
                 $class = $v['attributes']['class'].' ';
             }
             switch ($v['type']) {
@@ -157,7 +170,7 @@ class FormProcessor
             }
             ## check error on type file ##########
             if ($v['type']=='file') {
-                if ($_POST[$v['element']]['error']) {
+                if (isset($_POST[$v['element']]['error'])) {
                     $form->setElementError($v['element'], isset($v['requiredmsg']) ? $v['requiredmsg'] : getGS('Missing value for $1', $v['label']));
                 }
             }

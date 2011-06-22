@@ -57,14 +57,12 @@
                     val = 'on';
                 }
 
-                ajax_forms++;
                 callServer(['ArticleData', 'setProperty'], [
                     '<?php echo $articleObj->getType(); ?>',
                     <?php echo $articleObj->getArticleNumber(); ?>,
                     <?php echo $f_language_selected; ?>,
                     $(this).attr('name'), val], function(json) {
                 	   flashMessage('<?php putGS('Switches saved.'); ?>');
-                	    ajax_forms--;
                     });
             });
 
@@ -72,13 +70,11 @@
             for (method in vals) {
                 if (vals[method].attr('disabled'))
                     continue;
-                ajax_forms++;
                 callServer(['Article', method], [
                     <?php echo $f_language_selected; ?>,
                     <?php echo $articleObj->getArticleNumber(); ?>,
                     Number(vals[method].attr('checked'))], function(json) {
                         flashMessage('<?php putGS('Switches saved.'); ?>');
-                        ajax_forms--;
                     });
             }
 

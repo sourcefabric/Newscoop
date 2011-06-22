@@ -1,5 +1,6 @@
 var terms = [];
 $(function() {
+	$('.flash ui-state-error').click(function(){ $(this).hide(); })
     // main menu
     $('.main-menu-bar ul.navigation > li > a').each(function(i) {
         var menu = $(this);
@@ -188,17 +189,19 @@ $(function() {
 
     // zend_form utils
     $('dl.zend_form').each(function() {
+        var emptyRegExp = /\S/;
         var form = $(this);
         // hide hidden fields
         $('input:hidden', form).each(function() {
-            var ischeckbox = $(this).next('input:checkbox');
-        	if(ischeckbox)
+            if ($(this).next('input:checkbox').size()) {
         		return;
+            }
+
             var dd = $(this).closest('dd');
             var dt = dd.prev('dt');
             var errors = $('ul.errors', dd);
 
-            if (dt.html() == '') { // if empty
+            if (emptyRegExp.test(dt.html())) { // remove if empty
                 dt.hide().detach().appendTo(form);
             }
 
@@ -310,7 +313,8 @@ function callServer(p_callback, p_args, p_handle)
         'success': function(json) {
             flash.fadeOut();
 
-            if (json.error_code) {
+
+            if (json != undefined && json.error_code != undefined) {
                 flashMessage(json.error_message, 'error', true);
                 return;
             }

@@ -24,6 +24,16 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
         camp_load_translation_strings('user_subscription_sections');
 
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\SubscriptionSection');
+
+        $sections = array();
+        $sectionRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Section');
+        foreach ($sectionRepository->findAll() as $section) {
+            if (!isset($sections[$section->getNumber()])) {
+                $sections[$section->getNumber()] = $section->getName();
+            }
+        }
+
+        $this->view->sections = $sections;
     }
 
     public function indexAction()
@@ -72,14 +82,22 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
 
         if ($this->getRequest()->isPost() && $form->isValid($_POST)) {
             $subscriptionRepository = $this->_helper->entity->getRepository($subscription);
-            $subscriptionRepository->addSections($subscription, $form->getValues());
-            $this->_helper->entity->flushManager();
+            try {
+                $subscriptionRepository->addSections($subscription, $form->getValues());
+                $this->_helper->entity->flushManager();
 
-            $this->_helper->flashMessenger(getGS('Section $1', getGS('saved')));
-            $this->_helper->redirector('index', 'subscription-section', 'admin', array(
-                'user' => $this->_getParam('user'),
-                'subscription' => $this->_getParam('subscription'),
-            ));
+                $this->_helper->flashMessenger(getGS('Section $1', getGS('saved')));
+                $this->_helper->redirector('index', 'subscription-section', 'admin', array(
+                    'user' => $this->_getParam('user'),
+                    'subscription' => $this->_getParam('subscription'),
+                ));
+            } catch (\InvalidArgumentException $e) {
+                $this->_helper->flashMessenger(array('error', getGS('Select sections for subscribing')));
+                $this->_helper->redirector('add', 'subscription-section', 'admin', array(
+                    'user' => $this->_getParam('user'),
+                    'subscription' => $this->_getParam('subscription'),
+                ));
+            }
         }
 
         $this->view->form = $form;
@@ -91,7 +109,7 @@ class Admin_SubscriptionSectionController extends Zend_Controller_Action
         $form = new Admin_Form_Subscription_SectionEditForm;
         $form->setAction('')->setMethod('post');
         $form->setDefaults(array(
-            'name' => $section->getSectionName(),
+            'name' => $this->view->sections[$section->getSectionNumber()],
             'language' => $section->getLanguageName(),
             'start_date' => $section->getStartDate()->format('Y-m-d'),
             'days' => $section->getDays(),

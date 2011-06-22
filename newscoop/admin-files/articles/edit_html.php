@@ -82,7 +82,8 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
   <?php } else { ?>
     <span class="article-title"><?php print wordwrap(htmlspecialchars($articleObj->getTitle()), 80, '<br />'); ?></span>
   <?php } ?>
-    <span class="comments"><?php p(count($comments)); ?></span>
+    
+    <span class="comments"><?php p(count(isset($comments) ? $comments : array())); ?></span>
     <div class="save-button-bar">
       <input type="submit" class="save-button" value="<?php putGS('Save All'); ?>" id="save" name="save" <?php if (!$inEditMode) { ?> disabled style="opacity: 0.3"<?php } ?> />
       <input type="submit" class="save-button" value="<?php $inEditMode ? putGS('Save and Close') : putGS('Close'); ?>" id="save_and_close" name="save_and_close" />
@@ -122,6 +123,10 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
                 'f_article_title'
                 );
             foreach ($hiddens as $name) {
+                if (!isset($$name)) {
+                    $$name = '';
+                }
+
                 echo '<input type="hidden" name="', $name;
                 echo '" value="', $$name, '" />', "\n";
             }

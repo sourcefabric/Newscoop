@@ -2,8 +2,6 @@
 regGS("Select Country", "");
 regGS("Filters", "Filteri");
 regGS("Add new Author", "Dodaj novog autora");
-regGS("You do not have the right to sync Newscoop and Phorum users.", "Nemate pravo da sinhronizujete Newscoop i Phorum korisnike.");
-regGS("User may synchronize Newscoop and Phorum users", "Korisnik može da sinhronizuje Newscoop i Phorum korisnike");
 regGS("Unsubscribe email notifications", "Odjavi se sa email obaveštenja");
 regGS("New author \"$1\" ($2) created.", "Novi autor \"$1\" ($2) je kreiran.");
 regGS("Loading Data", "Učitavanje podataka");

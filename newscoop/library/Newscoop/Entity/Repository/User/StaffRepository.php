@@ -37,6 +37,13 @@ class StaffRepository extends UserRepository
             }
         }
 
+        // try if will be able to manage users
+        $acl = \Zend_Registry::get('acl')->getAcl($staff);
+        $auth = \Zend_Auth::getInstance();
+        if ($auth->getIdentity() == $staff->getId() && !$acl->isAllowed($staff, 'user', 'manage')) {
+            throw new \InvalidArgumentException("Can't prevent yourself from managing users");
+        }
+
         // set role
         if ($staff->getId() == NULL) { // add
             $role = new Role;

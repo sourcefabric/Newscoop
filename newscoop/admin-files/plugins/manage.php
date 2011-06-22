@@ -79,11 +79,16 @@ foreach ($plugins as $plugin) {
     camp_load_translation_strings("plugin_".$plugin->getName());
 }
 
-// check if update was needed
-CampPlugin::GetPluginsInfo(false, true);
-if ($needsUpdate = CampPlugin::GetNeedsUpdate()) {
-    camp_html_add_msg(getGS("Some plugins have to be updated. Please press the save button."));
+if( count($infos = CampPlugin::GetPluginsInfo()) > 0 ) {
+	// check if update was needed
+	CampPlugin::GetPluginsInfo(false, true);
+	if ($needsUpdate = CampPlugin::GetNeedsUpdate()) {
+	    camp_html_add_msg(getGS("Some plugins have to be updated. Please press the save button."));
+	}
+} else {
+	camp_html_add_msg(getGS("You have no installed plugins."));
 }
+
 
 $crumbs = array();
 $crumbs[] = array(getGS("Plugins"), "");
@@ -108,7 +113,7 @@ camp_html_display_msgs();
 </FORM>
 
 <?php
-if ($success) {
+if ( isset( $success ) ) {
     ?>
     <table cellpadding="0" cellspacing="0" class="action_buttons" style="padding-bottom: 5px;">
       <tr>
@@ -116,7 +121,7 @@ if ($success) {
       </tr>
    </table>
    <?php
-} else {
+} elseif( isset( $error ) ) {
     ?>
     <table cellpadding="0" cellspacing="0" class="action_buttons" style="padding-bottom: 5px;">
       <tr>
@@ -128,7 +133,7 @@ if ($success) {
 ?>
 
 <P>
-<?php if (count($infos = CampPlugin::GetPluginsInfo()) > 0) { ?>
+<?php if (count($infos) > 0) { ?>
 <FORM name="plugins_enabled" action="/<?php echo $ADMIN; ?>/plugins/manage.php">
 <?php echo SecurityToken::FormParameter(); ?>
 <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" width="95%">

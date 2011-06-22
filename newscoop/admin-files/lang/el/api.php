@@ -59,7 +59,6 @@ regGS("File #$1 \"$2\" deleted.", "Το αρχείο \"$1\" ($2) διαγράφ�
 regGS("Field \"$1\" updated", "Το πεδίο \"$1\" ανανεώθηκε");
 regGS("Country \"$1\" ($2) deleted", "Η χώρα  \"$1\" ($2) διαγράφτηκε");
 regGS("Changed properties for image \"$1\" ($2)", "Αλλαγμένες ιδιότητες για την εικόνα \"$1\" ($2) ");
-regGS("Base data synchronized to phorum user for \"$1\" ($2)", "Η βάση δεδομένων συγχρονίστηκε με τον phorum χρήστη για \"$1\" ($2)");
 regGS("Article type field \"$1\" deleted", "Το πεδίο τύπου άρθρου \"$1\" διαγράφτηκε");
 regGS("Article type field \"$1\" created", "Το πεδίο τύπου άρθρου \"$1\" δημιουργήθηκε");
 regGS("Article type field \"$1\" changed", "Το πεδίο τύπου άρθρου \"$1\" άλλαξε");

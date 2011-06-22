@@ -16,7 +16,7 @@
         <?php foreach ($this->cols as $label) { ?>
         <?php if (!isset($label)) { ?>
         <th><input type="checkbox" /></th>
-        <?php } else { ?> 
+        <?php } else { ?>
         <th><?php echo $label; ?></th>
         <?php }} ?>
     </tr>
@@ -128,7 +128,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         },
         { // not sortable
             'bSortable': false,
-            'aTargets': [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 18]
+            'aTargets': [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 18, 19]
         },
         { // id
             'sClass': 'id',
@@ -147,7 +147,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         { // short
             'sClass': 'flag',
             'sWidth': '5em',
-            'aTargets': [7, 8, 9, 10, 11, 12, 13, 14, 15]
+            'aTargets': [7, 8, 9, 10, 11, 12, 13, 14, 15, 19]
         },
         { // dates
             'sClass': 'date',

@@ -45,7 +45,7 @@ class Issue extends Entity
      * @Column(name="Name")
      * @var string
      */
-    private $name;
+    private $name = '';
 
     /**
      * @OneToMany(targetEntity="Newscoop\Entity\Section", mappedBy="issue")
@@ -78,7 +78,7 @@ class Issue extends Entity
      * @Column(name="ShortName")
      * @var string
      */
-    private $shortName;
+    private $shortName = '';
 
     /**
      * @param int $number

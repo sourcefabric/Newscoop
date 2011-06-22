@@ -1,3 +1,13 @@
 <?php $this->placeholder('title')->set(getGS('Add new subscription')); ?>
 
 <?php echo $this->form; ?>
+
+<script type="text/javascript">
+$(function() {
+    $('#language_set').change(function() {
+        var selector = 'dt#languages-label,dd#languages-element';
+        $(this).val() == 'select' ?
+            $(selector).show() : $(selector).hide();
+    }).change();
+});
+</script>

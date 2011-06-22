@@ -1,9 +1,3 @@
--- fix CodePage values
-UPDATE `Languages` SET `CodePage` = 'ko' WHERE `Name` = 'Korean';
-UPDATE `Languages` SET `CodePage` = 'be' WHERE `Name` = 'Belarus';
-UPDATE `Languages` SET `CodePage` = 'ka' WHERE `Name` = 'Georgian';
-
-
 -- Map setting
 -- should be geo-points autofocused
 INSERT INTO SystemPreferences (varname, value) VALUES ('MapAutoFocusDefault', '1');
@@ -89,6 +83,9 @@ INSERT INTO SystemPreferences (varname, value) VALUES ('CollectStatistics', 'Y')
 
 -- clean the Templates table
 DELETE FROM Templates;
+
+-- fix SubsSection language
+UPDATE `SubsSections` SET `IdLanguage` = NULL WHERE `IdLanguage` = 0;
 
 system php ./acl.php
 system php ./transfer_phorum.php

@@ -1349,8 +1349,8 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     break;
                 }
     
-                $lat_part = str_pad(trim(substr(sprintf('%1.13f\n', $one_lat), 0, 19)) . ',', 20, ' ');
-                $lon_part = str_pad(trim(substr(sprintf('%1.13f\n', $one_lon), 0, 19)) . ',', 20, ' ');
+                $lat_part = str_pad(trim(substr(sprintf('%1.13f', $one_lat), 0, 19)) . ',', 20, ' ');
+                $lon_part = str_pad(trim(substr(sprintf('%1.13f', $one_lon), 0, 19)) . ',', 20, ' ');
     
                 $sql_part .= $lat_part . $lon_part;
     

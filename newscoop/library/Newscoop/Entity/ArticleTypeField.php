@@ -72,6 +72,15 @@ class ArticleTypeField
 	/**
      * @return \Newscoop\Entity\ArticleTypeField
      */
+    public function setArticleTypeHack( ArticleType $type )
+    {
+        $this->typeHack = $type;
+        return $this;
+    }
+
+	/**
+     * @return \Newscoop\Entity\ArticleTypeField
+     */
     public function setName( $name )
     {
         $this->name = $name;

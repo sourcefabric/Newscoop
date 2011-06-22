@@ -8,6 +8,7 @@
       }
 
       function drawComboContent($id = 0) {
+          $combo = '';
           $types = AuthorType::GetAuthorTypes();
           foreach ($types as $xtype) {
               $combo .=  '<option value="' . $xtype->getId() . '"';

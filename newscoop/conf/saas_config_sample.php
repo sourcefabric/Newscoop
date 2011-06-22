@@ -6,7 +6,7 @@
  *
 */
     $this->saasConfig = array(
-        'permissions_disabled_for_the_360beta' => array(
+        'permissions' => array(
         /*article types*/
         'ManageArticleTypes',
         'DeleteArticleTypes',
@@ -69,12 +69,13 @@
         'ManageSystemPreferences'
 
     ),
-    'privileges_disabled_for_the_360beta' =>
+    'privileges' =>
     array(
         array('resource' => 'staff', 'privilege' => 'add'),
         array('resource' => 'publication', 'privilege' => 'delete'),
         array('resource' => 'template', 'privilege' => 'delete'),
         array('resource' => 'template', 'privilege' => 'manage'),
+        array('resource' => 'themes', 'privilege' => 'index'),
         array('resource' => 'subscriber', 'privilege' => 'manage'),
         array('resource' => 'subscriber', 'privilege' => 'add'),
         array('resource' => 'country', 'privilege' => 'manage'),

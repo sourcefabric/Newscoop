@@ -5,6 +5,11 @@
  * @author $Author: vlad $
  * @package ImageManager
  */
+
+header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
+header("Cache-Control: no-cache");
+header("Pragma: no-cache");
+
 $GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
 

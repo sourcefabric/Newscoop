@@ -14,9 +14,9 @@ body.with-sidebar dl.zend_form {
 }
 
 .zend_form dt {
-    /*padding: 12px 26px;*/
+    margin-top: 8px;
     padding: 0;
-    -position: absolute;
+    position: relative;
     font-weight: bold;
     color: #696969;
 }
@@ -28,10 +28,9 @@ body.with-sidebar dl.zend_form {
 .zend_form dd {
     margin: 4px 0 0;
     padding: 0;
-    width: 400px !important;
 }
 
-	.zend_form dd .description{ font-size: 11px; }
+.zend_form dd .description{ font-size: 11px; }
 
 .zend_form dd input[type=text], .zend_form dd input[type=password] {
     display: block;
@@ -118,12 +117,10 @@ body.with-sidebar dl.zend_form {
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #409fc6), color-stop(100%, #007fb3));
 }
 
+
 .zend_form dd.buttons {
-    height: 1%;
-    overflow: hidden;
     margin-top: 13px;
-    padding: 10px;
-    float: left;
+    padding: 0;
 }
 
 .zend_form label {

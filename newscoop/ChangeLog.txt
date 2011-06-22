@@ -32,7 +32,6 @@
   * [CS-254]  Article Edit -> Duplicate -> Too many pubs/issues/sections may break this screen
   * [CS-234]  ORDER BY in template directory structure
 
-
 3.5.3 (May 19, 2011)
   Tasks
   -----

@@ -468,7 +468,7 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
             }
             $error_queries = array();
             $sq_file = $upgrade_dir . $script;
-            $err_count = camp_import_dbfile($db_host . ":" . $db_port, $db_username, $db_userpass, $db_database, $sq_file, &$error_queries);
+            $err_count = camp_import_dbfile($db_host . ":" . $db_port, $db_username, $db_userpass, $db_database, $sq_file, $error_queries);
 
             if ($err_count && ($script != "data-optional.sql")) {
                 flock($lockFile, LOCK_UN); // release the lock

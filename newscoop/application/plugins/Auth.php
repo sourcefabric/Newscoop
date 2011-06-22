@@ -15,7 +15,7 @@ class Application_Plugin_Auth extends Zend_Controller_Plugin_Abstract
     public function __construct($namespace)
     {
         $auth = Zend_Auth::getInstance();
-        $storage = new Zend_Auth_Storage_Session('Zend_Auth_' . ucfirst($namespace));
+        $storage = new Zend_Auth_Storage_Session('Zend_Auth_'.ucfirst($namespace));
         $auth->setStorage($storage);
 
         $seconds = (int) SystemPref::Get('SiteSessionLifeTime');
@@ -102,4 +102,5 @@ class Application_Plugin_Auth extends Zend_Controller_Plugin_Abstract
     {
         return Zend_Registry::get($name);
     }
+
 }
