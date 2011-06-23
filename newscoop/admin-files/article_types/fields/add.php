@@ -141,9 +141,9 @@ foreach ($topics as $topicPath) {
     <td align="right"><?php putGS('Editor size'); ?>:</td>
     <td>
 		<select name="f_editor_size" onChange="if (this.value == 'custom') document.getElementById('editor_size_custom').style.display = 'inline'; else document.getElementById('editor_size_custom').style.display = 'none';">
-			<option value="small"><?php putGS('Small (12 rows)')?></option>
-			<option value="medium"><?php putGS('Medium (20 rows)')?></option>
-			<option value="large"><?php putGS('Large (40 rows)')?></option>
+			<option value="small"><?php putGS('Small ($1 rows)', ArticleTypeField::BODY_ROWS_SMALL)?></option>
+			<option value="medium"><?php putGS('Medium ($1 rows)', ArticleTypeField::BODY_ROWS_MEDIUM)?></option>
+			<option value="large"><?php putGS('Large ($1 rows)', ArticleTypeField::BODY_ROWS_LARGE)?></option>
 			<option value="custom"><?php putGS('Custom')?></option>
 		</select>
 		&nbsp;
