@@ -4,6 +4,7 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+use Newscoop\Service\Exception\RemoveThemeException;
 use Newscoop\Entity\OutputSettings;
 use Newscoop\Service\IArticleTypeService,
     Newscoop\Entity\Repository\ArticleTypeRepository,
@@ -573,7 +574,22 @@ class Admin_ThemesController extends Zend_Controller_Action
     public function unassignAction()
     {
         if( ( $themeId = $this->_getParam( 'id', null ) ) ) {
-            $this->view->response = $this->getThemeService()->removeTheme($themeId);
+            try
+            {
+                $this->getThemeService()->removeTheme($themeId);
+                $this->view->status = true;
+                $this->view->response = getGS( "Unassign successful" );
+            }
+            catch( RemoveThemeException $e )
+            {
+                $this->view->status = false;
+                $this->view->response = getGS( "Cannot remove theme, it's most probably used by an issue" );
+            }
+            catch( Exception $e )
+            {
+                $this->view->status = false;
+                $this->view->response = getGS( "Failed unassigning theme" );
+            }
         }
     }
 
