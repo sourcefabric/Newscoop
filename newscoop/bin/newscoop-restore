@@ -144,7 +144,7 @@ $destDbName = isset($options['t']) ? $options['t'] : "";
 $convertToUTF = isset($options['c']) || isset($options['s']);
 
 // verify if the command line parameters were valid
-if (empty($archive_file) || ($destDbSpecified && empty($destDbName))
+if ((empty($archive_file) && !in_array('l', array_keys($options))) || ($destDbSpecified && empty($destDbName))
 || (isset($options['c']) && empty($options['c']))) {
     echo $usage;
     camp_exit_with_error("Invalid parameters; please read the usage description above.");
