@@ -584,27 +584,33 @@ function camp_detect_database_version($p_dbName, &$version)
             } else {
                 return 0;
             }
-            $res2 = mysql_query("SHOW COLUMNS FROM phorum_users LIKE 'fk_campsite_user_id'");
-            if (is_resource($res2) && mysql_num_rows($res2) > 0) {
-                $version = "2.6.2";
-            } else {
-                return 0;
-            }
 
-            $res2 = mysql_query("SELECT * FROM Events WHERE Id = 171");
-            if (is_resource($res2) && mysql_num_rows($res2) > 0) {
-                $version = "2.6.3";
-            } else {
-                return 0;
-            }
-            $res2 = mysql_query("SELECT * FROM UserConfig "
-                                . "WHERE varname = 'ExternalSubscriptionManagement'");
-            if (is_resource($res2) && mysql_num_rows($res2) > 0) {
-                $version = "2.6.4";
-            }
-            $res2 = mysql_query("SELECT * from phorum_users WHERE fk_campsite_user_id IS NULL");
-            if (is_resource($res2) && mysql_num_rows($res2) == 0) {
-                $version = "2.6.x";
+            // check for phorum_users old table
+            $chkPhorumUsers = mysql_query( "SHOW TABLES LIKE '%phorum_users%'" );
+            if( is_resource($chkPhorumUsers) && mysql_num_rows($res2) > 0 )
+            {
+                $res2 = mysql_query("SHOW COLUMNS FROM phorum_users LIKE 'fk_campsite_user_id'");
+                if (is_resource($res2) && mysql_num_rows($res2) > 0) {
+                    $version = "2.6.2";
+                } else {
+                    return 0;
+                }
+
+                $res2 = mysql_query("SELECT * FROM Events WHERE Id = 171");
+                if (is_resource($res2) && mysql_num_rows($res2) > 0) {
+                    $version = "2.6.3";
+                } else {
+                    return 0;
+                }
+                $res2 = mysql_query("SELECT * FROM UserConfig "
+                                    . "WHERE varname = 'ExternalSubscriptionManagement'");
+                if (is_resource($res2) && mysql_num_rows($res2) > 0) {
+                    $version = "2.6.4";
+                }
+                $res2 = mysql_query("SELECT * from phorum_users WHERE fk_campsite_user_id IS NULL");
+                if (is_resource($res2) && mysql_num_rows($res2) == 0) {
+                    $version = "2.6.x";
+                }
             }
         }
         if (!$res2 = mysql_query("SHOW TABLES LIKE '%Audioclip%'")) {

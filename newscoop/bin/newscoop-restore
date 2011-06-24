@@ -553,12 +553,11 @@ if ($dbVersion < '2.6.0') {
 echo " * Upgrading (if necessary)...";
 flush_output($flush);
 $res = camp_upgrade_database($destDbName);
-/*if ($res !== 0) {
+if ($res !== 0) {
     camp_exit_with_error($res);
-}*/
-
-if( $res === 0 )
-{
+}
+//if( $res === 0 )
+//{
 
 	if ($convertToUTF) {
 	    echo " * Converting the database from '$fromCharset' to 'UTF-8'...\n";
@@ -577,7 +576,7 @@ if( $res === 0 )
 	
 	    echo "   done.\n";
 	}
-}
+//}
 
 // upgrade plugins
 echo " * Updating plugins (if necessary)...";
