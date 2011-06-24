@@ -48,7 +48,12 @@ $errorArticles = array();
 foreach ($f_article_code as $code) {
 	list($articleId, $languageId) = explode("_", $code);
 	$tmpArticle = new Article($languageId, $articleId);
-	$articles[] = $tmpArticle;
+	if ($tmpArticle->getWorkflowStatus() != 'N') {
+		$articles[] = $tmpArticle;
+	}
+	else {
+		$errorArticles[] = $tmpArticle;
+	}
 }
 
 $publicationObj = new Publication($f_publication_id);

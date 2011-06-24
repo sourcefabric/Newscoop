@@ -110,7 +110,7 @@ function change_language(select)
 
     <!-- BEGIN Workflow -->
     <?php if ($g_user->hasPermission('Publish')) { ?>
-    <select name="f_action_workflow" class="input_select"
+    <select name="f_action_workflow" class="input_select" id="f_action_workflow"
       onchange="return checkChanged() && this.form.submit();" <?php if ($locked) { ?>disabled="disabled"<?php } ?>>
     <?php
     if (!isset($issueObj)) {
@@ -125,7 +125,7 @@ function change_language(select)
     ?>
     </select>
     <?php } elseif ($articleObj->userCanModify($g_user) && ($articleObj->getWorkflowStatus() != 'Y')) { ?>
-    <select name="f_action_workflow" class="input_select left-floated"
+    <select name="f_action_workflow" class="input_select left-floated" id="f_action_workflow"
       onchange="return checkChanged() && this.form.submit();" <?php if ($locked) { ?>disabled="disabled"<?php } ?>>
     <?php
     camp_html_select_option('S', $articleObj->getWorkflowStatus(), getGS('Status') . ': ' . getGS('Submitted'));
@@ -152,7 +152,9 @@ function change_language(select)
     <!-- END Workflow -->
   </fieldset>
   <?php
-  require_once('edit_schedule_box.php');
+  if( $articleObj->getWorkflowStatus() != 'N' ) {
+      require_once('edit_schedule_box.php');
+  }
   ?>
 </form>
 </div>

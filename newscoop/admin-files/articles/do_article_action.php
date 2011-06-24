@@ -1,5 +1,8 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
+error_reporting(E_ALL);
+ini_set('display_errors', '1');
+
 
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
@@ -104,6 +107,19 @@ if (!is_null($f_action_workflow)) {
 			|| ($articleObj->userCanModify($g_user) && ($f_action_workflow == 'S') )) {
 			$access = true;
 		}
+
+		// If the article is set to New, remove all the autopublish events
+		if ( $f_action_workflow == 'N') {
+            $articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected, TRUE);
+            foreach($articleEvents as $event) {
+                $eventId = $event->getArticlePublishId();
+                $articlePublishObj = new ArticlePublish($eventId);
+				if ($articlePublishObj->exists()) {
+				    $articlePublishObj->delete();
+				}
+            }
+		}
+
 		if (!$access) {
 			camp_html_add_msg(getGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users."));
 			camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, "edit.php"));
