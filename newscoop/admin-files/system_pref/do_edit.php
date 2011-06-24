@@ -16,6 +16,7 @@ if (!$g_user->hasPermission('ChangeSystemPreferences')) {
 }
 
 if(SaaS::singleton()->hasPermission('ManageSystemPreferences')) {
+	$f_collect_statistics = Input::Get('f_collect_statistics');
 	$f_cache_engine = Input::Get('f_cache_engine');
 	$f_template_cache_handler = Input::Get('f_template_cache_handler');
 	$f_smtp_host = strip_tags(Input::Get('f_smtp_host'));
