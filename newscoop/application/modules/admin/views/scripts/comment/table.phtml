@@ -71,10 +71,11 @@
                             <h4>
                                 <span>{{comment.created.date}} <?php putGS('at'); ?> {{comment.created.time}}</span>
                                 <span class="commentSubject">{{comment.subject}}</span>
-                            </h4>
+                            </h4><!--
                             <div class="ratingHolder">
                                 <span class="thumbs up">{{comment.likes}}</span>
                                 <span class="thumbs down">{{comment.dislikes}}</span> </div>
+                                -->
                             <p class="commentBody">{{comment.message}}</p>
                         </div>
 
@@ -122,7 +123,9 @@
                 {% if(can.edit) %}
                 <li><a href="javascript:;" class="action-edit link icon-link"><span class="icon ui-icon-pencil"></span><?php putGS('Quick edit'); ?></a></li>
                 {% endif %}
+                <!--
                 <li><a href="javascript:;" class="action-rating link icon-link"><span class="icon ui-icon-star"></span><?php putGS('Add rating'); ?></a></li>
+                -->
                 <li class="last">
                     <a href="{{commenter.banurl}}" class="banUser"><span><?php putGS('Ban user'); ?></span></a>
                 </li>
