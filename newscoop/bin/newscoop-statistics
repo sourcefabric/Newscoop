@@ -19,10 +19,21 @@ function clean_statistics($p_confDir)
     $sessionDiff = 3600 * 48;
     $requestTimeDiff = 3600;
     // select sections older than 48 hours
-    $sql = 'SELECT ss.id, TIME_TO_SEC(TIMEDIFF(NOW(), ss.start_time)) AS session_time_diff,'
-        . ' MIN(TIME_TO_SEC(TIMEDIFF(NOW(), rq.last_request_time))) AS last_update_diff'
-        . ' FROM Sessions AS ss LEFT JOIN Requests AS rq ON ss.id = rq.session_id'
-        . " WHERE TIME_TO_SEC(TIMEDIFF(NOW(), ss.start_time)) >= $sessionDiff GROUP BY ss.id";
+    $sql = "
+		SELECT
+			ss.id,
+			TIME_TO_SEC(TIMEDIFF(NOW(), ss.start_time)) AS session_time_diff,
+			MIN(TIME_TO_SEC(TIMEDIFF(NOW(), rq.last_stats_update))) AS last_update_diff
+		FROM
+			Sessions AS ss
+		LEFT JOIN
+			Requests AS rq ON ss.id = rq.session_id
+		WHERE
+			TIME_TO_SEC(TIMEDIFF(NOW(), ss.start_time)) >= $sessionDiff
+		GROUP BY
+			ss.id
+    ";
+    
     $sessRes = mysql_query($sql);
     if (empty($sessRes)) {
         return;
@@ -36,11 +47,11 @@ function clean_statistics($p_confDir)
         }
 
         // delete the session requests
-        $sql = "DELETE FROM Requests WHERE session_id = '" . mysql_escape_string($sessRow['Id']) . "'";
+        $sql = "DELETE FROM Requests WHERE session_id = '" . mysql_escape_string($sessRow['id']) . "'";
         mysql_query($sql);
 
         // delete the session
-        $sql = "DELETE FROM Sessions WHERE id = '" . mysql_escape_string($sessRow['Id']) . "'";
+        $sql = "DELETE FROM Sessions WHERE id = '" . mysql_escape_string($sessRow['id']) . "'";
         mysql_query($sql);
     }
 }
