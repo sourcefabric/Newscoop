@@ -231,6 +231,14 @@ abstract class CampSystem
      */
     public static function GetThemePath($p_lngId, $p_pubId, $p_issNr)
     {
+    	if (empty($p_lngId) || empty($p_issNr)) {
+    		$issue = self::GetLastIssue($p_pubId, $p_lngId);
+    		if (is_null($issue)) {
+    			return null;
+    		}
+    		$p_issNr = array_shift($issue);
+    		$p_lngId = array_shift($issue);
+    	}
         $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
         $resourceId = new ResourceId('template_engine/classes/CampSystem');
         /* @var $outputSettingIssueService IOutputSettingIssueService */
@@ -306,6 +314,29 @@ abstract class CampSystem
         }
         return self::GetIssueTemplate($p_lngId, $p_pubId, $p_issNr);
     }// fn GetTemplate
+
+    public static function GetLastIssue($p_pubId, $p_langId, $p_isPublished = true)
+    {
+        global $g_ado_db;
+    	$publication = new Publication($p_pubId);
+    	if (!$publication->exists()) {
+    		return null;
+    	}
+    	if (empty($p_langId)) {
+    		$p_langId = $publication->getDefaultLanguageId();
+    	}
+    	$sql = 'SELECT MAX(Number) AS Number FROM Issues '
+    	. 'WHERE IdPublication = ' . $p_pubId
+    	. ' AND IdLanguage = ' . $p_langId;
+    	if ($p_isPublished == true) {
+    		$sql .= " AND Published = 'Y'";
+    	}
+    	$issueNo = $g_ado_db->GetOne($sql);
+    	if (empty($issueNo)) {
+    		return null;
+    	}
+    	return array($issueNo, $p_langId);
+    }
 
     public static function GetIssueTemplate($p_lngId, $p_pubId, $p_issNr)
     {
