@@ -63,6 +63,12 @@ class Commenter
      */
     private $time_created;
 
+    /**
+     * Bidirectional - One-To-Many (INVERSE SIDE)
+     *
+     * @OneToMany(targetEntity="Newscoop\Entity\Comment", mappedBy="commenter", cascade={"persist", "remove"})
+     */
+    private $comments;
 
     /**
      * Set commenter id
@@ -253,4 +259,8 @@ class Commenter
         return $this->getUser() ? $this->getUser()->getId() : '';
     }
 
+    public function getComments()
+    {
+        return $this->comments;
+    }
 }

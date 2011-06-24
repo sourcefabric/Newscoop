@@ -66,10 +66,12 @@ var toggleComments = function() {
     $('input:radio[name^="f_comment"]:checked').each(function() {
         var form = $('#comments-form');
         var list = $('#comments-list');
+        var commentReply = $('#comment-moderate dd.buttons');
         switch ($(this).val()) {
             case 'enabled':
                 form.show();
                 list.show();
+                commentReply.show();
                 break;
 
             case 'disabled':
@@ -80,6 +82,7 @@ var toggleComments = function() {
             case 'locked':
                 form.hide();
                 list.show();
+                commentReply.hide();
                 break;
         }
     });

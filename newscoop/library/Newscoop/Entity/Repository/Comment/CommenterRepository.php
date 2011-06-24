@@ -76,13 +76,43 @@ class CommenterRepository extends DatatableSource
      * Delete a commenter
      *
      * @param Newscoop\Entity\Comment\Commenter $p_commenter
+     * @param array $p_values
      * @return void
      */
-    public function delete(Commenter $p_commenter)
+    public function delete(Commenter $p_commenter, $p_values)
     {
         $em = $this->getEntityManager();
-        $em->remove($p_commenter);
+        $q = $em->createQueryBuilder();
+        /** @todo have inverse cascade delete or somethig for this */
+        $q->select("cc")
+        ->from('Newscoop\Entity\Comment\Commenter','cc')
+        ->where('cc.id = :id')
+            ->setParameter('id', $p_commenter->getId());
+        if(!empty($p_values['name'])) {
+            $q->orWhere('cc.name = :name')
+                    ->setParameter('name', $p_commenter->getName());
+        }
+        if(!empty($p_values['ip'])) {
+            $q->orWhere('cc.ip = :ip')
+                    ->setParameter('ip', $p_commenter->getIp());
+        }
+        if(!empty($p_values['email'])) {
+            $q->orWhere('cc.email = :email')
+                    ->setParameter('id', $p_commenter->getEmail());
+        }
+        $commenters = $q->getQuery()->getResult();
+
+        foreach($commenters as $commenter) {
+            $qq = $em->createQueryBuilder();
+            $qq->delete()
+            ->from('Newscoop\Entity\Comment','c')
+            ->where('c.commenter = :commenter')
+                ->setParameter('commenter',$commenter->getId());
+            $qq->getQuery()->execute();
+            $em->remove($commenter);
+        }
     }
+
     public function flush()
     {
         $this->getEntityManager()->flush();

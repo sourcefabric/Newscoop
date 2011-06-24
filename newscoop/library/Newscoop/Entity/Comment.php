@@ -8,11 +8,7 @@
 
 namespace Newscoop\Entity;
 
-use DateTime,
-    InvalidArgumentException,
-    Newscoop\Entity\Comment\Commenter,
-    Newscoop\Entity\Language,
-    Newscoop\Entity\Publication;
+use DateTime, InvalidArgumentException, Newscoop\Entity\Comment\Commenter, Newscoop\Entity\Language, Newscoop\Entity\Publication;
 
 /**
  * Comment entity
@@ -23,113 +19,111 @@ use DateTime,
 class Comment
 {
 
-    private $allowedTags = array(
-        'a' => array('title', 'href'),
-        'abbr' => array('title'),
-        'acronym' => array('title'),
-        'b' => array(),
-        'blockquote' => array('cite'),
-        'cite' => array(),
-        'code' => array(),
-        'del' => array('datetime'),
-        'em' => array(),
-        'i' => array(),
-        'q' => array('cite'),
-        'strike' => array(),
-        'strong' => array()
-    );
+    private $allowedTags =
+    array('a' => array('title', 'href'), 'abbr' => array('title'), 'acronym' => array('title'), 'b' => array(),
+          'blockquote' => array('cite'), 'cite' => array(), 'code' => array(), 'del' => array('datetime'),
+          'em' => array(), 'i' => array(), 'q' => array('cite'), 'strike' => array(), 'strong' => array());
+
     /**
      * Constants for status
 
-      const STATUS_APPROVED   = 0;
-      const STATUS_PENDING    = 1;
-      const STATUS_HIDDEN     = 2;
-      const STATUS_DELETED    = 3;
+    const STATUS_APPROVED   = 0;
+    const STATUS_PENDING    = 1;
+    const STATUS_HIDDEN     = 2;
+    const STATUS_DELETED    = 3;
      */
     /**
      * @var string to code mapper for status
-      static $status_enum = array(
-      self::STATUS_APPROVED,
-      self::STATUS_PENDING,
-      self::STATUS_HIDDEN,
-      self::STATUS_DELETED
-      );
-     */
-    /**
-     * @var string to code mapper for status
-     */
     static $status_enum = array(
-        'approved',
-        'pending',
-        'hidden',
-        'deleted'
+    self::STATUS_APPROVED,
+    self::STATUS_PENDING,
+    self::STATUS_HIDDEN,
+    self::STATUS_DELETED
     );
+     */
+    /**
+     * @var string to code mapper for status
+     */
+    static $status_enum = array('approved', 'pending', 'hidden', 'deleted');
+
     /**
      * @id @generatedValue
      * @column(type="integer")
      * @var int
      */
     private $id;
+
     /**
-     * @manyToOne(targetEntity="Newscoop\Entity\Comment\Commenter")
-     * @joinColumn(name="fk_comment_commenter_id", referencedColumnName="id", onDelete="CASCADE")
+     * @manyToOne(targetEntity="Newscoop\Entity\Comment\Commenter", inversedBy="comments" )
+     * @joinColumn(name="fk_comment_commenter_id", referencedColumnName="id")
      * @var Newscoop\Entity\Comment\Commenter
      */
     private $commenter;
+
     /**
      * @manyToOne(targetEntity="Publication")
      * @joinColumn(name="fk_forum_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
     private $forum;
+
     /**
      * @manyToOne(targetEntity="Comment")
      * @joinColumn(name="fk_parent_id", referencedColumnName="id")
      * @var Newscoop\Entity\Comment
      */
     private $parent;
+
     /**
      * @manyToOne(targetEntity="Article")
      * @joinColumn(name="fk_thread_id", referencedColumnName="Number")
      * @var Newscoop\Entity\Article
      */
     private $thread;
+
     /**
      * @manyToOne(targetEntity="Language")
      * @joinColumn(name="fk_language_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
     private $language;
+
     /**
      * @column(length=140)
      * @var string
      */
     private $subject;
+
     /**
      * @column
      * @var text
      */
     private $message;
+
     /**
      * @column(length=4)
      * @var int
      */
     private $thread_level;
+
     /**
      * @column(length=4)
      * @var int
      */
     private $thread_order;
+
     /**
      * @column(length=2)
      * @var int
      */
     private $status;
+
     /**
      * @column(length=39)
      * @var int
      */
     private $ip;
+
     /**
      * @column(type="datetime")
      * @var DateTime
@@ -141,11 +135,13 @@ class Comment
      * @var DateTime
      */
     private $time_updated;
+
     /**
      * @column(length=4)
      * @var int
      */
     private $likes;
+
     /**
      * @column(length=4)
      * @var int
@@ -227,7 +223,7 @@ class Comment
      */
     public function setSubject($p_subject)
     {
-        $this->subject = (string) $p_subject;
+        $this->subject = (string)$p_subject;
         // return this for chaining mechanism
         return $this;
     }
@@ -250,7 +246,7 @@ class Comment
      */
     public function setMessage($p_message)
     {
-        $this->message = $this->formatMessage((string) $p_message);
+        $this->message = $this->formatMessage((string)$p_message);
         // return this for chaining mechanism
         return $this;
     }
@@ -274,7 +270,7 @@ class Comment
     public function setIp($p_ip)
     {
         // remove subnet & limit to IP_LENGTH
-        $ip_array = explode('/', (string) $p_ip);
+        $ip_array = explode('/', (string)$p_ip);
         $this->ip = substr($ip_array[0], 0, 39);
         // return this for chaining mechanism
         return $this;
@@ -293,7 +289,7 @@ class Comment
                 return long2ip($this->ip);
             }
         }
-        return (string) $this->ip;
+        return (string)$this->ip;
     }
 
     /**
@@ -546,7 +542,7 @@ class Comment
      */
     public function exists()
     {
-        return!is_null($this->id);
+        return !is_null($this->id);
     }
 
     /**
@@ -558,10 +554,11 @@ class Comment
      */
     public function getProperty($p_key)
     {
-        if (isset($this->$p_key))
+        if (isset($this->$p_key)) {
             return $this->$p_key;
-        else
+        } else {
             return null;
+        }
     }
 
     /**
@@ -574,8 +571,9 @@ class Comment
     {
         $parts = explode('<', $str);
         // if no < was found then return the original string
-        if (count($parts) === 1)
+        if (count($parts) === 1) {
             return $str;
+        }
         /** @type array vector where the tag list are keeped */
         $tag = array();
         $attrib = array();
@@ -590,8 +588,7 @@ class Comment
                  *      this is breaking on not quotes define attibutes
                  *      ex: like checked=true for good parsing should be checked="true" or checked='true'
                  */
-                preg_match_all("#([^=]+)=\s*(['\"])?([^\\2]*)\\2#iU",
-                        $tagAndAttrib[1], $rez);
+                preg_match_all("#([^=]+)=\s*(['\"])?([^\\2]*)\\2#iU", $tagAndAttrib[1], $rez);
                 if (isset($rez[1])) {
                     for ($k = 0, $countk = count($rez[1]); $k < $countk; $k++) {
                         $attrib[$i][] = array(strtolower(trim($rez[1][$k])), $rez[3][$k]);
@@ -616,53 +613,51 @@ class Comment
                     if (isset($attrib[$i])) {
                         for ($j = 0, $countj = count($attrib[$i]); $j < $countj; $j++) {
                             if ($attrib[$i][$j][0] == 'href') {
-                                $attrib[$i][$j][1] = preg_replace('/(javascript[:]?)/i','', $attrib[$i][$j][1]);
+                                $attrib[$i][$j][1] = preg_replace('/(javascript[:]?)/i', '', $attrib[$i][$j][1]);
                             }
                             if (in_array($attrib[$i][$j][0], $this->allowedTags[$tag[$i]])) {
-                                $composeTag.=$attrib[$i][$j][0] . '="' . $attrib[$i][$j][1] . '" ';
+                                $composeTag .= $attrib[$i][$j][0] . '="' . $attrib[$i][$j][1] . '" ';
                             }
                         }
                     }
-                    $return.=substr($composeTag, 0, -1) . '>' . $contentAfter[$i];
+                    $return .= substr($composeTag, 0, -1) . '>' . $contentAfter[$i];
                 } else {
                     $composeTag = '<' . $tag[$i] . ' ';
                     $title = false;
                     $cite = false;
                     if (isset($attrib[$i])) {
                         for ($j = 0, $countj = count($attrib[$i]); $j < $countj; $j++) {
-                            if (in_array($attrib[$i][$j][0],
-                                            $this->allowedTags[$tag[$i]])) {
+                            if (in_array($attrib[$i][$j][0], $this->allowedTags[$tag[$i]])) {
                                 if ($attrib[$i][$j][0] == 'href') {
                                     $attrib[$i][$j][1] = preg_replace('/(javascript[:]?)/i', '', $attrib[$i][$j][1]);
                                 }
                                 if ($attrib[$i][$j][0] == 'title') {
-                                    $title = $attrib[$i][$j][0];
+                                    $title = $attrib[$i][$j][1];
                                 } elseif ($attrib[$i][$j][0] == 'cite') {
-                                    $cite = $attrib[$i][$j][0];
+                                    $cite = $attrib[$i][$j][1];
                                 } else {
-                                    $composeTag.=$attrib[$i][$j][0] . '="' . $attrib[$i][$j][1] . '" ';
+                                    $composeTag .= $attrib[$i][$j][0] . '="' . $attrib[$i][$j][1] . '" ';
                                 }
                             }
                         }
                     }
                     // if title is set and is a broken tag use the title like inline text
-                    if ($title) {
-                        $return.=substr($composeTag, 0, -1) . '>' . $title . '</' . $tag[$i] . '>' . $contentAfter[$i];
-                    }
-                    // if cite is set and is a broken tag use the cite like inline text
-                    elseif ($cite) {
-                        $return.=substr($composeTag, 0, -1) . '>' . $cite . '</' . $tag[$i] . '>' . $contentAfter[$i];
-                    }
-                    // else use the text after
+                    if ($title !== false) {
+                        $return .= substr($composeTag, 0,
+                                          -1) . '>' . $title . '</' . $tag[$i] . '>' . $contentAfter[$i];
+                    } // if cite is set and is a broken tag use the cite like inline text
+                    elseif ($cite !== false) {
+                        $return .= substr($composeTag, 0, -1) . '>' . $cite . '</' . $tag[$i] . '>' . $contentAfter[$i];
+                    } // else use the text after
                     else {
-                        $return.=substr($composeTag, 0, -1) . '>' . $contentAfter[$i] . '</' . $tag[$i] . '>';
+                        $return .= substr($composeTag, 0, -1) . '>' . $contentAfter[$i] . '</' . $tag[$i] . '>';
                     }
                 }
             } elseif (isset($tag[$i]) && $isClosed && in_array(substr($tag[$i], 1), $allowedNameTags)) {
                 unset($closed[$i]);
-                $return.='<' . $tag[$i] . '>' . $contentAfter[$i];
+                $return .= '<' . $tag[$i] . '>' . $contentAfter[$i];
             } else {
-                $return.=' ' . $contentAfter[$i];
+                $return .= ' ' . $contentAfter[$i];
             }
         }
         return $return;

@@ -4,6 +4,7 @@
  */
 class Admin_Form_Ban extends Zend_Form
 {
+
     /**
      * Getter for the submit button
      *
@@ -23,6 +24,37 @@ class Admin_Form_Ban extends Zend_Form
     {
         return $this->delete_comments;
     }
+
+    /**
+     * Getter for the ip checkbox
+     *
+	 * @return Zend_Form_Element_Checkbox
+     */
+    public function getElementIp()
+    {
+        return $this->ip;
+    }
+
+    /**
+     * Getter for the name checkbox
+     *
+	 * @return Zend_Form_Element_Checkbox
+     */
+    public function gettElementName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * Getter for the email checkbox
+     *
+	 * @return Zend_Form_Element_Checkbox
+     */
+    public function gettElementEmail()
+    {
+        return $this->email;
+    }
+
 
     public function init()
     {
@@ -71,8 +103,9 @@ class Admin_Form_Ban extends Zend_Form
      */
     public function setValues($p_commenter, $p_values)
     {
+        /* @var $name Zend_Form_Element_CheckBox */
         $this->name->setLabel(getGS('Name').":".$p_commenter->getName())
-                   ->setChecked($p_values['name']);
+                    ->setChecked($p_values['name']);
 
         $this->email->setLabel(getGS('Email').":".$p_commenter->getEmail())
                     ->setChecked($p_values['email']);
