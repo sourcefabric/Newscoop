@@ -106,8 +106,7 @@ class Admin_UserGroupController extends Zend_Controller_Action
         if (count($users) == 0) {
             $this->repository->delete($groupId);
             $this->_helper->flashMessenger->addMessage(getGS('User type deleted.'));
-        }
-        else {
+        } else {
             $this->_helper->flashMessenger->addMessage(getGS('Can not delete a user type with assigned users.'));
         }
         $this->_helper->redirector('index');

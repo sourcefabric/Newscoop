@@ -119,7 +119,7 @@ class Group implements \Zend_Acl_Role_Interface
      */
     public function getUsers()
     {
-        return($this->users);
+        return $this->users;
     }
 
     /**

@@ -142,7 +142,6 @@ $( function()
 		{
 			"Delete" : function()
 			{
-				$(this).dialog("close");
 				$.ajax
 				({
 					url : thisA.attr('href')+'/format/json',
@@ -150,8 +149,17 @@ $( function()
 					{
 						if( data.response ) 
 						{
-							// TODO bad way to refresh datagrid
-							$('.themesListHolder .themesListTabsBtns li a').parent( '.ui-state-active' ).find( 'a' ).click()
+							confirmDeleteDialog.find( '.delete-message' ).text( data.response )
+								.show().delay(3000).fadeOut( 'fast', function()
+								{
+									confirmDeleteDialog.find( '.delete-message' ).text( '' );
+									confirmDeleteDialog.dialog( 'close' ); 
+								} );
+							
+							if( data.status ) {
+								// TODO bad way to refresh datagrid
+								$('.themesListHolder .themesListTabsBtns li a').parent( '.ui-state-active' ).find( 'a' ).click()
+							}
 						}
 					}
 				})

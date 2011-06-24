@@ -89,6 +89,10 @@
 								margin-right:16px;
 								border:1px solid #9d9d9d !important;
 								}
+								.themesListTabs div, .themesListTabs li img
+								{
+									width: 100%	
+								}
 							.themesListTabs .imageCtrls ul, .themesListTabs .imageCtrls li
 							{
 								width: 300px !important;

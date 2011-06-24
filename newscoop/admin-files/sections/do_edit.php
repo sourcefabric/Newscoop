@@ -32,8 +32,8 @@ $cShortName = trim(Input::Get('cShortName', 'string'));
 $cDescription = trim(Input::Get('cDescription'));
 
 
-$cSectionTplId = Input::Get('cSectionTplId', 'int', 0);
-$cArticleTplId = Input::Get('cArticleTplId', 'int', 0);
+$cSectionTplId = Input::Get('cSectionTplId', 'string', 0);
+$cArticleTplId = Input::Get('cArticleTplId', 'string', 0);
 
 $cName = Input::Get('cName');
 

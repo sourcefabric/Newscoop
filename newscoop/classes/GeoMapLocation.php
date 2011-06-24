@@ -1052,7 +1052,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 }
 
                 // for the list-of-objects array
-                $tmpPoint['art_id'] = $p_mapId;
+                $tmpPoint['map_id'] = $ps_mapId;
                 $tmpPoint['art_number'] = 0;
                 $tmpPoint['art_numbers'] = '';
                 if ($mc_mapCons) {
@@ -1109,11 +1109,11 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 $one_lan_source = array(
                     'id' => $one_poi['con_id'],
                     'fk_maplocation_id' => $one_poi['loc_id'],
-                    'fk_language_id' => $p_languageId,
+                    'fk_language_id' => $ps_languageId,
                     'fk_content_id' => $one_poi['txt_id'],
                     'poi_display' => $one_poi['display'],
                 );
-                $one_poi_obj->setLanguage($p_languageId, new Geo_MapLocationLanguage(NULL, 0, $one_geo_source, true));
+                $one_poi_obj->setLanguage($ps_languageId, new Geo_MapLocationLanguage(NULL, 0, $one_geo_source, true));
     
                 $one_txt_source = array(
                     'id' => $one_poi['txt_id'],
@@ -1126,7 +1126,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     'IdUser' => $one_poi['txt_user'],
                     'time_updated' => $one_poi['txt_updated'],
                 );
-                $one_poi_obj->setContent($p_languageId, new Geo_MapLocationContent(NULL, NULL, $one_txt_source, true));
+                $one_poi_obj->setContent($ps_languageId, new Geo_MapLocationContent(NULL, NULL, $one_txt_source, true));
 
                 if(array_key_exists($one_poi['loc_id'], $mm_objs)) {
                     $poi_mm = $mm_objs[$one_poi['loc_id']];

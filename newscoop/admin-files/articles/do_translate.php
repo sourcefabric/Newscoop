@@ -70,7 +70,9 @@ if ($f_publication_id > 0) {
 		exit;
 	}
 
-	$translationIssueObj = new Issue($f_publication_id, $f_translation_language, $f_issue_number);
+	//$translationIssueObj = new Issue($f_publication_id, $f_translation_language, $f_issue_number);
+	$translationIssueObj = $issueObj->copy(null, $issueObj->getIssueNumber(), $f_translation_language);
+	
 	if (!$translationIssueObj->exists()) {
 		if (!$g_user->hasPermission("ManageIssue")) {
 			camp_html_add_msg(getGS('An issue must be created for the selected language but you do not have the right to create an issue.'));

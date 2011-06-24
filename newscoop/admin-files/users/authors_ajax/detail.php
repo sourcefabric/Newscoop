@@ -62,7 +62,7 @@ if ($id > 0) {
   <ul>
     <li><a href="#generalContainer"><?php putGS('General'); ?></a></li>
     <li><a href="#biographyContainer"><?php putGS('Biography'); ?></a></li>
-    <?php if (is_object($author)) { ?>
+    <?php if ( isset($author) && is_object($author)) { ?>
     <li><a href="#contentContainer"><?php putGS('Content'); ?></a></li>
     <?php } ?>
   </ul>
@@ -202,7 +202,7 @@ if ($id > 0) {
     <fieldset class="frame">
       <div class="authorThumb">
       <?php
-      if (is_object($author) && is_numeric($author->getImage())) {
+      if ( isset($author) && is_object($author) && is_numeric($author->getImage())) {
           $image = new Image($author->getImage());
           echo '<img src="' . $image->getThumbnailUrl() . '"/>';
       } else {
@@ -237,7 +237,7 @@ if ($id > 0) {
   </div>
 
   <?php
-  if (is_object($author)) {
+  if ( isset($author) && is_object($author)) {
   ?>
   <div id="contentContainer">
     <div class="space-box"></div>
@@ -274,7 +274,7 @@ if ($id > 0) {
     </fieldset>
   </div>
   <?php } ?>
-  
+
   <fieldset class="frame" style="margin-bottom:0;">
     <ul>
       <li>
@@ -286,10 +286,10 @@ if ($id > 0) {
 
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/editor_load_tinymce.php");
-$languageObj = new Language($Language);
-if (!is_object($languageObj)) {
-    $languageObj = new Language(1);
-}
+$languageObj = new Language( isset($Language) ? $Language : 1 );
+//if (!is_object($languageObj)) {
+//    $languageObj = new Language(1);
+//}
 
 $editorLanguage = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : $languageObj->getCode();
 editor_load_tinymce('txt_biography', $g_user, 0, $editorLanguage, 'authorbiography');

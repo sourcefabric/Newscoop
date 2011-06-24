@@ -269,12 +269,13 @@ for ($i = 0; $i < sizeof($fCustomSwitches); $i++) {
 }
 
 $jsArrayTextareasStr = '';
-for ($i = 0; $i < sizeof($fCustomTextareas); $i++) {
-    $jsArrayTextareasStr .= "'" . addslashes($fCustomTextareas[$i]) . "'";
-    if ($i + 1 < sizeof($fCustomTextareas)) {
-        $jsArrayTextareasStr .= ',';
+if( isset($fCustomTextareas) )
+    for ($i = 0; $i < sizeof($fCustomTextareas); $i++) {
+        $jsArrayTextareasStr .= "'" . addslashes($fCustomTextareas[$i]) . "'";
+        if ($i + 1 < sizeof($fCustomTextareas)) {
+            $jsArrayTextareasStr .= ',';
+        }
     }
-}
 
 include ("edit_javascript.php");
 

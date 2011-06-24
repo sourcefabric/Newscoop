@@ -95,14 +95,6 @@ $map_height = 0;
 $focus_info = Geo_Preferences::GetFocusInfo();
 $auto_focus = (bool) $focus_info["json_obj"]["auto_focus"];
 
-$map_fixed_info = "";
-$map_focused_info = "";
-
-$focus_other_label = $map_fixed_label;
-$focus_current_label = $map_focused_info;
-if ($focus_default && (!$auto_focus)) {$focus_other_label = $map_focused_label; $focus_current_label = $map_fixed_info;}
-if ((!$focus_default) && $auto_focus) {$focus_other_label = $map_focused_label; $focus_current_label = $map_fixed_info;}
-
 if (!$focus_default) {$auto_focus = !$auto_focus;}
 
 $map_options = array('auto_focus' => $auto_focus, 'load_common' => true);

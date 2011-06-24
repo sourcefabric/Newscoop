@@ -14,6 +14,7 @@ use Newscoop\Service\ISyncResourceService;
 use Newscoop\Entity\Output\OutputSettingsTheme;
 use Newscoop\Entity\Output\OutputSettingsIssue;
 use Newscoop\Service\Exception\DuplicateNameException;
+use Newscoop\Service\Exception\RemoveThemeException;
 use Newscoop\Version;
 use Newscoop\Service\Implementation\Exception\FailedException;
 use Newscoop\Service\Error\ThemeErrors;
@@ -352,7 +353,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
             $this->cacheThemeConfigs = NULL;
             return true;
         }
-        return false;
+        throw new RemoveThemeException();
     }
 
     function assignTheme(Theme $theme, Publication $publication)
