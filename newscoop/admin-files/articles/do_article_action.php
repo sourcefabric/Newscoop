@@ -1,7 +1,5 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
-error_reporting(E_ALL);
-ini_set('display_errors', '1');
 
 
 if (!SecurityToken::isValid()) {
