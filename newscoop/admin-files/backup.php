@@ -167,9 +167,16 @@ if ($files) {
         print "<tr $tr_class><td>{$file['name']}</td><td align=\"left\">{$file['time']}</td><td align=\"center\">{$file['size']}</td>";
         print '<td align="center"><a href="backup.php?action=download&index='.$key.'"><img src="'
             .$Campsite["ADMIN_IMAGE_BASE_URL"].'/save.png" border="0" alt="'.getGS('Download file').'" title="'.getGS('Download file').'"></a>';
-        print '<td align="center"><a href="#" onclick="if (confirm(\''.getGS('Are you sure you want to restore the file $1?',
-            htmlspecialchars($file['name'])).'\')) window.open(\'backup.php?action=restore&index='.$key.'\', \'Backup\', \'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=550, top=100, left=100\');"><img src="'
-            .$Campsite["ADMIN_IMAGE_BASE_URL"].'/help.png" border="0" alt="'.getGS('Restore file').'" title="'.getGS('Restore file').'"></a>';
+?>
+		<td align="center">
+			<a href="#" onclick="
+				if( confirm( '<?php echo getGS('Warning: the existing data and themes will be deleted!') ?>'
+					+'\n'+'<?php echo getGS('Are you sure you want to restore the file $1?', htmlspecialchars($file['name'])) ?>') )
+					window.open('backup.php?action=restore&index=<?php echo $key ?>', 'Backup',
+						'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=550, top=100, left=100');">
+			<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"] ?>/help.png" border="0" alt="<?php echo getGS('Restore file') ?>"
+				title="<?php echo getGS('Restore file') ?>"></a>
+<?php
         print '<td align="center"><a href="backup.php?action=delete&index='.$key.'" onclick="return confirm(\''
             .getGS('Are you sure you want to delete the file $1?',htmlspecialchars($file['name'])).'\');"><img src="'
             .$Campsite["ADMIN_IMAGE_BASE_URL"].'/delete.png" border="0" alt="'.getGS('Delete file').'" title="'.getGS('Delete file').'"></a>';
