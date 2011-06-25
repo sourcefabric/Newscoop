@@ -95,8 +95,7 @@ $mapPrefixToDir = array(
         '/application/modules/admin/controllers/CommentCommenterController.php',
     ),
     'system_pref' => '/admin-files/system_pref',
-    'templates' => array(
-        '/admin-files/templates',
+    'themes' => array(
         '/application/modules/admin/views/scripts/themes',
         '/application/modules/admin/views/scripts/template',
         '/application/modules/admin/forms/Template.php',

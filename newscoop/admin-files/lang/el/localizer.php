@@ -1,4 +1,6 @@
 <?php 
+regGS("Themes", "");
+regGS("Area to localize", "");
 regGS("Dashboard", "Πίνακας");
 regGS("Authors", "Συγγραφείς");
 regGS("Libraries", "Βιβλιοθήκες");
@@ -20,7 +22,6 @@ regGS("Translate to:", "Μετάφραση σε:");
 regGS("Translate from:", "Μετάφραση από:");
 regGS("The following strings are not used:", "Οι παρακάτω σειρές δεν χρησιμοποιούνται:");
 regGS("The following strings are missing from the translation files:", "Οι παρακάτω σειρές λείπουν από τα αρχεία μετάφρασης:");
-regGS("Screen:", "Οθόνη:");
 regGS("No source strings found.", "Δεν βρέθηκαν πηγαίες σειρές.");
 regGS("No matches found.", "Δεν βρέθηκαν αποτελέσματα.");
 regGS("Globals", "Γενικά");

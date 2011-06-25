@@ -1,4 +1,6 @@
 <?php 
+regGS("Themes", "");
+regGS("Area to localize", "");
 regGS("Dashboard", "");
 regGS("Authors", "");
 regGS("Libraries", "");
@@ -20,7 +22,6 @@ regGS("Translate to:", "Перакласьцi на:");
 regGS("Translate from:", "Перакласьцi з:");
 regGS("The following strings are not used:", "Наступныя радкі не выкарыстоўваюцца:");
 regGS("The following strings are missing from the translation files:", "Наступныя радкі прапушчаныя ў файлах перакладу:");
-regGS("Screen:", "Экран:");
 regGS("No source strings found.", "Ня знойдзена зыходных радкоў.");
 regGS("No matches found.", "Ня знойдзена супадзеньняў.");
 regGS("Globals", "Агульныя");

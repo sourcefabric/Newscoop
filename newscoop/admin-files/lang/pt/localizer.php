@@ -1,4 +1,6 @@
 <?php 
+regGS("Themes", "");
+regGS("Area to localize", "");
 regGS("Dashboard", "");
 regGS("Authors", "");
 regGS("Libraries", "");
@@ -20,7 +22,6 @@ regGS("Translate to:", "Traduzir para:");
 regGS("Translate from:", "Traduzir de:");
 regGS("The following strings are not used:", "As seguintes mensagens não estão a ser usadas:");
 regGS("The following strings are missing from the translation files:", "As seguintes mensagens estão em falta nos ficheiros de destino:");
-regGS("Screen:", "Ecran:");
 regGS("No source strings found.", "Não existe mensagem de origem.");
 regGS("No matches found.", "Não foram encontrada");
 regGS("Globals", "Global");

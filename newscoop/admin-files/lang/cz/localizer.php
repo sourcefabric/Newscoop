@@ -1,4 +1,6 @@
 <?php 
+regGS("Themes", "");
+regGS("Area to localize", "");
 regGS("Dashboard", "Hlavní panel");
 regGS("Authors", "Autoři");
 regGS("Libraries", "Knihovny");
@@ -20,7 +22,6 @@ regGS("Translate to:", "Přeložit do:");
 regGS("Translate from:", "Přeložit z:");
 regGS("The following strings are not used:", "Následující řetězce nejsou použity:");
 regGS("The following strings are missing from the translation files:", "Následující řetězce chybí v souborech s překladem:");
-regGS("Screen:", "Vypsat:");
 regGS("No source strings found.", "Nebyly nalezene žádné zdrojové řetězce.");
 regGS("No matches found.", "Nebyly nalezeny žádné shody.");
 regGS("Globals", "Obecné");
