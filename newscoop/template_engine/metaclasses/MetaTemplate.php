@@ -33,21 +33,25 @@ final class MetaTemplate extends MetaDbObject
         /* @var $syncResourceService ISyncResourceService */
         $syncResourceService = $resourceId->getService(ISyncResourceService::NAME);
 
-        try
-        {
+        try {
             $this->m_dbObject = $syncResourceService->findByPathOrId($p_templateIdOrName);
+        } catch (Exception $e) {
+        	$this->m_dbObject = null;
         }
-        catch( Exception $e ){ return; }
+
+        $this->m_properties = array();
 
         $this->m_customProperties['name'] = 'getValue';
         $this->m_customProperties['identifier'] = 'getId';
-
         $this->m_customProperties['type'] = 'getTemplateType';
         $this->m_customProperties['defined'] = 'defined';
     }// fn __construct
 
     protected function getTemplateType()
     {
+    	if (is_null($this->m_dbObject)) {
+    		return null;
+    	}
         if (isset($this->_map[$this->m_dbObject->getName()])) {
 
             return $this->_map[$this->m_dbObject->getName()];
@@ -57,7 +61,10 @@ final class MetaTemplate extends MetaDbObject
 
     protected function getValue()
     {
-        return $this->m_dbObject->getPath();
+    	if (is_null($this->m_dbObject)) {
+    		return null;
+    	}
+    	return $this->m_dbObject->getPath();
     }
 
     public function IsValid($p_value)
@@ -67,7 +74,10 @@ final class MetaTemplate extends MetaDbObject
 
     public function getId()
     {
-        return $this->m_dbObject->getId();
+    	if (is_null($this->m_dbObject)) {
+    		return null;
+    	}
+    	return $this->m_dbObject->getId();
     }
 
     public static function GetTypeName()
