@@ -263,7 +263,7 @@ class Admin_ThemesController extends Zend_Controller_Action
                 ->getElement( 'submit-button' )->clearDecorators()->addDecorator( 'ViewHelper' )->setAttrib( 'style', 'display:none' );
             $this->view->uploadForm = $uploadForm;
 
-            $this->view->headScript()->appendFile( $this->view->baseUrl( "/js/jquery/jquery.tmpl.js" ) );
+            $this->view->headScript()->appendFile( $this->view->baseUrl( "/js/jquery/doT.js" ) );
             $this->view->headLink( array
             (
             	'type'  =>'text/css',

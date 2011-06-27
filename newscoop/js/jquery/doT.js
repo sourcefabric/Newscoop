@@ -69,12 +69,14 @@
                                 c.evaluate,
                                 function(match, code)
                                 {
-                                    return "';"
+                                    var x = "';"
                                             + code.replace(c.ends, '}')
                                                     .replace(/\\'/g, "'")
                                                     .replace(/\\\\/g, "\\")
                                                     .replace(/[\r\t\n]/g,
                                                             ' ') +(c.ends.test(code)?"":"{") +"out+='";
+                                    c.ends.test(code); // Chrome weird true vs. false fix
+                                    return x; 
                                 }) + "';return out;}").replace(/\n/g, '\\n')
                 .replace(/\t/g, '\\t').replace(/\r/g, '\\r').split("out+='';")
                 .join('').split('var out="";out+=').join('var out=');
