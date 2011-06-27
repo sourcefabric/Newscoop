@@ -90,4 +90,4 @@ UPDATE `SubsSections` SET `IdLanguage` = NULL WHERE `IdLanguage` = 0;
 system php ./acl.php
 system php ./transfer_phorum.php
 system php ./javascript_js_cleanup.php
-
+system php ./fix_adodb_rights.php
