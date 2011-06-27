@@ -1,4 +1,6 @@
 <?php 
+regGS("Themes", "");
+regGS("Area to localize", "");
 regGS("Dashboard", "Контролна табла");
 regGS("Authors", "Аутори");
 regGS("Libraries", "Библиотеке");
@@ -20,7 +22,6 @@ regGS("Translate to:", "Преведи у:");
 regGS("Translate from:", "Преведи из:");
 regGS("The following strings are not used:", "Следећи стрингови се не користе:");
 regGS("The following strings are missing from the translation files:", "Следећи стрингови фале у фајловима за превођење:");
-regGS("Screen:", "Екран:");
 regGS("No source strings found.", "Није пронађен изворни стринг.");
 regGS("No matches found.", "Нема подударности.");
 regGS("Globals", "Општи стрингови");

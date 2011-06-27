@@ -32,7 +32,7 @@ if (php_sapi_name() == 'cli') {
 require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
 require_once $CAMPSITE_DIR . '/classes/CampPlugin.php';
 
-if (!is_array($GLOBALS['argv']) && empty($options)) {
+if( isset($GLOBAL['argv']) && !is_array($GLOBALS['argv']) && empty($options)) {
     echo "Can't read command line arguments\n";
     exit(1);
 }
@@ -556,24 +556,27 @@ $res = camp_upgrade_database($destDbName);
 if ($res !== 0) {
     camp_exit_with_error($res);
 }
+//if( $res === 0 )
+//{
 
-if ($convertToUTF) {
-    echo " * Converting the database from '$fromCharset' to 'UTF-8'...\n";
-
-    $dumpFile = "$tempDirName/$destDbName-database-$fromCharset.sql";
-    if (camp_backup_database($destDbName, $dumpFile, $output,
-    array("--default-character-set=$fromCharset")) != 0) {
-        camp_exit_with_error("Unable to backup the database $destDbName\n"
-        . implode("\n", $output));
-    }
-    $outDumpFile = "$tempDirName/$destDbName-database-utf8.sql";
-    camp_change_dump_encoding($dumpFile, $outDumpFile, $fromCharset);
-    camp_restore_database($outDumpFile);
-    unlink($dumpFile);
-    unlink($outDumpFile);
-
-    echo "   done.\n";
-}
+	if ($convertToUTF) {
+	    echo " * Converting the database from '$fromCharset' to 'UTF-8'...\n";
+	
+	    $dumpFile = "$tempDirName/$destDbName-database-$fromCharset.sql";
+	    if (camp_backup_database($destDbName, $dumpFile, $output,
+	    array("--default-character-set=$fromCharset")) != 0) {
+	        camp_exit_with_error("Unable to backup the database $destDbName\n"
+	        . implode("\n", $output));
+	    }
+	    $outDumpFile = "$tempDirName/$destDbName-database-utf8.sql";
+	    camp_change_dump_encoding($dumpFile, $outDumpFile, $fromCharset);
+	    camp_restore_database($outDumpFile);
+	    unlink($dumpFile);
+	    unlink($outDumpFile);
+	
+	    echo "   done.\n";
+	}
+//}
 
 // upgrade plugins
 echo " * Updating plugins (if necessary)...";

@@ -1,4 +1,6 @@
 <?php 
+regGS("Themes", "");
+regGS("Area to localize", "");
 regGS("Dashboard", "");
 regGS("Authors", "");
 regGS("Libraries", "");
@@ -20,7 +22,6 @@ regGS("Translate to:", "Prevedi na:");
 regGS("Translate from:", "Prevedi sa:");
 regGS("The following strings are not used:", "Slijedeći znakovi nisu korišteni:");
 regGS("The following strings are missing from the translation files:", "Slijedeći znakovi nedostaju u datotekama prijevoda:");
-regGS("Screen:", "Ekran:");
 regGS("No source strings found.", "Nemoguće pronaći izvorne znakove.");
 regGS("No matches found.", "Ništa nije pronađeno.");
 regGS("Globals", "Globalno");

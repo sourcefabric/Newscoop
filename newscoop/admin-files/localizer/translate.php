@@ -113,7 +113,7 @@ function translationForm($p_request)
     $mapPrefixToDisplay["geolocation"] = getGS("Geo-location");
     $mapPrefixToDisplay["comments"] = getGS("Comments");
     $mapPrefixToDisplay["system_pref"] = getGS("System Preferences");
-    $mapPrefixToDisplay["templates"] = getGS("Templates");
+    $mapPrefixToDisplay["themes"] = getGS("Themes");
     $mapPrefixToDisplay["article_types"] = getGS("Article Types");
     $mapPrefixToDisplay["article_type_fields"] = getGS("Article Type Fields");
     $mapPrefixToDisplay["topics"] = getGS("Topics");

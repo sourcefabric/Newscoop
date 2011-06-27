@@ -115,7 +115,6 @@ final class CampSite extends CampSystem
             $template = CS_SYS_TEMPLATES_DIR . DIR_SEP . '_campsite_error.tpl';
             $error_message = 'At initialization: ' . $g_errorList[0]->getMessage();
         } else {
-            $templates_dir = CS_TEMPLATES_DIR;
             $template = $uri->getTemplate();
             if (empty($template)) {
                 $tplId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
@@ -130,15 +129,18 @@ final class CampSite extends CampSystem
                     $error_message = 'The template identified by the number ' . $tplId
                             . ' does not exist.';
                 }
-                $template = CS_SYS_TEMPLATES_DIR . DIR_SEP . '_campsite_error.tpl';
                 $templates_dir = CS_TEMPLATES_DIR;
+                $template = CS_SYS_TEMPLATES_DIR . DIR_SEP . '_campsite_error.tpl';
+            } else {
+            	$themePath = $uri->getThemePath();
+            	$templates_dir = CS_TEMPLATES_DIR . DIR_SEP . $themePath;
+            	$template = substr($template,  strlen($themePath));
             }
         }
-        $themePath = $uri->getThemePath();
         $params = array(
             'context' => $context,
-            'template' => substr($template,  strlen($themePath)),
-            'templates_dir' => $templates_dir . DIR_SEP . $themePath,
+            'template' => $template,
+            'templates_dir' => $templates_dir,
             'error_message' => isset($error_message) ? $error_message : null
         );
         $document->render($params);

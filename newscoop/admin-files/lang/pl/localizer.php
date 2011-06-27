@@ -1,4 +1,6 @@
 <?php 
+regGS("Themes", "");
+regGS("Area to localize", "");
 regGS("Dashboard", "Dashboard");
 regGS("Authors", "Autorzy");
 regGS("Libraries", "Biblioteki");
@@ -20,7 +22,6 @@ regGS("Translate to:", "Przetłumacz na:");
 regGS("Translate from:", "Przetłumacz z:");
 regGS("The following strings are not used:", "Poniższe zmienne nie są używane");
 regGS("The following strings are missing from the translation files:", "Poniższe zmienne nie znajdują się w plikach tłumaczeń:");
-regGS("Screen:", "Ekran:");
 regGS("No source strings found.", "Brak zmiennych źródłowych.");
 regGS("No matches found.", "Brak rezultatów.");
 regGS("Globals", "Globalne");

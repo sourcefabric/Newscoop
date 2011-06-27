@@ -280,7 +280,7 @@ function camp_backup_database($p_dbName, $p_destFile, &$p_output,
 
     $user = $Campsite['DATABASE_USER'];
     $password = $Campsite['DATABASE_PASSWORD'];
-    $cmd = "mysqldump --add-drop-table -c -Q --skip-extended-insert --user=$user --host="
+    $cmd = "%s --add-drop-table -c -Q --skip-extended-insert --user=$user --host="
         . $Campsite['DATABASE_SERVER_ADDRESS']
         . " --port=" . $Campsite['DATABASE_SERVER_PORT'];
     if ($password != "") {
@@ -289,12 +289,34 @@ function camp_backup_database($p_dbName, $p_destFile, &$p_output,
     $cmd .= ' ' . implode(' ', $p_customParams);
     $cmd .= " $p_dbName > $p_destFile";
     $p_output = array();
-    @exec($cmd, $p_output, $result);
+    @exec( sprintf( $cmd, 'mysqldump' ), $p_output, $result);
+    if( $result !== 0 ) //one more try with full path for mother russia
+    {
+        $newCmd = exec( 'which mysqldump' );
+        if( trim( $newCmd ) != '' ) {
+            @exec( sprintf( $cmd, $newCmd ), $p_output, $result );
+        }
+    }
+    switch( $result )
+    {
+        case 1	:
+        case 2	: $error = "General error"; break;
+        case 126 :	$error = "Command invoked cannot be executed. Permission problem or command is not an executable"; break;
+        case 127 : $error = "'mysqldump' Command not found. Possible problem with \$PATH or a typo"; break;
+        case 128 : $error =	"Invalid argument to exit"; break;
+        default : $error = false;
+    }
     $additionalFile = $Campsite['CAMPSITE_DIR'] . '/bin/mysql-dump-ext.sql';
     if (file_exists($additionalFile)) {
         @exec('cat ' . $additionalFile . '>>' .$p_destFile, $p_output, $result);
     }
-    return $result;
+
+    if( !$error ) {
+        return $result;
+    }
+    else {
+       return $error;
+    }
 } // fn camp_backup_database
 
 
@@ -562,27 +584,33 @@ function camp_detect_database_version($p_dbName, &$version)
             } else {
                 return 0;
             }
-            $res2 = mysql_query("SHOW COLUMNS FROM phorum_users LIKE 'fk_campsite_user_id'");
-            if (is_resource($res2) && mysql_num_rows($res2) > 0) {
-                $version = "2.6.2";
-            } else {
-                return 0;
-            }
 
-            $res2 = mysql_query("SELECT * FROM Events WHERE Id = 171");
-            if (is_resource($res2) && mysql_num_rows($res2) > 0) {
-                $version = "2.6.3";
-            } else {
-                return 0;
-            }
-            $res2 = mysql_query("SELECT * FROM UserConfig "
-                                . "WHERE varname = 'ExternalSubscriptionManagement'");
-            if (is_resource($res2) && mysql_num_rows($res2) > 0) {
-                $version = "2.6.4";
-            }
-            $res2 = mysql_query("SELECT * from phorum_users WHERE fk_campsite_user_id IS NULL");
-            if (is_resource($res2) && mysql_num_rows($res2) == 0) {
-                $version = "2.6.x";
+            // check for phorum_users old table
+            $chkPhorumUsers = mysql_query( "SHOW TABLES LIKE '%phorum_users%'" );
+            if( is_resource($chkPhorumUsers) && mysql_num_rows($res2) > 0 )
+            {
+                $res2 = mysql_query("SHOW COLUMNS FROM phorum_users LIKE 'fk_campsite_user_id'");
+                if (is_resource($res2) && mysql_num_rows($res2) > 0) {
+                    $version = "2.6.2";
+                } else {
+                    return 0;
+                }
+
+                $res2 = mysql_query("SELECT * FROM Events WHERE Id = 171");
+                if (is_resource($res2) && mysql_num_rows($res2) > 0) {
+                    $version = "2.6.3";
+                } else {
+                    return 0;
+                }
+                $res2 = mysql_query("SELECT * FROM UserConfig "
+                                    . "WHERE varname = 'ExternalSubscriptionManagement'");
+                if (is_resource($res2) && mysql_num_rows($res2) > 0) {
+                    $version = "2.6.4";
+                }
+                $res2 = mysql_query("SELECT * from phorum_users WHERE fk_campsite_user_id IS NULL");
+                if (is_resource($res2) && mysql_num_rows($res2) == 0) {
+                    $version = "2.6.x";
+                }
             }
         }
         if (!$res2 = mysql_query("SHOW TABLES LIKE '%Audioclip%'")) {
@@ -896,7 +924,7 @@ function camp_restore_database($p_sqlFile, $p_silent = false)
 {
     global $Campsite;
 
-    $cmd = "mysql -u " . $Campsite['DATABASE_USER'] . " --host="
+     $cmd = "%s -u " . $Campsite['DATABASE_USER'] . " --host="
     . $Campsite['DATABASE_SERVER_ADDRESS'] . " --port="
     . $Campsite['DATABASE_SERVER_PORT']
     . ' --default-character-set=utf8';
@@ -904,7 +932,18 @@ function camp_restore_database($p_sqlFile, $p_silent = false)
         $cmd .= " --password=\"" . $Campsite['DATABASE_PASSWORD'] . "\"";
     }
     $cmd .= ' ' . $Campsite['DATABASE_NAME'] . " < $p_sqlFile";
-    camp_exec_command($cmd, "Unable to import database. (Command: $cmd)",
+
+    $cmdpath = 'mysql';
+    exec( sprintf( $cmd, $cmdpath ), $o, $r );
+    if( $r !== 0 )
+    {
+        $testcmd = exec( "which $cmdpath" );
+        if( trim( $testcmd ) != '' ) {
+            $cmdpath = exec( sprintf( $cmd, $testcmd ) );
+        }
+    }
+
+    camp_exec_command( sprintf( $cmd, 'mysql' ), "Unable to import database. (Command: $cmd)",
                       true, $p_silent);
     return true;
 }

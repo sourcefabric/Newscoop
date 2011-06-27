@@ -54,15 +54,15 @@ if (!$sectionObj->exists()) {
 $articleEvents = ArticlePublish::GetArticleEvents($f_article_number, $f_language_selected);
 
 $publishTime = date("Y-m-d H:i");
-
-$publishAction = '';
-$frontPageAction = '';
-$sectionPageAction = '';
-$datetime = explode(" ", trim($publishTime));
-$publishDate = $datetime[0];
-$publishTime = explode(":", trim($datetime[1]));
-$publishHour = $publishTime[0];
-$publishMinute = $publishTime[1];
+if ($articleObj->getWorkflowStatus() != 'N') {
+	$publishAction = '';
+	$frontPageAction = '';
+	$sectionPageAction = '';
+	$datetime = explode(" ", trim($publishTime));
+	$publishDate = $datetime[0];
+	$publishTime = explode(":", trim($datetime[1]));
+	$publishHour = $publishTime[0];
+	$publishMinute = $publishTime[1];
 ?>
 
 <!DOCTYPE html>
@@ -156,6 +156,25 @@ $publishMinute = $publishTime[1];
 </TR>
 </TABLE>
 </FORM>
-
+<?php } else { ?>
+	<BLOCKQUOTE>
+	<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box">
+	<TR>
+		<TD COLSPAN="2">
+			<B> <?php  putGS("Scheduling a new publish action"); ?> </B>
+			<HR NOSHADE SIZE="1" COLOR="BLACK">
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN="2"><BLOCKQUOTE><?php putGS("The article is new; it is not possible to schedule it for automatic publishing.");?></BLOCKQUOTE></TD>
+	</TR>
+	<TR>
+		<TD COLSPAN="2" align="center">
+			<INPUT TYPE="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php echo $ADMIN; ?>/articles/edit.php?f_publication_id=<?php p($f_publication_id); ?>&f_issue_number=<?php p($f_issue_number); ?>&f_section_number=<?php p($f_section_number); ?>&f_article_number=<?php p($f_article_number); ?>&f_language_id=<?php p($f_language_id); ?>&f_language_selected=<?php p($f_language_selected); ?>'" class="button">
+		</TD>
+	</TR>
+	</TABLE>
+	</BLOCKQUOTE>
+<?php } ?>
 </body>
 </html>

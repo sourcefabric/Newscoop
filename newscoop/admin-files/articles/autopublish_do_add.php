@@ -48,7 +48,12 @@ $errorArticles = array();
 foreach ($f_article_code as $code) {
 	list($articleId, $languageId) = explode("_", $code);
 	$tmpArticle = new Article($languageId, $articleId);
-	$articles[] = $tmpArticle;
+	if ($tmpArticle->getWorkflowStatus() != 'N') {
+		$articles[] = $tmpArticle;
+	}
+	else {
+		$errorArticles[] = $tmpArticle;
+	}
 }
 
 $publicationObj = new Publication($f_publication_id);
@@ -87,12 +92,38 @@ if ( (count($articles) == 0) && (count($errorArticles) > 0) ) {
 	camp_html_add_msg(getGS("The article is new; it is not possible to schedule it for automatic publishing."));
 }
 
+
+
+
 if (camp_html_has_msgs()) {
 	camp_html_goto_page($backLink);
 }
 
 $publishTime = $f_publish_date . " " . $f_publish_hour . ":" . $f_publish_minute . ":00";
+
 foreach ($articles as $tmpArticle) {
+
+
+	$articleEvents = ArticlePublish::GetArticleEvents($tmpArticle->getArticleNumber(), $f_language_selected, TRUE);
+	foreach($articleEvents as $event) {
+        if ( $event->getActionTime() == $publishTime ) {
+            if ( $f_publish_action != $event->getPublishAction() ) {
+            	?>
+			    <script type="text/javascript">
+			    try {
+			        parent.$.fancybox.reload = true;
+			        parent.$.fancybox.message = '<?php putGS('You can not schedule opposing events at the same time'); ?>';
+			        parent.$.fancybox.close();
+			    } catch (e) {
+			    }
+			    </script>
+			    <?php
+            	exit();
+            }
+        }
+	}
+
+
 	$articlePublishObj = new ArticlePublish();
 	$articlePublishObj->create();
 	$articlePublishObj->setArticleNumber($tmpArticle->getArticleNumber());
@@ -109,6 +140,8 @@ foreach ($articles as $tmpArticle) {
 	}
 	Log::ArticleMessage($tmpArticle, getGS('Scheduled action added'), $g_user->getUserId(), 37);
 }
+
+
 if ($f_mode == "multi") {
 	$args = $_REQUEST;
 	unset($args["f_article_code"]);

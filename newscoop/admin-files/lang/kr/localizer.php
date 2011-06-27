@@ -1,4 +1,6 @@
 <?php 
+regGS("Themes", "");
+regGS("Area to localize", "");
 regGS("Dashboard", "");
 regGS("Authors", "");
 regGS("Libraries", "");
@@ -20,7 +22,6 @@ regGS("Translate to:", "으로 번역:");
 regGS("Translate from:", "에서 번역:");
 regGS("The following strings are not used:", "다음 단어는 사용하지 않음.");
 regGS("The following strings are missing from the translation files:", "다음 단어가 번역 파일에 없습니다.");
-regGS("Screen:", "스크린");
 regGS("No source strings found.", "원래 단어 없슴.");
 regGS("No matches found.", "맞는것이 없슴.");
 regGS("Globals", "글로벌");

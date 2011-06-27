@@ -4,21 +4,33 @@
  * @author $Author: holman $
  */
 $GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
-require_once($GLOBALS['g_campsiteDir'].'/conf/liveuser_configuration.php');
 
-// Only logged in admin users allowed
-if (!$LiveUser->isLoggedIn()) {
-    header("Location: /$ADMIN/login.php");
-    exit(0);
-} else {
-    $userId = $LiveUser->getProperty('auth_user_id');
-    $userTmp = new User($userId);
-    if (!$userTmp->exists() || !$userTmp->isAdmin()) {
-        header("Location: /$ADMIN/login.php");
-        exit(0);
-    }
-    unset($userTmp);
+// run zend
+require_once $GLOBALS['g_campsiteDir'] . '/public/index.php';
+
+require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
+
+set_include_path(implode(PATH_SEPARATOR, array(
+    realpath(APPLICATION_PATH . '/../library'),
+    get_include_path(),
+    '/usr/share/php/libzend-framework-php',
+)));
+
+
+
+include_once("Zend/Auth.php");
+include_once("Zend/Auth/Storage/Session.php");
+
+// setup the correct namespace for the zend auth session
+Zend_Auth::getInstance()->setStorage(new Zend_Auth_Storage_Session( 'Zend_Auth_Admin' ) );
+
+$userId = Zend_Auth::getInstance()->getIdentity();
+$userTmp = new User($userId);
+if (!$userTmp->exists() || !$userTmp->isAdmin()) {
+	header("Location: /$ADMIN/login.php");
+	exit(0);
 }
+unset($userTmp);
 
 require_once('config.inc.php');
 require_once('classes/AttachmentManager.php');

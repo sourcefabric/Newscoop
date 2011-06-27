@@ -1,4 +1,6 @@
 <?php 
+regGS("Themes", "");
+regGS("Area to localize", "");
 regGS("Dashboard", "");
 regGS("Authors", "");
 regGS("Libraries", "");
@@ -20,7 +22,6 @@ regGS("Translate to:", "Översätt till:");
 regGS("Translate from:", "Översätt från:");
 regGS("The following strings are not used:", "Följande strängar används inte:");
 regGS("The following strings are missing from the translation files:", "Följande strängar saknas i översättningsfilerna:");
-regGS("Screen:", "Skärm:");
 regGS("No source strings found.", "Inga källsträngar funna.");
 regGS("No matches found.", "Inga matchar funna.");
 regGS("Globals", "Globala");

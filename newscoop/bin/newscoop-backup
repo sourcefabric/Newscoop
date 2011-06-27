@@ -127,8 +127,8 @@ $db_file_name = "$backupDirFullPath/".$Campsite['DATABASE_NAME'].'-database.sql'
 if (is_file($db_file_name) && (camp_backup_file($db_file_name, $output) != 0)) {
 	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
 }
-if (camp_backup_database($Campsite['DATABASE_NAME'], $db_file_name, $output) != 0) {
-	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
+if ( ( $error = camp_backup_database($Campsite['DATABASE_NAME'], $db_file_name, $output) ) !== 0) {
+	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $error));
 }
 if (!$silent) {
 	echo "done.\n";

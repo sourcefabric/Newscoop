@@ -1,4 +1,6 @@
 <?php 
+regGS("Themes", "");
+regGS("Area to localize", "");
 regGS("Dashboard", "");
 regGS("Authors", "");
 regGS("Libraries", "");
@@ -20,7 +22,6 @@ regGS("Translate to:", "Vertaal naar:");
 regGS("Translate from:", "Vertaal van:");
 regGS("The following strings are not used:", "De volgende woorden zijn niet gebruikt:");
 regGS("The following strings are missing from the translation files:", "De volgende woorden missen in de vertaling bestanden:");
-regGS("Screen:", "Scherm:");
 regGS("No source strings found.", "Geen bron woorden gevonden.");
 regGS("No matches found.", "Geen overeenkomsten gevonden.");
 regGS("Globals", "Globale waarden");
