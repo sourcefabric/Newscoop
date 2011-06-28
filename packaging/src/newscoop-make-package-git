@@ -79,7 +79,7 @@ if [ "package_format" = "tar" ]; then
     tar czf $package_filename ./$package_name
     res=$?
 else
-    zip -qr $package_filename ./$package_name
+    zip -qyr $package_filename ./$package_name
     res=$?
 fi
 
