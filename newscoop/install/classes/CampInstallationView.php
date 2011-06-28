@@ -119,11 +119,12 @@ final class CampInstallationView
         $libraryRequirements = array();
 
         // autoloader for dependencies
-        $inclPath = explode( PATH_SEPARATOR, get_include_path() );
-        $autoloadCallback = function( $class ) use ( $inclPath )
+        $inclPath = explode(PATH_SEPARATOR, get_include_path());
+        $autoloadCallback = function($p_class) use ($inclPath)
         {
-            foreach( $inclPath as $path ) {
-                if( file_exists( ( $fn = DIR_SEP.trim( $path, DIR_SEP ).DIR_SEP.str_replace( "_", DIR_SEP, $class ).".php" ) ) ) {
+            foreach ($inclPath as $path) {
+                $fn = DIR_SEP.trim($path, DIR_SEP).DIR_SEP.str_replace("_", DIR_SEP, $p_class).".php";
+                if (file_exists($fn)) {
                     require_once $fn;
                     return true;
                 }
@@ -132,7 +133,7 @@ final class CampInstallationView
         };
 
         $autoloader = Zend_Loader_Autoloader::getInstance();
-        $autoloader->pushAutoloader( $autoloadCallback );
+        $autoloader->pushAutoloader($autoloadCallback);
 
 
         $pear = CampInstallationViewHelper::CheckPear();
@@ -222,7 +223,7 @@ final class CampInstallationView
         $this->m_lists['libraryRequirements'] = $libraryRequirements;
 
         // removing that autoloader
-        $autoloader->removeAutoloader( $autoloadCallback );
+        $autoloader->removeAutoloader($autoloadCallback);
 
         return $success;
     } // fn librariesCheck
