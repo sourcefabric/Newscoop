@@ -22,6 +22,8 @@ camp_html_content_top(getGS('Media Archive'), NULL);
     <?php if ($g_user->hasPermission('AddImage')) { ?>
     <p class="actions">
         <a href="/<?php echo $ADMIN; ?>/media-archive/add.php" title="<?php putGS('Add new image'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new image'); ?>"><?php putGS('Add new image'); ?></a>
+        &nbsp;
+        <a href="/<?php echo $ADMIN; ?>/media-archive/edit.php?f_fix_thumbs=1" title="<?php putGS('Fix thumbnails'); ?>"><?php putGS('Fix thumbnails'); ?></a>
     </p>
     <?php } ?>
 

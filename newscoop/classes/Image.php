@@ -332,6 +332,54 @@ class Image extends DatabaseObject
 	} // fn getThumbnailUrl
 
 
+    public function generateThumbnailFromImage()
+    {
+        global $Campsite;
+        // Verify its a valid image file.
+        $imageInfo = @getimagesize($this->getImageStorageLocation());
+        if ($imageInfo === false) {
+            return new PEAR_Error(getGS("The file uploaded is not an image."));
+        }
+        $extension = Image::__ImageTypeToExtension($imageInfo[2]);
+
+        $thumbDir = $Campsite['THUMBNAIL_DIRECTORY'];
+        if (!file_exists($thumbDir) || !is_writable($thumbDir)) {
+            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $thumbDir),
+                                  CAMP_ERROR_WRITE_DIR);
+        }
+        $target = $this->generateImageStorageLocation($extension);
+        $thumbnail = $this->generateThumbnailStorageLocation($extension);
+
+        try {
+
+        	$createMethodName = Image::__GetImageTypeCreateMethod($imageInfo[2]);
+            if (!isset($createMethodName)) {
+                throw new Exception(getGS("Image type $1 is not supported.",
+                                    image_type_to_mime_type($p_imageType)));
+            }
+
+            $imageHandler = $createMethodName($target);
+	        $thumbnailImage = Image::ResizeImage($imageHandler,
+	            $Campsite['THUMBNAIL_MAX_SIZE'], $Campsite['THUMBNAIL_MAX_SIZE']);
+	        if (PEAR::isError($thumbnailImage)) {
+	            throw new Exception($thumbnailImage->getMessage(), $thumbnailImage->getCode());
+	        }
+	        $result = Image::SaveImageToFile($thumbnailImage, $thumbnail, $imageInfo[2]);
+	        if (PEAR::isError($result)) {
+	            throw new Exception($result->getMessage(), $result->getCode());
+	        }
+	        chmod($thumbnail, 0644);
+        } catch (Exception $ex) {
+            if (file_exists($thumbnail)) {
+                @unlink($thumbnail);
+            }
+        	return new PEAR_Error($ex->getMessage(), $ex->getCode());
+        }
+        return $thumbnailImage;
+    }
+
+
+
 	/**
 	 * @return int
 	 */
@@ -806,7 +854,7 @@ class Image extends DatabaseObject
         if (PEAR::isError($result)) {
             throw new Exception($result->getMessage(), $result->getCode());
         }
-        
+
         if (file_exists($thumbnail)) {
             chmod($thumbnail, 0644);
         }
