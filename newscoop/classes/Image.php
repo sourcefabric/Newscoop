@@ -344,9 +344,9 @@ class Image extends DatabaseObject
 
         $thumbDir = $Campsite['THUMBNAIL_DIRECTORY'];
         if (!file_exists($thumbDir) || !is_writable($thumbDir)) {
-            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $thumbDir),
-                                  CAMP_ERROR_WRITE_DIR);
+            return FALSE;
         }
+
         $target = $this->generateImageStorageLocation($extension);
         $thumbnail = $this->generateThumbnailStorageLocation($extension);
 
