@@ -332,6 +332,13 @@ class Image extends DatabaseObject
 	} // fn getThumbnailUrl
 
 
+	/**
+     * Generate the thumbnail from the existing image.
+     *
+     * @return mixed
+     *      The Image object that was created or updated on success,
+     *      return error on error.
+     */
     public function generateThumbnailFromImage()
     {
         global $Campsite;
