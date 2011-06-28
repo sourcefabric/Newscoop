@@ -245,8 +245,8 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
                 $fCustomTextareas[] = $textAreaId;
             ?>
               <textarea name="<?php print($textAreaId); ?>"
-                id="<?php print($textAreaId); ?>" class="tinymce"
-                rows="<?php print($editorSize); ?>" cols="70"><?php print $text; ?></textarea>
+                id="<?php print($textAreaId); ?>" class="tinymce" 
+                style="height: <?php print($editorSize); ?>px;" cols="70"><?php print $text; ?></textarea>
             <?php } else { ?>
               <?php p($text); ?>
             <?php } ?>

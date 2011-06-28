@@ -141,13 +141,13 @@ foreach ($topics as $topicPath) {
     <td align="right"><?php putGS('Editor size'); ?>:</td>
     <td>
 		<select name="f_editor_size" onChange="if (this.value == 'custom') document.getElementById('editor_size_custom').style.display = 'inline'; else document.getElementById('editor_size_custom').style.display = 'none';">
-			<option value="small"><?php putGS('Small ($1 rows)', ArticleTypeField::BODY_ROWS_SMALL)?></option>
-			<option value="medium"><?php putGS('Medium ($1 rows)', ArticleTypeField::BODY_ROWS_MEDIUM)?></option>
-			<option value="large"><?php putGS('Large ($1 rows)', ArticleTypeField::BODY_ROWS_LARGE)?></option>
+			<option value="small"><?php putGS('Small ($1 pixels)', ArticleTypeField::BODY_ROWS_SMALL)?></option>
+			<option value="medium"><?php putGS('Medium ($1 pixels)', ArticleTypeField::BODY_ROWS_MEDIUM)?></option>
+			<option value="large"><?php putGS('Large ($1 pixels)', ArticleTypeField::BODY_ROWS_LARGE)?></option>
 			<option value="custom"><?php putGS('Custom')?></option>
 		</select>
 		&nbsp;
-		<input type="text" name="f_editor_size_custom" class="input_text" value="20" id="editor_size_custom" size="3" style="display: none;">
+		<input type="text" name="f_editor_size_custom" class="input_text" value="160" id="editor_size_custom" size="3" style="display: none;">
     </td>
 </tr>
 <tr style="display: none;" id="precision">
