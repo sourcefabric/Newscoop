@@ -158,22 +158,7 @@ class CampURIShortNames extends CampURI
             $uriString = $this->getURISection();
             $uriString .= $this->m_article->url_name . '/';
             if ($seo = $this->m_publication->seo) {
-                $article = null;
-                foreach ($seo as $field => $value) {
-                    switch ($field) {
-                        case 'name':
-                            $article .= trim($this->m_article->name) . ' ';
-                            break;
-                        case 'keywords':
-                            $article .= trim($this->m_article->keywords) . ' ';
-                            break;
-                        case 'topics':
-                            $article .= implode('-', $this->m_article->topics) . ' ';
-                            break;
-                    }
-                }
-                $article = preg_replace('/[,\/\.\?"\+&%:#]/', '', trim($article));
-                $article = str_replace(' ', '-', $article) . '.htm';
+                $article = $this->m_article->seo_url_end;
                 $uriString .= $article;
             }
         } else {

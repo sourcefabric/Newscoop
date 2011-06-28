@@ -1630,6 +1630,32 @@ class Article extends DatabaseObject {
     } // fn getUrlName
 
 
+    public function getSEOURLEnd(array $seoFields, $languageId)
+    {
+    	$urlEnd = '';
+    	foreach ($seoFields as $field => $value) {
+    		switch ($field) {
+    			case 'name':
+    				$urlEnd .= trim($this->getName()) . ' ';
+    				break;
+    			case 'keywords':
+    				$urlEnd .= trim($this->getKeywords()) . ' ';
+    				break;
+    			case 'topics':
+    				$articleTopics = ArticleTopic::GetArticleTopics($this->getArticleNumber());
+        			foreach ($articleTopics as $topic) {
+        				$urlEnd .= '-' . $topic->getName($languageId);
+        			}
+    				$urlEnd .= implode('-', $this->m_article->topics) . ' ';
+    				break;
+    		}
+    	}
+    	$urlEnd = preg_replace('/[,\/\.\?"\+&%:#]/', '', trim($urlEnd));
+    	$urlEnd = str_replace(' ', '-', $urlEnd) . '.htm';
+		return $urlEnd;
+    }
+
+
     /**
      * @param string value
      */

@@ -75,7 +75,8 @@ final class MetaArticle extends MetaDbObject {
     'topics_count'=>'topicsCount',
     'has_topics'=>'hasTopics',
     'topics'=>'getTopics',
-    'type_translation'=>'getTypeTranslated'
+    'type_translation'=>'getTypeTranslated',
+    'seo_url_end'=>'getSEOURLEnd'
     );
 
 
@@ -560,6 +561,12 @@ final class MetaArticle extends MetaDbObject {
             $topics[] = $topic->getName($this->getLanguage()->number);
         }
         return $topics;
+    }
+
+
+    protected function getSEOURLEnd()
+    {
+    	return $this->m_dbObject->getSEOURLEnd($this->getPublication()->seo, $this->getLanguage()->number);
     }
 
 
