@@ -230,6 +230,11 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
                 // Transform Campsite-specific tags into editor-friendly tags.
                 $unparsedText = $articleData->getProperty($dbColumn->getName());
                 $text = parseTextBody($unparsedText, $f_article_number);
+                $editorSize = str_replace('editor_size=', '', $dbColumn->m_data['field_type_param']);
+                if (!is_numeric($editorSize)) {
+					require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTypeField.php');
+					$editorSize = ArticleTypeField::BODY_ROWS_MEDIUM;
+				}
         ?>
           <li>
             <label><?php echo htmlspecialchars($dbColumn->getDisplayName()); ?></label>
@@ -240,8 +245,8 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
                 $fCustomTextareas[] = $textAreaId;
             ?>
               <textarea name="<?php print($textAreaId); ?>"
-                id="<?php print($textAreaId); ?>" class="tinymce"
-                rows="20" cols="70"><?php print $text; ?></textarea>
+                id="<?php print($textAreaId); ?>" class="tinymce" 
+                style="height: <?php print($editorSize); ?>px;" cols="70"><?php print $text; ?></textarea>
             <?php } else { ?>
               <?php p($text); ?>
             <?php } ?>

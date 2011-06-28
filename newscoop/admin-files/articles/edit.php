@@ -235,6 +235,7 @@ include_once('edit_html.php');
 
 // Display tinymce loading code if required
 $hasArticleBodyField = FALSE;
+
 foreach ($dbColumns as $dbColumn) {
     if ($dbColumn->getType() == ArticleTypeField::TYPE_BODY) {
         $hasArticleBodyField = TRUE;
