@@ -72,6 +72,9 @@ if ($f_publication_id > 0) {
 
 	//$translationIssueObj = new Issue($f_publication_id, $f_translation_language, $f_issue_number);
 	$translationIssueObj = $issueObj->copy(null, $issueObj->getIssueNumber(), $f_translation_language);
+	if (!$translationIssueObj) {
+		$translationIssueObj = new Issue($f_publication_id, $f_translation_language, $f_issue_number);
+	}
 	
 	if (!$translationIssueObj->exists()) {
 		if (!$g_user->hasPermission("ManageIssue")) {

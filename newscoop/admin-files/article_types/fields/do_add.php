@@ -4,6 +4,7 @@ camp_load_translation_strings("api");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTypeField.php');
 
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
@@ -22,6 +23,8 @@ $fieldType = trim(Input::Get('f_article_field_type'));
 $rootTopicId = Input::Get('f_root_topic_id', 'int', 0);
 $isContent = Input::Get('f_is_content');
 $precision = Input::Get('f_precision');
+$editorSize = Input::Get('f_editor_size');
+$editorSizeCustom = Input::Get('f_editor_size_custom');
 $maxsize = Input::Get('f_maxsize');
 
 $field = new ArticleTypeField($articleTypeName, $fieldName);
@@ -51,9 +54,15 @@ if ($article->has_property($fieldName) || method_exists($article, $fieldName)) {
 }
 
 if ($correct) {
+    if ($editorSize == 'small') $editorSize = ArticleTypeField::BODY_ROWS_SMALL;
+    else if ($editorSize == 'medium') $editorSize = ArticleTypeField::BODY_ROWS_MEDIUM;
+    else if ($editorSize == 'large') $editorSize = ArticleTypeField::BODY_ROWS_LARGE;
+    else if ($editorSize == 'custom') $editorSize = $editorSizeCustom;
+    else $editorSize = ArticleTypeField::BODY_ROWS_MEDIUM;
+    
     $params = array('root_topic_id'=>$rootTopicId, 'is_content'=>strtolower($isContent) == 'on',
-	'precision'=>$precision, 'maxsize'=>$maxsize);
-    $field->create($fieldType, $params);
+	'precision'=>$precision, 'maxsize'=>$maxsize, 'editor_size' => $editorSize);
+	$field->create($fieldType, $params);
 	camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
 }
 

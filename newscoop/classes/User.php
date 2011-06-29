@@ -528,7 +528,7 @@ class User extends DatabaseObject {
             $pluginConfig = true;
             foreach (CampPlugin::GetPluginsInfo(true) as $info) {
             	self::$m_defaultConfig += $info['userDefaultConfig'];
-            }     
+            }
         }
         return self::$m_defaultConfig;
     } // fn GetDefaultConfig
@@ -679,6 +679,16 @@ class User extends DatabaseObject {
         return ($p_password == $this->m_data['Password']);
     } // fn isValidPassword
 
+    const SALT_LENGTH = 12;
+	private function _hashPass($p_pass, $p_salt = null)
+	{
+		if( is_null($p_salt) ) {
+        	$salt = substr(md5(uniqid(openssl_random_pseudo_bytes(self::SALT_LENGTH), true)), 0, self::SALT_LENGTH);
+		} else {
+			$salt = substr($salt, 0, self::SALT_LENGTH);
+		}
+    	return $salt.sha1($salt.$p_pass);
+	}
 
     /**
      * @param string $p_password
