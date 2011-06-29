@@ -328,6 +328,9 @@ class Image extends DatabaseObject
 	public function getThumbnailUrl()
 	{
 		global $Campsite;
+		if(!file_exists($Campsite['THUMBNAIL_BASE_URL'].$this->m_data['ThumbnailFileName'])) {
+			$this->generateThumbnailFromImage();
+		}
 		return $Campsite['THUMBNAIL_BASE_URL'].$this->m_data['ThumbnailFileName'];
 	} // fn getThumbnailUrl
 
