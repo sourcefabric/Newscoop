@@ -7,6 +7,7 @@
 
 namespace Newscoop\Entity\Repository;
 
+use Doctrine\ORM\Query\Expr;
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Newscoop\Entity\Comment;
@@ -178,14 +179,19 @@ class CommentRepository extends DatatableSource
     public function getData(array $p_params, array $p_cols)
     {
         $qb = $this->createQueryBuilder('e');
-        $qb->leftJoin('e.commenter', 'c');
-        $qb->leftJoin('e.thread', 'a');
+        $qb->from('Newscoop\Entity\Comment\Commenter', 'c')
+                ->from('Newscoop\Entity\Article', 'a');
+        $andx = $qb->expr()->andx();
+        $andx->add($qb->expr()->eq('e.language', new Expr\Literal('a.language')));
+        $andx->add($qb->expr()->eq('e.thread', new Expr\Literal('a.number')));
+        $andx->add($qb->expr()->eq('e.commenter', new Expr\Literal('c.id')));
+
         if (!empty($p_params['sSearch'])) {
-            $qb->where($this->buildWhere($p_cols, $p_params['sSearch'], $qb));
+            $this->buildWhere($p_cols, $p_params['sSearch'], $qb, $andx);
         }
 
         if (!empty($p_params['sFilter'])) {
-            $qb->where($this->buildFilter($p_cols, $p_params['sFilter']));
+            $this->buildFilter($p_cols, $p_params['sFilter'], $qb, $andx);
         }
 
         // sort
@@ -212,7 +218,7 @@ class CommentRepository extends DatatableSource
                     $qb->orderBy("e." . $sortBy, $dir);
             }
         }
-
+        $qb->where($andx);
         // limit
         if (isset($p_params['iDisplayLength'])) {
             $qb->setFirstResult((int)$p_params['iDisplayStart'])->setMaxResults((int)$p_params['iDisplayLength']);
@@ -230,15 +236,24 @@ class CommentRepository extends DatatableSource
      */
     public function getCount(array $p_params = null, array $p_cols = array())
     {
-        $qb = $this->createQueryBuilder('e')->leftJoin('e.commenter', 'c')->leftJoin('e.thread',
-                                                                                     'a')->select('COUNT(e)');
+        $qb = $this->createQueryBuilder('e');
+        $qb->from('Newscoop\Entity\Comment\Commenter', 'c')
+                ->from('Newscoop\Entity\Article', 'a');
+        $andx = $qb->expr()->andx();
+        $andx->add($qb->expr()->eq('e.language', new Expr\Literal('a.language')));
+        $andx->add($qb->expr()->eq('e.thread', new Expr\Literal('a.number')));
+        $andx->add($qb->expr()->eq('e.commenter', new Expr\Literal('c.id')));
+
         if (is_array($p_params) && !empty($p_params['sSearch'])) {
-            $qb->where($this->buildWhere($p_cols, $p_params['sSearch'], $qb));
+            $this->buildWhere($p_cols, $p_params['sSearch'], $qb, $andx);
         }
 
         if (is_array($p_params) && !empty($p_params['sFilter'])) {
-            $qb->where($this->buildFilter($p_cols, $p_params['sFilter']));
+            $this->buildFilter($p_cols, $p_params['sFilter'], $qb, $andx);
         }
+
+        $qb->where($andx);
+        $qb->select('COUNT(e)');
         return $qb->getQuery()->getSingleScalarResult();
     }
 
@@ -249,14 +264,14 @@ class CommentRepository extends DatatableSource
      * @param string $search
      * @return Doctrine\ORM\Query\Expr
      */
-    protected function buildWhere(array $p_cols, $p_search, $qb)
+    protected function buildWhere(array $p_cols, $p_search, $qb, $andx)
     {
-        $or = $qb->expr()->orx();
-        $or->add($qb->expr()->like("c.name", $qb->expr()->literal("%{$p_search}%")));
-        $or->add($qb->expr()->like("a.name", $qb->expr()->literal("%{$p_search}%")));
-        $or->add($qb->expr()->like("e.subject", $qb->expr()->literal("%{$p_search}%")));
-        $or->add($qb->expr()->like("e.message", $qb->expr()->literal("%{$p_search}%")));
-        return $or;
+        $orx = $qb->expr()->orx();
+        $orx->add($qb->expr()->like("c.name", $qb->expr()->literal("%{$p_search}%")));
+        $orx->add($qb->expr()->like("a.name", $qb->expr()->literal("%{$p_search}%")));
+        $orx->add($qb->expr()->like("e.subject", $qb->expr()->literal("%{$p_search}%")));
+        $orx->add($qb->expr()->like("e.message", $qb->expr()->literal("%{$p_search}%")));
+        return $andx->add($orx);
     }
 
     /**
@@ -264,32 +279,35 @@ class CommentRepository extends DatatableSource
      *
      * @param array $p_
      * @param string $p_cols
+     * @param 
      * @return Doctrine\ORM\Query\Expr
      */
-    protected function buildFilter(array $p_cols, array $p_filter)
+    protected function buildFilter(array $p_cols, array $p_filter, $qb, $andx)
     {
-        $qb = $this->createQueryBuilder('e');
-        $and = $qb->expr()->andx();
         foreach ($p_filter as $key => $values) {
             if (!is_array($values)) {
                 $values = array($values);
             }
-            $or = $qb->expr()->orx();
+            $orx = $qb->expr()->orx();
             switch ($key) {
                 case 'status':
                     $mapper = array_flip(Comment::$status_enum);
-                    foreach ($values as $value) $or->add($qb->expr()->eq('e.status', $mapper[$value]));
+                    foreach ($values as $value) {
+                        $orx->add($qb->expr()->eq('e.status', $mapper[$value]));
+                    }
                     break;
                 case 'id':
                 case 'forum':
                 case 'thread':
                 case 'language':
-                    foreach ($values as $value) $or->add($qb->expr()->eq("e.$key", $value));
+                    foreach ($values as $value) {
+                        $orx->add($qb->expr()->eq("e.$key", $value));
+                    }
                     break;
             }
-            $and->add($or);
+            $andx->add($orx);
         }
-        return $and;
+        return $andx;
     }
 
     /**
