@@ -123,10 +123,16 @@ class NewscoopEntityCommentCommenterProxy extends \Newscoop\Entity\Comment\Comme
         return parent::getUserId();
     }
 
+    public function getComments()
+    {
+        $this->_load();
+        return parent::getComments();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'user', 'name', 'email', 'url', 'ip', 'time_created');
+        return array('__isInitialized__', 'id', 'user', 'name', 'email', 'url', 'ip', 'time_created', 'comments');
     }
 
     public function __clone()

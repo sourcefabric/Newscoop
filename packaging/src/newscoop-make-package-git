@@ -75,11 +75,11 @@ package_name="newscoop-$version"
 package_filename="newscoop-$version.$package_format"
 cp -a ./newscoop ./$package_name
 
-if [ "package_format" = "zip" ]; then
+if [ "package_format" = "tar" ]; then
     tar czf $package_filename ./$package_name
     res=$?
 else
-    zip -qr $package_filename ./$package_name
+    zip -qyr $package_filename ./$package_name
     res=$?
 fi
 
