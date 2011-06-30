@@ -56,7 +56,9 @@
                     </td>
                     <td class="commentUser">
                         <div class="commentUserHolder">
-                            <div><img src="{{commenter.avatar}}"></div>
+                            <div{% if (commenter.is.banned.name || commenter.is.banned.email || commenter.is.banned.ip) %} class="user-blocked-avatar"{% endif %}>
+                                <img src="{{commenter.avatar}}">
+                            </div>
                             <p>
                                 <b>{{commenter.username}}</b><br>
                                 {{commenter.name}}<br>
