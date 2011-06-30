@@ -135,7 +135,7 @@ foreach ($topics as $topicPath) {
                 <?php echo SecurityToken::FormParameter(); ?>
                 <input type="hidden" name="f_topic_parent_id" value="<?php p($currentTopic->getTopicId()); ?>" />
                 <input type="hidden" name="f_topic_language_id" value="<?php p($topicLanguageId); ?>" />
-            
+
 
             <fieldset class="subtopic">
                 <legend><?php putGS("Add subtopic:"); ?></legend>
@@ -232,7 +232,10 @@ $('ul.tree.sortable .item').each(function() {
         return;
     }
 
-    $('.open', $(this)).click(function() {
+    $('.open', $(this)).bind( 'click', function() {
+    	if($(this).parents('ul:eq(0)').data( 'is-sorting' )) {
+        	return false;
+    	}
         subtopics.toggle();
         $('> .item .open', $(this).closest('li'))
             .toggleClass('closed')
@@ -246,10 +249,12 @@ $('ul.tree.sortable, ul.tree.sortable ul').sortable({
     revert: 100,
     distance: 5,
     start: function(event, ui) {
+        $(this).data( 'is-sorting', true );
         sorting = true;
         ui.item.addClass('move');
     },
     stop: function(event, ui) {
+    	$(this).data( 'is-sorting', false );
         sorting = false;
         ui.item.removeClass('move');
     },

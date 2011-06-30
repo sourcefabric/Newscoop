@@ -795,8 +795,8 @@ class Issue extends DatabaseObject {
 		}
 		$queryStr .= " ORDER BY Number DESC LIMIT 0, 1";
 		$result = $g_ado_db->GetRow($queryStr);
-		if (is_null($result)) {
-			return null;
+		if (empty($result)) {
+			return new Issue($p_publicationId,0,0); // type safety
 		}
 		$issue = new Issue($p_publicationId, $result['IdLanguage'], $result['Number']);
 		if (CampCache::IsEnabled()) {

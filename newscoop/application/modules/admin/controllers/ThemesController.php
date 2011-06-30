@@ -451,6 +451,8 @@ class Admin_ThemesController extends Zend_Controller_Action
                 ->clearDecorators()
                 ->setAttrib( 'style', 'display:none' );
         }
+
+        $this->_helper->flashMessenger(getGS('Theme settings updated.'));
     }
 
     public function articleTypesEditAction()
@@ -472,7 +474,7 @@ class Admin_ThemesController extends Zend_Controller_Action
 
         $articleTypes           = $this->_request->getPost( 'articleTypes' );
         $articleTypeFields      = $this->_request->getPost( 'articleTypeFields' );
-        $themeArticleTypeFields = $this->_request->getPost( 'themeArticleTypeFields' );
+        $themeArticleTypeFields = $this->_request->getPost( 'themeArticleTypeFields', array() );
         $themeArticleTypes      = $this->_request->getPost( 'themeArticleTypes' );
 
         // complex logic for matching
@@ -563,6 +565,8 @@ class Admin_ThemesController extends Zend_Controller_Action
         //exit;
 
         $this->view->response = $thmServ->assignArticleTypes( $updateArticleTypes, $theme );
+
+        $this->_helper->flashMessenger(getGS('Theme settings updated.'));
 
     }
 

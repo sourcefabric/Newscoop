@@ -324,11 +324,18 @@ function callServer(p_callback, p_args, p_handle)
             }
         },
         'error': function(xhr, textStatus, errorThrown) {
-            flash.hide();
-            var login = window.open(g_admin_url + '/login.php?request=ajax', 'login', 'height=400,width=500');
-            login.focus();
-            popupFlash = flashMessage(localizer.session_expired + ' ' + localizer.please + ' <a href="'+g_admin_url + '/login.php" target="_blank">' + localizer.login + '</a>.', 'error', true);
-
+        	if(xhr.getResponseHeader('Not-Logged-In')) {
+        		flash.hide();
+        		if(!window.loginpopped) {
+        			var login = window.open(g_admin_url + '/login.php?request=ajax', 'login', 'height=400,width=500');
+        			login.focus();
+        			window.loginpopped = true;
+        		}
+                popupFlash = flashMessage(localizer.session_expired + ' ' + localizer.please + ' <a href="'+g_admin_url + '/login.php" target="_blank">' + localizer.login + '</a>.', 'error', true);
+        	}
+        	else {
+        		popupFlash = flashMessage(localizer.connection_interrupted + '! ' + localizer.please + localizer.try_again_later + '!', 'error', true);
+        	}
             // store request
             queue.push({
                 callback: p_callback,

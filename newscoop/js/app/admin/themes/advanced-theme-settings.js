@@ -51,8 +51,9 @@ jQuery( function()
 		$(this).bind( 'form-submitted.newscoop', function()
 		{ 
 			var frmSub = $(this).data( 'form-submitted' );
-			if( frmSub == 1 )
+			if( frmSub == 1 ) {
 				location.reload();
+			}
 			$(this).data( 'form-submitted', frmSub-1 );
 		} )
 	});
@@ -88,7 +89,7 @@ jQuery( function()
 					.val( articleTypes[i] )
 					.text( articleTypes[i].replace( '_', ' ' ).capitalize() );
 				if( articleTypes[i] == foundFields[fieldsIdx] )	{
-					selectedVal = articleTypes[i]
+					selectedVal = articleTypes[i];
 				}
 				$(this).append( opt );
 			}
