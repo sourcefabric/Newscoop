@@ -327,6 +327,7 @@ class CampGetImage
             $this->ExitError('File "'.$this->m_image->getImageStorageLocation().$this->m_image->getUrl().'" not found');
         }
 
+        $this->m_image->fixMissingThumbnail();
         $this->PushImage();
     } // fn GetImage
 

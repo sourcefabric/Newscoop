@@ -75,9 +75,7 @@ class ImageList extends BaseList
 
         // get in use info
         $image = new Image($row['Id']);
-        if(!file_exists($Campsite['THUMBNAIL_BASE_URL'] . $row['ThumbnailFileName'])) {
-        	$image->generateThumbnailFromImage();
-        }
+        $image->fixMissingThumbnail();
         $row['InUse'] = (int) $image->inUse();
 
         return array_values($row);

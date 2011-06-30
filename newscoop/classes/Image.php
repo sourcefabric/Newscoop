@@ -321,6 +321,15 @@ class Image extends DatabaseObject
 	} // fn getImageUrl
 
 
+	public function fixMissingThumbnail()
+	{
+	   global $Campsite;
+       if(!file_exists($Campsite['THUMBNAIL_BASE_URL'].$this->m_data['ThumbnailFileName'])) {
+           $this->generateThumbnailFromImage();
+       }
+	}
+
+
 	/**
 	 * Get the full URL to the thumbnail image.
 	 * @return string
@@ -328,9 +337,7 @@ class Image extends DatabaseObject
 	public function getThumbnailUrl()
 	{
 		global $Campsite;
-		if(!file_exists($Campsite['THUMBNAIL_BASE_URL'].$this->m_data['ThumbnailFileName'])) {
-			$this->generateThumbnailFromImage();
-		}
+		$this->fixMissingThumbnail();
 		return $Campsite['THUMBNAIL_BASE_URL'].$this->m_data['ThumbnailFileName'];
 	} // fn getThumbnailUrl
 
