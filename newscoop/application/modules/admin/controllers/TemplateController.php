@@ -33,7 +33,7 @@ class Admin_TemplateController extends Zend_Controller_Action
         $storage = new Storage($fullPath);
         $repository = $this->_helper->entity->getRepository('Newscoop\Entity\Template')
             ->setBasePath($path);
-        $this->service = new Template($storage, $repository); 
+        $this->service = new Template($storage, $repository);
 
         $this->_helper->contextSwitch
             ->addActionContext('get-items', 'json')
@@ -101,7 +101,7 @@ class Admin_TemplateController extends Zend_Controller_Action
                 'class' => 'upload',
                 'reset_params' => false,
                 'params' => array(
-                    'next' => urlencode($this->view->url()),
+                    'next' => urlencode(trim($this->view->url(),"/")),
                 ),
             ),
             array(
