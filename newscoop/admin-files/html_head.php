@@ -34,7 +34,9 @@ if ($locale == 'cz') {
         processing: '<?php putGS('Processing...'); ?>',
         session_expired: '<?php putGS('Session expired.'); ?>',
         please: '<?php putGS('Please'); ?>',
-        login: '<?php putGS('login'); ?>'
+        login: '<?php putGS('login'); ?>',
+        connection_interrupted : '<?php putGS('Connection interrupted') ?>',
+        try_again_later : '<?php putGS('try again later') ?>'
     };
 
     $(function() {

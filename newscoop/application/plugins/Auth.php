@@ -83,6 +83,9 @@ class Application_Plugin_Auth extends Zend_Controller_Plugin_Abstract
             $_POST['_next'] = $request->isPost() ? 'post' : 'get';
         }
 
+        if($this->_request->isXmlHttpRequest()) {
+            $this->_response->setHeader('not-logged-in', true);
+        }
         // use old login
         $_SERVER['REQUEST_URI'] = "/{$ADMIN}/login.php";
         $request

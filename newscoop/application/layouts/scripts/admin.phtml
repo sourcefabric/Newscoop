@@ -19,7 +19,9 @@
             session_expired: '<?php putGS('Session expired.'); ?>',
             please: '<?php putGS('Please'); ?>',
             login: '<?php putGS('login'); ?>',
-            confirm: '<?php putGS('Are you sure you want to'); ?>'
+            confirm: '<?php putGS('Are you sure you want to'); ?>',
+            connection_interrupted : '<?php putGS('Connection interrupted') ?>',
+            try_again_later : '<?php putGS('try again later') ?>'
         };
 
         <?php if (isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'], 'login.php') !== FALSE) { ?>
