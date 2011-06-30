@@ -95,10 +95,12 @@ class WidgetManager
         $rows = $g_ado_db->GetAll($queryStr);
 
         $widgets = array();
-        foreach ($rows as $row) {
-            $widget = new WidgetRendererDecorator((array) $row);
-            if ($widget->getWidget() !== NULL) {
-                $widgets[] = $widget;
+        if(is_array($rows)) {
+            foreach ($rows as $row) {
+                $widget = new WidgetRendererDecorator((array) $row);
+                if ($widget->getWidget() !== NULL) {
+                    $widgets[] = $widget;
+                }
             }
         }
         return $widgets;
