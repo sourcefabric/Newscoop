@@ -17,37 +17,37 @@ if (!$g_user->hasPermission('plugin_soundcloud_browser')) {
 
 $soundcloud = new SoundcloudAPI();
 $limit = 5;
+$offset = 0;
 $showMessage = array();
 $track = array();
 $js = null;
 $article = Input::Get('article_id', 'string', null);
 $action = Input::Get('action', 'string', null);
-
+$track = array(
+    'title' => Input::Get('title', 'string', null),
+    'description' => Input::Get('description', 'string', null),
+    'track_type' => Input::Get('track_type', 'string', null),
+    'genre' => Input::Get('genre', 'string', null),
+    'license' => Input::Get('license', 'string', null),
+    'tag_list' => Input::Get('tag_list', 'string', null),
+    'label_name' => Input::Get('label_name', 'string', null),
+    'release' => Input::Get('release', 'string', null),
+    'isrc' => Input::Get('isrc', 'string', null),
+    'bpm' => Input::Get('bpm', 'float', null),
+    'key_signature' => Input::Get('key_signature', 'string', null),
+    'purchase_url' => Input::Get('purchase_url', 'string', null),
+    'video_url' => Input::Get('video_url', 'string', null),
+    'sharing' => Input::Get('sharing', 'string', 'public'),
+    'downloadable' => Input::Get('downloadable', 'string', null) == "0" ? false : true,
+    'streamable' => Input::Get('streamable', 'string', null) == "0" ? false : true,
+    'sharing_note' =>  Input::Get('sharing_note', 'string', null),
+    'release_date' => Input::Get('release_date', 'string', null),
+);
 if ($action) {
     if (!$g_user->hasPermission('plugin_soundcloud_upload')) {
         camp_html_display_error(getGS('You do not have the right to upload Soundcloud tracks.'));
         exit;
     }
-    $track = array(
-        'title' => Input::Get('title', 'string', null),
-        'description' => Input::Get('description', 'string', null),
-        'track_type' => Input::Get('track_type', 'string', null),
-        'genre' => Input::Get('genre', 'string', null),
-        'licence' => Input::Get('licence', 'string', null),
-        'tag_list' => Input::Get('tag_list', 'string', null),
-        'label_name' => Input::Get('label_name', 'string', null),
-        'release' => Input::Get('release', 'string', null),
-        'isrc' => Input::Get('isrc', 'string', null),
-        'bpm' => Input::Get('bpm', 'float', null),
-        'key_signature' => Input::Get('key_signature', 'string', null),
-        'purchase_url' => Input::Get('purchase_url', 'string', null),
-        'video_url' => Input::Get('video_url', 'string', null),
-        'sharing' => Input::Get('sharing', 'string', null),
-        'downloadable' => Input::Get('downloadable', 'string', null) == 1 ? true : false,
-        'streamable' => Input::Get('streamable', 'string', null) == 1 ? true : false,
-        'sharing_note' =>  Input::Get('sharing_note', 'string', null),
-        'release_date' => Input::Get('release_date', 'string', null),
-    );
 
     if (!empty($_FILES['asset_data']['error'])) {
         $showMessage = array (
@@ -125,16 +125,12 @@ if ($action) {
     }
 }
 
-if (empty($track)) {
-    $track['sharing'] = 'public';
-    $track['downloadable'] = true;
-    $track['streamable'] = true;
-}
 $trackListParams = array(
     'order' => 'created_at',
     'offset' => 0,
     'limit' => $limit,
 );
+
 $trackList = $soundcloud->trackSearch($trackListParams);
 $attached = array();
 if ($article) {

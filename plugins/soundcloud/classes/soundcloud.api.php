@@ -25,7 +25,8 @@ class SoundcloudAPI
               . '&client_secret=' . SystemPref::Get('PLUGIN_SOUNDCLOUD_CLIENT_SECRET')
               . '&grant_type=password'
               . '&username=' . SystemPref::Get('PLUGIN_SOUNDCLOUD_USERNAME')
-              . '&password=' . SystemPref::Get('PLUGIN_SOUNDCLOUD_PASSWORD');
+              . '&password=' . SystemPref::Get('PLUGIN_SOUNDCLOUD_PASSWORD')
+              . '&scope=non-expiring';
 
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POST, 1);
