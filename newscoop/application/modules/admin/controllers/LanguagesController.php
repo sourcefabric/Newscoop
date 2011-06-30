@@ -39,7 +39,7 @@ class Admin_LanguagesController extends Zend_Controller_Action
                 'controller' => 'languages',
                 'action' => 'add',
                 'resource' => 'language',
-                'privilege' => 'edit',
+                'privilege' => 'manage',
             ),
         );
     }
