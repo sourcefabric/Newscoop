@@ -98,10 +98,9 @@ class CommenterRepository extends DatatableSource
         }
         if(!empty($p_values['email'])) {
             $q->orWhere('cc.email = :email')
-                    ->setParameter('id', $p_commenter->getEmail());
+                    ->setParameter('email', $p_commenter->getEmail());
         }
         $commenters = $q->getQuery()->getResult();
-
         foreach($commenters as $commenter) {
             $qq = $em->createQueryBuilder();
             $qq->delete()

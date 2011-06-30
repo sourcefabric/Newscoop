@@ -38,8 +38,10 @@ class Admin_CommentController extends Zend_Controller_Action
     {
         // get comment repository
         $this->commentRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment');
+
         // get article repository
         $this->articleRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Article');
+
         // get language repository
         $this->languageRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Language');
 
@@ -72,7 +74,8 @@ class Admin_CommentController extends Zend_Controller_Action
         $acl = array();
         $acl['edit'] = $this->_helper->acl->isAllowed('comment', 'edit');
         $acl['enable'] = $this->_helper->acl->isAllowed('comment', 'enable');
-        $table->setHandle(function($comment) use ($view, $acl, &$index)
+        $acceptanceRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
+        $table->setHandle(function($comment) use ($view, $acl, $acceptanceRepository, &$index)
             {
                 /* var Newscoop\Entity\Comment\Commenter */
                 $commenter = $comment->getCommenter();
@@ -84,6 +87,12 @@ class Admin_CommentController extends Zend_Controller_Action
                                    'email' => $commenter->getEmail(),
                                    'avatar' => (string)$view->getAvatar($commenter->getEmail(), array('img_size' => 50,
                                                                                                      'default_img' => 'wavatar')),
+                                   /**
+                                    * @todo have this in the commenter entity as a flag isBanned witch is checked when a ban is done
+                                    *       for a faster result not having sql checks insides for statements
+                                    *       this needs entity changes can't be done in the bug release stage
+                                    */
+                                   'is' => array('banned' => $acceptanceRepository->isBanned($commenter, null)),
                                    'ip' => $commenter->getIp(), 'url' => $commenter->getUrl(),
                                    'banurl' => $view->url(
                                        array('controller' => 'comment-commenter', 'action' => 'toggle-ban',
@@ -338,7 +347,7 @@ class Admin_CommentController extends Zend_Controller_Action
     {
         if ($this->getRequest()->isPost() && $p_form->isValid($_POST)) {
             $values = $p_form->getValues();
-            $values['ip'] = $request->getClientIp();
+            $values['ip'] = $this->getRequest()->getClientIp();
             $values['status'] = 'hidden';
             $values['time_created'] = new DateTime;
             $this->commentRepository->save($p_comment, $values);

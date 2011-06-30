@@ -279,6 +279,7 @@ select {
 	float:left;
 	width:71%;
 	min-width:670px;
+	min-height: 820px;
 }
 .sidebar {
 	float:left;
@@ -2231,4 +2232,7 @@ ul#edit-files h2 {
 
 .main-menu-bar ul.navigation ul {
     display: none;
+}
+.datatable tr td.dataTables_empty {
+	padding: 5px 0 5px 7px;
 }
