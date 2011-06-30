@@ -1940,7 +1940,7 @@ dl.right-floated {
 					}
 			.versionHolder dl dd {
 				float:left;
-				width:434px;
+				width:400px;
 				margin-bottom:12px;
 				}
 				.versionHolder dl dd input {
@@ -1996,7 +1996,7 @@ dl.right-floated {
 				}
 		.templateSettings dl dd {
 			float:left;
-			width:434px;
+			width:400px;
 			margin-bottom:12px;
 			}
 			.templateSettings dl dd select {
