@@ -30,6 +30,8 @@ use Newscoop\Entity\Publication;
 use Newscoop\Service\IThemeManagementService;
 use Newscoop\Service\IArticleTypeService;
 use Newscoop\Utils\Validation;
+use Newscoop\Service\Model\Search\Search;
+
 
 /**
  * Provides the management services implementation for the themes.
@@ -96,8 +98,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
     private $articleTypeService = NULL;
 
     /* --------------------------------------------------------------- */
-
-    function getUnassignedThemes(SearchTheme $search = NULL, $offset = 0, $limit = -1)
+    private function getUnassignedThemesData(SearchTheme $search = NULL)
     {
         $allConfigs = $this->findAllThemesConfigPaths();
         $configs = array();
@@ -113,11 +114,30 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         if($search !== NULL){
             $themes = $this->filterThemes($search, $themes);
         }
-
-        return $this->trim($themes, $offset, $limit);
+        return $themes;
     }
 
-    function getThemes($publication, SearchTheme $search = NULL, $offset = 0, $limit = -1)
+    function getUnassignedThemes(SearchTheme $search = NULL, $offset = 0, $limit = -1)
+    {
+
+        return $this->trim($this->getUnassignedThemesData($search), $offset, $limit);
+    }
+
+    /**
+     * Provides the count of the entities that can be associated with the provided search.
+     *
+     * @param Newscoop\Service\Model\Search\Search $search
+     *		The search criteria, not null.
+     *
+     * @return int
+     *		The entities count.
+     */
+    function getCountUnassignedThemes(Search $search = NULL)
+    {
+        return count($this->getUnassignedThemesData($search));
+    }
+
+    private function getThemesData($publication, SearchTheme $search = NULL)
     {
         Validation::notEmpty($publication, 'publication');
         if($publication instanceof Publication){
@@ -142,8 +162,17 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         if($search !== NULL){
             $themes = $this->filterThemes($search, $themes);
         }
+        return $themes;
+    }
 
-        return $this->trim($themes, $offset, $limit);
+    function getThemes($publication, SearchTheme $search = NULL, $offset = 0, $limit = -1)
+    {
+        return $this->trim($this->getThemesData($publication,$search), $offset, $limit);
+    }
+
+    function getCountThemes($publication, SearchTheme $search = NULL)
+    {
+        return count($this->getThemesData($publication, $search));
     }
 
     function getTemplates($theme)
@@ -210,6 +239,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
         return $this->loadOutputSettings($theme->getPath());
     }
+
 
     /**
      * @author mihaibalaceanu

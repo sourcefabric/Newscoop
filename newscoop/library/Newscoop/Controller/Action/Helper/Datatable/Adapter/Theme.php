@@ -93,6 +93,39 @@ class Theme extends AAdapter
         return $retThemes;
     }
 
+    public function getCount( array $p_params = array(), array $cols = array() )
+    {
+        $search = $this->getSearchObject();
+        $p_params = (object) $p_params;
+        if( isset( $p_params->search ) )
+        {
+            if( @trim( $p_params->search[ $this->_pubColFilterIdx ] ) != "" )
+            {
+                $p = new Publication();
+                $p->setId( intval( $p_params->search[ $this->_pubColFilterIdx ] ) );
+                try
+                {
+                    return $this->_service->getCountThemes( $p, $search );
+                }
+                catch( \Exception $e )
+                {
+                    return 0;
+                }
+            }
+
+            $this->search( $p_params->search );
+        }
+
+        try
+        {
+            return $this->_service->getCountUnassignedThemes( $search );
+        }
+        catch( \Exception $e )
+        {
+            return 0;
+        }
+    }
+
     /**
      * Define in what column number to look for the publication filter search
      * @param int $column
@@ -122,19 +155,6 @@ class Theme extends AAdapter
             }
             $sortMethod = ( $v == 'asc' ? 'orderAscending' : 'orderDescending' );
             $search->$colName->$sortMethod();
-        }
-    }
-
-    public function getCount( array $params = array(), array $cols = array() )
-    {
-        $search = $this->getSearchObject();
-        try
-        {
-            return $this->_service->getCount( $search );
-        }
-        catch( \Exception $e )
-        {
-            return 0;
         }
     }
 

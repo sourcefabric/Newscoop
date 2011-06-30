@@ -19,6 +19,19 @@ use Newscoop\Service\Resource\ResourceId;
 use Newscoop\Service\Model\Search\Search;
 use Newscoop\Service\Model\SearchTheme;
 
+function var_hook()
+{
+   $arg_list = func_get_args();
+   $numargs = func_num_args();
+   $out = '';
+   for ($i = 0; $i < $numargs; $i++) {
+       $out.= var_export($arg_list[$i], true).", ";
+
+    }
+    //syslog(LOG_INFO, $out);
+    error_log($out);
+    //fb($out, FirePHP::LOG);
+}
 /**
  * Provides the services implementation for the themes.
  */
@@ -108,8 +121,11 @@ class ThemeServiceLocalFileSystem implements IThemeService
 			throw new \Exception("The search needs to be a SearchTheme instance.");
 		}
 		$themes = $this->loadThemes($themesConfigs);
+        var_hook($themes);
 		$themes = $this->filterThemes($search, $themes);
-		return count($themes);
+		//var_dump($themes);
+        //die();
+        return count($themes);
 	}
 
 	function getEntities(Search $search = NULL, $offset = 0, $limit = -1)
@@ -193,12 +209,17 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	protected function findAllThemesConfigPaths()
 	{
 		if($this->cacheThemeConfigs === NULL){
+
 			$this->cacheThemeConfigs = array();
-			if (is_dir($this->themesFolder)) {
+
+            if (is_dir($this->themesFolder)) {
 				if ($dh = opendir($this->themesFolder)) {
+
 					while (($dir = readdir($dh)) !== false) {
-						$folder = $this->themesFolder.$dir;
-						if ($dir != "." && $dir != ".." && is_dir($folder)){
+
+                        $folder = $this->themesFolder.$dir;
+
+                        if ($dir != "." && $dir != ".." && is_dir($folder)){
 							// Reading the subdirectories which contain the themes
 							if($subDh = opendir($folder)){
 								while (($file = readdir($subDh)) !== false) {
