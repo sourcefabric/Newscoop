@@ -25,8 +25,14 @@ set_include_path(implode(PATH_SEPARATOR, array(
     get_include_path(),
 )));
 
+$oldErrorReporting = error_reporting();
+error_reporting(0);
 /** Zend_Application */
-require_once 'Zend/Application.php';
+include_once 'Zend/Application.php';
+if(!class_exists('Zend_Application',false)) {
+    die('Missing dependency! Please install Zend Framework library!');
+}
+error_reporting($oldErrorReporting);
 
 // Create application, bootstrap, and run
 $application = new Zend_Application(
