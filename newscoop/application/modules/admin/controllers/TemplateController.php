@@ -95,7 +95,7 @@ class Admin_TemplateController extends Zend_Controller_Action
 
         // redirect parameter in session
         $nextUrl = new Zend_Session_Namespace('upload-next');
-        $nextUrl->setExpirationHops(4);
+        $nextUrl->setExpirationHops(5, 'next', true);
         $nextUrl->next = $this->_request->getParams();
 
         $this->view->actions = array(
@@ -152,7 +152,7 @@ class Admin_TemplateController extends Zend_Controller_Action
         }
 
         // prelong next parameter
-        $nextRedirect->setExpirationHops(5);
+        $nextRedirect->setExpirationHops(5, 'next', true);
 
         $this->view->form = $form;
         $this->view->isWritable = $this->service->isWritable($path);
