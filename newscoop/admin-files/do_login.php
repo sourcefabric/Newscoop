@@ -65,7 +65,6 @@ if ($auth->hasIdentity()) {
         // if user valid, password valid, encrypted, CAPTCHA valid -> login
 
         LoginAttempts::ClearLoginAttemptsForIp();
-        setcookie("TOL_Language", $f_login_language);
         Article::UnlockByUser($user->getId());
 
         // next action GET/POST detection
@@ -106,6 +105,7 @@ if ($auth->hasIdentity()) {
         if (!empty($_POST['_next']) && $_POST['_next'] == 'post') { // forward POST request
             $this->_forward($this->_getParam('action'), $this->_getParam('controller'), 'admin');
         } else { // redirect GET request
+            setcookie("TOL_Language", $f_login_language);
             $this->_redirect($_SERVER['REQUEST_URI'], array(
                 'prependBase' => false,
             ));
