@@ -25,6 +25,12 @@ $(function() {
     uploader.bind('FilesAdded', function(up, files) {
         for (i in files) {
             var file = files[i];
+
+            if (file.size == 0) {
+            	alert("<?php putGS("The file '$1' is empty.", '" + file.name + "'); ?>");
+            	uploader.removeFile(uploader.getFile(file.id));
+            }
+
             for (j in items) {
                 var item = items[j];
                 if (item.name == file.name) { // conflict
@@ -40,5 +46,8 @@ $(function() {
             }
         }
     });
+	uploader.bind('Error', function(up, args) {
+		if( console ) console.dir(args);
+	});
 });
 </script>

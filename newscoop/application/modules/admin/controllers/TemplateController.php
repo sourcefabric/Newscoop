@@ -92,6 +92,12 @@ class Admin_TemplateController extends Zend_Controller_Action
         $this->view->nav = new Zend_Navigation($pages);
         $this->view->dateFormat = 'Y-m-d H:i';
         $this->view->separator = self::SEPARATOR;
+
+        // redirect parameter in session
+        $nextUrl = new Zend_Session_Namespace('upload-next');
+        $nextUrl->setExpirationHops(4);
+        $nextUrl->next = $this->_request->getParams();
+
         $this->view->actions = array(
             array(
                 'label' => getGS('Upload'),
@@ -99,10 +105,7 @@ class Admin_TemplateController extends Zend_Controller_Action
                 'controller' => 'template',
                 'action' => 'upload',
                 'class' => 'upload',
-                'reset_params' => false,
-                'params' => array(
-                    'next' => urlencode(trim($this->view->url(),"/")),
-                ),
+                'reset_params' => false
             ),
             array(
                 'label' => getGS('Create folder'),
@@ -125,6 +128,9 @@ class Admin_TemplateController extends Zend_Controller_Action
 
     public function uploadAction()
     {
+        // get next redirect param
+        $nextRedirect = new Zend_Session_Namespace('upload-next');
+
         $path = $this->parsePath($this->_getParam('path', ''));
         $plupload = $this->getHelper('plupload');
 
@@ -133,17 +139,20 @@ class Admin_TemplateController extends Zend_Controller_Action
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
+
             $files = $plupload->getUploadedFiles();
             foreach ($files as $basename => $tmp) {
                 $this->service->storeItem("$path/$basename", file_get_contents($tmp));
             }
-
             $this->_helper->flashMessenger($this->formatMessage(array_keys($files), getGS('uploaded')));
             $this->_helper->log($this->formatMessage(array_keys($files), getGS('uploaded')));
-            $this->_redirect(urldecode($this->_getParam('next')), array(
-                'prependBase' => false,
-            ));
+
+            // redirect by next parameter
+            $this->_helper->redirector->gotoRouteAndExit( $nextRedirect->next );
         }
+
+        // prelong next parameter
+        $nextRedirect->setExpirationHops(5);
 
         $this->view->form = $form;
         $this->view->isWritable = $this->service->isWritable($path);

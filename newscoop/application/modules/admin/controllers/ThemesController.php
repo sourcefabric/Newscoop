@@ -420,8 +420,7 @@ class Admin_ThemesController extends Zend_Controller_Action
         try // @todo maybe implement this a little smarter, little less code?
         {
             if( $this->_request->isPost() ) {
-                if( $outputForm->isValid( $this->_request->getPost() ) )
-                {
+                if( $outputForm->isValid( $this->_request->getPost() ) ) {
                     $settings->setFrontPage( new Resource( $outputForm->getValue( 'frontpage' ) ) );
                     $settings->setSectionPage( new Resource( $outputForm->getValue( 'sectionpage' ) ) );
                     $settings->setArticlePage( new Resource( $outputForm->getValue( 'articlepage' ) ) );
@@ -429,10 +428,11 @@ class Admin_ThemesController extends Zend_Controller_Action
 
                     $this->getThemeService()->assignOutputSetting( $settings, $theme );
 
-                    $this->_helper->flashMessenger( ( $this->view->success = getGS( 'Settings saved.' ) ) );
+                    $msg = getGS( 'Theme settings saved.' ) ;
+                    $this->view->success = $msg;
+                    $this->_helper->flashMessenger( $msg );
                 }
-                else
-                {
+                else {
                     throw new \Exception();
                 }
             }
@@ -451,8 +451,6 @@ class Admin_ThemesController extends Zend_Controller_Action
                 ->clearDecorators()
                 ->setAttrib( 'style', 'display:none' );
         }
-
-        $this->_helper->flashMessenger(getGS('Theme settings updated.'));
     }
 
     public function articleTypesEditAction()
