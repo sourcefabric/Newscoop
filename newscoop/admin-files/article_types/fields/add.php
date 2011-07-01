@@ -157,7 +157,7 @@ foreach ($topics as $topicPath) {
 <tr style="display: table-row;" id="maxsize">
     <td align="right"><?php putGS('Characters limit'); ?>:</td>
     <td>
-        <input type="text" class="input_text" size="3" maxlength="3" name="f_maxsize" emsg="<?php putGS('You must input a number greater than $1 and less than $2 into the $3 field.', 0, 999, getGS('Characters limit')); ?>" alt="number|0|0|999|bok" >
+        <input type="text" class="input_text" size="3" maxlength="3" name="f_maxsize" emsg="<?php putGS('You must input a number greater than $1 and less than $2 into the $3 field.', 0, 999, getGS('Characters limit')); ?>" alt="number|0|1|999|bok" >
     </td>
 </tr>
 <TR>
