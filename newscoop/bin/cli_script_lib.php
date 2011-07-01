@@ -574,21 +574,20 @@ function camp_detect_database_version($p_dbName, &$version)
             return "Unable to query the database $p_dbName";
         }
         if (mysql_num_rows($res2) > 0) {
-            $version = "2.6.0";
-            if (!$res2 = mysql_query("SHOW COLUMNS FROM ArticleTypeMetadata LIKE 'type_name'")) {
-                return "Unable to query the database $p_dbName";
-            }
-            $row = mysql_fetch_array($res2, MYSQL_ASSOC);
-            if (!is_null($row) && strstr($row['Type'], '166') != '') {
-                $version = "2.6.1";
-            } else {
-                return 0;
-            }
-
             // check for phorum_users old table
             $chkPhorumUsers = mysql_query( "SHOW TABLES LIKE '%phorum_users%'" );
-            if( is_resource($chkPhorumUsers) && mysql_num_rows($res2) > 0 )
-            {
+            if( is_resource($chkPhorumUsers) && mysql_num_rows($chkPhorumUsers) > 0 ) {
+                $version = "2.6.0";
+                if (!$res2 = mysql_query("SHOW COLUMNS FROM ArticleTypeMetadata LIKE 'type_name'")) {
+                    return "Unable to query the database $p_dbName";
+                }
+                $row = mysql_fetch_array($res2, MYSQL_ASSOC);
+                if (!is_null($row) && strstr($row['Type'], '166') != '') {
+                    $version = "2.6.1";
+                } else {
+                    return 0;
+                }
+
                 $res2 = mysql_query("SHOW COLUMNS FROM phorum_users LIKE 'fk_campsite_user_id'");
                 if (is_resource($res2) && mysql_num_rows($res2) > 0) {
                     $version = "2.6.2";
