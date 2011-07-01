@@ -148,7 +148,12 @@ class Admin_TemplateController extends Zend_Controller_Action
             $this->_helper->log($this->formatMessage(array_keys($files), getGS('uploaded')));
 
             // redirect by next parameter
-            $this->_helper->redirector->gotoRouteAndExit( $nextRedirect->next );
+            if(!is_null($nextRedirect->next)) {
+                $this->_helper->redirector->gotoRouteAndExit($nextRedirect->next);
+            }
+            else {
+                $this->_helper->redirector->gotoSimple("index", "themes", "admin");
+            }
         }
 
         // prelong next parameter
