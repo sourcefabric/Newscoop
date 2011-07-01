@@ -80,7 +80,7 @@ class Saas
 
         foreach ($privileges as $privilege) {
             if ($privilege['resource'] == $p_resourceName) {
-                if ($privilege['privilege'] == $p_privilegeName) {
+                if ( ($privilege['privilege'] == $p_privilegeName) || ($privilege['privilege'] == '*') ) {
                     $hasPrivilege = FALSE;
                     continue;
                 }
@@ -112,7 +112,7 @@ class Saas
                 $found = FALSE;
                 foreach ($privileges as $privilege) {
                     if ($privilege['resource'] == $p_resourceName) {
-                        if ($privilege['privilege'] == $p_name) {
+                        if ( ($privilege['privilege'] == $p_name) || ($privilege['privilege'] == '*') ) {
                             $found = TRUE;
                             continue;
                         }

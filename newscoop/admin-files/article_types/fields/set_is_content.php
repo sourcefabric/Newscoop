@@ -5,6 +5,11 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 
+if (!Saas::singleton()->hasPermission('ManageArticleTypes')) {
+    camp_html_display_error(getGS("You do not have the right to delete article types."));
+    exit;
+}
+
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
     exit;

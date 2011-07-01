@@ -5,6 +5,11 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Translation.php');
 
+if (!Saas::singleton()->hasPermission('ManageArticleTypes')) {
+    camp_html_display_error(getGS("You do not have the right to manage article types."));
+    exit;
+}
+
 $articleTypeName = Input::Get('f_article_type');
 // return value is sorted by language
 $allLanguages = Language::GetLanguages(null, null, null, array(), array(), true);
