@@ -13,7 +13,7 @@ if (!SecurityToken::isValid()) {
 
 // Check permissions
 if (!$g_user->hasPermission('ManageArticleTypes')) {
-	camp_html_display_error(getGS("You do not have the right to add article types."));
+	camp_html_display_error(getGS("You do not have the right to translate article types."));
 	exit;
 }
 

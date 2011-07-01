@@ -12,7 +12,7 @@ if (!SecurityToken::isValid()) {
 
 // Check permissions
 if (!$g_user->hasPermission('ManageArticleTypes')) {
-	camp_html_display_error(getGS("You do not have the right to add article type fields."));
+	camp_html_display_error(getGS("You do not have the right to reassign article type fields."));
 	exit;
 }
 

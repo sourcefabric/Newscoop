@@ -1,8 +1,7 @@
 <?php
 /*
  * configuration file for the Saas feature
- * to disable the Saas feature just rename the arrays inside the saasConfig array
- * to something other than 'permissions' and 'privileges'
+ * to disable the Saas feature just rename the file to something other then saas_config.php
  *
 */
     $this->saasConfig = array(
@@ -75,7 +74,8 @@
         array('resource' => 'publication', 'privilege' => 'delete'),
         array('resource' => 'template', 'privilege' => 'delete'),
         array('resource' => 'template', 'privilege' => 'manage'),
-        array('resource' => 'themes', 'privilege' => 'index'),
+        array('resource' => 'themes', 'privilege' => '*'),
+        array('resource' => 'theme', 'privilege' => '*'),
         array('resource' => 'subscriber', 'privilege' => 'manage'),
         array('resource' => 'subscriber', 'privilege' => 'add'),
         array('resource' => 'country', 'privilege' => 'manage'),
