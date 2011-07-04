@@ -77,7 +77,7 @@ final class CampSession
      */
     function start()
     {
-        $newscoop_path = dirname(dirname(__FILE__));
+        $newscoop_path = dirname(dirname(dirname(__FILE__)));
         $application_path = $newscoop_path . '/application';
         $config = parse_ini_file($application_path . '/configs/application.ini');
         $session_name = $config['resources.session.name'];
