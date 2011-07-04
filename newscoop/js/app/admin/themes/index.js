@@ -104,14 +104,14 @@ $( function()
 				$('.actionDropDown .edit:parent').hide();
 			});
 		}
-	})
-
-	$('.assign-ctrl').live( 'click', function( evt )
+	});
+	// binding for assign and copy controls
+	$('.assign-ctrl,.copy-to-avail-themes a').live( 'click', function( evt )
 	{
-		var thisA = $(this)
+		var thisA = $(this);
 		$.ajax
 		({
-			url : $(this).attr('href')+'/format/json',
+			url : thisA.attr('href')+'/format/json',
 			success : function( data ) {
 				var msgCon = thisA.parents('ul.actionDropDown').prev('div')
 								.fadeTo( 'fast', 1 )
