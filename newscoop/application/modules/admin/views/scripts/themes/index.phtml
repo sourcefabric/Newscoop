@@ -121,7 +121,13 @@
         				</li>
         	            <?php endforeach; ?>
 						<li class="copy-to-avail-themes" style="display:none">
-        		    		<a href="javascript:void(0)"><?php echo getGS( 'Copy to available themes' ); ?></a>
+        		    		<a href="<?php echo $this->url( array
+        		    		(
+        		    			'action'     => 'copy-to-available',
+        		    			'controller' => 'themes',
+        		    		    'module'     => 'admin',
+        		    		    'theme-id'	 => '{{id}}'
+        		    		), null, null, false )?>"><?php echo getGS( 'Copy to available themes' ); ?></a>
         				</li>
 					</ul>
 				</li>

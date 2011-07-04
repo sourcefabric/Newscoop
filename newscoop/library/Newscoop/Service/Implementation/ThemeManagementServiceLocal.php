@@ -386,6 +386,24 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         throw new RemoveThemeException();
     }
 
+    function copyToUnassigned(Theme $theme)
+    {
+        Validation::notEmpty($theme, 'theme');
+
+        $newThemeFolder = $this->getNewThemeFolder(self::FOLDER_UNASSIGNED."/");
+        try
+        {
+            $this->copy($this->toFullPath($theme), $this->themesFolder.$newThemeFolder);
+        }
+        catch( \Exception $e )
+        {
+            rmdir($newThemeFolder);
+            throw $e;
+        }
+        // TODO this ain't actually working for some reason
+        return $this->loadThemeByPath($newThemeFolder);
+    }
+
     function assignTheme(Theme $theme, Publication $publication)
     {
         Validation::notEmpty($theme, 'theme');
@@ -955,7 +973,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
     {
         $dir = opendir($src);
         if(!file_exists($dst))
-        mkdir($dst);
+            mkdir($dst);
         while(false !== ( $file = readdir($dir)) ) {
             if (( $file != '.' ) && ( $file != '..' )) {
                 if ( is_dir($src . '/' . $file) ) {
