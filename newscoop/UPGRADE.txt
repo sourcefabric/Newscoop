@@ -15,6 +15,19 @@ http://[site_name]
 The upgrade will be performed automatically when you make the first
 request to the publication site or to the Newscoop admin interface.
 
+After upgrading, you need to MANUALLY update .htaccess file in your 
+Newscoop directory. Change the following line:
+
+RewriteCond %{REQUEST_URI} !/+templates
+
+by this line:
+
+RewriteCond %{REQUEST_URI} !/+themes
+
+The reason why this is not performed during automatic upgrade is because
+almost every Newscoop installation is on a custom configuration and has a
+modified .htaccess file. Therefore, it's not a good idea to automatically
+modify the file.
 
 Compatibility issues
 
