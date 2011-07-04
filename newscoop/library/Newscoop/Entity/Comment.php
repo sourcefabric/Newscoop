@@ -18,11 +18,25 @@ use DateTime, InvalidArgumentException, Newscoop\Entity\Comment\Commenter, Newsc
  */
 class Comment
 {
+    private $allowedEmpty = array( 'br', 'input', 'image' );
 
     private $allowedTags =
-    array('a' => array('title', 'href'), 'abbr' => array('title'), 'acronym' => array('title'), 'b' => array(),
-          'blockquote' => array('cite'), 'cite' => array(), 'code' => array(), 'del' => array('datetime'),
-          'em' => array(), 'i' => array(), 'q' => array('cite'), 'strike' => array(), 'strong' => array());
+    array(
+        'a' => array('title', 'href'),
+        'abbr' => array('title'),
+        'acronym' => array('title'),
+        'b' => array(),
+        'blockquote' => array('cite'),
+        'cite' => array(),
+        'code' => array(),
+        'del' => array('datetime'),
+        'em' => array(),
+        'i' => array(),
+        'q' => array('cite'),
+        'p' => array(),
+        'br' => array(),
+        'strike' => array(),
+        'strong' => array());
 
     /**
      * Constants for status
@@ -603,8 +617,13 @@ class Comment
         $allowedNameTags = array_keys($this->allowedTags);
         for ($i = 0, $counti = count($contentAfter); $i < $counti; $i++) {
             $isClosed = isset($tag[$i]) ? (substr($tag[$i], 0, 1) == '/') : false;
-
-            if (isset($tag[$i]) && (in_array($tag[$i], $allowedNameTags))) {
+            if(isset($tag[$i])) {
+                $tagName = $tag[$i];
+                if(substr($tagName,-1,1) == '/') {
+                   $tagName = substr($tagName, 0, -1);
+                }
+            }
+            if (isset($tag[$i]) && (in_array($tagName, $allowedNameTags))) {
                 unset($closed[$i]);
                 $good = array_search('/' . $tag[$i], $closed, true);
                 if ($good) {
@@ -613,8 +632,8 @@ class Comment
                     if (isset($attrib[$i])) {
                         for ($j = 0, $countj = count($attrib[$i]); $j < $countj; $j++) {
                             if ($attrib[$i][$j][0] == 'href') {
-                                $attrib[$i][$j][1] = preg_replace('/(javascript[:]?)/i', '', $attrib[$i][$j][1]);
                             }
+                            $attrib[$i][$j][1] = preg_replace('/(javascript[:]?)/i', '', $attrib[$i][$j][1]);
                             if (in_array($attrib[$i][$j][0], $this->allowedTags[$tag[$i]])) {
                                 $composeTag .= $attrib[$i][$j][0] . '="' . $attrib[$i][$j][1] . '" ';
                             }
@@ -642,7 +661,10 @@ class Comment
                         }
                     }
                     // if title is set and is a broken tag use the title like inline text
-                    if ($title !== false) {
+                    if( in_array($tagName, $this->allowedEmpty)) {
+                        $return .= substr($composeTag, 0, -1) . '>' . $contentAfter[$i];
+                    }
+                    elseif ($title !== false) {
                         $return .= substr($composeTag, 0,
                                           -1) . '>' . $title . '</' . $tag[$i] . '>' . $contentAfter[$i];
                     } // if cite is set and is a broken tag use the cite like inline text
@@ -657,7 +679,7 @@ class Comment
                 unset($closed[$i]);
                 $return .= '<' . $tag[$i] . '>' . $contentAfter[$i];
             } else {
-                $return .= ' ' . $contentAfter[$i];
+                $return .= $contentAfter[$i];
             }
         }
         return $return;

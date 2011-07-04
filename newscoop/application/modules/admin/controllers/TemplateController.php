@@ -136,6 +136,7 @@ class Admin_TemplateController extends Zend_Controller_Action
 
         $form = new Admin_Form_Upload;
         $form->setMethod('post');
+        $form->getElement('submit')->setLabel(getGS('Done uploading'));
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {

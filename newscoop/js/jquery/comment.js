@@ -32,11 +32,14 @@ var datatableCallback = {
             $(this).find(".commentBtns").css("visibility", "hidden");
         });
         datatableCallback.loading = false;
+    },
+    init: function() {
+        $('.dataTables_filter input').attr('placeholder',putGS('Search'));
     }
 };
 $(function () {
-    $('.tabs').tabs();
-    $('.tabs').tabs('select', '#tabs-1');
+    //$('.tabs').tabs();
+    //$('.tabs').tabs('select', '#tabs-1');
     var commentFilterTriggerCount = 0;
     $("#commentFilterTrigger").click(function () {
         if (commentFilterTriggerCount == 0) {

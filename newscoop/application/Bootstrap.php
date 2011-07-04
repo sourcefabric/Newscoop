@@ -51,6 +51,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initPlugins()
     {
         $front = Zend_Controller_Front::getInstance();
+        $front->registerPlugin(new Application_Plugin_ContentType());
         $front->registerPlugin(new Application_Plugin_Upgrade());
         $front->registerPlugin(new Application_Plugin_CampPluginAutoload());
         $front->registerPlugin(new Application_Plugin_Bootstrap($this->getOptions()));
