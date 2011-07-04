@@ -13,6 +13,11 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/SQLSelectClause.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
 
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\IOutputSettingSectionService;
+use Newscoop\Service\ISectionService;
+use Newscoop\Entity\Output\OutputSettingsSection;
+
 /**
  * @package Campsite
  */
@@ -211,7 +216,58 @@ class Section extends DatabaseObject {
 		}
 		return $numArticlesDeleted;
 	} // fn delete
+	
+	/* --------------------------------------------------------------- */
 
+	/** @var Newscoop\Services\Resource\ResourceId */
+	private $resourceId = null;
+	/** @var Newscoop\Service\IOutputSettingSectionService */
+	private $outputSettingSectionService = null;
+	/** @var Newscoop\Service\ISectionService */
+    private $sectionService = NULL;
+
+	/**
+	 * Provides the controller resource id.
+	 *
+	 * @return Newscoop\Services\Resource\ResourceId
+	 * 		The controller resource id.
+	 */
+	protected function getResourceId()
+	{
+		if ($this->resourceId === NULL) {
+			$this->resourceId = new ResourceId(__CLASS__);
+		}
+		return $this->resourceId;
+	}
+
+	/**
+	 * Provides the Output setting section service.
+	 *
+	 * @return Newscoop\Service\IOutputSettingSectionService
+	 * 		The output setting section service to be used by this controller.
+	 */
+	protected function getOutputSettingSectionService()
+	{
+		if ($this->outputSettingSectionService === NULL) {
+			$this->outputSettingSectionService = $this->getResourceId()->getService(IOutputSettingSectionService::NAME);
+		}
+		return $this->outputSettingSectionService;
+	}
+
+	/**
+     * Provides the Section service.
+     *
+     * @return Newscoop\Service\ISectionService
+     * 		The section service to be used by this controller.
+     */
+    protected function getSectionService()
+    {
+        if ($this->sectionService === NULL) {
+            $this->sectionService = $this->getResourceId()->getService(ISectionService::NAME);
+        }
+        return $this->sectionService;
+    }
+	
 	/**
 	 * Return the section ID.
 	 * @return int
