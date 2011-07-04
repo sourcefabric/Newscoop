@@ -66,6 +66,7 @@ class Admin_CommentController extends Zend_Controller_Action
         $table = $this->getHelper('datatable');
         /* @var $table Action_Helper_Datatable */
         $table->setDataSource($this->commentRepository);
+        $table->setOption('oLanguage',array('sSearch'=>''));
         $table->setCols(array('index' => $view->toggleCheckbox(), 'commenter' => getGS('Author'),
                              'comment' => getGS('Date') . ' / ' . getGS('Comment'), 'thread' => getGS('Article'),
                              'threadorder' => '',), array('index' => false));
@@ -116,13 +117,18 @@ class Admin_CommentController extends Zend_Controller_Action
                                                'section' => array('name' => '')),);
             });
 
-        $table->setOption('fnDrawCallback', 'datatableCallback.draw')->setOption('fnRowCallback',
-                                                                                 'datatableCallback.row')->setOption('fnServerData',
-                                                                                                                     'datatableCallback.addServerData')->setStripClasses()->toggleAutomaticWidth(false)->setDataProp(
-            array('index' => null, 'commenter' => null, 'comment' => null, 'thread' => null,
-                 'threadorder' => null))->setVisible(array('threadorder' => false))->setClasses(
-            array('index' => 'commentId', 'commenter' => 'commentUser', 'comment' => 'commentTimeCreated',
-                 'thread' => 'commentThread'));
+        $table->setOption('fnDrawCallback', 'datatableCallback.draw')
+                ->setOption('fnRowCallback', 'datatableCallback.row')
+                ->setOption('fnServerData', 'datatableCallback.addServerData')
+                ->setOption('fnInitComplete', 'datatableCallback.init')
+                ->setStripClasses()
+                ->toggleAutomaticWidth(false)
+                ->setDataProp(
+                    array('index' => null, 'commenter' => null, 'comment' => null, 'thread' => null,
+                    'threadorder' => null))->setVisible(array('threadorder' => false))
+                ->setClasses(
+                    array('index' => 'commentId', 'commenter' => 'commentUser', 'comment' => 'commentTimeCreated',
+                    'thread' => 'commentThread'));
         $table->dispatch();
         $this->editForm->setSimpleDecorate()->setAction($this->_helper->url('update'));
         $this->view->editForm = $this->editForm;

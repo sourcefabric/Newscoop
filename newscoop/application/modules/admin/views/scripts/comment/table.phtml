@@ -23,6 +23,7 @@
     serverObj.security = {<?php echo SecurityToken::JsParameter(); ?>};
 
     serverObj.languageObj = [
+        'Search',
         'Comments updated.',
         'Comments deleted.',
         'Comments status change to $1.',
@@ -32,6 +33,7 @@
         'Unable to reach Newscoop. Please check your internet connection.'
     ];
     serverObj.translateObj = [
+        '<?php putGS('Search'); ?>',
         '<?php putGS('Comments updated.'); ?>',
         '<?php putGS('Comments deleted.'); ?>',
         '<?php putGS('Comments status change to $1.'); ?>',
@@ -143,10 +145,12 @@
     <div class="ui-widget-content small-block block-shadow commentsHolder">
         <div class="padded clearfix inner-tabs">
             <div class="tabs">
+                <!--
                 <ul>
                     <li><a href="#tabs-1">Comments</a></li>
-                    <!--<li><a href="#tabs-2">Users</a></li>-->
+                    <li><a href="#tabs-2">Users</a></li>
                 </ul>
+                -->
                 <div id="tabs-1">
                     <div id="showComments">
                         <fieldset><legend><?php putGS('Show'); ?></legend>
@@ -162,9 +166,12 @@
                                 <li class="hidden"><input type="checkbox" id="show_hidden"
                                                           value="hidden"> <label for="show_hidden"><?php putGS('Hidden'); ?></label>
                                 </li>
+                                <!--
+                                /** @todo change this when the "cron job" like engine is done */
                                 <li class="deleted"><input type="checkbox" id="show_deleted"
                                                            value="deleted"> <label for="show_deleted"><?php putGS('Deleted'); ?></label>
                                 </li>
+                                -->
                             </ul>
                         </fieldset>
                     </div>
