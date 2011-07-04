@@ -136,6 +136,7 @@ class Admin_TemplateController extends Zend_Controller_Action
 
         $form = new Admin_Form_Upload;
         $form->setMethod('post');
+        $form->getElement('submit')->setLabel(getGS('Done uploading'));
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
@@ -148,7 +149,12 @@ class Admin_TemplateController extends Zend_Controller_Action
             $this->_helper->log($this->formatMessage(array_keys($files), getGS('uploaded')));
 
             // redirect by next parameter
-            $this->_helper->redirector->gotoRouteAndExit( $nextRedirect->next );
+            if(!is_null($nextRedirect->next)) {
+                $this->_helper->redirector->gotoRouteAndExit($nextRedirect->next);
+            }
+            else {
+                $this->_helper->redirector->gotoSimple("index", "themes", "admin");
+            }
         }
 
         // prelong next parameter
