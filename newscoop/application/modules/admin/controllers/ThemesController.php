@@ -175,6 +175,7 @@ class Admin_ThemesController extends Zend_Controller_Action
         $this->_helper->contextSwitch
             ->addActionContext( 'index', 'json' )
             ->addActionContext( 'assign-to-publication', 'json' )
+            ->addActionContext( 'copy-to-available', 'json' )
             ->addActionContext( 'output-edit', 'json' )
             ->addActionContext( 'article-types-edit', 'json' )
             ->addActionContext( 'unassign', 'json' )
@@ -533,10 +534,6 @@ class Admin_ThemesController extends Zend_Controller_Action
 
         }
 
-        //print '===create===';
-        //var_dump( $createArticleTypes['Blog'] );
-        //die;
-
         $artServ = $this->getArticleTypeService();
         $themeArticleTypes = (array) $this->getThemeService()->getArticleTypes( $theme );
         foreach( $createArticleTypes as $typeName => $type )
@@ -557,10 +554,6 @@ class Admin_ThemesController extends Zend_Controller_Action
         }
 
         $artServ->createMany( $createArticleTypes );
-
-        //print '===update===';
-        //var_dump( $createArticleTypes );
-        //exit;
 
         $this->view->response = $thmServ->assignArticleTypes( $updateArticleTypes, $theme );
 
@@ -648,6 +641,19 @@ class Admin_ThemesController extends Zend_Controller_Action
         }
         catch( DuplicateNameException $e ) {
             $this->view->exception = array( "code" => $e->getCode(), "message" => getGS( 'Duplicate assignation' ) );
+        }
+        catch( \Exception $e ) {
+            $this->view->exception = array( "code" => $e->getCode(), "message" => getGS( 'Something broke' ) );
+        }
+    }
+
+    function copyToAvailableAction()
+    {
+        try
+        {
+            $theme  = $this->getThemeService()->getById($this->_request->getParam('theme-id'));
+            $this->getThemeService()->copyToUnassigned($theme);
+            $this->view->response =  getGS( 'Copied successfully' );
         }
         catch( \Exception $e ) {
             $this->view->exception = array( "code" => $e->getCode(), "message" => getGS( 'Something broke' ) );

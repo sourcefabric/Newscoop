@@ -248,7 +248,7 @@ class CampGetImage
     {
         $w_src = imagesx($p_im);
         $h_src = imagesy($p_im);
-	if ($this->m_ratio > 0 && $this->m_ratio < 100) {
+	if ($this->m_ratio > 0 && $this->m_ratio <= 100) {
 	    $ratio = $this->m_ratio / 100;
 	    $w_dest = @round($w_src * $ratio);
 	    $h_dest = @round($h_src * $ratio);
