@@ -95,7 +95,7 @@ final class CampSession
             unset($_GET[$session_name]);
             unset($_POST[$session_name]);
         }
-        session_start();
+        @session_start();
     } // fn start
 
 
