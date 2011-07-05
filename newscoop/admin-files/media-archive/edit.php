@@ -8,6 +8,28 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
 $f_image_id = Input::Get('f_image_id', 'int', 0);
 
+$f_fix_thumbs = Input::Get('f_fix_thumbs', 'int', 0);
+if ($f_fix_thumbs) {
+    //regenerate missing thumbs
+    $returnMessage = 'No thumbnails were fixed.';
+    $imageObj = new Image();
+    $imagesList = $imageObj->GetList(array(), array(), 0, 0, $imagesCount, TRUE);
+
+    foreach ($imagesList as $image) {
+        $thumbLocation = $image->getThumbnailStorageLocation();
+        if (!file_exists($thumbLocation)) {
+            if ($image->generateThumbnailFromImage()) {
+            	$returnMessage = 'Missing thumbnails fixed.';
+            }
+        }
+    }
+
+    camp_html_add_msg(getGS($returnMessage));
+    camp_html_goto_page("/$ADMIN/media-archive/index.php");
+    exit();
+
+}
+
 if (!Input::IsValid()) {
 	camp_html_goto_page("/$ADMIN/media-archive/index.php");
 }
