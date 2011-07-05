@@ -133,6 +133,7 @@ if ($articleObj->exists()) {
 	camp_html_add_msg(getGS("Article created."), "ok");
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, "edit.php"), false);
 	ArticleIndex::RunIndexer(3, 10, true);
+	exit();
 } else {
 	camp_html_display_error("Could not create article.");
 }
