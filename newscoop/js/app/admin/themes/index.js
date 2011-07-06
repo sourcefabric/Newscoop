@@ -112,6 +112,7 @@ $( function()
 		$.ajax
 		({
 			url : thisA.attr('href')+'/format/json',
+			dataType : "json",
 			success : function( data ) {
 				var msgCon = thisA.parents('ul.actionDropDown').prev('div')
 								.fadeTo( 'fast', 1 )
@@ -145,8 +146,10 @@ $( function()
 				$.ajax
 				({
 					url : thisA.attr('href')+'/format/json',
+					dataType : "json",
 					success : function( data ) 
 					{
+						console.log( data )
 						if( data.response ) 
 						{
 							confirmDeleteDialog.find( '.delete-message' ).text( data.response )
