@@ -216,7 +216,6 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         <?php }} ?>
             callServer(['ArticleList', 'doData'], aoData, fnCallback);
     },
-    'bStateSave': true,
     'fnStateLoadCallback': function(oSettings, oData) {
         oData.sFilter = ''; // reset filter
         <?php if ($this->order) { ?>
