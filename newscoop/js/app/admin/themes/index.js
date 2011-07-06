@@ -149,7 +149,6 @@ $( function()
 					dataType : "json",
 					success : function( data ) 
 					{
-						console.log( data )
 						if( data.response ) 
 						{
 							confirmDeleteDialog.find( '.delete-message' ).text( data.response )

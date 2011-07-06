@@ -658,7 +658,7 @@ abstract class CampURI
             if (!$tplObj->defined()) {
                 return null;
             }
-            $template = $tplObj->getName();
+            $template = $tplObj->getValue();
         } elseif (is_null($this->m_errorCode)) {
             $template = CampSystem::GetTemplate($this->language->number,
                             $this->publication->identifier,

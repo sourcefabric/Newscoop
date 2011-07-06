@@ -69,7 +69,7 @@ class SyncResourceServiceDoctrine extends AEntityServiceDoctrine
     {
         Validation::notEmpty($pathOrId, 'path');
         $em = $this->getEntityManager();
-        if (is_int($pathOrId)) {
+        if (is_numeric($pathOrId)) {
             $resources = $em->getRepository($this->entityClassName)->findById($pathOrId);
         } else {
             $resources = $em->getRepository($this->entityClassName)->findByPath($pathOrId);

@@ -59,7 +59,7 @@ final class MetaTemplate extends MetaDbObject
         return 'default';
     }
 
-    protected function getValue()
+    public function getValue()
     {
     	if (is_null($this->m_dbObject)) {
     		return null;
