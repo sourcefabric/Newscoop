@@ -727,8 +727,14 @@ ORDER BY Number DESC";
     function fixPathsInFile($filePath, $folder){
         $content = file_get_contents($filePath);
 
-        $replacer = function($match){
-            return "\"{{ url static_file='".$match['path']."' }}\"";
+        $errors = array();
+        $replacer = function($match) use (&$errors) {
+            if(strpos($match[0], '{{') === false){
+                return "\"{{ url static_file='".$match['path']."' }}\"";
+            }else{
+                $errors[] = $match[0];
+                return $match[0];
+            }
         };
 
         //Replace all of the gimme tag + relative path
@@ -742,6 +748,16 @@ ORDER BY Number DESC";
         //Replace all relatives to theme folder (this kind of risky but i just might doe everithing forgoted)
         $content = preg_replace('('.$folder.'\/)', '', $content);
 
+        if(count($errors) > 0){
+             $fh = fopen($filePath.'.err', 'w') or die("can't open file");
+             $textBefore = getGS("Code bellow can't be interpreted: ")."\n";
+             $textAfter = "\n\n";
+             $content_error = $textBefore.implode($textBefore.$textAfter, $errors).$textAfter;
+             $content_error.= getGS("Please try to fix the error above or contact sourcefabric newscoop ");
+             fwrite($fh, $content_error);
+             fclose($fh);
+         }
+
         $fh = fopen($filePath, 'w') or die("can't open file");
         fwrite($fh, $content);
         fclose($fh);
@@ -750,6 +766,6 @@ ORDER BY Number DESC";
 
 
 $themeUpgrade = new ThemeUpgrade($templatesPath, $themesPath);
-//$themeUpgrade->fixPathsInFile('c:/wamp/www/newscoop/themes/unassigned/classic/index.tpl', 'classic');
+//$themeUpgrade->fixPathsInFile('/var/www/services/newscoop/templates/set_thejournal/_tpl/_banner300x250.tpl', 'set_thejournal');
 //$themeUpgrade->fixPathsInFolder('c:/wamp/www/newscoop/themes/unassigned/set_thejournal');
 $themeUpgrade->createThemes();
