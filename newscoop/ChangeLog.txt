@@ -1,3 +1,31 @@
+3.6.0-beta4 (July 5, 2011)
+  Bug Fixes
+  ---------
+  * [CS-3343] User can replace image files and change some values for article types
+  * [CS-3258] Warnings in the install screen when there are missing dependencies
+  * [CS-3358] Warning on the install page
+  * [CS-3310] Comment: line breaks and paragraph breaks don't work
+  * [CS-3352] Comments-> Show->Deleted doesn't show anything.
+  * [CS-2979] Embeds from Google Docs does not work in Newscoop
+  * [CS-3195] .htaccess rewrite rule for templates directory is not updated to themes
+  * [CS-3254] Index file missed utf encoding header
+  * [CS-3299] Invalid session warning
+  * [CS-3357] Symbol of place isn't showed in article.
+  * [CS-3293] Restore process broken
+  * [CS-3301] Localization is not selected properly in the admin interface for FF
+  * [CS-3345] Image isn't correctly showed, when is upload by URL
+  * [CS-3339] User can't upload files into themes.
+  * [CS-3349] Copy to available Themes doesn't work
+
+  Improvements
+  ------------
+  * [CS-3037] There is no way to see my user rights
+  * [CS-3024] Enable POI text editing directly in the popup bubble
+  * [CS-745]  Articles cannot be created if they have the same name as an unplaced article
+  * [CS-671]  Ability to regenerate image thumbnail
+  * [CS-3305] Can not edit comments
+
+
 3.6.0-beta1 (June 15, 2011)
   New Features/refactoring
   ------------------------

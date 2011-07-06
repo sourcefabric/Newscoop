@@ -321,6 +321,15 @@ class Image extends DatabaseObject
 	} // fn getImageUrl
 
 
+	public function fixMissingThumbnail()
+	{
+	   global $Campsite;
+       if(!file_exists($Campsite['THUMBNAIL_BASE_URL'].$this->m_data['ThumbnailFileName'])) {
+           $this->generateThumbnailFromImage();
+       }
+	}
+
+
 	/**
 	 * Get the full URL to the thumbnail image.
 	 * @return string
@@ -328,8 +337,64 @@ class Image extends DatabaseObject
 	public function getThumbnailUrl()
 	{
 		global $Campsite;
+		$this->fixMissingThumbnail();
 		return $Campsite['THUMBNAIL_BASE_URL'].$this->m_data['ThumbnailFileName'];
 	} // fn getThumbnailUrl
+
+
+	/**
+     * Generate the thumbnail from the existing image.
+     *
+     * @return mixed
+     *      The Image object that was created or updated on success,
+     *      return error on error.
+     */
+    public function generateThumbnailFromImage()
+    {
+        global $Campsite;
+        // Verify its a valid image file.
+        $imageInfo = @getimagesize($this->getImageStorageLocation());
+        if ($imageInfo === false) {
+            return new PEAR_Error(getGS("The file uploaded is not an image."));
+        }
+        $extension = Image::__ImageTypeToExtension($imageInfo[2]);
+
+        $thumbDir = $Campsite['THUMBNAIL_DIRECTORY'];
+        if (!file_exists($thumbDir) || !is_writable($thumbDir)) {
+            return FALSE;
+        }
+
+        $target = $this->generateImageStorageLocation($extension);
+        $thumbnail = $this->generateThumbnailStorageLocation($extension);
+
+        try {
+
+        	$createMethodName = Image::__GetImageTypeCreateMethod($imageInfo[2]);
+            if (!isset($createMethodName)) {
+                throw new Exception(getGS("Image type $1 is not supported.",
+                                    image_type_to_mime_type($p_imageType)));
+            }
+
+            $imageHandler = $createMethodName($target);
+	        $thumbnailImage = Image::ResizeImage($imageHandler,
+	            $Campsite['THUMBNAIL_MAX_SIZE'], $Campsite['THUMBNAIL_MAX_SIZE']);
+	        if (PEAR::isError($thumbnailImage)) {
+	            throw new Exception($thumbnailImage->getMessage(), $thumbnailImage->getCode());
+	        }
+	        $result = Image::SaveImageToFile($thumbnailImage, $thumbnail, $imageInfo[2]);
+	        if (PEAR::isError($result)) {
+	            throw new Exception($result->getMessage(), $result->getCode());
+	        }
+	        chmod($thumbnail, 0644);
+        } catch (Exception $ex) {
+            if (file_exists($thumbnail)) {
+                @unlink($thumbnail);
+            }
+        	return new PEAR_Error($ex->getMessage(), $ex->getCode());
+        }
+        return $thumbnailImage;
+    }
+
 
 
 	/**
@@ -806,7 +871,7 @@ class Image extends DatabaseObject
         if (PEAR::isError($result)) {
             throw new Exception($result->getMessage(), $result->getCode());
         }
-        
+
         if (file_exists($thumbnail)) {
             chmod($thumbnail, 0644);
         }

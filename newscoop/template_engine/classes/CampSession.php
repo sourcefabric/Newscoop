@@ -77,10 +77,25 @@ final class CampSession
      */
     function start()
     {
-    	require_once 'Zend/Session.php';
-        Zend_Session::start();
-//        @session_cache_limiter('none');
-//        @session_start();
+        $newscoop_path = dirname(dirname(dirname(__FILE__)));
+        $application_path = $newscoop_path . '/application';
+        $config = parse_ini_file($application_path . '/configs/application.ini');
+        $session_name = $config['resources.session.name'];
+
+    	$sessionId = false;
+        if (array_key_exists($session_name, $_COOKIE)) {
+            $sessionId = $_COOKIE[$session_name];
+        } elseif (array_key_exists($session_name, $_GET)) {
+            $sessionId = $_GET[$session_name];
+        } elseif (array_key_exists($session_name, $_POST)) {
+            $sessionId = $_POST[$session_name];
+        }
+        if ($sessionId !== false && !preg_match('/^[a-z0-9-]+$/', $sessionId)) {
+            unset($_COOKIE[$session_name]);
+            unset($_GET[$session_name]);
+            unset($_POST[$session_name]);
+        }
+        @session_start();
     } // fn start
 
 

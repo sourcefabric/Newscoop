@@ -58,6 +58,7 @@ class ImageList extends BaseList
     public function processRow(array $row)
     {
         global $Campsite, $ADMIN;
+        $Campsite['THUMBNAIL_BASE_URL'] . $row['ThumbnailFileName'];
 
         // set thumbnail
         $row['ThumbnailFileName'] = sprintf('<a href="/%s/media-archive/edit.php?f_image_id=%d"><img src="%s" alt="%s" /></a>',
@@ -74,6 +75,7 @@ class ImageList extends BaseList
 
         // get in use info
         $image = new Image($row['Id']);
+        $image->fixMissingThumbnail();
         $row['InUse'] = (int) $image->inUse();
 
         return array_values($row);
