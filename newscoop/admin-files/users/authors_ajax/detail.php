@@ -285,7 +285,7 @@ if ($id > 0) {
 </div>
 
 <?php
-require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/editor_load_tinymce.php");
+require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/users/load_tinymce.php");
 $languageObj = new Language( isset($Language) ? $Language : 1 );
 //if (!is_object($languageObj)) {
 //    $languageObj = new Language(1);

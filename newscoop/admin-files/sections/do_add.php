@@ -19,6 +19,8 @@ $f_description = trim(Input::Get('f_description', '', true));
 $f_number = trim(Input::Get('f_number', 'int', 0, true));
 if(SaaS::singleton()->hasPermission('ManageSectionSubscriptions')) {
 	$f_add_subscriptions = Input::Get('f_add_subscriptions', 'checkbox');
+} else {
+	$f_add_subscriptions = 0;
 }
 $f_url_name = trim(Input::Get('f_url_name', 'string', '', true));
 
