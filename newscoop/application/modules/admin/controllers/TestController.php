@@ -22,6 +22,12 @@ use Newscoop\Service\Model\SearchTheme;
 use Newscoop\Service\Model\SearchPublication;
 use Newscoop\Service\Model\SearchLanguage;
 
+use Newscoop\Api\Publication as ResPublication;
+use Newscoop\Api\Resource as Res;
+
+/**
+ * @Acl(resource="theme", action="manage")
+ */
 class Admin_TestController extends Zend_Controller_Action
 {
 
@@ -657,6 +663,41 @@ class Admin_TestController extends Zend_Controller_Action
         }
     }
 
+    public function testApiAction()
+    {
+        $r = new Res;
+
+        echo '&bull; get all resources';
+        var_dump( $r->get() ); // get all resources
+
+        echo '&bull; get all publications';
+        var_dump( $r->Publication()->get() ); // get all publications
+
+        $p = new ResPublication;
+
+        echo '&bull; get all publications';
+        var_dump( $p->get() ); // get all publications
+
+        echo '&bull; get 1 publication';
+        var_dump( $p->id(1)->get() ); // get 1 publication
+        var_dump( $p->id(2)->get() );
+
+        echo '&bull; get themes for publication';
+        var_dump( $p->id(2)->Theme()->get() ); // get themes for publication
+
+        echo '&bull; insert a publication';
+        var_dump( $p->insert(array('x'=>'y','a'=>'b')) ); // insert a publication
+
+        echo '&bull; update a publication';
+        var_dump( $p->id(1)->update(array('x'=>'y')) ); // update a publication
+
+        echo '&bull; update a publication theme';
+        var_dump( $p->id(1)->Theme()->update(array('x'=>'y')) ); // update a publication
+
+        echo '&bull; delete a publication';
+        var_dump( $p->id(1)->delete() ); // delete a publication
+
+        die;
+    }
 }
 
-?>

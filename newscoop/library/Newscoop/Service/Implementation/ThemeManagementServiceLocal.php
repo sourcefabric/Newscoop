@@ -327,6 +327,8 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
         $zip = new \ZipArchive;
         $res = $zip->open($filePath);
+        // there was an error with this file upon extraction, so I just deleted it :)
+        $zip->deleteName(".");
         if ($res === TRUE) {
             $themePath = $this->getNewThemeFolder(self::FOLDER_UNASSIGNED.'/');
             $zip->extractTo(realpath($this->toFullPath($themePath)));
