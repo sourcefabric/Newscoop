@@ -48,8 +48,8 @@
 
                 ed.windowManager.open({
                     file : url + '/link.php' + url_params,
-                    width : 480 + parseInt(ed.getLang('campsiteinternallink.delta_width', 0)),
-                    height : 360 + parseInt(ed.getLang('campsiteinternallink.delta_height', 0)),
+                    width : 480,
+                    height : 360,
                     inline : 1
                 }, {
                     plugin_url : url
@@ -58,12 +58,12 @@
 
             // Register buttons
             ed.addButton('campsiteinternallink', {
-                title : 'campsiteinternallink.campsiteinternallink_desc',
+                title : 'campsiteinternallink.editor_button',
                 cmd : 'mcecampsiteinternallink',
                 image : url + '/img/newscoopinternallink.gif'
             });
 
-            ed.addShortcut('ctrl+k', 'campsiteinternallink.campsiteinternallink_desc', 'mcecampsiteinternallink');
+            ed.addShortcut('ctrl+k', 'campsiteinternallink.editor_button', 'mcecampsiteinternallink');
 
             ed.onNodeChange.add(function(ed, cm, n, co) {
                 cm.setDisabled('link', co && n.nodeName != 'A');
@@ -73,7 +73,7 @@
 
         getInfo : function() {
             return {
-                longname : 'campsiteinternallink',
+                longname : 'Newscoop - Internal Link',
                 author : 'Sourcefabric',
                 authorurl : 'http://www.sourcefabric.org',
                 infourl : 'http://dev.sourcefabric.org/browse/CS',
