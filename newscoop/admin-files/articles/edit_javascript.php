@@ -5,6 +5,21 @@ var fullDate = '<?php p(date("Y-m-d H:i:s", $lastModified)); ?>';
 document.getElementById('info-text').innerHTML = '<?php putGS('Saved'); ?> ' + ' ' + dateTime;
 document.getElementById('date-last-modified').innerHTML = '<?php putGS('Last modified'); ?> ' + ': ' + fullDate;
 
+/**
+ * Close window after timeout
+ * @param int timeout
+ * @return void
+ */
+var close = function(timeout) {
+    setTimeout("window.location.href = '<?php
+    if ($f_publication_id > 0 && $f_issue_number > 0 && $f_section_number > 0) {
+    	echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number";
+    } else {
+    	echo "/$ADMIN/";
+    }
+    ?>'", timeout);
+};
+
 $(function() {
 
 // make breadcrumbs + save buttons sticky
@@ -126,21 +141,6 @@ $('form#article-main').submit(function() {
 });
 
 /**
- * Close window after timeout
- * @param int timeout
- * @return void
- */
-var close = function(timeout) {
-    setTimeout("window.location.href = '<?php
-    if ($f_publication_id > 0 && $f_issue_number > 0 && $f_section_number > 0) {
-    	echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number";
-    } else {
-    	echo "/$ADMIN/";
-    }
-    ?>'", timeout);
-};
-
-/**
  * Unlock article
  * @return void
  */
@@ -153,15 +153,16 @@ var unlockArticle = function() {
 };
 
 <?php if ($inEditMode) { ?>
+
 // save all buttons
 $('.save-button-bar input').click(function() {
     $('form#article-keywords').submit();
     $('form#article-switches').submit();
     $('form#article-main').submit();
-
+    
     if ($(this).attr('id') == 'save_and_close') {
-        unlockArticle();
-        $(this).ajaxStop(function() {
+		unlockArticle();
+		$(this).ajaxComplete(function() {
             close(1500);
         });
     }

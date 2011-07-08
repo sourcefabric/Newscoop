@@ -383,7 +383,9 @@ if ($backupVersion < 3) {
     $configSrcDir = "$tempDirName/$origDbName/database_conf.php";
 } else {
     $templatesSrcDir = "$tempDirName/templates";
+    $themesSrcDir = "$tempDirName/themes";
     $packageTemplatesDirName = 'templates';
+    $packageThemesDirName = 'themes';
     $configSrcDir = "$tempDirName/conf/database_conf.php";
 }
 
@@ -393,7 +395,9 @@ $configDestDir = $ETC_DIR;
 $filesDestDir = $CAMPSITE_DIR.'/files';
 $imagesDestDir = $CAMPSITE_DIR.'/images';
 $templatesDirName = 'templates'; // keep for gimme template upgrade
+$themesDirName = 'themes'; // keep for gimme theme upgrade
 $templatesDestDir = $CAMPSITE_DIR.'/'.$templatesDirName;
+$themesDestDir = $CAMPSITE_DIR.'/'.$themesDirName;
 $compiledTemplatesDir = $CAMPSITE_DIR.'/cache';
 
 $destDirs = array("$CAMPSITE_DIR/themes", $imagesDestDir, $filesDestDir, $compiledTemplatesDir);
@@ -440,6 +444,8 @@ foreach ($destDirs as $dir) {
     flush_output($flush);
     if ($dir == $templatesDestDir) {
         camp_remove_dir($dir."/*", '', array('system_templates'));
+    } else if ($dir == $themesDestDir) {
+        camp_remove_dir($dir."/*", '', array('system_templates'));
     } else {
         camp_remove_dir($dir."/*");
     }
@@ -456,6 +462,17 @@ if (!is_null($templatesSrcDir)) {
     if ($packageTemplatesDirName != $templatesDirName) {
         camp_remove_dir($templatesDestDir);
         rename($CAMPSITE_DIR.'/'.$packageTemplatesDirName, $templatesDestDir);
+    }
+}
+echo "done.\n";
+
+echo " * Restoring themes...";
+flush_output($flush);
+if (!is_null($themesSrcDir)) {
+    camp_copy_files($themesSrcDir, $CAMPSITE_DIR);
+    if ($packageThemesDirName != $themesDirName) {
+        camp_remove_dir($themesDestDir);
+        rename($CAMPSITE_DIR.'/'.$packageThemesDirName, $themesDestDir);
     }
 }
 echo "done.\n";

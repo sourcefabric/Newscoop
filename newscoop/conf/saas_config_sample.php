@@ -74,6 +74,7 @@
         array('resource' => 'publication', 'privilege' => 'delete'),
         array('resource' => 'template', 'privilege' => 'delete'),
         array('resource' => 'template', 'privilege' => 'manage'),
+        array('resource' => 'template', 'privilege' => '*'),
         array('resource' => 'themes', 'privilege' => '*'),
         array('resource' => 'theme', 'privilege' => '*'),
         array('resource' => 'subscriber', 'privilege' => 'manage'),
