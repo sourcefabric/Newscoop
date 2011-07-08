@@ -39,8 +39,8 @@
 
                 ed.windowManager.open({
                     file : url + '/popup.php?article_id=' + articleNo + '&language_selected=' + langId,
-                    width : 580 + parseInt(ed.getLang('campsiteattachment.delta_width', 0)),
-                    height : 330 + parseInt(ed.getLang('campsiteattachment.delta_height', 0)),
+                    width : 580,
+                    height : 330,
                     inline : 1
                 }, {
                     plugin_url : url
@@ -49,12 +49,12 @@
 
             // Register buttons
             ed.addButton('campsiteattachment', {
-                title : 'campsiteattachment.campsiteattachment_desc',
+                title : 'campsiteattachment.editor_button',
                 cmd : 'mcecampsiteattachment',
                 image : url + '/img/newscoopattachment.gif'
             });
 
-            ed.addShortcut('ctrl+h', 'campsiteattachment.campsiteattachment_desc', 'mcecampsiteattachment');
+            ed.addShortcut('ctrl+h', 'campsiteattachment.editor_button', 'mcecampsiteattachment');
 
             ed.onNodeChange.add(function(ed, cm, n, co) {
                 cm.setDisabled('link', co && n.nodeName != 'A');
@@ -64,7 +64,7 @@
 
         getInfo : function() {
             return {
-                longname : 'campsiteattachment',
+                longname : 'Newscoop - File Attachment',
                 author : 'Sourcefabric',
                 authorurl : 'http://www.sourcefabric.org',
                 infourl : 'http://dev.sourcefabric.org/browse/CS',

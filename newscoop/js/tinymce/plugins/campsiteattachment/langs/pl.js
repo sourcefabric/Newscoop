@@ -1,5 +1,4 @@
 tinyMCE.addI18n('pl.campsiteattachment',{
-campsiteattachment_desc: "File Attachment",
-title: "Insert link to article file",
-select_to_link: "You need to select some text before creating a link to a file"
+    editor_button: "File Attachment",
+    select_to_link: "You need to select some text before creating a link to a file"
 });
