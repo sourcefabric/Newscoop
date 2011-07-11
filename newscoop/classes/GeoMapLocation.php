@@ -639,7 +639,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $ps_orders = array();
         if ((!$p_order) || (!is_array($p_order)) || (0 == count($p_order))) {
             if ($mc_mapCons) {
-                $ps_orders = array(array('a.Number' => 'DESC'), array('m.id' => 'DESC'));
+                $ps_orders = array(array('a.PublishDate' => 'DESC'), array('a.Number' => 'DESC'), array('m.id' => 'DESC'));
             }
         } else {
             $allowed_order_dirs = array('DESC' => true, 'ASC' => true);
@@ -647,6 +647,11 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                 $one_dir = strtoupper($one_order_dir);
                 if (!array_key_exists($one_dir, $allowed_order_dirs)) {continue;}
                 switch(strtolower($one_order_column)) {
+                    case 'publish':
+                    case 'published':
+                        if (!$mc_mapCons) {break;}
+                        $ps_orders[] = array('a.PublishDate' => $one_dir);
+                        break;
                     case 'article':
                         if (!$mc_mapCons) {break;}
                         $ps_orders[] = array('a.Number' => $one_dir);
