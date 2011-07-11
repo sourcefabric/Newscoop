@@ -20,7 +20,7 @@ if (is_object($map) && $map->exists()) {
     }
     $map_name_max_len = 20;
     if ($map_name_max_len < strlen($map_name)) {
-        $map_name = substr($map_name, 0, $map_name_max_len) . "...";
+        $map_name = mb_substr($map_name, 0, $map_name_max_len, 'UTF-8') . "...";
     }
     $map_name = str_replace("&", '&amp;', $map_name);
     $map_name = str_replace("<", '&lt;', $map_name);
@@ -85,7 +85,7 @@ $map_article_spec = '' . $f_article_number . '_' . $map_language_used;
         $poi_name = $content->getName();
         $poi_name_max_len = 40;
         if ($poi_name_max_len < strlen($poi_name)) {
-            $poi_name = substr($poi_name, 0, $poi_name_max_len) . "...";
+            $poi_name = mb_substr($poi_name, 0, $poi_name_max_len, 'UTF-8') . "...";
         }
         $poi_name = str_replace("&", '&amp;', $poi_name);
         $poi_name = str_replace("<", '&lt;', $poi_name);

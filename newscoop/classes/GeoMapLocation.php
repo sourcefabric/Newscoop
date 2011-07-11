@@ -1113,7 +1113,7 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     'fk_content_id' => $one_poi['txt_id'],
                     'poi_display' => $one_poi['display'],
                 );
-                $one_poi_obj->setLanguage($ps_languageId, new Geo_MapLocationLanguage(NULL, 0, $one_geo_source, true));
+                $one_poi_obj->setLanguage($ps_languageId, new Geo_MapLocationLanguage(NULL, 0, $one_lan_source, true));
     
                 $one_txt_source = array(
                     'id' => $one_poi['txt_id'],
