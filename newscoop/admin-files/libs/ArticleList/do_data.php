@@ -76,7 +76,8 @@ foreach ($filters as $name => $opts) {
 // search
 if (isset($_REQUEST['sSearch']) && strlen($_REQUEST['sSearch']) > 0) {
     $search_phrase = $_REQUEST['sSearch'];
-    $articlesParams[] = new ComparisonOperation('search_phrase', new Operator('is', 'integer'), $search_phrase);
+    //$articlesParams[] = new ComparisonOperation('search_phrase', new Operator('is', 'integer'), $search_phrase);
+    $articlesParams[] = new ComparisonOperation('search_phrase', new Operator('like', 'string'), $search_phrase);
 }
 
 // sorting
