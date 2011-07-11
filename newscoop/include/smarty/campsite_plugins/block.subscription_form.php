@@ -32,12 +32,30 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
 
     // gets the context variable
     $campsite = $p_smarty->get_template_vars('gimme');
+      // gets the URL base
+    $urlString = $campsite->url->base;
 
     if (strtolower($p_params['type']) == 'by_publication') {
         $campsite->subs_by_type = 'publication';
     } elseif (strtolower($p_params['type']) == 'by_section') {
         $campsite->subs_by_type = 'section';
     }
+
+    //includes the smarty camp uri plugin
+    require_once($p_smarty->_get_plugin_filepath('function', 'uri'));
+    // appends the URI path and query values to the base
+    $urlString = smarty_function_uri(array("options"=>"id ".$p_params['template']), $p_smarty);
+    $resourceId = NULL;
+
+    $urlStringParams =  explode('=', $urlString);
+    for($i = 0; $i < count($urlStringParams) - 1; $i++) {
+        if( (substr($urlStringParams[$i], -3) == 'tpl')  ) {
+            $resourceIdArray = explode('&', $urlStringParams[$i + 1]);
+            $resourceId = $resourceIdArray[0];
+            break;
+        }
+    }
+
 
     if (!isset($p_content)) {
         return null;
@@ -48,8 +66,10 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
     $url = $campsite->url;
     $url->uri_parameter = "";
     $template = null;
+
     if (isset($p_params['template'])) {
-        $template = new MetaTemplate($p_params['template']);
+        //$template = new MetaTemplate($p_params['template']);
+        $template = new MetaTemplate($resourceId);
         if (!$template->defined()) {
             CampTemplate::singleton()->trigger_error('invalid template "' . $p_params['template']
             . '" specified in the subscription form');
@@ -101,7 +121,7 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
         $html .= '<input type="hidden" name="'.$param['name']
             .'" value="'.htmlentities($param['value'])."\" />\n";
     }
-    
+
     $html .= $p_content;
 
     if ($subsType == 'paid' && isset($p_params['total']) != '') {

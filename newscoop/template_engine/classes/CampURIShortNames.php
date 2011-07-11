@@ -412,6 +412,22 @@ class CampURIShortNames extends CampURI
                     $this->m_buildQueryArray[CampRequest::TEMPLATE_ID] = $pathRsc->getId();
                 }
                 break;
+            case 'id':
+                $option = isset($p_params[0]) ? array_shift($p_params) : null;
+                if (is_null($this->_themePath)) {
+                    $this->_themePath = CampSystem::GetThemePath($this->m_language->number,
+                                    $this->m_publication->identifier,
+                                    $this->m_issue->number);
+                }
+                $pathRsc = new Resource();
+                $pathRsc->setName('buildPage');
+                $pathRsc->setPath($this->_themePath.$option);
+                $resourceId = new ResourceId('template_engine/classes/CampURIShortNames');
+                $pathRsc = $syncResourceService = $resourceId->getService(ISyncResourceService::NAME)->getSynchronized($pathRsc);
+                if (!is_null($option) && !is_null($pathRsc) && $pathRsc->exists()) {
+                    $this->m_buildQueryArray[CampRequest::TEMPLATE_ID] = $pathRsc->getId();
+                }
+                break;
             default:
                 if (!empty($parameter)) {
                     array_unshift($p_params, $parameter);

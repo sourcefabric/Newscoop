@@ -22,6 +22,7 @@ final class MetaTemplate extends MetaDbObject
 
     public function __construct($p_templateIdOrName = null)
     {
+
         $this->_map = array(
             "frontPage" => "issue",
             "errorPage" => "default",
