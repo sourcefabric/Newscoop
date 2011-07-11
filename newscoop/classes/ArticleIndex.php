@@ -43,7 +43,7 @@ class ArticleIndex extends DatabaseObject {
 	} // fn getArticleNumber
 
 
-	public static function SearchQuery($p_searchPhrase)
+	public static function SearchQuery($p_searchPhrase, $p_symbol=null)
 	{
 	    global $g_ado_db;
 
@@ -83,11 +83,15 @@ class ArticleIndex extends DatabaseObject {
             $selectKeywordClauseObj->addJoin('LEFT JOIN KeywordIndex AS KI1 ON AI1.IdKeyword = KI1.Id');
 
             foreach ($keywords as $keyword) {
-                $keywordConstraint = "KI1.Keyword = '" . $g_ado_db->escape($keyword) . "'";
+                if( strtolower($p_symbol) == 'like' ) {
+                    $keywordConstraint = "KI1.Keyword LIKE '%" . $g_ado_db->escape($keyword) . "%'";
+                }
+                else {
+                    $keywordConstraint = "KI1.Keyword = '" . $g_ado_db->escape($keyword) . "'";
+                }
                 $selectKeywordClauseObj->addConditionalWhere($keywordConstraint);
             }
         }
-
         return $selectKeywordClauseObj->buildQuery();
 	}
 
