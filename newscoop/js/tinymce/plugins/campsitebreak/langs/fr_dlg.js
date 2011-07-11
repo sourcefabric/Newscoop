@@ -1,4 +1,4 @@
-tinyMCE.addI18n('fr.emotions_dlg',{
+tinyMCE.addI18n('fr.campsitebreak_dlg',{
 title:"Ins\u00E9rer \u00E9motion",
 desc:"\u00C9motions",
 cool:"Cool",

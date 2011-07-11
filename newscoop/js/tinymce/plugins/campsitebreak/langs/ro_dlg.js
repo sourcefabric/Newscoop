@@ -1,4 +1,4 @@
-tinyMCE.addI18n('ro.emotions_dlg',{
+tinyMCE.addI18n('ro.campsitebreak_dlg',{
 title:"Insereaz\u0103 emoticon",
 desc:"Emo\u0163ii",
 cool:"Cool",

@@ -1,4 +1,4 @@
-tinyMCE.addI18n('sr.emotions_dlg',{
+tinyMCE.addI18n('sr.campsitebreak_dlg',{
 title:"Umetni emociju",
 desc:"Emocije",
 cool:"Cool",

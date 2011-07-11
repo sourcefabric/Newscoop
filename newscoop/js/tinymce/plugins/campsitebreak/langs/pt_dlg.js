@@ -1,4 +1,4 @@
-tinyMCE.addI18n('pt.emotions_dlg',{
+tinyMCE.addI18n('pt.campsitebreak_dlg',{
 title:"Inserir emoticon",
 desc:"Emoticons",
 cool:"Legal",

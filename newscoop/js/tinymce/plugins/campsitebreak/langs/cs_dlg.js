@@ -1,4 +1,4 @@
-tinyMCE.addI18n('cs.emotions_dlg',{
+tinyMCE.addI18n('cs.campsitebreak_dlg',{
 title:"Vlo\u017Eit emotikon",
 desc:"Emotikony",
 cool:"Cool",

@@ -1,4 +1,4 @@
-tinyMCE.addI18n('ru.emotions_dlg',{
+tinyMCE.addI18n('ru.campsitebreak_dlg',{
 title:"\u0412\u0441\u0442\u0430\u0432\u0438\u0442\u044C \u0441\u043C\u0430\u0439\u043B\u0438\u043A",
 desc:"\u0421\u043C\u0430\u0439\u043B\u0438\u043A\u0438",
 cool:"\u041A\u043B\u0451\u0432\u044B\u0439",

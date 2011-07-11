@@ -1,4 +1,4 @@
-tinyMCE.addI18n('es.emotions_dlg',{
+tinyMCE.addI18n('es.campsitebreak_dlg',{
 title:"Insertar emoticon",
 desc:"Emoticones",
 cool:"Todo bien",

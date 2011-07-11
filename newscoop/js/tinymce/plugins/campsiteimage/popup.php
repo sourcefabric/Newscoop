@@ -75,7 +75,7 @@ if (isset($_REQUEST['image_id'])) {
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html>
 <head>
-  <title>{#campsiteimage.title}</title>
+  <title>{#campsiteimage_dlg.title}</title>
 
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link href="css/campsiteimage.css" rel="stylesheet" type="text/css" />
@@ -105,37 +105,37 @@ if (isset($_REQUEST['image_id'])) {
     <input type="hidden" id="orginal_width" />
     <input type="hidden" id="orginal_height" />
     <tr>
-      <td align="right"><label for="f_alt">{#campsiteimage.alt}</label></td>
+      <td align="right"><label for="f_alt">{#campsiteimage_dlg.alt}</label></td>
       <td><input type="text" id="f_alt" class="largelWidth" value="" /></td>
     </tr>
     <tr>
-      <td align="right"><label for="f_caption">{#campsiteimage.caption}</label></td>
+      <td align="right"><label for="f_caption">{#campsiteimage_dlg.caption}</label></td>
       <td><input type="text" id="f_caption" class="largelWidth" value="" /></td>
     </tr>
     <tr>
-      <td align="right"><label for="f_align">{#campsiteimage.alignment}:</label></td>
+      <td align="right"><label for="f_align">{#campsiteimage_dlg.alignment}:</label></td>
       <td>
-        <select size="1" id="f_align"  title="{#campsiteimage.positiontitle}">
-          <option value="">{#campsiteimage.notset}</option>
-          <option value="left">{#campsiteimage.left}</option>
-          <option value="right">{#campsiteimage.right}</option>
-          <option value="middle">{#campsiteimage.middle}</option>
+        <select size="1" id="f_align"  title="{#campsiteimage_dlg.positiontitle}">
+          <option value="">{#campsiteimage_dlg.notset}</option>
+          <option value="left">{#campsiteimage_dlg.left}</option>
+          <option value="right">{#campsiteimage_dlg.right}</option>
+          <option value="middle">{#campsiteimage_dlg.middle}</option>
         </select>
       </td>
     </tr>
     <tr>
-      <td align="right"><label for="f_ratio">{#campsiteimage.resizeratio}:</label></td>
+      <td align="right"><label for="f_ratio">{#campsiteimage_dlg.resizeratio}:</label></td>
       <td><input type="text" id="f_ratio" class="largelWidth" value="" /></td>
     </tr>
     <tr>
-      <td colspan="2" align="right"><small>{#campsiteimage.resizenotice}</small></td>
+      <td colspan="2" align="right"><small>{#campsiteimage_dlg.resizenotice}</small></td>
     </tr>
     <tr>
-      <td align="right"><label for="f_resize_width">{#campsiteimage.resizewidth}:</label></td>
+      <td align="right"><label for="f_resize_width">{#campsiteimage_dlg.resizewidth}:</label></td>
       <td><input type="text" id="f_resize_width" class="largelWidth" value="" /></td>
     </tr>
     <tr>
-      <td align="right"><label for="f_resize_height">{#campsiteimage.resizeheight}:</label></td>
+      <td align="right"><label for="f_resize_height">{#campsiteimage_dlg.resizeheight}:</label></td>
       <td><input type="text" id="f_resize_height" class="largelWidth" value="" /></td>
     </tr>
     </table>
@@ -143,11 +143,11 @@ if (isset($_REQUEST['image_id'])) {
     <div style="text-align: right;">
       <hr />
       <?php if (isset($_REQUEST['image_id'])) { ?>
-      <button type="button" class="buttons" onclick="CampsiteImageDialog.edit();">{#campsiteimage.edit}</button>
+      <button type="button" class="buttons" onclick="CampsiteImageDialog.edit();">{#campsiteimage_dlg.edit}</button>
       <?php } else { ?>
-      <button type="button" class="buttons" onclick="CampsiteImageDialog.insert();">{#campsiteimage.ok}</button>
+      <button type="button" class="buttons" onclick="CampsiteImageDialog.insert();">{#campsiteimage_dlg.ok}</button>
       <?php } ?>
-      <button type="button" class="buttons" onclick="CampsiteImageDialog.close();">{#campsiteimage.cancel}</button>
+      <button type="button" class="buttons" onclick="CampsiteImageDialog.close();">{#campsiteimage_dlg.cancel}</button>
     </div>
   </form>
 </body>

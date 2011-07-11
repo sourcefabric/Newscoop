@@ -50,8 +50,8 @@
 
                 ed.windowManager.open({
                     file : url + '/popup.php?article_id=' + articleNo + url_params,
-                    width : 580 + parseInt(ed.getLang('campsiteimage.delta_width', 0)),
-                    height : 430 + parseInt(ed.getLang('campsiteimage.delta_height', 0)),
+                    width : 580,
+                    height : 430,
                     inline : 1
                 }, {
                     plugin_url : url
@@ -60,12 +60,12 @@
 
             // Register buttons
             ed.addButton('campsiteimage', {
-                title : 'campsiteimage.campsiteimage_desc',
+                title : 'campsiteimage.editor_button',
                 cmd : 'mcecampsiteimage',
                 image : url + '/img/campsiteimage.gif'
             });
 
-            ed.addShortcut('ctrl+g', 'campsiteimage.campsiteimage_desc', 'mcecampsiteimage');
+            ed.addShortcut('ctrl+g', 'campsiteimage.editor_button', 'mcecampsiteimage');
 
             ed.onNodeChange.add(function(ed, cm, n, co) {
                 cm.setDisabled('link', co && n.nodeName != 'A');
@@ -75,7 +75,7 @@
 
         getInfo : function() {
             return {
-                longname : 'campsiteimage',
+                longname : 'Newscoop - Image insertion',
                 author : 'Sourcefabric',
                 authorurl : 'http://www.sourcefabric.org',
                 infourl : 'http://dev.sourcefabric.org/browse/CS',
