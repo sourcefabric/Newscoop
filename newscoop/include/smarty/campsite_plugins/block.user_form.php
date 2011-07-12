@@ -24,7 +24,11 @@
  */
 function smarty_block_user_form($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
-    if (!isset($p_content)) {
+
+    require_once($p_smarty->_get_plugin_filepath('function', 'get_resource_id'));
+    $resourceId = smarty_function_get_resource_id($p_params, $p_smarty);
+
+	if (!isset($p_content)) {
         return null;
     }
 
@@ -36,8 +40,9 @@ function smarty_block_user_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     $url = $campsite->url;
     $url->uri_parameter = "";
     $template = null;
+
     if (isset($p_params['template'])) {
-        $template = new MetaTemplate($p_params['template']);
+        $template = new MetaTemplate($resourceId);
         if (!$template->defined()) {
             CampTemplate::singleton()->trigger_error('invalid template "' . $p_params['template']
             . '" specified in the user form');
