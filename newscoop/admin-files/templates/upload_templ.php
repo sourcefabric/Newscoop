@@ -99,8 +99,8 @@ $(function() {
             // Files in queue upload them first
             if (uploader.files.length > 0) {
                 // When all files are uploaded submit form
-                uploader.bind('UploadProgress', function() {
-                    if (uploader.total.uploaded == uploader.files.length) {
+                uploader.bind('StateChanged', function() {
+                    if ((uploader.total.uploaded + uploader.total.failed) == uploader.files.length) {
                         $('form').submit();
                     }
                 });
