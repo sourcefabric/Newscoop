@@ -557,8 +557,9 @@ function smarty_function_set_map($p_params, &$p_smarty)
             $url->section = $myArticle->section;
             $url->article = $myArticle;
             $articleURI = $url->getURI('article');
+            $article_name = $myArticle->name;
 
-            $art_backlinks[$one_art_id] = $articleURI;
+            $art_backlinks[$one_art_id] = array('link' => $articleURI, 'label' => $article_name);
         }
         krsort($meta_art_objs);
 

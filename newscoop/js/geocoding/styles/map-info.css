@@ -86,4 +86,7 @@
 	width:100%;
 	color:#444;
 }
-	
+
+.article_backlinks {
+    max-width: 200px;
+}

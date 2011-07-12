@@ -739,11 +739,7 @@ this.got_load_data = function (load_data, is_obj) {
 
         vector.attributes.m_text = one_poi['text'];
         vector.attributes.m_link = one_poi['link'];
-        vector.attributes.m_backlink = null;
         vector.attributes.m_backlinks = null;
-        if (one_poi['backlink']) {
-            vector.attributes.m_backlink = one_poi['backlink'];
-        }
         if (one_poi['backlinks']) {
             vector.attributes.m_backlinks = one_poi['backlinks'];
         }
