@@ -324,7 +324,7 @@ class Image extends DatabaseObject
 	public function fixMissingThumbnail()
 	{
 	   global $Campsite;
-       if(!file_exists($Campsite['THUMBNAIL_BASE_URL'].$this->m_data['ThumbnailFileName'])) {
+       if(!file_exists($Campsite['THUMBNAIL_DIRECTORY'].$this->m_data['ThumbnailFileName'])) {
            $this->generateThumbnailFromImage();
        }
 	}
