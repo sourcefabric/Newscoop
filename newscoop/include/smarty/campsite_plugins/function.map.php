@@ -102,8 +102,46 @@ function smarty_function_map($p_params, &$p_smarty)
     }
 
     // get map width and height
-    $width = isset($p_params['width']) ? (int) $p_params['width'] : 0;
-    $height = isset($p_params['height']) ? (int) $p_params['height'] : 0;
+    $width_dyn = false;
+    $height_dyn = false;
+    $width = 0;
+    $height = 0;
+
+    if (isset($p_params['width'])) {
+        $param_width = strtolower(trim((string) $p_params['width']));
+        $param_width_arr = explode('%', $param_width);
+        if (1 < count($param_width_arr)) {
+            $width_dyn = true;
+            $width = (int) $param_width_arr[0];
+            if (100 < $width) {
+                $width = 100;
+            }
+        }
+        else {
+            $width = (int) $p_params['width'];
+        }
+        if (0 > $width) {
+            $width = 0;
+        }
+    }
+
+    if (isset($p_params['height'])) {
+        $param_height = strtolower(trim((string) $p_params['height']));
+        $param_height_arr = explode('%', $param_height);
+        if (1 < count($param_height_arr)) {
+            $height_dyn = true;
+            $height = (int) $param_height_arr[0];
+            if (100 < $height) {
+                $height = 100;
+            }
+        }
+        else {
+            $height = (int) $p_params['height'];
+        }
+        if (0 > $height) {
+            $height = 0;
+        }
+    }
 
     $width_large = isset($p_params['popup_width']) ? (int) $p_params['popup_width'] : 800;
     $height_large = isset($p_params['popup_height']) ? (int) $p_params['popup_height'] : 600;
@@ -140,6 +178,8 @@ function smarty_function_map($p_params, &$p_smarty)
         $multi_options['map_margin'] = $map_margin;
         $multi_options['load_common'] = $map_load_common_header;
         $multi_options['pois_retrieved'] = false;
+        $multi_options['width_dyn'] = $width_dyn;
+        $multi_options['height_dyn'] = $height_dyn;
 
         $multi_options['large_map_on_click'] = $openMapOnClick;
         $multi_options['large_map_open'] = $showOpenLink;
@@ -233,6 +273,8 @@ function smarty_function_map($p_params, &$p_smarty)
     $map_options['max_zoom'] = $max_zoom;
     $map_options['map_margin'] = $map_margin;
     $map_options['load_common'] = $map_load_common_header;
+    $map_options['width_dyn'] = $width_dyn;
+    $map_options['height_dyn'] = $height_dyn;
 
     $map_options['large_map_on_click'] = $openMapOnClick;
     $map_options['large_map_open'] = $showOpenLink;

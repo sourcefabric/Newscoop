@@ -48,7 +48,10 @@ class RequestObject extends DatabaseObject {
 
     public function getRequestCount()
     {
-    	return $this->m_data['request_count'];
+        if( isset($this->m_data['request_count']) )
+    	    return $this->m_data['request_count'];
+        else
+            return 0;
     }
 
 

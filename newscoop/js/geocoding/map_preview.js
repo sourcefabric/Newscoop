@@ -62,6 +62,9 @@ this.map_art_view_height_display = 400;
 this.map_art_view_top_display = 70;
 this.map_art_view_right_display = 105;
 
+this.map_width_percentage = 0;
+this.map_height_percentage = 0;
+
 this.map_label_name = "";
 this.map_id = 0;
 
@@ -399,6 +402,15 @@ this.proc_subst_action = function(params) {
     window.OpenLayers.HooksPopups.on_map_feature_select(geo_obj, select_poi);
 };
 
+this.set_size_percentage = function(params) {
+    if ("width" in params) {
+        this.map_width_percentage = params["width"];
+    }
+    if ("height" in params) {
+        this.map_height_percentage = params["height"];
+    }
+};
+
 this.try_size_updated = function() {
     if (this.map_is_popup) {
         var page_height = $(window).height();
@@ -416,6 +428,11 @@ this.try_size_updated = function() {
             this.map.updateSize();
         }
 
+    }
+    else {
+        if (this.map) {
+            this.map.updateSize();
+        }
     }
 };
 
@@ -877,6 +894,11 @@ this.main_openlayers_init = function(map_div_name) {
             body_holder.style.height = "" + this.last_page_height + "px";
         }
 
+    } else {
+        if (this.map_height_percentage) {
+            var place_height = $('#' + this.map_div_name).height();
+            this.map_art_view_height_default = place_height;
+        }
     }
 
     var pzb_ctrl = null;

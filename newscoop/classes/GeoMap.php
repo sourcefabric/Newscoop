@@ -1721,7 +1721,7 @@ $header_part = '
         $tag_string_fin .= "\n";
 
         $tag_string_fin .= 'window.map_win_popup.document.write("<script type=\"text/javascript\">" + "\n")' . "\n";
-        $tag_string_fin .= 'window.map_win_popup.document.write("setInterval(\"geo_object' . $p_mapSuffix . '.try_size_updated()\", 1000);\n");' . "\n";
+        $tag_string_fin .= 'window.map_win_popup.document.write("setInterval(\"geo_object' . $p_mapSuffix . '.try_size_updated();\", 1000);\n");' . "\n";
         $tag_string_fin .= 'window.map_win_popup.document.write("<" + "/script>" + "\n");' . "\n";
 
         $tag_string_fin .= '
@@ -1774,6 +1774,8 @@ $header_part = '
         $max_zoom = null;
         $map_margin = null;
         $load_common = true;
+        $width_dyn = false;
+        $height_dyn = false;
 
         if (is_array($p_options)) {
             if (array_key_exists('auto_focus', $p_options)) {
@@ -1787,6 +1789,12 @@ $header_part = '
             }
             if (array_key_exists('load_common', $p_options)) {
                 $load_common = $p_options['load_common'];
+            }
+            if (array_key_exists('width_dyn', $p_options)) {
+                $width_dyn = $p_options['width_dyn'];
+            }
+            if (array_key_exists('height_dyn', $p_options)) {
+                $height_dyn = $p_options['height_dyn'];
             }
         }
 
@@ -2003,13 +2011,29 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
     if (map_obj)
     {
         if (typeof(window.map_popup_win) == "undefined") {
-            map_obj.style.width = "' . $geo_map_usage['width'] . 'px";
-            map_obj.style.height = "' . $geo_map_usage['height'] . 'px";
+            map_obj.style.width = "' . $geo_map_usage['width'] . ($width_dyn ? '%' : 'px') . '";
+            map_obj.style.height = "' . $geo_map_usage['height'] . ($height_dyn ? '%' : 'px') . '";
         } else {
             // not setting the map size for the large map
         }
 
 ';
+
+    $dyn_size_params = array();
+    if ($width_dyn) {
+        $dyn_size_params['width'] = $geo_map_usage['width'];
+    }
+    if ($height_dyn) {
+        $dyn_size_params['height'] = $geo_map_usage['height'];
+    }
+    if (0 < count($dyn_size_params)) {
+        $tag_string_mid .= '
+        if (typeof(window.map_popup_win) == "undefined") {
+            geo_object' . $map_suffix . '.set_size_percentage(' . json_encode($dyn_size_params) . ');
+            setInterval("geo_object' . $map_suffix . '.try_size_updated();", 1000);
+        }
+        ';
+    }
 
     $article_spec_arr = array('language_id' => $f_language_id, 'article_number' => $f_article_number);
     $article_spec = json_encode($article_spec_arr);
@@ -2325,6 +2349,8 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
         $load_common = true;
         $area_points = null;
         $area_points_empty_only = 'false';
+        $width_dyn = false;
+        $height_dyn = false;
 
         if (is_array($p_options)) {
             if (array_key_exists('pois_retrieved', $p_options)) {
@@ -2346,6 +2372,12 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
                 if ($p_options['area_points_empty_only']) {
                     $area_points_empty_only = 'true';
                 }
+            }
+            if (array_key_exists('width_dyn', $p_options)) {
+                $width_dyn = $p_options['width_dyn'];
+            }
+            if (array_key_exists('height_dyn', $p_options)) {
+                $height_dyn = $p_options['height_dyn'];
             }
         }
 
@@ -2607,12 +2639,28 @@ var geo_on_load_proc_map' . $map_suffix . ' = function()
     if (map_obj)
     {
         if (typeof(window.map_popup_win) == "undefined") {
-            map_obj.style.width = "' . $geo_map_usage['width'] . 'px";
-            map_obj.style.height = "' . $geo_map_usage['height'] . 'px";
+            map_obj.style.width = "' . $geo_map_usage['width'] . ($width_dyn ? '%' : 'px') . '";
+            map_obj.style.height = "' . $geo_map_usage['height'] . ($height_dyn ? '%' : 'px') . '";
         } else {
             // not setting the map size for the large map
         }
 ';
+
+    $dyn_size_params = array();
+    if ($width_dyn) {
+        $dyn_size_params['width'] = $geo_map_usage['width'];
+    }
+    if ($height_dyn) {
+        $dyn_size_params['height'] = $geo_map_usage['height'];
+    }
+    if (0 < count($dyn_size_params)) {
+        $tag_string_mid .= '
+        if (typeof(window.map_popup_win) == "undefined") {
+            geo_object' . $map_suffix . '.set_size_percentage(' . json_encode($dyn_size_params) . ');
+            setInterval("geo_object' . $map_suffix . '.try_size_updated();", 1000);
+        }
+        ';
+    }
 
     $article_spec_arr = array('language_id' => $f_language_id, 'article_number' => 0);
     $article_spec = json_encode($article_spec_arr);

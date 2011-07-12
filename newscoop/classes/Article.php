@@ -2475,10 +2475,11 @@ class Article extends DatabaseObject {
                 $selectClauseObj->addWhere('Articles.Number = ArticleAuthors.fk_article_number');
                 $selectClauseObj->addWhere('Articles.IdLanguage = ArticleAuthors.fk_language_id');
             } elseif ($leftOperand == 'search_phrase') {
-                $searchQuery = ArticleIndex::SearchQuery($comparisonOperation['right']);
+                $searchQuery = ArticleIndex::SearchQuery($comparisonOperation['right'], $comparisonOperation['symbol']);
                 $mainClauseConstraint = "(Articles.Number, Articles.IdLanguage) IN ( $searchQuery )";
                 $selectClauseObj->addWhere($mainClauseConstraint);
-            } elseif ($leftOperand == 'location') {
+            }
+            elseif ($leftOperand == 'location') {
                 $num = '[-+]?[0-9]+(?:\.[0-9]+)?';
                 if (preg_match("/($num) ($num), ($num) ($num)/",
                     trim($comparisonOperation['right']), $matches)) {
