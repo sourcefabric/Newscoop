@@ -45,32 +45,33 @@ $(function() {
         var uploader = $('#uploader').pluploadQueue();
 
         // Files in queue upload them first
-        if ((uploader.files.length > 0) && (uploader.files.length != uploader.total.uploaded)) {
+        if ((0 < uploader.files.length) && ((uploader.total.uploaded + uploader.total.failed) != uploader.files.length)) {
             // When all files are uploaded submit form
-            uploader.bind('UploadProgress', function() {
-                if (uploader.total.uploaded == uploader.files.length) {
-                    // $('form<?php $this->plupload->form; ?>').submit(); // this final submit did not work and does not work
+            uploader.bind('StateChanged', function() {
+                if ((uploader.total.uploaded + uploader.total.failed) == uploader.files.length) {
+                    $('form<?php $this->plupload->form; ?>').submit();
                 }
             });
             uploader.start();
             if (e && e.preventDefault) {
                 e.preventDefault();
             }
-            return;
+            return false;
         }
 
         // Validate number of uploaded files
         if (uploader.total.uploaded == 0) {
-            // if no file, then at least url shall be provided
+            // if no file, then at least url shall be provided (if some at that page)
             var url_str = $.trim($('#form-url').val());
             if ('' == url_str) {
                 alert(<?php echo json_encode(getGS('You must at least upload one file.')); ?>);
                 if (e && e.preventDefault) {
                     e.preventDefault();
                 }
+                return false;
             }
         }
-
+        return true;
     });
 });
 
