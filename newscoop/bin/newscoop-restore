@@ -468,7 +468,7 @@ echo "done.\n";
 
 echo " * Restoring themes...";
 flush_output($flush);
-if (!is_null($themesSrcDir)) {
+if (!is_null($themesSrcDir) && file_exists($themesSrcDir)) {
     camp_copy_files($themesSrcDir, $CAMPSITE_DIR);
     if ($packageThemesDirName != $themesDirName) {
         camp_remove_dir($themesDestDir);
