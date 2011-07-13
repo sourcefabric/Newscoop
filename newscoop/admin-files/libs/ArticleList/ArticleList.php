@@ -425,6 +425,11 @@ class ArticleList extends BaseList
 	public static function doAction($f_action, $f_items, $f_params = array())
 	{
 		global $ADMIN_DIR, $g_user, $Campsite, $ADMIN;
+
+        // this is used for some actions, but some do not have it defined at all
+        if (empty($f_target)) {
+            $f_target = '';
+        }
 		return require_once dirname(__FILE__) . '/do_action.php';
 	}
 
