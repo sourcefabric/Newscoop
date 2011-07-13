@@ -201,6 +201,12 @@ class MetaActionEdit_User extends MetaAction
                 return false;
             }
 
+            if ( (User::EmailExists($this->m_properties['email'])) && ($this->m_properties['email'] != $user->getEmail()) ) {
+                $this->m_error = new PEAR_Error("Another user is registered with this e-mail address, please choose a different one.",
+                ACTION_EDIT_USER_ERR_DUPLICATE_EMAIL);
+                return false;
+            }
+
             foreach ($this->m_properties as $property=>$value) {
                 if (!isset(MetaActionEdit_User::$m_fields[$property]['db_field'])) {
                     continue;
