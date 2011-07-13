@@ -194,6 +194,13 @@ class MetaActionEdit_User extends MetaAction
                 ACTION_EDIT_USER_ERR_INTERNAL);
                 return false;
             }
+
+            if ( (User::UserNameExists($this->m_properties['uname'])) && ($this->m_properties['uname'] != $user->getUserName()) ) {
+                $this->m_error = new PEAR_Error("The login name already exists, please choose a different one.",
+                ACTION_EDIT_USER_ERR_DUPLICATE_USER_NAME);
+                return false;
+            }
+
             foreach ($this->m_properties as $property=>$value) {
                 if (!isset(MetaActionEdit_User::$m_fields[$property]['db_field'])) {
                     continue;
