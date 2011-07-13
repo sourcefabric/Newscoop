@@ -79,9 +79,7 @@ $( function()
 		var pubId 	  = $(this).attr( 'pub-id' );
 		if( pubId ) // publication tab
 		{
-			//datatable.fnFilter( pubId, 4 );
-			datatable.fnSettings().aoPreSearchCols[4].sSearch = ""; // hacked
-			datatable.fnFilter( "" );
+			datatable.fnFilter( pubId, 4 );
 			$( document.body ).data( 'newscoop.themesDatatable.oneFilterCallback', function()
 			{
 				$('.copy-to-avail-themes').show();
