@@ -40,36 +40,26 @@ class Theme extends AAdapter
     {
         $p_params = (object) $p_params;
         $dataCollection = null;
-        if( isset( $p_params->search ) )
-        {
-            /*
-             * some sort of search management
-            foreach( $p_params as $searchCol => $searchVal )
-            {
-                if( @trim( $searchVal ) != "" )
-                    switch( $searchCol )
-                    {
-                    };
-            }
 
-            */
-            if( @trim( $p_params->search[ $this->_pubColFilterIdx ] ) != "" )
-            {
-                $p = new Publication();
-                $p->setId( intval( $p_params->search[ $this->_pubColFilterIdx ] ) );
-                $dataCollection = $this->_service->getThemes( $p );
-                //var_dump( $dataCollection );
-            }
-
-            $this->search( $p_params->search );
-        }
         if( isset( $p_params->sort ) ) {
             $this->sort( ( !is_array( $p_params->sort ) ? array( $p_params->sort ) : $p_params->sort ) );
         }
 
+        // for search by publication
+        if( isset( $p_params->search ) ) {
+            if( @trim( $p_params->search[ $this->_pubColFilterIdx ] ) != "" ) {
+                $p = new Publication();
+                $p->setId( intval( $p_params->search[ $this->_pubColFilterIdx ] ) );
+                $dataCollection = $this->_service->getThemes( $p, $this->getSearchObject() );
+            }
+            // @todo ?
+            $this->search( $p_params->search );
+        }
+
         $retThemes = array();
-        if( is_null( $dataCollection ) )
+        if( is_null( $dataCollection ) ) {
             $dataCollection = $this->_service->getUnassignedThemes( $this->getSearchObject() );
+        }
 
         foreach( $dataCollection as $theme )
         {
@@ -141,6 +131,10 @@ class Theme extends AAdapter
         return;
     }
 
+    /**
+     * handle sorting parameters
+     * @see Newscoop\Controller\Action\Helper\Datatable\Adapter.AAdapter::sort()
+     */
     public function sort( array $p_params )
     {
         $search = $this->getSearchObject();

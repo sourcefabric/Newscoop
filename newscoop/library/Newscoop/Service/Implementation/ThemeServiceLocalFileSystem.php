@@ -288,15 +288,18 @@ class ThemeServiceLocalFileSystem implements IThemeService
 	 * @return array
 	 * 		The sorted array.
 	 */
-	protected function sort($array, $property, $asscending)
+	protected function sort($array, $property, $ascending)
 	{
-		usort($array, function($a, $b) use ($property, $asscending) {
-			if($asscending){
-				return strcmp($a->$property(), $b->$property());
-			} else {
-				return strcmp($b->$property(), $a->$property());
-			}
+	    $isAllEqual = true; // going to use this to still simulate a sort if all values are equal
+		usort( $array, function( $a, $b ) use ( $property, $ascending, &$isAllEqual )
+		{
+		    $cmp = strcmp( $a->$property(), $b->$property() );
+		    if( $cmp != 0 ) $isAllEqual = false;
+		    return $ascending ? $cmp : -$cmp;
 		});
+		// if all values equal and sort is descending just reverse the results..
+		if( $isAllEqual && !$ascending )
+		    return array_reverse($array);
 		return $array;
 	}
 
