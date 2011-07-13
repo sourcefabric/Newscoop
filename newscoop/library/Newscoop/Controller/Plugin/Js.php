@@ -89,6 +89,12 @@ class Js extends Zend_Controller_Plugin_Abstract
                 $this->view->headScript()->appendScript( $urn );
             }
             if( $this->_basePath && file_exists( $path ) ) {
+                 // we have a problem with repeating directories in $urn
+                 // this is a temporary solution...
+                 $urn = explode(DIR_SEP, $urn);
+                 $urn = array_unique($urn);
+                 $urn = implode(DIR_SEP, $urn);
+                 
                  $this->view->headScript()->appendFile( $urn );
             }
         }
