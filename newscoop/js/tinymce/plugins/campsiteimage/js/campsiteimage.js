@@ -6,9 +6,9 @@ var CampsiteImageDialog = {
     init : function(ed) {
         tinyMCEPopup.resizeToInnerSize();
     },
-
-    insert : function() {
-        var ed = tinyMCEPopup.editor, dom = ed.dom;
+    
+    edit_insert : function(command) {
+		var ed = tinyMCEPopup.editor, dom = ed.dom;
         var topDoc = window.top.document;
         var re = /\"/;
         var alt = topDoc.getElementById('f_alt').value;
@@ -25,7 +25,10 @@ var CampsiteImageDialog = {
         else
             shrinkRatio = '_' + shrinkRatio;
 
-        tinyMCEPopup.execCommand('mceInsertContent', false, dom.createHTML('img', {
+        if (command == 'insert') var mce_command = 'mceInsertContent';
+        if (command == 'edit') var mce_command = 'mceReplaceContent';
+        
+        tinyMCEPopup.execCommand(mce_command, false, dom.createHTML('img', {
             src : topDoc.getElementById('f_url').value,
             align : topDoc.getElementById('f_align').value,
             id : topDoc.getElementById('f_image_template_id').value + shrinkRatio,
@@ -35,37 +38,15 @@ var CampsiteImageDialog = {
             height : topDoc.getElementById('f_resize_height').value
         }));
 
-        tinyMCEPopup.close();
+        return(tinyMCEPopup.close());
+	},
+
+    insert : function() {
+        return(CampsiteImageDialog.edit_insert('insert'));
     },
 
     edit : function() {
-        var ed = tinyMCEPopup.editor, dom = ed.dom;
-        var topDoc = window.top.document;
-        var re = /\"/;
-        var alt = topDoc.getElementById('f_alt').value;
-        var caption = topDoc.getElementById('f_caption').value;
-        if ((alt.match(re)) || (caption.match(re))) {
-            alert('Double quotes are not allowed for Alt and Caption fields.\nUse single quotes or double single quotes instead.');
-            return false;
-        }
-
-        var shrinkRatio = topDoc.getElementById('f_ratio').value;
-        if (shrinkRatio < 1 || shrinkRatio > 99)
-            shrinkRatio = '';
-        else
-            shrinkRatio = '_' + shrinkRatio;
-
-        tinyMCEPopup.execCommand('mceReplaceContent', false, dom.createHTML('img', {
-            src : topDoc.getElementById('f_url').value,
-            align : topDoc.getElementById('f_align').value,
-            id : topDoc.getElementById('f_image_template_id').value + shrinkRatio,
-            title : topDoc.getElementById('f_caption').value,
-            alt : topDoc.getElementById('f_alt').value,
-            width : topDoc.getElementById('f_resize_width').value,
-            height : topDoc.getElementById('f_resize_height').value
-        }));
-
-        tinyMCEPopup.close();
+        return(CampsiteImageDialog.edit_insert('edit'));
     },
 
     select : function(p_image_template_id, p_filename, p_alt, p_title, p_align, p_ratio, p_width, p_height) {
