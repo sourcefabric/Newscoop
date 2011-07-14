@@ -184,8 +184,20 @@ class MetaActionEdit_User extends MetaAction
                 ACTION_EDIT_USER_ERR_INTERNAL);
                 return false;
             }
+
+            // login on success
+            global $controller;
+            $auth = Zend_Auth::getInstance();
+            $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\User\Subscriber');
+            $adapter = new Newscoop\Auth\Adapter($repository, $this->m_properties['uname'], $this->m_properties['password']);
+            $result = $auth->authenticate($adapter);
+            if ($result->getCode() != Zend_Auth_Result::SUCCESS) {
+                $this->m_error = new PEAR_Error('Invalid user credentials',
+                    ACTION_LOGIN_ERR_INVALID_CREDENTIALS);
+                return FALSE;
+            }
+
             $user->initLoginKey();
-            setcookie("LoginUserKey", $user->getKeyId(), null, '/');
             $p_context->user = new MetaUser($user->getUserId());
         } else {
             $user = new User($metaUser->identifier);
