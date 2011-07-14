@@ -143,7 +143,7 @@ if (isset($_REQUEST['image_id'])) {
     <div style="text-align: right;">
       <hr />
       <?php if (isset($_REQUEST['image_id'])) { ?>
-      <button type="button" class="buttons" onclick="CampsiteImageDialog.edit();">{#campsiteimage_dlg.edit}</button>
+      <button type="button" class="buttons" onclick="CampsiteImageDialog.insert();">{#campsiteimage_dlg.edit}</button>
       <?php } else { ?>
       <button type="button" class="buttons" onclick="CampsiteImageDialog.insert();">{#campsiteimage_dlg.ok}</button>
       <?php } ?>
