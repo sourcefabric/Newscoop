@@ -34,16 +34,16 @@ class Log extends DatabaseObject {
 	public static function Message($p_text, $p_userId = null, $p_eventId = 0)
 	{
 		global $g_ado_db;
-		if (is_null($p_userId)) {
+
+        if (empty($p_userId)) {
 			$p_userId = 0;
 
-			// try to get the user name from the global environment
-			if (isset($_REQUEST['LoginUserId'])) {
-				$p_userId = $_REQUEST['LoginUserId'];
-			} elseif (isset($_COOKIE['LoginUserId'])) {
-			    $p_userId = $_COOKIE['LoginUserId'];
-			}
+            $auth = \Zend_Auth::getInstance();
+            if ($auth->hasIdentity()) {
+                $p_userId = $auth->getIdentity();
+            }
 		}
+
 		if (isset($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 			$userIP = $_SERVER['HTTP_X_FORWARDED_FOR'];
 		} elseif (isset($_SERVER['REMOTE_ADDR'])) {
