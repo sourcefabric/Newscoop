@@ -99,6 +99,8 @@ class User extends DatabaseObject {
     {
         global $controller;
 
+
+
         if (is_array($p_values)) {
             $p_values['time_created'] = strftime("%Y-%m-%d %H:%M:%S", time());
         }
@@ -118,8 +120,16 @@ class User extends DatabaseObject {
             }
         }
 
+
         $values['perm_type'] = 1;
-        $class = $values['Reader'] == 'N' ? 'Newscoop\Entity\User\Staff' : 'Newscoop\Entity\User\Subscriber';
+
+        if (array_key_exists('Reader', $values)) {
+            $class = $values['Reader'] == 'N' ? 'Newscoop\Entity\User\Staff' : 'Newscoop\Entity\User\Subscriber';
+        } else {
+        	$class = 'Newscoop\Entity\User\Subscriber';
+        }
+
+
 
         try {
             $user = new $class;
