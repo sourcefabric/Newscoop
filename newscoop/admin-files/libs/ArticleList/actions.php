@@ -124,6 +124,8 @@ $('.smartlist .actions select').change(function() {
 
             var smartlistId = smartlist.attr('id').split('-')[1];
             tables[smartlistId].fnDraw(true);
+
+            $('.datatable th input:checkbox').attr('checked', false);
         }
     );
 });
