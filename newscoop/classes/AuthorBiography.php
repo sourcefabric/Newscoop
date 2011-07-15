@@ -31,10 +31,19 @@ class AuthorBiography extends DatabaseObject
         if (is_numeric($p_authorId)) {
             $this->m_data['fk_author_id'] = $p_authorId;
         }
+
         if (is_numeric($p_languageId)) {
             $this->m_data['fk_language_id'] = $p_languageId;
         }
-        if (!is_null($p_authorId) && !is_null($p_languageId)) {
+
+        // set keys
+        foreach ($this->m_columnNames as $key) {
+            if (!isset($this->m_data[$key])) {
+                $this->m_data[$key] = '';
+            }
+        }
+
+        if (!empty($p_authorId) && !empty($p_languageId)) {
             $this->fetch();
         }
     } // fn constructor
@@ -121,6 +130,4 @@ class AuthorBiography extends DatabaseObject
         $g_ado_db->Execute($queryStr);
     } // fn OnAuthorDelete
 
-} // class AuthorBiography
-
-?>
+}

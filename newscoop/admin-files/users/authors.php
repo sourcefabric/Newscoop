@@ -300,10 +300,12 @@ function deleteAuthor(id) {
 
 function getRow(id) {
     $.get('authors_ajax/detail.php?id=' + id, function(data) {
+        $('#detailtable').hide();
         $("#detailtable").html(data);
         $(function() {
             $(".tabs").tabs({ selected: 0 });
         });
+        $('#detailtable').show();
     });
 }
 

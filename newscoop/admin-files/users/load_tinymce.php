@@ -159,6 +159,8 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
     }
 
     $theme_buttons1 = (count($toolbar1) > 0) ? implode(',', $toolbar1) : '';
+    $theme_buttons2 = '';
+    $theme_buttons3 = '';
 
 
     $localeFile = $Campsite['CAMPSITE_DIR'] . '/js/tinymce/langs/' . $p_editorLanguage . '.js';

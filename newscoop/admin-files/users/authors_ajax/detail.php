@@ -42,9 +42,7 @@ if ($id > 0) {
         echo $json;
         exit();
     }
-    if ($getNames == 1) {
 
-    }
     $first_name = $author->getFirstName();
     $last_name = $author->getLastName();
     $type = $author->getType();
