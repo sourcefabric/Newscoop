@@ -1,5 +1,6 @@
+<h4><?php echo $this->url ?></h4>
 <ul>
-<?php foreach( $this->result as $res ) : ?>
-	<li><?php print_r($res) ?></li>
+<?php if( is_array($this->result) || is_object($this->result) ) foreach( $this->result as $k => $res ) : ?>
+	<li><?php echo $k ?> <?php echo $res ?></li>
 <?php endforeach; ?>
 </ul>

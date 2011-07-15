@@ -663,11 +663,16 @@ class Admin_TestController extends Zend_Controller_Action
         }
     }
 
+    /* -------------------------------------------------------------------------------- */
+
+
+
     private function cfgApi()
     {
         $logWriter = new Zend_Log_Writer_Stream('/var/log/newscoop-api-client.log');
         $logger = new Zend_Log();
         $logger->addWriter($logWriter);
+
         Newscoop\Api\Client::configure( array
         (
         	'accept' => 'xml',
@@ -692,7 +697,7 @@ class Admin_TestController extends Zend_Controller_Action
         $this->view->insert = $p->insert( array( 'Name'=>'y' ) ); // insert a publication
 
         $this->view->update = $p->id(4)->update(array('Name'=>'test'))->ok(); // update a publication
-//        $this->view->update2 = $p->id(4)->update(array('Name2'=>'test'))->ok(); // update a publication
+        $this->view->update2 = $p->id(4)->update(array('Name2'=>'test')); // update a publication
 
     }
 
@@ -700,7 +705,14 @@ class Admin_TestController extends Zend_Controller_Action
     {
         $this->cfgApi();
         $p = new ResPublication;
-        $p->id($this->_request->getParam('id'))->delete();
+
+        $ids = $this->_request->getParam('id');
+        if( !is_array($ids) )
+            $ids = array($ids);
+
+        foreach( $ids as $id )
+            $p->id($id)->delete();
+
         $this->_helper->redirector('test-api','test','admin');
     }
 

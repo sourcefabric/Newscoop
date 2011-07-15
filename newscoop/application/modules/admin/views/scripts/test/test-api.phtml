@@ -10,14 +10,18 @@
 </ul>
 
 <h3>Publications available on the api</h3>
+<form action="<?php echo $this->baseUrl() ?>/admin/test/test-api-del-pub/" method="get">
 <ul>
 <?php foreach( $this->publications as $k => $v ) : ?>
 	<li>
 		<a href="<?php echo (string) $v['href'] ?>"><?php echo $k ?> <?php echo $v ?></a>
 		<a href="<?php echo $this->baseUrl() ?>/admin/test/test-api-del-pub/id/<?php echo $v ?>">delete</a>
+		<input type="checkbox" name="id[]" value="<?php echo $v ?>" />
 	</li>
 <?php endforeach; ?>
 </ul>
+<button type="submit">Delete</button>
+</form>
 
 <h3>Insert</h3>
 <?php echo $this->insert->href ?>
