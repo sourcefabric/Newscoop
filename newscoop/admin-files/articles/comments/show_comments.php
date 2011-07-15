@@ -109,7 +109,7 @@ function loadComments() {
         },
         success: function(data) {
             $('#comment-moderate').empty();
-        	hasComents = false;
+            hasComment = false;
             for(i in data.result) {
                 hasComment = true;
                 comment = data.result[i];
