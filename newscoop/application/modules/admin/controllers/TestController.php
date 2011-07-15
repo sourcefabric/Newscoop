@@ -663,41 +663,53 @@ class Admin_TestController extends Zend_Controller_Action
         }
     }
 
+    private function cfgApi()
+    {
+        $logWriter = new Zend_Log_Writer_Stream('/var/log/newscoop-api-client.log');
+        $logger = new Zend_Log();
+        $logger->addWriter($logWriter);
+        Newscoop\Api\Client::configure( array
+        (
+        	'accept' => 'xml',
+        	'data-type' => 'json',
+        	'url' => 'http://localhost:8080/',
+        	'logger' => $logger
+        ));
+    }
+
     public function testApiAction()
     {
+        $this->cfgApi();
+
         $r = new Res;
 
-        echo '&bull; get all resources';
-        var_dump( $r->get() ); // get all resources
-
-        echo '&bull; get all publications';
-        var_dump( $r->Publication()->get() ); // get all publications
+        $this->view->resouces = $r->get(); // get all resources
 
         $p = new ResPublication;
 
-        echo '&bull; get all publications';
-        var_dump( $p->get() ); // get all publications
+        $this->view->publications = $p->asc('name')->get(); // get all publications
 
-        echo '&bull; get 1 publication';
-        var_dump( $p->id(1)->get() ); // get 1 publication
-        var_dump( $p->id(2)->get() );
+        $this->view->insert = $p->insert( array( 'Name'=>'y' ) ); // insert a publication
 
-        echo '&bull; get themes for publication';
-        var_dump( $p->id(2)->Theme()->get() ); // get themes for publication
+        $this->view->update = $p->id(4)->update(array('Name'=>'test'))->ok(); // update a publication
+//        $this->view->update2 = $p->id(4)->update(array('Name2'=>'test'))->ok(); // update a publication
 
-        echo '&bull; insert a publication';
-        var_dump( $p->insert(array('x'=>'y','a'=>'b')) ); // insert a publication
+    }
 
-        echo '&bull; update a publication';
-        var_dump( $p->id(1)->update(array('x'=>'y')) ); // update a publication
+    public function testApiDelPubAction()
+    {
+        $this->cfgApi();
+        $p = new ResPublication;
+        $p->id($this->_request->getParam('id'))->delete();
+        $this->_helper->redirector('test-api','test','admin');
+    }
 
-        echo '&bull; update a publication theme';
-        var_dump( $p->id(1)->Theme()->update(array('x'=>'y')) ); // update a publication
-
-        echo '&bull; delete a publication';
-        var_dump( $p->id(1)->delete() ); // delete a publication
-
-        die;
+    public function testApiFollowAction()
+    {
+        $this->cfgApi();
+        $res = new Res;
+        $this->view->url = $url = base64_decode($this->_request->getParam('url'));
+        $this->view->result = $res->understand( $url )->get();
     }
 }
 

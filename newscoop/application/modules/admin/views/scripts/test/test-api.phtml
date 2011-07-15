@@ -1,0 +1,27 @@
+<h3>Resources available on the api</h3>
+<ul>
+<?php foreach( $this->resouces as $resource => $resouceValue ) : ?>
+	<li>
+        <a href="<?php echo $this->baseUrl() ?>/admin/test/test-api-follow/url/<?php echo base64_encode($resouceValue['href']) ?>">
+            <?php echo $resource ?>
+        </a>
+    </li>
+<?php endforeach; ?>
+</ul>
+
+<h3>Publications available on the api</h3>
+<ul>
+<?php foreach( $this->publications as $k => $v ) : ?>
+	<li>
+		<a href="<?php echo (string) $v['href'] ?>"><?php echo $k ?> <?php echo $v ?></a>
+		<a href="<?php echo $this->baseUrl() ?>/admin/test/test-api-del-pub/id/<?php echo $v ?>">delete</a>
+	</li>
+<?php endforeach; ?>
+</ul>
+
+<h3>Insert</h3>
+<?php echo $this->insert->href ?>
+
+<h3>Update</h3>
+<?php var_dump($this->update) ?>
+<?php var_dump($this->update2) ?>
