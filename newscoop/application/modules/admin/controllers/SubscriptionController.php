@@ -18,6 +18,9 @@ class Admin_SubscriptionController extends Zend_Controller_Action
         camp_load_translation_strings('api');
         camp_load_translation_strings('users');
         camp_load_translation_strings('user_subscriptions');
+
+        $currency = new Zend_Currency('en_US');
+        Zend_Registry::set('Zend_Currency', $currency);
     }
 
     public function indexAction()
