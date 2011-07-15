@@ -124,7 +124,7 @@ if (isset($_REQUEST['image_id'])) {
 function drawFiles($list, &$manager)
 {
         global $relative, $image;
-
+	$first = true;
 	foreach($list as $entry => $file)
 	{
 	    if (isset($image) && is_object($image)) {
@@ -154,7 +154,7 @@ function drawFiles($list, &$manager)
 			<table width="100" cellpadding="0" cellspacing="0">
 			<tr>
 		                <td class="block" id="block_<?php echo $file['template_id']; ?>" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo  escape_js_param($file['alt']); ?>', '<?php echo  escape_js_param($file['alt']); ?>');">
-		<a href="javascript:;" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo  escape_js_param($file['alt']); ?>', '<?php echo  escape_js_param($file['alt']); ?>');" title="<?php echo  escape_js_param($file['alt']); ?>"><img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo  escape_js_param($file['alt']); ?>"/></a>
+		<a href="javascript:;" onclick="CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo  escape_js_param($file['alt']); ?>', '<?php echo  escape_js_param($file['alt']); ?>', '', '', '<?php echo($file['image'][0]); ?>', '<?php echo($file['image'][1]); ?>');" title="<?php echo  escape_js_param($file['alt']); ?>"><img src="<?php echo $file['image_object']->getThumbnailUrl(); ?>" alt="<?php echo  escape_js_param($file['alt']); ?>"/></a>
 		                </td></tr><tr><td class="edit">
 		<?php
 		if ($file['image']) {
@@ -168,6 +168,8 @@ function drawFiles($list, &$manager)
                         </tr></table></td>
 	<?php   } ?>
 	  <?php
+	  if ($first == true) { ?><script>CampsiteImageDialog.select(<?php echo $file['template_id']; ?>, '<?php echo $file['image_object']->getImageUrl(); ?>', '<?php echo  escape_js_param($file['alt']); ?>', '<?php echo  escape_js_param($file['alt']); ?>', '', '', '<?php echo($file['image'][0]); ?>', '<?php echo($file['image'][1]); ?>');</script><?php }
+	  $first = false;
 	}//foreach
 }//function drawFiles
 
