@@ -135,29 +135,62 @@ class Admin_CommentController extends Zend_Controller_Action
     }
 
     /**
+    * Function to return all replies to a comment
+    * Works by recursion
+    * @param $p_comment_id (array or integer)
+    * returns an array or comment ids
+    */
+    public function getAllReplies($p_comment_id)
+    {
+         if(!is_array($p_comment_id)) {
+         	$directReplies = $this->commentRepository->getDirectReplies($p_comment_id);
+         	if(count($directReplies)) {
+         		return array_merge( array($p_comment_id), $this->getAllReplies($directReplies) );
+         	} else {
+         		return array($p_comment_id);
+         	}
+         } else {
+            if(count($p_comment_id) > 1) {
+                return array_merge(
+                    $this->getAllReplies(array_pop($p_comment_id)),
+	                $this->getAllReplies($p_comment_id)
+	                );
+            } else {
+            	return $this->getAllReplies(array_pop($p_comment_id));
+            }
+         }
+    }
+
+    /**
      * Action for setting a status
      */
     public function setStatusAction()
     {
-
-
         $this->getHelper('contextSwitch')->addActionContext('set-status', 'json')->initContext();
         if (!SecurityToken::isValid()) {
             $this->view->status = 401;
             $this->view->message = getGS('Invalid security token!');
             return;
         }
+
+        $status = $this->getRequest()->getParam('status');
+        $comments = $this->getRequest()->getParam('comment');
+        if (!is_array($comments)) {
+            $comments = array($comments);
+        }
+
+        if($status == "deleted") {
+            $comments = array_unique(array_merge($comments, $this->getAllReplies($comments)));
+        }
+
         try {
-            $comments = $this->getRequest()->getParam('comment');
-            $status = $this->getRequest()->getParam('status');
-            if (!is_array($comments)) {
-                $comments = array($comments);
-            }
             foreach ($comments as $id) {
-                $comment = $this->commentRepository->find($id);
+            	$comment = $this->commentRepository->find($id);
+
                 if ($status == "deleted") {
                     $msg = getGS('Comment delete by $1 from the article $2 ($3)', Zend_Registry::get('user')->getName(),
                                  $comment->getThread()->getName(), $comment->getLanguage()->getCode());
+
                     $this->_helper->log($msg);
                     $this->_helper->flashMessenger($msg);
                 } else {
@@ -362,5 +395,7 @@ class Admin_CommentController extends Zend_Controller_Action
             $this->_helper->redirector->gotoSimple('index');
         }
     }
+
+
 
 }
