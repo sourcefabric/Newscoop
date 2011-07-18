@@ -30,7 +30,7 @@ if (!is_file('Zend/Application.php')) {
 		get_include_path(),
 	)));
 }
-include_once('Zend/Application.php') or die('Missing dependency! Please install Zend Framework library!');
+include_once('Zend/Application.php');
 
 $oldErrorReporting = error_reporting();
 error_reporting(0);
