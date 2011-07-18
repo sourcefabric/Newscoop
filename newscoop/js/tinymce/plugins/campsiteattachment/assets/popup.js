@@ -34,8 +34,10 @@ function comboSelectValue(c, val) {
 };
 
 function __dlg_onclose() {
-	if(opener.Dialog._return)
-		opener.Dialog._return(null);
+	if(opener && opener.Dialog && opener.Dialog._arguments) {
+		if(opener.Dialog._return)
+			opener.Dialog._return(null);
+	}
 };
 
 function __dlg_init(bottom) {
