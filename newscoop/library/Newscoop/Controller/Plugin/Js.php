@@ -59,17 +59,9 @@ class Js extends Zend_Controller_Plugin_Abstract
 
     public function postDispatch( Zend_Controller_Request_Abstract $p_request )
     {
-        $x = '';
-        foreach( $p_request->getParams() as $k => $v )
-            if( is_string( $v ) )
-                $x .= "$k : $v, ";
-        syslog( LOG_WARNING, "!!!!". $x );
-
         // stick the baseUrl to the basePath because we have a dispatched request now
         // and format those god damn slashes!!
         $baseUrl = trim( Zend_Controller_Front::getInstance()->getBaseUrl(), DIR_SEP );
-
-        syslog( LOG_WARNING, "!!!!". $baseUrl." --- ".$this->_baseUrn );
 
         $currentUrn = ( $baseUrl != "" ? DIR_SEP . $baseUrl : "" )
                     . DIR_SEP
@@ -79,7 +71,7 @@ class Js extends Zend_Controller_Plugin_Abstract
         $filesToAppend = array
         (
             "{$this->_basePath}{$this->_sharedFileName}.{$this->_fileSuffix}" => // adding the shared file first for utils
-            	"{$this->_baseUrn}{$this->_sharedFileName}.{$this->_fileSuffix}",
+            	"{$currentUrn}{$this->_sharedFileName}.{$this->_fileSuffix}",
             'script' => $this->view->jQueryReady()->toString(), // then the document ready scripts
             "{$this->_basePath}{$p_request->getControllerName()}.{$this->_fileSuffix}" => // controller shared
                 "{$currentUrn}{$p_request->getControllerName()}.{$this->_fileSuffix}",
