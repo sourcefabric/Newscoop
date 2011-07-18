@@ -59,28 +59,32 @@ class Js extends Zend_Controller_Plugin_Abstract
 
     public function postDispatch( Zend_Controller_Request_Abstract $p_request )
     {
-//        $x = '';
-//        foreach ($p_request->getParams() as $k => $v)
-//            if (is_string($v))
-//                $x .= "$k : $v, ";
-//        syslog(LOG_WARNING, "!!!!" . $x);
+        $x = '';
+        foreach( $p_request->getParams() as $k => $v )
+            if( is_string( $v ) )
+                $x .= "$k : $v, ";
+        syslog( LOG_WARNING, "!!!!". $x );
+
         // stick the baseUrl to the basePath because we have a dispatched request now
         // and format those god damn slashes!!
         $baseUrl = trim( Zend_Controller_Front::getInstance()->getBaseUrl(), DIR_SEP );
-        $this->_baseUrn = ( $baseUrl != "" ? DIR_SEP . $baseUrl : "" )
-                         . DIR_SEP
-                         . trim( $this->_baseUrn, DIR_SEP )
-                         . DIR_SEP;
+
+        syslog( LOG_WARNING, "!!!!". $baseUrl." --- ".$this->_baseUrn );
+
+        $currentUrn = ( $baseUrl != "" ? DIR_SEP . $baseUrl : "" )
+                    . DIR_SEP
+                    . trim( $this->_baseUrn, DIR_SEP )
+                    . DIR_SEP;
 
         $filesToAppend = array
         (
             "{$this->_basePath}{$this->_sharedFileName}.{$this->_fileSuffix}" => // adding the shared file first for utils
             	"{$this->_baseUrn}{$this->_sharedFileName}.{$this->_fileSuffix}",
-            'script' => $this->view->jQueryReady()->toString(),
+            'script' => $this->view->jQueryReady()->toString(), // then the document ready scripts
             "{$this->_basePath}{$p_request->getControllerName()}.{$this->_fileSuffix}" => // controller shared
-                "{$this->_baseUrn}{$p_request->getControllerName()}.{$this->_fileSuffix}",
+                "{$currentUrn}{$p_request->getControllerName()}.{$this->_fileSuffix}",
             "{$this->_basePath}{$p_request->getControllerName()}".DIR_SEP."{$p_request->getActionName()}.{$this->_fileSuffix}" => // action specific
-            	"{$this->_baseUrn}{$p_request->getControllerName()}".DIR_SEP."{$p_request->getActionName()}.{$this->_fileSuffix}"
+            	"{$currentUrn}{$p_request->getControllerName()}".DIR_SEP."{$p_request->getActionName()}.{$this->_fileSuffix}"
         );
 
         foreach( $filesToAppend as $path => $urn )
@@ -89,36 +93,8 @@ class Js extends Zend_Controller_Plugin_Abstract
                 $this->view->headScript()->appendScript( $urn );
             }
             if( $this->_basePath && file_exists( $path ) ) {
-                 // we have a problem with repeating directories in $urn
-                 // this is a temporary solution...
-                 $urn = explode(DIR_SEP, $urn);
-                 $urn = array_unique($urn);
-                 $urn = implode(DIR_SEP, $urn);
-                 
                  $this->view->headScript()->appendFile( $urn );
             }
         }
-        /* $this->view->headScript()
-          ->appendFile
-          (
-          $this->_baseUrn
-          .   $this->_sharedFileName
-          .	".{$this->_fileSuffix}"
-          )
-          ->appendScript( $this->view->jQueryReady()->toString() )
-          ->appendFile
-          (
-          $this->_baseUrn
-          .   $p_request->getControllerName()
-          .	".{$this->_fileSuffix}"
-          )
-          ->appendFile
-          (
-          $this->_baseUrn
-          .   $p_request->getControllerName()
-          .   DIR_SEP
-          .   $p_request->getActionName()
-          .	".{$this->_fileSuffix}"
-          ); */
     }
 }
