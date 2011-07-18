@@ -13,13 +13,18 @@
 		border:none !important;
 		}
 		.themesListTabsBtns {
-			padding:0px !important; margin-bottom:20px !important;
-			background:none !important;
-			border:none !important; border-bottom:1px solid #9D9D9D !important;
+			padding:0px !important;
+            margin-bottom:0px !important;
+			border:none !important;
 			}
 			.themesListTabsBtns .ui-tabs-selected {
-				background:#f6f6f6 !important;
+				background:#fff !important;
 				}
+
+.themesListHolder .dataTables_wrapper {
+    margin-top: 0;
+}
+
 		#addNewPublication {
 			position:absolute; right:0px; top:8px; display:block;
 			height:13px; 

@@ -27,6 +27,15 @@
 		</div>
 	</div>
 </div>
+<script type="text/javascript">
+$(function() {
+    $('.themesListHolder .ui-tabs .ui-widget-header li').hover(function() {
+        $(this).addClass('ui-state-hover');
+    }, function() {
+        $(this).removeClass('ui-state-hover');
+    });
+});
+</script>
 
 <script id="popupTmpl" type="text/x-jQuery-tmpl" title="<?php echo getGS( 'Upload theme' ) ?>">
 	<div class="message-holder">
