@@ -30,7 +30,7 @@ if (!is_file('Zend/Application.php')) {
 		get_include_path(),
 	)));
 }
-require_once 'Zend/Application.php';
+include_once('Zend/Application.php');
 
 $oldErrorReporting = error_reporting();
 error_reporting(0);

@@ -279,7 +279,7 @@ class CommentRepository extends DatatableSource
      *
      * @param array $p_
      * @param string $p_cols
-     * @param 
+     * @param
      * @return Doctrine\ORM\Query\Expr
      */
     protected function buildFilter(array $p_cols, array $p_filter, $qb, $andx)
@@ -366,6 +366,31 @@ class CommentRepository extends DatatableSource
     public function flush()
     {
         $this->getEntityManager()->flush();
+    }
+
+    /**
+     *
+     * Get direct replies to a comment
+     *
+     * @param $p_comment_id
+     */
+
+    public function getDirectReplies($p_comment_id)
+    {
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->add('select', 'c.id')
+            ->add('from', 'Newscoop\Entity\Comment c')
+            ->add('where', 'c.parent = :p_comment_id')
+            ->setParameter('p_comment_id', $p_comment_id);
+        $query = $qb->getQuery();
+        $commentIds = $query->getArrayResult();
+
+        $clearCommentIds = array();
+        foreach($commentIds as $key => $value) {
+        	$clearCommentIds[] = $value['id'];
+        }
+        return $clearCommentIds;
     }
 
 }
