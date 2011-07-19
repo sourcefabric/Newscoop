@@ -1,3 +1,52 @@
+3.6.0-RC1 (July 18, 2011)
+  Improvements
+  ------------
+  * [CS-3023] Better user experience for Geo-location POI edit popup
+  * [CS-3387] List of articles in dynamic maps can be presented as a list of names
+  * [CS-3363] support of percentage for the dimension of a map in frontend pages
+  * [CS-2595] New "About & Help" screen for the admin interface
+
+  Bug Fixes
+  ---------
+  * [CS-3284] Converting templates to themes does not work for all cases
+  * [CS-3375] Fatal error in installation process whit PluginLoader.php
+  * [CS-3199] Backup file is corrupted and cannot be opened or restored
+  * [CS-3361] After creating an article the page gets stuck at the do_add.php page
+  * [CS-3372] Upload Theme gives "Upload failed" but still uploads the theme
+  * [CS-3309] tpl parameter is not available anymore
+  * [CS-3333] Installer does not check for all requirements
+  * [CS-3378] Deleting a comment does not delete the replies to it
+  * [CS-3412] Set bulk articles gives "Error: Undefined variable f_target"
+  * [CS-3382] Upload of image from URL fails. No image is uploaded.
+  * [CS-3381] Imposible to upload a new image to the media archive
+  * [CS-3407] Re-sized images are not displayed properly in frontend
+  * [CS-3359] Deleting a theme fails
+  * [CS-3424] Wrong re-login path on session expiring when using tinymce plugins
+  * [CS-3397] Plupload auto-submit does not work with the current plupload version
+  * [CS-3419] Logger does not fill the "user" column in some cases
+  * [CS-3413] Show/Hide in article list cannot be un-checked
+  * [CS-3433] Registration in frontend requires user to be logged in
+  * [CS-3371] Save & Close in article edit screen saves but does not close the screen
+  * [CS-3355] Second page of articles list tries to display list entries that do not exist
+  * [CS-3409] Installer says permissions are Ok but they are too strict for the admin interface to work
+  * [CS-3377] Text grammar is wrong in comments actions
+  * [CS-3432] Check all button in articles list remains checked after any action is performed
+  * [CS-3405] Sorting does not work in themes
+  * [CS-3435] When editing an author data is displayed before styling
+  * [CS-3434] Undefined javascript variable in article edit screen
+  * [CS-3393] Firebug displays syntax error for the Dashboard
+  * [CS-3370] Warning in subscription-notifier script
+  * [CS-2942] Confusing UI in Authors management screen
+  * [CS-3345] Image is not displayed properly when uploaded via URL
+  * [CS-3364] Editing user profile allows creating existing login name
+  * [CS-3261] Error when inserting an image in the article content
+  * [CS-3354] Inserting an image throught tinymce editor causes a notice in the toolbar
+  * [CS-3406] Image can be copied twice in tinymce editor for lack of focus
+  * [CS-3431] Tinymce insert image plugin popup does not close after editing
+  * [CS-3426] Re-sized image is not displayed re-sized in tinymce editor
+  * [CS-3430] Theme management screen has incorrect background color when hovering
+
+
 3.6.0-beta4 (July 5, 2011)
   Bug Fixes
   ---------

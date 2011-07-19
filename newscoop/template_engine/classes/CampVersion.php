@@ -32,7 +32,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_devStatus = 'beta4';
+    private $m_devStatus = 'RC1';
 
     /**
      * @var string
@@ -42,7 +42,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_releaseDate = '2011-07-05';
+    private $m_releaseDate = '2011-07-19';
 
     /**
      * @var string
