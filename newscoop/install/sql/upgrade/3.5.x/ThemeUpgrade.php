@@ -537,6 +537,10 @@ ORDER BY Number DESC";
         $replDir = basename($dir);
         $reInclude = "`({$ct->left_delimiter}\s*include.+file\s*=\s*['\"][^'\"]*)({$replDir})/([^'\"]*['\"].+{$ct->right_delimiter})`";
 
+        $searchPath = "templates"; // /templates srcs
+        $replacePath = "themes/".basename(dirname($dir));
+        $reHtmlSrc = "`((?:url\s*\(|(?:src|href)\s*=)\s*['\"]?)(/{$searchPath})([^'\"\)]*(['\"]|\)))`";
+
         $scanDirs = array($dir);
         for($i=0;;$i++) {
             // break if stack finished
@@ -551,6 +555,7 @@ ORDER BY Number DESC";
                 elseif(strpos($file, ".tpl") !== false) {
                     $fullFilePath = $currentDir.DIR_SEP.$file;
                     file_put_contents($fullFilePath, preg_replace($reInclude, "$1$3", file_get_contents($fullFilePath)));
+                    file_put_contents($fullFilePath, preg_replace($reHtmlSrc, "$1$replacePath$3", file_get_contents($fullFilePath)));
                 }
             }
         }
