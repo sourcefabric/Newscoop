@@ -163,3 +163,13 @@ ul.edit li a.delete {
     margin-top: 8px;
     font-weight: normal;
 }
+
+table.resource th, table.resource td { text-align: left; }
+table.resource th { border-bottom: 1px solid #ccc; }
+table.resource input { float: left; }
+table.resource label {
+    display: block;
+    margin-left: 20px;
+    padding-top: 3px;
+    padding-left: 3px;
+}

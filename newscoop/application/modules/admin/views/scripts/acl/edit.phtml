@@ -1,3 +1,66 @@
+<?php foreach ($this->resources as $resource => $actions) { ?>
+<table class="resource">
+    <tr>
+        <th><input type="checkbox" id="<?php echo $resource; ?>" /> <label for="<?php echo $resource; ?>"><?php echo $resource; ?></label></th>
+    </tr>
+    <?php foreach ($actions as $action) { ?>
+    <tr>
+        <td><input type="checkbox" id="<?php echo $resource, '_', $action; ?>" name="<?php echo $resource; ?>" value="<?php echo $action; ?>" <?php echo $this->acl->isAllowed($resource, $action) ? ' checked="checked"' : ''; ?> />
+        <label for="<?php echo $resource, '_', $action; ?>"><?php echo $action; ?></label></td>
+    </tr>
+    <?php } ?>
+</table>
+<?php } ?>
+
+<script type="text/javascript">
+$(function() {
+    // check/uncheck all items
+    $('.resource th input:checkbox').change(function() {
+        var checked = $(this).attr('checked');
+        var table = $(this).closest('table');
+        $('td input:checkbox', table).each(function() {
+            $(this).attr('checked', checked != undefined);
+            $(this).change();
+        });
+    }).each(function() { // init
+        var table = $(this).closest('table');
+        $(this).attr('checked', $('td input:checkbox', table).size() == $('td input:checkbox:checked', table).size());
+    });
+
+    $('.resource td input:checkbox').change(function() {
+        var type = $(this).attr('checked') != undefined ? 'allow' : 'deny';
+        var resource = $(this).attr('name');
+        var action = $(this).val();
+
+        $.post("<?php echo $this->url(array(
+            'module' => 'admin',
+            'controller' => 'acl',
+            'action' => 'save',
+            'format' => 'json',
+        )); ?>", {
+            'role': <?php echo $this->role; ?>,
+            'type': type,
+            'resource': resource,
+            'action': action
+        }, function(data, textStatus, jqXHR) {
+            if (data.status == 'ok') {
+                flashMessage('Permissions updated');
+            } else {
+                flashMessage('Error: ' + data.message, 'error');
+            }
+        }, 'json');
+
+        // update check all checkbox on item change
+        var table = $(this).closest('table');
+        $('th input:checkbox', table).attr('checked', $('td input:checkbox', table).size() == $('td input:checkbox:checked', table).size());
+    });
+});
+</script>
+
+<hr />
+
+<?php return; ?>
+
 <?php if (empty($this->rules) && empty($this->rulesParents)) {
     echo $this->renderMessage(getGS('No rules.'));
     return;

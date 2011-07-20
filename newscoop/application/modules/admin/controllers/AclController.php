@@ -41,6 +41,10 @@ class Admin_AclController extends Zend_Controller_Action
             ->addActionContext('actions', 'json')
             ->initContext();
 
+        $this->_helper->contextSwitch()
+            ->addActionContext('save', 'json')
+            ->initContext();
+
         $this->acl = Zend_Registry::get('acl');
 
         $this->resource = $this->_getParam('user', false) ? 'user' : 'user-group';
@@ -95,60 +99,23 @@ class Admin_AclController extends Zend_Controller_Action
 
     public function editAction()
     {
-        $role = $this->_helper->entity->get(new Role, 'role');
-        $resources = array('' => getGS('Global'));
-        foreach (array_keys($this->acl->getResources()) as $resource) {
-            $resources[$resource] = $this->formatName($resource);
+        $this->view->resources = $this->acl->getResources();
+        $this->view->acl = $this->getHelper('acl');
+        $this->view->role = $this->_getParam('role');
+    }
+
+    public function saveAction()
+    {
+        try {
+            $rule = new Rule();
+            $request = $this->getRequest();
+            $this->ruleRepository->save($rule, $request->getPost());
+            $this->_helper->entity->flushManager();
+            $this->view->status = 'ok';
+        } catch (\Exception $e) {
+            $this->view->status = 'error';
+            $this->view->message = $e->getMessage();
         }
-
-        // get rules
-        $rules = array();
-        foreach ($role->getRules() as $rule) {
-            $resource = $rule->getResource();
-            if (!isset($rules[$resource])) {
-                $rules[$resource] = array();
-            }
-
-            $rules[$resource][] = (object) array(
-                'id' => $rule->getId(),
-                'class' => $rule->getType(),
-                'type' => $this->ruleTypes[$rule->getType()],
-                'action' => $this->formatName($rule->getAction()),
-            );
-        }
-
-        $rulesParents = array();
-        $user = $this->_getParam('user', false);
-        if ($user) {
-            $staff = $this->_helper->entity->get(new Staff, 'user', FALSE);
-            foreach ($staff->getGroups() as $group) {
-                foreach ($group->getRoleRules() as $rule) {
-                    $resource = $rule->getResource();
-                    if (!isset($rulesParents[$resource])) {
-                        $rulesParents[$resource] = array();
-                    }
-
-                    $rulesParents[$resource][] = (object) array(
-                        'id' => $rule->getId(),
-                        'class' => $rule->getType(),
-                        'type' => $this->ruleTypes[$rule->getType()],
-                        'action' => $this->formatName($rule->getAction()),
-                    );
-                }
-            }
-        }
-
-        $this->view->role = $role;
-        $this->view->resources = $resources;
-        $this->view->rules = $rules;
-        $this->view->rulesParents = $rulesParents;
-
-        $this->_helper->sidebar(array(
-            'label' => getGS('Add new rule'),
-            'module' => 'admin',
-            'controller' => 'acl',
-            'action' => 'form',
-        ), true);
     }
 
     public function deleteAction()
