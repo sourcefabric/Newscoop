@@ -341,6 +341,7 @@ class ArticleTypeField extends DatabaseObject {
         $translation = new Translation(null, $this->getPhraseId());
         $translation->deletePhrase();
 
+        $success = false;
         if ($this->getPrintName() != 'NULL') {
 			$queryStr = "ALTER TABLE `X" . $this->m_data['type_name']
 			. "` DROP COLUMN `" . $this->getName() . "`";
@@ -364,8 +365,9 @@ class ArticleTypeField extends DatabaseObject {
 		if ($success) {
             $newOrders = array();
             foreach ($orders as $k => $v) {
-                if ($v != $this->m_data['field_name'])
-                    $newOrders[] = $v;
+                if (array_key_exists('field_name', $this->m_data)) {
+					if ($v != $this->m_data['field_name']) $newOrders[] = $v;
+				}
 
             }
             $newOrders = array_reverse($newOrders);
