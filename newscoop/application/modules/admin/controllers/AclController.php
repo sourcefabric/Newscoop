@@ -37,9 +37,109 @@ class Admin_AclController extends Zend_Controller_Action
             'deny' => getGS('Deny'),
         );
 
-        $this->_helper->contextSwitch()
-            ->addActionContext('actions', 'json')
-            ->initContext();
+        $this->groups = array(
+            'authoring' => getGS('Authoring'),
+            'structure' => getGS('Structure'),
+            'layout' => getGS('Layout'),
+            'users' => getGS('Users'),
+            'system' => getGS('System'),
+            'plugins' => getGS('Plugins'),
+        );
+
+        $this->resources = array(
+            'authoring' => array(
+                'article' => getGS('Articles'),
+                'image' => getGS('Images'),
+                'comment' => getGS('Comments'),
+                'file' => getGS('Files'),
+                'audioclip' => getGS('Audioclips'),
+                'editor' => getGS('Rich-Text Editor Preferences'),
+            ),
+            'structure' => array(
+                'publication' => getGS('Publications'),
+                'issue' => getGS('Issues'),
+                'section' => getGS('Sections'),
+                'topic' => getGS('Topics'),
+                'language' => getGS('Languages'),
+            ),
+            'users' => array(
+                'user-group' => getGS('User Groups'),
+                'user' => getGS('Staff'),
+                'author' => getGS('Authors'),
+                'subscriber' => getGS('Subscribers'),
+            ),
+            'layout' => array(
+                'theme' => getGS('Themes'),
+                'template' => getGS('Templates'),
+                'article-type' => getGS('Article Types'),
+            ),
+            'system' => array(
+                'system-preferences' => getGS('Global'),
+                'indexer' => getGS('Search Indexer'),
+                'log' => getGS('Log'),
+                'localizer' => getGS('Localizer'),
+                'backup' => getGS('Backup'),
+                'cache' => getGS('Cache'),
+                'subscription' => getGS('Subscriptions'),
+                'country' => getGS('Countries'),
+            ),
+            'plugins' => array(
+                'plugin' => getGS('Plugins'),
+                'plugin-blog' => getGS('Blogs'),
+                'pluginpoll' => getGS('Polls'),
+                'plugin-interview' => getGS('Interviews'),
+                'plugin-recaptcha' => getGS('ReCaptcha'),
+            ),
+        );
+
+        // i18n
+        array(
+            getGS('add'),
+            getGS('admin'),
+            getGS('attach'),
+            getGS('clear'),
+            getGS('delete'),
+            getGS('edit'),
+            getGS('enable'),
+            getGS('guest'),
+            getGS('manage'),
+            getGS('moderate'),
+            getGS('moderator'),
+            getGS('move'),
+            getGS('notify'),
+            getGS('publish'),
+            getGS('translate'),
+            getGS('view'),
+
+            // editor related
+            getGS('bold'),
+            getGS('charactermap'),
+            getGS('copycutpaste'),
+            getGS('enlarge'),
+            getGS('findreplace'),
+            getGS('fontcolor'),
+            getGS('fontface'),
+            getGS('fontsize'),
+            getGS('horizontalrule'),
+            getGS('image'),
+            getGS('indent'),
+            getGS('italic'),
+            getGS('link'),
+            getGS('listbullet'),
+            getGS('listnumber'),
+            getGS('sourceview'),
+            getGS('spellcheckerenabled'),
+            getGS('statusbar'),
+            getGS('strikethrough'),
+            getGS('subhead'),
+            getGS('subscript'),
+            getGS('superscript'),
+            getGS('table'),
+            getGS('textalignment'),
+            getGS('textdirection'),
+            getGS('underline'),
+            getGS('undoredo'),
+        );
 
         $this->_helper->contextSwitch()
             ->addActionContext('save', 'json')
@@ -99,7 +199,9 @@ class Admin_AclController extends Zend_Controller_Action
 
     public function editAction()
     {
-        $this->view->resources = $this->acl->getResources();
+        $this->view->groups = $this->groups;
+        $this->view->resources = $this->resources;
+        $this->view->actions = $this->acl->getResources();
         $this->view->acl = $this->getHelper('acl');
         $this->view->role = $this->_getParam('role');
     }

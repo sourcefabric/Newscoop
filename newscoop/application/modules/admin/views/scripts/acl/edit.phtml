@@ -1,15 +1,18 @@
-<?php foreach ($this->resources as $resource => $actions) { ?>
-<table class="resource">
-    <tr>
-        <th><input type="checkbox" id="<?php echo $resource; ?>" /> <label for="<?php echo $resource; ?>"><?php echo $resource; ?></label></th>
-    </tr>
-    <?php foreach ($actions as $action) { ?>
-    <tr>
-        <td><input type="checkbox" id="<?php echo $resource, '_', $action; ?>" name="<?php echo $resource; ?>" value="<?php echo $action; ?>" <?php echo $this->acl->isAllowed($resource, $action) ? ' checked="checked"' : ''; ?> />
-        <label for="<?php echo $resource, '_', $action; ?>"><?php echo $action; ?></label></td>
-    </tr>
+<?php foreach ($this->groups as $group => $groupName) { ?>
+<div class="resource-group <?php echo $group; ?>">
+    <h3><?php echo $groupName; ?></h3>
+    <?php foreach ($this->resources[$group] as $resource => $resourceName) { ?>
+    <h4><input type="checkbox" id="<?php echo $resource; ?>" /> <label for="<?php echo $resource; ?>"><?php echo $resourceName; ?></label></h4>
+    <ul class="resource <?php echo $resource; ?>">
+        <?php foreach ($this->actions[$resource] as $action) { ?>
+        <li>
+            <td><input type="checkbox" id="<?php echo $resource, '_', $action; ?>" name="<?php echo $resource; ?>" value="<?php echo $action; ?>" <?php echo $this->acl->isAllowed($resource, $action) ? ' checked="checked"' : ''; ?> />
+            <label for="<?php echo $resource, '_', $action; ?>"><?php putGS($action); ?></label></td>
+        </li>
+        <?php } ?>
+    </ul>
     <?php } ?>
-</table>
+</div>
 <?php } ?>
 
 <script type="text/javascript">
@@ -25,6 +28,14 @@ $(function() {
     }).each(function() { // init
         var table = $(this).closest('table');
         $(this).attr('checked', $('td input:checkbox', table).size() == $('td input:checkbox:checked', table).size());
+    });
+
+    $('.resource-group').each(function() {
+        $(this).accordion({
+            header: 'h4',
+            autoHeight: false,
+            event: 'mouseover'
+        });
     });
 
     $('.resource td input:checkbox').change(function() {
@@ -44,9 +55,9 @@ $(function() {
             'action': action
         }, function(data, textStatus, jqXHR) {
             if (data.status == 'ok') {
-                flashMessage('Permissions updated');
+                flashMessage(<?php echo json_encode(getGS('Permissions updated')); ?>);
             } else {
-                flashMessage('Error: ' + data.message, 'error');
+                flashMessage(<?php echo json_encode(getGS('Error: ')); ?> + data.message, 'error');
             }
         }, 'json');
 
@@ -56,47 +67,3 @@ $(function() {
     });
 });
 </script>
-
-<hr />
-
-<?php return; ?>
-
-<?php if (empty($this->rules) && empty($this->rulesParents)) {
-    echo $this->renderMessage(getGS('No rules.'));
-    return;
-} ?>
-
-<?php foreach ($this->resources as $resource => $name) {
-    if (empty($this->rules[$resource]) && empty($this->rulesParents[$resource])) { // ignore empty
-        continue;
-    }
-?>
-<dl class="resource">
-    <dt><?php echo $name; ?></dt>
-
-    <?php 
-    if (!isset($this->rulesParents[$resource])) {
-        $this->rulesParents[$resource] = array();
-    }
-
-    foreach ($this->rulesParents[$resource] as $rule) { ?>
-    <dd class="<?php echo $rule->class; ?> inherited"><strong><?php echo $rule->type; ?></strong> <?php echo $rule->action ?: getGS('Any action'); ?></dd>
-    <?php } ?>
-
-    <?php 
-    if (!isset($this->rules[$resource])) {
-        $this->rules[$resource] = array();
-    }
-        
-    foreach ($this->rules[$resource] as $rule) { ?>
-    <dd class="<?php echo $rule->class; ?>">
-        <a class="delete icon" href="<?php echo $this->url(array(
-            'controller' => 'acl',
-            'action' => 'delete',
-            'rule' => $rule->id,
-        )); ?>" title="<?php putGS('Remove rule'); ?>"><?php putGS('Remove'); ?></a>
-        <strong><?php echo $rule->type; ?></strong> <?php echo $rule->action ?: getGS('Any action'); ?>
-    </dd>
-    <?php } ?>
-</dl>
-<?php } ?>

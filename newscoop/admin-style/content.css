@@ -77,62 +77,6 @@ a.ui-icon-wrapper span {
     padding-left: 0;
 }*/
 
-/** Acl resources */
-dl.resource {
-    margin: 10px 0 0;
-    font-size: 1.3em;
-    border: 1px solid #a9a9a9;
-    -mozilla-box-shadow: 2px 2px 3px #ccc;
-    -webkit-box-shadow: 2px 2px 3px #d4d4d4;
-    box-shadow: 2px 2px 3px #e5e5e5;
-}
-
-dl.resource:first-child {
-    margin-top: 0;
-}
-
-dl.resource dt, dl.resource dd {
-    margin: 0;
-    padding: 9px 11px;
-    -mozilla-box-shadow: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-}
-
-dl.resource dt {
-    font-weight: bold;
-    color: #000;
-    background-color: #fafafa;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(1, #f5f5f5));
-}
-
-dl.resource dd {
-    color: #444;
-    background-color: #fff;
-    border-top: 1px solid #a9a9a9;
-}
-
-dl.resource dd strong {
-    display: inline-block;
-    width: 70px;
-}
-
-dl.resource dd.allow strong {
-    color: #3d8215;
-}
-
-dl.resource dd.deny strong {
-    color: #cc3333;
-}
-
-dl.resource dd a.delete {
-    float: right;
-}
-
-dl.resource dd.inherited {
-    opacity: 0.7;
-}
-
 /** Lists */
 ul.edit {
     margin: 0;
@@ -164,12 +108,48 @@ ul.edit li a.delete {
     font-weight: normal;
 }
 
-table.resource th, table.resource td { text-align: left; }
-table.resource th { border-bottom: 1px solid #ccc; }
-table.resource input { float: left; }
-table.resource label {
+.resource-group {
+    float: left;
+    width: 466px;
+    margin: 0 13px 13px 0;
+    padding: 8px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+.resource-group.users {
+    clear: left;
+}
+
+.resource-group h3 {
+    margin: 0;
+    padding: 0;
+    font-size: 1.8em;
+    color: #333;
+}
+
+.resource-group .resource {
+    width: 100%;
+    margin: 8px 0 0;
+    padding: 0;
+}
+
+.resource th, .resource td { text-align: left; }
+.resource th { border-bottom: 1px solid #ccc; }
+.resource input { float: left; }
+.resource label {
     display: block;
     margin-left: 20px;
-    padding-top: 3px;
     padding-left: 3px;
+    cursor: pointer;
+}
+
+.resource-group h4 .ui-icon { display: none; }
+.resource-group ul.resource {
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+.resource-group li {
+    padding-top: 3px;
 }
