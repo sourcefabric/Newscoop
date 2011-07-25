@@ -2,7 +2,10 @@
 <div class="resource-group <?php echo $group; ?>">
     <h2><?php echo $groupName; ?></h2>
 
-    <?php foreach ($this->resources[$group] as $resource => $resourceName) { ?>
+    <?php foreach ($this->resources[$group] as $resource => $resourceName) {
+    if (!isset($this->actions[$resource])) { // skip empty
+        continue;
+    } ?>
     <h3><?php echo $resourceName; ?></h3>
     <ul class="resource <?php echo $resource; ?>">
         <?php foreach ($this->actions[$resource] as $action) { ?>
