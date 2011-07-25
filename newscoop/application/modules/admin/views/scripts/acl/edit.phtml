@@ -1,13 +1,14 @@
 <?php foreach ($this->groups as $group => $groupName) { ?>
 <div class="resource-group <?php echo $group; ?>">
-    <h3><?php echo $groupName; ?></h3>
+    <h2><?php echo $groupName; ?></h2>
+
     <?php foreach ($this->resources[$group] as $resource => $resourceName) { ?>
-    <h4><input type="checkbox" id="<?php echo $resource; ?>" /> <label for="<?php echo $resource; ?>"><?php echo $resourceName; ?></label></h4>
+    <h3><?php echo $resourceName; ?></h3>
     <ul class="resource <?php echo $resource; ?>">
         <?php foreach ($this->actions[$resource] as $action) { ?>
         <li>
-            <td><input type="checkbox" id="<?php echo $resource, '_', $action; ?>" name="<?php echo $resource; ?>" value="<?php echo $action; ?>" <?php echo $this->acl->isAllowed($resource, $action) ? ' checked="checked"' : ''; ?> />
-            <label for="<?php echo $resource, '_', $action; ?>"><?php putGS($action); ?></label></td>
+            <input type="checkbox" id="_<?php echo $resource, '_', $action; ?>" name="<?php echo $resource; ?>" value="<?php echo $action; ?>" <?php echo $this->acl->isAllowed($resource, $action) ? ' checked="checked"' : ''; ?> />
+            <label for="_<?php echo $resource, '_', $action; ?>"><?php putGS($action); ?></label>
         </li>
         <?php } ?>
     </ul>
@@ -18,27 +19,27 @@
 <script type="text/javascript">
 $(function() {
     // check/uncheck all items
-    $('.resource th input:checkbox').change(function() {
+    $('h3 input:checkbox').change(function() {
         var checked = $(this).attr('checked');
-        var table = $(this).closest('table');
-        $('td input:checkbox', table).each(function() {
+        var context = $(this).closest('h3').next('ul');
+        $('input:checkbox', context).each(function() {
             $(this).attr('checked', checked != undefined);
             $(this).change();
         });
     }).each(function() { // init
-        var table = $(this).closest('table');
-        $(this).attr('checked', $('td input:checkbox', table).size() == $('td input:checkbox:checked', table).size());
+        var context = $(this).closest('h3').next('ul');
+        $(this).attr('checked', $('input:checkbox', context).size() == $('input:checkbox:checked', context).size());
     });
 
     $('.resource-group').each(function() {
         $(this).accordion({
-            header: 'h4',
+            header: 'h3',
             autoHeight: false,
-            event: 'mouseover'
+            //event: 'mouseover'
         });
     });
 
-    $('.resource td input:checkbox').change(function() {
+    $('.resource input:checkbox').change(function() {
         var type = $(this).attr('checked') != undefined ? 'allow' : 'deny';
         var resource = $(this).attr('name');
         var action = $(this).val();
@@ -62,8 +63,8 @@ $(function() {
         }, 'json');
 
         // update check all checkbox on item change
-        var table = $(this).closest('table');
-        $('th input:checkbox', table).attr('checked', $('td input:checkbox', table).size() == $('td input:checkbox:checked', table).size());
+        var context = $(this).closest('ul');
+        $('input:checkbox', context.prev('h3')).attr('checked', $('input:checkbox', context).size() == $('input:checkbox:checked', context).size());
     });
 });
 </script>

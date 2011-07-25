@@ -117,39 +117,44 @@ ul.edit li a.delete {
     border: 1px solid #ccc;
 }
 
-.resource-group.users {
+.resource-group.layout, .resource-group.system {
     clear: left;
+}
+
+.resource-group h2 {
+    margin: 0 0 3px;
+    padding: 0;
+    font-size: 1.5em;
+    color: #333;
 }
 
 .resource-group h3 {
     margin: 0;
-    padding: 0;
-    font-size: 1.8em;
-    color: #333;
+    padding: 5px 5px 4px 28px;
 }
 
-.resource-group .resource {
-    width: 100%;
-    margin: 8px 0 0;
-    padding: 0;
-}
-
-.resource th, .resource td { text-align: left; }
-.resource th { border-bottom: 1px solid #ccc; }
-.resource input { float: left; }
-.resource label {
-    display: block;
-    margin-left: 20px;
-    padding-left: 3px;
-    cursor: pointer;
-}
-
-.resource-group h4 .ui-icon { display: none; }
-.resource-group ul.resource {
+ul.resource {
     margin: 0;
     padding: 0;
-    overflow: hidden;
 }
-.resource-group li {
-    padding-top: 3px;
+
+ul.resource li {
+    margin: 3px 0 0;
+    padding: 5px;
+    background-color: #efefef;
+}
+
+ul.resource li:hover {
+    background-color: #cce5f0;
+}
+
+ul.resource input {
+    float: left;
+}
+
+ul.resource label {
+    display: block;
+    margin: 0 0 0 20px;
+    padding: 3px 0 0 3px;
+    cursor: pointer;
 }
