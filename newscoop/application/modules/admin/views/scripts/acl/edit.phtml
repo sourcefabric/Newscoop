@@ -8,6 +8,9 @@
     } ?>
     <h3><?php echo $resourceName; ?></h3>
     <ul class="resource <?php echo $resource; ?>">
+        <li class="all">
+            <input type="checkbox" id="_<?php echo $resource; ?>_all" class="toggle" /> <label for="_<?php echo $resource; ?>_all"><?php putGS('all'); ?></label>
+        </li>
         <?php foreach ($this->actions[$resource] as $action) { ?>
         <li>
             <input type="checkbox" id="_<?php echo $resource, '_', $action; ?>" name="<?php echo $resource; ?>" value="<?php echo $action; ?>" <?php echo $this->acl->isAllowed($resource, $action) ? ' checked="checked"' : ''; ?> />
@@ -22,16 +25,16 @@
 <script type="text/javascript">
 $(function() {
     // check/uncheck all items
-    $('h3 input:checkbox').change(function() {
+    $('input:checkbox.toggle').change(function() {
         var checked = $(this).attr('checked');
-        var context = $(this).closest('h3').next('ul');
-        $('input:checkbox', context).each(function() {
+        var context = $(this).closest('ul');
+        $('input:checkbox', context).not('.toggle').each(function() {
             $(this).attr('checked', checked != undefined);
             $(this).change();
         });
     }).each(function() { // init
-        var context = $(this).closest('h3').next('ul');
-        $(this).attr('checked', $('input:checkbox', context).size() == $('input:checkbox:checked', context).size());
+        var context = $(this).closest('ul');
+        $(this).attr('checked', $('input:checkbox', context).not('.toggle').size() == $('input:checkbox:checked', context).not('.toggle').size());
     });
 
     $('.resource-group').each(function() {
@@ -42,7 +45,7 @@ $(function() {
         });
     });
 
-    $('.resource input:checkbox').change(function() {
+    $('.resource input:checkbox').not('.toggle').change(function() {
         var input = $(this);
         var type = input.attr('checked') != undefined ? 'allow' : 'deny';
         var resource = input.attr('name');

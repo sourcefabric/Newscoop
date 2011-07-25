@@ -149,6 +149,13 @@ ul.resource li {
     background-color: #efefef;
 }
 
+ul.resource li.all, ul.resource li.all:hover {
+    margin-top: -8px;
+    padding-top: 0;
+    padding-bottom: 3px;
+    background-color: transparent;
+}
+
 ul.resource li:hover {
     background-color: #cce5f0;
 }
