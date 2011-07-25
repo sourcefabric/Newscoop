@@ -440,7 +440,7 @@ class Admin_ThemesController extends Zend_Controller_Action
         }
         catch( \Exception $e )
         {
-            $this->_helper->flashMessenger( ( $this->view->error = getGS( 'Saving settings failed.' ) ) );
+//            $this->_helper->flashMessenger( ( $this->view->error = getGS( 'Saving settings failed.' ) ) );
         }
         $this->view->outputForm = $outputForm;
 

@@ -98,7 +98,8 @@ class Admin_TemplateController extends Zend_Controller_Action
 
         // redirect parameter in session
         $nextUrl = new Zend_Session_Namespace('upload-next');
-        $nextUrl->setExpirationHops(5, 'next', true);
+
+        $nextUrl->setExpirationHops(7, 'next', true);
         $nextUrl->next = $this->_request->getParams();
 
         $this->view->actions = array(
@@ -161,7 +162,7 @@ class Admin_TemplateController extends Zend_Controller_Action
         }
 
         // prelong next parameter
-        $nextRedirect->setExpirationHops(5, 'next', true);
+        $nextRedirect->setExpirationHops(7, 'next', true);
 
         $this->view->form = $form;
         $this->view->isWritable = $this->service->isWritable($path);
@@ -499,27 +500,36 @@ class Admin_TemplateController extends Zend_Controller_Action
     {
         $form = new Zend_Form;
 
-        $form->addElement('hash', 'csrf');
-        $form->addElement('hidden', 'name');
-
-        $form->addElement('select', 'multiaction', array(
-            'multioptions' => array(
-                '' => getGS('Actions'),
-                'move' => getGS('Move'),
-                'delete' => getGS('Delete'),
-            ),
+        $form->addElements( array
+        (
+            new Zend_Form_Element_Hash('csrf'),
+            new Zend_Form_Element_Hidden('name'),
+            new Zend_Form_Element_Select('multiaction', array
+            (
+            	'multioptions' => array
+                (
+                	'' => getGS('Actions'),
+                	'move' => getGS('Move'),
+                	'delete' => getGS('Delete'),
+                )
+            )),
+            new Zend_Form_Element_Hidden('action', array
+            (
+            	'required' => true,
+            	'validators' => array
+                (
+                    array('inArray', true, array
+                    (
+                        array('copy', 'move', 'rename', 'delete', 'create-file', 'create-folder'),
+                    )),
+                ),
+            )),
+            new Zend_Form_Element_MultiCheckbox('file')
         ));
 
-        $form->addElement('hidden', 'action', array(
-            'required' => true,
-            'validators' => array(
-                array('inArray', true, array(
-                    array('copy', 'move', 'rename', 'delete', 'create-file', 'create-folder'),
-                )),
-            ),
-        ));
-
-        $form->addElement('multiCheckbox', 'file', array());
+        foreach( $form->getElements() as $elem ) {
+            $elem->removeDecorator( 'DtDdWrapper' )->removeDecorator( 'Label' );
+        }
 
         return $form;
     }

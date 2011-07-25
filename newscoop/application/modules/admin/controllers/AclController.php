@@ -17,9 +17,6 @@ class Admin_AclController extends Zend_Controller_Action
     /** @var Resource_Acl */
     private $acl;
 
-    /** @var array */
-    private $ruleTypes;
-
     /** @var Doctrine\ORM\EntityRepository */
     private $ruleRepository;
 
@@ -37,8 +34,113 @@ class Admin_AclController extends Zend_Controller_Action
             'deny' => getGS('Deny'),
         );
 
+        $this->groups = array(
+            'authoring' => getGS('Authoring'),
+            'structure' => getGS('Structure'),
+            'layout' => getGS('Layout'),
+            'users' => getGS('Users'),
+            'system' => getGS('System'),
+            'plugins' => getGS('Plugins'),
+        );
+
+        $this->resources = array(
+            'authoring' => array(
+                'article' => getGS('Articles'),
+                'image' => getGS('Images'),
+                'comment' => getGS('Comments'),
+                'file' => getGS('Files'),
+                'audioclip' => getGS('Audioclips'),
+                'editor' => getGS('Rich-Text Editor Preferences'),
+            ),
+            'structure' => array(
+                'publication' => getGS('Publications'),
+                'issue' => getGS('Issues'),
+                'section' => getGS('Sections'),
+                'topic' => getGS('Topics'),
+                'language' => getGS('Languages'),
+            ),
+            'users' => array(
+                'user-group' => getGS('User Groups'),
+                'user' => getGS('Staff'),
+                'author' => getGS('Authors'),
+                'subscriber' => getGS('Subscribers'),
+            ),
+            'layout' => array(
+                'theme' => getGS('Themes'),
+                'template' => getGS('Templates'),
+                'article-type' => getGS('Article Types'),
+            ),
+            'system' => array(
+                'system-preferences' => getGS('Global'),
+                'indexer' => getGS('Search Indexer'),
+                'country' => getGS('Countries'),
+                'log' => getGS('Log'),
+                'localizer' => getGS('Localizer'),
+                'backup' => getGS('Backup'),
+                'cache' => getGS('Cache'),
+                'subscription' => getGS('Subscriptions'),
+                'notification' => getGS('Notification'),
+            ),
+            'plugins' => array(
+                'plugin' => getGS('Plugins'),
+                'plugin-blog' => getGS('Blogs'),
+                'pluginpoll' => getGS('Polls'),
+                'plugin-interview' => getGS('Interviews'),
+                'plugin-recaptcha' => getGS('ReCaptcha'),
+            ),
+        );
+
+        // i18n
+        $this->actions = array(
+            'add' => getGS('add'),
+            'admin' => getGS('admin'),
+            'attach' => getGS('attach'),
+            'clear' => getGS('clear'),
+            'delete' => getGS('delete'),
+            'edit' => getGS('edit'),
+            'enable' => getGS('enable'),
+            'guest' => getGS('guest'),
+            'manage' => getGS('manage'),
+            'moderate' => getGS('moderate'),
+            'moderator' => getGS('moderate'),
+            'move' => getGS('move'),
+            'notify' => getGS('notify'),
+            'publish' => getGS('publish'),
+            'translate' => getGS('translate'),
+            'view' => getGS('view'),
+
+            // editor related
+            'bold' => getGS('bold'),
+            'charactermap' => getGS('character map'),
+            'copycutpaste' => getGS('copy/cut/paste'),
+            'enlarge' => getGS('enlarge'),
+            'findreplace' => getGS('find/replace'),
+            'fontcolor' => getGS('font color'),
+            'fontface' => getGS('font face'),
+            'fontsize' => getGS('font size'),
+            'horizontalrule' => getGS('horizontal rule'),
+            'image' => getGS('image'),
+            'indent' => getGS('indent'),
+            'italic' => getGS('italic'),
+            'link' => getGS('link'),
+            'listbullet' => getGS('list bullet'),
+            'listnumber' => getGS('list number'),
+            'sourceview' => getGS('source view'),
+            'spellcheckerenabled' => getGS('spell checker enabled'),
+            'statusbar' => getGS('statusbar'),
+            'strikethrough' => getGS('strikethrough'),
+            'subhead' => getGS('subhead'),
+            'subscript' => getGS('subscript'),
+            'superscript' => getGS('superscript'),
+            'table' => getGS('table'),
+            'textalignment' => getGS('text alignment'),
+            'textdirection' => getGS('text direction'),
+            'underline' => getGS('underline'),
+            'undoredo' => getGS('undo/redo'),
+        );
+
         $this->_helper->contextSwitch()
-            ->addActionContext('actions', 'json')
+            ->addActionContext('save', 'json')
             ->initContext();
 
         $this->acl = Zend_Registry::get('acl');
@@ -46,227 +148,56 @@ class Admin_AclController extends Zend_Controller_Action
         $this->resource = $this->_getParam('user', false) ? 'user' : 'user-group';
     }
 
-    public function formAction()
-    {
-        $this->_helper->acl->check($this->resource, 'manage');
-
-        $form = $this->getForm()
-            ->setAction('')
-            ->setMethod('post')
-            ->setDefaults(array(
-                'type' => 'allow',
-                'role' => $this->_getParam('role', 0),
-                'group' => $this->_getParam('group', 0),
-                'user' => $this->_getParam('user', 0),
-            ));
-
-        // form handle
-        if ($this->getRequest()->isPost() && $form->isValid($_POST)) {
-            $values = $form->getValues();
-            $user = Zend_Registry::get('user');
-            $acl = $this->_helper->acl->getAcl($user);
-
-            // check if rule would deny user to manage permissions
-            if (in_array($values['role'], $acl->getRoles()) && $values['type'] == 'deny') {
-                $resource = empty($values['resource']) ? null : $values['resource'];
-                $action = empty($values['action']) ? null : $values['action'];
-                $acl->deny($values['role'], $resource, $action);
-
-                if (!$acl->isAllowed($user, $this->resource, 'manage')) {
-                    $this->_helper->flashMessenger(array('error', getGS("You can't deny yourself to manage $1", $this->formatName($this->resource))));
-                    $this->redirect();
-                }
-            }
-
-            try {
-                $rule = new Rule();
-                $this->ruleRepository->save($rule, $form->getValues());
-                $this->_helper->entity->flushManager();
-
-                $this->_helper->flashMessenger->addMessage(getGS('Rule saved.'));
-                $this->redirect();
-            } catch (PDOException $e) {
-                $form->role->addError(getGS('Rule for this resource/action exists already.'));
-            }
-        }
-
-        $this->view->form = $form;
-    }
-
     public function editAction()
     {
-        $role = $this->_helper->entity->get(new Role, 'role');
-        $resources = array('' => getGS('Global'));
-        foreach (array_keys($this->acl->getResources()) as $resource) {
-            $resources[$resource] = $this->formatName($resource);
-        }
-
-        // get rules
-        $rules = array();
-        foreach ($role->getRules() as $rule) {
-            $resource = $rule->getResource();
-            if (!isset($rules[$resource])) {
-                $rules[$resource] = array();
-            }
-
-            $rules[$resource][] = (object) array(
-                'id' => $rule->getId(),
-                'class' => $rule->getType(),
-                'type' => $this->ruleTypes[$rule->getType()],
-                'action' => $this->formatName($rule->getAction()),
-            );
-        }
-
-        $rulesParents = array();
-        $user = $this->_getParam('user', false);
-        if ($user) {
-            $staff = $this->_helper->entity->get(new Staff, 'user', FALSE);
-            foreach ($staff->getGroups() as $group) {
-                foreach ($group->getRoleRules() as $rule) {
-                    $resource = $rule->getResource();
-                    if (!isset($rulesParents[$resource])) {
-                        $rulesParents[$resource] = array();
-                    }
-
-                    $rulesParents[$resource][] = (object) array(
-                        'id' => $rule->getId(),
-                        'class' => $rule->getType(),
-                        'type' => $this->ruleTypes[$rule->getType()],
-                        'action' => $this->formatName($rule->getAction()),
-                    );
-                }
-            }
-        }
-
-        $this->view->role = $role;
-        $this->view->resources = $resources;
-        $this->view->rules = $rules;
-        $this->view->rulesParents = $rulesParents;
-
-        $this->_helper->sidebar(array(
-            'label' => getGS('Add new rule'),
-            'module' => 'admin',
-            'controller' => 'acl',
-            'action' => 'form',
-        ), true);
+        $this->view->groups = $this->groups;
+        $this->view->resources = $this->resources;
+        $this->view->actions = $this->acl->getResources();
+        $this->view->acl = $this->getHelper('acl');
+        $this->view->role = $this->_getParam('role');
+        $this->view->actionNames = $this->actions;
     }
 
-    public function deleteAction()
+    public function saveAction()
     {
-        $this->_helper->acl->check($this->resource, 'manage');
+        $request = $this->getRequest();
+        if (!$request->isPost()) {
+            return;
+        }
 
+        $values = $request->getPost();
         $user = Zend_Registry::get('user');
         $acl = $this->_helper->acl->getAcl($user);
-        $rule = $this->_helper->entity->find('Newscoop\Entity\Acl\Rule', $this->_getParam('rule'));
 
-        // check if removing rule would prevent user to edit permissions
-        if (in_array($rule->getRoleId(), $acl->getRoles())) {
-            $method = 'remove' . ucfirst($rule->getType());
-            $acl->$method($rule->getRoleId(), $rule->getResource(), $rule->getAction());
+        // check if rule would deny user to manage permissions
+        if (in_array($values['role'], $acl->getRoles()) && $values['type'] == 'deny') {
+            $resource = empty($values['resource']) ? null : $values['resource'];
+            $action = empty($values['action']) ? null : $values['action'];
+            $acl->deny($values['role'], $resource, $action);
+
             if (!$acl->isAllowed($user, $this->resource, 'manage')) {
-                $this->_helper->flashMessenger(array('error', getGS("You can't deny yourself to manage $1", $this->formatName($this->resource))));
-                $this->redirect();
+                $resourceName = $this->resource;
+                foreach ($this->resources as $resources) { // search for translation
+                    if (isset($resources[$this->resource])) {
+                        $resourceName = $resources[$this->resource];
+                        break;
+                    }
+                }
+                $this->view->status = 'error';
+                $this->view->message = getGS("You can't deny yourself to manage $1", $resourceName);
+                return;
             }
         }
 
-        $this->ruleRepository->delete($this->_getParam('rule'));
-        $this->_helper->entity->flushManager();
-
-        $this->_helper->flashMessenger->addMessage(getGS('Rule removed.'));
-        $this->redirect();
-    }
-
-    /**
-     * Get actions for resource
-     */
-    public function actionsAction()
-    {
-        $actions = array();
-        $resource = $this->_getParam('resource', '');
-        if (!empty($resource)) {
-            $actions = Saas::singleton()->filterPrivileges($resource, $this->acl->getActions($resource));
+        try {
+            $rule = new Rule();
+            $request = $this->getRequest();
+            $this->ruleRepository->save($rule, $values);
+            $this->_helper->entity->flushManager();
+            $this->view->status = 'ok';
+        } catch (\Exception $e) {
+            $this->view->status = 'error';
+            $this->view->message = $e->getMessage();
         }
-
-        $this->view->actions = $actions;
-    }
-
-    /**
-     * Get rule form
-     *
-     * @return Zend_Form
-     */
-    private function getForm()
-    {
-        $form = new Zend_Form();
-
-        $form->addElement('hidden', 'role', array(
-            'filters' => array(
-                array('int'),
-            ),
-        ));
-        $form->addElement('hidden', 'group');
-        $form->addElement('hidden', 'user');
-
-        // get resources
-        $resources = array('' => getGS('Any resource'));
-        foreach (array_keys($this->acl->getResources()) as $resource) {
-            $resources[$resource] = $this->formatName($resource);
-        }
-
-        $form->addElement('select', 'resource', array(
-            'multioptions' => $resources,
-            'label' => getGS('Resource'),
-        ));
-
-        // get actions
-        $actions = array('' => getGS('Any action'));
-        foreach ($this->acl->getActions() as $action) {
-            $actions[$action] = $this->formatName($action);
-        }
-
-        $form->addElement('select', 'action', array(
-            'multioptions' => $actions,
-            'label' => getGS('Action'),
-        ));
-
-        $form->addElement('radio', 'type', array(
-            'label' => getGS('Add Rule'),
-            'multioptions' => $this->ruleTypes,
-            'class' => 'acl type',
-        ));
-
-        $form->addElement('submit', 'submit', array(
-            'label' => getGS('Add'),
-        ));
-
-        return $form;
-    }
-
-    /**
-     * Redirect after action
-     *
-     * @return void
-     */
-    private function redirect()
-    {
-        $params = $this->getRequest()->getParams();
-        $entity = !empty($params['group']) ? 'group' : 'user';
-
-        $this->_helper->redirector('edit-access', $entity == 'group' ? 'user-group' : 'staff', 'admin', array(
-            $entity => $params[$entity],
-        ));
-    }
-
-    /**
-     * Format name
-     *
-     * @param string $name
-     * @return string
-     */
-    private function formatName($name)
-    {
-        $parts = explode('-', $name);
-        $parts = array_map('ucfirst', $parts);
-        return implode(' ', $parts);
     }
 }
