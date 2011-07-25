@@ -1,0 +1,245 @@
+/*  
+Theme Name: ZEN for Newscoop
+Version: 0.9 for Newscoop 3.5.x
+Author: Sourcefabric www.sourcefabric.org
+License: GNU GPL Version 3
+*/
+body { 
+  margin: 0; 
+  font-family: arial, sans-serif;
+  line-height: 1.3em;
+/*   font-family: georgia, "times new roman", times, serif; */
+  color: #444;
+}
+a {
+  text-decoration: none;
+  color: #007fb3;
+}
+a:hover { text-decoration: underline; }
+/* remove dotted outlines */
+a:active { outline: none; }
+:focus {outline:none;}
+::-moz-focus-inner {border:0;}
+
+h1, h2, h3, h4 { }
+.post {
+  display: block;
+  clear: both;
+  margin-bottom: 0em;
+  padding-bottom: 1em;
+}
+.caption, .cs_img_caption {
+  font-size: 0.7em;
+  font-family: georgia, serif;
+  color: #999;
+}
+/* Mobile - hide everything with class 'mobilehide' */
+@media handheld, only screen and (max-width: 767px) {
+  .mobilehide { display: none }
+}
+/* FEATURE POST ****************************** */
+#feature #image a {
+  display: inline-block;
+  width: 100%;
+  max-height: 350px;
+  overflow: hidden;
+}
+#feature #post h2 {
+  font-size: 3em;
+  line-height: 1em;
+  margin-bottom: 0.5em;
+}
+/* Mobile */
+@media handheld, only screen and (max-width: 767px) {
+  #feature #post h2 { font-size: 2em; }
+}
+/* META NAVIGATION ****************************** */
+#metanavigation, #metanavigation input  {
+  font-size: 0.8em;
+  margin-top: 0.5em;
+  color: #666;
+}
+#metanavigation .rss, #metanavigation .date  { margin-top: 0.6em; }
+#metanavigation a  { color: #666; }
+/* BLOCK **************************************** */
+.block { clear: both; margin-bottom: 1em; }
+.block .title {
+  font-weight: bold;
+  display: inline-block;
+  margin-bottom: 1em;
+  text-transform: uppercase;
+}
+.block ul { list-style: none; }
+.block h3 {
+  text-transform: uppercase;
+  padding: 0.5em 0;
+  border-top: 3px solid #444;
+}
+/* ARTICLE ************************************* */
+h2.post-title {
+  font-size: 3em;
+  line-height: 1em;
+  margin-bottom: 0.5em;
+  text-transform: uppercase; 
+}
+.post-details { color: #999; font-size: 0.8em;}
+#content .post-details { margin: 2em 0; }
+.full_text { width: 100%; clear: both; display: block; }
+.full_text div, .full_text p { margin-bottom: 1em; }
+.articleinset { 
+  border-right: 1px dotted #999;
+  float: left;
+  display: inline;
+  width: 50%;
+  max-width: 300px;
+  min-width: 150px;
+  margin-right: 1em;
+  margin-bottom: 1em;
+  padding-right: 1em;
+}
+.full_text_fullwidth .cs_img { margin-left: 2em; } /*image floats on the right*/
+.video-entity { padding: 1em; margin-bottom: 2em; width: 95%; background: #f7f7f7; border: 1px solid #ddd; }
+.audio-entity { width: 100%; margin: 10px 0; padding: 10px 0; clear: both; border-bottom: 1px solid #ccc; }  
+/* author bio box */
+.authorbio { border: 1px solid #ddd; background: #f7f7f7; overflow: hidden; line-height: 1.1em; height: 80px; padding: 10px;  }
+.authorbio img { max-height: 80px; float: left; margin-right: 1em; }
+/* Mobile */
+@media handheld, only screen and (max-width: 767px) {
+  h2.post-title { font-size: 2em; }
+  .articleinset { width: 100%; display: block; clear: both; padding: 0; border: 0;}
+}
+/* HEADERS FOR SECTIONS ************************** */
+.section a {
+  display: block;
+  margin-bottom: 0.5em;
+  font-size: 0.7em;
+  color: #666;
+  display: block;
+}
+.section a {
+  text-transform: uppercase;
+  padding-top: 0.5em;
+  border-top: 3px solid #444;
+}
+/* READ MORE LINK ******************************** */
+.read_more { 
+  display: block;
+  margin-bottom: 0.5em;
+  font-size: 0.7em;
+}
+.read_more a { color: #666; }
+/* FORMS / COMMENTS ****************************** */
+label { font-size: 0.8em; width: 30%; float: left; }
+.widerone { width: 50%; }
+.comment-form input.textfield, .comment-form textarea { width: 60%; }
+#article_comment_submit { margin: 1em 30%; font-size: 0.8em; }
+.comment-info { margin-left: 30%; font-size: 0.8em; }
+#comments_wrap li { list-style: none; min-height: 60px; margin: 1em 0; padding: 10px; border-left: 0px solid #ddd; }
+#comments_wrap li.odd { background: #f7f7f7; }
+#comments_wrap .user-meta { color: #999; font-size: 0.8em;}
+.posterrorcode { font-style: italic; font-size: 0.8em; color: #aaa;}
+.commentimage { border: 1px solid #ddd; float: left; margin-right: 10px; }
+.comment-entry { margin-left: 70px; overflow: hidden; }
+/* Mobile */
+@media handheld, only screen and (max-width: 767px) {
+  label { width: 100%; }
+  .comment-form input.textfield, .comment-form textarea { width: 100%; }
+}
+/* MAP ***************************************** */
+.olMap { width: 100% !important; } /*override newscoop bug - should be 100% in template*/
+.geo_side_info, .geomap_menu { font-size: 0.8em; clear: left; }
+.geomap_poi_spacer { display: none; }
+.geomap_map_name_label, .geomap_poi_name { float: left; width: 50%; }
+/* GENERAL ************************************* */
+.container .row {
+  margin-bottom: 1em;
+  padding-bottom: 1em;
+  border-bottom: 1px dotted #999;
+}
+.premium {
+  display: block;
+  float: left;
+  font-size: 0.7em;
+  padding: 0 2px;
+  font-weight: normal;
+  color: white;
+  background: #cc0000;
+  margin-right: 0.5em;
+}
+.message, .messagesmall { border: 1px solid #444; }
+.message { padding: 2em; margin: 3em 10%; }
+.messagesmall { display: inline; padding: 0.2em 1em; margin: 0.5em 0; }
+.messageinformation { background: #e2ffe2; }
+.messageerror { background: #ffe2e2; }
+/* block recent comments */
+.commentnick { font-style: italic; font-weight: bold; font-family: georgia, times, serif; }
+/* NAVIGATION *********************************** */
+#main-nav ul
+{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+#main-nav li
+{
+  float: left;
+  margin-right: 0.5em;
+} 
+#main-nav li a {
+  text-transform: uppercase;
+  color: #666;
+  font-weight: bold;
+  padding: 0 2px;
+}
+#main-nav .current_page_item, #main-nav a:hover, #main-nav .current-cat {
+  background-color:#cc0000;
+  color:#ffffff !important;
+  text-decoration: none;
+}
+#main-nav .current_page_item a, #main-nav a:hover, #main-nav .current-cat a {
+  color:#ffffff;
+}
+#main-nav input  {
+  font-size: 0.8em;
+  float: left;
+  color: #666;
+}
+.post img.thumbnail {
+  float: left;
+  margin-right: 1em;
+  margin-bottom: 1em;
+}
+/* SEARCH ************************************* */
+.searchbox input { }
+.searchbox #searchtext {
+    float: right;
+    background: url("img/bg-search.jpg") no-repeat scroll 4px 2px #FFFFFF;
+    height: 16px;
+    padding-left: 20px;
+    width: 80px;
+}
+.searchbox .searchbutton { display: none; }
+.more_entries .alignleft { float: left; margin-right: 2em; }
+/* Mobile */
+@media handheld, only screen and (max-width: 767px) {
+  .searchbox #searchtext { clear: both; float: left; margin-top: 1em; }
+}
+/* LOGIN FORM TOP **************************** */
+/* Mobile */
+@media handheld, only screen and (max-width: 767px) {
+  #loginname, #loginpassword { width: 40px; }
+}
+/* FOOTER ************************************** */
+#footer { font-size: 0.8em; background: #444; color: white; text-align:center; }
+#footer a { color: white; }
+#footer #footerinner { padding: 1em; }
+#footer #sections a { text-transform:uppercase; }
+#footer #sections, #footer #pages { text-align: center; padding: 0.5em 0; }
+#footer #sections li, #footer #pages li { display:inline; margin-right: 1em; }
+#footer #pages li { padding-right:0.5em; margin-right:0.3em; border-right: 1px solid white; }
+/* IMAGES *********************************** */
+/* ICONS */
+#metanavigation .rss a {
+  background: url(../../_img/ico-rss.png) no-repeat 0 5px;
+  padding: 6px 0 3px 23px;
+}
