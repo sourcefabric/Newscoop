@@ -552,6 +552,7 @@ this.main_init = function(map_div_name)
 
     // for switching between maps
     var lswitch = new OpenLayers.Control.LayerSwitcher();
+	lswitch.roundedCornerColor = "#464646";
 
     this.map.addControl(lswitch);
 
