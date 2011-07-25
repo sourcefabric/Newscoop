@@ -110,11 +110,16 @@ ul.edit li a.delete {
 
 .resource-group {
     float: left;
-    width: 466px;
+    width: 403px;
     margin: 0 13px 13px 0;
     padding: 8px;
     background-color: #fff;
     border: 1px solid #ccc;
+}
+
+.content-sidebar .resource-group {
+    float: none;
+    margin-right: 0;
 }
 
 .resource-group.layout, .resource-group.system {
