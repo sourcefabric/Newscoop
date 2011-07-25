@@ -24,7 +24,9 @@ class Admin_TemplateController extends Zend_Controller_Action
     {
         $resource = new ResourceId(__CLASS__);
         $themeService = $resource->getService(IThemeService::NAME);
+        /* @var $themeService Newscoop\Service\Implementation\ThemeServiceLocalFileSystem */
         $theme = $themeService->findById($this->_getParam('id'));
+        /* @var $theme Newscoop\Entity\Theme */
 
         $path = $theme->getPath();
         $fullPath = $themeService->toFullPath($theme);
@@ -34,6 +36,7 @@ class Admin_TemplateController extends Zend_Controller_Action
         $repository = $this->_helper->entity->getRepository('Newscoop\Entity\Template')
             ->setBasePath($path);
         $this->service = new Template($storage, $repository);
+        $this->service->setTheme($theme);
 
         $this->_helper->contextSwitch
             ->addActionContext('get-items', 'json')

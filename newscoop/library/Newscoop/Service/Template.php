@@ -8,7 +8,9 @@
 namespace Newscoop\Service;
 
 use Newscoop\Storage,
-    Newscoop\Entity\Repository\TemplateRepository;
+    Newscoop\Entity\Repository\TemplateRepository,
+    Newscoop\Service\Resource\ResourceId,
+    Newscoop\Entity\Theme;
 
 /**
  * Template service
@@ -37,6 +39,18 @@ class Template
     private $repository;
 
     /**
+     * Used for getting the proper id of a template
+     * @var Newscoop\Service\Implementation\SyncResourceServiceDoctrine
+     */
+    private $syncResServ;
+
+    /**
+     * The theme that the files belong to
+     * @var Newscoop\Entity\Theme
+     */
+    private $theme;
+
+    /**
      * @param Newscoop\Storage $storage
      * @param Newscoop\Entity\Repository\TemplateRepository $repository
      */
@@ -44,6 +58,14 @@ class Template
     {
         $this->storage = $storage;
         $this->repository = $repository;
+        $resourceId = new ResourceId('template_engine/metaclasses/MetaTemplate');
+        /* @var $syncResourceService ISyncResourceService */
+        $this->syncResServ = $resourceId->getService(ISyncResourceService::NAME);
+    }
+
+    public function setTheme(Theme $theme)
+    {
+        $this->theme = $theme;
     }
 
     /**
@@ -97,11 +119,16 @@ class Template
 
         if (!$item->isDir()) {
             $template = $this->repository->getTemplate($key);
+
+            // get the resource for the template id
+            $resource = $this->syncResServ->findByPathOrId( rtrim( $this->theme->getPath(), "/" )."/".ltrim( $key, "/" ) );
+            /* @var $resource Newscoop\Entity\Resource */
+
             $metadata += array(
                 'size' => $item->getSize(),
                 'ctime' => $item->getChangeTime(),
 
-                'id' => $template->getId(),
+                'id' => is_object($resource) ? $resource->getId() : $template->getId(),
                 'ttl' => $template->getCacheLifetime(),
             );
         }

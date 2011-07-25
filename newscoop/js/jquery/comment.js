@@ -187,8 +187,8 @@ $(function () {
             this.reset();
         });
         td.find('.commentSubject,.commentBody').slideDown("fast");
-        td.find('.content-edit').slideUp("fast");
-        td.find('.content-reply').slideUp("fast");
+        td.find('.content-edit').hide();
+        td.find('.content-reply').hide();
     });
     $('.dateCommentHolderEdit .edit-reply').live('click', function () {
         var el = $(this);
@@ -204,9 +204,9 @@ $(function () {
     $('.datatable .action-edit').live('click', function () {
         var el = $(this);
         var td = el.parents('td');
-        td.find('.commentSubject').slideToggle("fast");
-        td.find('.commentBody').slideToggle("fast");
-        td.find('.content-edit').slideToggle("fast");
+        td.find('.commentSubject').toggle("fast");
+        td.find('.commentBody').toggle("fast");
+        td.find('.content-edit').toggle("fast");
     });
     // Dialog
     $('.dialogPopup').dialog({
