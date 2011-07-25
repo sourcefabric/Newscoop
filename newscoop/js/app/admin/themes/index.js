@@ -152,7 +152,7 @@ $( function()
 						if( data.response ) 
 						{
 							confirmDeleteDialog.find( '.delete-message' ).text( data.response )
-								.show().delay(500).fadeOut( 'fast', function()
+								.show().delay(data.status ? 1000 : 3000).fadeOut( 'fast', function()
 								{
 									confirmDeleteDialog.find( '.delete-message' ).text( '' );
 									confirmDeleteDialog.dialog( 'close' ); 
