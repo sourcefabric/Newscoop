@@ -43,9 +43,10 @@ $(function() {
     });
 
     $('.resource input:checkbox').change(function() {
-        var type = $(this).attr('checked') != undefined ? 'allow' : 'deny';
-        var resource = $(this).attr('name');
-        var action = $(this).val();
+        var input = $(this);
+        var type = input.attr('checked') != undefined ? 'allow' : 'deny';
+        var resource = input.attr('name');
+        var action = input.val();
 
         $.post("<?php echo $this->url(array(
             'module' => 'admin',
@@ -62,11 +63,13 @@ $(function() {
                 flashMessage(<?php echo json_encode(getGS('Permissions updated')); ?>);
             } else {
                 flashMessage(<?php echo json_encode(getGS('Error: ')); ?> + data.message, 'error');
+                input.attr('checked', type != 'allow');
+                return false;
             }
         }, 'json');
 
         // update check all checkbox on item change
-        var context = $(this).closest('ul');
+        var context = input.closest('ul');
         $('input:checkbox', context.prev('h3')).attr('checked', $('input:checkbox', context).size() == $('input:checkbox:checked', context).size());
     });
 });
