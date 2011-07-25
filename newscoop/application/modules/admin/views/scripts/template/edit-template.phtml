@@ -22,3 +22,28 @@ $(function() {
     });
 });
 </script>
+
+<script type="text/javascript">
+
+window.open_filter_popup = function () {
+	var url = "<?php echo $this->baseUrl('/admin/articles/locations/filter.php'); ?>";
+	if ((!window.geo_filter_window) || (window.geo_filter_window.closed)) {
+		window.geo_filter_window = window.open(url, 'geo_filter','height=600,width=900');
+	}
+	try {
+		if (window.focus)
+		{
+			geo_filter_window.focus();
+		}
+	} catch (e) {alert(e);}
+
+};
+
+$(function() {
+	$('#geo_filtering').click(function() {
+		window.open_filter_popup();
+	});
+});
+
+</script>
+
