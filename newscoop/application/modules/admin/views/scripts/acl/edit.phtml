@@ -8,7 +8,7 @@
         <?php foreach ($this->actions[$resource] as $action) { ?>
         <li>
             <input type="checkbox" id="_<?php echo $resource, '_', $action; ?>" name="<?php echo $resource; ?>" value="<?php echo $action; ?>" <?php echo $this->acl->isAllowed($resource, $action) ? ' checked="checked"' : ''; ?> />
-            <label for="_<?php echo $resource, '_', $action; ?>"><?php putGS($action); ?></label>
+            <label for="_<?php echo $resource, '_', $action; ?>"><?php echo isset($this->actionNames[$action]) ? $this->actionNames[$action] : getGS($action); ?></label>
         </li>
         <?php } ?>
     </ul>

@@ -9,7 +9,9 @@
  */
 
 use Newscoop\Entity\Comment\Acceptance;
+
 /**
+ * @Acl(resource="comment", action="moderate")
  */
 class Admin_CommentAcceptanceController extends Zend_Controller_Action
 {
