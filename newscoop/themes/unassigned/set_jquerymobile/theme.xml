@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<theme name="Set Jquerymobile" designer="default" version="1.0" require="3.6">
+<theme name="The Mobile" designer="default" version="1.0" require="3.6">
     <description></description>
     
     <presentation-img src="front.jpg" name="Front page"/>
