@@ -1,3 +1,27 @@
+3.6.0-RC2 (July 26, 2011)
+  Improvements
+  ------------
+  [CS-3320] Better user experience in the user management screen
+  [CS-3447] Inclusion of the Zen theme into the theme manager
+  [CS-3321] User permissions are not longer presented in contradictory fashion style
+  [CS-3322] Select all to perform actions on permissions
+  [CS-3451] Plupload runs now in html5 mode by default
+
+  Bug Fixes
+  ---------
+  [CS-3353] include_path is not set properly and allow conflicting inclusions
+  [CS-3443] Images in frontend are not displayed after upgrading from templates to themes
+  [CS-3461] Data table says article "Name" instead of "Title"
+  [CS-3450] Warning message when deleting theme is too short
+  [CS-3423] Copying a thumbnail from media box into TinyMCE editor by drag&drop is not ok
+  [CS-3376] Reply to a comment leaves the submit button overcasting the text
+  [CS-3462] Wording is not clear in the article type screen
+  [CS-3417] Delete an article type cause an exception
+
+  Tasks
+  -----
+  [CS-3463] Remove the "Add Publication" button from the theme manager
+
 3.6.0-RC1 (July 18, 2011)
   Improvements
   ------------
