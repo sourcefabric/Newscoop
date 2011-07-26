@@ -515,13 +515,11 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
         // We have to update also the output theme settings in the database if there is one.
         $em = $this->getEntityManager();
-
         $q = $em->createQueryBuilder();
         $q->select('ost')->from(OutputSettingsTheme::NAME, 'ost');
         $q->leftJoin('ost.themePath', 'rsc');
         $q->andWhere('rsc.path = ?1');
         $q->setParameter(1, $theme->getPath());
-
         $result = $q->getQuery()->getResult();
         // If there are results than it means that the theme belongs to a publication
         if(count($result) > 0){
@@ -531,6 +529,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
                 if($outTh->getOutput() == $outputSettings->getOutput()){
                     $this->syncOutputSettings($outTh, $outputSettings);
                     $em->persist($outTh);
+                    $em->flush();
                     $updated = TRUE;
                     break;
                 }
@@ -546,9 +545,10 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
                 $outTh->setThemePath($pathRsc);
 
                 $outTh->setOutput($outputSettings->getOutput());
-                $this->syncOutputSettings($outTh, $outputSettings);
 
+                $this->syncOutputSettings($outTh, $outputSettings);
                 $em->persist($outTh);
+                $em->flush();
             }
         }
     }
