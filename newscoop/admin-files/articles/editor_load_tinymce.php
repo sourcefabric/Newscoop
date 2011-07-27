@@ -283,6 +283,7 @@ $().ready(function() {
         paste_convert_headers_to_strong: true,
         paste_remove_spans: true,
         paste_remove_styles: true,
+        paste_block_drop: true,
 
         // not escaping greek characters
         entity_encoding: 'raw',
@@ -293,7 +294,19 @@ $().ready(function() {
 
         <?php if ($p_user->hasPermission('EditorSubhead') && $p_objectType == 'article') { ?>
         setup : function(ed) {
-            ed.onInit.add(function(){ed.controlManager.setDisabled('pasteword', true);});
+            ed.onInit.add(function(){
+				ed.controlManager.setDisabled('pasteword', true);
+					if (tinymce.isIE) {
+						tinymce.dom.Event.add(ed.getBody(), "dragenter", function(e) {
+							return tinymce.dom.Event.cancel(e);
+						});
+					} else {
+					   tinymce.dom.Event.add(ed.getBody().parentNode, "drop", function(e) {
+							tinymce.dom.Event.cancel(e);
+							tinymce.dom.Event.stop(e);
+						});
+					}
+			});
             ed.onNodeChange.add(function(){ed.controlManager.setDisabled('pasteword', true);});
 
             ed.onKeyUp.add(function(ed, l) {

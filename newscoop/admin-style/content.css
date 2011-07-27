@@ -77,62 +77,6 @@ a.ui-icon-wrapper span {
     padding-left: 0;
 }*/
 
-/** Acl resources */
-dl.resource {
-    margin: 10px 0 0;
-    font-size: 1.3em;
-    border: 1px solid #a9a9a9;
-    -mozilla-box-shadow: 2px 2px 3px #ccc;
-    -webkit-box-shadow: 2px 2px 3px #d4d4d4;
-    box-shadow: 2px 2px 3px #e5e5e5;
-}
-
-dl.resource:first-child {
-    margin-top: 0;
-}
-
-dl.resource dt, dl.resource dd {
-    margin: 0;
-    padding: 9px 11px;
-    -mozilla-box-shadow: none;
-    -webkit-box-shadow: none;
-    box-shadow: none;
-}
-
-dl.resource dt {
-    font-weight: bold;
-    color: #000;
-    background-color: #fafafa;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #fff), color-stop(1, #f5f5f5));
-}
-
-dl.resource dd {
-    color: #444;
-    background-color: #fff;
-    border-top: 1px solid #a9a9a9;
-}
-
-dl.resource dd strong {
-    display: inline-block;
-    width: 70px;
-}
-
-dl.resource dd.allow strong {
-    color: #3d8215;
-}
-
-dl.resource dd.deny strong {
-    color: #cc3333;
-}
-
-dl.resource dd a.delete {
-    float: right;
-}
-
-dl.resource dd.inherited {
-    opacity: 0.7;
-}
-
 /** Lists */
 ul.edit {
     margin: 0;
@@ -162,4 +106,67 @@ ul.edit li a.delete {
     float: right;
     margin-top: 8px;
     font-weight: normal;
+}
+
+.resource-group {
+    float: left;
+    width: 403px;
+    margin: 0 13px 13px 0;
+    padding: 8px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+}
+
+.content-sidebar .resource-group {
+    float: none;
+    margin-right: 0;
+}
+
+.resource-group.layout, .resource-group.system {
+    clear: left;
+}
+
+.resource-group h2 {
+    margin: 0 0 3px;
+    padding: 0;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.resource-group h3 {
+    margin: 0;
+    padding: 5px 5px 4px 28px;
+}
+
+ul.resource {
+    margin: 0;
+    padding: 0;
+}
+
+ul.resource li {
+    margin: 3px 0 0;
+    padding: 5px;
+    background-color: #efefef;
+}
+
+ul.resource li.all, ul.resource li.all:hover {
+    margin-top: -8px;
+    padding-top: 0;
+    padding-bottom: 3px;
+    background-color: transparent;
+}
+
+ul.resource li:hover {
+    background-color: #cce5f0;
+}
+
+ul.resource input {
+    float: left;
+}
+
+ul.resource label {
+    display: block;
+    margin: 0 0 0 20px;
+    padding: 3px 0 0 3px;
+    cursor: pointer;
 }

@@ -274,7 +274,7 @@ function camp_archive_file($p_sourceFile, $p_destDir, $p_fileName, &$p_output)
  * @return int
  */
 function camp_backup_database($p_dbName, $p_destFile, &$p_output,
-                              $p_customParams = array())
+                              $p_customParams = array(), $p_omitGeoNames = true)
 {
     global $Campsite;
 
@@ -286,6 +286,9 @@ function camp_backup_database($p_dbName, $p_destFile, &$p_output,
     if ($password != "") {
         $cmd .= " --password=$password";
     }
+	if ($p_omitGeoNames) {
+        $cmd .= ' --ignore-table=' . $p_dbName . '.CityNames --ignore-table=' . $p_dbName . '.CityLocations';
+	}
     $cmd .= ' ' . implode(' ', $p_customParams);
     $cmd .= " $p_dbName > $p_destFile";
     $p_output = array();

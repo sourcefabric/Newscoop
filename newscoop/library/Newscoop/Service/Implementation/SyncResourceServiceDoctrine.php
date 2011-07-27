@@ -47,6 +47,7 @@ class SyncResourceServiceDoctrine extends AEntityServiceDoctrine
             if (isset($resources) && count($resources) > 0) {
                 return $resources[0];
             }
+            $resource->setName('buildPage');
             $em->persist($resource);
             $em->flush();
             return $resource;

@@ -25,14 +25,26 @@ class RuleRepository extends EntityRepository
     public function save(Rule $rule, array $values)
     {
         $em = $this->getEntityManager();
-
         $role = $em->getReference('Newscoop\Entity\Acl\Role', (int) $values['role']);
+        $resource = (string) $values['resource'];
+        $action = (string) $values['action'];
+
+        $conflicts = $this->findBy(array(
+            'role' => (int) $values['role'],
+            'resource' => $resource,
+            'action' => $action,
+        ));
+
+        foreach ($conflicts as $conflict) {
+            $em->remove($conflict);
+            $em->flush();
+        }
 
         $rule->setType($values['type']);
         $rule->setRole($role);
-        $rule->setResource((string) $values['resource']);
-        $rule->setAction((string) $values['action']);
-
+        $rule->setResource($resource);
+        $rule->setAction($action);
+        
         $em->persist($rule);
     }
 

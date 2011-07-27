@@ -168,7 +168,9 @@ $(function() {
         });
 
     // zebra
-    $('.content table tr:odd, .sidebar table tr:odd').addClass('odd');
+    $('.content table, .sidebar table').each(function() {
+        $('tr:odd', $(this)).addClass('odd');
+    });
 
     // confirmations
     $('.confirm[title]').click(function() {
