@@ -37,7 +37,7 @@ foreach ($hiddens as $name) {
       </li>
 
       <li>
-        <input type="radio" name="comment_action_${id}" value="deleted" class="input_radio" id="delete_${id}" ${deleted_checked}/>
+        <input type="radio" name="comment_action_${id}" value="deleted" class="input_radio" id="deleted_${id}" ${deleted_checked}/>
         <label class="inline-style left-floated" for="deleted_${id}"><?php putGS('Delete'); ?></label>
       </li>
 
@@ -73,7 +73,7 @@ foreach ($hiddens as $name) {
 </fieldset>
 <p style="display:none"><?php putGS('No comments posted.'); ?></p>
 <form id="comment-moderate" action="../comment/set-status/format/json" method="POST"></form>
-<script>
+<script type="text/javascript">
 function toggleCommentStatus() {
     var commentSetting = $('input:radio[name^="f_comment"]:checked').val();
     $('#comment-moderate .comments-block').each(function() {
@@ -107,16 +107,31 @@ function loadComments() {
             "article": "<?php echo $articleObj->getArticleNumber(); ?>",
             "language": "<?php echo $f_language_selected; ?>"
         },
-        success: function(data) {
+        success: function(data, status) {
+			if ((200 != status) && ('success' != status)) {
+		    	flashMessage('<?php putGS('Could not load comments.'); ?>');
+				return;
+			}
+			if ('string' == typeof(data)) {
+				try {
+					data = JSON.parse(data);
+				} catch (e) {
+					flashMessage('<?php putGS('Could not load comments.'); ?>');
+					return;
+				}
+			}
+
             $('#comment-moderate').empty();
-            hasComment = false;
-            for(i in data.result) {
+            var hasComment = false;
+            for(var i in data.result) {
                 hasComment = true;
-                comment = data.result[i];
-                if(typeof(comment) == "function")
+                var comment = data.result[i];
+                if(typeof(comment) == "function") {
                     continue;
-                template = $('#comment-prototype').html();
-                for(key in comment) {
+				}
+
+                var template = $('#comment-prototype').html();
+                for(var key in comment) {
                     if(key == 'status') {
                     	template = template.replace(new RegExp("\\$({|%7B)"+comment[key]+"_checked(}|%7D)","g"),'checked="true"');
                     	template = template.replace(new RegExp("\\${[^_]*_checked}","g"),'');
@@ -141,11 +156,21 @@ $('.action-list a').live('click',function(){
 		   "status": el.val(),
 		   <?php echo SecurityToken::JsParameter();?>,
 		},
-		success: function(data) {
-		    if(data.status != 200) {
-		    	flashMessage(data.message);
+		success: function(data, status) {
+			if ((200 != status) && ('success' != status)) {
+		    	flashMessage('<?php putGS('Could not update comments.'); ?>');
 		    	return;
 		    }
+
+			if ('string' == typeof(data)) {
+				try {
+					data = JSON.parse(data);
+				} catch (e) {
+					flashMessage('<?php putGS('Could not update comments.'); ?>');
+					return;
+				}
+			}
+
             flashMessage('<?php putGS('Comments updated.'); ?>');
             toggleCommentStatus();
 		},
@@ -157,7 +182,7 @@ $('.action-list a').live('click',function(){
 	});
 });
 </script>
-<script>
+<script type="text/javascript">
 $(function() {
 	loadComments();
 });

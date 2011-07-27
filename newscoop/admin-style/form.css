@@ -194,3 +194,35 @@ body.with-sidebar dl.zend_form {
 form.popup dd input[type="text"] {
     width: 99%;
 }
+
+h1 .inline.zend_form {
+    display: inline;
+    float: none;
+    text-align: left;
+    background-color: transparent;
+    border: none;
+	box-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+}
+
+h1 .inline dt {
+    display: none;
+}
+
+h1 .inline dd {
+    display: inline;
+}
+
+h1 .inline .top-input {
+    float: none;
+}
+
+h1 .inline #name {
+    width: 34em;
+    display: inline;
+}
+
+h1 .inline #submit {
+
+}

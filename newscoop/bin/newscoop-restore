@@ -238,6 +238,10 @@ if ($archiveExtension == "gz") {
 } else {
     $tarGzOption = "";
 }
+
+$backupDir = $Campsite['CAMPSITE_DIR'] . DIR_SEP . 'backup' . DIR_SEP;
+$tarDirOption .= ' -C ' . escapeshellarg($backupDir);
+
 $isNewBackupFormat = true;
 $cmd = "tar tf$tarGzOption " . escapeshellarg($archive_file)." | grep sql";
 exec($cmd, $output);
@@ -257,6 +261,10 @@ if ($isNewBackupFormat) {
 } else {
     $tempDirName = "backup-temp-".date("Y-m-d-H-i-s");
 }
+
+// having the tmp directory inside the backup directory
+$tempDirName = $backupDir . $tempDirName;
+
 echo "   * Temp directory: $tempDirName\n";
 echo "   * Initialization done.\n";
 flush_output($flush);
@@ -272,7 +280,7 @@ if (file_exists($tempDirName)) {
 echo " * Extracting files into temp directory...";
 flush_output($flush);
 if ($isNewBackupFormat) {
-    $cmd = "tar xf$tarGzOption " . escapeshellarg($archive_file);
+    $cmd = "tar xf$tarGzOption " . escapeshellarg($archive_file) . $tarDirOption;
     camp_exec_command($cmd, $adviceOnError);
 } else {
     camp_create_dir($tempDirName);

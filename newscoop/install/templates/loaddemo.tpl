@@ -55,8 +55,8 @@
               <label for="install_demo">Please choose a sample site:</label> &nbsp;
               <br /><input id="install_demo_no" name="install_demo" value="0" type="radio" style="margin: 0 5px 0 13px" {{ if !$dm.loaddemo }} checked {{ /if }}> <label for="install_demo_no">No, thanks!</label>
               {{ foreach from=$sample_templates key="step" item="t" }}
-              <br /><input type="radio" id="install_demo" name="install_demo" value="{{ $t }}" style="margin: 0 5px 0 13px" {{ if $dm.loaddemo eq $t }} checked {{ /if }}/>
-              <label for="install_demo">{{include file="./../sample_templates/$t/name.txt"}}</label>
+              <br /><input type="radio" id="install_demo_{{ $t }}" name="install_demo" value="{{ $t }}" style="margin: 0 5px 0 13px" {{ if $dm.loaddemo eq $t }} checked {{ /if }}/>
+              <label for="install_demo_{{ $t }}">{{include file="./../sample_templates/$t/name.txt"}}</label>
               {{ /foreach }}
             </div>
             {{ foreach from=$sample_templates key="step" item="t" }}
