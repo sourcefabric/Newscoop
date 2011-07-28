@@ -40,16 +40,16 @@ class ArticleCommentsList extends ListObject
             $params['iDisplayLength'] = $p_limit;
         }
         foreach($this->m_order as $order)
-        {
+        {            
             $index = $cols[$order['field']];
-            if($order['field'] == 'bydate') {
+            if(strtolower($order['field']) == 'bydate') {
                 $params['iSortCol_0'] = 0;
                 $params['sSortDir_0'] = $order['dir'];
             }
-            elseif($order['field'] == 'default')
+            elseif(strtolower($order['field']) == 'default')
             {
-                $params['iSortCol_1'] = true;
-                $params['sSortDir_1'] = $order['dir'];
+                $params['iSortCol_0'] = 1;
+                $params['sSortDir_0'] = $order['dir'];
             }
         }
 	    //$p_count = $repository->getCount($params, $cols);
