@@ -107,7 +107,7 @@ class CommentRepository extends DatatableSource
      */
     public function save(Comment $p_entity, $p_values)
     {
-        // get the enitity manager
+	// get the enitity manager
         $em = $this->getEntityManager();
 
         $commenterRepository = $em->getRepository('Newscoop\Entity\Comment\Commenter');
@@ -123,10 +123,15 @@ class CommentRepository extends DatatableSource
              * get the maximum thread order from the current parent
              */
             $qb = $this->createQueryBuilder('c');
-            $threadOrder = $qb->select('MAX(c.thread_order)')->andwhere('c.parent = :parent')->andWhere('c.thread = :thread')->andWhere('c.language = :language')->setParameter('parent',
-                                                                                                                                                                                $parent)->setParameter('thread',
-                                                                                                                                                                                                       $parent->getThread())->setParameter('language',
-                                                                                                                                                                                                                                           $parent->getLanguage())->getQuery()->getSingleScalarResult();
+            $threadOrder = 
+            $qb->select('MAX(c.thread_order)')
+                    ->andwhere('c.parent = :parent')
+                    ->andWhere('c.thread = :thread')
+                    ->andWhere('c.language = :language')
+                    ->setParameter('parent', $parent)
+                    ->setParameter('thread', $parent->getThread())
+                    ->setParameter('language', $parent->getLanguage())
+            ->getQuery()->getSingleScalarResult();
             // if the comment parent doesn't have children then use the parent thread order
             if (empty($threadOrder)) {
                 $threadOrder = $parent->getThreadOrder();
@@ -137,11 +142,15 @@ class CommentRepository extends DatatableSource
              * of the current thread_order
              */
             $qb = $this->createQueryBuilder('c');
-            $qb->update()->set('c.thread_order',
-                               $qb->expr()->literal('c.thread_order+1'))->andwhere('c.thread_order >= :thread_order')->andWhere('c.thread = :thread')->andWhere('c.language = :language')->setParameter('language',
-                                                                                                                                                                                                        $parent->getLanguage())->setParameter('thread',
-                                                                                                                                                                                                                                              $parent->getThread())->setParameter('thread_order',
-                                                                                                                                                                                                                                                                                  $threadOrder);
+            $qb->update()
+               ->set('c.thread_order',  'c.thread_order+1')
+               ->andwhere('c.thread_order >= :thread_order')
+               ->andWhere('c.thread = :thread')
+               ->andWhere('c.language = :language')
+                    ->setParameter('language', $parent->getLanguage())
+                    ->setParameter('thread', $parent->getThread())
+                    ->setParameter('thread_order', $threadOrder);
+            $qb->getQuery()->execute();
             // set the thread level the thread level of the parent plus one the current level
             $threadLevel = $parent->getThreadLevel() + 1;
         } else {
