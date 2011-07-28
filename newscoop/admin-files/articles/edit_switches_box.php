@@ -53,7 +53,7 @@
             // set dynamic
             $('input.db', form).each(function() {
                 var val = 'off';
-                if ($(this).attr('checked')) {
+                if ($(this).is(':checked')) {
                     val = 'on';
                 }
 
@@ -73,7 +73,7 @@
                 callServer(['Article', method], [
                     <?php echo $f_language_selected; ?>,
                     <?php echo $articleObj->getArticleNumber(); ?>,
-                    Number(vals[method].attr('checked'))], function(json) {
+                    Number(vals[method].is(':checked'))], function(json) {
                         flashMessage('<?php putGS('Switches saved.'); ?>');
                     });
             }

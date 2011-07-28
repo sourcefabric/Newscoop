@@ -46,6 +46,7 @@ final class MetaTemplate extends MetaDbObject
         $this->m_customProperties['identifier'] = 'getId';
         $this->m_customProperties['type'] = 'getTemplateType';
         $this->m_customProperties['defined'] = 'defined';
+        $this->m_customProperties['theme_dir'] = 'getThemeDir';
     }// fn __construct
 
     protected function getTemplateType()
@@ -86,6 +87,21 @@ final class MetaTemplate extends MetaDbObject
         return 'template';
     }
 
-}// class MetaTemplate
+	// we need this theme info for securing the smarty caching
+	protected function getThemeDir() {
+		$path = $this->getValue();
+		if (empty($path)) {
+			return '';
+		}
+
+		$dir_arr = explode(DIR_SEP, $path);
+		if (2 < count($dir_arr)) {
+			return  $dir_arr[0] . DIR_SEP . $dir_arr[1];
+		}
+
+		return $path;
+	}
+}
+// class MetaTemplate
 
 ?>

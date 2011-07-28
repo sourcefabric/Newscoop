@@ -31,7 +31,7 @@ if (Input::Get('save')) {
         $CampPlugin = new CampPlugin($plugin);   // installed version, if exists
         $currentVersion = $CampPlugin->getFsVersion();
 
-        if ($p_enabled[$plugin]) {
+        if ($p_enabled && array_key_exists($plugin, $p_enabled) && $p_enabled[$plugin]) {
             if ($CampPlugin->exists()) {
                 if ($CampPlugin->getDbVersion() != $currentVersion) {
                     // update plugin

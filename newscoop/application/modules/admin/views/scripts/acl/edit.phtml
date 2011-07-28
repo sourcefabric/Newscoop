@@ -73,7 +73,7 @@ $(function() {
 
         // update check all checkbox on item change
         var context = input.closest('ul');
-        $('input:checkbox', context.prev('h3')).attr('checked', $('input:checkbox', context).size() == $('input:checkbox:checked', context).size());
+        $('input:checkbox.toggle', context).attr('checked', $('input:checkbox', context).not('.toggle').size() == $('input:checkbox:checked', context).not('.toggle').size());
     });
 });
 </script>

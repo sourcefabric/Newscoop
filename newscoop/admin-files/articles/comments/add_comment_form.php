@@ -41,6 +41,7 @@ function addComment() {
                     this.reset();
                 });
                 loadComments();
+                flashMessage('<?php putGS('Comment saved.'); ?>');
             }
         });
         return false;
