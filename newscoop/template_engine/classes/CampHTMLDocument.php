@@ -287,13 +287,14 @@ final class CampHTMLDocument
         $siteinfo['keywords'] = $this->getMetaTag('keywords');
         $siteinfo['description'] = $this->getMetaTag('description');
 
-        if (!file_exists(CS_PATH_SITE.DIR_SEP.$siteinfo['templates_path'].DIR_SEP.$template)
+        if (!file_exists(rtrim(CS_PATH_SITE,"/").DIR_SEP.trim($siteinfo['templates_path'],"/").DIR_SEP.ltrim($template,"/"))
                 || $template === false) {
             if (empty($template)) {
                 $siteinfo['error_message'] = "No template set for display.";
             } else {
                 $siteinfo['error_message'] = "The template '$template' does not exist in the templates directory.";
             }
+            // @todo this path is not correct
             $template = CS_SYS_TEMPLATES_DIR.DIR_SEP.'_campsite_error.tpl';
             $siteinfo['templates_path'] = CS_TEMPLATES_DIR;
         }

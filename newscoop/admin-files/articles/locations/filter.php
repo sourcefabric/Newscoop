@@ -1,5 +1,4 @@
 <?php
-require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/pub/pub_common.php");
 
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoPreferences.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMap.php');
@@ -8,14 +7,16 @@ camp_load_translation_strings('api');
 camp_load_translation_strings('geolocation');
 
 header('Content-Type: text/html; charset=utf-8');
-?>
-<?php
 echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' . "\n";
 ?>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="Expires" content="now" />
+
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet_new.css" />
+	<link rel="stylesheet" type="text/css" media="screen" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/jquery-ui-1.8.6.custom.css" />
 
     <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/map-filter.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/js/geocoding/styles/map-info.css" />
@@ -24,18 +25,30 @@ echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' . "\n";
     <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/base64.js"></script>
     <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/json2.js"></script>
 
+    <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery-1.6.1.min.js"></script>
+
+    <script type="text/javascript">
+		window.update_opener_link = function() {
+			try {
+				if (window.opener && (!window.opener.closed) && (!window.opener.geo_filter_window)) {
+					window.opener.geo_filter_window = window;
+				}
+			}
+			catch (e) {alert(e);};
+		}
+		if (window.opener) {
+			window.setInterval('window.update_opener_link();', 1000);
+		}
+	</script>
+
 <?php
     $map_width = 800;
     $map_height = 500;
-    echo Geo_Map::GetMapFilterHeader($map_width, $map_height);
+	echo Geo_Map::GetMapFilterHeader($map_width, $map_height);
 ?>
 
 </head>
 <body onLoad="return false;">
-
-<?php
-camp_html_content_top(getGS('Geo Filtering'), null);
-?>
 
 <div class="map_show_filter">
 
@@ -52,7 +65,6 @@ camp_html_content_top(getGS('Geo Filtering'), null);
 <div id="geo_polygons_info">&nbsp;</div>
 </div><!-- end of polygon_info -->
 
-
 <div class="polygon_append">
 <form name="polygon_spec_new" action="#" onSubmit="<?php echo Geo_Map::GetMapFilterObjName(); ?>.add_polygon(polygon_spec_new.geo_polygon_new.value); return false;">
 <a style="float:left" href='#' onclick='<?php echo Geo_Map::GetMapFilterObjName(); ?>.add_polygon(polygon_spec_new.geo_polygon_new.value); return false;'><span class="geo_add_polygon ui-icon ui-icon-plusthick"></span></a>
@@ -60,10 +72,7 @@ camp_html_content_top(getGS('Geo Filtering'), null);
 </form>
 </div><!-- end of polygon_append -->
 
-
 </div><!-- end of map_show_filter -->
-
-<?php camp_html_copyright_notice(); ?>
 
 </body>
 </html>

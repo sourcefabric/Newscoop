@@ -1,0 +1,24 @@
+.feature-image {
+float: left; 
+margin-right: 10px; 
+margin-bottom: 10px; 
+background-repeat: no-repeat;
+background-position: center center;
+background-color: #aaaaaa;
+clear: both;
+}
+.full_text {
+  font-family: georgia, serif; 
+}
+.full_text p,
+.full_text div {
+  margin-bottom: 1em; 
+}
+.full_text img {
+  max-width: 100%; 
+}
+.full_text .cs_img_caption {
+  font-size: 66%;
+}
+
+
