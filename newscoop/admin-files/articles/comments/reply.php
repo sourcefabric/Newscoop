@@ -13,6 +13,12 @@ if (!Input::IsValid()) {
 	exit;
 }
 
+if ($g_user->hasPermission('EditorSpellcheckerEnabled')) {
+    $spellcheck = 'spellcheck="true"';
+} else {
+    $spellcheck = 'spellcheck="false"';
+}
+
 // Check that the article exists.
 $articleObj = new Article($f_language_id, $f_article_number);
 if (!$articleObj->exists()) {
