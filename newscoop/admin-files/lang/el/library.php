@@ -1,4 +1,15 @@
 <?php 
+regGS("Title", "");
+regGS("No video playback capabilities, please download the video below", "");
+regGS("Article status set to '$1' for $2 articles", "");
+regGS("Article status not set to '$1' for $2 articles", "");
+regGS("$1 toggled for $2 articles.", "");
+regGS("$1 not toggled for $2 articles.", "");
+regGS("$1 not toggled for $2  articles.", "");
+regGS("$1 articles have not been removed", "");
+regGS("$1 Article(s) unlocked", "");
+regGS("$1 Article(s) not unlocked", "");
+regGS("$1 Article(s) duplicated", "");
 regGS("Download file", "Κατέβασμα αρχείου");
 regGS("You do not have the right to delete articles.", "Δεν έχετε το δικαίωμα να διαγράψετε άρθρα.");
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "Δεν έχετε το δικαίωμα να αλλάξετε την κατάσταση του άρθρου. Από την στιγμή υποβολλής ενός άρθρου, μόνο εξουσιοδοτημένοι χρήστες μπορούν να πραγματοποιήσουν αλλαγές.");
@@ -43,9 +54,6 @@ regGS("Duplicate to another section", "Αντιγραφή σε άλλη ενότ
 regGS("Display _MENU_ records", "Εμφάνιση καταχωρήσεων _MENU_ ");
 regGS("Creator", "Δημιουργός");
 regGS("Create Date", "Δημιουργία Ημερομηνίας");
-regGS("Articles updated.", "Τα άρθρα ανανεώθηκαν.");
-regGS("Article(s) unlocked", "Το άρθρο/α ξεκλειδώθηκαν");
-regGS("Article(s) duplicated", "Το άρθρο/α αντιγράφτηκαν");
 regGS("Article status set to '$1'", "Η κατάσταση του άρθρου ορίστηκε σε '$1'");
 regGS("Are you sure you want to delete selected articles?", "Είστε σίγουρος/η ότι θέλετε να διαγράψετε τα επιλεγμένα άρθρα;");
 regGS("All Sections", "Όλες οι Ενότητες");

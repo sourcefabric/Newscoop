@@ -1,5 +1,5 @@
 <?php 
-regGS("Reset order", "Переустановка порядок");
+regGS("Reset order", "Переустановка порядка следования");
 regGS("Order changes will be lost. Are you sure you want to continue?", "Изменения порядка были утеряны. Вы уверены, что хотите продолжить?");
 regGS("Topics order saved.", "Порядок тем сохранен.");
 regGS("Show languages", "Отобразить языки");

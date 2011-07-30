@@ -1,4 +1,5 @@
 <?php 
+regGS("You have no installed plugins.", "");
 regGS("Some plugins have to be updated. Please press the save button.", "Κάποια πρόσθετα πρέπει να ενημερωθούν. Παρακαλούμε πατήστε το πλήκτρο αποθήκευσης.");
 regGS("Please confirm the plugin $1 uninstall. All plugin data will be deleted!", "Παρακαλούμε επιβεβαιώστε την απεγκατάσταση του πρόσθετου $1. Όλα τα δεδομένα προσθέτου θα διαγραφούν!");
 regGS("You do not have the right to manage plugins.", "Δεν έχετε το δικαίωμα να διαχειρίζεστε τα πρότυπα.");

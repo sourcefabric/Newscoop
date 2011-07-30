@@ -1,4 +1,6 @@
 <?php 
+regGS("Image files", "");
+regGS("Fix all thumbnails", "");
 regGS("You do not have the right to add files.", "");
 regGS("Should this file only be available for this translation of the article, or for all translations?", "");
 regGS("Please enter a description for the file: '$1'.", "");
@@ -29,19 +31,11 @@ regGS("Are you sure you want to delete selected items?", "");
 regGS("Add new file", "");
 regGS("You do not have the right to add images.", "");
 regGS("Use for all", "");
-regGS("Stop current upload", "");
-regGS("Start uploading queue", "");
-regGS("Start upload", "");
 regGS("Specify image url if you want to load it.", "");
 regGS("Size", "");
-regGS("Select files", "");
 regGS("No images for multi editing.", "");
 regGS("Images updated.", "");
-regGS("Filename", "");
 regGS("Edit images", "");
-regGS("Drag files here.", "");
-regGS("Add files to the upload queue and click the start button.", "");
-regGS("Add files", "");
 regGS("\"$1\" files uploaded.", "");
 regGS("Unable to add new image.", "");
 regGS("Image updated.", "");

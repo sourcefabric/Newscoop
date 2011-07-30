@@ -1,6 +1,15 @@
 <?php 
+regGS("Warning", "");
+regGS("Severity:", "");
+regGS("Severity", "");
+regGS("Notice", "");
+regGS("No logs.", "");
+regGS("Info", "");
+regGS("Filter", "");
+regGS("Emergency", "");
+regGS("Debug", "");
+regGS("Critical", "");
+regGS("Alert", "");
 regGS("User IP Address", "");
-regGS("You do not have the right to view logs.", "Vous n'avez pas le droit d'afficher le fichier log. ");
 regGS("User", "Utilisateur");
-regGS("Event", "Evénement");
 ?>

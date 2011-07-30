@@ -1,4 +1,7 @@
 <?php 
+regGS("default", "");
+regGS("before you can configure the section templates.", "");
+regGS("You have to assign a theme to the issue", "");
 regGS("The section number $1 was already in use.", "Die Rubriknummer $1 wird bereits verwendet.");
 regGS("Delete all articles written in $1 language from this section", "Alle Artikel der Sprache $1 aus dieser Rubrik löschen.");
 regGS("Delete all articles and all of their translations", "Alle Artikel und ihre Übersetzungen löschen.");

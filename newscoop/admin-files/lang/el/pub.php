@@ -81,5 +81,4 @@ regGS("Search engine optimization", "Βελτιστοποίηση των μηχ�
 regGS("Article title", "Τίτλος άρθρου");
 regGS("Article keywords", "Λέξεις-κλειδιά του άρθρου");
 regGS("Article topics", "Θέματα άρθρου");
-regGS("Invalid URL Template", "Μή έγκυρο Πρότυπο URL");
 ?>

@@ -1,4 +1,6 @@
 <?php 
+regGS("Image files", "");
+regGS("Fix all thumbnails", "");
 regGS("You do not have the right to add files.", "");
 regGS("Should this file only be available for this translation of the article, or for all translations?", "");
 regGS("Please enter a description for the file: '$1'.", "");
@@ -29,19 +31,11 @@ regGS("Are you sure you want to delete selected items?", "Da li ste sigurni d a�
 regGS("Add new file", "Dodaj novi fajl");
 regGS("You do not have the right to add images.", "Nemate pravo da dodajete slike.");
 regGS("Use for all", "Koristi za sve.");
-regGS("Stop current upload", "Prekini trenutni aploud");
-regGS("Start uploading queue", "Započni aploud reda");
-regGS("Start upload", "Započni aploud");
 regGS("Specify image url if you want to load it.", "Odredite URL slike ako želite da je učitate.");
 regGS("Size", "Veličina");
-regGS("Select files", "Izaberi fajlove");
 regGS("No images for multi editing.", "Nema slika za višestruko uređivanje");
 regGS("Images updated.", "slike izmenjene.");
-regGS("Filename", "Naziv fajla");
 regGS("Edit images", "Uredi slike");
-regGS("Drag files here.", "Prevuci fajlove ovde.");
-regGS("Add files to the upload queue and click the start button.", "Dodajte fajlove u red za apploud i kliknite dugme za početak.");
-regGS("Add files", "Dodaj fajlove");
 regGS("\"$1\" files uploaded.", "\"$1\" fajlova aploudovano.");
 regGS("Unable to add new image.", "Nije moguće dodati novu sliku.");
 regGS("Image updated.", "slika izmenjena");

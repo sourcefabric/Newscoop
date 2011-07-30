@@ -81,5 +81,4 @@ regGS("Search engine optimization", "Optimizacija pretraživača");
 regGS("Article title", "Naslov teksta");
 regGS("Article keywords", "Ključne reči");
 regGS("Article topics", "Teme");
-regGS("Invalid URL Template", "Šablon za prikaz pri pogrešnom URLu");
 ?>

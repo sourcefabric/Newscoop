@@ -1,4 +1,6 @@
 <?php 
+regGS("Image files", "");
+regGS("Fix all thumbnails", "");
 regGS("You do not have the right to add files.", "");
 regGS("Should this file only be available for this translation of the article, or for all translations?", "");
 regGS("Please enter a description for the file: '$1'.", "");
@@ -29,19 +31,11 @@ regGS("Are you sure you want to delete selected items?", "Na pewno chcesz usuną
 regGS("Add new file", "Dodaj nowy plik");
 regGS("You do not have the right to add images.", "Nie masz praw aby dodawać zdjęcia.");
 regGS("Use for all", "Użyj do wszystkich");
-regGS("Stop current upload", "Zatrzymaj aktualne wgrywanie");
-regGS("Start uploading queue", "Rozpocznij kolejkę dodawania");
-regGS("Start upload", "Rozpocznij dodawanie");
 regGS("Specify image url if you want to load it.", "Podaj adres URL obrazka, który chcesz dodać");
 regGS("Size", "Rozmiar");
-regGS("Select files", "Wybierz pliki");
 regGS("No images for multi editing.", "Brak zdjęć do multiedycji");
 regGS("Images updated.", "Zdjęcia dodane.");
-regGS("Filename", "Nazwa pliku");
 regGS("Edit images", "Edytuj zdjęcia");
-regGS("Drag files here.", "Upuść pliki tutaj");
-regGS("Add files to the upload queue and click the start button.", "Dodaj pliki do kolejki i rozpocznij dodawanie");
-regGS("Add files", "Dodaj pliki");
 regGS("\"$1\" files uploaded.", "Dodano plików: \"$1\"");
 regGS("Unable to add new image.", "Nie można dodać nowego zdjęcia.");
 regGS("Image updated.", "Zdjęcie zaktualizowane.");

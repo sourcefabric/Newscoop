@@ -1,6 +1,6 @@
 <?php 
 regGS("Themes", "");
-regGS("Area to localize", "");
+regGS("Area to localize", "Район локализации");
 regGS("Dashboard", "Мой Newscoop");
 regGS("Authors", "Авторы");
 regGS("Libraries", "Библиотеки");

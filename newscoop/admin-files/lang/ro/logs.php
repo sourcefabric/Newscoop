@@ -1,7 +1,16 @@
 <?php 
+regGS("Warning", "");
+regGS("Severity:", "");
+regGS("Severity", "");
+regGS("Notice", "");
+regGS("No logs.", "");
+regGS("Info", "");
+regGS("Filter", "");
+regGS("Emergency", "");
+regGS("Debug", "");
+regGS("Critical", "");
+regGS("Alert", "");
 regGS("User IP Address", "");
-regGS("You do not have the right to view logs.", "Nu ai dreptul să vizualizezi log-uri.");
 regGS("User", "Utilizator");
-regGS("Event", "Eveniment");
 regGS("Date/Time", "Data/Timpul");
 ?>

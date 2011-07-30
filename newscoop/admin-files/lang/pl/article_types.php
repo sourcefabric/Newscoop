@@ -1,4 +1,6 @@
 <?php 
+regGS("Hide human-readable field names", "");
+regGS("Edit and translate human-readable field names", "");
 regGS("The template name may only contain letters and the underscore (_) character.", "Nazwa szablonu może tylko zawierać litery oraz podkreślnik (_)");
 regGS("Rename article type '$1'", "Zmień nazwę typu artykułu '$1'");
 regGS("Invalid article type '$1'.", "Niepoprawny typ artykułu '$1'");
@@ -41,7 +43,6 @@ regGS("The translation could not be added.", "Tłumaczenie nie zostało dodane."
 regGS("The article type $1 does not exist.", "Typ artykułu $1 nie istnieje.");
 regGS("Template Type Name", "Nazwa typu szablonu");
 regGS("Show/Hide", "Pokaż/Schowaj");
-regGS("Show display names", "Pokaż nazwy wyświetlna");
 regGS("Show article on section page", "Pokaż artykuł na stronie sekcji");
 regGS("Show article on front page", "Pokaż artykuł na stronie głównej");
 regGS("Publish date", "Data publikacji");
@@ -49,7 +50,6 @@ regGS("Merge!", "Połącz!");
 regGS("Merge types", "Typy łączenia");
 regGS("Merge article type", "Typ łączenia artykułu");
 regGS("Link to public page", "Linkuj do strony publicznej");
-regGS("Hide display names", "Schowaj nazwy wyświetlane");
 regGS("Go to Step 3", "Idź do Kroku 3");
 regGS("Go to Step 2", "Idź do Kroku 2");
 regGS("Display Name", "Nazwa wyświetlana");

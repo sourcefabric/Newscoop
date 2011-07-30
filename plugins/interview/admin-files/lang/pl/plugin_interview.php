@@ -1,25 +1,4 @@
 <?php 
-regGS("User receives notification about new interviews", "");
-regGS("User is interview moderator", "Użytkownik jest moderatorem wywiadu");
-regGS("User is interview guest", "Użytkownik jest gościem wywiadu");
-regGS("User is interview admin", "Użytkownik jest adminem wywiadu");
-regGS("Please select:", "Wybierz:");
-regGS("Create new one...", "Utwórz nowy...");
-regGS("Title", "Tytuł");
-regGS("Sender", "Nadawca");
-regGS("Reset", "Reset");
-regGS("Questioneer preview text", "Podgląd tekstu dla pytającego");
-regGS("Poll Id $1 created.", "Ankieta Id $1 utworzona.");
-regGS("New Moderator Email", "Nowy email moderatora");
-regGS("Invite Now", "Zaproś teraz");
-regGS("Invitations to questioneers has already been sent at $1", "Zaproszenia do uczestników zostały już wysłane o $1");
-regGS("Invitation to interview guest has already been sent at $1", "Zaproszenie do gościa zostało wysłane o $1");
-regGS("Invitation Template for Questioneer", "Szablon Zaproszenia dla Uczestnika");
-regGS("Invitation Template for Guest", "Szablon Zaproszenia dla Gościa");
-regGS("Interview Id $1 created.", "Wywiad Id $1 utworzony.");
-regGS("Interview #$1: \"$2\" ($3) deleted.", "Wywiad #$1: \"$2\" ($3) usunięty.");
-regGS("Guest preview text", "Podgląd tekstu uczestnika.");
-regGS("Create new Moderator", "Utwórz nowego Moderatora");
 regGS("Interviews", "Wywiady");
 regGS("Administer", "Administracja");
 regGS("Moderate", "Moderacja");

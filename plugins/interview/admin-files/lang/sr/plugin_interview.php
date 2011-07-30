@@ -1,25 +1,4 @@
 <?php 
-regGS("User receives notification about new interviews", "");
-regGS("User is interview moderator", "Корисник је модератор интервјуа");
-regGS("User is interview guest", "Корисник је гост интервјуа");
-regGS("User is interview admin", "Корисник је администратор интервјуа");
-regGS("Please select:", "Изаберите:");
-regGS("Create new one...", "Креирај нови...");
-regGS("Title", "Наслов");
-regGS("Sender", "Пошиљалац");
-regGS("Reset", "Поништи");
-regGS("Questioneer preview text", "Приказ упитника");
-regGS("Poll Id $1 created.", "Анкета са ИД $1 је напраљена");
-regGS("New Moderator Email", "Нови имејл");
-regGS("Invite Now", "Позови");
-regGS("Invitations to questioneers has already been sent at $1", "Позиви за питаоце су већ послати на $1");
-regGS("Invitation to interview guest has already been sent at $1", "Позиви за госте интервјуа су већ послати на $1");
-regGS("Invitation Template for Questioneer", "Шаблон позива за питаоце");
-regGS("Invitation Template for Guest", "Шаблон позива за госте");
-regGS("Interview Id $1 created.", "Интервју ИД $1 је креиран");
-regGS("Interview #$1: \"$2\" ($3) deleted.", "Интервју #$1: \"$2\" ($3) је обрисан");
-regGS("Guest preview text", "Приказ текста госта");
-regGS("Create new Moderator", "Направи новог модератора");
 regGS("Interviews", "Интервјуи");
 regGS("Administer", "Администрирај");
 regGS("Moderate", "Модерирај");
