@@ -29,7 +29,7 @@ regGS("fill in map name", "заполните имя карты");
 regGS("You do not have the right to remove maps from articles.", "У Вас нет прав доступа для удаления карт из статей.");
 regGS("Video file", "Видеофайл");
 regGS("Video ID", "ID видео");
-regGS("The removal is from all language versions of the article.", "Удаление из всез языковых версий статьи.");
+regGS("The removal is from all language versions of the article.", "Удаление из всех языковых версий статьи.");
 regGS("The map has been removed from the article.", "Эта карта была удалена из статьи.");
 regGS("Short description for points listing", "Короткое описание для списка пунктов расположения");
 regGS("Really to delete the point?", "Вы действительно хотите удалить этот пункт?");

@@ -1,8 +1,8 @@
 <?php 
-regGS("Newscoop", "");
-regGS("Pending Article", "");
-regGS("Overwrite articles with matching names", "");
-regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");
+regGS("Newscoop", "Newscoop");
+regGS("Pending Article", "Артыкулы ў статуте \"Адпраўленыя\"");
+regGS("Overwrite articles with matching names", "Перапісаць артыкулы з адпаведнымі імёнамі");
+regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "Артыкул \"<i> $1</ i>\" ужо існуе і не быў перазапісаны. <br />");
 regGS("Files", "Файлы");
 regGS("Select section:", "Выберыце раздзел");
 regGS("Add another author", "Дадаць аўтара");
@@ -147,4 +147,7 @@ regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 min
 regGS("Back to article details", "Назад да падрабязнасьцяў артыкула");
 regGS("Article automatic publishing schedule", "Расклад аўтаматычнай публікацыі артыкулаў");
 regGS("Are you sure you want to delete this scheduled action?", "Цi Вы ўпэўненыя, што жадаеце выдаліць гэтую заплянаваную апэрацыю?");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдалiць тэму \\'$1\\' з артыкула?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдалiць файл \\'$1\\' з артыкула?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдаліць графічны файл \\'$1\\' з артыкула? ");
 ?>

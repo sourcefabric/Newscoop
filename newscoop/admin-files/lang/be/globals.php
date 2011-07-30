@@ -1,5 +1,5 @@
 <?php 
-regGS("Plugins", "Утыліты");
+regGS("Plugins", "Плагіны");
 regGS("Manage Plugins", "Кіраванне плагінамі");
 regGS("Account", "Улiковы запiс");
 regGS("Items per page", "Аб'ектаў на старонцы");
@@ -259,6 +259,7 @@ regGS("Reads", "Колькасьць праглядаў");
 regGS("Publish with issue", "Апублiкаваць выпуск");
 regGS("Universal List", "Універсальны спіс");
 regGS("Invalid security token!", "Няправільны маркер бяспецы!");
+regGS("Authors", "Аўтары");
 regGS("User name", "Карыстальнiк");
 regGS("User Types", "Тыпы карыстальнiкаў ");
 regGS("Add new user account", "Дадаць новы ўлiковы запiс карыстальнiка");
@@ -275,5 +276,5 @@ regGS("There are $1 keyword(s) left.", "Засталося $1 ключавога
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Назва<BR><SMALL>(нацiснуць для праўкi)</SMALL>:by");
 regGS("New field", "Новае поле");
 regGS("Author:", "Аўтар");
-regGS("Authors", "");
+regGS("Are you sure you want to delete the image \\'$1\\'?", "Цi Вы ўпэўнены, што жадаеце выдалiць графiчны файл \\'$1\\'? ");
 ?>

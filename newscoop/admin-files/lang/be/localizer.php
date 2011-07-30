@@ -1,10 +1,11 @@
 <?php 
-regGS("Dashboard", "");
-regGS("Authors", "");
-regGS("Libraries", "");
-regGS("Media Archive", "");
-regGS("Extensions", "");
-regGS("Geo-location", "");
+regGS("Area to localize", "Рэгіён лакалізацыі");
+regGS("Dashboard", "Мой Newscoop");
+regGS("Authors", "Аўтары");
+regGS("Libraries", "Бібліятэкі");
+regGS("Media Archive", "Архіў Медыа");
+regGS("Extensions", "Пашырэнні");
+regGS("Geo-location", "Геалакацыя");
 regGS("Translation status:", "Статус перакладу ");
 regGS("Editor Media Plugin", "Плагін Медыя-рэдактара");
 regGS("$1 of $2 strings translated", "$1 з $2  радкоў перакладзены");
@@ -20,7 +21,6 @@ regGS("Translate to:", "Перакласьцi на:");
 regGS("Translate from:", "Перакласьцi з:");
 regGS("The following strings are not used:", "Наступныя радкі не выкарыстоўваюцца:");
 regGS("The following strings are missing from the translation files:", "Наступныя радкі прапушчаныя ў файлах перакладу:");
-regGS("Screen:", "Экран:");
 regGS("No source strings found.", "Ня знойдзена зыходных радкоў.");
 regGS("No matches found.", "Ня знойдзена супадзеньняў.");
 regGS("Globals", "Агульныя");

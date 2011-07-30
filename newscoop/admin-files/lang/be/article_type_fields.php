@@ -1,5 +1,5 @@
 <?php 
-regGS("The template name may only contain letters and the underscore (_) character.", "");
+regGS("The template name may only contain letters and the underscore (_) character.", "Імя шаблёну можа змяшчаць толькі літары і знак падкрэслівання (_).");
 regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "Гэтае імя поля ўжо выкарыстоўваецца як базавая ўласцівасць артыкула. Змест гэтага поля не можа быць адлюстраваны ў шаблоне.");
 regGS("The property '$1' is already in use.", "Уласцівасць  '$1' ужо выкарыстоўваецца. ");
 regGS("Precision", "Дакладнасць");

@@ -1,15 +1,15 @@
 <?php 
-regGS("User name", "");
-regGS("Newscoop", "");
-regGS("Campsite", "");
-regGS("Password recovery request for $1", "");
-regGS("Your password has been reset.", "");
-regGS("Proceed to login.", "");
-regGS("Hi, \n\nfor password recovery, please follow this link: $1", "");
-regGS("Go to login", "");
-regGS("Back to login.", "");
-regGS("Back to login", "");
-regGS("An email with instructions on how to recover you password has been sent to your inbox.", "");
+regGS("User name", "Імя карыстальніка");
+regGS("Newscoop", "Newscoop");
+regGS("Campsite", "Campsite");
+regGS("Password recovery request for $1", "Запыт аднаўлення пароля для $ 1");
+regGS("Your password has been reset.", "Ваш пароль пераусталяваны.");
+regGS("Proceed to login.", "Ўвайсці.");
+regGS("Hi, \n\nfor password recovery, please follow this link: $1", "Добры дзень, \ \ n \ \ n для аднаўлення пароля, ідзіце па спасылцы: $1");
+regGS("Go to login", "На старонку ўваходу.");
+regGS("Back to login.", "Вярнуцца на старонку ўваходу.");
+regGS("Back to login", "Вярнуцца на старонку ўваходу");
+regGS("An email with instructions on how to recover you password has been sent to your inbox.", "Паведамленне з інструкцыямі аб тым, як аднавіць Ваш пароль быў высланы на Ваш e-mail.");
 regGS("Session expired.", "Сесія скончана.");
 regGS("Processing...", "Апрацоўка...");
 regGS("Please", "Калі ласка");
@@ -99,4 +99,5 @@ regGS("Login failed", "Памылка ўваходу");
 regGS("Please make sure that you typed the correct user name and password.", "Калi ласка, праверце, цi правiльна Вы ўвялі лагiн і пароль.");
 regGS("If your problem persists please contact the site administrator $1", "Калi праблема iснуе, зьвярнецеся да адмiнiстратара сайта $1");
 regGS("Backup/Restore", "Рэзервнае капіраванне");
+regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Добры дзень, \\ \\ n \\ \\ n для аднаўлення пароля, ідзіце па спасылцы: $1");
 ?>

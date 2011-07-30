@@ -1,15 +1,15 @@
 <?php 
-regGS("User name", "");
-regGS("Newscoop", "");
-regGS("Campsite", "");
-regGS("Password recovery request for $1", "");
-regGS("Your password has been reset.", "");
-regGS("Proceed to login.", "");
+regGS("User name", "Usuario");
+regGS("Newscoop", "Newscoop");
+regGS("Campsite", "Campsite");
+regGS("Password recovery request for $1", "Solicitud de recuperación de contraseña de $1");
+regGS("Your password has been reset.", "Se ha restablecido su contraseña.");
+regGS("Proceed to login.", "Proceda al ingreso.");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "");
-regGS("Go to login", "");
-regGS("Back to login.", "");
-regGS("Back to login", "");
-regGS("An email with instructions on how to recover you password has been sent to your inbox.", "");
+regGS("Go to login", "Ir al área de ingreso");
+regGS("Back to login.", "De vuelta al área de ingreso.");
+regGS("Back to login", "De vuelta al área de ingreso.");
+regGS("An email with instructions on how to recover you password has been sent to your inbox.", "Te hemos enviado un correo electrónico con indicaciones sobre cómo recuperar tu contraseña.");
 regGS("Session expired.", "La sesión expiró.");
 regGS("Processing...", "Procesando...");
 regGS("Please", "Por favor");
@@ -99,4 +99,5 @@ regGS("Login failed", "Acceso fallido");
 regGS("Please make sure that you typed the correct user name and password.", "Por favor asegurese de que escribio correctamente su nombre de usuario y clave.");
 regGS("If your problem persists please contact the site administrator $1", "Si su problema persiste favor contacte al administrador del sistema $1");
 regGS("Backup/Restore", "Respaldar/Restablecer");
+regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Hola, \\n\\n para recuperar tu contraseña, sigue el siguiente enlace $1");
 ?>

@@ -1,5 +1,5 @@
 <?php 
-regGS("The template name may only contain letters and the underscore (_) character.", "");
+regGS("The template name may only contain letters and the underscore (_) character.", "Імя шаблёну можа змяшчаць толькі літары і знак падкрэслівання (_).");
 regGS("Rename article type '$1'", "Пераіменаваць тып артыкула  '$1' ");
 regGS("Invalid article type '$1'.", "Няправільны тып артыкула '$1'.");
 regGS("You cannot merge the same type into itself.", "Вы ня можаце аб'яднаць тып сам з сабой.");

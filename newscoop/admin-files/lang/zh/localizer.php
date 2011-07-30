@@ -1,4 +1,5 @@
 <?php 
+regGS("Area to localize", "");
 regGS("Dashboard", "");
 regGS("Authors", "");
 regGS("Libraries", "");
@@ -20,7 +21,6 @@ regGS("Translate to:", "");
 regGS("Translate from:", "");
 regGS("The following strings are not used:", "");
 regGS("The following strings are missing from the translation files:", "");
-regGS("Screen:", "");
 regGS("No source strings found.", "");
 regGS("No matches found.", "");
 regGS("Globals", "");

@@ -1,4 +1,5 @@
 <?php 
+regGS("Area to localize", "Área para traducir");
 regGS("Dashboard", "Tablero");
 regGS("Authors", "Autores");
 regGS("Libraries", "Bibliotecas");
@@ -20,7 +21,6 @@ regGS("Translate to:", "Traducir a:");
 regGS("Translate from:", "Traducir de:");
 regGS("The following strings are not used:", "No se han utilizado las siguientes cadenas de caracteres:");
 regGS("The following strings are missing from the translation files:", "Hacen falta las siguientes cadenas de caracteres de los archivos de traducción:");
-regGS("Screen:", "Pantalla:");
 regGS("No source strings found.", "No se encuentran strings de fuente.");
 regGS("No matches found.", "No se encuentran coincidencias.");
 regGS("Globals", "Globales");

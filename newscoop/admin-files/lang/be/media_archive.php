@@ -1,12 +1,12 @@
 <?php 
-regGS("You do not have the right to add files.", "");
-regGS("Should this file only be available for this translation of the article, or for all translations?", "");
-regGS("Please enter a description for the file: '$1'.", "");
-regGS("Only this translation", "");
-regGS("No files for multi editing.", "");
-regGS("Edit files", "");
-regGS("Change file information", "");
-regGS("All translations", "");
+regGS("You do not have the right to add files.", "У Вас няма дазволу для дадання файлаў.");
+regGS("Should this file only be available for this translation of the article, or for all translations?", "Гэты файл будзе даступны для гэтага перакладу артыкула або для ўсіх?");
+regGS("Please enter a description for the file: '$1'.", "Калі ласка, увядзіце апісанне файла: '$1'.");
+regGS("Only this translation", "Толькі гэты пераклад");
+regGS("No files for multi editing.", "Няма файлаў для агульнага рэдагавання.");
+regGS("Edit files", "Рэдагаваць файлы");
+regGS("Change file information", "Змяніць інфармацыю аб файле");
+regGS("All translations", "Усе пераклады");
 regGS("Save All", "Захаваць усе");
 regGS("Files", "Файлы");
 regGS("You can't delete used files.", "Вы не можаце выдаліць  файлы, якія выкарыстоўваюцца.");

@@ -1,4 +1,5 @@
 <?php 
+regGS("Area to localize", "");
 regGS("Dashboard", "");
 regGS("Authors", "");
 regGS("Libraries", "");
@@ -20,7 +21,6 @@ regGS("Translate to:", "Tradu în:");
 regGS("Translate from:", "Tradu din:");
 regGS("The following strings are not used:", "Următoarele string-uri nu sunt folosite:");
 regGS("The following strings are missing from the translation files:", "Următoarele string-uri lipsesc din fişierele traducerii:");
-regGS("Screen:", "Ecran:");
 regGS("No source strings found.", "Nu au fost găsite string-uri sursă.");
 regGS("No matches found.", "Nu s-au găsit înregistrări.");
 regGS("Globals", "Globale");

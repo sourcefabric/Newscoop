@@ -1,8 +1,8 @@
 <?php 
-regGS("login", "");
-regGS("Session expired.", "");
-regGS("Processing...", "");
-regGS("Please", "");
+regGS("login", "Ingreso");
+regGS("Session expired.", "La sesión expiró.");
+regGS("Processing...", "Procesando...");
+regGS("Please", "Por favor");
 regGS("Files attached.", "Archivos adjuntos");
 regGS("File '$1' unattached.", "Se desvinculó el archivo '$1' ");
 regGS("Attach new file", "Adjuntar un nuevo archivo");

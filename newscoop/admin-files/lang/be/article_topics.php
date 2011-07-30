@@ -1,5 +1,5 @@
 <?php 
-regGS("No topics have been created yet.", "");
+regGS("No topics have been created yet.", "Няма тэм, створаных карыстальнікамі.");
 regGS("Topics updated.", "Тэмы абноўленыя.");
 regGS("Topic does not exist.", "Тэмы не iснуе.");
 regGS("The topic '$1' has been removed from article.", "Тэма '$1' выдалена з артыкула.");

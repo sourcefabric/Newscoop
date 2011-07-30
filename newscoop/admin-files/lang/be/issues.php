@@ -1,5 +1,5 @@
 <?php 
-regGS("The publishing schedule can not be set in in the past", "");
+regGS("The publishing schedule can not be set in in the past", "Немагчыма планаванне датай, якая прайшла ");
 regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "Запланаванае дзеянне выдалена з выпуска #$1: \"$2\" (Выданне: $3) ");
 regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "Запланававае дзеянне  $1 для выпуска #$2: \"$3\" (Выданне: $4)");
 regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "Выпуск \"$1\" ($2) абноўлена ў выданні \"$3\"");

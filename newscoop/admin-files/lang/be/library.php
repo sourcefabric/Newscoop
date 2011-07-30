@@ -1,13 +1,13 @@
 <?php 
-regGS("Article status set to '$1' for $2 articles", "");
-regGS("Article status not set to '$1' for $2 articles", "");
-regGS("$1 toggled for $2 articles.", "");
-regGS("$1 not toggled for $2 articles.", "");
-regGS("$1 not toggled for $2  articles.", "");
-regGS("$1 articles have not been removed", "");
-regGS("$1 Article(s) unlocked", "");
-regGS("$1 Article(s) not unlocked", "");
-regGS("$1 Article(s) duplicated", "");
+regGS("Article status set to '$1' for $2 articles", "Статут артыкула '$1'  устаноўлены для $2 артыкулаў");
+regGS("Article status not set to '$1' for $2 articles", "Статут артыкула '$1'  не устаноўлены для $2 артыкулаў");
+regGS("$1 toggled for $2 articles.", "$1 уключаны для $2 артыкулаў.");
+regGS("$1 not toggled for $2 articles.", "$1 не ўключаны для $2 артыкулаў.");
+regGS("$1 not toggled for $2  articles.", "$1 не ўключаны для $2 артыкулаў.");
+regGS("$1 articles have not been removed", "$1 артыкулаў не былі выдаленыя");
+regGS("$1 Article(s) unlocked", "$1 артыкул(ы) разблакаваныя");
+regGS("$1 Article(s) not unlocked", "$1 артыкул(ы) не разблакаваныя");
+regGS("$1 Article(s) duplicated", "$1 артыкул(ы) дубляваныя.");
 regGS("Download file", "Запампаваць файл");
 regGS("You do not have the right to delete articles.", "У Вас няма правоў доступу для выдалення артыкулаў.");
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "У Вас няма правоў доступу для змены статуту артыкула. Створаны і зацверджаны артыкул можа быць зменены толькі аўтарызаваным карыстальнікам.");

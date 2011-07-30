@@ -1,5 +1,5 @@
 <?php 
-regGS("Select Country", "");
+regGS("Select Country", "Seleccionar país");
 regGS("Filters", "Filtros");
 regGS("Add new Author", "Añadir nuevo autor");
 regGS("You do not have the right to sync Newscoop and Phorum users.", "No tiene los privilegios para sincronizar los usuarios de Newscoop y Phorum.");

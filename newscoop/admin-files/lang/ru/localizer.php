@@ -1,4 +1,5 @@
 <?php 
+regGS("Area to localize", "Район локализации");
 regGS("Dashboard", "Мой Newscoop");
 regGS("Authors", "Авторы");
 regGS("Libraries", "Библиотеки");
@@ -20,7 +21,6 @@ regGS("Translate to:", "Перевести на:");
 regGS("Translate from:", "Перевести с:");
 regGS("The following strings are not used:", "Следующие строки не используются:");
 regGS("The following strings are missing from the translation files:", "Следующие строк пропущены в файлах перевода:");
-regGS("Screen:", "Экран:");
 regGS("No source strings found.", "Не найдено исходных строк.");
 regGS("No matches found.", "Не найдено совпадений.");
 regGS("Globals", "Общие");

@@ -1,5 +1,5 @@
 <?php 
-regGS("Loading...", "");
+regGS("Loading...", "Пампуецца...");
 regGS("Version", "Версія");
 regGS("License", "Ліцэнзія");
 regGS("Homepage", "Галоўная");

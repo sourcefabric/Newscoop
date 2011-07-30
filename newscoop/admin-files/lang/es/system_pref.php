@@ -1,6 +1,6 @@
 <?php 
-regGS("Please enter password recovery from email.", "");
-regGS("From email address:", "");
+regGS("Please enter password recovery from email.", "Por favor ingrese la recuperación de contraseña del correo electrónico.");
+regGS("From email address:", "De la cuenta de correo electrónico:");
 regGS("Run scheduled tasks externally?", "¿Correr tareas programads de forma externa?");
 regGS("Setting up a Newscoop Replication Server?", "¿Desea configurar un servidor de replicación para Newscoop?");
 regGS("Newscoop Online Server Database", "Base de datos del servidor en línea de Newscoop");
