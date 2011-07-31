@@ -1,4 +1,25 @@
 <?php 
+regGS("User receives notification about new interviews", "Ο χρήστης λαμβάνει ειδοποιήσεις για νέες συνεντεύξεις");
+regGS("User is interview moderator", "Ο χρήστης είναι συντονιστής συνέντευξης");
+regGS("User is interview guest", "Ο χρήστης είναι καλεσμένος συνέντευξης");
+regGS("User is interview admin", "Ο χρήστης είναι admin συνέντευξης    ");
+regGS("Please select:", "Παρακαλούμε επιλέξτε:");
+regGS("Create new one...", "Δημιουργία νέας...");
+regGS("Title", "Τίτλος");
+regGS("Sender", "Αποστολέας");
+regGS("Reset", "Επαναφορά");
+regGS("Questioneer preview text", "Προεπισκόπηση κειμένου συνεντευκτή(Questioneer)");
+regGS("Poll Id $1 created.", "Id δημοσκόπησης $1 δημιουργήθηκε.");
+regGS("New Moderator Email", "Νέο Email Συντονιστή");
+regGS("Invite Now", "Πρόσκληση Τώρα");
+regGS("Invitations to questioneers has already been sent at $1", "Προσκλήσεις στους συνεντευκτές(questioneers) έχουν ήδη σταλεί σε $1");
+regGS("Invitation to interview guest has already been sent at $1", "Πρόσκληση στον καλεσμένο συνέντευξης έχει ήδη σταλεί σε $1");
+regGS("Invitation Template for Questioneer", "Πρότυπο Πρόσκλησης για Συνεντευκτή(Questioneer)");
+regGS("Invitation Template for Guest", "Πρότυπο Πρόσκλησης για Καλεσμένο");
+regGS("Interview Id $1 created.", "Id Συνέντευξης $1 δημιουργήθηκε.");
+regGS("Interview #$1: \"$2\" ($3) deleted.", "Συνέντευξη #$1: \"$2\" ($3) διαγράφτηκε.");
+regGS("Guest preview text", "Προεπισκόπηση κειμένου καλεσμένου");
+regGS("Create new Moderator", "Δημιουργία νέου Συντονιστή");
 regGS("Interviews", "Συνεντεύξεις");
 regGS("Administer", "Διαχειρίζομαι");
 regGS("Moderate", "Συντονίζω");

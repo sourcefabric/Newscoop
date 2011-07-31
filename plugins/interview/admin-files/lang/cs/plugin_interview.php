@@ -1,4 +1,25 @@
 <?php 
+regGS("User receives notification about new interviews", "");
+regGS("User is interview moderator", "Uživatel je moderátorem rozhovoru");
+regGS("User is interview guest", "Uživatel je hostem rozhovoru");
+regGS("User is interview admin", "Uživatel je adminem rozhovoru");
+regGS("Please select:", "Prosíme vybrat:");
+regGS("Create new one...", "Vytvořit nový...");
+regGS("Title", "Název");
+regGS("Sender", "Odesílatel");
+regGS("Reset", "Resetovat");
+regGS("Questioneer preview text", "Náhled textu tazatele");
+regGS("Poll Id $1 created.", "Id ankety $1 vytvořeno ");
+regGS("New Moderator Email", "E-mail nového moderátora");
+regGS("Invite Now", "Pozvat hned");
+regGS("Invitations to questioneers has already been sent at $1", "Pozvánky tazatelům byly již odeslány v $1");
+regGS("Invitation to interview guest has already been sent at $1", "Pozvánka k rozhovoru s hostem byla již odeslána v $1");
+regGS("Invitation Template for Questioneer", "Šablona pozvánky pro tazatele");
+regGS("Invitation Template for Guest", "Šablona pozvánky pro hosta");
+regGS("Interview Id $1 created.", "Id rozhovoru $1 bylo vytvořeno.");
+regGS("Interview #$1: \"$2\" ($3) deleted.", "Rozhovor #$1: \"$2\" ($3) byl odstraněn.");
+regGS("Guest preview text", "Náhled textu hosta");
+regGS("Create new Moderator", "Vytvořit nového moderátora");
 regGS("Interviews", "Rozhovory");
 regGS("Administer", "Spravovat");
 regGS("Moderate", "Moderovat");

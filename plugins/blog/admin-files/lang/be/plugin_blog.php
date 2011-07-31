@@ -1,7 +1,7 @@
 <?php 
-regGS("List comments", "");
-regGS("User may moderate Blogs", "");
-regGS("User may manage Blogs", "");
+regGS("List comments", "Спіс каментароў");
+regGS("User may moderate Blogs", "Карыстальнік можа мадэраваць блогі");
+regGS("User may manage Blogs", "Карыстальнік можа кіраваць блогамі");
 regGS("read only", "толькі для чытання");
 regGS("You are not allowed to edit this blog.", "У Вас няма права доступу каб рэгадаваць.");
 regGS("Title", "Загаловак");

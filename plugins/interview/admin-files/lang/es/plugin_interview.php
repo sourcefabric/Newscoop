@@ -1,4 +1,25 @@
 <?php 
+regGS("User receives notification about new interviews", "El usuario recibe notificaciones sobre nuevas entrevistas.");
+regGS("User is interview moderator", "El usuario es un moderador de entrevistas");
+regGS("User is interview guest", "El usuario es un invitado a la entrevista");
+regGS("User is interview admin", "El usuario es un administrador de entrevsitas");
+regGS("Please select:", "Seleccione:");
+regGS("Create new one...", "Crear una nueva...");
+regGS("Title", "Título");
+regGS("Sender", "Remitente");
+regGS("Reset", "Restablecer");
+regGS("Questioneer preview text", "Previsualización del texto del entrevistador");
+regGS("Poll Id $1 created.", "Se creó la encuesta con ID $1");
+regGS("New Moderator Email", "Nuevo correo electrónico del modeador");
+regGS("Invite Now", "Invitar ahora");
+regGS("Invitations to questioneers has already been sent at $1", "El $1 se enviaron las invitaciones a los entrevistadores");
+regGS("Invitation to interview guest has already been sent at $1", "El $1 se convocó a los invitados");
+regGS("Invitation Template for Questioneer", "Plantilla de invitación para el entrevistador");
+regGS("Invitation Template for Guest", "Plantilla de invitación para el invitado");
+regGS("Interview Id $1 created.", "Se creó la entrevista con ID $1");
+regGS("Interview #$1: \"$2\" ($3) deleted.", "La entrevista #$1: \"$2\" ($3)  ha sido eliminada.");
+regGS("Guest preview text", "Previsualización del texto del invitado");
+regGS("Create new Moderator", "Crear nuevo moderador");
 regGS("Interviews", "Entrevistas");
 regGS("Administer", "Administrar");
 regGS("Moderate", "Moderar");

@@ -1,6 +1,6 @@
 <?php 
-regGS("Are you sure you want to delete the poll \"$1\"?", "");
-regGS("click to edit", "");
+regGS("Are you sure you want to delete the poll \"$1\"?", "Вы ўпэўненыя, што жадаеце выдаліць апытанне \"$1\"?");
+regGS("click to edit", "клікніце для рэдагавання");
 regGS("Polls", "Апытанні");
 regGS("You must select a file to upload.", "Вы павінны абраць файл для для загрузкі.");
 regGS("You do not have the right to delete files.", "Вы ня маеце правоў доступу, каб выдаляць файлы");
@@ -81,4 +81,5 @@ regGS("Answer $1", "Адказ $1");
 regGS("Add new Poll", "Дадаць новае апытанне");
 regGS("---Select---", "---Абраць--- ");
 regGS("$1/$2 polls assigned/unassigned.", "Апытанні  $1/$2 размеркаваныя /неразмеркаваныя");
+regGS("Are you sure you want to remove the file \\'$1\\' from the poll answer?", "Вы упэўнены, што хаціце выдаліць файл \\'$1\\' з адказу гэтага апытання?");
 ?>

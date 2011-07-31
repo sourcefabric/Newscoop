@@ -1,4 +1,25 @@
 <?php 
+regGS("User receives notification about new interviews", "Карыстальнік атрымлівае паведамленні аб новых інтэрв'ю");
+regGS("User is interview moderator", "Карыстальнік з'яўляецца мадэратарам інтэрв'ю");
+regGS("User is interview guest", "Карыстальнік з'яўляецца госцем інтэрв'ю");
+regGS("User is interview admin", "Карыстальнік з'яўляецца адміністратарам інтэрв'ю");
+regGS("Please select:", "Выберыце:");
+regGS("Create new one...", "Стварыць новы");
+regGS("Title", "Загаловак");
+regGS("Sender", "Адпраўнік");
+regGS("Reset", "Скінуць");
+regGS("Questioneer preview text", "Прагляд тэксту для журналіста");
+regGS("Poll Id $1 created.", "Апытальнік № $1 створаны.");
+regGS("New Moderator Email", "Новы email-адрас модэратара");
+regGS("Invite Now", "Запрасіць");
+regGS("Invitations to questioneers has already been sent at $1", "Запрашэння журналістам для інтэрв'ю адпраўлена $1 ");
+regGS("Invitation to interview guest has already been sent at $1", "Запрашэння гасцям для інтэрв'ю адпраўлена $1 ");
+regGS("Invitation Template for Questioneer", "Шаблён інтэрв'ю для журналіста");
+regGS("Invitation Template for Guest", "Шаблён інтэрв'ю для госця");
+regGS("Interview Id $1 created.", " Інтэрв'ю $1 створанае.");
+regGS("Interview #$1: \"$2\" ($3) deleted.", "Интервью № $1: \"$2\" ($3) выдаленае.");
+regGS("Guest preview text", "Прагляд тэксту для госця");
+regGS("Create new Moderator", "Стварыць новага мадэратара");
 regGS("Interviews", "Інтэрв'ю");
 regGS("Administer", "Кіраваць");
 regGS("Moderate", "Мадэраваць");
