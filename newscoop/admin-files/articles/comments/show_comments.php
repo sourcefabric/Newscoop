@@ -100,86 +100,57 @@ function toggleCommentStatus() {
     });
 }
 function loadComments() {
-    $.ajax({
-        type: 'POST',
-        url: '../comment/list/format/json',
-        data: {
-            "article": "<?php echo $articleObj->getArticleNumber(); ?>",
-            "language": "<?php echo $f_language_selected; ?>"
-        },
-        success: function(data, status) {
-			if ((200 != status) && ('success' != status)) {
-		    	flashMessage('<?php putGS('Could not load comments.'); ?>');
-				return;
-			}
-			if ('string' == typeof(data)) {
-				try {
-					data = JSON.parse(data);
-				} catch (e) {
-					flashMessage('<?php putGS('Could not load comments.'); ?>');
-					return;
-				}
+
+	var call_data = {
+		"article": "<?php echo $articleObj->getArticleNumber(); ?>",
+		"language": "<?php echo $f_language_selected; ?>"
+	};
+
+    var call_url = '../comment/list/format/json';
+
+	var res_handle = function(data) {
+		$('#comment-moderate').empty();
+		var hasComment = false;
+		for(var i in data.result) {
+			hasComment = true;
+			var comment = data.result[i];
+			if(typeof(comment) == "function") {
+				continue;
 			}
 
-            $('#comment-moderate').empty();
-            var hasComment = false;
-            for(var i in data.result) {
-                hasComment = true;
-                var comment = data.result[i];
-                if(typeof(comment) == "function") {
-                    continue;
+			var template = $('#comment-prototype').html();
+			for(var key in comment) {
+				if(key == 'status') {
+					template = template.replace(new RegExp("\\$({|%7B)"+comment[key]+"_checked(}|%7D)","g"),'checked="true"');
+					template = template.replace(new RegExp("\\${[^_]*_checked}","g"),'');
 				}
+				template = template.replace(new RegExp("\\$({|%7B)"+key+"(}|%7D)","g"),comment[key]);
+			}
+			$('#comment-moderate').append('<fieldset class="plain comments-block">'+template+'</fieldset>');
+		}
+		if(!hasComment)
+			$('#no-comments').show();
+		toggleCommentStatus();
+	};
 
-                var template = $('#comment-prototype').html();
-                for(var key in comment) {
-                    if(key == 'status') {
-                    	template = template.replace(new RegExp("\\$({|%7B)"+comment[key]+"_checked(}|%7D)","g"),'checked="true"');
-                    	template = template.replace(new RegExp("\\${[^_]*_checked}","g"),'');
-                    }
-                	template = template.replace(new RegExp("\\$({|%7B)"+key+"(}|%7D)","g"),comment[key]);
-                }
-            	$('#comment-moderate').append('<fieldset class="plain comments-block">'+template+'</fieldset>');
-            }
-            if(!hasComment)
-                $('#no-comments').show();
-            toggleCommentStatus();
-        }
-    });
-}
+	callServer(call_url, call_data, res_handle, true);
+};
 $('.action-list a').live('click',function(){
 	var el = $(this).parents('ul').find('input:checked').first();
-	$.ajax({
-        type: 'POST',
-        url: '../comment/set-status/format/json',
-        data: {
-		   "comment": el.attr('id').match(/\d+/)[0],
-		   "status": el.val(),
-		   <?php echo SecurityToken::JsParameter();?>,
-		},
-		success: function(data, status) {
-			if ((200 != status) && ('success' != status)) {
-		    	flashMessage('<?php putGS('Could not update comments.'); ?>');
-		    	return;
-		    }
 
-			if ('string' == typeof(data)) {
-				try {
-					data = JSON.parse(data);
-				} catch (e) {
-					flashMessage('<?php putGS('Could not update comments.'); ?>');
-					return;
-				}
-			}
+	var call_data = {
+	   "comment": el.attr('id').match(/\d+/)[0],
+	   "status": el.val()
+	};
 
-            flashMessage('<?php putGS('Comments updated.'); ?>');
-            toggleCommentStatus();
-		},
-        error: function (rq, status, error) {
-            if (status == 0 || status == -1) {
-                flashMessage('<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>', 'error');
-            }
-        }
-	});
+    var call_url = '../comment/set-status/format/json';
+
+	var res_handle = function(data) {
+		flashMessage('<?php putGS('Comments updated.'); ?>');
+		toggleCommentStatus();
+	};
+
+	callServer(call_url, call_data, res_handle, true);
 });
 </script>
 <script type="text/javascript">

@@ -296,25 +296,32 @@ var queue = [];
  * @param {callback} p_handle
  * @return bool
  */
-function callServer(p_callback, p_args, p_handle)
+function callServer(p_callback, p_args, p_handle, p_direct)
 {
     if (!p_args) {
         p_args = [];
     }
+	if (undefined === p_direct) {
+		p_direct = false;
+	}
+
+	var use_url = (p_direct) ? (p_callback) : (g_admin_url + '/json.php');
+
+	var default_data = {
+            'callback': p_callback,
+            'args': p_args
+	}
+	var use_data = (p_direct) ? p_args : default_data;
+    use_data['security_token'] = g_security_token;
 
     var flash = flashMessage(localizer.processing, null, true);
     $.ajax({
-        'url': g_admin_url + '/json.php',
+        'url': use_url,
         'type': 'POST',
-        'data': {
-            'security_token': g_security_token,
-            'callback': p_callback,
-            'args': p_args
-        },
+		'data': use_data,
         'dataType': 'json',
         'success': function(json) {
             flash.fadeOut();
-
 
             if (json != undefined && json.error_code != undefined) {
                 flashMessage(json.error_message, 'error', true);
@@ -342,7 +349,8 @@ function callServer(p_callback, p_args, p_handle)
             queue.push({
                 callback: p_callback,
                 args: p_args,
-                handle: p_handle
+                handle: p_handle,
+				direct: p_direct
             });
         }
     });
@@ -365,6 +373,6 @@ function setSecurityToken(security_token)
     // restore request
     for (var i = 0; i < queue.length; i++) {
         var request = queue[i];
-        callServer(request.callback, request.args, request.handle);
+        callServer(request.callback, request.args, request.handle, request.direct);
     }
 }

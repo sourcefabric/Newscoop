@@ -25,28 +25,32 @@
 <script>
 function addComment() {
     $('#comment-add').submit(function(){
-        $.ajax({
-            type: 'POST',
-            url: '../comment/add-to-article/format/json',
-            data: {
-                "article": "<?php echo $f_article_number; ?>",
-                "language": "<?php echo $f_language_selected; ?>",
-                "name": $('#commenter_name').val(),
-                "subject": $('#comment_subject').val(),
-                "message" :$('#comment_message').val(),
-                <?php echo SecurityToken::JsParameter();?>,
-            },
-            success: function(data) {
-                $('#comment-add').each(function(){
-                    this.reset();
-                });
-                loadComments();
-                flashMessage('<?php putGS('Comment saved.'); ?>');
-            }
-        });
+
+		var call_data = {
+			"article": "<?php echo $f_article_number; ?>",
+			"language": "<?php echo $f_language_selected; ?>",
+			"name": $('#commenter_name').val(),
+			"subject": $('#comment_subject').val(),
+			"message" :$('#comment_message').val()
+		};
+
+	    var call_url = '../comment/add-to-article/format/json';
+
+		var res_handle = function(data) {
+
+			$('#comment-add').each(function(){
+				this.reset();
+			});
+			loadComments();
+			flashMessage('<?php putGS('Comment saved.'); ?>');
+
+		};
+
+		callServer(call_url, call_data, res_handle, true);
+
         return false;
     });
-}
+};
 </script>
 <script>
 $(function() {

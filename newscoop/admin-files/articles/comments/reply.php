@@ -118,52 +118,47 @@ if (isset($connectedToOnlineServer)
 <script>
 function replyComment() {
 	$('#comment-reply').submit(function(){
-        $.ajax({
-            type: 'POST',
-            url: '../../comment/reply/format/json',
-            data: {
-                "article": "<?php echo $f_article_number; ?>",
-                "language": "<?php echo $f_language_selected; ?>",
-                "parent": "<?php echo $f_comment_id; ?>",
-                "subject": $('#comment_subject').val(),
-                "message": $('#comment_message').val(),
-                <?php echo SecurityToken::JsParameter();?>,
-            },
-            success: function(data) {
-                if(data.status != 200) {
-                    flashMessage(data.message);
-                    return;
-                }
-            	window.location.href = "<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php"); ?>";
-            },
-            error: function (rq, status, error) {
-                if (status == 0 || status == -1) {
-                    flashMessage('<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>', 'error');
-                }
-            }
-        });
+
+		var call_data = {
+			"article": "<?php echo $f_article_number; ?>",
+			"language": "<?php echo $f_language_selected; ?>",
+			"parent": "<?php echo $f_comment_id; ?>",
+			"subject": $('#comment_subject').val(),
+			"message": $('#comment_message').val()
+		};
+
+	    var call_url = '../../comment/reply/format/json';
+
+		var res_handle = function(data) {
+			window.location.href = "<?php echo camp_html_article_url($articleObj, $f_language_id, "edit.php"); ?>";
+		};
+
+		callServer(call_url, call_data, res_handle, true);
+
         return false;
 
 	});
-}
+};
 function loadComment() {
-    $.ajax({
-        type: 'POST',
-        url: '../../comment/list/format/json',
-        data: {
-            "comment": "<?php echo $f_comment_id; ?>",
-        },
-        success: function(data) {
-        	template = $('#comment-reply-to').html();
-            comment = data.result[0];
-            if(comment)
-                for(key in comment) {
-                    template = template.replace(new RegExp("\\$({|%7B)"+key+"(}|%7D)","g"),comment[key]);
-                }
-            $('#comment-reply-to').html(template).show();
-        }
-    });
-}
+
+	var call_data = {
+		"comment": "<?php echo $f_comment_id; ?>"
+	};
+
+    var call_url = '../../comment/reply/format/json';
+
+	var res_handle = function(data) {
+		template = $('#comment-reply-to').html();
+		comment = data.result[0];
+		if(comment)
+			for(key in comment) {
+				template = template.replace(new RegExp("\\$({|%7B)"+key+"(}|%7D)","g"),comment[key]);
+			}
+		$('#comment-reply-to').html(template).show();
+	};
+
+	callServer(call_url, call_data, res_handle, true);
+};
 </script>
 <script>
 $(function() {
