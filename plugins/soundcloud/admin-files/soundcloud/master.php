@@ -141,4 +141,3 @@ if ($article) {
 }
 
 require_once 'templates/master.php';
-?>
