@@ -101,7 +101,7 @@ $( function()
 				$('.actionDropDown .unassign:parent').hide();
 				$('.actionDropDown .download:parent').hide();
 				$('.actionDropDown .delete:parent').show();
-				$('.actionDropDown .edit:parent').hide();
+				$('.actionDropDown .edit:parent').show();
 			});
 		}
 	});
