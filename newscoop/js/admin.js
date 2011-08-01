@@ -336,7 +336,10 @@ function callServer(p_callback, p_args, p_handle, p_direct)
         'error': function(xhr, textStatus, errorThrown) {
         	if(xhr.getResponseHeader('Not-Logged-In')) {
         		flash.hide();
-        		location.reload();
+        		if((!window.login_popup) || (window.login_popup.closed)) {
+        			window.login_popup = window.open(g_admin_url + '/login.php?request=ajax', 'login', 'height=400,width=500');
+        		}
+        		window.login_popup.focus();
                 popupFlash = flashMessage(localizer.session_expired + ' ' + localizer.please + ' <a href="'+g_admin_url + '/login.php" target="_blank">' + localizer.login + '</a>.', 'error', true);
         	}
         	else {
