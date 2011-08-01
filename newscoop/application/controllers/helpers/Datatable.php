@@ -50,10 +50,11 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
             'bJQueryUI' => true,
             'bAutoWidth' => true,
             'bSaveState' => true,
-            'iDisplayLength' => 10,
+            'iDisplayLength' => 25,
             'bLengthChange' => true,
             'sPaginationType' => 'full_numbers',
             'bPaginate' => true,
+            'sDom' => '<"H"lfri>t<"F"ip>',
             'aoColumnDefs' => array()
         );
         return $this;
