@@ -20,7 +20,7 @@ jQuery( function()
 	/**
 	 * add ajax to form submits
 	 */
-	$('.templateSettings form, .articleTypes form').live( 'submit', function( evt )
+	$('.templateSettings form, .articleTypes form, .versionHolder form').live( 'submit', function( evt )
 	{
 		var thisForm = $(this)
 		$.ajax
@@ -39,8 +39,7 @@ jQuery( function()
 	$('.articleTypes form').submit( function()
 	{
 		$(this).find('select').removeAttr( 'disabled' ); 
-	})
-	$('.versionHolder form').submit( function(){ return false; })
+	});
 	
 	$('#submit-settings-ctrl').click( function()
 	{

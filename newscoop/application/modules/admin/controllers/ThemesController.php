@@ -287,11 +287,19 @@ class Admin_ThemesController extends Zend_Controller_Action
         $theme = $this->getThemeService()->findById( $this->_request->getParam( 'id' ) );
         // setup the theme settings form
         $themeForm = new Admin_Form_Theme();
-        $themeForm->populate( array
-        (
-        	"theme-version"    => (string) $theme->getVersion(),
-        	"required-version" => (string) $theme->getMinorNewscoopVersion()
-        ) );
+        $themeForm->setDefaults(array(
+            'name' => $theme->getName(),
+            'theme-version' => (string) $theme->getVersion(),
+            'required-version' => (string) $theme->getMinorNewscoopVersion(),
+        ));
+
+        $request = $this->getRequest();
+        if ($request->isPost() && $themeForm->isValid($request->getPost())) {
+            $values = $themeForm->getValues();
+            $theme->setName($values['name']);
+            $this->getThemeService()->updateTheme($theme);
+        }
+
         $this->view->themeForm = $themeForm;
     }
 
