@@ -42,6 +42,7 @@ class MetaActionSubmit_Comment extends MetaAction
                                           $p_input['f_comment_nickname'] : '';
         $this->m_properties['subject'] = $p_input['f_comment_subject'];
         $this->m_properties['content'] = $p_input['f_comment_content'];
+        $this->m_properties['is_anonymous'] = $p_input['f_comment_is_anonymous'];
         if (isset($p_input['f_comment_reader_email'])) {
             $readerEmail = trim($p_input['f_comment_reader_email']);
             if (!empty($readerEmail)) {
@@ -115,7 +116,8 @@ class MetaActionSubmit_Comment extends MetaAction
         $publicationObj = new Publication($publication_id);
         $user = $p_context->user;
         $userIp = getIp();
-        if ($user->defined)
+        
+        if ($user->defined && $this->m_properties['is_anonymous'] != null)
         {
             $userId = $user->identifier;
             $userEmail = $user->email;
@@ -124,6 +126,9 @@ class MetaActionSubmit_Comment extends MetaAction
 			}
             else {
 				$userRealName = $this->m_properties['nickname'];
+			}
+			if ($this->m_properties['is_anonymous']) {
+				$userRealName = 'anonymous';
 			}
         }
         else
@@ -145,12 +150,7 @@ class MetaActionSubmit_Comment extends MetaAction
             $userId = null;
             $userEmail = $this->m_properties['reader_email'];
             
-            if ($this->m_properties['nickname'] == '') {
-				$userRealName = 'anonymous';
-			}
-            else {
-				$userRealName = $this->m_properties['nickname'];
-			}
+            $userRealName = $this->m_properties['nickname'];
         }
 
         // Validate the CAPTCHA code if it was enabled for the current publication.
