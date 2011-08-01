@@ -230,7 +230,8 @@ class Admin_ThemesController extends Zend_Controller_Action
             	'bLengthChange'  => false,
                 'fnRowCallback'	 => "newscoopDatatables.callbackRow",
                 'fnDrawCallback' => "newscoopDatatables.callbackDraw",
-                'fnInitComplete' => "newscoopDatatables.callbackInit"
+                'fnInitComplete' => "newscoopDatatables.callbackInit",
+                'fnServerData'	 => "newscoopDatatables.callbackServerData"
             ) )
             ->setWidths( array( 'checkbox' => 0, 'image' => 215, 'name' => 235, 'description' => 280, 'actions' => 115 ) )
             ->setRowHandler
