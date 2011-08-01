@@ -130,7 +130,11 @@ class SubscriptionSection
      */
     public function getLanguageId()
     {
-        return $this->language ? $this->language->getId() : 0;
+		try {
+			return $this->language ? $this->language->getId() : 0;
+		} catch (\Doctrine\ORM\EntityNotFoundException $exc) {
+			return 0;
+		}
     }
 
     /**
@@ -140,7 +144,11 @@ class SubscriptionSection
      */
     public function getLanguageName()
     {
-        return $this->language ? $this->language->getName() : '';
+		try {
+			return $this->language ? $this->language->getName() : '';
+		} catch (\Doctrine\ORM\EntityNotFoundException $exc) {
+			return '';
+		}
     }
 
     /**

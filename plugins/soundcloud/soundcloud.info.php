@@ -9,7 +9,7 @@
 $info = array(
     'name' => 'soundcloud',
     'version' => '0.1.0',
-    'label' => 'Soundcloud',
+    'label' => getGS('Soundcloud'),
     'description' => 'This plugin provides Soundcloud integration.',
     'menu' => array(
         'name' => 'soundcloud',

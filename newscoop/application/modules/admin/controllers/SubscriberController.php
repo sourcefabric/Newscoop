@@ -128,7 +128,7 @@ class Admin_SubscriberController extends Zend_Controller_Action
                     'format' => NULL,
                 )),
                 getGS('Edit subscriptions'),
-                getGS('Subscriptions')
+                getGS('Edit subscriptions')
             );
 
             $deleteLink = sprintf('<a href="%s" class="delete confirm" title="%s">%s</a>',

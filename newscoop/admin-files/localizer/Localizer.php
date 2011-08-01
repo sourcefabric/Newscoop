@@ -271,9 +271,9 @@ class Localizer {
         $files = array();
         $root = rtrim($g_localizerConfig['BASE_DIR'], '/');
         foreach ($p_directory as $dir) {
-            if (strpos($dir, '*') !== FALSE) { // loads subdirectories /*/*.php
+            while (($pos = strrpos($dir, '/*')) !== FALSE) {
                 $files = array_merge($files, glob("$root/$dir/*.*"));
-                $dir = rtrim($dir, '*');
+                $dir = substr($dir, 0, $pos);
             }
 
             $realpath = realpath("$root/$dir");
