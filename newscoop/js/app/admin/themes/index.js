@@ -1,5 +1,22 @@
 newscoopDatatables =
 {
+	callbackServerData : function ( sSource, aoData, fnCallback ) 
+	{
+		$.ajax
+		({
+			dataType : 'json',
+			type : "POST",
+			url : sSource,
+			data : aoData,
+			success : fnCallback,
+			error : function(xhr, textStatus, errorThrown)
+			{
+				if (xhr.getResponseHeader('Not-Logged-In')) {
+					location.reload();
+				}
+			}
+		});
+	},
 	callbackRow : function( row, data, displayIndex, displayIndexFull )
 	{
 		$(row).children().each( function( idx )
@@ -39,7 +56,7 @@ newscoopDatatables =
 			imgs.addClass( 'ui-tabs-hide' ).eq( idx ).removeClass( 'ui-tabs-hide' );
 		});
 
-		$(".themesListTabs div a").fancybox();
+		$(".themesListTabs a").fancybox();
 
 		$(".actionDropDown li").hover(function()
 		{
@@ -101,7 +118,7 @@ $( function()
 				$('.actionDropDown .unassign:parent').hide();
 				$('.actionDropDown .download:parent').hide();
 				$('.actionDropDown .delete:parent').show();
-				$('.actionDropDown .edit:parent').hide();
+				$('.actionDropDown .edit:parent').show();
 			});
 		}
 	});
