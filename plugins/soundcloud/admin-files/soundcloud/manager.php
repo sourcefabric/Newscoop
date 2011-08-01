@@ -14,4 +14,3 @@ echo camp_html_breadcrumbs(array(
 
 $attachement = false;
 include 'master.php';
-?>

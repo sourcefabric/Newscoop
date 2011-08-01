@@ -338,4 +338,4 @@ function jsonOutput($content, $message = array(), $js = null, $otherParams = arr
     echo json_encode($output);
 }
 
-?>
+exit;

@@ -52,4 +52,3 @@ echo camp_html_breadcrumbs(array(
 camp_html_display_msgs();
 
 include 'templates/preferences.php';
-?>
