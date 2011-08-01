@@ -36,8 +36,6 @@ class Action_Helper_Acl extends Zend_Controller_Action_Helper_Abstract
         return $aclResource->getAcl($role);
     }
 
-
-
     /**
      * Permission check
      *

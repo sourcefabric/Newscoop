@@ -156,6 +156,10 @@ ul.resource li.all, ul.resource li.all:hover {
     background-color: transparent;
 }
 
+ul.resource li.deny {
+    background-color: #fae9e9;
+}
+
 ul.resource li:hover {
     background-color: #cce5f0;
 }
