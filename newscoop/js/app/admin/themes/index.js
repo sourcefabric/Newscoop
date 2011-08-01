@@ -39,7 +39,7 @@ newscoopDatatables =
 			imgs.addClass( 'ui-tabs-hide' ).eq( idx ).removeClass( 'ui-tabs-hide' );
 		});
 
-		$(".themesListTabs div a").fancybox();
+		$(".themesListTabs a").fancybox();
 
 		$(".actionDropDown li").hover(function()
 		{
