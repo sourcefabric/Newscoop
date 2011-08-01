@@ -1,8 +1,4 @@
 <?php 
-regGS("login", "");
-regGS("Session expired.", "");
-regGS("Processing...", "");
-regGS("Please", "");
 regGS("Files attached.", "Plik załaczony.");
 regGS("File '$1' unattached.", "Plik '$1' odłączony.");
 regGS("Attach new file", "Załącz nowy plik");

@@ -154,6 +154,26 @@ final class CampTemplate extends Smarty
         }
     } // fn trigger_error
 
+    /**
+     * get a concrete filename for automagically created content
+     *
+     * @param string $auto_base
+     * @param string $auto_source
+     * @param string $auto_id
+     *
+     * @return string
+     */
+    function _get_auto_filename($auto_base, $auto_source = null, $auto_id = null)
+    {
+		$show_spec = '';
+		if (isset($this->m_context)) {
+			$show_spec .= hash('sha1', ($this->m_context->template ? $this->m_context->template->theme_dir : ''));
+		}
+
+		return parent::_get_auto_filename($auto_base, $auto_source, $auto_id) . '%%' . $show_spec;
+	} // fn _get_auto_filename
+
+
 } // class CampTemplate
 
 ?>

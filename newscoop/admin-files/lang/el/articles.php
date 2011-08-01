@@ -1,4 +1,12 @@
 <?php 
+regGS("You do not have the right to moderate comments.", "");
+regGS("You can not schedule opposing events at the same time", "");
+regGS("Unable to reach Newscoop. Please check your internet connection.", "");
+regGS("Title", "");
+regGS("There already is an article with the same name. Please change the name and try again.", "");
+regGS("Please be aware that all scheduled publishing events for this article will be deleted when you set this article to \"New\" state. Please confirm the state change.", "");
+regGS("Geolocation", "");
+regGS("Newscoop", "Newscoop");
 regGS("Pending Article", "");
 regGS("Overwrite articles with matching names", "");
 regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");
@@ -15,7 +23,6 @@ regGS("Attach Topic To Article", "Επισύναψη Θέματος Στο Άρ�
 regGS("Article saved.", "Το άρθρο αποθηκεύτηκε.");
 regGS("Article is locked", "Το άρθρο είναι κλειδωμένο");
 regGS("Actions updated.", "Οι ενέργειες ενημερώθηκαν.");
-regGS("Unable to reach Campsite. Please check your internet connection.", "Η πρόσβαση στο Campsite ήταν αδύνατη. Παρακαλούμε ελένξτε την σύνδεσή σας στο internet.");
 regGS("Your work has not been saved. Do you want to continue and lose your changes?", "Η δουλειά σας δεν έχει αποθηκευτεί. Επιθυμείτε να συνεχίσετε και να χάσετε τις αλλαγές σας;");
 regGS("Switches", "Εναλλαγές");
 regGS("No subtopics available", "Καμία διαθέσιμη κατηγορία");
@@ -26,7 +33,6 @@ regGS("Keywords &amp; Topics", "Λέξεις κλειδιά &  Θέματα");
 regGS("Info", "Πληροφορίες");
 regGS("Go to live article", "Πήγαινε στο ζωντανό άρθρο");
 regGS("Created", "Δημιουργήθηκε");
-regGS("Locations", "Τοποθεσίες");
 regGS("Are you sure you want to remove the map from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε τον χάρτη από το άρθρο;");
 regGS("Scheduled action added", "Η προγραμματισμένη ενέργεια προστέθηκε");
 regGS("Content edited", "Το περιεχόμενο υπέστη επεξεργασία");

@@ -1,4 +1,6 @@
 <?php 
+regGS("Image files", "");
+regGS("Fix all thumbnails", "");
 regGS("You do not have the right to add files.", "У Вас нет прав доступа для добавления файлов.");
 regGS("Should this file only be available for this translation of the article, or for all translations?", "Этот файл будет доступен для данного перевода статьи или для всех?");
 regGS("Please enter a description for the file: '$1'.", "Введите описание файла: '$1'.");
@@ -29,19 +31,11 @@ regGS("Are you sure you want to delete selected items?", "Вы уверены, �
 regGS("Add new file", "Добавить новый файл");
 regGS("You do not have the right to add images.", "У Вас нет прав для загрузки изображений.");
 regGS("Use for all", "Для всех пользователей");
-regGS("Stop current upload", "Остановить текущую загрузку");
-regGS("Start uploading queue", "Начать загрузку очереди");
-regGS("Start upload", "Начать загрузку");
 regGS("Specify image url if you want to load it.", "Укажите URL изображения для его загрузки.");
 regGS("Size", "Размер");
-regGS("Select files", "Выберите файлы");
 regGS("No images for multi editing.", "Нет изображений для многофайлового редактирования.");
 regGS("Images updated.", "Обновление изображений.");
-regGS("Filename", "Имя файла");
 regGS("Edit images", "Редактировать изображения");
-regGS("Drag files here.", "Перетащите файлы сюда");
-regGS("Add files to the upload queue and click the start button.", "Добавьте файлы в очередь для загрузки и нажмите кнопку для начала загрузки.");
-regGS("Add files", "Добавить файлы");
 regGS("\"$1\" files uploaded.", "Файлы \"$1\" загружены.");
 regGS("Unable to add new image.", "Невозможно добавить новое изображение.");
 regGS("Image updated.", "Изображение обновлено.");

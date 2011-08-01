@@ -1,4 +1,6 @@
 <?php 
+regGS("Hide human-readable field names", "");
+regGS("Edit and translate human-readable field names", "");
 regGS("The template name may only contain letters and the underscore (_) character.", "Το όνομα προτύπου μπορεί να περιλαμβάνει μόνο γράμματα και τον χαρακτήρα υπογραμμισης (_).");
 regGS("Rename article type '$1'", "Μετονομασία τύπου άρθρου '$1'");
 regGS("Invalid article type '$1'.", "Μη έγκυρος τύπος άρθρου'$1'.");
@@ -41,7 +43,6 @@ regGS("The translation could not be added.", "Η μετάφραση δεν μπ�
 regGS("The article type $1 does not exist.", "Ο τύπος άρθρου $1 δεν υπάρχει.");
 regGS("Template Type Name", "Όνομα Τύπου Προτύπου");
 regGS("Show/Hide", "Εμφάνιση/Απόκρυψη");
-regGS("Show display names", "Εμφάνιση ονομάτων");
 regGS("Show article on section page", "Εμφάνιση άρθρου στην σελίδα ενότητας");
 regGS("Show article on front page", "Εμφάνιση άρθρου στην αρχική σελίδα");
 regGS("Publish date", "Δημοσίευση ημερομηνίας");
@@ -49,7 +50,6 @@ regGS("Merge!", "Συγχώνευση!");
 regGS("Merge types", "Τύποι συγχώνευσης");
 regGS("Merge article type", "Συγχώνευση τύπου άρθρου");
 regGS("Link to public page", "Σύνδεση σε δημόσια σελίδα");
-regGS("Hide display names", "Απόκρυψη εμφανιζόμενων ονομάτων");
 regGS("Go to Step 3", "Πήγαινε στο Βήμα 3");
 regGS("Go to Step 2", "Πήγαινε στο Βήμα 2");
 regGS("Display Name", "Εμφανιζόμενο Όνομα");

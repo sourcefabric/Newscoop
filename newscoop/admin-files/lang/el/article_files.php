@@ -1,8 +1,4 @@
 <?php 
-regGS("login", "");
-regGS("Session expired.", "");
-regGS("Processing...", "");
-regGS("Please", "");
 regGS("Files attached.", "Τα αρχεία επισυνάφθηκαν.");
 regGS("File '$1' unattached.", "Το αρχείο '$1' αποσυνδέθηκε.");
 regGS("Attach new file", "Επισύναψη νέου αρχείου");

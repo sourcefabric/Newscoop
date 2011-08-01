@@ -1,4 +1,6 @@
 <?php 
+regGS("Hide human-readable field names", "");
+regGS("Edit and translate human-readable field names", "");
 regGS("The template name may only contain letters and the underscore (_) character.", "Име шаблона може садржати искључиво слова и доњу црту (_)");
 regGS("Rename article type '$1'", "Преименуј тип текста '$1'");
 regGS("Invalid article type '$1'.", "Погрешан тип текста '$1'");
@@ -41,7 +43,6 @@ regGS("The translation could not be added.", "ПРевод не може бит�
 regGS("The article type $1 does not exist.", "Тип текста $1 не постоји");
 regGS("Template Type Name", "Назив типа шаблона");
 regGS("Show/Hide", "Прикажи/сакри");
-regGS("Show display names", "Прикажи показна имена");
 regGS("Show article on section page", "Прикажи текст на страни рубрике");
 regGS("Show article on front page", "Прикажи текст на првој страни");
 regGS("Publish date", "Датум објављивања");
@@ -49,7 +50,6 @@ regGS("Merge!", "Споји!");
 regGS("Merge types", "Спој типове");
 regGS("Merge article type", "Спој тип текста");
 regGS("Link to public page", "Линк на страну");
-regGS("Hide display names", "Сакри приказна имена");
 regGS("Go to Step 3", "Иди на корак 3");
 regGS("Go to Step 2", "Иди на корак 2");
 regGS("Display Name", "Назив који се приказује");

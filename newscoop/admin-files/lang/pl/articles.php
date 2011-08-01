@@ -1,4 +1,12 @@
 <?php 
+regGS("You do not have the right to moderate comments.", "");
+regGS("You can not schedule opposing events at the same time", "");
+regGS("Unable to reach Newscoop. Please check your internet connection.", "Nie można połączyć z Newscoop. Sprawdź połączenie z Internetem.");
+regGS("Title", "");
+regGS("There already is an article with the same name. Please change the name and try again.", "");
+regGS("Please be aware that all scheduled publishing events for this article will be deleted when you set this article to \"New\" state. Please confirm the state change.", "");
+regGS("Geolocation", "");
+regGS("Newscoop", "");
 regGS("Pending Article", "");
 regGS("Overwrite articles with matching names", "");
 regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");
@@ -15,7 +23,6 @@ regGS("Attach Topic To Article", "Dodaj temat do artykuły");
 regGS("Article saved.", "Artykuł zapisany.");
 regGS("Article is locked", "Artykuł jest zablokowany");
 regGS("Actions updated.", "Akcje uaktualnione.");
-regGS("Unable to reach Newscoop. Please check your internet connection.", "Nie można połączyć z Newscoop. Sprawdź połączenie z Internetem.");
 regGS("Your work has not been saved. Do you want to continue and lose your changes?", "Twoja praca nie została zapisana. Chcesz kontynuować czy utracić swoje zmiany?");
 regGS("Switches", "Przełączniki");
 regGS("No subtopics available", "Brak podtematów");
@@ -26,7 +33,6 @@ regGS("Keywords &amp; Topics", "Słowa kluczowe &amp; Tematy");
 regGS("Info", "Info");
 regGS("Go to live article", "Zobacz arykuł live");
 regGS("Created", "Utworzono");
-regGS("Locations", "Lokalizacje");
 regGS("Are you sure you want to remove the map from the article?", "Na pewnoc hcesz usunąć mapę z artykułu?");
 regGS("Scheduled action added", "Dodaną zaplanowaną akcję");
 regGS("Content edited", "Edycja kontentu zakończona");

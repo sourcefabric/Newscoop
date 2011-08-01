@@ -1,4 +1,6 @@
 <?php 
+regGS("Hide human-readable field names", "");
+regGS("Edit and translate human-readable field names", "");
 regGS("The template name may only contain letters and the underscore (_) character.", "");
 regGS("Rename article type '$1'", "");
 regGS("Invalid article type '$1'.", "");
@@ -41,7 +43,6 @@ regGS("The translation could not be added.", "Traducerea nu a putut fi adăugat�
 regGS("The article type $1 does not exist.", "Tipul $1 al articolului nu există.");
 regGS("Template Type Name", "Numele tipului şablonului");
 regGS("Show/Hide", "Arată/Ascunde");
-regGS("Show display names", "Arată numele publice");
 regGS("Show article on section page", "Afişează articolul pe pagina secţiunii");
 regGS("Show article on front page", "Afişează articolul pe prima pagină");
 regGS("Publish date", "Data publicării");
@@ -49,7 +50,6 @@ regGS("Merge!", "Combină!");
 regGS("Merge types", "Tipuri de combinare");
 regGS("Merge article type", "Combină tipul articolului");
 regGS("Link to public page", "Legătură spre un site public");
-regGS("Hide display names", "Ascunde numele publice");
 regGS("Go to Step 3", "Mergi la pasul 3");
 regGS("Go to Step 2", "Mergi la pasul 2");
 regGS("Display Name", "Numele public");

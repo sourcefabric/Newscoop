@@ -1,4 +1,19 @@
 <?php 
+regGS("You must input a number greater than $1 and less than $2 into the $3 field.", "");
+regGS("You do not have the right to translate article types.", "");
+regGS("You do not have the right to reorder article types.", "");
+regGS("You do not have the right to reassign article type fields.", "");
+regGS("You do not have the right to manage article types.", "");
+regGS("You do not have the right to hide article types.", "");
+regGS("You do not have the right to delete article types.", "");
+regGS("Small ($1 pixels)", "");
+regGS("Medium ($1 pixels)", "");
+regGS("Large ($1 pixels)", "");
+regGS("Hide human-readable field names", "");
+regGS("Editor size", "");
+regGS("Edit and translate human-readable field names", "");
+regGS("Custom", "");
+regGS("Characters limit", "");
 regGS("The template name may only contain letters and the underscore (_) character.", "Имя шаблона может содержать только буквы и знак подчеркивания (_).");
 regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "Это имя поля уже используется как базовое свойство статьи. Содержимое этого поля не может быть отображено в шаблоне.");
 regGS("The property '$1' is already in use.", "Свойство '$1' уже используется.");
@@ -13,18 +28,15 @@ regGS("You must enter a name for the field.", "Вы должны ввести н
 regGS("You must choose a language for the field.", "Вы должны выбрать язык для поля.");
 regGS("You do not have the right to rename article type fields.", "Вы не имеете прав доступа для переименования поля типа статей.");
 regGS("You do not have the right to reassign a field type.", "Вы не имеете прав доступа для переназначения типа поля.");
-regGS("You do not have the right to add article types.", "Вы не имеете прав доступа для добавления типов статей.");
 regGS("Translating field", "Поле перевода");
 regGS("The translation could not be added.", "Перевод не может быть добавлен.");
 regGS("The field $1 does not exist.", "Поле $1 не существует.");
 regGS("The $1 field may only contain letters and underscore (_) character.", "Поле $1 может содержать только буквы и символ подчеркивания (_).");
 regGS("Template Field Name", "Название поля шаблона");
 regGS("Show/Hide", "Показать/Спрятать");
-regGS("Show display names", "Показать отображаемые названия");
 regGS("Renaming article type field", "Переименование поля типа статей");
 regGS("Rename field", "Переименовать поле");
 regGS("Reassign a field type", "Переназначить тип поля");
-regGS("Hide display names", "Скрыть отображаемые названия");
 regGS("Display Name", "Отображаемое название");
 regGS("Are you sure you want to $1 the article type field $2?", "Вы уверены, что хотите $1 поле типа статей $2?");
 regGS("Adding new article type", "Добавление нового типа статьи");

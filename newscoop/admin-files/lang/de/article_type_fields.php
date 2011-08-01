@@ -1,4 +1,19 @@
 <?php 
+regGS("You must input a number greater than $1 and less than $2 into the $3 field.", "");
+regGS("You do not have the right to translate article types.", "");
+regGS("You do not have the right to reorder article types.", "");
+regGS("You do not have the right to reassign article type fields.", "");
+regGS("You do not have the right to manage article types.", "");
+regGS("You do not have the right to hide article types.", "");
+regGS("You do not have the right to delete article types.", "");
+regGS("Small ($1 pixels)", "");
+regGS("Medium ($1 pixels)", "");
+regGS("Large ($1 pixels)", "");
+regGS("Hide human-readable field names", "");
+regGS("Editor size", "");
+regGS("Edit and translate human-readable field names", "");
+regGS("Custom", "");
+regGS("Characters limit", "");
 regGS("The template name may only contain letters and the underscore (_) character.", "Der Templatename darf nur Buchstaben und den Unterstrich (_) enthalten.");
 regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "Der Feldname war bereits als Grundeigenschaft für den Artikel in Gebrauch. Der Feldinhalt wird nicht in den Templates angezeigt.");
 regGS("The property '$1' is already in use.", "Die Eigenschaft '$1' ist bereits in Gebrauch.");
@@ -13,18 +28,15 @@ regGS("You must enter a name for the field.", "Sie müssen einen Feldnamen einge
 regGS("You must choose a language for the field.", "Sie müssen eine Sprache für das Feld wählen.");
 regGS("You do not have the right to rename article type fields.", "Keine Berechtigung um Artikeltypen Felder umzubenennen.");
 regGS("You do not have the right to reassign a field type.", "Keine Berechtigung um Feldtypen neu zu vergeben.");
-regGS("You do not have the right to add article types.", "Keine Berechtigung um Artikeltypen hinzuzufügen.");
 regGS("Translating field", "Feld wird übersetzt");
 regGS("The translation could not be added.", "Die Übersetzung konnte nicht hinzugefügt werden.");
 regGS("The field $1 does not exist.", "das Feld $1 existiert nicht.");
 regGS("The $1 field may only contain letters and underscore (_) character.", "Das $1 Feld darf nur Buchstaben und den Unterstrich (_) enthalten.");
 regGS("Template Field Name", "Template Feldnamen");
 regGS("Show/Hide", "Anzeigen/Verbergen");
-regGS("Show display names", "Anzeigenamen zeigen");
 regGS("Renaming article type field", "Artikel Feldtyp umbenennen");
 regGS("Rename field", "Feld umbennen");
 regGS("Reassign a field type", "Feldtyp neu vergeben");
-regGS("Hide display names", "Anzeigenamen verbergen");
 regGS("Display Name", "Anzeigename");
 regGS("Are you sure you want to $1 the article type field $2?", "Wirklich Artikel Feldtyp $2 $1?");
 regGS("Adding new article type", "Neuer Artikeltyp wird hinzugefügt");

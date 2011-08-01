@@ -81,5 +81,4 @@ regGS("Search engine optimization", "SEO");
 regGS("Article title", "Tytuł artykułu");
 regGS("Article keywords", "Słowa kluczowe artykułu");
 regGS("Article topics", "Tematy artykułów");
-regGS("Invalid URL Template", "Niepoprawny URL szablonu");
 ?>

@@ -1,4 +1,15 @@
 <?php 
+regGS("Title", "");
+regGS("No video playback capabilities, please download the video below", "");
+regGS("Article status set to '$1' for $2 articles", "");
+regGS("Article status not set to '$1' for $2 articles", "");
+regGS("$1 toggled for $2 articles.", "");
+regGS("$1 not toggled for $2 articles.", "");
+regGS("$1 not toggled for $2  articles.", "");
+regGS("$1 articles have not been removed", "");
+regGS("$1 Article(s) unlocked", "");
+regGS("$1 Article(s) not unlocked", "");
+regGS("$1 Article(s) duplicated", "");
 regGS("Download file", "Pobierz plik");
 regGS("You do not have the right to delete articles.", "Nie masz praw aby usuwać artykuły.");
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "Nie masz praw aby zmieniać status artykułu. Po wysłaniu artykuł może być zmieniony tylko przez autoryzowanych użytkowników.");
@@ -43,9 +54,6 @@ regGS("Duplicate to another section", "Duplikuj do innej sekcji");
 regGS("Display _MENU_ records", "Pokaż _MENU_ rekordy");
 regGS("Creator", "Twórca");
 regGS("Create Date", "Data utworzenia");
-regGS("Articles updated.", "Artykuły zaktualizowane.");
-regGS("Article(s) unlocked", "Artykuł(y) odblokowane.");
-regGS("Article(s) duplicated", "Artykuł(y) zduplikowane.");
 regGS("Article status set to '$1'", "Status artykułu zmieniony na '$1'");
 regGS("Are you sure you want to delete selected articles?", "Na pewno chcesz usunąć wybrane artykuły?");
 regGS("All Sections", "Wszystkie sekcje");

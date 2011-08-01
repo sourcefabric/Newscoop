@@ -1,4 +1,19 @@
 <?php 
+regGS("vertices", "");
+regGS("There was a problem trying to execute the XML RPC function.", "");
+regGS("The Campcaster server configuration is invalid.", "");
+regGS("Pan Map", "");
+regGS("Open large map", "");
+regGS("No news available.", "");
+regGS("Invalid parameter given to Audioclip::editMetadata()", "");
+regGS("File $1 does not exist", "");
+regGS("Edit Polygon", "");
+regGS("Create Polygon", "");
+regGS("Communication error: ", "");
+regGS("Cannot update audioclip metadata on storage server", "");
+regGS("Cannot update audioclip metadata on Campsite", "");
+regGS("Can't fetch news from '$1'", "");
+regGS("Loading...", "");
 regGS("Version", "");
 regGS("License", "");
 regGS("Homepage", "");
@@ -7,7 +22,6 @@ regGS("The uploaded archive does not contain an valid newscoop plugin.", "Арх
 regGS("Map", "Мапа");
 regGS("Center", "Центар");
 regGS("Title", "Наслов");
-regGS("No news.", "Нема вести");
 regGS("Invalid security token.", "Погрешан сигурносни токен");
 regGS("Callback '$1' is not callable.", "Callback '$1' is not callable.");
 regGS("Author type $1 linked to author $2", "Тип аутора $1 додат аутору $2");
@@ -72,11 +86,8 @@ regGS("* Marked fields are mandatory.", "Поља означена са * су �
 regGS("$1 is of type $2", "$1 је за тип $2");
 regGS("Invalid resize width/height.", "Неисправне вредности за промену димензија ширина/висина");
 regGS("Image type $1 is not supported.", "Тип слике $1 није подржан");
-regGS("There was a problem trying to execute the XML RPC function.", "Дошло је до проблема при извршавању XML RPC функције.");
 regGS("Template $1 was moved to $2", "Шаблон $1 је премештен на $2");
 regGS("Template $1 was deleted", "Шаблон $1 је обрисан");
-regGS("File $1 does not exist", "Фајл $1 не постоји");
-regGS("Communication error: ", "Грешка у комуникацији:");
 regGS("Template $1 no longer exists!", "Шаблон $1 више не постоји");
 regGS("The file uploaded is not an image.", "Аплоудовани фајл није слика.");
 regGS("Could not delete record from the database.", "Није могуће обрисати запис из базе.");

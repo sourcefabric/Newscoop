@@ -368,12 +368,6 @@ class CampInstallationBase
         $source = CS_INSTALL_DIR.DIR_SEP.'sample_templates'.DIR_SEP.$template_name['loaddemo'].DIR_SEP.'templates';
         $target = CS_PATH_TEMPLATES.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED;
         
-        //
-        if (is_dir(CS_INSTALL_DIR.DIR_SEP.'temp')) {
-			CampInstallationBaseHelper::CopyFiles(CS_INSTALL_DIR.DIR_SEP.'temp', CS_PATH_TEMPLATES.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED);
-			camp_remove_dir(CS_INSTALL_DIR.DIR_SEP.'temp');
-		}
-        
         if (CampInstallationBaseHelper::CopyFiles($source, $target) == false) {
             $this->m_step = 'loaddemo';
             $this->m_message = 'Error: Copying sample site files';
@@ -458,6 +452,12 @@ class CampInstallationBase
         		$themeService->assignTheme($theme, $publication);
         	}
         }
+        
+        //
+        if (is_dir(CS_INSTALL_DIR.DIR_SEP.'temp')) {
+			CampInstallationBaseHelper::CopyFiles(CS_INSTALL_DIR.DIR_SEP.'temp', CS_PATH_TEMPLATES.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED);
+			camp_remove_dir(CS_INSTALL_DIR.DIR_SEP.'temp');
+		}
 
         return true;
     } // fn loadDemoSite
@@ -739,10 +739,12 @@ class CampInstallationBaseHelper
             return false;
         }
 
-        $sqlQuery1 = 'UPDATE liveuser_users SET '
-            ."Password = SHA1('".$g_db->Escape($p_password)."'), "
-            ."EMail = '".$g_db->Escape($p_email)."' "
-            .'WHERE Id = 1';
+        $sqlQuery1 = "UPDATE liveuser_users SET
+            Password = SHA1('".$g_db->Escape($p_password)."'),
+            EMail = '".$g_db->Escape($p_email)."',
+            time_updated = NOW(),
+            time_created = NOW()
+            WHERE Id = 1";
         if (!$g_db->Execute($sqlQuery1)) {
             return false;
         }

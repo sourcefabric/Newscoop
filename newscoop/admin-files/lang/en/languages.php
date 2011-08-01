@@ -1,4 +1,21 @@
 <?php 
+regGS("No languages.", "No languages.");
+regGS("Native Name", "Native Name");
+regGS("Name taken.", "Name taken.");
+regGS("Language saved.", "Language saved.");
+regGS("Language removed.", "Language removed.");
+regGS("Language not found.", "Language not found.");
+regGS("Language is in use and cannot be removed.", "Language is in use and cannot be removed.");
+regGS("Language added.", "Language added.");
+regGS("English language cannot be removed.", "English language cannot be removed.");
+regGS("Edit short month names", "Edit short month names");
+regGS("Edit short day names", "Edit short day names");
+regGS("Edit month names", "Edit month names");
+regGS("Edit language: $1", "Edit language: $1");
+regGS("Edit day names", "Edit day names");
+regGS("Code Page", "Code Page");
+regGS("Add new Language", "Add new Language");
+regGS("Add Language", "Add Language");
 regGS("We", "We");
 regGS("Tu", "Tu");
 regGS("Th", "Th");

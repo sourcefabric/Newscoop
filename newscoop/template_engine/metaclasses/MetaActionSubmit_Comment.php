@@ -39,9 +39,10 @@ class MetaActionSubmit_Comment extends MetaAction
             return;
         }
         $this->m_properties['nickname'] = isset($p_input['f_comment_nickname']) ?
-                                          $p_input['f_comment_nickname'] : 'anonymous';
+                                          $p_input['f_comment_nickname'] : '';
         $this->m_properties['subject'] = $p_input['f_comment_subject'];
         $this->m_properties['content'] = $p_input['f_comment_content'];
+        $this->m_properties['is_anonymous'] = $p_input['f_comment_is_anonymous'];
         if (isset($p_input['f_comment_reader_email'])) {
             $readerEmail = trim($p_input['f_comment_reader_email']);
             if (!empty($readerEmail)) {
@@ -115,11 +116,20 @@ class MetaActionSubmit_Comment extends MetaAction
         $publicationObj = new Publication($publication_id);
         $user = $p_context->user;
         $userIp = getIp();
-        if ($user->defined)
+        
+        if ($user->defined && $this->m_properties['is_anonymous'] != null)
         {
             $userId = $user->identifier;
             $userEmail = $user->email;
-            $userRealName = $user->name;
+            if ($this->m_properties['nickname'] == '') {
+				$userRealName = $user->name;
+			}
+            else {
+				$userRealName = $this->m_properties['nickname'];
+			}
+			if ($this->m_properties['is_anonymous']) {
+				$userRealName = 'anonymous';
+			}
         }
         else
         {
@@ -139,6 +149,7 @@ class MetaActionSubmit_Comment extends MetaAction
             }
             $userId = null;
             $userEmail = $this->m_properties['reader_email'];
+            
             $userRealName = $this->m_properties['nickname'];
         }
 

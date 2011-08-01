@@ -1,4 +1,19 @@
 <?php 
+regGS("vertices", "");
+regGS("There was a problem trying to execute the XML RPC function.", "");
+regGS("The Campcaster server configuration is invalid.", "");
+regGS("Pan Map", "");
+regGS("Open large map", "");
+regGS("No news available.", "");
+regGS("Invalid parameter given to Audioclip::editMetadata()", "");
+regGS("File $1 does not exist", "");
+regGS("Edit Polygon", "");
+regGS("Create Polygon", "");
+regGS("Communication error: ", "");
+regGS("Cannot update audioclip metadata on storage server", "");
+regGS("Cannot update audioclip metadata on Campsite", "");
+regGS("Can't fetch news from '$1'", "");
+regGS("Loading...", "");
 regGS("Version", "");
 regGS("License", "");
 regGS("Homepage", "");
@@ -7,7 +22,6 @@ regGS("The uploaded archive does not contain an valid newscoop plugin.", "");
 regGS("Map", "");
 regGS("Center", "");
 regGS("Title", "");
-regGS("No news.", "");
 regGS("Invalid security token.", "");
 regGS("Callback '$1' is not callable.", "");
 regGS("Author type $1 linked to author $2", "");

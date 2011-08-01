@@ -1,4 +1,12 @@
 <?php 
+regGS("You do not have the right to moderate comments.", "");
+regGS("You can not schedule opposing events at the same time", "");
+regGS("Unable to reach Newscoop. Please check your internet connection.", "");
+regGS("Title", "");
+regGS("There already is an article with the same name. Please change the name and try again.", "");
+regGS("Please be aware that all scheduled publishing events for this article will be deleted when you set this article to \"New\" state. Please confirm the state change.", "");
+regGS("Geolocation", "");
+regGS("Newscoop", "");
 regGS("Pending Article", "");
 regGS("Overwrite articles with matching names", "");
 regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");
@@ -15,7 +23,6 @@ regGS("Attach Topic To Article", "Додај тему у текст");
 regGS("Article saved.", "Текст снимљен");
 regGS("Article is locked", "Текст је закључан");
 regGS("Actions updated.", "Акције измењене");
-regGS("Unable to reach Campsite. Please check your internet connection.", "Newscoop је недоступан. Проверите своју интернет везу.");
 regGS("Your work has not been saved. Do you want to continue and lose your changes?", "Ваш рад није снимљен. Да ли желите да наставите и изгубите измене које сте унели?");
 regGS("Switches", "Свичеви");
 regGS("No subtopics available", "Нису доступне под-теме");
@@ -26,7 +33,6 @@ regGS("Keywords &amp; Topics", "Кључне речи и теме");
 regGS("Info", "Инфо");
 regGS("Go to live article", "Иди на \"живи\" текст");
 regGS("Created", "Направљено");
-regGS("Locations", "Локације");
 regGS("Are you sure you want to remove the map from the article?", "Да ли сте сигурни да желите да уклоните мапу из текста?");
 regGS("Scheduled action added", "Акција је заказана");
 regGS("Content edited", "Садржај је уређен");

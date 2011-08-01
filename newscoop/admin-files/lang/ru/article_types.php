@@ -1,5 +1,7 @@
 <?php 
-regGS("The template name may only contain letters and the underscore (_) character.", "Имя шаблона может содержать только буквы и знак почеркивания (_).");
+regGS("Hide human-readable field names", "");
+regGS("Edit and translate human-readable field names", "");
+regGS("The template name may only contain letters and the underscore (_) character.", "Имя шаблона может содержать только буквы и знак подчеркивания (_).");
 regGS("Rename article type '$1'", "Переименовать тип статьи '$1'");
 regGS("Invalid article type '$1'.", "Неправильный тип статьи '$1'.");
 regGS("You cannot merge the same type into itself.", "Вы не можете объединить тип сам с собой.");
@@ -41,7 +43,6 @@ regGS("The translation could not be added.", "Перевод не может б�
 regGS("The article type $1 does not exist.", "Тип статьи $1 не существует.");
 regGS("Template Type Name", "Название типа шаблона");
 regGS("Show/Hide", "Показать/скрыть");
-regGS("Show display names", "Показать отображаемые названия");
 regGS("Show article on section page", "Показать статью на странице рубрики");
 regGS("Show article on front page", "Показать статью на титульной странице");
 regGS("Publish date", "Дата публикации");
@@ -49,7 +50,6 @@ regGS("Merge!", "Объединить!");
 regGS("Merge types", "Объединить типы");
 regGS("Merge article type", "Объединить типы статей");
 regGS("Link to public page", "Ссылка на общедоступную страницу");
-regGS("Hide display names", "Спрятать отображаемые названия");
 regGS("Go to Step 3", "Перейти к шагу 3");
 regGS("Go to Step 2", "Перейти к шагу 2");
 regGS("Display Name", "Отображаемое название");

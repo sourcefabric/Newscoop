@@ -1,4 +1,12 @@
 <?php 
+regGS("You do not have the right to moderate comments.", "");
+regGS("You can not schedule opposing events at the same time", "");
+regGS("Unable to reach Newscoop. Please check your internet connection.", "");
+regGS("Title", "");
+regGS("There already is an article with the same name. Please change the name and try again.", "");
+regGS("Please be aware that all scheduled publishing events for this article will be deleted when you set this article to \"New\" state. Please confirm the state change.", "");
+regGS("Geolocation", "");
+regGS("Newscoop", "Newscoop");
 regGS("Pending Article", "Статьи в статусе \"Отправленные\"");
 regGS("Overwrite articles with matching names", "Переписать статьи с соответствующими именами");
 regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "Статья \"<i>$1</i>\" уже существует и не была перезаписана. <br />");
@@ -15,7 +23,6 @@ regGS("Attach Topic To Article", "Добавить тему к статье");
 regGS("Article saved.", "Содержимое статьи сохранено.");
 regGS("Article is locked", "Статья заблокирована");
 regGS("Actions updated.", "Действие обновлено.");
-regGS("Unable to reach Campsite. Please check your internet connection.", "Невозможно попасть в бэк-офис Newscoop. Проверьте наличие интернет-соединения.");
 regGS("Your work has not been saved. Do you want to continue and lose your changes?", "Ваши действия на сайте не были сохранены. Хотите ли Вы продолжить и потерять сделанные изменения?");
 regGS("Switches", "Переключатели");
 regGS("No subtopics available", "Нет доступных подтем для использования");
@@ -26,7 +33,6 @@ regGS("Keywords &amp; Topics", "Ключевые слова & Темы");
 regGS("Info", "Информация");
 regGS("Go to live article", "Перейти к активной статье");
 regGS("Created", "Создана");
-regGS("Locations", "Места событий");
 regGS("Are you sure you want to remove the map from the article?", "Вы уверены, что хотите удалить эту карту из статьи?");
 regGS("Scheduled action added", "Запланированное действие добавлено");
 regGS("Content edited", "Содержимое обновлено");
@@ -146,7 +152,4 @@ regGS("Could not save the article.  It has been locked by $1 $2 hours and $3 min
 regGS("Back to article details", "Назад к подробностям статьи");
 regGS("Article automatic publishing schedule", "Расписание автоматической публикации статей");
 regGS("Are you sure you want to delete this scheduled action?", "Вы уверены, что хотитее удалить эту запланированную операцию");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Вы уверены, что хотите удалить тему \\'$1\\' из статьи?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Вы уверены, что хотите удалить файл \\'$1\\' из статьи?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Вы уверены, что хотите удалить изображение \\'$1\\' из статьи?");
 ?>

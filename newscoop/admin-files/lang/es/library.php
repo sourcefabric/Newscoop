@@ -1,6 +1,17 @@
 <?php 
+regGS("Title", "");
+regGS("No video playback capabilities, please download the video below", "");
+regGS("Article status set to '$1' for $2 articles", "El estatus del artículo sí se configuró en '$1' para los $2 artículos.");
+regGS("Article status not set to '$1' for $2 articles", "El estatus del artículo no se configuró en '$1' para los $2 artículos.");
+regGS("$1 toggled for $2 articles.", "La opción $1 sí se modificó para los $2 artículos.");
+regGS("$1 not toggled for $2 articles.", "La opción $1 no se modificó para los $2 artículos.");
+regGS("$1 not toggled for $2  articles.", "La opción $1 no se modificó para los $2 artículos.");
+regGS("$1 articles have not been removed", "No se eliminó/eliminaron $1 artículo(s) ");
+regGS("$1 Article(s) unlocked", "$1 artículo(s) no está bloqueado");
+regGS("$1 Article(s) not unlocked", "");
+regGS("$1 Article(s) duplicated", "Se duplicó/duplicaron $1 artículo(s)");
 regGS("Download file", "Descargar el archivo");
-regGS("You do not have the right to delete articles.", "No tiene privilegios para eliminar artículos");
+regGS("You do not have the right to delete articles.", "No tienes privilegios para eliminar artículos");
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "No tiene privilegios para modificar el estatus de este artículo.  Una vez enviado, éste solo puede ser modificado por su autor y usuarios autorizados.");
 regGS("Use Map", "Mapa utilizado");
 regGS("Toggle: 'On Section Page'", "Mostrar/ocultar:  'en sección'");
@@ -43,9 +54,6 @@ regGS("Duplicate to another section", "Duplicar en otra sección");
 regGS("Display _MENU_ records", "Desplegar registros _MENU_");
 regGS("Creator", "Creador");
 regGS("Create Date", "Fecha de creación");
-regGS("Articles updated.", "Se subieron los artículos");
-regGS("Article(s) unlocked", "Artículo(s) desbloqueado(s)");
-regGS("Article(s) duplicated", "Artículo(s) duplicado(s).");
 regGS("Article status set to '$1'", "Se ha asignado el estatus '$1' al artículo.");
 regGS("Are you sure you want to delete selected articles?", "¿Quiere borrar los archivos seleccionados?");
 regGS("All Sections", "Todas las secciones");

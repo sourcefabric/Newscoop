@@ -1,4 +1,19 @@
 <?php 
+regGS("You must input a number greater than $1 and less than $2 into the $3 field.", "You must input a number greater than $1 and less than $2 into the $3 field.");
+regGS("You do not have the right to translate article types.", "You do not have the right to translate article types.");
+regGS("You do not have the right to reorder article types.", "You do not have the right to reorder article types.");
+regGS("You do not have the right to reassign article type fields.", "You do not have the right to reassign article type fields.");
+regGS("You do not have the right to manage article types.", "You do not have the right to manage article types.");
+regGS("You do not have the right to hide article types.", "You do not have the right to hide article types.");
+regGS("You do not have the right to delete article types.", "You do not have the right to delete article types.");
+regGS("Small ($1 pixels)", "Small ($1 pixels)");
+regGS("Medium ($1 pixels)", "Medium ($1 pixels)");
+regGS("Large ($1 pixels)", "Large ($1 pixels)");
+regGS("Hide human-readable field names", "Hide human-readable field names");
+regGS("Editor size", "Editor size");
+regGS("Edit and translate human-readable field names", "Edit and translate human-readable field names");
+regGS("Custom", "Custom");
+regGS("Characters limit", "Characters limit");
 regGS("The template name may only contain letters and the underscore (_) character.", "The template name may only contain letters and the underscore (_) character.");
 regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "The field name was already in use as a base property of the article. The field content will not be displayed in the templates.");
 regGS("The property '$1' is already in use.", "The property '$1' is already in use.");
@@ -13,18 +28,15 @@ regGS("You must enter a name for the field.", "You must enter a name for the fie
 regGS("You must choose a language for the field.", "You must choose a language for the field.");
 regGS("You do not have the right to rename article type fields.", "You do not have the right to rename article type fields.");
 regGS("You do not have the right to reassign a field type.", "You do not have the right to reassign a field type.");
-regGS("You do not have the right to add article types.", "You do not have the right to add article types.");
 regGS("Translating field", "Translating field");
 regGS("The translation could not be added.", "The translation could not be added.");
 regGS("The field $1 does not exist.", "The field $1 does not exist.");
 regGS("The $1 field may only contain letters and underscore (_) character.", "The $1 field may only contain letters and underscore (_) character.");
 regGS("Template Field Name", "Template Field Name");
 regGS("Show/Hide", "Show/Hide");
-regGS("Show display names", "Show display names");
 regGS("Renaming article type field", "Renaming article type field");
 regGS("Rename field", "Rename field");
 regGS("Reassign a field type", "Reassign a field type");
-regGS("Hide display names", "Hide display names");
 regGS("Display Name", "Display Name");
 regGS("Are you sure you want to $1 the article type field $2?", "Are you sure you want to $1 the article type field $2?");
 regGS("Adding new article type", "Adding new article type");

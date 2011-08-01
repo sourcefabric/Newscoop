@@ -1,4 +1,19 @@
 <?php 
+regGS("You must input a number greater than $1 and less than $2 into the $3 field.", "");
+regGS("You do not have the right to translate article types.", "");
+regGS("You do not have the right to reorder article types.", "");
+regGS("You do not have the right to reassign article type fields.", "");
+regGS("You do not have the right to manage article types.", "");
+regGS("You do not have the right to hide article types.", "");
+regGS("You do not have the right to delete article types.", "");
+regGS("Small ($1 pixels)", "");
+regGS("Medium ($1 pixels)", "");
+regGS("Large ($1 pixels)", "");
+regGS("Hide human-readable field names", "");
+regGS("Editor size", "");
+regGS("Edit and translate human-readable field names", "");
+regGS("Custom", "");
+regGS("Characters limit", "");
 regGS("The template name may only contain letters and the underscore (_) character.", "");
 regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "");
 regGS("The property '$1' is already in use.", "");
@@ -13,18 +28,15 @@ regGS("You must enter a name for the field.", "Trebuie să introduci un nume pen
 regGS("You must choose a language for the field.", "Trebuie să alegi o limbă pentru câmp.");
 regGS("You do not have the right to rename article type fields.", "Nu ai dreptul să redenumeşti câmpurile tipului de articol.");
 regGS("You do not have the right to reassign a field type.", "Nu ai dreotul să realoci un tip de câmp.");
-regGS("You do not have the right to add article types.", "Nu ai dreptul să adaugi tipuri de articole.");
 regGS("Translating field", "Se traduce câmpul");
 regGS("The translation could not be added.", "Traducerea nu a putut fi adăugată.");
 regGS("The field $1 does not exist.", "Câmpul $1 nu există.");
 regGS("The $1 field may only contain letters and underscore (_) character.", "Câmpul $1 poate conţine doar litere sau caracterul underscore (_).");
 regGS("Template Field Name", "Numele câmpului şablonului");
 regGS("Show/Hide", "Arată/Ascunde");
-regGS("Show display names", "Arată numele publice");
 regGS("Renaming article type field", "Se redenumeşte câmpul tipului de articol");
 regGS("Rename field", "Redenumeşte câmpul");
 regGS("Reassign a field type", "Realocă un tip de câmp");
-regGS("Hide display names", "Ascunde numele publice");
 regGS("Display Name", "Nume public");
 regGS("Are you sure you want to $1 the article type field $2?", "Eşti sigur că vrei să $1 câmpul tipului de articol $2?");
 regGS("Adding new article type", "Se adaugă un tip nou de articol");

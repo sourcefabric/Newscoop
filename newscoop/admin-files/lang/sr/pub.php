@@ -81,6 +81,5 @@ regGS("Search engine optimization", "Оптимизација претражив
 regGS("Article title", "Наслов текста");
 regGS("Article keywords", "Кључне речи");
 regGS("Article topics", "Теме");
-regGS("Invalid URL Template", "Шаблон за приказ при погрешном УРЛу");
 regGS("The default subscription time for $1 has been added.", "Нови период претплате за $1 додат");
 ?>

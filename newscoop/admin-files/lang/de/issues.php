@@ -1,4 +1,11 @@
 <?php 
+regGS("in order to be able to assigned to the issue.", "");
+regGS("default", "");
+regGS("The publishing/unpublishing can not be set the same time", "");
+regGS("The publishing schedule can not be set in the past", "");
+regGS("Please assign at least one theme to the publication", "");
+regGS("Only than the issue can be published", "");
+regGS("Issue Theme", "");
 regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "Automatisierte Aktion aus Ausgabe #$1: \"$2\" (Publikation: $3) gelöscht.");
 regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "Automatisierte Aktion $1 für Ausgabe #$2: \"$3\" (Publikation: $4)");
 regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "Ausgabe \"$1\" ($2) in Publikation \"$3\" aktualisiert.");

@@ -81,5 +81,4 @@ regGS("Search engine optimization", "Оптимизация для поиско�
 regGS("Article title", "Название статьи");
 regGS("Article keywords", "Ключевые слова статьи");
 regGS("Article topics", "Темы статьи");
-regGS("Invalid URL Template", "Шаблон для показа ошибки 404 (неверная ссылка)");
 ?>

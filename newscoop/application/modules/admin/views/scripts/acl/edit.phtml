@@ -9,11 +9,11 @@
     <h3><?php echo $resourceName; ?></h3>
     <ul class="resource <?php echo $resource; ?>">
         <li class="all">
-            <input type="checkbox" id="_<?php echo $resource; ?>_all" class="toggle" /> <label for="_<?php echo $resource; ?>_all"><?php putGS('all'); ?></label>
+            <input type="checkbox" id="_<?php echo $resource; ?>_all" class="toggle" /> <label for="_<?php echo $resource; ?>_all"><?php putGS('Check all'); ?></label>
         </li>
         <?php foreach ($this->actions[$resource] as $action) { ?>
-        <li>
-            <input type="checkbox" id="_<?php echo $resource, '_', $action; ?>" name="<?php echo $resource; ?>" value="<?php echo $action; ?>" <?php echo $this->acl->isAllowed($resource, $action) ? ' checked="checked"' : ''; ?> />
+        <li class="<?php echo $this->acl->isAllowed($this->role, $resource, $action) ? '' : 'deny'; ?>">
+            <input type="checkbox" id="_<?php echo $resource, '_', $action; ?>" name="<?php echo $resource; ?>" value="<?php echo $action; ?>" <?php echo $this->acl->isAllowed($this->role, $resource, $action) ? ' checked="checked"' : ''; ?> />
             <label for="_<?php echo $resource, '_', $action; ?>"><?php echo isset($this->actionNames[$action]) ? $this->actionNames[$action] : getGS($action); ?></label>
         </li>
         <?php } ?>
@@ -40,8 +40,7 @@ $(function() {
     $('.resource-group').each(function() {
         $(this).accordion({
             header: 'h3',
-            autoHeight: false,
-            //event: 'mouseover'
+            autoHeight: false
         });
     });
 
@@ -50,6 +49,13 @@ $(function() {
         var type = input.attr('checked') != undefined ? 'allow' : 'deny';
         var resource = input.attr('name');
         var action = input.val();
+        var context = input.closest('ul');
+
+        if (type == 'deny') {
+            input.closest('li').addClass('deny');
+        } else {
+            input.closest('li').removeClass('deny');
+        }
 
         $.post("<?php echo $this->url(array(
             'module' => 'admin',
@@ -57,7 +63,7 @@ $(function() {
             'action' => 'save',
             'format' => 'json',
         )); ?>", {
-            'role': <?php echo $this->role; ?>,
+            'role': <?php echo $this->roleId; ?>,
             'type': type,
             'resource': resource,
             'action': action
@@ -66,13 +72,11 @@ $(function() {
                 flashMessage(<?php echo json_encode(getGS('Permissions updated')); ?>);
             } else {
                 flashMessage(<?php echo json_encode(getGS('Error: ')); ?> + data.message, 'error');
-                input.attr('checked', type != 'allow');
-                return false;
+                input.attr('checked', type != 'allow').closest('li').removeClass('deny');
             }
         }, 'json');
 
         // update check all checkbox on item change
-        var context = input.closest('ul');
         $('input:checkbox.toggle', context).attr('checked', $('input:checkbox', context).not('.toggle').size() == $('input:checkbox:checked', context).not('.toggle').size());
     });
 });

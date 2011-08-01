@@ -34,6 +34,9 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
     /** @var array */
     private $access;
 
+    /** @var array */
+    private $cache = array();
+
     /**
      * Init acl
      */
@@ -69,6 +72,10 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
      */
     public function getAcl(Zend_Acl_Role_Interface $role)
     {
+        if (isset($this->cache[$role->getRoleId()])) {
+            return $this->cache[$role->getRoleId()];
+        }
+
         $acl = new Zend_Acl;
 
         // set resources
@@ -92,7 +99,7 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
         $acl->addRole($role, $parents);
         $this->addRules($acl, $role);
 
-        return $acl;
+        return $this->cache[$role->getRoleId()] = $acl;
     }
 
     /**

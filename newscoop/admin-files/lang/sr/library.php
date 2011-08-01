@@ -1,4 +1,15 @@
 <?php 
+regGS("Title", "");
+regGS("No video playback capabilities, please download the video below", "");
+regGS("Article status set to '$1' for $2 articles", "");
+regGS("Article status not set to '$1' for $2 articles", "");
+regGS("$1 toggled for $2 articles.", "");
+regGS("$1 not toggled for $2 articles.", "");
+regGS("$1 not toggled for $2  articles.", "");
+regGS("$1 articles have not been removed", "");
+regGS("$1 Article(s) unlocked", "");
+regGS("$1 Article(s) not unlocked", "");
+regGS("$1 Article(s) duplicated", "");
 regGS("Download file", "Преузми фајл");
 regGS("You do not have the right to delete articles.", "Немате право да бришете текст");
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "Немате право да бришете статус текста. Предат текст може бити измењен само од стране ауторизованих корисника");
@@ -43,9 +54,6 @@ regGS("Duplicate to another section", "Дуплирај у другу рубри
 regGS("Display _MENU_ records", "Прикажи _MENU_ записе");
 regGS("Creator", "Направио");
 regGS("Create Date", "Датум прављења");
-regGS("Articles updated.", "Тесктова измењено");
-regGS("Article(s) unlocked", "Текст(ова) откључан(о)");
-regGS("Article(s) duplicated", "Текст(ова) дуплиран(о)");
 regGS("Article status set to '$1'", "Статус текста постављен на '$1'");
 regGS("Are you sure you want to delete selected articles?", "Да ли сте сигурни да желите да обришете изабране текстове?");
 regGS("All Sections", "Све рубрике");

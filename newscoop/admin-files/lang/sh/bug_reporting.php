@@ -1,4 +1,11 @@
 <?php 
+regGS("You have reached the error page", "");
+regGS("Stack trace:", "");
+regGS("Request Parameters:", "");
+regGS("Page not found", "");
+regGS("Exception information:", "");
+regGS("Application error", "");
+regGS("An error occurred", "");
 regGS("Newscoop has encountered a problem.", "Kempsajt je naišao na problem.");
 regGS("In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.", "Da biste pomogli Newscoop timu da istraži i popravi ovu grešku, molimo dovojte koji trenutak da opišete šta se desilo");
 regGS("What were you trying to do when this happened?", "Šta ste pokušavali da uradite kada se ovo desilo?");
@@ -14,6 +21,5 @@ regGS("Error Number:", "Broj greške:");
 regGS("Error String:", "Objašnjenje greške:");
 regGS("Software:", "Softver:");
 regGS("We are sorry, but there was a problem sending your bug report.", "Žao nam je, ali došlo je do problema pri slanju izveštaja o grešci.");
-regGS("Your bug report has been sent to Campware and will be investigated.", "Vaš izveštaj o grešci je poslat Kempsajt timu i biće istražen.");
 regGS("Simply copy and paste the error report below and send it to:", "Jednostavno kopiraj/zalepi izveštaj o grešci dole i pošalji na:");
 ?>

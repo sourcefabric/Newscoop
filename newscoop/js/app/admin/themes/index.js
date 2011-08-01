@@ -56,7 +56,7 @@ newscoopDatatables =
 			imgs.addClass( 'ui-tabs-hide' ).eq( idx ).removeClass( 'ui-tabs-hide' );
 		});
 
-		$(".themesListTabs div a").fancybox();
+		$(".themesListTabs a").fancybox();
 
 		$(".actionDropDown li").hover(function()
 		{
@@ -140,6 +140,57 @@ $( function()
 		evt.preventDefault()
 	});
 	
+	var confirmUnassignDialog = $('<div />')
+	.tmpl( '#confirmUnassignTmpl', {} )
+	.dialog
+	({
+		autoOpen: false,
+		width: 460,
+		resizable: false,
+		modal: true,
+		position:'center',
+		title: $('#confirmUnassignTmpl').attr( 'title' )
+	});
+	
+	
+	$('.actionDropDown .unassign').live( 'click', function( evt )
+			{
+				var thisA = $(this)
+				confirmUnassignDialog.dialog( 'option', 'buttons', 
+				{
+					"Unnasign" : function()
+					{
+						$.ajax
+						({
+							url : thisA.attr('href')+'/format/json',
+							dataType : "json",
+							success : function( data ) 
+							{
+								if( data.response ) 
+								{
+									confirmUnassignDialog.find( '.unassign-message' ).text( data.response )
+										.show().delay(data.status ? 1000 : 3000).fadeOut( 'fast', function()
+										{
+											confirmUnassignDialog.find( '.unassign-message' ).text( '' );
+											confirmUnassignDialog.dialog( 'close' ); 
+										} );
+									
+									if( data.status ) {
+										// TODO bad way to refresh datagrid
+										$('.themesListHolder .themesListTabsBtns li a').parent( '.ui-state-active' ).find( 'a' ).click()
+									}
+								}
+							}
+						})
+					},
+					"Cancel" : function(){ $(this).dialog("close"); } 
+				}).dialog( 'open' );
+						
+				
+				evt.preventDefault()
+			});
+	
+	
 	var confirmDeleteDialog = $('<div />')
 		.tmpl( '#confirmDeleteTmpl', {} )
 		.dialog
@@ -153,7 +204,7 @@ $( function()
 		});
 	
 		
-	$('.actionDropDown .unassign, .actionDropDown .delete').live( 'click', function( evt )
+	$('.actionDropDown .delete').live( 'click', function( evt )
 	{
 		var thisA = $(this)
 		confirmDeleteDialog.dialog( 'option', 'buttons', 

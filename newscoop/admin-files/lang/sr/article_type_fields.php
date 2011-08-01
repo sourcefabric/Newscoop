@@ -1,4 +1,19 @@
 <?php 
+regGS("You must input a number greater than $1 and less than $2 into the $3 field.", "");
+regGS("You do not have the right to translate article types.", "");
+regGS("You do not have the right to reorder article types.", "");
+regGS("You do not have the right to reassign article type fields.", "");
+regGS("You do not have the right to manage article types.", "");
+regGS("You do not have the right to hide article types.", "");
+regGS("You do not have the right to delete article types.", "");
+regGS("Small ($1 pixels)", "");
+regGS("Medium ($1 pixels)", "");
+regGS("Large ($1 pixels)", "");
+regGS("Hide human-readable field names", "");
+regGS("Editor size", "");
+regGS("Edit and translate human-readable field names", "");
+regGS("Custom", "");
+regGS("Characters limit", "");
 regGS("The template name may only contain letters and the underscore (_) character.", "Назив поља може садржати искључиво слова и доњу црту (_)");
 regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "Име поља је већ у употреби као основно својство текста. Садржај поља неће бити приказан у шаблонима.");
 regGS("The property '$1' is already in use.", "Својство '$1' је већ у употреби");
@@ -13,18 +28,15 @@ regGS("You must enter a name for the field.", "Морате унети име п
 regGS("You must choose a language for the field.", "Морате изабрати језик за поље");
 regGS("You do not have the right to rename article type fields.", "Немате право да преименујете поља типа текста");
 regGS("You do not have the right to reassign a field type.", "Немате право да додељујете типове поља");
-regGS("You do not have the right to add article types.", "Немате право да додајете типове текстова");
 regGS("Translating field", "Превођење поља");
 regGS("The translation could not be added.", "Превод не може бити додат");
 regGS("The field $1 does not exist.", "Поље $1 не постоји");
 regGS("The $1 field may only contain letters and underscore (_) character.", "Поље $1 може садржати искључиво слова и доњу црту (_)");
 regGS("Template Field Name", "Име поља шаблона");
 regGS("Show/Hide", "прикажи/сакри");
-regGS("Show display names", "Прикажи приказна имена");
 regGS("Renaming article type field", "Преименовање поља типа тикста");
 regGS("Rename field", "Преименуј поље");
 regGS("Reassign a field type", "Поново додели тип поља");
-regGS("Hide display names", "сакри приказна имена");
 regGS("Display Name", "Приказно име");
 regGS("Are you sure you want to $1 the article type field $2?", "Да ли сте сигурни да желите да $1 поље типа текста $2?");
 regGS("Adding new article type", "додавање новог типа текста");

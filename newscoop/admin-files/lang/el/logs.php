@@ -1,6 +1,15 @@
 <?php 
+regGS("Warning", "");
+regGS("Severity:", "");
+regGS("Severity", "");
+regGS("Notice", "");
+regGS("No logs.", "");
+regGS("Info", "");
+regGS("Filter", "");
+regGS("Emergency", "");
+regGS("Debug", "");
+regGS("Critical", "");
+regGS("Alert", "");
 regGS("User IP Address", "Διεύθυνση IP του Χρήστη");
-regGS("You do not have the right to view logs.", "Δεν έχετε το δικαίωμα να δείτε το μητρώο πρακτικών.");
 regGS("User", "Χρήστης");
-regGS("Event", "Εκδήλωση");
 ?>
