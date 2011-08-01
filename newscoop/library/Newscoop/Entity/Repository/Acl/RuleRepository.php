@@ -37,8 +37,9 @@ class RuleRepository extends EntityRepository
 
         foreach ($conflicts as $conflict) {
             $em->remove($conflict);
-            $em->flush();
         }
+
+        $em->flush();
 
         $rule->setType($values['type']);
         $rule->setRole($role);

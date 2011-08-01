@@ -150,12 +150,19 @@ class Admin_AclController extends Zend_Controller_Action
 
     public function editAction()
     {
+        if ($this->_getParam('user', false)) {
+            $role = $this->_helper->entity->find('Newscoop\Entity\User\Staff', $this->_getParam('user'));
+        } else {
+            $role = $this->_helper->entity->find('Newscoop\Entity\User\Group', $this->_getParam('group'));
+        }
+
+        $this->view->role = $role;
+        $this->view->roleId = $role->getRoleId();
         $this->view->groups = $this->groups;
         $this->view->resources = $this->resources;
         $this->view->actions = $this->acl->getResources();
-        $this->view->acl = $this->getHelper('acl');
-        $this->view->role = $this->_getParam('role');
         $this->view->actionNames = $this->actions;
+        $this->view->acl = $this->getHelper('acl')->getAcl($role);
     }
 
     public function saveAction()
@@ -166,32 +173,14 @@ class Admin_AclController extends Zend_Controller_Action
         }
 
         $values = $request->getPost();
-        $user = Zend_Registry::get('user');
-        $acl = $this->_helper->acl->getAcl($user);
-
-        // check if rule would deny user to manage permissions
-        if (in_array($values['role'], $acl->getRoles()) && $values['type'] == 'deny') {
-            $resource = empty($values['resource']) ? null : $values['resource'];
-            $action = empty($values['action']) ? null : $values['action'];
-            $acl->deny($values['role'], $resource, $action);
-
-            if (!$acl->isAllowed($user, $this->resource, 'manage')) {
-                $resourceName = $this->resource;
-                foreach ($this->resources as $resources) { // search for translation
-                    if (isset($resources[$this->resource])) {
-                        $resourceName = $resources[$this->resource];
-                        break;
-                    }
-                }
-                $this->view->status = 'error';
-                $this->view->message = getGS("You can't deny yourself to manage $1", $resourceName);
-                return;
-            }
+        if ($this->isBlocker($values)) {
+            $this->view->status = 'error';
+            $this->view->message = getGS("You can't deny yourself to manage $1", $this->getResourceName($this->resource));
+            return;
         }
 
         try {
             $rule = new Rule();
-            $request = $this->getRequest();
             $this->ruleRepository->save($rule, $values);
             $this->_helper->entity->flushManager();
             $this->view->status = 'ok';
@@ -199,5 +188,44 @@ class Admin_AclController extends Zend_Controller_Action
             $this->view->status = 'error';
             $this->view->message = $e->getMessage();
         }
+    }
+
+    /**
+     * Test if adding rule would block current user to manage users/types
+     *
+     * @param array $values
+     * @return bool
+     */
+    private function isBlocker(array $values)
+    {
+        $user = Zend_Registry::get('user');
+        $acl = $this->_helper->acl->getAcl($user);
+
+        if (in_array($values['role'], $acl->getRoles()) && $values['type'] == 'deny') {
+            $resource = empty($values['resource']) ? null : $values['resource'];
+            $action = empty($values['action']) ? null : $values['action'];
+            $acl->deny($values['role'], $resource, $action);
+
+            return !$acl->isAllowed($user, $this->resource, 'manage');
+        }
+
+        return False;
+    }
+
+    /**
+     * Get translated resource name
+     *
+     * @param string $resource
+     * @return string
+     */
+    private function getResourceName($resource)
+    {
+        foreach ($this->resources as $resources) {
+            if (isset($resources[$resource])) {
+                return $resources[$resource];
+            }
+        }
+
+        return $resource;
     }
 }
