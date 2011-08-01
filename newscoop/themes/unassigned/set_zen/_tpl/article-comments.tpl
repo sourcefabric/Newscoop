@@ -36,7 +36,6 @@ print "<img src=\"http://www.gravatar.com/avatar/".md5( strtolower( trim( $profi
 <a name="commentform">  </a>
 <h3>Leave a Reply</h3>
 {{ include file="_tpl/article-comments-errorcheck.tpl" }}
-
 {{* if $gimme->comment->defined }}
     <p><strong>{{ $gimme->comment->subject }}
         ({{ $gimme->comment->reader_email|obfuscate_email }}) -
@@ -51,10 +50,25 @@ print "<img src=\"http://www.gravatar.com/avatar/".md5( strtolower( trim( $profi
 {{ comment_form html_code="id=\"commentform\"" submit_button="SUBMIT" button_html_code="tabindex=\"6\"" }}
 
 <div class="comment-form">
-
+<script type="text/javascript">
+function switchName() {
+	var anonymous = document.getElementById('is_anonymous').checked;
+	if (anonymous) {
+		document.getElementById('author').disabled = true;
+	}
+	else {
+		document.getElementById('author').disabled = false;
+	}
+}
+</script>
 <p>
-<label for="author">Name (required)</label>
+<label for="author">Name {{ if ! $gimme->user->logged_in }}(required){{ /if }}</label>
 {{ camp_edit object="comment" attribute="nickname" html_code="class=\"textfield\" id=\"author\" size=\"22\" tabindex=\"1\"" }}
+</p>
+<p>
+{{ if $gimme->user->logged_in }}
+	{{ camp_edit object="comment" attribute="is_anonymous" html_code="id=\"is_anonymous\" onClick=\"switchName();\""}} <label for="is_anonymous">Post anonymous</label>
+{{ /if }}
 </p>
 
 <p>
