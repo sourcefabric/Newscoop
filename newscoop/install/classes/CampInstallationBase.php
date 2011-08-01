@@ -739,10 +739,12 @@ class CampInstallationBaseHelper
             return false;
         }
 
-        $sqlQuery1 = 'UPDATE liveuser_users SET '
-            ."Password = SHA1('".$g_db->Escape($p_password)."'), "
-            ."EMail = '".$g_db->Escape($p_email)."' "
-            .'WHERE Id = 1';
+        $sqlQuery1 = "UPDATE liveuser_users SET
+            Password = SHA1('".$g_db->Escape($p_password)."'),
+            EMail = '".$g_db->Escape($p_email)."',
+            time_updated = NOW(),
+            time_created = NOW()
+            WHERE Id = 1";
         if (!$g_db->Execute($sqlQuery1)) {
             return false;
         }
