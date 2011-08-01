@@ -1,5 +1,22 @@
 newscoopDatatables =
 {
+	callbackServerData : function ( sSource, aoData, fnCallback ) 
+	{
+		$.ajax
+		({
+			dataType : 'json',
+			type : "POST",
+			url : sSource,
+			data : aoData,
+			success : fnCallback,
+			error : function(xhr, textStatus, errorThrown)
+			{
+				if (xhr.getResponseHeader('Not-Logged-In')) {
+					location.reload();
+				}
+			}
+		});
+	},
 	callbackRow : function( row, data, displayIndex, displayIndexFull )
 	{
 		$(row).children().each( function( idx )
