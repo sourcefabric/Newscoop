@@ -82,6 +82,7 @@ class Admin_CommentController extends Zend_Controller_Action
                 $commenter = $comment->getCommenter();
                 $thread = $comment->getThread();
                 $forum = $comment->getForum();
+                $section = $thread->getSection();
                 return array('index' => $index++, 'can' => array('enable' => $acl['enable'], 'edit' => $acl['edit']),
                              'commenter' =>
                              array('username' => $commenter->getUsername(), 'name' => $commenter->getName(),
@@ -114,7 +115,7 @@ class Admin_CommentController extends Zend_Controller_Action
                                                ('edit' => $view->baseUrl("admin/articles/edit.php?") . $view->linkArticle($thread),
                                                 'get' => $view->baseUrl("admin/articles/get.php?") . $view->linkArticle($thread)),
                                                'forum' => array('name' => $forum->getName()),
-                                               'section' => array('name' => '')),);
+                                               'section' => array('name' => $section->getName())),);
             });
 
         $table->setOption('fnDrawCallback', 'datatableCallback.draw')
