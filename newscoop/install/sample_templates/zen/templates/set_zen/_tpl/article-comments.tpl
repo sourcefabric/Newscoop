@@ -85,6 +85,7 @@ function switchName() {
 {{ camp_edit object="comment" attribute="content" html_code="id=\"comment\" rows=\"5\" tabindex=\"4\"" }}
 </p>
 
+{{ if $gimme->publication->captcha_enabled }}
 <p>
 <label for="f_captcha_image">&nbsp;</label>
 <img src="{{ captcha_image_link }}">
@@ -94,6 +95,7 @@ function switchName() {
 <label for="f_captcha_code">Enter the code:</label>
 {{ camp_edit object="captcha" attribute="code" html_code="class=\"textfield\" id=\"comment-code\" tabindex=\"5\"" }}
 </p>
+{{ /if }}
 
 <p>{{ /comment_form }}</p>
 {{ /if }}
