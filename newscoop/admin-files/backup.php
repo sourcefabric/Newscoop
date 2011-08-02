@@ -114,7 +114,7 @@ echo $breadcrumbs;
 <table border="0" cellspacing="0" cellpadding="0" class="action_buttons">
     <tr>
     <td valign="bottom"><b><?php echo getGS("Free disk space") . ': '
-        . ceil(disk_free_space($Campsite['CAMPSITE_DIR'])/1024/1024) . ' ' . getGS('Mb');?></b></td>
+        . ceil(disk_free_space($Campsite['CAMPSITE_DIR'])/1024/1024) . ' ' . getGS('MiB');?></b></td>
     <td valign="bottom" style="padding-left: 10px;">
         <a href="#" onclick="if (confirm('<?php putGS('Are you sure you want to make new backup?')?>')) window.open('backup.php?action=backup', 'Backup', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=550, top=100, left=100');">
         <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0">

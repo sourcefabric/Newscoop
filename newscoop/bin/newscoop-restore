@@ -240,7 +240,7 @@ if ($archiveExtension == "gz") {
 }
 
 $backupDir = $Campsite['CAMPSITE_DIR'] . DIR_SEP . 'backup' . DIR_SEP;
-$tarDirOption .= ' -C ' . escapeshellarg($backupDir);
+$tarDirOption = ' -C ' . escapeshellarg($backupDir);
 
 $isNewBackupFormat = true;
 $cmd = "tar tf$tarGzOption " . escapeshellarg($archive_file)." | grep sql";

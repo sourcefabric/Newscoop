@@ -253,12 +253,21 @@ function camp_backup_file($p_filePath, &$p_output)
  */
 function camp_archive_file($p_sourceFile, $p_destDir, $p_fileName, &$p_output)
 {
+	$output_file_name = "$p_destDir/$p_fileName.tar.gz";
     $fileStr = escapeshellarg(basename($p_sourceFile));
     $source_dir = dirname($p_sourceFile);
     $currentDir = getcwd();
     chdir($source_dir);
-    $cmd = "tar czf " . escapeshellarg("$p_destDir/$p_fileName.tar.gz") . " $fileStr &> /dev/null";
+    $cmd = "tar czf " . escapeshellarg($output_file_name) . " $fileStr 2>&1 >/dev/null";
     @exec($cmd, $p_output, $result);
+	// remove false tar.gz file if partially created
+	if ($result) {
+		// catch problems for if the file is not there
+		try {
+			@unlink($output_file_name);
+		}
+		catch (Exception $exc) {}
+	}
     chdir($currentDir);
     return $result;
 } // fn camp_archive_file
@@ -1202,5 +1211,22 @@ function camp_connect_to_adodb($db_host, $db_username, $db_userpass, $db_databas
     $GLOBALS['g_ado_db'] = $db_conn;
     return $db_conn;
 } // fn camp_connect_to_adodb
+
+function camp_readable_size($p_bytes)
+{
+	$show_size = 0 + $p_bytes;
+	$size_units = 'TiB';
+
+	$unit_names = array('B', 'KiB', 'MiB', 'GiB');
+	foreach ($unit_names as $cur_unit) {
+		if ($show_size < 1024) {
+			$size_units = $cur_unit;
+			break;
+		}
+		$show_size = $show_size / 1024;
+	}
+
+	return number_format($show_size, 2) . ' ' . $size_units;
+}
 
 ?>

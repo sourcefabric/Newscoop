@@ -119,15 +119,28 @@ camp_exec_command($cmd, "Couldn't write VERSION file.");
 
 // backup the database
 if (!$silent) {
+	$free_space = disk_free_space($backupDirFullPath);
+	echo '
+Available disk space is <b>' . camp_readable_size($free_space) . '.</b>
+The actual necessary space depends mostly on size of your database and multimedia files.
+If the backup does not succeed, try to create more free space, please.
+
+';
 	echo " * Backing up the database...";
+
 	flush_output($flush);
 }
+
 $db_file_name = "$backupDirFullPath/".$Campsite['DATABASE_NAME'].'-database.sql';
 
 if (is_file($db_file_name) && (camp_backup_file($db_file_name, $output) != 0)) {
+	// remove the abandoned dir, but the error string shall be on the original issue
+	camp_remove_dir($backupDirFullPath, "");
 	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
 }
 if ( ( $error = camp_backup_database($Campsite['DATABASE_NAME'], $db_file_name, $output) ) !== 0) {
+	// remove the abandoned dir, but the error string shall be on the original issue
+	camp_remove_dir($backupDirFullPath, "");
 	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $error));
 }
 if (!$silent) {
@@ -185,6 +198,9 @@ if (!$silent) {
 }
 
 if (camp_archive_file($backupDirFullPath, dirname($backupDirFullPath), $backupDirName, $output) != 0) {
+	echo "\n" . implode("\n", $output) . "\n";
+	// remove the abandoned dir, but the error string shall be on the original issue
+	camp_remove_dir($backupDirFullPath, "");
 	camp_exit_with_error($silent ? "" : array("Unable to create temporary archive.", $adviceOnError));
 }
 
