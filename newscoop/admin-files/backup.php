@@ -1,6 +1,8 @@
 <?php
 camp_load_translation_strings("home");
 
+require_once(CS_PATH_SITE.DIR_SEP . 'scripts' . DIR_SEP . 'file_processing.php');
+
 // check permission
 if (!$g_user->hasPermission('ManageBackup')) {
     camp_html_display_error(getGS("You do not have the right to manage backup."));
@@ -74,21 +76,49 @@ switch ($action) {
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
         header('Content-Transfer-Encoding: binary');
         set_time_limit(0);
-        $fp = fopen($file, 'r');
-        while (!feof($fp)) {
-            print(fread($fp, 8192));
-            flush();
-            ob_flush();
-        }
-        fclose($fp);
+		// it looks that a problem could happen here if the server is out of its disk space
+		try {
+	        $fp = fopen($file, 'r');
+	        while (!feof($fp)) {
+	            print(fread($fp, 8192));
+	            flush();
+	            ob_flush();
+	        }
+	        fclose($fp);
+		}
+		catch (Exception $exc) {
+			echo getGS('Download was not successful. Check please that the server is not out of disk space.');
+		}
         exit(0);
 
     case 'upload':
         foreach ($_FILES as $file) {
+			if (UPLOAD_ERR_OK != $file['error']) {
+				$err_msg = camp_upload_errors($file['error']);
+                camp_html_add_msg(getGS('Upload of file $1 was not successful.', $file['name']) . ' ' . $err_msg);
+				continue;
+			}
+
             if ($file['type'] == 'application/x-tar' || $file['type'] == 'application/x-gzip'
-            || $file['type'] == 'application/gzip') {
-                move_uploaded_file($file["tmp_name"], CS_PATH_SITE . DIR_SEP . 'backup' . DIR_SEP . $file['name']);
-                camp_html_add_msg(getGS('The file $1 has been uploaded successfully.', $file['name']), 'ok');
+            || $file['type'] == 'application/gzip' || $file['type'] == 'application/x-compressed-tar') {
+				// if not enough space, throws exception on the move attempt
+				$move_failed = false;
+				$move_dest = CS_PATH_SITE . DIR_SEP . 'backup' . DIR_SEP . $file['name'];
+				try {
+					move_uploaded_file($file['tmp_name'], $move_dest);
+					camp_html_add_msg(getGS('The file $1 has been uploaded successfully.', $file['name']), 'ok');
+				}
+				catch (Exception $exc) {
+					$move_failed = true;
+					camp_html_add_msg(getGS('The file $1 could not be moved. Check you have enough of disk space.', $file['name']));
+				}
+				// try to remove the (partially) moved file if the move was not successful
+				if ($move_failed) {
+					try {
+						unlink($move_dest);
+					}
+					catch (Exception $exc) {}
+				}
             } else {
                 camp_html_add_msg(getGS("You have tried to upload wrong backup file."));
             }
