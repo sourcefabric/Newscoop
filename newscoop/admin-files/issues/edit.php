@@ -85,15 +85,15 @@ if(count($outSetIssues) > 0){
 }
 
 $publicationThemes = $themeManagementService->getThemes($publicationObj->getPublicationId());
+
 $publicationHasThemes = count($publicationThemes) > 0;
 if($themePath == null && $publicationHasThemes){
 	$themePath = $publicationThemes[0]->getPath();
 }
 
-if($themePath != null && $themePath != 0){
-	$allTemplates = $themeManagementService->getTemplates($themePath);
-} else {
-	$allTemplates = array();
+$allTemplates = array();
+if (!empty($themePath)) {
+    $allTemplates = $themeManagementService->getTemplates($themePath);
 }
 
 //@New theme management

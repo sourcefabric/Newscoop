@@ -32,9 +32,9 @@ $f_publication_date = Input::Get('f_publication_date', 'string', '', true);
 
 
 $f_theme_id = Input::Get('f_theme_id', 'string');
-$f_issue_template_id = Input::Get('f_issue_template_id', 'int');
-$f_section_template_id = Input::Get('f_section_template_id', 'int');
-$f_article_template_id = Input::Get('f_article_template_id', 'int');
+$f_issue_template_id = Input::Get('f_issue_template_id', 'string');
+$f_section_template_id = Input::Get('f_section_template_id', 'string');
+$f_article_template_id = Input::Get('f_article_template_id', 'string');
 
 
 $f_url_name = trim(Input::Get('f_url_name'));
