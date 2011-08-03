@@ -96,6 +96,11 @@ $(function () {
             });
             action.val('');
             if (!ids.length) return;
+
+            if (status == 'deleted' && !confirm(putGS('You are about to permanently delete multiple comments.') + '\n' + putGS('Are you sure you want to do it?'))) {
+                return false;
+            }
+
             $.ajax({
                 type: 'POST',
                 url: 'comment/set-status/format/json',
@@ -137,6 +142,11 @@ $(function () {
         var id = el.attr('id');
         var ids = [id.match(/\d+/)[0]];
         var status = id.match(/[^_]+/)[0];
+
+        if (status == 'deleted' && !confirm(putGS('You are about to permanently delete a comment.') + '\n' + putGS('Are you sure you want to do it?'))) {
+            return false;
+        }
+
         $.ajax({
             type: 'POST',
             url: 'comment/set-status/format/json',
