@@ -168,12 +168,13 @@ $( function()
 							{
 								if( data.response ) 
 								{
-									confirmUnassignDialog.find( '.unassign-message' ).text( data.response )
-										.show().delay(data.status ? 1000 : 3000).fadeOut( 'fast', function()
-										{
-											confirmUnassignDialog.find( '.unassign-message' ).text( '' );
+                                    var oldtext = confirmUnassignDialog.find('.message-holder').text();
+									confirmUnassignDialog.find( '.message-holder' ).html('<span class="' + data.status + '">' + data.response + '</span>')
+										.show().delay(data.status ? 1000 : 3000).fadeOut('fast', function() {
+                                            confirmUnassignDialog.find('.message-holder').text(oldtext);
 											confirmUnassignDialog.dialog( 'close' ); 
-										} );
+                                            confirmUnassignDialog.find('.message-holder').show();
+										});
 									
 									if( data.status ) {
 										// TODO bad way to refresh datagrid

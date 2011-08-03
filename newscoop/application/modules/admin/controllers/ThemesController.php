@@ -587,7 +587,7 @@ class Admin_ThemesController extends Zend_Controller_Action
             catch( RemoveThemeException $e )
             {
                 $this->view->status = false;
-                $this->view->response = getGS( "The theme can not be unassigned because it is in use by one of the issues in this publication" );
+                $this->view->response = getGS("The theme can not be unassigned because it is in use by issues ($1) in this publication", $e->getMessage());
             }
             catch( Exception $e )
             {

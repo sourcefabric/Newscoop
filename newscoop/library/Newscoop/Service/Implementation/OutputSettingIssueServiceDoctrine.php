@@ -105,7 +105,7 @@ implements IOutputSettingIssueService
         return NULL;
     }
 
-    function isThemeUsed($theme)
+    function isThemeUsed($theme, &$themes = NULL)
     {
         Validation::notEmpty($theme, 'theme');
         if($theme instanceof Theme){
@@ -114,17 +114,25 @@ implements IOutputSettingIssueService
             $themePath = $theme;
         }
 
+        if ($themes === NULL) {
+            $themes = array();
+        }
 
         $em = $this->getEntityManager();
         // we need to find if the theme is used by anyoane.
         $q = $em->createQueryBuilder();
-        $q->select('count(osi)')
-        ->from(OutputSettingsIssue::NAME_1, 'osi')
-        ->join('osi.themePath', 'th')
-        ->where('th.path = :themePath');
+        $q->select('i.name')
+            ->from(OutputSettingsIssue::NAME_1, 'osi')
+            ->join('osi.issue', 'i')
+            ->join('osi.themePath', 'th')
+            ->where('th.path = :themePath');
 
         $q->setParameter('themePath', $themePath);
-        return $q->getQuery()->getSingleScalarResult() > 0;
+        foreach ($q->getQuery()->getResult() as $row) {
+            $themes[] = $row['name'];
+        }
+
+        return sizeof($themes) > 0;
     }
 
     /**

@@ -378,14 +378,15 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
             $theme = $this->findById($theme);
         }
         $themePath = $theme->getPath();
-        if(!$this->getOutputSettingIssueService()->isThemeUsed($themePath)){
+        $themes = array();
+        if(!$this->getOutputSettingIssueService()->isThemeUsed($themePath, $themes)){
             $this->rrmdir($this->toFullPath($themePath));
             $this->getSyncResourceService()->clearAllFor($themePath);
             // Reset the theme configs cache so also the new theme will be avaialable
             $this->cacheThemeConfigs = NULL;
             return true;
         }
-        throw new RemoveThemeException();
+        throw new RemoveThemeException(implode(', ', $themes));
     }
 
     function copyToUnassigned(Theme $theme)

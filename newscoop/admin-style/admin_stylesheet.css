@@ -1552,6 +1552,10 @@ fieldset.filters a.reset {
 	height: 26px;
 }
 
+.message-holder .false {
+    color: #cc0000;
+}
+
 /*---  System messages ---*/
 .info_message {
     font-weight: bold;
