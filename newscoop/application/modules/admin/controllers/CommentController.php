@@ -33,7 +33,7 @@ class Admin_CommentController extends Zend_Controller_Action
 
     /** @var Admin_Form_Comment_EditForm */
     private $editForm;
-
+    
     public function init()
     {
         // get comment repository
@@ -95,6 +95,7 @@ class Admin_CommentController extends Zend_Controller_Action
                                     *       this needs entity changes can't be done in the bug release stage
                                     */
                                    'is' => array('banned' => $acceptanceRepository->isBanned($commenter, null)),
+                                   'trace' => array('ip' => 'http://www.ip-adress.com/ip_tracer/'.$commenter->getIp()),
                                    'ip' => $commenter->getIp(), 'url' => $commenter->getUrl(),
                                    'banurl' => $view->url(
                                        array('controller' => 'comment-commenter', 'action' => 'toggle-ban',
@@ -122,6 +123,7 @@ class Admin_CommentController extends Zend_Controller_Action
                 ->setOption('fnRowCallback', 'datatableCallback.row')
                 ->setOption('fnServerData', 'datatableCallback.addServerData')
                 ->setOption('fnInitComplete', 'datatableCallback.init')
+                ->setOption('sDom','<"top">f<"#actionExtender">lrt<"bottom"ip>')
                 ->setStripClasses()
                 ->toggleAutomaticWidth(false)
                 ->setDataProp(

@@ -30,11 +30,14 @@
         'Comment updated.',
         'Comment deleted.',
         'Comment status change to $1.',
-        'You are about to permanently delete a comment.',
-        'You are about to permanently delete multiple comments.',
-        'Are you sure you want to do it?',
-        'Unable to reach Newscoop. Please check your internet connection.'
+        'Change selected comments status',
+        'New',
+        'Approved',
+        'Hidden',
+        'Deleted',
+        'Unable to reach Newscoop. Please check your internet connection.',        
     ];
+    
     serverObj.translateObj = [
         '<?php putGS('Search'); ?>',
         '<?php putGS('Comments updated.'); ?>',
@@ -43,9 +46,11 @@
         '<?php putGS('Comment updated.'); ?>',
         '<?php putGS('Comment deleted.'); ?>',
         '<?php putGS('Comment status change to $1.'); ?>',
-        <?php echo json_encode(getGS("You are about to permanently delete a comment.")); ?>,
-        <?php echo json_encode(getGS("You are about to permanently delete multiple comments.")); ?>,
-        <?php echo json_encode(getGS("Are you sure you want to do it?")); ?>,
+        '<?php putGS('Change selected comments status'); ?>',
+        '<?php putGS('New'); ?>',
+        '<?php putGS('Approved'); ?>',
+        '<?php putGS('Hidden'); ?>',
+        '<?php putGS('Deleted'); ?>',
         '<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>'
     ];
 </script>
@@ -68,11 +73,11 @@
                                 <img src="{{commenter.avatar}}">
                             </div>
                             <p>
-                                <b>{{commenter.username}}</b><br>
-                                {{commenter.name}}<br>
-                                <a href="#">{{commenter.ip}}</a><br>
-                                <a href="#">{{commenter.email}}</a><br>
-                                <a href="#">{{commenter.url}}</a>
+                                <p><b>{{commenter.username}}</b></p>
+                                <p class="{% if (commenter.is.banned.name) %}user-blocked-avatar{% endif %}">{{commenter.name}}</p>
+                                <p class="{% if (commenter.is.banned.ip) %}user-blocked-avatar{% endif %}"><a target="_blank" href="{{commenter.trace.ip}}">{{commenter.ip}}</a></p>
+                                <p class="{% if (commenter.is.banned.email) %}user-blocked-avatar{% endif %}"><a href="mailto:{{commenter.email}}">{{commenter.email}}</a></p>
+                                <p><a href="{{commenter.url}}">{{commenter.url}}</a></p>
                             </p>
                         </div>
                     </td>
@@ -116,9 +121,9 @@
                             <p>
                                 <a href="{{thread.link.get}}" class="articleLink">{{thread.name}}</a>
                                 <br>
-                                <span>{{thread.forum.name}}; <?php putGS('Section'); ?> {{thread.section.name}}</span>
+                                <span>{{thread.forum.name}}; <b><?php putGS('Section'); ?></b> {{thread.section.name}}</span>
                             </p>
-                            <a class="goToArticle" href="{{thread.link.edit}}"><?php putGS('Go to edit article'); ?></a> </div>
+                            <a class="goToArticle" href="{{thread.link.edit}}"><?php putGS('Go to article page'); ?></a> </div>
                     </td>
                 </tr></tbody>
         </table>
@@ -182,13 +187,6 @@
                         </fieldset>
                     </div>
                         <div id="actionExpand" class="dataTables_actions">
-                            <fieldset><select class="input_select actions">
-                                    <option value=""><?php putGS('Comments status'); ?></option>
-                                    <option value="pending"><?php putGS('New'); ?></option>
-                                    <option value="approved"><?php putGS('Approved'); ?></option>
-                                    <option value="hidden"><?php putGS('Hidden'); ?></option>
-                                    <option value="deleted"><?php putGS('Deleted'); ?></option>
-                                </select></fieldset>
                             <a href="javascript:;" class="sort_tread"> <span
                                     class="css_right ui-icon ui-icon-carat-2-n-s"></span> <?php putGS('Sort by Thread order'); ?>
                             </a></div>

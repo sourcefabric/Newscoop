@@ -168,7 +168,7 @@ body#comments {
 }
 
 select.actions {
-    width: 100px;
+    width: 230px;
     margin-right: 10px;
 }
 
@@ -591,9 +591,8 @@ select.actions {
     clear:left;
 }
 .commentsHolder  .dataTables_length {
-    padding: 0 0 10px 0;
-    vertical-align: top;
     float:right;
+    clear: none;
     line-height:23px;
 }
 .commentsHolder .ui-widget-header select, .dataTables_actions .actions {
@@ -634,7 +633,7 @@ select.actions {
     text-decoration:underline;
 }
 .commentsHolder .dataTables_actions select {
-    width: 180px;
+    width: 215px;
 }
 
 /*---////////// Status Colors //////////---*/
@@ -662,4 +661,8 @@ select.actions {
 }
 .user-blocked-avatar, .commentUserHolder div.user-blocked-avatar {
 	border:1px solid #b30000;
+}
+
+#actionExtender {
+    float: left;
 }

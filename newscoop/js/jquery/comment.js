@@ -35,11 +35,48 @@ var datatableCallback = {
     },
     init: function() {
         $('.dataTables_filter input').attr('placeholder',putGS('Search'));
+        $('#actionExtender').html('<select class="input_select actions">\
+                                    <option value="">' + putGS('Change selected comments status') + '</option>\
+                                    <option value="pending">' + putGS('New') + '</option>\
+                                    <option value="approved">' + putGS('Approved') + '</option>\
+                                    <option value="hidden">' + putGS('Hidden') + '</option>\
+                                    <option value="deleted">' + putGS('Deleted')+ '</option>\
+                                </select>');
+        $('.actions').change(function () {
+            action = $(this);
+            var status = action.val();
+            if (status != '') {
+                ids = [];
+                $('.table-checkbox:checked').each(function () {
+                    ids[ids.length] = $(this).val();
+                });
+                action.val('');
+                if (!ids.length) return;
+                $.ajax({
+                    type: 'POST',
+                    url: 'comment/set-status/format/json',
+                    data: $.extend({
+                        "comment": ids,
+                        "status": status
+                    }, serverObj.security),
+                    success: function (data) {
+                        flashMessage(putGS('Comments status change to $1.', statusMap[status]));
+                        datatable.fnDraw();
+                    },
+                    error: function (rq, status, error) {
+                        if (status == 0 || status == -1) {
+                            flashMessage(putGS('Unable to reach Newscoop. Please check your internet connection.'), "error");
+                        }
+                    }
+                });
+            }
+        });
+        
     }
 };
 $(function () {
     //$('.tabs').tabs();
-    //$('.tabs').tabs('select', '#tabs-1');
+    //$('.tabs').tabs('select', '#tabs-1');    
     var commentFilterTriggerCount = 0;
     $("#commentFilterTrigger").click(function () {
         if (commentFilterTriggerCount == 0) {
@@ -86,40 +123,6 @@ $(function () {
      * Action to fire
      * when action select is triggered
      */
-    $('.actions').change(function () {
-        action = $(this);
-        var status = action.val();
-        if (status != '') {
-            ids = [];
-            $('.table-checkbox:checked').each(function () {
-                ids[ids.length] = $(this).val();
-            });
-            action.val('');
-            if (!ids.length) return;
-
-            if (status == 'deleted' && !confirm(putGS('You are about to permanently delete multiple comments.') + '\n' + putGS('Are you sure you want to do it?'))) {
-                return false;
-            }
-
-            $.ajax({
-                type: 'POST',
-                url: 'comment/set-status/format/json',
-                data: $.extend({
-                    "comment": ids,
-                    "status": status
-                }, serverObj.security),
-                success: function (data) {
-                    flashMessage(putGS('Comments status change to $1.', statusMap[status]));
-                    datatable.fnDraw();
-                },
-                error: function (rq, status, error) {
-                    if (status == 0 || status == -1) {
-                        flashMessage(putGS('Unable to reach Newscoop. Please check your internet connection.'), "error");
-                    }
-                }
-            });
-        }
-    });
     $('.sort_tread').click(function () {
         var dir = $(this).find('span');
         if (dir.hasClass('ui-icon-triangle-1-n')) {
