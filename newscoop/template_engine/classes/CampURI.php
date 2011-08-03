@@ -653,13 +653,27 @@ abstract class CampURI
             return $this->m_template->name;
         }
 
-        if (!empty($p_templateIdOrName)) {
+        if (!empty($p_templateIdOrName))
+        {
             $tplObj = new MetaTemplate($p_templateIdOrName);
-            if (!$tplObj->defined()) {
-                return null;
+            if (!$tplObj->defined())
+            {
+                $tplObj->getByTemplateId($p_templateIdOrName);
+                if(!$tplObj->getId()) {
+                    return null;
+                }
+                $template = $tplObj->getTemplateValue();
             }
-            $template = $tplObj->getValue();
-        } elseif (is_null($this->m_errorCode)) {
+            else {
+                if($tplObj->getDbObject() instanceof \Newscoop\Entity\Resource) {
+                    $template = $tplObj->getValue();
+                } else {
+                    $template = $tplObj->getTemplateValue();
+                }
+            }
+        }
+        elseif (is_null($this->m_errorCode))
+        {
             $template = CampSystem::GetTemplate($this->language->number,
                             $this->publication->identifier,
                             $this->issue->number, $this->section->number,

@@ -278,18 +278,18 @@ function flashMessage(message, type, fixed)
         .css('padding', '8px')
         .css('font-size', '1.3em')
         .click(function() {
-            $(this).hide();
+            $(this).remove();
         });
 
     if (!fixed) {
-        flash.delay(3000).fadeOut('slow');
+        flash.delay(3000).fadeOut('slow',function(){$(this).remove()});
     }
 
     return flash;
 }
 
 var queue = [];
-
+$(document.body).data('loginDialog',false)
 /**
  * Call server function
  * @param {array} p_callback
@@ -334,13 +334,39 @@ function callServer(p_callback, p_args, p_handle, p_direct)
             }
         },
         'error': function(xhr, textStatus, errorThrown) {
-        	if(xhr.getResponseHeader('Not-Logged-In')) {
+        	if(xhr.getResponseHeader('Not-Logged-In'))
+        	{
         		flash.hide();
-        		if((!window.login_popup) || (window.login_popup.closed)) {
-        			window.login_popup = window.open(g_admin_url + '/login.php?request=ajax', 'login', 'height=400,width=500');
+        		if( !$(document.body).data('loginDialog') )
+        		{
+        			loginIframe = $('<iframe />')
+        				.attr( 'src', g_admin_url+'/login.php?request=ajax' )
+        				.attr( 'frameborder', 0 )
+        				.attr( 'width', 500 )
+        				.attr( 'height', 400 )
+        				.css({ width: 500, height: 400, padding: 0 });
+        			$(document.body).data( 
+        				'loginDialog',
+        				loginIframe.dialog
+        				({ 
+        					title: localizer.session_expired + ' ' + localizer.please + ' ' + localizer.login,
+        					width: 500, 
+        					height: 400, 
+        					modal: true,
+        					resizable: false,
+        					open: function(evt, ui) {
+        						$(this).width(500);
+        						var parentDiv = $(this).parents('.ui-dialog').eq(0)
+        						parentDiv.css('z-index', parseInt( parentDiv.siblings('.ui-widget-overlay').css('z-index'))+1)
+        					},
+        					close: function(evt, ui) {
+        						$(document.body).removeData('loginDialog')
+        					}
+        				})
+        			);
         		}
-        		window.login_popup.focus();
-                popupFlash = flashMessage(localizer.session_expired + ' ' + localizer.please + ' <a href="'+g_admin_url + '/login.php" target="_blank">' + localizer.login + '</a>.', 'error', true);
+
+                popupFlash = flashMessage(localizer.session_expired + ' ' + localizer.please + ' <a href="'+g_admin_url + '/login.php" target="_blank">' + localizer.login + '</a>.', 'error', false);
         	}
         	else {
         		popupFlash = flashMessage(localizer.connection_interrupted + '! ' + localizer.please + ' ' + localizer.try_again_later + '!', 'highlight', true);

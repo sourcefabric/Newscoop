@@ -42,12 +42,55 @@ final class MetaTemplate extends MetaDbObject
 
         $this->m_properties = array();
 
-        $this->m_customProperties['name'] = 'getValue';
-        $this->m_customProperties['identifier'] = 'getId';
-        $this->m_customProperties['type'] = 'getTemplateType';
-        $this->m_customProperties['defined'] = 'defined';
-        $this->m_customProperties['theme_dir'] = 'getThemeDir';
+        //try to get from template table
+        if( is_null($this->m_dbObject) ) {
+            $this->getByTemplateIdOrName($p_templateIdOrName);
+            $this->m_customProperties['name'] = 'getTemplateValue';
+            $this->m_customProperties['identifier'] = 'getId';
+            $this->m_customProperties['type'] = 'getTemplateType';
+            $this->m_customProperties['defined'] = 'defined';
+            $this->m_customProperties['theme_dir'] = 'getThemeDir';
+        }
+        else {
+            $this->m_customProperties['name'] = 'getValue';
+            $this->m_customProperties['identifier'] = 'getId';
+            $this->m_customProperties['type'] = 'getTemplateType';
+            $this->m_customProperties['defined'] = 'defined';
+            $this->m_customProperties['theme_dir'] = 'getThemeDir';
+        }
+
+
     }// fn __construct
+
+    /**
+     * Try to get it from the template id (tempaltes table)
+     * @param int $tplId
+     * @author Mihai Balaceanu
+     */
+    public function getByTemplateIdOrName($tplId)
+    {
+        $doctrine = Zend_Registry::get('doctrine');
+        if( is_numeric($tplId) ) {
+            $tpl = $doctrine->getEntityManager()->getRepository('Newscoop\Entity\Template')->find($tplId);
+        }
+        else {
+            $tpl = $doctrine->getEntityManager()->getRepository('Newscoop\Entity\Template')->findOneBy(array('key' => $tplId));
+        }
+        /* @var $tpl \Newscoop\Entity\Template */
+        $this->m_dbObject = $tpl;
+    }
+
+    /**
+     * Get template path if it's from tempalte entity table
+     */
+    public function getTemplateValue()
+    {
+    	if (is_null($this->m_dbObject)) {
+    		return null;
+    	}
+    	return $this->m_dbObject->getKey();
+    }
+
 
     protected function getTemplateType()
     {
@@ -66,7 +109,7 @@ final class MetaTemplate extends MetaDbObject
     	if (is_null($this->m_dbObject)) {
     		return null;
     	}
-    	return $this->m_dbObject->getPath();
+    	return $this->m_dbObject instanceof \Newscoop\Entity\Template ? $this->m_dbObject : $this->m_dbObject->getPath();
     }
 
     public function IsValid($p_value)
@@ -101,7 +144,11 @@ final class MetaTemplate extends MetaDbObject
 
 		return $path;
 	}
+
+	public function getDbObject()
+	{
+	    return $this->m_dbObject;
+	}
 }
 // class MetaTemplate
 
-?>

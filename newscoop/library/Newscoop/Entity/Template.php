@@ -95,4 +95,16 @@ class Template
     {
         return (int) $this->cache_lifetime;
     }
+
+    /* ----- LEGACY ----- */
+	/**
+     * Check if the template exists
+     *
+     * @return bool
+     *          True always for now
+     */
+    public function exists()
+    {
+        return true;
+    }
 }

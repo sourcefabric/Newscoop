@@ -28,9 +28,37 @@ if ($this->getRequest()->isPost() && !empty($_POST['f_user_name']) && !empty($_P
 $f_force_login = Input::Get('f_force_login');
 
 $auth = Zend_Auth::getInstance();
-if ($auth->hasIdentity() && (!$f_force_login)) { // logged in allready
-    $this->_helper->redirector('index', 'index');
+if ($auth->hasIdentity() && (!$f_force_login))
+{ // logged in allready
+    if( !(isset($_GET['request']) && $_GET['request'] == 'ajax') ) :
+        $this->_helper->redirector('index', 'index');
+    else :
+        require_once($GLOBALS['g_campsiteDir'].'/classes/SecurityToken.php');
+?>
+<!DOCTYPE html>
+<html>
+	<head>
+		<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet_new.css" />
+		<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
+		<script type="text/javascript">
+			window.parent.g_security_token = '<?php echo SecurityToken::GetToken(); ?>';
+			window.parent.$(window.parent.document.body).data('loginDialog').dialog('close');
+		</script>
+	</head>
+	<body>
+		<form name="login_form">
+			<div class="login_box" style="background:none; border-bottom: none">
+				<h2>Redirecting...</h2>
+			</div>
+		</form>
+	</body>
+</html>
+<?php
+        exit(0);
+    endif;
 }
+
+
 
 // token
 $key = md5(rand(0, (double)microtime()*1000000)).md5(rand(0,1000000));
@@ -152,7 +180,7 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
 			if (is_array($value)) {
 				foreach ($value as $arrayValue) {
 					$printHidden("{$name}[]", $arrayValue);
-				} 
+				}
 			} else {
 				$printHidden($name, $value);
 			}
@@ -166,8 +194,10 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
 <input type="hidden" name="f_is_encrypted" value="1" />
 <?php } ?>
 <div class="login_box">
-<div class="logobox"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/sign_big.gif" border="0" alt="" /></div>
-<h2><?php putGS("Login"); ?></h2>
+<?php if ( !(isset($_GET['request']) && $_GET['request'] == 'ajax') ) : ?>
+	<div class="logobox"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/sign_big.gif" border="0" alt="" /></div>
+	<h2><?php putGS("Login"); ?></h2>
+<?php endif; ?>
     <noscript>
     <?php
     putGS('Your browser does not support Javascript or (more likely) you have Javascript disabled. Please fix this to be able to use Newscoop.');

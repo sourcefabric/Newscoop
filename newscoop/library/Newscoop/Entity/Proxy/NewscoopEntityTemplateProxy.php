@@ -57,6 +57,12 @@ class NewscoopEntityTemplateProxy extends \Newscoop\Entity\Template implements \
         return parent::getCacheLifetime();
     }
 
+    public function exists()
+    {
+        $this->_load();
+        return parent::exists();
+    }
+
 
     public function __sleep()
     {

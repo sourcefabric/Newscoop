@@ -222,7 +222,7 @@ class CampURIShortNames extends CampURI
      *                 - object mandatory?
      *                     - yes: return error
      *                     - no: continue
-     *
+     * @todo the "algorithm" should be revised
      * @return PEAR_Error
      *
      */
@@ -328,7 +328,9 @@ class CampURIShortNames extends CampURI
                             $articleObj->getArticleNumber());
         }
         $templateId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
+
         $this->m_template = new MetaTemplate($this->getTemplate($templateId));
+
         if (!$this->m_template->defined()) {
             return new PEAR_Error("Invalid template in URL or no default template specified.",
                     self::INVALID_TEMPLATE);
