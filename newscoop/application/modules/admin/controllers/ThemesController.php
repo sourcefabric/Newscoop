@@ -630,7 +630,21 @@ class Admin_ThemesController extends Zend_Controller_Action
                 ->setHeader( 'Content-Disposition', 'attachment; filename="'.$themeEntity->getName().'.zip"' )
                 ->setHeader( 'Content-length', filesize( $exportPath ) )
                 ->setHeader( 'Cache-control', 'private' );
-            readfile( $exportPath );
+
+			// it looks that a problem could happen here if the server is out of its disk space
+			$send_file_failure = false;
+			try {
+				if(!@readfile( $exportPath )) {
+					$send_file_failure = true;
+				}
+			}
+			catch (Exception $exc) {
+				$send_file_failure = true;
+			}
+			if ($send_file_failure) {
+				echo getGS('Download was not successful. Check please that the server is not out of disk space.');
+			}
+
             $this->getResponse()->sendResponse();
         }
     }
