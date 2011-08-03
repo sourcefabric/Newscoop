@@ -392,16 +392,20 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
     {
         Validation::notEmpty($theme, 'theme');
 
-        $newThemeFolder = $this->getNewThemeFolder(self::FOLDER_UNASSIGNED."/");
-        try
-        {
-            $this->copy($this->toFullPath($theme), $this->themesFolder.$newThemeFolder);
+        foreach ($this->getUnassignedThemes() as $unassigned) {
+            if (trim($unassigned->getName()) == trim($theme->getName())) {
+                throw new DuplicateNameException();
+            }
         }
-        catch( \Exception $e )
-        {
+
+        $newThemeFolder = $this->getNewThemeFolder(self::FOLDER_UNASSIGNED."/");
+        try {
+            $this->copy($this->toFullPath($theme), $this->themesFolder.$newThemeFolder);
+        } catch(\Exception $e) {
             rmdir($newThemeFolder);
             throw $e;
         }
+
         // TODO this ain't actually working for some reason
         return $this->loadThemeByPath($newThemeFolder);
     }

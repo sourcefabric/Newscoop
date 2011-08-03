@@ -658,16 +658,21 @@ class Admin_ThemesController extends Zend_Controller_Action
 
     function copyToAvailableAction()
     {
-        try
-        {
-            $theme  = $this->getThemeService()->getById($this->_request->getParam('theme-id'));
+        try {
+            $theme = $this->getThemeService()->getById($this->_getParam('theme-id'));
             $this->getThemeService()->copyToUnassigned($theme);
-            $this->view->response =  getGS( 'Copied successfully' );
+            $this->view->response = getGS('Copied successfully');
+        } catch (DuplicateNameException $e) {
+            $this->view->exception = array(
+                'code' => $e->getCode(),
+                'message' => getGS('Duplicate assignation'),
+            );
+        } catch(\Exception $e) {
+            $this->view->exception = array(
+                'code' => $e->getCode(),
+                'message' => getGS('Something broke')
+            );
         }
-        catch( \Exception $e ) {
-            $this->view->exception = array( "code" => $e->getCode(), "message" => getGS( 'Something broke' ) );
-        }
-
     }
 
     public function installAction()
