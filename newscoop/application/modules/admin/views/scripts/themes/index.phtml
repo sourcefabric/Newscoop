@@ -67,7 +67,7 @@ $(function() {
 		{% for( i in images ) %}
 		<li class="imageItem ui-tabs-panel ui-widget-content ui-corner-bottom
 			{% if( i > 0 ) %} ui-tabs-hide {% endif %}" id="themesListTabD">
-    		<a id="example1" href="<?php echo $this->themesPath ?>/{{images[i]}}">
+            <a id="example1" rel="theme_{{id}}" href="<?php echo $this->themesPath ?>/{{images[i]}}">
 				<img src="<?php echo $this->themesPath ?>/{{images[i]}}" alt="{{images[i]}}" />
 			</a>
 		</li>
@@ -81,20 +81,20 @@ $(function() {
         <p><i><b><?php echo getGS( 'Design' ) ?>:</b> {{designer}}</i></p>
 		<ul class="imageCtrls ui-tabs-nav ui-helper-reset ui-helper-clearfix ui-widget-header ui-corner-all">
             <li class="ui-state-default ui-corner-top ui-tabs-selected ui-state-active">
-				<a href="javascript:void(0)">
-                    <?php echo getGS( 'Issue page' ) ?>
+                <a href="javascript:void(0)" rel="theme_{{id}}_b" title="<?php putGS('Issue page'); ?>">
+                    <?php putGS( 'Issue page' ) ?>
 					<span><?php echo getGS( 'Click to enlarge' ) ?></span>
 				</a>
 			</li>
             <li class="ui-state-default ui-corner-top">
-				<a href="javascript:void(0)">
-					<?php echo getGS( 'Section page' ); ?>
+                <a href="javascript:void(0)" rel="theme_{{id}}_b" title="<?php putGS('Section page'); ?>">
+					<?php putGS( 'Section page' ); ?>
 					<span><?php echo getGS( 'Click to enlarge' ) ?></span>
 				</a>
 			</li>
         	<li class="ui-state-default ui-corner-top">
-				<a href="javascript:void(0)">
-                    <?php echo getGS( 'Article page' ) ?>
+                <a href="javascript:void(0)" rel="theme_{{id}}_b" title="<?php putGS('Article page'); ?>">
+                    <?php putGS( 'Article page' ) ?>
 					<span><?php echo getGS( 'Click to enlarge' ) ?></span>
 				</a>
 			</li>
