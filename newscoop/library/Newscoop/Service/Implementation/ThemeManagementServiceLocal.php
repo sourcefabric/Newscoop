@@ -304,15 +304,15 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
 
         $themePath = $this->toFullPath($theme->getPath());
-        $themePathLength = strlen($themePath);
+        $lenght = strlen($themePath);
         // initialize an iterator
         // pass it the directory to be processed
         $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($themePath));
         // iterate over the directory
         // add each file found to the archive
         foreach ($iterator as $key=>$value) {
-            $fname = substr($key, $themePathLength);
-            if(strlen($fname) > 0 && !in_array(basename($fname), array(".", "..")) ) {
+            $fname = substr($key, $lenght);
+            if(strlen($fname) > 0){
                 $zip->addFile(realpath($key), $fname) or die ("ERROR: Could not add file: $key");
             }
         }

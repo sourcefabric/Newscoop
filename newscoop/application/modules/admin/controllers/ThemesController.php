@@ -631,8 +631,7 @@ class Admin_ThemesController extends Zend_Controller_Action
                 ->setHeader( 'Content-length', filesize( $exportPath ) )
                 ->setHeader( 'Cache-control', 'private' );
 
-            // check if the file is still there after export if no exception in the prev. step:
-            // for example the system could've been out of diskspace and no zip would be available
+			// it looks that a problem could happen here if the server is out of its disk space
 			$send_file_failure = false;
 			try {
 				if(!@readfile( $exportPath )) {
@@ -643,13 +642,9 @@ class Admin_ThemesController extends Zend_Controller_Action
 				$send_file_failure = true;
 			}
 			if ($send_file_failure) {
-			    $this->getResponse()
-			        ->setHttpResponseCode(500)
-			        ->setHeader( 'Content-Type', 'text/html; charset=utf-8', true )
-			        ->clearHeader( 'Content-Disposition' )
-			        ->clearHeader( 'Content-length' );
-                throw new Exception( getGS('Download was not successful. Check please that the server is not out of disk space.'), 500 );
+				echo getGS('Download was not successful. Check please that the server is not out of disk space.');
 			}
+
             $this->getResponse()->sendResponse();
         }
     }
