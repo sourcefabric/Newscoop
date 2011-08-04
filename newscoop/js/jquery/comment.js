@@ -52,6 +52,12 @@ var datatableCallback = {
                 });
                 action.val('');
                 if (!ids.length) return;
+                
+                
+                if (status == 'deleted' && !confirm(putGS('You are about to permanently delete multiple comments.') + '\n' + putGS('Are you sure you want to do it?'))) {
+                    return false;
+                }
+                
                 $.ajax({
                     type: 'POST',
                     url: 'comment/set-status/format/json',
