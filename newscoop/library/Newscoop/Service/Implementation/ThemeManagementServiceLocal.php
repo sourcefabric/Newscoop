@@ -282,7 +282,8 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
     /* --------------------------------------------------------------- */
 
-    function exportTheme($theme){
+    function exportTheme($theme)
+    {
         Validation::notEmpty($theme, 'theme');
         if(!($theme instanceof Theme)){
             $theme = $this->findById($theme);
@@ -304,15 +305,15 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
 
         $themePath = $this->toFullPath($theme->getPath());
-        $lenght = strlen($themePath);
+        $themePathLength = strlen($themePath);
         // initialize an iterator
         // pass it the directory to be processed
         $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($themePath));
         // iterate over the directory
         // add each file found to the archive
         foreach ($iterator as $key=>$value) {
-            $fname = substr($key, $lenght);
-            if(strlen($fname) > 0){
+            $fname = substr($key, $themePathLength);
+            if(strlen($fname) > 0 && !in_array(basename($fname), array(".", "..")) ) {
                 $zip->addFile(realpath($key), $fname) or die ("ERROR: Could not add file: $key");
             }
         }
