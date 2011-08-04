@@ -299,7 +299,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         // create object
         $zip = new \ZipArchive();
         // open archive
-        if ($zip->open($zipFilePath, \ZIPARCHIVE::CREATE) !== TRUE) {
+        if ($zip->open($zipFilePath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== TRUE) {
             die ("Could not open archive");
         }
 
@@ -311,10 +311,15 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($themePath));
         // iterate over the directory
         // add each file found to the archive
+        $addedDirs = array();
         foreach ($iterator as $key=>$value) {
             $fname = substr($key, $themePathLength);
             if(strlen($fname) > 0 && !in_array(basename($fname), array(".", "..")) ) {
-                $zip->addFile(realpath($key), $fname) or die ("ERROR: Could not add file: $key");
+                if( !in_array(dirname($fname),$addedDirs) ) {
+                	$zip->addEmptyDir(dirname($fname));
+                	$addedDirs[]=dirname($fname);
+                };
+            	$zip->addFile(realpath($key), $fname) or die ("ERROR: Could not add file: $key");
             }
         }
         // close and save archive

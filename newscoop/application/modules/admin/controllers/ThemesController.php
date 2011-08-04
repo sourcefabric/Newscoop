@@ -572,14 +572,34 @@ class Admin_ThemesController extends Zend_Controller_Action
 
     public function deleteAction()
     {
-        $this->_forward( 'unassign' );
+        $this->_forward( 'unassign', null, null, array('p_forwardedFrom' => 'deleteAction'));
     }
 
     public function unassignAction()
     {
+        $p_forwardedFrom = $this->_request->getParam( 'p_forwardedFrom' );
         if( ( $themeId = $this->_getParam( 'id', null ) ) ) {
             try
             {
+            	if($p_forwardedFrom == 'deleteAction') {
+                    global $Campsite;
+                    $themeIsAssigned = FALSE;
+                    $theme = $this->getThemeService()->getById($themeId);
+                    $themeName = $theme->getName();
+                    foreach($Campsite['publications'] as $publication) {
+                    	$pub = $this->getPublicationService()->findById( $publication->getPublicationId() );
+	                    foreach($this->getThemeService()->getThemes($pub) as $th){
+				            if( trim($th->getName()) === trim($themeName) ){
+                                $themeIsAssigned = TRUE;
+                                break 2;
+				            }
+				        }
+                    }
+                    if($themeIsAssigned) {
+                       throw new Exception('Theme is assigned and can not be deleted', 500);
+                    }
+            	}
+
                 $this->getThemeService()->removeTheme($themeId);
                 $this->view->status = true;
                 $this->view->response = getGS( "Unassign successful" );
@@ -592,7 +612,12 @@ class Admin_ThemesController extends Zend_Controller_Action
             catch( Exception $e )
             {
                 $this->view->status = false;
-                $this->view->response = getGS( "Failed unassigning theme" );
+                if( $e->getCode() == 500) {
+                    $this->view->response = getGS( "Theme is assigned and can not be deleted" );
+                } else {
+                    $this->view->response = getGS( "Failed unassigning theme" );
+                }
+
             }
         }
     }
@@ -624,15 +649,13 @@ class Admin_ThemesController extends Zend_Controller_Action
         {
             $exportPath = $this->getThemeService()
                 ->exportTheme( ( $themeEntity = $this->getThemeService()->findById( $themeId ) ) );
-
             $this->getResponse()
                 ->setHeader( 'Content-type', 'application/zip' )
                 ->setHeader( 'Content-Disposition', 'attachment; filename="'.$themeEntity->getName().'.zip"' )
                 ->setHeader( 'Content-length', filesize( $exportPath ) )
                 ->setHeader( 'Cache-control', 'private' );
 
-            // check if the file is still there after export if no exception in the prev. step:
-            // for example the system could've been out of diskspace and no zip would be available
+			// it looks that a problem could happen here if the server is out of its disk space
 			$send_file_failure = false;
 			try {
 				if(!@readfile( $exportPath )) {
@@ -643,13 +666,9 @@ class Admin_ThemesController extends Zend_Controller_Action
 				$send_file_failure = true;
 			}
 			if ($send_file_failure) {
-			    $this->getResponse()
-			        ->setHttpResponseCode(500)
-			        ->setHeader( 'Content-Type', 'text/html; charset=utf-8', true )
-			        ->clearHeader( 'Content-Disposition' )
-			        ->clearHeader( 'Content-length' );
-                throw new Exception( getGS('Download was not successful. Check please that the server is not out of disk space.'), 500 );
+				echo getGS('Download was not successful. Check please that the server is not out of disk space.');
 			}
+
             $this->getResponse()->sendResponse();
         }
     }
