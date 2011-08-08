@@ -123,7 +123,7 @@ class Admin_CommentController extends Zend_Controller_Action
                 ->setOption('fnRowCallback', 'datatableCallback.row')
                 ->setOption('fnServerData', 'datatableCallback.addServerData')
                 ->setOption('fnInitComplete', 'datatableCallback.init')
-                ->setOption('sDom','<"top">f<"#actionExtender">lrt<"bottom"ip>')
+                ->setOption('sDom','<"top">lf<"#actionExtender">rit<"bottom"ip>')
                 ->setStripClasses()
                 ->toggleAutomaticWidth(false)
                 ->setDataProp(
