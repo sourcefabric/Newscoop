@@ -35,13 +35,16 @@ var datatableCallback = {
     },
     init: function() {
         $('.dataTables_filter input').attr('placeholder',putGS('Search'));
-        $('#actionExtender').html('<select class="input_select actions">\
-                                    <option value="">' + putGS('Change selected comments status') + '</option>\
+        $('#actionExtender').html('<fieldset>\
+                                <legend>' + putGS('Actions') + '</legend> \
+                                <select class="input_select actions">\
+                                    <option value="">' + putGS('Select status') + '</option>\
                                     <option value="pending">' + putGS('New') + '</option>\
                                     <option value="approved">' + putGS('Approved') + '</option>\
                                     <option value="hidden">' + putGS('Hidden') + '</option>\
                                     <option value="deleted">' + putGS('Deleted')+ '</option>\
-                                </select>');
+                                </select>\
+                              </fieldset>');
         $('.actions').change(function () {
             action = $(this);
             var status = action.val();
@@ -180,7 +183,7 @@ $(function () {
      * Action to fire
      * when action submit is triggered
      */
-    $('.dateCommentHolderEdit form').live('submit', function () {
+    $('.dateCommentHolderEdit form,.dateCommentHolderReply form').live('submit', function () {
         var that = this;
         $.ajax({
             type: 'POST',
@@ -198,7 +201,7 @@ $(function () {
         });
         return false;
     });
-    $('.dateCommentHolderEdit .edit-cancel,.dateCommentHolderEdit .reply-cancel').live('click', function () {
+    $('.dateCommentHolderEdit .edit-cancel,.dateCommentHolderReply .reply-cancel').live('click', function () {
         var el = $(this);
         var td = el.parents('td');
         var form = el.parents('form');
@@ -209,24 +212,23 @@ $(function () {
         td.find('.content-edit').hide();
         td.find('.content-reply').hide();
     });
-    $('.dateCommentHolderEdit .edit-reply').live('click', function () {
-        var el = $(this);
-        var td = el.parents('td');
-        var form = td.find('form');
-        $(form).each(function () {
-            this.reset();
-        });
-        td.find('.content-edit').slideUp("fast");
-        td.find('.content-reply').slideDown("fast");
-    });
 
     $('.datatable .action-edit').live('click', function () {
         var el = $(this);
         var td = el.parents('td');
+        td.find('.content-reply').hide();
         td.find('.commentSubject').toggle("fast");
         td.find('.commentBody').toggle("fast");
         td.find('.content-edit').toggle("fast");
     });
+
+    $('.datatable .action-reply').live('click', function () {
+        var el = $(this);
+        var td = el.parents('td');
+        td.find('.content-edit').hide();
+        td.find('.content-reply').toggle("fast");
+    });
+
     // Dialog
     $('.dialogPopup').dialog({
         autoOpen: false,

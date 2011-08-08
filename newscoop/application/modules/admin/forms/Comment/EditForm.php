@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @author Nistor Mihai
  * @package Newscoop
@@ -60,13 +59,6 @@ class Admin_Form_Comment_EditForm extends Form
             'class' => 'button edit-cancel'
         ));
 
-        /** Reply Button */
-        $this->addElement('button', 'reply',
-                array(
-            'label' => getGS('Reply'),
-            'class' => 'button edit-reply'
-        ));
-
         /** Save Button */
         $this->addElement('submit', 'save',
                 array(
@@ -77,7 +69,6 @@ class Admin_Form_Comment_EditForm extends Form
         /** Group buttons together */
         $this->addDisplayGroup(array(
             'cancel',
-            'reply',
             'save',
                 ), 'commenter',
                 array(
