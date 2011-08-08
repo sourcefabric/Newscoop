@@ -109,12 +109,14 @@ ul.edit li a.delete {
 }
 
 .resource-group {
-    float: left;
-    width: 403px;
+    width: 500px;
     margin: 0 13px 13px 0;
     padding: 8px;
     background-color: #fff;
-    border: 1px solid #ccc;
+    border: 1px solid #9D9D9D;
+    -moz-box-shadow: 0 2px 2px rgba(0,0,0,.10);
+    -webkit-box-shadow: 0 2px 2px rgba(0,0,0,.10);
+    box-shadow: 0 2px 2px rgba(0,0,0,.10);
 }
 
 .content-sidebar .resource-group {
@@ -134,8 +136,8 @@ ul.edit li a.delete {
 }
 
 .resource-group h3 {
-    margin: 0;
-    padding: 5px 5px 4px 28px;
+    margin: 5px 0 0 !important;
+    padding: 7px 5px 6px 28px;
 }
 
 ul.resource {
@@ -173,4 +175,8 @@ ul.resource label {
     margin: 0 0 0 20px;
     padding: 3px 0 0 3px;
     cursor: pointer;
+}
+
+.resource-group.ui-accordion .ui-accordion-content {
+    padding: 10px 0 10px !important;
 }
