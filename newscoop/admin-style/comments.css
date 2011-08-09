@@ -638,6 +638,7 @@ select.actions {
 }
 .commentsHolder  .dataTables_filter {
     clear:left;
+	padding:0;
 }
 .commentsHolder  .dataTables_length {
     padding: 0 0 10px 0;
@@ -719,4 +720,18 @@ select.actions {
 .commentBtns ul li label {
 	line-height:16px;
 	padding-top:2px;
+}
+.commentsHolder .smartlist fieldset:first-child, .commentsHolder .smartlist fieldset {
+    margin: 10px 0;
+}
+
+.commentsHolder input [type="select"] {
+    background-color: #FFFFFF;
+    border: 1px solid #9D9D9D;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 25px;
+    margin: 0;
+    padding: 2px 2px 2px 0;
+    vertical-align: top;
 }
