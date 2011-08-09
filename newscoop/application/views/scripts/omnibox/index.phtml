@@ -88,6 +88,10 @@ var omnibox = {
 			var element = this.element_list[i];
 			this.elements[element] = document.getElementById(element);
 		}
+		var location = (String)(document.location);
+		if (location.indexOf('#') != -1) {
+			this.showHide();
+		}
 	},
 	showHide: function() {
 		if (this.status == false) {
@@ -166,9 +170,18 @@ var omnibox = {
 			data = $.parseJSON(data);
 			console.log(data);
 			
-			omnibox.setMessage(data.response);
-			omnibox.showMessage();
-			omnibox.showInput();
+			if (data.response == 'OK') {
+				var location = (String)(document.location);
+				location = location.split('#');
+				location = location[0];
+				document.location = location + '#comments_wrap';
+				document.location.reload();
+			}
+			else {
+				omnibox.setMessage(data.response);
+				omnibox.showMessage();
+				omnibox.showInput();
+			}
 		});
 	}
 };

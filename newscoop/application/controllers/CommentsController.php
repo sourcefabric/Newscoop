@@ -69,7 +69,7 @@ class CommentsController extends Zend_Controller_Action
 			$commentRepository->save($comment, $values);
 			$commentRepository->flush();
 			
-			$this->view->response = getGS('Comment added.');
+			$this->view->response = 'OK';
 		}
 		else {
 			$errors = implode('<br>', $errors);
