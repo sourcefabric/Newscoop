@@ -30,7 +30,6 @@ if (!is_file('Zend/Application.php')) {
 		get_include_path(),
 	)));
 }
-require_once 'Zend/Application.php';
 
 /** Zend_Application */
 require_once 'Zend/Application.php';
