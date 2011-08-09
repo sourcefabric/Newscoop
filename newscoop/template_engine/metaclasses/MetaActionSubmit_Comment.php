@@ -116,7 +116,7 @@ class MetaActionSubmit_Comment extends MetaAction
         $publicationObj = new Publication($publication_id);
         $user = $p_context->user;
         $userIp = getIp();
-        
+
         if ($user->defined && $this->m_properties['is_anonymous'] != null)
         {
             $userId = $user->identifier;
@@ -149,7 +149,7 @@ class MetaActionSubmit_Comment extends MetaAction
             }
             $userId = null;
             $userEmail = $this->m_properties['reader_email'];
-            
+
             $userRealName = $this->m_properties['nickname'];
         }
 
@@ -217,8 +217,6 @@ class MetaActionSubmit_Comment extends MetaAction
 
         $controller->getHelper('actionStack')->actionToStack("moderate-comment","notification","admin", array('comment'=>$comment->getId()));
 
-        $p_context->comment = new MetaComment($comment->getId());
-        $p_context->comment = new MetaComment($comment->getId());
         $p_context->default_url->reset_parameter('f_comment_reader_email');
         $p_context->default_url->reset_parameter('f_comment_subject');
         $p_context->default_url->reset_parameter('f_comment_content');
