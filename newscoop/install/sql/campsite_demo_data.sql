@@ -331,7 +331,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `Publications` WRITE;
 /*!40000 ALTER TABLE `Publications` DISABLE KEYS */;
-INSERT  IGNORE INTO `Publications` VALUES (2,'The Journal',1,'D',0.00,0.00,'',0,0,4,2,2,1,1,0,1,0,1,0,'','',1220,'a:1:{s:4:\"name\";s:2:\"on\";}');
+INSERT  IGNORE INTO `Publications` VALUES (2,'Sample Publication',1,'D',0.00,0.00,'',0,0,4,2,2,1,1,0,1,0,1,0,'','',1220,'a:1:{s:4:\"name\";s:2:\"on\";}');
 /*!40000 ALTER TABLE `Publications` ENABLE KEYS */;
 UNLOCK TABLES;
 
