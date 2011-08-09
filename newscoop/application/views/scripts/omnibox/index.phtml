@@ -1,0 +1,177 @@
+<div id="ob_wrapper" style="position: absolute; left: 0px; top: 0px;">
+<input type="hidden" id="base_url" value="<?php echo($GLOBALS['Campsite']['SUBDIR']); ?>">
+<input type="hidden" id="language" value="<?php echo($this->gimme->language->number); ?>">
+<div id="ob_main" style="display: none;">
+<?php if ($this->gimme->user->logged_in) { ?>
+	welcome <?php echo($this->gimme->user->name); ?>, bla bla!<br>
+	
+	<div style="display: inline;" id="ob_input">
+	
+	<div id="ob_message_wrapper">
+		<div id="ob_message" style="display: none;"></div>
+		<div id="ob_message_close" style="display: none;"><a href="javascript:omnibox.hideMessage();omnibox.setMessage('');">close</a></div>
+	</div>
+	
+	<?php if ($this->gimme->article->number) { ?>
+		on article page<br>
+		<div>
+			<input type="radio" name="ob_comment_feedback" id="ob_comment" onClick="omnibox.switchCommentFeedback();" checked="checked">
+			<label for="ob_comment" style="float: none;">comment on article</label>
+		</div>
+		
+		<div>
+			<input type="radio" name="ob_comment_feedback" id="ob_feedback" onClick="omnibox.switchCommentFeedback();">
+			<label for="ob_feedback" style="float: none;">feedback</label>
+		</div>
+		
+		<div id="ob_comment_text_container" style="display: inline;">
+			<input type="hidden" id="ob_comment_article_number" value="<?php echo($this->gimme->article->number); ?>">
+			<textarea name="ob_comment_text" id="ob_comment_text"></textarea><br>
+			<input type="button" value="next" onClick="omnibox.showReview();">
+		</div>
+		
+		<div id="ob_feedback_text_container" style="display: none;">
+			<textarea name="ob_feedback_text" id="ob_feedback_text"></textarea><br>
+			-- here comes file upload<br>
+			<input type="button" value="next" onClick="omnibox.showReview();">
+		</div>
+	<?php } else { ?>
+		not on article page
+	<?php } ?>
+	
+	</div>
+	
+	<div style="display: none;" id="ob_review_comment">
+		comments are not moderated, so be nice, etc.<br>
+		<div style="border: 1px solid #000000;" id="ob_review_comment_text"></div><br>
+		<?php if ($this->gimme->publication->captcha_enabled) { ?>
+			<img id="ob_review_comment_captcha_image" src=""><br>
+			<input type="text" id="ob_review_comment_captcha_code"><br>
+		<?php } ?>
+		<?php if (!$this->gimme->publication->captcha_enabled) { ?>
+			<input type="hidden" id="ob_review_comment_captcha" value="">
+		<?php } ?>
+		<input type="button" value="back" onClick="omnibox.showInput();">
+		<input type="button" value="send" onClick="omnibox.sendComment();">
+		<br>
+	</div>
+	<div style="display: none;" id="ob_review_feedback">
+		feedback review
+	</div>
+	
+<?php } else { ?>
+	not logged in...
+<?php } ?>
+</div>
+
+<div id="ob_handle" style="">
+<a href="javascript:omnibox.showHide();">omnibox</a>
+</div>
+
+</div>
+
+<script>
+var omnibox = {
+	language: false,
+	baseUrl: false,
+	status: false,
+	type: 'comment',
+	element_list: ['ob_main', 'ob_comment', 'ob_feedback', 'ob_comment_text_container', 'ob_comment_text', 'ob_feedback_text_container', 'ob_feedback_text',
+		'ob_input', 'ob_review_comment', 'ob_review_comment_text', 'ob_review_feedback', 'ob_review_comment_captcha_image', 'ob_review_comment_captcha_code',
+		'ob_message', 'ob_message_close'],
+	elements: {},
+	initialize: function() {
+		this.baseUrl = document.getElementById('base_url').value;
+		this.language = document.getElementById('language').value;
+		
+		for (var i in this.element_list) {
+			var element = this.element_list[i];
+			this.elements[element] = document.getElementById(element);
+		}
+	},
+	showHide: function() {
+		if (this.status == false) {
+			this.elements.ob_main.style.display = 'inline';
+			this.status = true;
+		}
+		else {
+			this.elements.ob_main.style.display = 'none';
+			this.status = false;
+		}
+	},
+	switchCommentFeedback: function() {
+		if (this.elements.ob_comment.checked) {
+			this.type = 'comment';
+		}
+		else if (this.elements.ob_feedback.checked) {
+			this.type = 'feedback';
+		}
+		
+		this.showInput();
+	},
+	showInput: function() {
+		this.elements.ob_review_comment.style.display = 'none';
+		this.elements.ob_review_feedback.style.display = 'none';
+		this.elements.ob_input.style.display = 'inline';
+		if (this.type == 'comment') {
+			this.elements.ob_comment_text_container.style.display = 'inline';
+			this.elements.ob_feedback_text_container.style.display = 'none';
+		}
+		if (this.type == 'feedback') {
+			this.elements.ob_comment_text_container.style.display = 'none';
+			this.elements.ob_feedback_text_container.style.display = 'inline';
+		}
+	},
+	showReview: function() {
+		var random_temp = Math.random();
+		this.elements.ob_review_comment_captcha_image.src = this.baseUrl + '/include/captcha/image.php?x=' + random_temp;
+		this.elements.ob_input.style.display = 'none';
+		if (this.type == 'comment') {
+			this.elements.ob_review_comment_text.innerHTML = this.elements.ob_comment_text.value;
+			
+			this.elements.ob_review_comment.style.display = 'inline';
+			this.elements.ob_review_feedback.style.display = 'none';
+		}
+		if (this.type == 'feedback') {
+			this.elements.ob_review_comment.style.display = 'none';
+			this.elements.ob_review_feedback.style.display = 'inline';
+		}
+	},
+	showMessage: function() {
+		this.elements.ob_message.style.display = 'inline';
+		this.elements.ob_message_close.style.display = 'inline';
+	},
+	hideMessage: function() {
+		this.elements.ob_message.style.display = 'none';
+		this.elements.ob_message_close.style.display = 'none';
+	},
+	setMessage: function(message) {
+		this.elements.ob_message.innerHTML = message;
+	},
+	sendComment: function() {
+		var data = {
+			f_comment_url: String(document.location),
+			f_submit_comment: 'SUBMIT',
+			f_comment_nickname: '',
+			f_comment_reader_email: '',
+			f_comment_content: this.elements.ob_comment_text.value,
+			f_article_number: document.getElementById('ob_comment_article_number').value,
+			f_comment_is_anonymous: 0,
+			f_comment_subject: 'SiteComment',
+			f_captcha: this.elements.ob_review_comment_captcha_code.value,
+			f_language: this.language
+		};
+		
+		$.post(this.baseUrl + '/comments/save/?format=json', data, function(data) {
+			data = $.parseJSON(data);
+			console.log(data);
+			
+			omnibox.setMessage(data.response);
+			omnibox.showMessage();
+			omnibox.showInput();
+		});
+	}
+};
+
+omnibox.initialize();
+</script>
