@@ -13,7 +13,7 @@ use Newscoop\Entity\Comment;
 
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
  
-class CommentsController extends Zend_Controller_Action
+class CommentController extends Zend_Controller_Action
 {
     public function init()
     {

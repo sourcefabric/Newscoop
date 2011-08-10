@@ -166,7 +166,7 @@ var omnibox = {
 			f_language: this.language
 		};
 		
-		$.post(this.baseUrl + '/comments/save/?format=json', data, function(data) {
+		$.post(this.baseUrl + '/comment/save/?format=json', data, function(data) {
 			data = $.parseJSON(data);
 			console.log(data);
 			
