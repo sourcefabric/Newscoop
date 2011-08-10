@@ -1,4 +1,4 @@
-<div id="ob_wrapper" style="position: absolute; left: 0px; top: 0px;">
+<div id="ob_wrapper" style="position: fixed; left: 0px; top: 0px;">
 <input type="hidden" id="base_url" value="<?php echo($GLOBALS['Campsite']['SUBDIR']); ?>">
 <input type="hidden" id="language" value="<?php echo($this->gimme->language->number); ?>">
 <div id="ob_main" style="display: none;">
@@ -88,6 +88,11 @@ var omnibox = {
 			var element = this.element_list[i];
 			this.elements[element] = document.getElementById(element);
 		}
+		
+		this.elements.ob_comment_text.value = '';
+		this.elements.ob_feedback_text.value = '';
+		this.elements.ob_review_comment_captcha_code.value = '';
+		
 		var location = (String)(document.location);
 		if (location.indexOf('#') != -1) {
 			this.showHide();
