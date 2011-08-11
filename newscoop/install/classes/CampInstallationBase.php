@@ -354,7 +354,6 @@ XML;
 
         // creating preview images
         $preview = @imagecreatetruecolor(210, 130);
-        imageantialias($preview, true);
         $logoPoints = array( 159, 9,   113, 34,   86, 99,   150, 121,   203, 99,   138, 78 );
         $textColor = imagecolorallocate($preview, 191, 191, 191);
         imagefill($preview, 0, 0, imagecolorallocate($preview, 255, 255, 255));
