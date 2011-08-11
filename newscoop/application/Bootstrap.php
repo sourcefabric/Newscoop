@@ -1,5 +1,8 @@
 <?php
 
+use Newscoop\DoctrineEventDispatcherProxy,
+    Newscoop\Service;
+
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     /**
@@ -46,6 +49,24 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         ));
 
         Zend_Session::start();
+    }
+
+    protected function _initEventDispatcher()
+    {
+        require_once APPLICATION_PATH . '/../library/fabpot-event-dispatcher-782a5ef/lib/sfEventDispatcher.php';
+
+        $this->bootstrap('doctrine');
+
+        $dispatcher = new sfEventDispatcher();
+        $dispatcherProxy = new DoctrineEventDispatcherProxy($dispatcher);
+        Zend_Registry::get('doctrine')->getEntityManager()
+            ->getEventManager()
+            ->addEventSubscriber($dispatcherProxy);
+
+        DatabaseObject::setEventDispatcher($dispatcher);
+        Zend_Registry::set('eventDispatcher', $dispatcher);
+
+        return $dispatcher;
     }
 
     protected function _initPlugins()

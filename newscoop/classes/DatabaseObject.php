@@ -78,6 +78,9 @@ class DatabaseObject {
 	 */
 	private static $m_cacheEngine = null;
 
+    /** @var sfEventDispatcher */
+    protected static $eventDispatcher = null;
+
 	/**
 	 * DatabaseObject represents a row in a database table.
 	 * This class is meant to be subclassed in order to implement a
@@ -455,6 +458,8 @@ class DatabaseObject {
 			$this->m_data[$this->m_keyColumnNames[0]] =
 				$g_ado_db->Insert_ID();
 		}
+
+        self::$eventDispatcher->notify(new sfEvent($this, "{$this->m_dbTableName}.create"));
 		$this->resetCache();
 		return $success;
 	} // fn create
@@ -482,6 +487,8 @@ class DatabaseObject {
 		    $cacheObj = CampCache::singleton();
 		    $cacheObj->delete($cacheKey);
 		}
+
+        self::$eventDispatcher->notify(new sfEvent($this, "{$this->m_dbTableName}.delete", $this->m_data));
 
 		// Always set "exists" to false because if a row wasnt
 		// deleted it means it probably didnt exist in the first place.
@@ -686,6 +693,8 @@ class DatabaseObject {
 			return false;
 		}
 
+        $diff = array();
+
         $setColumns = array();
         foreach ($p_columns as $columnName => $columnValue) {
         	// Set the value only if the column name exists.
@@ -706,6 +715,7 @@ class DatabaseObject {
     	        	$setColumns[] = "`".$columnName . "`='". mysql_real_escape_string($columnValue) ."'";
     	        	if (!$p_isSql) {
     	        		$this->m_data[$columnName] = $columnValue;
+                        $diff[$columnName] = $columnValue;
     	        	}
 	        	}
         	}
@@ -729,6 +739,7 @@ class DatabaseObject {
         // Write the object to cache
         if ($success !== false) {
             $this->writeCache();
+            self::$eventDispatcher->notify(new sfEvent($this, "{$this->m_dbTableName}.update", $diff));
         }
 
 		return $success;
@@ -1063,6 +1074,17 @@ class DatabaseObject {
 
     	$unlockQuery = 'UNLOCK TABLES';
     	return $g_ado_db->Execute($unlockQuery);
+    }
+
+    /**
+     * Set event dispatcher
+     *
+     * @param sfEventDispatcher $dispatcher
+     * @return void
+     */
+    public static function setEventDispatcher(sfEventDispatcher $dispatcher)
+    {
+        self::$eventDispatcher = $dispatcher;
     }
 } // class DatabaseObject
 
