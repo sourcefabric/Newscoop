@@ -52,8 +52,9 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
     public function postPersist(LifecycleEventArgs $args)
     {
         $entityName = $this->getEntityName($args->getEntity());
-        $event = new \sfEvent($this, "{$entityName}.create");
-        $this->dispatcher->notify($event);
+        $this->dispatcher->notify(new \sfEvent($this, "{$entityName}.create", array(
+            'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
+        )));
     }
 
     /**
@@ -65,8 +66,10 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entityName = $this->getEntityName($args->getEntity());
-        $event = new \sfEvent($this, "{$entityName}.update", $args->getEntityChangeSet());
-        $this->dispatcher->notify($event);
+        $this->dispatcher->notify(new \sfEvent($this, "{$entityName}.update", array(
+            'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
+            'diff' => $args->getEntityChangeSet(),
+        )));
     }
 
     /**
@@ -78,9 +81,10 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
     public function preRemove(LifecycleEventArgs $args)
     {
         $entityName = $this->getEntityName($args->getEntity());
-        $properties = $this->getEntityProperties($args->getEntity(), $args->getEntityManager());
-        $event = new \sfEvent($this, "{$entityName}.delete", $properties);
-        $this->dispatcher->notify($event);
+        $this->dispatcher->notify(new \sfEvent($this, "{$entityName}.delete", array(
+            'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
+            'diff' => $this->getEntityProperties($args->getEntity(), $args->getEntityManager()),
+        )));
     }
 
     /**
@@ -114,5 +118,18 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
         }
 
         return $properties;
+    }
+
+    /**
+     * Get entity id.
+     *
+     * @param object $entity
+     * @param Doctrine\ORM\EntityManager $em
+     * @return mixed
+     */
+    private function getEntityId($entity, EntityManager $em)
+    {
+        $meta = $em->getClassMetadata(get_class($entity));
+        return $meta->getIdentifierValues($entity);
     }
 }

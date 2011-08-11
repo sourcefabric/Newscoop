@@ -13,7 +13,7 @@ use Doctrine\ORM\EntityRepository,
 /**
  * Base user repository
  */
-abstract class UserRepository extends EntityRepository
+class UserRepository extends EntityRepository
 {
     /** @var array */
     private static $defaults = array(

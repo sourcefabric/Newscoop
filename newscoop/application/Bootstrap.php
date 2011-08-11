@@ -55,18 +55,53 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         require_once APPLICATION_PATH . '/../library/fabpot-event-dispatcher-782a5ef/lib/sfEventDispatcher.php';
 
+        $options = $this->getOptions();
         $this->bootstrap('doctrine');
+        $doctrine = $this->getResource('doctrine');
 
         $dispatcher = new sfEventDispatcher();
         $dispatcherProxy = new DoctrineEventDispatcherProxy($dispatcher);
-        Zend_Registry::get('doctrine')->getEntityManager()
+        $doctrine->getEntityManager()
             ->getEventManager()
             ->addEventSubscriber($dispatcherProxy);
 
         DatabaseObject::setEventDispatcher($dispatcher);
+        DatabaseObject::setResourceNames($options['resourceNames']);
         Zend_Registry::set('eventDispatcher', $dispatcher);
 
         return $dispatcher;
+    }
+
+    protected function _initUserService()
+    {
+        $this->bootstrap('doctrine');
+        $doctrine = $this->getResource('doctrine');
+        $userRepository = $doctrine->getEntityManager()->getRepository('Newscoop\Entity\User');
+        $userService = new Service\User($userRepository, Zend_Auth::getInstance());
+        return $userService;
+    }
+
+    protected function _initAuditService()
+    {
+        $this->bootstrap('userService');
+        $this->bootstrap('eventDispatcher');
+
+        $options = $this->getOptions();
+
+        $httpClient = new Zend_Http_Client('http://localhost:8080/Audit/', array(
+            'maxredirects' => 0,
+            'timeout' => 30,
+        ));
+
+        $userService = $this->getResource('userService');
+        $auditService = new Service\Audit($httpClient, $userService);
+
+        $eventDispatcher = $this->getResource('eventDispatcher');
+        foreach ($options['service']['audit']['events'] as $event) {
+            $eventDispatcher->connect($event, array($auditService, 'update'));
+        }
+
+        return $auditService;
     }
 
     protected function _initPlugins()

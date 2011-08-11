@@ -3,21 +3,17 @@
  * @package Campsite
  */
 
-/**
- * Includes
- */
-require_once dirname(__FILE__) . '/../include/campsite_constants.php';
 require_once 'PEAR.php';
+require_once dirname(__FILE__) . '/../include/campsite_constants.php';
 require_once dirname(__FILE__) . '/DbObjectArray.php';
 require_once dirname(__FILE__) . '/SystemPref.php';
 require_once dirname(__FILE__) . '/CampCache.php';
 require_once dirname(__FILE__) . '/Exceptions.php';
 
-
 /**
- * @package Campsite
  */
-class DatabaseObject {
+class DatabaseObject
+{
 	/**
 	 * The name of the database table.
 	 * Redefine this in the subclass.
@@ -80,6 +76,9 @@ class DatabaseObject {
 
     /** @var sfEventDispatcher */
     protected static $eventDispatcher = null;
+
+    /** @var array */
+    protected static $resourceNames = array();
 
 	/**
 	 * DatabaseObject represents a row in a database table.
@@ -459,7 +458,10 @@ class DatabaseObject {
 				$g_ado_db->Insert_ID();
 		}
 
-        self::$eventDispatcher->notify(new sfEvent($this, "{$this->m_dbTableName}.create"));
+        self::$eventDispatcher->notify(new sfEvent($this, "{$this->getResourceName()}.create", array(
+            'id' => $this->getKey(),
+            'diff' => $this->m_data,
+        )));
 		$this->resetCache();
 		return $success;
 	} // fn create
@@ -488,7 +490,10 @@ class DatabaseObject {
 		    $cacheObj->delete($cacheKey);
 		}
 
-        self::$eventDispatcher->notify(new sfEvent($this, "{$this->m_dbTableName}.delete", $this->m_data));
+        self::$eventDispatcher->notify(new sfEvent($this, "{$this->getResourceName()}.delete", array(
+            'id' => $this->getKey(),
+            'diff' => $this->m_data,
+        )));
 
 		// Always set "exists" to false because if a row wasnt
 		// deleted it means it probably didnt exist in the first place.
@@ -636,6 +641,11 @@ class DatabaseObject {
 				}
 			}
 		}
+
+        $diff = array($p_dbColumnName => array(
+            $this->m_data[$p_dbColumnName],
+        ));
+
 		// Store the value locally.
 		if (!$p_isSql) {
 			$this->m_data[$p_dbColumnName] = $p_value;
@@ -654,6 +664,12 @@ class DatabaseObject {
 				$errorMsg = $g_ado_db->ErrorMsg();
 			}
 		}
+
+        $diff[$p_dbColumnName][] = $this->m_data[$p_dbColumnName];
+        self::$eventDispatcher->notify(new sfEvent($this, "{$this->getResourceName()}.update", array(
+            'id' => $this->getKey(),
+            'diff' => $diff,
+        )));
 
         // Write the object to cache
         if ($success !== false && $p_commit) {
@@ -714,8 +730,8 @@ class DatabaseObject {
 	        	if ($columnValue != $this->m_data[$columnName]) {
     	        	$setColumns[] = "`".$columnName . "`='". mysql_real_escape_string($columnValue) ."'";
     	        	if (!$p_isSql) {
+                        $diff[$columnName] = array($this->m_data[$columnName], $columnValue);
     	        		$this->m_data[$columnName] = $columnValue;
-                        $diff[$columnName] = $columnValue;
     	        	}
 	        	}
         	}
@@ -739,7 +755,10 @@ class DatabaseObject {
         // Write the object to cache
         if ($success !== false) {
             $this->writeCache();
-            self::$eventDispatcher->notify(new sfEvent($this, "{$this->m_dbTableName}.update", $diff));
+            self::$eventDispatcher->notify(new sfEvent($this, "{$this->getResourceName()}.update", array(
+                'id' => $this->getKey(),
+                'diff' => $diff,
+            )));
         }
 
 		return $success;
@@ -1077,7 +1096,7 @@ class DatabaseObject {
     }
 
     /**
-     * Set event dispatcher
+     * Set event dispatcher.
      *
      * @param sfEventDispatcher $dispatcher
      * @return void
@@ -1086,6 +1105,25 @@ class DatabaseObject {
     {
         self::$eventDispatcher = $dispatcher;
     }
-} // class DatabaseObject
 
-?>
+    /**
+     * Set resource names.
+     *
+     * @param array $names
+     * @return void
+     */
+    public static function setResourceNames(array $names)
+    {
+        self::$resourceNames = $names;
+    }
+
+    /**
+     * Get resource name.
+     *
+     * @return string
+     */
+    protected function getResourceName()
+    {
+        return isset(self::$resourceNames[$this->m_dbTableName]) ? self::$resourceNames[$this->m_dbTableName] : $this->m_dbTableName;
+    }
+}

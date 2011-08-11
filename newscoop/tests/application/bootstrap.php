@@ -16,6 +16,7 @@ set_include_path(implode(PATH_SEPARATOR, array(
     realpath(dirname(__FILE__) . '/../include'),
     get_include_path(),
 )));
+
 if (!is_file('Zend/Application.php')) {
 	// include libzend if we dont have zend_application
 	set_include_path(implode(PATH_SEPARATOR, array(
@@ -23,6 +24,7 @@ if (!is_file('Zend/Application.php')) {
 		get_include_path(),
 	)));
 }
+
 require_once 'Zend/Application.php';
 
 require_once dirname(__FILE__) . '/../RepositoryTestCase.php';

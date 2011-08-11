@@ -52,6 +52,8 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
         $config->setMetadataCacheImpl($cache);
         $config->setQueryCacheImpl($cache);
 
+        require_once APPLICATION_PATH . '/../conf/database_conf.php';
+
         // set database
         $database = array(
             'driver' => 'pdo_mysql',
