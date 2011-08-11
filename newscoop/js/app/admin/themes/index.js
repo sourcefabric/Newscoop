@@ -25,7 +25,7 @@ newscoopDatatables =
 			{
 				$( this ).tmpl( '#datatableTmpl_'+idx, data );
 			}
-			catch( e ){ if( console ) console.log( e ); }
+			catch( e ){ if( typeof console != 'undefined' ) console.log( e ); }
 		});
 		
 		$('.themesListTabs .imageItem', row ).each( function( i, e )
