@@ -124,7 +124,8 @@ function replyComment() {
 			"language": "<?php echo $f_language_selected; ?>",
 			"parent": "<?php echo $f_comment_id; ?>",
 			"subject": $('#comment_subject').val(),
-			"message": $('#comment_message').val()
+			"message": $('#comment_message').val(),
+                        "<?php echo SecurityToken::KeyParameter();?>": "<?php echo SecurityToken::ValueParameter();?>"
 		};
 
 	    var call_url = '../../comment/reply/format/json';
@@ -145,7 +146,7 @@ function loadComment() {
 		"comment": "<?php echo $f_comment_id; ?>"
 	};
 
-    var call_url = '../../comment/reply/format/json';
+    var call_url = '../../comment/list/format/json';
 
 	var res_handle = function(data) {
 		template = $('#comment-reply-to').html();
