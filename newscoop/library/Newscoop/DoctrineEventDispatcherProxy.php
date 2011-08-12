@@ -4,7 +4,6 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop;
 
 use Doctrine\Common\EventSubscriber,
@@ -54,6 +53,7 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
         $entityName = $this->getEntityName($args->getEntity());
         $this->dispatcher->notify(new \sfEvent($this, "{$entityName}.create", array(
             'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
+            'title' => $this->getEntityTitle($args->getEntity()),
         )));
     }
 
@@ -69,6 +69,7 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
         $this->dispatcher->notify(new \sfEvent($this, "{$entityName}.update", array(
             'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
             'diff' => $args->getEntityChangeSet(),
+            'title' => $this->getEntityTitle($args->getEntity()),
         )));
     }
 
@@ -84,6 +85,7 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
         $this->dispatcher->notify(new \sfEvent($this, "{$entityName}.delete", array(
             'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
             'diff' => $this->getEntityProperties($args->getEntity(), $args->getEntityManager()),
+            'title' => $this->getEntityTitle($args->getEntity()),
         )));
     }
 
@@ -131,5 +133,23 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
     {
         $meta = $em->getClassMetadata(get_class($entity));
         return $meta->getIdentifierValues($entity);
+    }
+
+    /**
+     * Get entity title.
+     *
+     * @param object $entity
+     * @return string
+     */
+    private function getEntityTitle($entity)
+    {
+        static $nameMethods = array('getTitle', 'getName');
+        foreach ($nameMethods as $method) {
+            if (method_exists($entity, $method)) {
+                return $entity->$method();
+            }
+        }
+
+        return '';
     }
 }

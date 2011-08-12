@@ -461,6 +461,7 @@ class DatabaseObject
         self::$eventDispatcher->notify(new sfEvent($this, "{$this->getResourceName()}.create", array(
             'id' => $this->getKey(),
             'diff' => $this->m_data,
+            'title' => method_exists($this, 'getName') ? $this->getName() : '',
         )));
 		$this->resetCache();
 		return $success;
@@ -493,6 +494,7 @@ class DatabaseObject
         self::$eventDispatcher->notify(new sfEvent($this, "{$this->getResourceName()}.delete", array(
             'id' => $this->getKey(),
             'diff' => $this->m_data,
+            'title' => method_exists($this, 'getName') ? $this->getName() : '',
         )));
 
 		// Always set "exists" to false because if a row wasnt
@@ -669,6 +671,7 @@ class DatabaseObject
         self::$eventDispatcher->notify(new sfEvent($this, "{$this->getResourceName()}.update", array(
             'id' => $this->getKey(),
             'diff' => $diff,
+            'title' => method_exists($this, 'getName') ? $this->getName() : '',
         )));
 
         // Write the object to cache
@@ -758,6 +761,7 @@ class DatabaseObject
             self::$eventDispatcher->notify(new sfEvent($this, "{$this->getResourceName()}.update", array(
                 'id' => $this->getKey(),
                 'diff' => $diff,
+                'title' => method_exists($this, 'getName') ? $this->getName() : '',
             )));
         }
 
