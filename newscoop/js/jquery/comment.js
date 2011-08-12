@@ -22,7 +22,8 @@ var datatableCallback = {
     row: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
         $(nRow)
             .addClass('status_' + statusMap[aData.comment.status])
-            .tmpl('#comment-tmpl', aData);
+            .tmpl('#comment-tmpl', aData)
+            .find("input."+ statusMap[aData.comment.status]).attr("checked","checked");
         return nRow;
     },
     draw: function () {
@@ -84,6 +85,8 @@ var datatableCallback = {
     }
 };
 $(function () {
+	
+	
     //$('.tabs').tabs();
     //$('.tabs').tabs('select', '#tabs-1');    
     var commentFilterTriggerCount = 0;
@@ -158,7 +161,7 @@ $(function () {
         if (status == 'deleted' && !confirm(putGS('You are about to permanently delete a comment.') + '\n' + putGS('Are you sure you want to do it?'))) {
             return false;
         }
-
+        
         $.ajax({
             type: 'POST',
             url: 'comment/set-status/format/json',
@@ -248,7 +251,6 @@ $(function () {
             type: 'GET',
             url: $(this).attr('href'),
             success: function (data) {
-                data = $.parseJSON(data);
                 var content = '<h3><a href="#">' + $(that).html() + '</a></h3>';
                 for (i in data) {
                     content += '<h4>' + i + '</h4>';
