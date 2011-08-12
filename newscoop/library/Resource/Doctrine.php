@@ -52,7 +52,10 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
         $config->setMetadataCacheImpl($cache);
         $config->setQueryCacheImpl($cache);
 
-        require_once APPLICATION_PATH . '/../conf/database_conf.php';
+        $config_file = APPLICATION_PATH . '/../conf/database_conf.php';
+        if (empty($Campsite) && file_exists($config_file)) {
+            require_once $config_file;
+        }
 
         // set database
         $database = array(

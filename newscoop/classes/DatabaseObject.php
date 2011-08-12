@@ -458,11 +458,11 @@ class DatabaseObject
 				$g_ado_db->Insert_ID();
 		}
 
-        self::$eventDispatcher->notify(new sfEvent($this, "{$this->getResourceName()}.create", array(
+        self::dispatchEvent("{$this->getResourceName()}.create", $this, array(
             'id' => $this->getKey(),
             'diff' => $this->m_data,
             'title' => method_exists($this, 'getName') ? $this->getName() : '',
-        )));
+        ));
 		$this->resetCache();
 		return $success;
 	} // fn create
@@ -491,11 +491,11 @@ class DatabaseObject
 		    $cacheObj->delete($cacheKey);
 		}
 
-        self::$eventDispatcher->notify(new sfEvent($this, "{$this->getResourceName()}.delete", array(
+        self::dispatchEvent("{$this->getResourceName()}.delete", $this, array(
             'id' => $this->getKey(),
             'diff' => $this->m_data,
             'title' => method_exists($this, 'getName') ? $this->getName() : '',
-        )));
+        ));
 
 		// Always set "exists" to false because if a row wasnt
 		// deleted it means it probably didnt exist in the first place.
@@ -668,11 +668,11 @@ class DatabaseObject
 		}
 
         $diff[$p_dbColumnName][] = $this->m_data[$p_dbColumnName];
-        self::$eventDispatcher->notify(new sfEvent($this, "{$this->getResourceName()}.update", array(
+        self::dispatchEvent("{$this->getResourceName()}.update", $this, array(
             'id' => $this->getKey(),
             'diff' => $diff,
             'title' => method_exists($this, 'getName') ? $this->getName() : '',
-        )));
+        ));
 
         // Write the object to cache
         if ($success !== false && $p_commit) {
@@ -758,11 +758,11 @@ class DatabaseObject
         // Write the object to cache
         if ($success !== false) {
             $this->writeCache();
-            self::$eventDispatcher->notify(new sfEvent($this, "{$this->getResourceName()}.update", array(
+            self::dispatchEvent("{$this->getResourceName()}.update", $this, array(
                 'id' => $this->getKey(),
                 'diff' => $diff,
                 'title' => method_exists($this, 'getName') ? $this->getName() : '',
-            )));
+            ));
         }
 
 		return $success;
@@ -1108,6 +1108,22 @@ class DatabaseObject
     public static function setEventDispatcher(sfEventDispatcher $dispatcher)
     {
         self::$eventDispatcher = $dispatcher;
+    }
+
+    /**
+     * Dispatch event.
+     *
+     * @param string $event
+     * @param string $subject
+     * @param array $params
+     */
+    protected static function dispatchEvent($event, $subject, $params = array())
+    {
+        if (empty(self::$eventDispatcher)) {
+            return;
+        }
+
+        self::$eventDispatcher->notify(new sfEvent($subject, $event, $params));
     }
 
     /**
