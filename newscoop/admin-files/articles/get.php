@@ -36,6 +36,11 @@ $articleData = $articleObj->getArticleData();
 // Get article type fields.
 $dbColumns = $articleData->getUserDefinedColumns(false, true);
 foreach ($dbColumns as $dbColumn) {
-  $articleInfo[htmlspecialchars($dbColumn->getDisplayName(0))] = $articleData->getProperty($dbColumn->getName());
+    if ($dbColumn->getType() == ArticleTypeField::TYPE_SWITCH) {
+        $value = $articleData->getProperty($dbColumn->getName()) ? getGS('On') : getGS('Off');
+        $articleInfo[htmlspecialchars($dbColumn->getDisplayName(0))] = $value;
+    } else {
+        $articleInfo[htmlspecialchars($dbColumn->getDisplayName(0))] = $articleData->getProperty($dbColumn->getName());
+    }
 }
 echo $this->view->json($articleInfo);
