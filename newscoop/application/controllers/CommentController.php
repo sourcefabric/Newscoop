@@ -12,6 +12,7 @@
 use Newscoop\Entity\Comment;
 
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
+require_once($GLOBALS['g_campsiteDir'].'/include/get_ip.php');
  
 class CommentController extends Zend_Controller_Action
 {
@@ -34,9 +35,19 @@ class CommentController extends Zend_Controller_Action
 		$article = new Article($parameters['f_language'], $parameters['f_article_number']);
 		$publication = new Publication($article->getPublicationId());
 		
-		if (!$auth->getIdentity()) {
+		if ($auth->getIdentity()) {
+			$acceptanceRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Comment\Acceptance');
+			$user = new User($auth->getIdentity());
+			
+			$userIp = getIp();
+			if ($acceptanceRepository->checkParamsBanned($user->m_data['Name'], $user->m_data['EMail'], $userIp, $article->getPublicationId())) {
+				$errors[] = getGS('You have been banned from writing comments.');
+			}
+		}
+		else {
 			$errors[] = getGS('You are not logged in.');
 		}
+		
 		if (!array_key_exists('f_comment_subject', $parameters) || empty($parameters['f_comment_subject'])) {
 			$errors[] = getGS('The comment subject was not filled in.');
 		}
