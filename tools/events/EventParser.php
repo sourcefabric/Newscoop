@@ -14,10 +14,10 @@ class EventParser_Parser {
      * @param string $p_file file name of the wxr file
      * @return array
      */
-    function parse($p_file) {
+    function parse($p_file, $p_categories) {
 
         $parser = new ED_Parser_SimpleXML;
-        $result = $parser->parse($p_file);
+        $result = $parser->parse($p_file, $p_categories);
 
         return $result;
     } // fn parse
@@ -34,8 +34,11 @@ class ED_Parser_SimpleXML {
      * @param string $p_file file name of the eventdata file
      * @return array
      */
-    function parse($p_file) {
+    function parse($p_file, $p_categories) {
         //$authors = $posts = $categories = $categories_by_slug = $categories_slugs_by_name = $tags = $terms = array();
+
+		$events = array();
+		$all_cats = array();
 
         libxml_clear_errors();
         $internal_errors = libxml_use_internal_errors(true);
@@ -70,37 +73,70 @@ class ED_Parser_SimpleXML {
 
 			// one event is object of 72 (simple) properties, most of them are empty
 			foreach ($entry_set as $event) {
+				$event_info = array();
+
+
 				// Ids
 				// number, event id, shall be unique
-				$eveid = $event->eveid;
+				$x_eveid = '' . $event->eveid;
+				if (empty($x_eveid)) {
+					$x_eveid = null;
+				}
+				$event_info['event_id'] = $x_eveid;
+
 				// number, turnus id, shall be shared among events of particular repeated actions
-				$trnid = $event->trnid;
+				$x_trnid = '' . $event->trnid;
+				if (empty($x_trnid)) {
+					$x_trnid = null;
+				}
+				$event_info['turnus_id'] = $x_trnid;
+
 				// number, town id
-				$loctwn = $event->loctwn;
+				$x_loctwn = $event->loctwn;
+
 				// number, location id
-				$locid = $event->locid;
+				$x_locid = $event->locid;
+				if (empty($x_locid)) {
+					$x_locid = null;
+				}
+				$event_info['location_id'] = $x_locid;
+
 				// string, location key
-				$lockey = $event->lockey;
+				$x_lockey = $event->lockey;
 				// string, some event category group
-				$catgrp = $event->catgrp;
+				$x_catgrp = $event->catgrp;
 
 
 				// Categories
 				// * main type fields
 				// event category
-				$catnam = $event->catnam;
+				$x_catnam = strtolower('' . $event->catnam);
+				$event_info['event_type_id'] = 0;
+				$event_info['event_type'] = 'miscellaneous';
+				foreach ($p_categories as $one_category_id => $one_category) {
+					if (array_key_exists($x_catnam, $one_category['nicks'])) {
+						$event_info['event_type_id'] = $one_category_id;
+						$event_info['event_type'] = $one_category['name'];
+						break;
+					}
+				}
+
+				if (!array_key_exists($x_catnam, $all_cats)) {
+					$all_cats[$x_catnam] = true;
+				}
+
 				// event subcategory
-				$catsub = $event->catsub;
+				$x_catsub = $event->catsub;
 				// * minor type fields
 				// location type (club, museum, ...)
-				$loctyp = $event->loctyp;
+				$x_loctyp = $event->loctyp;
 				// turnus category
-				$trncao = $event->trncao;
+				$x_trncao = $event->trncao;
 				// * additional usually empty category info
 				// minimal age of turnus visitors
-				$trnage = $event->trnage;
+				$x_trnage = $event->trnage;
 				// turnus language
-				$trnlan = $event->trnlan;
+				$x_trnlan = $event->trnlan;
 
 				// Names
 				// * main display provider name
@@ -210,6 +246,9 @@ class ED_Parser_SimpleXML {
 
 
 		}
+
+		echo "\ncats:\n";
+		var_dump($all_cats);
 
 //exit(0);
 
@@ -401,8 +440,33 @@ class ED_Parser_SimpleXML {
 } // class WXR_Parser_SimpleXML
 
 
+$known_categories = array(
+	1 => array('name' => 'theater',
+		       'nicks' => array('theater'),
+		       ),
+	2 => array('name' => 'gallery',
+			   'nicks' => array('gallery'),
+			   ),
+	3 => array('name' => 'exhibition',
+			   'nicks' => array('exhibition', 'ausstellung', 'ausstellungen'),
+			   ),
+	4 => array('name' => 'party',
+			   'nicks' => array('party'),
+			   ),
+	5 => array('name' => 'music',
+			   'nicks' => array('music'),
+			   ),
+	6 => array('name' => 'concert',
+			   'nicks' => array('concert', 'konzerte'),
+			   ),
+	7 => array('name' => 'cinema',
+			   'nicks' => array('cinema'),
+			   ),
+);
+
+
 $fname = 'eventexport.xml';
 $ed_parser = new EventParser_Parser();
-$ed_parser->parse($fname);
+$ed_parser->parse($fname, $known_categories);
 
 
