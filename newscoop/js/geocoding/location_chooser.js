@@ -2375,6 +2375,8 @@ this.got_load_data = function (received_obj)
 {
     this.select_control.destroy();
 
+    this.set_save_state(false);
+
     this.edited_point = 0;
     this.poi_rank_out = 0;
 
@@ -2675,7 +2677,7 @@ this.check_points_filled = function()
     }
 
     return filled;
-}
+};
 
 // saving data, on the main 'save' user action; do ajax here
 this.map_save_all = function(script_dir, force_save)
@@ -2683,8 +2685,6 @@ this.map_save_all = function(script_dir, force_save)
     if (!this.something_to_save) {return;}
 
     var geo_obj = this;
-
-    this.set_save_state(false);
 
     var cur_marker = null;
 
