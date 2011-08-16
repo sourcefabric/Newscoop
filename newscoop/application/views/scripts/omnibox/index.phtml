@@ -35,7 +35,13 @@
 			<input type="button" value="next" onClick="omnibox.showReview();">
 		</div>
 	<?php } else { ?>
-		not on article page
+		not on article page<br>
+		<div id="ob_feedback_text_container">
+			<input type="hidden" id="ob_feedback_publication_id" value="<?php echo($this->gimme->publication->identifier); ?>">
+			<textarea name="ob_feedback_text" id="ob_feedback_text"></textarea><br>
+			-- here comes file upload<br>
+			<input type="button" value="next" onClick="omnibox.showReview();">
+		</div>
 	<?php } ?>
 	
 	</div>
@@ -78,6 +84,11 @@
 <script type="text/javascript" src="<?php echo($GLOBALS['Campsite']['SUBDIR']); ?>/js/omnibox.js"></script>
 <script>
 omnibox.initialize();
+<?php if ($this->gimme->article->number) { ?>
+	omnibox.setType('comment');
+<?php } else { ?>
+	omnibox.setType('feedback');
+<?php } ?>
 omnibox.setBaseUrl('<?php echo($GLOBALS['Campsite']['SUBDIR']); ?>');
 omnibox.setLanguage('<?php echo($this->gimme->language->number); ?>');
 </script>

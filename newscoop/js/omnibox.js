@@ -24,11 +24,28 @@ var omnibox = {
 		}
 		*/
 	},
+	setType: function(type) {
+		this.type = type;
+	},
 	setBaseUrl: function(baseUrl) {
 		this.baseUrl = baseUrl;
 	},
 	setLanguage: function(language) {
 		this.language = language;
+	},
+	showHideElement: function(elementName, action) {
+		if (action == 'show') var display = 'inline';
+		else var display = 'none';
+		if (typeof(elementName) == 'object') {
+			var elementList = elementName;
+			for (var i in elementList) {
+				var elementName = elementList[i];
+				if (this.elements[elementName]) this.elements[elementName].style.display = display;
+			}
+		}
+		else {
+			if (this.elements[elementName]) this.elements[elementName].style.display = display;
+		}
 	},
 	showHide: function() {
 		if (this.status == false) {
@@ -53,47 +70,43 @@ var omnibox = {
 		this.showInput();
 	},
 	showInput: function() {
-		this.elements.ob_review_comment.style.display = 'none';
-		this.elements.ob_review_feedback.style.display = 'none';
-		this.elements.ob_input.style.display = 'inline';
-		this.elements.ob_review_captcha.style.display = 'none';
+		this.showHideElement(['ob_review_comment', 'ob_review_feedback', 'ob_review_captcha'], 'hide');
+		this.showHideElement('ob_input', 'show');
 		
 		if (this.type == 'comment') {
-			this.elements.ob_comment_text_container.style.display = 'inline';
-			this.elements.ob_feedback_text_container.style.display = 'none';
+			this.showHideElement('ob_feedback_text_container', 'hide');
+			this.showHideElement('ob_comment_text_container', 'show');
 		}
 		if (this.type == 'feedback') {
-			this.elements.ob_comment_text_container.style.display = 'none';
-			this.elements.ob_feedback_text_container.style.display = 'inline';
+			this.showHideElement('ob_comment_text_container', 'hide');
+			this.showHideElement('ob_feedback_text_container', 'show');
 		}
 	},
 	showReview: function() {
 		var random_temp = Math.random();
 		this.elements.ob_review_captcha_image.src = this.baseUrl + '/include/captcha/image.php?x=' + random_temp;
 		
-		this.elements.ob_input.style.display = 'none';
-		this.elements.ob_review_captcha.style.display = 'inline';
+		this.showHideElement('ob_input', 'hide');
+		this.showHideElement('ob_review_captcha', 'show');
 		
 		if (this.type == 'comment') {
 			this.elements.ob_review_comment_text.innerHTML = this.elements.ob_comment_text.value;
 			
-			this.elements.ob_review_comment.style.display = 'inline';
-			this.elements.ob_review_feedback.style.display = 'none';
+			this.showHideElement('ob_review_comment', 'show');
+			this.showHideElement('ob_review_feedback', 'hide');
 		}
 		if (this.type == 'feedback') {
 			this.elements.ob_review_feedback_text.innerHTML = this.elements.ob_feedback_text.value;
 			
-			this.elements.ob_review_comment.style.display = 'none';
-			this.elements.ob_review_feedback.style.display = 'inline';
+			this.showHideElement('ob_review_comment', 'hide');
+			this.showHideElement('ob_review_feedback', 'show');
 		}
 	},
 	showMessage: function() {
-		this.elements.ob_message.style.display = 'inline';
-		this.elements.ob_message_close.style.display = 'inline';
+		this.showHideElement(['ob_message', 'ob_message_close'], 'show');
 	},
 	hideMessage: function() {
-		this.elements.ob_message.style.display = 'none';
-		this.elements.ob_message_close.style.display = 'none';
+		this.showHideElement(['ob_message', 'ob_message_close'], 'hide');
 	},
 	setMessage: function(message) {
 		this.elements.ob_message.innerHTML = message;
