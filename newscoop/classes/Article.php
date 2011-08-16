@@ -2074,8 +2074,16 @@ class Article extends DatabaseObject {
         //(can have multiple with the switch implementation).
         for ($i=0; $i<count($articles)-1; $i++) {
 
-            $date_article1 = new DateTime($articles[$i]->getPublishDate());
-            $date_article2 = new DateTime($articles[$i+1]->getPublishDate());
+            $date_1 = $articles[$i]->getPublishDate();
+            $date_1 = explode(" ", $date_1);
+            $date_1 = $date_1[0];
+
+            $date_2 = $articles[$i+1]->getPublishDate();
+            $date_2 = explode(" ", $date_2);
+            $date_2 = $date_2[0];
+
+            $date_article1 = new DateTime($date_1);
+            $date_article2 = new DateTime($date_2);
 
             if($date_article1 < $date_article2) {
                 $filtered[] = $articles[$i];
