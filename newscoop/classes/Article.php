@@ -2041,6 +2041,51 @@ class Article extends DatabaseObject {
         return $languages;
     } // fn GetAllLanguages
 
+    public static function GetArticlesOfTheDay($p_start_date=null, $p_end_date=null, $p_publication_id=null, $p_language_id=null)
+    {
+        global $g_ado_db;
+
+        $start_date = '2010-12-01';
+        $end_date = '2010-12-30';
+
+        //TODO: this function shouldn't have to rely on a custom switch in the database. (FArticle_Of_The_Day)
+        //wait until Newscoop has a better architecture.
+        $queryStr = "SELECT *
+            FROM Articles
+            WHERE Articles.IdPublication = '$p_publication_id'
+                    AND Articles.IdLanguage = '$p_language_id'
+                    AND Articles.Published = 'Y'
+                    AND Articles.Number IN ( SELECT NrArticle FROM `Xnews` WHERE FArticle_Of_The_Day = '1' AND IdLanguage = '$p_language_id' )
+                    AND DATE(Articles.PublishDate) >= '$start_date'
+                    AND DATE(Articles.PublishDate) < '$end_date'
+                    AND (Articles.Type = 'news' )
+            ORDER BY Articles.PublishDate asc,
+                    Articles.time_updated asc";
+
+        $articles = DbObjectArray::Create('Article', $queryStr);
+
+        //return an empty array if there are no articles.
+        if (count($articles) == 0) {
+            return $articles;
+        }
+
+        $filtered = array();
+        //need to perform parsing of data, make sure days only have 1 article of the day
+        //(can have multiple with the switch implementation).
+        for ($i=0; $i<count($articles)-1; $i++) {
+
+            $date_article1 = new DateTime($articles[$i]->getPublishDate());
+            $date_article2 = new DateTime($articles[$i+1]->getPublishDate());
+
+            if($date_article1 < $date_article2) {
+                $filtered[] = $articles[$i];
+            }
+        }
+        //because of how sorted in DB last article in list will always be a valid article of the day.
+        $filtered[] = $articles[count($articles)-1];
+
+        return $filtered;
+    }
 
     /**
      * Get a list of articles.  You can be as specific or as general as you

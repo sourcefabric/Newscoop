@@ -1,0 +1,25 @@
+<div id="wobs_calendar"></div>
+
+<script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/jquery.wobscalendar.js'); ?>"></script>
+
+<script>
+
+function getArticlesOfTheDay( start, end, callback )
+{
+    $.post("<?php echo $this->baseUrl('/articleoftheday/article-of-the-day'); ?>",
+    	{"format": "json", "start": start, "end": end,
+    	    "publication_id": "<?php echo($this->gimme->publication->identifier); ?>",
+    	    "language_id": "<?php echo($this->gimme->language->number); ?>"
+        },
+    	function(data){
+        	callback(data.articles);
+    	},
+    	"json"
+    );
+}
+
+$("#wobs_calendar").wobscalendar({
+	name: "Cool Calendar",
+	articles: getArticlesOfTheDay
+});
+</script>
