@@ -33,13 +33,13 @@ class Feedback
     private $user;
     
     /**
-     * @column
+     * @column(length=2048)
      * @var text
      */
     private $message;
     
     /**
-     * @column(length=256)
+     * @column(length=128)
      * @var string
      */
     private $url;
@@ -64,7 +64,7 @@ class Feedback
      */
     public function setId($p_id)
     {
-        return $this->id;
+        $this->id = $p_id;
     }
 
     /**
@@ -78,7 +78,7 @@ class Feedback
     }
 
     /**
-     * Set timecreated
+     * Set time created
      *
      * @param DateTime $p_datetime
      * @return Newscoop\Entity\Feedback
@@ -114,7 +114,7 @@ class Feedback
     }
 
     /**
-     * Get creation time.
+     * Get update time.
      *
      * @return DateTime
      */
