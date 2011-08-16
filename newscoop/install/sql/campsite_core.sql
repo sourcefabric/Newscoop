@@ -1940,6 +1940,31 @@ INSERT INTO `acl_rule` VALUES (1,'allow',1,'article','add'),(2,'allow',1,'audioc
 UNLOCK TABLES;
 
 --
+-- Table structure for table `feedback`
+--
+
+CREATE TABLE `feedback` (
+   `id` int(11) not null auto_increment,
+   `user_id` int(11),
+   `message` varchar(2048) not null,
+   `url` varchar(128) not null,
+   `time_created` datetime not null,
+   `time_updated` datetime not null,
+   PRIMARY KEY (`id`),
+   KEY `user` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `feedback`
+--
+
+LOCK TABLES `feedback` WRITE;
+/*!40000 ALTER TABLE `feedback` DISABLE KEYS */;
+/*!40000 ALTER TABLE `feedback` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `comment`
 --
 
