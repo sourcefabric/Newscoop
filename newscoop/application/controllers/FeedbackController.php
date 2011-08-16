@@ -9,7 +9,7 @@
  * Feedback controller
  */
  
-//use Newscoop\Entity\Feedback;
+use Newscoop\Entity\Feedback, Newscoop\Entity\User\Subscriber;
 
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
  
@@ -25,47 +25,41 @@ class FeedbackController extends Zend_Controller_Action
 		global $_SERVER;
 		
 		$this->_helper->layout->disableLayout();
-		$this->view->params = $this->getRequest()->getParams();
+		$parameters = $this->getRequest()->getParams();
 		
 		$errors = array();
 		
 		$auth = Zend_Auth::getInstance();
 		
-		$publication = new Publication($this->view->params['f_publication_id']);
+		$publication = new Publication($parameters['f_publication_id']);
 		
 		if (!$auth->getIdentity()) {
 			$errors[] = getGS('You are not logged in.');
 		}
-		if (!array_key_exists('f_feedback_content', $this->view->params) || empty($this->view->params['f_feedback_content'])) {
+		if (!array_key_exists('f_feedback_content', $parameters) || empty($parameters['f_feedback_content'])) {
 			$errors[] = getGS('The feedback content was not filled in.');
 		}
 		
 		if ($publication->isCaptchaEnabled()) {
-			if (!PhpCaptcha::Validate($this->view->params['f_captcha'], true)) {
+			if (!PhpCaptcha::Validate($parameters['f_captcha'], true)) {
 				$errors[] = getGS('The code you entered is not the same with the one shown in the image.');
 			}
 		}
 		
 		if (empty($errors)) {
-			/*
-			$commentRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
-			$comment = new Comment();
+			$feedbackRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Feedback');
+			$feedback = new Feedback();
+			$subscriber = $auth->getIdentity();
 			
 			$values = array(
-				'user' => $auth->getIdentity(),
-				'name' => $this->view->params['f_comment_nickname'],
-				'subject' => $this->view->params['f_comment_subject'],
-				'message' => $this->view->params['f_comment_content'],
-				'language' => $this->view->params['f_language'],
-				'thread' => $this->view->params['f_article_number'],
-				'ip' => $_SERVER['REMOTE_ADDR'],
-				'status' => 'approved',
+				'subscriber' => $subscriber,
+				'message' => $parameters['f_feedback_content'],
+				'url' => $parameters['f_feedback_url'],
 				'time_created' => new DateTime()
 			);
 			
-			$commentRepository->save($comment, $values);
-			$commentRepository->flush();
-			*/
+			$feedbackRepository->save($feedback, $values);
+			$feedbackRepository->flush();
 			
 			$this->view->response = getGS('Your message is sent.');
 		}

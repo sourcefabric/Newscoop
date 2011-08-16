@@ -154,6 +154,7 @@ var omnibox = {
 		};
 		
 		$.post(this.baseUrl + '/feedback/save/?format=json', data, function(data) {
+			console.log(data);
 			data = $.parseJSON(data);
 			console.log(data);
 			

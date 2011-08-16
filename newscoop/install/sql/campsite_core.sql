@@ -1945,13 +1945,13 @@ UNLOCK TABLES;
 
 CREATE TABLE `feedback` (
    `id` int(11) not null auto_increment,
-   `user_id` int(11),
+   `subscriber_id` int(11),
    `message` varchar(2048) not null,
    `url` varchar(128) not null,
    `time_created` datetime not null,
    `time_updated` datetime not null,
    PRIMARY KEY (`id`),
-   KEY `user` (`user_id`)
+   KEY `subscriber` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
