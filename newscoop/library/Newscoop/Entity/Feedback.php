@@ -27,7 +27,7 @@ class Feedback
     
     /**
      * @manyToOne(targetEntity="Newscoop\Entity\User\Subscriber")
-     * @joinColumn(name="subscriber_id", referencedColumnName="id")
+     * @joinColumn(name="subscriber_id", referencedColumnName="Id")
      * @var Newscoop\Entity\User\Subscriber
      */
     private $subscriber;
