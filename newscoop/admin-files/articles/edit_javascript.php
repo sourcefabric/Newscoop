@@ -108,14 +108,40 @@ var toggleComments = function() {
 // init
 toggleComments();
 
+/**
+ * Telling to the Tinymce that the current state is the correct one
+ */
+cleanTextContents = function()
+{
+    var editor_rank = 0;
+    while (true) {
+        var editor_obj = tinyMCE.get(editor_rank);
+        if (!editor_obj) {
+            break;
+        }
+		editor_obj.isNotDirty = true;
+        editor_rank += 1;
+    }
+};
+
+/**
+ * Tracking save problems is used at checking un/saved state of article
+ */
+window.save_had_problems = false;
+window.ajax_had_problems = false;
+
 // main form submit
 $('form#article-main').submit(function() {
 
+	window.save_had_problems = false;
     var form = $(this);
 
-    if (!form.hasClass('changed') && !tinyMCE.activeEditor.isDirty()) {
+    if (!articleChanged()) {
         flashMessage('<?php putGS('Article saved.'); ?>');
     } else {
+		// tinymce should know that the current state is the correct one
+		cleanTextContents();
+
     	 // ping for connection
         callServer('ping', [], function(json) {
             $.ajax({
@@ -127,6 +153,7 @@ $('form#article-main').submit(function() {
                     toggleComments();
                 },
                 error: function (rq, status, error) {
+					window.save_had_problems = true;
                     if (status == 0 || status == -1) {
                         flashMessage('<?php putGS('Unable to reach Newscoop. Please check your internet connection.'); ?>', 'error');
                     }
@@ -273,6 +300,26 @@ function editorsChanged()
  * Check for unsaved changes in main/boxes forms
  * @return bool
  */
+function articleChanged()
+{
+	if (window.save_had_problems || window.ajax_had_problems) {
+		return true;
+	}
+
+    if ((!editorsChanged()) && ($('form.changed').size() == 0)) {
+		return false;
+	}
+
+	return true;
+};
+
+window.article_confirm_question = '<?php putGS('Your work has not been saved. Do you want to continue and lose your changes?'); ?>';
+
+/**
+ * Check for unsaved changes in main/boxes forms
+ * Asks for confirmations too.
+ * @return bool
+ */
 function checkChanged()
 {
     if( $("#f_action_workflow").val() == 'N' ) {
@@ -284,9 +331,46 @@ function checkChanged()
             }
         ?>
     }
-    if ((!editorsChanged()) && ($('form.changed').size() == 0)) {
+    if (!articleChanged()) {
         return true; // continue
     }
-    return confirm('<?php putGS('Your work has not been saved. Do you want to continue and lose your changes?'); ?>');
+    return confirm(window.article_confirm_question);
 }
+
+/**
+ * Check for unsaved changes in main/boxes forms
+ * Warn if leaving the page without saving it.
+ */
+$(document).ready(function() {
+    window.onbeforeunload = function ()
+    {
+        if (articleChanged())
+        {
+            return window.article_confirm_question;
+        }
+    };
+    if (window.opera) {
+        $('.breadcrumbs').click(function() {
+            if (articleChanged()) {
+                return confirm(window.article_confirm_question);
+            }
+            return true;
+        });
+
+        var leave_links = ['/admin', '/admin/auth/logout', '/admin/application/help'];
+        var leave_links_length = leave_links.length;
+
+        for (var lind = 0; lind < leave_links_length; lind++) {
+            var one_leaf = leave_links[lind];
+
+            $('a[href$="' + one_leaf + '"]').click(function() {
+                if (articleChanged()) {
+                    return confirm(window.article_confirm_question);
+                }
+                return true;
+            });
+        }
+    }
+});
+
 </script>

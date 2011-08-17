@@ -322,6 +322,7 @@ function callServer(p_callback, p_args, p_handle, p_direct)
 		'data': use_data,
         'dataType': 'json',
         'success': function(json) {
+			window.ajax_had_problems = false;
             flash.fadeOut();
 
             if (json != undefined && json.error_code != undefined) {
@@ -334,6 +335,7 @@ function callServer(p_callback, p_args, p_handle, p_direct)
             }
         },
         'error': function(xhr, textStatus, errorThrown) {
+			window.ajax_had_problems = true;
         	if(xhr.getResponseHeader('Not-Logged-In'))
         	{
         		flash.hide();
