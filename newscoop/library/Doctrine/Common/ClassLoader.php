@@ -162,9 +162,14 @@ class ClassLoader
         if ($this->namespace !== null && strpos($className, $this->namespace.$this->namespaceSeparator) !== 0) {
             return false;
         }
-        return file_exists(($this->includePath !== null ? $this->includePath . DIRECTORY_SEPARATOR : '')
-               . str_replace($this->namespaceSeparator, DIRECTORY_SEPARATOR, $className)
-               . $this->fileExtension);
+
+        $file = str_replace($this->namespaceSeparator, DIRECTORY_SEPARATOR, $className) . $this->fileExtension;
+
+        if ($this->includePath !== null) {
+            return file_exists($this->includePath . DIRECTORY_SEPARATOR . $file);
+        }
+
+        return self::fileExistsInIncludePath($file);
     }
 
     /**
@@ -229,12 +234,28 @@ class ClassLoader
     public static function getClassLoader($className)
     {
          foreach (spl_autoload_functions() as $loader) {
-            if (is_array($loader) && $loader[0] instanceof ClassLoader &&
-                    $loader[0]->canLoadClass($className)) {
+            if (is_array($loader)
+                && $loader[0] instanceof ClassLoader
+                && $loader[0]->canLoadClass($className)
+            ) {
                 return $loader[0];
             }
         }
 
         return null;
+    }
+    
+    /**
+     * @param string $file The file relative path.
+     * @return boolean Whether file exists in include_path.
+     */
+    public static function fileExistsInIncludePath($file)
+    {
+        foreach (explode(PATH_SEPARATOR, get_include_path()) as $dir) {
+            if (file_exists($dir . DIRECTORY_SEPARATOR . $file)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

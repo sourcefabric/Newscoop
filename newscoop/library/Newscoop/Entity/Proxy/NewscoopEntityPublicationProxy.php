@@ -15,7 +15,8 @@ class NewscoopEntityPublicationProxy extends \Newscoop\Entity\Publication implem
         $this->_entityPersister = $entityPersister;
         $this->_identifier = $identifier;
     }
-    private function _load()
+    /** @private */
+    public function __load()
     {
         if (!$this->__isInitialized__ && $this->_entityPersister) {
             $this->__isInitialized__ = true;
@@ -25,83 +26,83 @@ class NewscoopEntityPublicationProxy extends \Newscoop\Entity\Publication implem
             unset($this->_entityPersister, $this->_identifier);
         }
     }
-
+    
     
     public function getName()
     {
-        $this->_load();
+        $this->__load();
         return parent::getName();
     }
 
     public function getLanguage()
     {
-        $this->_load();
+        $this->__load();
         return parent::getLanguage();
     }
 
     public function getIssues()
     {
-        $this->_load();
+        $this->__load();
         return parent::getIssues();
     }
 
     public function getLanguages()
     {
-        $this->_load();
+        $this->__load();
         return parent::getLanguages();
     }
 
     public function getDefaultLanguage()
     {
-        $this->_load();
+        $this->__load();
         return parent::getDefaultLanguage();
     }
 
     public function getDefaultLanguageName()
     {
-        $this->_load();
+        $this->__load();
         return parent::getDefaultLanguageName();
     }
 
     public function getSections()
     {
-        $this->_load();
+        $this->__load();
         return parent::getSections();
     }
 
     public function getId()
     {
-        $this->_load();
+        $this->__load();
         return parent::getId();
     }
 
     public function setId($id)
     {
-        $this->_load();
+        $this->__load();
         return parent::setId($id);
     }
 
     public function setModeratorTo($p_moderator_to)
     {
-        $this->_load();
+        $this->__load();
         return parent::setModeratorTo($p_moderator_to);
     }
 
     public function getModeratorTo()
     {
-        $this->_load();
+        $this->__load();
         return parent::getModeratorTo();
     }
 
     public function setModeratorFrom($p_moderator_from)
     {
-        $this->_load();
+        $this->__load();
         return parent::setModeratorFrom($p_moderator_from);
     }
 
     public function getModeratorFrom()
     {
-        $this->_load();
+        $this->__load();
         return parent::getModeratorFrom();
     }
 

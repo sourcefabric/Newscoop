@@ -225,8 +225,11 @@ class ArrayCollection implements Collection
      */
     public function exists(Closure $p)
     {
-        foreach ($this->_elements as $key => $element)
-            if ($p($key, $element)) return true;
+        foreach ($this->_elements as $key => $element) {
+            if ($p($key, $element)) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -347,7 +350,7 @@ class ArrayCollection implements Collection
      */
     public function map(Closure $func)
     {
-        return new ArrayCollection(array_map($func, $this->_elements));
+        return new static(array_map($func, $this->_elements));
     }
 
     /**
@@ -359,7 +362,7 @@ class ArrayCollection implements Collection
      */
     public function filter(Closure $p)
     {
-        return new ArrayCollection(array_filter($this->_elements, $p));
+        return new static(array_filter($this->_elements, $p));
     }
 
     /**
@@ -399,7 +402,7 @@ class ArrayCollection implements Collection
                 $coll2[$key] = $element;
             }
         }
-        return array(new ArrayCollection($coll1), new ArrayCollection($coll2));
+        return array(new static($coll1), new static($coll2));
     }
 
     /**

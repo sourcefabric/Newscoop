@@ -15,7 +15,8 @@ class NewscoopEntityArticleTypeProxy extends \Newscoop\Entity\ArticleType implem
         $this->_entityPersister = $entityPersister;
         $this->_identifier = $identifier;
     }
-    private function _load()
+    /** @private */
+    public function __load()
     {
         if (!$this->__isInitialized__ && $this->_entityPersister) {
             $this->__isInitialized__ = true;
@@ -25,18 +26,24 @@ class NewscoopEntityArticleTypeProxy extends \Newscoop\Entity\ArticleType implem
             unset($this->_entityPersister, $this->_identifier);
         }
     }
-
+    
     
     public function getName()
     {
-        $this->_load();
+        $this->__load();
         return parent::getName();
     }
 
     public function setName($name)
     {
-        $this->_load();
+        $this->__load();
         return parent::setName($name);
+    }
+
+    public function __toString()
+    {
+        $this->__load();
+        return parent::__toString();
     }
 
 

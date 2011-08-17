@@ -1,10 +1,6 @@
 <?php
 
-use Doctrine\ORM\Mapping\ClassMetadataFactory,
-    Doctrine\ORM\Tools\SchemaTool,
-    Newscoop\DoctrineEventDispatcherProxy,
-    Newscoop\Services\UserService,
-    Newscoop\Services\AuditService;
+use Newscoop\DoctrineEventDispatcherProxy;
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
@@ -43,9 +39,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             return;
         }, 'ADO');
 
-        // init session before loading plugins to prevent session start errors
-        $this->bootstrap('session');
-
         return $autoloader;
     }
 
@@ -55,17 +48,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initSession()
     {
         $options = $this->getOptions();
-        $name = isset($options['session']['name']) ? $options['session']['name'] : session_name();
-
-        Zend_Session::setOptions(array(
-            'name' => $name,
-        ));
-
+        Zend_Session::setOptions($options['session']);
         Zend_Session::start();
     }
 
     protected function _initContainer()
     {
+        $this->bootstrap('autoloader');
+
         $container = new sfServiceContainerBuilder($this->getOptions());
 
         $this->bootstrap('doctrine');

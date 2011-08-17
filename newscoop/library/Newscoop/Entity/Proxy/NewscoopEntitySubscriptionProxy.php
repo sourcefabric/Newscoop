@@ -15,7 +15,8 @@ class NewscoopEntitySubscriptionProxy extends \Newscoop\Entity\Subscription impl
         $this->_entityPersister = $entityPersister;
         $this->_identifier = $identifier;
     }
-    private function _load()
+    /** @private */
+    public function __load()
     {
         if (!$this->__isInitialized__ && $this->_entityPersister) {
             $this->__isInitialized__ = true;
@@ -25,77 +26,77 @@ class NewscoopEntitySubscriptionProxy extends \Newscoop\Entity\Subscription impl
             unset($this->_entityPersister, $this->_identifier);
         }
     }
-
+    
     
     public function getId()
     {
-        $this->_load();
+        $this->__load();
         return parent::getId();
     }
 
     public function setSubscriber(\Newscoop\Entity\User\Subscriber $subscriber)
     {
-        $this->_load();
+        $this->__load();
         return parent::setSubscriber($subscriber);
     }
 
     public function setPublication(\Newscoop\Entity\Publication $publication)
     {
-        $this->_load();
+        $this->__load();
         return parent::setPublication($publication);
     }
 
     public function getPublication()
     {
-        $this->_load();
+        $this->__load();
         return parent::getPublication();
     }
 
     public function getPublicationName()
     {
-        $this->_load();
+        $this->__load();
         return parent::getPublicationName();
     }
 
     public function setToPay($toPay)
     {
-        $this->_load();
+        $this->__load();
         return parent::setToPay($toPay);
     }
 
     public function getToPay()
     {
-        $this->_load();
+        $this->__load();
         return parent::getToPay();
     }
 
     public function setType($type)
     {
-        $this->_load();
+        $this->__load();
         return parent::setType($type);
     }
 
     public function getType()
     {
-        $this->_load();
+        $this->__load();
         return parent::getType();
     }
 
     public function setActive($active)
     {
-        $this->_load();
+        $this->__load();
         return parent::setActive($active);
     }
 
     public function isActive()
     {
-        $this->_load();
+        $this->__load();
         return parent::isActive();
     }
 
     public function getSections()
     {
-        $this->_load();
+        $this->__load();
         return parent::getSections();
     }
 

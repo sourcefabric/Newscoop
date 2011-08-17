@@ -15,7 +15,8 @@ class NewscoopEntityUserSubscriberProxy extends \Newscoop\Entity\User\Subscriber
         $this->_entityPersister = $entityPersister;
         $this->_identifier = $identifier;
     }
-    private function _load()
+    /** @private */
+    public function __load()
     {
         if (!$this->__isInitialized__ && $this->_entityPersister) {
             $this->__isInitialized__ = true;
@@ -25,300 +26,150 @@ class NewscoopEntityUserSubscriberProxy extends \Newscoop\Entity\User\Subscriber
             unset($this->_entityPersister, $this->_identifier);
         }
     }
-
+    
     
     public function getSubscriptions()
     {
-        $this->_load();
+        $this->__load();
         return parent::getSubscriptions();
     }
 
     public function hasSubscriptions()
     {
-        $this->_load();
+        $this->__load();
         return parent::hasSubscriptions();
     }
 
     public function getIps()
     {
-        $this->_load();
+        $this->__load();
         return parent::getIps();
     }
 
     public function hasIps()
     {
-        $this->_load();
+        $this->__load();
         return parent::hasIps();
     }
 
     public function getId()
     {
-        $this->_load();
+        $this->__load();
         return parent::getId();
-    }
-
-    public function getUserId()
-    {
-        $this->_load();
-        return parent::getUserId();
-    }
-
-    public function getKeyId()
-    {
-        $this->_load();
-        return parent::getKeyId();
-    }
-
-    public function setName($name)
-    {
-        $this->_load();
-        return parent::setName($name);
-    }
-
-    public function getName()
-    {
-        $this->_load();
-        return parent::getName();
-    }
-
-    public function getRealName()
-    {
-        $this->_load();
-        return parent::getRealName();
     }
 
     public function setUsername($username)
     {
-        $this->_load();
+        $this->__load();
         return parent::setUsername($username);
     }
 
     public function getUsername()
     {
-        $this->_load();
+        $this->__load();
         return parent::getUsername();
     }
 
     public function setPassword($password)
     {
-        $this->_load();
+        $this->__load();
         return parent::setPassword($password);
     }
 
-    public function getPasswordHash()
+    public function checkPassword($password)
     {
-        $this->_load();
-        return parent::getPasswordHash();
+        $this->__load();
+        return parent::checkPassword($password);
+    }
+
+    public function setFirstName($first_name)
+    {
+        $this->__load();
+        return parent::setFirstName($first_name);
+    }
+
+    public function getFirstName()
+    {
+        $this->__load();
+        return parent::getFirstName();
+    }
+
+    public function setLastName($last_name)
+    {
+        $this->__load();
+        return parent::setLastName($last_name);
+    }
+
+    public function getLastName()
+    {
+        $this->__load();
+        return parent::getLastName();
+    }
+
+    public function setStatus($status)
+    {
+        $this->__load();
+        return parent::setStatus($status);
+    }
+
+    public function getStatus()
+    {
+        $this->__load();
+        return parent::getStatus();
+    }
+
+    public function isActive()
+    {
+        $this->__load();
+        return parent::isActive();
     }
 
     public function setEmail($email)
     {
-        $this->_load();
+        $this->__load();
         return parent::setEmail($email);
     }
 
     public function getEmail()
     {
-        $this->_load();
+        $this->__load();
         return parent::getEmail();
     }
 
-    public function getTimeCreated()
+    public function getCreated()
     {
-        $this->_load();
-        return parent::getTimeCreated();
+        $this->__load();
+        return parent::getCreated();
     }
 
-    public function setPhone($phone)
+    public function getGroups()
     {
-        $this->_load();
-        return parent::setPhone($phone);
+        $this->__load();
+        return parent::getGroups();
     }
 
-    public function getPhone()
+    public function setRole(\Newscoop\Entity\Acl\Role $role)
     {
-        $this->_load();
-        return parent::getPhone();
+        $this->__load();
+        return parent::setRole($role);
     }
 
-    public function setTitle($title)
+    public function getRoleId()
     {
-        $this->_load();
-        return parent::setTitle($title);
+        $this->__load();
+        return parent::getRoleId();
     }
 
-    public function getTitle()
+    public function hasPermission($permission)
     {
-        $this->_load();
-        return parent::getTitle();
-    }
-
-    public function setGender($gender)
-    {
-        $this->_load();
-        return parent::setGender($gender);
-    }
-
-    public function getGender()
-    {
-        $this->_load();
-        return parent::getGender();
-    }
-
-    public function setAge($age)
-    {
-        $this->_load();
-        return parent::setAge($age);
-    }
-
-    public function getAge()
-    {
-        $this->_load();
-        return parent::getAge();
-    }
-
-    public function setCity($city)
-    {
-        $this->_load();
-        return parent::setCity($city);
-    }
-
-    public function getCity()
-    {
-        $this->_load();
-        return parent::getCity();
-    }
-
-    public function setStreetAddress($streetAddress)
-    {
-        $this->_load();
-        return parent::setStreetAddress($streetAddress);
-    }
-
-    public function getStreetAddress()
-    {
-        $this->_load();
-        return parent::getStreetAddress();
-    }
-
-    public function setPostalCode($postalCode)
-    {
-        $this->_load();
-        return parent::setPostalCode($postalCode);
-    }
-
-    public function getPostalCode()
-    {
-        $this->_load();
-        return parent::getPostalCode();
-    }
-
-    public function setState($state)
-    {
-        $this->_load();
-        return parent::setState($state);
-    }
-
-    public function getState()
-    {
-        $this->_load();
-        return parent::getState();
-    }
-
-    public function setCountry($country)
-    {
-        $this->_load();
-        return parent::setCountry($country);
-    }
-
-    public function getCountry()
-    {
-        $this->_load();
-        return parent::getCountry();
-    }
-
-    public function setFax($fax)
-    {
-        $this->_load();
-        return parent::setFax($fax);
-    }
-
-    public function getFax()
-    {
-        $this->_load();
-        return parent::getFax();
-    }
-
-    public function setContactPerson($contactPerson)
-    {
-        $this->_load();
-        return parent::setContactPerson($contactPerson);
-    }
-
-    public function getContactPerson()
-    {
-        $this->_load();
-        return parent::getContactPerson();
-    }
-
-    public function setPhoneSecond($phoneSecond)
-    {
-        $this->_load();
-        return parent::setPhoneSecond($phoneSecond);
-    }
-
-    public function getPhoneSecond()
-    {
-        $this->_load();
-        return parent::getPhoneSecond();
-    }
-
-    public function setEmployer($employer)
-    {
-        $this->_load();
-        return parent::setEmployer($employer);
-    }
-
-    public function getEmployer()
-    {
-        $this->_load();
-        return parent::getEmployer();
-    }
-
-    public function setEmployerType($employerType)
-    {
-        $this->_load();
-        return parent::setEmployerType($employerType);
-    }
-
-    public function getEmployerType()
-    {
-        $this->_load();
-        return parent::getEmployerType();
-    }
-
-    public function setPosition($position)
-    {
-        $this->_load();
-        return parent::setPosition($position);
-    }
-
-    public function getPosition()
-    {
-        $this->_load();
-        return parent::getPosition();
-    }
-
-    public function __toString()
-    {
-        $this->_load();
-        return parent::__toString();
+        $this->__load();
+        return parent::hasPermission($permission);
     }
 
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'token', 'name', 'username', 'password', 'email', 'timeCreated', 'phone', 'title', 'gender', 'age', 'city', 'streetAddress', 'postalCode', 'state', 'country', 'fax', 'contactPerson', 'phoneSecond', 'employer', 'employerType', 'position', 'subscriptions', 'ips');
+        return array('__isInitialized__', 'id', 'username', 'password', 'first_name', 'last_name', 'email', 'created', 'role', 'groups', 'subscriptions', 'ips');
     }
 
     public function __clone()

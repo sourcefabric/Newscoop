@@ -15,6 +15,7 @@ namespace Newscoop\Entity\Comment\Preference;
 class Publication
 {
     /**
+     * @Id
      * @oneToOne(targetEntity="Newscoop\Entity\Publication")
      * @joinColumn(name="id", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
@@ -81,7 +82,7 @@ class Publication
      * @param Newscoop\Entity\Publication $p_id
      * @return unknown_type
      */
-    public function setId(Newscoop\Entity\Publication $p_id)
+    public function setId(\Newscoop\Entity\Publication $p_id)
     {
         $this->id = $p_id;
         // return this for chaining mechanism

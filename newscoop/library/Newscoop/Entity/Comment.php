@@ -8,7 +8,7 @@
 
 namespace Newscoop\Entity;
 
-use DateTime, InvalidArgumentException, Newscoop\Entity\Comment\Commenter, Newscoop\Entity\Language, Newscoop\Entity\Publication;
+use Newscoop\Entity\Comment\Commenter;
 
 /**
  * Comment entity
@@ -189,7 +189,7 @@ class Comment
      * @param DateTime $p_datetime
      * @return Newscoop\Entity\Comment
      */
-    public function setTimeCreated(DateTime $p_datetime)
+    public function setTimeCreated(\DateTime $p_datetime)
     {
         $this->time_created = $p_datetime;
         // return this for chaining mechanism
@@ -212,7 +212,7 @@ class Comment
      * @param DateTime $p_datetime
      * @return Newscoop\Entity\Comment
      */
-    public function setTimeUpdated(DateTime $p_datetime)
+    public function setTimeUpdated(\DateTime $p_datetime)
     {
         $this->time_updated = $p_datetime;
         // return this for chaining mechanism
