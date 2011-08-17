@@ -349,6 +349,28 @@ $(document).ready(function() {
             return window.article_confirm_question;
         }
     };
+    if (window.opera) {
+        $('.breadcrumbs').click(function() {
+            if (articleChanged()) {
+                return confirm(window.article_confirm_question);
+            }
+            return true;
+        });
+
+        var leave_links = ['/admin', '/admin/auth/logout', '/admin/application/help'];
+        var leave_links_length = leave_links.length;
+
+        for (var lind = 0; lind < leave_links_length; lind++) {
+            var one_leaf = leave_links[lind];
+
+            $('a[href$="' + one_leaf + '"]').click(function() {
+                if (articleChanged()) {
+                    return confirm(window.article_confirm_question);
+                }
+                return true;
+            });
+        }
+    }
 });
 
 </script>
