@@ -7,32 +7,32 @@
 
 namespace Newscoop\Services;
 
-use Newscoop\Entity\AuditEvent,
-    Newscoop\Entity\Repository\AuditRepository;
+use Doctrine\ORM\EntityManager,
+    Newscoop\Entity\AuditEvent;
 
 /**
  * Audit service
  */
 class AuditService
 {
-    /** @var Newscoop\Entity\Repository\AuditRepository */
-    protected $repository;
+    /** @var Doctrine\ORM\EntityManager */
+    protected $em;
 
-    /** @var Newscoop\Service\User */
+    /** @var Newscoop\Services\UserService */
     protected $userService;
 
     /**
-     * @param Newscoop\Entity\Repository\AuditRepository $repository
+     * @param Doctrine\ORM\EntityManager $em
      * @param Newscoop\Service\User $userService
      */
-    public function __construct(AuditRepository $repository, UserService $userService)
+    public function __construct(EntityManager $em, UserService $userService)
     {
-        $this->repository = $repository;
+        $this->em = $em;
         $this->userService = $userService;
     }
 
     /**
-     * Update audit.
+     * Update audit
      *
      * @param sfEvent $event
      * @return void
@@ -53,21 +53,24 @@ class AuditService
             'resource_title' => !empty($params['title']) ? $params['title'] : null,
         );
 
-        $this->repository->save($auditEvent, $values);
+        $this->em->getRepository('Newscoop\Entity\AuditEvent')
+            ->save($auditEvent, $values);
+        $this->em->flush();
     }
 
     /**
-     * Find all records.
+     * Find all records
      *
      * @return array
      */
     public function findAll()
     {
-        return $this->repository->findAll();
+        return $this->em->getRepository('Newscoop\Entity\AuditEvent')
+            ->findAll();
     }
 
     /**
-     * Find records by set of criteria.
+     * Find records by set of criteria
      *
      * @param array $criteria
      * @param array|null $orderBy
@@ -77,6 +80,7 @@ class AuditService
      */
     public function findBy(array $criteria, $orderBy = null, $limit = null, $offset = null)
     {
-        return $this->repository->findBy($criteria, $orderBy, $limit, $offset);
+        return $this->em->getRepository('Newscoop\Entity\AuditEvent')
+            ->findBy($criteria, $orderBy, $limit, $offset);
     }
 }

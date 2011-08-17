@@ -9,6 +9,9 @@ namespace Newscoop\Services;
 
 class AuditServiceTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var Doctrine\ORM\EntityManager */
+    protected $em;
+
     /** @var Newscoop\Services\AuditService */
     protected $service;
 
@@ -20,6 +23,10 @@ class AuditServiceTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->repository = $this->getMockBuilder('Newscoop\Entity\Repository\AuditRepository')
             ->disableOriginalConstructor()
             ->getMock();
@@ -28,7 +35,7 @@ class AuditServiceTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->service = new AuditService($this->repository, $this->userService);
+        $this->service = new AuditService($this->em, $this->userService);
     }
 
     public function testAudit()
@@ -42,6 +49,15 @@ class AuditServiceTest extends \PHPUnit_Framework_TestCase
             ->method('save')
             ->with($this->isInstanceOf('Newscoop\Entity\AuditEvent'), $this->contains('test'));
 
+        $this->em->expects($this->once())
+            ->method('getRepository')
+            ->with($this->equalTo('Newscoop\Entity\AuditEvent'))
+            ->will($this->returnValue($this->repository));
+
+        $this->em->expects($this->once())
+            ->method('flush')
+            ->with();
+
         $event = new \sfEvent($this, 'event.test');
         $this->service->update($event);
     }
@@ -52,6 +68,11 @@ class AuditServiceTest extends \PHPUnit_Framework_TestCase
         $this->repository->expects($this->once())
             ->method('findAll')
             ->will($this->returnValue($all));
+
+        $this->em->expects($this->once())
+            ->method('getRepository')
+            ->with($this->equalTo('Newscoop\Entity\AuditEvent'))
+            ->will($this->returnValue($this->repository));
         
         $this->assertEquals($all, $this->service->findAll());
     }
@@ -67,6 +88,11 @@ class AuditServiceTest extends \PHPUnit_Framework_TestCase
             ->method('findBy')
             ->with($this->equalTo($criteria), $this->equalTo($orderBy), $this->equalTo($limit), $this->equalTo($offset))
             ->will($this->returnValue($result));
+
+        $this->em->expects($this->once())
+            ->method('getRepository')
+            ->with($this->equalTo('Newscoop\Entity\AuditEvent'))
+            ->will($this->returnValue($this->repository));
 
         $this->assertEquals($result, $this->service->findBy($criteria, $orderBy, $limit, $offset));
     }

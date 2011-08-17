@@ -7,15 +7,16 @@
 
 namespace Newscoop\Services;
 
-use Newscoop\Entity\Repository\UserRepository;
+use Doctrine\ORM\EntityManager,
+    Newscoop\Entity\Repository\UserRepository;
 
 /**
  * User service
  */
 class UserService
 {
-    /** @var Newscoop\Entity\Repository\UserRepository */
-    protected $repository;
+    /** @var Doctrine\ORM\EntityManager */
+    protected $em;
 
     /** @var Zend_Auth */
     protected $auth;
@@ -24,17 +25,17 @@ class UserService
     protected $currentUser;
 
     /**
-     * @param Newscoop\Entity\Repository\UserRepository $repository
+     * @param Doctrine\ORM\EntityManager $em
      * @param Zend_Auth $auth
      */
-    public function __construct($repository, \Zend_Auth $auth)
+    public function __construct(EntityManager $em, \Zend_Auth $auth)
     {
-        $this->repository = $repository;
+        $this->em = $em;
         $this->auth = $auth;
     }
 
     /**
-     * Get current user.
+     * Get current user
      *
      * @return Newscoop\Entity\User
      */
@@ -42,7 +43,8 @@ class UserService
     {
         if ($this->currentUser === NULL) {
             if ($this->auth->hasIdentity()) {
-                $this->currentUser = $this->repository->find($this->auth->getIdentity());
+                $this->currentUser = $this->em->getRepository('Newscoop\Entity\User')
+                    ->find($this->auth->getIdentity());
             }
         }
 

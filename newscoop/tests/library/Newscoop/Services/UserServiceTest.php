@@ -15,12 +15,15 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
     /** @var Zend_Auth */
     protected $auth;
 
+    /** @var Doctrine\ORM\EntityManager */
+    protected $em;
+
     /** @var Newscoop\Entity\Repository\UserRepository */
     protected $repository;
 
     public function setUp()
     {
-        $this->repository = $this->getMockBuilder('Newscoop\Entity\Repository\UserRepository')
+        $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -28,18 +31,22 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->service = new UserService($this->repository, $this->auth);
+        $this->repository = $this->getMockBuilder('Newscoop\Entity\Repository\UserRepository')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->service = new UserService($this->em, $this->auth);
     }
 
     public function testUser()
     {
-        $service = new UserService($this->repository, $this->auth);
+        $service = new UserService($this->em, $this->auth);
         $this->assertInstanceOf('Newscoop\Services\UserService', $service);
     }
 
     public function testGetCurrentUser()
     {
-        $user = $this->getMock('Newscoop\Entity\User', array(), array('username'));
+        $user = $this->getMock('Newscoop\Entity\User');
 
         $this->auth->expects($this->once())
             ->method('hasIdentity')
@@ -48,6 +55,11 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
         $this->auth->expects($this->once())
             ->method('getIdentity')
             ->will($this->returnValue(1));
+
+        $this->em->expects($this->once())
+            ->method('getRepository')
+            ->with($this->equalTo('Newscoop\Entity\User'))
+            ->will($this->returnValue($this->repository));
 
         $this->repository->expects($this->once())
             ->method('find')

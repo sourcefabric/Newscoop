@@ -28,8 +28,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $autoloader = Zend_Loader_Autoloader::getInstance();
         $autoloader->setFallbackAutoloader(TRUE);
 
+        // autoload symfony service container
+        $autoloader->pushAutoloader(function($class) {
+            require_once APPLICATION_PATH . "/../library/fabpot-dependency-injection-07ff9ba/lib/{$class}.php";
+        }, 'sfService');
+
+        // autoload symfony event dispatcher
+        $autoloader->pushAutoloader(function($class) {
+            require_once APPLICATION_PATH . "/../library/fabpot-event-dispatcher-782a5ef/lib/{$class}.php";
+        }, 'sfEvent');
+
         // fix adodb loading error
-        $autoloader->pushAutoloader(function($file) {
+        $autoloader->pushAutoloader(function($class) {
             return;
         }, 'ADO');
 
@@ -54,55 +64,50 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         Zend_Session::start();
     }
 
-    protected function _initEventDispatcher()
+    protected function _initContainer()
     {
-        require_once APPLICATION_PATH . '/../library/fabpot-event-dispatcher-782a5ef/lib/sfEventDispatcher.php';
+        $container = new sfServiceContainerBuilder($this->getOptions());
 
-        $options = $this->getOptions();
         $this->bootstrap('doctrine');
         $doctrine = $this->getResource('doctrine');
+        $container->setService('em', $doctrine->getEntityManager());
 
-        $dispatcher = new sfEventDispatcher();
-        $dispatcherProxy = new DoctrineEventDispatcherProxy($dispatcher);
-        $doctrine->getEntityManager()
-            ->getEventManager()
-            ->addEventSubscriber($dispatcherProxy);
+        $container->register('user', 'Newscoop\Services\UserService')
+            ->addArgument(new sfServiceReference('em'))
+            ->addArgument(Zend_Auth::getInstance());
 
-        DatabaseObject::setEventDispatcher($dispatcher);
-        DatabaseObject::setResourceNames($options['resourceNames']);
-        Zend_Registry::set('eventDispatcher', $dispatcher);
+        $container->register('audit', 'Newscoop\Services\AuditService')
+            ->addArgument(new sfServiceReference('em'))
+            ->addArgument(new sfServiceReference('user'));
 
-        return $dispatcher;
-    }
+        $container->register('dispatcher', 'sfEventDispatcher')
+            ->setConfigurator(function($service) use ($container) {
+                DatabaseObject::setEventDispatcher($service);
+                DatabaseObject::setResourceNames($container->getParameter('resourceNames'));
 
-    protected function _initUserService()
-    {
-        $this->bootstrap('doctrine');
-        $doctrine = $this->getResource('doctrine');
-        $userRepository = $doctrine->getEntityManager()->getRepository('Newscoop\Entity\User');
-        $userService = new UserService($userRepository, Zend_Auth::getInstance());
+                $container->getService('em')
+                    ->getEventManager()
+                    ->addEventSubscriber(new DoctrineEventDispatcherProxy($service));
+            });
 
-        return $userService;
+        $container->register('auth.adapter', 'Newscoop\Services\Auth\DoctrineAuthService')
+            ->addArgument(new sfServiceReference('em'));
+
+        return $container;
     }
 
     protected function _initAuditService()
     {
-        $this->bootstrap('doctrine');
-        $this->bootstrap('userService');
-        $this->bootstrap('eventDispatcher');
+        $this->bootstrap('container');
+        $container = $this->getResource('container');
 
-        $doctrine = $this->getResource('doctrine');
-        $userService = $this->getResource('userService');
-        $eventDispatcher = $this->getResource('eventDispatcher');
-        $auditRepository = $doctrine->getEntityManager()->getRepository('Newscoop\Entity\AuditEvent');
-        $auditService = new AuditService($auditRepository, $userService);
-
-        $options = $this->getOptions();
-        foreach ((array) $options['audit']['events'] as $event) {
-            $eventDispatcher->connect($event, array($auditService, 'update'));
+        $config = $container->getParameter('audit');
+        foreach ((array) $config['events'] as $event) {
+            $container->getService('dispatcher')
+                ->connect($event, array($container->getService('audit'), 'update'));
         }
 
-        return $auditService;
+        return $container->getService('audit');
     }
 
     protected function _initPlugins()
