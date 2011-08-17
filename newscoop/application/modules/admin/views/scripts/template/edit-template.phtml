@@ -3,13 +3,56 @@ $this->form->content->setAttrib('id', 'template-edit-area');
 ?>
 
 <div class="template ui-widget-content small-block block-shadow theme-edit">
-    <?php echo $this->replaceForm->setAttrib('class', 'replace'); ?>
-    <?php echo $this->form; ?>
+<form enctype="multipart/form-data" method="post" class="replace" action="" name="replaceForm">
+<dl class="zend_form">
+<dd>
+<fieldset id="fieldset-theme_replace" class="toggle">
+	<legend>Replace existing template</legend>
+	<dl>
+	   <dd style="text-align: left;">
+		<p class="info-text"> You can replace the existing template with a new one of your choice. Browse below for a new template on your local disc, and <em>Replace</em> to apply the change.</p>
+
+            <dl>
+	            <?php echo $this->replaceForm->getElement('file'); ?>
+	            <div class="save-button-bar" style="display: block">
+	                <input type="button" name="cancel" id="cancel" value="Cancel" onClick="document.replaceForm.reset();return false">
+	                <input type="submit" name="submit" id="submit" value="Replace">
+	            </div>
+            </dl>
+
+		    </dd>
+	    </dl>
+	</fieldset>
+</dd>
+</dl>
+</form>
+
+<form enctype="application/x-www-form-urlencoded" method="post" action="" name="editTemplate">
+<dl class="zend_form">
+    <?php echo $this->form->getElement('csrf'); ?>
+    <?php echo $this->form->getElement('content'); ?>
+    <fieldset id="fieldset-geo_filtering" class="toggle">
+    <legend>Geofiltering</legend>
+    <dl>
+        <?php echo $this->form->getElement('geo_filtering'); ?>
+    </dl>
+    </fieldset>
+
+    <fieldset id="fieldset-cache_lifetime">
+    <legend>Cache lifetime</legend>
+    <dl>
+        <?php echo $this->form->getElement('cache_lifetime'); ?>
+    </dl>
+    </fieldset>
+    <?php echo $this->form->getElement('submit'); ?>
+</dl>
+</form>
 </div>
 
 <script type="text/javascript" src="<?php echo $this->baseUrl('/js/editarea/edit_area/edit_area_full.js'); ?>"></script>
 <script type="text/javascript">
 $(function() {
+
     editAreaLoader.init({
         id : "template-edit-area",
         start_highlight: true,
@@ -20,6 +63,7 @@ $(function() {
         is_editable: "true",
         replace_tab_by_spaces: 2
     });
+
 });
 </script>
 
