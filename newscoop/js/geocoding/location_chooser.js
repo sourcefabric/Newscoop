@@ -1268,11 +1268,14 @@ this.main_openlayers_init = function(map_div_name, descs_name)
 
     this.pzb_ctrl = new OpenLayers.Control.PanZoomBarMod();
 
+    var scaleline = new OpenLayers.Control.ScaleLine();
+    scaleline.geodesic = true;
+
     this.map = new OpenLayers.Map(map_div_name, {
         controls: [
             new OpenLayers.Control.Navigation(),
             this.pzb_ctrl,
-            new OpenLayers.Control.ScaleLine()
+            scaleline
         ],
         numZoomLevels: 20
     });

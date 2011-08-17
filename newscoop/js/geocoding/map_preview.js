@@ -915,12 +915,15 @@ this.main_openlayers_init = function(map_div_name) {
 
     this.map = null;
 
+    var scaleline = new OpenLayers.Control.ScaleLine();
+    scaleline.geodesic = true;
+
     if (!this.action_substitute) {
         this.map = new OpenLayers.Map(map_div_name, {
             controls: [
                 new OpenLayers.Control.Navigation(),
                 pzb_ctrl,
-                new OpenLayers.Control.ScaleLine()
+                scaleline
             ],
             numZoomLevels: 20
         });
