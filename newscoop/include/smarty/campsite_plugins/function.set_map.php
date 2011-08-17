@@ -80,9 +80,11 @@ function smarty_function_set_map($p_params, &$p_smarty)
     $campsite = $p_smarty->get_template_vars('gimme');
     $run_article = ($campsite->article->defined) ? $campsite->article : null;
     $run_language = $campsite->language;
+    $run_topic = ($campsite->topic->defined) ? $campsite->topic : null;
 
     $parameters = array();
     $running = '_current';
+    $of_article = '_article';
 
     $map_label = '';
     $map_max_points = 0;
@@ -117,7 +119,7 @@ function smarty_function_set_map($p_params, &$p_smarty)
         foreach (explode(',', $p_params['authors']) as $one_author) {
             $one_author = trim('' . $one_author);
             if (0 < strlen($one_author)) {
-                if ($running == $one_author) {
+                if ($of_article == $one_author) {
                     if ($run_article) {
                         $run_authors = $run_article->authors;
                         foreach ($run_authors as $art_author) {
@@ -185,11 +187,19 @@ function smarty_function_set_map($p_params, &$p_smarty)
         foreach (explode(',', $p_params['topics']) as $one_topic) {
             $one_topic = trim('' . $one_topic);
             if (0 < strlen($one_topic)) {
-                if ($running == $one_topic) {
+                if ($of_article == $one_topic) {
                     if ($run_article) {
                         $run_topics = $run_article->topics;
                         foreach ($run_topics as $art_topic) {
                             $con_topics[] = $art_topic . ':' . $run_language->code;
+                        }
+                    }
+                }
+                elseif ($running == $one_topic) {
+                    if ($run_topic) {
+                        $cur_topic = $run_topic->name;
+                        if (!empty($cur_topic)) {
+                            $con_topics[] = htmlspecialchars_decode($cur_topic);
                         }
                     }
                 }
