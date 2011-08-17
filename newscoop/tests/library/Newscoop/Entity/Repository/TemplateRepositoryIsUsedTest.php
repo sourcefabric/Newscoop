@@ -25,11 +25,7 @@ class TemplateRepositoryIsUsedTest extends \RepositoryTestCase
 
     public function setUp()
     {
-        parent::setUp(array(
-            'Newscoop\Entity\Issue',
-            'Newscoop\Entity\Section',
-            $this->entity,
-        ));
+        parent::setUp('Newscoop\Entity\Issue', 'Newscoop\Entity\Section', $this->entity);
 
         $this->repository = $this->em->getRepository($this->entity);
 

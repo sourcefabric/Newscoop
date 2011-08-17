@@ -5,11 +5,11 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\Service;
+namespace Newscoop\Services;
 
-class UserTest extends \PHPUnit_Framework_TestCase
+class UserServiceTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var Newscoop\Service\User */
+    /** @var Newscoop\Services\UserService */
     protected $service;
 
     /** @var Zend_Auth */
@@ -28,18 +28,18 @@ class UserTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->service = new User($this->repository, $this->auth);
+        $this->service = new UserService($this->repository, $this->auth);
     }
 
     public function testUser()
     {
-        $service = new User($this->repository, $this->auth);
-        $this->assertInstanceOf('Newscoop\Service\User', $service);
+        $service = new UserService($this->repository, $this->auth);
+        $this->assertInstanceOf('Newscoop\Services\UserService', $service);
     }
 
     public function testGetCurrentUser()
     {
-        $user = $this->getMock('Newscoop\Entity\User');
+        $user = $this->getMock('Newscoop\Entity\User', array(), array('username'));
 
         $this->auth->expects($this->once())
             ->method('hasIdentity')
@@ -51,7 +51,7 @@ class UserTest extends \PHPUnit_Framework_TestCase
 
         $this->repository->expects($this->once())
             ->method('find')
-            ->with($this->equalTo('Newscoop\Entity\User'), $this->equalTo(1))
+            ->with($this->equalTo(1))
             ->will($this->returnValue($user));
 
         $this->assertEquals($user, $this->service->getCurrentUser());

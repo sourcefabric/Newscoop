@@ -1,7 +1,10 @@
 <?php
 
-use Newscoop\DoctrineEventDispatcherProxy,
-    Newscoop\Service;
+use Doctrine\ORM\Mapping\ClassMetadataFactory,
+    Doctrine\ORM\Tools\SchemaTool,
+    Newscoop\DoctrineEventDispatcherProxy,
+    Newscoop\Services\UserService,
+    Newscoop\Services\AuditService;
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
@@ -77,27 +80,25 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $this->bootstrap('doctrine');
         $doctrine = $this->getResource('doctrine');
         $userRepository = $doctrine->getEntityManager()->getRepository('Newscoop\Entity\User');
-        $userService = new Service\User($userRepository, Zend_Auth::getInstance());
+        $userService = new UserService($userRepository, Zend_Auth::getInstance());
+
         return $userService;
     }
 
     protected function _initAuditService()
     {
+        $this->bootstrap('doctrine');
         $this->bootstrap('userService');
         $this->bootstrap('eventDispatcher');
 
-        $options = $this->getOptions();
-
-        $httpClient = new Zend_Http_Client('http://localhost:8080/Audit/', array(
-            'maxredirects' => 0,
-            'timeout' => 30,
-        ));
-
+        $doctrine = $this->getResource('doctrine');
         $userService = $this->getResource('userService');
-        $auditService = new Service\Audit($httpClient, $userService);
-
         $eventDispatcher = $this->getResource('eventDispatcher');
-        foreach ($options['service']['audit']['events'] as $event) {
+        $auditRepository = $doctrine->getEntityManager()->getRepository('Newscoop\Entity\AuditEvent');
+        $auditService = new AuditService($auditRepository, $userService);
+
+        $options = $this->getOptions();
+        foreach ((array) $options['audit']['events'] as $event) {
             $eventDispatcher->connect($event, array($auditService, 'update'));
         }
 

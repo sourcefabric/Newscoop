@@ -5,14 +5,14 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\Service;
+namespace Newscoop\Services;
 
 use Newscoop\Entity\Repository\UserRepository;
 
 /**
- * User service.
+ * User service
  */
-class User
+class UserService
 {
     /** @var Newscoop\Entity\Repository\UserRepository */
     protected $repository;
@@ -42,7 +42,7 @@ class User
     {
         if ($this->currentUser === NULL) {
             if ($this->auth->hasIdentity()) {
-                $this->currentUser = $this->repository->find('Newscoop\Entity\User', $this->auth->getIdentity());
+                $this->currentUser = $this->repository->find($this->auth->getIdentity());
             }
         }
 
