@@ -8,21 +8,13 @@ defined('APPLICATION_PATH')
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 
-
-// goes to install process if configuration files does not exist yet
-if (!file_exists(APPLICATION_PATH . '/../conf/configuration.php')
-    || !file_exists(APPLICATION_PATH . '/../conf/database_conf.php')) {
-    $subdir = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/', -2));
-    header("Location: $subdir/install/");
-    exit;
-}
-
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
     realpath(APPLICATION_PATH . '/../library'),
-    realpath(dirname(__FILE__) . '/../include'),
+    realpath(APPLICATION_PATH . '/../include'),
     get_include_path(),
 )));
+
 if (!is_file('Zend/Application.php')) {
 	// include libzend if we dont have zend_application
 	set_include_path(implode(PATH_SEPARATOR, array(

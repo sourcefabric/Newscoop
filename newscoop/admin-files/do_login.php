@@ -38,23 +38,16 @@ $t_password = rc4($xorkey, base64ToText($f_password));
 // password invalid, not encrypted -> userpass
 
 if (!$auth->hasIdentity()) {
-    $repository = $this->_helper->entity->getRepository('Newscoop\Entity\User\Staff');
-    $adapter = new Newscoop\Auth\Adapter($repository, $f_user_name, $t_password);
+    $adapter = $controller->_helper->service('auth.adapter');
+    $adapter->setUsername($f_user_name)->setPassword($t_password);
     $result = $auth->authenticate($adapter);
-
     if ($result->getCode() != Zend_Auth_Result::SUCCESS) {
         LoginAttempts::RecordLoginAttempt();
         return 'userpass';
     }
 }
 
-$user = $repository->find($auth->getIdentity());
 $validateCaptcha = LoginAttempts::MaxLoginAttemptsExceeded();
-
-// set user for environment
-$g_user = $user;
-$this->view->user = $user;
-Zend_Registry::set('user', $user);
 
 //
 // Valid login section
@@ -65,7 +58,7 @@ if ($auth->hasIdentity()) {
         // if user valid, password valid, encrypted, CAPTCHA valid -> login
 
         LoginAttempts::ClearLoginAttemptsForIp();
-        Article::UnlockByUser($user->getId());
+        Article::UnlockByUser($auth->getIdentity());
 
         // next action GET/POST detection
         if (!empty($_POST['_next']) && $_POST['_next'] == 'get') {
@@ -125,11 +118,6 @@ LoginAttempts::RecordLoginAttempt();
 // CAPTCHA invalid -> captcha login page
 if ($validateCaptcha && !PhpCaptcha::Validate($f_captcha_code, true)) {
     return 'captcha';
-}
-
-// user valid, password invalid, encrypted, CAPTCHA valid -> upgrade
-if (!is_null($user) && $f_is_encrypted && (strlen($user->getPasswordHash()) < 40)) {
-    return 'upgrade';
 }
 
 // Everything else

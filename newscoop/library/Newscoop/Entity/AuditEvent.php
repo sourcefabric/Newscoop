@@ -8,8 +8,8 @@
 namespace Newscoop\Entity;
 
 /**
- * Audit event entity.
- * @entity(repositoryClass="Newscoop\Entity\Repository\AuditRepository")
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\AuditRepository")
+ * @Table(name="audit_event")
  */
 class AuditEvent
 {
@@ -60,7 +60,7 @@ class AuditEvent
      * @Column(type="boolean")
      * @var bool
      */
-    private $is_public = False;
+    private $is_public = FALSE;
 
     /**
      * @ManyToOne(targetEntity="User")

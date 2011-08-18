@@ -1,6 +1,5 @@
 <?php
 
-use Newscoop\Entity\User\Staff;
 use Newscoop\Log\Writer;
 
 class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
@@ -78,58 +77,6 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
             unlink($GLOBALS['g_campsiteDir'] . '/reset_cache');
         }
     }
-
-	/**
-	 * @todo tried refactoring the view init but there's an user object
- 	 * assigned to the view from some legacy code that messes up everything...
- 	 * I think really needs to be revised, because it's not a good practice to insert complex objects in the view
- 	 * @author mihaibalaceanu
- 	 */
-    /*protected function _initView()
-    {
-        $viewResource = $this->getPluginResource('view');
-        /* @var $viewResource Zend_Application_Resource_View * /
-        $view = $viewResource->getView();
-        /* @var $view Zend_View * /
-
-        $view->addScriptPath( APPLICATION_PATH . '/modules/admin/views/partials' );
-
-        global $Campsite;
-
-        // set doctype
-        $view->doctype('HTML5');
-
-        $view->helpUrl = $Campsite['site']['help_url'];
-        $locale = $_COOKIE['TOL_Language'] ?: 'en';
-        $locale_fix = array(
-            'cz' => 'cs',
-        );
-        $view->locale = $locale_fix[$locale] ?: $locale;
-
-        // set title
-        $title = !empty($Campsite['site']['title']) ? htmlspecialchars($Campsite['site']['title']) : getGS('Newscoop') . $Campsite['VERSION'];
-
-        $view->headTitle($title . ' (powered by Zend)')
-            ->setSeparator(' - ');
-
-        // set placeholders
-        $view->placeholder('title')->setPrefix('<h1>')->setPostfix('</h1>');
-
-        // content sidebar
-        // not using prefix/postfix to detect if is empty
-        $view->placeholder('sidebar')
-            ->setSeparator('</div><div class="sidebar">' . "\n");
-
-        // flash messenger
-        $flashMessenger = Zend_Controller_Action_HelperBroker::getStaticHelper('FlashMessenger');
-        if ($flashMessenger->hasMessages()) {
-            $view = $this->getResource('view');
-            $view->messages = $flashMessenger->getMessages();
-        }
-
-        return $viewResource;
-    }
- 	*/
 
     /**
      * Init doctype & view - first function using it
@@ -258,11 +205,4 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 
         Zend_Form::setDefaultTranslator($translate);
     }
-
-    /*protected function _initView()
-    {
-        // setup layout
-        $this->bootstrap( "Layout" );
-       	$layout = $this->getResource( "layout" );
-    }*/
 }

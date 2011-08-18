@@ -57,7 +57,7 @@ class WidgetManager
         global $g_user;
 
         if ($uid === NULL) {
-            $uid = $g_user->getUserId();
+            $uid = $g_user->getId();
         }
 
         // get all widget extensions
@@ -89,7 +89,7 @@ class WidgetManager
             FROM ' . Extension_Extension::TABLE . ' w
                 INNER JOIN ' . WidgetManagerDecorator::TABLE . ' wcw
                 ON w.id = wcw.fk_widget_id
-            WHERE wcw.fk_user_id = ' . $g_user->getUserId() . '
+            WHERE wcw.fk_user_id = ' . $g_user->getId() . '
                 AND wcw.fk_widgetcontext_id = ' . $context->getId() . '
             ORDER BY `order`';
         $rows = $g_ado_db->GetAll($queryStr);
@@ -125,7 +125,7 @@ class WidgetManager
 
         // set uid
         if (empty($uid)) {
-            $uid = $g_user->getUserId();
+            $uid = $g_user->getId();
         }
 
         if ($order === NULL) {
@@ -138,7 +138,7 @@ class WidgetManager
         }
 
         // generate uniq id
-        $id = 'w' . substr(sha1(uniqid() . $g_user->getUserId()), -12);
+        $id = 'w' . substr(sha1(uniqid() . $g_user->getId()), -12);
 
         // add widget
         $widget = new WidgetManagerDecorator(array(

@@ -1,0 +1,19 @@
+<?php $this->placeholder('title')->set(getGS('Users')); ?>
+
+<table class="users">
+<tr>
+    <th><?php putGS('Username'); ?></th>
+    <th><?php putGS('Full name'); ?></th>
+    <th><?php putGS('E-mail'); ?></th>
+</tr>
+<?php foreach ($this->users as $user) { ?>
+<tr>
+    <td><a href="<?php echo $this->url(array(
+        'action' => 'edit',
+        'user' => $user->getId(),
+    )); ?>"><?php echo $user->getUsername(); ?></a></td>
+    <td><?php echo $user->getFirstName(); ?> <?php echo $user->getLastName(); ?></td>
+    <td><?php echo $user->getEmail(); ?></td>
+</tr>
+<?php } ?>
+</table>

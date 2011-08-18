@@ -1,11 +1,12 @@
 <?php
 /**
- * @package Campsite
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-/**
- * Includes
- */
+use Newscoop\Entity\User;
+
 require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Country.php');
@@ -13,61 +14,72 @@ require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObjec
 require_once($GLOBALS['g_campsiteDir'].'/include/get_ip.php');
 
 /**
- * @package Campsite
  */
-final class MetaUser extends MetaDbObject {
+final class MetaUser
+{
+    /** @var Newscoop\Entity\User */
+    protected $entity;
 
-    public function __construct($p_userId = null)
+    /** @var array */
+    protected $callbacks = array();
+
+    /** @var int */
+    public $identifier;
+
+    /** @var string */
+    public $uname;
+
+    /** @var string */
+    public $name;
+
+    /** @var string */
+    public $email;
+
+    /** @var bool */
+    public $defined;
+
+    /**
+     * @param Newscoop\Entity\User $user
+     */
+    public function __construct(User $user = NULL)
     {
-        $this->m_dbObject = new User($p_userId);
-        if (!$this->m_dbObject->exists()) {
-            $this->m_dbObject = new User();
+        if (!$user) {
+            return;
         }
 
-        $this->m_properties['identifier'] = 'Id';
-        $this->m_properties['name'] = 'Name';
-        $this->m_properties['uname'] = 'UName';
-        $this->m_properties['email'] = 'EMail';
-        $this->m_properties['city'] = 'City';
-        $this->m_properties['str_address'] = 'StrAddress';
-        $this->m_properties['state'] = 'State';
-        $this->m_properties['phone'] = 'Phone';
-        $this->m_properties['fax'] = 'Fax';
-        $this->m_properties['contact'] = 'Contact';
-        $this->m_properties['second_phone'] = 'Phone2';
-        $this->m_properties['postal_code'] = 'PostalCode';
-        $this->m_properties['employer'] = 'Employer';
-        $this->m_properties['position'] = 'Position';
-        $this->m_properties['interests'] = 'Interests';
-        $this->m_properties['how'] = 'How';
-        $this->m_properties['languages'] = 'Languages';
-        $this->m_properties['improvements'] = 'Improvements';
-        $this->m_properties['field1'] = 'Field1';
-        $this->m_properties['field2'] = 'Field2';
-        $this->m_properties['field3'] = 'Field3';
-        $this->m_properties['field4'] = 'Field4';
-        $this->m_properties['field5'] = 'Field5';
-        $this->m_properties['text1'] = 'Text1';
-        $this->m_properties['text2'] = 'Text2';
-        $this->m_properties['text3'] = 'Text3';
-        $this->m_properties['title'] = 'Title';
-        $this->m_properties['age'] = 'Age';
-        $this->m_properties['country_code'] = 'CountryCode';
-        $this->m_properties['gender'] = 'Gender';
-        $this->m_properties['pref1'] = 'Pref1';
-        $this->m_properties['pref2'] = 'Pref2';
-        $this->m_properties['pref3'] = 'Pref3';
-        $this->m_properties['pref4'] = 'Pref4';
-        $this->m_properties['password_encrypted'] = 'Password';
+        $this->entity = $user;
 
-        $this->m_customProperties['country'] = 'getCountry';
-        $this->m_customProperties['defined'] = 'defined';
-        $this->m_customProperties['logged_in'] =  'isLoggedIn';
-        $this->m_customProperties['blocked_from_comments'] = 'isBlockedFromComments';
-        $this->m_customProperties['subscription'] = 'getSubscription';
-        $this->m_customProperties['is_admin'] = 'isAdmin';
-    } // fn __construct
+        $this->identifier = $user->getId();
+        $this->name = trim($user->getFirstName() . ' ' . $user->getLastName());
+        $this->uname = $user->getUsername();
+        $this->email = $user->getEmail();
+        $this->defined = $user->getId() > 0;
+        $this->is_admin = true; // TODO add permissions based check
 
+        $this->callbacks = array(
+            'country' => array($this, 'getCountry'),
+            'logged_in' => array($this, 'isLoggedIn'),
+            'blocked_from_comments' => array($this, 'isBlockedFromComments'),
+            'subscription' => array($this, 'getSubscription'),
+            'is_admin' => array($this, 'isAdmin'),
+        );
+    }
+
+    /**
+     * @param string $property
+     */
+    public function __get($property)
+    {
+        if (empty($this->callbacks[$property])) {
+            throw new InvalidArgumentException("Property '$property' not defined");
+        }
+
+        if (empty($this->entity)) {
+            return;
+        }
+
+        return call_user_func($this->callbacks[$property]);
+    }
 
     /**
      * Returns the name of the country of the registered user.
@@ -76,7 +88,7 @@ final class MetaUser extends MetaDbObject {
      */
     protected function getCountry()
     {
-        $countryCode = $this->m_dbObject->getProperty('CountryCode');
+        $countryCode = $this->entity->getAttribute('CountryCode');
         $smartyObj = CampTemplate::singleton();
         $contextObj = $smartyObj->get_template_vars('gimme');
         $country = new Country($countryCode, $contextObj->language->number);
@@ -95,10 +107,7 @@ final class MetaUser extends MetaDbObject {
      */
     public function has_permission($p_permission)
     {
-        if ($this->m_dbObject->hasPermission($p_permission)) {
-            return true;
-        }
-        return false;
+        return $this->entity->hasPermission($p_permission);
     }
 
 
@@ -107,8 +116,10 @@ final class MetaUser extends MetaDbObject {
      *
      * @return bool
      */
-    protected function isAdmin() {
-        return $this->m_dbObject->isAdmin();
+    protected function isAdmin()
+    {
+        // TODO use acl
+        return True;
     }
 
 
@@ -120,51 +131,32 @@ final class MetaUser extends MetaDbObject {
     protected function isLoggedIn()
     {
         $auth = Zend_Auth::getInstance();
-        $context = CampTemplate::singleton()->context();
-
-        if ($context->login_action->defined
-            && $context->login_action->ok
-            && $context->login_action->user_name == $this->uname
-            && $this->uname != '') {
-            return true;
-        }
-
-        return $auth->hasIdentity() && $this->m_dbObject->getKeyId() == CampRequest::GetVar('LoginUserKey');
+        return $auth->hasIdentity() && $auth->getIdentity() == $this->entity->getId();
     }
 
-
-    protected function isBlockedFromComments() {
+    protected function isBlockedFromComments()
+    {
         global $controller;
+
         $publication_id = CampTemplate::singleton()->context()->publication->identifier;
         $userIp = getIp();
         $repositoryAcceptance = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment\Acceptance');
         $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
-        return (int)$repositoryAcceptance->checkParamsBanned($this->m_dbObject->getRealName(), $this->m_dbObject->getEmail(), $userIp, $publication_id);
+        return (int) $repositoryAcceptance->checkParamsBanned($this->name, $this->email, $userIp, $publication_id);
     }
 
 
-    protected function getSubscription() {
+    protected function getSubscription()
+    {
+        if (empty($this->entity)) {
+            return;
+        }
+
         $publicationId = CampTemplate::singleton()->context()->publication->identifier;
-        $subscriptions = Subscription::GetSubscriptions($publicationId, $this->m_dbObject->getUserId());
+        $subscriptions = Subscription::GetSubscriptions($publicationId, $this->entity->getId());
         if (empty($subscriptions)) {
             return new MetaSubscription();
         }
         return new MetaSubscription($subscriptions[0]->getSubscriptionId());
-    }
-
-    /**
-     * Check user token
-     *
-     * @param string
-     * @return bool
-     */
-    public function checkToken($token)
-    {
-         $return = $token == $this->m_dbObject->getKeyId();
-         if ($return) { // change key
-             $this->m_dbObject->initLoginKey();
-         }
-
-         return $return;
     }
 }

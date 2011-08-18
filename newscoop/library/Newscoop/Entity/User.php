@@ -46,13 +46,14 @@ class User implements \Zend_Acl_Role_Interface
     private $password;
 
     /**
-     * @Column(type="string", length="80", nullable=True)
+     * @Column(type="string", length="80", name="Name", nullable=True)
      * @var string
      */
     private $first_name;
 
     /**
-     * @Column(type="string", length="80", nullable=True)
+     * @TODO add new db column
+     * @Column(type="string", length="80", name="Field1", nullable=True)
      * @var string
      */
     private $last_name;
@@ -85,12 +86,18 @@ class User implements \Zend_Acl_Role_Interface
     private $groups;
 
     /**
+     * @OneToMany(targetEntity="UserAttribute", mappedBy="user", cascade={"ALL"}, indexBy="attribute")
+     */
+    private $attributes;
+
+    /**
      */
     public function __construct()
     {
         $this->created = new \DateTime();
         $this->groups = new ArrayCollection();
         $this->token = mt_rand((int) "1 000 000 000", (int) "9 999 999 999");
+        $this->attributes = new ArrayCollection();
     }
 
     /**
@@ -319,6 +326,19 @@ class User implements \Zend_Acl_Role_Interface
     public function getRoleId()
     {
         return $this->role ? $this->role->getId() : 0;
+    }
+
+    /**
+     * Add attribute
+     *
+     * @param string $name
+     * @param string $value
+     * @return Newscoop\Entity\User
+     */
+    public function addAttribute($name, $value)
+    {
+        $this->attributes[$name] = new UserAttribute($name, $value, $this);
+        return $this;
     }
 
     /**

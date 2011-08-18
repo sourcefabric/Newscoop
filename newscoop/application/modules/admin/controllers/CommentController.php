@@ -116,7 +116,7 @@ class Admin_CommentController extends Zend_Controller_Action
                                                ('edit' => $view->baseUrl("admin/articles/edit.php?") . $view->linkArticle($thread),
                                                 'get' => $view->baseUrl("admin/articles/get.php?") . $view->linkArticle($thread)),
                                                'forum' => array('name' => $forum->getName()),
-                                               'section' => array('name' => $section->getName())),);
+                                               'section' => array('name' => ($section) ? $section->getName() : null)),);
             });
 
         $table->setOption('fnDrawCallback', 'datatableCallback.draw')

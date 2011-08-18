@@ -7,6 +7,8 @@
 
 namespace Newscoop\Services;
 
+use Newscoop\Entity\User;
+
 class UserServiceTest extends \PHPUnit_Framework_TestCase
 {
     /** @var Newscoop\Services\UserService */
@@ -56,10 +58,7 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
             ->method('getIdentity')
             ->will($this->returnValue(1));
 
-        $this->em->expects($this->once())
-            ->method('getRepository')
-            ->with($this->equalTo('Newscoop\Entity\User'))
-            ->will($this->returnValue($this->repository));
+        $this->expectGetRepository();
 
         $this->repository->expects($this->once())
             ->method('find')
@@ -77,5 +76,37 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(false));
 
         $this->assertNull($this->service->getCurrentUser());
+    }
+
+    public function testFindAll()
+    {
+        $this->expectGetRepository();
+
+        $this->repository->expects($this->once())
+            ->method('findAll')
+            ->with()
+            ->will($this->returnValue(array(1, 2)));
+
+        $this->assertEquals(array(1, 2), $this->service->findAll());
+    }
+
+    public function testFind()
+    {
+        $user = new User();
+        $this->expectGetRepository();
+        $this->repository->expects($this->once())
+            ->method('find')
+            ->with($this->equalTo(1))
+            ->will($this->returnValue($user));
+
+        $this->assertEquals($user, $this->service->find(1));
+    }
+
+    protected function expectGetRepository()
+    {
+        $this->em->expects($this->once())
+            ->method('getRepository')
+            ->with($this->equalTo('Newscoop\Entity\User'))
+            ->will($this->returnValue($this->repository));
     }
 }

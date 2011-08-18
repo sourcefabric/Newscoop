@@ -3213,6 +3213,19 @@ LOCK TABLES `resource` WRITE;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+CREATE TABLE IF NOT EXISTS `audit_event` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `resource_type` varchar(80) NOT NULL,
+  `resource_id` varchar(80) DEFAULT NULL,
+  `resource_title` varchar(255) DEFAULT NULL,
+  `resource_diff` longtext,
+  `action` varchar(80) NOT NULL,
+  `created` datetime NOT NULL,
+  `is_public` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
