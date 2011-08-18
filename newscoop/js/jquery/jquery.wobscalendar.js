@@ -2,9 +2,11 @@
 	
 	var defaults = {
 		'name' : 'Wobs Calendar',
+		'namespace': 'wobs',
 		'defaultView' : 'month',
 		'date' : new Date(),
-		'dayNames': ['Sun','Mon','Tue','Wed','Thu','Fri','Sat']
+		'dayNames': ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+		'monthNames': ['January','February','March','April','May','June','July','August','September','October','November','December']
     };
   
 	var methods = {
@@ -49,38 +51,60 @@
 	function WobsCalendar(element, options) {
 		
 		var t = this;
+	
+		var _articles = [];
+		var _date_cache = [];	
+		var _start = undefined;
+		var _end = undefined;
+		var _date = options.date;
+		var _view = options.defaultView;
+		var _header = undefined;
 		
 		this.options = options;
 		
-		var _articles = [];
-		var _date_cache = [];
-		var _element = element[0];
-		var _date = options.date;
-		var _month_lengths = [];
-		
-		var _start = undefined;
-		var _end = undefined;
-		
+		t.getCalendarDate = getCalendarDate;
+		t.setCalendarDate = setCalendarDate;
 		t.render = render;
-		t.renderArticles = renderArticles;
 	
-		if ($.isFunction(options.articles)) {
-			t.getArticles = options.articles;
-		}
-		
 		function render() {
-			//element.append("Cool Plugin: ")
-				//.append(options.name);
+			var header;
+			
+			_header = new Header(t, element, options);
 				
-			if(options.defaultView === 'month') {
+			if (_view === 'month') {
 				monthView();
 			}
 			
-			this.renderArticles();
+			renderArticles();
+		}
+		
+		function getCalendarDate() {
+			return _date;
+		}
+		
+		function setCalendarDate(date) {
+			_date = date;
+			
+			//set these to empty date boxes.
+			for (var i=0; i<_date_cache.length; i++) {
+				_date_cache[i].clear();
+			}
+			
+			if (_view === 'month') {
+				setMonthViewDates();
+			}
+			
+			renderArticles();
 		}
 		
 		function renderArticles() {
-			t.getArticles(_start, _end, updateCalendar);
+			
+			if ($.isFunction(options.articles)) {
+				if (_view === 'month') {
+					_header.disableHeader();
+				}
+				options.articles(_start, _end, updateCalendar);
+			}	
 		}
 		
 		function updateCalendar(articles) {
@@ -92,6 +116,10 @@
 				
 				cached_date.setTitle(articles[i].title);
 				cached_date.setThumbnail(articles[i].image);
+			}
+			
+			if (_view === 'month') {
+				_header.enableHeader();
 			}
 		}
 		
@@ -122,7 +150,7 @@
 				
 				thead
 					.find("tr")
-					.append(th);
+						.append(th);
 			}
 			
 			//make the <tbody> <tr>s
@@ -156,36 +184,158 @@
 			table.append(thead)
 				.append(tbody);
 			
-			setDates();
+			setMonthViewDates();
 				
 			$(element).append(table);
+		}	
+		
+		function setMonthViewDates() {
+			var y, m, begin, s_dofw;
 			
-			function setDates() {
-				var y, m, begin, s_dofw;
-				
-				y = _date.getFullYear();
-				m = _date.getMonth();
-				
-				begin = new Date(y, m, 1);
-				s_dofw = begin.getDay();
+			y = _date.getFullYear();
+			m = _date.getMonth();
 			
-				var d = 1-s_dofw;
-				var tmp_date;
-				for (var c=0; c<_date_cache.length; c++) {
-					tmp_date = new Date(y, m, d);
-					
-					if(c == 0) {
-						_start = tmp_date;
-					}
-					else if(c == _date_cache.length-1) {
-						_end = tmp_date;
-					}
-					
-					_date_cache[c].setDate(tmp_date);
-					d++;
+			begin = new Date(y, m, 1);
+			s_dofw = begin.getDay();
+		
+			var d = 1-s_dofw;
+			var tmp_date;
+			for (var c=0; c<_date_cache.length; c++) {
+				tmp_date = new Date(y, m, d);
+				
+				if(c == 0) {
+					_start = tmp_date;
 				}
+				else if(c == _date_cache.length-1) {
+					_end = tmp_date;
+				}
+				
+				_date_cache[c].setDate(tmp_date);
+				d++;
 			}
-		}		
+		}
+	}
+	
+	function Header(calendar, element, options) {
+		
+		var t, table, tm;
+		
+		t = this;
+		ns = options.namespace;
+		
+		t.disableHeader = disableHeader;
+		t.enableHeader = enableHeader;
+		
+		table = $('<table class="'+ns+'-header"/>');
+		
+		table.append('<tbody/>')
+			.find('tbody')
+				.append('<tr/>')
+					.find('tr')
+						.append('<td class="'+ns+'-button-prev"> << </td>')
+						.append('<td class="'+ns+'-header-title"></td>')
+						.append('<td class="'+ns+'-button-next"> >> </td>');
+		
+		updateHeader(calendar.getCalendarDate());
+		
+		table.find('.'+ns+'-button-prev').click(function(){
+			var date, mm, yyyy, newDate;
+			
+			if ($(this).hasClass(ns + '-state-disabled')) {
+				return;
+			}
+			
+			date = calendar.getCalendarDate();
+			
+			yyyy = date.getFullYear();
+			mm = date.getMonth();
+			
+			if (mm > 0) {
+				mm = mm - 1;
+			}
+			else {
+				mm = 11;
+				yyyy = yyyy -1;
+			}
+			
+			newDate = new Date(yyyy, mm);
+			
+			updateHeader(newDate);
+			calendar.setCalendarDate(newDate);			
+		});
+		
+		table.find('.'+ns+'-button-next').click(function(){
+			var date, mm, yyyy, newDate;
+			
+			if ($(this).hasClass(ns + '-state-disabled')) {
+				return;
+			}
+			
+			date = calendar.getCalendarDate();
+			
+			yyyy = date.getFullYear();
+			mm = date.getMonth();
+			mm = mm + 1;
+			
+			newDate = new Date(yyyy, mm);
+			
+			updateHeader(newDate);
+			calendar.setCalendarDate(newDate);
+		});
+		
+		element.append(table);
+		
+		function disableHeader() {
+			
+			disableButton('prev');
+			disableButton('next');
+			
+			deactivateButton('prev');
+			deactivateButton('next');	
+		}
+		
+		function enableHeader() {
+			
+			activateButton('prev');
+			activateButton('next');
+			
+			enableButton('prev');
+			enableButton('next');
+		}
+		
+		function activateButton(buttonName) {
+			table.find('.'+ns+'-button-' + buttonName)
+				.addClass(ns + '-state-active');
+		}	
+		
+		function deactivateButton(buttonName) {
+			table.find('.'+ns+'-button-' + buttonName)
+				.removeClass(ns + '-state-active');
+		}
+			
+		function disableButton(buttonName) {
+			table.find('.'+ns+'-button-' + buttonName)
+				.addClass(ns + '-state-disabled');
+		}
+			
+		function enableButton(buttonName) {
+			table.find('.'+ns+'-button-' + buttonName)
+				.removeClass(ns + '-state-disabled');
+		}
+		
+		function updateHeader(date) {
+			var month;
+			
+			yyyy = date.getFullYear();
+			month = date.getMonth();
+			month = options.monthNames[month]; 
+			
+			table.find('.'+ns+'-header-title')
+				.empty()
+				.append(month+" "+yyyy);
+		}
+		
+		return t;
 	}
 	
 	function DayBox(id, td) {
