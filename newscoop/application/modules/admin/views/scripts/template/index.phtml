@@ -197,7 +197,7 @@ $(function() {
 
     // check/uncheck all items
     $('thead input:checkbox').change(function() {
-        var checked = $(this).attr("checked");
+        var checked = (typeof $(this).attr("checked") === 'undefined') ? false : true;
         var table = $(this).closest('table');
         $('tbody input:checkbox', table).each(function() {
             $(this).attr("checked", checked);
