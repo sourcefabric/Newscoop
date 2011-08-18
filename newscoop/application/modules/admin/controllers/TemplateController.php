@@ -487,7 +487,7 @@ class Admin_TemplateController extends Zend_Controller_Action
      */
     private function formatName($name, $ext = '')
     {
-        $name = trim(strtr(basename($name), '?~#%*&|"\'\\/<>', '_____________'), '_');
+        $name = strtr(basename($name), '?~#%*&|"\'\\/<>', '_____________');
         if (!empty($ext)) {
             $current = pathinfo($name, PATHINFO_EXTENSION);
             if ($current != $ext) {
