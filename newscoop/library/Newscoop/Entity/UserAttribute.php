@@ -9,23 +9,25 @@ namespace Newscoop\Entity;
 
 /**
  * @Entity
+ * @Table(name="user_attribute")
  */
 class UserAttribute
 {
     /**
      * @Id @ManyToOne(targetEntity="User", inversedBy="attributes")
+     * @JoinColumn(name="user_id", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;
 
     /**
-     * @Id @Column(type="string")
+     * @Id @Column(type="string", length="255")
      * @var string
      */
     private $attribute;
 
     /**
-     * @Column(type="string")
+     * @Column(type="string", length="255")
      * @var string
      */
     private $value;
@@ -37,8 +39,18 @@ class UserAttribute
      */
     public function __construct($name, $value, User $user)
     {
-        $this->attribute = $name;
-        $this->value = $value;
+        $this->attribute = (string) $name;
+        $this->value = (string) $value;
         $this->user = $user;
+    }
+
+    /**
+     * Get attribute value
+     *
+     * @return string
+     */
+    public function getValue()
+    {
+        return $this->value;
     }
 }

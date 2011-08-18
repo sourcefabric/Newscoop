@@ -16,7 +16,7 @@ class UserTest extends \RepositoryTestCase
 
     public function setUp()
     {
-        parent::setUp('Newscoop\Entity\User');
+        parent::setUp('Newscoop\Entity\User', 'Newscoop\Entity\UserAttribute');
         $this->repository = $this->em->getRepository('Newscoop\Entity\User');
     }
 
@@ -119,5 +119,24 @@ class UserTest extends \RepositoryTestCase
         $user = new User();
         $user->setRole($role);
         $this->assertEquals(3, $user->getRoleId());
+    }
+
+    public function testAttributes()
+    {
+        $user = new User();
+        $user->setUsername('test');
+        $this->em->persist($user);
+        $this->em->flush();
+
+        $this->assertNull($user->getAttribute('city'));
+        $this->assertEquals($user, $user->addAttribute('city', 'praha'));
+        $this->assertEquals('praha', $user->getAttribute('city'));
+
+        $this->em->persist($user);
+        $this->em->flush();
+        unset($user);
+
+        $user = array_shift($this->repository->findAll());
+        $this->assertEquals('praha', $user->getAttribute('city'));
     }
 }

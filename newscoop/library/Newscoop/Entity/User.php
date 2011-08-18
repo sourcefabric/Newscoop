@@ -12,8 +12,6 @@ use Doctrine\Common\Collections\ArrayCollection,
     Newscoop\Entity\Acl\Role;
 
 /**
- * User entity.
- *
  * @Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
  * @Table(name="liveuser_users")
  */
@@ -82,11 +80,13 @@ class User implements \Zend_Acl_Role_Interface
      *      joinColumns={@joinColumn(name="perm_user_id", referencedColumnName="Id")},
      *      inverseJoinColumns={@joinColumn(name="group_id", referencedColumnName="group_id")}
      *      )
+     * @var Doctrine\Common\Collections\Collection;
      */
     private $groups;
 
     /**
-     * @OneToMany(targetEntity="UserAttribute", mappedBy="user", indexBy="attribute")
+     * @OneToMany(targetEntity="UserAttribute", mappedBy="user", cascade={"ALL"}, indexBy="attribute")
+     * @var Doctrine\Common\Collections\Collection;
      */
     private $attributes;
 
@@ -96,12 +96,12 @@ class User implements \Zend_Acl_Role_Interface
     {
         $this->created = new \DateTime();
         $this->groups = new ArrayCollection();
-        $this->token = mt_rand((int) "1 000 000 000", (int) "9 999 999 999");
         $this->attributes = new ArrayCollection();
+        $this->status = self::STATUS_INACTIVE;
     }
 
     /**
-     * Get id.
+     * Get id
      *
      * @return int
      */
@@ -111,7 +111,7 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
-     * Set username.
+     * Set username
      *
      * @param string $username
      * @return Newscoop\Entity\User
@@ -123,7 +123,7 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
-     * Get username.
+     * Get username
      *
      * @return string
      */
@@ -133,7 +133,7 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
-     * Set password.
+     * Set password
      *
      * @param string $password
      * @return Newscoop\Entity\User
@@ -151,7 +151,7 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
-     * Check password.
+     * Check password
      *
      * @param string $password
      * @return bool
@@ -172,7 +172,7 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
-     * Get random string.
+     * Get random string
      *
      * @param int $length
      * @param string $allowed_chars
@@ -189,7 +189,7 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
-     * Set first name.
+     * Set first name
      *
      * @param string $first_name
      * @return Newscoop\Entity\User
@@ -201,7 +201,7 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
-     * Get first name.
+     * Get first name
      *
      * @return string
      */
@@ -211,7 +211,7 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
-     * Set last name.
+     * Set last name
      *
      * @param string $last_name
      * @return Newscoop\Entity\User
@@ -223,7 +223,7 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
-     * Get last name.
+     * Get last name
      *
      * @return string
      */
@@ -233,19 +233,29 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
-     * Set status.
+     * Set status
      *
      * @param int $status
      * @return Newscoop\Entity\User
      */
     public function setStatus($status)
     {
+        static $statuses = array(
+            self::STATUS_INACTIVE,
+            self::STATUS_ACTIVE,
+            self::STATUS_BANNED,
+        );
+
+        if (!in_array($status, $statuses)) {
+            throw new \InvalidArgumentException("Unknown status '$status'");
+        }
+
         $this->status = (int) $status;
         return $this;
     }
 
     /**
-     * Get status.
+     * Get status
      *
      * @return int
      */
@@ -255,7 +265,7 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
-     * Test if is active.
+     * Test if user is active
      *
      * @return bool
      */
@@ -265,7 +275,7 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
-     * Set email.
+     * Set email
      *
      * @param string $email
      * @return Newscoop\Entity\User
@@ -277,7 +287,7 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
-     * Get email.
+     * Get email
      *
      * @return string
      */
@@ -342,6 +352,22 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * Get attribute
+     *
+     * @param string $name
+     * @param string $value
+     * @return mixed
+     */
+    public function getAttribute($name)
+    {
+        if (isset($this->attributes[$name])) {
+            return $this->attributes[$name]->getValue();
+        }
+
+        return null;
+    }
+
+    /**
      * Check permissions
      *
      * @param string $permission
@@ -358,7 +384,7 @@ class User implements \Zend_Acl_Role_Interface
             } else {
             	return FALSE;
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             return false;
         }
     }

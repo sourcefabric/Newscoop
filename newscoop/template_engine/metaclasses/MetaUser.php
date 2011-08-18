@@ -70,15 +70,15 @@ final class MetaUser
      */
     public function __get($property)
     {
-        if (empty($this->callbacks[$property])) {
-            throw new InvalidArgumentException("Property '$property' not defined");
+        if (!empty($this->callbacks[$property])) {
+            return call_user_func($this->callbacks[$property]);
         }
 
         if (empty($this->entity)) {
-            return;
+            return null;
         }
 
-        return call_user_func($this->callbacks[$property]);
+        return $this->entity->getAttribute($property);
     }
 
     /**

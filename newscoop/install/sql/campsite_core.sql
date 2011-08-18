@@ -3213,6 +3213,7 @@ LOCK TABLES `resource` WRITE;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
+DROP TABLE IF EXISTS `audit_event`;
 CREATE TABLE IF NOT EXISTS `audit_event` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `user_id` int(11) unsigned DEFAULT NULL,
@@ -3224,7 +3225,15 @@ CREATE TABLE IF NOT EXISTS `audit_event` (
   `created` datetime NOT NULL,
   `is_public` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `user_attribute`;
+CREATE TABLE IF NOT EXISTS `user_attribute` (
+  `user_id` int(11) unsigned NOT NULL,
+  `attribute` varchar(255) NOT NULL,
+  `value` varchar(255) NOT NULL,
+  PRIMARY KEY (`user_id`,`attribute`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
