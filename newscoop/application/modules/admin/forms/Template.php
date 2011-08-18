@@ -16,13 +16,11 @@ class Admin_Form_Template extends Zend_Form
         $this->addElement('hash', 'csrf');
 
         $this->addElement('textarea', 'content', array(
-            'label' => getGS('Edit template'),
             'required' => TRUE,
         ));
 
         $this->addElement('text', 'cache_lifetime', array(
-            'label' => getGS('Cache lifetime'),
-            'class' => 'short',
+            'class' => 'short'
         ));
 
         $this->addElement('button', 'geo_filtering', array(

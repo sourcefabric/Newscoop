@@ -41,7 +41,7 @@
         'You are about to permanently delete multiple comments.',
         'Are you sure you want to do it?'
     ];
-    
+
     serverObj.translateObj = [
         '<?php putGS('Search'); ?>',
         '<?php putGS('Comments updated.'); ?>',
@@ -140,11 +140,27 @@
         </table>
         <div class="commentBtns">
             <ul>
-                <li><a href="javascript:;" id="pending_{{comment.id}}" class="action new"><?php putGS('New'); ?></a></li>
+                <li>
+                    <input type="radio" name="action_comment_{{comment.id}}" class="action new" id="pending_{{comment.id}}" value="pending"/>
+                    <label for="pending_{{comment.id}}"><?php putGS('New'); ?></label>
+                    &nbsp;&nbsp;
+                </li>
                 {% if(can.enable) %}
-                <li><a href="javascript:;" id="approved_{{comment.id}}" class="action approved"><?php putGS('Approved'); ?></a></li>
-                <li><a href="javascript:;" id="hidden_{{comment.id}}" class="action hidden"><?php putGS('Hidden'); ?></a></li>
+                <li>
+                    <input type="radio" name="action_comment_{{comment.id}}" class="action approved" id="approved_{{comment.id}}" value="approved"/>
+                    <label for="approved_{{comment.id}}"><?php putGS('Approved'); ?></label>
+
+                    &nbsp;&nbsp;
+                </li>
+                <li>
+                    <input type="radio" name="action_comment_{{comment.id}}" class="action hidden" id="hidden_{{comment.id}}" value="hidden" style="height: auto"/>
+                    <label for="hidden_{{comment.id}}"><?php putGS('Hidden'); ?></label>
+                    &nbsp;&nbsp;
+                </li>
                 {% endif %}
+
+
+
                 {% if(can.edit) %}
                 <li><a href="javascript:;" class="actionButton action-edit"><?php putGS('Quick edit'); ?></a></li>
                 {% endif %}
