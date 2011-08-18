@@ -2045,9 +2045,6 @@ class Article extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $start_date = '2010-12-01';
-        $end_date = '2010-12-30';
-
         //TODO: this function shouldn't have to rely on a custom switch in the database. (FArticle_Of_The_Day)
         //wait until Newscoop has a better architecture.
         $queryStr = "SELECT *
@@ -2056,8 +2053,8 @@ class Article extends DatabaseObject {
                     AND Articles.IdLanguage = '$p_language_id'
                     AND Articles.Published = 'Y'
                     AND Articles.Number IN ( SELECT NrArticle FROM `Xnews` WHERE FArticle_Of_The_Day = '1' AND IdLanguage = '$p_language_id' )
-                    AND DATE(Articles.PublishDate) >= '$start_date'
-                    AND DATE(Articles.PublishDate) < '$end_date'
+                    AND DATE(Articles.PublishDate) >= '$p_start_date'
+                    AND DATE(Articles.PublishDate) <= '$p_end_date'
                     AND (Articles.Type = 'news' )
             ORDER BY Articles.PublishDate asc,
                     Articles.time_updated asc";

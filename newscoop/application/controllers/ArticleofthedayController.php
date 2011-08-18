@@ -25,7 +25,11 @@ class ArticleofthedayController extends Zend_Controller_Action
         $publication_id = $params['publication_id'];
         $language_id = $params['language_id'];
 
-        $articles = Article::GetArticlesOfTheDay(null, null, $publication_id, $language_id);
+        //TODO parse these to make sure are times.
+        $start_date = $params['start'];
+        $end_date = $params['end'];
+
+        $articles = Article::GetArticlesOfTheDay($start_date, $end_date, $publication_id, $language_id);
 
         //get what we need for the json returned data.
         $results = array();
@@ -38,6 +42,13 @@ class ArticleofthedayController extends Zend_Controller_Action
 
             $json['title'] = $article->getTitle();
             $json['image'] = $this->view->baseUrl("/get_img?ImageWidth=100&ImageId=".$image->getImageId());
+
+            $date = $article->getPublishDate();
+            $date = explode(" ", $date);
+            $YMD = explode("-", $date[0]);
+
+            //month-1 is for js, months are 0-11.
+            $json['date'] = array("year"=>intval($YMD[0]), "month"=>intval($YMD[1]-1), "day"=>intval($YMD[2]));
 
             $results[] = $json;
         }
