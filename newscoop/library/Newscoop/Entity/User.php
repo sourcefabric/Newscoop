@@ -86,7 +86,7 @@ class User implements \Zend_Acl_Role_Interface
     private $groups;
 
     /**
-     * @OneToMany(targetEntity="UserAttribute", mappedBy="user", cascade={"ALL"}, indexBy="attribute")
+     * @OneToMany(targetEntity="UserAttribute", mappedBy="user", indexBy="attribute")
      */
     private $attributes;
 

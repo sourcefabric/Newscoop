@@ -8,41 +8,66 @@
 use Newscoop\Entity\User;
 
 /**
- * User form
  */
-abstract class Admin_Form_User extends Zend_Form
+class Admin_Form_User extends Zend_Form
 {
     public function init()
     {
         $this->addElement('hash', 'csrf');
 
+        $this->addElement('text', 'first_name', array(
+            'label' => getGS('First name'),
+            'filters' => array(
+                'stringTrim',
+            ),
+        ));
+
+        $this->addElement('text', 'last_name', array(
+            'label' => getGS('Last name'),
+            'filters' => array(
+                'stringTrim',
+            ),
+        ));
+
         $this->addElement('text', 'username', array(
-            'label' => getGS('Account name'),
-            'required' => true,
+            'label' => getGS('Username'),
+            'required' => TRUE,
             'filters' => array(
                 'stringTrim',
             ),
             'validators' => array(
-                array('stringLength', false, array(3, 32)),
+                array('stringLength', false, array(5, 80)),
             ),
-            'order' => 10,
         ));
+
+        $this->addElement('text', 'email', array(
+            'label' => getGS('E-mail'),
+            'filters' => array(
+                'stringTrim',
+            ),
+        ));
+
+        $this->addElement('submit', 'submit', array(
+            'label' => getGS('Add user'),
+            'ignore' => TRUE,
+        ));
+
+        return; // TODO handle rest
 
         $this->addElement('password', 'password', array(
             'label' => getGS('Password'),
-            'required' => true,
+            'required' => TRUE,
             'filters' => array(
                 'stringTrim',
             ),
             'validators' => array(
-                array('stringLength', false, array(5, 32)),
+                array('stringLength', false, array(5, 80)),
             ),
-            'order' => 20,
         ));
 
         $this->addElement('password', 'password_confirm', array( // checked with isValid
             'label' => getGS('Confirm password'),
-            'required' => true,
+            'required' => TRUE,
             'filters' => array(
                 'stringTrim',
             ),
@@ -57,7 +82,7 @@ abstract class Admin_Form_User extends Zend_Form
 
         $this->addElement('text', 'name', array(
             'label' => getGS('Name'),
-            'required' => true,
+            'required' => TRUE,
             'filters' => array(
                 'stringTrim',
             ),
@@ -65,12 +90,6 @@ abstract class Admin_Form_User extends Zend_Form
                 array('stringLength', false, array(1, 128)),
             ),
             'order' => 40,
-        ));
-
-        $this->addElement('text', 'email', array(
-            'label' => getGS('E-mail'),
-            'required' => true,
-            'order' => 50,
         ));
 
         $this->addElement('text', 'phone', array(

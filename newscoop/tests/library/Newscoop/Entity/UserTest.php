@@ -56,6 +56,22 @@ class UserTest extends \RepositoryTestCase
         $this->assertLessThan(2, time() - $user->getCreated()->getTimestamp());
     }
 
+    public function testSaveUsernameOnly()
+    {
+        $user = new User();
+        $this->repository->save($user, array(
+            'username' => 'foobar',
+        ));
+
+        $this->em->flush();
+
+        $this->assertEquals(1, $user->getId());
+        $this->assertEquals('foobar', $user->getUsername());
+        $this->assertEmpty($user->getFirstName());
+        $this->assertEmpty($user->getLastName());
+        $this->assertEmpty($user->getEmail());
+    }
+
     public function testSetPassword()
     {
         $user = new User();

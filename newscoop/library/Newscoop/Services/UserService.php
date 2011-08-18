@@ -8,13 +8,12 @@
 namespace Newscoop\Services;
 
 use Doctrine\ORM\EntityManager,
-    Newscoop\Datatable\ISource as DatatableSource;
-
+    Newscoop\Entity\User;
 
 /**
  * User service
  */
-class UserService implements DatatableSource
+class UserService
 {
     const ENTITY = 'Newscoop\Entity\User';
 
@@ -92,24 +91,33 @@ class UserService implements DatatableSource
     }
 
     /**
-     * Get data for datatable
+     * Create user
      *
-     * @param array $params
-     * @param array $cols
-     * @return array
+     * @param array $values
+     * @return Newscoop\Entity\User
      */
-    public function getData(array $params, array $cols)
+    public function create(array $values)
     {
+        $user = new User();
+        $this->em->getRepository(self::ENTITY)
+            ->save($user, $values);
+        $this->em->flush();
+        return $user;
     }
 
     /**
-     * Get data count for datatable
+     * Delete user
      *
-     * @param array $params
-     * @param array $cols
-     * @return int
+     * @param Newscoop\Entity\User $user
+     * @return void
      */
-    public function getCount(array $params, array $cols)
+    public function delete(User $user)
     {
+        if ($this->auth->getIdentity() == $user->getId()) {
+            throw new \InvalidArgumentException("You can't delete yourself");
+        }
+
+        $this->em->remove($user);
+        $this->em->flush();
     }
 }

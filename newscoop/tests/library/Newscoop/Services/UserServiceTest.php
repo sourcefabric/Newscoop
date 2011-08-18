@@ -102,6 +102,63 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($user, $this->service->find(1));
     }
 
+    public function testCreate()
+    {
+        $this->expectGetRepository();
+
+        $userdata = array(
+            'username' => 'foobar',
+            'first_name' => 'foo',
+            'last_name' => 'bar',
+            'email' => 'foo@bar.com',
+        );
+
+        $this->repository->expects($this->once())
+            ->method('save')
+            ->with($this->isInstanceOf('Newscoop\Entity\User'), $this->equalTo($userdata));
+
+        $this->em->expects($this->once())
+            ->method('flush')
+            ->with();
+
+        $this->assertInstanceOf('Newscoop\Entity\User', $this->service->create($userdata));
+    }
+
+    public function testDelete()
+    {
+        $this->auth->expects($this->once())
+            ->method('getIdentity')
+            ->will($this->returnValue(3));
+
+        $user = new User();
+        $this->em->expects($this->once())
+            ->method('remove')
+            ->with($this->equalTo($user));
+
+        $this->em->expects($this->once())
+            ->method('flush')
+            ->with();
+
+        $this->service->delete($user);
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testDeleteHimself()
+    {
+        $user = new User();
+        $property = new \ReflectionProperty($user, 'id');
+        $property->setAccessible(TRUE);
+        $property->setValue($user, 1);
+
+        $this->auth->expects($this->once())
+            ->method('getIdentity')
+            ->will($this->returnValue(1));
+
+        $this->service->delete($user);
+    }
+
     protected function expectGetRepository()
     {
         $this->em->expects($this->once())

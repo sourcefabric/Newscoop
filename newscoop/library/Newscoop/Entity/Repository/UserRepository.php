@@ -11,19 +11,30 @@ use Doctrine\ORM\EntityRepository,
     Newscoop\Entity\User;
 
 /**
- * User repository.
+ * User repository
  */
 class UserRepository extends EntityRepository
 {
+    /** @var array */
+    private static $defaults = array(
+        'password' => '',
+        'first_name' => '',
+        'last_name' => '',
+        'email' => '',
+        'status' => User::STATUS_INACTIVE,
+    );
+
     /**
-     * Save user.
+     * Save user
      *
      * @param Newscoop\Entity\User $user
      * @param array $values
      * @return void
      */
-    public function save(User $user, array $values = array())
+    public function save(User $user, array $values)
     {
+        $values += self::$defaults;
+
         $user->setUsername($values['username']);
         $user->setPassword($values['password']);
         $user->setFirstName($values['first_name']);

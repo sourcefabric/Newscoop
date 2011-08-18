@@ -412,21 +412,21 @@ if ($showUserMenu) {
             'label' => getGS('Users'),
             'module' => 'admin',
             'controller' => 'user',
+            'action' => 'index',
             'pages' => array(
                 array(
-                    'label' => getGS('Add new user'),
+                    'label' => getGS('Add user'),
                     'module' => 'admin',
                     'controller' => 'user',
-                    'action' => 'add',
+                    'action' => 'create',
                     'visible' => false,
                 ),
                 array(
                     'label' => getGS('Edit user'),
                     'module' => 'admin',
                     'controller' => 'user',
-                    'action' => 'edit',
+                    'action' => 'update',
                     'visible' => false,
-                    'reset_params' => false,
                     'pages' => array(
                         array(
                             'label' => getGS('Edit permissions'),
