@@ -1,12 +1,12 @@
 (function( $ ){
 	
 	var defaults = {
-		'name' : 'Wobs Calendar',
 		'namespace': 'wobs',
 		'defaultView' : 'month',
 		'date' : new Date(),
 		'dayNames': ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
-		'monthNames': ['January','February','March','April','May','June','July','August','September','October','November','December']
+		'monthNames': ['January','February','March','April','May','June','July','August','September','October','November','December'],
+		'navigation': true
     };
   
 	var methods = {
@@ -24,12 +24,7 @@
 			});
 		
 			return this;
-		},
-		//moves to previous month/week
-		previous : function() {},
-		//moves to next month/week
-		next : function(){}
-	
+		}
 	};
 		
 	$.fn.wobscalendar = function( method ) {
@@ -52,7 +47,7 @@
 		
 		var t = this;
 	
-		var _articles = [];
+		var _get_articles = undefined;
 		var _date_cache = [];	
 		var _start = undefined;
 		var _end = undefined;
@@ -65,9 +60,13 @@
 		t.getCalendarDate = getCalendarDate;
 		t.setCalendarDate = setCalendarDate;
 		t.render = render;
+		
+		if ($.isFunction(options.articles)) {
+			_get_articles = options.articles;
+			delete options.articles;
+		}
 	
 		function render() {
-			var header;
 			
 			_header = new Header(t, element, options);
 				
@@ -99,26 +98,35 @@
 		
 		function renderArticles() {
 			
-			if ($.isFunction(options.articles)) {
-				if (_view === 'month') {
+			if (_get_articles !== undefined) {
+				if (_view === 'month' && options.navigation === true) {
 					_header.disableHeader();
 				}
-				options.articles(_start, _end, updateCalendar);
+				_get_articles(_start, _end, updateCalendar);
 			}	
 		}
 		
 		function updateCalendar(articles) {
-			var cached_date, tmpDate;
+			var cached_date, tmpDate, article;
 				
 			for (var i=0; i<articles.length; i++) {
-				tmpDate = new Date(articles[i].date.year, articles[i].date.month, articles[i].date.day);
+				article = articles[i];
+				
+				tmpDate = new Date(article.date.year, article.date.month, article.date.day);
 				cached_date = retrieveDateFromCache(tmpDate);
 				
-				cached_date.setTitle(articles[i].title);
-				cached_date.setThumbnail(articles[i].image);
+				if (article.title !== undefined) {
+					cached_date.setTitle(article.title);
+				}
+				if (article.image !== undefined) {
+					cached_date.setThumbnail(article.image);
+				}
+				if (article.url !== undefined) {
+					cached_date.setUrl(article.url);
+				}		
 			}
 			
-			if (_view === 'month') {
+			if (_view === 'month' && options.navigation === true) {
 				_header.enableHeader();
 			}
 		}
@@ -218,7 +226,7 @@
 	
 	function Header(calendar, element, options) {
 		
-		var t, table, tm;
+		var t, table, tm, html='';
 		
 		t = this;
 		ns = options.namespace;
@@ -228,13 +236,21 @@
 		
 		table = $('<table class="'+ns+'-header"/>');
 		
-		table.append('<tbody/>')
-			.find('tbody')
-				.append('<tr/>')
-					.find('tr')
-						.append('<td class="'+ns+'-button-prev"> << </td>')
-						.append('<td class="'+ns+'-header-title"></td>')
-						.append('<td class="'+ns+'-button-next"> >> </td>');
+		html = '<tbody><tr>';
+		
+		if (options.navigation === true) {
+			html = html + '<td class="'+ns+'-button-prev"> << </td>';
+		}	
+		
+		html = html + '<td class="'+ns+'-header-title"></td>';
+		
+		if (options.navigation === true) {
+			html = html + '<td class="'+ns+'-button-next"> >> </td>';
+		}
+		
+		html = html + '</tr></tbody>';
+		
+		table.append(html);
 		
 		updateHeader(calendar.getCalendarDate());
 		
@@ -357,11 +373,11 @@
 		td.append('<div class="wobs-date-content"/>').find("div")
 			.append('<div class="wobs-date-label"/>')
 			.append('<div class="wobs-date-title"/>');
-			//.width("125px")
-			//.height("120px");
 		
 		td.click(function(){
-			alert(_date.getDate());
+			if (_url !== undefined) {
+				window.open(_url);
+			}
 		});
 		
 		function setDate(date) {

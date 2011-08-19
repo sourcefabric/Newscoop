@@ -16,6 +16,22 @@ class ArticleofthedayController extends Zend_Controller_Action
 
     public function indexAction()
     {
+        $request = $this->getRequest();
+
+        $date = $request->getParam('date', date("Y/m/d"));
+        $date = explode("/", $date);
+
+        if (isset($date[0])) {
+            $this->view->year = $date[0];
+        }
+        if (isset($date[1])) {
+            $this->view->month = $date[1]-1;
+        }
+        if (isset($date[2])) {
+            $this->view->day = $date[2];
+        }
+
+        $this->view->nav = $request->getParam('navigation', true);
         $this->view->gimme = CampTemplate::singleton()->context();
     }
 
@@ -35,9 +51,11 @@ class ArticleofthedayController extends Zend_Controller_Action
         $results = array();
 
         foreach ($articles as $article) {
+            $article_number = $article->getArticleNumber();
+
             $json = array();
 
-            $images = ArticleImage::GetImagesByArticleNumber($article->getArticleNumber());
+            $images = ArticleImage::GetImagesByArticleNumber($article_number);
             $image = $images[0];
 
             $json['title'] = $article->getTitle();
@@ -49,6 +67,8 @@ class ArticleofthedayController extends Zend_Controller_Action
 
             //month-1 is for js, months are 0-11.
             $json['date'] = array("year"=>intval($YMD[0]), "month"=>intval($YMD[1]-1), "day"=>intval($YMD[2]));
+
+            $json['url'] = ShortURL::GetURL($publication_id, $language_id, null, null, $article_number);
 
             $results[] = $json;
         }

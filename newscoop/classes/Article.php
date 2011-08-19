@@ -2041,6 +2041,25 @@ class Article extends DatabaseObject {
         return $languages;
     } // fn GetAllLanguages
 
+    /**
+     * Gets a list of articles marked as "Article of the Day"
+     *
+     * @param string $p_start_date - yyyy-mm-dd
+     *      Find articles published starting from this date.
+     *
+     * @param string $p_end_date - yyyy-mm-dd
+     *      Find articles published before or on this date..
+     *
+     * @param int $p_publicationId -
+     *      The publication ID.
+     *
+     * @param int $p_languageId -
+     *      The language ID.
+     *
+     * @return array
+     *     Return an array of Article objects with indexes in sequential order
+     *     starting from zero.
+     */
     public static function GetArticlesOfTheDay($p_start_date=null, $p_end_date=null, $p_publication_id=null, $p_language_id=null)
     {
         global $g_ado_db;

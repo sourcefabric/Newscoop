@@ -1,6 +1,8 @@
-<div id="wobs_calendar"></div>
+<?php $rand_int = md5(uniqid("", true)); ?>
 
-<script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/jquery.wobscalendar.js'); ?>"></script>
+<div id="wobs_calendar_<?php echo($rand_int); ?>" class="wobs-calendar"></div>
+
+<!--<script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/jquery.wobscalendar.js'); ?>"></script>-->
 
 <script>
 
@@ -45,8 +47,9 @@ function getArticlesOfTheDay( start, end, callback )
     );
 }
 
-$("#wobs_calendar").wobscalendar({
-	name: "Cool Calendar",
-	articles: getArticlesOfTheDay
+$("#wobs_calendar_<?php echo($rand_int); ?>").wobscalendar({
+	date: new Date('<?php echo($this->year); ?>', '<?php echo($this->month); ?>'),
+	articles: getArticlesOfTheDay,
+	navigation: <?php if($this->nav){echo 'true';}else{ echo 'false';}?>
 });
 </script>
