@@ -36,7 +36,6 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
             exit;
         }
 
-        $this->bootstrap('session');
         require_once CS_PATH_CONFIG . DIR_SEP . 'database_conf.php';
         require_once CS_PATH_SITE . DIR_SEP . 'include' . DIR_SEP . 'campsite_init.php';
         require_once CS_PATH_SITE . DIR_SEP . 'classes' . DIR_SEP . 'CampTemplateCache.php';

@@ -15,16 +15,14 @@ class Application_Plugin_Auth extends Zend_Controller_Plugin_Abstract
     public function __construct($namespace)
     {
         $auth = Zend_Auth::getInstance();
-        $storage = new Zend_Auth_Storage_Session('Zend_Auth_'.ucfirst($namespace));
+        $storage = new Zend_Auth_Storage_Session('Zend_Auth_Storage');
+        $session = new Zend_Session_Namespace($storage->getNamespace());
         $auth->setStorage($storage);
 
-        $seconds = (int) SystemPref::Get('SiteSessionLifeTime');
-        if ($seconds <= 0) { // must be positive number
-            return;
+        $seconds = SystemPref::Get('SiteSessionLifeTime');
+        if ($seconds > 0) {
+            $session->setExpirationSeconds($seconds);
         }
-
-        $session = new Zend_Session_Namespace($storage->getNamespace());
-        $session->setExpirationSeconds($seconds);
     }
 
     /** @var array */
