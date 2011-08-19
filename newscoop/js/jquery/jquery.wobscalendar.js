@@ -67,11 +67,13 @@
 		}
 	
 		function render() {
-			
-			_header = new Header(t, element, options);
-				
+	
 			if (_view === 'month') {
+				_header = new Header(t, element, options);
 				monthView();
+			}
+			else if(_view === 'widget') {
+				widgetView();
 			}
 			
 			renderArticles();
@@ -141,8 +143,55 @@
 			return _date_cache[diff];
 		}
 		
+		function widgetView() {
+			var table, tr, td, dateBox;
+			
+			table = $("<table><tbody></tbody></table>");
+			tr = $("<tr/>");
+			
+			for (var j=0; j<7; j++) {
+				
+				td = $("<td/>");
+				td.addClass("wobs-day-"+j);
+				
+				dateBox = new DayBox(j, td);
+				_date_cache.push(dateBox);
+				
+				tr.append(td);
+			}
+			
+			table.append(tr);
+			
+			setWidgetViewDates();
+			
+			element.append(table);
+		}
+		
+		function setWidgetViewDates() {
+			var y, m, d;
+			
+			y = _date.getFullYear();
+			m = _date.getMonth();
+			d = _date.getDate() - 1;
+			
+			var tmp_date;
+			for (var c=_date_cache.length-1; c>-1; c--) {
+				tmp_date = new Date(y, m, d);
+				
+				if(c == 0) {
+					_start = tmp_date;
+				}
+				else if(c == _date_cache.length-1) {
+					_end = tmp_date;
+				}
+				
+				_date_cache[c].setDate(tmp_date);
+				d--;
+			}
+		}
+		
 		function monthView() {
-			var table, thead, tbody, tr, td, th;
+			var table, thead, tbody, tr, td, th, dateBox;
 			
 			table = $("<table/>");
 			thead = $("<thead/>");
@@ -194,7 +243,7 @@
 			
 			setMonthViewDates();
 				
-			$(element).append(table);
+			element.append(table);
 		}	
 		
 		function setMonthViewDates() {
@@ -388,8 +437,8 @@
 		
 		function setTitle(title) {
 			_title = title;
-			td.find(".wobs-date-title")
-				.append(_title);
+			//td.find(".wobs-date-title")
+				//.append(_title);
 		}
 		
 		function setThumbnail(picture) {

@@ -18,6 +18,9 @@ class ArticleofthedayController extends Zend_Controller_Action
     {
         $request = $this->getRequest();
 
+        $view = $request->getParam('view', "month");
+        $this->view->view = $view;
+
         $date = $request->getParam('date', date("Y/m/d"));
         $date = explode("/", $date);
 
@@ -29,6 +32,9 @@ class ArticleofthedayController extends Zend_Controller_Action
         }
         if (isset($date[2])) {
             $this->view->day = $date[2];
+        }
+        else if (!isset($date[2]) && ($view === "month")) {
+            $this->view->day = 1;
         }
 
         $this->view->nav = $request->getParam('navigation', true);

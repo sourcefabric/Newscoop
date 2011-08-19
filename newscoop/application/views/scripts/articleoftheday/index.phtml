@@ -48,8 +48,9 @@ function getArticlesOfTheDay( start, end, callback )
 }
 
 $("#wobs_calendar_<?php echo($rand_int); ?>").wobscalendar({
-	date: new Date('<?php echo($this->year); ?>', '<?php echo($this->month); ?>'),
+	date: new Date('<?php echo($this->year); ?>', '<?php echo($this->month); ?>', '<?php echo($this->day); ?>'),
 	articles: getArticlesOfTheDay,
+	defaultView: '<?php echo($this->view); ?>',
 	navigation: <?php if($this->nav){echo 'true';}else{ echo 'false';}?>
 });
 </script>
