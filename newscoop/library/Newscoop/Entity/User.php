@@ -20,6 +20,7 @@ class User implements \Zend_Acl_Role_Interface
     const STATUS_INACTIVE = 0;
     const STATUS_ACTIVE = 1;
     const STATUS_BANNED = 2;
+    const STATUS_DELETED = 3;
 
     const HASH_SEP = '$';
     const HASH_ALGO = 'sha1';
@@ -244,13 +245,14 @@ class User implements \Zend_Acl_Role_Interface
             self::STATUS_INACTIVE,
             self::STATUS_ACTIVE,
             self::STATUS_BANNED,
+            self::STATUS_DELETED,
         );
 
         if (!in_array($status, $statuses)) {
             throw new \InvalidArgumentException("Unknown status '$status'");
         }
 
-        $this->status = (int) $status;
+        $this->status = $status;
         return $this;
     }
 
@@ -347,7 +349,12 @@ class User implements \Zend_Acl_Role_Interface
      */
     public function addAttribute($name, $value)
     {
-        $this->attributes[$name] = new UserAttribute($name, $value, $this);
+        if (empty($this->attributes[$name])) {
+            $this->attributes[$name] = new UserAttribute($name, $value, $this);
+        } else {
+            $this->attributes[$name]->setValue($value);
+        }
+
         return $this;
     }
 
@@ -372,7 +379,6 @@ class User implements \Zend_Acl_Role_Interface
      *
      * @param string $permission
      * @return bool
-     * @deprecated
      */
     public function hasPermission($permission)
     {

@@ -36,6 +36,9 @@ class UserTest extends \RepositoryTestCase
             'first_name' => 'Foo',
             'last_name' => 'Bar',
             'status' => User::STATUS_INACTIVE,
+            'attributes' => array(
+                'phone' => 123,
+            ),
         ));
 
         $this->em->flush();
@@ -52,8 +55,14 @@ class UserTest extends \RepositoryTestCase
         $this->assertEquals('Bar', $user->getLastName());
         $this->assertEquals(User::STATUS_INACTIVE, $user->getStatus());
         $this->assertFalse($user->isActive());
-
         $this->assertLessThan(2, time() - $user->getCreated()->getTimestamp());
+        $this->assertEquals(123, $user->getAttribute('phone'));
+
+        // test attribute change
+        $user->addAttribute('phone', 1234);
+        $this->em->persist($user);
+        $this->em->flush();
+        $this->assertEquals(1234, $user->getAttribute('phone'));
     }
 
     public function testSaveUsernameOnly()
@@ -70,6 +79,35 @@ class UserTest extends \RepositoryTestCase
         $this->assertEmpty($user->getFirstName());
         $this->assertEmpty($user->getLastName());
         $this->assertEmpty($user->getEmail());
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testSaveUsernameEmpty()
+    {
+        $user = new User();
+        $this->repository->save($user, array(
+            'username' => '',
+        ));
+    }
+
+    public function testSaveTwice()
+    {
+        $user = new User();
+        $this->repository->save($user, array(
+            'username' => 'foo',
+            'last_name' => 'Bar',
+        ));
+        $this->em->flush();
+
+        $this->assertEquals('Bar', $user->getLastName());
+
+        $this->repository->save($user, array());
+        $this->em->flush();
+
+        $this->assertEquals('foo', $user->getUsername());
+        $this->assertEquals('Bar', $user->getLastName());
     }
 
     public function testSetPassword()

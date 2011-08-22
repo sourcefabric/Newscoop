@@ -117,7 +117,7 @@ class UserService
             throw new \InvalidArgumentException("You can't delete yourself");
         }
 
-        $this->em->remove($user);
+        $user->setStatus(User::STATUS_DELETED);
         $this->em->flush();
     }
 }

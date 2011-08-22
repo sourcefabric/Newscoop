@@ -16,12 +16,13 @@ use Doctrine\ORM\EntityRepository,
 class UserRepository extends EntityRepository
 {
     /** @var array */
-    private static $defaults = array(
-        'password' => '',
-        'first_name' => '',
-        'last_name' => '',
-        'email' => '',
-        'status' => User::STATUS_INACTIVE,
+    private static $mapping = array(
+        'username' => 'setUsername',
+        'password' => 'setPassword',
+        'first_name' => 'setFirstName',
+        'last_name' => 'setLastName',
+        'email' => 'setEmail',
+        'status' => 'setStatus',
     );
 
     /**
@@ -33,26 +34,29 @@ class UserRepository extends EntityRepository
      */
     public function save(User $user, array $values)
     {
-        $values += self::$defaults;
+        // set common properties
+        foreach (self::$mapping as $property => $setter) {
+            if (array_key_exists($property, $values)) {
+                $user->$setter($values[$property]);
+            }
+        }
 
-        $user->setUsername($values['username']);
-        $user->setPassword($values['password']);
-        $user->setFirstName($values['first_name']);
-        $user->setLastName($values['last_name']);
-        $user->setEmail($values['email']);
-        $user->setStatus($values['status']);
+        // set attributes
+        if (!empty($values['attributes'])) {
+            if (!$user->getId()) { // must persist user before adding attributes
+                $this->getEntityManager()->persist($user);
+                $this->getEntityManager()->flush();
+            }
+
+            foreach ($values['attributes'] as $key => $value) {
+                $user->addAttribute($key, $value);
+            }
+        }
+
+        if (!$user->getUsername()) {
+            throw new \InvalidArgumentException("Username can't be empty");
+        }
 
         $this->getEntityManager()->persist($user);
-    }
-
-    /**
-     * Delete user
-     *
-     * @param Newscoop\Entity\User $user
-     * @return void
-     */
-    public function delete(User $user)
-    {
-        $this->getEntityManager()->remove($user);
     }
 }

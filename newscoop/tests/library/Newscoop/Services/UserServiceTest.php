@@ -130,10 +130,10 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
             ->method('getIdentity')
             ->will($this->returnValue(3));
 
-        $user = new User();
-        $this->em->expects($this->once())
-            ->method('remove')
-            ->with($this->equalTo($user));
+        $user = $this->getMock('Newscoop\Entity\User');
+        $user->expects($this->once())
+            ->method('setStatus')
+            ->with($this->equalTo(User::STATUS_DELETED));
 
         $this->em->expects($this->once())
             ->method('flush')

@@ -40,8 +40,20 @@ class UserAttribute
     public function __construct($name, $value, User $user)
     {
         $this->attribute = (string) $name;
-        $this->value = (string) $value;
+        $this->value = $value;
         $this->user = $user;
+    }
+
+    /**
+     * Set attribute value
+     *
+     * @param mixed $value
+     * @return Newscoop\Entity\UserAttribute
+     */
+    public function setValue($value)
+    {
+        $this->value = $value;
+        return $this;
     }
 
     /**
