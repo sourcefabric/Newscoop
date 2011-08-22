@@ -20,9 +20,7 @@ var datatableCallback = {
         });
     },
     row: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-        $(nRow)
-            .addClass('status_' + statusMap[aData.comment.status])
-            .tmpl('#comment-tmpl', aData);
+        $(nRow).tmpl('#comment-tmpl', aData);
         return nRow;
     },
     draw: function () {
@@ -258,6 +256,8 @@ $(function () {
                 if (status == 0 || status == -1) {
                     flashMessage(putGS('Unable to reach Newscoop. Please check your internet connection.'), "error");
                 }
+                else {
+				}
             }
         });
         return false;

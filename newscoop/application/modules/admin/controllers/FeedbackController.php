@@ -75,14 +75,13 @@ class Admin_FeedbackController extends Zend_Controller_Action
 						'created' => array(
 							'date' => $feedback->getTimeCreated()->format('Y.i.d'),
                             'time' => $feedback->getTimeCreated()->format('H:i:s')),
-                            'message' => $comment->getMessage(),
+                            'message' => $feedback->getMessage(),
                             'action' => array(
 								'update' => $view->url(array('action' => 'update', 'format' => 'json')),
 								'reply' => $view->url(array('action' => 'reply', 'format' => 'json')))
                     )
 				);
-                                               
-                return($result);
+				return($result);
             });
 
         $table->setOption('fnDrawCallback', 'datatableCallback.draw')

@@ -300,15 +300,26 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
             $view->cols = $this->cols;
             return;
         }
-
+        
         // get data
         $rows = array();
         $handle = $this->handle;
+        
+        /*
         foreach ($this->dataSource->getData($params, $this->cols) as $entity) {
             $rows[] = $handle($entity);
         }
+        */
+        
+        $data = $this->dataSource->getData($params, $this->cols);
+        
+        foreach ($data as $entity) {
+            $rows[] = $handle($entity);
+        }
+        
         // set data
         $view->iTotalRecords = $this->dataSource->getCount();
+        error_log($view->iTotalRecords);
         $view->iTotalDisplayRecords = $this->dataSource->getCount($params, $this->cols);
         $view->aaData = $rows;
         $view->sEcho = $params['sEcho'];

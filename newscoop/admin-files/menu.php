@@ -75,7 +75,7 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
           flyOut: true,
           showSpeed: 150
       });
-      <?php if ($showAdminActions) { ?>
+      <?php if (isset($showAdminActions)) { ?>
       $('#newscoop_menu_action').topmenu({
           content: $('#newscoop_menu_action').next().html(),
           flyOut: true,
@@ -83,7 +83,7 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
       });
       <?php
       }
-      if ($showConfigureMenu) {
+      if (isset($showConfigureMenu)) {
       ?>
       $('#newscoop_menu_configure').topmenu({
           content: $('#newscoop_menu_configure').next().html(),
@@ -92,7 +92,7 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
       });
       <?php
       }
-      if ($showUserMenu) {
+      if (isset($showUserMenu)) {
       ?>
       $('#newscoop_menu_users').topmenu({
           content: $('#newscoop_menu_users').next().html(),

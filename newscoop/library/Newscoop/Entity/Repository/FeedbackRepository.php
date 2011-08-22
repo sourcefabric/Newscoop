@@ -52,6 +52,83 @@ class FeedbackRepository extends DatatableSource
         $em->persist($p_entity);
         return $p_entity;
     }
+    
+    /**
+     * Get data for table
+     *
+     * @param array $p_params
+     * @param array $cols
+     * @return Comment[]
+     */
+    public function getData(array $p_params, array $p_cols)
+    {
+		$qb = $this->createQueryBuilder('f');
+        $qb->from('Newscoop\Entity\User\Subscriber', 's');
+        $andx = $qb->expr()->andx();
+        $andx->add($qb->expr()->eq('f.subscriber', new Expr\Literal('s.id')));
+
+        $qb->where($andx);
+        // limit
+        if (isset($p_params['iDisplayLength'])) {
+            $qb->setFirstResult((int)$p_params['iDisplayStart'])->setMaxResults((int)$p_params['iDisplayLength']);
+        }
+        error_log($qb->getQuery()->getSql());
+        $result = $qb->getQuery()->getResult();
+        return $result;
+	}
+	
+	/**
+     * Build where condition
+     *
+     * @param array $cols
+     * @param string $search
+     * @return Doctrine\ORM\Query\Expr
+     */
+    protected function buildWhere(array $p_cols, $p_search, $qb, $andx)
+    {
+        $orx = $qb->expr()->orx();
+        $orx->add($qb->expr()->like("c.name", $qb->expr()->literal("%{$p_search}%")));
+        $orx->add($qb->expr()->like("a.name", $qb->expr()->literal("%{$p_search}%")));
+        $orx->add($qb->expr()->like("e.subject", $qb->expr()->literal("%{$p_search}%")));
+        $orx->add($qb->expr()->like("e.message", $qb->expr()->literal("%{$p_search}%")));
+        return $andx->add($orx);
+    }
+
+    /**
+     * Build filter condition
+     *
+     * @param array $p_
+     * @param string $p_cols
+     * @param
+     * @return Doctrine\ORM\Query\Expr
+     */
+    protected function buildFilter(array $p_cols, array $p_filter, $qb, $andx)
+    {
+        foreach ($p_filter as $key => $values) {
+            if (!is_array($values)) {
+                $values = array($values);
+            }
+            $orx = $qb->expr()->orx();
+            switch ($key) {
+                case 'status':
+                    $mapper = array_flip(Comment::$status_enum);
+                    foreach ($values as $value) {
+                        $orx->add($qb->expr()->eq('e.status', $mapper[$value]));
+                    }
+                    break;
+                case 'id':
+                case 'forum':
+                case 'thread':
+                case 'language':
+                    foreach ($values as $value) {
+                        $orx->add($qb->expr()->eq("e.$key", $value));
+                    }
+                    break;
+            }
+            $andx->add($orx);
+        }
+        return $andx;
+    }
 
     /**
      * Flush method
