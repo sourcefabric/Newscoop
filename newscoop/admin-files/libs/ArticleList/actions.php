@@ -46,7 +46,7 @@ $(document).ready(function() {
 // check all/none
 $('.smartlist thead input:checkbox').change(function() {
     var smartlist = $(this).closest('.smartlist');
-    var checked = $(this).attr('checked');
+    var checked = (typeof $(this).attr("checked") === 'undefined') ? false : true;
     $('tbody input:checkbox', smartlist).each(function() {
         $(this).attr('checked', checked);
         if (checked) {

@@ -14,4 +14,16 @@
 		
 		
 	<frontPage src="front.tpl"/><sectionPage src="section.tpl"/><articlePage src="article.tpl"/><errorPage src="404.tpl"/></output>
+	
+    <articleType name="link">
+        <field name="url" type="singleline" length="255"/>
+    </articleType>
+    <articleType name="news">
+        <field name="highlight" type="switch" length="255"/>
+	<field name="deck" type="multiline" length="255"/>
+	<field name="full_text" type="multiline" length="255"/>
+    </articleType>
+    <articleType name="page">
+	<field name="full_text" type="multiline" length="255"/>
+    </articleType>
 </theme>
