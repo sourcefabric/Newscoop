@@ -66,6 +66,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(Zend_Auth::getInstance());
 
+        $container->register('user_type', 'Newscoop\Services\UserTypeService')
+            ->addArgument(new sfServiceReference('em'));
+
         $container->register('audit', 'Newscoop\Services\AuditService')
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('user'));

@@ -409,18 +409,11 @@ if( Saas::singleton()->hasPrivilege('themes' , 'index') ) {
 if ($showUserMenu) {
     if ($g_user->hasPermission('ManageUsers') || $g_user->hasPermission('DeleteUsers')) {
         $pages[4]['pages'][] = array(
-            'label' => getGS('Users'),
+            'label' => getGS('Manage Users'),
             'module' => 'admin',
             'controller' => 'user',
             'action' => 'index',
             'pages' => array(
-                array(
-                    'label' => getGS('Add user'),
-                    'module' => 'admin',
-                    'controller' => 'user',
-                    'action' => 'create',
-                    'visible' => false,
-                ),
                 array(
                     'label' => getGS('Edit user'),
                     'module' => 'admin',
@@ -443,7 +436,7 @@ if ($showUserMenu) {
 
     if ($g_user->hasPermission('EditAuthors')) {
         $pages[4]['pages'][] = array(
-            'label' => getGS('Authors'),
+            'label' => getGS('Manage Authors'),
             'module' => 'admin',
             'controller' => 'users',
             'action' => 'authors.php',
@@ -451,7 +444,7 @@ if ($showUserMenu) {
     }
 
     $pages[4]['pages'][] = array(
-        'label' => getGS('User Types'),
+        'label' => getGS('Manage User Types'),
         'module' => 'admin',
         'controller' => 'user-group',
         'resource' => 'user-group',
@@ -472,6 +465,13 @@ if ($showUserMenu) {
                 'visible' => false,
             ),
         ),
+    );
+
+    $pages[4]['pages'][] = array(
+        'label' => getGS('Create new account'),
+        'module' => 'admin',
+        'controller' => 'user',
+        'action' => 'create',
     );
 } else {
     unset($pages[4]);

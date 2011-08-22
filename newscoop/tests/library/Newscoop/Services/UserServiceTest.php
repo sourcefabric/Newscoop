@@ -159,6 +159,27 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
         $this->service->delete($user);
     }
 
+    public function testGenerateUsername()
+    {
+        $user = new User();
+        $user->setUsername('foo.bar');
+
+        $this->em->expects($this->atLeastOnce())
+            ->method('getRepository')
+            ->with($this->equalTo('Newscoop\Entity\User'))
+            ->will($this->returnValue($this->repository));
+
+        $this->repository->expects($this->any())
+            ->method('findOneBy')
+            ->will($this->onConsecutiveCalls(null, $user, null));
+
+        $this->assertEquals('foo.bar', $this->service->generateUsername('Foo', 'Bar'));
+        $this->assertEquals('foo.bar1', $this->service->generateUsername('Foo', 'Bar'));
+        $this->assertEquals('', $this->service->generateUsername('', ''));
+        $this->assertEquals('foo', $this->service->generateUsername('Foo', ''));
+        $this->assertEquals('bar', $this->service->generateUsername('', 'Bar'));
+    }
+
     protected function expectGetRepository()
     {
         $this->em->expects($this->once())

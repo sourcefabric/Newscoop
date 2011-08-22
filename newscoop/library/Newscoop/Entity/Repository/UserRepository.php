@@ -41,6 +41,22 @@ class UserRepository extends EntityRepository
             }
         }
 
+        if (!$user->getUsername()) {
+            throw new \InvalidArgumentException('username_empty');
+        }
+
+        if (!$this->isUnique('username', $user->getUsername(), $user->getId())) {
+            throw new \InvalidArgumentException('username_conflict');
+        }
+
+        if (!$user->getEmail()) {
+            throw new \InvalidArgumentException('email_empty');
+        }
+
+        if (!$this->isUnique('email', $user->getEmail(), $user->getId())) {
+            throw new \InvalidArgumentException('email_conflict');
+        }
+
         // set attributes
         if (!empty($values['attributes'])) {
             if (!$user->getId()) { // must persist user before adding attributes
@@ -53,10 +69,35 @@ class UserRepository extends EntityRepository
             }
         }
 
-        if (!$user->getUsername()) {
-            throw new \InvalidArgumentException("Username can't be empty");
+        $this->getEntityManager()->persist($user);
+    }
+
+    /**
+     * Test if property value is unique
+     *
+     * @param string $property
+     * @param string $value
+     * @param int $id
+     * @return bool
+     */
+    protected function isUnique($property, $value, $id)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder()
+            ->select('COUNT(u.id)')
+            ->from('Newscoop\Entity\User', 'u')
+            ->where("u.{$property} = :value");
+
+        $params = array(
+            'value' => $value,
+        );
+
+        if ($id > 0) {
+            $qb->andWhere('u.id <> :id');
+            $params['id'] = $id;
         }
 
-        $this->getEntityManager()->persist($user);
+        $qb->setParameters($params);
+
+        return !$qb->getQuery()->getSingleScalarResult();
     }
 }

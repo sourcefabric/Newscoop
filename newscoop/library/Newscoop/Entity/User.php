@@ -51,9 +51,9 @@ class User implements \Zend_Acl_Role_Interface
     private $first_name;
 
     /**
-     * @TODO add new db column
      * @Column(type="string", length="80", name="Field1", nullable=True)
      * @var string
+     * @todo add new db column for status
      */
     private $last_name;
 
@@ -70,7 +70,14 @@ class User implements \Zend_Acl_Role_Interface
     private $created;
 
     /**
-     * @oneToOne(targetEntity="Newscoop\Entity\Acl\Role")
+     * @Column(type="integer", length="1", name="Field2", nullable=True)
+     * @var int
+     * @todo add new db column for status
+     */
+    private $status;
+
+    /**
+     * @oneToOne(targetEntity="Newscoop\Entity\Acl\Role", cascade={"ALL"})
      * @var Newscoop\Entity\Acl\Role
      */
     private $role;
@@ -99,6 +106,8 @@ class User implements \Zend_Acl_Role_Interface
         $this->groups = new ArrayCollection();
         $this->attributes = new ArrayCollection();
         $this->status = self::STATUS_INACTIVE;
+        $this->role = new Role();
+        $this->setPassword($this->generateRandomString(6)); // make sure password is not empty
     }
 
     /**
@@ -141,7 +150,7 @@ class User implements \Zend_Acl_Role_Interface
      */
     public function setPassword($password)
     {
-        $salt = $this->getRandomString();
+        $salt = $this->generateRandomString();
         $this->password = implode(self::HASH_SEP, array(
             self::HASH_ALGO,
             $salt,
@@ -179,7 +188,7 @@ class User implements \Zend_Acl_Role_Interface
      * @param string $allowed_chars
      * @return string
      */
-    final protected function getRandomString($length = 12, $allowed_chars = 'abcdefghijklmnopqrstuvwxyzAMCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
+    final protected function generateRandomString($length = 12, $allowed_chars = 'abcdefghijklmnopqrstuvwxyzAMCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
     {
         $return = '';
         for ($i = 0; $i < $length; $i++) {

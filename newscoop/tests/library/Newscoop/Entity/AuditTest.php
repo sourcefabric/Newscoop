@@ -16,7 +16,7 @@ class AuditTest extends \RepositoryTestCase
 
     public function setUp()
     {
-        parent::setUp('Newscoop\Entity\AuditEvent', 'Newscoop\Entity\User');
+        parent::setUp('Newscoop\Entity\AuditEvent', 'Newscoop\Entity\User', 'Newscoop\Entity\Acl\Role');
         $this->repository = $this->em->getRepository('Newscoop\Entity\AuditEvent');
     }
 

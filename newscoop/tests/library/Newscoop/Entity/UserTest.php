@@ -16,7 +16,7 @@ class UserTest extends \RepositoryTestCase
 
     public function setUp()
     {
-        parent::setUp('Newscoop\Entity\User', 'Newscoop\Entity\UserAttribute');
+        parent::setUp('Newscoop\Entity\User', 'Newscoop\Entity\UserAttribute', 'Newscoop\Entity\Acl\Role');
         $this->repository = $this->em->getRepository('Newscoop\Entity\User');
     }
 
@@ -42,6 +42,7 @@ class UserTest extends \RepositoryTestCase
         ));
 
         $this->em->flush();
+        $this->em->clear();
 
         $users = $this->repository->findAll();
         $this->assertEquals(1, sizeof($users));
@@ -65,24 +66,26 @@ class UserTest extends \RepositoryTestCase
         $this->assertEquals(1234, $user->getAttribute('phone'));
     }
 
-    public function testSaveUsernameOnly()
+    public function testSaveMinimal()
     {
         $user = new User();
         $this->repository->save($user, array(
             'username' => 'foobar',
+            'email' => 'foo@bar.com',
         ));
 
         $this->em->flush();
 
         $this->assertEquals(1, $user->getId());
         $this->assertEquals('foobar', $user->getUsername());
+        $this->assertEquals('foo@bar.com', $user->getEmail());
         $this->assertEmpty($user->getFirstName());
         $this->assertEmpty($user->getLastName());
-        $this->assertEmpty($user->getEmail());
+        $this->assertFalse($user->checkPassword(''));
     }
 
     /**
-     * @expectedException InvalidArgumentException
+     * @expectedException InvalidArgumentException username_empty
      */
     public function testSaveUsernameEmpty()
     {
@@ -97,6 +100,7 @@ class UserTest extends \RepositoryTestCase
         $user = new User();
         $this->repository->save($user, array(
             'username' => 'foo',
+            'email' => 'foo@bar.com',
             'last_name' => 'Bar',
         ));
         $this->em->flush();
@@ -136,6 +140,55 @@ class UserTest extends \RepositoryTestCase
         $this->assertFalse($user->checkPassword(sha1('test')));
     }
 
+    /**
+     * @expectedException InvalidArgumentException username_conflict
+     */
+    public function testSaveUsernameConflict()
+    {
+        $user = new User();
+        $this->repository->save($user, array(
+            'username' => 'foo',
+            'email' => 'foo@bar.com',
+        ));
+        $this->em->flush();
+
+        $user = new User();
+        $this->repository->save($user, array(
+            'username' => 'foo',
+            'email' => 'foo2@bar.com',
+        ));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException email_empty
+     */
+    public function testSaveEmailEmpty()
+    {
+        $user = new User();
+        $this->repository->save($user, array(
+            'username' => 'foo',
+        ));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException email_conflict
+     */
+    public function testSaveEmailConflict()
+    {
+        $user = new User();
+        $this->repository->save($user, array(
+            'username' => 'foo',
+            'email' => 'foo@bar.com',
+        ));
+        $this->em->flush();
+
+        $user = new User();
+        $this->repository->save($user, array(
+            'username' => 'foo2',
+            'email' => 'foo@bar.com',
+        ));
+    }
+
     public function testFindAll()
     {
         $this->assertEmpty($this->repository->findAll());
@@ -172,7 +225,7 @@ class UserTest extends \RepositoryTestCase
 
         $this->em->persist($user);
         $this->em->flush();
-        unset($user);
+        $this->em->clear();
 
         $user = array_shift($this->repository->findAll());
         $this->assertEquals('praha', $user->getAttribute('city'));

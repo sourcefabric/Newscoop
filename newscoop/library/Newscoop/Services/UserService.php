@@ -15,8 +15,6 @@ use Doctrine\ORM\EntityManager,
  */
 class UserService
 {
-    const ENTITY = 'Newscoop\Entity\User';
-
     /** @var Doctrine\ORM\EntityManager */
     protected $em;
 
@@ -45,7 +43,7 @@ class UserService
     {
         if ($this->currentUser === NULL) {
             if ($this->auth->hasIdentity()) {
-                $this->currentUser = $this->em->getRepository(self::ENTITY)
+                $this->currentUser = $this->getRepository()
                     ->find($this->auth->getIdentity());
             }
         }
@@ -61,7 +59,7 @@ class UserService
      */
     public function find($id)
     {
-        return $this->em->getRepository(self::ENTITY)
+        return $this->getRepository()
             ->find($id);
     }
 
@@ -72,7 +70,7 @@ class UserService
      */
     public function findAll()
     {
-        return $this->em->getRepository(self::ENTITY)
+        return $this->getRepository()
             ->findAll();
     }
 
@@ -86,7 +84,7 @@ class UserService
      */
     public function findBy($critearia, array $orderBy = NULL, $limit = NULL, $offset = NULL)
     {
-        return $this->em->getRepository(self::ENTITY)
+        return $this->getRepository()
             ->findBy($criteria, $orderBy, $limit, $offset);
     }
 
@@ -99,7 +97,7 @@ class UserService
     public function create(array $values)
     {
         $user = new User();
-        $this->em->getRepository(self::ENTITY)
+        $this->getRepository()
             ->save($user, $values);
         $this->em->flush();
         return $user;
@@ -119,5 +117,40 @@ class UserService
 
         $user->setStatus(User::STATUS_DELETED);
         $this->em->flush();
+    }
+
+    /**
+     * Generate username
+     *
+     * @param string $firstName
+     * @param string $lastName
+     * @return string
+     */
+    public function generateUsername($firstName, $lastName)
+    {
+        if (empty($firstName) && empty($lastName)) {
+            return '';
+        }
+
+        $username = trim(strtolower("{$firstName}.{$lastName}"), '.');
+        for ($i = '';; $i++) {
+            $conflict = $this->getRepository()->findOneBy(array(
+                'username' => "$username{$i}",
+            ));
+
+            if (empty($conflict)) {
+                return "$username{$i}";
+            }
+        }
+    }
+
+    /**
+     * Get repository for user entity
+     *
+     * @return Newscoop\Entity\Repository\UserRepository
+     */
+    protected function getRepository()
+    {
+        return $this->em->getRepository('Newscoop\Entity\User');
     }
 }

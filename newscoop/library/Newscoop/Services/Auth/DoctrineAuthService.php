@@ -47,6 +47,10 @@ class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
             return new \Zend_Auth_Result(\Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND, NULL);
         }
 
+        if (!$user->isActive()) {
+            return new \Zend_Auth_Result(\Zend_Auth_Result::FAILURE_UNCATEGORIZED, NULL);
+        }
+
         if (!$user->checkPassword($this->password)) {
             return new \Zend_Auth_Result(\Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID, NULL);
         }

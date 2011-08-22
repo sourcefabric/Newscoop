@@ -13,7 +13,10 @@
 class Admin_UserController extends Zend_Controller_Action
 {
     /** @var Newscoop\Services\UserService */
-    private $service;
+    private $userService;
+
+    /** @var Newscoop\Services\UserTypeService */
+    private $userTypeService;
 
     /**
      */
@@ -22,15 +25,16 @@ class Admin_UserController extends Zend_Controller_Action
         camp_load_translation_strings('api');
         camp_load_translation_strings('users');
 
-        $this->service = $this->_helper->service('user');
+        $this->userService = $this->_helper->service('user');
+        $this->userTypeService = $this->_helper->service('user_type');
     }
 
     public function indexAction()
     {
-        $this->view->users = $this->service->findAll();
+        $this->view->users = $this->userService->findAll();
         $this->view->actions = array(
             array(
-                'label' => getGS('Add user'),
+                'label' => getGS('Create new account'),
                 'module' => 'admin',
                 'controller' => 'user',
                 'action' => 'create',
@@ -44,14 +48,27 @@ class Admin_UserController extends Zend_Controller_Action
     public function createAction()
     {
         $form = new Admin_Form_User();
+        $form->user_type->setMultioptions($this->userTypeService->getOptions());
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
-            $user = $this->service->create($form->getValues());
-            $this->_helper->flashMessenger(getGS("User '$1' created", $user->getUsername()));
-            $this->_helper->redirector('update', 'user', 'admin', array(
-                'user' => $user->getId(),
-            ));
+            try {
+                $user = $this->userService->create($form->getValues());
+                $this->_helper->flashMessenger(getGS("User '$1' created", $user->getUsername()));
+                $this->_helper->redirector('update', 'user', 'admin', array(
+                    'user' => $user->getId(),
+                ));
+            } catch (\InvalidArgumentException $e) {
+                switch ($e->getMessage()) {
+                    case 'username_conflict':
+                        $form->username->addError(getGS('Username is used already'));
+                        break;
+
+                    case 'email_conflict':
+                        $form->email->addError(getGS('Email is used already'));
+                        break;
+                }
+            }
         }
 
         $this->view->form = $form;
@@ -67,7 +84,7 @@ class Admin_UserController extends Zend_Controller_Action
     {
         try {
             $user = $this->getUser();
-            $this->service->delete($user);
+            $this->userService->delete($user);
             $this->_helper->flashMessenger(getGS("User '$1' deleted", $user->getUsername()));
         } catch (InvalidArgumentException $e) {
             $this->_helper->flashMessenger(array('error', getGS("You can't delete yourself")));
@@ -88,7 +105,7 @@ class Admin_UserController extends Zend_Controller_Action
             $this->_helper->redirector('index');
         }
 
-        $user = $this->service->find($id);
+        $user = $this->userService->find($id);
         if (empty($user)) {
             $this->_helper->flashMessenger(array('error', getGS("User with id '$1' not found", $id)));
             $this->_helper->redirector('index');

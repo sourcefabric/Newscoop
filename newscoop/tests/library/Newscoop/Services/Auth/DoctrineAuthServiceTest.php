@@ -65,6 +65,36 @@ class DoctrineAuthServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(\Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND, $result->getCode());
     }
 
+    public function testAuthenticateInactive()
+    {
+        $this->em->expects($this->once())
+            ->method('getRepository')
+            ->with($this->equalTo('Newscoop\Entity\User'))
+            ->will($this->returnValue($this->repository));
+
+        $user = $this->getMock('Newscoop\Entity\User');
+
+        $user->expects($this->once())
+            ->method('isActive')
+            ->will($this->returnValue(FALSE));
+
+        $user->expects($this->never())
+            ->method('checkPassword');
+
+        $this->repository->expects($this->once())
+            ->method('findOneBy')
+            ->with($this->equalTo(array('username' => 'john')))
+            ->will($this->returnValue($user));
+
+        $service = new DoctrineAuthService($this->em);
+        $service->setUsername('john');
+        $service->setPassword('secret');
+        $result = $service->authenticate();
+
+        $this->assertInstanceOf('Zend_Auth_Result', $result);
+        $this->assertEquals(\Zend_Auth_Result::FAILURE_UNCATEGORIZED, $result->getCode());
+    }
+
     public function testAuthenticateInvalid()
     {
         $this->em->expects($this->once())
@@ -73,6 +103,11 @@ class DoctrineAuthServiceTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($this->repository));
 
         $user = $this->getMock('Newscoop\Entity\User');
+
+        $user->expects($this->once())
+            ->method('isActive')
+            ->will($this->returnValue(TRUE));
+
         $user->expects($this->once())
             ->method('checkPassword')
             ->with($this->equalTo('secret'))
@@ -104,6 +139,10 @@ class DoctrineAuthServiceTest extends \PHPUnit_Framework_TestCase
             ->with();
 
         $user = $this->getMock('Newscoop\Entity\User');
+
+        $user->expects($this->once())
+            ->method('isActive')
+            ->will($this->returnValue(TRUE));
 
         $user->expects($this->once())
             ->method('checkPassword')
