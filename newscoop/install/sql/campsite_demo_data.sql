@@ -620,6 +620,7 @@ LOCK TABLES `liveuser_users` WRITE;
 /*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
 INSERT  IGNORE INTO `liveuser_users` VALUES (1,804830992,'Administrator','admin','d033e22ae348aeb5660fc2140aec35850c4da997','admin@email.addr','N',1,'a','','','AD','2','','','1','Mr.','M','0-17','','','Other','','','','','','N','N','N','N','','','','','','','','','2011-06-13 13:34:24','2011-02-10 16:00:31','2011-03-14 15:29:45',1,'',6),(26,770302083,'Test Person','test','1c6027c0667c7646b964476b61960e0cf7b559ee','test@persona.org','Y',0,'Otawa, Canada','','','','1','','','2','Mr.','','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2011-06-13 13:34:24','2011-03-10 08:45:53','2011-03-10 15:16:24',1,'',7);
 /*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
+UPDATE `liveuser_users` SET `Field2` = '1';
 UNLOCK TABLES;
 
 --

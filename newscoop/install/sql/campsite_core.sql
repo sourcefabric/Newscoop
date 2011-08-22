@@ -2627,7 +2627,7 @@ CREATE TABLE `liveuser_users` (
 
 LOCK TABLES `liveuser_users` WRITE;
 /*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
-INSERT INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','d033e22ae348aeb5660fc2140aec35850c4da997','admin@email.addr','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2011-06-13 09:19:05','0000-00-00 00:00:00','2011-01-17 14:29:16',1,NULL,6);
+INSERT INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','d033e22ae348aeb5660fc2140aec35850c4da997','admin@email.addr','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','1','','','','','','','2011-06-13 09:19:05','0000-00-00 00:00:00','2011-01-17 14:29:16',1,NULL,6);
 /*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
