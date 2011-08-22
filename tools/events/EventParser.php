@@ -164,6 +164,8 @@ class EventData_Parser_SimpleXML {
 
 				// Locations
 				// !!! no country info
+				$event_info['location_country'] = 'ch';
+
 				// * main location info
 				// town name
 				$x_twnnam = '' . $event->twnnam;
@@ -398,6 +400,7 @@ class EventData_Parser_SimpleXML {
 
 		}
 
+        return $events;
     } // fn parse
 } // class EventData_Parser_SimpleXML
 

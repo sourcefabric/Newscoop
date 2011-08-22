@@ -690,6 +690,45 @@ class Geo_Map extends DatabaseObject implements IGeoMap
     } // fn OnCreateTranslation
 
 
+    // TODO: an intial state by now
+    public static function GetLatestMapByArticleType($p_event_type_name, $p_event_field_name)
+    {
+
+        $queryStr_sel = 'SELECT m.id, a.Number FROM Maps AS m INNER JOIN Articles AS a ON m.fk_article_number = a.Number INNER JOIN ' . $event_type_table . ' AS e ON a.Number = e.NrArticle WHERE a.Type = "' . $p_event_type_name . '" AND e.' . $location_id_field . ' = ? AND a.Published = "Y" ORDER BY a.NUMBER DESC';
+
+        $event_type_table = 'X' . $p_event_type_name;
+        $event_type_field = 'F' . $p_event_type_field_name;
+
+
+        try
+        {
+            $sel_params = array();
+            $sel_params[] = $p_articleNumber;
+            $sel_params[] = $p_srcLanguageId;
+
+            $rows = $g_ado_db->GetAll($queryStr_sel, $sel_params);
+            if (is_array($rows)) {
+                foreach ($rows as $row) {
+                    $ins_params = array();
+                    $ins_params[] = $row['ml_id'];
+                    $ins_params[] = (int) $p_destLanguageId;
+                    $ins_params[] = $row['con_id'];
+                    $ins_params[] = 0;
+
+                    $g_ado_db->Execute($queryStr_ins, $ins_params);
+                }
+            }
+        }
+        catch (Exception $exc)
+        {
+            return false;
+        }
+
+        ;
+        ;
+    }
+
+
     // ajax processing handlers
 
     /**
