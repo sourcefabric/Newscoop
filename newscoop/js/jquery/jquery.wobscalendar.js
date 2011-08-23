@@ -229,7 +229,7 @@
 					td = $("<td/>");
 					td.addClass("wobs-day-"+dayNum);
 					
-					dateBox = new DayBox(dayNum, td);
+					dateBox = new DayBox(t, td);
 					_date_cache.push(dateBox);
 					
 					tr.append(td);
@@ -403,9 +403,8 @@
 		return t;
 	}
 	
-	function DayBox(id, td) {
+	function DayBox(calendar, td) {
 		
-		var _id = id;
 		var _date = undefined;
 		var _title = undefined;
 		var _s_image = undefined;
@@ -430,9 +429,22 @@
 		});
 		
 		function setDate(date) {
+			var cm, dm;
+			
 			_date = date;
 			td.find(".wobs-date-label")
 				.append(_date.getDate());
+			
+			cm = calendar.getCalendarDate();
+			cm = cm.getMonth();
+			dm = _date.getMonth();
+			
+			if (cm === dm) {
+				td.addClass("wobs-curr-month");
+			}
+			else {
+				td.addClass("wobs-other-month");
+			}
 		}
 		
 		function setTitle(title) {
@@ -460,6 +472,9 @@
 			_s_image = undefined;
 			_url = undefined;
 			
+			td.removeClass("wobs-other-month");
+			td.removeClass("wobs-curr-month");
+				
 			td.find("img")
 				.remove();
 			td.find(".wobs-date-title")
