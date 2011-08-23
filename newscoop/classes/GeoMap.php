@@ -693,6 +693,7 @@ class Geo_Map extends DatabaseObject implements IGeoMap
     // TODO: an intial state by now
     public static function GetLatestMapByArticleType($p_event_type_name, $p_event_field_name)
     {
+        return null;
 
         $queryStr_sel = 'SELECT m.id, a.Number FROM Maps AS m INNER JOIN Articles AS a ON m.fk_article_number = a.Number INNER JOIN ' . $event_type_table . ' AS e ON a.Number = e.NrArticle WHERE a.Type = "' . $p_event_type_name . '" AND e.' . $location_id_field . ' = ? AND a.Published = "Y" ORDER BY a.NUMBER DESC';
 

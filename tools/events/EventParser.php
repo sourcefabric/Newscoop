@@ -14,12 +14,31 @@ class EventData_Parser {
      * @param string $p_file file name of the event file
      * @return array
      */
-    function parse($p_provider, $p_file, $p_categories) {
+    public static function Parse($p_provider, $p_dir, $p_categories) {
+        if (!is_array($p_categories)) {
+            $p_categories = array();
+        }
+        //if (!is_array($p_events)) {
+        //    $p_events = array();
+        //}
 
         $parser = new EventData_Parser_SimpleXML;
-        $result = $parser->parse($p_provider, $p_file, $p_categories);
 
-        return $result;
+		$events = array();
+        $files = array();
+
+        if ($dir_handle = opendir($p_dir)) {
+            while (false !== ($event_file = readdir($dir_handle))) {
+                try {
+                    $result = $parser->parse($events, $p_provider, $p_dir . '/' . $event_file, $p_categories);
+                catch (Exception $exc) {
+                    // may be some logging;
+                }
+                $files[] = $event_file;
+            }
+        }
+
+        return array('files' => $files, 'events' => $events);
     } // fn parse
 } // class EventData_Parser
 
@@ -34,9 +53,9 @@ class EventData_Parser_SimpleXML {
      * @param string $p_file file name of the eventdata file
      * @return array
      */
-    function parse($p_provider, $p_file, $p_categories) {
+    function parse(@$p_events, $p_provider, $p_file, $p_categories) {
 
-		$events = array();
+		//$events = array();
 
         libxml_clear_errors();
         $internal_errors = libxml_use_internal_errors(true);
@@ -97,17 +116,34 @@ class EventData_Parser_SimpleXML {
 
 
 				// Categories
+
+                $event_topics = array();
 				// * main type fields
 				// event category
 				$x_catnam = strtolower('' . $event->catnam);
-				$event_info['event_type_id'] = 0;
-				$event_info['event_type'] = 'miscellaneous';
-				foreach ($p_categories as $one_category_id => $one_category) {
-					if (array_key_exists($x_catnam, $one_category['nicks'])) {
-						$event_info['event_type_id'] = $one_category_id;
-						$event_info['event_type'] = $one_category['name'];
-						break;
-					}
+				//$event_info['event_type_id'] = 0;
+				//$event_info['event_type'] = 'miscellaneous';
+				foreach ($p_categories as $one_category) {
+                    if (!is_array($one_category)) {
+                        continue;
+                    }
+                    if (array_key_exists('fixed', $one_category)) {
+                        $event_topics[] = $one_category['fixed'];
+                        continue;
+                    }
+                    if ((array_key_exists('match_xml', $one_category)) && (array_key_exists('match_topic', $one_category))) {
+                        $one_cat_match_xml = $one_category['match_xml'];
+                        $one_cat_match_topic = $one_category['match_topic'];
+                        if ((!is_array($one_cat_match_xml)) || (!is_array($one_cat_match_topic))) {
+                            continue;
+                        }
+                        if (array_key_exists($x_catnam, $one_cat_match_xml)) {
+                            //$event_info['event_type_id'] = $one_category_id;
+                            //$event_info['event_type'] = $one_category['name'];
+                            $event_topics[] = $one_cat_match_topic;
+                            continue;
+                        }
+                    }
 				}
 
 				// event subcategory
@@ -395,16 +431,18 @@ class EventData_Parser_SimpleXML {
 				// audios
 				$x_eveaud = '' . $event->eveaud;
 
-			}
 
+                $p_events[] = $event_info;
+			}
 
 		}
 
-        return $events;
+        return $p_events;
     } // fn parse
 } // class EventData_Parser_SimpleXML
 
 
+/*
 $known_categories = array(
 	1 => array('name' => 'theater',
 		       'nicks' => array('theater', 'theatre'),
@@ -413,7 +451,7 @@ $known_categories = array(
 			   'nicks' => array('gallery'),
 			   ),
 	3 => array('name' => 'exhibition',
-			   'nicks' => array('exhibition', 'ausstellung', 'ausstellungen'),
+			   'nicks' => array('exhibition', 'ausstellungen'),
 			   ),
 	4 => array('name' => 'party',
 			   'nicks' => array('party'),
@@ -434,5 +472,5 @@ $provider_id = 1;
 $fname = 'eventexport.xml';
 $ed_parser = new EventData_Parser();
 $ed_parser->parse($provider_id, $fname, $known_categories);
-
+*/
 

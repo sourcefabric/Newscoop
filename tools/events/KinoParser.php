@@ -21,6 +21,11 @@ class KinoData_Parser {
 
         return $result;
     } // fn parse
+
+    //function readCategories() {
+    //    ;
+    //}
+
 } // class KinoData_Parser
 
 /**
