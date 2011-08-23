@@ -16,7 +16,7 @@ use Doctrine\ORM\EntityRepository,
 class UserRepository extends EntityRepository
 {
     /** @var array */
-    private static $mapping = array(
+    private $setters = array(
         'username' => 'setUsername',
         'password' => 'setPassword',
         'first_name' => 'setFirstName',
@@ -34,12 +34,7 @@ class UserRepository extends EntityRepository
      */
     public function save(User $user, array $values)
     {
-        // set common properties
-        foreach (self::$mapping as $property => $setter) {
-            if (array_key_exists($property, $values)) {
-                $user->$setter($values[$property]);
-            }
-        }
+        $this->setProperties($user, $values);
 
         if (!$user->getUsername()) {
             throw new \InvalidArgumentException('username_empty');
@@ -57,19 +52,44 @@ class UserRepository extends EntityRepository
             throw new \InvalidArgumentException('email_conflict');
         }
 
-        // set attributes
-        if (!empty($values['attributes'])) {
-            if (!$user->getId()) { // must persist user before adding attributes
-                $this->getEntityManager()->persist($user);
-                $this->getEntityManager()->flush();
-            }
-
-            foreach ($values['attributes'] as $key => $value) {
-                $user->addAttribute($key, $value);
-            }
-        }
+        $this->setAttributes($user, array_key_exists('attributes', $values) ? $values['attributes'] : array());
 
         $this->getEntityManager()->persist($user);
+    }
+
+    /**
+     * Set user properties
+     *
+     * @param Newscoop\Entity\User $user
+     * @param array $values
+     * @return void
+     */
+    private function setProperties(User $user, array $values)
+    {
+        foreach ($this->setters as $property => $setter) {
+            if (array_key_exists($property, $values)) {
+                $user->$setter($values[$property]);
+            }
+        }
+    }
+
+    /**
+     * Set user attributes
+     *
+     * @param Newscoop\Entity\User $user
+     * @param array $attributes
+     * @return void
+     */
+    private function setAttributes(User $user, array $attributes)
+    {
+        if (!$user->getId()) { // must persist user before adding attributes
+            $this->getEntityManager()->persist($user);
+            $this->getEntityManager()->flush();
+        }
+
+        foreach ($attributes as $name => $value) {
+            $user->addAttribute($name, $value);
+        }
     }
 
     /**
@@ -80,20 +100,18 @@ class UserRepository extends EntityRepository
      * @param int $id
      * @return bool
      */
-    protected function isUnique($property, $value, $id)
+    private function isUnique($property, $value, $id)
     {
         $qb = $this->getEntityManager()->createQueryBuilder()
             ->select('COUNT(u.id)')
             ->from('Newscoop\Entity\User', 'u')
-            ->where("u.{$property} = :value");
+            ->where("u.{$property} = ?0");
 
-        $params = array(
-            'value' => $value,
-        );
+        $params = array($value);
 
         if ($id > 0) {
-            $qb->andWhere('u.id <> :id');
-            $params['id'] = $id;
+            $qb->andWhere('u.id <> ?1');
+            $params[] = $id;
         }
 
         $qb->setParameters($params);
