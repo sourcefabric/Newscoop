@@ -100,7 +100,7 @@ class FeedbackRepository extends DatatableSource
         if (isset($p_params['iDisplayLength'])) {
             $qb->setFirstResult((int)$p_params['iDisplayStart'])->setMaxResults((int)$p_params['iDisplayLength']);
         }
-        error_log($qb->getQuery()->getSql());
+        
         $result = $qb->getQuery()->getResult();
         return $result;
 	}

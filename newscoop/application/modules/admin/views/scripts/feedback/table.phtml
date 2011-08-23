@@ -126,33 +126,22 @@
     <div class="ui-widget-content small-block block-shadow commentsHolder">
         <div class="padded clearfix inner-tabs">
             <div class="tabs">
-                <!--
-                <ul>
-                    <li><a href="#tabs-1">Comments</a></li>
-                    <li><a href="#tabs-2">Users</a></li>
-                </ul>
-                -->
                 <div id="tabs-1">
                     <div id="showComments">
                         <fieldset><legend><?php putGS('Show'); ?></legend>
                             <ul class="status_filter">
-                                <li class="published" style="display: none;"><input type="checkbox"
-                                                                                    id="show_published" value="approved"> <label for="show_published"><?php putGS('Published'); ?></label>
+                                <li class="published" style="display: none;">
+									<input type="checkbox" id="show_published" value="approved"> <label for="show_published"><?php putGS('Published'); ?></label>
                                 </li>
-                                <li class="new"><input type="checkbox" id="show_new" value="pending"> <label
-                                        for="show_new"><?php putGS('New'); ?></label></li>
-                                <li class="approved"><input type="checkbox" id="show_approved"
-                                                            value="approved"> <label for="show_approved"><?php putGS('Approved'); ?></label>
+                                <li class="new">
+									<input type="checkbox" id="show_new" value="pending"> <label for="show_new"><?php putGS('New'); ?></label>
+								</li>
+                                <li class="approved">
+									<input type="checkbox" id="show_approved" value="approved"> <label for="show_approved"><?php putGS('Approved'); ?></label>
                                 </li>
-                                <li class="hidden"><input type="checkbox" id="show_hidden"
-                                                          value="hidden"> <label for="show_hidden"><?php putGS('Hidden'); ?></label>
+                                <li class="hidden">
+									<input type="checkbox" id="show_hidden" value="hidden"> <label for="show_hidden"><?php putGS('Hidden'); ?></label>
                                 </li>
-                                <!--
-                                /** @todo change this when the "cron job" like engine is done */
-                                <li class="deleted"><input type="checkbox" id="show_deleted"
-                                                           value="deleted"> <label for="show_deleted"><?php putGS('Deleted'); ?></label>
-                                </li>
-                                -->
                             </ul>
                         </fieldset>
                     </div>
