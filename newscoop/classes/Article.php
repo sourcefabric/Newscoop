@@ -2066,7 +2066,7 @@ class Article extends DatabaseObject {
 
         //TODO: this function shouldn't have to rely on a custom switch in the database. (FArticle_Of_The_Day)
         //wait until Newscoop has a better architecture.
-        /*
+
         $queryStr = "SELECT *
             FROM Articles
             WHERE Articles.IdPublication = '$p_publication_id'
@@ -2078,8 +2078,9 @@ class Article extends DatabaseObject {
                     AND (Articles.Type = 'news' )
             ORDER BY Articles.PublishDate asc,
                     Articles.time_updated asc";
-         */
 
+
+        /*
         $queryStr = "SELECT *
             FROM Articles
             WHERE
@@ -2090,6 +2091,7 @@ class Article extends DatabaseObject {
                 AND (Articles.Type = 'news' )
             ORDER BY Articles.PublishDate asc,
                     Articles.time_updated asc";
+                    */
 
         $articles = DbObjectArray::Create('Article', $queryStr);
 
