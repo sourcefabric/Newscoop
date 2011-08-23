@@ -127,23 +127,6 @@ $(function () {
      * Action to fire
      * when action select is triggered
      */
-    $('.sort_tread').click(function () {
-        var dir = $(this).find('span');
-        if (dir.hasClass('ui-icon-triangle-1-n')) {
-            dir.removeClass("ui-icon-triangle-1-n");
-            dir.addClass('ui-icon-triangle-1-s');
-            datatable.fnSort([
-                [4, 'asc']
-            ]);
-        } else {
-            dir.removeClass("ui-icon-triangle-1-s");
-            dir.addClass('ui-icon-triangle-1-n');
-            datatable.fnSort([
-                [4, 'desc']
-            ]);
-        }
-        dir.removeClass("ui-icon-carat-2-n-s");
-    });
     $('.datatable .action').live('click', function () {
         var el = $(this);
         var id = el.attr('id');

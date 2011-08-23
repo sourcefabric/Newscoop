@@ -75,11 +75,9 @@ class Admin_FeedbackController extends Zend_Controller_Action
 						'created' => array(
 							'date' => $feedback->getTimeCreated()->format('Y.i.d'),
                             'time' => $feedback->getTimeCreated()->format('H:i:s')),
-                            'message' => $feedback->getMessage(),
-                            'action' => array(
-								'update' => $view->url(array('action' => 'update', 'format' => 'json')),
-								'reply' => $view->url(array('action' => 'reply', 'format' => 'json')))
-                    )
+                            'message' => $feedback->getMessage()
+                    ),
+                    'url' => $url
 				);
 				return($result);
             });
@@ -91,6 +89,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
                 ->setOption('sDom','<"top">f<"#actionExtender">lrt<"bottom"ip>')
                 ->setStripClasses()
                 ->toggleAutomaticWidth(false)
+                ->setDataProp(array('index' => null, 'user' => null, 'message' => null, 'url' => null))
                 ->setClasses(array('index' => 'commentId', 'commenter' => 'commentUser', 'comment' => 'commentTimeCreated', 'thread' => 'commentThread'));
         $table->dispatch();
         $this->editForm->setSimpleDecorate()->setAction($this->_helper->url('update'));

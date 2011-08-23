@@ -89,6 +89,9 @@
                     </td>
                     <td class="commentMessage">
                         <div class="dateCommentHolder">
+                            <h4>
+                                <span>{{message.created.date}} <?php putGS('at'); ?> {{message.created.time}}</span>
+                            </h4>
                             <p class="commentBody">{{message.message}}</p>
                         </div>
 
@@ -100,7 +103,7 @@
                     </td>
                     <td>
                         <div class="commentArticleHolder">
-                            
+                            <p class="commentBody">{{url}}</p>
                         </div>
                     </td>
                 </tr></tbody>
@@ -153,10 +156,6 @@
                             </ul>
                         </fieldset>
                     </div>
-                        <div id="actionExpand" class="dataTables_actions">
-                            <a href="javascript:;" class="sort_tread"> <span
-                                    class="css_right ui-icon ui-icon-carat-2-n-s"></span> <?php putGS('Sort by Thread order'); ?>
-                            </a></div>
                         <?php $this->renderDatatable(); ?></div>
                 </div>
             </div>
