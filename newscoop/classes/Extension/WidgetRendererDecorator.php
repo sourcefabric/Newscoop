@@ -49,6 +49,10 @@ class WidgetRendererDecorator extends WidgetManagerDecorator implements IWidget
         $height = 100;
         $heights = isset($_COOKIE['widget_heights']) ? explode('&', $_COOKIE['widget_heights']) : array();
         foreach ($heights as $param) {
+            if (empty($param)) {
+                break;
+            }
+
             list($wid, $wheight) = explode('=', $param);
             if ($this->getId() == $wid) {
                 $height = $wheight;
