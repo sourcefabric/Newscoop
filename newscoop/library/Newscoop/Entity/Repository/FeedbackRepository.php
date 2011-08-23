@@ -67,6 +67,34 @@ class FeedbackRepository extends DatatableSource
         $andx = $qb->expr()->andx();
         $andx->add($qb->expr()->eq('f.subscriber', new Expr\Literal('s.id')));
 
+		if (!empty($p_params['sSearch'])) {
+            $this->buildWhere($p_cols, $p_params['sSearch'], $qb, $andx);
+        }
+        
+        // sort
+        if (isset($p_params["iSortCol_0"])) {
+            $cols = array_keys($p_cols);
+            $sortId = $p_params["iSortCol_0"];
+            $sortBy = $cols[$sortId];
+            $dir = $p_params["sSortDir_0"] ? : 'asc';
+            switch ($sortBy) {
+                case 'user':
+                    $qb->orderBy("s.name", $dir);
+                    break;
+                case 'message':
+                    $qb->orderBy("f.message", $dir);
+                    break;
+                case 'url':
+                    $qb->orderBy("f.url", $dir);
+                    break;
+                case 'index':
+                    $qb->orderBy("f.time_created", $dir);
+                    break;
+                default:
+                    $qb->orderBy("e." . $sortBy, $dir);
+            }
+        }
+		
         $qb->where($andx);
         // limit
         if (isset($p_params['iDisplayLength'])) {
@@ -87,10 +115,8 @@ class FeedbackRepository extends DatatableSource
     protected function buildWhere(array $p_cols, $p_search, $qb, $andx)
     {
         $orx = $qb->expr()->orx();
-        $orx->add($qb->expr()->like("c.name", $qb->expr()->literal("%{$p_search}%")));
-        $orx->add($qb->expr()->like("a.name", $qb->expr()->literal("%{$p_search}%")));
-        $orx->add($qb->expr()->like("e.subject", $qb->expr()->literal("%{$p_search}%")));
-        $orx->add($qb->expr()->like("e.message", $qb->expr()->literal("%{$p_search}%")));
+        $orx->add($qb->expr()->like("s.name", $qb->expr()->literal("%{$p_search}%")));
+        $orx->add($qb->expr()->like("f.message", $qb->expr()->literal("%{$p_search}%")));
         return $andx->add($orx);
     }
 
