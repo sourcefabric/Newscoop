@@ -49,7 +49,6 @@ class Admin_AclController extends Zend_Controller_Action
                 'image' => getGS('Images'),
                 'comment' => getGS('Comments'),
                 'file' => getGS('Files'),
-                'audioclip' => getGS('Audioclips'),
                 'editor' => getGS('Rich-Text Editor Preferences'),
             ),
             'structure' => array(
