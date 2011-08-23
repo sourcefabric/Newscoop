@@ -444,10 +444,10 @@
 		function setThumbnail(picture) {
 			_s_image = picture;
 			
-			td.find(".wobs-date-content")
-				.css("background-image", "url("+_s_image+")")
-				.css("background-size", "125px 120px")
-				.css("background-repeat", "no-repeat");
+			td.find("a").append('<img width="164" height="166" src="'+_s_image+'"></img>');
+				//.css("background-image", "url("+_s_image+")")
+				//.css("background-size", "125px 120px")
+				//.css("background-repeat", "no-repeat");
 		}
 		
 		function setUrl(url) {
@@ -460,8 +460,8 @@
 			_s_image = undefined;
 			_url = undefined;
 			
-			td.find(".wobs-date-content")
-				.removeAttr("style");
+			td.find("img")
+				.remove();
 			td.find(".wobs-date-title")
 				.empty();
 			td.find(".wobs-date-label")
