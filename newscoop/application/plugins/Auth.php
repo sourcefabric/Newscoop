@@ -2,78 +2,62 @@
 /**
  * @package Newscoop
  * @copyright 2011 Sourcefabric o.p.s.
- * @license http://www.gnu.org/licenses/gpl.txt
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
-use Newscoop\Entity\User\Staff;
 
 /**
  * Auth controller plugin
  */
 class Application_Plugin_Auth extends Zend_Controller_Plugin_Abstract
 {
-    public function __construct($namespace)
-    {
-        $auth = Zend_Auth::getInstance();
-        $storage = new Zend_Auth_Storage_Session('Zend_Auth_Storage');
-        $session = new Zend_Session_Namespace($storage->getNamespace());
-        $auth->setStorage($storage);
-
-        $seconds = SystemPref::Get('SiteSessionLifeTime');
-        if ($seconds > 0) {
-            $session->setExpirationSeconds($seconds);
-        }
-    }
+    /** @var array */
+    private $modules = array();
 
     /** @var array */
-    private $ignored = array(
-        'auth',
-        'error',
-        'legacy',
-        'login.php',
-        'password_recovery.php',
-        'password_check_token.php',
-    );
+    private $ignore = array();
 
+    /**
+     * @param array $config
+     */
+    public function __construct(array $config)
+    {
+        $this->modules = $config['modules'];
+        $this->ignore = $config['ignore'];
+    }
+
+    /**
+     * @param Zend_Controller_Request_Abstract $request
+     * @return void
+     */
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
-        global $ADMIN, $g_user;
+        $this->setSessionLifeTime();
 
-        // filter logged
-        $auth = Zend_Auth::getInstance();
+        if (!in_array($request->getModuleName(), $this->modules)) {
+            return;
+        }
 
-        if ($auth->hasIdentity()) {
-            $doctrine = $this->getResource('doctrine');
-            $user = $doctrine->getEntityManager()->find( 'Newscoop\Entity\User', $auth->getIdentity() );
-
-            /* @var $user Newscoop\Entity\User\Staff */
+        if (Zend_Auth::getInstance()->hasIdentity()) {
+            $user = Zend_Registry::get('container')->getService('user')->getCurrentUser();
 
             // set user for application
-            $g_user = $user;
+            $GLOBALS['g_user'] = $user;
             Zend_Registry::set('user', $user);
 
             // set view user
-            $view = $this->getResource('view');
+            $view = Zend_Registry::get('view');
             $view->currentUser = $user;
 
             // set view navigation acl
-            $acl = $this->getResource('acl')->getAcl($user);
+            $acl = Zend_Registry::get('acl')->getAcl($user);
             /* @var $acl Zend_Acl */
 
             $view->navigation()->setAcl($acl);
             $view->navigation()->setRole($user);
-
-			if( !\SaaS::singleton()->hasPrivilege( $request->getControllerName(), $request->getActionName() ) )
-			{
-				$redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
-				/* @var $redirector Zend_Controller_Action_Helper_Redirector */
-				$redirector->direct( "index", "index", "admin" );
-			}
             return;
         }
 
-        // filter ignored
-        if (in_array($request->getControllerName(), $this->ignored)) {
+        if (in_array($request->getControllerName(), $this->ignore)) {
             return;
         }
 
@@ -84,8 +68,9 @@ class Application_Plugin_Auth extends Zend_Controller_Plugin_Abstract
         if($this->_request->isXmlHttpRequest()) {
             $this->_response->setHeader('not-logged-in', true);
         }
+
         // use old login
-        $_SERVER['REQUEST_URI'] = "/{$ADMIN}/login.php";
+        $_SERVER['REQUEST_URI'] = "/$GLOBALS[ADMIN]/login.php";
         $request
             ->setModuleName('admin')
             ->setControllerName('legacy')
@@ -94,14 +79,19 @@ class Application_Plugin_Auth extends Zend_Controller_Plugin_Abstract
     }
 
     /**
-     * Get resource
+     * Set session lifetime
      *
-     * @param string $name
-     * @return mixed
+     * @return void
      */
-    private function getResource($name)
+    private function setSessionLifetime()
     {
-        return Zend_Registry::get($name);
-    }
+        $storage = new Zend_Auth_Storage_Session('Zend_Auth_Storage');
+        Zend_Auth::getInstance()->setStorage($storage);
 
+        $session = new Zend_Session_Namespace($storage->getNamespace());
+        $seconds = SystemPref::Get('SiteSessionLifeTime');
+        if ($seconds > 0) {
+            $session->setExpirationSeconds($seconds);
+        }
+    }
 }

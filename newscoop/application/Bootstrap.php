@@ -1,26 +1,18 @@
 <?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
 use Newscoop\DoctrineEventDispatcherProxy;
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
-    /**
-     * Init autoloader
-     */
     protected function _initAutoloader()
     {
-        global $g_campsiteDir;
-
-        $g_campsiteDir = realpath(APPLICATION_PATH . '/../');
-
-        set_include_path(implode(PATH_SEPARATOR, array(
-            realpath(APPLICATION_PATH . '/../classes/'),
-            realpath(APPLICATION_PATH . '/../classes/Extension/'),
-            realpath(APPLICATION_PATH . '/../template_engine/classes/'),
-            realpath(APPLICATION_PATH . '/../template_engine/metaclasses/'),
-            realpath(APPLICATION_PATH . '/../library/Service/'),
-        )) . PATH_SEPARATOR . get_include_path());
-
+        $options = $this->getOptions();
+        set_include_path(implode(PATH_SEPARATOR, array_map('realpath', $options['autoloader']['dirs'])) . PATH_SEPARATOR . get_include_path());
         $autoloader = Zend_Loader_Autoloader::getInstance();
         $autoloader->setFallbackAutoloader(TRUE);
 
@@ -39,17 +31,24 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             return;
         }, 'ADO');
 
+        $GLOBALS['g_campsiteDir'] = realpath(APPLICATION_PATH . '/../');
+
         return $autoloader;
     }
 
-    /**
-     * Init session
-     */
     protected function _initSession()
     {
         $options = $this->getOptions();
-        Zend_Session::setOptions($options['session']);
+        if (!empty($options['session'])) {
+            Zend_Session::setOptions($options['session']);
+        }
         Zend_Session::start();
+
+        foreach ($_COOKIE as $name => $value) { // remove unused cookies
+            if ($name[0] == 'w' && strrpos('_height', $name) !== FALSE) {
+                setcookie($name, '', time() - 3600);
+            }
+        }
     }
 
     protected function _initContainer()
@@ -86,6 +85,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('auth.adapter', 'Newscoop\Services\Auth\DoctrineAuthService')
             ->addArgument(new sfServiceReference('em'));
 
+        Zend_Registry::set('container', $container);
         return $container;
     }
 
@@ -105,10 +105,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
     protected function _initPlugins()
     {
+        $options = $this->getOptions();
         $front = Zend_Controller_Front::getInstance();
         $front->registerPlugin(new Application_Plugin_ContentType());
         $front->registerPlugin(new Application_Plugin_Upgrade());
         $front->registerPlugin(new Application_Plugin_CampPluginAutoload());
-        $front->registerPlugin(new Application_Plugin_Bootstrap($this->getOptions()));
+        $front->registerPlugin(new Application_Plugin_Auth($options['auth']));
+        $front->registerPlugin(new Application_Plugin_Acl($options['acl']));
     }
 }
