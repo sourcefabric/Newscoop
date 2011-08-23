@@ -285,19 +285,19 @@
 		
 		table = $('<table class="'+ns+'-header"/>');
 		
-		html = '<tbody><tr>';
+		html = '<tbody><tr><th colspan="7"><ul class="wobs-calendar-nav">';
 		
 		if (options.navigation === true) {
-			html = html + '<td class="'+ns+'-button-prev"> << </td>';
+			html = html + '<li class="'+ns+'-button-prev"><a></a></li>';
 		}	
 		
-		html = html + '<td class="'+ns+'-header-title"></td>';
+		html = html + '<li class="'+ns+'-header-title"><h5></h5></li>';
 		
 		if (options.navigation === true) {
-			html = html + '<td class="'+ns+'-button-next"> >> </td>';
+			html = html + '<li class="'+ns+'-button-next"><a></a></li>';
 		}
 		
-		html = html + '</tr></tbody>';
+		html = html + '</ul></th></tr></tbody>';
 		
 		table.append(html);
 		
@@ -395,7 +395,7 @@
 			month = date.getMonth();
 			month = options.monthNames[month]; 
 			
-			table.find('.'+ns+'-header-title')
+			table.find('.'+ns+'-header-title h5')
 				.empty()
 				.append(month+" "+yyyy);
 		}
@@ -419,9 +419,9 @@
 		this.setUrl = setUrl;
 		this.clear = clear;
 		
-		td.append('<div class="wobs-date-content"/>').find("div")
+		td.append('<div class="wobs-date-content"><a></a></div>').find("a")
 			.append('<div class="wobs-date-label"/>')
-			.append('<div class="wobs-date-title"/>');
+			.append('<span class="wobs-date-title"/>');
 		
 		td.click(function(){
 			if (_url !== undefined) {
@@ -437,8 +437,8 @@
 		
 		function setTitle(title) {
 			_title = title;
-			//td.find(".wobs-date-title")
-				//.append(_title);
+			td.find(".wobs-date-title")
+				.append(_title);
 		}
 		
 		function setThumbnail(picture) {
@@ -462,7 +462,9 @@
 			
 			td.find(".wobs-date-content")
 				.removeAttr("style");
-			td.find("div > div")
+			td.find(".wobs-date-title")
+				.empty();
+			td.find(".wobs-date-label")
 				.empty();
 		}
 	}
