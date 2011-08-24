@@ -39,26 +39,26 @@ class User implements \Zend_Acl_Role_Interface
     private $username;
 
     /**
-     * @Column(type="string", length="60", name="Password", nullable=True)
+     * @Column(type="string", length="60", name="Password", nullable=TRUE)
      * @var string
      */
     private $password;
 
     /**
-     * @Column(type="string", length="80", name="Name", nullable=True)
+     * @Column(type="string", length="80", name="Name", nullable=TRUE)
      * @var string
      */
     private $first_name;
 
     /**
-     * @Column(type="string", length="80", name="Field1", nullable=True)
+     * @Column(type="string", length="80", name="Field1", nullable=TRUE)
      * @var string
      * @todo add new db column
      */
     private $last_name;
 
     /**
-     * @Column(name="EMail", length="80", nullable=True)
+     * @Column(name="EMail", length="80", nullable=TRUE)
      * @var string
      */
     private $email;
@@ -70,7 +70,7 @@ class User implements \Zend_Acl_Role_Interface
     private $created;
 
     /**
-     * @Column(type="integer", length="1", name="Field2", nullable=True)
+     * @Column(type="integer", length="1", name="Field2", nullable=TRUE)
      * @var int
      * @todo add new db column
      */
@@ -82,6 +82,13 @@ class User implements \Zend_Acl_Role_Interface
      * @todo add new db column
      */
     private $is_admin;
+
+    /**
+     * @Column(type="boolean", name="Field4")
+     * @var bool
+     * @todo add new db column
+     */
+    private $is_public;
 
     /**
      * @oneToOne(targetEntity="Newscoop\Entity\Acl\Role", cascade={"ALL"})
@@ -115,7 +122,8 @@ class User implements \Zend_Acl_Role_Interface
         $this->status = self::STATUS_INACTIVE;
         $this->role = new Role();
         $this->setPassword($this->generateRandomString(6)); // make sure password is not empty
-        $this->is_admin = false;
+        $this->is_admin = FALSE;
+        $this->is_public = FALSE;
     }
 
     /**
@@ -179,10 +187,10 @@ class User implements \Zend_Acl_Role_Interface
         if (sizeof(explode(self::HASH_SEP, $this->password)) != 3) { // fallback
             if ($this->password == sha1($password)) { // update old password on success
                 $this->setPassword($password);
-                return True;
+                return TRUE;
             }
 
-            return False;
+            return FALSE;
         }
 
         list($algo, $salt, $password_hash) = explode(self::HASH_SEP, $this->password);
@@ -348,6 +356,28 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * Set user is public
+     *
+     * @param bool $public
+     * @return Newscoop\Entity\User
+     */
+    public function setPublic($public)
+    {
+        $this->is_public = (bool) $public;
+        return $this;
+    }
+
+    /**
+     * Test if user is public
+     *
+     * @return bool
+     */
+    public function isPublic()
+    {
+        return (bool) $this->is_public;
+    }
+
+    /**
      * Get groups
      *
      * @return array of Newscoop\Entity\User\Group
@@ -430,7 +460,7 @@ class User implements \Zend_Acl_Role_Interface
             	return FALSE;
             }
         } catch (\Exception $e) {
-            return false;
+            return FALSE;
         }
     }
 

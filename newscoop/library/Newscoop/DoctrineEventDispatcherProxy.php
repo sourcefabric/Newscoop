@@ -160,7 +160,7 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
      */
     private function getEntityTitle($entity)
     {
-        static $nameMethods = array('getTitle', 'getName', 'getFirstName');
+        static $nameMethods = array('__toString', 'getTitle', 'getName');
         foreach ($nameMethods as $method) {
             if (method_exists($entity, $method)) {
                 return $entity->$method();

@@ -65,6 +65,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(Zend_Auth::getInstance());
 
+        $container->register('user.list', 'Newscoop\Services\ListUserService')
+            ->addArgument(new sfServiceReference('em'));
+
         $container->register('user_type', 'Newscoop\Services\UserTypeService')
             ->addArgument(new sfServiceReference('em'));
 
@@ -72,14 +75,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('user'));
 
+        $container->register('community_ticker', 'Newscoop\Services\CommunityTickerService')
+            ->addArgument(new sfServiceReference('em'));
+
         $container->register('dispatcher', 'sfEventDispatcher')
             ->setConfigurator(function($service) use ($container) {
-                DatabaseObject::setEventDispatcher($service);
-                DatabaseObject::setResourceNames($container->getParameter('resourceNames'));
-
-                $container->getService('em')
-                    ->getEventManager()
-                    ->addEventSubscriber(new DoctrineEventDispatcherProxy($service));
+                foreach ($container->getParameter('listener') as $listener) {
+                    $listenerService = $container->getService($listener);
+                    $listenerParams = $container->getParameter($listener);
+                    foreach ((array) $listenerParams['events'] as $event) {
+                        $service->connect($event, array($listenerService, 'update'));
+                    }
+                }
             });
 
         $container->register('auth.adapter', 'Newscoop\Services\Auth\DoctrineAuthService')
@@ -89,18 +96,20 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         return $container;
     }
 
-    protected function _initAuditService()
+    /**
+     * @todo pass container to allow lazy dispatcher loading
+     */
+    protected function _initEventDispatcher()
     {
         $this->bootstrap('container');
         $container = $this->getResource('container');
 
-        $config = $container->getParameter('audit');
-        foreach ((array) $config['events'] as $event) {
-            $container->getService('dispatcher')
-                ->connect($event, array($container->getService('audit'), 'update'));
-        }
+        DatabaseObject::setEventDispatcher($container->getService('dispatcher'));
+        DatabaseObject::setResourceNames($container->getParameter('resourceNames'));
 
-        return $container->getService('audit');
+        $container->getService('em')
+            ->getEventManager()
+            ->addEventSubscriber(new DoctrineEventDispatcherProxy($container->getService('dispatcher')));
     }
 
     protected function _initPlugins()

@@ -124,8 +124,7 @@ final class MetaUser
      */
     public function is_admin()
     {
-        // TODO use acl
-        return True;
+        return $this->user->isAdmin();
     }
 
     /**

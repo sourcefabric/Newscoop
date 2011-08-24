@@ -23,6 +23,8 @@ class UserRepository extends EntityRepository
         'last_name' => 'setLastName',
         'email' => 'setEmail',
         'status' => 'setStatus',
+        'is_admin' => 'setAdmin',
+        'is_public' => 'setPublic',
     );
 
     /**
@@ -55,6 +57,17 @@ class UserRepository extends EntityRepository
         $this->setAttributes($user, array_key_exists('attributes', $values) ? $values['attributes'] : array());
 
         $this->getEntityManager()->persist($user);
+    }
+
+    /**
+     * Get total count for given criteria
+     *
+     * @param array $criteria
+     * @return int
+     */
+    public function countBy(array $criteria)
+    {
+        return count($this->findBy($criteria));
     }
 
     /**

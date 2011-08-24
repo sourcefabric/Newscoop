@@ -29,6 +29,10 @@ class UserTest extends \RepositoryTestCase
     public function testSave()
     {
         $user = new User();
+
+        $this->assertFalse($user->isAdmin());
+        $this->assertFalse($user->isPublic());
+
         $this->repository->save($user, array(
             'username' => 'foo.bar',
             'password' => 'secret',
@@ -36,6 +40,8 @@ class UserTest extends \RepositoryTestCase
             'first_name' => 'Foo',
             'last_name' => 'Bar',
             'status' => User::STATUS_INACTIVE,
+            'is_public' => TRUE,
+            'is_admin' => TRUE,
             'attributes' => array(
                 'phone' => 123,
             ),
@@ -58,7 +64,8 @@ class UserTest extends \RepositoryTestCase
         $this->assertFalse($user->isActive());
         $this->assertLessThan(2, time() - $user->getCreated()->getTimestamp());
         $this->assertEquals(123, $user->getAttribute('phone'));
-        $this->assertFalse($user->isAdmin());
+        $this->assertTrue($user->isAdmin());
+        $this->assertTrue($user->isPublic());
 
         // test attribute change
         $user->addAttribute('phone', 1234);
@@ -113,15 +120,6 @@ class UserTest extends \RepositoryTestCase
 
         $this->assertEquals('foo', $user->getUsername());
         $this->assertEquals('Bar', $user->getLastName());
-    }
-
-    public function testSetAdmin()
-    {
-        $user = new User();
-        $this->assertFalse($user->isAdmin());
-
-        $user->setAdmin(true);
-        $this->assertTrue($user->isAdmin());
     }
 
     public function testSetPassword()
