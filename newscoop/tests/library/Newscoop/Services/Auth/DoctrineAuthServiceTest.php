@@ -42,6 +42,7 @@ class DoctrineAuthServiceTest extends \PHPUnit_Framework_TestCase
         $service = new DoctrineAuthService($this->em);
         $this->assertEquals($service, $service->setUsername('foo'));
         $this->assertEquals($service, $service->setPassword('bar'));
+        $this->assertEquals($service, $service->setAdmin(true));
     }
 
     public function testAuthenticateNotFound()
@@ -109,6 +110,10 @@ class DoctrineAuthServiceTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(TRUE));
 
         $user->expects($this->once())
+            ->method('isAdmin')
+            ->will($this->returnValue(FALSE));
+
+        $user->expects($this->once())
             ->method('checkPassword')
             ->with($this->equalTo('secret'))
             ->will($this->returnValue(FALSE));
@@ -134,14 +139,59 @@ class DoctrineAuthServiceTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo('Newscoop\Entity\User'))
             ->will($this->returnValue($this->repository));
 
-        $this->em->expects($this->once())
-            ->method('flush')
-            ->with();
-
         $user = $this->getMock('Newscoop\Entity\User');
+
+        $this->repository->expects($this->once())
+            ->method('findOneBy')
+            ->with($this->equalTo(array('username' => 'john')))
+            ->will($this->returnValue($user));
 
         $user->expects($this->once())
             ->method('isActive')
+            ->will($this->returnValue(TRUE));
+
+        $user->expects($this->once())
+            ->method('isAdmin')
+            ->will($this->returnValue(FALSE));
+
+        $user->expects($this->once())
+            ->method('checkPassword')
+            ->with($this->equalTo('secret'))
+            ->will($this->returnValue(TRUE));
+
+        $user->expects($this->once())
+            ->method('getId')
+            ->will($this->returnValue(3));
+
+        $service = new DoctrineAuthService($this->em);
+        $service->setUsername('john')->setPassword('secret');
+
+        $result = $service->authenticate();
+        $this->assertInstanceOf('Zend_Auth_Result', $result);
+        $this->assertEquals(\Zend_Auth_Result::SUCCESS, $result->getCode());
+        $this->assertEquals(3, $result->getIdentity());
+    }
+
+    public function testAuthenticateValidAdmin()
+    {
+        $this->em->expects($this->once())
+            ->method('getRepository')
+            ->with($this->equalTo('Newscoop\Entity\User'))
+            ->will($this->returnValue($this->repository));
+
+        $user = $this->getMock('Newscoop\Entity\User');
+
+        $this->repository->expects($this->once())
+            ->method('findOneBy')
+            ->with($this->equalTo(array('username' => 'john')))
+            ->will($this->returnValue($user));
+
+        $user->expects($this->once())
+            ->method('isActive')
+            ->will($this->returnValue(TRUE));
+
+        $user->expects($this->once())
+            ->method('isAdmin')
             ->will($this->returnValue(TRUE));
 
         $user->expects($this->once())
@@ -153,18 +203,42 @@ class DoctrineAuthServiceTest extends \PHPUnit_Framework_TestCase
             ->method('getId')
             ->will($this->returnValue(3));
 
-        $this->repository->expects($this->once())
-            ->method('findOneBy')
-            ->with($this->equalTo(array('username' => 'john')))
-            ->will($this->returnValue($user));
-
         $service = new DoctrineAuthService($this->em);
-        $service->setUsername('john');
-        $service->setPassword('secret');
+        $service->setUsername('john')->setPassword('secret')->setAdmin(TRUE);
 
         $result = $service->authenticate();
         $this->assertInstanceOf('Zend_Auth_Result', $result);
         $this->assertEquals(\Zend_Auth_Result::SUCCESS, $result->getCode());
         $this->assertEquals(3, $result->getIdentity());
+    }
+
+    public function testAuthenticateInvalidAdmin()
+    {
+        $this->em->expects($this->once())
+            ->method('getRepository')
+            ->with($this->equalTo('Newscoop\Entity\User'))
+            ->will($this->returnValue($this->repository));
+
+        $user = $this->getMock('Newscoop\Entity\User');
+
+        $this->repository->expects($this->once())
+            ->method('findOneBy')
+            ->with($this->equalTo(array('username' => 'john')))
+            ->will($this->returnValue($user));
+
+        $user->expects($this->once())
+            ->method('isActive')
+            ->will($this->returnValue(TRUE));
+
+        $user->expects($this->once())
+            ->method('isAdmin')
+            ->will($this->returnValue(FALSE));
+
+        $service = new DoctrineAuthService($this->em);
+        $service->setUsername('john')->setPassword('secret')->setAdmin(TRUE);
+
+        $result = $service->authenticate();
+        $this->assertInstanceOf('Zend_Auth_Result', $result);
+        $this->assertEquals(\Zend_Auth_Result::FAILURE_UNCATEGORIZED, $result->getCode());
     }
 }

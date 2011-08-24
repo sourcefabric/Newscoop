@@ -58,6 +58,7 @@ class UserTest extends \RepositoryTestCase
         $this->assertFalse($user->isActive());
         $this->assertLessThan(2, time() - $user->getCreated()->getTimestamp());
         $this->assertEquals(123, $user->getAttribute('phone'));
+        $this->assertFalse($user->isAdmin());
 
         // test attribute change
         $user->addAttribute('phone', 1234);
@@ -112,6 +113,15 @@ class UserTest extends \RepositoryTestCase
 
         $this->assertEquals('foo', $user->getUsername());
         $this->assertEquals('Bar', $user->getLastName());
+    }
+
+    public function testSetAdmin()
+    {
+        $user = new User();
+        $this->assertFalse($user->isAdmin());
+
+        $user->setAdmin(true);
+        $this->assertTrue($user->isAdmin());
     }
 
     public function testSetPassword()

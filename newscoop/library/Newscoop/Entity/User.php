@@ -53,7 +53,7 @@ class User implements \Zend_Acl_Role_Interface
     /**
      * @Column(type="string", length="80", name="Field1", nullable=True)
      * @var string
-     * @todo add new db column for status
+     * @todo add new db column
      */
     private $last_name;
 
@@ -72,9 +72,16 @@ class User implements \Zend_Acl_Role_Interface
     /**
      * @Column(type="integer", length="1", name="Field2", nullable=True)
      * @var int
-     * @todo add new db column for status
+     * @todo add new db column
      */
     private $status;
+
+    /**
+     * @Column(type="boolean", name="Field3")
+     * @var bool
+     * @todo add new db column
+     */
+    private $is_admin;
 
     /**
      * @oneToOne(targetEntity="Newscoop\Entity\Acl\Role", cascade={"ALL"})
@@ -108,6 +115,7 @@ class User implements \Zend_Acl_Role_Interface
         $this->status = self::STATUS_INACTIVE;
         $this->role = new Role();
         $this->setPassword($this->generateRandomString(6)); // make sure password is not empty
+        $this->is_admin = false;
     }
 
     /**
@@ -318,6 +326,28 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * Set admin switch
+     *
+     * @param bool $admin
+     * @return Newscoop\Entity\User
+     */
+    public function setAdmin($admin)
+    {
+        $this->is_admin = (bool) $admin;
+        return $this;
+    }
+
+    /**
+     * Test if user is admin
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        return (bool) $this->is_admin;
+    }
+
+    /**
      * Get groups
      *
      * @return array of Newscoop\Entity\User\Group
@@ -402,5 +432,13 @@ class User implements \Zend_Acl_Role_Interface
         } catch (\Exception $e) {
             return false;
         }
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->getUsername();
     }
 }

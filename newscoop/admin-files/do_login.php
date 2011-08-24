@@ -39,7 +39,7 @@ $t_password = rc4($xorkey, base64ToText($f_password));
 
 if (!$auth->hasIdentity()) {
     $adapter = $controller->_helper->service('auth.adapter');
-    $adapter->setUsername($f_user_name)->setPassword($t_password);
+    $adapter->setUsername($f_user_name)->setPassword($t_password)->setAdmin(TRUE);
     $result = $auth->authenticate($adapter);
     if ($result->getCode() != Zend_Auth_Result::SUCCESS) {
         LoginAttempts::RecordLoginAttempt();

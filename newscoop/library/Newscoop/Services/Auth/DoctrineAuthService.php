@@ -23,6 +23,9 @@ class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
     /** @var string */
     private $password;
 
+    /** @var bool */
+    private $is_admin = FALSE;
+
     /**
      * @param Doctrine\ORM\EntityManager $em
      */
@@ -51,6 +54,10 @@ class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
             return new \Zend_Auth_Result(\Zend_Auth_Result::FAILURE_UNCATEGORIZED, NULL);
         }
 
+        if ($user->isAdmin() != $this->is_admin) {
+            return new \Zend_Auth_Result(\Zend_Auth_Result::FAILURE_UNCATEGORIZED, NULL);
+        }
+
         if (!$user->checkPassword($this->password)) {
             return new \Zend_Auth_Result(\Zend_Auth_Result::FAILURE_CREDENTIAL_INVALID, NULL);
         }
@@ -63,7 +70,7 @@ class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
      * Set username
      *
      * @param string $username
-     * @return Newscoop\Services\AuthService
+     * @return Newscoop\Services\Auth\DoctrineAuthService
      */
     public function setUsername($username)
     {
@@ -75,11 +82,23 @@ class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
      * Set password
      *
      * @param string $password
-     * @return Newscoop\Services\AuthService
+     * @return Newscoop\Services\Auth\DoctrineAuthService
      */
     public function setPassword($password)
     {
         $this->password = $password;
+        return $this;
+    }
+
+    /**
+     * Set is admin constrain
+     *
+     * @param bool $admin
+     * @return Newscoop\Services\AuthService
+     */
+    public function setAdmin($admin = TRUE)
+    {
+        $this->is_admin = (bool) $admin;
         return $this;
     }
 }
