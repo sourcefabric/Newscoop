@@ -643,33 +643,34 @@ class Admin_ThemesController extends Zend_Controller_Action
 
     public function exportAction()
     {
+        $erro_msg = getGS('Theme export was not successful. Check please that the server is not out of disk space.');
+
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         if( ( $themeId = $this->_getParam( 'id', null ) ) )
         {
-            $exportPath = $this->getThemeService()
-                ->exportTheme( ( $themeEntity = $this->getThemeService()->findById( $themeId ) ) );
-            $this->getResponse()
-                ->setHeader( 'Content-type', 'application/zip' )
-                ->setHeader( 'Content-Disposition', 'attachment; filename="'.$themeEntity->getName().'.zip"' )
-                ->setHeader( 'Content-length', filesize( $exportPath ) )
-                ->setHeader( 'Cache-control', 'private' );
+            // it looks that a problem could happen here if the server is out of its disk space
+            try {
+                $exportPath = $this->getThemeService()
+                    ->exportTheme( ( $themeEntity = $this->getThemeService()->findById( $themeId ) ), $erro_msg );
+                if (false === $exportPath) {
+                    die($erro_msg);
+                }
 
-			// it looks that a problem could happen here if the server is out of its disk space
-			$send_file_failure = false;
-			try {
-				if(!@readfile( $exportPath )) {
-					$send_file_failure = true;
-				}
-			}
-			catch (Exception $exc) {
-				$send_file_failure = true;
-			}
-			if ($send_file_failure) {
-				echo getGS('Download was not successful. Check please that the server is not out of disk space.');
-			}
+                $this->getResponse()
+                    ->setHeader( 'Content-type', 'application/zip' )
+                    ->setHeader( 'Content-Disposition', 'attachment; filename="'.$themeEntity->getName().'.zip"' )
+                    ->setHeader( 'Content-length', filesize( $exportPath ) )
+                    ->setHeader( 'Cache-control', 'private' );
 
-            $this->getResponse()->sendResponse();
+                if(!@readfile( $exportPath )) {
+                    die($erro_msg);
+                }
+                $this->getResponse()->sendResponse();
+            }
+            catch (Exception $exc) {
+                echo $erro_msg;
+            }
         }
     }
 
