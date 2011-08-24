@@ -24,7 +24,7 @@ class EventData_Parser {
 
         $parser = new EventData_Parser_SimpleXML;
 
-		$events = array();
+        $events = array();
         $files = array();
 
         if ($dir_handle = opendir($p_dir)) {
@@ -55,7 +55,7 @@ class EventData_Parser_SimpleXML {
      */
     function parse(@$p_events, $p_provider, $p_file, $p_categories) {
 
-		//$events = array();
+        //$events = array();
 
         libxml_clear_errors();
         $internal_errors = libxml_use_internal_errors(true);
@@ -71,59 +71,103 @@ class EventData_Parser_SimpleXML {
             return array("correct" => false, "errormsg" => $error_msg);
         }
 
-		// $xml->date is an array of (per-day) event sets
-		foreach ($xml->date as $event_day) {
+        // $xml->date is an array of (per-day) event sets
+        foreach ($xml->date as $event_day) {
 
-			// day of event set (event record)
-			$recdate = $event_day->recdate;
+            // day of event set (event record)
+            $recdate = $event_day->recdate;
 
-			// array of events info
-			$entry_set = $event_day->entry;
+            // array of events info
+            $entry_set = $event_day->entry;
 
-			// one event is object of 72 (simple) properties, most of them are empty
-			foreach ($entry_set as $event) {
-				$event_info = array('provider_id' => $p_provider);
-
-				// Ids
-				// number, event id, shall be unique
-				$x_eveid = '' . $event->eveid;
-				if (empty($x_eveid)) {
-					$x_eveid = null;
-				}
-				$event_info['event_id'] = $x_eveid;
-
-				// number, turnus id, shall be shared among events of particular repeated actions
-				$x_trnid = '' . $event->trnid;
-				if (empty($x_trnid)) {
-					$x_trnid = null;
-				}
-				$event_info['turnus_id'] = $x_trnid;
-
-				// number, town id
-				$x_loctwn = '' . $event->loctwn;
-
-				// number, location id
-				$x_locid = '' . $event->locid;
-				if (empty($x_locid)) {
-					$x_locid = null;
-				}
-				$event_info['location_id'] = $x_locid;
-
-				// string, location key
-				$x_lockey = '' . $event->lockey;
-				// string, some event category group
-				$x_catgrp = '' . $event->catgrp;
+            // one event is object of 72 (simple) properties, most of them are empty
+            foreach ($entry_set as $event) {
+                $event_info = array('provider_id' => $p_provider);
 
 
-				// Categories
+                // Ids: hidden fields, other ones will be visible
+
+                // number, event id, shall be unique
+                $x_eveid = '' . $event->eveid;
+                if (empty($x_eveid)) {
+                    $x_eveid = null;
+                }
+                $event_info['event_id'] = $x_eveid;
+
+                // number, tour id, shall be shared among events of particular repeated actions
+                $x_trnid = '' . $event->trnid;
+                if (empty($x_trnid)) {
+                    $x_trnid = null;
+                }
+                $event_info['tour_id'] = $x_trnid;
+
+                // number, town id
+                $x_loctwn = '' . $event->loctwn;
+                if (empty($x_loctwn)) {
+                    $x_loctwn = null;
+                }
+                $event_info['town_id'] = $x_loctwn;
+
+                // number, location id
+                $x_locid = '' . $event->locid;
+                if (empty($x_locid)) {
+                    $x_locid = null;
+                }
+                $event_info['location_id'] = $x_locid;
+
+
+                // Categories
+
+                // event category
+                $x_catnam = '' . $event->catnam;
+                if (empty($x_catnam)) {
+                    $x_catnam = null;
+                }
+                $event_info['category'] = $x_catnam;
+
+                // event subcategory
+                $x_catsub = '' . $event->catsub;
+                if (empty($x_catsub)) {
+                    $x_catsub = null;
+                }
+                $event_info['subcategory'] = $x_catsub;
+
+                // string, some event category group
+                $x_catgrp = '' . $event->catgrp;
+                if (empty($x_catgrp)) {
+                    $x_catgrp = null;
+                }
+                $event_info['category_group'] = $x_catgrp;
+
+                // location type (club, museum, ...)
+                $x_loctyp = '' . $event->loctyp;
+                if (empty($x_loctyp)) {
+                    $x_loctyp = null;
+                }
+                $event_info['location_type'] = $x_loctyp;
+
+                // location hot
+                $x_lochot = '' . $event->lochot;
+                if (empty($x_lochot)) {
+                    $x_lochot = null;
+                }
+                $event_info['location_hot'] = $x_lochot;
+
+                // tour category (provider's internal)
+                $x_trncao = '' . $event->trncao;
+                if (empty($x_trncao)) {
+                    $x_trncao = null;
+                }
+                $event_info['tour_category'] = $x_trncao;
+
 
                 $event_topics = array();
-				// * main type fields
-				// event category
-				$x_catnam = strtolower('' . $event->catnam);
-				//$event_info['event_type_id'] = 0;
-				//$event_info['event_type'] = 'miscellaneous';
-				foreach ($p_categories as $one_category) {
+                // * main type fields
+                // event category
+                $x_catnam = strtolower('' . $event->catnam);
+                //$event_info['event_type_id'] = 0;
+                //$event_info['event_type'] = 'miscellaneous';
+                foreach ($p_categories as $one_category) {
                     if (!is_array($one_category)) {
                         continue;
                     }
@@ -144,298 +188,387 @@ class EventData_Parser_SimpleXML {
                             continue;
                         }
                     }
-				}
+                }
 
-				// event subcategory
-				$x_catsub = '' . $event->catsub;
-				// * minor type fields
-				// location type (club, museum, ...)
-				$x_loctyp = '' . $event->loctyp;
-				// turnus category
-				$x_trncao = '' . $event->trncao;
-				// * additional usually empty category info
-				// minimal age of turnus visitors
-				$x_trnage = '' . $event->trnage;
-				// turnus language
-				$x_trnlan = '' . $event->trnlan;
 
-				// Names
-				// * main display provider name
-				// event location name
-				$event_location_name = null;
+                // Location
 
-				$x_locnam = '' . $event->locnam;
-				if (!empty($x_locnam)) {
-					$event_location_name = $x_locnam;
-				}
+                // * main display provider name
+                // event location name
+                // the 'trnorg'/'tour_organization' is a similar/related info
+                $x_locnam = '' . $event->locnam;
+                if (empty($x_locnam)) {
+                    $x_locnam = null;
+                }
+                $event_info['location_name'] = $x_locnam;
 
-				// * minor display provider name
-				// event location organizer
-				$x_trnorg = '' . $event->trnorg;
-				if (empty($event_location_name)) {
-					if (!empty($x_trnorg)) {
-						$event_location_name = $x_trnorg;
-					}
-				}
+                // !!! no country info
+                $event_info['location_country'] = 'ch';
 
-				$event_info['event_location'] = $event_location_name;
+                // * main location info
+                // town name
+                $x_twnnam = '' . $event->twnnam;
+                if (empty($x_twnnam)) {
+                    $x_twnnam = null;
+                }
+                $event_info['location_town'] = $x_twnnam;
 
-				// * main display turnus name
-				// event name
-				$x_trnnam = '' . $event->trnnam;
-				if (empty($x_trnnam)) {
-					$x_trnnam = null;
-				}
-				$event_info['event_name'] = $x_trnnam;
+                // zip code
+                $x_loczip = '' . $event->loczip;
+                if (empty($x_loczip)) {
+                    $x_loczip = null;
+                }
+                $event_info['location_zip'] = $x_loczip;
 
-				// Prices, mostly empty, frequently inconsistent
-				// number, better to ignore
-				$x_evepri = '' . $event->evepri;
-				// number, better to ignore
-				$x_trnpri = '' . $event->trnpri;
-				// plain text, may be used
-				$x_eveptx = '' . $event->eveptx;
-				// plain text, may be used
-				$x_trnptx = '' . $event->trnptx;
+                // street address, free form, but usually 'street_name house_number'
+                $x_locadr = '' . $event->locadr;
+                if (empty($x_locadr)) {
+                    $x_locadr = null;
+                }
+                $event_info['location_street'] = $x_locadr;
 
-				// Locations
-				// !!! no country info
-				$event_info['location_country'] = 'ch';
+                // string, location key
+                $x_lockey = '' . $event->lockey;
+                if (empty($x_lockey)) {
+                    $x_lockey = null;
+                }
+                $event_info['location_key'] = $x_lockey;
 
-				// * main location info
-				// town name
-				$x_twnnam = '' . $event->twnnam;
-				if (empty($x_twnnam)) {
-					$x_twnnam = null;
-				}
-				$event_info['location_town'] = $x_twnnam;
+                // * minor location info
+                // other location specification
+                $x_locade = '' . $event->locade;
+                if (empty($x_locade)) {
+                    $x_locade = null;
+                }
+                $event_info['location_addition'] = $x_locade;
 
-				// zip code
-				$x_loczip = '' . $event->loczip;
-				if (empty($x_loczip)) {
-					$x_loczip = null;
-				}
-				$event_info['location_zip'] = $x_loczip;
+                // directions to the location
+                $x_locacc = '' . $event->locacc;
+                if (empty($x_locacc)) {
+                    $x_locacc = null;
+                }
+                $event_info['location_approach'] = $x_locacc;
 
-				// street address, free form, but usually 'street_name house_number'
-				$x_locadr = '' . $event->locadr;
-				if (empty($x_locadr)) {
-					$x_locadr = null;
-				}
-				$event_info['location_street'] = $x_locadr;
 
-				// * minor location info
-				// other location specification
-				$x_locade = '' . $event->locade;
-				// other location specification
-				$x_eveloz = '' . $event->eveloz;
-				// directions to the location
-				$x_locacc = '' . $event->locacc;
+                // Tour
 
-				// Date, time
-				// * main date-time info
+                // * main display tour name
+                // tour name
+                $x_trnnam = '' . $event->trnnam;
+                if (empty($x_trnnam)) {
+                    $x_trnnam = null;
+                }
+                $event_info['tour_name'] = $x_trnnam;
 
-				$event_date = null;
+                // tour organizer
+                $x_trnorg = '' . $event->trnorg;
+                if (empty($x_trnorg)) {
+                    $x_trnorg = null;
+                }
+                $event_info['tour_organizer'] = $x_trnorg;
 
-				// year, four digits
-				$x_evedatyeanum2 = '' . $event->evedatyeanum2;
-				// month, two digits
-				$x_evedatmonnum2 = '' . $event->evedatmonnum2;
-				// day, two digits
-				$x_evedatdaynum2 = '' . $event->evedatdaynum2;
+                // tour language
+                $x_trnlan = '' . $event->trnlan;
+                if (empty($x_trnorg)) {
+                    $x_trnorg = null;
+                }
+                $event_info['tour_organizer'] = $x_trnorg;
 
-				if ((!empty($x_evedatyeanum2)) && (!empty($x_evedatmonnum2)) && (!empty($x_evedatdaynum2))) {
-					if ((4 == strlen($x_evedatyeanum2)) && (2 == strlen($x_evedatmonnum2)) && (2 == strlen($x_evedatdaynum2))) {
-						$event_date = $x_evedatyeanum2 . '-' . $x_evedatmonnum2 . '-' . $x_evedatdaynum2;
-					}
-				}
-				$event_info['event_date'] = $event_date;
+                // * additional usually empty info
+                // minimal age of tour visitors
+                $x_trnage = '' . $event->trnage;
+                if (empty($x_trnage)) {
+                    $x_trnage = null;
+                }
+                $event_info['minimal_age'] = $x_trnage;
 
-				// hours, like '14.30'
-				$x_eveda2 = '' . $event->eveda2;
-				if (empty($x_eveda2)) {
-					$x_eveda2 = null;
-				}
-				$event_info['event_time'] = $x_eveda2;
+                // Descriptions
 
-				$event_open = array();
+                // * usually the main texts
+                // short description
+                $x_trntxs = '' . $event->trntxs;
+                if (!empty($x_trntxs)) {
+                    $x_trntxs = null;
+                }
+                $event_info['tour_text_small'] = $x_trntxs;
 
-				// * plaint text days/hours span info
-				// long-term days
-				$x_trntxx = '' . $event->trntxx;
-				if (!empty($x_trntxx)) {
-					$event_open[] = $x_trntxx;
-				}
+                // middle description
+                $x_trntxm = '' . $event->trntxm;
+                if (!empty($x_trntxm)) {
+                    $x_trntxm = null;
+                }
+                $event_info['tour_text_middle'] = $x_trntxm;
 
-				// long-term hours
-				$x_lochou = '' . $event->lochou;
-				if (!empty($x_lochou)) {
-					$event_open[] = $x_lochou;
-				}
+                // long description
+                $x_trntxl = '' . $event->trntxl;
+                if (!empty($x_trntxl)) {
+                    $x_trntxl = null;
+                }
+                $event_info['tour_text_large'] = $x_trntxl;
 
-				// hour span
-				$x_evehou = '' . $event->evehou;
-				if (!empty($x_evehou)) {
-					$event_open[] = $x_evehou;
-				}
+                // * short additional info
+                // subtitle
+                $x_trntt1 = '' . $event->trntt1;
+                if (!empty($x_trntt1)) {
+                    $x_trntt1 = null;
+                }
+                $event_info['tour_subtitle1'] = $x_trntt1;
 
-				// hour span
-				$x_evemtx = '' . $event->evemtx;
-				if (!empty($x_evemtx)) {
-					$event_open[] = $x_evemtx;
-				}
+                // subtitle
+                $x_trntt2 = '' . $event->trntt2;
+                if (!empty($x_trntt2)) {
+                    $x_trntt2 = null;
+                }
+                $event_info['tour_subtitle2'] = $x_trntt2;
 
-				$event_info['event_open'] = $event_open;
+                // subtitle
+                $x_trntt3 = '' . $event->trntt3;
+                if (!empty($x_trntt3)) {
+                    $x_trntt3 = null;
+                }
+                $event_info['tour_subtitle3'] = $x_trntt3;
 
-				// Descriptions
+                // additional text, usually (but not always) long-term days if anything at all
+                $x_trntxx = '' . $event->trntxx;
+                if (empty($x_trntxx)) {
+                    $x_trntxx = null;
+                }
+                $event_info['tour_additional'] = $x_trntxx;
 
-				$event_texts = array();
 
-				// * usually the main texts
-				// short description
-				$x_trntxs = '' . $event->trntxs;
-				if (!empty($x_trntxs)) {
-					$event_texts[] = $x_trntxs;
-				}
+                // Event
 
-				// middle description
-				$x_trntxm = '' . $event->trntxm;
-				if (!empty($x_trntxm)) {
-					$event_texts[] = $x_trntxm;
-				}
+                // other event location specification
+                $x_eveloz = '' . $event->eveloz;
+                if (empty($x_eveloz)) {
+                    $x_eveloz = null;
+                }
+                $event_info['event_location_addition'] = $x_eveloz;
 
-				// long description
-				$x_trntxl = '' . $event->trntxl;
-				if (!empty($x_trntxl)) {
-					$event_texts[] = $x_trntxl;
-				}
+                // * additional notices
+                // subtitle
+                $x_evett1 = '' . $event->evett1;
+                if (empty($x_evett1)) {
+                    $x_evett1 = null;
+                }
+                $event_info['event_subtitle1'] = $x_evett1;
 
-				// * short additional info
-				// short info
-				$x_trntt1 = '' . $event->trntt1;
-				if (!empty($x_trntt1)) {
-					$event_texts[] = $x_trntt1;
-				}
+                // subtitle
+                $x_evett2 = '' . $event->evett2;
+                if (empty($x_evett2)) {
+                    $x_evett2 = null;
+                }
+                $event_info['event_subtitle2'] = $x_evett2;
 
-				// short info
-				$x_trntt2 = '' . $event->trntt2;
-				if (!empty($x_trntt2)) {
-					$event_texts[] = $x_trntt2;
-				}
+                // subtitle
+                $x_evett3 = '' . $event->evett3;
+                if (empty($x_evett3)) {
+                    $x_evett3 = null;
+                }
+                $event_info['event_subtitle3'] = $x_evett3;
 
-				// short info
-				$x_trntt3 = '' . $event->trntt3;
-				if (!empty($x_trntt3)) {
-					$event_texts[] = $x_trntt3;
-				}
 
-				// * additional notice
-				// notice
-				$x_evett1 = '' . $event->evett1;
-				if (!empty($x_evett1)) {
-					$event_texts[] = $x_evett1;
-				}
+                // Date, time
+                // * main date-time info
 
-				// notice
-				$x_evett2 = '' . $event->evett2;
-				if (!empty($x_evett2)) {
-					$event_texts[] = $x_evett2;
-				}
+                $event_date = null;
 
-				// notice
-				$x_evett3 = '' . $event->evett3;
-				if (!empty($x_evett3)) {
-					$event_texts[] = $x_evett3;
-				}
+                // year, four digits
+                $x_evedatyeanum2 = '' . $event->evedatyeanum2;
+                // month, two digits
+                $x_evedatmonnum2 = '' . $event->evedatmonnum2;
+                // day, two digits
+                $x_evedatdaynum2 = '' . $event->evedatdaynum2;
 
-				$event_info['event_texts'] = $event_texts;
+                if ((!empty($x_evedatyeanum2)) && (!empty($x_evedatmonnum2)) && (!empty($x_evedatdaynum2))) {
+                    if ((4 == strlen($x_evedatyeanum2)) && (2 == strlen($x_evedatmonnum2)) && (2 == strlen($x_evedatdaynum2))) {
+                        $event_date = $x_evedatyeanum2 . '-' . $x_evedatmonnum2 . '-' . $x_evedatdaynum2;
+                    }
+                }
+                $event_info['date'] = $event_date;
 
-				// Links
+                if (empty($x_evedatyeanum2)) {
+                    $x_evedatyeanum2 = null;
+                }
+                $event_info['date_year'] = $x_evedatyeanum2;
 
-				$event_web = null;
+                if (empty($x_evedatmonnum2)) {
+                    $x_evedatmonnum2 = null;
+                }
+                $event_info['date_month'] = $x_evedatmonnum2;
 
-				// web link for event, usually empty
-				$x_evelnk = '' . $event->evelnk;
-				if (!empty($x_evelnk)) {
-					$event_web = $x_evelnk;
-				}
+                if (empty($x_evedatdaynum2)) {
+                    $x_evedatdaynum2 = null;
+                }
+                $event_info['date_day'] = $x_evedatdaynum2;
 
-				// web link for turnus, usually empty
-				$x_trnlnk = '' . $event->trnlnk;
-				if (empty($event_web)) {
-					if (!empty($x_trnlnk)) {
-						$event_web = $x_trnlnk;
-					}
-				}
+                // hours, like '14.30'
+                $x_eveda2 = '' . $event->eveda2;
+                if (empty($x_eveda2)) {
+                    $x_eveda2 = null;
+                }
+                $event_info['event_time'] = $x_eveda2;
 
-				// location web url
-				$x_locurl = '' . $event->locurl;
-				if (empty($event_web)) {
-					if (!empty($x_locurl)) {
-						$event_web = $x_locurl;
-					}
-				}
 
-				$event_info['event_web'] = $event_web;
+                // * plaint text days/hours span info
+                // hour span
+                $x_evemtx = '' . $event->evemtx;
+                if (empty($x_evemtx)) {
+                    $x_evemtx = null;
+                }
+                $event_info['event_time_text'] = $x_evemtx;
 
-				// location email address
-				$x_locema = '' . $event->locema;
-				if (empty($x_locema)) {
-					$x_locema = null;
-				}
-				$event_info['event_email'] = $x_locema;
+                // long-term hours
+                $x_lochou = '' . $event->lochou;
+                if (empty($x_lochou)) {
+                    $x_lochou = null;
+                }
+                $event_info['location_time_open'] = $x_lochou;
 
-				// location phone number
-				$x_loctel = '' . $event->loctel;
-				if (empty($x_loctel)) {
-					$x_loctel = null;
-				}
-				$event_info['event_phone'] = $x_loctel;
+                // hour span
+                $x_evehou = '' . $event->evehou;
+                if (empty($x_evehou)) {
+                    $x_evehou = null;
+                }
+                $event_info['event_time_open'] = $x_evehou;
 
-				// Multimedia
-				// * list (usually by newlines) of links plus names (space separated)
-				// images
 
-				$event_images = array();
+                // Prices, mostly empty, frequently inconsistent
 
-				$x_eveimg = '' . $event->eveimg;
-				if (!empty($x_eveimg)) {
-					$x_eveimg = trim($x_eveimg);
-					$x_eveimg_arr = explode("\n", $x_eveimg);
-					for ($x_eveimg_arr as $one_image) {
-						$one_image = trim($one_image);
-						if ('http' != substr($one_image, 0, 4)) {
-							continue;
-						}
-						$one_image_desc_start = strpos($one_image, ' ');
-						if (false === $one_image_desc_start) {
-							$event_images[] = array('url' => $one_image, 'label' = null);
-							continue;
-						}
-						$one_image_desc = trim(substr($one_image, $one_image_desc_start));
-						if ('' == $one_image_desc) {
-							$one_image_desc = null;
-						}
-						if ('default image' == strtolower($one_image_desc)) {
-							$one_image_desc = null;
-						}
+                // number, better to ignore
+                $x_trnpri = '' . $event->trnpri;
+                if (empty($x_trnpri)) {
+                    $x_trnpri = null;
+                }
+                $event_info['tour_price'] = $x_trnpri;
 
-						$event_images[] = array('url' => substr($one_image, 0, ($one_image_desc_start - 1)), 'label' = $one_image_des);
-					}
-				}
+                // plain text, may be used
+                $x_trnptx = '' . $event->trnptx;
+                if (empty($x_trnptx)) {
+                    $x_trnptx = null;
+                }
+                $event_info['tour_price_text'] = $x_trnptx;
 
-				$event_info['event_images'] = $event_images;
+                // number, better to ignore
+                $x_evepri = '' . $event->evepri;
+                if (empty($x_evepri)) {
+                    $x_evepri = null;
+                }
+                $event_info['event_price'] = $x_evepri;
 
-				// videos
-				$x_evevid = '' . $event->evevid;
-				// audios
-				$x_eveaud = '' . $event->eveaud;
+                // plain text, may be used
+                $x_eveptx = '' . $event->eveptx;
+                if (empty($x_eveptx)) {
+                    $x_eveptx = null;
+                }
+                $event_info['event_price_text'] = $x_eveptx;
+
+
+                // Links
+
+                // location web url
+                $x_locurl = '' . $event->locurl;
+                if (empty($x_locurl)) {
+                    $x_locurl = null;
+                }
+                $event_info['location_url'] = $x_locurl;
+
+                // location web links
+                $x_loclnk = '' . $event->loclnk;
+                if (empty($x_locurl)) {
+                    $x_loclnk = null;
+                }
+                $event_info['location_links'] = $x_loclnk;
+
+                // tour web url
+                $x_trnurl = '' . $event->trnurl;
+                if (empty($x_trnurl)) {
+                    $x_trnurl = null;
+                }
+                $event_info['tour_url'] = $x_trnurl;
+
+                // tour web links
+                $x_trnlnk = '' . $event->trnlnk;
+                if (empty($x_trnlnk)) {
+                    $x_trnlnk = null;
+                }
+                $event_info['tour_links'] = $x_trnlnk;
+
+                // event web links
+                $x_evelnk = '' . $event->evelnk;
+                if (empty($x_evelnk)) {
+                    $x_evelnk = null;
+                }
+                $event_info['event_links'] = $x_evelnk;
+
+
+                // location email address
+                $x_locema = '' . $event->locema;
+                if (empty($x_locema)) {
+                    $x_locema = null;
+                }
+                $event_info['event_email'] = $x_locema;
+
+                // location phone number
+                $x_loctel = '' . $event->loctel;
+                if (empty($x_loctel)) {
+                    $x_loctel = null;
+                }
+                $event_info['event_phone'] = $x_loctel;
+
+                // Multimedia
+                // * list (usually by newlines) of links plus names (space separated)
+                // images
+
+                $event_images = array();
+
+                $x_eveimg = '' . $event->eveimg;
+                if (!empty($x_eveimg)) {
+                    $x_eveimg = trim($x_eveimg);
+                    $x_eveimg_arr = explode("\n", $x_eveimg);
+                    for ($x_eveimg_arr as $one_image) {
+                        $one_image = trim($one_image);
+                        if ('http' != substr($one_image, 0, 4)) {
+                            continue;
+                        }
+                        $one_image_desc_start = strpos($one_image, ' ');
+                        if (false === $one_image_desc_start) {
+                            $event_images[] = array('url' => $one_image, 'label' = null);
+                            continue;
+                        }
+                        $one_image_desc = trim(substr($one_image, $one_image_desc_start));
+                        if ('' == $one_image_desc) {
+                            $one_image_desc = null;
+                        }
+                        if ('default image' == strtolower($one_image_desc)) {
+                            $one_image_desc = null;
+                        }
+
+                        $event_images[] = array('url' => substr($one_image, 0, ($one_image_desc_start - 1)), 'label' = $one_image_des);
+                    }
+                }
+
+                $event_info['event_images'] = $event_images;
+
+                // videos
+                $x_evevid = '' . $event->evevid;
+                if (empty($x_locvid)) {
+                    $x_locvid = null;
+                }
+                $event_info['event_video'] = $x_locvid;
+
+                // audios
+                $x_eveaud = '' . $event->eveaud;
+                if (empty($x_locaud)) {
+                    $x_locaud = null;
+                }
+                $event_info['event_audio'] = $x_locaud;
 
 
                 $p_events[] = $event_info;
-			}
+            }
 
-		}
+        }
 
         return $p_events;
     } // fn parse
@@ -444,27 +577,27 @@ class EventData_Parser_SimpleXML {
 
 /*
 $known_categories = array(
-	1 => array('name' => 'theater',
-		       'nicks' => array('theater', 'theatre'),
-		       ),
-	2 => array('name' => 'gallery',
-			   'nicks' => array('gallery'),
-			   ),
-	3 => array('name' => 'exhibition',
-			   'nicks' => array('exhibition', 'ausstellungen'),
-			   ),
-	4 => array('name' => 'party',
-			   'nicks' => array('party'),
-			   ),
-	5 => array('name' => 'music',
-			   'nicks' => array('music', 'musik'),
-			   ),
-	6 => array('name' => 'concert',
-			   'nicks' => array('concert', 'konzerte'),
-			   ),
-	7 => array('name' => 'cinema',
-			   'nicks' => array('cinema'),
-			   ),
+    1 => array('name' => 'theater',
+               'nicks' => array('theater', 'theatre'),
+               ),
+    2 => array('name' => 'gallery',
+               'nicks' => array('gallery'),
+               ),
+    3 => array('name' => 'exhibition',
+               'nicks' => array('exhibition', 'ausstellungen'),
+               ),
+    4 => array('name' => 'party',
+               'nicks' => array('party'),
+               ),
+    5 => array('name' => 'music',
+               'nicks' => array('music', 'musik'),
+               ),
+    6 => array('name' => 'concert',
+               'nicks' => array('concert', 'konzerte'),
+               ),
+    7 => array('name' => 'cinema',
+               'nicks' => array('cinema'),
+               ),
 );
 
 
