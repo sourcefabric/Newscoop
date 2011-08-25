@@ -1,4 +1,5 @@
 <?php 
+regGS("Soundcloud", "");
 regGS("select range", "");
 regGS("connection error", "");
 regGS("a comma separated list of tags", "");
