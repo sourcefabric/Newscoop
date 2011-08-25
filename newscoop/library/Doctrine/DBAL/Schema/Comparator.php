@@ -99,7 +99,7 @@ class Comparator
                 $diff->newSequences[] = $sequence;
             } else {
                 if ($this->diffSequence($sequence, $fromSchema->getSequence($sequenceName))) {
-                    $diff->changedSequences[] = $fromSchema->getSequence($sequenceName);
+                    $diff->changedSequences[] = $toSchema->getSequence($sequenceName);
                 }
             }
         }
@@ -345,6 +345,11 @@ class Comparator
 
         if ($column1->getAutoincrement() != $column2->getAutoincrement()) {
             $changedProperties[] = 'autoincrement';
+        }
+
+        // only allow to delete comment if its set to '' not to null.
+        if ($column1->getComment() !== null && $column1->getComment() != $column2->getComment()) {
+            $changedProperties[] = 'comment';
         }
 
         return $changedProperties;

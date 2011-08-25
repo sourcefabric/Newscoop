@@ -20,7 +20,11 @@
 namespace Doctrine\ORM;
 
 use Doctrine\Common\Cache\Cache,
-    Doctrine\ORM\Mapping\Driver\Driver;
+    Doctrine\Common\Cache\ArrayCache,
+    Doctrine\Common\Annotations\AnnotationRegistry,
+    Doctrine\Common\Annotations\AnnotationReader,
+    Doctrine\ORM\Mapping\Driver\Driver,
+    Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 
 /**
  * Configuration container for all configuration options of Doctrine.
@@ -120,10 +124,28 @@ class Configuration extends \Doctrine\DBAL\Configuration
      */
     public function newDefaultAnnotationDriver($paths = array())
     {
-        $reader = new \Doctrine\Common\Annotations\AnnotationReader();
-        $reader->setDefaultAnnotationNamespace('Doctrine\ORM\Mapping\\');
-        
-        return new \Doctrine\ORM\Mapping\Driver\AnnotationDriver($reader, (array)$paths);
+        if (version_compare(\Doctrine\Common\Version::VERSION, '3.0.0-DEV', '>=')) {
+            // Register the ORM Annotations in the AnnotationRegistry
+            AnnotationRegistry::registerFile(__DIR__ . '/Mapping/Driver/DoctrineAnnotations.php');
+            
+            $reader = new AnnotationReader();
+            $reader = new \Doctrine\Common\Annotations\CachedReader($reader, new ArrayCache());
+        } else if (version_compare(\Doctrine\Common\Version::VERSION, '2.1.0-DEV', '>=')) {
+            // Register the ORM Annotations in the AnnotationRegistry
+            AnnotationRegistry::registerFile(__DIR__ . '/Mapping/Driver/DoctrineAnnotations.php');
+            
+            $reader = new AnnotationReader();
+            $reader->setDefaultAnnotationNamespace('Doctrine\ORM\Mapping\\');
+            $reader->setIgnoreNotImportedAnnotations(true);
+            $reader->setEnableParsePhpImports(false);
+            $reader = new \Doctrine\Common\Annotations\CachedReader(
+                new \Doctrine\Common\Annotations\IndexedReader($reader), new ArrayCache()
+            );
+        } else {
+            $reader = new AnnotationReader();
+            $reader->setDefaultAnnotationNamespace('Doctrine\ORM\Mapping\\');
+        }
+        return new AnnotationDriver($reader, (array)$paths);
     }
 
     /**
@@ -162,6 +184,16 @@ class Configuration extends \Doctrine\DBAL\Configuration
     public function setEntityNamespaces(array $entityNamespaces)
     {
         $this->_attributes['entityNamespaces'] = $entityNamespaces;
+    }
+    
+    /**
+     * Retrieves the list of registered entity namespace aliases.
+     * 
+     * @return array
+     */
+    public function getEntityNamespaces()
+    {
+        return $this->_attributes['entityNamespaces'];
     }
 
     /**

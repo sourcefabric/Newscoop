@@ -15,7 +15,8 @@ class NewscoopEntitySectionProxy extends \Newscoop\Entity\Section implements \Do
         $this->_entityPersister = $entityPersister;
         $this->_identifier = $identifier;
     }
-    private function _load()
+    /** @private */
+    public function __load()
     {
         if (!$this->__isInitialized__ && $this->_entityPersister) {
             $this->__isInitialized__ = true;
@@ -25,65 +26,65 @@ class NewscoopEntitySectionProxy extends \Newscoop\Entity\Section implements \Do
             unset($this->_entityPersister, $this->_identifier);
         }
     }
-
+    
     
     public function getLanguage()
     {
-        $this->_load();
+        $this->__load();
         return parent::getLanguage();
     }
 
     public function getLanguageId()
     {
-        $this->_load();
+        $this->__load();
         return parent::getLanguageId();
     }
 
     public function getLanguageName()
     {
-        $this->_load();
+        $this->__load();
         return parent::getLanguageName();
     }
 
     public function getNumber()
     {
-        $this->_load();
+        $this->__load();
         return parent::getNumber();
     }
 
     public function getName()
     {
-        $this->_load();
+        $this->__load();
         return parent::getName();
     }
 
     public function setTemplate(\Newscoop\Entity\Template $template)
     {
-        $this->_load();
+        $this->__load();
         return parent::setTemplate($template);
     }
 
     public function setArticleTemplate(\Newscoop\Entity\Template $template)
     {
-        $this->_load();
+        $this->__load();
         return parent::setArticleTemplate($template);
     }
 
     public function getIssue()
     {
-        $this->_load();
+        $this->__load();
         return parent::getIssue();
     }
 
     public function getId()
     {
-        $this->_load();
+        $this->__load();
         return parent::getId();
     }
 
     public function setId($id)
     {
-        $this->_load();
+        $this->__load();
         return parent::setId($id);
     }
 

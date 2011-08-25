@@ -64,6 +64,7 @@ class Admin_AclController extends Zend_Controller_Action
                 'user' => getGS('Staff'),
                 'author' => getGS('Authors'),
                 'subscriber' => getGS('Subscribers'),
+                'subscription' => getGS('Subscriptions'),
             ),
             'layout' => array(
                 'theme' => getGS('Themes'),
@@ -78,7 +79,6 @@ class Admin_AclController extends Zend_Controller_Action
                 'localizer' => getGS('Localizer'),
                 'backup' => getGS('Backup'),
                 'cache' => getGS('Cache'),
-                'subscription' => getGS('Subscriptions'),
                 'notification' => getGS('Notification'),
             ),
             'plugins' => array(

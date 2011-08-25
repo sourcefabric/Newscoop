@@ -1061,11 +1061,11 @@ class Article extends DatabaseObject {
         $userCreatedArticle = ($this->m_data['IdUser'] == $p_user->getUserId());
         $articleIsNew = ($this->m_data['Published'] == 'N');
         $articleIsNotPublished = (($this->m_data['Published'] == 'N') || ($this->m_data['Published'] == 'S'));
-
-        if ($p_user->hasPermission('Publish')
-                || ($p_user->hasPermission('ChangeArticle')
-                && $articleIsNotPublished)
-                || ($userCreatedArticle && $articleIsNew)) {
+        if (
+                ( $p_user->hasPermission('Publish') && $p_user->hasPermission('ChangeArticle') )
+                || ( $p_user->hasPermission('ChangeArticle') && $articleIsNotPublished )
+                || ($userCreatedArticle && $articleIsNew))
+            {
             return true;
         } else {
             return false;

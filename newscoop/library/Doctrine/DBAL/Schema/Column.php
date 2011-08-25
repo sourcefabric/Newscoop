@@ -89,6 +89,11 @@ class Column extends AbstractAsset
     protected $_columnDefinition = null;
 
     /**
+     * @var string
+     */
+    protected $_comment = null;
+
+    /**
      * Create a new Column
      * 
      * @param string $columnName
@@ -324,6 +329,17 @@ class Column extends AbstractAsset
         return $this;
     }
 
+    public function setComment($comment)
+    {
+        $this->_comment = $comment;
+        return $this;
+    }
+
+    public function getComment()
+    {
+        return $this->_comment;
+    }
+
     /**
      * @param Visitor $visitor
      */
@@ -349,6 +365,7 @@ class Column extends AbstractAsset
             'unsigned'      => $this->_unsigned,
             'autoincrement' => $this->_autoincrement,
             'columnDefinition' => $this->_columnDefinition,
+            'comment' => $this->_comment,
         ), $this->_platformOptions);
     }
 }

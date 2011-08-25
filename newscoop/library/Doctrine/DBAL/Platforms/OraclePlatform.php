@@ -99,6 +99,42 @@ class OraclePlatform extends AbstractPlatform
     {
         return 'SYS_GUID()';
     }
+
+    /**
+     * Get the number of days difference between two dates.
+     * 
+     * Note: Since Oracle timestamp differences are calculated down to the microsecond we have to truncate
+     * them to the difference in days. This is obviously a restriction of the original functionality, but we
+     * need to make this a portable function.
+     * 
+     * @param type $date1
+     * @param type $date2
+     * @return type 
+     */
+    public function getDateDiffExpression($date1, $date2)
+    {
+        return "TRUNC(TO_NUMBER(SUBSTR((" . $date1 . "-" . $date2 . "), 1, INSTR(" . $date1 . "-" . $date2 .", ' '))))";
+    }
+
+    public function getDateAddDaysExpression($date, $days)
+    {
+        return '(' . $date . '+' . (int)$days . ')';
+    }
+
+    public function getDateSubDaysExpression($date, $days)
+    {
+        return '(' . $date . '-' . (int)$days . ')';
+    }
+
+    public function getDateAddMonthExpression($date, $months)
+    {
+        return "ADD_MONTHS(" . $date . ", " . (int)$months . ")";
+    }
+
+    public function getDateSubMonthExpression($date, $months)
+    {
+        return "ADD_MONTHS(" . $date . ", -" . (int)$months . ")";
+    }
     
     /**
      * Gets the SQL used to create a sequence that starts with a given value
@@ -116,6 +152,12 @@ class OraclePlatform extends AbstractPlatform
         return 'CREATE SEQUENCE ' . $sequence->getQuotedName($this) .
                ' START WITH ' . $sequence->getInitialValue() .
                ' MINVALUE ' . $sequence->getInitialValue() . 
+               ' INCREMENT BY ' . $sequence->getAllocationSize();
+    }
+    
+    public function getAlterSequenceSQL(\Doctrine\DBAL\Schema\Sequence $sequence)
+    {
+        return 'ALTER SEQUENCE ' . $sequence->getQuotedName($this) . 
                ' INCREMENT BY ' . $sequence->getAllocationSize();
     }
 
@@ -430,10 +472,12 @@ LEFT JOIN all_cons_columns r_cols
         return 'SELECT * FROM user_constraints WHERE table_name = \'' . $table . '\'';
     }
 
-    public function getListTableColumnsSQL($table)
+    public function getListTableColumnsSQL($table, $database = null)
     {
         $table = strtoupper($table);
-        return "SELECT * FROM all_tab_columns WHERE table_name = '" . $table . "' ORDER BY column_name";
+        return "SELECT c.*, d.comments FROM all_tab_columns c ".
+               "INNER JOIN all_col_comments d ON d.OWNER = c.OWNER AND d.TABLE_NAME = c.TABLE_NAME AND d.COLUMN_NAME = c.COLUMN_NAME ".
+               "WHERE c.table_name = '" . $table . "' ORDER BY c.column_name";
     }
 
     /**
@@ -488,10 +532,14 @@ LEFT JOIN all_cons_columns r_cols
     public function getAlterTableSQL(TableDiff $diff)
     {
         $sql = array();
+        $commentsSQL = array();
 
         $fields = array();
         foreach ($diff->addedColumns AS $column) {
             $fields[] = $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
+            if ($comment = $this->getColumnComment($column)) {
+                $commentsSQL[] = $this->getCommentOnColumnSQL($diff->name, $column->getName(), $comment);
+            }
         }
         if (count($fields)) {
             $sql[] = 'ALTER TABLE ' . $diff->name . ' ADD (' . implode(', ', $fields) . ')';
@@ -501,6 +549,9 @@ LEFT JOIN all_cons_columns r_cols
         foreach ($diff->changedColumns AS $columnDiff) {
             $column = $columnDiff->column;
             $fields[] = $column->getQuotedName($this). ' ' . $this->getColumnDeclarationSQL('', $column->toArray());
+            if ($columnDiff->hasChanged('comment') && $comment = $this->getColumnComment($column)) {
+                $commentsSQL[] = $this->getCommentOnColumnSQL($diff->name, $column->getName(), $comment);
+            }
         }
         if (count($fields)) {
             $sql[] = 'ALTER TABLE ' . $diff->name . ' MODIFY (' . implode(', ', $fields) . ')';
@@ -515,16 +566,14 @@ LEFT JOIN all_cons_columns r_cols
             $fields[] = $column->getQuotedName($this);
         }
         if (count($fields)) {
-            $sql[] = 'ALTER TABLE ' . $diff->name . ' DROP COLUMN ' . implode(', ', $fields);
+            $sql[] = 'ALTER TABLE ' . $diff->name . ' DROP (' . implode(', ', $fields).')';
         }
 
         if ($diff->newName !== false) {
             $sql[] = 'ALTER TABLE ' . $diff->name . ' RENAME TO ' . $diff->newName;
         }
 
-        $sql = array_merge($sql, $this->_getAlterTableIndexForeignKeySQL($diff));
-
-        return $sql;
+        return array_merge($sql, $this->_getAlterTableIndexForeignKeySQL($diff), $commentsSQL);
     }
 
     /**
@@ -533,6 +582,11 @@ LEFT JOIN all_cons_columns r_cols
      * @return boolean
      */
     public function prefersSequences()
+    {
+        return true;
+    }
+
+    public function supportsCommentOnStatement()
     {
         return true;
     }
@@ -560,7 +614,7 @@ LEFT JOIN all_cons_columns r_cols
         $limit = (int) $limit;
         $offset = (int) $offset;
         if (preg_match('/^\s*SELECT/i', $query)) {
-            if ( ! preg_match('/\sFROM\s/i', $query)) {
+            if (!preg_match('/\sFROM\s/i', $query)) {
                 $query .= " FROM dual";
             }
             if ($limit > 0) {
@@ -568,13 +622,11 @@ LEFT JOIN all_cons_columns r_cols
                 $column = '*';
                 if ($offset > 0) {
                     $min = $offset + 1;
-                    $query = 'SELECT b.'.$column.' FROM ('.
-                                 'SELECT a.*, ROWNUM AS doctrine_rownum FROM ('
-                                   . $query . ') a '.
-                              ') b '.
-                              'WHERE doctrine_rownum BETWEEN ' . $min .  ' AND ' . $max;
+                    $query = 'SELECT * FROM (SELECT a.' . $column . ', rownum AS doctrine_rownum FROM (' .
+                            $query .
+                            ') a WHERE rownum <= ' . $max . ') WHERE doctrine_rownum >= ' . $min;
                 } else {
-                    $query = 'SELECT a.'.$column.' FROM (' . $query .') a WHERE ROWNUM <= ' . $max;
+                    $query = 'SELECT a.' . $column . ' FROM (' . $query . ') a WHERE ROWNUM <= ' . $max;
                 }
             }
         }
@@ -709,5 +761,10 @@ LEFT JOIN all_cons_columns r_cols
     public function releaseSavePoint($savepoint)
     {
         return '';
+    }
+    
+    protected function getReservedKeywordsClass()
+    {
+        return 'Doctrine\DBAL\Platforms\Keywords\OracleKeywords';
     }
 }

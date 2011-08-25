@@ -15,7 +15,8 @@ class NewscoopEntityTemplateProxy extends \Newscoop\Entity\Template implements \
         $this->_entityPersister = $entityPersister;
         $this->_identifier = $identifier;
     }
-    private function _load()
+    /** @private */
+    public function __load()
     {
         if (!$this->__isInitialized__ && $this->_entityPersister) {
             $this->__isInitialized__ = true;
@@ -25,41 +26,41 @@ class NewscoopEntityTemplateProxy extends \Newscoop\Entity\Template implements \
             unset($this->_entityPersister, $this->_identifier);
         }
     }
-
+    
     
     public function getId()
     {
-        $this->_load();
+        $this->__load();
         return parent::getId();
     }
 
     public function setKey($key)
     {
-        $this->_load();
+        $this->__load();
         return parent::setKey($key);
     }
 
     public function getKey()
     {
-        $this->_load();
+        $this->__load();
         return parent::getKey();
     }
 
     public function setCacheLifetime($lifetime)
     {
-        $this->_load();
+        $this->__load();
         return parent::setCacheLifetime($lifetime);
     }
 
     public function getCacheLifetime()
     {
-        $this->_load();
+        $this->__load();
         return parent::getCacheLifetime();
     }
 
     public function exists()
     {
-        $this->_load();
+        $this->__load();
         return parent::exists();
     }
 

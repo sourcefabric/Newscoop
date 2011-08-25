@@ -20,7 +20,9 @@
 namespace Doctrine\DBAL\Platforms;
 
 use Doctrine\DBAL\DBALException,
-    Doctrine\DBAL\Schema\TableDiff;
+    Doctrine\DBAL\Schema\TableDiff,
+    Doctrine\DBAL\Schema\Index,
+    Doctrine\DBAL\Schema\Table;
 
 /**
  * The MySqlPlatform provides the behavior, features and SQL dialect of the
@@ -97,6 +99,31 @@ class MySqlPlatform extends AbstractPlatform
     {
         $args = func_get_args();
         return 'CONCAT(' . join(', ', (array) $args) . ')';
+    }
+
+    public function getDateDiffExpression($date1, $date2)
+    {
+        return 'DATEDIFF(' . $date1 . ', ' . $date2 . ')';
+    }
+
+    public function getDateAddDaysExpression($date, $days)
+    {
+        return 'DATE_ADD(' . $date . ', INTERVAL ' . (int)$days . ' DAY)';
+    }
+
+    public function getDateSubDaysExpression($date, $days)
+    {
+        return 'DATE_SUB(' . $date . ', INTERVAL ' . (int)$days . ' DAY)';
+    }
+
+    public function getDateAddMonthExpression($date, $months)
+    {
+        return 'DATE_ADD(' . $date . ', INTERVAL ' . (int)$months . ' MONTH)';
+    }
+
+    public function getDateSubMonthExpression($date, $months)
+    {
+        return 'DATE_SUB(' . $date . ', INTERVAL ' . (int)$months . ' MONTH)';
     }
 
     public function getListDatabasesSQL()
@@ -264,6 +291,11 @@ class MySqlPlatform extends AbstractPlatform
         return true;
     }
 
+    public function supportsInlineColumnComments()
+    {
+        return true;
+    }
+
     public function getShowDatabasesSQL()
     {
         return 'SHOW DATABASES';
@@ -274,9 +306,16 @@ class MySqlPlatform extends AbstractPlatform
         return "SHOW FULL TABLES WHERE Table_type = 'BASE TABLE'";
     }
 
-    public function getListTableColumnsSQL($table)
+    public function getListTableColumnsSQL($table, $database = null)
     {
-        return 'DESCRIBE ' . $table;
+        if ($database) {
+            return "SELECT COLUMN_NAME AS Field, COLUMN_TYPE AS Type, IS_NULLABLE AS `Null`, ".
+                   "COLUMN_KEY AS `Key`, COLUMN_DEFAULT AS `Default`, EXTRA AS Extra, COLUMN_COMMENT AS Comment, " .
+                   "CHARACTER_SET_NAME AS CharacterSet, COLLATION_NAME AS CollactionName ".
+                   "FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = '" . $database . "' AND TABLE_NAME = '" . $table . "'";
+        } else {
+            return 'DESCRIBE ' . $table;
+        }
     }
 
     /**
@@ -332,7 +371,13 @@ class MySqlPlatform extends AbstractPlatform
      *                              'comment' => 'Foo',
      *                              'charset' => 'utf8',
      *                              'collate' => 'utf8_unicode_ci',
-     *                              'type'    => 'innodb',
+     *                              'engine' => 'innodb',
+     *                              'foreignKeys' => array(
+     *                                  new ForeignKeyConstraint(),
+     *                                  new ForeignKeyConstraint(),
+     *                                  new ForeignKeyConstraint(),
+     *                                  // etc
+     *                              )
      *                          );
      *
      * @return void
@@ -370,7 +415,7 @@ class MySqlPlatform extends AbstractPlatform
         $optionStrings = array();
 
         if (isset($options['comment'])) {
-            $optionStrings['comment'] = 'COMMENT = ' . $this->quote($options['comment'], 'text');
+            $optionStrings['comment'] = 'COMMENT = ' . $options['comment'];
         }
         if (isset($options['charset'])) {
             $optionStrings['charset'] = 'DEFAULT CHARACTER SET ' . $options['charset'];
@@ -415,7 +460,9 @@ class MySqlPlatform extends AbstractPlatform
         }
 
         foreach ($diff->addedColumns AS $fieldName => $column) {
-            $queryParts[] = 'ADD ' . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
+            $columnArray = $column->toArray();
+            $columnArray['comment'] = $this->getColumnComment($column);
+            $queryParts[] = 'ADD ' . $this->getColumnDeclarationSQL($column->getQuotedName($this), $columnArray);
         }
 
         foreach ($diff->removedColumns AS $column) {
@@ -425,20 +472,28 @@ class MySqlPlatform extends AbstractPlatform
         foreach ($diff->changedColumns AS $columnDiff) {
             /* @var $columnDiff Doctrine\DBAL\Schema\ColumnDiff */
             $column = $columnDiff->column;
+            $columnArray = $column->toArray();
+            $columnArray['comment'] = $this->getColumnComment($column);
             $queryParts[] =  'CHANGE ' . ($columnDiff->oldColumnName) . ' '
-                    . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
+                    . $this->getColumnDeclarationSQL($column->getQuotedName($this), $columnArray);
         }
 
         foreach ($diff->renamedColumns AS $oldColumnName => $column) {
+            $columnArray = $column->toArray();
+            $columnArray['comment'] = $this->getColumnComment($column);
             $queryParts[] =  'CHANGE ' . $oldColumnName . ' '
-                    . $this->getColumnDeclarationSQL($column->getQuotedName($this), $column->toArray());
+                    . $this->getColumnDeclarationSQL($column->getQuotedName($this), $columnArray);
         }
 
         $sql = array();
         if (count($queryParts) > 0) {
             $sql[] = 'ALTER TABLE ' . $diff->name . ' ' . implode(", ", $queryParts);
         }
-        $sql = array_merge($sql, $this->_getAlterTableIndexForeignKeySQL($diff));
+        $sql = array_merge(
+            $this->getPreAlterTableIndexForeignKeySQL($diff),
+            $sql,
+            $this->getPostAlterTableIndexForeignKeySQL($diff)
+        );
         return $sql;
     }
     
@@ -523,20 +578,37 @@ class MySqlPlatform extends AbstractPlatform
      * @override
      */
     public function getDropIndexSQL($index, $table=null)
-    {
-        if($index instanceof \Doctrine\DBAL\Schema\Index) {
-            $index = $index->getQuotedName($this);
-        } else if(!is_string($index)) {
+    {        
+        if($index instanceof Index) {
+            $indexName = $index->getQuotedName($this);
+        } else if(is_string($index)) {
+            $indexName = $index;
+        } else {
             throw new \InvalidArgumentException('MysqlPlatform::getDropIndexSQL() expects $index parameter to be string or \Doctrine\DBAL\Schema\Index.');
         }
         
-        if($table instanceof \Doctrine\DBAL\Schema\Table) {
+        if($table instanceof Table) {
             $table = $table->getQuotedName($this);
         } else if(!is_string($table)) {
             throw new \InvalidArgumentException('MysqlPlatform::getDropIndexSQL() expects $table parameter to be string or \Doctrine\DBAL\Schema\Table.');
         }
+        
+        if ($index instanceof Index && $index->isPrimary()) {
+            // mysql primary keys are always named "PRIMARY", 
+            // so we cannot use them in statements because of them being keyword.
+            return $this->getDropPrimaryKeySQL($table);
+        }
 
-        return 'DROP INDEX ' . $index . ' ON ' . $table;
+        return 'DROP INDEX ' . $indexName . ' ON ' . $table;
+    }
+    
+    /**
+     * @param Index $index
+     * @param Table $table 
+     */
+    protected function getDropPrimaryKeySQL($table)
+    {
+        return 'ALTER TABLE ' . $table . ' DROP PRIMARY KEY';
     }
     
     /**
@@ -608,5 +680,10 @@ class MySqlPlatform extends AbstractPlatform
     public function getVarcharMaxLength()
     {
         return 65535;
+    }
+    
+    protected function getReservedKeywordsClass()
+    {
+        return 'Doctrine\DBAL\Platforms\Keywords\MySQLKeywords';
     }
 }

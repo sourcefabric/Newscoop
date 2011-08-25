@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id: Abstract.php 1393 2008-03-06 17:49:16Z guilhermeblanco $
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -56,6 +54,11 @@ abstract class AbstractQuery
      * Hydrates a single scalar value.
      */
     const HYDRATE_SINGLE_SCALAR = 4;
+
+    /**
+     * Very simple object hydrator (optimized for performance).
+     */
+    const HYDRATE_SIMPLEOBJECT = 5;
 
     /**
      * @var array The parameter map of this query.
@@ -192,10 +195,13 @@ abstract class AbstractQuery
      */
     public function setParameter($key, $value, $type = null)
     {
-        if ($type !== null) {
-            $this->_paramTypes[$key] = $type;
+        if ($type === null) {
+            $type = Query\ParameterTypeInferer::inferType($value);
         }
+        
+        $this->_paramTypes[$key] = $type;
         $this->_params[$key] = $value;
+        
         return $this;
     }
 
@@ -269,7 +275,7 @@ abstract class AbstractQuery
      * @param boolean $bool
      * @param integer $timeToLive
      * @param string $resultCacheId
-     * @return This query instance.
+     * @return Doctrine\ORM\AbstractQuery This query instance.
      */
     public function useResultCache($bool, $timeToLive = null, $resultCacheId = null)
     {
@@ -332,6 +338,26 @@ abstract class AbstractQuery
     }
 
     /**
+     * Change the default fetch mode of an association for this query.
+     *
+     * $fetchMode can be one of ClassMetadata::FETCH_EAGER or ClassMetadata::FETCH_LAZY
+     *
+     * @param  string $class
+     * @param  string $assocName
+     * @param  int $fetchMode
+     * @return AbstractQuery
+     */
+    public function setFetchMode($class, $assocName, $fetchMode)
+    {
+        if ($fetchMode !== Mapping\ClassMetadata::FETCH_EAGER) {
+            $fetchMode = Mapping\ClassMetadata::FETCH_LAZY;
+        }
+
+        $this->_hints['fetchMode'][$class][$assocName] = $fetchMode;
+        return $this;
+    }
+
+    /**
      * Defines the processing mode to be used during hydration / result set transformation.
      *
      * @param integer $hydrationMode Doctrine processing mode to be used during hydration process.
@@ -388,6 +414,31 @@ abstract class AbstractQuery
     public function getScalarResult()
     {
         return $this->execute(array(), self::HYDRATE_SCALAR);
+    }
+
+    /**
+     * Get exactly one result or null.
+     *
+     * @throws NonUniqueResultException
+     * @param int $hydrationMode
+     * @return mixed
+     */
+    public function getOneOrNullResult($hydrationMode = null)
+    {
+        $result = $this->execute(array(), $hydrationMode);
+
+        if ($this->_hydrationMode !== self::HYDRATE_SINGLE_SCALAR && ! $result) {
+            return null;
+        }
+
+        if (is_array($result)) {
+            if (count($result) > 1) {
+                throw new NonUniqueResultException;
+            }
+            return array_shift($result);
+        }
+
+        return $result;
     }
 
     /**
@@ -510,10 +561,6 @@ abstract class AbstractQuery
             $this->setParameters($params);
         }
 
-        if (isset($this->_params[0])) {
-            throw QueryException::invalidParameterPosition(0);
-        }
-
         // Check result cache
         if ($this->_useResultCache && $cacheDriver = $this->getResultCacheDriver()) {
             list($key, $hash) = $this->getResultCacheId();
@@ -524,8 +571,8 @@ abstract class AbstractQuery
                 $stmt = $this->_doExecute();
 
                 $result = $this->_em->getHydrator($this->_hydrationMode)->hydrateAll(
-                        $stmt, $this->_resultSetMapping, $this->_hints
-                        );
+                    $stmt, $this->_resultSetMapping, $this->_hints
+                );
 
                 $cacheDriver->save($hash, array($key => $result), $this->_resultCacheTTL);
 

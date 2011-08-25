@@ -218,6 +218,14 @@ class Admin_StaffController extends Zend_Controller_Action
                     getGS("Could not save user '$1'. Please make sure it doesn't already exist", $this->_request->getPost('username')))
                 );
                 $this->_helper->redirector->gotoSimple('add', 'staff', 'admin');
+            } catch (\InvalidArgumentException $e) {
+                if ($e->getMessage() == 'email') {
+                    $this->_helper->flashMessenger(array(
+                        'error',
+                        getGS("Could not save user with e-mail address '$1'. Please make sure it doesn't already exist", $this->_request->getPost('email')))
+                    );
+                }
+                $this->_helper->redirector->gotoSimple('add', 'staff', 'admin');
             } catch (\Exception $e) {
                 $this->_helper->flashMessenger(array('error', getGS("Changing user type would prevent you to manage users. Aborted.")));
                 $this->_helper->redirector->gotoSimple('edit', 'staff', 'admin', array(

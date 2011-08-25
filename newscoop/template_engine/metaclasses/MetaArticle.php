@@ -384,7 +384,9 @@ final class MetaArticle extends MetaDbObject {
 
     protected function getOwner()
     {
-        return new MetaUser($this->m_dbObject->getProperty('IdUser'));
+        global $controller;
+        $userService = $controller->getHelper('service')->getService('user');
+        return new MetaUser($userService->find($this->m_dbObject->getProperty('IdUser')));
     }
 
 

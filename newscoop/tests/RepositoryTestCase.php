@@ -24,7 +24,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
      * @param mixed $classes
      * @return void
      */
-    public function setUp($classes = NULL)
+    public function setUp()
     {
         $this->doctrine = Zend_Registry::get('doctrine');
         $this->em = $this->doctrine->getEntityManager();
@@ -33,6 +33,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
         $tool = new SchemaTool($this->em);
         $tool->dropDatabase();
 
+        $classes = func_get_args();
         if (!empty($classes)) {
             $metadataFactory = new ClassMetadataFactory();
             $metadataFactory->setEntityManager($this->em);

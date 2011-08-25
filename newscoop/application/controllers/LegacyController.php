@@ -67,6 +67,10 @@ class LegacyController extends Zend_Controller_Action
 	        set_error_handler(create_function('', 'return true;'));
         }
 
+        if ($this->_request->getParam('logout') == 'true') {
+            $this->_redirect('/auth/logout/?url=' . urlencode($this->getRequest()->getPathInfo()));
+        }
+
         // renders the site
         $campsite->render();
 

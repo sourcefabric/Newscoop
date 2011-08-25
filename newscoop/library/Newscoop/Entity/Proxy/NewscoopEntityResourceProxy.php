@@ -15,7 +15,8 @@ class NewscoopEntityResourceProxy extends \Newscoop\Entity\Resource implements \
         $this->_entityPersister = $entityPersister;
         $this->_identifier = $identifier;
     }
-    private function _load()
+    /** @private */
+    public function __load()
     {
         if (!$this->__isInitialized__ && $this->_entityPersister) {
             $this->__isInitialized__ = true;
@@ -25,65 +26,65 @@ class NewscoopEntityResourceProxy extends \Newscoop\Entity\Resource implements \
             unset($this->_entityPersister, $this->_identifier);
         }
     }
-
+    
     
     public function getName()
     {
-        $this->_load();
+        $this->__load();
         return parent::getName();
     }
 
     public function setName($name)
     {
-        $this->_load();
+        $this->__load();
         return parent::setName($name);
     }
 
     public function getPath()
     {
-        $this->_load();
+        $this->__load();
         return parent::getPath();
     }
 
     public function setPath($path)
     {
-        $this->_load();
+        $this->__load();
         return parent::setPath($path);
     }
 
     public function isSame(\Newscoop\Entity\Resource $other)
     {
-        $this->_load();
+        $this->__load();
         return parent::isSame($other);
     }
 
     public function exists()
     {
-        $this->_load();
+        $this->__load();
         return parent::exists();
     }
 
     public function sameAs(\Newscoop\Entity\Resource $other)
     {
-        $this->_load();
+        $this->__load();
         return parent::sameAs($other);
     }
 
     public function getProperty()
     {
-        $this->_load();
+        $this->__load();
         return parent::getProperty();
     }
 
     public function getId()
     {
-        $this->_load();
+        $this->__load();
         return parent::getId();
     }
 
     public function setId($id)
     {
-        $this->_load();
+        $this->__load();
         return parent::setId($id);
     }
 

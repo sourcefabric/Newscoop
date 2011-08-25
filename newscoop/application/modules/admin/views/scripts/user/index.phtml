@@ -1,0 +1,26 @@
+<?php $this->placeholder('title')->set(getGS('Users')); ?>
+
+<?php echo $this->renderActions(); ?>
+
+<table class="users">
+<tr>
+    <th><?php putGS('Username'); ?></th>
+    <th><?php putGS('Full name'); ?></th>
+    <th><?php putGS('E-mail'); ?></th>
+    <th></th>
+</tr>
+<?php foreach ($this->users as $user) { ?>
+<tr>
+    <td><a href="<?php echo $this->url(array(
+        'action' => 'update',
+        'user' => $user->getId(),
+    )); ?>"><?php echo $user->getUsername(); ?></a></td>
+    <td><?php echo $user->getFirstName(); ?> <?php echo $user->getLastName(); ?></td>
+    <td><?php echo $user->getEmail(); ?></td>
+    <td><a href="<?php echo $this->url(array(
+        'action' => 'delete',
+        'user' => $user->getId(),
+    )); ?>" title="<?php putGS("Delete user '$1'", $user->getUsername()); ?>"><?php putGS('Delete'); ?></td>
+</tr>
+<?php } ?>
+</table>

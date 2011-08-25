@@ -6,6 +6,7 @@
  */
 
 use Doctrine\Common\Annotations\AnnotationReader,
+    Doctrine\Common\Annotations\AnnotationRegistry,
     Doctrine\Common\Annotations\Parser,
     Doctrine\Common\Cache\ArrayCache,
     Resource\Acl\StorageInterface,
@@ -16,7 +17,7 @@ use Doctrine\Common\Annotations\AnnotationReader,
  */
 class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
 {
-    const ANNOTATION = 'Resource\Acl\Annotation\Acl';
+    const ANNOTATION = 'Newscoop\Annotations\Acl';
 
     const PARENTS_METHOD = 'getGroups';
 
@@ -43,6 +44,7 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
     public function init()
     {
         Zend_Registry::set('acl', $this);
+
         return $this;
     }
 
@@ -332,13 +334,9 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
     private function getAnnotationReader()
     {
         if ($this->reader === NULL) {
-            $namespaces = explode('\\', self::ANNOTATION);
-            array_pop($namespaces);
-            $namespace = implode('\\', $namespaces) . '\\';
-
-            $this->reader = new AnnotationReader;
-            $this->reader->setAutoloadAnnotations(true);
-            $this->reader->setDefaultAnnotationNamespace($namespace);
+            AnnotationRegistry::registerAutoloadNamespace('Newscoop\Annotations\\', APPLICATION_PATH . '/../library/');
+            $this->reader = new AnnotationReader();
+            $this->reader->setDefaultAnnotationNamespace('Newscoop\Annotations\\');
         }
 
         return $this->reader;

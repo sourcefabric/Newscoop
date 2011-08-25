@@ -15,7 +15,8 @@ class NewscoopEntityThemeProxy extends \Newscoop\Entity\Theme implements \Doctri
         $this->_entityPersister = $entityPersister;
         $this->_identifier = $identifier;
     }
-    private function _load()
+    /** @private */
+    public function __load()
     {
         if (!$this->__isInitialized__ && $this->_entityPersister) {
             $this->__isInitialized__ = true;
@@ -25,60 +26,114 @@ class NewscoopEntityThemeProxy extends \Newscoop\Entity\Theme implements \Doctri
             unset($this->_entityPersister, $this->_identifier);
         }
     }
-
     
-    public function setId($id)
+    
+    public function getPath()
     {
-        $this->_load();
-        return parent::setId($id);
+        $this->__load();
+        return parent::getPath();
     }
 
-    public function getId()
+    public function setPath($path)
     {
-        $this->_load();
-        return parent::getId();
+        $this->__load();
+        return parent::setPath($path);
     }
 
     public function getName()
     {
-        $this->_load();
+        $this->__load();
         return parent::getName();
     }
 
-    public function getOffset()
+    public function setName($name)
     {
-        $this->_load();
-        return parent::getOffset();
+        $this->__load();
+        return parent::setName($name);
+    }
+
+    public function getDesigner()
+    {
+        $this->__load();
+        return parent::getDesigner();
+    }
+
+    public function setDesigner($designer)
+    {
+        $this->__load();
+        return parent::setDesigner($designer);
     }
 
     public function getVersion()
     {
-        $this->_load();
+        $this->__load();
         return parent::getVersion();
     }
 
-    public function setInstalledVersion($version = NULL)
+    public function setVersion($version)
     {
-        $this->_load();
-        return parent::setInstalledVersion($version);
+        $this->__load();
+        return parent::setVersion($version);
     }
 
-    public function getInstalledVersion()
+    public function getMinorNewscoopVersion()
     {
-        $this->_load();
-        return parent::getInstalledVersion();
+        $this->__load();
+        return parent::getMinorNewscoopVersion();
+    }
+
+    public function setMinorNewscoopVersion($minorNewscoopVersion)
+    {
+        $this->__load();
+        return parent::setMinorNewscoopVersion($minorNewscoopVersion);
+    }
+
+    public function getDescription()
+    {
+        $this->__load();
+        return parent::getDescription();
+    }
+
+    public function setDescription($description)
+    {
+        $this->__load();
+        return parent::setDescription($description);
     }
 
     public function isInstalled()
     {
-        $this->_load();
+        $this->__load();
         return parent::isInstalled();
+    }
+
+    public function getInstalledVersion()
+    {
+        $this->__load();
+        return parent::getInstalledVersion();
+    }
+
+    public function toObject()
+    {
+        $this->__load();
+        return parent::toObject();
+    }
+
+    public function getId()
+    {
+        $this->__load();
+        return parent::getId();
+    }
+
+    public function setId($id)
+    {
+        $this->__load();
+        return parent::setId($id);
     }
 
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'offset', 'version');
+        return array('__isInitialized__', 'id');
     }
 
     public function __clone()

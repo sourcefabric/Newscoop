@@ -9,12 +9,21 @@
  * @link http://www.sourcefabric.org
  */
 
+// Define path to application directory
+defined('APPLICATION_PATH')
+    || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/application'));
+
+// Define application environment
+defined('APPLICATION_ENV')
+    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
+
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
     realpath(dirname(__FILE__)) . '/library',
     realpath(dirname(__FILE__) . '/../include'),
     get_include_path(),
 )));
+
 if (!is_file('Zend/Application.php')) {
 	// include libzend if we dont have zend_application
 	set_include_path(implode(PATH_SEPARATOR, array(
@@ -22,16 +31,17 @@ if (!is_file('Zend/Application.php')) {
 		get_include_path(),
 	)));
 }
+
+/** Zend_Application */
 require_once 'Zend/Application.php';
 
-/**
- * Includes
- */
-$GLOBALS['g_campsiteDir'] = dirname(__FILE__);
-require_once($GLOBALS['g_campsiteDir'].'/include/campsite_init.php');
-require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampRequest.php');
-require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampGetImage.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
+// Create application, bootstrap, and run
+$application = new Zend_Application(
+    APPLICATION_ENV,
+    APPLICATION_PATH . '/configs/application.ini'
+);
+
+$application->bootstrap('autoloader');
 
 // reads parameters from image link URI
 $imageId = (int) CampRequest::GetVar('ImageId', null, 'get');

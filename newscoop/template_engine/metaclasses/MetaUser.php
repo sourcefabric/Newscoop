@@ -1,170 +1,158 @@
 <?php
 /**
- * @package Campsite
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+
+use Newscoop\Entity\User;
 
 /**
- * Includes
+ * Template user
  */
-require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Country.php');
-require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObject.php');
-require_once($GLOBALS['g_campsiteDir'].'/include/get_ip.php');
+final class MetaUser
+{
+    /** @var Newscoop\Entity\User */
+    protected $user;
 
-/**
- * @package Campsite
- */
-final class MetaUser extends MetaDbObject {
+    /** @var int */
+    public $identifier;
 
-    public function __construct($p_userId = null)
-    {
-        $this->m_dbObject = new User($p_userId);
-        if (!$this->m_dbObject->exists()) {
-            $this->m_dbObject = new User();
-        }
+    /** @var string */
+    public $uname;
 
-        $this->m_properties['identifier'] = 'Id';
-        $this->m_properties['name'] = 'Name';
-        $this->m_properties['uname'] = 'UName';
-        $this->m_properties['email'] = 'EMail';
-        $this->m_properties['city'] = 'City';
-        $this->m_properties['str_address'] = 'StrAddress';
-        $this->m_properties['state'] = 'State';
-        $this->m_properties['phone'] = 'Phone';
-        $this->m_properties['fax'] = 'Fax';
-        $this->m_properties['contact'] = 'Contact';
-        $this->m_properties['second_phone'] = 'Phone2';
-        $this->m_properties['postal_code'] = 'PostalCode';
-        $this->m_properties['employer'] = 'Employer';
-        $this->m_properties['position'] = 'Position';
-        $this->m_properties['interests'] = 'Interests';
-        $this->m_properties['how'] = 'How';
-        $this->m_properties['languages'] = 'Languages';
-        $this->m_properties['improvements'] = 'Improvements';
-        $this->m_properties['field1'] = 'Field1';
-        $this->m_properties['field2'] = 'Field2';
-        $this->m_properties['field3'] = 'Field3';
-        $this->m_properties['field4'] = 'Field4';
-        $this->m_properties['field5'] = 'Field5';
-        $this->m_properties['text1'] = 'Text1';
-        $this->m_properties['text2'] = 'Text2';
-        $this->m_properties['text3'] = 'Text3';
-        $this->m_properties['title'] = 'Title';
-        $this->m_properties['age'] = 'Age';
-        $this->m_properties['country_code'] = 'CountryCode';
-        $this->m_properties['gender'] = 'Gender';
-        $this->m_properties['pref1'] = 'Pref1';
-        $this->m_properties['pref2'] = 'Pref2';
-        $this->m_properties['pref3'] = 'Pref3';
-        $this->m_properties['pref4'] = 'Pref4';
-        $this->m_properties['password_encrypted'] = 'Password';
+    /** @var string */
+    public $name;
 
-        $this->m_customProperties['country'] = 'getCountry';
-        $this->m_customProperties['defined'] = 'defined';
-        $this->m_customProperties['logged_in'] =  'isLoggedIn';
-        $this->m_customProperties['blocked_from_comments'] = 'isBlockedFromComments';
-        $this->m_customProperties['subscription'] = 'getSubscription';
-        $this->m_customProperties['is_admin'] = 'isAdmin';
-    } // fn __construct
+    /** @var string */
+    public $first_name;
 
+    /** @var string */
+    public $last_name;
+
+    /** @var string */
+    public $email;
+
+    /** @var bool */
+    public $defined;
 
     /**
-     * Returns the name of the country of the registered user.
+     * @param Newscoop\Entity\User $user
+     */
+    public function __construct(User $user = NULL)
+    {
+        $this->user = $user;
+        if (!$user) {
+            return;
+        }
+
+        $this->identifier = $user->getId();
+        $this->uname = $user->getUsername();
+        $this->email = $user->getEmail();
+
+        $this->first_name = $user->getFirstName();
+        $this->last_name = $user->getLastName();
+        $this->name = trim($user->getFirstName() . ' ' . $user->getLastName());
+
+        $this->defined = $user->getId() > 0;
+    }
+
+    /**
+     * Get user attribute value
+     *
+     * Provides backward compatibility for callbacks called as property
+     *
+     * @param string $property
+     */
+    public function __get($property)
+    {
+        if (method_exists($this, $property)) {
+            return $this->$property();
+        }
+
+        return (!$this->user) ? null : $this->user->getAttribute($property);
+    }
+
+    /**
+     * Get subscription
+     *
+     * @return MetaSubscription
+     */
+    public function subscription()
+    {
+        if (empty($this->user)) {
+            return new MetaSubscription();
+        }
+
+        $publicationId = CampTemplate::singleton()->context()->publication->identifier;
+        $subscriptions = Subscription::GetSubscriptions($publicationId, $this->user->getId());
+        return empty($subscriptions) ? new MetaSubscription() : new MetaSubscription($subscriptions[0]->getSubscriptionId());
+    }
+
+    /**
+     * Get the name of the country of the registered user
      *
      * @return string
      */
-    protected function getCountry()
+    public function country()
     {
-        $countryCode = $this->m_dbObject->getProperty('CountryCode');
+        require_once dirname(__FILE__) . '/../../classes/Country.php';
+        require_once dirname(__FILE__) . '/../../classes/Language.php';
+
+        $countryCode = $this->user->getAttribute('country_code');
         $smartyObj = CampTemplate::singleton();
         $contextObj = $smartyObj->get_template_vars('gimme');
         $country = new Country($countryCode, $contextObj->language->number);
-        if (!$country->exists()) {
-            return null;
-        }
-        return $country->getName();
+        return !$country->exists() ? '' : $country->getName();
     }
 
-
     /**
-     * Request an user permission indicated by permission name
+     * Test if user has permission
      *
-     * @param string $p_permission permission name
+     * @param string $permission
      * @return boolean
      */
-    public function has_permission($p_permission)
+    public function has_permission($permission)
     {
-        if ($this->m_dbObject->hasPermission($p_permission)) {
-            return true;
-        }
-        return false;
+        return $this->user->hasPermission($permission);
     }
 
-
     /**
-     * Returns true if the user had adminstration rights
+     * Test if user is admin
      *
      * @return bool
      */
-    protected function isAdmin() {
-        return $this->m_dbObject->isAdmin();
+    public function is_admin()
+    {
+        return $this->user->isAdmin();
     }
 
-
     /**
-     * Returns true of the user was authenticated, false if not
+     * Test if user is logged in
      *
      * @return bool
      */
-    protected function isLoggedIn()
+    public function logged_in()
     {
         $auth = Zend_Auth::getInstance();
-        $context = CampTemplate::singleton()->context();
-
-        if ($context->login_action->defined
-            && $context->login_action->ok
-            && $context->login_action->user_name == $this->uname
-            && $this->uname != '') {
-            return true;
-        }
-
-        return $auth->hasIdentity() && $this->m_dbObject->getKeyId() == CampRequest::GetVar('LoginUserKey');
-    }
-
-
-    protected function isBlockedFromComments() {
-        global $controller;
-        $publication_id = CampTemplate::singleton()->context()->publication->identifier;
-        $userIp = getIp();
-        $repositoryAcceptance = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment\Acceptance');
-        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
-        return (int)$repositoryAcceptance->checkParamsBanned($this->m_dbObject->getRealName(), $this->m_dbObject->getEmail(), $userIp, $publication_id);
-    }
-
-
-    protected function getSubscription() {
-        $publicationId = CampTemplate::singleton()->context()->publication->identifier;
-        $subscriptions = Subscription::GetSubscriptions($publicationId, $this->m_dbObject->getUserId());
-        if (empty($subscriptions)) {
-            return new MetaSubscription();
-        }
-        return new MetaSubscription($subscriptions[0]->getSubscriptionId());
+        return $auth->hasIdentity() && $auth->getIdentity() == $this->user->getId();
     }
 
     /**
-     * Check user token
+     * Test if user is blocked from commenting
      *
-     * @param string
      * @return bool
      */
-    public function checkToken($token)
+    public function is_blocked_from_comments()
     {
-         $return = $token == $this->m_dbObject->getKeyId();
-         if ($return) { // change key
-             $this->m_dbObject->initLoginKey();
-         }
+        require_once dirname(__FILE__) . '/../../include/get_ip.php';
 
-         return $return;
+        global $controller;
+
+        $userIp = getIp();
+        $publication_id = CampTemplate::singleton()->context()->publication->identifier;
+        $repositoryAcceptance = $controller->getHelper('user')->getRepository('Newscoop\user\Comment\Acceptance');
+        $repository = $controller->getHelper('user')->getRepository('Newscoop\user\Comment');
+        return (int) $repositoryAcceptance->checkParamsBanned($this->name, $this->email, $userIp, $publication_id);
     }
 }

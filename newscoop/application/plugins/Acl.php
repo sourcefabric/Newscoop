@@ -2,12 +2,8 @@
 /**
  * @package Newscoop
  * @copyright 2011 Sourcefabric o.p.s.
- * @license http://www.gnu.org/licenses/gpl.txt
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
-use Doctrine\Common\Annotations\AnnotationReader,
-    Doctrine\Common\Annotations\Parser,
-    Doctrine\Common\Cache\ArrayCache;
 
 /**
  * Acl controller plugin
@@ -15,28 +11,46 @@ use Doctrine\Common\Annotations\AnnotationReader,
 class Application_Plugin_Acl extends Zend_Controller_Plugin_Abstract
 {
     /** @var array */
-    private $ignored = array(
-        'auth',
-        'error',
-        'legacy',
-        'login.php',
-        'password_recovery.php',
-        'password_check_token.php',
-    );
+    private $modules = array();
 
+    /** @var array */
+    private $ignore = array();
+
+    /**
+     * @param array $config
+     */
+    public function __construct(array $config)
+    {
+        $this->modules = $config['modules'];
+        $this->ignore = $config['ignore'];
+    }
+
+    /**
+     * @param Zend_Controller_Request_Abstract $request
+     * @return void
+     */
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
-        $auth = Zend_Auth::getInstance();
-        if (!$auth->hasIdentity()) {
+        if (!in_array($request->getModuleName(), $this->modules)) {
+            return;
+        }
+
+        if (!Zend_Auth::getInstance()->hasIdentity()) {
             return;
         }
 
         $resource = $request->getControllerName();
         $action = $request->getActionName();
 
-        if (in_array($resource, $this->ignored)) {
+        if (in_array($resource, $this->ignore)) {
             return; // ignore
         }
+
+        if (!\SaaS::singleton()->hasPrivilege($resource, $action)) {
+            $redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
+			/* @var $redirector Zend_Controller_Action_Helper_Redirector */
+			$redirector->direct("index", "index", "admin");
+		}
 
         $acl = Zend_Registry::get('acl');
         list($resource, $action) = $acl->getAccess($request->getControllerName(), $request->getActionName());

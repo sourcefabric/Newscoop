@@ -30,7 +30,8 @@
         'Comment updated.',
         'Comment deleted.',
         'Comment status change to $1.',
-        'Change selected comments status',
+        'Actions',
+        'Select status',
         'New',
         'Approved',
         'Hidden',
@@ -40,7 +41,7 @@
         'You are about to permanently delete multiple comments.',
         'Are you sure you want to do it?'
     ];
-    
+
     serverObj.translateObj = [
         '<?php putGS('Search'); ?>',
         '<?php putGS('Comments updated.'); ?>',
@@ -49,12 +50,13 @@
         '<?php putGS('Comment updated.'); ?>',
         '<?php putGS('Comment deleted.'); ?>',
         '<?php putGS('Comment status change to $1.'); ?>',
-        '<?php putGS('Change selected comments status'); ?>',
+        '<?php putGS('Actions'); ?>',
+        '<?php putGS('Select status'); ?>',
         '<?php putGS('New'); ?>',
         '<?php putGS('Approved'); ?>',
         '<?php putGS('Hidden'); ?>',
         '<?php putGS('Deleted'); ?>',
-        '<?php putGS('Unable to reach Campsite. Please check your internet connection.'); ?>',
+        '<?php putGS('Unable to reach Newscoop. Please check your internet connection.'); ?>',
         <?php echo json_encode(getGS("You are about to permanently delete a comment.")); ?>,
         <?php echo json_encode(getGS("You are about to permanently delete multiple comments.")); ?>,
         <?php echo json_encode(getGS("Are you sure you want to do it?")); ?>
@@ -84,6 +86,7 @@
                                 <p class="{% if (commenter.is.banned.ip) %}user-blocked-avatar{% endif %}"><a target="_blank" href="{{commenter.trace.ip}}">{{commenter.ip}}</a></p>
                                 <p class="{% if (commenter.is.banned.email) %}user-blocked-avatar{% endif %}"><a href="mailto:{{commenter.email}}">{{commenter.email}}</a></p>
                                 <p><a href="{{commenter.url}}">{{commenter.url}}</a></p>
+                                <p><a href="{{commenter.banurl}}" class="banUser"><span><?php putGS('Ban user'); ?></span></a></p>
                             </p>
                         </div>
                     </td>
@@ -104,9 +107,11 @@
                             <fieldset class="content-edit" style="display:none;">
                                 <?php echo $this->editForm->setTemplate(array('comment')); ?>
                             </fieldset>
+                        </div>
 
+                        <div class="dateCommentHolderReply">
                             <fieldset class="content-reply" style="display:none;">
-                                <h3>Reply to comment</h3>
+                                <h3><?php putGS('Reply to comment'); ?></h3>
                                 <form action="{{comment.action.reply}}">
                                     <input type="hidden" name="parent" value="{{comment.id}}" />
                                     <?php echo SecurityToken::FormParameter(); ?>
@@ -116,7 +121,7 @@
                                     <textarea name="message" class="input_text_area"></textarea>
                                     <div class="buttonBar">
                                         <input type="button" value="<?php putGS('Cancel'); ?>" class="button reply-cancel">
-                                        <input type="submit" value="<?php putGS('Submit'); ?>'" class="button">
+                                        <input type="submit" value="<?php putGS('Submit'); ?>" class="button">
                                     </div>
                                 </form>
                             </fieldset>
@@ -129,27 +134,43 @@
                                 <br>
                                 <span>{{thread.forum.name}}; <b><?php putGS('Section'); ?></b> {{thread.section.name}}</span>
                             </p>
-                            <a class="goToArticle" href="{{thread.link.edit}}"><?php putGS('Go to article page'); ?></a> </div>
+                            <a class="goToArticle" href="{{thread.link.edit}}"><?php putGS('Go to edit article'); ?></a> </div>
                     </td>
                 </tr></tbody>
         </table>
         <div class="commentBtns">
             <ul>
-                <li><a href="javascript:;" id="pending_{{comment.id}}" class="action new"><?php putGS('New'); ?></a></li>
+                <li>
+                    <input type="radio" name="action_comment_{{comment.id}}" class="action new" id="pending_{{comment.id}}" value="pending"/>
+                    <label for="pending_{{comment.id}}"><?php putGS('New'); ?></label>
+                    &nbsp;&nbsp;
+                </li>
                 {% if(can.enable) %}
-                <li><a href="javascript:;" id="approved_{{comment.id}}" class="action approved"><?php putGS('Approved'); ?></a></li>
-                <li><a href="javascript:;" id="hidden_{{comment.id}}" class="action hidden"><?php putGS('Hidden'); ?></a></li>
-                <li><a href="javascript:;" id="deleted_{{comment.id}}" class="action deleted"><?php putGS('Delete'); ?></a></li>
+                <li>
+                    <input type="radio" name="action_comment_{{comment.id}}" class="action approved" id="approved_{{comment.id}}" value="approved"/>
+                    <label for="approved_{{comment.id}}"><?php putGS('Approved'); ?></label>
+
+                    &nbsp;&nbsp;
+                </li>
+                <li>
+                    <input type="radio" name="action_comment_{{comment.id}}" class="action hidden" id="hidden_{{comment.id}}" value="hidden" style="height: auto"/>
+                    <label for="hidden_{{comment.id}}"><?php putGS('Hidden'); ?></label>
+                    &nbsp;&nbsp;
+                </li>
                 {% endif %}
+
+
+
                 {% if(can.edit) %}
-                <li><a href="javascript:;" class="action-edit link icon-link"><span class="icon ui-icon-pencil"></span><?php putGS('Quick edit'); ?></a></li>
+                <li><a href="javascript:;" class="actionButton action-edit"><?php putGS('Quick edit'); ?></a></li>
+                {% endif %}
+                {% if(can.enable) %}
+                <li><a href="javascript:;" class="actionButton action-reply"><?php putGS('Reply'); ?></a></li>
+                <li><a href="javascript:;" id="deleted_{{comment.id}}" class="actionButton action"><?php putGS('Delete'); ?></a></li>
                 {% endif %}
                 <!--
                 <li><a href="javascript:;" class="action-rating link icon-link"><span class="icon ui-icon-star"></span><?php putGS('Add rating'); ?></a></li>
                 -->
-                <li class="last">
-                    <a href="{{commenter.banurl}}" class="banUser"><span><?php putGS('Ban user'); ?></span></a>
-                </li>
             </ul>
         </div>
 </td>
@@ -193,9 +214,9 @@
                         </fieldset>
                     </div>
                         <div id="actionExpand" class="dataTables_actions">
-                            <a href="javascript:;" class="sort_tread"> <span
+                            <!-- <a href="javascript:;" class="sort_tread"> <span
                                     class="css_right ui-icon ui-icon-carat-2-n-s"></span> <?php putGS('Sort by Thread order'); ?>
-                            </a></div>
+                            </a>//--></div>
                         <?php $this->renderDatatable(); ?></div>
                 </div>
             </div>

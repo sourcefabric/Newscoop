@@ -47,6 +47,9 @@ class Admin_TemplateController extends Zend_Controller_Action
 
     public function indexAction()
     {
+        $resource = new ResourceId(__CLASS__);
+        $themeService = $resource->getService(IThemeService::NAME);
+
         // item action form
         $form = $this->getActionForm();
         $form->setMethod('post');
@@ -61,6 +64,10 @@ class Admin_TemplateController extends Zend_Controller_Action
 
                 if (!isset($item->id)) {
                     $folders[] = $item;
+                    continue;
+                }
+
+                if ($item->name == $themeService->themeConfigFileName) {
                     continue;
                 }
 
@@ -480,7 +487,7 @@ class Admin_TemplateController extends Zend_Controller_Action
      */
     private function formatName($name, $ext = '')
     {
-        $name = trim(strtr(basename($name), '?~#%*&|"\'\\/<>', '_____________'), '_');
+        $name = strtr(basename($name), '?~#%*&|"\'\\/<>', '_____________');
         if (!empty($ext)) {
             $current = pathinfo($name, PATHINFO_EXTENSION);
             if ($current != $ext) {

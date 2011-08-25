@@ -40,7 +40,10 @@ final class CampContext
 								    'user'=>array('class'=>'User'),
 								    'template'=>array('class'=>'Template'),
     								'location'=>array('class'=>'MapLocation'),
-    								'author'=>array('class'=>'Author')
+                                    'author'=>array('class'=>'Author'),
+        'list_user' => array(
+            'class' => 'User',
+        ),
     );
 
     // Defines the list objects
@@ -81,7 +84,12 @@ final class CampContext
 	                                                'list'=>'search_results', 'url_id'=>'src'),
 	                         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics',
 	                         					'url_id'=>'tp'),
-    						 'images'=>array('class'=>'Images', 'list'=>'images', 'url'=>'img')
+                             'images'=>array('class'=>'Images', 'list'=>'images', 'url'=>'img'),
+        'users' => array(
+            'class' => 'Users',
+            'list' => 'users',
+            'url_id' => 'uid',
+        ),
     );
 
     /**
