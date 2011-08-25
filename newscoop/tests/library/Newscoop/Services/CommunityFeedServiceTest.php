@@ -7,7 +7,7 @@
 
 namespace Newscoop\Services;
 
-class CommunityTickerServiceTest extends \PHPUnit_Framework_TestCase
+class CommunityFeedServiceTest extends \PHPUnit_Framework_TestCase
 {
     protected $em;
 
@@ -23,12 +23,12 @@ class CommunityTickerServiceTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->service = new CommunityTickerService($this->em);
+        $this->service = new CommunityFeedService($this->em);
     }
 
     public function testAudit()
     {
-        $this->assertInstanceOf('Newscoop\Services\CommunityTickerService', $this->service);
+        $this->assertInstanceOf('Newscoop\Services\CommunityFeedService', $this->service);
     }
 
     public function testUpdate()
@@ -56,19 +56,7 @@ class CommunityTickerServiceTest extends \PHPUnit_Framework_TestCase
         $this->service->update($event);
     }
 
-    public function testFindAll()
-    {
-        $this->getRepository();
-
-        $this->repository->expects($this->once())
-            ->method('findBy')
-            ->with($this->equalTo(array()), $this->equalTo(array('id' => 'desc')), $this->equalTo(10), $this->equalTo(0))
-            ->will($this->returnValue('result'));
-
-        $this->assertEquals('result', $this->service->findAll(10));
-    }
-
-    public function testFindByUser()
+    public function testFindBy()
     {
         $this->getRepository();
 
@@ -77,7 +65,7 @@ class CommunityTickerServiceTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo(array('user' => 1)), $this->equalTo(array('id' => 'desc')), $this->equalTo(10), $this->equalTo(0))
             ->will($this->returnValue('result'));
 
-        $this->assertEquals('result', $this->service->findByUser(1, 10));
+        $this->assertEquals('result', $this->service->findBy(array('user' => 1), array('id' => 'desc'), 10, 0));
     }
 
     protected function getRepository()

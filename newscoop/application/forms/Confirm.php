@@ -27,9 +27,8 @@ class Form_Confirm extends Zend_Form
             ),
         ));
 
-        $this->addElement('text', 'password', array(
+        $this->addElement('text', 'password_change', array(
             'label' => 'Password',
-            'required' => true,
             'filters' => array(
                 'stringTrim',
             ),

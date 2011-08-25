@@ -75,7 +75,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('user'));
 
-        $container->register('community_ticker', 'Newscoop\Services\CommunityTickerService')
+        $container->register('community_feed', 'Newscoop\Services\CommunityFeedService')
             ->addArgument(new sfServiceReference('em'));
 
         $container->register('dispatcher', 'sfEventDispatcher')

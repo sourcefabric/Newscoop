@@ -40,20 +40,15 @@ class UsersList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-        try {
         $service = $GLOBALS['controller']->getHelper('service')->getService('user.list');
         $count = $service->countBy($this->m_constraints);
-        $users = $service->findBy($this->m_constraints, $this->m_order, $p_limit, $p_start);
-        } catch (\Exception $e) {
-            var_dump($e);
-            exit;
-        }
-        $metaUsers = array();
-        foreach ($users as $user) {
-            $metaUsers[] = new MetaUser($user);
+
+        $users = array();
+        foreach ($service->findBy($this->m_constraints, $this->m_order, $p_limit, $p_start) as $user)
+            $users[] = new MetaUser($user);
         }
 
-        return $metaUsers;
+        return $users;
 	}
 
 	/**
@@ -135,5 +130,3 @@ class UsersList extends ListObject
 		return $parameters;
 	}
 }
-
-?>

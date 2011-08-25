@@ -11,9 +11,9 @@ use Doctrine\ORM\EntityManager,
     Newscoop\Entity\Events\CommunityTickerEvent;
 
 /**
- * Community Ticker service
+ * Community Feed Service
  */
-class CommunityTickerService
+class CommunityFeedService
 {
     /** @var Doctrine\ORM\EntityManager */
     private $em;
@@ -36,13 +36,12 @@ class CommunityTickerService
     {
         $params = $event->getParameters();
 
-        if (empty($params['user'])) {
-            $params['user'] = null;
-        }
+        $user = array_key_exists('user', $params) ? $params['user'] : null;
+        unset($params['user']);
 
         $this->getRepository()->save(new CommunityTickerEvent(), array(
             'event' => $event->getName(),
-            'user' => isset($params['user']) ? $params['user'] : null,
+            'user' => $user,
             'params' => $params,
         ));
 
@@ -50,30 +49,29 @@ class CommunityTickerService
     }
 
     /**
-     * Find events
+     * Find by criteria
      *
+     * @param array $criteria
+     * @param array $orderBy
      * @param int $limit
      * @param int $offset
      * @return array
      */
-    public function findAll($limit, $offset = 0)
+    public function findBy(array $criteria, array $orderBy, $limit, $offset)
     {
-        return $this->getRepository()->findBy(array(), array('id' => 'desc'), $limit, $offset);
+        return $this->getRepository()
+            ->findBy($criteria, $orderBy, $limit, $offset);
     }
 
     /**
-     * Find user events
+     * Count by criteria
      *
-     * @param int $user
-     * @param int $limit
-     * @param int $offset
-     * @return array
+     * @param array $criteria
+     * @return int
      */
-    public function findByUser($userId, $limit, $offset = 0)
+    public function countBy(array $criteria)
     {
-        return $this->getRepository()->findBy(array(
-            'user' => $userId,
-        ), array('id' => 'desc'), $limit, $offset);
+        return count($this->getRepository()->findBy($criteria));
     }
 
     /**

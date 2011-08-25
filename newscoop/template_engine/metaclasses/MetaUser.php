@@ -10,7 +10,7 @@ use Newscoop\Entity\User;
 /**
  * Template user
  */
-final class MetaUser
+final class MetaUser extends MetaEntity
 {
     /** @var Newscoop\Entity\User */
     protected $user;
@@ -60,17 +60,23 @@ final class MetaUser
     /**
      * Get user attribute value
      *
-     * Provides backward compatibility for callbacks called as property
-     *
      * @param string $property
      */
     public function __get($property)
     {
-        if (method_exists($this, $property)) {
-            return $this->$property();
+        try {
+            return parent::__get($property);
+        } catch (\InvalidArgumentException $e) {
+            return (!$this->user) ? null : $this->user->getAttribute($property);
         }
+    }
 
-        return (!$this->user) ? null : $this->user->getAttribute($property);
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
     }
 
     /**
