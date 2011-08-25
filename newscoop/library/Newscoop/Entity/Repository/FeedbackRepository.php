@@ -45,6 +45,7 @@ class FeedbackRepository extends DatatableSource
         $subscriber = $em->getReference('Newscoop\Entity\User', $p_values['subscriber']);
         
         $p_entity->setSubscriber($subscriber);
+        $p_entity->setSubject($p_values['subject']);
         $p_entity->setMessage($p_values['message']);
         $p_entity->setUrl($p_values['url']);
         $p_entity->setTimeCreated($p_values['time_created']);

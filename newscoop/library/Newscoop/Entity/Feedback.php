@@ -45,6 +45,12 @@ class Feedback
     private $url;
     
     /**
+     * @column(length=128)
+     * @var string
+     */
+    private $subject;
+    
+    /**
      * @column(type="datetime")
      * @var DateTime
      */
@@ -144,6 +150,29 @@ class Feedback
     public function getUrl()
     {
         return $this->url;
+    }
+    
+    /**
+     * Set subject.
+     *
+     * @param string $p_subject
+     * @return Newscoop\Entity\Feedback
+     */
+    public function setSubject($p_subject)
+    {
+        $this->subject = (string)$p_subject;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get subject.
+     *
+     * @return string
+     */
+    public function getSubject()
+    {
+        return $this->subject;
     }
 
     /**

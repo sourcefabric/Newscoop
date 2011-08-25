@@ -36,6 +36,7 @@ class FeedbackController extends Zend_Controller_Action
 		if (!$auth->getIdentity()) {
 			$errors[] = getGS('You are not logged in.');
 		}
+		
 		if (!array_key_exists('f_feedback_content', $parameters) || empty($parameters['f_feedback_content'])) {
 			$errors[] = getGS('The feedback content was not filled in.');
 		}
@@ -53,6 +54,7 @@ class FeedbackController extends Zend_Controller_Action
 			
 			$values = array(
 				'subscriber' => $subscriber,
+				'subject' => $parameters['f_feedback_subject'],
 				'message' => $parameters['f_feedback_content'],
 				'url' => $parameters['f_feedback_url'],
 				'time_created' => new DateTime()

@@ -24,12 +24,18 @@
 		
 		<div id="ob_comment_text_container" style="display: inline;">
 			<input type="hidden" id="ob_comment_article_number" value="<?php echo($this->gimme->article->number); ?>">
+			<label for="ob_comment_subject" style="float: none;">subject</label>
+			<input type="text" id="ob_comment_subject" value=""><br>
+			<label for="ob_comment_text" style="float: none;">comment</label>
 			<textarea name="ob_comment_text" id="ob_comment_text"></textarea><br>
 			<input type="button" value="next" onClick="omnibox.showReview();">
 		</div>
 		
 		<div id="ob_feedback_text_container" style="display: none;">
 			<input type="hidden" id="ob_feedback_publication_id" value="<?php echo($this->gimme->publication->identifier); ?>">
+			<label for="ob_feedback_subject" style="float: none;">subject</label>
+			<input type="text" id="ob_feedback_subject" value=""><br>
+			<label for="ob_feedback_text" style="float: none;">message</label>
 			<textarea name="ob_feedback_text" id="ob_feedback_text"></textarea><br>
 			-- here comes file upload<br>
 			<input type="button" value="next" onClick="omnibox.showReview();">
@@ -38,6 +44,9 @@
 		not on article page<br>
 		<div id="ob_feedback_text_container">
 			<input type="hidden" id="ob_feedback_publication_id" value="<?php echo($this->gimme->publication->identifier); ?>">
+			<label for="ob_feedback_subject" style="float: none;">subject</label>
+			<input type="text" id="ob_feedback_subject" value=""><br>
+			<label for="ob_feedback_text" style="float: none;">message</label>
 			<textarea name="ob_feedback_text" id="ob_feedback_text"></textarea><br>
 			-- here comes file upload<br>
 			<input type="button" value="next" onClick="omnibox.showReview();">
@@ -58,6 +67,7 @@
 	
 	<div style="display: none;" id="ob_review_comment">
 		comments are not moderated, so be nice, etc.<br>
+		<div style="border: 1px solid #000000;" id="ob_review_comment_subject"></div><br>
 		<div style="border: 1px solid #000000;" id="ob_review_comment_text"></div><br>
 		<input type="button" value="back" onClick="omnibox.showInput();">
 		<input type="button" value="send" onClick="omnibox.sendComment();">
@@ -65,6 +75,7 @@
 	</div>
 	<div style="display: none;" id="ob_review_feedback">
 		this is review part...
+		<div style="border: 1px solid #000000;" id="ob_review_feedback_subject"></div><br>
 		<div style="border: 1px solid #000000;" id="ob_review_feedback_text"></div><br>
 		<input type="button" value="back" onClick="omnibox.showInput();">
 		<input type="button" value="send" onClick="omnibox.sendFeedback();">

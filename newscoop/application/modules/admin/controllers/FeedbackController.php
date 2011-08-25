@@ -75,7 +75,8 @@ class Admin_FeedbackController extends Zend_Controller_Action
 						'created' => array(
 							'date' => $feedback->getTimeCreated()->format('Y.i.d'),
                             'time' => $feedback->getTimeCreated()->format('H:i:s')),
-                            'message' => $feedback->getMessage()
+                        'message' => $feedback->getMessage(),
+                        'subject' => $feedback->getSubject()
                     ),
                     'url' => $url
 				);

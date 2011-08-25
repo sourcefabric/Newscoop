@@ -257,6 +257,17 @@ class User implements \Zend_Acl_Role_Interface
     {
         return (string) $this->last_name;
     }
+    
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        $name = $this->getFirstName().' '.$this->getLastName();
+        return $name;
+    }
 
     /**
      * Set status

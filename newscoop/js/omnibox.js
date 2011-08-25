@@ -3,9 +3,9 @@ var omnibox = {
 	baseUrl: false,
 	status: false,
 	type: 'comment',
-	elementList: ['ob_main', 'ob_comment', 'ob_feedback', 'ob_comment_text_container', 'ob_comment_text', 'ob_feedback_text_container', 'ob_feedback_text',
-		'ob_input', 'ob_review_comment', 'ob_review_comment_text', 'ob_review_feedback', 'ob_review_feedback_text', 'ob_message', 'ob_message_close',
-		'ob_review_captcha', 'ob_review_captcha_image', 'ob_review_captcha_code'],
+	elementList: ['ob_main', 'ob_comment', 'ob_feedback', 'ob_comment_text_container', 'ob_comment_subject', 'ob_comment_text', 'ob_feedback_text_container', 'ob_feedback_subject',
+		'ob_feedback_text', 'ob_input', 'ob_review_comment', 'ob_review_comment_subject', 'ob_review_comment_text', 'ob_review_feedback', 'ob_review_feedback_subject',
+		'ob_review_feedback_text', 'ob_message', 'ob_message_close', 'ob_review_captcha', 'ob_review_captcha_image', 'ob_review_captcha_code'],
 	elements: {},
 	initialize: function() {
 		for (var i in this.elementList) {
@@ -13,7 +13,9 @@ var omnibox = {
 			this.elements[element] = document.getElementById(element);
 		}
 		
+		if (this.elements.ob_comment_subject) this.elements.ob_comment_subject.value = '';
 		if (this.elements.ob_comment_text) this.elements.ob_comment_text.value = '';
+		if (this.elements.ob_feedback_subject) this.elements.ob_feedback_subject.value = '';
 		if (this.elements.ob_feedback_text) this.elements.ob_feedback_text.value = '';
 		if (this.elements.ob_review_captcha_code) this.elements.ob_review_captcha_code.value = '';
 		
@@ -90,12 +92,14 @@ var omnibox = {
 		this.showHideElement('ob_review_captcha', 'show');
 		
 		if (this.type == 'comment') {
+			this.elements.ob_review_comment_subject.innerHTML = this.elements.ob_comment_subject.value;
 			this.elements.ob_review_comment_text.innerHTML = this.elements.ob_comment_text.value;
 			
 			this.showHideElement('ob_review_comment', 'show');
 			this.showHideElement('ob_review_feedback', 'hide');
 		}
 		if (this.type == 'feedback') {
+			this.elements.ob_review_feedback_subject.innerHTML = this.elements.ob_feedback_subject.value;
 			this.elements.ob_review_feedback_text.innerHTML = this.elements.ob_feedback_text.value;
 			
 			this.showHideElement('ob_review_comment', 'hide');
@@ -119,7 +123,7 @@ var omnibox = {
 			f_comment_content: this.elements.ob_comment_text.value,
 			f_article_number: document.getElementById('ob_comment_article_number').value,
 			f_comment_is_anonymous: 0,
-			f_comment_subject: 'SiteComment',
+			f_comment_subject: this.elements.ob_comment_subject.value,
 			f_captcha: this.elements.ob_review_captcha_code.value,
 			f_language: this.language
 		};
@@ -147,6 +151,7 @@ var omnibox = {
 	sendFeedback: function() {
 		var data = {
 			f_feedback_url: String(document.location),
+			f_feedback_subject: this.elements.ob_feedback_subject.value,
 			f_feedback_content: this.elements.ob_feedback_text.value,
 			f_captcha: this.elements.ob_review_captcha_code.value,
 			f_language: this.language,
