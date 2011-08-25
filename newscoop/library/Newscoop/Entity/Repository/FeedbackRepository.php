@@ -42,7 +42,7 @@ class FeedbackRepository extends DatatableSource
 		// get the entity manager
         $em = $this->getEntityManager();
         
-        $subscriber = $em->getReference('Newscoop\Entity\User\Subscriber', $p_values['subscriber']);
+        $subscriber = $em->getReference('Newscoop\Entity\User', $p_values['subscriber']);
         
         $p_entity->setSubscriber($subscriber);
         $p_entity->setMessage($p_values['message']);
@@ -63,7 +63,7 @@ class FeedbackRepository extends DatatableSource
     public function getData(array $p_params, array $p_cols)
     {
 		$qb = $this->createQueryBuilder('f');
-        $qb->from('Newscoop\Entity\User\Subscriber', 's');
+        $qb->from('Newscoop\Entity\User', 's');
         $andx = $qb->expr()->andx();
         $andx->add($qb->expr()->eq('f.subscriber', new Expr\Literal('s.id')));
 

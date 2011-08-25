@@ -8,7 +8,7 @@
 
 namespace Newscoop\Entity;
 
-use DateTime, Newscoop\Entity\User\Subscriber;
+use DateTime, Newscoop\Entity\User;
 
 /**
  * Feedback entity
@@ -26,7 +26,7 @@ class Feedback
 	private $id;
     
     /**
-     * @manyToOne(targetEntity="Newscoop\Entity\User\Subscriber")
+     * @manyToOne(targetEntity="Newscoop\Entity\User")
      * @joinColumn(name="subscriber_id", referencedColumnName="Id")
      * @var Newscoop\Entity\User\Subscriber
      */
@@ -175,7 +175,7 @@ class Feedback
      * @param Newscoop\Entity\User\Subscriber $p_subscriber
      * @return Newscoop\Entity\Feedback
      */
-    public function setSubscriber(Subscriber $p_subscriber)
+    public function setSubscriber(User $p_subscriber)
     {
         $this->subscriber = $p_subscriber;
         // return this for chaining mechanism

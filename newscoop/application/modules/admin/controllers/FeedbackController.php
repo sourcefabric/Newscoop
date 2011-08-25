@@ -66,7 +66,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
 					'index' => $index++,
                     'user' => array(
 						'username' => $user->getUsername(),
-						'name' => $user->getName(),
+						'name' => $user->getFirstName(),
 						'email' => $user->getEmail(),
 						'avatar' => (string)$view->getAvatar($user->getEmail(), array('img_size' => 50, 'default_img' => 'wavatar'))
 					),

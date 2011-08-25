@@ -9,7 +9,7 @@
  * Feedback controller
  */
  
-use Newscoop\Entity\Feedback, Newscoop\Entity\User\Subscriber;
+use Newscoop\Entity\Feedback, Newscoop\Entity\User;
 
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
  
