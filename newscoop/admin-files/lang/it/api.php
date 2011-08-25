@@ -1,14 +1,14 @@
 <?php 
-regGS("vertices", "");
-regGS("There was a problem trying to execute the XML RPC function.", "");
-regGS("The Campcaster server configuration is invalid.", "");
-regGS("Pan Map", "");
-regGS("Open large map", "");
-regGS("No news available.", "");
-regGS("Edit Polygon", "");
-regGS("Create Polygon", "");
-regGS("Communication error: ", "");
-regGS("Can't fetch news from '$1'", "");
+regGS("vertices", "vertici");
+regGS("There was a problem trying to execute the XML RPC function.", "Si è verificato un problema eseguendo la funzione XML RPC");
+regGS("The Campcaster server configuration is invalid.", "La configurazione del server Campcaster non è valida");
+regGS("Pan Map", "Scorri mappa");
+regGS("Open large map", "Apri mappa");
+regGS("No news available.", "Nessuna news disponibile");
+regGS("Edit Polygon", "Modifica poligono");
+regGS("Create Polygon", "Crea poligono");
+regGS("Communication error: ", "Errore di comunicazione:");
+regGS("Can't fetch news from '$1'", "Non posso acquisire news da '$1'");
 regGS("Loading...", "Caricamento...");
 regGS("Version", "Versione");
 regGS("License", "Licenza");
