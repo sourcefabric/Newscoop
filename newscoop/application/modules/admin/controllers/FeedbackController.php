@@ -73,13 +73,19 @@ class Admin_FeedbackController extends Zend_Controller_Action
                     'message' => array(
                         'id' => $feedback->getId(),
                         'created' => array(
-                            'date' => $feedback->getTimeCreated()->format('Y.i.d'),
+                            'date' => $feedback->getTimeCreated()->format('Y.m.d'),
                             'time' => $feedback->getTimeCreated()->format('H:i:s')
                         ),
                         'message' => $feedback->getMessage(),
                         'subject' => $feedback->getSubject()
                     ),
-                    'url' => $url
+                    'url' => $url,
+                    /*
+                    array(
+                       'url' => $url,
+                       'link' => array('source' => $view->baseUrl("admin/articles/edit.php?") . $view->linkArticle($thread)),
+                       'section' => array('name' => ($section) ? $section->getName() : null))
+                    ); */
                 );
                 return($result);
             });
