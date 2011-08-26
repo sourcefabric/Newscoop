@@ -65,7 +65,7 @@ class ArticleofthedayController extends Zend_Controller_Action
             $image = $images[0];
 
             $json['title'] = $article->getTitle();
-            $json['image'] = $this->view->baseUrl("/get_img?ImageWidth=100&ImageId=".$image->getImageId());
+            $json['image'] = $this->view->baseUrl("/get_img?ImageWidth=164&ImageId=".$image->getImageId());
 
             $date = $article->getPublishDate();
             $date = explode(" ", $date);
