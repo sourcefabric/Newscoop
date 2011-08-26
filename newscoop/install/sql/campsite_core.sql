@@ -3246,6 +3246,14 @@ CREATE TABLE IF NOT EXISTS `community_ticker_event` (
   KEY `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `user_points_index`;
+CREATE TABLE IF NOT EXISTS `user_points_index` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `action` varchar(255) NOT NULL,
+  `points` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
