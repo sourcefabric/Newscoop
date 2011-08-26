@@ -468,6 +468,13 @@ if ($showUserMenu) {
     );
 
     $pages[4]['pages'][] = array(
+        'label' => getGS('Manage User Points System'),
+        'module' => 'admin',
+        'controller' => 'user-points',
+        'action' => 'index',
+    );
+
+    $pages[4]['pages'][] = array(
         'label' => getGS('Create new account'),
         'module' => 'admin',
         'controller' => 'user',
