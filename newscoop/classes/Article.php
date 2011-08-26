@@ -2069,29 +2069,14 @@ class Article extends DatabaseObject {
 
         $queryStr = "SELECT *
             FROM Articles
-            WHERE Articles.IdPublication = '$p_publication_id'
-                    AND Articles.IdLanguage = '$p_language_id'
-                    AND Articles.Published = 'Y'
-                    AND Articles.Number IN ( SELECT NrArticle FROM `Xnews` WHERE FArticle_Of_The_Day = '1' AND IdLanguage = '$p_language_id' )
-                    AND DATE(Articles.PublishDate) >= '$p_start_date'
-                    AND DATE(Articles.PublishDate) <= '$p_end_date'
-                    AND (Articles.Type = 'news' )
-            ORDER BY Articles.PublishDate asc,
-                    Articles.time_updated asc";
-
-
-        /*
-        $queryStr = "SELECT *
-            FROM Articles
             WHERE
-                AND Articles.Published = 'Y'
-                AND Articles.Number IN ( SELECT NrArticle FROM `Xnews` WHERE FArticle_Of_The_Day = '1' )
+                Articles.Published = 'Y'
+                AND Articles.Number IN ( SELECT NrArticle FROM `Xnews` WHERE FArticle_Of_The_Day = '1')
                 AND DATE(Articles.PublishDate) >= '$p_start_date'
                 AND DATE(Articles.PublishDate) <= '$p_end_date'
                 AND (Articles.Type = 'news' )
             ORDER BY Articles.PublishDate asc,
                     Articles.time_updated asc";
-                    */
 
         $articles = DbObjectArray::Create('Article', $queryStr);
 
