@@ -51,8 +51,9 @@ class Admin_FeedbackController extends Zend_Controller_Action
         $table->setDataSource($this->feedbackRepository);
         $table->setOption('oLanguage',array('sSearch'=>''));
         $table->setCols(array(
-            'index' => $view->toggleCheckbox(), 'user' => getGS('Author'),
-            'message' => getGS('Date') . ' / ' . getGS('Message'), 'url' => getGS('URL')),
+            'index' => $view->toggleCheckbox(), 'user' => getGS('User'),
+            'message' => getGS('Date') . ' / ' . getGS('Message'),
+            'url' => getGS('Coming from')),
             array('index' => false)
         );
         $index = 1;
@@ -77,7 +78,13 @@ class Admin_FeedbackController extends Zend_Controller_Action
                             'time' => $feedback->getTimeCreated()->format('H:i:s')
                         ),
                         'message' => $feedback->getMessage(),
-                        'subject' => $feedback->getSubject()
+                        'subject' => $feedback->getSubject(),
+                        'action' => array(
+                            'reply' => $view->url(array(
+                                'action' => 'reply',
+                                'format' => 'json'
+                            ))
+                        ),
                     ),
                     'url' => $url,
                     /*

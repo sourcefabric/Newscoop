@@ -98,9 +98,21 @@
             <p class="commentBody">{{message.message}}</p>
           </div>
 
-          <div class="dateCommentHolderEdit">
-            <fieldset class="content-edit" style="display:none;">
-              <?php /*echo $this->editForm->setTemplate(array('comment'));*/ ?>
+          <div class="dateCommentHolderReply">
+            <fieldset class="content-reply" style="display:none;">
+              <h3><?php putGS('Reply to message'); ?></h3>
+              <form action="{{message.action.reply}}">
+              <input type="hidden" name="parent" value="{{message.id}}" />
+              <?php echo SecurityToken::FormParameter(); ?>
+              <label><?php putGS('Subject'); ?></label>
+              <input name="subject" type="text" class="input_text">
+              <label><?php putGS('Message'); ?></label>
+              <textarea name="message" class="input_text_area"></textarea>
+              <div class="buttonBar">
+                <input type="button" value="<?php putGS('Cancel'); ?>" class="button reply-cancel">
+                <input type="submit" value="<?php putGS('Submit'); ?>" class="button">
+              </div>
+              </form>
             </fieldset>
           </div>
         </td>

@@ -161,7 +161,7 @@ $(function () {
      * Action to fire
      * when action submit is triggered
      */
-    $('.dateCommentHolderEdit form').live('submit', function () {
+    $('.dateCommentHolderReply form').live('submit', function () {
         var that = this;
         $.ajax({
             type: 'POST',
@@ -179,7 +179,7 @@ $(function () {
         });
         return false;
     });
-    $('.dateCommentHolderEdit .edit-cancel,.dateCommentHolderEdit .reply-cancel').live('click', function () {
+    $('.dateCommentHolderReply .reply-cancel').live('click', function () {
         var el = $(this);
         var td = el.parents('td');
         var form = el.parents('form');
@@ -187,26 +187,13 @@ $(function () {
             this.reset();
         });
         td.find('.commentSubject,.commentBody').slideDown("fast");
-        td.find('.content-edit').hide();
         td.find('.content-reply').hide();
     });
-    $('.dateCommentHolderEdit .edit-reply').live('click', function () {
-        var el = $(this);
-        var td = el.parents('td');
-        var form = td.find('form');
-        $(form).each(function () {
-            this.reset();
-        });
-        td.find('.content-edit').slideUp("fast");
-        td.find('.content-reply').slideDown("fast");
-    });
 
-    $('.datatable .action-edit').live('click', function () {
+    $('.datatable .action-reply').live('click', function () {
         var el = $(this);
         var td = el.parents('td');
-        td.find('.commentSubject').toggle("fast");
-        td.find('.commentBody').toggle("fast");
-        td.find('.content-edit').toggle("fast");
+        td.find('.content-reply').toggle("fast");
     });
     // Dialog
     $('.dialogPopup').dialog({
