@@ -33,122 +33,151 @@ class FeedbackRepository extends DatatableSource
     /**
      * Method for saving a feedback
      *
-     * @param Feedback $p_entity
-     * @param array $params
-     * @return Feedback $p_entity
+     * @param \Newscoop\Entity\Feedback $entity
+     * @param array $values
+     * @return Feedback \Newscoop\Entity\Feedback
      */
-    public function save(Feedback $p_entity, $p_values)
+    public function save(Feedback $entity, $values)
     {
-		// get the entity manager
+        // get the entity manager
         $em = $this->getEntityManager();
-        
-        $subscriber = $em->getReference('Newscoop\Entity\User', $p_values['subscriber']);
-        
-        $p_entity->setSubscriber($subscriber);
-        $p_entity->setSubject($p_values['subject']);
-        $p_entity->setMessage($p_values['message']);
-        $p_entity->setUrl($p_values['url']);
-        $p_entity->setTimeCreated($p_values['time_created']);
+        $subscriber = $em->getReference('Newscoop\Entity\User', $values['subscriber']);
 
-        $em->persist($p_entity);
-        return $p_entity;
+        $entity->setSubscriber($subscriber);
+        $entity->setSubject($values['subject']);
+        $entity->setMessage($values['message']);
+        $entity->setUrl($values['url']);
+        $entity->setTimeCreated($values['time_created']);
+
+        $em->persist($entity);
+        return $entity;
     }
-    
+
+    /**
+     * Method for setting status
+     *
+     * @param array $feedbacks Feedback identifiers
+     * @param string $status
+     * @return void
+     */
+    public function setStatus(array $feedbacks, $status)
+    {
+        foreach ($feedbacks as $feedback) {
+            $this->setFeedbackStatus($this->find($feedback), $status);
+        }
+    }
+
+    /**
+     * Method for setting status for a feedback message
+     *
+     * @param \Newscoop\Entity\Feedback $feedback
+     * @param  string $status
+     * @return void
+     */
+    private function setFeedbackStatus(Feedback $feedback, $status)
+    {
+        $em = $this->getEntityManager();
+        if ($status == 'deleted') {
+            $em->remove($feedback);
+        } else {
+            $feedback->setStatus($status);
+            $em->persist($feedback);
+        }
+    }
+
     /**
      * Get data for table
      *
-     * @param array $p_params
+     * @param array $params
      * @param array $cols
      * @return Comment[]
      */
-    public function getData(array $p_params, array $p_cols)
+    public function getData(array $params, array $cols)
     {
-		$qb = $this->createQueryBuilder('f');
+        $qb = $this->createQueryBuilder('e');
         $qb->from('Newscoop\Entity\User', 's');
         $andx = $qb->expr()->andx();
-        $andx->add($qb->expr()->eq('f.subscriber', new Expr\Literal('s.id')));
+        $andx->add($qb->expr()->eq('e.subscriber', new Expr\Literal('s.id')));
 
-		if (!empty($p_params['sSearch'])) {
-            $this->buildWhere($p_cols, $p_params['sSearch'], $qb, $andx);
+        if (!empty($params['sSearch'])) {
+            $this->buildWhere($cols, $params['sSearch'], $qb, $andx);
         }
-        
+
+        if (!empty($params['sFilter'])) {
+            $this->buildFilter($cols, $params['sFilter'], $qb, $andx);
+        }
+
         // sort
-        if (isset($p_params["iSortCol_0"])) {
-            $cols = array_keys($p_cols);
-            $sortId = $p_params["iSortCol_0"];
-            $sortBy = $cols[$sortId];
-            $dir = $p_params["sSortDir_0"] ? : 'asc';
+        if (isset($params['iSortCol_0'])) {
+            $colsIndex = array_keys($cols);
+            $sortId = $params['iSortCol_0'];
+            $sortBy = $colsIndex[$sortId];
+            $dir = $params['sSortDir_0'] ? : 'asc';
             switch ($sortBy) {
                 case 'user':
-                    $qb->orderBy("s.name", $dir);
+                    $qb->orderBy('s.name', $dir);
                     break;
                 case 'message':
-                    $qb->orderBy("f.message", $dir);
+                    $qb->orderBy('e.message', $dir);
                     break;
                 case 'url':
-                    $qb->orderBy("f.url", $dir);
+                    $qb->orderBy('e.url', $dir);
                     break;
                 case 'index':
-                    $qb->orderBy("f.time_created", $dir);
+                    $qb->orderBy('e.time_created', $dir);
                     break;
                 default:
-                    $qb->orderBy("e." . $sortBy, $dir);
+                    $qb->orderBy('e.' . $sortBy, $dir);
             }
         }
-		
+
         $qb->where($andx);
+
         // limit
-        if (isset($p_params['iDisplayLength'])) {
-            $qb->setFirstResult((int)$p_params['iDisplayStart'])->setMaxResults((int)$p_params['iDisplayLength']);
+        if (isset($params['iDisplayLength'])) {
+            $qb->setFirstResult((int)$params['iDisplayStart'])->setMaxResults((int)$params['iDisplayLength']);
         }
-        
-        $result = $qb->getQuery()->getResult();
-        return $result;
-	}
-	
-	/**
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
      * Build where condition
      *
      * @param array $cols
      * @param string $search
      * @return Doctrine\ORM\Query\Expr
      */
-    protected function buildWhere(array $p_cols, $p_search, $qb, $andx)
+    protected function buildWhere(array $cols, $search, $qb, $andx)
     {
         $orx = $qb->expr()->orx();
-        $orx->add($qb->expr()->like("s.name", $qb->expr()->literal("%{$p_search}%")));
-        $orx->add($qb->expr()->like("f.message", $qb->expr()->literal("%{$p_search}%")));
+        $orx->add($qb->expr()->like('s.name', $qb->expr()->literal("%{$search}%")));
+        $orx->add($qb->expr()->like('e.subject', $qb->expr()->literal("%{$search}%")));
+        $orx->add($qb->expr()->like('e.message', $qb->expr()->literal("%{$search}%")));
         return $andx->add($orx);
     }
 
     /**
      * Build filter condition
      *
-     * @param array $p_
-     * @param string $p_cols
-     * @param
+     * @param array $cols
+     * @param array $filter
+     * @param $qb
+     * @param $andx
      * @return Doctrine\ORM\Query\Expr
      */
-    protected function buildFilter(array $p_cols, array $p_filter, $qb, $andx)
+    protected function buildFilter(array $cols, array $filter, $qb, $andx)
     {
-        foreach ($p_filter as $key => $values) {
+        foreach ($filter as $key => $values) {
             if (!is_array($values)) {
                 $values = array($values);
             }
             $orx = $qb->expr()->orx();
             switch ($key) {
                 case 'status':
-                    $mapper = array_flip(Comment::$status_enum);
+                    $mapper = array_flip(Feedback::$status_enum);
                     foreach ($values as $value) {
                         $orx->add($qb->expr()->eq('e.status', $mapper[$value]));
-                    }
-                    break;
-                case 'id':
-                case 'forum':
-                case 'thread':
-                case 'language':
-                    foreach ($values as $value) {
-                        $orx->add($qb->expr()->eq("e.$key", $value));
                     }
                     break;
             }

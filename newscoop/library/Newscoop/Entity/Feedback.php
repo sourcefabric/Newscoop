@@ -18,12 +18,12 @@ use DateTime, Newscoop\Entity\User;
  */
 class Feedback
 {
-	/**
+    /**
      * @id @generatedValue
      * @column(type="integer")
      * @var int
      */
-	private $id;
+    private $id;
     
     /**
      * @manyToOne(targetEntity="Newscoop\Entity\User")
@@ -49,7 +49,13 @@ class Feedback
      * @var string
      */
     private $subject;
-    
+
+    /**
+     * @column(length=2)
+     * @var int
+     */
+    private $status;
+
     /**
      * @column(type="datetime")
      * @var DateTime
@@ -61,7 +67,13 @@ class Feedback
      * @var DateTime
      */
     private $time_updated;
-    
+
+    /**
+     * @var string to code mapper for status
+     */
+    static $status_enum = array('processed', 'pending', 'starred', 'deleted');
+
+
     /**
      * Set id
      *
@@ -219,5 +231,27 @@ class Feedback
     public function getSubscriber()
     {
         return $this->subscriber;
+    }
+
+    /**
+     * Set status
+     *
+     * @return Newscoop\Entity\Feedback
+     */
+    public function setStatus($status)
+    {
+        $status_enum = array_flip(self::$status_enum);
+        $this->status = $status_enum[$status];
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return self::$status_enum[$this->status];
     }
 }

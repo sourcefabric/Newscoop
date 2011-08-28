@@ -1,8 +1,8 @@
 var statusMap = {
     'pending': 'new',
-    'hidden': 'hidden',
-    'deleted': 'deleted',
-    'approved': 'approved'
+    'processed': 'processed',
+    'starred': 'starred',
+    'deleted': 'deleted'
 };
 var datatableCallback = {
     serverData: {},
@@ -20,7 +20,10 @@ var datatableCallback = {
         });
     },
     row: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-        $(nRow).tmpl('#comment-tmpl', aData);
+        $(nRow)
+            .addClass('status_' + statusMap[aData.message.status])
+            .tmpl('#comment-tmpl', aData)
+            .find("input."+ statusMap[aData.message.status]).attr("checked","checked");
         return nRow;
     },
     draw: function () {
@@ -33,13 +36,16 @@ var datatableCallback = {
     },
     init: function() {
         $('.dataTables_filter input').attr('placeholder',putGS('Search'));
-        $('#actionExtender').html('<select class="input_select actions">\
-                                    <option value="">' + putGS('Change selected comments status') + '</option>\
-                                    <option value="pending">' + putGS('New') + '</option>\
-                                    <option value="approved">' + putGS('Approved') + '</option>\
-                                    <option value="hidden">' + putGS('Hidden') + '</option>\
-                                    <option value="deleted">' + putGS('Deleted')+ '</option>\
-                                </select>');
+        $('#actionExtender').html('<fieldset>\
+                                <legend>' + putGS('Actions') + '</legend> \
+                                <select class="input_select actions">\
+                                  <option value="">' + putGS('Change selected messages status') + '</option>\
+                                  <option value="pending">' + putGS('New') + '</option>\
+                                  <option value="processed">' + putGS('Processed') + '</option>\
+                                  <option value="starred">' + putGS('Starred') + '</option>\
+                                  <option value="deleted">' + putGS('Deleted')+ '</option>\
+                                </select>\
+                              </fieldset>');
         $('.actions').change(function () {
             action = $(this);
             var status = action.val();
@@ -52,19 +58,19 @@ var datatableCallback = {
                 if (!ids.length) return;
                 
                 
-                if (status == 'deleted' && !confirm(putGS('You are about to permanently delete multiple comments.') + '\n' + putGS('Are you sure you want to do it?'))) {
+                if (status == 'deleted' && !confirm(putGS('You are about to permanently delete multiple messages.') + '\n' + putGS('Are you sure you want to do it?'))) {
                     return false;
                 }
                 
                 $.ajax({
                     type: 'POST',
-                    url: 'comment/set-status/format/json',
+                    url: 'feedback/set-status/format/json',
                     data: $.extend({
-                        "comment": ids,
+                        "feedback": ids,
                         "status": status
                     }, serverObj.security),
                     success: function (data) {
-                        flashMessage(putGS('Comments status change to $1.', statusMap[status]));
+                        flashMessage(putGS('Messages status change to $1.', statusMap[status]));
                         datatable.fnDraw();
                     },
                     error: function (rq, status, error) {
@@ -102,7 +108,7 @@ $(function () {
 
     /**
      * Action to fire
-     * when header filter buttons are triggresd
+     * when header filter buttons are triggered
      */
     $('.status_filter li')
     .click(function (evt) {
@@ -133,20 +139,20 @@ $(function () {
         var ids = [id.match(/\d+/)[0]];
         var status = id.match(/[^_]+/)[0];
 
-        if (status == 'deleted' && !confirm(putGS('You are about to permanently delete a comment.') + '\n' + putGS('Are you sure you want to do it?'))) {
+        if (status == 'deleted' && !confirm(putGS('You are about to permanently delete a message.') + '\n' + putGS('Are you sure you want to do it?'))) {
             return false;
         }
 
         $.ajax({
             type: 'POST',
-            url: 'comment/set-status/format/json',
+            url: 'feedback/set-status/format/json',
             data: $.extend({
-                "comment": ids,
+                "feedback": ids,
                 "status": status
             }, serverObj.security),
             success: function (data) {
-                if ('deleted' == status) flashMessage(putGS('Comment deleted.'));
-                else flashMessage(putGS('Comment status change to $1.', statusMap[status]));
+                if ('deleted' == status) flashMessage(putGS('Message deleted.'));
+                else flashMessage(putGS('Message status change to $1.', statusMap[status]));
                 datatable.fnDraw();
             },
             error: function (rq, status, error) {
@@ -169,7 +175,7 @@ $(function () {
             data: $(this).serialize(),
             success: function (data) {
                 datatable.fnDraw();
-                flashMessage(putGS('Comment updated.'));
+                flashMessage(putGS('Message updated.'));
             },
             error: function (rq, status, error) {
                 if (status == 0 || status == -1) {

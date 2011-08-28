@@ -19,18 +19,18 @@ class Admin_FeedbackController extends Zend_Controller_Action
     private $feedbackRepository;
 
     /** @var Admin_Form_Feedback */
-    private $form;
+    //private $form;
 
     /** @var Admin_Form_Feedback_EditForm */
-    private $editForm;
+    //private $editForm;
     
     public function init()
     {
         // get feedback repository
         $this->feedbackRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Feedback');
 
-        $this->form = new Admin_Form_Comment;
-        $this->editForm = new Admin_Form_Comment_EditForm;
+        //$this->form = new Admin_Form_Comment;
+        //$this->editForm = new Admin_Form_Comment_EditForm;
 
         return $this;
     }
@@ -49,11 +49,13 @@ class Admin_FeedbackController extends Zend_Controller_Action
         $table = $this->getHelper('datatable');
         /* @var $table Action_Helper_Datatable */
         $table->setDataSource($this->feedbackRepository);
-        $table->setOption('oLanguage',array('sSearch'=>''));
-        $table->setCols(array(
-            'index' => $view->toggleCheckbox(), 'user' => getGS('User'),
-            'message' => getGS('Date') . ' / ' . getGS('Message'),
-            'url' => getGS('Coming from')),
+        $table->setOption('oLanguage', array('sSearch' => ''));
+        $table->setCols(
+            array(
+                'index' => $view->toggleCheckbox(), 'user' => getGS('User'),
+                'message' => getGS('Date') . ' / ' . getGS('Message'),
+                'url' => getGS('Coming from')
+            ),
             array('index' => false)
         );
         $index = 1;
@@ -79,6 +81,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
                         ),
                         'message' => $feedback->getMessage(),
                         'subject' => $feedback->getSubject(),
+                        'status' => $feedback->getStatus(),
                         'action' => array(
                             'reply' => $view->url(array(
                                 'action' => 'reply',
@@ -107,7 +110,61 @@ class Admin_FeedbackController extends Zend_Controller_Action
                 ->setDataProp(array('index' => null, 'user' => null, 'message' => null, 'url' => null))
                 ->setClasses(array('index' => 'commentId', 'user' => 'commentUser', 'message' => 'commentTimeCreated', 'url' => 'commentThread'));
         $table->dispatch();
-        $this->editForm->setSimpleDecorate()->setAction($this->_helper->url('update'));
-        $this->view->editForm = $this->editForm;
+        //$this->editForm->setSimpleDecorate()->setAction($this->_helper->url('update'));
+        //$this->view->editForm = $this->editForm;
+    }
+
+    /**
+     * Status action
+     */
+    public function setStatusAction()
+    {
+        $this->getHelper('contextSwitch')->addActionContext('set-status', 'json')->initContext();
+        if (!SecurityToken::isValid()) {
+            $this->view->status = 401;
+            $this->view->message = getGS('Invalid security token!');
+            return;
+        }
+
+        $status = $this->getRequest()->getParam('status');
+        $feedbacks = $this->getRequest()->getParam('feedback');
+        if (!is_array($feedbacks)) {
+            $feedbacks = array($feedbacks);
+        }
+
+        if ($status == 'deleted') {
+            //$messages = array_unique(array_merge($messages, $this->getAllReplies($messages)));
+        }
+
+        try {
+            foreach ($feedbacks as $id) {
+                $feedback = $this->feedbackRepository->find($id);
+
+                if ($status == 'deleted') {
+                    /*
+                    $msg = getGS('Comment delete by $1 from the article $2 ($3)', Zend_Registry::get('user')->getName(),
+                                 $comment->getThread()->getName(), $comment->getLanguage()->getCode());
+
+                    $this->_helper->log($msg);
+                    $this->_helper->flashMessenger($msg);
+                    */
+                } else {
+                    /*
+                    $msg = getGS('Message $4 by $1 in the article $2 ($3)', Zend_Registry::get('user')->getName(),
+                                 $comment->getThread()->getName(), $comment->getLanguage()->getCode(), $status);
+                    $this->_helper->log($msg);
+                    $this->_helper->flashMessenger($msg);
+                    */
+                }
+            }
+            $this->feedbackRepository->setStatus($feedbacks, $status);
+            $this->feedbackRepository->flush();
+        } catch (Exception $e) {
+            $this->view->status = $e->getCode();
+            $this->view->message = $e->getMessage();
+            return;
+        }
+        $this->view->status = 200;
+        $this->view->message = 'succcesful';
     }
 }

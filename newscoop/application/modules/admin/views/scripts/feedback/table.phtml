@@ -2,14 +2,14 @@
     /* @var Zend_View_Helper_HeadLink */
     $headStyle = $this->headLink();
     $headStyle->appendStylesheet($this->baseUrl('/admin-style/comments.css'));
-    $headStyle->offsetSetStylesheet('table','');
+    $headStyle->offsetSetStylesheet('table', '');
 ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/doT.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/jquery.ba-iff.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/jquery.version.js')); ?>
 <?php $this->headScript()->appendFile($this->baseUrl('/js/jquery/feedback.js')); ?>
 
-<?php $this->placeholder('title')->set(getGS('Feedback')); ?>
+<?php $this->placeholder('title')->set(getGS('Feedback Messages')); ?>
 <script>
     function putGS(str) {
         var msg = serverObj.translateObj[serverObj.languageObj.indexOf(str)]
@@ -24,39 +24,41 @@
 
     serverObj.languageObj = [
         'Search',
-        'Comments updated.',
-        'Comments deleted.',
-        'Comments status change to $1.',
-        'Comment updated.',
-        'Comment deleted.',
-        'Comment status change to $1.',
-        'Change selected comments status',
+        'Messages updated.',
+        'Messages deleted.',
+        'Messages status change to $1.',
+        'Message updated.',
+        'Message deleted.',
+        'Message status change to $1.',
+        'Change selected messages status',
+        'Actions',
         'New',
-        'Approved',
-        'Hidden',
+        'Processed',
+        'Starred',
         'Deleted',
         'Unable to reach Newscoop. Please check your internet connection.',
-        'You are about to permanently delete a comment.',
-        'You are about to permanently delete multiple comments.',
+        'You are about to permanently delete a message.',
+        'You are about to permanently delete multiple messages.',
         'Are you sure you want to do it?'
     ];
     
     serverObj.translateObj = [
         '<?php putGS('Search'); ?>',
-        '<?php putGS('Comments updated.'); ?>',
-        '<?php putGS('Comments deleted.'); ?>',
-        '<?php putGS('Comments status change to $1.'); ?>',
-        '<?php putGS('Comment updated.'); ?>',
-        '<?php putGS('Comment deleted.'); ?>',
-        '<?php putGS('Comment status change to $1.'); ?>',
-        '<?php putGS('Change selected comments status'); ?>',
+        '<?php putGS('Messages updated.'); ?>',
+        '<?php putGS('Messages deleted.'); ?>',
+        '<?php putGS('Messages status change to $1.'); ?>',
+        '<?php putGS('Message updated.'); ?>',
+        '<?php putGS('Message deleted.'); ?>',
+        '<?php putGS('Message status change to $1.'); ?>',
+        '<?php putGS('Change selected messages status'); ?>',
+        '<?php putGS('Actions');?>',
         '<?php putGS('New'); ?>',
-        '<?php putGS('Approved'); ?>',
-        '<?php putGS('Hidden'); ?>',
+        '<?php putGS('Processed'); ?>',
+        '<?php putGS('Starred'); ?>',
         '<?php putGS('Deleted'); ?>',
         '<?php putGS('Unable to reach Newscoop. Please check your internet connection.'); ?>',
-        <?php echo json_encode(getGS("You are about to permanently delete a comment.")); ?>,
-        <?php echo json_encode(getGS("You are about to permanently delete multiple comments.")); ?>,
+        <?php echo json_encode(getGS("You are about to permanently delete a message.")); ?>,
+        <?php echo json_encode(getGS("You are about to permanently delete multiple messages.")); ?>,
         <?php echo json_encode(getGS("Are you sure you want to do it?")); ?>
     ];
 </script>
@@ -133,13 +135,13 @@
       </li>
 
       <li>
-        <input type="radio" name="action_comment_{{message.id}}" class="action approved" id="approved_{{message.id}}" value="approved"/>
-        <label for="approved_{{message.id}}"><?php putGS('Processed'); ?></label>
+        <input type="radio" name="action_comment_{{message.id}}" class="action approved" id="processed_{{message.id}}" value="processed"/>
+        <label for="processed_{{message.id}}"><?php putGS('Processed'); ?></label>
         &nbsp;&nbsp;
       </li>
       <li>
-        <input type="radio" name="action_comment_{{message.id}}" class="action hidden" id="hidden_{{message.id}}" value="hidden" style="height: auto"/>
-        <label for="hidden_{{message.id}}"><?php putGS('Star'); ?></label>
+        <input type="radio" name="action_comment_{{message.id}}" class="action hidden" id="starred_{{message.id}}" value="starred" style="height: auto"/>
+        <label for="starred_{{message.id}}"><?php putGS('Star'); ?></label>
         &nbsp;&nbsp;
       </li>
 
@@ -170,10 +172,10 @@
                 <input type="checkbox" id="show_new" value="pending"> <label for="show_new"><?php putGS('New'); ?></label>
               </li>
               <li class="approved">
-                <input type="checkbox" id="show_approved" value="approved"> <label for="show_approved"><?php putGS('Processed'); ?></label>
+                <input type="checkbox" id="show_processed" value="processed"> <label for="show_processed"><?php putGS('Processed'); ?></label>
               </li>
               <li class="hidden">
-                <input type="checkbox" id="show_hidden" value="hidden"> <label for="show_hidden"><?php putGS('Starred'); ?></label>
+                <input type="checkbox" id="show_starred" value="starred"> <label for="show_starred"><?php putGS('Starred'); ?></label>
               </li>
               <li class="multipart">
                 <input type="checkbox" id="show_multipart" value="multipart"> <label for="show_multipart"><?php putGS('With Files Attached'); ?></label>
