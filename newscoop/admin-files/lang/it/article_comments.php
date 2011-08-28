@@ -1,5 +1,5 @@
 <?php 
-regGS("Comment saved.", "");
+regGS("Comment saved.", "Commento salvato.");
 regGS("Comments updated.", "Commenti aggiornati.");
 regGS("Post a Comment", "Pubblica un commento");
 regGS("From", "Da");
