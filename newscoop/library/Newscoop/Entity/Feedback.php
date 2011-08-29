@@ -33,6 +33,20 @@ class Feedback
     private $subscriber;
     
     /**
+     * @manyToOne(targetEntity="Newscoop\Entity\Section")
+     * @joinColumn(name="section_id", referencedColumnName="Number")
+     * @var Newscoop\Entity\Section
+     */
+    private $section;
+    
+    /**
+     * @manyToOne(targetEntity="Newscoop\Entity\Article")
+     * @joinColumn(name="section_id", referencedColumnName="Number")
+     * @var Newscoop\Entity\Article
+     */
+    private $article;
+    
+    /**
      * @column(length=2048)
      * @var text
      */
@@ -231,6 +245,52 @@ class Feedback
     public function getSubscriber()
     {
         return $this->subscriber;
+    }
+    
+    /**
+     * Set section
+     *
+     * @param Newscoop\Entity\Section $p_section
+     * @return Newscoop\Entity\Feedback
+     */
+    public function setSection(User $p_section)
+    {
+        $this->section = $p_section;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get section
+     *
+     * @return Newscoop\Entity\Section
+     */
+    public function getSection()
+    {
+        return $this->section;
+    }
+    
+    /**
+     * Set article
+     *
+     * @param Newscoop\Entity\Article $p_article
+     * @return Newscoop\Entity\Feedback
+     */
+    public function setArticle(User $p_article)
+    {
+        $this->article = $p_article;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get article
+     *
+     * @return Newscoop\Entity\Article
+     */
+    public function getArticle()
+    {
+        return $this->article;
     }
 
     /**

@@ -1948,6 +1948,8 @@ DROP TABLE IF EXISTS `feedback`;
 CREATE TABLE `feedback` (
    `id` int(11) not null auto_increment,
    `subscriber_id` int(11),
+   `section_id` int(11),
+   `article_id` int(11),
    `subject` varchar(128),
    `message` varchar(2048) not null,
    `status` tinyint(1) unsigned not null,
