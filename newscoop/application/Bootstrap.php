@@ -135,6 +135,32 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $router = $front->getRouter();
 
         $router->addRoute(
+            'issue',
+            new Zend_Controller_Router_Route(':language/:issue', array(
+                'module' => 'default',
+                'controller' => 'index',
+                'action' => 'index',
+                'language' => null,
+                'issue' => null,
+            )));
+
+        $router->addRoute(
+            'section',
+            new Zend_Controller_Router_Route(':language/:issue/:section', array(
+                'module' => 'default',
+                'controller' => 'index',
+                'action' => 'index',
+            )));
+
+        $router->addRoute(
+            'article',
+            new Zend_Controller_Router_Route(':language/:issue/:section/:articleNo/:articleUrl', array(
+                'module' => 'default',
+                'controller' => 'index',
+                'action' => 'index',
+            )));
+
+        $router->addRoute(
             'user',
             new Zend_Controller_Router_Route('user/:username', array(
                 'module' => 'default',
