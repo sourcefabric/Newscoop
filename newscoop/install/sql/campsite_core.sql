@@ -1950,6 +1950,7 @@ CREATE TABLE `feedback` (
    `subscriber_id` int(11),
    `subject` varchar(128),
    `message` varchar(2048) not null,
+   `status` tinyint(1) unsigned not null,
    `url` varchar(128) not null,
    `time_created` datetime not null,
    `time_updated` datetime not null,
