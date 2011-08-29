@@ -41,7 +41,6 @@ class ArticleCommentsList extends ListObject
         }
         foreach($this->m_order as $order)
         {            
-            $index = $cols[$order['field']];
             if(strtolower($order['field']) == 'bydate') {
                 $params['iSortCol_0'] = 0;
                 $params['sSortDir_0'] = $order['dir'];

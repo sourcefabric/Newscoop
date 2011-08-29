@@ -44,7 +44,7 @@ class UsersList extends ListObject
         $count = $service->countBy($this->m_constraints);
 
         $users = array();
-        foreach ($service->findBy($this->m_constraints, $this->m_order, $p_limit, $p_start) as $user)
+        foreach ($service->findBy($this->m_constraints, $this->m_order, $p_limit, $p_start) as $user) {
             $users[] = new MetaUser($user);
         }
 

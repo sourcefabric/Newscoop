@@ -21,7 +21,7 @@
 function smarty_function_disable_html_encoding($p_params, &$p_smarty)
 {
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('gimme');
+    $campsite = $p_smarty->getTemplateVars('gimme');
 
     if ($campsite->htmlencoding == true) {
         $campsite->htmlencoding = false;

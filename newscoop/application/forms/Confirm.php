@@ -7,12 +7,10 @@
 
 /**
  */
-class Form_Confirm extends Zend_Form
+class Application_Form_Confirm extends Zend_Form
 {
     public function init()
     {
-        $this->setMethod('POST');
-
         $this->addElement('hidden', 'first_name');
         $this->addElement('hidden', 'last_name');
 

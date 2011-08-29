@@ -6,21 +6,47 @@
  */
 
 /**
- * @Acl(ignore="1")
  */
 class AuthController extends Zend_Controller_Action
 {
+    /** @var Zend_Auth */
+    private $auth;
+
     public function init()
     {
-        camp_load_translation_strings('api');
+        $this->_helper->layout->disableLayout();
+        $this->auth = Zend_Auth::getInstance();
+    }
+
+    public function indexAction()
+    {
+        if ($this->auth->hasIdentity()) {
+            $this->_helper->redirector('index', 'index');
+        }
+
+        $form = new Application_Form_Login();
+
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $values = $form->getValues();
+            $adapter = $this->_helper->service('auth.adapter');
+            $adapter->setUsername($values['username'])->setPassword($values['password']);
+            $result = $this->auth->authenticate($adapter);
+
+            if ($result->getCode() == Zend_Auth_Result::SUCCESS) {
+                $this->_helper->redirector('index', 'dashboard');
+            }
+
+            $this->view->error = "Invalid credentials";
+        }
+
+        $this->view->form = $form;
     }
 
     public function logoutAction()
     {
-        $auth = Zend_Auth::getInstance();
-        if ($auth->hasIdentity()) {
-            Article::UnlockByUser((int) $auth->getIdentity());
-            $auth->clearIdentity();
+        if ($this->auth->hasIdentity()) {
+            $this->auth->clearIdentity();
         }
 
         $url = $this->_request->getParam('url');

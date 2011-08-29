@@ -799,7 +799,8 @@ class CampInstallationBaseHelper
             time_updated = NOW(),
             time_created = NOW(),
             Field2 = '1',
-            Field3 = '1'
+            Field3 = '1',
+            Field4 = '1'
             WHERE Id = 1";
         if (!$g_db->Execute($sqlQuery1)) {
             return false;

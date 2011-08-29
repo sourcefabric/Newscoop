@@ -25,10 +25,8 @@
  */
 function smarty_function_breadcrumb($p_params, &$p_smarty)
 {
-    require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
-
-    // gets the context variable
-    $campsite = $p_smarty->get_template_vars('gimme');
+    $p_smarty->smarty->loadPlugin('smarty_shared_escape_special_chars');
+    $campsite = $p_smarty->getTemplateVars('gimme');
 
     if (!isset($p_params['first_level']) || empty($p_params['first_level'])) {
         $p_params['first_level'] = 'home';

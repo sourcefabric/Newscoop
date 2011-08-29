@@ -82,7 +82,7 @@ class UserService
      * @param int $limit
      * @param int $offset
      */
-    public function findBy($critearia, array $orderBy = NULL, $limit = NULL, $offset = NULL)
+    public function findBy($criteria, array $orderBy = NULL, $limit = NULL, $offset = NULL)
     {
         return $this->getRepository()
             ->findBy($criteria, $orderBy, $limit, $offset);
@@ -101,6 +101,20 @@ class UserService
             ->save($user, $values);
         $this->em->flush();
         return $user;
+    }
+
+    /**
+     * Update user
+     *
+     * @param Newscoop\Entity\User $user
+     * @param array $values
+     * @return void
+     */
+    public function update(User $user, array $values)
+    {
+        $this->getRepository()
+            ->save($user, $values);
+        $this->em->flush();
     }
 
     /**

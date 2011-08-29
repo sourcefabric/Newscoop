@@ -32,7 +32,6 @@ require_once($GLOBALS['g_campsiteDir'] . '/template_engine/classes/CampTemplate.
  */
 class CampURIShortNames extends CampURI
 {
-
     /**
      * The theme path storage
      */
@@ -253,7 +252,11 @@ class CampURIShortNames extends CampURI
         $cParams = explode('/', trim($params, '/'));
         $cParamsSize = sizeof($cParams);
         if ($cParamsSize >= 1) {
-            $cLangCode = $cParams[0];
+            if (in_array($cParams[0], $this->getZendViews())) { // mimic empty url, content delivered with zend
+                $cParamsSize = 0;
+            } else {
+                $cLangCode = $cParams[0];
+            }
         }
         if ($cParamsSize >= 2) {
             $cIssueSName = $cParams[1];
@@ -465,8 +468,19 @@ class CampURIShortNames extends CampURI
         $this->validateCache(true);
     }
 
-// fn buildURI
+    /**
+     * Get zend views which should not be handled with shortURL
+     *
+     * @return array
+     */
+    private function getZendViews()
+    {
+        return array(
+            'auth',
+            'dashboard',
+            'error',
+            'register',
+            'user',
+        );
+    }
 }
-
-// class CampURIShortNames
-?>

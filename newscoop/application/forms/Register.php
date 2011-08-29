@@ -7,7 +7,7 @@
 
 /**
  */
-class Form_Register extends Zend_Form
+class Application_Form_Register extends Zend_Form
 {
     public function init()
     {

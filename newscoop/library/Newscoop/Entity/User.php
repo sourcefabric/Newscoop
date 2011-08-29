@@ -119,7 +119,7 @@ class User implements \Zend_Acl_Role_Interface
         $this->created = new \DateTime();
         $this->groups = new ArrayCollection();
         $this->attributes = new ArrayCollection();
-        $this->status = self::STATUS_INACTIVE;
+        $this->status = self::STATUS_ACTIVE; // @todo change to inactive once email confirmation works
         $this->role = new Role();
         $this->setPassword($this->generateRandomString(6)); // make sure password is not empty
         $this->is_admin = FALSE;

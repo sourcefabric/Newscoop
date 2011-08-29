@@ -180,11 +180,17 @@ class IPAccess extends DatabaseObject {
         $intIPAddress = $ipObj->__array2int($ipObj->__string2array($p_ipAddress));
         $queryStr = "SELECT DISTINCT(IdUser) FROM SubsByIP WHERE StartIP <= $intIPAddress "
         . "AND $intIPAddress <= (StartIP + Addresses - 1)";
-        $rows = $g_ado_db->GetAll($queryStr);
+        $rows = (array) $g_ado_db->GetAll($queryStr);
+
+        if (empty($rows)) {
+            return array();
+        }
+
         $users = array();
 		foreach ($rows as $row) {
 			$users[] = new User($row['IdUser']);
 		}
+
 		return $users;
 	}
 }

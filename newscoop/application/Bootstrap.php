@@ -31,6 +31,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             return;
         }, 'ADO');
 
+        $autoloader->pushAutoloader(function($class) {
+            require_once 'smarty3/sysplugins/' . strtolower($class) . '.php';
+        }, 'Smarty');
+
         $GLOBALS['g_campsiteDir'] = realpath(APPLICATION_PATH . '/../');
 
         return $autoloader;
@@ -53,9 +57,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
     protected function _initContainer()
     {
-        $this->bootstrap('autoloader');
-
-        $container = new sfServiceContainerBuilder($this->getOptions());
+        $this->bootstrap('autoloader'); $container = new sfServiceContainerBuilder($this->getOptions());
 
         $this->bootstrap('doctrine');
         $doctrine = $this->getResource('doctrine');
@@ -121,5 +123,20 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $front->registerPlugin(new Application_Plugin_CampPluginAutoload());
         $front->registerPlugin(new Application_Plugin_Auth($options['auth']));
         $front->registerPlugin(new Application_Plugin_Acl($options['acl']));
+        $front->registerPlugin(new Application_Plugin_Smarty());
+    }
+
+    protected function _initRouter()
+    {
+        $front = Zend_Controller_Front::getInstance();
+        $router = $front->getRouter();
+
+        $router->addRoute(
+            'user',
+            new Zend_Controller_Router_Route('user/:username', array(
+                'module' => 'default',
+                'controller' => 'user',
+                'action' => 'profile',
+            )));
     }
 }

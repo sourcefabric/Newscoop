@@ -52,6 +52,17 @@ class ListUserService
     }
 
     /**
+     * Find one user by criteria
+     *
+     * @param array $criteria
+     * @return Newscoop\Entity\User
+     */
+    public function findOneBy(array $criteria)
+    {
+        return $this->getRepository()->findOneBy($criteria);
+    }
+
+    /**
      * Get repository
      *
      * @return Newscoop\Entity\Repository\UserRepository

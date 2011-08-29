@@ -20,16 +20,14 @@
  *
  * @return string $html
  */
-function smarty_block_search_form($p_params, $p_content, &$p_smarty)
+function smarty_block_search_form($p_params, $p_content, $p_smarty)
 {
     if (!isset($p_content)) {
         return '';
     }
 
-    require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
-
-    // gets the context variable
-    $campsite = $p_smarty->get_template_vars('gimme');
+    $p_smarty->smarty->loadPlugin('smarty_shared_escape_special_chars');
+    $campsite = $p_smarty->getTemplateVars('gimme');
 
     $url = $campsite->url;
     $url->uri_parameter = "";
@@ -64,7 +62,7 @@ function smarty_block_search_form($p_params, $p_content, &$p_smarty)
         $html .= "<input type=\"hidden\" name=\"tpl\" value=\"" . $template->identifier . "\" />\n";
     }
     foreach ($campsite->url->form_parameters as $param) {
-        if (strncasecmp($param[name], $searchListIdPrefix, strlen($searchListIdPrefix)) == 0) {
+        if (strncasecmp($param['name'], $searchListIdPrefix, strlen($searchListIdPrefix)) == 0) {
             continue;
         }
         if ($param['name'] == 'tpl') {

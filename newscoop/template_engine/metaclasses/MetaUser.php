@@ -36,6 +36,9 @@ final class MetaUser extends MetaEntity
     /** @var bool */
     public $defined;
 
+    /** @var string */
+    public $created;
+
     /**
      * @param Newscoop\Entity\User $user
      */
@@ -55,6 +58,7 @@ final class MetaUser extends MetaEntity
         $this->name = trim($user->getFirstName() . ' ' . $user->getLastName());
 
         $this->defined = $user->getId() > 0;
+        $this->created = $user->getCreated()->format('d.m.Y');
     }
 
     /**

@@ -118,6 +118,30 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
         return parent::getCreated();
     }
 
+    public function setAdmin($admin)
+    {
+        $this->__load();
+        return parent::setAdmin($admin);
+    }
+
+    public function isAdmin()
+    {
+        $this->__load();
+        return parent::isAdmin();
+    }
+
+    public function setPublic($public)
+    {
+        $this->__load();
+        return parent::setPublic($public);
+    }
+
+    public function isPublic()
+    {
+        $this->__load();
+        return parent::isPublic();
+    }
+
     public function getGroups()
     {
         $this->__load();
@@ -136,16 +160,34 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
         return parent::getRoleId();
     }
 
+    public function addAttribute($name, $value)
+    {
+        $this->__load();
+        return parent::addAttribute($name, $value);
+    }
+
+    public function getAttribute($name)
+    {
+        $this->__load();
+        return parent::getAttribute($name);
+    }
+
     public function hasPermission($permission)
     {
         $this->__load();
         return parent::hasPermission($permission);
     }
 
+    public function __toString()
+    {
+        $this->__load();
+        return parent::__toString();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'username', 'password', 'first_name', 'last_name', 'email', 'created', 'role', 'groups');
+        return array('__isInitialized__', 'id', 'username', 'password', 'first_name', 'last_name', 'email', 'created', 'status', 'is_admin', 'is_public', 'role', 'groups', 'attributes');
     }
 
     public function __clone()
