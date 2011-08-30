@@ -1,22 +1,8 @@
 <?php
 
-/*
-$conf_dir = dirname(__FILE__) . '/conf/';
-require($conf_dir . 'event_import_conf.php');
-//require($conf_dir . 'event_import_cats.php');
-
-$incl_dir = dirname(__FILE__) . '/incl/';
-require($incl_dir . 'EventParser.php');
-
-$classes_dir = $event_data_properties['newscoop_dir'] . '/classes/';
-require($incl_dir . 'GeoMap.php');
-*/
-
 
 class NewsImport extends DatabaseObject
 {
-    //const TABLE = 'Maps';
-
 
     public static function ProcessImport(&$p_importOnly) {
 
@@ -44,7 +30,7 @@ class NewsImport extends DatabaseObject
         }
 
         // the path (as of request_uri) that is for the statistics part
-        $xmlimp_start .= '_xmlimport/';
+        $xmlimp_start .= '_newsimport/';
         $xmlimp_start_len = strlen($xmlimp_start);
         // if request_uri starts with the statistics path, it is just for the statistics things
         if (substr($path_request, 0, $xmlimp_start_len) == $xmlimp_start) {
@@ -55,37 +41,62 @@ class NewsImport extends DatabaseObject
             return true;
         }
 
-        echo " aaaaaaa bbbbbb ";
-        return false;
-
-        if (!array_key_exists('xmlauth', $_GET)) {
+        if (!array_key_exists('newsauth', $_GET)) {
             return false;
         }
 
-        $xml_auth = $_GET['xmlauth'];
-        $xml_feed = null;
+        $news_auth = $_GET['newsauth'];
+        $news_feed = null;
 
-        if (array_key_exists('xmlfeed', $_GET)) {
-            $xml_feed = $_GET['xmlfeed'];
+        if (array_key_exists('newsfeed', $_GET)) {
+            $news_feed = $_GET['newsfeed'];
         }
 
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'SystemPref.php');
-        require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'TopicName.php');
-        require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'GeoMap.php');
 
-        $xml_pref_sys_pref = SystemPref::Get('XMLImportAuthorization');
-        if ((!empty($xml_pref_sys_pref)) && ($xml_auth != $xml_auth_sys_pref)) {
+        $news_auth_sys_pref = SystemPref::Get('NewsImportAuthorization');
+        if ((!empty($news_auth_sys_pref)) && ($news_auth != $news_auth_sys_pref)) {
             return false;
         }
 
-        require_once(CS_PATH_CONFIG.DIR_SEP.'xml_import_conf.php');
-        return self::LoadEventData($event_data_sources, $xml_feed);
+        require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'Topic.php');
+        require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'TopicName.php');
+        require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'GeoMap.php');
 
-        //return true;
+        $conf_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'include';
+        $class_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'classes';
+        require_once($conf_dir.DIR_SEP.'default_topics.php');
+        require_once($conf_dir.DIR_SEP.'news_feeds_conf.php');
+        require_once($class_dir.DIR_SEP.'NewsImport.php');
+
+        // take the ctegory topics, as array by [language][category] of [name,id]
+        $cat_topics = self::ReadEventTopics($newsimport_default_cat_names);
+
+        return self::LoadEventData($event_data_sources, $news_feed, $cat_topics);
     }
 
+    public static function ReadEventTopics($p_defaultTopicNames) {
+        $event_spec_topics = array();
 
-    public static function ReadEventCategories($p_source) {
+        foreach ($p_defaultTopicNames as $cat_key => $event_spec_names) {
+            foreach ($event_spec_names as $cat_lan_id => $cat_name) {
+                $cat_key_sys_pref = 'EventCat' . $cat_lan_id . ucfirst($cat_name);
+                $cat_name_sys_pref = SystemPref::Get($cat_key_sys_pref);
+                if (!empty($cat_name_sys_pref)) {
+                    $cat_name = $cat_name_sys_pref;
+                }
+                if (!array_key_exists($cat_lan_id, $event_spec_topics)) {
+                    $event_spec_topics[$cat_lan_id] = array();
+                }
+                $topic_name_obj = new TopicName($cat_name, $cat_lan_id);
+                $event_spec_topics[$cat_lan_id][$cat_key] = array('name' => $cat_name, 'id' => $topic_name_obj->getTopicId());
+            }
+        }
+
+        return $event_spec_topics;
+    }
+
+    public static function ReadEventCategories($p_source, $p_catTopics) {
         if (!is_array($p_source)) {
             return false;
         }
@@ -101,82 +112,29 @@ class NewsImport extends DatabaseObject
             return null;
         }
 
-/*
-        $provider_info = $p_conf[$p_providerId];
-        if ((!is_array($provider_info)) || (!array_key_exists($p_eventType, $provider_info))) {
+        if (!array_key_exists($language_id, $p_catTopics)) {
             return null;
         }
-        $event_type_info = $provide_info[$p_eventType];
-        if ((!is_array($event_type_info)) || (!array_key_exists('categories' $event_type_info))) {
-            return null;
-        }
-        $categories_info = $event_type_info['categories'];
-        if (!is_array($categories_info)) {
-            return null;
-        }
-*/
-        global $Campsite;
-        var_dump($Campsite['system_preferences']);
+        $lang_topics = $p_catTopics[$language_id];
 
         $topics = array();
         foreach ($categories_info as $one_spec_key => $one_spec_value) {
-            //if ((!is_string($one_spec_key)) || (!is_string($one_spec_value))) {
-            //    continue;
-            //}
             if (!is_string($one_spec_key)) {
-                echo "wtf 001";
-                continue;
-            }
-
-            $topic_name_str = SystemPref::Get($one_spec_key);
-            if (empty($topic_name_str)) {
-                echo "wtf 002: $one_spec_key ... ";
                 continue;
             }
 
             if ('*' == $one_spec_value) {
-                //$topic_info = TopicName::GetTopicInfoByPref($one_spec_key, $language_id);
-                //if (!empty($topic_info)) {
-                //    $topics[] = array('fixed' => $topic_info);
-                //}
-                $topic_name_obj = new TopicName($topic_name_str, $language_id);
-                var_dump($topic_name_obj);
-                if (!$topic_name_obj->m_exists) {
-                    continue;
+                if (array_key_exists($one_spec_key, $lang_topics)) {
+                    $topics[] = array('fixed' => $lang_topics[$one_spec_key]);
                 }
-                $topics[] = array('fixed' => array('name' => $topic_name_str, 'id' => $topic_name_obj->getTopicId()));
             }
             if (is_array($one_spec_value)) {
-                //$topic_info = TopicName::GetTopicInfoByPref($one_spec_key, $language_id);
-                //if (!empty($topic_info)) {
-                //    $topics[] = array('match_xml' => $one_spec_value, 'match_topic' => $topic_info);
-                //}
-                $topic_name_obj = new TopicName($topic_name_str, $language_id);
-                var_dump($topic_name_obj);
-                if (!$topic_name_obj->m_exists) {
-                    continue;
-                }
-                $topics[] = array('fixed' => array('name' => $topic_name_str, 'id' => $topic_name_obj->getTopicId()));
-            }
-
-
-/*
-            if ('fixed' == $one_spec_key) {
-                $topic_info = TopicName::GetTopicInfoByPref($one_spec_value);
-                if (!empty($topic_info)) {
-                    $topics[] = array('fixed' => $topic_info);
+                if (array_key_exists($one_spec_key, $lang_topics)) {
+                    $topics[] = array('match_xml' => $one_spec_value, 'match_topic' => $lang_topics[$one_spec_key]);
                 }
             }
-            if ('match' == $one_spec_key) {
-                $topic_info = TopicName::GetTopicTreeByPref($one_spec_value);
-                if (!empty($topic_info)) {
-                    $topics[] = array('match' => $topic_info);
-                }
-            }
-*/
         }
 
-        var_dump($topics);
         return $topics;
     }
 
@@ -417,31 +375,40 @@ class NewsImport extends DatabaseObject
     
     }
 
-    public static function StoreEventData($p_events, $p_source, $p_install) {
+    public static function StoreEventData($p_events, $p_source) {
         if (empty($p_events)) {
             return;
         }
     
         $art_type = 'event_type';
-        $art_publication = '';
-        $art_issue = '';
-        $art_section = '';
-        //$art_ = '';
-    
+        $art_publication = $p_source['publication_id'];
+        $art_issue = $p_source['issue_number'];
+        $art_section = $p_source['section_number'];
+        $art_lang = $p_source['language_id'];
+
+//var_dump($p_events);
+
         foreach ($p_events as $one_event) {
-            $art_name = $one_event['event_name'];
-    
-            $article = new Article($art_type, $art_name, $art_publication, $art_issue, $art_section);
-            $article->create();
-    
+            $art_name = $one_event['event_name'] . ' ' . mt_rand();
+
+echo "\n$art_type, $art_name, $art_publication, $art_issue, $art_section\n";
+
+            $article = new Article($art_lang);
+            $article->create($art_type, $art_name, $art_publication, $art_issue, $art_section);
+
+echo  $article->getArticleNumber() . ' - ' . $article->getLanguageId() . "\n" . "\n";
+
             $article_data = new ArticleData($art_type, $article->getArticleNumber(), $article->getLanguageId());
+            $article_data->setProperty('event_id', $one_event['event_id']);
             $article_data->setProperty('event_name', $art_name);
-    
+
+/*
             $article_data->setProperty('provider_id', $one_event['provider_id']);
             $article_data->setProperty('event_id', $one_event['event_id']);
             $article_data->setProperty('turnus_id', $one_event['turnus_id']);
             $article_data->setProperty('location_id', $one_event['location_id']);
             $article_data->setProperty('location_name', $one_event['location_name']);
+*/
     
             //$article_data->setProperty('event_name', $one_event['event_name']);
     /*
@@ -472,17 +439,38 @@ class NewsImport extends DatabaseObject
     
         $src_dir = $p_params['source_dirs']['new'];
         $dest_dir = $p_params['source_dirs']['old'];
-    
+
         foreach ($p_files as $one_file) {
-            rename($src_dir . '/' . $one_file, $dest_dir . '/' . $one_file);
+            try {
+                rename($src_dir . '/' . $one_file, $dest_dir . '/' . $one_file);
+            }
+            catch (Exception $exc) {
+                var_dump($exc);
+                continue;
+            }
         }
+
     }
 
     //public static function LoadEventData($p_eventSources, $p_newscoopInst) {
-    public static function LoadEventData($p_eventSources, $p_xmlFeed = null) {
+    public static function LoadEventData($p_eventSources, $p_newsFeed, $p_catTopics) {
+
+
+        //$conf_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'include';
+        $class_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'classes';
+        //require_once($conf_dir.DIR_SEP.'default_topics.php');
+        //require_once($conf_dir.DIR_SEP.'news_feeds_conf.php');
+        require_once($class_dir.DIR_SEP.'EventParser.php');
+
 
         echo "\n<pre>\n";
+        //echo "aaaaaa xx zz";
 
+        //var_dump($p_eventSources);
+        //var_dump($p_newsFeed);
+        //var_dump($p_catTopics);
+
+        //return false;
         //require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'GeoMap.php');
 
         //echo "abc\n<pre>\n";
@@ -499,15 +487,14 @@ class NewsImport extends DatabaseObject
         //return false;
     
         foreach ($p_eventSources as $one_source_name => $one_source) {
-            if ((!empty($p_xmlFeed)) && ($one_source_name != $p_xmlFeed)) {
+            if ((!empty($p_newsFeed)) && ($one_source_name != $p_newsFeed)) {
                 continue;
             }
     
-            $categories = self::ReadEventCategories($one_source);
-            //ReadEventCategories($p_conf, $p_providerId, $p_eventType)
-            continue;
+            $categories = self::ReadEventCategories($one_source, $p_catTopics);
+            //continue;
 
-    
+
             $event_set = null;
             if ('events' == $one_source['event_type']) {
                 //$event_set = ReadEventData($one_source['provider_id'], $one_source['source_dirs'], $categories);
@@ -515,21 +502,24 @@ class NewsImport extends DatabaseObject
             }
             // temporarily not working with movies
             //elseif ('movies' ==  $one_source['event_type']) {
-            //    $event_set = ReadMovieData($used_event_files, $one_source, $categories);
+            //    $event_set = MovieData_Parser::ReadMovieData($used_event_files, $one_source, $categories);
             //}
+
+            //var_dump($event_set);
+            //continue;
     
             if (empty($event_set)) {
                 continue;
             }
     
-            LocateEventData($event_set['events'], $one_source);
-            StoreEventData($event_set['events'], $one_source, $p_newscoopInst);
+            //self::LocateEventData($event_set['events'], $one_source);
+            self::StoreEventData($event_set['events'], $one_source);
     
-            CleanEventSources($event_set['files'], $one_source);
-    
+            //self::CleanEventSources($event_set['files'], $one_source);
+
         }
 
-        echo 'asdf';
+        //echo 'asdf';
 
     }
 
