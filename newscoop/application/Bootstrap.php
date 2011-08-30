@@ -135,13 +135,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $router = $front->getRouter();
 
         $router->addRoute(
-            'issue',
-            new Zend_Controller_Router_Route(':language/:issue', array(
+            'article',
+            new Zend_Controller_Router_Route(':language/:issue/:section/:articleNo/:articleUrl', array(
                 'module' => 'default',
                 'controller' => 'index',
                 'action' => 'index',
-                'language' => null,
-                'issue' => null,
             )));
 
         $router->addRoute(
@@ -153,11 +151,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             )));
 
         $router->addRoute(
-            'article',
-            new Zend_Controller_Router_Route(':language/:issue/:section/:articleNo/:articleUrl', array(
+            'issue',
+            new Zend_Controller_Router_Route(':language/:issue', array(
                 'module' => 'default',
                 'controller' => 'index',
                 'action' => 'index',
+                'language' => null,
+                'issue' => null,
             )));
 
         $router->addRoute(
@@ -166,6 +166,30 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'module' => 'default',
                 'controller' => 'user',
                 'action' => 'profile',
+            )));
+
+        $router->addRoute(
+            'register',
+            new Zend_Controller_Router_Route('register/:action', array(
+                'module' => 'default',
+                'controller' => 'register',
+                'action' => 'index',
+            )));
+
+        $router->addRoute(
+            'auth',
+            new Zend_Controller_Router_Route('auth/:action', array(
+                'module' => 'default',
+                'controller' => 'auth',
+                'action' => 'index',
+            )));
+
+        $router->addRoute(
+            'dashboard',
+            new Zend_Controller_Router_Route('dashboard/:action', array(
+                'module' => 'default',
+                'controller' => 'dashboard',
+                'action' => 'index',
             )));
     }
 }
