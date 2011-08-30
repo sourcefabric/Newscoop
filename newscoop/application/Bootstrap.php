@@ -185,10 +185,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             )));
 
         $router->addRoute(
-            'dashboard',
-            new Zend_Controller_Router_Route('dashboard/:action', array(
-                'module' => 'default',
-                'controller' => 'dashboard',
+            'admin',
+            new Zend_Controller_Router_Route('admin/:controller/:action/*', array(
+                'module' => 'admin',
+                'controller' => 'index',
                 'action' => 'index',
             )));
     }
