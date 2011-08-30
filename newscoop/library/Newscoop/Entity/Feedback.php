@@ -27,21 +27,24 @@ class Feedback
     
     /**
      * @manyToOne(targetEntity="Newscoop\Entity\User")
-     * @joinColumn(name="subscriber_id", referencedColumnName="Id")
-     * @var Newscoop\Entity\User\Subscriber
+     * @joinColumn(name="user_id", referencedColumnName="Id")
+     * @var Newscoop\Entity\User
      */
-    private $subscriber;
+    private $user;
     
     /**
      * @manyToOne(targetEntity="Newscoop\Entity\Section")
-     * @joinColumn(name="section_id", referencedColumnName="Number")
+     * @joinColumn(name="section_id", referencedColumnName="id")
      * @var Newscoop\Entity\Section
      */
     private $section;
     
     /**
      * @manyToOne(targetEntity="Newscoop\Entity\Article")
-     * @joinColumn(name="section_id", referencedColumnName="Number")
+     * @JoinColumns({
+     *     @JoinColumn(name="article_number", referencedColumnName="Number"),
+     *     @JoinColumn(name="article_language", referencedColumnName="IdLanguage")
+     * })
      * @var Newscoop\Entity\Article
      */
     private $article;
@@ -225,14 +228,14 @@ class Feedback
     }
     
     /**
-     * Set subscriber
+     * Set user
      *
-     * @param Newscoop\Entity\User\Subscriber $p_subscriber
+     * @param Newscoop\Entity\User $p_user
      * @return Newscoop\Entity\Feedback
      */
-    public function setSubscriber(User $p_subscriber)
+    public function setUser(User $p_user)
     {
-        $this->subscriber = $p_subscriber;
+        $this->user = $p_user;
         // return this for chaining mechanism
         return $this;
     }
@@ -240,11 +243,11 @@ class Feedback
     /**
      * Get subscriber
      *
-     * @return Newscoop\Entity\User\Subscriber
+     * @return Newscoop\Entity\User
      */
-    public function getSubscriber()
+    public function getUser()
     {
-        return $this->subscriber;
+        return $this->user;
     }
     
     /**
@@ -253,7 +256,7 @@ class Feedback
      * @param Newscoop\Entity\Section $p_section
      * @return Newscoop\Entity\Feedback
      */
-    public function setSection(User $p_section)
+    public function setSection(Section $p_section)
     {
         $this->section = $p_section;
         // return this for chaining mechanism
@@ -276,7 +279,7 @@ class Feedback
      * @param Newscoop\Entity\Article $p_article
      * @return Newscoop\Entity\Feedback
      */
-    public function setArticle(User $p_article)
+    public function setArticle(Article $p_article)
     {
         $this->article = $p_article;
         // return this for chaining mechanism

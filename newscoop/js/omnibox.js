@@ -1,5 +1,7 @@
 var omnibox = {
 	language: false,
+	section: false,
+	article: false,
 	baseUrl: false,
 	status: false,
 	type: 'comment',
@@ -34,6 +36,12 @@ var omnibox = {
 	},
 	setLanguage: function(language) {
 		this.language = language;
+	},
+	setSection: function(section) {
+		this.section = section;
+	},
+	setArticle: function(article) {
+		this.article = article;
 	},
 	showHideElement: function(elementName, action) {
 		if (action == 'show') var display = 'inline';
@@ -155,6 +163,8 @@ var omnibox = {
 			f_feedback_content: this.elements.ob_feedback_text.value,
 			f_captcha: this.elements.ob_review_captcha_code.value,
 			f_language: this.language,
+			f_section: this.section,
+			f_article: this.article,
 			f_publication_id: document.getElementById('ob_feedback_publication_id').value
 		};
 		

@@ -50,14 +50,18 @@ class FeedbackController extends Zend_Controller_Action
 		if (empty($errors)) {
 			$feedbackRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Feedback');
 			$feedback = new Feedback();
-			$subscriber = $auth->getIdentity();
+			$user = $auth->getIdentity();
 			
 			$values = array(
-				'subscriber' => $subscriber,
+				'user' => $user,
+				'section' => $parameters['f_section'],
+				'article' => $parameters['f_article'],
 				'subject' => $parameters['f_feedback_subject'],
 				'message' => $parameters['f_feedback_content'],
 				'url' => $parameters['f_feedback_url'],
-				'time_created' => new DateTime()
+				'time_created' => new DateTime(),
+				'language' => $parameters['f_language'],
+				'status' => 'pending'
 			);
 			
 			$feedbackRepository->save($feedback, $values);

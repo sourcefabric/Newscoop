@@ -2,8 +2,6 @@
 
 <body>
 
-{{ omnibox }}{{ /omnibox }}
-
 <div class="container">
 
 {{ include file="_tpl/top.tpl" }}

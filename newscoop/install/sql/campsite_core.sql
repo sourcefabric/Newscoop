@@ -1947,7 +1947,7 @@ DROP TABLE IF EXISTS `feedback`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `feedback` (
    `id` int(11) not null auto_increment,
-   `subscriber_id` int(11),
+   `user_id` int(11),
    `section_id` int(11),
    `article_id` int(11),
    `subject` varchar(128),

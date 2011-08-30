@@ -12,6 +12,8 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Newscoop\Entity\Feedback;
 use Newscoop\Entity\User;
+use Newscoop\Entity\Article;
+use Newscoop\Entity\Section;
 use Newscoop\Datatable\Source as DatatableSource;
 
 /**
@@ -41,14 +43,22 @@ class FeedbackRepository extends DatatableSource
     {
         // get the entity manager
         $em = $this->getEntityManager();
-        $subscriber = $em->getReference('Newscoop\Entity\User', $values['subscriber']);
-
-        $entity->setSubscriber($subscriber);
+        $user = $em->getReference('Newscoop\Entity\User', $values['user']);
+        $section = $em->getReference('Newscoop\Entity\Section', $values['section']);
+        $article = $em->getReference('Newscoop\Entity\Article', array(
+			'language' => $values['language'],
+			'number' => $values['article'],
+		));
+		
+        $entity->setUser($user);
+        $entity->setSection($section);
+        $entity->setArticle($article);
         $entity->setSubject($values['subject']);
         $entity->setMessage($values['message']);
         $entity->setUrl($values['url']);
         $entity->setTimeCreated($values['time_created']);
-
+        $entity->setStatus($values['status']);
+        
         $em->persist($entity);
         return $entity;
     }
