@@ -57,7 +57,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
     protected function _initContainer()
     {
-        $this->bootstrap('autoloader'); $container = new sfServiceContainerBuilder($this->getOptions());
+        $this->bootstrap('autoloader');
+        $container = new sfServiceContainerBuilder($this->getOptions());
 
         $this->bootstrap('doctrine');
         $doctrine = $this->getResource('doctrine');
@@ -70,10 +71,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('user.list', 'Newscoop\Services\ListUserService')
             ->addArgument(new sfServiceReference('em'));
 
+        $container->register('user.token', 'Newscoop\Services\UserTokenService')
+            ->addArgument(new sfServiceReference('em'));
+
         $container->register('user_type', 'Newscoop\Services\UserTypeService')
             ->addArgument(new sfServiceReference('em'));
 
-	$container->register('user_points', 'Newscoop\Services\UserPointsService')
+        $container->register('user_points', 'Newscoop\Services\UserPointsService')
             ->addArgument(new sfServiceReference('em'));
 
         $container->register('audit', 'Newscoop\Services\AuditService')
@@ -147,6 +151,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'language' => 'en', // @todo get default language from config
             ), array(
                 'language' => '[a-z]{2}',
+            )));
+
+        $router->addRoute(
+            'confirm-email',
+            new Zend_Controller_Router_Route('confirm-email/:user/:token', array(
+                'module' => 'default',
+                'controller' => 'register',
+                'action' => 'confirm-email',
             )));
 
         $router->addRoute(

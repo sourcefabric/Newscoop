@@ -159,6 +159,18 @@ class UserService
     }
 
     /**
+     * Set user active
+     *
+     * @param Newscoop\Entity\User $user
+     * @return void
+     */
+    public function setActive(User $user)
+    {
+        $user->setStatus(User::STATUS_ACTIVE);
+        $this->em->flush();
+    }
+
+    /**
      * Get repository for user entity
      *
      * @return Newscoop\Entity\Repository\UserRepository

@@ -3254,6 +3254,15 @@ CREATE TABLE IF NOT EXISTS `user_points_index` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `user_token`;
+CREATE TABLE IF NOT EXISTS `user_token` (
+  `user_id` int(11) unsigned NOT NULL,
+  `action` varchar(40) NOT NULL,
+  `token` varchar(40) NOT NULL,
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`user_id`,`action`,`token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;

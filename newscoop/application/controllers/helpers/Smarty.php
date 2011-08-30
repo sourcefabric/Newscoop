@@ -16,13 +16,14 @@ class Action_Helper_Smarty extends Zend_Controller_Action_Helper_Abstract
 
     /** @var array */
     private $controllers = array(
+        'auth',
+        'dashboard',
+        'email',
+        'error',
         'index',
         'legacy',
-        'user',
-        'dashboard',
         'register',
-        'auth',
-        'error',
+        'user',
     );
 
     /**

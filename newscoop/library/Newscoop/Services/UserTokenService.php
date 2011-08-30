@@ -1,0 +1,77 @@
+<?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
+
+namespace Newscoop\Services;
+
+use Doctrine\ORM\EntityManager,
+    Newscoop\Entity\User,
+    Newscoop\Entity\UserToken;
+
+/**
+ * User service
+ */
+class UserTokenService
+{
+    const TOKEN_LENGTH = 40;
+    const TOKEN_LIFETIME = 'P2D'; // DateInterval syntax
+
+    /** @var Doctrine\ORM\EntityManager */
+    protected $em;
+
+    /**
+     * @param Doctrine\ORM\EntityManager $em
+     */
+    public function __construct(EntityManager $em)
+    {
+        $this->em = $em;
+    }
+
+    /**
+     * Generate user action token
+     *
+     * @param Newscoop\Entity\User $user
+     * @param string $action
+     * @return string
+     */
+    public function generateToken(User $user, $action = 'any')
+    {
+        $token = $user->generateRandomString(self::TOKEN_LENGTH);
+        $this->em->persist(new UserToken($user, $action, $token));
+        $this->em->flush();
+        return $token;
+    }
+
+    /**
+     * Check user action token
+     *
+     * @param Newscoop\Entity\User $user
+     * @param string $token
+     * @param string $action
+     * @return bool
+     */
+    public function checkToken(User $user, $token, $action = 'any')
+    {
+        $userToken = $this->em->find('Newscoop\Entity\UserToken', array(
+            'user' => $user->getId(),
+            'action' => $action,
+            'token' => $token,
+        ));
+
+        if (empty($userToken)) {
+            return false;
+        }
+
+        $now = new \DateTime();
+        if ($now->sub(new \DateInterval(self::TOKEN_LIFETIME))->getTimestamp() >= $userToken->getCreated()->getTimestamp()) {
+            return false;
+        }
+
+        $this->em->remove($userToken);
+        $this->em->flush();
+        return true;
+    }
+}

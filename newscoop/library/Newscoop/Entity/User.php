@@ -119,11 +119,11 @@ class User implements \Zend_Acl_Role_Interface
         $this->created = new \DateTime();
         $this->groups = new ArrayCollection();
         $this->attributes = new ArrayCollection();
-        $this->status = self::STATUS_ACTIVE; // @todo change to inactive once email confirmation works
+        $this->status = self::STATUS_INACTIVE;
         $this->role = new Role();
-        $this->setPassword($this->generateRandomString(6)); // make sure password is not empty
         $this->is_admin = FALSE;
         $this->is_public = FALSE;
+        $this->setPassword($this->generateRandomString(6)); // make sure password is not empty
     }
 
     /**
@@ -204,7 +204,7 @@ class User implements \Zend_Acl_Role_Interface
      * @param string $allowed_chars
      * @return string
      */
-    final protected function generateRandomString($length = 12, $allowed_chars = 'abcdefghijklmnopqrstuvwxyzAMCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
+    final public function generateRandomString($length = 12, $allowed_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
     {
         $return = '';
         for ($i = 0; $i < $length; $i++) {

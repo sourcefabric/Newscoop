@@ -180,6 +180,20 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('bar', $this->service->generateUsername('', 'Bar'));
     }
 
+    public function testSetActive()
+    {
+        $user = new User();
+        $user->setUsername('foo');
+        $this->assertFalse($user->isActive());
+
+        $this->em->expects($this->once())
+            ->method('flush')
+            ->with();
+
+        $this->service->setActive($user);
+        $this->assertTrue($user->isActive());
+    }
+
     protected function expectGetRepository()
     {
         $this->em->expects($this->once())
