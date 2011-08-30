@@ -3231,7 +3231,7 @@ DROP TABLE IF EXISTS `user_attribute`;
 CREATE TABLE IF NOT EXISTS `user_attribute` (
   `user_id` int(11) unsigned NOT NULL,
   `attribute` varchar(255) NOT NULL,
-  `value` varchar(255) NOT NULL,
+  `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`user_id`,`attribute`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

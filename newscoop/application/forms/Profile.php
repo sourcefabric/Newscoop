@@ -89,7 +89,7 @@ class Application_Form_Profile extends Zend_Form
 
         $profile = $this->getSubForm('attributes');
         foreach ($profile as $field) {
-            $defaults['attributes'][$field->getName()] = $user->getAttribute($field->getName());
+            $defaults['attributes'][$field->getName()] = (string) $user->getAttribute($field->getName());
         }
 
         $this->setDefaults($defaults);

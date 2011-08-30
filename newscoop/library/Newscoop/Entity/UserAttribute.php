@@ -27,7 +27,7 @@ class UserAttribute
     private $attribute;
 
     /**
-     * @Column(type="string", length="255")
+     * @Column(type="string", length="255", nullable=True)
      * @var string
      */
     private $value;

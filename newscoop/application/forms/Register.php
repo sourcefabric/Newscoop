@@ -11,10 +11,9 @@ class Application_Form_Register extends Zend_Form
 {
     public function init()
     {
-        $this->setMethod('POST');
-
         $this->addElement('text', 'first_name', array(
             'label' => 'First Name',
+            'required' => true,
             'filters' => array(
                 'stringTrim',
             ),
@@ -22,6 +21,7 @@ class Application_Form_Register extends Zend_Form
 
         $this->addElement('text', 'last_name', array(
             'label' => 'Last Name',
+            'required' => true,
             'filters' => array(
                 'stringTrim',
             ),
@@ -38,7 +38,7 @@ class Application_Form_Register extends Zend_Form
             ),
         ));
 
-        $this->addElement('text', 'password', array(
+        $this->addElement('password', 'password', array(
             'label' => 'Password',
             'required' => true,
             'filters' => array(
