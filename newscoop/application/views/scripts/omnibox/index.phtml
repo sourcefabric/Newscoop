@@ -34,7 +34,6 @@
 		</div>
 		
 		<div id="ob_feedback_text_container" style="display: none;">
-			<input type="hidden" id="ob_feedback_publication_id" value="<?php echo($this->gimme->publication->identifier); ?>">
 			<label for="ob_feedback_subject" style="float: none;">subject</label>
 			<input type="text" id="ob_feedback_subject" value=""><br>
 			<label for="ob_feedback_text" style="float: none;">message</label>
@@ -45,7 +44,6 @@
 	<?php } else { ?>
 		not on article page<br>
 		<div id="ob_feedback_text_container">
-			<input type="hidden" id="ob_feedback_publication_id" value="<?php echo($this->gimme->publication->identifier); ?>">
 			<label for="ob_feedback_subject" style="float: none;">subject</label>
 			<input type="text" id="ob_feedback_subject" value=""><br>
 			<label for="ob_feedback_text" style="float: none;">message</label>
@@ -104,6 +102,7 @@ omnibox.initialize();
 <?php } ?>
 omnibox.setBaseUrl('<?php echo($GLOBALS['Campsite']['SUBDIR']); ?>');
 omnibox.setLanguage('<?php echo($this->gimme->language->number); ?>');
+omnibox.setPublication('<?php echo($this->gimme->publication->identifier); ?>');
 omnibox.setSection('<?php echo($this->gimme->section->id); ?>');
 omnibox.setArticle('<?php echo($this->gimme->article->number); ?>');
 </script>

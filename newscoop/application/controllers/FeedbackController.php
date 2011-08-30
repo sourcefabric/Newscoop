@@ -54,6 +54,7 @@ class FeedbackController extends Zend_Controller_Action
 			
 			$values = array(
 				'user' => $user,
+				'publication' => $parameters['f_publication'],
 				'section' => $parameters['f_section'],
 				'article' => $parameters['f_article'],
 				'subject' => $parameters['f_feedback_subject'],

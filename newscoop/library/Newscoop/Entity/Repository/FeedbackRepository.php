@@ -14,6 +14,7 @@ use Newscoop\Entity\Feedback;
 use Newscoop\Entity\User;
 use Newscoop\Entity\Article;
 use Newscoop\Entity\Section;
+use Newscoop\Entity\Publication;
 use Newscoop\Datatable\Source as DatatableSource;
 
 /**
@@ -44,15 +45,25 @@ class FeedbackRepository extends DatatableSource
         // get the entity manager
         $em = $this->getEntityManager();
         $user = $em->getReference('Newscoop\Entity\User', $values['user']);
-        $section = $em->getReference('Newscoop\Entity\Section', $values['section']);
-        $article = $em->getReference('Newscoop\Entity\Article', array(
-			'language' => $values['language'],
-			'number' => $values['article'],
-		));
-		
+        
         $entity->setUser($user);
-        $entity->setSection($section);
-        $entity->setArticle($article);
+        
+        if (!empty($values['publication'])) {
+			$publication = $em->getReference('Newscoop\Entity\Publication', $values['publication']);
+			$entity->setPublication($publication);
+		}
+		if (!empty($values['section'])) {
+			$section = $em->getReference('Newscoop\Entity\Section', $values['section']);
+			$entity->setSection($section);
+		}
+		if (!empty($values['language']) && !empty($values['article'])) {
+			$article = $em->getReference('Newscoop\Entity\Article', array(
+				'language' => $values['language'],
+				'number' => $values['article']
+			));
+			$entity->setArticle($article);
+		}
+        
         $entity->setSubject($values['subject']);
         $entity->setMessage($values['message']);
         $entity->setUrl($values['url']);

@@ -40,6 +40,13 @@ class Feedback
     private $section;
     
     /**
+     * @manyToOne(targetEntity="Newscoop\Entity\Publication")
+     * @joinColumn(name="publication_id", referencedColumnName="Id")
+     * @var Newscoop\Entity\Publication
+     */
+    private $publication;
+    
+    /**
      * @manyToOne(targetEntity="Newscoop\Entity\Article")
      * @JoinColumns({
      *     @JoinColumn(name="article_number", referencedColumnName="Number"),
@@ -271,6 +278,29 @@ class Feedback
     public function getSection()
     {
         return $this->section;
+    }
+    
+    /**
+     * Set publication
+     *
+     * @param Newscoop\Entity\Publication $p_publication
+     * @return Newscoop\Entity\Feedback
+     */
+    public function setPublication(Publication $p_publication)
+    {
+        $this->publication = $p_publication;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get publication
+     *
+     * @return Newscoop\Entity\Publication
+     */
+    public function getPublication()
+    {
+        return $this->publication;
     }
     
     /**

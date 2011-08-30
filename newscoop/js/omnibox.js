@@ -1,5 +1,6 @@
 var omnibox = {
 	language: false,
+	publication: false,
 	section: false,
 	article: false,
 	baseUrl: false,
@@ -39,6 +40,9 @@ var omnibox = {
 	},
 	setSection: function(section) {
 		this.section = section;
+	},
+	setPublication: function(publication) {
+		this.publication = publication;
 	},
 	setArticle: function(article) {
 		this.article = article;
@@ -165,7 +169,7 @@ var omnibox = {
 			f_language: this.language,
 			f_section: this.section,
 			f_article: this.article,
-			f_publication_id: document.getElementById('ob_feedback_publication_id').value
+			f_publication: this.publication
 		};
 		
 		$.post(this.baseUrl + '/feedback/save/?format=json', data, function(data) {

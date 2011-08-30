@@ -1949,6 +1949,7 @@ CREATE TABLE `feedback` (
    `id` int(11) not null auto_increment,
    `user_id` int(11),
    `section_id` int(11),
+   `publication_id` int(11),
    `article_language` int(11),
    `article_number` int(11),
    `subject` varchar(128),
