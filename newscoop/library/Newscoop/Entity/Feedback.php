@@ -241,7 +241,7 @@ class Feedback
     }
 
     /**
-     * Get subscriber
+     * Get user
      *
      * @return Newscoop\Entity\User
      */

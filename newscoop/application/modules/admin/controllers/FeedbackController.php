@@ -62,7 +62,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
         $table->setHandle(function($feedback) use ($view, &$index)
             {
                 /* var Newscoop\Entity\Comment\Commenter */
-                $user = $feedback->getSubscriber();
+                $user = $feedback->getUser();
                 $url = $feedback->getUrl();
                 $message = $feedback->getMessage();
                 $result = array(

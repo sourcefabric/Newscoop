@@ -107,7 +107,7 @@ class FeedbackRepository extends DatatableSource
         $qb = $this->createQueryBuilder('e');
         $qb->from('Newscoop\Entity\User', 's');
         $andx = $qb->expr()->andx();
-        $andx->add($qb->expr()->eq('e.subscriber', new Expr\Literal('s.id')));
+        $andx->add($qb->expr()->eq('e.user', new Expr\Literal('s.id')));
 
         if (!empty($params['sSearch'])) {
             $this->buildWhere($cols, $params['sSearch'], $qb, $andx);

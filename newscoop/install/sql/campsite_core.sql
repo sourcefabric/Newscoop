@@ -1949,7 +1949,8 @@ CREATE TABLE `feedback` (
    `id` int(11) not null auto_increment,
    `user_id` int(11),
    `section_id` int(11),
-   `article_id` int(11),
+   `article_language` int(11),
+   `article_number` int(11),
    `subject` varchar(128),
    `message` varchar(2048) not null,
    `status` tinyint(1) unsigned not null,
@@ -1957,7 +1958,7 @@ CREATE TABLE `feedback` (
    `time_created` datetime not null,
    `time_updated` datetime not null,
    PRIMARY KEY (`id`),
-   KEY `subscriber` (`subscriber_id`)
+   KEY `user` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
