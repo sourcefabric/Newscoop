@@ -15,6 +15,7 @@
                 <directory suffix=".php">../library/Zend</directory>
                 <directory suffix=".php">../library/fabpot-event-dispatcher-782a5ef</directory>
                 <directory suffix=".php">../library/fabpot-dependency-injection-07ff9ba</directory>
+                <directory suffix=".php">../library/smarty3</directory>
                 <directory suffix=".php">../library/Newscoop/Controller</directory>
                 <directory suffix=".php">../library/Newscoop/Entity/Proxy</directory>
                 <directory suffix=".php">../library/Newscoop/Entity/Output</directory>
