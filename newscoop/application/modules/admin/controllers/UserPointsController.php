@@ -25,10 +25,8 @@ class Admin_UserPointsController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $form = new Admin_Form_UserPoints();
-
-        $points_settings = $this->userPointsService->getPointOptions();
-        $form->setDefaults($points_settings);
+        $all_actions = $this->userPointsService->findAll();
+        $form = new Admin_Form_UserPoints($all_actions);
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {

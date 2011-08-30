@@ -91,6 +91,13 @@ class User implements \Zend_Acl_Role_Interface
     private $is_public;
 
     /**
+     * @Column(type="integer", name="Field5")
+     * @var int
+     * @todo add new db column (should have default 0)
+     */
+    private $points;
+
+    /**
      * @oneToOne(targetEntity="Newscoop\Entity\Acl\Role", cascade={"ALL"})
      * @var Newscoop\Entity\Acl\Role
      */
@@ -375,6 +382,32 @@ class User implements \Zend_Acl_Role_Interface
     public function isPublic()
     {
         return (bool) $this->is_public;
+    }
+
+    /**
+     * Get points
+     *
+     * @return int
+     */
+    public function getPoints()
+    {
+        return (int) $this->points;
+    }
+
+    /**
+     * Set points
+     *
+     * @param int $points
+     * @return Newscoop\Entity\User
+     */
+    public function setPoints($points)
+    {
+        if (!is_int($points)) {
+            throw new \InvalidArgumentException("Points must be an integer: '$points'");
+        }
+
+        $this->points = $points;
+        return $this;
     }
 
     /**
