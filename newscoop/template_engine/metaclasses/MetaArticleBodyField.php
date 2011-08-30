@@ -185,6 +185,7 @@ final class MetaArticleBodyField {
 
                     $content .= '
                         <script type="text/javascript">
+                        <!--
                         var stats_getHTTPObject' . $name_spec . ' = function () {
                             var xhr = false;
                             if (window.XMLHttpRequest) {
@@ -204,6 +205,11 @@ final class MetaArticleBodyField {
                         };
 
                         var stats_submit' . $name_spec . ' = function () {
+                            if (undefined !== window.statistics_request_sent_' . $name_spec . ') {
+                                return;
+                            }
+                            window.statistics_request_sent_' . $name_spec . ' = true;
+
                             var stats_request = stats_getHTTPObject' . $name_spec . '();
                             stats_request.onreadystatechange = function() {};
     
@@ -224,6 +230,7 @@ final class MetaArticleBodyField {
                             } catch (e) {}
                         };
                         stats_submit' . $name_spec . '();
+                        -->
                         </script>
                     ';
                 }
