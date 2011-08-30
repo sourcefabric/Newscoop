@@ -135,29 +135,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $router = $front->getRouter();
 
         $router->addRoute(
-            'article',
+            'content',
             new Zend_Controller_Router_Route(':language/:issue/:section/:articleNo/:articleUrl', array(
                 'module' => 'default',
                 'controller' => 'index',
                 'action' => 'index',
-            )));
-
-        $router->addRoute(
-            'section',
-            new Zend_Controller_Router_Route(':language/:issue/:section', array(
-                'module' => 'default',
-                'controller' => 'index',
-                'action' => 'index',
-            )));
-
-        $router->addRoute(
-            'issue',
-            new Zend_Controller_Router_Route(':language/:issue', array(
-                'module' => 'default',
-                'controller' => 'index',
-                'action' => 'index',
-                'language' => null,
+                'articleUrl' => null,
+                'articleNo' => null,
+                'section' => null,
                 'issue' => null,
+                'language' => 'en', // @todo get default language from config
+            ), array(
+                'language' => '[a-z]{2}',
             )));
 
         $router->addRoute(
@@ -166,30 +155,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'module' => 'default',
                 'controller' => 'user',
                 'action' => 'profile',
-            )));
-
-        $router->addRoute(
-            'register',
-            new Zend_Controller_Router_Route('register/:action', array(
-                'module' => 'default',
-                'controller' => 'register',
-                'action' => 'index',
-            )));
-
-        $router->addRoute(
-            'auth',
-            new Zend_Controller_Router_Route('auth/:action', array(
-                'module' => 'default',
-                'controller' => 'auth',
-                'action' => 'index',
-            )));
-
-        $router->addRoute(
-            'admin',
-            new Zend_Controller_Router_Route('admin/:controller/:action/*', array(
-                'module' => 'admin',
-                'controller' => 'index',
-                'action' => 'index',
             )));
     }
 }
