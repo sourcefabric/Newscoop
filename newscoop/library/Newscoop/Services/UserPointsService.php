@@ -27,18 +27,31 @@ class UserPointsService
     }
 
     /**
-     * Find all userpoints entries in form array("action" => points)
+     * Find point value for action
      *
-     * @return array
+     * @param string $action
+     *
+     * @return int
      */
-    public function getPointOptions()
+    public function getPointValueForAction($action)
     {
-        $options = array();
-        foreach ($this->getRepository()->findAll() as $userPoint) {
-            $options[$userPoint->getAction()] = $userPoint->getPoints();
-        }
+        $user_points = $this->find($action);
 
-        return $options;
+        return $user_points->getPoints();
+    }
+
+    /**
+     * Find UserPoints entity object for this action.
+     *
+     * @param string $action
+     *
+     * @return Newscoop\Entity\UserPoints
+     */
+    public function find($action)
+    {
+        return $this->getRepository()->findOneBy(array(
+            'action' => $action,
+        ));
     }
 
     /**
@@ -50,6 +63,28 @@ class UserPointsService
     {
         return $this->getRepository()
             ->findAll();
+    }
+
+    /**
+     * Receives notifications of points events.
+     *
+     * @param sfEvent $event
+     * @return void
+     */
+    public function update(\sfEvent $event)
+    {
+        $params = $event->getParameters();
+        list($resource, $action) = explode('.', $event->getName());
+
+        $user = array_key_exists('user', $params) ? $params['user'] : null;
+        unset($params['user']);
+
+        $points = $user->getPoints();
+        $points_action = $this->getPointValueForAction($action);
+
+        $user->setPoints($points+$points_action);
+
+        $this->em->flush();
     }
 
     /**
