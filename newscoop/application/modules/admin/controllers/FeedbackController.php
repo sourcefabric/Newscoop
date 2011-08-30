@@ -61,10 +61,13 @@ class Admin_FeedbackController extends Zend_Controller_Action
         $index = 1;
         $table->setHandle(function($feedback) use ($view, &$index)
             {
-                /* var Newscoop\Entity\Comment\Commenter */
                 $user = $feedback->getUser();
                 $url = $feedback->getUrl();
                 $message = $feedback->getMessage();
+                $publication = $feedback->getPublication();
+                $section = $feedback->getSection();
+                $article = $feedback->getArticle();
+                
                 $result = array(
                     'index' => $index++,
                     'user' => array(
@@ -88,14 +91,14 @@ class Admin_FeedbackController extends Zend_Controller_Action
                                 'format' => 'json'
                             ))
                         ),
-                    ),
-                    'url' => $url,
-                    /*
-                    array(
-                       'url' => $url,
-                       'link' => array('source' => $view->baseUrl("admin/articles/edit.php?") . $view->linkArticle($thread)),
-                       'section' => array('name' => ($section) ? $section->getName() : null))
-                    ); */
+                        'url' => $url,
+                        'publication' => $publication->getName(),
+                        'section' => ($section) ? $section->getName() : getGS('None'),
+                        'article' => array(
+							'name' => ($article) ? $article->getName() : getGS('None'),
+							'url' => ($article) ? $view->baseUrl("admin/articles/get.php?") . $view->linkArticle($article) : $view->baseUrl("admin/feedback")
+						)
+                    )
                 );
                 return($result);
             });

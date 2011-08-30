@@ -120,7 +120,12 @@
         </td>
         <td>
           <div class="commentArticleHolder">
-            <p class="commentBody">{{url}}</p>
+            <p>
+				<a href="{{ message.article.url }}" class="articleLink">{{ message.article.name }}</a>
+				<br>
+				<span>{{ message.publication }}; <b><?php putGS('Section'); ?></b> {{ message.section }}</span>
+            </p>
+            <p><span>URL: <a href="{{ message.url }}">{{message.url}}</a></span></p>
           </div>
         </td>
       </tr>
