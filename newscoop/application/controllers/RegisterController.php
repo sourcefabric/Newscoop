@@ -45,6 +45,7 @@ class RegisterController extends Zend_Controller_Action
                 if ($request->has('username') && $formConfirm->isValid($request->getPost())) {
                     $values = $formConfirm->getValues();
                     $values['password'] = empty($values['password_change']) ? $this->session->password : $values['password_change'];
+                    $values['is_public'] = true; // public by default
                     $user = $this->service->create($values);
                     $dispatcher = $this->_helper->service('dispatcher');
                     $dispatcher->notify(new sfEvent($this, 'user.register', array(
