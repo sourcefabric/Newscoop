@@ -112,6 +112,10 @@ class UserService
      */
     public function update(User $user, array $values)
     {
+        if (empty($values['image'])) {
+            unset($values['image']);
+        }
+
         $this->getRepository()
             ->save($user, $values);
         $this->em->flush();

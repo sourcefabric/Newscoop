@@ -142,6 +142,18 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
         return parent::isPublic();
     }
 
+    public function getPoints()
+    {
+        $this->__load();
+        return parent::getPoints();
+    }
+
+    public function setPoints($points)
+    {
+        $this->__load();
+        return parent::setPoints($points);
+    }
+
     public function getGroups()
     {
         $this->__load();
@@ -172,10 +184,34 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
         return parent::getAttribute($name);
     }
 
+    public function setImage($image)
+    {
+        $this->__load();
+        return parent::setImage($image);
+    }
+
+    public function getImage()
+    {
+        $this->__load();
+        return parent::getImage();
+    }
+
     public function hasPermission($permission)
     {
         $this->__load();
         return parent::hasPermission($permission);
+    }
+
+    public function getRealName()
+    {
+        $this->__load();
+        return parent::getRealName();
+    }
+
+    public function getUserId()
+    {
+        $this->__load();
+        return parent::getUserId();
     }
 
     public function __toString()
@@ -187,7 +223,7 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'username', 'password', 'first_name', 'last_name', 'email', 'created', 'status', 'is_admin', 'is_public', 'role', 'groups', 'attributes');
+        return array('__isInitialized__', 'id', 'username', 'password', 'first_name', 'last_name', 'email', 'created', 'status', 'is_admin', 'is_public', 'points', 'image', 'role', 'groups', 'attributes');
     }
 
     public function __clone()

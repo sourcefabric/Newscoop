@@ -48,6 +48,11 @@ final class MetaCommunityFeed extends MetaEntity
                 printf('%s subscribed to TagesWoche.', $this->user);
                 break;
 
+            case 'topic-follow':
+                $params = $this->feed->getParams();
+                printf("%s started to follow topic '%s'.", $this->user, $params['topic_name']);
+                break;
+
             default:
                 printf('%s %s', $this->user, $this->type);
         }

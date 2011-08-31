@@ -87,7 +87,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('community_feed', 'Newscoop\Services\CommunityFeedService')
             ->addArgument(new sfServiceReference('em'));
 
-        $container->register('dispatcher', 'sfEventDispatcher')
+        $container->register('dispatcher', 'Newscoop\Services\EventDispatcherService')
             ->setConfigurator(function($service) use ($container) {
                 foreach ($container->getParameter('listener') as $listener) {
                     $listenerService = $container->getService($listener);
@@ -97,6 +97,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                     }
                 }
             });
+
+        $container->register('user.topic', 'Newscoop\Services\UserTopicService')
+            ->addArgument(new sfServiceReference('em'))
+            ->addArgument(new sfServiceReference('dispatcher'));
+
 
         $container->register('auth.adapter', 'Newscoop\Services\Auth\DoctrineAuthService')
             ->addArgument(new sfServiceReference('em'));

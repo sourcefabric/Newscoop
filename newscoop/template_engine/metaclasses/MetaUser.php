@@ -175,10 +175,34 @@ final class MetaUser extends MetaEntity
      */
     public function image($width = 80, $height = 80)
     {
+        if (!$this->user->getImage()) {
+            return '';
+        }
+
         return $GLOBALS['controller']->view->url(array(
             'image' => $this->user->getImage(),
             'width' => $width,
             'height' => $height,
         ), 'user-image');
+    }
+
+    /**
+     * Get topics
+     *
+     * @return array
+     */
+    public function topics()
+    {
+        if (!$this->user->getId()) {
+            return array();
+        }
+
+        $service = $GLOBALS['controller']->getHelper('service')->getService('user.topic');
+        $topics = array();
+        foreach ($service->getTopics($this->user) as $topic) {
+            $topics[$topic->getTopicId()] = $topic->getName();
+        }
+
+        return $this->topics = $topics;
     }
 }
