@@ -1057,15 +1057,6 @@ CREATE TABLE `comment_acceptance` (
 --
 
 DROP TABLE IF EXISTS `liveuser_grouprights`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_grouprights` (
-  `group_id` int(11) NOT NULL DEFAULT '0',
-  `right_id` int(11) NOT NULL DEFAULT '0',
-  `right_level` int(11) NOT NULL DEFAULT '3',
-  UNIQUE KEY `grouprights_id_i_idx` (`group_id`,`right_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `liveuser_groups`
@@ -1089,13 +1080,6 @@ CREATE TABLE `liveuser_groups` (
 --
 
 DROP TABLE IF EXISTS `liveuser_groups_group_id_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_groups_group_id_seq` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `liveuser_groupusers`
@@ -1116,30 +1100,12 @@ CREATE TABLE `liveuser_groupusers` (
 --
 
 DROP TABLE IF EXISTS `liveuser_perm_users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_perm_users` (
-  `perm_user_id` int(11) NOT NULL DEFAULT '0',
-  `auth_user_id` varchar(32) NOT NULL DEFAULT '',
-  `auth_container_name` varchar(32) NOT NULL DEFAULT '',
-  `perm_type` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`perm_user_id`),
-  UNIQUE KEY `perm_users_auth_id_i_idx` (`auth_user_id`,`auth_container_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `liveuser_perm_users_perm_user_id_seq`
 --
 
 DROP TABLE IF EXISTS `liveuser_perm_users_perm_user_id_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_perm_users_perm_user_id_seq` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `liveuser_rights`
@@ -1163,13 +1129,6 @@ CREATE TABLE `liveuser_rights` (
 --
 
 DROP TABLE IF EXISTS `liveuser_rights_right_id_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_rights_right_id_seq` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=240 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `liveuser_users`
@@ -1224,6 +1183,7 @@ CREATE TABLE `liveuser_users` (
   `isActive` tinyint(1) DEFAULT '1',
   `password_reset_token` varchar(85) DEFAULT NULL,
   `role_id` int(10) DEFAULT NULL,
+  `image` VARCHAR(255) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `UName` (`UName`)
 ) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
@@ -1234,13 +1194,6 @@ CREATE TABLE `liveuser_users` (
 --
 
 DROP TABLE IF EXISTS `liveuser_users_auth_user_id_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_users_auth_user_id_seq` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=27 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `output`
