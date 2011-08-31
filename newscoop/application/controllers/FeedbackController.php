@@ -9,10 +9,11 @@
  * Feedback controller
  */
  
-use Newscoop\Entity\Feedback, Newscoop\Entity\User;
+use Newscoop\Entity\Feedback;
 
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
- 
+require_once($GLOBALS['g_campsiteDir'].'/include/get_ip.php');
+
 class FeedbackController extends Zend_Controller_Action
 {
     public function init()
@@ -33,7 +34,16 @@ class FeedbackController extends Zend_Controller_Action
 		
 		$publication = new Publication($parameters['f_publication_id']);
 		
-		if (!$auth->getIdentity()) {
+		if ($auth->getIdentity()) {
+			$acceptanceRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Comment\Acceptance');
+			$user = new User($auth->getIdentity());
+			
+			$userIp = getIp();
+			if ($acceptanceRepository->checkParamsBanned($user->m_data['Name'], $user->m_data['EMail'], $userIp, $parameters['f_publication'])) {
+				$errors[] = getGS('You have been banned from writing feedbacks.');
+			}
+		}
+		else {
 			$errors[] = getGS('You are not logged in.');
 		}
 		
@@ -50,10 +60,9 @@ class FeedbackController extends Zend_Controller_Action
 		if (empty($errors)) {
 			$feedbackRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Feedback');
 			$feedback = new Feedback();
-			$user = $auth->getIdentity();
 			
 			$values = array(
-				'user' => $user,
+				'user' => $auth->getIdentity(),
 				'publication' => $parameters['f_publication'],
 				'section' => $parameters['f_section'],
 				'article' => $parameters['f_article'],

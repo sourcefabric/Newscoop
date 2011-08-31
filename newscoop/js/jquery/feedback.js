@@ -82,6 +82,11 @@ var datatableCallback = {
             }
         });
         
+        $('.table-checkbox').click(function(){
+			if(!$(this).is(':checked')) {
+				$('.toggle-checkbox').removeAttr('checked');
+			}
+		});
     }
 };
 $(function () {
