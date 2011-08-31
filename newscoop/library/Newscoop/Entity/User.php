@@ -126,9 +126,11 @@ class User implements \Zend_Acl_Role_Interface
     private $attributes;
 
     /**
+     * @param string $username
      */
-    public function __construct()
+    public function __construct($username = null)
     {
+        $this->username = $username;
         $this->created = new \DateTime();
         $this->groups = new ArrayCollection();
         $this->attributes = new ArrayCollection();
@@ -524,6 +526,27 @@ class User implements \Zend_Acl_Role_Interface
         } catch (\Exception $e) {
             return FALSE;
         }
+    }
+
+    /**
+     * Get real name
+     *
+     * @return string
+     */
+    public function getRealName()
+    {
+        return trim($this->first_name . ' ' . $this->last_name);
+    }
+
+    /**
+     * Get user id
+     * proxy to getId
+     *
+     * @return int
+     */
+    public function getUserId()
+    {
+        return $this->getId();
     }
 
     /**
