@@ -25,6 +25,7 @@ class UserRepository extends EntityRepository
         'status' => 'setStatus',
         'is_admin' => 'setAdmin',
         'is_public' => 'setPublic',
+        'image' => 'setImage',
     );
 
     /**

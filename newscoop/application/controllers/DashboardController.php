@@ -42,7 +42,20 @@ class DashboardController extends Zend_Controller_Action
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
-            $this->service->update($this->user, $form->getValues());
+            $values = $form->getValues();
+
+            $imageInfo = array_pop($form->image->getFileInfo());
+            if (!in_array($imageInfo['type'], array('image/jpeg'))) {
+                $this->image->addError("Unsupported image type '$imageInfo[type]'");
+            } else {
+                $newname = sha1_file($imageInfo['tmp_name']) . '.' . array_pop(explode('.', $imageInfo['name']));
+                if (!file_exists(APPLICATION_PATH . "/../images/$newname")) {
+                    rename($imageInfo['tmp_name'], APPLICATION_PATH . "/../images/$newname");
+                }
+                $values['image'] = $newname;
+            }
+
+            $this->service->update($this->user, $values);
             $this->_helper->redirector('index');
         }
 

@@ -98,6 +98,12 @@ class User implements \Zend_Acl_Role_Interface
     private $points;
 
     /**
+     * @Column(type="string", length="255", nullable=TRUE)
+     * @var string
+     */
+    private $image;
+
+    /**
      * @oneToOne(targetEntity="Newscoop\Entity\Acl\Role", cascade={"ALL"})
      * @var Newscoop\Entity\Acl\Role
      */
@@ -128,9 +134,10 @@ class User implements \Zend_Acl_Role_Interface
         $this->attributes = new ArrayCollection();
         $this->status = self::STATUS_INACTIVE;
         $this->role = new Role();
-        $this->is_admin = FALSE;
-        $this->is_public = FALSE;
+        $this->is_admin = false;
+        $this->is_public = false;
         $this->setPassword($this->generateRandomString(6)); // make sure password is not empty
+        $this->points = 0;
     }
 
     /**
@@ -474,6 +481,28 @@ class User implements \Zend_Acl_Role_Interface
         }
 
         return null;
+    }
+
+    /**
+     * Set image
+     *
+     * @param string $image
+     * @return Newscoop\Entity\User
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 
     /**

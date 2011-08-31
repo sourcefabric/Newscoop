@@ -165,4 +165,20 @@ final class MetaUser extends MetaEntity
         $repository = $controller->getHelper('user')->getRepository('Newscoop\user\Comment');
         return (int) $repositoryAcceptance->checkParamsBanned($this->name, $this->email, $userIp, $publication_id);
     }
+
+    /**
+     * Get image src
+     *
+     * @param int $width
+     * @param int $height
+     * @return string
+     */
+    public function image($width = 80, $height = 80)
+    {
+        return $GLOBALS['controller']->view->url(array(
+            'image' => $this->user->getImage(),
+            'width' => $width,
+            'height' => $height,
+        ), 'user-image');
+    }
 }

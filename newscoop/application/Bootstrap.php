@@ -168,5 +168,17 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'controller' => 'user',
                 'action' => 'profile',
             )));
+
+        $router->addRoute(
+            'user-image',
+            new Zend_Controller_Router_Route_Regex('media/user/cache/(\d+)_(\d+)_(.+)', array(
+                'module' => 'default',
+                'controller' => 'image',
+                'action' => 'user',
+            ), array(
+                1 => 'width',
+                2 => 'height',
+                3 => 'image',
+            ), 'media/user/cache/%d_%d_%s'));
     }
 }

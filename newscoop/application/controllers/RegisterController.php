@@ -64,6 +64,10 @@ class RegisterController extends Zend_Controller_Action
                             case 'email_conflict':
                                 $formConfirm->email->addError('E-mail is used. Please use another one.');
                                 break;
+
+                            default:
+                                var_dump($e);
+                                exit;
                         }
                     }
                 } elseif (!$request->has('username')) { // init confirm form
