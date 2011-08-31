@@ -170,4 +170,48 @@ class Admin_FeedbackController extends Zend_Controller_Action
         $this->view->status = 200;
         $this->view->message = 'succcesful';
     }
+    
+    /**
+     * Reply action
+     */
+    public function replyAction()
+    {
+		$this->getHelper('contextSwitch')->addActionContext('reply', 'json')->initContext();
+		
+		$auth = Zend_Auth::getInstance();
+		$user = new User($auth->getIdentity());
+		$fromEmail = $user->getEmail();
+		
+		$feedbackId = $this->getRequest()->getParam('parent');
+		$subject = $this->getRequest()->getParam('subject');
+		$message = $this->getRequest()->getParam('message');
+		
+		$feedback = $this->feedbackRepository->find($feedbackId);
+		$user = $feedback->getUser();
+		$toEmail = $user->getEmail();
+		
+		/*
+		$configMail = array( 'auth' => 'login',
+							 'username' => 'user@gmail.com',
+							 'password' => 'password',
+							 'ssl' => 'ssl',
+							 'port' => 465
+		);
+		$mailTransport = new Zend_Mail_Transport_Smtp('smtp.gmail.com',$configMail);
+		*/
+		$mail = new Zend_Mail();
+		$mail->setSubject($subject);
+		$mail->setBodyText($message);
+		$mail->setFrom($fromEmail);
+		$mail->addTo($toEmail);
+		try {
+			$mail->send();
+			$this->view->status = 200;
+			$this->view->message = 'succcesful';
+		}
+		catch (Exception $e) {
+			$this->view->status = 200;
+			$this->view->message = 'succcesful';
+		}
+	}
 }
