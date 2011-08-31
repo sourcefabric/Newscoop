@@ -63,14 +63,53 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         }
 
         $art_fields = array(
-            'event_id' => array('type' => 'numeric', 'params' => array('precision' => 0)),
-            'event_name' => array('type' => 'text', 'params' => array()),
+            // ids - auxiliary, hidden
+            'provider_id' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => true), // source of the news file
+            'event_id' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => true), // an event at an day from a provider should have unique id
+            'tour_id' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => true), // for grouping of repeated events, e.g. an exhibition available for more days
+            'location_id' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => true), // should be unique per place/provider
+            // main event info - free form
+            'headline' => array('type' => 'text', 'params' => array(), 'hidden' => false), // even/tour_name (or movie name)
+            'organizer' => array('type' => 'text', 'params' => array(), 'hidden' => false), // either tour_organizer (if filled) or location_name (or cinema name)
+            // address - free form
+            'country' => array('type' => 'text', 'params' => array(), 'hidden' => false), // ch (i.e. Swiss country code)
+            'zipcode' => array('type' => 'text', 'params' => array(), 'hidden' => false),
+            'town' => array('type' => 'text', 'params' => array(), 'hidden' => false),
+            'street' => array('type' => 'text', 'params' => array(), 'hidden' => false), // street address, including house number
+            // date/time - fixed form
+            'date' => array('type' => 'date', 'params' => array(), 'hidden' => false), // text, 2010-08-31
+            'date_year' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 2010
+            'date_month' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 8
+            'date_day' => array('type' => 'text', 'numeric' => array('precision' => 0), 'hidden' => false), // number, 31
+            'time' => array('type' => 'text', 'params' => array(), 'hidden' => false), // event_time, like 10:30 (or a list for movie screenings at a day)
+            // date/time - free form
+            'date_time_text' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 1), 'hidden' => false), // comprises other textual date/time information, if available
+            // contact - free form
+            'web' => array('type' => 'text', 'params' => array(), 'hidden' => false), // location_url if filled, or event/tour_link if some there
+            'email' => array('type' => 'text', 'params' => array(), 'hidden' => false),
+            'phone' => array('type' => 'text', 'params' => array(), 'hidden' => false),
+            // text parts - free form
+            'description' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 1), 'hidden' => false), // a (longer) text, if some available
+            'other' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 1), 'hidden' => false), // other texts, web links to audio/video, ...
+            // other details - free form
+            'genre' => array('type' => 'text', 'params' => array(), 'hidden' => false), // Sonderausstellung/Dauerausstellung; Jazz, Festival, ... (or movie genre)
+            'languages' => array('type' => 'text', 'params' => array(), 'hidden' => false), // usually empty
+            'prices' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 1), 'hidden' => false), // some textual or numerical info, if available
+            'minimal_age' => array('type' => 'text', 'params' => array(), 'hidden' => false), // textual or numerical info, if any, but usually empty
+            // other details - fixed form
+            'rated' => array('type' => 'switch', 'params' => array(), 'hidden' => false), // if of some restricted (hot/explicit) kind
+            // category available as article topic
+            // images (probably) as article images
+            // geolocation (probably) as map POIs
         );
 
         foreach ($art_fields as $one_field_name => $one_field_params) {
             $art_type_filed_obj = new ArticleTypeField($art_type_name, $one_field_name);
             if (!$art_type_filed_obj->exists()) {
                 $art_type_filed_obj->create($one_field_params['type'], $one_field_params['params']);
+            }
+            if (array_key_exists('hidden', $one_field_params) && $one_field_params['hidden']) {
+                $art_type_filed_obj->setStatus('hide');
             }
         }
     }

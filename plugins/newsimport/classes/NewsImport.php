@@ -62,6 +62,7 @@ class NewsImport extends DatabaseObject
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'Topic.php');
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'TopicName.php');
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'GeoMap.php');
+        require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'Article.php');
 
         $conf_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'include';
         $class_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'classes';
@@ -379,7 +380,7 @@ class NewsImport extends DatabaseObject
         if (empty($p_events)) {
             return;
         }
-    
+
         $art_type = 'event_type';
         $art_publication = $p_source['publication_id'];
         $art_issue = $p_source['issue_number'];
@@ -389,45 +390,93 @@ class NewsImport extends DatabaseObject
 //var_dump($p_events);
 
         foreach ($p_events as $one_event) {
-            $art_name = $one_event['event_name'] . ' ' . mt_rand();
+            //$ev_headline = $one_event['headline'];
+            //$ev_event_id = $one_event['event_id'];
 
-echo "\n$art_type, $art_name, $art_publication, $art_issue, $art_section\n";
+//var_dump($one_event);
+//return;
+
+/*
+
+First, try to load event (possibly created by former imports), and if there, remove it - will be put in with the current, possible more correct info.
+*/
+
+            //$art_name = $one_event['headline'] . ' (' . mt_rand() . ')';
+            $art_name = $one_event['headline'] . ' - ' . $one_event['date'] . ' (' . $one_event['event_id'] . ')';
+
+//echo "\n$art_type, $art_name, $art_publication, $art_issue, $art_section\n";
 
             $article = new Article($art_lang);
             $article->create($art_type, $art_name, $art_publication, $art_issue, $art_section);
+            $art_number = $article->getArticleNumber();
 
-echo  $article->getArticleNumber() . ' - ' . $article->getLanguageId() . "\n" . "\n";
+//echo  $article->getArticleNumber() . ' - ' . $article->getLanguageId() . "\n" . "\n";
 
-            $article_data = new ArticleData($art_type, $article->getArticleNumber(), $article->getLanguageId());
-            $article_data->setProperty('event_id', $one_event['event_id']);
-            $article_data->setProperty('event_name', $art_name);
+            //$article_data = new ArticleData($art_type, $art_number, $article->getLanguageId());
+            $article_data = $article->getArticleData();
 
-/*
-            $article_data->setProperty('provider_id', $one_event['provider_id']);
-            $article_data->setProperty('event_id', $one_event['event_id']);
-            $article_data->setProperty('turnus_id', $one_event['turnus_id']);
-            $article_data->setProperty('location_id', $one_event['location_id']);
-            $article_data->setProperty('location_name', $one_event['location_name']);
-*/
+            $article_data->setProperty('Fprovider_id', $one_event['provider_id']);
+            $article_data->setProperty('Fevent_id', $one_event['event_id']);
+            $article_data->setProperty('Ftour_id', $one_event['tour_id']);
+            $article_data->setProperty('Flocation_id', $one_event['location_id']);
+
+            $article_data->setProperty('Fheadline', $one_event['headline']);
+            $article_data->setProperty('Forganizer', $one_event['organizer']);
+
+            $article_data->setProperty('Fcountry', $one_event['country']);
+            $article_data->setProperty('Fzipcode', $one_event['zipcode']);
+            $article_data->setProperty('Ftown', $one_event['town']);
+            $article_data->setProperty('Fstreet', $one_event['street']);
+
+            $article_data->setProperty('Fdate', $one_event['date']);
+            $article_data->setProperty('Fdate_year', $one_event['date_year']);
+            $article_data->setProperty('Fdate_month', $one_event['date_month']);
+            $article_data->setProperty('Fdate_day', $one_event['date_day']);
+            $article_data->setProperty('Ftime', $one_event['time']);
+
+            $article_data->setProperty('Fdate_time_text', $one_event['date_time_text']);
+
+            $article_data->setProperty('Fweb', $one_event['web']);
+            $article_data->setProperty('Femail', $one_event['email']);
+            $article_data->setProperty('Fphone', $one_event['phone']);
+
+            $article_data->setProperty('Fdescription', $one_event['description']);
+            $ev_other_info = implode("\n", $one_event['other']);
+            $article_data->setProperty('Fother', $ev_other_info);
+
+            $article_data->setProperty('Fgenre', $one_event['genre']);
+            $article_data->setProperty('Flanguages', $one_event['languages']);
+            $article_data->setProperty('Fprices', $one_event['prices']);
+            $article_data->setProperty('Fminimal_age', $one_event['minimal_age']);
+
+            $article_data->setProperty('Frated', ($one_event['rated'] ? 1 : 0));
     
-            //$article_data->setProperty('event_name', $one_event['event_name']);
-    /*
-            $article_data->setProperty('location_country', $one_event['location_country']);
-            $article_data->setProperty('location_town', $one_event['location_town']);
-            $article_data->setProperty('location_zip', $one_event['location_zip']);
-            $article_data->setProperty('location_street', $one_event['location_street']);
-            $article_data->setProperty('event_date', $one_event['event_date']);
-            $article_data->setProperty('event_time', $one_event['event_time']);
-            $article_data->setProperty('event_open', $one_event['event_open']);
-            $article_data->setProperty('event_texts', $one_event['event_texts']);
-            $article_data->setProperty('event_web', $one_event['event_web']);
-            $article_data->setProperty('event_email', $one_event['event_email']);
-            $article_data->setProperty('event_phone', $one_event['event_phone']);
-            $article_data->setProperty('event_images', $one_event['event_images']);
-            //$article_data->setProperty('', $one_event['']);
-            //$article_data->setProperty('', $one_event['']);
-    */
             // set topics!
+
+            $art_topics = null;
+            if (array_key_exists('topics', $one_event)) {
+                $art_topics = $one_event['topics'];
+            }
+
+            if (is_array($art_topics)) {
+                foreach ($art_topics as $topic_info) {
+                    $topic_id = null;
+                    if (is_array($topic_info) && array_key_exists('id', $topic_info)) {
+                        $topic_id = $topic_info['id'];
+                    }
+                    if (empty($topic_id)) {
+                        continue;
+                    }
+                    ArticleTopic::AddTopicToArticle($topic_id, $art_number);
+                }
+            }
+
+            $article->setIsPublic(true);
+            $article->setCommentsEnabled(false);
+            //$article->setIsIndexed(true);
+            $article->setWorkflowStatus('Y');
+            $article->setPublishDate($one_event['date']);
+
         }
         ;
     }
@@ -465,6 +514,30 @@ echo  $article->getArticleNumber() . ' - ' . $article->getLanguageId() . "\n" . 
 
         echo "\n<pre>\n";
         //echo "aaaaaa xx zz";
+
+//            new ComparisonOperation('event_type.event_id', new Operator('is', 'sql'), '529313'),
+//            new ComparisonOperation('event_type.event_id', new Operator('greater', 'string'), '0'),
+
+        $p_count = true;
+        $test_list = Article::GetList(array(
+            new ComparisonOperation('idlanguage', new Operator('is', 'sql'), 1),
+            new ComparisonOperation('IdPublication', new Operator('is', 'sql'), 2),
+            new ComparisonOperation('NrIssue', new Operator('is', 'sql'), 13),
+            new ComparisonOperation('NrSection', new Operator('is', 'sql'), 30),
+            //new ComparisonOperation('', new Operator('is', 'sql'), 1),
+            new ComparisonOperation('event_type.event_id', new Operator('is', 'sql'), 529313),
+        ), null, null, 0, $p_count, true);
+
+        if (is_array($test_list)) {
+            foreach ($test_list as $one_art) {
+                $one_art_data = $one_art->getArticleData();
+                var_dump($one_art);
+                var_dump($one_art_data);
+            }
+        }
+
+        //var_dump($test_list);
+        return;
 
         //var_dump($p_eventSources);
         //var_dump($p_newsFeed);
