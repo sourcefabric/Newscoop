@@ -151,7 +151,7 @@ class Section extends DatabaseObject {
 		if (!$dstSectionObj->exists()) {
 			$dstSectionObj->create($sectionName, $shortName, $dstSectionCols);
 		}
-		
+
 		// Copy all the articles.
 		if ($p_copyArticles) {
 			$srcSectionArticles = Article::GetArticles($this->m_data['IdPublication'],
@@ -216,7 +216,7 @@ class Section extends DatabaseObject {
 		}
 		return $numArticlesDeleted;
 	} // fn delete
-	
+
 	/* --------------------------------------------------------------- */
 
 	/** @var Newscoop\Services\Resource\ResourceId */
@@ -267,7 +267,7 @@ class Section extends DatabaseObject {
         }
         return $this->sectionService;
     }
-	
+
 	/**
 	 * Return the section ID.
 	 * @return int
@@ -276,7 +276,7 @@ class Section extends DatabaseObject {
 	{
 		return $this->m_data['id'];
 	} // fn getId
-	
+
 	/**
 	 * @return int
 	 */
@@ -387,6 +387,7 @@ class Section extends DatabaseObject {
 
 
 	/**
+	 * @deprecated
 	 * @return int
 	 */
 	public function getArticleTemplateId()
@@ -422,7 +423,7 @@ class Section extends DatabaseObject {
 	{
 		return $this->setProperty('SectionTplId', $p_value);
 	} // fn setSectionTemplateId
-    
+
 	/**
 	 * Return an array of sections in the given issue.
 	 * @param int $p_publicationId

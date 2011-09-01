@@ -1,4 +1,7 @@
 <?php
+use Newscoop\Service\IOutputService;
+use Newscoop\Service\IPublicationService;
+use Newscoop\Service\IIssueService;
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Alias.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ShortURL.php');
@@ -22,17 +25,54 @@ $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f
 $articleObj = new Article($f_language_selected, $f_article_number);
 
 $errorStr = "";
+
 if (!$articleObj->exists()) {
 	$errorStr = getGS('There was an error reading request parameters.');
-} else {
-	$templateId = $sectionObj->getArticleTemplateId();
-	if ($templateId == 0) {
-		$templateId = $issueObj->getArticleTemplateId();
+	camp_html_display_error($errorStr, null, true);
+}
+
+/**
+ * @author Mihai Balaceanu <mihai.balaceanu@sourcefabric.org>
+ * New theme management
+ */
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\IThemeManagementService;
+use Newscoop\Service\IOutputSettingIssueService;
+
+$resourceId = new ResourceId('Publication/Edit');
+$themeManagementService = $resourceId->getService(IThemeManagementService::NAME_1);
+/* @var $themeManagementService \Newscoop\Service\Implementation\ThemeManagementServiceLocal */
+$outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
+/* @var $outputSettingIssueService \Newscoop\Service\Implementation\OutputSettingIssueServiceDoctrine */
+$issueService = $resourceId->getService(IIssueService::NAME);
+/* @var $issueService \Newscoop\Service\Implementation\IssueServiceDoctrine */
+$publicationService = $resourceId->getService(IPublicationService::NAME);
+/* @var $publicationService \Newscoop\Service\Implementation\PublicationServiceDoctrine */
+$outputIssueSettings = current($outputSettingIssueService->findByIssue($issueObj->getIssueId()));
+/* @var $outputIssueSettings \Newscoop\Entity\Output\OutputSettingsIssue */
+
+// if article page is not set secifically for issue get for publication
+if (is_null(( $articlePage = $outputIssueSettings->getArticlePage())))
+{
+    $publicationTheme = current($themeManagementService->getThemes($f_publication_id));
+    if (!$publicationTheme) {
+		$errorStr = getGS('This article cannot be previewed. Please make sure it has the publication has a theme assigned.');
+		camp_html_display_error($errorStr, null, true);
 	}
-	//getGS("This article cannot be previewed. Please make sure it has the front page template selected.");
-	if ($templateId == 0) {
-		$errorStr = getGS('This article cannot be previewed. Please make sure it has the article template selected.');
+	else
+	{
+    	/* @var $publicationTheme \Newscoop\Entity\Theme */
+        $publicationOutputSettings = current($themeManagementService->getOutputSettings($publicationTheme));
+    	/* @var $publicationOutputSettings \Newscoop\Entity\OutputSettings */
+        $articlePage = $publicationOutputSettings->getArticlePage();
+    	/* @var $articlePage \Newscoop\Entity\Resource */
 	}
+}
+$templateId = $articlePage->getPath();
+
+if (!$templateId) {
+	$errorStr = getGS('This article cannot be previewed. Please make sure it has the article template selected.');
+	camp_html_display_error($errorStr, null, true);
 }
 
 $templateObj = new Template($templateId);
@@ -64,7 +104,7 @@ $selectedLanguage = (int)CampRequest::GetVar('f_language_selected');
 $url .= "&previewLang=$selectedLanguage";
 $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['site']['title']) : putGS("Newscoop") . $Campsite['VERSION'];
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en" xml:lang="en">
 <head>
   <title><?php p($siteTitle); ?></title>
