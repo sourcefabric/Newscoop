@@ -211,7 +211,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
 		}
 		catch (Exception $e) {
 			$this->view->status = 200;
-			$this->view->message = 'succcesful';
+			$this->view->message = 'succcesful?';
 		}
 	}
 }

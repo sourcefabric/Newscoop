@@ -163,14 +163,15 @@ class CommentRepository extends DatatableSource
             // set the thread level the thread level of the parent plus one the current level
             $threadLevel = $parent->getThreadLevel() + 1;
         } else {
-            $articleRepository = $em->getRepository('Newscoop\Entity\Article');
-            $thread = $articleRepository->find($p_values['thread']);
             if (!isset($p_values['language'])) {
                 $language = $thread->getLanguage();
             } else {
                 $languageRepository = $em->getRepository('Newscoop\Entity\Language');
                 $language = $languageRepository->find($p_values['language']);
             }
+            
+            $articleRepository = $em->getRepository('Newscoop\Entity\Article');
+            $thread = $articleRepository->find(array('number' => $p_values['thread'], 'language' => $language->getId()));
 
             $qb = $this->createQueryBuilder('c');
             $threadOrder = $qb->select('MAX(c.thread_order)')->andWhere('c.thread = :thread')->andWhere('c.language = :language')->setParameter('thread',
