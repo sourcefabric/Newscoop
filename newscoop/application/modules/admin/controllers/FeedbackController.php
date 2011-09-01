@@ -70,6 +70,13 @@ class Admin_FeedbackController extends Zend_Controller_Action
                 $section = $feedback->getSection();
                 $article = $feedback->getArticle();
                 
+                $banned = $acceptanceRepository->checkBanned(array('name' => $user->getName()), $publication);
+                if ($banned['name'] == true) {
+					$banned = true;
+				} else {
+					$banned = false;
+				}
+                
                 $result = array(
                     'index' => $index++,
                     'user' => array(
@@ -89,7 +96,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
 							'user' => $user->getId(),
 							'publication' => $publication->getId()
 						)),
-						'is_banned' => $acceptanceRepository->checkBanned(array('name' => $user->getName()), $publication)
+						'is_banned' => $banned
                     ),
                     'message' => array(
                         'id' => $feedback->getId(),
