@@ -56,9 +56,9 @@ class Admin_UserController extends Zend_Controller_Action
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             try {
-                $user = $this->userService->create($form->getValues());
+                $user = $this->userService->save($form->getValues());
                 $this->_helper->flashMessenger(getGS("User '$1' created", $user->getUsername()));
-                $this->_helper->redirector('update', 'user', 'admin', array(
+                $this->_helper->redirector('edit', 'user', 'admin', array(
                     'user' => $user->getId(),
                 ));
             } catch (\InvalidArgumentException $e) {
@@ -77,10 +77,42 @@ class Admin_UserController extends Zend_Controller_Action
         $this->view->form = $form;
     }
 
-    public function updateAction()
+    public function editAction()
     {
+        $form = new Admin_Form_User();
+        $form->user_type->setMultioptions($this->userTypeService->getOptions());
+
         $user = $this->getUser();
+        $form->setDefaultsFromEntity($user);
+
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            try {
+                $this->userService->save($form->getValues(), $user);
+                $this->_helper->flashMessenger(getGS("User saved"));
+                $this->_helper->redirector('edit', 'user', 'admin', array(
+                    'user' => $user->getId(),
+                ));
+            } catch (\Exception $e) {
+                var_dump($e);
+                exit;
+            }
+        }
+
+        $this->view->form = $form;
         $this->view->user = $user;
+        $this->view->actions = array(
+            array(
+                'label' => getGS('Edit permissions'),
+                'module' => 'admin',
+                'controller' => 'acl',
+                'action' => 'edit',
+                'params' => array(
+                    'user' => $user->getId(),
+                    'role' => $user->getRoleId(),
+                ),
+            ),
+        );
     }
 
     public function deleteAction()
@@ -124,6 +156,7 @@ class Admin_UserController extends Zend_Controller_Action
                         'controller' => 'user',
                         'action' => 'edit',
                         'user' => $user->getId(),
+                        'format' => null,
                     )), $user->getUsername()),
                 $user->getFirstName(),
                 $user->getLastName(),

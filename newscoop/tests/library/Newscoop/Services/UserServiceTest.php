@@ -78,18 +78,6 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($this->service->getCurrentUser());
     }
 
-    public function testFindAll()
-    {
-        $this->expectGetRepository();
-
-        $this->repository->expects($this->once())
-            ->method('findAll')
-            ->with()
-            ->will($this->returnValue(array(1, 2)));
-
-        $this->assertEquals(array(1, 2), $this->service->findAll());
-    }
-
     public function testFind()
     {
         $user = new User();
@@ -102,7 +90,7 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($user, $this->service->find(1));
     }
 
-    public function testCreate()
+    public function testSaveNew()
     {
         $this->expectGetRepository();
 
@@ -121,7 +109,7 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
             ->method('flush')
             ->with();
 
-        $this->assertInstanceOf('Newscoop\Entity\User', $this->service->create($userdata));
+        $this->assertInstanceOf('Newscoop\Entity\User', $this->service->save($userdata));
     }
 
     public function testDelete()
@@ -192,6 +180,25 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->service->setActive($user);
         $this->assertTrue($user->isActive());
+    }
+
+    public function testSave()
+    {
+        $user = new User('foo');
+        $data = array(
+            'email' => 'info@example.com',
+        );
+
+        $this->expectGetRepository();
+
+        $this->repository->expects($this->once())
+            ->method('save')
+            ->with($this->equalTo($user), $this->equalTo($data));
+
+        $this->em->expects($this->once())
+            ->method('flush');
+
+        $this->assertEquals($user, $this->service->save($data, $user));
     }
 
     protected function expectGetRepository()
