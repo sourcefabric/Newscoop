@@ -14,25 +14,25 @@
  * @param object $smarty
  * @return string
  */
-function smarty_function_follow_topic($params, $smarty)
+function smarty_function_link_follow_topic($params, $smarty)
 {
     $context = $smarty->getTemplateVars('gimme');
 
     $topic = !empty($params['topic']) ? $params['topic'] : $context->topic;
     if (empty($topic)) {
-        return '';
+         '';
     }
 
     $user = $context->user;
     if (!$user->logged_in) {
-        return;
+        return '';
     }
 
-    if (in_array($topic->identifier, array_keys($user->topics))) {
-        return;
+    if (in_array($topic->identifier, array_keys($user->topics))) { // @todo make unfollow link
+        return '';
     }
 
-    return sprintf('<a href="%s" title="Follow topic \'%s\'">Follow topic</a>',
+    return sprintf('<a href="%s">%s</a>',
         $smarty->getTemplateVars('view')
             ->url(array(
                 'module' => 'default',
@@ -40,5 +40,5 @@ function smarty_function_follow_topic($params, $smarty)
                 'action' => 'follow-topic',
                 'topic' => $topic->identifier,
             ), 'default'),
-            $topic->name);
+            !empty($params['link_text']) ? $params['link_text'] : "Follow");
 }
