@@ -568,7 +568,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `liveuser_users` WRITE;
 /*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
-INSERT  IGNORE INTO `liveuser_users` VALUES (1,804830992,'Administrator','admin','d033e22ae348aeb5660fc2140aec35850c4da997','admin@email.addr','N',1,'a','','','AD','2','','','1','Mr.','M','0-17','','','Other','','','','','','N','N','N','N','','','','','','','','','2011-06-13 13:34:24','2011-02-10 16:00:31','2011-03-14 15:29:45',1,'',6, null),(26,770302083,'Test Person','test','1c6027c0667c7646b964476b61960e0cf7b559ee','test@persona.org','Y',0,'Otawa, Canada','','','','1','','','2','Mr.','','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2011-06-13 13:34:24','2011-03-10 08:45:53','2011-03-10 15:16:24',1,'',7, null);
+INSERT  IGNORE INTO `liveuser_users` VALUES (1,804830992,'Administrator','admin','d033e22ae348aeb5660fc2140aec35850c4da997','admin@email.addr','N',1,'a','','','AD','2','','','1','Mr.','M','0-17','','','Other','','','','','','N','N','N','N','Adminer','','','','','','','','2011-06-13 13:34:24','2011-02-10 16:00:31','2011-03-14 15:29:45',1,'',6, null),(26,770302083,'Test Person','test','1c6027c0667c7646b964476b61960e0cf7b559ee','test@persona.org','Y',0,'Ottawa, Canada','','','','1','','','2','Mr.','','0-17','','','','','','','','','N','N','N','N','TestBlah','','','','','','','','2011-06-13 13:34:24','2011-03-10 08:45:53','2011-03-10 15:16:24',1,'',7, null);
 /*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
 UPDATE `liveuser_users` SET `Field2` = '1', `Field4` = '1';
 UNLOCK TABLES;
@@ -764,3 +764,12 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2011-06-13 16:34:55
+
+LOCK TABLES `user_points_index` WRITE;
+INSERT  IGNORE INTO `user_points_index` (action, name)
+VALUES  ('test','Login'),
+        ('test2','frontPage'),
+        ('test3','sectionPage'),
+        ('test4','articlePage'),
+        ('test5','errorPage');
+UNLOCK TABLES;

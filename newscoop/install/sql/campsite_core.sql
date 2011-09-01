@@ -2919,7 +2919,9 @@ DROP TABLE IF EXISTS `user_points_index`;
 CREATE TABLE IF NOT EXISTS `user_points_index` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `action` varchar(255) NOT NULL,
-  `points` int(10) NOT NULL,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `points` int(10) NOT NULL DEFAULT '0',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

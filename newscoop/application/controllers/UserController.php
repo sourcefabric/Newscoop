@@ -21,10 +21,9 @@ class UserController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $users = $this->service->findBy(array(
-            'is_public' => true,
-            'status' => User::STATUS_ACTIVE,
-        ), array('id' => 'desc'));
+        $users = $this->service->getPublicUsers();
+        //$users = $this->service->findUsersLastNameInRange(array('t', 'b'));
+        //$users = $this->service->findUsersBySearch("min tor");
 
         $this->view->users = array();
         foreach ($users as $user) {
