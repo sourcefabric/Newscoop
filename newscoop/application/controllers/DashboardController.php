@@ -46,7 +46,7 @@ class DashboardController extends Zend_Controller_Action
 
             $imageInfo = array_pop($form->image->getFileInfo());
             if (!in_array($imageInfo['type'], array('image/jpeg'))) {
-                $this->image->addError("Unsupported image type '$imageInfo[type]'");
+                $form->image->addError("Unsupported image type '$imageInfo[type]'");
             } else {
                 $newname = sha1_file($imageInfo['tmp_name']) . '.' . array_pop(explode('.', $imageInfo['name']));
                 if (!file_exists(APPLICATION_PATH . "/../images/$newname")) {
@@ -61,5 +61,21 @@ class DashboardController extends Zend_Controller_Action
 
         $this->view->form = $form;
         $this->view->user = new MetaUser($this->user);
+    }
+
+    public function followTopicAction()
+    {
+        $service = $this->_helper->service('user.topic');
+        $topic = $service->findTopic($this->_getParam('topic'));
+        if (!$topic) {
+            $this->_helper->flashMessenger(array('error', "No topic to follow"));
+            $this->_helper->redirector('index', 'index', 'default');
+        }
+
+        $service = $this->_helper->service('user.topic');
+        $service->followTopic($this->user, $topic);
+
+        $this->_helper->flashMessenger("Topic added to followed");
+        $this->_helper->redirector->gotoUrl($_SERVER['HTTP_REFERER']);
     }
 }

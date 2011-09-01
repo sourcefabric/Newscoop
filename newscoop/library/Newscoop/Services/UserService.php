@@ -64,17 +64,6 @@ class UserService
     }
 
     /**
-     * Find all users
-     *
-     * @return array
-     */
-    public function findAll()
-    {
-        return $this->getRepository()
-            ->findAll();
-    }
-
-    /**
      * Find by given criteria
      *
      * @param array $criteria
@@ -89,32 +78,29 @@ class UserService
     }
 
     /**
-     * Create user
+     * Save user
      *
-     * @param array $values
+     * @param array $data
+     * @param Newscoop\Entity\User $user
      * @return Newscoop\Entity\User
      */
-    public function create(array $values)
+    public function save(array $data, User $user = null)
     {
-        $user = new User();
-        $this->getRepository()
-            ->save($user, $values);
+        if ($user === null) {
+            $user = new User();
+        }
+
+        if (empty($data['image'])) {
+            unset($data['image']);
+        }
+
+        if (empty($data['password'])) {
+            unset($data['password']);
+        }
+
+        $this->getRepository()->save($user, $data);
         $this->em->flush();
         return $user;
-    }
-
-    /**
-     * Update user
-     *
-     * @param Newscoop\Entity\User $user
-     * @param array $values
-     * @return void
-     */
-    public function update(User $user, array $values)
-    {
-        $this->getRepository()
-            ->save($user, $values);
-        $this->em->flush();
     }
 
     /**

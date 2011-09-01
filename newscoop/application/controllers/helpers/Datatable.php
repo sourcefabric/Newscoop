@@ -311,6 +311,6 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
         $view->iTotalRecords = $this->dataSource->getCount();
         $view->iTotalDisplayRecords = $this->dataSource->getCount($params, $this->cols);
         $view->aaData = $rows;
-        $view->sEcho = $params['sEcho'];
+        $view->sEcho = !empty($params['sEcho']) ? $params['sEcho'] : 0;
     }
 }

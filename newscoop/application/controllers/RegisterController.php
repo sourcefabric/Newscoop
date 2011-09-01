@@ -51,7 +51,7 @@ class RegisterController extends Zend_Controller_Action
                     $values['password'] = empty($values['password_change']) ? $this->session->password : $values['password_change'];
                     $values['is_public'] = true; // public by default
                     try {
-                        $user = $this->service->create($values);
+                        $user = $this->service->save($values);
                         $this->sendConfirmEmail($user);
                         $this->notifyDispatcher($user);
                         $this->_helper->redirector('index', 'index');

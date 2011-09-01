@@ -418,14 +418,15 @@ if ($showUserMenu) {
                     'label' => getGS('Edit user'),
                     'module' => 'admin',
                     'controller' => 'user',
-                    'action' => 'update',
+                    'action' => 'edit',
                     'visible' => false,
+                    'reset_params' => false,
                     'pages' => array(
                         array(
                             'label' => getGS('Edit permissions'),
                             'module' => 'admin',
-                            'controller' => 'user',
-                            'action' => 'edit-access',
+                            'controller' => 'acl',
+                            'action' => 'edit',
                             'visible' => false,
                         ),
                     ),
