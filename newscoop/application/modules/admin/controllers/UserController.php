@@ -5,6 +5,8 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+use Newscoop\Entity\User;
+
 /**
  * User controller
  *
@@ -31,7 +33,6 @@ class Admin_UserController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $this->view->users = $this->userService->findAll();
         $this->view->actions = array(
             array(
                 'label' => getGS('Create new account'),
@@ -43,6 +44,8 @@ class Admin_UserController extends Zend_Controller_Action
                 'privilege' => 'manage',
             ),
         );
+
+        $this->_forward('table');
     }
 
     public function createAction()
@@ -90,6 +93,47 @@ class Admin_UserController extends Zend_Controller_Action
             $this->_helper->flashMessenger(array('error', getGS("You can't delete yourself")));
         }
         $this->_helper->redirector('index');
+    }
+
+    public function tableAction()
+    {
+        $table = $this->getHelper('datatable');
+        $table->setEntity('Newscoop\Entity\User');
+
+        $table->setCols(array(
+            'username' => getGS('Username'),
+            'first_name' => getGS('First Name'),
+            'last_name' => getGS('Last Name'),
+            'email' => getGS('Email'),
+            'status' => getGS('Status'),
+            'created' => getGS('Created'),
+        ));
+
+        $view = $this->view;
+        $statuses = array(
+            User::STATUS_INACTIVE => getGS('Pending'),
+            User::STATUS_ACTIVE => getGS('Active'),
+            User::STATUS_DELETED => getGS('Deleted'),
+        );
+
+        $table->setHandle(function(User $user) use ($view, $statuses) {
+            return array(
+                sprintf('<a href="%s">%s</a>',
+                    $view->url(array(
+                        'module' => 'admin',
+                        'controller' => 'user',
+                        'action' => 'edit',
+                        'user' => $user->getId(),
+                    )), $user->getUsername()),
+                $user->getFirstName(),
+                $user->getLastName(),
+                $user->getEmail(),
+                $statuses[$user->getStatus()],
+                $user->getCreated()->format('d.m.Y'),
+            );
+        });
+
+        $table->dispatch();
     }
 
     /**
