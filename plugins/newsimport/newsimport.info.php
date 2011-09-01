@@ -30,13 +30,9 @@ $info = array(
     	'plugin_newsimport_admin' => 'User may manage NewsImport',
     ),
     'template_engine' => array(
-/*
-        'objecttypes' => array(
-            array('newsimport' => array('class' => 'NewsImport')),
-        ),
+        'objecttypes' => array(),
         'listobjects' => array(),
         'init' => 'plugin_newsimport_init'
-*/
     ),
     'localizer' => array(
         'id' => 'plugin_newsimport',
@@ -54,8 +50,69 @@ $info = array(
 if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
     define('PLUGIN_NEWSIMPORT_FUNCTIONS', TRUE);
 
+    function plugin_newsimport_set_url() {
+        $plugin_inst_name = dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR.'news_feeds_intall.php';
+
+        global $Campsite;
+        $campsite_inst_dir = $Campsite['WEBSITE_URL'];
+
+        $campsite_inst_php = '<?php' . "\n\n" . '$newsipmort_install = \'' . $campsite_inst_dir . '\';' . "\n\n";
+
+        try {
+            $plugin_inst_file = fopen($plugin_inst_name, 'w');
+            fwrite($plugin_inst_file, $campsite_inst_php);
+            fclose($plugin_inst_file);
+        }
+        catch (Exception $exc) {
+            // may be some logging
+        }
+    }
+
+    function plugin_newsimport_set_cron($p_state) {
+        exec('crontab -l', $cron_output, $cron_result);
+        if (0 != $cron_result) {
+            return false;
+        }
+
+        $request_file = dirname(__FILE__).DIRECTORY_SEPARATOR.'admin-files'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'cron'.DIRECTORY_SEPARATOR.'request_import.php';
+
+        $new_cron = array();
+        foreach ($cron_output as $one_cron_line) {
+            if (false !== strpos($one_cron_line, $request_file)) {
+                continue;
+            }
+            $new_cron[] = $one_cron_line;
+        }
+        if ($p_state) {
+
+            $incl_dir = dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR;
+            require($incl_dir . 'default_cron.php');
+
+            $cron_min = $newsimport_cron['min'];
+            $cron_hour = $newsimport_cron['hour'];
+
+            $new_cron[] = $cron_min . ' ' . $cron_hour . ' * * * ' . $request_file;
+        }
+
+        $tmp_file_path = tempnam(sys_get_temp_dir(), '' . mt_rand(100, 999));
+        $tmp_file = fopen($tmp_file_path, 'w');
+        foreach ($new_cron as $one_cron_line) {
+            fwrite($tmp_file, $one_cron_line);
+            fwrite($tmp_file, "\n");
+        }
+        fclose($tmp_file);
+        exec('crontab ' . escapeshellarg($tmp_file_path), $cron_output, $cron_result);
+        unlink($tmp_file_path);
+        if (0 != $cron_result) {
+            return false;
+        }
+
+        return true;
+    }
+
+
     function plugin_newsimport_create_event_type() {
-        $art_type_name = 'event_type';
+        $art_type_name = 'event_general';
 
         $art_type_obj = new ArticleType($art_type_name);
         if (!$art_type_obj->exists()) {
@@ -80,7 +137,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             'date' => array('type' => 'date', 'params' => array(), 'hidden' => false), // text, 2010-08-31
             'date_year' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 2010
             'date_month' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 8
-            'date_day' => array('type' => 'text', 'numeric' => array('precision' => 0), 'hidden' => false), // number, 31
+            'date_day' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 31
             'time' => array('type' => 'text', 'params' => array(), 'hidden' => false), // event_time, like 10:30 (or a list for movie screenings at a day)
             // date/time - free form
             'date_time_text' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 1), 'hidden' => false), // comprises other textual date/time information, if available
@@ -115,13 +172,14 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
     }
 
     function plugin_newsimport_set_preferences() {
-        $incl_dir = dirname(__FILE__) . '/include/';
+        $incl_dir = dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR;
         require($incl_dir . 'default_access.php');
 
-        $cur_nimp_auth = SystemPref::Get('NewsImportAuthorization');
-        if (empty($cur_nimp_auth)) {
-            SystemPref::Set('NewsImportAuthorization', $newsimport_default_access);
-        }
+        // not putting it into sysprefs, since the cron job would not be able to access it
+        //$cur_nimp_auth = SystemPref::Get('Plugin_NewsImport_CommandToken');
+        //if (empty($cur_nimp_auth)) {
+        //    SystemPref::Set('Plugin_NewsImport_CommandToken', $newsimport_default_access);
+        //}
     }
 
     function plugin_newsimport_set_one_topic($p_topicCat, $p_topicNames, $p_parentIds) {
@@ -204,7 +262,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
     }
 
     function plugin_newsimport_set_event_topics() {
-        $incl_dir = dirname(__FILE__) . '/include/';
+        $incl_dir = dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR;
         require($incl_dir . 'default_topics.php');
 
         // setting the root event topic
@@ -234,6 +292,8 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         plugin_newsimport_set_event_topics();
         plugin_newsimport_create_event_type();
         SystemPref::Set('NewsImportUsage', '1');
+        plugin_newsimport_set_cron(true);
+        plugin_newsimport_set_url();
     }
     function plugin_newsimport_enable()
     {
@@ -241,15 +301,19 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         plugin_newsimport_set_event_topics();
         plugin_newsimport_create_event_type();
         SystemPref::Set('NewsImportUsage', '1');
+        plugin_newsimport_set_cron(true);
+        plugin_newsimport_set_url();
     }
     function plugin_newsimport_disable()
     {
         SystemPref::Set('NewsImportUsage', '0');
+        plugin_newsimport_set_cron(false);
     }
 
     function plugin_newsimport_uninstall()
     {
         SystemPref::Set('NewsImportUsage', '0');
+        plugin_newsimport_set_cron(false);
     }
 
     function plugin_newsimport_update()

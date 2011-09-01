@@ -270,7 +270,7 @@ class Article extends DatabaseObject {
      * @param int $p_sectionNumber
      * @return void
      */
-    public function create($p_articleType, $p_name = null, $p_publicationId = null, $p_issueNumber = null, $p_sectionNumber = null)
+    public function create($p_articleType, $p_name = null, $p_publicationId = null, $p_issueNumber = null, $p_sectionNumber = null, $p_doLog = true)
     {
         global $g_ado_db;
 
@@ -335,7 +335,9 @@ class Article extends DatabaseObject {
         if (function_exists("camp_load_translation_strings")) {
             camp_load_translation_strings("api");
         }
-        Log::ArticleMessage($this, getGS('Article created.'), null, 31, TRUE);
+        if ($p_doLog) {
+            Log::ArticleMessage($this, getGS('Article created.'), null, 31, TRUE);
+        }
     } // fn create
 
 
@@ -1404,7 +1406,7 @@ class Article extends DatabaseObject {
      * @param string $p_value
      * @return boolean
      */
-    public function setWorkflowStatus($p_value)
+    public function setWorkflowStatus($p_value, $p_doLog = true)
     {
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleIndex.php');
 
@@ -1443,9 +1445,11 @@ class Article extends DatabaseObject {
         if (function_exists("camp_load_translation_strings")) {
             camp_load_translation_strings("api");
         }
-        $logtext = getGS('Article status changed from $1 to $2.',
-            $this->getWorkflowDisplayString($oldStatus), $this->getWorkflowDisplayString($p_value));
-        Log::ArticleMessage($this, $logtext, null, 35);
+        if ($p_doLog) {
+            $logtext = getGS('Article status changed from $1 to $2.',
+                $this->getWorkflowDisplayString($oldStatus), $this->getWorkflowDisplayString($p_value));
+            Log::ArticleMessage($this, $logtext, null, 35);
+        }
         return true;
     } // fn setWorkflowStatus
 
@@ -2662,7 +2666,7 @@ class Article extends DatabaseObject {
         }
         $queries = array();
         foreach ($fields as $fieldObj) {
-            $query .= '        SELECT NrArticle FROM `X' . $fieldObj->getArticleType()
+            $query = '        SELECT NrArticle FROM `X' . $fieldObj->getArticleType()
                    . '` WHERE ' . $fieldObj->getName() . ' '
                    . $p_comparisonOperation['symbol']
                    . " '" . $g_ado_db->escape($p_comparisonOperation['right']) . "'";

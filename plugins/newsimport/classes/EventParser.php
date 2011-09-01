@@ -15,9 +15,14 @@ class EventData_Parser {
      * @param string $p_file file name of the event file
      * @return array
      */
-    public static function Parse($p_provider, $p_dir, $p_categories) {
+    public static function Parse($p_provider, $p_dir, $p_categories, $p_otherParams) {
         if (!is_array($p_categories)) {
             $p_categories = array();
+        }
+
+        $start_date = null;
+        if (array_key_exists('start_date', $p_otherParams)) {
+            $start_date = $p_otherParams['start_date'];
         }
 
         $parser = new EventData_Parser_SimpleXML;
@@ -35,20 +40,23 @@ class EventData_Parser {
 
         if ($dir_handle) {
             while (false !== ($event_file = readdir($dir_handle))) {
-                if (!is_file($p_dir . '/' . $event_file)) {
+                if (!is_file($p_dir . DIRECTORY_SEPARATOR . $event_file)) {
                     continue;
                 }
 
+                // TODO: to check that no transfer is running by now
+
                 try {
-                    $result = $parser->parse($events, $p_provider, $p_dir . '/' . $event_file, $p_categories);
+                    $result = $parser->parse($events, $p_provider, $p_dir . DIRECTORY_SEPARATOR . $event_file, $p_categories, $start_date);
                 }
                 catch (Exception $exc) {
+                    //var_dump($exc);
                     // may be some logging;
                 }
                 $files[] = $event_file;
             }
         }
-
+//echo count($events);
         return array('files' => $files, 'events' => $events);
     } // fn parse
 } // class EventData_Parser
@@ -64,7 +72,7 @@ class EventData_Parser_SimpleXML {
      * @param string $p_file file name of the eventdata file
      * @return array
      */
-    function parse(&$p_events, $p_provider, $p_file, $p_categories) {
+    function parse(&$p_events, $p_provider, $p_file, $p_categories, $p_startDate) {
 
         libxml_clear_errors();
         $internal_errors = libxml_use_internal_errors(true);
@@ -96,6 +104,32 @@ class EventData_Parser_SimpleXML {
 
                 $event_info = array('provider_id' => $p_provider);
                 $event_other = array();
+
+                // Date, time - first here, for possible omiting passed events
+
+                // * main date-time info
+
+                $event_date = '0000-00-00';
+
+                // year, four digits
+                $x_evedatyeanum2 = trim('' . $event->evedatyeanum2);
+                // month, two digits
+                $x_evedatmonnum2 = trim('' . $event->evedatmonnum2);
+                // day, two digits
+                $x_evedatdaynum2 = trim('' . $event->evedatdaynum2);
+
+                if ((!empty($x_evedatyeanum2)) && (!empty($x_evedatmonnum2)) && (!empty($x_evedatdaynum2))) {
+                    if ((4 == strlen($x_evedatyeanum2)) && (2 == strlen($x_evedatmonnum2)) && (2 == strlen($x_evedatdaynum2))) {
+                        $event_date = $x_evedatyeanum2 . '-' . $x_evedatmonnum2 . '-' . $x_evedatdaynum2;
+                    }
+                }
+                $event_info['date'] = $event_date;
+
+                if ($p_startDate) {
+                    if ($event_date < $p_startDate) {
+                        continue;
+                    }
+                }
 
                 // Ids: hidden fields, other ones will be visible
 
@@ -335,7 +369,7 @@ class EventData_Parser_SimpleXML {
                 // Date, time
 
                 // * main date-time info
-
+/*
                 $event_date = '0000-00-00';
 
                 // year, four digits
@@ -351,6 +385,7 @@ class EventData_Parser_SimpleXML {
                     }
                 }
                 $event_info['date'] = $event_date;
+*/
 
                 // year, four digits
                 $x_evedatyeanum2 = trim('' . $event->evedatyeanum2);
@@ -517,7 +552,7 @@ class EventData_Parser_SimpleXML {
                             $one_image_desc = null;
                         }
 
-                        $event_images[] = array('url' => substr($one_image, 0, ($one_image_desc_start - 1)), 'label' => $one_image_des);
+                        $event_images[] = array('url' => substr($one_image, 0, ($one_image_desc_start - 1)), 'label' => $one_image_desc);
                     }
                 }
 
@@ -525,19 +560,24 @@ class EventData_Parser_SimpleXML {
 
                 // videos
                 $x_evevid = trim('' . $event->evevid);
-                if (!empty($x_locvid)) {
-                    $event_other[] = $x_locvid;
+                if (!empty($x_evevid)) {
+                    $event_other[] = $x_evevid;
                 }
-                $event_info['event_video'] = $x_locvid;
+                $event_info['event_video'] = $x_evevid;
 
                 // audios
                 $x_eveaud = trim('' . $event->eveaud);
-                if (!empty($x_locaud)) {
-                    $event_other[] = $x_locaud;
+                if (!empty($x_eveaud)) {
+                    $event_other[] = $x_eveaud;
                 }
 
-                $event_info['other'] = $event_other[];
+                $event_info['other'] = $event_other;
 
+                // geo data
+
+
+
+//var_dump($event_info);
                 $p_events[] = $event_info;
             }
 

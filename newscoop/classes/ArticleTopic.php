@@ -50,7 +50,7 @@ class ArticleTopic extends DatabaseObject {
 	 * @param int $p_articleNumber
 	 * @return void
 	 */
-	public static function AddTopicToArticle($p_topicId, $p_articleNumber)
+	public static function AddTopicToArticle($p_topicId, $p_articleNumber, $p_doLog = true)
 	{
 		global $g_ado_db;
 		$queryStr = 'INSERT IGNORE INTO ArticleTopics(NrArticle, TopicId)'
@@ -59,8 +59,10 @@ class ArticleTopic extends DatabaseObject {
 		if (function_exists("camp_load_translation_strings")) {
 			camp_load_translation_strings("api");
 		}
-		$logtext = getGS('Topic $1 added to article $2', $p_topicId, $p_articleNumber);
-		Log::Message($logtext, null, 144);
+        if ($p_doLog) {
+            $logtext = getGS('Topic $1 added to article $2', $p_topicId, $p_articleNumber);
+            Log::Message($logtext, null, 144);
+        }
 	} // fn AddTopicToArticle
 
 
@@ -70,7 +72,7 @@ class ArticleTopic extends DatabaseObject {
 	 * @param int $p_articleNumber
 	 * @return void
 	 */
-	public static function RemoveTopicFromArticle($p_topicId, $p_articleNumber)
+	public static function RemoveTopicFromArticle($p_topicId, $p_articleNumber, $p_doLog = true)
 	{
 		global $g_ado_db;
 		$queryStr = "DELETE FROM ArticleTopics WHERE NrArticle=$p_articleNumber AND TopicId=$p_topicId";
@@ -78,8 +80,10 @@ class ArticleTopic extends DatabaseObject {
 		if (function_exists("camp_load_translation_strings")) {
 			camp_load_translation_strings("api");
 		}
-		$logtext = getGS('Article topic $1 deleted from article $2', $p_topicId, $p_articleNumber);
-		Log::Message($logtext, null, 145);
+        if ($p_doLog) {
+            $logtext = getGS('Article topic $1 deleted from article $2', $p_topicId, $p_articleNumber);
+            Log::Message($logtext, null, 145);
+		}
 	} // fn RemoveTopicFromArticle
 
 

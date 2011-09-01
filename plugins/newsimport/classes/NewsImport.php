@@ -54,7 +54,11 @@ class NewsImport extends DatabaseObject
 
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'SystemPref.php');
 
-        $news_auth_sys_pref = SystemPref::Get('NewsImportAuthorization');
+        $incl_dir = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR;
+        require($incl_dir . 'default_access.php');
+        $news_auth_sys_pref = $newsimport_default_access;
+        // not taking it from sysprefs since cron job does not have access there
+        //$news_auth_sys_pref = SystemPref::Get('Plugin_NewsImport_CommandToken');
         if ((!empty($news_auth_sys_pref)) && ($news_auth != $news_auth_sys_pref)) {
             return false;
         }
@@ -73,8 +77,51 @@ class NewsImport extends DatabaseObject
         // take the ctegory topics, as array by [language][category] of [name,id]
         $cat_topics = self::ReadEventTopics($newsimport_default_cat_names);
 
-        return self::LoadEventData($event_data_sources, $news_feed, $cat_topics);
+        $events_limit = 0;
+        $events_skip = 0;
+        if (array_key_exists('newslimit', $_GET)) {
+            $events_limit = 0 + $_GET['newslimit'];
+            $events_limit = max(0, $events_limit);
+        }
+        if (array_key_exists('newsoffset', $_GET)) {
+            $events_skip = 0 + $_GET['newsoffset'];
+            $events_skip = max(0, $events_skip);
+        }
+
+        $params_other = array(
+            'skip' => $events_skip,
+            'limit' => $events_limit,
+        );
+
+        $events_ignore_passed = false;
+        if (array_key_exists('newsignorepassed', $_GET)) {
+            if (in_array(strtolower($_GET['newsignorepassed']), array('1', 'true', 't', 'yes', 'y', 'on'))) {
+                $events_ignore_passed = true;
+            }
+            if (in_array(strtolower($_GET['newsignorepassed']), array('0', 'false', 'f', 'no', 'n', 'off'))) {
+                $events_ignore_passed = false;
+            }
+        }
+        if ($events_ignore_passed) {
+            $params_other['start_date'] = date('Y-m-d', localtime());
+        }
+
+        set_time_limit(0);
+        ob_end_flush();
+        flush();
+
+        //if (self::SomeTransferRunning()) {
+        //    return;
+        //}
+
+        return self::LoadEventData($event_data_sources, $news_feed, $cat_topics, $params_other);
     }
+
+    public static function SomeTransferRunning() {
+        // TODO: how to check that the files are complete
+        return false;
+    }
+
 
     public static function ReadEventTopics($p_defaultTopicNames) {
         $event_spec_topics = array();
@@ -327,7 +374,8 @@ class NewsImport extends DatabaseObject
     }
 
     public static function LocateEventData(&$event_data, $p_params) {
-        $event_type_name = 'event_type';
+        //$event_type_name = 'event_general';
+        $event_type_name = $p_params['event_type'];
         //$event_type_table = 'X' . $event_type_name;
         $event_field_name = 'location_id';
         //$location_id_field = 'F' . $event_field_name;
@@ -377,19 +425,40 @@ class NewsImport extends DatabaseObject
     }
 
     public static function StoreEventData($p_events, $p_source) {
+//echo count($p_events) . " of events:\n";
         if (empty($p_events)) {
             return;
         }
 
-        $art_type = 'event_type';
+        //$art_type = 'event_general';
+        $art_type = $p_source['event_type'];
         $art_publication = $p_source['publication_id'];
         $art_issue = $p_source['issue_number'];
         $art_section = $p_source['section_number'];
         $art_lang = $p_source['language_id'];
 
+        $status_public = $p_source['status']['public'];
+        $status_comments = $p_source['status']['comments'];
+        $status_publish = $p_source['status']['publish'];
+
+        $art_author = new Author($p_source['provider_name']);
+        if (!$art_author->exists()) {
+            $art_author->create();
+        }
+
 //var_dump($p_events);
 
+//echo count($p_events) . " of events:\n";
+
+        //$debug_rank = -1;
         foreach ($p_events as $one_event) {
+            //$debug_rank += 1;
+            //echo "rank $debug_rank: " . $one_event['date'] . "\n";
+            //try {
+            //    ob_end_flush();
+            //} catch (Exception $exc) {}
+            //flush();
+
             //$ev_headline = $one_event['headline'];
             //$ev_event_id = $one_event['event_id'];
 
@@ -401,13 +470,32 @@ class NewsImport extends DatabaseObject
 First, try to load event (possibly created by former imports), and if there, remove it - will be put in with the current, possible more correct info.
 */
 
+            $article = null;
+
+            $p_count = 0;
+            $event_art_list = Article::GetList(array(
+                new ComparisonOperation('idlanguage', new Operator('is', 'sql'), $art_lang),
+                new ComparisonOperation('IdPublication', new Operator('is', 'sql'), $art_publication),
+                new ComparisonOperation('NrIssue', new Operator('is', 'sql'), $art_issue),
+                new ComparisonOperation('NrSection', new Operator('is', 'sql'), $art_section),
+                //new ComparisonOperation('', new Operator('is', 'sql'), 1),
+                new ComparisonOperation($art_type . '.event_id', new Operator('is', 'sql'), $one_event['event_id']),
+            ), null, null, 0, $p_count, true);
+
+            if (is_array($event_art_list) && 0 <count($event_art_list)) {
+                $article = $event_art_list[0];
+            }
+
             //$art_name = $one_event['headline'] . ' (' . mt_rand() . ')';
             $art_name = $one_event['headline'] . ' - ' . $one_event['date'] . ' (' . $one_event['event_id'] . ')';
 
 //echo "\n$art_type, $art_name, $art_publication, $art_issue, $art_section\n";
 
-            $article = new Article($art_lang);
-            $article->create($art_type, $art_name, $art_publication, $art_issue, $art_section);
+            if (!$article) {
+                $article = new Article($art_lang);
+                $article->create($art_type, $art_name, $art_publication, $art_issue, $art_section, false);
+            }
+
             $art_number = $article->getArticleNumber();
 
 //echo  $article->getArticleNumber() . ' - ' . $article->getLanguageId() . "\n" . "\n";
@@ -450,8 +538,14 @@ First, try to load event (possibly created by former imports), and if there, rem
             $article_data->setProperty('Fminimal_age', $one_event['minimal_age']);
 
             $article_data->setProperty('Frated', ($one_event['rated'] ? 1 : 0));
-    
+
             // set topics!
+
+            $old_topics = ArticleTopic::GetArticleTopics($art_number);
+            foreach ($old_topics as $one_topic) {
+                ArticleTopic::RemoveTopicFromArticle($one_topic->getTopicId(), $art_number, false);
+                //$one_topic->delete($art_lang);
+            }
 
             $art_topics = null;
             if (array_key_exists('topics', $one_event)) {
@@ -467,16 +561,24 @@ First, try to load event (possibly created by former imports), and if there, rem
                     if (empty($topic_id)) {
                         continue;
                     }
-                    ArticleTopic::AddTopicToArticle($topic_id, $art_number);
+                    ArticleTopic::AddTopicToArticle($topic_id, $art_number, false);
                 }
             }
+//echo " setting author ";
+            //ArticleAuthor::GetAuthorsByArticle($art_number, $art_lang);
+            ArticleAuthor::OnArticleLanguageDelete($art_number, $art_lang);
 
-            $article->setIsPublic(true);
-            $article->setCommentsEnabled(false);
+            $article->setAuthor($art_author);
+
+            $article->setIsPublic($status_public);
+            $article->setCommentsEnabled($status_comments);
             //$article->setIsIndexed(true);
-            $article->setWorkflowStatus('Y');
             $article->setPublishDate($one_event['date']);
-
+            if ($status_publish) {
+                $article->setWorkflowStatus('Y', false);
+                $article->setPublishDate($one_event['date']); // necessary to reset after changing the workflow status
+                //$article->setPublishDate('2020-02-02');
+            }
         }
         ;
     }
@@ -485,13 +587,13 @@ First, try to load event (possibly created by former imports), and if there, rem
         if (empty($p_files)) {
             return;
         }
-    
+
         $src_dir = $p_params['source_dirs']['new'];
         $dest_dir = $p_params['source_dirs']['old'];
 
         foreach ($p_files as $one_file) {
             try {
-                rename($src_dir . '/' . $one_file, $dest_dir . '/' . $one_file);
+                rename($src_dir . DIRECTORY_SEPARATOR . $one_file, $dest_dir . DIRECTORY_SEPARATOR . $one_file);
             }
             catch (Exception $exc) {
                 var_dump($exc);
@@ -502,7 +604,7 @@ First, try to load event (possibly created by former imports), and if there, rem
     }
 
     //public static function LoadEventData($p_eventSources, $p_newscoopInst) {
-    public static function LoadEventData($p_eventSources, $p_newsFeed, $p_catTopics) {
+    public static function LoadEventData($p_eventSources, $p_newsFeed, $p_catTopics, $p_otherParams) {
 
 
         //$conf_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'include';
@@ -517,8 +619,8 @@ First, try to load event (possibly created by former imports), and if there, rem
 
 //            new ComparisonOperation('event_type.event_id', new Operator('is', 'sql'), '529313'),
 //            new ComparisonOperation('event_type.event_id', new Operator('greater', 'string'), '0'),
-
-        $p_count = true;
+/*
+        $p_count = 0;
         $test_list = Article::GetList(array(
             new ComparisonOperation('idlanguage', new Operator('is', 'sql'), 1),
             new ComparisonOperation('IdPublication', new Operator('is', 'sql'), 2),
@@ -535,9 +637,9 @@ First, try to load event (possibly created by former imports), and if there, rem
                 var_dump($one_art_data);
             }
         }
-
+*/
         //var_dump($test_list);
-        return;
+        //return;
 
         //var_dump($p_eventSources);
         //var_dump($p_newsFeed);
@@ -558,7 +660,7 @@ First, try to load event (possibly created by former imports), and if there, rem
         //var_dump($p_xmlFeed);
 
         //return false;
-    
+
         foreach ($p_eventSources as $one_source_name => $one_source) {
             if ((!empty($p_newsFeed)) && ($one_source_name != $p_newsFeed)) {
                 continue;
@@ -569,9 +671,9 @@ First, try to load event (possibly created by former imports), and if there, rem
 
 
             $event_set = null;
-            if ('events' == $one_source['event_type']) {
+            if ('event_general' == $one_source['event_type']) {
                 //$event_set = ReadEventData($one_source['provider_id'], $one_source['source_dirs'], $categories);
-                $event_set = EventData_Parser::Parse($one_source['provider_id'], $one_source['source_dirs']['new'], $categories);
+                $event_load = EventData_Parser::Parse($one_source['provider_id'], $one_source['source_dirs']['new'], $categories, $p_otherParams);
             }
             // temporarily not working with movies
             //elseif ('movies' ==  $one_source['event_type']) {
@@ -580,16 +682,59 @@ First, try to load event (possibly created by former imports), and if there, rem
 
             //var_dump($event_set);
             //continue;
-    
+
+            $event_set = $event_load['events'];
+            //unset($event_load['events']);
+//echo "\nevent count: " . count($event_set) . "\n";
+
             if (empty($event_set)) {
                 continue;
             }
-    
-            //self::LocateEventData($event_set['events'], $one_source);
-            self::StoreEventData($event_set['events'], $one_source);
-    
-            //self::CleanEventSources($event_set['files'], $one_source);
 
+            $ev_limit = 0;
+            $ev_skip = 0;
+            if (array_key_exists('limit', $p_otherParams)) {
+                $ev_limit = $p_otherParams['limit'];
+            }
+            if (array_key_exists('skip', $p_otherParams)) {
+                $ev_skip = $p_otherParams['skip'];
+            }
+
+### DEBUG
+$ev_limit = 1;
+### DEBUG
+
+            $ev_count = count($event_set);
+
+            if (0 < $ev_skip) {
+                if (0 < $ev_limit) {
+                    $event_set = array_slice($event_set, $ev_skip, $ev_limit);
+                }
+                else {
+                    $event_set = array_slice($event_set, $ev_skip);
+                }
+            }
+            else {
+                if (0 < $ev_limit) {
+                    $event_set = array_slice($event_set, 0, $ev_limit);
+                }
+            }
+
+            $omit_cleanup = false;
+            if (0 < $ev_limit) {
+                if (count($event_set) == $ev_limit) {
+                    $omit_cleanup = true;
+                }
+            }
+
+echo "\nevent count: " . count($event_set) . "\n";
+
+            //self::LocateEventData($event_set['events'], $one_source);
+            self::StoreEventData($event_set, $one_source);
+
+            if (!$omit_cleanup) {
+                //self::CleanEventSources($event_load['files'], $one_source);
+            }
         }
 
         //echo 'asdf';

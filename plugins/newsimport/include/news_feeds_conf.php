@@ -3,7 +3,8 @@
 $event_data_sources = array(
     'events_1' => array(
         'provider_id' => 1,
-        'event_type' => 'events',
+        'provider_name' => 'Werbeverlags AG',
+        'event_type' => 'event_general',
         'publication_id' => 2,
         'language_id' => 1,
         'issue_number' => 13,
@@ -18,7 +19,12 @@ $event_data_sources = array(
             'party' => array('party',),
             'music' => array('music', 'musik',),
             'concert' => array('concert', 'konzerte',),
-        )
+        ),
+        'status' => array(
+            'public' => true,
+            'comments' => false,
+            'publish' => true,
+        ),
 /*
         'geo' => array(
             'search_old' => true,
@@ -29,7 +35,9 @@ $event_data_sources = array(
     ),
     'movies_1' => array(
         'provider_id' => 2,
-        'event_type' => 'movies',
+        'provider_name' => 'Werbeverlags AG',
+        'event_type' => 'event_general',
+        //'event_type' => 'event_movie',
         'publication_id' => 1,
         'issue_number' => 1,
         'section_number' => 1,
@@ -40,6 +48,11 @@ $event_data_sources = array(
         ),
         'categories' => array(
             'movie' => '*',
+        ),
+        'status' => array(
+            'public' => true,
+            'comments' => false,
+            'publish' => true,
         ),
 /*
         'geo' => array(

@@ -9,6 +9,7 @@ $newsimport_default_cat_names = array(
     'music' => array(1 => 'Music', 5 => 'Musik',),
     'concert' => array(1 => 'Concert', 5 => 'Konzert',),
     'movie' => array(1 => 'Movie', 5 => 'Movie',),
+    'circus' => array(1 => 'Circus', 5 => 'Zirkus'),
 );
 
 // changes via SysPrefs: EventCat$LangId$EventCat, e.g.
