@@ -58,8 +58,10 @@ class Admin_FeedbackController extends Zend_Controller_Action
             ),
             array('index' => false)
         );
+        
         $index = 1;
-        $table->setHandle(function($feedback) use ($view, &$index)
+        $acceptanceRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
+        $table->setHandle(function($feedback) use ($view, &$index, $acceptanceRepository)
             {
                 $user = $feedback->getUser();
                 $url = $feedback->getUrl();
@@ -74,7 +76,20 @@ class Admin_FeedbackController extends Zend_Controller_Action
                         'username' => $user->getUsername(),
                         'name' => $user->getFirstName(),
                         'email' => $user->getEmail(),
-                        'avatar' => (string)$view->getAvatar($user->getEmail(), array('img_size' => 50, 'default_img' => 'wavatar'))
+                        'avatar' => (string)$view->getAvatar($user->getEmail(), array('img_size' => 50, 'default_img' => 'wavatar')),
+                        'banurl' => $view->url(array(
+							'controller' => 'user',
+							'action' => 'ban',
+							'user' => $user->getId(),
+							'publication' => $publication->getId()
+						)),
+						'unbanurl' => $view->url(array(
+							'controller' => 'user',
+							'action' => 'unban',
+							'user' => $user->getId(),
+							'publication' => $publication->getId()
+						)),
+						'is_banned' => $acceptanceRepository->checkBanned(array('name' => $user->getName()), $publication)
                     ),
                     'message' => array(
                         'id' => $feedback->getId(),
