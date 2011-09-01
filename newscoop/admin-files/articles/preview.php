@@ -52,7 +52,7 @@ $outputIssueSettings = current($outputSettingIssueService->findByIssue($issueObj
 /* @var $outputIssueSettings \Newscoop\Entity\Output\OutputSettingsIssue */
 
 // if article page is not set secifically for issue get for publication
-if (is_null(( $articlePage = $outputIssueSettings->getArticlePage())))
+if ( !$outputIssueSettings || is_null(( $articlePage = $outputIssueSettings->getArticlePage())))
 {
     $publicationTheme = current($themeManagementService->getThemes($f_publication_id));
     if (!$publicationTheme) {
