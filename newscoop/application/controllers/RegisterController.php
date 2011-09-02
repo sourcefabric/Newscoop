@@ -62,19 +62,34 @@ class RegisterController extends Zend_Controller_Action
             $this->_helper->redirector('index', 'index', 'default');
         }
 
+        if (!$user->isPending()) {
+            $this->_helper->flashMessenger(array('error', "User has been activated"));
+            $this->_helper->redirector('index', 'index', 'default');
+        }
+
         $token = $this->_getParam('token', false);
         if (!$token) {
             $this->_helper->flashMessenger(array('error', "No token provided"));
             $this->_helper->redirector('index', 'index', 'default');
         }
 
-        if (!$this->tokenService->checkToken($user, $token, 'email.confirm')) {
+        if (!$this->_helper->service('user.token')->checkToken($user, $token, 'email.confirm')) {
             $this->_helper->flashMessenger(array('error', "Invalid token"));
             $this->_helper->redirector('index', 'index', 'default');
         }
 
-        // @todo set user active
-        $this->service->setActive($user);
+        $form = new Application_Form_Confirm();
+        $form->setMethod('POST');
+
+        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
+            $values = $form->getValues();
+            $this->_helper->service('user')->savePending($values, $user);
+            // @todo dispatch user.register
+            // @todo auth user
+            $this->_helper->redirector('index', 'dashboard', 'default');
+        }
+
+        $this->view->form = $form;
     }
 
     public function initAction()

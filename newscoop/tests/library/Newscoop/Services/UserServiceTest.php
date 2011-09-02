@@ -24,7 +24,8 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
     protected $repository;
 
     public function setUp()
-    { $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
+    {
+        $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
             ->disableOriginalConstructor()
             ->getMock();
 
@@ -212,6 +213,21 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
             
         $user = $this->service->createPending('email@example.com');
         $this->assertInstanceOf('Newscoop\Entity\User', $user);
+    }
+
+    public function testSavePending()
+    {
+        $data = array();
+        $user = new User('email');
+
+        $this->expectGetRepository();
+
+        $this->repository->expects($this->once())
+            ->method('save')
+            ->with($this->equalTo($user), $this->equalTo($data));
+
+        $this->service->savePending($data, $user);
+        $this->assertTrue($user->isActive());
     }
 
     protected function expectGetRepository()

@@ -171,6 +171,23 @@ class UserService
     }
 
     /**
+     * Save pending user
+     *
+     * @param array $data
+     * @param Newscoop\Entity\User $user
+     * @return void
+     */
+    public function savePending($data, User $user)
+    {
+        if (!$user->isPending()) {
+            throw new \InvalidArgumentException("User '{$user->getUsername()}' is not pending user.");
+        }
+
+        $user->setActive();
+        $this->save($data, $user);
+    }
+
+    /**
      * Get repository for user entity
      *
      * @return Newscoop\Entity\Repository\UserRepository
