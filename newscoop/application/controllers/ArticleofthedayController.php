@@ -61,11 +61,17 @@ class ArticleofthedayController extends Zend_Controller_Action
 
             $json = array();
 
-            $images = ArticleImage::GetImagesByArticleNumber($article_number);
-            $image = $images[0];
-
             $json['title'] = $article->getTitle();
-            $json['image'] = $this->view->baseUrl("/get_img?ImageWidth=164&ImageId=".$image->getImageId());
+
+            $images = ArticleImage::GetImagesByArticleNumber($article_number);
+
+            if (count($images) > 0) {
+                $image = $images[0];
+                $json['image'] = $this->view->baseUrl("/get_img?ImageWidth=164&ImageId=".$image->getImageId());
+            }
+            else {
+                $json['image'] = null;
+            }
 
             $date = $article->getPublishDate();
             $date = explode(" ", $date);
