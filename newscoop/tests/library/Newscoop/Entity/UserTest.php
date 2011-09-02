@@ -74,6 +74,16 @@ class UserTest extends \RepositoryTestCase
         $this->assertEquals(1234, $user->getAttribute('phone'));
     }
 
+    public function testPending()
+    {
+        $user = new User('email');
+        $this->assertTrue($user->isPending());
+        $user->setActive();
+        $this->assertTrue($user->isPending());
+        $user->setUsername('uname');
+        $this->assertFalse($user->isPending());
+    }
+
     public function testSaveMinimal()
     {
         $user = new User();
@@ -222,8 +232,7 @@ class UserTest extends \RepositoryTestCase
 
     public function testAttributes()
     {
-        $user = new User();
-        $user->setUsername('test');
+        $user = new User('email');
         $this->em->persist($user);
         $this->em->flush();
 

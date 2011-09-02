@@ -16,13 +16,13 @@ use Doctrine\ORM\EntityManager,
 class UserService
 {
     /** @var Doctrine\ORM\EntityManager */
-    protected $em;
+    private $em;
 
     /** @var Zend_Auth */
-    protected $auth;
+    private $auth;
 
     /** @var Newscoop\Entity\User */
-    protected $currentUser;
+    private $currentUser;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
@@ -157,11 +157,25 @@ class UserService
     }
 
     /**
+     * Create pending user
+     *
+     * @param string $email
+     * @return Newscoop\Entity\User
+     */
+    public function createPending($email)
+    {
+        $user = new User($email);
+        $this->em->persist($user);
+        $this->em->flush();
+        return $user;
+    }
+
+    /**
      * Get repository for user entity
      *
      * @return Newscoop\Entity\Repository\UserRepository
      */
-    protected function getRepository()
+    private function getRepository()
     {
         return $this->em->getRepository('Newscoop\Entity\User');
     }

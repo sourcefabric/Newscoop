@@ -1,7 +1,7 @@
-Hello {{ $user }},
+Hello,
 
 please confirm your e-mail address via clicking on link below:
 
-http://{{ $publication }}{{ $view->url(['user' => $user->identifier, 'token' => $token], 'confirm-email') }}
+http://{{ $publication }}{{ $view->url(['user' => $user, 'token' => $token], 'confirm-email') }}
 
 Thanks!

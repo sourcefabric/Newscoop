@@ -94,10 +94,22 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
         return parent::getStatus();
     }
 
+    public function setActive()
+    {
+        $this->__load();
+        return parent::setActive();
+    }
+
     public function isActive()
     {
         $this->__load();
         return parent::isActive();
+    }
+
+    public function isPending()
+    {
+        $this->__load();
+        return parent::isPending();
     }
 
     public function setEmail($email)

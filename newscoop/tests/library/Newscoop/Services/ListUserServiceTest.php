@@ -24,15 +24,13 @@ class ListUserServiceTest extends \RepositoryTestCase
 
     public function testOrderByRank()
     {
-        $user = new User();
-        $user->setUsername('user1');
+        $user = new User('email');
         $this->em->persist($user);
         $this->em->flush();
         $user->addAttribute('points', 1);
 
 
-        $user = new User();
-        $user->setUsername('user2');
+        $user = new User('email');
         $this->em->persist($user);
         $this->em->flush();
         $user->addAttribute('points', 2);

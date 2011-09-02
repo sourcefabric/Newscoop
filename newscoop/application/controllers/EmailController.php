@@ -11,11 +11,8 @@ class EmailController extends Zend_Controller_Action
 {
     public function confirmAction()
     {
-        $user = $this->_getParam('user');
-        $tokenService = $this->_helper->service('user.token');
-
-        $this->view->user = new MetaUser($user);
-        $this->view->token = $tokenService->generateToken($user, 'email.confirm');
+        $this->view->user = $this->_getParam('user');
+        $this->view->token = $this->_getParam('token');
 
         $server = $this->getRequest()->getServer();
         $this->view->publication = $server['SERVER_NAME'];

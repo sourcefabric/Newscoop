@@ -33,8 +33,7 @@ class AuditTest extends \RepositoryTestCase
 
     public function testSaveEntity()
     {
-        $user = new User();
-        $user->setUsername('username');
+        $user = new User('email');
         $this->em->persist($user);
 
         $audit = new AuditEvent();

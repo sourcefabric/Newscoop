@@ -27,8 +27,7 @@ class UserTokenTest extends \RepositoryTestCase
 
     public function testSave()
     {
-        $user = new User();
-        $user->setUsername('foo');
+        $user = new User('email');
         $this->em->persist($user);
         $this->em->flush();
 

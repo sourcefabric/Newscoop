@@ -33,7 +33,7 @@ class User implements \Zend_Acl_Role_Interface
     private $id;
 
     /**
-     * @Column(type="string", length="80", name="UName")
+     * @Column(type="string", length="80", name="UName", nullable=TRUE)
      * @var string
      */
     private $username;
@@ -58,7 +58,7 @@ class User implements \Zend_Acl_Role_Interface
     private $last_name;
 
     /**
-     * @Column(name="EMail", length="80", nullable=TRUE)
+     * @Column(type="string", length="80", name="EMail")
      * @var string
      */
     private $email;
@@ -126,11 +126,11 @@ class User implements \Zend_Acl_Role_Interface
     private $attributes;
 
     /**
-     * @param string $username
+     * @param string $email
      */
-    public function __construct($username = null)
+    public function __construct($email = null)
     {
-        $this->username = $username;
+        $this->email = $email;
         $this->created = new \DateTime();
         $this->groups = new ArrayCollection();
         $this->attributes = new ArrayCollection();
@@ -308,6 +308,16 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * Set user as active
+     *
+     * @return Newscoop\Entity\User
+     */
+    public function setActive()
+    {
+        return $this->setStatus(self::STATUS_ACTIVE);
+    }
+
+    /**
      * Test if user is active
      *
      * @return bool
@@ -315,6 +325,16 @@ class User implements \Zend_Acl_Role_Interface
     public function isActive()
     {
         return $this->status == self::STATUS_ACTIVE;
+    }
+
+    /**
+     * Test if user is pending
+     *
+     * @return bool
+     */
+    public function isPending()
+    {
+        return $this->status == self::STATUS_INACTIVE || empty($this->username);
     }
 
     /**

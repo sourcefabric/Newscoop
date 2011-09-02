@@ -112,6 +112,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('auth.adapter', 'Newscoop\Services\Auth\DoctrineAuthService')
             ->addArgument(new sfServiceReference('em'));
 
+        $container->register('email', 'Newscoop\Services\EmailService')
+            ->addArgument(new sfServiceReference('view'))
+            ->addArgument(new sfServiceReference('user.token'));
+
         Zend_Registry::set('container', $container);
         return $container;
     }
@@ -169,7 +173,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             new Zend_Controller_Router_Route('confirm-email/:user/:token', array(
                 'module' => 'default',
                 'controller' => 'register',
-                'action' => 'confirm-email',
+                'action' => 'confirm',
             )));
 
         $router->addRoute(

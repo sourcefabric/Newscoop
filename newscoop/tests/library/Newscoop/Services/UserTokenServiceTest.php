@@ -53,15 +53,6 @@ class UserTokenServiceTest extends \PHPUnit_Framework_TestCase
         $user = new User();
         $token = new UserToken($user, 'test', 'qwerty');
         $this->expectsFind('qwerty', 'test', $user, $token);
-
-        $this->em->expects($this->once())
-            ->method('remove')
-            ->with($this->equalTo($token));
-
-        $this->em->expects($this->once())
-            ->method('flush')
-            ->with();
-
         $this->assertTrue($this->service->checkToken($user, 'qwerty', 'test'));
     }
 

@@ -20,78 +20,43 @@ class RegisterController extends Zend_Controller_Action
     /** @var Newscoop\Services\UserTokenService */
     private $tokenService;
 
-    public function init()
-    {
-        $GLOBALS['controller'] = $this;
-        $this->_helper->layout->disableLayout();
-
-        $this->service = $this->_helper->service('user');
-        $this->session = new Zend_Session_Namespace('Form_Register');
-        $this->tokenService = $this->_helper->service('user.token');
-    }
-
     public function indexAction()
     {
-        $formRegister = new Application_Form_Register();
-        $formConfirm = new Application_Form_Confirm();
-
-        $formRegister->setMethod('POST');
-        $formConfirm->setMethod('POST');
+        $form = new Application_Form_Register();
+        $form->setMethod('POST');
 
         $request = $this->getRequest();
-        if ($request->isPost()) {
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $values = $form->getValues();
+            $users = $this->_helper->service('user')->findBy(array(
+                'email' => $values['email'],
+            ));
 
-            if (!$request->has('password') && isset($this->session->password)) {
-                $request->setPost('password', $this->session->password);
+            if (count($users) > 0) {
+                $user = array_pop($users);
+            } else {
+                $user = $this->_helper->service('user')->createPending($values['email']);
             }
 
-            if ($formRegister->isValid($request->getPost())) { // handle confirm form
-                if ($request->has('username') && $formConfirm->isValid($request->getPost())) {
-                    $values = $formConfirm->getValues();
-                    $values['password'] = empty($values['password_change']) ? $this->session->password : $values['password_change'];
-                    $values['is_public'] = true; // public by default
-                    try {
-                        $user = $this->service->save($values);
-                        $this->sendConfirmEmail($user);
-                        $this->notifyDispatcher($user);
-                        $this->_helper->redirector('index', 'index');
-                    } catch (Exception $e) {
-                        switch ($e->getMessage()) {
-                            case 'username_conflict':
-                                $formConfirm->username->addError('Username is used. Please use another one.');
-                                break;
-
-                            case 'email_conflict':
-                                $formConfirm->email->addError('E-mail is used. Please use another one.');
-                                break;
-
-                            default:
-                                var_dump($e);
-                                exit;
-                        }
-                    }
-                } elseif (!$request->has('username')) { // init confirm form
-                    $values = $formRegister->getValues();
-                    $this->session->password = $values['password'];
-                    $values['username'] = $this->service->generateUsername($values['first_name'], $values['last_name']);
-                    $formConfirm->setDefaults($values + array(
-                        'terms_of_services' => 'Terms of services text',
-                    ));
-                }
-
-                $this->view->form = $formConfirm;
-                return;
+            if (!$user->isPending()) {
+                $this->_helper->flashMessenger(array('error', "User with given username exists."));
+                $this->_helper->redirector('index', 'index', 'default');
             }
-        } else {
-            $this->session->password = null;
+
+            $this->_helper->service('email')->sendConfirmationToken($user);
+            $this->_helper->redirector('after');
         }
 
-        $this->view->form = $formRegister;
+        $this->view->form = $form;
     }
 
-    public function confirmEmailAction()
+    public function afterAction()
     {
-        $user = $this->service->find($this->_getParam('user'));
+    }
+
+    public function confirmAction()
+    {
+        $user = $this->_helper->service('user')->find($this->_getParam('user'));
         if (empty($user)) {
             $this->_helper->flashMessenger(array('error', "User not found"));
             $this->_helper->redirector('index', 'index', 'default');
@@ -108,29 +73,30 @@ class RegisterController extends Zend_Controller_Action
             $this->_helper->redirector('index', 'index', 'default');
         }
 
+        // @todo set user active
         $this->service->setActive($user);
-        $this->_helper->redirector('index', 'auth', 'default');
     }
 
-    /**
-     * Send confirm email
-     *
-     * @param Newscoop\Entity\User $user
-     * @return void
-     */
-    private function sendConfirmEmail(User $user)
+    public function initAction()
     {
-        $email = $this->view->action('confirm', 'email', 'default', array(
-            'user' => $user,
-        ));
+        switch ($e->getMessage()) {
+            case 'username_conflict':
+                $formConfirm->username->addError('Username is used. Please use another one.');
+                break;
 
-        // @todo send to user email from some valid email
-        $mail = new Zend_Mail();
-        $mail->setBodyText($email);
-        $mail->setFrom('no-reply@localhost');
-        $mail->addTo('petr@localhost');
-        $mail->setSubject('Confirm e-mail');
-        $mail->send();
+            case 'email_conflict':
+                $formConfirm->email->addError('E-mail is used. Please use another one.');
+                break;
+
+            default:
+                var_dump($e);
+                exit;
+        }
+    }
+
+    public function generateUsername()
+    {
+        return $this->service->generateUsername($this->_getParam('first_name'), $this->_getParam('last_name'));
     }
 
     /**
