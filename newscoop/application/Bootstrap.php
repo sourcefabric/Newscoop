@@ -64,6 +64,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $doctrine = $this->getResource('doctrine');
         $container->setService('em', $doctrine->getEntityManager());
 
+        $this->bootstrap('view');
+        $container->setService('view', $this->getResource('view'));
+
+        $container->register('image', 'Newscoop\Services\ImageService')
+            ->addArgument(new sfServiceReference('view'));
+
         $container->register('user', 'Newscoop\Services\UserService')
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(Zend_Auth::getInstance());
@@ -175,15 +181,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             )));
 
         $router->addRoute(
-            'user-image',
-            new Zend_Controller_Router_Route_Regex('media/user/cache/(\d+)_(\d+)_(.+)', array(
+            'image',
+            new Zend_Controller_Router_Route_Regex('media/image/cache/(\d+)_(\d+)_(.+)', array(
                 'module' => 'default',
                 'controller' => 'image',
-                'action' => 'user',
+                'action' => 'cache',
             ), array(
                 1 => 'width',
                 2 => 'height',
                 3 => 'image',
-            ), 'media/user/cache/%d_%d_%s'));
+            ), 'media/image/cache/%d_%d_%s'));
     }
 }

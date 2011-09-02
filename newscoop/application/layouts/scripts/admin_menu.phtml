@@ -431,6 +431,13 @@ if ($showUserMenu) {
                         ),
                     ),
                 ),
+                array(
+                    'label' => getGS('Create new user'),
+                    'module' => 'admin',
+                    'controller' => 'user',
+                    'action' => 'create',
+                    'visible' => false,
+                ),
             ),
         );
     }

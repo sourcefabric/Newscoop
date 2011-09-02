@@ -2,4 +2,18 @@
 
 <?php $this->renderActions(); ?>
 
+<div class="edit-image">
+    <a href="<?php echo $this->url(array(
+        'module' => 'admin',
+        'controller' => 'image',
+        'action' => 'change',
+    )); ?>" class="iframe"><img src="<?php echo $this->image; ?>" width="80" height="80" /><br /><?php empty($this->image) ? putGS('Add picture') : putGS('Edit picture'); ?></a>
+</div>
+
 <?php echo $this->form; ?>
+
+<script>
+$('.edit-image a').fancybox({
+    hideOnContentClick: false
+});
+</script>

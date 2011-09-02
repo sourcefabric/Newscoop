@@ -44,19 +44,14 @@ class DashboardController extends Zend_Controller_Action
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $values = $form->getValues();
 
-            $imageInfo = array_pop($form->image->getFileInfo());
-            if (!in_array($imageInfo['type'], array('image/jpeg'))) {
-                $form->image->addError("Unsupported image type '$imageInfo[type]'");
-            } else {
-                $newname = sha1_file($imageInfo['tmp_name']) . '.' . array_pop(explode('.', $imageInfo['name']));
-                if (!file_exists(APPLICATION_PATH . "/../images/$newname")) {
-                    rename($imageInfo['tmp_name'], APPLICATION_PATH . "/../images/$newname");
-                }
-                $values['image'] = $newname;
+            try {
+                $imageInfo = array_pop($form->image->getFileInfo());
+                $values['image'] = $this->_helper->service('image')->save($imageInfo);
+                $this->service->save($values, $this->user);
+                $this->_helper->redirector('index');
+            } catch (\InvalidArgumentException $e) {
+                $form->image->addError($e->getMessage());
             }
-
-            $this->service->update($this->user, $values);
-            $this->_helper->redirector('index');
         }
 
         $this->view->form = $form;
