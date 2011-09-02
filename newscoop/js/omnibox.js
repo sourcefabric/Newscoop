@@ -133,7 +133,7 @@ var omnibox = {
 			f_comment_nickname: '',
 			f_comment_reader_email: '',
 			f_comment_content: this.elements.ob_comment_text.value,
-			f_article_number: document.getElementById('ob_comment_article_number').value,
+			f_article_number: this.article,
 			f_comment_is_anonymous: 0,
 			f_comment_subject: this.elements.ob_comment_subject.value,
 			f_captcha: this.elements.ob_review_captcha_code.value,
