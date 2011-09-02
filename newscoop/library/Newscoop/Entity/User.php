@@ -33,7 +33,7 @@ class User implements \Zend_Acl_Role_Interface
     private $id;
 
     /**
-     * @Column(type="string", length="80", name="UName")
+     * @Column(type="string", length="80", name="UName", nullable=TRUE)
      * @var string
      */
     private $username;
@@ -58,7 +58,7 @@ class User implements \Zend_Acl_Role_Interface
     private $last_name;
 
     /**
-     * @Column(name="EMail", length="80", nullable=TRUE)
+     * @Column(type="string", length="80", name="EMail")
      * @var string
      */
     private $email;
@@ -91,6 +91,19 @@ class User implements \Zend_Acl_Role_Interface
     private $is_public;
 
     /**
+     * @Column(type="integer", name="Field5")
+     * @var int
+     * @todo add new db column (should have default 0)
+     */
+    private $points;
+
+    /**
+     * @Column(type="string", length="255", nullable=TRUE)
+     * @var string
+     */
+    private $image;
+
+    /**
      * @oneToOne(targetEntity="Newscoop\Entity\Acl\Role", cascade={"ALL"})
      * @var Newscoop\Entity\Acl\Role
      */
@@ -113,17 +126,20 @@ class User implements \Zend_Acl_Role_Interface
     private $attributes;
 
     /**
+     * @param string $email
      */
-    public function __construct()
+    public function __construct($email = null)
     {
+        $this->email = $email;
         $this->created = new \DateTime();
         $this->groups = new ArrayCollection();
         $this->attributes = new ArrayCollection();
         $this->status = self::STATUS_INACTIVE;
         $this->role = new Role();
+        $this->is_admin = false;
+        $this->is_public = false;
         $this->setPassword($this->generateRandomString(6)); // make sure password is not empty
-        $this->is_admin = FALSE;
-        $this->is_public = FALSE;
+        $this->points = 0;
     }
 
     /**
@@ -204,7 +220,7 @@ class User implements \Zend_Acl_Role_Interface
      * @param string $allowed_chars
      * @return string
      */
-    final protected function generateRandomString($length = 12, $allowed_chars = 'abcdefghijklmnopqrstuvwxyzAMCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
+    final public function generateRandomString($length = 12, $allowed_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
     {
         $return = '';
         for ($i = 0; $i < $length; $i++) {
@@ -257,17 +273,6 @@ class User implements \Zend_Acl_Role_Interface
     {
         return (string) $this->last_name;
     }
-    
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        $name = $this->getFirstName().' '.$this->getLastName();
-        return $name;
-    }
 
     /**
      * Set status
@@ -303,6 +308,16 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * Set user as active
+     *
+     * @return Newscoop\Entity\User
+     */
+    public function setActive()
+    {
+        return $this->setStatus(self::STATUS_ACTIVE);
+    }
+
+    /**
      * Test if user is active
      *
      * @return bool
@@ -310,6 +325,16 @@ class User implements \Zend_Acl_Role_Interface
     public function isActive()
     {
         return $this->status == self::STATUS_ACTIVE;
+    }
+
+    /**
+     * Test if user is pending
+     *
+     * @return bool
+     */
+    public function isPending()
+    {
+        return $this->status == self::STATUS_INACTIVE || empty($this->username);
     }
 
     /**
@@ -389,6 +414,32 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * Get points
+     *
+     * @return int
+     */
+    public function getPoints()
+    {
+        return (int) $this->points;
+    }
+
+    /**
+     * Set points
+     *
+     * @param int $points
+     * @return Newscoop\Entity\User
+     */
+    public function setPoints($points)
+    {
+        if (!is_int($points)) {
+            throw new \InvalidArgumentException("Points must be an integer: '$points'");
+        }
+
+        $this->points = $points;
+        return $this;
+    }
+
+    /**
      * Get groups
      *
      * @return array of Newscoop\Entity\User\Group
@@ -455,6 +506,28 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * Set image
+     *
+     * @param string $image
+     * @return Newscoop\Entity\User
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+        return $this;
+    }
+
+    /**
+     * Get image
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
      * Check permissions
      *
      * @param string $permission
@@ -473,6 +546,27 @@ class User implements \Zend_Acl_Role_Interface
         } catch (\Exception $e) {
             return FALSE;
         }
+    }
+
+    /**
+     * Get real name
+     *
+     * @return string
+     */
+    public function getRealName()
+    {
+        return trim($this->first_name . ' ' . $this->last_name);
+    }
+
+    /**
+     * Get user id
+     * proxy to getId
+     *
+     * @return int
+     */
+    public function getUserId()
+    {
+        return $this->getId();
     }
 
     /**
