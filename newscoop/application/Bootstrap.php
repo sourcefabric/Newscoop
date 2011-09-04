@@ -145,7 +145,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $front->registerPlugin(new Application_Plugin_CampPluginAutoload());
         $front->registerPlugin(new Application_Plugin_Auth($options['auth']));
         $front->registerPlugin(new Application_Plugin_Acl($options['acl']));
-        $front->registerPlugin(new Application_Plugin_Smarty());
     }
 
     protected function _initRouter()
@@ -195,5 +194,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 2 => 'height',
                 3 => 'image',
             ), 'media/image/cache/%d_%d_%s'));
+    }
+
+    protected function _initActionHelpers()
+    {
+        require_once APPLICATION_PATH . '/controllers/helpers/Smarty.php';
+        Zend_Controller_Action_HelperBroker::addHelper(new Action_Helper_Smarty());
     }
 }
