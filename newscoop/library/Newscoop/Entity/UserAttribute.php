@@ -15,7 +15,6 @@ class UserAttribute
 {
     /**
      * @Id @ManyToOne(targetEntity="User", inversedBy="attributes")
-     * @JoinColumn(name="user_id", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;

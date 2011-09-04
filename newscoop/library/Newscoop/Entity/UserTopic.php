@@ -16,7 +16,6 @@ class UserTopic
     /**
      * @Id
      * @OneToOne(targetEntity="Newscoop\Entity\User")
-     * @JoinColumn(name="user_id", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;

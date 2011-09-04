@@ -15,7 +15,6 @@ class UserToken
 {
     /**
      * @Id @ManyToOne(targetEntity="Newscoop\Entity\User")
-     * @JoinColumn(name="user_id", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;
