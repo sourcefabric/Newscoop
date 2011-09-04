@@ -17,6 +17,15 @@ require_once dirname(__FILE__) . '/../../classes/Browser.php';
  */
 final class CampContext
 {
+    /**
+     * dummy login action
+     * @var array
+     */
+    public $login_action = array(
+        'is_error' => false,
+        'error_message' => '',
+    );
+
     // Defines the object types
     private static $m_objectTypes = array(
 								    'language'=>array('class'=>'Language',
