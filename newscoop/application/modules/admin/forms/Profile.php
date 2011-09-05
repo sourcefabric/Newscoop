@@ -7,19 +7,20 @@
 
 /**
  */
-class Admin_Form_Image extends Zend_Form
+class Admin_Form_Profile extends Zend_Form
 {
     public function init()
     {
         $this->setAttrib('enctype', 'multipart/form-data');
 
         $this->addElement('file', 'image', array(
-            'label' => 'Image',
+            'label' => getGS('Picture'),
         ));
 
         $this->addElement('submit', 'submit', array(
-            'label' => 'Upload',
+            'label' => 'Save',
             'ignore' => true,
+            'order' => 99,
         ));
     }
 }

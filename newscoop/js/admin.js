@@ -200,6 +200,10 @@ $(function() {
         		return;
             }
 
+            if ($(this).attr('name') == 'MAX_FILE_SIZE') {
+                return;
+            }
+
             var dd = $(this).closest('dd');
             var dt = dd.prev('dt');
             var errors = $('ul.errors', dd);

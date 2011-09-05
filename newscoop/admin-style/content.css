@@ -268,3 +268,11 @@ dl dd .info-text    {
     background-color: #fff;
     text-align: left;
 }
+
+.iframe .content {
+    margin: 5px;
+}
+
+.iframe .zend_form {
+    width: 503px;
+}
