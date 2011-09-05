@@ -70,7 +70,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
                 $section = $feedback->getSection();
                 $article = $feedback->getArticle();
                 
-                $banned = $acceptanceRepository->checkBanned(array('name' => $user->getName()), $publication);
+                $banned = $acceptanceRepository->checkBanned(array('name' => $user->getName(), 'email' => '', 'ip' => ''), $publication);
                 if ($banned['name'] == true) {
 					$banned = true;
 				} else {
