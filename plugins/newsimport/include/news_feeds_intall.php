@@ -1,4 +1,4 @@
 <?php
 
-$newsipmort_install = 'http://localhost/';
+$newsipmort_install = 'http://newscoop';
 

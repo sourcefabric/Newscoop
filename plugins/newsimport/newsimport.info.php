@@ -51,6 +51,11 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
     define('PLUGIN_NEWSIMPORT_FUNCTIONS', TRUE);
 
     function plugin_newsimport_set_url() {
+        global $Campsite;
+
+        SystemPref::Set('NewsImportBaseUrl', $Campsite['WEBSITE_URL']);
+
+/*
         $plugin_inst_name = dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR.'news_feeds_intall.php';
 
         global $Campsite;
@@ -66,6 +71,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         catch (Exception $exc) {
             // may be some logging
         }
+*/
     }
 
     function plugin_newsimport_set_cron($p_state) {
@@ -112,7 +118,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 
 
     function plugin_newsimport_create_event_type() {
-        $art_type_name = 'event_general';
+        $art_type_name = 'newswire';
 
         $art_type_obj = new ArticleType($art_type_name);
         if (!$art_type_obj->exists()) {
@@ -175,11 +181,12 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         $incl_dir = dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR;
         require($incl_dir . 'default_access.php');
 
-        // not putting it into sysprefs, since the cron job would not be able to access it
-        //$cur_nimp_auth = SystemPref::Get('Plugin_NewsImport_CommandToken');
+        //$cur_nimp_auth = SystemPref::Get('NewsImportCommandToken');
         //if (empty($cur_nimp_auth)) {
-        //    SystemPref::Set('Plugin_NewsImport_CommandToken', $newsimport_default_access);
+        //    SystemPref::Set('NewsImportCommandToken', $newsimport_default_access);
         //}
+        // for now, always putting into sysprefs, since no other way to chnage it
+        SystemPref::Set('NewsImportCommandToken', $newsimport_default_access);
     }
 
     function plugin_newsimport_set_one_topic($p_topicCat, $p_topicNames, $p_parentIds) {

@@ -56,9 +56,9 @@ class NewsImport extends DatabaseObject
 
         $incl_dir = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR;
         require($incl_dir . 'default_access.php');
-        $news_auth_sys_pref = $newsimport_default_access;
-        // not taking it from sysprefs since cron job does not have access there
-        //$news_auth_sys_pref = SystemPref::Get('Plugin_NewsImport_CommandToken');
+        //$news_auth_sys_pref = $newsimport_default_access;
+        // taking access token from sysprefs
+        $news_auth_sys_pref = SystemPref::Get('NewsImportCommandToken');
         if ((!empty($news_auth_sys_pref)) && ($news_auth != $news_auth_sys_pref)) {
             return false;
         }
@@ -425,12 +425,17 @@ class NewsImport extends DatabaseObject
     }
 
     public static function StoreEventData($p_events, $p_source) {
-//echo count($p_events) . " of events:\n";
         if (empty($p_events)) {
             return;
         }
 
-        //$art_type = 'event_general';
+        global $g_user;
+
+        if ((!isset($g_user)) || (empty($g_user))) {
+            $user_id = $p_source['admin_user_id']; //1;
+            $g_user = new User($user_id);
+        }
+
         $art_type = $p_source['event_type'];
         $art_publication = $p_source['publication_id'];
         $art_issue = $p_source['issue_number'];
@@ -441,32 +446,17 @@ class NewsImport extends DatabaseObject
         $status_comments = $p_source['status']['comments'];
         $status_publish = $p_source['status']['publish'];
 
+        $geo_sys_def = $p_source['geo'];
+
         $art_author = new Author($p_source['provider_name']);
         if (!$art_author->exists()) {
             $art_author->create();
         }
 
-//var_dump($p_events);
-
-//echo count($p_events) . " of events:\n";
-
         //$debug_rank = -1;
         foreach ($p_events as $one_event) {
-            //$debug_rank += 1;
-            //echo "rank $debug_rank: " . $one_event['date'] . "\n";
-            //try {
-            //    ob_end_flush();
-            //} catch (Exception $exc) {}
-            //flush();
-
-            //$ev_headline = $one_event['headline'];
-            //$ev_event_id = $one_event['event_id'];
-
-//var_dump($one_event);
-//return;
 
 /*
-
 First, try to load event (possibly created by former imports), and if there, remove it - will be put in with the current, possible more correct info.
 */
 
@@ -478,7 +468,6 @@ First, try to load event (possibly created by former imports), and if there, rem
                 new ComparisonOperation('IdPublication', new Operator('is', 'sql'), $art_publication),
                 new ComparisonOperation('NrIssue', new Operator('is', 'sql'), $art_issue),
                 new ComparisonOperation('NrSection', new Operator('is', 'sql'), $art_section),
-                //new ComparisonOperation('', new Operator('is', 'sql'), 1),
                 new ComparisonOperation($art_type . '.event_id', new Operator('is', 'sql'), $one_event['event_id']),
             ), null, null, 0, $p_count, true);
 
@@ -486,10 +475,7 @@ First, try to load event (possibly created by former imports), and if there, rem
                 $article = $event_art_list[0];
             }
 
-            //$art_name = $one_event['headline'] . ' (' . mt_rand() . ')';
             $art_name = $one_event['headline'] . ' - ' . $one_event['date'] . ' (' . $one_event['event_id'] . ')';
-
-//echo "\n$art_type, $art_name, $art_publication, $art_issue, $art_section\n";
 
             if (!$article) {
                 $article = new Article($art_lang);
@@ -498,9 +484,6 @@ First, try to load event (possibly created by former imports), and if there, rem
 
             $art_number = $article->getArticleNumber();
 
-//echo  $article->getArticleNumber() . ' - ' . $article->getLanguageId() . "\n" . "\n";
-
-            //$article_data = new ArticleData($art_type, $art_number, $article->getLanguageId());
             $article_data = $article->getArticleData();
 
             $article_data->setProperty('Fprovider_id', $one_event['provider_id']);
@@ -544,7 +527,6 @@ First, try to load event (possibly created by former imports), and if there, rem
             $old_topics = ArticleTopic::GetArticleTopics($art_number);
             foreach ($old_topics as $one_topic) {
                 ArticleTopic::RemoveTopicFromArticle($one_topic->getTopicId(), $art_number, false);
-                //$one_topic->delete($art_lang);
             }
 
             $art_topics = null;
@@ -564,8 +546,121 @@ First, try to load event (possibly created by former imports), and if there, rem
                     ArticleTopic::AddTopicToArticle($topic_id, $art_number, false);
                 }
             }
-//echo " setting author ";
-            //ArticleAuthor::GetAuthorsByArticle($art_number, $art_lang);
+
+            // set geo
+
+            if (!empty($one_event['geo'])) {
+                $ev_map_info = array();
+                $ev_map_info['cen_lon'] = 0 + $one_event['geo']['longitude'];
+                $ev_map_info['cen_lat'] = 0 + $one_event['geo']['latitude'];
+                $ev_map_info['zoom'] = 0 + $geo_sys_def['map_zoom']; //15;
+                $ev_map_info['provider'] = '' . $geo_sys_def['map_provider']; //'osm';
+                $ev_map_info['width'] = 0 + $geo_sys_def['map_width']; //600;
+                $ev_map_info['height'] = 0 + $geo_sys_def['map_height']; //400;
+                $ev_map_info['name'] = $one_event['headline'];
+
+                $ev_map_id = Geo_Map::ReadMapId($art_number);
+                if (empty($ev_map_id)) {
+                    $ev_map_id = 0;
+                }
+                else {
+                    $ev_map_obj = new Geo_Map($ev_map_id);
+                    $ev_map_point_ids = array();
+                    foreach ($ev_map_obj->getLocations() as $one_map_point) {
+                        $ev_map_point_ids[] = array('location_id' => $one_map_point->getId());
+                    }
+                    if (!empty($ev_map_point_ids)) {
+                        Geo_Map::RemovePoints($ev_map_id, $ev_map_point_ids);
+                    }
+                }
+
+                Geo_Map::UpdateMap($ev_map_id, $art_number, $ev_map_info);
+                $ev_poi_desc = mb_substr($one_event['description'], 0, (0 + $geo_sys_def['poi_desc_len']));
+                if ($ev_poi_desc != $one_event['description']) {
+                    $ev_poi_desc .= ' ...';
+                }
+
+                $ev_points = array(
+                    array(
+                        'index' => 0,
+                        'longitude' => 0 + $one_event['geo']['longitude'],
+                        'latitude' => 0 + $one_event['geo']['latitude'],
+                        'style' => '' . $geo_sys_def['poi_marker_name'], //'marker-gold.png',
+                        'display' => 1,
+                        'name' => $one_event['headline'],
+                        'link' => '',
+                        'perex' => '',
+                        'content_type' => 1,
+                        'content' => '',
+                        'text' => $ev_poi_desc,
+                        'image_src' => '',
+                        'video_id' => '',
+                    ),
+                );
+                $poi_indices = array();
+                Geo_Map::InsertPoints($ev_map_id, $art_lang, $art_number, $ev_points, $poi_indices);
+
+            }
+
+
+            // setting images
+
+            $one_old_images = ArticleImage::GetImagesByArticleNumber($art_number);
+            foreach ($one_old_images as $one_old_img_link) {
+                $one_old_img = $one_old_img_link->getImage();
+                $one_old_img_link->delete();
+                if (0 == count(ArticleImage::GetArticlesThatUseImage($one_old_img->getImageId()))) {
+                    $one_old_img->delete();
+                }
+            }
+
+            if (!empty($one_event['images'])) {
+
+                //$one_img_rank = -1;
+                foreach ($one_event['images'] as $one_image) {
+//echo " aa 1 \n";
+/*
+                    $one_img_rank += 1;
+                    $one_image_cont = file_get_contents(urlencode($one_image['url']));
+                    $one_file_path = tempnam(sys_get_temp_dir(), '' . mt_rand(100, 999));
+                    $one_file_fndl = fopen($one_file_path, 'w');
+                    fwrite($one_file_fndl, $one_image_cont);
+                    fclose($one_file_fndl);
+
+                    $one_image_mime = '';
+                    $one_image_info = getimagesize($one_file_path);
+                    if ($one_image_info) {
+                        $one_image_mime = $one_image_info['mime'];
+                    }
+
+                    $one_file_info = array(
+                        'name' => $one_event['event_id'] . '-img-' . $one_img_rank,
+                        'type' => $one_image_mime,
+                        'tmp_name' => $one_file_path,
+                        'size' => filesize($one_file_path),
+                        'error' => 0,
+                    );
+*/
+
+                    $one_image_attributes = array();
+                    if (!empty($one_image['label'])) {
+                        $one_image_attributes['Description'] = $one_image['label'];
+                    }
+
+                    //Image::OnImageUpload();
+                    try {
+                        $one_image_obj = Image::OnAddRemoteImage($one_image['url'], $one_image_attributes);
+                        if (is_a($one_image_obj, 'Image')) {
+                            $one_img_res = ArticleImage::AddImageToArticle($one_image_obj->getImageId(), $art_number);
+                        }
+                    }
+                    catch (Exception $exc) {
+                        continue;
+                    }
+                }
+            }
+
+
             ArticleAuthor::OnArticleLanguageDelete($art_number, $art_lang);
 
             $article->setAuthor($art_author);
@@ -603,7 +698,6 @@ First, try to load event (possibly created by former imports), and if there, rem
 
     }
 
-    //public static function LoadEventData($p_eventSources, $p_newscoopInst) {
     public static function LoadEventData($p_eventSources, $p_newsFeed, $p_catTopics, $p_otherParams) {
 
 
@@ -615,64 +709,16 @@ First, try to load event (possibly created by former imports), and if there, rem
 
 
         echo "\n<pre>\n";
-        //echo "aaaaaa xx zz";
-
-//            new ComparisonOperation('event_type.event_id', new Operator('is', 'sql'), '529313'),
-//            new ComparisonOperation('event_type.event_id', new Operator('greater', 'string'), '0'),
-/*
-        $p_count = 0;
-        $test_list = Article::GetList(array(
-            new ComparisonOperation('idlanguage', new Operator('is', 'sql'), 1),
-            new ComparisonOperation('IdPublication', new Operator('is', 'sql'), 2),
-            new ComparisonOperation('NrIssue', new Operator('is', 'sql'), 13),
-            new ComparisonOperation('NrSection', new Operator('is', 'sql'), 30),
-            //new ComparisonOperation('', new Operator('is', 'sql'), 1),
-            new ComparisonOperation('event_type.event_id', new Operator('is', 'sql'), 529313),
-        ), null, null, 0, $p_count, true);
-
-        if (is_array($test_list)) {
-            foreach ($test_list as $one_art) {
-                $one_art_data = $one_art->getArticleData();
-                var_dump($one_art);
-                var_dump($one_art_data);
-            }
-        }
-*/
-        //var_dump($test_list);
-        //return;
-
-        //var_dump($p_eventSources);
-        //var_dump($p_newsFeed);
-        //var_dump($p_catTopics);
-
-        //return false;
-        //require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'GeoMap.php');
-
-        //echo "abc\n<pre>\n";
-
-        //var_dump($_GET);
-
-        //var_dump($p_eventSources);
-
-        //$a_map = new Geo_Map();
-        //var_dump($a_map);
-
-        //var_dump($p_xmlFeed);
-
-        //return false;
 
         foreach ($p_eventSources as $one_source_name => $one_source) {
             if ((!empty($p_newsFeed)) && ($one_source_name != $p_newsFeed)) {
                 continue;
             }
-    
-            $categories = self::ReadEventCategories($one_source, $p_catTopics);
-            //continue;
 
+            $categories = self::ReadEventCategories($one_source, $p_catTopics);
 
             $event_set = null;
-            if ('event_general' == $one_source['event_type']) {
-                //$event_set = ReadEventData($one_source['provider_id'], $one_source['source_dirs'], $categories);
+            if ('newswire' == $one_source['event_type']) {
                 $event_load = EventData_Parser::Parse($one_source['provider_id'], $one_source['source_dirs']['new'], $categories, $p_otherParams);
             }
             // temporarily not working with movies
@@ -680,12 +726,8 @@ First, try to load event (possibly created by former imports), and if there, rem
             //    $event_set = MovieData_Parser::ReadMovieData($used_event_files, $one_source, $categories);
             //}
 
-            //var_dump($event_set);
-            //continue;
-
             $event_set = $event_load['events'];
             //unset($event_load['events']);
-//echo "\nevent count: " . count($event_set) . "\n";
 
             if (empty($event_set)) {
                 continue;
@@ -701,7 +743,7 @@ First, try to load event (possibly created by former imports), and if there, rem
             }
 
 ### DEBUG
-$ev_limit = 1;
+$ev_limit = 10;
 ### DEBUG
 
             $ev_count = count($event_set);

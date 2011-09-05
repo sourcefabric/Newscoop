@@ -2,9 +2,10 @@
 
 $event_data_sources = array(
     'events_1' => array(
+        'admin_user_id' => 1,
         'provider_id' => 1,
         'provider_name' => 'Werbeverlags AG',
-        'event_type' => 'event_general',
+        'event_type' => 'newswire',
         'publication_id' => 2,
         'language_id' => 1,
         'issue_number' => 13,
@@ -25,18 +26,25 @@ $event_data_sources = array(
             'comments' => false,
             'publish' => true,
         ),
-/*
         'geo' => array(
+            'map_provider' => 'mapquest', // googlev3, mapquest, osm
+            'map_zoom' => 15,
+            'map_width' => 600,
+            'map_height' => 400,
+            'poi_marker_name' => 'marker-gold.png',
+            'poi_desc_len' => 100,
+/*
             'search_old' => true,
             'center_latitude' => 47.556876,
             'center_longitude' => 7.577676,
-        ),
 */
+        ),
     ),
     'movies_1' => array(
+        'admin_user_id' => 1,
         'provider_id' => 2,
         'provider_name' => 'Werbeverlags AG',
-        'event_type' => 'event_general',
+        'event_type' => 'newswire',
         //'event_type' => 'event_movie',
         'publication_id' => 1,
         'issue_number' => 1,
@@ -54,13 +62,19 @@ $event_data_sources = array(
             'comments' => false,
             'publish' => true,
         ),
-/*
         'geo' => array(
+            'map_provider' => 'mapquest', // googlev3, mapquest, osm
+            'map_zoom' => 15,
+            'map_width' => 600,
+            'map_height' => 400,
+            'poi_marker_name' => 'marker-gold.png',
+            'poi_desc_len' => 100,
+/*
             'search_old' => true,
             'center_latitude' => 47.556876,
             'center_longitude' => 7.577676,
-        ),
 */
+        ),
     ),
 );
 

@@ -46,8 +46,18 @@ class EventData_Parser {
 
                 // TODO: to check that no transfer is running by now
 
+                $event_file_path = $p_dir . DIRECTORY_SEPARATOR . $event_file;
+                $event_file_path_arr = explode('.', $event_file_path);
+                $event_file_path_arr_last_rank = count($event_file_path_arr) - 1;
+                if (0 < $event_file_path_arr_last_rank) {
+                    if ('gz' == strtolower($event_file_path_arr[$event_file_path_arr_last_rank])) {
+                        $event_file_path = 'compress.zlib://' . $event_file_path;
+                    }
+                }
+
                 try {
-                    $result = $parser->parse($events, $p_provider, $p_dir . DIRECTORY_SEPARATOR . $event_file, $p_categories, $start_date);
+                    $result = $parser->parse($events, $p_provider, $event_file_path, $p_categories, $start_date);
+                    //echo count($result);
                 }
                 catch (Exception $exc) {
                     //var_dump($exc);
@@ -56,7 +66,6 @@ class EventData_Parser {
                 $files[] = $event_file;
             }
         }
-//echo count($events);
         return array('files' => $files, 'events' => $events);
     } // fn parse
 } // class EventData_Parser
@@ -89,12 +98,10 @@ class EventData_Parser_SimpleXML {
         }
 
         // $xml->date is an array of (per-day) event sets
-        foreach ($xml->date as $event_day) {
-            // day of event set (event record)
-            $recdate = $event_day->recdate;
+        foreach ($xml->location as $event_location) {
 
             // array of events info
-            $entry_set = $event_day->entry;
+            $entry_set = $event_location->entry;
 
             //$debug_end = false;
             // one event is object of 72 (simple) properties, most of them are empty
@@ -142,7 +149,7 @@ class EventData_Parser_SimpleXML {
                 $event_info['tour_id'] = $x_trnid;
 
                 // number, location id
-                $x_locid = trim('' . $event->locid);
+                $x_locid = trim('' . $event_location->locid);
                 $event_info['location_id'] = $x_locid;
 
 
@@ -153,7 +160,7 @@ class EventData_Parser_SimpleXML {
                 $event_info['genre'] = $x_catsub;
 
                 // location hot
-                $x_lochot = trim('' . $event->lochot);
+                $x_lochot = trim('' . $event_location->lochot);
                 $event_info['rated'] = (empty($x_lochot) ? true : false);
 
                 $event_topics = array();
@@ -187,7 +194,7 @@ class EventData_Parser_SimpleXML {
                 // * main display provider name
                 // event location name
                 // the 'trnorg'/'tour_organization' is a similar/related info
-                $x_locnam = trim('' . $event->locnam);
+                $x_locnam = trim('' . $event_location->locnam);
                 $event_info['organizer'] = $x_locnam; // may be overwritten by tour_organizer
 
                 // !!! no country info
@@ -199,25 +206,26 @@ class EventData_Parser_SimpleXML {
                 $event_info['town'] = $x_twnnam;
 
                 // zip code
-                $x_loczip = trim('' . $event->loczip);
+                $x_loczip = trim('' . $event_location->loczip);
                 $event_info['zipcode'] = $x_loczip;
 
                 // street address, free form, but usually 'street_name house_number'
-                $x_locadr = trim('' . $event->locadr);
+                $x_locadr = trim('' . $event_location->locadr);
                 $event_info['street'] = $x_locadr;
 
                 // * minor location info
                 // other location specification
-                $x_locade = trim('' . $event->locade);
+                $x_locade = trim('' . $event_location->locade);
                 if (!empty($x_locade)) {
                     $event_other[] = $x_locade;
                 }
 
                 // directions to the location
-                $x_locacc = trim('' . $event->locacc);
+                $x_locacc = trim('' . $event_location->locacc);
                 if (!empty($x_locacc)) {
                     $event_other[] = $x_locacc;
                 }
+
 
                 // Tour
 
@@ -369,23 +377,6 @@ class EventData_Parser_SimpleXML {
                 // Date, time
 
                 // * main date-time info
-/*
-                $event_date = '0000-00-00';
-
-                // year, four digits
-                $x_evedatyeanum2 = trim('' . $event->evedatyeanum2);
-                // month, two digits
-                $x_evedatmonnum2 = trim('' . $event->evedatmonnum2);
-                // day, two digits
-                $x_evedatdaynum2 = trim('' . $event->evedatdaynum2);
-
-                if ((!empty($x_evedatyeanum2)) && (!empty($x_evedatmonnum2)) && (!empty($x_evedatdaynum2))) {
-                    if ((4 == strlen($x_evedatyeanum2)) && (2 == strlen($x_evedatmonnum2)) && (2 == strlen($x_evedatdaynum2))) {
-                        $event_date = $x_evedatyeanum2 . '-' . $x_evedatmonnum2 . '-' . $x_evedatdaynum2;
-                    }
-                }
-                $event_info['date'] = $event_date;
-*/
 
                 // year, four digits
                 $x_evedatyeanum2 = trim('' . $event->evedatyeanum2);
@@ -417,7 +408,7 @@ class EventData_Parser_SimpleXML {
                 }
 
                 // long-term hours
-                $x_lochou = trim('' . $event->lochou);
+                $x_lochou = trim('' . $event_location->lochou);
                 if (!empty($x_lochou)) {
                     $event_date_time_text[] = $x_lochou;
                 }
@@ -465,7 +456,7 @@ class EventData_Parser_SimpleXML {
                 $event_web = '';
 
                 // location web url
-                $x_locurl = trim('' . $event->locurl);
+                $x_locurl = trim('' . $event_location->locurl);
                 $event_web = $x_locurl;
 
                 // tour web url
@@ -482,7 +473,7 @@ class EventData_Parser_SimpleXML {
                 $event_other_links = array();
 
                 // location web links
-                $event_other_links[] = trim('' . $event->loclnk);
+                $event_other_links[] = trim('' . $event_location->loclnk);
 
                 // tour web links
                 $event_other_links[] = trim('' . $event->trnlnk);
@@ -517,11 +508,11 @@ class EventData_Parser_SimpleXML {
                 $event_info['web'] = $event_web;
 
                 // location email address
-                $x_locema = trim('' . $event->locema);
+                $x_locema = trim('' . $event_location->locema);
                 $event_info['email'] = $x_locema;
 
                 // location phone number
-                $x_loctel = trim('' . $event->loctel);
+                $x_loctel = trim('' . $event_location->loctel);
                 $event_info['phone'] = $x_loctel;
 
                 // Multimedia
@@ -552,18 +543,17 @@ class EventData_Parser_SimpleXML {
                             $one_image_desc = null;
                         }
 
-                        $event_images[] = array('url' => substr($one_image, 0, ($one_image_desc_start - 1)), 'label' => $one_image_desc);
+                        $event_images[] = array('url' => trim(substr($one_image, 0, $one_image_desc_start)), 'label' => $one_image_desc);
                     }
                 }
 
-                $event_info['event_images'] = $event_images;
+                $event_info['images'] = $event_images;
 
                 // videos
                 $x_evevid = trim('' . $event->evevid);
                 if (!empty($x_evevid)) {
                     $event_other[] = $x_evevid;
                 }
-                $event_info['event_video'] = $x_evevid;
 
                 // audios
                 $x_eveaud = trim('' . $event->eveaud);
@@ -574,10 +564,14 @@ class EventData_Parser_SimpleXML {
                 $event_info['other'] = $event_other;
 
                 // geo data
+                $x_loclat = trim('' . $event_location->loclat);
+                $x_loclng = trim('' . $event_location->loclng);
 
+                $event_info['geo'] = null;
+                if ((!empty($x_loclat)) && (!empty($x_loclng))) {
+                    $event_info['geo'] = array('longitude' => $x_loclng, 'latitude' => $x_loclat);
+                }
 
-
-//var_dump($event_info);
                 $p_events[] = $event_info;
             }
 
