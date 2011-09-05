@@ -181,8 +181,6 @@ class WidgetManager
      */
     public static function SetDefaultWidgetsAll()
     {
-        require_once dirname(__FILE__) . '/../User.php';
-
         // do only once
         if (SystemPref::Get(self::SETTING) != NULL) {
             return;
@@ -191,7 +189,10 @@ class WidgetManager
         SystemPref::Set(self::SETTING, time());
 
         // set widgets per user
-        $users = (array) User::GetUsers();
+        $users = (array) $GLOBALS['controller']->getHelper('service')->getService('user')->findBy(array(
+            'is_admin' => 1,
+        ));
+
         foreach ($users as $user) {
             WidgetManager::SetDefaultWidgets($user->getUserId());
         }

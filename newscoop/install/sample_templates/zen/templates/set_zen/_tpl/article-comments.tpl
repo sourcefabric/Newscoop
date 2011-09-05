@@ -13,11 +13,8 @@
       <div class="comment-head">
          <div class="user-meta">
 {{* get gravatar image *}}
-{{ assign var="profile_email" value=`$gimme->comment->reader_email` }}
-{{ php }}
-$profile_email = $this->get_template_vars('profile_email');
-print "<img src=\"http://www.gravatar.com/avatar/".md5( strtolower( trim( $profile_email ) ) )."?s=60\" / class=\"commentimage\" width=60 height=60 />";
-{{ /php }}
+{{ assign var="profile_email" value=$gimme->comment->reader_email }}
+<img src="http://www.gravatar.com/avatar/{{ md5(strtolower(trim($profile_email))) }}?s=60" class="commentimage" width="60" height="60" />
              <span class="name">{{ $gimme->comment->nickname }}</span> {{ $gimme->comment->submit_date|camp_date_format:"%e.%m.%Y at %H:%i" }}
           </div>
       </div>

@@ -19,7 +19,7 @@
  */
 function smarty_block_list_users($params, $content, &$smarty, &$repeat)
 {
-    $context = $smarty->get_template_vars('gimme');
+    $context = $smarty->getTemplateVars('gimme');
 
     if (!isset($content)) { // init
         $start = $context->next_list_start('UsersList');

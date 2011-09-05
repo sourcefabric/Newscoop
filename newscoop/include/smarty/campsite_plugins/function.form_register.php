@@ -18,17 +18,24 @@ function smarty_function_form_register($params, $smarty)
     $formRegister = new Form_Register();
     $formConfirm = new Form_Confirm();
     $userService = $controller->getHelper('service')->getService('user');
+    $session = new Zend_Session_Namespace('Form_Register');
 
     $request = $controller->getRequest();
     if ($request->isPost()) {
+        $request->setPost('password', $session->password);
         if ($formRegister->isValid($request->getPost())) { // handle confirm form
             if ($request->has('username') && $formConfirm->isValid($request->getPost())) {
                 $values = $formConfirm->getValues();
-                $userService->create($values);
-                $controller->_redirect($controller->getRequest()->getRequestUri());
-                // todo add info message
+                $values['password'] = empty($values['password_change']) ? $session->password : $values['password_change'];
+                $user = $userService->create($values);
+                $dispatcher = $controller->getHelper('service')->getService('dispatcher');
+                $dispatcher->notify(new sfEvent($smarty, 'user.register', array(
+                    'user' => $user,
+                )));
+                $controller->getHelper('redirector')->gotoSimple('index', 'index', 'default');
             } elseif (!$request->has('username')) { // init confirm form
                 $values = $formRegister->getValues();
+                $session->password = $values['password'];
                 $values['username'] = $userService->generateUsername($values['first_name'], $values['last_name']);
                 $formConfirm->setDefaults($values + array(
                     'terms_of_services' => 'Terms of services text',
@@ -38,6 +45,8 @@ function smarty_function_form_register($params, $smarty)
             echo $formConfirm;
             return;
         }
+    } else {
+        $session->password = null;
     }
 
     echo $formRegister;

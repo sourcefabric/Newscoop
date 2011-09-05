@@ -94,10 +94,22 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
         return parent::getStatus();
     }
 
+    public function setActive()
+    {
+        $this->__load();
+        return parent::setActive();
+    }
+
     public function isActive()
     {
         $this->__load();
         return parent::isActive();
+    }
+
+    public function isPending()
+    {
+        $this->__load();
+        return parent::isPending();
     }
 
     public function setEmail($email)
@@ -118,6 +130,42 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
         return parent::getCreated();
     }
 
+    public function setAdmin($admin)
+    {
+        $this->__load();
+        return parent::setAdmin($admin);
+    }
+
+    public function isAdmin()
+    {
+        $this->__load();
+        return parent::isAdmin();
+    }
+
+    public function setPublic($public)
+    {
+        $this->__load();
+        return parent::setPublic($public);
+    }
+
+    public function isPublic()
+    {
+        $this->__load();
+        return parent::isPublic();
+    }
+
+    public function getPoints()
+    {
+        $this->__load();
+        return parent::getPoints();
+    }
+
+    public function setPoints($points)
+    {
+        $this->__load();
+        return parent::setPoints($points);
+    }
+
     public function getGroups()
     {
         $this->__load();
@@ -136,16 +184,58 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
         return parent::getRoleId();
     }
 
+    public function addAttribute($name, $value)
+    {
+        $this->__load();
+        return parent::addAttribute($name, $value);
+    }
+
+    public function getAttribute($name)
+    {
+        $this->__load();
+        return parent::getAttribute($name);
+    }
+
+    public function setImage($image)
+    {
+        $this->__load();
+        return parent::setImage($image);
+    }
+
+    public function getImage()
+    {
+        $this->__load();
+        return parent::getImage();
+    }
+
     public function hasPermission($permission)
     {
         $this->__load();
         return parent::hasPermission($permission);
     }
 
+    public function getRealName()
+    {
+        $this->__load();
+        return parent::getRealName();
+    }
+
+    public function getUserId()
+    {
+        $this->__load();
+        return parent::getUserId();
+    }
+
+    public function __toString()
+    {
+        $this->__load();
+        return parent::__toString();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'username', 'password', 'first_name', 'last_name', 'email', 'created', 'role', 'groups');
+        return array('__isInitialized__', 'id', 'username', 'password', 'first_name', 'last_name', 'email', 'created', 'status', 'is_admin', 'is_public', 'points', 'image', 'role', 'groups', 'attributes');
     }
 
     public function __clone()

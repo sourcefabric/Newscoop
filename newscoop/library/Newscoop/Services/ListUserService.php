@@ -7,7 +7,8 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManager,
+    Newscoop\Entity\User;
 
 /**
  * List User service
@@ -49,6 +50,37 @@ class ListUserService
     public function countBy(array $criteria = array())
     {
         return $this->getRepository()->countBy($criteria);
+    }
+
+    /**
+     * Find one user by criteria
+     *
+     * @param array $criteria
+     * @return Newscoop\Entity\User
+     */
+    public function findOneBy(array $criteria)
+    {
+        return $this->getRepository()->findOneBy($criteria);
+    }
+
+    public function getPublicUsers()
+    {
+        $users = $this->findBy(array(
+            'is_public' => true,
+            'status' => User::STATUS_ACTIVE,
+        ), array('id' => 'desc'));
+
+        return $users;
+    }
+
+    public function findUsersLastNameInRange($letters)
+    {
+        return $this->getRepository()->findUsersLastNameInRange($letters);
+    }
+
+    public function findUsersBySearch($search)
+    {
+        return $this->getRepository()->searchUsers($search);
     }
 
     /**

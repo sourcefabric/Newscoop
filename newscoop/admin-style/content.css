@@ -253,3 +253,18 @@ dl dd .info-text    {
     width: 883px;
     text-indent: 3px;
 }
+
+.edit-image  {
+    margin: 8px 0;
+    height: 1%;
+    overflow: hidden;
+}
+
+.edit-image a {
+    display: block;
+    float: left;
+    padding: 5px;
+    font-size: 1.3em;
+    background-color: #fff;
+    text-align: left;
+}

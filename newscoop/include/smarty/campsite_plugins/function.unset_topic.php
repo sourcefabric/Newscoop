@@ -19,7 +19,7 @@
 function smarty_function_unset_topic($p_params, &$p_smarty)
 {
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('gimme');
+    $campsite = $p_smarty->getTemplateVars('gimme');
     if (!is_object($campsite->topic) || !$campsite->topic->defined) {
         return;
     }

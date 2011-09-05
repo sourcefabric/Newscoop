@@ -25,7 +25,7 @@ function smarty_function_camp_select($p_params, &$p_smarty)
 {
     global $g_ado_db;
 
-    require_once $p_smarty->_get_plugin_filepath('function','html_options');
+    $p_smarty->loadPlugin('smarty_function_html_options');
 
     if (!isset($p_params['object']) || !isset($p_params['attribute'])) {
         return;
@@ -35,7 +35,7 @@ function smarty_function_camp_select($p_params, &$p_smarty)
     }
 
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('gimme');
+    $campsite = $p_smarty->getTemplateVars('gimme');
     $html = '';
 
     $object = strtolower($p_params['object']);

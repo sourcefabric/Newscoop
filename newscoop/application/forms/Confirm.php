@@ -7,51 +7,39 @@
 
 /**
  */
-class Form_Confirm extends Zend_Form
+class Application_Form_Confirm extends Zend_Form
 {
     public function init()
     {
-        $this->setMethod('POST');
-
-        $this->addElement('hidden', 'first_name');
-        $this->addElement('hidden', 'last_name');
-
-        $this->addElement('text', 'email', array(
-            'label' => 'Email',
+        $this->addElement('text', 'first_name', array(
+            'label' => 'First Name',
             'required' => true,
-            'filters' => array(
-                'stringTrim',
-            ),
-            'validators' => array(
-                'emailAddress',
-            ),
+            'filters' => array('stringTrim'),
         ));
 
-        $this->addElement('text', 'password', array(
-            'label' => 'Password',
+        $this->addElement('text', 'last_name', array(
+            'label' => 'Last Name',
             'required' => true,
-            'filters' => array(
-                'stringTrim',
-            ),
-            'validators' => array(
-                array('stringLength', false, array(6, 80)),
-            ),
+            'filters' => array('stringTrim'),
         ));
 
         $this->addElement('text', 'username', array(
             'label' => 'Username',
             'required' => true,
+            'filters' => array('stringTrim'),
         ));
 
-        $this->addElement('textarea', 'terms_of_services', array(
-            'label' => 'Terms of service',
-            'ignore' => true,
-            'rows' => 8,
-            'cols' => 60,
+        $this->addElement('password', 'password', array(
+            'label' => 'Password',
+            'required' => true,
+            'filters' => array('stringTrim'),
+            'validators' => array(
+                array('stringLength', false, array(6, 80)),
+            ),
         ));
 
         $this->addElement('submit', 'submit', array(
-            'label' => 'Register',
+            'label' => 'Save',
             'ignore' => true,
         ));
     }

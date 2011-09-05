@@ -7,7 +7,7 @@
 
 use Newscoop\Entity\Acl\Role,
     Newscoop\Entity\Acl\Rule,
-    Newscoop\Entity\User\Staff;
+    Newscoop\Entity\User;
 
 /**
  * @Acl(ignore="1")
@@ -151,7 +151,7 @@ class Admin_AclController extends Zend_Controller_Action
     public function editAction()
     {
         if ($this->_getParam('user', false)) {
-            $role = $this->_helper->entity->find('Newscoop\Entity\User\Staff', $this->_getParam('user'));
+            $role = $this->_helper->entity->find('Newscoop\Entity\User', $this->_getParam('user'));
         } else {
             $role = $this->_helper->entity->find('Newscoop\Entity\User\Group', $this->_getParam('group'));
         }

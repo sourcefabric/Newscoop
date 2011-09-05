@@ -27,10 +27,8 @@ function smarty_function_camp_edit($p_params, &$p_smarty)
     
     static $calendarIncludesSent = false;
 
-    require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
-
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('gimme');
+    $campsite = $p_smarty->getTemplateVars('gimme');
     $html = '';
 
     if (!isset($p_params['object']) || !isset($p_params['attribute'])) {

@@ -17,6 +17,12 @@ require_once dirname(__FILE__) . '/../../classes/Browser.php';
  */
 final class CampContext
 {
+    /**
+     * dummy login action
+     * @var array
+     */
+    public $login_action;
+
     // Defines the object types
     private static $m_objectTypes = array(
 								    'language'=>array('class'=>'Language',
@@ -43,6 +49,9 @@ final class CampContext
                                     'author'=>array('class'=>'Author'),
         'list_user' => array(
             'class' => 'User',
+        ),
+        'community_feed' => array(
+            'class' => 'CommunityFeed',
         ),
     );
 
@@ -89,6 +98,11 @@ final class CampContext
             'class' => 'Users',
             'list' => 'users',
             'url_id' => 'uid',
+        ),
+        'communityfeeds' => array(
+            'class' => 'CommunityFeeds',
+            'list' => 'community_feeds',
+            'url_id' => 'cfid',
         ),
     );
 
@@ -149,6 +163,11 @@ final class CampContext
         if (!is_null($this->m_properties)) {
             return;
         }
+
+        $this->login_action = (object) array(
+            'is_error' => false,
+            'error_message' => '',
+        );
 
         self::$m_nullMetaArticle = new MetaArticle();
         self::$m_nullMetaSection = new MetaSection();
@@ -373,7 +392,7 @@ final class CampContext
                     $this->m_objects[$p_element] = $p_value;
                 }
 
-                return $this->m_objects[$p_element];
+                return isset($this->m_objects[$p_element]) ? $this->m_objects[$p_element] : null;
             } catch (InvalidObjectException $e) {
                 $this->trigger_invalid_object_error($e->getClassName());
                 return null;
@@ -1003,7 +1022,7 @@ final class CampContext
     {
         static $sectionHandlerRunning = false;
 
-        if (!$this->m_readonlyProperties['preview']
+        if (!$this->m_readonlyProperties['preview'] && isset($p_newSection->issue)
         && !$p_newSection->issue->is_published && $p_newSection->defined()) {
             return;
         }

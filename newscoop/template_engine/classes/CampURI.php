@@ -1215,12 +1215,13 @@ abstract class CampURI
 
     private function readUser()
     {
+        global $controller;
+
         $this->m_preview = false;
+        $userService = $controller->getHelper('service')->getService('user');
 
         $auth = Zend_Auth::getInstance();
         if ($auth->hasIdentity()) {
-            global $controller;
-            $userService = $controller->getHelper('service')->getService('user');
             $user = $userService->find($auth->getIdentity());
             if (!empty($user)) {
                 $this->m_user = new MetaUser($user);
@@ -1228,7 +1229,7 @@ abstract class CampURI
             }
         } else {
             $ipUsers = IPAccess::GetUsersHavingIP($_SERVER['REMOTE_ADDR']);
-            if (count($ipUsers) > 0) {
+            if (!empty($ipUsers)) {
                 $user = $userService->find($ipUsers[0]->getUserId());
                 $this->m_user = new MetaUser($user);
             }

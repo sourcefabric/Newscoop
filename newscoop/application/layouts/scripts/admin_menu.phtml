@@ -425,17 +425,25 @@ if ($showUserMenu) {
                     'label' => getGS('Edit user'),
                     'module' => 'admin',
                     'controller' => 'user',
-                    'action' => 'update',
+                    'action' => 'edit',
                     'visible' => false,
+                    'reset_params' => false,
                     'pages' => array(
                         array(
                             'label' => getGS('Edit permissions'),
                             'module' => 'admin',
-                            'controller' => 'user',
-                            'action' => 'edit-access',
+                            'controller' => 'acl',
+                            'action' => 'edit',
                             'visible' => false,
                         ),
                     ),
+                ),
+                array(
+                    'label' => getGS('Create new user'),
+                    'module' => 'admin',
+                    'controller' => 'user',
+                    'action' => 'create',
+                    'visible' => false,
                 ),
             ),
         );
@@ -472,6 +480,13 @@ if ($showUserMenu) {
                 'visible' => false,
             ),
         ),
+    );
+
+    $pages[4]['pages'][] = array(
+        'label' => getGS('Manage User Points System'),
+        'module' => 'admin',
+        'controller' => 'user-points',
+        'action' => 'index',
     );
 
     $pages[4]['pages'][] = array(

@@ -24,11 +24,10 @@
  */
 function smarty_block_list_subtitles($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
-    require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
+    $p_smarty->smarty->loadPlugin('smarty_shared_escape_special_chars');
+    $campContext = $p_smarty->getTemplateVars('gimme');
 
     static $subtitleURLId = null;
-    // gets the context variable
-    $campContext = $p_smarty->get_template_vars('gimme');
 
     if (!isset($p_content)) {
         $start = $campContext->next_list_start('SubtitlesList');

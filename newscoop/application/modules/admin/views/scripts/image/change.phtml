@@ -1,0 +1,9 @@
+<?php echo $this->form; ?>
+
+<?php if (!empty($this->image)) { ?>
+<script>
+parent.$('.edit-image img').attr('src', <?php echo json_encode($this->image); ?>);
+parent.$.fancybox.close();
+parent.flashMessage(<?php echo json_encode(getGS("Image updated.")); ?>);
+</script>
+<?php } ?>

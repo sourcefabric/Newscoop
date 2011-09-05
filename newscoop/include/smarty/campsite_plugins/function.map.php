@@ -33,7 +33,7 @@ function smarty_function_map($p_params, &$p_smarty)
     define('DEFAULT_OPEN_TEXT', getGS('Open large map'));
 
     // get the context variable
-    $campsite = $p_smarty->get_template_vars('gimme');
+    $campsite = $p_smarty->getTemplateVars('gimme');
     $html = '';
 
     $map_common_header_set = $campsite->map_common_header_set;

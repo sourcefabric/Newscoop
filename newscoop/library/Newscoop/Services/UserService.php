@@ -16,13 +16,13 @@ use Doctrine\ORM\EntityManager,
 class UserService
 {
     /** @var Doctrine\ORM\EntityManager */
-    protected $em;
+    private $em;
 
     /** @var Zend_Auth */
-    protected $auth;
+    private $auth;
 
     /** @var Newscoop\Entity\User */
-    protected $currentUser;
+    private $currentUser;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
@@ -64,17 +64,6 @@ class UserService
     }
 
     /**
-     * Find all users
-     *
-     * @return array
-     */
-    public function findAll()
-    {
-        return $this->getRepository()
-            ->findAll();
-    }
-
-    /**
      * Find by given criteria
      *
      * @param array $criteria
@@ -82,23 +71,34 @@ class UserService
      * @param int $limit
      * @param int $offset
      */
-    public function findBy($critearia, array $orderBy = NULL, $limit = NULL, $offset = NULL)
+    public function findBy($criteria, array $orderBy = NULL, $limit = NULL, $offset = NULL)
     {
         return $this->getRepository()
             ->findBy($criteria, $orderBy, $limit, $offset);
     }
 
     /**
-     * Create user
+     * Save user
      *
-     * @param array $values
+     * @param array $data
+     * @param Newscoop\Entity\User $user
      * @return Newscoop\Entity\User
      */
-    public function create(array $values)
+    public function save(array $data, User $user = null)
     {
-        $user = new User();
-        $this->getRepository()
-            ->save($user, $values);
+        if ($user === null) {
+            $user = new User();
+        }
+
+        if (empty($data['image'])) {
+            unset($data['image']);
+        }
+
+        if (empty($data['password'])) {
+            unset($data['password']);
+        }
+
+        $this->getRepository()->save($user, $data);
         $this->em->flush();
         return $user;
     }
@@ -145,11 +145,54 @@ class UserService
     }
 
     /**
+     * Set user active
+     *
+     * @param Newscoop\Entity\User $user
+     * @return void
+     */
+    public function setActive(User $user)
+    {
+        $user->setStatus(User::STATUS_ACTIVE);
+        $this->em->flush();
+    }
+
+    /**
+     * Create pending user
+     *
+     * @param string $email
+     * @return Newscoop\Entity\User
+     */
+    public function createPending($email)
+    {
+        $user = new User($email);
+        $this->em->persist($user);
+        $this->em->flush();
+        return $user;
+    }
+
+    /**
+     * Save pending user
+     *
+     * @param array $data
+     * @param Newscoop\Entity\User $user
+     * @return void
+     */
+    public function savePending($data, User $user)
+    {
+        if (!$user->isPending()) {
+            throw new \InvalidArgumentException("User '{$user->getUsername()}' is not pending user.");
+        }
+
+        $user->setActive();
+        $this->save($data, $user);
+    }
+
+    /**
      * Get repository for user entity
      *
      * @return Newscoop\Entity\Repository\UserRepository
      */
-    protected function getRepository()
+    private function getRepository()
     {
         return $this->em->getRepository('Newscoop\Entity\User');
     }

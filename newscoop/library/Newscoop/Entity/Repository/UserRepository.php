@@ -25,6 +25,7 @@ class UserRepository extends EntityRepository
         'status' => 'setStatus',
         'is_admin' => 'setAdmin',
         'is_public' => 'setPublic',
+        'image' => 'setImage',
     );
 
     /**
@@ -130,5 +131,67 @@ class UserRepository extends EntityRepository
         $qb->setParameters($params);
 
         return !$qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * Return Users if their last name begins with one of the letter passed in.
+     *
+     * @param array $letters = ['a', 'b']
+     *
+     * @return array Newscoop\Entity\User
+     */
+    public function findUsersLastNameInRange($letters)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('u')
+            ->from('Newscoop\Entity\User', 'u');
+
+        $qb->where($qb->expr()->like("u.last_name", "'$letters[0]%'"));
+        for ($i=1; $i < count($letters); $i++) {
+            $qb->orWhere($qb->expr()->like("u.last_name", "'$letters[$i]%'"));
+        }
+
+        $qb->orderBy('u.last_name', 'ASC');
+        $qb->addOrderBy('u.first_name', 'ASC');
+        $qb->addOrderBy('u.id', 'ASC');
+
+        return $qb->getQuery()->getResult();
+    }
+
+    /**
+     * Return Users if any of their searched attributes contain the searched term.
+     *
+     * @param string $search
+     *
+     * @param array $attributes
+     *
+     * @return array Newscoop\Entity\User
+     */
+    public function searchUsers($search, $attributes = array("first_name", "last_name", "username"))
+    {
+        $keywords = explode(" ", $search);
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('u')
+            ->from('Newscoop\Entity\User', 'u');
+
+        $outerAnd = $qb->expr()->andx();
+
+        for($i=0; $i < count($keywords); $i++) {
+            $innerOr = $qb->expr()->orx();
+            for ($j=0; $j < count($attributes); $j++) {
+                $innerOr->add($qb->expr()->like("u.{$attributes[$j]}", "'%$keywords[$i]%'"));
+            }
+            $outerAnd->add($innerOr);
+        }
+
+        $qb->where($outerAnd);
+        $qb->orderBy('u.last_name', 'ASC');
+        $qb->addOrderBy('u.first_name', 'ASC');
+        $qb->addOrderBy('u.id', 'ASC');
+
+        //echo $qb->getQuery()->getSql();
+
+        return $qb->getQuery()->getResult();
     }
 }

@@ -1,0 +1,79 @@
+<?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
+
+namespace Newscoop\Entity;
+
+/**
+ * @Entity
+ * @Table(name="TopicNames")
+ */
+class Topic
+{
+    /**
+     * @Id
+     * @Column(type="integer", name="fk_topic_id")
+     * @var int
+     * @todo add reference to topic
+     */
+    private $id;
+
+    /**
+     * @Id
+     * @Column(type="integer", name="fk_language_id")
+     * @var int
+     * @todo add reference to language
+     */
+    private $language;
+
+    /**
+     * @Column(type="string", length="255")
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @param int $id
+     * @param int $language
+     * @param int $name
+     */
+    public function __construct($id, $language, $name)
+    {
+        $this->id = (int) $id;
+        $this->language = (int) $language;
+        $this->name = (string) $name;
+    }
+
+    /**
+     * Get topic id
+     *
+     * @return int
+     */
+    public function getTopicId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Get language id
+     *
+     * @return int
+     */
+    public function getLanguageId()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+}

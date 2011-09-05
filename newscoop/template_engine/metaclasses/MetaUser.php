@@ -10,7 +10,7 @@ use Newscoop\Entity\User;
 /**
  * Template user
  */
-final class MetaUser
+final class MetaUser extends MetaEntity
 {
     /** @var Newscoop\Entity\User */
     protected $user;
@@ -36,6 +36,9 @@ final class MetaUser
     /** @var bool */
     public $defined;
 
+    /** @var string */
+    public $created;
+
     /**
      * @param Newscoop\Entity\User $user
      */
@@ -55,22 +58,29 @@ final class MetaUser
         $this->name = trim($user->getFirstName() . ' ' . $user->getLastName());
 
         $this->defined = $user->getId() > 0;
+        $this->created = $user->getCreated()->format('d.m.Y');
     }
 
     /**
      * Get user attribute value
      *
-     * Provides backward compatibility for callbacks called as property
-     *
      * @param string $property
      */
     public function __get($property)
     {
-        if (method_exists($this, $property)) {
-            return $this->$property();
+        try {
+            return parent::__get($property);
+        } catch (\InvalidArgumentException $e) {
+            return (!$this->user) ? null : $this->user->getAttribute($property);
         }
+    }
 
-        return (!$this->user) ? null : $this->user->getAttribute($property);
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->name;
     }
 
     /**
@@ -154,5 +164,42 @@ final class MetaUser
         $repositoryAcceptance = $controller->getHelper('user')->getRepository('Newscoop\user\Comment\Acceptance');
         $repository = $controller->getHelper('user')->getRepository('Newscoop\user\Comment');
         return (int) $repositoryAcceptance->checkParamsBanned($this->name, $this->email, $userIp, $publication_id);
+    }
+
+    /**
+     * Get image src
+     *
+     * @param int $width
+     * @param int $height
+     * @return string
+     */
+    public function image($width = 80, $height = 80)
+    {
+        if (!$this->user->getImage()) {
+            return '';
+        }
+
+        return $GLOBALS['controller']->getHelper('service')->getService('image')
+            ->getSrc($this->user->getImage(), $width, $height);
+    }
+
+    /**
+     * Get topics
+     *
+     * @return array
+     */
+    public function topics()
+    {
+        if (!$this->user->getId()) {
+            return array();
+        }
+
+        $service = $GLOBALS['controller']->getHelper('service')->getService('user.topic');
+        $topics = array();
+        foreach ($service->getTopics($this->user) as $topic) {
+            $topics[$topic->getTopicId()] = $topic->getName();
+        }
+
+        return $this->topics = $topics;
     }
 }

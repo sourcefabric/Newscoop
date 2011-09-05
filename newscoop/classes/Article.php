@@ -2662,7 +2662,7 @@ class Article extends DatabaseObject {
         }
         $queries = array();
         foreach ($fields as $fieldObj) {
-            $query .= '        SELECT NrArticle FROM `X' . $fieldObj->getArticleType()
+            $query = '        SELECT NrArticle FROM `X' . $fieldObj->getArticleType()
                    . '` WHERE ' . $fieldObj->getName() . ' '
                    . $p_comparisonOperation['symbol']
                    . " '" . $g_ado_db->escape($p_comparisonOperation['right']) . "'";
