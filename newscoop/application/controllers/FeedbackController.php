@@ -32,7 +32,7 @@ class FeedbackController extends Zend_Controller_Action
 		
 		$auth = Zend_Auth::getInstance();
 		
-		$publication = new Publication($parameters['f_publication_id']);
+		$publication = new Publication($parameters['f_publication']);
 		
 		if ($auth->getIdentity()) {
 			$acceptanceRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Comment\Acceptance');
