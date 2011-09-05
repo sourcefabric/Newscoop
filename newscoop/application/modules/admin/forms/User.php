@@ -69,12 +69,10 @@ class Admin_Form_User extends Zend_Form
 
         $this->addElement('checkbox', 'is_admin', array(
             'label' => getGS('Admin access'),
-            'description' => getGS('Can access admin?'),
         ));
 
         $this->addElement('checkbox', 'is_public', array(
             'label' => getGS('Public profile'),
-            'description' => getGS('Should be presented on frontend?'),
         ));
 
         $this->addElement('multiCheckbox', 'user_type', array(

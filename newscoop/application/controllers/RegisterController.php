@@ -94,8 +94,17 @@ class RegisterController extends Zend_Controller_Action
                 $values = $form->getValues();
                 $this->_helper->service('user')->savePending($values, $user);
                 $this->notifyDispatcher($user);
-                // @todo auth user
-                $this->_helper->redirector('index', 'dashboard', 'default');
+
+                $auth = \Zend_Auth::getInstance();
+                if ($auth->hasIdentity()) { // show index
+                    $this->_helper->flashMessenger('User registered successfully.');
+                    $this->_helper->redirector('index', 'index', 'default');
+                } else {
+                    $adapter = $this->_helper->service('auth.adapter');
+                    $adapter->setUsername($values['username'])->setPassword($values['password']);
+                    $result = $auth->authenticate($adapter);
+                    $this->_helper->redirector('index', 'dashboard', 'default');
+                }
             } catch (\Exception $e) {
                 switch ($e->getMessage()) {
                     case 'username_conflict':
