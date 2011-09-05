@@ -1,7 +1,7 @@
 <div id="ob_wrapper" style="position: fixed; left: 0px; top: 40%;">
 <div id="ob_main" style="display: none;">
-<?php if ($this->gimme->user->logged_in) { ?>
-	welcome <?php echo($this->gimme->user->name); ?>, introduction here<br>
+{{ if $gimme->user->logged_in }}
+	welcome {{ $gimme->user->name }}, introduction here<br>
 	
 	<div style="display: inline;" id="ob_input">
 	
@@ -10,7 +10,7 @@
 		<div id="ob_message_close" style="display: none;"><a href="javascript:omnibox.hideMessage();omnibox.setMessage('');">close</a></div>
 	</div>
 	
-	<?php if ($this->gimme->article->number) { ?>
+	{{ if $gimme->article->number }}
 		on article page<br>
 		<div>
 			<input type="radio" name="ob_comment_feedback" id="ob_comment" onClick="omnibox.switchCommentFeedback();" checked="checked">
@@ -38,7 +38,7 @@
 			-- here comes file upload<br>
 			<input type="button" value="next" onClick="omnibox.showReview();">
 		</div>
-	<?php } else { ?>
+	{{ else }}
 		not on article page<br>
 		<div id="ob_feedback_text_container">
 			<label for="ob_feedback_subject" style="float: none;">subject</label>
@@ -48,18 +48,18 @@
 			-- here comes file upload<br>
 			<input type="button" value="next" onClick="omnibox.showReview();">
 		</div>
-	<?php } ?>
+	{{ /if }}
 	
 	</div>
 	
 	<div style="display: none;" id="ob_review_captcha">
-		<?php if ($this->gimme->publication->captcha_enabled) { ?>
+		{{ if $gimme->publication->captcha_enabled }}
 			<img id="ob_review_captcha_image" src=""><br>
 			<input type="text" id="ob_review_captcha_code"><br>
-		<?php } else { ?>
+		{{ else }}
 			<img id="ob_review_captcha_image" src="" style="display: none;"><br>
 			<input type="hidden" id="ob_review_captcha_code" value="">
-		<?php } ?>
+		{{ /if }}
 	</div>
 	
 	<div style="display: none;" id="ob_review_comment">
@@ -79,9 +79,9 @@
 		<br>
 	</div>
 	
-<?php } else { ?>
+{{ else }}
 	not logged in...
-<?php } ?>
+{{ /if }}
 </div>
 
 <div id="ob_handle" style="">
@@ -89,17 +89,17 @@
 </div>
 
 </div>
-<script type="text/javascript" src="<?php echo($GLOBALS['Campsite']['SUBDIR']); ?>/js/omnibox.js"></script>
+<script type="text/javascript" src="{{ $view->baseUrl('/js/omnibox.js') }}"></script>
 <script>
 omnibox.initialize();
-<?php if ($this->gimme->article->number) { ?>
+{{ if $gimme->article->number }}
 	omnibox.setType('comment');
-<?php } else { ?>
+{{ else }}
 	omnibox.setType('feedback');
-<?php } ?>
-omnibox.setBaseUrl('<?php echo($GLOBALS['Campsite']['SUBDIR']); ?>');
-omnibox.setLanguage('<?php echo($this->gimme->language->number); ?>');
-omnibox.setPublication('<?php echo($this->gimme->publication->identifier); ?>');
-omnibox.setSection('<?php echo($this->gimme->section->id); ?>');
-omnibox.setArticle('<?php echo($this->gimme->article->number); ?>');
+{{ /if }}
+omnibox.setBaseUrl('{{ $view->baseUrl() }}');
+omnibox.setLanguage('{{ $gimme->language->number }}');
+omnibox.setPublication('{{ $gimme->publication->identifier }}');
+omnibox.setSection('{{ $gimme->section->id }}');
+omnibox.setArticle('{{ $gimme->article->number }}');
 </script>
