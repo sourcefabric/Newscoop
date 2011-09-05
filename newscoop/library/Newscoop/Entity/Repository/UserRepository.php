@@ -114,7 +114,7 @@ class UserRepository extends EntityRepository
      * @param int $id
      * @return bool
      */
-    private function isUnique($property, $value, $id)
+    public function isUnique($property, $value, $id = null)
     {
         $qb = $this->getEntityManager()->createQueryBuilder()
             ->select('COUNT(u.id)')
@@ -123,7 +123,7 @@ class UserRepository extends EntityRepository
 
         $params = array($value);
 
-        if ($id > 0) {
+        if ($id !== null) {
             $qb->andWhere('u.id <> ?1');
             $params[] = $id;
         }

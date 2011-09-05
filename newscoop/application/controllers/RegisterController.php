@@ -20,6 +20,15 @@ class RegisterController extends Zend_Controller_Action
     /** @var Newscoop\Services\UserTokenService */
     private $tokenService;
 
+    public function init()
+    {
+        $this->_helper->contextSwitch
+            ->addActionContext('generate-username', 'json')
+            ->addActionContext('check-username', 'json')
+            ->addActionContext('check-email', 'json')
+            ->initContext();
+    }
+
     public function indexAction()
     {
         $form = new Application_Form_Register();
@@ -39,12 +48,11 @@ class RegisterController extends Zend_Controller_Action
             }
 
             if (!$user->isPending()) {
-                $this->_helper->flashMessenger(array('error', "User with given username exists."));
-                $this->_helper->redirector('index', 'index', 'default');
+                $form->email->addError("User with email '$values[email]' is registered already.");
+            } else {
+                $this->_helper->service('email')->sendConfirmationToken($user);
+                $this->_helper->redirector('after');
             }
-
-            $this->_helper->service('email')->sendConfirmationToken($user);
-            $this->_helper->redirector('after');
         }
 
         $this->view->form = $form;
@@ -82,36 +90,61 @@ class RegisterController extends Zend_Controller_Action
         $form->setMethod('POST');
 
         if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
-            $values = $form->getValues();
-            $this->_helper->service('user')->savePending($values, $user);
-            // @todo dispatch user.register
-            // @todo auth user
-            $this->_helper->redirector('index', 'dashboard', 'default');
+            try {
+                $values = $form->getValues();
+                $this->_helper->service('user')->savePending($values, $user);
+                $this->notifyDispatcher($user);
+                // @todo auth user
+                $this->_helper->redirector('index', 'dashboard', 'default');
+            } catch (\Exception $e) {
+                switch ($e->getMessage()) {
+                    case 'username_conflict':
+                        $form->username->addError('Username is used. Please use another one.');
+                        break;
+
+                    default:
+                        var_dump($e);
+                        exit;
+                }
+            }
         }
 
         $this->view->form = $form;
     }
 
-    public function initAction()
+    public function generateUsernameAction()
     {
-        switch ($e->getMessage()) {
-            case 'username_conflict':
-                $formConfirm->username->addError('Username is used. Please use another one.');
-                break;
-
-            case 'email_conflict':
-                $formConfirm->email->addError('E-mail is used. Please use another one.');
-                break;
-
-            default:
-                var_dump($e);
-                exit;
-        }
+        $this->view->username = $this->_helper->service('user')
+            ->generateUsername($this->_getParam('first_name'), $this->_getParam('last_name'));
     }
 
-    public function generateUsername()
+    /**
+     * Test if username is available
+     */
+    public function checkUsernameAction()
     {
-        return $this->service->generateUsername($this->_getParam('first_name'), $this->_getParam('last_name'));
+        $this->view->status = $this->_helper->service('user')
+            ->checkUsername($this->_getParam('username'));
+    }
+
+    /**
+     * Test if email is available
+     */
+    public function checkEmailAction()
+    {
+        $users = $this->_helper->service('user')->findBy(array(
+            'email' => $this->_getParam('email'),
+        ));
+
+        if (sizeof($users) > 0) {
+            $user = array_pop($users);
+            if (!$user->isPending()) {
+                $this->view->status = false;
+                return;
+            }
+        }
+
+        $this->view->status = true;
     }
 
     /**
@@ -122,8 +155,8 @@ class RegisterController extends Zend_Controller_Action
      */
     private function notifyDispatcher(User $user)
     {
-        $dispatcher = $this->_helper->service('dispatcher');
-        $dispatcher->notify(new sfEvent($this, 'user.register', array(
+        $this->_helper->service('dispatcher')
+            ->notify(new sfEvent($this, 'user.register', array(
             'user' => $user,
         )));
     }
