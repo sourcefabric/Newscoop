@@ -21,10 +21,7 @@ final class CampContext
      * dummy login action
      * @var array
      */
-    public $login_action = array(
-        'is_error' => false,
-        'error_message' => '',
-    );
+    public $login_action;
 
     // Defines the object types
     private static $m_objectTypes = array(
@@ -166,6 +163,11 @@ final class CampContext
         if (!is_null($this->m_properties)) {
             return;
         }
+
+        $this->login_action = (object) array(
+            'is_error' => false,
+            'error_message' => '',
+        );
 
         self::$m_nullMetaArticle = new MetaArticle();
         self::$m_nullMetaSection = new MetaSection();
