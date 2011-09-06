@@ -63,24 +63,43 @@ class ListUserService
         return $this->getRepository()->findOneBy($criteria);
     }
 
-    public function getPublicUsers()
+    public function getActiveUsers($countOnly=false, $page=1, $limit=8)
     {
-        $users = $this->findBy(array(
-            'is_public' => true,
-            'status' => User::STATUS_ACTIVE,
-        ), array('id' => 'desc'));
+        $offset = ($page-1) * $limit;
 
-        return $users;
+        $result = $this->getRepository()->findActiveUsers($countOnly, $offset, $limit);
+
+        if($countOnly) {
+            return $result[1];
+        }
+
+        return $result;
     }
 
-    public function findUsersLastNameInRange($letters)
+    public function findUsersLastNameInRange($letters, $countOnly=false, $page=1, $limit=25)
     {
-        return $this->getRepository()->findUsersLastNameInRange($letters);
+        $offset = ($page-1) * $limit;
+
+        $result = $this->getRepository()->findUsersLastNameInRange($letters, $countOnly, $offset, $limit);
+
+        if($countOnly) {
+            return $result[1];
+        }
+
+        return $result;
     }
 
-    public function findUsersBySearch($search)
+    public function findUsersBySearch($search, $countOnly=false, $page=1, $limit=25)
     {
-        return $this->getRepository()->searchUsers($search);
+        $offset = ($page-1) * $limit;
+
+        $result = $this->getRepository()->searchUsers($search, $countOnly, $offset, $limit);
+
+        if($countOnly) {
+            return $result[1];
+        }
+
+        return $result;
     }
 
     /**
