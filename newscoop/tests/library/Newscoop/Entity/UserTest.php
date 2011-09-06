@@ -7,6 +7,8 @@
 
 namespace Newscoop\Entity;
 
+use Newscoop\Entity\User\Group;
+
 /**
  */
 class UserTest extends \RepositoryTestCase
@@ -16,7 +18,7 @@ class UserTest extends \RepositoryTestCase
 
     public function setUp()
     {
-        parent::setUp('Newscoop\Entity\User', 'Newscoop\Entity\UserAttribute', 'Newscoop\Entity\Acl\Role');
+        parent::setUp('Newscoop\Entity\User', 'Newscoop\Entity\UserAttribute', 'Newscoop\Entity\Acl\Role', 'Newscoop\Entity\User\Group');
         $this->repository = $this->em->getRepository('Newscoop\Entity\User');
     }
 
@@ -29,6 +31,9 @@ class UserTest extends \RepositoryTestCase
     public function testSave()
     {
         $user = new User();
+        $group = new Group();
+        $group->setName('test');
+        $this->em->persist($group);
 
         $this->assertFalse($user->isAdmin());
         $this->assertFalse($user->isPublic());
@@ -44,6 +49,9 @@ class UserTest extends \RepositoryTestCase
             'is_admin' => TRUE,
             'attributes' => array(
                 'phone' => 123,
+            ),
+            'user_type' => array(
+                1,
             ),
         ));
 
@@ -66,6 +74,7 @@ class UserTest extends \RepositoryTestCase
         $this->assertEquals(123, $user->getAttribute('phone'));
         $this->assertTrue($user->isAdmin());
         $this->assertTrue($user->isPublic());
+        $this->assertEquals(1, sizeof($user->getUserTypes()));
 
         // test attribute change
         $user->addAttribute('phone', 1234);

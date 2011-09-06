@@ -93,6 +93,11 @@ class Admin_Form_User extends Zend_Form
      */
     public function setDefaultsFromEntity(User $user)
     {
+        $types = array();
+        foreach ($user->getUserTypes() as $type) {
+            $types[] = $type->getId();
+        }
+
         return $this->setDefaults(array(
             'first_name' => $user->getFirstName(),
             'last_name' => $user->getLastName(),
@@ -101,6 +106,7 @@ class Admin_Form_User extends Zend_Form
             'status' => $user->isActive(),
             'is_admin' => $user->isAdmin(),
             'is_public' => $user->isPublic(),
+            'user_type' => $types,
         ));
     }
 }

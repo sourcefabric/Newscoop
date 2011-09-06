@@ -56,6 +56,7 @@ class UserRepository extends EntityRepository
         }
 
         $this->setAttributes($user, array_key_exists('attributes', $values) ? $values['attributes'] : array());
+        $this->setUserTypes($user, array_key_exists('user_type', $values) ? $values['user_type'] : array());
 
         $this->getEntityManager()->persist($user);
     }
@@ -103,6 +104,21 @@ class UserRepository extends EntityRepository
 
         foreach ($attributes as $name => $value) {
             $user->addAttribute($name, $value);
+        }
+    }
+
+    /**
+     * Set user types
+     *
+     * @param Newscoop\Entity\User $user
+     * @param array $types
+     * @return void
+     */
+    private function setUserTypes(User $user, array $types)
+    {
+        $user->getUserTypes()->clear();
+        foreach ($types as $type) {
+            $user->addUserType($this->getEntityManager()->getReference('Newscoop\Entity\User\Group', $type));
         }
     }
 
