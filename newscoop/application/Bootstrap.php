@@ -64,6 +64,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $doctrine = $this->getResource('doctrine');
         $container->setService('em', $doctrine->getEntityManager());
 
+        $this->bootstrap('view');
+        $container->setService('view', $this->getResource('view'));
+
+        $container->register('image', 'Newscoop\Services\ImageService')
+            ->addArgument(new sfServiceReference('view'));
+
         $container->register('user', 'Newscoop\Services\UserService')
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(Zend_Auth::getInstance());
@@ -106,6 +112,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('auth.adapter', 'Newscoop\Services\Auth\DoctrineAuthService')
             ->addArgument(new sfServiceReference('em'));
 
+        $container->register('email', 'Newscoop\Services\EmailService')
+            ->addArgument('%email%')
+            ->addArgument(new sfServiceReference('view'))
+            ->addArgument(new sfServiceReference('user.token'));
+
         Zend_Registry::set('container', $container);
         return $container;
     }
@@ -135,7 +146,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $front->registerPlugin(new Application_Plugin_CampPluginAutoload());
         $front->registerPlugin(new Application_Plugin_Auth($options['auth']));
         $front->registerPlugin(new Application_Plugin_Acl($options['acl']));
-        $front->registerPlugin(new Application_Plugin_Smarty());
     }
 
     protected function _initRouter()
@@ -163,7 +173,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             new Zend_Controller_Router_Route('confirm-email/:user/:token', array(
                 'module' => 'default',
                 'controller' => 'register',
-                'action' => 'confirm-email',
+                'action' => 'confirm',
             )));
 
         $router->addRoute(
@@ -193,15 +203,21 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             )));
 
         $router->addRoute(
-            'user-image',
-            new Zend_Controller_Router_Route_Regex('media/user/cache/(\d+)_(\d+)_(.+)', array(
+            'image',
+            new Zend_Controller_Router_Route_Regex('media/image/cache/(\d+)_(\d+)_(.+)', array(
                 'module' => 'default',
                 'controller' => 'image',
-                'action' => 'user',
+                'action' => 'cache',
             ), array(
                 1 => 'width',
                 2 => 'height',
                 3 => 'image',
-            ), 'media/user/cache/%d_%d_%s'));
+            ), 'media/image/cache/%d_%d_%s'));
+    }
+
+    protected function _initActionHelpers()
+    {
+        require_once APPLICATION_PATH . '/controllers/helpers/Smarty.php';
+        Zend_Controller_Action_HelperBroker::addHelper(new Action_Helper_Smarty());
     }
 }

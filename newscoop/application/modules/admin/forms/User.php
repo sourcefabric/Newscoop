@@ -69,12 +69,10 @@ class Admin_Form_User extends Zend_Form
 
         $this->addElement('checkbox', 'is_admin', array(
             'label' => getGS('Admin access'),
-            'description' => getGS('Can access admin?'),
         ));
 
         $this->addElement('checkbox', 'is_public', array(
             'label' => getGS('Public profile'),
-            'description' => getGS('Should be presented on frontend?'),
         ));
 
         $this->addElement('multiCheckbox', 'user_type', array(
@@ -95,6 +93,11 @@ class Admin_Form_User extends Zend_Form
      */
     public function setDefaultsFromEntity(User $user)
     {
+        $types = array();
+        foreach ($user->getUserTypes() as $type) {
+            $types[] = $type->getId();
+        }
+
         return $this->setDefaults(array(
             'first_name' => $user->getFirstName(),
             'last_name' => $user->getLastName(),
@@ -103,6 +106,7 @@ class Admin_Form_User extends Zend_Form
             'status' => $user->isActive(),
             'is_admin' => $user->isAdmin(),
             'is_public' => $user->isPublic(),
+            'user_type' => $types,
         ));
     }
 }

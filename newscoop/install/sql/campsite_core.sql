@@ -2253,68 +2253,41 @@ DROP TABLE IF EXISTS `liveuser_userrights`;
 --
 
 DROP TABLE IF EXISTS `liveuser_users`;
+DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_users` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `KeyId` int(10) unsigned DEFAULT NULL,
-  `Name` varchar(255) NOT NULL DEFAULT '',
-  `UName` varchar(70) NOT NULL DEFAULT '',
-  `Password` varchar(64) NOT NULL DEFAULT '',
-  `EMail` varchar(255) NOT NULL DEFAULT '',
-  `Reader` enum('Y','N') NOT NULL DEFAULT 'Y',
-  `fk_user_type` int(10) unsigned DEFAULT NULL,
-  `City` varchar(100) NOT NULL DEFAULT '',
-  `StrAddress` varchar(255) NOT NULL DEFAULT '',
-  `State` varchar(32) NOT NULL DEFAULT '',
-  `CountryCode` varchar(21) DEFAULT NULL,
-  `Phone` varchar(20) NOT NULL DEFAULT '',
-  `Fax` varchar(20) NOT NULL DEFAULT '',
-  `Contact` varchar(64) NOT NULL DEFAULT '',
-  `Phone2` varchar(20) NOT NULL DEFAULT '',
-  `Title` enum('Mr.','Mrs.','Ms.','Dr.') NOT NULL DEFAULT 'Mr.',
-  `Gender` enum('M','F') DEFAULT NULL,
-  `Age` enum('0-17','18-24','25-39','40-49','50-65','65-') NOT NULL DEFAULT '0-17',
-  `PostalCode` varchar(70) NOT NULL DEFAULT '',
-  `Employer` varchar(140) NOT NULL DEFAULT '',
-  `EmployerType` varchar(140) NOT NULL DEFAULT '',
-  `Position` varchar(70) NOT NULL DEFAULT '',
-  `Interests` mediumblob,
-  `How` varchar(255) NOT NULL DEFAULT '',
-  `Languages` varchar(100) NOT NULL DEFAULT '',
-  `Improvements` mediumblob,
-  `Pref1` enum('N','Y') NOT NULL DEFAULT 'N',
-  `Pref2` enum('N','Y') NOT NULL DEFAULT 'N',
-  `Pref3` enum('N','Y') NOT NULL DEFAULT 'N',
-  `Pref4` enum('N','Y') NOT NULL DEFAULT 'N',
-  `Field1` varchar(150) NOT NULL DEFAULT '',
-  `Field2` varchar(150) NOT NULL DEFAULT '',
-  `Field3` varchar(150) NOT NULL DEFAULT '',
-  `Field4` varchar(150) NOT NULL DEFAULT '',
-  `Field5` varchar(150) NOT NULL DEFAULT '',
-  `Text1` mediumblob,
-  `Text2` mediumblob,
-  `Text3` mediumblob,
-  `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `time_created` timestamp NULL DEFAULT NULL,
-  `lastLogin` datetime DEFAULT '1970-01-01 00:00:00',
-  `isActive` tinyint(1) DEFAULT '1',
-  `password_reset_token` varchar(85) DEFAULT NULL,
-  `role_id` int(10) DEFAULT NULL,
-  `image` VARCHAR(255) DEFAULT NULL,
-  PRIMARY KEY (`Id`),
-  UNIQUE KEY `UName` (`UName`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `user` (
+    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `email` varchar(255) NOT NULL,
+    `username` varchar(80) DEFAULT NULL,
+    `password` varchar(60) DEFAULT NULL,
+    `first_name` varchar(80) DEFAULT NULL,
+    `last_name` varchar(80) DEFAULT NULL,
+    `status` tinyint(1) NOT NULL DEFAULT '0',
+    `is_admin` boolean NOT NULL DEFAULT '0',
+    `is_public` boolean NOT NULL DEFAULT '0',
+    `points` int(10) DEFAULT '0',
+    `created` datetime NOT NULL,
+    `updated` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `lastLogin` datetime DEFAULT NULL,
+    `password_reset_token` varchar(85) DEFAULT NULL,
+    `image` varchar(255) DEFAULT NULL,
+    `role_id` int(11) unsigned DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE (`email`),
+    UNIQUE (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `liveuser_users`
 --
 
-LOCK TABLES `liveuser_users` WRITE;
-/*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
-INSERT INTO `liveuser_users` (`Id`, `Name`, `UName`, `Password`, `EMail`, `Reader`, `fk_user_type`, `Field2`, `Field3`, `time_updated`, `time_created`, `lastLogin`, `isActive`, `role_id`)  VALUES (1, 'Administrator', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin@email.addr', 'N', 1,'1','1','2011-06-13 09:19:05','0000-00-00 00:00:00','2011-01-17 14:29:16',1,6);
-/*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` (`id`, `first_name`, `username`, `password`, `email`, `status`, `is_admin`, `role_id`) VALUES
+(1, 'Administrator', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin@email.addr', '1', '1', 6);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --

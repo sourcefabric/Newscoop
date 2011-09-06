@@ -179,11 +179,8 @@ final class MetaUser extends MetaEntity
             return '';
         }
 
-        return $GLOBALS['controller']->view->url(array(
-            'image' => $this->user->getImage(),
-            'width' => $width,
-            'height' => $height,
-        ), 'user-image');
+        return $GLOBALS['controller']->getHelper('service')->getService('image')
+            ->getSrc($this->user->getImage(), $width, $height);
     }
 
     /**

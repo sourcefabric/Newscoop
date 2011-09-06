@@ -17,6 +17,12 @@ require_once dirname(__FILE__) . '/../../classes/Browser.php';
  */
 final class CampContext
 {
+    /**
+     * dummy login action
+     * @var array
+     */
+    public $login_action;
+
     // Defines the object types
     private static $m_objectTypes = array(
 								    'language'=>array('class'=>'Language',
@@ -157,6 +163,11 @@ final class CampContext
         if (!is_null($this->m_properties)) {
             return;
         }
+
+        $this->login_action = (object) array(
+            'is_error' => false,
+            'error_message' => '',
+        );
 
         self::$m_nullMetaArticle = new MetaArticle();
         self::$m_nullMetaSection = new MetaSection();

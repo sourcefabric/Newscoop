@@ -9,11 +9,12 @@ namespace Newscoop\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection,
     Newscoop\Utils\PermissionToAcl,
-    Newscoop\Entity\Acl\Role;
+    Newscoop\Entity\Acl\Role,
+    Newscoop\Entity\User\Group;
 
 /**
  * @Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
- * @Table(name="liveuser_users")
+ * @Table(name="user")
  */
 class User implements \Zend_Acl_Role_Interface
 {
@@ -27,73 +28,68 @@ class User implements \Zend_Acl_Role_Interface
 
     /**
      * @Id @GeneratedValue
-     * @Column(type="integer", name="Id")
+     * @Column(type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @Column(type="string", length="80", name="UName")
-     * @var string
-     */
-    private $username;
-
-    /**
-     * @Column(type="string", length="60", name="Password", nullable=TRUE)
-     * @var string
-     */
-    private $password;
-
-    /**
-     * @Column(type="string", length="80", name="Name", nullable=TRUE)
-     * @var string
-     */
-    private $first_name;
-
-    /**
-     * @Column(type="string", length="80", name="Field1", nullable=TRUE)
-     * @var string
-     * @todo add new db column
-     */
-    private $last_name;
-
-    /**
-     * @Column(name="EMail", length="80", nullable=TRUE)
+     * @Column(type="string", length="80")
      * @var string
      */
     private $email;
 
     /**
-     * @Column(type="datetime", name="time_created")
+     * @Column(type="string", length="80", nullable=TRUE)
+     * @var string
+     */
+    private $username;
+
+    /**
+     * @Column(type="string", length="60", nullable=TRUE)
+     * @var string
+     */
+    private $password;
+
+    /**
+     * @Column(type="string", length="80", nullable=TRUE)
+     * @var string
+     */
+    private $first_name;
+
+    /**
+     * @Column(type="string", length="80", nullable=TRUE)
+     * @var string
+     */
+    private $last_name;
+
+    /**
+     * @Column(type="datetime")
      * @var DateTime
      */
     private $created;
 
     /**
-     * @Column(type="integer", length="1", name="Field2", nullable=TRUE)
+     * @Column(type="integer", length="1")
      * @var int
-     * @todo add new db column
      */
-    private $status;
+    private $status = self::STATUS_INACTIVE;
 
     /**
-     * @Column(type="boolean", name="Field3")
+     * @Column(type="boolean")
      * @var bool
-     * @todo add new db column
      */
     private $is_admin;
 
     /**
-     * @Column(type="boolean", name="Field4")
+     * @Column(type="boolean")
      * @var bool
-     * @todo add new db column
      */
     private $is_public;
 
     /**
-     * @Column(type="integer", name="Field5")
+     * @Column(type="integer")
      * @var int
-     * @todo add new db column (should have default 0)
      */
     private $points;
 
@@ -112,7 +108,7 @@ class User implements \Zend_Acl_Role_Interface
     /**
      * @manyToMany(targetEntity="Newscoop\Entity\User\Group")
      * @joinTable(name="liveuser_groupusers",
-     *      joinColumns={@joinColumn(name="perm_user_id", referencedColumnName="Id")},
+     *      joinColumns={@joinColumn(name="perm_user_id", referencedColumnName="id")},
      *      inverseJoinColumns={@joinColumn(name="group_id", referencedColumnName="group_id")}
      *      )
      * @var Doctrine\Common\Collections\Collection;
@@ -126,15 +122,14 @@ class User implements \Zend_Acl_Role_Interface
     private $attributes;
 
     /**
-     * @param string $username
+     * @param string $email
      */
-    public function __construct($username = null)
+    public function __construct($email = null)
     {
-        $this->username = $username;
+        $this->email = $email;
         $this->created = new \DateTime();
         $this->groups = new ArrayCollection();
         $this->attributes = new ArrayCollection();
-        $this->status = self::STATUS_INACTIVE;
         $this->role = new Role();
         $this->is_admin = false;
         $this->is_public = false;
@@ -308,6 +303,16 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * Set user as active
+     *
+     * @return Newscoop\Entity\User
+     */
+    public function setActive()
+    {
+        return $this->setStatus(self::STATUS_ACTIVE);
+    }
+
+    /**
      * Test if user is active
      *
      * @return bool
@@ -315,6 +320,16 @@ class User implements \Zend_Acl_Role_Interface
     public function isActive()
     {
         return $this->status == self::STATUS_ACTIVE;
+    }
+
+    /**
+     * Test if user is pending
+     *
+     * @return bool
+     */
+    public function isPending()
+    {
+        return $this->status == self::STATUS_INACTIVE || empty($this->username);
     }
 
     /**
@@ -427,6 +442,28 @@ class User implements \Zend_Acl_Role_Interface
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    /**
+     * Add user type
+     *
+     * @param Newscoop\Entity\User\Group $type
+     * @return Newscoop\Entity\User
+     */
+    public function addUserType(Group $type)
+    {
+        $this->groups->add($type);
+        return $this;
+    }
+
+    /**
+     * Get user types
+     *
+     * @return array
+     */
+    public function getUserTypes()
+    {
+        return $this->getGroups();
     }
 
     /**

@@ -66,12 +66,6 @@ class UserTokenService
         }
 
         $now = new \DateTime();
-        if ($now->sub(new \DateInterval(self::TOKEN_LIFETIME))->getTimestamp() >= $userToken->getCreated()->getTimestamp()) {
-            return false;
-        }
-
-        $this->em->remove($userToken);
-        $this->em->flush();
-        return true;
+        return $now->sub(new \DateInterval(self::TOKEN_LIFETIME))->getTimestamp() < $userToken->getCreated()->getTimestamp();
     }
 }

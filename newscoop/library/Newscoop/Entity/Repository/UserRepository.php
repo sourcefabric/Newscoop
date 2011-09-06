@@ -56,6 +56,7 @@ class UserRepository extends EntityRepository
         }
 
         $this->setAttributes($user, array_key_exists('attributes', $values) ? $values['attributes'] : array());
+        $this->setUserTypes($user, array_key_exists('user_type', $values) ? $values['user_type'] : array());
 
         $this->getEntityManager()->persist($user);
     }
@@ -107,6 +108,21 @@ class UserRepository extends EntityRepository
     }
 
     /**
+     * Set user types
+     *
+     * @param Newscoop\Entity\User $user
+     * @param array $types
+     * @return void
+     */
+    private function setUserTypes(User $user, array $types)
+    {
+        $user->getUserTypes()->clear();
+        foreach ($types as $type) {
+            $user->addUserType($this->getEntityManager()->getReference('Newscoop\Entity\User\Group', $type));
+        }
+    }
+
+    /**
      * Test if property value is unique
      *
      * @param string $property
@@ -114,7 +130,7 @@ class UserRepository extends EntityRepository
      * @param int $id
      * @return bool
      */
-    private function isUnique($property, $value, $id)
+    public function isUnique($property, $value, $id = null)
     {
         $qb = $this->getEntityManager()->createQueryBuilder()
             ->select('COUNT(u.id)')
@@ -123,7 +139,7 @@ class UserRepository extends EntityRepository
 
         $params = array($value);
 
-        if ($id > 0) {
+        if ($id !== null) {
             $qb->andWhere('u.id <> ?1');
             $params[] = $id;
         }

@@ -11,22 +11,6 @@ class Application_Form_Register extends Zend_Form
 {
     public function init()
     {
-        $this->addElement('text', 'first_name', array(
-            'label' => 'First Name',
-            'required' => true,
-            'filters' => array(
-                'stringTrim',
-            ),
-        ));
-
-        $this->addElement('text', 'last_name', array(
-            'label' => 'Last Name',
-            'required' => true,
-            'filters' => array(
-                'stringTrim',
-            ),
-        ));
-
         $this->addElement('text', 'email', array(
             'label' => 'E-mail Address',
             'required' => true,
@@ -38,19 +22,16 @@ class Application_Form_Register extends Zend_Form
             ),
         ));
 
-        $this->addElement('password', 'password', array(
-            'label' => 'Password',
-            'required' => true,
-            'filters' => array(
-                'stringTrim',
-            ),
-            'validators' => array(
-                array('stringLength', false, array(6, 80)),
-            ),
+        $this->addElement('textarea', 'terms_of_use_text', array(
+            'label' => 'Terms of Use',
+            'value' => 'Terms of user sample',
+            'ignore' => true,
+            'columns' => 60,
+            'rows' => 5,
         ));
 
         $this->addElement('submit', 'submit', array(
-            'label' => 'Sign Up',
+            'label' => 'I aggre, Continue',
             'ignore' => true,
         ));
     }
