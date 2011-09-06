@@ -256,11 +256,6 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         {
 
             $artTypeName = (string) $this->readAttribute($artType, self::ATTR_ARTICLE_TYPE_NAME);
-            /*            if( isset( $ret->$artTypeName ) ) {
-             $artTypeName .= "_";
-             var_dump( $artType->{self::ATTR_ARTICLE_TYPE_NAME} );
-             }
-             */
             // set article type name on return array
             $ret->$artTypeName = new \stdClass;
             // getting the article type fields
@@ -1028,5 +1023,31 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
             reset($objects);
             rmdir($dir);
         }
+    }
+
+    /**
+     * Get the publication of a theme, and optionally output
+     * @param Theme $theme
+   	 * @param Output $output
+   	 * @return Publication
+     */
+    function getThemePublication($theme, $output=null)
+    {
+        $pathRsc = $this->getSyncResourceService()->getThemePath($theme->getPath());
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->select('th')->from(OutputSettingsTheme::NAME, 'th');
+        $qb->where('th.themePath = :themePath');
+        $qb->setParameter('themePath', $pathRsc);
+        if (!is_null($output))
+        {
+            $qb->andWhere('th.output = :output');
+            $qb->setParameter('output', $output);
+        }
+        $result = current($qb->getQuery()->getResult());
+        if ($result) {
+            return $result->getPublication();
+        }
+        return null;
     }
 }

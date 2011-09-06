@@ -154,7 +154,6 @@ class Admin_ThemesController extends Zend_Controller_Action
     public function init()
     {
         $this->getThemeService();
-        $this->view->placeholder( 'title' )->set( getGS( 'Theme management' ) );
 
         // TODO move this + callbacks from here to a higher level
         if( !$this->_helper->contextSwitch->hasContext( 'adv' ) )
@@ -280,6 +279,7 @@ class Admin_ThemesController extends Zend_Controller_Action
                 'media'	=> 'screen',
                 'rel'	=> 'stylesheet'
             ) );
+            $this->view->placeholder( 'title' )->set( getGS( 'Theme management' ) );
         }
     }
 
@@ -364,7 +364,7 @@ class Admin_ThemesController extends Zend_Controller_Action
 
     public function advancedThemeSettingsAction()
     {
-        $this->view->themeId = $this->_request->getParam( 'id' );
+        $this->view->themeId = ( $themeId = $this->_request->getParam( 'id' ) );
         $this->view->headLink( array
         (
         	'type'  =>'text/css',
@@ -375,6 +375,16 @@ class Admin_ThemesController extends Zend_Controller_Action
 
         $params = $this->getRequest()->getParams();
         $this->view->templatesParams = $params;
+
+        $this->view->placeholder( 'title' )->set( getGS( 'Theme management' ) );
+
+        $themeMngService = $this->getThemeService();
+        /* @var $themeMngService Newscoop\Service\Implementation\ThemeManagementServiceLocal */
+        $theme = $themeMngService->getById($themeId);
+        $this->view->placeholder( 'title' )->append( ": ".$theme->getName() );
+        if (($publication = $themeMngService->getThemePublication($theme))) {
+            $this->view->placeholder( 'title' )->append( " - ".$publication->getName() );
+        }
     }
 
     /**

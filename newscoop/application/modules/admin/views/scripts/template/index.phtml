@@ -1,16 +1,18 @@
 <div class="currentDirectory">
+
     <strong><?php putGS('Current directory:'); ?></strong>
-    <?php if (empty($this->path)) { ?>
-    <?php putGS('Templates'); ?>
-    <?php } else { ?>
-    <a href="<?php echo $this->url(array(
-        'path' => NULL,
-    )); ?>"><?php putGS('Templates'); ?></a> / <?php echo $this->navigation()->breadcrumbs()
-        ->setContainer($this->nav)
-        ->setMinDepth(0)
-        ->setSeparator(' / ');
-    ?>
-    <?php } ?>
+
+    <?php if (empty($this->path)) : ?>
+        <?php putGS('Templates'); ?>
+    <?php else : ?>
+        <a href="<?php echo $this->url(array( 'path' => NULL )); ?>"><?php putGS('Templates'); ?></a>
+        	/
+        	<?php echo $this->navigation()->breadcrumbs()
+                ->setContainer($this->nav)
+                ->setMinDepth(0)
+                ->setSeparator(' / ');
+            ?>
+    <?php endif; ?>
 </div>
 
 <?php $this->renderActions(); ?>
@@ -20,12 +22,21 @@
     'action' => 'index',
     'next' => urlencode($this->url()),
 )); ?>" method="<?php echo $this->form->getMethod(); ?>">
-<dl>
+
+<div style="border: 1px solid #CCCCCC;margin: 1em 0;padding: 8px;">
+
     <?php echo $this->form->csrf; ?>
     <?php echo $this->form->action; ?>
     <?php echo $this->form->name; ?>
     <?php echo $this->form->multiaction; ?>
-</dl>
+
+    <?php if ($this->doCache) : ?>
+    <span id="template-caching-status" style="float:right; text-align:right; width:680px; color:#BFBFBF">
+    	<?php echo getGS('Caching templates in:') ?>
+    	<strong></strong>
+    </span>
+	<?php endif; ?>
+</div>
 
 <table class="themeTemplatesTable templates">
 <thead>
@@ -41,7 +52,7 @@
     <th></th>
 </tr>
 
-<?php if (!empty($this->path)) { ?>
+<?php if (!empty($this->path)) : ?>
 <tr class="parent">
     <td colspan="9"><a href="<?php echo $this->url(array(
         'path' => $this->parent,
@@ -49,12 +60,12 @@
         'next' => null,
     )); ?>" class="upOneLevel" title="<?php putGS('Go to parent'); ?>"><?php putGS('Go to parent'); ?></a></td>
 </tr>
-<?php } ?>
+<?php endif; ?>
 
 </thead>
 
 <tbody>
-<?php foreach ($this->folders as $folder) { ?>
+<?php foreach ($this->folders as $folder) : ?>
 <tr class="collection">
     <td class="id"><input type="checkbox" name="file[]" value="<?php echo $folder->name; ?>" /></td>
     <td><a href="<?php echo $this->url(array(
@@ -75,10 +86,10 @@
         </ul></li>
     </ul></td>
 </tr>
-<?php } ?>
+<?php endforeach; ?>
 
-<?php foreach ($this->templates as $file) { ?>
-<tr class="template">
+<?php foreach ($this->templates as $file) : ?>
+<tr class="template" file-name="<?php echo $file->name ?>">
     <td class="id"><input type="checkbox" name="file[]" value="<?php echo $file->name; ?>" /></td>
     <td><a href="<?php echo $this->url(array(
         'controller' => 'template',
@@ -103,7 +114,7 @@
         </ul></li>
     </ul></td>
 </tr>
-<?php } ?>
+<?php endforeach; ?>
 </tbody>
 </table>
 
@@ -139,7 +150,7 @@ $(function() {
 		modal: true,
 		position:'center',
 		buttons: {
-            <?php echo json_encode(getGS('Save')); ?>: function() { 
+            <?php echo json_encode(getGS('Save')); ?>: function() {
                 var name = $('[name="name"]', $(this)).not(':hidden').val();
                 if (!name.length) {
                     alert(<?php echo json_encode(getGS("Name can't be empty")); ?>);
@@ -149,9 +160,9 @@ $(function() {
                 var form = $('#actions-form');
                 $('input[name="name"]', form).val(name);
                 form.submit();
-			}, 
-            <?php echo json_encode(getGS('Cancel')); ?>: function() { 
-				$(this).dialog("close"); 
+			},
+            <?php echo json_encode(getGS('Cancel')); ?>: function() {
+				$(this).dialog("close");
 			}
         }
 	});
@@ -175,7 +186,7 @@ $(function() {
             $(this).attr('checked', true);
         });
 
-        form.submit();
+        form.trigger('submit', [$(this).parents('tr:eq(0)').attr('file-name')]);
 	});
 
     // datatable
@@ -251,7 +262,7 @@ $(function() {
     });
 
     // submit actions form - ask for name if needed
-    $('#actions-form').submit(function() {
+    $('#actions-form').bind( 'submit', function(evt, fn) {
         var action = $('input[name="action"]', $(this)).val();
         var name = $('input[name="name"]', $(this)).val();
 
@@ -260,19 +271,51 @@ $(function() {
         }
 
         if (action != 'delete' && !name.length) {
-            if (action == 'move') {
-                $('#ui-dialog-title-1').html(<?php echo json_encode(getGS('Choose destination')); ?>);
-                $('.dialogPopup select').show();
-                $('.dialogPopup input').hide();
-            } else {
-                $('#ui-dialog-title-1').html(<?php echo json_encode(getGS('Set new name')); ?>);
-                $('.dialogPopup select').hide();
-                $('.dialogPopup input').show();
+            switch (action)
+            {
+            	case 'move' :
+            		$('#ui-dialog-title-1').html(<?php echo json_encode(getGS('Choose destination')); ?>);
+                    $('.dialogPopup select').show();
+                    $('.dialogPopup input').hide();
+                   	break;
+            	case 'rename' :
+            		$('#ui-dialog-title-1').html(<?php echo json_encode(getGS('Rename file')); ?>);
+                    $('.dialogPopup select').hide();
+                    $('.dialogPopup input').show().val(fn);
+                	break;
+            	default :
+            		$('#ui-dialog-title-1').html(<?php echo json_encode(getGS('Set new name to')); ?>+' '+fn);
+                	$('.dialogPopup select').hide();
+                	$('.dialogPopup input').show();
+                	break;
             }
 
 		    $('.dialogPopup').dialog('open');
             return false;
         }
     });
+
+    <?php if ($this->doCache) : ?>
+	var cachePathList = <?php echo Zend_Json::encode( array('/') + $this->paths ) ?>;
+	function cacheTemplates()
+	{
+		var path = cachePathList.shift();
+		if ( typeof path == 'undefined' )
+		{
+			$('#template-caching-status').text('<?php echo getGS('Caching templates finished') ?>');
+			return;
+		}
+		$('#template-caching-status strong').text(path);
+    	$.ajax
+    	({
+    		url : '<?php echo $this->url( array( 'controller'=>'template', 'action'=>'cache-templates', 'module'=>'admin' ), 'default', true ) ?>',
+    		data : { 'format' : 'json', 'path' : path, 'id' : <?php echo $this->themeId ?> },
+    		dataType : 'json',
+    		success : cacheTemplates,
+    		error : cacheTemplates
+    	});
+	};
+	cacheTemplates.call(this);
+	<?php endif; ?>
 });
 </script>

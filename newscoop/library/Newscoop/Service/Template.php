@@ -68,6 +68,7 @@ class Template
         $this->theme = $theme;
     }
 
+
     /**
      * Find items
      *
@@ -84,6 +85,36 @@ class Template
 
             return $items;
         } catch (\InvalidArgumentException $e) {
+            throw new \InvalidArgumentException(getGS("'$1' not found", $path), $e->getCode(), $e);
+        }
+    }
+
+    /**
+     * List paths in theme dir..
+     * @param string $path
+     */
+    public function listPaths($path)
+    {
+        return $this->storage->listPaths($path);
+    }
+
+    /**
+     *
+     */
+    public function cacheTemplates($path)
+    {
+        try
+        {
+            $items = array();
+            foreach ($this->storage->listItems($path) as $file) {
+                $storageFile = $this->storage->getItem($file);
+                if (!$storageFile->isDir()) {
+                    $items[] = $this->repository->getTemplate($storageFile);
+                }
+            }
+            return $this->repository->flush();
+        }
+        catch (\InvalidArgumentException $e) {
             throw new \InvalidArgumentException(getGS("'$1' not found", $path), $e->getCode(), $e);
         }
     }
@@ -118,7 +149,7 @@ class Template
         );
 
         if (!$item->isDir()) {
-            $template = $this->repository->getTemplate($key);
+            $template = $this->repository->getTemplate($key, false);
 
             // get the resource for the template id
             $resource = $this->syncResServ->findByPathOrId( rtrim( $this->theme->getPath(), "/" )."/".ltrim( $key, "/" ) );

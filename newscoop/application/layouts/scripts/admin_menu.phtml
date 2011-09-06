@@ -600,6 +600,7 @@ foreach ($pages as $i => $page) {
 
 $nav = new Zend_Navigation($pages);
 $view->navigation()->breadcrumbs()
+    ->setSeparator(' &gt; ')
     ->setContainer($nav)
     ->setRenderInvisible(true);
 ?>
