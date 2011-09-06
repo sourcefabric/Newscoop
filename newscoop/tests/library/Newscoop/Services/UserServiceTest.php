@@ -213,6 +213,7 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
             
         $user = $this->service->createPending('email@example.com');
         $this->assertInstanceOf('Newscoop\Entity\User', $user);
+        $this->assertTrue($user->isPublic());
     }
 
     public function testSavePending()
@@ -228,6 +229,7 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->service->savePending($data, $user);
         $this->assertTrue($user->isActive());
+        $this->assertTrue($user->isPublic());
     }
 
     protected function expectGetRepository()

@@ -9,6 +9,17 @@
  */
 class EmailController extends Zend_Controller_Action
 {
+    public function init()
+    {
+        $this->getHelper('viewRenderer')
+            ->setView($this->view)
+            ->setViewScriptPathSpec(':controller_:action.:suffix')
+            ->setViewSuffix('tpl');
+
+        $this->getHelper('layout')
+            ->disableLayout();
+    }
+
     public function confirmAction()
     {
         $this->view->user = $this->_getParam('user');

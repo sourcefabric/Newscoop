@@ -132,7 +132,14 @@ class UserService
             return '';
         }
 
-        $username = trim(strtolower("{$firstName}.{$lastName}"), '.');
+        $username = strtolower(trim($firstName) . '-' . trim($lastName));
+        $username = preg_replace('~[^\\pL0-9_]+~u', '-', $username);
+        $username = trim($username, "-");
+        $username = iconv("utf-8", "us-ascii//TRANSLIT", $username);
+        $username = strtolower($username);
+        $username = preg_replace('~[^-a-z0-9_]+~', '', $username);
+        $username = str_replace('-', '.', $username);
+
         for ($i = '';; $i++) {
             $conflict = $this->getRepository()->findOneBy(array(
                 'username' => "$username{$i}",
@@ -165,6 +172,7 @@ class UserService
     public function createPending($email)
     {
         $user = new User($email);
+        $user->setPublic(true);
         $this->em->persist($user);
         $this->em->flush();
         return $user;
@@ -184,7 +192,19 @@ class UserService
         }
 
         $user->setActive();
+        $user->setPublic(true);
         $this->save($data, $user);
+    }
+
+    /**
+     * Test if username is available
+     *
+     * @param string $username
+     * @return bool
+     */
+    public function checkUsername($username)
+    {
+        return $this->getRepository()->isUnique('username', $username);
     }
 
     /**

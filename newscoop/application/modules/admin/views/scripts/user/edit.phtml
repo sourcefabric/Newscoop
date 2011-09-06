@@ -2,13 +2,15 @@
 
 <?php $this->renderActions(); ?>
 
+<?php if ($this->user->isPublic()) { ?>
 <div class="edit-image">
     <a href="<?php echo $this->url(array(
         'module' => 'admin',
-        'controller' => 'image',
-        'action' => 'change',
-    )); ?>" class="iframe"><img src="<?php echo $this->image; ?>" width="80" height="80" /><br /><?php empty($this->image) ? putGS('Add picture') : putGS('Edit picture'); ?></a>
+        'controller' => 'user',
+        'action' => 'profile',
+    )); ?>" class="iframe"><img src="<?php echo $this->image; ?>" width="80" height="80" /><br /><?php putGS('Edit profile'); ?></a>
 </div>
+<?php } ?>
 
 <?php echo $this->form; ?>
 

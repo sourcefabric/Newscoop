@@ -170,6 +170,39 @@ class Admin_UserController extends Zend_Controller_Action
         $table->dispatch();
     }
 
+    public function profileAction()
+    {
+        $this->_helper->layout->setLayout('iframe');
+
+        $form = new Admin_Form_Profile();
+        $user = $this->getUser();
+
+        $formProfile = new Application_Form_Profile();
+        $formProfile->setDefaultsFromEntity($user);
+        $form->addSubform($formProfile->getSubform('attributes'), 'attributes');
+
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $values = $form->getValues();
+
+            try {
+                if (!empty($values['image'])) {
+                    $imageInfo = array_pop($form->image->getFileInfo());
+                    $values['image'] = $this->_helper->service('image')->save($imageInfo);
+                    $this->view->image = $this->_helper->service('image')->getSrc($values['image'], $this->_getParam('width', 80), $this->_getParam('height', 80));
+                } else {
+                    unset($values['image']);
+                }
+                $this->_helper->service('user')->save($values, $user);
+                $this->view->close = true;
+            } catch (\InvalidArgumentException $e) {
+                $form->image->addError($e->getMessage());
+            }
+        }
+
+        $this->view->form = $form;
+    }
+
     /**
      * Get user for given id
      *
