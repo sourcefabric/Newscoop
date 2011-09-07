@@ -3,10 +3,13 @@
 	var defaults = {
 		'namespace': 'wobs',
 		'defaultView' : 'month',
+		'today' : new Date(),
 		'date' : new Date(),
 		'dayNames': ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+		'firstDay': 0,
 		'monthNames': ['January','February','March','April','May','June','July','August','September','October','November','December'],
-		'navigation': true
+		'navigation': true,
+		'showDayNames': true
     };
   
 	var methods = {
@@ -51,6 +54,7 @@
 		var _date_cache = [];	
 		var _start = undefined;
 		var _end = undefined;
+		var _today = options.today;
 		var _date = options.date;
 		var _view = options.defaultView;
 		var _header = undefined;
@@ -59,6 +63,7 @@
 		
 		t.getCalendarDate = getCalendarDate;
 		t.setCalendarDate = setCalendarDate;
+		t.getTodaysDate = getTodaysDate;
 		t.render = render;
 		
 		if ($.isFunction(options.articles)) {
@@ -69,14 +74,18 @@
 		function render() {
 	
 			if (_view === 'month') {
-				_header = new Header(t, element, options);
 				monthView();
+				_header = new Header(t, element, options);
 			}
 			else if(_view === 'widget') {
 				widgetView();
 			}
 			
 			renderArticles();
+		}
+		
+		function getTodaysDate() {
+			return _today;
 		}
 		
 		function getCalendarDate() {
@@ -191,23 +200,27 @@
 		}
 		
 		function monthView() {
-			var table, thead, tbody, tr, td, th, dateBox;
+			var table, thead, tbody, tr, td, th, dateBox, dayIndex;
 			
 			table = $("<table/>");
-			thead = $("<thead/>");
 			tbody = $("<tbody/>");
 			
-			thead.append("<tr/>");
-			
-			//make the <thead> <tr> <th>s
-			for(var i=0; i<7; i++) {
-				th = $("<th/>");
+			//show the names of the days of the week on the calendar
+			if(options.showDayNames) {
+				thead = $("<thead/>");
+				thead.append("<tr/>");
 				
-				th.append(options.dayNames[i]);
+				//make the <thead> <tr> <th>s
+				for(var i=0; i<7; i++) {
+					th = $("<th/>");
+					
+					dayIndex = (options.firstDay + i) % 7;
+					th.append(options.dayNames[dayIndex]);
+					
+					thead.find("tr").append(th);
+				}
 				
-				thead
-					.find("tr")
-						.append(th);
+				table.append(thead)
 			}
 			
 			//make the <tbody> <tr>s
@@ -229,7 +242,7 @@
 					td = $("<td/>");
 					td.addClass("wobs-day-"+dayNum);
 					
-					dateBox = new DayBox(t, td);
+					dateBox = new DayBox(t, td, dayNum);
 					_date_cache.push(dateBox);
 					
 					tr.append(td);
@@ -238,8 +251,7 @@
 				tbody.append(tr);
 			}
 			
-			table.append(thead)
-				.append(tbody);
+			table.append(tbody);
 			
 			setMonthViewDates();
 				
@@ -247,16 +259,20 @@
 		}	
 		
 		function setMonthViewDates() {
-			var y, m, begin, s_dofw;
+			var y, m, begin, s_dofw, d, tmp_date;
 			
 			y = _date.getFullYear();
 			m = _date.getMonth();
 			
 			begin = new Date(y, m, 1);
 			s_dofw = begin.getDay();
-		
-			var d = 1-s_dofw;
-			var tmp_date;
+			
+			//need this first day option to start week on either sunday/monday etc (leftmost day)
+			d = 1 - s_dofw + options.firstDay;
+			if (s_dofw < options.firstDay) {
+				d = d - 7;
+			}
+
 			for (var c=0; c<_date_cache.length; c++) {
 				tmp_date = new Date(y, m, d);
 				
@@ -275,7 +291,7 @@
 	
 	function Header(calendar, element, options) {
 		
-		var t, table, tm, html='';
+		var t, ul, html='';
 		
 		t = this;
 		ns = options.namespace;
@@ -283,27 +299,21 @@
 		t.disableHeader = disableHeader;
 		t.enableHeader = enableHeader;
 		
-		table = $('<table class="'+ns+'-header"/>');
-		
-		html = '<tbody><tr><th colspan="7"><ul class="wobs-calendar-nav">';
-		
-		if (options.navigation === true) {
-			html = html + '<li class="'+ns+'-button-prev"><a></a></li>';
-		}	
-		
-		html = html + '<li class="'+ns+'-header-title"><h5></h5></li>';
+		ul = $('<ul class="'+ns+'-calendar-nav"/>');
 		
 		if (options.navigation === true) {
 			html = html + '<li class="'+ns+'-button-next"><a></a></li>';
-		}
+			html = html + '<li class="'+ns+'-button-prev"><a></a></li>';
+		}	
 		
-		html = html + '</ul></th></tr></tbody>';
+		html = html + '<li class="'+ns+'-calendar-month"><p></p></li>';
 		
-		table.append(html);
+		
+		ul.append(html);
 		
 		updateHeader(calendar.getCalendarDate());
 		
-		table.find('.'+ns+'-button-prev').click(function(){
+		ul.find('.'+ns+'-button-prev').click(function(){
 			var date, mm, yyyy, newDate;
 			
 			if ($(this).hasClass(ns + '-state-disabled')) {
@@ -329,7 +339,7 @@
 			calendar.setCalendarDate(newDate);			
 		});
 		
-		table.find('.'+ns+'-button-next').click(function(){
+		ul.find('.'+ns+'-button-next').click(function(){
 			var date, mm, yyyy, newDate;
 			
 			if ($(this).hasClass(ns + '-state-disabled')) {
@@ -348,7 +358,7 @@
 			calendar.setCalendarDate(newDate);
 		});
 		
-		element.append(table);
+		element.append(ul);
 		
 		function disableHeader() {
 			
@@ -369,22 +379,22 @@
 		}
 		
 		function activateButton(buttonName) {
-			table.find('.'+ns+'-button-' + buttonName)
+			ul.find('.'+ns+'-button-' + buttonName)
 				.addClass(ns + '-state-active');
 		}	
 		
 		function deactivateButton(buttonName) {
-			table.find('.'+ns+'-button-' + buttonName)
+			ul.find('.'+ns+'-button-' + buttonName)
 				.removeClass(ns + '-state-active');
 		}
 			
 		function disableButton(buttonName) {
-			table.find('.'+ns+'-button-' + buttonName)
+			ul.find('.'+ns+'-button-' + buttonName)
 				.addClass(ns + '-state-disabled');
 		}
 			
 		function enableButton(buttonName) {
-			table.find('.'+ns+'-button-' + buttonName)
+			ul.find('.'+ns+'-button-' + buttonName)
 				.removeClass(ns + '-state-disabled');
 		}
 		
@@ -395,7 +405,7 @@
 			month = date.getMonth();
 			month = options.monthNames[month]; 
 			
-			table.find('.'+ns+'-header-title h5')
+			ul.find('.'+ns+'-calendar-month p')
 				.empty()
 				.append(month+" "+yyyy);
 		}
@@ -403,7 +413,7 @@
 		return t;
 	}
 	
-	function DayBox(calendar, td) {
+	function DayBox(calendar, td, box_id) {
 		
 		var _date = undefined;
 		var _title = undefined;
@@ -418,9 +428,11 @@
 		this.setUrl = setUrl;
 		this.clear = clear;
 		
-		td.append('<div class="wobs-date-content"><a></a></div>').find("a")
-			.append('<div class="wobs-date-label"/>')
-			.append('<span class="wobs-date-title"/>');
+		td.append('<div class="wobs-date-content"><a></a></div>')
+			.find("a")
+			.append('<div class="wobs-date-container"/>')
+				.find(".wobs-date-container")
+				.append('<div class="wobs-date-label"/>');
 		
 		td.click(function(){
 			if (_url !== undefined) {
@@ -429,15 +441,14 @@
 		});
 		
 		function setDate(date) {
-			var cm, dm;
-			
-			_date = date;
+			var cm, dm, today;
+	
 			td.find(".wobs-date-label")
-				.append(_date.getDate());
+				.append(date.getDate());
 			
 			cm = calendar.getCalendarDate();
 			cm = cm.getMonth();
-			dm = _date.getMonth();
+			dm = date.getMonth();
 			
 			if (cm === dm) {
 				td.addClass("wobs-curr-month");
@@ -445,21 +456,38 @@
 			else {
 				td.addClass("wobs-other-month");
 			}
+			
+			today = calendar.getTodaysDate();
+			//date is today
+			if (today.getTime() == date.getTime()) {
+				td.find(".wobs-date-label").addClass("wobs-today");
+			}
+			
+			_date = date;
 		}
 		
 		function setTitle(title) {
 			_title = title;
-			td.find(".wobs-date-title")
-				.append(_title);
+			
+			$(td).qtip({
+			    id: 'wobs-tooltip-'+box_id,
+			    content: {
+			        text: title
+			    },
+				position: {
+					my: 'bottom center',
+					at: 'top center'
+				},
+				style: {
+			      classes: 'ui-tooltip-light ui-tooltip-shadow ui-tooltip-rounded'
+			   }
+			});
 		}
 		
 		function setThumbnail(picture) {
 			_s_image = picture;
 			
 			td.find("a").append('<img width="164" height="166" src="'+_s_image+'"></img>');
-				//.css("background-image", "url("+_s_image+")")
-				//.css("background-size", "125px 120px")
-				//.css("background-repeat", "no-repeat");
 		}
 		
 		function setUrl(url) {
@@ -472,14 +500,18 @@
 			_s_image = undefined;
 			_url = undefined;
 			
+			td.qtip('destroy');
+			
 			td.removeClass("wobs-other-month");
 			td.removeClass("wobs-curr-month");
-				
+			td.removeAttr("title");
+			
 			td.find("img")
 				.remove();
 			td.find(".wobs-date-title")
-				.empty();
+				.attr("title", "");
 			td.find(".wobs-date-label")
+				.removeClass("wobs-today")
 				.empty();
 		}
 	}

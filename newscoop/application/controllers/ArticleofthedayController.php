@@ -24,6 +24,9 @@ class ArticleofthedayController extends Zend_Controller_Action
         $date = $request->getParam('date', date("Y/m/d"));
         $date = explode("/", $date);
 
+        $today = date("Y/m/d");
+        $this->view->today = explode("/", $today);
+
         if (isset($date[0])) {
             $this->view->year = $date[0];
         }
@@ -38,6 +41,9 @@ class ArticleofthedayController extends Zend_Controller_Action
         }
 
         $this->view->nav = $request->getParam('navigation', true);
+        $this->view->firstDay = $request->getParam('firstDay', 0);
+        $this->view->dayNames = $request->getParam('showDayNames', true);
+
         $this->view->gimme = CampTemplate::singleton()->context();
     }
 
