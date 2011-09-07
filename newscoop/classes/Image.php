@@ -751,7 +751,7 @@ class Image extends DatabaseObject
 	 * 		Return an Image object on success, return a PEAR_Error otherwise.
 	 */
 	public static function OnAddRemoteImage($p_url, $p_attributes,
-	                                        $p_userId = null, $p_id = null)
+	                                        $p_userId = null, $p_id = null, $p_doLog = true)
 	{
 		global $Campsite;
 		if (function_exists("camp_load_translation_strings")) {
@@ -879,10 +879,11 @@ class Image extends DatabaseObject
         unlink($tmpname);
         $image->commit();
 
-		$logtext = getGS('The image $1 has been added.',
-						$image->m_data['Description']." (".$image->m_data['Id'].")");
-		Log::Message($logtext, null, 41);
-
+        if ($p_doLog) {
+            $logtext = getGS('The image $1 has been added.',
+                            $image->m_data['Description']." (".$image->m_data['Id'].")");
+            Log::Message($logtext, null, 41);
+        }
 	    return $image;
 	} // fn OnAddRemoteImage
 

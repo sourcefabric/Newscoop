@@ -134,7 +134,7 @@ class ArticleImage extends DatabaseObject {
      *
      * @return boolean
      */
-    public function delete()
+    public function delete($p_doLog = true)
     {
         if (!$this->exists()) {
             return false;
@@ -142,11 +142,13 @@ class ArticleImage extends DatabaseObject {
         ArticleImage::RemoveImageTagsFromArticleText($this->getArticleNumber(), $this->getTemplateId());
         $result = parent::delete();
         if ($result) {
-        	if (function_exists("camp_load_translation_strings")) {
-        		camp_load_translation_strings("api");
-        	}
-        	$logtext = getGS('Image $1 unlinked from article $2', $p_imageId, $p_articleNumber);
-        	Log::Message($logtext, null, 42);
+            if ($p_doLog) {
+                if (function_exists("camp_load_translation_strings")) {
+                    camp_load_translation_strings("api");
+                }
+                $logtext = getGS('Image $1 unlinked from article $2', $p_imageId, $p_articleNumber);
+                Log::Message($logtext, null, 42);
+            }
         }
         return $result;
     }
@@ -249,7 +251,7 @@ class ArticleImage extends DatabaseObject {
 	 * @return void
 	 */
 	public static function AddImageToArticle($p_imageId, $p_articleNumber,
-	                                         $p_templateId = null)
+	                                         $p_templateId = null, $p_doLog = true)
 	{
 		global $g_ado_db;
 		if (is_null($p_templateId)) {
@@ -258,11 +260,14 @@ class ArticleImage extends DatabaseObject {
 		$queryStr = 'INSERT IGNORE INTO ArticleImages(NrArticle, IdImage, Number)'
 					.' VALUES('.$p_articleNumber.', '.$p_imageId.', '.$p_templateId.')';
 		$g_ado_db->Execute($queryStr);
-		if (function_exists("camp_load_translation_strings")) {
-			camp_load_translation_strings("api");
-		}
-		$logtext = getGS('Image $1 linked to article $2', $p_imageId, $p_articleNumber);
-		Log::Message($logtext, null, 41);
+
+        if ($p_doLog) {
+            if (function_exists("camp_load_translation_strings")) {
+                camp_load_translation_strings("api");
+            }
+            $logtext = getGS('Image $1 linked to article $2', $p_imageId, $p_articleNumber);
+            Log::Message($logtext, null, 41);
+        }
 	} // fn AddImageToArticle
 
 
