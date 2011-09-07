@@ -380,7 +380,7 @@ CREATE TABLE `Images` (
   `LastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `TimeCreated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `Source` enum('local','feedback') not null default 'local',
-  `Status` enum('unpublished','published') not null default 'published',
+  `Status` enum('unapproved','approved') not null default 'approved',
   PRIMARY KEY (`Id`),
   FULLTEXT KEY `Description` (`Description`),
   FULLTEXT KEY `Photographer` (`Photographer`),

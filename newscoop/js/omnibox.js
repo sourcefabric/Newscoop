@@ -185,12 +185,13 @@ var omnibox = {
 		
 		this.elements.ob_review_captcha_code.value = '';
 	},
-	sendFeedback: function(fileUploaded) {
+	sendFeedback: function(fileType, fileId) {
 		var that = this;
-		console.log(this.uploader.total);
 		if (this.uploader.total.queued > 0) {
-			this.uploader.bind('FileUploaded', function(up, file) {
-				that.sendFeedback(true);
+			this.uploader.bind('FileUploaded', function(up, file, info) {
+				response = $.parseJSON(info.response);
+				response = response.response;
+				that.sendFeedback('image', response);
 			});
 			this.uploader.start();
 		}
@@ -207,12 +208,12 @@ var omnibox = {
 			};
 			
 			var url = this.baseUrl + '/feedback/save/?format=json';
-			if (fileUploaded == true) url = url + '&upload=1';
+			if (fileType == 'image') {
+				url = url + '&image_id=' + fileId;
+			}
 			
 			$.post(url, data, function(data) {
-				console.log(data);
 				data = $.parseJSON(data);
-				console.log(data);
 				
 				omnibox.setMessage(data.response);
 				omnibox.showMessage();

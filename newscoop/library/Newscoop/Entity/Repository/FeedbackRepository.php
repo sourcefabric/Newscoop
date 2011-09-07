@@ -64,11 +64,13 @@ class FeedbackRepository extends DatatableSource
 			$entity->setArticle($article);
 		}
         
-        $entity->setSubject($values['subject']);
-        $entity->setMessage($values['message']);
-        $entity->setUrl($values['url']);
-        $entity->setTimeCreated($values['time_created']);
-        $entity->setStatus($values['status']);
+        if (isset($values['subject'])) $entity->setSubject($values['subject']);
+		if (isset($values['message'])) $entity->setMessage($values['message']);
+        if (isset($values['url'])) $entity->setUrl($values['url']);
+        if (isset($values['time_created'])) $entity->setTimeCreated($values['time_created']);
+        if (isset($values['status'])) $entity->setStatus($values['status']);
+        if (isset($values['attachment_type'])) $entity->setAttachmentType($values['attachment_type']);
+        if (isset($values['attachment_id'])) $entity->setAttachmentId($values['attachment_id']);
         
         $em->persist($entity);
         return $entity;

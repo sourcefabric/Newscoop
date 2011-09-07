@@ -1184,7 +1184,7 @@ class Image extends DatabaseObject
             'Place' => '',
             'Date' => '',
             'Source' => 'local',
-            'Status' => 'published'
+            'Status' => 'approved'
         );
         
         if ($p_attributes != NULL && is_array($p_attributes)) {

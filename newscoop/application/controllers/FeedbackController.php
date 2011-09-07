@@ -73,16 +73,24 @@ class FeedbackController extends Zend_Controller_Action
 				'url' => $parameters['f_feedback_url'],
 				'time_created' => new DateTime(),
 				'language' => $parameters['f_language'],
-				'status' => 'pending'
+				'status' => 'pending',
+				'attachment_type' => 'none',
+				'attachment_id' => 0
 			);
 			
-			$feedbackRepository->save($feedback, $values);
-			$feedbackRepository->flush();
-			
-			if ($parameters['upload'] == 1) {
+			if (isset($parameters['image_id'])) {
+				$values['attachment_type'] = 'image';
+				$values['attachment_id'] = $parameters['image_id'];
+				
+				$feedbackRepository->save($feedback, $values);
+				$feedbackRepository->flush();
+				
 				$this->view->response = getGS('File is uploaded and your message is sent.');
 			}
 			else {
+				$feedbackRepository->save($feedback, $values);
+				$feedbackRepository->flush();
+				
 				$this->view->response = getGS('Your message is sent.');
 			}
 		}
@@ -100,15 +108,16 @@ class FeedbackController extends Zend_Controller_Action
 		$auth = Zend_Auth::getInstance();
 		$userId = $auth->getIdentity();
 		
+		$_FILES['file']['name'] = preg_replace('/[^\w\._]+/', '', $_FILES['file']['name']);
+		
 		$mimeType = $_FILES['file']['type'];
-		echo($mimeType);die;
 		$type = explode('/', $mimeType);
 		$type = $type[0];
 		
 		if ($type == 'image') {
 			$file = Plupload::OnMultiFileUploadCustom($Campsite['IMAGE_DIRECTORY']);
-			$image = Image::ProcessFile($_FILES['file']['name'], $_FILES['file']['name'], $userId, array('Source' => 'feedback', 'Status' => 'Unpublished'));
-			$this->view->response = 'OK';
+			$image = Image::ProcessFile($_FILES['file']['name'], $_FILES['file']['name'], $userId, array('Source' => 'feedback', 'Status' => 'Unapproved'));
+			$this->view->response = $image->getImageId();
 		}
 	}
     

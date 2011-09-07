@@ -96,6 +96,22 @@ class Feedback
      * @var string to code mapper for status
      */
     static $status_enum = array('processed', 'pending', 'starred', 'deleted');
+    /**
+     * @var string to code mapper for attachment_type
+     */
+    static $attachment_type_enum = array('none', 'image', 'file');
+    
+    /**
+     * @column(length=1)
+     * @var int
+     */
+    private $attachment_type;
+    
+    /**
+     * @column(type="integer")
+     * @var int
+     */
+    private $attachment_id;
 
 
     /**
@@ -346,5 +362,50 @@ class Feedback
     public function getStatus()
     {
         return self::$status_enum[$this->status];
+    }
+    
+    /**
+     * Set attachment type
+     *
+     * @return Newscoop\Entity\Feedback
+     */
+    public function setAttachmentType($attachment_type)
+    {
+        $attachment_type_enum = array_flip(self::$attachment_type_enum);
+        $this->attachment_type = $attachment_type_enum[$attachment_type];
+        return $this;
+    }
+
+    /**
+     * Get attachment_type
+     *
+     * @return string
+     */
+    public function getAttachmentType()
+    {
+        return self::$attachment_type_enum[$this->attachment_type];
+    }
+    
+    /**
+     * Set attachment_id
+     *
+     * @param integer p_attachment_id
+     * @return Newscoop\Entity\Feedback
+     */
+    public function setAttachmentId($attachment_id)
+    {
+        $this->attachment_id = $attachment_id;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get attachment_id
+     *
+     * @return integer
+     */
+    public function getAttachmentId()
+    {
+        return $this->attachment_id;
     }
 }
