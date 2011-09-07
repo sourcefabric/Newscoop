@@ -358,7 +358,7 @@ class NewsImport
             $one_old_images = ArticleImage::GetImagesByArticleNumber($art_number);
             foreach ($one_old_images as $one_old_img_link) {
                 $one_old_img = $one_old_img_link->getImage();
-                $one_old_img_link->delete();
+                $one_old_img_link->delete(false);
                 if (0 == count(ArticleImage::GetArticlesThatUseImage($one_old_img->getImageId()))) {
                     $one_old_img->delete(false);
                 }

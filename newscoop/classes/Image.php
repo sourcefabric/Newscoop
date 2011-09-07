@@ -82,7 +82,7 @@ class Image extends DatabaseObject
 	 *		TRUE if the record was deleted,
 	 * 		return a PEAR_Error on failure.
 	 */
-	public function delete()
+	public function delete($p_doLog = true)
 	{
 		require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
 
@@ -117,9 +117,10 @@ class Image extends DatabaseObject
 		if (!parent::delete()) {
 			return new PEAR_Error(getGS("Could not delete record from the database."));
 		}
-
-		$logtext = getGS('Image "$1" ($2) deleted', $imageDescription, $imageId);
-		Log::Message($logtext, null, 42);
+        if ($p_doLog) {
+            $logtext = getGS('Image "$1" ($2) deleted', $imageDescription, $imageId);
+            Log::Message($logtext, null, 42);
+        }
 		return true;
 	} // fn delete
 
