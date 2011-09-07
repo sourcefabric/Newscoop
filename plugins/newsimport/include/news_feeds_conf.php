@@ -5,14 +5,22 @@ $event_data_sources = array(
         'admin_user_id' => 1,
         'provider_id' => 1,
         'provider_name' => 'Werbeverlags AG',
-        'event_type' => 'newswire',
+        'event_type' => 'general',
+        'article_type' => 'event',
         'publication_id' => 2,
         'language_id' => 1,
         'issue_number' => 13,
         'section_number' => 30,
         'source_dirs' => array(
             'new' => '/usr/local/var/www/fabric/events/input/events/',
+            'use' => '/usr/local/var/www/fabric/events/current/events/',
             'old' => '/usr/local/var/www/fabric/events/processed/events/',
+            'ready' => array(
+                'events' => 'events_done.txt',
+            ),
+            'source' => array(
+                'events' => array('events_all_*',),
+            ),
         ),
         'categories' => array(
             'theater' => array('theater', 'theatre',),
@@ -25,6 +33,7 @@ $event_data_sources = array(
             'public' => true,
             'comments' => false,
             'publish' => true,
+            'publish_date_by_event_date' => false,
         ),
         'geo' => array(
             'map_provider' => 'mapquest', // googlev3, mapquest, osm
@@ -44,15 +53,28 @@ $event_data_sources = array(
         'admin_user_id' => 1,
         'provider_id' => 2,
         'provider_name' => 'Werbeverlags AG',
-        'event_type' => 'newswire',
-        //'event_type' => 'event_movie',
+        'event_type' => 'movie',
+        'article_type' => 'event',
         'publication_id' => 1,
         'issue_number' => 1,
         'section_number' => 1,
         'language_id' => 1,
         'source_dirs' => array(
             'new' => '/usr/local/var/www/fabric/events/input/movies/',
+            'use' => '/usr/local/var/www/fabric/events/current/movies/',
             'old' => '/usr/local/var/www/fabric/events/processed/movies/',
+            'ready' => array(
+                'programs' => 'wvag_cine_done.txt',
+                'movies' => 'ci_done.txt',
+                'genres' => 'ci_done.txt',
+                'timestamps' => 'ci_done.txt',
+            ),
+            'source' => array(
+                'programs' => array('tageswoche_7d.xml.gz',),
+                'movies' => array('tageswoche_mov.xml.gz',),
+                'genres' => array('tageswoche_gen.xml.gz',),
+                'timestamps' => array('tageswoche_tim.xml.gz',),
+            ),
         ),
         'categories' => array(
             'movie' => '*',
@@ -61,6 +83,7 @@ $event_data_sources = array(
             'public' => true,
             'comments' => false,
             'publish' => true,
+            'publish_date_by_event_date' => false,
         ),
         'geo' => array(
             'map_provider' => 'mapquest', // googlev3, mapquest, osm

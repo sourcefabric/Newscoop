@@ -9,13 +9,201 @@
 
 class EventData_Parser {
 
+    var $m_working = '_working';
+    var $m_dirmode = 0755;
+
+    var $m_source = null;
+    var $m_provider = null;
+    var $m_dirs = null;
+
+    public function __construct($p_source)
+    {
+        $this->m_source = $p_source;
+        $this->m_dirs = $p_source['source_dirs'];
+        $this->m_provider = $p_source['provider_id'];
+    }
+
+    public function start() {
+        // stop, if some worker running; return false
+        $working_path = $this->m_dirs['use'] . $this->m_working;
+        if (file_exists($working_path)) {
+            return false;
+        }
+
+        foreach (array($this->m_dirs['use'], $this->m_dirs['new']) as $one_dir) {
+            if (!is_dir($one_dir)) {
+                try {
+                    $created = mkdir($one_dir, $this->m_dirmode, true);
+                    if (!$created) {
+                        return false;
+                    }
+                }
+                catch (Exception $exc) {
+                    return false;
+                }
+            }
+        }
+
+        try {
+            $working_file = fopen($working_path, 'w');
+            fwrite($working_file, date('Y-m-d') . "\n");
+            fclose($working_file);
+        }
+        catch (Exception $exc) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function stop() {
+        // stop, if some worker running; return false
+        $working_path = $this->m_dirs['use'] . $this->m_working;
+        if (!file_exists($working_path)) {
+            return false;
+        }
+
+        try {
+            unlink($working_path);
+        }
+        catch (Exception $exc) {
+            return false;
+        }
+
+        return true;
+    }
+
+    public function prepare() {
+        // we need that conf info
+        if ((!isset($this->m_dirs['source'])) || (!isset($this->m_dirs['source']['events']))) {
+            return false;
+        }
+
+        $to_copy_files = true;
+
+        $some_files_to_process = true;
+
+        if ((isset($this->m_dirs['ready'])) && (isset($this->m_dirs['ready']['events']))) {
+            $ready_file = $this->m_dirs['new'] . $this->m_dirs['ready']['events'];
+            // if no new files (still may be some not fully processed at the interim dir)
+            if (!file_exists($ready_file)) {
+                $to_copy_files = false;
+
+                $some_files_to_process = false;
+                foreach ($this->m_dirs['source']['events'] as $one_file_glob) {
+                    $one_path_glob = $this->m_dirs['use'] . '*' . $one_file_glob;
+                    $one_file_set = glob($one_path_glob);
+                    if (false === $one_file_set) {
+                        continue;
+                    }
+                    foreach ($one_file_set as $event_file_path) {
+                        if (!is_file($event_file_path)) {
+                            continue;
+                        }
+                        $some_files_to_process = true;
+                        break;
+                    }
+                }
+
+                // if neither new, no interim
+                if (!$some_files_to_process) {
+                    return false;
+                }
+
+                // some files to process are there
+                return true;
+            }
+        }
+
+        if ($to_copy_files) {
+            // copy files with time stamps
+            foreach ($this->m_dirs['source']['events'] as $one_file_glob) {
+                $one_path_glob = $ready_file = $this->m_dirs['new'] . $one_file_glob;
+                $one_file_set = glob($one_path_glob);
+                if (false === $one_file_set) {
+                    continue;
+                }
+
+                foreach ($one_file_set as $event_file_path_new) {
+                    if (!is_file($event_file_path_new)) {
+                        continue;
+                    }
+                    $event_file_name = basename($event_file_path_new);
+                    $event_file_path_use = $this->m_dirs['use'] . date('YmdHis') . '-' . $event_file_name;
+                    try {
+                        rename($event_file_path_new, $event_file_path_use);
+                    }
+                    catch (Exception $exc) {
+                        continue;
+                    }
+                }
+            }
+
+            // remove the ready file
+            if ((isset($this->m_dirs['ready'])) && (isset($this->m_dirs['ready']['events']))) {
+                $ready_file = $this->m_dirs['new'] . $this->m_dirs['ready']['events'];
+                if (file_exists($ready_file)) {
+                    try {
+                        unlink($ready_file);
+                    }
+                    catch (Exception $exc) {
+                        // return false;
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+    public function cleanup() {
+        // we need that conf info
+        if ((!isset($this->m_dirs['source'])) || (!isset($this->m_dirs['source']['events']))) {
+            return false;
+        }
+
+        // moving all the files from the interim into the old dir
+        $dir_handle = null;
+        try {
+            $dir_handle = opendir($this->m_dirs['use']);
+        }
+        catch (Exception $exc) {
+            return false;
+        }
+
+        if (!$dir_handle) {
+            return false;
+        }
+
+        while (false !== ($event_file = readdir($dir_handle))) {
+            $one_use_path = $this->m_dirs['use'] . DIRECTORY_SEPARATOR . $event_file;
+            $one_old_path = $this->m_dirs['old'] . DIRECTORY_SEPARATOR . $event_file;
+
+            if (!is_file($one_use_path)) {
+                continue;
+            }
+            if (basename($one_use_path) == $this->m_working) {
+                continue;
+            }
+
+            try {
+                rename($one_use_path, $one_old_path);
+            }
+            catch (Exception $exc) {
+                continue;
+            }
+        }
+
+        return true;
+    }
+
     /**
      * Parses EventData data (by EventData_Parser_SimpleXML)
      *
      * @param string $p_file file name of the event file
      * @return array
      */
-    public static function Parse($p_provider, $p_dir, $p_categories, $p_otherParams) {
+    public function parse($p_categories, $p_otherParams) {
         if (!is_array($p_categories)) {
             $p_categories = array();
         }
@@ -32,7 +220,7 @@ class EventData_Parser {
 
         $dir_handle = null;
         try {
-            $dir_handle = opendir($p_dir);
+            $dir_handle = opendir($this->m_dirs['use']);
         }
         catch (Exception $exc) {
             return false;
@@ -40,13 +228,12 @@ class EventData_Parser {
 
         if ($dir_handle) {
             while (false !== ($event_file = readdir($dir_handle))) {
-                if (!is_file($p_dir . DIRECTORY_SEPARATOR . $event_file)) {
+                $event_file_path = $this->m_dirs['use'] . $event_file;
+
+                if (!is_file($event_file_path)) {
                     continue;
                 }
 
-                // TODO: to check that no transfer is running by now
-
-                $event_file_path = $p_dir . DIRECTORY_SEPARATOR . $event_file;
                 $event_file_path_arr = explode('.', $event_file_path);
                 $event_file_path_arr_last_rank = count($event_file_path_arr) - 1;
                 if (0 < $event_file_path_arr_last_rank) {
@@ -56,8 +243,7 @@ class EventData_Parser {
                 }
 
                 try {
-                    $result = $parser->parse($events, $p_provider, $event_file_path, $p_categories, $start_date);
-                    //echo count($result);
+                    $result = $parser->parse($events, $this->m_provider, $event_file_path, $p_categories, $start_date);
                 }
                 catch (Exception $exc) {
                     //var_dump($exc);
@@ -103,11 +289,8 @@ class EventData_Parser_SimpleXML {
             // array of events info
             $entry_set = $event_location->entry;
 
-            //$debug_end = false;
-            // one event is object of 72 (simple) properties, most of them are empty
+            // note that most of event properties are usually empty
             foreach ($entry_set as $event) {
-                //if ($debug_end) {return;}
-                //$debug_end = true;
 
                 $event_info = array('provider_id' => $p_provider);
                 $event_other = array();

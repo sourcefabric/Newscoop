@@ -118,7 +118,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 
 
     function plugin_newsimport_create_event_type() {
-        $art_type_name = 'newswire';
+        $art_type_name = 'event';
 
         $art_type_obj = new ArticleType($art_type_name);
         if (!$art_type_obj->exists()) {

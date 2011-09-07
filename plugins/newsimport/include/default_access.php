@@ -1,4 +1,4 @@
 <?php
 
-$newsimport_default_access = 'newsimport2';
+$newsimport_default_access = 'newsimportb';
 
