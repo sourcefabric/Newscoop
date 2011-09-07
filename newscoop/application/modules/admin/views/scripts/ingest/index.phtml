@@ -1,0 +1,13 @@
+<h2><?php putGS('Latest news'); ?></h2>
+<ul class="ingest-entries">
+    <?php foreach ($this->entries as $entry) { ?>
+    <li><?php echo $entry->getTitle(); ?></li>
+    <?php } ?>
+</ul>
+
+<h2><?php putGS('Feeds'); ?></h2>
+<ul class="ingest-feeds">
+    <?php foreach ($this->feeds as $feed) { ?>
+    <li><?php echo $feed->getTitle(); ?> <em>last updated: <?php echo $feed->getUpdated()->format('d.m.Y H:m:s'); ?></em></li>
+    <?php } ?>
+</ul>
