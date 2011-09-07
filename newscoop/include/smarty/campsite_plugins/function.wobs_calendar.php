@@ -15,6 +15,12 @@ function smarty_function_wobs_calendar($p_params, &$p_smarty)
     if (isset($p_params['view'])){
         $wobs_commands['view'] = $p_params['view'];
     }
+    if (isset($p_params['firstDay'])){
+        $wobs_commands['firstDay'] = $p_params['firstDay'];
+    }
+    if (isset($p_params['showDayNames'])){
+        $wobs_commands['showDayNames'] = $p_params['showDayNames'];
+    }
 
     $p_content = $controller->view->action(
         'index',
