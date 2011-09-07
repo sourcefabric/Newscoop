@@ -113,6 +113,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('em'));
 
         $container->register('email', 'Newscoop\Services\EmailService')
+            ->addArgument('%email%')
             ->addArgument(new sfServiceReference('view'))
             ->addArgument(new sfServiceReference('user.token'));
 
@@ -173,6 +174,24 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'module' => 'default',
                 'controller' => 'register',
                 'action' => 'confirm',
+            )));
+
+        $router->addRoute(
+            'user-list',
+            new Zend_Controller_Router_Route('listing/:user-listing/:page', array(
+                'module' => 'default',
+                'controller' => 'user',
+                'action' => 'index',
+                'page' => 1,
+            )));
+
+        $router->addRoute(
+            'user-active',
+            new Zend_Controller_Router_Route('active/:page', array(
+                'module' => 'default',
+                'controller' => 'user',
+                'action' => 'index',
+                'page' => 1,
             )));
 
         $router->addRoute(

@@ -56,6 +56,7 @@ class UserRepository extends EntityRepository
         }
 
         $this->setAttributes($user, array_key_exists('attributes', $values) ? $values['attributes'] : array());
+        $this->setUserTypes($user, array_key_exists('user_type', $values) ? $values['user_type'] : array());
 
         $this->getEntityManager()->persist($user);
     }
@@ -107,6 +108,21 @@ class UserRepository extends EntityRepository
     }
 
     /**
+     * Set user types
+     *
+     * @param Newscoop\Entity\User $user
+     * @param array $types
+     * @return void
+     */
+    private function setUserTypes(User $user, array $types)
+    {
+        $user->getUserTypes()->clear();
+        foreach ($types as $type) {
+            $user->addUserType($this->getEntityManager()->getReference('Newscoop\Entity\User\Group', $type));
+        }
+    }
+
+    /**
      * Test if property value is unique
      *
      * @param string $property
@@ -133,6 +149,38 @@ class UserRepository extends EntityRepository
         return !$qb->getQuery()->getSingleScalarResult();
     }
 
+    public function findActiveUsers($countOnly, $offset, $limit)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        if ($countOnly) {
+            $qb->select('COUNT(u.id)');
+        }
+        else {
+            $qb->select('u');
+        }
+
+        $qb->from('Newscoop\Entity\User', 'u');
+
+        $qb->where($qb->expr()->eq("u.status", User::STATUS_ACTIVE));
+        $qb->andWhere($qb->expr()->eq("u.is_public", true));
+
+        if ($countOnly === false) {
+            $qb->orderBy('u.points', 'DESC');
+            $qb->addOrderBy('u.id', 'ASC');
+
+            $qb->setFirstResult($offset);
+            $qb->setMaxResults($limit);
+
+            echo $qb->getQuery()->getSql();
+
+            return $qb->getQuery()->getResult();
+        }
+        else {
+            return $qb->getQuery()->getOneOrNullResult();
+        }
+    }
+
     /**
      * Return Users if their last name begins with one of the letter passed in.
      *
@@ -140,22 +188,39 @@ class UserRepository extends EntityRepository
      *
      * @return array Newscoop\Entity\User
      */
-    public function findUsersLastNameInRange($letters)
+    public function findUsersLastNameInRange($letters, $countOnly, $offset, $limit)
     {
         $qb = $this->getEntityManager()->createQueryBuilder();
-        $qb->select('u')
-            ->from('Newscoop\Entity\User', 'u');
+
+        if ($countOnly) {
+            $qb->select('COUNT(u.id)');
+        }
+        else {
+            $qb->select('u');
+        }
+
+        $qb->from('Newscoop\Entity\User', 'u');
 
         $qb->where($qb->expr()->like("u.last_name", "'$letters[0]%'"));
         for ($i=1; $i < count($letters); $i++) {
             $qb->orWhere($qb->expr()->like("u.last_name", "'$letters[$i]%'"));
         }
 
-        $qb->orderBy('u.last_name', 'ASC');
-        $qb->addOrderBy('u.first_name', 'ASC');
-        $qb->addOrderBy('u.id', 'ASC');
+        if ($countOnly === false) {
+            $qb->orderBy('u.last_name', 'ASC');
+            $qb->addOrderBy('u.first_name', 'ASC');
+            $qb->addOrderBy('u.id', 'ASC');
 
-        return $qb->getQuery()->getResult();
+            $qb->setFirstResult($offset);
+            $qb->setMaxResults($limit);
+
+            //echo $qb->getQuery()->getSql();
+
+            return $qb->getQuery()->getResult();
+        }
+        else {
+            return $qb->getQuery()->getOneOrNullResult();
+        }
     }
 
     /**
@@ -167,7 +232,7 @@ class UserRepository extends EntityRepository
      *
      * @return array Newscoop\Entity\User
      */
-    public function searchUsers($search, $attributes = array("first_name", "last_name", "username"))
+    public function searchUsers($search, $countOnly, $offset, $limit, $attributes = array("first_name", "last_name", "username"))
     {
         $keywords = explode(" ", $search);
 
@@ -189,6 +254,9 @@ class UserRepository extends EntityRepository
         $qb->orderBy('u.last_name', 'ASC');
         $qb->addOrderBy('u.first_name', 'ASC');
         $qb->addOrderBy('u.id', 'ASC');
+
+        $qb->setFirstResult($offset);
+        $qb->setMaxResults($limit);
 
         //echo $qb->getQuery()->getSql();
 

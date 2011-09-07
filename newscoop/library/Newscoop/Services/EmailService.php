@@ -14,6 +14,9 @@ use Newscoop\Entity\User;
  */
 class EmailService
 {
+    /** @var array */
+    private $config = array();
+
     /** @var Zend_View_Abstract */
     private $view;
 
@@ -21,10 +24,13 @@ class EmailService
     private $tokenService;
 
     /**
-     * @param Zend_View_Abstract
+     * @param array $config
+     * @param Zend_View_Abstract $view
+     * @param UserTokenService $tokenService
      */
-    public function __construct(\Zend_View_Abstract $view, UserTokenService $tokenService)
+    public function __construct(array $config, \Zend_View_Abstract $view, UserTokenService $tokenService)
     {
+        $this->config = $config;
         $this->view = $view;
         $this->tokenService = $tokenService;
     }
@@ -37,17 +43,33 @@ class EmailService
      */
     public function sendConfirmationToken(User $user)
     {
-        $text = $this->view->action('confirm', 'email', 'default', array(
+        $message = $this->view->action('confirm', 'email', 'default', array(
             'user' => $user->getId(),
             'token' => $this->tokenService->generateToken($user, 'email.confirm'),
         ));
 
-        // @todo send to user email from some valid email
+        $this->send("Email confirmation", $message, $user->getEmail());
+    }
+
+    /**
+     * Send email
+     *
+     * @param string $subject
+     * @param string $message
+     * @param mixed $tos
+     * @return void
+     */
+    private function send($subject, $message, $tos)
+    {
         $mail = new \Zend_Mail();
-        $mail->setBodyText($text);
-        $mail->setFrom('no-reply@localhost');
-        $mail->addTo('petr@localhost');
-        $mail->setSubject('Confirm e-mail');
+        $mail->setSubject($subject);
+        $mail->setBodyText($message);
+        $mail->setFrom($this->config['from']);
+
+        foreach ((array) $tos as $to) {
+            $mail->addTo($to);
+        }
+
         $mail->send();
     }
 }

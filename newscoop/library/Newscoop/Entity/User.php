@@ -9,7 +9,8 @@ namespace Newscoop\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection,
     Newscoop\Utils\PermissionToAcl,
-    Newscoop\Entity\Acl\Role;
+    Newscoop\Entity\Acl\Role,
+    Newscoop\Entity\User\Group;
 
 /**
  * @Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
@@ -452,6 +453,28 @@ class User implements \Zend_Acl_Role_Interface
     public function getGroups()
     {
         return $this->groups;
+    }
+
+    /**
+     * Add user type
+     *
+     * @param Newscoop\Entity\User\Group $type
+     * @return Newscoop\Entity\User
+     */
+    public function addUserType(Group $type)
+    {
+        $this->groups->add($type);
+        return $this;
+    }
+
+    /**
+     * Get user types
+     *
+     * @return array
+     */
+    public function getUserTypes()
+    {
+        return $this->getGroups();
     }
 
     /**
