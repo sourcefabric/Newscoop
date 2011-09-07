@@ -13,12 +13,14 @@ use Newscoop\Entity\Feedback;
 
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
 require_once($GLOBALS['g_campsiteDir'].'/include/get_ip.php');
+require_once($GLOBALS['g_campsiteDir']. '/classes/Plupload.php');
 
 class FeedbackController extends Zend_Controller_Action
 {
     public function init()
     {
 		$this->getHelper('contextSwitch')->addActionContext('save', 'json')->initContext();
+		$this->getHelper('contextSwitch')->addActionContext('upload', 'json')->initContext();
     }
 
     public function saveAction()
@@ -77,7 +79,12 @@ class FeedbackController extends Zend_Controller_Action
 			$feedbackRepository->save($feedback, $values);
 			$feedbackRepository->flush();
 			
-			$this->view->response = getGS('Your message is sent.');
+			if ($parameters['upload'] == 1) {
+				$this->view->response = getGS('File is uploaded and your message is sent.');
+			}
+			else {
+				$this->view->response = getGS('Your message is sent.');
+			}
 		}
 		else {
 			$errors = implode('<br>', $errors);
@@ -85,6 +92,25 @@ class FeedbackController extends Zend_Controller_Action
 			$this->view->response = $errors;
 		}
     }
+    
+    public function uploadAction()
+    {
+		global $Campsite;
+		
+		$auth = Zend_Auth::getInstance();
+		$userId = $auth->getIdentity();
+		
+		$mimeType = $_FILES['file']['type'];
+		echo($mimeType);die;
+		$type = explode('/', $mimeType);
+		$type = $type[0];
+		
+		if ($type == 'image') {
+			$file = Plupload::OnMultiFileUploadCustom($Campsite['IMAGE_DIRECTORY']);
+			$image = Image::ProcessFile($_FILES['file']['name'], $_FILES['file']['name'], $userId, array('Source' => 'feedback', 'Status' => 'Unpublished'));
+			$this->view->response = 'OK';
+		}
+	}
     
     public function indexAction()
     {

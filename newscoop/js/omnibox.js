@@ -1,4 +1,9 @@
 var omnibox = {
+	uploader: false,
+	flashRuntime: false,
+	silverlightRuntime: false,
+	uploadUrl: false,
+	uploadStatus: true,
 	language: false,
 	publication: false,
 	section: false,
@@ -21,16 +26,18 @@ var omnibox = {
 		if (this.elements.ob_feedback_subject) this.elements.ob_feedback_subject.value = '';
 		if (this.elements.ob_feedback_text) this.elements.ob_feedback_text.value = '';
 		if (this.elements.ob_review_captcha_code) this.elements.ob_review_captcha_code.value = '';
-		
-		/*
-		var location = (String)(document.location);
-		if (location.indexOf('#') != -1) {
-			this.showHide();
-		}
-		*/
 	},
 	setType: function(type) {
 		this.type = type;
+	},
+	setFlashRuntime: function(flashRuntime) {
+		this.flashRuntime = flashRuntime;
+	},
+	setSilverlightRuntime: function(silverlightRuntime) {
+		this.silverlightRuntime = silverlightRuntime;
+	},
+	setUploadUrl: function(uploadUrl) {
+		this.uploadUrl = uploadUrl;
 	},
 	setBaseUrl: function(baseUrl) {
 		this.baseUrl = baseUrl;
@@ -46,6 +53,22 @@ var omnibox = {
 	},
 	setArticle: function(article) {
 		this.article = article;
+	},
+	showUploader: function() {
+		this.uploader = new plupload.Uploader({
+			runtimes: 'html5,html4',
+			browse_button: 'file_upload',
+			max_file_size: '10mb',
+			flash_swf_url: this.flashRuntime,
+			silverlight_xap_url: this.silverlightRuntime,
+			url: this.uploadUrl,
+			filters: [{title: "Image files", extensions: "jpg,gif,png"}, {title: "Adobe Acrobat files", extensions: "pdf"}]
+		});
+		this.uploader.init();
+		this.uploader.refresh();
+	},
+	hideUploader: function() {
+		this.uploader.refresh();
 	},
 	showHideElement: function(elementName, action) {
 		if (action == 'show') var display = 'inline';
@@ -66,11 +89,13 @@ var omnibox = {
 			//this.elements.ob_main.style.display = 'inline';
 			$('#ob_main').show(500);
 			this.status = true;
+			this.showUploader();
 		}
 		else {
 			//this.elements.ob_main.style.display = 'none';
 			$('#ob_main').hide(500);
 			this.status = false;
+			this.hideUploader();
 		}
 	},
 	switchCommentFeedback: function() {
@@ -160,28 +185,41 @@ var omnibox = {
 		
 		this.elements.ob_review_captcha_code.value = '';
 	},
-	sendFeedback: function() {
-		var data = {
-			f_feedback_url: String(document.location),
-			f_feedback_subject: this.elements.ob_feedback_subject.value,
-			f_feedback_content: this.elements.ob_feedback_text.value,
-			f_captcha: this.elements.ob_review_captcha_code.value,
-			f_language: this.language,
-			f_section: this.section,
-			f_article: this.article,
-			f_publication: this.publication
-		};
-		
-		$.post(this.baseUrl + '/feedback/save/?format=json', data, function(data) {
-			console.log(data);
-			data = $.parseJSON(data);
-			console.log(data);
+	sendFeedback: function(fileUploaded) {
+		var that = this;
+		console.log(this.uploader.total);
+		if (this.uploader.total.queued > 0) {
+			this.uploader.bind('FileUploaded', function(up, file) {
+				that.sendFeedback(true);
+			});
+			this.uploader.start();
+		}
+		else {
+			var data = {
+				f_feedback_url: String(document.location),
+				f_feedback_subject: this.elements.ob_feedback_subject.value,
+				f_feedback_content: this.elements.ob_feedback_text.value,
+				f_captcha: this.elements.ob_review_captcha_code.value,
+				f_language: this.language,
+				f_section: this.section,
+				f_article: this.article,
+				f_publication: this.publication
+			};
 			
-			omnibox.setMessage(data.response);
-			omnibox.showMessage();
-			omnibox.showInput();
-		});
-		
-		this.elements.ob_review_captcha_code.value = '';
+			var url = this.baseUrl + '/feedback/save/?format=json';
+			if (fileUploaded == true) url = url + '&upload=1';
+			
+			$.post(url, data, function(data) {
+				console.log(data);
+				data = $.parseJSON(data);
+				console.log(data);
+				
+				omnibox.setMessage(data.response);
+				omnibox.showMessage();
+				omnibox.showInput();
+			});
+			
+			this.elements.ob_review_captcha_code.value = '';
+		}
 	}
 };
