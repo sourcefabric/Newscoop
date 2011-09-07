@@ -99,6 +99,27 @@
               <span class="commentSubject">{{message.subject}}</span>
             </h4>
             <p class="commentBody">{{message.message}}</p>
+            {% if (attachment.type == 'image') %}
+				<img src="{{attachment.thumbnail}}">
+				{% if (attachment.status == 'unapproved') %}
+					<div class="approval">
+					<form action="{{attachment.approve_url}}">
+						<input type="hidden" name="attachment_type" value="{{attachment.type}}" />
+						<input type="hidden" name="attachment_id" value="{{attachment.id}}" />
+						<?php echo SecurityToken::FormParameter(); ?>
+						<div class="buttonBar">
+						<input type="submit" value="<?php putGS('Approve'); ?>" class="button">
+						</div>
+					</form>
+					</div>
+				{% endif %}
+				{% if (attachment.status == 'approved') %}
+					<?php putGS('Approved.'); ?>
+				{% endif %}
+            {% endif %}
+            {% if (attachment.type == 'file') %}
+				
+            {% endif %}
           </div>
 
           <div class="dateCommentHolderReply">

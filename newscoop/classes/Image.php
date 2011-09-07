@@ -249,8 +249,23 @@ class Image extends DatabaseObject
     {
         return substr($this->m_data['ContentType'], strlen('image/'));
     } // fn getType
-
-
+    
+    /**
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->m_data['Source'];
+    } // fn getSource
+    
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->m_data['Status'];
+    } // fn getSource
+    
 	/**
 	 * Return the full path to the image file.
 	 * @return string

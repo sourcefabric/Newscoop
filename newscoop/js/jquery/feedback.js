@@ -172,6 +172,28 @@ $(function () {
      * Action to fire
      * when action submit is triggered
      */
+    $('.approval form').live('submit', function () {
+        var that = this;
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {
+                flashMessage(putGS('Message updated.'));
+                datatable.fnDraw();
+            },
+            error: function (rq, status, error) {
+                if (status == 0 || status == -1) {
+                    flashMessage(putGS('Unable to reach Newscoop. Please check your internet connection.'), "error");
+                }
+            }
+        });
+        return false;
+    });
+    /**
+     * Action to fire
+     * when action submit is triggered
+     */
     $('.dateCommentHolderReply form').live('submit', function () {
         var that = this;
         $.ajax({

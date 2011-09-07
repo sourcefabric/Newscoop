@@ -70,6 +70,18 @@ class Admin_FeedbackController extends Zend_Controller_Action
                 $section = $feedback->getSection();
                 $article = $feedback->getArticle();
                 
+                $attachment = array();
+                
+                $attachment['type'] = $feedback->getAttachmentType();
+                $attachment['id'] = $feedback->getAttachmentId();
+                
+                if ($attachment['type'] == 'image') {
+					$image = new Image($attachment['id']);
+					$attachment['status'] = $image->getStatus();
+					$attachment['thumbnail'] = $image->getThumbnailUrl();
+					$attachment['approve_url'] = $view->url(array('action' => 'approve', 'type' => 'image', 'format' => 'json', 'id' => $attachment['id']));
+				}
+                
                 $banned = $acceptanceRepository->checkBanned(array('name' => $user->getName(), 'email' => '', 'ip' => ''), $publication);
                 if ($banned['name'] == true) {
 					$banned = true;
@@ -120,7 +132,8 @@ class Admin_FeedbackController extends Zend_Controller_Action
 							'name' => ($article) ? $article->getName() : getGS('None'),
 							'url' => ($article) ? $view->baseUrl("admin/articles/get.php?") . $view->linkArticle($article) : $view->baseUrl("admin/feedback")
 						)
-                    )
+                    ),
+                    'attachment' => $attachment
                 );
                 return($result);
             });
@@ -234,6 +247,21 @@ class Admin_FeedbackController extends Zend_Controller_Action
 		catch (Exception $e) {
 			$this->view->status = 200;
 			$this->view->message = 'succcesful?';
+		}
+	}
+	
+	/**
+     * Approve action
+     */
+    public function approveAction()
+    {
+		$this->getHelper('contextSwitch')->addActionContext('approve', 'json')->initContext();
+		
+		$parameters = $this->getRequest()->getParams();
+		
+		if ($parameters['type'] == 'image') {
+			$image = new Image($parameters['id']);
+			$image->update(array('Status' => 'approved'));
 		}
 	}
 }
