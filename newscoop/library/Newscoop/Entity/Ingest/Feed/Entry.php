@@ -94,6 +94,16 @@ class Entry
     }
 
     /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Get title
      *
      * @return string
@@ -101,6 +111,48 @@ class Entry
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Get content
+     *
+     * @return string
+     */
+    public function getContent()
+    {
+        return $this->content;
+    }
+
+    /**
+     * Set published
+     *
+     * @param DateTime $published
+     * @return Newscoop\Entity\Ingest\Feed\Entry
+     */
+    public function setPublished(\DateTime $published)
+    {
+        $this->published = $published;
+        return $this;
+    }
+
+    /**
+     * Get published
+     *
+     * @return DateTime
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
+
+    /**
+     * Test if is published
+     *
+     * @return bool
+     */
+    public function isPublished()
+    {
+        return isset($this->published);
     }
 
     /**

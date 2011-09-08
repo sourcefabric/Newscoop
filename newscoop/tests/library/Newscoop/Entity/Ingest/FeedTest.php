@@ -25,7 +25,6 @@ class FeedTest extends \RepositoryTestCase
     public function testUpdate()
     {
         $feed = new Feed('sda');
-        $feed->setPath(APPLICATION_PATH . '/../tests/ingest/');
         $feed->update();
         $this->assertGreaterThan(1, count($feed->getEntries()));
     }

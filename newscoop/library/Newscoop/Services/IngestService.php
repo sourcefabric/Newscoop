@@ -7,8 +7,9 @@
 
 namespace Newscoop\Services;
 
-use Newscoop\Entity\Ingest\Feed,
-    Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManager,
+    Newscoop\Entity\Ingest\Feed,
+    Newscoop\Entity\Ingest\Feed\Entry;
 
 /**
  * Ingest service
@@ -78,6 +79,18 @@ class IngestService
     }
 
     /**
+     * Find by id
+     *
+     * @param int $id
+     * @return Newscoop\Entity\Ingest\Feed\Entry
+     */
+    public function find($id)
+    {
+        return $this->getEntryRepository()
+            ->find($id);
+    }
+
+    /**
      * Find by given criteria
      *
      * @param array $criteria
@@ -88,7 +101,30 @@ class IngestService
      */
     public function findBy(array $criteria, array $orderBy = array(), $limit = 25, $offset = 0)
     {
-        return $this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry')
+        return $this->getEntryRepository()
             ->findBy($criteria, $orderBy, $limit, $offset);
+    }
+
+    /**
+     * Publish entry
+     *
+     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
+     * @return void
+     */
+    public function publish(Entry $entry)
+    {
+        $entry->setPublished(new \DateTime());
+        $this->em->persist($entry);
+        $this->em->flush();
+    }
+
+    /**
+     * Get feed entry repository
+     *
+     * @return Doctrine\ORM\EntityRepository
+     */
+    private function getEntryRepository()
+    {
+        return $this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry');
     }
 }

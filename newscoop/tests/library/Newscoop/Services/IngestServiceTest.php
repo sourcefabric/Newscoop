@@ -7,7 +7,8 @@
 
 namespace Newscoop\Services;
 
-use Newscoop\Entity\Ingest\Feed;
+use Newscoop\Entity\Ingest\Feed,
+    Newscoop\Entity\Ingest\Feed\Entry;
 
 class IngestServiceTest extends \PHPUnit_Framework_TestCase
 {
@@ -41,26 +42,37 @@ class IngestServiceTest extends \PHPUnit_Framework_TestCase
             ->method('update')
             ->with();
 
-        $this->service->addFeed($feed);
+        $repository = $this->getRepository();
+        $repository->expects($this->once())
+            ->method('findAll')
+            ->will($this->returnValue(array($feed)));
+
+        $this->em->expects($this->once())
+            ->method('getRepository')
+            ->with($this->equalTo('Newscoop\Entity\Ingest\Feed'))
+            ->will($this->returnValue($repository));
+
         $this->service->updateAll();
     }
 
     public function testGetFeeds()
     {
-        $this->assertEmpty($this->service->getFeeds());
+        $repository = $this->getRepository();
+        $repository->expects($this->once())
+            ->method('findAll')
+            ->will($this->returnValue(array('feeds')));
 
-        $feed = $this->getMock('Newscoop\Entity\Ingest\Feed', null, array('title'));
-        $this->service->addFeed($feed);
+        $this->em->expects($this->once())
+            ->method('getRepository')
+            ->with($this->equalTo('Newscoop\Entity\Ingest\Feed'))
+            ->will($this->returnValue($repository));
 
-        $feeds = $this->service->getFeeds();
-        $this->assertEquals(1, count($feeds));
+        $this->assertEquals(array('feeds'), $this->service->getFeeds());
     }
 
     public function testFindBy()
     {
-        $repository = $this->getMockBuilder('Doctrine\ORM\EntityRepository')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $repository = $this->getRepository();
 
         $this->em->expects($this->once())
             ->method('getRepository')
@@ -73,5 +85,50 @@ class IngestServiceTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(array('result')));
 
         $this->assertEquals(array('result'), $this->service->findBy(array('feed' => 1), array('updated' => 'desc'), 0, 10));
+    }
+
+    public function testFind()
+    {
+        $repository = $this->getRepository();
+        $repository->expects($this->once())
+            ->method('find')
+            ->with($this->equalTo(123))
+            ->will($this->returnValue('entry'));
+
+        $this->em->expects($this->once())
+            ->method('getRepository')
+            ->with($this->equalTo('Newscoop\Entity\Ingest\Feed\Entry'))
+            ->will($this->returnValue($repository));
+
+        $this->assertEquals('entry', $this->service->find(123));
+    }
+
+    public function testPublish()
+    {
+        $entry = new Entry('title', 'content');
+        $this->assertFalse($entry->isPublished());
+
+        $this->em->expects($this->once())
+            ->method('persist')
+            ->with($this->equalTo($entry));
+
+        $this->em->expects($this->once())
+            ->method('flush')
+            ->with();
+
+        $this->service->publish($entry);
+        $this->assertTrue($entry->isPublished());
+    }
+
+    /**
+     * Get repository
+     *
+     * @return Doctrine\ORM\EntityRepository
+     */
+    private function getRepository()
+    {
+        return $this->getMockBuilder('Doctrine\ORM\EntityRepository')
+            ->disableOriginalConstructor()
+            ->getMock();
     }
 }
