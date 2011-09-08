@@ -25,7 +25,7 @@ class ArticleofthedayController extends Zend_Controller_Action
         $request = $this->getRequest();
 
         $view = $request->getParam('view', "month");
-        $this->view->view = $view;
+        $this->view->defaultView = $view;
 
         $date = $request->getParam('date', date("Y/m/d"));
         $date = explode("/", $date);
@@ -49,21 +49,18 @@ class ArticleofthedayController extends Zend_Controller_Action
         $this->view->nav = $request->getParam('navigation', true);
         $this->view->firstDay = $request->getParam('firstDay', 0);
         $this->view->dayNames = $request->getParam('showDayNames', true);
-
-        $this->view->gimme = CampTemplate::singleton()->context();
+        $this->view->rand_int = md5(uniqid("", true));
     }
 
     public function articleOfTheDayAction()
     {
         $params = $this->getRequest()->getParams();
-        $publication_id = $params['publication_id'];
-        $language_id = $params['language_id'];
 
         //TODO parse these to make sure are times.
         $start_date = $params['start'];
         $end_date = $params['end'];
 
-        $articles = Article::GetArticlesOfTheDay($start_date, $end_date, $publication_id, $language_id);
+        $articles = Article::GetArticlesOfTheDay($start_date, $end_date);
 
         //get what we need for the json returned data.
         $results = array();
@@ -92,7 +89,7 @@ class ArticleofthedayController extends Zend_Controller_Action
             //month-1 is for js, months are 0-11.
             $json['date'] = array("year"=>intval($YMD[0]), "month"=>intval($YMD[1]-1), "day"=>intval($YMD[2]));
 
-            $json['url'] = ShortURL::GetURL($publication_id, $language_id, null, null, $article_number);
+            $json['url'] = ShortURL::GetURL($article->getPublicationId(), $article->getLanguageId(), null, null, $article_number);
 
             $results[] = $json;
         }

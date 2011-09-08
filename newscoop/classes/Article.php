@@ -2060,7 +2060,7 @@ class Article extends DatabaseObject {
      *     Return an array of Article objects with indexes in sequential order
      *     starting from zero.
      */
-    public static function GetArticlesOfTheDay($p_start_date=null, $p_end_date=null, $p_publication_id=null, $p_language_id=null)
+    public static function GetArticlesOfTheDay($p_start_date=null, $p_end_date=null)
     {
         global $g_ado_db;
 
