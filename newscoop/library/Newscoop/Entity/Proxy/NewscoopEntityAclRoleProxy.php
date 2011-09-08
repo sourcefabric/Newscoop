@@ -15,7 +15,8 @@ class NewscoopEntityAclRoleProxy extends \Newscoop\Entity\Acl\Role implements \D
         $this->_entityPersister = $entityPersister;
         $this->_identifier = $identifier;
     }
-    private function _load()
+    /** @private */
+    public function __load()
     {
         if (!$this->__isInitialized__ && $this->_entityPersister) {
             $this->__isInitialized__ = true;
@@ -25,17 +26,17 @@ class NewscoopEntityAclRoleProxy extends \Newscoop\Entity\Acl\Role implements \D
             unset($this->_entityPersister, $this->_identifier);
         }
     }
-
+    
     
     public function getId()
     {
-        $this->_load();
+        $this->__load();
         return parent::getId();
     }
 
     public function getRules()
     {
-        $this->_load();
+        $this->__load();
         return parent::getRules();
     }
 

@@ -409,130 +409,50 @@ if( Saas::singleton()->hasPrivilege('themes' , 'index') ) {
 if ($showUserMenu) {
     if ($g_user->hasPermission('ManageUsers') || $g_user->hasPermission('DeleteUsers')) {
         $pages[4]['pages'][] = array(
-            'label' => getGS('Staff'),
+            'label' => getGS('Manage Users'),
             'module' => 'admin',
-            'controller' => 'staff',
+            'controller' => 'user',
+            'action' => 'index',
             'pages' => array(
                 array(
-                    'label' => getGS('Add new staff member'),
+                    'label' => getGS('Edit user'),
                     'module' => 'admin',
-                    'controller' => 'staff',
-                    'action' => 'add',
-                    'visible' => false,
-                ),
-                array(
-                    'label' => getGS('Edit staff member'),
-                    'module' => 'admin',
-                    'controller' => 'staff',
+                    'controller' => 'user',
                     'action' => 'edit',
                     'visible' => false,
                     'reset_params' => false,
                     'pages' => array(
                         array(
-                            'label' => getGS('Edit access'),
+                            'label' => getGS('Edit permissions'),
                             'module' => 'admin',
-                            'controller' => 'staff',
-                            'action' => 'edit-access',
+                            'controller' => 'acl',
+                            'action' => 'edit',
                             'visible' => false,
                         ),
                     ),
                 ),
+                array(
+                    'label' => getGS('Create new user'),
+                    'module' => 'admin',
+                    'controller' => 'user',
+                    'action' => 'create',
+                    'visible' => false,
+                ),
             ),
         );
     }
 
-    if (($g_user->hasPermission('ManageReaders') || $g_user->hasPermission('ManageSubscriptions'))
-            && SystemPref::Get('ExternalSubscriptionManagement') != 'Y') {
+    if ($g_user->hasPermission('EditAuthors')) {
         $pages[4]['pages'][] = array(
-            'label' => getGS('Subscribers'),
+            'label' => getGS('Manage Authors'),
             'module' => 'admin',
-            'controller' => 'subscriber',
-            'resource' => 'subscriber',
-            'privilege' => 'manage',
-            'pages' => array(
-                array(
-                    'label' => getGS('Add new subscriber'),
-                    'module' => 'admin',
-                    'controller' => 'subscriber',
-                    'action' => 'add',
-                    'visible' => false,
-                ),
-                array(
-                    'label' => getGS('Edit subscriber'),
-                    'module' => 'admin',
-                    'controller' => 'subscriber',
-                    'action' => 'edit',
-                    'visible' => false,
-                    'reset_params' => false,
-                    'pages' => array(
-                        array(
-                            'label' => getGS('Subscriptions'),
-                            'module' => 'admin',
-                            'controller' => 'subscription',
-                            'action' => 'index',
-                            'reset_params' => false,
-                            'pages' => array(
-                                array(
-                                    'label' => getGS('Add new subscription'),
-                                    'module' => 'admin',
-                                    'controller' => 'subscription',
-                                    'action' => 'add',
-                                ),
-                                array(
-                                    'label' => getGS('Edit subscription'),
-                                    'module' => 'admin',
-                                    'controller' => 'subscription',
-                                    'action' => 'edit',
-                                ),
-                                array(
-                                    'label' => getGS('Sections'),
-                                    'module' => 'admin',
-                                    'controller' => 'subscription-section',
-                                    'action' => 'index',
-                                    'reset_params' => false,
-                                    'pages' => array(
-                                        array(
-                                            'label' => getGS('Add new subscription section'),
-                                            'module' => 'admin',
-                                            'controller' => 'subscription-section',
-                                            'action' => 'add',
-                                        ),
-                                        array(
-                                            'label' => getGS('Edit section'),
-                                            'module' => 'admin',
-                                            'controller' => 'subscription-section',
-                                            'action' => 'edit',
-                                        ),
-                                        array(
-                                            'label' => getGS('Edit all sections'),
-                                            'module' => 'admin',
-                                            'controller' => 'subscription-section',
-                                            'action' => 'edit-all',
-                                        ),
-                                    ),
-                                ),
-                            ),
-                        ),
-                        array(
-                            'label' => getGS('Add new subscription'),
-                            'module' => 'admin',
-                            'controller' => 'subscription',
-                            'action' => 'add',
-                        ),
-                        array(
-                            'label' => getGS('Add new IP Address'),
-                            'module' => 'admin',
-                            'controller' => 'subscription-ip',
-                            'action' => 'add',
-                        ),
-                    ),
-                ),
-            ),
+            'controller' => 'users',
+            'action' => 'authors.php',
         );
     }
 
     $pages[4]['pages'][] = array(
-        'label' => getGS('Staff User Types'),
+        'label' => getGS('Manage User Types'),
         'module' => 'admin',
         'controller' => 'user-group',
         'resource' => 'user-group',
@@ -555,14 +475,19 @@ if ($showUserMenu) {
         ),
     );
 
-    if ($g_user->hasPermission('EditAuthors')) {
-        $pages[4]['pages'][] = array(
-            'label' => getGS('Manage Authors'),
-            'module' => 'admin',
-            'controller' => 'users',
-            'action' => 'authors.php',
-        );
-    }
+    $pages[4]['pages'][] = array(
+        'label' => getGS('Manage User Points System'),
+        'module' => 'admin',
+        'controller' => 'user-points',
+        'action' => 'index',
+    );
+
+    $pages[4]['pages'][] = array(
+        'label' => getGS('Create new account'),
+        'module' => 'admin',
+        'controller' => 'user',
+        'action' => 'create',
+    );
 } else {
     unset($pages[4]);
 }

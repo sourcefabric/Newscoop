@@ -20,6 +20,9 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
     /** @var sfEventDispatcher */
     private $dispatcher;
 
+    /** @var array */
+    private $events = array();
+
     /**
      * @param sfEventDispatcher $dispatcher
      */
@@ -38,6 +41,7 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
         return array(
             Events::postPersist,
             Events::preUpdate,
+            Events::postUpdate,
             Events::preRemove,
         );
     }
@@ -66,17 +70,30 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entityName = $this->getEntityName($args->getEntity());
-        $this->dispatcher->notify(new \sfEvent($this, "{$entityName}.update", array(
+        $this->events[] = new \sfEvent($args->getEntity(), "{$entityName}.update", array(
             'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
             'diff' => $args->getEntityChangeSet(),
             'title' => $this->getEntityTitle($args->getEntity()),
-        )));
+        ));
+    }
+
+    /**
+     * Dispatch entity.update on preUpdate.
+     *
+     * @param Doctrine\ORM\Event\LifecycleEventArgs $args
+     * @return void
+     */
+    public function postUpdate(LifecycleEventArgs $args)
+    {
+        foreach ($this->events as $event) {
+            $this->dispatcher->notify($event);
+        }
     }
 
     /**
      * Dispatch entity.delete on preRemove.
      *
-     * @param Doctrine\ORM\Event\LivecycleEventArgs $args
+     * @param Doctrine\ORM\Event\LifecycleEventArgs $args
      * @return void
      */
     public function preRemove(LifecycleEventArgs $args)
@@ -143,7 +160,7 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
      */
     private function getEntityTitle($entity)
     {
-        static $nameMethods = array('getTitle', 'getName');
+        static $nameMethods = array('__toString', 'getTitle', 'getName');
         foreach ($nameMethods as $method) {
             if (method_exists($entity, $method)) {
                 return $entity->$method();

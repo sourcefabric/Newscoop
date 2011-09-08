@@ -11,6 +11,8 @@ $.fn.widgets = function (options) {
         localizer: {}
     };
 
+    var heights = {};
+
     /**
      * Update widgets order.
      * @return void
@@ -31,13 +33,13 @@ $.fn.widgets = function (options) {
      * Widgets plugin init
      * @return JQuery
      */
-    return this.each(function() {
+    return this.each(function(i) {
         if (options) {
             $.extend(settings, options)
         }
 
         // set up items
-        $(this).find(settings.widgets).each(function() {
+        $(this).find(settings.widgets).each(function(i) {
             var widget = $(this);
             var controls = $(settings.controls, widget);
             var meta = $('dl.meta', widget);
@@ -197,10 +199,12 @@ $.fn.widgets = function (options) {
                 true], function(json) {
                     // set new content
                     var wrapper = $('> .content > .scroll', widget).html(json);
-
-                    // store height
-                    $.cookie(widget.attr('id')+'_height', wrapper.height(), { expires: 7 });
+                    heights[widget.attr('id')] = wrapper.height();
                 });
+
+            $(this).ajaxComplete(function() {
+                $.cookie('widget_heights', $.param(heights));
+            });
         });
 
         // make sortable

@@ -136,7 +136,7 @@ class Article
      */
     public function getPublicationId()
     {
-        return $this->publication->getId();
+        return ($this->publication) ? $this->publication->getId() : null;
     }
 
     /**
@@ -199,7 +199,7 @@ class Article
      */
     public function getLanguageId()
     {
-        return $this->language->getId();
+        return ($this->language) ? $this->language->getId() : null;
     }
 
 

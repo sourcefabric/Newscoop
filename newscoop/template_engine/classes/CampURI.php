@@ -1215,24 +1215,23 @@ abstract class CampURI
 
     private function readUser()
     {
+        global $controller;
+
         $this->m_preview = false;
-        if (CampRequest::GetVar('preview') == 'on') {
-            $token = CampRequest::GetVar('LoginUserKey');
-            $userId = CampRequest::GetVar('LoginUserId');
-            $user = new MetaUser($userId);
-            $this->m_preview = $user->checkToken($token);
-        }
+        $userService = $controller->getHelper('service')->getService('user');
 
         $auth = Zend_Auth::getInstance();
         if ($auth->hasIdentity()) {
-            $user = new User($auth->getIdentity());
-            if ($user->exists()) {
-                $this->m_user = new MetaUser($auth->getIdentity());
+            $user = $userService->find($auth->getIdentity());
+            if (!empty($user)) {
+                $this->m_user = new MetaUser($user);
+                $this->m_preview = CampRequest::GetVar('preview') == 'on' && True; // TODO add acl check
             }
         } else {
             $ipUsers = IPAccess::GetUsersHavingIP($_SERVER['REMOTE_ADDR']);
-            if (count($ipUsers) > 0) {
-                $this->m_user = new MetaUser($ipUsers[0]->getUserId());
+            if (!empty($ipUsers)) {
+                $user = $userService->find($ipUsers[0]->getUserId());
+                $this->m_user = new MetaUser($user);
             }
         }
     }

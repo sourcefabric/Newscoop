@@ -1,169 +1,140 @@
 <?php
-/** * @package Newscoop
+/**
+ * @package Newscoop
  * @copyright 2011 Sourcefabric o.p.s.
- * @license http://www.gnu.org/licenses/gpl.txt
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
 namespace Newscoop\Entity;
 
-use DateTime,
-    Doctrine\Common\Collections\ArrayCollection,
-    Newscoop\Entity\Acl\Role;
+use Doctrine\Common\Collections\ArrayCollection,
+    Newscoop\Utils\PermissionToAcl,
+    Newscoop\Entity\Acl\Role,
+    Newscoop\Entity\User\Group;
 
 /**
- * Base user entity
- * @entity
- * @inheritanceType("SINGLE_TABLE")
- * @discriminatorColumn(name="Reader", type="string")
- * @discriminatorMap({"N" = "Newscoop\Entity\User\Staff", "Y" = "Newscoop\Entity\User\Subscriber"})
- * @table(name="liveuser_users")
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
+ * @Table(name="user")
  */
-abstract class User
+class User implements \Zend_Acl_Role_Interface
 {
+    const STATUS_INACTIVE = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_BANNED = 2;
+    const STATUS_DELETED = 3;
+
+    const HASH_SEP = '$';
+    const HASH_ALGO = 'sha1';
+
     /**
-     * @id @generatedValue
-     * @column(type="integer", name="Id")
+     * @Id @GeneratedValue
+     * @Column(type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @column(type="integer", name="KeyId")
-     * @var int
-     */
-    private $token;
-
-    /**
-     * @column(name="Name")
-     * @var string
-     */
-    private $name;
-
-    /**
-     * @column(name="UName")
-     * @var string
-     */
-    private $username;
-
-    /**
-     * @column(name="Password")
-     * @var string
-     */
-    private $password;
-
-    /**
-     * @column(name="EMail")
+     * @Column(type="string", length="80")
      * @var string
      */
     private $email;
 
     /**
+     * @Column(type="string", length="80", nullable=TRUE)
      * @var string
      */
-    private $reader;
+    private $username;
 
     /**
-     * @column(type="datetime", name="time_created")
+     * @Column(type="string", length="60", nullable=TRUE)
+     * @var string
+     */
+    private $password;
+
+    /**
+     * @Column(type="string", length="80", nullable=TRUE)
+     * @var string
+     */
+    private $first_name;
+
+    /**
+     * @Column(type="string", length="80", nullable=TRUE)
+     * @var string
+     */
+    private $last_name;
+
+    /**
+     * @Column(type="datetime")
      * @var DateTime
      */
-    private $timeCreated;
+    private $created;
 
     /**
-     * @column(name="Phone")
+     * @Column(type="integer", length="1")
+     * @var int
+     */
+    private $status = self::STATUS_INACTIVE;
+
+    /**
+     * @Column(type="boolean")
+     * @var bool
+     */
+    private $is_admin;
+
+    /**
+     * @Column(type="boolean")
+     * @var bool
+     */
+    private $is_public;
+
+    /**
+     * @Column(type="integer")
+     * @var int
+     */
+    private $points;
+
+    /**
+     * @Column(type="string", length="255", nullable=TRUE)
      * @var string
      */
-    private $phone;
+    private $image;
 
     /**
-     * @column(name="Title")
-     * @var string
+     * @oneToOne(targetEntity="Newscoop\Entity\Acl\Role", cascade={"ALL"})
+     * @var Newscoop\Entity\Acl\Role
      */
-    private $title;
+    private $role;
 
     /**
-     * @column(name="Gender")
-     * @var string
+     * @manyToMany(targetEntity="Newscoop\Entity\User\Group")
+     * @joinTable(name="liveuser_groupusers",
+     *      joinColumns={@joinColumn(name="perm_user_id", referencedColumnName="id")},
+     *      inverseJoinColumns={@joinColumn(name="group_id", referencedColumnName="group_id")}
+     *      )
+     * @var Doctrine\Common\Collections\Collection;
      */
-    private $gender;
+    private $groups;
 
     /**
-     * @column(name="Age")
-     * @var string
+     * @OneToMany(targetEntity="UserAttribute", mappedBy="user", cascade={"ALL"}, indexBy="attribute")
+     * @var Doctrine\Common\Collections\Collection;
      */
-    private $age;
+    private $attributes;
 
     /**
-     * @column(name="City")
-     * @var string
+     * @param string $email
      */
-    private $city;
-
-    /**
-     * @column(name="StrAddress")
-     * @var string
-     */
-    private $streetAddress;
-
-    /**
-     * @column(name="PostalCode")
-     * @var string
-     */
-    private $postalCode;
-
-    /**
-     * @column(name="State")
-     * @var string
-     */
-    private $state;
-
-    /**
-     * @column(name="CountryCode")
-     * @var string
-     */
-    private $country;
-
-    /**
-     * @column(name="Fax")
-     * @var string
-     */
-    private $fax;
-
-    /**
-     * @column(name="Contact")
-     * @var string
-     */
-    private $contactPerson;
-
-    /**
-     * @column(name="Phone2")
-     * @var string
-     */
-    private $phoneSecond;
-
-    /**
-     * @column(name="Employer")
-     * @var string
-     */
-    private $employer;
-
-    /**
-     * @column(name="EmployerType")
-     * @var string
-     */
-    private $employerType;
-
-    /**
-     * @column(name="Position")
-     * @var string
-     */
-    private $position;
-
-    /**
-     */
-    public function __construct()
+    public function __construct($email = null)
     {
-        $this->timeCreated = new DateTime('now');
-        $this->token = mt_rand((int) "1 000 000 000", (int) "9 999 999 999");
+        $this->email = $email;
+        $this->created = new \DateTime();
+        $this->groups = new ArrayCollection();
+        $this->attributes = new ArrayCollection();
+        $this->role = new Role();
+        $this->is_admin = false;
+        $this->is_public = false;
+        $this->setPassword($this->generateRandomString(6)); // make sure password is not empty
+        $this->points = 0;
     }
 
     /**
@@ -173,61 +144,7 @@ abstract class User
      */
     public function getId()
     {
-        return $this->id;
-    }
-
-    /**
-     * Get id
-     *
-     * @return int
-     * @deprecated
-     */
-    public function getUserId()
-    {
-        return $this->getId();
-    }
-
-    /**
-     * Get key id
-     *
-     * @return string
-     */
-    public function getKeyId()
-    {
-        return $this->token;
-    }
-
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return Newscoop\Entity\User
-     */
-    public function setName($name)
-    {
-        $this->name = (string) $name;
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
-     * Get real name
-     *
-     * @return string
-     * @deprecated
-     */
-    public function getRealName()
-    {
-        return $this->getName();
+        return (int) $this->id;
     }
 
     /**
@@ -249,7 +166,7 @@ abstract class User
      */
     public function getUsername()
     {
-        return $this->username;
+        return (string) $this->username;
     }
 
     /**
@@ -260,18 +177,159 @@ abstract class User
      */
     public function setPassword($password)
     {
-        $this->password = sha1($password);
+        $salt = $this->generateRandomString();
+        $this->password = implode(self::HASH_SEP, array(
+            self::HASH_ALGO,
+            $salt,
+            hash(self::HASH_ALGO, $salt . $password),
+        ));
+
         return $this;
     }
 
     /**
-     * Get password hash
+     * Check password
+     *
+     * @param string $password
+     * @return bool
+     */
+    public function checkPassword($password)
+    {
+        if (sizeof(explode(self::HASH_SEP, $this->password)) != 3) { // fallback
+            if ($this->password == sha1($password)) { // update old password on success
+                $this->setPassword($password);
+                return TRUE;
+            }
+
+            return FALSE;
+        }
+
+        list($algo, $salt, $password_hash) = explode(self::HASH_SEP, $this->password);
+        return $password_hash === hash($algo, $salt . $password);
+    }
+
+    /**
+     * Get random string
+     *
+     * @param int $length
+     * @param string $allowed_chars
+     * @return string
+     */
+    final public function generateRandomString($length = 12, $allowed_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
+    {
+        $return = '';
+        for ($i = 0; $i < $length; $i++) {
+            $return .= $allowed_chars[mt_rand(0, strlen($allowed_chars) - 1)];
+        }
+
+        return $return;
+    }
+
+    /**
+     * Set first name
+     *
+     * @param string $first_name
+     * @return Newscoop\Entity\User
+     */
+    public function setFirstName($first_name)
+    {
+        $this->first_name = (string) $first_name;
+        return $this;
+    }
+
+    /**
+     * Get first name
      *
      * @return string
      */
-    public function getPasswordHash()
+    public function getFirstName()
     {
-        return $this->password;
+        return (string) $this->first_name;
+    }
+
+    /**
+     * Set last name
+     *
+     * @param string $last_name
+     * @return Newscoop\Entity\User
+     */
+    public function setLastName($last_name)
+    {
+        $this->last_name = (string) $last_name;
+        return $this;
+    }
+
+    /**
+     * Get last name
+     *
+     * @return string
+     */
+    public function getLastName()
+    {
+        return (string) $this->last_name;
+    }
+
+    /**
+     * Set status
+     *
+     * @param int $status
+     * @return Newscoop\Entity\User
+     */
+    public function setStatus($status)
+    {
+        static $statuses = array(
+            self::STATUS_INACTIVE,
+            self::STATUS_ACTIVE,
+            self::STATUS_BANNED,
+            self::STATUS_DELETED,
+        );
+
+        if (!in_array($status, $statuses)) {
+            throw new \InvalidArgumentException("Unknown status '$status'");
+        }
+
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return int
+     */
+    public function getStatus()
+    {
+        return (int) $this->status;
+    }
+
+    /**
+     * Set user as active
+     *
+     * @return Newscoop\Entity\User
+     */
+    public function setActive()
+    {
+        return $this->setStatus(self::STATUS_ACTIVE);
+    }
+
+    /**
+     * Test if user is active
+     *
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->status == self::STATUS_ACTIVE;
+    }
+
+    /**
+     * Test if user is pending
+     *
+     * @return bool
+     */
+    public function isPending()
+    {
+        return $this->status == self::STATUS_INACTIVE || empty($this->username);
     }
 
     /**
@@ -301,348 +359,238 @@ abstract class User
      *
      * @return DateTime
      */
-    public function getTimeCreated()
+    public function getCreated()
     {
-        return $this->timeCreated;
+        return $this->created;
     }
 
     /**
-     * Set phone
+     * Set admin switch
      *
-     * @param string $phone
+     * @param bool $admin
      * @return Newscoop\Entity\User
      */
-    public function setPhone($phone)
+    public function setAdmin($admin)
     {
-        $this->phone = (string) $phone;
+        $this->is_admin = (bool) $admin;
         return $this;
     }
 
     /**
-     * Get phone
+     * Test if user is admin
      *
-     * @return string
+     * @return bool
      */
-    public function getPhone()
+    public function isAdmin()
     {
-        return $this->phone;
+        return (bool) $this->is_admin;
     }
 
     /**
-     * Set title
+     * Set user is public
      *
-     * @param string $title
+     * @param bool $public
      * @return Newscoop\Entity\User
      */
-    public function setTitle($title)
+    public function setPublic($public)
     {
-        $this->title = (string) $title;
+        $this->is_public = (bool) $public;
         return $this;
     }
 
     /**
-     * Get title
+     * Test if user is public
      *
-     * @return string
+     * @return bool
      */
-    public function getTitle()
+    public function isPublic()
     {
-        return $this->title;
+        return (bool) $this->is_public;
     }
 
     /**
-     * Set gender
+     * Get points
      *
-     * @param string $gender
+     * @return int
+     */
+    public function getPoints()
+    {
+        return (int) $this->points;
+    }
+
+    /**
+     * Set points
+     *
+     * @param int $points
      * @return Newscoop\Entity\User
      */
-    public function setGender($gender)
+    public function setPoints($points)
     {
-        $this->gender = (string) $gender;
+        if (!is_int($points)) {
+            throw new \InvalidArgumentException("Points must be an integer: '$points'");
+        }
+
+        $this->points = $points;
         return $this;
     }
 
     /**
-     * Get gender
+     * Get groups
      *
-     * @return string
+     * @return array of Newscoop\Entity\User\Group
      */
-    public function getGender()
+    public function getGroups()
     {
-        return $this->gender;
+        return $this->groups;
     }
 
     /**
-     * Set age
+     * Add user type
      *
-     * @param string $age
+     * @param Newscoop\Entity\User\Group $type
      * @return Newscoop\Entity\User
      */
-    public function setAge($age)
+    public function addUserType(Group $type)
     {
-        $this->age = (string) $age;
+        $this->groups->add($type);
         return $this;
     }
 
     /**
-     * Get age
+     * Get user types
      *
-     * @return string
+     * @return array
      */
-    public function getAge()
+    public function getUserTypes()
     {
-        return $this->age;
+        return $this->getGroups();
     }
 
     /**
-     * Set city
+     * Set role
      *
-     * @param string $city
+     * @param Newscoop\Entity\Acl\Role $role
      * @return Newscoop\Entity\User
      */
-    public function setCity($city)
+    public function setRole(Role $role)
     {
-        $this->city = (string) $city;
+        $this->role = $role;
         return $this;
     }
 
     /**
-     * Get city
+     * Get role id
      *
-     * @return string
+     * @return int
      */
-    public function getCity()
+    public function getRoleId()
     {
-        return $this->city;
+        return $this->role ? $this->role->getId() : 0;
     }
 
     /**
-     * Set street address
+     * Add attribute
      *
-     * @param string $streetAddress
+     * @param string $name
+     * @param string $value
      * @return Newscoop\Entity\User
      */
-    public function setStreetAddress($streetAddress)
+    public function addAttribute($name, $value)
     {
-        $this->streetAddress = (string) $streetAddress;
+        if (empty($this->attributes[$name])) {
+            $this->attributes[$name] = new UserAttribute($name, $value, $this);
+        } else {
+            $this->attributes[$name]->setValue($value);
+        }
+
         return $this;
     }
 
     /**
-     * Get street address
+     * Get attribute
      *
-     * @return string
+     * @param string $name
+     * @param string $value
+     * @return mixed
      */
-    public function getStreetAddress()
+    public function getAttribute($name)
     {
-        return $this->streetAddress;
+        if (isset($this->attributes[$name])) {
+            return $this->attributes[$name]->getValue();
+        }
+
+        return null;
     }
 
     /**
-     * Set postal code
+     * Set image
      *
-     * @param string $postalCode
+     * @param string $image
      * @return Newscoop\Entity\User
      */
-    public function setPostalCode($postalCode)
+    public function setImage($image)
     {
-        $this->postalCode = (string) $postalCode;
+        $this->image = $image;
         return $this;
     }
 
     /**
-     * Get postal code
+     * Get image
      *
      * @return string
      */
-    public function getPostalCode()
+    public function getImage()
     {
-        return $this->postalCode;
+        return $this->image;
     }
 
     /**
-     * Set state
+     * Check permissions
      *
-     * @param string $state
-     * @return Newscoop\Entity\User
+     * @param string $permission
+     * @return bool
      */
-    public function setState($state)
+    public function hasPermission($permission)
     {
-        $this->state = (string) $state;
-        return $this;
+        $acl = \Zend_Registry::get('acl')->getAcl($this);
+        try {
+            list($resource, $action) = PermissionToAcl::translate($permission);
+            if($acl->isAllowed($this, strtolower($resource), strtolower($action))) {
+				return \SaaS::singleton()->hasPermission($permission);
+            } else {
+            	return FALSE;
+            }
+        } catch (\Exception $e) {
+            return FALSE;
+        }
     }
 
     /**
-     * Get state
+     * Get real name
      *
      * @return string
      */
-    public function getState()
+    public function getRealName()
     {
-        return $this->state;
+        return trim($this->first_name . ' ' . $this->last_name);
     }
 
     /**
-     * Set country
+     * Get user id
+     * proxy to getId
      *
-     * @param string $country
-     * @return Newscoop\Entity\User
+     * @return int
      */
-    public function setCountry($country)
+    public function getUserId()
     {
-        $this->country = (string) $country;
-        return $this;
+        return $this->getId();
     }
 
     /**
-     * Get country
-     *
-     * @return string
-     */
-    public function getCountry()
-    {
-        return $this->country;
-    }
-
-    /**
-     * Set fax
-     *
-     * @param string $fax
-     * @return Newscoop\Entity\User
-     */
-    public function setFax($fax)
-    {
-        $this->fax = (string) $fax;
-        return $this;
-    }
-
-    /**
-     * Get fax
-     *
-     * @return string
-     */
-    public function getFax()
-    {
-        return $this->fax;
-    }
-
-    /**
-     * Set contact person
-     *
-     * @param string $contactPerson
-     * @return Newscoop\Entity\User
-     */
-    public function setContactPerson($contactPerson)
-    {
-        $this->contactPerson = (string) $contactPerson;
-        return $this;
-    }
-
-    /**
-     * Get contact person
-     *
-     * @return string
-     */
-    public function getContactPerson()
-    {
-        return $this->contactPerson;
-    }
-
-    /**
-     * Set second phone
-     *
-     * @param string $phoneSecond
-     * @return Newscoop\Entity\User
-     */
-    public function setPhoneSecond($phoneSecond)
-    {
-        $this->phoneSecond = (string) $phoneSecond;
-        return $this;
-    }
-
-    /**
-     * Get second phone
-     *
-     * @return string
-     */
-    public function getPhoneSecond()
-    {
-        return $this->phoneSecond;
-    }
-
-    /**
-     * Set employer
-     *
-     * @param string $employer
-     * @return Newscoop\Entity\User
-     */
-    public function setEmployer($employer)
-    {
-        $this->employer = (string) $employer;
-        return $this;
-    }
-
-    /**
-     * Get employer
-     *
-     * @return string
-     */
-    public function getEmployer()
-    {
-        return $this->employer;
-    }
-
-    /**
-     * Set employer type
-     *
-     * @param string $employerType
-     * @return Newscoop\Entity\User
-     */
-    public function setEmployerType($employerType)
-    {
-        $this->employerType = (string) $employerType;
-        return $this;
-    }
-
-    /**
-     * Get employer type
-     *
-     * @return string
-     */
-    public function getEmployerType()
-    {
-        return $this->employerType;
-    }
-
-    /**
-     * Set position
-     *
-     * @param string $position
-     * @return Newscoop\Entity\User
-     */
-    public function setPosition($position)
-    {
-        $this->position = (string) $position;
-        return $this;
-    }
-
-    /**
-     * Get position
-     *
-     * @return string
-     */
-    public function getPosition()
-    {
-        return $this->position;
-    }
-    /**
-     * To string strategy
-     *
      * @return string
      */
     public function __toString()
     {
-        return $this->getName();
+        return $this->getUsername();
     }
 }
-

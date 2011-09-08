@@ -2,11 +2,14 @@
 /**
  * @package Resource
  * @copyright 2011 Sourcefabric o.p.s.
- * @license http://www.gnu.org/licenses/gpl.txt
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+use Doctrine\ORM\Configuration,
+    Doctrine\ORM\EntityManager;
+
 /**
- * Doctrine Zend application resource.
+ * Doctrine Zend application resource
  */
 class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
 {
@@ -35,10 +38,10 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
             return $this->em;
         }
 
-        $config = new Doctrine\ORM\Configuration;
+        $config = new Configuration();
         $options = $this->getOptions();
 
-        // set annotation driver
+        // set annotations reader
         $metadata = $config->newDefaultAnnotationDriver(realpath($options['entity']['dir']));
         $config->setMetadataDriverImpl($metadata);
 
@@ -73,7 +76,7 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
             $database = $options['database'];
         }
 
-        $this->em = Doctrine\ORM\EntityManager::create($database, $config);
+        $this->em = EntityManager::create($database, $config);
         return $this->em;
     }
 }

@@ -2042,164 +2042,42 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `liveuser_applications`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_applications` (
-  `application_id` int(11) NOT NULL DEFAULT '0',
-  `application_define_name` varchar(32) NOT NULL DEFAULT '',
-  PRIMARY KEY (`application_id`),
-  UNIQUE KEY `applications_define_name_i_idx` (`application_define_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_applications`
---
-
-LOCK TABLES `liveuser_applications` WRITE;
-/*!40000 ALTER TABLE `liveuser_applications` DISABLE KEYS */;
-INSERT INTO `liveuser_applications` VALUES (1,'Campsite'),(2,'Campcaster');
-/*!40000 ALTER TABLE `liveuser_applications` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_applications_application_id_seq`
 --
 
 DROP TABLE IF EXISTS `liveuser_applications_application_id_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_applications_application_id_seq` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_applications_application_id_seq`
---
-
-LOCK TABLES `liveuser_applications_application_id_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_applications_application_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_applications_application_id_seq` VALUES (2);
-/*!40000 ALTER TABLE `liveuser_applications_application_id_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_applications_seq`
 --
 
 DROP TABLE IF EXISTS `liveuser_applications_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_applications_seq` (
-  `sequence` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`sequence`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_applications_seq`
---
-
-LOCK TABLES `liveuser_applications_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_applications_seq` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_applications_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_area_admin_areas`
 --
 
 DROP TABLE IF EXISTS `liveuser_area_admin_areas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_area_admin_areas` (
-  `area_id` int(11) NOT NULL DEFAULT '0',
-  `perm_user_id` int(11) NOT NULL DEFAULT '0',
-  UNIQUE KEY `area_admin_areas_id_i_idx` (`area_id`,`perm_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_area_admin_areas`
---
-
-LOCK TABLES `liveuser_area_admin_areas` WRITE;
-/*!40000 ALTER TABLE `liveuser_area_admin_areas` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_area_admin_areas` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_areas`
 --
 
 DROP TABLE IF EXISTS `liveuser_areas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_areas` (
-  `area_id` int(11) NOT NULL DEFAULT '0',
-  `application_id` int(11) NOT NULL DEFAULT '0',
-  `area_define_name` varchar(32) NOT NULL DEFAULT '',
-  PRIMARY KEY (`area_id`),
-  UNIQUE KEY `areas_define_name_i_idx` (`application_id`,`area_define_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_areas`
---
-
-LOCK TABLES `liveuser_areas` WRITE;
-/*!40000 ALTER TABLE `liveuser_areas` DISABLE KEYS */;
-INSERT INTO `liveuser_areas` VALUES (1,1,'Articles');
-/*!40000 ALTER TABLE `liveuser_areas` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_areas_seq`
 --
 
 DROP TABLE IF EXISTS `liveuser_areas_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_areas_seq` (
-  `sequence` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`sequence`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_areas_seq`
---
-
-LOCK TABLES `liveuser_areas_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_areas_seq` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_areas_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_group_subgroups`
 --
 
 DROP TABLE IF EXISTS `liveuser_group_subgroups`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_group_subgroups` (
-  `group_id` int(11) NOT NULL DEFAULT '0',
-  `subgroup_id` int(11) NOT NULL DEFAULT '0',
-  UNIQUE KEY `group_subgroups_id_i_idx` (`group_id`,`subgroup_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_group_subgroups`
---
-
-LOCK TABLES `liveuser_group_subgroups` WRITE;
-/*!40000 ALTER TABLE `liveuser_group_subgroups` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_group_subgroups` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_grouprights`
@@ -2258,45 +2136,12 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `liveuser_groups_group_id_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_groups_group_id_seq` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_groups_group_id_seq`
---
-
-LOCK TABLES `liveuser_groups_group_id_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_groups_group_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_groups_group_id_seq` VALUES (5);
-/*!40000 ALTER TABLE `liveuser_groups_group_id_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_groups_seq`
 --
 
 DROP TABLE IF EXISTS `liveuser_groups_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_groups_seq` (
-  `sequence` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`sequence`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_groups_seq`
---
-
-LOCK TABLES `liveuser_groups_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_groups_seq` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_groups_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_groupusers`
@@ -2327,95 +2172,24 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `liveuser_perm_users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_perm_users` (
-  `perm_user_id` int(11) NOT NULL DEFAULT '0',
-  `auth_user_id` varchar(32) NOT NULL DEFAULT '',
-  `auth_container_name` varchar(32) NOT NULL DEFAULT '',
-  `perm_type` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`perm_user_id`),
-  UNIQUE KEY `perm_users_auth_id_i_idx` (`auth_user_id`,`auth_container_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_perm_users`
---
-
-LOCK TABLES `liveuser_perm_users` WRITE;
-/*!40000 ALTER TABLE `liveuser_perm_users` DISABLE KEYS */;
-INSERT INTO `liveuser_perm_users` VALUES (1,'1','DB',1);
-/*!40000 ALTER TABLE `liveuser_perm_users` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_perm_users_perm_user_id_seq`
 --
 
 DROP TABLE IF EXISTS `liveuser_perm_users_perm_user_id_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_perm_users_perm_user_id_seq` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_perm_users_perm_user_id_seq`
---
-
-LOCK TABLES `liveuser_perm_users_perm_user_id_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_perm_users_perm_user_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_perm_users_perm_user_id_seq` VALUES (1);
-/*!40000 ALTER TABLE `liveuser_perm_users_perm_user_id_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_perm_users_seq`
 --
 
 DROP TABLE IF EXISTS `liveuser_perm_users_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_perm_users_seq` (
-  `sequence` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`sequence`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_perm_users_seq`
---
-
-LOCK TABLES `liveuser_perm_users_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_perm_users_seq` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_perm_users_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_right_implied`
 --
 
 DROP TABLE IF EXISTS `liveuser_right_implied`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_right_implied` (
-  `right_id` int(11) NOT NULL DEFAULT '0',
-  `implied_right_id` int(11) NOT NULL DEFAULT '0',
-  UNIQUE KEY `right_implied_id_i_idx` (`right_id`,`implied_right_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_right_implied`
---
-
-LOCK TABLES `liveuser_right_implied` WRITE;
-/*!40000 ALTER TABLE `liveuser_right_implied` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_right_implied` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_rights`
@@ -2449,186 +2223,71 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `liveuser_rights_right_id_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_rights_right_id_seq` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=104 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_rights_right_id_seq`
---
-
-LOCK TABLES `liveuser_rights_right_id_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_rights_right_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_rights_right_id_seq` VALUES (103);
-/*!40000 ALTER TABLE `liveuser_rights_right_id_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_rights_seq`
 --
 
 DROP TABLE IF EXISTS `liveuser_rights_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_rights_seq` (
-  `sequence` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`sequence`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_rights_seq`
---
-
-LOCK TABLES `liveuser_rights_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_rights_seq` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_rights_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_translations`
 --
 
 DROP TABLE IF EXISTS `liveuser_translations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_translations` (
-  `translation_id` int(11) NOT NULL DEFAULT '0',
-  `section_id` int(11) NOT NULL DEFAULT '0',
-  `section_type` int(11) NOT NULL DEFAULT '0',
-  `language_id` varchar(32) NOT NULL DEFAULT '',
-  `name` varchar(32) NOT NULL DEFAULT '',
-  `description` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`translation_id`),
-  UNIQUE KEY `translations_translation_i_idx` (`section_id`,`section_type`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_translations`
---
-
-LOCK TABLES `liveuser_translations` WRITE;
-/*!40000 ALTER TABLE `liveuser_translations` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_translations` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_translations_seq`
 --
 
 DROP TABLE IF EXISTS `liveuser_translations_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_translations_seq` (
-  `sequence` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`sequence`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_translations_seq`
---
-
-LOCK TABLES `liveuser_translations_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_translations_seq` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_translations_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_userrights`
 --
 
 DROP TABLE IF EXISTS `liveuser_userrights`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_userrights` (
-  `perm_user_id` int(11) NOT NULL DEFAULT '0',
-  `right_id` int(11) NOT NULL DEFAULT '0',
-  `right_level` int(11) NOT NULL DEFAULT '3',
-  UNIQUE KEY `userrights_id_i_idx` (`perm_user_id`,`right_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_userrights`
---
-
-LOCK TABLES `liveuser_userrights` WRITE;
-/*!40000 ALTER TABLE `liveuser_userrights` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_userrights` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_users`
 --
 
 DROP TABLE IF EXISTS `liveuser_users`;
+DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_users` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `KeyId` int(10) unsigned DEFAULT NULL,
-  `Name` varchar(255) NOT NULL DEFAULT '',
-  `UName` varchar(70) NOT NULL DEFAULT '',
-  `Password` varchar(64) NOT NULL DEFAULT '',
-  `EMail` varchar(255) NOT NULL DEFAULT '',
-  `Reader` enum('Y','N') NOT NULL DEFAULT 'Y',
-  `fk_user_type` int(10) unsigned DEFAULT NULL,
-  `City` varchar(100) NOT NULL DEFAULT '',
-  `StrAddress` varchar(255) NOT NULL DEFAULT '',
-  `State` varchar(32) NOT NULL DEFAULT '',
-  `CountryCode` varchar(21) DEFAULT NULL,
-  `Phone` varchar(20) NOT NULL DEFAULT '',
-  `Fax` varchar(20) NOT NULL DEFAULT '',
-  `Contact` varchar(64) NOT NULL DEFAULT '',
-  `Phone2` varchar(20) NOT NULL DEFAULT '',
-  `Title` enum('Mr.','Mrs.','Ms.','Dr.') NOT NULL DEFAULT 'Mr.',
-  `Gender` enum('M','F') DEFAULT NULL,
-  `Age` enum('0-17','18-24','25-39','40-49','50-65','65-') NOT NULL DEFAULT '0-17',
-  `PostalCode` varchar(70) NOT NULL DEFAULT '',
-  `Employer` varchar(140) NOT NULL DEFAULT '',
-  `EmployerType` varchar(140) NOT NULL DEFAULT '',
-  `Position` varchar(70) NOT NULL DEFAULT '',
-  `Interests` mediumblob,
-  `How` varchar(255) NOT NULL DEFAULT '',
-  `Languages` varchar(100) NOT NULL DEFAULT '',
-  `Improvements` mediumblob,
-  `Pref1` enum('N','Y') NOT NULL DEFAULT 'N',
-  `Pref2` enum('N','Y') NOT NULL DEFAULT 'N',
-  `Pref3` enum('N','Y') NOT NULL DEFAULT 'N',
-  `Pref4` enum('N','Y') NOT NULL DEFAULT 'N',
-  `Field1` varchar(150) NOT NULL DEFAULT '',
-  `Field2` varchar(150) NOT NULL DEFAULT '',
-  `Field3` varchar(150) NOT NULL DEFAULT '',
-  `Field4` varchar(150) NOT NULL DEFAULT '',
-  `Field5` varchar(150) NOT NULL DEFAULT '',
-  `Text1` mediumblob,
-  `Text2` mediumblob,
-  `Text3` mediumblob,
-  `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `time_created` timestamp NULL DEFAULT NULL,
-  `lastLogin` datetime DEFAULT '1970-01-01 00:00:00',
-  `isActive` tinyint(1) DEFAULT '1',
-  `password_reset_token` varchar(85) DEFAULT NULL,
-  `role_id` int(10) DEFAULT NULL,
-  PRIMARY KEY (`Id`),
-  UNIQUE KEY `UName` (`UName`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `user` (
+    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `email` varchar(255) NOT NULL,
+    `username` varchar(80) DEFAULT NULL,
+    `password` varchar(60) DEFAULT NULL,
+    `first_name` varchar(80) DEFAULT NULL,
+    `last_name` varchar(80) DEFAULT NULL,
+    `status` tinyint(1) NOT NULL DEFAULT '0',
+    `is_admin` boolean NOT NULL DEFAULT '0',
+    `is_public` boolean NOT NULL DEFAULT '0',
+    `points` int(10) DEFAULT '0',
+    `created` datetime NOT NULL,
+    `updated` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `lastLogin` datetime DEFAULT NULL,
+    `password_reset_token` varchar(85) DEFAULT NULL,
+    `image` varchar(255) DEFAULT NULL,
+    `role_id` int(11) unsigned DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE (`email`),
+    UNIQUE (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `liveuser_users`
 --
 
-LOCK TABLES `liveuser_users` WRITE;
-/*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
-INSERT INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','d033e22ae348aeb5660fc2140aec35850c4da997','admin@email.addr','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2011-06-13 09:19:05','0000-00-00 00:00:00','2011-01-17 14:29:16',1,NULL,6);
-/*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` (`id`, `first_name`, `username`, `password`, `email`, `status`, `is_admin`, `role_id`) VALUES
+(1, 'Administrator', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin@email.addr', '1', '1', 6);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2636,23 +2295,6 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `liveuser_users_auth_user_id_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_users_auth_user_id_seq` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_users_auth_user_id_seq`
---
-
-LOCK TABLES `liveuser_users_auth_user_id_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_users_auth_user_id_seq` VALUES (1);
-/*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `output`
@@ -3212,6 +2854,58 @@ LOCK TABLES `resource` WRITE;
 /*!40000 ALTER TABLE `resource` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+DROP TABLE IF EXISTS `audit_event`;
+CREATE TABLE IF NOT EXISTS `audit_event` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `resource_type` varchar(80) NOT NULL,
+  `resource_id` varchar(80) DEFAULT NULL,
+  `resource_title` varchar(255) DEFAULT NULL,
+  `resource_diff` longtext,
+  `action` varchar(80) NOT NULL,
+  `created` datetime NOT NULL,
+  `is_public` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `user_attribute`;
+CREATE TABLE IF NOT EXISTS `user_attribute` (
+  `user_id` int(11) unsigned NOT NULL,
+  `attribute` varchar(255) NOT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`attribute`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `community_ticker_event`;
+CREATE TABLE IF NOT EXISTS `community_ticker_event` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `event` varchar(80) NOT NULL,
+  `params` text,
+  `created` datetime NOT NULL,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `user_points_index`;
+CREATE TABLE IF NOT EXISTS `user_points_index` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `action` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `points` int(10) NOT NULL DEFAULT '0',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `user_token`;
+CREATE TABLE IF NOT EXISTS `user_token` (
+  `user_id` int(11) unsigned NOT NULL,
+  `action` varchar(40) NOT NULL,
+  `token` varchar(40) NOT NULL,
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`user_id`,`action`,`token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

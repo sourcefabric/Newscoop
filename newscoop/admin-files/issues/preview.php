@@ -76,8 +76,7 @@ $scheme = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
 $siteAlias = new Alias($publicationObj->getDefaultAliasId());
 $websiteURL = $scheme.$siteAlias->getName();
 
-$accessParams = "LoginUserId=" . $g_user->getUserId() . "&LoginUserKey=" . $g_user->getKeyId()
-. "&AdminAccess=all";
+$accessParams = "";
 $urlType = $publicationObj->getProperty('IdURLType');
 if ($urlType == 1) {
 	$templateObj = new Template($templateId);

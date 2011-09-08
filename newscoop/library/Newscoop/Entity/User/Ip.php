@@ -17,7 +17,7 @@ class Ip
     /**
      * @Id
      * @ManyToOne(targetEntity="Newscoop\Entity\User\Subscriber")
-     * @JoinColumn(name="IdUser", referencedColumnName="Id")
+     * @JoinColumn(name="IdUser")
      * @var Newscoop\Entity\User\Subscriber
      */
     private $subscriber;

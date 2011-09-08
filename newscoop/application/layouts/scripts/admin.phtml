@@ -99,7 +99,7 @@
     <ul>
         <li><a href="<?php echo $this->url(array('controller' => 'auth', 'action' => 'logout')); ?>"><?php putGS('Logout'); ?></a></li>
         <li><a href="<?php echo $this->url(array('controller' => 'application', 'action' => 'help')); ?>"><?php putGS('Help'); ?></a></li>
-        <li><?php putGS("Signed in: $1", '<strong>' . $this->user->getRealName() . '</strong>'); ?></li>
+        <li><?php putGS("Signed in: $1", sprintf('<strong>%s %s</strong>', $this->currentUser->getFirstName(), $this->currentUser->getLastName())); ?></li>
     </ul>
 </div>
 

@@ -102,7 +102,7 @@ class Admin_CommentController extends Zend_Controller_Action
                                             'commenter' => $commenter->getId(), 'thread' => $thread->getId()))),
                              'comment' => array('id' => $comment->getId(),
                                                 'created' =>
-                                                array('date' => $comment->getTimeCreated()->format('Y.i.d'),
+                                                array('date' => $comment->getTimeCreated()->format('Y.m.d'),
                                                       'time' => $comment->getTimeCreated()->format('H:i:s')),
                                                 'subject' => $comment->getSubject(),
                                                 'message' => $comment->getMessage(), 'likes' => '', 'dislikes' => '',
@@ -116,7 +116,7 @@ class Admin_CommentController extends Zend_Controller_Action
                                                ('edit' => $view->baseUrl("admin/articles/edit.php?") . $view->linkArticle($thread),
                                                 'get' => $view->baseUrl("admin/articles/get.php?") . $view->linkArticle($thread)),
                                                'forum' => array('name' => $forum->getName()),
-                                               'section' => array('name' => $section->getName())),);
+                                               'section' => array('name' => ($section) ? $section->getName() : null)),);
             });
 
         $table->setOption('fnDrawCallback', 'datatableCallback.draw')
@@ -285,7 +285,7 @@ class Admin_CommentController extends Zend_Controller_Action
             $result[] = array("name" => $commenter->getName(), "email" => $commenter->getEmail(),
                               "ip" => $commenter->getIp(), "id" => $comment->getId(), "status" => $comment->getStatus(),
                               "subject" => $comment->getSubject(), "message" => $comment->getMessage(),
-                              "time_created" => $comment->getTimeCreated()->format('Y-i-d H:i:s'),);
+                              "time_created" => $comment->getTimeCreated()->format('Y-m-d H:i:s'),);
         }
         $this->view->result = $result;
     }

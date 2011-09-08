@@ -20,6 +20,7 @@
 namespace Doctrine\ORM;
 
 use Doctrine\DBAL\LockMode;
+use Doctrine\Common\Persistence\ObjectRepository;
 
 /**
  * An EntityRepository serves as a repository for entities with generic as well as
@@ -34,7 +35,7 @@ use Doctrine\DBAL\LockMode;
  * @author  Jonathan Wage <jonwage@gmail.com>
  * @author  Roman Borschel <roman@code-factory.org>
  */
-class EntityRepository
+class EntityRepository implements ObjectRepository
 {
     /**
      * @var string
@@ -75,6 +76,17 @@ class EntityRepository
         return $this->_em->createQueryBuilder()
             ->select($alias)
             ->from($this->_entityName, $alias);
+    }
+
+    /**
+     * Create a new Query instance based on a predefined metadata named query.
+     *
+     * @param string $queryName
+     * @return Query
+     */
+    public function createNamedQuery($queryName)
+    {
+        return $this->_em->createQuery($this->_class->getNamedQuery($queryName));
     }
 
     /**
@@ -148,11 +160,14 @@ class EntityRepository
      * Finds entities by a set of criteria.
      *
      * @param array $criteria
-     * @return array
+     * @param array|null $orderBy
+     * @param int|null $limit
+     * @param int|null $offset
+     * @return array The objects.
      */
-    public function findBy(array $criteria)
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
-        return $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName)->loadAll($criteria);
+        return $this->_em->getUnitOfWork()->getEntityPersister($this->_entityName)->loadAll($criteria, $orderBy, $limit, $offset);
     }
 
     /**

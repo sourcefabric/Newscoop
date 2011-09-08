@@ -15,7 +15,8 @@ class NewscoopEntityCommentCommenterProxy extends \Newscoop\Entity\Comment\Comme
         $this->_entityPersister = $entityPersister;
         $this->_identifier = $identifier;
     }
-    private function _load()
+    /** @private */
+    public function __load()
     {
         if (!$this->__isInitialized__ && $this->_entityPersister) {
             $this->__isInitialized__ = true;
@@ -25,107 +26,107 @@ class NewscoopEntityCommentCommenterProxy extends \Newscoop\Entity\Comment\Comme
             unset($this->_entityPersister, $this->_identifier);
         }
     }
-
+    
     
     public function setId($p_id)
     {
-        $this->_load();
+        $this->__load();
         return parent::setId($p_id);
     }
 
     public function getId()
     {
-        $this->_load();
+        $this->__load();
         return parent::getId();
     }
 
     public function setName($p_name)
     {
-        $this->_load();
+        $this->__load();
         return parent::setName($p_name);
     }
 
     public function getName()
     {
-        $this->_load();
+        $this->__load();
         return parent::getName();
     }
 
     public function setEmail($p_email)
     {
-        $this->_load();
+        $this->__load();
         return parent::setEmail($p_email);
     }
 
     public function getEmail()
     {
-        $this->_load();
+        $this->__load();
         return parent::getEmail();
     }
 
     public function setUser(\Newscoop\Entity\User $user)
     {
-        $this->_load();
+        $this->__load();
         return parent::setUser($user);
     }
 
     public function getUser()
     {
-        $this->_load();
+        $this->__load();
         return parent::getUser();
     }
 
     public function setUrl($p_url)
     {
-        $this->_load();
+        $this->__load();
         return parent::setUrl($p_url);
     }
 
     public function getUrl()
     {
-        $this->_load();
+        $this->__load();
         return parent::getUrl();
     }
 
     public function setIp($p_ip)
     {
-        $this->_load();
+        $this->__load();
         return parent::setIp($p_ip);
     }
 
     public function getIp()
     {
-        $this->_load();
+        $this->__load();
         return parent::getIp();
     }
 
     public function setTimeCreated(\DateTime $p_datetime)
     {
-        $this->_load();
+        $this->__load();
         return parent::setTimeCreated($p_datetime);
     }
 
     public function getTimeCreated()
     {
-        $this->_load();
+        $this->__load();
         return parent::getTimeCreated();
     }
 
     public function getUserName()
     {
-        $this->_load();
+        $this->__load();
         return parent::getUserName();
     }
 
     public function getUserId()
     {
-        $this->_load();
+        $this->__load();
         return parent::getUserId();
     }
 
     public function getComments()
     {
-        $this->_load();
+        $this->__load();
         return parent::getComments();
     }
 

@@ -4,6 +4,8 @@
  * @package Campsite
  */
 
+require_once dirname(__FILE__) . '/function.uri.php';
+
 /**
  * Campsite url function plugin
  *
@@ -20,12 +22,9 @@
  */
 function smarty_function_url($p_params, &$p_smarty)
 {
-    $context = $p_smarty->get_template_vars('gimme');
+    $context = $p_smarty->getTemplateVars('gimme');
     // gets the URL base
     $urlString = $context->url->base;
-
-    // includes the smarty camp uri plugin
-    require_once($p_smarty->_get_plugin_filepath('function', 'uri'));
 
     // appends the URI path and query values to the base
     $urlString .= smarty_function_uri($p_params, $p_smarty);

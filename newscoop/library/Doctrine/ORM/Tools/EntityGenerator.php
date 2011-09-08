@@ -91,6 +91,8 @@ class EntityGenerator
 
 <namespace>
 
+use Doctrine\ORM\Mapping as ORM;
+
 <entityAnnotation>
 <entityClassName>
 {
@@ -101,7 +103,7 @@ class EntityGenerator
 '/**
  * <description>
  *
- * @return <variableType>$<variableName>
+ * @return <variableType>
  */
 public function <methodName>()
 {
@@ -146,11 +148,18 @@ public function <methodName>()
 }
 ';
 
+    public function __construct()
+    {
+        if (version_compare(\Doctrine\Common\Version::VERSION, '3.0.0-DEV', '>=')) {
+            $this->_annotationsPrefix = 'ORM\\';
+        }
+    }
+
     /**
      * Generate and write entity classes for the given array of ClassMetadataInfo instances
      *
      * @param array $metadatas
-     * @param string $outputDirectory 
+     * @param string $outputDirectory
      * @return void
      */
     public function generate(array $metadatas, $outputDirectory)
@@ -164,7 +173,7 @@ public function <methodName>()
      * Generated and write entity class to disk for the given ClassMetadataInfo instance
      *
      * @param ClassMetadataInfo $metadata
-     * @param string $outputDirectory 
+     * @param string $outputDirectory
      * @return void
      */
     public function writeEntityClass(ClassMetadataInfo $metadata, $outputDirectory)
@@ -179,11 +188,11 @@ public function <methodName>()
         $this->_isNew = !file_exists($path) || (file_exists($path) && $this->_regenerateEntityIfExists);
 
         if ( ! $this->_isNew) {
-            $this->_parseTokensInEntityFile($path);
+            $this->_parseTokensInEntityFile(file_get_contents($path));
         }
 
         if ($this->_backupExisting && file_exists($path)) {
-            $backupPath = dirname($path) . DIRECTORY_SEPARATOR .  "~" . basename($path);
+            $backupPath = dirname($path) . DIRECTORY_SEPARATOR . basename($path) . "~";
             if (!copy($path, $backupPath)) {
                 throw new \RuntimeException("Attempt to backup overwritten entitiy file but copy operation failed.");
             }
@@ -201,7 +210,7 @@ public function <methodName>()
     /**
      * Generate a PHP5 Doctrine 2 entity class from the given ClassMetadataInfo instance
      *
-     * @param ClassMetadataInfo $metadata 
+     * @param ClassMetadataInfo $metadata
      * @return string $code
      */
     public function generateEntityClass(ClassMetadataInfo $metadata)
@@ -227,8 +236,8 @@ public function <methodName>()
     /**
      * Generate the updated code for the given ClassMetadataInfo and entity at path
      *
-     * @param ClassMetadataInfo $metadata 
-     * @param string $path 
+     * @param ClassMetadataInfo $metadata
+     * @param string $path
      * @return string $code;
      */
     public function generateUpdatedEntityClass(ClassMetadataInfo $metadata, $path)
@@ -245,7 +254,7 @@ public function <methodName>()
     /**
      * Set the number of spaces the exported class should have
      *
-     * @param integer $numSpaces 
+     * @param integer $numSpaces
      * @return void
      */
     public function setNumSpaces($numSpaces)
@@ -257,7 +266,7 @@ public function <methodName>()
     /**
      * Set the extension to use when writing php files to disk
      *
-     * @param string $extension 
+     * @param string $extension
      * @return void
      */
     public function setExtension($extension)
@@ -278,7 +287,7 @@ public function <methodName>()
     /**
      * Set whether or not to generate annotations for the entity
      *
-     * @param bool $bool 
+     * @param bool $bool
      * @return void
      */
     public function setGenerateAnnotations($bool)
@@ -293,13 +302,16 @@ public function <methodName>()
      */
     public function setAnnotationPrefix($prefix)
     {
+        if (version_compare(\Doctrine\Common\Version::VERSION, '3.0.0-DEV', '>=')) {
+            return;
+        }
         $this->_annotationsPrefix = $prefix;
     }
 
     /**
      * Set whether or not to try and update the entity if it already exists
      *
-     * @param bool $bool 
+     * @param bool $bool
      * @return void
      */
     public function setUpdateEntityIfExists($bool)
@@ -400,24 +412,42 @@ public function <methodName>()
 
     /**
      * @todo this won't work if there is a namespace in brackets and a class outside of it.
-     * @param string $path
+     * @param string $src
      */
-    private function _parseTokensInEntityFile($path)
+    private function _parseTokensInEntityFile($src)
     {
-        $tokens = token_get_all(file_get_contents($path));
+        $tokens = token_get_all($src);
         $lastSeenNamespace = "";
         $lastSeenClass = false;
-        
+
+        $inNamespace = false;
+        $inClass = false;
         for ($i = 0; $i < count($tokens); $i++) {
             $token = $tokens[$i];
-            if ($token[0] == T_NAMESPACE) {
-                $lastSeenNamespace = $tokens[$i+2][1] . "\\";
-            } else if ($token[0] == T_NS_SEPARATOR) {
-                $lastSeenNamespace .= $tokens[$i+1][1] . "\\";
-            } else if ($token[0] == T_CLASS) {
-                $lastSeenClass = $lastSeenNamespace . $tokens[$i+2][1];
+            if (in_array($token[0], array(T_WHITESPACE, T_COMMENT, T_DOC_COMMENT))) {
+                continue;
+            }
+
+            if ($inNamespace) {
+                if ($token[0] == T_NS_SEPARATOR || $token[0] == T_STRING) {
+                    $lastSeenNamespace .= $token[1];
+                } else if (is_string($token) && in_array($token, array(';', '{'))) {
+                    $inNamespace = false;
+                }
+            }
+
+            if ($inClass) {
+                $inClass = false;
+                $lastSeenClass = $lastSeenNamespace . '\\' . $token[1];
                 $this->_staticReflection[$lastSeenClass]['properties'] = array();
                 $this->_staticReflection[$lastSeenClass]['methods'] = array();
+            }
+
+            if ($token[0] == T_NAMESPACE) {
+                $lastSeenNamespace = "";
+                $inNamespace = true;
+            } else if ($token[0] == T_CLASS) {
+                $inClass = true;
             } else if ($token[0] == T_FUNCTION) {
                 if ($tokens[$i+2][0] == T_STRING) {
                     $this->_staticReflection[$lastSeenClass]['methods'][] = $tokens[$i+2][1];
@@ -502,7 +532,7 @@ public function <methodName>()
             }
 
             if ($metadata->isMappedSuperclass) {
-                $lines[] = ' * @' . $this->_annotationsPrefix . 'MappedSupperClass';
+                $lines[] = ' * @' . $this->_annotationsPrefix . 'MappedSuperClass';
             } else {
                 $lines[] = ' * @' . $this->_annotationsPrefix . 'Entity';
             }
@@ -790,7 +820,7 @@ public function <methodName>()
                 if ($associationMapping['isCascadeMerge']) $cascades[] = '"merge"';
                 if ($associationMapping['isCascadeRefresh']) $cascades[] = '"refresh"';
 
-                $typeOptions[] = 'cascade={' . implode(',', $cascades) . '}';            
+                $typeOptions[] = 'cascade={' . implode(',', $cascades) . '}';
             }
 
             if (isset($associationMapping['orphanRemoval']) && $associationMapping['orphanRemoval']) {
@@ -844,7 +874,7 @@ public function <methodName>()
                 $lines[] = $this->_spaces . ' * @' . $this->_annotationsPrefix . 'OrderBy({';
 
                 foreach ($associationMapping['orderBy'] as $name => $direction) {
-                    $lines[] = $this->_spaces . ' *     "' . $name . '"="' . $direction . '",'; 
+                    $lines[] = $this->_spaces . ' *     "' . $name . '"="' . $direction . '",';
                 }
 
                 $lines[count($lines) - 1] = substr($lines[count($lines) - 1], 0, strlen($lines[count($lines) - 1]) - 1);

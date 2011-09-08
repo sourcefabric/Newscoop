@@ -39,7 +39,7 @@ abstract class Base
     protected $_postSeparator = ')';
     protected $_allowedClasses = array();
 
-    private $_parts = array();
+    protected $_parts = array();
 
     public function __construct($args = array())
     {
@@ -55,7 +55,7 @@ abstract class Base
 
     public function add($arg)
     {
-        if ( ! empty($arg) || ($arg instanceof self && $arg->count() > 0)) {
+        if ( $arg !== null || ($arg instanceof self && $arg->count() > 0)) {
             // If we decide to keep Expr\Base instances, we can use this check
             if ( ! is_string($arg)) {
                 $class = get_class($arg);

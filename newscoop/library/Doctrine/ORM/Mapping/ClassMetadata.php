@@ -63,10 +63,10 @@ class ClassMetadata extends ClassMetadataInfo
      */
     public function __construct($entityName)
     {
-        parent::__construct($entityName);
         $this->reflClass = new ReflectionClass($entityName);
         $this->namespace = $this->reflClass->getNamespaceName();
         $this->table['name'] = $this->reflClass->getShortName();
+        parent::__construct($this->reflClass->getName()); // do not use $entityName, possible case-problems
     }
 
     /**
@@ -206,48 +206,6 @@ class ClassMetadata extends ClassMetadataInfo
     }
 
     /**
-     * Gets the (possibly quoted) column name of a mapped field for safe use
-     * in an SQL statement.
-     * 
-     * @param string $field
-     * @param AbstractPlatform $platform
-     * @return string
-     */
-    public function getQuotedColumnName($field, $platform)
-    {
-        return isset($this->fieldMappings[$field]['quoted']) ?
-                $platform->quoteIdentifier($this->fieldMappings[$field]['columnName']) :
-                $this->fieldMappings[$field]['columnName'];
-    }
-    
-    /**
-     * Gets the (possibly quoted) primary table name of this class for safe use
-     * in an SQL statement.
-     * 
-     * @param AbstractPlatform $platform
-     * @return string
-     */
-    public function getQuotedTableName($platform)
-    {
-        return isset($this->table['quoted']) ?
-                $platform->quoteIdentifier($this->table['name']) :
-                $this->table['name'];
-    }
-
-    /**
-     * Gets the (possibly quoted) name of the join table.
-     *
-     * @param AbstractPlatform $platform
-     * @return string
-     */
-    public function getQuotedJoinTableName(array $assoc, $platform)
-    {
-        return isset($assoc['joinTable']['quoted'])
-            ? $platform->quoteIdentifier($assoc['joinTable']['name'])
-            : $assoc['joinTable']['name'];
-    }
-
-    /**
      * Creates a string representation of this instance.
      *
      * @return string The string representation of this instance.
@@ -317,6 +275,10 @@ class ClassMetadata extends ClassMetadataInfo
             $serialized[] = 'isMappedSuperclass';
         }
 
+        if ($this->containsForeignIdentifier) {
+            $serialized[] = 'containsForeignIdentifier';
+        }
+
         if ($this->isVersioned) {
             $serialized[] = 'isVersioned';
             $serialized[] = 'versionField';
@@ -324,6 +286,14 @@ class ClassMetadata extends ClassMetadataInfo
 
         if ($this->lifecycleCallbacks) {
             $serialized[] = 'lifecycleCallbacks';
+        }
+
+        if ($this->namedQueries) {
+            $serialized[] = 'namedQueries';
+        }
+
+        if ($this->isReadOnly) {
+            $serialized[] = 'isReadOnly';
         }
 
         return $serialized;

@@ -47,9 +47,18 @@ class AssignedGenerator extends AbstractIdGenerator
         if ($class->isIdentifierComposite) {
             $idFields = $class->getIdentifierFieldNames();
             foreach ($idFields as $idField) {
-                $value = $class->getReflectionProperty($idField)->getValue($entity);
+                $value = $class->reflFields[$idField]->getValue($entity);
                 if (isset($value)) {
-                    $identifier[$idField] = $value;
+                    if (isset($class->associationMappings[$idField])) {
+                        if (!$em->getUnitOfWork()->isInIdentityMap($value)) {
+                            throw ORMException::entityMissingForeignAssignedId($entity, $value);
+                        }
+                        
+                        // NOTE: Single Columns as associated identifiers only allowed - this constraint it is enforced.
+                        $identifier[$idField] = current($em->getUnitOfWork()->getEntityIdentifier($value));
+                    } else {
+                        $identifier[$idField] = $value;
+                    }
                 } else {
                     throw ORMException::entityMissingAssignedId($entity);
                 }
@@ -58,7 +67,16 @@ class AssignedGenerator extends AbstractIdGenerator
             $idField = $class->identifier[0];
             $value = $class->reflFields[$idField]->getValue($entity);
             if (isset($value)) {
-                $identifier[$idField] = $value;
+                if (isset($class->associationMappings[$idField])) {
+                    if (!$em->getUnitOfWork()->isInIdentityMap($value)) {
+                        throw ORMException::entityMissingForeignAssignedId($entity, $value);
+                    }
+                    
+                    // NOTE: Single Columns as associated identifiers only allowed - this constraint it is enforced.
+                    $identifier[$idField] = current($em->getUnitOfWork()->getEntityIdentifier($value));
+                } else {
+                    $identifier[$idField] = $value;
+                }
             } else {
                 throw ORMException::entityMissingAssignedId($entity);
             }

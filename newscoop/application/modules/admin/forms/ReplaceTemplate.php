@@ -12,13 +12,16 @@ class Admin_Form_ReplaceTemplate extends Zend_Form
     public function init()
     {
         $this->addElement('file', 'file', array(
-            'label' => getGS('Replace with'),
-            'required' => TRUE,
+            'required' => TRUE
+        ));
+
+        $this->addElement('reset', 'reset', array(
+            'label' => getGS('Cancel')
         ));
 
         $this->addElement('submit', 'submit', array(
             'label' => getGS('Replace'),
-            'ignore' => TRUE,
+            'ignore' => TRUE
         ));
     }
 }

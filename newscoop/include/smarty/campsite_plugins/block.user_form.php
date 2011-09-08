@@ -25,17 +25,15 @@
 function smarty_block_user_form($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
 
-    require_once($p_smarty->_get_plugin_filepath('function', 'get_resource_id'));
+    $p_smarty->smarty->loadPlugin('smarty_function_get_resource_id');
     $resourceId = smarty_function_get_resource_id($p_params, $p_smarty);
 
 	if (!isset($p_content)) {
         return null;
     }
 
-    require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
-
-    // gets the context variable
-    $campsite = $p_smarty->get_template_vars('gimme');
+    $p_smarty->smarty->loadPlugin('smarty_shared_escape_special_chars');
+    $campsite = $p_smarty->getTemplateVars('gimme');
 
     $url = $campsite->url;
     $url->uri_parameter = "";

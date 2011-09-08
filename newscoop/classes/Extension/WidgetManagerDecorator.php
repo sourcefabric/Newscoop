@@ -63,7 +63,7 @@ class WidgetManagerDecorator extends DatabaseObject
         } else {
             parent::__construct($this->m_columnNames);
             $this->m_data['id'] = (string) $args;
-            $this->m_data['fk_user_id'] = $g_user->getUserId();
+            $this->m_data['fk_user_id'] = $g_user->getId();
         }
     }
 
@@ -78,7 +78,7 @@ class WidgetManagerDecorator extends DatabaseObject
 
         // be able to render
         $widget = new WidgetRendererDecorator(array(
-            'fk_user_id' => $g_user->getUserId(),
+            'fk_user_id' => $g_user->getId(),
             'fk_widget_id' => $extension->getId(),
         ));
 

@@ -15,7 +15,8 @@ class NewscoopEntityIssueProxy extends \Newscoop\Entity\Issue implements \Doctri
         $this->_entityPersister = $entityPersister;
         $this->_identifier = $identifier;
     }
-    private function _load()
+    /** @private */
+    public function __load()
     {
         if (!$this->__isInitialized__ && $this->_entityPersister) {
             $this->__isInitialized__ = true;
@@ -25,71 +26,71 @@ class NewscoopEntityIssueProxy extends \Newscoop\Entity\Issue implements \Doctri
             unset($this->_entityPersister, $this->_identifier);
         }
     }
-
+    
     
     public function getLanguage()
     {
-        $this->_load();
+        $this->__load();
         return parent::getLanguage();
     }
 
     public function getPublication()
     {
-        $this->_load();
+        $this->__load();
         return parent::getPublication();
     }
 
     public function getPublicationId()
     {
-        $this->_load();
+        $this->__load();
         return parent::getPublicationId();
     }
 
     public function getSections()
     {
-        $this->_load();
+        $this->__load();
         return parent::getSections();
     }
 
     public function setTemplate(\Newscoop\Entity\Template $template)
     {
-        $this->_load();
+        $this->__load();
         return parent::setTemplate($template);
     }
 
     public function setSectionTemplate(\Newscoop\Entity\Template $template)
     {
-        $this->_load();
+        $this->__load();
         return parent::setSectionTemplate($template);
     }
 
     public function setArticleTemplate(\Newscoop\Entity\Template $template)
     {
-        $this->_load();
+        $this->__load();
         return parent::setArticleTemplate($template);
     }
 
     public function getName()
     {
-        $this->_load();
+        $this->__load();
         return parent::getName();
     }
 
     public function getShortName()
     {
-        $this->_load();
+        $this->__load();
         return parent::getShortName();
     }
 
     public function getId()
     {
-        $this->_load();
+        $this->__load();
         return parent::getId();
     }
 
     public function setId($id)
     {
-        $this->_load();
+        $this->__load();
         return parent::setId($id);
     }
 

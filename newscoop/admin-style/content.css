@@ -180,3 +180,99 @@ ul.resource label {
 .resource-group.ui-accordion .ui-accordion-content {
     padding: 10px 0 10px !important;
 }
+
+/* Theme edit 
+--------------------------------- */
+.theme-edit dl.zend_form {
+    box-shadow: none;
+    width:100%;
+    margin: 6px 0 10px 0;
+}
+.theme-edit .zend_form dd.buttons {
+    margin-top: 10px;
+    padding: 0;
+    display:block;
+    text-align:right;
+}
+.theme-edit .zend_form dd {
+    margin: 0;
+    padding: 0;
+    display:inline;
+}
+.theme-edit .zend_form dd input[type="file"] {
+    width: 30%;
+}
+.theme-edit .zend_form dd input[type="button"],
+.theme-edit .zend_form dd .geo_filtering_button {
+    background: -moz-linear-gradient(center top , #FAFAFA 0pt, #F6F6F6 100%) repeat scroll 0 0 transparent;
+    border: 1px solid #9D9D9D;
+    color: #444444;
+    cursor: pointer;
+    margin: 0 6px 0 0;
+    padding: 3px 12px 4px;
+}
+
+.theme-edit .zend_form dd input[type="button"]:hover,
+.theme-edit .zend_form dd .geo_filtering_button:hover {
+    background: #007FB3;
+    background: -moz-linear-gradient(center top , #2390BD 0pt, #007FB3 100%) repeat scroll 0 0 transparent;
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2390BD), color-stop(100%, #007FB3));
+    border: 1px solid #007FB3;
+    color: #FFFFFF;
+}
+.theme-edit fieldset dl {
+    margin:0;
+}
+dl dd .info-text    {
+    padding: 0;
+    margin: 0 0 10px 0;
+    float: none;
+    font-weight: normal !important;
+}
+.theme-edit #EditAreaArroundInfos_cField    {
+    text-align:right;
+    margin-bottom:8px;
+}
+.theme-edit .zend_form dd input[type="text"] {
+    width:40%;
+}
+.theme-edit .save-button-bar {
+    padding:0;
+    margin:0;
+    float:right;
+}
+.theme-edit .area_toolbar {
+    background-color: #F5F5F5 !important;
+}
+.theme-edit dl.zend_form:last-child {
+    margin: 6px 0 0 0;
+}
+#template-edit-area-element textarea {
+    width:885px;    margin: 0;
+    padding: 5px 0 0 0;
+    width: 883px;
+    text-indent: 3px;
+}
+
+.edit-image  {
+    margin: 8px 0;
+    height: 1%;
+    overflow: hidden;
+}
+
+.edit-image a {
+    display: block;
+    float: left;
+    padding: 5px;
+    font-size: 1.3em;
+    background-color: #fff;
+    text-align: left;
+}
+
+.iframe .content {
+    margin: 5px;
+}
+
+.iframe .zend_form {
+    width: 503px;
+}

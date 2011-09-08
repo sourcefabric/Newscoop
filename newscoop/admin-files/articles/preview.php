@@ -45,7 +45,7 @@ $scheme = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
 $siteAlias = new Alias($publicationObj->getDefaultAliasId());
 $websiteURL = $scheme.$siteAlias->getName() . $GLOBALS['Campsite']['SUBDIR'];
 
-$accessParams = "LoginUserId=" . $g_user->getUserId() . "&LoginUserKey=" . $g_user->getKeyId()
+$accessParams = "LoginUserId=" . $g_user->getUserId()
 				. "&AdminAccess=all";
 if ($publicationObj->getUrlTypeId() == 1) {
 	$templateObj = new Template($templateId);
@@ -54,7 +54,7 @@ if ($publicationObj->getUrlTypeId() == 1) {
 		. "&NrArticle=$f_article_number&$accessParams";
 } else {
 	$url = ShortURL::GetURL($f_publication_id, $f_language_selected, null, null, $f_article_number);
-	if (PEAR::isError($url)) {
+	if (!is_string($url) && PEAR::isError($url)) {
 		$errorStr = $url->getMessage();
 	}
 	$url .= '?' . $accessParams;

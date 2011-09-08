@@ -15,7 +15,8 @@ class NewscoopEntityArticleProxy extends \Newscoop\Entity\Article implements \Do
         $this->_entityPersister = $entityPersister;
         $this->_identifier = $identifier;
     }
-    private function _load()
+    /** @private */
+    public function __load()
     {
         if (!$this->__isInitialized__ && $this->_entityPersister) {
             $this->__isInitialized__ = true;
@@ -25,89 +26,89 @@ class NewscoopEntityArticleProxy extends \Newscoop\Entity\Article implements \Do
             unset($this->_entityPersister, $this->_identifier);
         }
     }
-
+    
     
     public function setId($p_id)
     {
-        $this->_load();
+        $this->__load();
         return parent::setId($p_id);
     }
 
     public function getId()
     {
-        $this->_load();
+        $this->__load();
         return parent::getId();
     }
 
     public function getName()
     {
-        $this->_load();
+        $this->__load();
         return parent::getName();
     }
 
     public function setPublication(\Newscoop\Entity\Publication $p_publication)
     {
-        $this->_load();
+        $this->__load();
         return parent::setPublication($p_publication);
     }
 
     public function getPublication()
     {
-        $this->_load();
+        $this->__load();
         return parent::getPublication();
     }
 
     public function getPublicationId()
     {
-        $this->_load();
+        $this->__load();
         return parent::getPublicationId();
     }
 
     public function getSection()
     {
-        $this->_load();
+        $this->__load();
         return parent::getSection();
     }
 
     public function getSectionId()
     {
-        $this->_load();
+        $this->__load();
         return parent::getSectionId();
     }
 
     public function getIssueId()
     {
-        $this->_load();
+        $this->__load();
         return parent::getIssueId();
     }
 
     public function setLanguage(\Newscoop\Entity\Language $p_language)
     {
-        $this->_load();
+        $this->__load();
         return parent::setLanguage($p_language);
     }
 
     public function getLanguage()
     {
-        $this->_load();
+        $this->__load();
         return parent::getLanguage();
     }
 
     public function getLanguageId()
     {
-        $this->_load();
+        $this->__load();
         return parent::getLanguageId();
     }
 
     public function getNumber()
     {
-        $this->_load();
+        $this->__load();
         return parent::getNumber();
     }
 
     public function getTitle()
     {
-        $this->_load();
+        $this->__load();
         return parent::getTitle();
     }
 

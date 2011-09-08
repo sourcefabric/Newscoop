@@ -42,6 +42,13 @@ class DatatableRepository
      */
     public function getData(array $params, array $cols)
     {
+        static $default_params = array(
+            'iDisplayStart' => 0,
+            'iDisplayLength' => 25,
+        );
+
+        $params += $default_params;
+
         $qb = $this->repository->createQueryBuilder('e');
 
         if (!empty($params['sSearch'])) {

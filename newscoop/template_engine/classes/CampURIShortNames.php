@@ -32,7 +32,6 @@ require_once($GLOBALS['g_campsiteDir'] . '/template_engine/classes/CampTemplate.
  */
 class CampURIShortNames extends CampURI
 {
-
     /**
      * The theme path storage
      */
@@ -57,7 +56,7 @@ class CampURIShortNames extends CampURI
         parent::__construct($p_uri);
 
         $this->setURLType(URLTYPE_SHORT_NAMES);
-        $res = $this->setURL();
+        $res = $this->setURL($GLOBALS['controller']->getRequest());
         if (PEAR::isError($res)) {
             $this->m_validURI = false;
             $this->m_errorCode = $res->getCode();
@@ -207,140 +206,161 @@ class CampURIShortNames extends CampURI
     }
 
     /**
-     * Sets the URL values.
+     * Get publication by site name
      *
-     * Algorithm:
-     * - identify object (e.g.: publication, language, issue, section, article)
-     *     - object defined
-     *         - valid object?
-     *             - yes: set
-     *             - no: return error
-     *     - object undefined
-     *         - has default value?
-     *             - yes: set
-     *             - no:
-     *                 - object mandatory?
-     *                     - yes: return error
-     *                     - no: continue
-     * @todo the "algorithm" should be revised
-     * @return PEAR_Error
-     *
+     * @return MetaPublication
      */
-    private function setURL()
+    private function _getPublication()
+    {
+        $alias = preg_replace('/^' . $this->getScheme() . ':\/\//', '', $this->getBase());
+        $aliasObj = new Alias($alias);
+
+        if ($aliasObj->exists()) {
+            $publication = new MetaPublication($aliasObj->getPublicationId());
+        }
+
+        if (empty($publication) || !$publication->defined()) {
+            throw new InvalidArgumentException("Invalid site name '$alias' in URL.", self::INVALID_SITE_NAME);
+        }
+
+        return $publication;
+    }
+
+    /**
+     * Get language by code
+     *
+     * @param string $code
+     * @param MetaPublication $publication
+     * @return MetaLanguage
+     */
+    private function _getLanguage($code, MetaPublication $publication)
+    {
+        if (!empty($code)) {
+            $langArray = Language::GetLanguages(null, $code);
+            if (is_array($langArray) && sizeof($langArray) == 1) {
+                $language = new MetaLanguage($langArray[0]->getLanguageId());
+            }
+        } else {
+            $language = new MetaLanguage($publication->default_language->number);
+        }
+
+        if (empty($language) || !$language->defined()) {
+            throw new InvalidArgumentException("Invalid language identifier in URL.", self::INVALID_LANGUAGE);
+        }
+
+        return $language;
+    }
+
+    /**
+     * Get issue
+     *
+     * @param string $name
+     * @return MetaIssue
+     */
+    private function _getIssue($name, MetaLanguage $language, MetaPublication $publication)
+    {
+        if (!empty($name)) {
+            $issueArray = Issue::GetIssues($publication->identifier, $language->number, null, $name, null, !$this->m_preview);
+            if (is_array($issueArray) && sizeof($issueArray) == 1) {
+                $issue = new MetaIssue($publication->identifier, $language->number, $issueArray[0]->getIssueNumber());
+            } else {
+                throw new InvalidArgumentException("Invalid issue identifier in URL.", self::INVALID_ISSUE);
+            }
+        } else {
+            $issueObj = Issue::GetCurrentIssue($publication->identifier, $language->number);
+            $issue = new MetaIssue($publication->identifier, $language->number, $issueObj->getIssueNumber());
+            if (!$issue->defined()) {
+                throw new InvalidArgumentException("No published issue was found.", self::INVALID_ISSUE);
+            }
+        }
+
+        return $issue;
+    }
+
+    /**
+     * Get section
+     *
+     * @param string $name
+     * @param MetaIssue $issue
+     * @param MetaLanguage $language
+     * @param MetaPublication $publication
+     * @return MetaSection
+     */
+    private function _getSection($name, MetaIssue $issue, MetaLanguage $language, MetaPublication $publication)
+    {
+        if (empty($name)) {
+            return null;
+        }
+
+        $sections = Section::GetSections($publication->identifier, $issue->number, $language->number, $name);
+        if (is_array($sections) && sizeof($sections) == 1) {
+            return new MetaSection($publication->identifier, $issue->number, $language->number, $sections[0]->getSectionNumber());
+        }
+
+        throw new InvalidArgumentException("Invalid section identifier in URL.", self::INVALID_SECTION);
+    }
+
+    /**
+     * Get article
+     *
+     * @param int $articleNo
+     * @param MetaLanguage $language
+     * @return MetaArticle
+     */
+    private function _getArticle($articleNo, MetaLanguage $language)
+    {
+        if (empty($articleNo)) {
+            return null;
+        }
+
+        $articleObj = new Article($language->number, $articleNo);
+        if (!$articleObj->exists() || (!$this->m_preview && !$articleObj->isPublished())) {
+            throw new InvalidArgumentException("Invalid article identifier in URL.", self::INVALID_ARTICLE);
+        }
+
+        return new MetaArticle($language->number, $articleObj->getArticleNumber());
+    }
+
+    /**
+     * Get template
+     *
+     * @return MetaTemplate
+     */
+    private function _getTemplate()
+    {
+        $templateId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
+        $template = new MetaTemplate(parent::getTemplate($templateId));
+        if (!$template->defined()) {
+            throw new InvalidArgumentException("Invalid template in URL or no default template specified.", self::INVALID_TEMPLATE);
+        }
+
+        return $template;
+    }
+
+    /**
+     * Sets the URL values
+     *
+     * @param Zend_Controller_Request_Abstract $request
+     * @return void|PEAR_Error
+     */
+    private function setURL(Zend_Controller_Request_Abstract $request)
     {
         $this->setQueryVar('acid', null);
 
-        $this->m_publication = null;
-        $this->m_language = null;
-        $this->m_issue = null;
-        $this->m_section = null;
-        $this->m_article = null;
-
-        // gets the publication object based on site name (URI host)
-        $alias = preg_replace('/^' . $this->getScheme() . ':\/\//', '',
-                $this->getBase());
-        $aliasObj = new Alias($alias);
-        if ($aliasObj->exists()) {
-            $this->m_publication = new MetaPublication($aliasObj->getPublicationId());
-        }
-        if (is_null($this->m_publication) || !$this->m_publication->defined()) {
-            return new PEAR_Error("Invalid site name '$alias' in URL.", self::INVALID_SITE_NAME);
-        }
-
-        // reads parameters values if any
-        $params = str_replace($this->m_config->getSetting('SUBDIR'), '',
-                $this->getPath());
-        $cParams = explode('/', trim($params, '/'));
-        $cParamsSize = sizeof($cParams);
-        if ($cParamsSize >= 1) {
-            $cLangCode = $cParams[0];
-        }
-        if ($cParamsSize >= 2) {
-            $cIssueSName = $cParams[1];
-        }
-        if ($cParamsSize >= 3) {
-            $cSectionSName = $cParams[2];
-        }
-        if ($cParamsSize >= 4) {
-            $cArticleSName = $cParams[3];
-        }
-
-        // gets the language identifier and sets the language code
-        if (!empty($cLangCode)) {
-            $langArray = Language::GetLanguages(null, $cLangCode);
-            if (is_array($langArray) && sizeof($langArray) == 1) {
-                $this->m_language = new MetaLanguage($langArray[0]->getLanguageId());
-            }
-        } else {
-            $this->m_language = new MetaLanguage($this->m_publication->default_language->number);
-        }
-        if (is_null($this->m_language) || !$this->m_language->defined()) {
-            return new PEAR_Error("Invalid language identifier in URL.", self::INVALID_LANGUAGE);
-        }
-
-        // gets the issue number and sets the issue short name
-        if (!empty($cIssueSName)) {
-            $publishedOnly = !$this->m_preview;
-            $issueArray = Issue::GetIssues($this->m_publication->identifier,
-                            $this->m_language->number, null, $cIssueSName, null,
-                            $publishedOnly);
-            if (is_array($issueArray) && sizeof($issueArray) == 1) {
-                $this->m_issue = new MetaIssue($this->m_publication->identifier,
-                                $this->m_language->number,
-                                $issueArray[0]->getIssueNumber());
-            } else {
-                return new PEAR_Error("Invalid issue identifier in URL.", self::INVALID_ISSUE);
-            }
-        } else {
-            $issueObj = Issue::GetCurrentIssue($this->m_publication->identifier,
-                            $this->m_language->number);
-            $this->m_issue = new MetaIssue($this->m_publication->identifier,
-                            $this->m_language->number, $issueObj->getIssueNumber());
-            if (!$this->m_issue->defined()) {
-                return new PEAR_Error("No published issue was found.", self::INVALID_ISSUE);
-            }
-        }
-
-        // gets the section number and sets the section short name
-        if (!empty($cSectionSName)) {
-            $sectionArray = Section::GetSections($this->m_publication->identifier,
-                            $this->m_issue->number, $this->m_language->number,
-                            $cSectionSName);
-            if (is_array($sectionArray) && sizeof($sectionArray) == 1) {
-                $this->m_section = new MetaSection($this->m_publication->identifier,
-                                $this->m_issue->number,
-                                $this->m_language->number,
-                                $sectionArray[0]->getSectionNumber());
-            } else {
-                return new PEAR_Error("Invalid section identifier in URL.", self::INVALID_SECTION);
-            }
-        }
-
-        // gets the article number and sets the article short name
-        if (!empty($cArticleSName)) {
-            // we pass article short name as article identifier as they are
-            // the same for Campsite, we will have to change this in the future
-            $articleObj = new Article($this->m_language->number, $cArticleSName);
-            if (!$articleObj->exists() || (!$this->m_preview && !$articleObj->isPublished())) {
-                return new PEAR_Error("Invalid article identifier in URL.", self::INVALID_ARTICLE);
-            }
-            $this->m_article = new MetaArticle($this->m_language->number,
-                            $articleObj->getArticleNumber());
-        }
-        $templateId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
-
-        $this->m_template = new MetaTemplate($this->getTemplate($templateId));
-
-        if (!$this->m_template->defined()) {
-            return new PEAR_Error("Invalid template in URL or no default template specified.",
-                    self::INVALID_TEMPLATE);
+        try {
+            $this->m_publication = $this->_getPublication();
+            $this->m_language = $this->_getLanguage($request->getParam('language'), $this->m_publication);
+            $this->m_issue = $this->_getIssue($request->getParam('issue'), $this->m_language, $this->m_publication);
+            $this->m_section = $this->_getSection($request->getParam('section'), $this->m_issue, $this->m_language, $this->m_publication);
+            $this->m_article = $this->_getArticle($request->getParam('articleNo'), $this->m_language);
+            $this->m_template = $this->_getTemplate();
+        } catch (\Exception $e) {
+            return new PEAR_Error($e->getMessage(), $e->getCode());
         }
 
         $this->m_validURI = true;
         $this->validateCache(false);
     }
-
-// fn setURL
 
     /**
      * Sets the URI path and query values based on given parameters.
@@ -465,8 +485,19 @@ class CampURIShortNames extends CampURI
         $this->validateCache(true);
     }
 
-// fn buildURI
+    /**
+     * Get zend views which should not be handled with shortURL
+     *
+     * @return array
+     */
+    private function getZendViews()
+    {
+        return array(
+            'auth',
+            'dashboard',
+            'error',
+            'register',
+            'user',
+        );
+    }
 }
-
-// class CampURIShortNames
-?>
