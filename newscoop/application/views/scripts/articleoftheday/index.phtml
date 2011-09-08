@@ -1,5 +1,8 @@
 <?php $rand_int = md5(uniqid("", true)); ?>
 
+<div><?php echo $this->headScript(); ?></div>
+<div><?php echo $this->headLink(); ?></div>
+
 <div id="wobs_calendar_<?php echo($rand_int); ?>" class="wobs-calendar wobs-calendar-full"></div>
 
 <script>

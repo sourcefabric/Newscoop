@@ -16,6 +16,12 @@ class ArticleofthedayController extends Zend_Controller_Action
 
     public function indexAction()
     {
+        $this->view->headScript()->appendFile($this->view->baseUrl('/public/js/jquery.qtip.min.js'));
+        $this->view->headScript()->appendFile($this->view->baseUrl('/public/js/jquery.wobscalendar.js'));
+
+        $this->view->headLink()->appendStylesheet($this->view->baseUrl('/public/css/jquery.qtip.css'));
+        $this->view->headLink()->appendStylesheet($this->view->baseUrl('/public/css/wobs_calendar.css'));
+
         $request = $this->getRequest();
 
         $view = $request->getParam('view', "month");

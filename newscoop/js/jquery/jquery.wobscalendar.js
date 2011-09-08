@@ -508,8 +508,7 @@
 			
 			td.find("img")
 				.remove();
-			td.find(".wobs-date-title")
-				.attr("title", "");
+	
 			td.find(".wobs-date-label")
 				.removeClass("wobs-today")
 				.empty();
