@@ -1,4 +1,4 @@
-<input type="button" id="file_upload" value="upload file"><br>
+<input type="button" id="file_upload" value="upload file"><span id="file_info"></span><br>
 <div id="ob_wrapper" style="position: fixed; left: 0px; top: 40%;">
 <script type="text/javascript" src="{{ $view->baseUrl('/js/plupload/js/plupload.full.js') }}"></script>
 <div id="ob_main" style="display: none;">
@@ -37,7 +37,7 @@
 			<input type="text" id="ob_feedback_subject" value=""><br>
 			<label for="ob_feedback_text" style="float: none;">message</label>
 			<textarea name="ob_feedback_text" id="ob_feedback_text"></textarea><br>
-			<!--<input type="button" id="file_upload" value="upload file"><br>-->
+			<!--<input type="button" id="file_upload" value="upload file"><span id="file_info"></span><br>-->
 			<input type="button" value="next" onClick="omnibox.showReview();">
 		</div>
 	{{ else }}
@@ -47,7 +47,7 @@
 			<input type="text" id="ob_feedback_subject" value=""><br>
 			<label for="ob_feedback_text" style="float: none;">message</label>
 			<textarea name="ob_feedback_text" id="ob_feedback_text"></textarea><br>
-			<!--<input type="button" id="file_upload" value="upload file"><br>-->
+			<!--<input type="button" id="file_upload" value="upload file"><span id="file_info"></span><br>-->
 			<input type="button" value="next" onClick="omnibox.showReview();">
 		</div>
 	{{ /if }}

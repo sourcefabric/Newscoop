@@ -13,7 +13,7 @@ var omnibox = {
 	type: 'comment',
 	elementList: ['ob_main', 'ob_comment', 'ob_feedback', 'ob_comment_text_container', 'ob_comment_subject', 'ob_comment_text', 'ob_feedback_text_container', 'ob_feedback_subject',
 		'ob_feedback_text', 'ob_input', 'ob_review_comment', 'ob_review_comment_subject', 'ob_review_comment_text', 'ob_review_feedback', 'ob_review_feedback_subject',
-		'ob_review_feedback_text', 'ob_message', 'ob_message_close', 'ob_review_captcha', 'ob_review_captcha_image', 'ob_review_captcha_code'],
+		'ob_review_feedback_text', 'ob_message', 'ob_message_close', 'ob_review_captcha', 'ob_review_captcha_image', 'ob_review_captcha_code', 'file_info'],
 	elements: {},
 	initialize: function() {
 		for (var i in this.elementList) {
@@ -58,14 +58,34 @@ var omnibox = {
 		this.uploader = new plupload.Uploader({
 			runtimes: 'html5,html4',
 			browse_button: 'file_upload',
-			max_file_size: '10mb',
+			max_file_size: '20mb',
 			flash_swf_url: this.flashRuntime,
 			silverlight_xap_url: this.silverlightRuntime,
 			url: this.uploadUrl,
-			filters: [{title: "Image files", extensions: "jpg,gif,png"}, {title: "Adobe Acrobat files", extensions: "pdf"}]
+			filters: [{title: "Image files", extensions: "jpg,gif,png"}, {title: "Document", extensions: "pdf"}],
+			multi_selection: false
 		});
 		this.uploader.init();
 		this.uploader.refresh();
+		
+		var that = this;
+		this.uploader.bind('FilesAdded', function(up, files) {
+			/*
+			var file = files[0];
+			var fileNameParts = file.name.split('.');
+			var extension = fileNameParts[fileNameParts.length - 1];
+			
+			if (extension == 'jpg' || extension == 'gif' || extension == 'png' || extension == 'pdf') {
+				that.elements.file_info.innerHTML = file.name;
+			}
+			else {
+				that.elements.file_info.innerHTML = '';
+				that.setMessage('File type not allowed');
+				that.showMessage();
+			}
+			*/
+			that.elements.file_info.innerHTML = files[0].name;
+		});
 	},
 	hideUploader: function() {
 		this.uploader.refresh();
@@ -189,9 +209,19 @@ var omnibox = {
 		var that = this;
 		if (this.uploader.total.queued > 0) {
 			this.uploader.bind('FileUploaded', function(up, file, info) {
-				response = $.parseJSON(info.response);
-				response = response.response;
-				that.sendFeedback('image', response);
+				var fileNameParts = file.name.split('.');
+				var extension = fileNameParts[fileNameParts.length - 1];
+				
+				if (extension == 'jpg' || extension == 'gif' || extension == 'png') {
+					response = $.parseJSON(info.response);
+					response = response.response;
+					that.sendFeedback('image', response);
+				}
+				if (extension == 'pdf') {
+					response = $.parseJSON(info.response);
+					response = response.response;
+					that.sendFeedback('document', response);
+				}
 			});
 			this.uploader.start();
 		}
@@ -211,6 +241,9 @@ var omnibox = {
 			if (fileType == 'image') {
 				url = url + '&image_id=' + fileId;
 			}
+			if (fileType == 'document') {
+				url = url + '&document_id=' + fileId;
+			}
 			
 			$.post(url, data, function(data) {
 				data = $.parseJSON(data);
@@ -220,6 +253,8 @@ var omnibox = {
 				omnibox.showInput();
 			});
 			
+			this.elements.ob_feedback_subject.value = '';
+			this.elements.ob_feedback_text.value = '';
 			this.elements.ob_review_captcha_code.value = '';
 		}
 	}

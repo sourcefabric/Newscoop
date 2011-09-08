@@ -18,18 +18,22 @@ class Attachment extends DatabaseObject {
     var $m_keyColumnNames = array('id');
     var $m_keyIsAutoIncrement = true;
     var $m_dbTableName = 'Attachments';
-    var $m_columnNames = array('id',
-                               'fk_language_id',
-                               'file_name',
-                               'extension',
-                               'content_disposition',
-                               'http_charset',
-                               'mime_type',
-                               'size_in_bytes',
-                               'fk_description_id',
-                               'fk_user_id',
-                               'last_modified',
-                               'time_created');
+    var $m_columnNames = array(
+		'id',
+		'fk_language_id',
+		'file_name',
+		'extension',
+		'content_disposition',
+		'http_charset',
+		'mime_type',
+		'size_in_bytes',
+		'fk_description_id',
+		'fk_user_id',
+		'last_modified',
+		'time_created',
+		'Source',
+		'Status'
+	);
 
     public function Attachment($p_id = null)
     {
@@ -263,6 +267,22 @@ class Attachment extends DatabaseObject {
     	. '/' . $this->m_data['file_name'];
     	return $attachmentUri;
     } // fn getAttachmentUri
+    
+    /**
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->m_data['Source'];
+    } // fn getSource
+    
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->m_data['Status'];
+    } // fn getSource
 
 
     /**
@@ -447,10 +467,11 @@ class Attachment extends DatabaseObject {
      *
      * @return Image|NULL
      */
-    public static function ProcessFile($p_tmpFile, $p_newFile, $p_userId = NULL)
+    public static function ProcessFile($p_tmpFile, $p_newFile, $p_userId = NULL, $p_attributes = NULL)
     {
-        $tmp_attachment = new Attachment();
-        $tmp_name =  $tmp_attachment->getStorageLocation()."/". $p_tmpFile;
+        //$tmp_attachment = new Attachment();
+        //$tmp_name =  $tmp_attachment->getStorageLocation()."/". $p_tmpFile;
+        $tmp_name = $GLOBALS['Campsite']['FILE_DIRECTORY'] . '/' . $p_tmpFile;
         $file = array(
             'name' => $p_newFile,
             'tmp_name' => $tmp_name,
@@ -461,8 +482,16 @@ class Attachment extends DatabaseObject {
 
         $attributes = array(
             'fk_user_id' => $p_userId,
-            'fk_description_id' => 0
+            'fk_description_id' => 0,
+            'Source' => 'local',
+            'Status' => 'approved'
         );
+        
+        if ($p_attributes != NULL && is_array($p_attributes)) {
+			foreach ($p_attributes as $key => $value) {
+				$attributes[$key] = $value;
+			}
+		}
 
         try {
             $image = self::OnFileUpload($file, $attributes, null, true);

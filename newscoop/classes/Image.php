@@ -168,6 +168,14 @@ class Image extends DatabaseObject
 	{
 		return $this->m_data['Id'];
 	} // fn getImageId
+	
+	/**
+	 * @return int
+	 */
+	public function getImageFileName()
+	{
+		return $this->m_data['ImageFileName'];
+	} // fn getImageId
 
 
 	/**

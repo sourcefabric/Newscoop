@@ -61,7 +61,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
         
         $index = 1;
         $acceptanceRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
-        $table->setHandle(function($feedback) use ($view, &$index, $acceptanceRepository)
+        $table->setHandle(function($feedback) use ($view, &$index, $acceptanceRepository, $Campsite)
             {
                 $user = $feedback->getUser();
                 $url = $feedback->getUrl();
@@ -77,9 +77,16 @@ class Admin_FeedbackController extends Zend_Controller_Action
                 
                 if ($attachment['type'] == 'image') {
 					$image = new Image($attachment['id']);
+					$attachment['name'] = $image->getImageFileName();
 					$attachment['status'] = $image->getStatus();
 					$attachment['thumbnail'] = $image->getThumbnailUrl();
 					$attachment['approve_url'] = $view->url(array('action' => 'approve', 'type' => 'image', 'format' => 'json', 'id' => $attachment['id']));
+				}
+				if ($attachment['type'] == 'document') {
+					$document = new Attachment($attachment['id']);
+					$attachment['name'] = $document->getFileName();
+					$attachment['status'] = $document->getStatus();
+					$attachment['approve_url'] = $view->url(array('action' => 'approve', 'type' => 'document', 'format' => 'json', 'id' => $attachment['id']));
 				}
                 
                 $banned = $acceptanceRepository->checkBanned(array('name' => $user->getName(), 'email' => '', 'ip' => ''), $publication);
@@ -262,6 +269,10 @@ class Admin_FeedbackController extends Zend_Controller_Action
 		if ($parameters['type'] == 'image') {
 			$image = new Image($parameters['id']);
 			$image->update(array('Status' => 'approved'));
+		}
+		if ($parameters['type'] == 'document') {
+			$document = new Attachment($parameters['id']);
+			$document->update(array('Status' => 'approved'));
 		}
 	}
 }

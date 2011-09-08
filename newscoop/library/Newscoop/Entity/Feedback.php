@@ -99,7 +99,7 @@ class Feedback
     /**
      * @var string to code mapper for attachment_type
      */
-    static $attachment_type_enum = array('none', 'image', 'file');
+    static $attachment_type_enum = array('none', 'image', 'document');
     
     /**
      * @column(length=1)

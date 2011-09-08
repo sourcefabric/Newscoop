@@ -87,6 +87,15 @@ class FeedbackController extends Zend_Controller_Action
 				
 				$this->view->response = getGS('File is uploaded and your message is sent.');
 			}
+			else if (isset($parameters['document_id'])) {
+				$values['attachment_type'] = 'document';
+				$values['attachment_id'] = $parameters['document_id'];
+				
+				$feedbackRepository->save($feedback, $values);
+				$feedbackRepository->flush();
+				
+				$this->view->response = getGS('File is uploaded and your message is sent.');
+			}
 			else {
 				$feedbackRepository->save($feedback, $values);
 				$feedbackRepository->flush();
@@ -112,12 +121,16 @@ class FeedbackController extends Zend_Controller_Action
 		
 		$mimeType = $_FILES['file']['type'];
 		$type = explode('/', $mimeType);
-		$type = $type[0];
 		
-		if ($type == 'image') {
+		if ($type[0] == 'image') {
 			$file = Plupload::OnMultiFileUploadCustom($Campsite['IMAGE_DIRECTORY']);
 			$image = Image::ProcessFile($_FILES['file']['name'], $_FILES['file']['name'], $userId, array('Source' => 'feedback', 'Status' => 'Unapproved'));
 			$this->view->response = $image->getImageId();
+		}
+		else if ($type[1] == 'pdf') {
+			$file = Plupload::OnMultiFileUploadCustom($Campsite['FILE_DIRECTORY']);
+			$document = Attachment::ProcessFile($_FILES['file']['name'], $_FILES['file']['name'], $userId, array('Source' => 'feedback', 'Status' => 'Unapproved'));
+			$this->view->response = $document->getAttachmentId();
 		}
 	}
     
