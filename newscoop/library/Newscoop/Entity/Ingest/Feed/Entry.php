@@ -7,7 +7,8 @@
 
 namespace Newscoop\Entity\Ingest\Feed;
 
-use Newscoop\Entity\Ingest\Feed;
+use Newscoop\Entity\Ingest\Feed,
+    Newscoop\Ingest\Parser;
 
 /**
  * @Entity
@@ -65,7 +66,7 @@ class Entry
     private $category;
 
     /**
-     * @Column(type="datetime", nullable=True)
+     * @Column(type="datetime")
      * @var DateTime
      */
     private $created;
@@ -83,6 +84,12 @@ class Entry
     private $priority;
 
     /**
+     * @Column(type="string")
+     * @var string
+     */
+    private $service;
+
+    /**
      * @param string $title
      * @param string $content
      */
@@ -90,7 +97,7 @@ class Entry
     {
         $this->title = $title;
         $this->content = $content;
-        $this->updated = new \DateTime();
+        $this->created = $this->updated = new \DateTime();
     }
 
     /**
@@ -156,6 +163,84 @@ class Entry
     }
 
     /**
+     * Set created
+     *
+     * @param DateTime $created
+     * @return Newscoop\Entity\Ingest\Feed\Entry
+     */
+    public function setCreated(\DateTime $created)
+    {
+        $this->created = $created;
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * Set updated
+     *
+     * @param DateTime $updated
+     * @return Newscoop\Entity\Ingest\Feed\Entry
+     */
+    public function setUpdated(\DateTime $updated)
+    {
+        $this->updated = $updated;
+        return $this;
+    }
+
+    /**
+     * Set priority
+     *
+     * @param int $priority
+     * @return Newscoop\Entity\Ingest\Feed\Entry
+     */
+    public function setPriority($priority)
+    {
+        $this->priority = (int) $priority;
+        return $this;
+    }
+
+    /**
+     * Get priority
+     *
+     * @return int
+     */
+    public function getPriority()
+    {
+        return $this->priority;
+    }
+
+    /**
+     * Set service
+     *
+     * @param string $service
+     * @return Newscoop\Entity\Ingest\Feed\Entry
+     */
+    public function setService($service)
+    {
+        $this->service = (string) $service;
+        return $this;
+    }
+
+    /**
+     * Get service
+     *
+     * @return string
+     */
+    public function getService()
+    {
+        return $this->service;
+    }
+
+    /**
      * Set feed
      *
      * @param Newscoop\Entity\Ingest\Feed $feed
@@ -165,5 +250,20 @@ class Entry
     {
         $this->feed = $feed;
         return $this;
+    }
+
+    /**
+     * Entry factory
+     *
+     * @param Newscoop\Ingest\Parser $parser
+     * @return Newscoop\Entity\Ingest\Feed\Entry
+     */
+    public static function create(Parser $parser)
+    {
+        $entry = new self($parser->getTitle(), $parser->getContent());
+        $entry->setCreated($parser->getCreated());
+        $entry->setUpdated($parser->getUpdated());
+        $entry->setPriority($parser->getPriority());
+        return $entry;
     }
 }

@@ -7,10 +7,12 @@
 
 namespace Newscoop\Ingest\Parser;
 
+use Newscoop\Ingest\Parser;
+
 /**
  * NewsML parser
  */
-class NewsMlParser
+class NewsMlParser implements Parser
 {
     /** @var SimpleXMLElement */
     private $xml;
