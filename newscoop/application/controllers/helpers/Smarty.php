@@ -16,6 +16,7 @@ class Action_Helper_Smarty extends Zend_Controller_Action_Helper_Abstract
 
     /** @var array */
     private $controllers = array(
+        'articleoftheday',
         'auth',
         'dashboard',
         'email',
@@ -34,14 +35,20 @@ class Action_Helper_Smarty extends Zend_Controller_Action_Helper_Abstract
         $GLOBALS['controller'] = $controller;
 
         $request = $this->getRequest();
+
+        $format = $request->getParam('format', null);
+        if (isset($format) && $format == "json") {
+            return;
+        }
+
         if (!in_array($request->getParam('module'), $this->modules) || !in_array($request->getParam('controller'), $this->controllers)) {
             return;
         }
 
         $controller->view = new Newscoop\SmartyView();
         $controller->view
-            ->addScriptPath(APPLICATION_PATH . '/views/scripts/')
-            ->addScriptPath(APPLICATION_PATH . '/../themes/publication_2/theme_1/');
+            ->addScriptPath(APPLICATION_PATH . '/views/scripts/');
+            //->addScriptPath(APPLICATION_PATH . '/../themes/publication_2/theme_1/');
 
         $controller->getHelper('viewRenderer')
             ->setView($controller->view)

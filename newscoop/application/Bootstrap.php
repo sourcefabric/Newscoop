@@ -181,6 +181,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             )));
 
         $router->addRoute(
+            'user-search',
+            new Zend_Controller_Router_Route('search/:search/:page', array(
+                'module' => 'default',
+                'controller' => 'user',
+                'action' => 'index',
+                'page' => 1,
+            )));
+
+        $router->addRoute(
             'user-list',
             new Zend_Controller_Router_Route('listing/:user-listing/:page', array(
                 'module' => 'default',

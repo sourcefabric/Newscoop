@@ -46,7 +46,7 @@ class UserController extends Zend_Controller_Action
             $users = $this->service->findUsersBySearch($search);
 
             $link_name = "user-search";
-            $link_data = array();
+            $link_data = array('search' => $search);
         }
         //order users by lastname A-D
         else {
@@ -59,10 +59,6 @@ class UserController extends Zend_Controller_Action
             $link_name = "user-list";
             $link_data = array('user-listing' => $range);
         }
-
-        //$users = $this->service->getPublicUsers();
-        //$users = $this->service->findUsersLastNameInRange(array('t', 'b'));
-        //$users = $this->service->findUsersBySearch("min tor");
 
         $this->view->users = array();
         foreach ($users as $user) {
@@ -82,7 +78,6 @@ class UserController extends Zend_Controller_Action
         $this->view->paginator = $paginator->getPages();
         $this->view->link_name = $link_name;
         $this->view->link_data = $link_data;
-
     }
 
     public function profileAction()

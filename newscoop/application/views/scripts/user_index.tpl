@@ -14,8 +14,8 @@
 <table>
     <tbody>
         <tr>
-            <td>Active</td>
-            <td><a href="{{ $view->url() }}">All</a></td>
+            <td><a href="{{ $view->url([], 'user-active') }}">Active</a></td>
+            <td><a href="{{ $view->url(['user-listing' => 'A-Z'], 'user-list') }}">All</a></td>
             <td><a href="{{ $view->url(['user-listing' => 'A-D'], 'user-list') }}">A-D</a></td>
             <td><a href="{{ $view->url(['user-listing' => 'E-K'], 'user-list') }}">E-K</a></td>
             <td><a href="{{ $view->url(['user-listing' => 'L-P'], 'user-list') }}">L-P</a></td>
