@@ -33,4 +33,31 @@ class NewsMlParserTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertStringEqualsFile(APPLICATION_PATH . '/../tests/ingest/test_phd.content.xml', $this->parser->getContent());
     }
+
+    public function testGetCreated()
+    {
+        $created = new \DateTime('20110825T051533+0200');
+        $this->assertEquals($created, $this->parser->getCreated());
+    }
+
+    public function testGetUpdated()
+    {
+        $updated = new \DateTime('20110825T120549+0200');
+        $this->assertEquals($updated, $this->parser->getUpdated());
+    }
+
+    public function testGetPriority()
+    {
+        $this->assertEquals(2, $this->parser->getPriority());
+    }
+
+    public function testGetService()
+    {
+        $this->assertEquals('SDA-ATS News Service', $this->parser->getService());
+    }
+
+    public function getPublicId()
+    {
+        $this->assertEquals('urn:newsml:www.sda-ats.ch:20110825:brd004:3N', $this->parser->getPublicId());
+    }
 }
