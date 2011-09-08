@@ -308,6 +308,10 @@ if( Saas::singleton()->hasPrivilege('themes' , 'index') ) {
                 'action' => 'advanced-theme-settings',
                 'visible' => false,
                 'reset_params' => false,
+                'params' => array(
+                    'next' => null,
+                    'file' => null,
+                ),
                 'pages' => array(
                     array(
                         'label' => getGS('Upload'),
