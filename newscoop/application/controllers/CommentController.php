@@ -55,12 +55,6 @@ class CommentController extends Zend_Controller_Action
 			$errors[] = getGS('The comment content was not filled in.');
 		}
 		
-		if ($publication->isCaptchaEnabled()) {
-			if (!PhpCaptcha::Validate($parameters['f_captcha'], true)) {
-				$errors[] = getGS('The code you entered is not the same with the one shown in the image.');
-			}
-		}
-		
 		if (empty($errors)) {
 			$commentRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
 			$comment = new Comment();

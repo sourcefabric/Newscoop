@@ -12,8 +12,7 @@ var omnibox = {
 	status: false,
 	type: 'comment',
 	elementList: ['ob_main', 'ob_comment', 'ob_feedback', 'ob_comment_text_container', 'ob_comment_subject', 'ob_comment_text', 'ob_feedback_text_container', 'ob_feedback_subject',
-		'ob_feedback_text', 'ob_input', 'ob_review_comment', 'ob_review_comment_subject', 'ob_review_comment_text', 'ob_review_feedback', 'ob_review_feedback_subject',
-		'ob_review_feedback_text', 'ob_message', 'ob_message_close', 'ob_review_captcha', 'ob_review_captcha_image', 'ob_review_captcha_code', 'file_info'],
+		'ob_feedback_text', 'ob_input', 'ob_message', 'ob_message_close', 'ob_file_info', 'ob_username', 'ob_password'],
 	elements: {},
 	initialize: function() {
 		for (var i in this.elementList) {
@@ -25,7 +24,10 @@ var omnibox = {
 		if (this.elements.ob_comment_text) this.elements.ob_comment_text.value = '';
 		if (this.elements.ob_feedback_subject) this.elements.ob_feedback_subject.value = '';
 		if (this.elements.ob_feedback_text) this.elements.ob_feedback_text.value = '';
-		if (this.elements.ob_review_captcha_code) this.elements.ob_review_captcha_code.value = '';
+		
+		if (document.location.hash == '#omnibox') {
+			this.showHide();
+		}
 	},
 	setType: function(type) {
 		this.type = type;
@@ -57,7 +59,7 @@ var omnibox = {
 	showUploader: function() {
 		this.uploader = new plupload.Uploader({
 			runtimes: 'html5,html4',
-			browse_button: 'file_upload',
+			browse_button: 'ob_file_upload',
 			max_file_size: '20mb',
 			flash_swf_url: this.flashRuntime,
 			silverlight_xap_url: this.silverlightRuntime,
@@ -84,7 +86,7 @@ var omnibox = {
 				that.showMessage();
 			}
 			*/
-			that.elements.file_info.innerHTML = files[0].name;
+			that.elements.ob_file_info.innerHTML = files[0].name;
 		});
 	},
 	hideUploader: function() {
@@ -125,11 +127,44 @@ var omnibox = {
 		else if (this.elements.ob_feedback.checked) {
 			this.type = 'feedback';
 		}
-		
 		this.showInput();
 	},
+	login: function() {
+		var data = {
+			username: this.elements.ob_username.value,
+			password: this.elements.ob_username.value
+		};
+		
+		this.elements.ob_username.value = '';
+		this.elements.ob_password.value = '';
+		
+		$.post(this.baseUrl + '/omnibox/login/?format=json', data, function(data) {
+			data = $.parseJSON(data);
+			
+			if (data.response == 'OK') {
+				document.location.reload();
+			}
+			else {
+				omnibox.setMessage(data.response);
+				omnibox.showMessage();
+			}
+		});
+	},
+	logout: function() {
+		$.post(this.baseUrl + '/omnibox/logout/?format=json', {}, function(data) {
+			document.location.reload();
+		});
+	},
+	showMessage: function() {
+		this.showHideElement(['ob_message', 'ob_message_close'], 'show');
+	},
+	hideMessage: function() {
+		this.showHideElement(['ob_message', 'ob_message_close'], 'hide');
+	},
+	setMessage: function(message) {
+		this.elements.ob_message.innerHTML = message;
+	},
 	showInput: function() {
-		this.showHideElement(['ob_review_comment', 'ob_review_feedback', 'ob_review_captcha'], 'hide');
 		this.showHideElement('ob_input', 'show');
 		
 		if (this.type == 'comment') {
@@ -141,37 +176,6 @@ var omnibox = {
 			this.showHideElement('ob_feedback_text_container', 'show');
 		}
 	},
-	showReview: function() {
-		var random_temp = Math.random();
-		this.elements.ob_review_captcha_image.src = this.baseUrl + '/include/captcha/image.php?x=' + random_temp;
-		
-		this.showHideElement('ob_input', 'hide');
-		this.showHideElement('ob_review_captcha', 'show');
-		
-		if (this.type == 'comment') {
-			this.elements.ob_review_comment_subject.innerHTML = this.elements.ob_comment_subject.value;
-			this.elements.ob_review_comment_text.innerHTML = this.elements.ob_comment_text.value;
-			
-			this.showHideElement('ob_review_comment', 'show');
-			this.showHideElement('ob_review_feedback', 'hide');
-		}
-		if (this.type == 'feedback') {
-			this.elements.ob_review_feedback_subject.innerHTML = this.elements.ob_feedback_subject.value;
-			this.elements.ob_review_feedback_text.innerHTML = this.elements.ob_feedback_text.value;
-			
-			this.showHideElement('ob_review_comment', 'hide');
-			this.showHideElement('ob_review_feedback', 'show');
-		}
-	},
-	showMessage: function() {
-		this.showHideElement(['ob_message', 'ob_message_close'], 'show');
-	},
-	hideMessage: function() {
-		this.showHideElement(['ob_message', 'ob_message_close'], 'hide');
-	},
-	setMessage: function(message) {
-		this.elements.ob_message.innerHTML = message;
-	},
 	sendComment: function() {
 		var data = {
 			f_submit_comment: 'SUBMIT',
@@ -181,13 +185,11 @@ var omnibox = {
 			f_article_number: this.article,
 			f_comment_is_anonymous: 0,
 			f_comment_subject: this.elements.ob_comment_subject.value,
-			f_captcha: this.elements.ob_review_captcha_code.value,
 			f_language: this.language
 		};
 		
 		$.post(this.baseUrl + '/comment/save/?format=json', data, function(data) {
 			data = $.parseJSON(data);
-			console.log(data);
 			
 			if (data.response == 'OK') {
 				var location = (String)(document.location);
@@ -199,11 +201,8 @@ var omnibox = {
 			else {
 				omnibox.setMessage(data.response);
 				omnibox.showMessage();
-				omnibox.showInput();
 			}
 		});
-		
-		this.elements.ob_review_captcha_code.value = '';
 	},
 	sendFeedback: function(fileType, fileId) {
 		var that = this;
@@ -230,7 +229,6 @@ var omnibox = {
 				f_feedback_url: String(document.location),
 				f_feedback_subject: this.elements.ob_feedback_subject.value,
 				f_feedback_content: this.elements.ob_feedback_text.value,
-				f_captcha: this.elements.ob_review_captcha_code.value,
 				f_language: this.language,
 				f_section: this.section,
 				f_article: this.article,
@@ -250,12 +248,11 @@ var omnibox = {
 				
 				omnibox.setMessage(data.response);
 				omnibox.showMessage();
-				omnibox.showInput();
 			});
 			
 			this.elements.ob_feedback_subject.value = '';
 			this.elements.ob_feedback_text.value = '';
-			this.elements.ob_review_captcha_code.value = '';
+			this.elements.ob_file_info.innerHTML = '';
 		}
 	}
 };

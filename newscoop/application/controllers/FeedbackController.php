@@ -53,12 +53,6 @@ class FeedbackController extends Zend_Controller_Action
 			$errors[] = getGS('The feedback content was not filled in.');
 		}
 		
-		if ($publication->isCaptchaEnabled()) {
-			if (!PhpCaptcha::Validate($parameters['f_captcha'], true)) {
-				$errors[] = getGS('The code you entered is not the same with the one shown in the image.');
-			}
-		}
-		
 		if (empty($errors)) {
 			$feedbackRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Feedback');
 			$feedback = new Feedback();

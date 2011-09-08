@@ -61,7 +61,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
         
         $index = 1;
         $acceptanceRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
-        $table->setHandle(function($feedback) use ($view, &$index, $acceptanceRepository, $Campsite)
+        $table->setHandle(function($feedback) use ($view, &$index, $acceptanceRepository)
             {
                 $user = $feedback->getUser();
                 $url = $feedback->getUrl();

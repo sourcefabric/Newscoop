@@ -1,16 +1,16 @@
-<input type="button" id="file_upload" value="upload file"><span id="file_info"></span><br>
+<input type="button" id="ob_file_upload" value="upload file"><span id="ob_file_info"></span><br>
 <div id="ob_wrapper" style="position: fixed; left: 0px; top: 40%;">
 <script type="text/javascript" src="{{ $view->baseUrl('/js/plupload/js/plupload.full.js') }}"></script>
 <div id="ob_main" style="display: none;">
+<div id="ob_message_wrapper">
+	<div id="ob_message" style="display: none;"></div>
+	<div id="ob_message_close" style="display: none;"><a href="javascript:omnibox.hideMessage();omnibox.setMessage('');">close</a></div>
+</div>
 {{ if $gimme->user->logged_in }}
 	welcome {{ $gimme->user->name }}, introduction here<br>
+	<a href="#" onClick="omnibox.logout();">logout</a><br>
 	
 	<div style="display: inline;" id="ob_input">
-	
-	<div id="ob_message_wrapper">
-		<div id="ob_message" style="display: none;"></div>
-		<div id="ob_message_close" style="display: none;"><a href="javascript:omnibox.hideMessage();omnibox.setMessage('');">close</a></div>
-	</div>
 	
 	{{ if $gimme->article->number }}
 		on article page<br>
@@ -29,7 +29,7 @@
 			<input type="text" id="ob_comment_subject" value=""><br>
 			<label for="ob_comment_text" style="float: none;">comment</label>
 			<textarea name="ob_comment_text" id="ob_comment_text"></textarea><br>
-			<input type="button" value="next" onClick="omnibox.showReview();">
+			<input type="button" value="send" onClick="omnibox.sendComment();">
 		</div>
 		
 		<div id="ob_feedback_text_container" style="display: none;">
@@ -38,7 +38,7 @@
 			<label for="ob_feedback_text" style="float: none;">message</label>
 			<textarea name="ob_feedback_text" id="ob_feedback_text"></textarea><br>
 			<!--<input type="button" id="file_upload" value="upload file"><span id="file_info"></span><br>-->
-			<input type="button" value="next" onClick="omnibox.showReview();">
+			<input type="button" value="send" onClick="omnibox.sendFeedback();">
 		</div>
 	{{ else }}
 		not on article page<br>
@@ -48,41 +48,19 @@
 			<label for="ob_feedback_text" style="float: none;">message</label>
 			<textarea name="ob_feedback_text" id="ob_feedback_text"></textarea><br>
 			<!--<input type="button" id="file_upload" value="upload file"><span id="file_info"></span><br>-->
-			<input type="button" value="next" onClick="omnibox.showReview();">
+			<input type="button" value="send" onClick="omnibox.sendFeedback();">
 		</div>
 	{{ /if }}
 	
 	</div>
 	
-	<div style="display: none;" id="ob_review_captcha">
-		{{ if $gimme->publication->captcha_enabled }}
-			<img id="ob_review_captcha_image" src=""><br>
-			<input type="text" id="ob_review_captcha_code"><br>
-		{{ else }}
-			<img id="ob_review_captcha_image" src="" style="display: none;"><br>
-			<input type="hidden" id="ob_review_captcha_code" value="">
-		{{ /if }}
-	</div>
-	
-	<div style="display: none;" id="ob_review_comment">
-		comments are not moderated, so be nice, etc.<br>
-		<div style="border: 1px solid #000000;" id="ob_review_comment_subject"></div><br>
-		<div style="border: 1px solid #000000;" id="ob_review_comment_text"></div><br>
-		<input type="button" value="back" onClick="omnibox.showInput();">
-		<input type="button" value="send" onClick="omnibox.sendComment();">
-		<br>
-	</div>
-	<div style="display: none;" id="ob_review_feedback">
-		this is review part...
-		<div style="border: 1px solid #000000;" id="ob_review_feedback_subject"></div><br>
-		<div style="border: 1px solid #000000;" id="ob_review_feedback_text"></div><br>
-		<input type="button" value="back" onClick="omnibox.showInput();">
-		<input type="button" value="send" onClick="omnibox.sendFeedback();">
-		<br>
-	</div>
-	
 {{ else }}
-	not logged in...
+	not logged in...<br>
+	<input type="text" id="ob_username"><br>
+	<input type="password" id="ob_password"><br>
+	<input type="button" value="login" onClick="omnibox.login();"><br>
+	
+	<a href="{{ $view->baseUrl('/register') }}">register</a><br>
 {{ /if }}
 </div>
 
