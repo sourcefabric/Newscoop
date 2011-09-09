@@ -1,6 +1,7 @@
 <?php
 camp_load_translation_strings("articles");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ContextBox.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Section.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Issue.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');

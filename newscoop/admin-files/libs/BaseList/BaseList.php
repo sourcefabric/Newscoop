@@ -114,6 +114,24 @@ class BaseList
     }
 
     /**
+     * Get Context Box sDom property.
+     * @return string
+     */
+    public function getContextSDom()
+    {
+        $colvis = $this->colVis ? 'C' : '';
+        $search = $this->search ? 'f' : '';
+        $paging = $this->items === NULL ? 'ip' : 'i';
+        return sprintf('<"H"%s%s>t<"F"%s%s>',
+            $colvis,
+            $search,
+            //$paging,
+            $paging,
+            $this->items === NULL ? 'l' : ''
+        );
+    }
+
+    /**
      * Get default sorting
      * @return string
      */
@@ -298,7 +316,7 @@ class BaseList
         }
 
         // add limit
-        $queryStr .= sprintf(' LIMIT %d,%d',
+        $queryStr .= sprintf(' LIMIT %s,%s',
             $aoData['iDisplayStart'],
             $aoData['iDisplayLength']);
 

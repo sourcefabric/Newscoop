@@ -8,17 +8,18 @@
  * @link http://www.sourcefabric.org
  */
 
-
-require_once dirname(__FILE__) . '/ArticleList.php';
+require_once dirname(__FILE__) . '/ContextList.php';
 require_once WWW_DIR . '/classes/Article.php';
 
 // start >= 0
 $start = max(0,
     empty($_REQUEST['iDisplayStart']) ? 0 : (int) $_REQUEST['iDisplayStart']);
 
+
 // results num >= 10 && <= 100
-$limit = min(100, max(10,
+$limit = min(100, min(10,
     empty($_REQUEST['iDisplayLength']) ? 0 : (int) $_REQUEST['iDisplayLength']));
+
 
 // filters - common
 $articlesParams = array();
@@ -104,15 +105,16 @@ for ($i = 0; $i < $sortingCols; $i++) {
     }
 }
 
-
 // get articles
 $articles = Article::GetList($articlesParams, array(array('field' => $sortBy, 'dir' => $sortDir)), $start, $limit, $articlesCount, true);
 
-$list = new ArticleList(TRUE);
+$list = new ContextList(TRUE);
 $return = array();
 foreach($articles as $article) {
     $return[] = $list->processItem($article);
 }
+
+
 return array(
     'iTotalRecords' => Article::GetTotalCount(),
     'iTotalDisplayRecords' => $articlesCount,

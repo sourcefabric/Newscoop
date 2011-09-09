@@ -181,6 +181,9 @@ case "unlock":
 	}
 	camp_html_add_msg(getGS("Article(s) unlocked."), "ok");
 	break;
+case "context_box_update":
+	camp_html_add_msg(getGS("Context Box updated"), "ok");
+	break;
 case "schedule_publish":
 	$args = $_REQUEST;
 	unset($args[SecurityToken::SECURITY_TOKEN]);

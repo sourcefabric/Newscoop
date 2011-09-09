@@ -137,6 +137,16 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * Get user id
+     *
+     * @return int
+     */
+    public function getUserId()
+    {
+        return (int) $this->getId();
+    }
+
+    /**
      * Set username
      *
      * @param string $username
@@ -257,6 +267,18 @@ class User implements \Zend_Acl_Role_Interface
     {
         return (string) $this->last_name;
     }
+
+    /**
+     * Get real name
+     *
+     * @return string
+     */
+    public function getRealName()
+    {
+        return (string)  $this->first_name.' '.$this->last_name;
+    }
+
+
 
     /**
      * Set status

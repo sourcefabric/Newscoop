@@ -188,7 +188,7 @@ $('.save-button-bar input').click(function() {
     $('form#article-keywords').submit();
     $('form#article-switches').submit();
     $('form#article-main').submit();
-    
+
     if ($(this).attr('id') == 'save_and_close') {
 		unlockArticle();
 		$(this).ajaxComplete(function() {
@@ -256,6 +256,13 @@ $('a.iframe').each(function() {
 $('#locations_box a.iframe').each(function() {
     $(this).data('fancybox').showCloseButton = false;
     $(this).data('fancybox').width = 1100;
+    $(this).data('fancybox').height = 660;
+
+});
+
+$('#context_box a.iframe').each(function() {
+    $(this).data('fancybox').showCloseButton = false;
+    $(this).data('fancybox').width = 1150;
     $(this).data('fancybox').height = 660;
 
 });
