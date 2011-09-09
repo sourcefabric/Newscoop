@@ -12,7 +12,7 @@ var omnibox = {
 	status: false,
 	type: 'comment',
 	elementList: ['ob_main', 'ob_comment', 'ob_feedback', 'ob_comment_text_container', 'ob_comment_subject', 'ob_comment_text', 'ob_feedback_text_container', 'ob_feedback_subject',
-		'ob_feedback_text', 'ob_input', 'ob_message', 'ob_message_close', 'ob_file_info', 'ob_username', 'ob_password'],
+		'ob_feedback_text', 'ob_input', 'ob_message', 'ob_message_close', 'ob_file_info', 'ob_username', 'ob_password', 'ob_file_upload_container'],
 	elements: {},
 	initialize: function() {
 		for (var i in this.elementList) {
@@ -72,20 +72,6 @@ var omnibox = {
 		
 		var that = this;
 		this.uploader.bind('FilesAdded', function(up, files) {
-			/*
-			var file = files[0];
-			var fileNameParts = file.name.split('.');
-			var extension = fileNameParts[fileNameParts.length - 1];
-			
-			if (extension == 'jpg' || extension == 'gif' || extension == 'png' || extension == 'pdf') {
-				that.elements.file_info.innerHTML = file.name;
-			}
-			else {
-				that.elements.file_info.innerHTML = '';
-				that.setMessage('File type not allowed');
-				that.showMessage();
-			}
-			*/
 			that.elements.ob_file_info.innerHTML = files[0].name;
 		});
 	},
@@ -109,13 +95,14 @@ var omnibox = {
 	showHide: function() {
 		if (this.status == false) {
 			//this.elements.ob_main.style.display = 'inline';
-			$('#ob_main').show(500);
+			$('#ob_main').show(100);
 			this.status = true;
-			this.showUploader();
+			this.elements.ob_file_upload_container.innerHTML = '<input type="button" id="ob_file_upload" value="upload file">';
+			setTimeout('omnibox.showUploader();', 200);
 		}
 		else {
 			//this.elements.ob_main.style.display = 'none';
-			$('#ob_main').hide(500);
+			$('#ob_main').hide(100);
 			this.status = false;
 			this.hideUploader();
 		}
