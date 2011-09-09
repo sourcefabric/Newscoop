@@ -41,20 +41,17 @@ final class MetaCommunityFeed extends MetaEntity
     {
         switch ($this->type) {
             case 'print-subscribe':
-                printf('New print subscriber: %s.', $this->user);
-                break;
+                return sprintf('New print subscriber: %s.', $this->user);
 
             case 'user-register':
-                printf('%s subscribed to TagesWoche.', $this->user);
-                break;
+                return sprintf('%s subscribed to TagesWoche.', $this->user);
 
             case 'topic-follow':
                 $params = $this->feed->getParams();
-                printf("%s started to follow topic '%s'.", $this->user, $params['topic_name']);
-                break;
+                return sprintf("%s started to follow topic '%s'.", $this->user, $params['topic_name']);
 
             default:
-                printf('%s %s', $this->user, $this->type);
+                return sprintf('%s %s', $this->user, $this->type);
         }
     }
 }
