@@ -9,7 +9,9 @@ namespace Newscoop\Services;
 
 use Doctrine\ORM\EntityManager,
     Newscoop\Entity\Ingest\Feed,
-    Newscoop\Entity\Ingest\Feed\Entry;
+    Newscoop\Entity\Ingest\Feed\Entry,
+    Newscoop\Ingest\Publisher,
+    Newscoop\Services\Ingest\PublisherService;
 
 /**
  * Ingest service
@@ -22,6 +24,9 @@ class IngestService
     /** Doctrine\ORM\EntityManager */
     private $em;
 
+    /** @var Newscoop\Services\Ingest\PublisherService */
+    private $publisher;
+
     /** @var array */
     private $feeds;
 
@@ -29,10 +34,11 @@ class IngestService
      * @param array $config
      * @param Doctrine\ORM\EntityManager $em
      */
-    public function __construct($config, EntityManager $em)
+    public function __construct($config, EntityManager $em, PublisherService $publisher)
     {
         $this->config = $config;
         $this->em = $em;
+        $this->publisher = $publisher;
     }
 
     /**
@@ -113,6 +119,7 @@ class IngestService
      */
     public function publish(Entry $entry)
     {
+        $this->publisher->publish($entry);
         $entry->setPublished(new \DateTime());
         $this->em->persist($entry);
         $this->em->flush();

@@ -225,6 +225,36 @@ class Entry
     }
 
     /**
+     * Get language code
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Get subject
+     *
+     * @return string
+     */
+    public function getSubject()
+    {
+        return $this->subject;
+    }
+
+    /**
+     * Get country
+     *
+     * @return string
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
      * Entry factory
      *
      * @param Newscoop\Ingest\Parser $parser
@@ -238,6 +268,9 @@ class Entry
         $entry->priority = (int) $parser->getPriority();
         $entry->service = (string) $parser->getService();
         $entry->summary = (string) $parser->getSummary();
+        $entry->language = (string) $parser->getLanguage();
+        $entry->subject = (string) $parser->getSubject();
+        $entry->country = (string) $parser->getCountry();
         return $entry;
     }
 }

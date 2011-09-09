@@ -23,7 +23,7 @@ class Admin_IngestController extends Zend_Controller_Action
     public function indexAction()
     {
         $this->view->feeds = $this->service->getFeeds();
-        $this->view->entries = $this->service->findBy(array(), array('updated' => 'desc'), 25, 0);
+        $this->view->entries = $this->service->findBy(array('published' => null), array('updated' => 'desc'), 25, 0);
     }
 
     public function publishAction()

@@ -440,7 +440,7 @@ class NewsMlParser implements Parser
     {
         $authors = array();
 
-        foreach ($this->xml->xpath('//Property') as $one_property) {
+        foreach ($this->xml->xpath('//Property[@FormalName="Author"]') as $one_property) {
             if ('author' == (string) $one_property['FormalName']) {
                 $one_author = (string) $one_property['Value'];
                 if (!in_array($one_author, $authors)) {
@@ -450,6 +450,33 @@ class NewsMlParser implements Parser
         }
 
         return $authors;
+    }
+
+    /**
+     * Get language
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+    }
+
+    /**
+     * Get subject
+     *
+     * @return string
+     */
+    public function getSubject()
+    {
+    }
+
+    /**
+     * Get country
+     *
+     * @return string
+     */
+    public function getCountry()
+    {
     }
 
     /**
