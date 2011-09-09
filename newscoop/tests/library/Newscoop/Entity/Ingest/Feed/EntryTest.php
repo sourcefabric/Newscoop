@@ -7,37 +7,51 @@
 
 namespace Newscoop\Entity\Ingest\Feed;
 
+use Newscoop\Ingest\Parser\NewsMlParser,
+    Newscoop\Ingest\Parser\NewsMlParserTest;
+
+require_once APPLICATION_PATH . '/../tests/library/Newscoop/Ingest/Parser/NewsMlParserTest.php';
+
 /**
  */
-class EntryTest extends \RepositoryTestCase
+class EntryTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var Newscoop\Entity\Ingest\Feed\Entry */
+    private $entry;
+
     public function setUp()
     {
-        parent::setUp('Newscoop\Entity\Ingest\Feed', 'Newscoop\Entity\Ingest\Feed\Entry');
+        $this->entry = new Entry('title', 'content');
     }
 
     public function testEntry()
     {
-        $entry = new Entry('title', 'content');
-        $this->assertInstanceOf('Newscoop\Entity\Ingest\Feed\Entry', $entry);
-    }
-
-    public function testTitleContent()
-    {
-        $entry = new Entry('title', 'content');
-        $this->assertEquals('title', $entry->getTitle());
-        $this->assertEquals('content', $entry->getContent());
+        $this->assertInstanceOf('Newscoop\Entity\Ingest\Feed\Entry', $this->entry);
     }
 
     public function testPublished()
     {
-        $entry = new Entry('t', 'c');
-        $this->assertFalse($entry->isPublished());
-
         $now = new \DateTime();
-        $entry->setPublished($now);
 
-        $this->assertTrue($entry->isPublished());
-        $this->assertEquals($now, $entry->getPublished());
+        $this->assertFalse($this->entry->isPublished());
+        $this->assertEquals($this->entry, $this->entry->setPublished($now));
+
+        $this->assertTrue($this->entry->isPublished());
+        $this->assertEquals($now, $this->entry->getPublished());
+    }
+
+    public function testCreate()
+    {
+        $parser = new NewsMlParser(APPLICATION_PATH . NewsMlParserTest::NEWSML);
+        $entry = Entry::create($parser);
+
+        $this->assertInstanceOf('Newscoop\Entity\Ingest\Feed\Entry', $entry);
+        $this->assertEquals(NewsMlParserTest::TITLE, $entry->getTitle());
+        $this->assertStringEqualsFile(APPLICATION_PATH . NewsMlParserTest::CONTENT, $entry->getContent());
+        $this->assertEquals(new \DateTime(NewsMlParserTest::CREATED), $entry->getCreated());
+        $this->assertEquals(new \DateTime(NewsMlParserTest::UPDATED), $entry->getUpdated());
+        $this->assertEquals(NewsMlParserTest::PRIORITY, $entry->getPriority());
+        $this->assertEquals(NewsMlParserTest::SERVICE, $entry->getService());
+        $this->assertEquals(NewsMlParserTest::SUMMARY, $entry->getSummary());
     }
 }

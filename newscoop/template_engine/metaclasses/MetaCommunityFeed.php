@@ -5,7 +5,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Newscoop\Entity\CommunityFeed;
+use Newscoop\Entity\Events\CommunityTickerEvent;
 
 /**
  */
@@ -23,7 +23,7 @@ final class MetaCommunityFeed extends MetaEntity
     /**
      * @param Newscoop\Entity\CommunityFeed $feed
      */
-    public function __construct(CommunityFeed $feed)
+    public function __construct(CommunityTickerEvent $feed = null)
     {
         if (!$feed) { // fix getting called once more
             return;

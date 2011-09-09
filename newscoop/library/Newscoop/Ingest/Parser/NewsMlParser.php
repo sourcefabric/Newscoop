@@ -7,10 +7,12 @@
 
 namespace Newscoop\Ingest\Parser;
 
+use Newscoop\Ingest\Parser;
+
 /**
  * NewsML parser
  */
-class NewsMlParser
+class NewsMlParser implements Parser
 {
     /** @var SimpleXMLElement */
     private $xml;
@@ -157,6 +159,16 @@ class NewsMlParser
     public function getPublicId()
     {
         return $this->getString($this->xml->xpath('//PublicIdentifier'));
+    }
+
+    /**
+     * Get summary
+     *
+     * @return string
+     */
+    public function getSummary()
+    {
+        return $this->getString($this->xml->xpath('//p[@lede]'));
     }
 
     /**
@@ -419,6 +431,11 @@ class NewsMlParser
         return $sources;
     }
 
+    /**
+     * Get authors
+     *
+     * @return array
+     */
     public function getAuthors()
     {
         $authors = array();

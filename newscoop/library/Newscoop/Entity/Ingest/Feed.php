@@ -92,7 +92,7 @@ class Feed
 
             // @todo lock file
             $parser = new NewsMlParser($file);
-            $entry = new Entry($parser->getTitle(), $parser->getContent());
+            $entry = Entry::create($parser);
             $this->addEntry($entry);
             // @todo unlock file
         }

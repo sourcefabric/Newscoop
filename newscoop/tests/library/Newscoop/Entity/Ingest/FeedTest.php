@@ -26,6 +26,11 @@ class FeedTest extends \RepositoryTestCase
     {
         $feed = new Feed('sda');
         $feed->update();
-        $this->assertGreaterThan(1, count($feed->getEntries()));
+
+        $entries = $feed->getEntries();
+        $this->assertGreaterThan(1, count($entries));
+
+        $entry = $entries[0];
+        $this->assertNotNull($entry->getTitle());
     }
 }
