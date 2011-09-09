@@ -110,8 +110,9 @@
         tmplData: [],
         tmpl : function(tmpl, data)
         {
-            if('function' != typeof $.tmplData[tmpl])
-              $.tmplData[tmpl] = doT.template( $(tmpl).html() )
+            if('function' != typeof $.tmplData[tmpl]) {
+				$.tmplData[tmpl] = doT.template( $(tmpl).html() );
+			}
             return $.tmplData[tmpl](data);
         }
     });

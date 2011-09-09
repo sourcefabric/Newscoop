@@ -1,8 +1,8 @@
 var statusMap = {
     'pending': 'new',
-    'hidden': 'hidden',
-    'deleted': 'deleted',
-    'approved': 'approved'
+    'processed': 'processed',
+    'starred': 'starred',
+    'deleted': 'deleted'
 };
 var datatableCallback = {
     serverData: {},
@@ -21,9 +21,9 @@ var datatableCallback = {
     },
     row: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
         $(nRow)
-            .addClass('status_' + statusMap[aData.comment.status])
+            .addClass('status_' + statusMap[aData.message.status])
             .tmpl('#comment-tmpl', aData)
-            .find("input."+ statusMap[aData.comment.status]).attr("checked","checked");
+            .find("input."+ statusMap[aData.message.status]).attr("checked","checked");
         return nRow;
     },
     draw: function () {
@@ -39,11 +39,11 @@ var datatableCallback = {
         $('#actionExtender').html('<fieldset>\
                                 <legend>' + putGS('Actions') + '</legend> \
                                 <select class="input_select actions">\
-                                    <option value="">' + putGS('Select status') + '</option>\
-                                    <option value="pending">' + putGS('New') + '</option>\
-                                    <option value="approved">' + putGS('Approved') + '</option>\
-                                    <option value="hidden">' + putGS('Hidden') + '</option>\
-                                    <option value="deleted">' + putGS('Deleted')+ '</option>\
+                                  <option value="">' + putGS('Change selected messages status') + '</option>\
+                                  <option value="pending">' + putGS('New') + '</option>\
+                                  <option value="processed">' + putGS('Processed') + '</option>\
+                                  <option value="starred">' + putGS('Starred') + '</option>\
+                                  <option value="deleted">' + putGS('Deleted')+ '</option>\
                                 </select>\
                               </fieldset>');
         $('.actions').change(function () {
@@ -58,19 +58,19 @@ var datatableCallback = {
                 if (!ids.length) return;
                 
                 
-                if (status == 'deleted' && !confirm(putGS('You are about to permanently delete multiple comments.') + '\n' + putGS('Are you sure you want to do it?'))) {
+                if (status == 'deleted' && !confirm(putGS('You are about to permanently delete multiple messages.') + '\n' + putGS('Are you sure you want to do it?'))) {
                     return false;
                 }
                 
                 $.ajax({
                     type: 'POST',
-                    url: 'comment/set-status/format/json',
+                    url: 'feedback/set-status/format/json',
                     data: $.extend({
-                        "comment": ids,
+                        "feedback": ids,
                         "status": status
                     }, serverObj.security),
                     success: function (data) {
-                        flashMessage(putGS('Comments status change to $1.', statusMap[status]));
+                        flashMessage(putGS('Messages status change to $1.', statusMap[status]));
                         datatable.fnDraw();
                     },
                     error: function (rq, status, error) {
@@ -90,13 +90,11 @@ var datatableCallback = {
     }
 };
 $(function () {
-	
-	
     //$('.tabs').tabs();
     //$('.tabs').tabs('select', '#tabs-1');    
     var commentFilterTriggerCount = 0;
     $("#commentFilterTrigger").click(function () {
-		if (commentFilterTriggerCount == 0) {
+        if (commentFilterTriggerCount == 0) {
             $("#commentFilterSearch").css("display", "block");
             $(this).addClass("collapsed");
             commentFilterTriggerCount = 1;
@@ -115,7 +113,7 @@ $(function () {
 
     /**
      * Action to fire
-     * when header filter buttons are triggresd
+     * when header filter buttons are triggered
      */
     $('.status_filter li')
     .click(function (evt) {
@@ -140,43 +138,26 @@ $(function () {
      * Action to fire
      * when action select is triggered
      */
-    $('.sort_tread').click(function () {
-        var dir = $(this).find('span');
-        if (dir.hasClass('ui-icon-triangle-1-n')) {
-            dir.removeClass("ui-icon-triangle-1-n");
-            dir.addClass('ui-icon-triangle-1-s');
-            datatable.fnSort([
-                [4, 'asc']
-            ]);
-        } else {
-            dir.removeClass("ui-icon-triangle-1-s");
-            dir.addClass('ui-icon-triangle-1-n');
-            datatable.fnSort([
-                [4, 'desc']
-            ]);
-        }
-        dir.removeClass("ui-icon-carat-2-n-s");
-    });
     $('.datatable .action').live('click', function () {
         var el = $(this);
         var id = el.attr('id');
         var ids = [id.match(/\d+/)[0]];
         var status = id.match(/[^_]+/)[0];
 
-        if (status == 'deleted' && !confirm(putGS('You are about to permanently delete a comment.') + '\n' + putGS('Are you sure you want to do it?'))) {
+        if (status == 'deleted' && !confirm(putGS('You are about to permanently delete a message.') + '\n' + putGS('Are you sure you want to do it?'))) {
             return false;
         }
-        
+
         $.ajax({
             type: 'POST',
-            url: 'comment/set-status/format/json',
+            url: 'feedback/set-status/format/json',
             data: $.extend({
-                "comment": ids,
+                "feedback": ids,
                 "status": status
             }, serverObj.security),
             success: function (data) {
-                if ('deleted' == status) flashMessage(putGS('Comment deleted.'));
-                else flashMessage(putGS('Comment status change to $1.', statusMap[status]));
+                if ('deleted' == status) flashMessage(putGS('Message deleted.'));
+                else flashMessage(putGS('Message status change to $1.', statusMap[status]));
                 datatable.fnDraw();
             },
             error: function (rq, status, error) {
@@ -191,15 +172,15 @@ $(function () {
      * Action to fire
      * when action submit is triggered
      */
-    $('.dateCommentHolderEdit form,.dateCommentHolderReply form').live('submit', function () {
+    $('.approval form').live('submit', function () {
         var that = this;
         $.ajax({
             type: 'POST',
             url: $(this).attr('action'),
             data: $(this).serialize(),
             success: function (data) {
+                flashMessage(putGS('Message updated.'));
                 datatable.fnDraw();
-                flashMessage(putGS('Comment updated.'));
             },
             error: function (rq, status, error) {
                 if (status == 0 || status == -1) {
@@ -209,7 +190,29 @@ $(function () {
         });
         return false;
     });
-    $('.dateCommentHolderEdit .edit-cancel,.dateCommentHolderReply .reply-cancel').live('click', function () {
+    /**
+     * Action to fire
+     * when action submit is triggered
+     */
+    $('.dateCommentHolderReply form').live('submit', function () {
+        var that = this;
+        $.ajax({
+            type: 'POST',
+            url: $(this).attr('action'),
+            data: $(this).serialize(),
+            success: function (data) {
+                datatable.fnDraw();
+                flashMessage(putGS('Message updated.'));
+            },
+            error: function (rq, status, error) {
+                if (status == 0 || status == -1) {
+                    flashMessage(putGS('Unable to reach Newscoop. Please check your internet connection.'), "error");
+                }
+            }
+        });
+        return false;
+    });
+    $('.dateCommentHolderReply .reply-cancel').live('click', function () {
         var el = $(this);
         var td = el.parents('td');
         var form = el.parents('form');
@@ -217,26 +220,14 @@ $(function () {
             this.reset();
         });
         td.find('.commentSubject,.commentBody').slideDown("fast");
-        td.find('.content-edit').hide();
         td.find('.content-reply').hide();
-    });
-
-    $('.datatable .action-edit').live('click', function () {
-        var el = $(this);
-        var td = el.parents('td');
-        td.find('.content-reply').hide();
-        td.find('.commentSubject').toggle("fast");
-        td.find('.commentBody').toggle("fast");
-        td.find('.content-edit').toggle("fast");
     });
 
     $('.datatable .action-reply').live('click', function () {
         var el = $(this);
         var td = el.parents('td');
-        td.find('.content-edit').hide();
         td.find('.content-reply').toggle("fast");
     });
-
     // Dialog
     $('.dialogPopup').dialog({
         autoOpen: false,
@@ -268,6 +259,8 @@ $(function () {
                 if (status == 0 || status == -1) {
                     flashMessage(putGS('Unable to reach Newscoop. Please check your internet connection.'), "error");
                 }
+                else {
+				}
             }
         });
         return false;

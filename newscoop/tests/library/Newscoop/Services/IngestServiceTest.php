@@ -19,7 +19,9 @@ class IngestServiceTest extends \PHPUnit_Framework_TestCase
     protected $em;
 
     /** @var array */
-    protected $config = array();
+    protected $config = array(
+        'article_type' => 'news',
+    );
 
     public function setUp()
     {
@@ -27,7 +29,11 @@ class IngestServiceTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->service = new IngestService($this->config, $this->em);
+        $this->publisher = $this->getMockBuilder('Newscoop\Services\Ingest\PublisherService')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->service = new IngestService($this->config, $this->em, $this->publisher);
     }
 
     public function testService()
@@ -108,13 +114,18 @@ class IngestServiceTest extends \PHPUnit_Framework_TestCase
         $entry = new Entry('title', 'content');
         $this->assertFalse($entry->isPublished());
 
+        $this->publisher->expects($this->once())
+            ->method('publish')
+            ->with($this->isInstanceOf('Newscoop\Entity\Ingest\Feed\Entry'));
+
         $this->em->expects($this->once())
             ->method('persist')
-            ->with($this->equalTo($entry));
+            ->id('persist')
+            ->with($this->isInstanceOf('Newscoop\Entity\Ingest\Feed\Entry'));
 
         $this->em->expects($this->once())
             ->method('flush')
-            ->with();
+            ->after('persist');
 
         $this->service->publish($entry);
         $this->assertTrue($entry->isPublished());

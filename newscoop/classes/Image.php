@@ -31,7 +31,10 @@ class Image extends DatabaseObject
 		'ImageFileName',
 		'UploadedByUser',
 		'LastModified',
-		'TimeCreated');
+		'TimeCreated',
+		'Source',
+		'Status'
+	);
 
 	static private $s_defaultOrder = array(array('field'=>'default', 'dir'=>'asc'));
 
@@ -165,6 +168,14 @@ class Image extends DatabaseObject
 	{
 		return $this->m_data['Id'];
 	} // fn getImageId
+	
+	/**
+	 * @return int
+	 */
+	public function getImageFileName()
+	{
+		return $this->m_data['ImageFileName'];
+	} // fn getImageId
 
 
 	/**
@@ -246,8 +257,23 @@ class Image extends DatabaseObject
     {
         return substr($this->m_data['ContentType'], strlen('image/'));
     } // fn getType
-
-
+    
+    /**
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->m_data['Source'];
+    } // fn getSource
+    
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->m_data['Status'];
+    } // fn getSource
+    
 	/**
 	 * Return the full path to the image file.
 	 * @return string
@@ -1158,10 +1184,11 @@ class Image extends DatabaseObject
      * @param string $p_tmpFile
      * @param string $p_newFile
      * @param int $p_userId
+     * @param int $p_attributes
      *
      * @return Image|NULL
      */
-    public static function ProcessFile($p_tmpFile, $p_newFile, $p_userId = NULL)
+    public static function ProcessFile($p_tmpFile, $p_newFile, $p_userId = NULL, $p_attributes = NULL)
     {
         $tmp_name = $GLOBALS['Campsite']['IMAGE_DIRECTORY'] . $p_tmpFile;
         $image_ary = getimagesize($tmp_name);
@@ -1179,7 +1206,15 @@ class Image extends DatabaseObject
             'Photographer' => '',
             'Place' => '',
             'Date' => '',
+            'Source' => 'local',
+            'Status' => 'approved'
         );
+        
+        if ($p_attributes != NULL && is_array($p_attributes)) {
+			foreach ($p_attributes as $key => $value) {
+				$attributes[$key] = $value;
+			}
+		}
 
         try {
             $image = self::OnImageUpload($file, $attributes, $p_userId);
