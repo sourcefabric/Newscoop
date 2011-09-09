@@ -224,4 +224,46 @@ class Admin_UserController extends Zend_Controller_Action
 
         return $user;
     }
+    
+    public function banAction()
+    {
+        $parameters = $this->getRequest()->getParams();
+        
+        if (!isset($parameters['user']) || !isset($parameters['publication'])) {
+            throw new InvalidArgumentException;
+        }
+        
+        $userRepository = $this->_helper->entity->getRepository('Newscoop\Entity\User');
+        $acceptanceRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
+        
+        $user = $userRepository->find($parameters['user']);
+
+        $values = array('name' => $user->getName());
+        $acceptanceRepository->ban($parameters['publication'], $values);
+		$acceptanceRepository->flush();
+		$this->_helper->flashMessenger(getGS('Ban for user "$1" saved.', $user->getName()));
+		
+		$this->_helper->redirector->gotoSimple('index', 'feedback');
+    }
+    
+    public function unbanAction()
+    {
+        $parameters = $this->getRequest()->getParams();
+        
+        if (!isset($parameters['user']) || !isset($parameters['publication'])) {
+            throw new InvalidArgumentException;
+        }
+        
+        $userRepository = $this->_helper->entity->getRepository('Newscoop\Entity\User');
+        $acceptanceRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
+        
+        $user = $userRepository->find($parameters['user']);
+
+        $values = array('name' => $user->getName());
+        $acceptanceRepository->unban($parameters['publication'], $values);
+		$acceptanceRepository->flush();
+		$this->_helper->flashMessenger(getGS('user "$1" unbanned.', $user->getName()));
+		
+		$this->_helper->redirector->gotoSimple('index', 'feedback');
+    }
 }

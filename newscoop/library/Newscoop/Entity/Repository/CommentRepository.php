@@ -111,10 +111,19 @@ class CommentRepository extends DatatableSource
         $em = $this->getEntityManager();
 
         $commenterRepository = $em->getRepository('Newscoop\Entity\Comment\Commenter');
+        
         $commenter = new Commenter;
         $commenter = $commenterRepository->save($commenter, $p_values);
-        $p_entity->setCommenter($commenter)->setSubject($p_values['subject'])->setMessage($p_values['message'])->setStatus($p_values['status'])->setIp($p_values['ip'])->setTimeCreated($p_values['time_created']);
+        
+        $p_entity->setCommenter($commenter)
+				 ->setSubject($p_values['subject'])
+				 ->setMessage($p_values['message'])
+				 ->setStatus($p_values['status'])
+				 ->setIp($p_values['ip'])
+				 ->setTimeCreated($p_values['time_created']);
+        
         $threadLevel = 0;
+        
         if (!empty($p_values['parent']) && (0 != $p_values['parent'])) {
             $parent = $this->find($p_values['parent']);
             // set parent of the comment
@@ -154,14 +163,15 @@ class CommentRepository extends DatatableSource
             // set the thread level the thread level of the parent plus one the current level
             $threadLevel = $parent->getThreadLevel() + 1;
         } else {
-            $articleRepository = $em->getRepository('Newscoop\Entity\Article');
-            $thread = $articleRepository->find($p_values['thread']);
             if (!isset($p_values['language'])) {
                 $language = $thread->getLanguage();
             } else {
                 $languageRepository = $em->getRepository('Newscoop\Entity\Language');
                 $language = $languageRepository->find($p_values['language']);
             }
+            
+            $articleRepository = $em->getRepository('Newscoop\Entity\Article');
+            $thread = $articleRepository->find(array('number' => $p_values['thread'], 'language' => $language->getId()));
 
             $qb = $this->createQueryBuilder('c');
             $threadOrder = $qb->select('MAX(c.thread_order)')->andWhere('c.thread = :thread')->andWhere('c.language = :language')->setParameter('thread',
@@ -172,9 +182,11 @@ class CommentRepository extends DatatableSource
 
             $p_entity->setLanguage($language)->setForum($thread->getPublication())->setThread($thread);
         }
+        
         $p_entity->setThreadOrder($threadOrder)->setThreadLevel($threadLevel);
 
         $em->persist($p_entity);
+        
         return $p_entity;
     }
 
