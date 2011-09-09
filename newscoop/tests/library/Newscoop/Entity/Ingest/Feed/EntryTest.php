@@ -7,16 +7,20 @@
 
 namespace Newscoop\Entity\Ingest\Feed;
 
+use Newscoop\Ingest\Parser\NewsMlParser,
+    Newscoop\Ingest\Parser\NewsMlParserTest;
+
+require_once APPLICATION_PATH . '/../tests/library/Newscoop/Ingest/Parser/NewsMlParserTest.php';
+
 /**
  */
-class EntryTest extends \RepositoryTestCase
+class EntryTest extends \PHPUnit_Framework_TestCase
 {
     /** @var Newscoop\Entity\Ingest\Feed\Entry */
     private $entry;
 
     public function setUp()
     {
-        parent::setUp('Newscoop\Entity\Ingest\Feed', 'Newscoop\Entity\Ingest\Feed\Entry');
         $this->entry = new Entry('title', 'content');
     }
 
@@ -25,59 +29,29 @@ class EntryTest extends \RepositoryTestCase
         $this->assertInstanceOf('Newscoop\Entity\Ingest\Feed\Entry', $this->entry);
     }
 
-    public function testTitleContent()
-    {
-        $this->assertEquals('title', $this->entry->getTitle());
-        $this->assertEquals('content', $this->entry->getContent());
-    }
-
     public function testPublished()
     {
-        $this->assertFalse($this->entry->isPublished());
-
         $now = new \DateTime();
+
+        $this->assertFalse($this->entry->isPublished());
         $this->assertEquals($this->entry, $this->entry->setPublished($now));
 
         $this->assertTrue($this->entry->isPublished());
         $this->assertEquals($now, $this->entry->getPublished());
     }
 
-    public function testCreated()
-    {
-        $this->assertNotNull($this->entry->getCreated());
-        $now = new \DateTime();
-        $this->assertEquals($this->entry, $this->entry->setCreated($now));
-        $this->assertEquals($now, $this->entry->getCreated());
-    }
-
-    public function testPriority()
-    {
-        $this->assertNull($this->entry->getPriority());
-        $this->assertEquals($this->entry, $this->entry->setPriority(3));
-        $this->assertEquals(3, $this->entry->getPriority());
-    }
-
-    public function testService()
-    {
-        $this->assertNull($this->entry->getService());
-        $this->assertEquals($this->entry, $this->entry->setService('service'));
-        $this->assertEquals('service', $this->entry->getService());
-    }
-
     public function testCreate()
     {
-        $parser = $this->getMock('Newscoop\Ingest\Parser\NewsMlParser', array(), array(APPLICATION_PATH . '/../tests/ingest/test_phd.xml'));
-
-        $now = new \DateTime();
-        $parser->expects($this->once())
-            ->method('getCreated')
-            ->will($this->returnValue($now));
-
-        $parser->expects($this->once())
-            ->method('getUpdated')
-            ->will($this->returnValue($now));
-
+        $parser = new NewsMlParser(APPLICATION_PATH . NewsMlParserTest::NEWSML);
         $entry = Entry::create($parser);
+
         $this->assertInstanceOf('Newscoop\Entity\Ingest\Feed\Entry', $entry);
+        $this->assertEquals(NewsMlParserTest::TITLE, $entry->getTitle());
+        $this->assertStringEqualsFile(APPLICATION_PATH . NewsMlParserTest::CONTENT, $entry->getContent());
+        $this->assertEquals(new \DateTime(NewsMlParserTest::CREATED), $entry->getCreated());
+        $this->assertEquals(new \DateTime(NewsMlParserTest::UPDATED), $entry->getUpdated());
+        $this->assertEquals(NewsMlParserTest::PRIORITY, $entry->getPriority());
+        $this->assertEquals(NewsMlParserTest::SERVICE, $entry->getService());
+        $this->assertEquals(NewsMlParserTest::SUMMARY, $entry->getSummary());
     }
 }

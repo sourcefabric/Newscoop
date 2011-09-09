@@ -163,18 +163,6 @@ class Entry
     }
 
     /**
-     * Set created
-     *
-     * @param DateTime $created
-     * @return Newscoop\Entity\Ingest\Feed\Entry
-     */
-    public function setCreated(\DateTime $created)
-    {
-        $this->created = $created;
-        return $this;
-    }
-
-    /**
      * Get created
      *
      * @return DateTime
@@ -185,27 +173,13 @@ class Entry
     }
 
     /**
-     * Set updated
+     * Get updated
      *
-     * @param DateTime $updated
-     * @return Newscoop\Entity\Ingest\Feed\Entry
+     * @return DateTime
      */
-    public function setUpdated(\DateTime $updated)
+    public function getUpdated()
     {
-        $this->updated = $updated;
-        return $this;
-    }
-
-    /**
-     * Set priority
-     *
-     * @param int $priority
-     * @return Newscoop\Entity\Ingest\Feed\Entry
-     */
-    public function setPriority($priority)
-    {
-        $this->priority = (int) $priority;
-        return $this;
+        return $this->updated;
     }
 
     /**
@@ -216,18 +190,6 @@ class Entry
     public function getPriority()
     {
         return $this->priority;
-    }
-
-    /**
-     * Set service
-     *
-     * @param string $service
-     * @return Newscoop\Entity\Ingest\Feed\Entry
-     */
-    public function setService($service)
-    {
-        $this->service = (string) $service;
-        return $this;
     }
 
     /**
@@ -253,6 +215,16 @@ class Entry
     }
 
     /**
+     * Get summary
+     *
+     * @return string
+     */
+    public function getSummary()
+    {
+        return $this->summary;
+    }
+
+    /**
      * Entry factory
      *
      * @param Newscoop\Ingest\Parser $parser
@@ -261,9 +233,11 @@ class Entry
     public static function create(Parser $parser)
     {
         $entry = new self($parser->getTitle(), $parser->getContent());
-        $entry->setCreated($parser->getCreated());
-        $entry->setUpdated($parser->getUpdated());
-        $entry->setPriority($parser->getPriority());
+        $entry->created = $parser->getCreated();
+        $entry->updated = $parser->getUpdated();
+        $entry->priority = (int) $parser->getPriority();
+        $entry->service = (string) $parser->getService();
+        $entry->summary = (string) $parser->getSummary();
         return $entry;
     }
 }

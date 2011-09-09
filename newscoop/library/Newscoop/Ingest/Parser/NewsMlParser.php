@@ -103,6 +103,16 @@ class NewsMlParser implements Parser
     }
 
     /**
+     * Get summary
+     *
+     * @return string
+     */
+    public function getSummary()
+    {
+        return $this->getString($this->xml->xpath('//p[@lede]'));
+    }
+
+    /**
      * Get string value of first matched element
      *
      * @param array $matches

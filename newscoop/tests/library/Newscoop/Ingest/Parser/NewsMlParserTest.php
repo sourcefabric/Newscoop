@@ -11,12 +11,22 @@ namespace Newscoop\Ingest\Parser;
  */
 class NewsMlParserTest extends \PHPUnit_Framework_TestCase
 {
+    const NEWSML = '/../tests/ingest/test_phd.xml';
+    const TITLE = 'title';
+    const CONTENT = '/../tests/ingest/test_phd.content.xml';
+    const CREATED = '20110825T051533+0200';
+    const UPDATED = '20110825T120549+0200';
+    const PRIORITY = 2;
+    const SERVICE = 'SDA-ATS News Service';
+    const UID = 'urn:newsml:www.sda-ats.ch:20110825:brd004:3N';
+    const SUMMARY = 'first';
+
     /** @var Newscoop\Ingest\Parser\NewsMlParser */
     private $parser;
 
     public function setUp()
     {
-        $this->parser = new NewsMlParser(APPLICATION_PATH . '/../tests/ingest/test_phd.xml');
+        $this->parser = new NewsMlParser(APPLICATION_PATH . self::NEWSML);
     }
 
     public function testParser()
@@ -26,38 +36,38 @@ class NewsMlParserTest extends \PHPUnit_Framework_TestCase
 
     public function testGetTitle()
     {
-        $this->assertEquals('title', $this->parser->getTitle());
+        $this->assertEquals(self::TITLE, $this->parser->getTitle());
     }
 
     public function testGetContent()
     {
-        $this->assertStringEqualsFile(APPLICATION_PATH . '/../tests/ingest/test_phd.content.xml', $this->parser->getContent());
+        $this->assertStringEqualsFile(APPLICATION_PATH . self::CONTENT, $this->parser->getContent());
     }
 
     public function testGetCreated()
     {
-        $created = new \DateTime('20110825T051533+0200');
+        $created = new \DateTime(self::CREATED);
         $this->assertEquals($created, $this->parser->getCreated());
     }
 
     public function testGetUpdated()
     {
-        $updated = new \DateTime('20110825T120549+0200');
+        $updated = new \DateTime(self::UPDATED);
         $this->assertEquals($updated, $this->parser->getUpdated());
     }
 
     public function testGetPriority()
     {
-        $this->assertEquals(2, $this->parser->getPriority());
+        $this->assertEquals(self::PRIORITY, $this->parser->getPriority());
     }
 
     public function testGetService()
     {
-        $this->assertEquals('SDA-ATS News Service', $this->parser->getService());
+        $this->assertEquals(self::SERVICE, $this->parser->getService());
     }
 
     public function getPublicId()
     {
-        $this->assertEquals('urn:newsml:www.sda-ats.ch:20110825:brd004:3N', $this->parser->getPublicId());
+        $this->assertEquals(self::UID, $this->parser->getPublicId());
     }
 }
