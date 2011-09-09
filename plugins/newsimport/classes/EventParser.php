@@ -16,13 +16,24 @@ class EventData_Parser {
     var $m_provider = null;
     var $m_dirs = null;
 
+	/**
+	 * constructor
+	 * @param array $p_source
+	 *
+	 * @return void
+	 */
     public function __construct($p_source)
     {
         $this->m_source = $p_source;
         $this->m_dirs = $p_source['source_dirs'];
         $this->m_provider = $p_source['provider_id'];
-    }
+    } // fn __construct
 
+	/**
+	 * checks whether we can start a job
+	 *
+	 * @return bool
+	 */
     public function start() {
         // stop, if some worker running; return false
         $working_path = $this->m_dirs['use'] . $this->m_working;
@@ -54,8 +65,13 @@ class EventData_Parser {
         }
 
         return true;
-    }
+    } // fn start
 
+	/**
+	 * closes a job
+	 *
+	 * @return bool
+	 */
     public function stop() {
         // stop, if some worker running; return false
         $working_path = $this->m_dirs['use'] . $this->m_working;
@@ -71,8 +87,13 @@ class EventData_Parser {
         }
 
         return true;
-    }
+    } // fn stop
 
+	/**
+	 * prepares files for the parsing
+	 *
+	 * @return bool
+	 */
     public function prepare() {
         // we need that conf info
         if ((!isset($this->m_dirs['source'])) || (!isset($this->m_dirs['source']['events']))) {
@@ -154,8 +175,13 @@ class EventData_Parser {
         }
 
         return true;
-    }
+    } // fn prepare
 
+	/**
+	 * (re)moves files after parsing && importing
+	 *
+	 * @return bool
+	 */
     public function cleanup() {
         // we need that conf info
         if ((!isset($this->m_dirs['source'])) || (!isset($this->m_dirs['source']['events']))) {
@@ -195,12 +221,14 @@ class EventData_Parser {
         }
 
         return true;
-    }
+    } // fn cleanup
 
     /**
      * Parses EventData data (by EventData_Parser_SimpleXML)
      *
-     * @param string $p_file file name of the event file
+     * @param array $p_categories
+     * @param array $p_otherParams
+     *
      * @return array
      */
     public function parse($p_categories, $p_otherParams) {
@@ -246,8 +274,6 @@ class EventData_Parser {
                     $result = $parser->parse($events, $this->m_provider, $event_file_path, $p_categories, $start_date);
                 }
                 catch (Exception $exc) {
-                    //var_dump($exc);
-                    // may be some logging;
                 }
                 $files[] = $event_file;
             }

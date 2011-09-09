@@ -7,6 +7,9 @@ require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_S
 require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'ArticleType.php');
 require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'ArticleTypeField.php');
 
+/**
+ * NewsImport plugin specification.
+ */
 $info = array(
     'name' => 'newsimport',
     'version' => '0.1.0',
@@ -50,9 +53,18 @@ $info = array(
 if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
     define('PLUGIN_NEWSIMPORT_FUNCTIONS', TRUE);
 
+	/**
+     * puts into sys-prefs info on newscoop url
+     *
+	 * @return bool
+	 */
     function plugin_newsimport_set_url() {
-        global $Campsite;
 
+        global $Campsite;
+        if (isset($Campsite['system_preferences'])) {
+            unset($Campsite['system_preferences']['NewsImportBaseUrl']);
+        }
+        SystemPref::Set('NewsImportBaseUrl', $Campsite['WEBSITE_URL']);
         SystemPref::Set('NewsImportBaseUrl', $Campsite['WEBSITE_URL']);
 
 /*
@@ -72,8 +84,13 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             // may be some logging
         }
 */
-    }
+    } // fn plugin_newsimport_set_url
 
+	/**
+     * sets cron job for event data import
+     *
+	 * @return bool
+	 */
     function plugin_newsimport_set_cron($p_state) {
         exec('crontab -l', $cron_output, $cron_result);
         if (0 != $cron_result) {
@@ -114,9 +131,14 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         }
 
         return true;
-    }
+    } // fn plugin_newsimport_set_cron
 
 
+	/**
+     * create possibly missing article type for events
+     *
+	 * @return void
+	 */
     function plugin_newsimport_create_event_type() {
         $art_type_name = 'event';
 
@@ -162,8 +184,8 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             // other details - fixed form
             'rated' => array('type' => 'switch', 'params' => array(), 'hidden' => false), // if of some restricted (hot/explicit) kind
             // category available as article topic
-            // images (probably) as article images
-            // geolocation (probably) as map POIs
+            // images as article images
+            // geolocation as map POIs
         );
 
         foreach ($art_fields as $one_field_name => $one_field_params) {
@@ -175,20 +197,29 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
                 $art_type_filed_obj->setStatus('hide');
             }
         }
-    }
+    } // fn plugin_newsimport_create_event_type
 
+	/**
+     * sets import command token
+     *
+	 * @return void
+	 */
     function plugin_newsimport_set_preferences() {
         $incl_dir = dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR;
         require($incl_dir . 'default_access.php');
 
+        // shall be put into db just on explicit requests
         //$cur_nimp_auth = SystemPref::Get('NewsImportCommandToken');
         //if (empty($cur_nimp_auth)) {
         //    SystemPref::Set('NewsImportCommandToken', $newsimport_default_access);
         //}
-        // for now, always putting into sysprefs, since no other way to chnage it
-        SystemPref::Set('NewsImportCommandToken', $newsimport_default_access);
-    }
+    } // fn plugin_newsimport_set_preferences
 
+	/**
+     * create possibly missing article topic for events
+     *
+	 * @return array
+	 */
     function plugin_newsimport_set_one_topic($p_topicCat, $p_topicNames, $p_parentIds) {
         // setting the given event topic
         $ev_this_ids = array();
@@ -266,8 +297,13 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         }
 
         return $ev_this_ids;
-    }
+    } // fn plugin_newsimport_set_one_topic
 
+	/**
+     * create possibly missing article topics for events
+     *
+	 * @return void
+	 */
     function plugin_newsimport_set_event_topics() {
         $incl_dir = dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR;
         require($incl_dir . 'default_topics.php');
@@ -291,49 +327,114 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             plugin_newsimport_set_one_topic($topic_cat_key, $topic_cat_names, $ev_root_ids);
 
         }
-    }
+    } // fn plugin_newsimport_set_event_topics
 
+	/**
+     * plugin installation
+     *
+	 * @return void
+	 */
     function plugin_newsimport_install()
     {
         plugin_newsimport_set_preferences();
         plugin_newsimport_set_event_topics();
         plugin_newsimport_create_event_type();
+
+        global $Campsite;
+        if (isset($Campsite['system_preferences'])) {
+            unset($Campsite['system_preferences']['NewsImportUsage']);
+        }
         SystemPref::Set('NewsImportUsage', '1');
+        SystemPref::Set('NewsImportUsage', '1');
+
         plugin_newsimport_set_cron(true);
         plugin_newsimport_set_url();
-    }
+    } // fn plugin_newsimport_install
+
+	/**
+     * plugin enabling
+     *
+	 * @return void
+	 */
     function plugin_newsimport_enable()
     {
         plugin_newsimport_set_preferences();
         plugin_newsimport_set_event_topics();
         plugin_newsimport_create_event_type();
+
+        global $Campsite;
+        if (isset($Campsite['system_preferences'])) {
+            unset($Campsite['system_preferences']['NewsImportUsage']);
+        }
         SystemPref::Set('NewsImportUsage', '1');
+        SystemPref::Set('NewsImportUsage', '1');
+
         plugin_newsimport_set_cron(true);
         plugin_newsimport_set_url();
-    }
+    } // fn plugin_newsimport_enable
+
+	/**
+     * plugin disabling
+     *
+	 * @return void
+	 */
     function plugin_newsimport_disable()
     {
-        SystemPref::Set('NewsImportUsage', '0');
-        plugin_newsimport_set_cron(false);
-    }
 
+        global $Campsite;
+        if (isset($Campsite['system_preferences'])) {
+            unset($Campsite['system_preferences']['NewsImportUsage']);
+        }
+        SystemPref::Set('NewsImportUsage', '0');
+        SystemPref::Set('NewsImportUsage', '0');
+
+        plugin_newsimport_set_cron(false);
+    } // fn plugin_newsimport_disable
+
+	/**
+     * plugin enabling
+     *
+	 * @return void
+	 */
     function plugin_newsimport_uninstall()
     {
-        SystemPref::Set('NewsImportUsage', '0');
-        plugin_newsimport_set_cron(false);
-    }
 
+        global $Campsite;
+        if (isset($Campsite['system_preferences'])) {
+            unset($Campsite['system_preferences']['NewsImportUsage']);
+        }
+        SystemPref::Set('NewsImportUsage', '0');
+        SystemPref::Set('NewsImportUsage', '0');
+
+        plugin_newsimport_set_cron(false);
+    } // fn plugin_newsimport_uninstall
+
+	/**
+     * plugin updating
+     *
+	 * @return void
+	 */
     function plugin_newsimport_update()
     {
-    }
+    } // fn plugin_newsimport_update
 
+	/**
+     * plugin template init
+     *
+	 * @return void
+	 */
     function plugin_newsimport_init(&$p_context)
     {
-    }
+    } // fn plugin_newsimport_init
 
+	/**
+     * plugin permissions
+     *
+	 * @return void
+	 */
     function plugin_newsimport_addPermissions()
     {
         $Admin = new UserType(1);
         $Admin->setPermission('plugin_newsimport_admin', true);
-    }
+    } // fn plugin_newsimport_addPermissions
 }

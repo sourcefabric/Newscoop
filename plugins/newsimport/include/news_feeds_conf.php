@@ -1,16 +1,19 @@
 <?php
-
+/**
+ * event import configurations
+ */
 $event_data_sources = array(
     'events_1' => array(
         'admin_user_id' => 1,
         'provider_id' => 1,
         'provider_name' => 'Werbeverlags AG',
         'event_type' => 'general',
-        'article_type' => 'event',
+        'article_type' => 'event', // do not change this, used at e.g. plugin_newsimport_create_event_type too
+        'images_local' => true,
         'publication_id' => 2,
-        'language_id' => 1,
         'issue_number' => 13,
         'section_number' => 30,
+        'language_id' => 1,
         'source_dirs' => array(
             'new' => '/usr/local/var/www/fabric/events/input/events/',
             'use' => '/usr/local/var/www/fabric/events/current/events/',
@@ -33,7 +36,7 @@ $event_data_sources = array(
             'public' => true,
             'comments' => false,
             'publish' => true,
-            'publish_date_by_event_date' => false,
+            'publish_date_by_event_date' => true,
         ),
         'geo' => array(
             'map_provider' => 'mapquest', // googlev3, mapquest, osm
@@ -54,7 +57,8 @@ $event_data_sources = array(
         'provider_id' => 2,
         'provider_name' => 'Werbeverlags AG',
         'event_type' => 'movie',
-        'article_type' => 'event',
+        'article_type' => 'event', // do not change this, used at e.g. plugin_newsimport_create_event_type too
+        'images_local' => true,
         'publication_id' => 1,
         'issue_number' => 1,
         'section_number' => 1,
@@ -83,7 +87,7 @@ $event_data_sources = array(
             'public' => true,
             'comments' => false,
             'publish' => true,
-            'publish_date_by_event_date' => false,
+            'publish_date_by_event_date' => true,
         ),
         'geo' => array(
             'map_provider' => 'mapquest', // googlev3, mapquest, osm

@@ -1,9 +1,18 @@
 <?php
 
 
+/**
+ * NewsImport manages the event importing.
+ */
 class NewsImport
 {
 
+	/**
+     * checks whether a request for event import, calls that import if asked
+     *
+	 * @param bool $p_importOnly
+	 * @return bool
+	 */
     public static function ProcessImport(&$p_importOnly) {
 
         global $Campsite;
@@ -56,9 +65,14 @@ class NewsImport
 
         $incl_dir = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR;
         require($incl_dir . 'default_access.php');
-        //$news_auth_sys_pref = $newsimport_default_access;
-        // taking access token from sysprefs
-        $news_auth_sys_pref = SystemPref::Get('NewsImportCommandToken');
+        // taking the default access token from config file
+        $news_auth_sys_pref = $newsimport_default_access;
+        // taking access token from sysprefs if any changed there
+        $news_auth_sys_pref_changed = SystemPref::Get('NewsImportCommandToken');
+        if (!empty($news_auth_sys_pref_changed)) {
+            $news_auth_sys_pref = $news_auth_sys_pref_changed;
+        }
+
         if ((!empty($news_auth_sys_pref)) && ($news_auth != $news_auth_sys_pref)) {
             return false;
         }
@@ -67,6 +81,7 @@ class NewsImport
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'TopicName.php');
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'GeoMap.php');
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'Article.php');
+        require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'Log.php');
 
         $conf_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'include';
         $class_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'classes';
@@ -74,7 +89,7 @@ class NewsImport
         require_once($conf_dir.DIR_SEP.'news_feeds_conf.php');
         require_once($class_dir.DIR_SEP.'NewsImport.php');
 
-        // take the ctegory topics, as array by [language][category] of [name,id]
+        // take the category topics, as array by [language][category] of [name,id]
         $cat_topics = self::ReadEventTopics($newsimport_default_cat_names);
 
         $events_limit = 0;
@@ -111,8 +126,14 @@ class NewsImport
         flush();
 
         return self::LoadEventData($event_data_sources, $news_feed, $cat_topics, $params_other);
-    }
+    } // fn ProcessImport
 
+	/**
+     * Takes topics for event categories
+     *
+	 * @param array $p_defaultTopicNames
+	 * @return array
+	 */
     public static function ReadEventTopics($p_defaultTopicNames) {
         $event_spec_topics = array();
 
@@ -132,8 +153,15 @@ class NewsImport
         }
 
         return $event_spec_topics;
-    }
+    } // fn ReadEventTopics
 
+	/**
+     * Takes categories specifications for events
+     *
+	 * @param array $p_source
+     * @param array $p_catTopics
+	 * @return array
+	 */
     public static function ReadEventCategories($p_source, $p_catTopics) {
         if (!is_array($p_source)) {
             return false;
@@ -174,8 +202,15 @@ class NewsImport
         }
 
         return $topics;
-    }
+    } // fn ReadEventCategories
 
+	/**
+     * Puts parsed event data into (new) articles
+     *
+     * @param array $p_events
+	 * @param array $p_source
+	 * @return void
+	 */
     public static function StoreEventData($p_events, $p_source) {
         if (empty($p_events)) {
             return;
@@ -184,7 +219,7 @@ class NewsImport
         global $g_user;
 
         if ((!isset($g_user)) || (empty($g_user))) {
-            $user_id = $p_source['admin_user_id']; //1;
+            $user_id = $p_source['admin_user_id'];
             $g_user = new User($user_id);
         }
 
@@ -199,6 +234,8 @@ class NewsImport
         $status_publish = $p_source['status']['publish'];
         $status_publish_by_event_date = $p_source['status']['publish_date_by_event_date'];
 
+        $images_local = $p_source['images_local'];
+
         $geo_sys_def = $p_source['geo'];
 
         $art_author = new Author($p_source['provider_name']);
@@ -207,7 +244,6 @@ class NewsImport
         }
 
         foreach ($p_events as $one_event) {
-
             $article = null;
             $article_new = false;
 
@@ -218,18 +254,25 @@ class NewsImport
                 new ComparisonOperation('IdPublication', new Operator('is', 'sql'), $art_publication),
                 new ComparisonOperation('NrIssue', new Operator('is', 'sql'), $art_issue),
                 new ComparisonOperation('NrSection', new Operator('is', 'sql'), $art_section),
+                new ComparisonOperation('Type', new Operator('is', 'sql'), $art_type),
                 new ComparisonOperation($art_type . '.event_id', new Operator('is', 'sql'), $one_event['event_id']),
             ), null, null, 0, $p_count, true);
 
-            if (is_array($event_art_list) && 0 <count($event_art_list)) {
-                $article = $event_art_list[0];
+            if (is_array($event_art_list) && (0 < count($event_art_list))) {
+                foreach ($event_art_list as $event_art_test) {
+                    $event_data_test = $event_art_test->getArticleData();
+                    if (($event_data_test->getFieldValue('event_id')) == $one_event['event_id']) {
+                        $article = $event_art_test;
+                        break;
+                    }
+                }
             }
 
             $art_name = $one_event['headline'] . ' - ' . $one_event['date'] . ' (' . $one_event['event_id'] . ')';
 
             if (!$article) {
                 $article = new Article($art_lang);
-                $article->create($art_type, $art_name, $art_publication, $art_issue, $art_section, false);
+                $article->create($art_type, $art_name, $art_publication, $art_issue, $art_section);
                 $article_new = true;
             }
 
@@ -277,7 +320,7 @@ class NewsImport
 
             $old_topics = ArticleTopic::GetArticleTopics($art_number);
             foreach ($old_topics as $one_topic) {
-                ArticleTopic::RemoveTopicFromArticle($one_topic->getTopicId(), $art_number, false);
+                ArticleTopic::RemoveTopicFromArticle($one_topic->getTopicId(), $art_number);
             }
 
             $art_topics = null;
@@ -294,7 +337,7 @@ class NewsImport
                     if (empty($topic_id)) {
                         continue;
                     }
-                    ArticleTopic::AddTopicToArticle($topic_id, $art_number, false);
+                    ArticleTopic::AddTopicToArticle($topic_id, $art_number);
                 }
             }
 
@@ -304,10 +347,10 @@ class NewsImport
                 $ev_map_info = array();
                 $ev_map_info['cen_lon'] = 0 + $one_event['geo']['longitude'];
                 $ev_map_info['cen_lat'] = 0 + $one_event['geo']['latitude'];
-                $ev_map_info['zoom'] = 0 + $geo_sys_def['map_zoom']; //15;
-                $ev_map_info['provider'] = '' . $geo_sys_def['map_provider']; //'osm';
-                $ev_map_info['width'] = 0 + $geo_sys_def['map_width']; //600;
-                $ev_map_info['height'] = 0 + $geo_sys_def['map_height']; //400;
+                $ev_map_info['zoom'] = 0 + $geo_sys_def['map_zoom'];
+                $ev_map_info['provider'] = '' . $geo_sys_def['map_provider'];
+                $ev_map_info['width'] = 0 + $geo_sys_def['map_width'];
+                $ev_map_info['height'] = 0 + $geo_sys_def['map_height'];
                 $ev_map_info['name'] = $one_event['headline'];
 
                 $ev_map_id = Geo_Map::ReadMapId($art_number);
@@ -336,7 +379,7 @@ class NewsImport
                         'index' => 0,
                         'longitude' => 0 + $one_event['geo']['longitude'],
                         'latitude' => 0 + $one_event['geo']['latitude'],
-                        'style' => '' . $geo_sys_def['poi_marker_name'], //'marker-gold.png',
+                        'style' => '' . $geo_sys_def['poi_marker_name'],
                         'display' => 1,
                         'name' => $one_event['headline'],
                         'link' => '',
@@ -358,25 +401,79 @@ class NewsImport
             $one_old_images = ArticleImage::GetImagesByArticleNumber($art_number);
             foreach ($one_old_images as $one_old_img_link) {
                 $one_old_img = $one_old_img_link->getImage();
-                $one_old_img_link->delete(false);
+                $one_old_img_link->delete();
                 if (0 == count(ArticleImage::GetArticlesThatUseImage($one_old_img->getImageId()))) {
-                    $one_old_img->delete(false);
+                    $one_old_img->delete();
                 }
             }
 
             if (!empty($one_event['images'])) {
 
+                $one_img_rank = -1;
                 foreach ($one_event['images'] as $one_image) {
 
+                    $one_file_info = array();
+                    if ($images_local) {
+                        $one_img_rank += 1;
+                        $one_image_cont = false;
+                        try {
+                            $one_image_cont = file_get_contents($one_image['url']);
+                        }
+                        catch (Exception $exc) {
+                            continue;
+                        }
+                        if (false === $one_image_cont) {
+                            continue;
+                        }
+
+                        $one_file_path = tempnam(sys_get_temp_dir(), '' . mt_rand(100, 999));
+                        $one_file_fndl = fopen($one_file_path, 'w');
+                        fwrite($one_file_fndl, $one_image_cont);
+                        fclose($one_file_fndl);
+                        if (false === exif_imagetype($one_file_path)) {
+                            unlink($one_file_path);
+                            continue;
+                        }
+
+                        $one_image_mime = '';
+                        $one_image_info = getimagesize($one_file_path);
+                        if (false === $one_image_info) {
+                            unlink($one_file_path);
+                            continue;
+                        }
+
+                        if (isset($one_image_info['mime'])) {
+                            $one_image_mime = $one_image_info['mime'];
+                        }
+
+                        $one_url_arr = explode('/', $one_image['url']);
+                        $one_url_end = $one_url_arr[count($one_url_arr) - 1];
+                        $one_file_info = array(
+                            'name' => $one_url_end,
+                            'type' => $one_image_mime,
+                            'tmp_name' => $one_file_path,
+                            'size' => filesize($one_file_path),
+                            'error' => 0,
+                        );
+                    }
+
                     $one_image_attributes = array();
+                    $one_image_attributes['Photographer'] = $p_source['provider_name'];
                     if (!empty($one_image['label'])) {
                         $one_image_attributes['Description'] = $one_image['label'];
                     }
 
+                    $one_image_obj = null;
                     try {
-                        $one_image_obj = Image::OnAddRemoteImage($one_image['url'], $one_image_attributes, null, null, false);
+                        if ($images_local) {
+                            $one_image_obj = Image::OnImageUpload($one_file_info, $one_image_attributes);
+                        }
+                        else {
+                            $one_image_obj = Image::OnAddRemoteImage($one_image['url'], $one_image_attributes, null, null);
+                        }
+
                         if (is_a($one_image_obj, 'Image')) {
-                            $one_img_res = ArticleImage::AddImageToArticle($one_image_obj->getImageId(), $art_number, null, false);
+                            $one_img_res = ArticleImage::AddImageToArticle($one_image_obj->getImageId(), $art_number, null);
                         }
                     }
                     catch (Exception $exc) {
@@ -397,7 +494,7 @@ class NewsImport
 
             if ($article_new) {
                 if ($status_publish) {
-                    $article->setWorkflowStatus('Y', false);
+                    $article->setWorkflowStatus('Y');
                 }
             }
 
@@ -407,21 +504,30 @@ class NewsImport
                 }
             }
         }
-    }
+    } // fn StoreEventData
 
+	/**
+     * Does the cycle of event data parsing and storing
+     *
+     * @param array $p_eventSources
+	 * @param array $p_newsFeed
+     * @param array $p_catTopics
+	 * @param array $p_otherParams
+	 * @return void
+	 */
     public static function LoadEventData($p_eventSources, $p_newsFeed, $p_catTopics, $p_otherParams) {
 
         $class_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'classes';
         require_once($class_dir.DIR_SEP.'EventParser.php');
 
-### DEBUG
-echo "\n<pre>\n";
-### DEBUG
+        global $Campsite;
 
         foreach ($p_eventSources as $one_source_name => $one_source) {
             if ((!empty($p_newsFeed)) && ($one_source_name != $p_newsFeed)) {
                 continue;
             }
+
+            $Campsite['OMIT_LOGGING'] = true;
 
             $categories = self::ReadEventCategories($one_source, $p_catTopics);
 
@@ -456,7 +562,7 @@ echo "\n<pre>\n";
             }
 
             $event_set = $event_load['events'];
-            //unset($event_load['events']);
+            unset($event_load['events']);
 
             $ev_limit = 0;
             $ev_skip = 0;
@@ -466,10 +572,6 @@ echo "\n<pre>\n";
             if (array_key_exists('skip', $p_otherParams)) {
                 $ev_skip = $p_otherParams['skip'];
             }
-
-### DEBUG
-$ev_limit = 10;
-### DEBUG
 
             $ev_count = count($event_set);
 
@@ -494,23 +596,24 @@ $ev_limit = 10;
                 }
             }
 
-### DEBUG
-echo "\nevent count: " . count($event_set) . "\n";
-### DEBUG
-
             self::StoreEventData($event_set, $one_source);
 
             if (!$omit_cleanup) {
                 $parser_obj->cleanup();
             }
+
+            $parser_obj->stop();
+
+            $Campsite['OMIT_LOGGING'] = false;
+
+            Log::Message(getGS('$1 articles of $2 events set.', count($event_set), $one_source_name), null, 31);
+
         }
 
-        $parser_obj->stop();
-
-    }
+    } // fn LoadEventData
 
 
 } // class NewsImport
-//$used_event_files = array();
+
 
 ?>

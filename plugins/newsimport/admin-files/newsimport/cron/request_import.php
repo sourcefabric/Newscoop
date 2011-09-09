@@ -1,11 +1,15 @@
 #!/usr/bin/env php
 <?php
 
+/**
+ * taking confs for import requests
+ *
+ * @return array
+ */
 function newsimport_take_conf_info() {
     $plugin_dir = dirname(dirname(dirname(dirname(__FILE__)))).DIRECTORY_SEPARATOR;
 
     $incl_dir = $plugin_dir.'include'.DIRECTORY_SEPARATOR;
-    //require($incl_dir . 'news_feeds_intall.php');
     require($incl_dir . 'default_access.php');
 
     $base_url = 'http://localhost';
@@ -14,9 +18,9 @@ function newsimport_take_conf_info() {
     if (!isset($GLOBALS['Campsite'])) {
         $GLOBALS['Campsite'] = array();
     }
+    global $Campsite;
 
     $newscoop_dir = dirname(dirname($plugin_dir));
-    //require($newscoop_dir.DIRECTORY_SEPARATOR.'conf'.DIRECTORY_SEPARATOR.'database_conf.php');
     require($newscoop_dir.DIRECTORY_SEPARATOR.'system_preferences.php');
 
     $keyNewscoopBase = 'NewsImportBaseUrl';
@@ -30,6 +34,8 @@ function newsimport_take_conf_info() {
     }
 
 /*
+    // if the cached sys-prefs file would not be used
+    require($newscoop_dir.DIRECTORY_SEPARATOR.'conf'.DIRECTORY_SEPARATOR.'database_conf.php');
     $dbAccess = $Campsite['db'];
 
     $db_host = $dbAccess['host'];
@@ -70,19 +76,17 @@ function newsimport_take_conf_info() {
 */
 
     $return array('base_url' => $base_url, 'access_token' => $access_token);
-}
+} // fn newsimport_take_conf_info
 
+/**
+ * making import requests
+ *
+ * @return void
+ */
 function newsimport_ask_for_import() {
     set_time_limit(0);
 
-    //$incl_dir = dirname(dirname(dirname(dirname(__FILE__)))).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR;
-    //require($incl_dir . 'default_access.php');
-    //require($incl_dir . 'news_feeds_intall.php');
-
     $conf_info = newsimport_take_conf_info();
-
-    //$request_url = $newsipmort_install;
-    //$request_url = newsimport_take_base_url();
 
     $request_url = $conf_info['base_url'];
     if ('/' != $request_url[strlen($request_url)-1]) {
@@ -108,11 +112,7 @@ function newsimport_ask_for_import() {
         catch (Exception $exc) {}
     }
 
-    //$fh = fopen('/tmp/d006', 'a');
-    //fwrite($fh, "aaa\n");
-    //fclose($fh);
-
-}
+} // fn newsimport_ask_for_import
 
 newsimport_ask_for_import();
 

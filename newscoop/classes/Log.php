@@ -34,6 +34,11 @@ class Log extends DatabaseObject {
 	public static function Message($p_text, $p_userId = null, $p_eventId = 0)
 	{
 		global $g_ado_db;
+        global $Campsite;
+
+        if (isset($Campsite) && is_array($Campsite) && array_key_exists('OMIT_LOGGING', $Campsite) && $Campsite['OMIT_LOGGING']) {
+            return;
+        }
 
         if (empty($p_userId)) {
 			$p_userId = 0;

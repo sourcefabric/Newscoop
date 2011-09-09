@@ -82,7 +82,7 @@ class Image extends DatabaseObject
 	 *		TRUE if the record was deleted,
 	 * 		return a PEAR_Error on failure.
 	 */
-	public function delete($p_doLog = true)
+	public function delete()
 	{
 		require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
 
@@ -117,10 +117,9 @@ class Image extends DatabaseObject
 		if (!parent::delete()) {
 			return new PEAR_Error(getGS("Could not delete record from the database."));
 		}
-        if ($p_doLog) {
-            $logtext = getGS('Image "$1" ($2) deleted', $imageDescription, $imageId);
-            Log::Message($logtext, null, 42);
-        }
+
+		$logtext = getGS('Image "$1" ($2) deleted', $imageDescription, $imageId);
+		Log::Message($logtext, null, 42);
 		return true;
 	} // fn delete
 
@@ -752,7 +751,7 @@ class Image extends DatabaseObject
 	 * 		Return an Image object on success, return a PEAR_Error otherwise.
 	 */
 	public static function OnAddRemoteImage($p_url, $p_attributes,
-	                                        $p_userId = null, $p_id = null, $p_doLog = true)
+	                                        $p_userId = null, $p_id = null)
 	{
 		global $Campsite;
 		if (function_exists("camp_load_translation_strings")) {
@@ -880,11 +879,10 @@ class Image extends DatabaseObject
         unlink($tmpname);
         $image->commit();
 
-        if ($p_doLog) {
-            $logtext = getGS('The image $1 has been added.',
-                            $image->m_data['Description']." (".$image->m_data['Id'].")");
-            Log::Message($logtext, null, 41);
-        }
+		$logtext = getGS('The image $1 has been added.',
+						$image->m_data['Description']." (".$image->m_data['Id'].")");
+		Log::Message($logtext, null, 41);
+
 	    return $image;
 	} // fn OnAddRemoteImage
 

@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * topics for categories
+ */
 $newsimport_default_cat_names = array(
     // do not change keys; num ids are for topic names by language
     'event' => array(1 => 'Event', 5 => 'Veranstaltung',), // the root of event topics
