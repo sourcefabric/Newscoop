@@ -255,6 +255,16 @@ class Entry
     }
 
     /**
+     * Get product
+     *
+     * @return string
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
+
+    /**
      * Entry factory
      *
      * @param Newscoop\Ingest\Parser $parser
@@ -271,6 +281,7 @@ class Entry
         $entry->language = (string) $parser->getLanguage();
         $entry->subject = (string) $parser->getSubject();
         $entry->country = (string) $parser->getCountry();
+        $entry->product = (string) $parser->getProduct();
         return $entry;
     }
 }
