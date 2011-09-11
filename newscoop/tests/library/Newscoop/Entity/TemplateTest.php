@@ -23,7 +23,7 @@ class TemplateTest extends \PHPUnit_Framework_TestCase
     public function testTemplate()
     {
         $template = new Template("test");
-        $this->assertType('Newscoop\Entity\Template', $template);
+        $this->assertInstanceOf('Newscoop\Entity\Template', $template);
     }
 
     public function testGetId()
