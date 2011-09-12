@@ -68,13 +68,16 @@
 	{{ else }}
 		<div class="top_title">Login</div>
 		<div class="clear"></div>
+		<div class="text_container left">
+			introduction text here...
+		</div>
 		<div class="text_container">
-			<label for="ob_username" style="float: none;">user</label>
-			<input type="text" id="ob_username"><br>
-			<label for="ob_password" style="float: none;">password</label>
-			<input type="password" id="ob_password"><br>
-			<a class="register_link" href="{{ $view->baseUrl('/register') }}">register</a>
-			<input type="button" class="send_button" value="login" onClick="omnibox.login();"><br>
+			<input type="text" id="ob_username" class="small right"><br>
+			<div class="clear"></div>
+			<input type="password" id="ob_password" class="small right"><br>
+			<div class="clear"></div>
+			<input type="button" class="send_button right" value="login" onClick="omnibox.login();">
+			<a class="register_link right" href="{{ $view->baseUrl('/register') }}">register</a>
 		</div>
 		
 		<div class="clear"></div>
