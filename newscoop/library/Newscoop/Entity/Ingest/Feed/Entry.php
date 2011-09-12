@@ -84,10 +84,10 @@ class Entry
     private $priority;
 
     /**
-     * @Column(type="string")
-     * @var string
+     * @Column(type="array", nullable=True)
+     * @var array
      */
-    private $service;
+    private $attributes = array();
 
     /**
      * @param string $title
@@ -97,7 +97,8 @@ class Entry
     {
         $this->title = $title;
         $this->content = $content;
-        $this->created = $this->updated = new \DateTime();
+        $this->created = new \DateTime();
+        $this->updated = new \DateTime();
     }
 
     /**
@@ -193,16 +194,6 @@ class Entry
     }
 
     /**
-     * Get service
-     *
-     * @return string
-     */
-    public function getService()
-    {
-        return $this->service;
-    }
-
-    /**
      * Set feed
      *
      * @param Newscoop\Entity\Ingest\Feed $feed
@@ -212,6 +203,16 @@ class Entry
     {
         $this->feed = $feed;
         return $this;
+    }
+
+    /**
+     * Get service
+     *
+     * @return string
+     */
+    public function getService()
+    {
+        return $this->getAttribute('service');
     }
 
     /**
@@ -231,7 +232,7 @@ class Entry
      */
     public function getLanguage()
     {
-        return $this->language;
+        return $this->getAttribute('language');
     }
 
     /**
@@ -241,7 +242,7 @@ class Entry
      */
     public function getSubject()
     {
-        return $this->subject;
+        return $this->getAttribute('subject');
     }
 
     /**
@@ -251,7 +252,7 @@ class Entry
      */
     public function getCountry()
     {
-        return $this->country;
+        return $this->getAttribute('country');
     }
 
     /**
@@ -261,7 +262,7 @@ class Entry
      */
     public function getProduct()
     {
-        return $this->product;
+        return $this->getAttribute('product');
     }
 
     /**
@@ -273,15 +274,46 @@ class Entry
     public static function create(Parser $parser)
     {
         $entry = new self($parser->getTitle(), $parser->getContent());
-        $entry->created = $parser->getCreated();
-        $entry->updated = $parser->getUpdated();
+        $entry->created = $parser->getCreated() ?: $entry->created;
+        $entry->updated = $parser->getUpdated() ?: $entry->updated;
         $entry->priority = (int) $parser->getPriority();
-        $entry->service = (string) $parser->getService();
         $entry->summary = (string) $parser->getSummary();
-        $entry->language = (string) $parser->getLanguage();
-        $entry->subject = (string) $parser->getSubject();
-        $entry->country = (string) $parser->getCountry();
-        $entry->product = (string) $parser->getProduct();
+        $entry->setAttribute('service', (string) $parser->getService());
+        $entry->setAttribute('language', (string) $parser->getLanguage());
+        $entry->setAttribute('subject', (string) $parser->getSubject());
+        $entry->setAttribute('country', (string) $parser->getCountry());
+        $entry->setAttribute('product', (string) $parser->getProduct());
         return $entry;
+    }
+
+    /**
+     * Set attribute
+     *
+     * @param string $name
+     * @param mixed $value
+     * @return void
+     */
+    private function setAttribute($name, $value)
+    {
+        if (!is_array($this->attributes)) {
+            $this->attributes = array();
+        }
+
+        $this->attributes[$name] = $value;
+    }
+
+    /**
+     * Get attribute
+     *
+     * @param string $name
+     * @return mixed
+     */
+    private function getAttribute($name)
+    {
+        if (!is_array($this->attributes)) {
+            $this->attributes = array();
+        }
+
+        return array_key_exists($name, $this->attributes) ? $this->attributes[$name] : null;
     }
 }
