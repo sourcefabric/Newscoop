@@ -168,7 +168,7 @@ class Image extends DatabaseObject
 	{
 		return $this->m_data['Id'];
 	} // fn getImageId
-	
+
 	/**
 	 * @return int
 	 */
@@ -257,7 +257,7 @@ class Image extends DatabaseObject
     {
         return substr($this->m_data['ContentType'], strlen('image/'));
     } // fn getType
-    
+
     /**
      * @return string
      */
@@ -265,7 +265,7 @@ class Image extends DatabaseObject
     {
         return $this->m_data['Source'];
     } // fn getSource
-    
+
     /**
      * @return string
      */
@@ -273,7 +273,7 @@ class Image extends DatabaseObject
     {
         return $this->m_data['Status'];
     } // fn getSource
-    
+
 	/**
 	 * Return the full path to the image file.
 	 * @return string
@@ -934,6 +934,30 @@ class Image extends DatabaseObject
 	} // fn GetUploadUsers
 
 
+    /**
+     * Get an array of Images uploaded by the user with $user_id.
+     *
+     * @param int $user_id
+     * @return array Image objects
+     */
+	public static function GetUploadedImagesForUser($user_id)
+	{
+        global $g_ado_db;
+        $images = array();
+
+        $queryStr = "SELECT * FROM Images WHERE UploadedByUser='".mysql_real_escape_string($user_id)."'";
+        $rows = $g_ado_db->GetAll($queryStr);
+
+        foreach ( $rows as $row ) {
+            $image = new Image();
+            $image->fetch($row);
+
+            $images[] = $image;
+        }
+
+        return $images;
+	}
+
 	/**
 	 * Fetch an image object by matching the URL.
 	 * @param string $p_url
@@ -1209,7 +1233,7 @@ class Image extends DatabaseObject
             'Source' => 'local',
             'Status' => 'approved'
         );
-        
+
         if ($p_attributes != NULL && is_array($p_attributes)) {
 			foreach ($p_attributes as $key => $value) {
 				$attributes[$key] = $value;
