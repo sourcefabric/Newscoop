@@ -14,6 +14,8 @@ use Newscoop\Entity\Ingest\Feed\Entry;
  */
 class PublisherService
 {
+    const DATETIME_FORMAT = 'Y-m-d H:i:s';
+
     /** @var array */
     private $config;
 
@@ -34,8 +36,10 @@ class PublisherService
     public function publish(Entry $entry)
     {
         $article = new \Article($this->getLanguage($entry->getLanguage()));
-        $article->create('news', $entry->getTitle(), $this->getPublication(), $this->getIssue(), $this->getSection($entry));
+        $article->create($this->config['article_type'], $entry->getTitle(), $this->getPublication(), $this->getIssue(), $this->getSection($entry));
+        $article->setWorkflowStatus('Y');
         $this->setArticleData($article, $entry);
+        $this->setArticleDates($article, $entry);
         return $article;
     }
 
@@ -119,6 +123,22 @@ class PublisherService
     private function setArticleData(\Article $article, Entry $entry)
     {
         $data = $article->getArticleData();
-        $data->setProperty('Fdeck', $entry->getContent());
+        $data->setProperty($this->config['field_summary'], $entry->getSummary());
+        $data->setProperty($this->config['field_content'], $entry->getContent());
+    }
+
+    /**
+     * Set article dates
+     *
+     * @param Article $article
+     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
+     * @return void
+     */
+    private function setArticleDates(\Article $article, Entry $entry)
+    {
+        $entry->setPublished(new \DateTime());
+        $article->setCreationDate($entry->getCreated()->format(self::DATETIME_FORMAT));
+        $article->setPublishDate($entry->getPublished()->format(self::DATETIME_FORMAT));
+        $article->setProperty('time_updated', $entry->getUpdated()->format(self::DATETIME_FORMAT));
     }
 }

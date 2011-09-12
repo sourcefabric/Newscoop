@@ -117,7 +117,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('view'))
             ->addArgument(new sfServiceReference('user.token'));
 
-        $container->register('ingest.publisher', 'Newscoop\Services\Ingest\PubliserService')
+        $container->register('ingest.publisher', 'Newscoop\Services\Ingest\PublisherService')
             ->addArgument('%ingest_publisher%');
 
         $container->register('ingest', 'Newscoop\Services\IngestService')
