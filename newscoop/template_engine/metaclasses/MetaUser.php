@@ -80,7 +80,14 @@ final class MetaUser extends MetaEntity
      */
     public function __toString()
     {
-        return $this->name;
+        $url = $GLOBALS['controller']->view->url(array('username' => $this->uname), 'user');
+
+        if ($this->user->isPublic()) {
+            return "<a href='{$url}'>{$this->name}</a>";
+        }
+        else {
+            return $this->name;
+        }
     }
 
     /**

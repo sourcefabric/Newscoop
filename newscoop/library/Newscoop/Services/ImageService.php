@@ -44,7 +44,7 @@ class ImageService
 
         $name = sha1_file($info['tmp_name']) . '.' . array_pop(explode('.', $info['name']));
         if (!file_exists(APPLICATION_PATH . "/../images/$name")) {
-            rename($imageInfo['tmp_name'], APPLICATION_PATH . "/../images/$name");
+            rename($info['tmp_name'], APPLICATION_PATH . "/../images/$name");
         }
 
         return $name;

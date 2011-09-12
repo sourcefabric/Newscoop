@@ -39,4 +39,6 @@
 
 {{include file='paginator_control.tpl'}}
 
+{{ list_community_feeds length=5 }}<div class="community_ticker">{{$gimme->community_feed}}</div>{{ /list_community_feeds }}
+
 {{/block}}
