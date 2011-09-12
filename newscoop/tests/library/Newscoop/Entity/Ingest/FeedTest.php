@@ -22,15 +22,10 @@ class FeedTest extends \RepositoryTestCase
         $this->assertInstanceOf('Newscoop\Entity\Ingest\Feed', $feed);
     }
 
-    public function testUpdate()
+    public function testUpdateEmpty()
     {
         $feed = new Feed('sda');
         $feed->update();
-
-        $entries = $feed->getEntries();
-        $this->assertGreaterThan(1, count($entries));
-
-        $entry = $entries[0];
-        $this->assertNotNull($entry->getTitle());
+        $this->assertEquals(0, count($feed->getEntries()));
     }
 }

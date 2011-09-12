@@ -14,6 +14,17 @@ use Newscoop\Entity\Ingest\Feed\Entry;
  */
 class PublisherService
 {
+    /** @var array */
+    private $config;
+
+    /**
+     * @param array $config
+     */
+    public function __construct(array $config)
+    {
+        $this->config = $config;
+    }
+
     /**
      * Publish entry
      *
@@ -79,23 +90,23 @@ class PublisherService
     {
         switch ($entry->getSubject()) {
             case '15000000':
-                return 'sport';
+                return $this->config['section_sport'];
                 break;
 
-            case '10000000':
-                return 'cultur';
+            case '1000000':
+                return $this->config['section_culture'];
                 break;
         }
 
         if ($entry->getCountry() != 'CH')  {
-            return 'international';
+            return $this->config['section_international'];
         }
 
         if ($entry->getProduct() == "Regionaldienst Nord") {
-            return 'basel';
+            return $this->config['section_basel'];
         }
 
-        return 'schweiz';
+        return $this->config['section_other'];
     }
 
     /**

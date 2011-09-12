@@ -17,11 +17,17 @@ class PublisherServiceTest extends \PHPUnit_Framework_TestCase
     /** @var array */
     protected $config = array(
         'article_type' => 'news',
+        'section_sport' => 101,
+        'section_culture' => 102,
+        'section_basel' => 103,
+        'section_international' => 104,
+        'section_other' => 105,
     );
 
     public function setUp()
     {
-        $this->service = new PublisherService();
+        $this->service = new PublisherService($this->config);
+
         $this->parser = $this->getMockBuilder('Newscoop\Ingest\Parser\NewsMlParser')
             ->disableOriginalConstructor()
             ->getMock();
@@ -46,4 +52,100 @@ class PublisherServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertGreaterThan(0, $article->getIssueNumber());
         $this->assertGreaterThan(0, $article->getSectionNumber());
     }
+
+    public function testPublishSectionSport()
+    {
+        $this->parser->expects($this->once())
+            ->method('getLanguage')
+            ->will($this->returnValue('de'));
+
+        $this->parser->expects($this->once())
+            ->method('getSubject')
+            ->will($this->returnValue(15000000));
+
+        $entry = Entry::create($this->parser);
+        $article = $this->service->publish($entry);
+        $this->assertEquals($this->config['section_sport'], $article->getSectionNumber());
+    }
+
+    public function testPublishSectionCulture()
+    {
+        $this->parser->expects($this->once())
+            ->method('getLanguage')
+            ->will($this->returnValue('de'));
+
+        $this->parser->expects($this->once())
+            ->method('getSubject')
+            ->will($this->returnValue(1000000));
+
+        $entry = Entry::create($this->parser);
+        $article = $this->service->publish($entry);
+        $this->assertEquals($this->config['section_culture'], $article->getSectionNumber());
+    }
+
+    public function testPublishSectionInternational()
+    {
+        $this->parser->expects($this->once())
+            ->method('getLanguage')
+            ->will($this->returnValue('de'));
+
+        $this->parser->expects($this->once())
+            ->method('getSubject')
+            ->will($this->returnValue(1));
+
+        $this->parser->expects($this->once())
+            ->method('getCountry')
+            ->will($this->returnValue('CZ'));
+
+        $entry = Entry::create($this->parser);
+        $article = $this->service->publish($entry);
+        $this->assertEquals($this->config['section_international'], $article->getSectionNumber());
+    }
+
+    public function testPublishSectionBasel()
+    {
+        $this->parser->expects($this->once())
+            ->method('getLanguage')
+            ->will($this->returnValue('de'));
+
+        $this->parser->expects($this->once())
+            ->method('getSubject')
+            ->will($this->returnValue(1));
+
+        $this->parser->expects($this->once())
+            ->method('getCountry')
+            ->will($this->returnValue('CH'));
+
+        $this->parser->expects($this->once())
+            ->method('getProduct')
+            ->will($this->returnValue('Regionaldienst Nord'));
+
+        $entry = Entry::create($this->parser);
+        $article = $this->service->publish($entry);
+        $this->assertEquals($this->config['section_basel'], $article->getSectionNumber());
+    }
+
+    public function testPublishSectionOther()
+    {
+        $this->parser->expects($this->once())
+            ->method('getLanguage')
+            ->will($this->returnValue('de'));
+
+        $this->parser->expects($this->once())
+            ->method('getSubject')
+            ->will($this->returnValue(1));
+
+        $this->parser->expects($this->once())
+            ->method('getCountry')
+            ->will($this->returnValue('CH'));
+
+        $this->parser->expects($this->once())
+            ->method('getProduct')
+            ->will($this->returnValue('x'));
+
+        $entry = Entry::create($this->parser);
+        $article = $this->service->publish($entry);
+        $this->assertEquals($this->config['section_other'], $article->getSectionNumber());
+    }
+
 }
