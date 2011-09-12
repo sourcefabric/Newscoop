@@ -15,17 +15,11 @@ class PublisherServiceTest extends \PHPUnit_Framework_TestCase
     protected $service;
 
     /** @var array */
-    protected $config = array(
-        'article_type' => 'news',
-        'section_sport' => 101,
-        'section_culture' => 102,
-        'section_basel' => 103,
-        'section_international' => 104,
-        'section_other' => 105,
-    );
+    protected $config;
 
     public function setUp()
     {
+        $this->config = \Zend_Registry::get('container')->getParameter('ingest_publisher');
         $this->service = new PublisherService($this->config);
 
         $this->parser = $this->getMockBuilder('Newscoop\Ingest\Parser\NewsMlParser')
@@ -40,17 +34,30 @@ class PublisherServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testPublish()
     {
+        $created = new \DateTime('-2 day');
+        $published = new \DateTime();
+
         $this->parser->expects($this->once())
             ->method('getLanguage')
-            ->will($this->returnValue('de'));
+            ->will($this->returnValue('en'));
+
+        $this->parser->expects($this->once())
+            ->method('getCreated')
+            ->will($this->returnValue($created));
 
         $entry = Entry::create($this->parser);
         $article = $this->service->publish($entry);
         $this->assertInstanceOf('Article', $article);
-        $this->assertEquals('Deutsch', $article->getLanguageName());
+        $this->assertEquals($this->config['article_type'], $article->getType());
+        $this->assertEquals('English', $article->getLanguageName());
         $this->assertGreaterThan(0, $article->getPublicationId());
         $this->assertGreaterThan(0, $article->getIssueNumber());
         $this->assertGreaterThan(0, $article->getSectionNumber());
+        $this->assertEquals($created->format('Y-m-d H:i:s'), $article->getCreationDate());
+        $this->assertEquals($entry->getUpdated()->format('Y-m-d H:i:s'), $article->getLastModified());
+        $this->assertEquals('Y', $article->getWorkflowStatus());
+        $this->assertNotEmpty($article->getPublishDate());
+        $this->assertTrue($article->isPublic());
     }
 
     public function testPublishSectionSport()
@@ -147,5 +154,4 @@ class PublisherServiceTest extends \PHPUnit_Framework_TestCase
         $article = $this->service->publish($entry);
         $this->assertEquals($this->config['section_other'], $article->getSectionNumber());
     }
-
 }
