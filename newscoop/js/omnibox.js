@@ -135,6 +135,7 @@ var omnibox = {
 			data = $.parseJSON(data);
 			
 			if (data.response == 'OK') {
+				document.location.hash = '#omnibox';
 				document.location.reload();
 			}
 			else {

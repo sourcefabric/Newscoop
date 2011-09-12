@@ -232,6 +232,10 @@ class ArticleAttachment extends DatabaseObject {
                 $whereCondition = '('.$comparisonOperation['left'].' IS NULL OR '
                     .$comparisonOperation['left']." = '"
                     .$g_ado_db->escape($comparisonOperation['right'])."')";
+            } else {
+                $whereCondition = $comparisonOperation['left'] . ' '
+                    . $comparisonOperation['symbol'] . " '"
+                    . $g_ado_db->escape($comparisonOperation['right']) . "' ";
             }
             $selectClauseObj->addWhere($whereCondition);
             $countClauseObj->addWhere($whereCondition);
