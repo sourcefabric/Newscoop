@@ -77,6 +77,7 @@ class IngestService
     public function updateAll()
     {
         foreach ($this->getFeeds() as $feed) {
+            $feed->setConfig($this->config);
             $feed->update();
             $this->em->persist($feed);
         }
