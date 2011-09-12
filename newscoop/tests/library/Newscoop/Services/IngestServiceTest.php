@@ -19,12 +19,12 @@ class IngestServiceTest extends \PHPUnit_Framework_TestCase
     protected $em;
 
     /** @var array */
-    protected $config = array(
-        'article_type' => 'news',
-    );
+    protected $config;
 
     public function setUp()
     {
+        $this->config = \Zend_Registry::get('container')->getParameter('ingest');
+
         $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
             ->disableOriginalConstructor()
             ->getMock();
@@ -34,31 +34,15 @@ class IngestServiceTest extends \PHPUnit_Framework_TestCase
             ->getMock();
 
         $this->service = new IngestService($this->config, $this->em, $this->publisher);
+
+        foreach (glob(APPLICATION_PATH . '/../tests/ingest/tmp_*.xml') as $file) {
+            unlink($file);
+        }
     }
 
     public function testService()
     {
         $this->assertInstanceOf('Newscoop\Services\IngestService', $this->service);
-    }
-
-    public function testUpdateAll()
-    {
-        $feed = $this->getMock('Newscoop\Entity\Ingest\Feed', array('update'), array('title'));
-        $feed->expects($this->once())
-            ->method('update')
-            ->with();
-
-        $repository = $this->getRepository();
-        $repository->expects($this->once())
-            ->method('findAll')
-            ->will($this->returnValue(array($feed)));
-
-        $this->em->expects($this->once())
-            ->method('getRepository')
-            ->with($this->equalTo('Newscoop\Entity\Ingest\Feed'))
-            ->will($this->returnValue($repository));
-
-        $this->service->updateAll();
     }
 
     public function testGetFeeds()
@@ -141,5 +125,35 @@ class IngestServiceTest extends \PHPUnit_Framework_TestCase
         return $this->getMockBuilder('Doctrine\ORM\EntityRepository')
             ->disableOriginalConstructor()
             ->getMock();
+    }
+
+    public function testUpdateAll()
+    {
+        $feed = new Feed('sda');
+        $repository = $this->getRepository();
+
+        $repository->expects($this->once())
+            ->method('findAll')
+            ->will($this->returnValue(array($feed)));
+
+        $this->em->expects($this->once())
+            ->method('getRepository')
+            ->with($this->equalTo('Newscoop\Entity\Ingest\Feed'))
+            ->will($this->returnValue($repository));
+
+        $this->assertEquals(0, count($feed->getEntries()));
+
+        $this->service->updateAll();
+        $this->assertEquals(2, count($feed->getEntries()));
+        $this->assertInstanceOf('DateTime', $feed->getUpdated());
+
+        $this->service->updateAll();
+        $this->assertEquals(2, count($feed->getEntries()));
+
+        $tmpFile = APPLICATION_PATH . '/../tests/ingest/' . uniqid('tmp_') . '.xml';
+        copy(APPLICATION_PATH . '/../tests/ingest/newsml1.xml', $tmpFile);
+
+        $this->service->updateAll();
+        $this->assertEquals(2, count($feed->getEntries()));
     }
 }

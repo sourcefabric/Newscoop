@@ -8,8 +8,7 @@
 namespace Newscoop\Entity\Ingest;
 
 use Doctrine\Common\Collections\ArrayCollection,
-    Newscoop\Entity\Ingest\Feed\Entry,
-    Newscoop\Ingest\Parser\NewsMlParser;
+    Newscoop\Entity\Ingest\Feed\Entry;
 
 /**
  * @Entity
@@ -17,8 +16,6 @@ use Doctrine\Common\Collections\ArrayCollection,
  */
 class Feed
 {
-    const TIME_DELAY = 180;
-
     /**
      * @Id @GeneratedValue
      * @Column(type="integer")
@@ -45,11 +42,6 @@ class Feed
     private $entries;
 
     /**
-     * @var array
-     */
-    public $config;
-
-    /**
      * @param string $title
      */
     public function __construct($title)
@@ -69,6 +61,18 @@ class Feed
     }
 
     /**
+     * Set updated
+     *
+     * @param DateTime $updated
+     * @return Newscoop\Entity\Ingest\Feed
+     */
+    public function setUpdated(\DateTime $updated)
+    {
+        $this->updated = $updated;
+        return $this;
+    }
+
+    /**
      * Get updated
      *
      * @return DateTime
@@ -79,59 +83,12 @@ class Feed
     }
 
     /**
-     * Set config
-     *
-     * @param array $config
-     * @return Newscoop\Entity\Ingest\Feed
-     */
-    public function setConfig(array $config)
-    {
-        $this->config = $config;
-        return $this;
-    }
-
-    /**
-     * Update feed
-     *
-     * @return void
-     */
-    public function update()
-    {
-        foreach (glob($this->config['path'] . '/*.xml') as $file) {
-            if (strpos($file, '_phd') !== false) {
-                continue;
-            }
-
-            if ($this->updated && $this->updated->getTimestamp() > filemtime($file)) {
-                continue;
-            }
-
-            if (time() < filemtime($file) + self::TIME_DELAY) {
-                continue;
-            }
-
-            $handle = fopen($file, 'r');
-            if (flock($handle, LOCK_EX | LOCK_NB)) {
-                $parser = new NewsMlParser($file);
-                $entry = Entry::create($parser);
-                $this->addEntry($entry);
-                flock($handle, LOCK_UN);
-                fclose($handle);
-            } else {
-                continue;
-            }
-        }
-
-        $this->updated = new \DateTime();
-    }
-
-    /**
      * Add entry
      *
      * @param Newscoop\Entity\Ingest\Feed\Entry $entry
      * @return void
      */
-    private function addEntry(Entry $entry)
+    public function addEntry(Entry $entry)
     {
         $this->entries->add($entry);
         $entry->setFeed($this);
