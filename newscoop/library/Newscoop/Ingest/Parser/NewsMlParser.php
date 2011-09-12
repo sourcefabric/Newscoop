@@ -29,8 +29,12 @@ class NewsMlParser implements Parser
     private static $s_media_labels = array('caption');
 
     /** @var array */
-    private static $s_byline_specs = array(
+    private static $s_lead_specs = array(
         array('key' => 'lede', 'value' => 'true'),
+    );
+    /** @var array */
+    private static $s_unknown = array(
+        'unknown',
     );
 
     /**
@@ -54,14 +58,14 @@ class NewsMlParser implements Parser
     }
 
     /**
-     * Is content element a byline one
+     * Is content element a lead one
      *
      * @return bool
      */
-    private function isByline($element)
+    private function isLead($element)
     {
-        foreach (self::$s_byline_specs as $byline_spec) {
-            if ( ((string) $element[$byline_spec['key']]) == $byline_spec['value'] ) {
+        foreach (self::$s_lead_specs as $lead_spec) {
+            if ( ((string) $element[$lead_spec['key']]) == $lead_spec['value'] ) {
                 return true;
             }
         }
@@ -73,13 +77,13 @@ class NewsMlParser implements Parser
      *
      * @return string
      */
-    public function getContent($p_withByline = true)
+    public function getContent($p_withLead = true)
     {
         $content = array();
 
         foreach ($this->xml->xpath('//body.content/*') as $element) {
-            if (!$p_withByline) {
-                if ($this->isByline($element)) {
+            if (!$p_withLead) {
+                if ($this->isLead($element)) {
                     continue;
                 }
             }
@@ -91,22 +95,22 @@ class NewsMlParser implements Parser
     }
 
     /**
-     * Get byline (aka lede, per extensum)
+     * Get lead (aka lede, per extensum)
      *
      * @return string
      */
-    public function getByline()
+    public function getLead()
     {
-        $byline = '';
+        $lead = '';
 
         foreach ($this->xml->xpath('//body.content/p') as $element) {
-            if ($this->isByline($element)) {
-                $byline = (string) $element;
+            if ($this->isLead($element)) {
+                $lead = (string) $element;
                 break;
             }
         }
 
-        return $byline;
+        return $lead;
     }
 
     /**
@@ -363,7 +367,7 @@ class NewsMlParser implements Parser
         return array(
             array(
                 'type' => 'name',
-                'value' => $this->getString($this->xml->xpath('//DateLine[1]')),
+                'value' => (string) $this->getString($this->xml->xpath('//DateLine[1]')),
             ),
         );
     }
@@ -432,7 +436,7 @@ class NewsMlParser implements Parser
     }
 
     /**
-     * Get authors
+     * Get list of authors
      *
      * @return array
      */
@@ -450,6 +454,31 @@ class NewsMlParser implements Parser
         }
 
         return $authors;
+    }
+
+    /**
+     * Get a string of authors
+     *
+     * @return string
+     */
+    public function getByline($p_omitUnknown = false)
+    {
+        $byline  = (string) $this->getString($this->xml->xpath('//ByLine[1]'));
+        if ($p_omitUnknown) {
+            if (in_array($byline, self::$s_unknown)) {
+                $byline = '';
+            }
+        }
+        if (empty($byline)) {
+            $byline = implode(', ', $this->getAuthors());
+        }
+        if ($p_omitUnknown) {
+            if (in_array($byline, self::$s_unknown)) {
+                $byline = '';
+            }
+        }
+
+        return $byline;
     }
 
     /**
