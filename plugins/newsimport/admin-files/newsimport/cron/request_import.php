@@ -21,16 +21,20 @@ function newsimport_take_conf_info() {
     global $Campsite;
 
     $newscoop_dir = dirname(dirname($plugin_dir));
-    require($newscoop_dir.DIRECTORY_SEPARATOR.'system_preferences.php');
+    $sys_pref_path = $newscoop_dir.DIRECTORY_SEPARATOR.'system_preferences.php';
+    if (!is_file($sys_pref_path)) {
+        $sys_pref_path = $newscoop_dir.DIRECTORY_SEPARATOR.'newscoop'.DIRECTORY_SEPARATOR.'system_preferences.php';
+    }
+    require($sys_pref_path);
 
     $keyNewscoopBase = 'NewsImportBaseUrl';
     $keyNewscoopToken = 'NewsImportCommandToken';
 
-    if (isset($GLOBALS['Campsite'][$keyNewscoopBase])) {
-        $base_url = $GLOBALS['Campsite'][$keyNewscoopBase];
+    if (isset($GLOBALS['Campsite']['system_preferences'][$keyNewscoopBase])) {
+        $base_url = $GLOBALS['Campsite']['system_preferences'][$keyNewscoopBase];
     }
-    if (isset($GLOBALS['Campsite'][$keyNewscoopToken])) {
-        $access_token = $GLOBALS['Campsite'][$keyNewscoopToken];
+    if (isset($GLOBALS['Campsite']['system_preferences'][$keyNewscoopToken])) {
+        $access_token = $GLOBALS['Campsite']['system_preferences'][$keyNewscoopToken];
     }
 
 /*
@@ -75,7 +79,7 @@ function newsimport_take_conf_info() {
     }
 */
 
-    $return array('base_url' => $base_url, 'access_token' => $access_token);
+    return array('base_url' => $base_url, 'access_token' => $access_token);
 } // fn newsimport_take_conf_info
 
 /**
@@ -106,7 +110,7 @@ function newsimport_ask_for_import() {
     foreach ($request_offsets as $one_offset) {
         try {
             $one_request = $request_url . '&newsoffset=' . $one_offset;
-            echo $one_request . "\n";
+            //echo $one_request . "\n";
             file_get_contents($one_request);
         }
         catch (Exception $exc) {}

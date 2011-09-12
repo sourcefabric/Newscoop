@@ -10,14 +10,14 @@ $event_data_sources = array(
         'event_type' => 'general',
         'article_type' => 'event', // do not change this, used at e.g. plugin_newsimport_create_event_type too
         'images_local' => true,
-        'publication_id' => 2,
-        'issue_number' => 13,
-        'section_number' => 30,
+        'publication_id' => 1, // 2,
+        'issue_number' => 1, // 13,
+        'section_number' => 40, // 30,
         'language_id' => 1,
         'source_dirs' => array(
-            'new' => '/usr/local/var/www/fabric/events/input/events/',
-            'use' => '/usr/local/var/www/fabric/events/current/events/',
-            'old' => '/usr/local/var/www/fabric/events/processed/events/',
+            'new' => '/usr/local/var/basel-events/input/events/',
+            'use' => '/usr/local/var/basel-events/current/events/',
+            'old' => '/usr/local/var/basel-events/processed/events/',
             'ready' => array(
                 'events' => 'events_done.txt',
             ),
@@ -45,13 +45,9 @@ $event_data_sources = array(
             'map_height' => 400,
             'poi_marker_name' => 'marker-gold.png',
             'poi_desc_len' => 100,
-/*
-            'search_old' => true,
-            'center_latitude' => 47.556876,
-            'center_longitude' => 7.577676,
-*/
         ),
     ),
+/*
     'movies_1' => array(
         'admin_user_id' => 1,
         'provider_id' => 2,
@@ -64,9 +60,9 @@ $event_data_sources = array(
         'section_number' => 1,
         'language_id' => 1,
         'source_dirs' => array(
-            'new' => '/usr/local/var/www/fabric/events/input/movies/',
-            'use' => '/usr/local/var/www/fabric/events/current/movies/',
-            'old' => '/usr/local/var/www/fabric/events/processed/movies/',
+            'new' => '/usr/local/var/basel-events/input/movies/',
+            'use' => '/usr/local/var/basel-events/current/movies/',
+            'old' => '/usr/local/var/basel-events/processed/movies/',
             'ready' => array(
                 'programs' => 'wvag_cine_done.txt',
                 'movies' => 'ci_done.txt',
@@ -96,13 +92,9 @@ $event_data_sources = array(
             'map_height' => 400,
             'poi_marker_name' => 'marker-gold.png',
             'poi_desc_len' => 100,
-/*
-            'search_old' => true,
-            'center_latitude' => 47.556876,
-            'center_longitude' => 7.577676,
-*/
         ),
     ),
+*/
 );
 
 ?>
