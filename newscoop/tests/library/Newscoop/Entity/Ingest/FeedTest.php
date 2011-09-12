@@ -17,11 +17,6 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->feed = new Feed('sda');
-        $this->feed->setConfig(\Zend_Registry::get('container')->getParameter('ingest'));
-
-        foreach (glob(APPLICATION_PATH . '/../tests/ingest/tmp_*.xml') as $file) {
-            unlink($file);
-        }
     }
 
     public function testFeed()
@@ -29,26 +24,10 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Newscoop\Entity\Ingest\Feed', $this->feed);
     }
 
-    public function testUpdate()
+    public function testUpdated()
     {
-        $this->assertEquals(0, count($this->feed->getEntries()));
-
-        $this->feed->update();
-        $this->assertEquals(2, count($this->feed->getEntries()));
-
-        $this->feed->update();
-        $this->assertEquals(2, count($this->feed->getEntries()));
-    }
-
-    public function testUpdateWithFreshFile()
-    {
-        $tmpFile = APPLICATION_PATH . '/../tests/ingest/' . uniqid('tmp_') . '.xml';
-        copy(APPLICATION_PATH . '/../tests/ingest/newsml1.xml', $tmpFile);
-
-        $this->feed->update();
-        $this->assertEquals(2, count($this->feed->getEntries()));
-
-        $this->feed->update();
-        $this->assertEquals(2, count($this->feed->getEntries()));
+        $now = new \DateTime();
+        $this->assertEquals($this->feed, $this->feed->setUpdated($now));
+        $this->assertEquals($now, $this->feed->getUpdated());
     }
 }

@@ -10,6 +10,7 @@ namespace Newscoop\Services;
 use Doctrine\ORM\EntityManager,
     Newscoop\Entity\Ingest\Feed,
     Newscoop\Entity\Ingest\Feed\Entry,
+    Newscoop\Ingest\Parser\NewsMlParser,
     Newscoop\Ingest\Publisher,
     Newscoop\Services\Ingest\PublisherService;
 
@@ -18,6 +19,8 @@ use Doctrine\ORM\EntityManager,
  */
 class IngestService
 {
+    const IMPORT_DELAY = 180;
+
     /** @var array */
     private $config = array();
 
@@ -77,12 +80,47 @@ class IngestService
     public function updateAll()
     {
         foreach ($this->getFeeds() as $feed) {
-            $feed->setConfig($this->config);
-            $feed->update();
-            $this->em->persist($feed);
+            $this->update($feed);
         }
 
         $this->em->flush();
+    }
+
+    /**
+     * Update feed
+     *
+     * @param Newscoop\Entity\Ingest\Feed $feed
+     * @return void
+     */
+    private function update(Feed $feed)
+    {
+        foreach (glob($this->config['path'] . '/*.xml') as $file) {
+            if (strpos($file, '_phd') !== false) {
+                continue;
+            }
+
+            if ($feed->getUpdated() && $feed->getUpdated()->getTimestamp() > filemtime($file)) {
+                continue;
+            }
+
+            if (time() < filemtime($file) + self::IMPORT_DELAY) {
+                continue;
+            }
+
+            $handle = fopen($file, 'r');
+            if (flock($handle, LOCK_EX | LOCK_NB)) {
+                $parser = new NewsMlParser($file);
+                $entry = Entry::create($parser);
+                $feed->addEntry($entry);
+                flock($handle, LOCK_UN);
+                fclose($handle);
+            } else {
+                continue;
+            }
+        }
+
+        $feed->setUpdated(new \DateTime());
+        $this->em->persist($feed);
     }
 
     /**
