@@ -19,8 +19,18 @@ $info = array(
         'name' => 'newsimport',
         'label' => 'NewsImport',
         'icon' => '',
-        'permission' => 'plugin_newsimport_admin',
+        'permission' => 'plugin_manager',
         'path' => 'newsimport/admin/newsimport_prefs.php',
+/*
+        'sub' => array(
+            array(
+                'permission' => 'EditSystem-Preferences',
+                'path' => 'newsimport/admin/newsimport_prefs.php',
+                'label' => 'Configure',
+                'icon' => '',
+            ),
+        ),
+*/
     ),
     'userDefaultConfig' => array(
         'plugin_newsimport' => 'N',
@@ -30,7 +40,8 @@ $info = array(
      * Do not remove this comment: it is needed for the localizer
      * getGS('User may manage NewsImport');
      */
-    	'plugin_newsimport_admin' => 'User may manage NewsImport',
+    	//'plugin_newsimport_admin' => 'User may manage NewsImport',
+        'plugin_manager' => 'User may manage NewsImport',
     ),
     'template_engine' => array(
         'objecttypes' => array(),
@@ -183,6 +194,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             'minimal_age' => array('type' => 'text', 'params' => array(), 'hidden' => false), // textual or numerical info, if any, but usually empty
             // other details - fixed form
             'rated' => array('type' => 'switch', 'params' => array(), 'hidden' => false), // if of some restricted (hot/explicit) kind
+            'edited' => array('type' => 'switch', 'params' => array(), 'hidden' => false), // whether to disable auto-overwriting
             // category available as article topic
             // images as article images
             // geolocation as map POIs
@@ -434,7 +446,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 	 */
     function plugin_newsimport_addPermissions()
     {
-        $Admin = new UserType(1);
-        $Admin->setPermission('plugin_newsimport_admin', true);
+        //$Admin = new UserType(1);
+        //$Admin->setPermission('plugin_newsimport_admin', true);
     } // fn plugin_newsimport_addPermissions
 }

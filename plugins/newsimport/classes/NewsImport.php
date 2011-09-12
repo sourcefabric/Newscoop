@@ -72,6 +72,7 @@ class NewsImport
         if (!empty($news_auth_sys_pref_changed)) {
             $news_auth_sys_pref = $news_auth_sys_pref_changed;
         }
+        $news_auth_sys_pref = md5($news_auth_sys_pref);
 
         if ((!empty($news_auth_sys_pref)) && ($news_auth != $news_auth_sys_pref)) {
             return false;
@@ -194,6 +195,11 @@ class NewsImport
                     $topics[] = array('fixed' => $lang_topics[$one_spec_key]);
                 }
             }
+            if ('x' == $one_spec_value) {
+                if (array_key_exists($one_spec_key, $lang_topics)) {
+                    $topics[] = array('other' => $lang_topics[$one_spec_key]);
+                }
+            }
             if (is_array($one_spec_value)) {
                 if (array_key_exists($one_spec_key, $lang_topics)) {
                     $topics[] = array('match_xml' => $one_spec_value, 'match_topic' => $lang_topics[$one_spec_key]);
@@ -256,8 +262,10 @@ class NewsImport
                 new ComparisonOperation('NrSection', new Operator('is', 'sql'), $art_section),
                 new ComparisonOperation('Type', new Operator('is', 'sql'), $art_type),
                 new ComparisonOperation($art_type . '.event_id', new Operator('is', 'sql'), $one_event['event_id']),
+                new ComparisonOperation($art_type . '.provider_id', new Operator('is', 'sql'), $one_event['provider_id']),
             ), null, null, 0, $p_count, true);
 
+            $event_data_test = null;
             if (is_array($event_art_list) && (0 < count($event_art_list))) {
                 foreach ($event_art_list as $event_art_test) {
                     $event_data_test = $event_art_test->getArticleData();
@@ -265,6 +273,12 @@ class NewsImport
                         $article = $event_art_test;
                         break;
                     }
+                }
+            }
+
+            if ($article && $event_data_test) {
+                if ($event_data_test->getFieldValue('edited')) {
+                    continue;
                 }
             }
 
@@ -315,6 +329,7 @@ class NewsImport
             $article_data->setProperty('Fminimal_age', $one_event['minimal_age']);
 
             $article_data->setProperty('Frated', ($one_event['rated'] ? 1 : 0));
+            $article_data->setProperty('Fedited', 0);
 
             // set topics
 
@@ -524,6 +539,39 @@ class NewsImport
 
         foreach ($p_eventSources as $one_source_name => $one_source) {
             if ((!empty($p_newsFeed)) && ($one_source_name != $p_newsFeed)) {
+                continue;
+            }
+
+            $feed_key = base64_encode($one_source_name);
+            $sp_images_local = trim('' . SystemPref::Set('NewsImportImagesLocal:' . $feed_key));
+            if (!empty($sp_images_local)) {
+                if ('Y' == $one_feed_images_local_sys_pref) {
+                    $one_source['images_local'] = true;
+                }
+                else {
+                    $one_source['images_local'] = false;
+                }
+            }
+
+            $sp_publication_id = trim('' . SystemPref::Get('NewsImportPublicationId:' . $feed_key));
+            if (!empty($sp_publication_id)) {
+                $one_source['publication_id'] = 0 + $sp_publication_id;
+            }
+            $sp_issue_number = trim('' . SystemPref::Get('NewsImportIssueNumber:' . $feed_key));
+            if (!empty($sp_issue_number)) {
+                $one_source['issue_number'] = 0 + $sp_issue_number;
+            }
+            $sp_section_number = trim('' . SystemPref::Get('NewsImportSectionNumber:' . $feed_key));
+            if (!empty($sp_section_number)) {
+                $one_source['section_number'] = 0 + $sp_section_number;
+            }
+            if (0 >= $one_source['publication_id']) {
+                continue;
+            }
+            if (0 >= $one_source['section_number']) {
+                continue;
+            }
+            if (0 >= $one_source['issue_number']) {
                 continue;
             }
 

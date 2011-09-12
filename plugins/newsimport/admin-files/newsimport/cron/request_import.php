@@ -79,7 +79,7 @@ function newsimport_take_conf_info() {
     }
 */
 
-    return array('base_url' => $base_url, 'access_token' => $access_token);
+    return array('base_url' => $base_url, 'access_token' => md5($access_token));
 } // fn newsimport_take_conf_info
 
 /**

@@ -376,12 +376,17 @@ class EventData_Parser_SimpleXML {
                 // * main type fields
                 // event category
                 $x_catnam = strtolower(trim('' . $event->catnam));
+                $c_other = null;
                 foreach ($p_categories as $one_category) {
                     if (!is_array($one_category)) {
                         continue;
                     }
                     if (array_key_exists('fixed', $one_category)) {
                         $event_topics[] = $one_category['fixed'];
+                        continue;
+                    }
+                    if (array_key_exists('other', $one_category)) {
+                        $c_other = $one_category['other'];
                         continue;
                     }
                     if ((array_key_exists('match_xml', $one_category)) && (array_key_exists('match_topic', $one_category))) {
@@ -394,6 +399,11 @@ class EventData_Parser_SimpleXML {
                             $event_topics[] = $one_cat_match_topic;
                             continue;
                         }
+                    }
+                }
+                if (empty($event_topics)) {
+                    if (!empty($c_other)) {
+                        $event_topics[] = $c_other;
                     }
                 }
                 $event_info['topics'] = $event_topics;
