@@ -3,13 +3,14 @@
     <?php foreach ($this->entries as $entry) { ?>
     <li>
         <h3><?php echo $entry->getTitle(); ?></h3>
+        <em><?php echo $entry->getUpdated()->format('d.m.Y H:i:s'); ?></em>
         <?php if (!$entry->isPublished()) { ?>
         <a href="<?php echo $this->url(array(
             'action' => 'publish',
             'entry' => $entry->getId(),
         )); ?>">Publish</a>
         <?php } else { ?>
-        <em>published: <?php echo $entry->getPublished()->format('d.m.Y H:m:s'); ?></em>
+        <em>published: <?php echo $entry->getPublished()->format('d.m.Y H:i:s'); ?></em>
         <?php } ?>
         <hr />
     </li>
@@ -19,6 +20,6 @@
 <h2><?php putGS('Feeds'); ?></h2>
 <ul class="ingest-feeds">
     <?php foreach ($this->feeds as $feed) { ?>
-    <li><?php echo $feed->getTitle(); ?> <em>updated: <?php echo $feed->getUpdated()->format('d.m.Y H:m:s'); ?></em></li>
+    <li><?php echo $feed->getTitle(); ?> <em>updated: <?php echo $feed->getUpdated()->format('d.m.Y H:i:s'); ?></em></li>
     <?php } ?>
 </ul>

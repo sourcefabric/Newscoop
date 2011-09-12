@@ -9,23 +9,46 @@ namespace Newscoop\Entity\Ingest;
 
 /**
  */
-class FeedTest extends \RepositoryTestCase
+class FeedTest extends \PHPUnit_Framework_TestCase
 {
+    /** @var Newscoop\Entity\Ingest\Feed */
+    private $feed;
+
     public function setUp()
     {
-        parent::setUp('Newscoop\Entity\Ingest\Feed');
+        $this->feed = new Feed('sda');
+        $this->feed->setConfig(\Zend_Registry::get('container')->getParameter('ingest'));
+
+        foreach (glob(APPLICATION_PATH . '/../tests/ingest/tmp_*.xml') as $file) {
+            unlink($file);
+        }
     }
 
     public function testFeed()
     {
-        $feed = new Feed('title');
-        $this->assertInstanceOf('Newscoop\Entity\Ingest\Feed', $feed);
+        $this->assertInstanceOf('Newscoop\Entity\Ingest\Feed', $this->feed);
     }
 
-    public function testUpdateEmpty()
+    public function testUpdate()
     {
-        $feed = new Feed('sda');
-        $feed->update();
-        $this->assertEquals(0, count($feed->getEntries()));
+        $this->assertEquals(0, count($this->feed->getEntries()));
+
+        $this->feed->update();
+        $this->assertEquals(2, count($this->feed->getEntries()));
+
+        $this->feed->update();
+        $this->assertEquals(2, count($this->feed->getEntries()));
+    }
+
+    public function testUpdateWithFreshFile()
+    {
+        $tmpFile = APPLICATION_PATH . '/../tests/ingest/' . uniqid('tmp_') . '.xml';
+        copy(APPLICATION_PATH . '/../tests/ingest/newsml1.xml', $tmpFile);
+
+        $this->feed->update();
+        $this->assertEquals(2, count($this->feed->getEntries()));
+
+        $this->feed->update();
+        $this->assertEquals(2, count($this->feed->getEntries()));
     }
 }

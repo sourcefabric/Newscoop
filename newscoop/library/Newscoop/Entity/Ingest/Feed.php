@@ -17,6 +17,8 @@ use Doctrine\Common\Collections\ArrayCollection,
  */
 class Feed
 {
+    const TIME_DELAY = 180;
+
     /**
      * @Id @GeneratedValue
      * @Column(type="integer")
@@ -31,7 +33,7 @@ class Feed
     private $title;
 
     /**
-     * @Column(type="datetime")
+     * @Column(type="datetime", nullable=True)
      * @var DateTime
      */
     private $updated;
@@ -43,10 +45,9 @@ class Feed
     private $entries;
 
     /**
-     * @var string
-     * @todo use some file manager
+     * @var array
      */
-    public $path = '/../tests/ingest';
+    public $config;
 
     /**
      * @param string $title
@@ -54,7 +55,6 @@ class Feed
     public function __construct($title)
     {
         $this->title = $title;
-        $this->updated = new \DateTime();
         $this->entries = new ArrayCollection();
     }
 
@@ -79,22 +79,47 @@ class Feed
     }
 
     /**
+     * Set config
+     *
+     * @param array $config
+     * @return Newscoop\Entity\Ingest\Feed
+     */
+    public function setConfig(array $config)
+    {
+        $this->config = $config;
+        return $this;
+    }
+
+    /**
      * Update feed
      *
      * @return void
      */
     public function update()
     {
-        foreach (glob(APPLICATION_PATH . $this->path . '/*.xml') as $file) {
+        foreach (glob($this->config['path'] . '/*.xml') as $file) {
             if (strpos($file, '_phd') !== false) {
                 continue;
             }
 
-            // @todo lock file
-            $parser = new NewsMlParser($file);
-            $entry = Entry::create($parser);
-            $this->addEntry($entry);
-            // @todo unlock file
+            if ($this->updated && $this->updated->getTimestamp() > filemtime($file)) {
+                continue;
+            }
+
+            if (time() < filemtime($file) + self::TIME_DELAY) {
+                continue;
+            }
+
+            $handle = fopen($file, 'r');
+            if (flock($handle, LOCK_EX | LOCK_NB)) {
+                $parser = new NewsMlParser($file);
+                $entry = Entry::create($parser);
+                $this->addEntry($entry);
+                flock($handle, LOCK_UN);
+                fclose($handle);
+            } else {
+                continue;
+            }
         }
 
         $this->updated = new \DateTime();
