@@ -51,6 +51,16 @@ class Feed
     }
 
     /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Get title
      *
      * @return string
