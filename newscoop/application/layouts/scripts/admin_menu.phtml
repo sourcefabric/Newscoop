@@ -99,6 +99,13 @@ $pages[1]['pages'][] = array(
     'action' => 'index.php',
 );
 
+$pages[1]['pages'][] = array(
+    'label' => 'Newswires',
+    'module' => 'admin',
+    'controller' => 'ingest',
+    'action' => 'index',
+);
+
 // add content/publications
 foreach ($Campsite['publications'] as $publication) {
     $pubId = $publication->getPublicationId();
