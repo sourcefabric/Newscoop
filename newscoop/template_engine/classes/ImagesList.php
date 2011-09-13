@@ -153,6 +153,8 @@ class ImagesList extends ListObject
     		}
     	}
 
+    	$this->m_constraints[] = new ComparisonOperation('status', new Operator('is', 'string'), 'approved');
+
         return $parameters;
 	}
 }

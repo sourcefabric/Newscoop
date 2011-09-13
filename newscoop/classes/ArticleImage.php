@@ -432,7 +432,7 @@ class ArticleImage extends DatabaseObject {
         // sets the where conditions
         foreach ($p_parameters as $param) {
             $comparisonOperation = self::ProcessListParameters($param);
-            if (sizeof($comparisonOperation) < 1) {
+            if (sizeof($comparisonOperation) < 3) {
                 break;
             }
 
@@ -528,6 +528,14 @@ class ArticleImage extends DatabaseObject {
         case 'nrarticle':
             $comparisonOperation['left'] = 'ArticleImages.NrArticle';
             $comparisonOperation['right'] = (int) $p_param->getRightOperand();
+            break;
+        case 'status':
+            $comparisonOperation['right'] = $p_param->getRightOperand();
+            $comparisonOperation['right'] = strtolower($comparisonOperation['right']);
+            if ($comparisonOperation['right'] == 'approved'
+            || $comparisonOperation['right'] == 'unapproved') {
+                $comparisonOperation['left'] = 'Images.Status';
+            }
             break;
         }
 

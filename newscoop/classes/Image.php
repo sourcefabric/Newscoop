@@ -1032,7 +1032,7 @@ class Image extends DatabaseObject
         // sets the where conditions
         foreach ($p_parameters as $param) {
             $comparisonOperation = self::ProcessListParameters($param);
-            if (sizeof($comparisonOperation) < 1) {
+            if (sizeof($comparisonOperation) < 3) {
                 break;
             }
 
@@ -1144,6 +1144,13 @@ class Image extends DatabaseObject
     		case 'last_modified':
     			$comparisonOperation['left'] = 'Images.LastModified';
     			break;
+    		case 'status':
+    		    $comparisonOperation['right'] = strtolower($comparisonOperation['right']);
+    		    if ($comparisonOperation['right'] == 'approved'
+    		    || $comparisonOperation['right'] == 'unapproved') {
+    		        $comparisonOperation['left'] = 'Images.Status';
+    		    }
+    		    break;
     		default:
     			return null;
     	}
