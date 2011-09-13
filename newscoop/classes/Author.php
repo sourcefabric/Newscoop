@@ -398,7 +398,7 @@ class Author extends DatabaseObject
         global $g_ado_db;
 
         $queryStr = 'SELECT DISTINCT Name FROM ('
-            . '  SELECT Name FROM liveuser_users'
+            . '  SELECT TRIM(CONCAT(first_name, \' \', last_name)) AS Name FROM user'
             . '  UNION'
             . '  SELECT TRIM(CONCAT(first_name, \' \', last_name)) AS Name'
             . '    FROM Authors'

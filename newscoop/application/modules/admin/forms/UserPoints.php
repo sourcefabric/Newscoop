@@ -10,19 +10,31 @@
  */
 class Admin_Form_UserPoints extends Zend_Form
 {
+    private $entities = array();
+
+    public function __construct($point_entities)
+    {
+        $this->entities = $point_entities;
+        parent::__construct();
+    }
+
     public function init()
     {
         //$this->addElement('hash', 'csrf');
 
-        $this->addElement('text', 'test', array(
-            'label' => getGS("Test Action"),
-            'filters' => array(
-                'stringTrim',
-            ),
-            'validators' => array(
-                'int',
-            )
-        ));
+        foreach ($this->entities as $entry) {
+
+            $this->addElement('text', $entry->getAction(), array(
+                'label' => $entry->getAction(),
+                'value' => $entry->getPoints(),
+                'filters' => array(
+                    'stringTrim',
+                ),
+                'validators' => array(
+                    'int',
+                )
+            ));
+        }
 
         $this->addElement('submit', 'submit', array(
             'label' => getGS('Save'),

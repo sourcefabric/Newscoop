@@ -80,7 +80,14 @@ final class MetaUser extends MetaEntity
      */
     public function __toString()
     {
-        return $this->name;
+        $url = $GLOBALS['controller']->view->url(array('username' => $this->uname), 'user');
+
+        if ($this->user->isPublic()) {
+            return "<a href='{$url}'>{$this->name}</a>";
+        }
+        else {
+            return $this->name;
+        }
     }
 
     /**
@@ -164,5 +171,42 @@ final class MetaUser extends MetaEntity
         $repositoryAcceptance = $controller->getHelper('user')->getRepository('Newscoop\user\Comment\Acceptance');
         $repository = $controller->getHelper('user')->getRepository('Newscoop\user\Comment');
         return (int) $repositoryAcceptance->checkParamsBanned($this->name, $this->email, $userIp, $publication_id);
+    }
+
+    /**
+     * Get image src
+     *
+     * @param int $width
+     * @param int $height
+     * @return string
+     */
+    public function image($width = 80, $height = 80)
+    {
+        if (!$this->user->getImage()) {
+            return '';
+        }
+
+        return $GLOBALS['controller']->getHelper('service')->getService('image')
+            ->getSrc($this->user->getImage(), $width, $height);
+    }
+
+    /**
+     * Get topics
+     *
+     * @return array
+     */
+    public function topics()
+    {
+        if (!$this->user->getId()) {
+            return array();
+        }
+
+        $service = $GLOBALS['controller']->getHelper('service')->getService('user.topic');
+        $topics = array();
+        foreach ($service->getTopics($this->user) as $topic) {
+            $topics[$topic->getTopicId()] = $topic->getName();
+        }
+
+        return $this->topics = $topics;
     }
 }

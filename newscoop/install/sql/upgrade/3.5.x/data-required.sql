@@ -91,3 +91,12 @@ system php ./acl.php
 system php ./transfer_phorum.php
 system php ./javascript_js_cleanup.php
 
+-- add new acl_rule
+INSERT INTO `acl_rule` VALUES (null,'allow',1,'feedback','view');
+
+-- update images
+UPDATE `Images` SET `Source` = 'local', `Status` = 'approved' WHERE 1;
+
+-- update attachments
+UPDATE `Attachments` SET `Source` = 'local', `Status` = 'approved' WHERE 1;
+

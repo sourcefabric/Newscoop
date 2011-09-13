@@ -13,6 +13,8 @@ class Application_Form_Profile extends Zend_Form
 {
     public function init()
     {
+        $this->setAttrib('enctype', 'multipart/form-data');
+
         $this->addElement('text', 'first_name', array(
             'label' => 'First Name',
             'filters' => array('stringTrim'),
@@ -21,6 +23,10 @@ class Application_Form_Profile extends Zend_Form
         $this->addElement('text', 'last_name', array(
             'label' => 'Last Name',
             'filters' => array('stringTrim'),
+        ));
+
+        $this->addElement('file', 'image', array(
+            'label' => 'Profile image',
         ));
 
         $profile = new Zend_Form_SubForm();
@@ -89,7 +95,7 @@ class Application_Form_Profile extends Zend_Form
 
         $profile = $this->getSubForm('attributes');
         foreach ($profile as $field) {
-            $defaults['attributes'][$field->getName()] = $user->getAttribute($field->getName());
+            $defaults['attributes'][$field->getName()] = (string) $user->getAttribute($field->getName());
         }
 
         $this->setDefaults($defaults);

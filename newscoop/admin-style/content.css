@@ -253,137 +253,138 @@ dl dd .info-text	{
     width: 883px;
 	text-indent: 3px;
 }
-/* File upload
--------------------------------------- */
-.uploader	{
-	margin: 20px 30px 10px 30px;
-}
-.plupload_content .position-helper,
-.plupload-addon-bottom .position-helper {
-	float:left;
-	padding:0;
-	font-style:normal;
-	width:100%;
-	margin: 10px 10px 0px 10px;
-}
-.plupload_content .position-helper .input_text  {
-	width:40%;
-	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;
-}
-.plupload_content ul	{
-	margin:0;
-	padding:0;
 }
 
-/* Media archive
--------------------------------------- */
-.media-archive	{
-    background: none !important;
-    border: none !important;
-    padding: 0 !important;
-    position: relative;
+.edit-image  {
+    margin: 8px 0;
+    height: 1%;
+    overflow: hidden;
 }
-.media-archive .dataTables_wrapper {
-    margin: 0;
-}
-.media-archive .smartlist .no-top-border {
-	border-top:none;
-}
-.media-archive .smartlist .no-bottom-border {
-	border-bottom:none;
-}
-.media-archive .search {
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;
-	background-image: url('images/searchfield_bg.png');
-	border: 1px solid #9D9D9D;
+
+.edit-image a {
+    display: block;
     float: left;
-    font-size: 12px;
-    height: 23px;
+    padding: 5px;
+    font-size: 1.3em;
+    background-color: #fff;
+    text-align: left;
+}
+
+.iframe .content {
+    margin: 5px;
+}
+
+.iframe .zend_form {
+    width: 503px;
+}
+
+.ingest {
+    height: 1%;
+    overflow: hidden;
+}
+
+.ingest ul {
     margin: 0;
-    padding: 0 0 0 20px;
-    text-indent: 3px;
-}
-.media-archive .smartlist .ui-widget-header {
-    background: none repeat scroll 0 0 #FFFFFF;
-    padding: 10px;
-}
-.media-archive .dataTables_filter	{
-	float:left;
-	width:80%;
-}
-.media-archive .dataTables_length {
-	clear:none;
-	float:right;
-	padding:0;
-}
-.media-archive .TableTools {
-    clear:both;
-	float:right;
-    margin:0;
     padding: 0;
 }
-.media-archive .TableTools_Button	{
-	margin:0;
-}
-.media-archive .TableTools_Button:hover	{
-	color:#FFFFFF;
-	background: #007FB3;
-    background: -moz-linear-gradient(center top , #2390BD 0pt, #007FB3 100%) repeat scroll 0 0 transparent;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2390BD), color-stop(100%, #007FB3));
-	border: 1px solid #007FB3;
-}
-.media-archive .dataTables_info {
-	/*float:left;*/
-	margin:0;
-	padding:0;
-}
-.media-archive select {
-	padding:2px;
-}
-.media-archive .dataTables_paginate.ui-buttonset {
-	margin:10px 0 0;
-	overflow:hidden;
-}
-.media-archive .ui-state-default:hover {
-	color:#FFFFFF;
-	background: #007FB3;
-    background: -moz-linear-gradient(center top , #2390BD 0pt, #007FB3 100%) repeat scroll 0 0 transparent;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2390BD), color-stop(100%, #007FB3));
-	border: 1px solid #007FB3;
+
+.ingest li {
+    margin: 0; 
+    padding: 5px 0;
 }
 
-/* simple tabs */
-.simple-tabs {
-	padding:0px !important;
-	margin-bottom:20px !important;
-	background:none !important;
-	border:none !important;
-	border-bottom:1px solid #9D9D9D !important;
+.ingest li:first-child {
+    padding-top: 0;
 }
-.simple-tabs .ui-tabs-selected {
-	background:#f6f6f6 !important;
+
+.ingest .control {
+    float: left;
+    width: 215px;
+    font-size: 1.3em;
 }
-.simple-tabs .ui-state-default a, 
-.simple-tabs .ui-state-default a:link,
-.simple-tabs .ui-state-default a:visited {
-    color: #007fb3;
+
+.ingest .control .w {
+    padding-top: 5px;
+    margin-right: 10px;
 }
-.simple-tabs li.ui-state-default:hover	{
-	border:none;
+
+.ingest .control .mode {
+    margin: 0 0 6px;
+    padding 0 0 5px: 
 }
-.simple-tabs .ui-state-default a:hover	{
-	color:#FFFFFF;
-	background: #007FB3;
-    background: -moz-linear-gradient(center top , #2390BD 0pt, #007FB3 100%) repeat scroll 0 0 transparent;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2390BD), color-stop(100%, #007FB3));
-	border: 1px solid #007FB3;
-	border-bottom:none !important;
+
+.ingest .control .mode dt {
+    /*float: left;*/
 }
-.simple-tabs .ui-tabs-selected a:hover	{
-	background:none;
-	border: 1px solid #9D9D9D;
+
+.ingest .control .mode dd {
+    margin: 0 0 1px;
+    font-weight: bold;
 }
-.simple-tabs .ui-state-active a, 
+
+.ingest .control .mode a {
+    color: #cc0000;
+}
+
+.ingest .control .mode .auto a {
+    color: #4e9a06;
+}
+
+.ingest .control h2 {
+    padding: 10px 0 5px;
+    font-size: 1em;
+    font-weight: bold;
+}
+
+.ingest .main {
+    float: left;
+    width: 800px;
+}
+
+.ingest .entries li {
+    font-size: 1.3em;
+    border-top: 1px solid #ebebeb;
+}
+
+.ingest .entries li:hover {
+    background-color: #fff;
+}
+
+.ingest .entries li:first-child {
+    padding-top: 5px;
+    border-top: none;
+}
+
+.ingest .entries li > * {
+    padding: 0 7px;
+}
+
+.ingest .entries .title a {
+    color: inherit;
+}
+
+.ingest .entries .title.p-2 {
+    font-weight: bold;
+    color: #ce5c00;
+}
+
+.ingest .date {
+    float: right;
+}
+
+.ingest .publish {
+    float: right;
+}
+
+.ingest h1 {
+    border: none;
+}
+
+.ingest .entries p {
+    font-size: 1em;
+    color: #555753;
+}
+
 .simple-tabs .ui-state-active a:link, 
 .simple-tabs .ui-state-active a:visited {
     color: #444444;

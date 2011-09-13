@@ -142,8 +142,8 @@ class Statistics {
         $config = parse_ini_file($application_path . '/configs/application.ini');
 
         $session_name = session_name();
-        if (isset($config['resources.session.name'])) {
-            $session_name = $config['resources.session.name'];
+        if (isset($config['session.name'])) {
+            $session_name = $config['session.name'];
         }
 
         session_start($session_name);

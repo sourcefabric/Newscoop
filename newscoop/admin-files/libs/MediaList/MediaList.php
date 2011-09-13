@@ -32,6 +32,8 @@ class MediaList extends BaseList
             'content_disposition' => getGS('Open in browser'),
             'time_created' => getGS('Added'),
             'last_modified' => getGS('Last modified'),
+            'Source' => getGS('Source'),
+            'Status' => getGS('Status'),
             'InUse' => getGS('In use'),
         );
         

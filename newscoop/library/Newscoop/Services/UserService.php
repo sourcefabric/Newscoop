@@ -16,13 +16,13 @@ use Doctrine\ORM\EntityManager,
 class UserService
 {
     /** @var Doctrine\ORM\EntityManager */
-    protected $em;
+    private $em;
 
     /** @var Zend_Auth */
-    protected $auth;
+    private $auth;
 
     /** @var Newscoop\Entity\User */
-    protected $currentUser;
+    private $currentUser;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
@@ -64,17 +64,6 @@ class UserService
     }
 
     /**
-     * Find all users
-     *
-     * @return array
-     */
-    public function findAll()
-    {
-        return $this->getRepository()
-            ->findAll();
-    }
-
-    /**
      * Find by given criteria
      *
      * @param array $criteria
@@ -89,32 +78,29 @@ class UserService
     }
 
     /**
-     * Create user
+     * Save user
      *
-     * @param array $values
+     * @param array $data
+     * @param Newscoop\Entity\User $user
      * @return Newscoop\Entity\User
      */
-    public function create(array $values)
+    public function save(array $data, User $user = null)
     {
-        $user = new User();
-        $this->getRepository()
-            ->save($user, $values);
+        if ($user === null) {
+            $user = new User();
+        }
+
+        if (empty($data['image'])) {
+            unset($data['image']);
+        }
+
+        if (empty($data['password'])) {
+            unset($data['password']);
+        }
+
+        $this->getRepository()->save($user, $data);
         $this->em->flush();
         return $user;
-    }
-
-    /**
-     * Update user
-     *
-     * @param Newscoop\Entity\User $user
-     * @param array $values
-     * @return void
-     */
-    public function update(User $user, array $values)
-    {
-        $this->getRepository()
-            ->save($user, $values);
-        $this->em->flush();
     }
 
     /**
@@ -146,7 +132,14 @@ class UserService
             return '';
         }
 
-        $username = trim(strtolower("{$firstName}.{$lastName}"), '.');
+        $username = strtolower(trim($firstName) . '-' . trim($lastName));
+        $username = preg_replace('~[^\\pL0-9_]+~u', '-', $username);
+        $username = trim($username, "-");
+        $username = iconv("utf-8", "us-ascii//TRANSLIT", $username);
+        $username = strtolower($username);
+        $username = preg_replace('~[^-a-z0-9_]+~', '', $username);
+        $username = str_replace('-', '.', $username);
+
         for ($i = '';; $i++) {
             $conflict = $this->getRepository()->findOneBy(array(
                 'username' => "$username{$i}",
@@ -159,11 +152,67 @@ class UserService
     }
 
     /**
+     * Set user active
+     *
+     * @param Newscoop\Entity\User $user
+     * @return void
+     */
+    public function setActive(User $user)
+    {
+        $user->setStatus(User::STATUS_ACTIVE);
+        $this->em->flush();
+    }
+
+    /**
+     * Create pending user
+     *
+     * @param string $email
+     * @return Newscoop\Entity\User
+     */
+    public function createPending($email)
+    {
+        $user = new User($email);
+        $user->setPublic(true);
+        $this->em->persist($user);
+        $this->em->flush();
+        return $user;
+    }
+
+    /**
+     * Save pending user
+     *
+     * @param array $data
+     * @param Newscoop\Entity\User $user
+     * @return void
+     */
+    public function savePending($data, User $user)
+    {
+        if (!$user->isPending()) {
+            throw new \InvalidArgumentException("User '{$user->getUsername()}' is not pending user.");
+        }
+
+        $user->setActive();
+        $user->setPublic(true);
+        $this->save($data, $user);
+    }
+
+    /**
+     * Test if username is available
+     *
+     * @param string $username
+     * @return bool
+     */
+    public function checkUsername($username)
+    {
+        return $this->getRepository()->isUnique('username', $username);
+    }
+
+    /**
      * Get repository for user entity
      *
      * @return Newscoop\Entity\Repository\UserRepository
      */
-    protected function getRepository()
+    private function getRepository()
     {
         return $this->em->getRepository('Newscoop\Entity\User');
     }

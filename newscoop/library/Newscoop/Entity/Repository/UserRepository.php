@@ -25,6 +25,7 @@ class UserRepository extends EntityRepository
         'status' => 'setStatus',
         'is_admin' => 'setAdmin',
         'is_public' => 'setPublic',
+        'image' => 'setImage',
     );
 
     /**
@@ -55,6 +56,7 @@ class UserRepository extends EntityRepository
         }
 
         $this->setAttributes($user, array_key_exists('attributes', $values) ? $values['attributes'] : array());
+        $this->setUserTypes($user, array_key_exists('user_type', $values) ? $values['user_type'] : array());
 
         $this->getEntityManager()->persist($user);
     }
@@ -106,6 +108,21 @@ class UserRepository extends EntityRepository
     }
 
     /**
+     * Set user types
+     *
+     * @param Newscoop\Entity\User $user
+     * @param array $types
+     * @return void
+     */
+    private function setUserTypes(User $user, array $types)
+    {
+        $user->getUserTypes()->clear();
+        foreach ($types as $type) {
+            $user->addUserType($this->getEntityManager()->getReference('Newscoop\Entity\User\Group', $type));
+        }
+    }
+
+    /**
      * Test if property value is unique
      *
      * @param string $property
@@ -113,7 +130,7 @@ class UserRepository extends EntityRepository
      * @param int $id
      * @return bool
      */
-    private function isUnique($property, $value, $id)
+    public function isUnique($property, $value, $id = null)
     {
         $qb = $this->getEntityManager()->createQueryBuilder()
             ->select('COUNT(u.id)')
@@ -122,7 +139,7 @@ class UserRepository extends EntityRepository
 
         $params = array($value);
 
-        if ($id > 0) {
+        if ($id !== null) {
             $qb->andWhere('u.id <> ?1');
             $params[] = $id;
         }
@@ -130,5 +147,127 @@ class UserRepository extends EntityRepository
         $qb->setParameters($params);
 
         return !$qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function findActiveUsers($countOnly, $offset, $limit)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        if ($countOnly) {
+            $qb->select('COUNT(u.id)');
+        }
+        else {
+            $qb->select('u');
+        }
+
+        $qb->from('Newscoop\Entity\User', 'u');
+
+        $qb->where($qb->expr()->eq("u.status", User::STATUS_ACTIVE));
+        $qb->andWhere($qb->expr()->eq("u.is_public", true));
+
+        if ($countOnly === false) {
+            $qb->orderBy('u.points', 'DESC');
+            $qb->addOrderBy('u.id', 'ASC');
+
+            $qb->setFirstResult($offset);
+            $qb->setMaxResults($limit);
+
+            echo $qb->getQuery()->getSql();
+
+            return $qb->getQuery()->getResult();
+        }
+        else {
+            return $qb->getQuery()->getOneOrNullResult();
+        }
+    }
+
+    /**
+     * Return Users if their last name begins with one of the letter passed in.
+     *
+     * @param array $letters = ['a', 'b']
+     *
+     * @return array Newscoop\Entity\User
+     */
+    public function findUsersLastNameInRange($letters, $countOnly, $offset, $limit)
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+
+        if ($countOnly) {
+            $qb->select('COUNT(u.id)');
+        }
+        else {
+            $qb->select('u');
+        }
+
+        $qb->from('Newscoop\Entity\User', 'u');
+
+        $qb->where($qb->expr()->eq("u.status", User::STATUS_ACTIVE));
+        $qb->andWhere($qb->expr()->eq("u.is_public", true));
+
+        $letterIndex = $qb->expr()->orx();
+        for ($i=0; $i < count($letters); $i++) {
+            $letterIndex->add($qb->expr()->like("u.last_name", "'$letters[$i]%'"));
+        }
+        $qb->andWhere($letterIndex);
+
+        if ($countOnly === false) {
+            $qb->orderBy('u.last_name', 'ASC');
+            $qb->addOrderBy('u.first_name', 'ASC');
+            $qb->addOrderBy('u.id', 'ASC');
+
+            $qb->setFirstResult($offset);
+            $qb->setMaxResults($limit);
+
+            //echo $qb->getQuery()->getSql();
+
+            return $qb->getQuery()->getResult();
+        }
+        else {
+            return $qb->getQuery()->getOneOrNullResult();
+        }
+    }
+
+    /**
+     * Return Users if any of their searched attributes contain the searched term.
+     *
+     * @param string $search
+     *
+     * @param array $attributes
+     *
+     * @return array Newscoop\Entity\User
+     */
+    public function searchUsers($search, $countOnly, $offset, $limit, $attributes = array("first_name", "last_name", "username"))
+    {
+        $keywords = explode(" ", $search);
+
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb->select('u')
+            ->from('Newscoop\Entity\User', 'u');
+
+        $outerAnd = $qb->expr()->andx();
+
+        for($i=0; $i < count($keywords); $i++) {
+            $innerOr = $qb->expr()->orx();
+            for ($j=0; $j < count($attributes); $j++) {
+                $innerOr->add($qb->expr()->like("u.{$attributes[$j]}", "'%$keywords[$i]%'"));
+            }
+            $outerAnd->add($innerOr);
+        }
+
+        $outerAnd->add($qb->expr()->eq("u.status", User::STATUS_ACTIVE));
+        $outerAnd->add($qb->expr()->eq("u.is_public", true));
+
+        $qb->where($outerAnd);
+
+        $qb->orderBy('u.last_name', 'ASC');
+        $qb->addOrderBy('u.first_name', 'ASC');
+        $qb->addOrderBy('u.id', 'DESC');
+
+        $qb->setFirstResult($offset);
+        $qb->setMaxResults($limit);
+
+        //echo $qb->getQuery()->getSql();
+
+        return $qb->getQuery()->getResult();
     }
 }

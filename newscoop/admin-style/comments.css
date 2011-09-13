@@ -688,13 +688,13 @@ select.actions {
 
 /*---////////// Status Colors //////////---*/
 
-.datatable tr.status_approved {
+.datatable tr.status_approved, .datatable tr.status_processed {
     background:#fff;
 }
 .datatable tr.status_new {
     background:#EAF7DA;
 }
-.datatable tr.status_hidden {
+.datatable tr.status_hidden, .datatable tr.status_starred {
     background:#f2f2f2;
 }
 .datatable tr.status_deleted {

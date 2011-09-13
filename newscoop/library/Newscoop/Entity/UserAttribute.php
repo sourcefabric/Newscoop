@@ -15,7 +15,6 @@ class UserAttribute
 {
     /**
      * @Id @ManyToOne(targetEntity="User", inversedBy="attributes")
-     * @JoinColumn(name="user_id", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;
@@ -27,7 +26,7 @@ class UserAttribute
     private $attribute;
 
     /**
-     * @Column(type="string", length="255")
+     * @Column(type="string", length="255", nullable=True)
      * @var string
      */
     private $value;

@@ -54,7 +54,7 @@ class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
             return new \Zend_Auth_Result(\Zend_Auth_Result::FAILURE_UNCATEGORIZED, NULL);
         }
 
-        if ($user->isAdmin() != $this->is_admin) {
+        if ($this->is_admin && !$user->isAdmin()) {
             return new \Zend_Auth_Result(\Zend_Auth_Result::FAILURE_UNCATEGORIZED, NULL);
         }
 

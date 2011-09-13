@@ -27,8 +27,7 @@ class TemplateRepositoryTest extends \RepositoryTestCase
 
     public function testTemplateRepository()
     {
-        $this->assertType('Newscoop\Entity\Repository\TemplateRepository',
-            $this->repository);
+        $this->assertInstanceOf('Newscoop\Entity\Repository\TemplateRepository', $this->repository);
     }
 
     public function testGetTemplate()

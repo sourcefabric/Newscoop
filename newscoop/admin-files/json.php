@@ -58,6 +58,10 @@ try {
     $serverRequest->allow('ImageList::doData');
     $serverRequest->allow('MediaList::doDelete');
     $serverRequest->allow('ImageList::doDelete');
+    $serverRequest->allow('ImageList::doApprove');
+    $serverRequest->allow('MediaList::doApprove');
+    $serverRequest->allow('ImageList::doDisapprove');
+    $serverRequest->allow('MediaList::doDisapprove');
     $serverRequest->allow('Article::setOnFrontPage','Publish');
     $serverRequest->allow('Article::setOnSectionPage','Publish');
     $serverRequest->allow('Article::setIsPublic','Publish');

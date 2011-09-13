@@ -401,6 +401,40 @@ class BaseList
 
         return TRUE;
     }
+    
+    /**
+     * Handle approve
+     * @param array $ids
+     * @return bool
+     */
+    public function doApprove($ids)
+    {
+        $class = get_class($this->model);
+
+        foreach ((array) $ids as $id) {
+            $object = new $class($id);
+            $object->update(array('Status' => 'approved'));
+        }
+
+        return TRUE;
+    }
+    
+    /**
+     * Handle disapprove
+     * @param array $ids
+     * @return bool
+     */
+    public function doDisapprove($ids)
+    {
+        $class = get_class($this->model);
+
+        foreach ((array) $ids as $id) {
+            $object = new $class($id);
+            $object->update(array('Status' => 'unapproved'));
+        }
+
+        return TRUE;
+    }
 
     /**
      * Get human readable filesize

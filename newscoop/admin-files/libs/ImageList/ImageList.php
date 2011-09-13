@@ -32,7 +32,9 @@ class ImageList extends BaseList
             'Date' => getGS('Date'),
             'TimeCreated' => getGS('Added'),
             'LastModified' => getGS('Last modified'),
-            'InUse' => getGS('In use'),
+            'Source' => getGS('Source'),
+            'Status' => getGS('Status'),
+            'InUse' => getGS('In use')
         );
 
         $this->searchCols = array(

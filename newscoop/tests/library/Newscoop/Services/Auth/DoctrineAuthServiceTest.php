@@ -110,10 +110,6 @@ class DoctrineAuthServiceTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(TRUE));
 
         $user->expects($this->once())
-            ->method('isAdmin')
-            ->will($this->returnValue(FALSE));
-
-        $user->expects($this->once())
             ->method('checkPassword')
             ->with($this->equalTo('secret'))
             ->will($this->returnValue(FALSE));
@@ -149,10 +145,6 @@ class DoctrineAuthServiceTest extends \PHPUnit_Framework_TestCase
         $user->expects($this->once())
             ->method('isActive')
             ->will($this->returnValue(TRUE));
-
-        $user->expects($this->once())
-            ->method('isAdmin')
-            ->will($this->returnValue(FALSE));
 
         $user->expects($this->once())
             ->method('checkPassword')

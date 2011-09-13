@@ -64,7 +64,6 @@ class AuditEvent
 
     /**
      * @ManyToOne(targetEntity="User")
-     * @JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;

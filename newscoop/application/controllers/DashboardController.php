@@ -42,11 +42,35 @@ class DashboardController extends Zend_Controller_Action
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
-            $this->service->update($this->user, $form->getValues());
-            $this->_helper->redirector('index');
+            $values = $form->getValues();
+
+            try {
+                $imageInfo = array_pop($form->image->getFileInfo());
+                $values['image'] = $this->_helper->service('image')->save($imageInfo);
+                $this->service->save($values, $this->user);
+                $this->_helper->redirector('index');
+            } catch (\InvalidArgumentException $e) {
+                $form->image->addError($e->getMessage());
+            }
         }
 
         $this->view->form = $form;
         $this->view->user = new MetaUser($this->user);
+    }
+
+    public function followTopicAction()
+    {
+        $service = $this->_helper->service('user.topic');
+        $topic = $service->findTopic($this->_getParam('topic'));
+        if (!$topic) {
+            $this->_helper->flashMessenger(array('error', "No topic to follow"));
+            $this->_helper->redirector('index', 'index', 'default');
+        }
+
+        $service = $this->_helper->service('user.topic');
+        $service->followTopic($this->user, $topic);
+
+        $this->_helper->flashMessenger("Topic added to followed");
+        $this->_helper->redirector->gotoUrl($_SERVER['HTTP_REFERER']);
     }
 }

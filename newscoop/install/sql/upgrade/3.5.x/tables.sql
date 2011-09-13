@@ -198,6 +198,40 @@ CREATE TABLE IF NOT EXISTS `context_boxes` (
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
  
 
+-- Feedback main table
+DROP TABLE IF EXISTS `feedback`;
+CREATE TABLE `feedback` (
+   `id` int(11) not null auto_increment,
+   `user_id` int(11),
+   `section_id` int(11),
+   `publication_id` int(11),
+   `article_language` int(11),
+   `article_number` int(11),
+   `subject` varchar(128),
+   `message` varchar(2048) not null,
+   `status` tinyint(1) unsigned not null,
+   `url` varchar(128) not null,
+   `time_created` datetime not null,
+   `time_updated` datetime not null,
+   `attachment_type` int(1),
+   `attachment_id` int(11),
+   PRIMARY KEY (`id`),
+   KEY `user` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- Update Images
+ALTER TABLE `Images`
+ ADD COLUMN `Source` enum('local','feedback') not null default 'local',
+ ADD COLUMN `Status` enum('unapproved','approved') not null default 'approved',
+ DROP PRIMARY KEY,
+ ADD PRIMARY KEY (`id`);
+
+-- Update Attachments
+ALTER TABLE `Attachments`
+ ADD COLUMN `Source` enum('local','feedback') not null default 'local',
+ ADD COLUMN `Status` enum('unapproved','approved') not null default 'approved',
+ DROP PRIMARY KEY,
+ ADD PRIMARY KEY (`id`);
 
 -- Upgrade templates to themes
 system php ./create_themes.php

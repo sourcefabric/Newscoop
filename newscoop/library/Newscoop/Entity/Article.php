@@ -25,7 +25,6 @@ class Article
     private $language;
 
     /**
-     * @Id
      * @ManyToOne(targetEntity="Newscoop\Entity\Publication")
      * @JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
@@ -33,7 +32,6 @@ class Article
     private $publication;
 
     /**
-     * @Id
      * @ManyToOne(targetEntity="Newscoop\Entity\Issue")
      * @JoinColumn(name="NrIssue", referencedColumnName="Number")
      * @var Newscoop\Entity\Issue
@@ -41,7 +39,6 @@ class Article
     private $issue;
 
     /**
-     * @Id
      * @ManyToOne(targetEntity="Newscoop\Entity\Section")
      * @JoinColumn(name="NrSection", referencedColumnName="Number")
      * @var Newscoop\Entity\Section

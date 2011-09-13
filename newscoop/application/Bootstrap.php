@@ -57,11 +57,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
     protected function _initContainer()
     {
-        $this->bootstrap('autoloader'); $container = new sfServiceContainerBuilder($this->getOptions());
+        $this->bootstrap('autoloader');
+        $container = new sfServiceContainerBuilder($this->getOptions());
 
         $this->bootstrap('doctrine');
         $doctrine = $this->getResource('doctrine');
         $container->setService('em', $doctrine->getEntityManager());
+
+        $this->bootstrap('view');
+        $container->setService('view', $this->getResource('view'));
+
+        $container->register('image', 'Newscoop\Services\ImageService')
+            ->addArgument(new sfServiceReference('view'));
 
         $container->register('user', 'Newscoop\Services\UserService')
             ->addArgument(new sfServiceReference('em'))
@@ -70,10 +77,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('user.list', 'Newscoop\Services\ListUserService')
             ->addArgument(new sfServiceReference('em'));
 
+        $container->register('user.token', 'Newscoop\Services\UserTokenService')
+            ->addArgument(new sfServiceReference('em'));
+
         $container->register('user_type', 'Newscoop\Services\UserTypeService')
             ->addArgument(new sfServiceReference('em'));
 
-	$container->register('user_points', 'Newscoop\Services\UserPointsService')
+        $container->register('user_points', 'Newscoop\Services\UserPointsService')
             ->addArgument(new sfServiceReference('em'));
 
         $container->register('audit', 'Newscoop\Services\AuditService')
@@ -83,7 +93,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('community_feed', 'Newscoop\Services\CommunityFeedService')
             ->addArgument(new sfServiceReference('em'));
 
-        $container->register('dispatcher', 'sfEventDispatcher')
+        $container->register('dispatcher', 'Newscoop\Services\EventDispatcherService')
             ->setConfigurator(function($service) use ($container) {
                 foreach ($container->getParameter('listener') as $listener) {
                     $listenerService = $container->getService($listener);
@@ -94,8 +104,26 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 }
             });
 
+        $container->register('user.topic', 'Newscoop\Services\UserTopicService')
+            ->addArgument(new sfServiceReference('em'))
+            ->addArgument(new sfServiceReference('dispatcher'));
+
+
         $container->register('auth.adapter', 'Newscoop\Services\Auth\DoctrineAuthService')
             ->addArgument(new sfServiceReference('em'));
+
+        $container->register('email', 'Newscoop\Services\EmailService')
+            ->addArgument('%email%')
+            ->addArgument(new sfServiceReference('view'))
+            ->addArgument(new sfServiceReference('user.token'));
+
+        $container->register('ingest.publisher', 'Newscoop\Services\Ingest\PublisherService')
+            ->addArgument('%ingest_publisher%');
+
+        $container->register('ingest', 'Newscoop\Services\IngestService')
+            ->addArgument('%ingest%')
+            ->addArgument(new sfServiceReference('em'))
+            ->addArgument(new sfServiceReference('ingest.publisher'));
 
         Zend_Registry::set('container', $container);
         return $container;
@@ -126,7 +154,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $front->registerPlugin(new Application_Plugin_CampPluginAutoload());
         $front->registerPlugin(new Application_Plugin_Auth($options['auth']));
         $front->registerPlugin(new Application_Plugin_Acl($options['acl']));
-        $front->registerPlugin(new Application_Plugin_Smarty());
     }
 
     protected function _initRouter()
@@ -135,29 +162,53 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $router = $front->getRouter();
 
         $router->addRoute(
-            'article',
+            'content',
             new Zend_Controller_Router_Route(':language/:issue/:section/:articleNo/:articleUrl', array(
                 'module' => 'default',
                 'controller' => 'index',
                 'action' => 'index',
-            )));
-
-        $router->addRoute(
-            'section',
-            new Zend_Controller_Router_Route(':language/:issue/:section', array(
-                'module' => 'default',
-                'controller' => 'index',
-                'action' => 'index',
-            )));
-
-        $router->addRoute(
-            'issue',
-            new Zend_Controller_Router_Route(':language/:issue', array(
-                'module' => 'default',
-                'controller' => 'index',
-                'action' => 'index',
-                'language' => null,
+                'articleUrl' => null,
+                'articleNo' => null,
+                'section' => null,
                 'issue' => null,
+                'language' => 'en', // @todo get default language from config
+            ), array(
+                'language' => '[a-z]{2}',
+            )));
+
+        $router->addRoute(
+            'confirm-email',
+            new Zend_Controller_Router_Route('confirm-email/:user/:token', array(
+                'module' => 'default',
+                'controller' => 'register',
+                'action' => 'confirm',
+            )));
+
+        $router->addRoute(
+            'user-search',
+            new Zend_Controller_Router_Route('search/:search/:page', array(
+                'module' => 'default',
+                'controller' => 'user',
+                'action' => 'index',
+                'page' => 1,
+            )));
+
+        $router->addRoute(
+            'user-list',
+            new Zend_Controller_Router_Route('listing/:user-listing/:page', array(
+                'module' => 'default',
+                'controller' => 'user',
+                'action' => 'index',
+                'page' => 1,
+            )));
+
+        $router->addRoute(
+            'user-active',
+            new Zend_Controller_Router_Route('active/:page', array(
+                'module' => 'default',
+                'controller' => 'user',
+                'action' => 'index',
+                'page' => 1,
             )));
 
         $router->addRoute(
@@ -169,27 +220,21 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             )));
 
         $router->addRoute(
-            'register',
-            new Zend_Controller_Router_Route('register/:action', array(
+            'image',
+            new Zend_Controller_Router_Route_Regex('media/image/cache/(\d+)_(\d+)_(.+)', array(
                 'module' => 'default',
-                'controller' => 'register',
-                'action' => 'index',
-            )));
+                'controller' => 'image',
+                'action' => 'cache',
+            ), array(
+                1 => 'width',
+                2 => 'height',
+                3 => 'image',
+            ), 'media/image/cache/%d_%d_%s'));
+    }
 
-        $router->addRoute(
-            'auth',
-            new Zend_Controller_Router_Route('auth/:action', array(
-                'module' => 'default',
-                'controller' => 'auth',
-                'action' => 'index',
-            )));
-
-        $router->addRoute(
-            'admin',
-            new Zend_Controller_Router_Route('admin/:controller/:action/*', array(
-                'module' => 'admin',
-                'controller' => 'index',
-                'action' => 'index',
-            )));
+    protected function _initActionHelpers()
+    {
+        require_once APPLICATION_PATH . '/controllers/helpers/Smarty.php';
+        Zend_Controller_Action_HelperBroker::addHelper(new Action_Helper_Smarty());
     }
 }
