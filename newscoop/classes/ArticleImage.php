@@ -530,8 +530,7 @@ class ArticleImage extends DatabaseObject {
             $comparisonOperation['right'] = (int) $p_param->getRightOperand();
             break;
         case 'status':
-            $comparisonOperation['right'] = $p_param->getRightOperand();
-            $comparisonOperation['right'] = strtolower($comparisonOperation['right']);
+            $comparisonOperation['right'] = strtolower($p_param->getRightOperand());
             if ($comparisonOperation['right'] == 'approved'
             || $comparisonOperation['right'] == 'unapproved') {
                 $comparisonOperation['left'] = 'Images.Status';
