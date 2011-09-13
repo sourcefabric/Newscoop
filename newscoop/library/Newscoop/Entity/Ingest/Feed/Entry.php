@@ -84,6 +84,18 @@ class Entry
     private $priority;
 
     /**
+     * @Column(type="string", nullable=True)
+     * @var string
+     */
+    private $date_id;
+
+    /**
+     * @Column(type="string", nullable=True)
+     * @var string
+     */
+    private $news_item_id;
+
+    /**
      * @Column(type="array", nullable=True)
      * @var array
      */
@@ -292,7 +304,7 @@ class Entry
      */
     public function getDateId()
     {
-        return $this->getAttribute('date_id');
+        return $this->date_id;
     }
 
     /**
@@ -302,7 +314,7 @@ class Entry
      */
     public function getNewsItemId()
     {
-        return $this->getAttribute('news_item_id');
+        return $this->news_item_id;
     }
 
     /**
@@ -386,6 +398,38 @@ class Entry
     }
 
     /**
+     * Update entry
+     *
+     * @param Newscoop\Ingest\Parser $parser
+     * @return Newscoop\Entity\Ingest\Feed\Entry
+     */
+    public function update(Parser $parser)
+    {
+        $this->updated = $parser->getUpdated();
+        $this->title = $parser->getTitle();
+        $this->content = $parser->getContent();
+        $this->priority = $parser->getPriority();
+        $this->summary = (string) $parser->getSummary();
+        $this->setAttribute('revision_id', (string) $parser->getRevisionId());
+        $this->setAttribute('service', (string) $parser->getService());
+        $this->setAttribute('language', (string) $parser->getLanguage());
+        $this->setAttribute('subject', (string) $parser->getSubject());
+        $this->setAttribute('country', (string) $parser->getCountry());
+        $this->setAttribute('product', (string) $parser->getProduct());
+        $this->setAttribute('subtitle', (string) $parser->getSubtitle());
+        $this->setAttribute('provider_id', (string) $parser->getProviderId());
+        $this->setAttribute('revision_id', (string) $parser->getRevisionId());
+        $this->setAttribute('location', (string) $parser->getLocation());
+        $this->setAttribute('provider', (string) $parser->getProvider());
+        $this->setAttribute('source', (string) $parser->getSource());
+        $this->setAttribute('catch_line', (string) $parser->getCatchLine());
+        $this->setAttribute('catch_word', (string) $parser->getCatchWord());
+        $this->setAttribute('authors', (string) $parser->getAuthors());
+        self::setImages($this, $parser);
+        return $this;
+    }
+
+    /**
      * Entry factory
      *
      * @param Newscoop\Ingest\Parser $parser
@@ -405,8 +449,8 @@ class Entry
         $entry->setAttribute('product', (string) $parser->getProduct());
         $entry->setAttribute('subtitle', (string) $parser->getSubtitle());
         $entry->setAttribute('provider_id', (string) $parser->getProviderId());
-        $entry->setAttribute('date_id', (string) $parser->getDateId());
-        $entry->setAttribute('news_item_id', (string) $parser->getNewsItemId());
+        $entry->date_id = (string) $parser->getDateId();
+        $entry->news_item_id = (string) $parser->getNewsItemId();
         $entry->setAttribute('revision_id', (string) $parser->getRevisionId());
         $entry->setAttribute('location', (string) $parser->getLocation());
         $entry->setAttribute('provider', (string) $parser->getProvider());
