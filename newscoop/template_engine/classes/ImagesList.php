@@ -159,7 +159,7 @@ class ImagesList extends ListObject
 
     	//set some default parameters.
     	$operator = new Operator('is', 'string');
-        $this->m_constraints[] = new ComparisonOperation($parameter, $operator, "approved");
+        $this->m_constraints[] = new ComparisonOperation('status', $operator, "approved");
 
         return $parameters;
 	}
