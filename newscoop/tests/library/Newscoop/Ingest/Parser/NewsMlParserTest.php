@@ -11,15 +11,31 @@ namespace Newscoop\Ingest\Parser;
  */
 class NewsMlParserTest extends \PHPUnit_Framework_TestCase
 {
-    const NEWSML = '/../tests/ingest/test_phd.xml';
+    const NEWSML = '/../tests/ingest/test.xml';
     const TITLE = 'title';
-    const CONTENT = '/../tests/ingest/test_phd.content.xml';
+    const SUBTITLE = '';
+    const CONTENT = "<p>next</p>\n<h2>h2</h2>\n<p>last</p>";
     const CREATED = '20110825T051533+0200';
     const UPDATED = '20110825T120549+0200';
     const PRIORITY = 2;
     const SERVICE = 'SDA-ATS News Service';
-    const UID = 'urn:newsml:www.sda-ats.ch:20110825:brd004:3N';
+    const PRODUCT = 'sda-Online D';
     const SUMMARY = 'first';
+    const PROVIDER_ID = 'www.sda-ats.ch';
+    const DATE_ID = '20110825';
+    const NEWS_ITEM_ID = 'brd004';
+    const REVISION_ID = 3;
+    const INSTRUCTION = 'Update';
+    const LOCATION = 'Tripolis';
+    const LANGUAGE = 'de';
+    const COUNTRY = 'LY';
+    const PROVIDER = 'sda';
+    const SOURCE = 'sda, dpa, afp, dapd';
+    const SUBJECT = '11000000';
+    const CATCH_LINE = 'NATO unterstützt Rebellen bei Gaddafi-Jagd';
+    const CATCH_WORD = 'Libyen';
+    const AUTHORS = 'kr;kad';
+    const IMAGE_CAPTION = 'Sion feiert das 1:0 durch Feindouno';
 
     /** @var Newscoop\Ingest\Parser\NewsMlParser */
     private $parser;
@@ -41,7 +57,7 @@ class NewsMlParserTest extends \PHPUnit_Framework_TestCase
 
     public function testGetContent()
     {
-        $this->assertStringEqualsFile(APPLICATION_PATH . self::CONTENT, $this->parser->getContent());
+        $this->assertEquals(self::CONTENT, $this->parser->getContent());
     }
 
     public function testGetCreated()
@@ -61,13 +77,105 @@ class NewsMlParserTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(self::PRIORITY, $this->parser->getPriority());
     }
 
+    public function testIsImage()
+    {
+        $this->assertFalse($this->parser->isImage());
+    }
+
     public function testGetService()
     {
         $this->assertEquals(self::SERVICE, $this->parser->getService());
     }
 
-    public function getPublicId()
+    public function testGetProviderId()
     {
-        $this->assertEquals(self::UID, $this->parser->getPublicId());
+        $this->assertEquals(self::PROVIDER_ID, $this->parser->getProviderId());
+    }
+
+    public function testGetProvider()
+    {
+        $this->assertEquals(self::PROVIDER, $this->parser->getProvider());
+    }
+
+    public function testGetDateId()
+    {
+        $this->assertEquals(self::DATE_ID, $this->parser->getDateId());
+    }
+
+    public function testGetNewsItemId()
+    {
+        $this->assertEquals(self::NEWS_ITEM_ID, $this->parser->getNewsItemId());
+    }
+
+    public function testGetRevisionId()
+    {
+        $this->assertEquals(self::REVISION_ID, $this->parser->getRevisionId());
+    }
+
+    public function testGetInstruction()
+    {
+        $this->assertEquals(self::INSTRUCTION, $this->parser->getInstruction());
+    }
+
+    public function testGetLocation()
+    {
+        $this->assertEquals(self::LOCATION, $this->parser->getLocation());
+    }
+
+    public function testGetProduct()
+    {
+        $this->assertEquals(self::PRODUCT, $this->parser->getProduct());
+    }
+
+    public function testGetLanguage()
+    {
+        $this->assertEquals(self::LANGUAGE, $this->parser->getLanguage());
+    }
+
+    public function testGetSource()
+    {
+        $this->assertEquals(self::SOURCE, $this->parser->getSource());
+    }
+
+    public function testGetCountry()
+    {
+        $this->assertEquals(self::COUNTRY, $this->parser->getCountry());
+    }
+
+    public function testGetSubject()
+    {
+        $this->assertEquals(self::SUBJECT, $this->parser->getSubject());
+    }
+
+    public function testGetCatchLine()
+    {
+        $this->assertEquals(self::CATCH_LINE, $this->parser->getCatchLine());
+    }
+
+    public function testGetCatchWord()
+    {
+        $this->assertEquals(self::CATCH_WORD, $this->parser->getCatchWord());
+    }
+
+    public function testGetSubHeadline()
+    {
+        $this->assertEquals(self::SUBTITLE, $this->parser->getSubTitle());
+    }
+
+    public function testGetAuthors()
+    {
+        $this->assertEquals(explode(';', self::AUTHORS), $this->parser->getAuthors());
+    }
+
+    public function testGetImages()
+    {
+        $images = $this->parser->getImages();
+        $this->assertEquals(1, count($images));
+
+        $image = array_shift($images);
+        $this->assertInstanceOf('Newscoop\Ingest\Parser\NewsMlParser', $image);
+        $this->assertTrue($image->isImage());
+        $this->assertFileExists($image->getPath());
+        $this->assertEquals(self::IMAGE_CAPTION, $image->getTitle());
     }
 }

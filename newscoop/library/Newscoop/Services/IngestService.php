@@ -96,10 +96,6 @@ class IngestService
     private function update(Feed $feed)
     {
         foreach (glob($this->config['path'] . '/*.xml') as $file) {
-            if (strpos($file, '_phd') !== false) {
-                continue;
-            }
-
             if ($feed->getUpdated() && $feed->getUpdated()->getTimestamp() > filemtime($file)) {
                 continue;
             }
@@ -111,8 +107,10 @@ class IngestService
             $handle = fopen($file, 'r');
             if (flock($handle, LOCK_EX | LOCK_NB)) {
                 $parser = new NewsMlParser($file);
-                $entry = Entry::create($parser);
-                $feed->addEntry($entry);
+                if (!$parser->isImage()) {
+                    $entry = Entry::create($parser);
+                    $feed->addEntry($entry);
+                }
                 flock($handle, LOCK_UN);
                 fclose($handle);
             } else {

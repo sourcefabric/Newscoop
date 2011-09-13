@@ -85,16 +85,16 @@ class IngestServiceTest extends \RepositoryTestCase
         $this->assertEquals(0, count($feed->getEntries()));
 
         $this->service->updateAll();
-        $this->assertEquals(2, count($feed->getEntries()));
+        $this->assertEquals(3, count($feed->getEntries()));
         $this->assertInstanceOf('DateTime', $feed->getUpdated());
 
         $this->service->updateAll();
-        $this->assertEquals(2, count($feed->getEntries()));
+        $this->assertEquals(3, count($feed->getEntries()));
 
         $tmpFile = APPLICATION_PATH . '/../tests/ingest/' . uniqid('tmp_') . '.xml';
         copy(APPLICATION_PATH . '/../tests/ingest/newsml1.xml', $tmpFile);
 
         $this->service->updateAll();
-        $this->assertEquals(2, count($feed->getEntries()));
+        $this->assertEquals(3, count($feed->getEntries()));
     }
 }

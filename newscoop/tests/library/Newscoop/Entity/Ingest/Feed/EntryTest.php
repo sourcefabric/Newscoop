@@ -47,7 +47,7 @@ class EntryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Newscoop\Entity\Ingest\Feed\Entry', $entry);
         $this->assertEquals(NewsMlParserTest::TITLE, $entry->getTitle());
-        $this->assertStringEqualsFile(APPLICATION_PATH . NewsMlParserTest::CONTENT, $entry->getContent());
+        $this->assertEquals(NewsMlParserTest::CONTENT, $entry->getContent());
         $this->assertEquals(new \DateTime(NewsMlParserTest::CREATED), $entry->getCreated());
         $this->assertEquals(new \DateTime(NewsMlParserTest::UPDATED), $entry->getUpdated());
         $this->assertEquals(NewsMlParserTest::PRIORITY, $entry->getPriority());
