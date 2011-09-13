@@ -5,7 +5,8 @@
 <div id="ob_main" style="display: none;">
 	<div id="ob_message_wrapper" style="display: none;">
 		<div id="ob_message" style="display: none;"></div>
-		<div id="ob_message_close" style="display: none;"><a href="javascript:omnibox.hideMessage();omnibox.setMessage('');">close</a></div>
+		<div id="ob_message_close" style="display: none;" class="right"><a href="javascript:omnibox.hideMessage();omnibox.setMessage('');"><img src="{{ $view->baseUrl('/public/css/img/close-button.png') }}"></a></div>
+		<div class="clear"></div>
 	</div>
 	<div class="clear"></div>
 	{{ if $gimme->user->logged_in }}
@@ -30,7 +31,7 @@
 			
 			<div id="ob_comment_text_container" class="text_container" style="display: inline;">
 				<label for="ob_comment_subject" style="float: none;">subject</label>
-				<input type="text" id="ob_comment_subject" value=""><br>
+				<input type="text" id="ob_comment_subject" value="" onKeyPress="if (event.keyCode == 13) omnibox.sendComment();"><br>
 				<label for="ob_comment_text" style="float: none;">comment</label>
 				<textarea name="ob_comment_text" id="ob_comment_text"></textarea><br>
 				<input type="button" class="send_button" value="send" onClick="omnibox.sendComment();">
@@ -38,7 +39,7 @@
 			
 			<div id="ob_feedback_text_container" class="text_container" style="display: none;">
 				<label for="ob_feedback_subject" style="float: none;">subject</label>
-				<input type="text" id="ob_feedback_subject" value=""><br>
+				<input type="text" id="ob_feedback_subject" value="" onKeyPress="if (event.keyCode == 13) omnibox.sendFeedback();"><br>
 				<label for="ob_feedback_text" style="float: none;">message</label>
 				<textarea name="ob_feedback_text" id="ob_feedback_text"></textarea><br>
 				<span id="ob_file_upload_container"></span>
@@ -51,7 +52,7 @@
 		{{ else }}
 			<div id="ob_feedback_text_container" class="text_container">
 				<label for="ob_feedback_subject" style="float: none;">subject</label>
-				<input type="text" id="ob_feedback_subject" value=""><br>
+				<input type="text" id="ob_feedback_subject" value="" onKeyPress="if (event.keyCode == 13) omnibox.sendFeedback();"><br>
 				<label for="ob_feedback_text" style="float: none;">message</label>
 				<textarea name="ob_feedback_text" id="ob_feedback_text"></textarea><br>
 				<span id="ob_file_upload_container"></span>
@@ -72,9 +73,9 @@
 			introduction text here...
 		</div>
 		<div class="text_container">
-			<input type="text" id="ob_username" class="small right"><br>
+			<input type="text" id="ob_username" class="small right" onKeyPress="if (event.keyCode == 13) omnibox.login();"><br>
 			<div class="clear"></div>
-			<input type="password" id="ob_password" class="small right"><br>
+			<input type="password" id="ob_password" class="small right" onKeyPress="if (event.keyCode == 13) omnibox.login();"><br>
 			<div class="clear"></div>
 			<input type="button" class="send_button right" value="login" onClick="omnibox.login();">
 			<a class="register_link right" href="{{ $view->baseUrl('/register') }}">register</a>

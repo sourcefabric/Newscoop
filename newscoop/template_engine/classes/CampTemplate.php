@@ -95,7 +95,7 @@ final class CampTemplate extends Smarty
     {
         $dirs = array();
         foreach (CampPlugin::GetEnabled() as $CampPlugin) {
-            $dirs[] = APPLICATION_PATH . "/{$CampPlugin->getBasePath()}/smarty_camp_plugins";
+            $dirs[] = CS_PATH_SITE . "/{$CampPlugin->getBasePath()}/smarty_camp_plugins";
         }
 
         return $dirs;
