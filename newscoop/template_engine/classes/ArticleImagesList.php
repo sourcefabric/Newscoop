@@ -128,6 +128,7 @@ class ArticleImagesList extends ListObject
         }
         $this->m_constraints[] = new ComparisonOperation('nrarticle', $operator,
                                                          $context->article->number);
+        $this->m_constraints[] = new ComparisonOperation('status', $operator, 'approved');
 
         return $parameters;
 	}

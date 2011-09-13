@@ -1035,7 +1035,7 @@ class Image extends DatabaseObject
         // sets the where conditions
         foreach ($p_parameters as $param) {
             $comparisonOperation = self::ProcessListParameters($param);
-            if (sizeof($comparisonOperation) < 1) {
+            if (sizeof($comparisonOperation) < 3) {
                 break;
             }
 
@@ -1078,8 +1078,6 @@ class Image extends DatabaseObject
 
         // builds the query and executes it
         $selectQuery = $selectClauseObj->buildQuery();
-
-        //echo $selectQuery;
 
         $images = $g_ado_db->GetAll($selectQuery);
         if (is_array($images)) {
@@ -1150,9 +1148,13 @@ class Image extends DatabaseObject
     		case 'last_modified':
     			$comparisonOperation['left'] = 'Images.LastModified';
     			break;
-    	    case 'status':
-                $comparisonOperation['left'] = 'Images.Status';
-                break;
+    		case 'status':
+    		    $comparisonOperation['right'] = strtolower($comparisonOperation['right']);
+    		    if ($comparisonOperation['right'] == 'approved'
+    		    || $comparisonOperation['right'] == 'unapproved') {
+    		        $comparisonOperation['left'] = 'Images.Status';
+    		    }
+    		    break;
             case 'user':
                 $comparisonOperation['left'] = 'Images.UploadedByUser';
                 break;
