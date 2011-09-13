@@ -9,7 +9,7 @@
 require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/ContextArticle.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ContextBoxArticle.php');
 /**
  * @package Campsite
  */
@@ -57,12 +57,7 @@ Class ContextBox extends DatabaseObject {
     }
 
     public function getArticlesList() {
-
-    	/*
-        $contextArticleObj = new ContextArticle();
-        return $contextArticleObj->getList($this->getId());
-        */
-        return ContextArticle::GetList(array($this->getId()), null, 0, 0, $p_count, FALSE);
+        return ContextBoxArticle::GetList($this->getId(), null, 0, 0, $p_count, FALSE);
 
     }
 

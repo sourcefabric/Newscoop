@@ -40,12 +40,12 @@ function smarty_block_list_box_articles($p_params, $p_content, &$p_smarty, &$p_r
     	                                                'issue', 'section', 'article',
     	                                                'image', 'attachment', 'comment',
     	                                                'subtitle'));
-		$campContext->issue = $campContext->current_issues_list->current;
+		$campContext->article = $campContext->current_list->current;
 		$p_repeat = true;
 	} else {
-		$campContext->current_issues_list->defaultIterator()->next();
-		if (!is_null($campContext->current_issues_list->current)) {
-			$campContext->issue = $campContext->current_issues_list->current;
+		$campContext->current_list->defaultIterator()->next();
+		if (!is_null($campContext->current_list->current)) {
+			$campContext->article = $campContext->current_list->current;
 			$p_repeat = true;
 		} else {
 			$campContext->resetCurrentList();

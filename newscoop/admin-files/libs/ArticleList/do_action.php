@@ -306,8 +306,8 @@ case 'context_box_update':
     if ($articleObj->userCanModify($g_user)) {
         $contextBoxObj = new ContextBox(null, $contextContent['f_article_id']);
         $contextId = $contextBoxObj->getId();
-        $contextArticleObj = new ContextArticle();
-        $contextArticleObj->saveList($contextId, $contextContent['f_related_items']);
+        $contextBoxArticleObj = new ContextBoxArticle();
+        $contextBoxArticleObj->saveList($contextId, $contextContent['f_related_items']);
 
     }
 	return json_encode(array(200));

@@ -13,7 +13,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
  * @package Campsite
  */
 
-Class ContextArticle extends DatabaseObject {
+Class ContextBoxArticle extends DatabaseObject {
     var $m_dbTableName = 'context_articles';
 
 
@@ -50,8 +50,8 @@ Class ContextArticle extends DatabaseObject {
     /**
      * Gets an issues list based on the given parameters.
      *
-     * @param array $p_parameters
-     *    An array of ComparisonOperation objects
+     * @param integer $p_context_id
+     *    The Context Box Identifier
      * @param string $p_order
      *    An array of columns and directions to order by
      * @param integer $p_start
@@ -65,7 +65,7 @@ Class ContextArticle extends DatabaseObject {
      * @return array $issuesList
      *    An array of Issue objects
      */
-    public static function GetList(array $p_parameters, $p_order = null,
+    public static function GetList($p_context_id, $p_order = null,
     $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
     {
         global $g_ado_db;
@@ -82,7 +82,7 @@ Class ContextArticle extends DatabaseObject {
             }
         }
 
-        $p_context_id = $p_parameters[0];
+
 
         $returnArray = array();
         $queryStr = '

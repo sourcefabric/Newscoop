@@ -33,12 +33,28 @@ class BoxArticlesList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $BoxArticlesList = Issue::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+		$context = CampTemplate::singleton()->context();
+        if (!$context->article->defined()) {
+        	return array();
+        }
+
+        if (!$context->language->defined()) {
+        	$languageId = $context->publication->default_language->number;
+        } else {
+        	$languageId = $context->language->number;
+        }
+
+        $preview = $context->preview;
+
+        $contextBox = new ContextBox(null, $context->article->number);
+
+        $BoxArticlesList = ContextBoxArticle::GetList($contextBox->getId(), $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaBoxArticlesList = array();
-	    foreach ($BoxArticlesList as $issue) {
-	        $metaBoxArticlesList[] = new MetaIssue($issue->getPublicationId(),
-	                                          $issue->getLanguageId(),
-	                                          $issue->getIssueNumber());
+	    foreach ($BoxArticlesList as $articleNo) {
+	        $article = new MetaArticle($languageId, $articleNo);
+	        if ($preview || $article->is_published) {
+	        	$metaBoxArticlesList[] = $article;
+	        }
 	    }
 	    return $metaBoxArticlesList;
 	}
@@ -170,18 +186,6 @@ class BoxArticlesList extends ListObject
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_box_articles", $p_smarty);
     		}
     	}
-
-        $operator = new Operator('is', 'integer');
-        $context = CampTemplate::singleton()->context();
-        $this->m_constraints[] = new ComparisonOperation('IdPublication', $operator,
-                                                         $context->publication->identifier);
-        if ($context->language->defined) {
-            $this->m_constraints[] = new ComparisonOperation('IdLanguage', $operator,
-                                                             $context->language->number);
-        }
-        if (!$context->preview) {
-            $this->m_constraints[] = new ComparisonOperation('published', $operator, 'true');
-        }
 
     	return $parameters;
 	}
