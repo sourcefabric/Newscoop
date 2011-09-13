@@ -326,7 +326,7 @@ class NewsImport
             $article_data->setProperty('Fphone', $one_event['phone']);
 
             $article_data->setProperty('Fdescription', $one_event['description']);
-            $ev_other_info = implode("\n", $one_event['other']);
+            $ev_other_info = implode("\n<br />\n", $one_event['other']);
             $article_data->setProperty('Fother', $ev_other_info);
 
             $article_data->setProperty('Fgenre', $one_event['genre']);

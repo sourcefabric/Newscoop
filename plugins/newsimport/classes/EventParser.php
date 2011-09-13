@@ -9,8 +9,9 @@
 
 class EventData_Parser {
 
-    var $m_working = '_working';
+    var $m_working = '_lock';
     var $m_dirmode = 0755;
+    var $m_lockfile = null;
 
     var $m_source = null;
     var $m_provider = null;
@@ -37,7 +38,12 @@ class EventData_Parser {
     public function start() {
         // stop, if some worker running; return false
         $working_path = $this->m_dirs['use'] . $this->m_working;
-        if (file_exists($working_path)) {
+        //if (file_exists($working_path)) {
+        //    return false;
+        //}
+        $this->m_lockfile = fopen($working_path, 'a');
+        $locked = flock($this->m_lockfile, LOCK_EX);
+        if (!$locked) {
             return false;
         }
 
@@ -78,9 +84,14 @@ class EventData_Parser {
         if (!file_exists($working_path)) {
             return false;
         }
+        if (!$this->m_lockfile) {
+            return false;
+        }
 
         try {
-            unlink($working_path);
+            //unlink($working_path);
+            flock($this->m_lockfile, LOCK_UN);
+            fclose($this->m_lockfile);
         }
         catch (Exception $exc) {
             return false;
