@@ -17,6 +17,8 @@ class EventData_Parser {
     var $m_provider = null;
     var $m_dirs = null;
 
+    var $m_last_events = null;
+
 	/**
 	 * constructor
 	 * @param array $p_source
@@ -149,6 +151,7 @@ class EventData_Parser {
 
         if ($to_copy_files) {
             // copy files with time stamps
+            $cur_time = date('YmdHis');
             foreach ($this->m_dirs['source']['events'] as $one_file_glob) {
                 $one_path_glob = $ready_file = $this->m_dirs['new'] . $one_file_glob;
                 $one_file_set = glob($one_path_glob);
@@ -161,7 +164,7 @@ class EventData_Parser {
                         continue;
                     }
                     $event_file_name = basename($event_file_path_new);
-                    $event_file_path_use = $this->m_dirs['use'] . date('YmdHis') . '-' . $event_file_name;
+                    $event_file_path_use = $this->m_dirs['use'] . $cur_time . '-' . $event_file_name;
                     try {
                         rename($event_file_path_new, $event_file_path_use);
                     }
@@ -234,6 +237,99 @@ class EventData_Parser {
         return true;
     } // fn cleanup
 
+    public function parseOld($p_categories, $p_otherParams) {
+        $this->m_last_events = null;
+        if (!is_array($p_categories)) {
+            $p_categories = array();
+        }
+
+        $start_date = null;
+        if (array_key_exists('start_date', $p_otherParams)) {
+            $start_date = $p_otherParams['start_date'];
+        }
+
+        $parser = new EventData_Parser_SimpleXML();
+
+        $events = array();
+        //$files = array();
+
+        $dir_handle = null;
+        try {
+            $dir_handle = opendir($this->m_dirs['old']);
+        }
+        catch (Exception $exc) {
+            return false;
+        }
+
+        $datetime_length = 14;
+        $date_length = 8;
+
+        $passed_files = array();
+        if ($dir_handle) {
+            while (false !== ($event_file = readdir($dir_handle))) {
+                $event_file_path = $this->m_dirs['old'] . $event_file;
+
+                if (!is_file($event_file_path)) {
+                    continue;
+                }
+                if (($datetime_length + 2) > strlen($event_file)) { // 14 for datetime, 1 for '-', and something then
+                    continue;
+                }
+                if (!is_numeric(substr($event_file, 0, $datetime_length))) {
+                    continue;
+                }
+
+                $passed_files[] = $event_file_path;
+            }
+        }
+        if (empty($passed_files)) {
+            return;
+        }
+
+        rsort($passed_files); // the youngest file as the first one
+
+        $lastest_file = array_shift($passed_files);
+        $latest_start = substr(basename($lastest_file), 0, $date_length);
+
+        $last_files = array($lastest_file);
+
+        // taking one day dose of events for the subsequent checking
+        foreach ($passed_files as $one_file) {
+            if (substr(basename($one_file), 0, $date_length) != $latest_start) {
+                break;
+            }
+            $last_files[] = $one_file;
+        }
+
+        sort($last_files); // the youngest (last updates) file as the last one
+        foreach ($last_files as $event_file_path)
+        {
+            {
+                $event_file_path_arr = explode('.', $event_file_path);
+                $event_file_path_arr_last_rank = count($event_file_path_arr) - 1;
+                if (0 < $event_file_path_arr_last_rank) {
+                    if ('gz' == strtolower($event_file_path_arr[$event_file_path_arr_last_rank])) {
+                        $event_file_path = 'compress.zlib://' . $event_file_path;
+                    }
+                }
+
+                try {
+                    $result = $parser->parse($events, $this->m_provider, $event_file_path, $p_categories, $start_date);
+                }
+                catch (Exception $exc) {
+                    //var_dump($exc);
+                }
+                //$files[] = $event_file;
+            }
+        }
+        $this->m_last_events = array();
+        foreach ($events as $one_event) {
+            $this->m_last_events[$one_event['event_id']] = json_encode($one_event);
+        }
+
+        return true;
+    }
+
     /**
      * Parses EventData data (by EventData_Parser_SimpleXML)
      *
@@ -252,7 +348,9 @@ class EventData_Parser {
             $start_date = $p_otherParams['start_date'];
         }
 
-        $parser = new EventData_Parser_SimpleXML;
+        $this->parseOld($p_categories, $p_otherParams);
+
+        $parser = new EventData_Parser_SimpleXML($this->m_last_events);
 
         $events = array();
         $files = array();
@@ -297,6 +395,13 @@ class EventData_Parser {
  * EventData Parser that makes use of the SimpleXML PHP extension.
  */
 class EventData_Parser_SimpleXML {
+
+    var $m_last_events = null;
+
+    public function __construct($p_lastEvents = null)
+    {
+        $this->m_last_events = $p_lastEvents;
+    } // fn __construct
 
     /**
      * Parses EventData data (by SimplXML)
@@ -800,6 +905,14 @@ class EventData_Parser_SimpleXML {
                 $event_info['geo'] = null;
                 if ((!empty($x_loclat)) && (!empty($x_loclng))) {
                     $event_info['geo'] = array('longitude' => $x_loclng, 'latitude' => $x_loclat);
+                }
+
+                if (!empty($this->m_last_events)) {
+                    if (array_key_exists($event_info['event_id'], $this->m_last_events)) {
+                        if (json_encode($event_info) == $this->m_last_events[$event_info['event_id']]) {
+                            continue;
+                        }
+                    }
                 }
 
                 $p_events[] = $event_info;

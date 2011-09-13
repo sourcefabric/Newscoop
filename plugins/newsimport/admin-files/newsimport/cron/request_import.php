@@ -103,13 +103,14 @@ function newsimport_ask_for_import() {
     //$one_limit = 5;
     $request_url .= 'newsauth=' . urlencode($conf_info['access_token']) . '&newslimit=' . $one_limit;
 
+    $request_count = 100;
     $request_offsets = array(0);
-    for ($ind = 1; $ind <= 100; $ind++) {
+    for ($ind = 1; $ind <= $request_count; $ind++) {
         $request_offsets[] = $ind * $one_limit;
     }
 
     foreach ($request_offsets as $one_offset) {
-        sleep(1);
+        //sleep(1);
         try {
             $one_request = $request_url . '&newsoffset=' . $one_offset;
             //echo $one_request . "\n";
