@@ -5,7 +5,8 @@
 <div id="ob_main" style="display: none;">
 	<div id="ob_message_wrapper" style="display: none;">
 		<div id="ob_message" style="display: none;"></div>
-		<div id="ob_message_close" style="display: none;"><a href="javascript:omnibox.hideMessage();omnibox.setMessage('');">close</a></div>
+		<div id="ob_message_close" style="display: none;" class="right"><a href="javascript:omnibox.hideMessage();omnibox.setMessage('');"><img src="{{ $view->baseUrl('/public/css/img/close-button.png') }}"></a></div>
+		<div class="clear"></div>
 	</div>
 	<div class="clear"></div>
 	{{ if $gimme->user->logged_in }}
