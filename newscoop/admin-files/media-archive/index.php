@@ -68,6 +68,8 @@ camp_html_content_top(getGS('Media Archive'), NULL);
     <?php if ($g_user->hasPermission('DeleteFile')) { ?>
     <fieldset class="actions">
         <input type="submit" name="delete" value="<?php putGS('Delete selected'); ?>" />
+        <input type="submit" name="approve" value="<?php putGS('Approve selected'); ?>" />
+        <input type="submit" name="disapprove" value="<?php putGS('Disapprove selected'); ?>" />
     </fieldset>
     <?php } ?>
 </div><!-- /#files -->

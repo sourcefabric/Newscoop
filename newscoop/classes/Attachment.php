@@ -469,9 +469,9 @@ class Attachment extends DatabaseObject {
      */
     public static function ProcessFile($p_tmpFile, $p_newFile, $p_userId = NULL, $p_attributes = NULL)
     {
-        //$tmp_attachment = new Attachment();
-        //$tmp_name =  $tmp_attachment->getStorageLocation()."/". $p_tmpFile;
-        $tmp_name = $GLOBALS['Campsite']['FILE_DIRECTORY'] . '/' . $p_tmpFile;
+        $tmp_attachment = new Attachment();
+        $tmp_name =  $tmp_attachment->getStorageLocation()."/". $p_tmpFile;
+        //$tmp_name = $GLOBALS['Campsite']['FILE_DIRECTORY'] . '/' . $p_tmpFile;
         $file = array(
             'name' => $p_newFile,
             'tmp_name' => $tmp_name,
