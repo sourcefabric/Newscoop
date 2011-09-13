@@ -916,7 +916,9 @@ class Image extends DatabaseObject
 	/**
 	 * Get an array of users who have uploaded images.
 	 * @return array
+	 * @todo does anyone need this method? liveuser_users table is now just called users.
 	 */
+	/*
 	public static function GetUploadUsers()
 	{
 		$tmpUser = new User();
@@ -932,6 +934,7 @@ class Image extends DatabaseObject
 		$users = DbObjectArray::Create('User', $queryStr);
 		return $users;
 	} // fn GetUploadUsers
+	*/
 
 
     /**
@@ -1075,6 +1078,7 @@ class Image extends DatabaseObject
 
         // builds the query and executes it
         $selectQuery = $selectClauseObj->buildQuery();
+
         $images = $g_ado_db->GetAll($selectQuery);
         if (is_array($images)) {
         	$countQuery = $countClauseObj->buildQuery();
@@ -1151,6 +1155,9 @@ class Image extends DatabaseObject
     		        $comparisonOperation['left'] = 'Images.Status';
     		    }
     		    break;
+            case 'user':
+                $comparisonOperation['left'] = 'Images.UploadedByUser';
+                break;
     		default:
     			return null;
     	}

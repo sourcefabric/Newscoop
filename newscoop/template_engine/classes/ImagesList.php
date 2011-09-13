@@ -148,6 +148,10 @@ class ImagesList extends ListObject
 					$operator = new Operator($opName, 'string');
 					$this->m_constraints[] = new ComparisonOperation($parameter, $operator, 'local');
     				break;
+                case 'user':
+                    $operator = new Operator('is', 'int');
+                    $this->m_constraints[] = new ComparisonOperation($parameter, $operator, $value);
+                    break;
     			default:
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_images", $p_smarty);
     		}
