@@ -17,6 +17,7 @@ $f_image_description = Input::Get('f_image_description');
 $f_image_photographer = Input::Get('f_image_photographer');
 $f_image_place = Input::Get('f_image_place');
 $f_image_date = Input::Get('f_image_date');
+$f_image_status = Input::Get('f_image_status');
 //$f_image_url = Input::Get('f_image_url', 'string', '', true);
 if (!Input::IsValid() || ($f_image_id <= 0)) {
 	camp_html_goto_page("/$ADMIN/media-archive/index.php");
@@ -31,7 +32,8 @@ if (!$g_user->hasPermission('ChangeImage')) {
 $updateArray = array('Description' => $f_image_description,
 					'Photographer' => $f_image_photographer,
 					'Place' => $f_image_place,
-					'Date' => $f_image_date);
+					'Date' => $f_image_date,
+					'Status' => $f_image_status);
 //if (!empty($f_image_url)) {
 //	$updateArray['URL'] = $f_image_url;
 //}
