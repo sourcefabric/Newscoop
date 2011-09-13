@@ -191,7 +191,7 @@ class NewsMlParser implements Parser
             $authors[] = (string) $author['Value'];
         }
 
-        return $authors;
+        return implode(', ', $authors);
     }
 
     /**

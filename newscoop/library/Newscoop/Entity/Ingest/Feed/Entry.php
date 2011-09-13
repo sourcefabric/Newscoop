@@ -266,6 +266,126 @@ class Entry
     }
 
     /**
+     * Get subtitle
+     *
+     * @return string
+     */
+    public function getSubtitle()
+    {
+        return $this->getAttribute('subtitle');
+    }
+
+    /**
+     * Get provider id
+     *
+     * @return string
+     */
+    public function getProviderId()
+    {
+        return $this->getAttribute('provider_id');
+    }
+
+    /**
+     * Get date id
+     *
+     * @return string
+     */
+    public function getDateId()
+    {
+        return $this->getAttribute('date_id');
+    }
+
+    /**
+     * Get news item id
+     *
+     * @return string
+     */
+    public function getNewsItemId()
+    {
+        return $this->getAttribute('news_item_id');
+    }
+
+    /**
+     * Get revision id
+     *
+     * @return string
+     */
+    public function getRevisionId()
+    {
+        return $this->getAttribute('revision_id');
+    }
+
+    /**
+     * Get location
+     *
+     * @return string
+     */
+    public function getLocation()
+    {
+        return $this->getAttribute('location');
+    }
+
+    /**
+     * Get provider
+     *
+     * @return string
+     */
+    public function getProvider()
+    {
+        return $this->getAttribute('provider');
+    }
+
+    /**
+     * Get source
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->getAttribute('source');
+    }
+
+    /**
+     * Get catch line
+     *
+     * @return string
+     */
+    public function getCatchLine()
+    {
+        return $this->getAttribute('catch_line');
+    }
+
+    /**
+     * Get catch word
+     *
+     * @return string
+     */
+    public function getCatchWord()
+    {
+        return $this->getAttribute('catch_word');
+    }
+
+    /**
+     * Get authors
+     *
+     * @return string
+     */
+    public function getAuthors()
+    {
+        return $this->getAttribute('authors');
+    }
+
+    /**
+     * Get images
+     *
+     * @return array
+     */
+    public function getImages()
+    {
+        return $this->getAttribute('images');
+    }
+
+    /**
      * Entry factory
      *
      * @param Newscoop\Ingest\Parser $parser
@@ -283,8 +403,40 @@ class Entry
         $entry->setAttribute('subject', (string) $parser->getSubject());
         $entry->setAttribute('country', (string) $parser->getCountry());
         $entry->setAttribute('product', (string) $parser->getProduct());
+        $entry->setAttribute('subtitle', (string) $parser->getSubtitle());
+        $entry->setAttribute('provider_id', (string) $parser->getProviderId());
+        $entry->setAttribute('date_id', (string) $parser->getDateId());
+        $entry->setAttribute('news_item_id', (string) $parser->getNewsItemId());
+        $entry->setAttribute('revision_id', (string) $parser->getRevisionId());
+        $entry->setAttribute('location', (string) $parser->getLocation());
+        $entry->setAttribute('provider', (string) $parser->getProvider());
+        $entry->setAttribute('source', (string) $parser->getSource());
+        $entry->setAttribute('catch_line', (string) $parser->getCatchLine());
+        $entry->setAttribute('catch_word', (string) $parser->getCatchWord());
+        $entry->setAttribute('authors', (string) $parser->getAuthors());
+        self::setImages($entry, $parser);
         return $entry;
     }
+
+    /**
+     * Set entry images
+     *
+     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
+     * @param Newscoop\Ingest\Parser $parser
+     */
+    private static function setImages(self $entry, Parser $parser)
+    {
+        $images = array();
+        $parserImages = $parser->getImages();
+        if (is_array($parserImages)) {
+            foreach ($parserImages as $image) {
+                $images[] = basename($image->getPath());
+            }
+        }
+
+        $entry->setAttribute('images', $images);
+    }
+
 
     /**
      * Set attribute

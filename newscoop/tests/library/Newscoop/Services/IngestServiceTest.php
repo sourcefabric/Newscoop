@@ -25,11 +25,22 @@ class IngestServiceTest extends \RepositoryTestCase
     public function setUp()
     {
         parent::setUp('Newscoop\Entity\Ingest\Feed', 'Newscoop\Entity\Ingest\Feed\Entry');
+        $this->cleanFiles();
 
         $this->config = \Zend_Registry::get('container')->getParameter('ingest');
         $this->publisher = new PublisherService(\Zend_Registry::get('container')->getParameter('ingest_publisher'));
         $this->service = new IngestService($this->config, $this->em, $this->publisher);
 
+    }
+
+    public function tearDown()
+    {
+        parent::tearDown();
+        $this->cleanFiles();
+    }
+
+    private function cleanFiles()
+    {
         foreach (glob(APPLICATION_PATH . '/../tests/ingest/tmp_*.xml') as $file) {
             unlink($file);
         }
