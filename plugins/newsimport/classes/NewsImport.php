@@ -87,7 +87,13 @@ class NewsImport
         $conf_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'include';
         $class_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'classes';
         require_once($conf_dir.DIR_SEP.'default_topics.php');
-        require_once($conf_dir.DIR_SEP.'news_feeds_conf.php');
+
+        $feed_conf_path = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'conf'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'news_feeds_conf.php';
+        if (!is_file($feed_conf_path)) {
+            $feed_conf_path = $conf_dir.DIR_SEP.'news_feeds_conf_inst.php';
+        }
+        require_once($feed_conf_path);
+
         require_once($class_dir.DIR_SEP.'NewsImport.php');
 
         // take the category topics, as array by [language][category] of [name,id]
@@ -328,8 +334,8 @@ class NewsImport
             $article_data->setProperty('Fprices', $one_event['prices']);
             $article_data->setProperty('Fminimal_age', $one_event['minimal_age']);
 
-            $article_data->setProperty('Frated', ($one_event['rated'] ? 1 : 0));
-            $article_data->setProperty('Fedited', 0);
+            $article_data->setProperty('Frated', ($one_event['rated'] ? 'on' : 'off'));
+            $article_data->setProperty('Fedited', 'off');
 
             // set topics
 
@@ -543,9 +549,9 @@ class NewsImport
             }
 
             $feed_key = base64_encode($one_source_name);
-            $sp_images_local = trim('' . SystemPref::Set('NewsImportImagesLocal:' . $feed_key));
+            $sp_images_local = trim('' . SystemPref::Get('NewsImportImagesLocal:' . $feed_key));
             if (!empty($sp_images_local)) {
-                if ('Y' == $one_feed_images_local_sys_pref) {
+                if ('Y' == $sp_images_local) {
                     $one_source['images_local'] = true;
                 }
                 else {

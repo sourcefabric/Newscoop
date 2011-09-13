@@ -370,7 +370,7 @@ class EventData_Parser_SimpleXML {
 
                 // location hot
                 $x_lochot = trim('' . $event_location->lochot);
-                $event_info['rated'] = (empty($x_lochot) ? true : false);
+                $event_info['rated'] = ( ((!empty($x_lochot)) && ('0' != $x_lochot)) ? true : false );
 
                 $event_topics = array();
                 // * main type fields

@@ -20,7 +20,11 @@ $conf_feeds = false;
 $auth_feeds = false;
 
 $plugin_path = dirname(dirname(dirname(dirname(__FILE__))));
-$feed_conf_path = $plugin_path . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'news_feeds_conf.php';
+
+$feed_conf_path = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'conf'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'news_feeds_conf.php';
+if (!is_file($feed_conf_path)) {
+    $feed_conf_path = $plugin_path . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'news_feeds_conf_inst.php';
+}
 $feed_auth_path = $plugin_path . DIRECTORY_SEPARATOR . 'include' . DIRECTORY_SEPARATOR . 'default_access.php';
 
 if (is_file($feed_conf_path)) {

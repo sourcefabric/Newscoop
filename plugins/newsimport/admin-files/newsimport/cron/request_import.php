@@ -100,10 +100,11 @@ function newsimport_ask_for_import() {
     //&newsfeed=events_1
 
     $one_limit = 500;
+    //$one_limit = 5;
     $request_url .= 'newsauth=' . urlencode($conf_info['access_token']) . '&newslimit=' . $one_limit;
 
     $request_offsets = array(0);
-    for ($ind = 1; $ind <= 20; $ind++) {
+    for ($ind = 1; $ind <= 100; $ind++) {
         $request_offsets[] = $ind * $one_limit;
     }
 

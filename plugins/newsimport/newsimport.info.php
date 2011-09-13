@@ -67,7 +67,28 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 	/**
      * puts into sys-prefs info on newscoop url
      *
-	 * @return bool
+	 * @return void
+	 */
+    function plugin_newsimport_copy_conf() {
+        $conf_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'include';
+        $feed_conf_path_src = $conf_dir.DIR_SEP.'news_feeds_conf_inst.php';
+
+        $feed_conf_path_dst_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'conf'.DIRECTORY_SEPARATOR.'newsimport';
+        $feed_conf_path_dst = $feed_conf_path_dst_dir.DIRECTORY_SEPARATOR.'news_feeds_conf.php';
+
+        if (!is_dir($feed_conf_path_dst_dir)) {
+            mkdir($feed_conf_path_dst_dir);
+        }
+        if (!is_file($feed_conf_path_dst)) {
+            copy($feed_conf_path_src, $feed_conf_path_dst);
+        }
+
+    }
+
+	/**
+     * puts into sys-prefs info on newscoop url
+     *
+	 * @return void
 	 */
     function plugin_newsimport_set_url() {
 
@@ -348,6 +369,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 	 */
     function plugin_newsimport_install()
     {
+        plugin_newsimport_copy_conf();
         plugin_newsimport_set_preferences();
         plugin_newsimport_set_event_topics();
         plugin_newsimport_create_event_type();
@@ -370,6 +392,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 	 */
     function plugin_newsimport_enable()
     {
+        plugin_newsimport_copy_conf();
         plugin_newsimport_set_preferences();
         plugin_newsimport_set_event_topics();
         plugin_newsimport_create_event_type();

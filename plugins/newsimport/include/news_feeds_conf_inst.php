@@ -49,7 +49,6 @@ $event_data_sources = array(
             'poi_desc_len' => 100,
         ),
     ),
-/*
     'movies_1' => array(
         'admin_user_id' => 1,
         'provider_id' => 2,
@@ -96,7 +95,6 @@ $event_data_sources = array(
             'poi_desc_len' => 100,
         ),
     ),
-*/
 );
 
 ?>
