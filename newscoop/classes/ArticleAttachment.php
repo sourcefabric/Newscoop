@@ -328,6 +328,10 @@ class ArticleAttachment extends DatabaseObject {
             $comparisonOperation['left'] = 'Attachments.fk_language_id';
             $comparisonOperation['right'] = (int) $p_param->getRightOperand();
             break;
+        case 'status':
+            $comparisonOperation['left'] = 'Attachments.Status';
+            $comparisonOperation['right'] = (string) $p_param->getRightOperand();
+            break;
         }
 
         if (isset($comparisonOperation['left'])) {
