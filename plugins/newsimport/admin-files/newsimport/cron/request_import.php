@@ -109,6 +109,7 @@ function newsimport_ask_for_import() {
     }
 
     foreach ($request_offsets as $one_offset) {
+        sleep(1);
         try {
             $one_request = $request_url . '&newsoffset=' . $one_offset;
             //echo $one_request . "\n";

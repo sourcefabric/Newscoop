@@ -1,8 +1,9 @@
 <?php
 
 $newsimport_cron = array(
-    'hour' => '*',
-    'min' => '25',
+    //'hour' => '*',
+    'hour' => '4',
+    'min' => '45',
 );
 
 
