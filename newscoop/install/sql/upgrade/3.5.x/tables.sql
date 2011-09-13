@@ -183,6 +183,20 @@ ALTER TABLE `SubsSections` MODIFY COLUMN `IdLanguage` INTEGER UNSIGNED DEFAULT N
  DROP PRIMARY KEY,
  ADD PRIMARY KEY (`id`),
  ADD UNIQUE (`IdSubscription`, `SectionNumber`, `IdLanguage`);
+ 
+-- Tables for context box
+CREATE TABLE IF NOT EXISTS `context_articles` (
+  `fk_context_id` int(10) NOT NULL,
+  `fk_article_no` int(10) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `context_boxes` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `fk_article_no` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+ 
 
 
 -- Upgrade templates to themes

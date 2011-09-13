@@ -43,7 +43,7 @@ function appendItemToContextList(article_id, article_date, article_title) {
                 '<div class="context-item-date">'+article_date+'</div>'+
                 '<a href="#" class="view-article" style="display: none" onClick="viewArticle($(this).parent(\'div\').parent(\'div\').parent(\'td\').parent(\'tr\').attr(\'id\'));"><?php echo getGS('View article') ?></a>'+
             '</div>'+
-            '<a href="#" class="corner-button" style="display: block" onClick="removeFromContext($(this).parent(\'div\').parent(\'td\').parent(\'tr\').attr(\'id\'));"><span class="ui-icon ui-icon-closethick"></span></a>'+
+            '<a href="#" class="corner-button" style="display: block" onClick="$(this).parent(\'div\').parent(\'td\').parent(\'tr\').remove();"><span class="ui-icon ui-icon-closethick"></span></a>'+
             '<div class="context-item-summary">'+article_title+'</div>'+
             '</div>'+
     	    '</td>'+
@@ -66,7 +66,7 @@ function fnPreviewArticle(data) {
 
 		$("#preview-article-date").val(data.date);
 		$("#preview-article-title").html(data.title);
-		$("#preview-article-body").html(data.title);
+		$("#preview-article-body").html(data.body);
 		$(".context-block.context-list").css("display","none");
 	    $(".context-block.context-article").css("display","block");
 	} else {
@@ -118,28 +118,13 @@ function popup_save() {
         'relatedArticles': relatedArticles,
         'articleId': '<?php echo Input::Get('f_article_number', 'int', 1)?>',
     });
-    callServer(['ArticleList', 'doAction'], aoData, fnCallback);
+    callServer(['ArticleList', 'doAction'], aoData, fnSaveCallback);
 }
 
-function fnCallback() {
-	//alert('fnCallback functions4');
+function fnSaveCallback() {
+	var flash = flashMessage('<?php putGS('Context List saved'); ?>', null, false);
 }
 
-function leClick() {
-
-	var aoData = new Array();
-
-	aoData.push({
-        'name': 'iColumns',
-        'value': '20',
-    });
-	aoData.push({
-        'name': 'cacat',
-        'value': '20',
-    });
-
-	callServer(['ArticleList', 'doData'], aoData, fnCallback);
-}
 
    </script>
 
@@ -177,9 +162,9 @@ $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 <div id="context-box" class="block-shadow">
 <div class="toolbar">
 <div class="save-button-bar"><input type="submit" name="cancel"
-	value="Cancel" class="default-button" onclick="popup_close();"
+	value="<?php echo putGS('Close'); ?>" class="default-button" onclick="popup_close();"
 	id="context_button_close"> <input type="submit" name="save"
-	value="Save" class="save-button-small" onclick="popup_save();"
+	value="<?php echo putGS('Save'); ?>" class="save-button-small" onclick="popup_save();"
 	id="context_button_save"></div>
 <h2>Context Box</h2>
 </div>
@@ -190,7 +175,7 @@ $contextlist = new ContextList();
 $contextlist->setSearch(TRUE);
 $contextlist->setOrder(TRUE);
 
-//$contextlist->renderFilters();
+$contextlist->renderFilters();
 $contextlist->render();
 
 
@@ -241,7 +226,7 @@ $contextlist->render();
 	class="save-button-small" onclick="appendItemToContextList($('#preview-article-id').val(), $('#preview-article-date').val(), $('#preview-article-title').html());" id="context_button_add"> <input
 	type="submit" name="close" value="Close" class="default-button"
 	onclick="closeArticle();" id="context_button_close_article"></div>
-<div class="context-article-preview">
+<div class="context-article-preview" style="overflow-y:auto; height:500px;">
 
 <input id="preview-article-date" type="hidden" />
 <input id="preview-article-id" type="hidden" />
@@ -254,13 +239,6 @@ $contextlist->render();
 </div>
 </div>
 </div>
-
-<p>&nbsp;</p>
-
-<div id="mata" style="border: 1px solid #CCCCCC"></div>
-
-
-
 </body>
 </html>
 

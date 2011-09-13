@@ -306,8 +306,8 @@ case 'context_box_update':
     if ($articleObj->userCanModify($g_user)) {
         $contextBoxObj = new ContextBox(null, $contextContent['f_article_id']);
         $contextId = $contextBoxObj->getId();
-        $contextArticlesObj = new ContextArticles();
-        $contextArticlesObj->saveList($contextId, $contextContent['f_related_items']);
+        $contextArticleObj = new ContextArticle();
+        $contextArticleObj->saveList($contextId, $contextContent['f_related_items']);
 
     }
 	return json_encode(array(200));
@@ -324,11 +324,29 @@ case 'context_box_preview_article':
 
     $articleObj = new Article($f_language_selected, $articleId);
 
+	$articleInfo = array();
+	$articleData = $articleObj->getArticleData();
+	// Get article type fields.
+	$dbColumns = $articleData->getUserDefinedColumns(false, true);
+	foreach ($dbColumns as $dbColumn) {
+		if(htmlspecialchars($dbColumn->getDisplayName(0)) == 'full_text') {
+			if ($dbColumn->getType() == ArticleTypeField::TYPE_SWITCH) {
+	            $value = $articleData->getProperty($dbColumn->getName()) ? getGS('On') : getGS('Off');
+	            $return['body'] = $value;
+	        } else {
+	            $return['body'] = $articleData->getProperty($dbColumn->getName());
+	        }
+		}
+	}
+
     $return['title'] = $articleObj->getTitle();
     $return['articleId'] = $articleId;
     $return['date'] = $articleObj->getCreationDate();
-    $return['body'] = $articleObj->getData();
-    $return['code'] = 200;
+
+    if(!array_key_exists('body', $return)) {
+    	$return['date'] = $articleObj->getCreationDate();
+    }
+      $return['code'] = 200;
     return $return;
     break;
 

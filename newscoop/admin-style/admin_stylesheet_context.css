@@ -38,6 +38,15 @@ fieldset.closed {
 .ui-buttonset .ui-button {
     margin-right: 2px;
 }
-.fg-toolbar .ui-toolbar .ui-widget-header .ui-corner-bl .ui-corner-br .ui-helper-clearfix {
-    background-image: url()!important;
+.ui-widget-header{
+    background: none !important;
+    font-weight: normal !important;
+}
+
+.dataTables_info {
+    color: #696969;
+    font-size: 11px;
+    font-weight: normal;
+    margin: 3px 0 0;
+    padding: 6px 0;
 }

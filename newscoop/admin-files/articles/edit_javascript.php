@@ -262,8 +262,9 @@ $('#locations_box a.iframe').each(function() {
 
 $('#context_box a.iframe').each(function() {
     $(this).data('fancybox').showCloseButton = false;
-    $(this).data('fancybox').width = 1150;
-    $(this).data('fancybox').height = 660;
+    $(this).data('fancybox').width = 1120;
+    $(this).data('fancybox').height = 680;
+    $(this).data('fancybox').scrolling = 'no';
 
 });
 

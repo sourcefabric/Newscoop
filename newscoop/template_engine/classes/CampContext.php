@@ -98,6 +98,11 @@ final class CampContext
             'list' => 'community_feeds',
             'url_id' => 'cfid',
         ),
+        'boxarticles' => array(
+            'class' => 'BoxArticles',
+            'list' => 'box_articles',
+            'url_id' => 'box',
+        ),
     );
 
     /**
