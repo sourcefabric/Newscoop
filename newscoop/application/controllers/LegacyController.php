@@ -48,20 +48,6 @@ class LegacyController extends Zend_Controller_Action
             exit(0);
         }
 
-        // is this a news import request?
-        $news_import_active = SystemPref::Get('NewsImportUsage');
-        if (!empty($news_import_active)) {
-            $news_imp_file_name = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'NewsImport.php';
-            if (file_exists($news_imp_file_name)) {
-                require_once($news_imp_file_name);
-                $news_import_only = false;
-                NewsImport::ProcessImport($news_import_only);
-                if ($news_import_only) {
-                    exit(0);
-                }
-            }
-        }
-
         // initiates the context
         $campsite->init();
 

@@ -472,4 +472,29 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         //$Admin = new UserType(1);
         //$Admin->setPermission('plugin_newsimport_admin', true);
     } // fn plugin_newsimport_addPermissions
+
+    function plugin_newsimport_test()
+    {
+        // is this a news import request?
+        $news_import_active = SystemPref::Get('NewsImportUsage');
+        if (!empty($news_import_active)) {
+            $news_imp_file_name = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'NewsImport.php';
+            if (file_exists($news_imp_file_name)) {
+                require_once($news_imp_file_name);
+                $news_import_only = false;
+                NewsImport::ProcessImport($news_import_only);
+                if ($news_import_only) {
+                    exit(0);
+                }
+            }
+        }
+    }
+
 }
+
+// NB: this is recognizing whether the request is on events import
+// this file is included during page loading, thus can be done this way
+// if it would change, we would need to put it into LegacyController
+plugin_newsimport_test();
+
+

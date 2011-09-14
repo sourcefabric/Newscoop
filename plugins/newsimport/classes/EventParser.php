@@ -289,13 +289,15 @@ class EventData_Parser {
         rsort($passed_files); // the youngest file as the first one
 
         $lastest_file = array_shift($passed_files);
-        $latest_start = substr(basename($lastest_file), 0, $date_length);
+        //$latest_start = substr(basename($lastest_file), 0, $date_length);
+        $latest_start = substr(basename($lastest_file), 0, $datetime_length);
 
         $last_files = array($lastest_file);
 
         // taking one day dose of events for the subsequent checking
         foreach ($passed_files as $one_file) {
-            if (substr(basename($one_file), 0, $date_length) != $latest_start) {
+            //if (substr(basename($one_file), 0, $date_length) != $latest_start) {
+            if (substr(basename($one_file), 0, $datetime_length) != $latest_start) {
                 break;
             }
             $last_files[] = $one_file;

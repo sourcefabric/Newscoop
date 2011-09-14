@@ -7,6 +7,16 @@
 class NewsImport
 {
 
+    private static $s_already_run = false;
+
+    private static function LoadInit()
+    {
+        // it looks that just the localizer path is missing in the include_path here
+        $admin_path = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'admin-files'.DIRECTORY_SEPARATOR.'localizer';
+        set_include_path($admin_path . PATH_SEPARATOR . get_include_path());
+
+    }
+
 	/**
      * checks whether a request for event import, calls that import if asked
      *
@@ -38,17 +48,22 @@ class NewsImport
             $xmlimp_start .= '/';
         }
 
-        // the path (as of request_uri) that is for the statistics part
+        // the path (as of request_uri) that is for the import part
         $xmlimp_start .= '_newsimport/';
         $xmlimp_start_len = strlen($xmlimp_start);
-        // if request_uri starts with the statistics path, it is just for the statistics things
+        // if request_uri starts with the import path, it is just for the import things
         if (substr($path_request, 0, $xmlimp_start_len) == $xmlimp_start) {
             $p_importOnly = true;
         }
-        // if not on statistics, just return and let run the standard newscoop processing
+        // if not on import, just return and let run the standard newscoop processing
         if (!$p_importOnly) {
             return true;
         }
+
+        if (self::$s_already_run) {
+            return false;
+        }
+        self::$s_already_run = true;
 
         if (!array_key_exists('newsauth', $_GET)) {
             return false;
@@ -77,6 +92,7 @@ class NewsImport
         if ((!empty($news_auth_sys_pref)) && ($news_auth != $news_auth_sys_pref)) {
             return false;
         }
+        self::LoadInit();
 
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'Topic.php');
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'TopicName.php');
