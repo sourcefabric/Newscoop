@@ -2076,6 +2076,21 @@ LOCK TABLES `comment_commenter` WRITE;
 /*!40000 ALTER TABLE `comment_commenter` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+-- Tables for context box
+CREATE TABLE IF NOT EXISTS `context_articles` (
+  `fk_context_id` int(10) NOT NULL,
+  `fk_article_no` int(10) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `context_boxes` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `fk_article_no` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+
+
 --
 -- Table structure for table `liveuser_applications`
 --
