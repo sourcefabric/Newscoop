@@ -267,7 +267,7 @@ class Attachment extends DatabaseObject {
     	. '/' . $this->m_data['file_name'];
     	return $attachmentUri;
     } // fn getAttachmentUri
-    
+
     /**
      * @return string
      */
@@ -275,7 +275,15 @@ class Attachment extends DatabaseObject {
     {
         return $this->m_data['Source'];
     } // fn getSource
-    
+
+    /**
+     * @return int
+     */
+    public function getUploadingUserId()
+    {
+        return $this->m_data['fk_user_id'];
+    } // fn getUploadingUserId
+
     /**
      * @return string
      */
@@ -496,7 +504,7 @@ class Attachment extends DatabaseObject {
             'Source' => 'local',
             'Status' => 'approved'
         );
-        
+
         if ($p_attributes != NULL && is_array($p_attributes)) {
 			foreach ($p_attributes as $key => $value) {
 				$attributes[$key] = $value;

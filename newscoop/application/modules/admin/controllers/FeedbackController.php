@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Newscoop
- * @subpackage Feedback 
+ * @subpackage Feedback
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  *
@@ -23,7 +23,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
 
     /** @var Admin_Form_Feedback_EditForm */
     //private $editForm;
-    
+
     public function init()
     {
         // get feedback repository
@@ -58,7 +58,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
             ),
             array('index' => false)
         );
-        
+
         $index = 1;
         $acceptanceRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
         $table->setHandle(function($feedback) use ($view, &$index, $acceptanceRepository)
@@ -69,12 +69,12 @@ class Admin_FeedbackController extends Zend_Controller_Action
                 $publication = $feedback->getPublication();
                 $section = $feedback->getSection();
                 $article = $feedback->getArticle();
-                
+
                 $attachment = array();
-                
+
                 $attachment['type'] = $feedback->getAttachmentType();
                 $attachment['id'] = $feedback->getAttachmentId();
-                
+
                 if ($attachment['type'] == 'image') {
 					$image = new Image($attachment['id']);
 					$attachment['name'] = $image->getImageFileName();
@@ -88,14 +88,14 @@ class Admin_FeedbackController extends Zend_Controller_Action
 					$attachment['status'] = $document->getStatus();
 					$attachment['approve_url'] = $view->url(array('action' => 'approve', 'type' => 'document', 'format' => 'json', 'id' => $attachment['id']));
 				}
-                
+
                 $banned = $acceptanceRepository->checkBanned(array('name' => $user->getName(), 'email' => '', 'ip' => ''), $publication);
                 if ($banned['name'] == true) {
 					$banned = true;
 				} else {
 					$banned = false;
 				}
-                
+
                 $result = array(
                     'index' => $index++,
                     'user' => array(
@@ -212,26 +212,26 @@ class Admin_FeedbackController extends Zend_Controller_Action
         $this->view->status = 200;
         $this->view->message = 'succcesful';
     }
-    
+
     /**
      * Reply action
      */
     public function replyAction()
     {
 		$this->getHelper('contextSwitch')->addActionContext('reply', 'json')->initContext();
-		
+
 		$auth = Zend_Auth::getInstance();
 		$user = new User($auth->getIdentity());
 		$fromEmail = $user->getEmail();
-		
+
 		$feedbackId = $this->getRequest()->getParam('parent');
 		$subject = $this->getRequest()->getParam('subject');
 		$message = $this->getRequest()->getParam('message');
-		
+
 		$feedback = $this->feedbackRepository->find($feedbackId);
 		$user = $feedback->getUser();
 		$toEmail = $user->getEmail();
-		
+
 		/*
 		$configMail = array( 'auth' => 'login',
 							 'username' => 'user@gmail.com',
@@ -256,23 +256,31 @@ class Admin_FeedbackController extends Zend_Controller_Action
 			$this->view->message = 'succcesful?';
 		}
 	}
-	
+
 	/**
      * Approve action
      */
     public function approveAction()
     {
 		$this->getHelper('contextSwitch')->addActionContext('approve', 'json')->initContext();
-		
+
 		$parameters = $this->getRequest()->getParams();
-		
+
 		if ($parameters['type'] == 'image') {
 			$image = new Image($parameters['id']);
 			$image->update(array('Status' => 'approved'));
+
+			$user_id = $image->getUploadingUserId();
+			$user = $this->_helper->service('user')->find($user_id);
+			$this->_helper->service->notifyDispatcher("image.approved", array('user' => $user));
 		}
 		if ($parameters['type'] == 'document') {
 			$document = new Attachment($parameters['id']);
 			$document->update(array('Status' => 'approved'));
+
+			$user_id = $document->getUploadingUserId();
+			$user = $this->_helper->service('user')->find($user_id);
+			$this->_helper->service->notifyDispatcher("document.approved", array('user' => $user));
 		}
 	}
 }
