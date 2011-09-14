@@ -38,9 +38,7 @@ Class ContextBox extends DatabaseObject {
         if(!$this->exists()) {
         	$this->create($p_article_no);
         }
-
     }
-
 
     public function create($p_article_no)
     {
@@ -58,8 +56,5 @@ Class ContextBox extends DatabaseObject {
 
     public function getArticlesList() {
         return ContextBoxArticle::GetList($this->getId(), null, 0, 0, $p_count, FALSE);
-
     }
-
-
 }

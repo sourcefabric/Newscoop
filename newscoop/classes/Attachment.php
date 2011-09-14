@@ -294,10 +294,18 @@ class Attachment extends DatabaseObject {
     public function getStorageLocation()
     {
         global $Campsite;
-        $storageLocation = $Campsite['FILE_DIRECTORY']
+        if (isset($this->m_data['id'])) {
+			$storageLocation = $Campsite['FILE_DIRECTORY']
                            ."/".$this->getLevel1DirectoryName()
                            ."/".$this->getLevel2DirectoryName()
                            ."/".sprintf('%09d', $this->m_data['id']);
+		}
+		else {
+			$storageLocation = $Campsite['FILE_DIRECTORY']
+                           ."/".$this->getLevel1DirectoryName()
+                           ."/".$this->getLevel2DirectoryName()
+                           ."/".sprintf('%09d', 0);
+		}
         if (isset($this->m_data['extension']) && !empty($this->m_data['extension'])) {
             $storageLocation .= '.'.$this->m_data['extension'];
         }
@@ -308,7 +316,8 @@ class Attachment extends DatabaseObject {
     public function getLevel1DirectoryName()
     {
         global $Campsite;
-        $level1Dir = floor($this->m_data['id']/($Campsite['FILE_NUM_DIRS_LEVEL_1']*$Campsite['FILE_NUM_DIRS_LEVEL_2']));
+        if (isset($this->m_data['id'])) $level1Dir = floor($this->m_data['id']/($Campsite['FILE_NUM_DIRS_LEVEL_1']*$Campsite['FILE_NUM_DIRS_LEVEL_2']));
+        else $level1Dir = 0;
         $level1ZeroPad = strlen($Campsite['FILE_NUM_DIRS_LEVEL_1']);
          return sprintf('%0'.$level1ZeroPad.'d', $level1Dir);
     } // fn getLevel1DirectoryName
@@ -317,7 +326,8 @@ class Attachment extends DatabaseObject {
     public function getLevel2DirectoryName()
     {
         global $Campsite;
-        $level2Dir = ($this->m_data['id']/$Campsite['FILE_NUM_DIRS_LEVEL_2'])%$Campsite['FILE_NUM_DIRS_LEVEL_1'];
+        if (isset($this->m_data['id'])) $level2Dir = ($this->m_data['id']/$Campsite['FILE_NUM_DIRS_LEVEL_2'])%$Campsite['FILE_NUM_DIRS_LEVEL_1'];
+        else $level2Dir = 0;
         $level2ZeroPad = strlen($Campsite['FILE_NUM_DIRS_LEVEL_2']);
         return sprintf('%0'.$level2ZeroPad.'d', $level2Dir);
     } // fn getLevel2DirectoryName

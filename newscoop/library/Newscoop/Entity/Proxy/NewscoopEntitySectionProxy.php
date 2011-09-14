@@ -91,7 +91,7 @@ class NewscoopEntitySectionProxy extends \Newscoop\Entity\Section implements \Do
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'publication', 'issue', 'language', 'number', 'name', 'template', 'articleTemplate', 'id');
+        return array('__isInitialized__', 'id', 'publication', 'issue', 'language', 'number', 'name', 'template', 'articleTemplate');
     }
 
     public function __clone()
