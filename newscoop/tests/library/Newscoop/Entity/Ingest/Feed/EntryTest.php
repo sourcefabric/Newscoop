@@ -69,5 +69,24 @@ class EntryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(NewsMlParserTest::CATCH_WORD, $entry->getCatchWord());
         $this->assertEquals(NewsMlParserTest::AUTHORS, $entry->getAuthors());
         $this->assertEquals(array(NewsMlParserTest::IMAGE_FILE), $entry->getImages());
+        $this->assertEquals(NewsMlParserTest::STATUS, $entry->getStatus());
+        $this->assertEquals(new \DateTime(NewsMlParserTest::EMBARGO_LIFT), $entry->getEmbargoed());
+    }
+
+    public function testUpdate()
+    {
+        $entry = Entry::create(new NewsMlParser(APPLICATION_PATH . NewsMlParserTest::NEWSML));
+        $updated = new NewsMlParser(APPLICATION_PATH . NewsMlParserTest::NEWSML_UPDATED);
+
+        $entry->update($updated);
+
+        $this->assertEquals($entry->getTitle(), $updated->getTitle());
+        $this->assertEquals($entry->getCreated(), $updated->getCreated());
+        $this->assertEquals($entry->getUpdated(), $updated->getUpdated());
+        $this->assertEquals($entry->getContent(), $updated->getContent());
+        $this->assertEquals($entry->getPriority(), $updated->getPriority());
+        $this->assertEquals($entry->getSummary(), $updated->getSummary());
+        $this->assertEquals($entry->getStatus(), $updated->getStatus());
+        $this->assertEquals($entry->getAuthors(), $updated->getAuthors());
     }
 }
