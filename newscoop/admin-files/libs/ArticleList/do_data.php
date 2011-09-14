@@ -8,6 +8,7 @@
  * @link http://www.sourcefabric.org
  */
 
+
 require_once dirname(__FILE__) . '/ArticleList.php';
 require_once WWW_DIR . '/classes/Article.php';
 
@@ -103,6 +104,7 @@ for ($i = 0; $i < $sortingCols; $i++) {
     }
 }
 
+
 // get articles
 $articles = Article::GetList($articlesParams, array(array('field' => $sortBy, 'dir' => $sortDir)), $start, $limit, $articlesCount, true);
 
@@ -111,7 +113,6 @@ $return = array();
 foreach($articles as $article) {
     $return[] = $list->processItem($article);
 }
-
 return array(
     'iTotalRecords' => Article::GetTotalCount(),
     'iTotalDisplayRecords' => $articlesCount,

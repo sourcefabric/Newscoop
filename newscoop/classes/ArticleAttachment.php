@@ -307,7 +307,7 @@ class ArticleAttachment extends DatabaseObject {
 
 
     /**
-     * Processes a paremeter (condition) coming from template tags.
+     * Processes a parameter (condition) coming from template tags.
      *
      * @param array $p_param
      *      The array of parameters
@@ -329,8 +329,11 @@ class ArticleAttachment extends DatabaseObject {
             $comparisonOperation['right'] = (int) $p_param->getRightOperand();
             break;
         case 'status':
-            $comparisonOperation['left'] = 'Attachments.Status';
-            $comparisonOperation['right'] = (string) $p_param->getRightOperand();
+            $comparisonOperation['right'] = strtolower($p_param->getRightOperand());
+            if ($comparisonOperation['right'] == 'approved'
+            || $comparisonOperation['right'] == 'unapproved') {
+                $comparisonOperation['left'] = 'Attachments.Status';
+            }
             break;
         }
 

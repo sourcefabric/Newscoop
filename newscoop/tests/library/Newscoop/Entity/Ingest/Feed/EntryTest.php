@@ -47,11 +47,46 @@ class EntryTest extends \PHPUnit_Framework_TestCase
 
         $this->assertInstanceOf('Newscoop\Entity\Ingest\Feed\Entry', $entry);
         $this->assertEquals(NewsMlParserTest::TITLE, $entry->getTitle());
-        $this->assertStringEqualsFile(APPLICATION_PATH . NewsMlParserTest::CONTENT, $entry->getContent());
+        $this->assertEquals(NewsMlParserTest::SUBTITLE, $entry->getSubtitle());
+        $this->assertEquals(NewsMlParserTest::CONTENT, $entry->getContent());
         $this->assertEquals(new \DateTime(NewsMlParserTest::CREATED), $entry->getCreated());
         $this->assertEquals(new \DateTime(NewsMlParserTest::UPDATED), $entry->getUpdated());
         $this->assertEquals(NewsMlParserTest::PRIORITY, $entry->getPriority());
         $this->assertEquals(NewsMlParserTest::SERVICE, $entry->getService());
+        $this->assertEquals(NewsMlParserTest::PRODUCT, $entry->getProduct());
         $this->assertEquals(NewsMlParserTest::SUMMARY, $entry->getSummary());
+        $this->assertEquals(NewsMlParserTest::PROVIDER_ID, $entry->getProviderId());
+        $this->assertEquals(NewsMlParserTest::DATE_ID, $entry->getDateId());
+        $this->assertEquals(NewsMlParserTest::NEWS_ITEM_ID, $entry->getNewsItemId());
+        $this->assertEquals(NewsMlParserTest::REVISION_ID, $entry->getRevisionId());
+        $this->assertEquals(NewsMlParserTest::LOCATION, $entry->getLocation());
+        $this->assertEquals(NewsMlParserTest::LANGUAGE, $entry->getLanguage());
+        $this->assertEquals(NewsMlParserTest::COUNTRY, $entry->getCountry());
+        $this->assertEquals(NewsMlParserTest::PROVIDER, $entry->getProvider());
+        $this->assertEquals(NewsMlParserTest::SOURCE, $entry->getSource());
+        $this->assertEquals(NewsMlParserTest::SUBJECT, $entry->getSubject());
+        $this->assertEquals(NewsMlParserTest::CATCH_LINE, $entry->getCatchLine());
+        $this->assertEquals(NewsMlParserTest::CATCH_WORD, $entry->getCatchWord());
+        $this->assertEquals(NewsMlParserTest::AUTHORS, $entry->getAuthors());
+        $this->assertEquals(array(NewsMlParserTest::IMAGE_FILE), $entry->getImages());
+        $this->assertEquals(NewsMlParserTest::STATUS, $entry->getStatus());
+        $this->assertEquals(new \DateTime(NewsMlParserTest::EMBARGO_LIFT), $entry->getEmbargoed());
+    }
+
+    public function testUpdate()
+    {
+        $entry = Entry::create(new NewsMlParser(APPLICATION_PATH . NewsMlParserTest::NEWSML));
+        $updated = new NewsMlParser(APPLICATION_PATH . NewsMlParserTest::NEWSML_UPDATED);
+
+        $entry->update($updated);
+
+        $this->assertEquals($entry->getTitle(), $updated->getTitle());
+        $this->assertEquals($entry->getCreated(), $updated->getCreated());
+        $this->assertEquals($entry->getUpdated(), $updated->getUpdated());
+        $this->assertEquals($entry->getContent(), $updated->getContent());
+        $this->assertEquals($entry->getPriority(), $updated->getPriority());
+        $this->assertEquals($entry->getSummary(), $updated->getSummary());
+        $this->assertEquals($entry->getStatus(), $updated->getStatus());
+        $this->assertEquals($entry->getAuthors(), $updated->getAuthors());
     }
 }

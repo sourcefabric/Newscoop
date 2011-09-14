@@ -1,0 +1,9 @@
+<div class="ingest">
+
+<span class="date"><?php echo $this->entry->getUpdated()->format('H:i'); ?></span>
+<h2><?php echo $this->entry->getTitle(); ?></h2>
+<p class="summary"><?php echo $this->entry->getSummary(); ?></p>
+
+<?php echo $this->entry->getContent(); ?>
+
+</div>

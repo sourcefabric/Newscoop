@@ -1,25 +1,50 @@
-<h2><?php putGS('Latest news'); ?></h2>
-<ul class="ingest-entries">
+<?php $this->placeholder('title')->set('Newswires'); ?>
+
+<div class="ingest"><div class="control"><div class="w">
+
+<dl class="mode">
+    <dt><?php putGS('Publish Mode'); ?></dt>
+    <dd class="<?php echo $this->auto_mode ? 'auto' : 'manual'; ?>">
+        <a href="<?php echo $this->url(array(
+            'action' => 'switch-mode',
+        )); ?>" title="Switch mode"><?php echo $this->auto_mode ? getGS('Automatic') : getGS('Manual'); ?></a>
+    </dd>
+</dl>
+    
+<h2><?php putGS('Feeds'); ?></h2>
+<ul class="feeds">
+    <?php foreach ($this->feeds as $feed) { ?>
+    <li><?php echo $feed->getTitle(); ?> (<?php putGS('updated'); ?> <?php echo $feed->getUpdated()->format('H:i'); ?>)</li>
+    <?php } ?>
+</ul>
+
+</div></div><div class="main"><div class="w">
+
+<ul class="entries">
     <?php foreach ($this->entries as $entry) { ?>
     <li>
-        <h3><?php echo $entry->getTitle(); ?></h3>
-        <em><?php echo $entry->getUpdated()->format('d.m.Y H:i:s'); ?></em>
+        <span class="date"><?php echo $entry->getUpdated()->format('H:i'); ?></span>
         <?php if (!$entry->isPublished()) { ?>
         <a href="<?php echo $this->url(array(
             'action' => 'publish',
             'entry' => $entry->getId(),
-        )); ?>">Publish</a>
+        )); ?>" title="<?php echo getGS('Publish'), ' ', $entry->getTitle(); ?>" class="publish">Publish</a>
         <?php } else { ?>
         <em>published: <?php echo $entry->getPublished()->format('d.m.Y H:i:s'); ?></em>
         <?php } ?>
-        <hr />
+        <span class="title p-<?php echo $entry->getPriority(); ?>"><a href="<?php echo $this->url(array(
+            'action' => 'detail',
+            'entry' => $entry->getId(),
+        )); ?>" class="iframe"><?php echo $entry->getTitle(); ?></a></span>
+        <p><?php echo $entry->getSummary(); ?></p>
     </li>
     <?php } ?>
 </ul>
 
-<h2><?php putGS('Feeds'); ?></h2>
-<ul class="ingest-feeds">
-    <?php foreach ($this->feeds as $feed) { ?>
-    <li><?php echo $feed->getTitle(); ?> <em>updated: <?php echo $feed->getUpdated()->format('d.m.Y H:i:s'); ?></em></li>
-    <?php } ?>
-</ul>
+</div></div></div>
+
+<script>
+$('.ingest .title a').fancybox({
+    hideOnContentClick: false
+});
+</script>

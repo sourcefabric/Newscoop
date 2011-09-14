@@ -78,10 +78,34 @@ class Entry
     private $published;
 
     /**
+     * @Column(type="datetime", nullable=True)
+     * @var DateTime
+     */
+    private $embargoed;
+
+    /**
+     * @Column(type="string", nullable=True)
+     * @var string
+     */
+    private $status;
+
+    /**
      * @Column(type="integer", nullable=True)
      * @var int
      */
     private $priority;
+
+    /**
+     * @Column(type="string", nullable=True)
+     * @var string
+     */
+    private $date_id;
+
+    /**
+     * @Column(type="string", nullable=True)
+     * @var string
+     */
+    private $news_item_id;
 
     /**
      * @Column(type="array", nullable=True)
@@ -266,6 +290,166 @@ class Entry
     }
 
     /**
+     * Get subtitle
+     *
+     * @return string
+     */
+    public function getSubtitle()
+    {
+        return $this->getAttribute('subtitle');
+    }
+
+    /**
+     * Get provider id
+     *
+     * @return string
+     */
+    public function getProviderId()
+    {
+        return $this->getAttribute('provider_id');
+    }
+
+    /**
+     * Get date id
+     *
+     * @return string
+     */
+    public function getDateId()
+    {
+        return $this->date_id;
+    }
+
+    /**
+     * Get news item id
+     *
+     * @return string
+     */
+    public function getNewsItemId()
+    {
+        return $this->news_item_id;
+    }
+
+    /**
+     * Get revision id
+     *
+     * @return string
+     */
+    public function getRevisionId()
+    {
+        return $this->getAttribute('revision_id');
+    }
+
+    /**
+     * Get location
+     *
+     * @return string
+     */
+    public function getLocation()
+    {
+        return $this->getAttribute('location');
+    }
+
+    /**
+     * Get provider
+     *
+     * @return string
+     */
+    public function getProvider()
+    {
+        return $this->getAttribute('provider');
+    }
+
+    /**
+     * Get source
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->getAttribute('source');
+    }
+
+    /**
+     * Get catch line
+     *
+     * @return string
+     */
+    public function getCatchLine()
+    {
+        return $this->getAttribute('catch_line');
+    }
+
+    /**
+     * Get catch word
+     *
+     * @return string
+     */
+    public function getCatchWord()
+    {
+        return $this->getAttribute('catch_word');
+    }
+
+    /**
+     * Get authors
+     *
+     * @return string
+     */
+    public function getAuthors()
+    {
+        return $this->getAttribute('authors');
+    }
+
+    /**
+     * Get images
+     *
+     * @return array
+     */
+    public function getImages()
+    {
+        return $this->getAttribute('images');
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Get embargoed
+     *
+     * @return DateTime
+     */
+    public function getEmbargoed()
+    {
+        return $this->embargoed;
+    }
+
+    /**
+     * Update entry
+     *
+     * @param Newscoop\Ingest\Parser $parser
+     * @return Newscoop\Entity\Ingest\Feed\Entry
+     */
+    public function update(Parser $parser)
+    {
+        $this->updated = $parser->getUpdated();
+        $this->title = $parser->getTitle();
+        $this->content = $parser->getContent();
+        $this->priority = $parser->getPriority();
+        $this->summary = (string) $parser->getSummary();
+        $this->status = (string) $parser->getStatus();
+        $this->embargoed = $parser->getLiftEmbargo();
+        self::setAttributes($this, $parser);
+        self::setImages($this, $parser);
+        return $this;
+    }
+
+    /**
      * Entry factory
      *
      * @param Newscoop\Ingest\Parser $parser
@@ -278,13 +462,58 @@ class Entry
         $entry->updated = $parser->getUpdated() ?: $entry->updated;
         $entry->priority = (int) $parser->getPriority();
         $entry->summary = (string) $parser->getSummary();
+        $entry->date_id = (string) $parser->getDateId();
+        $entry->news_item_id = (string) $parser->getNewsItemId();
+        $entry->status = (string) $parser->getStatus();
+        $entry->embargoed = $parser->getLiftEmbargo();
+        self::setAttributes($entry, $parser);
+        self::setImages($entry, $parser);
+        return $entry;
+    }
+
+    /**
+     * Set entry attributes
+     *
+     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
+     * @param Newscoop\Ingest\Parser $parser
+     */
+    private static function setAttributes(self $entry, Parser $parser)
+    {
         $entry->setAttribute('service', (string) $parser->getService());
         $entry->setAttribute('language', (string) $parser->getLanguage());
         $entry->setAttribute('subject', (string) $parser->getSubject());
         $entry->setAttribute('country', (string) $parser->getCountry());
         $entry->setAttribute('product', (string) $parser->getProduct());
-        return $entry;
+        $entry->setAttribute('subtitle', (string) $parser->getSubtitle());
+        $entry->setAttribute('provider_id', (string) $parser->getProviderId());
+        $entry->setAttribute('revision_id', (string) $parser->getRevisionId());
+        $entry->setAttribute('location', (string) $parser->getLocation());
+        $entry->setAttribute('provider', (string) $parser->getProvider());
+        $entry->setAttribute('source', (string) $parser->getSource());
+        $entry->setAttribute('catch_line', (string) $parser->getCatchLine());
+        $entry->setAttribute('catch_word', (string) $parser->getCatchWord());
+        $entry->setAttribute('authors', (string) $parser->getAuthors());
     }
+
+    /**
+     * Set entry images
+     *
+     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
+     * @param Newscoop\Ingest\Parser $parser
+     */
+    private static function setImages(self $entry, Parser $parser)
+    {
+        $images = array();
+        $parserImages = $parser->getImages();
+        if (is_array($parserImages)) {
+            foreach ($parserImages as $image) {
+                $images[] = basename($image->getPath());
+            }
+        }
+
+        $entry->setAttribute('images', $images);
+    }
+
 
     /**
      * Set attribute

@@ -105,6 +105,17 @@ class Feed
     }
 
     /**
+     * Remove entry
+     *
+     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
+     * @return void
+     */
+    public function removeEntry(Entry $entry)
+    {
+        $this->entries->removeElement($entry);
+    }
+
+    /**
      * Get entries
      *
      * @return array

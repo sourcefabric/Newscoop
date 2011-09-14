@@ -50,12 +50,14 @@ $imageNr = (int) CampRequest::GetVar('NrImage', null, 'get');
 $imageRatio = (int) CampRequest::GetVar('ImageRatio', null, 'get');
 $imageResizeWidth = (int) CampRequest::GetVar('ImageWidth', null, 'get');
 $imageResizeHeight = (int) CampRequest::GetVar('ImageHeight', null, 'get');
+$imageCrop = CampRequest::GetVar('ImageForcecrop', null, 'get');
+$resizeCrop = CampRequest::GetVar('ImageCrop', null, 'get');
 
 if (empty($imageId) && !empty($imageNr) && !empty($articleNr)) {
 	$articleImage = new ArticleImage($articleNr, null, $imageNr);
 	$imageId = $articleImage->getImageId();
 }
 
-$showImage = new CampGetImage($imageId, $imageRatio, $imageResizeWidth, $imageResizeHeight);
+$showImage = new CampGetImage($imageId, $imageRatio, $imageResizeWidth, $imageResizeHeight, $imageCrop, $resizeCrop);
 
 ?>
