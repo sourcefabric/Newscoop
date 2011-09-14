@@ -8,7 +8,7 @@
 /**
  * Feedback controller
  */
- 
+
 use Newscoop\Entity\Feedback;
 
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
@@ -26,20 +26,20 @@ class FeedbackController extends Zend_Controller_Action
     public function saveAction()
     {
 		global $_SERVER;
-		
+
 		$this->_helper->layout->disableLayout();
 		$parameters = $this->getRequest()->getParams();
-		
+
 		$errors = array();
-		
+
 		$auth = Zend_Auth::getInstance();
-		
+
 		$publication = new Publication($parameters['f_publication']);
-		
+
 		if ($auth->getIdentity()) {
 			$acceptanceRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Comment\Acceptance');
 			$user = new User($auth->getIdentity());
-			
+
 			$userIp = getIp();
 			if ($acceptanceRepository->checkParamsBanned($user->m_data['Name'], $user->m_data['EMail'], $userIp, $parameters['f_publication'])) {
 				$errors[] = getGS('You have been banned from writing feedbacks.');
@@ -48,15 +48,15 @@ class FeedbackController extends Zend_Controller_Action
 		else {
 			$errors[] = getGS('You are not logged in.');
 		}
-		
+
 		if (!array_key_exists('f_feedback_content', $parameters) || empty($parameters['f_feedback_content'])) {
 			$errors[] = getGS('The feedback content was not filled in.');
 		}
-		
+
 		if (empty($errors)) {
 			$feedbackRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Feedback');
 			$feedback = new Feedback();
-			
+
 			$values = array(
 				'user' => $auth->getIdentity(),
 				'publication' => $parameters['f_publication'],
@@ -71,29 +71,35 @@ class FeedbackController extends Zend_Controller_Action
 				'attachment_type' => 'none',
 				'attachment_id' => 0
 			);
-			
+
 			if (isset($parameters['image_id'])) {
 				$values['attachment_type'] = 'image';
 				$values['attachment_id'] = $parameters['image_id'];
-				
+
 				$feedbackRepository->save($feedback, $values);
 				$feedbackRepository->flush();
-				
+
+				$current_user = $this->_helper->service('user')->getCurrentUser();
+                $this->_helper->service->notifyDispatcher("image.delivered", array('user' => $current_user));
+
 				$this->view->response = getGS('File is uploaded and your message is sent.');
 			}
 			else if (isset($parameters['document_id'])) {
 				$values['attachment_type'] = 'document';
 				$values['attachment_id'] = $parameters['document_id'];
-				
+
 				$feedbackRepository->save($feedback, $values);
 				$feedbackRepository->flush();
-				
+
+				$current_user = $this->_helper->service('user')->getCurrentUser();
+                $this->_helper->service->notifyDispatcher("document.delivered", array('user' => $current_user));
+
 				$this->view->response = getGS('File is uploaded and your message is sent.');
 			}
 			else {
 				$feedbackRepository->save($feedback, $values);
 				$feedbackRepository->flush();
-				
+
 				$this->view->response = getGS('Your message is sent.');
 			}
 		}
@@ -103,19 +109,19 @@ class FeedbackController extends Zend_Controller_Action
 			$this->view->response = $errors;
 		}
     }
-    
+
     public function uploadAction()
     {
 		global $Campsite;
-		
+
 		$auth = Zend_Auth::getInstance();
 		$userId = $auth->getIdentity();
-		
+
 		$_FILES['file']['name'] = preg_replace('/[^\w\._]+/', '', $_FILES['file']['name']);
-		
+
 		$mimeType = $_FILES['file']['type'];
 		$type = explode('/', $mimeType);
-		
+
 		if ($type[0] == 'image') {
 			$file = Plupload::OnMultiFileUploadCustom($Campsite['IMAGE_DIRECTORY']);
 			$image = Image::ProcessFile($_FILES['file']['name'], $_FILES['file']['name'], $userId, array('Source' => 'feedback', 'Status' => 'Unapproved'));
@@ -130,7 +136,7 @@ class FeedbackController extends Zend_Controller_Action
 			$this->view->response = $document->getAttachmentId();
 		}
 	}
-    
+
     public function indexAction()
     {
 		$this->view->param = $this->_getParam('switch');

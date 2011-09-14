@@ -28,6 +28,11 @@ class UserPoints
     private $action;
 
     /**
+     * @Column(type="string",unique=true,name="name")
+     */
+    private $name;
+
+    /**
      * @Column(type="integer",unique=false,name="points")
      */
     private $points;
@@ -51,6 +56,15 @@ class UserPoints
     public function setAction($action) {
         $this->action = (string) $action;
         return $this;
+    }
+
+    /**
+     * Get human readable action name
+     *
+     * @return string
+     */
+    public function getName() {
+        return (string) $this->name;
     }
 
     /**

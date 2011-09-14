@@ -548,6 +548,24 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * Get all user attributes
+     *
+     * @return array of all user attributes
+     */
+    public function getAttributes()
+    {
+        $attributes = array();
+
+        $keys = $this->attributes->getKeys();
+
+        foreach ($keys as $key) {
+            $attributes[$key] = $this->attributes[$key]->getValue();
+        }
+
+        return $attributes;
+    }
+
+    /**
      * Set image
      *
      * @param string $image

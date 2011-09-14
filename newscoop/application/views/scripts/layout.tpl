@@ -5,11 +5,15 @@
     <title>{{block title}}Newcoop{{/block}}</title>
 
     {{block style}}
-    <link rel="stylesheet" href="{{ $view->baseUrl('public/style.css') }}" />
+        {{ if isset($view) }}
+            {{ $view->headLink() }}
+        {{ /if }}
     {{/block}}
 
     {{block script}}
-    <script src="{{ $view->baseUrl('public/script.js') }}"></script>
+        {{ if isset($view) }}
+            {{ $view->headScript() }}
+        {{ /if }}
     {{/block}}
 </head>
 <body>

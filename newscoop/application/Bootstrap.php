@@ -86,6 +86,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('user_points', 'Newscoop\Services\UserPointsService')
             ->addArgument(new sfServiceReference('em'));
 
+        $container->register('user_attributes', 'Newscoop\Services\UserAttributeService')
+            ->addArgument(new sfServiceReference('em'));
+
         $container->register('audit', 'Newscoop\Services\AuditService')
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('user'));
