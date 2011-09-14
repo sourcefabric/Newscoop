@@ -14,7 +14,7 @@
 <h2><?php putGS('Feeds'); ?></h2>
 <ul class="feeds">
     <?php foreach ($this->feeds as $feed) { ?>
-    <li><?php echo $feed->getTitle(); ?> (<?php putGS('updated'); ?> <?php echo $feed->getUpdated()->format('H:i'); ?>)</li>
+    <li><?php echo $feed->getTitle(); ?> (<?php putGS('updated'); ?> <?php echo $feed->getUpdated() ? $feed->getUpdated()->format('H:i') : getGS('Never'); ?>)</li>
     <?php } ?>
 </ul>
 

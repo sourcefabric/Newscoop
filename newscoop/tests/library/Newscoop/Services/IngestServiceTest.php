@@ -30,7 +30,6 @@ class IngestServiceTest extends \RepositoryTestCase
         $this->config = \Zend_Registry::get('container')->getParameter('ingest');
         $this->publisher = new PublisherService(\Zend_Registry::get('container')->getParameter('ingest_publisher'));
         $this->service = new IngestService($this->config, $this->em, $this->publisher);
-
     }
 
     public function tearDown()
@@ -79,6 +78,14 @@ class IngestServiceTest extends \RepositoryTestCase
         $this->assertEquals($entry, $this->service->find($entry->getId()));
     }
 
+    public function testAutoMode()
+    {
+        $this->setAutoMode();
+        $this->assertTrue($this->service->isAutoMode());
+        $this->service->switchAutoMode();
+        $this->assertFalse($this->service->isAutoMode());
+    }
+
     public function testPublish()
     {
         $entry = new Entry('title', 'content');
@@ -87,6 +94,24 @@ class IngestServiceTest extends \RepositoryTestCase
         $this->service->publish($entry);
 
         $this->assertTrue($entry->isPublished());
+    }
+
+    public function testAutomaticPublishAutoModeOn()
+    {
+        $this->setAutoMode();
+        $entry = new Entry('title', 'content');
+
+        $this->service->publish($entry, false);
+        $this->assertTrue($entry->isPublished());
+    }
+
+    public function testAutomaticPublishAutoModeOff()
+    {
+        $this->setAutoMode(false);
+        $entry = new Entry('title', 'content');
+
+        $this->service->publish($entry, false);
+        $this->assertFalse($entry->isPublished());
     }
 
     public function testUpdateAll()
@@ -121,5 +146,15 @@ class IngestServiceTest extends \RepositoryTestCase
 
         $this->service->updateAll();
         $this->assertEquals(6, count($feed->getEntries()));
+    }
+
+    /**
+     * Set auto mode
+     *
+     * @param bool $auto
+     */
+    private function setAutoMode($auto = true)
+    {
+        \SystemPref::Set(IngestService::MODE_SETTING, $auto);
     }
 }

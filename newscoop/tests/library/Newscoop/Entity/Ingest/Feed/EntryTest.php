@@ -68,9 +68,9 @@ class EntryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(NewsMlParserTest::CATCH_LINE, $entry->getCatchLine());
         $this->assertEquals(NewsMlParserTest::CATCH_WORD, $entry->getCatchWord());
         $this->assertEquals(NewsMlParserTest::AUTHORS, $entry->getAuthors());
-        $this->assertEquals(array(NewsMlParserTest::IMAGE_FILE), $entry->getImages());
         $this->assertEquals(NewsMlParserTest::STATUS, $entry->getStatus());
         $this->assertEquals(new \DateTime(NewsMlParserTest::EMBARGO_LIFT), $entry->getEmbargoed());
+        $this->assertEquals(array(NewsMlParserTest::IMAGE_FILE => NewsMlParserTest::IMAGE_CAPTION), $entry->getImages());
     }
 
     public function testUpdate()
