@@ -51,6 +51,24 @@ class CampGetImage
     private $m_resizeHeight = 0;
 
     /**
+     * @var string
+     * 		crop image from
+     * 		top-left, top-right, bottom-left, bottom-right
+     * 		center-left, center-right, top-center, bottom-center
+     * 		top(-center), bottom(-center), (center-)left, (center-)right
+     * 		center(-center)
+     */
+    private $m_crop = null;
+    
+    /**
+     * @var string
+     * 		after resizing
+     * 		crop image from
+     * 		top, center, bottom, left, right
+     */
+    private $m_resizeCrop = null;
+
+	/**
      * @param integer $m_ttl
      *      ttl for cached files
      */
@@ -77,7 +95,7 @@ class CampGetImage
      * @param integer $p_imageHeight
      *      The max height for image resize
      */
-    public function __construct($p_imageId, $p_imageRatio=100, $p_imageWidth = 0, $p_imageHeight = 0)
+    public function __construct($p_imageId, $p_imageRatio=100, $p_imageWidth = 0, $p_imageHeight = 0, $p_imageCrop = null, $p_resizeCrop = null)
     {
         $this->m_basePath = $GLOBALS['g_campsiteDir'].'/images/';
         $this->m_ttl = SystemPref::Get('ImagecacheLifetime');
@@ -93,6 +111,35 @@ class CampGetImage
         }
         if($p_imageHeight > 0) {
             $this->m_resizeHeight = $p_imageHeight;
+        }
+        if (!is_null($p_imageCrop)) {
+            $availableCropOptions = array(
+				'top-left', 'top-right', 'bottom-left', 'bottom-right',
+				'center-left', 'center-right', 'top-center', 'bottom-center',
+				'top', 'bottom', 'left', 'right', 'center', 'center-center'
+			);
+			
+			if (in_array($p_imageCrop, $availableCropOptions)) {
+				if ($p_imageCrop == 'top' || $p_imageCrop == 'bottom') {
+					$p_imageCrop = $p_imageCrop.'-center';
+				}
+				if ($p_imageCrop == 'left' || $p_imageCrop == 'right') {
+					$p_imageCrop = 'center-'.$p_imageCrop;
+				}
+				if ($p_imageCrop == 'center') {
+					$p_imageCrop = 'center-center';
+				}
+				$this->m_crop = $p_imageCrop;
+			}
+        }
+        if (!is_null($p_resizeCrop)) {
+            $availableCropOptions = array(
+				'top', 'bottom', 'left', 'right', 'center'
+			);
+			
+			if (in_array($p_resizeCrop, $availableCropOptions)) {
+				$this->m_resizeCrop = $p_resizeCrop;
+			}
         }
         $this->GetImage($p_imageId);
     }   // fn __construct
@@ -228,7 +275,9 @@ class CampGetImage
         //        header('Pragma: no-cache');
         header('Content-type: ' . $this->m_image->getContentType());
 
-        if ($this->m_isLocal && $this->m_ratio == 100
+        if ($this->m_crop) {
+            $this->CropImage();
+        } elseif ($this->m_isLocal && $this->m_ratio == 100
 	        && $this->m_resizeWidth == 0 && $this->m_resizeHeight == 0) {
             // do not cache local 100% images
             readfile($this->getSourcePath());
@@ -238,6 +287,101 @@ class CampGetImage
         }
     }  // fn PushImage
 
+	/**
+     * crops image
+     *
+     *
+     */
+    private function CropImage()
+    {
+        //list($current_width, $current_height) = getimagesize($filename);
+        list($current_width, $current_height) = getimagesize($this->m_imageSource);
+        
+        // Resulting size of the image after cropping
+        $width = $this->m_resizeWidth;
+        $height = $this->m_resizeHeight;
+
+        // Cropping coordinates
+        $cropPosition = explode('-', $this->m_crop);
+        if ($cropPosition[0] == 'top') $top = 0;
+        if ($cropPosition[0] == 'center') $top = ($current_height - $height) / 2;
+        if ($cropPosition[0] == 'bottom') $top = ($current_height - $height);
+        if ($cropPosition[1] == 'left') $left = 0;
+        if ($cropPosition[1] == 'center') $left = ($current_width - $width) / 2;
+        if ($cropPosition[1] == 'right') $left = ($current_width - $width);
+
+        // Resample the image
+        $canvas = @imagecreatetruecolor($width, $height);
+        $current_image = @imagecreatefromjpeg($this->getSourcePath());
+        @imagecopy($canvas, $current_image, 0, 0, $left, $top, $current_width, $current_height);
+        //@imagejpeg($canvas, $this->getSourcePath(), 100);
+        @imagejpeg($canvas, null, 100);
+    }
+    
+    /**
+     * crops resized image to fit size
+     *
+     * @param resource $p_im
+     */
+    private function CropResizedImage($p_im)
+    {
+        $current_width = imagesx($p_im);
+        $current_height = imagesy($p_im);
+        
+        // Resulting size of the image after cropping
+        $width = $this->m_resizeWidth;
+        $height = $this->m_resizeHeight;
+        
+        if ($current_width == $width && $current_height == $height) {
+			// no cropping necessary
+			return($p_im);
+		}
+
+        // hcrop
+        if ($current_width > $current_height) {
+			// translate vertical and horizontal values to each other for convenience
+			if ($this->m_resizeCrop == 'top') $this->m_resizeCrop = 'left';
+			if ($this->m_resizeCrop == 'bottom') $this->m_resizeCrop = 'right';
+			
+			if ($this->m_resizeCrop == 'left') {
+				$top = 0;
+				$left = 0;
+			}
+			if ($this->m_resizeCrop == 'center') {
+				$top = 0;
+				$left = ($current_width - $width) / 2;
+			}
+			if ($this->m_resizeCrop == 'right') {
+				$top = 0;
+				$left = ($current_width - $width);
+			}
+		}
+		// vcrop
+		if ($current_width < $current_height) {
+			// translate vertical and horizontal values to each other for convenience
+			if ($this->m_resizeCrop == 'left') $this->m_resizeCrop = 'top';
+			if ($this->m_resizeCrop == 'right') $this->m_resizeCrop = 'bottom';
+			
+			if ($this->m_resizeCrop == 'top') {
+				$top = 0;
+				$left = 0;
+			}
+			if ($this->m_resizeCrop == 'center') {
+				$top = ($current_height - $height) / 2;
+				$left = 0;
+			}
+			if ($this->m_resizeCrop == 'bottom') {
+				$top = ($current_height - $height);
+				$left = 0;
+			}
+		}
+		//error_log('top: '.$top.' left: '.$left.' width: '.$width);
+        
+        // Resample the image
+        $canvas = @imagecreatetruecolor($width, $height);
+        @imagecopy($canvas, $p_im, 0, 0, $left, $top, $current_width, $current_height);
+        return($canvas);
+    }
 
     /**
      * resizes image
@@ -248,40 +392,54 @@ class CampGetImage
     {
         $w_src = imagesx($p_im);
         $h_src = imagesy($p_im);
-    if ($this->m_ratio > 0 && $this->m_ratio < 100) {
-	    $ratio = $this->m_ratio / 100;
-	    $w_dest = @round($w_src * $ratio);
-	    $h_dest = @round($h_src * $ratio);
-	} else {
-	    // if both width and height are set, get the smaller resulting
-	    // image dimension
-	    if ($this->m_resizeWidth > 0 && $this->m_resizeHeight > 0) {
-	        $h_dest = (100 / ($w_src / $this->m_resizeWidth)) * 0.01;
-		$h_dest = @round($h_src * $h_dest);
-		if ($h_dest < $this->m_resizeHeight) {
-		    $w_dest = $this->m_resizeWidth;
+		if ($this->m_ratio > 0 && $this->m_ratio < 100) {
+			$ratio = $this->m_ratio / 100;
+			$w_dest = @round($w_src * $ratio);
+			$h_dest = @round($h_src * $ratio);
 		} else {
-		    $w_dest = (100 / ($h_src / $this->m_resizeHeight)) * 0.01;
-		    $w_dest = @round($w_src * $w_dest);
-		    $h_dest = $this->m_resizeHeight;
+			// if both width and height are set, get the smaller resulting
+			// image dimension
+			// but if m_resizeCrop is set, then get the bigger resulting one
+			// because we will crop the excess
+			if ($this->m_resizeWidth > 0 && $this->m_resizeHeight > 0) {
+				$h_dest = (100 / ($w_src / $this->m_resizeWidth)) * 0.01;
+				$h_dest = @round($h_src * $h_dest);
+				
+				if ($this->m_resizeCrop == null) {
+					if ($h_dest < $this->m_resizeHeight) {
+						$w_dest = $this->m_resizeWidth;
+					} else {
+						$w_dest = (100 / ($h_src / $this->m_resizeHeight)) * 0.01;
+						$w_dest = @round($w_src * $w_dest);
+						$h_dest = $this->m_resizeHeight;
+					}
+				}
+				else {
+					if ($h_dest > $this->m_resizeHeight) {
+						$w_dest = $this->m_resizeWidth;
+					} else {
+						$w_dest = (100 / ($h_src / $this->m_resizeHeight)) * 0.01;
+						$w_dest = @round($w_src * $w_dest);
+						$h_dest = $this->m_resizeHeight;
+					}
+				}
+			} elseif ($this->m_resizeWidth > 0 && $this->m_resizeHeight == 0) {
+				// autocompute height
+				$h_dest = (100 / ($w_src / $this->m_resizeWidth)) * 0.01;
+				$h_dest = @round($h_src * $h_dest);
+				$w_dest = $this->m_resizeWidth;
+			} elseif ($this->m_resizeHeight > 0 && $this->m_resizeWidth == 0) {
+				// autocompute width
+				$w_dest = (100 / ($h_src / $this->m_resizeHeight)) * 0.01;
+				$w_dest = @round($w_src * $w_dest);
+				$h_dest = $this->m_resizeHeight;
+			}
 		}
-	    } elseif ($this->m_resizeWidth > 0 && $this->m_resizeHeight == 0) {
-	        // autocompute height
-	        $h_dest = (100 / ($w_src / $this->m_resizeWidth)) * 0.01;
-		$h_dest = @round($h_src * $h_dest);
-		$w_dest = $this->m_resizeWidth;
-	    } elseif ($this->m_resizeHeight > 0 && $this->m_resizeWidth == 0) {
-	        // autocompute width
-	        $w_dest = (100 / ($h_src / $this->m_resizeHeight)) * 0.01;
-		$w_dest = @round($w_src * $w_dest);
-		$h_dest = $this->m_resizeHeight;
-	    }
-	}
-        $dest = @imagecreatetruecolor($w_dest, $h_dest);
-        $imageType = $this->m_image->getContentType();
+		$dest = @imagecreatetruecolor($w_dest, $h_dest);
+		$imageType = $this->m_image->getContentType();
 
-        // fix transparent backgrounds for png/gif
-        if (in_array($imageType, array('image/gif', 'image/png'))) {
+		// fix transparent backgrounds for png/gif
+		if (in_array($imageType, array('image/gif', 'image/png'))) {
             imagesavealpha($dest, TRUE);
             $color = imagecolorallocatealpha($dest, 0, 0, 0, 127);
 
@@ -340,6 +498,7 @@ class CampGetImage
      */
     private function imageCacheHandler()
     {
+        if ($this->m_resizeCrop != null) $this->m_ttl = 0;
         if ($this->m_ttl == 0) {
             // cache disabled
             return $this->createImage();
@@ -383,6 +542,9 @@ class CampGetImage
         $func_ending = $this->GetEnding();
         $t = $this->ReadImage($func_ending);
         $t = $this->ResizeImage($t);
+        if ($this->m_resizeCrop != null) {
+			$t = $this->CropResizedImage($t);
+		}
         $function = 'image'.$func_ending;
 
         if (!$p_target) {

@@ -1148,7 +1148,7 @@ abstract class CampURI
             $parameter = strtolower($p_params[$parIndex]);
             $parIndex++;
             if (!in_array($parameter,
-                            array('number', 'ratio', 'width', 'height'))) {
+                            array('number', 'ratio', 'width', 'height', 'crop'))) {
                 CampTemplate::trigger_error("Invalid image parameter '$parameter' in URL statement");
                 break;
             }
@@ -1180,17 +1180,18 @@ abstract class CampURI
         } else {
             while (isset($p_params[0])) {
                 $option = strtolower(array_shift($p_params));
-                if ($option != 'width' && $option != 'height') {
+                if ($option != 'width' && $option != 'height' && $option != 'crop' && $option != 'forcecrop') {
                     CampTemplate::trigger_error("Invalid image attribute '$option' in URL statement.");
                     break;
                 }
-                if (isset($p_params[0]) && is_numeric($p_params[0])) {
+                if (isset($p_params[0])) {
                     $option_value = array_shift($p_params);
                 } else {
                     CampTemplate::trigger_error("Value not set for '$option' image attribute in URL statement.");
                     break;
                 }
                 $param = 'Image' . ucfirst($option);
+                
                 $this->m_buildQueryArray[$param] = $option_value;
             }
         }
