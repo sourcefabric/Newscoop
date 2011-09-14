@@ -17,38 +17,34 @@
 <ProviderId>www.sda-ats.ch</ProviderId>
 <DateId>20110825</DateId>
 <NewsItemId>brd004</NewsItemId>
-<RevisionId PreviousRevision="2" Update="N">3</RevisionId>
-<PublicIdentifier>urn:newsml:www.sda-ats.ch:20110825:brd004:3N</PublicIdentifier>
+<RevisionId PreviousRevision="3" Update="N">4</RevisionId>
+<PublicIdentifier>urn:newsml:www.sda-ats.ch:20110825:brd004:4N</PublicIdentifier>
 </NewsIdentifier>
 </Identification>
 <NewsManagement>
 <NewsItemType FormalName="News"/>
 <FirstCreated>20110825T051533+0200</FirstCreated>
-<ThisRevisionCreated>20110825T120549+0200</ThisRevisionCreated>
-<Status FormalName="Embargoed"/>
-<StatusWillChange>
-<FutureStatus FormalName="Usable"/>
-<DateAndTime>20110831T150029</DateAndTime>
-</StatusWillChange>
-<Urgency FormalName="2"/>
+<ThisRevisionCreated>20110825T150231+0200</ThisRevisionCreated>
+<Status FormalName="Usable"/>
+<Urgency FormalName="3"/>
 <AssociatedWith NewsItem="urn:newsml:www.sda-ats.ch:20110825:phd9030"/>
 <Instruction FormalName="Update">
-<RevisionStatus Revision="1">
+<RevisionStatus Revision="3">
 <Status FormalName="Usable"/>
 </RevisionStatus>
 </Instruction>
 </NewsManagement>
 <NewsComponent>
 <NewsLines>
-<HeadLine>title</HeadLine>
-<DateLine>Tripolis</DateLine>
+<HeadLine>title2</HeadLine>
+<DateLine>Tripolis2</DateLine>
 <NewsLine>
 <NewsLineType FormalName="CatchLine"/>
-<NewsLineText>NATO unterstützt Rebellen bei Gaddafi-Jagd</NewsLineText>
+<NewsLineText>NATO unterstützt Rebellen bei Gaddafi-Jagd2</NewsLineText>
 </NewsLine>
 <NewsLine>
 <NewsLineType FormalName="CatchWord"/>
-<NewsLineText>Libyen</NewsLineText>
+<NewsLineText>Libyen2</NewsLineText>
 </NewsLine>
 </NewsLines>
 <AdministrativeMetadata>
@@ -59,22 +55,22 @@
 <Party FormalName="sda"/>
 <Party FormalName="dpa"/>
 <Party FormalName="afp"/>
-<Party FormalName="dapd"/>
 </Source>
 <Property FormalName="author" Value="kr"/>
 <Property FormalName="author" Value="kad"/>
+<Property FormalName="author" Value="cad"/>
 </AdministrativeMetadata>
 <DescriptiveMetadata>
-<Language FormalName="DE"/>
+<Language FormalName="EN"/>
 <Genre FormalName="Current"/>
 <SubjectCode>
-<Subject FormalName="11000000"/>
+<Subject FormalName="12000000"/>
 <Subject FormalName="16000000"/>
 <SubjectMatter FormalName="11006000"/>
 <SubjectMatter FormalName="11014000"/>
 </SubjectCode>
 <Location>
-<Property FormalName="Country" Value="LY"/>
+<Property FormalName="Country" Value="CZ"/>
 </Location>
 </DescriptiveMetadata>
 <NewsComponent>
@@ -88,10 +84,11 @@
 <nitf>
 <body>
 <body.content>
-<p lede="true">first</p>
-<p>next</p>
+<p lede="true">first2</p>
+<p>next2</p>
 <hl2>h2</hl2>
 <p>last</p>
+<p>one more</p>
 </body.content>
 </body>
 </nitf>

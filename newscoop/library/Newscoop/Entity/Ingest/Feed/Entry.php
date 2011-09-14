@@ -78,6 +78,18 @@ class Entry
     private $published;
 
     /**
+     * @Column(type="datetime", nullable=True)
+     * @var DateTime
+     */
+    private $embargoed;
+
+    /**
+     * @Column(type="string", nullable=True)
+     * @var string
+     */
+    private $status;
+
+    /**
      * @Column(type="integer", nullable=True)
      * @var int
      */
@@ -398,6 +410,26 @@ class Entry
     }
 
     /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+    /**
+     * Get embargoed
+     *
+     * @return DateTime
+     */
+    public function getEmbargoed()
+    {
+        return $this->embargoed;
+    }
+
+    /**
      * Update entry
      *
      * @param Newscoop\Ingest\Parser $parser
@@ -410,21 +442,9 @@ class Entry
         $this->content = $parser->getContent();
         $this->priority = $parser->getPriority();
         $this->summary = (string) $parser->getSummary();
-        $this->setAttribute('revision_id', (string) $parser->getRevisionId());
-        $this->setAttribute('service', (string) $parser->getService());
-        $this->setAttribute('language', (string) $parser->getLanguage());
-        $this->setAttribute('subject', (string) $parser->getSubject());
-        $this->setAttribute('country', (string) $parser->getCountry());
-        $this->setAttribute('product', (string) $parser->getProduct());
-        $this->setAttribute('subtitle', (string) $parser->getSubtitle());
-        $this->setAttribute('provider_id', (string) $parser->getProviderId());
-        $this->setAttribute('revision_id', (string) $parser->getRevisionId());
-        $this->setAttribute('location', (string) $parser->getLocation());
-        $this->setAttribute('provider', (string) $parser->getProvider());
-        $this->setAttribute('source', (string) $parser->getSource());
-        $this->setAttribute('catch_line', (string) $parser->getCatchLine());
-        $this->setAttribute('catch_word', (string) $parser->getCatchWord());
-        $this->setAttribute('authors', (string) $parser->getAuthors());
+        $this->status = (string) $parser->getStatus();
+        $this->embargoed = $parser->getLiftEmbargo();
+        self::setAttributes($this, $parser);
         self::setImages($this, $parser);
         return $this;
     }
@@ -442,6 +462,23 @@ class Entry
         $entry->updated = $parser->getUpdated() ?: $entry->updated;
         $entry->priority = (int) $parser->getPriority();
         $entry->summary = (string) $parser->getSummary();
+        $entry->date_id = (string) $parser->getDateId();
+        $entry->news_item_id = (string) $parser->getNewsItemId();
+        $entry->status = (string) $parser->getStatus();
+        $entry->embargoed = $parser->getLiftEmbargo();
+        self::setAttributes($entry, $parser);
+        self::setImages($entry, $parser);
+        return $entry;
+    }
+
+    /**
+     * Set entry attributes
+     *
+     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
+     * @param Newscoop\Ingest\Parser $parser
+     */
+    private static function setAttributes(self $entry, Parser $parser)
+    {
         $entry->setAttribute('service', (string) $parser->getService());
         $entry->setAttribute('language', (string) $parser->getLanguage());
         $entry->setAttribute('subject', (string) $parser->getSubject());
@@ -449,8 +486,6 @@ class Entry
         $entry->setAttribute('product', (string) $parser->getProduct());
         $entry->setAttribute('subtitle', (string) $parser->getSubtitle());
         $entry->setAttribute('provider_id', (string) $parser->getProviderId());
-        $entry->date_id = (string) $parser->getDateId();
-        $entry->news_item_id = (string) $parser->getNewsItemId();
         $entry->setAttribute('revision_id', (string) $parser->getRevisionId());
         $entry->setAttribute('location', (string) $parser->getLocation());
         $entry->setAttribute('provider', (string) $parser->getProvider());
@@ -458,8 +493,6 @@ class Entry
         $entry->setAttribute('catch_line', (string) $parser->getCatchLine());
         $entry->setAttribute('catch_word', (string) $parser->getCatchWord());
         $entry->setAttribute('authors', (string) $parser->getAuthors());
-        self::setImages($entry, $parser);
-        return $entry;
     }
 
     /**

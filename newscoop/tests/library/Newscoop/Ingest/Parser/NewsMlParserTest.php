@@ -12,6 +12,7 @@ namespace Newscoop\Ingest\Parser;
 class NewsMlParserTest extends \PHPUnit_Framework_TestCase
 {
     const NEWSML = '/../tests/ingest/test.xml';
+    const NEWSML_UPDATED = '/../tests/ingest/test_updated.xml';
     const TITLE = 'title';
     const SUBTITLE = '';
     const CONTENT = "<p>next</p>\n<h2>h2</h2>\n<p>last</p>";
@@ -37,6 +38,8 @@ class NewsMlParserTest extends \PHPUnit_Framework_TestCase
     const AUTHORS = 'kr, kad';
     const IMAGE_FILE = '20110825222727235.jpg';
     const IMAGE_CAPTION = 'Sion feiert das 1:0 durch Feindouno';
+    const STATUS = 'Embargoed';
+    const EMBARGO_LIFT = '20110831T150029';
 
     /** @var Newscoop\Ingest\Parser\NewsMlParser */
     private $parser;
@@ -178,5 +181,15 @@ class NewsMlParserTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($image->isImage());
         $this->assertFileExists($image->getPath());
         $this->assertEquals(self::IMAGE_CAPTION, $image->getTitle());
+    }
+
+    public function testGetStatus()
+    {
+        $this->assertEquals(self::STATUS, $this->parser->getStatus());
+    }
+
+    public function testgetLiftEmbargo()
+    {
+        $this->assertEquals(new \DateTime(self::EMBARGO_LIFT), $this->parser->getLiftEmbargo());
     }
 }

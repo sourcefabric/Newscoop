@@ -32,7 +32,7 @@ foreach ($articleTopics as $topic) {
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
   <meta http-equiv="Expires" content="now" />
   <title><?php putGS("Attach Topic To Article"); ?></title>
-  
+
 <?php include dirname(__FILE__) . '/../../html_head.php' ?>
 </head>
 <body class="pop-up">
