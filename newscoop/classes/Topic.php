@@ -297,7 +297,7 @@ class Topic extends DatabaseObject {
 	/**
 	 * @return string
 	 */
-	public function getName($p_languageId)
+	public function getName($p_languageId = null)
 	{
 		if (is_numeric($p_languageId) && isset($this->m_names[$p_languageId])) {
 			return $this->m_names[$p_languageId]->getName();

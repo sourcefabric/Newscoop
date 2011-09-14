@@ -103,6 +103,7 @@ class NewsImport
         $conf_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'include';
         $class_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'classes';
         require_once($conf_dir.DIR_SEP.'default_topics.php');
+        require_once($conf_dir.DIR_SEP.'default_limits.php');
 
         $feed_conf_path = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'conf'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'news_feeds_conf.php';
         if (!is_file($feed_conf_path)) {
@@ -130,7 +131,7 @@ class NewsImport
             'skip' => $events_skip,
             'limit' => $events_limit,
         );
-
+/*
         $events_ignore_passed = false;
         if (array_key_exists('newsignorepassed', $_GET)) {
             if (in_array(strtolower($_GET['newsignorepassed']), array('1', 'true', 't', 'yes', 'y', 'on'))) {
@@ -143,12 +144,12 @@ class NewsImport
         if ($events_ignore_passed) {
             $params_other['start_date'] = date('Y-m-d', localtime());
         }
-
+*/
         set_time_limit(0);
         ob_end_flush();
         flush();
 
-        return self::LoadEventData($event_data_sources, $news_feed, $cat_topics, $params_other);
+        return self::LoadEventData($event_data_sources, $news_feed, $cat_topics, $event_data_limits, $params_other);
     } // fn ProcessImport
 
 	/**
@@ -214,17 +215,17 @@ class NewsImport
 
             if ('*' == $one_spec_value) {
                 if (array_key_exists($one_spec_key, $lang_topics)) {
-                    $topics[] = array('fixed' => $lang_topics[$one_spec_key]);
+                    $topics[] = array('key' => $one_spec_key, 'fixed' => $lang_topics[$one_spec_key]);
                 }
             }
             if ('x' == $one_spec_value) {
                 if (array_key_exists($one_spec_key, $lang_topics)) {
-                    $topics[] = array('other' => $lang_topics[$one_spec_key]);
+                    $topics[] = array('key' => $one_spec_key, 'other' => $lang_topics[$one_spec_key]);
                 }
             }
             if (is_array($one_spec_value)) {
                 if (array_key_exists($one_spec_key, $lang_topics)) {
-                    $topics[] = array('match_xml' => $one_spec_value, 'match_topic' => $lang_topics[$one_spec_key]);
+                    $topics[] = array('key' => $one_spec_key, 'match_xml' => $one_spec_value, 'match_topic' => $lang_topics[$one_spec_key]);
                 }
             }
         }
@@ -552,7 +553,7 @@ class NewsImport
 	 * @param array $p_otherParams
 	 * @return void
 	 */
-    public static function LoadEventData($p_eventSources, $p_newsFeed, $p_catTopics, $p_otherParams) {
+    public static function LoadEventData($p_eventSources, $p_newsFeed, $p_catTopics, $p_limits, $p_otherParams) {
 
         $class_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'classes';
         require_once($class_dir.DIR_SEP.'EventParser.php');
@@ -625,7 +626,11 @@ class NewsImport
                 continue;
             }
 
-            $event_load = $parser_obj->parse($categories, $p_otherParams);
+            $limits = null;
+            if (array_key_exists($one_source_name, $p_limits)) {
+                $limits  = $p_limits[$one_source_name];
+            }
+            $event_load = $parser_obj->parse($categories, $limits);
             if (empty($event_load)) {
                 $parser_obj->stop();
                 continue;

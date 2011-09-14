@@ -237,15 +237,33 @@ class EventData_Parser {
         return true;
     } // fn cleanup
 
-    public function parseOld($p_categories, $p_otherParams) {
+    public function parseOld($p_categories, $p_limits) {
         $this->m_last_events = null;
         if (!is_array($p_categories)) {
             $p_categories = array();
         }
 
-        $start_date = null;
-        if (array_key_exists('start_date', $p_otherParams)) {
-            $start_date = $p_otherParams['start_date'];
+        //$start_date = null;
+        //$end_date = null;
+        $lim_span_past = null;
+        $lim_span_next = null;
+        if ((!empty($p_limits)) && (array_key_exists('dates', $p_limits))) {
+            $date_limits = $p_limits['dates'];
+            if (is_array($date_limits) && isset($date_limits['past'])) {
+                $lim_span_past = 0 + $date_limits['past'];
+                //$start_date = date('Y-m-d', (time() - ($lim_span_past * 24 * 60 * 60)));
+            }
+            if (is_array($date_limits) && isset($date_limits['next'])) {
+                $lim_span_next = 0 + $date_limits['next'];
+                //$end_date = date('Y-m-d', (time() + ($lim_span_past * 24 * 60 * 60)));
+            }
+        }
+        //if (array_key_exists('start_date', $p_otherParams)) {
+        //    $start_date = $p_otherParams['start_date'];
+        //}
+        $cat_limits = null;
+        if ((!empty($p_limits)) && (array_key_exists('categories', $p_limits))) {
+            $cat_limits = $p_limits['categories'];
         }
 
         $parser = new EventData_Parser_SimpleXML();
@@ -316,7 +334,7 @@ class EventData_Parser {
                 }
 
                 try {
-                    $result = $parser->parse($events, $this->m_provider, $event_file_path, $p_categories, $start_date);
+                    $result = $parser->parse($events, $this->m_provider, $event_file_path, $p_categories, $lim_span_past, $lim_span_next, $cat_limits);
                 }
                 catch (Exception $exc) {
                     //var_dump($exc);
@@ -340,17 +358,35 @@ class EventData_Parser {
      *
      * @return array
      */
-    public function parse($p_categories, $p_otherParams) {
+    public function parse($p_categories, $p_limits) {
         if (!is_array($p_categories)) {
             $p_categories = array();
         }
 
-        $start_date = null;
-        if (array_key_exists('start_date', $p_otherParams)) {
-            $start_date = $p_otherParams['start_date'];
+        //$start_date = null;
+        //$end_date = null;
+        $lim_span_past = null;
+        $lim_span_next = null;
+        if ((!empty($p_limits)) && (array_key_exists('dates', $p_limits))) {
+            $date_limits = $p_limits['dates'];
+            if (is_array($date_limits) && isset($date_limits['past'])) {
+                $lim_span_past = 0 + $date_limits['past'];
+                //$start_date = date('Y-m-d', (time() - ($lim_span_past * 24 * 60 * 60)));
+            }
+            if (is_array($date_limits) && isset($date_limits['next'])) {
+                $lim_span_next = 0 + $date_limits['next'];
+                //$end_date = date('Y-m-d', (time() + ($lim_span_past * 24 * 60 * 60)));
+            }
+        }
+        //if (array_key_exists('start_date', $p_otherParams)) {
+        //    $start_date = $p_otherParams['start_date'];
+        //}
+        $cat_limits = null;
+        if ((!empty($p_limits)) && (array_key_exists('categories', $p_limits))) {
+            $cat_limits = $p_limits['categories'];
         }
 
-        $this->parseOld($p_categories, $p_otherParams);
+        $this->parseOld($p_categories, $p_limits);
 
         $parser = new EventData_Parser_SimpleXML($this->m_last_events);
 
@@ -382,7 +418,7 @@ class EventData_Parser {
                 }
 
                 try {
-                    $result = $parser->parse($events, $this->m_provider, $event_file_path, $p_categories, $start_date);
+                    $result = $parser->parse($events, $this->m_provider, $event_file_path, $p_categories, $lim_span_past, $lim_span_next, $cat_limits);
                 }
                 catch (Exception $exc) {
                 }
@@ -405,13 +441,37 @@ class EventData_Parser_SimpleXML {
         $this->m_last_events = $p_lastEvents;
     } // fn __construct
 
+/*
+    private function canUseTopic($p_event, $p_category, $p_catLimits)
+    {
+        $one_cat_skip = false;
+        $one_cat_key = $p_category['key'];
+        foreach ($p_catLimits as $cat_lim_key => $cat_lim_spec) {
+            if ($cat_lim_key != $one_cat_key) {
+                continue;
+            }
+            if (array_key_exists('towns', $cat_lim_spec)) {
+                if (!in_array($p_event['town'], $cat_lim_spec['towns'])) {
+                    $one_cat_skip = true;
+                    break;
+                }
+            }
+        }
+
+        return (!$one_cat_skip);
+    }
+*/
+
     /**
      * Parses EventData data (by SimplXML)
      *
      * @param string $p_file file name of the eventdata file
      * @return array
      */
-    function parse(&$p_events, $p_provider, $p_file, $p_categories, $p_startDate) {
+    function parse(&$p_events, $p_provider, $p_file, $p_categories, $p_daysPast = null, $p_daysNext = null, $p_catLimits = null) {
+        if (empty($p_catLimits)) {
+            $p_catLimits = array();
+        }
 
         libxml_clear_errors();
         $internal_errors = libxml_use_internal_errors(true);
@@ -425,6 +485,43 @@ class EventData_Parser_SimpleXML {
             }
             libxml_clear_errors();
             return array("correct" => false, "errormsg" => $error_msg);
+        }
+
+        $limit_date_start = null;
+        $limit_date_end = null;
+
+        // we expect the datetime as e.g. '01.09.2011-01:30:27'
+        try {
+            $exp_date_time = explode('-', (string) $xml->export->date);
+
+            $exp_date = explode('.', $exp_date_time[0]);
+            $exp_year = 0 + $exp_date[2];
+            $exp_month = 0 + ltrim($exp_date[1], '0');
+            $exp_day = 0 + ltrim($exp_date[0], '0');
+
+            $exp_time = explode(':', $exp_date_time[1]);
+            $exp_hour = 0 + ltrim($exp_time[0], '0');
+            $exp_min = 0 + ltrim($exp_time[1], '0');
+            $exp_sec = 0 + ltrim($exp_time[2], '0');
+
+            $correct_datetime = true;
+            if (2000 >= $exp_year) {$correct_datetime = false;}
+            if ((0 >= $exp_month) || (13 <= $exp_month)) {$correct_datetime = false;}
+            if ((0 >= $exp_day) || (32 <= $exp_day)) {$correct_datetime = false;}
+
+            if ($correct_datetime) {
+                $exp_time = mktime($exp_hour, $exp_min, $exp_sec, $exp_month, $exp_day, $exp_year);
+                if (!empty($p_daysPast)) {
+                    $limit_date_start = date('Y-m-d', ($exp_time - ($p_daysPast * 24 * 60 * 60)));
+                }
+                if (!empty($p_daysNext)) {
+                    $limit_date_end = date('Y-m-d', ($exp_time + ($p_daysNext * 24 * 60 * 60)));
+                }
+            }
+        }
+        catch (Exception $exc) {
+            $limit_date_start = null;
+            $limit_date_end = null;
         }
 
         // $xml->date is an array of (per-day) event sets
@@ -459,8 +556,13 @@ class EventData_Parser_SimpleXML {
                 }
                 $event_info['date'] = $event_date;
 
-                if ($p_startDate) {
-                    if ($event_date < $p_startDate) {
+                if ($limit_date_start) {
+                    if ($event_date < $limit_date_start) {
+                        continue;
+                    }
+                }
+                if ($limit_date_end) {
+                    if ($event_date > $limit_date_end) {
                         continue;
                     }
                 }
@@ -490,6 +592,11 @@ class EventData_Parser_SimpleXML {
                 $x_lochot = trim('' . $event_location->lochot);
                 $event_info['rated'] = ( ((!empty($x_lochot)) && ('0' != $x_lochot)) ? true : false );
 
+                // * main location info
+                // town name (used at topics limiting)
+                $x_twnnam = trim('' . $event->twnnam);
+                $event_info['town'] = $x_twnnam;
+
                 $event_topics = array();
                 // * main type fields
                 // event category
@@ -499,6 +606,26 @@ class EventData_Parser_SimpleXML {
                     if (!is_array($one_category)) {
                         continue;
                     }
+
+                    $one_cat_skip = false;
+                    $one_cat_key = $one_category['key'];
+                    foreach ($p_catLimits as $cat_lim_key => $cat_lim_spec) {
+                        if ($cat_lim_key != $one_cat_key) {
+                            continue;
+                        }
+                        if (array_key_exists('towns', $cat_lim_spec)) {
+                            if (!in_array($event_info['town'], $cat_lim_spec['towns'])) {
+                                $one_cat_skip = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    //if (!canUseTopic($event_info, $one_category, $p_catLimits)) {
+                    if ($one_cat_skip) {
+                        continue;
+                    }
+
                     if (array_key_exists('fixed', $one_category)) {
                         $event_topics[] = $one_category['fixed'];
                         continue;
@@ -524,6 +651,10 @@ class EventData_Parser_SimpleXML {
                         $event_topics[] = $c_other;
                     }
                 }
+                if (empty($event_topics)) {
+                    continue;
+                }
+
                 $event_info['topics'] = $event_topics;
 
                 // Location
@@ -539,8 +670,8 @@ class EventData_Parser_SimpleXML {
 
                 // * main location info
                 // town name
-                $x_twnnam = trim('' . $event->twnnam);
-                $event_info['town'] = $x_twnnam;
+                //$x_twnnam = trim('' . $event->twnnam);
+                //$event_info['town'] = $x_twnnam;
 
                 // zip code
                 $x_loczip = trim('' . $event_location->loczip);
