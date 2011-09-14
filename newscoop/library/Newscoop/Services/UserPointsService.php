@@ -37,6 +37,10 @@ class UserPointsService
     {
         $user_points = $this->find($action);
 
+        if (is_null($user_points)) {
+            return 0;
+        }
+
         return $user_points->getPoints();
     }
 
