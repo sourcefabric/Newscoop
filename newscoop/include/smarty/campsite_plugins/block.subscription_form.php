@@ -31,7 +31,7 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
     }
 
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('gimme');
+    $campsite = $p_smarty->getTemplateVars('gimme');
       // gets the URL base
     $urlString = $campsite->url->base;
 
@@ -41,7 +41,7 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
         $campsite->subs_by_type = 'section';
     }
 
-    require_once($p_smarty->_get_plugin_filepath('function', 'get_resource_id'));
+    $p_smarty->smarty->loadPlugin('smarty_function_get_resource_id'));
     $resourceId = smarty_function_get_resource_id($p_params, $p_smarty);
 
 

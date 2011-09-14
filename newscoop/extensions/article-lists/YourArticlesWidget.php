@@ -22,6 +22,6 @@ class YourArticlesWidget extends ArticlesWidget
 
     public function beforeRender()
     {
-        $this->items = Article::GetArticlesByUser($this->getUser()->getUserId());
+        $this->items = Article::GetArticlesByUser($this->getUser()->getId());
     }
 }

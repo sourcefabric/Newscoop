@@ -17,71 +17,98 @@ require_once dirname(__FILE__) . '/../../classes/Browser.php';
  */
 final class CampContext
 {
+    /**
+     * dummy login action
+     * @var array
+     */
+    public $login_action;
+
     // Defines the object types
     private static $m_objectTypes = array(
-								    'language'=>array('class'=>'Language',
-								                      'handler'=>'setLanguageHandler'),
-    								'publication'=>array('class'=>'Publication',
-                                                         'handler'=>'setPublicationHandler'),
-								    'issue'=>array('class'=>'Issue',
-								                   'handler'=>'setIssueHandler'),
-								    'section'=>array('class'=>'Section',
-								                     'handler'=>'setSectionHandler'),
-								    'article'=>array('class'=>'Article',
-								                     'handler'=>'setArticleHandler'),
-								    'image'=>array('class'=>'Image'),
-								    'attachment'=>array('class'=>'Attachment'),
-								    'comment'=>array('class'=>'Comment',
-								    				 'handler'=>'setCommentHandler'),
-								    'subtitle'=>array('class'=>'Subtitle',
-                                                      'handler'=>'setSubtitleHandler'),
-								    'topic'=>array('class'=>'Topic',
-                                                   'handler'=>'setTopicHandler'),
-								    'user'=>array('class'=>'User'),
-								    'template'=>array('class'=>'Template'),
-    								'location'=>array('class'=>'MapLocation'),
-    								'author'=>array('class'=>'Author')
+        'language'=>array('class'=>'Language',
+                      'handler'=>'setLanguageHandler'),
+        'publication'=>array('class'=>'Publication',
+                         'handler'=>'setPublicationHandler'),
+        'issue'=>array('class'=>'Issue',
+                   'handler'=>'setIssueHandler'),
+        'section'=>array('class'=>'Section',
+                     'handler'=>'setSectionHandler'),
+        'article'=>array('class'=>'Article',
+                     'handler'=>'setArticleHandler'),
+        'image'=>array('class'=>'Image'),
+        'attachment'=>array('class'=>'Attachment'),
+        'comment'=>array('class'=>'Comment',
+			         'handler'=>'setCommentHandler'),
+        'subtitle'=>array('class'=>'Subtitle',
+                      'handler'=>'setSubtitleHandler'),
+        'topic'=>array('class'=>'Topic',
+                   'handler'=>'setTopicHandler'),
+        'user'=>array('class'=>'User'),
+        'template'=>array('class'=>'Template'),
+        'location'=>array('class'=>'MapLocation'),
+        'author'=>array('class'=>'Author'),
+        'list_user' => array(
+            'class' => 'User',
+        ),
+        'community_feed' => array(
+            'class' => 'CommunityFeed',
+        ),
     );
 
     // Defines the list objects
     private $m_listObjects = array(
-                             'languages'=>array('class'=>'Languages', 'list'=>'languages',
-                                             'url_id'=>'lang'),
-                             'issues'=>array('class'=>'Issues', 'list'=>'issues',
-	                         				 'url_id'=>'iss'),
-	                         'sections'=>array('class'=>'Sections', 'list'=>'sections',
-	                         				   'url_id'=>'sec'),
-	                         'articles'=>array('class'=>'Articles', 'list'=>'articles',
-	                         				   'url_id'=>'art'),
-	                         'maparticles'=>array('class'=>'MapArticles', 'list'=>'map_articles',
-	                         				   'url_id'=>'mart'),
-	                         'articleauthors'=>array('class'=>'ArticleAuthors',
-	                                                 'list'=>'article_authors',
-	                                                 'url_id'=>'aas'),
-	                         'articlelocations'=>array('class'=>'ArticleLocations',
-	                                                'list'=>'article_locations',
-	                                                'url_id'=>'alc'),
-	                         'maplocations'=>array('class'=>'MapLocations',
-	                                                'list'=>'map_locations',
-	                                                'url_id'=>'mlc'),
-    						 'articleimages'=>array('class'=>'ArticleImages',
-	                                                'list'=>'article_images',
-	                                                'url_id'=>'aim'),
-    						 'articleattachments'=>array('class'=>'ArticleAttachments',
-	                                                     'list'=>'article_attachments',
-	                                                     'url_id'=>'aat'),
-    						 'articlecomments'=>array('class'=>'ArticleComments',
-	                                                  'list'=>'article_comments',
-	                                                  'url_id'=>'acm'),
-	                         'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles',
-                                                'url_id'=>'st'),
-    						 'articletopics'=>array('class'=>'ArticleTopics',
-	                                                'list'=>'article_topics', 'url_id'=>'atp'),
-	                         'searchresults'=>array('class'=>'SearchResults',
-	                                                'list'=>'search_results', 'url_id'=>'src'),
-	                         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics',
-	                         					'url_id'=>'tp'),
-    						 'images'=>array('class'=>'Images', 'list'=>'images', 'url'=>'img')
+        'languages'=>array('class'=>'Languages', 'list'=>'languages',
+                     'url_id'=>'lang'),
+        'issues'=>array('class'=>'Issues', 'list'=>'issues',
+			         'url_id'=>'iss'),
+        'sections'=>array('class'=>'Sections', 'list'=>'sections',
+			           'url_id'=>'sec'),
+        'articles'=>array('class'=>'Articles', 'list'=>'articles',
+			           'url_id'=>'art'),
+        'maparticles'=>array('class'=>'MapArticles', 'list'=>'map_articles',
+			           'url_id'=>'mart'),
+        'articleauthors'=>array('class'=>'ArticleAuthors',
+                             'list'=>'article_authors',
+                             'url_id'=>'aas'),
+        'articlelocations'=>array('class'=>'ArticleLocations',
+                            'list'=>'article_locations',
+                            'url_id'=>'alc'),
+        'maplocations'=>array('class'=>'MapLocations',
+                            'list'=>'map_locations',
+                            'url_id'=>'mlc'),
+        'articleimages'=>array('class'=>'ArticleImages',
+                            'list'=>'article_images',
+                            'url_id'=>'aim'),
+        'articleattachments'=>array('class'=>'ArticleAttachments',
+                                 'list'=>'article_attachments',
+                                 'url_id'=>'aat'),
+        'articlecomments'=>array('class'=>'ArticleComments',
+                              'list'=>'article_comments',
+                              'url_id'=>'acm'),
+        'subtitles'=>array('class'=>'Subtitles', 'list'=>'subtitles',
+                        'url_id'=>'st'),
+        'articletopics'=>array('class'=>'ArticleTopics',
+                            'list'=>'article_topics', 'url_id'=>'atp'),
+        'searchresults'=>array('class'=>'SearchResults',
+                            'list'=>'search_results', 'url_id'=>'src'),
+        'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics',
+				        'url_id'=>'tp'),
+        'images'=>array('class'=>'Images', 'list'=>'images', 'url_id'=>'img'),
+        'users' => array(
+            'class' => 'Users',
+            'list' => 'users',
+            'url_id' => 'uid',
+        ),
+        'communityfeeds' => array(
+            'class' => 'CommunityFeeds',
+            'list' => 'community_feeds',
+            'url_id' => 'cfid',
+        ),
+        'boxarticles' => array(
+            'class' => 'BoxArticles',
+            'list' => 'box_articles',
+            'url_id' => 'box',
+        ),
     );
 
     /**
@@ -141,6 +168,11 @@ final class CampContext
         if (!is_null($this->m_properties)) {
             return;
         }
+
+        $this->login_action = (object) array(
+            'is_error' => false,
+            'error_message' => '',
+        );
 
         self::$m_nullMetaArticle = new MetaArticle();
         self::$m_nullMetaSection = new MetaSection();
@@ -365,7 +397,7 @@ final class CampContext
                     $this->m_objects[$p_element] = $p_value;
                 }
 
-                return $this->m_objects[$p_element];
+                return isset($this->m_objects[$p_element]) ? $this->m_objects[$p_element] : null;
             } catch (InvalidObjectException $e) {
                 $this->trigger_invalid_object_error($e->getClassName());
                 return null;
@@ -995,7 +1027,7 @@ final class CampContext
     {
         static $sectionHandlerRunning = false;
 
-        if (!$this->m_readonlyProperties['preview']
+        if (!$this->m_readonlyProperties['preview'] && isset($p_newSection->issue)
         && !$p_newSection->issue->is_published && $p_newSection->defined()) {
             return;
         }

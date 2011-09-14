@@ -304,6 +304,8 @@ CREATE TABLE `Attachments` (
   `fk_user_id` int(10) unsigned DEFAULT NULL,
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `time_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Source` enum('local','feedback') not null default 'local',
+  `Status` enum('unapproved','approved') not null default 'approved',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -778,6 +780,8 @@ CREATE TABLE `Images` (
   `UploadedByUser` int(11) DEFAULT NULL,
   `LastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `TimeCreated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Source` enum('local','feedback') not null default 'local',
+  `Status` enum('unapproved','approved') not null default 'approved',
   PRIMARY KEY (`Id`),
   FULLTEXT KEY `Description` (`Description`),
   FULLTEXT KEY `Photographer` (`Photographer`),
@@ -1935,8 +1939,43 @@ CREATE TABLE `acl_rule` (
 
 LOCK TABLES `acl_rule` WRITE;
 /*!40000 ALTER TABLE `acl_rule` DISABLE KEYS */;
-INSERT INTO `acl_rule` VALUES (1,'allow',1,'article','add'),(2,'allow',1,'audioclip','add'),(3,'allow',1,'file','add'),(4,'allow',1,'image','add'),(5,'allow',1,'audioclip','attach'),(6,'allow',1,'image','attach'),(7,'allow',1,'topic','attach'),(8,'allow',1,'article','edit'),(9,'allow',1,'file','edit'),(10,'allow',1,'image','edit'),(11,'allow',1,'system-preferences','edit'),(12,'allow',1,'cache','clear'),(13,'allow',1,'comment','enable'),(14,'allow',1,'comment','moderate'),(15,'allow',1,'article','delete'),(16,'allow',1,'article-type','delete'),(17,'allow',1,'country','delete'),(18,'allow',1,'file','delete'),(19,'allow',1,'image','delete'),(20,'allow',1,'issue','delete'),(21,'allow',1,'language','delete'),(22,'allow',1,'publication','delete'),(23,'allow',1,'section','delete'),(24,'allow',1,'template','delete'),(25,'allow',1,'user','delete'),(26,'allow',1,'editor','bold'),(27,'allow',1,'editor','charactermap'),(28,'allow',1,'editor','copycutpaste'),(29,'allow',1,'editor','enlarge'),(30,'allow',1,'editor','findreplace'),(31,'allow',1,'editor','fontcolor'),(32,'allow',1,'editor','fontface'),(33,'allow',1,'editor','fontsize'),(34,'allow',1,'editor','horizontalrule'),(35,'allow',1,'editor','image'),(36,'allow',1,'editor','indent'),(37,'allow',1,'editor','italic'),(38,'allow',1,'editor','link'),(39,'allow',1,'editor','listbullet'),(40,'allow',1,'editor','listnumber'),(41,'allow',1,'editor','sourceview'),(42,'allow',1,'editor','strikethrough'),(43,'allow',1,'editor','subhead'),(44,'allow',1,'editor','subscript'),(45,'allow',1,'editor','superscript'),(46,'allow',1,'editor','table'),(47,'allow',1,'editor','textalignment'),(48,'allow',1,'editor','textdirection'),(49,'allow',1,'editor','underline'),(50,'allow',1,'editor','undoredo'),(51,'allow',1,'plugin','manage'),(52,'allow',1,'article-type','manage'),(53,'allow',1,'country','manage'),(54,'allow',1,'issue','manage'),(55,'allow',1,'language','manage'),(56,'allow',1,'localizer','manage'),(57,'allow',1,'publication','manage'),(58,'allow',1,'subscriber','manage'),(59,'allow',1,'section','manage'),(60,'allow',1,'subscription','manage'),(61,'allow',1,'template','manage'),(62,'allow',1,'topic','manage'),(63,'allow',1,'user-group','manage'),(64,'allow',1,'user','manage'),(65,'allow',1,'article','move'),(66,'allow',1,'article','publish'),(67,'allow',1,'article','translate'),(68,'allow',1,'log','view'),(69,'allow',1,'editor','statusbar'),(70,'allow',1,'editor','spellcheckerenabled'),(71,'allow',1,'backup','manage'),(72,'allow',1,'plugin-interview','moderator'),(73,'allow',1,'plugin-interview','admin'),(74,'allow',1,'plugin-blog','admin'),(75,'allow',1,'plugin-blog','moderator'),(76,'allow',1,'pluginpoll','enable'),(77,'allow',1,'author','edit'),(78,'allow',2,'article','add'),(79,'allow',2,'audioclip','add'),(80,'allow',2,'file','add'),(81,'allow',2,'image','add'),(82,'allow',2,'audioclip','attach'),(83,'allow',2,'image','attach'),(84,'allow',2,'topic','attach'),(85,'allow',2,'article','edit'),(86,'allow',2,'file','edit'),(87,'allow',2,'image','edit'),(88,'allow',2,'cache','clear'),(89,'allow',2,'comment','enable'),(90,'allow',2,'comment','moderate'),(91,'allow',2,'article','delete'),(92,'allow',2,'country','delete'),(93,'allow',2,'file','delete'),(94,'allow',2,'image','delete'),(95,'allow',2,'publication','delete'),(96,'allow',2,'template','delete'),(97,'allow',2,'user','delete'),(98,'allow',2,'editor','bold'),(99,'allow',2,'editor','charactermap'),(100,'allow',2,'editor','copycutpaste'),(101,'allow',2,'editor','enlarge'),(102,'allow',2,'editor','findreplace'),(103,'allow',2,'editor','horizontalrule'),(104,'allow',2,'editor','image'),(105,'allow',2,'editor','indent'),(106,'allow',2,'editor','italic'),(107,'allow',2,'editor','link'),(108,'allow',2,'editor','listbullet'),(109,'allow',2,'editor','sourceview'),(110,'allow',2,'editor','strikethrough'),(111,'allow',2,'editor','subhead'),(112,'allow',2,'editor','subscript'),(113,'allow',2,'editor','superscript'),(114,'allow',2,'editor','textalignment'),(115,'allow',2,'editor','textdirection'),(116,'allow',2,'editor','underline'),(117,'allow',2,'indexer','manage'),(118,'allow',2,'language','manage'),(119,'allow',2,'publication','manage'),(120,'allow',2,'subscriber','manage'),(121,'allow',2,'template','manage'),(122,'allow',2,'user-group','manage'),(123,'allow',2,'user','manage'),(124,'allow',2,'article','move'),(125,'allow',2,'article','publish'),(126,'allow',2,'article','translate'),(127,'allow',2,'editor','spellcheckerenabled'),(128,'allow',2,'plugin-interview','moderator'),(129,'allow',2,'plugin-blog','moderator'),(130,'allow',2,'pluginpoll','enable'),(131,'allow',3,'article','add'),(132,'allow',3,'audioclip','add'),(133,'allow',3,'file','add'),(134,'allow',3,'image','add'),(135,'allow',3,'audioclip','attach'),(136,'allow',3,'image','attach'),(137,'allow',3,'topic','attach'),(138,'allow',3,'article','edit'),(139,'allow',3,'file','edit'),(140,'allow',3,'image','edit'),(141,'allow',3,'comment','moderate'),(142,'allow',3,'country','delete'),(143,'allow',3,'file','delete'),(144,'allow',3,'user','delete'),(145,'allow',3,'editor','bold'),(146,'allow',3,'editor','charactermap'),(147,'allow',3,'editor','copycutpaste'),(148,'allow',3,'editor','enlarge'),(149,'allow',3,'editor','horizontalrule'),(150,'allow',3,'editor','image'),(151,'allow',3,'editor','indent'),(152,'allow',3,'editor','italic'),(153,'allow',3,'editor','link'),(154,'allow',3,'editor','listbullet'),(155,'allow',3,'editor','strikethrough'),(156,'allow',3,'editor','superscript'),(157,'allow',3,'editor','table'),(158,'allow',3,'editor','textalignment'),(159,'allow',3,'editor','textdirection'),(160,'allow',3,'editor','underline'),(161,'allow',3,'user','manage'),(162,'allow',3,'article','publish'),(163,'allow',3,'editor','spellcheckerenabled'),(164,'allow',3,'pluginpoll','enable'),(165,'allow',4,'article','add'),(166,'allow',4,'audioclip','add'),(167,'allow',4,'file','add'),(168,'allow',4,'image','add'),(169,'allow',4,'audioclip','attach'),(170,'allow',4,'image','attach'),(171,'allow',4,'topic','attach'),(172,'allow',4,'file','edit'),(173,'allow',4,'image','edit'),(174,'allow',4,'editor','bold'),(175,'allow',4,'editor','charactermap'),(176,'allow',4,'editor','copycutpaste'),(177,'allow',4,'editor','enlarge'),(178,'allow',4,'editor','horizontalrule'),(179,'allow',4,'editor','indent'),(180,'allow',4,'editor','italic'),(181,'allow',4,'editor','link'),(182,'allow',4,'editor','listbullet'),(183,'allow',4,'editor','strikethrough'),(184,'allow',4,'editor','textdirection'),(185,'allow',4,'editor','underline'),(186,'allow',4,'article','publish'),(187,'allow',4,'editor','spellcheckerenabled'),(188,'allow',5,'publication','manage'),(189,'allow',5,'section','manage'),(190, 'allow', 1, 'theme', 'manage'),(191,'allow',2,'theme','manage'),(193,'allow',1,'comment','edit');
+INSERT INTO `acl_rule` VALUES (null,'allow',1,'article','add'),(null,'allow',1,'article','edit'),(null,'allow',1,'article','delete'),(null,'allow',1,'article','move'), (null,'allow',1,'article','publish'),(null,'allow',1,'article','translate'),(null,'allow',1,'image','add'),(null,'allow',1,'image','attach'),(null,'allow',1,'image','edit'),(null,'allow',1,'image','delete'),(null,'allow',1,'comment','enable'),(null,'allow',1,'comment','moderate'),(null,'allow',1,'comment','edit'),(null,'allow',1,'file','add'),(null,'allow',1,'file','edit'),(null,'allow',1,'file','delete'),(null,'allow',1,'audioclip','add'),(null,'allow',1,'audioclip','attach'),(null,'allow',1,'editor','bold'),(null,'allow',1,'editor','charactermap'),(null,'allow',1,'editor','copycutpaste'),(null,'allow',1,'editor','enlarge'),(null,'allow',1,'editor','findreplace'),(null,'allow',1,'editor','fontcolor'),(null,'allow',1,'editor','fontface'),(null,'allow',1,'editor','fontsize'),(null,'allow',1,'editor','horizontalrule'),(null,'allow',1,'editor','image'),(null,'allow',1,'editor','indent'),(null,'allow',1,'editor','italic'),(null,'allow',1,'editor','link'),(null,'allow',1,'editor','listbullet'),(null,'allow',1,'editor','listnumber'),(null,'allow',1,'editor','sourceview'),(null,'allow',1,'editor','spellcheckerenabled'),(null,'allow',1,'editor','statusbar'),(null,'allow',1,'editor','strikethrough'),(null,'allow',1,'editor','subhead'),(null,'allow',1,'editor','subscript'),(null,'allow',1,'editor','superscript'),(null,'allow',1,'editor','table'),(null,'allow',1,'editor','textalignment'),(null,'allow',1,'editor','textdirection'),(null,'allow',1,'editor','underline'),(null,'allow',1,'editor','undoredo'),(null, 'allow', 1, 'theme', 'manage'),(null,'allow',1,'template','delete'),(null,'allow',1,'template','manage'),(null,'allow',1,'article-type','delete'),(null,'allow',1,'article-type','manage'),(null,'allow',1,'system-preferences','edit'),(null,'allow',1,'indexer','manage'),(null,'allow',1,'country','delete'),(null,'allow',1,'country','manage'),(null,'allow',1,'log','view'),(null,'allow',1,'localizer','manage'),(null,'allow',1,'backup','manage'),(null,'allow',1,'cache','clear'),(null,'allow',1,'notification','get'),(null,'allow',1,'notification','moderate-comment'),(null,'allow',1,'publication','delete'),(null,'allow',1,'publication','manage'),(null,'allow',1,'issue','delete'),(null,'allow',1,'issue','manage'),(null,'allow',1,'section','delete'),(null,'allow',1,'section','manage'),(null,'allow',1,'topic','attach'),(null,'allow',1,'topic','manage'),(null,'allow',1,'language','delete'),(null,'allow',1,'language','manage'),(null,'allow',1,'user-group','manage'),(null,'allow',1,'user','delete'),(null,'allow',1,'user','manage'),(null,'allow',1,'author','edit'),(null,'allow',1,'subscriber','manage'),(null,'allow',1,'subscription','manage'),(null,'allow',1,'plugin','manage'),(null,'allow',1,'plugin-blog','moderator'),(null,'allow',1,'plugin-blog','admin'),(null,'allow',1,'pluginpoll','enable'),(null,'allow',1,'plugin-interview','admin'),(null,'allow',1,'plugin-interview','guest'),(null,'allow',1,'plugin-interview','moderator'),(null,'allow',1,'plugin-interview','notify'),(null,'allow',2,'article','add'),(null,'allow',2,'article','edit'),(null,'allow',2,'article','delete'),(null,'allow',2,'article','move'), (null,'allow',2,'article','publish'),(null,'allow',2,'article','translate'),(null,'allow',2,'image','add'),(null,'allow',2,'image','attach'),(null,'allow',2,'image','edit'),(null,'allow',2,'image','delete'),(null,'allow',2,'comment','enable'),(null,'allow',2,'comment','moderate'),(null,'allow',2,'comment','edit'),(null,'allow',2,'file','add'),(null,'allow',2,'file','edit'),(null,'allow',2,'file','delete'),(null,'allow',2,'audioclip','add'),(null,'allow',2,'audioclip','attach'),(null,'allow',2,'editor','bold'),(null,'allow',2,'editor','copycutpaste'),(null,'allow',2,'editor','enlarge'),(null,'allow',2,'editor','findreplace'),(null,'allow',2,'editor','image'),(null,'allow',2,'editor','indent'),(null,'allow',2,'editor','italic'),(null,'allow',2,'editor','link'),(null,'allow',2,'editor','listbullet'),(null,'allow',2,'editor','listnumber'),(null,'allow',2,'editor','sourceview'),(null,'allow',2,'editor','spellcheckerenabled'),(null,'allow',2,'editor','strikethrough'),(null,'allow',2,'editor','subhead'),(null,'allow',2,'editor','table'),(null,'allow',2,'editor','textalignment'),(null,'allow',2,'editor','textdirection'),(null,'allow',2,'editor','underline'),(null,'allow',2,'editor','undoredo'),(null, 'allow',2, 'theme', 'manage'),(null,'allow',2,'log','view'),(null,'allow',2,'cache','clear'),(null,'allow',2,'notification','get'),(null,'allow',2,'notification','moderate-comment'),(null,'allow',2,'issue','delete'),(null,'allow',2,'issue','manage'),(null,'allow',2,'section','delete'),(null,'allow',2,'section','manage'),(null,'allow',2,'topic','attach'),(null,'allow',2,'topic','manage'),(null,'allow',2,'author','edit'),(null,'allow',2,'plugin','manage'),(null,'allow',2,'plugin-blog','moderator'),(null,'allow',2,'pluginpoll','enable'),(null,'allow',2,'plugin-interview','moderator'),(null,'allow',3,'article','add'),(null,'allow',3,'article','edit'),(null,'allow',3,'article','delete'),(null,'allow',3,'article','move'), (null,'allow',3,'article','publish'),(null,'allow',3,'article','translate'),(null,'allow',3,'image','add'),(null,'allow',3,'image','attach'),(null,'allow',3,'image','edit'),(null,'allow',3,'image','delete'),(null,'allow',3,'comment','enable'),(null,'allow',3,'comment','moderate'),(null,'allow',3,'comment','edit'),(null,'allow',3,'file','add'),(null,'allow',3,'file','edit'),(null,'allow',3,'file','delete'),(null,'allow',3,'audioclip','add'),(null,'allow',3,'audioclip','attach'),(null,'allow',3,'editor','bold'),(null,'allow',3,'editor','copycutpaste'),(null,'allow',3,'editor','findreplace'),(null,'allow',3,'editor','image'),(null,'allow',3,'editor','indent'),(null,'allow',3,'editor','italic'),(null,'allow',3,'editor','link'),(null,'allow',3,'editor','sourceview'),(null,'allow',3,'editor','spellcheckerenabled'),(null,'allow',3,'editor','subhead'),(null,'allow',3,'editor','table'),(null,'allow',3,'editor','undoredo'),(null,'allow',3,'cache','clear'),(null,'allow',3,'notification','get'),(null,'allow',3,'notification','moderate-comment'),(null,'allow',3,'topic','attach'),(null,'allow',3,'topic','manage'),(null,'allow',3,'author','edit'),(null,'allow',3,'plugin','manage'),(null,'allow',3,'pluginpoll','enable'),(null,'allow',4,'article','add'),(null,'allow',4,'article','edit'),(null,'allow',4,'article','delete'),(null,'allow',4,'article','move'), (null,'allow',4,'article','translate'),(null,'allow',4,'image','add'),(null,'allow',4,'image','attach'),(null,'allow',4,'image','edit'),(null,'allow',4,'comment','enable'),(null,'allow',4,'comment','moderate'),(null,'allow',4,'comment','edit'),(null,'allow',4,'file','add'),(null,'allow',4,'file','edit'),(null,'allow',4,'audioclip','add'),(null,'allow',4,'audioclip','attach'),(null,'allow',4,'editor','bold'),(null,'allow',4,'editor','copycutpaste'),(null,'allow',4,'editor','findreplace'),(null,'allow',4,'editor','image'),(null,'allow',4,'editor','indent'),(null,'allow',4,'editor','italic'),(null,'allow',4,'editor','link'),(null,'allow',4,'editor','spellcheckerenabled'),(null,'allow',4,'editor','subhead'),(null,'allow',4,'editor','undoredo'),(null,'allow',4,'notification','get'),(null,'allow',4,'notification','moderate-comment'),(null,'allow',4,'topic','attach'),(null,'allow',4,'plugin','manage'),(null,'allow',5,'subscriber','manage'),(null,'allow',5,'subscription','manage'),(null,'allow',1,'feedback','view');
 /*!40000 ALTER TABLE `acl_rule` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `feedback`
+--
+DROP TABLE IF EXISTS `feedback`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `feedback` (
+   `id` int(11) not null auto_increment,
+   `user_id` int(11),
+   `section_id` int(11),
+   `publication_id` int(11),
+   `article_language` int(11),
+   `article_number` int(11),
+   `subject` varchar(128),
+   `message` varchar(2048) not null,
+   `status` tinyint(1) unsigned not null,
+   `url` varchar(128) not null,
+   `time_created` datetime not null,
+   `time_updated` datetime not null,
+   `attachment_type` int(1),
+   `attachment_id` int(11),
+   PRIMARY KEY (`id`),
+   KEY `user` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `feedback`
+--
+
+LOCK TABLES `feedback` WRITE;
+/*!40000 ALTER TABLE `feedback` DISABLE KEYS */;
+/*!40000 ALTER TABLE `feedback` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2037,169 +2076,62 @@ LOCK TABLES `comment_commenter` WRITE;
 /*!40000 ALTER TABLE `comment_commenter` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+-- Tables for context box
+CREATE TABLE IF NOT EXISTS `context_articles` (
+  `fk_context_id` int(10) NOT NULL,
+  `fk_article_no` int(10) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `context_boxes` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `fk_article_no` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+
+
 --
 -- Table structure for table `liveuser_applications`
 --
 
 DROP TABLE IF EXISTS `liveuser_applications`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_applications` (
-  `application_id` int(11) NOT NULL DEFAULT '0',
-  `application_define_name` varchar(32) NOT NULL DEFAULT '',
-  PRIMARY KEY (`application_id`),
-  UNIQUE KEY `applications_define_name_i_idx` (`application_define_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_applications`
---
-
-LOCK TABLES `liveuser_applications` WRITE;
-/*!40000 ALTER TABLE `liveuser_applications` DISABLE KEYS */;
-INSERT INTO `liveuser_applications` VALUES (1,'Campsite'),(2,'Campcaster');
-/*!40000 ALTER TABLE `liveuser_applications` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_applications_application_id_seq`
 --
 
 DROP TABLE IF EXISTS `liveuser_applications_application_id_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_applications_application_id_seq` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_applications_application_id_seq`
---
-
-LOCK TABLES `liveuser_applications_application_id_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_applications_application_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_applications_application_id_seq` VALUES (2);
-/*!40000 ALTER TABLE `liveuser_applications_application_id_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_applications_seq`
 --
 
 DROP TABLE IF EXISTS `liveuser_applications_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_applications_seq` (
-  `sequence` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`sequence`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_applications_seq`
---
-
-LOCK TABLES `liveuser_applications_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_applications_seq` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_applications_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_area_admin_areas`
 --
 
 DROP TABLE IF EXISTS `liveuser_area_admin_areas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_area_admin_areas` (
-  `area_id` int(11) NOT NULL DEFAULT '0',
-  `perm_user_id` int(11) NOT NULL DEFAULT '0',
-  UNIQUE KEY `area_admin_areas_id_i_idx` (`area_id`,`perm_user_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_area_admin_areas`
---
-
-LOCK TABLES `liveuser_area_admin_areas` WRITE;
-/*!40000 ALTER TABLE `liveuser_area_admin_areas` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_area_admin_areas` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_areas`
 --
 
 DROP TABLE IF EXISTS `liveuser_areas`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_areas` (
-  `area_id` int(11) NOT NULL DEFAULT '0',
-  `application_id` int(11) NOT NULL DEFAULT '0',
-  `area_define_name` varchar(32) NOT NULL DEFAULT '',
-  PRIMARY KEY (`area_id`),
-  UNIQUE KEY `areas_define_name_i_idx` (`application_id`,`area_define_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_areas`
---
-
-LOCK TABLES `liveuser_areas` WRITE;
-/*!40000 ALTER TABLE `liveuser_areas` DISABLE KEYS */;
-INSERT INTO `liveuser_areas` VALUES (1,1,'Articles');
-/*!40000 ALTER TABLE `liveuser_areas` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_areas_seq`
 --
 
 DROP TABLE IF EXISTS `liveuser_areas_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_areas_seq` (
-  `sequence` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`sequence`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_areas_seq`
---
-
-LOCK TABLES `liveuser_areas_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_areas_seq` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_areas_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_group_subgroups`
 --
 
 DROP TABLE IF EXISTS `liveuser_group_subgroups`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_group_subgroups` (
-  `group_id` int(11) NOT NULL DEFAULT '0',
-  `subgroup_id` int(11) NOT NULL DEFAULT '0',
-  UNIQUE KEY `group_subgroups_id_i_idx` (`group_id`,`subgroup_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_group_subgroups`
---
-
-LOCK TABLES `liveuser_group_subgroups` WRITE;
-/*!40000 ALTER TABLE `liveuser_group_subgroups` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_group_subgroups` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_grouprights`
@@ -2258,45 +2190,12 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `liveuser_groups_group_id_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_groups_group_id_seq` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_groups_group_id_seq`
---
-
-LOCK TABLES `liveuser_groups_group_id_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_groups_group_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_groups_group_id_seq` VALUES (5);
-/*!40000 ALTER TABLE `liveuser_groups_group_id_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_groups_seq`
 --
 
 DROP TABLE IF EXISTS `liveuser_groups_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_groups_seq` (
-  `sequence` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`sequence`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_groups_seq`
---
-
-LOCK TABLES `liveuser_groups_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_groups_seq` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_groups_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_groupusers`
@@ -2327,95 +2226,24 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `liveuser_perm_users`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_perm_users` (
-  `perm_user_id` int(11) NOT NULL DEFAULT '0',
-  `auth_user_id` varchar(32) NOT NULL DEFAULT '',
-  `auth_container_name` varchar(32) NOT NULL DEFAULT '',
-  `perm_type` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`perm_user_id`),
-  UNIQUE KEY `perm_users_auth_id_i_idx` (`auth_user_id`,`auth_container_name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_perm_users`
---
-
-LOCK TABLES `liveuser_perm_users` WRITE;
-/*!40000 ALTER TABLE `liveuser_perm_users` DISABLE KEYS */;
-INSERT INTO `liveuser_perm_users` VALUES (1,'1','DB',1);
-/*!40000 ALTER TABLE `liveuser_perm_users` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_perm_users_perm_user_id_seq`
 --
 
 DROP TABLE IF EXISTS `liveuser_perm_users_perm_user_id_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_perm_users_perm_user_id_seq` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_perm_users_perm_user_id_seq`
---
-
-LOCK TABLES `liveuser_perm_users_perm_user_id_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_perm_users_perm_user_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_perm_users_perm_user_id_seq` VALUES (1);
-/*!40000 ALTER TABLE `liveuser_perm_users_perm_user_id_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_perm_users_seq`
 --
 
 DROP TABLE IF EXISTS `liveuser_perm_users_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_perm_users_seq` (
-  `sequence` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`sequence`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_perm_users_seq`
---
-
-LOCK TABLES `liveuser_perm_users_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_perm_users_seq` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_perm_users_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_right_implied`
 --
 
 DROP TABLE IF EXISTS `liveuser_right_implied`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_right_implied` (
-  `right_id` int(11) NOT NULL DEFAULT '0',
-  `implied_right_id` int(11) NOT NULL DEFAULT '0',
-  UNIQUE KEY `right_implied_id_i_idx` (`right_id`,`implied_right_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_right_implied`
---
-
-LOCK TABLES `liveuser_right_implied` WRITE;
-/*!40000 ALTER TABLE `liveuser_right_implied` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_right_implied` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_rights`
@@ -2449,186 +2277,71 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `liveuser_rights_right_id_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_rights_right_id_seq` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=104 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_rights_right_id_seq`
---
-
-LOCK TABLES `liveuser_rights_right_id_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_rights_right_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_rights_right_id_seq` VALUES (103);
-/*!40000 ALTER TABLE `liveuser_rights_right_id_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_rights_seq`
 --
 
 DROP TABLE IF EXISTS `liveuser_rights_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_rights_seq` (
-  `sequence` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`sequence`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_rights_seq`
---
-
-LOCK TABLES `liveuser_rights_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_rights_seq` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_rights_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_translations`
 --
 
 DROP TABLE IF EXISTS `liveuser_translations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_translations` (
-  `translation_id` int(11) NOT NULL DEFAULT '0',
-  `section_id` int(11) NOT NULL DEFAULT '0',
-  `section_type` int(11) NOT NULL DEFAULT '0',
-  `language_id` varchar(32) NOT NULL DEFAULT '',
-  `name` varchar(32) NOT NULL DEFAULT '',
-  `description` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`translation_id`),
-  UNIQUE KEY `translations_translation_i_idx` (`section_id`,`section_type`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_translations`
---
-
-LOCK TABLES `liveuser_translations` WRITE;
-/*!40000 ALTER TABLE `liveuser_translations` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_translations` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_translations_seq`
 --
 
 DROP TABLE IF EXISTS `liveuser_translations_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_translations_seq` (
-  `sequence` int(11) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`sequence`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_translations_seq`
---
-
-LOCK TABLES `liveuser_translations_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_translations_seq` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_translations_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_userrights`
 --
 
 DROP TABLE IF EXISTS `liveuser_userrights`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_userrights` (
-  `perm_user_id` int(11) NOT NULL DEFAULT '0',
-  `right_id` int(11) NOT NULL DEFAULT '0',
-  `right_level` int(11) NOT NULL DEFAULT '3',
-  UNIQUE KEY `userrights_id_i_idx` (`perm_user_id`,`right_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_userrights`
---
-
-LOCK TABLES `liveuser_userrights` WRITE;
-/*!40000 ALTER TABLE `liveuser_userrights` DISABLE KEYS */;
-/*!40000 ALTER TABLE `liveuser_userrights` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `liveuser_users`
 --
 
 DROP TABLE IF EXISTS `liveuser_users`;
+DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_users` (
-  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `KeyId` int(10) unsigned DEFAULT NULL,
-  `Name` varchar(255) NOT NULL DEFAULT '',
-  `UName` varchar(70) NOT NULL DEFAULT '',
-  `Password` varchar(64) NOT NULL DEFAULT '',
-  `EMail` varchar(255) NOT NULL DEFAULT '',
-  `Reader` enum('Y','N') NOT NULL DEFAULT 'Y',
-  `fk_user_type` int(10) unsigned DEFAULT NULL,
-  `City` varchar(100) NOT NULL DEFAULT '',
-  `StrAddress` varchar(255) NOT NULL DEFAULT '',
-  `State` varchar(32) NOT NULL DEFAULT '',
-  `CountryCode` varchar(21) DEFAULT NULL,
-  `Phone` varchar(20) NOT NULL DEFAULT '',
-  `Fax` varchar(20) NOT NULL DEFAULT '',
-  `Contact` varchar(64) NOT NULL DEFAULT '',
-  `Phone2` varchar(20) NOT NULL DEFAULT '',
-  `Title` enum('Mr.','Mrs.','Ms.','Dr.') NOT NULL DEFAULT 'Mr.',
-  `Gender` enum('M','F') DEFAULT NULL,
-  `Age` enum('0-17','18-24','25-39','40-49','50-65','65-') NOT NULL DEFAULT '0-17',
-  `PostalCode` varchar(70) NOT NULL DEFAULT '',
-  `Employer` varchar(140) NOT NULL DEFAULT '',
-  `EmployerType` varchar(140) NOT NULL DEFAULT '',
-  `Position` varchar(70) NOT NULL DEFAULT '',
-  `Interests` mediumblob,
-  `How` varchar(255) NOT NULL DEFAULT '',
-  `Languages` varchar(100) NOT NULL DEFAULT '',
-  `Improvements` mediumblob,
-  `Pref1` enum('N','Y') NOT NULL DEFAULT 'N',
-  `Pref2` enum('N','Y') NOT NULL DEFAULT 'N',
-  `Pref3` enum('N','Y') NOT NULL DEFAULT 'N',
-  `Pref4` enum('N','Y') NOT NULL DEFAULT 'N',
-  `Field1` varchar(150) NOT NULL DEFAULT '',
-  `Field2` varchar(150) NOT NULL DEFAULT '',
-  `Field3` varchar(150) NOT NULL DEFAULT '',
-  `Field4` varchar(150) NOT NULL DEFAULT '',
-  `Field5` varchar(150) NOT NULL DEFAULT '',
-  `Text1` mediumblob,
-  `Text2` mediumblob,
-  `Text3` mediumblob,
-  `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `time_created` timestamp NULL DEFAULT NULL,
-  `lastLogin` datetime DEFAULT '1970-01-01 00:00:00',
-  `isActive` tinyint(1) DEFAULT '1',
-  `password_reset_token` varchar(85) DEFAULT NULL,
-  `role_id` int(10) DEFAULT NULL,
-  PRIMARY KEY (`Id`),
-  UNIQUE KEY `UName` (`UName`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+CREATE TABLE `user` (
+    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `email` varchar(255) NOT NULL,
+    `username` varchar(80) DEFAULT NULL,
+    `password` varchar(60) DEFAULT NULL,
+    `first_name` varchar(80) DEFAULT NULL,
+    `last_name` varchar(80) DEFAULT NULL,
+    `status` tinyint(1) NOT NULL DEFAULT '0',
+    `is_admin` boolean NOT NULL DEFAULT '0',
+    `is_public` boolean NOT NULL DEFAULT '0',
+    `points` int(10) DEFAULT '0',
+    `created` datetime NOT NULL,
+    `updated` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `lastLogin` datetime DEFAULT NULL,
+    `password_reset_token` varchar(85) DEFAULT NULL,
+    `image` varchar(255) DEFAULT NULL,
+    `role_id` int(11) unsigned DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE (`email`),
+    UNIQUE (`username`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Dumping data for table `liveuser_users`
 --
 
-LOCK TABLES `liveuser_users` WRITE;
-/*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
-INSERT INTO `liveuser_users` VALUES (1,NULL,'Administrator','admin','d033e22ae348aeb5660fc2140aec35850c4da997','admin@email.addr','N',1,'','','','AD','','','','','Mr.','M','0-17','','','','','','','','','N','N','N','N','','','','','','','','','2011-06-13 09:19:05','0000-00-00 00:00:00','2011-01-17 14:29:16',1,NULL,6);
-/*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
+LOCK TABLES `user` WRITE;
+/*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` (`id`, `first_name`, `username`, `password`, `email`, `status`, `is_admin`, `role_id`) VALUES
+(1, 'Administrator', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin@email.addr', '1', '1', 6);
+/*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2636,23 +2349,6 @@ UNLOCK TABLES;
 --
 
 DROP TABLE IF EXISTS `liveuser_users_auth_user_id_seq`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `liveuser_users_auth_user_id_seq` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `liveuser_users_auth_user_id_seq`
---
-
-LOCK TABLES `liveuser_users_auth_user_id_seq` WRITE;
-/*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` DISABLE KEYS */;
-INSERT INTO `liveuser_users_auth_user_id_seq` VALUES (1);
-/*!40000 ALTER TABLE `liveuser_users_auth_user_id_seq` ENABLE KEYS */;
-UNLOCK TABLES;
 
 --
 -- Table structure for table `output`
@@ -3212,6 +2908,58 @@ LOCK TABLES `resource` WRITE;
 /*!40000 ALTER TABLE `resource` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
+
+DROP TABLE IF EXISTS `audit_event`;
+CREATE TABLE IF NOT EXISTS `audit_event` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `resource_type` varchar(80) NOT NULL,
+  `resource_id` varchar(80) DEFAULT NULL,
+  `resource_title` varchar(255) DEFAULT NULL,
+  `resource_diff` longtext,
+  `action` varchar(80) NOT NULL,
+  `created` datetime NOT NULL,
+  `is_public` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `user_attribute`;
+CREATE TABLE IF NOT EXISTS `user_attribute` (
+  `user_id` int(11) unsigned NOT NULL,
+  `attribute` varchar(255) NOT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`attribute`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `community_ticker_event`;
+CREATE TABLE IF NOT EXISTS `community_ticker_event` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `event` varchar(80) NOT NULL,
+  `params` text,
+  `created` datetime NOT NULL,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `user_points_index`;
+CREATE TABLE IF NOT EXISTS `user_points_index` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `action` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `points` int(10) NOT NULL DEFAULT '0',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `user_token`;
+CREATE TABLE IF NOT EXISTS `user_token` (
+  `user_id` int(11) unsigned NOT NULL,
+  `action` varchar(40) NOT NULL,
+  `token` varchar(40) NOT NULL,
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`user_id`,`action`,`token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

@@ -1,0 +1,55 @@
+{{ $view->headLink() }}
+{{ $view->headScript() }}
+
+<div id="wobs_calendar_{{$rand_int}}" class="wobs-calendar wobs-calendar-full"></div>
+
+<script>
+
+function formatDate(date)
+{
+    var s = '';
+    var yyyy, mm, dd;
+
+    yyyy = date.getFullYear();
+    mm = date.getMonth()+1;
+    mm = mm.toString();
+    dd = date.getDate();
+    dd = dd.toString();
+
+    if (mm.length === 1) {
+        mm = "0"+mm;
+    }
+    if (dd.length === 1) {
+        dd = "0"+dd;
+    }
+
+    s = yyyy + "-" + mm + "-" + dd;
+    return s;
+}
+
+function getArticlesOfTheDay( start, end, callback )
+{
+    var search_start, search_end;
+
+    search_start = formatDate(start);
+    search_end = formatDate(end);
+
+    $.post("{{$view->baseUrl('/articleoftheday/article-of-the-day')}}",
+        {"format": "json", "start": search_start, "end": search_end},
+        function(data){
+            callback(data.articles);
+        },
+        "json"
+    );
+}
+
+$("#wobs_calendar_{{$rand_int}}").wobscalendar({
+    'today': new Date('{{$today[0]}}', '{{$today[1]-1}}', '{{$today[2]}}'),
+    'date': new Date('{{$year}}', '{{$month}}', '{{$day}}'),
+    'articles': getArticlesOfTheDay,
+    'defaultView': '{{$defaultView}}',
+    'firstDay': {{$firstDay}},
+    'navigation': {{if $nav}}true{{else}}false{{/if}},
+    'showDayNames': {{if $dayNames}}true{{else}}false{{/if}}
+});
+</script>

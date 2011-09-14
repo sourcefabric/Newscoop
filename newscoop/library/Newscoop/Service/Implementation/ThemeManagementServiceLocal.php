@@ -282,7 +282,8 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
     /* --------------------------------------------------------------- */
 
-    function exportTheme($theme){
+    function exportTheme($theme)
+    {
         Validation::notEmpty($theme, 'theme');
         if(!($theme instanceof Theme)){
             $theme = $this->findById($theme);
@@ -298,22 +299,27 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         // create object
         $zip = new \ZipArchive();
         // open archive
-        if ($zip->open($zipFilePath, \ZIPARCHIVE::CREATE) !== TRUE) {
+        if ($zip->open($zipFilePath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== TRUE) {
             die ("Could not open archive");
         }
 
 
         $themePath = $this->toFullPath($theme->getPath());
-        $lenght = strlen($themePath);
+        $themePathLength = strlen($themePath);
         // initialize an iterator
         // pass it the directory to be processed
         $iterator = new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($themePath));
         // iterate over the directory
         // add each file found to the archive
+        $addedDirs = array();
         foreach ($iterator as $key=>$value) {
-            $fname = substr($key, $lenght);
-            if(strlen($fname) > 0){
-                $zip->addFile(realpath($key), $fname) or die ("ERROR: Could not add file: $key");
+            $fname = substr($key, $themePathLength);
+            if(strlen($fname) > 0 && !in_array(basename($fname), array(".", "..")) ) {
+                if( !in_array(dirname($fname),$addedDirs) ) {
+                	$zip->addEmptyDir(dirname($fname));
+                	$addedDirs[]=dirname($fname);
+                };
+            	$zip->addFile(realpath($key), $fname) or die ("ERROR: Could not add file: $key");
             }
         }
         // close and save archive

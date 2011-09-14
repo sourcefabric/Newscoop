@@ -114,6 +114,24 @@ class BaseList
     }
 
     /**
+     * Get Context Box sDom property.
+     * @return string
+     */
+    public function getContextSDom()
+    {
+        $colvis = $this->colVis ? 'C' : '';
+        $search = $this->search ? 'f' : '';
+        $paging = $this->items === NULL ? 'ip' : 'i';
+        return sprintf('<"H"%s%s>t<"F"%s%s>',
+            $colvis,
+            $search,
+            //$paging,
+            $paging,
+            $this->items === NULL ? 'l' : ''
+        );
+    }
+
+    /**
      * Get default sorting
      * @return string
      */
@@ -298,7 +316,7 @@ class BaseList
         }
 
         // add limit
-        $queryStr .= sprintf(' LIMIT %d,%d',
+        $queryStr .= sprintf(' LIMIT %s,%s',
             $aoData['iDisplayStart'],
             $aoData['iDisplayLength']);
 
@@ -379,6 +397,40 @@ class BaseList
         foreach ((array) $ids as $id) {
             $object = new $class($id);
             $object->delete();
+        }
+
+        return TRUE;
+    }
+    
+    /**
+     * Handle approve
+     * @param array $ids
+     * @return bool
+     */
+    public function doApprove($ids)
+    {
+        $class = get_class($this->model);
+
+        foreach ((array) $ids as $id) {
+            $object = new $class($id);
+            $object->update(array('Status' => 'approved'));
+        }
+
+        return TRUE;
+    }
+    
+    /**
+     * Handle disapprove
+     * @param array $ids
+     * @return bool
+     */
+    public function doDisapprove($ids)
+    {
+        $class = get_class($this->model);
+
+        foreach ((array) $ids as $id) {
+            $object = new $class($id);
+            $object->update(array('Status' => 'unapproved'));
         }
 
         return TRUE;

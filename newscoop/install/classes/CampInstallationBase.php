@@ -124,6 +124,7 @@ class CampInstallationBase
                     }
                 }
             }
+            $this->installEmptyTheme();
             $this->saveCronJobsScripts();
             if ($this->finish()) {
                 $this->saveConfiguration();
@@ -318,6 +319,59 @@ class CampInstallationBase
     } // fn generalConfiguration
 
 
+    private function installEmptyTheme()
+    {
+        global $g_db;
+        $templatesDir = CS_PATH_TEMPLATES;
+        $unassignedTemplatesDir = $templatesDir.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED;
+        $emptyThemeDir = $unassignedTemplatesDir.DIR_SEP."empty";
+
+        $isWritable = true;
+        if ((!is_dir($unassignedTemplatesDir) && !mkdir($unassignedTemplatesDir)) || !is_writable($unassignedTemplatesDir))
+            $isWritable = false;
+        if ((!is_dir($emptyThemeDir) && !mkdir($emptyThemeDir)) || !is_writable($emptyThemeDir))
+            $isWritable = false;
+
+        if(!$isWritable) return false;
+
+        // creating theme xml
+        $themeXml = <<<XML
+<theme name="Empty" designer="default" version="1.0" require="3.6">
+    <description>This is an empty theme</description>
+    <presentation-img src="preview-front.jpg" name="Front page"/>
+    <presentation-img src="preview-section.jpg" name="Section page"/>
+    <presentation-img src="preview-article.jpg" name="Article page"/>
+	<output name="Web">
+		<frontPage src="front.tpl"/>
+		<sectionPage src="section.tpl"/>
+		<articlePage src="article.tpl"/>
+		<errorPage src="404.tpl"/>
+	</output>
+</theme>
+XML;
+        $sxml = new SimpleXMLElement($themeXml);
+        $sxml->asXML($emptyThemeDir.DIR_SEP."theme.xml");
+
+        // creating preview images
+        $preview = @imagecreatetruecolor(210, 130);
+        $logoPoints = array( 159, 9,   113, 34,   86, 99,   150, 121,   203, 99,   138, 78 );
+        $textColor = imagecolorallocate($preview, 191, 191, 191);
+        imagefill($preview, 0, 0, imagecolorallocate($preview, 255, 255, 255));
+        imagefilledpolygon($preview, $logoPoints, 6, imagecolorallocate($preview, 239, 239, 239));
+        imagestring($preview, 5, 10, 100,  'Empty Theme', $textColor);
+        imagejpeg($preview, $emptyThemeDir.DIR_SEP."preview-front.jpg",100);
+        imagejpeg($preview, $emptyThemeDir.DIR_SEP."preview-article.jpg",100);
+        imagejpeg($preview, $emptyThemeDir.DIR_SEP."preview-section.jpg",100);
+        imagedestroy($preview);
+
+        // put empty templates in theme
+        file_put_contents($emptyThemeDir.DIR_SEP."front.tpl", "<!-- Front page template -->");
+        file_put_contents($emptyThemeDir.DIR_SEP."section.tpl", "<!-- Section page template -->");
+        file_put_contents($emptyThemeDir.DIR_SEP."article.tpl", "<!-- Article page template -->");
+        file_put_contents($emptyThemeDir.DIR_SEP."404.tpl", "<!-- Error page template -->");
+
+    }
+
     /**
      *
      */
@@ -356,18 +410,18 @@ class CampInstallationBase
         }
 
         require_once($GLOBALS['g_campsiteDir'].'/bin/cli_script_lib.php');
-        
+
         //
         if (is_dir(CS_PATH_TEMPLATES.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED)) {
 			CampInstallationBaseHelper::CopyFiles(CS_PATH_TEMPLATES.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED, CS_INSTALL_DIR.DIR_SEP.'temp');
 		}
-        
+
         camp_remove_dir(CS_PATH_TEMPLATES.DIR_SEP.'*', null, array('system_templates'));
 
         // copies template files to corresponding directory
         $source = CS_INSTALL_DIR.DIR_SEP.'sample_templates'.DIR_SEP.$template_name['loaddemo'].DIR_SEP.'templates';
         $target = CS_PATH_TEMPLATES.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED;
-        
+
         if (CampInstallationBaseHelper::CopyFiles($source, $target) == false) {
             $this->m_step = 'loaddemo';
             $this->m_message = 'Error: Copying sample site files';
@@ -452,7 +506,7 @@ class CampInstallationBase
         		$themeService->assignTheme($theme, $publication);
         	}
         }
-        
+
         //
         if (is_dir(CS_INSTALL_DIR.DIR_SEP.'temp')) {
 			CampInstallationBaseHelper::CopyFiles(CS_INSTALL_DIR.DIR_SEP.'temp', CS_PATH_TEMPLATES.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED);
@@ -739,12 +793,14 @@ class CampInstallationBaseHelper
             return false;
         }
 
-        $sqlQuery1 = "UPDATE liveuser_users SET
-            Password = SHA1('".$g_db->Escape($p_password)."'),
-            EMail = '".$g_db->Escape($p_email)."',
-            time_updated = NOW(),
-            time_created = NOW()
-            WHERE Id = 1";
+        $sqlQuery1 = "UPDATE user SET
+            password = SHA1('".$g_db->Escape($p_password)."'),
+            email = '".$g_db->Escape($p_email)."',
+            updated = NOW(),
+            created = NOW(),
+            status = '1',
+            is_admin = '1'
+            WHERE id = 1";
         if (!$g_db->Execute($sqlQuery1)) {
             return false;
         }

@@ -1,7 +1,5 @@
 <?php
 /*
- *  $Id$
- *
  * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
  * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
  * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -114,6 +112,13 @@ class ResultSetMapping
      * @var array
      */
     public $declaringClasses = array();
+    
+    /**
+     * This is necessary to hydrate derivate foreign keys correctly.
+     * 
+     * @var array
+     */
+    public $isIdentifierColumn = array();
 
     /**
      * Adds an entity result to this ResultSetMapping.
@@ -383,14 +388,17 @@ class ResultSetMapping
     /**
      * Adds a meta column (foreign key or discriminator column) to the result set.
      * 
-     * @param $alias
-     * @param $columnName
-     * @param $fieldName
+     * @param string $alias
+     * @param string $columnName
+     * @param string $fieldName
+     * @param bool
      */
-    public function addMetaResult($alias, $columnName, $fieldName)
+    public function addMetaResult($alias, $columnName, $fieldName, $isIdentifierColumn = false)
     {
         $this->metaMappings[$columnName] = $fieldName;
         $this->columnOwnerMap[$columnName] = $alias;
+        if ($isIdentifierColumn) {
+            $this->isIdentifierColumn[$alias][$columnName] = true;
+        }
     }
 }
-

@@ -8,10 +8,14 @@
  * @link http://www.sourcefabric.org
  */
 
+$f_language_selected = (int) camp_session_get('f_language_selected', 0);
+
+
+
 require_once $GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php";
 camp_load_translation_strings("library");
 
-$f_language_selected = (int) camp_session_get('f_language_selected', 0);
+
 
 $success = false;
 $message = getGS('Access denied.'); // default error
@@ -22,6 +26,7 @@ $notAffectedArticles = 0;;
 
 $message = '';
 $errorMessage = '';
+
 
 
 $articleCodes = array();
@@ -43,6 +48,31 @@ function returnJson($status = 'true', $message = 'Articles updated.', $hiperlink
 	return json_encode($returnJson);
 }
 */
+
+function prepareContextBoxItems($f_params) {
+    GLOBAL $f_language_selected;
+    $myItems = array();
+    $return = array();
+    if(array_key_exists('relatedArticles', $f_params)) {
+        $f_items = $f_params['relatedArticles'];
+    } else {
+        $f_items = array();
+    }
+    $f_article_id = $f_params['articleId'];
+
+    $splitItems = explode('&', $f_items);
+    foreach($splitItems as $splitItem) {
+        $labelId = explode('=', $splitItem);
+        if(count($labelId) > 1) {
+            $myItems[] = $labelId[1];
+        }
+    }
+    $f_items = $myItems;
+    $return['f_related_items'] = $myItems;
+    $return['f_article_id'] = $f_article_id;
+    return $return;
+}
+
 
 function buildMessage($status, $no, $message) {
 	$messageArray = array();
@@ -267,6 +297,84 @@ case 'publish_schedule':
         $argsStr .= '&f_article_code[]=' . $articleCode;
     }
     return returnJson(0, '', 0, '',  $Campsite['WEBSITE_URL'] . "/admin/articles/multi_autopublish.php?".$argsStr);
+    break;
+case 'context_box_update':
+
+	$contextContent = prepareContextBoxItems($f_params);
+
+	$articleObj = new Article($f_language_selected, $contextContent['f_article_id']);
+    if ($articleObj->userCanModify($g_user)) {
+        $contextBoxObj = new ContextBox(null, $contextContent['f_article_id']);
+        $contextId = $contextBoxObj->getId();
+        $contextBoxArticleObj = new ContextBoxArticle();
+        $contextBoxArticleObj->saveList($contextId, $contextContent['f_related_items']);
+
+    }
+	return json_encode(array(200));
+	break;
+
+case 'context_box_preview_article':
+    $return = array();
+
+    $articleId = $f_params['articleId'];
+    if(!is_numeric($articleId)) {
+    	$articleIdArray = explode('_', $articleId);
+    	$articleId = $articleIdArray[1];
+    }
+
+    $articleObj = new Article($f_language_selected, $articleId);
+
+	$articleInfo = array();
+	$articleData = $articleObj->getArticleData();
+	// Get article type fields.
+	$dbColumns = $articleData->getUserDefinedColumns(false, true);
+	foreach ($dbColumns as $dbColumn) {
+		if(htmlspecialchars($dbColumn->getDisplayName(0)) == 'full_text') {
+			if ($dbColumn->getType() == ArticleTypeField::TYPE_SWITCH) {
+	            $value = $articleData->getProperty($dbColumn->getName()) ? getGS('On') : getGS('Off');
+	            $return['body'] = $value;
+	        } else {
+	            $return['body'] = $articleData->getProperty($dbColumn->getName());
+	        }
+		}
+	}
+
+    $return['title'] = $articleObj->getTitle();
+    $return['articleId'] = $articleId;
+    $return['date'] = $articleObj->getCreationDate();
+
+    if(!array_key_exists('body', $return)) {
+    	$return['date'] = $articleObj->getCreationDate();
+    }
+      $return['code'] = 200;
+    return $return;
+    break;
+
+case 'context_box_load_list':
+    $return = array();
+    $items = array();
+
+    $articleId = $f_params['articleId'];
+    if(!is_numeric($articleId)) {
+        $articleIdArray = explode('_', $articleId);
+        $articleId = $articleIdArray[1];
+    }
+
+    $contextBoxObj = new ContextBox(null, $articleId);
+    $contextId = $contextBoxObj->getId();
+    $contextArticleIds = $contextBoxObj->getArticlesList();
+
+    foreach($contextArticleIds as $contextArticleId) {
+    	$articleObj = new Article($f_language_selected, $contextArticleId);
+        $item['title'] = $articleObj->getTitle();
+        $item['articleId'] = 'article_'.$contextArticleId;
+        $item['date'] = $articleObj->getCreationDate();
+        $items[] = $item;
+    }
+
+    $return['items'] = $items;
+    $return['code'] = 200;
+    return $return;
     break;
 }
 

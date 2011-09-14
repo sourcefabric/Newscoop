@@ -39,9 +39,15 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
      */
     public function init()
     {
-        $this->getActionController()->getHelper('contextSwitch')
+        try {
+			$this->getActionController()->getHelper('contextSwitch')
             ->addActionContext('table', 'json')
             ->initContext();
+		}
+        catch (Exception $e) {
+			echo($e);
+			die;
+		}
 
         $view = $this->getActionController()->initView();
         $this->iOptions = array(
@@ -300,17 +306,27 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
             $view->cols = $this->cols;
             return;
         }
-
+        
         // get data
         $rows = array();
         $handle = $this->handle;
+        
+        /*
         foreach ($this->dataSource->getData($params, $this->cols) as $entity) {
             $rows[] = $handle($entity);
         }
+        */
+        
+        $data = $this->dataSource->getData($params, $this->cols);
+        
+        foreach ($data as $entity) {
+            $rows[] = $handle($entity);
+        }
+        
         // set data
         $view->iTotalRecords = $this->dataSource->getCount();
         $view->iTotalDisplayRecords = $this->dataSource->getCount($params, $this->cols);
         $view->aaData = $rows;
-        $view->sEcho = $params['sEcho'];
+        $view->sEcho = !empty($params['sEcho']) ? $params['sEcho'] : 0;
     }
 }

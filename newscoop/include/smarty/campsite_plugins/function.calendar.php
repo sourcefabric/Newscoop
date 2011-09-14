@@ -30,7 +30,7 @@ function smarty_function_calendar($p_params, &$p_smarty)
     }
 
     // get the context variable
-    $campsite = $p_smarty->get_template_vars('gimme');
+    $campsite = $p_smarty->getTemplateVars('gimme');
     $html = '';
 
     // language must be set in context, otherwise function does nothing

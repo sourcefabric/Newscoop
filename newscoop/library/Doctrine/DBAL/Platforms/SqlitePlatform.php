@@ -125,6 +125,31 @@ class SqlitePlatform extends AbstractPlatform
         }
     }
 
+    public function getDateDiffExpression($date1, $date2)
+    {
+        return 'ROUND(JULIANDAY('.$date1 . ')-JULIANDAY('.$date2.'))';
+    }
+
+    public function getDateAddDaysExpression($date, $days)
+    {
+        return "DATE(" . $date . ",'+". (int)$days . " day')";
+    }
+
+    public function getDateSubDaysExpression($date, $days)
+    {
+        return "DATE(" . $date . ",'-". (int)$days . " day')";
+    }
+
+    public function getDateAddMonthExpression($date, $months)
+    {
+        return "DATE(" . $date . ",'+". (int)$months . " month')";
+    }
+
+    public function getDateSubMonthExpression($date, $months)
+    {
+        return "DATE(" . $date . ",'-". (int)$months . " month')";
+    }
+
     protected function _getTransactionIsolationLevelSQL($level)
     {
         switch ($level) {
@@ -460,5 +485,10 @@ class SqlitePlatform extends AbstractPlatform
             'decimal'       => 'decimal',
             'numeric'       => 'decimal',
         );
+    }
+    
+    protected function getReservedKeywordsClass()
+    {
+        return 'Doctrine\DBAL\Platforms\Keywords\SQLiteKeywords';
     }
 }

@@ -110,9 +110,9 @@ class IPAccess extends DatabaseObject {
 	    $tmpValues = array('IdUser'=>$p_userId, 'StartIP'=>$startIP, 'Addresses'=>$p_addresses);
 	    $result = parent::create($tmpValues);
 	    if ($result) {
-	    	$user = new User($p_userId);
+	    	$user = $GLOBALS['controller']->getHelper('service')->getService('user')->find($p_userId);
 			$logtext = getGS('IP Group $1 added for user $2', "$startIPstring:$p_addresses",
-							 $user->getUserName());
+							 $user->getUsername());
 			Log::Message($logtext, null, 57);
 	    }
 		return $result;
@@ -180,11 +180,17 @@ class IPAccess extends DatabaseObject {
         $intIPAddress = $ipObj->__array2int($ipObj->__string2array($p_ipAddress));
         $queryStr = "SELECT DISTINCT(IdUser) FROM SubsByIP WHERE StartIP <= $intIPAddress "
         . "AND $intIPAddress <= (StartIP + Addresses - 1)";
-        $rows = $g_ado_db->GetAll($queryStr);
+        $rows = (array) $g_ado_db->GetAll($queryStr);
+
+        if (empty($rows)) {
+            return array();
+        }
+
         $users = array();
 		foreach ($rows as $row) {
-			$users[] = new User($row['IdUser']);
+            $users[] = $GLOBALS['controller']->getHelper('service')->getService('user')->find($row['IdUser']);
 		}
+
 		return $users;
 	}
 }

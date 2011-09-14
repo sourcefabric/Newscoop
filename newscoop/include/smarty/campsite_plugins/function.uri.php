@@ -18,7 +18,7 @@
  */
 function smarty_function_uri($p_params, &$p_smarty)
 {
-    $context = $p_smarty->get_template_vars('gimme');
+    $context = $p_smarty->getTemplateVars('gimme');
 
     $url = 'url';
     if (isset($p_params['static_file']) && !empty($p_params['static_file'])) {

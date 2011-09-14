@@ -176,12 +176,19 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
             }
         });
 
-
         $('#table-<?php echo $this->id; ?> tbody input:checkbox').change(function() {
             if ($(this).attr('checked')) {
                 $(this).parents('tr').addClass('selected');
             } else {
                 $(this).parents('tr').removeClass('selected');
+            }
+
+            // update check all checkbox on item change
+            var table = $('#table-<?php echo $this->id; ?>');
+            if ($('tbody input:checkbox', table).size() == $('tbody input:checkbox:checked', table).size()) { // all checked
+                $('.smartlist thead input:checkbox').attr("checked", true);
+            } else {
+                $('.smartlist thead input:checkbox').attr("checked", false);
             }
         });
 

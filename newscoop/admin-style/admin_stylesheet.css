@@ -800,11 +800,53 @@ dl.inline-list dd {
 	list-style-type:0;
 }
 .action-list li {
+    display: block;
 	margin: 0;
-	padding:0px 0 3px 15px;
+    padding: 0;
 	float:right;
 	width:auto;
+    line-height: 18px;
+    margin-left: 5px;
 }
+
+.action-list ul li.new, .action-list ul li.approved, .action-list ul li.hidden {
+    border-radius: 3px 3px 3px 3px;
+    margin-left: 4px;
+    padding-right: 10px;
+}
+
+.action-list ul li.new {
+    background: none repeat scroll 0 0 #EAF7DA;
+    border: 1px solid #2A8921;
+    color: #006B0E;
+}
+.action-list ul li.approved {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #5B5B5B;
+    color: #585858;
+}
+.action-list ul li.hidden {
+    background: none repeat scroll 0 0 #F2F2F2;
+    border: 1px solid #838383;
+    color: #969696;
+}
+
+.action-list ul li.button-first {
+    margin-left:20px;
+}
+.action-list ul li label, .action-list ul li label.inline-style {
+    font-weight: normal;
+}
+.action-list ul li.new label.inline-style {
+    color: #006B0E;
+}
+.action-list ul li.approved label.inline-style {
+    color: #585858;
+}
+.action-list ul li.hidden label.inline-style {
+    color: #969696;
+}
+
 /*---Comments color*/
 .comment_approve {
     background: transparent;
@@ -1466,12 +1508,12 @@ fieldset.filters a.reset {
 
 /*---  plupload addon ---*/
 .plupload-addon-bottom {
-	margin:0 30px 20px 30px;
+	margin:0 30px 10px 30px;
 	border: 1px solid #9d9d9d;
-	border-width: 0 1px 1px 1px;
+	border-width: 1px;
 	background:#f9f9f9;
 	font-size:12px;
-	padding:20px 0 20px 0;
+	padding:0 0 10px 0;
 }
 .plupload-addon-bottom .info {
 	float:left;
@@ -1500,7 +1542,7 @@ fieldset.filters a.reset {
 	min-width:240px;
 }
 .plupload-addon-bottom .inputs .input_text  {
-	width:70%;
+	width:100%;
 }
 .plupload-addon-bottom .inputs .input_select {
 	width:100%;
@@ -1514,10 +1556,10 @@ fieldset.filters a.reset {
 }
 .plupload-addon-bottom .buttons {
 	float:right;
-	padding-right:16px;
+	padding-right:10px;
 }
 .plupload-addon-bottom .buttons .save-button{
-	margin:-2px 0 0 0;
+	margin:10px 0 0 0;
 }
 #uploader_error {
 	background:#fce5e5;
@@ -1879,8 +1921,9 @@ ul.edit a.delete {
 	border-width: 0 0 1px 0;
 }
 .theme-edit {
-	width:895px;
-	padding: 0 0 0 8px;
+	width:885px;
+	padding: 10px;
+	overflow:hidden;
 }
 .theme-edit .button {
 	margin: 0 0 0 6px;
@@ -2239,4 +2282,28 @@ ul#edit-files h2 {
 }
 .datatable tr td.dataTables_empty {
 	padding: 5px 0 5px 7px;
+}
+
+
+.action-list a.actionButton {
+    color: #444444 !important;
+	background-color:#ebebeb;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fafafa), to(#ebebeb));
+	background-image: -moz-linear-gradient(center top , #fafafa 0pt, #ebebeb 100%);
+    border: 1px solid #9d9d9d;
+	display: inline-block;
+    height: 22px;
+    line-height: 22px;
+    padding: 0 10px 0 10px;
+	font-size:12px;
+}
+.action-list a.actionButton:hover {
+    color: #444444 !important;
+	background-color:#d9d9d9;
+    background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fafafa), to(#d9d9d9));
+	background-image: -moz-linear-gradient(center top , #fafafa 0pt, #d9d9d9 100%);
+    border-color: #656565;
+    -moz-box-shadow: 0 1px 1px rgba(0,0,0,.20);
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.20);
+    box-shadow: 0 1px 1px rgba(0,0,0,.20);
 }

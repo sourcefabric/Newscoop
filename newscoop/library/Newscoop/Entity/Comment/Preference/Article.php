@@ -7,6 +7,8 @@
 
 namespace Newscoop\Entity\Comment\Preference;
 
+use Newscoop\Entity\Language;
+
 /**
  * Article entity
  * @entity
@@ -24,7 +26,7 @@ class Article
     private $id;
 
     /**
-     * @manyToOne(targetEntity="Language")
+     * @manyToOne(targetEntity="Newscoop\Entity\Language")
      * @joinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */

@@ -232,6 +232,10 @@ class ArticleAttachment extends DatabaseObject {
                 $whereCondition = '('.$comparisonOperation['left'].' IS NULL OR '
                     .$comparisonOperation['left']." = '"
                     .$g_ado_db->escape($comparisonOperation['right'])."')";
+            } else {
+                $whereCondition = $comparisonOperation['left'] . ' '
+                    . $comparisonOperation['symbol'] . " '"
+                    . $g_ado_db->escape($comparisonOperation['right']) . "' ";
             }
             $selectClauseObj->addWhere($whereCondition);
             $countClauseObj->addWhere($whereCondition);
@@ -303,7 +307,7 @@ class ArticleAttachment extends DatabaseObject {
 
 
     /**
-     * Processes a paremeter (condition) coming from template tags.
+     * Processes a parameter (condition) coming from template tags.
      *
      * @param array $p_param
      *      The array of parameters
@@ -323,6 +327,13 @@ class ArticleAttachment extends DatabaseObject {
         case 'language_id':
             $comparisonOperation['left'] = 'Attachments.fk_language_id';
             $comparisonOperation['right'] = (int) $p_param->getRightOperand();
+            break;
+        case 'status':
+            $comparisonOperation['right'] = strtolower($p_param->getRightOperand());
+            if ($comparisonOperation['right'] == 'approved'
+            || $comparisonOperation['right'] == 'unapproved') {
+                $comparisonOperation['left'] = 'Attachments.Status';
+            }
             break;
         }
 

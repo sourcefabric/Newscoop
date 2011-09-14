@@ -140,7 +140,11 @@ class Statistics {
         // taking info on session name and its value
         $application_path = $newscoop_path . '/application';
         $config = parse_ini_file($application_path . '/configs/application.ini');
-        $session_name = $config['resources.session.name'];
+
+        $session_name = session_name();
+        if (isset($config['session.name'])) {
+            $session_name = $config['session.name'];
+        }
 
         session_start($session_name);
         $session_id = session_id();

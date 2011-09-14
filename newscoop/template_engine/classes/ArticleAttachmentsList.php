@@ -101,6 +101,9 @@ class ArticleAttachmentsList extends ListObject
             $this->m_constraints[] = new ComparisonOperation('language_id', $operator,
                                                              $context->language->number);
         }
+        
+        $operator = new Operator('is', 'string');
+        $this->m_constraints[] = new ComparisonOperation('status', $operator, 'approved');
 
     	return $parameters;
 	}

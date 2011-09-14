@@ -22,7 +22,8 @@ var datatableCallback = {
     row: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
         $(nRow)
             .addClass('status_' + statusMap[aData.comment.status])
-            .tmpl('#comment-tmpl', aData);
+            .tmpl('#comment-tmpl', aData)
+            .find("input."+ statusMap[aData.comment.status]).attr("checked","checked");
         return nRow;
     },
     draw: function () {
@@ -35,13 +36,16 @@ var datatableCallback = {
     },
     init: function() {
         $('.dataTables_filter input').attr('placeholder',putGS('Search'));
-        $('#actionExtender').html('<select class="input_select actions">\
-                                    <option value="">' + putGS('Change selected comments status') + '</option>\
+        $('#actionExtender').html('<fieldset>\
+                                <legend>' + putGS('Actions') + '</legend> \
+                                <select class="input_select actions">\
+                                    <option value="">' + putGS('Select status') + '</option>\
                                     <option value="pending">' + putGS('New') + '</option>\
                                     <option value="approved">' + putGS('Approved') + '</option>\
                                     <option value="hidden">' + putGS('Hidden') + '</option>\
                                     <option value="deleted">' + putGS('Deleted')+ '</option>\
-                                </select>');
+                                </select>\
+                              </fieldset>');
         $('.actions').change(function () {
             action = $(this);
             var status = action.val();
@@ -52,6 +56,12 @@ var datatableCallback = {
                 });
                 action.val('');
                 if (!ids.length) return;
+                
+                
+                if (status == 'deleted' && !confirm(putGS('You are about to permanently delete multiple comments.') + '\n' + putGS('Are you sure you want to do it?'))) {
+                    return false;
+                }
+                
                 $.ajax({
                     type: 'POST',
                     url: 'comment/set-status/format/json',
@@ -72,14 +82,21 @@ var datatableCallback = {
             }
         });
         
+        $('.table-checkbox').click(function(){
+			if(!$(this).is(':checked')) {
+				$('.toggle-checkbox').removeAttr('checked');
+			}
+		});
     }
 };
 $(function () {
+	
+	
     //$('.tabs').tabs();
     //$('.tabs').tabs('select', '#tabs-1');    
     var commentFilterTriggerCount = 0;
     $("#commentFilterTrigger").click(function () {
-        if (commentFilterTriggerCount == 0) {
+		if (commentFilterTriggerCount == 0) {
             $("#commentFilterSearch").css("display", "block");
             $(this).addClass("collapsed");
             commentFilterTriggerCount = 1;
@@ -149,7 +166,7 @@ $(function () {
         if (status == 'deleted' && !confirm(putGS('You are about to permanently delete a comment.') + '\n' + putGS('Are you sure you want to do it?'))) {
             return false;
         }
-
+        
         $.ajax({
             type: 'POST',
             url: 'comment/set-status/format/json',
@@ -174,7 +191,7 @@ $(function () {
      * Action to fire
      * when action submit is triggered
      */
-    $('.dateCommentHolderEdit form').live('submit', function () {
+    $('.dateCommentHolderEdit form,.dateCommentHolderReply form').live('submit', function () {
         var that = this;
         $.ajax({
             type: 'POST',
@@ -192,7 +209,7 @@ $(function () {
         });
         return false;
     });
-    $('.dateCommentHolderEdit .edit-cancel,.dateCommentHolderEdit .reply-cancel').live('click', function () {
+    $('.dateCommentHolderEdit .edit-cancel,.dateCommentHolderReply .reply-cancel').live('click', function () {
         var el = $(this);
         var td = el.parents('td');
         var form = el.parents('form');
@@ -203,24 +220,23 @@ $(function () {
         td.find('.content-edit').hide();
         td.find('.content-reply').hide();
     });
-    $('.dateCommentHolderEdit .edit-reply').live('click', function () {
-        var el = $(this);
-        var td = el.parents('td');
-        var form = td.find('form');
-        $(form).each(function () {
-            this.reset();
-        });
-        td.find('.content-edit').slideUp("fast");
-        td.find('.content-reply').slideDown("fast");
-    });
 
     $('.datatable .action-edit').live('click', function () {
         var el = $(this);
         var td = el.parents('td');
+        td.find('.content-reply').hide();
         td.find('.commentSubject').toggle("fast");
         td.find('.commentBody').toggle("fast");
         td.find('.content-edit').toggle("fast");
     });
+
+    $('.datatable .action-reply').live('click', function () {
+        var el = $(this);
+        var td = el.parents('td');
+        td.find('.content-edit').hide();
+        td.find('.content-reply').toggle("fast");
+    });
+
     // Dialog
     $('.dialogPopup').dialog({
         autoOpen: false,

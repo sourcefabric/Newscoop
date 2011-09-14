@@ -5,11 +5,6 @@
  */
 
 /**
- * Includes the {@link shared.make_timestamp.php} plugin
- */
-require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
-
-/**
  * Campsite camp_date_format modifier plugin
  *
  * Type:     modifier
@@ -42,9 +37,10 @@ function smarty_modifier_camp_date_format($p_unixtime, $p_format = null, $p_only
     }
 
     // gets the context variable
-    $campsite = CampTemplate::singleton()->get_template_vars('gimme');
+    $campsite = CampTemplate::singleton()->getTemplateVars('gimme');
 
     // makes sure $p_unixtime is unixtime stamp
+    CampTemplate::singleton()->loadPlugin('smarty_shared_make_timestamp');
     $p_unixtime = smarty_make_timestamp($p_unixtime);
 
     if (is_null($p_format) || empty($p_format)) {

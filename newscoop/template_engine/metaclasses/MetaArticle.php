@@ -150,8 +150,8 @@ final class MetaArticle extends MetaDbObject {
                 $propertyValue = $this->m_dbObject->$methodName($property);
             } elseif (array_key_exists($property, $this->m_customProperties)) {
                 return $this->getCustomProperty($property);
-            } else {
-                $this->trigger_invalid_property_error($p_property);
+            } else { // empty
+                //$this->trigger_invalid_property_error($p_property);
                 return null;
             }
             if (empty($propertyValue) || !is_string($propertyValue) || is_numeric($propertyValue)) {
@@ -384,7 +384,9 @@ final class MetaArticle extends MetaDbObject {
 
     protected function getOwner()
     {
-        return new MetaUser($this->m_dbObject->getProperty('IdUser'));
+        global $controller;
+        $userService = $controller->getHelper('service')->getService('user');
+        return new MetaUser($userService->find($this->m_dbObject->getProperty('IdUser')));
     }
 
 

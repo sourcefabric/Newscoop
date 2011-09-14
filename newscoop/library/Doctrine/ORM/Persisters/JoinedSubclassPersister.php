@@ -20,13 +20,16 @@
 namespace Doctrine\ORM\Persisters;
 
 use Doctrine\ORM\ORMException,
-    Doctrine\ORM\Mapping\ClassMetadata;
+    Doctrine\ORM\Mapping\ClassMetadata,
+    Doctrine\DBAL\LockMode,
+    Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * The joined subclass persister maps a single entity instance to several tables in the
  * database as it is defined by the <tt>Class Table Inheritance</tt> strategy.
  *
  * @author Roman Borschel <roman@code-factory.org>
+ * @author Benjamin Eberlei <kontakt@beberlei.de>
  * @since 2.0
  * @see http://martinfowler.com/eaaCatalog/classTableInheritance.html
  */
@@ -235,13 +238,17 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
     /**
      * {@inheritdoc}
      */
-    protected function _getSelectEntitiesSQL(array $criteria, $assoc = null, $lockMode = 0)
+    protected function _getSelectEntitiesSQL(array $criteria, $assoc = null, $lockMode = 0, $limit = null, $offset = null, array $orderBy = null)
     {
         $idColumns = $this->_class->getIdentifierColumnNames();
         $baseTableAlias = $this->_getSQLTableAlias($this->_class->name);
 
         // Create the column list fragment only once
         if ($this->_selectColumnListSql === null) {
+            
+            $this->_rsm = new ResultSetMapping();
+            $this->_rsm->addEntityResult($this->_class->name, 'r');
+            
             // Add regular columns
             $columnList = '';
             foreach ($this->_class->fieldMappings as $fieldName => $mapping) {
@@ -277,7 +284,8 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
             }
 
             $resultColumnName = $this->_platform->getSQLResultCasing($discrColumn);
-            $this->_resultColumnNames[$resultColumnName] = $discrColumn;
+            $this->_rsm->setDiscriminatorColumn('r', $resultColumnName);
+            $this->_rsm->addMetaResult('r', $resultColumnName, $discrColumn);
         }
 
         // INNER JOIN parent tables
@@ -335,19 +343,25 @@ class JoinedSubclassPersister extends AbstractEntityInheritancePersister
 
         $conditionSql = $this->_getSelectConditionSQL($criteria, $assoc);
 
-        $orderBySql = '';
-        if ($assoc != null && isset($assoc['orderBy'])) {
-            $orderBySql = $this->_getCollectionOrderBySQL($assoc['orderBy'], $baseTableAlias);
-        }
+        $orderBy = ($assoc !== null && isset($assoc['orderBy'])) ? $assoc['orderBy'] : $orderBy;
+        $orderBySql = $orderBy ? $this->_getOrderBySQL($orderBy, $baseTableAlias) : '';
 
         if ($this->_selectColumnListSql === null) {
             $this->_selectColumnListSql = $columnList;
         }
 
-        return 'SELECT ' . $this->_selectColumnListSql
+        $lockSql = '';
+        if ($lockMode == LockMode::PESSIMISTIC_READ) {
+            $lockSql = ' ' . $this->_platform->getReadLockSql();
+        } else if ($lockMode == LockMode::PESSIMISTIC_WRITE) {
+            $lockSql = ' ' . $this->_platform->getWriteLockSql();
+        }
+
+        return $this->_platform->modifyLimitQuery('SELECT ' . $this->_selectColumnListSql
                 . ' FROM ' . $this->_class->getQuotedTableName($this->_platform) . ' ' . $baseTableAlias
                 . $joinSql
-                . ($conditionSql != '' ? ' WHERE ' . $conditionSql : '') . $orderBySql;
+                . ($conditionSql != '' ? ' WHERE ' . $conditionSql : '') . $orderBySql, $limit, $offset)
+                . $lockSql;
     }
 
     /**
