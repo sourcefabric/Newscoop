@@ -11,6 +11,9 @@ use Newscoop\Entity\Ingest\Feed\Entry;
 
 class PublisherServiceTest extends \PHPUnit_Framework_TestCase
 {
+    const SECTION_SPORT = 15000000;
+    const SECTION_CULTURE = 1000000;
+
     /** @var Newscoop\Services\Ingest\PublisherService */
     protected $service;
 
@@ -21,10 +24,6 @@ class PublisherServiceTest extends \PHPUnit_Framework_TestCase
     {
         $this->config = \Zend_Registry::get('container')->getParameter('ingest_publisher');
         $this->service = new PublisherService($this->config);
-
-        $this->parser = $this->getMockBuilder('Newscoop\Ingest\Parser\NewsMlParser')
-            ->disableOriginalConstructor()
-            ->getMock();
     }
 
     public function testService()
@@ -37,15 +36,16 @@ class PublisherServiceTest extends \PHPUnit_Framework_TestCase
         $created = new \DateTime('-2 day');
         $published = new \DateTime();
 
-        $this->parser->expects($this->once())
-            ->method('getLanguage')
-            ->will($this->returnValue('en'));
 
-        $this->parser->expects($this->once())
-            ->method('getCreated')
-            ->will($this->returnValue($created));
+        $entry = $this->getEntry(array(
+            'getLanguage' => 'en',
+            'getCreated' => $created,
+            'getTitle' => 'title',
+            'getCatchWord' => 'catch',
+            'getSummary' => 'summary',
+            'getContent' => 'content',
+        ));
 
-        $entry = Entry::create($this->parser);
         $article = $this->service->publish($entry);
         $this->assertInstanceOf('Article', $article);
         $this->assertEquals($this->config['article_type'], $article->getType());
@@ -58,100 +58,144 @@ class PublisherServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Y', $article->getWorkflowStatus());
         $this->assertNotEmpty($article->getPublishDate());
         $this->assertTrue($article->isPublic());
+        $this->assertEquals($entry->getArticleNumber(), $article->getArticleNumber());
+        $this->assertEquals('title', $article->getTitle());
+        $this->assertEquals('catch', $article->getKeywords());
+
+        /**
+        $data = $article->getArticleData();
+        $this->assertEquals('content', $data->getFieldValue($this->config['field']['content']));
+        $this->assertEquals('summary', $data->getFieldValue($this->config['field']['summary']));
+         */
+    }
+
+    public function testUpdate()
+    {
+        $entry = $this->getEntry(array(
+            'getLanguage' => 'en',
+            'getSubject' => self::SECTION_SPORT,
+        ));
+
+        $orig = $this->service->publish($entry);
+
+        $updatedTime = new \DateTime('-2d');
+        $entry->update($this->getParser(array(
+            'getLanguage' => 'en',
+            'getSubject' => self::SECTION_SPORT,
+            'getTitle' => 'newtitle',
+            'getUpdated' => $updatedTime,
+        )));
+
+        $updated = $this->service->update($entry);
+
+        $this->assertEquals($orig->getArticleNumber(), $updated->getArticleNumber());
+        $this->assertEquals($entry->getTitle(), $updated->getTitle());
+        $this->assertEquals($updatedTime->format('Y-m-d H:i:s'), $updated->getLastModified());
+    }
+
+    public function testDelete()
+    {
+        $entry = $this->getEntry(array(
+            'getLanguage' => 'en',
+            'getSubject' => self::SECTION_SPORT,
+        ));
+
+        $article = $this->service->publish($entry);
+        $this->service->delete($entry);
+
+        $article->fetch();
+        $this->assertFalse($article->exists());
     }
 
     public function testPublishSectionSport()
     {
-        $this->parser->expects($this->once())
-            ->method('getLanguage')
-            ->will($this->returnValue('de'));
+        $entry = $this->getEntry(array(
+            'getLanguage' => 'de',
+            'getSubject' => self::SECTION_SPORT,
+        ));
 
-        $this->parser->expects($this->once())
-            ->method('getSubject')
-            ->will($this->returnValue(15000000));
-
-        $entry = Entry::create($this->parser);
         $article = $this->service->publish($entry);
         $this->assertEquals($this->config['section_sport'], $article->getSectionNumber());
     }
 
     public function testPublishSectionCulture()
     {
-        $this->parser->expects($this->once())
-            ->method('getLanguage')
-            ->will($this->returnValue('de'));
+        $entry = $this->getEntry(array(
+            'getLanguage' => 'de',
+            'getSubject' => self::SECTION_CULTURE,
+        ));
 
-        $this->parser->expects($this->once())
-            ->method('getSubject')
-            ->will($this->returnValue(1000000));
-
-        $entry = Entry::create($this->parser);
         $article = $this->service->publish($entry);
         $this->assertEquals($this->config['section_culture'], $article->getSectionNumber());
     }
 
     public function testPublishSectionInternational()
     {
-        $this->parser->expects($this->once())
-            ->method('getLanguage')
-            ->will($this->returnValue('de'));
+        $entry = $this->getEntry(array(
+            'getLanguage' => 'de',
+            'getSubject' => 1,
+            'getCountry' => 'CZ',
+        ));
 
-        $this->parser->expects($this->once())
-            ->method('getSubject')
-            ->will($this->returnValue(1));
-
-        $this->parser->expects($this->once())
-            ->method('getCountry')
-            ->will($this->returnValue('CZ'));
-
-        $entry = Entry::create($this->parser);
         $article = $this->service->publish($entry);
         $this->assertEquals($this->config['section_international'], $article->getSectionNumber());
     }
 
     public function testPublishSectionBasel()
     {
-        $this->parser->expects($this->once())
-            ->method('getLanguage')
-            ->will($this->returnValue('de'));
+        $entry = $this->getEntry(array(
+            'getLanguage' => 'de',
+            'getSubject' => 1,
+            'getCountry' => 'CH',
+            'getProduct' => 'Regionaldienst Nord',
+        ));
 
-        $this->parser->expects($this->once())
-            ->method('getSubject')
-            ->will($this->returnValue(1));
-
-        $this->parser->expects($this->once())
-            ->method('getCountry')
-            ->will($this->returnValue('CH'));
-
-        $this->parser->expects($this->once())
-            ->method('getProduct')
-            ->will($this->returnValue('Regionaldienst Nord'));
-
-        $entry = Entry::create($this->parser);
         $article = $this->service->publish($entry);
         $this->assertEquals($this->config['section_basel'], $article->getSectionNumber());
     }
 
     public function testPublishSectionOther()
     {
-        $this->parser->expects($this->once())
-            ->method('getLanguage')
-            ->will($this->returnValue('de'));
+        $entry = $this->getEntry(array(
+            'getLanguage' => 'de',
+            'getSubject' => 1,
+            'getCountry' => 'CH',
+            'getProduct' => '',
+        ));
 
-        $this->parser->expects($this->once())
-            ->method('getSubject')
-            ->will($this->returnValue(1));
-
-        $this->parser->expects($this->once())
-            ->method('getCountry')
-            ->will($this->returnValue('CH'));
-
-        $this->parser->expects($this->once())
-            ->method('getProduct')
-            ->will($this->returnValue('x'));
-
-        $entry = Entry::create($this->parser);
         $article = $this->service->publish($entry);
         $this->assertEquals($this->config['section_other'], $article->getSectionNumber());
+    }
+
+    /**
+     * Get parser
+     *
+     * @param array $expects
+     * @return Newscoop\Ingest\Parser
+     */
+    private function getParser(array $expects)
+    {
+        $parser = $this->getMockBuilder('Newscoop\Ingest\Parser\NewsMlParser')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        foreach ($expects as $method => $value) {
+            $parser->expects($this->once())
+                ->method($method)
+                ->will($this->returnValue($value));
+        }
+
+        return $parser;
+    }
+
+    /**
+     * Get entry
+     *
+     * @param array $expects
+     * @return Newscoop\Entity\Ingest\Feed\Entry
+     */
+    private function getEntry(array $expects)
+    {
+        return Entry::create($this->getParser($expects));
     }
 }

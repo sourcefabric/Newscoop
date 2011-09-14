@@ -82,7 +82,7 @@ class IngestService
     public function updateAll()
     {
         foreach ($this->getFeeds() as $feed) {
-            $this->update($feed);
+            $this->updateFeed($feed);
         }
 
         $this->em->flush();
@@ -94,7 +94,7 @@ class IngestService
      * @param Newscoop\Entity\Ingest\Feed $feed
      * @return void
      */
-    private function update(Feed $feed)
+    private function updateFeed(Feed $feed)
     {
         foreach (glob($this->config['path'] . '/*.xml') as $file) {
             if ($feed->getUpdated() && $feed->getUpdated()->getTimestamp() > filemtime($file)) {
@@ -110,23 +110,19 @@ class IngestService
                 $parser = new NewsMlParser($file);
                 if (!$parser->isImage()) {
                     if ($parser->getRevisionId() > 1) {
-                        $previous = $this->getPrevious($parser, $feed);
+                        $entry = $this->getPrevious($parser, $feed);
                         switch ($parser->getInstruction()) {
                             case 'Rectify':
                             case 'Update':
-                                $previous->update($parser);
-                                $this->em->persist($previous);
-                                if ($previous->isPublished()) {
-                                    $this->publisher->update($previous);
-                                }
+                                $entry->update($parser);
+                                $this->updatePublished($entry);
+                                $this->em->persist($entry);
                                 break;
 
                             case 'Delete':
-                                $this->em->remove($previous);
-                                $feed->removeEntry($previous);
-                                if ($previous->isPublished()) {
-                                    $this->publisher->delete($previous);
-                                }
+                                $this->deletePublished($entry);
+                                $feed->removeEntry($entry);
+                                $this->em->remove($entry);
                                 break;
 
                             default:
@@ -135,8 +131,9 @@ class IngestService
                         }
                     } else {
                         $entry = Entry::create($parser);
-                        $this->em->persist($entry);
                         $feed->addEntry($entry);
+                        $this->publish($entry, false);
+                        $this->em->persist($entry);
                     }
                 }
 
@@ -202,17 +199,62 @@ class IngestService
     }
 
     /**
+     * Test if mode is automatic
+     *
+     * @return bool
+     */
+    public function isAutoMode()
+    {
+        return (bool) \SystemPref::Get(self::MODE_SETTING);
+    }
+
+    /**
+     * Switch mode
+     *
+     * @return void
+     */
+    public function switchAutoMode()
+    {
+        \SystemPref::Set(self::MODE_SETTING, !\SystemPref::Get(self::MODE_SETTING));
+    }
+
+    /**
      * Publish entry
+     *
+     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
+     * @param bool $manual
+     * @return void
+     */
+    public function publish(Entry $entry, $manual = true)
+    {
+        if ($manual || $this->isAutoMode()) {
+            $this->publisher->publish($entry);
+            $entry->setPublished(new \DateTime());
+            $this->em->persist($entry);
+            $this->em->flush();
+        }
+    }
+
+    /**
+     * Updated published entry
      *
      * @param Newscoop\Entity\Ingest\Feed\Entry $entry
      * @return void
      */
-    public function publish(Entry $entry)
+    private function updatePublished(Entry $entry)
     {
-        $this->publisher->publish($entry);
-        $entry->setPublished(new \DateTime());
-        $this->em->persist($entry);
-        $this->em->flush();
+        $this->publisher->update($entry);
+    }
+
+    /**
+     * Delete published entry
+     *
+     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
+     * @return void
+     */
+    private function deletePublished(Entry $entry)
+    {
+        $this->publisher->delete($entry);
     }
 
     /**

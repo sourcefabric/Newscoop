@@ -23,7 +23,7 @@ class Admin_IngestController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $this->view->auto_mode = (bool) SystemPref::Get(IngestService::MODE_SETTING);
+        $this->view->auto_mode = $this->service->isAutoMode();
         $this->view->feeds = $this->service->getFeeds();
         $this->view->entries = $this->service->findBy(array('published' => null), array('updated' => 'desc'), 25, 0);
     }
@@ -36,7 +36,7 @@ class Admin_IngestController extends Zend_Controller_Action
 
     public function switchModeAction()
     {
-        SystemPref::Set(IngestService::MODE_SETTING, !SystemPref::Get(IngestService::MODE_SETTING));
+        $this->service->switchAutoMode();
         $this->_helper->redirector('index');
     }
 

@@ -148,7 +148,10 @@ class SystemPref {
         if (!$cacheFile) {
         	return false;
         }
-        chmod($cacheFileName, 0600);
+
+        if (!defined('APPLICATION_ENV') || APPLICATION_ENV != 'testing') {
+            chmod($cacheFileName, 0600);
+        }
 
         $buffer = "<?php\n\$GLOBALS['Campsite']['system_preferences'] = array(\n";
         $preferences = array();

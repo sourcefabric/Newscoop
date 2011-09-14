@@ -430,6 +430,28 @@ class Entry
     }
 
     /**
+     * Set article number
+     *
+     * @param int $articleNumber
+     * @return Newscoop\Entity\Ingest\Feed\Entry
+     */
+    public function setArticleNumber($articleNumber)
+    {
+        $this->setAttribute('article_number', (int) $articleNumber);
+        return $this;
+    }
+
+    /**
+     * Get article number
+     *
+     * @return int
+     */
+    public function getArticleNumber()
+    {
+        return $this->getAttribute('article_number');
+    }
+
+    /**
      * Update entry
      *
      * @param Newscoop\Ingest\Parser $parser
@@ -507,7 +529,7 @@ class Entry
         $parserImages = $parser->getImages();
         if (is_array($parserImages)) {
             foreach ($parserImages as $image) {
-                $images[] = basename($image->getPath());
+                $images[basename($image->getPath())] = $image->getTitle();
             }
         }
 

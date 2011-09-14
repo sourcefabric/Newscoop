@@ -2961,6 +2961,36 @@ CREATE TABLE IF NOT EXISTS `user_token` (
   PRIMARY KEY (`user_id`,`action`,`token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `ingest_feed`;
+CREATE TABLE IF NOT EXISTS `ingest_feed` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ingest_feed_entry`;
+CREATE TABLE IF NOT EXISTS `ingest_feed_entry` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `feed_id` int(11) unsigned NOT NULL,
+  `date_id` varchar(20) DEFAULT NULL,
+  `news_item_id` varchar(20) DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
+  `updated` datetime NOT NULL,
+  `author` varchar(255) DEFAULT NULL,
+  `content` text NOT NULL,
+  `summary` text,
+  `category` varchar(255) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `published` datetime DEFAULT NULL,
+  `embargoed` datetime DEFAULT NULL,
+  `priority` tinyint(4) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `attributes` text,
+  PRIMARY KEY (`id`),
+  KEY `feed_id` (`feed_id`,`updated`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
