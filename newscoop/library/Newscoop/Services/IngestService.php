@@ -10,6 +10,7 @@ namespace Newscoop\Services;
 use Doctrine\ORM\EntityManager,
     Newscoop\Entity\Ingest\Feed,
     Newscoop\Entity\Ingest\Feed\Entry,
+    Newscoop\Ingest\Parser,
     Newscoop\Ingest\Parser\NewsMlParser,
     Newscoop\Ingest\Publisher,
     Newscoop\Services\Ingest\PublisherService;
@@ -108,11 +109,40 @@ class IngestService
             if (flock($handle, LOCK_EX | LOCK_NB)) {
                 $parser = new NewsMlParser($file);
                 if (!$parser->isImage()) {
-                    $entry = Entry::create($parser);
-                    $feed->addEntry($entry);
+                    if ($parser->getRevisionId() > 1) {
+                        $previous = $this->getPrevious($parser, $feed);
+                        switch ($parser->getInstruction()) {
+                            case 'Rectify':
+                            case 'Update':
+                                $previous->update($parser);
+                                $this->em->persist($previous);
+                                if ($previous->isPublished()) {
+                                    $this->publisher->update($previous);
+                                }
+                                break;
+
+                            case 'Delete':
+                                $this->em->remove($previous);
+                                $feed->removeEntry($previous);
+                                if ($previous->isPublished()) {
+                                    $this->publisher->delete($previous);
+                                }
+                                break;
+
+                            default:
+                                throw new \InvalidArgumentException("Instruction '{$parser->getInstruction()}' not implemented.");
+                                break;
+                        }
+                    } else {
+                        $entry = Entry::create($parser);
+                        $this->em->persist($entry);
+                        $feed->addEntry($entry);
+                    }
                 }
+
                 flock($handle, LOCK_UN);
                 fclose($handle);
+                $this->em->flush();
             } else {
                 continue;
             }
@@ -120,6 +150,28 @@ class IngestService
 
         $feed->setUpdated(new \DateTime());
         $this->em->persist($feed);
+    }
+
+    /**
+     * Get previous version of entry
+     *
+     * @param Newscoop\Ingest\Parser $parser
+     * @param Newscoop\Entity\Ingest\Feed $feed
+     * @return Newscoop\Entity\Ingest\Feed\Entry
+     */
+    public function getPrevious(Parser $parser, Feed $feed)
+    {
+        $previous = array_shift($this->getEntryRepository()->findBy(array(
+            'date_id' => $parser->getDateId(),
+            'news_item_id' => $parser->getNewsItemId(),
+        )));
+
+        if (empty($previous)) {
+            $previous = Entry::create($parser);
+            $feed->addEntry($previous);
+        }
+
+        return $previous;
     }
 
     /**

@@ -34,7 +34,8 @@ class NewsMlParserTest extends \PHPUnit_Framework_TestCase
     const SUBJECT = '11000000';
     const CATCH_LINE = 'NATO unterstützt Rebellen bei Gaddafi-Jagd';
     const CATCH_WORD = 'Libyen';
-    const AUTHORS = 'kr;kad';
+    const AUTHORS = 'kr, kad';
+    const IMAGE_FILE = '20110825222727235.jpg';
     const IMAGE_CAPTION = 'Sion feiert das 1:0 durch Feindouno';
 
     /** @var Newscoop\Ingest\Parser\NewsMlParser */
@@ -164,7 +165,7 @@ class NewsMlParserTest extends \PHPUnit_Framework_TestCase
 
     public function testGetAuthors()
     {
-        $this->assertEquals(explode(';', self::AUTHORS), $this->parser->getAuthors());
+        $this->assertEquals(self::AUTHORS, $this->parser->getAuthors());
     }
 
     public function testGetImages()
