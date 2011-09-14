@@ -268,7 +268,7 @@ class User implements \Zend_Acl_Role_Interface
     {
         return (string) $this->last_name;
     }
-    
+
     /**
      * Get name
      *
@@ -531,6 +531,24 @@ class User implements \Zend_Acl_Role_Interface
         }
 
         return null;
+    }
+
+    /**
+     * Get all user attributes
+     *
+     * @return array of all user attributes
+     */
+    public function getAttributes()
+    {
+        $attributes = array();
+
+        $keys = $this->attributes->getKeys();
+
+        foreach ($keys as $key) {
+            $attributes[$key] = $this->attributes[$key]->getValue();
+        }
+
+        return $attributes;
     }
 
     /**

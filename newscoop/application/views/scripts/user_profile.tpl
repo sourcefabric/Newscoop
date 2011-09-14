@@ -25,4 +25,16 @@
     {{ /if }}
     {{ /foreach }}
 </dl>
+
+{{ assign var=i value=1 }}
+{{ list_images user=$user->identifier order="byLastUpdate desc"}}
+    {{ if $i <= 10 }}
+        <a class="user_uploaded_pics" rel="user_pics" href="{{ uri options="image" }}"><img src="{{ uri options="image width 50 height 50" }}" alt=""/></a>
+    {{ else }}
+        <a class="user_uploaded_pics" rel="user_pics" href="{{ uri options="image" }}"></a>
+    {{ /if }}
+    
+    {{ $i = $i + 1 }}
+{{ /list_images }}
+
 {{/block}}
