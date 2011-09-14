@@ -28,7 +28,7 @@
 <ul class="users">
     {{ foreach $users as $user }}
     <li>
-        <h3><a href="{{ $view->url(['username' => $user->uname], 'user') }}">{{ $user }}</a></h3>
+        <h3>{{ $user }}</h3>
         {{ if $user->image() }}
         <img src="{{ $user->image(30, 30) }}" />
         {{ /if }}
