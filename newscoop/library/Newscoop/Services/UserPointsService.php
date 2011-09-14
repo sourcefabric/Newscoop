@@ -74,10 +74,9 @@ class UserPointsService
     public function update(\sfEvent $event)
     {
         $params = $event->getParameters();
-        list($resource, $action) = explode('.', $event->getName());
 
-        $user = array_key_exists('user', $params) ? $params['user'] : null;
-        unset($params['user']);
+        $action =  str_replace(".", "_", $event->getName());
+        $user = $params['user'];
 
         $points = $user->getPoints();
         $points_action = $this->getPointValueForAction($action);
