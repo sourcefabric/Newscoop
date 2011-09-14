@@ -27,6 +27,8 @@ camp_html_content_top(getGS('Media Archive'), NULL);
     </p>
     <?php } ?>
 
+    <p><input type="checkbox" id="newswires-images" /> <label for="newswires-images"><?php putGS('Display Newswires images'); ?></label></p>
+
     <?php
         $list = new ImageList;
         $list->setSearch(TRUE);
@@ -234,6 +236,12 @@ $(document).ready(function() {
 
         return false;
     });
+
+    $('#newswires-images').change(function() {
+        $.smartlist_filter = $(this).attr('checked') ? 'sda' : '';
+        var smartlistId = $('.smartlist', $(this).closest('#images')).attr('id').split('-')[1];
+        tables[smartlistId].fnDraw(true);
+    });
 });
 
 /**
@@ -246,6 +254,7 @@ function onUpload()
     tables[smartlistId].fnDraw(true);
     flashMessage('<?php putGS('File uploaded.'); ?>');
 }
+
 //-->
 </script>
 
