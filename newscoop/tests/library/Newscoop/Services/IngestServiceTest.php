@@ -82,9 +82,10 @@ class IngestServiceTest extends \RepositoryTestCase
     public function testPublish()
     {
         $entry = new Entry('title', 'content');
-
         $this->assertFalse($entry->isPublished());
+
         $this->service->publish($entry);
+
         $this->assertTrue($entry->isPublished());
     }
 
@@ -92,20 +93,33 @@ class IngestServiceTest extends \RepositoryTestCase
     {
         $feed = new Feed('sda');
         $this->service->addFeed($feed);
-
         $this->assertEquals(0, count($feed->getEntries()));
 
         $this->service->updateAll();
-        $this->assertEquals(3, count($feed->getEntries()));
+
+        $this->assertEquals(6, count($feed->getEntries()));
         $this->assertInstanceOf('DateTime', $feed->getUpdated());
+    }
+
+    public function testUpdateAllUnique()
+    {
+        $feed = new Feed('sda');
+        $this->service->addFeed($feed);
 
         $this->service->updateAll();
-        $this->assertEquals(3, count($feed->getEntries()));
+        $this->service->updateAll();
 
+        $this->assertEquals(6, count($feed->getEntries()));
+    }
+
+    public function testUpdateAllTimeout()
+    {
+        $feed = new Feed('sda');
+        $this->service->addFeed($feed);
         $tmpFile = APPLICATION_PATH . '/../tests/ingest/' . uniqid('tmp_') . '.xml';
         copy(APPLICATION_PATH . '/../tests/ingest/newsml1.xml', $tmpFile);
 
         $this->service->updateAll();
-        $this->assertEquals(3, count($feed->getEntries()));
+        $this->assertEquals(6, count($feed->getEntries()));
     }
 }

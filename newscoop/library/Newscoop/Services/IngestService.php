@@ -112,6 +112,7 @@ class IngestService
                     if ($parser->getRevisionId() > 1) {
                         $previous = $this->getPrevious($parser, $feed);
                         switch ($parser->getInstruction()) {
+                            case 'Rectify':
                             case 'Update':
                                 $previous->update($parser);
                                 $this->em->persist($previous);
@@ -122,6 +123,7 @@ class IngestService
 
                             case 'Delete':
                                 $this->em->remove($previous);
+                                $feed->removeEntry($previous);
                                 if ($previous->isPublished()) {
                                     $this->publisher->delete($previous);
                                 }
@@ -133,12 +135,14 @@ class IngestService
                         }
                     } else {
                         $entry = Entry::create($parser);
+                        $this->em->persist($entry);
                         $feed->addEntry($entry);
                     }
                 }
 
                 flock($handle, LOCK_UN);
                 fclose($handle);
+                $this->em->flush();
             } else {
                 continue;
             }
