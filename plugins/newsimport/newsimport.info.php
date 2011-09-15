@@ -113,7 +113,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
                 }
             }
         }
-    }
+    } // fn plugin_newsimport_make_dirs
 
 	/**
      * puts into sys-prefs info on newscoop url
@@ -527,6 +527,11 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         //$Admin->setPermission('plugin_newsimport_admin', true);
     } // fn plugin_newsimport_addPermissions
 
+	/**
+     * test whether to do, and calls (if shall) the event import
+     *
+	 * @return void
+	 */
     function plugin_newsimport_test()
     {
         // is this a news import request?
@@ -542,12 +547,11 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
                 }
             }
         }
-    }
+    } // fn plugin_newsimport_test
 
 }
 
 // NB: this is recognizing whether the request is on events import
 // this file is included during page loading, thus can be done this way
 // if it would change, we would need to put it into LegacyController
-// (as is the case for now - because of the "global $controller" things)
-// plugin_newsimport_test();
+plugin_newsimport_test();

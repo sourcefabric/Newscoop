@@ -6,17 +6,45 @@
 /**
  * EventData Importer class for managing parsing of EventData files.
  */
-
 class EventData_Parser {
 
+    /**
+     * To omit a possible double run if it would happened.
+     * @var string
+     */
     var $m_working = '_lock';
-    var $m_dirmode = 0755;
+    /**
+     * To omit a possible double run if it would happened.
+     * @var mixed
+     */
     var $m_lockfile = null;
 
+    /**
+     * Mode of (possibly) created directories.
+     * @var integer
+     */
+    var $m_dirmode = 0755;
+
+    /**
+     * What is this.
+     * @var array
+     */
     var $m_source = null;
+    /**
+     * Who provides this.
+     * @var integer
+     */
     var $m_provider = null;
+    /**
+     * Where to take this.
+     * @var array
+     */
     var $m_dirs = null;
 
+    /**
+     * Data from the last run
+     * @var array
+     */
     var $m_last_events = null;
 
 	/**
@@ -238,6 +266,16 @@ class EventData_Parser {
         return true;
     } // fn cleanup
 
+    /**
+     * Parses old EventData data (by EventData_Parser_SimpleXML)
+     * for diffing them before touching Newscoop && database
+     *
+     * @param array $p_categories
+     * @param array $p_limits
+     * @param array $p_cancels
+     *
+     * @return bool
+     */
     public function parseOld($p_categories, $p_limits, $p_cancels) {
         $this->m_last_events = null;
         if (!is_array($p_categories)) {
@@ -353,13 +391,14 @@ class EventData_Parser {
         }
 
         return true;
-    }
+    } // fn parseOld
 
     /**
      * Parses EventData data (by EventData_Parser_SimpleXML)
      *
      * @param array $p_categories
-     * @param array $p_otherParams
+     * @param array $p_limits
+     * @param array $p_cancels
      *
      * @return array
      */
@@ -451,8 +490,18 @@ class EventData_Parser {
  */
 class EventData_Parser_SimpleXML {
 
+    /**
+     * Data from the last run.
+     * @var array
+     */
     var $m_last_events = null;
 
+    /**
+     * Takes auxiliary data (possibly) used at other work
+     *
+     * @param string $p_lastEvents
+     * @return void
+     */
     public function __construct($p_lastEvents = null)
     {
         $this->m_last_events = $p_lastEvents;

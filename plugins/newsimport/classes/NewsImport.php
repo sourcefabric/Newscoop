@@ -7,18 +7,27 @@
 class NewsImport
 {
 
+    /**
+     * To omit a possible double run if it would happened.
+     * @var bool
+     */
     private static $s_already_run = false;
 
+	/**
+     * Makes necessary initialization for Newscoop
+     *
+	 * @return void
+	 */
     private static function LoadInit()
     {
         // it looks that just the localizer path is missing in the include_path here
         $admin_path = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'admin-files'.DIRECTORY_SEPARATOR.'localizer';
         set_include_path($admin_path . PATH_SEPARATOR . get_include_path());
 
-    }
+    } // fn LoadInit
 
 	/**
-     * checks whether a request for event import, calls that import if asked
+     * Checks whether a request for event import, calls that import if asked
      *
 	 * @param bool $p_importOnly
 	 * @return bool
@@ -555,6 +564,13 @@ class NewsImport
     } // fn StoreEventData
 
 
+	/**
+     * Prunes out passed events on a given source
+     *
+     * @param array $p_source
+     * @param array $p_limits
+	 * @return void
+	 */
     public static function PruneEventData($p_source, $p_limits) {
 
         $art_provider = $p_source['provider_id'];
@@ -648,7 +664,7 @@ class NewsImport
 
         $Campsite['OMIT_LOGGING'] = false;
 
-    }
+    } // fn PruneEventData
 
 	/**
      * Does the cycle of event data parsing and storing
@@ -656,6 +672,8 @@ class NewsImport
      * @param array $p_eventSources
 	 * @param array $p_newsFeed
      * @param array $p_catTopics
+     * @param array $p_limits
+     * @param array $p_cancels
 	 * @param array $p_otherParams
 	 * @return void
 	 */
