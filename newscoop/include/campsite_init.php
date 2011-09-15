@@ -9,9 +9,11 @@
  * @link http://www.sourcefabric.org
  */
 
+global $g_ado_db;
+
 if (!isset($GLOBALS['g_campsiteDir'])) {
     $GLOBALS['g_campsiteDir'] = dirname(dirname(__FILE__));
-} 
+}
 
 // redirects to the installation process if necessary
 if (!file_exists($GLOBALS['g_campsiteDir'].'/conf/configuration.php')
@@ -25,7 +27,7 @@ set_include_path(
     $GLOBALS['g_campsiteDir'] . '/library' . PATH_SEPARATOR .
     '/usr/share/php/libzend-framework-php' . PATH_SEPARATOR .
     get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
-   
+
 if (!is_file('Zend/Application.php')) {
 	// include libzend if we dont have zend_application
 	set_include_path(implode(PATH_SEPARATOR, array(
