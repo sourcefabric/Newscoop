@@ -118,6 +118,7 @@ class NewsImport
 
         $events_limit = 0;
         $events_skip = 0;
+        $events_prune = false;
         if (array_key_exists('newslimit', $_GET)) {
             $events_limit = 0 + $_GET['newslimit'];
             $events_limit = max(0, $events_limit);
@@ -126,10 +127,18 @@ class NewsImport
             $events_skip = 0 + $_GET['newsoffset'];
             $events_skip = max(0, $events_skip);
         }
+        if (array_key_exists('newsprune', $_GET)) {
+            $events_prune_tmp = 0 + $_GET['newsprune'];
+            $events_prune_tmp = max(0, $events_prune_tmp);
+            if ($events_prune_tmp) {
+                $events_prune = true;
+            }
+        }
 
         $params_other = array(
             'skip' => $events_skip,
             'limit' => $events_limit,
+            'pruning' => $events_prune,
         );
 /*
         $events_ignore_passed = false;
@@ -545,6 +554,94 @@ class NewsImport
         }
     } // fn StoreEventData
 
+
+    public static function PruneEventData($p_source, $p_limits) {
+
+        $art_provider = $p_source['provider_id'];
+
+        $art_type = $p_source['article_type'];
+        $art_publication = $p_source['publication_id'];
+        $art_issue = $p_source['issue_number'];
+        $art_section = $p_source['section_number'];
+        $art_lang = $p_source['language_id'];
+
+        if (!isset($p_limits['dates'])) {
+            return;
+        }
+        if (!isset($p_limits['dates']['past'])) {
+            return;
+        }
+
+        $passed_span = max(0, $p_limits['dates']['past']);
+        if (!$passed_span) {
+            return;
+        }
+
+        $passed_time = time() - ($passed_span * 24 * 60 * 60);
+        $passed_date = date('Y-m-d', $passed_time);
+
+        // Load all already passed event articles of that feed.
+        $p_count = 0;
+        $event_art_list = Article::GetList(array(
+            new ComparisonOperation('idlanguage', new Operator('is', 'sql'), $art_lang),
+            new ComparisonOperation('IdPublication', new Operator('is', 'sql'), $art_publication),
+            new ComparisonOperation('NrIssue', new Operator('is', 'sql'), $art_issue),
+            new ComparisonOperation('NrSection', new Operator('is', 'sql'), $art_section),
+            new ComparisonOperation('Type', new Operator('is', 'sql'), $art_type),
+            new ComparisonOperation($art_type . '.date', new Operator('smaller', 'sql'), $passed_date),
+            new ComparisonOperation($art_type . '.provider_id', new Operator('is', 'sql'), $art_provider),
+        ), null, null, 0, $p_count, true);
+
+        $event_data_test = null;
+        if (!is_array($event_art_list) || (0 == count($event_art_list))) {
+            return;
+        }
+
+        foreach ($event_art_list as $event_art_rem) {
+
+            $event_data_rem = $event_art_rem->getArticleData();
+            try {
+                if (($event_data_rem->getFieldValue('date')) >= $passed_date) {
+                    continue;
+                }
+            }
+            catch (Exception $exc) {
+                //var_dump($exc);
+                continue;
+            }
+
+            $art_number = $event_art_rem->getArticleNumber();
+
+            // remove images
+            $one_rem_images = ArticleImage::GetImagesByArticleNumber($art_number);
+            foreach ($one_rem_images as $one_rem_img_link) {
+                $one_rem_img = $one_rem_img_link->getImage();
+                $one_rem_img_link->delete();
+                if (0 == count(ArticleImage::GetArticlesThatUseImage($one_rem_img->getImageId()))) {
+                    $one_rem_img->delete();
+                }
+            }
+
+            // get map
+            $ev_map_id = Geo_Map::ReadMapId($art_number);
+
+            // delete article (with map unlinking)
+            $event_art_rem->delete();
+
+            // remove map
+            if (!empty($ev_map_id)) {
+                $ev_map_obj = new Geo_Map($ev_map_id);
+                if ($ev_map_obj->exists()) {
+                    if (!$ev_map_obj->getArticleNumber()) {
+                        $ev_map_obj->delete();
+                    }
+                }
+            }
+
+        }
+
+    }
+
 	/**
      * Does the cycle of event data parsing and storing
      *
@@ -612,6 +709,20 @@ class NewsImport
                 continue;
             }
 
+            $limits = null;
+            $cancels = null;
+            if (array_key_exists($one_source_name, $p_limits)) {
+                $limits  = $p_limits[$one_source_name];
+            }
+            if (array_key_exists($one_source_name, $p_cancels)) {
+                $cancels  = $p_cancels[$one_source_name];
+            }
+
+            if (isset($p_otherParams['pruning']) && $p_otherParams['pruning']) {
+                self::PruneEventData($one_source, $limits);
+                continue;
+            }
+
             $Campsite['OMIT_LOGGING'] = true;
 
             $categories = self::ReadEventCategories($one_source, $p_catTopics);
@@ -638,15 +749,6 @@ class NewsImport
             if (!$res) {
                 $parser_obj->stop();
                 continue;
-            }
-
-            $limits = null;
-            $cancels = null;
-            if (array_key_exists($one_source_name, $p_limits)) {
-                $limits  = $p_limits[$one_source_name];
-            }
-            if (array_key_exists($one_source_name, $p_cancels)) {
-                $cancels  = $p_cancels[$one_source_name];
             }
 
             $event_load = $parser_obj->parse($categories, $limits, $cancels);

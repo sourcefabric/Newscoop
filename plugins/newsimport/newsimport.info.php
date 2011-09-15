@@ -549,6 +549,5 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 // NB: this is recognizing whether the request is on events import
 // this file is included during page loading, thus can be done this way
 // if it would change, we would need to put it into LegacyController
-plugin_newsimport_test();
-
-
+// (as is the case for now - because of the "global $controller" things)
+// plugin_newsimport_test();

@@ -19,6 +19,7 @@ $event_data_limits = array(
         ),
         'dates' => array(
             'past' => 31, // 30 days old
+            //'past' => 2, // 2 days old, testing
             'next' => 93, // 93 days adv
         ),
     ),

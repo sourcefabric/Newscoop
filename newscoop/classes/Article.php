@@ -1564,7 +1564,7 @@ class Article extends DatabaseObject {
      */
     public function isPublished()
     {
-        return ($this->m_data['Published'] == 'Y');
+        return ((isset($this->m_data['Published'])) && ($this->m_data['Published'] == 'Y'));
     } // fn isPublic
 
 

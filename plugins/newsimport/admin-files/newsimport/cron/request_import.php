@@ -101,8 +101,10 @@ function newsimport_ask_for_import() {
 
     $one_limit = 500;
     //$one_limit = 5;
-    $request_url .= 'newsauth=' . urlencode($conf_info['access_token']) . '&newslimit=' . $one_limit;
+    $request_url .= 'newsauth=' . urlencode($conf_info['access_token']);
+    $request_url_prune = $request_url . '&newsprune=1';
 
+    $request_url .=  '&newslimit=' . $one_limit;
     $request_count = 100;
     $request_offsets = array(0);
     for ($ind = 1; $ind <= $request_count; $ind++) {
@@ -118,6 +120,14 @@ function newsimport_ask_for_import() {
         }
         catch (Exception $exc) {}
     }
+
+    //sleep(1);
+    try {
+        $one_request = $request_url_prune;
+        //echo $one_request . "\n";
+        file_get_contents($one_request);
+    }
+    catch (Exception $exc) {}
 
 } // fn newsimport_ask_for_import
 
