@@ -91,27 +91,20 @@ class IngestServiceTest extends \RepositoryTestCase
         $entry = new Entry('title', 'content');
         $this->assertFalse($entry->isPublished());
 
-        $this->service->publish($entry);
+        $article = $this->service->publish($entry);
 
+        $this->assertInstanceOf('Article', $article);
+        $this->assertGreaterThan(0, $article->getArticleNumber());
+        $this->assertTrue($article->isPublished());
         $this->assertTrue($entry->isPublished());
     }
 
-    public function testAutomaticPublishAutoModeOn()
+    public function testPrepare()
     {
-        $this->setAutoMode();
         $entry = new Entry('title', 'content');
-
-        $this->service->publish($entry, false);
+        $article = $this->service->publish($entry, 'N');
+        $this->assertFalse($article->isPublished());
         $this->assertTrue($entry->isPublished());
-    }
-
-    public function testAutomaticPublishAutoModeOff()
-    {
-        $this->setAutoMode(false);
-        $entry = new Entry('title', 'content');
-
-        $this->service->publish($entry, false);
-        $this->assertFalse($entry->isPublished());
     }
 
     public function testUpdateAll()
