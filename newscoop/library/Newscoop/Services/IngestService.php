@@ -132,7 +132,9 @@ class IngestService
                     } else {
                         $entry = Entry::create($parser);
                         $feed->addEntry($entry);
-                        $this->publish($entry, false);
+                        if ($this->isAutoMode()) {
+                            $this->publish($entry);
+                        }
                         $this->em->persist($entry);
                     }
                 }
@@ -222,17 +224,16 @@ class IngestService
      * Publish entry
      *
      * @param Newscoop\Entity\Ingest\Feed\Entry $entry
-     * @param bool $manual
-     * @return void
+     * @param string $workflow
+     * @return Article
      */
-    public function publish(Entry $entry, $manual = true)
+    public function publish(Entry $entry, $workflow = 'Y')
     {
-        if ($manual || $this->isAutoMode()) {
-            $this->publisher->publish($entry);
-            $entry->setPublished(new \DateTime());
-            $this->em->persist($entry);
-            $this->em->flush();
-        }
+        $article = $this->publisher->publish($entry, $workflow);
+        $entry->setPublished(new \DateTime());
+        $this->em->persist($entry);
+        $this->em->flush();
+        return $article;
     }
 
     /**
