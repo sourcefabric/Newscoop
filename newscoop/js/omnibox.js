@@ -76,7 +76,25 @@ var omnibox = {
 		
 		var that = this;
 		this.uploader.bind('FilesAdded', function(up, files) {
+			if (this.files.length > 1) {
+				this.removeFile(this.files[0]);
+			}
 			that.elements.ob_file_info.innerHTML = files[0].name;
+		});
+		this.uploader.bind('FileUploaded', function(up, file, info) {
+			var fileNameParts = file.name.split('.');
+			var extension = fileNameParts[fileNameParts.length - 1];
+			
+			if (extension == 'jpg' || extension == 'gif' || extension == 'png') {
+				response = $.parseJSON(info.response);
+				response = response.response;
+				that.sendFeedback('image', response);
+			}
+			if (extension == 'pdf') {
+				response = $.parseJSON(info.response);
+				response = response.response;
+				that.sendFeedback('document', response);
+			}
 		});
 	},
 	hideUploader: function() {
@@ -205,21 +223,6 @@ var omnibox = {
 	sendFeedback: function(fileType, fileId) {
 		var that = this;
 		if (this.uploader.total.queued > 0) {
-			this.uploader.bind('FileUploaded', function(up, file, info) {
-				var fileNameParts = file.name.split('.');
-				var extension = fileNameParts[fileNameParts.length - 1];
-				
-				if (extension == 'jpg' || extension == 'gif' || extension == 'png') {
-					response = $.parseJSON(info.response);
-					response = response.response;
-					that.sendFeedback('image', response);
-				}
-				if (extension == 'pdf') {
-					response = $.parseJSON(info.response);
-					response = response.response;
-					that.sendFeedback('document', response);
-				}
-			});
 			this.uploader.start();
 		}
 		else {
@@ -233,19 +236,20 @@ var omnibox = {
 				f_publication: this.publication
 			};
 			
-			var url = this.baseUrl + '/feedback/save/?format=json';
 			if (fileType == 'image') {
-				url = url + '&image_id=' + fileId;
+				data['image_id'] = fileId;
 			}
 			if (fileType == 'document') {
-				url = url + '&document_id=' + fileId;
+				data['document_id'] = fileId;
 			}
 			
+			var url = this.baseUrl + '/feedback/save/?format=json';
 			$.post(url, data, function(data) {
 				data = $.parseJSON(data);
 				
 				omnibox.setMessage(data.response);
 				omnibox.showMessage();
+				omnibox.showUploader();
 			});
 			
 			this.elements.ob_feedback_subject.value = '';
