@@ -566,12 +566,12 @@ UNLOCK TABLES;
 -- Dumping data for table `liveuser_users`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT IGNORE INTO `user` (`id`, `first_name`, `username`, `password`, `email`, `status`, `is_admin`, `is_public`, `role_id`, `created`) VALUES 
+LOCK TABLES `liveuser_users` WRITE;
+/*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
+INSERT IGNORE INTO `liveuser_users` (`Id`, `Name`, `UName`, `Password`, `EMail`, `status`, `is_admin`, `is_public`, `role_id`, `time_created`) VALUES 
 (1, 'Administrator', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin@email.addr', 1, 1, 0, 6, 'NOW()'),
 (26, 'Test Person', 'test', '1c6027c0667c7646b964476b61960e0cf7b559ee', 'test@persona.org', 1, 0, 1, 7, 'NOW()');
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+/*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
