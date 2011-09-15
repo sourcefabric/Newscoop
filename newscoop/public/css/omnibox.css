@@ -12,6 +12,7 @@
 	font-family: Georgia, "Times New Roman", Times, serif; font-size:16px; line-height:22px;
 	float: left;
 	margin-bottom: 18px;
+	font-weight: bold;
 }
 .top_user {
 	font-size:11px; font-family:Arial, Helvetica, sans-serif; line-height:15px;
@@ -60,7 +61,7 @@
 }
 .text_container input.small {
 	float: right;
-	width: 40%;
+	width: 80%;
 	display: block;
 	border: 1px solid #a5a5a5;
 	font-size:10px; font-family:Arial, Helvetica, sans-serif; line-height:11px;
@@ -97,7 +98,10 @@
 	color: #a5a5a5;
 	font-size:11px; font-family:Arial, Helvetica, sans-serif; line-height:11px;
 	margin-top: 8px;
-	margin-right: 64px;
+	margin-right: 24px;
+}
+.half {
+	width: 300px;
 }
 #ob_message_wrapper {
 	background-color: #e0ffe0;

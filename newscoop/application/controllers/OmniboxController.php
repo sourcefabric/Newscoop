@@ -17,6 +17,7 @@ class OmniboxController extends Zend_Controller_Action
     {
         $this->_helper->layout->disableLayout();
         $this->auth = Zend_Auth::getInstance();
+        $this->view->translate = Zend_Registry::get('Zend_Translate');
     }
 
     public function indexAction()
@@ -38,7 +39,7 @@ class OmniboxController extends Zend_Controller_Action
 			$this->view->response = 'OK';
 		}
 		else {
-			$this->view->response = getGS('Login failed.');
+			$this->view->response = $this->view->translate('Login failed.');
 		}
 	}
 	public function logoutAction()
