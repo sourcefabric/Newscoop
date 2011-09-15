@@ -2969,6 +2969,8 @@ CREATE TABLE IF NOT EXISTS `ingest_feed` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
+INSERT INTO `ingest_feed` (`title`) VALUES ('SDA');
+
 DROP TABLE IF EXISTS `ingest_feed_entry`;
 CREATE TABLE IF NOT EXISTS `ingest_feed_entry` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
@@ -2988,7 +2990,8 @@ CREATE TABLE IF NOT EXISTS `ingest_feed_entry` (
   `status` varchar(20) DEFAULT NULL,
   `attributes` text,
   PRIMARY KEY (`id`),
-  KEY `feed_id` (`feed_id`,`updated`)
+  UNIQUE (`date_id`, `news_item_id`),
+  KEY (`status`, `updated`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
