@@ -122,6 +122,12 @@ class User implements \Zend_Acl_Role_Interface
     private $attributes;
 
     /**
+     * @OneToMany(targetEntity="Newscoop\Entity\Comment\Commenter", mappedBy="user", cascade={"ALL"}, indexBy="name")
+     * @var Doctrine\Common\Collections\Collection;
+     */
+    private $commenters;
+
+    /**
      * @param string $email
      */
     public function __construct($email = null)
@@ -609,6 +615,24 @@ class User implements \Zend_Acl_Role_Interface
     }
 
 
+    /**
+     * Get a User's comments which are associated with his User account.
+     *
+     * @return array
+     */
+    public function getComments()
+    {
+        $comments = array();
+
+        foreach ($this->commenters as $commenter) {
+
+            foreach ($commenter->getComments() as $comment) {
+                $comments[] = $comment;
+            }
+        }
+
+        return $comments;
+    }
 
     /**
      * Get user id

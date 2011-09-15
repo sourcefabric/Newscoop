@@ -42,6 +42,28 @@ final class MetaComment extends MetaDbObject {
         $this->m_skipFilter = array('content_real');
     } // fn __construct
 
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        $date = $this->getSubmitDate();
+        $subject = $this->getSubject();
+        $message = $this->getMessage();
+
+        //want to get the name from this article here and return it with everything else..
+        //$article = $this->getArticle();
+
+        $html = '<p class="comment_date">%s</p>
+                <p class="comment_subject">%s</p>
+                <p class="comment_message">%s</p>';
+
+        $langid = $this->m_dbObject->getLanguage()->getId();
+        $article_num = $this->m_dbObject->getThread()->getId();
+
+        return sprintf($html, $date, $subject, $message);
+    }
+
     protected function getThreadDepth()
     {
         return $this->m_dbObject->getThreadLevel();
