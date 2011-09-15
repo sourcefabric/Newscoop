@@ -78,8 +78,9 @@ final class CampTemplate extends Smarty
 
         $this->plugins_dir = array_merge((array) $this->plugins_dir, array(APPLICATION_PATH . self::PLUGINS), self::getPluginsPluginsDir());
 
+        $uri = CampSite::GetURIInstance();
         $this->template_dir = array(
-            APPLICATION_PATH . '/../themes/publication_2/theme_1',
+            APPLICATION_PATH . '/../themes/',
             APPLICATION_PATH . self::SCRIPTS,
         );
 

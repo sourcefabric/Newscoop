@@ -26,8 +26,8 @@ class Subscription
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\User\Subscriber")
-     * @JoinColumn(name="IdUser")
+     * @ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @JoinColumn(name="IdUser", referencedColumnName="Id")
      * @var Newscoop\Entity\User\Subscriber
      */
     private $subscriber;
