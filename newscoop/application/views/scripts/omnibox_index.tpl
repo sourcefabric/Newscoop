@@ -110,7 +110,8 @@ omnibox.initialize();
 {{ else }}
 	omnibox.setType('feedback');
 {{ /if }}
-omnibox.setTranslation('Attach file', '{{ $view->translate("Attach file") }}');
+omnibox.setTranslation('attach_file', '{{ $view->translate("Attach file") }}');
+omnibox.setTranslation('feedback_content_empty', '{{ $view->translate("Feedback content is not filled in.") }}');
 omnibox.setUploadUrl('{{ $view->baseUrl("/feedback/upload/?format=json") }}');
 omnibox.setFlashRuntime('{{ $view->baseUrl('/js/plupload/js/plupload.flash.swf') }}');
 omnibox.setSilverlightRuntime('{{ $view->baseUrl('/js/plupload/js/plupload.silverlight.xap') }}');

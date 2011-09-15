@@ -125,7 +125,7 @@ var omnibox = {
 			//this.elements.ob_main.style.display = 'inline';
 			$('#ob_main').show(100);
 			this.status = true;
-			if (this.elements.ob_file_upload_container) this.elements.ob_file_upload_container.innerHTML = '<input type="button" id="ob_file_upload" value="'+this.translations['Attach file']+'">';
+			if (this.elements.ob_file_upload_container) this.elements.ob_file_upload_container.innerHTML = '<input type="button" id="ob_file_upload" value="'+this.translations['attach_file']+'">';
 			setTimeout('omnibox.showUploader();', 200);
 		}
 		else {
@@ -221,40 +221,47 @@ var omnibox = {
 		});
 	},
 	sendFeedback: function(fileType, fileId) {
-		var that = this;
-		if (this.uploader.total.queued > 0) {
-			this.uploader.start();
+		if (this.elements.ob_feedback_subject.value == '' || this.elements.ob_feedback_text.value == '') {
+			omnibox.setMessage(this.translations['feedback_content_empty']);
+			omnibox.showMessage();
 		}
 		else {
-			var data = {
-				f_feedback_url: String(document.location),
-				f_feedback_subject: this.elements.ob_feedback_subject.value,
-				f_feedback_content: this.elements.ob_feedback_text.value,
-				f_language: this.language,
-				f_section: this.section,
-				f_article: this.article,
-				f_publication: this.publication
-			};
-			
-			if (fileType == 'image') {
-				data['image_id'] = fileId;
+			var that = this;
+			if (this.uploader.total.queued > 0) {
+				this.uploader.start();
 			}
-			if (fileType == 'document') {
-				data['document_id'] = fileId;
-			}
-			
-			var url = this.baseUrl + '/feedback/save/?format=json';
-			$.post(url, data, function(data) {
-				data = $.parseJSON(data);
+			else {
+				var data = {
+					f_feedback_url: String(document.location),
+					f_feedback_subject: this.elements.ob_feedback_subject.value,
+					f_feedback_content: this.elements.ob_feedback_text.value,
+					f_language: this.language,
+					f_section: this.section,
+					f_article: this.article,
+					f_publication: this.publication
+				};
 				
-				omnibox.setMessage(data.response);
-				omnibox.showMessage();
-				omnibox.showUploader();
-			});
-			
-			this.elements.ob_feedback_subject.value = '';
-			this.elements.ob_feedback_text.value = '';
-			this.elements.ob_file_info.innerHTML = '';
+				if (fileType == 'image') {
+					data['image_id'] = fileId;
+				}
+				if (fileType == 'document') {
+					data['document_id'] = fileId;
+				}
+				
+				var url = this.baseUrl + '/feedback/save/?format=json';
+				$.post(url, data, function(data) {
+					data = $.parseJSON(data);
+					
+					omnibox.setMessage(data.response);
+					omnibox.showMessage();
+					omnibox.showUploader();
+				});
+				
+				this.elements.ob_feedback_subject.value = '';
+				this.elements.ob_feedback_text.value = '';
+				this.elements.ob_file_info.innerHTML = '';
+			}
+
 		}
 	}
 };
