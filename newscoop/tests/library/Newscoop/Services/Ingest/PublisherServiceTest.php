@@ -13,7 +13,7 @@ use Newscoop\Entity\Ingest\Feed\Entry,
 
 require_once __DIR__ . '/../../Ingest/Parser/NewsMlParserTest.php';
 
-class PublisherServiceTest extends \PHPUnit_Framework_TestCase
+class PublisherServiceTest extends \RepositoryTestCase
 {
     const SECTION_SPORT = 15000000;
     const SECTION_CULTURE = 1000000;
@@ -26,6 +26,7 @@ class PublisherServiceTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        parent::setUp('Newscoop\Entity\Comment');
         $this->config = \Zend_Registry::get('container')->getParameter('ingest_publisher');
         $this->service = new PublisherService($this->config);
     }

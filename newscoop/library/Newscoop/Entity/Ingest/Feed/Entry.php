@@ -11,7 +11,7 @@ use Newscoop\Entity\Ingest\Feed,
     Newscoop\Ingest\Parser;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\Ingest\Feed\EntryRepository")
  * @Table(name="ingest_feed_entry")
  */
 class Entry

@@ -107,6 +107,12 @@ class IngestServiceTest extends \RepositoryTestCase
         $this->assertTrue($entry->isPublished());
     }
 
+    public function testUpdateAllEmpty()
+    {
+        $this->service->updateAll();
+        $this->assertEquals(0, count($this->service->getFeeds()));
+    }
+
     public function testUpdateAll()
     {
         $feed = new Feed('sda');
@@ -139,6 +145,71 @@ class IngestServiceTest extends \RepositoryTestCase
 
         $this->service->updateAll();
         $this->assertEquals(6, count($feed->getEntries()));
+    }
+
+    public function testLiftEmbargoNew()
+    {
+        $feed = new Feed('sda');
+        $this->service->addFeed($feed);
+
+        $entry = $this->getEntry(array(
+            'getTitle' => 'test',
+            'getContent' => 'test',
+            'getStatus' => 'Embargoed',
+            'getLiftEmbargo' => new \DateTime('+2 day'),
+        ));
+
+        $this->em->persist($entry);
+        $this->em->flush();
+        $this->em->clear();
+
+        $this->service->updateAll();
+
+        $loaded = $this->em->find('Newscoop\Entity\Ingest\Feed\Entry', $entry->getId());
+        $this->assertEquals('Embargoed', $loaded->getStatus());
+    }
+
+    public function testLiftEmbargoOld()
+    {
+        $feed = new Feed('sda');
+        $this->service->addFeed($feed);
+
+        $entry = $this->getEntry(array(
+            'getTitle' => 'test',
+            'getContent' => 'test',
+            'getStatus' => 'Embargoed',
+            'getLiftEmbargo' => new \DateTime('-2 day'),
+        ));
+
+        $this->em->persist($entry);
+        $this->em->flush();
+        $this->em->clear();
+
+        $this->service->updateAll();
+
+        $loaded = $this->em->find('Newscoop\Entity\Ingest\Feed\Entry', $entry->getId());
+        $this->assertEquals('Usable', $loaded->getStatus());
+    }
+
+    /**
+     * Get entry from parser with given methods
+     *
+     * @param array $methods
+     * @return Newscoop\Entity\Ingest\Feed\Entry
+     */
+    private function getEntry(array $methods)
+    {
+        $parser = $this->getMockBuilder('Newscoop\Ingest\Parser\NewsMlParser')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        foreach ($methods as $method => $return) {
+            $parser->expects($this->once())
+                ->method($method)
+                ->will($this->returnValue($return));
+        }
+
+        return Entry::create($parser);
     }
 
     /**
