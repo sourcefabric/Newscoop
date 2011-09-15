@@ -265,6 +265,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             'prices' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 1), 'hidden' => false), // some textual or numerical info, if available
             'minimal_age' => array('type' => 'text', 'params' => array(), 'hidden' => false), // textual or numerical info, if any, but usually empty
             // other details - fixed form
+            'canceled' => array('type' => 'switch', 'params' => array(), 'hidden' => false), // if event was canceled
             'rated' => array('type' => 'switch', 'params' => array(), 'hidden' => false), // if of some restricted (hot/explicit) kind
             'edited' => array('type' => 'switch', 'params' => array(), 'hidden' => false), // whether to disable auto-overwriting
             // category available as article topic

@@ -238,7 +238,7 @@ class EventData_Parser {
         return true;
     } // fn cleanup
 
-    public function parseOld($p_categories, $p_limits) {
+    public function parseOld($p_categories, $p_limits, $p_cancels) {
         $this->m_last_events = null;
         if (!is_array($p_categories)) {
             $p_categories = array();
@@ -339,7 +339,7 @@ class EventData_Parser {
                 }
 
                 try {
-                    $result = $parser->parse($events, $this->m_provider, $event_file_path, $p_categories, $lim_span_past, $lim_span_next, $cat_limits);
+                    $result = $parser->parse($events, $this->m_provider, $event_file_path, $p_categories, $lim_span_past, $lim_span_next, $cat_limits, $p_cancels);
                 }
                 catch (Exception $exc) {
                     //var_dump($exc);
@@ -363,7 +363,7 @@ class EventData_Parser {
      *
      * @return array
      */
-    public function parse($p_categories, $p_limits) {
+    public function parse($p_categories, $p_limits, $p_cancels) {
         if (!is_array($p_categories)) {
             $p_categories = array();
         }
@@ -391,7 +391,7 @@ class EventData_Parser {
             $cat_limits = $p_limits['categories'];
         }
 
-        $this->parseOld($p_categories, $p_limits);
+        $this->parseOld($p_categories, $p_limits, $p_cancels);
 
         $parser = new EventData_Parser_SimpleXML($this->m_last_events);
 
@@ -435,7 +435,7 @@ class EventData_Parser {
                 }
             }
             try {
-                $result = $parser->parse($events, $this->m_provider, $event_file_path, $p_categories, $lim_span_past, $lim_span_next, $cat_limits);
+                $result = $parser->parse($events, $this->m_provider, $event_file_path, $p_categories, $lim_span_past, $lim_span_next, $cat_limits, $p_cancels);
             }
             catch (Exception $exc) {
                 //var_dump($exc);
@@ -485,10 +485,14 @@ class EventData_Parser_SimpleXML {
      * @param string $p_file file name of the eventdata file
      * @return array
      */
-    function parse(&$p_events, $p_provider, $p_file, $p_categories, $p_daysPast = null, $p_daysNext = null, $p_catLimits = null) {
+    function parse(&$p_events, $p_provider, $p_file, $p_categories, $p_daysPast = null, $p_daysNext = null, $p_catLimits = null, $p_cancels = null) {
         if (empty($p_catLimits)) {
             $p_catLimits = array();
         }
+        //if (empty($p_cancels)) {
+        //    $p_cancels = array();
+        //    $p_cancels[] = array('field' => 'evett1', 'value' => 'Abgesagt');
+        //}
 
         libxml_clear_errors();
         $internal_errors = libxml_use_internal_errors(true);
@@ -552,6 +556,19 @@ class EventData_Parser_SimpleXML {
 
                 $event_info = array('provider_id' => $p_provider);
                 $event_other = array();
+
+                $e_canceled = false;
+                if (!empty($p_cancels)) {
+                    foreach ($p_cancels as $one_cancel_spec) {
+                        $one_cancel_field = $one_cancel_spec['field'];
+                        $one_cancel_value = $one_cancel_spec['value'];
+
+                        if ($event->$one_cancel_field == $one_cancel_value) {
+                            $e_canceled = true;
+                        }
+                    }
+                }
+                $event_info['canceled'] = $e_canceled;
 
                 // Date, time - first here, for possible omiting passed events
 

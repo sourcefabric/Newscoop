@@ -3,6 +3,12 @@
  * event import configurations
  */
 
+$event_data_cancel = array(
+    'events_1' => array(
+        array('field' => 'evett1', 'value' => 'Abgesagt'),
+    ),
+);
+
 $event_data_limits = array(
     'events_1' => array(
         'categories' => array(

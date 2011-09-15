@@ -149,7 +149,7 @@ class NewsImport
         ob_end_flush();
         flush();
 
-        return self::LoadEventData($event_data_sources, $news_feed, $cat_topics, $event_data_limits, $params_other);
+        return self::LoadEventData($event_data_sources, $news_feed, $cat_topics, $event_data_limits, $event_data_cancel, $params_other);
     } // fn ProcessImport
 
 	/**
@@ -351,6 +351,7 @@ class NewsImport
             $article_data->setProperty('Fprices', $one_event['prices']);
             $article_data->setProperty('Fminimal_age', $one_event['minimal_age']);
 
+            $article_data->setProperty('Fcanceled', ($one_event['canceled'] ? 'on' : 'off'));
             $article_data->setProperty('Frated', ($one_event['rated'] ? 'on' : 'off'));
             $article_data->setProperty('Fedited', 'off');
 
@@ -553,7 +554,7 @@ class NewsImport
 	 * @param array $p_otherParams
 	 * @return void
 	 */
-    public static function LoadEventData($p_eventSources, $p_newsFeed, $p_catTopics, $p_limits, $p_otherParams) {
+    public static function LoadEventData($p_eventSources, $p_newsFeed, $p_catTopics, $p_limits, $p_cancels, $p_otherParams) {
 
         $class_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'classes';
         require_once($class_dir.DIR_SEP.'EventParser.php');
@@ -640,10 +641,15 @@ class NewsImport
             }
 
             $limits = null;
+            $cancels = null;
             if (array_key_exists($one_source_name, $p_limits)) {
                 $limits  = $p_limits[$one_source_name];
             }
-            $event_load = $parser_obj->parse($categories, $limits);
+            if (array_key_exists($one_source_name, $p_cancels)) {
+                $cancels  = $p_cancels[$one_source_name];
+            }
+
+            $event_load = $parser_obj->parse($categories, $limits, $cancels);
             if (empty($event_load)) {
                 $parser_obj->stop();
                 continue;
