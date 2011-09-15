@@ -79,10 +79,10 @@
 	{{ else }}
 		<div class="top_title">{{ $view->translate('Login') }}</div>
 		<div class="clear"></div>
-		<div class="text_container left">
+		<div class="text_container left half">
 			{{ $view->translate('You have to be registered at TagesWoche in order to comment on articles and send messages directly to the editorial team. Please login or create a free user account on TagesWoche.') }}
 		</div>
-		<div class="text_container">
+		<div class="text_container right half">
 			<input type="text" id="ob_username" class="small right" onKeyPress="if (event.keyCode == 13) omnibox.login();"><br>
 			<div class="clear"></div>
 			<input type="password" id="ob_password" class="small right" onKeyPress="if (event.keyCode == 13) omnibox.login();"><br>
