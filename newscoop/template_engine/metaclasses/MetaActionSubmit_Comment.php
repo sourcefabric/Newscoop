@@ -42,7 +42,7 @@ class MetaActionSubmit_Comment extends MetaAction
                                           $p_input['f_comment_nickname'] : '';
         $this->m_properties['subject'] = $p_input['f_comment_subject'];
         $this->m_properties['content'] = $p_input['f_comment_content'];
-        $this->m_properties['is_anonymous'] = $p_input['f_comment_is_anonymous'];
+        //$this->m_properties['is_anonymous'] = $p_input['f_comment_is_anonymous'];
         if (isset($p_input['f_comment_reader_email'])) {
             $readerEmail = trim($p_input['f_comment_reader_email']);
             if (!empty($readerEmail)) {
