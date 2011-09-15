@@ -4,8 +4,8 @@
 <script type="text/javascript" src="{{ $view->baseUrl('/js/plupload/js/plupload.full.js') }}"></script>
 <div id="ob_main" style="display: none;">
 	<div id="ob_message_wrapper" style="display: none;">
-		<div id="ob_message" style="display: none;"></div>
 		<div id="ob_message_close" style="display: none;" class="right"><a href="javascript:omnibox.hideMessage();omnibox.setMessage('');"><img src="{{ $view->baseUrl('/public/css/img/close-button.png') }}"></a></div>
+		<div id="ob_message" style="display: none;"></div>
 		<div class="clear"></div>
 	</div>
 	<div class="clear"></div>
@@ -110,7 +110,8 @@ omnibox.initialize();
 {{ else }}
 	omnibox.setType('feedback');
 {{ /if }}
-omnibox.setTranslation('Attach file', '{{ $view->translate("Attach file") }}');
+omnibox.setTranslation('attach_file', '{{ $view->translate("Attach file") }}');
+omnibox.setTranslation('feedback_content_empty', '{{ $view->translate("Feedback content is not filled in.") }}');
 omnibox.setUploadUrl('{{ $view->baseUrl("/feedback/upload/?format=json") }}');
 omnibox.setFlashRuntime('{{ $view->baseUrl('/js/plupload/js/plupload.flash.swf') }}');
 omnibox.setSilverlightRuntime('{{ $view->baseUrl('/js/plupload/js/plupload.silverlight.xap') }}');

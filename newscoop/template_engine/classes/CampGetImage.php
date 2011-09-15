@@ -336,9 +336,9 @@ class CampGetImage
 			// no cropping necessary
 			return($p_im);
 		}
-
+		
         // hcrop
-        if ($current_width > $current_height) {
+        if ($width < $current_width) {
 			// translate vertical and horizontal values to each other for convenience
 			if ($this->m_resizeCrop == 'top') $this->m_resizeCrop = 'left';
 			if ($this->m_resizeCrop == 'bottom') $this->m_resizeCrop = 'right';
@@ -357,7 +357,7 @@ class CampGetImage
 			}
 		}
 		// vcrop
-		if ($current_width < $current_height) {
+		if ($height < $current_height) {
 			// translate vertical and horizontal values to each other for convenience
 			if ($this->m_resizeCrop == 'left') $this->m_resizeCrop = 'top';
 			if ($this->m_resizeCrop == 'right') $this->m_resizeCrop = 'bottom';
@@ -375,7 +375,7 @@ class CampGetImage
 				$left = 0;
 			}
 		}
-		//error_log('top: '.$top.' left: '.$left.' width: '.$width);
+		//error_log('top: '.$top.' left: '.$left);
         
         // Resample the image
         $canvas = @imagecreatetruecolor($width, $height);

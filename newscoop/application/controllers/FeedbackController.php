@@ -50,7 +50,7 @@ class FeedbackController extends Zend_Controller_Action
 		}
 
 		if (!array_key_exists('f_feedback_content', $parameters) || empty($parameters['f_feedback_content'])) {
-			$errors[] = getGS('The feedback content was not filled in.');
+			$errors[] = getGS('Feedback content was not filled in.');
 		}
 
 		if (empty($errors)) {

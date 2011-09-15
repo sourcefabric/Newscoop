@@ -90,6 +90,17 @@ final class MetaUser extends MetaEntity
         }
     }
 
+    public function comments($number=10)
+    {
+        $comments = $this->user->getComments();
+
+        if(count($comments) > 0) {
+            return new MetaComment($comments[0]->getId());
+        }
+
+        return "No comments";
+    }
+
     /**
      * Get subscription
      *

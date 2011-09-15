@@ -26,6 +26,8 @@
     {{ /foreach }}
 </dl>
 
+<p>{{ $user->comments }}</p>
+
 {{ assign var=i value=1 }}
 {{ list_images user=$user->identifier order="byLastUpdate desc"}}
     {{ if $i <= 10 }}

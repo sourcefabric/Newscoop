@@ -93,6 +93,13 @@
 	border: solid 1px #09d987;
 	margin: 2px;
 }
+.text_container #ob_file_clear {
+	float: left;
+	width: 100px;
+	font-size:11px; font-family:Arial, Helvetica, sans-serif; line-height:11px;
+	border: solid 1px #09d987;
+	margin: 2px;
+}
 .register_link {
 	text-decoration: underline;
 	color: #a5a5a5;
@@ -113,6 +120,7 @@
 }
 #ob_message_close {
 	float: right;
+	vertical-align: top;
 }
 #ob_handle {
 	float: left;
