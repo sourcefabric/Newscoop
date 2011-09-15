@@ -669,9 +669,11 @@ class Article extends DatabaseObject {
         // Delete Article Comments
         // @todo change this with DOCTRINE2 CASCADE DELETE
         global $controller;
-        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
-        $repository->deleteArticle($this->m_data['Number'], $this->m_data['IdLanguage']);
-        $repository->flush();
+        if (isset($controller)) {
+            $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+            $repository->deleteArticle($this->m_data['Number'], $this->m_data['IdLanguage']);
+            $repository->flush();
+        }
 
         // is this the last translation?
         if (count($this->getLanguages()) <= 1) {
@@ -1564,7 +1566,7 @@ class Article extends DatabaseObject {
      */
     public function isPublished()
     {
-        return ($this->m_data['Published'] == 'Y');
+        return (isset($this->m_data['Published']) && $this->m_data['Published'] == 'Y');
     } // fn isPublic
 
 
