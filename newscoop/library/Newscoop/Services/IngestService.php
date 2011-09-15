@@ -85,6 +85,7 @@ class IngestService
             $this->updateFeed($feed);
         }
 
+        $this->getEntryRepository()->liftEmbargo();
         $this->em->flush();
     }
 
