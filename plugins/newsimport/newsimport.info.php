@@ -65,6 +65,57 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
     define('PLUGIN_NEWSIMPORT_FUNCTIONS', TRUE);
 
 	/**
+     * create && fill data dirs while not fs access is set up
+     *
+	 * @return void
+	 */
+    function plugin_newsimport_make_dirs() {
+        $newsimport_demo_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'demo_data';
+        $newsimport_data_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR.'newsimport';
+
+        $data_dirs = array(
+            $newsimport_data_dir.DIRECTORY_SEPARATOR.'events',
+            $newsimport_data_dir.DIRECTORY_SEPARATOR.'events'.DIRECTORY_SEPARATOR.'current',
+            $newsimport_data_dir.DIRECTORY_SEPARATOR.'events'.DIRECTORY_SEPARATOR.'input',
+            $newsimport_data_dir.DIRECTORY_SEPARATOR.'events'.DIRECTORY_SEPARATOR.'processed',
+            $newsimport_data_dir.DIRECTORY_SEPARATOR.'movies',
+            $newsimport_data_dir.DIRECTORY_SEPARATOR.'movies'.DIRECTORY_SEPARATOR.'current',
+            $newsimport_data_dir.DIRECTORY_SEPARATOR.'movies'.DIRECTORY_SEPARATOR.'input',
+            $newsimport_data_dir.DIRECTORY_SEPARATOR.'movies'.DIRECTORY_SEPARATOR.'processed',
+        );
+
+        foreach ($data_dirs as $one_data_dir) {
+            if (!is_dir($one_data_dir)) {
+                try {
+                    mkdir($one_data_dir, 0755, true);
+                }
+                catch (Exception $ecx) {}
+            }
+        }
+
+        foreach (array('events', 'movies') as $one_demo_part) {
+            if (is_dir($newsimport_demo_dir.DIRECTORY_SEPARATOR.$one_demo_part)) {
+                $one_demo_set = glob($newsimport_demo_dir.DIRECTORY_SEPARATOR.$one_demo_part.DIRECTORY_SEPARATOR.'*');
+                if (false === $one_demo_set) {
+                    continue;
+                }
+                foreach ($one_demo_set as $event_demo_path) {
+                    if (!is_file($event_demo_path)) {
+                        continue;
+                    }
+                    $one_dest_path = $newsimport_data_dir.DIRECTORY_SEPARATOR.$one_demo_part.DIRECTORY_SEPARATOR.'input'.DIRECTORY_SEPARATOR.basename($event_demo_path);
+                    if (!is_file($one_dest_path)) {
+                        try {
+                            copy($event_demo_path, $one_dest_path);
+                        }
+                        catch (Exception $ecx) {}
+                    }
+                }
+            }
+        }
+    }
+
+	/**
      * puts into sys-prefs info on newscoop url
      *
 	 * @return void
@@ -383,6 +434,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 
         plugin_newsimport_set_cron(true);
         plugin_newsimport_set_url();
+        plugin_newsimport_make_dirs();
     } // fn plugin_newsimport_install
 
 	/**
@@ -406,6 +458,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 
         plugin_newsimport_set_cron(true);
         plugin_newsimport_set_url();
+        plugin_newsimport_make_dirs();
     } // fn plugin_newsimport_enable
 
 	/**

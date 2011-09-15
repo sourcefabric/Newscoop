@@ -233,6 +233,7 @@ class EventData_Parser {
                 continue;
             }
         }
+        closedir($dir_handle);
 
         return true;
     } // fn cleanup
@@ -290,6 +291,9 @@ class EventData_Parser {
                 if (!is_file($event_file_path)) {
                     continue;
                 }
+                if (basename($event_file_path) == $this->m_working) {
+                    continue;
+                }
                 if (($datetime_length + 2) > strlen($event_file)) { // 14 for datetime, 1 for '-', and something then
                     continue;
                 }
@@ -299,6 +303,7 @@ class EventData_Parser {
 
                 $passed_files[] = $event_file_path;
             }
+            closedir($dir_handle);
         }
         if (empty($passed_files)) {
             return;
@@ -401,6 +406,7 @@ class EventData_Parser {
             return false;
         }
 
+        $proc_files = array();
         if ($dir_handle) {
             while (false !== ($event_file = readdir($dir_handle))) {
                 $event_file_path = $this->m_dirs['use'] . $event_file;
@@ -408,22 +414,33 @@ class EventData_Parser {
                 if (!is_file($event_file_path)) {
                     continue;
                 }
-
-                $event_file_path_arr = explode('.', $event_file_path);
-                $event_file_path_arr_last_rank = count($event_file_path_arr) - 1;
-                if (0 < $event_file_path_arr_last_rank) {
-                    if ('gz' == strtolower($event_file_path_arr[$event_file_path_arr_last_rank])) {
-                        $event_file_path = 'compress.zlib://' . $event_file_path;
-                    }
+                if (basename($event_file_path) == $this->m_working) {
+                    continue;
                 }
-
-                try {
-                    $result = $parser->parse($events, $this->m_provider, $event_file_path, $p_categories, $lim_span_past, $lim_span_next, $cat_limits);
-                }
-                catch (Exception $exc) {
-                }
-                $files[] = $event_file;
+                $proc_files[] = $event_file_path;
             }
+            closedir($dir_handle);
+        }
+
+        if (!empty($proc_files)) {
+            sort($proc_files);
+        }
+
+        foreach ($proc_files as $event_file_path) {
+            $event_file_path_arr = explode('.', $event_file_path);
+            $event_file_path_arr_last_rank = count($event_file_path_arr) - 1;
+            if (0 < $event_file_path_arr_last_rank) {
+                if ('gz' == strtolower($event_file_path_arr[$event_file_path_arr_last_rank])) {
+                    $event_file_path = 'compress.zlib://' . $event_file_path;
+                }
+            }
+            try {
+                $result = $parser->parse($events, $this->m_provider, $event_file_path, $p_categories, $lim_span_past, $lim_span_next, $cat_limits);
+            }
+            catch (Exception $exc) {
+                //var_dump($exc);
+            }
+            $files[] = $event_file;
         }
         return array('files' => $files, 'events' => $events);
     } // fn parse

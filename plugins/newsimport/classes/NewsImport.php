@@ -565,6 +565,19 @@ class NewsImport
                 continue;
             }
 
+            if (isset($one_source['source_dirs']) && is_array($one_source['source_dirs'])) {
+                $parsed_src_dirs = array();
+                foreach ($one_source['source_dirs'] as $one_src_dir_key => $one_src_dir_val) {
+                    if (is_string($one_src_dir_val)) {
+                        if (DIRECTORY_SEPARATOR != substr($one_src_dir_val, 0, strlen(DIRECTORY_SEPARATOR))) {
+                            $one_src_dir_val = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.$one_src_dir_val;
+                        }
+                    }
+                    $parsed_src_dirs[$one_src_dir_key] = $one_src_dir_val;
+                }
+                $one_source['source_dirs'] = $parsed_src_dirs;
+            }
+
             $feed_key = base64_encode($one_source_name);
             $sp_images_local = trim('' . SystemPref::Get('NewsImportImagesLocal:' . $feed_key));
             if (!empty($sp_images_local)) {
