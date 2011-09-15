@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection,
 
 /**
  * @Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
- * @Table(name="user")
+ * @Table(name="liveuser_users")
  */
 class User implements \Zend_Acl_Role_Interface
 {
@@ -28,31 +28,31 @@ class User implements \Zend_Acl_Role_Interface
 
     /**
      * @Id @GeneratedValue
-     * @Column(type="integer")
+     * @Column(type="integer", name="Id")
      * @var int
      */
     private $id;
 
     /**
-     * @Column(type="string", length="80")
+     * @Column(type="string", length="80", name="EMail")
      * @var string
      */
     private $email;
 
     /**
-     * @Column(type="string", length="80", nullable=TRUE)
+     * @Column(type="string", length="80", nullable=TRUE, name="UName")
      * @var string
      */
     private $username;
 
     /**
-     * @Column(type="string", length="60", nullable=TRUE)
+     * @Column(type="string", length="60", nullable=TRUE, name="Password")
      * @var string
      */
     private $password;
 
     /**
-     * @Column(type="string", length="80", nullable=TRUE)
+     * @Column(type="string", length="80", nullable=TRUE, name="Name")
      * @var string
      */
     private $first_name;
@@ -64,7 +64,7 @@ class User implements \Zend_Acl_Role_Interface
     private $last_name;
 
     /**
-     * @Column(type="datetime")
+     * @Column(type="datetime", name="time_created")
      * @var DateTime
      */
     private $created;
@@ -108,7 +108,7 @@ class User implements \Zend_Acl_Role_Interface
     /**
      * @manyToMany(targetEntity="Newscoop\Entity\User\Group")
      * @joinTable(name="liveuser_groupusers",
-     *      joinColumns={@joinColumn(name="perm_user_id", referencedColumnName="id")},
+     *      joinColumns={@joinColumn(name="perm_user_id", referencedColumnName="Id")},
      *      inverseJoinColumns={@joinColumn(name="group_id", referencedColumnName="group_id")}
      *      )
      * @var Doctrine\Common\Collections\Collection;
@@ -120,6 +120,12 @@ class User implements \Zend_Acl_Role_Interface
      * @var Doctrine\Common\Collections\Collection;
      */
     private $attributes;
+
+    /**
+     * @OneToMany(targetEntity="Newscoop\Entity\Comment\Commenter", mappedBy="user", cascade={"ALL"}, indexBy="name")
+     * @var Doctrine\Common\Collections\Collection;
+     */
+    private $commenters;
 
     /**
      * @param string $email
@@ -548,6 +554,24 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * Get all user attributes
+     *
+     * @return array of all user attributes
+     */
+    public function getAttributes()
+    {
+        $attributes = array();
+
+        $keys = $this->attributes->getKeys();
+
+        foreach ($keys as $key) {
+            $attributes[$key] = $this->attributes[$key]->getValue();
+        }
+
+        return $attributes;
+    }
+
+    /**
      * Set image
      *
      * @param string $image
@@ -591,6 +615,24 @@ class User implements \Zend_Acl_Role_Interface
     }
 
 
+    /**
+     * Get a User's comments which are associated with his User account.
+     *
+     * @return array
+     */
+    public function getComments()
+    {
+        $comments = array();
+
+        foreach ($this->commenters as $commenter) {
+
+            foreach ($commenter->getComments() as $comment) {
+                $comments[] = $comment;
+            }
+        }
+
+        return $comments;
+    }
 
     /**
      * Get user id

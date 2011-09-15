@@ -45,6 +45,8 @@ filters = [];
 <script type="text/javascript"><!--
 $(document).ready(function() {
 var table = $('#table-<?php echo $this->id; ?>');
+var filters = [];
+$.smartlist_filter = '';
 tables['<?php echo $this->id; ?>'] = table.dataTable({
     'bAutoWidth': true,
     'bDestroy': true,
@@ -161,6 +163,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
     'bPaging': true,
     'sPaginationType': 'full_numbers',
     'fnServerData': function (sSource, aoData, fnCallback) {
+        aoData.push({ 'name': 'filter', 'value': $.smartlist_filter });
         callServer(['<?php echo get_class($this); ?>', 'doData'], aoData, fnCallback);
     },
     <?php } ?>

@@ -42,6 +42,7 @@ class CommunityTickerEvent
 
     /**
      * @ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;

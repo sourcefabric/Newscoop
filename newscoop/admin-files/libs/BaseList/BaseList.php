@@ -70,6 +70,9 @@ class BaseList
     /** @var bool */
     protected $clickable = TRUE;
 
+    /** @var array */
+    protected $filters = array('1');
+
     /**
      */
     public function __construct()
@@ -297,6 +300,8 @@ class BaseList
         $queryStr = 'SELECT ' . implode(', ', $cols) . '
             FROM ' . $this->model->m_dbTableName;
 
+        $queryStr .= ' WHERE ' . implode(' AND ', $this->filters);
+
         // set search
         if (!empty($aoData['sSearch'])) {
             $search = array();
@@ -304,7 +309,7 @@ class BaseList
                 $search[] = sprintf('%s LIKE "%%%s%%"', $col,
                     mysql_real_escape_string($aoData['sSearch']));
             }
-            $queryStr .= ' WHERE ' . implode(' OR ', $search);
+            $queryStr .= ' AND (' . implode(' OR ', $search) . ' ) ';
         }
 
         // get filtered count (before ordering and limiting)

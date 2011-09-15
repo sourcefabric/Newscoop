@@ -86,6 +86,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('user_points', 'Newscoop\Services\UserPointsService')
             ->addArgument(new sfServiceReference('em'));
 
+        $container->register('user_attributes', 'Newscoop\Services\UserAttributeService')
+            ->addArgument(new sfServiceReference('em'));
+
         $container->register('audit', 'Newscoop\Services\AuditService')
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('user'));
@@ -236,5 +239,20 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         require_once APPLICATION_PATH . '/controllers/helpers/Smarty.php';
         Zend_Controller_Action_HelperBroker::addHelper(new Action_Helper_Smarty());
+    }
+    
+    protected function _initTranslate()
+    {
+        $parameters = Zend_Registry::get('container')->getParameter('translation');
+        $filename = $parameters['path'].'/'.$parameters['language'].'.php';
+        include_once($filename);
+        
+        $translate = new Zend_Translate(array(
+            'adapter' => 'array',
+            'disableNotices' => TRUE,
+            'content' => $translation,
+        ));
+        
+        Zend_Registry::set('Zend_Translate', $translate);
     }
 }

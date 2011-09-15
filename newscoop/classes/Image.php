@@ -267,6 +267,14 @@ class Image extends DatabaseObject
     } // fn getSource
 
     /**
+     * @return int
+     */
+    public function getUploadingUserId()
+    {
+        return $this->m_data['UploadedByUser'];
+    } // fn getUploadingUserId
+
+    /**
      * @return string
      */
     public function getStatus()

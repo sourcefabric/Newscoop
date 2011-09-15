@@ -57,7 +57,7 @@ class Log
 
     /**
      * @manyToOne(targetEntity="User")
-     * @joinColumn(name="fk_user_id")
+     * @joinColumn(name="fk_user_id", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;

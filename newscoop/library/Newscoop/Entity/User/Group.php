@@ -37,7 +37,7 @@ class Group implements \Zend_Acl_Role_Interface
     private $role;
     
     /**
-     * @manyToMany(targetEntity="Newscoop\Entity\User\Staff", mappedBy="groups")
+     * @manyToMany(targetEntity="Newscoop\Entity\User", mappedBy="groups")
      */
     private $users;
 

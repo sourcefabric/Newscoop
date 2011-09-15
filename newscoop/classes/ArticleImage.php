@@ -139,6 +139,10 @@ class ArticleImage extends DatabaseObject {
         if (!$this->exists()) {
             return false;
         }
+
+        $p_imageId = $this->m_data['IdImage'];
+        $p_articleNumber = $this->m_data['Number'];
+
         ArticleImage::RemoveImageTagsFromArticleText($this->getArticleNumber(), $this->getTemplateId());
         $image_id = $this->getImageId();
         $article_number = $this->getArticleNumber();

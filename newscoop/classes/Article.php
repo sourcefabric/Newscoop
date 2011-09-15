@@ -668,8 +668,7 @@ class Article extends DatabaseObject {
 
         // Delete Article Comments
         // @todo change this with DOCTRINE2 CASCADE DELETE
-        global $controller;
-        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+        $repository = Zend_Registry::get('container')->getService('em')->getRepository('Newscoop\Entity\Comment');
         $repository->deleteArticle($this->m_data['Number'], $this->m_data['IdLanguage']);
         $repository->flush();
 
@@ -1564,7 +1563,7 @@ class Article extends DatabaseObject {
      */
     public function isPublished()
     {
-        return ((isset($this->m_data['Published'])) && ($this->m_data['Published'] == 'Y'));
+        return (isset($this->m_data['Published']) && $this->m_data['Published'] == 'Y');
     } // fn isPublic
 
 
