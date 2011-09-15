@@ -597,6 +597,12 @@ class NewsImport
             return;
         }
 
+        global $Campsite;
+        if (empty($Campsite)) {
+            $Campsite = array();
+        }
+        $Campsite['OMIT_LOGGING'] = true;
+
         foreach ($event_art_list as $event_art_rem) {
 
             $event_data_rem = $event_art_rem->getArticleData();
@@ -640,6 +646,8 @@ class NewsImport
 
         }
 
+        $Campsite['OMIT_LOGGING'] = false;
+
     }
 
 	/**
@@ -657,6 +665,9 @@ class NewsImport
         require_once($class_dir.DIR_SEP.'EventParser.php');
 
         global $Campsite;
+        if (empty($Campsite)) {
+            $Campsite = array();
+        }
 
         foreach ($p_eventSources as $one_source_name => $one_source) {
             if ((!empty($p_newsFeed)) && ($one_source_name != $p_newsFeed)) {
