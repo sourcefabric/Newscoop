@@ -110,12 +110,6 @@ final class MetaArticle extends MetaDbObject {
         }
     } // fn __construct
 
-    public function __toString()
-    {
-        return $this->title;
-        //return $this->getLanguage();
-    }
-
 
     final public function __get($p_property)
     {
