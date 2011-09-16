@@ -278,11 +278,9 @@ class Admin_UserController extends Zend_Controller_Action
                 if ($parameters['delete_messages'] == 1) {
 					$feedbackRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Feedback');
 					$feedbacks = $feedbackRepository->getByUser($p_user->getId());
-					foreach ($feedbacks as $feedback) {
-						$feedback = $feedbackRepository->find($feedback);
-						$feedbackRepository->save($feedback, array('status' => 'deleted'));
-						$feedbackRepository->flush();
-					}
+					
+					$feedbackRepository->setStatus($feedbacks, 'deleted');
+					$feedbackRepository->flush();
 				}
             }
             $this->_helper->redirector->gotoSimple('index', 'feedback');

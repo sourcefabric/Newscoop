@@ -194,6 +194,8 @@ var omnibox = {
 		if (this.type == 'feedback') {
 			this.showHideElement('ob_comment_text_container', 'hide');
 			this.showHideElement('ob_feedback_text_container', 'show');
+			if (this.elements.ob_file_upload_container) this.elements.ob_file_upload_container.innerHTML = '<input type="button" id="ob_file_upload" value="'+this.translations['attach_file']+'">';
+			setTimeout('omnibox.showUploader();', 200);
 		}
 	},
 	sendComment: function() {
