@@ -275,17 +275,15 @@ class Admin_UserController extends Zend_Controller_Action
                 
                 $this->_helper->flashMessenger(getGS('Ban for user "$1" saved.', $p_user->getName()));
                 
-                /*
                 if ($parameters['delete_messages'] == 1) {
 					$feedbackRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Feedback');
-					$filter = array('user' => $p_user->getId());
-					$dataParameters = array('sFilter' => $filter);
-					$feedbacks = $feedbackRepository->getData($dataParameters);
+					$feedbacks = $feedbackRepository->getByUser($p_user->getId());
 					foreach ($feedbacks as $feedback) {
-						//$feedback->delete();
+						$feedback = $feedbackRepository->find($feedback);
+						$feedbackRepository->save($feedback, array('status' => 'deleted'));
+						$feedbackRepository->flush();
 					}
 				}
-				*/
             }
             $this->_helper->redirector->gotoSimple('index', 'feedback');
         }

@@ -20,12 +20,10 @@ class Admin_Form_BanUser extends Zend_Form
      *
 	 * @return Zend_Form_Element_Checkbox
      */
-    /*
     public function getDeleteMessages()
     {
         return $this->delete_messages;
     }
-    */
 
     /**
      * Getter for the name checkbox
@@ -63,13 +61,11 @@ class Admin_Form_BanUser extends Zend_Form
             'order' => 20,
         ));
 
-        /*
         $this->addElement('checkbox', 'delete_messages', array(
             'label' => getGS('Delete feedback messages?'),
             'required' => false,
             'order' => 40,
         ));
-        */
 
         $this->addElement('submit', 'cancel', array(
             'label' => getGS('Cancel'),
