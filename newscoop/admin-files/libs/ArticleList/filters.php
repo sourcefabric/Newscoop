@@ -103,8 +103,8 @@ foreach (Topic::GetTree() as $topic) {
 	<dt><label for="filter_creator"><?php putGS('Creator'); ?></label></dt>
 	<dd><select name="creator">
 		<option value=""><?php putGS('All'); ?></option>
-		<?php foreach (User::GetUsers() as $creator) { ?>
-		<option value="<?php echo $creator->getUserId(); ?>"><?php echo $creator->getRealName(); ?></option>
+		<?php foreach (Zend_Registry::get('container')->getService('user')->findBy(array(), array('last_name' => 'asc', 'first_name' => 'asc')) as $user) { ?>
+		<option value="<?php echo $user->getId(); ?>"><?php echo $user->getName(); ?></option>
 		<?php } ?>
 	</select></dd>
 </dl>
