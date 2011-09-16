@@ -87,8 +87,7 @@
                     
             <p><a href="mailto:{{user.email}}">{{user.email}}</a></p>
             <p><a href="{{user.url}}">{{user.url}}</a></p>
-            {% if (user.is_banned == false) %}<p><a href="{{user.banurl}}" class="banUser"><span><?php putGS('Ban user'); ?></span></a></p>{% endif %}
-            {% if (user.is_banned == true) %}<p><a href="{{user.unbanurl}}" class="banUser"><span><?php putGS('Unban user'); ?></span></a></p>{% endif %}
+            <p><a href="{{user.banurl}}" class="banUser"><span><?php putGS('Ban user'); ?></span></a></p>
             </p>
           </div>
         </td>
