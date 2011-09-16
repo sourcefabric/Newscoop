@@ -105,13 +105,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
                         'avatar' => (string)$view->getAvatar($user->getEmail(), array('img_size' => 50, 'default_img' => 'wavatar')),
                         'banurl' => $view->url(array(
 							'controller' => 'user',
-							'action' => 'ban',
-							'user' => $user->getId(),
-							'publication' => $publication->getId()
-						)),
-						'unbanurl' => $view->url(array(
-							'controller' => 'user',
-							'action' => 'unban',
+							'action' => 'toggle-ban',
 							'user' => $user->getId(),
 							'publication' => $publication->getId()
 						)),
