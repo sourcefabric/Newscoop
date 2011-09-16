@@ -2,7 +2,7 @@
 
 <body>
 
-{{ omnibox }}{{ /omnibox }}
+{{ omnibox }}
 
 <div class="container">
 
