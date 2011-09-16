@@ -4,7 +4,6 @@
  * @package Campsite
  */
 
-
 /**
  * Campsite list_box_articles block plugin
  *
@@ -22,7 +21,7 @@
  * @return
  *
  */
-function smarty_block_list_box_articles($p_params, $p_content, &$p_smarty, &$p_repeat)
+function smarty_block_list_related_articles($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
 	$p_smarty->smarty->loadPlugin('smarty_shared_escape_special_chars');
 	$campContext = $p_smarty->getTemplateVars('gimme');

@@ -44,9 +44,10 @@ class FeedbackRepository extends DatatableSource
     {
         // get the entity manager
         $em = $this->getEntityManager();
-        $user = $em->getReference('Newscoop\Entity\User', $values['user']);
-        
-        $entity->setUser($user);
+        if (array_key_exists('user', $values)) {
+			$user = $em->getReference('Newscoop\Entity\User', $values['user']);
+			$entity->setUser($user);
+		}
         
         if (!empty($values['publication'])) {
 			$publication = $em->getReference('Newscoop\Entity\Publication', $values['publication']);
@@ -208,6 +209,23 @@ class FeedbackRepository extends DatatableSource
         }
         return $andx;
     }
+    
+    public function getByUser($p_user_id) {
+		$em = $this->getEntityManager();
+		$qb = $em->createQueryBuilder();
+		$qb->add('select', 'f.id')
+            ->add('from', 'Newscoop\Entity\Feedback f')
+            ->add('where', 'f.user = :p_user_id')
+            ->setParameter('p_user_id', $p_user_id);
+        $query = $qb->getQuery();
+        $feedbackIds = $query->getArrayResult();
+        
+        $clearFeedbackIds = array();
+        foreach($feedbackIds as $key => $value) {
+        	$clearFeedbackIds[] = $value['id'];
+        }
+        return $clearFeedbackIds;
+	}
 
     /**
      * Flush method

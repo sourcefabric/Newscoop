@@ -205,7 +205,7 @@ class ContextList extends BaseList
                         <div class="context-item-date">%s</div>
                         <a href="#" class="view-article" onClick="viewArticle($(this).parent(\'div\').parent(\'div\').parent(\'td\').parent(\'tr\').attr(\'id\'));">%s</a>
                     </div>
-                    <a href="#" class="corner-button" style="display: none" onClick="removeFromContext($(this).parent(\'div\').parent(\'td\').parent(\'tr\').attr(\'id\'));"><span class="ui-icon ui-icon-closethick"></span></a>
+                    <a href="#" class="corner-button" style="display: none" onClick="removeFromContext($(this).parent(\'div\').parent(\'td\').parent(\'tr\').attr(\'id\'));toggleDragZonePlaceHolder();"><span class="ui-icon ui-icon-closethick"></span></a>
                     <div class="context-item-summary">%s</div>
                     </div>
             ', $article->getCreationDate(), getGS('View article'), $article->getName()),

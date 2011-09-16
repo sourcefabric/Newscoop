@@ -80,6 +80,7 @@ final class CampTemplate extends Smarty
 
         $uri = CampSite::GetURIInstance();
         $this->template_dir = array(
+            APPLICATION_PATH . '/../themes/' . $uri->getThemePath(),
             APPLICATION_PATH . '/../themes/',
             APPLICATION_PATH . self::SCRIPTS,
         );
