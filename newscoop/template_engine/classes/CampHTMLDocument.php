@@ -296,7 +296,7 @@ final class CampHTMLDocument
             }
             // @todo this path is not correct
             $template = CS_SYS_TEMPLATES_DIR.DIR_SEP.'_campsite_error.tpl';
-            $siteinfo['templates_path'] = CS_TEMPLATES_DIR;
+            $siteinfo['templates_path'] = CS_TEMPLATES_DIR . '/unassigned/';
         }
 
         $tpl = CampTemplate::singleton();

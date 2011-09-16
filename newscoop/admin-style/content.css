@@ -376,6 +376,11 @@ dl dd .info-text	{
     float: right;
 }
 
+.ingest .prepare {
+    float: right;
+    color: #f57900;
+}
+
 .ingest h1 {
     border: none;
 }

@@ -85,6 +85,7 @@ class IngestService
             $this->updateFeed($feed);
         }
 
+        $this->getEntryRepository()->liftEmbargo();
         $this->em->flush();
     }
 
@@ -97,11 +98,11 @@ class IngestService
     private function updateFeed(Feed $feed)
     {
         foreach (glob($this->config['path'] . '/*.xml') as $file) {
-            if ($feed->getUpdated() && $feed->getUpdated()->getTimestamp() > filemtime($file)) {
+            if ($feed->getUpdated() && $feed->getUpdated()->getTimestamp() > filectime($file)) {
                 continue;
             }
 
-            if (time() < filemtime($file) + self::IMPORT_DELAY) {
+            if (time() < filectime($file) + self::IMPORT_DELAY) {
                 continue;
             }
 
@@ -132,7 +133,9 @@ class IngestService
                     } else {
                         $entry = Entry::create($parser);
                         $feed->addEntry($entry);
-                        $this->publish($entry, false);
+                        if ($this->isAutoMode()) {
+                            $this->publish($entry);
+                        }
                         $this->em->persist($entry);
                     }
                 }
@@ -222,17 +225,16 @@ class IngestService
      * Publish entry
      *
      * @param Newscoop\Entity\Ingest\Feed\Entry $entry
-     * @param bool $manual
-     * @return void
+     * @param string $workflow
+     * @return Article
      */
-    public function publish(Entry $entry, $manual = true)
+    public function publish(Entry $entry, $workflow = 'Y')
     {
-        if ($manual || $this->isAutoMode()) {
-            $this->publisher->publish($entry);
-            $entry->setPublished(new \DateTime());
-            $this->em->persist($entry);
-            $this->em->flush();
-        }
+        $article = $this->publisher->publish($entry, $workflow);
+        $entry->setPublished(new \DateTime());
+        $this->em->persist($entry);
+        $this->em->flush();
+        return $article;
     }
 
     /**

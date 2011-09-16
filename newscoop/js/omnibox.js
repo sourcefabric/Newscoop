@@ -10,6 +10,7 @@ var omnibox = {
 	article: false,
 	baseUrl: false,
 	status: false,
+	translations: {},
 	type: 'comment',
 	elementList: ['ob_main', 'ob_comment', 'ob_feedback', 'ob_comment_text_container', 'ob_comment_subject', 'ob_comment_text', 'ob_feedback_text_container', 'ob_feedback_subject',
 		'ob_feedback_text', 'ob_input', 'ob_message_wrapper', 'ob_message', 'ob_message_close', 'ob_file_info', 'ob_username', 'ob_password', 'ob_file_upload_container'],
@@ -31,6 +32,9 @@ var omnibox = {
 	},
 	setType: function(type) {
 		this.type = type;
+	},
+	setTranslation: function(key, value) {
+		this.translations[key] = value;
 	},
 	setFlashRuntime: function(flashRuntime) {
 		this.flashRuntime = flashRuntime;
@@ -72,7 +76,25 @@ var omnibox = {
 		
 		var that = this;
 		this.uploader.bind('FilesAdded', function(up, files) {
+			if (this.files.length > 1) {
+				this.removeFile(this.files[0]);
+			}
 			that.elements.ob_file_info.innerHTML = files[0].name;
+		});
+		this.uploader.bind('FileUploaded', function(up, file, info) {
+			var fileNameParts = file.name.split('.');
+			var extension = fileNameParts[fileNameParts.length - 1];
+			
+			if (extension == 'jpg' || extension == 'gif' || extension == 'png') {
+				response = $.parseJSON(info.response);
+				response = response.response;
+				that.sendFeedback('image', response);
+			}
+			if (extension == 'pdf') {
+				response = $.parseJSON(info.response);
+				response = response.response;
+				that.sendFeedback('document', response);
+			}
 		});
 	},
 	hideUploader: function() {
@@ -103,7 +125,7 @@ var omnibox = {
 			//this.elements.ob_main.style.display = 'inline';
 			$('#ob_main').show(100);
 			this.status = true;
-			if (this.elements.ob_file_upload_container) this.elements.ob_file_upload_container.innerHTML = '<input type="button" id="ob_file_upload" value="upload file">';
+			if (this.elements.ob_file_upload_container) this.elements.ob_file_upload_container.innerHTML = '<input type="button" id="ob_file_upload" value="'+this.translations['attach_file']+'">';
 			setTimeout('omnibox.showUploader();', 200);
 		}
 		else {
@@ -135,6 +157,8 @@ var omnibox = {
 			data = $.parseJSON(data);
 			
 			if (data.response == 'OK') {
+				omnibox.setMessage(omnibox.translations['login_successful']);
+				omnibox.showMessage();
 				document.location.hash = '#omnibox';
 				document.location.reload();
 			}
@@ -146,6 +170,8 @@ var omnibox = {
 	},
 	logout: function() {
 		$.post(this.baseUrl + '/omnibox/logout/?format=json', {}, function(data) {
+			omnibox.setMessage(omnibox.translations['logout_successful']);
+			omnibox.showMessage();
 			document.location.reload();
 		});
 	},
@@ -199,54 +225,47 @@ var omnibox = {
 		});
 	},
 	sendFeedback: function(fileType, fileId) {
-		var that = this;
-		if (this.uploader.total.queued > 0) {
-			this.uploader.bind('FileUploaded', function(up, file, info) {
-				var fileNameParts = file.name.split('.');
-				var extension = fileNameParts[fileNameParts.length - 1];
-				
-				if (extension == 'jpg' || extension == 'gif' || extension == 'png') {
-					response = $.parseJSON(info.response);
-					response = response.response;
-					that.sendFeedback('image', response);
-				}
-				if (extension == 'pdf') {
-					response = $.parseJSON(info.response);
-					response = response.response;
-					that.sendFeedback('document', response);
-				}
-			});
-			this.uploader.start();
+		if (this.elements.ob_feedback_subject.value == '' || this.elements.ob_feedback_text.value == '') {
+			omnibox.setMessage(this.translations['feedback_content_empty']);
+			omnibox.showMessage();
 		}
 		else {
-			var data = {
-				f_feedback_url: String(document.location),
-				f_feedback_subject: this.elements.ob_feedback_subject.value,
-				f_feedback_content: this.elements.ob_feedback_text.value,
-				f_language: this.language,
-				f_section: this.section,
-				f_article: this.article,
-				f_publication: this.publication
-			};
-			
-			var url = this.baseUrl + '/feedback/save/?format=json';
-			if (fileType == 'image') {
-				url = url + '&image_id=' + fileId;
+			var that = this;
+			if (this.uploader.total.queued > 0) {
+				this.uploader.start();
 			}
-			if (fileType == 'document') {
-				url = url + '&document_id=' + fileId;
-			}
-			
-			$.post(url, data, function(data) {
-				data = $.parseJSON(data);
+			else {
+				var data = {
+					f_feedback_url: String(document.location),
+					f_feedback_subject: this.elements.ob_feedback_subject.value,
+					f_feedback_content: this.elements.ob_feedback_text.value,
+					f_language: this.language,
+					f_section: this.section,
+					f_article: this.article,
+					f_publication: this.publication
+				};
 				
-				omnibox.setMessage(data.response);
-				omnibox.showMessage();
-			});
-			
-			this.elements.ob_feedback_subject.value = '';
-			this.elements.ob_feedback_text.value = '';
-			this.elements.ob_file_info.innerHTML = '';
+				if (fileType == 'image') {
+					data['image_id'] = fileId;
+				}
+				if (fileType == 'document') {
+					data['document_id'] = fileId;
+				}
+				
+				var url = this.baseUrl + '/feedback/save/?format=json';
+				$.post(url, data, function(data) {
+					data = $.parseJSON(data);
+					
+					omnibox.setMessage(data.response);
+					omnibox.showMessage();
+					omnibox.showUploader();
+				});
+				
+				this.elements.ob_feedback_subject.value = '';
+				this.elements.ob_feedback_text.value = '';
+				this.elements.ob_file_info.innerHTML = '';
+			}
+
 		}
 	}
 };

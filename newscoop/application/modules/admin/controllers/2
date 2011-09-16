@@ -91,6 +91,7 @@ class Admin_IngestController extends Zend_Controller_Action
             $paramsStrings[] = "$key=$val";
         }
 
-		return '/admin/articles/edit.php?' . implode('&', $paramsStrings);
+
+		return "/admin/articles/edit.php?$articleLinkParams";
     }
 }

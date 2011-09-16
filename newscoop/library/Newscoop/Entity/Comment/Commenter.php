@@ -28,7 +28,7 @@ class Commenter
 
     /**
      * @manyToOne(targetEntity="Newscoop\Entity\User")
-     * @joinColumn(name="fk_user_id")
+     * @joinColumn(name="fk_user_id", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;
