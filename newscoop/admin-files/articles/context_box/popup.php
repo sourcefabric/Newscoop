@@ -38,6 +38,7 @@ function loadContextList() {
 }
 
 function appendItemToContextList(article_id, article_date, article_title) {
+
     $("#context_list").append(
     	    '<tr id="'+article_id+'">'+
     	    '<td>'+
@@ -69,22 +70,24 @@ function removeFromContext(param) {
 }
 
 function fnPreviewArticle(data) {
-
 	if(data.code == 200) {
-
 		$("#preview-article-date").val(data.date);
 		$("#preview-article-title").html(data.title);
 		$("#preview-article-body").html(data.body);
 		$(".context-block.context-list").css("display","none");
 	    $(".context-block.context-article").css("display","block");
-	} else {
-
 	}
 }
 
-function viewArticle(param) {
-	 //alert(param);
+function clearActiveArticles() {
+	$('.item-active').each( function () {
+		$(this).removeClass('item-active');
+	});
+}
 
+function viewArticle(param) {
+	 clearActiveArticles();
+	 $("#"+param).addClass('item-active');
 	 var relatedArticles = $('#context_list').sortable( "serialize");
 	 var aoData = new Array();
 	 var items = new Array('1_1','0_0');
@@ -96,8 +99,6 @@ function viewArticle(param) {
      });
     $("#preview-article-id").val(param);
     callServer(['ArticleList', 'doAction'], aoData, fnPreviewArticle);
-
-
 }
 
 function closeArticle() {
@@ -237,9 +238,9 @@ $contextlist->render();
 <div class="context-block context-article" style="display: none">
 <div class="save-button-bar"><input type="submit"
 	name="add-this-article" value="Add this article"
-	class="save-button-small" onclick="appendItemToContextList($('#preview-article-id').val(), $('#preview-article-date').val(), $('#preview-article-title').html()); toggleDragZonePlaceHolder();" id="context_button_add"> <input
+	class="save-button-small" onclick="appendItemToContextList($('#preview-article-id').val(), $('#preview-article-date').val(), $('#preview-article-title').html()); toggleDragZonePlaceHolder(); clearActiveArticles();" id="context_button_add"> <input
 	type="submit" name="close" value="Close" class="default-button"
-	onclick="closeArticle();" id="context_button_close_article"></div>
+	onclick="closeArticle(); clearActiveArticles();" id="context_button_close_article"></div>
 <div class="context-article-preview" style="overflow-y:auto; height:500px;">
 
 <input id="preview-article-date" type="hidden" />
