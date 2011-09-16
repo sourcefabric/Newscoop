@@ -9,6 +9,7 @@
 require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 
 /**
  * @package Campsite
@@ -151,6 +152,38 @@ class TopicName extends DatabaseObject {
         }
 
         return $topics_query;
+    }
+
+    public static function GetTopicInfoByPref($p_prefName, $p_languageId = null)
+    {
+		//global $g_ado_db;
+
+        $topic_name_str = SystemPref::Get($p_prefName);
+        if (empty($topic_name_str)) {
+            return null;
+        }
+        $topic_name_obj = new TopicName($topic_name_str, $p_languageId);
+        if (!$topic_name_obj->m_exists) {
+            return null;
+        }
+
+/*
+        'SELECT fk_topic_id FROM TopicName WHERE name = ? AND fk_language_id = ?';
+
+		$rows = $g_ado_db->GetAll($sql);
+		foreach ($rows as $row) {
+			$tmpObj = new TopicName();
+			$tmpObj->fetch($row);
+			$names[$row['fk_language_id']] = $tmpObj;
+		}
+		return $names;
+*/
+
+        return array(
+            'name' => $topic_name_str,
+            'id' => $topic_name_obj->getTopicId(),
+        );
+
     }
 
 } // class BuildTopicIdsQuery
