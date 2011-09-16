@@ -442,6 +442,8 @@ dl dd .info-text	{
 .context-search	{	
 	margin: 22px 11px 22px 22px;
 	color: #444444;
+	height: 550px;
+	overflow-y: auto;
 }
 .context-search .search	{
 	background-image: url("images/searchfield_bg.png");

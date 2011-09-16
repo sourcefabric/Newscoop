@@ -260,13 +260,16 @@ $('#locations_box a.iframe').each(function() {
 
 });
 
-$('#context_box a.iframe').each(function() {
-    $(this).data('fancybox').showCloseButton = false;
-    $(this).data('fancybox').width = 1120;
-    $(this).data('fancybox').height = 680;
-    $(this).data('fancybox').scrolling = 'no';
-
+$("#context_box a.iframe").fancybox({
+	'showCloseButton' : false,
+    'width': 1120,
+    'height'     : 680,
+    'scrolling' : 'no',
+    'onClosed'      : function() {
+	   loadContextBoxActileList();
+    }
 });
+
 
 // comments form check for changes
 $('form#article-comments').submit(function() {
@@ -379,6 +382,34 @@ $(document).ready(function() {
             });
         }
     }
+    loadContextBoxActileList();
 });
+
+function fnLoadContextBoxArticleList(data) {
+	var items = data.items;
+	if(items.length > 0) {
+		var injectHtml = '<ul class="block-list">';
+	    for(var i=0; i<items.length; i++) {
+	        var item = items[i];
+	        injectHtml += '<li>'+item.title+'</li>';
+	    }
+	    injectHtml += '</ul>';
+	    $("#contextBoxArticlesList").html(injectHtml);
+	} else  {
+		$("#contextBoxArticlesList").html('');
+	}
+}
+
+function loadContextBoxActileList() {
+    var aoData = new Array();
+    var items = new Array('1_1','0_0');
+
+    aoData.push("context_box_load_list");
+    aoData.push(items);
+    aoData.push({
+        'articleId': '<?php echo Input::Get('f_article_number', 'int', 1)?>',
+    });
+    callServer(['ArticleList', 'doAction'], aoData, fnLoadContextBoxArticleList);
+}
 
 </script>
