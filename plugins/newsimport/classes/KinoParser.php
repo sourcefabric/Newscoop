@@ -32,6 +32,13 @@ class KinoData_Parser {
  * KinoData Parser that makes use of the SimpleXML PHP extension.
  */
 class KinoData_Parser_SimpleXML {
+    /**
+     * read new cinema files
+     * ... load info about movies
+     * ... load info about genres
+     * ... load (info about) images
+     */
+
 
     /**
      * Parses KinoData data (by SimplXML)
@@ -39,7 +46,7 @@ class KinoData_Parser_SimpleXML {
      * @param string $p_file file name of the eventdata file
      * @return array
      */
-    function parse($p_provider, $p_file, $p_categories) {
+    private function parse($p_provider, $p_file, $p_categories) {
 
 		$events = array();
 

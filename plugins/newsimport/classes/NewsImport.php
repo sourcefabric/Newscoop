@@ -774,20 +774,17 @@ class NewsImport
             }
 
             // shoud we process something
-            $res = $parser_obj->prepare();
+            $res = $parser_obj->prepare($categories, $limits, $cancels);
             if (!$res) {
                 $parser_obj->stop();
                 continue;
             }
 
-            $event_load = $parser_obj->parse($categories, $limits, $cancels);
-            if (empty($event_load)) {
+            $event_set = $parser_obj->load();
+            if (empty($event_set)) {
                 $parser_obj->stop();
                 continue;
             }
-
-            $event_set = $event_load['events'];
-            unset($event_load['events']);
 
             $ev_limit = 0;
             $ev_skip = 0;
