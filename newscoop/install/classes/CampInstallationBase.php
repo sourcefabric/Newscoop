@@ -728,7 +728,13 @@ XML;
 
         foreach (CampPlugin::GetPluginsInfo() as $info) {
             $CampPlugin = new CampPlugin($info['name']);
-            $CampPlugin->create($info['name'], $info['version']);
+
+            $to_enable = true;
+            if (isset($info['enabled_by_default'])) {
+                $to_enable = (in_array($info['enabled_by_default'], array(true, 1, 'Y')) ? true : false);
+            }
+
+            $CampPlugin->create($info['name'], $info['version'], $to_enable);
             $CampPlugin->install();
             if ($CampPlugin->isEnabled()) {
                 $CampPlugin->enable();
