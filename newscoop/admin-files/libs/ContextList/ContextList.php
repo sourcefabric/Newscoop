@@ -192,9 +192,6 @@ class ContextList extends BaseList
     public function processItem(Article $article)
     {
         global $g_user, $Campsite;
-
-
-
         return array(
             $article->getArticleNumber(),
             $article->getLanguageId(),

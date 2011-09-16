@@ -5,10 +5,10 @@
  */
 
 /**
- * Campsite list_box_articles block plugin
+ * Campsite list_related_articles block plugin
  *
  * Type:     block
- * Name:     list_box_articles
+ * Name:     list_related_articles
  * Purpose:  Provides a...
  *
  * @param string

@@ -144,12 +144,14 @@ class ArticleImage extends DatabaseObject {
         $p_articleNumber = $this->m_data['Number'];
 
         ArticleImage::RemoveImageTagsFromArticleText($this->getArticleNumber(), $this->getTemplateId());
+        $image_id = $this->getImageId();
+        $article_number = $this->getArticleNumber();
         $result = parent::delete();
         if ($result) {
         	if (function_exists("camp_load_translation_strings")) {
         		camp_load_translation_strings("api");
         	}
-        	$logtext = getGS('Image $1 unlinked from article $2', $p_imageId, $p_articleNumber);
+            $logtext = getGS('Image $1 unlinked from article $2', $image_id, $article_number);
         	Log::Message($logtext, null, 42);
         }
         return $result;
