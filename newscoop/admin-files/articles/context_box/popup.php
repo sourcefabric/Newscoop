@@ -3,11 +3,16 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="Expires" content="now" />
-<title><?php putGS("Edit Context Box"); ?></title>
+<title><?php putGS("Edit Related articles"); ?></title>
 <script type="text/javascript">
 
-
-
+function toggleDragZonePlaceHolder() {
+	if($('#context_list').find('.context-item').html() != null) {
+	    $('#drag-here-to-add-to-list').css('display', 'none');
+	} else {
+		$('#drag-here-to-add-to-list').css('display', 'block');
+	}
+}
 function fnLoadContextList(data) {
 	if(data.code == 200) {
 	    var items = data.items;
@@ -16,6 +21,7 @@ function fnLoadContextList(data) {
 	        appendItemToContextList(item.articleId, item.date, item.title);
 	    }
 	}
+	toggleDragZonePlaceHolder();
 }
 
 function loadContextList() {
@@ -29,11 +35,9 @@ function loadContextList() {
         'articleId': '<?php echo Input::Get('f_article_number', 'int', 1)?>',
     });
     callServer(['ArticleList', 'doAction'], aoData, fnLoadContextList);
-
 }
 
 function appendItemToContextList(article_id, article_date, article_title) {
-	//alert(article_id+' '+article_date+' '+article_title);
     $("#context_list").append(
     	    '<tr id="'+article_id+'">'+
     	    '<td>'+
@@ -43,7 +47,7 @@ function appendItemToContextList(article_id, article_date, article_title) {
                 '<div class="context-item-date">'+article_date+'</div>'+
                 '<a href="#" class="view-article" style="display: none" onClick="viewArticle($(this).parent(\'div\').parent(\'div\').parent(\'td\').parent(\'tr\').attr(\'id\'));"><?php echo getGS('View article') ?></a>'+
             '</div>'+
-            '<a href="#" class="corner-button" style="display: block" onClick="$(this).parent(\'div\').parent(\'td\').parent(\'tr\').remove();"><span class="ui-icon ui-icon-closethick"></span></a>'+
+            '<a href="#" class="corner-button" style="display: block" onClick="$(this).parent(\'div\').parent(\'td\').parent(\'tr\').remove();toggleDragZonePlaceHolder();"><span class="ui-icon ui-icon-closethick"></span></a>'+
             '<div class="context-item-summary">'+article_title+'</div>'+
             '</div>'+
     	    '</td>'+
@@ -53,7 +57,11 @@ function appendItemToContextList(article_id, article_date, article_title) {
 }
 
 function deleteContextList() {
-	$("#context_list").html('');
+	$("#context_list").html('<div id="context_list" style="display: block; min-height: 500px; min-width: 500px;">'+
+		    '<div id="drag-here-to-add-to-list" style="">'+
+	        'Drag here to add to list'+
+	    '</div>'+
+	'</div>');
 }
 
 function removeFromContext(param) {
@@ -122,7 +130,7 @@ function popup_save() {
 }
 
 function fnSaveCallback() {
-	var flash = flashMessage('<?php putGS('Context List saved'); ?>', null, false);
+	var flash = flashMessage('<?php putGS('Related articles list saved'); ?>', null, false);
 }
 
 
@@ -166,7 +174,7 @@ $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 	id="context_button_close"> <input type="submit" name="save"
 	value="<?php echo putGS('Save'); ?>" class="save-button-small" onclick="popup_save();"
 	id="context_button_save"></div>
-<h2>Context Box</h2>
+<h2><?php echo putGS('Related Articles'); ?></h2>
 </div>
 <div class="context-content">
 <div class="context-block context-search"><?php
@@ -193,6 +201,7 @@ $contextlist->render();
                          receive: function(event, ui) {
                              $(ui.item).find(".corner-button").css("display","none");
                              $(ui.item).find(".view-article").css("display","block");
+                             toggleDragZonePlaceHolder();
                          }
                      }).disableSelection();
                      $('#context_list').sortable({
@@ -200,6 +209,7 @@ $contextlist->render();
                          receive: function(event, ui) {
                             $(ui.item).find(".corner-button").css("display","block");
                             $(ui.item).find(".view-article").css("display","none");
+                            toggleDragZonePlaceHolder();
                          }
                      }).disableSelection();
                      loadContextList();
@@ -208,14 +218,18 @@ $contextlist->render();
                  </script>
 <div class="context-block context-list">
 
-<h3>Related Articles</h3>
+<h3><?php echo putGS('Related Articles'); ?></h3>
 <div class="context-list-results">
 <div class="save-button-bar" style="display: block;"><input
 	type="submit" name="delete-all" value="Delete all"
 	class="default-button" onclick="deleteContextList()" id="context_button_delete_all"></div>
 <div style="display: block; float: left">
-<div id="context_list"
-	style="display: block; min-height: 500px; min-width: 500px;"></div>
+<div id="context_list" style="display:block; min-height: 500px; min-width: 500px;">
+    <div id="drag-here-to-add-to-list" style="display:none">
+        Drag here to add to list
+    </div>
+</div>
+
 </div>
 </div>
 </div>
@@ -223,7 +237,7 @@ $contextlist->render();
 <div class="context-block context-article" style="display: none">
 <div class="save-button-bar"><input type="submit"
 	name="add-this-article" value="Add this article"
-	class="save-button-small" onclick="appendItemToContextList($('#preview-article-id').val(), $('#preview-article-date').val(), $('#preview-article-title').html());" id="context_button_add"> <input
+	class="save-button-small" onclick="appendItemToContextList($('#preview-article-id').val(), $('#preview-article-date').val(), $('#preview-article-title').html()); toggleDragZonePlaceHolder();" id="context_button_add"> <input
 	type="submit" name="close" value="Close" class="default-button"
 	onclick="closeArticle();" id="context_button_close_article"></div>
 <div class="context-article-preview" style="overflow-y:auto; height:500px;">
@@ -231,7 +245,7 @@ $contextlist->render();
 <input id="preview-article-date" type="hidden" />
 <input id="preview-article-id" type="hidden" />
 <h3 id="preview-article-title"></h3>
-<div id="preview-article-body"></div>
+<div id="preview-article-body" style="color: #444444"></div>
 </div>
 </div>
 

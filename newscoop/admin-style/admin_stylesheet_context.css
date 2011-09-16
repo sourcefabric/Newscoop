@@ -50,3 +50,13 @@ fieldset.closed {
     margin: 3px 0 0;
     padding: 6px 0;
 }
+
+#drag-here-to-add-to-list {
+    border: 2px #CCCCCC dashed; 
+    height: 45px; 
+    width: 439px; 
+    margin: 4px 9px; 
+    padding: 20px 5px 0px 26px;
+    color: #CCCCCC;
+    font-size: 20px;	
+}

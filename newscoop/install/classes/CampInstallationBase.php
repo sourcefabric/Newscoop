@@ -728,7 +728,13 @@ XML;
 
         foreach (CampPlugin::GetPluginsInfo() as $info) {
             $CampPlugin = new CampPlugin($info['name']);
-            $CampPlugin->create($info['name'], $info['version']);
+
+            $to_enable = true;
+            if (isset($info['enabled_by_default'])) {
+                $to_enable = (in_array($info['enabled_by_default'], array(true, 1, 'Y')) ? true : false);
+            }
+
+            $CampPlugin->create($info['name'], $info['version'], $to_enable);
             $CampPlugin->install();
             if ($CampPlugin->isEnabled()) {
                 $CampPlugin->enable();
@@ -793,11 +799,11 @@ class CampInstallationBaseHelper
             return false;
         }
 
-        $sqlQuery1 = "UPDATE user SET
-            password = SHA1('".$g_db->Escape($p_password)."'),
-            email = '".$g_db->Escape($p_email)."',
-            updated = NOW(),
-            created = NOW(),
+        $sqlQuery1 = "UPDATE liveuser_users SET
+            Password = SHA1('".$g_db->Escape($p_password)."'),
+            EMail = '".$g_db->Escape($p_email)."',
+            time_updated = NOW(),
+            time_created = NOW(),
             status = '1',
             is_admin = '1'
             WHERE id = 1";

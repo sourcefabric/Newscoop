@@ -58,7 +58,8 @@ $info = array(
     'enable' => 'plugin_newsimport_enable',
     'update' => 'plugin_newsimport_update',
     'disable' => 'plugin_newsimport_disable',
-    'uninstall' => 'plugin_newsimport_uninstall'
+    'uninstall' => 'plugin_newsimport_uninstall',
+    'enabled_by_default' => false,
 );
 
 if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
@@ -421,6 +422,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 	 */
     function plugin_newsimport_install()
     {
+/*
         plugin_newsimport_copy_conf();
         plugin_newsimport_set_preferences();
         plugin_newsimport_set_event_topics();
@@ -436,6 +438,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         plugin_newsimport_set_cron(true);
         plugin_newsimport_set_url();
         plugin_newsimport_make_dirs();
+*/
     } // fn plugin_newsimport_install
 
 	/**
@@ -445,6 +448,13 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 	 */
     function plugin_newsimport_enable()
     {
+        // this is called wrongly during newscoop install
+        if (!function_exists('getGS')) {
+            return false;
+        }
+
+        set_time_limit(0);
+
         plugin_newsimport_copy_conf();
         plugin_newsimport_set_preferences();
         plugin_newsimport_set_event_topics();
