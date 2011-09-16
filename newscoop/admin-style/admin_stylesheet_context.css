@@ -6,7 +6,9 @@
     max-height: 330px;
     padding-bottom: 20px;
 }
-
+.item-active    {
+    background: #ebf5f9;
+}
 .ui-widget-header + .datatable {
     border-width: 1px 1px 1px 1px;
 }
