@@ -1,5 +1,5 @@
-* * * * * /home/petr/dev/newscoop/newscoop/bin/newscoop-autopublish
-0 */4 * * * /home/petr/dev/newscoop/newscoop/bin/newscoop-indexer --silent
-0 */8 * * * /home/petr/dev/newscoop/newscoop/bin/subscription-notifier
-*/2 * * * * /home/petr/dev/newscoop/newscoop/bin/events-notifier
-0 */4 * * * /home/petr/dev/newscoop/newscoop/bin/newscoop-statistics
+* * * * * /home/petr/www/newscoop/newscoop/bin/newscoop-autopublish
+0 */4 * * * /home/petr/www/newscoop/newscoop/bin/newscoop-indexer --silent
+0 */8 * * * /home/petr/www/newscoop/newscoop/bin/subscription-notifier
+*/2 * * * * /home/petr/www/newscoop/newscoop/bin/events-notifier
+0 */4 * * * /home/petr/www/newscoop/newscoop/bin/newscoop-statistics
