@@ -9,6 +9,11 @@
  */
 class ErrorController extends Zend_Controller_Action
 {
+    public function init()
+    {
+        camp_load_translation_strings('bug_reporting');
+    }
+
     /**
      * Forward to legacy controller if controller/action not found
      */
@@ -21,17 +26,16 @@ class ErrorController extends Zend_Controller_Action
 
         $notFound = array(
             Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER,
-            Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION,
+            //Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ACTION,
         );
 
         if (in_array($errors->type, $notFound)) { // handle with old code
-            $this->_forward('index', 'legacy', $this->_getParam('module'));
+            $errors = null;
         }
-    }
-
-    public function init()
-    {
-        camp_load_translation_strings('bug_reporting');
+        
+        $this->_forward('index', 'legacy', $this->_getParam('module'), array(
+            'errors' => $errors,
+        ));
     }
 
     public function errorAction()

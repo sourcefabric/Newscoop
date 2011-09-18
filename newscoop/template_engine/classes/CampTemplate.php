@@ -78,10 +78,9 @@ final class CampTemplate extends Smarty
 
         $this->plugins_dir = array_merge((array) $this->plugins_dir, array(APPLICATION_PATH . self::PLUGINS), self::getPluginsPluginsDir());
 
-        $uri = CampSite::GetURIInstance();
         $this->template_dir = array(
-            APPLICATION_PATH . '/../themes/' . $uri->getThemePath(),
             APPLICATION_PATH . '/../themes/',
+            APPLICATION_PATH . '/../themes/unassigned/system_templates/',
             APPLICATION_PATH . self::SCRIPTS,
         );
 
@@ -163,10 +162,6 @@ final class CampTemplate extends Smarty
      */
     public function trigger_error($p_message, $p_smarty = null)
     {
-        if (self::isDevelopment()) {
-            throw new \RuntimeException($p_message);
-        }
-
         if (!self::singleton()->m_preview) {
             return;
         }

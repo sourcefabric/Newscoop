@@ -287,24 +287,23 @@ final class CampHTMLDocument
         $siteinfo['keywords'] = $this->getMetaTag('keywords');
         $siteinfo['description'] = $this->getMetaTag('description');
 
-        if (!file_exists(rtrim(CS_PATH_SITE,"/").DIR_SEP.trim($siteinfo['templates_path'],"/").DIR_SEP.ltrim($template,"/"))
-                || $template === false) {
-            if (empty($template)) {
-                $siteinfo['error_message'] = "No template set for display.";
-            } else {
-                $siteinfo['error_message'] = "The template '$template' does not exist in the templates directory.";
-            }
-            // @todo this path is not correct
-            $template = CS_SYS_TEMPLATES_DIR.DIR_SEP.'_campsite_error.tpl';
-            $siteinfo['templates_path'] = CS_TEMPLATES_DIR . '/unassigned/';
+        $tpl = CampTemplate::singleton();
+        array_unshift($tpl->template_dir, APPLICATION_PATH . '/../' . $siteinfo['templates_path']);
+        $tpl->template_dir = array_unique($tpl->template_dir);
+
+        if (!$template) {
+            $template = '_campsite_error.tpl';
+            $siteinfo['error_message'] = "No template set for display.";
+        } elseif (!$this->templateExists($template, $tpl)) {
+            $template = '_campsite_error.tpl';
+            $siteinfo['error_message'] = "The template '$template' does not exist in the templates directory.";
         }
 
-        $tpl = CampTemplate::singleton();
-        $tpl->template_dir = $siteinfo['templates_path'];
         $subdir = $this->m_config->getSetting('SUBDIR');
         if (!empty($subdir)) {
             $siteinfo['templates_path'] = substr($subdir, 1) . '/' . $siteinfo['templates_path'];
         }
+
         $tpl->assign('gimme', $context);
         $tpl->assign('siteinfo', $siteinfo);
 
@@ -318,11 +317,30 @@ final class CampHTMLDocument
 
         try {
             $tpl->display($template);
-        }
-        catch (Exception $ex) {
-            CampTemplate::trigger_error($ex->getMessage(), $tpl);
+        } catch (Exception $e) {
+            var_dump($e);
+            exit;
+            CampTemplate::trigger_error($e->getMessage(), $tpl);
         }
     } // fn render
+
+    /**
+     * Test if template exists
+     *
+     * @param string $template
+     * @param Smarty $smarty
+     * @return bool
+     */
+    private function templateExists($template, $smarty)
+    {
+        foreach ($smarty->template_dir as $dir) {
+            if (file_exists("$dir/" . ltrim($template, '/'))) {
+                return true;
+            }
+        }
+
+        return false;
+    }
 
 } // class CampHTMLDocument
 

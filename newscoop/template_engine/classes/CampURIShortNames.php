@@ -55,11 +55,15 @@ class CampURIShortNames extends CampURI
     {
         parent::__construct($p_uri);
 
-        $this->setURLType(URLTYPE_SHORT_NAMES);
-        $res = $this->setURL($GLOBALS['controller']->getRequest());
-        if (PEAR::isError($res)) {
+        try {
+            $this->setURLType(URLTYPE_SHORT_NAMES);
+            $this->setURL($GLOBALS['controller']->getRequest());
+            $this->m_validURI = true;
+            $this->validateCache(false);
+        } catch (Exception $e) {
             $this->m_validURI = false;
-            $this->m_errorCode = $res->getCode();
+            $this->m_errorCode = $e->getCode();
+
             if (!is_null($this->m_publication)) {
                 $tplId = CampSystem::GetInvalidURLTemplate($this->m_publication->identifier);
                 $template = new MetaTemplate($tplId);
@@ -67,14 +71,10 @@ class CampURIShortNames extends CampURI
                     $this->m_template = $template;
                 }
             }
-            CampTemplate::singleton()->trigger_error($res->getMessage());
-        } else {
-            $this->m_validURI = true;
-        }
-        $this->validateCache(false);
-    }
 
-// fn __construct
+            CampTemplate::singleton()->trigger_error($e->getMessage());
+        }
+    }
 
     /**
      * Gets the language URI path.
@@ -347,19 +347,12 @@ class CampURIShortNames extends CampURI
     {
         $this->setQueryVar('acid', null);
 
-        try {
-            $this->m_publication = $this->_getPublication();
-            $this->m_language = $this->_getLanguage($request->getParam('language'), $this->m_publication);
-            $this->m_issue = $this->_getIssue($request->getParam('issue'), $this->m_language, $this->m_publication);
-            $this->m_section = $this->_getSection($request->getParam('section'), $this->m_issue, $this->m_language, $this->m_publication);
-            $this->m_article = $this->_getArticle($request->getParam('articleNo'), $this->m_language);
-            $this->m_template = $this->_getTemplate();
-        } catch (\Exception $e) {
-            return new PEAR_Error($e->getMessage(), $e->getCode());
-        }
-
-        $this->m_validURI = true;
-        $this->validateCache(false);
+        $this->m_publication = $this->_getPublication();
+        $this->m_language = $this->_getLanguage($request->getParam('language'), $this->m_publication);
+        $this->m_issue = $this->_getIssue($request->getParam('issue'), $this->m_language, $this->m_publication);
+        $this->m_section = $this->_getSection($request->getParam('section'), $this->m_issue, $this->m_language, $this->m_publication);
+        $this->m_article = $this->_getArticle($request->getParam('articleNo'), $this->m_language);
+        $this->m_template = $this->_getTemplate();
     }
 
     /**
