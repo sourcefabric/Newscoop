@@ -44,13 +44,11 @@ class SocialAuthServiceTest extends \RepositoryTestCase
     public function testAuthenticateExisting()
     {
         $user = new User('username');
-        $userIdentity = new UserIdentity('foo', 'bar', $user);
         $this->em->persist($user);
-        $this->em->persist($userIdentity);
         $this->em->flush();
 
+        $this->service->addIdentity($user, 'foo', 'bar');
         $result = $this->service->setProvider('foo')->setProviderUserId('bar')->authenticate();
-
         $this->assertEquals(\Zend_Auth_Result::SUCCESS, $result->getCode());
     }
 }

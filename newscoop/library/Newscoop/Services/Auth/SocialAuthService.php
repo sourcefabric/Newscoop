@@ -7,7 +7,9 @@
 
 namespace Newscoop\Services\Auth;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManager,
+    Newscoop\Entity\User,
+    Newscoop\Entity\UserIdentity;
 
 /**
  */
@@ -71,5 +73,21 @@ class SocialAuthService implements \Zend_Auth_Adapter_Interface
     {
         $this->providerUserId = $providerUserId;
         return $this;
+    }
+
+    /**
+     * Add identity
+     *
+     * @param Newscoop\Entity\User $user
+     * @param string $provider
+     * @param string $providerUserId
+     * @return void
+     */
+    public function addIdentity(User $user, $provider, $providerUserId)
+    {
+        $userIdentity = new UserIdentity($provider, $providerUserId, $user);
+        $this->em->persist($userIdentity);
+        $this->em->flush();
+        return $userIdentity;
     }
 }
