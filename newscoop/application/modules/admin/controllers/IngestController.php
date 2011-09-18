@@ -31,6 +31,16 @@ class Admin_IngestController extends Zend_Controller_Action
         ), array('updated' => 'desc'), 25, 0);
     }
 
+    public function widgetAction()
+    {
+        $entries = $this->service->findBy(array(
+            'published' => null,
+            'status' => 'Usable',
+        ), array('updated' => 'desc'), 8, 0);
+
+        $this->view->entries = $entries;
+    }
+
     public function detailAction()
     {
         $this->_helper->layout->setLayout('iframe');
@@ -49,7 +59,7 @@ class Admin_IngestController extends Zend_Controller_Action
             $entry = $this->service->find($this->_getParam('entry'));
             $this->service->publish($entry);
             $this->_helper->flashMessenger(getGS("Entry '$1' published", $entry->getTitle()));
-            $this->_helper->redirector('index');
+            $this->_helper->redirector('index', $this->_getParam('return', 'ingest'));
         } catch (Exception $e) {
             var_dump($e);
             exit;
