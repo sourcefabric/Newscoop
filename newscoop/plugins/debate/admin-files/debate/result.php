@@ -30,6 +30,65 @@ echo camp_html_breadcrumbs(array(
     array(getGS('Result'), ''),
 ));
 ?>
+
+<?php $answers = $poll->getAnswers($f_poll_nr, $f_fk_language_id); ?>
+
+<style type="text/css">
+.results
+{
+	border: 1px solid #ccc;
+	margin: 0 30px 30px 30px;
+	box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1);
+	background-color: #f3f3f3;
+}
+    .results .item-def
+    {
+    	float: left;
+    	border-right: 1px solid #ccc;
+    	height: <?php echo count($answers)*30 + 20 ?>px;
+    }
+    	.results .item-def .value
+		{
+			height: <?php echo count($answers)*30 - 10 ?>px;
+			padding: 5px 10px;
+			border-bottom: 1px solid #ccc;
+		}
+    .results .item
+    {
+		width: 50px;
+    	float: left;
+    	height: <?php echo count($answers)*30 + 20 ?>px;
+    	border-right: 1px solid #ccc;
+    }
+    	.results .item .value
+		{
+			height: <?php echo count($answers)*30 ?>px;
+			border-bottom: 1px solid #ccc;
+		}
+		.results .item .bottom, .results .item-def .bottom
+		{
+			height: 20px;
+			line-height: 20px;
+			text-align: center;
+			color: #888;
+		}
+    	.results .item .division
+    	{
+    		text-align: center;
+		}
+    	.results .item .division:nth-child(3n+1)
+		{
+  			background-color: #fff;
+		}
+		.results .item .division:nth-child(3n+2)
+		{
+  			background-color: #eef;
+		}
+		.results .item .division:nth-child(3n+3) {
+  			background-color: #ddf;
+		}
+</style>
+
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
     <TD><A HREF="index.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
@@ -83,3 +142,45 @@ echo camp_html_breadcrumbs(array(
     </table>
     <p>
 <?php endforeach ?>
+
+<h3 style="margin-left:30px">
+    <?php echo ucfirst($poll->getProperty('results_time_unit')) ?> results:
+</h3>
+
+<div class="results">
+
+	<div class="item-def">
+		<div class="value">
+        <?php foreach ($answers as $answer) : ?>
+        	<div><?php echo $answer->getProperty('nr_answer') ?>. <?php echo $answer->getProperty('answer') ?></div>
+        <?php endforeach ?>
+    	</div>
+    	<div class="bottom">
+    	<?php
+    	    switch($poll->getProperty('results_time_unit'))
+    	    {
+    	        case 'daily' : putGS('Day'); $dformat = '%e.%m.%y'; break;
+    	        case 'weekly' : putGS('Week'); $dformat = '%W-%y'; break;
+    	        case 'monthly' : putGS('Month'); $dformat = '%b-%y'; break;
+    	    }
+    	?>
+    	</div>
+	</div>
+
+    <?php foreach (DebateVote::getResults($f_poll_nr, $f_fk_language_id) as $results) : ?>
+    	<div class="item">
+    		<div class="value">
+        	<?php foreach ($results as $result) : ?>
+        		<?php if (!is_array($result)) continue ?>
+        		<div class="division"
+        			style="height:<?php echo ($percentage = number_format($result['value']*100/$results['total_count'], 2)) ?>%; ">
+        		    <?php echo $percentage ?>%
+        		</div>
+        	<?php endforeach ?>
+        	</div>
+    		<div class="bottom"><?php echo strftime($dformat, $results['time']) ?></div>
+    	</div>
+    <?php endforeach ?>
+
+    <div style="clear: both"></div>
+</div>

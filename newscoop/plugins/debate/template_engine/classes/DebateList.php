@@ -28,7 +28,7 @@ class DebateList extends ListObject
         '_assign_publication_id' => array('field' => '_assign_publication_id', 'type' => 'integer'),
         '_assign_issue_nr' => array('field' => '_assign_issue_nr', 'type' => 'integer'),
         '_assign_section_nr' => array('field' => '_assign_section_nr', 'type' => 'integer'),
-        '_assign_article_nr' => array('field' => '_assign_article_nr', 'type' => 'integer'),
+        '_assign_article_nr' => array('field' => '_assign_article_nr', 'type' => 'integer')
     );
 
     private static $s_orderFields = array(
@@ -87,7 +87,7 @@ class DebateList extends ListObject
 	    $debatesList = Debate::GetList($this->m_constraints, $this->m_item, $this->m_order, $p_start, $p_limit, $p_count);
         $metaDebatesList = array();
 	    foreach ($debatesList as $debate) {
-	        $metaDebatesList[] = new MetaDebate($debate->getLanguageId(), $debate->getNumber());
+	        $metaDebatesList[] = new MetaDebate($debate->getLanguageId(), $debate->getNumber(), $context->user->identifier);
 	    }
 	    return $metaDebatesList;
 	}

@@ -18,6 +18,8 @@ final class MetaDebate extends MetaDbObject {
 		$this->m_properties['question'] = 'question';
 		$this->m_properties['answers'] = 'nr_of_answers';
 		$this->m_properties['votes_per_user'] = 'votes_per_user';
+		$this->m_properties['allow_not_logged_in'] = 'allow_not_logged_in';
+		$this->m_properties['results_time_unit'] = 'results_time_unit';
 		$this->m_properties['votes'] = 'nr_of_votes';
 		$this->m_properties['votes_overall'] = 'nr_of_votes_overall';
 		$this->m_properties['percentage_overall'] = 'percentage_of_votes_overall';
@@ -25,9 +27,9 @@ final class MetaDebate extends MetaDbObject {
 	}
 
 
-    public function __construct($p_languageId = null, $p_debate_nr = null)
+    public function __construct($p_languageId = null, $p_debate_nr = null, $p_user_id = null)
     {
-		$this->m_dbObject = new Debate($p_languageId, $p_debate_nr);
+		$this->m_dbObject = new Debate($p_languageId, $p_debate_nr, $p_user_id);
 
 		$this->InitProperties();
         $this->m_customProperties['defined'] = 'defined';
@@ -52,6 +54,11 @@ final class MetaDebate extends MetaDbObject {
         return true;
     }
 
+    public function getResultsTimeUnit()
+    {
+        return strtotime($this->m_dbObject->getProperty('results_time_unit'));
+    }
+
     public function getDateBegin()
     {
         return strtotime($this->m_dbObject->getProperty('date_begin'));
@@ -66,6 +73,16 @@ final class MetaDebate extends MetaDbObject {
     {
         $id = $this->m_dbObject->getProperty('fk_language_id').'_'.$this->m_dbObject->getProperty('debate_nr');
         return $id;
+    }
+
+    public function getNr()
+    {
+        return $this->m_dbObject->getProperty('debate_nr');
+    }
+
+    public function getLanguageId()
+    {
+        return $this->m_dbObject->getProperty('fk_language_id');
     }
 
     public function isVotable()

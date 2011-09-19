@@ -2,7 +2,8 @@
 /**
  * @package Campsite
  */
-class Debate extends DatabaseObject {
+class Debate extends DatabaseObject
+{
     /**
      * The column names used for the primary key.
      * @var array
@@ -13,7 +14,8 @@ class Debate extends DatabaseObject {
 
     var $m_dbTableName = 'plugin_debate';
 
-    var $m_columnNames = array(
+    var $m_columnNames = array
+    (
         // int - debate debate_nr
         'debate_nr',
 
@@ -47,6 +49,9 @@ class Debate extends DatabaseObject {
         // int - if not logged in users can vote, by cookie
         'allow_not_logged_in',
 
+        // enum - daily, weekly, monthly
+        'results_time_unit',
+
         // int - number of votes in this language
         'nr_of_votes',
 
@@ -70,6 +75,8 @@ class Debate extends DatabaseObject {
      */
     var $m_mode = 'single';
 
+    private $userId = null;
+
     /**
      * Construct by passing in the primary key to access the debate in
      * the database.
@@ -79,13 +86,13 @@ class Debate extends DatabaseObject {
      * @param int $p_debate_nr
      *        Not required when creating an debate.
      */
-    public function __construct($p_language_id = null, $p_debate_nr = null)
+    public function __construct($p_language_id = null, $p_debate_nr = null, $p_user_id = null)
     {
         parent::DatabaseObject($this->m_columnNames);
 
         $this->m_data['fk_language_id'] = $p_language_id;
         $this->m_data['debate_nr'] = $p_debate_nr;
-
+        $this->userId = $p_user_id;
         if ($this->keyValuesExist()) {
             $this->fetch();
         }
@@ -542,6 +549,11 @@ class Debate extends DatabaseObject {
         return $language->getName();
     }
 
+    public function setUserId($uid)
+    {
+        $this->userId = $uid;
+    }
+
     /**
      * Get the english language name
      *
@@ -909,6 +921,17 @@ class Debate extends DatabaseObject {
         if (strtotime($this->m_data['date_end']) < strtotime(date('Y-m-d'))) {
             return false;
         }
+
+        if (!$this->m_data['allow_not_logged_in'])
+        {
+            if (is_null($this->userId)) {
+                return false;
+            }
+            else {
+                return true;
+            }
+        }
+
         if ($this->m_data['votes_per_user'] <= $this->getUserVoteCount()) {
             // check if debate was reseted
             $token = $this->getResetToken();
@@ -944,6 +967,16 @@ class Debate extends DatabaseObject {
         setcookie($key, $value, time()+60*60*24*365, '/', $hostname[2]);
     }
 
+    public function userVote($answer_nr)
+    {
+        if (!$this->m_data['allow_not_logged_in'])
+        {
+            $vote = new DebateVote($this->m_data['debate_nr'], $answer_nr, $this->userId);
+            return $vote->__create();
+        }
+        return false;
+    }
+
     /**
      * Return counter single client has votes this debate
      *
@@ -951,13 +984,31 @@ class Debate extends DatabaseObject {
      */
     public function getUserVoteCount()
     {
-        $key = 'debate_'.$this->m_data['fk_language_id'].'_'.$this->m_data['debate_nr'];
+        if ($this->m_data['allow_not_logged_in']) // in this case we search for cookie value
+        {
+            $key = 'debate_'.$this->m_data['fk_language_id'].'_'.$this->m_data['debate_nr'];
 
-        if (array_key_exists($key, $_COOKIE)) {
-            return $_COOKIE[$key];
+            if (array_key_exists($key, $_COOKIE)) {
+                return $_COOKIE[$key];
+            }
+            if (array_key_exists($key, $_SESSION)) {
+                return $_SESSION[$key];
+            }
         }
-        if (array_key_exists($key, $_SESSION)) {
-            return $_SESSION[$key];
+        else // else for user id
+        {
+            if (is_null($this->userId)) {
+                return false;
+            };
+            $votes = DebateVote::getUserVotes($this->m_data['debate_nr'], $this->userId);
+            if (empty($votes)) {
+                return 0;
+            };
+            $total = 0;
+            foreach ($votes as $vote) {
+                $total += $vote;
+            }
+            return $total;
         }
 
         return 0;

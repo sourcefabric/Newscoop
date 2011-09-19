@@ -1,5 +1,5 @@
 <?php
-camp_load_translation_strings("plugin_poll");
+camp_load_translation_strings("plugin_debate");
 
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
@@ -7,7 +7,7 @@ if (!SecurityToken::isValid()) {
 }
 
 // Check permissions
-if (!$g_user->hasPermission('plugin_poll')) {
+if (!$g_user->hasPermission('plugin_debate_admin')) {
     camp_html_display_error(getGS('You do not have the right to manage polls.'));
     exit;
 }

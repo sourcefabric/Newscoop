@@ -26,6 +26,8 @@ if ($poll->exists()) {
     $nr_of_answers = $poll->getProperty('nr_of_answers');
     $fk_language_id = $poll->getProperty('fk_language_id');
     $votes_per_user = $poll->getProperty('votes_per_user');
+    $allow_not_logged_in = $poll->getProperty('allow_not_logged_in');
+    $results_time_unit = $poll->getProperty('results_time_unit');
 
     $poll_answers = $poll->getAnswers();
 
@@ -159,6 +161,29 @@ camp_html_display_msgs();
                 </SELECT>
             </td>
         </tr>
+        <tr>
+            <td ALIGN="RIGHT" ><?php putGS("Allow not logged in users") ?>:</td>
+            <td style="padding-top: 3px;">
+            	<select name="f_allow_not_logged_in" class="input_select">
+            		<option value="0" <?php if (isset($allow_not_logged_in) && $allow_not_logged_in) : ?>selected="selected"<?php endif ?>><?php putGS("Yes") ?></option>
+	                <option value="1" <?php if (isset($allow_not_logged_in) && !$allow_not_logged_in) : ?>selected="selected"<?php endif ?>><?php putGS("No") ?></option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td ALIGN="RIGHT" ><?php putGS("Results") ?>:</td>
+            <td style="padding-top: 3px;">
+            	<select name="f_results_time_unit" class="input_select">
+            		<?php foreach ( array( getGS('Daily'), getGS('Weekly'), getGS('Monthly') ) as $tunit ) : ?>
+            		<option value="<?php echo ($ltunit = strtolower($tunit)) ?>"
+            			<?php if (isset($results_time_unit) && $tunit == $results_time_unit) : ?>selected="selected"<?php endif ?> >
+            			<?php echo $tunit ?>
+            		</option>
+            		<?php endforeach; ?>
+                </select>
+            </td>
+        </tr>
 
         <tr>
         </tr>
@@ -208,7 +233,7 @@ camp_html_display_msgs();
 <script>
 
 $('#edit-poll-form #input-title').focus();
-$('#answer-row').data('answers', <?php echo json_encode(array_map( 'htmlspecialchars', array_values($answers))) ?>);
+$('#answer-row').data('answers', <?php echo isset($answers) ? json_encode(array_map( 'htmlspecialchars', array_values($answers))) : "[]" ?>);
 $('#input-nr-answers').change( function()
 {
 	$('#answer-row').nextAll('.answer-row').remove();

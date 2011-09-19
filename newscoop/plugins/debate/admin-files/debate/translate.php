@@ -62,7 +62,7 @@ camp_html_display_msgs();
                  foreach ($allLanguages as $tmpLanguage) {
                    if (!array_key_exists($tmpLanguage->getLanguageId(), $existing)) {
                      camp_html_select_option($tmpLanguage->getLanguageId(),
-                                             $f_target_language_id,
+                                             @$f_target_language_id,
                                              $tmpLanguage->getNativeName());
                    }
                 }

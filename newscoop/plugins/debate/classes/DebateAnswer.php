@@ -2,7 +2,8 @@
 /**
  * @package Campsite
  */
-class DebateAnswer extends DatabaseObject {
+class DebateAnswer extends DatabaseObject
+{
     /**
      * The column names used for the primary key.
      * @var array
@@ -53,7 +54,7 @@ class DebateAnswer extends DatabaseObject {
      * @param int $p_fk_debate_nr
      * @param int $p_nr_answer
      */
-    function DebateAnswer($p_fk_language_id = null, $p_fk_debate_nr = null, $p_nr_answer = null)
+    function DebateAnswer($p_fk_language_id = null, $p_fk_debate_nr = null, $p_nr_answer = null, $userId = null)
     {
         parent::DatabaseObject($this->m_columnNames);
         $this->m_data['fk_language_id'] = $p_fk_language_id;
@@ -62,6 +63,7 @@ class DebateAnswer extends DatabaseObject {
         if ($this->keyValuesExist()) {
             $this->fetch();
         }
+        $this->m_data['user_id'] = $userId;
     } // constructor
 
 
@@ -140,7 +142,7 @@ class DebateAnswer extends DatabaseObject {
         Log::Message($logtext, null, 31);
         */
 
-        return $debateAnswerCopy;
+        return $answer_copy;
     } // fn createTranslation
 
     /**
@@ -236,6 +238,27 @@ class DebateAnswer extends DatabaseObject {
         }
     }
 
+    public function getVotes($p_fk_debate_nr, $p_answer_nr)
+    {
+        global $g_ado_db;
+        if (is_null($p_fk_debate_nr) || is_null($p_answer_nr)) {
+            return false;
+        }
+        $query = "
+        	SELECT * FROM plugin_debate_answer
+        	WHERE fk_debate_nr = '$p_fk_debate_nr' AND nr_answer = '$p_answer_nr'
+        ";
+
+        $votes = array();
+
+        $res = $g_ado_db->Execute($query);
+        if ($res) while ($row = $res->fetchRow()) {
+            $answers[] = new DebateVote($row['fk_debate_nr'], $row['nr_answer']);
+        }
+
+        return $votes;
+    }
+
     public function getAnswers($p_fk_debate_nr = null, $p_fk_language_id = null)
     {
         global $g_ado_db;
@@ -289,7 +312,7 @@ class DebateAnswer extends DatabaseObject {
 
     public function getDebate()
     {
-        $debate = new Debate($this->m_data['fk_language_id'], $this->m_data['fk_debate_nr']);
+        $debate = new Debate($this->m_data['fk_language_id'], $this->m_data['fk_debate_nr'], $this->m_data['user_id']);
 
         return $debate;
     }
@@ -304,6 +327,9 @@ class DebateAnswer extends DatabaseObject {
         $this->setProperty('value', $this->getProperty('value') + $p_value);
         $this->setProperty('average_value', $this->getProperty('value') / $this->getProperty('nr_of_votes'));
         $this->getDebate()->increaseUserVoteCount();
+
+        $this->getDebate()->userVote($this->getProperty('nr_answer'));
+
         Debate::triggerStatistics($this->m_data['fk_debate_nr']);
     }
 

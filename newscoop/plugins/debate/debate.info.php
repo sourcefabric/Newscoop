@@ -33,11 +33,15 @@ $info = array(
         'objecttypes' => array(
             array('debate' => array('class' => 'Debate')),
             array('debateanswer' => array('class' => 'DebateAnswer')),
+            array('debatedays' => array('class' => 'DebateDays') ),
+            array('debatevotes' => array('class' => 'DebateVotes') ),
             array('debateanswerattachment' => array('class' => 'DebateAnswerAttachment'))
         ),
         'listobjects' => array(
-            array('debate' => array('class' => 'Debate', 'list' => 'debate', 'url_id'=>'pls')),
-            array('debateanswers' => array('class' => 'DebateAnswers', 'list' => 'debateanswers', 'url_id'=>'pl_ans')),
+            array('debate' => array('class' => 'Debate', 'list' => 'debate', 'url_id'=>'dbs')),
+            array('debateanswers' => array('class' => 'DebateAnswers', 'list' => 'debateanswers', 'url_id'=>'dbt_ans')),
+            array('debatedays' => array('class' => 'DebateDays', 'list' => 'debatedays', 'url_id'=>'dbt_dy')),
+            array('debatevotes' => array('class' => 'DebateVotes', 'list' => 'debatevotes', 'url_id'=>'dbt_vt')),
             array('debateanswerattachments' => array('class' => 'DebateAnswerAttachments', 'list' => 'attachments', 'url_id'=>'pl_ans_att'))
         ),
         'init' => 'plugin_debate_init'
@@ -122,7 +126,7 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
     {
         $debate_nr = Input::Get("f_debate_nr", "int");
         $debate_language_id = Input::Get("f_debate_language_id" ,"int");
-        $p_context->debate = new MetaDebate($debate_language_id, $debate_nr);
+        $p_context->debate = new MetaDebate($debate_language_id, $debate_nr, $p_context->user->identifier);
 
         // reset the context urlparameters
         foreach (array

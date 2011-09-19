@@ -22,6 +22,7 @@ $f_date_end = Input::Get('f_date_end', 'string');
 $f_votes_per_user = Input::Get('f_votes_per_user', 'int');
 $f_is_extended = Input::Get('f_is_extended', 'boolean');
 $f_nr_of_answers = Input::Get('f_nr_of_answers', 'int');
+$f_allow_not_logged_in =  Input::Get('f_allow_not_logged_in', 'int');
 
 $f_answers = Input::Get('f_answer', 'array');
 $f_onhitlist = Input::Get('f_onhitlist', 'array');
@@ -38,7 +39,7 @@ if ($poll->exists()) {
     $poll->setProperty('votes_per_user', $f_votes_per_user);
     $poll->setProperty('nr_of_answers', $f_nr_of_answers);
     $poll->setProperty('is_extended', $f_is_extended);
-
+    $poll->setProperty('allow_not_logged_in', $f_allow_not_logged_in);
 
     foreach ($f_answers as $nr_answer => $text) {
         if (trim($text) != '') {
