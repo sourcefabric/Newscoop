@@ -28,9 +28,9 @@
 <ul class="users">
     {{ foreach $users as $user }}
     <li>
-        <h3>{{ $user }}</h3>
-        {{ if $user->image() }}
-        <img src="{{ $user->image(30, 30) }}" />
+        <h3>{{ $user->name }}</h3>
+        {{ if $user->image }}
+        <img src="{{ $user->image }}" />
         {{ /if }}
         <hr />
     </li>
@@ -39,6 +39,8 @@
 
 {{include file='paginator_control.tpl'}}
 
-{{ list_community_feeds length=5 }}<div class="community_ticker">{{$gimme->community_feed}}</div>{{ /list_community_feeds }}
+<div class="community_ticker">
+{{ list_community_feeds length=5 }}<p>{{ $gimme->community_feed->created }} {{ $gimme->community_feed->message }}<p>{{ /list_community_feeds }}
+</div>
 
 {{/block}}

@@ -5,39 +5,23 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+/**
+ * Includes
+ */
+require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObject.php');
+
 use Newscoop\Entity\User;
 
 /**
  * Template user
  */
-final class MetaUser extends MetaEntity
+final class MetaUser extends MetaDbObject
 {
     /** @var Newscoop\Entity\User */
     protected $user;
 
-    /** @var int */
-    public $identifier;
-
-    /** @var string */
-    public $uname;
-
-    /** @var string */
-    public $name;
-
-    /** @var string */
-    public $first_name;
-
-    /** @var string */
-    public $last_name;
-
-    /** @var string */
-    public $email;
-
     /** @var bool */
-    public $defined;
-
-    /** @var string */
-    public $created;
+    //public $defined;
 
     /**
      * @param Newscoop\Entity\User $user
@@ -49,56 +33,45 @@ final class MetaUser extends MetaEntity
             return;
         }
 
-        $this->identifier = $user->getId();
-        $this->uname = $user->getUsername();
-        $this->email = $user->getEmail();
+        $this->m_dbObject = $user;
 
-        $this->first_name = $user->getFirstName();
-        $this->last_name = $user->getLastName();
-        $this->name = trim($user->getFirstName() . ' ' . $user->getLastName());
+        $this->m_properties['id'] = 'getId';
+        $this->m_properties['first_name'] = 'getFirstName';
+        $this->m_properties['last_name'] = 'getLastName';
+        $this->m_properties['uname'] = 'getUsername';
+        $this->m_properties['email'] = 'getEmail';
 
-        $this->defined = $user->getId() > 0;
-        $this->created = $user->getCreated()->format('d.m.Y');
+        $this->m_customProperties['name'] = 'getDisplayName';
+        $this->m_customProperties['created'] = 'getCreated';
+        $this->m_customProperties['country'] = 'getCountry';
+        $this->m_customProperties['subscription'] = 'getSubscription';
+
+        $this->m_skipFilter[] = "name";
+        //$this->defined = $user->getId() > 0;
     }
 
-    /**
-     * Get user attribute value
-     *
-     * @param string $property
-     */
-    public function __get($property)
-    {
-        try {
-            return parent::__get($property);
-        } catch (\InvalidArgumentException $e) {
-            return (!$this->user) ? null : $this->user->getAttribute($property);
-        }
-    }
 
     /**
      * @return string
      */
-    public function __toString()
+    protected function getDisplayName()
     {
-        $url = $GLOBALS['controller']->view->url(array('username' => $this->uname), 'user');
+        $url = $GLOBALS['controller']->view->url(array('username' => $this->user->getUsername()), 'user');
+
+        $name = trim($this->user->getFirstName() . ' ' . $this->user->getLastName());
 
         if ($this->user->isPublic()) {
-            return "<a href='{$url}'>{$this->name}</a>";
+            return "<a href='{$url}'>{$name}</a>";
         }
         else {
-            return $this->name;
+            return $name;
         }
     }
 
-    public function comments($number=10)
+    protected function getCreated()
     {
-        $comments = $this->user->getComments();
-
-        if(count($comments) > 0) {
-            return new MetaComment($comments[0]->getId());
-        }
-
-        return "No comments";
+        $date = $this->user->getCreated();
+        return $date->format('d.m.Y');
     }
 
     /**
@@ -106,7 +79,7 @@ final class MetaUser extends MetaEntity
      *
      * @return MetaSubscription
      */
-    public function subscription()
+    protected function getSubscription()
     {
         if (empty($this->user)) {
             return new MetaSubscription();
@@ -122,7 +95,7 @@ final class MetaUser extends MetaEntity
      *
      * @return string
      */
-    public function country()
+    protected function getCountry()
     {
         require_once dirname(__FILE__) . '/../../classes/Country.php';
         require_once dirname(__FILE__) . '/../../classes/Language.php';

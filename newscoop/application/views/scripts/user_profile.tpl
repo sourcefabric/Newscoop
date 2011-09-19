@@ -1,7 +1,7 @@
 {{extends file="layout.tpl"}}
 
 {{block content}}
-<h1>{{ $user }}</h1>
+<h1>{{ $user->name }}</h1>
 
 <ul class="links">
     {{ if $user->logged_in }}
@@ -11,7 +11,7 @@
 </ul>
 
 {{ if $user->image() }}
-<img src="{{ $user->image }}" alt="{{ $user }}" />
+<img src="{{ $user->image(30, 30) }}" alt="{{ $user->name }}" />
 {{ /if }}
 
 <p>{{ $user->first_name }} {{ $user->last_name }}</p>
@@ -26,10 +26,10 @@
     {{ /foreach }}
 </dl>
 
-<p>{{ $user->comments }}</p>
+
 
 {{ assign var=i value=1 }}
-{{ list_images user=$user->identifier order="byLastUpdate desc"}}
+{{ list_images user=$user->id order="byLastUpdate desc"}}
     {{ if $i <= 10 }}
         <a class="user_uploaded_pics" rel="user_pics" href="{{ uri options="image" }}"><img src="{{ uri options="image width 50 height 50" }}" alt=""/></a>
     {{ else }}

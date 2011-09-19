@@ -652,4 +652,32 @@ class User implements \Zend_Acl_Role_Interface
     {
         return $this->getUsername();
     }
+
+    /**
+     * Check if the user exists
+     * Test if there is set an id
+     *
+     * @return bool
+     * @deprecated legacy from frontend controllers
+     */
+    public function exists()
+    {
+        return !is_null($this->id);
+    }
+
+    /**
+     * Get an enity property
+     *
+     * @param $p_key
+     * @return mixed
+     * @deprecated legacy from frontend controllers
+     */
+    public function getProperty($p_key)
+    {
+        if (method_exists($this, $p_key)) {
+            return $this->$p_key();
+        } else {
+            throw new \InvalidArgumentException("User Property '$p_key' not found");
+        }
+    }
 }

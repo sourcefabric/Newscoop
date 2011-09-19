@@ -1,7 +1,7 @@
 {{extends file="layout.tpl"}}
 
 {{block content}}
-<h1>Welcome {{ $user }}</h1>
+<h1>Welcome {{ $user->name }}</h1>
 
 <div class="user-image">
     <img src="{{ $user->image() }}" title="User image" />
