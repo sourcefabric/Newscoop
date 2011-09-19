@@ -178,7 +178,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'articleNo' => null,
                 'section' => null,
                 'issue' => null,
-                'language' => 'en', // @todo get default language from config
+                'language' => null,
             ), array(
                 'language' => '[a-z]{2}',
             )));
