@@ -10,6 +10,8 @@ class DebateVote extends DatabaseObject
      */
     var $m_keyColumnNames = array( 'fk_debate_nr', 'fk_user_id' );
 
+    var $m_keyIsAutoIncrement = true;
+
     var $m_dbTableName = 'plugin_debate_vote';
 
     var $m_columnNames = array
@@ -45,10 +47,12 @@ class DebateVote extends DatabaseObject
         parent::DatabaseObject($this->m_columnNames);
 
         $this->m_data['fk_debate_nr'] = $p_fk_debate_nr;
-        $this->m_data['fk_answer_nr'] = $p_fk_answer_nr;
         $this->m_data['fk_user_id'] = $p_fk_user_id;
         if ($this->keyValuesExist()) {
             $this->fetch();
+        }
+        if (!is_null($p_fk_answer_nr)) {
+            $this->m_data['fk_answer_nr'] = $p_fk_answer_nr;
         }
     } // constructor
 
@@ -58,6 +62,62 @@ class DebateVote extends DatabaseObject
      * @param array $p_values
      */
     function __create($p_values = null) { return parent::create($p_values); }
+
+    function create($values=null)
+    {
+        // defaults from set on construct, overridden by passed values
+        if (isset($this->m_data['fk_debate_nr'])) {
+            $debateNr = $this->m_data['fk_debate_nr'];
+        }
+        if (isset($values['debate_nr'])) {
+            $debateNr = $values['debate_nr'];
+        }
+        if (!isset($debateNr)) {
+            return false;
+        }
+
+        if (isset($this->m_data['fk_answer_nr'])) {
+            $answerNr = $this->m_data['fk_answer_nr'];
+        }
+        if (isset($values['answer_nr']) ) {
+            $answerNr = $values['answer_nr'];
+        }
+        if (!isset($answerNr)) {
+            return false;
+        }
+
+        if (isset($this->m_data['fk_user_id'])) {
+            $userId = $this->m_data['fk_user_id'];
+        }
+        if (isset($values['user_id'])) {
+            $userId = $values['user_id'];
+        }
+        if (!isset($userId)) {
+             return false;
+        }
+
+        $added = "NOW()";
+        if (isset($values['added'])) {
+            $added = "'".strftime( "%Y-%m-%d %H:%M:%S", strtotime($values['added']))."'";
+        }
+        $queryStr = "REPLACE INTO `".$this->m_dbTableName."`
+        	SET `fk_debate_nr` = '$debateNr', `fk_answer_nr` = '$answerNr', `fk_user_id` = '$userId', `added` = $added";
+
+        global $g_ado_db;
+        $g_ado_db->Execute($queryStr);
+		$success = ($g_ado_db->Affected_Rows() > 0);
+		$this->m_exists = $success;
+		$this->m_data[$this->m_keyColumnNames[0]] = $g_ado_db->Insert_ID();
+
+		self::dispatchEvent("{$this->getResourceName()}.create", $this, array(
+            'id' => $this->getKey(),
+            'diff' => $this->m_data,
+            'title' => method_exists($this, 'getName') ? $this->getName() : '',
+        ));
+
+		$this->resetCache();
+		return $success;
+    }
 
     /**
      * Delete debate from database.  This will
@@ -123,35 +183,49 @@ class DebateVote extends DatabaseObject
         return $return;
     }
 
-    public function getResults($p_fk_debate_nr, $p_fk_debate_lang)
+    /**
+     * Get vote results
+     * @param int $p_fk_debate_nr
+     * @param int $p_fk_debate_lang
+     * @param int $limit from end time backwards
+     */
+    public function getResults($p_fk_debate_nr, $p_fk_debate_lang, $limit=null, $start=null)
     {
         $debate = new Debate($p_fk_debate_lang, $p_fk_debate_nr);
         $tunit = strtolower($debate->getProperty('results_time_unit'));
-
         $query = "
         	SELECT
 				`fk_debate_nr`,
                 COUNT(`id_vote`) as `vote_cnt`,
                 `fk_answer_nr`,
                 %s `dg`,
-                UNIX_TIMESTAMP(`added`) `time`
+                UNIX_TIMESTAMP(DATE(`added`)) `time`
 			FROM `plugin_debate_vote`
-            WHERE `fk_debate_nr` = '$p_fk_debate_nr'
+            WHERE `fk_debate_nr` = '$p_fk_debate_nr' %s %s
             GROUP BY `dg`, `fk_answer_nr`
             ORDER BY `dg` ASC, `fk_answer_nr` ASC";
+
+        $sqlLimit = '';
+        if (!is_null($limit)) {
+            $sqlLimit = "AND UNIX_TIMESTAMP(`added`) > $limit";
+        }
+        $sqlStart = '';
+        if (!is_null($start)) {
+            $sqlStart = "AND UNIX_TIMESTAMP(`added`) < $start";
+        }
 
         switch ($tunit)
         {
             case 'daily' :
-                $query = sprintf($query, "YEAR(added)*1000 + DAYOFYEAR(added)");
+                $query = sprintf($query, "YEAR(added)*1000 + DAYOFYEAR(added)", $sqlLimit, $sqlStart);
                 break;
 
             case 'weekly' :
-                $query = sprintf($query, "YEAR(added)*100 + WEEKOFYEAR(added)");
+                $query = sprintf($query, "YEAR(added)*100 + WEEKOFYEAR(added)", $sqlLimit, $sqlStart);
                 break;
 
             case 'monthly' :
-                $query = sprintf($query, "YEAR(added)*100 + MONTH(added)");
+                $query = sprintf($query, "YEAR(added)*100 + MONTH(added)", $sqlLimit, $sqlStart);
                 break;
         }
 
@@ -186,8 +260,12 @@ class DebateVote extends DatabaseObject
         global $g_ado_db;
         $sqlr = $g_ado_db->execute($query);
         $return = array();
-        while ($row = $sqlr->fetchRow())
+        while ($row = $sqlr->fetchRow()) {
+            if (!isset($return[$row['fk_answer_nr']])) {
+                $return[$row['fk_answer_nr']] = 0;
+            }
             $return[$row['fk_answer_nr']] += 1;
+        }
         return $return;
     }
 

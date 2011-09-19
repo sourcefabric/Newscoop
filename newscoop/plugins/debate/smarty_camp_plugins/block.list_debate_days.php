@@ -34,7 +34,7 @@ function smarty_block_list_debate_days($p_params, $p_content, &$p_smarty, &$p_re
     if (!isset($p_content))
     {
         $start = $campContext->next_list_start('DebateVotesList');
-    	$debateDaysList = new DebateDaysList();
+    	$debateDaysList = new DebateDaysList($start, $p_params);
     	$campContext->setCurrentList($debateDaysList, array('debatedays'));
     }
 

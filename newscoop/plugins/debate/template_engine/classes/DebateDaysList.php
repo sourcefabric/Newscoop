@@ -24,10 +24,24 @@ class DebateDaysList extends ListObject
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
 	    $context = CampTemplate::singleton()->context();
-//        $dateRange = range($context->debate->date_begin, $context->debate->date_end, 86400);
-        $dateRange = DebateVote::getResults($context->debate->number, $context->debate->language_id);
+	    $debate = new Debate($context->debate->language_id, $context->debate->number); // the template current debate
+	    switch ($debate->getProperty('results_time_unit'))
+	    {
+	        case 'daily' : $rangeUnit = 86400; break;
+	        case 'weekly' : $rangeUnit = 604800; break;
+	        case 'monthly' : $rangeUnit = 2629744; break;
+	    }
+
+	    $dateStart = $context->debate->date_begin;
+	    $dateEnd = ( $t = strtotime('tomorrow') ) > $context->debate->date_end ? $context->debate->date_end : $t;
+	    if ($p_limit != 0) {
+	        $dateStart = $dateEnd - ($rangeUnit*($p_limit-1));
+	    }
+	    $dateRange = range($dateStart, $dateEnd, $rangeUnit);
+        $dateVotes = DebateVote::getResults($context->debate->number, $context->debate->language_id, $dateStart, $dateEnd);
+
         $dateArray = array();
-        foreach ($dateRange as $date) {
+        foreach ($dateVotes as $date) {
             $dateArray[] = new MetaDebateDays($date);
         }
 
@@ -148,8 +162,6 @@ class DebateDaysList extends ListObject
 	 */
 	protected function ProcessParameters(array $p_parameters)
 	{
-	    return null;
-
 		$parameters = array();
     	foreach ($p_parameters as $parameter=>$value) {
     		$parameter = strtolower($parameter);
@@ -175,7 +187,6 @@ class DebateDaysList extends ListObject
     		}
     	}
     	$this->m_item = is_string($p_parameters['item']) && trim($p_parameters['item']) != '' ? $p_parameters['item'] : null;
-
     	return $parameters;
 	}
 

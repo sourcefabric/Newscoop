@@ -1,9 +1,8 @@
 <?php
-final class MetaDebateDays
+final class MetaDebateDays // extends MetaObject
 {
-    public $time;
-    public $answers;
-    public $count;
+    private $m_properties = array( 'time' => null, 'answers' => array(), 'count' => null );
+
     public function __construct($date)
     {
         foreach ($date as $key => $value)
@@ -11,18 +10,23 @@ final class MetaDebateDays
             switch (true)
             {
                 case is_array($value) :
-                    $this->answers[] = $value;
+                    $this->m_properties['answers'][] = $value;
                     break;
                 case $key == 'time' :
-                    $this->time = $value;
+                    $this->m_properties['time'] = $value;
                     break;
                 case $key == 'total_count' :
-                    $this->count = $value;
+                    $this->m_properties['count'] = $value;
                     break;
             }
         }
-        foreach ($this->answers as &$answer) {
+        foreach ($this->m_properties['answers'] as &$answer) {
             $answer['percentage'] = $answer['value']*100/$this->count;
         }
+    }
+
+    public function __get($name)
+    {
+        return isset($this->m_properties[$name]) ? $this->m_properties[$name] : null;
     }
 }

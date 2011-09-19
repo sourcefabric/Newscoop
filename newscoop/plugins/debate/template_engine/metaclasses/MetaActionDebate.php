@@ -26,21 +26,18 @@ class MetaActionDebate extends MetaAction
 
         if (!isset($p_input['f_debate_nr']) || empty($p_input['f_debate_nr'])) {
             $this->m_error = new PEAR_Error('The debate number is missing.', ACTION_DEBATE_ERR_NO_DEBATE_NUMBER);
-            syslog(LOG_WARNING, 676);
             return false;
         }
         $this->m_properties['debate_nr'] = $p_input['f_debate_nr'];
 
         if (!isset($p_input['f_debate_language_id']) || empty($p_input['f_debate_language_id'])) {
             $this->m_error = new PEAR_Error('The debate language is missing.', ACTION_DEBATE_ERR_NO_LANGUAGE_ID);
-            syslog(LOG_WARNING, 223333333);
             return false;
         }
         $this->m_properties['debate_language_id'] = $p_input['f_debate_language_id'];
 
         if ($p_input['f_debate_mode'] !== 'standard' && $p_input['f_debate_mode'] !== 'ajax') {
             $this->m_error = new PEAR_Error('The debate mode parameter is invalid.', ACTION_DEBATE_ERR_INVLID_MODE);
-            syslog(LOG_WARNING, 44);
             return false;
         }
         $this->m_properties['debate_mode'] = $p_input['f_debate_mode'];
@@ -49,7 +46,6 @@ class MetaActionDebate extends MetaAction
 
         if (!$Debate->exists()) {
             $this->m_error = new PEAR_Error('Debate does not exists.', ACTION_DEBATE_ERR_NOT_EXISTS);
-            syslog(LOG_WARNING, 212312);
             return false;
         }
 
@@ -66,7 +62,6 @@ class MetaActionDebate extends MetaAction
 
                     if (!is_array($allowed_values)) {
                         $this->m_error = new PEAR_Error('Invalid debate voting value.', ACTION_DEBATE_ERR_INVALID_VALUE);
-                        syslog(LOG_WARNING, 2);
                         return false;
                     }
 
@@ -78,7 +73,6 @@ class MetaActionDebate extends MetaAction
                             // check if value is valid
                             if (!array_key_exists($p_input['f_debateanswer_'.$nr], $allowed_values[$nr])) {
                                 $this->m_error = new PEAR_Error('Invalid debate voting value.', ACTION_DEBATE_ERR_INVALID_VALUE);
-                                syslog(LOG_WARNING, 3);
                                 return false;
                             }
                             $this->m_properties['debateanswer_nr'] = $nr;
@@ -88,7 +82,6 @@ class MetaActionDebate extends MetaAction
                     }
                     if (!$this->m_properties['value']) {
                         $this->m_error = new PEAR_Error('No answer value was given.', ACTION_DEBATE_ERR_NOANSWER_VALUE);
-                        syslog(LOG_WARNING, 2);
                         return false;
                     }
                 break;
@@ -96,7 +89,6 @@ class MetaActionDebate extends MetaAction
                 case 'standard':
                     if (!isset($p_input['f_debateanswer_nr']) || empty($p_input['f_debateanswer_nr'])) {
                         $this->m_error = new PEAR_Error('Invalid debate voting value.', ACTION_DEBATE_ERR_INVALID_VALUE);
-                        syslog(LOG_WARNING, 1);
                         return false;
                     }
                     $this->m_properties['debateanswer_nr'] = $p_input['f_debateanswer_nr'];
@@ -124,12 +116,10 @@ class MetaActionDebate extends MetaAction
         $this->m_debate->setUserId($user);
         if (!$this->m_debate->isVotable()) {
             $this->m_error = new PEAR_Error('Debate is not votable.', ACTION_DEBATE_ERR_NOT_VOTABLE);
-            syslog(LOG_WARNING, 221);
             return false;
 
         }
 
-        syslog(LOG_WARNING, $p_context->user->identifier);
         if (!is_object($this->m_debate)) {
             return false;
         }

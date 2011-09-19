@@ -967,14 +967,24 @@ class Debate extends DatabaseObject
         setcookie($key, $value, time()+60*60*24*365, '/', $hostname[2]);
     }
 
+    private $alreadyVoted = false;
+
     public function userVote($answer_nr)
     {
         if (!$this->m_data['allow_not_logged_in'])
         {
             $vote = new DebateVote($this->m_data['debate_nr'], $answer_nr, $this->userId);
-            return $vote->__create();
+            if (is_numeric($vote->m_data['id_vote'])) {
+                $this->alreadyVoted = $vote->m_data['fk_answer_nr'];
+            }
+            $vote->create();
         }
         return false;
+    }
+
+    public function alreadyVoted()
+    {
+        return $this->alreadyVoted;
     }
 
     /**

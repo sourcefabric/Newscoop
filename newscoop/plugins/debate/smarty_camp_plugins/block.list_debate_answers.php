@@ -26,37 +26,33 @@
  */
 function smarty_block_list_debate_answers($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
+    $p_smarty->smarty->loadPlugin('smarty_shared_escape_special_chars');
     // gets the context variable
-    $campContext = $p_smarty->get_template_vars('gimme');
-    $html = '';
+    $campContext = $p_smarty->getTemplateVars('gimme');
 
     if (!isset($p_content)) {
         $start = $campContext->next_list_start('DebateAnswersList');
     	$debateAnswersList = new DebateAnswersList($start, $p_params);
-    	$campContext->setCurrentList($debateAnswersList, array('debateanswer'));
-    }
-
-    $currentDebateAnswer = $campContext->current_list->current;
-
-    if (is_null($currentDebateAnswer)) {
-	    $p_repeat = false;
-	    $campContext->resetCurrentList();
-    	return $html;
-    } else {
-        $campContext->debateanswer = $currentDebateAnswer;
-    	$p_repeat = true;
-    }
-
-    if (isset($p_content)) {
-		$html = $p_content;
-	    if ($p_repeat) {
-    		$campContext->current_list->defaultIterator()->next();
-    		if (!is_null($campContext->current_list->current)) {
-                $campContext->debateanswer = $campContext->current_list->current;
-            }
+    	if ($debateAnswersList->isEmpty()) {
+            $campContext->setCurrentList($debateAnswersList, array());
+            $campContext->resetCurrentList();
+    		$p_repeat = false;
+    	    return null;
     	}
+    	$campContext->setCurrentList($debateAnswersList, array('debateanswers'));
+    	$campContext->debateanswer = $campContext->current_debateanswers_list->current;
+    	$p_repeat = true;
+    } else {
+        $campContext->current_debateanswers_list->defaultIterator()->next();
+        if (!is_null($campContext->current_debateanswers_list->current)) {
+            $campContext->debateanswer = $campContext->current_debateanswers_list->current;
+            $p_repeat = true;
+        } else {
+            $campContext->resetCurrentList();
+            $p_repeat = false;
+        }
     }
 
-    return $html;
+    return $p_content;
 } // fn smarty_block_list_debate_answers
 

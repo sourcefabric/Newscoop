@@ -323,12 +323,24 @@ class DebateAnswer extends DatabaseObject
             return false;
         }
 
-        $this->setProperty('nr_of_votes', $this->getProperty('nr_of_votes') + 1);
-        $this->setProperty('value', $this->getProperty('value') + $p_value);
-        $this->setProperty('average_value', $this->getProperty('value') / $this->getProperty('nr_of_votes'));
-        $this->getDebate()->increaseUserVoteCount();
+        $debate = $this->getDebate();
+        $debate->userVote($this->getProperty('nr_answer'));
+        $voted = $debate->alreadyVoted();
 
-        $this->getDebate()->userVote($this->getProperty('nr_answer'));
+        if (!is_null($voted) && $voted != $this->getProperty('nr_answer'))
+        {
+            $otherAnswer = new DebateAnswer($this->getProperty('fk_language_id'), $this->getProperty('fk_debate_nr'), $voted);
+            $otherAnswer->setProperty('nr_of_votes', $otherAnswer->getProperty('nr_of_votes')-1);
+            $otherAnswer->setProperty('value', $otherAnswer->getProperty('value')-$p_value);
+            $otherAnswer->setProperty('average_value', $otherAnswer->getProperty('value')/$otherAnswer->getProperty('nr_of_votes'));
+        }
+        elseif (is_null($voted))
+        {
+            $this->setProperty('nr_of_votes', $this->getProperty('nr_of_votes') + 1);
+            $this->setProperty('value', $this->getProperty('value') + $p_value);
+            $this->setProperty('average_value', $this->getProperty('value') / $this->getProperty('nr_of_votes'));
+        }
+        $debate->increaseUserVoteCount();
 
         Debate::triggerStatistics($this->m_data['fk_debate_nr']);
     }
