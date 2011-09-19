@@ -45,6 +45,7 @@ final class MetaUser extends MetaDbObject
         $this->m_customProperties['created'] = 'getCreated';
         $this->m_customProperties['country'] = 'getCountry';
         $this->m_customProperties['subscription'] = 'getSubscription';
+        $this->m_customProperties['logged_in'] = 'isLoggedIn';
 
         $this->m_skipFilter[] = "name";
         //$this->defined = $user->getId() > 0;
@@ -133,7 +134,7 @@ final class MetaUser extends MetaDbObject
      *
      * @return bool
      */
-    public function logged_in()
+    protected function isLoggedIn()
     {
         $auth = Zend_Auth::getInstance();
         return $auth->hasIdentity() && $auth->getIdentity() == $this->user->getId();
