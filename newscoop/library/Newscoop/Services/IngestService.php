@@ -98,7 +98,7 @@ class IngestService
     private function updateFeed(Feed $feed)
     {
         foreach (glob($this->config['path'] . '/*.xml') as $file) {
-            if ($feed->getUpdated() && $feed->getUpdated()->getTimestamp() > filectime($file)) {
+            if ($feed->getUpdated() && $feed->getUpdated()->getTimestamp() > filectime($file) + self::IMPORT_DELAY) {
                 continue;
             }
 
