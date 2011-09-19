@@ -46,6 +46,9 @@ final class MetaUser extends MetaDbObject
         $this->m_customProperties['country'] = 'getCountry';
         $this->m_customProperties['subscription'] = 'getSubscription';
         $this->m_customProperties['logged_in'] = 'isLoggedIn';
+        $this->m_customProperties['topics'] = 'getTopics';
+        $this->m_customProperties['is_blocked_from_comments'] = 'isBlockedFromComments';
+        $this->m_customProperties['is_admin'] = 'isAdmin';
 
         $this->m_skipFilter[] = "name";
         //$this->defined = $user->getId() > 0;
@@ -124,7 +127,7 @@ final class MetaUser extends MetaDbObject
      *
      * @return bool
      */
-    public function is_admin()
+    protected function isAdmin()
     {
         return $this->user->isAdmin();
     }
@@ -145,7 +148,7 @@ final class MetaUser extends MetaDbObject
      *
      * @return bool
      */
-    public function is_blocked_from_comments()
+    protected function isBlockedFromComments()
     {
         require_once dirname(__FILE__) . '/../../include/get_ip.php';
 
@@ -180,7 +183,7 @@ final class MetaUser extends MetaDbObject
      *
      * @return array
      */
-    public function topics()
+    protected function getTopics()
     {
         if (!$this->user->getId()) {
             return array();
