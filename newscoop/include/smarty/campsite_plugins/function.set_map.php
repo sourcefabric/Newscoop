@@ -89,6 +89,7 @@ function smarty_function_set_map($p_params, &$p_smarty)
     $map_label = '';
     $map_max_points = 0;
 
+    $con_article_types = array();
     $con_authors = array();
     $con_articles = array();
     $con_issues_num = array();
@@ -114,6 +115,22 @@ function smarty_function_set_map($p_params, &$p_smarty)
         $map_max_points = 0 + $map_max_points;
     }
     $campsite->map_dynamic_max_points = $map_max_points;
+
+    if (isset($p_params['article_types'])) {
+        foreach (explode(',', $p_params['article_types']) as $one_article_type) {
+            $one_article_type = trim('' . $one_article_type);
+            if (0 < strlen($one_article_type)) {
+                if ($of_article == $one_article_type) {
+                    if ($run_article) {
+                        $con_article_types[] = $run_article->type_name;
+                    }
+                }
+                else {
+                    $con_article_types[] = $one_article_type;
+                }
+            }
+        }
+    }
 
     if (isset($p_params['authors'])) {
         foreach (explode(',', $p_params['authors']) as $one_author) {
@@ -334,6 +351,14 @@ function smarty_function_set_map($p_params, &$p_smarty)
     }
 
     // to put the read constraints into parameters list
+
+    foreach ($con_article_types as $one_article_type) {
+        $leftOperand = 'article_type';
+        $rightOperand = $one_article_type;
+        $operator = new Operator('is', 'sql');
+        $constraint = new ComparisonOperation($leftOperand, $operator, $rightOperand);
+        $parameters[] = $constraint;
+    }
 
     foreach ($con_authors as $one_author) {
         $leftOperand = 'author';

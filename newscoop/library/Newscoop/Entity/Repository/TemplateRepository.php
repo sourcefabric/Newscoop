@@ -34,6 +34,7 @@ class TemplateRepository extends EntityRepository
      * Get template for given key
      *
      * @param string $key
+     * @param bool $flush
      * @return Newscoop\Entity\Template
      */
     public function getTemplate($key)
@@ -48,7 +49,6 @@ class TemplateRepository extends EntityRepository
             $template = new Template($key);
             $em = $this->getEntityManager();
             $em->persist($template);
-            $em->flush();
         }
 
         return $template;
@@ -171,5 +171,10 @@ class TemplateRepository extends EntityRepository
     {
         $key = trim($key, '/');
         return ltrim("{$this->basePath}/$key", '/');
+    }
+
+    public function flush()
+    {
+        return $this->getEntityManager()->flush();
     }
 }

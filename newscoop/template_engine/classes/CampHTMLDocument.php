@@ -318,8 +318,6 @@ final class CampHTMLDocument
         try {
             $tpl->display($template);
         } catch (Exception $e) {
-            var_dump($e);
-            exit;
             CampTemplate::trigger_error($e->getMessage(), $tpl);
         }
     } // fn render

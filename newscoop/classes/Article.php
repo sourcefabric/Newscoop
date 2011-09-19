@@ -194,7 +194,7 @@ class Article extends DatabaseObject {
      * @return boolean
      *      TRUE on success, FALSE on failure
      */
-    public function fetch($p_recordSet = null)
+    public function fetch($p_recordSet = null, $p_forceExists = false)
     {
         $res = parent::fetch($p_recordSet);
         if ($this->exists()) {
@@ -1634,19 +1634,22 @@ class Article extends DatabaseObject {
     	$urlEnd = '';
     	foreach ($seoFields as $field => $value) {
     		switch ($field) {
-    			case 'name':
-    				$urlEnd .= trim($this->getName()) . ' ';
-    				break;
-    			case 'keywords':
-    				$urlEnd .= trim($this->getKeywords()) . ' ';
-    				break;
-    			case 'topics':
-    				$articleTopics = ArticleTopic::GetArticleTopics($this->getArticleNumber());
-        			foreach ($articleTopics as $topic) {
-        				$urlEnd .= '-' . $topic->getName($languageId);
-        			}
-    				$urlEnd .= implode('-', $this->m_article->topics) . ' ';
-    				break;
+                case 'name':
+                    if ($text = trim($this->getName())) {
+                        $urlEnd .= $urlEnd ? '-' . $text : $text;
+                    }
+                    break;
+                case 'keywords':
+                    if ($text = trim($this->getKeywords())) {
+                        $urlEnd .= $urlEnd ? '-' . $text : $text;
+                    }
+                    break;
+                case 'topics':
+                    $articleTopics = ArticleTopic::GetArticleTopics($this->getArticleNumber());
+                    foreach ($articleTopics as $topic) {
+                        $urlEnd .= $urlEnd ? '-' . $topic->getName($languageId) : $topic->getName($languageId);
+                    }
+                    break;
     		}
     	}
     	$urlEnd = preg_replace('/[,\/\.\?"\+&%:#]/', '', trim($urlEnd));

@@ -24,7 +24,7 @@ class ArticleTypeField extends DatabaseObject {
 
     const NUMERIC_DEFAULT_DIGITS = 65;
     const NUMERIC_DEFAULT_PRECISION = 2;
-    
+
     const BODY_ROWS_SMALL = 250;
     const BODY_ROWS_MEDIUM = 500;
     const BODY_ROWS_LARGE = 750;
@@ -117,7 +117,7 @@ class ArticleTypeField extends DatabaseObject {
      * @return boolean
      *      TRUE on success, FALSE on failure
      */
-	public function fetch($p_recordSet = null)
+	public function fetch($p_recordSet = null, $p_forceExists = false)
 	{
 		$success = parent::fetch($p_recordSet);
 		if ($success && $this->getType() == self::TYPE_NUMERIC) {
@@ -164,7 +164,7 @@ class ArticleTypeField extends DatabaseObject {
 				return false;
 			}
 		}
-		
+
 		if ($this->getPrintName() != 'NULL') {
 			$queryStr = "ALTER TABLE `X" . $this->m_data['type_name'] . "` ADD COLUMN `"
 			. $this->getName() . '` ' . $types[$p_type];

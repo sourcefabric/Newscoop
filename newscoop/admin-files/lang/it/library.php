@@ -1,6 +1,6 @@
 <?php 
-regGS("Title", "");
-regGS("No video playback capabilities, please download the video below", "");
+regGS("Title", "Titolo");
+regGS("No video playback capabilities, please download the video below", "Non ci sono opzioni di playback del video, per favore scaricalo");
 regGS("Article status set to '$1' for $2 articles", "Stato articolo impostato a '$1' per $2 articoli");
 regGS("Article status not set to '$1' for $2 articles", "Stato articolo non impostato a '$1' per $2 articoli");
 regGS("$1 toggled for $2 articles.", "$1 impostato per $2 articoli.");

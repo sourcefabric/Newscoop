@@ -5,6 +5,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+use Newscoop\Service\IThemeManagementService;
 use Newscoop\Service\Template,
     Newscoop\Storage,
     Newscoop\Service\Resource\ResourceId,
@@ -27,6 +28,7 @@ class Admin_TemplateController extends Zend_Controller_Action
         /* @var $themeService Newscoop\Service\Implementation\ThemeServiceLocalFileSystem */
         $theme = $themeService->findById($this->_getParam('id'));
         /* @var $theme Newscoop\Entity\Theme */
+        $this->view->themeId = $this->_getParam('id');
 
         $path = $theme->getPath();
         $fullPath = $themeService->toFullPath($theme);
@@ -40,6 +42,7 @@ class Admin_TemplateController extends Zend_Controller_Action
 
         $this->_helper->contextSwitch
             ->addActionContext('get-items', 'json')
+            ->addActionContext('cache-templates', 'json')
             ->initContext();
 
         $this->view->basePath = $path;
@@ -99,6 +102,11 @@ class Admin_TemplateController extends Zend_Controller_Action
         $pages = array($this->buildBreadcrumbs(explode('/', $path)));
 
         $this->view->moveForm = $this->getMoveForm();
+        if ($path == '') {
+            $this->view->paths = $this->reqCachePaths; // don't move form here
+            $this->view->doCache = true;
+        }
+
         $this->view->nav = new Zend_Navigation($pages);
         $this->view->dateFormat = 'Y-m-d H:i';
         $this->view->separator = self::SEPARATOR;
@@ -272,11 +280,10 @@ class Admin_TemplateController extends Zend_Controller_Action
     {
         $path = $this->parsePath();
         $dest = $this->_getParam('name');
-
         try {
             $files = (array) $this->_getParam('file', array());
             foreach ($files as $file) {
-                $this->service->moveItem("$path/$file", $dest);
+                $s = $this->service->moveItem("$path/$file", $dest);
                 $this->_helper->flashMessenger->addMessage(getGS("Template '$1' $2.", $file, getGS('moved')));
                 $this->_helper->log(getGS("Template '$1' $2.", $file, getGS('moved')));
             }
@@ -298,7 +305,8 @@ class Admin_TemplateController extends Zend_Controller_Action
         }
 
         try {
-            $name = $this->formatName($this->_getParam('name'), pathinfo($file, PATHINFO_EXTENSION));
+            $nameExt = pathinfo($this->_getParam('name'),PATHINFO_EXTENSION);
+            $name = $this->formatName($this->_getParam('name'), ($nameExt==''?pathinfo($file, PATHINFO_EXTENSION):null) );
             $this->service->copyItem("$path/$file", $name);
 		    $this->_helper->flashMessenger(getGS("Template '$1' was duplicated into '$2'.", $file, $name));
 		    $this->_helper->log(getGS("Template '$1' was duplicated into '$2'.", $file, $name));
@@ -320,7 +328,7 @@ class Admin_TemplateController extends Zend_Controller_Action
         }
 
         try {
-            $name = $this->formatName($this->_getParam('name'), pathinfo($file, PATHINFO_EXTENSION));
+            $name = $this->formatName($this->_getParam('name'), null);
             $this->service->renameItem("$path/$file", $name);
             $this->clearCompiledTemplate("$path/$file");
 		    $this->_helper->flashMessenger(getGS("Template object '$1' was renamed to '$2'.", $file, $name));
@@ -393,6 +401,13 @@ class Admin_TemplateController extends Zend_Controller_Action
         $this->_redirect(urldecode($this->_getParam('next')), array(
             'prependBase' => false,
         ));
+    }
+
+    public function cacheTemplatesAction()
+    {
+        $path = $this->parsePath();
+        $this->service->cacheTemplates($path);
+        $this->view->success = true;
     }
 
     /**
@@ -509,8 +524,8 @@ class Admin_TemplateController extends Zend_Controller_Action
 
         $form->addElements( array
         (
-            new Zend_Form_Element_Hash('csrf'),
-            new Zend_Form_Element_Hidden('name'),
+            new Zend_Form_Element_Hash('csrf', array('decorators' => array( 'ViewHelper' )) ),
+            new Zend_Form_Element_Hidden('name', array('decorators' => array( 'ViewHelper' )) ),
             new Zend_Form_Element_Select('multiaction', array
             (
             	'multioptions' => array
@@ -518,7 +533,8 @@ class Admin_TemplateController extends Zend_Controller_Action
                 	'' => getGS('Actions'),
                 	'move' => getGS('Move'),
                 	'delete' => getGS('Delete'),
-                )
+                ),
+                'decorators' => array( 'ViewHelper' )
             )),
             new Zend_Form_Element_Hidden('action', array
             (
@@ -530,6 +546,7 @@ class Admin_TemplateController extends Zend_Controller_Action
                         array('copy', 'move', 'rename', 'delete', 'create-file', 'create-folder'),
                     )),
                 ),
+                'decorators' => array( 'ViewHelper' )
             )),
             new Zend_Form_Element_MultiCheckbox('file')
         ));
@@ -549,13 +566,17 @@ class Admin_TemplateController extends Zend_Controller_Action
     private function getMoveForm()
     {
         $form = new Zend_Form;
-
+        $multioptionPaths = array();
+        foreach (($paths = $this->getPaths('')) as $v)
+            $multioptionPaths[$v] = $v;
         $form->addElement('select', 'name', array(
-            'multioptions' => array('/' => '/') + $this->getPaths(''),
+            'multioptions' => array('/' => '/') + $multioptionPaths,
         ));
 
         return $form;
     }
+
+    private $reqCachePaths = array();
 
     /**
      * Get available paths starting from path
@@ -565,17 +586,7 @@ class Admin_TemplateController extends Zend_Controller_Action
      */
     private function getPaths($path)
     {
-        $paths = array();
-        foreach ($this->service->listItems($path) as $item) {
-            if (isset($item->id)) { // skip template
-                continue;
-            }
-
-            $paths["$path/$item->name"] = "$path/$item->name";
-            $paths += $this->getPaths("$path/$item->name");
-        }
-
-        return $paths;
+        return ( $this->reqCachePaths = $this->service->listPaths($path) );
     }
 
     /**

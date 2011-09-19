@@ -25,10 +25,11 @@ if (!Input::IsValid()) {
 $publicationObj = new Publication($f_publication_id);
 $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 
-$numArticlesDeleted = $issueObj->delete(true, true);
-
 $tmpArray = array("Pub" => $publicationObj, "Issue"=> $issueObj);
 camp_html_content_top(getGS("Deleted issue"), $tmpArray);
+
+$issueName = htmlspecialchars($issueObj->getName());
+$numArticlesDeleted = $issueObj->delete(true, true);
 ?>
 
 <P>
@@ -42,7 +43,7 @@ camp_html_content_top(getGS("Deleted issue"), $tmpArray);
 <TR>
 	<TD>
 		<BLOCKQUOTE>
-        <LI><?php putGS('The issue $1 has been deleted.','<B>'.htmlspecialchars($issueObj->getName()).'</B>'); ?></LI>
+        <LI><?php putGS('The issue $1 has been deleted.','<B>'.$issueName.'</B>'); ?></LI>
 		<LI><?php putGS('A total of $1 articles were deleted.','<B>'.$numArticlesDeleted.'</B>'); ?></LI>
 		</BLOCKQUOTE>
 	</TD>

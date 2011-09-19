@@ -327,6 +327,8 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         $ps_publicationId = 0;
 
         $mc_mapCons = false;
+        $mc_article_types_yes = array();
+        $mc_article_types_no = array();
         $mc_authors_yes = array();
         $mc_authors_no = array();
         $mc_users_yes = array();
@@ -367,6 +369,18 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                     break;
                 case 'publication':
                     $ps_publicationId = (int) $param->getRightOperand();
+                    break;
+                case 'article_type':
+                    $one_arttp_value = $param->getRightOperand();
+                    $one_arttp_type = $param->getOperator()->getName();
+                    if ('is' == $one_arttp_type) {
+                        $mc_article_types_yes[] = $one_arttp_value;
+                        $mc_mapCons = true;
+                    }
+                    if ('not' == $one_arttp_type) {
+                        $mc_article_types_no[] = $one_arttp_value;
+                        $mc_mapCons = true;
+                    }
                     break;
                 case 'author':
                     $one_user_value = $param->getRightOperand();
@@ -515,6 +529,8 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             $paramsArray_arr['preview'] = $ps_preview;
     
             $paramsArray_arr['map_cons'] = $mc_mapCons;
+            $paramsArray_arr['article_types_yes'] = $mc_article_types_yes;
+            $paramsArray_arr['article_types_no'] = $mc_article_types_no;
             $paramsArray_arr['authors_yes'] = $mc_authors_yes;
             $paramsArray_arr['authors_no'] = $mc_authors_no;
             $paramsArray_arr['articles_yes'] = $mc_articles_yes;
@@ -730,6 +746,29 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             if (0 < count($mc_users_no)) {
                 $query_mcons .= 'aa.fk_author_id NOT IN (' . implode(', ', $mc_users_no) . ') AND ';
                 $article_mcons = true;
+            }
+
+            if (0 < count($mc_article_types_yes)) {
+                $mc_correct = true;
+                foreach ($mc_article_types_yes as $val) {
+                    if (false !== stripos($val, '\'')) {$mc_correct = false; break;}
+                    if (false !== stripos($val, '"')) {$mc_correct = false; break;}
+                }
+                if ($mc_correct) {
+                    $query_mcons .= 'a.Type IN (\'' . implode('\', \'', $mc_article_types_yes) . '\') AND ';
+                    $article_mcons = true;
+                }
+            }
+            if (0 < count($mc_article_types_no)) {
+                $mc_correct = true;
+                foreach ($mc_article_types_no as $val) {
+                    if (false !== stripos($val, '\'')) {$mc_correct = false; break;}
+                    if (false !== stripos($val, '"')) {$mc_correct = false; break;}
+                }
+                if ($mc_correct) {
+                    $query_mcons .= 'a.Type NOT IN (\'' . implode('\', \'', $mc_article_types_no) . '\') AND ';
+                    $article_mcons = true;
+                }
             }
 
             if (0 < count($mc_articles_yes)) {
