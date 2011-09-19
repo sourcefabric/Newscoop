@@ -7,7 +7,6 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
 $f_image_id = Input::Get('f_image_id', 'int', 0);
-
 $f_fix_thumbs = Input::Get('f_fix_thumbs', 'int', 0, true);
 if ($f_fix_thumbs) {
     //regenerate missing thumbs

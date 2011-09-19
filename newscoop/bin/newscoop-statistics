@@ -33,7 +33,7 @@ function clean_statistics($p_confDir)
 		GROUP BY
 			ss.id
     ";
-    
+
     $sessRes = mysql_query($sql);
     if (empty($sessRes)) {
         return;
@@ -59,6 +59,8 @@ function clean_statistics($p_confDir)
 
 function db_connect($p_conf_dir)
 {
+    global $Campsite;
+
     is_valid_conf_dir($p_conf_dir);
 
     require_once($p_conf_dir . '/database_conf.php');

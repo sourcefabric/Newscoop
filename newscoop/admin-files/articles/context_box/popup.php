@@ -58,11 +58,11 @@ function appendItemToContextList(article_id, article_date, article_title) {
 }
 
 function deleteContextList() {
-	$("#context_list").html('<div id="context_list" style="display: block; min-height: 500px; min-width: 500px;">'+
+	$("#context_list").html(''+
 		    '<div id="drag-here-to-add-to-list" style="">'+
 	        'Drag here to add to list'+
 	    '</div>'+
-	'</div>');
+	'');
 }
 
 function removeFromContext(param) {
@@ -178,11 +178,14 @@ $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 <h2><?php echo putGS('Related Articles'); ?></h2>
 </div>
 <div class="context-content">
-<div class="context-block context-search"><?php
+<div class="context-block context-search">
+<h3><?php echo putGS('Available Articles'); ?></h3>
+<?php
 
 $contextlist = new ContextList();
 $contextlist->setSearch(TRUE);
 $contextlist->setOrder(TRUE);
+$contextlist->setLanguage($f_language_id);
 
 $contextlist->renderFilters();
 $contextlist->render();
@@ -195,6 +198,7 @@ $contextlist->render();
                         //$("#table-<?php echo $contextlist->getId();?>_filter").css("border","0px");
                         $(".fg-toolbar .ui-toolbar .ui-widget-header .ui-corner-tl .ui-corner-tr .ui-helper-clearfix").css("border","none");
                         $(".fg-toolbar .ui-toolbar .ui-widget-header .ui-corner-bl .ui-corner-br .ui-helper-clearfix").css("background-color","#CCCCCC");
+                        $(".datatable").css("position","static");
                  });
                  $(function(){
                      $('#table-<?php echo $contextlist->getId(); ?> tbody').sortable({
@@ -225,7 +229,7 @@ $contextlist->render();
 	type="submit" name="delete-all" value="Delete all"
 	class="default-button" onclick="deleteContextList()" id="context_button_delete_all"></div>
 <div style="display: block; float: left">
-<div id="context_list" style="display:block; min-height: 500px; min-width: 500px;">
+<div id="context_list" style="display:block; height: 433px; width: 506px; overflow-y:auto; overflow-x:hidden; padding: 36px 0px 0px 0px;">
     <div id="drag-here-to-add-to-list" style="display:none">
         Drag here to add to list
     </div>
