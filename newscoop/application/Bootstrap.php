@@ -160,6 +160,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $front->registerPlugin(new Application_Plugin_CampPluginAutoload());
         $front->registerPlugin(new Application_Plugin_Auth($options['auth']));
         $front->registerPlugin(new Application_Plugin_Acl($options['acl']));
+        $front->registerPlugin(new Application_Plugin_Locale());
     }
 
     protected function _initRouter()
@@ -246,16 +247,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     
     protected function _initTranslate()
     {
-        $parameters = Zend_Registry::get('container')->getParameter('translation');
-        $filename = $parameters['path'].'/'.$parameters['language'].'.php';
-        include_once($filename);
-        
+        $options = $this->getOptions();
         $translate = new Zend_Translate(array(
             'adapter' => 'array',
             'disableNotices' => TRUE,
-            'content' => $translation,
+            'content' => $options['translation']['path'],
         ));
-        
+
         Zend_Registry::set('Zend_Translate', $translate);
     }
 }
