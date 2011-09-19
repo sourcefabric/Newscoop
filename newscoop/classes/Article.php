@@ -194,7 +194,7 @@ class Article extends DatabaseObject {
      * @return boolean
      *      TRUE on success, FALSE on failure
      */
-    public function fetch($p_recordSet = null)
+    public function fetch($p_recordSet = null, $p_forceExists = false)
     {
         $res = parent::fetch($p_recordSet);
         if ($this->exists()) {

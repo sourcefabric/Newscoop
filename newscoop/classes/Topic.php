@@ -54,7 +54,7 @@ class Topic extends DatabaseObject {
 	 *
 	 * @return void
 	 */
-	public function fetch($p_columns = null)
+	public function fetch($p_columns = null, $p_forceExists = false)
 	{
 		global $g_ado_db;
 

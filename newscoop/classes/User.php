@@ -193,7 +193,7 @@ class User extends DatabaseObject {
      *
      * @return void
      */
-    public function fetch($p_recordSet = null)
+    public function fetch($p_recordSet = null, $p_forceExists = false)
     {
         global $g_ado_db;
 
