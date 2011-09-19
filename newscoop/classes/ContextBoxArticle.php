@@ -26,7 +26,7 @@ Class ContextBoxArticle extends DatabaseObject {
 
     public static function saveList($p_context_id, $p_article_no_array) {
         self::removeList($p_context_id);
-        self::insertList($p_context_id, $p_article_no_array);
+        self::insertList($p_context_id, array_unique($p_article_no_array));
     }
 
     public static function removeList($p_context_id) {

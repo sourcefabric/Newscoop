@@ -590,7 +590,7 @@ a.view-article:hover {
 .context-list-results .save-button-bar	{
 	margin:8px 8px 4px 0;
 }
-.context-list h3	{
+.context-list h3, .context-search h3	{
 	color:#444444;
 	width:50%;
 	margin: 0 6px;
