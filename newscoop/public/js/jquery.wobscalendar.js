@@ -434,12 +434,6 @@
 				.find(".wobs-date-container")
 				.append('<div class="wobs-date-label"/>');
 		
-		td.click(function(){
-			if (_url !== undefined) {
-				window.open(_url);
-			}
-		});
-		
 		function setDate(date) {
 			var cm, dm, today;
 	
@@ -492,6 +486,7 @@
 		
 		function setUrl(url) {
 			_url = url;
+			td.find("a").attr("href", url);
 		}
 		
 		function clear() {
@@ -505,6 +500,8 @@
 			td.removeClass("wobs-other-month");
 			td.removeClass("wobs-curr-month");
 			td.removeAttr("title");
+			
+			td.find("a").removeAttr("href");
 			
 			td.find("img")
 				.remove();
