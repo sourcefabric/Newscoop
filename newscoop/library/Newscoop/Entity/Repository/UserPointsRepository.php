@@ -17,27 +17,23 @@ class UserPointsRepository extends EntityRepository
 {
 
     /**
-     * Save user_points
+     * Find point value for action
      *
-     * @param Newscoop\Entity\UserPoints $user_points
-     * @param array $values
-     * @return void
+     * @param string $action
+     *
+     * @return int
      */
-    public function save(UserPoints $user_points, array $values)
+    public function getPointValueForAction($action)
     {
+        $user_points = $this->findOneBy(array(
+            'action' => $action,
+        ));
 
-        if (!isset($values["action"])) {
-            throw new \InvalidArgumentException("action undefined");
+        if (is_null($user_points)) {
+            return 0;
         }
 
-        if (!isset($values["points"])) {
-            throw new \InvalidArgumentException("points undefined");
-        }
-
-        $user_points->setAction($values["action"]);
-        $user_points->setPoints($values["points"]);
-
-        $this->getEntityManager()->persist($user_points);
+        return $user_points->getPoints();
     }
 
 }
