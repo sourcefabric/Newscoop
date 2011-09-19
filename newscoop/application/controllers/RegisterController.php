@@ -173,7 +173,9 @@ class RegisterController extends Zend_Controller_Action
             $user = $this->_helper->service('user')->save($form->getValues() + array('is_public' => 1));
             $this->_helper->service('user')->setActive($user);
             $this->_helper->service('auth.adapter.social')->addIdentity($user, $userData->providerId, $userData->providerUID);
-            $this->auth->authenticate($adapter);
+            $adapter = $this->_helper->service('auth.adapter.social');
+            $adapter->setProvider($userData->providerId)->setProviderUserId($userData->providerUID);
+            Zend_Auth::getInstance()->authenticate($adapter);
             $this->_helper->redirector('index', 'dashboard');
         }
 
