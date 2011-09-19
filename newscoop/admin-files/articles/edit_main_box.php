@@ -125,7 +125,7 @@ function change_language(select)
     ?>
     </select>
     <?php } elseif ($articleObj->userCanModify($g_user) && ($articleObj->getWorkflowStatus() != 'Y')) { ?>
-    <select name="f_action_workflow" class="input_select left-floated" id="f_action_workflow"
+    <select name="f_action_workflow" class="input_select" id="f_action_workflow"
       onchange="return checkChanged() && this.form.submit();" <?php if ($locked) { ?>disabled="disabled"<?php } ?>>
     <?php
     camp_html_select_option('S', $articleObj->getWorkflowStatus(), getGS('Status') . ': ' . getGS('Submitted'));

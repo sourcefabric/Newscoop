@@ -23,7 +23,7 @@ class Storage
     const ERROR_KEY_INVALID = 6;
 
     /** @var string */
-    private $root; 
+    private $root;
     /**
      * @param string $root
      */
@@ -210,12 +210,60 @@ class Storage
         if (!is_dir($path)) {
             throw new \InvalidArgumentException($key, self::ERROR_NOT_DIR);
         }
-
         $items = array();
         foreach (glob("$path/*") as $file) {
             $items[] = basename($file);
         }
 
+        return $items;
+    }
+
+    public function listPaths($dir)
+    {
+        $items = array();
+        $path = $this->getPath($dir, TRUE);
+        if (!$path) {
+            throw new \InvalidArgumentException($dir, self::ERROR_NOT_FOUND);
+        }
+        $scanDirs = array($path);
+        for ($i=0;;$i++) {
+            // break if stack finished
+        	if (!isset($scanDirs[$i])) break;
+        	$currentDir = $scanDirs[$i];
+            foreach (array_diff(scandir($currentDir), array(".","..")) as $file) {
+                // add directory to stack
+                if (is_dir($currentDir."/".$file)) {
+                    $scanDirs[] = $currentDir."/".$file;
+                    $items[] = substr( $currentDir."/".$file, strlen($path) );
+                }
+            }
+        }
+        return $items;
+    }
+
+    public function nrListItems($dir)
+    {
+        $items = array();
+        $path = $this->getPath($dir, TRUE);
+        if (!$path) {
+            throw new \InvalidArgumentException($dir, self::ERROR_NOT_FOUND);
+        }
+        $scanDirs = array($path);
+        for ($i=0;;$i++) {
+            // break if stack finished
+        	if (!isset($scanDirs[$i])) break;
+        	$currentDir = $scanDirs[$i];
+            foreach (array_diff(scandir($currentDir), array(".","..")) as $file) {
+                // add directory to stack
+                if (is_dir($currentDir."/".$file)) {
+                    $scanDirs[] = $currentDir."/".$file;
+                }
+                // add file to items
+                else {
+                    $items[] = basename($file);
+                }
+            }
+        }
         return $items;
     }
 

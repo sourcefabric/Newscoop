@@ -5,13 +5,9 @@ regGS("The Campcaster server configuration is invalid.", "The Campcaster server 
 regGS("Pan Map", "Pan Map");
 regGS("Open large map", "Open large map");
 regGS("No news available.", "No news available.");
-regGS("Invalid parameter given to Audioclip::editMetadata()", "Invalid parameter given to Audioclip::editMetadata()");
-regGS("File $1 does not exist", "File $1 does not exist");
 regGS("Edit Polygon", "Edit Polygon");
 regGS("Create Polygon", "Create Polygon");
 regGS("Communication error: ", "Communication error: ");
-regGS("Cannot update audioclip metadata on storage server", "Cannot update audioclip metadata on storage server");
-regGS("Cannot update audioclip metadata on Campsite", "Cannot update audioclip metadata on Campsite");
 regGS("Can't fetch news from '$1'", "Can't fetch news from '$1'");
 regGS("Loading...", "Loading...");
 regGS("Version", "Version");

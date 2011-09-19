@@ -1,4 +1,5 @@
 <?php 
+regGS("Check all", "");
 regGS("view", "");
 regGS("undo/redo", "");
 regGS("underline", "");
@@ -40,7 +41,6 @@ regGS("character map", "");
 regGS("bold", "");
 regGS("attach", "");
 regGS("any resource", "");
-regGS("all", "");
 regGS("admin", "");
 regGS("add", "");
 regGS("You can't deny yourself to manage $1", "");
@@ -74,7 +74,6 @@ regGS("Cache", "");
 regGS("Blogs", "");
 regGS("Backup", "");
 regGS("Authoring", "");
-regGS("Audioclips", "");
 regGS("Allow", "");
 regGS("User types", "Tipovi korisnika");
 regGS("No user types.", "Nema tipova korisnika");
