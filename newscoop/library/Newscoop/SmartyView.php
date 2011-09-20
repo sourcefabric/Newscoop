@@ -38,4 +38,14 @@ class SmartyView extends \Zend_View_Abstract
         $file = array_shift(func_get_args());
         $this->smarty->display($file);
     }
+
+    /**
+     * Add script path
+     *
+     * @param string $path
+     */
+    public function addPath($path)
+    {
+        array_unshift($this->smarty->template_dir, $path);
+    }
 }
