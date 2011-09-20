@@ -38,6 +38,19 @@ class Application_Form_Confirm extends Zend_Form
             ),
         ));
 
+        $form = $this;
+        $this->addElement('password', 'password_confirm', array(
+            'label' => 'Password',
+            'required' => true,
+            'filters' => array('stringTrim'),
+            'validators' => array(
+                new Zend_Validate_Callback(function ($value, $context) {
+                    return $value == $context['password'];
+                }),
+            ),
+            'errorMessages' => array("Password confirmation does not match your password."),
+        ));
+
         $this->addElement('submit', 'submit', array(
             'label' => 'Save',
             'ignore' => true,
