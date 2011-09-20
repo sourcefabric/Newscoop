@@ -805,7 +805,9 @@ class Debate extends DatabaseObject
 
         // count all available results
         $countRes = $g_ado_db->Execute($sqlQuery);
-        $p_count = $countRes->recordCount();
+        if (!is_null($countRes)) {
+            $p_count = $countRes->recordCount();
+        }
 
         //get the wanted rows
         $debateRes = $g_ado_db->SelectLimit($sqlQuery, $p_limit, $p_start);

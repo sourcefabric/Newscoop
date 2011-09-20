@@ -68,6 +68,7 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
         $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_debate_admin', 'has_implied' => 1));
 
         $em = Zend_Registry::get('doctrine')->getEntityManager();
+        /* @var $em Doctrine\ORM\EntityManager */
         $ruleRepository = $em->getRepository('Newscoop\Entity\Acl\Rule');
         /* @var $ruleRepository Newscoop\Entity\Repository\Acl\RuleRepository */
         $userRepository = $em->getRepository('Newscoop\Entity\User\Group');
@@ -75,9 +76,9 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
 
         if (!is_null( $user = $userRepository->findOneByName('Administrator') ))
         {
-            //$acl = Zend_Registry::get('acl');
             /* @var $acl \Resource_Acl */
             $rule = new Rule();
+            $user->getRoleId();
             $ruleRepository->save
             (
                 $rule,
@@ -89,6 +90,7 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
                 	"type" => "allow"
                 )
             );
+            $em->getUnitOfWork()->commit();
         }
 
         require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallationBase.php');
