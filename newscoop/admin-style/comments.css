@@ -53,6 +53,21 @@ body#comments {
     border: 1px solid #ffabad;
 }
 
+#showComments fieldset ul li.none {
+    background: #ffffff;
+    border: 1px solid #ffe0e0;
+}
+
+#showComments fieldset ul li.image {
+    background: #ffffff;
+    border: 1px solid #e0ffe0;
+}
+
+#showComments fieldset ul li.document {
+    background: #ffffff;
+    border: 1px solid #e0e0ff;
+}
+
 #showComments fieldset ul li input {
     float: left;
     margin: 6px 6px 0 0;

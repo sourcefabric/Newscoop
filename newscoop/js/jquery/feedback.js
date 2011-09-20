@@ -4,16 +4,33 @@ var statusMap = {
     'starred': 'starred',
     'deleted': 'deleted'
 };
+var attachmentTypeMap = {
+    'none': 'none',
+    'image': 'image',
+    'document': 'document'
+};
 var datatableCallback = {
     serverData: {},
     loading: false,
     addServerData: function (sSource, aoData, fnCallback) {
         that = datatableCallback;
         for (i in that.serverData) {
-            if (that.serverData[i]) aoData.push({
-                "name": "sFilter[status][]",
-                "value": i
-            });
+            if (i == 'pending' || i == 'processed' || i == 'starred' || i == 'deleted') {
+				if (that.serverData[i]) {
+					aoData.push({
+						"name": "sFilter[status][]",
+						"value": i
+					});
+				}
+			}
+			else {
+				if (that.serverData[i]) {
+					aoData.push({
+						"name": "sFilter[attachmentType][]",
+						"value": i
+					});
+				}
+			}
         }
         $.getJSON(sSource, aoData, function (json) {
             fnCallback(json);
@@ -21,6 +38,7 @@ var datatableCallback = {
     },
     row: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
         $(nRow)
+            .addClass('attachment_type_' + attachmentTypeMap[aData.message.attachmentType])
             .addClass('status_' + statusMap[aData.message.status])
             .tmpl('#comment-tmpl', aData)
             .find("input."+ statusMap[aData.message.status]).attr("checked","checked");
@@ -116,6 +134,29 @@ $(function () {
      * when header filter buttons are triggered
      */
     $('.status_filter li')
+    .click(function (evt) {
+        $(this).find('input').click().iff($.versionBetween(false,'1.6.0')).change();
+    })
+    .find('input')
+        .click(function(evt){
+            evt.stopPropagation();
+        })
+        .change(function(evt){
+            if(!datatableCallback.loading) {
+                datatableCallback.loading = true;
+                datatableCallback.serverData[$(this).val()] = $(this).is(':checked');
+                datatable.fnDraw();
+            } else
+                return false;
+    }).end().find('label').click(function(evt){
+        evt.stopPropagation();
+    });
+    
+    /**
+     * Action to fire
+     * when header filter buttons are triggered
+     */
+    $('.attachment_filter li')
     .click(function (evt) {
         $(this).find('input').click().iff($.versionBetween(false,'1.6.0')).change();
     })
