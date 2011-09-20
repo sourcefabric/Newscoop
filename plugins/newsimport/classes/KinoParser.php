@@ -8,20 +8,630 @@
  */
 class KinoData_Parser {
 
+    # TODO: set dirmode, provider_id
+
+    var $m_source = null;
+    var $m_dirs = null;
+    var $m_provider = null;
+
+    var $m_working = '_cin_lock';
+
+    var $m_saved_parts = array('dif' => 'cin_dif', 'all' => 'cin_set');
+
+    /**
+     * constructor
+     * @param array $p_source
+     *
+     * @return void
+     */
+    public function __construct($p_source)
+    {
+        $this->m_source = $p_source;
+        $this->m_dirs = $p_source['source_dirs'];
+        $this->m_provider = $p_source['provider_id'];
+    } // fn __construct
+
+
+    public function start()
+    {
+        // stop, if some worker running; return false
+        $working_path = $this->m_dirs['use'] . $this->m_working;
+        //if (file_exists($working_path)) {
+        //    return false;
+        //}
+        $this->m_lockfile = fopen($working_path, 'a');
+        $locked = flock($this->m_lockfile, LOCK_EX);
+        if (!$locked) {
+            return false;
+        }
+
+        foreach (array($this->m_dirs['use'], $this->m_dirs['new']) as $one_dir) {
+            if (!is_dir($one_dir)) {
+                try {
+                    $created = mkdir($one_dir, $this->m_dirmode, true);
+                    if (!$created) {
+                        return false;
+                    }
+                }
+                catch (Exception $exc) {
+                    return false;
+                }
+            }
+        }
+
+        try {
+            $working_file = fopen($working_path, 'w');
+            fwrite($working_file, date('Y-m-d') . "\n");
+            fclose($working_file);
+        }
+        catch (Exception $exc) {
+            return false;
+        }
+
+        return true;
+
+
+        // TODO: check by file locking
+        return true;
+    }
+
+    public function cleanup()
+    {
+        // we need that conf info
+        //if ((!isset($this->m_dirs['source'])) || (!isset($this->m_dirs['source']['movies']))) {
+        //    return false;
+        //}
+
+        // moving all the files from the interim into the old dir
+        $dir_handle = null;
+        try {
+            $dir_handle = opendir($this->m_dirs['use']);
+        }
+        catch (Exception $exc) {
+            return false;
+        }
+
+        if (!$dir_handle) {
+            return false;
+        }
+
+        while (false !== ($event_file = readdir($dir_handle))) {
+            $one_use_path = $this->m_dirs['use'] . DIRECTORY_SEPARATOR . $event_file;
+            $one_old_path = $this->m_dirs['old'] . DIRECTORY_SEPARATOR . $event_file;
+
+            if (!is_file($one_use_path)) {
+                continue;
+            }
+            if (basename($one_use_path) == $this->m_working) {
+                continue;
+            }
+
+            try {
+                rename($one_use_path, $one_old_path);
+            }
+            catch (Exception $exc) {
+                continue;
+            }
+        }
+        closedir($dir_handle);
+
+        return true;
+        // TODO: move files 'use' => 'old'
+        //return true;
+    }
+
+    public function stop()
+    {
+        // stop, if some worker running; return false
+        $working_path = $this->m_dirs['use'] . $this->m_working;
+        if (!file_exists($working_path)) {
+            return false;
+        }
+        if (!$this->m_lockfile) {
+            return false;
+        }
+
+        try {
+            //unlink($working_path);
+            flock($this->m_lockfile, LOCK_UN);
+            fclose($this->m_lockfile);
+        }
+        catch (Exception $exc) {
+            return false;
+        }
+
+        return true;
+        // TODO: release file locking
+        //return true;
+    }
+
+
+    public function prepare($p_categories, $p_limits, $p_cancels)
+    {
+        // we need that conf info
+        if ((!isset($this->m_dirs['source'])) || (!isset($this->m_dirs['source']['programs']))) { // movies, genres, timestamps too
+            return false;
+        }
+
+        $parser = new KinoData_Parser_SimpleXML();
+        $sqlite_name = $this->m_dirs['use'] . 'movies.sqlite';
+
+        // first copy and use movies files, if any
+        // this is an addition wrt the general event import
+
+        $cur_time = date('YmdHis');
+
+        $to_copy_files_movies = array();
+        $to_copy_files_genres = array();
+        $to_copy_files_timestamps = array();
+
+        $movies_infos_files = array();
+        $movies_genres_files = array();
+        $movies_links_files = array();
+
+        // if available_movies_main
+        $ready_file_movies = $this->m_dirs['new'] . $this->m_dirs['ready']['movies'];
+        $ready_file_genres = $this->m_dirs['new'] . $this->m_dirs['ready']['genres'];
+        $ready_file_timestamps = $this->m_dirs['new'] . $this->m_dirs['ready']['timestamps'];
+
+        if (file_exists($ready_file_movies)) {
+
+            // copy_movies_main;
+            foreach ($this->m_dirs['source']['movies'] as $one_file_glob) {
+                $one_path_glob = $this->m_dirs['new'] . $one_file_glob;
+                $one_file_set = glob($one_path_glob);
+                if (false === $one_file_set) {
+                    continue;
+                }
+                foreach ($one_file_set as $movie_file_path) {
+                    if (!is_file($movie_file_path)) {
+                        continue;
+                    }
+                    if (!array_key_exists($movie_file_path, $to_copy_files_movies)) {
+                        $to_copy_files_movies[$movie_file_path] = $this->m_dirs['use'] . $cur_time . '-' . basename($movie_file_path);
+                    }
+                }
+            }
+            foreach ($to_copy_files_movies as $one_file_src => $one_file_dest) {
+                try {
+                    rename($one_file_src, $one_file_dest);
+                    $movies_infos_files[] = $one_file_dest;
+                }
+                catch (Exception $exc) {}
+            }
+
+            // if available_movies_genres
+            $genres_ready = false;
+            if (file_exists($ready_file_genres)) {
+                $genres_ready = true;
+
+                // copy_movies_genres;
+                foreach ($this->m_dirs['source']['genres'] as $one_file_glob) {
+                    $one_path_glob = $this->m_dirs['new'] . $one_file_glob;
+                    $one_file_set = glob($one_path_glob);
+                    if (false === $one_file_set) {
+                        continue;
+                    }
+                    foreach ($one_file_set as $genre_file_path) {
+                        if (!is_file($genre_file_path)) {
+                            continue;
+                        }
+                        if (!array_key_exists($genre_file_path, $to_copy_files_genres)) {
+                            $to_copy_files_genres[$genre_file_path] = $this->m_dirs['use'] . $cur_time . '-' . basename($genre_file_path);
+                        }
+                    }
+                }
+                foreach ($to_copy_files_genres as $one_file_src => $one_file_dest) {
+                    try {
+                        rename($one_file_src, $one_file_dest);
+                        $movies_genres_files[] = $one_file_dest;
+                    }
+                    catch (Exception $exc) {}
+                }
+
+            }
+            // if available_movies_timestamps
+            $timestamps_ready = false;
+            if (file_exists($ready_file_genres)) {
+                $timestamps_ready = true;
+
+                //copy_movies_timestamps;
+                foreach ($this->m_dirs['source']['timestamps'] as $one_file_glob) {
+                    $one_path_glob = $this->m_dirs['new'] . $one_file_glob;
+                    $one_file_set = glob($one_path_glob);
+                    if (false === $one_file_set) {
+                        continue;
+                    }
+                    foreach ($one_file_set as $timestamp_file_path) {
+                        if (!is_file($timestamp_file_path)) {
+                            continue;
+                        }
+                        if (!array_key_exists($timestamp_file_path, $to_copy_files_timestamps)) {
+                            $to_copy_files_timestamps[$timestamp_file_path] = $this->m_dirs['use'] . $cur_time . '-' . basename($timestamp_file_path);
+                        }
+                    }
+                }
+                foreach ($to_copy_files_timestamps as $one_file_src => $one_file_dest) {
+                    try {
+                        rename($one_file_src, $one_file_dest);
+                        $movies_links_files[] = $one_file_dest;
+                    }
+                    catch (Exception $exc) {}
+                }
+            }
+
+            $movies_ready_files = array();
+            $movies_ready_files[] = $ready_file_movies;
+            if (!in_array($ready_file_genres, $movies_ready_files)) {
+                $movies_ready_files[] = $ready_file_genres;
+            }
+            if (!in_array($ready_file_timestamps, $movies_ready_files)) {
+                $movies_ready_files[] = $ready_file_timestamps;
+            }
+            foreach ($movies_ready_files as $one_ready_file) {
+                try {
+                    unlink($one_ready_file); // i.e. ci_done.txt
+                }
+                catch (Exception $exc) {}
+            }
+
+            // process_movies_files;
+            $parser->updateMoviesInfo($sqlite_name, $movies_infos_files, $movies_genres_files, $movies_links_files);
+
+        }
+
+
+//return true;
+
+        $to_copy_files_programs = array();
+        $programs_infos_files = array();
+
+        $ready_file_programs = $this->m_dirs['new'] . $this->m_dirs['ready']['programs'];
+        if (file_exists($ready_file_programs)) {
+            // copy_programs_main;
+            foreach ($this->m_dirs['source']['programs'] as $one_file_glob) {
+                $one_path_glob = $this->m_dirs['new'] . $one_file_glob;
+                $one_file_set = glob($one_path_glob);
+                if (false === $one_file_set) {
+                    continue;
+                }
+                foreach ($one_file_set as $program_file_path) {
+                    if (!is_file($program_file_path)) {
+                        continue;
+                    }
+                    if (!array_key_exists($program_file_path, $to_copy_files_programs)) {
+                        $to_copy_files_programs[$program_file_path] = $this->m_dirs['use'] . $cur_time . '-' . basename($program_file_path);
+                    }
+                }
+            }
+            foreach ($to_copy_files_programs as $one_file_src => $one_file_dest) {
+                try {
+                    rename($one_file_src, $one_file_dest);
+                    $programs_infos_files[] = $one_file_dest;
+                }
+                catch (Exception $exc) {}
+            }
+
+            try {
+                unlink($ready_file_programs); // i.e. wvag_cine_done.txt
+            }
+            catch (Exception $exc) {}
+
+            $events_last = $this->load(true);
+            $parser->setLastEvents($events_last);
+
+            // $p_categories, $p_limits, $p_cancels
+            //$start_date = null;
+            //$end_date = null;
+            $lim_span_past = null;
+            $lim_span_next = null;
+            if ((!empty($p_limits)) && (array_key_exists('dates', $p_limits))) {
+                $date_limits = $p_limits['dates'];
+                if (is_array($date_limits) && isset($date_limits['past'])) {
+                    $lim_span_past = 0 + $date_limits['past'];
+                    //$start_date = date('Y-m-d', (time() - ($lim_span_past * 24 * 60 * 60)));
+                }
+                if (is_array($date_limits) && isset($date_limits['next'])) {
+                    $lim_span_next = 0 + $date_limits['next'];
+                    //$end_date = date('Y-m-d', (time() + ($lim_span_past * 24 * 60 * 60)));
+                }
+            }
+            //if (array_key_exists('start_date', $p_otherParams)) {
+            //    $start_date = $p_otherParams['start_date'];
+            //}
+            $cat_limits = null;
+            if ((!empty($p_limits)) && (array_key_exists('categories', $p_limits))) {
+                $cat_limits = $p_limits['categories'];
+            }
+
+            $event_load = $parser->prepareKinosEvents($programs_infos_files, $sqlite_name, $p_categories, $lim_span_past, $lim_span_next, $cat_limits);
+
+            //$save_path_com = $this->m_dirs['use'] . $cur_time . '-';
+            if (!empty($event_load)) {
+                $event_all = $event_load['events_all'];
+                unset($event_load['events_all']);
+                $event_dif = $event_load['events_dif'];
+                unset($event_load['events_dif']);
+
+var_dump(count($event_all));
+var_dump(count($event_dif));
+
+                $event_all_json = json_encode($event_all);
+                $event_all_json_path = 'compress.zlib://' . $this->m_dirs['use'] . $cur_time . '-' . $this->m_saved_parts['all'] . '.json.gz';
+
+                $event_dif_json = json_encode($event_dif);
+                $event_dif_json_path = 'compress.zlib://' . $this->m_dirs['use'] . $cur_time . '-' . $this->m_saved_parts['dif'] . '.json.gz';
+
+                try {
+                    $event_all_json_file = fopen($event_all_json_path, 'w');
+                    fwrite($event_all_json_file, $event_all_json);
+                    fclose($event_all_json_file);
+                }
+                catch (Exception $exc) {
+                }
+
+                try {
+                    $event_dif_json_file = fopen($event_dif_json_path, 'w');
+                    fwrite($event_dif_json_file, $event_dif_json);
+                    fclose($event_dif_json_file);
+                }
+                catch (Exception $exc) {
+                }
+
+            }
+
+        }
+
+/*
+        $to_copy_files = true;
+
+        $some_files_to_process = true;
+
+        if ((isset($this->m_dirs['ready'])) && (isset($this->m_dirs['ready']['events']))) {
+            $ready_file = $this->m_dirs['new'] . $this->m_dirs['ready']['events'];
+            // if no new files (still may be some not fully processed at the interim dir)
+            if (!file_exists($ready_file)) {
+                $to_copy_files = false;
+
+                $some_files_to_process = false;
+                foreach ($this->m_dirs['source']['events'] as $one_file_glob) {
+                    $one_path_glob = $this->m_dirs['use'] . '*' . $one_file_glob;
+                    $one_file_set = glob($one_path_glob);
+                    if (false === $one_file_set) {
+                        continue;
+                    }
+                    foreach ($one_file_set as $event_file_path) {
+                        if (!is_file($event_file_path)) {
+                            continue;
+                        }
+                        $some_files_to_process = true;
+                        break;
+                    }
+                }
+
+                // if neither new, no interim
+                if (!$some_files_to_process) {
+                    return false;
+                }
+
+                // some files to process are there
+                return true;
+            }
+        }
+        if ($to_copy_files) {
+            // copy files with time stamps
+            $cur_time = date('YmdHis');
+            foreach ($this->m_dirs['source']['events'] as $one_file_glob) {
+                $one_path_glob = $ready_file = $this->m_dirs['new'] . $one_file_glob;
+                $one_file_set = glob($one_path_glob);
+                if (false === $one_file_set) {
+                    continue;
+                }
+
+                foreach ($one_file_set as $event_file_path_new) {
+                    if (!is_file($event_file_path_new)) {
+                        continue;
+                    }
+                    $event_file_name = basename($event_file_path_new);
+                    $event_file_path_use = $this->m_dirs['use'] . $cur_time . '-' . $event_file_name;
+                    try {
+                        rename($event_file_path_new, $event_file_path_use);
+                    }
+                    catch (Exception $exc) {
+                        continue;
+                    }
+                }
+            }
+
+            // remove the ready file
+            if ((isset($this->m_dirs['ready'])) && (isset($this->m_dirs['ready']['events']))) {
+                $ready_file = $this->m_dirs['new'] . $this->m_dirs['ready']['events'];
+                if (file_exists($ready_file)) {
+                    try {
+                        unlink($ready_file);
+                    }
+                    catch (Exception $exc) {
+                        // return false;
+                    }
+                }
+            }
+*/
+/*
+            $this->m_last_events = $this->load(true);
+
+            // to parse xml, restrict it, and convert to json
+            $event_load = $this->parse($p_categories, $p_limits, $p_cancels);
+            if (empty($event_load)) {
+                //$this->stop();
+                //continue;
+                return true;
+            }
+
+            $event_all = $event_load['events_all'];
+            unset($event_load['events_all']);
+            $event_dif = $event_load['events_dif'];
+            unset($event_load['events_dif']);
+
+            $event_all_json = json_encode($event_all);
+            $event_all_json_path = 'compress.zlib://' . $this->m_dirs['use'] . $cur_time . '-' . $this->m_saved_parts['all'] . '.json.gz';
+
+            $event_dif_json = json_encode($event_dif);
+            $event_dif_json_path = 'compress.zlib://' . $this->m_dirs['use'] . $cur_time . '-' . $this->m_saved_parts['dif'] . '.json.gz';
+
+            try {
+                $event_all_json_file = fopen($event_all_json_path, 'w');
+                fwrite($event_all_json_file, $event_all_json);
+                fclose($event_all_json_file);
+            }
+            catch (Exception $exc) {
+            }
+
+            try {
+                $event_dif_json_file = fopen($event_dif_json_path, 'w');
+                fwrite($event_dif_json_file, $event_dif_json);
+                fclose($event_dif_json_file);
+            }
+            catch (Exception $exc) {
+            }
+
+        }
+*/
+
+        $some_files_to_load = false;
+        $files_found = glob($this->m_dirs['use'] . '*-' . $this->m_saved_parts['dif'] . '.json.gz');
+        if (!empty($files_found)) {
+            foreach ($files_found as $one_file) {
+                if (is_file($one_file)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+
+    }
+
+    public function load($p_old = false) {
+
+        $dir_type = 'use';
+        $set_type = $this->m_saved_parts['dif'];
+        if ($p_old) {
+            $dir_type = 'old';
+            $set_type = $this->m_saved_parts['all'];
+        }
+
+        $dir_handle = null;
+        try {
+            $dir_handle = opendir($this->m_dirs[$dir_type]);
+        }
+        catch (Exception $exc) {
+            return false;
+        }
+
+        $search_dir = $this->m_dirs[$dir_type];
+        if ( DIRECTORY_SEPARATOR != substr($search_dir, (strlen($search_dir) - strlen(DIRECTORY_SEPARATOR))) ) {
+            $search_dir .= DIRECTORY_SEPARATOR;
+        }
+
+        $datetime_length = 14;
+        $proc_files = array();
+        $proc_files_gzipped = array();
+        if ($dir_handle) {
+            while (false !== ($event_file = readdir($dir_handle))) {
+
+                $event_file_path = $search_dir . $event_file;
+
+                if (!is_file($event_file_path)) {
+                    continue;
+                }
+                if ($event_file == $this->m_working) {
+                    continue;
+                }
+
+                $event_file_base_arr = explode('.', $event_file);
+                if ((3 == count($event_file_base_arr)) && ('gz' == strtolower($event_file_base_arr[2]))) {
+                    $event_file_base_arr = array_slice($event_file_base_arr, 0, 2);
+                    $proc_files_gzipped[$event_file_path] = true;
+                }
+
+                if (2 != count($event_file_base_arr)) {
+                    continue;
+                }
+                if ('json' != strtolower($event_file_base_arr[count($event_file_base_arr) - 1])) {
+                    continue;
+                }
+                if (strlen($event_file_base_arr[0]) != ($datetime_length + strlen($set_type) + 1)) {
+                    continue;
+                }
+                $event_file_name_arr = explode('-', $event_file_base_arr[0]);
+                if (2 != count($event_file_name_arr)) {
+                    continue;
+                }
+                if ($set_type != $event_file_name_arr[1]) {
+                    continue;
+                }
+                if (!is_numeric($event_file_name_arr[0])) {
+                    continue;
+                }
+
+                $proc_files[] = $event_file_path;
+            }
+            closedir($dir_handle);
+        }
+
+        if (!$p_old) {
+            sort($proc_files); // the newest as last to overwrite other ones, for the current
+        }
+        else {
+            if (0 < count($proc_files)) {
+                rsort($proc_files); // just the newest one, for the passed
+                $proc_files = array($proc_files[0]);
+            }
+        }
+
+        $events = array();
+
+        foreach ($proc_files as $one_proc_file) {
+            if (isset($proc_files_gzipped[$one_proc_file]) && $proc_files_gzipped[$one_proc_file]) {
+                $one_proc_file = 'compress.zlib://' . $one_proc_file;
+            }
+
+            $one_json = null;
+            try {
+                $one_json_string = @file_get_contents($one_proc_file);
+                if (false !== $one_json_string) {
+                    $one_json = json_decode($one_json_string, true);
+                    foreach ($one_json as $event_id => $event_info) {
+                        if ($p_old) {
+                            $event_info = json_encode($event_info);
+                        }
+                        $events[$event_id] = $event_info;
+                    }
+                }
+            }
+            catch (Exception $exc) {
+                //;
+            }
+        }
+        return $events;
+    } // fn load
+
+
     /**
      * Parses KinoData data (by KinoData_Parser_SimpleXML)
      *
      * @param string $p_file file name of the kino file
      * @return array
      */
-    function parse($p_provider, $p_file, $p_categories) {
+/*
+    public function parse($p_provider, $p_file, $p_categories) {
 
         $parser = new KinoData_Parser_SimpleXML;
         $result = $parser->parse($p_provider, $p_file, $p_categories);
 
         return $result;
     } // fn parse
-
+*/
     //function readCategories() {
     //    ;
     //}
@@ -32,6 +642,13 @@ class KinoData_Parser {
  * KinoData Parser that makes use of the SimpleXML PHP extension.
  */
 class KinoData_Parser_SimpleXML {
+
+    var $m_last_events = null;
+
+    public function setLastEvents($p_lastEvents)
+    {
+        $this->m_last_events = $p_lastEvents;
+    }
 
     private function setSourceFiles($p_fileNamesIn, &$p_fileNamesOut, &$p_filesToUnlink)
     {
@@ -376,18 +993,18 @@ class KinoData_Parser_SimpleXML {
 
     }
 
-    public function updateMoviesInfo($p_moviesInfosFiles, $p_moviesGenresFiles, $p_moviesLinksFiles)
+    public function updateMoviesInfo($p_moviesDatabase, $p_moviesInfosFiles, $p_moviesGenresFiles, $p_moviesLinksFiles)
     {
         $movies_info = $this->parseMoviesInfo($p_moviesInfosFiles, $p_moviesGenresFiles, $p_moviesLinksFiles);
 
-        $sqlite_name = '/tmp/movies001.sqlite';
+        $sqlite_name = $p_moviesDatabase;
         $table_name = 'movies';
 
         ksort($movies_info);
 //var_dump(count($movies_info));
-        $fh = fopen('/tmp/save001.json', 'w');
-        fwrite($fh, json_encode($movies_info));
-        fclose($fh);
+        //$fh = fopen('/tmp/save001.json', 'w');
+        //fwrite($fh, json_encode($movies_info));
+        //fclose($fh);
 
 
         $cre_req = 'CREATE TABLE IF NOT EXISTS ' . $table_name . ' (movie_id PRIMARY KEY, movie_key TEXT UNIQUE, movie_info TEXT)';
@@ -428,7 +1045,8 @@ class KinoData_Parser_SimpleXML {
 
 
     //private function parseKinosInfo($p_kinosInfosFiles, $p_moviesDatabase)
-    public function parseKinosInfo($p_kinosInfosFiles, $p_moviesDatabase)
+    //public function parseKinosInfo($p_kinosInfosFiles, $p_moviesDatabase)
+    public function parseKinosInfo($p_kinosInfosFiles)
     {
         // movies table: movie_id(int), movie_key(string), title(string), genres(json:strings), tim(int), url(string), images(json:id,tim,name,rank,label,url,w,h,updated), trailers(w,h,time,format,url,updated), 
         //parse_movies_info();
@@ -446,10 +1064,19 @@ class KinoData_Parser_SimpleXML {
         foreach ($kinos_infos_files as $one_kino_file) {
             $one_kino_xml = simplexml_load_file($one_kino_file);
             foreach ($one_kino_xml->kino as $one_kino) {
-                //$one_kino_id = trim('' . $one_kino->theaterid);
+                $one_kino_id = trim('' . $one_kino->theaterid);
                 //if (empty($one_kino_id)) {
                 //    continue;
                 //}
+                $one_kino_name = trim('' . $one_kino->theatername);
+                $one_kino_town = trim('' . $one_kino->theatertown);
+                $one_kino_zip = trim('' . $one_kino->theaterzip);
+                $one_kino_street = trim('' . $one_kino->theateradress);
+                $one_kino_latitude = trim('' . $one_kino->theaterlat);
+                $one_kino_longitude = trim('' . $one_kino->theaterlong);
+                $one_kino_phone = trim('' . $one_kino->theaterphone);
+                $one_kino_url = trim('' . $one_kino->theaterurl);
+
                 foreach ($one_kino->movie as $one_movie) {
                     $one_movie_id = trim('' . $one_movie->filmid);
                     if (empty($one_movie_id)) {
@@ -503,6 +1130,16 @@ class KinoData_Parser_SimpleXML {
 
                     $movies_screens[] = array(
                         // 'kino_id' => $one_kino_id, // kino id, address, ...
+                        'kino_id' => $one_kino_id,
+                        'kino_name' => $one_kino_name,
+                        'kino_town' => $one_kino_town,
+                        'kino_zip' => $one_kino_zip,
+                        'kino_street' => $one_kino_street,
+                        'kino_latitude' => $one_kino_latitude,
+                        'kino_longitude' => $one_kino_longitude,
+                        'kino_phone' => $one_kino_phone,
+                        'kino_url' => $one_kino_url,
+
                         'movie_id' => $one_movie_id,
                         'movie_key' => $one_movie_key,
                         'title' => $one_movie_title,
@@ -519,6 +1156,346 @@ class KinoData_Parser_SimpleXML {
         return $movies_screens;
     }
 
+    private function loadMoviesByKeys($p_moviesKeys, $p_sqliteName)
+    {
+        $movies_infos = array();
+
+        $table_name = 'movies';
+        $mov_req = 'SELECT movie_info FROM ' . $table_name . ' WHERE movie_key = :movie_key LIMIT 1';
+
+        @$db = new PDO ('sqlite:' . $p_sqliteName);
+        $stmt = $db->prepare($mov_req);
+
+        foreach ($p_moviesKeys as $mov_key => $mov_aux) {
+            $mov_info = null;
+            $stmt->bindParam(':movie_key', $mov_key, PDO::PARAM_STR);
+            $res = $stmt->execute();
+            if (!$res) {
+                continue;
+            }
+            $res = $stmt->fetch(PDO::FETCH_ASSOC);
+            if (empty($res)) {
+                continue;
+            }
+            $mov_info = $res['movie_info'];
+            try {
+                $mov_info = json_decode($mov_info, true);
+            }
+            catch (Exception $exc) {
+                $mov_info = null;
+            }
+            $movies_infos[$mov_key] = $mov_info;
+        }
+
+        return $movies_infos;
+    }
+
+    //public function prepareKinosEvents($p_kinosInfosFiles, $p_moviesDatabase, $p_moviesInfosFiles, $p_moviesGenresFiles, $p_moviesLinksFiles)
+    public function prepareKinosEvents($p_kinosInfosFiles, $p_moviesDatabase, $p_categories, $p_daysPast = null, $p_daysNext = null, $p_catLimits = null)
+    {
+        $provider_id = 2;
+        $kino_country = 'ch';
+
+        //$this->updateMoviesInfo($p_moviesDatabase, $p_moviesInfosFiles, $p_moviesGenresFiles, $p_moviesLinksFiles);
+
+        $limit_date_start = null;
+        $limit_date_end = null;
+
+        $cur_time = time();
+        if (!empty($p_daysPast)) {
+            $limit_date_start = date('Y-m-d', ($cur_time - ($p_daysPast * 24 * 60 * 60)));
+        }
+        if (!empty($p_daysNext)) {
+            $limit_date_end = date('Y-m-d', ($cur_time + ($p_daysNext * 24 * 60 * 60)));
+        }
+
+        $movies_screens = $this->parseKinosInfo($p_kinosInfosFiles);
+
+        $movies_keys = array();
+
+        foreach ($movies_screens as $one_screen) {
+            if (isset($one_screen['movie_key']) && (!empty($one_screen['movie_key']))) {
+                $movies_keys[$one_screen['movie_key']] = true;
+            }
+        }
+
+        $movies_infos = $this->loadMoviesByKeys($movies_keys, $p_moviesDatabase);
+        //foreach ($movies_keys as $one_mov_key) {
+        //    $mov_info = $this->takeMovieByKey($one_mov_key);
+        //}
+
+        $screen_events_all = array();
+        $screen_events_dif = array();
+
+        foreach ($movies_screens as $one_screen) {
+
+            // check if town - topic included
+            $cur_town = $one_screen['kino_town'];
+//var_dump($cur_town);
+            $event_topics = array();
+            // * main type fields
+            // event category
+            //$x_catnam = '';
+            $c_other = null;
+/*
+if ('Basel' == $cur_town) {
+echo "\n<pre>\n\n";
+//var_dump($p_categories);
+//var_dump($p_catLimits);
+//exit(0);
+}
+*/
+            foreach ($p_categories as $one_category) {
+                if (!is_array($one_category)) {
+                    continue;
+                }
+
+                $one_cat_skip = false;
+                $one_cat_key = $one_category['key'];
+                foreach ($p_catLimits as $cat_lim_key => $cat_lim_spec) {
+                    if ($cat_lim_key != $one_cat_key) {
+                        continue;
+                    }
+                    if (array_key_exists('towns', $cat_lim_spec)) {
+                        if (!in_array($cur_town, $cat_lim_spec['towns'])) {
+//if ('Basel' == $cur_town) {
+//echo " wtf? ";
+//}
+                            $one_cat_skip = true;
+                            break;
+                        }
+                    }
+                }
+
+                //if (!canUseTopic($event_info, $one_category, $p_catLimits)) {
+                if ($one_cat_skip) {
+                    continue;
+                }
+//if ('Basel' == $cur_town) {
+//echo " bbbbbb ";
+//}
+
+                if (array_key_exists('fixed', $one_category)) {
+                    $event_topics[] = $one_category['fixed'];
+                    continue;
+                }
+//if ('Basel' == $cur_town) {
+//var_dump($event_topics);
+//exit(0);
+//}
+                if (array_key_exists('other', $one_category)) {
+                    $c_other = $one_category['other'];
+                    continue;
+                }
+/*
+                if ((array_key_exists('match_xml', $one_category)) && (array_key_exists('match_topic', $one_category))) {
+                    $one_cat_match_xml = $one_category['match_xml'];
+                    $one_cat_match_topic = $one_category['match_topic'];
+                    if ((!is_array($one_cat_match_xml)) || (!is_array($one_cat_match_topic))) {
+                        continue;
+                    }
+                    if (in_array($x_catnam, $one_cat_match_xml)) {
+                        $event_topics[] = $one_cat_match_topic;
+                        continue;
+                    }
+                }
+*/
+            }
+            if (empty($event_topics)) {
+                if (!empty($c_other)) {
+                    $event_topics[] = $c_other;
+                }
+            }
+/*
+if ('Basel' == $cur_town) {
+echo " aaaaaaa ";
+//var_dump($event_topics);
+}
+*/
+            if (empty($event_topics)) {
+                continue;
+            }
+/*
+if ('Basel' == $cur_town) {
+//echo " bbbbbb ";
+var_dump($event_topics);
+exit(0);
+}
+*/
+            //$event_info['topics'] = $event_topics;
+
+            $one_movie = null;
+
+            if (isset($one_screen['movie_key']) && (!empty($one_screen['movie_key']))) {
+                $one_mov_key = $one_screen['movie_key'];
+                if (isset($movies_infos[$one_mov_key]) && (!empty($movies_infos[$one_mov_key]))) {
+                    $one_movie = $movies_infos[$one_mov_key];
+                }
+            }
+
+            $one_mov_genre = '';
+            $one_mov_desc = '';
+            $one_mov_images = array();
+
+            $one_mov_trailers = array();
+
+            if (!empty($one_movie)) {
+                if (isset($one_movie['genres'])) {
+                    $one_mov_genre = implode(',', $one_movie['genres']);
+                }
+                if (isset($one_movie['desc'])) {
+                    $one_mov_desc = $one_movie['desc'];
+                }
+                if ( isset($one_movie['link_images']) && (!empty($one_movie['link_images'])) ) {
+                    foreach($one_movie['link_images'] as $one_img_info) {
+                        if (isset($one_img_info['url'])) {
+                            $one_link_url = $one_img_info['url'];
+                            $one_link_label = '';
+                            $one_mov_images[] = array('url' => $one_link_url, 'label' => $one_link_label);
+                        }
+                    }
+                }
+
+                if ( isset($one_movie['trailer']) && (!empty($one_movie['trailer'])) ) {
+                    $cur_trailer = $one_movie['trailer'];
+                    if (strtolower(substr($cur_trailer, 0, 4)) != 'http') {
+                        $cur_trailer = 'http://' . $cur_trailer;
+                    }
+                    $cur_trailer = '<a href="' . $cur_trailer . '">trailer</a>';
+                    $one_mov_trailers[] = $cur_trailer;
+                }
+                if ( isset($one_movie['link_trailer']) && (!empty($one_movie['link_trailer'])) ) {
+                    $cur_trailer = $one_movie['link_trailer']['url'];
+                    if (strtolower(substr($cur_trailer, 0, 4)) != 'http') {
+                        $cur_trailer = 'http://' . $cur_trailer;
+                    }
+                    $cur_trailer = '<a href="' . $cur_trailer . '">trailer</a>';
+                    $one_mov_trailers[] = $cur_trailer;
+                }
+            }
+
+            $one_use_desc = $one_mov_desc;
+            if (empty($one_use_desc)) {
+                $one_use_desc = $one_screen['desc'];
+            }
+
+            foreach ($one_screen['dates'] as $one_date => $one_times) {
+//var_dump($one_date);
+                //$one_date_arr = explode('-', $one_date);
+                //$one_date_part = ($one_date_arr[0] * 10000) + (ltrim($one_date_arr[1], '0') * 100) + ltrim($one_date_arr[1], '0');
+                $one_date_part = str_replace('-', '', $one_date);
+//var_dump($one_date_part);
+                $one_event = array();
+                $one_event['provider_id'] = $provider_id;
+                //$one_event['event_id'] = $one_screen[''] . '-' . $one_screen[''];
+                //$one_event['event_id'] = (1000000 * 1000000 * (0 + $one_date_part)) + (1000000 * (0 + $one_screen['kino_id'])) + (0 + $one_screen['movie_id']);
+                $one_event['event_id'] = '' . $one_date_part . str_pad($one_screen['kino_id'], 6, '0', STR_PAD_LEFT) . str_pad($one_screen['movie_id'], 6, '0', STR_PAD_LEFT);
+//var_dump($one_event['event_id']);
+                $one_event['tour_id'] = $one_screen['movie_id'];
+                $one_event['location_id'] = $one_screen['kino_id'];
+
+                $one_event['headline'] = $one_screen['title'];
+                $one_event['organizer'] = $one_screen['kino_name'];
+
+                $one_event['country'] = $kino_country;
+                $one_event['zipcode'] = $one_screen['kino_zip'];
+                $one_event['town'] = $one_screen['kino_town'];
+                $one_event['street'] = $one_screen['kino_street'];
+
+                //$scr_times = implode(',', $one_times);
+                $scr_times = '';
+                foreach ($one_times as $one_scr_time) {
+                    if (!empty($scr_times)) {
+                        $scr_times .= ',';
+                    }
+                    $scr_times .= $one_scr_time['time'];
+                    if (isset($one_scr_time['lang']) && (!empty($one_scr_time['lang']))) {
+                        $scr_times .= ':' . $one_scr_time['lang'];
+                    }
+                    if (isset($one_scr_time['flag']) && (!empty($one_scr_time['flag']))) {
+                        $scr_times .= ':' . $one_scr_time['flag'];
+                    }
+                }
+
+                $one_date_year = '0000';
+                $one_date_month = '00';
+                $one_date_day = '00';
+                $one_date_arr = explode('-', $one_date);
+                if (3 == count($one_date_arr)) {
+                    $one_date_year = $one_date_arr[0];
+                    $one_date_month = ltrim($one_date_arr[1], '0');
+                    $one_date_day = ltrim($one_date_arr[2], '0');
+                }
+
+                if ($limit_date_start) {
+                    if ($one_date < $limit_date_start) {
+                        //continue;
+                    }
+                }
+                if ($limit_date_end) {
+                    if ($one_date > $limit_date_end) {
+                        continue;
+                    }
+                }
+
+                $one_event['date'] = $one_date;
+                $one_event['date_year'] = $one_date_year;
+                $one_event['date_month'] = $one_date_month;
+                $one_event['date_day'] = $one_date_day;
+                $one_event['time'] = $scr_times;
+
+                $one_event['date_time_text'] = '';
+
+                $one_event['web'] = $one_screen['kino_url'];
+                $one_event['email'] = '';
+                $one_event['phone'] = $one_screen['kino_phone'];
+
+                $one_event['description'] = str_replace("\n", "\n<br />\n", $one_use_desc);
+                $one_event['other'] = $one_screen['other'];
+                foreach ($one_mov_trailers as $cur_trailer) {
+                    $one_event['other'][] = $cur_trailer;
+//var_dump($cur_trailer);
+                }
+
+                $one_event['genre'] = $one_mov_genre;
+                $one_event['languages'] = '';
+                $one_event['prices'] = '';
+                $one_event['minimal_age'] = '';
+
+                $one_event['canceled'] = false;
+                $one_event['rated'] = false;
+
+                $one_event['geo'] = array();
+                if ( (!empty($one_screen['kino_latitude'])) && (!empty($one_screen['kino_longitude'])) ) {
+                    $one_event['geo']['longitude'] = $one_screen['kino_longitude'];
+                    $one_event['geo']['latitude'] = $one_screen['kino_latitude'];
+                }
+
+                $one_event['images'] = $one_mov_images;
+
+                $one_event['topics'] = $event_topics;
+
+                //$one_event[''] = $one_screen[''];
+                //$one_event[''] = $one_screen[''];
+
+                $screen_events_all[$one_event['event_id']] = $one_event;
+
+                if (!empty($this->m_last_events)) {
+                    if (isset($this->m_last_events[$one_event['event_id']])) {
+                        if ($this->m_last_events[$one_event['event_id']] == json_encode($one_event)) {
+                            continue;
+                        }
+                    }
+                }
+
+                $screen_events_dif[$one_event['event_id']] = $one_event;
+            }
+
+        }
+
+        return array('events_all' => $screen_events_all, 'events_dif' => $screen_events_dif);
+    }
+
 
 
 
@@ -528,11 +1505,12 @@ class KinoData_Parser_SimpleXML {
      * ... load info about genres
      * ... load (info about) images
      */
+/*
     public function prepare($p_categories, $p_limits, $p_cancels)
     {
         //updateMoviesInfo($p_moviesInfosFiles, $p_moviesGenresFiles, $p_$moviesLinksFiles);
     }
-
+*/
 
     /**
      * Parses KinoData data (by SimplXML)
@@ -540,6 +1518,7 @@ class KinoData_Parser_SimpleXML {
      * @param string $p_file file name of the eventdata file
      * @return array
      */
+/*
     private function parse($p_provider, $p_file, $p_categories) {
 
 		$events = array();
@@ -700,11 +1679,11 @@ class KinoData_Parser_SimpleXML {
                     continue;
                 }
 
-/*
+/ *
 				$event_info['event_date'] = null;
 				$event_info['event_time'] = null;
 				$event_info['event_open'] = null;
-*/
+* /
 
 				// Descriptions
                 // shall be taken from the movies file, if the movie is there
@@ -738,6 +1717,8 @@ class KinoData_Parser_SimpleXML {
 		}
 
     } // fn parse
+*/
+
 } // class KinoData_Parser_SimpleXML
 
 
@@ -746,7 +1727,7 @@ class KinoData_Parser_SimpleXML {
 /**
  * MovieData Importer class for managing parsing of MovieData files.
  */
-class MovieData_Parser {
+//class MovieData_Parser {
 
     /**
      * Parses MovieData data (by MovieData_Parser_SimpleXML)
@@ -754,6 +1735,7 @@ class MovieData_Parser {
      * @param string $p_file file name of the movie file
      * @return array
      */
+/*
     function parse($p_provider, $p_file, $p_categories) {
 
         $parser = new MovieData_Parser_SimpleXML;
@@ -761,12 +1743,13 @@ class MovieData_Parser {
 
         return $result;
     } // fn parse
-} // class MovieData_Parser
+*/
+//} // class MovieData_Parser
 
 /**
  * MovieData Parser that makes use of the SimpleXML PHP extension.
  */
-class MovieData_Parser_SimpleXML {
+//class MovieData_Parser_SimpleXML {
 
     /**
      * Parses MovieData data (by SimplXML)
@@ -774,6 +1757,7 @@ class MovieData_Parser_SimpleXML {
      * @param string $p_file file name of the eventdata file
      * @return array
      */
+/*
     function parse($p_provider, $p_file, $p_categories) {
 
 		$movies = array();
@@ -862,7 +1846,8 @@ class MovieData_Parser_SimpleXML {
 		}
 
     } // fn parse
-} // class MovieData_Parser_SimpleXML
+*/
+//} // class MovieData_Parser_SimpleXML
 
 
 

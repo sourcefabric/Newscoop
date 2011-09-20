@@ -23,6 +23,16 @@ $event_data_limits = array(
             'next' => 93, // 93 days adv
         ),
     ),
+    'movies_1' => array(
+        'categories' => array(
+            'movie' => array('towns' => newsimport_getBaselTowns()), // array('Basel')),
+            'other' => array('towns' => newsimport_getBaselTowns()), // array('Basel')),
+        ),
+        'dates' => array(
+            'past' => 1, // 1 day old
+            'next' => 7, // 7 days adv
+        ),
+    ),
 );
 
 function newsimport_getBaselTowns() {

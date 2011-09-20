@@ -474,7 +474,7 @@ class NewsImport
                         $one_img_rank += 1;
                         $one_image_cont = false;
                         try {
-                            $one_image_cont = file_get_contents($one_image['url']);
+                            $one_image_cont = @file_get_contents($one_image['url']);
                         }
                         catch (Exception $exc) {
                             continue;
@@ -681,6 +681,7 @@ class NewsImport
 
         $class_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'classes';
         require_once($class_dir.DIR_SEP.'EventParser.php');
+        require_once($class_dir.DIR_SEP.'KinoParser.php');
 
         global $Campsite;
         if (empty($Campsite)) {
@@ -761,6 +762,9 @@ class NewsImport
 
             if ('general' == $one_source['event_type']) {
                 $parser_obj = new EventData_Parser($one_source);
+            }
+            if ('movie' == $one_source['event_type']) {
+                $parser_obj = new KinoData_Parser($one_source);
             }
 
             if (!$parser_obj) {
