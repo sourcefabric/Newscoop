@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection,
     Newscoop\Utils\Validation;
 
 /**
- * @Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\UserPointsRepository")
  * @Table(name="user_points_index")
  */
 class UserPoints
@@ -26,6 +26,11 @@ class UserPoints
      * @Column(type="string",unique=true,name="action")
      */
     private $action;
+
+    /**
+     * @Column(type="string",unique=true,name="name")
+     */
+    private $name;
 
     /**
      * @Column(type="integer",unique=false,name="points")
@@ -51,6 +56,15 @@ class UserPoints
     public function setAction($action) {
         $this->action = (string) $action;
         return $this;
+    }
+
+    /**
+     * Get human readable action name
+     *
+     * @return string
+     */
+    public function getName() {
+        return (string) $this->name;
     }
 
     /**

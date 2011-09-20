@@ -14,8 +14,8 @@
 <table>
     <tbody>
         <tr>
-            <td>Active</td>
-            <td><a href="{{ $view->url() }}">All</a></td>
+            <td><a href="{{ $view->url([], 'user-active') }}">Active</a></td>
+            <td><a href="{{ $view->url(['user-listing' => 'A-Z'], 'user-list') }}">All</a></td>
             <td><a href="{{ $view->url(['user-listing' => 'A-D'], 'user-list') }}">A-D</a></td>
             <td><a href="{{ $view->url(['user-listing' => 'E-K'], 'user-list') }}">E-K</a></td>
             <td><a href="{{ $view->url(['user-listing' => 'L-P'], 'user-list') }}">L-P</a></td>
@@ -28,9 +28,9 @@
 <ul class="users">
     {{ foreach $users as $user }}
     <li>
-        <h3><a href="{{ $view->url(['username' => $user->uname], 'user') }}">{{ $user }}</a></h3>
-        {{ if $user->image() }}
-        <img src="{{ $user->image(30, 30) }}" />
+        <h3>{{ $user->name }}</h3>
+        {{ if $user->image }}
+        <img src="{{ $user->image }}" />
         {{ /if }}
         <hr />
     </li>
@@ -38,5 +38,9 @@
 </ul>
 
 {{include file='paginator_control.tpl'}}
+
+<div class="community_ticker">
+{{ list_community_feeds length=5 }}<p>{{ $gimme->community_feed->created }} {{ $gimme->community_feed->message }}<p>{{ /list_community_feeds }}
+</div>
 
 {{/block}}

@@ -14,11 +14,18 @@ namespace Newscoop\Entity;
  */
 class Section extends Entity
 {
-        /**
+    /**
      * Provides the class name as a constant.
      */
     const NAME = __CLASS__;
 
+    /**
+     * @Id @generatedValue
+     * @Column(name="id", type="integer")
+     * @var int
+     */
+    protected $id;
+    
     /**
      * @ManyToOne(targetEntity="Newscoop\Entity\Publication")
      * @JoinColumn(name="IdPublication", referencedColumnName="Id")
@@ -158,5 +165,15 @@ class Section extends Entity
     public function getIssue()
     {
         return $this->issue;
+    }
+    
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return (int) $this->id;
     }
 }

@@ -45,7 +45,6 @@ class CommunityFeedsList extends ListObject
 
         $feeds = array();
         foreach ($service->findBy($this->m_constraints, $this->m_order, $p_limit, $p_start) as $feed) {
-            $i++;
             $feeds[] = new MetaCommunityFeed($feed);
         }
 

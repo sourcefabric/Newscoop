@@ -1,4 +1,6 @@
 <?php 
+regGS("On", "");
+regGS("Off", "");
 regGS("You do not have the right to moderate comments.", "");
 regGS("You can not schedule opposing events at the same time", "");
 regGS("Unable to reach Newscoop. Please check your internet connection.", "Nie można połączyć z Newscoop. Sprawdź połączenie z Internetem.");

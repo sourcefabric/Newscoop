@@ -194,7 +194,7 @@ class Article extends DatabaseObject {
      * @return boolean
      *      TRUE on success, FALSE on failure
      */
-    public function fetch($p_recordSet = null)
+    public function fetch($p_recordSet = null, $p_forceExists = false)
     {
         $res = parent::fetch($p_recordSet);
         if ($this->exists()) {
@@ -668,8 +668,7 @@ class Article extends DatabaseObject {
 
         // Delete Article Comments
         // @todo change this with DOCTRINE2 CASCADE DELETE
-        global $controller;
-        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+        $repository = Zend_Registry::get('container')->getService('em')->getRepository('Newscoop\Entity\Comment');
         $repository->deleteArticle($this->m_data['Number'], $this->m_data['IdLanguage']);
         $repository->flush();
 
@@ -1564,7 +1563,7 @@ class Article extends DatabaseObject {
      */
     public function isPublished()
     {
-        return ($this->m_data['Published'] == 'Y');
+        return (isset($this->m_data['Published']) && $this->m_data['Published'] == 'Y');
     } // fn isPublic
 
 
@@ -1635,19 +1634,22 @@ class Article extends DatabaseObject {
     	$urlEnd = '';
     	foreach ($seoFields as $field => $value) {
     		switch ($field) {
-    			case 'name':
-    				$urlEnd .= trim($this->getName()) . ' ';
-    				break;
-    			case 'keywords':
-    				$urlEnd .= trim($this->getKeywords()) . ' ';
-    				break;
-    			case 'topics':
-    				$articleTopics = ArticleTopic::GetArticleTopics($this->getArticleNumber());
-        			foreach ($articleTopics as $topic) {
-        				$urlEnd .= '-' . $topic->getName($languageId);
-        			}
-    				$urlEnd .= implode('-', $this->m_article->topics) . ' ';
-    				break;
+                case 'name':
+                    if ($text = trim($this->getName())) {
+                        $urlEnd .= $urlEnd ? '-' . $text : $text;
+                    }
+                    break;
+                case 'keywords':
+                    if ($text = trim($this->getKeywords())) {
+                        $urlEnd .= $urlEnd ? '-' . $text : $text;
+                    }
+                    break;
+                case 'topics':
+                    $articleTopics = ArticleTopic::GetArticleTopics($this->getArticleNumber());
+                    foreach ($articleTopics as $topic) {
+                        $urlEnd .= $urlEnd ? '-' . $topic->getName($languageId) : $topic->getName($languageId);
+                    }
+                    break;
     		}
     	}
     	$urlEnd = preg_replace('/[,\/\.\?"\+&%:#]/', '', trim($urlEnd));
@@ -2041,6 +2043,75 @@ class Article extends DatabaseObject {
         return $languages;
     } // fn GetAllLanguages
 
+    /**
+     * Gets a list of articles marked as "Article of the Day"
+     *
+     * @param string $p_start_date - yyyy-mm-dd
+     *      Find articles published starting from this date.
+     *
+     * @param string $p_end_date - yyyy-mm-dd
+     *      Find articles published before or on this date..
+     *
+     * @param int $p_publicationId -
+     *      The publication ID.
+     *
+     * @param int $p_languageId -
+     *      The language ID.
+     *
+     * @return array
+     *     Return an array of Article objects with indexes in sequential order
+     *     starting from zero.
+     */
+    public static function GetArticlesOfTheDay($p_start_date=null, $p_end_date=null)
+    {
+        global $g_ado_db;
+
+        //TODO: this function shouldn't have to rely on a custom switch in the database. (FArticle_Of_The_Day)
+        //wait until Newscoop has a better architecture.
+
+        $queryStr = "SELECT *
+            FROM Articles
+            WHERE
+                Articles.Published = 'Y'
+                AND Articles.Number IN ( SELECT NrArticle FROM `Xnews` WHERE FArticle_Of_The_Day = '1')
+                AND DATE(Articles.PublishDate) >= '$p_start_date'
+                AND DATE(Articles.PublishDate) <= '$p_end_date'
+                AND (Articles.Type = 'news' )
+            ORDER BY Articles.PublishDate asc,
+                    Articles.time_updated asc";
+
+        $articles = DbObjectArray::Create('Article', $queryStr);
+
+        //return an empty array if there are no articles.
+        if (count($articles) == 0) {
+            return $articles;
+        }
+
+        $filtered = array();
+        //need to perform parsing of data, make sure days only have 1 article of the day
+        //(can have multiple with the switch implementation).
+        for ($i=0; $i<count($articles)-1; $i++) {
+
+            $date_1 = $articles[$i]->getPublishDate();
+            $date_1 = explode(" ", $date_1);
+            $date_1 = $date_1[0];
+
+            $date_2 = $articles[$i+1]->getPublishDate();
+            $date_2 = explode(" ", $date_2);
+            $date_2 = $date_2[0];
+
+            $date_article1 = new DateTime($date_1);
+            $date_article2 = new DateTime($date_2);
+
+            if($date_article1 < $date_article2) {
+                $filtered[] = $articles[$i];
+            }
+        }
+        //because of how sorted in DB last article in list will always be a valid article of the day.
+        $filtered[] = $articles[count($articles)-1];
+
+        return $filtered;
+    }
 
     /**
      * Get a list of articles.  You can be as specific or as general as you

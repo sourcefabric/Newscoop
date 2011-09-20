@@ -225,7 +225,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
         foreach( $articleTypes as $typeName => $type )
         {
             $artType = $this->_create( $typeName );
-            if( is_array( $type['fields'] ) ) {
+            if( isset($type['fields']) && is_array($type['fields']) ) {
                 foreach( $type['fields'] as $field ) {
                     $this->_createField( $field['name'], $artType );
                 }

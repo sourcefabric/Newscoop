@@ -341,6 +341,7 @@ class Issue extends DatabaseObject {
 
 	/**
 	 * Get the default template ID used for articles in this issue.
+	 * @deprecated
 	 * @return int
 	 */
 	public function getArticleTemplateId()

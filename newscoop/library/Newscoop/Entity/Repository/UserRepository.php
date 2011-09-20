@@ -55,8 +55,9 @@ class UserRepository extends EntityRepository
             throw new \InvalidArgumentException('email_conflict');
         }
 
-        $this->setAttributes($user, array_key_exists('attributes', $values) ? $values['attributes'] : array());
-        $this->setUserTypes($user, array_key_exists('user_type', $values) ? $values['user_type'] : array());
+        $this->setAttributes($user, array_key_exists('attributes', $values) ? (array) $values['attributes'] : array());
+
+        $this->setUserTypes($user, array_key_exists('user_type', $values) ? (array) $values['user_type'] : array());
 
         $this->getEntityManager()->persist($user);
     }
@@ -201,10 +202,14 @@ class UserRepository extends EntityRepository
 
         $qb->from('Newscoop\Entity\User', 'u');
 
-        $qb->where($qb->expr()->like("u.last_name", "'$letters[0]%'"));
-        for ($i=1; $i < count($letters); $i++) {
-            $qb->orWhere($qb->expr()->like("u.last_name", "'$letters[$i]%'"));
+        $qb->where($qb->expr()->eq("u.status", User::STATUS_ACTIVE));
+        $qb->andWhere($qb->expr()->eq("u.is_public", true));
+
+        $letterIndex = $qb->expr()->orx();
+        for ($i=0; $i < count($letters); $i++) {
+            $letterIndex->add($qb->expr()->like("u.last_name", "'$letters[$i]%'"));
         }
+        $qb->andWhere($letterIndex);
 
         if ($countOnly === false) {
             $qb->orderBy('u.last_name', 'ASC');
@@ -250,10 +255,14 @@ class UserRepository extends EntityRepository
             $outerAnd->add($innerOr);
         }
 
+        $outerAnd->add($qb->expr()->eq("u.status", User::STATUS_ACTIVE));
+        $outerAnd->add($qb->expr()->eq("u.is_public", true));
+
         $qb->where($outerAnd);
+
         $qb->orderBy('u.last_name', 'ASC');
         $qb->addOrderBy('u.first_name', 'ASC');
-        $qb->addOrderBy('u.id', 'ASC');
+        $qb->addOrderBy('u.id', 'DESC');
 
         $qb->setFirstResult($offset);
         $qb->setMaxResults($limit);

@@ -153,3 +153,6 @@ dl.meta dt:first-child {
 }
 
 .widget iframe { border: 1px solid #fff; }
+
+.widget .ingest a { color: #007fb3; }
+.widget .ingest a.prepare { color: #f57900; }

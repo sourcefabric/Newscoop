@@ -14,7 +14,7 @@ use Doctrine\Common\Collections\ArrayCollection,
 
 /**
  * @Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
- * @Table(name="user")
+ * @Table(name="liveuser_users")
  */
 class User implements \Zend_Acl_Role_Interface
 {
@@ -28,31 +28,31 @@ class User implements \Zend_Acl_Role_Interface
 
     /**
      * @Id @GeneratedValue
-     * @Column(type="integer")
+     * @Column(type="integer", name="Id")
      * @var int
      */
     private $id;
 
     /**
-     * @Column(type="string", length="80")
+     * @Column(type="string", length="80", name="EMail")
      * @var string
      */
     private $email;
 
     /**
-     * @Column(type="string", length="80", nullable=TRUE)
+     * @Column(type="string", length="80", nullable=TRUE, name="UName")
      * @var string
      */
     private $username;
 
     /**
-     * @Column(type="string", length="60", nullable=TRUE)
+     * @Column(type="string", length="60", nullable=TRUE, name="Password")
      * @var string
      */
     private $password;
 
     /**
-     * @Column(type="string", length="80", nullable=TRUE)
+     * @Column(type="string", length="80", nullable=TRUE, name="Name")
      * @var string
      */
     private $first_name;
@@ -64,7 +64,7 @@ class User implements \Zend_Acl_Role_Interface
     private $last_name;
 
     /**
-     * @Column(type="datetime")
+     * @Column(type="datetime", name="time_created")
      * @var DateTime
      */
     private $created;
@@ -108,7 +108,7 @@ class User implements \Zend_Acl_Role_Interface
     /**
      * @manyToMany(targetEntity="Newscoop\Entity\User\Group")
      * @joinTable(name="liveuser_groupusers",
-     *      joinColumns={@joinColumn(name="perm_user_id", referencedColumnName="id")},
+     *      joinColumns={@joinColumn(name="perm_user_id", referencedColumnName="Id")},
      *      inverseJoinColumns={@joinColumn(name="group_id", referencedColumnName="group_id")}
      *      )
      * @var Doctrine\Common\Collections\Collection;
@@ -120,6 +120,12 @@ class User implements \Zend_Acl_Role_Interface
      * @var Doctrine\Common\Collections\Collection;
      */
     private $attributes;
+
+    /**
+     * @OneToMany(targetEntity="Newscoop\Entity\Comment\Commenter", mappedBy="user", cascade={"ALL"}, indexBy="name")
+     * @var Doctrine\Common\Collections\Collection;
+     */
+    private $commenters;
 
     /**
      * @param string $email
@@ -146,6 +152,8 @@ class User implements \Zend_Acl_Role_Interface
     {
         return (int) $this->id;
     }
+
+
 
     /**
      * Set username
@@ -268,6 +276,29 @@ class User implements \Zend_Acl_Role_Interface
     {
         return (string) $this->last_name;
     }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        $name = $this->getFirstName().' '.$this->getLastName();
+        return $name;
+    }
+
+    /**
+     * Get real name
+     *
+     * @return string
+     */
+    public function getRealName()
+    {
+        return (string)  $this->first_name.' '.$this->last_name;
+    }
+
+
 
     /**
      * Set status
@@ -523,6 +554,24 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * Get all user attributes
+     *
+     * @return array of all user attributes
+     */
+    public function getAttributes()
+    {
+        $attributes = array();
+
+        $keys = $this->attributes->getKeys();
+
+        foreach ($keys as $key) {
+            $attributes[$key] = $this->attributes[$key]->getValue();
+        }
+
+        return $attributes;
+    }
+
+    /**
      * Set image
      *
      * @param string $image
@@ -565,14 +614,24 @@ class User implements \Zend_Acl_Role_Interface
         }
     }
 
+
     /**
-     * Get real name
+     * Get a User's comments which are associated with his User account.
      *
-     * @return string
+     * @return array
      */
-    public function getRealName()
+    public function getComments()
     {
-        return trim($this->first_name . ' ' . $this->last_name);
+        $comments = array();
+
+        foreach ($this->commenters as $commenter) {
+
+            foreach ($commenter->getComments() as $comment) {
+                $comments[] = $comment;
+            }
+        }
+
+        return $comments;
     }
 
     /**
@@ -592,5 +651,33 @@ class User implements \Zend_Acl_Role_Interface
     public function __toString()
     {
         return $this->getUsername();
+    }
+
+    /**
+     * Check if the user exists
+     * Test if there is set an id
+     *
+     * @return bool
+     * @deprecated legacy from frontend controllers
+     */
+    public function exists()
+    {
+        return !is_null($this->id);
+    }
+
+    /**
+     * Get an enity property
+     *
+     * @param $p_key
+     * @return mixed
+     * @deprecated legacy from frontend controllers
+     */
+    public function getProperty($p_key)
+    {
+        if (method_exists($this, $p_key)) {
+            return $this->$p_key();
+        } else {
+            throw new \InvalidArgumentException("User Property '$p_key' not found");
+        }
     }
 }

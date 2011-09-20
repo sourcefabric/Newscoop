@@ -1,0 +1,64 @@
+.datatable {
+    border: 1px solid #9d9d9d;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;
+    background: #f9f9f9;
+    margin: 5px 0 0;
+    max-height: 330px;
+    padding-bottom: 20px;
+}
+.item-active    {
+    background: #ebf5f9;
+}
+.ui-widget-header + .datatable {
+    border-width: 1px 1px 1px 1px;
+}
+a {
+    color: #007fb3;
+    text-decoration:none;
+}
+
+.datatable tr td, .datatable tr th {
+    border-color: #EBEBEB;
+    border-style: solid;
+    border-width: 0 0 0 0!important;
+    font-size: 12px;
+    padding: 0px 0px 0px 0px!important;
+}
+
+.ui-widget-header {
+    border: 0px!important;
+}
+
+fieldset {
+    border: 0px;
+}
+
+fieldset.closed {
+    border-width: 1px 0 0 0!important;
+}
+
+.ui-buttonset .ui-button {
+    margin-right: 2px;
+}
+.ui-widget-header{
+    background: none !important;
+    font-weight: normal !important;
+}
+
+.dataTables_info {
+    color: #696969;
+    font-size: 11px;
+    font-weight: normal;
+    margin: 3px 0 0;
+    padding: 6px 0;
+}
+
+#drag-here-to-add-to-list {
+    border: 2px #CCCCCC dashed; 
+    height: 45px; 
+    width: 439px; 
+    margin: 4px 9px; 
+    padding: 20px 5px 0px 26px;
+    color: #CCCCCC;
+    font-size: 20px;	
+}

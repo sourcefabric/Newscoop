@@ -1,4 +1,6 @@
 <?php 
+regGS("On", "On");
+regGS("Off", "Off");
 regGS("You do not have the right to moderate comments.", "You do not have the right to moderate comments.");
 regGS("You can not schedule opposing events at the same time", "You can not schedule opposing events at the same time");
 regGS("Unable to reach Newscoop. Please check your internet connection.", "Unable to reach Newscoop. Please check your internet connection.");

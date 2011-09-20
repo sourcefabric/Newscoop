@@ -15,6 +15,11 @@ require_once dirname(__FILE__) . '/../BaseList/BaseList.php';
  */
 class ImageList extends BaseList
 {
+    /** @var array */
+    protected $filters = array(
+        "Photographer <> 'sda'",
+    );
+
     /**
      */
     public function __construct()
@@ -32,7 +37,9 @@ class ImageList extends BaseList
             'Date' => getGS('Date'),
             'TimeCreated' => getGS('Added'),
             'LastModified' => getGS('Last modified'),
-            'InUse' => getGS('In use'),
+            'Source' => getGS('Source'),
+            'Status' => getGS('Status'),
+            'InUse' => getGS('In use')
         );
 
         $this->searchCols = array(
@@ -79,5 +86,18 @@ class ImageList extends BaseList
         $row['InUse'] = (int) $image->inUse();
 
         return array_values($row);
+    }
+
+    /**
+     * @see BaseList
+     */
+    public function doData()
+    {
+        $args = $this->getArgs();
+        if (!empty($args['filter']) && $args['filter'] == 'sda') {
+            $this->filters = array('1');
+        }
+
+        return parent::doData();
     }
 }

@@ -7,8 +7,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 
 $f_image_id = Input::Get('f_image_id', 'int', 0);
-
-$f_fix_thumbs = Input::Get('f_fix_thumbs', 'int', 0);
+$f_fix_thumbs = Input::Get('f_fix_thumbs', 'int', 0, true);
 if ($f_fix_thumbs) {
     //regenerate missing thumbs
     $returnMessage = 'No thumbnails were fixed.';
@@ -27,7 +26,6 @@ if ($f_fix_thumbs) {
     camp_html_add_msg(getGS($returnMessage));
     camp_html_goto_page("/$ADMIN/media-archive/index.php");
     exit();
-
 }
 
 if (!Input::IsValid()) {
@@ -110,6 +108,20 @@ echo $breadcrumbs;
 	<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 	<TD align="left">
 	<input type="text" name="f_image_date" value="<?php echo htmlspecialchars($imageObj->getDate()); ?>" size="11" maxlength="10" class="input_text date" />
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Status"); ?>:</TD>
+	<TD align="left">
+	<input type="radio" name="f_image_status" value="approved" <?php if ($imageObj->getStatus() == 'approved') echo('checked'); ?> >Approved
+	<input type="radio" name="f_image_status" value="unapproved" <?php if ($imageObj->getStatus() == 'unapproved') echo('checked'); ?>>Unapproved
+	</TD>
+</TR>
+<TR>
+	<TD ALIGN="RIGHT" ><?php  putGS("Source"); ?>:</TD>
+	<TD align="left">
+	<?php if ($imageObj->getSource() == 'local') putGS('Local'); ?>
+	<?php if ($imageObj->getSource() == 'feedback') putGS('Feedback'); ?>
 	</TD>
 </TR>
 <?php

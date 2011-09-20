@@ -31,7 +31,10 @@ class Image extends DatabaseObject
 		'ImageFileName',
 		'UploadedByUser',
 		'LastModified',
-		'TimeCreated');
+		'TimeCreated',
+		'Source',
+		'Status'
+	);
 
 	static private $s_defaultOrder = array(array('field'=>'default', 'dir'=>'asc'));
 
@@ -166,6 +169,14 @@ class Image extends DatabaseObject
 		return $this->m_data['Id'];
 	} // fn getImageId
 
+	/**
+	 * @return int
+	 */
+	public function getImageFileName()
+	{
+		return $this->m_data['ImageFileName'];
+	} // fn getImageId
+
 
 	/**
 	 * @return string
@@ -247,6 +258,29 @@ class Image extends DatabaseObject
         return substr($this->m_data['ContentType'], strlen('image/'));
     } // fn getType
 
+    /**
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->m_data['Source'];
+    } // fn getSource
+
+    /**
+     * @return int
+     */
+    public function getUploadingUserId()
+    {
+        return $this->m_data['UploadedByUser'];
+    } // fn getUploadingUserId
+
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->m_data['Status'];
+    } // fn getSource
 
 	/**
 	 * Return the full path to the image file.
@@ -890,7 +924,9 @@ class Image extends DatabaseObject
 	/**
 	 * Get an array of users who have uploaded images.
 	 * @return array
+	 * @todo does anyone need this method? liveuser_users table is now just called users.
 	 */
+	/*
 	public static function GetUploadUsers()
 	{
 		$tmpUser = new User();
@@ -906,7 +942,32 @@ class Image extends DatabaseObject
 		$users = DbObjectArray::Create('User', $queryStr);
 		return $users;
 	} // fn GetUploadUsers
+	*/
 
+
+    /**
+     * Get an array of Images uploaded by the user with $user_id.
+     *
+     * @param int $user_id
+     * @return array Image objects
+     */
+	public static function GetUploadedImagesForUser($user_id)
+	{
+        global $g_ado_db;
+        $images = array();
+
+        $queryStr = "SELECT * FROM Images WHERE UploadedByUser='".mysql_real_escape_string($user_id)."'";
+        $rows = $g_ado_db->GetAll($queryStr);
+
+        foreach ( $rows as $row ) {
+            $image = new Image();
+            $image->fetch($row);
+
+            $images[] = $image;
+        }
+
+        return $images;
+	}
 
 	/**
 	 * Fetch an image object by matching the URL.
@@ -982,7 +1043,7 @@ class Image extends DatabaseObject
         // sets the where conditions
         foreach ($p_parameters as $param) {
             $comparisonOperation = self::ProcessListParameters($param);
-            if (sizeof($comparisonOperation) < 1) {
+            if (sizeof($comparisonOperation) < 3) {
                 break;
             }
 
@@ -1025,6 +1086,7 @@ class Image extends DatabaseObject
 
         // builds the query and executes it
         $selectQuery = $selectClauseObj->buildQuery();
+
         $images = $g_ado_db->GetAll($selectQuery);
         if (is_array($images)) {
         	$countQuery = $countClauseObj->buildQuery();
@@ -1094,6 +1156,16 @@ class Image extends DatabaseObject
     		case 'last_modified':
     			$comparisonOperation['left'] = 'Images.LastModified';
     			break;
+    		case 'status':
+    		    $comparisonOperation['right'] = strtolower($comparisonOperation['right']);
+    		    if ($comparisonOperation['right'] == 'approved'
+    		    || $comparisonOperation['right'] == 'unapproved') {
+    		        $comparisonOperation['left'] = 'Images.Status';
+    		    }
+    		    break;
+            case 'user':
+                $comparisonOperation['left'] = 'Images.UploadedByUser';
+                break;
     		default:
     			return null;
     	}
@@ -1158,10 +1230,11 @@ class Image extends DatabaseObject
      * @param string $p_tmpFile
      * @param string $p_newFile
      * @param int $p_userId
+     * @param int $p_attributes
      *
      * @return Image|NULL
      */
-    public static function ProcessFile($p_tmpFile, $p_newFile, $p_userId = NULL)
+    public static function ProcessFile($p_tmpFile, $p_newFile, $p_userId = NULL, $p_attributes = NULL)
     {
         $tmp_name = $GLOBALS['Campsite']['IMAGE_DIRECTORY'] . $p_tmpFile;
         $image_ary = getimagesize($tmp_name);
@@ -1179,7 +1252,15 @@ class Image extends DatabaseObject
             'Photographer' => '',
             'Place' => '',
             'Date' => '',
+            'Source' => 'local',
+            'Status' => 'approved'
         );
+
+        if ($p_attributes != NULL && is_array($p_attributes)) {
+			foreach ($p_attributes as $key => $value) {
+				$attributes[$key] = $value;
+			}
+		}
 
         try {
             $image = self::OnImageUpload($file, $attributes, $p_userId);

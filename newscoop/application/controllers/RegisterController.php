@@ -156,6 +156,33 @@ class RegisterController extends Zend_Controller_Action
         $this->view->status = true;
     }
 
+    public function socialAction()
+    {
+        $form = new Application_Form_Social();
+        $form->setMethod('POST');
+
+        $userData = $this->_getParam('userData');
+        $form->setDefaults(array(
+            'first_name' => $userData->profile->firstName,
+            'last_name' => $userData->profile->lastName,
+            'email' => $userData->profile->email,
+        ));
+
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $user = $this->_helper->service('user')->save($form->getValues() + array('is_public' => 1));
+            $this->_helper->service('user')->setActive($user);
+            $this->_helper->service('auth.adapter.social')->addIdentity($user, $userData->providerId, $userData->providerUID);
+            $adapter = $this->_helper->service('auth.adapter.social');
+            $adapter->setProvider($userData->providerId)->setProviderUserId($userData->providerUID);
+            Zend_Auth::getInstance()->authenticate($adapter);
+            $this->_helper->redirector('index', 'dashboard');
+        }
+
+        $this->view->name = $userData->profile->displayName;
+        $this->view->form = $form;
+    }
+
     /**
      * Notify event dispatcher about new user
      *

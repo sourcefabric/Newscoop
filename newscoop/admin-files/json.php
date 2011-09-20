@@ -16,6 +16,7 @@ require_once WWW_DIR . '/classes/ServerRequest.php';
 // TODO replace with Zend_Loader
 require_once WWW_DIR . '/classes/Extension/WidgetManager.php';
 require_once LIBS_DIR . '/ArticleList/ArticleList.php';
+require_once LIBS_DIR . '/ContextList/ContextList.php';
 require_once LIBS_DIR . '/MediaList/MediaList.php';
 require_once LIBS_DIR . '/ImageList/ImageList.php';
 require_once WWW_DIR . '/classes/GeoNames.php';
@@ -34,6 +35,14 @@ try {
     $serverRequest->allow('ArticleList::getFilterIssues');
     $serverRequest->allow('ArticleList::getFilterSections');
     $serverRequest->allow('ArticleList::doOrder', 'Publish');
+
+    $serverRequest->allow('ContextList::doAction'); // checked in handler
+    $serverRequest->allow('ContextList::doData');
+    $serverRequest->allow('ContextList::getFilterIssues');
+    $serverRequest->allow('ContextList::getFilterSections');
+    $serverRequest->allow('ContextList::doOrder', 'Publish');
+
+
     $serverRequest->allow('WidgetManager::AddWidget');
     $serverRequest->allow('WidgetManagerDecorator::delete');
     $serverRequest->allow('WidgetRendererDecorator::render');
@@ -49,6 +58,10 @@ try {
     $serverRequest->allow('ImageList::doData');
     $serverRequest->allow('MediaList::doDelete');
     $serverRequest->allow('ImageList::doDelete');
+    $serverRequest->allow('ImageList::doApprove');
+    $serverRequest->allow('MediaList::doApprove');
+    $serverRequest->allow('ImageList::doDisapprove');
+    $serverRequest->allow('MediaList::doDisapprove');
     $serverRequest->allow('Article::setOnFrontPage','Publish');
     $serverRequest->allow('Article::setOnSectionPage','Publish');
     $serverRequest->allow('Article::setIsPublic','Publish');

@@ -18,18 +18,22 @@ class Attachment extends DatabaseObject {
     var $m_keyColumnNames = array('id');
     var $m_keyIsAutoIncrement = true;
     var $m_dbTableName = 'Attachments';
-    var $m_columnNames = array('id',
-                               'fk_language_id',
-                               'file_name',
-                               'extension',
-                               'content_disposition',
-                               'http_charset',
-                               'mime_type',
-                               'size_in_bytes',
-                               'fk_description_id',
-                               'fk_user_id',
-                               'last_modified',
-                               'time_created');
+    var $m_columnNames = array(
+		'id',
+		'fk_language_id',
+		'file_name',
+		'extension',
+		'content_disposition',
+		'http_charset',
+		'mime_type',
+		'size_in_bytes',
+		'fk_description_id',
+		'fk_user_id',
+		'last_modified',
+		'time_created',
+		'Source',
+		'Status'
+	);
 
     public function Attachment($p_id = null)
     {
@@ -264,6 +268,30 @@ class Attachment extends DatabaseObject {
     	return $attachmentUri;
     } // fn getAttachmentUri
 
+    /**
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->m_data['Source'];
+    } // fn getSource
+
+    /**
+     * @return int
+     */
+    public function getUploadingUserId()
+    {
+        return $this->m_data['fk_user_id'];
+    } // fn getUploadingUserId
+
+    /**
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->m_data['Status'];
+    } // fn getSource
+
 
     /**
      * Get the full path to the storage location of the file on disk.
@@ -274,10 +302,18 @@ class Attachment extends DatabaseObject {
     public function getStorageLocation()
     {
         global $Campsite;
-        $storageLocation = $Campsite['FILE_DIRECTORY']
+        if (isset($this->m_data['id'])) {
+			$storageLocation = $Campsite['FILE_DIRECTORY']
                            ."/".$this->getLevel1DirectoryName()
                            ."/".$this->getLevel2DirectoryName()
                            ."/".sprintf('%09d', $this->m_data['id']);
+		}
+		else {
+			$storageLocation = $Campsite['FILE_DIRECTORY']
+                           ."/".$this->getLevel1DirectoryName()
+                           ."/".$this->getLevel2DirectoryName()
+                           ."/".sprintf('%09d', 0);
+		}
         if (isset($this->m_data['extension']) && !empty($this->m_data['extension'])) {
             $storageLocation .= '.'.$this->m_data['extension'];
         }
@@ -288,7 +324,8 @@ class Attachment extends DatabaseObject {
     public function getLevel1DirectoryName()
     {
         global $Campsite;
-        $level1Dir = floor($this->m_data['id']/($Campsite['FILE_NUM_DIRS_LEVEL_1']*$Campsite['FILE_NUM_DIRS_LEVEL_2']));
+        if (isset($this->m_data['id'])) $level1Dir = floor($this->m_data['id']/($Campsite['FILE_NUM_DIRS_LEVEL_1']*$Campsite['FILE_NUM_DIRS_LEVEL_2']));
+        else $level1Dir = 0;
         $level1ZeroPad = strlen($Campsite['FILE_NUM_DIRS_LEVEL_1']);
          return sprintf('%0'.$level1ZeroPad.'d', $level1Dir);
     } // fn getLevel1DirectoryName
@@ -297,7 +334,8 @@ class Attachment extends DatabaseObject {
     public function getLevel2DirectoryName()
     {
         global $Campsite;
-        $level2Dir = ($this->m_data['id']/$Campsite['FILE_NUM_DIRS_LEVEL_2'])%$Campsite['FILE_NUM_DIRS_LEVEL_1'];
+        if (isset($this->m_data['id'])) $level2Dir = ($this->m_data['id']/$Campsite['FILE_NUM_DIRS_LEVEL_2'])%$Campsite['FILE_NUM_DIRS_LEVEL_1'];
+        else $level2Dir = 0;
         $level2ZeroPad = strlen($Campsite['FILE_NUM_DIRS_LEVEL_2']);
         return sprintf('%0'.$level2ZeroPad.'d', $level2Dir);
     } // fn getLevel2DirectoryName
@@ -447,10 +485,11 @@ class Attachment extends DatabaseObject {
      *
      * @return Image|NULL
      */
-    public static function ProcessFile($p_tmpFile, $p_newFile, $p_userId = NULL)
+    public static function ProcessFile($p_tmpFile, $p_newFile, $p_userId = NULL, $p_attributes = NULL)
     {
         $tmp_attachment = new Attachment();
         $tmp_name =  $tmp_attachment->getStorageLocation()."/". $p_tmpFile;
+        //$tmp_name = $GLOBALS['Campsite']['FILE_DIRECTORY'] . '/' . $p_tmpFile;
         $file = array(
             'name' => $p_newFile,
             'tmp_name' => $tmp_name,
@@ -461,8 +500,16 @@ class Attachment extends DatabaseObject {
 
         $attributes = array(
             'fk_user_id' => $p_userId,
-            'fk_description_id' => 0
+            'fk_description_id' => 0,
+            'Source' => 'local',
+            'Status' => 'approved'
         );
+
+        if ($p_attributes != NULL && is_array($p_attributes)) {
+			foreach ($p_attributes as $key => $value) {
+				$attributes[$key] = $value;
+			}
+		}
 
         try {
             $image = self::OnFileUpload($file, $attributes, null, true);

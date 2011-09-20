@@ -86,9 +86,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('user_points', 'Newscoop\Services\UserPointsService')
             ->addArgument(new sfServiceReference('em'));
 
+        $container->register('user_attributes', 'Newscoop\Services\UserAttributeService')
+            ->addArgument(new sfServiceReference('em'));
+
         $container->register('audit', 'Newscoop\Services\AuditService')
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('user'));
+
+        $container->register('comment', 'Newscoop\Services\CommentService')
+            ->addArgument(new sfServiceReference('em'));
 
         $container->register('community_feed', 'Newscoop\Services\CommunityFeedService')
             ->addArgument(new sfServiceReference('em'));
@@ -112,10 +118,21 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('auth.adapter', 'Newscoop\Services\Auth\DoctrineAuthService')
             ->addArgument(new sfServiceReference('em'));
 
+        $container->register('auth.adapter.social', 'Newscoop\Services\Auth\SocialAuthService')
+            ->addArgument(new sfServiceReference('em'));
+
         $container->register('email', 'Newscoop\Services\EmailService')
             ->addArgument('%email%')
             ->addArgument(new sfServiceReference('view'))
             ->addArgument(new sfServiceReference('user.token'));
+
+        $container->register('ingest.publisher', 'Newscoop\Services\Ingest\PublisherService')
+            ->addArgument('%ingest_publisher%');
+
+        $container->register('ingest', 'Newscoop\Services\IngestService')
+            ->addArgument('%ingest%')
+            ->addArgument(new sfServiceReference('em'))
+            ->addArgument(new sfServiceReference('ingest.publisher'));
 
         Zend_Registry::set('container', $container);
         return $container;
@@ -146,6 +163,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $front->registerPlugin(new Application_Plugin_CampPluginAutoload());
         $front->registerPlugin(new Application_Plugin_Auth($options['auth']));
         $front->registerPlugin(new Application_Plugin_Acl($options['acl']));
+        $front->registerPlugin(new Application_Plugin_Locale());
     }
 
     protected function _initRouter()
@@ -163,7 +181,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'articleNo' => null,
                 'section' => null,
                 'issue' => null,
-                'language' => 'en', // @todo get default language from config
+                'language' => null,
             ), array(
                 'language' => '[a-z]{2}',
             )));
@@ -174,6 +192,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'module' => 'default',
                 'controller' => 'register',
                 'action' => 'confirm',
+            )));
+
+        $router->addRoute(
+            'user-search',
+            new Zend_Controller_Router_Route('search/:search/:page', array(
+                'module' => 'default',
+                'controller' => 'user',
+                'action' => 'index',
+                'page' => 1,
             )));
 
         $router->addRoute(
@@ -219,5 +246,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         require_once APPLICATION_PATH . '/controllers/helpers/Smarty.php';
         Zend_Controller_Action_HelperBroker::addHelper(new Action_Helper_Smarty());
+    }
+
+    protected function _initTranslate()
+    {
+        $options = $this->getOptions();
+
+        $translate = new Zend_Translate(array(
+            'adapter' => 'array',
+            'disableNotices' => TRUE,
+            'content' => $options['translation']['path'],
+        ));
+
+        Zend_Registry::set('Zend_Translate', $translate);
     }
 }

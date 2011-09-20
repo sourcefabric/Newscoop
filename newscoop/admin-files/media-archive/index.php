@@ -27,6 +27,8 @@ camp_html_content_top(getGS('Media Archive'), NULL);
     </p>
     <?php } ?>
 
+    <p><input type="checkbox" id="newswires-images" /> <label for="newswires-images"><?php putGS('Display Newswires images'); ?></label></p>
+
     <?php
         $list = new ImageList;
         $list->setSearch(TRUE);
@@ -36,6 +38,8 @@ camp_html_content_top(getGS('Media Archive'), NULL);
     <?php if ($g_user->hasPermission('DeleteImage')) { ?>
     <fieldset class="actions">
         <input type="submit" name="delete" value="<?php putGS('Delete selected'); ?>" />
+        <input type="submit" name="approve" value="<?php putGS('Approve selected'); ?>" />
+        <input type="submit" name="disapprove" value="<?php putGS('Disapprove selected'); ?>" />
     </fieldset>
     <?php } ?>
 </div><!-- /#images -->
@@ -66,6 +70,8 @@ camp_html_content_top(getGS('Media Archive'), NULL);
     <?php if ($g_user->hasPermission('DeleteFile')) { ?>
     <fieldset class="actions">
         <input type="submit" name="delete" value="<?php putGS('Delete selected'); ?>" />
+        <input type="submit" name="approve" value="<?php putGS('Approve selected'); ?>" />
+        <input type="submit" name="disapprove" value="<?php putGS('Disapprove selected'); ?>" />
     </fieldset>
     <?php } ?>
 </div><!-- /#files -->
@@ -128,6 +134,114 @@ $(document).ready(function() {
 
         return false;
     });
+    
+    // approve button
+    $('input[name=approve]').click(function() {
+        var tab = $(this).closest('div');
+        var table = $('table.datatable', tab);
+        var items = $('tbody input:checked', table);
+
+        // check for items
+        if (!items.size()) {
+            alert('<?php putGS('Select some items first.'); ?>');
+            return false;
+        }
+
+        // get ids
+        var ids = [];
+        var used = false;
+        items.each(function() {
+            if ($('.used', $(this).closest('tr')).size()) {
+                used = true;
+            } else {
+                ids.push($(this).attr('value'));
+            }
+        });
+
+        if (!ids.length) { // only used selected, nothing to delete
+            flashMessage("<?php putGS("You can't update used files."); ?>", 'error');
+            return true;
+        }
+
+        // confirm
+        if (!used && !confirm('<?php putGS('Are you sure you want to update selected items?'); ?>')) {
+            return false;
+        } else if (used && !confirm("<?php echo getGS("You can't update used files."), ' ', getGS("Do you want to update unused only?"); ?>")) {
+            return false; // delete canceled
+        }
+
+        // delete
+        var callback = [];
+        if (table.hasClass('medialist')) { // files
+            callback = ['MediaList', 'doApprove'];
+        } else {
+            callback = ['ImageList', 'doApprove'];
+        }
+        callServer(callback, [ids], function (json) {
+            var smartlistId = table.closest('.smartlist').attr('id').split('-')[1];
+            tables[smartlistId].fnDraw(true);
+            flashMessage('<?php putGS('Items updated.'); ?>');
+        });
+
+        return false;
+    });
+    
+    // disapprove button
+    $('input[name=disapprove]').click(function() {
+        var tab = $(this).closest('div');
+        var table = $('table.datatable', tab);
+        var items = $('tbody input:checked', table);
+
+        // check for items
+        if (!items.size()) {
+            alert('<?php putGS('Select some items first.'); ?>');
+            return false;
+        }
+
+        // get ids
+        var ids = [];
+        var used = false;
+        items.each(function() {
+            if ($('.used', $(this).closest('tr')).size()) {
+                used = true;
+            } else {
+                ids.push($(this).attr('value'));
+            }
+        });
+
+        if (!ids.length) { // only used selected, nothing to delete
+            flashMessage("<?php putGS("You can't update used files."); ?>", 'error');
+            return true;
+        }
+
+        // confirm
+        if (!used && !confirm('<?php putGS('Are you sure you want to update selected items?'); ?>')) {
+            return false;
+        } else if (used && !confirm("<?php echo getGS("You can't update used files."), ' ', getGS("Do you want to update unused only?"); ?>")) {
+            return false; // delete canceled
+        }
+
+        // delete
+        var callback = [];
+        if (table.hasClass('medialist')) { // files
+            callback = ['MediaList', 'doDisapprove'];
+        } else {
+            callback = ['ImageList', 'doDisapprove'];
+        }
+        callServer(callback, [ids], function (json) {
+            var smartlistId = table.closest('.smartlist').attr('id').split('-')[1];
+            tables[smartlistId].fnDraw(true);
+            flashMessage('<?php putGS('Items updated.'); ?>');
+        });
+
+        return false;
+    });
+
+    $('#newswires-images').change(function() {
+        $.smartlist_filter = $(this).attr('checked') ? 'sda' : '';
+        var smartlistId = $('.smartlist', $(this).closest('#images')).attr('id').split('-')[1];
+        tables[smartlistId].fnDraw(true);
+    });
 });
 
 /**
@@ -140,6 +254,7 @@ function onUpload()
     tables[smartlistId].fnDraw(true);
     flashMessage('<?php putGS('File uploaded.'); ?>');
 }
+
 //-->
 </script>
 

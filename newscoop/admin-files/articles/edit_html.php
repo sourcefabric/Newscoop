@@ -64,7 +64,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
             $previewLinkURL .= $articleEndLink;
         }
 
-        if (PEAR::isError($previewLinkURL)) {
+        if (!is_string($previewLinkURL) && PEAR::isError($previewLinkURL)) {
             $doLiveLink = '';
         }
     }
@@ -77,6 +77,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
             . "&f_article_number=$f_article_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected";
     }
 }
+
 ?>
   <!-- BEGIN Article Title and Saving buttons bar //-->
   <div class="toolbar clearfix">
@@ -375,6 +376,10 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
       <!-- BEGIN Media table -->
       <?php require('edit_media_box.php'); ?>
       <!-- END Images table -->
+
+      <!-- BEGIN Context Box table -->
+      <?php require('edit_context_box.php'); ?>
+      <!-- END Context Box table -->
 
       <?php CampPlugin::PluginAdminHooks(__FILE__); ?>
 

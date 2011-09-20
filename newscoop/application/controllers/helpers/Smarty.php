@@ -14,18 +14,6 @@ class Action_Helper_Smarty extends Zend_Controller_Action_Helper_Abstract
         'default',
     );
 
-    /** @var array */
-    private $controllers = array(
-        'auth',
-        'dashboard',
-        'email',
-        'error',
-        'index',
-        'legacy',
-        'register',
-        'user',
-    );
-
     /**
      */
     public function preDispatch()
@@ -34,14 +22,25 @@ class Action_Helper_Smarty extends Zend_Controller_Action_Helper_Abstract
         $GLOBALS['controller'] = $controller;
 
         $request = $this->getRequest();
-        if (!in_array($request->getParam('module'), $this->modules) || !in_array($request->getParam('controller'), $this->controllers)) {
+
+        $format = $request->getParam('format', null);
+        if (isset($format) && $format == "json") {
             return;
         }
+
+        if (!in_array($request->getParam('module'), $this->modules)) {
+            return;
+        }
+
+        $uri = CampSite::GetURIInstance();
+        $themePath = $uri->getThemePath();
 
         $controller->view = new Newscoop\SmartyView();
         $controller->view
             ->addScriptPath(APPLICATION_PATH . '/views/scripts/')
-            ->addScriptPath(APPLICATION_PATH . '/../themes/publication_2/theme_1/');
+            ->addScriptPath(APPLICATION_PATH . "/../themes/$themePath");
+
+        $controller->view->addPath(APPLICATION_PATH . "/../themes/$themePath");
 
         $controller->getHelper('viewRenderer')
             ->setView($controller->view)

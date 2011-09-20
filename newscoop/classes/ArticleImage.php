@@ -139,13 +139,19 @@ class ArticleImage extends DatabaseObject {
         if (!$this->exists()) {
             return false;
         }
+
+        $p_imageId = $this->m_data['IdImage'];
+        $p_articleNumber = $this->m_data['Number'];
+
         ArticleImage::RemoveImageTagsFromArticleText($this->getArticleNumber(), $this->getTemplateId());
+        $image_id = $this->getImageId();
+        $article_number = $this->getArticleNumber();
         $result = parent::delete();
         if ($result) {
         	if (function_exists("camp_load_translation_strings")) {
         		camp_load_translation_strings("api");
         	}
-        	$logtext = getGS('Image $1 unlinked from article $2', $p_imageId, $p_articleNumber);
+            $logtext = getGS('Image $1 unlinked from article $2', $image_id, $article_number);
         	Log::Message($logtext, null, 42);
         }
         return $result;
@@ -432,7 +438,7 @@ class ArticleImage extends DatabaseObject {
         // sets the where conditions
         foreach ($p_parameters as $param) {
             $comparisonOperation = self::ProcessListParameters($param);
-            if (sizeof($comparisonOperation) < 1) {
+            if (sizeof($comparisonOperation) < 3) {
                 break;
             }
 
@@ -528,6 +534,13 @@ class ArticleImage extends DatabaseObject {
         case 'nrarticle':
             $comparisonOperation['left'] = 'ArticleImages.NrArticle';
             $comparisonOperation['right'] = (int) $p_param->getRightOperand();
+            break;
+        case 'status':
+            $comparisonOperation['right'] = strtolower($p_param->getRightOperand());
+            if ($comparisonOperation['right'] == 'approved'
+            || $comparisonOperation['right'] == 'unapproved') {
+                $comparisonOperation['left'] = 'Images.Status';
+            }
             break;
         }
 

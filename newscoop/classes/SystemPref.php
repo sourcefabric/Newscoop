@@ -141,6 +141,10 @@ class SystemPref {
     {
         global $Campsite;
 
+        if (defined('APPLICATION_ENV') && APPLICATION_ENV == 'testing') {
+            return false;
+        }
+
         CampSession::singleton()->setData('system_preferences', $Campsite['system_preferences'], 'default', true);
 
         $cacheFileName = $GLOBALS['g_campsiteDir'].'/'.self::CACHE_FILE_NAME;
@@ -148,6 +152,7 @@ class SystemPref {
         if (!$cacheFile) {
         	return false;
         }
+
         chmod($cacheFileName, 0600);
 
         $buffer = "<?php\n\$GLOBALS['Campsite']['system_preferences'] = array(\n";

@@ -79,6 +79,13 @@ $pages[1]['pages'][] = array(
 );
 
 $pages[1]['pages'][] = array(
+    'label' => getGS('Feedback'),
+    'module' => 'admin',
+    'controller' => 'feedback',
+    'action' => 'index'
+);
+
+$pages[1]['pages'][] = array(
     'label' => getGS('Media Archive'),
     'module' => 'admin',
     'controller' => 'media-archive',
@@ -90,6 +97,13 @@ $pages[1]['pages'][] = array(
     'module' => 'admin',
     'controller' => 'universal-list',
     'action' => 'index.php',
+);
+
+$pages[1]['pages'][] = array(
+    'label' => 'Newswires',
+    'module' => 'admin',
+    'controller' => 'ingest',
+    'action' => 'index',
 );
 
 // add content/publications
@@ -308,6 +322,10 @@ if( Saas::singleton()->hasPrivilege('themes' , 'index') ) {
                 'action' => 'advanced-theme-settings',
                 'visible' => false,
                 'reset_params' => false,
+                'params' => array(
+                    'next' => null,
+                    'file' => null,
+                ),
                 'pages' => array(
                     array(
                         'label' => getGS('Upload'),
@@ -323,6 +341,14 @@ if( Saas::singleton()->hasPrivilege('themes' , 'index') ) {
                     ),
                 ),
             ),
+	    array(
+                'label' => getGS('Settings'),
+		'module' => 'admin',
+		'controller' => 'themes',
+		'action' => 'advanced-theme-settings',
+		'visible' => false,
+		'reset_params' => true,
+	    ),
         ),
     );
 }
@@ -525,6 +551,7 @@ foreach ($pages as $i => $page) {
 
 $nav = new Zend_Navigation($pages);
 $view->navigation()->breadcrumbs()
+    ->setSeparator(' &gt; ')
     ->setContainer($nav)
     ->setRenderInvisible(true);
 ?>

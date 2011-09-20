@@ -25,7 +25,7 @@ class Admin_Form_UserPoints extends Zend_Form
         foreach ($this->entities as $entry) {
 
             $this->addElement('text', $entry->getAction(), array(
-                'label' => $entry->getAction(),
+                'label' => $entry->getName(),
                 'value' => $entry->getPoints(),
                 'filters' => array(
                     'stringTrim',

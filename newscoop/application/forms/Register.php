@@ -12,7 +12,7 @@ class Application_Form_Register extends Zend_Form
     public function init()
     {
         $this->addElement('text', 'email', array(
-            'label' => 'E-mail Address',
+            'label' => 'Email*:',
             'required' => true,
             'filters' => array(
                 'stringTrim',
@@ -23,15 +23,15 @@ class Application_Form_Register extends Zend_Form
         ));
 
         $this->addElement('textarea', 'terms_of_use_text', array(
-            'label' => 'Terms of Use',
-            'value' => 'Terms of user sample',
+            'label' => 'Terms of Use:',
             'ignore' => true,
             'columns' => 60,
             'rows' => 5,
+            'value' => 'Terms of use sample',
         ));
 
         $this->addElement('submit', 'submit', array(
-            'label' => 'I aggre, Continue',
+            'label' => 'Continue',
             'ignore' => true,
         ));
     }

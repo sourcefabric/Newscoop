@@ -1,4 +1,5 @@
 <?php 
+regGS("Could not save user with e-mail address '$1'. Please make sure it doesn't already exist", "Could not save user with e-mail address '$1'. Please make sure it doesn't already exist");
 regGS("You were logged out.", "You were logged out.");
 regGS("That $1 already exists, please choose a different $2.", "That $1 already exists, please choose a different $2.");
 regGS("Street address", "Street address");

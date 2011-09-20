@@ -17,7 +17,8 @@ final class MetaSection extends MetaDbObject {
 	'name'=>'Name',
     'number'=>'Number',
     'description'=>'Description',
-    'url_name'=>'ShortName'
+    'url_name'=>'ShortName',
+    'identifier' => 'id'
 	);
 
 	private static $m_defaultCustomProperties = array(

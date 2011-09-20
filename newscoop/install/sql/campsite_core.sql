@@ -304,6 +304,8 @@ CREATE TABLE `Attachments` (
   `fk_user_id` int(10) unsigned DEFAULT NULL,
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `time_created` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Source` enum('local','feedback') not null default 'local',
+  `Status` enum('unapproved','approved') not null default 'approved',
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -778,6 +780,8 @@ CREATE TABLE `Images` (
   `UploadedByUser` int(11) DEFAULT NULL,
   `LastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `TimeCreated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `Source` enum('local','feedback') not null default 'local',
+  `Status` enum('unapproved','approved') not null default 'approved',
   PRIMARY KEY (`Id`),
   FULLTEXT KEY `Description` (`Description`),
   FULLTEXT KEY `Photographer` (`Photographer`),
@@ -1935,8 +1939,43 @@ CREATE TABLE `acl_rule` (
 
 LOCK TABLES `acl_rule` WRITE;
 /*!40000 ALTER TABLE `acl_rule` DISABLE KEYS */;
-INSERT INTO `acl_rule` VALUES (null,'allow',1,'article','add'),(null,'allow',1,'article','edit'),(null,'allow',1,'article','delete'),(null,'allow',1,'article','move'), (null,'allow',1,'article','publish'),(null,'allow',1,'article','translate'),(null,'allow',1,'image','add'),(null,'allow',1,'image','attach'),(null,'allow',1,'image','edit'),(null,'allow',1,'image','delete'),(null,'allow',1,'comment','enable'),(null,'allow',1,'comment','moderate'),(null,'allow',1,'comment','edit'),(null,'allow',1,'file','add'),(null,'allow',1,'file','edit'),(null,'allow',1,'file','delete'),(null,'allow',1,'audioclip','add'),(null,'allow',1,'audioclip','attach'),(null,'allow',1,'editor','bold'),(null,'allow',1,'editor','charactermap'),(null,'allow',1,'editor','copycutpaste'),(null,'allow',1,'editor','enlarge'),(null,'allow',1,'editor','findreplace'),(null,'allow',1,'editor','fontcolor'),(null,'allow',1,'editor','fontface'),(null,'allow',1,'editor','fontsize'),(null,'allow',1,'editor','horizontalrule'),(null,'allow',1,'editor','image'),(null,'allow',1,'editor','indent'),(null,'allow',1,'editor','italic'),(null,'allow',1,'editor','link'),(null,'allow',1,'editor','listbullet'),(null,'allow',1,'editor','listnumber'),(null,'allow',1,'editor','sourceview'),(null,'allow',1,'editor','spellcheckerenabled'),(null,'allow',1,'editor','statusbar'),(null,'allow',1,'editor','strikethrough'),(null,'allow',1,'editor','subhead'),(null,'allow',1,'editor','subscript'),(null,'allow',1,'editor','superscript'),(null,'allow',1,'editor','table'),(null,'allow',1,'editor','textalignment'),(null,'allow',1,'editor','textdirection'),(null,'allow',1,'editor','underline'),(null,'allow',1,'editor','undoredo'),(null, 'allow', 1, 'theme', 'manage'),(null,'allow',1,'template','delete'),(null,'allow',1,'template','manage'),(null,'allow',1,'article-type','delete'),(null,'allow',1,'article-type','manage'),(null,'allow',1,'system-preferences','edit'),(null,'allow',1,'indexer','manage'),(null,'allow',1,'country','delete'),(null,'allow',1,'country','manage'),(null,'allow',1,'log','view'),(null,'allow',1,'localizer','manage'),(null,'allow',1,'backup','manage'),(null,'allow',1,'cache','clear'),(null,'allow',1,'notification','get'),(null,'allow',1,'notification','moderate-comment'),(null,'allow',1,'publication','delete'),(null,'allow',1,'publication','manage'),(null,'allow',1,'issue','delete'),(null,'allow',1,'issue','manage'),(null,'allow',1,'section','delete'),(null,'allow',1,'section','manage'),(null,'allow',1,'topic','attach'),(null,'allow',1,'topic','manage'),(null,'allow',1,'language','delete'),(null,'allow',1,'language','manage'),(null,'allow',1,'user-group','manage'),(null,'allow',1,'user','delete'),(null,'allow',1,'user','manage'),(null,'allow',1,'author','edit'),(null,'allow',1,'subscriber','manage'),(null,'allow',1,'subscription','manage'),(null,'allow',1,'plugin','manage'),(null,'allow',1,'plugin-blog','moderator'),(null,'allow',1,'plugin-blog','admin'),(null,'allow',1,'pluginpoll','enable'),(null,'allow',1,'plugin-interview','admin'),(null,'allow',1,'plugin-interview','guest'),(null,'allow',1,'plugin-interview','moderator'),(null,'allow',1,'plugin-interview','notify'),(null,'allow',2,'article','add'),(null,'allow',2,'article','edit'),(null,'allow',2,'article','delete'),(null,'allow',2,'article','move'), (null,'allow',2,'article','publish'),(null,'allow',2,'article','translate'),(null,'allow',2,'image','add'),(null,'allow',2,'image','attach'),(null,'allow',2,'image','edit'),(null,'allow',2,'image','delete'),(null,'allow',2,'comment','enable'),(null,'allow',2,'comment','moderate'),(null,'allow',2,'comment','edit'),(null,'allow',2,'file','add'),(null,'allow',2,'file','edit'),(null,'allow',2,'file','delete'),(null,'allow',2,'audioclip','add'),(null,'allow',2,'audioclip','attach'),(null,'allow',2,'editor','bold'),(null,'allow',2,'editor','copycutpaste'),(null,'allow',2,'editor','enlarge'),(null,'allow',2,'editor','findreplace'),(null,'allow',2,'editor','image'),(null,'allow',2,'editor','indent'),(null,'allow',2,'editor','italic'),(null,'allow',2,'editor','link'),(null,'allow',2,'editor','listbullet'),(null,'allow',2,'editor','listnumber'),(null,'allow',2,'editor','sourceview'),(null,'allow',2,'editor','spellcheckerenabled'),(null,'allow',2,'editor','strikethrough'),(null,'allow',2,'editor','subhead'),(null,'allow',2,'editor','table'),(null,'allow',2,'editor','textalignment'),(null,'allow',2,'editor','textdirection'),(null,'allow',2,'editor','underline'),(null,'allow',2,'editor','undoredo'),(null, 'allow',2, 'theme', 'manage'),(null,'allow',2,'log','view'),(null,'allow',2,'cache','clear'),(null,'allow',2,'notification','get'),(null,'allow',2,'notification','moderate-comment'),(null,'allow',2,'issue','delete'),(null,'allow',2,'issue','manage'),(null,'allow',2,'section','delete'),(null,'allow',2,'section','manage'),(null,'allow',2,'topic','attach'),(null,'allow',2,'topic','manage'),(null,'allow',2,'author','edit'),(null,'allow',2,'plugin','manage'),(null,'allow',2,'plugin-blog','moderator'),(null,'allow',2,'pluginpoll','enable'),(null,'allow',2,'plugin-interview','moderator'),(null,'allow',3,'article','add'),(null,'allow',3,'article','edit'),(null,'allow',3,'article','delete'),(null,'allow',3,'article','move'), (null,'allow',3,'article','publish'),(null,'allow',3,'article','translate'),(null,'allow',3,'image','add'),(null,'allow',3,'image','attach'),(null,'allow',3,'image','edit'),(null,'allow',3,'image','delete'),(null,'allow',3,'comment','enable'),(null,'allow',3,'comment','moderate'),(null,'allow',3,'comment','edit'),(null,'allow',3,'file','add'),(null,'allow',3,'file','edit'),(null,'allow',3,'file','delete'),(null,'allow',3,'audioclip','add'),(null,'allow',3,'audioclip','attach'),(null,'allow',3,'editor','bold'),(null,'allow',3,'editor','copycutpaste'),(null,'allow',3,'editor','findreplace'),(null,'allow',3,'editor','image'),(null,'allow',3,'editor','indent'),(null,'allow',3,'editor','italic'),(null,'allow',3,'editor','link'),(null,'allow',3,'editor','sourceview'),(null,'allow',3,'editor','spellcheckerenabled'),(null,'allow',3,'editor','subhead'),(null,'allow',3,'editor','table'),(null,'allow',3,'editor','undoredo'),(null,'allow',3,'cache','clear'),(null,'allow',3,'notification','get'),(null,'allow',3,'notification','moderate-comment'),(null,'allow',3,'topic','attach'),(null,'allow',3,'topic','manage'),(null,'allow',3,'author','edit'),(null,'allow',3,'plugin','manage'),(null,'allow',3,'pluginpoll','enable'),(null,'allow',4,'article','add'),(null,'allow',4,'article','edit'),(null,'allow',4,'article','delete'),(null,'allow',4,'article','move'), (null,'allow',4,'article','translate'),(null,'allow',4,'image','add'),(null,'allow',4,'image','attach'),(null,'allow',4,'image','edit'),(null,'allow',4,'comment','enable'),(null,'allow',4,'comment','moderate'),(null,'allow',4,'comment','edit'),(null,'allow',4,'file','add'),(null,'allow',4,'file','edit'),(null,'allow',4,'audioclip','add'),(null,'allow',4,'audioclip','attach'),(null,'allow',4,'editor','bold'),(null,'allow',4,'editor','copycutpaste'),(null,'allow',4,'editor','findreplace'),(null,'allow',4,'editor','image'),(null,'allow',4,'editor','indent'),(null,'allow',4,'editor','italic'),(null,'allow',4,'editor','link'),(null,'allow',4,'editor','spellcheckerenabled'),(null,'allow',4,'editor','subhead'),(null,'allow',4,'editor','undoredo'),(null,'allow',4,'notification','get'),(null,'allow',4,'notification','moderate-comment'),(null,'allow',4,'topic','attach'),(null,'allow',4,'plugin','manage'),(null,'allow',5,'subscriber','manage'),(null,'allow',5,'subscription','manage');
+INSERT INTO `acl_rule` VALUES (null,'allow',1,'article','add'),(null,'allow',1,'article','edit'),(null,'allow',1,'article','delete'),(null,'allow',1,'article','move'), (null,'allow',1,'article','publish'),(null,'allow',1,'article','translate'),(null,'allow',1,'image','add'),(null,'allow',1,'image','attach'),(null,'allow',1,'image','edit'),(null,'allow',1,'image','delete'),(null,'allow',1,'comment','enable'),(null,'allow',1,'comment','moderate'),(null,'allow',1,'comment','edit'),(null,'allow',1,'file','add'),(null,'allow',1,'file','edit'),(null,'allow',1,'file','delete'),(null,'allow',1,'editor','bold'),(null,'allow',1,'editor','charactermap'),(null,'allow',1,'editor','copycutpaste'),(null,'allow',1,'editor','enlarge'),(null,'allow',1,'editor','findreplace'),(null,'allow',1,'editor','fontcolor'),(null,'allow',1,'editor','fontface'),(null,'allow',1,'editor','fontsize'),(null,'allow',1,'editor','horizontalrule'),(null,'allow',1,'editor','image'),(null,'allow',1,'editor','indent'),(null,'allow',1,'editor','italic'),(null,'allow',1,'editor','link'),(null,'allow',1,'editor','listbullet'),(null,'allow',1,'editor','listnumber'),(null,'allow',1,'editor','sourceview'),(null,'allow',1,'editor','spellcheckerenabled'),(null,'allow',1,'editor','statusbar'),(null,'allow',1,'editor','strikethrough'),(null,'allow',1,'editor','subhead'),(null,'allow',1,'editor','subscript'),(null,'allow',1,'editor','superscript'),(null,'allow',1,'editor','table'),(null,'allow',1,'editor','textalignment'),(null,'allow',1,'editor','textdirection'),(null,'allow',1,'editor','underline'),(null,'allow',1,'editor','undoredo'),(null, 'allow', 1, 'theme', 'manage'),(null,'allow',1,'template','delete'),(null,'allow',1,'template','manage'),(null,'allow',1,'article-type','delete'),(null,'allow',1,'article-type','manage'),(null,'allow',1,'system-preferences','edit'),(null,'allow',1,'indexer','manage'),(null,'allow',1,'country','delete'),(null,'allow',1,'country','manage'),(null,'allow',1,'log','view'),(null,'allow',1,'localizer','manage'),(null,'allow',1,'backup','manage'),(null,'allow',1,'cache','clear'),(null,'allow',1,'notification','get'),(null,'allow',1,'notification','moderate-comment'),(null,'allow',1,'publication','delete'),(null,'allow',1,'publication','manage'),(null,'allow',1,'issue','delete'),(null,'allow',1,'issue','manage'),(null,'allow',1,'section','delete'),(null,'allow',1,'section','manage'),(null,'allow',1,'topic','attach'),(null,'allow',1,'topic','manage'),(null,'allow',1,'language','delete'),(null,'allow',1,'language','manage'),(null,'allow',1,'user-group','manage'),(null,'allow',1,'user','delete'),(null,'allow',1,'user','manage'),(null,'allow',1,'author','edit'),(null,'allow',1,'subscriber','manage'),(null,'allow',1,'subscription','manage'),(null,'allow',1,'plugin','manage'),(null,'allow',1,'plugin-blog','moderator'),(null,'allow',1,'plugin-blog','admin'),(null,'allow',1,'pluginpoll','enable'),(null,'allow',1,'plugin-interview','admin'),(null,'allow',1,'plugin-interview','guest'),(null,'allow',1,'plugin-interview','moderator'),(null,'allow',1,'plugin-interview','notify'),(null,'allow',2,'article','add'),(null,'allow',2,'article','edit'),(null,'allow',2,'article','delete'),(null,'allow',2,'article','move'), (null,'allow',2,'article','publish'),(null,'allow',2,'article','translate'),(null,'allow',2,'image','add'),(null,'allow',2,'image','attach'),(null,'allow',2,'image','edit'),(null,'allow',2,'image','delete'),(null,'allow',2,'comment','enable'),(null,'allow',2,'comment','moderate'),(null,'allow',2,'comment','edit'),(null,'allow',2,'file','add'),(null,'allow',2,'file','edit'),(null,'allow',2,'file','delete'),(null,'allow',2,'editor','bold'),(null,'allow',2,'editor','copycutpaste'),(null,'allow',2,'editor','enlarge'),(null,'allow',2,'editor','findreplace'),(null,'allow',2,'editor','image'),(null,'allow',2,'editor','indent'),(null,'allow',2,'editor','italic'),(null,'allow',2,'editor','link'),(null,'allow',2,'editor','listbullet'),(null,'allow',2,'editor','listnumber'),(null,'allow',2,'editor','sourceview'),(null,'allow',2,'editor','spellcheckerenabled'),(null,'allow',2,'editor','strikethrough'),(null,'allow',2,'editor','subhead'),(null,'allow',2,'editor','table'),(null,'allow',2,'editor','textalignment'),(null,'allow',2,'editor','textdirection'),(null,'allow',2,'editor','underline'),(null,'allow',2,'editor','undoredo'),(null, 'allow',2, 'theme', 'manage'),(null,'allow',2,'log','view'),(null,'allow',2,'cache','clear'),(null,'allow',2,'notification','get'),(null,'allow',2,'notification','moderate-comment'),(null,'allow',2,'issue','delete'),(null,'allow',2,'issue','manage'),(null,'allow',2,'section','delete'),(null,'allow',2,'section','manage'),(null,'allow',2,'topic','attach'),(null,'allow',2,'topic','manage'),(null,'allow',2,'author','edit'),(null,'allow',2,'plugin','manage'),(null,'allow',2,'plugin-blog','moderator'),(null,'allow',2,'pluginpoll','enable'),(null,'allow',2,'plugin-interview','moderator'),(null,'allow',3,'article','add'),(null,'allow',3,'article','edit'),(null,'allow',3,'article','delete'),(null,'allow',3,'article','move'), (null,'allow',3,'article','publish'),(null,'allow',3,'article','translate'),(null,'allow',3,'image','add'),(null,'allow',3,'image','attach'),(null,'allow',3,'image','edit'),(null,'allow',3,'image','delete'),(null,'allow',3,'comment','enable'),(null,'allow',3,'comment','moderate'),(null,'allow',3,'comment','edit'),(null,'allow',3,'file','add'),(null,'allow',3,'file','edit'),(null,'allow',3,'file','delete'),(null,'allow',3,'editor','bold'),(null,'allow',3,'editor','copycutpaste'),(null,'allow',3,'editor','findreplace'),(null,'allow',3,'editor','image'),(null,'allow',3,'editor','indent'),(null,'allow',3,'editor','italic'),(null,'allow',3,'editor','link'),(null,'allow',3,'editor','sourceview'),(null,'allow',3,'editor','spellcheckerenabled'),(null,'allow',3,'editor','subhead'),(null,'allow',3,'editor','table'),(null,'allow',3,'editor','undoredo'),(null,'allow',3,'cache','clear'),(null,'allow',3,'notification','get'),(null,'allow',3,'notification','moderate-comment'),(null,'allow',3,'topic','attach'),(null,'allow',3,'topic','manage'),(null,'allow',3,'author','edit'),(null,'allow',3,'plugin','manage'),(null,'allow',3,'pluginpoll','enable'),(null,'allow',4,'article','add'),(null,'allow',4,'article','edit'),(null,'allow',4,'article','delete'),(null,'allow',4,'article','move'), (null,'allow',4,'article','translate'),(null,'allow',4,'image','add'),(null,'allow',4,'image','attach'),(null,'allow',4,'image','edit'),(null,'allow',4,'comment','enable'),(null,'allow',4,'comment','moderate'),(null,'allow',4,'comment','edit'),(null,'allow',4,'file','add'),(null,'allow',4,'file','edit'),(null,'allow',4,'editor','bold'),(null,'allow',4,'editor','copycutpaste'),(null,'allow',4,'editor','findreplace'),(null,'allow',4,'editor','image'),(null,'allow',4,'editor','indent'),(null,'allow',4,'editor','italic'),(null,'allow',4,'editor','link'),(null,'allow',4,'editor','spellcheckerenabled'),(null,'allow',4,'editor','subhead'),(null,'allow',4,'editor','undoredo'),(null,'allow',4,'notification','get'),(null,'allow',4,'notification','moderate-comment'),(null,'allow',4,'topic','attach'),(null,'allow',4,'plugin','manage'),(null,'allow',5,'subscriber','manage'),(null,'allow',5,'subscription','manage'),(null,'allow',1,'feedback','view');
 /*!40000 ALTER TABLE `acl_rule` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `feedback`
+--
+DROP TABLE IF EXISTS `feedback`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `feedback` (
+   `id` int(11) not null auto_increment,
+   `user_id` int(11),
+   `section_id` int(11),
+   `publication_id` int(11),
+   `article_language` int(11),
+   `article_number` int(11),
+   `subject` varchar(128),
+   `message` varchar(2048) not null,
+   `status` tinyint(1) unsigned not null,
+   `url` varchar(128) not null,
+   `time_created` datetime not null,
+   `time_updated` datetime not null,
+   `attachment_type` int(1),
+   `attachment_id` int(11),
+   PRIMARY KEY (`id`),
+   KEY `user` (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `feedback`
+--
+
+LOCK TABLES `feedback` WRITE;
+/*!40000 ALTER TABLE `feedback` DISABLE KEYS */;
+/*!40000 ALTER TABLE `feedback` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2036,6 +2075,21 @@ LOCK TABLES `comment_commenter` WRITE;
 /*!40000 ALTER TABLE `comment_commenter` DISABLE KEYS */;
 /*!40000 ALTER TABLE `comment_commenter` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+-- Tables for context box
+CREATE TABLE IF NOT EXISTS `context_articles` (
+  `fk_context_id` int(10) NOT NULL,
+  `fk_article_no` int(10) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `context_boxes` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
+  `fk_article_no` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=21 ;
+
 
 --
 -- Table structure for table `liveuser_applications`
@@ -2214,7 +2268,7 @@ CREATE TABLE `liveuser_rights` (
 
 LOCK TABLES `liveuser_rights` WRITE;
 /*!40000 ALTER TABLE `liveuser_rights` DISABLE KEYS */;
-INSERT INTO `liveuser_rights` VALUES (1,0,'AddArticle',1),(2,0,'AddAudioclip',1),(3,0,'AddFile',1),(4,0,'AddImage',1),(5,0,'AttachAudioclipToArticle',1),(6,0,'AttachImageToArticle',1),(7,0,'AttachTopicToArticle',1),(8,0,'ChangeArticle',1),(9,0,'ChangeFile',1),(10,0,'ChangeImage',1),(11,0,'ChangeSystemPreferences',1),(12,0,'ClearCache',1),(13,0,'CommentEnable',1),(14,0,'CommentModerate',1),(15,0,'DeleteArticle',1),(16,0,'DeleteArticleTypes',1),(17,0,'DeleteCountries',1),(18,0,'DeleteFile',1),(19,0,'DeleteImage',1),(20,0,'DeleteIssue',1),(21,0,'DeleteLanguages',1),(22,0,'DeletePub',1),(23,0,'DeleteSection',1),(24,0,'DeleteTempl',1),(25,0,'DeleteUsers',1),(26,0,'EditorBold',1),(27,0,'EditorCharacterMap',1),(28,0,'EditorCopyCutPaste',1),(29,0,'EditorEnlarge',1),(30,0,'EditorFindReplace',1),(31,0,'EditorFontColor',1),(32,0,'EditorFontFace',1),(33,0,'EditorFontSize',1),(34,0,'EditorHorizontalRule',1),(35,0,'EditorImage',1),(36,0,'EditorIndent',1),(37,0,'EditorItalic',1),(38,0,'EditorLink',1),(39,0,'EditorListBullet',1),(40,0,'EditorListNumber',1),(41,0,'EditorSourceView',1),(42,0,'EditorStrikethrough',1),(43,0,'EditorSubhead',1),(44,0,'EditorSubscript',1),(45,0,'EditorSuperscript',1),(46,0,'EditorTable',1),(47,0,'EditorTextAlignment',1),(48,0,'EditorTextDirection',1),(49,0,'EditorUnderline',1),(50,0,'EditorUndoRedo',1),(51,0,'plugin_manager',1),(52,0,'MailNotify',1),(53,0,'ManageArticleTypes',1),(54,0,'ManageCountries',1),(55,0,'ManageIndexer',1),(56,0,'ManageIssue',1),(57,0,'ManageLanguages',1),(58,0,'ManageLocalizer',1),(59,0,'ManagePub',1),(60,0,'ManageReaders',1),(61,0,'ManageSection',1),(62,0,'ManageSubscriptions',1),(63,0,'ManageTempl',1),(64,0,'ManageTopics',1),(65,0,'ManageUserTypes',1),(66,0,'ManageUsers',1),(67,0,'MoveArticle',1),(68,0,'Publish',1),(69,0,'TranslateArticle',1),(70,0,'ViewLogs',1),(72,0,'EditorStatusBar',1),(73,0,'EditorSpellcheckerEnabled',1),(74,0,'ManageBackup',1),(89,0,'plugin_interview_notify',1),(90,0,'plugin_interview_guest',1),(91,0,'plugin_interview_moderator',1),(92,0,'plugin_interview_admin',1),(97,0,'plugin_blog_admin',1),(98,0,'plugin_blog_moderator',1),(101,0,'plugin_poll',1),(103,0,'EditAuthors',1);
+INSERT INTO `liveuser_rights` VALUES (1,0,'AddArticle',1),(3,0,'AddFile',1),(4,0,'AddImage',1),(6,0,'AttachImageToArticle',1),(7,0,'AttachTopicToArticle',1),(8,0,'ChangeArticle',1),(9,0,'ChangeFile',1),(10,0,'ChangeImage',1),(11,0,'ChangeSystemPreferences',1),(12,0,'ClearCache',1),(13,0,'CommentEnable',1),(14,0,'CommentModerate',1),(15,0,'DeleteArticle',1),(16,0,'DeleteArticleTypes',1),(17,0,'DeleteCountries',1),(18,0,'DeleteFile',1),(19,0,'DeleteImage',1),(20,0,'DeleteIssue',1),(21,0,'DeleteLanguages',1),(22,0,'DeletePub',1),(23,0,'DeleteSection',1),(24,0,'DeleteTempl',1),(25,0,'DeleteUsers',1),(26,0,'EditorBold',1),(27,0,'EditorCharacterMap',1),(28,0,'EditorCopyCutPaste',1),(29,0,'EditorEnlarge',1),(30,0,'EditorFindReplace',1),(31,0,'EditorFontColor',1),(32,0,'EditorFontFace',1),(33,0,'EditorFontSize',1),(34,0,'EditorHorizontalRule',1),(35,0,'EditorImage',1),(36,0,'EditorIndent',1),(37,0,'EditorItalic',1),(38,0,'EditorLink',1),(39,0,'EditorListBullet',1),(40,0,'EditorListNumber',1),(41,0,'EditorSourceView',1),(42,0,'EditorStrikethrough',1),(43,0,'EditorSubhead',1),(44,0,'EditorSubscript',1),(45,0,'EditorSuperscript',1),(46,0,'EditorTable',1),(47,0,'EditorTextAlignment',1),(48,0,'EditorTextDirection',1),(49,0,'EditorUnderline',1),(50,0,'EditorUndoRedo',1),(51,0,'plugin_manager',1),(52,0,'MailNotify',1),(53,0,'ManageArticleTypes',1),(54,0,'ManageCountries',1),(55,0,'ManageIndexer',1),(56,0,'ManageIssue',1),(57,0,'ManageLanguages',1),(58,0,'ManageLocalizer',1),(59,0,'ManagePub',1),(60,0,'ManageReaders',1),(61,0,'ManageSection',1),(62,0,'ManageSubscriptions',1),(63,0,'ManageTempl',1),(64,0,'ManageTopics',1),(65,0,'ManageUserTypes',1),(66,0,'ManageUsers',1),(67,0,'MoveArticle',1),(68,0,'Publish',1),(69,0,'TranslateArticle',1),(70,0,'ViewLogs',1),(72,0,'EditorStatusBar',1),(73,0,'EditorSpellcheckerEnabled',1),(74,0,'ManageBackup',1),(89,0,'plugin_interview_notify',1),(90,0,'plugin_interview_guest',1),(91,0,'plugin_interview_moderator',1),(92,0,'plugin_interview_admin',1),(97,0,'plugin_blog_admin',1),(98,0,'plugin_blog_moderator',1),(101,0,'plugin_poll',1),(103,0,'EditAuthors',1);
 /*!40000 ALTER TABLE `liveuser_rights` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -2253,41 +2307,71 @@ DROP TABLE IF EXISTS `liveuser_userrights`;
 --
 
 DROP TABLE IF EXISTS `liveuser_users`;
-DROP TABLE IF EXISTS `user`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user` (
-    `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-    `email` varchar(255) NOT NULL,
-    `username` varchar(80) DEFAULT NULL,
-    `password` varchar(60) DEFAULT NULL,
-    `first_name` varchar(80) DEFAULT NULL,
-    `last_name` varchar(80) DEFAULT NULL,
-    `status` tinyint(1) NOT NULL DEFAULT '0',
-    `is_admin` boolean NOT NULL DEFAULT '0',
-    `is_public` boolean NOT NULL DEFAULT '0',
-    `points` int(10) DEFAULT '0',
-    `created` datetime NOT NULL,
-    `updated` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    `lastLogin` datetime DEFAULT NULL,
-    `password_reset_token` varchar(85) DEFAULT NULL,
-    `image` varchar(255) DEFAULT NULL,
-    `role_id` int(11) unsigned DEFAULT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE (`email`),
-    UNIQUE (`username`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-/*!40101 SET character_set_client = @saved_cs_client */;
+CREATE TABLE `liveuser_users` (
+  `Id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `KeyId` int(10) unsigned DEFAULT NULL,
+  `Name` varchar(255) DEFAULT NULL,
+  `UName` varchar(70) DEFAULT NULL,
+  `Password` varchar(64) DEFAULT NULL,
+  `EMail` varchar(255) NOT NULL,
+  `Reader` enum('Y','N') NOT NULL DEFAULT 'Y',
+  `fk_user_type` int(10) unsigned DEFAULT NULL,
+  `City` varchar(100) DEFAULT NULL,
+  `StrAddress` varchar(255) DEFAULT NULL,
+  `State` varchar(32) DEFAULT NULL,
+  `CountryCode` varchar(21) DEFAULT NULL,
+  `Phone` varchar(20) DEFAULT NULL,
+  `Fax` varchar(20) DEFAULT NULL,
+  `Contact` varchar(64) DEFAULT NULL,
+  `Phone2` varchar(20) DEFAULT NULL,
+  `Title` enum('Mr.','Mrs.','Ms.','Dr.') NOT NULL DEFAULT 'Mr.',
+  `Gender` enum('M','F') DEFAULT NULL,
+  `Age` enum('0-17','18-24','25-39','40-49','50-65','65-') NOT NULL DEFAULT '0-17',
+  `PostalCode` varchar(70) DEFAULT NULL,
+  `Employer` varchar(140) DEFAULT NULL,
+  `EmployerType` varchar(140) DEFAULT NULL,
+  `Position` varchar(70) DEFAULT NULL,
+  `Interests` mediumblob,
+  `How` varchar(255) DEFAULT NULL,
+  `Languages` varchar(100) DEFAULT NULL,
+  `Improvements` mediumblob,
+  `Pref1` enum('N','Y') NOT NULL DEFAULT 'N',
+  `Pref2` enum('N','Y') NOT NULL DEFAULT 'N',
+  `Pref3` enum('N','Y') NOT NULL DEFAULT 'N',
+  `Pref4` enum('N','Y') NOT NULL DEFAULT 'N',
+  `Field1` varchar(150) DEFAULT NULL,
+  `Field2` varchar(150) DEFAULT NULL,
+  `Field3` varchar(150) DEFAULT NULL,
+  `Field4` varchar(150) DEFAULT NULL,
+  `Field5` varchar(150) DEFAULT NULL,
+  `Text1` mediumblob,
+  `Text2` mediumblob,
+  `Text3` mediumblob,
+  `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `time_created` datetime DEFAULT NULL,
+  `lastLogin` datetime DEFAULT NULL,
+  `isActive` tinyint(1) DEFAULT '1',
+  `password_reset_token` varchar(85) DEFAULT NULL,
+  `role_id` int(10) DEFAULT NULL,
+  `last_name` varchar(80) DEFAULT NULL,
+  `status` tinyint(1) NOT NULL DEFAULT '0',
+  `is_admin` boolean NOT NULL DEFAULT '0',
+  `is_public` boolean NOT NULL DEFAULT '0',
+  `points` int(10) DEFAULT '0',
+  `image` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  UNIQUE KEY `UName` (`UName`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `liveuser_users`
 --
 
-LOCK TABLES `user` WRITE;
-/*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`id`, `first_name`, `username`, `password`, `email`, `status`, `is_admin`, `role_id`) VALUES
+LOCK TABLES `liveuser_users` WRITE;
+/*!40000 ALTER TABLE `liveuser_users` DISABLE KEYS */;
+INSERT INTO `liveuser_users` (`Id`, `Name`, `UName`, `Password`, `EMail`, `status`, `is_admin`, `role_id`) VALUES
 (1, 'Administrator', 'admin', 'd033e22ae348aeb5660fc2140aec35850c4da997', 'admin@email.addr', '1', '1', 6);
-/*!40000 ALTER TABLE `user` ENABLE KEYS */;
+/*!40000 ALTER TABLE `liveuser_users` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -2906,6 +2990,47 @@ CREATE TABLE IF NOT EXISTS `user_token` (
   `created` datetime NOT NULL,
   PRIMARY KEY (`user_id`,`action`,`token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `ingest_feed`;
+CREATE TABLE IF NOT EXISTS `ingest_feed` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `title` varchar(255) NOT NULL,
+  `updated` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+INSERT INTO `ingest_feed` (`title`) VALUES ('SDA');
+
+DROP TABLE IF EXISTS `ingest_feed_entry`;
+CREATE TABLE IF NOT EXISTS `ingest_feed_entry` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `feed_id` int(11) unsigned NOT NULL,
+  `date_id` varchar(20) DEFAULT NULL,
+  `news_item_id` varchar(20) DEFAULT NULL,
+  `title` varchar(255) NOT NULL,
+  `updated` datetime NOT NULL,
+  `author` varchar(255) DEFAULT NULL,
+  `content` text NOT NULL,
+  `summary` text,
+  `category` varchar(255) DEFAULT NULL,
+  `created` datetime DEFAULT NULL,
+  `published` datetime DEFAULT NULL,
+  `embargoed` datetime DEFAULT NULL,
+  `priority` tinyint(4) DEFAULT NULL,
+  `status` varchar(20) DEFAULT NULL,
+  `attributes` text,
+  PRIMARY KEY (`id`),
+  UNIQUE (`date_id`, `news_item_id`),
+  KEY (`status`, `updated`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `user_identity`;
+CREATE TABLE IF NOT EXISTS `user_identity` (
+  `provider` varchar(80) NOT NULL,
+  `provider_user_id` varchar(255) NOT NULL,
+  `user_id` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`provider`, `provider_user_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

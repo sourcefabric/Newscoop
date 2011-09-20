@@ -46,7 +46,7 @@ class UserController extends Zend_Controller_Action
             $users = $this->service->findUsersBySearch($search);
 
             $link_name = "user-search";
-            $link_data = array();
+            $link_data = array('search' => $search);
         }
         //order users by lastname A-D
         else {
@@ -59,10 +59,6 @@ class UserController extends Zend_Controller_Action
             $link_name = "user-list";
             $link_data = array('user-listing' => $range);
         }
-
-        //$users = $this->service->getPublicUsers();
-        //$users = $this->service->findUsersLastNameInRange(array('t', 'b'));
-        //$users = $this->service->findUsersBySearch("min tor");
 
         $this->view->users = array();
         foreach ($users as $user) {
@@ -82,11 +78,15 @@ class UserController extends Zend_Controller_Action
         $this->view->paginator = $paginator->getPages();
         $this->view->link_name = $link_name;
         $this->view->link_data = $link_data;
-
     }
 
     public function profileAction()
     {
+        $this->view->headLink()->appendStylesheet($this->view->baseUrl('/js/jquery/fancybox/jquery.fancybox-1.3.4.css'));
+
+        $this->view->headScript()->appendFile($this->view->baseUrl('/js/jquery/fancybox/jquery.fancybox-1.3.4.pack.js'));
+        $this->view->headScript()->appendFile($this->view->baseUrl('/public/js/user_profile.js'));
+
         $username = $this->_getParam('username', false);
         if (!$username) {
             $this->_helper->flashMessenger(array('error', "User '$username' not found"));
@@ -103,17 +103,6 @@ class UserController extends Zend_Controller_Action
         }
 
         $this->view->user = new MetaUser($user);
-        $this->view->profile = $this->getProfile($user);
-    }
-
-    private function getProfile(User $user)
-    {
-        $profile = array();
-        $form = new Application_Form_Profile();
-        foreach ($form->getSubForm('attributes') as $field) {
-            $profile[$field->getLabel()] = $user->getAttribute($field->getName());
-        }
-
-        return $profile;
+        $this->view->profile = $user->getAttributes();
     }
 }

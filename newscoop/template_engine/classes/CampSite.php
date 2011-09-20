@@ -96,6 +96,8 @@ final class CampSite extends CampSystem
     {
         global $g_errorList;
 
+        $errors = $GLOBALS['controller']->getRequest()->getParam('errors', null);
+
         $uri = self::GetURIInstance();
         $document = self::GetHTMLDocumentInstance();
 
@@ -114,6 +116,14 @@ final class CampSite extends CampSystem
             $templates_dir = CS_TEMPLATES_DIR;
             $template = CS_SYS_TEMPLATES_DIR . DIR_SEP . '_campsite_error.tpl';
             $error_message = 'At initialization: ' . $g_errorList[0]->getMessage();
+        } elseif (!empty($errors)) {
+            $templates_dir = CS_TEMPLATES_DIR;
+            $template = '_campsite_error.tpl';
+            if (defined('APPLICATION_ENV') && APPLICATION_ENV == 'development') {
+                $error_message = $errors->exception;
+            } else {
+                $error_message = 'Error occured.';
+            }
         } else {
             $template = $uri->getTemplate();
             if (empty($template)) {

@@ -224,4 +224,66 @@ class Admin_UserController extends Zend_Controller_Action
 
         return $user;
     }
+    
+    public function toggleBanAction()
+    {
+        $parameters = $this->getRequest()->getParams();
+        
+        $userRepository = $this->_helper->entity->getRepository('Newscoop\Entity\User');
+        $publicationRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Publication');
+        $acceptanceRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
+        
+        if (!isset($parameters['user']) && !isset($parameters['publication'])) {
+            throw new InvalidArgumentException;
+        }
+        
+        $user = $userRepository->find($parameters['user']);
+        $publication = $publicationRepository->find($parameters['publication']);
+            
+        $form = new Admin_Form_BanUser;
+        $this->handleBanForm($form, $user, $publication);
+        
+        $banned = $acceptanceRepository->checkBanned(array('name' => $user->getName(), 'email' => $user->getEmail(), 'ip' => ''), $publication);
+        
+        $form->setValues($user, $banned);
+        $this->view->form = $form;
+    }
+    
+    /**
+     * Method for saving a banned
+     *
+     * @param ZendForm $p_form
+     * @param Newscoop\Entity\User $p_user
+     */
+    private function handleBanForm(Admin_Form_BanUser $p_form, $p_user, $p_publication)
+    {
+        if ($this->getRequest()->isPost() && $p_form->isValid($_POST)) {
+            if ($p_form->getSubmit()->isChecked()) {
+                $parameters = $p_form->getValues();
+                $banValues = array();
+                $unbanValues = array();
+                if ($parameters['name'] == 1) $banValues['name'] = $p_user->getName();
+                else $unbanValues['name'] = $p_user->getName();
+                if ($parameters['email'] == 1) $banValues['email'] = $p_user->getEmail();
+                else $unbanValues['email'] = $p_user->getEmail();
+                
+                $acceptanceRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
+                $acceptanceRepository->ban($p_publication, $banValues);
+                $acceptanceRepository->flush();
+                $acceptanceRepository->unban($p_publication, $unbanValues);
+                $acceptanceRepository->flush();
+                
+                $this->_helper->flashMessenger(getGS('Ban for user "$1" saved.', $p_user->getName()));
+                
+                if ($parameters['delete_messages'] == 1) {
+					$feedbackRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Feedback');
+					$feedbacks = $feedbackRepository->getByUser($p_user->getId());
+					
+					$feedbackRepository->setStatus($feedbacks, 'deleted');
+					$feedbackRepository->flush();
+				}
+            }
+            $this->_helper->redirector->gotoSimple('index', 'feedback');
+        }
+    }
 }

@@ -8,4 +8,9 @@
 {{ /if }}
 
 {{ $form }}
+
+<ul class="social">
+    <li><a href="{{ $view->url(['action' => 'social', 'provider' => 'Facebook']) }}">Facebook</a></li>
+</ul>
+
 {{/block}}

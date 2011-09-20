@@ -12,7 +12,7 @@
         <?php $allCount = 0; ?>
         <?php foreach ( $this->themeArticleTypes as $typeName => $typeFields ) : ?>
         	<span>
-        	    <?php echo strtoupper( str_replace( "_", " ", $typeName ) ) ?>
+        	    <?php echo $typeName ?>
         		<?php echo $this->formHidden( 'themeArticleTypes[]', $typeName, array( 'id' => null ) ) ?>
         	</span>
         	<ul>
@@ -47,7 +47,7 @@
 						<?php if( $this->camelize( $atn ) == $this->camelize( $articleTypeName ) ) : // strtolower( str_replace( "_", " ", $atn ) ) == strtolower( $articleTypeName ) ?>
 							selected="selected"
 						<?php endif; ?>>
-						<?php echo ucfirst( $atn ) ?></option>
+						<?php echo $atn ?></option>
 				<?php endforeach; ?>
             	</select>
             	<ul>

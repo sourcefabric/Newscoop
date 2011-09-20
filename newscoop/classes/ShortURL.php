@@ -42,7 +42,7 @@ class ShortURL
 		$scheme = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
 		$defaultAlias = new Alias($publicationObj->getDefaultAliasId());
 		$uri = ShortURL::GetURI($p_publicationId, $p_languageId, $p_issueNo, $p_sectionNo, $p_articleNo);
-		if (PEAR::isError($uri)) {
+		if (!is_string($uri) && PEAR::isError($uri)) {
 			return $uri;
 		}
 		return $scheme . $defaultAlias->getName() . $uri;

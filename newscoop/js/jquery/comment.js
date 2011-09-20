@@ -82,6 +82,11 @@ var datatableCallback = {
             }
         });
         
+        $('.table-checkbox').click(function(){
+			if(!$(this).is(':checked')) {
+				$('.toggle-checkbox').removeAttr('checked');
+			}
+		});
     }
 };
 $(function () {
@@ -91,7 +96,7 @@ $(function () {
     //$('.tabs').tabs('select', '#tabs-1');    
     var commentFilterTriggerCount = 0;
     $("#commentFilterTrigger").click(function () {
-        if (commentFilterTriggerCount == 0) {
+		if (commentFilterTriggerCount == 0) {
             $("#commentFilterSearch").css("display", "block");
             $(this).addClass("collapsed");
             commentFilterTriggerCount = 1;
@@ -251,6 +256,7 @@ $(function () {
             type: 'GET',
             url: $(this).attr('href'),
             success: function (data) {
+		data = $.parseJSON(data);
                 var content = '<h3><a href="#">' + $(that).html() + '</a></h3>';
                 for (i in data) {
                     content += '<h4>' + i + '</h4>';
