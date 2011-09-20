@@ -15,7 +15,7 @@ use Newscoop\Entity\User;
 /**
  * Template user
  */
-final class MetaUser extends MetaDbObject
+final class MetaUser extends MetaDbObject implements ArrayAccess
 {
     /** @var Newscoop\Entity\User */
     protected $user;
@@ -196,5 +196,37 @@ final class MetaUser extends MetaDbObject
         }
 
         return $this->topics = $topics;
+    }
+
+    /**
+     * @see ArrayAccess
+     * @todo
+     */
+    public function offsetExists($offset)
+    {
+    }
+
+    /**
+     * @see ArrayAccess
+     */
+    public function offsetGet($offset)
+    {
+        return $this->user->getAttribute($offset);
+    }
+
+    /**
+     * @see ArrayAccess
+     * @todo
+     */
+    public function offsetSet($offset, $value)
+    {
+    }
+
+    /**
+     * @see ArrayAccess
+     * @todo
+     */
+    public function offsetUnset($offset)
+    {
     }
 }

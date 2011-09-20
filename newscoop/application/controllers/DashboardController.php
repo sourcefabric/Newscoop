@@ -46,7 +46,9 @@ class DashboardController extends Zend_Controller_Action
 
             try {
                 $imageInfo = array_pop($form->image->getFileInfo());
-                $values['image'] = $this->_helper->service('image')->save($imageInfo);
+                if (!empty($values['image'])) {
+                    $values['image'] = $this->_helper->service('image')->save($imageInfo);
+                }
                 $this->service->save($values, $this->user);
                 $this->_helper->redirector('index');
             } catch (\InvalidArgumentException $e) {
