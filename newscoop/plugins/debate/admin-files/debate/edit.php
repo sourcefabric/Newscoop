@@ -165,8 +165,8 @@ camp_html_display_msgs();
             <td ALIGN="RIGHT" ><?php putGS("Allow not logged in users") ?>:</td>
             <td style="padding-top: 3px;">
             	<select name="f_allow_not_logged_in" class="input_select">
-            		<option value="0" <?php if (isset($allow_not_logged_in) && $allow_not_logged_in) : ?>selected="selected"<?php endif ?>><?php putGS("Yes") ?></option>
-	                <option value="1" <?php if (isset($allow_not_logged_in) && !$allow_not_logged_in) : ?>selected="selected"<?php endif ?>><?php putGS("No") ?></option>
+	                <option value="0" <?php if (isset($allow_not_logged_in) && !$allow_not_logged_in) : ?>selected="selected"<?php endif ?>><?php putGS("No") ?></option>
+	                <option value="1" <?php if (isset($allow_not_logged_in) && $allow_not_logged_in) : ?>selected="selected"<?php endif ?>><?php putGS("Yes") ?></option>
                 </select>
             </td>
         </tr>

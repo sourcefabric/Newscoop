@@ -319,10 +319,10 @@ class DebateAnswer extends DatabaseObject
 
     public function vote($p_value = 1)
     {
+
         if (!settype($p_value, 'float')) {
             return false;
         }
-
         $debate = $this->getDebate();
         $debate->userVote($this->getProperty('nr_answer'));
         $voted = $debate->alreadyVoted();

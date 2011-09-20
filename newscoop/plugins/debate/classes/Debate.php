@@ -967,7 +967,7 @@ class Debate extends DatabaseObject
         setcookie($key, $value, time()+60*60*24*365, '/', $hostname[2]);
     }
 
-    private $alreadyVoted = false;
+    private $alreadyVoted = null;
 
     public function userVote($answer_nr)
     {

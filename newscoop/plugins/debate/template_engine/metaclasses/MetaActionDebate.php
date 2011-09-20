@@ -113,6 +113,7 @@ class MetaActionDebate extends MetaAction
         if ($p_context->user->defined) {
             $user = $p_context->user->identifier;
         }
+
         $this->m_debate->setUserId($user);
         if (!$this->m_debate->isVotable()) {
             $this->m_error = new PEAR_Error('Debate is not votable.', ACTION_DEBATE_ERR_NOT_VOTABLE);
