@@ -84,6 +84,7 @@ var omnibox = {
 		this.uploader.bind('FileUploaded', function(up, file, info) {
 			var fileNameParts = file.name.split('.');
 			var extension = fileNameParts[fileNameParts.length - 1];
+			extension = extension.toLowerCase();
 			
 			if (extension == 'jpg' || extension == 'gif' || extension == 'png') {
 				response = $.parseJSON(info.response);
