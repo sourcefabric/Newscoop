@@ -131,8 +131,7 @@ class IngestService
                                 break;
                         }
                     } else {
-                        $entry = Entry::create($parser);
-                        $feed->addEntry($entry);
+                        $entry = $this->getPrevious($parser, $feed);
                         if ($this->isAutoMode()) {
                             $this->publish($entry);
                         }
