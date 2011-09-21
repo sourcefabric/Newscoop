@@ -211,12 +211,9 @@ camp_html_display_msgs();
                 		emsg-tpl="<?php putGS('You must fill in the $1 field %s.', getGS('Answer')); ?>" value="" disabled="disabled"/>
     			</td>
     			<td align='center'>
-    				<?php if ($debate->exists()) : ?>
-    				<a class="answer-attachment" stlye="display:none" href="javascript: void(0);"
-    					onclick="">
+    				<a stlye="display:none" href="javascript: void(0);" onclick="window.open('files/popup.php?f_debate_nr=<?php p($debate->getNumber()); ?>&amp;f_debateanswer_nr=<?php p($n) ?>&amp;f_fk_language_id=<?php p($debate->getLanguageId()); ?>', 'attach_file', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=600, top=200, left=100');">
                     	<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" border="0">
                 	</a>
-                	<?php endif; ?>
     			</td>
             </tr>
 
@@ -245,7 +242,6 @@ $('#input-nr-answers').change( function()
 	{
 		var newAnswer = $('#answer-row').clone();
 		newAnswer.removeAttr('id');
-		newAnswer.attr('answer-nr', nrAnswers-n);
 		var newTd = newAnswer.find('td:eq(0)');
 		newTd.text(newTd.text().replace('%s', nrAnswers-n));
 		var newInput = newAnswer.find('input');
@@ -264,17 +260,6 @@ $('.answer-row input[type=text]').live('blur', function()
 {
 	var idx = $('#answer-row').nextAll('.answer-row').index($(this).parents('tr:eq(0)'));
 	$('#answer-row').data('answers')[idx] = $(this).val();
-});
-$('a.answer-attachment').live('click', function()
-{
-	window.open
-	(
-		'files/popup.php?f_debate_nr=<?php p($debate->getNumber()); ?>&f_debateanswer_nr='+
-		$(this).parents('tr:eq(0)').attr('answer-nr')+
-		'&f_fk_language_id=<?php p($debate->getLanguageId()); ?>',
-		'attach_file',
-		'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=600, top=200, left=100'
-	);
 });
 $('#edit-debate-form').submit( function()
 {
