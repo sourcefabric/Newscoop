@@ -92,42 +92,52 @@ function newsimport_ask_for_import() {
 
     $conf_info = newsimport_take_conf_info();
 
-    $request_url = $conf_info['base_url'];
-    if ('/' != $request_url[strlen($request_url)-1]) {
-        $request_url .= '/';
+    $request_url_bare = $conf_info['base_url'];
+    if ('/' != $request_url_bare[strlen($request_url_bare)-1]) {
+        $request_url_bare .= '/';
     }
-    $request_url .= '_newsimport/?';
-    //&newsfeed=events_1
+    $request_url_bare .= '_newsimport/?';
 
     $one_limit = 500;
-    //$one_limit = 5;
-    $request_url .= 'newsauth=' . urlencode($conf_info['access_token']);
-    $request_url_prune = $request_url . '&newsprune=1';
+    $request_url_bare .= 'newsauth=' . urlencode($conf_info['access_token']);
+    $request_url_bare_prune = $request_url_bare . '&newsprune=1';
 
-    $request_url .=  '&newslimit=' . $one_limit;
-    $request_count = 100;
+    $request_url = $request_url_bare . '&newslimit=' . $one_limit;
+    $request_count = 10;
     $request_offsets = array(0);
     for ($ind = 1; $ind <= $request_count; $ind++) {
         $request_offsets[] = $ind * $one_limit;
     }
 
-    foreach ($request_offsets as $one_offset) {
+    foreach (array('events_1', 'movies_1') as $one_feed) {
+        $request_feed = $request_url . '&newsfeed=' . $one_feed;
+        $request_feed_bare = $request_url_bare . '&newsfeed=' . $one_feed;
+        $request_feed_prune = $request_url_bare_prune . '&newsfeed=' . $one_feed;
+
+        $req_rank = -1;
+        foreach ($request_offsets as $one_offset) {
+            //sleep(1);
+            $req_rank += 1;
+            $request_feed_use = $request_feed;
+            if ($req_rank == $request_count) {
+                $request_feed_use = $request_feed_bare;
+            }
+            try {
+                $one_request = $request_feed_use . '&newsoffset=' . $one_offset;
+                //echo $one_request . "\n";
+                @file_get_contents($one_request);
+            }
+            catch (Exception $exc) {}
+        }
+
         //sleep(1);
         try {
-            $one_request = $request_url . '&newsoffset=' . $one_offset;
+            $one_request = $request_feed_prune;
             //echo $one_request . "\n";
-            file_get_contents($one_request);
+            @file_get_contents($one_request);
         }
         catch (Exception $exc) {}
     }
-
-    //sleep(1);
-    try {
-        $one_request = $request_url_prune;
-        //echo $one_request . "\n";
-        file_get_contents($one_request);
-    }
-    catch (Exception $exc) {}
 
 } // fn newsimport_ask_for_import
 

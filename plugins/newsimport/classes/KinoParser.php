@@ -1,21 +1,50 @@
 <?php
-/**
- * Parsing the 'kinodatenCH.xml', 'test_mov.xml' files
- */
 
 /**
  * KinoData Importer class for managing parsing of KinoData files.
  */
 class KinoData_Parser {
 
-    # TODO: set dirmode, provider_id
-
+    /**
+     * What is this.
+     * @var array
+     */
     var $m_source = null;
+
+    /**
+     * Where to take this.
+     * @var array
+     */
     var $m_dirs = null;
+
+    /**
+     * Who provides this.
+     * @var integer
+     */
     var $m_provider = null;
 
+    /**
+     * Mode of (possibly) created directories.
+     * @var integer
+     */
+    var $m_dirmode = 0755;
+
+    /**
+     * To omit a possible double run if it would happened.
+     * @var mixed
+     */
+    var $m_lockfile = null;
+
+    /**
+     * To omit a possible double run if it would happened.
+     * @var string
+     */
     var $m_working = '_cin_lock';
 
+    /**
+     * Suffix parts for json data files
+     * @var array
+     */
     var $m_saved_parts = array('dif' => 'cin_dif', 'all' => 'cin_set');
 
     /**
@@ -32,13 +61,16 @@ class KinoData_Parser {
     } // fn __construct
 
 
+	/**
+	 * checks whether we can start a job
+	 *
+	 * @return bool
+	 */
     public function start()
     {
         // stop, if some worker running; return false
         $working_path = $this->m_dirs['use'] . $this->m_working;
-        //if (file_exists($working_path)) {
-        //    return false;
-        //}
+
         $this->m_lockfile = fopen($working_path, 'a');
         $locked = flock($this->m_lockfile, LOCK_EX);
         if (!$locked) {
@@ -73,15 +105,15 @@ class KinoData_Parser {
 
         // TODO: check by file locking
         return true;
-    }
+    } // fn start
 
+	/**
+	 * (re)moves files after parsing && importing
+	 *
+	 * @return bool
+	 */
     public function cleanup()
     {
-        // we need that conf info
-        //if ((!isset($this->m_dirs['source'])) || (!isset($this->m_dirs['source']['movies']))) {
-        //    return false;
-        //}
-
         // moving all the files from the interim into the old dir
         $dir_handle = null;
         try {
@@ -116,10 +148,13 @@ class KinoData_Parser {
         closedir($dir_handle);
 
         return true;
-        // TODO: move files 'use' => 'old'
-        //return true;
-    }
+    } // fn cleanup
 
+	/**
+	 * closes a job
+	 *
+	 * @return bool
+	 */
     public function stop()
     {
         // stop, if some worker running; return false
@@ -141,15 +176,24 @@ class KinoData_Parser {
         }
 
         return true;
-        // TODO: release file locking
-        //return true;
-    }
+    } // fn stop
 
-
+	/**
+	 * prepares files for the parsing
+     *
+     * @param array $p_categories
+     * @param array $p_limits
+     * @param array $p_cancels
+	 *
+	 * @return bool
+	 */
     public function prepare($p_categories, $p_limits, $p_cancels)
     {
         // we need that conf info
-        if ((!isset($this->m_dirs['source'])) || (!isset($this->m_dirs['source']['programs']))) { // movies, genres, timestamps too
+        if ((!isset($this->m_dirs['source'])) || (!isset($this->m_dirs['source']['programs']))) {
+            return false;
+        }
+        if ((!isset($this->m_dirs['source']['movies'])) || (!isset($this->m_dirs['source']['genres'])) || (!isset($this->m_dirs['source']['timestamps']))) {
             return false;
         }
 
@@ -281,8 +325,6 @@ class KinoData_Parser {
         }
 
 
-//return true;
-
         $to_copy_files_programs = array();
         $programs_infos_files = array();
 
@@ -320,41 +362,30 @@ class KinoData_Parser {
             $events_last = $this->load(true);
             $parser->setLastEvents($events_last);
 
-            // $p_categories, $p_limits, $p_cancels
-            //$start_date = null;
-            //$end_date = null;
             $lim_span_past = null;
             $lim_span_next = null;
             if ((!empty($p_limits)) && (array_key_exists('dates', $p_limits))) {
                 $date_limits = $p_limits['dates'];
                 if (is_array($date_limits) && isset($date_limits['past'])) {
                     $lim_span_past = 0 + $date_limits['past'];
-                    //$start_date = date('Y-m-d', (time() - ($lim_span_past * 24 * 60 * 60)));
                 }
                 if (is_array($date_limits) && isset($date_limits['next'])) {
                     $lim_span_next = 0 + $date_limits['next'];
-                    //$end_date = date('Y-m-d', (time() + ($lim_span_past * 24 * 60 * 60)));
                 }
             }
-            //if (array_key_exists('start_date', $p_otherParams)) {
-            //    $start_date = $p_otherParams['start_date'];
-            //}
+
             $cat_limits = null;
             if ((!empty($p_limits)) && (array_key_exists('categories', $p_limits))) {
                 $cat_limits = $p_limits['categories'];
             }
 
-            $event_load = $parser->prepareKinosEvents($programs_infos_files, $sqlite_name, $p_categories, $lim_span_past, $lim_span_next, $cat_limits);
+            $event_load = $parser->prepareKinosEvents($programs_infos_files, $sqlite_name, $this->m_provider, $p_categories, $lim_span_past, $lim_span_next, $cat_limits);
 
-            //$save_path_com = $this->m_dirs['use'] . $cur_time . '-';
             if (!empty($event_load)) {
                 $event_all = $event_load['events_all'];
                 unset($event_load['events_all']);
                 $event_dif = $event_load['events_dif'];
                 unset($event_load['events_dif']);
-
-var_dump(count($event_all));
-var_dump(count($event_dif));
 
                 $event_all_json = json_encode($event_all);
                 $event_all_json_path = 'compress.zlib://' . $this->m_dirs['use'] . $cur_time . '-' . $this->m_saved_parts['all'] . '.json.gz';
@@ -382,122 +413,6 @@ var_dump(count($event_dif));
 
         }
 
-/*
-        $to_copy_files = true;
-
-        $some_files_to_process = true;
-
-        if ((isset($this->m_dirs['ready'])) && (isset($this->m_dirs['ready']['events']))) {
-            $ready_file = $this->m_dirs['new'] . $this->m_dirs['ready']['events'];
-            // if no new files (still may be some not fully processed at the interim dir)
-            if (!file_exists($ready_file)) {
-                $to_copy_files = false;
-
-                $some_files_to_process = false;
-                foreach ($this->m_dirs['source']['events'] as $one_file_glob) {
-                    $one_path_glob = $this->m_dirs['use'] . '*' . $one_file_glob;
-                    $one_file_set = glob($one_path_glob);
-                    if (false === $one_file_set) {
-                        continue;
-                    }
-                    foreach ($one_file_set as $event_file_path) {
-                        if (!is_file($event_file_path)) {
-                            continue;
-                        }
-                        $some_files_to_process = true;
-                        break;
-                    }
-                }
-
-                // if neither new, no interim
-                if (!$some_files_to_process) {
-                    return false;
-                }
-
-                // some files to process are there
-                return true;
-            }
-        }
-        if ($to_copy_files) {
-            // copy files with time stamps
-            $cur_time = date('YmdHis');
-            foreach ($this->m_dirs['source']['events'] as $one_file_glob) {
-                $one_path_glob = $ready_file = $this->m_dirs['new'] . $one_file_glob;
-                $one_file_set = glob($one_path_glob);
-                if (false === $one_file_set) {
-                    continue;
-                }
-
-                foreach ($one_file_set as $event_file_path_new) {
-                    if (!is_file($event_file_path_new)) {
-                        continue;
-                    }
-                    $event_file_name = basename($event_file_path_new);
-                    $event_file_path_use = $this->m_dirs['use'] . $cur_time . '-' . $event_file_name;
-                    try {
-                        rename($event_file_path_new, $event_file_path_use);
-                    }
-                    catch (Exception $exc) {
-                        continue;
-                    }
-                }
-            }
-
-            // remove the ready file
-            if ((isset($this->m_dirs['ready'])) && (isset($this->m_dirs['ready']['events']))) {
-                $ready_file = $this->m_dirs['new'] . $this->m_dirs['ready']['events'];
-                if (file_exists($ready_file)) {
-                    try {
-                        unlink($ready_file);
-                    }
-                    catch (Exception $exc) {
-                        // return false;
-                    }
-                }
-            }
-*/
-/*
-            $this->m_last_events = $this->load(true);
-
-            // to parse xml, restrict it, and convert to json
-            $event_load = $this->parse($p_categories, $p_limits, $p_cancels);
-            if (empty($event_load)) {
-                //$this->stop();
-                //continue;
-                return true;
-            }
-
-            $event_all = $event_load['events_all'];
-            unset($event_load['events_all']);
-            $event_dif = $event_load['events_dif'];
-            unset($event_load['events_dif']);
-
-            $event_all_json = json_encode($event_all);
-            $event_all_json_path = 'compress.zlib://' . $this->m_dirs['use'] . $cur_time . '-' . $this->m_saved_parts['all'] . '.json.gz';
-
-            $event_dif_json = json_encode($event_dif);
-            $event_dif_json_path = 'compress.zlib://' . $this->m_dirs['use'] . $cur_time . '-' . $this->m_saved_parts['dif'] . '.json.gz';
-
-            try {
-                $event_all_json_file = fopen($event_all_json_path, 'w');
-                fwrite($event_all_json_file, $event_all_json);
-                fclose($event_all_json_file);
-            }
-            catch (Exception $exc) {
-            }
-
-            try {
-                $event_dif_json_file = fopen($event_dif_json_path, 'w');
-                fwrite($event_dif_json_file, $event_dif_json);
-                fclose($event_dif_json_file);
-            }
-            catch (Exception $exc) {
-            }
-
-        }
-*/
-
-        $some_files_to_load = false;
         $files_found = glob($this->m_dirs['use'] . '*-' . $this->m_saved_parts['dif'] . '.json.gz');
         if (!empty($files_found)) {
             foreach ($files_found as $one_file) {
@@ -509,8 +424,15 @@ var_dump(count($event_dif));
 
         return false;
 
-    }
+    } // fn prepare
 
+    /**
+     * Loads current or old parsed data
+     *
+     * @param bool $p_old
+     *
+     * @return array
+     */
     public function load($p_old = false) {
 
         $dir_type = 'use';
@@ -610,31 +532,11 @@ var_dump(count($event_dif));
                 }
             }
             catch (Exception $exc) {
-                //;
             }
         }
         return $events;
     } // fn load
 
-
-    /**
-     * Parses KinoData data (by KinoData_Parser_SimpleXML)
-     *
-     * @param string $p_file file name of the kino file
-     * @return array
-     */
-/*
-    public function parse($p_provider, $p_file, $p_categories) {
-
-        $parser = new KinoData_Parser_SimpleXML;
-        $result = $parser->parse($p_provider, $p_file, $p_categories);
-
-        return $result;
-    } // fn parse
-*/
-    //function readCategories() {
-    //    ;
-    //}
 
 } // class KinoData_Parser
 
@@ -643,13 +545,34 @@ var_dump(count($event_dif));
  */
 class KinoData_Parser_SimpleXML {
 
+    /**
+     * Storage of loaded events of last data dosis
+     * @var mixed
+     */
     var $m_last_events = null;
 
+    var $m_table_name = 'movies';
+
+
+    /**
+     * Setter of the last used data dosis
+     *
+     * @param array $p_lastEvents
+     * @return void
+     */
     public function setLastEvents($p_lastEvents)
     {
         $this->m_last_events = $p_lastEvents;
-    }
+    } // fn setLastEvents
 
+    /**
+     * Auxiliary function to prepare data files to the parser
+     *
+     * @param array $p_fileNamesIn
+     * @param array $p_fileNamesOut
+     * @param array $p_fileToUnlink
+     * @return void
+     */
     private function setSourceFiles($p_fileNamesIn, &$p_fileNamesOut, &$p_filesToUnlink)
     {
         if (empty($p_filesToUnlink)) {
@@ -704,12 +627,10 @@ class KinoData_Parser_SimpleXML {
                         continue;
                     }
 
-//var_dump($entry_name);
                     try {
-                        //$zip_temp_name = tempnam(sys_get_temp_dir(), '' . mt_rand(100, 999)) . '-' . basename($entry_name) . '-' . $entry_add_suffix;
                         $zip_temp_name_ini = tempnam(sys_get_temp_dir(), '' . mt_rand(100, 999));
                         $zip_temp_name = $zip_temp_name_ini . $entry_add_suffix;
-//var_dump($zip_temp_name);
+
                         $zip_temp_hnd = fopen($zip_temp_name, 'wb');
                         fwrite($zip_temp_hnd, $entry_content);
                         fclose($zip_temp_hnd);
@@ -721,7 +642,6 @@ class KinoData_Parser_SimpleXML {
                         }
                     }
                     catch (Exception $exc) {
-                        //var_dump($exc);
                         continue;
                     }
 
@@ -738,14 +658,18 @@ class KinoData_Parser_SimpleXML {
             $p_fileNamesOut[] = $one_file_name;
         }
 
-    }
+    } // fn setSourceFiles
 
-
-    //private function parseMoviesInfo($p_moviesInfosFiles, $p_moviesGenresFiles, $p_moviesLinksFiles)
+    /**
+     * Parses info on movies
+     *
+     * @param array $p_moviesInfosFiles
+     * @param array $p_moviesGenresFiles
+     * @param array $p_moviesLinksFiles
+     * @return array
+     */
     public function parseMoviesInfo($p_moviesInfosFiles, $p_moviesGenresFiles, $p_moviesLinksFiles)
     {
-        // movies table: movie_id(int), movie_key(string), title(string), genres(json:strings), tim(int), url(string), images(json:id,tim,name,rank,label,url,w,h,updated), trailers(w,h,time,format,url,updated), 
-        //parse_movies_info();
 
         $movies_infos_files = array();
         $movies_genres_files = array();
@@ -759,27 +683,9 @@ class KinoData_Parser_SimpleXML {
         }
         if (!empty($p_moviesGenresFiles)) {
             $this->setSourceFiles($p_moviesGenresFiles, $movies_genres_files, $files_to_unlink);
-/*
-            foreach ($p_moviesGenresFiles as $one_file_name) {
-                $one_file_name_arr = explode('.', $one_file_name);
-                if ('gz' == strtolower($one_file_name_arr[count($one_file_name_arr) - 1])) {
-                    $one_file_name = 'compress.zlib://' . $one_file_name;
-                }
-                $movies_genres_files[] = $one_file_name;
-            }
-*/
         }
         if (!empty($p_moviesLinksFiles)) {
             $this->setSourceFiles($p_moviesLinksFiles, $movies_links_files, $files_to_unlink);
-/*
-            foreach ($p_moviesLinksFiles as $one_file_name) {
-                $one_file_name_arr = explode('.', $one_file_name);
-                if ('gz' == strtolower($one_file_name_arr[count($one_file_name_arr) - 1])) {
-                    $one_file_name = 'compress.zlib://' . $one_file_name;
-                }
-                $movies_links_files[] = $one_file_name;
-            }
-*/
         }
 
         $movies_genres = array();
@@ -794,7 +700,6 @@ class KinoData_Parser_SimpleXML {
                 if (empty($one_mov_id)) {
                     continue;
                 }
-                //$one_mov_tim = trim('' . $one_movie->movtim);
                 $one_mov_info = array();
                 if (isset($movies_infos[$one_mov_id])) {
                     $one_mov_info = $movies_infos[$one_mov_id];
@@ -819,14 +724,6 @@ class KinoData_Parser_SimpleXML {
                 }
 
                 $movies_infos[$one_mov_id] = $one_mov_info;
-
-                //$one_mov_imdb = trim('' . $one_movie->movimb);
-                //$one_mov_spec = trim('' . $one_movie->movspc);
-                //$one_mov_key = trim('' . $one_movie->movkey);
-                //$one_mov_title = trim('' . $one_movie->movtit);
-                //$one_mov_directed = trim('' . $one_movie->movdir);
-                //$one_mov_link = trim('' . $one_movie->movlnk);
-                //$one_mov_trailer = trim('' . $one_movie->movtra);
 
             }
         }
@@ -859,9 +756,6 @@ class KinoData_Parser_SimpleXML {
 
             foreach ($one_mov_xml->movie as $one_movie) {
                 $one_mov_id = trim('' . $one_movie->movid);
-//if ('100' == ('' . $one_mov_id)) {
-//    var_dump($one_movie);
-//}
                 if (empty($one_mov_id)) {
                     continue;
                 }
@@ -869,19 +763,10 @@ class KinoData_Parser_SimpleXML {
                 if (isset($movies_infos[$one_mov_id])) {
                     $one_mov_info = $movies_infos[$one_mov_id];
                 }
-//if ('100' == ('' . $one_mov_id)) {
-//    var_dump($one_mov_info);
-//}
 
-                //$one_mov_key = trim('' . $one_movie->movkey);
-                //$one_mov_title = trim('' . $one_movie->movtit);
                 $one_mov_genres = array();
                 foreach ($one_movie->movgen->genreid as $one_mov_gen) {
                     $one_mov_gen_id = trim('' . $one_mov_gen);
-//if ('100' == ('' . $one_mov_id)) {
-//    var_dump($one_mov_gen_id);
-//    var_dump($movies_genres[$one_mov_gen_id]);
-//}
                     if (isset($movies_genres[$one_mov_gen_id])) {
                         $one_genres_names = $movies_genres[$one_mov_gen_id];
                         if ((isset($one_genres_names['de'])) && (!empty($one_genres_names['de']))) {
@@ -898,7 +783,6 @@ class KinoData_Parser_SimpleXML {
                     $movies_infos[$one_mov_id] = $one_mov_info;
                 }
 
-                //$movies_infos[$one_mov_id] = array('key' => $one_mov_key, 'title' => $one_mov_title, 'genres' => $one_mov_genres);
             }
         }
 
@@ -982,30 +866,28 @@ class KinoData_Parser_SimpleXML {
             }
         }
 
-//foreach($movies_infos as $m_id => $m_info) {
-//    if (!is_numeric($m_id)) {
-//        var_dump($m_id);
-//    }
-//}
-
         // return parsed info on movies
         return $movies_infos;
 
-    }
+    } // fn parseMoviesInfo
 
+    /**
+     * Puts new info on movies into the sqlite db
+     *
+     * @param array $p_moviesDatabase
+     * @param array $p_moviesInfosFiles
+     * @param array $p_moviesGenresFiles
+     * @param array $p_moviesLinksFiles
+     * @return bool
+     */
     public function updateMoviesInfo($p_moviesDatabase, $p_moviesInfosFiles, $p_moviesGenresFiles, $p_moviesLinksFiles)
     {
         $movies_info = $this->parseMoviesInfo($p_moviesInfosFiles, $p_moviesGenresFiles, $p_moviesLinksFiles);
 
         $sqlite_name = $p_moviesDatabase;
-        $table_name = 'movies';
+        $table_name = $this->m_table_name;
 
         ksort($movies_info);
-//var_dump(count($movies_info));
-        //$fh = fopen('/tmp/save001.json', 'w');
-        //fwrite($fh, json_encode($movies_info));
-        //fclose($fh);
-
 
         $cre_req = 'CREATE TABLE IF NOT EXISTS ' . $table_name . ' (movie_id PRIMARY KEY, movie_key TEXT UNIQUE, movie_info TEXT)';
         $ins_req = 'INSERT OR REPLACE INTO ' . $table_name . ' (movie_id, movie_key, movie_info) VALUES (:movie_id, :movie_key, :movie_info)';
@@ -1014,7 +896,6 @@ class KinoData_Parser_SimpleXML {
         $stmt = $db->prepare($cre_req);
         $res = $stmt->execute();
         if (!$res) {
-            echo ' wtf create ';
             return false;
         }
 
@@ -1033,23 +914,23 @@ class KinoData_Parser_SimpleXML {
 
             $res = $stmt->execute();
             if (!$res) {
-                echo ' wtf insert ';
                 return false;
             }
         }
         $db->commit();
 
+        return true;
+    } // fn updateMoviesInfo
 
-    }
 
-
-
-    //private function parseKinosInfo($p_kinosInfosFiles, $p_moviesDatabase)
-    //public function parseKinosInfo($p_kinosInfosFiles, $p_moviesDatabase)
+    /**
+     * Parses KinoData data (by KinoData_Parser_SimpleXML)
+     *
+     * @param array $p_kinosInfosFiles file name of the kino file
+     * @return array
+     */
     public function parseKinosInfo($p_kinosInfosFiles)
     {
-        // movies table: movie_id(int), movie_key(string), title(string), genres(json:strings), tim(int), url(string), images(json:id,tim,name,rank,label,url,w,h,updated), trailers(w,h,time,format,url,updated), 
-        //parse_movies_info();
 
         $kinos_infos_files = array();
         $files_to_unlink = array();
@@ -1098,7 +979,7 @@ class KinoData_Parser_SimpleXML {
                     }
                     $one_movie_dates_arr = explode(';', $one_movie_dates);
                     $one_movie_dates_cnt = count($one_movie_dates_arr) - 1;
-                    //$one_screen_date_last = null;
+
                     $one_screen_dates = array();
                     foreach ($one_movie_dates_arr as $one_movie_screen) {
                         $one_movie_screen_arr = explode(':', $one_movie_screen);
@@ -1129,7 +1010,6 @@ class KinoData_Parser_SimpleXML {
                     }
 
                     $movies_screens[] = array(
-                        // 'kino_id' => $one_kino_id, // kino id, address, ...
                         'kino_id' => $one_kino_id,
                         'kino_name' => $one_kino_name,
                         'kino_town' => $one_kino_town,
@@ -1154,13 +1034,20 @@ class KinoData_Parser_SimpleXML {
 
 
         return $movies_screens;
-    }
+    } // fn parseKinosInfo
 
+    /**
+     * Takes info of movies by movie keys
+     *
+     * @param array $p_moviesKeys
+     * @param string $p_sqliteName
+     * @return array
+     */
     private function loadMoviesByKeys($p_moviesKeys, $p_sqliteName)
     {
         $movies_infos = array();
 
-        $table_name = 'movies';
+        $table_name = $this->m_table_name;
         $mov_req = 'SELECT movie_info FROM ' . $table_name . ' WHERE movie_key = :movie_key LIMIT 1';
 
         @$db = new PDO ('sqlite:' . $p_sqliteName);
@@ -1188,15 +1075,24 @@ class KinoData_Parser_SimpleXML {
         }
 
         return $movies_infos;
-    }
+    } // fn loadMoviesByKeys
 
-    //public function prepareKinosEvents($p_kinosInfosFiles, $p_moviesDatabase, $p_moviesInfosFiles, $p_moviesGenresFiles, $p_moviesLinksFiles)
-    public function prepareKinosEvents($p_kinosInfosFiles, $p_moviesDatabase, $p_categories, $p_daysPast = null, $p_daysNext = null, $p_catLimits = null)
+    /**
+     * Puts together info on movie events
+     *
+     * @param array $p_kinosInfosFiles
+     * @param string $p_moviesDatabase
+     * @param int $p_providerId
+     * @param array $p_categories
+     * @param mixed $p_daysPast
+     * @param mixed $p_daysNext
+     * @param mixed $p_catLimits
+     * @return array
+     */
+    public function prepareKinosEvents($p_kinosInfosFiles, $p_moviesDatabase, $p_providerId, $p_categories, $p_daysPast = null, $p_daysNext = null, $p_catLimits = null)
     {
-        $provider_id = 2;
+        $provider_id = $p_providerId;
         $kino_country = 'ch';
-
-        //$this->updateMoviesInfo($p_moviesDatabase, $p_moviesInfosFiles, $p_moviesGenresFiles, $p_moviesLinksFiles);
 
         $limit_date_start = null;
         $limit_date_end = null;
@@ -1220,9 +1116,6 @@ class KinoData_Parser_SimpleXML {
         }
 
         $movies_infos = $this->loadMoviesByKeys($movies_keys, $p_moviesDatabase);
-        //foreach ($movies_keys as $one_mov_key) {
-        //    $mov_info = $this->takeMovieByKey($one_mov_key);
-        //}
 
         $screen_events_all = array();
         $screen_events_dif = array();
@@ -1231,20 +1124,11 @@ class KinoData_Parser_SimpleXML {
 
             // check if town - topic included
             $cur_town = $one_screen['kino_town'];
-//var_dump($cur_town);
+
             $event_topics = array();
-            // * main type fields
-            // event category
-            //$x_catnam = '';
+
             $c_other = null;
-/*
-if ('Basel' == $cur_town) {
-echo "\n<pre>\n\n";
-//var_dump($p_categories);
-//var_dump($p_catLimits);
-//exit(0);
-}
-*/
+
             foreach ($p_categories as $one_category) {
                 if (!is_array($one_category)) {
                     continue;
@@ -1258,71 +1142,36 @@ echo "\n<pre>\n\n";
                     }
                     if (array_key_exists('towns', $cat_lim_spec)) {
                         if (!in_array($cur_town, $cat_lim_spec['towns'])) {
-//if ('Basel' == $cur_town) {
-//echo " wtf? ";
-//}
                             $one_cat_skip = true;
                             break;
                         }
                     }
                 }
 
-                //if (!canUseTopic($event_info, $one_category, $p_catLimits)) {
                 if ($one_cat_skip) {
                     continue;
                 }
-//if ('Basel' == $cur_town) {
-//echo " bbbbbb ";
-//}
 
                 if (array_key_exists('fixed', $one_category)) {
                     $event_topics[] = $one_category['fixed'];
                     continue;
                 }
-//if ('Basel' == $cur_town) {
-//var_dump($event_topics);
-//exit(0);
-//}
+
                 if (array_key_exists('other', $one_category)) {
                     $c_other = $one_category['other'];
                     continue;
                 }
-/*
-                if ((array_key_exists('match_xml', $one_category)) && (array_key_exists('match_topic', $one_category))) {
-                    $one_cat_match_xml = $one_category['match_xml'];
-                    $one_cat_match_topic = $one_category['match_topic'];
-                    if ((!is_array($one_cat_match_xml)) || (!is_array($one_cat_match_topic))) {
-                        continue;
-                    }
-                    if (in_array($x_catnam, $one_cat_match_xml)) {
-                        $event_topics[] = $one_cat_match_topic;
-                        continue;
-                    }
-                }
-*/
             }
             if (empty($event_topics)) {
                 if (!empty($c_other)) {
                     $event_topics[] = $c_other;
                 }
             }
-/*
-if ('Basel' == $cur_town) {
-echo " aaaaaaa ";
-//var_dump($event_topics);
-}
-*/
+
             if (empty($event_topics)) {
                 continue;
             }
-/*
-if ('Basel' == $cur_town) {
-//echo " bbbbbb ";
-var_dump($event_topics);
-exit(0);
-}
-*/
-            //$event_info['topics'] = $event_topics;
+
 
             $one_movie = null;
 
@@ -1357,20 +1206,12 @@ exit(0);
                 }
 
                 if ( isset($one_movie['trailer']) && (!empty($one_movie['trailer'])) ) {
-                    $cur_trailer = $one_movie['trailer'];
-                    if (strtolower(substr($cur_trailer, 0, 4)) != 'http') {
-                        $cur_trailer = 'http://' . $cur_trailer;
-                    }
-                    $cur_trailer = '<a href="' . $cur_trailer . '">trailer</a>';
-                    $one_mov_trailers[] = $cur_trailer;
+                    $one_mov_trailers[] = $one_movie['trailer'];
                 }
                 if ( isset($one_movie['link_trailer']) && (!empty($one_movie['link_trailer'])) ) {
-                    $cur_trailer = $one_movie['link_trailer']['url'];
-                    if (strtolower(substr($cur_trailer, 0, 4)) != 'http') {
-                        $cur_trailer = 'http://' . $cur_trailer;
+                    if ( isset($one_movie['link_trailer']['url']) && (!empty($one_movie['link_trailer']['url'])) ) {
+                        $one_mov_trailers[] = $one_movie['link_trailer']['url'];
                     }
-                    $cur_trailer = '<a href="' . $cur_trailer . '">trailer</a>';
-                    $one_mov_trailers[] = $cur_trailer;
                 }
             }
 
@@ -1380,17 +1221,14 @@ exit(0);
             }
 
             foreach ($one_screen['dates'] as $one_date => $one_times) {
-//var_dump($one_date);
-                //$one_date_arr = explode('-', $one_date);
-                //$one_date_part = ($one_date_arr[0] * 10000) + (ltrim($one_date_arr[1], '0') * 100) + ltrim($one_date_arr[1], '0');
+
                 $one_date_part = str_replace('-', '', $one_date);
-//var_dump($one_date_part);
+
                 $one_event = array();
                 $one_event['provider_id'] = $provider_id;
-                //$one_event['event_id'] = $one_screen[''] . '-' . $one_screen[''];
-                //$one_event['event_id'] = (1000000 * 1000000 * (0 + $one_date_part)) + (1000000 * (0 + $one_screen['kino_id'])) + (0 + $one_screen['movie_id']);
-                $one_event['event_id'] = '' . $one_date_part . str_pad($one_screen['kino_id'], 6, '0', STR_PAD_LEFT) . str_pad($one_screen['movie_id'], 6, '0', STR_PAD_LEFT);
-//var_dump($one_event['event_id']);
+                //$one_event['event_id'] = '' . $one_date_part . str_pad($one_screen['kino_id'], 6, '0', STR_PAD_LEFT) . str_pad($one_screen['movie_id'], 6, '0', STR_PAD_LEFT);
+                $one_event['event_id'] = '' . $one_date_part . '-' . $one_screen['kino_id'] . '-' . $one_screen['movie_id'];
+
                 $one_event['tour_id'] = $one_screen['movie_id'];
                 $one_event['location_id'] = $one_screen['kino_id'];
 
@@ -1402,7 +1240,6 @@ exit(0);
                 $one_event['town'] = $one_screen['kino_town'];
                 $one_event['street'] = $one_screen['kino_street'];
 
-                //$scr_times = implode(',', $one_times);
                 $scr_times = '';
                 foreach ($one_times as $one_scr_time) {
                     if (!empty($scr_times)) {
@@ -1429,7 +1266,7 @@ exit(0);
 
                 if ($limit_date_start) {
                     if ($one_date < $limit_date_start) {
-                        //continue;
+                        continue;
                     }
                 }
                 if ($limit_date_end) {
@@ -1446,15 +1283,14 @@ exit(0);
 
                 $one_event['date_time_text'] = '';
 
-                $one_event['web'] = $one_screen['kino_url'];
+                $one_event['web'] = $this->makeLink($one_screen['kino_url'], null);
                 $one_event['email'] = '';
                 $one_event['phone'] = $one_screen['kino_phone'];
 
                 $one_event['description'] = str_replace("\n", "\n<br />\n", $one_use_desc);
                 $one_event['other'] = $one_screen['other'];
                 foreach ($one_mov_trailers as $cur_trailer) {
-                    $one_event['other'][] = $cur_trailer;
-//var_dump($cur_trailer);
+                    $one_event['other'][] = $this->makeLink($cur_trailer, 'trailer');
                 }
 
                 $one_event['genre'] = $one_mov_genre;
@@ -1475,9 +1311,6 @@ exit(0);
 
                 $one_event['topics'] = $event_topics;
 
-                //$one_event[''] = $one_screen[''];
-                //$one_event[''] = $one_screen[''];
-
                 $screen_events_all[$one_event['event_id']] = $one_event;
 
                 if (!empty($this->m_last_events)) {
@@ -1494,405 +1327,31 @@ exit(0);
         }
 
         return array('events_all' => $screen_events_all, 'events_dif' => $screen_events_dif);
-    }
-
-
-
+    } // fn prepareKinosEvents
 
     /**
-     * read new cinema files
-     * ... load info about movies
-     * ... load info about genres
-     * ... load (info about) images
-     */
-/*
-    public function prepare($p_categories, $p_limits, $p_cancels)
-    {
-        //updateMoviesInfo($p_moviesInfosFiles, $p_moviesGenresFiles, $p_$moviesLinksFiles);
-    }
-*/
-
-    /**
-     * Parses KinoData data (by SimplXML)
+     * Creates (html) link on given (partial) link and label
      *
-     * @param string $p_file file name of the eventdata file
-     * @return array
+     * @param string $p_target
+     * @param mixed $p_label
+     * @param bool $p_fullLink
+     *
+     * @return string
      */
-/*
-    private function parse($p_provider, $p_file, $p_categories) {
-
-		$events = array();
-
-        libxml_clear_errors();
-        $internal_errors = libxml_use_internal_errors(true);
-        $xml = simplexml_load_file($p_file);
-
-        // halt if loading produces an error
-        if (!$xml) {
-            $error_msg = "";
-            foreach (libxml_get_errors() as $err_line) {
-                $error_msg .= $err_line->message;
+    private function makeLink($p_target, $p_label = '', $p_fullLink = true) {
+        $link = '' . $p_target;
+        if ($p_fullLink) {
+            if ('http' != substr($link, 0, strlen('http'))) {
+                $link = 'http://' . $link;
             }
-            libxml_clear_errors();
-            return array("correct" => false, "errormsg" => $error_msg);
+        }
+        if (!empty($p_label)) {
+            $link = '<a href="' . $link . '">' . $p_label . '</a>';
         }
 
-
-        // day of event set (event record)
-        $recdate = $xml->export->date;
-
-		// $xml->kino is an array of (per-kino) movie sets
-		foreach ($xml->kino as $event_kino) {
-
-			// array of events info
-			$movie_set = $event_kino->movie;
-
-			// one event is object of simple properties, many of them are empty
-			foreach ($movie_set as $event) {
-				$event_info = array('provider_id' => $p_provider);
-
-				// Ids
-				// number, event id, shall be unique
-                // shall be assigned utomatically during insertion into database, but beware that
-                // a single screening (cinema/movie/date/time) can probably occur at multiple kino-daten files (at different days)
-				$event_info['event_id'] = null;
-
-				// string, movie key, shall be shared among events of particular repeated actions
-				$x_filmkey = '' . $event->filmkey;
-				if (empty($x_filmkey)) {
-					$x_filmkey = null;
-				}
-				$event_info['turnus_key'] = $x_filmkey;
-
-				// number, movie id
-                // will be taken from the movie xml file, according to turnus key,
-                // but it may happen that we will not get an id - then shall be autogenerated
-				$event_info['turnus_id'] = null;
-
-				// number, location id
-				$x_theaterid = '' . $event_kino->theaterid;
-				if (empty($x_theaterid)) {
-					$x_theaterid = null;
-				}
-				$event_info['location_id'] = $x_theaterid;
-
-
-				// Categories
-				// * main type fields
-				$event_info['event_type_id'] = 7;
-				$event_info['event_type'] = 'cinema';
-
-				// Names
-				// * main display provider name
-				$x_theatername = '' . $event_kino->theatername;
-				if (empty($x_theatername)) {
-					$x_theatername = null;
-				}
-				$event_info['event_location'] = $x_theatername;
-
-				// * main display turnus name
-				// event name
-				$x_filmtitle = '' . $event->filmtitle;
-				if (empty($x_filmtitle)) {
-					$x_filmtitle = null;
-				}
-				$event_info['event_name'] = $x_filmtitle;
-
-                $x_theatertelcost = '' . $event->theatertelcost;
-                if (empty($x_theatertelcost)) {
-                    $x_theatertelcost = null;
-                }
-                $event_info['fee_price'] = $x_theatertelcost;
-
-				// Locations
-				// !!! no country info
-				// * main location info
-				// town name
-				$x_theatertown = '' . $event_kino->theatertown;
-				if (empty($x_theatertown)) {
-					$x_theatertown = null;
-				}
-				$event_info['location_town'] = $x_theatertown;
-
-				// zip code
-				$x_theaterzip = '' . $event_kino->theaterzip;
-				if (empty($x_theaterzip)) {
-					$x_theaterzip = null;
-				}
-				$event_info['location_zip'] = $x_theaterzip;
-
-				// street address, free form, but usually 'street_name house_number'
-				$x_theateradress = '' . $event_kino->theateradress;
-				if (empty($x_theateradress)) {
-					$x_theateradress = null;
-				}
-				$event_info['location_street'] = $x_theateradress;
-
-				// Date, time
-				// * main date-time info
-
-				$event_screening = array();
-
-                $x_prolis = '' . $event->prolis;
-                if (!empty($x_prolis)) {
-                    foreach(explode(';', trim($x_prolis)) as $one_screening) {
-                        $one_screening = trim($one_screening);
-                        if (empty($one_screening)) {
-                            continue;
-                        }
-                        // one screening info shall be: "DD.MM.YYYY:HH.mm:L/n/g:"
-                        $one_screening_arr = explode(':', $one_screening);
-                        if (2 > count($one_screening_arr)) {
-                            continue;
-                        }
-                        $one_screening_date_arr = explode('.', $one_screening_arr[0]);
-                        if (3 != count($one_screening_date_arr)) {
-                            continue;
-                        }
-                        $one_screening_date = substr($one_screening_date_arr, 6, 4) . '-' . substr($one_screening_date_arr, 3, 2) . '-' . substr($one_screening_date_arr, 0, 2);
-                        if (10 != strlen($one_screening_date)) {
-                            continue;
-                        }
-
-                        $one_screening_time = trim($one_screening_arr[1]);
-                        if (empty($one_screening_time)) {
-                            $one_screening_time = null;
-                        }
-
-                        $one_screening_lang = null;
-                        if (3 <= count($one_screening_arr)) {
-                            $one_screening_lang = trim($one_screening_arr);
-                            if (empty($one_screening_lang)) {
-                                $one_screening_lang = null;
-                            }
-                        }
-
-                        if (!array_key_exists($one_screening_date, $event_screening)) {
-                            $event_screening[$one_screening_date] = array();
-                        }
-                        $event_screening[$one_screening_date][] = array('time' => $one_screening_time, 'lang' => $one_screening_lang);
-                    }
-                }
-
-                // no screening means no event
-                if (0 == count($event_screening)) {
-                    continue;
-                }
-
-/ *
-				$event_info['event_date'] = null;
-				$event_info['event_time'] = null;
-				$event_info['event_open'] = null;
-* /
-
-				// Descriptions
-                // shall be taken from the movies file, if the movie is there
-				$event_info['event_texts'] = array();
-
-				// Links
-
-				// web link for cinema
-				$x_theaterurl = '' . $event_kino->theaterurl;
-				if (empty($x_theaterurl)) {
-					$x_theaterurl = null;
-				}
-				$event_info['event_web'] = $x_theaterurl;
-
-				// location email address, none here
-				$event_info['event_email'] = null;
-
-				// location phone number
-				$x_theaterphone = '' . $event_kino->theaterphone;
-				if (empty($x_theaterphone)) {
-					$x_theaterphone = null;
-				}
-				$event_info['event_phone'] = $x_theaterphone;
-
-				// Multimedia
-				$event_info['event_images'] = array();
-
-			}
-
-
-		}
-
-    } // fn parse
-*/
+        return $link;
+    } // fn makeLink
 
 } // class KinoData_Parser_SimpleXML
-
-
-
-
-/**
- * MovieData Importer class for managing parsing of MovieData files.
- */
-//class MovieData_Parser {
-
-    /**
-     * Parses MovieData data (by MovieData_Parser_SimpleXML)
-     *
-     * @param string $p_file file name of the movie file
-     * @return array
-     */
-/*
-    function parse($p_provider, $p_file, $p_categories) {
-
-        $parser = new MovieData_Parser_SimpleXML;
-        $result = $parser->parse($p_provider, $p_file, $p_categories);
-
-        return $result;
-    } // fn parse
-*/
-//} // class MovieData_Parser
-
-/**
- * MovieData Parser that makes use of the SimpleXML PHP extension.
- */
-//class MovieData_Parser_SimpleXML {
-
-    /**
-     * Parses MovieData data (by SimplXML)
-     *
-     * @param string $p_file file name of the eventdata file
-     * @return array
-     */
-/*
-    function parse($p_provider, $p_file, $p_categories) {
-
-		$movies = array();
-
-        libxml_clear_errors();
-        $internal_errors = libxml_use_internal_errors(true);
-        $xml = simplexml_load_file($p_file);
-
-        // halt if loading produces an error
-        if (!$xml) {
-            $error_msg = "";
-            foreach (libxml_get_errors() as $err_line) {
-                $error_msg .= $err_line->message;
-            }
-            libxml_clear_errors();
-            return array("correct" => false, "errormsg" => $error_msg);
-        }
-
-
-        // day of event set (event record)
-        $recdate = $xml->export->date;
-
-		// $xml->movie is an array of movie descs
-		foreach ($xml->movie as $movie_info) {
-
-            $movie_info = array('provider_id' => $p_provider);
-
-            $x_movid = '' . $movie->movid;
-            if (empty($x_movid)) {
-                $x_movid = null;
-            }
-
-            $x_movkey = '' . $movie->movkey;
-            if (empty($x_movkey)) {
-                $x_movkey = null;
-            }
-
-            if (empty($x_movid) || empty($x_movkey)) {
-                continue;
-            }
-
-            $movie_key = $x_movkey;
-            $movie_info['movie_id'] = $x_movid;
-
-            $movie_de = null;
-            $movie_fr = null;
-            $movie_it = null;
-
-            $x_movcgd = '' . $movie->movcgd;
-            if (!empty($x_movcgd)) {
-                $movie_de = $x_movcgd;
-            }
-            if (empty($movie_de)) {
-                $x_movsyd = '' . $movie->movsyd;
-                if (!empty($x_movsyd)) {
-                    $movie_de = $x_movsyd;
-                }
-            }
-
-            $x_movcgf = '' . $movie->movcgf;
-            if (!empty($x_movcgf)) {
-                $movie_fr = $x_movcgf;
-            }
-            if (empty($movie_fr)) {
-                $x_movsyf = '' . $movie->movsyf;
-                if (!empty($x_movsyf)) {
-                    $movie_fr = $x_movsyf;
-                }
-            }
-
-            $x_movcgi = '' . $movie->movcgi;
-            if (!empty($x_movcgi)) {
-                $movie_it = $x_movcgi;
-            }
-            if (empty($movie_it)) {
-                $x_movsyi = '' . $movie->movsyi;
-                if (!empty($x_movsyi)) {
-                    $movie_it = $x_movsyi;
-                }
-            }
-
-            $movie_info['movie_text'] = array('de' => $movie_de, 'fr' => $movie_fr, 'it' => $movie_it);
-
-            $movies[$movie_key] = $movie_info;
-
-		}
-
-    } // fn parse
-*/
-//} // class MovieData_Parser_SimpleXML
-
-
-
-
-
-
-/*
-
-$known_categories = array(
-	1 => array('name' => 'theater',
-		       'nicks' => array('theater', 'theatre'),
-		       ),
-	2 => array('name' => 'gallery',
-			   'nicks' => array('gallery'),
-			   ),
-	3 => array('name' => 'exhibition',
-			   'nicks' => array('exhibition', 'ausstellung', 'ausstellungen'),
-			   ),
-	4 => array('name' => 'party',
-			   'nicks' => array('party'),
-			   ),
-	5 => array('name' => 'music',
-			   'nicks' => array('music', 'musik'),
-			   ),
-	6 => array('name' => 'concert',
-			   'nicks' => array('concert', 'konzerte'),
-			   ),
-	7 => array('name' => 'cinema',
-			   'nicks' => array('cinema'),
-			   ),
-);
-
-
-$provider_id = 2;
-
-$kino_name = 'kinodatenCH.xml';
-$kd_parser = new KinoData_Parser();
-$kd_parser->parse($provider_id, $kino_name, $known_categories);
-
-$movie_name = 'test_mov.xml';
-$md_parser = new MovieData_Parser();
-$md_parser->parse($provider_id, $movie_name, $known_categories);
-
-*/
-
-
 
 

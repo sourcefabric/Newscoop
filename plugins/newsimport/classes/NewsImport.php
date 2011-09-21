@@ -1,11 +1,16 @@
 <?php
 
-
 /**
  * NewsImport manages the event importing.
  */
 class NewsImport
 {
+
+    /**
+     * Handler of cached id / url data of images.
+     * @var mixed
+     */
+    private static $s_img_cache = null;
 
     /**
      * To omit a possible double run if it would happened.
@@ -121,6 +126,7 @@ class NewsImport
         require_once($feed_conf_path);
 
         require_once($class_dir.DIR_SEP.'NewsImport.php');
+        require_once($class_dir.DIR_SEP.'EventImage.php');
 
         // take the category topics, as array by [language][category] of [name,id]
         $cat_topics = self::ReadEventTopics($newsimport_default_cat_names);
@@ -149,20 +155,7 @@ class NewsImport
             'limit' => $events_limit,
             'pruning' => $events_prune,
         );
-/*
-        $events_ignore_passed = false;
-        if (array_key_exists('newsignorepassed', $_GET)) {
-            if (in_array(strtolower($_GET['newsignorepassed']), array('1', 'true', 't', 'yes', 'y', 'on'))) {
-                $events_ignore_passed = true;
-            }
-            if (in_array(strtolower($_GET['newsignorepassed']), array('0', 'false', 'f', 'no', 'n', 'off'))) {
-                $events_ignore_passed = false;
-            }
-        }
-        if ($events_ignore_passed) {
-            $params_other['start_date'] = date('Y-m-d', localtime());
-        }
-*/
+
         set_time_limit(0);
         ob_end_flush();
         flush();
@@ -455,19 +448,41 @@ class NewsImport
 
             // setting images
 
+            $images_to_delete = array();
             $one_old_images = ArticleImage::GetImagesByArticleNumber($art_number);
             foreach ($one_old_images as $one_old_img_link) {
                 $one_old_img = $one_old_img_link->getImage();
                 $one_old_img_link->delete();
-                if (0 == count(ArticleImage::GetArticlesThatUseImage($one_old_img->getImageId()))) {
-                    $one_old_img->delete();
-                }
+                $images_to_delete[] = $one_old_img->getImageId();
             }
 
             if (!empty($one_event['images'])) {
 
                 $one_img_rank = -1;
                 foreach ($one_event['images'] as $one_image) {
+
+                    // check if image already in archive
+                    $image_found = false;
+                    $use_image_obj = null;
+
+                    $img_used = self::$s_img_cache->checkImageInfoCache($one_image['url']);
+                    if (!empty($img_used)) {
+                        $images_local_check = '' . ($images_local ? 1 : 0);
+                        foreach ($img_used as $one_img_used) {
+                            if ($images_local_check == ('' . $one_img_used['local'])) {
+                                $use_image_obj = new Image('' . $one_img_used['image_id']);
+                                if ($use_image_obj->exists()) {
+                                    $image_found = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+
+                    if ($image_found) {
+                        $one_img_res = ArticleImage::AddImageToArticle($use_image_obj->getImageId(), $art_number, null);
+                        continue;
+                    }
 
                     $one_file_info = array();
                     if ($images_local) {
@@ -530,11 +545,29 @@ class NewsImport
                         }
 
                         if (is_a($one_image_obj, 'Image')) {
+                            $one_image_info = array(
+                                'image_id' => $one_image_obj->getImageId(),
+                                'local' => ($images_local ? 1 : 0),
+                                'url' => $one_image['url'],
+                                'label' => (isset($one_image['label']) ? $one_image['label'] : ''),
+                                'provider_id' => $one_event['provider_id'],
+                            );
+                            self::$s_img_cache->insertImageIntoCache($one_image_info);
                             $one_img_res = ArticleImage::AddImageToArticle($one_image_obj->getImageId(), $art_number, null);
                         }
                     }
                     catch (Exception $exc) {
                         continue;
+                    }
+                }
+            }
+
+            foreach ($images_to_delete as $one_del_img_id) {
+                if (0 == count(ArticleImage::GetArticlesThatUseImage($one_del_img_id))) {
+                    self::$s_img_cache->removeImageFromCache($one_del_img_id);
+                    $one_old_img = new Image($one_del_img_id);
+                    if ($one_old_img->exists()) {
+                        $one_old_img->delete();
                     }
                 }
             }
@@ -628,7 +661,6 @@ class NewsImport
                 }
             }
             catch (Exception $exc) {
-                //var_dump($exc);
                 continue;
             }
 
@@ -640,6 +672,7 @@ class NewsImport
                 $one_rem_img = $one_rem_img_link->getImage();
                 $one_rem_img_link->delete();
                 if (0 == count(ArticleImage::GetArticlesThatUseImage($one_rem_img->getImageId()))) {
+                    self::$s_img_cache->removeImageFromCache($one_rem_img->getImageId());
                     $one_rem_img->delete();
                 }
             }
@@ -679,14 +712,24 @@ class NewsImport
 	 */
     public static function LoadEventData($p_eventSources, $p_newsFeed, $p_catTopics, $p_limits, $p_cancels, $p_otherParams) {
 
-        $class_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'classes';
+        $plugin_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport';
+        $class_dir = $plugin_dir.DIRECTORY_SEPARATOR.'classes';
+        $incl_dir = $plugin_dir.DIRECTORY_SEPARATOR.'include';
         require_once($class_dir.DIR_SEP.'EventParser.php');
         require_once($class_dir.DIR_SEP.'KinoParser.php');
+        require_once($incl_dir.DIR_SEP.'default_cache.php');
 
         global $Campsite;
         if (empty($Campsite)) {
             $Campsite = array();
         }
+
+        $cache_path_dir = $newsimport_default_cache;
+        if ( DIRECTORY_SEPARATOR != substr($cache_path_dir, (strlen($cache_path_dir) - strlen(DIRECTORY_SEPARATOR))) ) {
+            $cache_path_dir .= DIRECTORY_SEPARATOR;
+        }
+        $img_cache_path = $cache_path_dir . 'images_infos.sqlite';
+        self::$s_img_cache = new EventImage($img_cache_path);
 
         foreach ($p_eventSources as $one_source_name => $one_source) {
             if ((!empty($p_newsFeed)) && ($one_source_name != $p_newsFeed)) {
@@ -835,6 +878,8 @@ class NewsImport
             Log::Message(getGS('$1 articles of $2 events set.', count($event_set), $one_source_name), null, 31);
 
         }
+
+        self::$s_img_cache = null;
 
     } // fn LoadEventData
 

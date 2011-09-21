@@ -71,6 +71,14 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 	 * @return void
 	 */
     function plugin_newsimport_make_dirs() {
+        $incl_dir = dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR;
+        require($incl_dir . 'default_cache.php');
+
+        try {
+            mkdir($newsimport_default_cache, 0755, true);
+        }
+        catch (Exception $ecx) {}
+
         $newsimport_demo_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'demo_data';
         $newsimport_data_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR.'newsimport';
 
@@ -234,7 +242,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         $art_fields = array(
             // ids - auxiliary, hidden
             'provider_id' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => true), // source of the news file
-            'event_id' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => true), // an event at an day from a provider should have unique id
+            'event_id' => array('type' => 'text', 'params' => array('precision' => 0), 'hidden' => true), // an event at a day from a provider should have unique id; crafted for cinemas
             'tour_id' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => true), // for grouping of repeated events, e.g. an exhibition available for more days
             'location_id' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => true), // should be unique per place/provider
             // main event info - free form
