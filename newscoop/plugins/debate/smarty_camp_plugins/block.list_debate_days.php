@@ -6,11 +6,11 @@
 
 
 /**
- * Campsite poll_list_answers block plugin
+ * Campsite debate_list_answers block plugin
  *
  * Type:     block
- * Name:     poll_list
- * Purpose:  Create a list answers to one poll
+ * Name:     debate_list
+ * Purpose:  Create a list answers to one debate
  *
  * @param string
  *     $p_params
@@ -60,6 +60,6 @@ function smarty_block_list_debate_days($p_params, $p_content, &$p_smarty, &$p_re
     }
 
     return $html;
-} // fn smarty_block_list_poll_answers
+} // fn smarty_block_list_debate_answers
 
 ?>

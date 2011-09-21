@@ -8,23 +8,23 @@ if (!$g_user->hasPermission('plugin_debate_admin')) {
 }
 
 $f_language_selected = Input::Get('f_language_selected', 'int');
-$f_poll_limit = Input::Get('f_poll_limit', 'int', 20);
-$f_poll_offset = Input::Get('f_poll_offset', 'int', 0);
-$f_poll_order = Input::Get('f_poll_order', 'string', 'bynumber');
+$f_debate_limit = Input::Get('f_debate_limit', 'int', 20);
+$f_debate_offset = Input::Get('f_debate_offset', 'int', 0);
+$f_debate_order = Input::Get('f_debate_order', 'string', 'bynumber');
 
-$parents = Debate::getPolls(array('language_id' => $f_language_selected, 'parent_debate_nr' => 0), null, $f_poll_offset, $f_poll_limit, $f_poll_order);
-$polls = array();
+$parents = Debate::getDebates(array('language_id' => $f_language_selected, 'parent_debate_nr' => 0), null, $f_debate_offset, $f_debate_limit, $f_debate_order);
+$debates = array();
 // add the copys
-foreach ($parents as $poll) {
-    $polls[] = $poll;
-    $copys = Debate::getPolls(array('language_id' => $poll->getLanguageId(), 'parent_debate_nr' => $poll->getNumber()));
-    foreach ($copys as $poll) {
-        $polls[] = $poll;
+foreach ($parents as $debate) {
+    $debates[] = $debate;
+    $copys = Debate::getDebates(array('language_id' => $debate->getLanguageId(), 'parent_debate_nr' => $debate->getNumber()));
+    foreach ($copys as $debate) {
+        $debates[] = $debate;
     }
 }
 
 
-$pager = new SimplePager(Debate::countPolls(), $f_poll_limit, "f_poll_offset", "index.php?f_poll_order=$f_poll_order&amp;", false);
+$pager = new SimplePager(Debate::countDebates(), $f_debate_limit, "f_debate_offset", "index.php?f_debate_order=$f_debate_order&amp;", false);
 $allLanguages = Language::GetLanguages();
 
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
@@ -35,7 +35,7 @@ echo camp_html_breadcrumbs(array(
 ));
 
 // DO NOT DELETE!!! Needed for localizer
-// getGS("Polls");
+// getGS("Debates");
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/campsite-checkbox.js"></script>
 
@@ -47,7 +47,7 @@ echo camp_html_breadcrumbs(array(
 </TABLE>
 <p>
 
-<FORM name="poll_list" action="action.php" method="POST">
+<FORM name="debate_list" action="action.php" method="POST">
 <?php echo SecurityToken::FormParameter(); ?>
 <TABLE CELLSPACING="0" CELLPADDING="0" class="table_actions">
 <TR>
@@ -79,7 +79,7 @@ echo camp_html_breadcrumbs(array(
                 function action_selected(dropdownElement)
                 {
                     // Verify that at least one checkbox has been selected.
-                    checkboxes = document.forms.poll_list["f_poll_code[]"];
+                    checkboxes = document.forms.debate_list["f_debate_code[]"];
                     if (checkboxes) {
                         isValid = false;
                         numCheckboxesChecked = 0;
@@ -146,7 +146,7 @@ echo camp_html_breadcrumbs(array(
                     }
                 }
                 </script>
-                <SELECT name="f_poll_list_action" class="input_select" onchange="action_selected(this);">
+                <SELECT name="f_debate_list_action" class="input_select" onchange="action_selected(this);">
                     <OPTION value=""><?php putGS("Actions"); ?>...</OPTION>
                     <OPTION value="delete"><?php putGS("Delete"); ?></OPTION>
                     <OPTION value="reset"><?php putGS("Reset"); ?></OPTION>
@@ -154,8 +154,8 @@ echo camp_html_breadcrumbs(array(
             </TD>
 
             <TD style="padding-left: 5px; font-weight: bold;">
-                <input type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll(<?php p(count($polls)); ?>);">
-                <input type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll(<?php p(count($polls)); ?>);">
+                <input type="button" class="button" value="<?php putGS("Select All"); ?>" onclick="checkAll(<?php p(count($debates)); ?>);">
+                <input type="button" class="button" value="<?php putGS("Select None"); ?>" onclick="uncheckAll(<?php p(count($debates)); ?>);">
             </TD>
         </TR>
         </TABLE>
@@ -177,20 +177,20 @@ echo camp_html_breadcrumbs(array(
 $counter = 0;
 $color= 0;
 
-if (count($polls)) {
+if (count($debates)) {
     ?>
     <TABLE BORDER="0" CELLSPACING="1" CELLPADDING="3" class="table_list" style="padding-top: 5px;" width="95%">
         <TR class="table_list_header">
             <TD width="10">&nbsp;</TD>
             <TD ALIGN="LEFT" VALIGN="TOP" width="800">
-                <A href="index.php?f_poll_offset=<?php echo $f_poll_offset ?>&amp;f_poll_order=byname"><?php  putGS("Name"); ?></a>
+                <A href="index.php?f_debate_offset=<?php echo $f_debate_offset ?>&amp;f_debate_order=byname"><?php  putGS("Name"); ?></a>
                 &nbsp;<SMALL>(<?php putGS('click to edit'); ?></SMALL>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="30">
-                <A href="index.php?f_poll_offset=<?php echo $f_poll_offset ?>&amp;f_poll_order=bybegin"><?php  putGS("Begin"); ?></a>
+                <A href="index.php?f_debate_offset=<?php echo $f_debate_offset ?>&amp;f_debate_order=bybegin"><?php  putGS("Begin"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="30">
-                <A href="index.php?f_poll_offset=<?php echo $f_poll_offset ?>&amp;f_poll_order=byend"><?php  putGS("End"); ?></a>
+                <A href="index.php?f_debate_offset=<?php echo $f_debate_offset ?>&amp;f_debate_order=byend"><?php  putGS("End"); ?></a>
             </TD>
             <TD ALIGN="center" VALIGN="TOP" width="20">&nbsp;</TD>
             <TD ALIGN="center" VALIGN="TOP" width="20">&nbsp;</TD>
@@ -201,7 +201,7 @@ if (count($polls)) {
 
         $used = array();
 
-        foreach ($polls as $poll) {
+        foreach ($debates as $debate) {
             if ($color) {
                 $rowClass = "list_row_even";
             } else {
@@ -212,53 +212,53 @@ if (count($polls)) {
             <script>default_class[<?php p($counter); ?>] = "<?php p($rowClass); ?>";</script>
             <TR id="row_<?php p($counter); ?>" class="<?php p($rowClass); ?>" onmouseover="setPointer(this, <?php p($counter); ?>, 'over');" onmouseout="setPointer(this, <?php p($counter); ?>, 'out');">
                 <TD>
-                    <input type="checkbox" value="<?php p((int)$poll->getNumber().'_'.(int)$poll->getLanguageId()); ?>" name="f_poll_code[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
+                    <input type="checkbox" value="<?php p((int)$debate->getNumber().'_'.(int)$debate->getLanguageId()); ?>" name="f_debate_code[]" id="checkbox_<?php p($counter); ?>" class="input_checkbox" onclick="checkboxClick(this, <?php p($counter); ?>);">
                 </TD>
 
                 <td>
                     <?php
-                    if (!array_key_exists($poll->getNumber(), $used) && $poll->getProperty('parent_debate_nr') == 0) {
-                        p($poll->getNumber().'.');
-                        $used[$poll->getNumber()] = true;
-                    } elseif ($poll->getProperty('parent_debate_nr')) {
-                        p('\'-> '.$poll->getNumber().'.');
+                    if (!array_key_exists($debate->getNumber(), $used) && $debate->getProperty('parent_debate_nr') == 0) {
+                        p($debate->getNumber().'.');
+                        $used[$debate->getNumber()] = true;
+                    } elseif ($debate->getProperty('parent_debate_nr')) {
+                        p('\'-> '.$debate->getNumber().'.');
                     } else {
                         p('&nbsp;&nbsp;');
                     }
                     ?>
-                    <a href="edit.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>">
-                        <?php p($poll->getProperty('title')); ?>
+                    <a href="edit.php?f_debate_nr=<?php p($debate->getNumber()); ?>&amp;f_fk_language_id=<?php p($debate->getLanguageId()); ?>">
+                        <?php p($debate->getProperty('title')); ?>
                     </a>
-                    &nbsp; (<?php p($poll->getLanguageName()); ?>)
+                    &nbsp; (<?php p($debate->getLanguageName()); ?>)
                 </td>
 
-                <td align="center"><?php p($poll->getProperty('date_begin')); ?></td>
-                <td align="center"><?php p($poll->getProperty('date_end')); ?></td>
+                <td align="center"><?php p($debate->getProperty('date_begin')); ?></td>
+                <td align="center"><?php p($debate->getProperty('date_end')); ?></td>
 
                 <td align='center'>
-                <?php if (!$poll->getProperty('parent_debate_nr')) { ?>
-                    <a href="translate.php?f_poll_nr=<?php p($poll->getNumber()); ?>&f_fk_language_id=<?php p($poll->getLanguageId()) ?>" title="<?php putGS('Translate') ?>">
+                <?php if (!$debate->getProperty('parent_debate_nr')) { ?>
+                    <a href="translate.php?f_debate_nr=<?php p($debate->getNumber()); ?>&f_fk_language_id=<?php p($debate->getLanguageId()) ?>" title="<?php putGS('Translate') ?>">
                         <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/translate.png" BORDER="0">
                     </a>
                 <?php } ?>
                 </td>
 
                 <td align='center'>
-                <?php if ($poll->isExtended()) { ?>
-                    <a href="copy.php?f_poll_nr=<?php p($poll->getNumber()); ?>&f_fk_language_id=<?php p($poll->getLanguageId()) ?>" title="<?php putGS('Copy') ?>">
+                <?php if ($debate->isExtended()) { ?>
+                    <a href="copy.php?f_debate_nr=<?php p($debate->getNumber()); ?>&f_fk_language_id=<?php p($debate->getLanguageId()) ?>" title="<?php putGS('Copy') ?>">
                         <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/duplicate.png" BORDER="0">
                     </a>
                 <?php } ?>
                 </td>
 
                 <td align='center'>
-                    <a href="result.php?f_poll_nr=<?php p($poll->getNumber()); ?>&f_fk_language_id=<?php p($poll->getLanguageId()); ?>" title="<?php putGS('Result') ?>">
+                    <a href="result.php?f_debate_nr=<?php p($debate->getNumber()); ?>&f_fk_language_id=<?php p($debate->getLanguageId()); ?>" title="<?php putGS('Result') ?>">
                         <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/preview.png" BORDER="0">
                     </a>
                 </td>
 
                 <td align='center'>
-                    <a href="javascript: if (confirm('<?php echo camp_javascriptspecialchars(getGS('Are you sure you want to delete the debate "$1"?', $poll->getProperty('title'))); ?>')) location.href='do_delete.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>&amp;<?php echo SecurityToken::URLParameter(); ?>'">
+                    <a href="javascript: if (confirm('<?php echo camp_javascriptspecialchars(getGS('Are you sure you want to delete the debate "$1"?', $debate->getProperty('title'))); ?>')) location.href='do_delete.php?f_debate_nr=<?php p($debate->getNumber()); ?>&amp;f_fk_language_id=<?php p($debate->getLanguageId()); ?>&amp;<?php echo SecurityToken::URLParameter(); ?>'">
                         <IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/delete.png" BORDER="0">
                     </a>
                 </td>

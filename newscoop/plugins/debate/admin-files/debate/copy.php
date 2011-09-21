@@ -1,30 +1,30 @@
 <?php
-camp_load_translation_strings("plugin_poll");
+camp_load_translation_strings("plugin_debate");
 
 // Check permissions
-if (!$g_user->hasPermission('plugin_poll')) {
-    camp_html_display_error(getGS('You do not have the right to manage polls.'));
+if (!$g_user->hasPermission('plugin_debate_admin')) {
+    camp_html_display_error(getGS('You do not have the right to manage debates.'));
     exit;
 }
 
 $allLanguages = Language::GetLanguages();
 
-$f_poll_nr = Input::Get('f_poll_nr', 'int');
+$f_debate_nr = Input::Get('f_debate_nr', 'int');
 $f_fk_language_id = Input::Get('f_fk_language_id', 'int');
 
-$poll = new Debate($f_fk_language_id, $f_poll_nr);
+$debate = new Debate($f_fk_language_id, $f_debate_nr);
 
-if (!$poll->exists()) {
-    camp_html_display_error(getGS('Poll does not exists.'));
+if (!$debate->exists()) {
+    camp_html_display_error(getGS('Debate does not exists.'));
     exit;
 }
 
-$title = $poll->getProperty('title');
-$question = $poll->getProperty('question');
-$date_begin = $poll->getProperty('date_begin');
-$date_end = $poll->getProperty('date_end');
-$fk_language_id = $poll->getProperty('fk_language_id');
-$votes_per_user = $poll->getProperty('votes_per_user');
+$title = $debate->getProperty('title');
+$question = $debate->getProperty('question');
+$date_begin = $debate->getProperty('date_begin');
+$date_end = $debate->getProperty('date_end');
+$fk_language_id = $debate->getProperty('fk_language_id');
+$votes_per_user = $debate->getProperty('votes_per_user');
 
 /*
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj,
@@ -35,7 +35,7 @@ camp_html_content_top(getGS('Add new article'), $topArray, true, false, array(ge
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
     <TD><A HREF="index.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
-    <TD><A HREF="index.php"><B><?php  putGS("Poll List"); ?></B></A></TD>
+    <TD><A HREF="index.php"><B><?php  putGS("Debate List"); ?></B></A></TD>
 </TR>
 </TABLE>
 
@@ -44,15 +44,15 @@ include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 camp_html_display_msgs();
 ?>
 <P>
-<FORM NAME="duplicate_poll" METHOD="POST" ACTION="do_copy.php" onsubmit="return (<?php camp_html_fvalidate(); ?> && checkForm());">
+<FORM NAME="duplicate_debate" METHOD="POST" ACTION="do_copy.php" onsubmit="return (<?php camp_html_fvalidate(); ?> && checkForm());">
 <?php echo SecurityToken::FormParameter(); ?>
-<INPUT TYPE="HIDDEN" NAME="f_poll_nr" VALUE="<?php  p($poll->getNumber()); ?>">
-<INPUT TYPE="HIDDEN" NAME="f_fk_language_id" VALUE="<?php  p($poll->getLanguageId()); ?>">
+<INPUT TYPE="HIDDEN" NAME="f_debate_nr" VALUE="<?php  p($debate->getNumber()); ?>">
+<INPUT TYPE="HIDDEN" NAME="f_fk_language_id" VALUE="<?php  p($debate->getLanguageId()); ?>">
 
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 <TR>
     <TD COLSPAN="2">
-        <B><?php  putGS("Duplicate Poll"); ?></B>
+        <B><?php  putGS("Duplicate Debate"); ?></B>
         <HR NOSHADE SIZE="1" COLOR="BLACK">
     </TD>
 </TR>
@@ -88,7 +88,7 @@ camp_html_display_msgs();
         <tr>
             <TD ALIGN="RIGHT" ><?php  putGS("Votes per single User"); ?>:</TD>
             <TD style="padding-top: 3px;">
-                <SELECT NAME="f_votes_per_user" alt="select" emsg="<?php putGS("You must select number of votes per user.")?>" class="input_select" onchange="poll_set_nr_of_answers()">
+                <SELECT NAME="f_votes_per_user" alt="select" emsg="<?php putGS("You must select number of votes per user.")?>" class="input_select" onchange="debate_set_nr_of_answers()">
                 <option value="0"><?php putGS("---Select---"); ?></option>
                 <?php
                  for($n=1; $n<=255; $n++) {
@@ -101,7 +101,7 @@ camp_html_display_msgs();
             </TD>
         </TR>
         <?php
-        foreach ($poll->getAnswers() as $answer) {
+        foreach ($debate->getAnswers() as $answer) {
             ?>
             <tr>
                 <TD ALIGN="RIGHT" ><?php  putGS("Answer $1", $answer->getNumber()); ?>:</TD>
@@ -137,9 +137,9 @@ camp_html_display_msgs();
 function checkForm() {
     var checked = false;
 
-    for (var i = 0; i < document.forms['duplicate_poll'].length; i++) {
-        if (document.forms['duplicate_poll'].elements[i].name.indexOf('[number]') != -1 &&
-            document.forms['duplicate_poll'].elements[i].checked) {
+    for (var i = 0; i < document.forms['duplicate_debate'].length; i++) {
+        if (document.forms['duplicate_debate'].elements[i].name.indexOf('[number]') != -1 &&
+            document.forms['duplicate_debate'].elements[i].checked) {
 
             checked = true;
         }

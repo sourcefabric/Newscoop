@@ -1,7 +1,7 @@
 {{ if $included }}
 
 <style>
- .poll_bar {
+ .debate_bar {
     border:1px solid #000; 
     background-color: #dfdfdf; 
     height: 20px; 
@@ -33,34 +33,34 @@ function stop()
 {{ /if }}
 
 
-{{ poll_form template='poll/poll-form-ajax.tpl' submit_button=false ajax=true }} 
+{{ debate_form template='debate/debate-form-ajax.tpl' submit_button=false ajax=true }} 
        
        
-    {{ $gimme->poll->title }}<br>
+    {{ $gimme->debate->title }}<br>
     {{*
-    Question: {{ $gimme->poll->question }}<br>
-    Voting Begin: {{ $gimme->poll->date_begin|date_format }}<br>
-    Voting End: {{ $gimme->poll->date_end|date_format }}<br>
+    Question: {{ $gimme->debate->question }}<br>
+    Voting Begin: {{ $gimme->debate->date_begin|date_format }}<br>
+    Voting End: {{ $gimme->debate->date_end|date_format }}<br>
     *}}
-    Votes: {{ $gimme->poll->votes }}<br>
+    Votes: {{ $gimme->debate->votes }}<br>
     
     <div style="height: 10px;" /></div>
 
     
-    {{ list_poll_answers }}
+    {{ list_debate_answers }}
        
-         {{ pollanswer_ajax }}
+         {{ debateanswer_ajax }}
          
-	          <div class="poll_bar" style="width:{{ $gimme->pollanswer->percentage }}%;" /></div>
+	          <div class="debate_bar" style="width:{{ $gimme->debateanswer->percentage }}%;" /></div>
 	          <div style="position: absolute">
-	          	{{ $gimme->pollanswer->answer }}
-	          	({{ $gimme->pollanswer->percentage|string_format:"%d" }})%
+	          	{{ $gimme->debateanswer->answer }}
+	          	({{ $gimme->debateanswer->percentage|string_format:"%d" }})%
 	         </div>
 	          
-        {{ /pollanswer_ajax }}
+        {{ /debateanswer_ajax }}
         
         <div style="clear: both"></div>
-        {{ list_pollanswer_attachments }}
+        {{ list_debateanswer_attachments }}
             {{ if $gimme->attachment->mime_type|substr:0:5 == 'audio' }}
                 <a href="javascript: void(0);" onClick="play('{{ uri options="articleattachment" }}')">
                     <img src="/css/is_shown.png" border="0">
@@ -69,31 +69,31 @@ function stop()
                     <img src="/css/unlink.png" border="0">
                 </a>
             {{ /if }}
-        {{ /list_pollanswer_attachments }}
+        {{ /list_debateanswer_attachments }}
         
 		<div style="clear: both"></div>
 		
-		{{ if $gimme->poll->is_votable }}
+		{{ if $gimme->debate->is_votable }}
 		Give a note: 
             {{ section name=foo start=1 loop=6 }}
-                {{ pollanswer_ajax value=$smarty.section.foo.index }}{{ $smarty.section.foo.index }}{{ /pollanswer_ajax }}
+                {{ debateanswer_ajax value=$smarty.section.foo.index }}{{ $smarty.section.foo.index }}{{ /debateanswer_ajax }}
             {{ /section }}
             <br>
         {{ /if }}
             
-        {{ $gimme->pollanswer->votes }} votes |
-        &#216;{{ $gimme->pollanswer->average_value|string_format:"%.1f" }} |
-        sum: {{ $gimme->pollanswer->value }}
+        {{ $gimme->debateanswer->votes }} votes |
+        &#216;{{ $gimme->debateanswer->average_value|string_format:"%.1f" }} |
+        sum: {{ $gimme->debateanswer->value }}
         
         <div style="clear: both; height: 10px"></div>
 
-    {{ /list_poll_answers }}
+    {{ /list_debate_answers }}
     
-    {{ if !$gimme->poll->is_votable }}
-        You reached max_vote_count, or this poll has expired.
+    {{ if !$gimme->debate->is_votable }}
+        You reached max_vote_count, or this debate has expired.
     {{ /if }}
            
-{{ /poll_form }}
+{{ /debate_form }}
  
 
 {{ if $included }}

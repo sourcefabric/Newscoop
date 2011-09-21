@@ -80,7 +80,7 @@ class DebateArticle extends DatabaseObject {
         if (function_exists("camp_load_translation_strings")) {
             camp_load_translation_strings("api");
         }
-        $logtext = getGS('Poll Id $1 created.', $this->m_data['IdPoll']);
+        $logtext = getGS('Debate Id $1 created.', $this->m_data['IdDebate']);
         Log::Message($logtext, null, 31);
         */
 
@@ -125,7 +125,7 @@ class DebateArticle extends DatabaseObject {
      *
      * @param int $p_debate_nr
      */
-    public static function OnPollDelete($p_debate_nr)
+    public static function OnDebateDelete($p_debate_nr)
     {
         if (count(Debate::getTranslations($p_debate_nr)) > 1) {
             return;
@@ -165,7 +165,7 @@ class DebateArticle extends DatabaseObject {
         global $g_ado_db;
         $records = array();
 
-        $PollArticle = new DebateArticle();
+        $DebateArticle = new DebateArticle();
 
         if (!empty($p_debate_nr)) {
             $where .= "AND fk_debate_nr = $p_debate_nr ";
@@ -182,7 +182,7 @@ class DebateArticle extends DatabaseObject {
         }
 
         $query = "SELECT    *
-                  FROM      {$PollArticle->m_dbTableName}
+                  FROM      {$DebateArticle->m_dbTableName}
                   WHERE     1 $where
                   ORDER BY  fk_debate_nr DESC";
         $res = $g_ado_db->selectLimit($query, $p_limit == 0 ? -1 : $p_limit, $p_offset);
@@ -222,7 +222,7 @@ class DebateArticle extends DatabaseObject {
      * @param $p_language_id wanted language
      * @return object
      */
-    public function getPoll($p_language_id)
+    public function getDebate($p_language_id)
     {
         $debate = new Debate($p_language_id, $this->m_data['fk_debate_nr']);
 
@@ -234,7 +234,7 @@ class DebateArticle extends DatabaseObject {
      *
      * @return int
      */
-    public function getPollNumber()
+    public function getDebateNumber()
     {
         return $this->m_data['fk_debate_nr'];
     }

@@ -31,19 +31,19 @@ function smarty_block_list_debateanswer_attachments($p_params, $p_content, &$p_s
     $html = '';
 
     if (!isset($p_content)) {
-        $start = $campContext->next_list_start('PollAnswerAttachmentsList');
+        $start = $campContext->next_list_start('DebateAnswerAttachmentsList');
     	$debateAnswerAttachmentsList = new DebateAnswerAttachmentsList($start, $p_params);
     	$campContext->setCurrentList($debateAnswerAttachmentsList, array('attachment'));
     }
 
-    $currentPollAnswerAttachment = $campContext->current_list->current;
+    $currentDebateAnswerAttachment = $campContext->current_list->current;
 
-    if (is_null($currentPollAnswerAttachment)) {
+    if (is_null($currentDebateAnswerAttachment)) {
 	    $p_repeat = false;
 	    $campContext->resetCurrentList();
     	return $html;
     } else {
-        $campContext->attachment = $currentPollAnswerAttachment;
+        $campContext->attachment = $currentDebateAnswerAttachment;
     	$p_repeat = true;
     }
 

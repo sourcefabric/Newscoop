@@ -57,12 +57,12 @@
 {{list_debates length="1" order="bynumber desc"}}
 
 	{{if $gimme->debate->is_votable}}
- 		{{debate_form template="poll.tpl" submit_button=false}}
+ 		{{debate_form template="debate.tpl" submit_button=false}}
   			{{list_debate_answers order="bynumber asc"}}
 				{{debateanswer_edit}}
 				{{$gimme->debateanswer->answer}} <br />
   			{{/list_debate_answers}}
- 			<input type="submit" id="submit_poll" class="button" value="I think so!" />
+ 			<input type="submit" id="submit_debate" class="button" value="I think so!" />
 		{{/debate_form}}
 	{{/if}}
 

@@ -1,14 +1,14 @@
 <?php
-camp_load_translation_strings("plugin_poll");
+camp_load_translation_strings("plugin_debate");
 camp_load_translation_strings('home');
 
-if (!$g_user->hasPermission("plugin_poll")) {
-	camp_html_display_error(getGS("You do not have the right to manage poll."));
+if (!$g_user->hasPermission("plugin_debate_admin")) {
+	camp_html_display_error(getGS("You do not have the right to manage debate."));
 	exit;
 }
 
 $f_include = Input::Get('f_include', 'string', false);
-$f_poll_item = Input::Get('f_poll_item', 'string');
+$f_debate_item = Input::Get('f_debate_item', 'string');
 $f_language_id = Input::Get('f_language_id', 'int');
 $f_publication_id = Input::Get('f_publication_id', 'int');
 $f_issue_nr = Input::Get('f_issue_nr', 'int');
@@ -24,7 +24,7 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
 <html>
 <head>
     <meta charset="utf-8" />
-	<title><?php putGS("Attach poll"); ?></title>
+	<title><?php putGS("Attach debate"); ?></title>
 
 	<meta http-equiv="Expires" content="now" />
 
@@ -38,7 +38,7 @@ switch ($f_include) {
     case 'edit.php':
         include 'edit.php';
     break;
-    
+
     default:
         include 'assign.php';
     break;

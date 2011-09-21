@@ -2,8 +2,8 @@
 camp_load_translation_strings("article_files");
 
 // Check permissions
-if (!$g_user->hasPermission('plugin_poll')) {
-    camp_html_display_error(getGS('You do not have the right to manage polls.'));
+if (!$g_user->hasPermission('plugin_debate')) {
+    camp_html_display_error(getGS('You do not have the right to manage debates.'));
     exit;
 }
 if (!$g_user->hasPermission('AddFile')) {
@@ -11,8 +11,8 @@ if (!$g_user->hasPermission('AddFile')) {
 	exit;
 }
 
-$f_poll_nr = Input::Get('f_poll_nr', 'int', 0);
-$f_pollanswer_nr = Input::Get('f_pollanswer_nr', 'int', 0);
+$f_debate_nr = Input::Get('f_debate_nr', 'int', 0);
+$f_debateanswer_nr = Input::Get('f_debateanswer_nr', 'int', 0);
 $f_fk_language_id = Input::Get('f_fk_language_id', 'int', 0);
 
 
@@ -27,7 +27,7 @@ if (!is_writable($Campsite['FILE_DIRECTORY'])) {
 	camp_html_add_msg(camp_get_error_message(CAMP_ERROR_WRITE_DIR, $Campsite['FILE_DIRECTORY']));
 }
 
-$PollAnswer = new DebateAnswer($f_fk_language_id, $f_poll_nr, $f_pollanswer_nr);
+$DebateAnswer = new DebateAnswer($f_fk_language_id, $f_debate_nr, $f_debateanswer_nr);
 
 camp_html_display_msgs();
 ?>
@@ -36,7 +36,7 @@ camp_html_display_msgs();
     <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<META HTTP-EQUIV="Expires" CONTENT="now">
 	<LINK rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/css/admin_stylesheet.css">
-	<title><?php putGS("Attach File to Poll Answer"); ?></title>
+	<title><?php putGS("Attach File to Debate Answer"); ?></title>
 	<?php include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php"); ?>
 </head>
 <body>
@@ -47,7 +47,7 @@ camp_html_display_msgs();
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 <TR>
 	<TD COLSPAN="2">
-		<B><?php  putGS("Attach File to Poll Answer"); ?></B>
+		<B><?php  putGS("Attach File to Debate Answer"); ?></B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
@@ -86,8 +86,8 @@ camp_html_display_msgs();
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-    <INPUT TYPE="HIDDEN" NAME="f_poll_nr" VALUE="<?php  p($f_poll_nr); ?>">
-    <INPUT TYPE="HIDDEN" NAME="f_pollanswer_nr" VALUE="<?php  p($f_pollanswer_nr); ?>">
+    <INPUT TYPE="HIDDEN" NAME="f_debate_nr" VALUE="<?php  p($f_debate_nr); ?>">
+    <INPUT TYPE="HIDDEN" NAME="f_debateanswer_nr" VALUE="<?php  p($f_debateanswer_nr); ?>">
     <INPUT TYPE="HIDDEN" NAME="f_fk_language_id" VALUE="<?php  p($f_fk_language_id); ?>">
     <INPUT TYPE="HIDDEN" NAME="BackLink" VALUE="<?php  p($_SERVER['REQUEST_URI']); ?>">
 <?php if (is_writable($Campsite['FILE_DIRECTORY'])) { ?>

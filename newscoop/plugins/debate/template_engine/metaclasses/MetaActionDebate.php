@@ -111,7 +111,7 @@ class MetaActionDebate extends MetaAction
     {
         $user = null;
         if ($p_context->user->defined) {
-            $user = $p_context->user->identifier;
+            $user = $p_context->user->id;
         }
 
         $this->m_debate->setUserId($user);

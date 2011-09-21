@@ -82,7 +82,7 @@ class DebateAnswerAttachment extends DatabaseObject {
         if (function_exists("camp_load_translation_strings")) {
             camp_load_translation_strings("api");
         }
-        $logtext = getGS('Poll Id $1 created.', $this->m_data['IdPoll']);
+        $logtext = getGS('Debate Id $1 created.', $this->m_data['IdDebate']);
         Log::Message($logtext, null, 31);
         */
 
@@ -99,11 +99,11 @@ class DebateAnswerAttachment extends DatabaseObject {
      */
     function delete()
     {
-        // delete correspondending Attachment object if not used by other PollAnswers
-        $PollAnswerAttachments = DebateAnswerAttachment::getPollAnswerAttachments(null, null, $this->getProperty('fk_attachment_id'));
-        if (count($PollAnswerAttachments) === 1) {
-            $PollAnswerAttachment = current($PollAnswerAttachments);
-            $PollAnswerAttachment->getAttachment()->delete();
+        // delete correspondending Attachment object if not used by other DebateAnswers
+        $DebateAnswerAttachments = DebateAnswerAttachment::getDebateAnswerAttachments(null, null, $this->getProperty('fk_attachment_id'));
+        if (count($DebateAnswerAttachments) === 1) {
+            $DebateAnswerAttachment = current($DebateAnswerAttachments);
+            $DebateAnswerAttachment->getAttachment()->delete();
         }
 
 
@@ -132,13 +132,13 @@ class DebateAnswerAttachment extends DatabaseObject {
 
 
     /**
-     * Call this if an PollAnswer is deleted
+     * Call this if an DebateAnswer is deleted
      *
      * @param int $p_publication_id
      */
-    public static function OnPollAnswerDelete($p_debate_nr, $p_debateanswer_nr)
+    public static function OnDebateAnswerDelete($p_debate_nr, $p_debateanswer_nr)
     {
-        foreach (self::getPollAnswerAttachments($p_debate_nr, $p_debateanswer_nr) as $record) {
+        foreach (self::getDebateAnswerAttachments($p_debate_nr, $p_debateanswer_nr) as $record) {
             $record->delete();
         }
     }
@@ -150,12 +150,12 @@ class DebateAnswerAttachment extends DatabaseObject {
      * @param int $p_debateanswer_nr
      * @return array(object DebateAnswerAttachment, object DebateAnswerAttachment, ...)
      */
-    public static function getPollAnswerAttachments($p_debate_nr = null, $p_debateanswer_nr = null, $p_attachment_id = null)
+    public static function getDebateAnswerAttachments($p_debate_nr = null, $p_debateanswer_nr = null, $p_attachment_id = null)
     {
         global $g_ado_db;
-        $PollAnswerAttachments = array();
+        $DebateAnswerAttachments = array();
 
-        $PollAnswerAttachment = new DebateAnswerAttachment();
+        $DebateAnswerAttachment = new DebateAnswerAttachment();
         $where = '';
         if (!empty($p_debate_nr)) {
             $where .= "AND fk_debate_nr = $p_debate_nr ";
@@ -172,16 +172,16 @@ class DebateAnswerAttachment extends DatabaseObject {
         }
 
         $query = "SELECT    fk_debate_nr, fk_debateanswer_nr, fk_attachment_id
-                  FROM      {$PollAnswerAttachment->m_dbTableName}
+                  FROM      {$DebateAnswerAttachment->m_dbTableName}
                   WHERE     1 $where
                   ORDER BY  fk_debateanswer_nr";
         $res = $g_ado_db->query($query);
 
         if ($res) while ($row = $res->fetchRow()) {
-            $PollAnswerAttachments[] = new DebateAnswerAttachment($row['fk_debate_nr'], $row['fk_debateanswer_nr'], $row['fk_attachment_id']);
+            $DebateAnswerAttachments[] = new DebateAnswerAttachment($row['fk_debate_nr'], $row['fk_debateanswer_nr'], $row['fk_attachment_id']);
         }
 
-        return $PollAnswerAttachments;
+        return $DebateAnswerAttachments;
     }
 
     /**
@@ -207,21 +207,21 @@ class DebateAnswerAttachment extends DatabaseObject {
      */
     function CreateCopySet($p_debate_nr, $p_language_id, $p_parent_nr)
     {
-        $ParentPoll = new Debate($p_language_id, $p_parent_nr);
-        $parentAnswers = $ParentPoll->getAnswers();
+        $ParentDebate = new Debate($p_language_id, $p_parent_nr);
+        $parentAnswers = $ParentDebate->getAnswers();
 
-        foreach ($parentAnswers as $ParentPollAnswer) {
-            $TargetPollAnswer = new DebateAnswer($p_language_id,
+        foreach ($parentAnswers as $ParentDebateAnswer) {
+            $TargetDebateAnswer = new DebateAnswer($p_language_id,
                                                $p_debate_nr,
-                                               $ParentPollAnswer->getNumber());
-            if ($TargetPollAnswer->exists()) {
-                $parentPollAnswerAttachments = $ParentPollAnswer->getPollAnswerAttachments();
+                                               $ParentDebateAnswer->getNumber());
+            if ($TargetDebateAnswer->exists()) {
+                $parentDebateAnswerAttachments = $ParentDebateAnswer->getDebateAnswerAttachments();
 
-                foreach ($parentPollAnswerAttachments as $ParentPollAnswerAttachment) {
-                    $TargetPollAnswerAttachment = new DebateAnswerAttachment($p_debate_nr,
-                                                                           $ParentPollAnswerAttachment->getProperty('fk_debateanswer_nr'),
-                                                                           $ParentPollAnswerAttachment->getProperty('fk_attachment_id'));
-                    $TargetPollAnswerAttachment->create();
+                foreach ($parentDebateAnswerAttachments as $ParentDebateAnswerAttachment) {
+                    $TargetDebateAnswerAttachment = new DebateAnswerAttachment($p_debate_nr,
+                                                                           $ParentDebateAnswerAttachment->getProperty('fk_debateanswer_nr'),
+                                                                           $ParentDebateAnswerAttachment->getProperty('fk_attachment_id'));
+                    $TargetDebateAnswerAttachment->create();
                 }
             }
         }
@@ -273,16 +273,16 @@ class DebateAnswerAttachment extends DatabaseObject {
         $sqlClauseObj = new SQLSelectClause();
 
         // sets the columns to be fetched
-        $tmpPollAnswerAttachment = new DebateAnswerAttachment($language_id, $debate_nr);
-		$columnNames = $tmpPollAnswerAttachment->getColumnNames(true);
+        $tmpDebateAnswerAttachment = new DebateAnswerAttachment($language_id, $debate_nr);
+		$columnNames = $tmpDebateAnswerAttachment->getColumnNames(true);
         foreach ($columnNames as $columnName) {
             $sqlClauseObj->addColumn($columnName);
         }
 
         // sets the main table for the query
-        $mainTblName = $tmpPollAnswerAttachment->getDbTableName();
+        $mainTblName = $tmpDebateAnswerAttachment->getDbTableName();
         $sqlClauseObj->setTable($mainTblName);
-        unset($tmpPollAnswerAttachment);
+        unset($tmpDebateAnswerAttachment);
 
 
         if (empty($debateanswer_nr) || empty($debate_nr)) {
