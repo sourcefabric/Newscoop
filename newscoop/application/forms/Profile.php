@@ -25,6 +25,10 @@ class Application_Form_Profile extends Zend_Form
             'filters' => array('stringTrim'),
         ));
 
+        $this->addElement('password', 'password', array(
+            'label' => 'Password',
+        ));
+
         $this->addElement('file', 'image', array(
             'label' => 'Profile image',
         ));
@@ -75,6 +79,18 @@ class Application_Form_Profile extends Zend_Form
         $profile->addElement('text', 'geolocation', array(
             'label' => 'Geolocation',
             'filters' => array('stringTrim'),
+        ));
+
+        $profile->addElement('checkbox', 'first_name_public', array(
+            'label' => 'First Name Public',
+        ));
+
+        $profile->addElement('checkbox', 'last_name_public', array(
+            'label' => 'Last Name Public',
+        ));
+
+        $profile->addElement('checkbox', 'email_public', array(
+            'label' => 'Allow sending emails',
         ));
 
         $this->addSubForm($profile, 'attributes');
