@@ -26,7 +26,12 @@
     {{ /foreach }}
 </dl>
 
-
+{{ list_user_comments user=$user->identifier length=10 order="bydate desc" }}
+    <p>{{ $gimme->user_comment->submit_date }}</p>
+    <p>{{ $gimme->user_comment->subject }}</p>
+    <p>{{ $gimme->user_comment->content }}</p>
+    <p><a href="{{ $gimme->user_comment->article->url }}">{{ $gimme->user_comment->article->name }}</a></p>
+{{ /list_user_comments }}
 
 {{ assign var=i value=1 }}
 {{ list_images user=$user->identifier order="byLastUpdate desc"}}

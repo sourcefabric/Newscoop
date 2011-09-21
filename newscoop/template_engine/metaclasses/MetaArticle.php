@@ -76,7 +76,8 @@ final class MetaArticle extends MetaDbObject {
     'has_topics'=>'hasTopics',
     'topics'=>'getTopics',
     'type_translation'=>'getTypeTranslated',
-    'seo_url_end'=>'getSEOURLEnd'
+    'seo_url_end'=>'getSEOURLEnd',
+    'url' =>'getUrl'
     );
 
 
@@ -574,6 +575,11 @@ final class MetaArticle extends MetaDbObject {
 
     protected function getTypeTranslated() {
     	return $this->m_dbObject->getTranslateType($this->m_dbObject->getLanguageId());
+    }
+
+    protected function getUrl()
+    {
+        return ShortURL::GetURL($this->m_dbObject->getPublicationId(), $this->m_dbObject->getLanguageId(), null, null, $this->m_dbObject->getArticleNumber());
     }
 
 

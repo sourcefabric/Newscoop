@@ -89,6 +89,14 @@ class Comment
     private $parent;
 
     /**
+     * TODO get rid of this when the composite key stuff is done.
+     *
+     * @column(type="integer", name="fk_thread_id")
+     * @var int
+     */
+    private $article_num;
+
+    /**
      * @manyToOne(targetEntity="Article")
      * @joinColumn(name="fk_thread_id", referencedColumnName="Number")
      * @var Newscoop\Entity\Article
@@ -181,6 +189,16 @@ class Comment
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * TODO get rid of this when the composite key stuff is done.
+     *
+     * @return int
+     */
+    public function getArticleNumber()
+    {
+        return $this->article_num;
     }
 
     /**
