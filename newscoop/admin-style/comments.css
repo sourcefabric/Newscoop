@@ -55,17 +55,17 @@ body#comments {
 
 #showComments fieldset ul li.none {
     background: #ffffff;
-    border: 1px solid #ffe0e0;
+    border: 1px solid #f0f0f0;
 }
 
 #showComments fieldset ul li.image {
     background: #ffffff;
-    border: 1px solid #e0ffe0;
+    border: 1px solid #f0f0f0;
 }
 
 #showComments fieldset ul li.document {
     background: #ffffff;
-    border: 1px solid #e0e0ff;
+    border: 1px solid #f0f0f0;
 }
 
 #showComments fieldset ul li input {
