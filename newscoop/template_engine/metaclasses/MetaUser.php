@@ -35,7 +35,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
 
         $this->m_dbObject = $user;
 
-        $this->m_properties['id'] = 'getId';
+        $this->m_properties['identifier'] = 'getId';
         $this->m_properties['first_name'] = 'getFirstName';
         $this->m_properties['last_name'] = 'getLastName';
         $this->m_properties['uname'] = 'getUsername';
@@ -49,9 +49,9 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         $this->m_customProperties['topics'] = 'getTopics';
         $this->m_customProperties['is_blocked_from_comments'] = 'isBlockedFromComments';
         $this->m_customProperties['is_admin'] = 'isAdmin';
+        $this->m_customProperties['defined'] = 'isDefined';
 
         $this->m_skipFilter[] = "name";
-        //$this->defined = $user->getId() > 0;
     }
 
 
@@ -70,6 +70,11 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         else {
             return $name;
         }
+    }
+
+    protected function isDefined()
+    {
+        return $this->user->getId() > 0;
     }
 
     protected function getCreated()
