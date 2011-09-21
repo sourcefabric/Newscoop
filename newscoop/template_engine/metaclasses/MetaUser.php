@@ -72,7 +72,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         }
     }
 
-    protected isDefined()
+    protected function isDefined()
     {
         return $this->user->getId() > 0;
     }
