@@ -209,7 +209,8 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     public function offsetExists($offset)
     {
-        return isset($this->user->getAttribute($offset));
+        $offset = $this->user->getAttribute($offset);
+        return isset($offset);
     }
 
     /**
