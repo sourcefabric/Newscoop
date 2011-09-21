@@ -7,8 +7,8 @@ if (!SecurityToken::isValid()) {
 }
 
 // Check permissions
-if (!$g_user->hasPermission('plugin_poll')) {
-    camp_html_display_error(getGS('You do not have the right to manage polls.'));
+if (!$g_user->hasPermission('plugin_debate_admin')) {
+    camp_html_display_error(getGS('You do not have the right to manage debates.'));
     exit;
 }
 if (!$g_user->hasPermission('AddFile')) {
@@ -23,8 +23,8 @@ if (!ini_get('safe_mode')) {
 	set_time_limit(0);
 }
 
-$f_poll_nr = Input::Get('f_poll_nr', 'int', 0);
-$f_pollanswer_nr = Input::Get('f_pollanswer_nr', 'int', 0);
+$f_debate_nr = Input::Get('f_debate_nr', 'int', 0);
+$f_debateanswer_nr = Input::Get('f_debateanswer_nr', 'int', 0);
 $f_fk_language_id = Input::Get('f_fk_language_id', 'int', 0);
 $f_description = Input::Get('f_description');
 $f_language_specific = Input::Get('f_language_specific');
@@ -55,21 +55,21 @@ if (isset($_FILES["f_file"])) {
 	camp_html_display_error(getGS("The file exceeds the allowed max file size."), null, true);
 }
 
-$PollAnswer = new DebateAnswer($f_fk_language_id, $f_poll_nr, $f_pollanswer_nr);
+$DebateAnswer = new DebateAnswer($f_fk_language_id, $f_debate_nr, $f_debateanswer_nr);
 
-if (!$PollAnswer->exists()) {
-	camp_html_display_error(getGS("Poll Answer $1 does not exist.", $f_pollanswer_nr), null, true);
+if (!$DebateAnswer->exists()) {
+	camp_html_display_error(getGS("Debate Answer $1 does not exist.", $f_debateanswer_nr), null, true);
 	exit;
 }
 
-$description = new Translation($f_language_id);
+$description = new Translation(@$f_language_id);
 $description->create($f_description);
 
 $attributes = array();
 $attributes['fk_description_id'] = $description->getPhraseId();
 $attributes['fk_user_id'] = $g_user->getUserId();
 if ($f_language_specific == "yes") {
-	$attributes['fk_language_id'] = $f_language_id;
+	$attributes['fk_language_id'] = @$f_language_id;
 }
 if ($f_content_disposition == "attachment") {
 	$attributes['content_disposition'] = "attachment";
@@ -78,7 +78,7 @@ if ($f_content_disposition == "attachment") {
 if (!empty($_FILES['f_file'])) {
 	$file = Attachment::OnFileUpload($_FILES['f_file'], $attributes);
 } else {
-	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'files/popup.php'));
+	camp_html_goto_page(camp_html_article_url($articleObj, @$f_language_id, 'files/popup.php'));
 }
 
 // Check if image was added successfully
@@ -87,12 +87,12 @@ if (PEAR::isError($file)) {
 	camp_html_goto_page($BackLink);
 }
 
-$PollAnswerAttachment = new DebateAnswerAttachment($f_poll_nr, $f_pollanswer_nr, $file->getAttachmentId());
-$PollAnswerAttachment->create();
+$DebateAnswerAttachment = new DebateAnswerAttachment($f_debate_nr, $f_debateanswer_nr, $file->getAttachmentId());
+$DebateAnswerAttachment->create();
 
 // Go back to upload screen.
 camp_html_add_msg(getGS("File '$1' added.", $file->getFileName()), "ok");
 ?>
 <script>
-location.href="popup.php?f_poll_nr=<?php p($f_poll_nr) ?>&f_pollanswer_nr=<?php p($f_pollanswer_nr) ?>&f_fk_language_id=<?php p($f_fk_language_id) ?>";
+location.href="popup.php?f_debate_nr=<?php p($f_debate_nr) ?>&f_debateanswer_nr=<?php p($f_debateanswer_nr) ?>&f_fk_language_id=<?php p($f_fk_language_id) ?>";
 </script>

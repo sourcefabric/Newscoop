@@ -1,25 +1,25 @@
 <?php
-camp_load_translation_strings("plugin_poll");
+camp_load_translation_strings("plugin_debate");
 
 // Check permissions
-if (!$g_user->hasPermission('plugin_poll')) {
-    camp_html_display_error(getGS('You do not have the right to manage polls.'));
+if (!$g_user->hasPermission('plugin_debate_admin')) {
+    camp_html_display_error(getGS('You do not have the right to manage debates.'));
     exit;
 }
 
-$f_poll_nr = Input::Get('f_poll_nr', 'int');
+$f_debate_nr = Input::Get('f_debate_nr', 'int');
 $f_fk_language_id = Input::Get('f_fk_language_id', 'int');
 
 $f_nr_answer = Input::Get('f_nr_answer', 'int');
 
-$poll = new Debate($f_fk_language_id, $f_poll_nr);
+$debate = new Debate($f_fk_language_id, $f_debate_nr);
 
 $format = '%.2f';
 
-$display[] = $poll;
+$display[] = $debate;
 
-foreach($poll->getTranslations() as $translation) {
-    if ($translation->getLanguageId() != $poll->getLanguageId()) {
+foreach($debate->getTranslations() as $translation) {
+    if ($translation->getLanguageId() != $debate->getLanguageId()) {
         $display[] = $translation;
     }
 }
@@ -31,7 +31,7 @@ echo camp_html_breadcrumbs(array(
 ));
 ?>
 
-<?php $answers = $poll->getAnswers($f_poll_nr, $f_fk_language_id); ?>
+<?php $answers = $debate->getAnswers($f_debate_nr, $f_fk_language_id); ?>
 
 <style type="text/css">
 .results
@@ -144,7 +144,7 @@ echo camp_html_breadcrumbs(array(
 <?php endforeach ?>
 
 <h3 style="margin-left:30px">
-    <?php echo ucfirst($poll->getProperty('results_time_unit')) ?> results:
+    <?php echo ucfirst($debate->getProperty('results_time_unit')) ?> results:
 </h3>
 
 <div class="results">
@@ -157,7 +157,7 @@ echo camp_html_breadcrumbs(array(
     	</div>
     	<div class="bottom">
     	<?php
-    	    switch($poll->getProperty('results_time_unit'))
+    	    switch($debate->getProperty('results_time_unit'))
     	    {
     	        case 'daily' : putGS('Day'); $dformat = '%e.%m.%y'; break;
     	        case 'weekly' : putGS('Week'); $dformat = '%W-%y'; break;
@@ -167,7 +167,7 @@ echo camp_html_breadcrumbs(array(
     	</div>
 	</div>
 
-    <?php foreach (DebateVote::getResults($f_poll_nr, $f_fk_language_id) as $results) : ?>
+    <?php foreach (DebateVote::getResults($f_debate_nr, $f_fk_language_id) as $results) : ?>
     	<div class="item">
     		<div class="value">
         	<?php foreach ($results as $result) : ?>

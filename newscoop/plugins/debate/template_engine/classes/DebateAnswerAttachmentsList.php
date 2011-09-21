@@ -32,19 +32,19 @@ class DebateAnswerAttachmentsList extends ListObject
 	{
 	    $operator = new Operator('is');
 	    $context = CampTemplate::singleton()->context();
-	    $comparisonOperation = new ComparisonOperation('poll_nr', $operator,
-	                                                   $context->poll->number);
+	    $comparisonOperation = new ComparisonOperation('debate_nr', $operator,
+	                                                   $context->debate->number);
 	    $this->m_constraints[] = $comparisonOperation;
 
-        $comparisonOperation = new ComparisonOperation('pollanswer_nr', $operator,
-                                                        $context->pollanswer->number);
+        $comparisonOperation = new ComparisonOperation('debateanswer_nr', $operator,
+                                                        $context->debateanswer->number);
 	    $this->m_constraints[] = $comparisonOperation;
 
-	    $pollAnswerAttachmentsList = DebateAnswerAttachment::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+	    $debateAnswerAttachmentsList = DebateAnswerAttachment::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
         $metaDebateAnswerAttachmentsList = array();
 
-	    foreach ($pollAnswerAttachmentsList as $pollAnswerAttachment) {
-	        $metaDebateAnswerAttachmentsList[] = new MetaAttachment($pollAnswerAttachment->getAttachmentId());
+	    foreach ($debateAnswerAttachmentsList as $debateAnswerAttachment) {
+	        $metaDebateAnswerAttachmentsList[] = new MetaAttachment($debateAnswerAttachment->getAttachmentId());
 	    }
 	    return $metaDebateAnswerAttachmentsList;
 	}
@@ -69,7 +69,7 @@ class DebateAnswerAttachmentsList extends ListObject
 	    foreach ($p_constraints as $word) {
 	        if ($state == 1) {
 	                if (array_key_exists($word, DebateAnswersList::$s_parameters) === false) {
-	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in list_pollanswer_attachments, constraints parameter");
+	                    CampTemplate::singleton()->trigger_error("invalid attribute $word in list_debateanswer_attachments, constraints parameter");
 	                }
 	                $attribute = $word;
 	                $state = 2;
@@ -80,7 +80,7 @@ class DebateAnswerAttachmentsList extends ListObject
 	                    $operator = new Operator($word, $type);
 	                }
 	                catch (InvalidOperatorException $e) {
-	                    CampTemplate::singleton()->trigger_error("invalid operator $word for attribute $attribute in list_pollanswer_attachments, constraints parameter");
+	                    CampTemplate::singleton()->trigger_error("invalid operator $word for attribute $attribute in list_debateanswer_attachments, constraints parameter");
 	                    $state = 1;
 	                    break;
 	                }
@@ -95,7 +95,7 @@ class DebateAnswerAttachmentsList extends ListObject
 	        }
 	    }
 	    if ($state != 1) {
-            CampTemplate::singleton()->trigger_error("unexpected end of constraints parameter in list_pollanswer_attachments");
+            CampTemplate::singleton()->trigger_error("unexpected end of constraints parameter in list_debateanswer_attachments");
 	    }
 
 		return $parameters;
@@ -119,7 +119,7 @@ class DebateAnswerAttachmentsList extends ListObject
 	        switch ($state) {
                 case 1: // reading the order field
 	                if (array_search(strtolower($word), DebateAnswerAttachmentsList::$s_orderFields) === false) {
-	                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_pollanswer_attachments, order parameter");
+	                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_debateanswer_attachments, order parameter");
 	                } else {
     	                $orderField = $word;
 	                }
@@ -129,14 +129,14 @@ class DebateAnswerAttachmentsList extends ListObject
                     if (MetaOrder::IsValid($word)) {
                         $order[$orderField] = $word;
                     } else {
-                        CampTemplate::singleton()->trigger_error("invalid order $word of attribute $orderField in list_pollanswer_attachments, order parameter");
+                        CampTemplate::singleton()->trigger_error("invalid order $word of attribute $orderField in list_debateanswer_attachments, order parameter");
                     }
                     $state = 1;
 	                break;
 	        }
 	    }
 	    if ($state != 1) {
-            CampTemplate::singleton()->trigger_error("unexpected end of order parameter in list_pollanswer_attachments");
+            CampTemplate::singleton()->trigger_error("unexpected end of order parameter in list_debateanswer_attachments");
 	    }
 
 	    return $order;
@@ -165,15 +165,14 @@ class DebateAnswerAttachmentsList extends ListObject
     				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;
     					if ("$intValue" != $value || $intValue < 0) {
-    						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_poll_answers");
-    					}
-	    				$parameters[$parameter] = (int)$value;
+    						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_debate_answers");
+    					}debate  				$parameters[$parameter] = (int)$value;
     				} else {
 	    				$parameters[$parameter] = $value;
     				}
     				break;
     			default:
-    				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_poll_answers", $p_smarty);
+    				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_debate_answers", $p_smarty);
     		}
     	}
     	$this->m_item = is_string($p_parameters['item']) && trim($p_parameters['item']) != '' ? $p_parameters['item'] : null;

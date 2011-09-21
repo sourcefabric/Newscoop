@@ -8,23 +8,23 @@ if (!SecurityToken::isValid()) {
 
 // Check permissions
 if (!$g_user->hasPermission('plugin_debate_admin')) {
-    camp_html_display_error(getGS('You do not have the right to manage polls.'));
+    camp_html_display_error(getGS('You do not have the right to manage debates.'));
     exit;
 }
 
-$f_poll_code = Input::Get('f_poll_code', 'array');
+$f_debate_code = Input::Get('f_debate_code', 'array');
 
-foreach ($f_poll_code as $code) {
-    list($poll_nr, $fk_language_id) = explode('_', $code);
-    $poll = new Debate($fk_language_id, $poll_nr);
+foreach ($f_debate_code as $code) {
+    list($debate_nr, $fk_language_id) = explode('_', $code);
+    $debate = new Debate($fk_language_id, $debate_nr);
 
-    switch (Input::Get('f_poll_list_action', 'string')) {
+    switch (Input::Get('f_debate_list_action', 'string')) {
         case 'delete':
-            $poll->delete();
+            $debate->delete();
         break;
 
         case 'reset':
-            $poll->reset();
+            $debate->reset();
         break;
     }
 }

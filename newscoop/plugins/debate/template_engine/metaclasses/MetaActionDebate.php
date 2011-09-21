@@ -49,6 +49,7 @@ class MetaActionDebate extends MetaAction
             return false;
         }
 
+        // need to check this by user also and here if I try to get the user from CampContext it breaks
         // if (!$Debate->isVotable()) {
         //    $this->m_error = new PEAR_Error('Debate is not votable.', ACTION_DEBATE_ERR_NOT_VOTABLE);
         //    syslog(LOG_WARNING, 221);
@@ -110,15 +111,15 @@ class MetaActionDebate extends MetaAction
     public function takeAction(CampContext &$p_context)
     {
         $user = null;
-        if ($p_context->user->defined) {
-            $user = $p_context->user->identifier;
+        if ($p_context->user instanceof  MetaUser) {
+            $user = $p_context->user->id;
         }
-
-        $this->m_debate->setUserId($user);
+        if ($this->m_debate instanceof Debate) {
+            $this->m_debate->setUserId($user);
+        }
         if (!$this->m_debate->isVotable()) {
             $this->m_error = new PEAR_Error('Debate is not votable.', ACTION_DEBATE_ERR_NOT_VOTABLE);
             return false;
-
         }
 
         if (!is_object($this->m_debate)) {

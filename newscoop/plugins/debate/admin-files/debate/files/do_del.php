@@ -7,16 +7,16 @@ if (!SecurityToken::isValid()) {
 }
 
 // Check permissions
-if (!$g_user->hasPermission('plugin_poll')) {
-    camp_html_display_error(getGS('You do not have the right to manage polls.'));
+if (!$g_user->hasPermission('plugin_debate_admin')) {
+    camp_html_display_error(getGS('You do not have the right to manage debates.'));
     exit;
 }
 if (!$g_user->hasPermission('DeleteFile')) {
 	camp_html_display_error(getGS('You do not have the right to delete files.' ), null, true);
 	exit;
 }
-$f_poll_nr = Input::Get('f_poll_nr', 'int', 0);
-$f_pollanswer_nr = Input::Get('f_pollanswer_nr', 'int', 0);
+$f_debate_nr = Input::Get('f_debate_nr', 'int', 0);
+$f_debateanswer_nr = Input::Get('f_debateanswer_nr', 'int', 0);
 $f_fk_language_id = Input::Get('f_fk_language_id', 'int', 0);
 $f_attachment_id = Input::Get('f_attachment_id', 'int', 0);
 
@@ -33,8 +33,8 @@ if (!is_writable(dirname($filePath))) {
 	exit;
 }
 
-$PollAnswerAttachment = new DebateAnswerAttachment($f_poll_nr, $f_pollanswer_nr, $f_attachment_id);
-$PollAnswerAttachment->delete();
+$DebateAnswerAttachment = new DebateAnswerAttachment($f_debate_nr, $f_debateanswer_nr, $f_attachment_id);
+$DebateAnswerAttachment->delete();
 
 // Go back to upload screen.
 camp_html_add_msg(getGS("File '$1' deleted.", $attachmentObj->getFileName()), "ok");
@@ -42,5 +42,5 @@ camp_html_add_msg(getGS("File '$1' deleted.", $attachmentObj->getFileName()), "o
 $attachmentObj->delete();
 ?>
 <script>
-location.href="popup.php?f_poll_nr=<?php p($f_poll_nr) ?>&f_pollanswer_nr=<?php p($f_pollanswer_nr) ?>&f_fk_language_id=<?php p($f_fk_language_id) ?>";
+location.href="popup.php?f_debate_nr=<?php p($f_debate_nr) ?>&f_debateanswer_nr=<?php p($f_debateanswer_nr) ?>&f_fk_language_id=<?php p($f_fk_language_id) ?>";
 </script>

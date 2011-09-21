@@ -124,20 +124,23 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
         $g_ado_db->execute('DROP TABLE plugin_debateanswer_attachment');
     }
 
+    /**
+     * @param CampContext $p_context
+     */
     function plugin_debate_init(&$p_context)
     {
         $debate_nr = Input::Get("f_debate_nr", "int");
         $debate_language_id = Input::Get("f_debate_language_id" ,"int");
-        $p_context->debate = new MetaDebate($debate_language_id, $debate_nr, $p_context->user->identifier);
+        $p_context->debate = new MetaDebate($debate_language_id, $debate_nr, $p_context->user->id);
+        $url = $p_context->url;
+        /* @var $url MetaURL */
+
+        //if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest') {
+        //    $p_context->url->set_parameter('f_debate_ajax_request', 1);
+        //}
 
         // reset the context urlparameters
-        foreach (array
-            (
-            	'f_debate',
-                'f_debate_nr',
-                'f_debate_language_id',
-                'f_debate_ajax_request'
-            ) as $param)
+        foreach (array('f_debate', 'f_debate_nr', 'f_debate_language_id', 'f_debate_ajax_request') as $param)
         {
             $p_context->url->reset_parameter($param);
             $p_context->default_url->reset_parameter($param);

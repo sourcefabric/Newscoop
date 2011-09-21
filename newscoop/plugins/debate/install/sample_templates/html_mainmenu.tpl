@@ -9,7 +9,7 @@
     {{ /list_sections }}
     
     {{ local }}
-    <li><a href="{{ uri options="template section-polls.tpl" }}">Polls</a></li>
+    <li><a href="{{ uri options="template section-debates.tpl" }}">Debates</a></li>
     {{ /local }}
     </ul>
     </div>

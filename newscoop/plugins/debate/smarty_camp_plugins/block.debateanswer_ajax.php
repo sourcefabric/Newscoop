@@ -25,7 +25,7 @@
 function smarty_block_debateanswer_ajax($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('gimme');
+    $campsite = $p_smarty->loadPlugin('gimme');
     $html = '';
 
     // the value for this rating

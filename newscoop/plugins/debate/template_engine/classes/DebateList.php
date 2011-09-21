@@ -87,7 +87,7 @@ class DebateList extends ListObject
 	    $debatesList = Debate::GetList($this->m_constraints, $this->m_item, $this->m_order, $p_start, $p_limit, $p_count);
         $metaDebatesList = array();
 	    foreach ($debatesList as $debate) {
-	        $metaDebatesList[] = new MetaDebate($debate->getLanguageId(), $debate->getNumber(), $context->user->identifier);
+	        $metaDebatesList[] = new MetaDebate($debate->getLanguageId(), $debate->getNumber(), $context->user->id);
 	    }
 	    return $metaDebatesList;
 	}

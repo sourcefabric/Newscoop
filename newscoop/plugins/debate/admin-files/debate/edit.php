@@ -9,30 +9,30 @@ if (!$g_user->hasPermission('plugin_debate_admin')) {
 
 $allLanguages = Language::GetLanguages();
 
-$f_poll_nr = Input::Get('f_poll_nr', 'int');
+$f_debate_nr = Input::Get('f_debate_nr', 'int');
 $f_fk_language_id = Input::Get('f_fk_language_id', 'int');
 $f_from = Input::Get('f_from', 'string', false);
 
-$poll = new Debate($f_fk_language_id, $f_poll_nr);
+$debate = new Debate($f_fk_language_id, $f_debate_nr);
 
-if ($poll->exists()) {
-    // edit existing poll
-    $parent_poll_nr = $poll->getProperty('parent_debate_nr');
-    $is_extended = $poll->isExtended();
-    $title = $poll->getProperty('title');
-    $question = $poll->getProperty('question');
-    $date_begin = $poll->getProperty('date_begin');
-    $date_end = $poll->getProperty('date_end');
-    $nr_of_answers = $poll->getProperty('nr_of_answers');
-    $fk_language_id = $poll->getProperty('fk_language_id');
-    $votes_per_user = $poll->getProperty('votes_per_user');
-    $allow_not_logged_in = $poll->getProperty('allow_not_logged_in');
-    $results_time_unit = $poll->getProperty('results_time_unit');
+if ($debate->exists()) {
+    // edit existing debate
+    $parent_debate_nr = $debate->getProperty('parent_debate_nr');
+    $is_extended = $debate->isExtended();
+    $title = $debate->getProperty('title');
+    $question = $debate->getProperty('question');
+    $date_begin = $debate->getProperty('date_begin');
+    $date_end = $debate->getProperty('date_end');
+    $nr_of_answers = $debate->getProperty('nr_of_answers');
+    $fk_language_id = $debate->getProperty('fk_language_id');
+    $votes_per_user = $debate->getProperty('votes_per_user');
+    $allow_not_logged_in = $debate->getProperty('allow_not_logged_in');
+    $results_time_unit = $debate->getProperty('results_time_unit');
 
-    $poll_answers = $poll->getAnswers();
+    $debate_answers = $debate->getAnswers();
 
-    foreach ($poll_answers as $poll_answer) {
-        $answers[$poll_answer->getProperty('nr_answer')] = $poll_answer->getProperty('answer');
+    foreach ($debate_answers as $debate_answer) {
+        $answers[$debate_answer->getProperty('nr_answer')] = $debate_answer->getProperty('answer');
     }
 
 } else {
@@ -41,7 +41,7 @@ if ($poll->exists()) {
 }
 
 if (empty($GLOBALS['_popup'])) {
-    $pageTitle = $poll->exists() ? getGS('Edit Debate') : getGS('Add new Debate');
+    $pageTitle = $debate->exists() ? getGS('Edit Debate') : getGS('Add new Debate');
     echo camp_html_breadcrumbs(array(
         array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
         array(getGS('Debates'), $Campsite['WEBSITE_URL'] . '/admin/debate/index.php'),
@@ -71,11 +71,11 @@ camp_html_display_msgs();
 ?>
 
 <P>
-<form name="edit_poll" id="edit-poll-form" method="POST" action="do_edit.php">
+<form name="edit_debate" id="edit-debate-form" method="POST" action="do_edit.php">
 <?php echo SecurityToken::FormParameter(); ?>
 
-<?php if ($poll->exists()) : ?>
-	<INPUT TYPE="HIDDEN" NAME="f_poll_nr" VALUE="<?php p($poll->getNumber()); ?>">
+<?php if ($debate->exists()) : ?>
+	<INPUT TYPE="HIDDEN" NAME="f_debate_nr" VALUE="<?php p($debate->getNumber()); ?>">
 <?php endif; ?>
 
 <?php if ($f_from) : ?>
@@ -111,7 +111,7 @@ camp_html_display_msgs();
             <td ALIGN="RIGHT" ><?php  putGS("Type"); ?>:</td>
             <td>
                 <SELECT NAME="f_is_extended" class="input_select">
-                <?php if ($poll->getProperty('parent_debate_nr')) : ?>
+                <?php if ($debate->getProperty('parent_debate_nr')) : ?>
                     <option value="0"><?php putGS('Copy') ?></option>
                 <?php else : ?>
                     <option value="0"><?php putGS('Standard') ?></option>
@@ -188,11 +188,11 @@ camp_html_display_msgs();
         <tr>
         </tr>
 
-        <?php if (!$poll->getProperty('parent_debate_nr')) : ?>
+        <?php if (!$debate->getProperty('parent_debate_nr')) : ?>
             <tr>
                 <td ALIGN="RIGHT" ><?php  putGS("Number of answers"); ?>:</td>
                 <td style="padding-top: 3px;">
-                    <SELECT NAME="f_nr_of_answers" id="input-nr-answers" alt="select" emsg="<?php putGS("You must select number of answers.")?>" class="input_select"> <!-- onchange="poll_set_nr_of_answers()"-->
+                    <SELECT NAME="f_nr_of_answers" id="input-nr-answers" alt="select" emsg="<?php putGS("You must select number of answers.")?>" class="input_select"> <!-- onchange="debate_set_nr_of_answers()"-->
                     <option value="0"><?php putGS("---Select---"); ?></option>
                     <?php
                         for($n=2; $n<=255; $n++) {
@@ -211,9 +211,12 @@ camp_html_display_msgs();
                 		emsg-tpl="<?php putGS('You must fill in the $1 field %s.', getGS('Answer')); ?>" value="" disabled="disabled"/>
     			</td>
     			<td align='center'>
-    				<a stlye="display:none" href="javascript: void(0);" onclick="window.open('files/popup.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_pollanswer_nr=<?php p($n) ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>', 'attach_file', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=600, top=200, left=100');">
+    				<?php if ($debate->exists()) : ?>
+    				<a class="answer-attachment" stlye="display:none" href="javascript: void(0);"
+    					onclick="">
                     	<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" border="0">
                 	</a>
+                	<?php endif; ?>
     			</td>
             </tr>
 
@@ -232,7 +235,7 @@ camp_html_display_msgs();
 <P>
 <script>
 
-$('#edit-poll-form #input-title').focus();
+$('#edit-debate-form #input-title').focus();
 $('#answer-row').data('answers', <?php echo isset($answers) ? json_encode(array_map( 'htmlspecialchars', array_values($answers))) : "[]" ?>);
 $('#input-nr-answers').change( function()
 {
@@ -242,6 +245,7 @@ $('#input-nr-answers').change( function()
 	{
 		var newAnswer = $('#answer-row').clone();
 		newAnswer.removeAttr('id');
+		newAnswer.attr('answer-nr', nrAnswers-n);
 		var newTd = newAnswer.find('td:eq(0)');
 		newTd.text(newTd.text().replace('%s', nrAnswers-n));
 		var newInput = newAnswer.find('input');
@@ -261,7 +265,18 @@ $('.answer-row input[type=text]').live('blur', function()
 	var idx = $('#answer-row').nextAll('.answer-row').index($(this).parents('tr:eq(0)'));
 	$('#answer-row').data('answers')[idx] = $(this).val();
 });
-$('#edit-poll-form').submit( function()
+$('a.answer-attachment').live('click', function()
+{
+	window.open
+	(
+		'files/popup.php?f_debate_nr=<?php p($debate->getNumber()); ?>&f_debateanswer_nr='+
+		$(this).parents('tr:eq(0)').attr('answer-nr')+
+		'&f_fk_language_id=<?php p($debate->getLanguageId()); ?>',
+		'attach_file',
+		'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=600, top=200, left=100'
+	);
+});
+$('#edit-debate-form').submit( function()
 {
 	if ($('.answer-row').length < 2)
 	{

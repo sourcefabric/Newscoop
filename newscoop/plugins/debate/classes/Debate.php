@@ -286,7 +286,7 @@ class Debate extends DatabaseObject
     public function delete()
     {
         // Delete from plugin_debate_answer table
-        DebateAnswer::OnPollDelete($this->m_data['debate_nr'], $this->m_data['fk_language_id']);
+        DebateAnswer::OnDebateDelete($this->m_data['debate_nr'], $this->m_data['fk_language_id']);
 
         // Delete from plugin_debate_article table
 
@@ -413,7 +413,7 @@ class Debate extends DatabaseObject
      * @param unknown_type $p_limit
      * @return array
      */
-    static public function GetPolls($p_constraints = array(), $p_item = null, $p_offset = 0, $p_limit = 20, $p_orderBy = null, $p_filter = null)
+    static public function getDebates($p_constraints = array(), $p_item = null, $p_offset = 0, $p_limit = 20, $p_orderBy = null, $p_filter = null)
     {
         $constraints = array();
         $operator = new Operator('is');
@@ -464,7 +464,7 @@ class Debate extends DatabaseObject
      *
      * @return int
      */
-    public function countPolls($p_language_id = null)
+    public function countDebates($p_language_id = null)
     {
         global $g_ado_db;;
 

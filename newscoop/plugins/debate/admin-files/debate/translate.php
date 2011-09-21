@@ -1,38 +1,38 @@
 <?php
-camp_load_translation_strings("plugin_poll");
+camp_load_translation_strings("plugin_debate");
 
 // Check permissions
-if (!$g_user->hasPermission('plugin_poll')) {
-    camp_html_display_error(getGS('You do not have the right to manage polls.'));
+if (!$g_user->hasPermission('plugin_debate_admin')) {
+    camp_html_display_error(getGS('You do not have the right to manage debates.'));
     exit;
 }
 
 $allLanguages = Language::GetLanguages();
 
-$f_poll_nr = Input::Get('f_poll_nr', 'int');
+$f_debate_nr = Input::Get('f_debate_nr', 'int');
 $f_fk_language_id = Input::Get('f_fk_language_id', 'int');
 
-$poll = new Debate($f_fk_language_id, $f_poll_nr);
+$debate = new Debate($f_fk_language_id, $f_debate_nr);
 
-if ($poll->exists()) {
-    foreach ($poll->getTranslations() as $translation) {
+if ($debate->exists()) {
+    foreach ($debate->getTranslations() as $translation) {
         $existing[$translation->getLanguageId()] = true;
     }
-    $title = $poll->getProperty('title');
-    $question = $poll->getProperty('question');
+    $title = $debate->getProperty('title');
+    $question = $debate->getProperty('question');
     $is_used_as_default = false;
 }
 
 echo camp_html_breadcrumbs(array(
     array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
-    array(getGS('Polls'), $Campsite['WEBSITE_URL'] . '/admin/poll/index.php'),
-    array(getGS('Translate Poll'), ''),
+    array(getGS('Debates'), $Campsite['WEBSITE_URL'] . '/admin/debate/index.php'),
+    array(getGS('Translate Debate'), ''),
 ));
 ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="1" class="action_buttons" style="padding-top: 5px;">
 <TR>
     <TD><A HREF="index.php"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/left_arrow.png" BORDER="0"></A></TD>
-    <TD><A HREF="index.php"><B><?php  putGS("Poll List"); ?></B></A></TD>
+    <TD><A HREF="index.php"><B><?php  putGS("Debate List"); ?></B></A></TD>
 </TR>
 </TABLE>
 
@@ -42,11 +42,11 @@ camp_html_display_msgs();
 ?>
 
 <P>
-<FORM NAME="edit_poll" METHOD="POST" ACTION="do_translate.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
+<FORM NAME="edit_debate" METHOD="POST" ACTION="do_translate.php" onsubmit="return <?php camp_html_fvalidate(); ?>;">
 <?php echo SecurityToken::FormParameter(); ?>
-<?php if ($poll) { ?>
-<INPUT TYPE="HIDDEN" NAME="f_poll_nr" VALUE="<?php  p($poll->getNumber()); ?>">
-<INPUT TYPE="HIDDEN" NAME="f_fk_language_id" VALUE="<?php  p($poll->getLanguageId()); ?>">
+<?php if ($debate) { ?>
+<INPUT TYPE="HIDDEN" NAME="f_debate_nr" VALUE="<?php  p($debate->getNumber()); ?>">
+<INPUT TYPE="HIDDEN" NAME="f_fk_language_id" VALUE="<?php  p($debate->getLanguageId()); ?>">
 <?php } ?>
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="6" class="table_input">
 <TR>
@@ -92,7 +92,7 @@ camp_html_display_msgs();
             </TD>
         </TR>
         <?php
-        foreach ($poll->getAnswers() as $answer) {
+        foreach ($debate->getAnswers() as $answer) {
             ?>
             <tr>
                 <TD ALIGN="RIGHT" ><?php  putGS("Answer $1", $answer->getNumber()); ?>:</TD>

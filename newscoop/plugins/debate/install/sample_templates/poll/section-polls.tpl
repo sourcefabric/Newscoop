@@ -11,14 +11,14 @@
     <tr>
       <td>
 
-    {{ if $gimme->poll->defined }}
+    {{ if $gimme->debate->defined }}
     
-        <h3>Poll Details</h3>
+        <h3>Debate Details</h3>
         
-        {{ include file='poll/poll-form-ajax.tpl' included=true}}
+        {{ include file='debate/debate-form-ajax.tpl' included=true}}
         
         <br>
-        <a href="{{ uri options="template section-polls.tpl" }}">All Polls</a>
+        <a href="{{ uri options="template section-debates.tpl" }}">All Debates</a>
         
     {{ else }}
        
@@ -35,18 +35,18 @@
         <tr><td colspan="6"><hr></td></tr>
         {{ local }}
   
-        {{ list_polls name="polls_list" length="10" order='bylastmodified ASC' }}
+        {{ list_debates name="debates_list" length="10" order='bylastmodified ASC' }}
            <tr align="center">
             <td align="left">
-                <a href="{{ uri options="template section-polls.tpl" }}">
-                    {{ $gimme->poll->name }}
+                <a href="{{ uri options="template section-debates.tpl" }}">
+                    {{ $gimme->debate->name }}
                 </a>
             </td>
-            <td>{{ $gimme->poll->date_begin|date_format }}</td>
-            <td>{{ $gimme->poll->date_end|date_format }}</td>
-            <td>{{ if $gimme->poll->is_current }} Y {{ else }} N {{ /if }}</td>
-            <td>{{ $gimme->poll->votes_per_user }}/{{ $gimme->poll->user_vote_count }}</td>
-            <td>{{ $gimme->poll->votes }}
+            <td>{{ $gimme->debate->date_begin|date_format }}</td>
+            <td>{{ $gimme->debate->date_end|date_format }}</td>
+            <td>{{ if $gimme->debate->is_current }} Y {{ else }} N {{ /if }}</td>
+            <td>{{ $gimme->debate->votes_per_user }}/{{ $gimme->debate->user_vote_count }}</td>
+            <td>{{ $gimme->debate->votes }}
           </tr>
            
         {{ if  $gimme->current_list->at_end }}
@@ -55,13 +55,13 @@
             <td>{{ $gimme->current_list->count }} Items</td>
             <td colspan="5">
                 {{ if $gimme->current_list->has_previous }}
-                    <a href="{{ uripath }}?p_polls_list_start={{ $gimme->current_list->previous }}">previous</a>
+                    <a href="{{ uripath }}?p_debates_list_start={{ $gimme->current_list->previous }}">previous</a>
                 {{ else }}
                     previous    
                 {{ /if }}
                 |
                 {{ if $gimme->current_list->has_next }}
-                    <a href="{{ uripath }}?p_polls_list_start={{ $gimme->current_list->next }}">next</a>
+                    <a href="{{ uripath }}?p_debates_list_start={{ $gimme->current_list->next }}">next</a>
                 {{ else }}
                     next
                 {{ /if }}
@@ -69,7 +69,7 @@
         </tr>
         {{ /if }}
            
-        {{ /list_polls }}
+        {{ /list_debates }}
         {{ /local }}
     
     {{ /if }}
