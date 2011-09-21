@@ -20,7 +20,7 @@
 function smarty_function_set_default_topic($p_params, &$p_smarty)
 {
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('gimme');
+    $campsite = $p_smarty->getTemplateVars('gimme');
 
     $campsite->topic = $campsite->default_topic;
 } // fn smarty_function_set_default_topic

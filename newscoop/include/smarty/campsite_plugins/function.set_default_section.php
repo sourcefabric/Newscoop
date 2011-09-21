@@ -20,7 +20,7 @@
 function smarty_function_set_default_section($p_params, &$p_smarty)
 {
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('gimme');
+    $campsite = $p_smarty->getTemplateVars('gimme');
 
     $campsite->section = $campsite->default_section;
 } // fn smarty_function_set_default_section

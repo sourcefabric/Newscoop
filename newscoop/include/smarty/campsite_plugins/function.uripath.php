@@ -20,7 +20,7 @@
  */
 function smarty_function_uripath($p_params, &$p_smarty)
 {
-    $context = $p_smarty->get_template_vars('gimme');
+    $context = $p_smarty->getTemplateVars('gimme');
 
     $url = 'url';
     $params = preg_split("/[\s]+/", $p_params['options']);

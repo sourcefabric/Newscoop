@@ -30,6 +30,7 @@ AddType video/webm .webm
     RewriteCond %{REQUEST_URI} !(/+plugins/[^/]*)?/+images
     RewriteCond %{REQUEST_URI} !/+themes
     RewriteCond %{REQUEST_URI} !/+videos
+    RewriteCond %{REQUEST_URI} !/+pdf
     RewriteRule . index.php [L]
 
     RewriteCond %{REQUEST_URI} .tpl$

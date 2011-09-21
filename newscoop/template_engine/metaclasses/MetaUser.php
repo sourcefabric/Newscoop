@@ -15,7 +15,7 @@ use Newscoop\Entity\User;
 /**
  * Template user
  */
-final class MetaUser extends MetaDbObject
+final class MetaUser extends MetaDbObject implements ArrayAccess
 {
     /** @var Newscoop\Entity\User */
     protected $user;
@@ -35,7 +35,7 @@ final class MetaUser extends MetaDbObject
 
         $this->m_dbObject = $user;
 
-        $this->m_properties['id'] = 'getId';
+        $this->m_properties['identifier'] = 'getId';
         $this->m_properties['first_name'] = 'getFirstName';
         $this->m_properties['last_name'] = 'getLastName';
         $this->m_properties['uname'] = 'getUsername';
@@ -49,9 +49,9 @@ final class MetaUser extends MetaDbObject
         $this->m_customProperties['topics'] = 'getTopics';
         $this->m_customProperties['is_blocked_from_comments'] = 'isBlockedFromComments';
         $this->m_customProperties['is_admin'] = 'isAdmin';
+        $this->m_customProperties['defined'] = 'isDefined';
 
         $this->m_skipFilter[] = "name";
-        //$this->defined = $user->getId() > 0;
     }
 
 
@@ -70,6 +70,11 @@ final class MetaUser extends MetaDbObject
         else {
             return $name;
         }
+    }
+
+    protected function isDefined()
+    {
+        return $this->user->getId() > 0;
     }
 
     protected function getCreated()
@@ -196,5 +201,38 @@ final class MetaUser extends MetaDbObject
         }
 
         return $this->topics = $topics;
+    }
+
+    /**
+     * @see ArrayAccess
+     * @todo
+     */
+    public function offsetExists($offset)
+    {
+        return isset($this->user->getAttribute($offset));
+    }
+
+    /**
+     * @see ArrayAccess
+     */
+    public function offsetGet($offset)
+    {
+        return $this->user->getAttribute($offset);
+    }
+
+    /**
+     * @see ArrayAccess
+     * @todo
+     */
+    public function offsetSet($offset, $value)
+    {
+    }
+
+    /**
+     * @see ArrayAccess
+     * @todo
+     */
+    public function offsetUnset($offset)
+    {
     }
 }

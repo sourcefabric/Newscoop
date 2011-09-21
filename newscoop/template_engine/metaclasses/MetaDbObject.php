@@ -64,7 +64,7 @@ class MetaDbObject {
     		$className = strtolower(substr($className, 4));
     	}
     	CampTemplate::trigger_error("Invalid use of object of type '$className'. Use \$campsite->${className}->[property_name] to display a property of this object.");
-    	return null;
+    	return '';
     }
 
 

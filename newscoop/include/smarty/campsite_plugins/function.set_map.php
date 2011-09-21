@@ -77,7 +77,7 @@ function aux_parser_set_map_area($p_areaSpec, &$p_areaCons)
 function smarty_function_set_map($p_params, &$p_smarty)
 {
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('gimme');
+    $campsite = $p_smarty->getTemplateVars('gimme');
     $run_article = ($campsite->article->defined) ? $campsite->article : null;
     $run_language = $campsite->language;
     $run_topic = ($campsite->topic->defined) ? $campsite->topic : null;

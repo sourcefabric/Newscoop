@@ -1,6 +1,6 @@
 <!--<input type="button" id="ob_file_upload" value="upload file"><span id="ob_file_info"></span><br>-->
 <link rel="stylesheet" href="{{ $view->baseUrl('/public/css/omnibox.css') }}" type="text/css" media="screen" />
-<div id="ob_wrapper" style="position: fixed; left: 0px; top: 20%;">
+<div id="ob_wrapper">
 <script type="text/javascript" src="{{ $view->baseUrl('/js/plupload/js/plupload.full.js') }}"></script>
 <div id="ob_main" style="display: none;">
 	<div id="ob_message_wrapper" style="display: none;">

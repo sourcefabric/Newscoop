@@ -1,3 +1,8 @@
+#ob_wrapper {
+	position: fixed;
+	top: 0px;
+}
+
 #ob_main {
 	display:none; position:relative; z-index:10;
 	margin:10px 0 0 0;
@@ -8,50 +13,50 @@
 	padding: 20px;
 	float: left;
 }
-.top_title {
+#ob_wrapper .top_title {
 	font-family: Georgia, "Times New Roman", Times, serif; font-size:16px; line-height:22px;
 	float: left;
 	margin-bottom: 18px;
 	font-weight: bold;
 }
-.top_user {
+#ob_wrapper .top_user {
 	font-size:11px; font-family:Arial, Helvetica, sans-serif; line-height:15px;
 	float: right;
 	text-align: right;
 }
-.top_user a {
+#ob_wrapper .top_user a {
 	text-decoration: none;
 	color: #09d987;
 }
-.clear {
+#ob_wrapper .clear {
 	clear: both;
 }
-.radio_container {
+#ob_wrapper .radio_container {
 	margin: 20px 20px 10px 0px;
 	float: left;
 	font-size:16px; font-family:Arial, Helvetica, sans-serif; line-height:16px;
 }
-.left {
+#ob_wrapper .left {
 	float: left;
 }
-.right {
+#ob_wrapper .right {
 	float: right;
 }
-.text_container {
-	font-size:11px; font-family:Arial, Helvetica, sans-serif; line-height:11px;
+#ob_wrapper .text_container {
+	font-size:12px; font-family:Arial, Helvetica, sans-serif; line-height:16px;
 }
-.text_container label {
+#ob_wrapper .text_container label {
 	font-size: 11px;
 	display: block;
 }
-.text_container input {
+#ob_wrapper .text_container input {
 	width: 98%;
 	display: block;
 	border: 1px solid #a5a5a5;
 	font-family: Georgia, "Times New Roman", Times, serif; font-size:16px; line-height:22px;
 	padding: 4px;
 }
-.text_container textarea {
+#ob_wrapper .text_container textarea {
 	width: 98%;
 	height: 100px;
 	display: block;
@@ -59,7 +64,7 @@
 	font-family: Georgia, "Times New Roman", Times, serif; font-size:16px; line-height:22px;
 	padding: 4px;
 }
-.text_container input.small {
+#ob_wrapper .text_container input.small {
 	float: right;
 	width: 80%;
 	display: block;
@@ -68,61 +73,61 @@
 	padding: 4px;
 	margin: 2px;
 }
-.text_container .send_button {
+#ob_wrapper .text_container .send_button {
 	float: right;
 	width: 100px;
 	font-size:11px; font-family:Arial, Helvetica, sans-serif; line-height:11px;
 	border: solid 1px #09d987;
 	margin: 2px;
 }
-.text_container #ob_file_upload_container {
+#ob_wrapper .text_container #ob_file_upload_container {
 	float: left;
 }
-.text_container #ob_file_type {
+#ob_wrapper .text_container #ob_file_type {
 	font-size:11px; font-family:Arial, Helvetica, sans-serif; line-height:11px;
 	vertical-align: bottom;
 }
-.text_container #ob_file_info {
+#ob_wrapper .text_container #ob_file_info {
 	font-size:11px; font-family:Arial, Helvetica, sans-serif; line-height:11px;
 	vertical-align: bottom;
 }
-.text_container #ob_file_upload {
+#ob_wrapper .text_container #ob_file_upload {
 	float: left;
 	width: 100px;
 	font-size:11px; font-family:Arial, Helvetica, sans-serif; line-height:11px;
 	border: solid 1px #09d987;
 	margin: 2px;
 }
-.text_container #ob_file_clear {
+#ob_wrapper .text_container #ob_file_clear {
 	float: left;
 	width: 100px;
 	font-size:11px; font-family:Arial, Helvetica, sans-serif; line-height:11px;
 	border: solid 1px #09d987;
 	margin: 2px;
 }
-.register_link {
+#ob_wrapper .register_link {
 	text-decoration: underline;
 	color: #a5a5a5;
 	font-size:11px; font-family:Arial, Helvetica, sans-serif; line-height:11px;
 	margin-top: 8px;
 	margin-right: 24px;
 }
-.half {
+#ob_wrapper .half {
 	width: 300px;
 }
-#ob_message_wrapper {
+#ob_wrapper #ob_message_wrapper {
 	background-color: #e0ffe0;
 	padding: 4px;
 	margin-bottom: 4px;
 }
-#ob_message {
+#ob_wrapper #ob_message {
 	font-size:11px; font-family:Arial, Helvetica, sans-serif; line-height:11px;
 }
-#ob_message_close {
+#ob_wrapper #ob_message_close {
 	float: right;
 	vertical-align: top;
 }
-#ob_handle {
+#ob_wrapper #ob_handle {
 	float: left;
 	margin-top: 10px;
 }

@@ -204,6 +204,11 @@ class FeedbackRepository extends DatatableSource
                         $orx->add($qb->expr()->eq('e.status', $mapper[$value]));
                     }
                     break;
+                case 'attachmentType':
+					$mapper = array_flip(Feedback::$attachment_type_enum);
+					foreach ($values as $value) {
+                        $orx->add($qb->expr()->eq('e.attachment_type', $mapper[$value]));
+                    }
             }
             $andx->add($orx);
         }
