@@ -3045,6 +3045,16 @@ class Article extends DatabaseObject {
                                                         'IdLanguage'=>'fk_language_id');
                     $p_whereConditions[] = "`comment_ids`.`last_comment_id` IS NOT NULL";
                     break;
+
+                case 'bypriority': // @wobs
+                    $dbField = 'newswires.urgency';
+                    $joinTable = "(SELECT NrArticle, IdLanguage, IF(FUrgency='2',2,3) as urgency FROM Xnewswire)";
+                    $p_otherTables[$joinTable] = array(
+                        '__TABLE_ALIAS' => 'newswires',
+                        'Number' => 'NrArticle',
+                        'IdLanguage' => 'IdLanguage',
+                    );
+                    break;
             }
             if (!is_null($dbField)) {
                 $direction = !empty($direction) ? $direction : 'asc';
