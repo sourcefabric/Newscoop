@@ -614,6 +614,11 @@ class User implements \Zend_Acl_Role_Interface
         }
     }
 
+    public function getCommenters()
+    {
+       return $this->commenters;
+    }
+
 
     /**
      * Get a User's comments which are associated with his User account.

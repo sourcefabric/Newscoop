@@ -53,6 +53,9 @@ final class CampContext
         'community_feed' => array(
             'class' => 'CommunityFeed',
         ),
+        'user_comment' => array(
+            'class' => 'Comment',
+        ),
     );
 
     // Defines the list objects
@@ -108,6 +111,11 @@ final class CampContext
             'class' => 'BoxArticles',
             'list' => 'box_articles',
             'url_id' => 'box',
+        ),
+        'usercomments' => array(
+            'class' => 'UserComments',
+            'list' => 'user_comments',
+            'url_id' => 'cid',
         ),
     );
 
@@ -772,7 +780,7 @@ final class CampContext
      *
      * @param string $p_property - property name
      */
-    final protected function trigger_invalid_property_error($p_property)
+    final protected function trigger_invalid_property_error($p_property, $p_smarty=null)
     {
         $errorMessage = INVALID_PROPERTY_STRING . " $p_property "
         . OF_OBJECT_STRING . ' campsite';
