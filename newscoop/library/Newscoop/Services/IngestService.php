@@ -244,7 +244,9 @@ class IngestService
      */
     private function updatePublished(Entry $entry)
     {
-        $this->publisher->update($entry);
+        if ($entry->isPublished()) {
+            $this->publisher->update($entry);
+        }
     }
 
     /**
@@ -255,7 +257,9 @@ class IngestService
      */
     private function deletePublished(Entry $entry)
     {
-        $this->publisher->delete($entry);
+        if ($entry->isPublished()) {
+            $this->publisher->delete($entry);
+        }
     }
 
     /**
