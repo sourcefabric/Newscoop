@@ -281,7 +281,8 @@ class CampInstallationBase
                                             'userpass' => $db_userpass,
                                             'database' => $db_database
                                             );
-
+        require_once($GLOBALS['g_campsiteDir'].'/bin/cli_script_lib.php');
+        camp_remove_dir(CS_PATH_TEMPLATES.DIR_SEP.'*', null, array('system_templates', 'unassigned'));
         return true;
     } // fn databaseConfiguration
 
