@@ -3047,13 +3047,15 @@ class Article extends DatabaseObject {
                     break;
 
                 case 'bypriority': // @wobs
-                    $dbField = 'newswires.urgency';
                     $joinTable = "(SELECT NrArticle, IdLanguage, IF(FUrgency='2',2,3) as urgency FROM Xnewswire)";
                     $p_otherTables[$joinTable] = array(
                         '__TABLE_ALIAS' => 'newswires',
                         'Number' => 'NrArticle',
                         'IdLanguage' => 'IdLanguage',
                     );
+                    $p_whereConditions[] = "Articles.Type = 'newswire'";
+                    $order[] = array('field' => 'newswires.urgency', 'dir' => 'asc');
+                    $order[] = array('field' => 'Articles.PublishDate', 'dir' => 'desc');
                     break;
             }
             if (!is_null($dbField)) {
