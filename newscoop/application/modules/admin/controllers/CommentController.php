@@ -33,7 +33,7 @@ class Admin_CommentController extends Zend_Controller_Action
 
     /** @var Admin_Form_Comment_EditForm */
     private $editForm;
-    
+
     public function init()
     {
         // get comment repository
@@ -214,7 +214,7 @@ class Admin_CommentController extends Zend_Controller_Action
         $this->view->status = 200;
         $this->view->message = "succcesful";
     }
-    
+
     /**
      * Action for setting a status
      */
@@ -229,9 +229,13 @@ class Admin_CommentController extends Zend_Controller_Action
 
         $comments = $this->getRequest()->getParam('comment');
         $recommended = $this->getRequest()->getParam('recommended');
-        
+
         if (!is_array($comments)) {
             $comments = array($comments);
+        }
+
+        foreach ($comments as $comment) {
+            $this->_helper->service->notifyDispatcher("comment.recommended", array('id' => $comment));
         }
 
         try {

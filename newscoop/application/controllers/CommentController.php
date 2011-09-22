@@ -74,9 +74,6 @@ class CommentController extends Zend_Controller_Action
 			$commentRepository->save($comment, $values);
 			$commentRepository->flush();
 
-            $current_user = $this->_helper->service('user')->getCurrentUser();
-            $this->_helper->service->notifyDispatcher("comment.delivered", array('user' => $current_user));
-
 			$this->view->response = 'OK';
 		}
 		else {
