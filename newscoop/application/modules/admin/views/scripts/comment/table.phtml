@@ -167,6 +167,15 @@
                 {% if(can.enable) %}
                 <li><a href="javascript:;" class="actionButton action-reply"><?php putGS('Reply'); ?></a></li>
                 <li><a href="javascript:;" id="deleted_{{comment.id}}" class="actionButton action"><?php putGS('Delete'); ?></a></li>
+                
+                {% if(comment.recommended == 0) %}
+                <li><a href="javascript:;" id="recommend_{{comment.id}}" class="actionButton action-recommend"><?php putGS('Recommend'); ?></a></li>
+                {% endif %}
+                
+                {% if(comment.recommended == 1) %}
+                <li><a href="javascript:;" id="unrecommend_{{comment.id}}" class="actionButton action-unrecommend"><?php putGS('Unrecommend'); ?></a></li>
+                {% endif %}
+                
                 {% endif %}
                 <!--
                 <li><a href="javascript:;" class="action-rating link icon-link"><span class="icon ui-icon-star"></span><?php putGS('Add rating'); ?></a></li>
@@ -210,6 +219,16 @@
                                                            value="deleted"> <label for="show_deleted"><?php putGS('Deleted'); ?></label>
                                 </li>
                                 -->
+                            </ul><br>
+                            <ul class="recommended_filter">
+                                <li class="hidden">
+									<input type="checkbox" id="show_recommended" value="recommended"> 
+									<label for="show_recommended"><?php putGS('Recommended'); ?></label>
+                                </li>
+                                <li class="hidden">
+									<input type="checkbox" id="show_unrecommended" value="unrecommended"> 
+									<label for="show_unrecommended"><?php putGS('Unrecommended'); ?></label>
+                                </li>
                             </ul>
                         </fieldset>
                     </div>

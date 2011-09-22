@@ -107,6 +107,7 @@ class Admin_CommentController extends Zend_Controller_Action
                                                 'subject' => $comment->getSubject(),
                                                 'message' => $comment->getMessage(), 'likes' => '', 'dislikes' => '',
                                                 'status' => $comment->getStatus(),
+                                                'recommended' => $comment->getRecommended(),
                                                 'action' => array('update' => $view->url(
                                                     array('action' => 'update', 'format' => 'json')),
                                                                   'reply' => $view->url(
@@ -204,6 +205,37 @@ class Admin_CommentController extends Zend_Controller_Action
                 }
             }
             $this->commentRepository->setStatus($comments, $status);
+            $this->commentRepository->flush();
+        } catch (Exception $e) {
+            $this->view->status = $e->getCode();
+            $this->view->message = $e->getMessage();
+            return;
+        }
+        $this->view->status = 200;
+        $this->view->message = "succcesful";
+    }
+    
+    /**
+     * Action for setting a status
+     */
+    public function setRecommendedAction()
+    {
+        $this->getHelper('contextSwitch')->addActionContext('set-recommended', 'json')->initContext();
+        if (!SecurityToken::isValid()) {
+            $this->view->status = 401;
+            $this->view->message = getGS('Invalid security token!');
+            return;
+        }
+
+        $comments = $this->getRequest()->getParam('comment');
+        $recommended = $this->getRequest()->getParam('recommended');
+        
+        if (!is_array($comments)) {
+            $comments = array($comments);
+        }
+
+        try {
+            $this->commentRepository->setRecommended($comments, $recommended);
             $this->commentRepository->flush();
         } catch (Exception $e) {
             $this->view->status = $e->getCode();
