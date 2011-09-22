@@ -49,6 +49,30 @@ class CommentService
         $user->setPoints($points+$points_action);
     }
 
+    private function comment_recommended($params)
+    {
+        $comment = $this->find($params['id']);
+
+        $commenter = $comment->getCommenter();
+        $user = $commenter->getUser();
+
+        if (!isset($user)) {
+            return;
+        }
+
+        $attribute_value = $user->getAttribute("comment_recommended");
+        $attribute_value = isset($attribute_value) ? ($attribute_value + 1) : 1;
+
+        $user->addAttribute("comment_recommended", $attribute_value);
+
+        $points_action = $this->em->getRepository('Newscoop\Entity\UserPoints')
+                    ->getPointValueForAction("comment_recommended");
+
+        $points = $user->getPoints();
+
+        $user->setPoints($points+$points_action);
+    }
+
     private function comment_update($params)
     {
         $comment = $this->find($params['id']);
