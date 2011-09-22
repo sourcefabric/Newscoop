@@ -147,7 +147,7 @@ class ArticleCommentsList extends ListObject
                     $parameters[$parameter] = $value;
                     break;
                 case 'recommended':
-					$parameters[$parameter] = $value;
+					if ($value == 'true' || $value == 'false') $parameters[$parameter] = $value;
                 default:
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_comments", $p_smarty);
     		}
@@ -185,8 +185,8 @@ class ArticleCommentsList extends ListObject
         }
         
         if ($parameters['recommended']) {
-			if ($parameters['recommended'] == 1) $this->m_constraints['recommended'] = 1;
-			if ($parameters['recommended'] == 0) $this->m_constraints['recommended'] = 0;
+			if ($parameters['recommended'] == 'true') $this->m_constraints['recommended'] = 1;
+			if ($parameters['recommended'] == 'false') $this->m_constraints['recommended'] = 0;
 		}
 
     	return $parameters;
