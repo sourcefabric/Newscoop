@@ -2565,6 +2565,8 @@ class Article extends DatabaseObject {
                     ));
                     $selectClauseObj->addWhere("Articles.Number IN ($queryLocation)");
                 }
+            } elseif ($leftOperand == 'insection') {
+                $selectClauseObj->addWhere("Articles.NrSection IN " . $comparisonOperation['right']);
             } else {
                 // custom article field; has a correspondence in the X[type]
                 // table fields
@@ -2809,6 +2811,15 @@ class Article extends DatabaseObject {
             $conditionOperation['symbol'] = '=';
             $conditionOperation['right'] = 'Y';
             break;
+
+        case 'insection':
+            $conditionOperation = array(
+                'left' => 'insection',
+                'symbol' => 'IN',
+                'right' => '(' . implode(',', array_map('intval', explode('|', $p_param->getRightOperand()))) . ')',
+            );
+            break;
+
         case 'reads':
             $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
         default:
