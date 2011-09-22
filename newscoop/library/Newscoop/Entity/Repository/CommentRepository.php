@@ -81,6 +81,31 @@ class CommentRepository extends DatatableSource
             $em->persist($p_comment);
         }
     }
+    
+    /**
+     * Method for recommending a comment
+     * @param \Newscoop\Entity\Comment $p_comment
+     * @return void
+     */
+    public function setRecommended(array $p_comment_ids, $p_recommended)
+    {
+        foreach ($p_comment_ids as $comment_id) {
+			$this->setCommentRecommended($this->find($comment_id), $p_recommended);
+		}
+    }
+    
+    /**
+     * Method for setting recommended for a comment
+     * @param \Newscoop\Entity\Comment $p_comment
+     * @param  string $p_recommended
+     * @return void
+     */
+    public function setCommentRecommended(Comment $p_comment, $p_recommended)
+    {
+        $em = $this->getEntityManager();
+        $p_comment->setRecommended($p_recommended);
+        $em->persist($p_comment);
+    }
 
     /**
      * Method for update a comment
@@ -325,6 +350,10 @@ class CommentRepository extends DatatableSource
                         $orx->add($qb->expr()->eq("e.$key", $value));
                     }
                     break;
+                case 'recommended':
+					foreach ($values as $value) {
+                        $orx->add($qb->expr()->eq('e.recommended', $value));
+                    }
             }
             $andx->add($orx);
         }

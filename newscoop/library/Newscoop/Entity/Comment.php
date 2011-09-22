@@ -169,6 +169,12 @@ class Comment
      * @var int
      */
     private $dislikes;
+    
+    /**
+     * @column(length=1)
+     * @var int
+     */
+    private $recommended;
 
     /**
      * Set id
@@ -322,6 +328,30 @@ class Comment
             }
         }
         return (string)$this->ip;
+    }
+    
+    /**
+     * Set recommended
+     *
+     * @param string $p_recommended
+     * @return Newscoop\Entity\Comment
+     */
+    public function setRecommended($p_recommended)
+    {
+        if ($p_recommended) $this->recommended = 1;
+        else $this->recommended = 0;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get comment recommended
+     *
+     * @return string
+     */
+    public function getRecommended()
+    {
+        return (string)$this->recommended;
     }
 
     /**

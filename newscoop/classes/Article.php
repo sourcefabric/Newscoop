@@ -1415,6 +1415,16 @@ class Article extends DatabaseObject {
         // If the article is being published
         if ( ($this->getWorkflowStatus() != 'Y') && ($p_value == 'Y') ) {
             $this->setProperty('PublishDate', 'NOW()', true, true);
+
+            //send out an article.published event
+            self::dispatchEvent("article.published", $this);
+            $article_images = ArticleImage::GetImagesByArticleNumber($this->getArticleNumber());
+            foreach ($article_images as $article_image) {
+                $image = $article_image->getImage();
+                $user_id = (int)$image->getUploadingUserId();
+                //send out an image.published event
+                self::dispatchEvent("image.published", $this, array("user" => $user_id));
+            }
         }
         // Unlock the article if it changes status.
         if ( $this->getWorkflowStatus() != $p_value ) {

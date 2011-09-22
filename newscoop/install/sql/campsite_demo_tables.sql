@@ -1009,6 +1009,7 @@ CREATE TABLE `comment` (
   `dislikes` tinyint(3) unsigned DEFAULT '0',
   `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `recommended` tinyint(1) unsigned DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `comments_users` (`fk_comment_commenter_id`),
   KEY `publication` (`fk_forum_id`),
