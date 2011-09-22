@@ -288,6 +288,7 @@ $(function () {
             type: 'GET',
             url: $(this).attr('href'),
             success: function (data) {
+                data = $.parseJSON(data);
                 var content = '<h3><a href="#">' + $(that).html() + '</a></h3>';
                 for (i in data) {
                     content += '<h4>' + i + '</h4>';
