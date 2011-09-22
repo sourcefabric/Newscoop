@@ -125,9 +125,17 @@ function newsimport_ask_for_import() {
             try {
                 $one_request = $request_feed_use . '&newsoffset=' . $one_offset;
                 //echo $one_request . "\n";
-                @file_get_contents($one_request);
+                $response = @file_get_contents($one_request);
+                if (!is_string($response)) {
+                    break;
+                }
+                if (false !== stristr($response, 'newsimport_locked')) {
+                    break;
+                }
             }
-            catch (Exception $exc) {}
+            catch (Exception $exc) {
+                break;
+            }
         }
 
         //sleep(1);

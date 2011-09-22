@@ -30,18 +30,6 @@ class KinoData_Parser {
     var $m_dirmode = 0755;
 
     /**
-     * To omit a possible double run if it would happened.
-     * @var mixed
-     */
-    var $m_lockfile = null;
-
-    /**
-     * To omit a possible double run if it would happened.
-     * @var string
-     */
-    var $m_working = '_cin_lock';
-
-    /**
      * Suffix parts for json data files
      * @var array
      */
@@ -59,53 +47,6 @@ class KinoData_Parser {
         $this->m_dirs = $p_source['source_dirs'];
         $this->m_provider = $p_source['provider_id'];
     } // fn __construct
-
-
-	/**
-	 * checks whether we can start a job
-	 *
-	 * @return bool
-	 */
-    public function start()
-    {
-        // stop, if some worker running; return false
-        $working_path = $this->m_dirs['use'] . $this->m_working;
-
-        $this->m_lockfile = fopen($working_path, 'a');
-        $locked = flock($this->m_lockfile, LOCK_EX);
-        if (!$locked) {
-            return false;
-        }
-
-        foreach (array($this->m_dirs['use'], $this->m_dirs['new']) as $one_dir) {
-            if (!is_dir($one_dir)) {
-                try {
-                    $created = mkdir($one_dir, $this->m_dirmode, true);
-                    if (!$created) {
-                        return false;
-                    }
-                }
-                catch (Exception $exc) {
-                    return false;
-                }
-            }
-        }
-
-        try {
-            $working_file = fopen($working_path, 'w');
-            fwrite($working_file, date('Y-m-d') . "\n");
-            fclose($working_file);
-        }
-        catch (Exception $exc) {
-            return false;
-        }
-
-        return true;
-
-
-        // TODO: check by file locking
-        return true;
-    } // fn start
 
 	/**
 	 * (re)moves files after parsing && importing
@@ -134,9 +75,6 @@ class KinoData_Parser {
             if (!is_file($one_use_path)) {
                 continue;
             }
-            if (basename($one_use_path) == $this->m_working) {
-                continue;
-            }
 
             try {
                 rename($one_use_path, $one_old_path);
@@ -149,34 +87,6 @@ class KinoData_Parser {
 
         return true;
     } // fn cleanup
-
-	/**
-	 * closes a job
-	 *
-	 * @return bool
-	 */
-    public function stop()
-    {
-        // stop, if some worker running; return false
-        $working_path = $this->m_dirs['use'] . $this->m_working;
-        if (!file_exists($working_path)) {
-            return false;
-        }
-        if (!$this->m_lockfile) {
-            return false;
-        }
-
-        try {
-            //unlink($working_path);
-            flock($this->m_lockfile, LOCK_UN);
-            fclose($this->m_lockfile);
-        }
-        catch (Exception $exc) {
-            return false;
-        }
-
-        return true;
-    } // fn stop
 
 	/**
 	 * prepares files for the parsing
@@ -195,6 +105,20 @@ class KinoData_Parser {
         }
         if ((!isset($this->m_dirs['source']['movies'])) || (!isset($this->m_dirs['source']['genres'])) || (!isset($this->m_dirs['source']['timestamps']))) {
             return false;
+        }
+
+        foreach (array($this->m_dirs['use'], $this->m_dirs['new'], $this->m_dirs['old']) as $one_dir) {
+            if (!is_dir($one_dir)) {
+                try {
+                    $created = mkdir($one_dir, $this->m_dirmode, true);
+                    if (!$created) {
+                        return false;
+                    }
+                }
+                catch (Exception $exc) {
+                    return false;
+                }
+            }
         }
 
         $parser = new KinoData_Parser_SimpleXML();
@@ -464,9 +388,6 @@ class KinoData_Parser {
                 $event_file_path = $search_dir . $event_file;
 
                 if (!is_file($event_file_path)) {
-                    continue;
-                }
-                if ($event_file == $this->m_working) {
                     continue;
                 }
 
@@ -1231,6 +1152,8 @@ class KinoData_Parser_SimpleXML {
 
                 $one_event['tour_id'] = $one_screen['movie_id'];
                 $one_event['location_id'] = $one_screen['kino_id'];
+
+                $one_event['movie_key'] = (isset($one_screen['movie_key']) && (!empty($one_screen['movie_key']))) ? $one_screen['movie_key'] : '';
 
                 $one_event['headline'] = $one_screen['title'];
                 $one_event['organizer'] = $one_screen['kino_name'];

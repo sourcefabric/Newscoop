@@ -18,6 +18,24 @@ class NewsImport
      */
     private static $s_already_run = false;
 
+    /**
+     * To omit a possible double run if it would happened.
+     * @var mixed
+     */
+    private static $s_lockfile = null;
+
+    /**
+     * To omit a possible double run if it would happened.
+     * @var string
+     */
+    private static $s_working = '_newsimport_lock';
+
+    /**
+     * To write down datetime of the last work start.
+     * @var string
+     */
+    private static $s_working_date = '_newsimport_date';
+
 	/**
      * Makes necessary initialization for Newscoop
      *
@@ -332,6 +350,9 @@ class NewsImport
             $article_data->setProperty('Fevent_id', $one_event['event_id']);
             $article_data->setProperty('Ftour_id', $one_event['tour_id']);
             $article_data->setProperty('Flocation_id', $one_event['location_id']);
+
+            $f_movie_key = (isset($one_event['movie_key']) && (!empty($one_event['movie_key']))) ? $one_event['movie_key'] : '';
+            $article_data->setProperty('Fmovie_key', $f_movie_key);
 
             $article_data->setProperty('Fheadline', $one_event['headline']);
             $article_data->setProperty('Forganizer', $one_event['organizer']);
@@ -710,24 +731,34 @@ class NewsImport
 	 * @param array $p_otherParams
 	 * @return void
 	 */
-    public static function LoadEventData($p_eventSources, $p_newsFeed, $p_catTopics, $p_limits, $p_cancels, $p_otherParams) {
-
+    public static function LoadEventData($p_eventSources, $p_newsFeed, $p_catTopics, $p_limits, $p_cancels, $p_otherParams)
+    {
         $plugin_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport';
         $class_dir = $plugin_dir.DIRECTORY_SEPARATOR.'classes';
         $incl_dir = $plugin_dir.DIRECTORY_SEPARATOR.'include';
-        require_once($class_dir.DIR_SEP.'EventParser.php');
-        require_once($class_dir.DIR_SEP.'KinoParser.php');
-        require_once($incl_dir.DIR_SEP.'default_cache.php');
+        require_once($class_dir.DIRECTORY_SEPARATOR.'EventParser.php');
+        require_once($class_dir.DIRECTORY_SEPARATOR.'KinoParser.php');
+        require_once($incl_dir.DIRECTORY_SEPARATOR.'default_spool.php');
+
+        if ( (!function_exists('plugin_newsimport_create_event_type')) && (!function_exists('plugin_newsimport_make_dirs')) ) {
+            require($plugin_dir.DIRECTORY_SEPARATOR.'newsimport.info.php');
+        }
+        plugin_newsimport_create_event_type();
+        plugin_newsimport_make_dirs();
 
         global $Campsite;
         if (empty($Campsite)) {
             $Campsite = array();
         }
 
-        $cache_path_dir = $newsimport_default_cache;
-        if ( DIRECTORY_SEPARATOR != substr($cache_path_dir, (strlen($cache_path_dir) - strlen(DIRECTORY_SEPARATOR))) ) {
-            $cache_path_dir .= DIRECTORY_SEPARATOR;
+        // whether we can start now
+        $locks_path_dir = self::AbsolutePath($newsimport_default_locks);
+        if (!self::Start($locks_path_dir)) {
+            echo 'newsimport_locked';
+            return false;
         }
+
+        $cache_path_dir = self::AbsolutePath($newsimport_default_cache);
         $img_cache_path = $cache_path_dir . 'images_infos.sqlite';
         self::$s_img_cache = new EventImage($img_cache_path);
 
@@ -740,9 +771,7 @@ class NewsImport
                 $parsed_src_dirs = array();
                 foreach ($one_source['source_dirs'] as $one_src_dir_key => $one_src_dir_val) {
                     if (is_string($one_src_dir_val)) {
-                        if (DIRECTORY_SEPARATOR != substr($one_src_dir_val, 0, strlen(DIRECTORY_SEPARATOR))) {
-                            $one_src_dir_val = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.$one_src_dir_val;
-                        }
+                        $one_src_dir_val = self::AbsolutePath($one_src_dir_val);
                     }
                     $parsed_src_dirs[$one_src_dir_key] = $one_src_dir_val;
                 }
@@ -814,25 +843,6 @@ class NewsImport
                 continue;
             }
 
-            // whether we can start on this feed now
-            $res = $parser_obj->start();
-            if (!$res) {
-                continue;
-            }
-
-            // shoud we process something
-            $res = $parser_obj->prepare($categories, $limits, $cancels);
-            if (!$res) {
-                $parser_obj->stop();
-                continue;
-            }
-
-            $event_set = $parser_obj->load();
-            if (empty($event_set)) {
-                $parser_obj->stop();
-                continue;
-            }
-
             $ev_limit = 0;
             $ev_skip = 0;
             if (array_key_exists('limit', $p_otherParams)) {
@@ -840,6 +850,21 @@ class NewsImport
             }
             if (array_key_exists('skip', $p_otherParams)) {
                 $ev_skip = $p_otherParams['skip'];
+            }
+
+            if (empty($ev_skip)) {
+                // shoud we process something (new)
+                $res = $parser_obj->prepare($categories, $limits, $cancels);
+                if (!$res) {
+                    $parser_obj->stop();
+                    continue;
+                }
+            }
+
+            $event_set = $parser_obj->load();
+            if (empty($event_set)) {
+                $parser_obj->stop();
+                continue;
             }
 
             $ev_count = count($event_set);
@@ -871,8 +896,6 @@ class NewsImport
                 $parser_obj->cleanup();
             }
 
-            $parser_obj->stop();
-
             $Campsite['OMIT_LOGGING'] = false;
 
             Log::Message(getGS('$1 articles of $2 events set.', count($event_set), $one_source_name), null, 31);
@@ -881,8 +904,130 @@ class NewsImport
 
         self::$s_img_cache = null;
 
+        self::Stop($locks_path_dir);
+
     } // fn LoadEventData
 
+	/**
+	 * checks whether we can start a job
+	 *
+     * @param string $p_path
+     * @param bool $p_ending
+	 * @return string
+	 */
+    public static function AbsolutePath($p_path, $p_ending = true)
+    {
+        if ($p_ending) {
+            if ( DIRECTORY_SEPARATOR != substr($p_path, (strlen($p_path) - strlen(DIRECTORY_SEPARATOR))) ) {
+                $p_path .= DIRECTORY_SEPARATOR;
+            }
+        }
+
+        // trying to make global path from possibly relative path
+        if ( substr($p_path, 0, strlen(DIRECTORY_SEPARATOR)) != DIRECTORY_SEPARATOR ) {
+            if (substr($p_path, 0, 2) != substr($GLOBALS['g_campsiteDir'], 0, 2)) {
+                $p_path = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.$p_path;
+            }
+        }
+
+        return $p_path;
+    } // fn absolutePath
+
+	/**
+	 * checks whether we can start a job
+	 *
+     * @param string $p_lockDir
+	 * @return bool
+	 */
+    public static function Start($p_lockDir)
+    {
+        $max_diff_new = 12; // max hours for taking the lock as a real one
+        $max_wait_lock = 10; // max admissible waiting; to not make two imports at once
+
+        // stop, if some worker running; return false
+        $working_path = $p_lockDir . self::$s_working;
+        $working_path_date = $p_lockDir . self::$s_working_date;
+
+        $lock_file = fopen($working_path, 'a');
+        $locked = flock($lock_file, LOCK_EX); // the LOCK_NB does not work, see https://bugs.php.net/bug.php?id=54453
+        if (!$locked) {
+            fclose($lock_file);
+            return false;
+        }
+
+        $is_free = true;
+
+        try {
+            $fp_date = fopen($working_path_date, 'rb');
+            $last_date = fgets($fp_date);
+            fclose($fp_date);
+            if (!empty($last_date)) {
+                $last_date_obj = new DateTime($last_date);
+                $curr_date_obj = new DateTime('now');
+                $date_diff = $curr_date_obj->diff($last_date_obj);
+                if (false !== $date_diff->days) {
+                    $diff_hours = (24 * $date_diff->days) + $date_diff->h;
+                    if ($max_diff_new >= $diff_hours) {
+                        $is_free = false;
+                    }
+                }
+            }
+        }
+        catch (Exception $exc) {}
+
+        if ($is_free) {
+            try {
+                clearstatcache();
+                $fp_date = fopen($working_path_date, 'wb');
+                set_file_buffer($fp_date,0);
+                fwrite($fp_date, date('c') . "\n");
+                fflush($fp_date);
+                fclose($fp_date);
+                clearstatcache();
+            }
+            catch (Exception $exc) {}
+        }
+
+        flock($lock_file, LOCK_UN);
+        fclose($lock_file);
+
+        return $is_free;
+
+    } // fn start
+
+	/**
+	 * closes a job
+	 *
+     * @param string $p_lockDir
+	 * @return bool
+	 */
+    public static function Stop($p_lockDir)
+    {
+
+        $working_path = $p_lockDir . self::$s_working;
+        $working_path_date = $p_lockDir . self::$s_working_date;
+
+        $lock_file = fopen($working_path, 'a');
+        $locked = flock($lock_file, LOCK_EX); // the LOCK_NB does not work, see https://bugs.php.net/bug.php?id=54453
+        if (!$locked) {
+            fclose($lock_file);
+            return false;
+        }
+
+        try {
+            $fp_date = fopen($working_path_date, 'wb');
+            fwrite($fp_date, '');
+            fflush($fp_date);
+            fclose($fp_date);
+        }
+        catch (Exception $exc) {}
+
+        flock($lock_file, LOCK_UN);
+        fclose($lock_file);
+
+        return true;
+
+    } // fn stop
 
 } // class NewsImport
 

@@ -6,18 +6,6 @@
 class EventData_Parser {
 
     /**
-     * To omit a possible double run if it would happened.
-     * @var string
-     */
-    var $m_working = '_gen_lock';
-
-    /**
-     * To omit a possible double run if it would happened.
-     * @var mixed
-     */
-    var $m_lockfile = null;
-
-    /**
      * Mode of (possibly) created directories.
      * @var integer
      */
@@ -67,72 +55,6 @@ class EventData_Parser {
     } // fn __construct
 
 	/**
-	 * checks whether we can start a job
-	 *
-	 * @return bool
-	 */
-    public function start() {
-        // stop, if some worker running; return false
-        $working_path = $this->m_dirs['use'] . $this->m_working;
-        $this->m_lockfile = fopen($working_path, 'a');
-        $locked = flock($this->m_lockfile, LOCK_EX);
-        if (!$locked) {
-            return false;
-        }
-
-        foreach (array($this->m_dirs['use'], $this->m_dirs['new']) as $one_dir) {
-            if (!is_dir($one_dir)) {
-                try {
-                    $created = mkdir($one_dir, $this->m_dirmode, true);
-                    if (!$created) {
-                        return false;
-                    }
-                }
-                catch (Exception $exc) {
-                    return false;
-                }
-            }
-        }
-
-        try {
-            $working_file = fopen($working_path, 'w');
-            fwrite($working_file, date('Y-m-d') . "\n");
-            fclose($working_file);
-        }
-        catch (Exception $exc) {
-            return false;
-        }
-
-        return true;
-    } // fn start
-
-	/**
-	 * closes a job
-	 *
-	 * @return bool
-	 */
-    public function stop() {
-        // stop, if some worker running; return false
-        $working_path = $this->m_dirs['use'] . $this->m_working;
-        if (!file_exists($working_path)) {
-            return false;
-        }
-        if (!$this->m_lockfile) {
-            return false;
-        }
-
-        try {
-            flock($this->m_lockfile, LOCK_UN);
-            fclose($this->m_lockfile);
-        }
-        catch (Exception $exc) {
-            return false;
-        }
-
-        return true;
-    } // fn stop
-
-	/**
 	 * prepares files for the parsing
      *
      * @param array $p_categories
@@ -145,6 +67,20 @@ class EventData_Parser {
         // we need that conf info
         if ((!isset($this->m_dirs['source'])) || (!isset($this->m_dirs['source']['events']))) {
             return false;
+        }
+
+        foreach (array($this->m_dirs['use'], $this->m_dirs['new'], $this->m_dirs['old']) as $one_dir) {
+            if (!is_dir($one_dir)) {
+                try {
+                    $created = mkdir($one_dir, $this->m_dirmode, true);
+                    if (!$created) {
+                        return false;
+                    }
+                }
+                catch (Exception $exc) {
+                    return false;
+                }
+            }
         }
 
         $cur_time = date('YmdHis');
@@ -289,10 +225,6 @@ class EventData_Parser {
             if (!is_file($one_use_path)) {
                 continue;
             }
-            if (basename($one_use_path) == $this->m_working) {
-                continue;
-            }
-
             try {
                 rename($one_use_path, $one_old_path);
             }
@@ -342,9 +274,6 @@ class EventData_Parser {
                 $event_file_path = $search_dir . $event_file;
 
                 if (!is_file($event_file_path)) {
-                    continue;
-                }
-                if ($event_file == $this->m_working) {
                     continue;
                 }
 

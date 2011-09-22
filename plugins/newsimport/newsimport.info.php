@@ -66,18 +66,35 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
     define('PLUGIN_NEWSIMPORT_FUNCTIONS', TRUE);
 
 	/**
-     * create && fill data dirs while not fs access is set up
+     * create aux dirs
      *
 	 * @return void
 	 */
     function plugin_newsimport_make_dirs() {
         $incl_dir = dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR;
-        require($incl_dir . 'default_cache.php');
+        require($incl_dir . 'default_spool.php');
 
-        try {
-            mkdir($newsimport_default_cache, 0755, true);
+        if (!is_dir($newsimport_default_cache)) {
+            try {
+                mkdir($newsimport_default_cache, 0755, true);
+            }
+            catch (Exception $ecx) {}
         }
-        catch (Exception $ecx) {}
+        if (!is_dir($newsimport_default_locks)) {
+            try {
+                mkdir($newsimport_default_locks, 0755, true);
+            }
+            catch (Exception $ecx) {}
+        }
+
+    } // fn plugin_newsimport_make_dirs
+
+	/**
+     * fill demo data while not fs access is set up
+     *
+	 * @return void
+	 */
+    function plugin_newsimport_demo_data() {
 
         $newsimport_demo_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'demo_data';
         $newsimport_data_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'files'.DIRECTORY_SEPARATOR.'newsimport';
@@ -122,7 +139,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
                 }
             }
         }
-    } // fn plugin_newsimport_make_dirs
+    } // fn plugin_newsimport_demo_data
 
 	/**
      * puts into sys-prefs info on newscoop url
@@ -241,10 +258,11 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 
         $art_fields = array(
             // ids - auxiliary, hidden
-            'provider_id' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => true), // source of the news file
-            'event_id' => array('type' => 'text', 'params' => array('precision' => 0), 'hidden' => true), // an event at a day from a provider should have unique id; crafted for cinemas
-            'tour_id' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => true), // for grouping of repeated events, e.g. an exhibition available for more days
-            'location_id' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => true), // should be unique per place/provider
+            'provider_id' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => true), // source of the news file (more like feed*provider id)
+            'event_id' => array('type' => 'text', 'params' => array(), 'hidden' => true, 'retype' => array('numeric' => 'text')), // an event at a day from a provider should have unique id; crafted for cinemas
+            'tour_id' => array('type' => 'text', 'params' => array(), 'hidden' => true, 'retype' => array('numeric' => 'text')), // for grouping of repeated events, e.g. an exhibition available for more days
+            'location_id' => array('type' => 'text', 'params' => array(), 'hidden' => true, 'retype' => array('numeric' => 'text')), // should be unique per place/provider
+            'movie_key' => array('type' => 'text', 'params' => array(), 'hidden' => true), // outer movie identifier, but can be empty
             // main event info - free form
             'headline' => array('type' => 'text', 'params' => array(), 'hidden' => false), // even/tour_name (or movie name)
             'organizer' => array('type' => 'text', 'params' => array(), 'hidden' => false), // either tour_organizer (if filled) or location_name (or cinema name)
@@ -289,6 +307,13 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             }
             if (array_key_exists('hidden', $one_field_params) && $one_field_params['hidden']) {
                 $art_type_filed_obj->setStatus('hide');
+            }
+            if (isset($one_field_params['retype'])) {
+                foreach ($one_field_params['retype'] as $type_old => $type_new) {
+                    if ($type_old == $art_type_filed_obj->getType()) {
+                        $art_type_filed_obj->setType($type_new);
+                    }
+                }
             }
         }
     } // fn plugin_newsimport_create_event_type
@@ -446,6 +471,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         plugin_newsimport_set_cron(true);
         plugin_newsimport_set_url();
         plugin_newsimport_make_dirs();
+        plugin_newsimport_demo_data();
 */
     } // fn plugin_newsimport_install
 
@@ -478,6 +504,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         plugin_newsimport_set_cron(true);
         plugin_newsimport_set_url();
         plugin_newsimport_make_dirs();
+        plugin_newsimport_demo_data();
     } // fn plugin_newsimport_enable
 
 	/**
