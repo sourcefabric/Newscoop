@@ -68,23 +68,21 @@ $created = $newIssueObj->create($f_url_name, array('Name' => $f_issue_name));
 $resourceId = new ResourceId('Publication/Edit');
 $syncRsc = $resourceId->getService(ISyncResourceService::NAME);
 $outputService = $resourceId->getService(IOutputService::NAME);
+$outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
 $issueService = $resourceId->getService(IIssueService::NAME);
 $themeManagementService = $resourceId->getService(IThemeManagementService::NAME_1);
 $publicationThemes = $themeManagementService->getThemes($publicationObj->getPublicationId());
 
-if(is_array($publicationThemes)) {
-	if(count($publicationThemes) > 1) {
+if (is_array($publicationThemes)) {
+	if (count($publicationThemes) > 1) {
         if ($lastIssueObj instanceof Issue) {
-        	$outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
         	$outSetIssues = $outputSettingIssueService->findByIssue($lastIssueObj->getIssueId());
 			$themePath = null;
 			if(count($outSetIssues) > 0){
 			    $outSetIssue = $outSetIssues[0];
 			    $themePath = $outSetIssue->getThemePath()->getPath();
 			}
-			$publicationThemes = $themeManagementService->getThemes($publicationObj->getPublicationId());
-			$publicationHasThemes = count($publicationThemes) > 0;
-			if($themePath == null && $publicationHasThemes){
+			if($themePath == null){
 			    $themePath = $publicationThemes[0]->getPath();
 			}
 			if($themePath == null) {
@@ -103,11 +101,11 @@ if(is_array($publicationThemes)) {
 	$f_theme_id = '0';
 }
 $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
-$outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
+
 $outSetIssues = $outputSettingIssueService->findByIssue($issueObj->getIssueId());
 
 $newOutputSetting = false;
-if(count($outSetIssues) > 0){
+if (count($outSetIssues) > 0){
     $outSetIssue = $outSetIssues[0];
 } else {
     $outSetIssue = new OutputSettingsIssue();
@@ -120,7 +118,7 @@ $outSetIssue->setFrontPage(null);
 $outSetIssue->setSectionPage(null);
 $outSetIssue->setArticlePage(null);
 
-if(SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
+if (SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
 	if($newOutputSetting){
 		$outputSettingIssueService->insert($outSetIssue);
 	} else {
