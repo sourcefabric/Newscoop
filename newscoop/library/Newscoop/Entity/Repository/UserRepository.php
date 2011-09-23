@@ -55,9 +55,13 @@ class UserRepository extends EntityRepository
             throw new \InvalidArgumentException('email_conflict');
         }
 
-        $this->setAttributes($user, array_key_exists('attributes', $values) ? (array) $values['attributes'] : array());
+        if (array_key_exists('attributes', $values)) {
+            $this->setAttributes($user, (array) $values['attributes']);
+        }
 
-        $this->setUserTypes($user, array_key_exists('user_type', $values) ? (array) $values['user_type'] : array());
+        if (array_key_exists('user_type', $values)) {
+            $this->setUserTypes($user, (array) $values['user_type']);
+        }
 
         $this->getEntityManager()->persist($user);
     }
