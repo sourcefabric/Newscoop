@@ -65,6 +65,10 @@ class NewsImport
         //looking whether the request is of form used for xml import, i.e.
         //http(s)://newscoop_domain/(newscoop_dir/)_xmlimport(/...)(?...)
 
+        if (!isset($_SERVER['REQUEST_URI'])) {
+            return false;
+        }
+
         $path_request_parts = explode('?', $_SERVER['REQUEST_URI']);
         $path_request = strtolower($path_request_parts[0]);
         if (('' == $path_request) || ('/' != $path_request[strlen($path_request)-1])) {
@@ -856,14 +860,12 @@ class NewsImport
                 // shoud we process something (new)
                 $res = $parser_obj->prepare($categories, $limits, $cancels);
                 if (!$res) {
-                    $parser_obj->stop();
                     continue;
                 }
             }
 
             $event_set = $parser_obj->load();
             if (empty($event_set)) {
-                $parser_obj->stop();
                 continue;
             }
 
