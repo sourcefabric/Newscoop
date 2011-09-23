@@ -959,33 +959,32 @@ class NewsImport
 
         $is_free = true;
 
-        try {
-            $fp_date = fopen($working_path_date, 'rb');
-            $last_date = fgets($fp_date);
-            fclose($fp_date);
-            if (!empty($last_date)) {
-                $last_date_obj = new DateTime($last_date);
-                $curr_date_obj = new DateTime('now');
-                $date_diff = $curr_date_obj->diff($last_date_obj);
-                if (false !== $date_diff->days) {
-                    $diff_hours = (24 * $date_diff->days) + $date_diff->h;
-                    if ($max_diff_new >= $diff_hours) {
-                        $is_free = false;
+        if (is_file($working_path_date)) {
+            try {
+                $fp_date = fopen($working_path_date, 'rb');
+                $last_date = fgets($fp_date);
+                fclose($fp_date);
+                if (!empty($last_date)) {
+                    $last_date_obj = new DateTime($last_date);
+                    $curr_date_obj = new DateTime('now');
+                    $date_diff = $curr_date_obj->diff($last_date_obj);
+                    if (false !== $date_diff->days) {
+                        $diff_hours = (24 * $date_diff->days) + $date_diff->h;
+                        if ($max_diff_new >= $diff_hours) {
+                            $is_free = false;
+                        }
                     }
                 }
             }
+            catch (Exception $exc) {}
         }
-        catch (Exception $exc) {}
-
         if ($is_free) {
             try {
-                clearstatcache();
                 $fp_date = fopen($working_path_date, 'wb');
                 set_file_buffer($fp_date,0);
                 fwrite($fp_date, date('c') . "\n");
                 fflush($fp_date);
                 fclose($fp_date);
-                clearstatcache();
             }
             catch (Exception $exc) {}
         }
