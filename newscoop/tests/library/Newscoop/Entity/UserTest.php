@@ -70,7 +70,7 @@ class UserTest extends \RepositoryTestCase
         $this->assertEquals('Bar', $user->getLastName());
         $this->assertEquals(User::STATUS_INACTIVE, $user->getStatus());
         $this->assertFalse($user->isActive());
-        $this->assertLessThan(2, time() - $user->getCreated()->getTimestamp());
+        $this->assertLessThan(5, time() - $user->getCreated()->getTimestamp());
         $this->assertEquals(123, $user->getAttribute('phone'));
         $this->assertTrue($user->isAdmin());
         $this->assertTrue($user->isPublic());
@@ -224,6 +224,41 @@ class UserTest extends \RepositoryTestCase
     public function testGetGroups()
     {
         $user = new User();
+        $this->assertEquals(0, count($user->getGroups()));
+    }
+
+    public function testSaveWithoutGroup()
+    {
+        $group = new Group();
+        $group->setName('test');
+        $this->em->persist($group);
+
+        $user = new User('name');
+        $user->addUserType($group);
+
+        $this->repository->save($user, array(
+            'username' => 'uname',
+            'email' => 'info@example.com',
+        ));
+
+        $this->assertEquals(1, count($user->getGroups()));
+    }
+
+    public function testSaveWithGroup()
+    {
+        $group = new Group();
+        $group->setName('test');
+        $this->em->persist($group);
+
+        $user = new User('name');
+        $user->addUserType($group);
+
+        $this->repository->save($user, array(
+            'username' => 'uname',
+            'email' => 'info@example.com',
+            'user_type' => array(),
+        ));
+
         $this->assertEquals(0, count($user->getGroups()));
     }
 
