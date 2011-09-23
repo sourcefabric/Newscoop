@@ -1,6 +1,8 @@
 #ob_wrapper {
 	position: fixed;
 	top: 0px;
+    z-index: 100;
+    width: 800px;
 }
 
 #ob_main {
@@ -12,6 +14,7 @@
 	border: solid 2px #09d987;
 	padding: 20px;
 	float: left;
+    left: -30px;
 }
 #ob_wrapper .top_title {
 	font-family: Georgia, "Times New Roman", Times, serif; font-size:16px; line-height:22px;
@@ -130,4 +133,6 @@
 #ob_wrapper #ob_handle {
 	float: left;
 	margin-top: 10px;
+    position: relative;
+    left: -30px;
 }
