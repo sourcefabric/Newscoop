@@ -200,7 +200,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
             $topics[$topic->getTopicId()] = $topic->getName();
         }
 
-        return $this->topics = $topics;
+        return $topics;
     }
 
     /**
