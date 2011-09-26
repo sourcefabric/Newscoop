@@ -20,6 +20,10 @@ function smarty_function_uri($p_params, &$p_smarty)
 {
     $context = $p_smarty->getTemplateVars('gimme');
 
+    if (!isset($p_params['options'])) {
+        $p_params['options'] = '';
+    }
+
     $url = 'url';
     if (isset($p_params['static_file']) && !empty($p_params['static_file'])) {
     	$p_params['options'] = 'static_file ' . $p_params['static_file'];
