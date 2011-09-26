@@ -199,7 +199,7 @@ abstract class CampSystem
         }
         if(is_null($p_issNr)){
             $sql = 'SELECT MAX(Number) AS Number FROM Issues '
-                    . 'WHERE IdPublication = ' . $p_pubId
+                    . 'WHERE Published = \'Y\' IdPublication = ' . $p_pubId
                     . ' AND IdLanguage = ' . $p_lngId;
             $data = $g_ado_db->GetOne($sql);
             if (empty($data)) {

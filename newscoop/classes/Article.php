@@ -3043,6 +3043,9 @@ class Article extends DatabaseObject {
                     $dbField = 'RequestObjects.request_count';
                     $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
                     break;
+                case 'bykeywords':
+                    $dbField = 'Articles.Keywords';
+                    break;
                 case 'bycomments':
                     //@todo change this with DOCTRINE2 when refactor
 		            $dbField = 'comments_counter.comments_count';
