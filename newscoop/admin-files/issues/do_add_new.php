@@ -73,63 +73,55 @@ $issueService = $resourceId->getService(IIssueService::NAME);
 $themeManagementService = $resourceId->getService(IThemeManagementService::NAME_1);
 $publicationThemes = $themeManagementService->getThemes($publicationObj->getPublicationId());
 
-if (is_array($publicationThemes)) {
-	if (count($publicationThemes) > 1) {
-        if ($lastIssueObj instanceof Issue) {
-        	$outSetIssues = $outputSettingIssueService->findByIssue($lastIssueObj->getIssueId());
-			$themePath = null;
-			if(count($outSetIssues) > 0){
-			    $outSetIssue = $outSetIssues[0];
-			    $themePath = $outSetIssue->getThemePath()->getPath();
-			}
-			if($themePath == null){
-			    $themePath = $publicationThemes[0]->getPath();
-			}
-			if($themePath == null) {
-				$f_theme_id = '0';
-			} else {
-				$f_theme_id = $themePath;
-			}
-        } else {
-        	$f_theme_id = $publicationThemes[0]->getPath();
+if (is_array($publicationThemes) && count($publicationThemes) > 0) {
+    if ($lastIssueObj instanceof Issue) {
+        $outSetIssues = $outputSettingIssueService->findByIssue($lastIssueObj->getIssueId());
+        $themePath = null;
+        if (count($outSetIssues) > 0) {
+            $outSetIssue = $outSetIssues[0];
+            $themePath = $outSetIssue->getThemePath()->getPath();
         }
-	} else {
+        if ($themePath == null) {
+            $themePath = $publicationThemes[0]->getPath();
+        }
+        if ($themePath == null) {
+            $f_theme_id = '0';
+        } else {
+            $f_theme_id = $themePath;
+        }
+    } else {
         $f_theme_id = $publicationThemes[0]->getPath();
-	}
+    }
 
+    $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
+
+    $outSetIssues = $outputSettingIssueService->findByIssue($issueObj->getIssueId());
+
+    $newOutputSetting = false;
+    if (count($outSetIssues) > 0) {
+        $outSetIssue = $outSetIssues[0];
+    } else {
+        $outSetIssue = new OutputSettingsIssue();
+        $outSetIssue->setOutput($outputService->findByName('Web'));
+        $outSetIssue->setIssue($issueService->getById($issueObj->getIssueId()));
+        $newOutputSetting = true;
+    }
+    $outSetIssue->setThemePath($syncRsc->getThemePath($f_theme_id));
+    $outSetIssue->setFrontPage(null);
+    $outSetIssue->setSectionPage(null);
+    $outSetIssue->setArticlePage(null);
+
+    if (SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
+        if($newOutputSetting){
+            $outputSettingIssueService->insert($outSetIssue);
+        } else {
+            $outputSettingIssueService->update($outSetIssue);
+        }
+    }
+    //end to add default theme
 } else {
-	$f_theme_id = '0';
+	$f_theme_id = null;
 }
-$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
-
-$outSetIssues = $outputSettingIssueService->findByIssue($issueObj->getIssueId());
-
-$newOutputSetting = false;
-if (count($outSetIssues) > 0){
-    $outSetIssue = $outSetIssues[0];
-} else {
-    $outSetIssue = new OutputSettingsIssue();
-    $outSetIssue->setOutput($outputService->findByName('Web'));
-    $outSetIssue->setIssue($issueService->getById($issueObj->getIssueId()));
-    $newOutputSetting = true;
-}
-$outSetIssue->setThemePath($syncRsc->getThemePath($f_theme_id));
-$outSetIssue->setFrontPage(null);
-$outSetIssue->setSectionPage(null);
-$outSetIssue->setArticlePage(null);
-
-if (SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
-	if($newOutputSetting){
-		$outputSettingIssueService->insert($outSetIssue);
-	} else {
-		$outputSettingIssueService->update($outSetIssue);
-	}
-}
-//end to add default theme
-
-
-
-
 
 
 if ($created) {
