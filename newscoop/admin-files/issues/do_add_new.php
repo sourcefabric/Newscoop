@@ -73,30 +73,25 @@ $issueService = $resourceId->getService(IIssueService::NAME);
 $themeManagementService = $resourceId->getService(IThemeManagementService::NAME_1);
 $publicationThemes = $themeManagementService->getThemes($publicationObj->getPublicationId());
 
-if (is_array($publicationThemes)) {
-	if (count($publicationThemes) > 1) {
-        if ($lastIssueObj instanceof Issue) {
-        	$outSetIssues = $outputSettingIssueService->findByIssue($lastIssueObj->getIssueId());
-			$themePath = null;
-			if(count($outSetIssues) > 0){
-			    $outSetIssue = $outSetIssues[0];
-			    $themePath = $outSetIssue->getThemePath()->getPath();
-			}
-			if($themePath == null){
-			    $themePath = $publicationThemes[0]->getPath();
-			}
-			if($themePath == null) {
-				$f_theme_id = '0';
-			} else {
-				$f_theme_id = $themePath;
-			}
-        } else {
-        	$f_theme_id = $publicationThemes[0]->getPath();
+if (is_array($publicationThemes) && count($publicationThemes) > 0) {
+    if ($lastIssueObj instanceof Issue) {
+        $outSetIssues = $outputSettingIssueService->findByIssue($lastIssueObj->getIssueId());
+        $themePath = null;
+        if (count($outSetIssues) > 0) {
+            $outSetIssue = $outSetIssues[0];
+            $themePath = $outSetIssue->getThemePath()->getPath();
         }
-	} else {
+        if ($themePath == null) {
+            $themePath = $publicationThemes[0]->getPath();
+        }
+        if ($themePath == null) {
+            $f_theme_id = '0';
+        } else {
+            $f_theme_id = $themePath;
+        }
+    } else {
         $f_theme_id = $publicationThemes[0]->getPath();
-	}
-
+    }
 } else {
 	$f_theme_id = '0';
 }
