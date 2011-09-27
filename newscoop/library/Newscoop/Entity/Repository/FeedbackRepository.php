@@ -239,4 +239,18 @@ class FeedbackRepository extends DatatableSource
     {
         $this->getEntityManager()->flush();
     }
+
+    /**
+     * Get feedbacks count for user
+     *
+     * @param Newscoop\Entity\User $user
+     * @return int
+     */
+    public function countByUser(User $user)
+    {
+        return (int) $this->getEntityManager()
+            ->createQuery("SELECT COUNT(feedback) FROM Newscoop\Entity\Feedback feedback WHERE feedback.user = :user")
+            ->setParameter('user', $user->getId())
+            ->getSingleScalarResult();
+    }
 }
