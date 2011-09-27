@@ -1999,8 +1999,8 @@ CREATE TABLE `user_subscription` (
 --
 
 LOCK TABLES `user_subscription` WRITE;
-/*!40000 ALTER TABLE `feedback` DISABLE KEYS */;
-/*!40000 ALTER TABLE `feedback` ENABLE KEYS */;
+/*!40000 ALTER TABLE `user_subscription` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_subscription` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
