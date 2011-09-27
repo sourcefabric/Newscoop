@@ -58,23 +58,28 @@ if (Input::Get('save')) {
             }
 
             $f_publication_id = Input::Get('f_publication_id-'.$feed_key, 'string');
-            if (!empty($f_publication_id)) {
+            if ('' != ('' . $f_publication_id)) {
                 SystemPref::Set('NewsImportPublicationId:' . $feed_key, $f_publication_id);
             }
 
             $f_issue_number = Input::Get('f_issue_number-'.$feed_key, 'string');
-            if (!empty($f_issue_number)) {
+            if ('' != ('' . $f_issue_number)) {
                 SystemPref::Set('NewsImportIssueNumber:' . $feed_key, $f_issue_number);
             }
 
             $f_section_number = Input::Get('f_section_number-'.$feed_key, 'string');
-            if (!empty($f_section_number)) {
+            if ('' != ('' . $f_section_number)) {
                 SystemPref::Set('NewsImportSectionNumber:' . $feed_key, $f_section_number);
             }
 
         }
     }
 
+
+    $f_newsimport_http_auth_usr = Input::Get('f_http_auth_usr', 'string');
+    SystemPref::Set('NewsImportHttpAuthUser', $f_newsimport_http_auth_usr);
+    $f_newsimport_http_auth_pwd = Input::Get('f_http_auth_pwd', 'string');
+    SystemPref::Set('NewsImportHttpAuthPwd', $f_newsimport_http_auth_pwd);
 
     camp_html_add_msg(getGS('NewsImport preferences updated.'), 'ok');
 }
@@ -98,19 +103,6 @@ camp_html_display_msgs();
     <p><?php putGS('NewsImport - news events import.'); ?></p>
   </td>
 </tr>
-
-<?php
-if ($auth_feeds) {
-
-    $cur_nimp_auth = SystemPref::Get('NewsImportCommandToken');
-    if (!empty($cur_nimp_auth)) {
-        $newsimport_default_access = $cur_nimp_auth;
-    }
-    echo '<tr><td width="200">' . getGS('Command token') . ': </td>';
-    echo '<td><input name="f_command_token" value="' . htmlspecialchars($newsimport_default_access) . '" /></td></tr>';
-}
-
-?>
 
 </table>
 
@@ -173,6 +165,36 @@ if ($conf_feeds) {
 
 
 ?>
+
+<table border="0" width="600" cellspacing="0" cellpadding="0" class="box_table">
+<?php
+
+    $web_http_auth_usr = SystemPref::Get('NewsImportHttpAuthUser');
+    $web_http_auth_pwd = SystemPref::Get('NewsImportHttpAuthPwd');
+
+    echo '<tr><td colspan="2" align="left">' . getGS('Http authentication if used') . ': </td>';
+    echo '<tr><td width="200">' . getGS('web user') . ': </td>';
+    echo '<td><input name="f_http_auth_usr" value="' . htmlspecialchars($web_http_auth_usr) . '" /></td></tr>';
+    echo '<tr><td width="200">' . getGS('web pwd') . ': </td>';
+    echo '<td><input name="f_http_auth_pwd" value="' . htmlspecialchars($web_http_auth_pwd) . '" /></td></tr>';
+
+?>
+</table>
+
+<table border="0" width="600" cellspacing="0" cellpadding="0" class="box_table">
+<?php
+if ($auth_feeds) {
+
+    $cur_nimp_auth = SystemPref::Get('NewsImportCommandToken');
+    if (!empty($cur_nimp_auth)) {
+        $newsimport_default_access = $cur_nimp_auth;
+    }
+    echo '<tr><td width="200">' . getGS('Command token') . ': </td>';
+    echo '<td><input name="f_command_token" value="' . htmlspecialchars($newsimport_default_access) . '" /></td></tr>';
+}
+
+?>
+</table>
 
 <table border="0" width="600" cellspacing="0" cellpadding="0" class="box_table">
 <tr>

@@ -111,6 +111,7 @@ class NewsImport
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'TopicName.php');
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'GeoMap.php');
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'Article.php');
+        require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'Issue.php');
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'Log.php');
 
         $conf_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'include';
@@ -737,6 +738,16 @@ class NewsImport
             }
             if (0 >= $one_source['section_number']) {
                 continue;
+            }
+            if (0 >= $one_source['issue_number']) {
+                $cur_issue_obj = Issue::GetCurrentIssue($one_source['publication_id'], $one_source['language_id']);
+                if (empty($cur_issue_obj)) {
+                    continue;
+                }
+                if (!$cur_issue_obj->exists()) {
+                    continue;
+                }
+                $one_source['issue_number'] = $cur_issue_obj->getIssueNumber();
             }
             if (0 >= $one_source['issue_number']) {
                 continue;
