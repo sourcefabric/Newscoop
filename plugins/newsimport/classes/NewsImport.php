@@ -812,6 +812,16 @@ class NewsImport
                 continue;
             }
             if (0 >= $one_source['issue_number']) {
+                $cur_issue_obj = Issue::GetCurrentIssue($one_source['publication_id'], $one_source['language_id']);
+                if (empty($cur_issue_obj)) {
+                    continue;
+                }
+                if (!$cur_issue_obj->exists()) {
+                    continue;
+                }
+                $one_source['issue_number'] = $cur_issue_obj->getIssueNumber();
+            }
+            if (0 >= $one_source['issue_number']) {
                 continue;
             }
 
@@ -842,7 +852,6 @@ class NewsImport
             if ('movie' == $one_source['event_type']) {
                 $parser_obj = new KinoData_Parser($one_source);
             }
-
             if (!$parser_obj) {
                 continue;
             }
