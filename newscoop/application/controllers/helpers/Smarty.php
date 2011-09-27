@@ -28,7 +28,7 @@ class Action_Helper_Smarty extends Zend_Controller_Action_Helper_Abstract
             return;
         }
 
-        if (!in_array($request->getParam('module'), $this->modules)) {
+        if (!in_array($request->getParam('module', 'default'), $this->modules)) {
             return;
         }
 
