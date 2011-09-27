@@ -1,3 +1,5 @@
+<?php use Newscoop\Webcode\Manager; ?>
+
 <div class="ui-widget-content small-block block-shadow">
   <div class="collapsible">
     <h3 class="head ui-accordion-header ui-helper-reset ui-state-default ui-widget">
@@ -27,6 +29,8 @@
       <dd><?php p($articleObj->getArticleNumber()); ?></dd>
       <dt><?php putGS('Created by'); ?></dt>
       <dd><?php p(htmlspecialchars($articleCreator->getRealName())); ?></dd>
+      <dt><?php putGS('Webcode'); ?></dt>
+      <dd><?php p( Manager::getWebcoder('')->encode($f_article_number) ) ?></dd>
     </dl>
   </div>
 </div>
