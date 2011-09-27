@@ -125,6 +125,12 @@ class IngestServiceTest extends \RepositoryTestCase
         $this->assertInstanceOf('DateTime', $feed->getUpdated());
     }
 
+    public function testUpdateAutoModeWithoutPublishedPreviousVersion()
+    {
+        $feed = new Feed('sda');
+        $this->service->addFeed($feed);
+    }
+
     public function testUpdateAllUnique()
     {
         $feed = new Feed('sda');

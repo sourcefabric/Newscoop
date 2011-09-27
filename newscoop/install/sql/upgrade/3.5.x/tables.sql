@@ -220,6 +220,17 @@ CREATE TABLE `feedback` (
    KEY `user` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- user_subscription main table
+DROP TABLE IF EXISTS `user_subscription`;
+CREATE TABLE `user_subscription` (
+   `id` int(11) unsigned not null auto_increment,
+   `user_id` int(11) unsigned,
+   `subscription_type` int(1),
+   `time_begin` datetime,
+   `time_end` datetime,
+   PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
 -- Update Images
 ALTER TABLE `Images`
  ADD COLUMN `Source` enum('local','feedback') not null default 'local',

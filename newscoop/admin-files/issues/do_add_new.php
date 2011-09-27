@@ -1,6 +1,15 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
 
+use Newscoop\Service\ISyncResourceService;
+use Newscoop\Service\IIssueService;
+use Newscoop\Service\IOutputService;
+//@New theme management
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\IThemeManagementService;
+use Newscoop\Service\IOutputSettingIssueService;
+use Newscoop\Entity\Output\OutputSettingsIssue;
+
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
     exit;
@@ -48,10 +57,73 @@ if ($errorMsg = camp_is_issue_conflicting($f_publication_id, $f_issue_number, $f
 if (camp_html_has_msgs()) {
 	camp_html_goto_page($backLink);
 }
-$publicationObj = new Publication($f_publication_id);
 
+$lastIssueObj = Issue::GetLastCreatedIssue($f_publication_id);
+
+$publicationObj = new Publication($f_publication_id);
 $newIssueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
 $created = $newIssueObj->create($f_url_name, array('Name' => $f_issue_name));
+
+//add default theme
+$resourceId = new ResourceId('Publication/Edit');
+$syncRsc = $resourceId->getService(ISyncResourceService::NAME);
+$outputService = $resourceId->getService(IOutputService::NAME);
+$outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
+$issueService = $resourceId->getService(IIssueService::NAME);
+$themeManagementService = $resourceId->getService(IThemeManagementService::NAME_1);
+$publicationThemes = $themeManagementService->getThemes($publicationObj->getPublicationId());
+
+if (is_array($publicationThemes) && count($publicationThemes) > 0) {
+    if ($lastIssueObj instanceof Issue) {
+        $outSetIssues = $outputSettingIssueService->findByIssue($lastIssueObj->getIssueId());
+        $themePath = null;
+        if (count($outSetIssues) > 0) {
+            $outSetIssue = $outSetIssues[0];
+            $themePath = $outSetIssue->getThemePath()->getPath();
+        }
+        if ($themePath == null) {
+            $themePath = $publicationThemes[0]->getPath();
+        }
+        if ($themePath == null) {
+            $f_theme_id = '0';
+        } else {
+            $f_theme_id = $themePath;
+        }
+    } else {
+        $f_theme_id = $publicationThemes[0]->getPath();
+    }
+
+    $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
+
+    $outSetIssues = $outputSettingIssueService->findByIssue($issueObj->getIssueId());
+
+    $newOutputSetting = false;
+    if (count($outSetIssues) > 0) {
+        $outSetIssue = $outSetIssues[0];
+    } else {
+        $outSetIssue = new OutputSettingsIssue();
+        $outSetIssue->setOutput($outputService->findByName('Web'));
+        $outSetIssue->setIssue($issueService->getById($issueObj->getIssueId()));
+        $newOutputSetting = true;
+    }
+    $outSetIssue->setThemePath($syncRsc->getThemePath($f_theme_id));
+    $outSetIssue->setFrontPage(null);
+    $outSetIssue->setSectionPage(null);
+    $outSetIssue->setArticlePage(null);
+
+    if (SaaS::singleton()->hasPermission('ManageIssueTemplates')) {
+        if($newOutputSetting){
+            $outputSettingIssueService->insert($outSetIssue);
+        } else {
+            $outputSettingIssueService->update($outSetIssue);
+        }
+    }
+    //end to add default theme
+} else {
+	$f_theme_id = null;
+}
+
+
 if ($created) {
 	camp_html_add_msg(getGS("Issue created."), "ok");
 	camp_html_goto_page("/$ADMIN/issues/edit.php?Pub=$f_publication_id&Issue=$f_issue_number&Language=$f_language_id");
