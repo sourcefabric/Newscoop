@@ -116,7 +116,7 @@ function newsimport_ask_for_import() {
         try {
             $one_request = $request_url . '&newsoffset=' . $one_offset;
             //echo $one_request . "\n";
-            file_get_contents($one_request);
+            @file_get_contents($one_request);
         }
         catch (Exception $exc) {}
     }
@@ -125,7 +125,7 @@ function newsimport_ask_for_import() {
     try {
         $one_request = $request_url_prune;
         //echo $one_request . "\n";
-        file_get_contents($one_request);
+        @file_get_contents($one_request);
     }
     catch (Exception $exc) {}
 
