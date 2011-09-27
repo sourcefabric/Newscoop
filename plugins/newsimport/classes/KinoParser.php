@@ -97,7 +97,7 @@ class KinoData_Parser {
 	 *
 	 * @return bool
 	 */
-    public function prepare($p_categories, $p_limits, $p_cancels)
+    public function prepare($p_categories, $p_limits, $p_cancels, $p_env)
     {
         // we need that conf info
         if ((!isset($this->m_dirs['source'])) || (!isset($this->m_dirs['source']['programs']))) {
@@ -122,7 +122,12 @@ class KinoData_Parser {
         }
 
         $parser = new KinoData_Parser_SimpleXML();
-        $sqlite_name = $this->m_dirs['use'] . 'movies.sqlite';
+
+        $movies_dir = $this->m_dirs['old'];
+        if ( isset($p_env['cache_dir']) && (!empty($p_env['cache_dir'])) ) {
+            $movies_dir = $p_env['cache_dir'];
+        }
+        $sqlite_name = $movies_dir . 'movies_info.sqlite';
 
         // first copy and use movies files, if any
         // this is an addition wrt the general event import
@@ -472,8 +477,17 @@ class KinoData_Parser_SimpleXML {
      */
     var $m_last_events = null;
 
+    /**
+     * Name of table where the movies info are stored
+     * @var string
+     */
     var $m_table_name = 'movies';
 
+    /**
+     * Specification string of poster images
+     * @var string
+     */
+    var $m_poster_spec = 'artw';
 
     /**
      * Setter of the last used data dosis
@@ -745,12 +759,13 @@ class KinoData_Parser_SimpleXML {
                     continue;
                 }
 
+                $one_img_type = trim('' . $one_lnk_image->i_imgcatkey);
                 $one_img_url = trim('' . $one_lnk_image->i_imgurl);
                 $one_img_w = trim('' . $one_lnk_image->i_imgsizsxm);
                 $one_img_h = trim('' . $one_lnk_image->i_imgsizsym);
 
                 if (!empty($one_img_url)) {
-                    $one_mov_info_images[$one_img_id] = array('url' => $one_img_url, 'width' => $one_img_w, 'height' => $one_img_h);
+                    $one_mov_info_images[$one_img_id] = array('url' => $one_img_url, 'width' => $one_img_w, 'height' => $one_img_h, 'type' => $one_img_type);
                     $one_mov_info['link_images'] = $one_mov_info_images;
                     $movies_infos[$one_mov_id] = $one_mov_info;
                 }
@@ -1121,7 +1136,13 @@ class KinoData_Parser_SimpleXML {
                         if (isset($one_img_info['url'])) {
                             $one_link_url = $one_img_info['url'];
                             $one_link_label = '';
-                            $one_mov_images[] = array('url' => $one_link_url, 'label' => $one_link_label);
+                            $one_link_image = array('url' => $one_link_url, 'label' => $one_link_label);
+                            if (isset($one_img_info['type']) && ($this->m_poster_spec == $one_img_info['type'])) {
+                                array_unshift($one_mov_images, $one_link_image);
+                            }
+                            else {
+                                $one_mov_images[] = $one_link_image;
+                            }
                         }
                     }
                 }

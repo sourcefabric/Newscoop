@@ -4,7 +4,7 @@
  * Where common cached info shall be stored.
  * @var string
  */
-$newsimport_default_cache = 'files/newsimport/caches/';
+$newsimport_default_cache = 'files/newsimport/cache/';
 
 /**
  * Where common run locks shall be stored.

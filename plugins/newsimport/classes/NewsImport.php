@@ -134,6 +134,7 @@ class NewsImport
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'TopicName.php');
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'GeoMap.php');
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'Article.php');
+        require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'Issue.php');
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'Log.php');
 
         $conf_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'include';
@@ -763,8 +764,12 @@ class NewsImport
         }
 
         $cache_path_dir = self::AbsolutePath($newsimport_default_cache);
-        $img_cache_path = $cache_path_dir . 'images_infos.sqlite';
+        $img_cache_path = $cache_path_dir . 'images_info.sqlite';
         self::$s_img_cache = new EventImage($img_cache_path);
+
+        $import_env = array(
+            'cache_dir' => $cache_path_dir,
+        );
 
         foreach ($p_eventSources as $one_source_name => $one_source) {
             if ((!empty($p_newsFeed)) && ($one_source_name != $p_newsFeed)) {
@@ -867,7 +872,7 @@ class NewsImport
 
             if (empty($ev_skip)) {
                 // shoud we process something (new)
-                $res = $parser_obj->prepare($categories, $limits, $cancels);
+                $res = $parser_obj->prepare($categories, $limits, $cancels, $import_env);
                 if (!$res) {
                     continue;
                 }

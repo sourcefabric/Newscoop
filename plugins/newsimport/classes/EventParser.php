@@ -63,7 +63,7 @@ class EventData_Parser {
 	 *
 	 * @return bool
 	 */
-    public function prepare($p_categories, $p_limits, $p_cancels) {
+    public function prepare($p_categories, $p_limits, $p_cancels, $p_env) {
         // we need that conf info
         if ((!isset($this->m_dirs['source'])) || (!isset($this->m_dirs['source']['events']))) {
             return false;
