@@ -1,4 +1,8 @@
 <?php 
+regGS("Set new name to", "");
+regGS("Rename file", "");
+regGS("Caching templates in:", "");
+regGS("Caching templates finished", "");
 regGS("Theme name", "");
 regGS("Theme is assigned and can not be deleted", "");
 regGS("Theme export was not successful. Check please that the server is not out of disk space.", "");
@@ -32,7 +36,6 @@ regGS("Template Id", "");
 regGS("Template '$1' was duplicated into '$2'.", "");
 regGS("Template '$1' $2.", "");
 regGS("Something broke", "");
-regGS("Set new name", "");
 regGS("Section page template", "");
 regGS("Saving..", "");
 regGS("Saving settings failed.", "");
