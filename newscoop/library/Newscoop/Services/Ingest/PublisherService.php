@@ -57,6 +57,10 @@ class PublisherService
      */
     public function update(Entry $entry)
     {
+        if (!$entry->isPublished()) {
+            return;
+        }
+
         $article = $this->getArticle($entry);
         $article->setTitle($entry->getTitle());
         $article->setProperty('time_updated', $entry->getUpdated()->format(self::DATETIME_FORMAT));
@@ -64,6 +68,7 @@ class PublisherService
         $this->setArticleData($article, $entry);
         $this->setArticleAuthors($article, $entry->getAuthors());
         $this->setArticleImages($article, $entry->getImages());
+        $entry->setPublished(new \DateTime());
         return $article;
     }
 
@@ -162,8 +167,11 @@ class PublisherService
     {
         $data = $article->getArticleData();
         foreach ($this->config['field'] as $property => $getter) {
-            $data->setProperty("F{$property}", $entry->$getter());
+            if (method_exists($entry, $getter)) {
+                $data->setProperty("F{$property}", $entry->$getter());
+            }
         }
+
         $data->create();
     }
 

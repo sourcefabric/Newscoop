@@ -89,6 +89,14 @@ class Comment
     private $parent;
 
     /**
+     * TODO get rid of this when the composite key stuff is done.
+     *
+     * @column(type="integer", name="fk_thread_id")
+     * @var int
+     */
+    private $article_num;
+
+    /**
      * @manyToOne(targetEntity="Article")
      * @joinColumn(name="fk_thread_id", referencedColumnName="Number")
      * @var Newscoop\Entity\Article
@@ -161,6 +169,12 @@ class Comment
      * @var int
      */
     private $dislikes;
+    
+    /**
+     * @column(length=1)
+     * @var int
+     */
+    private $recommended;
 
     /**
      * Set id
@@ -181,6 +195,16 @@ class Comment
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * TODO get rid of this when the composite key stuff is done.
+     *
+     * @return int
+     */
+    public function getArticleNumber()
+    {
+        return $this->article_num;
     }
 
     /**
@@ -304,6 +328,30 @@ class Comment
             }
         }
         return (string)$this->ip;
+    }
+    
+    /**
+     * Set recommended
+     *
+     * @param string $p_recommended
+     * @return Newscoop\Entity\Comment
+     */
+    public function setRecommended($p_recommended)
+    {
+        if ($p_recommended) $this->recommended = 1;
+        else $this->recommended = 0;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get comment recommended
+     *
+     * @return string
+     */
+    public function getRecommended()
+    {
+        return (string)$this->recommended;
     }
 
     /**

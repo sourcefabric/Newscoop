@@ -76,6 +76,11 @@ class Application_Form_Profile extends Zend_Form
             'filters' => array('stringTrim'),
         ));
 
+        $profile->addElement('text', 'google', array(
+            'label' => 'Google+',
+            'filters' => array('stringTrim'),
+        ));
+
         $profile->addElement('text', 'geolocation', array(
             'label' => 'Geolocation',
             'filters' => array('stringTrim'),

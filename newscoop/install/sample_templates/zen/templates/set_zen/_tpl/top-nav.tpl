@@ -1,5 +1,4 @@
 <div class="row" id="main-nav">
-  {{ omnibox }}
   <div class="tencol">
     <ul id="nav">
       <li{{ if $gimme->template->name == "front.tpl" }} class="current_page_item"{{ /if }}><a href="http://{{ $gimme->publication->site }}">Home</a></li>
@@ -15,7 +14,7 @@
 
     </ul>       
   </div>
-  <div class="twocol last searchbox">   
-{{ include file="_tpl/top-search-box.tpl" }}
+  <div class="twocol last searchbox">
   </div><!-- .searchbox -->
+  {{ include file="_tpl/top-webcode-box.tpl" }} 
 </div><!-- /#nav -->

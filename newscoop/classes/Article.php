@@ -1415,6 +1415,16 @@ class Article extends DatabaseObject {
         // If the article is being published
         if ( ($this->getWorkflowStatus() != 'Y') && ($p_value == 'Y') ) {
             $this->setProperty('PublishDate', 'NOW()', true, true);
+
+            //send out an article.published event
+            self::dispatchEvent("article.published", $this);
+            $article_images = ArticleImage::GetImagesByArticleNumber($this->getArticleNumber());
+            foreach ($article_images as $article_image) {
+                $image = $article_image->getImage();
+                $user_id = (int)$image->getUploadingUserId();
+                //send out an image.published event
+                self::dispatchEvent("image.published", $this, array("user" => $user_id));
+            }
         }
         // Unlock the article if it changes status.
         if ( $this->getWorkflowStatus() != $p_value ) {
@@ -2565,6 +2575,8 @@ class Article extends DatabaseObject {
                     ));
                     $selectClauseObj->addWhere("Articles.Number IN ($queryLocation)");
                 }
+            } elseif ($leftOperand == 'insection') {
+                $selectClauseObj->addWhere("Articles.NrSection IN " . $comparisonOperation['right']);
             } else {
                 // custom article field; has a correspondence in the X[type]
                 // table fields
@@ -2809,6 +2821,15 @@ class Article extends DatabaseObject {
             $conditionOperation['symbol'] = '=';
             $conditionOperation['right'] = 'Y';
             break;
+
+        case 'insection':
+            $conditionOperation = array(
+                'left' => 'insection',
+                'symbol' => 'IN',
+                'right' => '(' . implode(',', array_map('intval', explode('|', $p_param->getRightOperand()))) . ')',
+            );
+            break;
+
         case 'reads':
             $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
         default:
@@ -3022,6 +3043,9 @@ class Article extends DatabaseObject {
                     $dbField = 'RequestObjects.request_count';
                     $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
                     break;
+                case 'bykeywords':
+                    $dbField = 'Articles.Keywords';
+                    break;
                 case 'bycomments':
                     //@todo change this with DOCTRINE2 when refactor
 		            $dbField = 'comments_counter.comments_count';
@@ -3044,6 +3068,18 @@ class Article extends DatabaseObject {
                                                         'Number'=>'fk_article_number',
                                                         'IdLanguage'=>'fk_language_id');
                     $p_whereConditions[] = "`comment_ids`.`last_comment_id` IS NOT NULL";
+                    break;
+
+                case 'bypriority': // @wobs
+                    $joinTable = "(SELECT NrArticle, IdLanguage, IF(FUrgency='2',2,3) as urgency FROM Xnewswire)";
+                    $p_otherTables[$joinTable] = array(
+                        '__TABLE_ALIAS' => 'newswires',
+                        'Number' => 'NrArticle',
+                        'IdLanguage' => 'IdLanguage',
+                    );
+                    $p_whereConditions[] = "Articles.Type = 'newswire'";
+                    $order[] = array('field' => 'newswires.urgency', 'dir' => 'asc');
+                    $order[] = array('field' => 'Articles.PublishDate', 'dir' => 'desc');
                     break;
             }
             if (!is_null($dbField)) {

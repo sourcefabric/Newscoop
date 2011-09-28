@@ -11,79 +11,63 @@ use Newscoop\Entity\User,
     Newscoop\Entity\Topic,
     Newscoop\Entity\UserTopic;
 
-class UserTopicServiceTest extends \PHPUnit_Framework_TestCase
+class UserTopicServiceTest extends \RepositoryTestCase
 {
     /** @var Newscoop\Services\UserTopicService */
     protected $service;
 
-    /** @var Doctrine\ORM\EntityManager */
-    protected $em;
-
-    /** @var Doctrine\ORM\EntityRepository */
-    protected $repository;
+    /** @var Newscoop\Entity\User */
+    protected $user;
 
     public function setUp()
     {
-        $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->repository = $this->getMockBuilder('Doctrine\ORM\EntityRepository')
-            ->disableOriginalConstructor()
-            ->getMock();
+        parent::setUp('Newscoop\Entity\User', 'Newscoop\Entity\Topic', 'Newscoop\Entity\UserTopic', 'Newscoop\Entity\Acl\Role');
 
         $this->service = new UserTopicService($this->em);
+        $this->user = new User('name');
+        $this->em->persist($this->user);
+        $this->em->flush();
     }
 
     public function testService()
     {
-        $service = new UserTopicService($this->em);
-        $this->assertInstanceOf('Newscoop\Services\UserTopicService', $service);
+        $this->assertInstanceOf('Newscoop\Services\UserTopicService', $this->service);
     }
 
     public function testGetTopicsEmpty()
     {
-        $user = new User();
-
-        $this->em->expects($this->once())
-            ->method('getRepository')
-            ->will($this->returnValue($this->repository));
-
-        $this->repository->expects($this->once())
-            ->method('findBy')
-            ->with($this->equalTo(array('user' => $user->getId())))
-            ->will($this->returnValue(array()));
-
-        $this->assertEmpty($this->service->getTopics($user));
+        $this->assertEmpty($this->service->getTopics($this->user));
     }
 
     public function testFollow()
     {
-        $user = new User();
         $topic = new Topic(1, 1, 'name');
-        $rel = new UserTopic($user, $topic);
+        $this->em->persist($topic);
 
-        $this->em->expects($this->once())
-            ->method('persist')
-            ->with($this->equalTo($rel));
+        $this->service->followTopic($this->user, $topic);
 
-        $this->em->expects($this->once())
-            ->method('flush')
-            ->with();
-
-        $this->service->followTopic($user, $topic);
-
-        $this->em->expects($this->once())
-            ->method('getRepository')
-            ->will($this->returnValue($this->repository));
-
-        $this->repository->expects($this->once())
-            ->method('findBy')
-            ->with($this->equalTo(array('user' => $user->getId())))
-            ->will($this->returnValue(array($rel)));
-
-        $topics = $this->service->getTopics($user);
+        $topics = $this->service->getTopics($this->user);
         $this->assertEquals(1, sizeof($topics));
         $this->assertEquals($topic, $topics[0]);
+    }
+
+    public function testUpdateTopics()
+    {
+        $this->em->persist($topic = new Topic(1, 1, '1'));
+        $this->em->persist(new Topic(2, 1, '2'));
+        $this->em->persist(new Topic(3, 1, '3'));
+        $this->em->flush();
+
+        $this->service->followTopic($this->user, $topic);
+
+        $this->service->updateTopics($this->user, array(
+            '1' => 'false',
+            '2' => 'false',
+            '3' => 'true',
+        ));
+
+        $topics = $this->service->getTopics($this->user);
+        $this->assertEquals(1, count($topics));
+        $this->assertEquals('3', current($topics)->getName());
     }
 }

@@ -4,23 +4,45 @@ var statusMap = {
     'deleted': 'deleted',
     'approved': 'approved'
 };
+var recommendedMap = {
+	'recommended': 'recommended',
+	'unrecommended': 'unrecommended'
+};
 var datatableCallback = {
     serverData: {},
     loading: false,
     addServerData: function (sSource, aoData, fnCallback) {
         that = datatableCallback;
         for (i in that.serverData) {
-            if (that.serverData[i]) aoData.push({
-                "name": "sFilter[status][]",
-                "value": i
-            });
+			if (i == 'pending' || i == 'processed' || i == 'starred' || i == 'deleted') {
+				if (that.serverData[i]) {
+					aoData.push({
+						"name": "sFilter[status][]",
+						"value": i
+					});
+				}
+			}
+			else {
+				if (that.serverData[i]) {
+					if (i == 'recommended') var value = 1;
+					else var value = 0;
+					
+					aoData.push({
+						"name": "sFilter[recommended][]",
+						"value": value
+					});
+				}
+			}
         }
         $.getJSON(sSource, aoData, function (json) {
             fnCallback(json);
         });
     },
     row: function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-        $(nRow)
+		if (aData.comment.recommended == 1) $(nRow).addClass('recommended');
+		else $(nRow).addClass('unrecommended');
+		
+		$(nRow)
             .addClass('status_' + statusMap[aData.comment.status])
             .tmpl('#comment-tmpl', aData)
             .find("input."+ statusMap[aData.comment.status]).attr("checked","checked");
@@ -118,6 +140,29 @@ $(function () {
      * when header filter buttons are triggresd
      */
     $('.status_filter li')
+    .click(function (evt) {
+        $(this).find('input').click().iff($.versionBetween(false,'1.6.0')).change();
+    })
+    .find('input')
+        .click(function(evt){
+            evt.stopPropagation();
+        })
+        .change(function(evt){
+            if(!datatableCallback.loading) {
+                datatableCallback.loading = true;
+                datatableCallback.serverData[$(this).val()] = $(this).is(':checked');
+                datatable.fnDraw();
+            } else
+                return false;
+    }).end().find('label').click(function(evt){
+        evt.stopPropagation();
+    });
+    
+    /**
+     * Action to fire
+     * when header filter buttons are triggresd
+     */
+    $('.recommended_filter li')
     .click(function (evt) {
         $(this).find('input').click().iff($.versionBetween(false,'1.6.0')).change();
     })
@@ -236,6 +281,52 @@ $(function () {
         td.find('.content-edit').hide();
         td.find('.content-reply').toggle("fast");
     });
+    
+    $('.datatable .action-recommend').live('click', function () {
+        var el = $(this);
+        var ids = [el.attr('id').replace('recommend_', '')];
+        
+        $.ajax({
+            type: 'POST',
+            url: 'comment/set-recommended/format/json',
+            data: $.extend({
+                'comment': ids,
+                'recommended': 1
+            }, serverObj.security),
+            success: function (data) {
+                flashMessage(putGS('Comment updated.'));
+                datatable.fnDraw();
+            },
+            error: function (rq, status, error) {
+                if (status == 0 || status == -1) {
+                    flashMessage(putGS('Unable to reach Newscoop. Please check your internet connection.'), "error");
+                }
+            }
+        });
+    });
+    
+    $('.datatable .action-unrecommend').live('click', function () {
+        var el = $(this);
+        var ids = [el.attr('id').replace('unrecommend_', '')];
+        
+        $.ajax({
+            type: 'POST',
+            url: 'comment/set-recommended/format/json',
+            data: $.extend({
+                'comment': ids,
+                'recommended': 0
+            }, serverObj.security),
+            success: function (data) {
+                flashMessage(putGS('Comment updated.'));
+                datatable.fnDraw();
+            },
+            error: function (rq, status, error) {
+                if (status == 0 || status == -1) {
+                    flashMessage(putGS('Unable to reach Newscoop. Please check your internet connection.'), "error");
+                }
+            }
+        });
+    });
 
     // Dialog
     $('.dialogPopup').dialog({
@@ -256,7 +347,7 @@ $(function () {
             type: 'GET',
             url: $(this).attr('href'),
             success: function (data) {
-		data = $.parseJSON(data);
+				data = $.parseJSON(data);                
                 var content = '<h3><a href="#">' + $(that).html() + '</a></h3>';
                 for (i in data) {
                     content += '<h4>' + i + '</h4>';

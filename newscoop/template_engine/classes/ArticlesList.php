@@ -34,7 +34,11 @@ class ArticlesList extends ListObject
                                          'reads'=>array('field'=>null, 'type'=>'integer'),
                                          'author'=>array('field'=>null, 'type'=>'string'),
                                          'section'=>array('field'=>'NrSection', 'type'=>'integer'),
-                                         'issue'=>array('field'=>'NrIssue', 'type'=>'integer')
+                                         'issue'=>array('field'=>'NrIssue', 'type'=>'integer'),
+                                         'insection' => array(
+                                             'field' => 'insection',
+                                             'type' => 'string',
+                                         ),
                                    );
 
     private static $s_orderFields = array(
@@ -51,7 +55,9 @@ class ArticlesList extends ListObject
                                           'bylanguage',
                                           'bysectionorder',
                                           'bycomments',
-                                          'bylastcomment'
+                                          'bylastcomment',
+                                          'bypriority',
+                                          'bykeywords'
                                     );
 
 

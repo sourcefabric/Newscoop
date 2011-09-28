@@ -6,25 +6,18 @@
  */
 
 /**
- * Users list
+ * UserComments list
  */
-class UsersList extends ListObject
+class UserCommentsList extends ListObject
 {
     /** @var array */
     private static $s_orderFields = array(
-        'default',
-        'byusername',
-        'byfirstname',
-        'bylastname',
+        'bydate',
     );
 
     /** @var array */
     private $orderMapping = array(
-        'byusername' => 'username',
-        'byfirstname' => 'first_name',
-        'bylastname' => 'last_name',
-        'bycreated' => 'created',
-        'byrandom' => 'random',
+        'bydate' => 'time_created'
     );
 
 	/**
@@ -41,23 +34,20 @@ class UsersList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-        $service = $GLOBALS['controller']->getHelper('service')->getService('user.list');
+	    $comments = array();
 
-        if (in_array('random', array_keys($this->m_order))) { // random ordering
-            $users = $service->getRandomList($p_limit);
-            $count = count($users);
-        } else {
-            $users = $service->findBy($this->m_constraints, $this->m_order, $p_limit, $p_start);
-            $count = $service->countBy($this->m_constraints);
+        if(!isset( $p_parameters['commenters'])) {
+            return $comments;
+	    }
+
+        $comment_service = $GLOBALS['controller']->getHelper('service')->getService('comment');
+
+        foreach ($comment_service->findUserComments($p_parameters, $this->m_order, $p_limit, $p_start) as $comment) {
+            $comments[] = new MetaComment($comment->getId());
         }
 
-        $metaUsers = array();
-        foreach ($users as $user) {
-            $metaUsers[] = new MetaUser($user);
-        }
-
-        return $metaUsers;
-    }
+        return $comments;
+	}
 
 	/**
 	 * Processes list constraints passed in an array.
@@ -67,9 +57,7 @@ class UsersList extends ListObject
 	 */
 	protected function ProcessConstraints(array $p_constraints)
 	{
-        return $p_constraints + array(
-            'is_public' => true,
-        );
+        return $p_constraints;
 	}
 
 	/**
@@ -112,6 +100,8 @@ class UsersList extends ListObject
 	 */
 	protected function ProcessParameters(array $p_parameters)
 	{
+	    $user_service = $GLOBALS['controller']->getHelper('service')->getService('user');
+
 	    $parameters = array();
 	    foreach ($p_parameters as $parameter => $value) {
 	        $parameter = strtolower($parameter);
@@ -123,15 +113,26 @@ class UsersList extends ListObject
 	                if ($parameter == 'length' || $parameter == 'columns') {
 	                    $intValue = (int)$value;
 	                    if ("$intValue" != $value || $intValue < 0) {
-	                        CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_article_authors");
+	                        throw new \InvalidArgumentException("CommentsList Property '$parameter' invalid");
 	                    }
 	                    $parameters[$parameter] = (int) $value;
 	                } else {
 	                    $parameters[$parameter] = $value;
 	                }
 	                break;
+	            case 'user':
+	                $user = $user_service->find((int)$value);
+	                $commenter_ids = array();
+
+	                foreach ($user->getCommenters() as $commenter) {
+	                    $commenter_ids[] = $commenter->getId();
+	                }
+	                if (count($commenter_ids) > 0) {
+	                   $parameters['commenters'] = $commenter_ids;
+	                }
+                    break;
 	            default:
-	                CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_authors", $p_smarty);
+	                throw new \InvalidArgumentException("CommentsList Property '$parameter' invalid");
 	        }
 	    }
 

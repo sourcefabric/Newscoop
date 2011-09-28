@@ -76,6 +76,17 @@ class ListUserService
         return $result;
     }
 
+    /**
+     * Get random list of users
+     *
+     * @param int $limit
+     * @return array
+     */
+    public function getRandomList($limit = 25)
+    {
+        return $this->getRepository()->getRandomList($limit);
+    }
+
     public function findUsersLastNameInRange($letters, $countOnly=false, $page=1, $limit=25)
     {
         $offset = ($page-1) * $limit;

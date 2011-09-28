@@ -110,33 +110,30 @@ class IngestService
             if (flock($handle, LOCK_EX | LOCK_NB)) {
                 $parser = new NewsMlParser($file);
                 if (!$parser->isImage()) {
-                    if ($parser->getRevisionId() > 1) {
-                        $entry = $this->getPrevious($parser, $feed);
-                        switch ($parser->getInstruction()) {
-                            case 'Rectify':
-                            case 'Update':
-                                $entry->update($parser);
+                    $entry = $this->getPrevious($parser, $feed);
+                    switch ($parser->getInstruction()) {
+                        case 'Rectify':
+                        case 'Update':
+                            $entry->update($parser);
+
+                        case '':
+                            if ($entry->isPublished()) {
                                 $this->updatePublished($entry);
-                                $this->em->persist($entry);
-                                break;
+                            } elseif ($this->isAutoMode()) {
+                                $this->publish($entry);
+                            }
+                            $this->em->persist($entry);
+                            break;
 
-                            case 'Delete':
-                                $this->deletePublished($entry);
-                                $feed->removeEntry($entry);
-                                $this->em->remove($entry);
-                                break;
+                        case 'Delete':
+                            $this->deletePublished($entry);
+                            $feed->removeEntry($entry);
+                            $this->em->remove($entry);
+                            break;
 
-                            default:
-                                throw new \InvalidArgumentException("Instruction '{$parser->getInstruction()}' not implemented.");
-                                break;
-                        }
-                    } else {
-                        $entry = Entry::create($parser);
-                        $feed->addEntry($entry);
-                        if ($this->isAutoMode()) {
-                            $this->publish($entry);
-                        }
-                        $this->em->persist($entry);
+                        default:
+                            throw new \InvalidArgumentException("Instruction '{$parser->getInstruction()}' not implemented.");
+                            break;
                     }
                 }
 
@@ -245,7 +242,9 @@ class IngestService
      */
     private function updatePublished(Entry $entry)
     {
-        $this->publisher->update($entry);
+        if ($entry->isPublished()) {
+            $this->publisher->update($entry);
+        }
     }
 
     /**
@@ -256,7 +255,9 @@ class IngestService
      */
     private function deletePublished(Entry $entry)
     {
-        $this->publisher->delete($entry);
+        if ($entry->isPublished()) {
+            $this->publisher->delete($entry);
+        }
     }
 
     /**
