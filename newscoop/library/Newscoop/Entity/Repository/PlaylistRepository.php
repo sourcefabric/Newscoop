@@ -17,12 +17,17 @@ use Newscoop\Entity\PlaylistArticle,
 
 class PlaylistRepository extends EntityRepository
 {
-    public function getArticles(Playlist $playlist, Language $lang = null)
+    /**
+     * Returns articles for a given playlist, and optionally language
+     * @param Newscoop\Entity\Playlist $playlist
+     * @param Newscoop\Entity\Language $lang
+     */
+    public function articles(Playlist $playlist, Language $lang = null, $fullArticle = false)
     {
         $em = $this->getEntityManager();
         $query = $em->createQuery
         ("
-        	SELECT a.number articleId, a.name title, a.date date
+        	SELECT ".( $fullArticle ? "pa, a" : "a.number articleId, a.name title, a.date date" )."
         	FROM Newscoop\Entity\PlaylistArticle pa
         	JOIN pa.article a
         	WHERE pa.idPlaylist = ?1".
@@ -36,6 +41,11 @@ class PlaylistRepository extends EntityRepository
         return $rows;
     }
 
+    /**
+     * Save playlist with articles
+     * @param Newscoop\Entity\Playlist $playlist $playlist
+     * @param array $articles
+     */
     public function save(Playlist $playlist = null, $articles = null)
     {
         $em = $this->getEntityManager();
@@ -75,5 +85,19 @@ class PlaylistRepository extends EntityRepository
             return false;
         }
         return $playlist;
+    }
+
+    /**
+     * Delete playlist
+     * @param Newscoop\Entity\Playlist $playlist
+     */
+    public function delete(Playlist $playlist)
+    {
+        if (!$playlist) {
+            return false;
+        }
+        $em = $this->getEntityManager();
+        $em->remove($playlist);
+        $em->flush();
     }
 }

@@ -57,7 +57,9 @@ class Admin_PlaylistController extends Zend_Controller_Action
 
     public function deleteAction()
     {
-        $this->view->id = $this->_request->getParam('id');
+        $id = $this->_request->getParam('id');
+        $this->view->id = $id;
+        $this->playlistRepository->delete($this->playlistRepository->find($id));
     }
 
     public function listDataAction()
@@ -71,7 +73,7 @@ class Admin_PlaylistController extends Zend_Controller_Action
         }
 
         $playlist->setId($this->_request->getParam('id'));
-        $this->view->items = $this->playlistRepository->getArticles($playlist, $lang);
+        $this->view->items = $this->playlistRepository->articles($playlist, $lang);
         $this->view->code = 200;
     }
 

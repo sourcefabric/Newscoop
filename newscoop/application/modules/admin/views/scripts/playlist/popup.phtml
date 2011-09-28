@@ -162,9 +162,15 @@ function fnSaveCallback(data)
 		var flash = flashMessage('{$t['list-save-failed']}', null, false);
 		return false;
 	}
+	var pl = $(parent.document.body).find('#playlists option[value='+data.playlistId+']');
+	if (pl.length == 0) {
+		$(parent.document.body).find('#playlists').append( $('<option />').val(data.playlistId).text(data.playlistName) );
+	}
+	else {
+		pl.val(data.playlistId).text(data.playlistName);
+	}
 	var flash = flashMessage('{$t['list-saved']}', null, false);
 }
-
 
 JS;
 

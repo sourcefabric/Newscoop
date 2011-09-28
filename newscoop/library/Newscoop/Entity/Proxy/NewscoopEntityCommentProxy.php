@@ -40,6 +40,12 @@ class NewscoopEntityCommentProxy extends \Newscoop\Entity\Comment implements \Do
         return parent::getId();
     }
 
+    public function getArticleNumber()
+    {
+        $this->__load();
+        return parent::getArticleNumber();
+    }
+
     public function setTimeCreated(\DateTime $p_datetime)
     {
         $this->__load();
@@ -98,6 +104,18 @@ class NewscoopEntityCommentProxy extends \Newscoop\Entity\Comment implements \Do
     {
         $this->__load();
         return parent::getIp();
+    }
+
+    public function setRecommended($p_recommended)
+    {
+        $this->__load();
+        return parent::setRecommended($p_recommended);
+    }
+
+    public function getRecommended()
+    {
+        $this->__load();
+        return parent::getRecommended();
     }
 
     public function setCommenter(\Newscoop\Entity\Comment\Commenter $p_commenter)
@@ -247,7 +265,7 @@ class NewscoopEntityCommentProxy extends \Newscoop\Entity\Comment implements \Do
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'commenter', 'forum', 'parent', 'thread', 'language', 'subject', 'message', 'thread_level', 'thread_order', 'status', 'ip', 'time_created', 'likes', 'dislikes');
+        return array('__isInitialized__', 'id', 'commenter', 'forum', 'parent', 'article_num', 'thread', 'language', 'subject', 'message', 'thread_level', 'thread_order', 'status', 'ip', 'time_created', 'likes', 'dislikes', 'recommended');
     }
 
     public function __clone()
