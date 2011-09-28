@@ -40,8 +40,22 @@ class DebateDaysList extends ListObject
 	    $dateRange = range($dateStart, $dateEnd, $rangeUnit);
         $dateVotes = DebateVote::getResults($context->debate->number, $context->debate->language_id, $dateStart, $dateEnd);
 
+        $dateResults = array();
+        if (count($dateVotes) < count($dateRange)) {
+            foreach ($dateRange as $timetamp) {
+                foreach ($dateVotes as $vote) {
+                    if ($vote['time'] != $timetamp) {
+                        $dateResults[] = array( 'time' => $timetamp, 'total_count' => 0 );
+                    }
+                    else {
+                        $dateResults[] = $vote;
+                    }
+                }
+            }
+        }
+
         $dateArray = array();
-        foreach ($dateVotes as $date) {
+        foreach ($dateResults as $date) {
             $dateArray[] = new MetaDebateDays($date);
         }
 

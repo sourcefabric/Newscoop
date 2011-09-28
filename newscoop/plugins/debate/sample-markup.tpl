@@ -58,19 +58,35 @@
 
 	{{if $gimme->debate->is_votable}}
  		{{debate_form template="debate.tpl" submit_button=false}}
-  			{{list_debate_answers order="bynumber asc"}}
-				{{debateanswer_edit}}
-				{{$gimme->debateanswer->answer}} <br />
-  			{{/list_debate_answers}}
- 			<input type="submit" id="submit_debate" class="button" value="I think so!" />
+ 			<ul>
+  				{{list_debate_answers order="bynumber asc"}}
+				<li>
+					some text here
+					<em>{{$gimme->debateanswer->percentage|string_format:"%d"}}%</em>
+					<a onclick="$('#answer-{{$gimme->debateanswer->number}}').trigger('click'); return false;" href="javascript:void(0)">
+						{{$gimme->debateanswer->answer}}
+					</a>
+					<!-- f_debateanswer_nr name mandatory -->
+					<input type="radio" name="f_debateanswer_nr"
+						value="{{$gimme->debateanswer->number}}" id="answer-{{$gimme->debateanswer->number}}"
+						onclick="$('#submit-debate').trigger('click');"
+					/>
+				</li>
+	  			{{/list_debate_answers}}
+  			</ul>
+ 			<input type="submit" id="submit-debate" class="button" value="I think so!" style="display:none" />
 		{{/debate_form}}
-	{{/if}}
-
-	{{list_debate_answers order="bynumber asc"}}
-	<div class="answer">{{$gimme->debateanswer->percentage|string_format:"%d"}}%: {{ $gimme->debateanswer->answer }}
-		<div style="width:{{$gimme->debateanswer->percentage|string_format:"%d"}}%;background:#5d4040;">&nbsp;</div>
-    </div>
-	{{/list_debate_answers}}
+	{{else}}
+		<ul>
+    		{{list_debate_answers order="bynumber asc"}}
+    		<li style="height:100px">
+				<div style="height: {{$gimme->debateanswer->percentage|string_format:"%d"}}%;" class="gray"></div>
+                <em>{{$gimme->debateanswer->percentage|string_format:"%d"}}%</em>
+                <span>{{$gimme->debateanswer->answer}}</span>
+            </li>
+    		{{/list_debate_answers}}
+		</ul>
+   	{{/if}}
 
 	<div class="results">
 	{{list_debate_days length="10"}}
@@ -82,6 +98,7 @@
 			</div>
 			{{/list_debate_votes}}
 			</div>
+			<strong>{{$gimme->debatedays->time|date_format:"%b %e"}}</strong>
 		</div>
 	{{/list_debate_days}}
  	<div style="clear: both"></div>

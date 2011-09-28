@@ -88,6 +88,7 @@ class MetaActionDebate extends MetaAction
                 break;
 
                 case 'standard':
+
                     if (!isset($p_input['f_debateanswer_nr']) || empty($p_input['f_debateanswer_nr'])) {
                         $this->m_error = new PEAR_Error('Invalid debate voting value.', ACTION_DEBATE_ERR_INVALID_VALUE);
                         return false;
@@ -112,11 +113,15 @@ class MetaActionDebate extends MetaAction
     {
         $user = null;
         if ($p_context->user instanceof  MetaUser) {
-            $user = $p_context->user->id;
+            $user = $p_context->user->getId();
         }
         if ($this->m_debate instanceof Debate) {
             $this->m_debate->setUserId($user);
         }
+        else {
+            return false;
+        }
+
         if (!$this->m_debate->isVotable()) {
             $this->m_error = new PEAR_Error('Debate is not votable.', ACTION_DEBATE_ERR_NOT_VOTABLE);
             return false;

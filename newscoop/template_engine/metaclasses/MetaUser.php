@@ -73,6 +73,18 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         }
     }
 
+    /**
+     * Get user id
+     * DO NOT CHNAGE OR REMOVE!
+     * and please make sure it can always return a numeric value of the logged in user id
+     * @author Mihai Balaceanu
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->user->getId();
+    }
+
     protected function isDefined()
     {
         return $this->user->getId() > 0;
