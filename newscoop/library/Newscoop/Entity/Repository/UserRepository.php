@@ -275,4 +275,27 @@ class UserRepository extends EntityRepository
 
         return $qb->getQuery()->getResult();
     }
+
+    /**
+     * Get random list of users
+     *
+     * @param int $limit
+     * @return array
+     */
+    public function getRandomList($limit)
+    {
+        $query = $this->getEntityManager()->createQuery("SELECT u, RAND() as random FROM {$this->getEntityName()} u WHERE u.status = :status AND u.is_public = :public ORDER BY random");
+        $query->setMaxResults($limit);
+        $query->setParameters(array(
+            'status' => User::STATUS_ACTIVE,
+            'public' => True,
+        ));
+
+        $users = array();
+        foreach ($query->getResult() as $result) {
+            $users[] = $result[0];
+        }
+
+        return $users;
+    }
 }
