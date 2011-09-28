@@ -105,7 +105,7 @@ implements IOutputSettingIssueService
         return NULL;
     }
 
-    function isThemeUsed($theme, &$themes = NULL)
+    public function isThemeUsed($theme, &$themes = NULL)
     {
         Validation::notEmpty($theme, 'theme');
         if($theme instanceof Theme){
@@ -133,6 +133,26 @@ implements IOutputSettingIssueService
         }
 
         return sizeof($themes) > 0;
+    }
+
+    public function getUnthemedIssues($publication)
+    {
+        Validation::notEmpty($publication, 'publication');
+
+        $issues = array();
+
+        $em = $this->getEntityManager();
+        // we need to find if the theme is used by anyoane.
+        $q = $em->createQueryBuilder();
+        $q->select('iss')
+            ->from(Issue::NAME, 'iss')
+            ->leftJoin('iss.outputSettingsIssues', 'osi')
+            ->where('iss.publication = :publication')
+            ->andWhere('osi.id IS NULL')
+            ->setParameter('publication', $publication);
+
+        $issues = $q->getQuery()->getResult();
+        return $issues;
     }
 
     /**

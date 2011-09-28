@@ -474,6 +474,15 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
                 }
                 $this->syncOutputSettings($outTh, $outSet);
 
+                $issueOutSettings = $this->getOutputSettingIssueService();
+                foreach ($issueOutSettings->getUnthemedIssues($publication) as $issue) {
+                    $outIssueTh = new OutputSettingsIssue();
+                    $outIssueTh->setIssue($issue);
+                    $outIssueTh->setThemePath($pathRsc);
+                    $outIssueTh->setOutput($outSet->getOutput());
+                    $em->persist($outIssueTh);
+                }
+
                 $em->persist($outTh);
             }
             $em->flush();
