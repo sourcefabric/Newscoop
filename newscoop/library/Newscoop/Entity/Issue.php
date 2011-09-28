@@ -81,6 +81,12 @@ class Issue extends Entity
     private $shortName = '';
 
     /**
+    * @OneToMany(targetEntity="Newscoop\Entity\Output\OutputSettingsIssue", mappedBy="issue")
+    * @var Newscoop\Entity\Output\OutputSettingsIssue
+    */
+    private $outputSettingsIssues;
+
+    /**
      * @param int $number
      */
     public function __construct($number)
