@@ -39,6 +39,8 @@ final class MetaDebate extends MetaDbObject {
         $this->m_customProperties['getdebates'] = 'getDebates';
         $this->m_customProperties['identifier'] = 'getIdentifier';
         $this->m_customProperties['is_votable'] = 'isVotable';
+        $this->m_customProperties['is_closed'] = 'isClosed';
+        $this->m_customProperties['is_started'] = 'isStarted';
         $this->m_customProperties['user_vote_count'] = 'getUserVoteCount';
     } // fn __construct
 
@@ -88,6 +90,16 @@ final class MetaDebate extends MetaDbObject {
     public function isVotable()
     {
         return $this->m_dbObject->isVotable();
+    }
+
+    public function isClosed()
+    {
+        return $this->m_dbObject->isClosed();
+    }
+
+        public function isStarted()
+    {
+        return $this->m_dbObject->isStarted();
     }
 
     public function getUserVoteCount()

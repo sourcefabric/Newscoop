@@ -909,6 +909,28 @@ class Debate extends DatabaseObject
     }
 
     /**
+     * Date checking for closed
+     */
+    public function isClosed()
+    {
+        if (strtotime($this->m_data['date_end']) < strtotime(date('Y-m-d'))) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Date checking for open
+     */
+    public function isStarted()
+    {
+        if (strtotime($this->m_data['date_begin']) > strtotime(date('Y-m-d'))) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
      * Return if this debate can be voted
      * (must be within start-end interval,
      * and not been voted before by same client)
