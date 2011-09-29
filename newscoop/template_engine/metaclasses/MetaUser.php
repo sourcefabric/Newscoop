@@ -50,6 +50,25 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         $this->m_skipFilter[] = "name";
     }
 
+    protected function getFirstName()
+    {
+        return $this->m_dbObject->getFirstName();
+    }
+
+    protected function getLastName()
+    {
+        return $this->m_dbObject->getLastName();
+    }
+
+    protected function getUsername()
+    {
+        return $this->m_dbObject->getusername();
+    }
+
+    protected function getEmail()
+    {
+        return $this->m_dbObject->getEmail();
+    }
 
     /**
      * @return string
