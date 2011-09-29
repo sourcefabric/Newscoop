@@ -27,13 +27,15 @@ class ImageController extends Zend_Controller_Action
             mkdir(APPLICATION_PATH . '/../images/cache/');
         }
 
-
-        $placeholder = Image::fromBlank($width, $height, Image::rgb(255, 255, 255));
         $image = Image::fromFile($src);
-        $image->resize($width, $height);
-        $placeholder->place($image, '50%', '50%');
-        $placeholder->save($dest);
-        $placeholder->send();
+        if ($image->width > $image->height) {
+            $image->resize(null, $height);
+        } else {
+            $image->resize($width, null);
+        }
+        $image->crop('50%', '50%', $width, $height);
+        $image->save($dest);
+        $image->send();
         exit;
     }
 }

@@ -264,7 +264,7 @@ function init_smarty()
     global $CAMPSITE_DIR;
 
     // includes smarty main class
-    require_once("smarty/Smarty.class.php");
+    require_once __DIR__ . '/../library/smarty3/Smarty.class.php';
 
     // instantiates smarty template system
     $tpl = new Smarty();

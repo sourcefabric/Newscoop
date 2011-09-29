@@ -23,25 +23,28 @@ class OmniboxController extends Zend_Controller_Action
     public function indexAction()
     {
 		$this->view->gimme = $this->_getParam('gimme');
-	}
+    }
 	
-	public function loginAction()
-	{
-		$this->getHelper('contextSwitch')->addActionContext('login', 'json')->initContext();
-		
-		$parameters = $this->getRequest()->getParams();
-		
-		$adapter = $this->_helper->service('auth.adapter');
-		$adapter->setUsername($parameters['username'])->setPassword($parameters['password']);
-		$result = $this->auth->authenticate($adapter);
+    public function loginAction()
+    {
+        $this->getHelper('contextSwitch')->addActionContext('login', 'json')->initContext();
 
-		if ($result->getCode() == Zend_Auth_Result::SUCCESS) {
-			$this->view->response = 'OK';
-		}
-		else {
-			$this->view->response = $this->view->translate('Login failed.');
-		}
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $values = $form->getValues();
+
+            $adapter = $this->_helper->service('auth.adapter');
+            $adapter->setUsername($values['username'])->setPassword($values['password']);
+            $result = $this->auth->authenticate($adapter);
+
+            if ($result->getCode() == Zend_Auth_Result::SUCCESS) {
+                $this->view->response = 'OK';
+            } else {
+                $this->view->response = $this->view->translate('Login failed.');
+            }
 	}
+    }
+
 	public function logoutAction()
 	{
 		$this->getHelper('contextSwitch')->addActionContext('logout', 'json')->initContext();

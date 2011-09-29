@@ -192,7 +192,7 @@ $('.save-button-bar input').click(function() {
     if ($(this).attr('id') == 'save_and_close') {
 		unlockArticle();
 		$(this).ajaxComplete(function() {
-            close(1500);
+            close(2000);
         });
     }
 
