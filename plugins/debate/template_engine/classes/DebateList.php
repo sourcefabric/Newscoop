@@ -84,6 +84,10 @@ class DebateList extends ListObject
 	                                                   $context->article->number);
 	    $this->m_constraints[] = $comparisonOperation;
 
+	    if (isset($p_parameters['number'])) {
+	        $comparisonOperation = new ComparisonOperation('number', $operator, $p_parameters['number']);
+	        $this->m_constraints[] = $comparisonOperation;
+	    }
 	    $user = $context->user;
 	    /* @var $user MetaUser */
 
@@ -214,6 +218,7 @@ class DebateList extends ListObject
     			case 'name':
     			case 'constraints':
     			case 'order':
+    			case 'number' :
     			case 'item':
     				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;

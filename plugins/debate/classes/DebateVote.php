@@ -227,6 +227,9 @@ class DebateVote extends DatabaseObject
             case 'monthly' :
                 $query = sprintf($query, "YEAR(added)*100 + MONTH(added)", $sqlLimit, $sqlStart);
                 break;
+
+            default :
+                return array();
         }
 
         global $g_ado_db;
@@ -235,6 +238,7 @@ class DebateVote extends DatabaseObject
         $vote_total = 0;
         $tunit = null;
         $results = $current_result = array();
+
         while ($row = $sqlr->fetchRow())
         {
             if ($tunit != $row['dg'])

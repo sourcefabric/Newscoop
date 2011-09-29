@@ -38,7 +38,8 @@ class DebateDaysList extends ListObject
 	        $dateStart = $dateEnd - ($rangeUnit*($p_limit-1));
 	    }
 	    $dateRange = range($dateStart, $dateEnd, $rangeUnit);
-        $dateVotes = DebateVote::getResults($context->debate->number, $context->debate->language_id, $dateStart, $dateEnd);
+
+	    $dateVotes = DebateVote::getResults($context->debate->number, $context->debate->language_id, $dateStart, $dateEnd);
 
         $dateResults = array();
         if (count($dateVotes) < count($dateRange)) {
