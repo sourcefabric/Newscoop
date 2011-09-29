@@ -83,9 +83,9 @@
 			{{ $view->translate('You have to be registered at TagesWoche in order to comment on articles and send messages directly to the editorial team. Please login or create a free user account on TagesWoche.') }}
 		</div>
 		<div class="text_container right half">
-			<input type="text" id="ob_username" class="small right" onKeyPress="if (event.keyCode == 13) omnibox.login();"><br>
+			<input type="text" id="ob_username" name="ob_username" class="small right" onKeyPress="if (event.keyCode == 13) omnibox.login();"><br>
 			<div class="clear"></div>
-			<input type="password" id="ob_password" class="small right" onKeyPress="if (event.keyCode == 13) omnibox.login();"><br>
+			<input type="password" id="ob_password" name="ob_password" class="small right" onKeyPress="if (event.keyCode == 13) omnibox.login();"><br>
 			<div class="clear"></div>
 			<input type="button" class="send_button right" value="{{ $view->translate('Login') }}" onClick="omnibox.login();">
 			<a class="register_link right" href="{{ $view->baseUrl('/register') }}">{{ $view->translate('Register') }}</a>
