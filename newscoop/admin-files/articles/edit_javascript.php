@@ -115,7 +115,7 @@ cleanTextContents = function()
 {
     var editor_rank = 0;
     while (true) {
-        var editor_obj = tinyMCE.get(editor_rank);
+        var editor_obj = typeof(tinyMCE) != "undefined" ? tinyMCE.get(editor_rank) : false;
         if (!editor_obj) {
             break;
         }
@@ -294,7 +294,7 @@ function editorsChanged()
 {
     var editor_rank = 0;
     while (true) {
-        var editor_obj = tinyMCE.get(editor_rank);
+        var editor_obj = typeof(tinyMCE) != "undefined" ? tinyMCE.get(editor_rank) : false;
         if (!editor_obj) {
             break;
         }
