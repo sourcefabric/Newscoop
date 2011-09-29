@@ -17,29 +17,22 @@ use Newscoop\Entity\User;
  */
 final class MetaUser extends MetaDbObject implements ArrayAccess
 {
-    /** @var Newscoop\Entity\User */
-    protected $user;
-
-    /** @var bool */
-    //public $defined;
 
     /**
      * @param Newscoop\Entity\User $user
      */
     public function __construct(User $user = NULL)
     {
-        $this->user = $user;
-        if (!$user) {
-            return;
+        if (is_null($user)) {
+            $user = new User;
         }
-
         $this->m_dbObject = $user;
 
-        $this->m_properties['identifier'] = 'getId';
-        $this->m_properties['first_name'] = 'getFirstName';
-        $this->m_properties['last_name'] = 'getLastName';
-        $this->m_properties['uname'] = 'getUsername';
-        $this->m_properties['email'] = 'getEmail';
+        $this->m_customProperties['identifier'] = 'getId';
+        $this->m_customProperties['first_name'] = 'getFirstName';
+        $this->m_customProperties['last_name'] = 'getLastName';
+        $this->m_customProperties['uname'] = 'getUsername';
+        $this->m_customProperties['email'] = 'getEmail';
 
         $this->m_customProperties['name'] = 'getDisplayName';
         $this->m_customProperties['created'] = 'getCreated';
@@ -61,11 +54,11 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     protected function getDisplayName()
     {
-        $url = $GLOBALS['controller']->view->url(array('username' => $this->user->getUsername()), 'user');
+        $url = $GLOBALS['controller']->view->url(array('username' => $this->m_dbObject->getUsername()), 'user');
 
-        $name = trim($this->user->getFirstName() . ' ' . $this->user->getLastName());
+        $name = trim($this->m_dbObject->getFirstName() . ' ' . $this->m_dbObject->getLastName());
 
-        if ($this->user->isPublic()) {
+        if ($this->m_dbObject->isPublic()) {
             return "<a href='{$url}'>{$name}</a>";
         }
         else {
@@ -75,24 +68,22 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
 
     /**
      * Get user id
-     * DO NOT CHNAGE OR REMOVE!
-     * and please make sure it can always return a numeric value of the logged in user id
      * @author Mihai Balaceanu
      * @return int
      */
-    public function getId()
+    protected function getId()
     {
-        return $this->user->getId();
+        return $this->m_dbObject->getId();
     }
 
     protected function isDefined()
     {
-        return $this->user->getId() > 0;
+        return $this->m_dbObject->getId() > 0;
     }
 
     protected function getCreated()
     {
-        $date = $this->user->getCreated();
+        $date = $this->m_dbObject->getCreated();
         return $date->format('d.m.Y');
     }
 
@@ -103,12 +94,12 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     protected function getSubscription()
     {
-        if (empty($this->user)) {
+        if (empty($this->m_dbObject)) {
             return new MetaSubscription();
         }
 
         $publicationId = CampTemplate::singleton()->context()->publication->identifier;
-        $subscriptions = Subscription::GetSubscriptions($publicationId, $this->user->getId());
+        $subscriptions = Subscription::GetSubscriptions($publicationId, $this->m_dbObject->getId());
         return empty($subscriptions) ? new MetaSubscription() : new MetaSubscription($subscriptions[0]->getSubscriptionId());
     }
 
@@ -122,7 +113,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         require_once dirname(__FILE__) . '/../../classes/Country.php';
         require_once dirname(__FILE__) . '/../../classes/Language.php';
 
-        $countryCode = $this->user->getAttribute('country_code');
+        $countryCode = $this->m_dbObject->getAttribute('country_code');
         $smartyObj = CampTemplate::singleton();
         $contextObj = $smartyObj->get_template_vars('gimme');
         $country = new Country($countryCode, $contextObj->language->number);
@@ -137,7 +128,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     public function has_permission($permission)
     {
-        return $this->user->hasPermission($permission);
+        return $this->m_dbObject->hasPermission($permission);
     }
 
     /**
@@ -147,7 +138,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     protected function isAdmin()
     {
-        return $this->user->isAdmin();
+        return $this->m_dbObject->isAdmin();
     }
 
     /**
@@ -158,7 +149,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     protected function isLoggedIn()
     {
         $auth = Zend_Auth::getInstance();
-        return $auth->hasIdentity() && $auth->getIdentity() == $this->user->getId();
+        return $auth->hasIdentity() && $auth->getIdentity() == $this->m_dbObject->getId();
     }
 
     /**
@@ -188,12 +179,12 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     public function image($width = 80, $height = 80)
     {
-        if (!$this->user->getImage()) {
+        if (!$this->m_dbObject->getImage()) {
             return '';
         }
 
         return $GLOBALS['controller']->getHelper('service')->getService('image')
-            ->getSrc($this->user->getImage(), $width, $height);
+            ->getSrc($this->m_dbObject->getImage(), $width, $height);
     }
 
     /**
@@ -203,13 +194,13 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     protected function getTopics()
     {
-        if (!$this->user->getId()) {
+        if (!$this->m_dbObject->getId()) {
             return array();
         }
 
         $service = $GLOBALS['controller']->getHelper('service')->getService('user.topic');
         $topics = array();
-        foreach ($service->getTopics($this->user) as $topic) {
+        foreach ($service->getTopics($this->m_dbObject) as $topic) {
             $topics[$topic->getTopicId()] = $topic->getName();
         }
 
@@ -223,16 +214,16 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     protected function getPostsCount()
     {
-        if (!$this->user->getId()) {
+        if (!$this->m_dbObject->getId()) {
             return 0;
         }
 
         $sum = 0;
         $sum += $GLOBALS['controller']->getHelper('entity')->getRepository('Newscoop\Entity\Comment')
-            ->countByUser($this->user);
+            ->countByUser($this->m_dbObject);
 
         $sum += $GLOBALS['controller']->getHelper('entity')->getRepository('Newscoop\Entity\Feedback')
-            ->countByUser($this->user);
+            ->countByUser($this->m_dbObject);
 
         return $sum;
     }
@@ -243,7 +234,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     public function offsetExists($offset)
     {
-        $offset = $this->user->getAttribute($offset);
+        $offset = $this->m_dbObject->getAttribute($offset);
         return isset($offset);
     }
 
@@ -252,7 +243,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     public function offsetGet($offset)
     {
-        return $this->user->getAttribute($offset);
+        return $this->m_dbObject->getAttribute($offset);
     }
 
     /**
