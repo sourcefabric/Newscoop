@@ -27,7 +27,6 @@ class Application_Form_Confirm extends Zend_Form
             'label' => 'Username*:',
             'required' => true,
             'filters' => array('stringTrim'),
-            'description' => 'username_description',
         ));
 
         $this->addElement('password', 'password', array(
@@ -37,7 +36,6 @@ class Application_Form_Confirm extends Zend_Form
             'validators' => array(
                 array('stringLength', false, array(6, 80)),
             ),
-            'description' => 'password_description',
         ));
 
         $form = $this;
@@ -51,7 +49,6 @@ class Application_Form_Confirm extends Zend_Form
                 }),
             ),
             'errorMessages' => array("Password confirmation does not match your password."),
-            'description' => 'password_confirm_description',
         ));
 
         $this->addElement('submit', 'submit', array(
