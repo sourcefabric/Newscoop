@@ -43,14 +43,20 @@ class DebateDaysList extends ListObject
 
         $dateResults = array();
         if (count($dateVotes) < count($dateRange)) {
-            foreach ($dateRange as $timetamp) {
+            foreach ($dateRange as $timetamp)
+            {
+                $found = 0;
                 foreach ($dateVotes as $vote) {
-                    if ($vote['time'] != $timetamp) {
-                        $dateResults[] = array( 'time' => $timetamp, 'total_count' => 0 );
+                    if ($vote['time'] == $timetamp) {
+                        $found = $vote;
+                        break;
                     }
-                    else {
-                        $dateResults[] = $vote;
-                    }
+                }
+                if ($found) {
+                    $dateResults[] = $found;
+                }
+                else {
+                    $dateResults[] = array( 'time' => $timetamp, 'total_count' => 0 );
                 }
             }
         }
