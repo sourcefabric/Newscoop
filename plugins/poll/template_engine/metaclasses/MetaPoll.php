@@ -5,12 +5,9 @@
 final class MetaPoll extends MetaDbObject {
 
     protected $single = true;
-    
+
 	private function InitProperties()
 	{
-		if (!is_null($this->m_properties)) {
-			return;
-		}
 		$this->m_properties['number'] = 'poll_nr';
 		$this->m_properties['language_id'] = 'fk_language_id';
 		$this->m_properties['title'] = 'title';
@@ -39,43 +36,43 @@ final class MetaPoll extends MetaDbObject {
         $this->m_customProperties['is_votable'] = 'isVotable';
         $this->m_customProperties['user_vote_count'] = 'getUserVoteCount';
     } // fn __construct
-    
+
     public function isCurrent()
     {
         if (strtotime($this->date_begin) > strtotime(date('Y-m-d'))) {
-            return false;   
+            return false;
         }
         if (strtotime($this->date_end) < strtotime(date('Y-m-d'))) {
-            return false;   
+            return false;
         }
-        
-        return true;  
+
+        return true;
     }
-    
+
     public function getDateBegin()
     {
-        return strtotime($this->m_dbObject->getProperty('date_begin'));   
+        return strtotime($this->m_dbObject->getProperty('date_begin'));
     }
-    
+
     public function getDateEnd()
     {
-        return strtotime($this->m_dbObject->getProperty('date_end'));   
+        return strtotime($this->m_dbObject->getProperty('date_end'));
     }
-    
+
     public function getIdentifier()
     {
         $id = $this->m_dbObject->getProperty('fk_language_id').'_'.$this->m_dbObject->getProperty('poll_nr');
-        return $id;     
+        return $id;
     }
-    
+
     public function isVotable()
     {
-        return $this->m_dbObject->isVotable();   
+        return $this->m_dbObject->isVotable();
     }
-    
+
     public function getUserVoteCount()
     {
-        return $this->m_dbObject->getUserVoteCount();   
+        return $this->m_dbObject->getUserVoteCount();
     }
 
 } // class MetaPoll

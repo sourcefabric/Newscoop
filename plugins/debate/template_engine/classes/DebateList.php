@@ -84,13 +84,17 @@ class DebateList extends ListObject
 	                                                   $context->article->number);
 	    $this->m_constraints[] = $comparisonOperation;
 
+	    if (isset($p_parameters['number'])) {
+	        $comparisonOperation = new ComparisonOperation('number', $operator, $p_parameters['number']);
+	        $this->m_constraints[] = $comparisonOperation;
+	    }
 	    $user = $context->user;
 	    /* @var $user MetaUser */
 
 	    $debatesList = Debate::GetList($this->m_constraints, $this->m_item, $this->m_order, $p_start, $p_limit, $p_count);
         $metaDebatesList = array();
 	    foreach ($debatesList as $debate) {
-	        $metaDebatesList[] = new MetaDebate($debate->getLanguageId(), $debate->getNumber(), $user->getId());
+	        $metaDebatesList[] = new MetaDebate($debate->getLanguageId(), $debate->getNumber(), $user->identifier);
 	    }
 	    return $metaDebatesList;
 	}
@@ -214,6 +218,7 @@ class DebateList extends ListObject
     			case 'name':
     			case 'constraints':
     			case 'order':
+    			case 'number' :
     			case 'item':
     				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;

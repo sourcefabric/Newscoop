@@ -6,9 +6,6 @@ final class MetaPollAnswer extends MetaDbObject {
 
 	private function InitProperties()
 	{
-		if (!is_null($this->m_properties)) {
-			return;
-		}
 		$this->m_properties['poll_nr'] = 'fk_poll_nr';
 		$this->m_properties['language_id'] = 'fk_language_id';
 		$this->m_properties['number'] = 'nr_answer';
@@ -29,7 +26,7 @@ final class MetaPollAnswer extends MetaDbObject {
 		$this->InitProperties();
         $this->m_customProperties['defined'] = 'defined';
     } // fn __construct
-    
+
 } // class MetaPollAnswer
 
 ?>

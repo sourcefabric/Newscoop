@@ -125,7 +125,7 @@ class NewsImport
         }
         require_once($feed_conf_path);
 
-        require_once($class_dir.DIR_SEP.'NewsImport.php');
+        require_once($class_dir.DIR_SEP.'RegionInfo.php');
 
         // take the category topics, as array by [language][category] of [name,id]
         $cat_topics = self::ReadEventTopics($newsimport_default_cat_names);
@@ -352,6 +352,17 @@ class NewsImport
             $article_data->setProperty('Fzipcode', $one_event['zipcode']);
             $article_data->setProperty('Ftown', $one_event['town']);
             $article_data->setProperty('Fstreet', $one_event['street']);
+
+            $e_region = '';
+            if (isset($one_event['region'])) {
+                $e_region = $one_event['region'];
+            }
+            $article_data->setProperty('Fregion', $e_region);
+            $e_subregion = '';
+            if (isset($one_event['subregion'])) {
+                $e_subregion = $one_event['subregion'];
+            }
+            $article_data->setProperty('Fsubregion', $e_subregion);
 
             $article_data->setProperty('Fdate', $one_event['date']);
             $article_data->setProperty('Fdate_year', $one_event['date_year']);
