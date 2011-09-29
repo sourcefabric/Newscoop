@@ -658,19 +658,9 @@ abstract class CampURI
             $tplObj = new MetaTemplate($p_templateIdOrName);
             if (!$tplObj->defined())
             {
-                $tplObj->getByTemplateIdOrName($p_templateIdOrName);
-                if(!$tplObj->getId()) {
-                    return null;
-                }
-                $template = $tplObj->getTemplateValue();
+                return null;
             }
-            else {
-                if($tplObj->getDbObject() instanceof \Newscoop\Entity\Resource) {
-                    $template = $tplObj->getValue();
-                } else {
-                    $template = $tplObj->getTemplateValue();
-                }
-            }
+            $template = $tplObj->name;
         }
         elseif (is_null($this->m_errorCode))
         {
