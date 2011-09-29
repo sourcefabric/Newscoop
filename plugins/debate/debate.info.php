@@ -131,7 +131,7 @@ if (!defined('PLUGIN_POLL_FUNCTIONS')) {
     {
         $debate_nr = Input::Get("f_debate_nr", "int");
         $debate_language_id = Input::Get("f_debate_language_id" ,"int");
-        $p_context->debate = new MetaDebate($debate_language_id, $debate_nr, $p_context->user->getId());
+        $p_context->debate = new MetaDebate($debate_language_id, $debate_nr, $p_context->user->identifier);
         $url = $p_context->url;
         /* @var $url MetaURL */
 
