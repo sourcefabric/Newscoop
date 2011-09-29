@@ -166,7 +166,8 @@ class DebateAnswerAttachmentsList extends ListObject
     					$intValue = (int)$value;
     					if ("$intValue" != $value || $intValue < 0) {
     						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_debate_answers");
-    					}debate  				$parameters[$parameter] = (int)$value;
+    					}
+    					$parameters[$parameter] = (int)$value;
     				} else {
 	    				$parameters[$parameter] = $value;
     				}
