@@ -271,6 +271,9 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             'zipcode' => array('type' => 'text', 'params' => array(), 'hidden' => false),
             'town' => array('type' => 'text', 'params' => array(), 'hidden' => false),
             'street' => array('type' => 'text', 'params' => array(), 'hidden' => false), // street address, including house number
+            // region info - created
+            'region' => array('type' => 'text', 'params' => array(), 'hidden' => false),
+            'subregion' => array('type' => 'text', 'params' => array(), 'hidden' => false),
             // date/time - fixed form
             'date' => array('type' => 'date', 'params' => array(), 'hidden' => false), // text, 2010-08-31
             'date_year' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 2010
@@ -427,23 +430,31 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         $incl_dir = dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR;
         require($incl_dir . 'default_topics.php');
 
-        // setting the root event topic
-        $ev_root_id = null;
+        foreach ($newsimport_default_cat_names as $one_set_name => $one_set_topics) {
 
-        $event_root_names = $newsimport_default_cat_names['event'];
-        $ev_root_ids = plugin_newsimport_set_one_topic('event', $event_root_names, null);
+            // for setting the root event topic
+            $ev_root_ids = null;
+            $event_root_names = null;
 
-        if (empty($ev_root_ids)) {
-            // this shall not happen: either already having a root topic, or created one
-            return false;
-        }
+            $first_topic = true;
+            foreach ($one_set_topics as $topic_cat_key => $topic_cat_names) {
 
-        // setting the particular (non-root) event topics
-        foreach ($newsimport_default_cat_names as $topic_cat_key => $topic_cat_names) {
-            if ('event' == $topic_cat_key) {
-                continue;
+                if ($first_topic) {
+                    $event_root_names = $topic_cat_names;
+                    $ev_root_ids = plugin_newsimport_set_one_topic($topic_cat_key, $event_root_names, null);
+                    $first_topic = false;
+                    continue;
+                }
+
+                if (empty($ev_root_ids)) {
+                    // this shall not happen: either already having a root topic, or created one
+                    return false;
+                }
+
+                // setting the particular (non-root) event topics
+                plugin_newsimport_set_one_topic($topic_cat_key, $topic_cat_names, $ev_root_ids);
+
             }
-            plugin_newsimport_set_one_topic($topic_cat_key, $topic_cat_names, $ev_root_ids);
 
         }
     } // fn plugin_newsimport_set_event_topics

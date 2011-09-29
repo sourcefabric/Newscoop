@@ -1065,6 +1065,20 @@ class KinoData_Parser_SimpleXML {
 
             $c_other = null;
 
+            $one_movie = null;
+
+            if (isset($one_screen['movie_key']) && (!empty($one_screen['movie_key']))) {
+                $one_mov_key = $one_screen['movie_key'];
+                if (isset($movies_infos[$one_mov_key]) && (!empty($movies_infos[$one_mov_key]))) {
+                    $one_movie = $movies_infos[$one_mov_key];
+                }
+            }
+
+            $x_genres = array();
+            if (isset($one_movie['genres']) && (!empty($one_movie['genres']))) {
+                $x_genres = $one_movie['genres'];
+            }
+
             foreach ($p_categories as $one_category) {
                 if (!is_array($one_category)) {
                     continue;
@@ -1097,6 +1111,22 @@ class KinoData_Parser_SimpleXML {
                     $c_other = $one_category['other'];
                     continue;
                 }
+
+                foreach ($x_genres as $x_catnam) {
+                    $x_catnam = strtolower(trim($x_catnam));
+                    if ((array_key_exists('match_xml', $one_category)) && (array_key_exists('match_topic', $one_category))) {
+                        $one_cat_match_xml = $one_category['match_xml'];
+                        $one_cat_match_topic = $one_category['match_topic'];
+                        if ((!is_array($one_cat_match_xml)) || (!is_array($one_cat_match_topic))) {
+                            continue;
+                        }
+                        if (in_array($x_catnam, $one_cat_match_xml)) {
+                            $event_topics[] = $one_cat_match_topic;
+                            continue;
+                        }
+                    }
+                }
+
             }
             if (empty($event_topics)) {
                 if (!empty($c_other)) {
@@ -1108,7 +1138,7 @@ class KinoData_Parser_SimpleXML {
                 continue;
             }
 
-
+/*
             $one_movie = null;
 
             if (isset($one_screen['movie_key']) && (!empty($one_screen['movie_key']))) {
@@ -1117,7 +1147,7 @@ class KinoData_Parser_SimpleXML {
                     $one_movie = $movies_infos[$one_mov_key];
                 }
             }
-
+*/
             $one_mov_genre = '';
             $one_mov_desc = '';
             $one_mov_images = array();
@@ -1183,6 +1213,21 @@ class KinoData_Parser_SimpleXML {
                 $one_event['zipcode'] = $one_screen['kino_zip'];
                 $one_event['town'] = $one_screen['kino_town'];
                 $one_event['street'] = $one_screen['kino_street'];
+
+                // region info
+                $e_region = '';
+                $e_subregion = '';
+                $e_region_info = RegionInfo::ZipRegion($one_event['zipcode'], $one_event['country']);
+                if (!empty($e_region_info)) {
+                    if (isset($e_region_info['region'])) {
+                        $e_region = $e_region_info['region'];
+                    }
+                    if (isset($e_region_info['subregion'])) {
+                        $e_subregion = $e_region_info['subregion'];
+                    }
+                }
+                $event_info['region'] = $e_region;
+                $event_info['subregion'] = $e_subregion;
 
                 $scr_times = '';
                 foreach ($one_times as $one_scr_time) {

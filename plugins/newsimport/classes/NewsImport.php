@@ -148,7 +148,7 @@ class NewsImport
         }
         require_once($feed_conf_path);
 
-        require_once($class_dir.DIR_SEP.'NewsImport.php');
+        require_once($class_dir.DIR_SEP.'RegionInfo.php');
         require_once($class_dir.DIR_SEP.'EventImage.php');
 
         // take the category topics, as array by [language][category] of [name,id]
@@ -195,19 +195,25 @@ class NewsImport
     public static function ReadEventTopics($p_defaultTopicNames) {
         $event_spec_topics = array();
 
-        foreach ($p_defaultTopicNames as $cat_key => $event_spec_names) {
-            foreach ($event_spec_names as $cat_lan_id => $cat_name) {
-                $cat_key_sys_pref = 'EventCat' . $cat_lan_id . ucfirst($cat_name);
-                $cat_name_sys_pref = SystemPref::Get($cat_key_sys_pref);
-                if (!empty($cat_name_sys_pref)) {
-                    $cat_name = $cat_name_sys_pref;
+        foreach ($p_defaultTopicNames as $one_set_name => $one_set_topics) {
+            $cur_spec_topics = array();
+
+            foreach ($one_set_topics as $cat_key => $event_spec_names) {
+                foreach ($event_spec_names as $cat_lan_id => $cat_name) {
+                    $cat_key_sys_pref = 'EventCat' . $cat_lan_id . ucfirst($cat_name);
+                    $cat_name_sys_pref = SystemPref::Get($cat_key_sys_pref);
+                    if (!empty($cat_name_sys_pref)) {
+                        $cat_name = $cat_name_sys_pref;
+                    }
+                    if (!array_key_exists($cat_lan_id, $cur_spec_topics)) {
+                        $cur_spec_topics[$cat_lan_id] = array();
+                    }
+                    $topic_name_obj = new TopicName($cat_name, $cat_lan_id);
+                    $cur_spec_topics[$cat_lan_id][$cat_key] = array('name' => $cat_name, 'id' => $topic_name_obj->getTopicId());
                 }
-                if (!array_key_exists($cat_lan_id, $event_spec_topics)) {
-                    $event_spec_topics[$cat_lan_id] = array();
-                }
-                $topic_name_obj = new TopicName($cat_name, $cat_lan_id);
-                $event_spec_topics[$cat_lan_id][$cat_key] = array('name' => $cat_name, 'id' => $topic_name_obj->getTopicId());
             }
+
+            $event_spec_topics[$one_set_name] = $cur_spec_topics;
         }
 
         return $event_spec_topics;
@@ -366,6 +372,17 @@ class NewsImport
             $article_data->setProperty('Fzipcode', $one_event['zipcode']);
             $article_data->setProperty('Ftown', $one_event['town']);
             $article_data->setProperty('Fstreet', $one_event['street']);
+
+            $e_region = '';
+            if (isset($one_event['region'])) {
+                $e_region = $one_event['region'];
+            }
+            $article_data->setProperty('Fregion', $e_region);
+            $e_subregion = '';
+            if (isset($one_event['subregion'])) {
+                $e_subregion = $one_event['subregion'];
+            }
+            $article_data->setProperty('Fsubregion', $e_subregion);
 
             $article_data->setProperty('Fdate', $one_event['date']);
             $article_data->setProperty('Fdate_year', $one_event['date_year']);
@@ -846,7 +863,10 @@ class NewsImport
 
             $Campsite['OMIT_LOGGING'] = true;
 
-            $categories = self::ReadEventCategories($one_source, $p_catTopics);
+            $categories = array();
+            if (isset($p_catTopics[$one_source['event_type']])) {
+                $categories = self::ReadEventCategories($one_source, $p_catTopics[$one_source['event_type']]);
+            }
 
             $parser_obj = null;
             $event_set = null;
@@ -880,7 +900,8 @@ class NewsImport
 
             $event_set = $parser_obj->load();
             if (empty($event_set)) {
-                continue;
+                //continue;
+                $event_set = array();
             }
 
             $ev_count = count($event_set);
