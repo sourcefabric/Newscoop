@@ -4,7 +4,6 @@
  */
 require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
-require_once('Date.php');
 
 class SubscriptionSection extends DatabaseObject
 {
@@ -81,11 +80,9 @@ class SubscriptionSection extends DatabaseObject
 
 
 	public function getExpirationDate() {
-	    $startDate = new Date(isset($this->m_data['StartDate']) ? $this->m_data['StartDate'] : 0);
-	    $timeSpan = new Date_Span();
-	    $timeSpan->setFromDays($this->m_data['Days']);
-	    $startDate->addSpan($timeSpan);
-	    return $startDate->getDate();
+	    $startDate = new \DateTime(isset($this->m_data['StartDate']) ? $this->m_data['StartDate'] : 'now');
+	    $timeSpan = new \DateInterval('P' . $this->m_data['Days'] . 'D');
+        return $startDate->add($timeSpan);
 	}
 
 

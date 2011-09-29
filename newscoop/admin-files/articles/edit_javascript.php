@@ -262,9 +262,9 @@ $('#locations_box a.iframe').each(function() {
 
 $("#context_box a.iframe").fancybox({
 	'showCloseButton' : false,
-    'width': 1120,
-    'height'     : 680,
-    'scrolling' : 'no',
+    'width': 1150,
+    'height'     : 700,
+    'scrolling' : 'auto',
     'onClosed'      : function() {
 	   loadContextBoxActileList();
     }

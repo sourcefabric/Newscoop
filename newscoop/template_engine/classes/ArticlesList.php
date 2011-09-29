@@ -57,6 +57,7 @@ class ArticlesList extends ListObject
                                           'bycomments',
                                           'bylastcomment',
                                           'bypriority',
+                                          'bykeywords'
                                     );
 
 

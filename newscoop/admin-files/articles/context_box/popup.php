@@ -162,13 +162,13 @@ $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 
 
 </head>
-<body onLoad="return false;">
+<body onLoad="return false;" style="background: none repeat scroll 0 0 #FFFFFF;">
 
 
 
 
 <div class="content">
-<div id="context-box" class="block-shadow">
+<div id="context-box">
 <div class="toolbar">
 <div class="save-button-bar"><input type="submit" name="cancel"
 	value="<?php echo putGS('Close'); ?>" class="default-button" onclick="popup_close();"
@@ -177,7 +177,7 @@ $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 	id="context_button_save"></div>
 <h2><?php echo putGS('Related Articles'); ?></h2>
 </div>
-<div class="context-content">
+<div class="context-content" style="position:relative">
 <div class="context-block context-search">
 <h3><?php echo putGS('Available Articles'); ?></h3>
 <?php

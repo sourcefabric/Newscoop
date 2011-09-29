@@ -425,8 +425,13 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         // We have to check if there is no other theme by the new theme name.
         foreach($this->getThemes($publication) as $th){
             /* @var $th Theme */
-            if(trim($th->getName()) === trim($theme->getName())){
-                throw new DuplicateNameException();
+            if (trim($th->getName()) === trim($theme->getName())){
+                if ($this->getThemePublication($th) != NULL) {
+                    throw new DuplicateNameException();
+                } else {
+                    $thPath = $th->getPath();
+                    $this->rrmdir($this->toFullPath($thPath));
+                }
             }
         }
 
@@ -468,6 +473,15 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
                     $outTh->setOutput($outSet->getOutput());
                 }
                 $this->syncOutputSettings($outTh, $outSet);
+
+                $issueOutSettings = $this->getOutputSettingIssueService();
+                foreach ($issueOutSettings->getUnthemedIssues($publication) as $issue) {
+                    $outIssueTh = new OutputSettingsIssue();
+                    $outIssueTh->setIssue($issue);
+                    $outIssueTh->setThemePath($pathRsc);
+                    $outIssueTh->setOutput($outSet->getOutput());
+                    $em->persist($outIssueTh);
+                }
 
                 $em->persist($outTh);
             }

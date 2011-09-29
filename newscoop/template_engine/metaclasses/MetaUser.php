@@ -50,6 +50,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         $this->m_customProperties['is_blocked_from_comments'] = 'isBlockedFromComments';
         $this->m_customProperties['is_admin'] = 'isAdmin';
         $this->m_customProperties['defined'] = 'isDefined';
+        $this->m_customProperties['posts_count'] = 'getPostsCount';
 
         $this->m_skipFilter[] = "name";
     }
@@ -70,6 +71,18 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         else {
             return $name;
         }
+    }
+
+    /**
+     * Get user id
+     * DO NOT CHNAGE OR REMOVE!
+     * and please make sure it can always return a numeric value of the logged in user id
+     * @author Mihai Balaceanu
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->user->getId();
     }
 
     protected function isDefined()
@@ -200,7 +213,28 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
             $topics[$topic->getTopicId()] = $topic->getName();
         }
 
-        return $this->topics = $topics;
+        return $topics;
+    }
+
+    /**
+     * Get posts count
+     *
+     * @return int
+     */
+    protected function getPostsCount()
+    {
+        if (!$this->user->getId()) {
+            return 0;
+        }
+
+        $sum = 0;
+        $sum += $GLOBALS['controller']->getHelper('entity')->getRepository('Newscoop\Entity\Comment')
+            ->countByUser($this->user);
+
+        $sum += $GLOBALS['controller']->getHelper('entity')->getRepository('Newscoop\Entity\Feedback')
+            ->countByUser($this->user);
+
+        return $sum;
     }
 
     /**

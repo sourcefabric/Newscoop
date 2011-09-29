@@ -658,7 +658,7 @@ abstract class CampURI
             $tplObj = new MetaTemplate($p_templateIdOrName);
             if (!$tplObj->defined())
             {
-                $tplObj->getByTemplateId($p_templateIdOrName);
+                $tplObj->getByTemplateIdOrName($p_templateIdOrName);
                 if(!$tplObj->getId()) {
                     return null;
                 }
@@ -1191,7 +1191,7 @@ abstract class CampURI
                     break;
                 }
                 $param = 'Image' . ucfirst($option);
-                
+
                 $this->m_buildQueryArray[$param] = $option_value;
             }
         }

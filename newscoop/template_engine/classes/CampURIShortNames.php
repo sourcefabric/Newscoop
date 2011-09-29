@@ -13,6 +13,7 @@
 use Newscoop\Service\Resource\ResourceId;
 use Newscoop\Service\ISyncResourceService;
 use Newscoop\Entity\Resource;
+use Newscoop\Webcode\Manager;
 
 /**
  * Includes
@@ -346,13 +347,31 @@ class CampURIShortNames extends CampURI
     private function setURL(Zend_Controller_Request_Abstract $request)
     {
         $this->setQueryVar('acid', null);
-
+        $encoder = Manager::getWebcoder('');
         $this->m_publication = $this->_getPublication();
-        $this->m_language = $this->_getLanguage($request->getParam('language'), $this->m_publication);
-        $this->m_issue = $this->_getIssue($request->getParam('issue'), $this->m_language, $this->m_publication);
-        $this->m_section = $this->_getSection($request->getParam('section'), $this->m_issue, $this->m_language, $this->m_publication);
-        $this->m_article = $this->_getArticle($request->getParam('articleNo'), $this->m_language);
-        $this->m_template = $this->_getTemplate();
+        $webcode = $request->getParam('webcode');
+        $language = $request->getParam('language');
+        if (!empty( $webcode ) ) {
+            if (!empty( $language )) {
+                $webcodeLanguageId = Language::GetLanguageIdByCode($language);
+            } else {
+                $webcodeLanguageId = $this->m_publication->default_language->number;
+            }
+            $article_no = $encoder->decode($webcode);
+            $metaArticle = new MetaArticle($webcodeLanguageId, $article_no);
+            $this->m_article = $metaArticle;
+            $this->m_publication = $this->m_article->publication;
+            $this->m_issue = $this->m_article->issue;
+            $this->m_section = $this->m_article->section;
+            $this->m_template = $this->_getTemplate();
+        } else {
+            $this->m_language = $this->_getLanguage($request->getParam('language'), $this->m_publication);
+            $this->m_issue = $this->_getIssue($request->getParam('issue'), $this->m_language, $this->m_publication);
+            $this->m_section = $this->_getSection($request->getParam('section'), $this->m_issue, $this->m_language, $this->m_publication);
+            $this->m_article = $this->_getArticle($request->getParam('articleNo'), $this->m_language);
+            $this->m_template = $this->_getTemplate();
+        }
+
     }
 
     /**

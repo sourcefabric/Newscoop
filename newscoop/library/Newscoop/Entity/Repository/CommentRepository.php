@@ -13,6 +13,7 @@ use Doctrine\ORM\QueryBuilder;
 use Newscoop\Entity\Comment;
 use Newscoop\Entity\Comment\Commenter;
 use Newscoop\Datatable\Source as DatatableSource;
+use Newscoop\Entity\User;
 
 /**
  * Comment repository
@@ -443,4 +444,17 @@ class CommentRepository extends DatatableSource
         return $clearCommentIds;
     }
 
+    /**
+     * Get comments count for user
+     *
+     * @param Newscoop\Entity\User $user
+     * @return int
+     */
+    public function countByUser(User $user)
+    {
+        return (int) $this->getEntityManager()
+            ->createQuery("SELECT COUNT(comment) FROM Newscoop\Entity\Comment comment WHERE comment.commenter IN (SELECT commenter.id FROM Newscoop\Entity\Comment\Commenter commenter WHERE commenter.user = :user)")
+            ->setParameter('user', $user->getId())
+            ->getSingleScalarResult();
+    }
 }

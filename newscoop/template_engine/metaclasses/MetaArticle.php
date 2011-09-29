@@ -3,6 +3,8 @@
  * @package Campsite
  */
 
+use Newscoop\Webcode\Manager;
+
 /**
  * Includes
  */
@@ -69,6 +71,7 @@ final class MetaArticle extends MetaDbObject {
     'map'=>'getMap',
     'image_index'=>'getImageIndex',
     'comment_count'=>'getCommentCount',
+    'recommended_comment_count'=>'getRecommendedCommentCount',
     'content_accessible'=>'isContentAccessible',
     'image'=>'getImage',
     'reads'=>'getReads',
@@ -114,10 +117,15 @@ final class MetaArticle extends MetaDbObject {
 
     final public function __get($p_property)
     {
+
         $property = $this->translateProperty($p_property);
         if ($this->m_state == 'type_name_error') {
             $this->m_state = null;
             return null;
+        }
+
+        if ($property == 'webcode') {
+        	return Manager::getWebcoder('')->encode($this->m_dbObject->getProperty('Number'));
         }
 
         if ($property == 'type' && $this->m_state == null) {
@@ -504,6 +512,22 @@ final class MetaArticle extends MetaDbObject {
         $result = $repository->getCount($params);
         return $result;
     }
+    
+    protected function getRecommendedCommentCount() {
+        global $controller;
+        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+        $filter = array(
+            'status' => 'approved',
+            'thread' => $this->m_dbObject->getArticleNumber(),
+            'language' => $this->m_dbObject->getLanguageId(),
+            'recommended' => '1'
+        );
+        $params = array(
+            'sFilter' => $filter
+        );
+        $result = $repository->getCount($params);
+        return $result;
+    }
 
 
     protected function isContentAccessible() {
@@ -581,7 +605,6 @@ final class MetaArticle extends MetaDbObject {
     {
         return ShortURL::GetURL($this->m_dbObject->getPublicationId(), $this->m_dbObject->getLanguageId(), null, null, $this->m_dbObject->getArticleNumber());
     }
-
 
     public function has_topic($p_topicName) {
         $topic = new Topic($p_topicName);

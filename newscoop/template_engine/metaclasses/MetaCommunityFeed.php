@@ -5,10 +5,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-/**
- * Includes
- */
-require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObject.php');
+require_once __DIR__ . '/MetaDbObject.php';
 
 use Newscoop\Entity\Events\CommunityTickerEvent;
 
@@ -23,6 +20,9 @@ final class MetaCommunityFeed extends MetaDbObject
     private $feed;
 
     private $type;
+
+    /** @var array */
+    public $params;
 
     /**
      * @param Newscoop\Entity\CommunityFeed $feed
@@ -42,6 +42,8 @@ final class MetaCommunityFeed extends MetaDbObject
         $this->m_customProperties['user'] = 'getUser';
         $this->m_customProperties['type'] = 'getType';
         $this->m_customProperties['message'] = 'getMessage';
+
+        $this->params =  $feed->getParams();
 
         $this->m_skipFilter[] = "message";
 

@@ -17,6 +17,8 @@
 <p>{{ $user->first_name }} {{ $user->last_name }}</p>
 <p><em>member from {{ $user->created }}</em></p>
 
+<p>posts No.: {{ $user->posts_count }}</p>
+
 <dl class="profile">
     {{ foreach $profile as $label => $value }}
     {{ if !empty($value) }}
