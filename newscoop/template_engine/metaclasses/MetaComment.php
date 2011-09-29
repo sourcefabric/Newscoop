@@ -38,6 +38,7 @@ final class MetaComment extends MetaDbObject {
         $this->m_customProperties['submit_date'] = 'getSubmitDate';
         $this->m_customProperties['article'] = 'getArticle';
         $this->m_customProperties['defined'] = 'defined';
+        $this->m_customProperties['user'] = 'getUser';
 
         $this->m_skipFilter = array('content_real');
     } // fn __construct
@@ -107,6 +108,14 @@ final class MetaComment extends MetaDbObject {
         CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
     }
 
-} // class MetaComment
-
-?>
+    /**
+     * Get user
+     *
+     * @return MetaUser
+     */
+    public function getUser()
+    {
+        $user = $this->m_dbObject->getCommenter()->getUser();
+        return new \MetaUser($user);
+    }
+}

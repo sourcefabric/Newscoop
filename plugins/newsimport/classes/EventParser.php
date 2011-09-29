@@ -791,6 +791,21 @@ class EventData_Parser_SimpleXML {
                 $x_loczip = trim('' . $event_location->loczip);
                 $event_info['zipcode'] = $x_loczip;
 
+                // region info
+                $e_region = '';
+                $e_subregion = '';
+                $e_region_info = RegionInfo::ZipRegion($event_info['zipcode'], $event_info['country']);
+                if (!empty($e_region_info)) {
+                    if (isset($e_region_info['region'])) {
+                        $e_region = $e_region_info['region'];
+                    }
+                    if (isset($e_region_info['subregion'])) {
+                        $e_subregion = $e_region_info['subregion'];
+                    }
+                }
+                $event_info['region'] = $e_region;
+                $event_info['subregion'] = $e_subregion;
+
                 // street address, free form, but usually 'street_name house_number'
                 $x_locadr = trim('' . $event_location->locadr);
                 $event_info['street'] = $x_locadr;

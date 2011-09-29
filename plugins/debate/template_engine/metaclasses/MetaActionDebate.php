@@ -113,7 +113,7 @@ class MetaActionDebate extends MetaAction
     {
         $user = null;
         if ($p_context->user instanceof  MetaUser) {
-            $user = $p_context->user->getId();
+            $user = $p_context->user->identifier;
         }
         if ($this->m_debate instanceof Debate) {
             $this->m_debate->setUserId($user);

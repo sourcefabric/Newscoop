@@ -177,8 +177,6 @@ class UserRepository extends EntityRepository
             $qb->setFirstResult($offset);
             $qb->setMaxResults($limit);
 
-            echo $qb->getQuery()->getSql();
-
             return $qb->getQuery()->getResult();
         }
         else {
@@ -222,8 +220,6 @@ class UserRepository extends EntityRepository
 
             $qb->setFirstResult($offset);
             $qb->setMaxResults($limit);
-
-            //echo $qb->getQuery()->getSql();
 
             return $qb->getQuery()->getResult();
         }
@@ -270,8 +266,6 @@ class UserRepository extends EntityRepository
 
         $qb->setFirstResult($offset);
         $qb->setMaxResults($limit);
-
-        //echo $qb->getQuery()->getSql();
 
         return $qb->getQuery()->getResult();
     }

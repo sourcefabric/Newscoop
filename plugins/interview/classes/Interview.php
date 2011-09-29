@@ -1405,7 +1405,7 @@ class Interview extends DatabaseObject {
         $users = array();
         foreach ($repository->findAll() as $user) {
             if ($acl->isAllowed($user, $resource, $action)) {
-                $users[$user->getId()] = $user->getName();
+                $users[$user->identifier] = $user->getName();
             }
         }
 
