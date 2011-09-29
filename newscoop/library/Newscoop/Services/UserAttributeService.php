@@ -45,6 +45,10 @@ class UserAttributeService
             $user = $user_repo->find($user);
         }
 
+        if (empty($user)) {
+            return;
+        }
+
         $attribute_value = $user->getAttribute($attribute_name);
         $attribute_value = isset($attribute_value) ? ($attribute_value+1) : 1;
 
