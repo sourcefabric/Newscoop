@@ -1,0 +1,11 @@
+<?php 
+regGS("Article status set to '$1' for $2 articles", "");
+regGS("Article status not set to '$1' for $2 articles", "");
+regGS("$1 toggled for $2 articles.", "");
+regGS("$1 not toggled for $2 articles.", "");
+regGS("$1 not toggled for $2  articles.", "");
+regGS("$1 articles have not been removed", "");
+regGS("$1 Article(s) unlocked", "");
+regGS("$1 Article(s) not unlocked", "");
+regGS("$1 Article(s) duplicated", "");
+?>
