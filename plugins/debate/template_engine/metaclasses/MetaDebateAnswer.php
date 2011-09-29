@@ -6,9 +6,6 @@ final class MetaDebateAnswer extends MetaDbObject {
 
 	private function InitProperties()
 	{
-		if (!is_null($this->m_properties)) {
-			return;
-		}
 		$this->m_properties['debate_nr'] = 'fk_debate_nr';
 		$this->m_properties['language_id'] = 'fk_language_id';
 		$this->m_properties['number'] = 'nr_answer';
