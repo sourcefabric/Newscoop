@@ -489,6 +489,9 @@ class Article extends DatabaseObject {
             // Copy file pointers
             ArticleAttachment::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->m_data['Number']);
 
+            // Copy author pointers
+            ArticleAuthor::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->m_data['Number']);
+
             // Position the new article at the beginning of the section
             $articleCopy->positionAbsolute(1);
 
