@@ -13,9 +13,6 @@ final class MetaBlogComment extends MetaDbObject {
 
     private function InitProperties()
     {
-        if (!is_null($this->m_properties)) {
-            return;
-        }
         $this->m_properties['identifier'] = 'comment_id';
         $this->m_properties['entry_id'] = 'fk_entry_id';
         $this->m_properties['blog_id'] = 'fk_blog_id';
@@ -47,37 +44,37 @@ final class MetaBlogComment extends MetaDbObject {
         $this->m_customProperties['mood'] = 'getMood';
     } // fn __construct
 
-        
+
     public function getBlog()
     {
         $MetaBlog = new MetaBlog($this->fk_blog_id);
-        return $MetaBlog;   
+        return $MetaBlog;
     }
 
     public function getEntry()
     {
         $MetaBlogEntry = new MetaBlogEntry($this->fk_entry_id);
-        return $MetaBlogEntry;   
+        return $MetaBlogEntry;
     }
 
     public function getLanguage()
     {
         $MetaLanguage = new MetaLanguage($this->language_id);
-        return $MetaLanguage;   
+        return $MetaLanguage;
     }
-    
+
     public function getUser()
     {
         $MetaUser = new MetaUser($this->user_id);
-        return $MetaUser;   
+        return $MetaUser;
     }
-    
+
     public function getMood()
     {
         $MetaTopic = new MetaTopic($this->mood_id);
-        return $MetaTopic;   
+        return $MetaTopic;
     }
-    
+
 } // class MetaBlogComment
 
 ?>
