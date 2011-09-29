@@ -22,13 +22,13 @@ class MetaDbObject {
      * Array of meta class properties
      * @var array
      */
-    protected $m_properties = null;
+    protected $m_properties = array();
 
     /**
      * Array of meta class custom properties
      * @var array
      */
-    protected $m_customProperties = null;
+    protected $m_customProperties = array();
 
     /**
      * The name of the method used to retrieve a property value

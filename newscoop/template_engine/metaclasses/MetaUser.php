@@ -28,6 +28,8 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         }
         $this->m_dbObject = $user;
 
+        $this->m_properties = array();
+
         $this->m_customProperties['identifier'] = 'getId';
         $this->m_customProperties['first_name'] = 'getFirstName';
         $this->m_customProperties['last_name'] = 'getLastName';
