@@ -686,7 +686,11 @@ class Debate extends DatabaseObject
                     . $comparisonOperation['symbol'] . " '"
                     . $g_ado_db->escape($comparisonOperation['right']) . "' ";
                     $selectClauseObj->addWhere($whereCondition);
-
+            } elseif (strpos($comparisonOperation['left'], 'number') !== false) {
+                $whereCondition = $comparisonOperation['left'] . ' '
+                    . $comparisonOperation['symbol'] . " '"
+                    . $g_ado_db->escape($comparisonOperation['right']) . "' ";
+                    $selectClauseObj->addWhere($whereCondition);
             } else {
                 $whereCondition = $comparisonOperation['left'] . ' '
                 . $comparisonOperation['symbol'] . " '"
