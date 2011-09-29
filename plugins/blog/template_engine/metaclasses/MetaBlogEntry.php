@@ -13,10 +13,6 @@ final class MetaBlogEntry extends MetaDbObject {
 
     private function InitProperties()
     {
-        if (!is_null($this->m_properties)) {
-            return;
-        }
-
         $this->m_properties['identifier'] = 'entry_id';
         $this->m_properties['blog_id'] = 'fk_blog_id';
         $this->m_properties['language_id'] = 'fk_language_id';
@@ -50,34 +46,34 @@ final class MetaBlogEntry extends MetaDbObject {
 
         $this->m_skipFilter = array('content');
     } // fn __construct
-    
+
     public function getBlog()
     {
         $MetaBlog = new MetaBlog($this->fk_blog_id);
-        return $MetaBlog;   
+        return $MetaBlog;
     }
-    
+
     public function getLanguage()
     {
         $MetaLanguage = new MetaLanguage($this->language_id);
-        return $MetaLanguage;   
+        return $MetaLanguage;
     }
-    
+
     public function getUser()
     {
         $MetaUser = new MetaUser($this->user_id);
-        return $MetaUser;   
+        return $MetaUser;
     }
-    
+
     public function getCommentsCount()
     {
         return $this->comments_online + $this->comments_offline;
     }
-    
+
     public function getMood()
     {
         $MetaTopic = new MetaTopic($this->mood_id);
-        return $MetaTopic;   
+        return $MetaTopic;
     }
 
 } // class MetaBlogEntry
