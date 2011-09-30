@@ -168,6 +168,18 @@ class RegisterController extends Zend_Controller_Action
             'email' => $userData->profile->email,
         ));
 
+        if (!empty($userData->profile->email)) { // try to find user by email
+            $user = $this->_helper->service('user')->findBy(array('email' => $userData->profile->email));
+            if (!empty($user)) { // we have user for given email, add him login
+                $user = array_pop($user);
+                $this->_helper->service('auth.adapter.social')->addIdentity($user, $userData->providerId, $userData->providerUID);
+                $adapter = $this->_helper->service('auth.adapter.social');
+                $adapter->setProvider($userData->providerId)->setProviderUserId($userData->providerUID);
+                Zend_Auth::getInstance()->authenticate($adapter);
+                $this->_helper->redirector('index', 'dashboard');
+            }
+        }
+
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $user = $this->_helper->service('user')->save($form->getValues() + array('is_public' => 1));

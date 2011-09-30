@@ -69,7 +69,7 @@ class AuthController extends Zend_Controller_Action
 
         if (!$hauth->hasSession()) {
             $params = array(
-                'hauth_return_to' => $hauth->getCurrentUrl(),
+                'hauth_return_to' => $this->getRequest()->getHttpHost() . $this->getRequest()->getRequestUri(),
             );
 
             $adapter = $hauth->setup($this->_getParam('provider'), $params);
