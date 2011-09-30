@@ -41,18 +41,19 @@ class CommentController extends Zend_Controller_Action
 
 			$userIp = getIp();
 			if ($acceptanceRepository->checkParamsBanned($user->m_data['Name'], $user->m_data['EMail'], $userIp, $article->getPublicationId())) {
-				$errors[] = getGS('You have been banned from writing comments.');
+				$errors[] = $this->view->translate('You have been banned from writing comments.');
 			}
 		}
 		else {
-			$errors[] = getGS('You are not logged in.');
+			$errors[] = $this->view->translate('You are not logged in.');
 		}
 
 		if (!array_key_exists('f_comment_subject', $parameters) || empty($parameters['f_comment_subject'])) {
-			$errors[] = getGS('The comment subject was not filled in.');
+			//$errors[] = getGS('The comment subject was not filled in.');
+			$errors[] = $this->view->translate('The comment subject was not filled in.');
 		}
 		if (!array_key_exists('f_comment_content', $parameters) || empty($parameters['f_comment_content'])) {
-			$errors[] = getGS('The comment content was not filled in.');
+			$errors[] = $this->view->translate('The comment content was not filled in.');
 		}
 
 		if (empty($errors)) {
@@ -79,7 +80,7 @@ class CommentController extends Zend_Controller_Action
 		}
 		else {
 			$errors = implode('<br>', $errors);
-			$errors = getGS('Following errors have been found:') . '<br>' . $errors;
+			$errors = $this->view->translate('Following errors have been found:') . '<br>' . $errors;
 			$this->view->response = $errors;
 		}
     }
