@@ -52,6 +52,10 @@ class Admin_UserController extends Zend_Controller_Action
     {
         $form = new Admin_Form_User();
         $form->user_type->setMultioptions($this->userTypeService->getOptions());
+        $form->setDefaults(array(
+            'is_admin' => $this->_getParam('is_admin', 0),
+            'is_public' => $this->_getParam('is_public', 0),
+        ));
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
@@ -198,6 +202,22 @@ class Admin_UserController extends Zend_Controller_Action
             } catch (\InvalidArgumentException $e) {
                 $form->image->addError($e->getMessage());
             }
+        }
+
+        $this->view->form = $form;
+    }
+
+    public function editPasswordAction()
+    {
+        $user = $this->_helper->service('user')->getCurrentUser();
+        $form = new Admin_Form_EditPassword();
+        $form->setMethod('POST');
+
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $this->_helper->service('user')->save($form->getValues(), $user);
+            $this->_helper->flashMessenger(getGS('Password updated'));
+            $this->_helper->redirector('edit-password', 'user', 'admin');
         }
 
         $this->view->form = $form;
