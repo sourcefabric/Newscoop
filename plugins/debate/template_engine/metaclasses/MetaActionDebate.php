@@ -147,6 +147,8 @@ class MetaActionDebate extends MetaAction
             $p_context->url->reset_parameter('f_debateanswer_'.$nr);
         }
 
+        $p_context->debatejustvoted = new MetaDebateAnswer($this->m_properties['debate_language_id'], $this->m_properties['debate_nr'], $this->m_properties['debateanswer_nr']);
+
         $this->m_error = ACTION_OK;
         return true;
     }

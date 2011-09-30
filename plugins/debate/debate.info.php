@@ -35,7 +35,8 @@ $info = array(
             array('debateanswer' => array('class' => 'DebateAnswer')),
             array('debatedays' => array('class' => 'DebateDays') ),
             array('debatevotes' => array('class' => 'DebateVotes') ),
-            array('debateanswerattachment' => array('class' => 'DebateAnswerAttachment'))
+            array('debateanswerattachment' => array('class' => 'DebateAnswerAttachment')),
+            array('debatejustvoted' => array('class' => 'DebateAnswer'))
         ),
         'listobjects' => array(
             array('debate' => array('class' => 'Debate', 'list' => 'debate', 'url_id'=>'dbs')),

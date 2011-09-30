@@ -45,7 +45,9 @@ class DebateAnswersList extends ListObject
 	    $debateAnswersList = DebateAnswer::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
         $metaDebateAnswersList = array();
 	    foreach ($debateAnswersList as $debateAnswer) {
-	        $metaDebateAnswersList[] = new MetaDebateAnswer($debateAnswer->getLanguageId(), $debateAnswer->getDebateNumber(), $debateAnswer->getNumber());
+	        /* @var $debateAnswer DebateAnswer */
+            $voted = $debateAnswer->getDebate()->setUserId($context->user->identifier)->getAlreadyVoted($debateAnswer->getNumber());
+	        $metaDebateAnswersList[] = new MetaDebateAnswer($debateAnswer->getLanguageId(), $debateAnswer->getDebateNumber(), $debateAnswer->getNumber(), $voted);
 	    }
 	    return $metaDebateAnswersList;
 	}
