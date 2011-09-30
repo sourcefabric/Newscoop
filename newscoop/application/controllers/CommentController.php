@@ -68,7 +68,8 @@ class CommentController extends Zend_Controller_Action
 				'thread' => $parameters['f_article_number'],
 				'ip' => $_SERVER['REMOTE_ADDR'],
 				'status' => 'approved',
-				'time_created' => new DateTime()
+				'time_created' => new DateTime(),
+                'recommended' => '0'
 			);
 
 			$commentRepository->save($comment, $values);

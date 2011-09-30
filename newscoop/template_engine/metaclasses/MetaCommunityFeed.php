@@ -65,7 +65,7 @@ final class MetaCommunityFeed extends MetaDbObject
     protected function getCreated()
     {
         $date = $this->feed->getCreated();
-        return $date->format('d.m.Y');
+        return $date->format('d.m.Y H:i:s');
     }
 
     protected function getMessage()

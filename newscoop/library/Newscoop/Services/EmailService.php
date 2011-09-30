@@ -48,7 +48,8 @@ class EmailService
             'token' => $this->tokenService->generateToken($user, 'email.confirm'),
         ));
 
-        $this->send("Email confirmation", $message, $user->getEmail());
+        // @todo use config
+        $this->send("Registrierung bei tageswoche.ch", $message, $user->getEmail());
     }
 
     /**

@@ -30,11 +30,11 @@ class OmniboxController extends Zend_Controller_Action
         $this->getHelper('contextSwitch')->addActionContext('login', 'json')->initContext();
 
         $request = $this->getRequest();
-        if ($request->isPost() && $form->isValid($request->getPost())) {
-            $values = $form->getValues();
+        if ($request->isPost()) {
+            $params = $request->getParams();
 
             $adapter = $this->_helper->service('auth.adapter');
-            $adapter->setUsername($values['username'])->setPassword($values['password']);
+            $adapter->setUsername($params['username'])->setPassword($params['password']);
             $result = $this->auth->authenticate($adapter);
 
             if ($result->getCode() == Zend_Auth_Result::SUCCESS) {

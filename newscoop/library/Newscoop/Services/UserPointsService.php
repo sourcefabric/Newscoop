@@ -69,6 +69,10 @@ class UserPointsService
             $user = $user_repo->find($user);
         }
 
+        if (empty($user)) {
+            return;
+        }
+
         $points = $user->getPoints();
         $points_action = $this->getRepository()->getPointValueForAction($action);
 

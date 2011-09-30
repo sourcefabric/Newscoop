@@ -148,7 +148,7 @@ var omnibox = {
 	login: function() {
 		var data = {
 			username: this.elements.ob_username.value,
-			password: this.elements.ob_username.value
+			password: this.elements.ob_password.value
 		};
 		
 		this.elements.ob_username.value = '';
@@ -218,7 +218,7 @@ var omnibox = {
 				var location = (String)(document.location);
 				location = location.split('#');
 				location = location[0];
-				document.location = location + '#comments_wrap';
+				document.location = location + '#tab-2';
 				document.location.reload();
 			}
 			else {

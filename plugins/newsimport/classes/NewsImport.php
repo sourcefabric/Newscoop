@@ -490,7 +490,7 @@ class NewsImport
                         $one_img_rank += 1;
                         $one_image_cont = false;
                         try {
-                            $one_image_cont = file_get_contents($one_image['url']);
+                            $one_image_cont = @file_get_contents($one_image['url']);
                         }
                         catch (Exception $exc) {
                             continue;

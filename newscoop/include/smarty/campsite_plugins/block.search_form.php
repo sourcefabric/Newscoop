@@ -4,6 +4,9 @@
  * @package Campsite
  */
 
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\IOutputSettingIssueService;
+
 /**
  * Campsite search_form block plugin
  *
@@ -33,7 +36,17 @@ function smarty_block_search_form($p_params, $p_content, $p_smarty)
     $url->uri_parameter = "";
     $template = null;
     if (isset($p_params['template'])) {
-        $template = new MetaTemplate($p_params['template']);
+        $resourceId = new ResourceId('smarty_block_search_form');
+        $outSetIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
+        $outSets = $outSetIssueService->findByIssue($campsite->issue->id);
+        if (count($outSets) == 0) {
+            CampTemplate::singleton()->trigger_error('invalid template "' . $p_params['template']
+            . '" specified in the search form');
+            return false;
+        }
+        $outSet = $outSets[0];
+
+        $template = new MetaTemplate($p_params['template'], $outSet->getThemePath()->getPath());
         if (!$template->defined()) {
             CampTemplate::singleton()->trigger_error('invalid template "' . $p_params['template']
             . '" specified in the search form');
