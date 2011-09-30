@@ -28,6 +28,8 @@
 				<input type="radio" name="ob_comment_feedback" id="ob_feedback" onClick="omnibox.switchCommentFeedback();">
 				<label for="ob_feedback" style="float: none;">{{ $view->translate('Send message to the editorial team (is not published)') }}</label>
 			</div>
+            
+            <div class="clear"></div>
 			
 			<div id="ob_comment_text_container" class="text_container" style="display: inline;">
 				<label for="ob_comment_subject" style="float: none;">{{ $view->translate('Subject') }}</label>

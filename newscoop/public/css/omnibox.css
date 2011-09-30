@@ -1,7 +1,7 @@
 #ob_wrapper {
 	position: fixed;
 	top: 0px;
-    z-index: 100;
+    z-index: 999;
 }
 
 #ob_main {
