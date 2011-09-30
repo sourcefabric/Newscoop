@@ -1,13 +1,43 @@
 <?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
-// This file will deliver the attachment. It is supposed to work like this:
-// http://site/attachment/id/file_name
-$GLOBALS['g_campsiteDir'] = dirname(__FILE__);
+// Define path to application directory
+defined('APPLICATION_PATH')
+    || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/application'));
 
-require_once($GLOBALS['g_campsiteDir'].'/conf/install_conf.php');
-require_once($GLOBALS['g_campsiteDir'].'/include/campsite_init.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Attachment.php');
+// Define application environment
+defined('APPLICATION_ENV')
+    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
+
+// Ensure library/ is on include_path
+set_include_path(implode(PATH_SEPARATOR, array(
+    realpath(dirname(__FILE__)) . '/library',
+    realpath(dirname(__FILE__) . '/../include'),
+    get_include_path(),
+)));
+
+if (!is_file('Zend/Application.php')) {
+    // include libzend if we dont have zend_application
+    set_include_path(implode(PATH_SEPARATOR, array(
+        '/usr/share/php/libzend-framework-php',
+        get_include_path(),
+    )));
+}
+
+/** Zend_Application */
+require_once 'Zend/Application.php';
+
+// Create application, bootstrap, and run
+$application = new Zend_Application(
+    APPLICATION_ENV,
+    APPLICATION_PATH . '/configs/application.ini'
+);
+
+$application->bootstrap('autoloader');
 
 $g_download = Input::Get('g_download', 'int', 0, true);
 $g_show_in_browser = Input::Get('g_show_in_browser', 'int', 0, true);
@@ -50,9 +80,9 @@ if ($g_download == 1) {
     header('Content-Disposition: inline; filename="' . $attachmentObj->getFileName()).'"';
 } else {
     if (!$attachmentObj->getContentDisposition() &&
-        strstr($attachmentObj->getMimeType(), "image/") &&
-        (strstr($_SERVER['HTTP_ACCEPT'], $attachmentObj->getMimeType()) ||
-        (strstr($_SERVER['HTTP_ACCEPT'], "*/*")))) {
+            strstr($attachmentObj->getMimeType(), 'image/') &&
+            (strstr($_SERVER['HTTP_ACCEPT'], $attachmentObj->getMimeType()) ||
+            (strstr($_SERVER['HTTP_ACCEPT'], '*/*')))) {
         header('Content-Disposition: inline; filename="' . $attachmentObj->getFileName()).'"';
     } else {
         header('Content-Disposition: ' . $attachmentObj->getContentDisposition()
@@ -70,4 +100,3 @@ if (file_exists($filePath)) {
     exit;
 }
 
-?>
