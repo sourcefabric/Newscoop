@@ -552,6 +552,7 @@ class Debate extends DatabaseObject
     public function setUserId($uid)
     {
         $this->userId = $uid;
+        return $this;
     }
 
     /**
@@ -1012,6 +1013,22 @@ class Debate extends DatabaseObject
 
     public function alreadyVoted()
     {
+        return $this->alreadyVoted;
+    }
+
+    public function getAlreadyVoted($answer_nr)
+    {
+        if (!$this->m_data['allow_not_logged_in'])
+        {
+            // TODO duplicate fetch call...
+            $vote = new DebateVote($this->m_data['debate_nr'], $answer_nr, $this->userId);
+            $vote->fetch();
+            // ---
+
+            if (is_numeric($vote->m_data['id_vote'])) {
+                $this->alreadyVoted = $vote->m_data['fk_answer_nr'];
+            }
+        }
         return $this->alreadyVoted;
     }
 

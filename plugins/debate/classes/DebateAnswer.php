@@ -319,30 +319,37 @@ class DebateAnswer extends DatabaseObject
 
     public function vote($p_value = 1)
     {
-
         if (!settype($p_value, 'float')) {
             return false;
         }
         $debate = $this->getDebate();
+        $voted = $debate->getAlreadyVoted($this->getProperty('nr_answer'));
         $debate->userVote($this->getProperty('nr_answer'));
-        $voted = $debate->alreadyVoted();
 
-        if (!is_null($voted) && $voted != $this->getProperty('nr_answer'))
+        if (!is_null($voted) && $voted != $this->getProperty('nr_answer')) // switch votes
         {
             $otherAnswer = new DebateAnswer($this->getProperty('fk_language_id'), $this->getProperty('fk_debate_nr'), $voted);
             $otherAnswer->setProperty('nr_of_votes', $otherAnswer->getProperty('nr_of_votes')-1);
-            $otherAnswer->setProperty('value', $otherAnswer->getProperty('value')-$p_value);
-            $otherAnswer->setProperty('average_value', $otherAnswer->getProperty('value')/$otherAnswer->getProperty('nr_of_votes'));
+            $otherValueVotes = $otherAnswer->getProperty('value')-$p_value;
+            $otherAnswer->setProperty('value', $otherValueVotes < 0 ? 0 : $otherValueVotes);
+            $otherNrVotes = $otherAnswer->getProperty('nr_of_votes');
+            $otherAnswer->setProperty('average_value', $otherNrVotes!=0 ? $otherAnswer->getProperty('value')/$otherNrVotes : 0);
+
+            $this->setProperty('nr_of_votes', $this->getProperty('nr_of_votes') + 1);
+            $this->setProperty('value', $this->getProperty('value') + $p_value);
+            $this->setProperty('average_value', $this->getProperty('value') / $this->getProperty('nr_of_votes'));
         }
-        elseif (is_null($voted))
+        elseif (is_null($voted)) // first vote for user or not logged in user
         {
             $this->setProperty('nr_of_votes', $this->getProperty('nr_of_votes') + 1);
             $this->setProperty('value', $this->getProperty('value') + $p_value);
             $this->setProperty('average_value', $this->getProperty('value') / $this->getProperty('nr_of_votes'));
         }
+
         $debate->increaseUserVoteCount();
 
         Debate::triggerStatistics($this->m_data['fk_debate_nr']);
+
     }
 
     public function getNumber()

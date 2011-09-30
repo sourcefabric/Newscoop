@@ -73,7 +73,8 @@ function debate_'.$campsite->debate->identifier.'_vote()
 
         $url = $campsite->url;
         $url->uri_parameter = "template " . str_replace(' ', "\\ ", $template->name);
-        $html .= "<form name=\"debate\" id=\"debate_{$campsite->debate->identifier}_form\" action=\"" . $url->uri_path . "\" method=\"post\">\n";
+
+        $html .= "<form name=\"debate\" id=\"debate_{$campsite->debate->identifier}_form\" action=\"" . $url->uri . "\" method=\"post\">\n";
 
         $html .= "<input type=\"hidden\" name=\"f_debate\" value=\"1\" />\n";
         $html .= "<input type=\"hidden\" name=\"f_debate_nr\" value=\"{$campsite->debate->number}\" />\n";
