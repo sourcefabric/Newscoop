@@ -41,10 +41,8 @@ class Application_Plugin_Auth extends Zend_Controller_Plugin_Abstract
             $user = Zend_Registry::get('container')->getService('user')->getCurrentUser();
 
             if (!$user->isAdmin()) { // can't go into admin
-                $request->setModuleName('default')
-                    ->setControllerName('legacy')
-                    ->setActionName('index')
-                    ->setDispatched(FALSE);
+                $redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
+                $redirector->direct('index', 'index', 'default');
             }
 
             // set user for application
