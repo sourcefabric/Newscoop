@@ -148,7 +148,7 @@ var omnibox = {
 	login: function() {
 		var data = {
 			username: this.elements.ob_username.value,
-			password: this.elements.ob_username.value
+			password: this.elements.ob_password.value
 		};
 		
 		this.elements.ob_username.value = '';
