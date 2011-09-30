@@ -24,5 +24,14 @@ return array(
 	'Login failed.' => 'Login failed.',
     'Feedback content is not filled in.' => 'Feedback content is not filled in.',
     'Login successful. Please wait...' => 'Login successful. Please wait...',
-    'Logout successful. Please wait...' => 'Logout successful. Please wait...'
+    'Logout successful. Please wait...' => 'Logout successful. Please wait...',
+    'You have been banned from writing feedbacks.' => 'You have been banned from writing feedbacks.',
+    'You are not logged in.' => 'You are not logged in.',
+    'Feedback content was not filled in.' => 'Feedback content was not filled in.',
+    'File is uploaded and your message is sent.' => 'File is uploaded and your message is sent.',
+    'Your message is sent.' => 'Your message is sent.',
+    'Following errors have been found:' => 'Following errors have been found:',
+    'You have been banned from writing comments.' => 'You have been banned from writing comments.',
+    'The comment subject was not filled in.' => 'The comment subject was not filled in.',
+    'The comment content was not filled in.' => 'The comment content was not filled in.'
 );
