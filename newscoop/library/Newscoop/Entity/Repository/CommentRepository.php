@@ -146,7 +146,8 @@ class CommentRepository extends DatatableSource
 				 ->setMessage($p_values['message'])
 				 ->setStatus($p_values['status'])
 				 ->setIp($p_values['ip'])
-				 ->setTimeCreated($p_values['time_created']);
+				 ->setTimeCreated($p_values['time_created'])
+                 ->setRecommended($p_values['recommended']);
         
         $threadLevel = 0;
         
