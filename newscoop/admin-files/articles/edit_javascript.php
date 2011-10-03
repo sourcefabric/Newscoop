@@ -132,12 +132,13 @@ window.ajax_had_problems = false;
 
 // main form submit
 $('form#article-main').submit(function() {
-
 	window.save_had_problems = false;
     var form = $(this);
-
     if (!articleChanged()) {
         flashMessage('<?php putGS('Article saved.'); ?>');
+        if(save_and_close) {
+            close(1);
+        }
     } else {
 		// tinymce should know that the current state is the correct one
 		cleanTextContents();
@@ -151,6 +152,9 @@ $('form#article-main').submit(function() {
                 success: function(data, status, p) {
                     flashMessage('<?php putGS('Article saved.'); ?>');
                     toggleComments();
+                    if(save_and_close) {
+                        close(1);
+                    }
                 },
                 error: function (rq, status, error) {
 					window.save_had_problems = true;
@@ -173,27 +177,38 @@ $('form#article-main').submit(function() {
  * Unlock article
  * @return void
  */
-var unlockArticle = function() {
+function unlockArticle(doAction) {
+	doAction = typeof(doAction) != 'undefined' ? doAction : 'none';
     callServer(['Article', 'setIsLocked'], [
         <?php echo $f_language_selected; ?>,
         <?php echo $articleObj->getArticleNumber(); ?>,
         0,
-        <?php echo $g_user->getUserId(); ?>]);
+        <?php echo $g_user->getUserId(); ?>], function() {
+    	   if(doAction == 'close') {
+    		    close(1);
+    	   }
+        });
 };
 
 <?php if ($inEditMode) { ?>
 
 // save all buttons
+
 $('.save-button-bar input').click(function() {
     $('form#article-keywords').submit();
     $('form#article-switches').submit();
-    $('form#article-main').submit();
 
     if ($(this).attr('id') == 'save_and_close') {
-		unlockArticle();
-		$(this).ajaxComplete(function() {
-            close(2000);
-        });
+    	if (articleChanged()) {
+    		unlockArticle();
+	    	save_and_close = true;
+	        $('form#article-main').submit();
+    	} else {
+    		unlockArticle('close');
+    	}
+    } else {
+    	save_and_close = false;
+        $('form#article-main').submit();
     }
 
     return false;
@@ -207,6 +222,7 @@ $('.save-button-bar input#save_and_close').click(function() {
     close(1);
 });
 <?php } ?>
+
 
 
 
