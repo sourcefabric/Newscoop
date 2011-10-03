@@ -3,6 +3,9 @@
  * @package Campsite
  */
 
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\IOutputSettingIssueService;
+
 /**
  * Includes
  */
@@ -40,7 +43,7 @@ final class MetaIssue extends MetaDbObject {
     'is_current'=>'isCurrent',
     'is_published'=>'isPublished',
     'defined'=>'defined',
-    'theme'=>'getTheme'
+    'theme_path'=>'getThemePath'
 	);
 
 
@@ -57,8 +60,15 @@ final class MetaIssue extends MetaDbObject {
     } // fn __construct
 
 
-    protected function getTheme()
+    protected function getThemePath()
     {
+        $resourceId = new ResourceId(__CLASS__);
+        $outSetIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
+        $outSets = $outSetIssueService->findByIssue($this->m_dbObject->getIssueId());
+        if (count($outSets) == 0) {
+            return null;
+        }
+        return $outSets[0]->getThemePath()->getPath();
     }
 
 
