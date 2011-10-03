@@ -1,4 +1,5 @@
 <?php 
+regGS("This article cannot be previewed. Please make sure it has the publication has a theme assigned.", "");
 regGS("On", "");
 regGS("Off", "");
 regGS("You do not have the right to moderate comments.", "");
@@ -144,7 +145,6 @@ regGS("You must select an article type.", "Πρέπει να επιλέξετε 
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε την εικόνα \'$1\' από το άρθρο;");
 regGS("There was an error reading request parameters.", "Υπήρξε σφάλμα κατά την ανάγνωση αιτήματος των παραμέτρων.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Η προεπισκόπιση του άρθρου δεν ήταν δυνατή. Παρακαλούμε βεβαιωθείτε ότι έχει επιλεγεί το πρότυπο του άρθρου.");
-regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Η προεπισκόπιση του άρθρου δεν ήταν δυνατή. Παρακαλούμε βεβαιωθείτε ότι έχει επιλεγεί το πρότυπο της αρχικής σελίδας.");
 regGS("No such article.", "Δεν υπάρχει τέτοιο άρθρο.");
 regGS("No such section.", "Δεν υπάρχει τέτοια ενότητα.");
 ?>

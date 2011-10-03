@@ -1,4 +1,5 @@
 <?php 
+regGS("This article cannot be previewed. Please make sure it has the publication has a theme assigned.", "");
 regGS("On", "");
 regGS("Off", "");
 regGS("You do not have the right to moderate comments.", "");
@@ -144,7 +145,6 @@ regGS("You must select an article type.", "Je moet het artikel type selecteren."
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Weet je zeker dat je afbeelding \'$1\' wilt verwijderen uit het artikel?");
 regGS("There was an error reading request parameters.", "");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "");
-regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "");
 regGS("No such article.", "");
 regGS("No such section.", "");
 regGS("move", "verplaatsen");

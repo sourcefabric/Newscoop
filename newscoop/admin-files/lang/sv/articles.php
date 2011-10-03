@@ -1,4 +1,5 @@
 <?php 
+regGS("This article cannot be previewed. Please make sure it has the publication has a theme assigned.", "");
 regGS("On", "");
 regGS("Off", "");
 regGS("You do not have the right to moderate comments.", "");
@@ -146,7 +147,6 @@ regGS("Select None", "Avmarkera alla");
 regGS("Select All", "Markera alla");
 regGS("There was an error reading request parameters.", "Ett fel uppstod vid läsning av förfrågningsparametern.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Denna artikel kunde inte förhandsgranskas. Var god kontrollera att den har den valda mallen.");
-regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Denna artikel kunde inte förhandsgranskas. Var god kontrollera att den har den valda framsidesmallen.");
 regGS("No such article.", "Artikeln finns inte.");
 regGS("No such section.", "Sektionen finns inte.");
 ?>

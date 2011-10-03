@@ -1,4 +1,5 @@
 <?php 
+regGS("This article cannot be previewed. Please make sure it has the publication has a theme assigned.", "");
 regGS("On", "");
 regGS("Off", "");
 regGS("You do not have the right to moderate comments.", "");
@@ -144,7 +145,6 @@ regGS("You must select an article type.", "Вы павінны выбраць  �
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Цi Вы ўпэўненыя, што жадаеце выдаліць графічны файл \'$1\' з артыкула? ");
 regGS("There was an error reading request parameters.", "Памылка чытаньня парамэтраў запыту.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Немагчыма зрабіць папярэдні агляд артыкула. Пераканайцеся, ці выбраны шаблён артыкула.");
-regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Немагчыма зрабіць папярэдні  агляд артыкула. Пераканайцеся, ці выбраны шаблён тытульнай старонкі.");
 regGS("No such article.", "Няма такога артыкула.");
 regGS("No such section.", "Няма такой рубрыкі:by ");
 regGS("Reorder", "");

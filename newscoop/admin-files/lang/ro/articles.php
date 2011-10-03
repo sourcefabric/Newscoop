@@ -1,4 +1,5 @@
 <?php 
+regGS("This article cannot be previewed. Please make sure it has the publication has a theme assigned.", "");
 regGS("On", "");
 regGS("Off", "");
 regGS("You do not have the right to moderate comments.", "");
@@ -144,7 +145,6 @@ regGS("You must select an article type.", "Trebuie să selectezi un tip de artic
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Eşti sigur că vrei să ştergi imaginea \'$1\' de la articol?");
 regGS("There was an error reading request parameters.", "O eroare s-a produs în timpul interpretării parametrilor cererii.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Acest articol nu poate fi previzualizat. Asigură-te că este selectat şablonul articolului.");
-regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Acest articol nu poate fi previzualizat. Asigură-te că este selectat şablonul primei pagini.");
 regGS("No such article.", "Articolul nu există");
 regGS("No such section.", "Secţiunea nu există.");
 regGS("Are you sure you want to delete this scheduled action?", "");

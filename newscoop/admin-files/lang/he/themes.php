@@ -1,4 +1,8 @@
 <?php 
+regGS("Set new name to", "");
+regGS("Rename file", "");
+regGS("Caching templates in:", "");
+regGS("Caching templates finished", "");
 regGS("Theme name", "");
 regGS("Theme is assigned and can not be deleted", "");
 regGS("Theme export was not successful. Check please that the server is not out of disk space.", "");

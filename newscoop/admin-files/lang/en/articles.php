@@ -1,4 +1,5 @@
 <?php 
+regGS("This article cannot be previewed. Please make sure it has the publication has a theme assigned.", "This article cannot be previewed. Please make sure it has the publication has a theme assigned.");
 regGS("On", "On");
 regGS("Off", "Off");
 regGS("You do not have the right to moderate comments.", "You do not have the right to moderate comments.");
@@ -144,7 +145,6 @@ regGS("You must select an article type.", "You must select an article type.");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Are you sure you want to remove the image \'$1\' from the article?");
 regGS("There was an error reading request parameters.", "There was an error reading request parameters.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "This article cannot be previewed. Please make sure it has the article template selected.");
-regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "This article cannot be previewed. Please make sure it has the front page template selected.");
 regGS("No such article.", "No such article.");
 regGS("No such section.", "No such section.");
 ?>
