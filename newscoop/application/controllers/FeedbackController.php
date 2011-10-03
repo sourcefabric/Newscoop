@@ -42,15 +42,15 @@ class FeedbackController extends Zend_Controller_Action
 
 			$userIp = getIp();
 			if ($acceptanceRepository->checkParamsBanned($user->m_data['Name'], $user->m_data['EMail'], $userIp, $parameters['f_publication'])) {
-				$errors[] = getGS('You have been banned from writing feedbacks.');
+				$errors[] = $this->view->translate('You have been banned from writing feedbacks.');
 			}
 		}
 		else {
-			$errors[] = getGS('You are not logged in.');
+			$errors[] = $this->view->translate('You are not logged in.');
 		}
 
 		if (!array_key_exists('f_feedback_content', $parameters) || empty($parameters['f_feedback_content'])) {
-			$errors[] = getGS('Feedback content was not filled in.');
+			$errors[] = $this->view->translate('Feedback content was not filled in.');
 		}
 
 		if (empty($errors)) {
@@ -82,7 +82,7 @@ class FeedbackController extends Zend_Controller_Action
 				$current_user = $this->_helper->service('user')->getCurrentUser();
                 $this->_helper->service->notifyDispatcher("image.delivered", array('user' => $current_user));
 
-				$this->view->response = getGS('File is uploaded and your message is sent.');
+				$this->view->response = $this->view->translate('File is uploaded and your message is sent.');
 			}
 			else if (isset($parameters['document_id'])) {
 				$values['attachment_type'] = 'document';
@@ -94,18 +94,18 @@ class FeedbackController extends Zend_Controller_Action
 				$current_user = $this->_helper->service('user')->getCurrentUser();
                 $this->_helper->service->notifyDispatcher("document.delivered", array('user' => $current_user));
 
-				$this->view->response = getGS('File is uploaded and your message is sent.');
+				$this->view->response = $this->view->translate('File is uploaded and your message is sent.');
 			}
 			else {
 				$feedbackRepository->save($feedback, $values);
 				$feedbackRepository->flush();
 
-				$this->view->response = getGS('Your message is sent.');
+				$this->view->response = $this->view->translate('Your message is sent.');
 			}
 		}
 		else {
 			$errors = implode('<br>', $errors);
-			$errors = getGS('Following errors have been found:') . '<br>' . $errors;
+			$errors = $this->view->translate('Following errors have been found:') . '<br>' . $errors;
 			$this->view->response = $errors;
 		}
     }

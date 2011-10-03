@@ -39,15 +39,18 @@ class DebateDaysList extends ListObject
 	    }
 	    $dateRange = range($dateStart, $dateEnd, $rangeUnit);
 
-	    $dateVotes = DebateVote::getResults($context->debate->number, $context->debate->language_id, $dateStart, $dateEnd);
+	    $dateVotes = DebateVote::getResults($context->debate->number, $context->debate->language_id, $dateStart, $dateEnd+86399);
 
         $dateResults = array();
-        if (count($dateVotes) < count($dateRange)) {
+        if (count($dateVotes) < count($dateRange))
+        {
             foreach ($dateRange as $timetamp)
             {
                 $found = 0;
-                foreach ($dateVotes as $vote) {
-                    if ($vote['time'] == $timetamp) {
+                foreach ($dateVotes as $vote)
+                {
+                    if ($vote['time'] == $timetamp)
+                    {
                         $found = $vote;
                         break;
                     }
@@ -60,6 +63,7 @@ class DebateDaysList extends ListObject
                 }
             }
         }
+
 
         $dateArray = array();
         foreach ($dateResults as $date) {

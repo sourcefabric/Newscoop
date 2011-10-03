@@ -24,7 +24,7 @@
 
 	// Change $GLOBALS['GLOBAL_HYBRID_AUTH_URL_BASE'] in hybridauth/hybridauth.php configuration file
 	// with the complete url to hybridauth library on your website
- 	$GLOBALS['GLOBAL_HYBRID_AUTH_URL_BASE']         = "http://newscoop-hybrid.com/newscoop/newscoop/hybridauth/index.php"; 
+    $GLOBALS['GLOBAL_HYBRID_AUTH_URL_BASE'] = "http://newscoop-hybrid.com/hybridauth/index.php";
 
 	// real path to hybridauth
 	$GLOBALS['GLOBAL_HYBRID_AUTH_PATH_BASE'] 		 = realpath( dirname( __FILE__ ) ) . "/";

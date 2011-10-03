@@ -1,3 +1,6 @@
+{{if $gimme->debatejustvoted->number}}
+	You have voted {{$gimme->debatejustvoted->answer}}
+{{/if}}
 {{list_debates length="1" order="bynumber desc"}}
 
 	{{if $gimme->debate->is_votable}}
@@ -7,16 +10,16 @@
 				<li>
 					<em>heute stimmten</em>
 					{{$gimme->debateanswer->percentage|string_format:"%d"}}% fur
-					<a onclick="$('#answer-{{$gimme->debateanswer->number}}').trigger('click'); return false;" href="javascript:void(0)">
-						{{$gimme->debateanswer->answer}}
-					</a>
-					<!-- f_debateanswer_nr name mandatory -->
-					<span style="display: none">
-    					<input type="radio" name="f_debateanswer_nr"
-    						value="{{$gimme->debateanswer->number}}" id="answer-{{$gimme->debateanswer->number}}"
-    						onclick="$('#submit-debate').trigger('click');"
-    					/>
-					</span>
+					<a onclick="$('#answer-{{$gimme->debateanswer->number}}').attr('checked','checked');$(this).parents('form:eq(0)').submit(); return false;"
+						{{if $gimme->debateanswer->voted}}class="active"{{/if}}
+						href="javascript:void(0)">
+                        {{$gimme->debateanswer->answer}}
+                      </a>
+                      <!-- f_debateanswer_nr name mandatory -->
+                          <input type="radio" name="f_debateanswer_nr"
+                            value="{{$gimme->debateanswer->number}}" id="answer-{{$gimme->debateanswer->number}}"
+                            onclick="$(this).parents('form:eq(0)').submit();" style="display:none"
+                          />
 				</li>
 	  			{{/list_debate_answers}}
   			</ul>

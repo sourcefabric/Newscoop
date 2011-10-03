@@ -185,10 +185,13 @@ if( Saas::singleton()->hasPrivilege('staff' , 'add') ) {
     $pages[2]['pages'][] = array(
 	    'label' => getGS('Add new staff member'),
 	    'module' => 'admin',
-	    'controller' => 'staff',
-	    'action' => 'add',
+	    'controller' => 'user',
+	    'action' => 'create',
 	    'resource' => 'user',
 	    'privilege' => 'manage',
+        'params' => array(
+            'is_admin' => 1,
+        ),
 	);
 }
 
@@ -198,10 +201,13 @@ if ($g_user->hasPermission('ManageSubscriptions')) {
 	$pages[2]['pages'][] = array(
 	    'label' => getGS('Add new subscriber'),
 	    'module' => 'admin',
-	    'controller' => 'subscriber',
-	    'action' => 'add',
+	    'controller' => 'user',
+	    'action' => 'create',
 	    'resource' => 'user',
 	    'privilege' => 'manage',
+        'params' => array(
+            'is_public' => 1,
+        ),
 	);
 }
 
@@ -237,13 +243,10 @@ if ($g_user->hasPermission('ManageCountries')) {
 }
 
 $pages[2]['pages'][] = array(
-    'label' => getGS('Change your password'),
+    'label' => getGS('Edit your password'),
     'module' => 'admin',
-    'controller' => 'staff',
-    'action' => 'edit',
-    'params' => array(
-        'user' => $g_user->getId(),
-    ),
+    'controller' => 'user',
+    'action' => 'edit-password',
 );
 
 if ($showAdminActions) {
