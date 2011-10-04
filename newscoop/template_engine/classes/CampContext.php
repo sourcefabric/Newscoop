@@ -56,6 +56,7 @@ final class CampContext
         'user_comment' => array(
             'class' => 'Comment',
         ),
+        'playlist_article' => array( 'class' => 'Article' )
     );
 
     // Defines the list objects
@@ -116,6 +117,12 @@ final class CampContext
             'class' => 'UserComments',
             'list' => 'user_comments',
             'url_id' => 'cid',
+        ),
+        'playlist' => array
+        (
+        	'class' => 'Playlist',
+        	'list' => 'playlist',
+			'url_id' => 'pls'
         ),
     );
 
@@ -622,6 +629,7 @@ final class CampContext
    	    $this->m_readonlyProperties['current_list'] =& $p_list;
    	    $this->m_readonlyProperties[$listName.'_lists'][] =& $p_list;
    	    $this->m_readonlyProperties['current_'.$listName.'_list'] =& $p_list;
+   	    return $this->m_readonlyProperties;
     } // fn setCurrentList
 
 

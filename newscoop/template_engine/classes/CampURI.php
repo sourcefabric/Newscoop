@@ -653,17 +653,13 @@ abstract class CampURI
             return $this->m_template->name;
         }
 
-        if (!empty($p_templateIdOrName))
-        {
+        if (!empty($p_templateIdOrName)) {
             $tplObj = new MetaTemplate($p_templateIdOrName);
-            if (!$tplObj->defined())
-            {
+            if (!$tplObj->defined()) {
                 return null;
             }
             $template = $tplObj->name;
-        }
-        elseif (is_null($this->m_errorCode))
-        {
+        } elseif (is_null($this->m_errorCode)) {
             $template = CampSystem::GetTemplate($this->language->number,
                             $this->publication->identifier,
                             $this->issue->number, $this->section->number,

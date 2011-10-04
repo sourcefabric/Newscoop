@@ -242,7 +242,7 @@ class CampURIShortNames extends CampURI
                 $language = new MetaLanguage($langArray[0]->getLanguageId());
             }
         } else {
-            $language = new MetaLanguage($publication->default_language->number);
+            $language = $publication->default_language;
         }
 
         if (empty($language) || !$language->defined()) {

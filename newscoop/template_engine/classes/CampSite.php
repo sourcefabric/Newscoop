@@ -144,7 +144,6 @@ final class CampSite extends CampSystem
             } else {
             	$themePath = $uri->getThemePath();
             	$templates_dir = CS_TEMPLATES_DIR . DIR_SEP . $themePath;
-            	$template = substr($template,  strlen($themePath));
             }
         }
         $params = array(
