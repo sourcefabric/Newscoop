@@ -8,7 +8,7 @@ require_once($GLOBALS['g_campsiteDir'] . '/classes/CampCache.php');
  * ArticlesList class
  *
  */
-class ArticlePlaylist extends ListObject
+class PlaylistList extends ListObject
 {
     private static $s_parameters = array
     (
@@ -52,20 +52,27 @@ class ArticlePlaylist extends ListObject
 
         // get playlist
         if (isset($p_parameters['name']) && trim($p_parameters['name'])) {
-            $playlist = $repo->findBy(array( "name" => $p_parameters['name'] ));
+            $playlist = current($repo->findBy(array( "name" => $p_parameters['name'] )));
         }
         if (isset($p_parameters['id']) && trim($p_parameters['id'])!="") {
             $playlist = $repo->find($p_parameters['id']);
         }
         if (!($playlist instanceof \Newscoop\Entity\Playlist)) {
-            return false;
+            return array();
         }
 
         $langRepo = $doctrine->getEntityManager()->getRepository('Newscoop\Entity\Language');
         /* @var $langRepo \Newscoop\Entity\Repository\LanguageRepository */
         $lang = $langRepo->find($p_parameters['language']);
 
-        return $repo->articles($playlist, $lang, true);
+        $articlesList = $repo->articles($playlist, $lang);
+
+        $metaArticlesList = array();
+	    foreach ($articlesList as $article) {
+	        $metaArticlesList[] = new MetaArticle($lang->getId(), $article['articleId']);
+	    }
+
+	    return $metaArticlesList;
 	}
 
 

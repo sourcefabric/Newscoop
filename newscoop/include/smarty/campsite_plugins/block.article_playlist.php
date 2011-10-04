@@ -9,7 +9,7 @@
  * Campsite list_articles block plugin
  *
  * Type:     block
- * Name:     list_articles
+ * Name:     list_article_playlist
  * Purpose:  Provides a...
  *
  * @param string
@@ -26,44 +26,38 @@ function smarty_block_article_playlist($p_params, $p_content, &$p_smarty, &$p_re
 {
     $p_smarty->smarty->loadPlugin('smarty_shared_escape_special_chars');
     $campContext = $p_smarty->getTemplateVars('gimme');
+	/* @var $campContext CampContext */
+
+    if (!isset($p_params['language'])) {
+        $p_params['language'] = $campContext->language->number;
+    }
 
     if (!isset($p_content))
     {
-        if (!isset($p_params['language'])) {
-            $p_params['language'] = $campContext->language->number;
-        }
-
-        $start = $campContext->next_list_start('ArticlePlaylist');
-        $articlesList = new ArticlePlaylist($start, $p_params);
-
-        if ($articlesList->isEmpty())
-        {
+        $start = $campContext->next_list_start('PlaylistList');
+    	$articlesList = new PlaylistList($start, $p_params);
+    	if ($articlesList->isEmpty())
+    	{
             $campContext->setCurrentList($articlesList, array());
             $campContext->resetCurrentList();
-        	$p_repeat = false;
-            return null;
-        }
-    	var_dump($campContext->setCurrentList($articlesList, array('x')));
-    	$campContext->playlist = $campContext->current_playlist_list->current;
-
+    		$p_repeat = false;
+    	    return null;
+    	}
+    	$campContext->setCurrentList($articlesList, array('playlist'));
+    	$campContext->playlist_article = $campContext->current_playlist_list->current;
     	$p_repeat = true;
     }
     else
     {
-        $campContext->current_articles_list->defaultIterator()->next();
-    	if (!is_null($campContext->current_playlist_list->current))
-    	{
-    	    $campContext->playlist = $campContext->current_playlist_list->current;
-    	    $p_repeat = true;
-    	}
-    	else
-    	{
-    	    $campContext->resetCurrentList();
+        $campContext->current_playlist_list->defaultIterator()->next();
+        if (!is_null($campContext->current_playlist_list->current)) {
+            $campContext->playlist_article = $campContext->current_playlist_list->current;
+            $p_repeat = true;
+        } else {
+            $campContext->resetCurrentList();
             $p_repeat = false;
-    	}
+        }
     }
 
     return $p_content;
 }
-
-?>
