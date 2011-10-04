@@ -71,6 +71,12 @@ class Article
     private $name;
 
     /**
+     * @Column(name="time_updated")
+     * @var string
+     */
+    private $date;
+
+    /**
      * Set article id
      *
      * @param int $p_id
