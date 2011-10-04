@@ -153,7 +153,7 @@ foreach ($Campsite['publications'] as $publication) {
         if (count($Campsite['issues'][$pubId]) > 0) {
             $publication_page['pages'][] = array(
                 'label' => getGS('More...'),
-                'uri' => $view->baseUrl("admin/pub/?Pub=$pubId"),
+                'uri' => $view->baseUrl("admin/issues/?Pub=$pubId"),
             );
         }
     }
