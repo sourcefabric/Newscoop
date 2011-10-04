@@ -93,3 +93,19 @@ CREATE TABLE IF NOT EXISTS `ingest_feed_entry` (
   UNIQUE (`date_id`, `news_item_id`),
   KEY (`status`, `updated`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+
+-- Article playlist tables 
+CREATE TABLE `playlist` (
+  `id_playlist` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) NOT NULL,
+  `notes` varchar(1024) DEFAULT NULL,
+  PRIMARY KEY (`id_playlist`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `playlist_article` (
+  `id_playlist` int(10) unsigned NOT NULL,
+  `article_no` int(10) unsigned NOT NULL,
+  UNIQUE KEY `id_playlist` (`id_playlist`,`article_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
