@@ -134,6 +134,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('ingest.publisher'));
 
+        $container->register('blog', 'Newscoop\Services\BlogService')
+            ->addArgument('%blog%');
+
         Zend_Registry::set('container', $container);
         return $container;
     }

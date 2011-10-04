@@ -42,6 +42,20 @@ class Application_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         $resource = $request->getControllerName();
         $action = $request->getActionName();
 
+        $userService = Zend_Registry::get('container')->getService('user');
+        $blogService = Zend_Registry::get('container')->getService('blog');
+        $user = $userService->getCurrentUser();
+        if ($blogService->isBlogger($user)) {
+            if (!in_array($resource, array('blog')) && !$request->isXmlHttpRequest()
+                && $request->getParam('controller') != 'articles') {
+                $request->setModuleName('admin')
+                    ->setControllerName('blog')
+                    ->setActionName('index')
+                    ->setDispatched(false);
+                return;
+            }
+        }
+
         if (in_array($resource, $this->ignore)) {
             return; // ignore
         }
