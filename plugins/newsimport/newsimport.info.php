@@ -276,12 +276,14 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             'subregion' => array('type' => 'text', 'params' => array(), 'hidden' => false),
             // date/time - fixed form
             'date' => array('type' => 'date', 'params' => array(), 'hidden' => false), // text, 2010-08-31
-            'date_year' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 2010
-            'date_month' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 8
-            'date_day' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 31
+            //'date_year' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 2010
+            //'date_month' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 8
+            //'date_day' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 31
             'time' => array('type' => 'text', 'params' => array(), 'hidden' => false), // event_time, like 10:30 (or a list for movie screenings at a day)
             // date/time - free form
-            'date_time_text' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 1), 'hidden' => false), // comprises other textual date/time information, if available
+            'date_time_text' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 1), 'hidden' => true), // comprises other textual date/time information, if available
+            // date/time - json
+            'date_time_tree' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 0), 'hidden' => false), // puts several date, time, flags, into a single field
             // contact - free form
             'web' => array('type' => 'text', 'params' => array(), 'hidden' => false), // location_url if filled, or event/tour_link if some there
             'email' => array('type' => 'text', 'params' => array(), 'hidden' => false),
@@ -590,6 +592,10 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 	 */
     function plugin_newsimport_test()
     {
+        if (php_sapi_name() == 'cli') {
+            return;
+        }
+
         // is this a news import request?
         $news_import_active = SystemPref::Get('NewsImportUsage');
         if (!empty($news_import_active)) {
@@ -610,4 +616,4 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 // NB: this is recognizing whether the request is on events import
 // this file is included during page loading, thus can be done this way
 // if it would change, we would need to put it into LegacyController
-plugin_newsimport_test();
+//plugin_newsimport_test();

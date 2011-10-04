@@ -109,6 +109,7 @@ $event_data_sources = array(
             'sport' => array('sport', 'sport',),
             'thriller' => array('thriller', 'thriller',),
             'western' => array('western', 'western',),
+            'other' => 'x',
         ),
         'status' => array(
             'public' => true,

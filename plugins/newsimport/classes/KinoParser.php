@@ -880,6 +880,26 @@ class KinoData_Parser_SimpleXML {
         $other_desc_parts = array('weewee', 'weelea', 'weetxs');
         foreach ($kinos_infos_files as $one_kino_file) {
             $one_kino_xml = simplexml_load_file($one_kino_file);
+
+            $export_start_date = '0000-00-00';
+            $export_start_date_time = explode('-', trim('' . $one_kino_xml->export->date_min));
+            $export_start_date_info = explode('.', $export_start_date_time[0]);
+            if (3 == count($export_start_date_info)) {
+                $exp_year = '0000';
+                $exp_month = '00';
+                $exp_day = '00';
+                if (4 == strlen($export_start_date_info[2])) {
+                    $exp_year = $export_start_date_info[2];
+                }
+                if (2 == strlen($export_start_date_info[1])) {
+                    $exp_month = $export_start_date_info[1];
+                }
+                if (2 == strlen($export_start_date_info[0])) {
+                    $exp_day = $export_start_date_info[0];
+                }
+                $export_start_date = $exp_year . '-' . $exp_month . '-' . $exp_day;
+            }
+
             foreach ($one_kino_xml->kino as $one_kino) {
                 $one_kino_id = trim('' . $one_kino->theaterid);
                 //if (empty($one_kino_id)) {
@@ -946,6 +966,8 @@ class KinoData_Parser_SimpleXML {
                     }
 
                     $movies_screens[] = array(
+                        'start_date' => $export_start_date;
+
                         'kino_id' => $one_kino_id,
                         'kino_name' => $one_kino_name,
                         'kino_town' => $one_kino_town,
@@ -1046,7 +1068,7 @@ class KinoData_Parser_SimpleXML {
         $movies_keys = array();
 
         foreach ($movies_screens as $one_screen) {
-            if (isset($one_screen['movie_key']) && (!empty($one_screen['movie_key']))) {
+            if (isset($one_screen['movie_key']) && (!empty($kino_country))) {
                 $movies_keys[$one_screen['movie_key']] = true;
             }
         }
@@ -1056,10 +1078,31 @@ class KinoData_Parser_SimpleXML {
         $screen_events_all = array();
         $screen_events_dif = array();
 
-        foreach ($movies_screens as $one_screen) {
+        $set_date = '';
+        $set_date_times = array();
 
-            // check if town - topic included
-            $cur_town = $one_screen['kino_town'];
+        foreach ($movies_screens as $one_screen) {
+            // TODO: put it as a (full) week start of date/time screen listing (lists per days)
+            $start_date = $one_screen['start_date'];
+
+            // region info
+            $e_region = '';
+            $e_subregion = '';
+            $e_region_info = RegionInfo::ZipRegion($one_screen['kino_zip'], $kino_country);
+            if (!empty($e_region_info)) {
+                if (isset($e_region_info['region'])) {
+                    $e_region = $e_region_info['region'];
+                }
+                if (isset($e_region_info['subregion'])) {
+                    $e_subregion = $e_region_info['subregion'];
+                }
+            }
+
+            if (isset($p_catLimits['*']) && isset($p_catLimits['*']['regions'])) {
+                if (!in_array($e_region, $p_catLimits['*']['regions'])) {
+                    continue;
+                }
+            }
 
             $event_topics = array();
 
@@ -1079,11 +1122,22 @@ class KinoData_Parser_SimpleXML {
                 $x_genres = $one_movie['genres'];
             }
 
+            $e_rated = false;
+
+            $c_other = null;
             foreach ($p_categories as $one_category) {
                 if (!is_array($one_category)) {
                     continue;
                 }
 
+                $one_cat_key = $one_category['key'];
+
+                if (array_key_exists('other', $one_category)) {
+                    $c_other = $one_category['other'];
+                    continue;
+                }
+
+/*
                 $one_cat_skip = false;
                 $one_cat_key = $one_category['key'];
                 foreach ($p_catLimits as $cat_lim_key => $cat_lim_spec) {
@@ -1111,7 +1165,7 @@ class KinoData_Parser_SimpleXML {
                     $c_other = $one_category['other'];
                     continue;
                 }
-
+*/
                 foreach ($x_genres as $x_catnam) {
                     $x_catnam = strtolower(trim($x_catnam));
                     if ((array_key_exists('match_xml', $one_category)) && (array_key_exists('match_topic', $one_category))) {
@@ -1122,12 +1176,25 @@ class KinoData_Parser_SimpleXML {
                         }
                         if (in_array($x_catnam, $one_cat_match_xml)) {
                             $event_topics[] = $one_cat_match_topic;
+
+                            if ('adult' == $one_cat_key) {
+                                $e_rated = true;
+                            }
+
                             continue;
                         }
                     }
                 }
 
             }
+
+            if (empty($event_topics)) {
+                if (!empty($c_other)) {
+                    $event_topics[] = $c_other;
+                }
+            }
+
+/*
             if (empty($event_topics)) {
                 if (!empty($c_other)) {
                     $event_topics[] = $c_other;
@@ -1137,7 +1204,7 @@ class KinoData_Parser_SimpleXML {
             if (empty($event_topics)) {
                 continue;
             }
-
+*/
 /*
             $one_movie = null;
 
@@ -1192,14 +1259,34 @@ class KinoData_Parser_SimpleXML {
                 $one_use_desc = $one_screen['desc'];
             }
 
+
+            $one_event = array();
+            $one_event_date_def = '0000-00-00';
+            $one_event['date'] = $one_event_date_def;
+            //$one_date = '';
+            $one_event_screen = array();
+
             foreach ($one_screen['dates'] as $one_date => $one_times) {
+                if ($one_event_date_def == $one_event['date']) {
+                    $one_event['date'] = $one_date;
+                }
+                $one_event_screen[$one_date] = $one_times; // flag, lang, time
+            }
+            $one_event['date_time_tree'] = json_encode($one_event_screen);
+            $one_event['date_time_text'] = json_encode($one_event_screen);
 
+            //foreach ($one_screen['dates'] as $one_date => $one_times) {
+            //}
+            {
+/*
                 $one_date_part = str_replace('-', '', $one_date);
+*/
 
-                $one_event = array();
+                //$one_event = array();
                 $one_event['provider_id'] = $provider_id;
                 //$one_event['event_id'] = '' . $one_date_part . str_pad($one_screen['kino_id'], 6, '0', STR_PAD_LEFT) . str_pad($one_screen['movie_id'], 6, '0', STR_PAD_LEFT);
-                $one_event['event_id'] = '' . $one_date_part . '-' . $one_screen['kino_id'] . '-' . $one_screen['movie_id'];
+                //$one_event['event_id'] = '' . $one_date_part . '-' . $one_screen['kino_id'] . '-' . $one_screen['movie_id'];
+                $one_event['event_id'] = '' . $one_screen['kino_id'] . '-' . $one_screen['movie_id'];
 
                 $one_event['tour_id'] = $one_screen['movie_id'];
                 $one_event['location_id'] = $one_screen['kino_id'];
@@ -1214,6 +1301,7 @@ class KinoData_Parser_SimpleXML {
                 $one_event['town'] = $one_screen['kino_town'];
                 $one_event['street'] = $one_screen['kino_street'];
 
+/*
                 // region info
                 $e_region = '';
                 $e_subregion = '';
@@ -1226,9 +1314,11 @@ class KinoData_Parser_SimpleXML {
                         $e_subregion = $e_region_info['subregion'];
                     }
                 }
-                $event_info['region'] = $e_region;
-                $event_info['subregion'] = $e_subregion;
+*/
+                $one_event['region'] = $e_region;
+                $one_event['subregion'] = $e_subregion;
 
+/*
                 $scr_times = '';
                 foreach ($one_times as $one_scr_time) {
                     if (!empty($scr_times)) {
@@ -1242,7 +1332,9 @@ class KinoData_Parser_SimpleXML {
                         $scr_times .= ':' . $one_scr_time['flag'];
                     }
                 }
+*/
 
+/*
                 $one_date_year = '0000';
                 $one_date_month = '00';
                 $one_date_day = '00';
@@ -1252,10 +1344,12 @@ class KinoData_Parser_SimpleXML {
                     $one_date_month = ltrim($one_date_arr[1], '0');
                     $one_date_day = ltrim($one_date_arr[2], '0');
                 }
+*/
 
                 if ($limit_date_start) {
                     if ($one_date < $limit_date_start) {
-                        continue;
+// TODO: commented out just for debugging purposes
+//                        continue;
                     }
                 }
                 if ($limit_date_end) {
@@ -1264,13 +1358,14 @@ class KinoData_Parser_SimpleXML {
                     }
                 }
 
-                $one_event['date'] = $one_date;
-                $one_event['date_year'] = $one_date_year;
-                $one_event['date_month'] = $one_date_month;
-                $one_event['date_day'] = $one_date_day;
-                $one_event['time'] = $scr_times;
+                //$one_event['date'] = $one_date;
+                //$one_event['date_year'] = $one_date_year;
+                //$one_event['date_month'] = $one_date_month;
+                //$one_event['date_day'] = $one_date_day;
+                //$one_event['time'] = $scr_times;
+                $one_event['time'] = '';
 
-                $one_event['date_time_text'] = '';
+                //$one_event['date_time_text'] = '';
 
                 $one_event['web'] = $this->makeLink($one_screen['kino_url'], null);
                 $one_event['email'] = '';
@@ -1288,7 +1383,7 @@ class KinoData_Parser_SimpleXML {
                 $one_event['minimal_age'] = '';
 
                 $one_event['canceled'] = false;
-                $one_event['rated'] = false;
+                $one_event['rated'] = $e_rated;
 
                 $one_event['geo'] = array();
                 if ( (!empty($one_screen['kino_latitude'])) && (!empty($one_screen['kino_longitude'])) ) {

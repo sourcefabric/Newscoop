@@ -533,6 +533,37 @@ class EventData_Parser_SimpleXML {
                 $x_locid = trim('' . $event_location->locid);
                 $event_info['location_id'] = $x_locid;
 
+                // !!! no country info
+                $event_info['country'] = 'ch';
+
+                // * main location info
+                // town name
+                $x_twnnam = trim('' . $event->twnnam);
+                $event_info['town'] = $x_twnnam;
+
+                // zip code
+                $x_loczip = trim('' . $event_location->loczip);
+                $event_info['zipcode'] = $x_loczip;
+
+                // region info
+                $e_region = '';
+                $e_subregion = '';
+                $e_region_info = RegionInfo::ZipRegion($event_info['zipcode'], $event_info['country']);
+                if (!empty($e_region_info)) {
+                    if (isset($e_region_info['region'])) {
+                        $e_region = $e_region_info['region'];
+                    }
+                    if (isset($e_region_info['subregion'])) {
+                        $e_subregion = $e_region_info['subregion'];
+                    }
+                }
+                $event_info['region'] = $e_region;
+                $event_info['subregion'] = $e_subregion;
+
+                // street address, free form, but usually 'street_name house_number'
+                $x_locadr = trim('' . $event_location->locadr);
+                $event_info['street'] = $x_locadr;
+
 
                 // Categories
 
@@ -543,11 +574,6 @@ class EventData_Parser_SimpleXML {
                 // location hot
                 $x_lochot = trim('' . $event_location->lochot);
                 $event_info['rated'] = ( ((!empty($x_lochot)) && ('0' != $x_lochot)) ? true : false );
-
-                // * main location info
-                // town name (used at topics limiting)
-                $x_twnnam = trim('' . $event->twnnam);
-                $event_info['town'] = $x_twnnam;
 
                 $event_topics = array();
                 // * main type fields
@@ -565,8 +591,8 @@ class EventData_Parser_SimpleXML {
                         if ($cat_lim_key != $one_cat_key) {
                             continue;
                         }
-                        if (array_key_exists('towns', $cat_lim_spec)) {
-                            if (!in_array($event_info['town'], $cat_lim_spec['towns'])) {
+                        if (array_key_exists('regions', $cat_lim_spec)) {
+                            if (!in_array($event_info['region'], $cat_lim_spec['regions'])) {
                                 $one_cat_skip = true;
                                 break;
                             }
@@ -616,34 +642,6 @@ class EventData_Parser_SimpleXML {
                 $x_locnam = trim('' . $event_location->locnam);
                 $event_info['organizer'] = $x_locnam; // may be overwritten by tour_organizer
 
-                // !!! no country info
-                $event_info['country'] = 'ch';
-
-                // * main location info
-                // town name, set already above
-
-                // zip code
-                $x_loczip = trim('' . $event_location->loczip);
-                $event_info['zipcode'] = $x_loczip;
-
-                // region info
-                $e_region = '';
-                $e_subregion = '';
-                $e_region_info = RegionInfo::ZipRegion($event_info['zipcode'], $event_info['country']);
-                if (!empty($e_region_info)) {
-                    if (isset($e_region_info['region'])) {
-                        $e_region = $e_region_info['region'];
-                    }
-                    if (isset($e_region_info['subregion'])) {
-                        $e_subregion = $e_region_info['subregion'];
-                    }
-                }
-                $event_info['region'] = $e_region;
-                $event_info['subregion'] = $e_subregion;
-
-                // street address, free form, but usually 'street_name house_number'
-                $x_locadr = trim('' . $event_location->locadr);
-                $event_info['street'] = $x_locadr;
 
                 // * minor location info
                 // other location specification
