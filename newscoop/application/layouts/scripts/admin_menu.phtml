@@ -106,6 +106,13 @@ $pages[1]['pages'][] = array(
     'action' => 'index',
 );
 
+$pages[1]['pages'][] = array(
+    'label' => getGS('Article Playlists'),
+    'module' => 'admin',
+    'controller' => 'playlist',
+    'action' => 'index',
+);
+
 // add content/publications
 foreach ($Campsite['publications'] as $publication) {
     $pubId = $publication->getPublicationId();
