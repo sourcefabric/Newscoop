@@ -6,6 +6,16 @@
 <title><?php putGS("Edit Related articles"); ?></title>
 <script type="text/javascript">
 
+function relatedListIncidence(articleId) {
+	var incidence = 0;
+	$('#context_list').find('tr').each(function(key, value) {
+		if (value.id == articleId) {
+		    incidence ++;
+		}
+	});
+	return incidence;
+}
+
 function toggleDragZonePlaceHolder() {
 	if($('#context_list').find('.context-item').html() != null) {
 	    $('#drag-here-to-add-to-list').css('display', 'none');
@@ -38,23 +48,22 @@ function loadContextList() {
 }
 
 function appendItemToContextList(article_id, article_date, article_title) {
-
-    $("#context_list").append(
-    	    '<tr id="'+article_id+'">'+
-    	    '<td>'+
-    	    '<div class="context-item">'+
-            '<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>'+
-            '<div class="context-item-header">'+
-                '<div class="context-item-date">'+article_date+'</div>'+
-                '<a href="#" class="view-article" style="display: none" onClick="viewArticle($(this).parent(\'div\').parent(\'div\').parent(\'td\').parent(\'tr\').attr(\'id\'));"><?php echo getGS('View article') ?></a>'+
-            '</div>'+
-            '<a href="#" class="corner-button" style="display: block" onClick="$(this).parent(\'div\').parent(\'td\').parent(\'tr\').remove();toggleDragZonePlaceHolder();"><span class="ui-icon ui-icon-closethick"></span></a>'+
-            '<div class="context-item-summary">'+article_title+'</div>'+
-            '</div>'+
-    	    '</td>'+
-    	    '</tr>'
-    	    );
-    closeArticle();
+		$("#context_list").append(
+	            '<tr id="'+article_id+'">'+
+	            '<td>'+
+	            '<div class="context-item">'+
+	            '<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>'+
+	            '<div class="context-item-header">'+
+	                '<div class="context-item-date">'+article_date+'</div>'+
+	                '<a href="#" class="view-article" style="display: none" onClick="viewArticle($(this).parent(\'div\').parent(\'div\').parent(\'td\').parent(\'tr\').attr(\'id\'));"><?php echo getGS('View article') ?></a>'+
+	            '</div>'+
+	            '<a href="#" class="corner-button" style="display: block" onClick="$(this).parent(\'div\').parent(\'td\').parent(\'tr\').remove();toggleDragZonePlaceHolder();"><span class="ui-icon ui-icon-closethick"></span></a>'+
+	            '<div class="context-item-summary">'+article_title+'</div>'+
+	            '</div>'+
+	            '</td>'+
+	            '</tr>'
+	            );
+	    closeArticle();
 }
 
 function deleteContextList() {
@@ -215,6 +224,10 @@ $contextlist->render();
                             $(ui.item).find(".corner-button").css("display","block");
                             $(ui.item).find(".view-article").css("display","none");
                             toggleDragZonePlaceHolder();
+                            if (relatedListIncidence($(ui.item).attr('id')) > 1) {
+                                alert('<?php echo getGS('You already have this item in the Related Articles list!') ?>');
+                            	ui.item.remove();
+                            }
                          }
                      }).disableSelection();
                      loadContextList();
@@ -242,7 +255,7 @@ $contextlist->render();
 <div class="context-block context-article" style="display: none">
 <div class="save-button-bar"><input type="submit"
 	name="add-this-article" value="Add this article"
-	class="save-button-small" onclick="appendItemToContextList($('#preview-article-id').val(), $('#preview-article-date').val(), $('#preview-article-title').html()); toggleDragZonePlaceHolder(); clearActiveArticles();" id="context_button_add"> <input
+	class="save-button-small" onclick="if(relatedListIncidence($('#preview-article-id').val()) == 0) {appendItemToContextList($('#preview-article-id').val(), $('#preview-article-date').val(), $('#preview-article-title').html()); toggleDragZonePlaceHolder(); clearActiveArticles()} else { alert('<?php echo getGS('You already have this item in the Related Articles list!') ?>'); };" id="context_button_add"> <input
 	type="submit" name="close" value="Close" class="default-button"
 	onclick="closeArticle(); clearActiveArticles();" id="context_button_close_article"></div>
 <div class="context-article-preview" style="overflow-y:auto; height:500px;">
