@@ -62,7 +62,7 @@ class EmailService
      */
     private function send($subject, $message, $tos)
     {
-        $mail = new \Zend_Mail();
+        $mail = new \Zend_Mail('utf-8');
         $mail->setSubject($subject);
         $mail->setBodyText($message);
         $mail->setFrom($this->config['from']);
