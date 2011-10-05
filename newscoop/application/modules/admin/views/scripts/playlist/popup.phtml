@@ -8,7 +8,9 @@ $t = array
 	'drag-here' => getGS('Drag here to add to list'),
 	'playlist-updated' => getGS('Playlist updated.'),
     'list-saved' => getGS('Playlist saved'),
-	'list-save-failed' => getGS('Could not save playlist')
+	'list-save-failed' => getGS('Could not save playlist'),
+    'delete' => getGS('Delete'),
+    'cancel' => getGS('Cancel')
 );
 $dataUrl = $this->url( array
 (
@@ -21,6 +23,13 @@ $dataUrl = $this->url( array
 $saveUrl = $this->url( array
 (
 	'action' => 'save-data',
+	'controller' => 'playlist',
+	'module' => 'admin',
+	'format' => 'json'
+), null, null, false);
+$deleteUrl = $this->url( array
+(
+	'action' => 'delete',
 	'controller' => 'playlist',
 	'module' => 'admin',
 	'format' => 'json'
@@ -137,6 +146,12 @@ function popup_close()
         parent.$.fancybox.close();
     }
     catch (e) {window.close();}
+    try
+    {
+    	var iframe = $(parent.document.body).find('#playlist-display').removeAttr('src').clone();
+		$(parent.document.body).find('#playlist-display').replaceWith(iframe);
+	}
+	catch(e){}
 }
 
 function popup_save()
@@ -164,13 +179,45 @@ function fnSaveCallback(data)
 	}
 	var pl = $(parent.document.body).find('#playlists option[value='+data.playlistId+']');
 	if (pl.length == 0) {
-		$(parent.document.body).find('#playlists').append( $('<option />').val(data.playlistId).text(data.playlistName) );
+		var opt = $('<option />').val(data.playlistId).text(data.playlistName);
+		var sel = $(parent.document.body).find('#playlists');
+		sel.append( opt );
+		sel.val(data.playlistId)
+		parent.triggerSelectClick();
 	}
 	else {
-		pl.val(data.playlistId).text(data.playlistName);
+		pl.val(data.playlistId).text(data.playlistName).trigger('click');
 	}
 	var flash = flashMessage('{$t['list-saved']}', null, false);
 }
+
+$(function()
+{
+	$( "#dialog-confirm" ).dialog
+	({
+		resizable: false,
+		height:140,
+		modal: true,
+		autoOpen : false,
+		position : 'top',
+		buttons:
+		{
+			"{$t['delete']}" : function() {
+				callServer('{$deleteUrl}', {id:$('#playlists').val()}, function()
+				{
+					$(parent.document.body).find('#playlists option[value={$this->playlistId}]').remove();
+					var iframe = $(parent.document.body).find('#playlist-display').removeAttr('src').clone();
+					$(parent.document.body).find('#playlist-display').replaceWith(iframe);
+				}, true );
+				$( this ).dialog( "close" );
+			},
+			"{$t['cancel']}" : function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
+	$('#remove-ctrl').click(function(){ $( "#dialog-confirm" ).dialog('open') });
+});
 
 JS;
 
@@ -183,18 +230,28 @@ $this->headScript()->appendScript( $js, "text/javascript" );
 <div class="content">
 	<div id="context-box" class="block-shadow">
 		<div class="toolbar">
-			<div class="save-button-bar"><input type="submit" name="cancel"
-				value="<?php echo getGS('Close'); ?>" class="default-button" onclick="popup_close();"
-				id="context_button_close"> <input type="submit" name="save"
-				value="<?php echo getGS('Save'); ?>" class="save-button-small" onclick="popup_save();"
-				id="context_button_save">
+			<div class="save-button-bar">
+				<?php if (isset($this->playlistId)) : ?>
+				<input type="button" class="default-button" id="remove-ctrl" value="<?php echo getGS('Remove'); ?>" />
+				<?php endif; ?>
+				<input type="submit" name="cancel"
+					value="<?php echo getGS('Close'); ?>" class="default-button" onclick="popup_close();"
+					id="context_button_close"> <input type="submit" name="save"
+					value="<?php echo getGS('Save'); ?>" class="save-button-small" onclick="popup_save();"
+					id="context_button_save">
 			</div>
 
-			<h2>
+			<h2 style="width:700px">
 			    <?php echo getGS('Article Playlist'); ?>
 				<span style="float:right">
-					<label for="playlist-name"><?php echo getGS('Playlist Name') ?></label>
-					<input name="playlist-name" id="playlist-name" value="<?php echo $this->playlistName ?>" />
+					<label for="playlist-name"><?php echo getGS('Playlist Name') ?>:</label>
+					<input name="playlist-name" id="playlist-name" value="<?php echo $this->playlistName ?>"
+						style="font-size: 12px; width: 250px" />
+					<?php if(isset($this->playlistId)) : ?>
+					<label for="playlist-id"><?php echo getGS('Playlist ID')?>:</label>
+					<input id="playlist-id" style="font-size:12px; width:50px"
+						readonly="readonly"	value="<?php echo $this->playlistId ?>">
+					<?php endif; ?>
 				</span>
 			</h2>
 		</div>
@@ -272,7 +329,7 @@ $this->headScript()->appendScript( $js, "text/javascript" );
 			</script>
 
     		<div class="context-block context-list">
-    			<h3><?php echo getGS('Related Articles'); ?></h3>
+    			<h3><?php echo getGS('Playlist Articles'); ?></h3>
     			<div class="context-list-results">
     				<div class="save-button-bar" style="display: block;"><input
     					type="submit" name="delete-all" value="Delete all"
@@ -310,6 +367,9 @@ $this->headScript()->appendScript( $js, "text/javascript" );
 	</div>
 </div>
 
+<div id="dialog-confirm" style="display:none" title="<?php echo getGS('Remove playlist') ?>">
+	<p><?php echo getGS('Are you sure you want to delete this playlist?') ?></p>
+</div>
 
 
 
