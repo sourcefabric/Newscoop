@@ -966,7 +966,7 @@ class KinoData_Parser_SimpleXML {
                     }
 
                     $movies_screens[] = array(
-                        'start_date' => $export_start_date;
+                        'start_date' => $export_start_date,
 
                         'kino_id' => $one_kino_id,
                         'kino_name' => $one_kino_name,
@@ -1078,13 +1078,17 @@ class KinoData_Parser_SimpleXML {
         $screen_events_all = array();
         $screen_events_dif = array();
 
-        $set_date = '';
-        $set_date_times = array();
+        //$set_date = '';
+        //$set_date_times = array();
 
         foreach ($movies_screens as $one_screen) {
-            // TODO: put it as a (full) week start of date/time screen listing (lists per days)
-            $start_date = $one_screen['start_date'];
-
+            $set_date = $one_screen['start_date'];
+            $set_date_obj = new DateTime($set_date);
+            $set_date_times = array($set_date => array());
+            foreach (array(1, 2, 3, 4, 5, 6) as $cur_day_add) {
+                $set_date_obj->add(new DateInterval('P1D'));
+                $set_date_times[$set_date_obj->format('Y-m-d')] = array();
+            }
             // region info
             $e_region = '';
             $e_subregion = '';
@@ -1259,21 +1263,36 @@ class KinoData_Parser_SimpleXML {
                 $one_use_desc = $one_screen['desc'];
             }
 
-
             $one_event = array();
-            $one_event_date_def = '0000-00-00';
-            $one_event['date'] = $one_event_date_def;
+            //$one_event_date_def = '0000-00-00';
+            //$one_event['date'] = $one_event_date_def;
+            $one_event['date'] = $set_date;
+            //$one_date = $set_date;
             //$one_date = '';
-            $one_event_screen = array();
+            //$one_event_screen = array();
 
             foreach ($one_screen['dates'] as $one_date => $one_times) {
-                if ($one_event_date_def == $one_event['date']) {
-                    $one_event['date'] = $one_date;
+                //if ($one_event_date_def == $one_event['date']) {
+                //    $one_event['date'] = $one_date;
+                //}
+                if (!isset($set_date_times[$one_date])) {
+                    $set_date_times[$one_date] = array(); // this shall not occur
+                    //var_dump('wtf!!!');
+                    //var_dump($one_date);
+                    //var_dump($set_date_times[$one_date]);
                 }
-                $one_event_screen[$one_date] = $one_times; // flag, lang, time
+
+                foreach ($one_times as $one_screen_info) {
+                    $set_date_times[$one_date][] = $one_screen_info;
+                }
+                //$one_event_screen[$one_date] = $one_times; // flag, lang, time
             }
-            $one_event['date_time_tree'] = json_encode($one_event_screen);
-            $one_event['date_time_text'] = json_encode($one_event_screen);
+            ksort($set_date_times);
+
+            //$one_event['date_time_tree'] = json_encode($one_event_screen);
+            //$one_event['date_time_text'] = json_encode($one_event_screen);
+            $one_event['date_time_tree'] = json_encode($set_date_times);
+            $one_event['date_time_text'] = json_encode($set_date_times);
 
             //foreach ($one_screen['dates'] as $one_date => $one_times) {
             //}
@@ -1295,6 +1314,7 @@ class KinoData_Parser_SimpleXML {
 
                 $one_event['headline'] = $one_screen['title'];
                 $one_event['organizer'] = $one_screen['kino_name'];
+                $one_event['keywords'] = $one_screen['kino_name'];
 
                 $one_event['country'] = $kino_country;
                 $one_event['zipcode'] = $one_screen['kino_zip'];
@@ -1349,7 +1369,7 @@ class KinoData_Parser_SimpleXML {
                 if ($limit_date_start) {
                     if ($one_date < $limit_date_start) {
 // TODO: commented out just for debugging purposes
-//                        continue;
+                        continue;
                     }
                 }
                 if ($limit_date_end) {

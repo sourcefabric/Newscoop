@@ -281,9 +281,9 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             //'date_day' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 31
             'time' => array('type' => 'text', 'params' => array(), 'hidden' => false), // event_time, like 10:30 (or a list for movie screenings at a day)
             // date/time - free form
-            'date_time_text' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 1), 'hidden' => true), // comprises other textual date/time information, if available
+            'date_time_text' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 0), 'hidden' => false), // comprises other textual date/time information, if available
             // date/time - json
-            'date_time_tree' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 0), 'hidden' => false), // puts several date, time, flags, into a single field
+            'date_time_tree' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 0), 'hidden' => true), // puts several date, time, flags, into a single field
             // contact - free form
             'web' => array('type' => 'text', 'params' => array(), 'hidden' => false), // location_url if filled, or event/tour_link if some there
             'email' => array('type' => 'text', 'params' => array(), 'hidden' => false),
