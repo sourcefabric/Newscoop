@@ -92,7 +92,7 @@ class PublisherService
      * @param string $code
      * @return int
      */
-    private function getLanguage($code)
+    public function getLanguage($code)
     {
          $languages = \Language::GetLanguages(null, $code);
          if (empty($languages)) {
@@ -107,7 +107,7 @@ class PublisherService
      *
      * @return int
      */
-    private function getPublication()
+    public function getPublication()
     {
         $publications = $GLOBALS['Campsite']['publications'];
         if (empty($publications)) {
@@ -122,7 +122,7 @@ class PublisherService
      *
      * @return int
      */
-    private function getIssue()
+    public function getIssue()
     {
         return (int) \Issue::GetCurrentIssue($this->getPublication())->getIssueNumber();
     }
@@ -133,7 +133,7 @@ class PublisherService
      * @param Newscoop\Entity\Ingest\Feed\Entry $entry
      * @return int
      */
-    private function getSection(Entry $entry)
+    public function getSection(Entry $entry)
     {
         switch ($entry->getSubject()) {
             case '15000000':

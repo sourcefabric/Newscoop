@@ -29,6 +29,13 @@ class Admin_IngestController extends Zend_Controller_Action
             'published' => null,
             'status' => 'Usable',
         ), array('updated' => 'desc'), 25, 0);
+
+        $publisher = $this->_helper->service('ingest.publisher');
+        $this->view->sections = array();
+        foreach ($this->view->entries as $entry) {
+            $section = new Section($publisher->getPublication(), $publisher->getIssue(), $publisher->getLanguage($entry->getLanguage()), $publisher->getSection($entry));
+            $this->view->sections[$entry->getId()] = $section;
+        }
     }
 
     public function widgetAction()
@@ -73,6 +80,18 @@ class Admin_IngestController extends Zend_Controller_Action
             $article = $this->service->publish($entry, 'N');
             $this->_helper->flashMessenger(getGS("Entry '$1' prepared for publishing", $entry->getTitle()));
             $this->_helper->redirector->gotoUrl($this->_helper->article->getEditLink($article));
+        } catch (Exception $e) {
+            var_dump($e);
+            exit;
+        }
+    }
+
+    public function deleteAction()
+    {
+        try {
+            $this->service->deleteEntryById($this->_getParam('entry'));
+            $this->_helper->flashMessenger(getGS("Entry deleted"));
+            $this->_helper->redirector('index', 'ingest');
         } catch (Exception $e) {
             var_dump($e);
             exit;

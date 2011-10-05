@@ -1,3 +1,5 @@
+@import url("content_ingest.css");
+
 body h1 {
     float: none;
     margin: 0;
@@ -276,118 +278,6 @@ dl dd .info-text	{
 
 .iframe .zend_form {
     width: 503px;
-}
-
-.ingest {
-    height: 1%;
-    overflow: hidden;
-}
-
-.ingest ul {
-    margin: 0;
-    padding: 0;
-}
-
-.ingest li {
-    margin: 0; 
-    padding: 5px 0;
-}
-
-.ingest li:first-child {
-    padding-top: 0;
-}
-
-.ingest .control {
-    float: left;
-    width: 215px;
-    font-size: 1.3em;
-}
-
-.ingest .control .w {
-    padding-top: 5px;
-    margin-right: 10px;
-}
-
-.ingest .control .mode {
-    margin: 0 0 6px;
-    padding 0 0 5px: 
-}
-
-.ingest .control .mode dt {
-    /*float: left;*/
-}
-
-.ingest .control .mode dd {
-    margin: 0 0 1px;
-    font-weight: bold;
-}
-
-.ingest .control .mode a {
-    color: #cc0000;
-}
-
-.ingest .control .mode .auto a {
-    color: #4e9a06;
-}
-
-.ingest .control h2 {
-    padding: 10px 0 5px;
-    font-size: 1em;
-    font-weight: bold;
-}
-
-.ingest .main {
-    float: left;
-    width: 800px;
-}
-
-.ingest .entries li {
-    font-size: 1.3em;
-    border-top: 1px solid #ebebeb;
-}
-
-.ingest .entries li:hover {
-    background-color: #fff;
-}
-
-.ingest .entries li:first-child {
-    padding-top: 5px;
-    border-top: none;
-}
-
-.ingest .entries li > * {
-    padding: 0 7px;
-}
-
-.ingest .entries .title a {
-    color: inherit;
-}
-
-.ingest .entries .title.p-2 {
-    font-weight: bold;
-    color: #ce5c00;
-}
-
-.ingest .date {
-    float: right;
-}
-
-.ingest .publish {
-    float: right;
-}
-
-.ingest .prepare {
-    float: right;
-    color: #f57900;
-}
-
-.ingest h1 {
-    border: none;
-}
-
-.ingest .entries p {
-    font-size: 1em;
-    color: #555753;
 }
 
 .simple-tabs .ui-state-active a:link, 

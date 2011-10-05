@@ -235,6 +235,21 @@ class IngestService
     }
 
     /**
+     * Delete entry by id
+     *
+     * @param int $id
+     * @return void
+     */
+    public function deleteEntryById($id)
+    {
+        $entry = $this->find($id);
+        if (!empty($entry)) {
+            $this->em->remove($entry);
+            $this->em->flush();
+        }
+    }
+
+    /**
      * Updated published entry
      *
      * @param Newscoop\Entity\Ingest\Feed\Entry $entry
