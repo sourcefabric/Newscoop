@@ -1,33 +1,28 @@
 <?php $this->placeholder( 'title' )->set( getGS( 'Article playlists' ) ); ?>
 <div class="actions">
+	<form autocomplete="off">
     <ul class="navigation">
         <li><a class="add" href="#" id="add-ctrl"><?php echo getGS('Add playlist') ?></a></li>
-        <li><a class="copy" href="#" id="duplicate-ctrl"><?php echo getGS('Duplicate playlist') ?></a></li>
-        <li><a class="remove" href="#" id="remove-ctrl"><?php echo getGS('Remove playlist') ?></a></li>
+        <!-- li><a class="copy" href="#" id="duplicate-ctrl"><?php echo getGS('Duplicate playlist') ?></a></li-->
+        <li>
+			<select id="playlists" style="font-size:14px;padding:2px;border:none;">
+            	<option style="color: #aaa" value="" selected="selected"><?php echo getGS('Select a playlist') ?></option>
+                <?php foreach ($this->playlists as $pl) : ?>
+            		<option value="<?php echo $pl->getId() ?>"><?php echo $pl->getName() ?></option>
+                <?php endforeach; ?>
+            </select>
+        </li>
     </ul>
+    </form>
 </div>
 
-<select id="playlists" style="font-size:16px;padding:5px;">
-	<option style="color: #aaa" value=""><?php echo getGS('Select a playlist') ?></option>
-    <?php foreach ($this->playlists as $pl) : ?>
-		<option value="<?php echo $pl->getId() ?>"><?php echo $pl->getName() ?></option>
-    <?php endforeach; ?>
-</select>
 
-<div id="dialog-confirm" style="display:none" title="<?php echo getGS('Remove playlist') ?>">
-	<p><?php echo getGS('Are you sure you want to delete this playlist?') ?></p>
-</div>
+<iframe id="playlist-display" frameborder="0" style="width:1220px; height:750px"></iframe>
 
 <?php
 
 $t = array("cancel" => getGS('Cancel'), "delete" => getGS('Delete'));
-$deleteUrl = $this->url( array
-(
-	'action' => 'delete',
-	'controller' => 'playlist',
-	'module' => 'admin',
-	'format' => 'json'
-), null, null, false);
+
 $js = <<<JS
 
 $(function()
@@ -64,7 +59,7 @@ $(function()
 	function openPlaylistDialog(id)
 	{
 		var url = '{$this->url(array('action' => 'popup', 'controller' => 'playlist', 'module' => 'admin', 'id' => '{{id}}'), null, null, false)}'.replace('{{id}}', id);
-		$.fancybox
+		/*$.fancybox
     	({
     		showCloseButton : false,
         	width: 1220,
@@ -72,41 +67,26 @@ $(function()
         	scrolling : 'auto',
         	href : url,
         	type : 'iframe'
-    	})
+    	})*/
+    	$('#playlist-display').attr( 'src', url );
 	}
 
 	$('#playlists').change( function()
 	{
 		if ($(this).val() == '') return;
 		openPlaylistDialog($(this).val());
+		$(this).val('');
 	});
 
 	$('#add-ctrl').click( function()
 	{
 		openPlaylistDialog('');
 	});
-
-	$( "#dialog-confirm" ).dialog
-	({
-		resizable: false,
-		height:140,
-		modal: true,
-		autoOpen : false,
-		buttons:
-		{
-			"{$t['delete']}" : function() {
-				callServer('{$deleteUrl}', {id:$('#playlists').val()}, function(){ document.location.reload(); }, true );
-				$( this ).dialog( "close" );
-			},
-			"{$t['cancel']}" : function() {
-				$( this ).dialog( "close" );
-			}
-		}
-	});
-
-	$('#remove-ctrl').click(function(){ $( "#dialog-confirm" ).dialog('open') });
 });
-
+function triggerSelectClick()
+{
+	$('#playlists').change();
+}
 JS;
 $this->headScript()->appendScript($js, 'text/javascript');
 ?>
