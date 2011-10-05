@@ -412,7 +412,6 @@ class ArticleList extends BaseList
 		$returns['menuItemTitle'] = $menuSectionTitle;
 
 		return json_encode($returns);
-
 	}
 
 	/**

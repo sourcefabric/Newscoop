@@ -74,6 +74,10 @@ foreach ($filters as $name => $opts) {
     }
 }
 
+if (empty($_REQUEST['type']) || $_REQUEST['type'] != 'newswires') { // limit newswire articles by default
+    $articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), 'newswire');
+}
+
 // search
 if (isset($_REQUEST['sSearch']) && strlen($_REQUEST['sSearch']) > 0) {
     $search_phrase = $_REQUEST['sSearch'];
