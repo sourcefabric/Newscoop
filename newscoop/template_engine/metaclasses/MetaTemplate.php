@@ -40,21 +40,24 @@ final class MetaTemplate extends MetaDbObject
             "articlePage" => "article"
         );
 
-        $resourceId = new ResourceId('template_engine/metaclasses/MetaTemplate');
-        /* @var $syncResourceService ISyncResourceService */
-        $syncResourceService = $resourceId->getService(ISyncResourceService::NAME);
+        if ((is_string($p_templateIdOrName) || is_int($p_templateIdOrName))
+        && !empty($p_templateIdOrName)) {
+            $resourceId = new ResourceId('template_engine/metaclasses/MetaTemplate');
+            /* @var $syncResourceService ISyncResourceService */
+            $syncResourceService = $resourceId->getService(ISyncResourceService::NAME);
 
-        $this->m_dbObject = $syncResourceService->findByPathOrId($p_templateIdOrName);
-        if (is_null($this->m_dbObject)) {
-            $pathRsc = new Resource();
-            $pathRsc->setName('buildPage');
-            $filePath = CS_PATH_TEMPLATES.DIR_SEP.$p_themePath.$p_templateIdOrName;
-            if (!is_numeric($p_templateIdOrName) && !is_null($p_themePath)
-            && file_exists($filePath)) {
-                $pathRsc->setPath($p_themePath.$p_templateIdOrName);
-                $this->m_dbObject = $syncResourceService->getSynchronized($pathRsc);
-            } else {
-                $this->m_dbObject = $pathRsc;
+            $this->m_dbObject = $syncResourceService->findByPathOrId($p_templateIdOrName);
+            if (is_null($this->m_dbObject)) {
+                $pathRsc = new Resource();
+                $pathRsc->setName('buildPage');
+                $filePath = CS_PATH_TEMPLATES.DIR_SEP.$p_themePath.$p_templateIdOrName;
+                if (!is_numeric($p_templateIdOrName) && !is_null($p_themePath)
+                && file_exists($filePath)) {
+                    $pathRsc->setPath($p_themePath.$p_templateIdOrName);
+                    $this->m_dbObject = $syncResourceService->getSynchronized($pathRsc);
+                } else {
+                    $this->m_dbObject = $pathRsc;
+                }
             }
         }
     }// fn __construct

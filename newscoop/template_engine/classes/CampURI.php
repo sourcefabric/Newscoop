@@ -656,9 +656,11 @@ abstract class CampURI
         if (!empty($p_templateIdOrName)) {
             $tplObj = new MetaTemplate($p_templateIdOrName);
             if (!$tplObj->defined()) {
-                return null;
+                $template = CampSystem::GetInvalidURLTemplate($this->publication->identifier,
+                $this->issue->number, $this->language->number);
+            } else {
+                $template = $tplObj->name;
             }
-            $template = $tplObj->name;
         } elseif (is_null($this->m_errorCode)) {
             $template = CampSystem::GetTemplate($this->language->number,
                             $this->publication->identifier,
