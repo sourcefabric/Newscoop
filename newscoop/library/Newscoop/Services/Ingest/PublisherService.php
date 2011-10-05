@@ -114,7 +114,7 @@ class PublisherService
             throw new \RuntimeException("No publications defined.");
         }
 
-        return (int) $publications[count($publications) - 1]->getPublicationId();
+        return (int) $publications[0]->getPublicationId();
     }
 
     /**
