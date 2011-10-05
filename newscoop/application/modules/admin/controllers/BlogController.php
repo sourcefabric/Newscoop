@@ -39,11 +39,15 @@ class Admin_BlogController extends Zend_Controller_Action
         $form = new Admin_Form_Blog();
         $section = $this->blogService->getSection($this->user);
 
+        if (empty($section)) {
+            $this->_forward('nosection');
+        }
+
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $blog = $this->blogService->createBlog($form->title->getValue(), $section);
             $this->_helper->flashMessenger("Article created");
-            $this->_helper->redirector('index', 'blog', 'admin');
+            $this->_helper->redirector->gotoUrl($this->_helper->article->getEditLink($blog));
         }
 
         $list = new ArticleList();
@@ -53,5 +57,9 @@ class Admin_BlogController extends Zend_Controller_Action
         $list->setLanguage($section->getLanguageId());
         $this->view->list = $list;
         $this->view->form = $form;
+    }
+
+    public function nosectionAction()
+    {
     }
 }
