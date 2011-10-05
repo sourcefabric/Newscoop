@@ -65,7 +65,7 @@ class Admin_TemplateController extends Zend_Controller_Action
             foreach ($this->service->listItems($path) as $item) {
                 $form->file->addMultioption($item->name, $item->name); // add possible files
 
-                if (!isset($item->id)) {
+                if (!isset($item->size)) {
                     $folders[] = $item;
                     continue;
                 }
@@ -189,7 +189,7 @@ class Admin_TemplateController extends Zend_Controller_Action
         $item = $this->service->fetchMetadata($key);
         $this->view->item = $item;
         $this->view->placeholder('title')
-            ->set(getGS("Edit template: $1 (Template ID: $2)", $item->name, $item->id));
+            ->set(getGS("Edit template: $1", $item->name));
 
         switch ($item->type) {
             case 'jpg':
@@ -198,11 +198,11 @@ class Admin_TemplateController extends Zend_Controller_Action
                 $this->_forward('edit-image');
                 break;
 
-            case 'tpl':
             case 'css':
             case 'txt':
             case 'html':
             case 'js':
+            case 'tpl':
                 $this->_forward('edit-template');
                 break;
 
@@ -243,17 +243,20 @@ class Admin_TemplateController extends Zend_Controller_Action
         $form = new Admin_Form_Template;
         $form->setMethod('post');
 
+        $metadata = $this->service->fetchMetadata($key);
         $form->setDefaults(array(
             'content' => $this->service->fetchItem($key),
-            'cache_lifetime' => $this->service->fetchMetadata($key)->ttl,
+            'cache_lifetime' => $metadata->type == 'tpl' ? $metadata->ttl : 0,
         ));
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $values = $form->getValues();
             $this->service->storeItem($key, $values['content']);
-            $this->service->storeMetadata($key, $values);
-            $this->_helper->entity->flushManager();
+            if ($metadata->type == 'tpl') {
+                $this->service->storeMetadata($key, $values);
+                $this->_helper->entity->flushManager();
+            }
 
             $this->_helper->flashMessenger(getGS("Template '$1' $2.", basename($key), getGS('updated')));
             $this->_helper->log(getGS("Template '$1' $2.", basename($key), getGS('updated')));
