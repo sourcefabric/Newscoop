@@ -15,6 +15,7 @@ use Newscoop\Entity\Ingest\Feed\Entry;
 class PublisherService
 {
     const DATETIME_FORMAT = 'Y-m-d H:i:s';
+    const AUTHOR_NAME = 'ingest';
 
     /** @var array */
     private $config;
@@ -199,19 +200,12 @@ class PublisherService
      */
     private function setArticleAuthors(\Article $article, $authors)
     {
-        if (empty($authors)) {
-            return;
+        $author = new \Author(self::AUTHOR_NAME);
+        if (!$author->exists()) {
+            $author->create();
         }
 
-        foreach (explode(',', $authors) as $authorName) {
-            $authorName = trim($authorName);
-            $author = new \Author(trim($authorName));
-            if (!$author->exists()) {
-                $author->create();
-            }
-
-            $article->setAuthor($author);
-        }
+        $article->setAuthor($author);
     }
 
     /**
