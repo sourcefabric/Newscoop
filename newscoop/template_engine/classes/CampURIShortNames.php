@@ -330,7 +330,8 @@ class CampURIShortNames extends CampURI
     private function _getTemplate()
     {
         $templateId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
-        $template = new MetaTemplate(parent::getTemplate($templateId), $this->m_issue->theme_path);
+        $themePath = $this->m_issue->defined() ? $this->m_issue->theme_path : $this->m_publication->theme_path;
+        $template = new MetaTemplate(parent::getTemplate($templateId), $themePath);
         if (!$template->defined()) {
             throw new InvalidArgumentException("Invalid template in URL or no default template specified.", self::INVALID_TEMPLATE);
         }
