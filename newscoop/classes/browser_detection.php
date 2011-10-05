@@ -3,8 +3,8 @@
 Script Name: Full Featured PHP Browser/OS detection
 Author: Harald Hope, Website: http://techpatterns.com/
 Script Source URI: http://techpatterns.com/downloads/php_browser_detection.php
-Version 5.3.15
-Copyright (C) 6 December 2010
+Version 5.3.17
+Copyright (C) July 10 2011
 
 Special thanks to alanjstr for cleaning up the code, especially on function get_item_version(),
 which he improved greatly. Also to Tapio Markula, for his initial inspiration of creating a 
@@ -88,7 +88,7 @@ This change will will NOT break your existing programming or browser detection f
      'true_ie_number' => $true_ie_number
      'run_time' => $run_time
 8. mobile_test - returns a string of various mobile id methods, from device to os to browser. 
-   If string is not null, should be a mobile. Also see 15, 'type', which will be 'mobile' 
+   If string is not null, should be a mobile. Also see 16, 'ua_type', which will be 'mobile' 
    if handheld.
 9. mobile_data - returns an array of data about mobiles. Note the browser/os number data is very
    unreliable so don't count on that. No blackberry version handling done explicitly.
@@ -374,7 +374,7 @@ function browser_detection( $which_test, $test_excludes='', $external_ua_string=
 		rv comes last in case it is plain old mozilla. firefox/netscape/seamonkey need to be later
 		Thanks to: http://www.zytrax.com/tech/web/firefox-history.html
 		*/
-		$a_moz_types = array( 'bonecho', 'camino', 'epiphany', 'firebird', 'flock', 'galeon', 'iceape', 'icecat', 'k-meleon', 'minimo', 'multizilla', 'phoenix', 'songbird', 'swiftfox', 'seamonkey', 'shiretoko', 'iceweasel', 'firefox', 'minefield', 'netscape6', 'netscape', 'rv' );
+		$a_moz_types = array( 'bonecho', 'camino', 'epiphany', 'firebird', 'flock', 'galeon', 'iceape', 'icecat', 'k-meleon', 'minimo', 'multizilla', 'phoenix', 'songbird', 'swiftfox', 'seamonkey', 'shadowfox', 'shiretoko', 'iceweasel', 'firefox', 'minefield', 'netscape6', 'netscape', 'rv' );
 
 		/*
 		webkit types, this is going to expand over time as webkit browsers spread
@@ -382,7 +382,7 @@ function browser_detection( $which_test, $test_excludes='', $external_ua_string=
 		It will now default to khtml. gtklauncher is the temp id for epiphany, might
 		change. Defaults to applewebkit, and will all show the webkit number.
 		*/
-		$a_webkit_types = array( 'arora', 'chrome', 'epiphany', 'gtklauncher', 'konqueror', 'midori', 'omniweb', 'safari', 'uzbl', 'applewebkit', 'webkit' );
+		$a_webkit_types = array( 'arora', 'chrome', 'epiphany', 'gtklauncher', 'icab', 'konqueror', 'maxthon',  'midori', 'omniweb', 'rekonq', 'safari', 'shiira', 'uzbl', 'applewebkit', 'webkit' );
 
 		/*
 		run through the browser_types array, break if you hit a match, if no match, assume old browser
@@ -483,18 +483,33 @@ function browser_detection( $which_test, $test_excludes='', $external_ua_string=
 						note we're adding in the trident/ search to return only first instance in case
 						of msie 8, and we're triggering the  break last condition in the test, as well
 						as the test for a second search string, trident/
+						Sample: Mozilla/4.0 (compatible; MSIE 7.0; Windows NT 6.1; Trident/6.0)
 						*/
 						$browser_number = get_item_version( $browser_user_agent, $browser_name, true, 'trident/' );
-						// construct the proper real number if it's in compat mode and msie 8.0/9.0
-						if ( strstr( $browser_number, '7.' ) && strstr( $browser_user_agent, 'trident/5' ) )
+						// construct the proper real number if it's in compat mode and msie 10
+						if ( strstr( $browser_number, '7.' ) )
 						{
-							// note that 7.0 becomes 9 when adding 1, but if it's 7.1 it will be 9.1
-							$true_ie_number = $browser_number + 2;
-						}
-						elseif ( strstr( $browser_number, '7.' ) && strstr( $browser_user_agent, 'trident/4' ) )
-						{
-							// note that 7.0 becomes 8 when adding 1, but if it's 7.1 it will be 8.1
-							$true_ie_number = $browser_number + 1;
+							if ( strstr( $browser_user_agent, 'trident/7' ) )
+							{
+								// note that 7.0 becomes 11 when adding 4, but if it's 7.1 it will be 11.1
+								$true_ie_number = $browser_number + 4;
+							}
+							elseif ( strstr( $browser_user_agent, 'trident/6' ) )
+							{
+								// note that 7.0 becomes 10 when adding 3, but if it's 7.1 it will be 10.1
+								$true_ie_number = $browser_number + 3;
+							}
+							// construct the proper real number if it's in compat mode and msie 8.0/9.0
+							elseif ( strstr( $browser_user_agent, 'trident/5' ) )
+							{
+								// note that 7.0 becomes 9 when adding 2, but if it's 7.1 it will be 9.1
+								$true_ie_number = $browser_number + 2;
+							}
+							elseif ( strstr( $browser_user_agent, 'trident/4' ) )
+							{
+								// note that 7.0 becomes 8 when adding 1, but if it's 7.1 it will be 8.1
+								$true_ie_number = $browser_number + 1;
+							}
 						}
 						// the 9 series is finally standards compatible, html 5 etc, so worth a new id
 						if ( $browser_number >= 9 )
