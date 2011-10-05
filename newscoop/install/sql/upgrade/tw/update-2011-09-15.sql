@@ -96,6 +96,7 @@ CREATE TABLE IF NOT EXISTS `ingest_feed_entry` (
 
 
 -- Article playlist tables 
+DROP TABLE IF EXISTS `playlist`;
 CREATE TABLE `playlist` (
   `id_playlist` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(256) NOT NULL,
@@ -103,6 +104,7 @@ CREATE TABLE `playlist` (
   PRIMARY KEY (`id_playlist`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+DROP TABLE IF EXISTS `playlist_article`;
 CREATE TABLE `playlist_article` (
   `id_playlist` int(10) unsigned NOT NULL,
   `article_no` int(10) unsigned NOT NULL,
