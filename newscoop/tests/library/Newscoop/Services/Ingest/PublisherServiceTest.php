@@ -158,7 +158,8 @@ class PublisherServiceTest extends \RepositoryTestCase
     private function checkAuthors($count, \Article $article)
     {
         $authors = \ArticleAuthor::GetAuthorsByArticle($article->getArticleNumber(), $article->getLanguageId());
-        $this->assertEquals($count, count($authors));
+        $this->assertEquals(1, count($authors));
+        $this->assertEquals('ingest', $authors[0]->getName());
     }
 
     public function testDelete()
