@@ -252,7 +252,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
 }).css('position', 'relative').css('width', '100%');
 
 <?php if ($this->items === null) { ?>
-$('<input type="checkbox" name="type" value="newswires" id="filter_newswires_articles_<?php echo $this->id; ?>" /> <label for="filter_newswires_articles_<?php echo $this->id; ?>">Display newswires articles</label>')
+$('<input type="checkbox" name="type" value="newswires" id="filter_newswires_articles_<?php echo $this->id; ?>" /> <label for="filter_newswires_articles_<?php echo $this->id; ?>"><?php putGS("Display newswires articles"); ?></label>')
     .appendTo('#filter_type_<?php echo $this->id; ?>');
 
 $('#filter_type_<?php echo $this->id; ?>').css('margin-bottom', '5px');
