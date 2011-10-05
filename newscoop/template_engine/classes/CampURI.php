@@ -658,6 +658,7 @@ abstract class CampURI
             if (!$tplObj->defined()) {
                 $template = CampSystem::GetInvalidURLTemplate($this->publication->identifier,
                 $this->issue->number, $this->language->number);
+                $template = substr($template, strlen($this->getThemePath()));
             } else {
                 $template = $tplObj->name;
             }
@@ -666,6 +667,7 @@ abstract class CampURI
                             $this->publication->identifier,
                             $this->issue->number, $this->section->number,
                             $this->article->number);
+            $template = substr($template, strlen($this->getThemePath()));
         } else {
             return null;
         }

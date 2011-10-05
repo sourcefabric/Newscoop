@@ -42,11 +42,13 @@ final class MetaTemplate extends MetaDbObject
 
         if ((is_string($p_templateIdOrName) || is_int($p_templateIdOrName))
         && !empty($p_templateIdOrName)) {
+            $filePath = is_numeric($p_templateIdOrName) ? $p_templateIdOrName : $p_themePath.$p_templateIdOrName;
+
             $resourceId = new ResourceId('template_engine/metaclasses/MetaTemplate');
             /* @var $syncResourceService ISyncResourceService */
             $syncResourceService = $resourceId->getService(ISyncResourceService::NAME);
 
-            $this->m_dbObject = $syncResourceService->findByPathOrId($p_templateIdOrName);
+            $this->m_dbObject = $syncResourceService->findByPathOrId($filePath);
             if (is_null($this->m_dbObject)) {
                 $pathRsc = new Resource();
                 $pathRsc->setName('buildPage');
