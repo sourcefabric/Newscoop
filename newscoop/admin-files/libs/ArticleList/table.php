@@ -214,7 +214,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
                 'value': filters['<?php echo $this->id; ?>'][i],
             });
         }
-        <?php foreach (array('publication', 'issue', 'section', 'language') as $filter) {
+        <?php foreach (array('publication', 'issue', 'section', 'language', 'type') as $filter) {
             if ($filter == 'language' && !$this->order) {
                 continue; // ignore language on non-section pages
             }
@@ -252,13 +252,13 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
 }).css('position', 'relative').css('width', '100%');
 
 <?php if ($this->items === null) { ?>
-$('<input type="checkbox" name="type" value="newswires" id="filter_newswires_articles_<?php echo $this->id; ?>" /> <label for="filter_newswires_articles_<?php echo $this->id; ?>"><?php putGS("Display newswires articles"); ?></label>')
+$('<input type="checkbox" name="showtype" value="newswires" id="filter_newswires_articles_<?php echo $this->id; ?>" /> <label for="filter_newswires_articles_<?php echo $this->id; ?>"><?php putGS("Display newswires articles"); ?></label>')
     .appendTo('#filter_type_<?php echo $this->id; ?>');
 
 $('#filter_type_<?php echo $this->id; ?>').css('margin-bottom', '5px');
 
 $('input#filter_newswires_articles_<?php echo $this->id; ?>').change(function() {
-    filters['<?php echo $this->id; ?>']['type'] = $(this).attr('checked') ? 'newswires' : '';
+    filters['<?php echo $this->id; ?>']['showtype'] = $(this).attr('checked') ? 'newswires' : '';
     tables['<?php echo $this->id; ?>'].fnDraw(true);
 });
 <?php } ?>

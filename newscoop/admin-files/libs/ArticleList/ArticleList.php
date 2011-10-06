@@ -28,6 +28,9 @@ class ArticleList extends BaseList
 	/** @var int */
 	protected $language = null;
 
+    /** @var string */
+    protected $type = null;
+
 	/** @var array */
 	protected $filters = array();
 
@@ -128,6 +131,18 @@ class ArticleList extends BaseList
 		$this->language = empty($language) ? 1 : (int) $language;
 		return $this;
 	}
+
+    /**
+     * Set type
+     *
+     * @param string $type
+     * @return ArticleList
+     */
+    public function setType($type)
+    {
+        $this->type = (string) $type;
+        return $this;
+    }
 
 	/**
 	 * Set filter.
