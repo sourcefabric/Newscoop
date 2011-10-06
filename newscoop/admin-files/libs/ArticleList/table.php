@@ -77,7 +77,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
     'bAutoWidth': true,
     'bScrollCollapse': true,
     'bDestroy': true,
-<?php if ($this->items === null) {
+<?php if ($this->items === null && !isset($this->type)) {
     $this->addSDom('filter_type_' . $this->id);
 } ?>
     'sDom': '<?php echo $this->getSDom(); ?>',
@@ -251,7 +251,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
     'bJQueryUI': true
 }).css('position', 'relative').css('width', '100%');
 
-<?php if ($this->items === null) { ?>
+<?php if ($this->items === null && !isset($this->type)) { ?>
 $('<input type="checkbox" name="showtype" value="newswires" id="filter_newswires_articles_<?php echo $this->id; ?>" /> <label for="filter_newswires_articles_<?php echo $this->id; ?>"><?php putGS("Display newswires articles"); ?></label>')
     .appendTo('#filter_type_<?php echo $this->id; ?>');
 
