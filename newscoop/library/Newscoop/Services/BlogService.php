@@ -115,7 +115,7 @@ class BlogService
             return TRUE;
         }
 
-        if ($request->getParam('controller') == 'articles' && in_array($request->getParam('action'), array('edit.php', 'do_article_action.php', 'preview.php')) && isset($user)) {
+        if ($request->getParam('controller') == 'articles' && in_array($request->getParam('action'), array('edit.php', 'do_article_action.php', 'preview.php', 'locations')) && isset($user)) {
             $section = $this->getSection($user);
             if ($section->getSectionNumber() == $request->getParam('f_section_number')
                 && $section->getPublicationId() == $request->getParam('f_publication_id')
