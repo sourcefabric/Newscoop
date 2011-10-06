@@ -297,6 +297,13 @@ class CampGetImage
         // Resulting size of the image after cropping
         $width = $this->m_resizeWidth;
         $height = $this->m_resizeHeight;
+        
+        if (!$width) {
+            $width = $current_width;
+        }
+        if (!$height) {
+            $height = $current_height;
+        }
 
         // Cropping coordinates
         $cropPosition = explode('-', $this->m_crop);
