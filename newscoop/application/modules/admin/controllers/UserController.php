@@ -144,6 +144,7 @@ class Admin_UserController extends Zend_Controller_Action
             'email' => getGS('Email'),
             'status' => getGS('Status'),
             'created' => getGS('Created'),
+            'types' => getGS('Type'),
         ));
 
         $view = $this->view;
@@ -154,6 +155,7 @@ class Admin_UserController extends Zend_Controller_Action
         );
 
         $table->setHandle(function(User $user) use ($view, $statuses) {
+            $groups = $user->getGroups()->toArray();
             return array(
                 sprintf('<a href="%s">%s</a>',
                     $view->url(array(
@@ -168,6 +170,7 @@ class Admin_UserController extends Zend_Controller_Action
                 $user->getEmail(),
                 $statuses[$user->getStatus()],
                 $user->getCreated()->format('d.m.Y'),
+                !empty($groups) ? implode(", ", array_map(function($group) { return $group->getName(); }, $groups)) : '',
             );
         });
 

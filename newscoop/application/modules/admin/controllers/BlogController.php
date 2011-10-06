@@ -53,8 +53,10 @@ class Admin_BlogController extends Zend_Controller_Action
         $list = new ArticleList();
         $list->setPublication($section->getPublicationId());
         $list->setIssue($section->getIssueNumber());
-        $list->setSection($section->getSectionId());
+        $list->setSection($section->getSectionNumber());
         $list->setLanguage($section->getLanguageId());
+        $list->setType('news');
+
         $this->view->list = $list;
         $this->view->form = $form;
     }

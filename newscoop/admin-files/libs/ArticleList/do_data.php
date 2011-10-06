@@ -34,6 +34,7 @@ $filters = array(
     'topic' => array('is', 'integer'),
     'workflow_status' => array('is', 'string'),
     'creator' => array('is', 'integer'),
+    'type' => array('is', 'string'),
 );
 
 // mapping form name => db name
@@ -74,7 +75,7 @@ foreach ($filters as $name => $opts) {
     }
 }
 
-if (empty($_REQUEST['type']) || $_REQUEST['type'] != 'newswires') { // limit newswire articles by default
+if (empty($_REQUEST['showtype']) || $_REQUEST['showtype'] != 'newswires') { // limit newswire articles by default
     $articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), 'newswire');
     $articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), 'event');
 }

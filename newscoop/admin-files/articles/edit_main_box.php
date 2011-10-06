@@ -82,6 +82,7 @@ function change_language(select)
     <label for="f_action_language" class="inline-style right-floated" style="width:80px;"><?php putGS('Language'); ?></label>
     <!-- END Language -->
 
+    <?php if (empty($userIsBlogger)) { ?>
     <!-- BEGIN Actions -->
     <select name="f_action" class="input_select" onchange="action_selected(this);" style="margin-bottom:2px;">
       <option value=""><?php putGS("Actions"); ?>...</option>
@@ -107,6 +108,7 @@ function change_language(select)
       <?php } ?>
     </select>
     <!-- END Actions -->
+    <?php } ?>
 
     <!-- BEGIN Workflow -->
     <?php if ($g_user->hasPermission('Publish')) { ?>

@@ -99,15 +99,26 @@ if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedBy
 }
 
 // Update the article author
+    $blogService = Zend_Registry::get('container')->getService('blog');
+    $blogInfo = $blogService->getBlogInfo($g_user);
     if (!empty($f_article_author)) {
         ArticleAuthor::OnArticleLanguageDelete($articleObj->getArticleNumber(), $articleObj->getLanguageId());
         $i = 0;
         foreach ($f_article_author as $author) {
             $authorObj = new Author($author);
             if (!$authorObj->exists() && strlen(trim($author)) > 0) {
+                if ($blogService->isBlogger($g_user)) { // blogger can't create authors
+                    continue;
+                }
+
                 $authorData = Author::ReadName($author);
                 $authorObj->create($authorData);
+            } elseif ($blogService->isBlogger($g_user)) { // test if using authors from blog
+                if (!$blogService->isBlogAuthor($authorObj, $blogInfo)) {
+                    continue;
+                }
             }
+
             // Sets the author type selected
             $author_type = $f_article_author_type[$i];
             $authorObj->setType($author_type);
