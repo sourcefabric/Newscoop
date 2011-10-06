@@ -229,6 +229,12 @@ $('.save-button-bar input#save_and_close').click(function() {
 var authorsList = [
 <?php
 $allAuthors = Author::GetAllExistingNames();
+if ($userIsBlogger) {
+    $blogInfo = $blogService->getBlogInfo($g_user);
+    $allAuthors = array_map(function($author) {
+        return $author->getName();
+    }, ArticleAuthor::GetAuthorsByArticle($blogInfo->getArticleNumber(), $blogInfo->getLanguageId()));
+}
 $quoteStringFn = create_function('&$value, $key',
     '$value = json_encode((string) $value);');
 array_walk($allAuthors, $quoteStringFn);
