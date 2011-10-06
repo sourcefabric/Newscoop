@@ -47,12 +47,12 @@ class BlogService
     }
 
     /**
-     * Get blog section for given user
+     * Get blog info article
      *
      * @param Newscoop\Entity\User $user
-     * @return Section|null
+     * @return Article|null
      */
-    public function getSection(User $user)
+    public function getBlogInfo(User $user)
     {
         $articles = \Article::GetArticles($this->config['publication'], $this->config['issue'], null, null, null, false, array(
             "Type = '" . $this->config['type'] . "'",
@@ -62,11 +62,23 @@ class BlogService
             $data = $article->getArticleData();
             $authors = explode(self::SEPARATOR, $data->getFieldValue('loginname'));
             if (in_array($user->getUsername(), $authors)) {
-                return $article->getSection();
+                return $article;
             }
         }
 
         return null;
+    }
+
+    /**
+     * Get blog section for given user
+     *
+     * @param Newscoop\Entity\User $user
+     * @return Section|null
+     */
+    public function getSection(User $user)
+    {
+        $blogInfo = $this->getBlogInfo($user);
+        return isset($blogInfo) ? $blogInfo->getSection() : null;
     }
 
     /**
@@ -114,5 +126,19 @@ class BlogService
         }
 
         return FALSE;
+    }
+
+    /**
+     * Test if author is blog author
+     *
+     * @param Author $author
+     * @param Article $blogInfo
+     * @return bool
+     */
+    public function isBlogAuthor(\Author $author, \Article $blogInfo)
+    {
+        return in_array($author->getId(), array_map(function($blogAuthor) {
+            return $blogAuthor->getId();
+        }, \ArticleAuthor::GetAuthorsByArticle($blogInfo->getArticleNumber(), $blogInfo->getLanguageId())));
     }
 }
