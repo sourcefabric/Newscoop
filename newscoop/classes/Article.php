@@ -2469,7 +2469,7 @@ class Article extends DatabaseObject {
      *    An array of Article objects
      */
     public static function GetList(array $p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
+                                   $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false, $returnObjs = true)
     {
         global $g_ado_db;
 
@@ -2696,7 +2696,11 @@ class Article extends DatabaseObject {
             // builds the array of Article objects
             $articlesList = array();
             foreach ($articles as $article) {
-                $articlesList[] = new Article($article['IdLanguage'], $article['Number']);
+                if ($returnObjs) {
+                    $articlesList[] = new Article($article['IdLanguage'], $article['Number']);
+                } else {
+                    $articlesList[] = array('language_id'=>$article['IdLanguage'], 'number'=>$article['Number']);
+                }
             }
         } else {
             $articlesList = array();
@@ -2974,7 +2978,7 @@ class Article extends DatabaseObject {
             $selectQuery = $selectClauseObj->buildQuery();
             $articles = $g_ado_db->GetAll($selectQuery);
             foreach ($articles as $article) {
-                $articlesList[] = new Article($article['IdLanguage'], $article['Number']);
+                $articlesList[] = array('language_id'=>$article['IdLanguage'], 'number'=>$article['Number']);
             }
         }
         $countQuery = $countClauseObj->buildQuery();
@@ -3212,7 +3216,7 @@ class Article extends DatabaseObject {
             $selectQuery = $selectClauseObj->buildQuery();
             $articles = $g_ado_db->GetAll($selectQuery);
             foreach ($articles as $article) {
-                $articlesList[] = new Article($article['IdLanguage'], $article['Number']);
+                $articlesList[] = array('language_id'=>$article['IdLanguage'], 'number'=>$article['Number']);
             }
         }
         $countQuery = $countClauseObj->buildQuery();
