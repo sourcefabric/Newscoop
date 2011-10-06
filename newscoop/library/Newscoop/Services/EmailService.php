@@ -53,6 +53,20 @@ class EmailService
     }
 
     /**
+     * Send user message from other user
+     *
+     * @param string $from
+     * @param string $to
+     * @param string $subject
+     * @param string $message
+     * @return void
+     */
+    public function sendUserEmail($from, $to, $subject, $message)
+    {
+        $this->send($subject, $message, $to, $from);
+    }
+
+    /**
      * Send email
      *
      * @param string $subject
@@ -60,12 +74,12 @@ class EmailService
      * @param mixed $tos
      * @return void
      */
-    private function send($subject, $message, $tos)
+    private function send($subject, $message, $tos, $from = null)
     {
         $mail = new \Zend_Mail('utf-8');
         $mail->setSubject($subject);
         $mail->setBodyText($message);
-        $mail->setFrom($this->config['from']);
+        $mail->setFrom(isset($from) ? $from : $this->config['from']);
 
         foreach ((array) $tos as $to) {
             $mail->addTo($to);

@@ -242,7 +242,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $router->addRoute(
             'user',
-            new Zend_Controller_Router_Route('user/:username', array(
+            new Zend_Controller_Router_Route('user/:username/:action', array(
                 'module' => 'default',
                 'controller' => 'user',
                 'action' => 'profile',
