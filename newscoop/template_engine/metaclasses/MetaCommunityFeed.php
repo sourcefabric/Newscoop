@@ -43,6 +43,7 @@ final class MetaCommunityFeed extends MetaDbObject
         $this->m_customProperties['type'] = 'getType';
         $this->m_customProperties['message'] = 'getMessage';
         $this->m_customProperties['comment'] = 'getComment';
+        $this->m_customProperties['article'] = 'getArticle';
 
         $this->params =  $feed->getParams();
 
@@ -100,5 +101,20 @@ final class MetaCommunityFeed extends MetaDbObject
 
         $params = $this->m_dbObject->getParams();
         return !empty($params['id']) ? new \MetaComment($params['id']) : null;
+    }
+
+    /**
+     * Get article
+     *
+     * @return MetaArticle|null
+     */
+    protected function getArticle()
+    {
+        if ($this->type != 'blog-published') {
+            return null;
+        }
+
+        $params = $this->m_dbObject->getParams();
+        return !empty($params['number']) ? new \MetaArticle($params['language'], $params['number']) : null;
     }
 }

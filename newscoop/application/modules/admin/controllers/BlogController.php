@@ -50,12 +50,13 @@ class Admin_BlogController extends Zend_Controller_Action
             $this->_helper->redirector->gotoUrl($this->_helper->article->getEditLink($blog));
         }
 
+        $blogConfig = \Zend_Registry::get('container')->getParameter('blog');
         $list = new ArticleList();
         $list->setPublication($section->getPublicationId());
         $list->setIssue($section->getIssueNumber());
         $list->setSection($section->getSectionNumber());
         $list->setLanguage($section->getLanguageId());
-        $list->setType('news');
+        $list->setType($blogConfig['article_type']);
 
         $this->view->list = $list;
         $this->view->form = $form;

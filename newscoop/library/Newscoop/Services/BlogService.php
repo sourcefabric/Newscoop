@@ -22,7 +22,7 @@ class BlogService
     /**
      * @param array $config
      */
-    public function __construct($config)
+    public function __construct(array $config)
     {
         $this->config = $config;
     }
@@ -91,7 +91,7 @@ class BlogService
     public function createBlog($title, \Section $section)
     {
         $article = new \Article($section->getLanguageId());
-        $article->create('news', $title, $section->getPublicationId(), $section->getIssueNumber(), $section->getSectionNumber());
+        $article->create($this->config['article_type'], $title, $section->getPublicationId(), $section->getIssueNumber(), $section->getSectionNumber());
         return $article;
     }
 

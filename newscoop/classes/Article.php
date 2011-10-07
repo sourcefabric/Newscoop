@@ -1419,8 +1419,18 @@ class Article extends DatabaseObject {
         if ( ($this->getWorkflowStatus() != 'Y') && ($p_value == 'Y') ) {
             $this->setProperty('PublishDate', 'NOW()', true, true);
 
-            //send out an article.published event
+            // send out an article.published event
             self::dispatchEvent("article.published", $this);
+
+            // dispatch blog.published
+            $blogConfig = \Zend_Registry::get('container')->getParameter('blog');
+            if ($this->getType() == $blogConfig['article_type']) {
+                self::dispatchEvent('blog.published', $this, array(
+                    'number' => $this->getArticleNumber(),
+                    'language' => $this->getLanguageId(),
+                ));
+            }
+
             $article_images = ArticleImage::GetImagesByArticleNumber($this->getArticleNumber());
             foreach ($article_images as $article_image) {
                 $image = $article_image->getImage();
