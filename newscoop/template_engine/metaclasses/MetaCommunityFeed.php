@@ -42,6 +42,7 @@ final class MetaCommunityFeed extends MetaDbObject
         $this->m_customProperties['user'] = 'getUser';
         $this->m_customProperties['type'] = 'getType';
         $this->m_customProperties['message'] = 'getMessage';
+        $this->m_customProperties['comment'] = 'getComment';
 
         $this->params =  $feed->getParams();
 
@@ -84,5 +85,20 @@ final class MetaCommunityFeed extends MetaDbObject
             default:
                 return sprintf('%s %s', $this->user->name, $this->type);
         }
+    }
+
+    /**
+     * Get recommended comment
+     *
+     * @return MetaComment|null
+     */
+    protected function getComment()
+    {
+        if ($this->type != 'comment-recommended') {
+            return null;
+        }
+
+        $params = $this->m_dbObject->getParams();
+        return !empty($params['id']) ? new \MetaComment($params['id']) : null;
     }
 }
