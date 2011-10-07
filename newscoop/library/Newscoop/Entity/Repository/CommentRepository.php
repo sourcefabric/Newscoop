@@ -133,7 +133,9 @@ class CommentRepository extends DatatableSource
      */
     public function save(Comment $p_entity, $p_values)
     {
-	// get the enitity manager
+        $p_values += array('recommended' => false);
+
+	    // get the enitity manager
         $em = $this->getEntityManager();
 
         $commenterRepository = $em->getRepository('Newscoop\Entity\Comment\Commenter');

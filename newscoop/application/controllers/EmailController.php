@@ -18,14 +18,25 @@ class EmailController extends Zend_Controller_Action
 
         $this->getHelper('layout')
             ->disableLayout();
+
+        $server = $this->getRequest()->getServer();
+        $this->view->publication = $server['SERVER_NAME'];
     }
 
     public function confirmAction()
     {
         $this->view->user = $this->_getParam('user');
         $this->view->token = $this->_getParam('token');
+    }
 
-        $server = $this->getRequest()->getServer();
-        $this->view->publication = $server['SERVER_NAME'];
+    public function commentNotifyAction()
+    {
+        if ($this->_getParam('user', false)) {
+            $this->view->username = $this->_getParam('user')->getUsername();
+        }
+
+        $article = $this->_getParam('article');
+        $this->view->article = new \MetaArticle($article->getLanguageId(), $article->getArticleNumber());
+        $this->view->comment = $this->_getParam('comment');
     }
 }

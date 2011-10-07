@@ -7,7 +7,8 @@
 
 namespace Newscoop\Services;
 
-use Newscoop\Entity\User;
+use Newscoop\Entity\User,
+    Newscoop\Entity\Comment;
 
 /**
  * Email service
@@ -50,6 +51,40 @@ class EmailService
 
         // @todo use config
         $this->send("Registrierung bei tageswoche.ch", $message, $user->getEmail());
+    }
+
+    /**
+     * Send comment notification
+     *
+     * @param Newscoop\Entity\Comment $comment
+     * @param Article $article
+     * @param array $authors
+     * @param Newscoop\Entity\User $user
+     * @return void
+     */
+    public function sendCommentNotification(Comment $comment, \Article $article, array $authors, User $user = null)
+    {
+        $emails = array_unique(array_filter(array_map(function($author) { return $author->getEmail(); }, $authors)));
+        if (empty($emails)) {
+            return;
+        }
+
+        $message = $this->view->action('comment-notify', 'email', 'default', array(
+            'comment' => $comment,
+            'article' => $article,
+            'user' => $user,
+        ));
+
+        $mail = new \Zend_Mail('utf-8');
+        $mail->setSubject("Neuer Kommentar zum Artikel " . $article->getTitle());
+        $mail->setBodyHtml($message);
+        $mail->setFrom($user ? $user->getEmail() : "info@tageswoche.ch");
+
+        foreach ($emails as $email) {
+            $mail->addTo($email);
+        }
+
+        $mail->send();
     }
 
     /**

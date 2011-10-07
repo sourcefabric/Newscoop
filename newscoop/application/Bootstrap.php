@@ -137,6 +137,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('blog', 'Newscoop\Services\BlogService')
             ->addArgument('%blog%');
 
+        $container->register('comment_notification', 'Newscoop\Services\CommentNotificationService')
+            ->addArgument(new sfServiceReference('email'))
+            ->addArgument(new sfServiceReference('comment'))
+            ->addArgument(new sfServiceReference('user'));
+
         Zend_Registry::set('container', $container);
         return $container;
     }
