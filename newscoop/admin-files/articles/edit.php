@@ -45,6 +45,7 @@ if (!$articleObj->exists()) {
 }
 
 // detect if blogger can edit
+$userIsBlogger = false;
 $blogService = \Zend_Registry::get('container')->getService('blog');
 if ($blogService->isBlogger($g_user)) {
     $userIsBlogger = true;
