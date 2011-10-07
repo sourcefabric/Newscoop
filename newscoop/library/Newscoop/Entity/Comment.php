@@ -169,7 +169,7 @@ class Comment
      * @var int
      */
     private $dislikes;
-    
+
     /**
      * @column(length=1)
      * @var int
@@ -329,7 +329,7 @@ class Comment
         }
         return (string)$this->ip;
     }
-    
+
     /**
      * Set recommended
      *
@@ -523,7 +523,7 @@ class Comment
     /**
      * Get Language
      *
-     * @return integer
+     * @return Newscoop\Entity\Language
      */
     public function getLanguage()
     {

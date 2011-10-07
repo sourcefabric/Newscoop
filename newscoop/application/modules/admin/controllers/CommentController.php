@@ -76,11 +76,17 @@ class Admin_CommentController extends Zend_Controller_Action
         $acl['edit'] = $this->_helper->acl->isAllowed('comment', 'edit');
         $acl['enable'] = $this->_helper->acl->isAllowed('comment', 'enable');
         $acceptanceRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
+        $articleRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
         $table->setHandle(function($comment) use ($view, $acl, $acceptanceRepository, &$index)
             {
                 /* var Newscoop\Entity\Comment\Commenter */
                 $commenter = $comment->getCommenter();
                 $thread = $comment->getThread();
+
+                $articleNo = $comment->getArticleNumber();
+                $commentLang = $comment->getLanguage()->getId();
+                $article = new Article($commentLang, $articleNo);
+
                 $forum = $comment->getForum();
                 $section = $thread->getSection();
                 return array('index' => $index++, 'can' => array('enable' => $acl['enable'], 'edit' => $acl['edit']),
@@ -99,7 +105,7 @@ class Admin_CommentController extends Zend_Controller_Action
                                    'ip' => $commenter->getIp(), 'url' => $commenter->getUrl(),
                                    'banurl' => $view->url(
                                        array('controller' => 'comment-commenter', 'action' => 'toggle-ban',
-                                            'commenter' => $commenter->getId(), 'thread' => $thread->getId()))),
+                                            'commenter' => $commenter->getId(), 'thread' => $comment->getArticleNumber()))),
                              'comment' => array('id' => $comment->getId(),
                                                 'created' =>
                                                 array('date' => $comment->getTimeCreated()->format('Y.m.d'),
@@ -112,10 +118,10 @@ class Admin_CommentController extends Zend_Controller_Action
                                                     array('action' => 'update', 'format' => 'json')),
                                                                   'reply' => $view->url(
                                                                       array('action' => 'reply', 'format' => 'json')))),
-                             'thread' => array('name' => $thread->getName(),
+                             'thread' => array('name' => $article->getName(),
                                                'link' => array
-                                               ('edit' => $view->baseUrl("admin/articles/edit.php?") . $view->linkArticle($thread),
-                                                'get' => $view->baseUrl("admin/articles/get.php?") . $view->linkArticle($thread)),
+                                               ('edit' => $view->baseUrl("admin/articles/edit.php?") . $view->linkArticleObj($article),
+                                                'get' => $view->baseUrl("admin/articles/get.php?") . $view->linkArticleObj($article)),
                                                'forum' => array('name' => $forum->getName()),
                                                'section' => array('name' => ($section) ? $section->getName() : null)),);
             });
