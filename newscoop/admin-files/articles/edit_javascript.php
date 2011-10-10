@@ -143,6 +143,9 @@ $('form#article-main').submit(function() {
 		// tinymce should know that the current state is the correct one
 		cleanTextContents();
 
+		//fix breadcrumbs title
+        $('.breadcrumbs li:last a').html($('#f_article_title').attr('value') + ' (' + $('#article_language').html() + ')');
+
     	 // ping for connection
         callServer('ping', [], function(json) {
             $.ajax({
