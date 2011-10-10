@@ -10,6 +10,7 @@
  * PlaylistController
  * @Acl(resource="playlist", action="manage")
  */
+use Newscoop\Utils\Exception;
 use Newscoop\Service\Implementation\var_hook;
 use Newscoop\Entity\Language;
 use Newscoop\Entity\Playlist;
@@ -95,13 +96,13 @@ class Admin_PlaylistController extends Zend_Controller_Action
             $playlist->setName($this->_request->getParam('name', ''));
         }
         $playlist = $this->playlistRepository->save($playlist, $this->_request->getParam('articles'));
-        if ($playlist)
+        if (!($playlist instanceof \Exception))
         {
             $this->view->playlistId = $playlist->getId();
             $this->view->playlistName = $playlist->getName();
         }
         else {
-            $this->view->error = true;
+            $this->view->error = $playlist->getFile().":".$playlist->getLine()." ".$playlist->getMessage();
         }
     }
 }
