@@ -76,7 +76,7 @@ function change_language(select)
   <?php
   } else {
       $articleLanguage = camp_array_peek($articleLanguages);
-      echo '<strong class="right-floated">'.htmlspecialchars($articleLanguage->getNativeName()).'</strong>';
+      echo '<strong class="right-floated" id="article_language">'.htmlspecialchars($articleLanguage->getNativeName()).'</strong>';
   }
   ?>
     <label for="f_action_language" class="inline-style right-floated" style="width:80px;"><?php putGS('Language'); ?></label>
