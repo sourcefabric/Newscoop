@@ -210,7 +210,6 @@ class Admin_ThemesController extends Zend_Controller_Action
         $datatable            // setting options for the datatable
             ->setCols( array
             (
-                'checkbox'	   => '',
                 'image'        => '',
                 'name'         => getGS( 'Theme name / version' ),
                 'description'  => getGS( 'Compatibility' ),
@@ -232,7 +231,7 @@ class Admin_ThemesController extends Zend_Controller_Action
                 'fnInitComplete' => "newscoopDatatables.callbackInit",
                 'fnServerData'	 => "newscoopDatatables.callbackServerData"
             ) )
-            ->setWidths( array( 'checkbox' => 0, 'image' => 215, 'name' => 235, 'description' => 280, 'actions' => 115 ) )
+            ->setWidths( array( 'image' => 215, 'name' => 235, 'description' => 280, 'actions' => 115 ) )
             ->setRowHandler
             (
                 function( $theme, $index = null )
