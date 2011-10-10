@@ -249,11 +249,16 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 	 * @return void
 	 */
     function plugin_newsimport_create_event_type() {
-        $art_type_name = 'event';
+        $evt_type_name = 'event';
+        $scr_type_name = 'screening';
 
-        $art_type_obj = new ArticleType($art_type_name);
-        if (!$art_type_obj->exists()) {
-            $art_type_obj->create();
+        $evt_type_obj = new ArticleType($evt_type_name);
+        if (!$evt_type_obj->exists()) {
+            $evt_type_obj->create();
+        }
+        $scr_type_obj = new ArticleType($scr_type_name);
+        if (!$scr_type_obj->exists()) {
+            $scr_type_obj->create();
         }
 
         $art_fields = array(
@@ -262,7 +267,6 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             'event_id' => array('type' => 'text', 'params' => array(), 'hidden' => true, 'retype' => array('numeric' => 'text')), // an event at a day from a provider should have unique id; crafted for cinemas
             'tour_id' => array('type' => 'text', 'params' => array(), 'hidden' => true, 'retype' => array('numeric' => 'text')), // for grouping of repeated events, e.g. an exhibition available for more days
             'location_id' => array('type' => 'text', 'params' => array(), 'hidden' => true, 'retype' => array('numeric' => 'text')), // should be unique per place/provider
-            'movie_key' => array('type' => 'text', 'params' => array(), 'hidden' => true), // outer movie identifier, but can be empty
             // main event info - free form
             'headline' => array('type' => 'text', 'params' => array(), 'hidden' => false), // even/tour_name (or movie name)
             'organizer' => array('type' => 'text', 'params' => array(), 'hidden' => false), // either tour_organizer (if filled) or location_name (or cinema name)
@@ -282,8 +286,6 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             'time' => array('type' => 'text', 'params' => array(), 'hidden' => false), // event_time, like 10:30 (or a list for movie screenings at a day)
             // date/time - free form
             'date_time_text' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 0), 'hidden' => false), // comprises other textual date/time information, if available
-            // date/time - json
-            'date_time_tree' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 0), 'hidden' => true), // puts several date, time, flags, into a single field
             // contact - free form
             'web' => array('type' => 'text', 'params' => array(), 'hidden' => false), // location_url if filled, or event/tour_link if some there
             'email' => array('type' => 'text', 'params' => array(), 'hidden' => false),
@@ -305,22 +307,39 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             // geolocation as map POIs
         );
 
-        foreach ($art_fields as $one_field_name => $one_field_params) {
-            $art_type_filed_obj = new ArticleTypeField($art_type_name, $one_field_name);
-            if (!$art_type_filed_obj->exists()) {
-                $art_type_filed_obj->create($one_field_params['type'], $one_field_params['params']);
+        $scr_fields = array(
+            'movie_key' => array('type' => 'text', 'params' => array(), 'hidden' => true), // outer movie identifier, but can be empty
+            // date/time - json
+            // 'date_time_tree' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 0), 'hidden' => true), // puts several date, time, flags, into a single field
+        );
+
+        foreach (array($evt_type_name, $scr_type_name) as $art_type_name) {
+            $art_fields_use = $art_fields;
+            if ($scr_type_name == $art_type_name) {
+                foreach ($scr_fields as $one_field_name => $one_field_params) {
+                    $art_fields_use[$one_field_name] = $one_field_params;
+                }
             }
-            if (array_key_exists('hidden', $one_field_params) && $one_field_params['hidden']) {
-                $art_type_filed_obj->setStatus('hide');
-            }
-            if (isset($one_field_params['retype'])) {
-                foreach ($one_field_params['retype'] as $type_old => $type_new) {
-                    if ($type_old == $art_type_filed_obj->getType()) {
-                        $art_type_filed_obj->setType($type_new);
+
+            foreach ($art_fields_use as $one_field_name => $one_field_params) {
+                $art_type_filed_obj = new ArticleTypeField($art_type_name, $one_field_name);
+                if (!$art_type_filed_obj->exists()) {
+                    $art_type_filed_obj->create($one_field_params['type'], $one_field_params['params']);
+                }
+                if (array_key_exists('hidden', $one_field_params) && $one_field_params['hidden']) {
+                    $art_type_filed_obj->setStatus('hide');
+                }
+                if (isset($one_field_params['retype'])) {
+                    foreach ($one_field_params['retype'] as $type_old => $type_new) {
+                        if ($type_old == $art_type_filed_obj->getType()) {
+                            $art_type_filed_obj->setType($type_new);
+                        }
                     }
                 }
             }
         }
+
+
     } // fn plugin_newsimport_create_event_type
 
 	/**

@@ -413,7 +413,13 @@ class EventData_Parser_SimpleXML {
 
         libxml_clear_errors();
         $internal_errors = libxml_use_internal_errors(true);
-        $xml = simplexml_load_file($p_file);
+
+        $orig_file_data = file_get_contents($p_file);
+        $conv_file_data = str_replace(array('&'), array('&amp;'), $orig_file_data);
+        unset($orig_file_data);
+        //$xml = simplexml_load_file($p_file);
+        $xml = simplexml_load_string($conv_file_data);
+        unset($conv_file_data);
 
         // halt if loading produces an error
         if (!$xml) {
@@ -981,8 +987,8 @@ class EventData_Parser_SimpleXML {
                 $event_info['other'] = $event_other;
 
                 // geo data
-                $x_loclat = trim('' . $event_location->loclat);
-                $x_loclng = trim('' . $event_location->loclng);
+                $x_loclat = html_entity_decode(trim('' . $event_location->loclat));
+                $x_loclng = html_entity_decode(trim('' . $event_location->loclng));
 
                 $event_info['geo'] = null;
                 if ((!empty($x_loclat)) && (!empty($x_loclng))) {

@@ -1293,7 +1293,54 @@ class KinoData_Parser_SimpleXML {
             //$one_event['date_time_text'] = json_encode($one_event_screen);
             $one_event['date_time_tree'] = json_encode($set_date_times);
             $one_event['date_time_text'] = json_encode($set_date_times);
+/*
+yyyy-mm-dd
+hh.mm/langs/flags
+hh.mm/langs/flags
+....
+yyyy-mm-dd
+....
+yyyy-mm-dd
+hh.mm/langs/flags
+hh.mm/langs/flags
+....
 
+function = parse_date_text ($date_time_text)
+{
+$dates = array();
+$cur_date = null;
+foreach (explode("\n", $date_time_text) as $one_date_time_str) {
+    $one_date_str = trim($one_date_str);
+    if (empty($one_date_str)) {
+        continue;
+    }
+
+    $matches = array();
+    if (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $one_date_time_str, $matches)) {
+        // new date
+        $cur_date = $one_date_time_str;
+        $dates[$cur_date] = array();
+        continue;
+    }
+
+    if (null === $cur_date) {
+        continue; // this should not occur
+    }
+
+    $time_info = explode('/', $one_date_time_str);
+    $time_info_size = count($time_info);
+
+    $time_str = $time_info[0];
+    $lang_str = ((2 <= $time_info_size) ? $time_info[1] : '');
+    $flag_str = ((3 <= $time_info_size) ? $time_info[2] : '');
+
+    $dates[$cur_date][] = array('time' => $time_str, 'lang' => $lang_str, 'flag' => $flag_str);
+
+}
+
+}
+
+*/
             //foreach ($one_screen['dates'] as $one_date => $one_times) {
             //}
             {

@@ -369,6 +369,8 @@ class NewsImport
 
         global $g_user;
 
+        $scr_type = 'screening';
+
         if ((!isset($g_user)) || (empty($g_user))) {
             $user_id = $p_source['admin_user_id'];
             $g_user = new User($user_id);
@@ -458,8 +460,10 @@ class NewsImport
             $article_data->setProperty('Ftour_id', $one_event['tour_id']);
             $article_data->setProperty('Flocation_id', $one_event['location_id']);
 
-            $f_movie_key = (isset($one_event['movie_key']) && (!empty($one_event['movie_key']))) ? $one_event['movie_key'] : '';
-            $article_data->setProperty('Fmovie_key', $f_movie_key);
+            if ($scr_type == $art_type) {
+                $f_movie_key = (isset($one_event['movie_key']) && (!empty($one_event['movie_key']))) ? $one_event['movie_key'] : '';
+                $article_data->setProperty('Fmovie_key', $f_movie_key);
+            }
 
             $article_data->setProperty('Fheadline', $one_event['headline']);
             $article_data->setProperty('Forganizer', $one_event['organizer']);
@@ -488,11 +492,13 @@ class NewsImport
 
             $article_data->setProperty('Fdate_time_text', $one_event['date_time_text']);
 
-            $e_date_time_tree = '';
-            if (isset($one_event['date_time_tree'])) {
-                $e_date_time_tree = $one_event['date_time_tree'];
+            if ($scr_type == $art_type) {
+                $e_date_time_tree = '';
+                if (isset($one_event['date_time_tree'])) {
+                    $e_date_time_tree = $one_event['date_time_tree'];
+                }
+                $article_data->setProperty('Fdate_time_tree', $e_date_time_tree);
             }
-            $article_data->setProperty('Fdate_time_tree', $e_date_time_tree);
 
             $article_data->setProperty('Fweb', $one_event['web']);
             $article_data->setProperty('Femail', $one_event['email']);
