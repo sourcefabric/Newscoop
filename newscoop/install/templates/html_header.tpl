@@ -12,7 +12,7 @@
     <script type="text/javascript" src="include/js/fValidate/fValidate.lang-enUS.js"></script>
     <script type="text/javascript" src="include/js/fValidate/fValidate.validators.js"></script>
 
-    <script type="text/javascript" src="../js/jquery/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="../js/jquery/jquery-1.6.4.min.js"></script>
     <script type="text/javascript" src="../js/jquery/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
     <script type="text/javascript" src="include/js/install.js"></script>
     <script type="text/javascript"><!--
