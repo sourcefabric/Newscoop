@@ -142,7 +142,7 @@ class FeedbackRepository extends DatatableSource
                     $qb->orderBy('s.name', $dir);
                     break;
                 case 'message':
-                    $qb->orderBy('e.message', $dir);
+                    $qb->orderBy('e.time_created', $dir);
                     break;
                 case 'url':
                     $qb->orderBy('e.url', $dir);
