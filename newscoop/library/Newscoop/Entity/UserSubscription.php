@@ -16,7 +16,7 @@ use Newscoop\Entity\User;
  * @table(name="user_subscription")
  * @entity(repositoryClass="Newscoop\Entity\Repository\UserSubscriptionRepository")
  */
-class Feedback
+class UserSubscription
 {
     /**
      * @id @generatedValue

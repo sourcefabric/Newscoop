@@ -23,7 +23,7 @@
 <ul class="entries">
     <?php foreach ($this->entries as $entry) { ?>
     <li>
-        <span class="date"><?php echo $entry->getUpdated()->format('H:i'); ?></span>
+        <span class="date"><?php echo $entry->getUpdated()->format('j.n. H:i'); ?></span>
         <?php if (!$entry->isPublished()) { ?>
         <a href="<?php echo $this->url(array(
             'action' => 'publish',
@@ -33,13 +33,18 @@
             'action' => 'prepare',
             'entry' => $entry->getId(),
         )); ?>" title="<?php putGS("Prepare '$1' for publishing", $entry->getTitle()); ?>" class="prepare">Prepare</a>
+        <a href="<?php echo $this->url(array(
+            'action' => 'delete',
+            'entry' => $entry->getId(),
+        )); ?>" title="<?php putGS("Delete '$1'", $entry->getTitle()); ?>" class="delete">Delete</a>
         <?php } else { ?>
         <em>published: <?php echo $entry->getPublished()->format('d.m.Y H:i:s'); ?></em>
         <?php } ?>
         <span class="title p-<?php echo $entry->getPriority(); ?>"><a href="<?php echo $this->url(array(
             'action' => 'detail',
             'entry' => $entry->getId(),
-        )); ?>" class="iframe"><?php echo $entry->getTitle(); ?></a></span>
+        )); ?>" class="iframe"><?php echo $entry->getTitle(); ?></a></span><br />
+        <small><?php echo $this->sections[$entry->getId()]->getName(); ?></small>
         <p><?php echo $entry->getSummary(); ?></p>
     </li>
     <?php } ?>

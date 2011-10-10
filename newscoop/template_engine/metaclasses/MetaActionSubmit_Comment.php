@@ -28,6 +28,8 @@ class MetaActionSubmit_Comment extends MetaAction
         $this->m_error = null;
         $this->m_properties['rejected'] = null;
 
+        $p_input += array('f_comment_is_anonymous' => false);
+
         if (!isset($p_input['f_comment_subject']) || empty($p_input['f_comment_subject'])) {
             $this->m_error = new PEAR_Error('The comment subject was not filled in.',
             ACTION_SUBMIT_COMMENT_ERR_NO_SUBJECT);

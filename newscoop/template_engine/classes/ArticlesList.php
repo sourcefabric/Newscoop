@@ -93,11 +93,10 @@ class ArticlesList extends ListObject
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
 	    $articlesList = Article::GetList($this->m_constraints, $this->m_order,
-	    $p_start, $p_limit, $p_count);
+	    $p_start, $p_limit, $p_count, false, false);
 	    $metaArticlesList = array();
 	    foreach ($articlesList as $article) {
-	        $metaArticlesList[] = new MetaArticle($article->getLanguageId(),
-                                                  $article->getArticleNumber());
+	        $metaArticlesList[] = new MetaArticle($article['language_id'], $article['number']);
 	    }
 	    return $metaArticlesList;
 	}

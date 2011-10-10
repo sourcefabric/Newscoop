@@ -99,6 +99,17 @@ class BaseList
     }
 
     /**
+     * Add sDom element
+     *
+     * @param string $id
+     * @return void
+     */
+    public function addSDom($id)
+    {
+        $this->sDoms = array($id);
+    }
+
+    /**
      * Get sDom property.
      * @return string
      */
@@ -107,8 +118,10 @@ class BaseList
         $colvis = $this->colVis ? 'C' : '';
         $search = $this->search ? 'f' : '';
         $paging = $this->items === NULL ? 'ip' : 'i';
-        return sprintf('<"H"%s%s%s>t<"F"%s%s>',
+        $custom = !empty($this->sDoms) ? '<"#' . $this->sDoms[0] . '">' : '';
+        return sprintf('<"H"%s%s%s%s>t<"F"%s%s>',
             $colvis,
+            $custom,
             $search,
             $paging,
             $paging,

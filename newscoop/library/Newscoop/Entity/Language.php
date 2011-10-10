@@ -16,12 +16,12 @@ namespace Newscoop\Entity;
 class Language
 {
 	/**
-	 * Provides the class name as a constant. 
+	 * Provides the class name as a constant.
 	 */
 	const NAME = __CLASS__;
-	
+
 	/* --------------------------------------------------------------- */
-	
+
     /**
      * @id @generatedValue
      * @column(name="Id", type="integer")
@@ -291,6 +291,16 @@ class Language
         return $this->id;
     }
 
+	/**
+     * Set id
+     * @var int
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+        return $this;
+    }
+
     /**
      * Set name
      *
@@ -368,7 +378,7 @@ class Language
     {
         $this->month1 = (string) $month;
         return $this;
-    }    
+    }
 
     public function getMonth1()
     {

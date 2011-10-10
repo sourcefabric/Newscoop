@@ -50,8 +50,7 @@ class SearchResultsList extends ListObject
 
 	    $metaArticlesList = array();
 	    foreach ($articlesList as $article) {
-	        $metaArticlesList[] = new MetaArticle($article->getLanguageId(),
-	                                              $article->getArticleNumber());
+	        $metaArticlesList[] = new MetaArticle($article['language_id'], $article['number']);
 	    }
 		return $metaArticlesList;
 	}

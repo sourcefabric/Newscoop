@@ -108,7 +108,7 @@ class Template
             $items = array();
             foreach ($this->storage->listItems($path) as $file) {
                 $storageFile = $this->storage->getItem($file);
-                if (!$storageFile->isDir()) {
+                if (!$storageFile->isDir() && $storageFile->getType() == 'tpl') {
                     $items[] = $this->repository->getTemplate($storageFile);
                 }
             }
@@ -149,19 +149,23 @@ class Template
         );
 
         if (!$item->isDir()) {
-            $template = $this->repository->getTemplate($key, false);
-
-            // get the resource for the template id
-            $resource = $this->syncResServ->findByPathOrId( rtrim( $this->theme->getPath(), "/" )."/".ltrim( $key, "/" ) );
-            /* @var $resource Newscoop\Entity\Resource */
-
             $metadata += array(
                 'size' => $item->getSize(),
                 'ctime' => $item->getChangeTime(),
-
-                'id' => is_object($resource) ? $resource->getId() : $template->getId(),
-                'ttl' => $template->getCacheLifetime(),
             );
+
+            if ($metadata['type'] == 'tpl') {
+                $template = $this->repository->getTemplate($key, false);
+
+                // get the resource for the template id
+                $resource = $this->syncResServ->findByPathOrId( rtrim( $this->theme->getPath(), "/" )."/".ltrim( $key, "/" ) );
+                /* @var $resource Newscoop\Entity\Resource */
+
+                $metadata += array(
+                    'id' => is_object($resource) ? $resource->getId() : $template->getId(),
+                    'ttl' => $template->getCacheLifetime(),
+                );
+            }
         }
 
         return (object) $metadata;

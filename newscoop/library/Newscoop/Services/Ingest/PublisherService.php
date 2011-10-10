@@ -15,6 +15,7 @@ use Newscoop\Entity\Ingest\Feed\Entry;
 class PublisherService
 {
     const DATETIME_FORMAT = 'Y-m-d H:i:s';
+    const AUTHOR_NAME = 'ingest';
 
     /** @var array */
     private $config;
@@ -92,7 +93,7 @@ class PublisherService
      * @param string $code
      * @return int
      */
-    private function getLanguage($code)
+    public function getLanguage($code)
     {
          $languages = \Language::GetLanguages(null, $code);
          if (empty($languages)) {
@@ -107,14 +108,14 @@ class PublisherService
      *
      * @return int
      */
-    private function getPublication()
+    public function getPublication()
     {
         $publications = $GLOBALS['Campsite']['publications'];
         if (empty($publications)) {
             throw new \RuntimeException("No publications defined.");
         }
 
-        return (int) $publications[count($publications) - 1]->getPublicationId();
+        return (int) $publications[0]->getPublicationId();
     }
 
     /**
@@ -122,7 +123,7 @@ class PublisherService
      *
      * @return int
      */
-    private function getIssue()
+    public function getIssue()
     {
         return (int) \Issue::GetCurrentIssue($this->getPublication())->getIssueNumber();
     }
@@ -133,7 +134,7 @@ class PublisherService
      * @param Newscoop\Entity\Ingest\Feed\Entry $entry
      * @return int
      */
-    private function getSection(Entry $entry)
+    public function getSection(Entry $entry)
     {
         switch ($entry->getSubject()) {
             case '15000000':
@@ -199,19 +200,12 @@ class PublisherService
      */
     private function setArticleAuthors(\Article $article, $authors)
     {
-        if (empty($authors)) {
-            return;
+        $author = new \Author(self::AUTHOR_NAME);
+        if (!$author->exists()) {
+            $author->create();
         }
 
-        foreach (explode(',', $authors) as $authorName) {
-            $authorName = trim($authorName);
-            $author = new \Author(trim($authorName));
-            if (!$author->exists()) {
-                $author->create();
-            }
-
-            $article->setAuthor($author);
-        }
+        $article->setAuthor($author);
     }
 
     /**

@@ -76,12 +76,13 @@ function change_language(select)
   <?php
   } else {
       $articleLanguage = camp_array_peek($articleLanguages);
-      echo '<strong class="right-floated">'.htmlspecialchars($articleLanguage->getNativeName()).'</strong>';
+      echo '<strong class="right-floated" id="article_language">'.htmlspecialchars($articleLanguage->getNativeName()).'</strong>';
   }
   ?>
     <label for="f_action_language" class="inline-style right-floated" style="width:80px;"><?php putGS('Language'); ?></label>
     <!-- END Language -->
 
+    <?php if (empty($userIsBlogger)) { ?>
     <!-- BEGIN Actions -->
     <select name="f_action" class="input_select" onchange="action_selected(this);" style="margin-bottom:2px;">
       <option value=""><?php putGS("Actions"); ?>...</option>
@@ -107,6 +108,7 @@ function change_language(select)
       <?php } ?>
     </select>
     <!-- END Actions -->
+    <?php } ?>
 
     <!-- BEGIN Workflow -->
     <?php if ($g_user->hasPermission('Publish')) { ?>

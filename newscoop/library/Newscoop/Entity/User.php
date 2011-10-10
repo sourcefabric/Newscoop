@@ -601,6 +601,11 @@ class User implements \Zend_Acl_Role_Interface
      */
     public function hasPermission($permission)
     {
+        $blogService = \Zend_Registry::get('container')->getService('blog');
+        if ($blogService->isBlogger($this)) {
+            return true;
+        }
+
         $acl = \Zend_Registry::get('acl')->getAcl($this);
         try {
             list($resource, $action) = PermissionToAcl::translate($permission);

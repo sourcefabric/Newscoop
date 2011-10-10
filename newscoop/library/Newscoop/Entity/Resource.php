@@ -136,7 +136,7 @@ class Resource extends Entity
      */
     public function exists()
     {
-        return true;
+        return !empty($this->path) && !empty($this->id);
     }
 
     /**

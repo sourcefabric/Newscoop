@@ -41,7 +41,7 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
         $campsite->subs_by_type = 'section';
     }
 
-    $p_smarty->smarty->loadPlugin('smarty_function_get_resource_id'));
+    $p_smarty->smarty->loadPlugin('smarty_function_get_resource_id');
     $resourceId = smarty_function_get_resource_id($p_params, $p_smarty);
 
 

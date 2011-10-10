@@ -1,3 +1,4 @@
+<?php if (empty($userIsBlogger)) { ?>
 <div class="articlebox" title="<?php putGS('Switches'); ?>"><div>
 <form id="article-switches" action="/<?php echo $ADMIN; ?>/articles/post.php" method="POST">
 
@@ -86,3 +87,4 @@
     });
     </script>
 </div></div>
+<?php } ?>

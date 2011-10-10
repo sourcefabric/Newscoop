@@ -106,6 +106,13 @@ $pages[1]['pages'][] = array(
     'action' => 'index',
 );
 
+$pages[1]['pages'][] = array(
+    'label' => getGS('Article Playlists'),
+    'module' => 'admin',
+    'controller' => 'playlist',
+    'action' => 'index',
+);
+
 // add content/publications
 foreach ($Campsite['publications'] as $publication) {
     $pubId = $publication->getPublicationId();
@@ -153,7 +160,7 @@ foreach ($Campsite['publications'] as $publication) {
         if (count($Campsite['issues'][$pubId]) > 0) {
             $publication_page['pages'][] = array(
                 'label' => getGS('More...'),
-                'uri' => $view->baseUrl("admin/pub/?Pub=$pubId"),
+                'uri' => $view->baseUrl("admin/issues/?Pub=$pubId"),
             );
         }
     }
@@ -531,6 +538,17 @@ if (!empty($plugin_pages)) {
     );
 }
 
+// change menu for blogger
+$blogService = Zend_Registry::get('container')->getService('blog');  
+if ($blogService->isBlogger($g_user)) {
+    $pages = array(
+        array(
+            'label' => 'Blog',
+            'module' => 'admin',
+        ),
+    );
+}
+
 // set menu classes to speed up loading
 foreach ($pages as $i => $page) {
     $pages[$i]['class'] = 'fg-button ui-widget fg-button-icon-right fg-button-ui-state-default fg-button-ui-corner-all';
@@ -553,6 +571,7 @@ foreach ($pages as $i => $page) {
 }
 
 $nav = new Zend_Navigation($pages);
+
 $view->navigation()->breadcrumbs()
     ->setSeparator(' &gt; ')
     ->setContainer($nav)

@@ -31,11 +31,11 @@ class ErrorController extends Zend_Controller_Action
 
         if (in_array($errors->type, $notFound)) { // handle with old code
             $errors = null;
+            $this->_forward('index', 'legacy', $this->_getParam('module'), array(
+                'errors' => $errors,
+            ));
         }
-        
-        $this->_forward('index', 'legacy', $this->_getParam('module'), array(
-            'errors' => $errors,
-        ));
+
     }
 
     public function errorAction()

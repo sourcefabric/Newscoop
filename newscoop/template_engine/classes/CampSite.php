@@ -125,26 +125,21 @@ final class CampSite extends CampSystem
                 $error_message = 'Error occured.';
             }
         } else {
-            $template = $uri->getTemplate();
-            if (empty($template)) {
-                $tplId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
-                if (is_null($tplId)) {
+            $template = $uri->getTemplate(CampRequest::GetVar(CampRequest::TEMPLATE_ID));
+            switch ($template) {
+                case null:
                     $error_message = "Unable to select a template! "
-                            . "Please make sure the following conditions are met:\n"
-                            . "<li>there is at least one issue published and it had assigned "
-                            . "valid templates for the front, section and article pages;</li>\n"
-                            . "<li>a template was assigned for the URL error handling in "
-                            . "the publication configuration screen.";
-                } else {
-                    $error_message = 'The template identified by the number ' . $tplId
-                            . ' does not exist.';
-                }
-                $templates_dir = CS_TEMPLATES_DIR;
-                $template = CS_SYS_TEMPLATES_DIR . DIR_SEP . '_campsite_error.tpl';
-            } else {
-            	$themePath = $uri->getThemePath();
-            	$templates_dir = CS_TEMPLATES_DIR . DIR_SEP . $themePath;
-            	$template = substr($template,  strlen($themePath));
+                    . "Please make sure the following conditions are met:\n"
+                    . "<li>there is at least one issue published and it had assigned "
+                    . "valid templates for the front, section and article pages;</li>\n"
+                    . "<li>a template was assigned for the URL error handling in "
+                    . "the publication configuration screen.";
+                    $templates_dir = CS_TEMPLATES_DIR;
+                    $template = CS_SYS_TEMPLATES_DIR . DIR_SEP . '_campsite_error.tpl';
+                    break;
+                default:
+                    $themePath = $uri->getThemePath();
+                    $templates_dir = CS_TEMPLATES_DIR . DIR_SEP . $themePath;
             }
         }
         $params = array(

@@ -653,21 +653,21 @@ abstract class CampURI
             return $this->m_template->name;
         }
 
-        if (!empty($p_templateIdOrName))
-        {
+        if (!empty($p_templateIdOrName)) {
             $tplObj = new MetaTemplate($p_templateIdOrName);
-            if (!$tplObj->defined())
-            {
-                return null;
+            if (!$tplObj->defined()) {
+                $template = CampSystem::GetInvalidURLTemplate($this->publication->identifier,
+                $this->issue->number, $this->language->number);
+                $template = substr($template, strlen($this->getThemePath()));
+            } else {
+                $template = $tplObj->name;
             }
-            $template = $tplObj->name;
-        }
-        elseif (is_null($this->m_errorCode))
-        {
+        } elseif (is_null($this->m_errorCode)) {
             $template = CampSystem::GetTemplate($this->language->number,
                             $this->publication->identifier,
                             $this->issue->number, $this->section->number,
                             $this->article->number);
+            $template = substr($template, strlen($this->getThemePath()));
         } else {
             return null;
         }

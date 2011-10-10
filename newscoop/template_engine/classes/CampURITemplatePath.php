@@ -362,7 +362,7 @@ class CampURITemplatePath extends CampURI
             }
         }
 
-        $this->m_template = new MetaTemplate($this->getTemplate($this->readTemplate()));
+        $this->m_template = new MetaTemplate($this->getTemplate($this->readTemplate()), $this->getThemePath());
         if (!$this->m_template->defined()) {
             return new PEAR_Error("Invalid template in URL or no default template specified.",
             self::INVALID_TEMPLATE);

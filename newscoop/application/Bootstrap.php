@@ -134,6 +134,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('ingest.publisher'));
 
+        $container->register('blog', 'Newscoop\Services\BlogService')
+            ->addArgument('%blog%');
+
+        $container->register('comment_notification', 'Newscoop\Services\CommentNotificationService')
+            ->addArgument(new sfServiceReference('email'))
+            ->addArgument(new sfServiceReference('comment'))
+            ->addArgument(new sfServiceReference('user'));
+
         Zend_Registry::set('container', $container);
         return $container;
     }
@@ -189,7 +197,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
          $router->addRoute(
             'webcode',
             new Zend_Controller_Router_Route(':webcode', array(
-
+                'module' => 'default'
             ), array(
                 'webcode' => '^@[a-z]{5,6}',
             )));
@@ -197,6 +205,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             'language/webcode',
             new Zend_Controller_Router_Route(':language/:webcode', array(
             ), array(
+                'module' => 'default',
                 'language' => '[a-z]{2}',
                 'webcode' => '^@[a-z]{5,6}',
             )));
@@ -238,7 +247,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $router->addRoute(
             'user',
-            new Zend_Controller_Router_Route('user/:username', array(
+            new Zend_Controller_Router_Route('user/:username/:action', array(
                 'module' => 'default',
                 'controller' => 'user',
                 'action' => 'profile',

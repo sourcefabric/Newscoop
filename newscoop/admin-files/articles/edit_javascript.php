@@ -143,6 +143,9 @@ $('form#article-main').submit(function() {
 		// tinymce should know that the current state is the correct one
 		cleanTextContents();
 
+		//fix breadcrumbs title
+        $('.breadcrumbs li:last a').html($('#f_article_title').attr('value') + ' (' + $('#article_language').html() + ')');
+
     	 // ping for connection
         callServer('ping', [], function(json) {
             $.ajax({
@@ -229,6 +232,12 @@ $('.save-button-bar input#save_and_close').click(function() {
 var authorsList = [
 <?php
 $allAuthors = Author::GetAllExistingNames();
+if ($userIsBlogger) {
+    $blogInfo = $blogService->getBlogInfo($g_user);
+    $allAuthors = array_map(function($author) {
+        return $author->getName();
+    }, ArticleAuthor::GetAuthorsByArticle($blogInfo->getArticleNumber(), $blogInfo->getLanguageId()));
+}
 $quoteStringFn = create_function('&$value, $key',
     '$value = json_encode((string) $value);');
 array_walk($allAuthors, $quoteStringFn);

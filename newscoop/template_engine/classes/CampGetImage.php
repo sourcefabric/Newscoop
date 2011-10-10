@@ -187,8 +187,12 @@ class CampGetImage
         $derivates = null;
         if ($this->m_ratio > 0 && $this->m_ratio < 100) {
             $derivates = $this->m_derivates_dir.$this->m_ratio.'/';
-        } elseif ($this->m_resizeWidth > 0 || $this->m_resizeHeight > 0) {
+        } elseif ($this->m_resizeCrop == null && $this->m_crop == null && ($this->m_resizeWidth > 0 || $this->m_resizeHeight > 0)) {
         	$derivates = $this->m_derivates_dir.$this->m_resizeWidth.'x'.$this->m_resizeHeight.'/';
+        } elseif ($this->m_resizeCrop != null) {
+            $derivates = $this->m_derivates_dir.$this->m_resizeWidth.'x'.$this->m_resizeHeight.'_crop_'.$this->m_resizeCrop.'/';
+        } elseif ($this->m_crop != null) {
+            $derivates = $this->m_derivates_dir.$this->m_resizeWidth.'x'.$this->m_resizeHeight.'_forcecrop_'.$this->m_crop.'/';
         }
 
         $path = $this->m_basePath.$this->m_cache_dir.$fetched.$derivates.$this->getLocalFileName();
@@ -270,18 +274,11 @@ class CampGetImage
     private function PushImage()
     {
         header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
-        //        header('Cache-Control: no-store, no-cache, must-revalidate');
-        //        header('Cache-Control: post-check=0, pre-check=0', false);
-        //        header('Pragma: no-cache');
         header('Content-type: ' . $this->m_image->getContentType());
 
-        if ($this->m_crop) {
-            $this->CropImage();
-        } elseif ($this->m_isLocal && $this->m_ratio == 100
-	        && $this->m_resizeWidth == 0 && $this->m_resizeHeight == 0) {
+        if ($this->m_isLocal && $this->m_ratio == 100 && $this->m_resizeWidth == 0 && $this->m_resizeHeight == 0 && $this->m_crop == null && $this->m_cropResize == null) {
             // do not cache local 100% images
             readfile($this->getSourcePath());
-
         } else {
             $this->imageCacheHandler();
         }
@@ -300,22 +297,40 @@ class CampGetImage
         // Resulting size of the image after cropping
         $width = $this->m_resizeWidth;
         $height = $this->m_resizeHeight;
+        
+        if (!$width) {
+            $width = $current_width;
+        }
+        if (!$height) {
+            $height = $current_height;
+        }
 
         // Cropping coordinates
         $cropPosition = explode('-', $this->m_crop);
-        if ($cropPosition[0] == 'top') $top = 0;
-        if ($cropPosition[0] == 'center') $top = ($current_height - $height) / 2;
-        if ($cropPosition[0] == 'bottom') $top = ($current_height - $height);
-        if ($cropPosition[1] == 'left') $left = 0;
-        if ($cropPosition[1] == 'center') $left = ($current_width - $width) / 2;
-        if ($cropPosition[1] == 'right') $left = ($current_width - $width);
+        if ($cropPosition[0] == 'top') {
+            $top = 0;
+        }
+        if ($cropPosition[0] == 'center') {
+            $top = ($current_height - $height) / 2;
+        }
+        if ($cropPosition[0] == 'bottom') {
+            $top = ($current_height - $height);
+        }
+        if ($cropPosition[1] == 'left') {
+            $left = 0;
+        }
+        if ($cropPosition[1] == 'center') {
+            $left = ($current_width - $width) / 2;
+        }
+        if ($cropPosition[1] == 'right') {
+            $left = ($current_width - $width);
+        }
 
         // Resample the image
         $canvas = @imagecreatetruecolor($width, $height);
         $current_image = @imagecreatefromjpeg($this->getSourcePath());
         @imagecopy($canvas, $current_image, 0, 0, $left, $top, $current_width, $current_height);
-        //@imagejpeg($canvas, $this->getSourcePath(), 100);
-        @imagejpeg($canvas, null, 100);
+        return($canvas);
     }
     
     /**
@@ -375,8 +390,7 @@ class CampGetImage
 				$left = 0;
 			}
 		}
-		//error_log('top: '.$top.' left: '.$left);
-        
+		
         // Resample the image
         $canvas = @imagecreatetruecolor($width, $height);
         @imagecopy($canvas, $p_im, 0, 0, $left, $top, $current_width, $current_height);
@@ -498,7 +512,6 @@ class CampGetImage
      */
     private function imageCacheHandler()
     {
-        if ($this->m_resizeCrop != null) $this->m_ttl = 0;
         if ($this->m_ttl == 0) {
             // cache disabled
             return $this->createImage();
@@ -513,9 +526,11 @@ class CampGetImage
                 return $this->sendCachedImage();
             }
         }
+        
+        $targetpath = $this->getTargetPath();
 
-        $cachedir  = dirname($this->getTargetPath());
-        $cachefile = basename($this->getTargetPath());
+        $cachedir  = dirname($targetpath);
+        $cachefile = basename($targetpath);
 
         if (!is_dir($cachedir) || !is_writable($cachedir)) {
             // try to create the folder and cache file
@@ -541,10 +556,17 @@ class CampGetImage
     {
         $func_ending = $this->GetEnding();
         $t = $this->ReadImage($func_ending);
-        $t = $this->ResizeImage($t);
-        if ($this->m_resizeCrop != null) {
-			$t = $this->CropResizedImage($t);
-		}
+        
+        if ($this->m_crop == null) {
+            $t = $this->ResizeImage($t);
+            if ($this->m_resizeCrop != null) {
+                $t = $this->CropResizedImage($t);
+            }
+        }
+        else {
+            $t = $this->CropImage($t);
+        }
+        
         $function = 'image'.$func_ending;
 
         if (!$p_target) {

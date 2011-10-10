@@ -93,7 +93,7 @@ var datatableCallback = {
                     }, serverObj.security),
                     success: function (data) {
                         flashMessage(putGS('Comments status change to $1.', statusMap[status]));
-                        datatable.fnDraw();
+                        datatable.fnDraw(false);
                     },
                     error: function (rq, status, error) {
                         if (status == 0 || status == -1) {
@@ -222,7 +222,7 @@ $(function () {
             success: function (data) {
                 if ('deleted' == status) flashMessage(putGS('Comment deleted.'));
                 else flashMessage(putGS('Comment status change to $1.', statusMap[status]));
-                datatable.fnDraw();
+                datatable.fnDraw(false);
             },
             error: function (rq, status, error) {
                 if (status == 0 || status == -1) {

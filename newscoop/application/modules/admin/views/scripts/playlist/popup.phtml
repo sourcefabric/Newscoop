@@ -1,0 +1,375 @@
+<?php
+
+$this->headLink()->appendStylesheet( $this->baseUrl('admin-style/admin_stylesheet_context.css') );
+
+$t = array
+(
+	'view-article' => getGS('View article'),
+	'drag-here' => getGS('Drag here to add to list'),
+	'playlist-updated' => getGS('Playlist updated.'),
+    'list-saved' => getGS('Playlist saved'),
+	'list-save-failed' => getGS('Could not save playlist'),
+    'delete' => getGS('Delete'),
+    'cancel' => getGS('Cancel')
+);
+$dataUrl = $this->url( array
+(
+	'action' => 'list-data',
+	'controller' => 'playlist',
+	'module' => 'admin',
+    'id' => $this->playlistId,
+	'format' => 'json'
+), null, null, false);
+$saveUrl = $this->url( array
+(
+	'action' => 'save-data',
+	'controller' => 'playlist',
+	'module' => 'admin',
+	'format' => 'json'
+), null, null, false);
+$deleteUrl = $this->url( array
+(
+	'action' => 'delete',
+	'controller' => 'playlist',
+	'module' => 'admin',
+	'format' => 'json'
+), null, null, false);
+
+$js = <<<JS
+
+function toggleDragZonePlaceHolder()
+{
+	if($('#context_list').find('.context-item').html() != null) {
+	    $('#drag-here-to-add-to-list').css('display', 'none');
+	} else {
+		$('#drag-here-to-add-to-list').css('display', 'block');
+	}
+}
+function fnLoadContextList(data)
+{
+	if(data.code == 200) {
+	    var items = data.items;
+	    for(i = 0; i < items.length; i++) {
+	        var item = items[i];
+	        appendItemToContextList(item.articleId, item.date, item.title);
+	    }
+	}
+	toggleDragZonePlaceHolder();
+}
+function loadContextList()
+{
+	var relatedArticles = $('#context_list').sortable( "serialize");
+    var aoData = new Array();
+    var items = new Array('1_1','0_0');
+    aoData.push("context_box_load_list");
+    aoData.push(items);
+    aoData.push({ 'playlistId': '{$this->playlistId}' });
+    callServer('{$dataUrl}', aoData, fnLoadContextList, true);
+}
+function appendItemToContextList(article_id, article_date, article_title)
+{
+    $("#context_list").append
+    (
+		'<li class="item" id="'+article_id+'">'+
+		'<input type="hidden" name="article-id[]" value="'+article_id+'" />'+
+    	'<div class="context-item">'+
+        '<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>'+
+        '<div class="context-item-header">'+
+        '<div class="context-item-date">'+article_date+'</div>'+
+        '<a href="#" class="view-article" style="display: none" ' +
+        	'onClick="viewArticle($(this).parent(\'div\').parent(\'div\').parent(\'li.item\').attr(\'id\'));">{$t['view-article']}</a>'+
+        '</div>'+
+        '<a href="#" class="corner-button" style="display: block" '+
+        	'onClick="$(this).parent(\'div\').parent(\'li.item\').remove();toggleDragZonePlaceHolder();"><span class="ui-icon ui-icon-closethick"></span></a>'+
+        '<div class="context-item-summary">'+article_title+'</div>'+
+        '</div>'+
+    	'</li>'
+	);
+    closeArticle();
+}
+function deleteContextList()
+{
+	$("#context_list").html('<div id="drag-here-to-add-to-list" style="">{$t['drag-here']}</div>');
+}
+function removeFromContext(param)
+{
+    $("#"+param).remove();
+}
+
+function fnPreviewArticle(data)
+{
+	if(data.code == 200) {
+		$("#preview-article-date").val(data.date);
+		$("#preview-article-title").html(data.title);
+		$("#preview-article-body").html(data.body);
+		$(".context-block.context-list").css("display","none");
+	    $(".context-block.context-article").css("display","block");
+	}
+}
+
+function clearActiveArticles() {
+	$('.item-active').each( function () {
+		$(this).removeClass('item-active');
+	});
+}
+
+function viewArticle(param)
+{
+	 clearActiveArticles();
+	 $("#"+param).addClass('item-active');
+	 var relatedArticles = $('#context_list').sortable( "serialize");
+	 var aoData = new Array();
+	 var items = new Array('1_1','0_0');
+
+     aoData.push("context_box_preview_article");
+     aoData.push(items);
+     aoData.push({
+         'articleId': param,
+     });
+    $("#preview-article-id").val(param);
+    callServer(['ArticleList', 'doAction'], aoData, fnPreviewArticle);
+}
+
+function closeArticle()
+{
+    $(".context-block.context-list").css("display","block");
+    $(".context-block.context-article").css("display","none");
+}
+
+function popup_close()
+{
+	try
+	{
+        if (parent.$.fancybox.reload) {
+            parent.$.fancybox.message = '{$t['list-saved']}';
+        }
+        parent.$.fancybox.close();
+    }
+    catch (e) {window.close();}
+    try
+    {
+    	var iframe = $(parent.document.body).find('#playlist-display').removeAttr('src').clone();
+		$(parent.document.body).find('#playlist-display').replaceWith(iframe);
+	}
+	catch(e){}
+}
+
+function popup_save()
+{
+	var articles = [];
+	$('#context-list-form').find('input[type=hidden]').each(function()
+	{
+		articles.push($(this).val());
+	});
+    var aoData =
+    {
+        'articles': articles,
+        'id': '{$this->playlistId}',
+        'name': $('#playlist-name').val()
+    };
+    callServer('{$saveUrl}', aoData, fnSaveCallback, true );
+}
+
+function fnSaveCallback(data)
+{
+	if (typeof data['error'] != 'undefined' && data['error'])
+	{
+		var flash = flashMessage('{$t['list-save-failed']}', null, false);
+		return false;
+	}
+	var pl = $(parent.document.body).find('#playlists option[value='+data.playlistId+']');
+	if (pl.length == 0) {
+		var opt = $('<option />').val(data.playlistId).text(data.playlistName);
+		var sel = $(parent.document.body).find('#playlists');
+		sel.append( opt );
+		sel.val(data.playlistId)
+		parent.triggerSelectClick();
+	}
+	else {
+		pl.val(data.playlistId).text(data.playlistName).trigger('click');
+	}
+	var flash = flashMessage('{$t['list-saved']}', null, false);
+}
+
+$(function()
+{
+	$( "#dialog-confirm" ).dialog
+	({
+		resizable: false,
+		height:140,
+		modal: true,
+		autoOpen : false,
+		position : 'top',
+		buttons:
+		{
+			"{$t['delete']}" : function() {
+				callServer('{$deleteUrl}', {id:$('#playlists').val()}, function()
+				{
+					$(parent.document.body).find('#playlists option[value={$this->playlistId}]').remove();
+					var iframe = $(parent.document.body).find('#playlist-display').removeAttr('src').clone();
+					$(parent.document.body).find('#playlist-display').replaceWith(iframe);
+				}, true );
+				$( this ).dialog( "close" );
+			},
+			"{$t['cancel']}" : function() {
+				$( this ).dialog( "close" );
+			}
+		}
+	});
+	$('#remove-ctrl').click(function(){ $( "#dialog-confirm" ).dialog('open') });
+});
+
+JS;
+
+$this->headScript()->appendScript( $js, "text/javascript" );
+
+?>
+
+
+
+<div class="content">
+	<div id="context-box" class="block-shadow">
+		<div class="toolbar">
+			<div class="save-button-bar">
+				<?php if (isset($this->playlistId)) : ?>
+				<input type="button" class="default-button" id="remove-ctrl" value="<?php echo getGS('Remove'); ?>" />
+				<?php endif; ?>
+				<input type="submit" name="cancel"
+					value="<?php echo getGS('Close'); ?>" class="default-button" onclick="popup_close();"
+					id="context_button_close"> <input type="submit" name="save"
+					value="<?php echo getGS('Save'); ?>" class="save-button-small" onclick="popup_save();"
+					id="context_button_save">
+			</div>
+
+			<h2 style="width:700px">
+			    <?php echo getGS('Article Playlist'); ?>
+				<span style="float:right">
+					<label for="playlist-name"><?php echo getGS('Playlist Name') ?>:</label>
+					<input name="playlist-name" id="playlist-name" value="<?php echo $this->playlistName ?>"
+						style="font-size: 12px; width: 250px" />
+					<?php if(isset($this->playlistId)) : ?>
+					<label for="playlist-id"><?php echo getGS('Playlist ID')?>:</label>
+					<input id="playlist-id" style="font-size:12px; width:50px"
+						readonly="readonly"	value="<?php echo $this->playlistId ?>">
+					<?php endif; ?>
+				</span>
+			</h2>
+		</div>
+		<div class="context-content">
+			<div class="context-block context-search">
+				<h3><?php echo getGS('Available Articles'); ?></h3>
+
+	            <?php
+                require_once CS_PATH_SITE.'/admin-files/libs/ContextList/ContextList.php';
+                $contextlist = new ContextList();
+                $contextlist->setSearch(TRUE);
+                $contextlist->setOrder(TRUE);
+                $contextlist->setLanguage($this->languageId);
+                $contextlist->renderFilters();
+                $contextlist->render();
+                ?>
+
+			</div>
+
+			<script>
+                 $(function()
+                 {
+                 	$(".dataTables_filter input").attr("placeholder", "Search").addClass("context-search search");
+                    $(".fg-toolbar .ui-toolbar .ui-widget-header .ui-corner-tl .ui-corner-tr .ui-helper-clearfix").css("border","none");
+                    $(".fg-toolbar .ui-toolbar .ui-widget-header .ui-corner-bl .ui-corner-br .ui-helper-clearfix").css("background-color","#CCCCCC");
+                    $(".datatable").css("position","static");
+                 });
+                 $(function()
+                 {
+                     $('#table-<?php echo $contextlist->getId(); ?> tbody').sortable
+                     ({
+                         connectWith: "#context_list",
+                         receive: function(event, ui)
+                         {
+                             $(ui.item).find(".corner-button").css("display","none");
+                             $(ui.item).find(".view-article").css("display","block");
+
+                             var articleId = $(ui.item).attr('id');
+                             var newItem = $('<tr />');
+                             newItem.attr('id', articleId);
+                             newItem.append($('<td />').addClass('name'));
+                             $(ui.item).find('input[type=hidden]').remove();
+                             newItem.find('td').append($(ui.item).find('div:eq(0)'));
+                             $(ui.item).replaceWith(newItem);
+
+                             toggleDragZonePlaceHolder();
+                         },
+                         items : '> tr'
+                     })
+                     .disableSelection();
+                     $('#context_list').sortable
+                     ({
+                         connectWith: "#table-<?php echo $contextlist->getId(); ?> tbody",
+                         receive: function(event, ui)
+                         {
+                            $(ui.item).find(".corner-button").css("display","block");
+                            $(ui.item).find(".view-article").css("display","none");
+                            var articleId = $(ui.item).attr('id').replace('article_', '');
+                            var newItem = $('<li />').addClass('item').attr('id', articleId);
+                            newItem.append( $('<input />')
+                            	.attr('type', 'hidden')
+                            	.attr('name', 'article-id[]')
+                            	.val(articleId) );
+                            newItem.append($(ui.item).find('td > *'));
+                            $(ui.item).replaceWith(newItem);
+
+                            toggleDragZonePlaceHolder();
+                         },
+                         items : '> li'
+                     })
+                     .disableSelection();
+                     loadContextList();
+                 });
+
+			</script>
+
+    		<div class="context-block context-list">
+    			<h3><?php echo getGS('Playlist Articles'); ?></h3>
+    			<div class="context-list-results">
+    				<div class="save-button-bar" style="display: block;"><input
+    					type="submit" name="delete-all" value="Delete all"
+    					class="default-button" onclick="deleteContextList()" id="context_button_delete_all">
+    				</div>
+    				<div style="display: block; float: left">
+    					<form id="context-list-form">
+        					<ul id="context_list" style="display:block; height: 433px; width: 506px; overflow-y:auto; overflow-x:hidden; padding: 36px 0px 0px 0px;">
+            					<div id="drag-here-to-add-to-list" style="display:none">
+                					<?php echo getGS('Drag here to add to list') ?>
+            					</div>
+        					</ul>
+    					</form>
+    				</div>
+    			</div>
+    		</div>
+
+    		<div class="context-block context-article" style="display: none">
+    			<div class="save-button-bar"><input type="submit"
+    				name="add-this-article" value="Add this article"
+    				class="save-button-small" onclick="appendItemToContextList($('#preview-article-id').val(), $('#preview-article-date').val(), $('#preview-article-title').html()); toggleDragZonePlaceHolder(); clearActiveArticles();" id="context_button_add"> <input
+    				type="submit" name="close" value="Close" class="default-button"
+    				onclick="closeArticle(); clearActiveArticles();" id="context_button_close_article">
+    			</div>
+
+    			<div class="context-article-preview" style="overflow-y:auto; height:500px;">
+
+    				<input id="preview-article-date" type="hidden" />
+    				<input id="preview-article-id" type="hidden" />
+    				<h3 id="preview-article-title"></h3>
+    				<div id="preview-article-body" style="color: #444444"></div>
+    			</div>
+    		</div>
+    	</div>
+	</div>
+</div>
+
+<div id="dialog-confirm" style="display:none" title="<?php echo getGS('Remove playlist') ?>">
+	<p><?php echo getGS('Are you sure you want to delete this playlist?') ?></p>
+</div>
+
+
+
