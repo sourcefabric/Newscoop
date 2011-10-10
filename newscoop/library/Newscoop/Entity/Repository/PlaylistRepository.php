@@ -31,7 +31,8 @@ class PlaylistRepository extends EntityRepository
         	FROM Newscoop\Entity\PlaylistArticle pa
         	JOIN pa.article a
         	WHERE pa.idPlaylist = ?1".
-           (is_null($lang) ? "GROUP BY a.number" : "AND a.language = ?2")
+           (is_null($lang) ? "GROUP BY a.number" : "AND a.language = ?2").
+            " ORDER BY pa.id"
         );
         $query->setParameter(1, $playlist->getId());
         if (!is_null($lang)) {
@@ -64,25 +65,27 @@ class PlaylistRepository extends EntityRepository
 
             if (!is_null($articles) && is_array($articles))
             {
+                $ar = $this->getEntityManager()->getRepository('Newscoop\Entity\Article');
                 foreach ($articles as $articleId)
                 {
                     $article = new PlaylistArticle();
-                    $article->setId(array($playlist->getId(),$articleId));
-                    $ar = $this->getEntityManager()->getRepository('Newscoop\Entity\Article');
+//                    $article->setPlaylist($playlist->getId());
                     if (($a = current($ar->findBy(array("number" => $articleId)))) instanceof \Newscoop\Entity\Article) {
                         $article->setArticle($a);
                     }
-                    $em->persist($article);
+                    $em->getConnection()->executeUpdate("INSERT INTO playlist_article(id_playlist, article_no) VALUES(?, ?)", array( $playlist->getId(), $a->getId()));
+//                    $em->persist($article);
                 }
             }
-            $em->flush();
+// TODO doctrine persister not working
+//            $em->flush();
             $em->getConnection()->commit();
         }
         catch (\Exception $e)
         {
             $em->getConnection()->rollback();
             $em->close();
-            return false;
+            return $e;
         }
         return $playlist;
     }
