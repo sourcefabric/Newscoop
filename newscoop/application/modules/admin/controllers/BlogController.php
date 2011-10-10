@@ -41,6 +41,7 @@ class Admin_BlogController extends Zend_Controller_Action
 
         if (empty($section)) {
             $this->_forward('nosection');
+            return;
         }
 
         $request = $this->getRequest();

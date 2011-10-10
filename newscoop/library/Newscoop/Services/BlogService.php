@@ -21,12 +21,24 @@ class BlogService
 
     /** @var array */
     private $getArticleActions = array(
-        'edit.php', 'do_article_action.php', 'preview.php', 'locations', 'images', 'topics', 'files',
+        'edit.php',
+        'do_article_action.php',
+        'preview.php',
+        'locations',
+        'images',
+        'topics',
+        'files',
+        'comments',
+        'autopublish.php',
     );
 
     /** @var array */
     private $postArticleActions = array(
-        'images', 'topics', 'files',
+        'images',
+        'topics',
+        'files',
+        'comments',
+        'autopublish_do_add.php',
     );
 
     /**

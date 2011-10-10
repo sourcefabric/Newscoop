@@ -127,6 +127,11 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 	</SELECT>
 	</TD>
 </TR>
+<?php
+$user = \Zend_Registry::get('container')->getService('user')->getCurrentUser();
+$blogService = \Zend_Registry::get('container')->getService('blog');
+if (!$blogService->isBlogger($user)) {
+?>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Front page"); ?>:</TD>
 	<TD>
@@ -147,6 +152,7 @@ if ($articleObj->getWorkflowStatus() != 'N') {
 	</SELECT>
 	</TD>
 </TR>
+<?php } ?>
 <TR>
 	<TD COLSPAN="2" align="center">
 	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
