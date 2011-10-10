@@ -19,6 +19,16 @@ class BlogService
     /** @var array */
     private $config = array();
 
+    /** @var array */
+    private $getArticleActions = array(
+        'edit.php', 'do_article_action.php', 'preview.php', 'locations', 'images', 'topics', 'files',
+    );
+
+    /** @var array */
+    private $postArticleActions = array(
+        'images', 'topics', 'files',
+    );
+
     /**
      * @param array $config
      */
@@ -115,7 +125,11 @@ class BlogService
             return TRUE;
         }
 
-        if ($request->getParam('controller') == 'articles' && in_array($request->getParam('action'), array('edit.php', 'do_article_action.php', 'preview.php', 'locations')) && isset($user)) {
+        if ($request->isPost() && $request->getParam('controller') == 'articles' && in_array($request->getParam('action'), $this->postArticleActions)) {
+            return TRUE;
+        }
+
+        if ($request->isGet() && $request->getParam('controller') == 'articles' && in_array($request->getParam('action'), $this->getArticleActions) && isset($user)) {
             $section = $this->getSection($user);
             if ($section->getSectionNumber() == $request->getParam('f_section_number')
                 && $section->getPublicationId() == $request->getParam('f_publication_id')
