@@ -3025,7 +3025,7 @@ CREATE TABLE IF NOT EXISTS `ingest_feed` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
-INSERT INTO `ingest_feed` (`title`) VALUES ('SDA');
+INSERT INTO `ingest_feed` (`title`) VALUES ('SDA'),('swissinfo');
 
 DROP TABLE IF EXISTS `ingest_feed_entry`;
 CREATE TABLE IF NOT EXISTS `ingest_feed_entry` (

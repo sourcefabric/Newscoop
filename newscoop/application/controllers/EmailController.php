@@ -21,6 +21,10 @@ class EmailController extends Zend_Controller_Action
 
         $server = $this->getRequest()->getServer();
         $this->view->publication = $server['SERVER_NAME'];
+
+        $this->_helper->contextSwitch()
+            ->addActionContext('comment-notify', 'xml')
+            ->initContext();
     }
 
     public function confirmAction()
@@ -36,7 +40,27 @@ class EmailController extends Zend_Controller_Action
         }
 
         $article = $this->_getParam('article');
+
+        $this->view->articleLink = $this->getArticleLink($article);
         $this->view->article = new \MetaArticle($article->getLanguageId(), $article->getArticleNumber());
         $this->view->comment = $this->_getParam('comment');
+    }
+
+    private function getArticleLink(Article $article)
+    {
+        $params = array(
+            'f_publication_id' => $article->getPublicationId(),
+            'f_issue_number' => $article->getIssueNumber(),
+            'f_section_number' => $article->getSectionNumber(),
+            'f_article_number' => $article->getArticleNumber(),
+            'f_language_id' => $article->getLanguageId(),
+            'f_language_selected' => $article->getLanguageId(),
+        );
+
+        $queryString = implode('&', array_map(function($property) use ($params) {
+            return $property . '=' . $params[$property];
+        }, array_keys($params)));
+
+        return $this->view->baseUrl("/admin/articles/edit.php?$queryString");
     }
 }
