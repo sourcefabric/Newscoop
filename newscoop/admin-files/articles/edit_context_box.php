@@ -1,3 +1,4 @@
+<?php if (empty($userIsBlogger)) { ?>
 <div class="articlebox" title="<?php putGS('Related Articles'); ?>"><div>
 <div id="context_box">
     <div id="contextBoxArticlesList" style="display:block; padding-bottom:8px;">
@@ -8,3 +9,4 @@
         <span class="ui-icon ui-icon-pencil"></span><?php putGS('Edit'); ?></a>
 </div>
 </div></div>
+<?php } ?>
