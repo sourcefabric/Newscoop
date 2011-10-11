@@ -3,6 +3,7 @@
  * event import configurations
  */
 
+/*
 if (!function_exists('newsimport_getSwissRegions')) {
 
     function newsimport_getSwissRegions() {
@@ -20,17 +21,22 @@ if (!function_exists('newsimport_getSwissRegions')) {
     }
 
 }
+*/
 
 if (!function_exists('newsimport_getBaselRegions')) {
 
     function newsimport_getBaselRegions() {
         return array(
-    '4xxx', // Region Basel
+    'basel_region',
+    'basel_stadt',
+    'basel_landschaft',
+    //'4xxx', // Region Basel
         );
     }
 
 }
 
+/*
 if (!function_exists('newsimport_getBaselTowns')) {
 
     function newsimport_getBaselTowns() {
@@ -126,6 +132,7 @@ if (!function_exists('newsimport_getBaselTowns')) {
     }
 
 }
+*/
 
 $event_data_cancel = array(
     'events_1' => array(
@@ -149,7 +156,7 @@ $event_data_limits = array(
     ),
     'movies_1' => array(
         'categories' => array(
-            '*' => array('regions' => newsimport_getSwissRegions()),
+            //'*' => array('regions' => newsimport_getSwissRegions()),
             //'*' => array('regions' => newsimport_getBaselRegions()),
         ),
         'dates' => array(

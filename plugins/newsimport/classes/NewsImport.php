@@ -189,9 +189,7 @@ class NewsImport
         if (empty($p_loadSpec)) {
             $p_loadSpec = array();
         }
-//var_dump("to cli");
         self::LoadInit();
-//var_dump("0.1");
 
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'Topic.php');
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'TopicName.php');
@@ -199,33 +197,28 @@ class NewsImport
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'Article.php');
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'Issue.php');
         require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'Log.php');
-//var_dump("1.1");
 
         $conf_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'include';
         $class_dir = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'plugins'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'classes';
         require($conf_dir.DIR_SEP.'default_topics.php');
         require($conf_dir.DIR_SEP.'default_limits.php');
-//var_dump("2.1");
 
         $feed_conf_path = $GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'conf'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'news_feeds_conf.php';
         if (!is_file($feed_conf_path)) {
             $feed_conf_path = $conf_dir.DIR_SEP.'news_feeds_conf_inst.php';
         }
         require($feed_conf_path);
-//var_dump("3.1");
 
         require_once($class_dir.DIR_SEP.'RegionInfo.php');
         require_once($class_dir.DIR_SEP.'EventImage.php');
 
         // take the category topics, as array by [language][category] of [name,id]
         $cat_topics = self::ReadEventTopics($newsimport_default_cat_names);
-//var_dump("4.1");
 
         $news_feed = null;
         if (array_key_exists('newsfeed', $p_loadSpec)) {
             $news_feed = $p_loadSpec['newsfeed'];
         }
-//var_dump("5.1");
 
         $events_limit = 0;
         $events_skip = 0;
@@ -245,7 +238,6 @@ class NewsImport
                 $events_prune = true;
             }
         }
-//var_dump("7.1");
 
         $params_other = array(
             'skip' => $events_skip,
@@ -253,17 +245,9 @@ class NewsImport
             'pruning' => $events_prune,
         );
 
-//var_dump($news_feed);
-//var_dump($p_loadSpec);
-//var_dump($params_other);
-//return;
-
-//var_dump("8.1");
-
         set_time_limit(0);
         //ob_end_flush();
         //flush();
-//var_dump('to load');
         $msg = self::LoadEventData($event_data_sources, $news_feed, $cat_topics, $event_data_limits, $event_data_cancel, $params_other);
         return $msg;
     } // fn ProcessImportCli
@@ -400,7 +384,7 @@ class NewsImport
             $article = null;
             $article_new = false;
 
-            //First, try to load event (possibly created by former imports), and if there, remove it - will be put in with the current, possible more correct info.
+            //First, try to load event (possibly created by former imports), and if there, remove it - will be put in with the current, possibly more correct info.
             $p_count = 0;
             $event_art_list = Article::GetList(array(
                 new ComparisonOperation('idlanguage', new Operator('is', 'sql'), $art_lang),
@@ -473,6 +457,7 @@ class NewsImport
             $article_data->setProperty('Ftown', $one_event['town']);
             $article_data->setProperty('Fstreet', $one_event['street']);
 
+/*
             $e_region = '';
             if (isset($one_event['region'])) {
                 $e_region = $one_event['region'];
@@ -483,6 +468,7 @@ class NewsImport
                 $e_subregion = $one_event['subregion'];
             }
             $article_data->setProperty('Fsubregion', $e_subregion);
+*/
 
             $article_data->setProperty('Fdate', $one_event['date']);
             //$article_data->setProperty('Fdate_year', $one_event['date_year']);
@@ -492,6 +478,7 @@ class NewsImport
 
             $article_data->setProperty('Fdate_time_text', $one_event['date_time_text']);
 
+/*
             if ($scr_type == $art_type) {
                 $e_date_time_tree = '';
                 if (isset($one_event['date_time_tree'])) {
@@ -499,6 +486,7 @@ class NewsImport
                 }
                 $article_data->setProperty('Fdate_time_tree', $e_date_time_tree);
             }
+*/
 
             $article_data->setProperty('Fweb', $one_event['web']);
             $article_data->setProperty('Femail', $one_event['email']);
@@ -867,9 +855,13 @@ class NewsImport
         $class_dir = $plugin_dir.DIRECTORY_SEPARATOR.'classes';
         $incl_dir = $plugin_dir.DIRECTORY_SEPARATOR.'include';
         require_once($class_dir.DIRECTORY_SEPARATOR.'NewsImportEnv.php');
+        require_once($class_dir.DIRECTORY_SEPARATOR.'RegionInfo.php');
         require_once($class_dir.DIRECTORY_SEPARATOR.'EventParser.php');
         require_once($class_dir.DIRECTORY_SEPARATOR.'KinoParser.php');
         require($incl_dir.DIRECTORY_SEPARATOR.'default_spool.php');
+
+        $region_info = new RegionInfo();
+        $region_topics = $p_catTopics['regions'];
 
         if ( (!function_exists('plugin_newsimport_create_event_type')) && (!function_exists('plugin_newsimport_make_dirs')) ) {
             require($plugin_dir.DIRECTORY_SEPARATOR.'newsimport.info.php');
@@ -1001,9 +993,13 @@ class NewsImport
                 $ev_skip = $p_otherParams['skip'];
             }
 
+            $region_topics_lang = null;
+            if (isset($region_topics[$one_source['language_id']])) {
+                $region_topics_lang = $region_topics[$one_source['language_id']];
+            }
             if (empty($ev_skip)) {
                 // shoud we process something (new)
-                $res = $parser_obj->prepare($categories, $limits, $cancels, $import_env);
+                $res = $parser_obj->prepare($categories, $limits, $cancels, $import_env, $region_info, $region_topics_lang);
                 if (!$res) {
                     continue;
                 }

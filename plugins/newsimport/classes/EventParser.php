@@ -41,6 +41,9 @@ class EventData_Parser {
      */
     var $m_saved_parts = array('dif' => 'gen_dif', 'all' => 'gen_set');
 
+    //var $m_regionInfo = array();
+    //var $m_regionTopics = array();
+
 	/**
 	 * constructor
 	 * @param array $p_source
@@ -63,7 +66,10 @@ class EventData_Parser {
 	 *
 	 * @return bool
 	 */
-    public function prepare($p_categories, $p_limits, $p_cancels, $p_env) {
+    public function prepare($p_categories, $p_limits, $p_cancels, $p_env, $p_regionObj, $p_regionTopics) {
+        //$this->m_regionInfo = $p_regionObj;
+        //$this->m_regionTopics = $p_regionTopics;
+
         // we need that conf info
         if ((!isset($this->m_dirs['source'])) || (!isset($this->m_dirs['source']['events']))) {
             return false;
@@ -120,7 +126,7 @@ class EventData_Parser {
             catch (Exception $exc) {}
 
             $events_last = $this->load(true);
-            $parser = new EventData_Parser_SimpleXML($events_last);
+            $parser = new EventData_Parser_SimpleXML($events_last, $p_regionObj, $p_regionTopics);
 
             $lim_span_past = null;
             $lim_span_next = null;
@@ -357,15 +363,28 @@ class EventData_Parser_SimpleXML {
      */
     var $m_last_events = null;
 
+    var $m_region_info = array();
+    var $m_region_topics = array();
+
     /**
      * Takes auxiliary data (possibly) used at other work
      *
      * @param string $p_lastEvents
      * @return void
      */
-    public function __construct($p_lastEvents = null)
+    public function __construct($p_lastEvents = null, $p_regionInfo = null, $p_regionTopics = null)
     {
         $this->m_last_events = $p_lastEvents;
+
+        if (empty($p_regionObj)) {
+            $p_regionObj = array();
+        }
+        if (empty($p_regionTopics)) {
+            $p_regionTopics = array();
+        }
+        $this->m_region_info = $p_regionInfo;
+        $this->m_region_topics = $p_regionTopics;
+
     } // fn __construct
 
     /**
@@ -494,6 +513,12 @@ class EventData_Parser_SimpleXML {
                 }
                 $event_info['canceled'] = $e_canceled;
 
+                $e_important = false;
+                $x_evehig = trim('' . $event->evehig);
+                if ('1' == $x_evehig) {
+                    $e_important = true;
+                }
+
                 // Date, time - first here, for possible omiting passed events
 
                 // * main date-time info
@@ -554,6 +579,7 @@ class EventData_Parser_SimpleXML {
                 // region info
                 $e_region = '';
                 $e_subregion = '';
+/*
                 $e_region_info = RegionInfo::ZipRegion($event_info['zipcode'], $event_info['country']);
                 if (!empty($e_region_info)) {
                     if (isset($e_region_info['region'])) {
@@ -563,8 +589,19 @@ class EventData_Parser_SimpleXML {
                         $e_subregion = $e_region_info['subregion'];
                     }
                 }
+*/
                 $event_info['region'] = $e_region;
                 $event_info['subregion'] = $e_subregion;
+
+                $topics_regions = array();
+                $loc_regions = $this->m_region_info->ZipRegions($one_screen['kino_zip'], $kino_country);
+                foreach ($loc_regions as $region_name) {
+                    if (isset($this->m_region_topics[$region_name])) {
+                        $cur_reg_top = $this->m_region_topics[$region_name];
+                        $cur_reg_top['key'] = $region_name;
+                        $topics_regions[] = $cur_reg_top;
+                    }
+                }
 
                 // street address, free form, but usually 'street_name house_number'
                 $x_locadr = trim('' . $event_location->locadr);
@@ -593,15 +630,30 @@ class EventData_Parser_SimpleXML {
 
                     $one_cat_skip = false;
                     $one_cat_key = $one_category['key'];
-                    foreach ($p_catLimits as $cat_lim_key => $cat_lim_spec) {
+                    foreach ($p_catLimits as $cat_lim_key => $cat_lim_spec) { // not taking some events
+                        if ($e_important) { // taking all the important events
+                            break;
+                        }
+
                         if ($cat_lim_key != $one_cat_key) {
                             continue;
                         }
-                        if (array_key_exists('regions', $cat_lim_spec)) {
-                            if (!in_array($event_info['region'], $cat_lim_spec['regions'])) {
-                                $one_cat_skip = true;
+                        if (array_key_exists('regions', $cat_lim_spec)) { // limiting by regions vs. categories
+                            $one_cat_skip = true;
+                            foreach ($topics_regions as $one_reg_top) {
+                                $one_lim_key = $one_reg_top['key']; // keys of the regions that the current location belongs to
+                                if (in_array($one_lim_key, $cat_lim_spec['regions'])) {
+                                    $one_cat_skip = falsee;
+                                    break;
+                                }
+                            }
+
+                            //if (!in_array($event_info['region'], $cat_lim_spec['regions'])) {
+                            if ($one_cat_skip) {
+                                //$one_cat_skip = true;
                                 break;
                             }
+
                         }
                     }
 
@@ -638,6 +690,9 @@ class EventData_Parser_SimpleXML {
                     continue;
                 }
 
+                foreach ($topics_regions as $one_regtopic) {
+                    $event_topics[] = $one_regtopic;
+                }
                 $event_info['topics'] = $event_topics;
 
                 // Location

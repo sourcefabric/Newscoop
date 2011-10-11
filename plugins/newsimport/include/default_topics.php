@@ -47,3 +47,35 @@ $newsimport_default_cat_names['movie'] = array(
     'western' => array(1 => 'Western Movie', 5 => 'Western Film',),
     'other' => array(1 => 'Other Movie', 5 => 'Anderer Film'),
 );
+
+$newsimport_default_cat_names['regions'] = array(
+    // do not change keys; num ids are for topic names by language
+    'region' => array(1 => 'Region', 5 => 'Region',), // the root of cinema topics
+    'basel_region' => array(1 => 'Region Basel', 5 => 'Region Basel',),
+    'basel_stadt' => array(1 => 'Basel-Stadt', 5 => 'Basel-Stadt',),
+    'basel_landschaft' => array(1 => 'Basel-Landschaft', 5 => 'Basel-Landschaft',),
+    'aargau' => array(1 => 'Aargau', 5 => 'Aargau',),
+    'appenzell_ausserrhoden' => array(1 => 'Appenzell Ausserrhoden', 5 => 'Appenzell Ausserrhoden',),
+    'appenzell_innerrhoden' => array(1 => 'Appenzell Innerrhoden', 5 => 'Appenzell Innerrhoden',),
+    'bern' => array(1 => 'Bern', 5 => 'Bern',),
+    'freiburg' => array(1 => 'Freiburg', 5 => 'Freiburg',),
+    'genf' => array(1 => 'Genf', 5 => 'Genf',),
+    'glarus' => array(1 => 'Glarus', 5 => 'Glarus',),
+    'graubuenden' => array(1 => 'Graubünden', 5 => 'Graubünden',),
+    'jura' => array(1 => 'Jura', 5 => 'Jura',),
+    'luzern' => array(1 => 'Luzern', 5 => 'Luzern',),
+    'neuenburg' => array(1 => 'Neuenburg', 5 => 'Neuenburg',),
+    'nidwalden' => array(1 => 'Nidwalden', 5 => 'Nidwalden',),
+    'obwalden' => array(1 => 'Obwalden', 5 => 'Obwalden',),
+    'schaffhausen' => array(1 => 'Schaffhausen', 5 => 'Schaffhausen',),
+    'schwyz' => array(1 => 'Schwyz', 5 => 'Schwyz',),
+    'solothurn' => array(1 => 'Solothurn', 5 => 'Solothurn',),
+    'st_gallen' => array(1 => 'St. Gallen', 5 => 'St. Gallen',),
+    'tessin' => array(1 => 'Tessin', 5 => 'Tessin',),
+    'thurgau' => array(1 => 'Thurgau', 5 => 'Thurgau',),
+    'uri' => array(1 => 'Uri', 5 => 'Uri',),
+    'waadt' => array(1 => 'Waadt', 5 => 'Waadt',),
+    'wallis' => array(1 => 'Wallis', 5 => 'Wallis',),
+    'zug' => array(1 => 'Zug', 5 => 'Zug',),
+    'zuerich' => array(1 => 'Zürich', 5 => 'Zürich',),
+);

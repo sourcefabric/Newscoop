@@ -35,6 +35,10 @@ class KinoData_Parser {
      */
     var $m_saved_parts = array('dif' => 'cin_dif', 'all' => 'cin_set');
 
+    //var $m_regionInfo = array();
+    //var $m_regionTopics = array();
+
+
     /**
      * constructor
      * @param array $p_source
@@ -97,8 +101,11 @@ class KinoData_Parser {
 	 *
 	 * @return bool
 	 */
-    public function prepare($p_categories, $p_limits, $p_cancels, $p_env)
+    public function prepare($p_categories, $p_limits, $p_cancels, $p_env, $p_regionObj, $p_regionTopics)
     {
+        //$this->m_regionInfo = $p_regionObj;
+        //$this->m_regionTopics = $p_regionTopics;
+
         // we need that conf info
         if ((!isset($this->m_dirs['source'])) || (!isset($this->m_dirs['source']['programs']))) {
             return false;
@@ -121,7 +128,7 @@ class KinoData_Parser {
             }
         }
 
-        $parser = new KinoData_Parser_SimpleXML();
+        $parser = new KinoData_Parser_SimpleXML($p_regionObj, $p_regionTopics);
 
         $movies_dir = $this->m_dirs['old'];
         if ( isset($p_env['cache_dir']) && (!empty($p_env['cache_dir'])) ) {
@@ -489,6 +496,15 @@ class KinoData_Parser_SimpleXML {
      */
     var $m_poster_spec = 'artw';
 
+    var $m_region_info = array();
+    var $m_region_topics = array();
+
+    public function __construct($p_regionInfo, $p_regionTopics)
+    {
+        $this->m_region_info = $p_regionInfo;
+        $this->m_region_topics = $p_regionTopics;
+    }
+
     /**
      * Setter of the last used data dosis
      *
@@ -629,7 +645,11 @@ class KinoData_Parser_SimpleXML {
         // movies general info
         $mov_infos_parts = array('imdb' => 'movimb', 'spec' => 'movspc', 'key' => 'movkey', 'title' => 'movtit', 'directed' => 'movdir', 'url' => 'movlnk', 'trailer' => 'movtra',);
         foreach($movies_infos_files as $one_mov_file) {
-            $one_mov_xml = simplexml_load_file($one_mov_file);
+            $orig_file_data = file_get_contents($one_mov_file);
+            $conv_file_data = str_replace(array('&'), array('&amp;'), $orig_file_data);
+            unset($orig_file_data);
+            $one_mov_xml = simplexml_load_string($conv_file_data);
+            //$one_mov_xml = simplexml_load_file($one_mov_file);
             foreach ($one_mov_xml->movie as $one_movie) {
                 $one_mov_id = trim('' . $one_movie->movid);
                 if (empty($one_mov_id)) {
@@ -666,7 +686,11 @@ class KinoData_Parser_SimpleXML {
 
         // movies genres info
         foreach($movies_genres_files as $one_mov_file) {
-            $one_mov_xml = simplexml_load_file($one_mov_file);
+            $orig_file_data = file_get_contents($one_mov_file);
+            $conv_file_data = str_replace(array('&'), array('&amp;'), $orig_file_data);
+            unset($orig_file_data);
+            $one_mov_xml = simplexml_load_string($conv_file_data);
+            //$one_mov_xml = simplexml_load_file($one_mov_file);
             foreach ($one_mov_xml->genre as $one_genre) {
                 $one_gen_id = trim('' . $one_genre->genid);
                 if (empty($one_gen_id)) {
@@ -723,7 +747,11 @@ class KinoData_Parser_SimpleXML {
 
         // movies links info
         foreach($movies_links_files as $one_lnk_file) {
-            $one_lnk_xml = simplexml_load_file($one_lnk_file);
+            $orig_file_data = file_get_contents($one_lnk_file);
+            $conv_file_data = str_replace(array('&'), array('&amp;'), $orig_file_data);
+            unset($orig_file_data);
+            $one_lnk_xml = simplexml_load_string($conv_file_data);
+            //$one_lnk_xml = simplexml_load_file($one_lnk_file);
             foreach ($one_lnk_xml->movie as $one_movie) {
                 $one_mov_id = trim('' . $one_movie->m_movid);
                 if (empty($one_mov_id)) {
@@ -879,8 +907,11 @@ class KinoData_Parser_SimpleXML {
 
         $other_desc_parts = array('weewee', 'weelea', 'weetxs');
         foreach ($kinos_infos_files as $one_kino_file) {
-            $one_kino_xml = simplexml_load_file($one_kino_file);
-
+            $orig_file_data = file_get_contents($one_kino_file);
+            $conv_file_data = str_replace(array('&'), array('&amp;'), $orig_file_data);
+            unset($orig_file_data);
+            $one_kino_xml = simplexml_load_string($conv_file_data);
+            //$one_kino_xml = simplexml_load_file($one_kino_file);
             $export_start_date = '0000-00-00';
             $export_start_date_time = explode('-', trim('' . $one_kino_xml->export->date_min));
             $export_start_date_info = explode('.', $export_start_date_time[0]);
@@ -1035,6 +1066,28 @@ class KinoData_Parser_SimpleXML {
         return $movies_infos;
     } // fn loadMoviesByKeys
 
+    private function formatDateText($p_dateTimes)
+    {
+        $screens = '';
+
+        $line_sep = "\n<br />\n";
+        $field_sep = ':';
+
+        foreach ($p_dateTimes as $cur_date => $cur_screenings) {
+            $screens .= $cur_date . $line_sep;
+            foreach ($cur_screenings as $one_scr) {
+                $one_time = (isset($one_scr['time']) ? ('' . $one_scr['time']) : '');
+                $one_lang = (isset($one_scr['lang']) ? ('' . $one_scr['lang']) : '');
+                $one_flag = (isset($one_scr['flag']) ? ('' . $one_scr['flag']) : '');
+                $screens .= $one_time . $field_sep . $one_lang . $field_sep . $one_flag . $line_sep;
+            }
+            $screens .= $line_sep;
+        }
+
+        return $screens;
+    }
+
+
     /**
      * Puts together info on movie events
      *
@@ -1082,6 +1135,7 @@ class KinoData_Parser_SimpleXML {
         //$set_date_times = array();
 
         foreach ($movies_screens as $one_screen) {
+            // TODO: put it as a (full) week start of date/time screen listing (lists per days)
             $set_date = $one_screen['start_date'];
             $set_date_obj = new DateTime($set_date);
             $set_date_times = array($set_date => array());
@@ -1089,10 +1143,13 @@ class KinoData_Parser_SimpleXML {
                 $set_date_obj->add(new DateInterval('P1D'));
                 $set_date_times[$set_date_obj->format('Y-m-d')] = array();
             }
+
             // region info
             $e_region = '';
             $e_subregion = '';
+/*
             $e_region_info = RegionInfo::ZipRegion($one_screen['kino_zip'], $kino_country);
+
             if (!empty($e_region_info)) {
                 if (isset($e_region_info['region'])) {
                     $e_region = $e_region_info['region'];
@@ -1105,6 +1162,17 @@ class KinoData_Parser_SimpleXML {
             if (isset($p_catLimits['*']) && isset($p_catLimits['*']['regions'])) {
                 if (!in_array($e_region, $p_catLimits['*']['regions'])) {
                     continue;
+                }
+            }
+*/
+
+            $topics_regions = array();
+            $loc_regions = $this->m_region_info->ZipRegions($one_screen['kino_zip'], $kino_country);
+            foreach ($loc_regions as $region_name) {
+                if (isset($this->m_region_topics[$region_name])) {
+                    $cur_reg_top = $this->m_region_topics[$region_name];
+                    $cur_reg_top['key'] = $region_name;
+                    $topics_regions[] = $cur_reg_top;
                 }
             }
 
@@ -1219,6 +1287,11 @@ class KinoData_Parser_SimpleXML {
                 }
             }
 */
+
+            foreach ($topics_regions as $one_regtopic) {
+                $event_topics[] = $one_regtopic;
+            }
+
             $one_mov_genre = '';
             $one_mov_desc = '';
             $one_mov_images = array();
@@ -1277,9 +1350,6 @@ class KinoData_Parser_SimpleXML {
                 //}
                 if (!isset($set_date_times[$one_date])) {
                     $set_date_times[$one_date] = array(); // this shall not occur
-                    //var_dump('wtf!!!');
-                    //var_dump($one_date);
-                    //var_dump($set_date_times[$one_date]);
                 }
 
                 foreach ($one_times as $one_screen_info) {
@@ -1292,54 +1362,20 @@ class KinoData_Parser_SimpleXML {
             //$one_event['date_time_tree'] = json_encode($one_event_screen);
             //$one_event['date_time_text'] = json_encode($one_event_screen);
             $one_event['date_time_tree'] = json_encode($set_date_times);
-            $one_event['date_time_text'] = json_encode($set_date_times);
+            $one_event['date_time_text'] = $this->formatDateText($set_date_times);
+
+
 /*
 yyyy-mm-dd
-hh.mm/langs/flags
-hh.mm/langs/flags
+hh.mm:langs:flags
+hh.mm:langs:flags
 ....
 yyyy-mm-dd
 ....
 yyyy-mm-dd
-hh.mm/langs/flags
-hh.mm/langs/flags
+hh.mm:langs:flags
+hh.mm:langs:flags
 ....
-
-function = parse_date_text ($date_time_text)
-{
-$dates = array();
-$cur_date = null;
-foreach (explode("\n", $date_time_text) as $one_date_time_str) {
-    $one_date_str = trim($one_date_str);
-    if (empty($one_date_str)) {
-        continue;
-    }
-
-    $matches = array();
-    if (preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $one_date_time_str, $matches)) {
-        // new date
-        $cur_date = $one_date_time_str;
-        $dates[$cur_date] = array();
-        continue;
-    }
-
-    if (null === $cur_date) {
-        continue; // this should not occur
-    }
-
-    $time_info = explode('/', $one_date_time_str);
-    $time_info_size = count($time_info);
-
-    $time_str = $time_info[0];
-    $lang_str = ((2 <= $time_info_size) ? $time_info[1] : '');
-    $flag_str = ((3 <= $time_info_size) ? $time_info[2] : '');
-
-    $dates[$cur_date][] = array('time' => $time_str, 'lang' => $lang_str, 'flag' => $flag_str);
-
-}
-
-}
-
 */
             //foreach ($one_screen['dates'] as $one_date => $one_times) {
             //}
