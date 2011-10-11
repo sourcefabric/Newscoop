@@ -285,6 +285,10 @@ $('#locations_box a.iframe').each(function() {
 
 });
 
+$('#topic_box_frame a.iframe').each(function() {
+    $(this).data('fancybox').width = 700;
+});
+
 $("#context_box a.iframe").fancybox({
 	'showCloseButton' : false,
     'width': 1150,
