@@ -200,7 +200,7 @@ class Admin_ThemesController extends Zend_Controller_Action
         $datatableAdapter = new Theme( $this->getThemeService() );
         // really wierd way to bind some filtering logic right here
         // basically this is the column index we are going to look for filtering requests
-        $datatableAdapter->setPublicationFilterColumn(4);
+        $datatableAdapter->setPublicationFilterColumn(0);
 
         $datatable = $this->_helper->genericDatatable;
         /* @var $datatable Action_Helper_GenericDatatable */
