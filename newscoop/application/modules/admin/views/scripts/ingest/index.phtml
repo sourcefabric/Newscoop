@@ -2,19 +2,26 @@
 
 <div class="ingest"><div class="control"><div class="w">
 
-<dl class="mode">
-    <dt><?php putGS('Publish Mode'); ?></dt>
-    <dd class="<?php echo $this->auto_mode ? 'auto' : 'manual'; ?>">
-        <a href="<?php echo $this->url(array(
-            'action' => 'switch-mode',
-        )); ?>" title="Switch mode"><?php echo $this->auto_mode ? getGS('Automatic') : getGS('Manual'); ?></a>
-    </dd>
-</dl>
-    
 <h2><?php putGS('Feeds'); ?></h2>
 <ul class="feeds">
+    <li><a href="<?php echo $this->url(array(
+            'action' => 'index',
+            'feed' => null
+        )); ?>" title="Switch feed"><?php echo getGS('All'); ?></a>
+    </li>
     <?php foreach ($this->feeds as $feed) { ?>
-    <li><?php echo $feed->getTitle(); ?> (<?php putGS('updated'); ?> <?php echo $feed->getUpdated() ? $feed->getUpdated()->format('H:i') : getGS('Never'); ?>)</li>
+    <li><a href="<?php echo $this->url(array(
+            'action' => 'index',
+            'feed' => $feed->getId(),
+        )); ?>" title="Switch feed"><?php echo $feed->getTitle(); ?></a>
+        (<?php putGS('updated'); ?> <?php echo $feed->getUpdated() ? $feed->getUpdated()->format('H:i') : getGS('Never'); ?>)
+    </li>
+    <li>
+        <a href="<?php echo $this->url(array(
+            'action' => 'switch-mode',
+            'feed' => $feed->getId(),
+        )); ?>" title="Switch mode"><?php echo $feed->getMode() === "auto" ? getGS('Automatic') : getGS('Manual'); ?></a>
+    </li>
     <?php } ?>
 </ul>
 

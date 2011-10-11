@@ -78,14 +78,6 @@ class IngestServiceTest extends \RepositoryTestCase
         $this->assertEquals($entry, $this->service->find($entry->getId()));
     }
 
-    public function testAutoMode()
-    {
-        $this->setAutoMode();
-        $this->assertTrue($this->service->isAutoMode());
-        $this->service->switchAutoMode();
-        $this->assertFalse($this->service->isAutoMode());
-    }
-
     public function testPublish()
     {
         $entry = new Entry('title', 'content');
@@ -107,19 +99,19 @@ class IngestServiceTest extends \RepositoryTestCase
         $this->assertTrue($entry->isPublished());
     }
 
-    public function testUpdateAllEmpty()
+    public function testUpdateSDAEmpty()
     {
-        $this->service->updateAll();
+        $this->service->updateSDA();
         $this->assertEquals(0, count($this->service->getFeeds()));
     }
 
-    public function testUpdateAll()
+    public function testUpdateSDA()
     {
         $feed = new Feed('sda');
         $this->service->addFeed($feed);
         $this->assertEquals(0, count($feed->getEntries()));
 
-        $this->service->updateAll();
+        $this->service->updateSDA();
 
         $this->assertEquals(6, count($feed->getEntries()));
         $this->assertInstanceOf('DateTime', $feed->getUpdated());
@@ -216,15 +208,5 @@ class IngestServiceTest extends \RepositoryTestCase
         }
 
         return Entry::create($parser);
-    }
-
-    /**
-     * Set auto mode
-     *
-     * @param bool $auto
-     */
-    private function setAutoMode($auto = true)
-    {
-        \SystemPref::Set(IngestService::MODE_SETTING, $auto);
     }
 }
