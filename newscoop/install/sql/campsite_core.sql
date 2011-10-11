@@ -3021,6 +3021,7 @@ DROP TABLE IF EXISTS `ingest_feed`;
 CREATE TABLE IF NOT EXISTS `ingest_feed` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `title` varchar(255) NOT NULL,
+  `mode` varchar(25) DEFAULT 'manual',
   `updated` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
