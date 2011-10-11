@@ -78,6 +78,18 @@ class UserService
     }
 
     /**
+     * Find one by given criteria
+     *
+     * @param array $criteria
+     * @return Newscoop\Entity\User
+     */
+    public function findOneBy(array $criteria)
+    {
+        return $this->getRepository()
+            ->findOneBy($criteria);
+    }
+
+    /**
      * Save user
      *
      * @param array $data

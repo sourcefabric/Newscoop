@@ -68,4 +68,25 @@ class UserTokenService
         $now = new \DateTime();
         return $now->sub(new \DateInterval(self::TOKEN_LIFETIME))->getTimestamp() < $userToken->getCreated()->getTimestamp();
     }
+
+    /**
+     * Invalidate token
+     *
+     * @param Newscoop\Entity\User $user
+     * @param string $action
+     * @return void
+     */
+    public function invalidateTokens(User $user, $action = 'any')
+    {
+        $tokens = $this->em->getRepository('Newscoop\Entity\UserToken')->findBy(array(
+            'user' => $user->getId(),
+            'action' => $action,
+        ));
+
+        foreach ($tokens as $token) {
+            $this->em->remove($token);
+        }
+
+        $this->em->flush();
+    }
 }

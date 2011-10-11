@@ -37,7 +37,7 @@
     });
     </script>
   <?php } ?>
-    <div class="frame">
+    <div class="frame" id="topic_box_frame">
     <?php if ($inEditMode && $g_user->hasPermission('AttachTopicToArticle')) { ?>
       <a class="iframe ui-state-default icon-button right-floated"
       href="<?php echo camp_html_article_url($articleObj, $f_language_id, "topics/popup.php"); ?>"><span

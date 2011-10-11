@@ -91,4 +91,60 @@ class AuthController extends Zend_Controller_Action
             ));
         }
     }
+
+    public function passwordRestoreAction()
+    {
+        $form = new Application_Form_PasswordRestore();
+
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $user = $this->_helper->service('user')->findOneBy(array(
+                'email' => $form->email->getValue(),
+            ));
+
+            if (!empty($user) && $user->isActive()) {
+                $this->_helper->service('email')->sendPasswordRestoreToken($user);
+                $this->_helper->flashMessenger($this->view->translate("E-mail with instructions was sent to given email address."));
+                $this->_helper->redirector('index', 'index');
+            }
+        }
+
+        $this->view->form = $form;
+    }
+
+    public function passwordRestoreFinishAction()
+    {
+        $user = $this->_helper->service('user')->find($this->_getParam('user'));
+        if (empty($user)) {
+            $this->_helper->flashMessenger(array('error', $this->view->translate('User not found.')));
+            $this->_helper->redirector('index', 'index', 'default');
+        }
+
+        if (!$user->isActive()) {
+            $this->_helper->flashMessenger(array('error', $this->view->translate('User is not active user.')));
+            $this->_helper->redirector('index', 'index', 'default');
+        }
+
+        $token = $this->_getParam('token', false);
+        if (!$token) {
+            $this->_helper->flashMessenger(array('error', $this->view->translate('No token provided.')));
+            $this->_helper->redirector('index', 'index', 'default');
+        }
+
+        if (!$this->_helper->service('user.token')->checkToken($user, $token, 'password.restore')) {
+            $this->_helper->flashMessenger(array('error', $this->view->translate('Invalid token.')));
+            $this->_helper->redirector('index', 'index', 'default');
+        }
+
+        $form = new Application_Form_PasswordRestorePassword();
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $this->_helper->service('user')->save($form->getValues(), $user);
+            $this->_helper->service('user.token')->invalidateTokens($user, 'password.restore');
+            $this->_helper->flashMessenger($this->view->translate("Password changed"));
+            $this->_helper->redirector('index', 'auth');
+        }
+
+        $this->view->form = $form;
+    }
 }
