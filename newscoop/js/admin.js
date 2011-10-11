@@ -127,6 +127,12 @@ $(function() {
         });
         $('> a', 'ul.tree li.match').text('-');
     });
+    
+    //show all topics 
+    $('#show_all_topics').click(function(){
+    	$('input[name=search].topics').val('');
+    	$('input[name=search].topics').change();
+    });
 
     // set date pickers
     $('input.date, input.datetime').each(function() {

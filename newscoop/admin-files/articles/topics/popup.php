@@ -48,7 +48,8 @@ foreach ($articleTopics as $topic) {
 	<input type="submit" value="<?php putGS("Close"); ?>" class="button right-floated" onclick="parent.$.fancybox.close(); return false;" />
 	<input type="submit" value="<?php putGS("Save and Close"); ?>" class="button right-floated" />
     <input type="text" name="search" class="autocomplete topics input_text" />
-    <input type="submit" class="default-button" value="<?php putGS('Search'); ?>" />
+    <input type="button" class="default-button" value="<?php putGS('Search'); ?>" />
+    <input type="button" class="default-button" value="<?php putGS('Show All'); ?>" id="show_all_topics" style="padding: 3px 0px;"/>
 </fieldset>
 </div>
 
