@@ -95,7 +95,7 @@ class EmailService
         $mail = new \Zend_Mail('utf-8');
         $mail->setSubject("Neuer Kommentar zum Artikel " . $article->getTitle());
         $mail->setBodyHtml($message);
-        $mail->setFrom($user ? $user->getEmail() : "info@tageswoche.ch");
+        $mail->setFrom($user ? $user->getEmail() : $this->config['from']);
 
         foreach ($emails as $email) {
             $mail->addTo($email);
