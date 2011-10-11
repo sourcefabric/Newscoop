@@ -33,6 +33,12 @@ class EmailController extends Zend_Controller_Action
         $this->view->token = $this->_getParam('token');
     }
 
+    public function passwordRestoreAction()
+    {
+        $this->view->user = $this->_getParam('user');
+        $this->view->token = $this->_getParam('token');
+    }
+
     public function commentNotifyAction()
     {
         if ($this->_getParam('user', false)) {
