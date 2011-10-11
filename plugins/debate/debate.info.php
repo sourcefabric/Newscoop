@@ -59,8 +59,8 @@ $info = array(
     'uninstall' => 'plugin_debate_uninstall'
 );
 
-if (!defined('PLUGIN_POLL_FUNCTIONS')) {
-    define('PLUGIN_POLL_FUNCTIONS', true);
+if (!defined('PLUGIN_DEBATE_FUNCTIONS')) {
+    define('PLUGIN_DEBATE_FUNCTIONS', true);
 
     function plugin_debate_install()
     {

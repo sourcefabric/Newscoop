@@ -1,5 +1,9 @@
 <?php
 camp_load_translation_strings("plugin_debate");
+if (!$g_user->hasPermission('plugin_debate_admin')) {
+    camp_html_display_error(getGS('You do not have the right to manage debates.'));
+    exit;
+}
 ?>
 <script type="text/javascript" src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/campsite-checkbox.js"></script>
 <script language="javascript">
