@@ -480,6 +480,11 @@ class CampPlugin extends DatabaseObject
         CampPlugin::GetPluginsInfo(false, true);
     }
 
+    /**
+     * @param string $p_filename
+     * @param string $p_area
+     * @deprecated
+     */
     public static function PluginAdminHooks($p_filename, $p_area=null)
     {
         global $ADMIN, $ADMIN_DIR, $Campsite, $g_user;
@@ -491,9 +496,34 @@ class CampPlugin extends DatabaseObject
         $script = str_replace($admin_path, '', $filename);
 
         foreach (self::GetEnabled() as $plugin) {
-            $filepath = dirname(APPLICATION_PATH).$plugin->getBasePath().DIR_SEP.'admin-files'.DIR_SEP.'include'.DIR_SEP.$script;
+            $filepath = realpath(dirname(APPLICATION_PATH).DIR_SEP.$plugin->getBasePath().DIR_SEP.'admin-files'.DIR_SEP.'include'.DIR_SEP.$script);
             if (file_exists($filepath))  {
-                include $filepath;
+                require_once $filepath;
+            }
+        }
+    }
+
+    /**
+     * Includes hooks for this filename from plugins
+     * @param string $filename
+     * @param array $vars
+     */
+    public static function adminHook($filename, $vars=array())
+    {
+        global $ADMIN, $ADMIN_DIR, $Campsite, $g_user;
+
+        $filename = realpath($filename);
+        $admin_path = realpath(CS_PATH_SITE.DIR_SEP.$ADMIN_DIR);
+        $script = str_replace($admin_path, '', $filename);
+
+        foreach (array_keys($vars) as $var => $val )
+            global $$var;
+        extract($vars);
+
+        foreach (self::GetEnabled() as $plugin) {
+            $filepath = realpath(dirname(APPLICATION_PATH).DIR_SEP.$plugin->getBasePath().DIR_SEP.'admin-files'.DIR_SEP.'include'.DIR_SEP.$script);
+            if (file_exists($filepath))  {
+                require_once $filepath;
             }
         }
     }

@@ -310,7 +310,7 @@ if($themePath != null && $themePath != '0'){
 		</TABLE>
 		</FORM>
 		<P>
-		<?php CampPlugin::PluginAdminHooks(__FILE__); ?>
+		<?php CampPlugin::adminHook(__FILE__, array( 'issueObj' => $issueObj ) ); ?>
 	</td>
 
 	<td valign="top">
