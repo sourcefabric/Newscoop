@@ -51,7 +51,7 @@ class ArticleCommentsList extends ListObject
                 $params['sSortDir_0'] = $order['dir'];
             }
         }
-	    //$p_count = $repository->getCount($params, $cols);
+	    $p_count = $repository->getCount($params, $cols);
         $articleCommentsList = $repository->getData($params, $cols);
 	    foreach ($articleCommentsList as $comment)
 	    {
@@ -183,7 +183,7 @@ class ArticleCommentsList extends ListObject
             }
             $this->m_constraints['language'] = $context->language->number;
         }
-        
+
         if ($parameters['recommended']) {
 			if ($parameters['recommended'] == 'true') $this->m_constraints['recommended'] = 1;
 			if ($parameters['recommended'] == 'false') $this->m_constraints['recommended'] = 0;
