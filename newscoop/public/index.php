@@ -40,5 +40,7 @@ $application = new Zend_Application(
     APPLICATION_PATH . '/configs/application.ini'
 );
 
-$application->bootstrap()
-    ->run();
+$application->bootstrap();
+if (empty($GLOBALS['zend_bootstrap_only'])) { // workaround for CS-3806
+    $application->run();
+}
