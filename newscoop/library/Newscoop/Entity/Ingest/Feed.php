@@ -54,6 +54,7 @@ class Feed
     {
         $this->title = $title;
         $this->entries = new ArrayCollection();
+        $this->mode = "manual";
     }
 
     /**
