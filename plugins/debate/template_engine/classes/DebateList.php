@@ -23,6 +23,10 @@ class DebateList extends ListObject
         'votes' => array('field' => 'nr_of_votes', 'type' => 'integer'),
         'votes_overall' => array('field' => 'nr_of_votes_overall', 'type' => 'integer'),
 
+    	'archived' => array( 'field' => 'date_end', 'type' => 'datetime' ),
+    	'current' => array( 'field' => 'current', 'type' => 'datetime' ),
+    	'upcoming' => array( 'field' => 'upcoming', 'type' => 'datetime' ),
+
         ## following fields are NOT real datebase fields, they are processed by Debate::GetList()
         'is_current' => array('field' => '_current', 'type' => 'boolean'),
         '_assign_publication_id' => array('field' => '_assign_publication_id', 'type' => 'integer'),
@@ -84,10 +88,12 @@ class DebateList extends ListObject
 	                                                   $context->article->number);
 	    $this->m_constraints[] = $comparisonOperation;
 
-	    if (isset($p_parameters['number'])) {
+	    if (isset($p_parameters['number'])) // get exactly 1 debate by number
+	    {
 	        $comparisonOperation = new ComparisonOperation('number', $operator, $p_parameters['number']);
 	        $this->m_constraints[] = $comparisonOperation;
 	    }
+
 	    $user = $context->user;
 	    /* @var $user MetaUser */
 
@@ -109,6 +115,22 @@ class DebateList extends ListObject
 	{
 	    if (!is_array($p_constraints)) {
 	        return null;
+	    }
+
+	    if( in_array('archived', $p_constraints) ) {
+	        return array(new ComparisonOperation('end', new Operator('smaller', 'datetime'), strftime('%F %H:%M:%S')));
+	    }
+
+	    if( in_array('current', $p_constraints) ) {
+	        return array
+	        (
+	            new ComparisonOperation('end', new Operator('greater', 'datetime'), strftime('%F %H:%M:%S')),
+	            new ComparisonOperation('begin', new Operator('smaller', 'datetime'), strftime('%F %H:%M:%S')),
+	        );
+	    }
+
+	    if( in_array('upcoming', $p_constraints) ) {
+	        return array(new ComparisonOperation('begin', new Operator('greater', 'datetime'), strftime('%F %H:%M:%S')));
 	    }
 
 	    $parameters = array();
@@ -219,6 +241,7 @@ class DebateList extends ListObject
     			case 'constraints':
     			case 'order':
     			case 'number' :
+    			case 'start' :
     			case 'item':
     				if ($parameter == 'length' || $parameter == 'columns') {
     					$intValue = (int)$value;
