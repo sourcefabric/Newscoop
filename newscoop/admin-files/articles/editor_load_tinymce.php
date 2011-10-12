@@ -252,12 +252,10 @@ $().ready(function() {
         plugins : "<?php p($plugins_list); ?>",
         
         file_browser_callback : "campsitemedia",
-        forced_root_block : "",
         relative_urls : false,
         onchange_callback : function() { $('form#article-main').change(); },
         extended_valid_elements : "iframe[src|width|height|name|align|frameborder|scrolling|marginheight|marginwidth]",
 
-        
         // Theme options
         theme_advanced_buttons1 : "<?php p($theme_buttons1); ?>",
         theme_advanced_buttons2 : "<?php p($theme_buttons2); ?>",
