@@ -26,7 +26,7 @@ function smarty_function_render($p_params, &$p_smarty)
     }
 
     $smarty = CampTemplate::singleton();
-    $cash_lifetime = $smarty->cache_lifetime;
+    $cache_lifetime = $smarty->cache_lifetime;
 
     if (SystemPref::Get('TemplateCacheHandler')) {
         $campsiteVector = $smarty->campsiteVector;
@@ -53,7 +53,7 @@ function smarty_function_render($p_params, &$p_smarty)
     }
 
     $smarty->display($p_params['file']);
-    $smarty->cache_lifetime = $cash_lifetime;
+    $smarty->cache_lifetime = $cache_lifetime;
 
 } // fn smarty_function_render
 
