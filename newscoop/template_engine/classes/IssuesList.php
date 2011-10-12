@@ -59,12 +59,12 @@ class IssuesList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $issuesList = Issue::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
+	    $issuesList = Issue::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count, false, false);
 	    $metaIssuesList = array();
 	    foreach ($issuesList as $issue) {
-	        $metaIssuesList[] = new MetaIssue($issue->getPublicationId(),
-	                                          $issue->getLanguageId(),
-	                                          $issue->getIssueNumber());
+	        $metaIssuesList[] = new MetaIssue($issue['publication_id'],
+	                                          $issue['language_id'],
+	                                          $issue['number']);
 	    }
 	    return $metaIssuesList;
 	}
