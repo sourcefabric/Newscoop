@@ -77,10 +77,11 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
     }
 
     static function handler($action, &$smarty_obj, &$cache_content, $tpl_file = null, $cache_id = null,
-        $compile_id = null, $exp_time = null)
+        $compile_id = null, $exp_time = 0)
     {
         global $g_ado_db;
         static $cacheExists;
+        $exp_time += time();
 
         $return = false;
         if ($action != 'clean') {
@@ -102,11 +103,12 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
                         if ($result['expired'] > time()) {
                             $cacheExists[$tpl_file] = true;
                             $cache_content = $result['content'];
-                            $result = true;
+                            $return = $result['expired'];
                         } else {
                             // clear expired cache
                             $queryStr = 'DELETE FROM Cache WHERE expired <= '. time();
                             $g_ado_db->Execute($queryStr);
+                            $return = false;
                         }
                     }
                 }

@@ -24,7 +24,10 @@ function smarty_function_render($p_params, &$p_smarty)
     if (empty($p_params['file'])) {
         return null;
     }
-    $smarty = clone $p_smarty;
+
+    $smarty = CampTemplate::singleton();
+    $cash_lifetime = $smarty->cache_lifetime;
+
     if (SystemPref::Get('TemplateCacheHandler')) {
         $campsiteVector = $smarty->campsiteVector;
         foreach ($campsiteVector as $key => $value) {
@@ -42,13 +45,15 @@ function smarty_function_render($p_params, &$p_smarty)
         }
         $smarty->campsiteVector = $campsiteVector;
         if (empty($p_params['cache'])) {
-            $template = new Template($p_params['file']);
+            $template = new Template(CampSite::GetURIInstance()->getThemePath() . $p_params['file']);
             $smarty->cache_lifetime = (int)$template->getCacheLifetime();
         } else {
             $smarty->cache_lifetime = (int)$p_params['cache'];
         }
     }
-    return $smarty->display($p_params['file']);
+
+    $smarty->display($p_params['file']);
+    $smarty->cache_lifetime = $cash_lifetime;
 
 } // fn smarty_function_render
 
