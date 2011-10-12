@@ -93,6 +93,7 @@ class RegisterController extends Zend_Controller_Action
             try {
                 $values = $form->getValues();
                 $this->_helper->service('user')->savePending($values, $user);
+                $this->_helper->service('user.token')->invalidateTokens($user, 'email.confirm');
                 $this->notifyDispatcher($user);
 
                 $auth = \Zend_Auth::getInstance();

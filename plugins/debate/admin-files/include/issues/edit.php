@@ -1,6 +1,5 @@
 <?php
 camp_load_translation_strings("plugin_debate");
-global $issueObj;
 
 $issue_language_id = $issueObj->getLanguageId();
 $issue_nr = $issueObj->getIssueNumber();
@@ -26,11 +25,15 @@ $publication_id = $issueObj->getPublicationId();
 	<TD colspan="2">
     	<div style="overflow: auto; max-height: 50px">
         <?php
-        foreach (DebateIssue::getAssignments(null, $issueObj->getLanguageId(), $issueObj->getIssueNumber(), $issueObj->getPublicationId()) as $debateIssue) {
-            $debate = $debateIssue->getDebate($issue_language_id);
-            p($debate->getName());
-    		p("&nbsp;({$debate->getLanguageName()})<br>");
-    	}
+        if (count(($debateAssignments = DebateIssue::getAssignments(null, $issueObj->getLanguageId(), $issueObj->getIssueNumber(), $issueObj->getPublicationId())))) {
+            foreach ($debateAssignments as $debateIssue) {
+                $debate = $debateIssue->getDebate($issue_language_id);
+                p($debate->getName());
+        		p("&nbsp;({$debate->getLanguageName()})<br>");
+        	}
+        } else {
+            putGS("No debates assigned");
+        }
     	?>
     	</div>
 	</TD>

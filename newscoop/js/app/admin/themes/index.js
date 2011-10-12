@@ -107,7 +107,7 @@ $( function()
 		var pubId 	  = $(this).attr( 'pub-id' );
 		if( pubId ) // publication tab
 		{
-			datatable.fnFilter( pubId, 4 );
+			datatable.fnFilter( pubId, 0 ); // FILTERING PUBLICATION
 			$( document.body ).data( 'newscoop.themesDatatable.oneFilterCallback', function()
 			{
 				$('.copy-to-avail-themes').show();
@@ -120,7 +120,7 @@ $( function()
 		}
 		else
 		{
-			datatable.fnSettings().aoPreSearchCols[4].sSearch = ""; // hacked
+			datatable.fnSettings().aoPreSearchCols[0].sSearch = ""; // hacked, RESETTING PUBLICATION FILTER
 			datatable.fnFilter( "" );
 			$( document.body ).data( 'newscoop.themesDatatable.oneFilterCallback', function()
 			{

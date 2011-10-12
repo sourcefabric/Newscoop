@@ -209,6 +209,11 @@ if($issueHasTheme){
     }
 ?>
 <tr>
+	<td colspan="2">
+		<?php CampPlugin::adminHook(__FILE__, array( 'sectionObj' => $sectionObj ) ); ?>
+	</td>
+</tr>
+<tr>
   <td colspan="2" align="center">
     <input type="hidden" name="Pub" value="<?php p($Pub); ?>" />
     <input type="hidden" name="Issue" value="<?php p($Issue); ?>" />
@@ -225,5 +230,4 @@ if($issueHasTheme){
 document.section_edit.cName.focus();
 </script>
 
-<?php CampPlugin::PluginAdminHooks(__FILE__); ?>
 <?php camp_html_copyright_notice(); ?>

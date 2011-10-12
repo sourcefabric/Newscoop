@@ -292,9 +292,11 @@ function onCommentsModerated(p_checkbox)
 		}
     ?>
 </tr>
-
-<?php CampPlugin::PluginAdminHooks(__FILE__); ?>
-
+<tr>
+	<td colspan="2">
+        <?php CampPlugin::adminHook(__FILE__, array('publicationObj'=>$publicationObj)); ?>
+    </td>
+</tr>
 <TR>
 	<TD COLSPAN="2" align="center" style="padding-left: 8px; padding-right: 8px;">
 	   <table style="border-top: 1px solid black; padding-top: 7px; padding-bottom: 6px; margin-top: 10px;" width="100%">

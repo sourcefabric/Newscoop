@@ -19,6 +19,8 @@ $f_title = Input::Get('f_title', 'string');
 $f_question = Input::Get('f_question', 'string');
 $f_date_begin = Input::Get('f_date_begin', 'string');
 $f_date_end = Input::Get('f_date_end', 'string');
+$f_time_begin = Input::Get('f_time_begin', 'string');
+$f_time_end = Input::Get('f_time_end', 'string');
 $f_votes_per_user = Input::Get('f_votes_per_user', 'int');
 $f_is_extended = Input::Get('f_is_extended', 'boolean');
 $f_nr_of_answers = Input::Get('f_nr_of_answers', 'int');
@@ -34,8 +36,8 @@ if ($debate->exists()) {
     $debate = new Debate($f_fk_language_id, $f_debate_nr);
     $debate->setProperty('title', $f_title);
     $debate->setProperty('question', $f_question);
-    $debate->setProperty('date_begin', $f_date_begin);
-    $debate->setProperty('date_end', $f_date_end);
+    $debate->setProperty('date_begin', strftime( "%F %H:%M:%S", strtotime( $f_date_begin." ".$f_time_begin ) ) );
+    $debate->setProperty('date_end', strftime( "%F %H:%M:%S", strtotime( $f_date_end." ".$f_time_end ) ) );
     $debate->setProperty('votes_per_user', $f_votes_per_user);
     $debate->setProperty('nr_of_answers', $f_nr_of_answers);
     $debate->setProperty('is_extended', $f_is_extended);
@@ -57,6 +59,10 @@ if ($debate->exists()) {
 } else {
     // create new debate
     $debate = new Debate($f_fk_language_id);
+
+    $f_date_begin = strftime( "%F %H:%M:%S", strtotime( $f_date_begin." ".$f_time_begin ) );
+    $f_date_end = strftime( "%F %H:%M:%S", strtotime( $f_date_end." ".$f_time_end ) );
+
     $success = $debate->create($f_title, $f_question, $f_date_begin, $f_date_end, $f_nr_of_answers, $f_votes_per_user);
 
     if ($success) {

@@ -381,7 +381,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
       <?php require('edit_context_box.php'); ?>
       <!-- END Context Box table -->
 
-      <?php CampPlugin::PluginAdminHooks(__FILE__); ?>
+      <?php CampPlugin::adminHook(__FILE__, array( 'articleObj' => $articleObj, 'f_edit_mode' => $f_edit_mode ) ); ?>
 
   </div>
   <script type="text/javascript">

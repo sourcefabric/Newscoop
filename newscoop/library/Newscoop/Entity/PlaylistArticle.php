@@ -9,10 +9,18 @@ namespace Newscoop\Entity;
 /**
  * Playlist entity
  * @Entity
- * @Table(name="playlist_article",uniqueConstraints={@UniqueConstraint(name="playlist_article", columns={"id_article", "article_no"})})
+ * @Table(name="playlist_article",
+ * 	uniqueConstraints={@UniqueConstraint(name="playlist_article", columns={"id_playlist", "article_no"})})
  */
-class PlaylistArticle
+class PlaylistArticle extends Entity
 {
+	/**
+     * @Id @Column(name="id_playlist_article", type="integer")
+     * @GeneratedValue
+     * @var int
+     */
+    protected $id;
+
 	/**
      * @Id
      * @Column(type="integer", name="id_playlist")
@@ -27,15 +35,17 @@ class PlaylistArticle
      */
     private $article;
 
-    public function setId($idPair)
+    public function setPlaylist($idPlaylist)
     {
-        $this->idPlaylist = current($idPair);
-        $this->articleNo = next($idPair);
+        $this->idPlaylist = $idPlaylist;
+        return $this;
     }
 
-    public function setArticle($article)
+    public function setArticle(Article $article)
     {
         $this->article = $article;
         return $this;
     }
+
+    public function __toString(){ return 'playlist_article'; }
 }

@@ -21,8 +21,14 @@ if ($debate->exists()) {
     $is_extended = $debate->isExtended();
     $title = $debate->getProperty('title');
     $question = $debate->getProperty('question');
+
     $date_begin = $debate->getProperty('date_begin');
     $date_end = $debate->getProperty('date_end');
+    $time_begin = strftime('%H:%M', strtotime($date_begin));
+    $time_end = strftime('%H:%M', strtotime($date_end));
+    $date_begin = strftime('%Y-%m-%d', strtotime($date_begin));
+    $date_end = strftime('%Y-%m-%d', strtotime($date_end));
+
     $nr_of_answers = $debate->getProperty('nr_of_answers');
     $fk_language_id = $debate->getProperty('fk_language_id');
     $votes_per_user = $debate->getProperty('votes_per_user');
@@ -124,22 +130,32 @@ camp_html_display_msgs();
             <td ALIGN="RIGHT" ><?php  putGS("Date begin voting"); ?>:</td>
             <td>
                 <?php $now = getdate(); ?>
-                <INPUT TYPE="TEXT" class="input_text date" NAME="f_date_begin" id="f_date_begin" maxlength="10" SIZE="11"
-                	VALUE="<?php if (isset($date_begin)) p($date_begin); ?>" alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Date begin')."'"); ?>" />
+
+                <input type="text" class="input_text date" NAME="f_date_begin" id="f_date_begin" maxlength="10" SIZE="11"
+                	value="<?php if (isset($date_begin)) p($date_begin); else p(strftime('%Y-%m-%d', strtotime("Friday"))); ?>"
+                	alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Date begin')."'"); ?>" />
+
+               	<input type="text" class="input_text time" name="f_time_begin" id="f_time_begin" maxlength="5" size="5"
+               		value="<?php if (isset($time_begin)) p($time_begin); else p("12:00"); ?>" />
             </td>
         </tr>
         <tr>
             <td ALIGN="RIGHT" ><?php  putGS("Date end voting"); ?>:</td>
             <td>
                 <?php $now = getdate(); ?>
-                <INPUT TYPE="TEXT" class="input_text date" NAME="f_date_end" id="f_date_end" maxlength="10" SIZE="11"
-                	VALUE="<?php if (isset($date_end)) p($date_end); ?>" alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Date end')."'"); ?>" />
+
+                <input type="text" class="input_text date" NAME="f_date_end" id="f_date_end" maxlength="10" SIZE="11"
+                	value="<?php if (isset($date_end)) p($date_end); else p(strftime('%Y-%m-%d', strtotime("Thursday + 1 week"))); ?>"
+                	alt="date|yyyy/mm/dd|-|0|<?php echo $now["year"]."/".$now["mon"]."/".$now["mday"]; ?>" emsg="<?php putGS('You must fill in the $1 field.',"'".getGS('Date end')."'"); ?>" />
+
+                <input type="text" class="input_text time" name="f_time_end" id="f_time_end" maxlength="5" size="5"
+                	value="<?php if (isset($time_end)) p($time_end); else p("11:59"); ?>" />
             </td>
         </tr>
         <tr>
             <td ALIGN="RIGHT" ><?php  putGS("Title"); ?>:</td>
             <td>
-            <INPUT TYPE="TEXT" NAME="f_title" id="input-title" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', getGS('Title')); ?>" value="<?php if (isset($title)) echo htmlspecialchars($title); ?>">
+            <input type="text" NAME="f_title" id="input-title" SIZE="40" MAXLENGTH="255" class="input_text" alt="blank" emsg="<?php putGS('You must fill in the $1 field.', getGS('Title')); ?>" value="<?php if (isset($title)) echo htmlspecialchars($title); ?>">
             </td>
         </tr>
         <tr>
@@ -210,11 +226,13 @@ camp_html_display_msgs();
                 	<input type="text" name="f_answer[%s]" id="answer-tpl-input" size="40" maxlength="255" class="input_text" alt="blank"
                 		emsg-tpl="<?php putGS('You must fill in the $1 field %s.', getGS('Answer')); ?>" value="" disabled="disabled"/>
     			</td>
+    			<?php if ($debate->exists()) : ?>
     			<td align='center'>
     				<a stlye="display:none" href="javascript: void(0);" onclick="window.open('files/popup.php?f_debate_nr=<?php p($debate->getNumber()); ?>&amp;f_debateanswer_nr=<?php p($n) ?>&amp;f_fk_language_id=<?php p($debate->getLanguageId()); ?>', 'attach_file', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=500, height=600, top=200, left=100');">
                     	<img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/save.png" border="0">
                 	</a>
     			</td>
+    			<?php endif; ?>
             </tr>
 
         </table>
@@ -270,6 +288,37 @@ $('#edit-debate-form').submit( function()
 	}
 	$(this).find('#answer-tpl-input').remove();
 	return <?php camp_html_fvalidate(); ?>;
+})
+
+$(function()
+{
+	$('input.time#f_time_begin').data('origval', '12:00');
+	$('input.time#f_time_end').data('origval', '11:59');
+	$('input.time')
+	.focus(function()
+	{
+		var val = $(this).val()
+		if( val != '' )
+			$(this).data('origval', val );
+	})
+	.blur(function()
+	{
+		var val = $(this).val();
+		if( val.search(/\d{2}:\d{2}/) ) $(this).trigger('invalid');
+		var hrs = val.split(":");
+		var hr = parseInt(hrs[0]);
+		var min = parseInt(hrs[1]);
+		if( hr > 24 || hr < 0 ) $(this).trigger('invalid');
+		if( min > 60 || min < 0 ) $(this).trigger('invalid');
+	})
+	.bind( 'invalid', function()
+	{
+		$(this).val( $(this).data('origval') );
+	});
+
+	<?php if (!$debate->exists()) : ?>
+		$('#input-nr-answers').val(2).trigger('change');
+	<?php endif; ?>
 })
 </script>
 <?php

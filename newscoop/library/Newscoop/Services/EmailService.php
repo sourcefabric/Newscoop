@@ -54,6 +54,23 @@ class EmailService
     }
 
     /**
+     * Send password restore token
+     *
+     * @param Newscoop\Entity\User $user
+     * @return void
+     */
+    public function sendPasswordRestoreToken(User $user)
+    {
+        $message = $this->view->action('password-restore', 'email', 'default', array(
+            'user' => $user->getId(),
+            'token' => $this->tokenService->generateToken($user, 'password.restore'),
+        ));
+
+        // @todo use config
+        $this->send("Password restore bei tageswoche.ch", $message, $user->getEmail());
+    }
+
+    /**
      * Send comment notification
      *
      * @param Newscoop\Entity\Comment $comment
@@ -78,7 +95,7 @@ class EmailService
         $mail = new \Zend_Mail('utf-8');
         $mail->setSubject("Neuer Kommentar zum Artikel " . $article->getTitle());
         $mail->setBodyHtml($message);
-        $mail->setFrom($user ? $user->getEmail() : "info@tageswoche.ch");
+        $mail->setFrom($user ? $user->getEmail() : $this->config['from']);
 
         foreach ($emails as $email) {
             $mail->addTo($email);

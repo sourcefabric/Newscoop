@@ -1,8 +1,6 @@
 <?php
 camp_load_translation_strings("plugin_debate");
-global $publicationObj;
-
-if (is_object($publicationObj)) {
+if (is_object($publicationObj)) :
 ?>
 
 <table BORDER="0" CELLSPACING="0" CELLPADDING="3" style="padding-top: 0.5em; padding-left: 10px; padding-right: 10px;" width="100%">
@@ -35,6 +33,4 @@ if (is_object($publicationObj)) {
         </TD>
     </TR>
 </TABLE>
-<?php
-}
-?>
+<?php endif; ?>

@@ -13,9 +13,6 @@ use Newscoop\Entity\Events\CommunityTickerEvent;
  */
 final class MetaCommunityFeed extends MetaDbObject
 {
-    /** @var MetaUser */
-    private $user;
-
     /** @var Newscoop\Entity\CommunityFeed */
     private $feed;
 
@@ -51,12 +48,15 @@ final class MetaCommunityFeed extends MetaDbObject
 
         $this->feed = $feed;
         $this->type = implode('-', explode('.', $this->feed->getEvent()));
-        $this->user = new MetaUser($feed->getUser());
+
+        if (in_array($this->type, array('user-register', 'image-approved'))) { // @todo remove when having corrent proxies
+            $feed->getUser() ? $feed->getUser()->getId() : 'no user';
+        }
     }
 
     protected function getUser()
     {
-        return $this->user;
+        return new MetaUser($this->m_dbObject->getUser());
     }
 
     protected function getType()

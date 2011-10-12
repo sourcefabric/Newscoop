@@ -242,6 +242,7 @@ CREATE TABLE `playlist` (
 
 DROP TABLE IF EXISTS `playlist_article`;
 CREATE TABLE `playlist_article` (
+  `id_playlist_article` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_playlist` int(10) unsigned NOT NULL,
   `article_no` int(10) unsigned NOT NULL,
   UNIQUE KEY `id_playlist` (`id_playlist`,`article_no`)

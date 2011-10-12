@@ -53,7 +53,7 @@ foreach ($hiddens as $name) {
     </ul>
     <?php endif; //inEditMode?>
     <div class="frame clearfix">
-      <dl class="inline-list">
+      <dl class="inline-list" id="comment-${id}">
         <dt><?php putGS('From'); ?></dt>
         <dd><a href="mailto:${email}">"${name}" &lt;${email}&gt;</a> (${ip})</dd>
         <dt><?php putGS('Date'); ?></dt>
@@ -127,7 +127,14 @@ function loadComments() {
 				template = template.replace(new RegExp("\\$({|%7B)"+key+"(}|%7D)","g"),comment[key]);
 			}
 			$('#comment-moderate').append('<fieldset class="plain comments-block">'+template+'</fieldset>');
+
 		}
+
+        var referencedComment = $(document.location.hash);
+        if (referencedComment.size() == 1) {
+            $(window).scrollTop(referencedComment.position().top);
+        }
+
 		if(!hasComment)
 			$('#no-comments').show();
 		toggleCommentStatus();
