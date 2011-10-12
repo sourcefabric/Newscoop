@@ -2,6 +2,7 @@
 $GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 
 // run zend
+$GLOBALS['zend_bootstrap_only'] = true;
 require_once $GLOBALS['g_campsiteDir'] . '/public/index.php';
 
 /**
@@ -32,7 +33,7 @@ include_once("Zend/Auth.php");
 include_once("Zend/Auth/Storage/Session.php");
 
 // setup the correct namespace for the zend auth session
-Zend_Auth::getInstance()->setStorage(new Zend_Auth_Storage_Session( 'Zend_Auth_Admin' ) );
+Zend_Auth::getInstance()->setStorage(new Zend_Auth_Storage_Session( 'Zend_Auth_Storage' ) );
 
    	$userId = Zend_Auth::getInstance()->getIdentity();
     $userTmp = new User($userId);
