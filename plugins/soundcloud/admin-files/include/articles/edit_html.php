@@ -7,7 +7,10 @@
  */
 
 camp_load_translation_strings("plugin_soundcloud");
-global $articleObj, $f_article_number, $f_edit_mode;
+
+$f_article_number = Input::Get('f_article_number', 'int', 0);
+$f_edit_mode = Input::Get('f_edit_mode', 'string', 'edit', true);
+
 ?>
 <script type="text/javascript">
 $(document).ready(function(){

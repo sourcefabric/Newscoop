@@ -53,6 +53,7 @@ class Soundcloud extends DatabaseObject {
     static public function getAssignments($p_article_id, $p_order = 'asc', $p_start = 0, $p_limit = 0)
     {
         global $g_ado_db;
+        $tracks = array();
         $query = 'SELECT    track_data
                   FROM      plugin_soundcloud
                   WHERE     article_id = ' . $g_ado_db->escape($p_article_id) .
@@ -60,10 +61,10 @@ class Soundcloud extends DatabaseObject {
         if ($p_limit) {
             $query .= " LIMIT $p_start, $p_limit";
         }
-        $res = $g_ado_db->getAll($query);
-        $tracks = array();
-        foreach ($res as $track) {
-            $tracks[] = @unserialize($track['track_data']);
+        if ($res = $g_ado_db->getAll($query)) {
+            foreach ($res as $track) {
+                $tracks[] = @unserialize($track['track_data']);
+            }
         }
         return $tracks;
     }
