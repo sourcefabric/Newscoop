@@ -24,7 +24,7 @@
 
 	// Change $GLOBALS['GLOBAL_HYBRID_AUTH_URL_BASE'] in hybridauth/hybridauth.php configuration file
 	// with the complete url to hybridauth library on your website
-    $GLOBALS['GLOBAL_HYBRID_AUTH_URL_BASE'] = "http://newscoop-hybrid.com/hybridauth/index.php";
+    $GLOBALS['GLOBAL_HYBRID_AUTH_URL_BASE'] = "http://dev.tageswoche.ch/hybridauth/index.php";
 
 	// real path to hybridauth
 	$GLOBALS['GLOBAL_HYBRID_AUTH_PATH_BASE'] 		 = realpath( dirname( __FILE__ ) ) . "/";
@@ -63,8 +63,8 @@
 		"Facebook" => ARRAY ( 
 				"enabled" 	=> TRUE,
 				"keys"	 	=> ARRAY( 
-					"APPLICATION_ID"  => "191060070966360", 
-					"CONSUMER_SECRET" => "e252221a8ff728ac5ad5622b268e1d45", 
+					"APPLICATION_ID"  => "", 
+					"CONSUMER_SECRET" => "", 
 				),
 				"wrapper" 	=> "Providers/Facebook.php"
 			),
@@ -173,6 +173,15 @@
 				"wrapper" 	=> "Providers/Live.php" 
 			),
 	);
+
+    $configFile = __DIR__ . '/../application/configs/loginProviders.ini';
+    if (realpath($configFile)) { // overwrite config with keys from ini file
+        $config = parse_ini_file($configFile, true);
+        $env = defined('APPLICATION_ENV') ? APPLICATION_ENV : 'production';
+        foreach ($config[$env] as $key => $value) {
+            $GLOBALS['GLOBAL_HYBRID_AUTH_IDPROVIDERS'][$key]['keys'] = $value;
+        }
+    }
 
 	// -----------------------------------------------------------------------------
 	// /!\ Everything below shouldn't be edited unless you know what are you doing .
