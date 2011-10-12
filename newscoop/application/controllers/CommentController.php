@@ -27,8 +27,8 @@ class CommentController extends Zend_Controller_Action
 
 		$this->_helper->layout->disableLayout();
 		$parameters = $this->getRequest()->getParams();
-
-		$errors = array();
+        
+        $errors = array();
 
 		$auth = Zend_Auth::getInstance();
 
@@ -74,15 +74,17 @@ class CommentController extends Zend_Controller_Action
 			);
 
 			$commentRepository->save($comment, $values);
-			$commentRepository->flush();
-
-			$this->view->response = 'OK';
+            $commentRepository->flush();
+            
+            $this->view->response = 'OK';
 		}
 		else {
 			$errors = implode('<br>', $errors);
 			$errors = $this->view->translate('Following errors have been found:') . '<br>' . $errors;
 			$this->view->response = $errors;
 		}
+        
+        $this->getHelper('contextSwitch')->addActionContext('save', 'json')->initContext();
     }
 
     public function indexAction()

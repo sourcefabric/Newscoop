@@ -49,7 +49,7 @@ function smarty_block_subscription_form($p_params, $p_content, &$p_smarty, &$p_r
         return null;
     }
 
-    require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
+    $p_smarty->smarty->loadPlugin('smarty_shared_escape_special_chars');
 
     $url = $campsite->url;
     $url->uri_parameter = "";

@@ -59,7 +59,7 @@ class CampGetImage
      * 		center(-center)
      */
     private $m_crop = null;
-    
+
     /**
      * @var string
      * 		after resizing
@@ -118,7 +118,7 @@ class CampGetImage
 				'center-left', 'center-right', 'top-center', 'bottom-center',
 				'top', 'bottom', 'left', 'right', 'center', 'center-center'
 			);
-			
+
 			if (in_array($p_imageCrop, $availableCropOptions)) {
 				if ($p_imageCrop == 'top' || $p_imageCrop == 'bottom') {
 					$p_imageCrop = $p_imageCrop.'-center';
@@ -136,7 +136,7 @@ class CampGetImage
             $availableCropOptions = array(
 				'top', 'bottom', 'left', 'right', 'center'
 			);
-			
+
 			if (in_array($p_resizeCrop, $availableCropOptions)) {
 				$this->m_resizeCrop = $p_resizeCrop;
 			}
@@ -293,11 +293,11 @@ class CampGetImage
     {
         //list($current_width, $current_height) = getimagesize($filename);
         list($current_width, $current_height) = getimagesize($this->m_imageSource);
-        
+
         // Resulting size of the image after cropping
         $width = $this->m_resizeWidth;
         $height = $this->m_resizeHeight;
-        
+
         if (!$width) {
             $width = $current_width;
         }
@@ -332,7 +332,7 @@ class CampGetImage
         @imagecopy($canvas, $current_image, 0, 0, $left, $top, $current_width, $current_height);
         return($canvas);
     }
-    
+
     /**
      * crops resized image to fit size
      *
@@ -342,22 +342,22 @@ class CampGetImage
     {
         $current_width = imagesx($p_im);
         $current_height = imagesy($p_im);
-        
+
         // Resulting size of the image after cropping
         $width = $this->m_resizeWidth;
         $height = $this->m_resizeHeight;
-        
+
         if ($current_width == $width && $current_height == $height) {
 			// no cropping necessary
 			return($p_im);
 		}
-		
+
         // hcrop
         if ($width < $current_width) {
 			// translate vertical and horizontal values to each other for convenience
 			if ($this->m_resizeCrop == 'top') $this->m_resizeCrop = 'left';
 			if ($this->m_resizeCrop == 'bottom') $this->m_resizeCrop = 'right';
-			
+
 			if ($this->m_resizeCrop == 'left') {
 				$top = 0;
 				$left = 0;
@@ -376,7 +376,7 @@ class CampGetImage
 			// translate vertical and horizontal values to each other for convenience
 			if ($this->m_resizeCrop == 'left') $this->m_resizeCrop = 'top';
 			if ($this->m_resizeCrop == 'right') $this->m_resizeCrop = 'bottom';
-			
+
 			if ($this->m_resizeCrop == 'top') {
 				$top = 0;
 				$left = 0;
@@ -390,7 +390,7 @@ class CampGetImage
 				$left = 0;
 			}
 		}
-		
+
         // Resample the image
         $canvas = @imagecreatetruecolor($width, $height);
         @imagecopy($canvas, $p_im, 0, 0, $left, $top, $current_width, $current_height);
@@ -418,7 +418,7 @@ class CampGetImage
 			if ($this->m_resizeWidth > 0 && $this->m_resizeHeight > 0) {
 				$h_dest = (100 / ($w_src / $this->m_resizeWidth)) * 0.01;
 				$h_dest = @round($h_src * $h_dest);
-				
+
 				if ($this->m_resizeCrop == null) {
 					if ($h_dest < $this->m_resizeHeight) {
 						$w_dest = $this->m_resizeWidth;
@@ -526,7 +526,7 @@ class CampGetImage
                 return $this->sendCachedImage();
             }
         }
-        
+
         $targetpath = $this->getTargetPath();
 
         $cachedir  = dirname($targetpath);
@@ -548,7 +548,7 @@ class CampGetImage
 
     private function sendCachedImage()
     {
-        header('Campsite-Image-Cache: Cache created at '.date('r', filemtime($this->getTargetPath())));
+        header('Newscoop-Image-Cache: Cache created at '.date('r', filemtime($this->getTargetPath())));
         return readfile($this->getTargetPath()) !== false;
     }
 
@@ -556,7 +556,7 @@ class CampGetImage
     {
         $func_ending = $this->GetEnding();
         $t = $this->ReadImage($func_ending);
-        
+
         if ($this->m_crop == null) {
             $t = $this->ResizeImage($t);
             if ($this->m_resizeCrop != null) {
@@ -566,11 +566,11 @@ class CampGetImage
         else {
             $t = $this->CropImage($t);
         }
-        
+
         $function = 'image'.$func_ending;
 
         if (!$p_target) {
-            header('Campsite-Image-Cache: disabled');
+            header('Newscoop-Image-Cache: disabled');
             return $function($t);
         } else {
             $function($t, $p_target);

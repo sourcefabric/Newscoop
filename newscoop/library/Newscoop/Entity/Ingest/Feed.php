@@ -36,6 +36,12 @@ class Feed
     private $updated;
 
     /**
+     * @Column(type="string")
+     * @var string
+     */
+    private $mode;
+
+    /**
      * @OneToMany(targetEntity="Newscoop\Entity\Ingest\Feed\Entry", mappedBy="feed", cascade={"persist"})
      * @var array
      */
@@ -48,6 +54,7 @@ class Feed
     {
         $this->title = $title;
         $this->entries = new ArrayCollection();
+        $this->mode = "manual";
     }
 
     /**
@@ -68,6 +75,33 @@ class Feed
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set mode (manual|automatic)
+     *
+     * @param string $mode
+     * @return Newscoop\Entity\Ingest\Feed
+     */
+    public function setMode($mode)
+    {
+        $this->mode = $mode;
+        return $this;
+    }
+
+    /**
+     * Get mode
+     *
+     * @return string
+     */
+    public function getMode()
+    {
+        return (string) $this->mode;
+    }
+
+    public function isAutoMode()
+    {
+        return (bool) ($this->getMode() === "auto");
     }
 
     /**
