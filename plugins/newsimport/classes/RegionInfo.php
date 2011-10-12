@@ -143,16 +143,6 @@ class RegionInfo {
                 }
             }
 
-            //if (!is_numeric($p_zipCode)) {
-            //    return $regions;
-            //}
-            //if (4 != strlen($p_zipCode)) {
-            //    return $regions;
-            //}
-            //$start1 = substr($p_zipCode, 0, 1);
-            //$regions['region'] = $start1 . 'xxx';
-            //$start2 = substr($p_zipCode, 0, 2);
-            //$regions['subregion'] = $start2 . 'xx';
         }
 
         return $region_topics;
@@ -160,8 +150,3 @@ class RegionInfo {
 
 
 } // class RegionInfo
-
-/*
-  NB:
-    For the Swiss zipcodes, see http://en.wikipedia.org/wiki/Postal_codes_in_Switzerland_and_Liechtenstein
-*/

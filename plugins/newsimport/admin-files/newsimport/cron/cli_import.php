@@ -24,7 +24,6 @@ $GLOBALS['import_params'] = $spec_params;
 
 $plugin_dir = dirname(dirname(dirname(dirname(__FILE__))));
 require_once($plugin_dir.DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'NewsImportEnv.php');
-//require_once($plugin_dir.DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'NewsImport.php');
 
 if ( ("cli" == php_sapi_name()) && (!isset($GLOBALS['g_cliInited'])) ) {
     NewsImportEnv::BootCli();

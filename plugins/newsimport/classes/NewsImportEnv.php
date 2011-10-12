@@ -223,7 +223,6 @@ class NewsImportEnv
                         }
                     }
 
-                    // escapeshellarg
                     $var_output = array();
                     $var_return = 0;
                     exec($command, $var_output, $var_return);
@@ -235,22 +234,6 @@ class NewsImportEnv
         }
 
         return $msg;
-
-    /*
-        // the http request way
-        $c_hnd = curl_init($p_url);
-        if (!empty($p_access)) {
-            curl_setopt($c_hnd, CURLOPT_HTTPAUTH, CURLAUTH_ANY);
-            curl_setopt($c_hnd, CURLOPT_USERPWD, $p_access);
-        }
-        curl_setopt($c_hnd, CURLOPT_HEADER, 0);
-        curl_setopt($c_hnd, CURLOPT_TIMEOUT, 0);
-        curl_setopt($c_hnd, CURLOPT_RETURNTRANSFER, 1);
-
-        $c_res = @curl_exec($c_hnd);
-
-        return $c_res;
-    */
     }
 
     /**
@@ -284,22 +267,19 @@ class NewsImportEnv
         }
 
         foreach (array('events_1', 'movies_1') as $one_feed) {
-        //foreach (array('events_1') as $one_feed) {
-        //foreach (array('movies_1') as $one_feed) {
             $request_feed = $request_url . '&newsfeed=' . $one_feed;
             $request_feed_bare = $request_url_bare . '&newsfeed=' . $one_feed;
             $request_feed_prune = $request_url_bare_prune . '&newsfeed=' . $one_feed;
 
             $req_rank = -1;
             foreach ($request_offsets as $one_offset) {
-    //continue;
                 $one_limit_use = $one_limit;
                 //sleep(1);
                 $req_rank += 1;
                 $request_feed_use = $request_feed;
                 if ($req_rank == $request_count) {
-                    $request_feed_use = $request_feed_bare;
-                    $one_limit_use = 0;
+                    //$request_feed_use = $request_feed_bare;
+                    //$one_limit_use = 0;
                 }
                 try {
                     $one_request = $request_feed_use . '&newsoffset=' . $one_offset;
@@ -320,7 +300,7 @@ class NewsImportEnv
                     }
                 }
                 catch (Exception $exc) {
-                    var_dump($exc);
+                    //var_dump($exc);
                     break;
                 }
             }

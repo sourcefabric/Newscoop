@@ -72,7 +72,12 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 	 */
     function plugin_newsimport_make_dirs() {
         $incl_dir = dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR;
+        $class_dir = dirname(__FILE__).DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR;
         require($incl_dir . 'default_spool.php');
+        require_once($class_dir . 'NewsImportEnv.php');
+
+        $newsimport_default_cache = NewsImportEnv::AbsolutePath($newsimport_default_cache, false);
+        $newsimport_default_locks = NewsImportEnv::AbsolutePath($newsimport_default_locks, false);
 
         if (!is_dir($newsimport_default_cache)) {
             try {
@@ -632,7 +637,5 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 
 }
 
-// NB: this is recognizing whether the request is on events import
-// this file is included during page loading, thus can be done this way
-// if it would change, we would need to put it into LegacyController
+// NB: the whole import is done via cli now, thus not going here.
 //plugin_newsimport_test();
