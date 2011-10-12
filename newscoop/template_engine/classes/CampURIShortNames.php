@@ -66,8 +66,10 @@ class CampURIShortNames extends CampURI
             $this->m_errorCode = $e->getCode();
 
             if (!is_null($this->m_publication)) {
-                $tplId = CampSystem::GetInvalidURLTemplate($this->m_publication->identifier);
-                $template = new MetaTemplate($tplId);
+                $tplId = CampSystem::GetInvalidURLTemplate($this->m_publication->identifier, null, null, !$this->m_preview);
+                $themePath = $this->getThemePath();
+                $tplId = substr($tplId, strlen($themePath));
+                $template = new MetaTemplate($tplId, $themePath);
                 if ($template->defined()) {
                     $this->m_template = $template;
                 }
@@ -351,7 +353,12 @@ class CampURIShortNames extends CampURI
         $encoder = Manager::getWebcoder('');
         $this->m_publication = $this->_getPublication();
         $webcode = $request->getParam('webcode');
-        $language = $request->getParam('language');
+        $controller = $request->getParam('controller');
+        if ($controller != 'index') {
+            $language = $controller;
+        } else {
+            $language = $request->getParam('language');
+        }
         if (!empty( $webcode ) ) {
             if (!empty( $language )) {
                 $webcodeLanguageId = Language::GetLanguageIdByCode($language);
@@ -366,7 +373,7 @@ class CampURIShortNames extends CampURI
             $this->m_section = $this->m_article->section;
             $this->m_template = $this->_getTemplate();
         } else {
-            $this->m_language = $this->_getLanguage($request->getParam('language'), $this->m_publication);
+            $this->m_language = $this->_getLanguage($language, $this->m_publication);
             $this->m_issue = $this->_getIssue($request->getParam('issue'), $this->m_language, $this->m_publication);
             $this->m_section = $this->_getSection($request->getParam('section'), $this->m_issue, $this->m_language, $this->m_publication);
             $this->m_article = $this->_getArticle($request->getParam('articleNo'), $this->m_language);

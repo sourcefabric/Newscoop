@@ -25,7 +25,7 @@ function smarty_function_blogcomment_edit($p_params, &$p_smarty)
 {
     global $g_ado_db, $Campsite;
 
-    require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
+    $p_smarty->smarty->loadPlugin('smarty_shared_escape_special_chars');
 
     // gets the context variable
     $campsite = $p_smarty->get_template_vars('gimme');

@@ -685,8 +685,8 @@ function camp_cron() {
 function camp_display_message($p_message)
 {
     $params = array('context' => null,
-                'template' => CS_SYS_TEMPLATES_DIR.DIR_SEP.'_campsite_message.tpl',
-                'templates_dir' => CS_TEMPLATES_DIR,
+                'template' => '_campsite_message.tpl',
+                'templates_dir' => CS_TEMPLATES_DIR.DIR_SEP.CS_SYS_TEMPLATES_DIR,
                 'info_message' => $p_message
     );
     $document = CampSite::GetHTMLDocumentInstance();

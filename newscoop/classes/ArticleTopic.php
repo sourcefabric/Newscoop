@@ -313,10 +313,7 @@ class ArticleTopic extends DatabaseObject {
         	// builds the array of topic objects
         	$articleTopicsList = array();
         	foreach ($topics as $topic) {
-        		$topObj = new Topic($topic['TopicId']);
-        		if ($topObj->exists()) {
-        			$articleTopicsList[] = $topObj;
-        		}
+        	    $articleTopicsList[] = $topic['TopicId'];
         	}
         } else {
         	$articleTopicsList = array();
