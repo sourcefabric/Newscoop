@@ -56,7 +56,15 @@ class DashboardController extends Zend_Controller_Action
                 $this->service->save($values, $this->user);
                 $this->_helper->redirector('index');
             } catch (\InvalidArgumentException $e) {
-                $form->image->addError($e->getMessage());
+                switch ($e->getMessage()) {
+                    case 'username_conflict':
+                        $form->username->addError($this->view->translate("User with given username exists."));
+                        break;
+
+                    default:
+                        $form->image->addError($e->getMessage());
+                        break;
+                }
             }
         }
 
