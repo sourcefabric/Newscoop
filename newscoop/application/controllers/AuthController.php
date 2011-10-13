@@ -114,6 +114,8 @@ class AuthController extends Zend_Controller_Action
                 $this->_helper->service('email')->sendPasswordRestoreToken($user);
                 $this->_helper->flashMessenger($this->view->translate("E-mail with instructions was sent to given email address."));
                 $this->_helper->redirector('password-restore-after', 'auth');
+            } else if (empty($user)) {
+                $form->email->addError($this->view->translate("Given email not found."));
             }
         }
 
