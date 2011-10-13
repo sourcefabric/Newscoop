@@ -22,7 +22,6 @@ class BlogService
     /** @var array */
     private $getArticleActions = array(
         'edit.php',
-        'do_article_action.php',
         'preview.php',
         'locations',
         'images',
@@ -38,6 +37,7 @@ class BlogService
         'topics',
         'files',
         'comments',
+        'do_article_action.php',
         'autopublish_do_add.php',
     );
 
