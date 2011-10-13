@@ -155,8 +155,15 @@ class AuthController extends Zend_Controller_Action
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $this->_helper->service('user')->save($form->getValues(), $user);
             $this->_helper->service('user.token')->invalidateTokens($user, 'password.restore');
-            $this->_helper->flashMessenger($this->view->translate("Password changed"));
-            $this->_helper->redirector('index', 'auth');
+            if (!$this->auth->hasIdentity()) { // log in
+                $adapter = $this->_helper->service('auth.adapter');
+                $adapter->setEmail($user->getEmail())->setPassword($form->password->getValue());
+                $this->auth->authenticate($adapter);
+                $this->_helper->redirector('index', 'dashboard');
+            } else {
+                $this->_helper->flashMessenger($this->view->translate("Password changed"));
+                $this->_helper->redirector('index', 'auth');
+            }
         }
 
         $this->view->form = $form;
