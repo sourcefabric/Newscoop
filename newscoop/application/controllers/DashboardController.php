@@ -59,9 +59,17 @@ class DashboardController extends Zend_Controller_Action
                 $form->image->addError($e->getMessage());
             }
         }
-
+        
+        $userSubscriptionService = $this->_helper->service('user_subscription');
+        
+        //var_dump($userSubscriptionService->getSubscriptions($this->user));
+        
         $this->view->form = $form;
         $this->view->user = new MetaUser($this->user);
+        $this->view->userSubscriptions = $userSubscriptionService->getSubscriptions($this->user);
+        
+        //var_dump($this->view->userSubscriptions[0]->getTimeBegin());
+        var_dump($this->view->userSubscriptions[0]);
     }
 
     public function updateTopicsAction()
