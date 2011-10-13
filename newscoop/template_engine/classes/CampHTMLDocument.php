@@ -288,15 +288,18 @@ final class CampHTMLDocument
         $siteinfo['description'] = $this->getMetaTag('description');
 
         $tpl = CampTemplate::singleton();
-        array_unshift($tpl->template_dir, APPLICATION_PATH . '/../' . $siteinfo['templates_path']);
         $tpl->template_dir = array_unique($tpl->template_dir);
 
+        array_unshift($tpl->template_dir, CS_PATH_SITE . DIR_SEP . $siteinfo['templates_path']);
         if (!$template) {
-            $template = '_campsite_error.tpl';
             $siteinfo['error_message'] = "No template set for display.";
         } elseif (!$this->templateExists($template, $tpl)) {
-            $template = '_campsite_error.tpl';
             $siteinfo['error_message'] = "The template '$template' does not exist in the templates directory.";
+        }
+        if (!is_null($siteinfo['error_message'])) {
+            $siteinfo['templates_path'] = CS_TEMPLATES_DIR . DIR_SEP . CS_SYS_TEMPLATES_DIR;
+            $template = '_campsite_error.tpl';
+            array_unshift($tpl->template_dir, CS_PATH_SITE . DIR_SEP . $siteinfo['templates_path']);
         }
 
         $subdir = $this->m_config->getSetting('SUBDIR');
@@ -311,7 +314,7 @@ final class CampHTMLDocument
         if (SystemPref::Get('TemplateCacheHandler')) {
             $uri = CampSite::GetURIInstance();
             $tpl->campsiteVector = $uri->getCampsiteVector();
-            $templateObj = new Template($template);
+            $templateObj = new Template(CampSite::GetURIInstance()->getThemePath() . ltrim($template, '/'));
             $tpl->cache_lifetime = (int)$templateObj->getCacheLifetime();
         }
 
@@ -332,7 +335,8 @@ final class CampHTMLDocument
     private function templateExists($template, $smarty)
     {
         foreach ($smarty->template_dir as $dir) {
-            if (file_exists("$dir/" . ltrim($template, '/'))) {
+            $filePath = "$dir/" . ltrim($template, '/');
+            if (file_exists($filePath)) {
                 return true;
             }
         }

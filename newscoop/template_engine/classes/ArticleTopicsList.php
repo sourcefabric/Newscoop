@@ -26,7 +26,7 @@ class ArticleTopicsList extends ListObject
 	    $articleTopicsList = ArticleTopic::GetList($this->m_constraints, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaTopicsList = array();
 	    foreach ($articleTopicsList as $topic) {
-	        $metaTopicsList[] = new MetaTopic($topic->getTopicId());
+	        $metaTopicsList[] = new MetaTopic($topic);
 	    }
 	    return $metaTopicsList;
 	}

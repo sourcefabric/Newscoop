@@ -35,7 +35,7 @@ function getArticlesOfTheDay( start, end, callback )
     search_end = formatDate(end);
 
     $.post("{{$view->baseUrl('/articleoftheday/article-of-the-day')}}",
-        {"format": "json", "start": search_start, "end": search_end},
+        {"format": "json", "start": search_start, "end": search_end, "image_width": {{$imageWidth}}},
         function(data){
             callback(data.articles);
         },
@@ -45,11 +45,13 @@ function getArticlesOfTheDay( start, end, callback )
 
 $("#wobs_calendar_{{$rand_int}}").wobscalendar({
     'today': new Date('{{$today[0]}}', '{{$today[1]-1}}', '{{$today[2]}}'),
-    'date': new Date('{{$year}}', '{{$month}}', '{{$day}}'),
+    'date': new Date('{{$year}}', '{{$month}}'),
     'articles': getArticlesOfTheDay,
     'defaultView': '{{$defaultView}}',
     'firstDay': {{$firstDay}},
-    'navigation': {{if $nav}}true{{else}}false{{/if}},
-    'showDayNames': {{if $dayNames}}true{{else}}false{{/if}}
+    'navigation': {{if $nav}} true {{else}} false {{/if}},
+    'showDayNames': {{if $dayNames}} true {{else}} false {{/if}},
+    'earliestMonth': {{if $earliestMonth}} new Date('{{$earliestMonth[0]}}', '{{$earliestMonth[1]-1}}') {{else}} undefined {{/if}},
+    'latestMonth': {{if $latestMonth}} new Date('{{$latestMonth[0]}}', '{{$latestMonth[1]-1}}') {{else}} undefined {{/if}}
 });
 </script>

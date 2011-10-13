@@ -109,7 +109,7 @@ class CampURITemplatePath extends CampURI
             $this->m_errorCode = $res->getCode();
             if ($this->m_errorCode == self::INVALID_TEMPLATE
             && !is_null($this->m_publication)) {
-            	$tplId = CampSystem::GetInvalidURLTemplate($this->m_publication->identifier);
+            	$tplId = CampSystem::GetInvalidURLTemplate($this->m_publication->identifier, null, null, !$this->m_preview);
             	$template = new MetaTemplate($tplId);
             	if ($template->defined()) {
             		$this->m_template = $template;

@@ -103,7 +103,7 @@ class RegisterController extends Zend_Controller_Action
                     $this->_helper->redirector('index', 'index', 'default');
                 } else {
                     $adapter = $this->_helper->service('auth.adapter');
-                    $adapter->setUsername($values['username'])->setPassword($values['password']);
+                    $adapter->setEmail($user->getEmail())->setPassword($values['password']);
                     $result = $auth->authenticate($adapter);
                     $this->_helper->redirector('index', 'dashboard', 'default');
                 }

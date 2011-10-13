@@ -23,12 +23,18 @@ class Admin_IngestController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $this->view->auto_mode = $this->service->isAutoMode();
-        $this->view->feeds = $this->service->getFeeds();
-        $this->view->entries = $this->service->findBy(array(
+        $feed_id = $this->_getParam('feed', null);
+        $criteria = array(
             'published' => null,
             'status' => 'Usable',
-        ), array('updated' => 'desc'), 25, 0);
+        );
+
+        if (isset($feed_id)) {
+            $criteria['feed'] = $feed_id;
+        }
+
+        $this->view->feeds = $this->service->getFeeds();
+        $this->view->entries = $this->service->findBy($criteria, array('updated' => 'desc'), 25, 0);
 
         $publisher = $this->_helper->service('ingest.publisher');
         $this->view->sections = array();
@@ -56,7 +62,14 @@ class Admin_IngestController extends Zend_Controller_Action
 
     public function switchModeAction()
     {
-        $this->service->switchAutoMode();
+        $feed_id = $this->_getParam('feed', null);
+
+        if (is_null($feed_id)) {
+            $this->_helper->redirector('index');
+        }
+
+        $this->service->switchMode($feed_id);
+
         $this->_helper->redirector('index');
     }
 

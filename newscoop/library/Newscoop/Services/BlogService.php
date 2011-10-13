@@ -82,7 +82,7 @@ class BlogService
 
         foreach ($articles as $article) {
             $data = $article->getArticleData();
-            $authors = explode(self::SEPARATOR, $data->getFieldValue('loginname'));
+            $authors = array_map('trim', explode(self::SEPARATOR, $data->getFieldValue('loginname')));
             if (in_array($user->getUsername(), $authors)) {
                 return $article;
             }
