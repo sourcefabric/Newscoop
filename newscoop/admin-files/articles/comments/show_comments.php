@@ -26,19 +26,21 @@ foreach ($hiddens as $name) {
 /** @todo Replace this basic template with a doT template from jquery*/
 ?>
 <fieldset id="comment-prototype" class="plain comments-block" style="display:none">
+    <input type="hidden" name="comment_id" value="${id}">
     <?php if ($inEditMode): ?>
     <ul class="action-list clearfix">
       <li>
         <a class="ui-state-default icon-button right-floated" href="javascript:;"><span class="ui-icon ui-icon-disk"></span><?php putGS('Save'); ?></a>
       </li>
-      <li>
-        <input type="radio" name="comment_action_${id}" value="hidden" class="input_radio" id="hidden_${id}" ${hidden_checked}/>
-        <label class="inline-style left-floated" for="hidden_${id}"><?php putGS('Hidden'); ?></label>
-      </li>
-
+      
       <li>
         <input type="radio" name="comment_action_${id}" value="deleted" class="input_radio" id="deleted_${id}" ${deleted_checked}/>
         <label class="inline-style left-floated" for="deleted_${id}"><?php putGS('Delete'); ?></label>
+      </li>
+      
+      <li>
+        <input type="radio" name="comment_action_${id}" value="hidden" class="input_radio" id="hidden_${id}" ${hidden_checked}/>
+        <label class="inline-style left-floated" for="hidden_${id}"><?php putGS('Hidden'); ?></label>
       </li>
 
       <li>
@@ -74,22 +76,25 @@ foreach ($hiddens as $name) {
 <p style="display:none"><?php putGS('No comments posted.'); ?></p>
 <form id="comment-moderate" action="../comment/set-status/format/json" method="POST"></form>
 <script type="text/javascript">
-function toggleCommentStatus() {
+function toggleCommentStatus(commentId) {
     var commentSetting = $('input:radio[name^="f_comment"]:checked').val();
     $('#comment-moderate .comments-block').each(function() {
-    	var statusClassMap = { 'hidden': 'hide', 'approved': 'approve', 'pending': 'inbox'};
-    	var block = $(this);
-        var status = $('input:radio:checked', block).val();
-        var cclass = 'comment_'+statusClassMap[status];
-        var button = $('dd.buttons', block);
+    	if (commentId && commentId == $(this).find('input:hidden').val()) {
+            var statusClassMap = { 'hidden': 'hide', 'approved': 'approve', 'pending': 'inbox'};
+            var block = $(this);
+            var status = $('input:radio:checked', block).val();
+            
+            var cclass = 'comment_'+statusClassMap[status];
+            var button = $('dd.buttons', block);
 
-        // set class
-        $('.frame', block).removeClass('comment_inbox comment_hide comment_approve')
-            .addClass(cclass);
-        // show/hide button
-        button.hide();
-        if ((status == 'approved') && (commentSetting != 'locked')) {
-            button.show();
+            // set class
+            $('.frame', block).removeClass('comment_inbox comment_hide comment_approve')
+                .addClass(cclass);
+            // show/hide button
+            button.hide();
+            if ((status == 'approved') && (commentSetting != 'locked')) {
+                button.show();
+            }
         }
     });
     //detach deleted
@@ -149,12 +154,12 @@ $('.action-list a').live('click',function(){
 	   "comment": el.attr('id').match(/\d+/)[0],
 	   "status": el.val()
 	};
-
+    
     var call_url = '../comment/set-status/format/json';
 
 	var res_handle = function(data) {
 		flashMessage('<?php putGS('Comments updated.'); ?>');
-		toggleCommentStatus();
+		toggleCommentStatus(el.attr('id').match(/\d+/)[0]);
 	};
 
 	callServer(call_url, call_data, res_handle, true);
