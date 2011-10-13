@@ -126,6 +126,12 @@ class User implements \Zend_Acl_Role_Interface
      * @var Doctrine\Common\Collections\Collection;
      */
     private $commenters;
+    
+    /**
+     * @Column(type="integer")
+     * @var int
+     */
+    private $subscriber;
 
     /**
      * @param string $email
@@ -695,5 +701,27 @@ class User implements \Zend_Acl_Role_Interface
         } else {
             throw new \InvalidArgumentException("User Property '$p_key' not found");
         }
+    }
+    
+    /**
+     * Set subscriber
+     *
+     * @param integer $subscriber
+     * @return Newscoop\Entity\User
+     */
+    public function setSubscriber($subscriber)
+    {
+        $this->subscriber = $subscriber;
+        return $this;
+    }
+
+    /**
+     * Get subscriber
+     *
+     * @return integer
+     */
+    public function getSubscriber()
+    {
+        return $this->subscriber;
     }
 }

@@ -26,6 +26,7 @@ class RegisterController extends Zend_Controller_Action
             ->addActionContext('generate-username', 'json')
             ->addActionContext('check-username', 'json')
             ->addActionContext('check-email', 'json')
+            ->addActionContext('pending', 'json')
             ->initContext();
     }
 
@@ -194,6 +195,23 @@ class RegisterController extends Zend_Controller_Action
 
         $this->view->name = $userData->profile->displayName;
         $this->view->form = $form;
+    }
+    
+    public function pendingAction()
+    {
+        if ($this->_getParam('email')) {
+            $user = $this->_helper->service('user')->findBy(array('email' => $this->_getParam('email')));
+            
+            if ($user) {
+                $this->view->result = '0';
+            }
+            else {
+                $user = $this->_helper->service('user')->createPending($this->_getParam('email'));
+                $this->_helper->service('email')->sendConfirmationToken($user);
+                $this->view->result = '1';
+            }
+        }
+        $this->view->result = '0';
     }
 
     /**

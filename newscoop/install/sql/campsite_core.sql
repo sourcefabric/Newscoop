@@ -1990,6 +1990,7 @@ CREATE TABLE `user_subscription` (
    `subscription_type` int(1),
    `time_begin` datetime,
    `time_end` datetime,
+   `subscription` int(11),
    PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -2385,6 +2386,7 @@ CREATE TABLE `liveuser_users` (
   `is_public` boolean NOT NULL DEFAULT '0',
   `points` int(10) DEFAULT '0',
   `image` varchar(255) DEFAULT NULL,
+  `subscriber` int(10) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `UName` (`UName`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

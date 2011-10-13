@@ -13,4 +13,23 @@
 
 {{ $form }}
 
+-- <br>
+
+{{ if $userSubscriptions }}
+subscriptions:<br>
+{{ foreach $userSubscriptions as $userSubscription }}
+- type: {{ $userSubscription->getSubscriptionType() }} 
+begin: {{ $userSubscription->getTimeBegin()->format('Y.m.d') }} 
+end: {{ $userSubscription->getTimeEnd()->format('Y.m.d') }} 
+<a href="#">Details [{{ $userSubscription->getSubscription() }}]</a>
+<br>
+{{ /foreach }}
+
+{{ else }}
+no subscriptions<br>
+{{ /if }}
+<br>--
+<br>
+<a href="#">new subscription</a>
+
 {{/block}}
