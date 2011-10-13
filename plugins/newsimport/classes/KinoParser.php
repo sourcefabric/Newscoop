@@ -1,5 +1,7 @@
 <?php
 
+require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'FileLoad.php');
+
 /**
  * KinoData Importer class for managing parsing of KinoData files.
  */
@@ -645,11 +647,8 @@ class KinoData_Parser_SimpleXML {
         // movies general info
         $mov_infos_parts = array('imdb' => 'movimb', 'spec' => 'movspc', 'key' => 'movkey', 'title' => 'movtit', 'directed' => 'movdir', 'url' => 'movlnk', 'trailer' => 'movtra',);
         foreach($movies_infos_files as $one_mov_file) {
-            $orig_file_data = file_get_contents($one_mov_file);
-            $conv_file_data = str_replace(array('&'), array('&amp;'), $orig_file_data);
-            unset($orig_file_data);
-            $one_mov_xml = simplexml_load_string($conv_file_data);
             //$one_mov_xml = simplexml_load_file($one_mov_file);
+            $one_mov_xml = simplexml_load_string(FileLoad::LoadFix($one_mov_file));
             foreach ($one_mov_xml->movie as $one_movie) {
                 $one_mov_id = trim('' . $one_movie->movid);
                 if (empty($one_mov_id)) {
@@ -686,11 +685,8 @@ class KinoData_Parser_SimpleXML {
 
         // movies genres info
         foreach($movies_genres_files as $one_mov_file) {
-            $orig_file_data = file_get_contents($one_mov_file);
-            $conv_file_data = str_replace(array('&'), array('&amp;'), $orig_file_data);
-            unset($orig_file_data);
-            $one_mov_xml = simplexml_load_string($conv_file_data);
             //$one_mov_xml = simplexml_load_file($one_mov_file);
+            $one_mov_xml = simplexml_load_string(FileLoad::LoadFix($one_mov_file));
             foreach ($one_mov_xml->genre as $one_genre) {
                 $one_gen_id = trim('' . $one_genre->genid);
                 if (empty($one_gen_id)) {
@@ -747,11 +743,8 @@ class KinoData_Parser_SimpleXML {
 
         // movies links info
         foreach($movies_links_files as $one_lnk_file) {
-            $orig_file_data = file_get_contents($one_lnk_file);
-            $conv_file_data = str_replace(array('&'), array('&amp;'), $orig_file_data);
-            unset($orig_file_data);
-            $one_lnk_xml = simplexml_load_string($conv_file_data);
             //$one_lnk_xml = simplexml_load_file($one_lnk_file);
+            $one_lnk_xml = simplexml_load_string(FileLoad::LoadFix($one_lnk_file));
             foreach ($one_lnk_xml->movie as $one_movie) {
                 $one_mov_id = trim('' . $one_movie->m_movid);
                 if (empty($one_mov_id)) {
@@ -907,11 +900,8 @@ class KinoData_Parser_SimpleXML {
 
         $other_desc_parts = array('weewee', 'weelea', 'weetxs');
         foreach ($kinos_infos_files as $one_kino_file) {
-            $orig_file_data = file_get_contents($one_kino_file);
-            $conv_file_data = str_replace(array('&'), array('&amp;'), $orig_file_data);
-            unset($orig_file_data);
-            $one_kino_xml = simplexml_load_string($conv_file_data);
             //$one_kino_xml = simplexml_load_file($one_kino_file);
+            $one_kino_xml = simplexml_load_string(FileLoad::LoadFix($one_kino_file));
             $export_start_date = '0000-00-00';
             $export_start_date_time = explode('-', trim('' . $one_kino_xml->export->date_min));
             $export_start_date_info = explode('.', $export_start_date_time[0]);

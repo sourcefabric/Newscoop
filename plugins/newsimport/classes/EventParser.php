@@ -1,5 +1,7 @@
 <?php
 
+require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'FileLoad.php');
+
 /**
  * EventData Importer class for managing parsing of EventData files.
  */
@@ -433,12 +435,8 @@ class EventData_Parser_SimpleXML {
         libxml_clear_errors();
         $internal_errors = libxml_use_internal_errors(true);
 
-        $orig_file_data = file_get_contents($p_file);
-        $conv_file_data = str_replace(array('&'), array('&amp;'), $orig_file_data);
-        unset($orig_file_data);
         //$xml = simplexml_load_file($p_file);
-        $xml = simplexml_load_string($conv_file_data);
-        unset($conv_file_data);
+        $xml = simplexml_load_string(FileLoad::LoadFix($p_file));
 
         // halt if loading produces an error
         if (!$xml) {
