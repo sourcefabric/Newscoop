@@ -67,7 +67,7 @@ class EmailService
         ));
 
         // @todo use config
-        $this->send("Password restore bei tageswoche.ch", $message, $user->getEmail());
+        $this->send("Passwort für tageswoche.ch zurücksetzen", $message, $user->getEmail());
     }
 
     /**
