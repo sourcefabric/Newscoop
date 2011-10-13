@@ -1,7 +1,7 @@
 {{if $gimme->debatejustvoted->number}}
 	You have voted {{$gimme->debatejustvoted->answer}}
 {{/if}}
-{{list_debates length="1" order="bynumber desc"}}
+{{list_debates length="1" constraints="current" order="bynumber desc"}}
 
 	{{if $gimme->debate->is_votable}}
  		{{debate_form template="debate.tpl" submit_button=false}}
@@ -63,4 +63,34 @@
         </ul>
 	{{/if}}
 
+{{/list_debates}}
+
+<!-- UPCOMING SAMPLE -->
+{{list_debates length="1" constraints="upcoming"}}
+	{{$gimme->debate->name}}<br/>
+	{{$gimme->debate->question}}
+{{/list_debates}}
+
+<!-- ARCHIVE SAMPLE for 5 entries-->
+{{list_debates length="5" order="byend desc" constraints="archived"}}
+
+	{{$gimme->debate->name}}<br />
+	{{$gimme->debate->question}}<br />
+	<hr />
+	<ul>
+	{{list_debate_answers order="bynumber asc"}}
+		<li>
+			{{$gimme->debateanswer->percentage|string_format:"%d"}}%  {{$gimme->debateanswer->answer}}
+		</li>
+	{{/list_debate_answers}}
+	{{list_debate_days length="7"}}
+    	<li style="height:100px">
+    		<!-- the list of votes, numbering in 2 usually -->
+    		{{list_debate_votes}}
+				<em>{{$gimme->debatevotes->percentage|string_format:"%.0f"}}%</em>
+        	{{/list_debate_votes}}
+        	<span>{{$gimme->debatedays->time|date_format:"%a %d"}}.</span>
+    	</li>
+    {{/list_debate_days}}
+    </ul>
 {{/list_debates}}

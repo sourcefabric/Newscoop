@@ -2520,6 +2520,27 @@ LOCK TABLES `output_theme` WRITE;
 /*!40000 ALTER TABLE `output_theme` ENABLE KEYS */;
 UNLOCK TABLES;
 
+
+-- Article playlist tables
+DROP TABLE IF EXISTS `playlist`;
+CREATE TABLE `playlist` (
+  `id_playlist` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) NOT NULL,
+  `notes` varchar(1024) DEFAULT NULL,
+  PRIMARY KEY (`id_playlist`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `playlist_article`;
+CREATE TABLE `playlist_article` (
+  `id_playlist_article` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_playlist` int(10) unsigned NOT NULL,
+  `article_no` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id_playlist_article`),
+  UNIQUE KEY `id_playlist` (`id_playlist`,`article_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 --
 -- Table structure for table `plugin_blog_blog`
 --

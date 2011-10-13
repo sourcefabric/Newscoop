@@ -5,8 +5,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-include_once APPLICATION_PATH . '/../hybridauth/hybridauth.php';
-
 /**
  */
 class AuthController extends Zend_Controller_Action
@@ -61,6 +59,18 @@ class AuthController extends Zend_Controller_Action
 
     public function socialAction()
     {
+        // hack to import all GLOBAL_HYBRID_ into global namespace
+        foreach (token_get_all(file_get_contents(APPLICATION_PATH . '/../hybridauth/hybridauth.php')) as $token) {
+            if ($token[0] == T_VARIABLE) {
+                $var = substr($token[1], 1);
+                if (strstr($var, 'GLOBAL_HYBRID_AUTH_') !== FALSE) {
+                    global $$var;
+                }
+            }
+        }
+
+        require_once APPLICATION_PATH . '/../hybridauth/hybridauth.php';
+
         $hauth = new Hybrid_Auth();
         if ($hauth->hasError()) {
             var_dump($hauth->getErrorMessage());
@@ -68,11 +78,9 @@ class AuthController extends Zend_Controller_Action
         }
 
         if (!$hauth->hasSession()) {
-            $params = array(
-                'hauth_return_to' => $this->getRequest()->getHttpHost() . $this->getRequest()->getRequestUri(),
-            );
-
-            $adapter = $hauth->setup($this->_getParam('provider'), $params);
+            $adapter = $hauth->setup($this->_getParam('provider'), array(
+                'hauth_return_to' => 'http://dev.tageswoche.ch/auth/social/provider/' . $this->_getParam('provider'),
+            ));
             $adapter->login();
         } else {
             $adapter = $hauth->wakeup();
