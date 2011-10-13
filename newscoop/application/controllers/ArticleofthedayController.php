@@ -88,6 +88,12 @@ class ArticleofthedayController extends Zend_Controller_Action
             $this->view->latestMonth = null;
         }
 
+        $imageWidth = $request->getParam('imageWidth', 128);
+        if (!is_int($imageWidth)) {
+            $imageWidth = 128;
+        }
+        $this->view->imageWidth = $imageWidth;
+
         $this->view->nav = $request->getParam('navigation', true);
         $this->view->firstDay = $request->getParam('firstDay', 0);
         $this->view->dayNames = $request->getParam('showDayNames', true);
@@ -96,11 +102,13 @@ class ArticleofthedayController extends Zend_Controller_Action
 
     public function articleOfTheDayAction()
     {
-        $params = $this->getRequest()->getParams();
+        $request = $this->getRequest();
 
         //TODO parse these to make sure are times.
-        $start_date = $params['start'];
-        $end_date = $params['end'];
+        $start_date = $request->getParam('start');
+        $end_date = $request->getParam('end');
+
+        $imageWidth = $request->getParam('image_width', 128);
 
         $articles = Article::GetArticlesOfTheDay($start_date, $end_date);
 
@@ -118,7 +126,7 @@ class ArticleofthedayController extends Zend_Controller_Action
 
             if (count($images) > 0) {
                 $image = $images[0];
-                $json['image'] = $this->view->baseUrl("/get_img?ImageWidth=164&ImageId=".$image->getImageId());
+                $json['image'] = $this->view->baseUrl("/get_img?ImageWidth=$imageWidth&ImageId=".$image->getImageId());
             }
             else {
                 $json['image'] = null;

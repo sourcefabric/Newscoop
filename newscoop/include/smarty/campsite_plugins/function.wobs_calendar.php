@@ -27,6 +27,9 @@ function smarty_function_wobs_calendar($p_params, &$p_smarty)
     if (isset($p_params['latestMonth'])){
         $wobs_commands['latestMonth'] = $p_params['latestMonth'];
     }
+    if (isset($p_params['imageWidth'])){
+        $wobs_commands['imageWidth'] = $p_params['imageWidth'];
+    }
 
     $p_content = $controller->view->action(
         'index',

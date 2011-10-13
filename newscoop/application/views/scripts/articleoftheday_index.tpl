@@ -35,7 +35,7 @@ function getArticlesOfTheDay( start, end, callback )
     search_end = formatDate(end);
 
     $.post("{{$view->baseUrl('/articleoftheday/article-of-the-day')}}",
-        {"format": "json", "start": search_start, "end": search_end},
+        {"format": "json", "start": search_start, "end": search_end, "image_width": {{$imageWidth}}},
         function(data){
             callback(data.articles);
         },

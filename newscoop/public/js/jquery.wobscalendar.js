@@ -498,7 +498,7 @@
 		function setThumbnail(picture) {
 			_s_image = picture;
 			
-			td.find("a").append('<img width="164" height="166" src="'+_s_image+'"></img>');
+			td.find("a").append('<img src="'+_s_image+'"></img>');
 		}
 		
 		function setUrl(url) {
