@@ -31,7 +31,8 @@ class ArticleofthedayController extends Zend_Controller_Action
         $date = explode("/", $date);
 
         $today = date("Y/m/d");
-        $this->view->today = explode("/", $today);
+        $today = explode("/", $today);
+        $this->view->today = $today;
 
         if (isset($date[0])) {
             $this->view->year = $date[0];
@@ -44,6 +45,47 @@ class ArticleofthedayController extends Zend_Controller_Action
         }
         else if (!isset($date[2]) && ($view === "month")) {
             $this->view->day = 1;
+        }
+
+        $now = new DateTime("$today[0]-$today[1]");
+
+        //oldest month user can scroll to YYYY/mm
+        $earliestMonth = $request->getParam('earliestMonth', null);
+        if (isset($earliestMonth) && $earliestMonth == "current") {
+            $this->view->earliestMonth = $today;
+        }
+        else if (isset($earliestMonth)) {
+
+            $earliestMonth = explode("/", $earliestMonth);
+            $tmp_earliest = new DateTime("$earliestMonth[0]-$earliestMonth[1]");
+
+            if ($tmp_earliest > $now) {
+                $earliestMonth = $today;
+            }
+
+            $this->view->earliestMonth = $earliestMonth;
+        }
+        else {
+            $this->view->earliestMonth = null;
+        }
+
+        //most recent month user can scroll to YYYY/mm
+        $latestMonth = $request->getParam('latestMonth', null);
+        if (isset($latestMonth) && $latestMonth == "current") {
+            $this->view->latestMonth = $today;
+        }
+        else if (isset($latestMonth)) {
+            $latestMonth = explode("/", $latestMonth);
+            $tmp_latest = new DateTime("$latestMonth[0]-$latestMonth[1]");
+
+            if ($now > $tmp_latest) {
+                $latestMonth = $today;
+            }
+
+            $this->view->latestMonth = $latestMonth;
+        }
+        else {
+            $this->view->latestMonth = null;
         }
 
         $this->view->nav = $request->getParam('navigation', true);
