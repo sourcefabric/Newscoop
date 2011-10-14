@@ -48,7 +48,7 @@ $info = array(
         'init' => 'plugin_debate_init'
     ),
     'localizer' => array(
-        'id' => 'plugin_debate_admin',
+        'id' => 'plugin_debate',
         'path' => '/plugins/debate/admin-files/debate/*/*',
         'screen_name' => 'Debate'
     ),
