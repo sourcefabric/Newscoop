@@ -52,7 +52,7 @@ class DatatableRepository
         $qb = $this->repository->createQueryBuilder('e');
 
         if (!empty($params['sSearch'])) {
-            $qb->where($this->buildWhere($cols, $params['sSearch']));
+            $qb->where($this->buildWhere($cols, $params));
         }
 
         // sort
@@ -119,16 +119,19 @@ class DatatableRepository
      * @param string $search
      * @return Doctrine\ORM\Query\Expr
      */
-    private function buildWhere(array $cols, $search)
+    private function buildWhere(array $cols, $params)
     {
         $qb = $this->repository->createQueryBuilder('e');
         $or = $qb->expr()->orx();
-        foreach (array_keys($cols) as $i => $property) {
-            if (!is_string($property)) { // not searchable
-                continue;
-            }
-
-            $or->add($qb->expr()->like("e.$property", $qb->expr()->literal("%{$search}%")));
+        
+        $reflection = new \ReflectionObject(new $this->entityName);
+        
+        $search = $params['sSearch'];
+        foreach (array_keys($cols) as $id => $property) {
+        	//column is searchable
+            if ($reflection->hasProperty($property) && $params["bSearchable_{$id}"]) {
+                $or->add($qb->expr()->like("e.$property", $qb->expr()->literal("%{$search}%")));
+            }     
         }
 
         return $or;
