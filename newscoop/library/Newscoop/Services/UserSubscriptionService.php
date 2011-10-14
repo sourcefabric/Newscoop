@@ -31,6 +31,17 @@ class UserSubscriptionService
     {
         return $this->getRepository()->findBy(array('user' => $user->getId()));
     }
+    
+    public function createKey($user)
+    {
+        $key = md5($user->getId().$user->getEmail().time());
+        return($key);
+    }
+    
+    public function setKey($key)
+    {
+        // send request
+    }
 
     private function getRepository()
     {

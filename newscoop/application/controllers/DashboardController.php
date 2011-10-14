@@ -69,10 +69,13 @@ class DashboardController extends Zend_Controller_Action
         }
         
         $userSubscriptionService = $this->_helper->service('user_subscription');
+        $userSubscriptionKey = $userSubscriptionService->createKey($this->user);
+        $userSubscriptionService->setKey($userSubscriptionKey);
         
         $this->view->form = $form;
         $this->view->user = new MetaUser($this->user);
         $this->view->userSubscriptions = $userSubscriptionService->getSubscriptions($this->user);
+        $this->view->userSubscriptionKey = $userSubscriptionKey;
     }
 
     public function updateTopicsAction()
