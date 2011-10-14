@@ -35,9 +35,9 @@ class AuthController extends Zend_Controller_Action
 
             if ($result->getCode() == Zend_Auth_Result::SUCCESS) {
                 $this->_helper->redirector('index', 'dashboard');
+            } else {
+                $form->addError($this->view->translate("Invalid credentials"));
             }
-
-            $this->view->error = $this->view->translate("Invalid credentials");
         }
 
         $this->view->form = $form;
