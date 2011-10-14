@@ -98,6 +98,7 @@ class TemplateRepositoryTest extends \RepositoryTestCase
             'key' => 'newtemplate',
         ));
 
+        $this->assertNotEmpty($template);
         $this->assertEquals($id, $template->getId());
     }
 }

@@ -117,7 +117,7 @@ abstract class ListObject
 	 * @var object
 	 */
 	protected $m_defaultIterator = null;
-	
+
 	protected $m_cacheKey = null;
 
 	protected $m_defaultTTL = 600;
@@ -509,7 +509,7 @@ abstract class ListObject
 		}
 		return 1 + ($p_iterator->key() % $this->m_columns);
 	}
-	
+
 	/**
 	 * Returns the row number for the given iterator
 	 *
@@ -635,7 +635,7 @@ abstract class ListObject
 	    $lastWord = '';
 	    foreach (str_split($p_constraintsString) as $char) {
 	        if (preg_match('/[\s]/', $char) && !$escaped) {
-	            if (!empty($lastWord)) {
+	            if (strlen($lastWord) > 0) {
 	            	if ($lastWord == "''") {
 	            		$lastWord = '';
 	            	}

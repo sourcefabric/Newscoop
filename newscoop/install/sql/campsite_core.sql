@@ -1990,6 +1990,7 @@ CREATE TABLE `user_subscription` (
    `subscription_type` int(1),
    `time_begin` datetime,
    `time_end` datetime,
+   `subscription` int(11),
    PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -2385,6 +2386,7 @@ CREATE TABLE `liveuser_users` (
   `is_public` boolean NOT NULL DEFAULT '0',
   `points` int(10) DEFAULT '0',
   `image` varchar(255) DEFAULT NULL,
+  `subscriber` int(10) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `UName` (`UName`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
@@ -2519,6 +2521,27 @@ LOCK TABLES `output_theme` WRITE;
 /*!40000 ALTER TABLE `output_theme` DISABLE KEYS */;
 /*!40000 ALTER TABLE `output_theme` ENABLE KEYS */;
 UNLOCK TABLES;
+
+
+-- Article playlist tables
+DROP TABLE IF EXISTS `playlist`;
+CREATE TABLE `playlist` (
+  `id_playlist` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) NOT NULL,
+  `notes` varchar(1024) DEFAULT NULL,
+  PRIMARY KEY (`id_playlist`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `playlist_article`;
+CREATE TABLE `playlist_article` (
+  `id_playlist_article` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_playlist` int(10) unsigned NOT NULL,
+  `article_no` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id_playlist_article`),
+  UNIQUE KEY `id_playlist` (`id_playlist`,`article_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 --
 -- Table structure for table `plugin_blog_blog`

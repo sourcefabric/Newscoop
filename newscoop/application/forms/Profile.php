@@ -25,6 +25,12 @@ class Application_Form_Profile extends Zend_Form
             'filters' => array('stringTrim'),
         ));
 
+        $this->addElement('text', 'username', array(
+            'label' => 'Username',
+            'filters' => array('stringTrim'),
+            'required' => true,
+        ));
+
         $this->addElement('password', 'password', array(
             'label' => 'Password',
         ));
@@ -111,6 +117,7 @@ class Application_Form_Profile extends Zend_Form
         $defaults = array(
             'first_name' => $user->getFirstName(),
             'last_name' => $user->getLastName(),
+            'username' => $user->getUsername(),
             'attributes' => array(),
         );
 

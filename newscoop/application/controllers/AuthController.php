@@ -5,8 +5,6 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-include_once APPLICATION_PATH . '/../hybridauth/hybridauth.php';
-
 /**
  */
 class AuthController extends Zend_Controller_Action
@@ -32,14 +30,14 @@ class AuthController extends Zend_Controller_Action
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $values = $form->getValues();
             $adapter = $this->_helper->service('auth.adapter');
-            $adapter->setUsername($values['username'])->setPassword($values['password']);
+            $adapter->setEmail($values['email'])->setPassword($values['password']);
             $result = $this->auth->authenticate($adapter);
 
             if ($result->getCode() == Zend_Auth_Result::SUCCESS) {
                 $this->_helper->redirector('index', 'dashboard');
+            } else {
+                $form->addError($this->view->translate("Invalid credentials"));
             }
-
-            $this->view->error = $this->view->translate("Invalid credentials");
         }
 
         $this->view->form = $form;
@@ -61,6 +59,18 @@ class AuthController extends Zend_Controller_Action
 
     public function socialAction()
     {
+        // hack to import all GLOBAL_HYBRID_ into global namespace
+        foreach (token_get_all(file_get_contents(APPLICATION_PATH . '/../hybridauth/hybridauth.php')) as $token) {
+            if ($token[0] == T_VARIABLE) {
+                $var = substr($token[1], 1);
+                if (strstr($var, 'GLOBAL_HYBRID_AUTH_') !== FALSE) {
+                    global $$var;
+                }
+            }
+        }
+
+        require_once APPLICATION_PATH . '/../hybridauth/hybridauth.php';
+
         $hauth = new Hybrid_Auth();
         if ($hauth->hasError()) {
             var_dump($hauth->getErrorMessage());
@@ -68,7 +78,9 @@ class AuthController extends Zend_Controller_Action
         }
 
         if (!$hauth->hasSession()) {
-            $adapter = $hauth->setup($this->_getParam('provider'));
+            $adapter = $hauth->setup($this->_getParam('provider'), array(
+                'hauth_return_to' => 'http://dev.tageswoche.ch/auth/social/provider/' . $this->_getParam('provider'),
+            ));
             $adapter->login();
         } else {
             $adapter = $hauth->wakeup();
@@ -101,11 +113,17 @@ class AuthController extends Zend_Controller_Action
             if (!empty($user) && $user->isActive()) {
                 $this->_helper->service('email')->sendPasswordRestoreToken($user);
                 $this->_helper->flashMessenger($this->view->translate("E-mail with instructions was sent to given email address."));
-                $this->_helper->redirector('index', 'index');
+                $this->_helper->redirector('password-restore-after', 'auth');
+            } else if (empty($user)) {
+                $form->email->addError($this->view->translate("Given email not found."));
             }
         }
 
         $this->view->form = $form;
+    }
+
+    public function passwordRestoreAfterAction()
+    {
     }
 
     public function passwordRestoreFinishAction()
@@ -137,8 +155,15 @@ class AuthController extends Zend_Controller_Action
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $this->_helper->service('user')->save($form->getValues(), $user);
             $this->_helper->service('user.token')->invalidateTokens($user, 'password.restore');
-            $this->_helper->flashMessenger($this->view->translate("Password changed"));
-            $this->_helper->redirector('index', 'auth');
+            if (!$this->auth->hasIdentity()) { // log in
+                $adapter = $this->_helper->service('auth.adapter');
+                $adapter->setEmail($user->getEmail())->setPassword($form->password->getValue());
+                $this->auth->authenticate($adapter);
+                $this->_helper->redirector('index', 'dashboard');
+            } else {
+                $this->_helper->flashMessenger($this->view->translate("Password changed"));
+                $this->_helper->redirector('index', 'auth');
+            }
         }
 
         $this->view->form = $form;

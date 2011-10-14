@@ -43,17 +43,22 @@ class UserSubscription
      */
     static $subscription_type_enum = array('standard', 'student');
     
-    /*
-     * @column(type="datetime")
-     * @var DateTime
+    /**
+     * @Column(type="datetime")
      */
     private $time_begin;
     
-    /*
+    /**
      * @column(type="datetime")
      * @var DateTime
      */
     private $time_end;
+    
+    /**
+     * @Column(type="integer")
+     * @var int
+     */
+    private $subscription;
     
     /**
      * Set id
@@ -166,5 +171,27 @@ class UserSubscription
     public function getTimeEnd()
     {
         return $this->time_end;
+    }
+    
+    /**
+     * Set subscription
+     *
+     * @param integer $subscription
+     * @return Newscoop\Entity\UserSubscription
+     */
+    public function setSubscription($subscription)
+    {
+        $this->subscription = $subscription;
+        return $this;
+    }
+
+    /**
+     * Get subscription
+     *
+     * @return integer
+     */
+    public function getSubscription()
+    {
+        return $this->subscription;
     }
 }

@@ -22,7 +22,6 @@ class BlogService
     /** @var array */
     private $getArticleActions = array(
         'edit.php',
-        'do_article_action.php',
         'preview.php',
         'locations',
         'images',
@@ -38,6 +37,7 @@ class BlogService
         'topics',
         'files',
         'comments',
+        'do_article_action.php',
         'autopublish_do_add.php',
     );
 
@@ -82,7 +82,7 @@ class BlogService
 
         foreach ($articles as $article) {
             $data = $article->getArticleData();
-            $authors = explode(self::SEPARATOR, $data->getFieldValue('loginname'));
+            $authors = array_map('trim', explode(self::SEPARATOR, $data->getFieldValue('loginname')));
             if (in_array($user->getUsername(), $authors)) {
                 return $article;
             }

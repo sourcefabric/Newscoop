@@ -52,6 +52,10 @@
 	z-index:1;
 	text-decoration:none;
 }
+.wobs-calendar .wobs-date-content a img {
+	width:100%;
+	min-height:85px;
+}
 .wobs-calendar .wobs-other-month .wobs-date-content a img {
 	opacity:0.6;
 }
