@@ -68,6 +68,12 @@ foreach ($hiddens as $name) {
         <dt>&nbsp;</dt>
         <dd class="buttons">
             <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, 'comments/reply.php', '', '&f_comment_id=${id}'); ?>" class="ui-state-default text-button clear-margin"><?php putGS('Reply to comment'); ?></a>
+            <span style="float:left">&nbsp;</span>
+            <a href="<?php echo $controller->view->url(array(
+                'module' => 'admin',
+                'controller' => 'comment',
+                'action' => 'set-recommended',
+            )); ?>/comment/${id}/recommended/${recommended_toggle}" class="ui-state-default text-button clear-margin comment-recommend status-${recommended_toggle}"><?php putGS('Recommend'); ?></a>
         </dd>
         <?php endif; //inEditMode?>
       </dl>
@@ -143,6 +149,32 @@ function loadComments() {
 		if(!hasComment)
 			$('#no-comments').show();
 		toggleCommentStatus();
+
+        $('.comment-recommend').each(function() {
+             if ($(this).hasClass('status-0')) {
+                 $(this).html("<?php putGS("Unrecommend"); ?>");
+            }
+        }).click(function() {
+            var link = $(this);
+            $.getJSON($(this).attr('href') + '?format=json', {
+                'security_token': g_security_token
+            }, function(data, textStatus, jqXHR) {
+                if (link.hasClass('status-0')) {
+                    link.removeClass('status-0').addClass('status-1');
+                    link.html("<?php putGS("Recommend"); ?>");
+                    var status = 1;
+                } else {
+                    link.removeClass('status-1').addClass('status-0');
+                    link.html("<?php putGS("Unrecommend"); ?>");
+                    var status = 1;
+                }
+
+                var href = link.attr('href');
+                link.attr('href', href.substr(0, href.length - 2) + status);
+            });
+
+            return false;
+        });
 	};
 
 	callServer(call_url, call_data, res_handle, true);
