@@ -381,7 +381,7 @@ function callServer(p_callback, p_args, p_handle, p_direct)
                 popupFlash = flashMessage(localizer.session_expired + ' ' + localizer.please + ' <a href="'+g_admin_url + '/login.php" target="_blank">' + localizer.login + '</a>.', 'error', false);
         	}
         	else {
-        		popupFlash = flashMessage(localizer.connection_interrupted + '! ' + localizer.please + ' ' + localizer.try_again_later + '!', 'highlight', true);
+        		popupFlash = flashMessage(localizer.connection_interrupted + '! ' + localizer.please + ' ' + localizer.try_again_later + '!', 'highlight', false);
         	}
             // store request
             queue.push({

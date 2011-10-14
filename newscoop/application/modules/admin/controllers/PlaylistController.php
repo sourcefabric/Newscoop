@@ -56,6 +56,14 @@ class Admin_PlaylistController extends Zend_Controller_Action
         }
     }
 
+    public function articleAction()
+    {
+        $articleRepo = $this->_helper->entity->getRepository('Newscoop\Entity\Article');
+        $this->view->article = current( $articleRepo->findBy( array( "number" => $this->_getParam('id')) ) );
+        $this->view->playlists = $this->playlistRepository->findAll();
+        $this->_helper->layout->setLayout('iframe');
+    }
+
     public function deleteAction()
     {
         $id = $this->_request->getParam('id');
@@ -82,18 +90,19 @@ class Admin_PlaylistController extends Zend_Controller_Action
     {
         $playlistId = $this->_request->getParam('id', null);
         $playlist = null;
+        $playlistName = $this->_request->getParam('name', '');
         // TODO make a service
         if (is_numeric($playlistId))
         {
             $playlist = $this->playlistRepository->find($playlistId);
-            if (!is_null($playlist)) {
-                $playlist->setName($this->_request->getParam('name'));
+            if (!is_null($playlist) && trim($playlistName)!='') {
+                $playlist->setName($playlistName);
             }
         }
         else
         {
             $playlist = new Playlist();
-            $playlist->setName($this->_request->getParam('name', ''));
+            $playlist->setName(trim($playlistName)!='' ? $playlistName:getGS('Playlist').strftime('%F') );
         }
         $playlist = $this->playlistRepository->save($playlist, $this->_request->getParam('articles'));
         if (!($playlist instanceof \Exception))
