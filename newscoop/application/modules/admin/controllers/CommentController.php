@@ -335,11 +335,19 @@ class Admin_CommentController extends Zend_Controller_Action
         foreach ($comments as $comment) {
             /* @var $comment Newscoop\Entity\Comment */
             $commenter = $comment->getCommenter();
-            $result[] = array("name" => $commenter->getName(), "email" => $commenter->getEmail(),
-                              "ip" => $commenter->getIp(), "id" => $comment->getId(), "status" => $comment->getStatus(),
-                              "subject" => $comment->getSubject(), "message" => $comment->getMessage(),
-                              "time_created" => $comment->getTimeCreated()->format('Y-m-d H:i:s'),);
+            $result[] = array(
+                'name' => $commenter->getName(),
+                'email' => $commenter->getEmail(),
+                'ip' => $commenter->getIp(),
+                'id' => $comment->getId(),
+                'status' => $comment->getStatus(),
+                'subject' => $comment->getSubject(),
+                'message' => $comment->getMessage(),
+                'time_created' => $comment->getTimeCreated()->format('Y-m-d H:i:s'),
+                'recommended_toggle' => (int) !$comment->getRecommended(),
+            );
         }
+
         $this->view->result = $result;
     }
 
