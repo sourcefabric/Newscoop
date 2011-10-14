@@ -286,7 +286,7 @@ $('#locations_box a.iframe').each(function() {
 });
 
 $('#topic_box_frame a.iframe').each(function() {
-    $(this).data('fancybox').width = 700;
+    $(this).data('fancybox').width = 1200;
 });
 
 $("#context_box a.iframe").fancybox({
