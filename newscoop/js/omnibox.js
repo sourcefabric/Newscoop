@@ -124,14 +124,16 @@ var omnibox = {
 	showHide: function() {
 		if (this.status == false) {
 			//this.elements.ob_main.style.display = 'inline';
-			$('#ob_main').show(400);
-			this.status = true;
+			$('#ob_wrapper').css('width', '690px');
+            $('#ob_main').show(400);
+            this.status = true;
 			if (this.elements.ob_file_upload_container) this.elements.ob_file_upload_container.innerHTML = '<input type="button" id="ob_file_upload" value="'+this.translations['attach_file']+'">';
 			setTimeout('omnibox.showUploader();', 200);
 		}
 		else {
 			//this.elements.ob_main.style.display = 'none';
-			$('#ob_main').hide(400);
+			$('#ob_wrapper').css('width', '0px');
+            $('#ob_main').hide(400);
 			this.status = false;
 			this.hideUploader();
 		}
