@@ -225,4 +225,14 @@ class Article
     {
         return $this->name;
     }
+
+	/**
+     * Get date
+     *
+     * @return string
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
 }
