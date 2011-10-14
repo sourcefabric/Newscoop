@@ -13,7 +13,6 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Issue.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Section.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Template.php');
 
 class ShortURL
 {
@@ -50,7 +49,7 @@ class ShortURL
 
 	public static function GetURI($p_publicationId, $p_languageId,
 	                              $p_issueNo = null, $p_sectionNo = null,
-	                              $p_articleNo = null, $p_templateIdOrName = null)
+	                              $p_articleNo = null)
 	{
 		$languageObj = new Language($p_languageId);
 		if (!$languageObj->exists()) {
@@ -82,13 +81,6 @@ class ShortURL
 			$uri .= $issueObj->getUrlName() . '/';
 			$uri .= $sectionObj->getUrlName() . '/';
 			$uri .= $articleObj->getUrlName() . '/';
-		}
-		if (!is_null($p_templateIdOrName)) {
-			$templateObj = new Template($p_templateIdOrName);
-			if (!$templateObj->exists()) {
-				return new PEAR_Error(getGS('Template $1 no longer exists!'), $p_templateIdOrName);
-			}
-			$uri .= '?tpl=' . $templateObj->getTemplateId();
 		}
 		return $uri;
 	}

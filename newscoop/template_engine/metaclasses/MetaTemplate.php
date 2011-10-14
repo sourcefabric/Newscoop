@@ -6,7 +6,6 @@
 /**
  * Includes
  */
-require_once($GLOBALS['g_campsiteDir'] . '/classes/Template.php');
 require_once($GLOBALS['g_campsiteDir'] . '/template_engine/metaclasses/MetaDbObject.php');
 
 use Newscoop\Service\Resource\ResourceId;

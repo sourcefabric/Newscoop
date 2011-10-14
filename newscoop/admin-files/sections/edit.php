@@ -1,7 +1,6 @@
 <?php
 require_once($GLOBALS['g_campsiteDir'] . "/$ADMIN_DIR/sections/section_common.php");
 require_once($GLOBALS['g_campsiteDir'] . "/$ADMIN_DIR/articles/editor_load_tinymce.php");
-require_once($GLOBALS['g_campsiteDir'] . '/classes/Template.php');
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 //@New theme management
 use Newscoop\Service\Resource\ResourceId;

@@ -11,7 +11,6 @@ use Newscoop\Webcode\Manager;
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMap.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Template.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObject.php');
 
@@ -512,7 +511,7 @@ final class MetaArticle extends MetaDbObject {
         $result = $repository->getCount($params);
         return $result;
     }
-    
+
     protected function getRecommendedCommentCount() {
         global $controller;
         $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
