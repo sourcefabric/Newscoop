@@ -96,10 +96,10 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
     /*
     public function setAdapter()
     {
-        
+
     }
     */
-    
+
     /**
      * Set entity
      *
@@ -130,12 +130,31 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
      * @param array $cols
      * @return Action_Helper_Datatable
      */
-    public function setCols(array $cols, array $sorting = array())
+    public function setCols(array $cols, array $sorting = array(), array $initial_sort = array())
     {
         $this->cols = $cols;
         $this->colsIndex = array_flip(array_keys($this->cols));
         $this->buildColumnDefs();
         $this->setSorting($sorting);
+        $this->setInitialSorting($initial_sort);
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Set initial sorting columns (aaSorting)
+     *
+     * @param array $initialSort
+     * @return Action_Helper_Datatable
+     */
+    public function setInitialSorting(array $initial_sort = array())
+    {
+        $aa_sort = array();
+        foreach ($initial_sort as $column_name => $direction) {
+            $aa_sort[] = array($this->colsIndex[$column_name], $direction);
+        }
+
+        $this->iOptions['aaSorting'] = $aa_sort;
         // return this for chaining mechanism
         return $this;
     }
@@ -306,23 +325,23 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
             $view->cols = $this->cols;
             return;
         }
-        
+
         // get data
         $rows = array();
         $handle = $this->handle;
-        
+
         /*
         foreach ($this->dataSource->getData($params, $this->cols) as $entity) {
             $rows[] = $handle($entity);
         }
         */
-        
+
         $data = $this->dataSource->getData($params, $this->cols);
-        
+
         foreach ($data as $entity) {
             $rows[] = $handle($entity);
         }
-        
+
         // set data
         $view->iTotalRecords = $this->dataSource->getCount();
         $view->iTotalDisplayRecords = $this->dataSource->getCount($params, $this->cols);
