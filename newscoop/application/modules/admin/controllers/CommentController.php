@@ -69,7 +69,7 @@ class Admin_CommentController extends Zend_Controller_Action
         $table->setOption('oLanguage',array('sSearch'=>''));
         $table->setCols(array('index' => $view->toggleCheckbox(), 'commenter' => getGS('Author'),
                              'comment' => getGS('Date') . ' / ' . getGS('Comment'), 'thread' => getGS('Article'),
-                             'threadorder' => '',), array('index' => false));
+                             'threadorder' => '',), array('index' => false), array('comment' => 'desc'));
 
         $index = 1;
         $acl = array();
