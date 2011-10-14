@@ -249,7 +249,7 @@ function init_smarty()
     $tpl->right_delimiter = '}}';
     $tpl->force_compile = true;
     $tpl->config_dir = $CAMPSITE_DIR.'/include/smarty/configs';
-    $tpl->template_dir = $CAMPSITE_DIR.'/templates/system_templates';
+    $tpl->template_dir = $CAMPSITE_DIR.'/themes/system_templates';
     $tpl->compile_dir = $CAMPSITE_DIR.'/cache';
 
     return $tpl;

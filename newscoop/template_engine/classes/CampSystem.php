@@ -150,31 +150,6 @@ abstract class CampSystem
         $context->article = new MetaArticle($p_lngId, $p_artNr);
     }// fn setArticle
 
-    /**
-     *
-     */
-    public static function GetTemplateNameById($p_tplId)
-    {
-        $template = new Template($p_tplId);
-        if (!is_object($template) || !$template->exists()) {
-            return null;
-        }
-
-        return $template->getName();
-    }// fn GetTemplateNameById
-
-    /**
-     *
-     */
-    public static function GetTemplateIdByName($p_fileName)
-    {
-        $template = new Template($p_fileName);
-        if (!is_object($template) || !$template->exists()) {
-            return null;
-        }
-
-        return $template->getTemplateId();
-    }// fn GetTemplateIdByName
 
     public static function GetInvalidURLTemplate($p_pubId, $p_issNr = NULL, $p_lngId = NULL, $p_isPublished = true)
     {

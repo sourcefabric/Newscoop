@@ -2,7 +2,6 @@
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/pub/pub_common.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/TimeUnit.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/UrlType.php");
-require_once($GLOBALS['g_campsiteDir']."/classes/Template.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Alias.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Language.php");
 camp_load_translation_strings("api");
