@@ -7,7 +7,7 @@
 /**
  * Includes the {@link shared.make_timestamp.php} plugin
  */
-require_once $smarty->_get_plugin_filepath('shared','make_timestamp');
+$smarty->smarty->loadPlugin('smarty_shared_make_timestamp');
 
 /**
  * Campsite teaser modifier plugin

@@ -1,7 +1,6 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/IssuePublish.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Template.php');
 //@New theme management
 use Newscoop\Service\Resource\ResourceId;
 use Newscoop\Service\IThemeManagementService;

@@ -18,6 +18,9 @@ class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
     private $em;
 
     /** @var string */
+    private $email;
+
+    /** @var string */
     private $username;
 
     /** @var string */
@@ -41,10 +44,8 @@ class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
      */
     public function authenticate()
     {
-        $user = $this->em->getRepository('Newscoop\Entity\User')
-            ->findOneBy(array(
-            'username' => $this->username,
-        ));
+        $params = $this->is_admin ? array('username' => $this->username) : array('email' => $this->email);
+        $user = $this->em->getRepository('Newscoop\Entity\User')->findOneBy($params);
 
         if (empty($user)) {
             return new \Zend_Auth_Result(\Zend_Auth_Result::FAILURE_IDENTITY_NOT_FOUND, NULL);
@@ -99,6 +100,18 @@ class DoctrineAuthService implements \Zend_Auth_Adapter_Interface
     public function setAdmin($admin = TRUE)
     {
         $this->is_admin = (bool) $admin;
+        return $this;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     * @return Newscoop\Services\AuthService
+     */
+    public function setEmail($email)
+    {
+        $this->email = (string) $email;
         return $this;
     }
 }

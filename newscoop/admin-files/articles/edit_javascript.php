@@ -299,6 +299,15 @@ $("#context_box a.iframe").fancybox({
     }
 });
 
+$("#playlist a.iframe").fancybox
+({
+	'showCloseButton' : false,
+    'type' : 'iframe',
+    'width' : 700,
+    'height' : 700,
+    'scrolling' : 'auto',
+    'autoDimensions' : true
+});
 
 // comments form check for changes
 $('form#article-comments').submit(function() {

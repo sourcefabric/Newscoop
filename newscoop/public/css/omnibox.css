@@ -1,7 +1,14 @@
 #ob_wrapper {
 	position: fixed;
 	top: 0px;
-    z-index: 999;
+    z-index: 9999;
+    width: 0px;
+}
+#ob_wrapper #ob_handle {
+	float: left;
+	margin-top: 10px;
+    position: relative;
+    left: -30px;
 }
 
 #ob_main {
@@ -128,10 +135,4 @@
 #ob_wrapper #ob_message_close {
 	float: right;
 	vertical-align: top;
-}
-#ob_wrapper #ob_handle {
-	float: left;
-	margin-top: 10px;
-    position: relative;
-    left: -30px;
 }

@@ -13,6 +13,9 @@
 define('URLTYPE_TEMPLATE_PATH', 1);
 define('URLTYPE_SHORT_NAMES', 2);
 
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\ISyncResourceService;
+
 /**
  * Class CampURI
  */
@@ -657,7 +660,7 @@ abstract class CampURI
             $tplObj = new MetaTemplate($p_templateIdOrName);
             if (!$tplObj->defined()) {
                 $template = CampSystem::GetInvalidURLTemplate($this->publication->identifier,
-                $this->issue->number, $this->language->number);
+                $this->issue->number, $this->language->number, !$this->m_preview);
                 $template = substr($template, strlen($this->getThemePath()));
             } else {
                 $template = $tplObj->name;
@@ -667,10 +670,20 @@ abstract class CampURI
                             $this->publication->identifier,
                             $this->issue->number, $this->section->number,
                             $this->article->number);
+            if (is_null($template)) {
+                $template = CampSystem::GetInvalidURLTemplate($this->publication->identifier,
+                $this->issue->number, $this->language->number, !$this->m_preview);
+            }
             $template = substr($template, strlen($this->getThemePath()));
         } else {
             return null;
         }
+
+        $filePath = CS_PATH_TEMPLATES . DIR_SEP . $this->getThemePath() . $template;
+        if (!file_exists($filePath)) {
+            return null;
+        }
+
         return $template;
     }
 
@@ -699,15 +712,14 @@ abstract class CampURI
      */
     protected function isValidTemplate($p_templateName)
     {
-        $tplObj = new Template($p_templateName);
-        if (is_object($tplObj) && $tplObj->exists() && $tplObj->fileExists()) {
-            return true;
+        if (is_null($this->m_issue) || !$this->m_issue->defined()) {
+            return false;
         }
 
-        return false;
-    }
-
-// fn isValidTemplate
+        $resourceId = new ResourceId(__CLASS__);
+        $syncResService = $resourceId->getService(ISyncResourceService::NAME);
+        return !is_null($syncResService->findByPath($this->getThemePath().$p_templateName));
+    }// fn isValidTemplate
 
     /**
      * Sets the URL type.

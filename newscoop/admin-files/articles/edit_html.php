@@ -381,6 +381,10 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
       <?php require('edit_context_box.php'); ?>
       <!-- END Context Box table -->
 
+      <!-- BEGIN Article Playlist table -->
+      <?php require('edit_playlist.php'); ?>
+      <!-- END Article Playlist table -->
+
       <?php CampPlugin::adminHook(__FILE__, array( 'articleObj' => $articleObj, 'f_edit_mode' => $f_edit_mode ) ); ?>
 
   </div>

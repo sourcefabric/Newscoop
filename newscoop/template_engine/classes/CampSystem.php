@@ -150,33 +150,8 @@ abstract class CampSystem
         $context->article = new MetaArticle($p_lngId, $p_artNr);
     }// fn setArticle
 
-    /**
-     *
-     */
-    public static function GetTemplateNameById($p_tplId)
-    {
-        $template = new Template($p_tplId);
-        if (!is_object($template) || !$template->exists()) {
-            return null;
-        }
 
-        return $template->getName();
-    }// fn GetTemplateNameById
-
-    /**
-     *
-     */
-    public static function GetTemplateIdByName($p_fileName)
-    {
-        $template = new Template($p_fileName);
-        if (!is_object($template) || !$template->exists()) {
-            return null;
-        }
-
-        return $template->getTemplateId();
-    }// fn GetTemplateIdByName
-
-    public static function GetInvalidURLTemplate($p_pubId, $p_issNr = NULL, $p_lngId = NULL)
+    public static function GetInvalidURLTemplate($p_pubId, $p_issNr = NULL, $p_lngId = NULL, $p_isPublished = true)
     {
         global $g_ado_db;
         if (CampCache::IsEnabled()) {
@@ -187,38 +162,41 @@ abstract class CampSystem
                 return $issueTemplate;
             }
         }
-        $resourceId = new ResourceId('template_engine/classes/CampSystem');
-        /* @var $templateSearchService ITemplateSearchService */
-        $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
-        if(is_null($p_lngId)){
+        $publication = null;
+        if (is_null($p_lngId)) {
             $publication = new Publication($p_pubId);
             if (!$publication->exists()) {
-                return null;
+                $template = null;
             }
             $p_lngId = $publication->getLanguageId();
         }
-        if(is_null($p_issNr)){
-            $sql = 'SELECT MAX(Number) AS Number FROM Issues '
-                    . 'WHERE Published = \'Y\' IdPublication = ' . $p_pubId
-                    . ' AND IdLanguage = ' . $p_lngId;
-            $data = $g_ado_db->GetOne($sql);
-            if (empty($data)) {
-                return null;
+        if (is_null($p_issNr) && (!is_null($publication) || !is_null($p_pubId))) {
+            if (is_null($publication)) {
+                $publication = new Publication($p_pubId);
             }
-            $p_issNr = $data;
+            $lastIssue = self::GetLastIssue($publication, $p_lngId, $p_isPublished);
+            if (is_null($lastIssue)) {
+                $template = null;
+            }
+            $p_issNr = $lastIssue[0];
         }
-        $outputService = $resourceId->getService(IOutputService::NAME);
-        $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
-        $data = $templateSearchService->getErrorPage($issueObj->getIssueId(),
-                        $outputService->findByName('Web'));
+        if (!is_null($p_issNr)) {
+            $resourceId = new ResourceId('template_engine/classes/CampSystem');
+            /* @var $templateSearchService ITemplateSearchService */
+            $templateSearchService = $resourceId->getService(ITemplateSearchService::NAME);
+            $outputService = $resourceId->getService(IOutputService::NAME);
+            $issueObj = new Issue($p_pubId, $p_lngId, $p_issNr);
+            $template = $templateSearchService->getErrorPage($issueObj->getIssueId(),
+            $outputService->findByName('Web'));
+        }
 
-        if (empty($data)) {
-            $data = 'empty.tpl';
+        if (empty($template)) {
+            $template = null;
         }
         if (CampCache::IsEnabled()) {
-            CampCache::singleton()->store($cacheKey, $data);
+            CampCache::singleton()->store($cacheKey, $template);
         }
-        return $data;
+        return $template;
     }// fn GetInvalidURLTemplate
 
 
@@ -232,9 +210,13 @@ abstract class CampSystem
     public static function GetThemePath($p_lngId, $p_pubId, $p_issNr)
     {
     	if (empty($p_lngId) || empty($p_issNr)) {
-    		$issue = self::GetLastIssue($p_pubId, $p_lngId);
+    	    $publication = new Publication($p_pubId);
+    		$issue = self::GetLastIssue($publication, $p_lngId);
     		if (is_null($issue)) {
-    			return null;
+    		    $issue = self::GetLastIssue($publication);
+    		    if (is_null($issue)) {
+    		        return null;
+    		    }
     		}
     		$p_issNr = array_shift($issue);
     		$p_lngId = array_shift($issue);
@@ -271,13 +253,12 @@ abstract class CampSystem
                 $article = new Article($p_lngId, $p_artNr);
                 if (!$article->exists()
                         || ($p_isPublished && !$article->isPublished())) {
-                    return self::GetInvalidURLTemplate($p_pubId, $p_issNr, $p_lngId);
+                    return self::GetInvalidURLTemplate($p_pubId, $p_issNr, $p_lngId, $p_isPublished);
                 }
                 $p_issNr = $article->getIssueNumber();
                 $p_sctNr = $article->getSectionNumber();
             }
-            return self::GetArticleTemplate($p_lngId, $p_pubId, $p_issNr,
-                    $p_sctNr);
+            return self::GetArticleTemplate($p_lngId, $p_pubId, $p_issNr, $p_sctNr);
         }
         if ($p_sctNr > 0) {
             if ($p_issNr <= 0) {
@@ -285,8 +266,8 @@ abstract class CampSystem
                         . 'FROM Sections as s, Issues as i '
                         . 'WHERE s.IdPublication = i.IdPublication'
                         . ' AND s.IdLanguage = i.IdLanguage'
-                        . ' AND s.IdPublication = ' . $p_pubId
-                        . ' AND s.IdLanguage = ' . $p_lngId;
+                        . ' AND s.IdPublication = ' . (int)$p_pubId
+                        . ' AND s.IdLanguage = ' . (int)$p_lngId;
                 if ($p_isPublished == true) {
                     $sql .= " AND i.Published = 'Y'";
                 }
@@ -315,10 +296,10 @@ abstract class CampSystem
         return self::GetIssueTemplate($p_lngId, $p_pubId, $p_issNr);
     }// fn GetTemplate
 
-    public static function GetLastIssue($p_pubId, $p_langId, $p_isPublished = true)
+    public static function GetLastIssue(Publication $publication, $p_langId = null, $p_isPublished = true)
     {
         global $g_ado_db;
-    	$publication = new Publication($p_pubId);
+
     	if (!$publication->exists()) {
     		return null;
     	}
@@ -326,8 +307,8 @@ abstract class CampSystem
     		$p_langId = $publication->getDefaultLanguageId();
     	}
     	$sql = 'SELECT MAX(Number) AS Number FROM Issues '
-    	. 'WHERE IdPublication = ' . $p_pubId
-    	. ' AND IdLanguage = ' . $p_langId;
+    	. 'WHERE IdPublication = ' . (int)$publication->getPublicationId()
+    	. ' AND IdLanguage = ' . (int)$p_langId;
     	if ($p_isPublished == true) {
     		$sql .= " AND Published = 'Y'";
     	}

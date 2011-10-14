@@ -34,7 +34,7 @@ class OmniboxController extends Zend_Controller_Action
             $params = $request->getParams();
 
             $adapter = $this->_helper->service('auth.adapter');
-            $adapter->setUsername($params['username'])->setPassword($params['password']);
+            $adapter->setEmail($params['email'])->setPassword($params['password']);
             $result = $this->auth->authenticate($adapter);
 
             if ($result->getCode() == Zend_Auth_Result::SUCCESS) {

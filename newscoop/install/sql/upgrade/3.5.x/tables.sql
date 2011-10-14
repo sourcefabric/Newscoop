@@ -228,6 +228,7 @@ CREATE TABLE `user_subscription` (
    `subscription_type` int(1),
    `time_begin` datetime,
    `time_end` datetime,
+   `subscription` int(11),
    PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
@@ -245,6 +246,7 @@ CREATE TABLE `playlist_article` (
   `id_playlist_article` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `id_playlist` int(10) unsigned NOT NULL,
   `article_no` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id_playlist_article`),
   UNIQUE KEY `id_playlist` (`id_playlist`,`article_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 

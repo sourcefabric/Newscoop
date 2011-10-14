@@ -50,14 +50,15 @@ class PlaylistRepository extends EntityRepository
     public function save(Playlist $playlist = null, $articles = null)
     {
         $em = $this->getEntityManager();
+
         try
         {
+            $em->getConnection()->beginTransaction();
+
             $em->persist($playlist);
             if (is_null($playlist->getId())) {
                 $em->flush();
             }
-
-            $em->getConnection()->beginTransaction();
 
             $query = $em->createQuery("DELETE FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.idPlaylist = ?1");
             $query->setParameter(1, $playlist->getId());
@@ -78,7 +79,7 @@ class PlaylistRepository extends EntityRepository
                 }
             }
 // TODO doctrine persister not working
-//            $em->flush();
+            $em->flush();
             $em->getConnection()->commit();
         }
         catch (\Exception $e)

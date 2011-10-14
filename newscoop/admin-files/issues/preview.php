@@ -1,8 +1,6 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/issues/issue_common.php");
-require_once($GLOBALS['g_campsiteDir'].'/classes/Template.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Alias.php');
-
 
 
 use Newscoop\Service\ISyncResourceService;
@@ -41,35 +39,57 @@ if ($errorStr != "") {
 	camp_html_display_error($errorStr, null, true);
 }
 
-
-//allow preview by creating defaut OutputSettingsIssue
 $resourceId = new ResourceId('Publication/Edit');
 $themeManagementService = $resourceId->getService(IThemeManagementService::NAME_1);
+/* @var $themeManagementService \Newscoop\Service\Implementation\ThemeManagementServiceLocal */
 $outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
-$outputService = $resourceId->getService(IOutputService::NAME);
+/* @var $outputSettingIssueService \Newscoop\Service\Implementation\OutputSettingIssueServiceDoctrine */
 $issueService = $resourceId->getService(IIssueService::NAME);
+/* @var $issueService \Newscoop\Service\Implementation\IssueServiceDoctrine */
+$outputService = $resourceId->getService(IOutputService::NAME);
 $syncRsc = $resourceId->getService(ISyncResourceService::NAME);
 
-$outSetIssues = $outputSettingIssueService->findByIssue($issueObj->getIssueId());
-if(count($outSetIssues) == 0){
-    $publicationThemes = $themeManagementService->getThemes($publicationObj->getPublicationId());
-    $publicationHasThemes = count($publicationThemes) > 0;
-    if($publicationHasThemes){
+$outputIssueSettings = current($outputSettingIssueService->findByIssue($issueObj->getIssueId()));
+/* @var $outputIssueSettings \Newscoop\Entity\Output\OutputSettingsIssue */
+
+$publicationThemes = $themeManagementService->getThemes($publicationObj->getPublicationId());
+
+if (!$outputIssueSettings) {
+    if (count($publicationThemes) > 0) {
         $themePath = $publicationThemes[0]->getPath();
-        $outSetIssue = new OutputSettingsIssue();
-        $outSetIssue->setOutput($outputService->findByName('Web'));
-        $outSetIssue->setIssue($issueService->getById($issueObj->getIssueId()));
-        $outSetIssue->setThemePath($syncRsc->getThemePath($themePath));
-        $outSetIssue->setFrontPage(null);
-        $outSetIssue->setSectionPage(null);
-        $outSetIssue->setArticlePage(null);
-        $issueObj->commit();
-        $outputSettingIssueService->insert($outSetIssue);
+        $outputIssueSettings = new OutputSettingsIssue();
+        $outputIssueSettings->setOutput($outputService->findByName('Web'));
+        $outputIssueSettings->setIssue($issueService->getById($issueObj->getIssueId()));
+        $outputIssueSettings->setThemePath($syncRsc->getThemePath($themePath));
+        $outputIssueSettings->setFrontPage(null);
+        $outputIssueSettings->setSectionPage(null);
+        $outputIssueSettings->setArticlePage(null);
+        $outputSettingIssueService->insert($outputIssueSettings);
+    } else {
+        $errorStr = getGS('This issue cannot be previewed. Please make sure the publication has a theme assigned.');
+        camp_html_display_error($errorStr, null, true);
+    }
+} else {
+    $themePath = $outputIssueSettings->getThemePath()->getPath();
+}
+$frontPage = $outputIssueSettings->getFrontPage();
+if (is_null($frontPage)) {
+    foreach ($publicationThemes as $publicationTheme) {
+        if ($publicationTheme->getPath() == $themePath) {
+            $themeOutSettings = $themeManagementService->findOutputSetting($publicationTheme, $outputService->findByName('Web'));
+            $frontPage = $themeOutSettings->getFrontPage();
+        }
     }
 }
+$templateId = $frontPage->getPath();
+$templateName = substr($templateId, strlen($themePath));
 
-if (!isset($_SERVER['SERVER_PORT']))
-{
+if (!$templateId) {
+    $errorStr = getGS('This issue cannot be previewed. Please make sure it has the front template selected.');
+    camp_html_display_error($errorStr, null, true);
+}
+
+if (!isset($_SERVER['SERVER_PORT'])) {
 	$_SERVER['SERVER_PORT'] = 80;
 }
 $scheme = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
@@ -79,7 +99,6 @@ $websiteURL = $scheme.$siteAlias->getName();
 $accessParams = "";
 $urlType = $publicationObj->getProperty('IdURLType');
 if ($urlType == 1) {
-	$templateObj = new Template($templateId);
 	$url = "$websiteURL"  . $Campsite['SUBDIR'] . "/tpl/" . $templateObj->getName()
 	. "?IdLanguage=$Language&IdPublication=$Pub&NrIssue=$Issue&$accessParams";
 } else {

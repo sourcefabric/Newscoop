@@ -56,12 +56,26 @@ class DashboardController extends Zend_Controller_Action
                 $this->service->save($values, $this->user);
                 $this->_helper->redirector('index');
             } catch (\InvalidArgumentException $e) {
-                $form->image->addError($e->getMessage());
+                switch ($e->getMessage()) {
+                    case 'username_conflict':
+                        $form->username->addError($this->view->translate("User with given username exists."));
+                        break;
+
+                    default:
+                        $form->image->addError($e->getMessage());
+                        break;
+                }
             }
         }
-
+        
+        $userSubscriptionService = $this->_helper->service('user_subscription');
+        $userSubscriptionKey = $userSubscriptionService->createKey($this->user);
+        $userSubscriptionService->setKey($userSubscriptionKey);
+        
         $this->view->form = $form;
         $this->view->user = new MetaUser($this->user);
+        $this->view->userSubscriptions = $userSubscriptionService->getSubscriptions($this->user);
+        $this->view->userSubscriptionKey = $userSubscriptionKey;
     }
 
     public function updateTopicsAction()

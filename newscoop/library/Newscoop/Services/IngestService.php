@@ -33,8 +33,6 @@ class IngestService
     /** @var Newscoop\Services\Ingest\PublisherService */
     private $publisher;
 
-    /** @var array */
-    private $feeds;
 
     /**
      * @param array $config
@@ -57,22 +55,12 @@ class IngestService
     {
         $this->em->persist($feed);
         $this->em->flush();
-        $this->feeds = null;
     }
 
-    /**
-     * Get feeds
-     *
-     * @return array
-     */
     public function getFeeds()
     {
-        if ($this->feeds === null) {
-            $this->feeds = $this->em->getRepository('Newscoop\Entity\Ingest\Feed')
-                ->findAll();
-        }
-
-        return $this->feeds;
+        return $this->em->getRepository('Newscoop\Entity\Ingest\Feed')
+                    ->findAll();
     }
 
     /**
@@ -80,24 +68,33 @@ class IngestService
      *
      * @return void
      */
-    public function updateAll()
+    public function updateSDA()
     {
-        foreach ($this->getFeeds() as $feed) {
-            if ($feed->getTitle() == "swissinfo") {
-                $this->updateSwissInfo($feed);
-            }
-            else {
-                $this->updateFeed($feed);
-            }
-        }
+        $feed = $this->em->getRepository('Newscoop\Entity\Ingest\Feed')
+                    ->findBy(array(
+                        'title' => 'SDA',
+                    ));
 
-        $this->getEntryRepository()->liftEmbargo();
-        $this->em->flush();
+        if (count($feed) > 0) {
+            $this->updateSDAFeed($feed[0]);
+        }
+    }
+
+    public function updateSwissinfo()
+    {
+        $feed = $this->em->getRepository('Newscoop\Entity\Ingest\Feed')
+                    ->findBy(array(
+                        'title' => 'swissinfo',
+                    ));
+
+        if (count($feed) > 0) {
+            $this->updateSwissinfoFeed($feed[0]);
+        }
     }
 
     //private function
 
-    private function updateSwissInfo(Feed $feed)
+    private function updateSwissinfoFeed(Feed $feed)
     {
         try {
             $http = new \Zend_Http_Client($this->config['swissinfo_sections']);
@@ -135,7 +132,7 @@ class IngestService
                         $parser = new SwissinfoParser($story);
                         $entry = $this->getPrevious($parser, $feed);
 
-                        if ($this->isAutoMode()) {
+                        if ($feed->isAutoMode()) {
                             $this->publish($entry);
                         }
                     }
@@ -148,6 +145,8 @@ class IngestService
 
         $feed->setUpdated(new \DateTime());
         $this->em->persist($feed);
+
+        $this->em->flush();
     }
 
     /**
@@ -156,7 +155,7 @@ class IngestService
      * @param Newscoop\Entity\Ingest\Feed $feed
      * @return void
      */
-    private function updateFeed(Feed $feed)
+    private function updateSDAFeed(Feed $feed)
     {
         foreach (glob($this->config['path'] . '/*.xml') as $file) {
             if ($feed->getUpdated() && $feed->getUpdated()->getTimestamp() > filectime($file) + self::IMPORT_DELAY) {
@@ -180,7 +179,7 @@ class IngestService
                         case '':
                             if ($entry->isPublished()) {
                                 $this->updatePublished($entry);
-                            } elseif ($this->isAutoMode()) {
+                            } else if ($feed->isAutoMode()) {
                                 $this->publish($entry);
                             }
                             $this->em->persist($entry);
@@ -208,6 +207,9 @@ class IngestService
 
         $feed->setUpdated(new \DateTime());
         $this->em->persist($feed);
+
+        $this->getEntryRepository()->liftEmbargo();
+        $this->em->flush();
     }
 
     /**
@@ -260,23 +262,23 @@ class IngestService
     }
 
     /**
-     * Test if mode is automatic
-     *
-     * @return bool
-     */
-    public function isAutoMode()
-    {
-        return (bool) \SystemPref::Get(self::MODE_SETTING);
-    }
-
-    /**
      * Switch mode
      *
      * @return void
      */
-    public function switchAutoMode()
+    public function switchMode($feed_id)
     {
-        \SystemPref::Set(self::MODE_SETTING, !\SystemPref::Get(self::MODE_SETTING));
+        $feed = $this->em->getRepository('Newscoop\Entity\Ingest\Feed')->find($feed_id);
+
+        if ($feed->getMode() === "auto") {
+            $feed = $feed->setMode("manual");
+        }
+        else {
+            $feed = $feed->setMode("auto");
+        }
+
+        $this->em->persist($feed);
+        $this->em->flush();
     }
 
     /**

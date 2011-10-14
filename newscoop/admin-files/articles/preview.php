@@ -1,10 +1,18 @@
 <?php
-use Newscoop\Service\IOutputService;
-use Newscoop\Service\IPublicationService;
-use Newscoop\Service\IIssueService;
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Alias.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ShortURL.php');
+
+use Newscoop\Service\ISyncResourceService;
+use Newscoop\Service\IIssueService;
+use Newscoop\Service\IOutputService;
+
+//@New theme management
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\IThemeManagementService;
+use Newscoop\Service\IOutputSettingIssueService;
+use Newscoop\Service\IOutputSettingSectionService;
+use Newscoop\Entity\Output\OutputSettingsIssue;
 
 header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
 header("Last-Modified: " . gmdate("D, d M Y H:i:s") . " GMT");
@@ -35,50 +43,66 @@ if (!$articleObj->exists()) {
  * @author Mihai Balaceanu <mihai.balaceanu@sourcefabric.org>
  * New theme management
  */
-use Newscoop\Service\Resource\ResourceId;
-use Newscoop\Service\IThemeManagementService;
-use Newscoop\Service\IOutputSettingIssueService;
 
 $resourceId = new ResourceId('Publication/Edit');
 $themeManagementService = $resourceId->getService(IThemeManagementService::NAME_1);
 /* @var $themeManagementService \Newscoop\Service\Implementation\ThemeManagementServiceLocal */
+$outputSettingSectionService = $resourceId->getService(IOutputSettingSectionService::NAME);
+/* @var $outputSettingSectionService \Newscoop\Service\Implementation\OutputSettingSectionServiceDoctrine */
 $outputSettingIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
 /* @var $outputSettingIssueService \Newscoop\Service\Implementation\OutputSettingIssueServiceDoctrine */
 $issueService = $resourceId->getService(IIssueService::NAME);
 /* @var $issueService \Newscoop\Service\Implementation\IssueServiceDoctrine */
-$publicationService = $resourceId->getService(IPublicationService::NAME);
-/* @var $publicationService \Newscoop\Service\Implementation\PublicationServiceDoctrine */
+$outputService = $resourceId->getService(IOutputService::NAME);
+$syncRsc = $resourceId->getService(ISyncResourceService::NAME);
+
+$outputSectionSettings = current($outputSettingSectionService->findBySection($sectionObj->getSectionId()));
+/* @var $outputIssueSettings \Newscoop\Entity\Output\OutputSettingsIssue */
 $outputIssueSettings = current($outputSettingIssueService->findByIssue($issueObj->getIssueId()));
 /* @var $outputIssueSettings \Newscoop\Entity\Output\OutputSettingsIssue */
 
-// if article page is not set secifically for issue get for publication
-if ( !$outputIssueSettings || is_null(( $articlePage = $outputIssueSettings->getArticlePage())))
-{
-    $publicationTheme = current($themeManagementService->getThemes($f_publication_id));
-    if (!$publicationTheme) {
-		$errorStr = getGS('This article cannot be previewed. Please make sure it has the publication has a theme assigned.');
-		camp_html_display_error($errorStr, null, true);
-	}
-	else
-	{
-    	/* @var $publicationTheme \Newscoop\Entity\Theme */
-        $publicationOutputSettings = current($themeManagementService->getOutputSettings($publicationTheme));
-    	/* @var $publicationOutputSettings \Newscoop\Entity\OutputSettings */
-        $articlePage = $publicationOutputSettings->getArticlePage();
-    	/* @var $articlePage \Newscoop\Entity\Resource */
-	}
+$publicationThemes = $themeManagementService->getThemes($publicationObj->getPublicationId());
+
+if (!$outputIssueSettings) {
+    if (count($publicationThemes) > 0) {
+        $themePath = $publicationThemes[0]->getPath();
+        $outputIssueSettings = new OutputSettingsIssue();
+        $outputIssueSettings->setOutput($outputService->findByName('Web'));
+        $outputIssueSettings->setIssue($issueService->getById($issueObj->getIssueId()));
+        $outputIssueSettings->setThemePath($syncRsc->getThemePath($themePath));
+        $outputIssueSettings->setFrontPage(null);
+        $outputIssueSettings->setSectionPage(null);
+        $outputIssueSettings->setArticlePage(null);
+        $outputSettingIssueService->insert($outputIssueSettings);
+    } else {
+        $errorStr = getGS('This issue cannot be previewed. Please make sure the publication has a theme assigned.');
+        camp_html_display_error($errorStr, null, true);
+    }
+} else {
+    $themePath = $outputIssueSettings->getThemePath()->getPath();
+}
+if ($outputSectionSettings instanceof OutputSettingsSection) {
+    $articlePage = $outputSectionSettings->getArticlePage();
+} else {
+    $articlePage = $outputIssueSettings->getArticlePage();
+}
+if (is_null($articlePage)) {
+    foreach ($publicationThemes as $publicationTheme) {
+        if ($publicationTheme->getPath() == $themePath) {
+            $themeOutSettings = $themeManagementService->findOutputSetting($publicationTheme, $outputService->findByName('Web'));
+            $articlePage = $themeOutSettings->getArticlePage();
+        }
+    }
 }
 $templateId = $articlePage->getPath();
+$templateName = substr($templateId, strlen($themePath));
 
 if (!$templateId) {
 	$errorStr = getGS('This article cannot be previewed. Please make sure it has the article template selected.');
 	camp_html_display_error($errorStr, null, true);
 }
 
-$templateObj = new Template($templateId);
-
-if (!isset($_SERVER['SERVER_PORT']))
-{
+if (!isset($_SERVER['SERVER_PORT'])) {
 	$_SERVER['SERVER_PORT'] = 80;
 }
 $scheme = $_SERVER['SERVER_PORT'] == 443 ? 'https://' : 'http://';
@@ -88,8 +112,7 @@ $websiteURL = $scheme.$siteAlias->getName() . $GLOBALS['Campsite']['SUBDIR'];
 $accessParams = "LoginUserId=" . $g_user->getUserId()
 				. "&AdminAccess=all";
 if ($publicationObj->getUrlTypeId() == 1) {
-	$templateObj = new Template($templateId);
-	$url = "$websiteURL/tpl/" . $templateObj->getName() . "?IdLanguage=$f_language_id"
+	$url = "$websiteURL/tpl/$templateName?IdLanguage=$f_language_id"
 		. "&IdPublication=$f_publication_id&NrIssue=$f_issue_number&NrSection=$f_section_number"
 		. "&NrArticle=$f_article_number&$accessParams";
 } else {
