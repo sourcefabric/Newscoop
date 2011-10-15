@@ -194,6 +194,10 @@ class SearchResultsList extends ListObject
         	$this->m_constraints[] = new ComparisonOperation('Published', $operator, 'Y');
         }
 
+        if (!empty($p_parameters['type_not'])) {
+            $this->m_constraints[] = new ComparisonOperation('Articles.Type', new Operator('not', 'string'), $p_parameters['type_not']);
+        }
+
     	return $parameters;
 	}
 

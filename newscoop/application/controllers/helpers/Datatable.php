@@ -130,13 +130,13 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
      * @param array $cols
      * @return Action_Helper_Datatable
      */
-    public function setCols(array $cols, array $sorting = array(), array $initial_sort = array())
+    public function setCols(array $cols, array $sorting = array())
     {
         $this->cols = $cols;
         $this->colsIndex = array_flip(array_keys($this->cols));
         $this->buildColumnDefs();
         $this->setSorting($sorting);
-        $this->setInitialSorting($initial_sort);
+       
         // return this for chaining mechanism
         return $this;
     }
@@ -155,6 +155,24 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
         }
 
         $this->iOptions['aaSorting'] = $aa_sort;
+        // return this for chaining mechanism
+        return $this;
+    }
+    
+    /**
+     * Set searchable columns (bSearchable_col#)
+     *
+     * @param array $searchable
+     * @return Action_Helper_Datatable
+     */
+    public function setSearchable(array $searchable = array())
+    {
+        foreach ($searchable as $column_name => $boolean) {
+            $id = $this->colsIndex[$column_name];
+            
+            $this->iOptions["bSearchable_{$id}"] = $boolean;
+        }
+    
         // return this for chaining mechanism
         return $this;
     }
@@ -329,12 +347,6 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
         // get data
         $rows = array();
         $handle = $this->handle;
-
-        /*
-        foreach ($this->dataSource->getData($params, $this->cols) as $entity) {
-            $rows[] = $handle($entity);
-        }
-        */
 
         $data = $this->dataSource->getData($params, $this->cols);
 
