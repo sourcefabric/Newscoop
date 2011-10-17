@@ -22,7 +22,7 @@
       <li>
         <input type="checkbox" name="<?php echo $dbColumn->getName(); ?>" id="<?php echo $dbColumn->getName(); ?>"
           class="input_checkbox db" value="on" <?php if ($inViewMode) { ?>disabled<?php } ?> <?php echo $checked; ?> />
-        <label for="<?php echo $dbColumn->getName(); ?>"><?php echo htmlspecialchars($dbColumn->getDisplayName()); ?></label>
+        <label for="<?php echo $dbColumn->getName(); ?>"><?php echo htmlspecialchars($dbColumn->getDisplayName($articleObj->getLanguageId())); ?></label>
       </li>
     <?php
         }
