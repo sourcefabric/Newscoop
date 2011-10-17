@@ -523,29 +523,26 @@ class ArticleTypeField extends DatabaseObject {
 	} // fn getDisplayNameLanguageCode
 
 
-	/**
-	 * Gets the translation for a given language; default language is the
-	 * session language.  If no translation is set for that language, we
-	 * return the dbTableName.
-     *
-	 * @param int p_lang
-	 *
-	 * @return string
-	 */
-	public function getDisplayName($p_lang = 0)
-	{
-		if (!$p_lang) {
-			$lang = camp_session_get('LoginLanguageId', 1);
-		} else {
-			$lang = $p_lang;
-		}
+        /**
+         * Gets the translation for a given language; default language is the
+         * session language.  If no translation is set for that language, we
+         * return the dbTableName.
+         *
+         * @param int p_lang
+         *
+         * @return string
+         */
+        public function getDisplayName($p_lang = 0)
+        {
+            $lang = (!$p_lang) ? camp_session_get('LoginLanguageId', 1) : $p_lang;
+            $translations = $this->getTranslations();
 
-		$translations = $this->getTranslations();
-		if (!isset($translations[$lang])) {
-		    return $this->getPrintName();
-		}
-		return $translations[$lang];
-	} // fn getDisplayName
+            if (!isset($translations[$lang])) {
+                return $this->getPrintName();
+            }
+
+            return $translations[$lang];
+        } // fn getDisplayName
 
 
 	/**
