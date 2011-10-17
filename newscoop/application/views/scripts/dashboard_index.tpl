@@ -12,7 +12,7 @@
 <h2>Edit profile</h2>
 
 {{ $form }}
-
+<!--
 -- <br>
 
 {{ if $userSubscriptions }}
@@ -31,5 +31,7 @@ no subscriptions<br>
 <br>--
 <br>
 <a href="#">new subscription</a>
-
+<br>
+test key: {{ $userSubscriptionKey }}
+-->
 {{/block}}

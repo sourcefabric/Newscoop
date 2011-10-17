@@ -29,6 +29,7 @@ class BlogService
         'files',
         'comments',
         'autopublish.php',
+        'do_unlock.php',
     );
 
     /** @var array */
@@ -138,15 +139,13 @@ class BlogService
         }
 
         if ($request->isPost() && $request->getParam('controller') == 'articles' && in_array($request->getParam('action'), $this->postArticleActions)) {
-            return TRUE;
+            if ($this->isRequestedArticleEditable($request, $user)) {
+                return TRUE;
+            }
         }
 
         if ($request->isGet() && $request->getParam('controller') == 'articles' && in_array($request->getParam('action'), $this->getArticleActions) && isset($user)) {
-            $section = $this->getSection($user);
-            if ($section->getSectionNumber() == $request->getParam('f_section_number')
-                && $section->getPublicationId() == $request->getParam('f_publication_id')
-                && $section->getIssueNumber() == $request->getParam('f_issue_number')
-                && $section->getLanguageId() == $request->getParam('f_language_id')) {
+            if ($this->isRequestedArticleEditable($request, $user)) {
                 return TRUE;
             }
         }
@@ -166,5 +165,21 @@ class BlogService
         return in_array($author->getId(), array_map(function($blogAuthor) {
             return $blogAuthor->getId();
         }, \ArticleAuthor::GetAuthorsByArticle($blogInfo->getArticleNumber(), $blogInfo->getLanguageId())));
+    }
+
+    /**
+     * Test if requested article is editable by user
+     *
+     * @param Zend_Controller_Request_Abstract $request
+     * @param Newscoop\Entity\User $user
+     * @return bool
+     */
+    private function isRequestedArticleEditable(\Zend_Controller_Request_Abstract $request, User $user)
+    {
+        $section = $this->getSection($user);
+        return $section->getSectionNumber() == $request->getParam('f_section_number')
+            && $section->getPublicationId() == $request->getParam('f_publication_id')
+            && $section->getIssueNumber() == $request->getParam('f_issue_number')
+            && $section->getLanguageId() == $request->getParam('f_language_id');
     }
 }

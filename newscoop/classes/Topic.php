@@ -90,6 +90,64 @@ class Topic extends DatabaseObject {
         return $this->m_exists;
 	} // fn fetch
 
+	
+/**
+     * Create a new topic staticaly .
+     *
+     * The values array may have the following keys:
+     * - parent_id - parent topic identifier
+     * - node_left
+     * - node_right
+     * - names - array of topic translations of the form: language_id => name
+     *
+     * @param array $p_values
+     * @return json object
+     */
+    
+    public static function add($p_values = null)
+    {
+        $return = array();
+        $created = false;
+        if (!is_array($p_values)) {
+            $p_values = array();
+        }
+        $noName = FALSE;
+        if (!array_key_exists('f_topic_name', $p_values)) {
+            $noName = TRUE;
+        } else {
+            if (strlen($p_values['f_topic_name']) == 0) {
+                $noName = TRUE;
+            }
+        }
+
+        if ($noName) {
+            $return['status'] = 0;
+            $return['messageClass'] = 'error';
+            $return['message'] = getGS('You must fill in the $1 field.','<B>'.getGS('Name').'</B>');
+        } else {
+            $f_topic_parent_id = array_key_exists('f_topic_parent_id', $p_values) ? $p_values['f_topic_parent_id'] : 0;
+            $f_topic_language_id = array_key_exists('f_language_selected', $p_values) ? $p_values['f_language_selected'] : 1;
+            $f_topic_name = trim($p_values['f_topic_name']);
+            
+            $topicParent = new Topic($f_topic_parent_id);
+            
+            $topic = new Topic();
+            
+            $created = $topic->create(array('parent_id' => $f_topic_parent_id, 'names'=>array($f_topic_language_id=>$f_topic_name)));
+            
+            if ($created) {
+                $return['status'] = 1;
+                $return['messageClass'] = 'highlight';
+                $return['message'] = getGS('Topic created');
+            } else {
+                $return['status'] = 0;
+                $return['messageClass'] = 'error';
+                $return['message'] = getGS('The topic name is already in use by another topic.');
+            }
+        }
+        return json_encode($return);
+    }
+	
 
 	/**
 	 * Create a new topic.

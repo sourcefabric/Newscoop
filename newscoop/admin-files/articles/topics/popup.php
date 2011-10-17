@@ -50,6 +50,40 @@ foreach ($articleTopics as $topic) {
     <input type="text" name="search" class="autocomplete topics input_text" />
     <input type="button" class="default-button" value="<?php putGS('Search'); ?>" />
     <input type="button" class="default-button" value="<?php putGS('Show All'); ?>" id="show_all_topics" style="padding: 3px 0px;"/>
+    <input type="button" class="default-button" value="<?php putGS('Add new topic'); ?>" id="add_new_topic" style="padding: 3px 0px;"/>
+    <div style="width:100%; margin-top:10px;display:none" id="new_topic_holder">
+	    <?php putGS('Select the parent of the topic'); ?>
+	    <select name="f_topic_parent_id" id="f_topic_parent_id">
+	    <option value="0"><?php putGS('None');?></option>
+	    <?php
+	    $level = 0;
+	    
+	    foreach ($topics as $path) {
+	        $topic_level = 0;
+	        foreach ($path as $topicObj) {
+	            $topic_level++;
+	        }
+	        $currentTopic = camp_array_peek($path, false, -1);
+	        $topic_id = $currentTopic->getTopicId();
+	        $name = $currentTopic->getName($f_language_selected);
+	        if (empty($name)) {
+	            // Backwards compatibility
+	            $name = $currentTopic->getName(1);
+	            if (empty($name)) {
+	                continue;
+	            }
+	        }
+	        ?>
+	        <option value="<?php echo $topic_id; ?>"><?php echo str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $topic_level).$name;?></option>
+	        <?php
+	        $level = $topic_level;
+	    }
+	    
+	    ?>
+	    </select>
+	    <input type="text" name="f_topic_name" id="f_topic_name" value="" class="input_text" size="20" title="<?php putGS('You must enter a name for the topic.'); ?>" style="width: 360px"/>
+	    <input type="button" name="add" value="<?php putGS("Add"); ?>" class="button" id='submit_new_topic'/>
+    </div>
 </fieldset>
 </div>
 
@@ -57,6 +91,7 @@ foreach ($articleTopics as $topic) {
 $color = FALSE;
 $level = 0;
 foreach ($topics as $path) {
+	
     $topic_level = 0;
     foreach ($path as $topicObj) {
         $topic_level++;
@@ -88,6 +123,7 @@ foreach ($topics as $path) {
     if (!empty($selectedIds[$currentTopic->getTopicId()])) {
         $checked_str = ' checked="checked"';
     }
+    
 ?>
 
     <li<?php echo $color_class; ?>>
@@ -106,6 +142,7 @@ echo str_repeat('</li></ul>', $level);
 
 <script type="text/javascript">
 $(document).ready(function() {
+	
     $('ul.tree ul').hide(); // hide ul's
     $('ul.tree li').each(function() {
         if ($(this).children('ul').length > 0) {
@@ -133,7 +170,37 @@ $(document).ready(function() {
             $(this).text('+');
         }
     });
+    //add new topic
+    $('#add_new_topic').click(function() {
+        $('#new_topic_holder').toggle();
+    });
 });
+
+$('#submit_new_topic').click(function(){
+    var f_topic_name = $('#f_topic_name').val();
+    if (f_topic_name.length == 0) {
+        flashMessage("<?php putGS('You must enter a name for the topic.'); ?>", 'error');
+        $('#f_topic_name').focus();
+    } else {
+        var f_topic_parent_id = $('#f_topic_parent_id').val();
+        var f_language_selected = $('#f_language_selected').val();
+
+        var topicParams = {};
+        topicParams['f_topic_name'] = f_topic_name;
+        topicParams['f_topic_parent_id'] = f_topic_parent_id;
+        topicParams['f_language_selected'] = f_language_selected;
+        callServer(['Topic', 'add'], [
+                                              topicParams,
+                                              ],
+                                              function(json) {
+            msg = eval( '(' + json + ')' );
+            flashMessage(msg.message, msg.messageClass);
+            $('#new_topic_holder').toggle();
+            location.reload()
+            });
+    }
+});
+
 </script>
 
 <?php } else { ?>

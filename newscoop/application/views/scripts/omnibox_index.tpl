@@ -100,7 +100,7 @@
 
 <div id="ob_handle" style="">
 <a href="javascript:omnibox.showHide();">
-<img src="{{ $view->baseUrl('/public/css/img/floating-button-bgr.png') }}">
+<img id="ob_handle_image" src="{{ $view->baseUrl('/public/css/img/green-triangle.png') }}">
 </a>
 </div>
 

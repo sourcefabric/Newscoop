@@ -13,7 +13,6 @@
 /**
  * Includes
  */
-require_once($GLOBALS['g_campsiteDir'].'/classes/Template.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Issue.php');

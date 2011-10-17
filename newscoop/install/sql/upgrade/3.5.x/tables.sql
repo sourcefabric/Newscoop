@@ -228,6 +228,7 @@ CREATE TABLE `user_subscription` (
    `subscription_type` int(1),
    `time_begin` datetime,
    `time_end` datetime,
+   `subscription` int(11),
    PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 

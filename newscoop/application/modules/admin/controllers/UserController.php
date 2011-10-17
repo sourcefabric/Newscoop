@@ -146,6 +146,8 @@ class Admin_UserController extends Zend_Controller_Action
             'created' => getGS('Created'),
             'types' => getGS('Type'),
         ));
+        
+        $table->setSearchable(array('status' => false, 'types' => false));
 
         $view = $this->view;
         $statuses = array(

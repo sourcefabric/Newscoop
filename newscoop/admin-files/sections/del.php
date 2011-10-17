@@ -1,6 +1,5 @@
 <?php
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/sections/section_common.php");
-require_once($GLOBALS['g_campsiteDir']. '/classes/Template.php');
 require_once($GLOBALS['g_campsiteDir']. '/classes/Article.php');
 
 if (!$g_user->hasPermission('DeleteSection')) {
