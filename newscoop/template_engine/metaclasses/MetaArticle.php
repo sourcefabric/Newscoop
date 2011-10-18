@@ -11,6 +11,7 @@ use Newscoop\Webcode\Manager;
 require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMap.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Template.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObject.php');
 
@@ -511,7 +512,7 @@ final class MetaArticle extends MetaDbObject {
         $result = $repository->getCount($params);
         return $result;
     }
-
+    
     protected function getRecommendedCommentCount() {
         global $controller;
         $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
@@ -589,12 +590,21 @@ final class MetaArticle extends MetaDbObject {
         return $topics;
     }
 
-
+    /**
+     * Get SEO Url
+     *
+     * @return string
+     */
     protected function getSEOURLEnd()
     {
-    	return $this->m_dbObject->getSEOURLEnd($this->getPublication()->seo, $this->getLanguage()->number);
-    }
+        $pubSeo = $this->getPublication()->seo;
+        $lanNum = $this->getLanguage()->number;
+        if (empty($pubSeo) || empty($lanNum)) {
+            return '';
+        }
 
+    	return $this->m_dbObject->getSEOURLEnd($pubSeo, $lanNum);
+    }
 
     protected function getTypeTranslated() {
     	return $this->m_dbObject->getTranslateType($this->m_dbObject->getLanguageId());
