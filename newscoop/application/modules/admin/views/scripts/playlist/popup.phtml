@@ -276,6 +276,7 @@ $this->headScript()->appendScript( $js, "text/javascript" );
                 $contextlist->setSearch(TRUE);
                 $contextlist->setOrder(TRUE);
                 $contextlist->setLanguage($this->languageId);
+                $contextlist->setFilter('type', 'news');
                 $contextlist->renderFilters();
                 $contextlist->render();
                 ?>
