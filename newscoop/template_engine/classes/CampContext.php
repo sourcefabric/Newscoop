@@ -168,10 +168,15 @@ final class CampContext
      */
     private $m_list_count = array();
 
-
     private static $m_nullMetaArticle = null;
 
     private static $m_nullMetaSection = null;
+
+    /** @var Application_Form_Contact */
+    public $form_contact;
+
+    /** @var Zend_Service_ReCaptcha */
+    public $form_contact_captcha;
 
     /**
      * Class constructor
@@ -308,6 +313,24 @@ final class CampContext
         $this->m_properties['map_dynamic_id_counter'] = 0;
         $this->m_properties['map_common_header_set'] = false;
 
+        if (defined('APPLICATION_PATH')) {
+            $secretConfigFile = APPLICATION_PATH . '/configs/secret.ini';
+            if (file_exists($secretConfigFile)) {
+                $this->form_contact = new \Application_Form_Contact();
+                $this->form_contact->setMethod('POST');
+                $config = new \Zend_Config_Ini($secretConfigFile, APPLICATION_ENV);
+                $this->form_contact_captcha = new \Zend_Service_ReCaptcha(
+                    $config->get('recaptcha')->get('public_key'),
+                    $config->get('recaptcha')->get('private_key')
+                );
+
+                $request = \Zend_Controller_Front::getInstance()->getRequest();
+                if ($request->isPost() && $this->form_contact->isValid($request->getPost())) {
+                    var_dump($this->form_contact->getValues());
+                    exit;
+                }
+            }
+        }
     } // fn __construct
 
 
