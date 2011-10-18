@@ -5,100 +5,107 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+/**
+ * Includes
+ */
+require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObject.php');
+
 use Newscoop\Entity\User;
 
 /**
  * Template user
  */
-final class MetaUser extends MetaEntity
+final class MetaUser extends MetaDbObject implements ArrayAccess
 {
-    /** @var Newscoop\Entity\User */
-    protected $user;
-
-    /** @var int */
-    public $identifier;
-
-    /** @var string */
-    public $uname;
-
-    /** @var string */
-    public $name;
-
-    /** @var string */
-    public $first_name;
-
-    /** @var string */
-    public $last_name;
-
-    /** @var string */
-    public $email;
-
-    /** @var bool */
-    public $defined;
-
-    /** @var string */
-    public $created;
 
     /**
      * @param Newscoop\Entity\User $user
      */
     public function __construct(User $user = NULL)
     {
-        $this->user = $user;
-        if (!$user) {
-            return;
+        if (is_null($user)) {
+            $user = new User;
         }
+        $this->m_dbObject = $user;
 
-        $this->identifier = $user->getId();
-        $this->uname = $user->getUsername();
-        $this->email = $user->getEmail();
+        $this->m_properties = array();
 
-        $this->first_name = $user->getFirstName();
-        $this->last_name = $user->getLastName();
-        $this->name = trim($user->getFirstName() . ' ' . $user->getLastName());
+        $this->m_customProperties['identifier'] = 'getId';
+        $this->m_customProperties['first_name'] = 'getFirstName';
+        $this->m_customProperties['last_name'] = 'getLastName';
+        $this->m_customProperties['uname'] = 'getUsername';
+        $this->m_customProperties['email'] = 'getEmail';
 
-        $this->defined = $user->getId() > 0;
-        $this->created = $user->getCreated()->format('d.m.Y');
+        $this->m_customProperties['name'] = 'getDisplayName';
+        $this->m_customProperties['created'] = 'getCreated';
+        $this->m_customProperties['country'] = 'getCountry';
+        $this->m_customProperties['subscription'] = 'getSubscription';
+        $this->m_customProperties['logged_in'] = 'isLoggedIn';
+        $this->m_customProperties['topics'] = 'getTopics';
+        $this->m_customProperties['is_blocked_from_comments'] = 'isBlockedFromComments';
+        $this->m_customProperties['is_admin'] = 'isAdmin';
+        $this->m_customProperties['defined'] = 'isDefined';
+        $this->m_customProperties['posts_count'] = 'getPostsCount';
+
+        $this->m_skipFilter[] = "name";
     }
 
-    /**
-     * Get user attribute value
-     *
-     * @param string $property
-     */
-    public function __get($property)
+    protected function getFirstName()
     {
-        try {
-            return parent::__get($property);
-        } catch (\InvalidArgumentException $e) {
-            return (!$this->user) ? null : $this->user->getAttribute($property);
-        }
+        return $this->m_dbObject->getFirstName();
+    }
+
+    protected function getLastName()
+    {
+        return $this->m_dbObject->getLastName();
+    }
+
+    protected function getUsername()
+    {
+        return $this->m_dbObject->getusername();
+    }
+
+    protected function getEmail()
+    {
+        return $this->m_dbObject->getEmail();
     }
 
     /**
      * @return string
      */
-    public function __toString()
+    protected function getDisplayName()
     {
-        $url = $GLOBALS['controller']->view->url(array('username' => $this->uname), 'user');
+        $url = $GLOBALS['controller']->view->url(array('username' => $this->m_dbObject->getUsername()), 'user');
 
-        if ($this->user->isPublic()) {
-            return "<a href='{$url}'>{$this->name}</a>";
+        $name = trim($this->m_dbObject->getFirstName() . ' ' . $this->m_dbObject->getLastName());
+
+        if ($this->m_dbObject->isPublic()) {
+            return "<a href='{$url}'>{$name}</a>";
         }
         else {
-            return $this->name;
+            return $name;
         }
     }
 
-    public function comments($number=10)
+    /**
+     * Get user id
+     * @author Mihai Balaceanu
+     * @return int
+     */
+    protected function getId()
     {
-        $comments = $this->user->getComments();
+        return $this->m_dbObject->getId();
+    }
 
-        if(count($comments) > 0) {
-            return new MetaComment($comments[0]->getId());
-        }
+    protected function isDefined()
+    {
+        return $this->m_dbObject->getId() > 0;
+    }
 
-        return "No comments";
+    protected function getCreated()
+    {
+        $date = $this->m_dbObject->getCreated();
+        return $date->format('d.m.Y');
     }
 
     /**
@@ -106,14 +113,14 @@ final class MetaUser extends MetaEntity
      *
      * @return MetaSubscription
      */
-    public function subscription()
+    protected function getSubscription()
     {
-        if (empty($this->user)) {
+        if (empty($this->m_dbObject)) {
             return new MetaSubscription();
         }
 
         $publicationId = CampTemplate::singleton()->context()->publication->identifier;
-        $subscriptions = Subscription::GetSubscriptions($publicationId, $this->user->getId());
+        $subscriptions = Subscription::GetSubscriptions($publicationId, $this->m_dbObject->getId());
         return empty($subscriptions) ? new MetaSubscription() : new MetaSubscription($subscriptions[0]->getSubscriptionId());
     }
 
@@ -122,12 +129,12 @@ final class MetaUser extends MetaEntity
      *
      * @return string
      */
-    public function country()
+    protected function getCountry()
     {
         require_once dirname(__FILE__) . '/../../classes/Country.php';
         require_once dirname(__FILE__) . '/../../classes/Language.php';
 
-        $countryCode = $this->user->getAttribute('country_code');
+        $countryCode = $this->m_dbObject->getAttribute('country_code');
         $smartyObj = CampTemplate::singleton();
         $contextObj = $smartyObj->get_template_vars('gimme');
         $country = new Country($countryCode, $contextObj->language->number);
@@ -142,7 +149,7 @@ final class MetaUser extends MetaEntity
      */
     public function has_permission($permission)
     {
-        return $this->user->hasPermission($permission);
+        return $this->m_dbObject->hasPermission($permission);
     }
 
     /**
@@ -150,9 +157,9 @@ final class MetaUser extends MetaEntity
      *
      * @return bool
      */
-    public function is_admin()
+    protected function isAdmin()
     {
-        return $this->user->isAdmin();
+        return $this->m_dbObject->isAdmin();
     }
 
     /**
@@ -160,10 +167,10 @@ final class MetaUser extends MetaEntity
      *
      * @return bool
      */
-    public function logged_in()
+    protected function isLoggedIn()
     {
         $auth = Zend_Auth::getInstance();
-        return $auth->hasIdentity() && $auth->getIdentity() == $this->user->getId();
+        return $auth->hasIdentity() && $auth->getIdentity() == $this->m_dbObject->getId();
     }
 
     /**
@@ -171,7 +178,7 @@ final class MetaUser extends MetaEntity
      *
      * @return bool
      */
-    public function is_blocked_from_comments()
+    protected function isBlockedFromComments()
     {
         require_once dirname(__FILE__) . '/../../include/get_ip.php';
 
@@ -193,12 +200,12 @@ final class MetaUser extends MetaEntity
      */
     public function image($width = 80, $height = 80)
     {
-        if (!$this->user->getImage()) {
+        if (!$this->m_dbObject->getImage()) {
             return '';
         }
 
         return $GLOBALS['controller']->getHelper('service')->getService('image')
-            ->getSrc($this->user->getImage(), $width, $height);
+            ->getSrc($this->m_dbObject->getImage(), $width, $height);
     }
 
     /**
@@ -206,18 +213,73 @@ final class MetaUser extends MetaEntity
      *
      * @return array
      */
-    public function topics()
+    protected function getTopics()
     {
-        if (!$this->user->getId()) {
+        if (!$this->m_dbObject->getId()) {
             return array();
         }
 
         $service = $GLOBALS['controller']->getHelper('service')->getService('user.topic');
         $topics = array();
-        foreach ($service->getTopics($this->user) as $topic) {
+        foreach ($service->getTopics($this->m_dbObject) as $topic) {
             $topics[$topic->getTopicId()] = $topic->getName();
         }
 
-        return $this->topics = $topics;
+        return $topics;
+    }
+
+    /**
+     * Get posts count
+     *
+     * @return int
+     */
+    protected function getPostsCount()
+    {
+        if (!$this->m_dbObject->getId()) {
+            return 0;
+        }
+
+        $sum = 0;
+        $sum += $GLOBALS['controller']->getHelper('entity')->getRepository('Newscoop\Entity\Comment')
+            ->countByUser($this->m_dbObject);
+
+        $sum += $GLOBALS['controller']->getHelper('entity')->getRepository('Newscoop\Entity\Feedback')
+            ->countByUser($this->m_dbObject);
+
+        return $sum;
+    }
+
+    /**
+     * @see ArrayAccess
+     * @todo
+     */
+    public function offsetExists($offset)
+    {
+        $offset = $this->m_dbObject->getAttribute($offset);
+        return isset($offset);
+    }
+
+    /**
+     * @see ArrayAccess
+     */
+    public function offsetGet($offset)
+    {
+        return $this->m_dbObject->getAttribute($offset);
+    }
+
+    /**
+     * @see ArrayAccess
+     * @todo
+     */
+    public function offsetSet($offset, $value)
+    {
+    }
+
+    /**
+     * @see ArrayAccess
+     * @todo
+     */
+    public function offsetUnset($offset)
+    {
     }
 }

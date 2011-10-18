@@ -76,6 +76,8 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
             $database = $options['database'];
         }
 
+        $config->addCustomNumericFunction('RAND', $options['functions']['rand']);
+
         $this->em = EntityManager::create($database, $config);
         return $this->em;
     }

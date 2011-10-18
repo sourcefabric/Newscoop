@@ -13,7 +13,7 @@ if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
 
 if (!is_file("$ETC_DIR/database_conf.php")) {
 	echo "\n";
-	echo "Database configuration file is missed!\n";
+	echo "Database configuration file is missing!\n";
 	echo "\n";
 	exit(1);
 }
@@ -264,7 +264,7 @@ function init_smarty()
     global $CAMPSITE_DIR;
 
     // includes smarty main class
-    require_once("smarty/Smarty.class.php");
+    require_once __DIR__ . '/../library/smarty3/Smarty.class.php';
 
     // instantiates smarty template system
     $tpl = new Smarty();
@@ -274,7 +274,7 @@ function init_smarty()
     $tpl->right_delimiter = '}}';
     $tpl->force_compile = true;
     $tpl->config_dir = $CAMPSITE_DIR.'/include/smarty/configs';
-    $tpl->template_dir = $CAMPSITE_DIR.'/templates/system_templates';
+    $tpl->template_dir = $CAMPSITE_DIR.'/themes/system_templates';
     $tpl->compile_dir = $CAMPSITE_DIR.'/cache';
 
     return $tpl;

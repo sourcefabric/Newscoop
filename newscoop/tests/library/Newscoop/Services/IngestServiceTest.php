@@ -78,14 +78,6 @@ class IngestServiceTest extends \RepositoryTestCase
         $this->assertEquals($entry, $this->service->find($entry->getId()));
     }
 
-    public function testAutoMode()
-    {
-        $this->setAutoMode();
-        $this->assertTrue($this->service->isAutoMode());
-        $this->service->switchAutoMode();
-        $this->assertFalse($this->service->isAutoMode());
-    }
-
     public function testPublish()
     {
         $entry = new Entry('title', 'content');
@@ -107,49 +99,55 @@ class IngestServiceTest extends \RepositoryTestCase
         $this->assertTrue($entry->isPublished());
     }
 
-    public function testUpdateAllEmpty()
+    public function testUpdateSDAEmpty()
     {
-        $this->service->updateAll();
+        $this->service->updateSDA();
         $this->assertEquals(0, count($this->service->getFeeds()));
     }
 
-    public function testUpdateAll()
+    public function testUpdateSDA()
     {
-        $feed = new Feed('sda');
+        $feed = new Feed('SDA');
         $this->service->addFeed($feed);
         $this->assertEquals(0, count($feed->getEntries()));
 
-        $this->service->updateAll();
+        $this->service->updateSDA();
 
         $this->assertEquals(6, count($feed->getEntries()));
         $this->assertInstanceOf('DateTime', $feed->getUpdated());
     }
 
+    public function testUpdateAutoModeWithoutPublishedPreviousVersion()
+    {
+        $feed = new Feed('SDA');
+        $this->service->addFeed($feed);
+    }
+
     public function testUpdateAllUnique()
     {
-        $feed = new Feed('sda');
+        $feed = new Feed('SDA');
         $this->service->addFeed($feed);
 
-        $this->service->updateAll();
-        $this->service->updateAll();
+        $this->service->updateSDA();
+        $this->service->updateSDA();
 
         $this->assertEquals(6, count($feed->getEntries()));
     }
 
     public function testUpdateAllTimeout()
     {
-        $feed = new Feed('sda');
+        $feed = new Feed('SDA');
         $this->service->addFeed($feed);
         $tmpFile = APPLICATION_PATH . '/../tests/ingest/' . uniqid('tmp_') . '.xml';
         copy(APPLICATION_PATH . '/../tests/ingest/newsml1.xml', $tmpFile);
 
-        $this->service->updateAll();
+        $this->service->updateSDA();
         $this->assertEquals(6, count($feed->getEntries()));
     }
 
     public function testLiftEmbargoNew()
     {
-        $feed = new Feed('sda');
+        $feed = new Feed('SDA');
         $this->service->addFeed($feed);
 
         $entry = $this->getEntry(array(
@@ -163,7 +161,7 @@ class IngestServiceTest extends \RepositoryTestCase
         $this->em->flush();
         $this->em->clear();
 
-        $this->service->updateAll();
+        $this->service->updateSDA();
 
         $loaded = $this->em->find('Newscoop\Entity\Ingest\Feed\Entry', $entry->getId());
         $this->assertEquals('Embargoed', $loaded->getStatus());
@@ -171,7 +169,7 @@ class IngestServiceTest extends \RepositoryTestCase
 
     public function testLiftEmbargoOld()
     {
-        $feed = new Feed('sda');
+        $feed = new Feed('SDA');
         $this->service->addFeed($feed);
 
         $entry = $this->getEntry(array(
@@ -185,7 +183,7 @@ class IngestServiceTest extends \RepositoryTestCase
         $this->em->flush();
         $this->em->clear();
 
-        $this->service->updateAll();
+        $this->service->updateSDA();
 
         $loaded = $this->em->find('Newscoop\Entity\Ingest\Feed\Entry', $entry->getId());
         $this->assertEquals('Usable', $loaded->getStatus());
@@ -210,15 +208,5 @@ class IngestServiceTest extends \RepositoryTestCase
         }
 
         return Entry::create($parser);
-    }
-
-    /**
-     * Set auto mode
-     *
-     * @param bool $auto
-     */
-    private function setAutoMode($auto = true)
-    {
-        \SystemPref::Set(IngestService::MODE_SETTING, $auto);
     }
 }

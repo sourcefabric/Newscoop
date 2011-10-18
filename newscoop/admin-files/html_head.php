@@ -21,7 +21,7 @@ if ($locale == 'cz') {
 <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/content.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/ColVis.css" />
 
-<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery-1.4.2.min.js" type="text/javascript"></script>
+<script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery-1.6.4.min.js" type="text/javascript"></script>
 <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery-ui-1.8.6.custom.min.js" type="text/javascript"></script>
 
 <?php if ($locale != 'en') { ?>

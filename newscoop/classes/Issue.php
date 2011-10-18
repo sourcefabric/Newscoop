@@ -341,6 +341,7 @@ class Issue extends DatabaseObject {
 
 	/**
 	 * Get the default template ID used for articles in this issue.
+	 * @deprecated
 	 * @return int
 	 */
 	public function getArticleTemplateId()
@@ -888,7 +889,7 @@ class Issue extends DatabaseObject {
 	 *    An array of Issue objects
 	 */
 	public static function GetList(array $p_parameters, $p_order = null,
-	$p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
+	$p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false, $returnObs = true)
 	{
 		global $g_ado_db;
 
@@ -971,11 +972,11 @@ class Issue extends DatabaseObject {
 			// builds the array of issue objects
 			$issuesList = array();
 			foreach ($issues as $issue) {
-				$issObj = new Issue($issue['IdPublication'],
-				$issue['IdLanguage'],
-				$issue['Number']);
-				if ($issObj->exists()) {
-					$issuesList[] = $issObj;
+			    if ($returnObs) {
+			        $issuesList[] = new Issue($issue['IdPublication'], $issue['IdLanguage'], $issue['Number']);
+				} else {
+				    $issuesList[] = array('publication_id'=>$issue['IdPublication'],
+				    'language_id'=>$issue['IdLanguage'], 'number'=>$issue['Number']);
 				}
 			}
 		} else {

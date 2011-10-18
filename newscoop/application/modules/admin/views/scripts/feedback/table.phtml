@@ -100,7 +100,7 @@
             <p class="commentBody">{{message.message}}</p>
             {% if (attachment.type == 'image') %}
 				<div style="border: 1px solid #000000; width: 100%; background-color: #ffffff; padding: 2px;">
-				<span style="background-color: #e0e0e0; display: block; padding: 2px; font-weight: bold;"><?php putGS('Attachment'); ?></span>
+				<span style="background-color: #f0f0f0; display: block; padding: 2px; font-weight: bold;"><?php putGS('Attachment'); ?></span>
 				<img src="{{attachment.thumbnail}}" style="margin: 4px; float: left; border: 1px solid #000000;">
 				<p>{{attachment.name}}</p>
 				{% if (attachment.status == 'unapproved') %}
@@ -123,7 +123,7 @@
             {% endif %}
             {% if (attachment.type == 'document') %}
 				<div style="border: 1px solid #000000; width: 100%; background-color: #ffffff; padding: 2px;">
-				<span style="background-color: #e0e0e0; display: block; padding: 2px; font-weight: bold;"><?php putGS('Attachment'); ?></span>
+				<span style="background-color: #f0f0f0; display: block; padding: 2px; font-weight: bold;"><?php putGS('Attachment'); ?></span>
 				<img src="<?php echo $this->baseUrl('/admin-style/images/pdf.png'); ?>" style="width: 60px; margin: 4px; float: left; border: 1px solid #000000;">
 				<p>{{attachment.name}}</p>
 				{% if (attachment.status == 'unapproved') %}
@@ -141,6 +141,12 @@
 				{% if (attachment.status == 'approved') %}
 					<?php putGS('Approved.'); ?>
 				{% endif %}
+				<div style="clear: both;"></div>
+				</div>
+            {% endif %}
+            {% if (attachment.type == 'none') %}
+				<div style="border: 1px solid #000000; width: 100%; background-color: #ffffff; padding: 2px;">
+				<span style="background-color: #f0f0f0; display: block; padding: 2px; font-weight: bold;"><?php putGS('No atachment'); ?></span>
 				<div style="clear: both;"></div>
 				</div>
             {% endif %}
@@ -186,12 +192,12 @@
       </li>
 
       <li>
-        <input type="radio" name="action_comment_{{message.id}}" class="action approved" id="processed_{{message.id}}" value="processed"/>
+        <input type="radio" name="action_comment_{{message.id}}" class="action processed" id="processed_{{message.id}}" value="processed"/>
         <label for="processed_{{message.id}}"><?php putGS('Processed'); ?></label>
         &nbsp;&nbsp;
       </li>
       <li>
-        <input type="radio" name="action_comment_{{message.id}}" class="action hidden" id="starred_{{message.id}}" value="starred" style="height: auto"/>
+        <input type="radio" name="action_comment_{{message.id}}" class="action starred" id="starred_{{message.id}}" value="starred" style="height: auto"/>
         <label for="starred_{{message.id}}"><?php putGS('Star'); ?></label>
         &nbsp;&nbsp;
       </li>
@@ -228,8 +234,17 @@
               <li class="hidden">
                 <input type="checkbox" id="show_starred" value="starred"> <label for="show_starred"><?php putGS('Starred'); ?></label>
               </li>
-              <li class="multipart">
-                <input type="checkbox" id="show_multipart" value="multipart"> <label for="show_multipart"><?php putGS('With Files Attached'); ?></label>
+            </ul>
+            <br>
+            <ul class="attachment_filter">
+              <li class="none">
+                <input type="checkbox" id="show_none" value="none"> <label for="show_none"><?php putGS('With no attachment'); ?></label>
+              </li>
+              <li class="image">
+                <input type="checkbox" id="show_image" value="image"> <label for="show_image"><?php putGS('With image attachment'); ?></label>
+              </li>
+              <li class="document">
+                <input type="checkbox" id="show_document" value="document"> <label for="show_document"><?php putGS('With document attachment'); ?></label>
               </li>
             </ul>
             </fieldset>

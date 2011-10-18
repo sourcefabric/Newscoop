@@ -1,3 +1,4 @@
+<?php if (empty($userIsBlogger)) { ?>
 <div class="articlebox" title="<?php putGS('Switches'); ?>"><div>
 <form id="article-switches" action="/<?php echo $ADMIN; ?>/articles/post.php" method="POST">
 
@@ -21,7 +22,7 @@
       <li>
         <input type="checkbox" name="<?php echo $dbColumn->getName(); ?>" id="<?php echo $dbColumn->getName(); ?>"
           class="input_checkbox db" value="on" <?php if ($inViewMode) { ?>disabled<?php } ?> <?php echo $checked; ?> />
-        <label for="<?php echo $dbColumn->getName(); ?>"><?php echo htmlspecialchars($dbColumn->getDisplayName()); ?></label>
+        <label for="<?php echo $dbColumn->getName(); ?>"><?php echo htmlspecialchars($dbColumn->getDisplayName($articleObj->getLanguageId())); ?></label>
       </li>
     <?php
         }
@@ -86,3 +87,4 @@
     });
     </script>
 </div></div>
+<?php } ?>

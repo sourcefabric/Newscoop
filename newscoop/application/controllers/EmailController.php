@@ -18,14 +18,55 @@ class EmailController extends Zend_Controller_Action
 
         $this->getHelper('layout')
             ->disableLayout();
+
+        $server = $this->getRequest()->getServer();
+        $this->view->publication = $server['SERVER_NAME'];
+
+        $this->_helper->contextSwitch()
+            ->addActionContext('comment-notify', 'xml')
+            ->initContext();
     }
 
     public function confirmAction()
     {
         $this->view->user = $this->_getParam('user');
         $this->view->token = $this->_getParam('token');
+    }
 
-        $server = $this->getRequest()->getServer();
-        $this->view->publication = $server['SERVER_NAME'];
+    public function passwordRestoreAction()
+    {
+        $this->view->user = $this->_getParam('user');
+        $this->view->token = $this->_getParam('token');
+    }
+
+    public function commentNotifyAction()
+    {
+        if ($this->_getParam('user', false)) {
+            $this->view->username = $this->_getParam('user')->getUsername();
+        }
+
+        $article = $this->_getParam('article');
+
+        $this->view->articleLink = $this->getArticleLink($article);
+        $this->view->article = new \MetaArticle($article->getLanguageId(), $article->getArticleNumber());
+        $this->view->comment = $this->_getParam('comment');
+    }
+
+    private function getArticleLink(Article $article)
+    {
+        $params = array(
+            'f_publication_id' => $article->getPublicationId(),
+            'f_issue_number' => $article->getIssueNumber(),
+            'f_section_number' => $article->getSectionNumber(),
+            'f_article_number' => $article->getArticleNumber(),
+            'f_language_id' => $article->getLanguageId(),
+            'f_language_selected' => $article->getLanguageId(),
+        );
+
+        $queryString = implode('&', array_map(function($property) use ($params) {
+            return $property . '=' . $params[$property];
+        }, array_keys($params)));
+
+        return $this->view->baseUrl("/admin/articles/edit.php?$queryString");
     }
 }

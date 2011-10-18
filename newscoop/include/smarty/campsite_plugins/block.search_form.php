@@ -33,7 +33,8 @@ function smarty_block_search_form($p_params, $p_content, $p_smarty)
     $url->uri_parameter = "";
     $template = null;
     if (isset($p_params['template'])) {
-        $template = new MetaTemplate($p_params['template']);
+        $themePath = $campsite->issue->defined() ? $campsite->issue->theme_path : $campsite->publication->theme_path;
+        $template = new MetaTemplate($p_params['template'], $themePath);
         if (!$template->defined()) {
             CampTemplate::singleton()->trigger_error('invalid template "' . $p_params['template']
             . '" specified in the search form');

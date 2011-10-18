@@ -6,6 +6,7 @@ ALTER TABLE `liveuser_users` ADD `points` int(10) DEFAULT '0';
 ALTER TABLE `liveuser_users` CHANGE `time_created` `time_created` datetime NOT NULL;
 ALTER TABLE `liveuser_users` CHANGE `time_updated` `time_updated` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
 ALTER TABLE `liveuser_users` ADD `image` varchar(255) DEFAULT NULL;
+ALTER TABLE `liveuser_users` ADD `subscriber` int(10) DEFAULT NULL;
 
 UPDATE `liveuser_users` SET `status` = 1, `is_admin` = 1, `is_public` = 1;
 
@@ -93,3 +94,22 @@ CREATE TABLE IF NOT EXISTS `ingest_feed_entry` (
   UNIQUE (`date_id`, `news_item_id`),
   KEY (`status`, `updated`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+
+-- Article playlist tables 
+DROP TABLE IF EXISTS `playlist`;
+CREATE TABLE `playlist` (
+  `id_playlist` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) NOT NULL,
+  `notes` varchar(1024) DEFAULT NULL,
+  PRIMARY KEY (`id_playlist`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `playlist_article`;
+CREATE TABLE `playlist_article` (
+  `id_playlist_article` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_playlist` int(10) unsigned NOT NULL,
+  `article_no` int(10) unsigned NOT NULL,
+  UNIQUE KEY `id_playlist` (`id_playlist`,`article_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

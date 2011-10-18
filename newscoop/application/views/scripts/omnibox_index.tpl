@@ -1,6 +1,7 @@
+{{$gimme->article->comments_locked}}
 <!--<input type="button" id="ob_file_upload" value="upload file"><span id="ob_file_info"></span><br>-->
 <link rel="stylesheet" href="{{ $view->baseUrl('/public/css/omnibox.css') }}" type="text/css" media="screen" />
-<div id="ob_wrapper" style="position: fixed; left: 0px; top: 20%;">
+<div id="ob_wrapper">
 <script type="text/javascript" src="{{ $view->baseUrl('/js/plupload/js/plupload.full.js') }}"></script>
 <div id="ob_main" style="display: none;">
 	<div id="ob_message_wrapper" style="display: none;">
@@ -10,7 +11,7 @@
 	</div>
 	<div class="clear"></div>
 	{{ if $gimme->user->logged_in }}		
-		{{ if $gimme->article->number }}
+		{{ if $gimme->article->number && $gimme->article->comments_locked == 0 && $gimme->article->comments_enabled == 1}}
 			<div class="top_title">{{ $view->translate('My comment') }} / {{ $view->translate('Send message to the editorial team') }}</div>
 			<div class="top_user">
 				{{ $view->translate('You are logged in as %s', $gimme->user->name) }}<br><a href="#" onClick="omnibox.logout();">{{ $view->translate('Logout') }}</a><br>
@@ -28,6 +29,8 @@
 				<input type="radio" name="ob_comment_feedback" id="ob_feedback" onClick="omnibox.switchCommentFeedback();">
 				<label for="ob_feedback" style="float: none;">{{ $view->translate('Send message to the editorial team (is not published)') }}</label>
 			</div>
+            
+            <div class="clear"></div>
 			
 			<div id="ob_comment_text_container" class="text_container" style="display: inline;">
 				<label for="ob_comment_subject" style="float: none;">{{ $view->translate('Subject') }}</label>
@@ -83,9 +86,9 @@
 			{{ $view->translate('You have to be registered at TagesWoche in order to comment on articles and send messages directly to the editorial team. Please login or create a free user account on TagesWoche.') }}
 		</div>
 		<div class="text_container right half">
-			<input type="text" id="ob_username" class="small right" onKeyPress="if (event.keyCode == 13) omnibox.login();"><br>
+			<input type="text" id="ob_email" name="ob_email" class="small right" onKeyPress="if (event.keyCode == 13) omnibox.login();"><br>
 			<div class="clear"></div>
-			<input type="password" id="ob_password" class="small right" onKeyPress="if (event.keyCode == 13) omnibox.login();"><br>
+			<input type="password" id="ob_password" name="ob_password" class="small right" onKeyPress="if (event.keyCode == 13) omnibox.login();"><br>
 			<div class="clear"></div>
 			<input type="button" class="send_button right" value="{{ $view->translate('Login') }}" onClick="omnibox.login();">
 			<a class="register_link right" href="{{ $view->baseUrl('/register') }}">{{ $view->translate('Register') }}</a>
@@ -97,7 +100,7 @@
 
 <div id="ob_handle" style="">
 <a href="javascript:omnibox.showHide();">
-<img src="{{ $view->baseUrl('/public/css/img/floating-button-bgr.png') }}">
+<img id="ob_handle_image" src="{{ $view->baseUrl('/public/css/img/green-triangle.png') }}">
 </a>
 </div>
 
@@ -105,15 +108,25 @@
 <script type="text/javascript" src="{{ $view->baseUrl('/js/omnibox.js') }}"></script>
 <script>
 omnibox.initialize();
-{{ if $gimme->article->number }}
+{{ if $gimme->article->number && $gimme->article->comments_locked == 0 && $gimme->article->comments_enabled == 1}}
 	omnibox.setType('comment');
 {{ else }}
 	omnibox.setType('feedback');
 {{ /if }}
 omnibox.setTranslation('attach_file', '{{ $view->translate("Attach file") }}');
 omnibox.setTranslation('feedback_content_empty', '{{ $view->translate("Feedback content is not filled in.") }}');
+omnibox.setTranslation('login_failed', '{{ $view->translate("Login failed.") }}');
 omnibox.setTranslation('login_successful', '{{ $view->translate("Login successful. Please wait...") }}');
 omnibox.setTranslation('logout_successful', '{{ $view->translate("Logout successful. Please wait...") }}');
+omnibox.setTranslation('banned_feedback', '{{ $view->translate("You have been banned from writing feedbacks.") }}');
+omnibox.setTranslation('not_logged_in', '{{ $view->translate("You are not logged in.") }}');
+omnibox.setTranslation('feedback_file_sent', '{{ $view->translate("File is uploaded and your message is sent.") }}');
+omnibox.setTranslation('feedback_sent', '{{ $view->translate("Your message is sent.") }}');
+omnibox.setTranslation('error_header', '{{ $view->translate("Following errors have been found:") }}');
+omnibox.setTranslation('banned_comment', '{{ $view->translate("You have been banned from writing comments.") }}');
+omnibox.setTranslation('comment_subject_empty', '{{ $view->translate("The comment subject was not filled in.") }}');
+omnibox.setTranslation('comment_content_empty', '{{ $view->translate("The comment content was not filled in.") }}');
+
 omnibox.setUploadUrl('{{ $view->baseUrl("/feedback/upload/?format=json") }}');
 omnibox.setFlashRuntime('{{ $view->baseUrl('/js/plupload/js/plupload.flash.swf') }}');
 omnibox.setSilverlightRuntime('{{ $view->baseUrl('/js/plupload/js/plupload.silverlight.xap') }}');

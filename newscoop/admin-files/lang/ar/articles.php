@@ -1,4 +1,7 @@
 <?php 
+regGS("This article cannot be previewed. Please make sure it has the publication has a theme assigned.", "");
+regGS("On", "");
+regGS("Off", "");
 regGS("You do not have the right to moderate comments.", "");
 regGS("You can not schedule opposing events at the same time", "");
 regGS("Unable to reach Newscoop. Please check your internet connection.", "");
@@ -144,7 +147,6 @@ regGS("Are you sure you want to delete this scheduled action?", "");
 regGS("Are you sure you want to remove the image '$1' from the article?", "هل انت متأكد من ازالة الصورة' /1$/ 'من المقال ؟");
 regGS("There was an error reading request parameters.", "هنالك خطاء في قراءة متغيرات الطلب");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "لا يمكن معاينة هذا المقال. الرجاء التأكد من إختيار قالب المقال");
-regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "لا يمكن معاينة هذا المقال. الرجاء التأكد من إختيار قالب الصفحة الرئيسية");
 regGS("No such article.", "لا وجود للمقال");
 regGS("No such section.", "لا يوجد هكذا قسم");
 ?>

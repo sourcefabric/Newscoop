@@ -115,7 +115,7 @@ cleanTextContents = function()
 {
     var editor_rank = 0;
     while (true) {
-        var editor_obj = tinyMCE.get(editor_rank);
+        var editor_obj = typeof(tinyMCE) != "undefined" ? tinyMCE.get(editor_rank) : false;
         if (!editor_obj) {
             break;
         }
@@ -132,15 +132,19 @@ window.ajax_had_problems = false;
 
 // main form submit
 $('form#article-main').submit(function() {
-
 	window.save_had_problems = false;
     var form = $(this);
-
     if (!articleChanged()) {
         flashMessage('<?php putGS('Article saved.'); ?>');
+        if(save_and_close) {
+            close(1);
+        }
     } else {
 		// tinymce should know that the current state is the correct one
 		cleanTextContents();
+
+		//fix breadcrumbs title
+        $('.breadcrumbs li:last a').html($('#f_article_title').attr('value') + ' (' + $('#article_language').html() + ')');
 
     	 // ping for connection
         callServer('ping', [], function(json) {
@@ -151,6 +155,9 @@ $('form#article-main').submit(function() {
                 success: function(data, status, p) {
                     flashMessage('<?php putGS('Article saved.'); ?>');
                     toggleComments();
+                    if(save_and_close) {
+                        close(1);
+                    }
                 },
                 error: function (rq, status, error) {
 					window.save_had_problems = true;
@@ -173,27 +180,38 @@ $('form#article-main').submit(function() {
  * Unlock article
  * @return void
  */
-var unlockArticle = function() {
+function unlockArticle(doAction) {
+	doAction = typeof(doAction) != 'undefined' ? doAction : 'none';
     callServer(['Article', 'setIsLocked'], [
         <?php echo $f_language_selected; ?>,
         <?php echo $articleObj->getArticleNumber(); ?>,
         0,
-        <?php echo $g_user->getUserId(); ?>]);
+        <?php echo $g_user->getUserId(); ?>], function() {
+    	   if(doAction == 'close') {
+    		    close(1);
+    	   }
+        });
 };
 
 <?php if ($inEditMode) { ?>
 
 // save all buttons
+
 $('.save-button-bar input').click(function() {
     $('form#article-keywords').submit();
     $('form#article-switches').submit();
-    $('form#article-main').submit();
 
     if ($(this).attr('id') == 'save_and_close') {
-		unlockArticle();
-		$(this).ajaxComplete(function() {
-            close(1500);
-        });
+    	if (articleChanged()) {
+    		unlockArticle();
+	    	save_and_close = true;
+	        $('form#article-main').submit();
+    	} else {
+    		unlockArticle('close');
+    	}
+    } else {
+    	save_and_close = false;
+        $('form#article-main').submit();
     }
 
     return false;
@@ -210,9 +228,16 @@ $('.save-button-bar input#save_and_close').click(function() {
 
 
 
+
 var authorsList = [
 <?php
 $allAuthors = Author::GetAllExistingNames();
+if ($userIsBlogger) {
+    $blogInfo = $blogService->getBlogInfo($g_user);
+    $allAuthors = array_map(function($author) {
+        return $author->getName();
+    }, ArticleAuthor::GetAuthorsByArticle($blogInfo->getArticleNumber(), $blogInfo->getLanguageId()));
+}
 $quoteStringFn = create_function('&$value, $key',
     '$value = json_encode((string) $value);');
 array_walk($allAuthors, $quoteStringFn);
@@ -260,16 +285,29 @@ $('#locations_box a.iframe').each(function() {
 
 });
 
+$('#topic_box_frame a.iframe').each(function() {
+    $(this).data('fancybox').width = 1200;
+});
+
 $("#context_box a.iframe").fancybox({
 	'showCloseButton' : false,
-    'width': 1120,
-    'height'     : 680,
-    'scrolling' : 'no',
+    'width': 1150,
+    'height'     : 700,
+    'scrolling' : 'auto',
     'onClosed'      : function() {
 	   loadContextBoxActileList();
     }
 });
 
+$("#playlist a.iframe").fancybox
+({
+	'showCloseButton' : false,
+    'type' : 'iframe',
+    'width' : 700,
+    'height' : 700,
+    'scrolling' : 'auto',
+    'autoDimensions' : true
+});
 
 // comments form check for changes
 $('form#article-comments').submit(function() {
@@ -294,7 +332,7 @@ function editorsChanged()
 {
     var editor_rank = 0;
     while (true) {
-        var editor_obj = tinyMCE.get(editor_rank);
+        var editor_obj = typeof(tinyMCE) != "undefined" ? tinyMCE.get(editor_rank) : false;
         if (!editor_obj) {
             break;
         }

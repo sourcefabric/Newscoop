@@ -93,6 +93,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('user'));
 
+        $container->register('comment', 'Newscoop\Services\CommentService')
+            ->addArgument(new sfServiceReference('em'));
+
         $container->register('community_feed', 'Newscoop\Services\CommunityFeedService')
             ->addArgument(new sfServiceReference('em'));
 
@@ -115,6 +118,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('auth.adapter', 'Newscoop\Services\Auth\DoctrineAuthService')
             ->addArgument(new sfServiceReference('em'));
 
+        $container->register('auth.adapter.social', 'Newscoop\Services\Auth\SocialAuthService')
+            ->addArgument(new sfServiceReference('em'));
+
         $container->register('email', 'Newscoop\Services\EmailService')
             ->addArgument('%email%')
             ->addArgument(new sfServiceReference('view'))
@@ -127,6 +133,17 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument('%ingest%')
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('ingest.publisher'));
+
+        $container->register('blog', 'Newscoop\Services\BlogService')
+            ->addArgument('%blog%');
+
+        $container->register('comment_notification', 'Newscoop\Services\CommentNotificationService')
+            ->addArgument(new sfServiceReference('email'))
+            ->addArgument(new sfServiceReference('comment'))
+            ->addArgument(new sfServiceReference('user'));
+        
+        $container->register('user_subscription', 'Newscoop\Services\UserSubscriptionService')
+            ->addArgument(new sfServiceReference('em'));
 
         Zend_Registry::set('container', $container);
         return $container;
@@ -157,6 +174,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $front->registerPlugin(new Application_Plugin_CampPluginAutoload());
         $front->registerPlugin(new Application_Plugin_Auth($options['auth']));
         $front->registerPlugin(new Application_Plugin_Acl($options['acl']));
+        $front->registerPlugin(new Application_Plugin_Locale());
     }
 
     protected function _initRouter()
@@ -174,9 +192,25 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'articleNo' => null,
                 'section' => null,
                 'issue' => null,
-                'language' => 'en', // @todo get default language from config
+                'language' => null,
             ), array(
                 'language' => '[a-z]{2}',
+            )));
+
+         $router->addRoute(
+            'webcode',
+            new Zend_Controller_Router_Route(':webcode', array(
+                'module' => 'default'
+            ), array(
+                'webcode' => '^@[a-z]{5,6}',
+            )));
+         $router->addRoute(
+            'language/webcode',
+            new Zend_Controller_Router_Route(':language/:webcode', array(
+            ), array(
+                'module' => 'default',
+                'language' => '[a-z]{2}',
+                'webcode' => '^@[a-z]{5,6}',
             )));
 
         $router->addRoute(
@@ -216,7 +250,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $router->addRoute(
             'user',
-            new Zend_Controller_Router_Route('user/:username', array(
+            new Zend_Controller_Router_Route('user/:username/:action', array(
                 'module' => 'default',
                 'controller' => 'user',
                 'action' => 'profile',
@@ -240,19 +274,17 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         require_once APPLICATION_PATH . '/controllers/helpers/Smarty.php';
         Zend_Controller_Action_HelperBroker::addHelper(new Action_Helper_Smarty());
     }
-    
+
     protected function _initTranslate()
     {
-        $parameters = Zend_Registry::get('container')->getParameter('translation');
-        $filename = $parameters['path'].'/'.$parameters['language'].'.php';
-        include_once($filename);
-        
+        $options = $this->getOptions();
+
         $translate = new Zend_Translate(array(
             'adapter' => 'array',
             'disableNotices' => TRUE,
-            'content' => $translation,
+            'content' => $options['translation']['path'],
         ));
-        
+
         Zend_Registry::set('Zend_Translate', $translate);
     }
 }

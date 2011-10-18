@@ -13,7 +13,7 @@ var omnibox = {
 	translations: {},
 	type: 'comment',
 	elementList: ['ob_main', 'ob_comment', 'ob_feedback', 'ob_comment_text_container', 'ob_comment_subject', 'ob_comment_text', 'ob_feedback_text_container', 'ob_feedback_subject',
-		'ob_feedback_text', 'ob_input', 'ob_message_wrapper', 'ob_message', 'ob_message_close', 'ob_file_info', 'ob_username', 'ob_password', 'ob_file_upload_container'],
+		'ob_feedback_text', 'ob_input', 'ob_message_wrapper', 'ob_message', 'ob_message_close', 'ob_file_info', 'ob_email', 'ob_password', 'ob_file_upload_container', 'ob_handle_image'],
 	elements: {},
 	initialize: function() {
 		for (var i in this.elementList) {
@@ -84,6 +84,7 @@ var omnibox = {
 		this.uploader.bind('FileUploaded', function(up, file, info) {
 			var fileNameParts = file.name.split('.');
 			var extension = fileNameParts[fileNameParts.length - 1];
+			extension = extension.toLowerCase();
 			
 			if (extension == 'jpg' || extension == 'gif' || extension == 'png') {
 				response = $.parseJSON(info.response);
@@ -123,16 +124,20 @@ var omnibox = {
 	showHide: function() {
 		if (this.status == false) {
 			//this.elements.ob_main.style.display = 'inline';
-			$('#ob_main').show(100);
-			this.status = true;
+			$('#ob_wrapper').css('width', '690px');
+            $('#ob_main').show(400);
+            this.status = true;
 			if (this.elements.ob_file_upload_container) this.elements.ob_file_upload_container.innerHTML = '<input type="button" id="ob_file_upload" value="'+this.translations['attach_file']+'">';
-			setTimeout('omnibox.showUploader();', 200);
+            this.elements.ob_handle_image.src = this.baseUrl + '/public/css/img/green-triangle-close.png';
+            setTimeout('omnibox.showUploader();', 200);
 		}
 		else {
 			//this.elements.ob_main.style.display = 'none';
-			$('#ob_main').hide(100);
+			$('#ob_wrapper').css('width', '0px');
+            $('#ob_main').hide(400);
 			this.status = false;
 			this.hideUploader();
+            this.elements.ob_handle_image.src = this.baseUrl + '/public/css/img/green-triangle.png';
 		}
 	},
 	switchCommentFeedback: function() {
@@ -146,11 +151,11 @@ var omnibox = {
 	},
 	login: function() {
 		var data = {
-			username: this.elements.ob_username.value,
-			password: this.elements.ob_username.value
+			email: this.elements.ob_email.value,
+			password: this.elements.ob_password.value
 		};
 		
-		this.elements.ob_username.value = '';
+		this.elements.ob_email.value = '';
 		this.elements.ob_password.value = '';
 		
 		$.post(this.baseUrl + '/omnibox/login/?format=json', data, function(data) {
@@ -217,7 +222,7 @@ var omnibox = {
 				var location = (String)(document.location);
 				location = location.split('#');
 				location = location[0];
-				document.location = location + '#comments_wrap';
+				document.location = location + '#tab-2';
 				document.location.reload();
 			}
 			else {

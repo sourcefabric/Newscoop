@@ -81,6 +81,7 @@ class PublisherServiceTest extends \RepositoryTestCase
         $orig = $this->service->publish($entry, 'N');
         $entry->update(new NewsMlParser(APPLICATION_PATH . NewsMlParserTest::NEWSML));
         $next = $this->service->update($entry);
+        $this->assertTrue($entry->isPublished());
 
         $this->assertGreaterThan(0, $entry->getArticleNumber());
         $this->assertEquals($entry->getArticleNumber(), $orig->getArticleNumber());
@@ -103,6 +104,32 @@ class PublisherServiceTest extends \RepositoryTestCase
         $next->delete();
     }
 
+    public function testUpdateNotPublished()
+    {
+        $entry = $this->getEntry(array(
+            'getTitle' => 'new',
+            'getLanguage' => 'de',
+            'getSubject' => self::SECTION_SPORT,
+            'getCreated' => new \DateTime(),
+        ));
+
+        $this->service->update($entry);
+        $this->assertFalse($entry->isPublished());
+    }
+
+    public function testDeleteNotPublished()
+    {
+        $entry = $this->getEntry(array(
+            'getTitle' => 'new',
+            'getLanguage' => 'de',
+            'getSubject' => self::SECTION_SPORT,
+            'getCreated' => new \DateTime(),
+        ));
+
+        $this->service->delete($entry);
+        $this->assertFalse($entry->isPublished());
+    }
+
     /**
      * Test article data
      */
@@ -110,7 +137,9 @@ class PublisherServiceTest extends \RepositoryTestCase
     {
         $data = $article->getArticleData();
         foreach ($this->config['field'] as $field => $getter) {
-            $this->assertEquals($entry->$getter(), $data->getFieldValue($field));
+            if (method_exists($entry, $getter)) {
+                $this->assertEquals($entry->$getter(), $data->getFieldValue($field));
+            }
         }
     }
 
@@ -129,7 +158,8 @@ class PublisherServiceTest extends \RepositoryTestCase
     private function checkAuthors($count, \Article $article)
     {
         $authors = \ArticleAuthor::GetAuthorsByArticle($article->getArticleNumber(), $article->getLanguageId());
-        $this->assertEquals($count, count($authors));
+        $this->assertEquals(1, count($authors));
+        $this->assertEquals('ingest', $authors[0]->getName());
     }
 
     public function testDelete()

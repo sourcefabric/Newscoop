@@ -256,11 +256,6 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         {
 
             $artTypeName = (string) $this->readAttribute($artType, self::ATTR_ARTICLE_TYPE_NAME);
-            /*            if( isset( $ret->$artTypeName ) ) {
-             $artTypeName .= "_";
-             var_dump( $artType->{self::ATTR_ARTICLE_TYPE_NAME} );
-             }
-             */
             // set article type name on return array
             $ret->$artTypeName = new \stdClass;
             // getting the article type fields
@@ -282,8 +277,10 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
 
     /* --------------------------------------------------------------- */
 
-    function exportTheme($theme)
+    function exportTheme($theme, $p_errorMsg = '')
     {
+        $error_prefix = (empty($p_errorMsg)) ? '' : $p_errorMsg . "\n";
+
         Validation::notEmpty($theme, 'theme');
         if(!($theme instanceof Theme)){
             $theme = $this->findById($theme);
@@ -300,9 +297,8 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         $zip = new \ZipArchive();
         // open archive
         if ($zip->open($zipFilePath, \ZipArchive::CREATE | \ZipArchive::OVERWRITE) !== TRUE) {
-            die ("Could not open archive");
+            die ($error_prefix . 'Could not open archive');
         }
-
 
         $themePath = $this->toFullPath($theme->getPath());
         $themePathLength = strlen($themePath);
@@ -314,16 +310,20 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         $addedDirs = array();
         foreach ($iterator as $key=>$value) {
             $fname = substr($key, $themePathLength);
-            if(strlen($fname) > 0 && !in_array(basename($fname), array(".", "..")) ) {
+            if(strlen($fname) > 0 && !in_array(basename($fname), array('.', '..')) ) {
                 if( !in_array(dirname($fname),$addedDirs) ) {
-                	$zip->addEmptyDir(dirname($fname));
-                	$addedDirs[]=dirname($fname);
-                };
-            	$zip->addFile(realpath($key), $fname) or die ("ERROR: Could not add file: $key");
+                    if(!$zip->addEmptyDir(dirname($fname))) {
+                        return false;
+                    }
+                    $addedDirs[]=dirname($fname);
+                }
+                $zip->addFile(realpath($key), $fname) or die ($error_prefix . "ERROR: Could not add file: $key");
             }
         }
         // close and save archive
-        $zip->close();
+        if (!$zip->close()) {
+            return false;
+        }
 
         return $zipFilePath;
     }
@@ -425,8 +425,13 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
         // We have to check if there is no other theme by the new theme name.
         foreach($this->getThemes($publication) as $th){
             /* @var $th Theme */
-            if(trim($th->getName()) === trim($theme->getName())){
-                throw new DuplicateNameException();
+            if (trim($th->getName()) === trim($theme->getName())){
+                if ($this->getThemePublication($th) != NULL) {
+                    throw new DuplicateNameException();
+                } else {
+                    $thPath = $th->getPath();
+                    $this->rrmdir($this->toFullPath($thPath));
+                }
             }
         }
 
@@ -468,6 +473,15 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
                     $outTh->setOutput($outSet->getOutput());
                 }
                 $this->syncOutputSettings($outTh, $outSet);
+
+                $issueOutSettings = $this->getOutputSettingIssueService();
+                foreach ($issueOutSettings->getUnthemedIssues($publication) as $issue) {
+                    $outIssueTh = new OutputSettingsIssue();
+                    $outIssueTh->setIssue($issue);
+                    $outIssueTh->setThemePath($pathRsc);
+                    $outIssueTh->setOutput($outSet->getOutput());
+                    $em->persist($outIssueTh);
+                }
 
                 $em->persist($outTh);
             }
@@ -1023,5 +1037,31 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
             reset($objects);
             rmdir($dir);
         }
+    }
+
+    /**
+     * Get the publication of a theme, and optionally output
+     * @param Theme $theme
+   	 * @param Output $output
+   	 * @return Publication
+     */
+    function getThemePublication($theme, $output=null)
+    {
+        $pathRsc = $this->getSyncResourceService()->getThemePath($theme->getPath());
+        $em = $this->getEntityManager();
+        $qb = $em->createQueryBuilder();
+        $qb->select('th')->from(OutputSettingsTheme::NAME, 'th');
+        $qb->where('th.themePath = :themePath');
+        $qb->setParameter('themePath', $pathRsc);
+        if (!is_null($output))
+        {
+            $qb->andWhere('th.output = :output');
+            $qb->setParameter('output', $output);
+        }
+        $result = current($qb->getQuery()->getResult());
+        if ($result) {
+            return $result->getPublication();
+        }
+        return null;
     }
 }

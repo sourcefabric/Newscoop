@@ -143,6 +143,7 @@ CREATE TABLE IF NOT EXISTS  `comment` (
   `dislikes` tinyint(3) unsigned DEFAULT '0',
   `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `recommended` tinyint(1) unsigned DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `comments_users` (`fk_comment_commenter_id`),
   KEY `publication` (`fk_forum_id`),
@@ -218,6 +219,37 @@ CREATE TABLE `feedback` (
    PRIMARY KEY (`id`),
    KEY `user` (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- user_subscription main table
+DROP TABLE IF EXISTS `user_subscription`;
+CREATE TABLE `user_subscription` (
+   `id` int(11) unsigned not null auto_increment,
+   `user_id` int(11) unsigned,
+   `subscription_type` int(1),
+   `time_begin` datetime,
+   `time_end` datetime,
+   `subscription` int(11),
+   PRIMARY KEY (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+
+-- Article playlist tables 
+DROP TABLE IF EXISTS `playlist`;
+CREATE TABLE `playlist` (
+  `id_playlist` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(256) NOT NULL,
+  `notes` varchar(1024) DEFAULT NULL,
+  PRIMARY KEY (`id_playlist`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `playlist_article`;
+CREATE TABLE `playlist_article` (
+  `id_playlist_article` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `id_playlist` int(10) unsigned NOT NULL,
+  `article_no` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`id_playlist_article`),
+  UNIQUE KEY `id_playlist` (`id_playlist`,`article_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 -- Update Images
 ALTER TABLE `Images`

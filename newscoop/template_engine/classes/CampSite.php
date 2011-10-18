@@ -96,45 +96,50 @@ final class CampSite extends CampSystem
     {
         global $g_errorList;
 
+        $errors = $GLOBALS['controller']->getRequest()->getParam('errors', null);
+
         $uri = self::GetURIInstance();
         $document = self::GetHTMLDocumentInstance();
 
         $context = CampTemplate::singleton()->context();
         // sets the appropiate template if site is not in mode online
         if ($this->getSetting('site.online') == 'N') {
-            $templates_dir = CS_TEMPLATES_DIR;
-            $template = CS_SYS_TEMPLATES_DIR . DIR_SEP . '_campsite_offline.tpl';
+            $templates_dir = CS_TEMPLATES_DIR . DIR_SEP . CS_SYS_TEMPLATES_DIR;
+            $template = '_campsite_offline.tpl';
         } elseif (!$uri->publication->defined) {
-            $templates_dir = CS_TEMPLATES_DIR;
-            $template = CS_SYS_TEMPLATES_DIR . DIR_SEP . '_campsite_error.tpl';
+            $templates_dir = CS_TEMPLATES_DIR . DIR_SEP . CS_SYS_TEMPLATES_DIR;
+            $template = '_campsite_error.tpl';
             $error_message = 'The site alias \'' . $_SERVER['HTTP_HOST']
                     . '\' was not assigned to a publication. Please create a publication and '
                     . ' assign it the current site alias.';
         } elseif (is_array($g_errorList) && !empty($g_errorList)) {
-            $templates_dir = CS_TEMPLATES_DIR;
-            $template = CS_SYS_TEMPLATES_DIR . DIR_SEP . '_campsite_error.tpl';
+            $templates_dir = CS_TEMPLATES_DIR . DIR_SEP . CS_SYS_TEMPLATES_DIR;
+            $template = '_campsite_error.tpl';
             $error_message = 'At initialization: ' . $g_errorList[0]->getMessage();
-        } else {
-            $template = $uri->getTemplate();
-            if (empty($template)) {
-                $tplId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
-                if (is_null($tplId)) {
-                    $error_message = "Unable to select a template! "
-                            . "Please make sure the following conditions are met:\n"
-                            . "<li>there is at least one issue published and it had assigned "
-                            . "valid templates for the front, section and article pages;</li>\n"
-                            . "<li>a template was assigned for the URL error handling in "
-                            . "the publication configuration screen.";
-                } else {
-                    $error_message = 'The template identified by the number ' . $tplId
-                            . ' does not exist.';
-                }
-                $templates_dir = CS_TEMPLATES_DIR;
-                $template = CS_SYS_TEMPLATES_DIR . DIR_SEP . '_campsite_error.tpl';
+        } elseif (!empty($errors)) {
+            $templates_dir = CS_TEMPLATES_DIR . DIR_SEP . CS_SYS_TEMPLATES_DIR;
+            $template = '_campsite_error.tpl';
+            if (defined('APPLICATION_ENV') && APPLICATION_ENV == 'development') {
+                $error_message = $errors->exception;
             } else {
-            	$themePath = $uri->getThemePath();
-            	$templates_dir = CS_TEMPLATES_DIR . DIR_SEP . $themePath;
-            	$template = substr($template,  strlen($themePath));
+                $error_message = 'Error occured.';
+            }
+        } else {
+            $template = $uri->getTemplate(CampRequest::GetVar(CampRequest::TEMPLATE_ID));
+            switch ($template) {
+                case null:
+                    $error_message = "Unable to select a template! "
+                    . "Please make sure the following conditions are met:\n"
+                    . "<li>there is at least one issue published and it had assigned "
+                    . "valid templates for the front, section and article pages;</li>\n"
+                    . "<li>a template was assigned for the URL error handling in "
+                    . "the publication configuration screen.";
+                    $templates_dir = CS_TEMPLATES_DIR . DIR_SEP . CS_SYS_TEMPLATES_DIR;
+                    $template = '_campsite_error.tpl';
+                    break;
+                default:
+                    $themePath = $uri->getThemePath();
+                    $templates_dir = CS_TEMPLATES_DIR . DIR_SEP . $themePath;
             }
         }
         $params = array(

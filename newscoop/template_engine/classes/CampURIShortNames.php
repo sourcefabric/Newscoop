@@ -13,6 +13,7 @@
 use Newscoop\Service\Resource\ResourceId;
 use Newscoop\Service\ISyncResourceService;
 use Newscoop\Entity\Resource;
+use Newscoop\Webcode\Manager;
 
 /**
  * Includes
@@ -55,26 +56,28 @@ class CampURIShortNames extends CampURI
     {
         parent::__construct($p_uri);
 
-        $this->setURLType(URLTYPE_SHORT_NAMES);
-        $res = $this->setURL($GLOBALS['controller']->getRequest());
-        if (PEAR::isError($res)) {
+        try {
+            $this->setURLType(URLTYPE_SHORT_NAMES);
+            $this->setURL($GLOBALS['controller']->getRequest());
+            $this->m_validURI = true;
+            $this->validateCache(false);
+        } catch (Exception $e) {
             $this->m_validURI = false;
-            $this->m_errorCode = $res->getCode();
+            $this->m_errorCode = $e->getCode();
+
             if (!is_null($this->m_publication)) {
-                $tplId = CampSystem::GetInvalidURLTemplate($this->m_publication->identifier);
-                $template = new MetaTemplate($tplId);
+                $tplId = CampSystem::GetInvalidURLTemplate($this->m_publication->identifier, null, null, !$this->m_preview);
+                $themePath = $this->getThemePath();
+                $tplId = substr($tplId, strlen($themePath));
+                $template = new MetaTemplate($tplId, $themePath);
                 if ($template->defined()) {
                     $this->m_template = $template;
                 }
             }
-            CampTemplate::singleton()->trigger_error($res->getMessage());
-        } else {
-            $this->m_validURI = true;
-        }
-        $this->validateCache(false);
-    }
 
-// fn __construct
+            CampTemplate::singleton()->trigger_error($e->getMessage());
+        }
+    }
 
     /**
      * Gets the language URI path.
@@ -241,7 +244,7 @@ class CampURIShortNames extends CampURI
                 $language = new MetaLanguage($langArray[0]->getLanguageId());
             }
         } else {
-            $language = new MetaLanguage($publication->default_language->number);
+            $language = $publication->default_language;
         }
 
         if (empty($language) || !$language->defined()) {
@@ -329,7 +332,8 @@ class CampURIShortNames extends CampURI
     private function _getTemplate()
     {
         $templateId = CampRequest::GetVar(CampRequest::TEMPLATE_ID);
-        $template = new MetaTemplate(parent::getTemplate($templateId));
+        $themePath = $this->m_issue->defined() ? $this->m_issue->theme_path : $this->m_publication->theme_path;
+        $template = new MetaTemplate(parent::getTemplate($templateId), $themePath);
         if (!$template->defined()) {
             throw new InvalidArgumentException("Invalid template in URL or no default template specified.", self::INVALID_TEMPLATE);
         }
@@ -346,20 +350,36 @@ class CampURIShortNames extends CampURI
     private function setURL(Zend_Controller_Request_Abstract $request)
     {
         $this->setQueryVar('acid', null);
-
-        try {
-            $this->m_publication = $this->_getPublication();
-            $this->m_language = $this->_getLanguage($request->getParam('language'), $this->m_publication);
+        $encoder = Manager::getWebcoder('');
+        $this->m_publication = $this->_getPublication();
+        $webcode = $request->getParam('webcode');
+        $controller = $request->getParam('controller');
+        if ($controller != 'index') {
+            $language = $controller;
+        } else {
+            $language = $request->getParam('language');
+        }
+        if (!empty( $webcode ) ) {
+            if (!empty( $language )) {
+                $webcodeLanguageId = Language::GetLanguageIdByCode($language);
+            } else {
+                $webcodeLanguageId = $this->m_publication->default_language->number;
+            }
+            $article_no = $encoder->decode($webcode);
+            $metaArticle = new MetaArticle($webcodeLanguageId, $article_no);
+            $this->m_article = $metaArticle;
+            $this->m_publication = $this->m_article->publication;
+            $this->m_issue = $this->m_article->issue;
+            $this->m_section = $this->m_article->section;
+            $this->m_template = $this->_getTemplate();
+        } else {
+            $this->m_language = $this->_getLanguage($language, $this->m_publication);
             $this->m_issue = $this->_getIssue($request->getParam('issue'), $this->m_language, $this->m_publication);
             $this->m_section = $this->_getSection($request->getParam('section'), $this->m_issue, $this->m_language, $this->m_publication);
             $this->m_article = $this->_getArticle($request->getParam('articleNo'), $this->m_language);
             $this->m_template = $this->_getTemplate();
-        } catch (\Exception $e) {
-            return new PEAR_Error($e->getMessage(), $e->getCode());
         }
 
-        $this->m_validURI = true;
-        $this->validateCache(false);
     }
 
     /**
@@ -419,23 +439,11 @@ class CampURIShortNames extends CampURI
                 $p_params = array();
                 break;
             case 'template':
-                $option = isset($p_params[0]) ? array_shift($p_params) : null;
-                if (is_null($this->_themePath)) {
-                    $this->_themePath = CampSystem::GetThemePath($this->m_language->number,
-                                    $this->m_publication->identifier,
-                                    $this->m_issue->number);
-                }
-                $pathRsc = new Resource();
-                $pathRsc->setName('buildPage');
-                $pathRsc->setPath($this->_themePath.$option);
-                $resourceId = new ResourceId('template_engine/classes/CampURIShortNames');
-                $pathRsc = $syncResourceService = $resourceId->getService(ISyncResourceService::NAME)->getSynchronized($pathRsc);
-                if (!is_null($option) && !is_null($pathRsc) && $pathRsc->exists()) {
-                    $this->m_buildQueryArray[CampRequest::TEMPLATE_ID] = $pathRsc->getId();
-                }
-                break;
             case 'id':
                 $option = isset($p_params[0]) ? array_shift($p_params) : null;
+                if (is_null($option)) {
+                    break;
+                }
                 if (is_null($this->_themePath)) {
                     $this->_themePath = CampSystem::GetThemePath($this->m_language->number,
                                     $this->m_publication->identifier,
@@ -445,8 +453,8 @@ class CampURIShortNames extends CampURI
                 $pathRsc->setName('buildPage');
                 $pathRsc->setPath($this->_themePath.$option);
                 $resourceId = new ResourceId('template_engine/classes/CampURIShortNames');
-                $pathRsc = $syncResourceService = $resourceId->getService(ISyncResourceService::NAME)->getSynchronized($pathRsc);
-                if (!is_null($option) && !is_null($pathRsc) && $pathRsc->exists()) {
+                $pathRsc = $resourceId->getService(ISyncResourceService::NAME)->getSynchronized($pathRsc);
+                if (!is_null($pathRsc) && $pathRsc->exists()) {
                     $this->m_buildQueryArray[CampRequest::TEMPLATE_ID] = $pathRsc->getId();
                 }
                 break;

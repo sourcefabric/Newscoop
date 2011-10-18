@@ -24,6 +24,7 @@ class UsersList extends ListObject
         'byfirstname' => 'first_name',
         'bylastname' => 'last_name',
         'bycreated' => 'created',
+        'byrandom' => 'random',
     );
 
 	/**
@@ -41,15 +42,22 @@ class UsersList extends ListObject
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
         $service = $GLOBALS['controller']->getHelper('service')->getService('user.list');
-        $count = $service->countBy($this->m_constraints);
 
-        $users = array();
-        foreach ($service->findBy($this->m_constraints, $this->m_order, $p_limit, $p_start) as $user) {
-            $users[] = new MetaUser($user);
+        if (in_array('random', array_keys($this->m_order))) { // random ordering
+            $users = $service->getRandomList($p_limit);
+            $count = count($users);
+        } else {
+            $users = $service->findBy($this->m_constraints, $this->m_order, $p_limit, $p_start);
+            $count = $service->countBy($this->m_constraints);
         }
 
-        return $users;
-	}
+        $metaUsers = array();
+        foreach ($users as $user) {
+            $metaUsers[] = new MetaUser($user);
+        }
+
+        return $metaUsers;
+    }
 
 	/**
 	 * Processes list constraints passed in an array.

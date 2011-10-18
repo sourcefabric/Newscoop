@@ -1,4 +1,8 @@
 <?php 
+regGS("Upload of file $1 was not successful.", "");
+regGS("The file $1 could not be moved. Check you have enough of disk space.", "");
+regGS("MiB", "");
+regGS("Download was not successful. Check please that the server is not out of disk space.", "");
 regGS("User name", "");
 regGS("Newscoop", "");
 regGS("Campsite", "");

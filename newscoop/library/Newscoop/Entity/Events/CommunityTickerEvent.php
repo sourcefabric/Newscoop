@@ -139,4 +139,32 @@ class CommunityTickerEvent
     {
         return $this->user;
     }
+
+    /**
+     * Check if the feed message exists.
+     * Test if there is set an id
+     *
+     * @return bool
+     * @deprecated legacy from frontend controllers
+     */
+    public function exists()
+    {
+        return !is_null($this->id);
+    }
+
+    /**
+     * Get an enity property
+     *
+     * @param $p_key
+     * @return mixed
+     * @deprecated legacy from frontend controllers
+     */
+    public function getProperty($p_key)
+    {
+    if (method_exists($this, $p_key)) {
+            return $this->$p_key();
+        } else {
+            throw new \InvalidArgumentException("Community Ticker Property $p_key not found");
+        }
+    }
 }

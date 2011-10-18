@@ -13,6 +13,7 @@ use Doctrine\ORM\QueryBuilder;
 use Newscoop\Entity\Comment;
 use Newscoop\Entity\Comment\Commenter;
 use Newscoop\Datatable\Source as DatatableSource;
+use Newscoop\Entity\User;
 
 /**
  * Comment repository
@@ -81,6 +82,31 @@ class CommentRepository extends DatatableSource
             $em->persist($p_comment);
         }
     }
+    
+    /**
+     * Method for recommending a comment
+     * @param \Newscoop\Entity\Comment $p_comment
+     * @return void
+     */
+    public function setRecommended(array $p_comment_ids, $p_recommended)
+    {
+        foreach ($p_comment_ids as $comment_id) {
+			$this->setCommentRecommended($this->find($comment_id), $p_recommended);
+		}
+    }
+    
+    /**
+     * Method for setting recommended for a comment
+     * @param \Newscoop\Entity\Comment $p_comment
+     * @param  string $p_recommended
+     * @return void
+     */
+    public function setCommentRecommended(Comment $p_comment, $p_recommended)
+    {
+        $em = $this->getEntityManager();
+        $p_comment->setRecommended($p_recommended);
+        $em->persist($p_comment);
+    }
 
     /**
      * Method for update a comment
@@ -107,7 +133,9 @@ class CommentRepository extends DatatableSource
      */
     public function save(Comment $p_entity, $p_values)
     {
-	// get the enitity manager
+        $p_values += array('recommended' => false);
+
+	    // get the enitity manager
         $em = $this->getEntityManager();
 
         $commenterRepository = $em->getRepository('Newscoop\Entity\Comment\Commenter');
@@ -120,7 +148,8 @@ class CommentRepository extends DatatableSource
 				 ->setMessage($p_values['message'])
 				 ->setStatus($p_values['status'])
 				 ->setIp($p_values['ip'])
-				 ->setTimeCreated($p_values['time_created']);
+				 ->setTimeCreated($p_values['time_created'])
+                 ->setRecommended($p_values['recommended']);
         
         $threadLevel = 0;
         
@@ -325,6 +354,10 @@ class CommentRepository extends DatatableSource
                         $orx->add($qb->expr()->eq("e.$key", $value));
                     }
                     break;
+                case 'recommended':
+					foreach ($values as $value) {
+                        $orx->add($qb->expr()->eq('e.recommended', $value));
+                    }
             }
             $andx->add($orx);
         }
@@ -414,4 +447,17 @@ class CommentRepository extends DatatableSource
         return $clearCommentIds;
     }
 
+    /**
+     * Get comments count for user
+     *
+     * @param Newscoop\Entity\User $user
+     * @return int
+     */
+    public function countByUser(User $user)
+    {
+        return (int) $this->getEntityManager()
+            ->createQuery("SELECT COUNT(comment) FROM Newscoop\Entity\Comment comment WHERE comment.commenter IN (SELECT commenter.id FROM Newscoop\Entity\Comment\Commenter commenter WHERE commenter.user = :user)")
+            ->setParameter('user', $user->getId())
+            ->getSingleScalarResult();
+    }
 }

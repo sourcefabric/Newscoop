@@ -154,7 +154,6 @@ class Admin_ThemesController extends Zend_Controller_Action
     public function init()
     {
         $this->getThemeService();
-        $this->view->placeholder( 'title' )->set( getGS( 'Theme management' ) );
 
         // TODO move this + callbacks from here to a higher level
         if( !$this->_helper->contextSwitch->hasContext( 'adv' ) )
@@ -201,7 +200,7 @@ class Admin_ThemesController extends Zend_Controller_Action
         $datatableAdapter = new Theme( $this->getThemeService() );
         // really wierd way to bind some filtering logic right here
         // basically this is the column index we are going to look for filtering requests
-        $datatableAdapter->setPublicationFilterColumn(4);
+        $datatableAdapter->setPublicationFilterColumn(0);
 
         $datatable = $this->_helper->genericDatatable;
         /* @var $datatable Action_Helper_GenericDatatable */
@@ -211,7 +210,6 @@ class Admin_ThemesController extends Zend_Controller_Action
         $datatable            // setting options for the datatable
             ->setCols( array
             (
-                'checkbox'	   => '',
                 'image'        => '',
                 'name'         => getGS( 'Theme name / version' ),
                 'description'  => getGS( 'Compatibility' ),
@@ -233,7 +231,7 @@ class Admin_ThemesController extends Zend_Controller_Action
                 'fnInitComplete' => "newscoopDatatables.callbackInit",
                 'fnServerData'	 => "newscoopDatatables.callbackServerData"
             ) )
-            ->setWidths( array( 'checkbox' => 0, 'image' => 215, 'name' => 235, 'description' => 280, 'actions' => 115 ) )
+            ->setWidths( array( 'image' => 215, 'name' => 235, 'description' => 280, 'actions' => 115 ) )
             ->setRowHandler
             (
                 function( $theme, $index = null )
@@ -280,6 +278,7 @@ class Admin_ThemesController extends Zend_Controller_Action
                 'media'	=> 'screen',
                 'rel'	=> 'stylesheet'
             ) );
+            $this->view->placeholder( 'title' )->set( getGS( 'Theme management' ) );
         }
     }
 
@@ -364,7 +363,7 @@ class Admin_ThemesController extends Zend_Controller_Action
 
     public function advancedThemeSettingsAction()
     {
-        $this->view->themeId = $this->_request->getParam( 'id' );
+        $this->view->themeId = ( $themeId = $this->_request->getParam( 'id' ) );
         $this->view->headLink( array
         (
         	'type'  =>'text/css',
@@ -375,6 +374,16 @@ class Admin_ThemesController extends Zend_Controller_Action
 
         $params = $this->getRequest()->getParams();
         $this->view->templatesParams = $params;
+
+        $this->view->placeholder( 'title' )->set( getGS( 'Theme management' ) );
+
+        $themeMngService = $this->getThemeService();
+        /* @var $themeMngService Newscoop\Service\Implementation\ThemeManagementServiceLocal */
+        $theme = $themeMngService->getById($themeId);
+        $this->view->placeholder( 'title' )->append( ": ".$theme->getName() );
+        if (($publication = $themeMngService->getThemePublication($theme))) {
+            $this->view->placeholder( 'title' )->append( " - ".$publication->getName() );
+        }
     }
 
     /**
@@ -643,33 +652,34 @@ class Admin_ThemesController extends Zend_Controller_Action
 
     public function exportAction()
     {
+        $erro_msg = getGS('Theme export was not successful. Check please that the server is not out of disk space.');
+
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender();
         if( ( $themeId = $this->_getParam( 'id', null ) ) )
         {
-            $exportPath = $this->getThemeService()
-                ->exportTheme( ( $themeEntity = $this->getThemeService()->findById( $themeId ) ) );
-            $this->getResponse()
-                ->setHeader( 'Content-type', 'application/zip' )
-                ->setHeader( 'Content-Disposition', 'attachment; filename="'.$themeEntity->getName().'.zip"' )
-                ->setHeader( 'Content-length', filesize( $exportPath ) )
-                ->setHeader( 'Cache-control', 'private' );
+            // it looks that a problem could happen here if the server is out of its disk space
+            try {
+                $exportPath = $this->getThemeService()
+                    ->exportTheme( ( $themeEntity = $this->getThemeService()->findById( $themeId ) ), $erro_msg );
+                if (false === $exportPath) {
+                    die($erro_msg);
+                }
 
-			// it looks that a problem could happen here if the server is out of its disk space
-			$send_file_failure = false;
-			try {
-				if(!@readfile( $exportPath )) {
-					$send_file_failure = true;
-				}
-			}
-			catch (Exception $exc) {
-				$send_file_failure = true;
-			}
-			if ($send_file_failure) {
-				echo getGS('Download was not successful. Check please that the server is not out of disk space.');
-			}
+                $this->getResponse()
+                    ->setHeader( 'Content-type', 'application/zip' )
+                    ->setHeader( 'Content-Disposition', 'attachment; filename="'.$themeEntity->getName().'.zip"' )
+                    ->setHeader( 'Content-length', filesize( $exportPath ) )
+                    ->setHeader( 'Cache-control', 'private' );
 
-            $this->getResponse()->sendResponse();
+                if(!@readfile( $exportPath )) {
+                    die($erro_msg);
+                }
+                $this->getResponse()->sendResponse();
+            }
+            catch (Exception $exc) {
+                echo $erro_msg;
+            }
         }
     }
 

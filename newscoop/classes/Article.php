@@ -194,7 +194,7 @@ class Article extends DatabaseObject {
      * @return boolean
      *      TRUE on success, FALSE on failure
      */
-    public function fetch($p_recordSet = null)
+    public function fetch($p_recordSet = null, $p_forceExists = false)
     {
         $res = parent::fetch($p_recordSet);
         if ($this->exists()) {
@@ -488,6 +488,9 @@ class Article extends DatabaseObject {
 
             // Copy file pointers
             ArticleAttachment::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->m_data['Number']);
+
+            // Copy author pointers
+            ArticleAuthor::OnArticleCopy($copyMe->m_data['Number'], $articleCopy->m_data['Number']);
 
             // Position the new article at the beginning of the section
             $articleCopy->positionAbsolute(1);
@@ -1415,6 +1418,26 @@ class Article extends DatabaseObject {
         // If the article is being published
         if ( ($this->getWorkflowStatus() != 'Y') && ($p_value == 'Y') ) {
             $this->setProperty('PublishDate', 'NOW()', true, true);
+
+            // send out an article.published event
+            self::dispatchEvent("article.published", $this);
+
+            // dispatch blog.published
+            $blogConfig = \Zend_Registry::get('container')->getParameter('blog');
+            if ($this->getType() == $blogConfig['article_type']) {
+                self::dispatchEvent('blog.published', $this, array(
+                    'number' => $this->getArticleNumber(),
+                    'language' => $this->getLanguageId(),
+                ));
+            }
+
+            $article_images = ArticleImage::GetImagesByArticleNumber($this->getArticleNumber());
+            foreach ($article_images as $article_image) {
+                $image = $article_image->getImage();
+                $user_id = (int)$image->getUploadingUserId();
+                //send out an image.published event
+                self::dispatchEvent("image.published", $this, array("user" => $user_id));
+            }
         }
         // Unlock the article if it changes status.
         if ( $this->getWorkflowStatus() != $p_value ) {
@@ -1634,19 +1657,22 @@ class Article extends DatabaseObject {
     	$urlEnd = '';
     	foreach ($seoFields as $field => $value) {
     		switch ($field) {
-    			case 'name':
-    				$urlEnd .= trim($this->getName()) . ' ';
-    				break;
-    			case 'keywords':
-    				$urlEnd .= trim($this->getKeywords()) . ' ';
-    				break;
-    			case 'topics':
-    				$articleTopics = ArticleTopic::GetArticleTopics($this->getArticleNumber());
-        			foreach ($articleTopics as $topic) {
-        				$urlEnd .= '-' . $topic->getName($languageId);
-        			}
-    				$urlEnd .= implode('-', $this->m_article->topics) . ' ';
-    				break;
+                case 'name':
+                    if ($text = trim($this->getName())) {
+                        $urlEnd .= $urlEnd ? '-' . $text : $text;
+                    }
+                    break;
+                case 'keywords':
+                    if ($text = trim($this->getKeywords())) {
+                        $urlEnd .= $urlEnd ? '-' . $text : $text;
+                    }
+                    break;
+                case 'topics':
+                    $articleTopics = ArticleTopic::GetArticleTopics($this->getArticleNumber());
+                    foreach ($articleTopics as $topic) {
+                        $urlEnd .= $urlEnd ? '-' . $topic->getName($languageId) : $topic->getName($languageId);
+                    }
+                    break;
     		}
     	}
     	$urlEnd = preg_replace('/[,\/\.\?"\+&%:#]/', '', trim($urlEnd));
@@ -2453,7 +2479,7 @@ class Article extends DatabaseObject {
      *    An array of Article objects
      */
     public static function GetList(array $p_parameters, $p_order = null,
-                                   $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
+                                   $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false, $returnObjs = true)
     {
         global $g_ado_db;
 
@@ -2544,10 +2570,11 @@ class Article extends DatabaseObject {
                 $selectClauseObj->addWhere('Articles.IdLanguage = ArticleAuthors.fk_language_id');
             } elseif ($leftOperand == 'search_phrase') {
                 $searchQuery = ArticleIndex::SearchQuery($comparisonOperation['right'], $comparisonOperation['symbol']);
-                $mainClauseConstraint = "(Articles.Number, Articles.IdLanguage) IN ( $searchQuery )";
-                $selectClauseObj->addWhere($mainClauseConstraint);
-            }
-            elseif ($leftOperand == 'location') {
+                $otherTables["($searchQuery)"] = array('__TABLE_ALIAS'=>'search',
+                                                       '__JOIN'=>'INNER JOIN',
+                                                       'Number'=>'NrArticle',
+                                                       'IdLanguage'=>'IdLanguage');
+            } elseif ($leftOperand == 'location') {
                 $num = '[-+]?[0-9]+(?:\.[0-9]+)?';
                 if (preg_match("/($num) ($num), ($num) ($num)/",
                     trim($comparisonOperation['right']), $matches)) {
@@ -2562,6 +2589,8 @@ class Article extends DatabaseObject {
                     ));
                     $selectClauseObj->addWhere("Articles.Number IN ($queryLocation)");
                 }
+            } elseif ($leftOperand == 'insection') {
+                $selectClauseObj->addWhere("Articles.NrSection IN " . $comparisonOperation['right']);
             } else {
                 // custom article field; has a correspondence in the X[type]
                 // table fields
@@ -2678,7 +2707,11 @@ class Article extends DatabaseObject {
             // builds the array of Article objects
             $articlesList = array();
             foreach ($articles as $article) {
-                $articlesList[] = new Article($article['IdLanguage'], $article['Number']);
+                if ($returnObjs) {
+                    $articlesList[] = new Article($article['IdLanguage'], $article['Number']);
+                } else {
+                    $articlesList[] = array('language_id'=>$article['IdLanguage'], 'number'=>$article['Number']);
+                }
             }
         } else {
             $articlesList = array();
@@ -2806,6 +2839,15 @@ class Article extends DatabaseObject {
             $conditionOperation['symbol'] = '=';
             $conditionOperation['right'] = 'Y';
             break;
+
+        case 'insection':
+            $conditionOperation = array(
+                'left' => 'insection',
+                'symbol' => 'IN',
+                'right' => '(' . implode(',', array_map('intval', explode('|', $p_param->getRightOperand()))) . ')',
+            );
+            break;
+
         case 'reads':
             $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
         default:
@@ -2897,9 +2939,9 @@ class Article extends DatabaseObject {
         if ($p_matchAll) {
             $p_searchPhrase = '__match_all ' . $p_searchPhrase;
         }
-        $mainClauseConstraint = "(Articles.Number, Articles.IdLanguage) IN ("
-        . ArticleIndex::SearchQuery($p_searchPhrase) . ")";
-        $selectClauseObj->addWhere($mainClauseConstraint);
+        $searchQuery = ArticleIndex::SearchQuery($p_searchPhrase);
+        $selectClauseObj->addJoin("INNER JOIN ($searchQuery) AS search ON Articles.Number = search.NrArticle"
+        . " AND Articles.IdLanguage = search.IdLanguage");
 
         $joinTables = array();
         // set other constraints
@@ -2947,7 +2989,7 @@ class Article extends DatabaseObject {
             $selectQuery = $selectClauseObj->buildQuery();
             $articles = $g_ado_db->GetAll($selectQuery);
             foreach ($articles as $article) {
-                $articlesList[] = new Article($article['IdLanguage'], $article['Number']);
+                $articlesList[] = array('language_id'=>$article['IdLanguage'], 'number'=>$article['Number']);
             }
         }
         $countQuery = $countClauseObj->buildQuery();
@@ -3019,6 +3061,9 @@ class Article extends DatabaseObject {
                     $dbField = 'RequestObjects.request_count';
                     $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
                     break;
+                case 'bykeywords':
+                    $dbField = 'Articles.Keywords';
+                    break;
                 case 'bycomments':
                     //@todo change this with DOCTRINE2 when refactor
 		            $dbField = 'comments_counter.comments_count';
@@ -3041,6 +3086,18 @@ class Article extends DatabaseObject {
                                                         'Number'=>'fk_article_number',
                                                         'IdLanguage'=>'fk_language_id');
                     $p_whereConditions[] = "`comment_ids`.`last_comment_id` IS NOT NULL";
+                    break;
+
+                case 'bypriority': // @wobs
+                    $joinTable = "(SELECT NrArticle, IdLanguage, IF(FUrgency='2',2,3) as urgency FROM Xnewswire)";
+                    $p_otherTables[$joinTable] = array(
+                        '__TABLE_ALIAS' => 'newswires',
+                        'Number' => 'NrArticle',
+                        'IdLanguage' => 'IdLanguage',
+                    );
+                    $p_whereConditions[] = "Articles.Type = 'newswire'";
+                    $order[] = array('field' => 'newswires.urgency', 'dir' => 'asc');
+                    $order[] = array('field' => 'Articles.PublishDate', 'dir' => 'desc');
                     break;
             }
             if (!is_null($dbField)) {
@@ -3170,7 +3227,7 @@ class Article extends DatabaseObject {
             $selectQuery = $selectClauseObj->buildQuery();
             $articles = $g_ado_db->GetAll($selectQuery);
             foreach ($articles as $article) {
-                $articlesList[] = new Article($article['IdLanguage'], $article['Number']);
+                $articlesList[] = array('language_id'=>$article['IdLanguage'], 'number'=>$article['Number']);
             }
         }
         $countQuery = $countClauseObj->buildQuery();

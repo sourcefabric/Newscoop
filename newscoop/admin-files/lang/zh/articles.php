@@ -1,4 +1,7 @@
 <?php 
+regGS("This article cannot be previewed. Please make sure it has the publication has a theme assigned.", "");
+regGS("On", "");
+regGS("Off", "");
 regGS("You do not have the right to moderate comments.", "");
 regGS("You can not schedule opposing events at the same time", "");
 regGS("Unable to reach Newscoop. Please check your internet connection.", "");
@@ -134,7 +137,6 @@ regGS("The destination section is the same as the source section.", "");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "");
 regGS("There was an error reading request parameters.", "");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "");
-regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "");
 regGS("No such article.", "无此文章");
 regGS("No such section.", "无此区");
 ?>

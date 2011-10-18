@@ -181,7 +181,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
             if ($dbColumn->getType() == ArticleTypeField::TYPE_TEXT) {
         ?>
           <li>
-            <label><?php echo htmlspecialchars($dbColumn->getDisplayName()); ?></label>
+            <label><?php echo htmlspecialchars($dbColumn->getDisplayName($articleObj->getLanguageId())); ?></label>
             <?php
             if ($inEditMode) {
                 $fCustomFields[] = $dbColumn->getName();
@@ -213,7 +213,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
                 }
         ?>
           <li>
-            <label><?php echo htmlspecialchars($dbColumn->getDisplayName()); ?></label>
+            <label><?php echo htmlspecialchars($dbColumn->getDisplayName($articleObj->getLanguageId())); ?></label>
             <?php
             if ($inEditMode) {
                 $fCustomFields[] = $dbColumn->getName();
@@ -245,7 +245,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
 				}
         ?>
           <li>
-            <label><?php echo htmlspecialchars($dbColumn->getDisplayName()); ?></label>
+            <label><?php echo htmlspecialchars($dbColumn->getDisplayName($articleObj->getLanguageId())); ?></label>
             <div class="tinyMCEHolder" style="overflow: auto; min-width: 670px; <?php echo $inEditMode ? '' : 'width: 74%'; ?>">
             <?php
             if ($inEditMode) {
@@ -269,7 +269,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
                 $articleTopicId = $articleData->getProperty($dbColumn->getName());
         ?>
           <li>
-            <label><?php echo htmlspecialchars($dbColumn->getDisplayName()); ?></label>
+            <label><?php echo htmlspecialchars($dbColumn->getDisplayName($articleObj->getLanguageId())); ?></label>
                 <?php if (count($subtopics) == 0) { ?>
                 <?php putGS('No subtopics available'); ?>
                 <?php } else { ?>
@@ -301,7 +301,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
             } elseif ($dbColumn->getType() == ArticleTypeField::TYPE_NUMERIC) {
         ?>
           <li>
-            <label><?php echo htmlspecialchars($dbColumn->getDisplayName()); ?></label>
+            <label><?php echo htmlspecialchars($dbColumn->getDisplayName($articleObj->getLanguageId())); ?></label>
             <input type="text" class="input_text" size="20" maxlength="20" <?php print $spellcheck ?>
               name="<?php echo $dbColumn->getName(); ?>"
               id="<?php echo $dbColumn->getName(); ?>"
@@ -381,7 +381,11 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
       <?php require('edit_context_box.php'); ?>
       <!-- END Context Box table -->
 
-      <?php CampPlugin::PluginAdminHooks(__FILE__); ?>
+      <!-- BEGIN Article Playlist table -->
+      <?php require('edit_playlist.php'); ?>
+      <!-- END Article Playlist table -->
+
+      <?php CampPlugin::adminHook(__FILE__, array( 'articleObj' => $articleObj, 'f_edit_mode' => $f_edit_mode ) ); ?>
 
   </div>
   <script type="text/javascript">

@@ -127,6 +127,12 @@ $(function() {
         });
         $('> a', 'ul.tree li.match').text('-');
     });
+    
+    //show all topics 
+    $('#show_all_topics').click(function(){
+    	$('input[name=search].topics').val('');
+    	$('input[name=search].topics').change();
+    });
 
     // set date pickers
     $('input.date, input.datetime').each(function() {
@@ -375,7 +381,7 @@ function callServer(p_callback, p_args, p_handle, p_direct)
                 popupFlash = flashMessage(localizer.session_expired + ' ' + localizer.please + ' <a href="'+g_admin_url + '/login.php" target="_blank">' + localizer.login + '</a>.', 'error', false);
         	}
         	else {
-        		popupFlash = flashMessage(localizer.connection_interrupted + '! ' + localizer.please + ' ' + localizer.try_again_later + '!', 'highlight', true);
+        		popupFlash = flashMessage(localizer.connection_interrupted + '! ' + localizer.please + ' ' + localizer.try_again_later + '!', 'highlight', false);
         	}
             // store request
             queue.push({

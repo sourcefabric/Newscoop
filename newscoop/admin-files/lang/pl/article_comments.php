@@ -1,6 +1,4 @@
 <?php 
-regGS("Could not update comments.", "");
-regGS("Could not load comments.", "");
 regGS("Comment saved.", "");
 regGS("Unable to reach Newscoop. Please check your internet connection.", "Nie można połączyć z Newscoop. Sprawdź swoje połączenie z Internetem.");
 regGS("Comments updated.", "Komentarze uaktulnione.");

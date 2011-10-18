@@ -1,4 +1,7 @@
 <?php 
+regGS("This article cannot be previewed. Please make sure it has the publication has a theme assigned.", "");
+regGS("On", "");
+regGS("Off", "");
 regGS("You do not have the right to moderate comments.", "");
 regGS("You can not schedule opposing events at the same time", "");
 regGS("Unable to reach Newscoop. Please check your internet connection.", "");
@@ -142,7 +145,6 @@ regGS("You must select an article type.", "Musíte zvolit typ článku");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Opravdu chcete obrázek \'$1\' z článku odstranit?");
 regGS("There was an error reading request parameters.", "Vyskytla se chyba při čtení.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Článek nelze prohlédnout. Prosím ujistěte se, že má zvolenou šablonu článku.");
-regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Článek nelze prohlédnout. Prosím ujistěte se, že má zvolenou šablonu hlavní stránky.");
 regGS("No such article.", "Článek neexistuje");
 regGS("No such section.", "Rubrika neexistuje.");
 regGS("Are you sure you want to delete this scheduled action?", "");

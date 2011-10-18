@@ -70,6 +70,9 @@ class ArticleType {
 		if (strlen($this->m_dbTableName) <= 1) {
 			return false;
 		}
+		$queryStr = 'DROP TABLE `'.$this->m_dbTableName.'`';
+		$g_ado_db->Execute($queryStr);
+
 		$queryStr = "CREATE TABLE `".$this->m_dbTableName."` (\n"
                   . "    NrArticle INT UNSIGNED NOT NULL,\n"
                   . "    IdLanguage INT UNSIGNED NOT NULL,\n"

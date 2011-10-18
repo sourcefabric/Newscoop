@@ -10,70 +10,71 @@ namespace Newscoop\Services;
 use Newscoop\Entity\User,
     Newscoop\Entity\UserToken;
 
-class UserTokenServiceTest extends \PHPUnit_Framework_TestCase
+class UserTokenServiceTest extends \RepositoryTestCase
 {
-    /** @var Newscoop\Services\UserService */
+    /** @var Newscoop\Services\UserTokenService */
     protected $service;
 
     /** @var Doctrine\ORM\EntityManager */
     protected $em;
 
+    /** @var Newscoop\Entity\User */
+    protected $user;
+
     public function setUp()
     {
-        $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
-            ->disableOriginalConstructor()
-            ->getMock();
-
+        parent::setUp('Newscoop\Entity\UserToken', 'Newscoop\Entity\Acl\Role', 'Newscoop\Entity\User');
         $this->service = new UserTokenService($this->em);
+
+        $this->user = new User('test');
+        $this->user->setEmail('petr@localhost');
+        $this->em->persist($this->user);
+        $this->em->flush();
     }
 
     public function testService()
     {
-        $service = new UserTokenService($this->em);
-        $this->assertInstanceOf('Newscoop\Services\UserTokenService', $service);
+        $this->assertInstanceOf('Newscoop\Services\UserTokenService', $this->service);
     }
 
     public function testGenerateToken()
     {
-        $user = new User();
-
-        $token = $this->service->generateToken($user, 'test.action');
+        $token = $this->service->generateToken($this->user, 'test.action');
         $this->assertRegExp('/^[a-zA-Z0-9]{40}$/', $token);
+        $this->assertTrue($this->service->checkToken($this->user, $token, 'test.action'));
     }
 
-    public function testCheckTokenInvalid()
+    public function testCheckTokenNotExisting()
     {
-        $user = new User();
-        $this->expectsFind('qwerty', 'test', $user, null);
-        $this->assertFalse($this->service->checkToken($user, 'qwerty', 'test'));
+        $this->assertFalse($this->service->checkToken($this->user, 'qwerty', 'test'));
     }
 
     public function testCheckTokenValid()
     {
-        $user = new User();
-        $token = new UserToken($user, 'test', 'qwerty');
-        $this->expectsFind('qwerty', 'test', $user, $token);
-        $this->assertTrue($this->service->checkToken($user, 'qwerty', 'test'));
+        $token = new UserToken($this->user, 'test', 'qwerty');
+        $this->em->persist($token);
+        $this->em->flush();
+
+        $this->assertTrue($this->service->checkToken($this->user, 'qwerty', 'test'));
     }
 
     public function testCheckInvalidDate()
     {
-        $user = new User();
-        $token = new UserToken($user, 'test', 'qwerty');
+        $token = new UserToken($this->user, 'test', 'qwerty');
+        $this->em->persist($token);
+        $this->em->flush();
 
         $property = new \ReflectionProperty($token, 'created');
         $property->setAccessible(true);
         $property->setValue($token, new \DateTime('-3 days'));
 
-        $this->expectsFind('qwerty', 'test', $user, $token);
-        $this->assertFalse($this->service->checkToken($user, 'qwerty', 'test'));
+        $this->assertFalse($this->service->checkToken($this->user, 'qwerty', 'test'));
     }
 
-    private function expectsFind($token, $action, $user, $return)
+    public function testInvalidateTokens()
     {
-        $this->em->expects($this->once())
-            ->method('find')
-            ->with($this->equalTo('Newscoop\Entity\UserToken'), $this->equalTo(array('user' => $user->getId(), 'token' => $token, 'action' => $action)))
-            ->will($this->returnValue($return));
+        $token = $this->service->generateToken($this->user, 'action');
+        $this->service->invalidateTokens($this->user, 'action');
+        $this->assertFalse($this->service->checkToken($this->user, $token, 'action'));
     }
 }

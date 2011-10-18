@@ -1,7 +1,6 @@
 <?php
 require_once($GLOBALS['g_campsiteDir'] . "/$ADMIN_DIR/sections/section_common.php");
 require_once($GLOBALS['g_campsiteDir'] . "/$ADMIN_DIR/articles/editor_load_tinymce.php");
-require_once($GLOBALS['g_campsiteDir'] . '/classes/Template.php');
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 //@New theme management
 use Newscoop\Service\Resource\ResourceId;
@@ -209,6 +208,11 @@ if($issueHasTheme){
     }
 ?>
 <tr>
+	<td colspan="2">
+		<?php CampPlugin::adminHook(__FILE__, array( 'sectionObj' => $sectionObj ) ); ?>
+	</td>
+</tr>
+<tr>
   <td colspan="2" align="center">
     <input type="hidden" name="Pub" value="<?php p($Pub); ?>" />
     <input type="hidden" name="Issue" value="<?php p($Issue); ?>" />
@@ -225,5 +229,4 @@ if($issueHasTheme){
 document.section_edit.cName.focus();
 </script>
 
-<?php CampPlugin::PluginAdminHooks(__FILE__); ?>
 <?php camp_html_copyright_notice(); ?>

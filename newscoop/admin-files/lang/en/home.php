@@ -1,4 +1,8 @@
 <?php 
+regGS("Upload of file $1 was not successful.", "Upload of file $1 was not successful.");
+regGS("The file $1 could not be moved. Check you have enough of disk space.", "The file $1 could not be moved. Check you have enough of disk space.");
+regGS("MiB", "MiB");
+regGS("Download was not successful. Check please that the server is not out of disk space.", "Download was not successful. Check please that the server is not out of disk space.");
 regGS("try again later", "try again later");
 regGS("at", "at");
 regGS("You must at least upload one file.", "You must at least upload one file.");

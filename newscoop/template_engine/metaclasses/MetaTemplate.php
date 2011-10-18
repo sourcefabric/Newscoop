@@ -6,22 +6,30 @@
 /**
  * Includes
  */
-require_once($GLOBALS['g_campsiteDir'] . '/classes/Template.php');
 require_once($GLOBALS['g_campsiteDir'] . '/template_engine/metaclasses/MetaDbObject.php');
 
 use Newscoop\Service\Resource\ResourceId;
 use Newscoop\Service\ISyncResourceService;
+use Newscoop\Entity\Resource;
 
 /**
  * @package Campsite
  */
 final class MetaTemplate extends MetaDbObject
 {
+    private $_name = false;
 
     protected $_map = array();
 
-    public function __construct($p_templateIdOrName = null)
+    public function __construct($p_templateIdOrName = null, $p_themePath = null)
     {
+        $this->m_properties = array();
+
+        $this->m_customProperties['name'] = 'getValue';
+        $this->m_customProperties['identifier'] = 'getId';
+        $this->m_customProperties['type'] = 'getTemplateType';
+        $this->m_customProperties['defined'] = 'defined';
+        $this->m_customProperties['theme_dir'] = 'getThemeDir';
 
         $this->_map = array(
             "frontPage" => "issue",
@@ -30,98 +38,74 @@ final class MetaTemplate extends MetaDbObject
             "issuePage" => "issue",
             "articlePage" => "article"
         );
-        $resourceId = new ResourceId('template_engine/metaclasses/MetaTemplate');
-        /* @var $syncResourceService ISyncResourceService */
-        $syncResourceService = $resourceId->getService(ISyncResourceService::NAME);
 
-        try {
-            $this->m_dbObject = $syncResourceService->findByPathOrId($p_templateIdOrName);
-        } catch (Exception $e) {
-        	$this->m_dbObject = null;
+        if ((is_string($p_templateIdOrName) || is_int($p_templateIdOrName))
+        && !empty($p_templateIdOrName)) {
+            $filePath = is_numeric($p_templateIdOrName) ? $p_templateIdOrName : $p_themePath.$p_templateIdOrName;
+
+            $resourceId = new ResourceId('template_engine/metaclasses/MetaTemplate');
+            /* @var $syncResourceService ISyncResourceService */
+            $syncResourceService = $resourceId->getService(ISyncResourceService::NAME);
+
+            $this->m_dbObject = $syncResourceService->findByPathOrId($filePath);
+            if (is_null($this->m_dbObject)) {
+                $pathRsc = new Resource();
+                $pathRsc->setName('buildPage');
+                $filePath = CS_PATH_TEMPLATES.DIR_SEP.$p_themePath.$p_templateIdOrName;
+                if (!is_numeric($p_templateIdOrName) && !is_null($p_themePath)
+                && file_exists($filePath)) {
+                    $pathRsc->setPath($p_themePath.$p_templateIdOrName);
+                    $this->m_dbObject = $syncResourceService->getSynchronized($pathRsc);
+                } else {
+                    $this->m_dbObject = $pathRsc;
+                }
+            }
         }
-
-        $this->m_properties = array();
-
-        //try to get from template table
-        if( is_null($this->m_dbObject) ) {
-            $this->getByTemplateIdOrName($p_templateIdOrName);
-            $this->m_customProperties['name'] = 'getTemplateValue';
-            $this->m_customProperties['identifier'] = 'getId';
-            $this->m_customProperties['type'] = 'getTemplateType';
-            $this->m_customProperties['defined'] = 'defined';
-            $this->m_customProperties['theme_dir'] = 'getThemeDir';
-        }
-        else {
-            $this->m_customProperties['name'] = 'getValue';
-            $this->m_customProperties['identifier'] = 'getId';
-            $this->m_customProperties['type'] = 'getTemplateType';
-            $this->m_customProperties['defined'] = 'defined';
-            $this->m_customProperties['theme_dir'] = 'getThemeDir';
-        }
-
-
     }// fn __construct
 
     /**
-     * Try to get it from the template id (tempaltes table)
+     * Try to get it from the template id (templates table)
      * @param int $tplId
      * @author Mihai Balaceanu
      */
-    public function getByTemplateIdOrName($tplId)
+    protected function getByTemplateIdOrName($tplId)
     {
         $doctrine = Zend_Registry::get('doctrine');
         if( is_numeric($tplId) ) {
             $tpl = $doctrine->getEntityManager()->getRepository('Newscoop\Entity\Template')->find($tplId);
-        }
-        else {
+        } else {
             $tpl = $doctrine->getEntityManager()->getRepository('Newscoop\Entity\Template')->findOneBy(array('key' => $tplId));
         }
         /* @var $tpl \Newscoop\Entity\Template */
         $this->m_dbObject = $tpl;
     }
 
-    /**
-     * Get template path if it's from tempalte entity table
-     */
-    public function getTemplateValue()
-    {
-    	if (is_null($this->m_dbObject)) {
-    		return null;
-    	}
-    	return $this->m_dbObject->getKey();
-    }
-
-
     protected function getTemplateType()
     {
-    	if (is_null($this->m_dbObject)) {
-    		return null;
-    	}
         if (isset($this->_map[$this->m_dbObject->getName()])) {
-
             return $this->_map[$this->m_dbObject->getName()];
         }
         return 'default';
     }
 
-    public function getValue()
+    protected function getValue()
     {
-    	if (is_null($this->m_dbObject)) {
-    		return null;
-    	}
-    	return $this->m_dbObject instanceof \Newscoop\Entity\Template ? $this->m_dbObject : $this->m_dbObject->getPath();
+        if ($this->_name !== false) {
+            return $this->_name;
+        }
+        $parts = explode('/', $this->m_dbObject->getPath());
+        if (count($parts) < 3) {
+            $this->_name = null;
+            return null;
+        }
+        array_shift($parts);
+        array_shift($parts);
+        $this->_name = implode('/', $parts);
+        return $this->_name;
     }
 
-    public function IsValid($p_value)
+    protected function getId()
     {
-        return true;
-    }
-
-    public function getId()
-    {
-    	if (is_null($this->m_dbObject)) {
-    		return null;
-    	}
     	return $this->m_dbObject->getId();
     }
 
@@ -131,7 +115,8 @@ final class MetaTemplate extends MetaDbObject
     }
 
 	// we need this theme info for securing the smarty caching
-	protected function getThemeDir() {
+	protected function getThemeDir()
+	{
 		$path = $this->getValue();
 		if (empty($path)) {
 			return '';
@@ -144,11 +129,5 @@ final class MetaTemplate extends MetaDbObject
 
 		return $path;
 	}
-
-	public function getDbObject()
-	{
-	    return $this->m_dbObject;
-	}
 }
 // class MetaTemplate
-

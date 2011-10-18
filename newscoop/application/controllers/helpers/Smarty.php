@@ -14,19 +14,6 @@ class Action_Helper_Smarty extends Zend_Controller_Action_Helper_Abstract
         'default',
     );
 
-    /** @var array */
-    private $controllers = array(
-        'articleoftheday',
-        'auth',
-        'dashboard',
-        'email',
-        'error',
-        'index',
-        'legacy',
-        'register',
-        'user',
-    );
-
     /**
      */
     public function preDispatch()
@@ -41,14 +28,19 @@ class Action_Helper_Smarty extends Zend_Controller_Action_Helper_Abstract
             return;
         }
 
-        if (!in_array($request->getParam('module'), $this->modules) || !in_array($request->getParam('controller'), $this->controllers)) {
+        if (!in_array($request->getParam('module', 'default'), $this->modules) || !array_key_exists('module', $request->getParams())) {
             return;
         }
 
+        $uri = CampSite::GetURIInstance();
+        $themePath = $uri->getThemePath();
+
         $controller->view = new Newscoop\SmartyView();
         $controller->view
-            ->addScriptPath(APPLICATION_PATH . '/views/scripts/');
-            //->addScriptPath(APPLICATION_PATH . '/../themes/publication_2/theme_1/');
+            ->addScriptPath(APPLICATION_PATH . '/views/scripts/')
+            ->addScriptPath(realpath(APPLICATION_PATH . "/../themes/$themePath"));
+
+        $controller->view->addPath(realpath(APPLICATION_PATH . "/../themes/$themePath"));
 
         $controller->getHelper('viewRenderer')
             ->setView($controller->view)

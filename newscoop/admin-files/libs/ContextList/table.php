@@ -135,11 +135,11 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
     },
     <?php if ($this->items !== NULL) { // display all items ?>
     'bPaging': false,
-    'iDisplayLength': 3,
+    'iDisplayLength': 5,
     <?php } else { // no items - server side ?>
     'bPaging': true,
     'bServerSide': true,
-    'iDisplayLength' : 3,
+    'iDisplayLength' : 5,
     'sAjaxSource': '<?php echo $this->path; ?>/do_data.php',
     'sPaginationType': 'full_numbers',
     'fnServerData': function (sSource, aoData, fnCallback) {

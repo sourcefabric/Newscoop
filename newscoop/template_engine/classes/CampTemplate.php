@@ -50,7 +50,7 @@ final class CampTemplate extends Smarty
         $cacheHandler = SystemPref::Get('TemplateCacheHandler');
         if ($cacheHandler) {
             $this->caching = 1;
-            $this->cache_handler_func = "TemplateCacheHandler_$cacheHandler::handler";
+            $this->caching_type = 'newscoop';
             require_once APPLICATION_PATH . "/../classes/cache/TemplateCacheHandler_$cacheHandler.php";
         } else {
             $this->caching = 0;
@@ -78,10 +78,9 @@ final class CampTemplate extends Smarty
 
         $this->plugins_dir = array_merge((array) $this->plugins_dir, array(APPLICATION_PATH . self::PLUGINS), self::getPluginsPluginsDir());
 
-        $uri = CampSite::GetURIInstance();
         $this->template_dir = array(
-            APPLICATION_PATH . '/../themes/' . $uri->getThemePath(),
             APPLICATION_PATH . '/../themes/',
+            APPLICATION_PATH . '/../themes/unassigned/system_templates/',
             APPLICATION_PATH . self::SCRIPTS,
         );
 
@@ -163,10 +162,6 @@ final class CampTemplate extends Smarty
      */
     public function trigger_error($p_message, $p_smarty = null)
     {
-        if (self::isDevelopment()) {
-            throw new \RuntimeException($p_message);
-        }
-
         if (!self::singleton()->m_preview) {
             return;
         }
@@ -189,13 +184,13 @@ final class CampTemplate extends Smarty
      */
     public function _get_auto_filename($auto_base, $auto_source = null, $auto_id = null)
     {
-		$show_spec = '';
-		if (isset($this->m_context)) {
-			$show_spec .= hash('sha1', ($this->m_context->template ? $this->m_context->template->theme_dir : ''));
-		}
+        $show_spec = '';
+        if (isset($this->m_context)) {
+            $show_spec .= hash('sha1', ($this->m_context->template ? $this->m_context->template->theme_dir : ''));
+        }
 
-		return parent::_get_auto_filename($auto_base, $auto_source, $auto_id) . '%%' . $show_spec;
-	}
+        return parent::_get_auto_filename($auto_base, $auto_source, $auto_id) . '%%' . $show_spec;
+    }
 
     /**
      * Test if is development environment

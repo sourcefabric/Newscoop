@@ -44,6 +44,18 @@ if (!$articleObj->exists()) {
     exit;
 }
 
+// detect if blogger can edit
+$userIsBlogger = false;
+$blogService = \Zend_Registry::get('container')->getService('blog');
+if ($blogService->isBlogger($g_user)) {
+    $userIsBlogger = true;
+    $userSection = $blogService->getSection($g_user);
+    if (empty($userSection) || $userSection->getSectionId() != $articleObj->getSection()->getSectionId()) {
+        camp_html_display_error(getGS("You're not allowed to edit article."));
+        exit;
+    }
+}
+
 $articleData = $articleObj->getArticleData();
 // Get article type fields.
 $dbColumns = $articleData->getUserDefinedColumns(FALSE, TRUE);

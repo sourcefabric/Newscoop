@@ -14,7 +14,7 @@
 
     </ul>       
   </div>
-  <div class="twocol last searchbox">   
-{{ include file="_tpl/top-search-box.tpl" }}
+  <div class="twocol last searchbox">
+  {{ include file="_tpl/top-search-box.tpl" }}
   </div><!-- .searchbox -->
 </div><!-- /#nav -->

@@ -27,24 +27,6 @@ class UserPointsService
     }
 
     /**
-     * Find point value for action
-     *
-     * @param string $action
-     *
-     * @return int
-     */
-    public function getPointValueForAction($action)
-    {
-        $user_points = $this->find($action);
-
-        if (is_null($user_points)) {
-            return 0;
-        }
-
-        return $user_points->getPoints();
-    }
-
-    /**
      * Find UserPoints entity object for this action.
      *
      * @param string $action
@@ -82,8 +64,17 @@ class UserPointsService
         $action =  str_replace(".", "_", $event->getName());
         $user = $params['user'];
 
+        if (is_int($user)) {
+            $user_repo = $this->em->getRepository('Newscoop\Entity\User');
+            $user = $user_repo->find($user);
+        }
+
+        if (empty($user)) {
+            return;
+        }
+
         $points = $user->getPoints();
-        $points_action = $this->getPointValueForAction($action);
+        $points_action = $this->getRepository()->getPointValueForAction($action);
 
         $user->setPoints($points+$points_action);
 

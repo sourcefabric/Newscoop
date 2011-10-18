@@ -8,7 +8,7 @@
 
 function smarty_block_list_soundcloud_tracks($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
-    require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
+    $p_smarty->smarty->loadPlugin('smarty_shared_escape_special_chars');
 
     $gimme = $p_smarty->get_template_vars('gimme');
     $soundcloud = $p_smarty->get_template_vars('soundcloud');

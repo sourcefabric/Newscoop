@@ -33,7 +33,7 @@ class Admin_CommentController extends Zend_Controller_Action
 
     /** @var Admin_Form_Comment_EditForm */
     private $editForm;
-    
+
     public function init()
     {
         // get comment repository
@@ -70,17 +70,25 @@ class Admin_CommentController extends Zend_Controller_Action
         $table->setCols(array('index' => $view->toggleCheckbox(), 'commenter' => getGS('Author'),
                              'comment' => getGS('Date') . ' / ' . getGS('Comment'), 'thread' => getGS('Article'),
                              'threadorder' => '',), array('index' => false));
+        
+        $table->setInitialSorting(array('comment' => 'desc'));
 
         $index = 1;
         $acl = array();
         $acl['edit'] = $this->_helper->acl->isAllowed('comment', 'edit');
         $acl['enable'] = $this->_helper->acl->isAllowed('comment', 'enable');
         $acceptanceRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
+        $articleRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
         $table->setHandle(function($comment) use ($view, $acl, $acceptanceRepository, &$index)
             {
                 /* var Newscoop\Entity\Comment\Commenter */
                 $commenter = $comment->getCommenter();
                 $thread = $comment->getThread();
+
+                $articleNo = $comment->getArticleNumber();
+                $commentLang = $comment->getLanguage()->getId();
+                $article = new Article($commentLang, $articleNo);
+
                 $forum = $comment->getForum();
                 $section = $thread->getSection();
                 return array('index' => $index++, 'can' => array('enable' => $acl['enable'], 'edit' => $acl['edit']),
@@ -99,7 +107,7 @@ class Admin_CommentController extends Zend_Controller_Action
                                    'ip' => $commenter->getIp(), 'url' => $commenter->getUrl(),
                                    'banurl' => $view->url(
                                        array('controller' => 'comment-commenter', 'action' => 'toggle-ban',
-                                            'commenter' => $commenter->getId(), 'thread' => $thread->getId()))),
+                                            'commenter' => $commenter->getId(), 'thread' => $comment->getArticleNumber()))),
                              'comment' => array('id' => $comment->getId(),
                                                 'created' =>
                                                 array('date' => $comment->getTimeCreated()->format('Y.m.d'),
@@ -107,14 +115,15 @@ class Admin_CommentController extends Zend_Controller_Action
                                                 'subject' => $comment->getSubject(),
                                                 'message' => $comment->getMessage(), 'likes' => '', 'dislikes' => '',
                                                 'status' => $comment->getStatus(),
+                                                'recommended' => $comment->getRecommended(),
                                                 'action' => array('update' => $view->url(
                                                     array('action' => 'update', 'format' => 'json')),
                                                                   'reply' => $view->url(
                                                                       array('action' => 'reply', 'format' => 'json')))),
-                             'thread' => array('name' => $thread->getName(),
+                             'thread' => array('name' => $article->getName(),
                                                'link' => array
-                                               ('edit' => $view->baseUrl("admin/articles/edit.php?") . $view->linkArticle($thread),
-                                                'get' => $view->baseUrl("admin/articles/get.php?") . $view->linkArticle($thread)),
+                                               ('edit' => $view->baseUrl("admin/articles/edit.php?") . $view->linkArticleObj($article),
+                                                'get' => $view->baseUrl("admin/articles/get.php?") . $view->linkArticleObj($article)),
                                                'forum' => array('name' => $forum->getName()),
                                                'section' => array('name' => ($section) ? $section->getName() : null)),);
             });
@@ -215,6 +224,52 @@ class Admin_CommentController extends Zend_Controller_Action
     }
 
     /**
+     * Action for setting a status
+     */
+    public function setRecommendedAction()
+    {
+        $this->getHelper('contextSwitch')->addActionContext('set-recommended', 'json')->initContext();
+        if (!SecurityToken::isValid()) {
+            $this->view->status = 401;
+            $this->view->message = getGS('Invalid security token!');
+            return;
+        }
+
+        $comments = $this->getRequest()->getParam('comment');
+        $recommended = $this->getRequest()->getParam('recommended');
+
+        if (!is_array($comments)) {
+            $comments = array($comments);
+        }
+
+        foreach ($comments as $commentId) {
+            if (!$recommended) {
+                continue;
+            }
+
+            $comment = $this->commentRepository->find($commentId);
+            $this->_helper->service->notifyDispatcher("comment.recommended", array(
+                'id' => $comment->getId(),
+                'subject' => $comment->getSubject(),
+                'article' => $comment->getThread()->getName(),
+                'commenter' => $comment->getCommenterName(),
+            ));
+        }
+
+        try {
+            $this->commentRepository->setRecommended($comments, $recommended);
+            $this->commentRepository->flush();
+        } catch (Exception $e) {
+            $this->view->status = $e->getCode();
+            $this->view->message = $e->getMessage();
+            return;
+        }
+
+        $this->view->status = 200;
+        $this->view->message = "succcesful";
+    }
+
+    /**
      *
      */
     public function addToArticleAction()
@@ -282,11 +337,19 @@ class Admin_CommentController extends Zend_Controller_Action
         foreach ($comments as $comment) {
             /* @var $comment Newscoop\Entity\Comment */
             $commenter = $comment->getCommenter();
-            $result[] = array("name" => $commenter->getName(), "email" => $commenter->getEmail(),
-                              "ip" => $commenter->getIp(), "id" => $comment->getId(), "status" => $comment->getStatus(),
-                              "subject" => $comment->getSubject(), "message" => $comment->getMessage(),
-                              "time_created" => $comment->getTimeCreated()->format('Y-m-d H:i:s'),);
+            $result[] = array(
+                'name' => $commenter->getName(),
+                'email' => $commenter->getEmail(),
+                'ip' => $commenter->getIp(),
+                'id' => $comment->getId(),
+                'status' => $comment->getStatus(),
+                'subject' => $comment->getSubject(),
+                'message' => $comment->getMessage(),
+                'time_created' => $comment->getTimeCreated()->format('Y-m-d H:i:s'),
+                'recommended_toggle' => (int) !$comment->getRecommended(),
+            );
         }
+
         $this->view->result = $result;
     }
 

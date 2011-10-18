@@ -12,25 +12,25 @@ class Application_Form_Confirm extends Zend_Form
     public function init()
     {
         $this->addElement('text', 'first_name', array(
-            'label' => 'First Name',
+            'label' => 'First Name*:',
             'required' => true,
             'filters' => array('stringTrim'),
         ));
 
         $this->addElement('text', 'last_name', array(
-            'label' => 'Last Name',
+            'label' => 'Last Name*:',
             'required' => true,
             'filters' => array('stringTrim'),
         ));
 
         $this->addElement('text', 'username', array(
-            'label' => 'Username',
+            'label' => 'Username*:',
             'required' => true,
             'filters' => array('stringTrim'),
         ));
 
         $this->addElement('password', 'password', array(
-            'label' => 'Password',
+            'label' => 'Password*:',
             'required' => true,
             'filters' => array('stringTrim'),
             'validators' => array(
@@ -38,8 +38,21 @@ class Application_Form_Confirm extends Zend_Form
             ),
         ));
 
+        $form = $this;
+        $this->addElement('password', 'password_confirm', array(
+            'label' => 'Password Confirmation*:',
+            'required' => true,
+            'filters' => array('stringTrim'),
+            'validators' => array(
+                new Zend_Validate_Callback(function ($value, $context) {
+                    return $value == $context['password'];
+                }),
+            ),
+            'errorMessages' => array("Password confirmation does not match your password."),
+        ));
+
         $this->addElement('submit', 'submit', array(
-            'label' => 'Save',
+            'label' => 'Login',
             'ignore' => true,
         ));
     }

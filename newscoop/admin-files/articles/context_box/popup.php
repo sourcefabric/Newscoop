@@ -6,6 +6,16 @@
 <title><?php putGS("Edit Related articles"); ?></title>
 <script type="text/javascript">
 
+function relatedListIncidence(articleId) {
+	var incidence = 0;
+	$('#context_list').find('tr').each(function(key, value) {
+		if (value.id == articleId) {
+		    incidence ++;
+		}
+	});
+	return incidence;
+}
+
 function toggleDragZonePlaceHolder() {
 	if($('#context_list').find('.context-item').html() != null) {
 	    $('#drag-here-to-add-to-list').css('display', 'none');
@@ -38,31 +48,30 @@ function loadContextList() {
 }
 
 function appendItemToContextList(article_id, article_date, article_title) {
-
-    $("#context_list").append(
-    	    '<tr id="'+article_id+'">'+
-    	    '<td>'+
-    	    '<div class="context-item">'+
-            '<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>'+
-            '<div class="context-item-header">'+
-                '<div class="context-item-date">'+article_date+'</div>'+
-                '<a href="#" class="view-article" style="display: none" onClick="viewArticle($(this).parent(\'div\').parent(\'div\').parent(\'td\').parent(\'tr\').attr(\'id\'));"><?php echo getGS('View article') ?></a>'+
-            '</div>'+
-            '<a href="#" class="corner-button" style="display: block" onClick="$(this).parent(\'div\').parent(\'td\').parent(\'tr\').remove();toggleDragZonePlaceHolder();"><span class="ui-icon ui-icon-closethick"></span></a>'+
-            '<div class="context-item-summary">'+article_title+'</div>'+
-            '</div>'+
-    	    '</td>'+
-    	    '</tr>'
-    	    );
-    closeArticle();
+		$("#context_list").append(
+	            '<tr id="'+article_id+'">'+
+	            '<td>'+
+	            '<div class="context-item">'+
+	            '<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>'+
+	            '<div class="context-item-header">'+
+	                '<div class="context-item-date">'+article_date+'</div>'+
+	                '<a href="#" class="view-article" style="display: none" onClick="viewArticle($(this).parent(\'div\').parent(\'div\').parent(\'td\').parent(\'tr\').attr(\'id\'));"><?php echo getGS('View article') ?></a>'+
+	            '</div>'+
+	            '<a href="#" class="corner-button" style="display: block" onClick="$(this).parent(\'div\').parent(\'td\').parent(\'tr\').remove();toggleDragZonePlaceHolder();"><span class="ui-icon ui-icon-closethick"></span></a>'+
+	            '<div class="context-item-summary">'+article_title+'</div>'+
+	            '</div>'+
+	            '</td>'+
+	            '</tr>'
+	            );
+	    closeArticle();
 }
 
 function deleteContextList() {
-	$("#context_list").html('<div id="context_list" style="display: block; min-height: 500px; min-width: 500px;">'+
+	$("#context_list").html(''+
 		    '<div id="drag-here-to-add-to-list" style="">'+
 	        'Drag here to add to list'+
 	    '</div>'+
-	'</div>');
+	'');
 }
 
 function removeFromContext(param) {
@@ -162,13 +171,13 @@ $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 
 
 </head>
-<body onLoad="return false;">
+<body onLoad="return false;" style="background: none repeat scroll 0 0 #FFFFFF;">
 
 
 
 
 <div class="content">
-<div id="context-box" class="block-shadow">
+<div id="context-box">
 <div class="toolbar">
 <div class="save-button-bar"><input type="submit" name="cancel"
 	value="<?php echo putGS('Close'); ?>" class="default-button" onclick="popup_close();"
@@ -177,12 +186,15 @@ $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 	id="context_button_save"></div>
 <h2><?php echo putGS('Related Articles'); ?></h2>
 </div>
-<div class="context-content">
-<div class="context-block context-search"><?php
+<div class="context-content" style="position:relative">
+<div class="context-block context-search">
+<h3><?php echo putGS('Available Articles'); ?></h3>
+<?php
 
 $contextlist = new ContextList();
 $contextlist->setSearch(TRUE);
 $contextlist->setOrder(TRUE);
+$contextlist->setLanguage($f_language_id);
 
 $contextlist->renderFilters();
 $contextlist->render();
@@ -195,6 +207,7 @@ $contextlist->render();
                         //$("#table-<?php echo $contextlist->getId();?>_filter").css("border","0px");
                         $(".fg-toolbar .ui-toolbar .ui-widget-header .ui-corner-tl .ui-corner-tr .ui-helper-clearfix").css("border","none");
                         $(".fg-toolbar .ui-toolbar .ui-widget-header .ui-corner-bl .ui-corner-br .ui-helper-clearfix").css("background-color","#CCCCCC");
+                        $(".datatable").css("position","static");
                  });
                  $(function(){
                      $('#table-<?php echo $contextlist->getId(); ?> tbody').sortable({
@@ -211,6 +224,10 @@ $contextlist->render();
                             $(ui.item).find(".corner-button").css("display","block");
                             $(ui.item).find(".view-article").css("display","none");
                             toggleDragZonePlaceHolder();
+                            if (relatedListIncidence($(ui.item).attr('id')) > 1) {
+                                alert('<?php echo getGS('You already have this item in the Related Articles list!') ?>');
+                            	ui.item.remove();
+                            }
                          }
                      }).disableSelection();
                      loadContextList();
@@ -225,7 +242,7 @@ $contextlist->render();
 	type="submit" name="delete-all" value="Delete all"
 	class="default-button" onclick="deleteContextList()" id="context_button_delete_all"></div>
 <div style="display: block; float: left">
-<div id="context_list" style="display:block; min-height: 500px; min-width: 500px;">
+<div id="context_list" style="display:block; height: 433px; width: 506px; overflow-y:auto; overflow-x:hidden; padding: 36px 0px 0px 0px;">
     <div id="drag-here-to-add-to-list" style="display:none">
         Drag here to add to list
     </div>
@@ -238,7 +255,7 @@ $contextlist->render();
 <div class="context-block context-article" style="display: none">
 <div class="save-button-bar"><input type="submit"
 	name="add-this-article" value="Add this article"
-	class="save-button-small" onclick="appendItemToContextList($('#preview-article-id').val(), $('#preview-article-date').val(), $('#preview-article-title').html()); toggleDragZonePlaceHolder(); clearActiveArticles();" id="context_button_add"> <input
+	class="save-button-small" onclick="if(relatedListIncidence($('#preview-article-id').val()) == 0) {appendItemToContextList($('#preview-article-id').val(), $('#preview-article-date').val(), $('#preview-article-title').html()); toggleDragZonePlaceHolder(); clearActiveArticles()} else { alert('<?php echo getGS('You already have this item in the Related Articles list!') ?>'); };" id="context_button_add"> <input
 	type="submit" name="close" value="Close" class="default-button"
 	onclick="closeArticle(); clearActiveArticles();" id="context_button_close_article"></div>
 <div class="context-article-preview" style="overflow-y:auto; height:500px;">

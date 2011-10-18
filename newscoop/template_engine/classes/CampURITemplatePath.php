@@ -13,7 +13,6 @@
 /**
  * Includes
  */
-require_once($GLOBALS['g_campsiteDir'].'/classes/Template.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Issue.php');
@@ -109,7 +108,7 @@ class CampURITemplatePath extends CampURI
             $this->m_errorCode = $res->getCode();
             if ($this->m_errorCode == self::INVALID_TEMPLATE
             && !is_null($this->m_publication)) {
-            	$tplId = CampSystem::GetInvalidURLTemplate($this->m_publication->identifier);
+            	$tplId = CampSystem::GetInvalidURLTemplate($this->m_publication->identifier, null, null, !$this->m_preview);
             	$template = new MetaTemplate($tplId);
             	if ($template->defined()) {
             		$this->m_template = $template;
@@ -362,7 +361,7 @@ class CampURITemplatePath extends CampURI
             }
         }
 
-        $this->m_template = new MetaTemplate($this->getTemplate($this->readTemplate()));
+        $this->m_template = new MetaTemplate($this->getTemplate($this->readTemplate()), $this->getThemePath());
         if (!$this->m_template->defined()) {
             return new PEAR_Error("Invalid template in URL or no default template specified.",
             self::INVALID_TEMPLATE);

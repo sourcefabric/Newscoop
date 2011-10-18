@@ -106,6 +106,13 @@ $pages[1]['pages'][] = array(
     'action' => 'index',
 );
 
+$pages[1]['pages'][] = array(
+    'label' => getGS('Article Playlists'),
+    'module' => 'admin',
+    'controller' => 'playlist',
+    'action' => 'index',
+);
+
 // add content/publications
 foreach ($Campsite['publications'] as $publication) {
     $pubId = $publication->getPublicationId();
@@ -153,7 +160,7 @@ foreach ($Campsite['publications'] as $publication) {
         if (count($Campsite['issues'][$pubId]) > 0) {
             $publication_page['pages'][] = array(
                 'label' => getGS('More...'),
-                'uri' => $view->baseUrl("admin/pub/?Pub=$pubId"),
+                'uri' => $view->baseUrl("admin/issues/?Pub=$pubId"),
             );
         }
     }
@@ -185,10 +192,13 @@ if( Saas::singleton()->hasPrivilege('staff' , 'add') ) {
     $pages[2]['pages'][] = array(
 	    'label' => getGS('Add new staff member'),
 	    'module' => 'admin',
-	    'controller' => 'staff',
-	    'action' => 'add',
+	    'controller' => 'user',
+	    'action' => 'create',
 	    'resource' => 'user',
 	    'privilege' => 'manage',
+        'params' => array(
+            'is_admin' => 1,
+        ),
 	);
 }
 
@@ -198,10 +208,13 @@ if ($g_user->hasPermission('ManageSubscriptions')) {
 	$pages[2]['pages'][] = array(
 	    'label' => getGS('Add new subscriber'),
 	    'module' => 'admin',
-	    'controller' => 'subscriber',
-	    'action' => 'add',
+	    'controller' => 'user',
+	    'action' => 'create',
 	    'resource' => 'user',
 	    'privilege' => 'manage',
+        'params' => array(
+            'is_public' => 1,
+        ),
 	);
 }
 
@@ -237,13 +250,10 @@ if ($g_user->hasPermission('ManageCountries')) {
 }
 
 $pages[2]['pages'][] = array(
-    'label' => getGS('Change your password'),
+    'label' => getGS('Edit your password'),
     'module' => 'admin',
-    'controller' => 'staff',
-    'action' => 'edit',
-    'params' => array(
-        'user' => $g_user->getId(),
-    ),
+    'controller' => 'user',
+    'action' => 'edit-password',
 );
 
 if ($showAdminActions) {
@@ -322,6 +332,10 @@ if( Saas::singleton()->hasPrivilege('themes' , 'index') ) {
                 'action' => 'advanced-theme-settings',
                 'visible' => false,
                 'reset_params' => false,
+                'params' => array(
+                    'next' => null,
+                    'file' => null,
+                ),
                 'pages' => array(
                     array(
                         'label' => getGS('Upload'),
@@ -337,6 +351,14 @@ if( Saas::singleton()->hasPrivilege('themes' , 'index') ) {
                     ),
                 ),
             ),
+	    array(
+                'label' => getGS('Settings'),
+		'module' => 'admin',
+		'controller' => 'themes',
+		'action' => 'advanced-theme-settings',
+		'visible' => false,
+		'reset_params' => true,
+	    ),
         ),
     );
 }
@@ -516,6 +538,17 @@ if (!empty($plugin_pages)) {
     );
 }
 
+// change menu for blogger
+$blogService = Zend_Registry::get('container')->getService('blog');  
+if ($blogService->isBlogger($g_user)) {
+    $pages = array(
+        array(
+            'label' => 'Blog',
+            'module' => 'admin',
+        ),
+    );
+}
+
 // set menu classes to speed up loading
 foreach ($pages as $i => $page) {
     $pages[$i]['class'] = 'fg-button ui-widget fg-button-icon-right fg-button-ui-state-default fg-button-ui-corner-all';
@@ -538,7 +571,9 @@ foreach ($pages as $i => $page) {
 }
 
 $nav = new Zend_Navigation($pages);
+
 $view->navigation()->breadcrumbs()
+    ->setSeparator(' &gt; ')
     ->setContainer($nav)
     ->setRenderInvisible(true);
 ?>

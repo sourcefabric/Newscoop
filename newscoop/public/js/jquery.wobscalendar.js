@@ -9,7 +9,9 @@
 		'firstDay': 0,
 		'monthNames': ['January','February','March','April','May','June','July','August','September','October','November','December'],
 		'navigation': true,
-		'showDayNames': true
+		'showDayNames': true,
+		'earliestMonth': undefined,
+		'latestMonth': undefined
     };
   
 	var methods = {
@@ -312,6 +314,7 @@
 		ul.append(html);
 		
 		updateHeader(calendar.getCalendarDate());
+		enableHeader();
 		
 		ul.find('.'+ns+'-button-prev').click(function(){
 			var date, mm, yyyy, newDate;
@@ -363,29 +366,42 @@
 		function disableHeader() {
 			
 			disableButton('prev');
-			disableButton('next');
-			
-			deactivateButton('prev');
-			deactivateButton('next');	
+			disableButton('next');		
 		}
 		
 		function enableHeader() {
+			var date;
 			
-			activateButton('prev');
-			activateButton('next');
+			date = calendar.getCalendarDate();
 			
-			enableButton('prev');
-			enableButton('next');
+			//have reached the earliest month we should show.
+			if ((options.earliestMonth !== undefined) && (date.getTime() === options.earliestMonth.getTime())) {
+				deactivateButton('prev');
+			}
+			else {
+				activateButton('prev');
+				enableButton('prev');
+			}
+			
+			//have reached the latest month we should show.
+			if ((options.latestMonth !== undefined) && (date.getTime() === options.latestMonth.getTime())) {
+				deactivateButton('next');
+			}
+			else {
+				activateButton('next');
+				enableButton('next');
+			}
+					
 		}
 		
 		function activateButton(buttonName) {
 			ul.find('.'+ns+'-button-' + buttonName)
-				.addClass(ns + '-state-active');
+				.removeClass('disabled');
 		}	
 		
 		function deactivateButton(buttonName) {
 			ul.find('.'+ns+'-button-' + buttonName)
-				.removeClass(ns + '-state-active');
+				.addClass('disabled');
 		}
 			
 		function disableButton(buttonName) {
@@ -395,7 +411,8 @@
 			
 		function enableButton(buttonName) {
 			ul.find('.'+ns+'-button-' + buttonName)
-				.removeClass(ns + '-state-disabled');
+				.removeClass(ns + '-state-disabled')
+				.removeClass("disabled");
 		}
 		
 		function updateHeader(date) {
@@ -433,12 +450,6 @@
 			.append('<div class="wobs-date-container"/>')
 				.find(".wobs-date-container")
 				.append('<div class="wobs-date-label"/>');
-		
-		td.click(function(){
-			if (_url !== undefined) {
-				window.open(_url);
-			}
-		});
 		
 		function setDate(date) {
 			var cm, dm, today;
@@ -487,11 +498,12 @@
 		function setThumbnail(picture) {
 			_s_image = picture;
 			
-			td.find("a").append('<img width="164" height="166" src="'+_s_image+'"></img>');
+			td.find("a").append('<img src="'+_s_image+'"></img>');
 		}
 		
 		function setUrl(url) {
 			_url = url;
+			td.find("a").attr("href", url);
 		}
 		
 		function clear() {
@@ -505,6 +517,8 @@
 			td.removeClass("wobs-other-month");
 			td.removeClass("wobs-curr-month");
 			td.removeAttr("title");
+			
+			td.find("a").removeAttr("href");
 			
 			td.find("img")
 				.remove();

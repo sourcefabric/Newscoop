@@ -142,7 +142,7 @@ class FeedbackRepository extends DatatableSource
                     $qb->orderBy('s.name', $dir);
                     break;
                 case 'message':
-                    $qb->orderBy('e.message', $dir);
+                    $qb->orderBy('e.time_created', $dir);
                     break;
                 case 'url':
                     $qb->orderBy('e.url', $dir);
@@ -204,6 +204,11 @@ class FeedbackRepository extends DatatableSource
                         $orx->add($qb->expr()->eq('e.status', $mapper[$value]));
                     }
                     break;
+                case 'attachmentType':
+					$mapper = array_flip(Feedback::$attachment_type_enum);
+					foreach ($values as $value) {
+                        $orx->add($qb->expr()->eq('e.attachment_type', $mapper[$value]));
+                    }
             }
             $andx->add($orx);
         }
@@ -233,5 +238,19 @@ class FeedbackRepository extends DatatableSource
     public function flush()
     {
         $this->getEntityManager()->flush();
+    }
+
+    /**
+     * Get feedbacks count for user
+     *
+     * @param Newscoop\Entity\User $user
+     * @return int
+     */
+    public function countByUser(User $user)
+    {
+        return (int) $this->getEntityManager()
+            ->createQuery("SELECT COUNT(feedback) FROM Newscoop\Entity\Feedback feedback WHERE feedback.user = :user")
+            ->setParameter('user', $user->getId())
+            ->getSingleScalarResult();
     }
 }

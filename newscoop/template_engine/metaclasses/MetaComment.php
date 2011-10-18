@@ -38,31 +38,10 @@ final class MetaComment extends MetaDbObject {
         $this->m_customProperties['submit_date'] = 'getSubmitDate';
         $this->m_customProperties['article'] = 'getArticle';
         $this->m_customProperties['defined'] = 'defined';
+        $this->m_customProperties['user'] = 'getUser';
 
         $this->m_skipFilter = array('content_real');
     } // fn __construct
-
-    /**
-     * @return string
-     */
-    public function __toString()
-    {
-        $date = $this->getSubmitDate();
-        $subject = $this->getSubject();
-        $message = $this->getMessage();
-
-        //want to get the name from this article here and return it with everything else..
-        //$article = $this->getArticle();
-
-        $html = '<p class="comment_date">%s</p>
-                <p class="comment_subject">%s</p>
-                <p class="comment_message">%s</p>';
-
-        $langid = $this->m_dbObject->getLanguage()->getId();
-        $article_num = $this->m_dbObject->getThread()->getId();
-
-        return sprintf($html, $date, $subject, $message);
-    }
 
     protected function getThreadDepth()
     {
@@ -116,7 +95,9 @@ final class MetaComment extends MetaDbObject {
 
     protected function getArticle()
     {
-    	return new MetaArticle( $this->m_dbObject->getLanguage()->getId(), $this->m_dbObject->getThread()->getId() );
+        //TODO remove this when the composite key stuff is done.
+        return new MetaArticle( $this->m_dbObject->getLanguage()->getId(), $this->m_dbObject->getArticleNumber() );
+    	//return new MetaArticle( $this->m_dbObject->getLanguage()->getId(), $this->m_dbObject->getThread()->getId() );
     }
 
 
@@ -127,6 +108,14 @@ final class MetaComment extends MetaDbObject {
         CampTemplate::singleton()->trigger_error($errorMessage, $p_smarty);
     }
 
-} // class MetaComment
-
-?>
+    /**
+     * Get user
+     *
+     * @return MetaUser
+     */
+    public function getUser()
+    {
+        $user = $this->m_dbObject->getCommenter()->getUser();
+        return new \MetaUser($user);
+    }
+}

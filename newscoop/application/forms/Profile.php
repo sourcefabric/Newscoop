@@ -25,6 +25,16 @@ class Application_Form_Profile extends Zend_Form
             'filters' => array('stringTrim'),
         ));
 
+        $this->addElement('text', 'username', array(
+            'label' => 'Username',
+            'filters' => array('stringTrim'),
+            'required' => true,
+        ));
+
+        $this->addElement('password', 'password', array(
+            'label' => 'Password',
+        ));
+
         $this->addElement('file', 'image', array(
             'label' => 'Profile image',
         ));
@@ -72,9 +82,26 @@ class Application_Form_Profile extends Zend_Form
             'filters' => array('stringTrim'),
         ));
 
+        $profile->addElement('text', 'google', array(
+            'label' => 'Google+',
+            'filters' => array('stringTrim'),
+        ));
+
         $profile->addElement('text', 'geolocation', array(
             'label' => 'Geolocation',
             'filters' => array('stringTrim'),
+        ));
+
+        $profile->addElement('checkbox', 'first_name_public', array(
+            'label' => 'First Name Public',
+        ));
+
+        $profile->addElement('checkbox', 'last_name_public', array(
+            'label' => 'Last Name Public',
+        ));
+
+        $profile->addElement('checkbox', 'email_public', array(
+            'label' => 'Allow sending emails',
         ));
 
         $this->addSubForm($profile, 'attributes');
@@ -90,6 +117,7 @@ class Application_Form_Profile extends Zend_Form
         $defaults = array(
             'first_name' => $user->getFirstName(),
             'last_name' => $user->getLastName(),
+            'username' => $user->getUsername(),
             'attributes' => array(),
         );
 

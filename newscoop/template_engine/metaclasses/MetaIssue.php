@@ -3,6 +3,9 @@
  * @package Campsite
  */
 
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\IOutputSettingIssueService;
+
 /**
  * Includes
  */
@@ -15,6 +18,7 @@ require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObjec
 final class MetaIssue extends MetaDbObject {
 
 	private static $m_baseProperties = array(
+	'id'=>'id',
 	'name'=>'Name',
     'number'=>'Number',
     'date'=>'PublicationDate',
@@ -38,7 +42,8 @@ final class MetaIssue extends MetaDbObject {
     'language'=>'getLanguage',
     'is_current'=>'isCurrent',
     'is_published'=>'isPublished',
-    'defined'=>'defined'
+    'defined'=>'defined',
+    'theme_path'=>'getThemePath'
 	);
 
 
@@ -55,10 +60,22 @@ final class MetaIssue extends MetaDbObject {
     } // fn __construct
 
 
+    protected function getThemePath()
+    {
+        $resourceId = new ResourceId(__CLASS__);
+        $outSetIssueService = $resourceId->getService(IOutputSettingIssueService::NAME);
+        $outSets = $outSetIssueService->findByIssue($this->m_dbObject->getIssueId());
+        if (count($outSets) == 0) {
+            return null;
+        }
+        return $outSets[0]->getThemePath()->getPath();
+    }
+
+
     /**
      * Returns a list of MetaLanguage objects - list of languages in which
      * the issue was translated.
-     * 
+     *
      * @param boolean $p_excludeCurrent
      * @param array $p_order
      * @param boolean $p_allIssues
@@ -74,8 +91,8 @@ final class MetaIssue extends MetaDbObject {
         }
         return $metaLanguagesList;
     }
-    
-    
+
+
     protected function getPublishYear()
     {
         $publish_timestamp = strtotime($this->m_dbObject->getProperty('PublicationDate'));

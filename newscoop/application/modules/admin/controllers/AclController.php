@@ -49,7 +49,6 @@ class Admin_AclController extends Zend_Controller_Action
                 'image' => getGS('Images'),
                 'comment' => getGS('Comments'),
                 'file' => getGS('Files'),
-                'audioclip' => getGS('Audioclips'),
                 'editor' => getGS('Rich-Text Editor Preferences'),
             ),
             'structure' => array(
@@ -58,6 +57,7 @@ class Admin_AclController extends Zend_Controller_Action
                 'section' => getGS('Sections'),
                 'topic' => getGS('Topics'),
                 'language' => getGS('Languages'),
+                'playlist' => getGS('Article Playlists')
             ),
             'users' => array(
                 'user-group' => getGS('User Groups'),

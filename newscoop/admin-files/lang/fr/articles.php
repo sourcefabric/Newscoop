@@ -1,4 +1,7 @@
 <?php 
+regGS("This article cannot be previewed. Please make sure it has the publication has a theme assigned.", "");
+regGS("On", "");
+regGS("Off", "");
 regGS("You do not have the right to moderate comments.", "");
 regGS("You can not schedule opposing events at the same time", "");
 regGS("Unable to reach Newscoop. Please check your internet connection.", "");
@@ -142,7 +145,6 @@ regGS("You must select an article type.", "Vous devez choisir un type d'article.
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Etes-vous sûrs que vous voulez enlever l'image \'$1\' de l'article ? ");
 regGS("There was an error reading request parameters.", "Il y avait une erreur survenu lors de la lecture des paramètres requis.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Cet article ne peut être visualisé. SVP assurez-vous que son template d'article est sélectionné.");
-regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Cet article ne peut pas être visualiser. SVP assurez-vous  que son template de page d'accueil est sélectionné.");
 regGS("No such article.", "Pas d'article correspondant");
 regGS("No such section.", "Pas une telle section.");
 ?>

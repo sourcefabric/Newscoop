@@ -71,6 +71,12 @@ class Article
     private $name;
 
     /**
+     * @Column(name="time_updated")
+     * @var string
+     */
+    private $date;
+
+    /**
      * Set article id
      *
      * @param int $p_id
@@ -218,5 +224,15 @@ class Article
     public function getTitle()
     {
         return $this->name;
+    }
+
+	/**
+     * Get date
+     *
+     * @return string
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 }

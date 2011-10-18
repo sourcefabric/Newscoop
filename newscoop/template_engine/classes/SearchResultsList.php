@@ -50,8 +50,7 @@ class SearchResultsList extends ListObject
 
 	    $metaArticlesList = array();
 	    foreach ($articlesList as $article) {
-	        $metaArticlesList[] = new MetaArticle($article->getLanguageId(),
-	                                              $article->getArticleNumber());
+	        $metaArticlesList[] = new MetaArticle($article['language_id'], $article['number']);
 	    }
 		return $metaArticlesList;
 	}
@@ -193,6 +192,10 @@ class SearchResultsList extends ListObject
         }
         if (!$context->preview) {
         	$this->m_constraints[] = new ComparisonOperation('Published', $operator, 'Y');
+        }
+
+        if (!empty($p_parameters['type_not'])) {
+            $this->m_constraints[] = new ComparisonOperation('Articles.Type', new Operator('not', 'string'), $p_parameters['type_not']);
         }
 
     	return $parameters;

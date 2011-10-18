@@ -1,4 +1,5 @@
 <?php 
+regGS("Check all", "Check all");
 regGS("view", "view");
 regGS("undo/redo", "undo/redo");
 regGS("underline", "underline");
@@ -40,7 +41,6 @@ regGS("character map", "character map");
 regGS("bold", "bold");
 regGS("attach", "attach");
 regGS("any resource", "any resource");
-regGS("all", "all");
 regGS("admin", "admin");
 regGS("add", "add");
 regGS("You can't deny yourself to manage $1", "You can't deny yourself to manage $1");
@@ -74,7 +74,6 @@ regGS("Cache", "Cache");
 regGS("Blogs", "Blogs");
 regGS("Backup", "Backup");
 regGS("Authoring", "Authoring");
-regGS("Audioclips", "Audioclips");
 regGS("Allow", "Allow");
 regGS("User types", "User types");
 regGS("No user types.", "No user types.");

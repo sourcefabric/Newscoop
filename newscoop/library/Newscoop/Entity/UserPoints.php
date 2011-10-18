@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\ArrayCollection,
     Newscoop\Utils\Validation;
 
 /**
- * @Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\UserPointsRepository")
  * @Table(name="user_points_index")
  */
 class UserPoints

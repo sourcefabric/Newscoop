@@ -120,6 +120,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
                         'message' => $feedback->getMessage(),
                         'subject' => $feedback->getSubject(),
                         'status' => $feedback->getStatus(),
+                        'attachmentType' => $feedback->getAttachmentType(),
                         'action' => array(
                             'reply' => $view->url(array(
                                 'action' => 'reply',

@@ -239,7 +239,7 @@ function init_smarty()
     global $CAMPSITE_DIR;
 
     // includes smarty main class
-    require_once("$CAMPSITE_DIR/include/smarty/Smarty.class.php");
+   require_once __DIR__ . '/../library/smarty3/Smarty.class.php';
 
     // instantiates smarty template system
     $tpl = new Smarty();
@@ -249,7 +249,7 @@ function init_smarty()
     $tpl->right_delimiter = '}}';
     $tpl->force_compile = true;
     $tpl->config_dir = $CAMPSITE_DIR.'/include/smarty/configs';
-    $tpl->template_dir = $CAMPSITE_DIR.'/templates/system_templates';
+    $tpl->template_dir = $CAMPSITE_DIR.'/themes/system_templates';
     $tpl->compile_dir = $CAMPSITE_DIR.'/cache';
 
     return $tpl;

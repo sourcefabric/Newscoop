@@ -50,6 +50,7 @@ try {
     $serverRequest->allow('WidgetContext::setWidgets');
     $serverRequest->allow('WidgetManagerDecorator::update');
     $serverRequest->allow('Topic::UpdateOrder');
+    $serverRequest->allow('Topic::add');
     $serverRequest->allow('Geo_Names::FindCitiesByPosition');
     $serverRequest->allow('Geo_Names::FindCitiesByName');
     $serverRequest->allow('Geo_Map::LoadMapData');

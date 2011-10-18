@@ -26,6 +26,7 @@ class RegisterController extends Zend_Controller_Action
             ->addActionContext('generate-username', 'json')
             ->addActionContext('check-username', 'json')
             ->addActionContext('check-email', 'json')
+            ->addActionContext('pending', 'json')
             ->initContext();
     }
 
@@ -93,6 +94,7 @@ class RegisterController extends Zend_Controller_Action
             try {
                 $values = $form->getValues();
                 $this->_helper->service('user')->savePending($values, $user);
+                $this->_helper->service('user.token')->invalidateTokens($user, 'email.confirm');
                 $this->notifyDispatcher($user);
 
                 $auth = \Zend_Auth::getInstance();
@@ -101,7 +103,7 @@ class RegisterController extends Zend_Controller_Action
                     $this->_helper->redirector('index', 'index', 'default');
                 } else {
                     $adapter = $this->_helper->service('auth.adapter');
-                    $adapter->setUsername($values['username'])->setPassword($values['password']);
+                    $adapter->setEmail($user->getEmail())->setPassword($values['password']);
                     $result = $auth->authenticate($adapter);
                     $this->_helper->redirector('index', 'dashboard', 'default');
                 }
@@ -154,6 +156,62 @@ class RegisterController extends Zend_Controller_Action
         }
 
         $this->view->status = true;
+    }
+
+    public function socialAction()
+    {
+        $form = new Application_Form_Social();
+        $form->setMethod('POST');
+
+        $userData = $this->_getParam('userData');
+        $form->setDefaults(array(
+            'first_name' => $userData->profile->firstName,
+            'last_name' => $userData->profile->lastName,
+            'email' => $userData->profile->email,
+        ));
+
+        if (!empty($userData->profile->email)) { // try to find user by email
+            $user = $this->_helper->service('user')->findBy(array('email' => $userData->profile->email));
+            if (!empty($user)) { // we have user for given email, add him login
+                $user = array_pop($user);
+                $this->_helper->service('auth.adapter.social')->addIdentity($user, $userData->providerId, $userData->providerUID);
+                $adapter = $this->_helper->service('auth.adapter.social');
+                $adapter->setProvider($userData->providerId)->setProviderUserId($userData->providerUID);
+                Zend_Auth::getInstance()->authenticate($adapter);
+                $this->_helper->redirector('index', 'dashboard');
+            }
+        }
+
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $user = $this->_helper->service('user')->save($form->getValues() + array('is_public' => 1));
+            $this->_helper->service('user')->setActive($user);
+            $this->_helper->service('auth.adapter.social')->addIdentity($user, $userData->providerId, $userData->providerUID);
+            $adapter = $this->_helper->service('auth.adapter.social');
+            $adapter->setProvider($userData->providerId)->setProviderUserId($userData->providerUID);
+            Zend_Auth::getInstance()->authenticate($adapter);
+            $this->_helper->redirector('index', 'dashboard');
+        }
+
+        $this->view->name = $userData->profile->displayName;
+        $this->view->form = $form;
+    }
+    
+    public function pendingAction()
+    {
+        if ($this->_getParam('email')) {
+            $user = $this->_helper->service('user')->findBy(array('email' => $this->_getParam('email')));
+            
+            if ($user) {
+                $this->view->result = '0';
+            }
+            else {
+                $user = $this->_helper->service('user')->createPending($this->_getParam('email'));
+                $this->_helper->service('email')->sendConfirmationToken($user);
+                $this->view->result = '1';
+            }
+        }
+        $this->view->result = '0';
     }
 
     /**

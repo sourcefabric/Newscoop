@@ -123,8 +123,6 @@ class ThemeServiceLocalFileSystem implements IThemeService
 		$themes = $this->loadThemes($themesConfigs);
         var_hook($themes);
 		$themes = $this->filterThemes($search, $themes);
-		//var_dump($themes);
-        //die();
         return count($themes);
 	}
 

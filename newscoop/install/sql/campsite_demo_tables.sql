@@ -1009,6 +1009,7 @@ CREATE TABLE `comment` (
   `dislikes` tinyint(3) unsigned DEFAULT '0',
   `time_created` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `time_updated` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `recommended` tinyint(1) unsigned DEFAULT '0',
   PRIMARY KEY (`id`),
   KEY `comments_users` (`fk_comment_commenter_id`),
   KEY `publication` (`fk_forum_id`),
@@ -1191,6 +1192,7 @@ CREATE TABLE `liveuser_users` (
   `is_public` boolean NOT NULL DEFAULT '0',
   `points` int(10) DEFAULT '0',
   `image` varchar(255) DEFAULT NULL,
+  `subscriber` int(10) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `UName` (`UName`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

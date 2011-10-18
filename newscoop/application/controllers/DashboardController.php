@@ -24,6 +24,10 @@ class DashboardController extends Zend_Controller_Action
 
         $this->service = $this->_helper->service('user');
         $this->user = $this->service->getCurrentUser();
+
+        $this->_helper->contextSwitch()
+            ->addActionContext('update-topics', 'json')
+            ->initContext();
     }
 
     public function preDispatch()
@@ -45,17 +49,44 @@ class DashboardController extends Zend_Controller_Action
             $values = $form->getValues();
 
             try {
-                $imageInfo = array_pop($form->image->getFileInfo());
-                $values['image'] = $this->_helper->service('image')->save($imageInfo);
+                if (!empty($values['image'])) {
+                    $imageInfo = array_pop($form->image->getFileInfo());
+                    $values['image'] = $this->_helper->service('image')->save($imageInfo);
+                }
                 $this->service->save($values, $this->user);
                 $this->_helper->redirector('index');
             } catch (\InvalidArgumentException $e) {
-                $form->image->addError($e->getMessage());
+                switch ($e->getMessage()) {
+                    case 'username_conflict':
+                        $form->username->addError($this->view->translate("User with given username exists."));
+                        break;
+
+                    default:
+                        $form->image->addError($e->getMessage());
+                        break;
+                }
             }
         }
-
+        
+        $userSubscriptionService = $this->_helper->service('user_subscription');
+        $userSubscriptionKey = $userSubscriptionService->createKey($this->user);
+        $userSubscriptionService->setKey($userSubscriptionKey);
+        
         $this->view->form = $form;
         $this->view->user = new MetaUser($this->user);
+        $this->view->userSubscriptions = $userSubscriptionService->getSubscriptions($this->user);
+        $this->view->userSubscriptionKey = $userSubscriptionKey;
+    }
+
+    public function updateTopicsAction()
+    {
+        try {
+            $this->_helper->service('user.topic')->updateTopics($this->user, $this->_getParam('topics', array()));
+            $this->view->status = '0';
+        } catch (Exception $e) {
+            $this->view->status = -1;
+            $this->view->message = $e->getMessage();
+        }
     }
 
     public function followTopicAction()

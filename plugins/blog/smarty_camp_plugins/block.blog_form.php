@@ -37,7 +37,7 @@ function smarty_block_blog_form($p_params, $p_content, &$p_smarty, &$p_repeat)
     }
 
     if (isset($p_content)) {
-        require_once $p_smarty->_get_plugin_filepath('shared','escape_special_chars');
+        $p_smarty->smarty->loadPlugin('smarty_shared_escape_special_chars');
         $html = '';
 
         if (isset($p_params['template'])) {

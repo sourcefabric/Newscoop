@@ -1,4 +1,7 @@
 <?php 
+regGS("This article cannot be previewed. Please make sure it has the publication has a theme assigned.", "");
+regGS("On", "");
+regGS("Off", "");
 regGS("You do not have the right to moderate comments.", "");
 regGS("You can not schedule opposing events at the same time", "");
 regGS("Unable to reach Newscoop. Please check your internet connection.", "");
@@ -142,7 +145,6 @@ regGS("You must select an article type.", "Morate izabrati tip teksta.");
 regGS("Are you sure you want to remove the image \'$1\' from the article?", "Da li ste sigurni da iz teksta želite da uklonite sliku \'$1\'?");
 regGS("There was an error reading request parameters.", "Greška pri čitanju traženih parametara.");
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Tekst ne može biti pregledan. Proverite da li je odabran šablon za za prikaz teksta.");
-regGS("This article cannot be previewed. Please make sure it has the front page template selected.", "Tekst ne može biti pregledan. Proverite da li je odabran šablon za prvu stranu.");
 regGS("No such article.", "Nema takvog teksta.");
 regGS("No such section.", "Nema te rubrike.");
 regGS("Are you sure you want to delete this scheduled action?", " ");

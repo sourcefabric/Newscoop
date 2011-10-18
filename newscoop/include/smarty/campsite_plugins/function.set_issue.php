@@ -19,7 +19,7 @@
 function smarty_function_set_issue($p_params, &$p_smarty)
 {
     // gets the context variable
-    $campsite = $p_smarty->get_template_vars('gimme');
+    $campsite = $p_smarty->getTemplateVars('gimme');
 
     if (isset($p_params['number'])) {
     	$issueNumber = intval($p_params['number']);

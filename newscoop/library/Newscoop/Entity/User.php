@@ -126,6 +126,12 @@ class User implements \Zend_Acl_Role_Interface
      * @var Doctrine\Common\Collections\Collection;
      */
     private $commenters;
+    
+    /**
+     * @Column(type="integer")
+     * @var int
+     */
+    private $subscriber;
 
     /**
      * @param string $email
@@ -163,6 +169,12 @@ class User implements \Zend_Acl_Role_Interface
      */
     public function setUsername($username)
     {
+        $username = preg_replace('~[^\\pL0-9_]+~u', '-', $username);
+        $username = trim($username, "-");
+        $username = iconv("utf-8", "us-ascii//TRANSLIT", $username);
+        $username = strtolower($username);
+        $username = preg_replace('~[^-a-z0-9_]+~', '', $username);
+        $username = str_replace('-', '.', $username);
         $this->username = (string) $username;
         return $this;
     }
@@ -601,6 +613,11 @@ class User implements \Zend_Acl_Role_Interface
      */
     public function hasPermission($permission)
     {
+        $blogService = \Zend_Registry::get('container')->getService('blog');
+        if ($blogService->isBlogger($this)) {
+            return true;
+        }
+
         $acl = \Zend_Registry::get('acl')->getAcl($this);
         try {
             list($resource, $action) = PermissionToAcl::translate($permission);
@@ -612,6 +629,11 @@ class User implements \Zend_Acl_Role_Interface
         } catch (\Exception $e) {
             return FALSE;
         }
+    }
+
+    public function getCommenters()
+    {
+       return $this->commenters;
     }
 
 
@@ -651,5 +673,55 @@ class User implements \Zend_Acl_Role_Interface
     public function __toString()
     {
         return $this->getUsername();
+    }
+
+    /**
+     * Check if the user exists
+     * Test if there is set an id
+     *
+     * @return bool
+     * @deprecated legacy from frontend controllers
+     */
+    public function exists()
+    {
+        return !is_null($this->id);
+    }
+
+    /**
+     * Get an enity property
+     *
+     * @param $p_key
+     * @return mixed
+     * @deprecated legacy from frontend controllers
+     */
+    public function getProperty($p_key)
+    {
+        if (method_exists($this, $p_key)) {
+            return $this->$p_key();
+        } else {
+            throw new \InvalidArgumentException("User Property '$p_key' not found");
+        }
+    }
+    
+    /**
+     * Set subscriber
+     *
+     * @param integer $subscriber
+     * @return Newscoop\Entity\User
+     */
+    public function setSubscriber($subscriber)
+    {
+        $this->subscriber = $subscriber;
+        return $this;
+    }
+
+    /**
+     * Get subscriber
+     *
+     * @return integer
+     */
+    public function getSubscriber()
+    {
+        return $this->subscriber;
     }
 }

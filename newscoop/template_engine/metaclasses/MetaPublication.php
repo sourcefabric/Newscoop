@@ -3,6 +3,9 @@
  * @package Campsite
  */
 
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\IThemeManagementService;
+
 /**
  * Includes
  */
@@ -39,7 +42,20 @@ final class MetaPublication extends MetaDbObject {
         $this->m_customProperties['subscription_time_unit'] = 'getSubscriptionTimeUnit';
         $this->m_customProperties['subscription_time'] = 'getSubscriptionTime';
         $this->m_customProperties['seo'] = 'getSeo';
+        $this->m_customProperties['theme_path'] = 'getThemePath';
     } // fn __construct
+
+
+    protected function getThemePath()
+    {
+        $resourceId = new ResourceId(__CLASS__);
+        $themeService = $resourceId->getService(IThemeManagementService::NAME_1);
+        $outSets = $themeService->getThemes($this->m_dbObject->getPublicationId());
+        if (count($outSets) == 0) {
+            return null;
+        }
+        return $outSets[0]->getPath();
+    }
 
 
     /**

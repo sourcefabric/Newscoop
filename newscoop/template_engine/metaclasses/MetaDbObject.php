@@ -22,13 +22,13 @@ class MetaDbObject {
      * Array of meta class properties
      * @var array
      */
-    protected $m_properties = null;
+    protected $m_properties = array();
 
     /**
      * Array of meta class custom properties
      * @var array
      */
-    protected $m_customProperties = null;
+    protected $m_customProperties = array();
 
     /**
      * The name of the method used to retrieve a property value
@@ -64,7 +64,7 @@ class MetaDbObject {
     		$className = strtolower(substr($className, 4));
     	}
     	CampTemplate::trigger_error("Invalid use of object of type '$className'. Use \$campsite->${className}->[property_name] to display a property of this object.");
-    	return null;
+    	return '';
     }
 
 

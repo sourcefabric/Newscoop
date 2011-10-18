@@ -40,7 +40,7 @@ class ArticleCommentsList extends ListObject
             $params['iDisplayLength'] = $p_limit;
         }
         foreach($this->m_order as $order)
-        {            
+        {
             if(strtolower($order['field']) == 'bydate') {
                 $params['iSortCol_0'] = 0;
                 $params['sSortDir_0'] = $order['dir'];
@@ -51,7 +51,7 @@ class ArticleCommentsList extends ListObject
                 $params['sSortDir_0'] = $order['dir'];
             }
         }
-	    //$p_count = $repository->getCount($params, $cols);
+	    $p_count = $repository->getCount($params, $cols);
         $articleCommentsList = $repository->getData($params, $cols);
 	    foreach ($articleCommentsList as $comment)
 	    {
@@ -146,6 +146,8 @@ class ArticleCommentsList extends ListObject
                 	$value = isset($value) && strtolower($value) != 'false';
                     $parameters[$parameter] = $value;
                     break;
+                case 'recommended':
+					if ($value == 'true' || $value == 'false') $parameters[$parameter] = $value;
                 default:
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_comments", $p_smarty);
     		}
@@ -181,6 +183,11 @@ class ArticleCommentsList extends ListObject
             }
             $this->m_constraints['language'] = $context->language->number;
         }
+
+        if ($parameters['recommended']) {
+			if ($parameters['recommended'] == 'true') $this->m_constraints['recommended'] = 1;
+			if ($parameters['recommended'] == 'false') $this->m_constraints['recommended'] = 0;
+		}
 
     	return $parameters;
 	}

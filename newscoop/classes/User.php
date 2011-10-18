@@ -64,7 +64,9 @@ class User extends DatabaseObject {
         'time_created',
         'lastLogin',
         'isActive',
-        'password_reset_token');
+        'password_reset_token',
+        'is_admin',
+    );
 
     private static $m_defaultConfig = array();
 
@@ -193,7 +195,7 @@ class User extends DatabaseObject {
      *
      * @return void
      */
-    public function fetch($p_recordSet = null)
+    public function fetch($p_recordSet = null, $p_forceExists = false)
     {
         global $g_ado_db;
 
@@ -635,7 +637,7 @@ class User extends DatabaseObject {
      */
     public function isAdmin()
     {
-        return ($this->m_data['Reader'] == 'N');
+        return !empty($this->m_data['is_admin']);
     } // fn isAdmin
 
 
