@@ -25,7 +25,8 @@ $t = array
 	'list-save-failed' => getGS('Could not save playlist'),
     'delete' => getGS('Delete'),
     'cancel' => getGS('Cancel'),
-	'please-select-playlist' => getGS('Please select a playlist')
+	'please-select-playlist' => getGS('Please select a playlist'),
+    'item-exists' => getGS('Item already exists in the playlist')
 );
 $dataUrl = $this->url( array
 (
@@ -190,6 +191,8 @@ function popup_add()
 	}
 	if( !$('#context_list').find('input:hidden[value={$this->article->getId()}]').length )
 		appendItemToContextList( '{$this->article->getId()}', '{$this->article->getDate()}', '{$this->article->getName()}', true );
+	else
+		flashMessage('{$t['item-exists']}', 'error', false);
 }
 
 function fnSaveCallback(data)

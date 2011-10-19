@@ -73,13 +73,15 @@ class PlaylistList extends ListObject
         /* @var $langRepo \Newscoop\Entity\Repository\LanguageRepository */
         $lang = $langRepo->find($p_parameters['language']);
 
-        $articlesList = $repo->articles($playlist, $lang, false, $length, $start);
-//var_dump($articlesList);
+        $articlesList = $repo->articles($playlist, false, $length, $start);
+
+        //var_dump($articlesList);
         $metaArticlesList = array();
 	    foreach ($articlesList as $article) {
 	        $metaArticlesList[] = new MetaArticle($lang->getId(), $article['articleId']);
 	    }
-//var_dump($metaArticlesList);
+        //var_dump($metaArticlesList);
+
 	    return $metaArticlesList;
 	}
 

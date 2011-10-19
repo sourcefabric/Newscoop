@@ -44,20 +44,24 @@ function smarty_block_list_playlist_articles($p_params, $p_content, &$p_smarty, 
     	    return null;
     	}
     	$campContext->setCurrentList($articlesList, array('playlist'));
-    	$campContext->article = $campContext->current_playlist_list->current;
+    	$campContext->article = $campContext->current_list->current;
     	$p_repeat = true;
     }
     else
     {
-        $campContext->current_playlist_list->defaultIterator()->next();
-        if (!is_null($campContext->current_playlist_list->current)) {
-            $campContext->article = $campContext->current_playlist_list->current;
+        $campContext->current_list->defaultIterator()->next();
+        if (!is_null($campContext->current_list->current))
+        {
+            $campContext->article = $campContext->current_list->current;
             $p_repeat = true;
-        } else {
+        }
+        else
+        {
             $campContext->resetCurrentList();
             $p_repeat = false;
         }
     }
+    //var_dump("block: ".$campContext->current_list->current->name);
 
     return $p_content;
 }
