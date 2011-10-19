@@ -84,6 +84,7 @@
 		<div class="clear"></div>
 		<div class="text_container left half">
 			{{ $view->translate('You have to be registered at TagesWoche in order to comment on articles and send messages directly to the editorial team. Please login or create a free user account on TagesWoche.') }}
+			<br><a href="{{ $view->baseUrl('/de/pages/about/3919/Dialogkultur.htm>') }}">{{ $view->translate('login_link_text') }}</a>
 		</div>
 		<div class="text_container right half">
 			<input type="text" id="ob_email" name="ob_email" class="small right" onKeyPress="if (event.keyCode == 13) omnibox.login();"><br>
