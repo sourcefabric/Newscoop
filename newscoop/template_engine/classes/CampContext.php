@@ -175,15 +175,15 @@ final class CampContext
     /** @var Application_Form_Contact */
     public $form_contact;
 
-    /** @var Zend_Service_ReCaptcha */
-    public $form_contact_captcha;
+    /** @var array */
+    public $flash_messages = array();
 
     /**
      * Class constructor
      */
     final public function __construct()
     {
-        global $Campsite;
+        global $Campsite, $controller;
 
         if (!is_null($this->m_properties)) {
             return;
@@ -314,22 +314,25 @@ final class CampContext
         $this->m_properties['map_common_header_set'] = false;
 
         if (defined('APPLICATION_PATH')) {
-            $secretConfigFile = APPLICATION_PATH . '/configs/secret.ini';
-            if (file_exists($secretConfigFile)) {
-                $this->form_contact = new \Application_Form_Contact();
-                $this->form_contact->setMethod('POST');
-                $config = new \Zend_Config_Ini($secretConfigFile, APPLICATION_ENV);
-                $this->form_contact_captcha = new \Zend_Service_ReCaptcha(
-                    $config->get('recaptcha')->get('public_key'),
-                    $config->get('recaptcha')->get('private_key')
-                );
+            $options = $controller->getInvokeArg('bootstrap')->getOptions();
+            $form = new \Application_Form_Contact();
+            $form->setMethod('POST');
+            $request = \Zend_Controller_Front::getInstance()->getRequest();
+            if ($request->isPost() && $form->isValid($request->getPost())) {
+                $email = new \Zend_Mail('utf-8');
+                $email->setFrom($form->email->getValue(), $form->first_name->getValue() . ' ' . $form->last_name->getValue())
+                    ->setSubject($form->subject->getValue())
+                    ->setBodyText($form->message->getValue())
+                    ->addTo($options['email']['from'])
+                    ->send();
 
-                $request = \Zend_Controller_Front::getInstance()->getRequest();
-                if ($request->isPost() && $this->form_contact->isValid($request->getPost())) {
-                    var_dump($this->form_contact->getValues());
-                    exit;
-                }
+                $controller->getHelper('flashMessenger')->addMessage("form_contact_done");
+                $controller->getHelper('redirector')->gotoUrl($request->getPathInfo());
+                exit;
             }
+
+            $this->form_contact = $form;
+            $this->flash_messages = $controller->getHelper('flashMessenger')->getMessages();
         }
     } // fn __construct
 

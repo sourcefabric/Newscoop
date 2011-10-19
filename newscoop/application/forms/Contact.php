@@ -29,15 +29,26 @@ class Application_Form_Contact extends Zend_Form
 
         $this->addElement('select', 'subject', array(
             'label' => 'Subject',
-            'multiOptions' => array(
-                'test',
-            ),
         ));
 
         $this->addElement('textarea', 'message', array(
             'label' => 'Message',
             'required' => true,
         ));
+
+        $secretConfigFile = APPLICATION_PATH . '/configs/secret.ini';
+        if (file_exists($secretConfigFile)) {
+            $config = new \Zend_Config_Ini($secretConfigFile, APPLICATION_ENV);
+            $this->addElement('captcha', 'captcha', array(
+                'label' => "Please verify you're a human",
+                'captcha' => array(
+                    'ReCaptcha',
+                ),
+            ));
+
+            $this->captcha->getCaptcha()->setPubkey($config->get('recaptcha')->get('public_key'));
+            $this->captcha->getCaptcha()->setPrivkey($config->get('recaptcha')->get('private_key'));
+        }
 
         $this->addElement('submit', 'submit', array(
             'label' => 'Send',
