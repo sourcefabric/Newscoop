@@ -78,6 +78,7 @@ foreach ($filters as $name => $opts) {
 if (empty($_REQUEST['showtype']) || $_REQUEST['showtype'] != 'newswires') { // limit newswire articles by default
     $articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), 'newswire');
     $articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), 'event');
+    $articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), 'screening');
 }
 
 // search
