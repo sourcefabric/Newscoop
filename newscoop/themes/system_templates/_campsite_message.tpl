@@ -10,11 +10,11 @@
   <meta name="description" content="{{ $siteinfo.description }}" />
   <meta name="keywords" content="{{ $siteinfo.keywords }}" />
 
-  <link rel="stylesheet" type="text/css" href="/{{ $siteinfo.templates_path }}/system_templates/css/_style_offline.css" />
+  <link rel="stylesheet" type="text/css" href="/{{ $siteinfo.templates_path }}/css/_style_offline.css" />
 </head>
 <body>
 <div id="offline">
-  <div><img src="/{{ $siteinfo.templates_path }}/system_templates/img/newscoop_logo_big.png" />
+  <div><img src="/{{ $siteinfo.templates_path }}/img/newscoop_logo_big.png" />
   <div>{{ $siteinfo.info_message }}</div>
 </div>
 </body>
