@@ -112,6 +112,12 @@ class NewscoopEntityArticleProxy extends \Newscoop\Entity\Article implements \Do
         return parent::getTitle();
     }
 
+    public function getDate()
+    {
+        $this->__load();
+        return parent::getDate();
+    }
+
 
     public function __sleep()
     {

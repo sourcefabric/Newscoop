@@ -276,7 +276,7 @@ class CampGetImage
         header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
         header('Content-type: ' . $this->m_image->getContentType());
 
-        if ($this->m_isLocal && $this->m_ratio == 100 && $this->m_resizeWidth == 0 && $this->m_resizeHeight == 0 && $this->m_crop == null && $this->m_cropResize == null) {
+        if ($this->m_isLocal && $this->m_ratio == 100 && $this->m_resizeWidth == 0 && $this->m_resizeHeight == 0 && $this->m_crop == null && $this->m_resizeCrop == null) {
             // do not cache local 100% images
             readfile($this->getSourcePath());
         } else {

@@ -253,7 +253,7 @@ CREATE TABLE `playlist_article` (
 
 -- Update Images
 ALTER TABLE `Images`
- ADD COLUMN `Source` enum('local','feedback') not null default 'local',
+ ADD COLUMN `Source` enum('local','feedback','newsfeed') not null default 'local',
  ADD COLUMN `Status` enum('unapproved','approved') not null default 'approved',
  DROP PRIMARY KEY,
  ADD PRIMARY KEY (`id`);
