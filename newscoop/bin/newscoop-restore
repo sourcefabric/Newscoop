@@ -463,16 +463,18 @@ foreach ($destDirs as $dir) {
 //
 // Restore files from backup...
 //
-echo " * Restoring templates...";
-flush_output($flush);
-if (!is_null($templatesSrcDir)) {
-    camp_copy_files($templatesSrcDir, $CAMPSITE_DIR);
-    if ($packageTemplatesDirName != $templatesDirName) {
-        camp_remove_dir($templatesDestDir);
-        rename($CAMPSITE_DIR.'/'.$packageTemplatesDirName, $templatesDestDir);
+if (is_dir($templatesSrcDir)) {
+    echo " * Restoring templates...";
+    flush_output($flush);
+    if (!is_null($templatesSrcDir)) {
+        camp_copy_files($templatesSrcDir, $CAMPSITE_DIR);
+        if ($packageTemplatesDirName != $templatesDirName) {
+            camp_remove_dir($templatesDestDir);
+            rename($CAMPSITE_DIR.'/'.$packageTemplatesDirName, $templatesDestDir);
+        }
     }
+    echo "done.\n";
 }
-echo "done.\n";
 
 echo " * Restoring themes...";
 flush_output($flush);
@@ -516,7 +518,7 @@ if (!$useExistingConfig) {
 // Converting template files if necessary
 //
 if ($backupVersion < 3) {
-    echo " * Converting templates...";
+    echo " * Converting templates from 2.x versions...";
     flush_output($flush);
     require_once($CAMPSITE_DIR.'/classes/TemplateConverter.php');
     $template_files = camp_read_files($CAMPSITE_DIR.'/templates');
@@ -528,19 +530,6 @@ if ($backupVersion < 3) {
     }
     echo "done.\n";
 }
-
-// replace $campsite by $gimme
-echo " * Upgrading templates...";
-flush_output($flush);
-require_once($CAMPSITE_DIR.'/classes/TemplateConverterNewscoop.php');
-$template_files = camp_read_files($CAMPSITE_DIR.'/templates');
-$converter = new TemplateConverterNewscoop();
-foreach($template_files as $template_file) {
-    $converter->read($template_file);
-    $converter->parse();
-    $converter->write();
-}
-echo "done.\n";
 
 //
 // Restore the database...
@@ -586,6 +575,20 @@ $res = camp_upgrade_database($destDbName);
 if ($res !== 0) {
     camp_exit_with_error($res);
 }
+
+// replace $campsite by $gimme
+echo " * Upgrading templates...";
+flush_output($flush);
+require_once($CAMPSITE_DIR.'/classes/TemplateConverterNewscoop.php');
+$template_files = camp_read_files($CAMPSITE_DIR.'/themes');
+$converter = new TemplateConverterNewscoop();
+foreach($template_files as $template_file) {
+    $converter->read($template_file);
+    $converter->parse();
+    $converter->write();
+}
+echo "done.\n";
+
 //if( $res === 0 )
 //{
 

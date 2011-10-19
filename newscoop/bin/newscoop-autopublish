@@ -16,3 +16,4 @@ if ($issueActions > 0 || $articleActions > 0) {
     fopen(WWW_DIR.'/reset_cache', 'w');
 }
 
+session_destroy();

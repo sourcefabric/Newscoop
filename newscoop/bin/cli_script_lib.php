@@ -289,7 +289,7 @@ function camp_backup_database($p_dbName, $p_destFile, &$p_output,
 
     $user = $Campsite['DATABASE_USER'];
     $password = $Campsite['DATABASE_PASSWORD'];
-    $cmd = "%s --add-drop-table -c -Q --skip-extended-insert --user=$user --host="
+    $cmd = "%s --add-drop-table -c -Q --extended-insert --user=$user --host="
         . $Campsite['DATABASE_SERVER_ADDRESS']
         . " --port=" . $Campsite['DATABASE_SERVER_PORT'];
     if ($password != "") {
@@ -347,6 +347,7 @@ function camp_exit_with_error($p_errorStr)
         $p_errorStr = implode("\n", $p_errorStr);
     }
     echo "\nERROR!\n$p_errorStr\n";
+	session_destroy();
     exit(1);
 } // fn camp_exit_with_error
 
