@@ -22,18 +22,25 @@ class PlaylistRepository extends EntityRepository
      * @param Newscoop\Entity\Playlist $playlist
      * @param Newscoop\Entity\Language $lang
      */
-    public function articles(Playlist $playlist, Language $lang = null, $fullArticle = false)
+    public function articles(Playlist $playlist, Language $lang = null, $fullArticle = false, $limit = null, $offset = null)
     {
         $em = $this->getEntityManager();
         $query = $em->createQuery
-        ("
-        	SELECT ".( $fullArticle ? "pa, a" : "a.number articleId, a.name title, a.date date" )."
-        	FROM Newscoop\Entity\PlaylistArticle pa
+        (	"SELECT ".( $fullArticle ? "pa, a" : "a.number articleId, a.name title, a.date date" )
+        .  	" FROM Newscoop\Entity\PlaylistArticle pa
         	JOIN pa.article a
-        	WHERE pa.idPlaylist = ?1".
-           (is_null($lang) ? "GROUP BY a.number" : "AND a.language = ?2").
-            " ORDER BY pa.id"
+        	WHERE pa.idPlaylist = ?1"
+        .   (is_null($lang) ? "GROUP BY a.number" : "AND a.language = ?2")
+        .	" ORDER BY pa.id "
         );
+
+        if (!is_null($limit)) {
+            $query->setMaxResults($limit);
+        }
+        if (!is_null($offset)) {
+            $query->setFirstResult($offset);
+        }
+
         $query->setParameter(1, $playlist->getId());
         if (!is_null($lang)) {
             $query->setParameter(2, $lang->getId());

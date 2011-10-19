@@ -22,7 +22,7 @@
  * @return
  *
  */
-function smarty_block_article_playlist($p_params, $p_content, &$p_smarty, &$p_repeat)
+function smarty_block_list_playlist_articles($p_params, $p_content, &$p_smarty, &$p_repeat)
 {
     $p_smarty->smarty->loadPlugin('smarty_shared_escape_special_chars');
     $campContext = $p_smarty->getTemplateVars('gimme');
@@ -44,14 +44,14 @@ function smarty_block_article_playlist($p_params, $p_content, &$p_smarty, &$p_re
     	    return null;
     	}
     	$campContext->setCurrentList($articlesList, array('playlist'));
-    	$campContext->playlist_article = $campContext->current_playlist_list->current;
+    	$campContext->article = $campContext->current_playlist_list->current;
     	$p_repeat = true;
     }
     else
     {
         $campContext->current_playlist_list->defaultIterator()->next();
         if (!is_null($campContext->current_playlist_list->current)) {
-            $campContext->playlist_article = $campContext->current_playlist_list->current;
+            $campContext->article = $campContext->current_playlist_list->current;
             $p_repeat = true;
         } else {
             $campContext->resetCurrentList();
