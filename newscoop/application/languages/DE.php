@@ -6,6 +6,7 @@ return array(
 	'Please login' => 'Bitte loggen Sie sich ein',
 	'You have to be registered at TagesWoche in order to comment on articles and send messages directly to the editorial team. Please login or create a free user account on TagesWoche.' => 
 	'Melden Sie sich bei der TagesWoche an, um Artikel zu kommentieren und Mitteilungen direkt an die Redaktion zu schicken.',
+	'login_link_text' => 'Warum muss ich mich registrieren?',
 	'Register' => 'Benutzerkonto anlegen',
 	'Login' => 'Login',
 	'Send message to the editorial team' => 'Mitteilung an die Redaktion senden',
