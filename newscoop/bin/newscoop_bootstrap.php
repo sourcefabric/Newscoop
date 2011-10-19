@@ -8,7 +8,7 @@
  * @link http://www.sourcefabric.org
  */
 
-// check if script is included 
+// check if script is included
 if (!empty($GLOBALS['g_campsiteDir'])) {
     $CAMPSITE_DIR = $GLOBALS['g_campsiteDir'];
     if (!defined('WWW_DIR')) {
@@ -19,6 +19,9 @@ if (!empty($GLOBALS['g_campsiteDir'])) {
 
 // set
 set_document_root();
+
+session_destroy();
+
 
 /**
  * Set document root
