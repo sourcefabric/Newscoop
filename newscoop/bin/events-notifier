@@ -97,6 +97,8 @@ if ($last_tstamp != 0) {
     mysql_query($sql_query);
 }
 
+session_destroy();
+
 
 /**
  * Reads reply address

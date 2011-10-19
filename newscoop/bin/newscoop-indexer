@@ -104,3 +104,4 @@ if (!$g_silent) {
     );
 }
 
+session_destroy();
