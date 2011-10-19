@@ -46,7 +46,7 @@ $(function() {
 
     $('.resource input:checkbox').not('.toggle').change(function() {
         var input = $(this);
-        var type = input.attr('checked') != undefined ? 'allow' : 'deny';
+        var type = $('input:checked', input.closest('li')).size() ? 'allow' : 'deny';
         var resource = input.attr('name');
         var action = input.val();
         var context = input.closest('ul');
@@ -72,12 +72,13 @@ $(function() {
                 flashMessage(<?php echo json_encode(getGS('Permissions updated')); ?>);
             } else {
                 flashMessage(<?php echo json_encode(getGS('Error: ')); ?> + data.message, 'error');
-                input.attr('checked', type != 'allow').closest('li').removeClass('deny');
+                input.closest('li').removeClass('deny');
             }
         }, 'json');
 
         // update check all checkbox on item change
         $('input:checkbox.toggle', context).attr('checked', $('input:checkbox', context).not('.toggle').size() == $('input:checkbox:checked', context).not('.toggle').size());
+        return false;
     });
 });
 </script>

@@ -168,17 +168,22 @@ final class CampContext
      */
     private $m_list_count = array();
 
-
     private static $m_nullMetaArticle = null;
 
     private static $m_nullMetaSection = null;
+
+    /** @var Application_Form_Contact */
+    public $form_contact;
+
+    /** @var array */
+    public $flash_messages = array();
 
     /**
      * Class constructor
      */
     final public function __construct()
     {
-        global $Campsite;
+        global $Campsite, $controller;
 
         if (!is_null($this->m_properties)) {
             return;
@@ -308,6 +313,27 @@ final class CampContext
         $this->m_properties['map_dynamic_id_counter'] = 0;
         $this->m_properties['map_common_header_set'] = false;
 
+        if (defined('APPLICATION_PATH')) {
+            $options = $controller->getInvokeArg('bootstrap')->getOptions();
+            $form = new \Application_Form_Contact();
+            $form->setMethod('POST');
+            $request = \Zend_Controller_Front::getInstance()->getRequest();
+            if ($request->isPost() && $form->isValid($request->getPost())) {
+                $email = new \Zend_Mail('utf-8');
+                $email->setFrom($form->email->getValue(), $form->first_name->getValue() . ' ' . $form->last_name->getValue())
+                    ->setSubject($form->subject->getValue())
+                    ->setBodyText($form->message->getValue())
+                    ->addTo($options['email']['from'])
+                    ->send();
+
+                $controller->getHelper('flashMessenger')->addMessage("form_contact_done");
+                $controller->getHelper('redirector')->gotoUrl($request->getPathInfo());
+                exit;
+            }
+
+            $this->form_contact = $form;
+            $this->flash_messages = $controller->getHelper('flashMessenger')->getMessages();
+        }
     } // fn __construct
 
 

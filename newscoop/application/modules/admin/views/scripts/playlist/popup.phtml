@@ -10,7 +10,8 @@ $t = array
     'list-saved' => getGS('Playlist saved'),
 	'list-save-failed' => getGS('Could not save playlist'),
     'delete' => getGS('Delete'),
-    'cancel' => getGS('Cancel')
+    'cancel' => getGS('Cancel'),
+    'duplicate-entry' => getGS('Duplicate article entry found')
 );
 $dataUrl = $this->url( array
 (
@@ -157,10 +158,20 @@ function popup_close()
 function popup_save()
 {
 	var articles = [];
+	var cancelSave = false;
 	$('#context-list-form').find('input[type=hidden]').each(function()
 	{
-		articles.push($(this).val());
+		var artId = $(this).val();
+		if( $.inArray(artId, articles) != -1 ) {
+			flashMessage('{$t['duplicate-entry']}', 'error', false);
+			cancelSave = true;
+			return false;
+		}
+		articles.push(artId);
 	});
+
+	if( cancelSave ) return false;
+
     var aoData =
     {
         'articles': articles,
@@ -174,7 +185,7 @@ function fnSaveCallback(data)
 {
 	if (typeof data['error'] != 'undefined' && data['error'])
 	{
-		var flash = flashMessage('{$t['list-save-failed']}', null, false);
+		var flash = flashMessage('{$t['list-save-failed']}', 'error', false);
 		return false;
 	}
 	var pl = $(parent.document.body).find('#playlists option[value='+data.playlistId+']');
@@ -265,6 +276,7 @@ $this->headScript()->appendScript( $js, "text/javascript" );
                 $contextlist->setSearch(TRUE);
                 $contextlist->setOrder(TRUE);
                 $contextlist->setLanguage($this->languageId);
+                $contextlist->setFilter('type', 'news');
                 $contextlist->renderFilters();
                 $contextlist->render();
                 ?>

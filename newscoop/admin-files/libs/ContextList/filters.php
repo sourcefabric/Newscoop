@@ -24,7 +24,7 @@ $issues = Issue::GetIssues($this->publication, NULL);
 $issuesNo = is_array($issues) ? sizeof($issues) : 0;
 $menuIssueTitle = $issuesNo > 0 ? getGS('All Issues') : getGS('No issues found');
 
-
+$articleTypes = ArticleType::GetArticleTypes(true);
 
 // get sections
 $sections = array();
@@ -46,6 +46,11 @@ foreach (Topic::GetTree() as $topic) {
 }
 
 ?>
+<script type="text/javascript">
+//for use in table for default filters
+contextListFilters = {}
+</script>
+
 <div class="filters">
 
   <dl class="zend_form">
@@ -80,6 +85,28 @@ foreach (Topic::GetTree() as $topic) {
 		<?php }
 } ?>
 </select>
+
+<?php foreach ($this->filters as $filterName => $filterValue) : ?>
+    <?php switch ($filterName) :
+        case 'type' :
+            require_once $GLOBALS['g_campsiteDir'] . '/classes/ArticleType.php';
+            ?>
+            <!-- Type filter -->
+            <select name="type" id="type_filter">
+            	<option value=""><?php echo getGS('Select type'); ?></option>
+            	<?php if (count($articleTypes)) foreach ($articleTypes as $atype) : ?>
+            		<option <?php if (strtolower($atype)==$filterValue) : ?>selected="selected"<?php endif ?>">
+            		    <?php echo $atype ?>
+            		</option>
+            	<?php endforeach; ?>
+            </select>
+            <script type="text/javascript">
+            	var typeVal = $('#type_filter').val();
+            	if (typeVal != '') contextListFilters.type = typeVal;
+            </script>
+            <?php break ?>
+	<?php endswitch ?>
+<?php endforeach ?>
 
 <div class="extra">
 
@@ -154,10 +181,14 @@ foreach (Topic::GetTree() as $topic) {
 </div>
 <!-- /.smartlist-filters -->
 
-		<?php if (!self::$renderFilters) { ?>
+<?php if (!self::$renderFilters) : ?>
 <script type="text/javascript">
 
-function handleArgs() {
+/**
+ *
+ */
+function handleArgs()
+{
 	if($('#filter_name').val() < 0) {
 		langId = 0;
 	} else {
@@ -193,8 +224,8 @@ function handleArgs() {
     return args;
 }
 
-function handleFilterIssues(args) {
-
+function handleFilterIssues(args)
+{
 	var args = eval('(' + args + ')');
 	$('#issue_filter >option').remove();
 	$('#issue_filter').append($("<option></option>").val('0').html(args.menuItemTitle));
@@ -206,8 +237,8 @@ function handleFilterIssues(args) {
 	}
 }
 
-function handleFilterSections(args) {
-
+function handleFilterSections(args)
+{
 	var args = eval('(' + args + ')');
 	$('#section_filter >option').remove();
 	$('#section_filter').append($("<option></option>").val('0').html(args.menuItemTitle));
@@ -219,130 +250,137 @@ function handleFilterSections(args) {
 	}
 }
 
-function refreshFilterIssues() {
+function refreshFilterIssues()
+{
 	var args = handleArgs();
 	callServer(['ArticleList', 'getFilterIssues'], args, handleFilterIssues);
 }
 
-function refreshFilterSections() {
+function refreshFilterSections()
+{
 	var args = handleArgs();
 	callServer(['ArticleList', 'getFilterSections'], args, handleFilterSections);
 }
 
-$(document).ready(function() {
-//handle language change first
-$('#filter_name').change(function() {
+$(document).ready(function()
+{
+    //handle language change first
+    $('#filter_name').change(function()
+	{
+    	refreshFilterIssues();
+    	refreshFilterSections();
+	})
 
-	refreshFilterIssues();
-	refreshFilterSections();
-})
+    $('#publication_filter').change(function()
+	{
+    	refreshFilterIssues();
+    	refreshFilterSections();
+    })
 
-$('#publication_filter').change(function() {
-	refreshFilterIssues();
-	refreshFilterSections();
-})
-
-$('#issue_filter').change(function() {
-	var smartlist = $(this).closest('.smartlist');
-	var smartlistId = smartlist.attr('id').split('-')[1];
-	filters[smartlistId]['section'] = 0;
-	refreshFilterSections();
-})
-
-
-
-// filters handle
-$('.smartlist .filters select, .smartlist .filters input').change(function() {
-    var smartlist = $(this).closest('.smartlist');
-    var smartlistId = smartlist.attr('id').split('-')[1];
-    var name = $(this).attr('name');
-    var value = $(this).val();
-    filters[smartlistId][name] = value;
-    if($(this).attr('id') == 'filter_name' || $(this).attr('id') == 'publication_filter' ) {
-		filters[smartlistId]['issue'] = 0;
-		filters[smartlistId]['section'] = 0;
-	}
-    tables[smartlistId].fnDraw(true);
-    return false;
-});
+    $('#issue_filter').change(function()
+	{
+    	var smartlist = $(this).closest('.smartlist');
+    	var smartlistId = smartlist.attr('id').split('-')[1];
+    	filters[smartlistId]['section'] = 0;
+    	refreshFilterSections();
+    })
 
 
-// datepicker for dates
-$('input.date').datepicker({
-    dateFormat: 'yy-mm-dd',
-    maxDate: '+0d',
-});
 
-// filters managment
-$('fieldset.filters .extra').each(function() {
-    var extra = $(this);
-    $('dl', extra).hide();
-    $('<select class="filters"></select>')
-        .appendTo(extra)
-        .each(function() { // init options
-            var select = $(this);
-            $('<option value=""><?php putGS('Filter by...'); ?></option>')
-                .appendTo(select);
-            $('dl dt label', extra).each(function() {
-                var label = $(this).text();
-                $('<option value="'+label+'">'+label+'</option>')
+    // filters handle
+    $('.smartlist .filters select, .smartlist .filters input').change(function()
+	{
+        var smartlist = $(this).closest('.smartlist');
+        var smartlistId = smartlist.attr('id').split('-')[1];
+        var name = $(this).attr('name');
+        var value = $(this).val();
+        filters[smartlistId][name] = value;
+        if($(this).attr('id') == 'filter_name' || $(this).attr('id') == 'publication_filter' ) {
+    		filters[smartlistId]['issue'] = 0;
+    		filters[smartlistId]['section'] = 0;
+    	}
+        tables[smartlistId].fnDraw(true);
+        return false;
+    });
+
+
+    // datepicker for dates
+    $('input.date').datepicker({
+        dateFormat: 'yy-mm-dd',
+        maxDate: '+0d',
+    });
+
+    // filters managment
+    $('fieldset.filters .extra').each(function()
+	{
+        var extra = $(this);
+        $('dl', extra).hide();
+        $('<select class="filters"></select>')
+            .appendTo(extra)
+            .each(function() { // init options
+                var select = $(this);
+                $('<option value=""><?php putGS('Filter by...'); ?></option>')
                     .appendTo(select);
-            });
-        }).change(function() {
-            var select = $(this);
-            var value = $(this).val();
-            $(this).val('');
-            $('dl', $(this).parent()).each(function() {
-                var label = $('label', $(this)).text();
-                var option = $('option[value="' + label + '"]', select);
-                if (label == value) {
-                    $(this).show();
-                    $(this).insertBefore($('select.filters', $(this).parent()));
-                    if ($('a', $(this)).length == 0) {
-                        $('<a class="detach">X</a>').appendTo($('dd', $(this)))
-                            .click(function() {
-                                $(this).parent('dd').parent('dl').hide();
-                                $('input, select', $(this).parent()).val('').change();
-                                select.change();
-                                option.show();
-                            });
+                $('dl dt label', extra).each(function() {
+                    var label = $(this).text();
+                    $('<option value="'+label+'">'+label+'</option>')
+                        .appendTo(select);
+                });
+            }).change(function() {
+                var select = $(this);
+                var value = $(this).val();
+                $(this).val('');
+                $('dl', $(this).parent()).each(function() {
+                    var label = $('label', $(this)).text();
+                    var option = $('option[value="' + label + '"]', select);
+                    if (label == value) {
+                        $(this).show();
+                        $(this).insertBefore($('select.filters', $(this).parent()));
+                        if ($('a', $(this)).length == 0) {
+                            $('<a class="detach">X</a>').appendTo($('dd', $(this)))
+                                .click(function() {
+                                    $(this).parent('dd').parent('dl').hide();
+                                    $('input, select', $(this).parent()).val('').change();
+                                    select.change();
+                                    option.show();
+                                });
+                        }
+                        option.hide();
                     }
-                    option.hide();
-                }
+                });
+        }); // change
+    });
+
+    $('fieldset.toggle.filters dl:first').each(function()
+	{
+        var fieldset = $(this);
+        var smartlist = fieldset.closest('.smartlist');
+        var smartlistId = smartlist.attr('id').split('-')[1];
+
+        // reset all button
+        var resetMsg = '<?php putGS('Reset all filters'); ?>';
+
+        $('<a href="#" class="reset" title="'+resetMsg+'">'+resetMsg+'</a>')
+            .appendTo(fieldset)
+            .click(function() {
+                // reset extra filters
+                $('.extra dl', fieldset).each(function() {
+                    $(this).hide();
+                    $('select, input', $(this)).val('');
+                });
+                $('select.filters', fieldset).val('');
+                $('select.filters option', fieldset).show();
+
+                // reset main filters
+                $('> select', fieldset).val('0').change();
+
+                // redraw table
+                filters[smartlistId] = {};
+                tables[smartlistId].fnDraw(true);
+                return false;
             });
-    }); // change
-});
-
-$('fieldset.toggle.filters dl:first').each(function() {
-    var fieldset = $(this);
-    var smartlist = fieldset.closest('.smartlist');
-    var smartlistId = smartlist.attr('id').split('-')[1];
-
-    // reset all button
-    var resetMsg = '<?php putGS('Reset all filters'); ?>';
-
-    $('<a href="#" class="reset" title="'+resetMsg+'">'+resetMsg+'</a>')
-        .appendTo(fieldset)
-        .click(function() {
-            // reset extra filters
-            $('.extra dl', fieldset).each(function() {
-                $(this).hide();
-                $('select, input', $(this)).val('');
-            });
-            $('select.filters', fieldset).val('');
-            $('select.filters option', fieldset).show();
-
-            // reset main filters
-            $('> select', fieldset).val('0').change();
-
-            // redraw table
-            filters[smartlistId] = {};
-            tables[smartlistId].fnDraw(true);
-            return false;
-        });
-});
+    });
 
 }); // document.ready
-
 </script>
-		<?php } ?>
+<?php endif ?>
