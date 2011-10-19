@@ -323,7 +323,7 @@ final class CampContext
                 $email->setFrom($form->email->getValue(), $form->first_name->getValue() . ' ' . $form->last_name->getValue())
                     ->setSubject($form->subject->getValue())
                     ->setBodyText($form->message->getValue())
-                    ->addTo($options['email']['from'])
+                    ->addTo($options['email']['contact'])
                     ->send();
 
                 $controller->getHelper('flashMessenger')->addMessage("form_contact_done");

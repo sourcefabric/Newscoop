@@ -29,6 +29,7 @@ class Application_Form_Contact extends Zend_Form
 
         $this->addElement('select', 'subject', array(
             'label' => 'Subject',
+            'registerInArrayValidator' => FALSE,
         ));
 
         $this->addElement('textarea', 'message', array(
