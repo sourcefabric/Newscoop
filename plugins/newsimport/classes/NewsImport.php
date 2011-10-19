@@ -670,6 +670,7 @@ class NewsImport
 
                     $one_image_attributes = array();
                     $one_image_attributes['Photographer'] = $p_source['provider_name'];
+                    $one_image_attributes['Source'] = 'newsfeed';
                     if (!empty($one_image['label'])) {
                         $one_image_attributes['Description'] = $one_image['label'];
                     }
