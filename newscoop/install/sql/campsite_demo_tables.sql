@@ -381,7 +381,7 @@ CREATE TABLE `Images` (
   `UploadedByUser` int(11) DEFAULT NULL,
   `LastModified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `TimeCreated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `Source` enum('local','feedback') not null default 'local',
+  `Source` enum('local','feedback','newsfeed') not null default 'local',
   `Status` enum('unapproved','approved') not null default 'approved',
   PRIMARY KEY (`Id`),
   FULLTEXT KEY `Description` (`Description`),

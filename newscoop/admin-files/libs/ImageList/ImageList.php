@@ -17,7 +17,7 @@ class ImageList extends BaseList
 {
     /** @var array */
     protected $filters = array(
-        "Photographer <> 'sda'",
+        "Source <> 'newsfeed'",
     );
 
     /**

@@ -245,6 +245,7 @@ class PublisherService
             $attributes = array(
                 'Photographer' => 'sda',
                 'Description' => $caption,
+                'Source' => 'newsfeed',
             );
 
             try {
