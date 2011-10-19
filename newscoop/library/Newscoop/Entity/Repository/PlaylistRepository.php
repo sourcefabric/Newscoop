@@ -20,9 +20,9 @@ class PlaylistRepository extends EntityRepository
     /**
      * Returns articles for a given playlist, and optionally language
      * @param Newscoop\Entity\Playlist $playlist
-     * @param Newscoop\Entity\Language $lang
+     * @param Newscoop\Entity\Language $lang language of articles
      */
-    public function articles(Playlist $playlist, Language $lang = null, $fullArticle = false, $limit = null, $offset = null)
+    public function articles(Playlist $playlist, /*Language $lang = null,*/ $fullArticle = false, $limit = null, $offset = null)
     {
         $em = $this->getEntityManager();
         $query = $em->createQuery
@@ -30,7 +30,8 @@ class PlaylistRepository extends EntityRepository
         .  	" FROM Newscoop\Entity\PlaylistArticle pa
         	JOIN pa.article a
         	WHERE pa.idPlaylist = ?1"
-        .   (is_null($lang) ? "GROUP BY a.number" : "AND a.language = ?2")
+        //.   (is_null($lang) ? "GROUP BY a.number" : "AND a.language = ?2")
+        .   " GROUP BY a.number "
         .	" ORDER BY pa.id "
         );
 
@@ -42,9 +43,9 @@ class PlaylistRepository extends EntityRepository
         }
 
         $query->setParameter(1, $playlist->getId());
-        if (!is_null($lang)) {
+        /*if (!is_null($lang)) {
             $query->setParameter(2, $lang->getId());
-        }
+        }*/
         $rows = $query->getResult();
         return $rows;
     }

@@ -74,15 +74,15 @@ class Admin_PlaylistController extends Zend_Controller_Action
     public function listDataAction()
     {
         $playlist = new Playlist();
-        $lang = null;
-        if (isset($_SESSION['f_language_selected']))
-        {
-            $lang = new Language();
-            $lang->setId((int)$_SESSION['f_language_selected']);
-        }
+//        $lang = null;
+//        if (isset($_SESSION['f_language_selected']))
+//        {
+//            $lang = new Language();
+//            $lang->setId((int)$_SESSION['f_language_selected']);
+//        }
 
         $playlist->setId($this->_request->getParam('id'));
-        $this->view->items = $this->playlistRepository->articles($playlist, $lang);
+        $this->view->items = $this->playlistRepository->articles($playlist);
         $this->view->code = 200;
     }
 
