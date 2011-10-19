@@ -47,7 +47,7 @@ class PlaylistList extends ListObject
             return false;
         }
 
-	    $repo = $doctrine->getEntityManager()->getRepository('Newscoop\Entity\Playlist');
+        $repo = $doctrine->getEntityManager()->getRepository('Newscoop\Entity\Playlist');
         /* @var $repo \Newscoop\Entity\Repository\PlaylistRepository */
 
         // get playlist
@@ -60,18 +60,26 @@ class PlaylistList extends ListObject
         if (!($playlist instanceof \Newscoop\Entity\Playlist)) {
             return array();
         }
+        $length = null;
+        if (isset($p_parameters['length']) && trim($p_parameters['length'])!="") {
+            $length = $p_parameters['length'];
+        }
+	    $start = null;
+        if (isset($p_parameters['start']) && trim($p_parameters['start'])!="") {
+            $start = $p_parameters['start'];
+        }
 
         $langRepo = $doctrine->getEntityManager()->getRepository('Newscoop\Entity\Language');
         /* @var $langRepo \Newscoop\Entity\Repository\LanguageRepository */
         $lang = $langRepo->find($p_parameters['language']);
 
-        $articlesList = $repo->articles($playlist, $lang);
-
+        $articlesList = $repo->articles($playlist, $lang, false, $length, $start);
+//var_dump($articlesList);
         $metaArticlesList = array();
 	    foreach ($articlesList as $article) {
 	        $metaArticlesList[] = new MetaArticle($lang->getId(), $article['articleId']);
 	    }
-
+//var_dump($metaArticlesList);
 	    return $metaArticlesList;
 	}
 
@@ -110,7 +118,28 @@ class PlaylistList extends ListObject
 	 */
 	protected function ProcessParameters(array $p_parameters)
 	{
-		return $p_parameters;
+	    foreach ($p_parameters as $parameter=>$value)
+	    {
+	        switch (($parameter = strtolower($parameter)))
+	        {
+	            case 'start' :
+	            case 'length' :
+                    $intValue = (int)$value;
+    				if ("$intValue" != $value || $intValue < 0) {
+    				    CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_articles");
+                    }
+	    			$parameters[$parameter] = (int)$value;
+	                break;
+	            case 'language' :
+	            case 'name' :
+	                $parameters[$parameter] = (string)$value;
+	                break;
+	            case 'id' :
+	                $parameters[$parameter] = (int)$value;
+	                break;
+	        }
+	    }
+		return $parameters;
 	}
 }
 
