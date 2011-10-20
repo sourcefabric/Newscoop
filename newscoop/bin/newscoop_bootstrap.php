@@ -8,6 +8,8 @@
  * @link http://www.sourcefabric.org
  */
 
+register_shutdown_function('ns_cli_shutdown');
+
 // check if script is included
 if (!empty($GLOBALS['g_campsiteDir'])) {
     $CAMPSITE_DIR = $GLOBALS['g_campsiteDir'];
@@ -19,8 +21,6 @@ if (!empty($GLOBALS['g_campsiteDir'])) {
 
 // set
 set_document_root();
-
-session_destroy();
 
 
 /**
@@ -55,3 +55,10 @@ function set_document_root()
     }
 }
 
+function ns_cli_shutdown()
+{
+    $sessionId = session_id();
+    if (!empty($sessionId)) {
+        session_destroy();
+    }
+}

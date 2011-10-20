@@ -76,5 +76,3 @@ function is_valid_conf_dir($p_conf_dir)
 
 // runs the script
 clean_statistics(WWW_DIR . '/conf');
-
-session_destroy();

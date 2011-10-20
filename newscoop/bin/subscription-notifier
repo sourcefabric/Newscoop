@@ -205,8 +205,6 @@ if ($notified_index > 0) {
     print($notified_index . " user(s) notified\n");
 }
 
-session_destroy();
-
 
 /**
  * Reads reply address
