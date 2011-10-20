@@ -347,7 +347,6 @@ function camp_exit_with_error($p_errorStr)
         $p_errorStr = implode("\n", $p_errorStr);
     }
     echo "\nERROR!\n$p_errorStr\n";
-	session_destroy();
     exit(1);
 } // fn camp_exit_with_error
 
