@@ -51,6 +51,31 @@ class PlaylistRepository extends EntityRepository
     }
 
     /**
+     * Gets which playlist the article belongs to if any
+     * @param int $articleId
+     */
+    public function getArticlePlaylists($articleId)
+    {
+        $em = $this->getEntityManager();
+        $article = new Article();
+        $article->setId($articleId);
+        $query = $em->createQuery("SELECT pa FROM Newscoop\Entity\PlaylistArticle pa JOIN pa.playlist p WHERE pa.article = ?1");
+        $query->setParameter(1, $article);
+        try
+        {
+            $query->execute();
+        }
+        catch (\Exception $e)
+        {
+            echo $e->getMessage();
+            // TODO log here
+            return array();
+        }
+        $rows = $query->getResult();
+        return $rows;
+    }
+
+    /**
      * Save playlist with articles
      * @param Newscoop\Entity\Playlist $playlist $playlist
      * @param array $articles

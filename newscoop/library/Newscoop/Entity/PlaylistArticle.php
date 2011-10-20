@@ -29,6 +29,13 @@ class PlaylistArticle extends Entity
     protected $idPlaylist;
 
     /**
+     * @ManyToOne(targetEntity="Newscoop\Entity\Playlist")
+	 * @JoinColumn(name="id_playlist", referencedColumnName="id_playlist")
+     * @var Newscoop\Entity\Playlist
+     */
+    private $playlist;
+
+    /**
      * @ManyToOne(targetEntity="Newscoop\Entity\Article")
 	 * @JoinColumn(name="article_no", referencedColumnName="Number")
      * @var Newscoop\Entity\Article
@@ -39,6 +46,15 @@ class PlaylistArticle extends Entity
     {
         $this->idPlaylist = $idPlaylist;
         return $this;
+    }
+
+    /**
+     * get playlist
+     * @return Newscoop\Entity\Playlist
+     */
+    public function getPlaylist()
+    {
+        return $this->playlist;
     }
 
     public function setArticle(Article $article)
