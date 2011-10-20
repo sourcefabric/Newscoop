@@ -8,6 +8,8 @@
  * @link http://www.sourcefabric.org
  */
 
+register_shutdown_function('ns_cli_shutdown');
+
 if (!defined('APPLICATION_PATH')) {
     // Define path to application directory
     defined('APPLICATION_PATH')
@@ -56,8 +58,6 @@ if (!empty($GLOBALS['g_campsiteDir'])) {
 // set
 set_document_root();
 
-session_destroy();
-
 
 /**
  * Set document root
@@ -88,6 +88,14 @@ function set_document_root()
     $GLOBALS['g_campsiteDir'] = $CAMPSITE_DIR = realpath($document_root);
     if (!defined('WWW_DIR')) {
         define('WWW_DIR', $GLOBALS['g_campsiteDir']);
+    }
+}
+
+function ns_cli_shutdown()
+{
+    $sessionId = session_id();
+    if (!empty($sessionId)) {
+        session_destroy();
     }
 }
 
