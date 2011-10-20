@@ -8,6 +8,7 @@ $ETC_DIR = $CAMPSITE_DIR . '/conf';
 require_once("$CAMPSITE_DIR/bin/cli_script_lib.php");
 
 if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
+	session_destroy();
 	exit;
 }
 
@@ -18,6 +19,7 @@ if (!is_file("$ETC_DIR/database_conf.php")) {
 	echo "\n";
 	echo "Database configuration file is missed!\n";
 	echo "\n";
+	session_destroy();
 	exit;
 }
 
@@ -30,6 +32,7 @@ define('NOTIFIER_TEMPLATE', '_events_notifier.tpl');
 // connects to database server
 if (db_server_connect() == false) {
     msg_error('Connecting to DB server');
+	session_destroy();
     exit;
 }
 
@@ -51,6 +54,7 @@ $sql_query = "SELECT u.Name AS UserRealName, u.EMail AS UserEMail, "
     . "ORDER BY l.time_created ASC";
 if (!$result = mysql_query($sql_query)) {
     msg_error('Reading log timestamp');
+	session_destroy();
     exit;
 }
 
@@ -97,6 +101,8 @@ if ($last_tstamp != 0) {
     mysql_query($sql_query);
 }
 
+session_destroy();
+
 
 /**
  * Reads reply address
@@ -108,11 +114,13 @@ function get_reply_address()
     $sql_query = "SELECT EMail FROM liveuser_users WHERE UName = 'admin'";
     if (!$result = mysql_query($sql_query)) {
         msg_error('Getting reply address');
+		session_destroy();
         exit;
     }
 
     if (mysql_num_rows($result) <= 0) {
         msg_error('There is no reply address');
+		session_destroy();
         exit;
     }
 
@@ -131,11 +139,13 @@ function get_event_timestamp()
     $sql_query = 'SELECT LogTStamp FROM AutoId';
     if (!$result = mysql_query($sql_query)) {
         msg_error('Getting logtstamp');
+		session_destroy();
         exit;
     }
 
     if (mysql_num_rows($result) <= 0) {
         msg_error('There is no logtstamp');
+		session_destroy();
         exit;
     }
 
@@ -157,6 +167,7 @@ function get_users_to_notify()
         . "WHERE g.group_id = l.group_id AND r.right_id = l.right_id AND r.right_define_name = 'MailNotify'";
     if (!$result = mysql_query($sql_query)) {
         msg_error('Getting groups');
+		session_destroy();
         exit;
     }
 
@@ -177,6 +188,7 @@ function get_users_to_notify()
         . 'AND u.Id = p.auth_user_id AND g.group_id IN (' . $groups_str . ')';
     if (!$result = mysql_query($sql_query)) {
         msg_error('Getting recipients');
+		session_destroy();
         exit;
     }
 
@@ -194,6 +206,7 @@ function get_users_to_notify()
         . "AND r.right_define_name = 'MailNotify'";
     if (!$result = mysql_query($sql_query)) {
         msg_error('Getting recipients');
+		session_destroy();
         exit;
     }
 

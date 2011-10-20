@@ -8,6 +8,7 @@ $ETC_DIR = $CAMPSITE_DIR . '/conf';
 require_once("cli_script_lib.php");
 
 if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
+	session_destroy();
 	exit(1);
 }
 
@@ -15,6 +16,7 @@ if (!is_file("$ETC_DIR/database_conf.php")) {
 	echo "\n";
 	echo "Database configuration file is missing!\n";
 	echo "\n";
+	session_destroy();
 	exit(1);
 }
 
@@ -27,6 +29,7 @@ define('NOTIFIER_TEMPLATE', '_subscription_notifier.tpl');
 // connects to database server
 if (db_server_connect() == false) {
     msg_error('Connecting to DB server');
+	session_destroy();
     exit;
 }
 
@@ -49,6 +52,7 @@ $sql_query = "SELECT p.Name AS PubName, p.IdDefaultLanguage AS PubDefLang, "
 . "AND p.IdDefaultAlias = a.Id AND s.ToPay = \"0.00\"";
 if (!$result = mysql_query($sql_query)) {
     msg_error('Reading ending subscriptions');
+	session_destroy();
     exit;
 }
 
@@ -205,6 +209,8 @@ if ($notified_index > 0) {
     print($notified_index . " user(s) notified\n");
 }
 
+session_destroy();
+
 
 /**
  * Reads reply address
@@ -216,11 +222,13 @@ function get_reply_address()
     $sql_query = "SELECT EMail FROM liveuser_users WHERE UName = 'admin'";
     if (!$result = mysql_query($sql_query)) {
         msg_error('Getting reply address');
+		session_destroy();
         exit;
     }
 
     if (mysql_num_rows($result) <= 0) {
         msg_error('There is no reply address');
+		session_destroy();
         exit;
     }
 
