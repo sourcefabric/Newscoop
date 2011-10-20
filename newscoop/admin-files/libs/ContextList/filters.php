@@ -250,21 +250,39 @@ function handleFilterSections(args)
 	}
 }
 
-function refreshFilterIssues()
+function resetFilterIssues() 
 {
-	var args = handleArgs();
-	callServer(['ArticleList', 'getFilterIssues'], args, handleFilterIssues);
+	$('#issue_filter >option').remove();
+}
+
+function resetFilterSections() 
+{
+	$('#section_filter >option').remove();
+}
+
+function refreshFilterIssues()
+{	
+	if($('#publication_filter').val() <= 0) {
+		resetFilterIssues();
+	} else {
+		var args = handleArgs();
+		callServer(['ArticleList', 'getFilterIssues'], args, handleFilterIssues);
+	}
 }
 
 function refreshFilterSections()
 {
-	var args = handleArgs();
-	callServer(['ArticleList', 'getFilterSections'], args, handleFilterSections);
+	if($('#publication_filter').val() <= 0) {
+		resetFilterSections();
+	} else {
+		var args = handleArgs();
+		callServer(['ArticleList', 'getFilterSections'], args, handleFilterSections);
+	}
 }
 
 $(document).ready(function()
 {
-    // handle language change first
+    //handle language change first
     $('#filter_name').change(function()
 	{
     	refreshFilterIssues();
@@ -295,7 +313,7 @@ $(document).ready(function()
         var name = $(this).attr('name');
         var value = $(this).val();
         filters[smartlistId][name] = value;
-        if ($(this).attr('id') == 'filter_name' || $(this).attr('id') == 'publication_filter' ) {
+        if($(this).attr('id') == 'filter_name' || $(this).attr('id') == 'publication_filter' ) {
     		filters[smartlistId]['issue'] = 0;
     		filters[smartlistId]['section'] = 0;
     	}
