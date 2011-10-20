@@ -11,7 +11,6 @@
 $f_language_selected = (int) camp_session_get('f_language_selected', 0);
 
 
-
 require_once $GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/articles/article_common.php";
 camp_load_translation_strings("library");
 
@@ -314,6 +313,12 @@ case 'context_box_update':
 
 case 'context_box_preview_article':
     $return = array();
+
+    foreach ($_REQUEST['args'] as $arg) {
+        if ( is_array($arg) && isset($arg['langId'])) {
+            $f_language_selected = $arg['langId'];
+        }
+    }
 
     $articleId = $f_params['articleId'];
     if(!is_numeric($articleId)) {

@@ -94,7 +94,7 @@ function clearActiveArticles() {
 	});
 }
 
-function viewArticle(param) {
+function viewArticle(param, lang) {
 	 clearActiveArticles();
 	 $("#"+param).addClass('item-active');
 	 var relatedArticles = $('#context_list').sortable( "serialize");
@@ -103,9 +103,8 @@ function viewArticle(param) {
 
      aoData.push("context_box_preview_article");
      aoData.push(items);
-     aoData.push({
-         'articleId': param,
-     });
+     aoData.push({'articleId' : param});
+     aoData.push({'langId' : lang});
     $("#preview-article-id").val(param);
     callServer(['ArticleList', 'doAction'], aoData, fnPreviewArticle);
 }

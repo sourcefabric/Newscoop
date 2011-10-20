@@ -157,7 +157,8 @@ $(document).ready(function()
             for (var i in filters['<?php echo $this->id; ?>'])
 			{
     			addedFilters.push(i);
-                aoData.push({
+                aoData.push
+                ({
                     'name': i,
                     'value': filters['<?php echo $this->id; ?>'][i],
                 });
@@ -166,11 +167,13 @@ $(document).ready(function()
             <?php foreach (array('publication', 'issue', 'section', 'language') as $filter) : ?>
     		    <?php if ($filter == 'language' && !$this->order) continue; /*ignore language on non-section pages, TODO what does this mean?*/ ?>
     		    <?php if (!empty($this->$filter)) : ?>
-                	if ($.inArray('<?php echo $filter ?>', addedFilters) == -1) aoData.push
-                    ({
-                        'name': '<?php echo $filter; ?>',
-                        'value': '<?php echo $this->$filter; ?>',
-                    });
+                	if ($.inArray('<?php echo $filter ?>', addedFilters) == -1
+                    	&& $.trim(filters['<?php echo $this->id; ?>']['<?php echo $filter ?>']) == '')
+                    	aoData.push
+                        ({
+                            'name': '<?php echo $filter; ?>',
+                            'value': '<?php echo $this->$filter; ?>',
+                        });
                 <?php endif ?>
             <?php endforeach ?>
 

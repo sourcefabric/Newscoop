@@ -23,7 +23,6 @@ $notAffectedArticles = 0;;
 $message = '';
 $errorMessage = '';
 
-
 $articleCodes = array();
 $flatArticleCodes = array();
 $groupedArticleCodes = array();
