@@ -1,23 +1,11 @@
 <?php
-/**
- * Parsing the 'eventexport.xml' file
- */
+
+require_once(dirname(__FILE__).DIRECTORY_SEPARATOR.'FileLoad.php');
 
 /**
  * EventData Importer class for managing parsing of EventData files.
  */
 class EventData_Parser {
-
-    /**
-     * To omit a possible double run if it would happened.
-     * @var string
-     */
-    var $m_working = '_lock';
-    /**
-     * To omit a possible double run if it would happened.
-     * @var mixed
-     */
-    var $m_lockfile = null;
 
     /**
      * Mode of (possibly) created directories.
@@ -30,11 +18,13 @@ class EventData_Parser {
      * @var array
      */
     var $m_source = null;
+
     /**
      * Who provides this.
      * @var integer
      */
     var $m_provider = null;
+
     /**
      * Where to take this.
      * @var array
@@ -51,7 +41,10 @@ class EventData_Parser {
      * Suffix parts for json data files
      * @var array
      */
-    var $m_saved_parts = array('dif' => 'dif', 'all' => 'set');
+    var $m_saved_parts = array('dif' => 'gen_dif', 'all' => 'gen_set');
+
+    //var $m_regionInfo = array();
+    //var $m_regionTopics = array();
 
 	/**
 	 * constructor
@@ -67,23 +60,24 @@ class EventData_Parser {
     } // fn __construct
 
 	/**
-	 * checks whether we can start a job
+	 * prepares files for the parsing
+     *
+     * @param array $p_categories
+     * @param array $p_limits
+     * @param array $p_cancels
 	 *
 	 * @return bool
 	 */
-    public function start() {
-        // stop, if some worker running; return false
-        $working_path = $this->m_dirs['use'] . $this->m_working;
-        //if (file_exists($working_path)) {
-        //    return false;
-        //}
-        $this->m_lockfile = fopen($working_path, 'a');
-        $locked = flock($this->m_lockfile, LOCK_EX);
-        if (!$locked) {
+    public function prepare($p_categories, $p_limits, $p_cancels, $p_env, $p_regionObj, $p_regionTopics) {
+        //$this->m_regionInfo = $p_regionObj;
+        //$this->m_regionTopics = $p_regionTopics;
+
+        // we need that conf info
+        if ((!isset($this->m_dirs['source'])) || (!isset($this->m_dirs['source']['events']))) {
             return false;
         }
 
-        foreach (array($this->m_dirs['use'], $this->m_dirs['new']) as $one_dir) {
+        foreach (array($this->m_dirs['use'], $this->m_dirs['new'], $this->m_dirs['old']) as $one_dir) {
             if (!is_dir($one_dir)) {
                 try {
                     $created = mkdir($one_dir, $this->m_dirmode, true);
@@ -97,169 +91,115 @@ class EventData_Parser {
             }
         }
 
-        try {
-            $working_file = fopen($working_path, 'w');
-            fwrite($working_file, date('Y-m-d') . "\n");
-            fclose($working_file);
-        }
-        catch (Exception $exc) {
-            return false;
-        }
+        $cur_time = date('YmdHis');
 
-        return true;
-    } // fn start
+        $to_copy_files_events = array();
+        $events_infos_files = array();
 
-	/**
-	 * closes a job
-	 *
-	 * @return bool
-	 */
-    public function stop() {
-        // stop, if some worker running; return false
-        $working_path = $this->m_dirs['use'] . $this->m_working;
-        if (!file_exists($working_path)) {
-            return false;
-        }
-        if (!$this->m_lockfile) {
-            return false;
-        }
-
-        try {
-            //unlink($working_path);
-            flock($this->m_lockfile, LOCK_UN);
-            fclose($this->m_lockfile);
-        }
-        catch (Exception $exc) {
-            return false;
-        }
-
-        return true;
-    } // fn stop
-
-	/**
-	 * prepares files for the parsing
-	 *
-	 * @return bool
-	 */
-    public function prepare($p_categories, $p_limits, $p_cancels) {
-        // we need that conf info
-        if ((!isset($this->m_dirs['source'])) || (!isset($this->m_dirs['source']['events']))) {
-            return false;
-        }
-
-        $to_copy_files = true;
-
-        $some_files_to_process = true;
-
-        if ((isset($this->m_dirs['ready'])) && (isset($this->m_dirs['ready']['events']))) {
-            $ready_file = $this->m_dirs['new'] . $this->m_dirs['ready']['events'];
-            // if no new files (still may be some not fully processed at the interim dir)
-            if (!file_exists($ready_file)) {
-                $to_copy_files = false;
-
-                $some_files_to_process = false;
-                foreach ($this->m_dirs['source']['events'] as $one_file_glob) {
-                    $one_path_glob = $this->m_dirs['use'] . '*' . $one_file_glob;
-                    $one_file_set = glob($one_path_glob);
-                    if (false === $one_file_set) {
-                        continue;
-                    }
-                    foreach ($one_file_set as $event_file_path) {
-                        if (!is_file($event_file_path)) {
-                            continue;
-                        }
-                        $some_files_to_process = true;
-                        break;
-                    }
-                }
-
-                // if neither new, no interim
-                if (!$some_files_to_process) {
-                    return false;
-                }
-
-                // some files to process are there
-                return true;
-            }
-        }
-        if ($to_copy_files) {
-            // copy files with time stamps
-            $cur_time = date('YmdHis');
+        $ready_file_events = $this->m_dirs['new'] . $this->m_dirs['ready']['events'];
+        if (file_exists($ready_file_events)) {
+            // copy_events_main;
             foreach ($this->m_dirs['source']['events'] as $one_file_glob) {
-                $one_path_glob = $ready_file = $this->m_dirs['new'] . $one_file_glob;
+                $one_path_glob = $this->m_dirs['new'] . $one_file_glob;
                 $one_file_set = glob($one_path_glob);
                 if (false === $one_file_set) {
                     continue;
                 }
-
-                foreach ($one_file_set as $event_file_path_new) {
-                    if (!is_file($event_file_path_new)) {
+                foreach ($one_file_set as $event_file_path) {
+                    if (!is_file($event_file_path)) {
                         continue;
                     }
-                    $event_file_name = basename($event_file_path_new);
-                    $event_file_path_use = $this->m_dirs['use'] . $cur_time . '-' . $event_file_name;
-                    try {
-                        rename($event_file_path_new, $event_file_path_use);
-                    }
-                    catch (Exception $exc) {
-                        continue;
+                    if (!array_key_exists($event_file_path, $to_copy_files_events)) {
+                        $to_copy_files_events[$event_file_path] = $this->m_dirs['use'] . $cur_time . '-' . basename($event_file_path);
                     }
                 }
             }
+            foreach ($to_copy_files_events as $one_file_src => $one_file_dest) {
+                try {
+                    rename($one_file_src, $one_file_dest);
+                    $events_infos_files[] = $one_file_dest;
+                }
+                catch (Exception $exc) {}
+            }
 
-            // remove the ready file
-            if ((isset($this->m_dirs['ready'])) && (isset($this->m_dirs['ready']['events']))) {
-                $ready_file = $this->m_dirs['new'] . $this->m_dirs['ready']['events'];
-                if (file_exists($ready_file)) {
-                    try {
-                        unlink($ready_file);
-                    }
-                    catch (Exception $exc) {
-                        // return false;
-                    }
+            try {
+                unlink($ready_file_events); // i.e. events_done.txt
+            }
+            catch (Exception $exc) {}
+
+            $events_last = $this->load(true);
+            $parser = new EventData_Parser_SimpleXML($events_last, $p_regionObj, $p_regionTopics);
+
+            $lim_span_past = null;
+            $lim_span_next = null;
+            if ((!empty($p_limits)) && (array_key_exists('dates', $p_limits))) {
+                $date_limits = $p_limits['dates'];
+                if (is_array($date_limits) && isset($date_limits['past'])) {
+                    $lim_span_past = 0 + $date_limits['past'];
+                }
+                if (is_array($date_limits) && isset($date_limits['next'])) {
+                    $lim_span_next = 0 + $date_limits['next'];
                 }
             }
-
-            $this->m_last_events = $this->load(true);
-
-            // to parse xml, restrict it, and convert to json
-            $event_load = $this->parse($p_categories, $p_limits, $p_cancels);
-            if (empty($event_load)) {
-                //$this->stop();
-                //continue;
-                return true;
+            $cat_limits = null;
+            if ((!empty($p_limits)) && (array_key_exists('categories', $p_limits))) {
+                $cat_limits = $p_limits['categories'];
             }
 
-            $event_all = $event_load['events_all'];
-            unset($event_load['events_all']);
-            $event_dif = $event_load['events_dif'];
-            unset($event_load['events_dif']);
+            $event_all = array();
+            $event_dif = array();
+            foreach ($events_infos_files as $event_file_path) {
+                $event_file_path_arr = explode('.', $event_file_path);
+                $event_file_path_arr_last_rank = count($event_file_path_arr) - 1;
+                if (0 < $event_file_path_arr_last_rank) {
+                    if ('gz' == strtolower($event_file_path_arr[$event_file_path_arr_last_rank])) {
+                        $event_file_path = 'compress.zlib://' . $event_file_path;
+                    }
+                }
 
-            $event_all_json = json_encode($event_all);
-            $event_all_json_path = 'compress.zlib://' . $this->m_dirs['use'] . $cur_time . '-' . $this->m_saved_parts['all'] . '.json.gz';
-
-            $event_dif_json = json_encode($event_dif);
-            $event_dif_json_path = 'compress.zlib://' . $this->m_dirs['use'] . $cur_time . '-' . $this->m_saved_parts['dif'] . '.json.gz';
-
-            try {
-                $event_all_json_file = fopen($event_all_json_path, 'w');
-                fwrite($event_all_json_file, $event_all_json);
-                fclose($event_all_json_file);
-            }
-            catch (Exception $exc) {
+                $result = $parser->parse($event_all, $event_dif, $this->m_provider, $event_file_path, $p_categories, $lim_span_past, $lim_span_next, $cat_limits, $p_cancels);
             }
 
-            try {
-                $event_dif_json_file = fopen($event_dif_json_path, 'w');
-                fwrite($event_dif_json_file, $event_dif_json);
-                fclose($event_dif_json_file);
-            }
-            catch (Exception $exc) {
+            if (!empty($event_all)) {
+
+                $event_all_json = json_encode($event_all);
+                $event_all_json_path = 'compress.zlib://' . $this->m_dirs['use'] . $cur_time . '-' . $this->m_saved_parts['all'] . '.json.gz';
+
+                $event_dif_json = json_encode($event_dif);
+                $event_dif_json_path = 'compress.zlib://' . $this->m_dirs['use'] . $cur_time . '-' . $this->m_saved_parts['dif'] . '.json.gz';
+
+                try {
+                    $event_all_json_file = fopen($event_all_json_path, 'w');
+                    fwrite($event_all_json_file, $event_all_json);
+                    fclose($event_all_json_file);
+                }
+                catch (Exception $exc) {
+                }
+
+                try {
+                    $event_dif_json_file = fopen($event_dif_json_path, 'w');
+                    fwrite($event_dif_json_file, $event_dif_json);
+                    fclose($event_dif_json_file);
+                }
+                catch (Exception $exc) {
+                }
+
             }
 
         }
 
-        return true;
+        $files_found = glob($this->m_dirs['use'] . '*-' . $this->m_saved_parts['dif'] . '.json.gz');
+
+        if (!empty($files_found)) {
+            foreach ($files_found as $one_file) {
+                if (is_file($one_file)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+
     } // fn prepare
 
 	/**
@@ -293,10 +233,6 @@ class EventData_Parser {
             if (!is_file($one_use_path)) {
                 continue;
             }
-            if (basename($one_use_path) == $this->m_working) {
-                continue;
-            }
-
             try {
                 rename($one_use_path, $one_old_path);
             }
@@ -317,7 +253,6 @@ class EventData_Parser {
      * @return array
      */
     public function load($p_old = false) {
-
         $dir_type = 'use';
         $set_type = $this->m_saved_parts['dif'];
         if ($p_old) {
@@ -347,9 +282,6 @@ class EventData_Parser {
                 $event_file_path = $search_dir . $event_file;
 
                 if (!is_file($event_file_path)) {
-                    continue;
-                }
-                if ($event_file == $this->m_working) {
                     continue;
                 }
 
@@ -403,115 +335,23 @@ class EventData_Parser {
 
             $one_json = null;
             try {
-                $one_json_string = file_get_contents($one_proc_file);
-                $one_json = json_decode($one_json_string, true);
-                foreach ($one_json as $event_id => $event_info) {
-                    if ($p_old) {
-                        $event_info = json_encode($event_info);
+                $one_json_string = @file_get_contents($one_proc_file);
+                if (false !== $one_json_string) {
+                    $one_json = json_decode($one_json_string, true);
+                    foreach ($one_json as $event_id => $event_info) {
+                        if ($p_old) {
+                            $event_info = json_encode($event_info);
+                        }
+                        $events[$event_id] = $event_info;
                     }
-                    $events[$event_id] = $event_info;
                 }
             }
             catch (Exception $exc) {
-                //;
             }
         }
         return $events;
     } // fn load
 
-    /**
-     * Parses EventData data (by EventData_Parser_SimpleXML)
-     *
-     * @param array $p_categories
-     * @param array $p_limits
-     * @param array $p_cancels
-     *
-     * @return array
-     */
-    private function parse($p_categories, $p_limits, $p_cancels) {
-        if (!is_array($p_categories)) {
-            $p_categories = array();
-        }
-
-        //$start_date = null;
-        //$end_date = null;
-        $lim_span_past = null;
-        $lim_span_next = null;
-        if ((!empty($p_limits)) && (array_key_exists('dates', $p_limits))) {
-            $date_limits = $p_limits['dates'];
-            if (is_array($date_limits) && isset($date_limits['past'])) {
-                $lim_span_past = 0 + $date_limits['past'];
-                //$start_date = date('Y-m-d', (time() - ($lim_span_past * 24 * 60 * 60)));
-            }
-            if (is_array($date_limits) && isset($date_limits['next'])) {
-                $lim_span_next = 0 + $date_limits['next'];
-                //$end_date = date('Y-m-d', (time() + ($lim_span_past * 24 * 60 * 60)));
-            }
-        }
-        //if (array_key_exists('start_date', $p_otherParams)) {
-        //    $start_date = $p_otherParams['start_date'];
-        //}
-        $cat_limits = null;
-        if ((!empty($p_limits)) && (array_key_exists('categories', $p_limits))) {
-            $cat_limits = $p_limits['categories'];
-        }
-
-        $parser = new EventData_Parser_SimpleXML($this->m_last_events);
-
-        $events_all = array();
-        $events_dif = array();
-        $files = array();
-
-        $dir_handle = null;
-        try {
-            $dir_handle = opendir($this->m_dirs['use']);
-        }
-        catch (Exception $exc) {
-            return false;
-        }
-
-        $proc_files = array();
-        if ($dir_handle) {
-            while (false !== ($event_file = readdir($dir_handle))) {
-                $event_file_path = $this->m_dirs['use'] . $event_file;
-
-                if (!is_file($event_file_path)) {
-                    continue;
-                }
-                if (basename($event_file_path) == $this->m_working) {
-                    continue;
-                }
-                $event_file_path_arr = explode('.', $event_file_path);
-                if ('json' == strtolower($event_file_path_arr[count($event_file_path_arr) - 1])) {
-                    continue;
-                }
-                $proc_files[] = $event_file_path;
-            }
-            closedir($dir_handle);
-        }
-
-        if (!empty($proc_files)) {
-            sort($proc_files);
-        }
-
-        foreach ($proc_files as $event_file_path) {
-            $event_file_path_arr = explode('.', $event_file_path);
-            $event_file_path_arr_last_rank = count($event_file_path_arr) - 1;
-            if (0 < $event_file_path_arr_last_rank) {
-                if ('gz' == strtolower($event_file_path_arr[$event_file_path_arr_last_rank])) {
-                    $event_file_path = 'compress.zlib://' . $event_file_path;
-                }
-            }
-            try {
-                $result = $parser->parse($events_all, $events_dif, $this->m_provider, $event_file_path, $p_categories, $lim_span_past, $lim_span_next, $cat_limits, $p_cancels);
-            }
-            catch (Exception $exc) {
-                //var_dump($exc);
-            }
-            $files[] = $event_file;
-        }
-        return array('files' => $files, 'events_dif' => $events_dif, 'events_all' => $events_all);
-    } // fn parse
 } // class EventData_Parser
 
 /**
@@ -525,56 +365,78 @@ class EventData_Parser_SimpleXML {
      */
     var $m_last_events = null;
 
+    var $m_region_info = array();
+    var $m_region_topics = array();
+
     /**
      * Takes auxiliary data (possibly) used at other work
      *
      * @param string $p_lastEvents
      * @return void
      */
-    public function __construct($p_lastEvents = null)
+    public function __construct($p_lastEvents = null, $p_regionInfo = null, $p_regionTopics = null)
     {
         $this->m_last_events = $p_lastEvents;
+
+        if (empty($p_regionObj)) {
+            $p_regionObj = array();
+        }
+        if (empty($p_regionTopics)) {
+            $p_regionTopics = array();
+        }
+        $this->m_region_info = $p_regionInfo;
+        $this->m_region_topics = $p_regionTopics;
+
     } // fn __construct
 
-/*
-    private function canUseTopic($p_event, $p_category, $p_catLimits)
-    {
-        $one_cat_skip = false;
-        $one_cat_key = $p_category['key'];
-        foreach ($p_catLimits as $cat_lim_key => $cat_lim_spec) {
-            if ($cat_lim_key != $one_cat_key) {
-                continue;
-            }
-            if (array_key_exists('towns', $cat_lim_spec)) {
-                if (!in_array($p_event['town'], $cat_lim_spec['towns'])) {
-                    $one_cat_skip = true;
-                    break;
-                }
+    /**
+     * Creates (html) link on given (partial) link and label
+     *
+     * @param string $p_target
+     * @param mixed $p_label
+     * @param bool $p_fullLink
+     *
+     * @return string
+     */
+    private function makeLink($p_target, $p_label = '', $p_fullLink = true) {
+        $link = '' . $p_target;
+        if ($p_fullLink) {
+            if ('http' != substr($link, 0, strlen('http'))) {
+                $link = 'http://' . $link;
             }
         }
+        if (!empty($p_label)) {
+            $link = '<a href="' . $link . '">' . $p_label . '</a>';
+        }
 
-        return (!$one_cat_skip);
-    }
-*/
+        return $link;
+    } // fn makeLink
 
     /**
      * Parses EventData data (by SimplXML)
      *
+     * @param array $p_events_all
+     * @param array $p_events_dif
+     * @param int $p_provider
      * @param string $p_file file name of the eventdata file
+     * @param array $p_categories
+     * @param mixed $p_daysPast
+     * @param mixed $p_daysNext
+     * @param mixed $p_catLimits
+     * @param mixed $p_cancels
+     * 
      * @return array
      */
-    function parse(&$p_events_all, &$p_events_dif, $p_provider, $p_file, $p_categories, $p_daysPast = null, $p_daysNext = null, $p_catLimits = null, $p_cancels = null) {
+    public function parse(&$p_events_all, &$p_events_dif, $p_provider, $p_file, $p_categories, $p_daysPast = null, $p_daysNext = null, $p_catLimits = null, $p_cancels = null) {
         if (empty($p_catLimits)) {
             $p_catLimits = array();
         }
-        //if (empty($p_cancels)) {
-        //    $p_cancels = array();
-        //    $p_cancels[] = array('field' => 'evett1', 'value' => 'Abgesagt');
-        //}
 
         libxml_clear_errors();
         $internal_errors = libxml_use_internal_errors(true);
-        $xml = simplexml_load_file($p_file);
+
+        //$xml = simplexml_load_file($p_file);
+        $xml = simplexml_load_string(FileLoad::LoadFix($p_file));
 
         // halt if loading produces an error
         if (!$xml) {
@@ -584,7 +446,6 @@ class EventData_Parser_SimpleXML {
             }
             libxml_clear_errors();
             return false;
-            //return array("correct" => false, "errormsg" => $error_msg);
         }
 
         $limit_date_start = null;
@@ -650,6 +511,12 @@ class EventData_Parser_SimpleXML {
                 }
                 $event_info['canceled'] = $e_canceled;
 
+                $e_important = false;
+                $x_evehig = trim('' . $event->evehig);
+                if ('1' == $x_evehig) {
+                    $e_important = true;
+                }
+
                 // Date, time - first here, for possible omiting passed events
 
                 // * main date-time info
@@ -695,6 +562,49 @@ class EventData_Parser_SimpleXML {
                 $x_locid = trim('' . $event_location->locid);
                 $event_info['location_id'] = $x_locid;
 
+                // !!! no country info
+                $event_info['country'] = 'ch';
+
+                // * main location info
+                // town name
+                $x_twnnam = trim('' . $event->twnnam);
+                $event_info['town'] = $x_twnnam;
+
+                // zip code
+                $x_loczip = trim('' . $event_location->loczip);
+                $event_info['zipcode'] = $x_loczip;
+
+                // region info
+                $e_region = '';
+                $e_subregion = '';
+/*
+                $e_region_info = RegionInfo::ZipRegion($event_info['zipcode'], $event_info['country']);
+                if (!empty($e_region_info)) {
+                    if (isset($e_region_info['region'])) {
+                        $e_region = $e_region_info['region'];
+                    }
+                    if (isset($e_region_info['subregion'])) {
+                        $e_subregion = $e_region_info['subregion'];
+                    }
+                }
+*/
+                $event_info['region'] = $e_region;
+                $event_info['subregion'] = $e_subregion;
+
+                $topics_regions = array();
+                $loc_regions = $this->m_region_info->ZipRegions($event_info['zipcode'], $event_info['country']);
+                foreach ($loc_regions as $region_name) {
+                    if (isset($this->m_region_topics[$region_name])) {
+                        $cur_reg_top = $this->m_region_topics[$region_name];
+                        $cur_reg_top['key'] = $region_name;
+                        $topics_regions[] = $cur_reg_top;
+                    }
+                }
+
+                // street address, free form, but usually 'street_name house_number'
+                $x_locadr = trim('' . $event_location->locadr);
+                $event_info['street'] = $x_locadr;
+
 
                 // Categories
 
@@ -705,11 +615,6 @@ class EventData_Parser_SimpleXML {
                 // location hot
                 $x_lochot = trim('' . $event_location->lochot);
                 $event_info['rated'] = ( ((!empty($x_lochot)) && ('0' != $x_lochot)) ? true : false );
-
-                // * main location info
-                // town name (used at topics limiting)
-                $x_twnnam = trim('' . $event->twnnam);
-                $event_info['town'] = $x_twnnam;
 
                 $event_topics = array();
                 // * main type fields
@@ -723,19 +628,33 @@ class EventData_Parser_SimpleXML {
 
                     $one_cat_skip = false;
                     $one_cat_key = $one_category['key'];
-                    foreach ($p_catLimits as $cat_lim_key => $cat_lim_spec) {
+                    foreach ($p_catLimits as $cat_lim_key => $cat_lim_spec) { // not taking some events
+                        if ($e_important) { // taking all the important events
+                            break;
+                        }
+
                         if ($cat_lim_key != $one_cat_key) {
                             continue;
                         }
-                        if (array_key_exists('towns', $cat_lim_spec)) {
-                            if (!in_array($event_info['town'], $cat_lim_spec['towns'])) {
-                                $one_cat_skip = true;
+                        if (array_key_exists('regions', $cat_lim_spec)) { // limiting by regions vs. categories
+                            $one_cat_skip = true;
+                            foreach ($topics_regions as $one_reg_top) {
+                                $one_lim_key = $one_reg_top['key']; // keys of the regions that the current location belongs to
+                                if (in_array($one_lim_key, $cat_lim_spec['regions'])) {
+                                    $one_cat_skip = false;
+                                    break;
+                                }
+                            }
+
+                            //if (!in_array($event_info['region'], $cat_lim_spec['regions'])) {
+                            if ($one_cat_skip) {
+                                //$one_cat_skip = true;
                                 break;
                             }
+
                         }
                     }
 
-                    //if (!canUseTopic($event_info, $one_category, $p_catLimits)) {
                     if ($one_cat_skip) {
                         continue;
                     }
@@ -769,6 +688,9 @@ class EventData_Parser_SimpleXML {
                     continue;
                 }
 
+                foreach ($topics_regions as $one_regtopic) {
+                    $event_topics[] = $one_regtopic;
+                }
                 $event_info['topics'] = $event_topics;
 
                 // Location
@@ -779,36 +701,6 @@ class EventData_Parser_SimpleXML {
                 $x_locnam = trim('' . $event_location->locnam);
                 $event_info['organizer'] = $x_locnam; // may be overwritten by tour_organizer
 
-                // !!! no country info
-                $event_info['country'] = 'ch';
-
-                // * main location info
-                // town name
-                //$x_twnnam = trim('' . $event->twnnam);
-                //$event_info['town'] = $x_twnnam;
-
-                // zip code
-                $x_loczip = trim('' . $event_location->loczip);
-                $event_info['zipcode'] = $x_loczip;
-
-                // region info
-                $e_region = '';
-                $e_subregion = '';
-                $e_region_info = RegionInfo::ZipRegion($event_info['zipcode'], $event_info['country']);
-                if (!empty($e_region_info)) {
-                    if (isset($e_region_info['region'])) {
-                        $e_region = $e_region_info['region'];
-                    }
-                    if (isset($e_region_info['subregion'])) {
-                        $e_subregion = $e_region_info['subregion'];
-                    }
-                }
-                $event_info['region'] = $e_region;
-                $event_info['subregion'] = $e_subregion;
-
-                // street address, free form, but usually 'street_name house_number'
-                $x_locadr = trim('' . $event_location->locadr);
-                $event_info['street'] = $x_locadr;
 
                 // * minor location info
                 // other location specification
@@ -822,7 +714,6 @@ class EventData_Parser_SimpleXML {
                 if (!empty($x_locacc)) {
                     $event_other[] = $x_locacc;
                 }
-
 
                 // Tour
 
@@ -965,7 +856,7 @@ class EventData_Parser_SimpleXML {
                 foreach ($event_texts as $one_text) {
                     $one_text_rank += 1;
                     if (0 == $one_text_rank) {
-                        $event_info['description'] = $one_text;
+                        $event_info['description'] = str_replace("\n", "\n<br />\n", $one_text);
                         continue;
                     }
                     $event_other[] = $one_text;
@@ -1054,52 +945,40 @@ class EventData_Parser_SimpleXML {
 
                 // location web url
                 $x_locurl = trim('' . $event_location->locurl);
-                $event_web = $x_locurl;
+                $event_web = $this->makeLink($x_locurl, null);
 
                 // tour web url
                 $x_trnurl = trim('' . $event->trnurl);
                 if (!empty($x_trnurl)) {
                     if (!empty($event_web)) {
-                        $event_other[] = $x_trnurl;
+                        $event_other[] = $this->makeLink($x_trnurl, $x_trnurl);
                     }
                     else {
-                        $event_web = $x_trnurl;
+                        $event_web = $this->makeLink($x_trnurl, null);
                     }
                 }
 
                 $event_other_links = array();
 
-                // location web links
-                $event_other_links[] = trim('' . $event_location->loclnk);
-
-                // tour web links
-                $event_other_links[] = trim('' . $event->trnlnk);
-
-                // event web links
-                $event_other_links[] = trim('' . $event->evelnk);
-
-                foreach ($event_other_links as $other_links) {
-                    if (!empty($other_links)) {
-                        if (!empty($event_web)) {
-                            $event_other[] = $other_links;
-                        }
-                        else {
-                            $other_links_arr_tmp = explode("\n", $other_links);
-                            $other_links_arr = array();
-                            foreach ($other_links_arr_tmp as $one_links) {
-                                $one_links = trim($one_links);
-                                if (!empty($one_links)) {
-                                    $other_links_arr_arr[] = $one_links;
-                                }
-                            }
-                            if (0 < count($other_links_arr_arr)) {
-                                $event_web = $other_links_arr_arr[0];
-                            }
-                            if (1 < count($other_links_arr_arr)) {
-                                $event_other[] = $other_links;
-                            }
+                // other web links: location web links, tour web links, event web links
+                foreach (array(trim('' . $event_location->loclnk), trim('' . $event->trnlnk), trim('' . $event->evelnk)) as $one_links_part) {
+                    foreach (explode("\n", $one_links_part) as $one_links) {
+                        $one_links = trim($one_links);
+                        if (!empty($one_links)) {
+                            $event_other_links[] = $one_links;
                         }
                     }
+                }
+
+                foreach ($event_other_links as $other_links) {
+                    if (empty($other_links)) {
+                        continue;
+                    }
+                    if (empty($event_web)) {
+                        $event_web = $this->makeLink($other_links, null);
+                        continue;
+                    }
+                    $event_other[] = $this->makeLink($other_links, $other_links);
                 }
 
                 $event_info['web'] = $event_web;
@@ -1124,7 +1003,7 @@ class EventData_Parser_SimpleXML {
                     $x_eveimg_arr = explode("\n", $x_eveimg);
                     foreach ($x_eveimg_arr as $one_image) {
                         $one_image = trim($one_image);
-                        if ('http' != substr($one_image, 0, 4)) {
+                        if ('http' != substr($one_image, 0, strlen('http'))) {
                             continue;
                         }
                         $one_image_desc_start = strpos($one_image, ' ');
@@ -1161,8 +1040,8 @@ class EventData_Parser_SimpleXML {
                 $event_info['other'] = $event_other;
 
                 // geo data
-                $x_loclat = trim('' . $event_location->loclat);
-                $x_loclng = trim('' . $event_location->loclng);
+                $x_loclat = html_entity_decode(trim('' . $event_location->loclat));
+                $x_loclng = html_entity_decode(trim('' . $event_location->loclng));
 
                 $event_info['geo'] = null;
                 if ((!empty($x_loclat)) && (!empty($x_loclng))) {
@@ -1184,7 +1063,6 @@ class EventData_Parser_SimpleXML {
 
         }
 
-        //return $p_events;
         return true;
     } // fn parse
 } // class EventData_Parser_SimpleXML

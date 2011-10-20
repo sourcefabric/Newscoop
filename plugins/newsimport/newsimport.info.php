@@ -72,7 +72,12 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 	 */
     function plugin_newsimport_make_dirs() {
         $incl_dir = dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR;
+        $class_dir = dirname(__FILE__).DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR;
         require($incl_dir . 'default_spool.php');
+        require_once($class_dir . 'NewsImportEnv.php');
+
+        $newsimport_default_cache = NewsImportEnv::AbsolutePath($newsimport_default_cache, false);
+        $newsimport_default_locks = NewsImportEnv::AbsolutePath($newsimport_default_locks, false);
 
         if (!is_dir($newsimport_default_cache)) {
             try {
@@ -249,11 +254,16 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 	 * @return void
 	 */
     function plugin_newsimport_create_event_type() {
-        $art_type_name = 'event';
+        $evt_type_name = 'event';
+        $scr_type_name = 'screening';
 
-        $art_type_obj = new ArticleType($art_type_name);
-        if (!$art_type_obj->exists()) {
-            $art_type_obj->create();
+        $evt_type_obj = new ArticleType($evt_type_name);
+        if (!$evt_type_obj->exists()) {
+            $evt_type_obj->create();
+        }
+        $scr_type_obj = new ArticleType($scr_type_name);
+        if (!$scr_type_obj->exists()) {
+            $scr_type_obj->create();
         }
 
         $art_fields = array(
@@ -262,7 +272,6 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             'event_id' => array('type' => 'text', 'params' => array(), 'hidden' => true, 'retype' => array('numeric' => 'text')), // an event at a day from a provider should have unique id; crafted for cinemas
             'tour_id' => array('type' => 'text', 'params' => array(), 'hidden' => true, 'retype' => array('numeric' => 'text')), // for grouping of repeated events, e.g. an exhibition available for more days
             'location_id' => array('type' => 'text', 'params' => array(), 'hidden' => true, 'retype' => array('numeric' => 'text')), // should be unique per place/provider
-            'movie_key' => array('type' => 'text', 'params' => array(), 'hidden' => true), // outer movie identifier, but can be empty
             // main event info - free form
             'headline' => array('type' => 'text', 'params' => array(), 'hidden' => false), // even/tour_name (or movie name)
             'organizer' => array('type' => 'text', 'params' => array(), 'hidden' => false), // either tour_organizer (if filled) or location_name (or cinema name)
@@ -272,16 +281,16 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             'town' => array('type' => 'text', 'params' => array(), 'hidden' => false),
             'street' => array('type' => 'text', 'params' => array(), 'hidden' => false), // street address, including house number
             // region info - created
-            'region' => array('type' => 'text', 'params' => array(), 'hidden' => false),
-            'subregion' => array('type' => 'text', 'params' => array(), 'hidden' => false),
+            //'region' => array('type' => 'text', 'params' => array(), 'hidden' => false),
+            //'subregion' => array('type' => 'text', 'params' => array(), 'hidden' => false),
             // date/time - fixed form
             'date' => array('type' => 'date', 'params' => array(), 'hidden' => false), // text, 2010-08-31
-            'date_year' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 2010
-            'date_month' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 8
-            'date_day' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 31
+            //'date_year' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 2010
+            //'date_month' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 8
+            //'date_day' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 31
             'time' => array('type' => 'text', 'params' => array(), 'hidden' => false), // event_time, like 10:30 (or a list for movie screenings at a day)
             // date/time - free form
-            'date_time_text' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 1), 'hidden' => false), // comprises other textual date/time information, if available
+            'date_time_text' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 0), 'hidden' => false), // comprises other textual date/time information, if available
             // contact - free form
             'web' => array('type' => 'text', 'params' => array(), 'hidden' => false), // location_url if filled, or event/tour_link if some there
             'email' => array('type' => 'text', 'params' => array(), 'hidden' => false),
@@ -303,22 +312,39 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             // geolocation as map POIs
         );
 
-        foreach ($art_fields as $one_field_name => $one_field_params) {
-            $art_type_filed_obj = new ArticleTypeField($art_type_name, $one_field_name);
-            if (!$art_type_filed_obj->exists()) {
-                $art_type_filed_obj->create($one_field_params['type'], $one_field_params['params']);
+        $scr_fields = array(
+            'movie_key' => array('type' => 'text', 'params' => array(), 'hidden' => true), // outer movie identifier, but can be empty
+            // date/time - json
+            // 'date_time_tree' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 0), 'hidden' => true), // puts several date, time, flags, into a single field
+        );
+
+        foreach (array($evt_type_name, $scr_type_name) as $art_type_name) {
+            $art_fields_use = $art_fields;
+            if ($scr_type_name == $art_type_name) {
+                foreach ($scr_fields as $one_field_name => $one_field_params) {
+                    $art_fields_use[$one_field_name] = $one_field_params;
+                }
             }
-            if (array_key_exists('hidden', $one_field_params) && $one_field_params['hidden']) {
-                $art_type_filed_obj->setStatus('hide');
-            }
-            if (isset($one_field_params['retype'])) {
-                foreach ($one_field_params['retype'] as $type_old => $type_new) {
-                    if ($type_old == $art_type_filed_obj->getType()) {
-                        $art_type_filed_obj->setType($type_new);
+
+            foreach ($art_fields_use as $one_field_name => $one_field_params) {
+                $art_type_filed_obj = new ArticleTypeField($art_type_name, $one_field_name);
+                if (!$art_type_filed_obj->exists()) {
+                    $art_type_filed_obj->create($one_field_params['type'], $one_field_params['params']);
+                }
+                if (array_key_exists('hidden', $one_field_params) && $one_field_params['hidden']) {
+                    $art_type_filed_obj->setStatus('hide');
+                }
+                if (isset($one_field_params['retype'])) {
+                    foreach ($one_field_params['retype'] as $type_old => $type_new) {
+                        if ($type_old == $art_type_filed_obj->getType()) {
+                            $art_type_filed_obj->setType($type_new);
+                        }
                     }
                 }
             }
         }
+
+
     } // fn plugin_newsimport_create_event_type
 
 	/**
@@ -430,23 +456,31 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         $incl_dir = dirname(__FILE__).DIRECTORY_SEPARATOR.'include'.DIRECTORY_SEPARATOR;
         require($incl_dir . 'default_topics.php');
 
-        // setting the root event topic
-        $ev_root_id = null;
+        foreach ($newsimport_default_cat_names as $one_set_name => $one_set_topics) {
 
-        $event_root_names = $newsimport_default_cat_names['event'];
-        $ev_root_ids = plugin_newsimport_set_one_topic('event', $event_root_names, null);
+            // for setting the root event topic
+            $ev_root_ids = null;
+            $event_root_names = null;
 
-        if (empty($ev_root_ids)) {
-            // this shall not happen: either already having a root topic, or created one
-            return false;
-        }
+            $first_topic = true;
+            foreach ($one_set_topics as $topic_cat_key => $topic_cat_names) {
 
-        // setting the particular (non-root) event topics
-        foreach ($newsimport_default_cat_names as $topic_cat_key => $topic_cat_names) {
-            if ('event' == $topic_cat_key) {
-                continue;
+                if ($first_topic) {
+                    $event_root_names = $topic_cat_names;
+                    $ev_root_ids = plugin_newsimport_set_one_topic($topic_cat_key, $event_root_names, null);
+                    $first_topic = false;
+                    continue;
+                }
+
+                if (empty($ev_root_ids)) {
+                    // this shall not happen: either already having a root topic, or created one
+                    return false;
+                }
+
+                // setting the particular (non-root) event topics
+                plugin_newsimport_set_one_topic($topic_cat_key, $topic_cat_names, $ev_root_ids);
+
             }
-            plugin_newsimport_set_one_topic($topic_cat_key, $topic_cat_names, $ev_root_ids);
 
         }
     } // fn plugin_newsimport_set_event_topics
@@ -492,7 +526,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 
         set_time_limit(0);
 
-        plugin_newsimport_copy_conf();
+        //plugin_newsimport_copy_conf();
         plugin_newsimport_set_preferences();
         plugin_newsimport_set_event_topics();
         plugin_newsimport_create_event_type();
@@ -507,7 +541,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         plugin_newsimport_set_cron(true);
         plugin_newsimport_set_url();
         plugin_newsimport_make_dirs();
-        plugin_newsimport_demo_data();
+        //plugin_newsimport_demo_data();
     } // fn plugin_newsimport_enable
 
 	/**
@@ -582,6 +616,10 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 	 */
     function plugin_newsimport_test()
     {
+        if (php_sapi_name() == 'cli') {
+            return;
+        }
+
         // is this a news import request?
         $news_import_active = SystemPref::Get('NewsImportUsage');
         if (!empty($news_import_active)) {
@@ -599,7 +637,5 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 
 }
 
-// NB: this is recognizing whether the request is on events import
-// this file is included during page loading, thus can be done this way
-// if it would change, we would need to put it into LegacyController
-plugin_newsimport_test();
+// NB: the whole import is done via cli now, thus not going here.
+//plugin_newsimport_test();

@@ -83,6 +83,8 @@ final class MetaArticle extends MetaDbObject {
     'url' =>'getUrl'
     );
 
+    /** @var Article */
+    private $bloginfo;
 
     public function __construct($p_languageId = null, $p_articleId = null)
     {
@@ -742,6 +744,24 @@ final class MetaArticle extends MetaDbObject {
         }
         return new MetaImage($articleImage->getImageId());
     }
-} // class MetaArticle
 
-?>
+    /**
+     * Get related bloginfo
+     *
+     * @return Article|null
+     */
+    public function get_bloginfo()
+    {
+        if (NULL === $this->bloginfo) {
+            $infos = \Article::GetArticles($this->m_dbObject->getPublicationId(), $this->m_dbObject->getIssueNumber(), $this->m_dbObject->getSectionNumber(), null, null, false, array(
+                "Type = 'bloginfo'",
+            ));
+
+            if (!empty($infos)) {
+                $this->bloginfo = new self($infos[0]->getLanguageId(), $infos[0]->getArticleNumber());
+            }
+        }
+
+        return $this->bloginfo;
+    }
+}

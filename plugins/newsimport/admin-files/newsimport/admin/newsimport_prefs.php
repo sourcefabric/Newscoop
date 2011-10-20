@@ -43,10 +43,12 @@ if (Input::Get('save')) {
         exit;
     }
 
+/*
     $f_newsimport_command_token = Input::Get('f_command_token', 'string');
     if (!empty($f_newsimport_command_token)) {
         SystemPref::Set('NewsImportCommandToken', $f_newsimport_command_token);
     }
+*/
 
     if ($conf_feeds) {
         foreach ($event_data_sources as $feed_key => $feed_conf) {
@@ -76,10 +78,12 @@ if (Input::Get('save')) {
     }
 
 
+/*
     $f_newsimport_http_auth_usr = Input::Get('f_http_auth_usr', 'string');
     SystemPref::Set('NewsImportHttpAuthUser', $f_newsimport_http_auth_usr);
     $f_newsimport_http_auth_pwd = Input::Get('f_http_auth_pwd', 'string');
     SystemPref::Set('NewsImportHttpAuthPwd', $f_newsimport_http_auth_pwd);
+*/
 
     camp_html_add_msg(getGS('NewsImport preferences updated.'), 'ok');
 }
@@ -166,21 +170,24 @@ if ($conf_feeds) {
 
 ?>
 
+<!--
 <table border="0" width="600" cellspacing="0" cellpadding="0" class="box_table">
 <?php
 
     $web_http_auth_usr = SystemPref::Get('NewsImportHttpAuthUser');
     $web_http_auth_pwd = SystemPref::Get('NewsImportHttpAuthPwd');
 
-    echo '<tr><td colspan="2" align="left">' . getGS('Http authentication if used') . ': </td>';
-    echo '<tr><td width="200">' . getGS('web user') . ': </td>';
+    echo '<tr><td colspan="2" align="left">' . 'Http authentication if used' . ': </td>';
+    echo '<tr><td width="200">' . 'web user' . ': </td>';
     echo '<td><input name="f_http_auth_usr" value="' . htmlspecialchars($web_http_auth_usr) . '" /></td></tr>';
-    echo '<tr><td width="200">' . getGS('web pwd') . ': </td>';
+    echo '<tr><td width="200">' . 'web pwd' . ': </td>';
     echo '<td><input name="f_http_auth_pwd" value="' . htmlspecialchars($web_http_auth_pwd) . '" /></td></tr>';
 
 ?>
 </table>
+-->
 
+<!--
 <table border="0" width="600" cellspacing="0" cellpadding="0" class="box_table">
 <?php
 if ($auth_feeds) {
@@ -189,12 +196,13 @@ if ($auth_feeds) {
     if (!empty($cur_nimp_auth)) {
         $newsimport_default_access = $cur_nimp_auth;
     }
-    echo '<tr><td width="200">' . getGS('Command token') . ': </td>';
+    echo '<tr><td width="200">' . 'Command token' . ': </td>';
     echo '<td><input name="f_command_token" value="' . htmlspecialchars($newsimport_default_access) . '" /></td></tr>';
 }
 
 ?>
 </table>
+-->
 
 <table border="0" width="600" cellspacing="0" cellpadding="0" class="box_table">
 <tr>
