@@ -55,8 +55,7 @@ final class CampContext
         ),
         'user_comment' => array(
             'class' => 'Comment',
-        ),
-        'playlist_article' => array( 'class' => 'Article' )
+        )
     );
 
     // Defines the list objects
@@ -117,6 +116,12 @@ final class CampContext
             'class' => 'UserComments',
             'list' => 'user_comments',
             'url_id' => 'cid',
+        ),
+        'playlist' => array
+        (
+        	'class' => 'Playlist',
+        	'list' => 'playlist',
+			'url_id' => 'pls'
         )
     );
 
