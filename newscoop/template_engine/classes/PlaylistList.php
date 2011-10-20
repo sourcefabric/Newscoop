@@ -75,12 +75,13 @@ class PlaylistList extends ListObject
 
         $articlesList = $repo->articles($playlist, false, $length, $start);
 
-        //var_dump($articlesList);
         $metaArticlesList = array();
 	    foreach ($articlesList as $article) {
-	        $metaArticlesList[] = new MetaArticle($lang->getId(), $article['articleId']);
+	        $article = new MetaArticle($lang->getId(), $article['articleId']);
+	        if ($article->defined()) {
+	            $metaArticlesList[] = $article;
+	        }
 	    }
-        //var_dump($metaArticlesList);
 
 	    return $metaArticlesList;
 	}

@@ -153,23 +153,27 @@ $(document).ready(function()
         'sPaginationType': 'full_numbers',
         'fnServerData': function (sSource, aoData, fnCallback)
         {
+            var addedFilters = new Array();
             for (var i in filters['<?php echo $this->id; ?>'])
 			{
+    			addedFilters.push(i);
                 aoData.push({
                     'name': i,
                     'value': filters['<?php echo $this->id; ?>'][i],
                 });
             }
+
             <?php foreach (array('publication', 'issue', 'section', 'language') as $filter) : ?>
-    		    <?php if ($filter == 'language' && !$this->order) continue; /*ignore language on non-section pages*/ ?>
+    		    <?php if ($filter == 'language' && !$this->order) continue; /*ignore language on non-section pages, TODO what does this mean?*/ ?>
     		    <?php if (!empty($this->$filter)) : ?>
-                    aoData.push
+                	if ($.inArray('<?php echo $filter ?>', addedFilters) == -1) aoData.push
                     ({
                         'name': '<?php echo $filter; ?>',
                         'value': '<?php echo $this->$filter; ?>',
                     });
                 <?php endif ?>
             <?php endforeach ?>
+
             callServer(['ContextList', 'doData'], aoData, fnCallback);
         },
         'fnStateLoadCallback': function(oSettings, oData) {

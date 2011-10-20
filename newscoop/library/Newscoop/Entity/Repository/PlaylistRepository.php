@@ -29,7 +29,7 @@ class PlaylistRepository extends EntityRepository
         (	"SELECT ".( $fullArticle ? "pa, a" : "a.number articleId, a.name title, a.date date" )
         .  	" FROM Newscoop\Entity\PlaylistArticle pa
         	JOIN pa.article a
-        	WHERE pa.idPlaylist = ?1"
+        	WHERE pa.idPlaylist = ?1 "
         //.   (is_null($lang) ? "GROUP BY a.number" : "AND a.language = ?2")
         .   " GROUP BY a.number "
         .	" ORDER BY pa.id "
