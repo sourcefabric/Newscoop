@@ -82,7 +82,6 @@ function is_valid_conf_dir($p_conf_dir)
         return true;
     } catch (Exception $e) {
         print('Error: ' . $e->getMessage() . "\n");
-		session_destroy();
         exit(1);
     }
 }
@@ -90,4 +89,3 @@ function is_valid_conf_dir($p_conf_dir)
 
 // runs the script
 clean_statistics(WWW_DIR . '/conf');
-session_destroy();

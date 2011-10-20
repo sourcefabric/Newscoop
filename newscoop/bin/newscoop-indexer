@@ -25,7 +25,6 @@ function out_msg($p_msg, $p_ifVerboseSet = false, $p_newLine = true)
 function exit_error($p_errMsg, $p_ifVerboseSet = false)
 {
     out_msg($p_errMsg, $p_ifVerboseSet);
-	session_destroy();
     exit(1);
 }
 
@@ -60,21 +59,18 @@ for ($i = 1; isset($GLOBALS['argv'][$i]); $i++) {
     		break;
     	case '--help':
     		usage();
-			session_destroy();
     		exit(0);
         case '--time-limit':
             $g_time_limit = !empty($option[1]) ? (int)$option[1] : null;
             if (empty($g_time_limit)) {
                 out_msg("Time limit value not specified!");
                 usage();
-				session_destroy();
                 exit(1);
             }
             break;
     	default:
     		out_msg("Invalid option '" . $option[0] . "'!");
     		usage();
-			session_destroy();
     		exit(1);
     }
 }
@@ -95,7 +91,6 @@ if (PEAR::isError($res)) {
     if (!$g_silent) {
         out_msg($res->getMessage());
     }
-	session_destroy();
     exit(1);
 }
 
@@ -108,6 +103,3 @@ if (!$g_silent) {
     . sprintf("%.3f", $res['article time']) . ' seconds.'
     );
 }
-
-session_destroy();
-
