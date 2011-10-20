@@ -592,7 +592,7 @@ class EventData_Parser_SimpleXML {
                 $event_info['subregion'] = $e_subregion;
 
                 $topics_regions = array();
-                $loc_regions = $this->m_region_info->ZipRegions($one_screen['kino_zip'], $kino_country);
+                $loc_regions = $this->m_region_info->ZipRegions($event_info['zipcode'], $event_info['country']);
                 foreach ($loc_regions as $region_name) {
                     if (isset($this->m_region_topics[$region_name])) {
                         $cur_reg_top = $this->m_region_topics[$region_name];
@@ -641,7 +641,7 @@ class EventData_Parser_SimpleXML {
                             foreach ($topics_regions as $one_reg_top) {
                                 $one_lim_key = $one_reg_top['key']; // keys of the regions that the current location belongs to
                                 if (in_array($one_lim_key, $cat_lim_spec['regions'])) {
-                                    $one_cat_skip = falsee;
+                                    $one_cat_skip = false;
                                     break;
                                 }
                             }

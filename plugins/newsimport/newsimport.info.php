@@ -281,8 +281,8 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             'town' => array('type' => 'text', 'params' => array(), 'hidden' => false),
             'street' => array('type' => 'text', 'params' => array(), 'hidden' => false), // street address, including house number
             // region info - created
-            'region' => array('type' => 'text', 'params' => array(), 'hidden' => false),
-            'subregion' => array('type' => 'text', 'params' => array(), 'hidden' => false),
+            //'region' => array('type' => 'text', 'params' => array(), 'hidden' => false),
+            //'subregion' => array('type' => 'text', 'params' => array(), 'hidden' => false),
             // date/time - fixed form
             'date' => array('type' => 'date', 'params' => array(), 'hidden' => false), // text, 2010-08-31
             //'date_year' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // number, 2010
@@ -526,7 +526,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 
         set_time_limit(0);
 
-        plugin_newsimport_copy_conf();
+        //plugin_newsimport_copy_conf();
         plugin_newsimport_set_preferences();
         plugin_newsimport_set_event_topics();
         plugin_newsimport_create_event_type();
@@ -541,7 +541,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         plugin_newsimport_set_cron(true);
         plugin_newsimport_set_url();
         plugin_newsimport_make_dirs();
-        plugin_newsimport_demo_data();
+        //plugin_newsimport_demo_data();
     } // fn plugin_newsimport_enable
 
 	/**
