@@ -126,9 +126,9 @@ class User implements \Zend_Acl_Role_Interface
      * @var Doctrine\Common\Collections\Collection;
      */
     private $commenters;
-    
+
     /**
-     * @Column(type="integer")
+     * @Column(type="integer", nullable=True)
      * @var int
      */
     private $subscriber;

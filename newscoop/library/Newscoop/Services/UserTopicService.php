@@ -59,13 +59,7 @@ class UserTopicService
     public function getTopics(User $user)
     {
         $userTopics = $this->em->getRepository('Newscoop\Entity\UserTopic')
-            ->findBy(array(
-                'user' => $user->getId(),
-            ));
-
-        if (empty($userTopics)) {
-            return array();
-        }
+            ->findByUser($user);
 
         $topics = array();
         foreach ($userTopics as $userTopic) {
