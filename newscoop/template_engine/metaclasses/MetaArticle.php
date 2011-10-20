@@ -512,7 +512,7 @@ final class MetaArticle extends MetaDbObject {
         $result = $repository->getCount($params);
         return $result;
     }
-    
+
     protected function getRecommendedCommentCount() {
         global $controller;
         $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
