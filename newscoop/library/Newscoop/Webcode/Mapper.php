@@ -71,7 +71,7 @@ class Mapper implements Webcode
         for ($i = 0; $i < (5 - strlen($letterCode)); $i ++) {
         	$returnCode = self::$map[0] . $returnCode;
         }
-        return '@'.$returnCode;
+        return strtolower('@'.$returnCode);
     }
 
     public static function decode($webcode)
