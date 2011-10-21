@@ -77,9 +77,9 @@ class PlaylistList extends ListObject
 
         $metaArticlesList = array();
 	    foreach ($articlesList as $article) {
-	        $article = new MetaArticle($lang->getId(), $article['articleId']);
-	        if ($article->defined()) {
-	            $metaArticlesList[] = $article;
+	        $metaArticle = new MetaArticle($lang->getId(), $article['articleId']);
+	        if ($metaArticle->defined()) {
+	            $metaArticlesList[] = $metaArticle;
 	        }
 	    }
 
