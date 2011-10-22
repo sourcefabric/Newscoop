@@ -159,7 +159,8 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     protected function isAdmin()
     {
-        return $this->m_dbObject->isAdmin();
+        return $this->m_dbObject->isAdmin() &&
+            !\Zend_Registry::get('container')->getService('blog')->isBlogger($this->m_dbObject);
     }
 
     /**
