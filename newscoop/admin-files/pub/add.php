@@ -16,7 +16,6 @@ if (!$g_user->hasPermission('ManagePub') || !SaaS::singleton()->hasPermission("A
 $languages = Language::GetLanguages(null, null, null, array(), array(), true);
 $defaultLanguage = array_pop(Language::GetLanguages(null, camp_session_get('TOL_Language', 'en'), null, array(), array(), true));
 $urlTypes = UrlType::GetUrlTypes();
-$allTemplates = Template::GetAllTemplates(null, true, true, true);
 $timeUnits = TimeUnit::GetTimeUnits(camp_session_get('TOL_Language', 'en'));
 $shortNameUrlType = UrlType::GetByName('short names');
 $aliases = array();

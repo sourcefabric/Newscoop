@@ -407,8 +407,10 @@ $themesDirName = 'themes'; // keep for gimme theme upgrade
 $templatesDestDir = $CAMPSITE_DIR.'/'.$templatesDirName;
 $themesDestDir = $CAMPSITE_DIR.'/'.$themesDirName;
 $compiledTemplatesDir = $CAMPSITE_DIR.'/cache';
+$pdfDir = $CAMPSITE_DIR.'/pdf';
 
-$destDirs = array("$CAMPSITE_DIR/themes", $imagesDestDir, $filesDestDir, $compiledTemplatesDir);
+$destDirs = array("$CAMPSITE_DIR/themes", $imagesDestDir, $filesDestDir,
+    $compiledTemplatesDir, $pdfDir);
 
 foreach ($destDirs as $dir) {
     if (!file_exists($dir)) {
