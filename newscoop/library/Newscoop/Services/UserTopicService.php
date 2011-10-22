@@ -86,8 +86,15 @@ class UserTopicService
             return null;
         }
 
-        // @todo select by language
-        return array_shift($topics);
+        $germanTopic = null;
+        foreach ($topics as $topic) {
+            if (5 == $topic->getLanguageId()) { // first go for german
+                $germanTopic = $topic;
+                break;
+            }
+        }
+
+        return empty($germanTopic) ? $topics[0] : $germanTopic;
     }
 
     /**

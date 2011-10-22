@@ -41,6 +41,7 @@ class PublisherService
         $article->create($this->config['article_type'], $entry->getTitle(), $this->getPublication(), $this->getIssue(), $this->getSection($entry));
         $article->setWorkflowStatus($status);
         $article->setKeywords($entry->getCatchWord());
+        $article->setCommentsEnabled(TRUE);
         $this->setArticleData($article, $entry);
         $this->setArticleDates($article, $entry);
         $this->setArticleAuthors($article, $entry->getAuthors());
