@@ -122,8 +122,8 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	    $toolbar1[] = "|";
 	    $toolbar1[] = "ltr";
 	    $toolbar1[] = "rtl";
-	    $toolbar1[] = "charmap";
 	}
+
 	if ($p_user->hasPermission('EditorLink')) {
 	    $toolbar1[] = "|";
 	    $toolbar1[] = "campsiteinternallink";
@@ -170,6 +170,11 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	if (count($toolbar1) > 34) {
 		$toolbar2 = array_splice($toolbar1, 34);
 	}
+
+	if ($p_user->hasPermission('EditorCharacterMap')) {
+        $toolbar2[] = "charmap";
+	}
+
 
 	// This is to put the bulleted and numbered list controls
 	// on the most appropriate line of the toolbar.
@@ -242,7 +247,7 @@ function CampsiteSubhead(ed) {
 $().ready(function() {
     $('textarea.tinymce').tinymce({
 
-		
+
     	// Location of TinyMCE script
         script_url : '<?php echo $Campsite['WEBSITE_URL']; ?>/js/tinymce/tiny_mce.js',
 
@@ -250,7 +255,7 @@ $().ready(function() {
         language : "<?php p($p_editorLanguage); ?>",
         theme : "advanced",
         plugins : "<?php p($plugins_list); ?>",
-        
+
         file_browser_callback : "campsitemedia",
         relative_urls : false,
         onchange_callback : function() { $('form#article-main').change(); },
