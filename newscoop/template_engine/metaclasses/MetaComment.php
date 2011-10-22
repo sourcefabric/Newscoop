@@ -11,7 +11,13 @@ require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObjec
 /**
  * @package Campsite
  */
-final class MetaComment extends MetaDbObject {
+final class MetaComment extends MetaDbObject
+{
+    /** @var array */
+    private static $m_baseProperties = array(
+        'id' => 'id',
+        'recommended' => 'recommended',
+    );
 
 	private $m_realName = false;
 
@@ -24,7 +30,8 @@ final class MetaComment extends MetaDbObject {
         else
             $this->m_dbObject = $repository->find($p_messageId);
 
-        $this->m_properties['id'] = 'id';
+        $this->m_properties = self::$m_baseProperties;
+
         $this->m_customProperties['level'] = 'getThreadDepth';
         $this->m_customProperties['identifier'] = 'getId';
         $this->m_customProperties['subject'] = 'getSubject';
