@@ -125,6 +125,7 @@ class PlaylistList extends ListObject
 	    {
 	        switch (($parameter = strtolower($parameter)))
 	        {
+	            case 'columns':
 	            case 'start' :
 	            case 'length' :
                     $intValue = (int)$value;
