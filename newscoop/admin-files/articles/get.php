@@ -43,4 +43,7 @@ foreach ($dbColumns as $dbColumn) {
         $articleInfo[htmlspecialchars($dbColumn->getDisplayName(0))] = $articleData->getProperty($dbColumn->getName());
     }
 }
+$articleInfo['title'] = $articleObj->getTitle();
+$articleInfo['date'] = $articleObj->getCreationDate();
+
 echo $this->view->json($articleInfo);
