@@ -132,6 +132,7 @@ function viewArticle(param, lang)
 	clearActiveArticles();
 	$("#"+param).addClass('item-active');
 	param = param.substring( param.lastIndexOf('_')+1 );
+	$("#preview-article-id").val(param);
 	callServer('{$articlePreviewUrl}', { 'id' : param, 'lang' : lang }, fnPreviewArticle, true);
 	return;
 }
