@@ -79,6 +79,10 @@ class Admin_Form_User extends Zend_Form
             'label' => getGS('User Type'),
         ));
 
+        $this->addElement('select', 'author', array(
+            'label' => getGS('Author'),
+        ));
+
         $this->addElement('submit', 'submit', array(
             'label' => getGS('Save'),
             'ignore' => true,
@@ -107,6 +111,7 @@ class Admin_Form_User extends Zend_Form
             'is_admin' => $user->isAdmin(),
             'is_public' => $user->isPublic(),
             'user_type' => $types,
+            'author' => $user->getAuthorId(),
         ));
     }
 }

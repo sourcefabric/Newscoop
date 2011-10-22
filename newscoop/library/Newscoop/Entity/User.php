@@ -134,6 +134,12 @@ class User implements \Zend_Acl_Role_Interface
     private $subscriber;
 
     /**
+     * @OneToOne(targetEntity="Author", mappedBy="user")
+     * @var Newscoop\Entity\Author
+     */
+    private $author;
+
+    /**
      * @param string $email
      */
     public function __construct($email = null)
@@ -158,8 +164,6 @@ class User implements \Zend_Acl_Role_Interface
     {
         return (int) $this->id;
     }
-
-
 
     /**
      * Set username
@@ -723,5 +727,15 @@ class User implements \Zend_Acl_Role_Interface
     public function getSubscriber()
     {
         return $this->subscriber;
+    }
+
+    /**
+     * Get author id
+     *
+     * @return int
+     */
+    public function getAuthorId()
+    {
+        return $this->author ? $this->author->getId() : null;
     }
 }

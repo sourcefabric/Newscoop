@@ -85,6 +85,7 @@ class Admin_UserController extends Zend_Controller_Action
     {
         $form = new Admin_Form_User();
         $form->user_type->setMultioptions($this->userTypeService->getOptions());
+        $form->author->setMultioptions(array('' => getGS('None')) + $this->_helper->service('author')->getOptions());
 
         $user = $this->getUser();
         $form->setDefaultsFromEntity($user);
@@ -93,6 +94,7 @@ class Admin_UserController extends Zend_Controller_Action
         if ($request->isPost() && $form->isValid($request->getPost())) {
             try {
                 $this->userService->save($form->getValues(), $user);
+                $this->_helper->service('author')->setAuthorUser($form->author->getValue(), $user);
                 $this->_helper->flashMessenger(getGS("User saved"));
                 $this->_helper->redirector('edit', 'user', 'admin', array(
                     'user' => $user->getId(),
