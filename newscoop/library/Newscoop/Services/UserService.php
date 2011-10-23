@@ -144,13 +144,10 @@ class UserService
             return '';
         }
 
-        $username = strtolower(trim($firstName) . '-' . trim($lastName));
+        $username = trim($firstName) . ' ' . trim($lastName);
         $username = preg_replace('~[^\\pL0-9_]+~u', '-', $username);
         $username = trim($username, "-");
-        $username = iconv("utf-8", "us-ascii//TRANSLIT", $username);
-        $username = strtolower($username);
-        $username = preg_replace('~[^-a-z0-9_]+~', '', $username);
-        $username = str_replace('-', '.', $username);
+        $username = str_replace('-', '', $username);
 
         for ($i = '';; $i++) {
             $conflict = $this->getRepository()->findOneBy(array(

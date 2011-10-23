@@ -176,10 +176,7 @@ class User implements \Zend_Acl_Role_Interface
     {
         $username = preg_replace('~[^\\pL0-9_]+~u', '-', $username);
         $username = trim($username, "-");
-        $username = iconv("utf-8", "us-ascii//TRANSLIT", $username);
-        $username = strtolower($username);
-        $username = preg_replace('~[^-a-z0-9_]+~', '', $username);
-        $username = str_replace('-', '.', $username);
+        $username = str_replace('-', '', $username);
         $this->username = (string) $username;
         return $this;
     }
