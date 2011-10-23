@@ -434,7 +434,6 @@ CREATE TABLE `Authors` (
   `aim` varchar(255) DEFAULT NULL,
   `biography` text,
   `image` int(11) DEFAULT NULL,
-  `user_id` int(11) unsigned NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `authors_name_ukey` (`first_name`,`last_name`),
   FULLTEXT KEY `authors_name_skey` (`first_name`,`last_name`)
@@ -2388,6 +2387,7 @@ CREATE TABLE `liveuser_users` (
   `points` int(10) DEFAULT '0',
   `image` varchar(255) DEFAULT NULL,
   `subscriber` int(10) DEFAULT NULL,
+  `author_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `UName` (`UName`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

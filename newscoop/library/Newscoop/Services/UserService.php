@@ -220,6 +220,19 @@ class UserService
     }
 
     /**
+     * Find user by author
+     *
+     * @param int $authorId
+     * @return Newscoop\Entity\User|null
+     */
+    public function findByAuthor($authorId)
+    {
+        return $this->getRepository()->findOneBy(array(
+            'author' => $authorId,
+        ));
+    }
+
+    /**
      * Get repository for user entity
      *
      * @return Newscoop\Entity\Repository\UserRepository

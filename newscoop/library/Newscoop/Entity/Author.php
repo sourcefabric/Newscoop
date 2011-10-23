@@ -33,13 +33,6 @@ class Author
     private $last_name;
 
     /**
-     * @OneToOne(targetEntity="User", inversedBy="author")
-     * @JoinColumn(referencedColumnName="Id")
-     * @var Newscoop\Entity\User
-     */
-    private $user;
-
-    /**
      * Get id
      *
      * @return int
@@ -57,27 +50,5 @@ class Author
     public function getFullName()
     {
         return trim("$this->first_name $this->last_name");
-    }
-
-    /**
-     * Set user
-     *
-     * @param Newscoop\Entity\User $user
-     * @return Newscoop\Entity\Author
-     */
-    public function setUser(User $user = null)
-    {
-        $this->user = $user;
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return Newscoop\Entity\User
-     */
-    public function getUser()
-    {
-        return $this->user;
     }
 }

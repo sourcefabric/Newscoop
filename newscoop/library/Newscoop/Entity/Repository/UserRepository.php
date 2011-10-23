@@ -63,6 +63,14 @@ class UserRepository extends EntityRepository
             $this->setUserTypes($user, (array) $values['user_type']);
         }
 
+        if (array_key_exists('author', $values)) {
+            $author = null;
+            if (!empty($values['author'])) {
+                $author = $this->getEntityManager()->getReference('Newscoop\Entity\Author', $values['author']);
+            }
+            $user->setAuthor($author);
+        }
+
         $this->getEntityManager()->persist($user);
     }
 

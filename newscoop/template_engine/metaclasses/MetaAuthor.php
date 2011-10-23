@@ -81,7 +81,7 @@ final class MetaAuthor extends MetaDbObject
      */
     public function getUser()
     {
-        $user = \Zend_Registry::get('container')->getService('author')->getAuthorUser($this->m_dbObject->getId());
+        $user = \Zend_Registry::get('container')->getService('user')->findByAuthor($this->m_dbObject->getId());
         return new \MetaUser($user);
     }
 }

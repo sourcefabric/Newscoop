@@ -308,7 +308,6 @@ CREATE TABLE `Authors` (
   `aim` varchar(255) DEFAULT NULL,
   `biography` text,
   `image` int(11) DEFAULT NULL,
-  `user_id` int(11) unsigned NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `authors_name_ukey` (`first_name`,`last_name`),
   FULLTEXT KEY `authors_name_skey` (`first_name`,`last_name`)

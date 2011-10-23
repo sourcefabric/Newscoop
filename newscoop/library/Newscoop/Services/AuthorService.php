@@ -45,38 +45,4 @@ class AuthorService
 
         return $authors;
     }
-
-    /**
-     * Set user author
-     *
-     * @param int $authorId
-     * @param Newscoop\Entity\User $user
-     * @return void
-     */
-    public function setAuthorUser($authorId, User $user)
-    {
-        if (empty($authorId)) {
-            $author = $this->repository->findOneBy(array(
-                'user' => $user->getId(),
-            ));
-            $author->setUser(null);
-        } else {
-            $author = $this->repository->find($authorId);
-            $author->setUser($user);
-        }
-
-        $this->em->persist($author);
-        $this->em->flush();
-    }
-
-    /**
-     * Get author user
-     *
-     * @param int $authorId
-     * @return Newscoop\Entity\User
-     */
-    public function getAuthorUser($authorId)
-    {
-        return $this->repository->find($authorId)->getUser();
-    }
 }

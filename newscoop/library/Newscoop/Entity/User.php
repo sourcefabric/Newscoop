@@ -10,7 +10,8 @@ namespace Newscoop\Entity;
 use Doctrine\Common\Collections\ArrayCollection,
     Newscoop\Utils\PermissionToAcl,
     Newscoop\Entity\Acl\Role,
-    Newscoop\Entity\User\Group;
+    Newscoop\Entity\User\Group,
+    Newscoop\Entity\Author;
 
 /**
  * @Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
@@ -134,7 +135,7 @@ class User implements \Zend_Acl_Role_Interface
     private $subscriber;
 
     /**
-     * @OneToOne(targetEntity="Author", mappedBy="user")
+     * @OneToOne(targetEntity="Author")
      * @var Newscoop\Entity\Author
      */
     private $author;
@@ -727,6 +728,18 @@ class User implements \Zend_Acl_Role_Interface
     public function getSubscriber()
     {
         return $this->subscriber;
+    }
+
+    /**
+     * Set author
+     *
+     * @param Newscoop\Entity\Author $author
+     * @return Newscoop\Entity\User
+     */
+    public function setAuthor(Author $author = null)
+    {
+        $this->author = $author;
+        return $this;
     }
 
     /**
