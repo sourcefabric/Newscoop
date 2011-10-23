@@ -55,7 +55,7 @@
 		{{ else }}
 			<div class="top_title">{{ $view->translate('Send message to the editorial team') }}</div>
 			<div class="top_user">
-				welcome {{ $gimme->user->name }}<br><a href="#" onClick="omnibox.logout();">{{ $view->translate('Logout') }}</a><br>
+				{{ $view->translate('Registered as') }} {{ $gimme->user->name }}<br><a href="#" onClick="omnibox.logout();">{{ $view->translate('Logout') }}</a><br>
 			</div>
 			<div class="clear"></div>
 			

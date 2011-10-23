@@ -25,6 +25,7 @@ return array(
 	'Login failed.' => 'Login failed.',
 	'E-Mail' => 'E-Mail-Adresse',
 	'Password' => 'Passwort',
+        'Registered as' => 'Angemeldet als',
     'Feedback content is not filled in.' => 'Feedback content is not filled in.',
     'Login successful. Please wait...' => 'Login successful. Please wait...',
     'Logout successful. Please wait...' => 'Logout successful. Please wait...',
