@@ -39,7 +39,7 @@ class AuthorService
     public function getOptions()
     {
         $authors = array();
-        foreach ($this->repository->findAll() as $author) {
+        foreach ($this->repository->findBy(array(), array('last_name' => 'asc', 'first_name' => 'asc')) as $author) {
             $authors[$author->getId()] = $author->getFullName();
         }
 
