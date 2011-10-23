@@ -25,6 +25,7 @@ CREATE TABLE IF NOT EXISTS `acl_rule` (
 -- Add role id to user/group table
 ALTER TABLE `liveuser_groups` ADD `role_id` int(10) DEFAULT NULL; -- to be altered to NOT NULL when populated
 ALTER TABLE `liveuser_users` ADD `role_id` int(10) DEFAULT NULL; -- to be altered to NOT NULL when populated
+ALTER TABLE  `liveuser_users` ADD  `author_id` INT( 10 ) UNSIGNED NULL, ADD INDEX (  `author_id` );
 
 -- Add autoincremet to groups
 ALTER TABLE `liveuser_groups` CHANGE `group_id` `group_id` int(11) NOT NULL AUTO_INCREMENT;
