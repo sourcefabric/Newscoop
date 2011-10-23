@@ -2533,6 +2533,11 @@ class Article extends DatabaseObject {
                     $selectClauseObj->addConditionalWhere($isNullCond);
                 } elseif ($leftOperand == 'type' && $comparisonOperation['symbol'] == '=' ) {
 					$selectClauseObj->addConditionalWhere($whereCondition);
+                } elseif ($leftOperand == 'workflow_status'
+                && isset($comparisonOperation['pending'])) {
+                    $selectClauseObj->addConditionalWhere('Articles.NrIssue = 0');
+                    $selectClauseObj->addConditionalWhere('Articles.NrSection = 0');
+                    $selectClauseObj->addWhere($whereCondition);
                 } else {
                 	$selectClauseObj->addWhere($whereCondition);
                 }
@@ -2819,6 +2824,8 @@ class Article extends DatabaseObject {
         case 'workflow_status':
             $conditionOperation['symbol'] = '=';
             switch(strtolower($p_param->getRightOperand())) {
+            case 'pending':
+                $conditionOperation['pending'] = true;
             case 'new':
                 $conditionOperation['right'] = 'N';
                 break;
