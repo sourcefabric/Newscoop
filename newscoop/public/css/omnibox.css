@@ -121,6 +121,11 @@
 	margin-top: 8px;
 	margin-right: 24px;
 }
+#ob_wrapper .login_label {
+	color: #a5a5a5;
+	font-size:11px; font-family:Arial, Helvetica, sans-serif; line-height:11px;
+	margin-left: 40px;
+}
 #ob_wrapper .half {
 	width: 300px;
 }

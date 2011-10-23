@@ -85,8 +85,11 @@
 			<br><a href="{{ $view->baseUrl('/de/pages/about/3919/Dialogkultur.htm>') }}">{{ $view->translate('login_link_text') }}</a>
 		</div>
 		<div class="text_container right half">
+                        <div class="login_label">{{ $view->translate('E-Mail') }}</div>
 			<input type="text" id="ob_email" name="ob_email" class="small right" onKeyPress="if (event.keyCode == 13) omnibox.login();"><br>
 			<div class="clear"></div>
+                        <div class="login_label">{{ $view->translate('Password') }}</div>
+                        <div class="clear"></div>
 			<input type="password" id="ob_password" name="ob_password" class="small right" onKeyPress="if (event.keyCode == 13) omnibox.login();"><br>
 			<div class="clear"></div>
 			<input type="button" class="send_button right" value="{{ $view->translate('Login') }}" onClick="omnibox.login();">
