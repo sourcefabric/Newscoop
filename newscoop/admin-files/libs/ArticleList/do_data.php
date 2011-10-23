@@ -69,7 +69,7 @@ if( isset($_REQUEST['section']) ) {
 }
 
 foreach ($filters as $name => $opts) {
-    if (!empty($_REQUEST[$name])) {
+    if (isset($_REQUEST[$name])) {
         $field = !empty($fields[$name]) ? $fields[$name] : $name;
         $articlesParams[] = new ComparisonOperation($field, new Operator($opts[0], $opts[1]), $_REQUEST[$name]);
     }
