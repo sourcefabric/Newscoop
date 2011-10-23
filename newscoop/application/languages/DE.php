@@ -23,6 +23,8 @@ return array(
 	'Comment on article' => 'Kommentar zum Artikel',
 	'Send message to the editorial team (is not published)' => 'Mitteilung an die Redaktion (wird nicht veröffentlicht)',
 	'Login failed.' => 'Login failed.',
+	'E-Mail' => 'E-Mail-Adresse',
+	'Password' => 'Passwort',
     'Feedback content is not filled in.' => 'Feedback content is not filled in.',
     'Login successful. Please wait...' => 'Login successful. Please wait...',
     'Logout successful. Please wait...' => 'Logout successful. Please wait...',
