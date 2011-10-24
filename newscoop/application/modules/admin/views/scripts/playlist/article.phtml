@@ -44,6 +44,8 @@ $saveUrl = $this->url( array
 	'format' => 'json'
 ), null, true, false);
 
+$articleName = $this->article->getName();
+$articleName = addslashes($articleName);
 
 $js = <<<JS
 
@@ -217,7 +219,7 @@ function popup_add()
 		return false;
 	}
 	if( !$('#context_list').find('input:hidden[value={$this->article->getId()}]').length )
-		appendItemToContextList( '{$this->article->getId()}', '{$this->article->getDate()}', '{$this->article->getName()}', true );
+		appendItemToContextList( '{$this->article->getId()}', '{$this->article->getDate()}', '{$articleName}', true );
 	else
 		flashMessage('{$t['item-exists']}', 'error', false);
 }
