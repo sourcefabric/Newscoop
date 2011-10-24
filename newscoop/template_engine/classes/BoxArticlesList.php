@@ -52,7 +52,7 @@ class BoxArticlesList extends ListObject
 	    $metaBoxArticlesList = array();
 	    foreach ($BoxArticlesList as $articleNo) {
 	        $article = new MetaArticle($languageId, $articleNo);
-	        if ($preview || $article->is_published) {
+	        if ($article->defined() && ($preview || $article->is_published)) {
 	        	$metaBoxArticlesList[] = $article;
 	        }
 	    }
