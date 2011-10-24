@@ -148,7 +148,7 @@ class UserRepository extends EntityRepository
         $qb = $this->getEntityManager()->createQueryBuilder()
             ->select('COUNT(u.id)')
             ->from('Newscoop\Entity\User', 'u')
-            ->where("u.{$property} = ?0");
+            ->where("LOWER(u.{$property}) = LOWER(?0)");
 
         $params = array($value);
 
