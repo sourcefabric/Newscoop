@@ -2096,12 +2096,16 @@ class Article extends DatabaseObject {
             FROM Articles
             WHERE
                 Articles.Published = 'Y'
-                AND Articles.Number IN ( SELECT NrArticle FROM `Xnews` WHERE FArticle_Of_The_Day = '1')
+                AND
+                    (Articles.Number IN ( SELECT NrArticle FROM `Xnewswire` WHERE FArticle_Of_The_Day = '1') OR
+                    Articles.Number IN ( SELECT NrArticle FROM `Xnews` WHERE FArticle_Of_The_Day = '1'))
                 AND DATE(Articles.PublishDate) >= '$p_start_date'
                 AND DATE(Articles.PublishDate) <= '$p_end_date'
-                AND (Articles.Type = 'news' )
+                AND (Articles.Type = 'news' OR Articles.Type = 'newswire' )
             ORDER BY Articles.PublishDate asc,
                     Articles.time_updated asc";
+
+        //echo $queryStr;
 
         $articles = DbObjectArray::Create('Article', $queryStr);
 
