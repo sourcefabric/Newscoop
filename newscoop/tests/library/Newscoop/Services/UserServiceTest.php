@@ -9,7 +9,7 @@ namespace Newscoop\Services;
 
 use Newscoop\Entity\User;
 
-class UserServiceTest extends \PHPUnit_Framework_TestCase
+class UserServiceTest extends \RepositoryTestCase
 {
     /** @var Newscoop\Services\UserService */
     protected $service;
@@ -23,32 +23,35 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
     /** @var Newscoop\Entity\Repository\UserRepository */
     protected $repository;
 
+    /** @var Newscoop\Entity\User */
+    private $user;
+
     public function setUp()
     {
-        $this->em = $this->getMockBuilder('Doctrine\ORM\EntityManager')
-            ->disableOriginalConstructor()
-            ->getMock();
+        parent::setUp('Newscoop\Entity\User', 'Newscoop\Entity\Acl\Role');
 
         $this->auth = $this->getMockBuilder('Zend_Auth')
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->repository = $this->getMockBuilder('Newscoop\Entity\Repository\UserRepository')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->repository = $this->em->getRepository('Newscoop\Entity\User');
 
         $this->service = new UserService($this->em, $this->auth);
+
+        $this->user = new User();
+        $this->user->setEmail('test@example.com');
+        $this->user->setUsername('test');
     }
 
     public function testUser()
     {
-        $service = new UserService($this->em, $this->auth);
-        $this->assertInstanceOf('Newscoop\Services\UserService', $service);
+        $this->assertInstanceOf('Newscoop\Services\UserService', $this->service);
     }
 
     public function testGetCurrentUser()
     {
-        $user = $this->getMock('Newscoop\Entity\User');
+        $this->em->persist($this->user);
+        $this->em->flush();
 
         $this->auth->expects($this->once())
             ->method('hasIdentity')
@@ -58,15 +61,7 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
             ->method('getIdentity')
             ->will($this->returnValue(1));
 
-        $this->expectGetRepository();
-
-        $this->repository->expects($this->once())
-            ->method('find')
-            ->with($this->equalTo(1))
-            ->will($this->returnValue($user));
-
-        $this->assertEquals($user, $this->service->getCurrentUser());
-        $this->assertEquals($user, $this->service->getCurrentUser()); // test if getting user only once
+        $this->assertEquals($this->user, $this->service->getCurrentUser());
     }
 
     public function testGetCurrentUserNotAuthorized()
@@ -80,20 +75,14 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testFind()
     {
-        $user = new User();
-        $this->expectGetRepository();
-        $this->repository->expects($this->once())
-            ->method('find')
-            ->with($this->equalTo(1))
-            ->will($this->returnValue($user));
+        $this->em->persist($this->user);
+        $this->em->flush();
 
-        $this->assertEquals($user, $this->service->find(1));
+        $this->assertEquals($this->user, $this->service->find(1));
     }
 
     public function testSaveNew()
     {
-        $this->expectGetRepository();
-
         $userdata = array(
             'username' => 'foobar',
             'first_name' => 'foo',
@@ -101,33 +90,26 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
             'email' => 'foo@bar.com',
         );
 
-        $this->repository->expects($this->once())
-            ->method('save')
-            ->with($this->isInstanceOf('Newscoop\Entity\User'), $this->equalTo($userdata));
-
-        $this->em->expects($this->once())
-            ->method('flush')
-            ->with();
-
-        $this->assertInstanceOf('Newscoop\Entity\User', $this->service->save($userdata));
+        $user = $this->service->save($userdata);
+        $this->assertInstanceOf('Newscoop\Entity\User', $user);
+        $this->assertEquals(1, $user->getId());
     }
 
     public function testDelete()
     {
+        $this->user->setActive(true);
+        $this->em->persist($this->user);
+        $this->em->flush();
+
+        $this->assertTrue($this->user->isActive());
+
         $this->auth->expects($this->once())
             ->method('getIdentity')
             ->will($this->returnValue(3));
 
-        $user = $this->getMock('Newscoop\Entity\User');
-        $user->expects($this->once())
-            ->method('setStatus')
-            ->with($this->equalTo(User::STATUS_DELETED));
+        $this->service->delete($this->user);
 
-        $this->em->expects($this->once())
-            ->method('flush')
-            ->with();
-
-        $this->service->delete($user);
+        $this->assertFalse($this->user->isActive());
     }
 
     /**
@@ -150,93 +132,71 @@ class UserServiceTest extends \PHPUnit_Framework_TestCase
     public function testGenerateUsername()
     {
         $user = new User();
-        $user->setUsername('foo.bar');
+        $user->setEmail('test@example.com');
+        $user->setUsername('Foo Bar');
+        $this->em->persist($user);
+        $this->em->flush();
 
-        $this->em->expects($this->atLeastOnce())
-            ->method('getRepository')
-            ->with($this->equalTo('Newscoop\Entity\User'))
-            ->will($this->returnValue($this->repository));
-
-        $this->repository->expects($this->any())
-            ->method('findOneBy')
-            ->will($this->onConsecutiveCalls(null, $user, null));
-
-        $this->assertEquals('foo.bar', $this->service->generateUsername('Foo', 'Bar'));
-        $this->assertEquals('foo.bar1', $this->service->generateUsername('Foo', 'Bar'));
-        $this->assertEquals('', $this->service->generateUsername('', ''));
-        $this->assertEquals('foo', $this->service->generateUsername('Foo', ''));
-        $this->assertEquals('bar', $this->service->generateUsername('', 'Bar'));
+        $this->assertEquals('Foos Bar', $this->service->generateUsername('Foos', 'Bar'));
+        $this->assertEquals('Foo Bar1', $this->service->generateUsername('Foo', 'Bar'));
+        $this->assertEquals('', $this->service->generateUsername(' ', ' '));
+        $this->assertEquals('Foo', $this->service->generateUsername('Foo', ''));
+        $this->assertEquals('Bar', $this->service->generateUsername('', 'Bar'));
+        $this->assertEquals('', $this->service->generateUsername('!@#$%^&*()+-={}[]\\|;\':"§-?/.>,<', ''));
+        $this->assertEquals('_', $this->service->generateUsername('_', ''));
+        $this->assertEquals('Foo Bar Jr', $this->service->generateUsername('Foo  Bar ', ' Jr '));
     }
 
     public function testSetActive()
     {
-        $user = new User();
-        $user->setUsername('foo');
-        $this->assertFalse($user->isActive());
+        $this->assertFalse($this->user->isActive());
 
-        $this->em->expects($this->once())
-            ->method('flush')
-            ->with();
+        $this->service->setActive($this->user);
 
-        $this->service->setActive($user);
-        $this->assertTrue($user->isActive());
+        $this->assertTrue($this->user->isActive());
     }
 
     public function testSave()
     {
-        $user = new User('foo');
         $data = array(
             'email' => 'info@example.com',
         );
 
-        $this->expectGetRepository();
-
-        $this->repository->expects($this->once())
-            ->method('save')
-            ->with($this->equalTo($user), $this->equalTo($data));
-
-        $this->em->expects($this->once())
-            ->method('flush');
-
-        $this->assertEquals($user, $this->service->save($data, $user));
+        $this->assertEquals($this->user, $this->service->save($data, $this->user));
+        $this->assertGreaterThan(0, $this->user->getId());
+        $this->assertEquals('info@example.com', $this->user->getEmail());
     }
 
     public function testCreatePending()
     {
-        $this->em->expects($this->once())
-            ->method('persist')
-            ->with($this->isInstanceOf('Newscoop\Entity\User'));
-
-        $this->em->expects($this->once())
-            ->method('flush')
-            ->with();
-            
         $user = $this->service->createPending('email@example.com');
         $this->assertInstanceOf('Newscoop\Entity\User', $user);
         $this->assertTrue($user->isPublic());
+        $this->assertGreaterThan(0, $user->getId());
     }
 
     public function testSavePending()
     {
-        $data = array();
-        $user = new User('email');
+        $user = $this->service->createPending('info@example.com');
+        $this->service->savePending(array('username' => 'test'), $user);
 
-        $this->expectGetRepository();
-
-        $this->repository->expects($this->once())
-            ->method('save')
-            ->with($this->equalTo($user), $this->equalTo($data));
-
-        $this->service->savePending($data, $user);
         $this->assertTrue($user->isActive());
         $this->assertTrue($user->isPublic());
     }
 
-    protected function expectGetRepository()
+    /**
+     * @expectedException InvalidArgumentException username
+     */
+    public function testUsernameCaseSensitivity()
     {
-        $this->em->expects($this->once())
-            ->method('getRepository')
-            ->with($this->equalTo('Newscoop\Entity\User'))
-            ->will($this->returnValue($this->repository));
+        $this->service->save(array(
+            'email' => 'one@example.com',
+            'username' => 'Foo Bar',
+        ));
+
+        $this->service->save(array(
+            'email' => 'two@example.com',
+            'username' => 'foo bar',
+        ));
     }
 }

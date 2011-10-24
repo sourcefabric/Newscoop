@@ -98,7 +98,7 @@ class UserService
      */
     public function save(array $data, User $user = null)
     {
-        if ($user === null) {
+        if (NULL === $user) {
             $user = new User();
         }
 
@@ -144,10 +144,9 @@ class UserService
             return '';
         }
 
-        $username = trim($firstName) . ' ' . trim($lastName);
-        $username = preg_replace('~[^\\pL0-9_]+~u', '-', $username);
-        $username = trim($username, "-");
-        $username = str_replace('-', '', $username);
+        $user = new User();
+        $user->setUsername(trim($firstName) . ' ' . trim($lastName));
+        $username = $user->getUsername();
 
         for ($i = '';; $i++) {
             $conflict = $this->getRepository()->findOneBy(array(
