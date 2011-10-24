@@ -27,6 +27,7 @@ class RegisterController extends Zend_Controller_Action
             ->addActionContext('check-username', 'json')
             ->addActionContext('check-email', 'json')
             ->addActionContext('pending', 'json')
+            ->addActionContext('create-user', 'json')
             ->initContext();
     }
 
@@ -57,6 +58,15 @@ class RegisterController extends Zend_Controller_Action
         }
 
         $this->view->form = $form;
+    }
+    
+    public function createUserAction()
+    {
+        $parameters = $this->getRequest()->getParams();
+        $user = $this->_helper->service('user')->createPending($parameters['email'], $parameters['first_name'], $parameters['last_name']);
+        $this->_helper->service('email')->sendConfirmationToken($user);
+        
+        echo('1');die;
     }
 
     public function afterAction()
@@ -89,6 +99,15 @@ class RegisterController extends Zend_Controller_Action
 
         $form = new Application_Form_Confirm();
         $form->setMethod('POST');
+        
+        $values = array();
+        if ($user->getFirstName()) {
+            $values['first_name'] = $user->getFirstName();
+        }
+        if ($user->getLastName()) {
+            $values['last_name'] = $user->getLastName();
+        }
+        $form->populate($values);
 
         if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
             try {

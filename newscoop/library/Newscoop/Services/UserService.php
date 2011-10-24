@@ -98,7 +98,7 @@ class UserService
      */
     public function save(array $data, User $user = null)
     {
-        if ($user === null) {
+        if (NULL === $user) {
             $user = new User();
         }
 
@@ -144,10 +144,9 @@ class UserService
             return '';
         }
 
-        $username = trim($firstName) . ' ' . trim($lastName);
-        $username = preg_replace('~[^\\pL0-9_]+~u', '-', $username);
-        $username = trim($username, "-");
-        $username = str_replace('-', '', $username);
+        $user = new User();
+        $user->setUsername(trim($firstName) . ' ' . trim($lastName));
+        $username = $user->getUsername();
 
         for ($i = '';; $i++) {
             $conflict = $this->getRepository()->findOneBy(array(
@@ -178,10 +177,16 @@ class UserService
      * @param string $email
      * @return Newscoop\Entity\User
      */
-    public function createPending($email)
+    public function createPending($email, $first_name = null, $last_name = null)
     {
         $user = new User($email);
         $user->setPublic(true);
+        if ($first_name) {
+            $user->setFirstName($first_name);
+        }
+        if ($last_name) {
+            $user->setLastName($last_name);
+        }
         $this->em->persist($user);
         $this->em->flush();
         return $user;

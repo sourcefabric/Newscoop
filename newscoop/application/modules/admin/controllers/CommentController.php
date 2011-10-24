@@ -70,7 +70,7 @@ class Admin_CommentController extends Zend_Controller_Action
         $table->setCols(array('index' => $view->toggleCheckbox(), 'commenter' => getGS('Author'),
                              'comment' => getGS('Date') . ' / ' . getGS('Comment'), 'thread' => getGS('Article'),
                              'threadorder' => '',), array('index' => false));
-        
+
         $table->setInitialSorting(array('comment' => 'desc'));
 
         $index = 1;
@@ -351,6 +351,41 @@ class Admin_CommentController extends Zend_Controller_Action
         }
 
         $this->view->result = $result;
+    }
+
+    /**
+     * @Acl(action="edit")
+     */
+    public function updateContentsAction()
+    {
+        $this->getHelper('contextSwitch')->addActionContext('update-contents', 'json')->initContext();
+        if (!SecurityToken::isValid()) {
+            $this->view->status = 401;
+            $this->view->message = getGS('Invalid security token!');
+            return;
+        }
+
+        $subject = $this->getRequest()->getParam('subject');
+        $body = $this->getRequest()->getParam('body');
+        $id = $this->getRequest()->getParam('id');
+
+        $values = array(
+            'subject' => $subject,
+            'message' => $body
+        );
+
+        try {
+            $comment = $this->commentRepository->find($id);
+            $comment = $this->commentRepository->update($comment, $values);
+            $this->commentRepository->flush();
+        }
+        catch (Exception $e) {
+            $this->view->status = $e->getCode();
+            $this->view->message = $e->getMessage();
+            return;
+        }
+        $this->view->status = 200;
+        $this->view->message = "succesful";
     }
 
     /**
