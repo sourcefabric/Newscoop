@@ -36,14 +36,15 @@ function smarty_function_article_pdf($params, &$smarty)
 
     if (!file_exists($pdf_file) || $gimme->article->last_update > date('Y-m-d h:i:s', filemtime($pdf_file)))  {
         require('include/html2pdf/html2pdf.class.php');
-        try { 
-            $html2pdf = new HTML2PDF('P', 'A4', 'de');
+        try {
             $content = $smarty->fetch($template);
+            $html2pdf = new HTML2PDF('P', 'A4', 'de');
+            $html2pdf->pdf->SetDisplayMode('real');
             $html2pdf->writeHTML($content);
             $html2pdf->Output($pdf_file, 'F');
         } catch (HTML2PDF_exception $e) {
             echo $e;
-            exit; 
+            exit;
         }
     }
 
