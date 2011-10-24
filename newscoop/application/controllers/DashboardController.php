@@ -69,13 +69,20 @@ class DashboardController extends Zend_Controller_Action
         }
         
         $userSubscriptionService = $this->_helper->service('user_subscription');
-        $userSubscriptionKey = $userSubscriptionService->createKey($this->user);
-        $userSubscriptionService->setKey($userSubscriptionKey);
         
+        $this->view->subscriber = $userSubscriptionService->fetchSubscriber($this->user);
+        
+        //$this->view->subscriber = false;
+        
+        if ($this->view->subscriber) {
+            $userSubscriptionKey = $userSubscriptionService->createKey($this->user);
+            $userSubscriptionService->setKey($this->user, $userSubscriptionKey);
+            $this->view->userSubscriptions = $userSubscriptionService->fetchSubscriptions($this->user);
+            $this->view->userSubscriptionKey = $userSubscriptionKey;
+        }
+                
         $this->view->form = $form;
         $this->view->user = new MetaUser($this->user);
-        $this->view->userSubscriptions = $userSubscriptionService->getSubscriptions($this->user);
-        $this->view->userSubscriptionKey = $userSubscriptionKey;
     }
 
     public function updateTopicsAction()
