@@ -177,10 +177,16 @@ class UserService
      * @param string $email
      * @return Newscoop\Entity\User
      */
-    public function createPending($email)
+    public function createPending($email, $first_name = null, $last_name = null)
     {
         $user = new User($email);
         $user->setPublic(true);
+        if ($first_name) {
+            $user->setFirstName($first_name);
+        }
+        if ($last_name) {
+            $user->setLastName($last_name);
+        }
         $this->em->persist($user);
         $this->em->flush();
         return $user;

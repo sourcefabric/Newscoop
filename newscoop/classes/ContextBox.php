@@ -14,13 +14,15 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ContextBoxArticle.php');
  * @package Campsite
  */
 
-Class ContextBox extends DatabaseObject {
+Class ContextBox extends DatabaseObject
+{
     var $m_dbTableName = 'context_boxes';
     var $m_keyColumnNames = array('id');
     var $m_keyIsAutoIncrement = true;
     var $m_columnNames = array('id', 'fk_article_no');
 
-    public function __construct($p_id = null, $p_article_no = null) {
+    public function __construct($p_id = null, $p_article_no = null)
+    {
     	parent::__construct($this->m_columnNames);
         if (is_numeric($p_id) && $p_id > 0) {
             $this->m_data['id'] = $p_id;
@@ -50,11 +52,40 @@ Class ContextBox extends DatabaseObject {
         return $result;
     }
 
-    public function getId() {
+    public function getId()
+    {
     	return $this->m_data['id'];
     }
 
-    public function getArticlesList() {
+    public function getArticlesList()
+    {
         return ContextBoxArticle::GetList($this->getId(), null, 0, 0, $p_count, FALSE);
+    }
+
+
+	/**
+	 * Remove the context box for the given article.
+	 * @param int $articleNumber
+	 * @return void
+	 */
+    public static function OnArticleDelete($articleNumber)
+    {
+		global $g_ado_db;
+
+		$articleNumber = (int)$articleNumber;
+		if ($articleNumber < 1) {
+		    return;
+		}
+
+		$queryStr = 'SELECT * FROM context_boxes'
+		. " WHERE fk_article_no = '$articleNumber'";
+		$boxes = $g_ado_db->GetAll($queryStr);
+		foreach ($boxes as $box) {
+		    ContextBoxArticle::OnContextBoxDelete($box['id']);
+		}
+
+		$queryStr = 'DELETE FROM context_boxes'
+					." WHERE fk_article_no = '$articleNumber'";
+		$g_ado_db->Execute($queryStr);
     }
 }

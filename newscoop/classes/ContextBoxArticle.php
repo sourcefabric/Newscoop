@@ -13,10 +13,11 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
  * @package Campsite
  */
 
-Class ContextBoxArticle extends DatabaseObject {
+class ContextBoxArticle extends DatabaseObject
+{
     var $m_dbTableName = 'context_articles';
-    var $m_keyColumnNames = array('fk_context_id', 'fk_article_no');
 
+    var $m_keyColumnNames = array('fk_context_id', 'fk_article_no');
 
     var $m_columnNames = array('fk_context_id', 'fk_article_no');
 
@@ -83,8 +84,6 @@ Class ContextBoxArticle extends DatabaseObject {
             }
         }
 
-
-
         $returnArray = array();
         $queryStr = '
            SELECT fk_article_no FROM context_articles'.
@@ -99,6 +98,45 @@ Class ContextBoxArticle extends DatabaseObject {
 
         $p_count = count($returnArray);
         return array_reverse($returnArray);
+    }
 
+
+	/**
+	 * Remove the article from any related articles list.
+	 * @param int $articleNumber
+	 * @return void
+	 */
+    public static function OnArticleDelete($articleNumber)
+    {
+		global $g_ado_db;
+
+		$articleNumber = (int)$articleNumber;
+		if ($articleNumber < 1) {
+		    return;
+		}
+
+		$queryStr = 'DELETE FROM context_articles'
+					." WHERE fk_article_no = '$articleNumber'";
+		$g_ado_db->Execute($queryStr);
+    }
+
+
+	/**
+	 * Remove the given context box articles.
+	 * @param int $contextBoxId
+	 * @return void
+	 */
+    public static function OnContextBoxDelete($contextBoxId)
+    {
+		global $g_ado_db;
+
+		$contextBoxId = (int)$contextBoxId;
+		if ($contextBoxId < 1) {
+		    return;
+		}
+
+		$queryStr = 'DELETE FROM context_articles'
+					." WHERE fk_context_id = '$contextBoxId'";
+		$g_ado_db->Execute($queryStr);
     }
 }

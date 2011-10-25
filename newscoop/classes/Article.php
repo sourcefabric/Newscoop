@@ -686,6 +686,11 @@ class Article extends DatabaseObject {
             // Delete file pointers
             ArticleAttachment::OnArticleDelete($this->m_data['Number']);
 
+            // Delete related articles
+            ContextBox::OnArticleDelete($this->m_data['Number']);
+
+            ContextBoxArticle::OnArticleDelete($this->m_data['Number']);
+
             // Delete indexes
             ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueNumber(),
                 $this->getSectionNumber(), $this->getLanguageId(), $this->getArticleNumber());

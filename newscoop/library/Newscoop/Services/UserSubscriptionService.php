@@ -27,20 +27,68 @@ class UserSubscriptionService
         $this->em = $em;
     }
     
-    public function getSubscriptions($user)
-    {
-        return $this->getRepository()->findBy(array('user' => $user->getId()));
-    }
-    
     public function createKey($user)
     {
         $key = md5($user->getId().$user->getEmail().time());
         return($key);
     }
     
-    public function setKey($key)
+    public function setKey($user, $key)
     {
         // send request
+        $subscriber = $user->getSubscriber();
+        
+        if (!$subscriber) {
+            $subscriber = $this->fetchSubscriber($user);
+        }
+        
+        $url = 'https://abo.tageswoche.ch/dmpro/ws/subscriber/NMBA/' . $subscriber . '?userkey=' . $key;        
+        $client = new \Zend_Http_Client();
+        $client->setUri($url);
+        $client->setMethod(\Zend_Http_Client::PUT);
+        $response = $client->request();
+
+    }
+    
+    public function fetchSubscriber($user)
+    {
+        $url = 'https://abo.tageswoche.ch/dmpro/ws/subscriber/NMBA?firstname='.$user->getFirstName().'&lastname='.$user->getLastName().'&email='.$user->getEmail();
+        $client = new \Zend_Http_Client();
+        $client->setUri($url);
+        $client->setMethod(\Zend_Http_Client::GET);
+        $response = $client->request();
+        
+        $xml = new \SimpleXMLElement($response->getBody());
+        
+        $subscriber = (int) $xml->subscriber[0]->subscriberId;
+        
+        if (is_numeric($subscriber)) {
+            if (!$user->getSubscriber()) {
+                $user->setSubscriber($subscriber);
+                $this->em->persist($user);
+                $this->em->flush();
+            }
+            return($subscriber);
+        }
+        else {
+            return(false);
+        }
+    }
+    
+    public function fetchSubscriptions($user)
+    {
+        $subscriber = $user->getSubscriber();
+        
+        $url = 'https://abo.tageswoche.ch/dmpro/ws/subscriber/NMBA/' . $subscriber;
+        $client = new \Zend_Http_Client();
+        $client->setUri($url);
+        $client->setMethod(\Zend_Http_Client::GET);
+        $response = $client->request();
+        
+        $xml = new \SimpleXMLElement($response->getBody());
+        $subscriptions = $xml->subscriber->subscriptions->subscription;
+        
+        return($subscriptions);
     }
 
     private function getRepository()
