@@ -108,6 +108,18 @@ class RegisterController extends Zend_Controller_Action
             $values['last_name'] = $user->getLastName();
         }
         $form->populate($values);
+        
+        if ($user->getFirstName() || $user->getLastName()) {
+            $form->addElement('checkbox', 'terms_of_use', array(
+                'label' => 'Accepting terms of use',
+                'required' => true,
+                'validators' => array(
+                    array('greaterThan', true, array('min' => 0)),
+                ),
+                 'errorMessages' => array("You have to accept terms of use to proceed."),
+            ));
+            $form->getElement('terms_of_use')->setOrder(6);
+        }
 
         if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
             try {
