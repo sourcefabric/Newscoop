@@ -52,6 +52,9 @@ $("#wobs_calendar_{{$rand_int}}").wobscalendar({
     'navigation': {{if $nav}} true {{else}} false {{/if}},
     'showDayNames': {{if $dayNames}} true {{else}} false {{/if}},
     'earliestMonth': {{if $earliestMonth}} new Date('{{$earliestMonth[0]}}', '{{$earliestMonth[1]-1}}') {{else}} undefined {{/if}},
-    'latestMonth': {{if $latestMonth}} new Date('{{$latestMonth[0]}}', '{{$latestMonth[1]-1}}') {{else}} undefined {{/if}}
+    'latestMonth': {{if $latestMonth}} new Date('{{$latestMonth[0]}}', '{{$latestMonth[1]-1}}') {{else}} undefined {{/if}},
+    'monthNames': ['{{$view->translate('January')}}', '{{$view->translate('February')}}', '{{$view->translate('March')}}', '{{$view->translate('April')}}',
+                    '{{$view->translate('May')}}', '{{$view->translate('June')}}', '{{$view->translate('July')}}', '{{$view->translate('August')}}',
+                    '{{$view->translate('September')}}', '{{$view->translate('October')}}', '{{$view->translate('November')}}', '{{$view->translate('December')}}']
 });
 </script>
