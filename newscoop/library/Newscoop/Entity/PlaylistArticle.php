@@ -8,7 +8,7 @@ namespace Newscoop\Entity;
 
 /**
  * Playlist entity
- * @Entity
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\PlaylistArticleRepository")
  * @Table(name="playlist_article",
  * 	uniqueConstraints={@UniqueConstraint(name="playlist_article", columns={"id_playlist", "article_no"})})
  */
