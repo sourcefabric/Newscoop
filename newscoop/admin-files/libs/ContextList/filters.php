@@ -250,16 +250,34 @@ function handleFilterSections(args)
 	}
 }
 
-function refreshFilterIssues()
+function resetFilterIssues() 
 {
-	var args = handleArgs();
-	callServer(['ArticleList', 'getFilterIssues'], args, handleFilterIssues);
+	$('#issue_filter >option').remove();
+}
+
+function resetFilterSections() 
+{
+	$('#section_filter >option').remove();
+}
+
+function refreshFilterIssues()
+{	
+	if($('#publication_filter').val() <= 0) {
+		resetFilterIssues();
+	} else {
+		var args = handleArgs();
+		callServer(['ArticleList', 'getFilterIssues'], args, handleFilterIssues);
+	}
 }
 
 function refreshFilterSections()
 {
-	var args = handleArgs();
-	callServer(['ArticleList', 'getFilterSections'], args, handleFilterSections);
+	if($('#publication_filter').val() <= 0) {
+		resetFilterSections();
+	} else {
+		var args = handleArgs();
+		callServer(['ArticleList', 'getFilterSections'], args, handleFilterSections);
+	}
 }
 
 $(document).ready(function()

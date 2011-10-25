@@ -70,4 +70,19 @@ class UserTopicServiceTest extends \RepositoryTestCase
         $this->assertEquals(1, count($topics));
         $this->assertEquals('3', current($topics)->getName());
     }
+
+    public function testGetTopicsDeleted()
+    {
+        $topic = new Topic(1, 1, 'test');
+        $this->em->persist($topic);
+        $this->em->flush();
+
+        $this->service->followTopic($this->user, $topic);
+
+        $this->em->remove($topic);
+        $this->em->flush();
+        $this->em->clear();
+
+        $this->assertEquals(0, count($this->service->getTopics($this->user)));
+    }
 }

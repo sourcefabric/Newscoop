@@ -39,7 +39,7 @@ class UserTest extends \RepositoryTestCase
         $this->assertFalse($user->isPublic());
 
         $this->repository->save($user, array(
-            'username' => 'foo.bar',
+            'username' => 'foo_bar',
             'password' => 'secret',
             'email' => 'foo@bar.com',
             'first_name' => 'Foo',
@@ -63,7 +63,7 @@ class UserTest extends \RepositoryTestCase
 
         $user = array_shift($users);
         $this->assertEquals(1, $user->getId());
-        $this->assertEquals('foo.bar', $user->getUsername());
+        $this->assertEquals('foo_bar', $user->getUsername());
         $this->assertTrue($user->checkPassword('secret'));
         $this->assertEquals('foo@bar.com', $user->getEmail());
         $this->assertEquals('Foo', $user->getFirstName());

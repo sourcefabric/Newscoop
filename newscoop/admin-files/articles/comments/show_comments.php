@@ -61,14 +61,32 @@ foreach ($hiddens as $name) {
         <dt><?php putGS('Date'); ?></dt>
         <dd>${time_created}</dd>
         <dt><?php putGS('Subject'); ?></dt>
-        <dd>${subject}</dd>
+        <dd>
+            <?php if ($inEditMode): ?>
+                <input type="text" value="${subject}"></input>
+            <?php else: ?>
+                ${subject}
+            <?php endif; //inEditMode?>
+        </dd>
         <dt><?php putGS('Comment'); ?></dt>
-        <dd>${message}</dd>
+        <dd>
+            <?php if ($inEditMode): ?>
+                <textarea>${message}</textarea>
+            <?php else: ?>
+                ${message}
+            <?php endif; //inEditMode?>
+        </dd>
         <?php if ($inEditMode): ?>
         <dt>&nbsp;</dt>
         <dd class="buttons">
             <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, 'comments/reply.php', '', '&f_comment_id=${id}'); ?>" class="ui-state-default text-button clear-margin"><?php putGS('Reply to comment'); ?></a>
             <span style="float:left">&nbsp;</span>
+
+            <?php if ($inEditMode): ?>
+                <a class="ui-state-default text-button clear-margin comment-update"><?php putGS('Update comment'); ?></a>
+                <span style="float:left">&nbsp;</span>
+            <?php endif; //inEditMode?>
+
             <a href="<?php echo $controller->view->url(array(
                 'module' => 'admin',
                 'controller' => 'comment',
@@ -89,7 +107,7 @@ function toggleCommentStatus(commentId) {
             var statusClassMap = { 'hidden': 'hide', 'approved': 'approve', 'pending': 'inbox'};
             var block = $(this);
             var status = $('input:radio:checked', block).val();
-            
+
             var cclass = 'comment_'+statusClassMap[status];
             var button = $('dd.buttons', block);
 
@@ -186,7 +204,7 @@ $('.action-list a').live('click',function(){
 	   "comment": el.attr('id').match(/\d+/)[0],
 	   "status": el.val()
 	};
-    
+
     var call_url = '../comment/set-status/format/json';
 
 	var res_handle = function(data) {
@@ -195,6 +213,27 @@ $('.action-list a').live('click',function(){
 	};
 
 	callServer(call_url, call_data, res_handle, true);
+});
+$('.comment-update').live('click',function(){
+	var comment, subject, body;
+
+    comment = $(this).parents('dl');
+    subject = comment.find('input').val();
+    body = comment.find('textarea').val();
+
+    var call_data = {
+       "id": comment.attr('id').match(/\d+/)[0],
+       "subject": subject,
+       "body": body
+    };
+
+    var call_url = '../comment/update-contents/format/json';
+
+    var res_handle = function(data) {
+        flashMessage('<?php putGS('Comment updated.'); ?>');
+    };
+
+    callServer(call_url, call_data, res_handle, true);
 });
 </script>
 <script type="text/javascript">

@@ -214,12 +214,12 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
                 'value': filters['<?php echo $this->id; ?>'][i],
             });
         }
-        <?php foreach (array('publication', 'issue', 'section', 'language', 'type') as $filter) {
+        <?php foreach (array('publication', 'issue', 'section', 'language', 'workflow_status', 'type') as $filter) {
             if ($filter == 'language' && !$this->order) {
                 continue; // ignore language on non-section pages
             }
 
-            if (!empty($this->$filter)) { ?>
+            if (!is_null($this->$filter)) { ?>
             aoData.push({
                 'name': '<?php echo $filter; ?>',
                 'value': '<?php echo $this->$filter; ?>',

@@ -25,6 +25,15 @@ class RecentlyModifiedArticlesWidget extends ArticlesWidget
 
     public function beforeRender()
     {
-        $this->items = Article::GetRecentlyModifiedArticles($this->getCount());
+        $this->items = Article::GetList(array(
+            new ComparisonOperation('type', new Operator('is'), 'news'),
+            new ComparisonOperation('type', new Operator('is'), 'blog'),
+            new ComparisonOperation('type', new Operator('is'), 'dossier'),
+            ), array(
+                array(
+                    'field' => 'bylastupdate',
+                    'dir' => 'desc',
+                )
+            ), 0, self::LIMIT, $count = 0);
     }
 }

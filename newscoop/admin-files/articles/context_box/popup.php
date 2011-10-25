@@ -78,14 +78,21 @@ function removeFromContext(param) {
     $("#"+param).remove();
 }
 
-function fnPreviewArticle(data) {
-	if(data.code == 200) {
-		$("#preview-article-date").val(data.date);
-		$("#preview-article-title").html(data.title);
-		$("#preview-article-body").html(data.body);
-		$(".context-block.context-list").css("display","none");
-	    $(".context-block.context-article").css("display","block");
-	}
+function fnPreviewArticle(data)
+{
+	$("#preview-article-date").val(data.date);
+	$("#preview-article-title").html(data.title);
+	var bodyHtml = '';
+	for (i in data)
+	{
+		if ($.inArray(i, ['title', 'date']) != -1) continue;
+		bodyHtml += '<h4>'+i+'</h4>';
+		bodyHtml += '<p>'+data[i]+'</p>';
+	};
+
+	$("#preview-article-body").html(bodyHtml);
+	$(".context-block.context-list").css("display","none");
+    $(".context-block.context-article").css("display","block");
 }
 
 function clearActiveArticles() {
@@ -94,20 +101,24 @@ function clearActiveArticles() {
 	});
 }
 
-function viewArticle(param) {
+function viewArticle(param, lang)
+{
 	 clearActiveArticles();
 	 $("#"+param).addClass('item-active');
 	 var relatedArticles = $('#context_list').sortable( "serialize");
-	 var aoData = new Array();
-	 var items = new Array('1_1','0_0');
 
-     aoData.push("context_box_preview_article");
-     aoData.push(items);
-     aoData.push({
-         'articleId': param,
-     });
-    $("#preview-article-id").val(param);
-    callServer(['ArticleList', 'doAction'], aoData, fnPreviewArticle);
+	 //var aoData = new Array();
+	 //var items = new Array('1_1','0_0');
+
+     //aoData.push("context_box_preview_article");
+     //aoData.push(items);
+     //aoData.push({'articleId' : param});
+     //aoData.push({'langId' : lang});
+	 //callServer(['ArticleList', 'doAction'], aoData, fnPreviewArticle);
+
+     $("#preview-article-id").val(param);
+     param = param.substring( param.lastIndexOf('_')+1 );
+     callServer('/<?php echo $ADMIN ?>/playlist/article-preview', { 'id' : param, 'lang' : lang }, fnPreviewArticle, true);
 }
 
 function closeArticle() {

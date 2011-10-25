@@ -43,7 +43,10 @@ function smarty_block_list_playlist_articles($p_params, $p_content, &$p_smarty, 
     		$p_repeat = false;
     	    return null;
     	}
-    	$campContext->setCurrentList($articlesList, array('playlist'));
+    	$campContext->setCurrentList($articlesList, array('publication', 'language',
+    	                                                  'issue', 'section', 'article',
+    	                                                  'image', 'attachment', 'comment',
+    	                                                  'subtitle'));
     	$campContext->article = $campContext->current_list->current;
     	$p_repeat = true;
     }
@@ -61,7 +64,6 @@ function smarty_block_list_playlist_articles($p_params, $p_content, &$p_smarty, 
             $p_repeat = false;
         }
     }
-    //var_dump("block: ".$campContext->current_list->current->name);
 
     return $p_content;
 }

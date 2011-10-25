@@ -8,7 +8,7 @@
 namespace Newscoop\Entity;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\UserTopicRepository")
  * @Table(name="user_topic")
  */
 class UserTopic

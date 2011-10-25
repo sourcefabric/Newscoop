@@ -43,6 +43,7 @@ final class MetaImage extends MetaDbObject {
         $this->m_customProperties['defined'] = 'defined';
         $this->m_customProperties['imageurl'] = 'getImageUrl';
         $this->m_customProperties['thumbnailurl'] = 'getThumbnailUrl';
+        $this->m_customProperties['filerpath'] = 'getImageRelativePath';
         $this->m_customProperties['is_local'] = 'isLocal';
         $this->m_customProperties['type'] = 'getType';
     } // fn __construct
@@ -125,6 +126,13 @@ final class MetaImage extends MetaDbObject {
         return $url;
     }
 
+    protected function getImageRelativePath()
+    {
+        global $Campsite;
+
+        $imagesdir = basename(rtrim($Campsite['IMAGE_DIRECTORY'], '/'));
+        return (string) $imagesdir . '/' . $this->m_dbObject->getImageFileName();
+    }
 
     protected function getMonthName() {
         $dateTime = new MetaDatetime($this->m_dbObject->getProperty('Date'));

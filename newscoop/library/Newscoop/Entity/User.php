@@ -10,7 +10,8 @@ namespace Newscoop\Entity;
 use Doctrine\Common\Collections\ArrayCollection,
     Newscoop\Utils\PermissionToAcl,
     Newscoop\Entity\Acl\Role,
-    Newscoop\Entity\User\Group;
+    Newscoop\Entity\User\Group,
+    Newscoop\Entity\Author;
 
 /**
  * @Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
@@ -126,12 +127,18 @@ class User implements \Zend_Acl_Role_Interface
      * @var Doctrine\Common\Collections\Collection;
      */
     private $commenters;
-    
+
     /**
-     * @Column(type="integer")
+     * @Column(type="integer", nullable=True)
      * @var int
      */
     private $subscriber;
+
+    /**
+     * @OneToOne(targetEntity="Author")
+     * @var Newscoop\Entity\Author
+     */
+    private $author;
 
     /**
      * @param string $email
@@ -159,8 +166,6 @@ class User implements \Zend_Acl_Role_Interface
         return (int) $this->id;
     }
 
-
-
     /**
      * Set username
      *
@@ -170,12 +175,8 @@ class User implements \Zend_Acl_Role_Interface
     public function setUsername($username)
     {
         $username = preg_replace('~[^\\pL0-9_]+~u', '-', $username);
-        $username = trim($username, "-");
-        $username = iconv("utf-8", "us-ascii//TRANSLIT", $username);
-        $username = strtolower($username);
-        $username = preg_replace('~[^-a-z0-9_]+~', '', $username);
-        $username = str_replace('-', '.', $username);
-        $this->username = (string) $username;
+        $username = trim($username, '-');
+        $this->username = str_replace('-', ' ', $username);
         return $this;
     }
 
@@ -723,5 +724,27 @@ class User implements \Zend_Acl_Role_Interface
     public function getSubscriber()
     {
         return $this->subscriber;
+    }
+
+    /**
+     * Set author
+     *
+     * @param Newscoop\Entity\Author $author
+     * @return Newscoop\Entity\User
+     */
+    public function setAuthor(Author $author = null)
+    {
+        $this->author = $author;
+        return $this;
+    }
+
+    /**
+     * Get author id
+     *
+     * @return int
+     */
+    public function getAuthorId()
+    {
+        return $this->author ? $this->author->getId() : null;
     }
 }

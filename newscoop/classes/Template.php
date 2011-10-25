@@ -348,7 +348,8 @@ class Template extends DatabaseObject {
         }
 
         // insert new templates
-        $rootDir = $Campsite['TEMPLATE_DIRECTORY'];
+        // TODO there's some bug here maybe, you get a notice on this line cause that key is undefined
+        $rootDir = @$Campsite['TEMPLATE_DIRECTORY'];
         $dirs[] = $rootDir;
         while (($currDir = array_pop($dirs)) != "") {
             if (!is_readable($currDir)) {

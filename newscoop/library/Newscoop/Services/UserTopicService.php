@@ -59,13 +59,7 @@ class UserTopicService
     public function getTopics(User $user)
     {
         $userTopics = $this->em->getRepository('Newscoop\Entity\UserTopic')
-            ->findBy(array(
-                'user' => $user->getId(),
-            ));
-
-        if (empty($userTopics)) {
-            return array();
-        }
+            ->findByUser($user);
 
         $topics = array();
         foreach ($userTopics as $userTopic) {
@@ -92,8 +86,15 @@ class UserTopicService
             return null;
         }
 
-        // @todo select by language
-        return array_shift($topics);
+        $germanTopic = null;
+        foreach ($topics as $topic) {
+            if (5 == $topic->getLanguageId()) { // first go for german
+                $germanTopic = $topic;
+                break;
+            }
+        }
+
+        return empty($germanTopic) ? $topics[0] : $germanTopic;
     }
 
     /**

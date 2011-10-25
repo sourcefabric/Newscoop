@@ -157,7 +157,18 @@ UNLOCK TABLES;
 
 LOCK TABLES `Authors` WRITE;
 /*!40000 ALTER TABLE `Authors` DISABLE KEYS */;
-INSERT  IGNORE INTO `Authors` VALUES (1,'Douglas','Arellanes','doug@campware.org',NULL,NULL,NULL,NULL,NULL,NULL),(2,'James Q.','Reporter','',NULL,'','','',NULL,56),(3,'Sarah','Staffwriter','',NULL,'','','',NULL,59),(12,'Source','Fabric','office@sourcefabric.org',NULL,'','','',NULL,61),(5,'Jeffrey','McManus','jeffreymcmanus@gmail.com',NULL,NULL,NULL,NULL,NULL,NULL),(6,'Global Wire','Service','',NULL,'','','',NULL,55),(7,'Jane','Stockwriter','',NULL,'','','',NULL,57),(9,'Test','Persona','',NULL,'','','',NULL,60),(10,'Orlando','Persona','',NULL,'','','',NULL,58),(11,'Amerigo','Vespucci','amerigo.vespucci@thejournal.com',NULL,'','','',NULL,53),(13,'Frank N.','Stein','',NULL,'','','',NULL,54);
+INSERT  IGNORE INTO `Authors` (`id`, `first_name`, `last_name`, `email`, `image`) VALUES
+(1, 'Douglas', 'Arellanes', 'doug@campware.org', NULL),
+(2, 'James Q.', 'Reporter', '', 56),
+(3, 'Sarah', 'Staffwriter', '', 59),
+(12, 'Source', 'Fabric', 'office@sourcefabric.org', 61),
+(5, 'Jeffrey', 'McManus', 'jeffreymcmanus@gmail.com', NULL),
+(6, 'Global Wire', 'Service', '', 55),
+(7, 'Jane', 'Stockwriter', '', 57),
+(9, 'Test', 'Persona', '', 60),
+(10, 'Orlando', 'Persona', '', 58),
+(11, 'Amerigo', 'Vespucci', 'amerigo.vespucci@thejournal.com', 53),
+(13, 'Frank N.', 'Stein', '', 54);
 /*!40000 ALTER TABLE `Authors` ENABLE KEYS */;
 UNLOCK TABLES;
 

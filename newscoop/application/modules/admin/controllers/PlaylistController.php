@@ -10,10 +10,12 @@
  * PlaylistController
  * @Acl(resource="playlist", action="manage")
  */
+use Newscoop\Service\Implementation\ArticleTypeServiceDoctrine;
 use Newscoop\Utils\Exception;
 use Newscoop\Service\Implementation\var_hook;
 use Newscoop\Entity\Language;
 use Newscoop\Entity\Playlist;
+
 class Admin_PlaylistController extends Zend_Controller_Action
 {
     /**
@@ -25,6 +27,10 @@ class Admin_PlaylistController extends Zend_Controller_Action
      * @var Newscoop\Entity\Repository\PlaylistArticleRepository
      */
     private $playlistArticleRepository = NULL;
+
+    /**
+     * @var Newscoop\Services\Resource\ResourceId
+     */
 
     public function init()
     {
@@ -49,6 +55,7 @@ class Admin_PlaylistController extends Zend_Controller_Action
     {
         $this->_helper->layout->setLayout('iframe');
         $playlist = $this->playlistRepository->find($this->_request->getParam('id', null));
+
         if ($playlist instanceof \Newscoop\Entity\Playlist)
         {
             $this->view->playlistName = $playlist->getName();
@@ -113,5 +120,19 @@ class Admin_PlaylistController extends Zend_Controller_Action
         else {
             $this->view->error = $playlist->getFile().":".$playlist->getLine()." ".$playlist->getMessage();
         }
+    }
+
+    public function articlePreviewAction()
+    {
+        $articleId = $this->_getParam('id');
+        $languageId = $this->_getParam('lang');
+        $article = new Article($languageId, $articleId);
+        $this->_helper->redirector->gotoUrl
+        (
+            $this->view->baseUrl("admin/articles/get.php?") . $this->view->linkArticleObj($article),
+            array( 'prependBase' => false )
+        );
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->_helper->layout->disableLayout(true);
     }
 }

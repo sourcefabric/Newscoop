@@ -59,6 +59,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         $this->bootstrap('autoloader');
         $container = new sfServiceContainerBuilder($this->getOptions());
+        $container['config'] = $this->getOptions();
 
         $this->bootstrap('doctrine');
         $doctrine = $this->getResource('doctrine');
@@ -75,6 +76,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(Zend_Auth::getInstance());
 
         $container->register('user.list', 'Newscoop\Services\ListUserService')
+            ->addArgument('%config%')
             ->addArgument(new sfServiceReference('em'));
 
         $container->register('user.token', 'Newscoop\Services\UserTokenService')
@@ -87,6 +89,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('em'));
 
         $container->register('user_attributes', 'Newscoop\Services\UserAttributeService')
+            ->addArgument(new sfServiceReference('em'));
+
+        $container->register('author', 'Newscoop\Services\AuthorService')
             ->addArgument(new sfServiceReference('em'));
 
         $container->register('audit', 'Newscoop\Services\AuditService')
@@ -204,6 +209,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ), array(
                 'webcode' => '^@[a-z]{5,6}',
             )));
+
          $router->addRoute(
             'language/webcode',
             new Zend_Controller_Router_Route(':language/:webcode', array(
@@ -222,35 +228,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             )));
 
         $router->addRoute(
-            'user-search',
-            new Zend_Controller_Router_Route('search/:search/:page', array(
-                'module' => 'default',
-                'controller' => 'user',
-                'action' => 'index',
-                'page' => 1,
-            )));
-
-        $router->addRoute(
-            'user-list',
-            new Zend_Controller_Router_Route('listing/:user-listing/:page', array(
-                'module' => 'default',
-                'controller' => 'user',
-                'action' => 'index',
-                'page' => 1,
-            )));
-
-        $router->addRoute(
-            'user-active',
-            new Zend_Controller_Router_Route('active/:page', array(
-                'module' => 'default',
-                'controller' => 'user',
-                'action' => 'index',
-                'page' => 1,
-            )));
-
-        $router->addRoute(
             'user',
-            new Zend_Controller_Router_Route('user/:username/:action', array(
+            new Zend_Controller_Router_Route('user/profile/:username/:action', array(
                 'module' => 'default',
                 'controller' => 'user',
                 'action' => 'profile',

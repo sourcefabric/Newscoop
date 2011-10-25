@@ -35,6 +35,13 @@ $deleteUrl = $this->url( array
 	'module' => 'admin',
 	'format' => 'json'
 ), null, null, false);
+$articlePreviewUrl = $this->url( array
+(
+    'action' => 'article-preview',
+    'controller' => 'playlist',
+    'module' => 'admin',
+    'format' => 'json'
+), null, true, false);
 
 $js = <<<JS
 
@@ -99,13 +106,19 @@ function removeFromContext(param)
 
 function fnPreviewArticle(data)
 {
-	if(data.code == 200) {
-		$("#preview-article-date").val(data.date);
-		$("#preview-article-title").html(data.title);
-		$("#preview-article-body").html(data.body);
-		$(".context-block.context-list").css("display","none");
-	    $(".context-block.context-article").css("display","block");
-	}
+	$("#preview-article-date").val(data.date);
+	$("#preview-article-title").html(data.title);
+	var bodyHtml = '';
+	for (i in data)
+	{
+		if ($.inArray(i, ['title', 'date']) != -1) continue;
+		bodyHtml += '<h4>'+i+'</h4>';
+		bodyHtml += '<p>'+data[i]+'</p>';
+	};
+
+	$("#preview-article-body").html(bodyHtml);
+	$(".context-block.context-list").css("display","none");
+    $(".context-block.context-article").css("display","block");
 }
 
 function clearActiveArticles() {
@@ -114,21 +127,14 @@ function clearActiveArticles() {
 	});
 }
 
-function viewArticle(param)
+function viewArticle(param, lang)
 {
-	 clearActiveArticles();
-	 $("#"+param).addClass('item-active');
-	 var relatedArticles = $('#context_list').sortable( "serialize");
-	 var aoData = new Array();
-	 var items = new Array('1_1','0_0');
-
-     aoData.push("context_box_preview_article");
-     aoData.push(items);
-     aoData.push({
-         'articleId': param,
-     });
-    $("#preview-article-id").val(param);
-    callServer(['ArticleList', 'doAction'], aoData, fnPreviewArticle);
+	clearActiveArticles();
+	$("#"+param).addClass('item-active');
+	param = param.substring( param.lastIndexOf('_')+1 );
+	$("#preview-article-id").val(param);
+	callServer('{$articlePreviewUrl}', { 'id' : param, 'lang' : lang }, fnPreviewArticle, true);
+	return;
 }
 
 function closeArticle()
@@ -236,8 +242,6 @@ $this->headScript()->appendScript( $js, "text/javascript" );
 
 ?>
 
-
-
 <div class="content">
 	<div id="context-box" class="block-shadow">
 		<div class="toolbar">
@@ -275,7 +279,6 @@ $this->headScript()->appendScript( $js, "text/javascript" );
                 $contextlist = new ContextList();
                 $contextlist->setSearch(TRUE);
                 $contextlist->setOrder(TRUE);
-                $contextlist->setLanguage($this->languageId);
                 $contextlist->setFilter('type', 'news');
                 $contextlist->renderFilters();
                 $contextlist->render();

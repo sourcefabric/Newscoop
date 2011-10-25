@@ -23,8 +23,6 @@ $publicationObj = new Publication($Pub);
 $issueObj = new Issue($Pub, $Language, $Issue);
 $sectionObj = new Section($Pub, $Issue, $Language, $Section);
 
-$templates = Template::GetAllTemplates(null, true, true, true);
-
 $topArray = array('Pub' => $publicationObj, 'Issue' => $issueObj, 'Section' => $sectionObj);
 camp_html_content_top(getGS("Configure section"), $topArray);
 

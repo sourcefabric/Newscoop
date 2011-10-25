@@ -28,7 +28,8 @@ final class MetaAuthor extends MetaDbObject
         'biography' => 'getBiography',
         'picture' => 'getImage',
         'type' => 'getType',
-        'defined' => 'defined'
+        'defined' => 'defined',
+        'user' => 'getUser',
     );
 
     /** @var AuthorBiography **/
@@ -72,6 +73,15 @@ final class MetaAuthor extends MetaDbObject
     {
         return $this->m_dbObject->getAuthorType()->getName();
     }
-}
 
-?>
+    /**
+     * Get user related to author
+     *
+     * @return MetaUser
+     */
+    public function getUser()
+    {
+        $user = \Zend_Registry::get('container')->getService('user')->findByAuthor($this->m_dbObject->getId());
+        return new \MetaUser($user);
+    }
+}

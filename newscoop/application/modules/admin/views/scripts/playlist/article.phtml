@@ -44,6 +44,8 @@ $saveUrl = $this->url( array
 	'format' => 'json'
 ), null, true, false);
 
+$articleName = $this->article->getName();
+$articleName = addslashes($articleName);
 
 $js = <<<JS
 
@@ -170,16 +172,43 @@ function popup_save()
 		return false;
 	}
 	var articles = [];
+	var hasArticle = false;
 	$('#context-list-form').find('input[type=hidden]').each(function()
 	{
 		articles.push($(this).val());
+		if ('{$this->article->getId()}' == $(this).val()) {
+			hasArticle = true;
+		}
 	});
     var aoData =
     {
         'articles': articles,
         'id': $('#playlists').val()
     };
-    callServer('{$saveUrl}', aoData, fnSaveCallback, true );
+
+    var saveCallback = function(data)
+    {
+    	var playlistId = $('#playlists').val();
+
+		if (hasArticle && parent.$('#added-to-playlists [playlist-id='+playlistId+']').length == 0)
+		{
+			var newItem = $('<li />').attr('playlist-id', playlistId)
+							.text($("#playlists option[value='"+playlistId+"']").text())
+			parent.$("#added-to-playlists").append(newItem);
+    	}
+
+    	if (!hasArticle)
+			parent.$('#added-to-playlists [playlist-id='+playlistId+']').remove();
+
+    	if (parent.$('#added-to-playlists > *').length == 0)
+			parent.$('#playlist-default-message').show();
+		else
+			parent.$('#playlist-default-message').hide();
+
+    	fnSaveCallback.call(this, data);
+    }
+
+    callServer('{$saveUrl}', aoData, saveCallback, true );
 }
 
 function popup_add()
@@ -190,7 +219,7 @@ function popup_add()
 		return false;
 	}
 	if( !$('#context_list').find('input:hidden[value={$this->article->getId()}]').length )
-		appendItemToContextList( '{$this->article->getId()}', '{$this->article->getDate()}', '{$this->article->getName()}', true );
+		appendItemToContextList( '{$this->article->getId()}', '{$this->article->getDate()}', '{$articleName}', true );
 	else
 		flashMessage('{$t['item-exists']}', 'error', false);
 }
