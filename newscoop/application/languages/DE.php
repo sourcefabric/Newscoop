@@ -8,6 +8,7 @@ return array(
 	'Melden Sie sich bei der TagesWoche an, um Artikel zu kommentieren und Mitteilungen direkt an die Redaktion zu schicken.',
 	'login_link_text' => 'Warum muss ich mich registrieren?',
 	'Register' => 'Benutzerkonto anlegen',
+    'Forgot password' => 'Passwort vergessen',
 	'Login' => 'Login',
 	'Send message to the editorial team' => 'Mitteilung an die Redaktion senden',
 	'You are logged in as %s' => 'Sie sind eingeloggt als %s',
