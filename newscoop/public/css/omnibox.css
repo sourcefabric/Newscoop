@@ -89,6 +89,16 @@
 	border: solid 1px #09d987;
 	margin: 2px;
 }
+
+#ob_wrapper .text_container .login_button {
+	float: right;
+	width: 100px;
+	font-size:11px; font-family:Arial, Helvetica, sans-serif; line-height:11px;
+	border: solid 1px #09d987;
+	margin: 2px;
+    margin-top: 12px;
+}
+
 #ob_wrapper .text_container #ob_file_upload_container {
 	float: left;
 }
