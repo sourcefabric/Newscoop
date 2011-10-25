@@ -223,8 +223,7 @@ class UserRepository extends EntityRepository
         $qb->andWhere($letterIndex);
 
         if ($countOnly === false) {
-            $qb->orderBy('u.last_name', 'ASC');
-            $qb->addOrderBy('u.first_name', 'ASC');
+            $qb->orderBy('u.username', 'ASC');
             $qb->addOrderBy('u.id', 'ASC');
 
             $qb->setFirstResult($offset);
