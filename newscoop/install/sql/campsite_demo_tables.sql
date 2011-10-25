@@ -1193,6 +1193,7 @@ CREATE TABLE `liveuser_users` (
   `points` int(10) DEFAULT '0',
   `image` varchar(255) DEFAULT NULL,
   `subscriber` int(10) DEFAULT NULL,
+  `author_id` int(10) unsigned DEFAULT NULL,
   PRIMARY KEY (`Id`),
   UNIQUE KEY `UName` (`UName`)
 ) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;

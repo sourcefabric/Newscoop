@@ -8,6 +8,7 @@
 namespace Newscoop\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository,
+    Doctrine\ORM\Query\Expr,
     Newscoop\Entity\User;
 
 /**
@@ -148,7 +149,7 @@ class UserRepository extends EntityRepository
         $qb = $this->getEntityManager()->createQueryBuilder()
             ->select('COUNT(u.id)')
             ->from('Newscoop\Entity\User', 'u')
-            ->where("u.{$property} = ?0");
+            ->where("LOWER(u.{$property}) = LOWER(?0)");
 
         $params = array($value);
 
@@ -217,13 +218,12 @@ class UserRepository extends EntityRepository
 
         $letterIndex = $qb->expr()->orx();
         for ($i=0; $i < count($letters); $i++) {
-            $letterIndex->add($qb->expr()->like("u.last_name", "'$letters[$i]%'"));
+            $letterIndex->add($qb->expr()->like("LOWER(u.username)", "'$letters[$i]%'"));
         }
         $qb->andWhere($letterIndex);
 
         if ($countOnly === false) {
-            $qb->orderBy('u.last_name', 'ASC');
-            $qb->addOrderBy('u.first_name', 'ASC');
+            $qb->orderBy('u.username', 'ASC');
             $qb->addOrderBy('u.id', 'ASC');
 
             $qb->setFirstResult($offset);
@@ -299,5 +299,62 @@ class UserRepository extends EntityRepository
         }
 
         return $users;
+    }
+
+    /**
+     * Get editors
+     *
+     * @param int $blogRole
+     * @param int $limit
+     * @param int $offset
+     * @return array
+     */
+    public function findEditors($blogRole, $limit, $offset)
+    {
+        $query = $this->createQueryBuilder('u')
+            ->leftJoin('u.groups', 'g', Expr\Join::WITH, 'g.id = ' . $blogRole)
+            ->where('u.is_admin = :admin')
+            ->andWhere('u.status = :status')
+            ->andWhere('u.author IS NOT NULL')
+            ->andWhere('g.id IS NULL')
+            ->orderBy('u.username', 'asc')
+            ->setFirstResult($offset)
+            ->setMaxResults($limit)
+            ->getQuery();
+
+        $query->setParameters(array(
+            'admin' => 1,
+            'status' => User::STATUS_ACTIVE,
+        ));
+
+        return $query->getResult();
+    }
+
+    /**
+     * Get editors count
+     *
+     * @param int $blogRole
+     * @return int
+     */
+    public function getEditorsCount($blogRole)
+    {
+        $query = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('COUNT(u)')
+            ->from('Newscoop\Entity\User', 'u')
+            ->leftJoin('u.groups', 'g', Expr\Join::WITH, 'g.id = ' . $blogRole)
+            ->where('u.is_admin = :admin')
+            ->andWhere('u.status = :status')
+            ->andWhere('u.author IS NOT NULL')
+            ->andWhere('g.id IS NULL')
+            ->orderBy('u.username', 'asc')
+            ->getQuery();
+
+        $query->setParameters(array(
+            'admin' => 1,
+            'status' => User::STATUS_ACTIVE,
+        ));
+
+        return $query->getSingleScalarResult();
     }
 }

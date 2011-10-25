@@ -17,10 +17,10 @@ require_once WWW_DIR . '/classes/GeoMap.php';
 class ArticleList extends BaseList
 {
 	/** @var int */
-	protected $publication = 0;
+	protected $publication = null;
 
 	/** @var int */
-	protected $issue = 0;
+	protected $issue = null;
 
 	/** @var int */
 	protected $section = null;
@@ -28,7 +28,10 @@ class ArticleList extends BaseList
 	/** @var int */
 	protected $language = null;
 
-    /** @var string */
+	/** @var int */
+	protected $workflow_status = null;
+
+	/** @var string */
     protected $type = null;
 
 	/** @var array */
@@ -69,6 +72,7 @@ class ArticleList extends BaseList
             'Language' => getGS('Language'),
             'Order' => getGS('Order'),
             'Name' => getGS('Title'),
+//             'Section' => getGS('Section'),
             'Type' => getGS('Type'),
             'Created' => getGS('Created by'),
             'Author' => getGS('Author'),
@@ -95,7 +99,7 @@ class ArticleList extends BaseList
 	 */
 	public function setPublication($publication)
 	{
-		$this->publication = empty($publication) ? NULL : (int) $publication;
+		$this->publication = is_null($publication) ? NULL : (int) $publication;
 		return $this;
 	}
 
@@ -106,7 +110,7 @@ class ArticleList extends BaseList
 	 */
 	public function setIssue($issue)
 	{
-		$this->issue = empty($issue) ? NULL : (int) $issue;
+		$this->issue = is_null($issue) ? NULL : (int) $issue;
 		return $this;
 	}
 
@@ -117,7 +121,7 @@ class ArticleList extends BaseList
 	 */
 	public function setSection($section)
 	{
-		$this->section = empty($section) ? NULL : (int) $section;
+		$this->section = is_null($section) ? NULL : (int) $section;
 		return $this;
 	}
 
@@ -130,6 +134,19 @@ class ArticleList extends BaseList
 	{
 		$this->language = empty($language) ? 1 : (int) $language;
 		return $this;
+	}
+
+	/**
+	 * Set status.
+	 * @param string $status
+	 * @return ArticleList
+	 */
+	public function setWorkflowStatus($status)
+	{
+	    if (array_search($status, array('pending', 'new', 'submitted', 'withissue', 'published')) !== false) {
+	        $this->workflow_status = $status;
+	    }
+	    return $this;
 	}
 
     /**
@@ -296,6 +313,7 @@ class ArticleList extends BaseList
 		$articleLink,
 		getGS('Edit'), $article->getName() . " ({$article->getLanguageName()})",
 		$article->getName() . (empty($_REQUEST['language']) ? " ({$language->getCode()})" : '')),
+//		$article->getSection()->getName(),
 		$tmpArticleType->getDisplayName(),
 		$tmpUser->getRealName(),
 		$tmpAuthor->getName(),

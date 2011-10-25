@@ -686,6 +686,17 @@ class Article extends DatabaseObject {
             // Delete file pointers
             ArticleAttachment::OnArticleDelete($this->m_data['Number']);
 
+            // Delete related articles
+            ContextBox::OnArticleDelete($this->m_data['Number']);
+
+            ContextBoxArticle::OnArticleDelete($this->m_data['Number']);
+
+            // Delete the article from playlists
+            $em = Zend_Registry::get('doctrine')->getEntityManager();
+            $repository = $em->getRepository('Newscoop\Entity\PlaylistArticle');
+            $repository->deleteArticle($this->m_data['Number']);
+            $em->flush();
+
             // Delete indexes
             ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueNumber(),
                 $this->getSectionNumber(), $this->getLanguageId(), $this->getArticleNumber());
@@ -2096,12 +2107,16 @@ class Article extends DatabaseObject {
             FROM Articles
             WHERE
                 Articles.Published = 'Y'
-                AND Articles.Number IN ( SELECT NrArticle FROM `Xnews` WHERE FArticle_Of_The_Day = '1')
+                AND
+                    (Articles.Number IN ( SELECT NrArticle FROM `Xnewswire` WHERE FArticle_Of_The_Day = '1') OR
+                    Articles.Number IN ( SELECT NrArticle FROM `Xnews` WHERE FArticle_Of_The_Day = '1'))
                 AND DATE(Articles.PublishDate) >= '$p_start_date'
                 AND DATE(Articles.PublishDate) <= '$p_end_date'
-                AND (Articles.Type = 'news' )
+                AND (Articles.Type = 'news' OR Articles.Type = 'newswire' )
             ORDER BY Articles.PublishDate asc,
                     Articles.time_updated asc";
+
+        //echo $queryStr;
 
         $articles = DbObjectArray::Create('Article', $queryStr);
 
@@ -2533,6 +2548,11 @@ class Article extends DatabaseObject {
                     $selectClauseObj->addConditionalWhere($isNullCond);
                 } elseif ($leftOperand == 'type' && $comparisonOperation['symbol'] == '=' ) {
 					$selectClauseObj->addConditionalWhere($whereCondition);
+                } elseif ($leftOperand == 'workflow_status'
+                && isset($comparisonOperation['pending'])) {
+                    $selectClauseObj->addConditionalWhere('Articles.NrIssue = 0');
+                    $selectClauseObj->addConditionalWhere('Articles.NrSection = 0');
+                    $selectClauseObj->addWhere($whereCondition);
                 } else {
                 	$selectClauseObj->addWhere($whereCondition);
                 }
@@ -2819,6 +2839,8 @@ class Article extends DatabaseObject {
         case 'workflow_status':
             $conditionOperation['symbol'] = '=';
             switch(strtolower($p_param->getRightOperand())) {
+            case 'pending':
+                $conditionOperation['pending'] = true;
             case 'new':
                 $conditionOperation['right'] = 'N';
                 break;

@@ -46,7 +46,7 @@ $fields = array(
 );
 
 //fix for the new issue filters
-if( isset($_REQUEST['issue']) ) {
+if( isset($_REQUEST['issue']) && $_REQUEST['issue'] > 0 ) {
 	if($_REQUEST['issue'] != 0) {
 		$issueFiltersArray = explode('_', $_REQUEST['issue']);
 		if(count($issueFiltersArray) > 1) {
@@ -56,8 +56,9 @@ if( isset($_REQUEST['issue']) ) {
 		}
 	}
 }
+
 //fix for the new section filters
-if( isset($_REQUEST['section']) ) {
+if( isset($_REQUEST['section']) && $_REQUEST['section'] > 0 ) {
 	if($_REQUEST['section'] != 0) {
 		$sectionFiltersArray = explode('_', $_REQUEST['section']);
 		if(count($sectionFiltersArray) > 1) {
@@ -69,7 +70,8 @@ if( isset($_REQUEST['section']) ) {
 }
 
 foreach ($filters as $name => $opts) {
-    if (!empty($_REQUEST[$name])) {
+    if (isset($_REQUEST[$name])
+    && (!empty($_REQUEST[$name]) || $_REQUEST[$name] === 0)) {
         $field = !empty($fields[$name]) ? $fields[$name] : $name;
         $articlesParams[] = new ComparisonOperation($field, new Operator($opts[0], $opts[1]), $_REQUEST[$name]);
     }

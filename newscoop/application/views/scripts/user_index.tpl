@@ -3,32 +3,29 @@
 {{block content}}
 
 <div>
-    <form method="post" action="{{ $view->url() }}">
-        <input type="text" name="users_search"></input>
+    <form method="GET" action="{{ $view->url(['controller' => 'user', 'action' => 'search'], 'default', true) }}">
+        <input type="text" name="q"></input>
         <input type="submit" value="search"></input>
     </form>
 </div>
 
 <h1>Users index</h1>
 
-<table>
-    <tbody>
-        <tr>
-            <td><a href="{{ $view->url([], 'user-active') }}">Active</a></td>
-            <td><a href="{{ $view->url(['user-listing' => 'A-Z'], 'user-list') }}">All</a></td>
-            <td><a href="{{ $view->url(['user-listing' => 'A-D'], 'user-list') }}">A-D</a></td>
-            <td><a href="{{ $view->url(['user-listing' => 'E-K'], 'user-list') }}">E-K</a></td>
-            <td><a href="{{ $view->url(['user-listing' => 'L-P'], 'user-list') }}">L-P</a></td>
-            <td><a href="{{ $view->url(['user-listing' => 'Q-T'], 'user-list') }}">Q-T</a></td>
-            <td><a href="{{ $view->url(['user-listing' => 'U-Z'], 'user-list') }}">U-Z</a></td>
-        </tr>
-    </tbody>
-</table>
+<ul class="tabs">
+    <li><a href="{{ $view->url(['controller' => 'user', 'action' => 'index'], 'default', true) }}">Active</a></li>
+    <li><a href="{{ $view->url(['controller' => 'user', 'action' => 'filter', 'f' => 'a-z'], 'default', true) }}">All</a></li>
+    <li><a href="{{ $view->url(['controller' => 'user', 'action' => 'filter', 'f' => 'a-d'], 'default', true) }}">A-D</a></li>
+    <li><a href="{{ $view->url(['controller' => 'user', 'action' => 'filter', 'f' => 'e-k'], 'default', true) }}">E-K</a></li>
+    <li><a href="{{ $view->url(['controller' => 'user', 'action' => 'filter', 'f' => 'l-p'], 'default', true) }}">L-P</a></li>
+    <li><a href="{{ $view->url(['controller' => 'user', 'action' => 'filter', 'f' => 'q-t'], 'default', true) }}">Q-T</a></li>
+    <li><a href="{{ $view->url(['controller' => 'user', 'action' => 'filter', 'f' => 'u-z'], 'default', true) }}">U-Z</a></li>
+    <li><a href="{{ $view->url(['controller' => 'user', 'action' => 'editors'], 'default', true) }}">Editors</a></li>
+</ul>
 
 <ul class="users">
     {{ foreach $users as $user }}
     <li>
-        <h3>{{ $user->name }}</h3>
+        <h3>{{ $user->uname }}</h3>
         {{ if $user->image }}
         <img src="{{ $user->image }}" />
         {{ /if }}

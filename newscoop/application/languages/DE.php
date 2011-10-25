@@ -4,10 +4,11 @@
 
 return array(
 	'Please login' => 'Bitte loggen Sie sich ein',
-	'You have to be registered at TagesWoche in order to comment on articles and send messages directly to the editorial team. Please login or create a free user account on TagesWoche.' => 
+	'You have to be registered at TagesWoche in order to comment on articles and send messages directly to the editorial team. Please login or create a free user account on TagesWoche.' =>
 	'Melden Sie sich bei der TagesWoche an, um Artikel zu kommentieren und Mitteilungen direkt an die Redaktion zu schicken.',
 	'login_link_text' => 'Warum muss ich mich registrieren?',
 	'Register' => 'Benutzerkonto anlegen',
+    'Forgot password' => 'Passwort vergessen',
 	'Login' => 'Login',
 	'Send message to the editorial team' => 'Mitteilung an die Redaktion senden',
 	'You are logged in as %s' => 'Sie sind eingeloggt als %s',
@@ -35,5 +36,17 @@ return array(
     'Your message is sent.' => 'Your message is sent.',
     'Following errors have been found:' => 'Following errors have been found:',
     'You have been banned from writing comments.' => 'You have been banned from writing comments.',
-    'The comment content was not filled in.' => 'The comment content was not filled in.'
+    'The comment content was not filled in.' => 'The comment content was not filled in.',
+    'January' => 'Januar',
+    'February' => 'Februar',
+    'March' => 'März',
+    'April' => 'April',
+    'May' => 'Mai',
+    'June' => 'Juni',
+    'July' => 'Juli',
+    'August' => 'August',
+    'September' => 'September',
+    'October' => 'Oktober',
+    'November' => 'November',
+    'December' => 'Dezember'
 );

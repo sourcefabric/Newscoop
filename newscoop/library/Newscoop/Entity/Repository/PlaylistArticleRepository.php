@@ -1,0 +1,67 @@
+<?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
+
+namespace Newscoop\Entity\Repository;
+
+use Newscoop\Entity\PlaylistArticle,
+    Newscoop\Entity\Language,
+    Newscoop\Entity\Playlist,
+    Doctrine\ORM\EntityRepository,
+    Newscoop\Entity\Theme,
+    Newscoop\Entity\Theme\Loader,
+    Newscoop\Entity\Article;
+
+class PlaylistArticleRepository extends EntityRepository
+{
+    /**
+     * Delete playlist
+     * @param Newscoop\Entity\Playlist $playlist
+     */
+    public function onPlaylistDelete(Newscoop\Entity\Playlist $playlist)
+    {
+        $em = $this->getEntityManager();
+        $query = $em->createQuery("DELETE FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.playlist = ?1");
+        $query->setParameter(1, $playlist);
+        try
+        {
+            $query->execute();
+        }
+        catch (\Exception $e)
+        {
+            echo $e->getMessage();
+            // TODO log here
+            return array();
+        }
+        $rows = $query->getResult();
+        return $rows;
+    }
+
+    /**
+     * Delete article from playlists
+     * @param int $articleId
+     */
+    public function deleteArticle($articleId)
+    {
+        $em = $this->getEntityManager();
+        $article = new Article();
+        $article->setId($articleId);
+        $query = $em->createQuery("DELETE FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.article = ?1");
+        $query->setParameter(1, $article);
+        try
+        {
+            $query->execute();
+        }
+        catch (\Exception $e)
+        {
+            echo $e->getMessage();
+            // TODO log here
+            return array();
+        }
+        $rows = $query->getResult();
+        return $rows;
+    }
+}

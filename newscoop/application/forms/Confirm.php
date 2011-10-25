@@ -16,18 +16,21 @@ class Application_Form_Confirm extends Zend_Form
             'required' => true,
             'filters' => array('stringTrim'),
         ));
+        $this->getElement('first_name')->setOrder(1);
 
         $this->addElement('text', 'last_name', array(
             'label' => 'Last Name*:',
             'required' => true,
             'filters' => array('stringTrim'),
         ));
+        $this->getElement('last_name')->setOrder(2);
 
         $this->addElement('text', 'username', array(
             'label' => 'Username*:',
             'required' => true,
             'filters' => array('stringTrim'),
         ));
+        $this->getElement('username')->setOrder(3);
 
         $this->addElement('password', 'password', array(
             'label' => 'Password*:',
@@ -37,6 +40,7 @@ class Application_Form_Confirm extends Zend_Form
                 array('stringLength', false, array(6, 80)),
             ),
         ));
+        $this->getElement('password')->setOrder(4);
 
         $form = $this;
         $this->addElement('password', 'password_confirm', array(
@@ -50,10 +54,12 @@ class Application_Form_Confirm extends Zend_Form
             ),
             'errorMessages' => array("Password confirmation does not match your password."),
         ));
+        $this->getElement('password_confirm')->setOrder(5);
 
         $this->addElement('submit', 'submit', array(
             'label' => 'Login',
             'ignore' => true,
         ));
+        $this->getElement('submit')->setOrder(7);
     }
 }

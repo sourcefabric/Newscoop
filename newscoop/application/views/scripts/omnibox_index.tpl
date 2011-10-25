@@ -82,7 +82,7 @@
 		<div class="clear"></div>
 		<div class="text_container left half">
 			{{ $view->translate('You have to be registered at TagesWoche in order to comment on articles and send messages directly to the editorial team. Please login or create a free user account on TagesWoche.') }}
-			<br><a href="{{ $view->baseUrl('/de/pages/about/3919/Dialogkultur.htm>') }}">{{ $view->translate('login_link_text') }}</a>
+			<br><a href="{{ $view->baseUrl('/de/pages/about/3919/Dialogkultur.htm') }}">{{ $view->translate('login_link_text') }}</a>
 		</div>
 		<div class="text_container right half">
                         <div class="login_label">{{ $view->translate('E-Mail') }}</div>
@@ -92,8 +92,9 @@
                         <div class="clear"></div>
 			<input type="password" id="ob_password" name="ob_password" class="small right" onKeyPress="if (event.keyCode == 13) omnibox.login();"><br>
 			<div class="clear"></div>
-			<input type="button" class="send_button right" value="{{ $view->translate('Login') }}" onClick="omnibox.login();">
+			<input type="button" class="login_button right" value="{{ $view->translate('Login') }}" onClick="omnibox.login();">
 			<a class="register_link right" href="{{ $view->baseUrl('/register') }}">{{ $view->translate('Register') }}</a>
+            <a class="register_link right" href="{{ $view->baseUrl('/auth/password-restore ') }}">{{ $view->translate('Forgot password') }}</a>
 		</div>
 		
 		<div class="clear"></div>
