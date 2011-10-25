@@ -33,6 +33,16 @@ class Author
     private $last_name;
 
     /**
+     * @param string $firstName
+     * @param string $lastName
+     */
+    public function __construct($firstName, $lastName)
+    {
+        $this->first_name = (string) $firstName;
+        $this->last_name = (string) $lastName;
+    }
+
+    /**
      * Get id
      *
      * @return int
