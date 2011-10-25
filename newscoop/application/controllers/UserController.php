@@ -11,8 +11,13 @@ use Newscoop\Entity\User;
  */
 class UserController extends Zend_Controller_Action
 {
+    const LIMIT = 8;
+
     /** @var Newscoop\Services\ListUserService */
     private $service;
+
+    /** @var int */
+    private $page;
 
     public function init()
     {
@@ -21,67 +26,79 @@ class UserController extends Zend_Controller_Action
         $this->_helper->contextSwitch()
             ->addActionContext('send-email', 'json')
             ->initContext();
+
+        $this->page = $this->_getParam('page', 1);
+        if ($this->page < 1) {
+            $this->page = 1;
+        }
     }
 
     public function indexAction()
     {
-        $range = $this->_getParam('user-listing', NULL);
-        $search = $this->_getParam('users_search', NULL);
-        $page = $this->_getParam('page', 1);
+        $count = $this->service->getActiveUsers(true);
+        $users = $this->service->getActiveUsers(false, $this->page, self::LIMIT);
 
-        $active = false;
-        if (is_null($range) && is_null($search)) {
-            $active = true;
-        }
+        $this->setViewUsers($users);
+        $this->setViewPaginator($count, self::LIMIT);
+    }
 
-        $items_per_page = 25;
-        $count = null;
+    public function searchAction()
+    {
+        $query = $this->_getParam('q');
+        $users = $this->service->findUsersBySearch($query);
+        $this->setViewUsers($users);
+        $this->setViewPaginator(0, self::LIMIT);
+        $this->render('index');
+    }
 
-        if($active === true) {
-            $items_per_page = 8;
+    public function filterAction()
+    {
+        list($from, $to) = array_map('strtolower', explode('-', $this->_getParam('f', 'a-z')));
+        $letters = range($from, $to);
+        $count = $this->service->findUsersLastNameInRange($letters, true);
+        $users = $this->service->findUsersLastNameInRange($letters, false, $this->page, self::LIMIT);
+        $this->setViewUsers($users);
+        $this->setViewPaginator($count, self::LIMIT);
+        $this->render('index');
+    }
 
-            $count = $this->service->getActiveUsers(true);
-            $users = $this->service->getActiveUsers(false, $page, $items_per_page);
+    public function editorsAction()
+    {
+        $count = $this->service->getEditorsCount();
+        $users = $this->service->findEditors(self::LIMIT, ($this->page - 1) * self::LIMIT);
+        $this->setViewUsers($users);
+        $this->setViewPaginator($count, self::LIMIT);
+        $this->render('index');
+    }
 
-            $link_name = "user-active";
-            $link_data = array();
-        }
-        else if (isset($search)) {
-            $users = $this->service->findUsersBySearch($search);
+    /**
+     * Set view users
+     *
+     * @param array $users
+     * @return void
+     */
+    private function setViewUsers($users)
+    {
+        $this->view->users = array_map(function($user) {
+            return new \MetaUser($user);
+        }, $users);
+    }
 
-            $link_name = "user-search";
-            $link_data = array('search' => $search);
-        }
-        //order users by lastname A-D
-        else {
-            $array_range = explode("-", $range);
-            $letters = range(strtolower($array_range[0]), strtolower($array_range[1]));
-
-            $count = $this->service->findUsersLastNameInRange($letters, true);
-            $users = $this->service->findUsersLastNameInRange($letters, false, $page, $items_per_page);
-
-            $link_name = "user-list";
-            $link_data = array('user-listing' => $range);
-        }
-
-        $this->view->users = array();
-        foreach ($users as $user) {
-            $this->view->users[] = new MetaUser($user);
-        }
-
-
-        //test the paginator with our views.
+    /**
+     * Set view paginator
+     *
+     * @param int $count
+     * @param int $perPage
+     * @return void
+     */
+    private function setViewPaginator($count, $perPage)
+    {
         $adapter = new Zend_Paginator_Adapter_Null($count);
         $paginator = new Zend_Paginator($adapter);
-
         Zend_Paginator::setDefaultScrollingStyle('Sliding');
-        $paginator->setItemCountPerPage($items_per_page);
-        //$paginator->setItemCountPerPage(1);
-        $paginator->setCurrentPageNumber($page);
-
+        $paginator->setItemCountPerPage($perPage);
+        $paginator->setCurrentPageNumber($this->page);
         $this->view->paginator = $paginator->getPages();
-        $this->view->link_name = $link_name;
-        $this->view->link_data = $link_data;
     }
 
     public function profileAction()
