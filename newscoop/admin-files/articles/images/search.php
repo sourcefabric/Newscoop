@@ -10,6 +10,8 @@ $f_order_direction = camp_session_get('f_order_direction', 'ASC');
 $f_image_offset = camp_session_get('f_image_offset', 0);
 $f_search_string = camp_session_get('f_search_string', '');
 $f_items_per_page = camp_session_get('f_items_per_page', 4);
+$f_source_filter_out = !isset($_REQUEST['f_source_all']) ? 'newsfeed' : false;
+
 if ($f_items_per_page < 4) {
 	$f_items_per_page = 4;
 }
@@ -31,6 +33,9 @@ if ($f_order_direction == 'DESC') {
 
 $TotalImages = Image::GetTotalImages();
 $imageSearch = new ImageSearch($f_search_string, $f_order_by, $f_order_direction, $f_image_offset, $f_items_per_page);
+if ($f_source_filter_out) {
+    $imageSearch->setFilter( "Source", $f_source_filter_out, true );
+}
 $imageSearch->run();
 $imageData = $imageSearch->getImages();
 $NumImagesFound = $imageSearch->getNumImagesFound();
@@ -39,7 +44,7 @@ $NumImagesFound = $imageSearch->getNumImagesFound();
 
 ?>
 
-    <form method="POST" action="/<?php echo $ADMIN; ?>/articles/images/popup.php">
+    <form method="POST" action="/<?php echo $ADMIN; ?>/articles/images/popup.php" id="searchform">
 <input type="hidden" name="f_order_direction" value="<?php echo $f_order_direction; ?>">
 <input type="hidden" name="f_image_offset" value="0">
 <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">
@@ -74,12 +79,21 @@ $NumImagesFound = $imageSearch->getNumImagesFound();
 	</td>
 	<td><?php putGS("Items per page"); ?>: <input type="text" name="f_items_per_page" value="<?php p($f_items_per_page); ?>" class="input_text" size="4"></td>
 </tr>
+<tr>
+	<td colspan="4">
+		<input name="f_source_all" id="f_source_all" value="newsfeed" type="checkbox"
+			<?php if (!$f_source_filter_out) : ?>checked="checked"<?php endif; ?>
+			onclick="console.log(this.checked); document.getElementById('searchform').submit()" />
+	    <label for="f_source_all"><?php echo getGS('Show all') ?></label>
+	</td>
+</tr>
 </table>
 </form>
 
 <?php
 if (count($imageData) > 0) {
-    $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "images/popup.php")."&";
+    $pagerUrl = camp_html_article_url($articleObj, $f_language_id, "images/popup.php")."&".
+        (!$f_source_filter_out ? "f_source_all=newsfeed&" : "");
     $pager = new SimplePager($NumImagesFound, $f_items_per_page, "f_image_offset", $pagerUrl);
 
 ?>
