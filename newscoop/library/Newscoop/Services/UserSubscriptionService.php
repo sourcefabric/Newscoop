@@ -63,10 +63,11 @@ class UserSubscriptionService
         $subscriber = (int) $xml->subscriber[0]->subscriberId;
         
         if (is_numeric($subscriber)) {
-            $user->setSubscriber($subscriber);
-            $this->em->persist($user);
-            $this->em->flush();
-            
+            if (!$user->getSubscriber()) {
+                $user->setSubscriber($subscriber);
+                $this->em->persist($user);
+                $this->em->flush();
+            }
             return($subscriber);
         }
         else {

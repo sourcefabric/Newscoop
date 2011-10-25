@@ -3,6 +3,14 @@
 {{block content}}
 
 <script>
+function afterRegistration() {
+    location.reload();
+}
+function newSubscriber(firstName, lastName, email) {
+    var container = document.getElementById('new_subscriber_box');
+    var url = 'https://abo.tageswoche.ch/dmpro?type=abo&mode=new&name=' + lastName + '&firstname=' + firstName + '&email=' + email + '&jscallback=afterRegistration';
+    container.innerHTML = '<iframe src="'+url+'" width="600" height="300">';
+}
 function newSubscription(userSubscriptionKey) {
     var container = document.getElementById('new_subscription_box');
     var url = 'https://abo.tageswoche.ch/dmpro?type=abo&mode=new&userkey=' + userSubscriptionKey;
@@ -31,31 +39,33 @@ function manageSubscription(userSubscriptionKey) {
 -- <br>
 
 {{ if $subscriber }}
-{{ if $userSubscriptions }}
+    {{ if $userSubscriptions }}
 
-subscriptions:<br>
-<a href="javascript:manageSubscription('{{ $userSubscriptionKey }}');">manage subscriptions</a>
-<div id="manage_subscription_box"></div>
-<br>
-{{ foreach $userSubscriptions as $userSubscription }}
-- type: {{ $userSubscription->type }} 
-begin: {{ $userSubscription->validFromFormated }} 
-end: {{ $userSubscription->validUntilFormated }} 
-<br>
-{{ /foreach }}
+        subscriptions:<br>
+        <a href="javascript:manageSubscription('{{ $userSubscriptionKey }}');">manage subscriptions</a>
+        <div id="manage_subscription_box"></div>
+        <br>
+        {{ foreach $userSubscriptions as $userSubscription }}
+            - type: {{ $userSubscription->type }} 
+            begin: {{ $userSubscription->validFromFormated }} 
+            end: {{ $userSubscription->validUntilFormated }} 
+            <br>
+        {{ /foreach }}
+
+    {{ else }}
+        no subscriptions<br>
+    {{ /if }}
+
+    <br>==
+    <br>
+    <a href="javascript:newSubscription('{{ $userSubscriptionKey }}');">new subscription</a>
+    <div id="new_subscription_box"></div>
+    <br>
 
 {{ else }}
-no subscriptions<br>
-{{ /if }}
-
-<br>--
-<br>
-<a href="javascript:newSubscription('{{ $userSubscriptionKey }}');">new subscription</a>
-<div id="new_subscription_box"></div>
-<br>
-
-{{ else }}
-(user is not registered at PRO, here should be plans or link to abo page..)<br>
+    <br>
+    <a href="javascript:newSubscriber('{{ $user_first_name }}', '{{ $user_last_name }}', '{{ $user_email }}');">new subscription</a>
+    <div id="new_subscriber_box"></div>
 {{ /if }}
 
 {{/block}}

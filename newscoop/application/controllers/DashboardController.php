@@ -70,7 +70,10 @@ class DashboardController extends Zend_Controller_Action
         
         $userSubscriptionService = $this->_helper->service('user_subscription');
         
-        $this->view->subscriber = $userSubscriptionService->fetchSubscriber($this->user);
+        $this->view->subscriber = $this->user->getSubscriber();
+        if (!$this->view->subscriber) {
+            $this->view->subscriber = $userSubscriptionService->fetchSubscriber($this->user);
+        }
         
         //$this->view->subscriber = false;
         
@@ -79,6 +82,11 @@ class DashboardController extends Zend_Controller_Action
             $userSubscriptionService->setKey($this->user, $userSubscriptionKey);
             $this->view->userSubscriptions = $userSubscriptionService->fetchSubscriptions($this->user);
             $this->view->userSubscriptionKey = $userSubscriptionKey;
+        }
+        else {
+            $this->view->user_first_name = $this->user->getFirstName();
+            $this->view->user_last_name = $this->user->getLastName();
+            $this->view->user_email = $this->user->getEmail();
         }
                 
         $this->view->form = $form;
