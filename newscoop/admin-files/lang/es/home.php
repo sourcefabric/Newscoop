@@ -1,8 +1,8 @@
 <?php 
-regGS("Upload of file $1 was not successful.", "");
-regGS("The file $1 could not be moved. Check you have enough of disk space.", "");
-regGS("MiB", "");
-regGS("Download was not successful. Check please that the server is not out of disk space.", "");
+regGS("Upload of file $1 was not successful.", "La carga del archivo $1 no se realizó de forma exitosa.");
+regGS("The file $1 could not be moved. Check you have enough of disk space.", "No se pudo mover el archivo $1.  Verifica que cuentas con suficiente espacio en el disco.");
+regGS("MiB", "MiB");
+regGS("Download was not successful. Check please that the server is not out of disk space.", "La descarga no se realizó con éxito.  Por favor verifica que el servidor aún cuenta con espacio.");
 regGS("try again later", "Inténtalo de nuevo");
 regGS("at", "en");
 regGS("You must at least upload one file.", "Debes subir al menos un archivo");
@@ -10,7 +10,7 @@ regGS("Warning: the existing data and themes will be deleted!", "Alerta: se elim
 regGS("Value is required and can't be empty", "Se requiere un valor.  No puede quedarse vacío.");
 regGS("Upload", "Subir");
 regGS("Update comment", "Actualizar comentario");
-regGS("Time created", "");
+regGS("Time created", "Creado a las");
 regGS("Themes", "Temas");
 regGS("Stop current upload", "Detener la carga de archivos actual");
 regGS("Start uploading queue", "Iniciar carga de archivos en espera");
@@ -35,11 +35,11 @@ regGS("Connection interrupted", "Se interrupió la conexión");
 regGS("Ban", "Bloquear");
 regGS("Are you sure you want to", "¿Estás seguro de querer");
 regGS("Add new subscription section", "Añadir una nueva sección de suscripción");
-regGS("Add new IP Address", "");
-regGS("Add files to the upload queue and click the start button.", "");
-regGS("Add files", "");
-regGS("'%value%' is more than %max% characters long", "");
-regGS("'%value%' is less than %min% characters long", "");
+regGS("Add new IP Address", "Añade una nueva dirección de IP");
+regGS("Add files to the upload queue and click the start button.", "Añade archivos a la cola de carga y da clic al botón de iniciar.");
+regGS("Add files", "Añadir archivos");
+regGS("'%value%' is more than %max% characters long", "'%value%' es mayor a %max% caracteres de largo");
+regGS("'%value%' is less than %min% characters long", "'%value%' es menor a %max% caracteres de largo");
 regGS("User name", "Usuario");
 regGS("Newscoop", "Newscoop");
 regGS("Campsite", "Campsite");
@@ -138,4 +138,5 @@ regGS("Login failed", "Acceso fallido");
 regGS("Please make sure that you typed the correct user name and password.", "Por favor asegurese de que escribio correctamente su nombre de usuario y clave.");
 regGS("If your problem persists please contact the site administrator $1", "Si su problema persiste favor contacte al administrador del sistema $1");
 regGS("Backup/Restore", "Respaldar/Restablecer");
+regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Hola, \\n\\n para recuperar tu contraseña, sigue el siguiente enlace $1");
 ?>

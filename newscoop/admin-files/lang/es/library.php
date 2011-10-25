@@ -1,6 +1,6 @@
 <?php 
-regGS("Title", "");
-regGS("No video playback capabilities, please download the video below", "");
+regGS("Title", "Título");
+regGS("No video playback capabilities, please download the video below", "No es posible reproducir archivos de video, por favor descarga el video que aparece a continuación");
 regGS("Article status set to '$1' for $2 articles", "El estatus del artículo sí se configuró en '$1' para los $2 artículos.");
 regGS("Article status not set to '$1' for $2 articles", "El estatus del artículo no se configuró en '$1' para los $2 artículos.");
 regGS("$1 toggled for $2 articles.", "La opción $1 sí se modificó para los $2 artículos.");
@@ -8,7 +8,7 @@ regGS("$1 not toggled for $2 articles.", "La opción $1 no se modificó para los
 regGS("$1 not toggled for $2  articles.", "La opción $1 no se modificó para los $2 artículos.");
 regGS("$1 articles have not been removed", "No se eliminó/eliminaron $1 artículo(s) ");
 regGS("$1 Article(s) unlocked", "$1 artículo(s) no está bloqueado");
-regGS("$1 Article(s) not unlocked", "");
+regGS("$1 Article(s) not unlocked", "El/los artículo(s) $1 no están desbloqueados.");
 regGS("$1 Article(s) duplicated", "Se duplicó/duplicaron $1 artículo(s)");
 regGS("Download file", "Descargar el archivo");
 regGS("You do not have the right to delete articles.", "No tienes privilegios para eliminar artículos");

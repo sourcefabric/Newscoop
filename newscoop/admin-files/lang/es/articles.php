@@ -8,7 +8,7 @@ regGS("Unable to reach Newscoop. Please check your internet connection.", "");
 regGS("Title", "");
 regGS("There already is an article with the same name. Please change the name and try again.", "");
 regGS("Please be aware that all scheduled publishing events for this article will be deleted when you set this article to \"New\" state. Please confirm the state change.", "");
-regGS("Geolocation", "");
+regGS("Geolocation", "Geolocalización");
 regGS("Newscoop", "Newscoop");
 regGS("Pending Article", "Artículo pendiente");
 regGS("Overwrite articles with matching names", "Sobreescribir artículos con nombres idénticos");
@@ -150,4 +150,7 @@ regGS("No such section.", "No existe sección");
 regGS("Reorder", "");
 regGS("Author", "");
 regGS("Are you sure you want to delete this scheduled action?", "");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "¿Está seguro de que desea eliminar el tópico \\'$1\\' del artículo?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "¿Está seguro de que desea eliminar el archivo \\'$1\\' del artículo?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "¿Está seguro de que desea eliminar la imagen \\'$1\\' del artículo?");
 ?>
