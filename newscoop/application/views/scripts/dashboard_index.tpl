@@ -6,9 +6,9 @@
 function afterRegistration() {
     location.reload();
 }
-function newSubscriber(firstName, lastName, email) {
+function newSubscriber(firstName, lastName, email, productId) {
     var container = document.getElementById('new_subscriber_box');
-    var url = 'https://abo.tageswoche.ch/dmpro?type=abo&mode=new&name=' + lastName + '&firstname=' + firstName + '&email=' + email + '&jscallback=afterRegistration';
+    var url = 'https://abo.tageswoche.ch/dmpro?type=abo&mode=new&name=' + lastName + '&firstname=' + firstName + '&email=' + email + '&jscallback=afterRegistration&product=' + productId;
     container.innerHTML = '<iframe src="'+url+'" width="600" height="300">';
 }
 function newSubscription(userSubscriptionKey, productId) {
@@ -77,9 +77,25 @@ function manageSubscription(userSubscriptionKey) {
     <br>
 
 {{ else }}
+    <br>==
+    new subscription:
     <br>
-    <a href="javascript:newSubscriber('{{ $user_first_name }}', '{{ $user_last_name }}', '{{ $user_email }}');">new subscription</a>
+    <a href="javascript:newSubscriber('{{ $user_first_name }}', '{{ $user_last_name }}', '{{ $user_email }}', 1);">Normal-Abo Tages Woche 6 Monate</a><br>
+    <a href="javascript:newSubscriber('{{ $user_first_name }}', '{{ $user_last_name }}', '{{ $user_email }}', 2);">Normal-Abo Tages Woche 12 Monate</a><br>
+    <a href="javascript:newSubscriber('{{ $user_first_name }}', '{{ $user_last_name }}', '{{ $user_email }}', 3);">Normal-Abo Tages Woche 24 Monate</a><br>
+    <a href="javascript:newSubscriber('{{ $user_first_name }}', '{{ $user_last_name }}', '{{ $user_email }}', 4);">Schnupper-Abo Tages Woche 1 Monat Schnupper-Abo</a><br>
+    <a href="javascript:newSubscriber('{{ $user_first_name }}', '{{ $user_last_name }}', '{{ $user_email }}', 5);">Normal-Abo Tages Woche 12 Monate 2 FÜR 1-ABOS</a><br>
+    <a href="javascript:newSubscriber('{{ $user_first_name }}', '{{ $user_last_name }}', '{{ $user_email }}', 6);">Normal-Abo Tages Woche 6 Monate Studenten-Abo</a><br>
+    <a href="javascript:newSubscriber('{{ $user_first_name }}', '{{ $user_last_name }}', '{{ $user_email }}', 7);">Normal-Abo Tages Woche 6 Monate PROMO 1</a><br>
+    <a href="javascript:newSubscriber('{{ $user_first_name }}', '{{ $user_last_name }}', '{{ $user_email }}', 8);">Normal-Abo Tages Woche 18 Monate PROMO 2</a><br>
+    <a href="javascript:newSubscriber('{{ $user_first_name }}', '{{ $user_last_name }}', '{{ $user_email }}', 11);">Geschenk-Abo Tages Woche 6 Monate</a><br>
+    <a href="javascript:newSubscriber('{{ $user_first_name }}', '{{ $user_last_name }}', '{{ $user_email }}', 12);">Geschenk-Abo Tages Woche 12 Monate</a><br>
+    <a href="javascript:newSubscriber('{{ $user_first_name }}', '{{ $user_last_name }}', '{{ $user_email }}', 13);">Geschenk-Abo Tages Woche 24 Monate</a><br>
+    <a href="javascript:newSubscriber('{{ $user_first_name }}', '{{ $user_last_name }}', '{{ $user_email }}', 16);">Geschenk-Abo Tages Woche 6 Monate Studenten-Abo</a><br>
+    <a href="javascript:newSubscriber('{{ $user_first_name }}', '{{ $user_last_name }}', '{{ $user_email }}', 17);">Geschenk-Abo Tages Woche 6 Monate PROMO 1</a><br>
+    <a href="javascript:newSubscriber('{{ $user_first_name }}', '{{ $user_last_name }}', '{{ $user_email }}', 18);">Geschenk-Abo Tages Woche 18 Monate PROMO 2</a><br>
     <div id="new_subscriber_box"></div>
+    <br>
 {{ /if }}
 
 {{/block}}

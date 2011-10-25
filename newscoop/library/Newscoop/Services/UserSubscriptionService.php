@@ -60,8 +60,7 @@ class UserSubscriptionService
         
         $xml = new \SimpleXMLElement($response->getBody());
         
-        $subscriber = (int) $xml->subscriber[0]->subscriberId;
-        
+        $subscriber = $xml->subscriber[0] ? (int) $xml->subscriber[0]->subscriberId : false;
         if (is_numeric($subscriber)) {
             if (!$user->getSubscriber()) {
                 $user->setSubscriber($subscriber);
