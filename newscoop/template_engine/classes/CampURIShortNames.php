@@ -368,6 +368,7 @@ class CampURIShortNames extends CampURI
             $article_no = $encoder->decode($webcode);
             $metaArticle = new MetaArticle($webcodeLanguageId, $article_no);
             $this->m_article = $metaArticle;
+            $this->m_language = $this->m_article->language;
             $this->m_publication = $this->m_article->publication;
             $this->m_issue = $this->m_article->issue;
             $this->m_section = $this->m_article->section;
