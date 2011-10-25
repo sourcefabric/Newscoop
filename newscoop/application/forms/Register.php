@@ -22,15 +22,6 @@ class Application_Form_Register extends Zend_Form
             ),
         ));
 
-        $this->addElement('checkbox', 'terms_of_use', array(
-            'label' => 'Accepting terms of use',
-            'required' => true,
-            'validators' => array(
-                array('greaterThan', true, array('min' => 0)),
-            ),
-        ));
-
-
         $this->addElement('submit', 'submit', array(
             'label' => 'Continue',
             'ignore' => true,
