@@ -1,5 +1,5 @@
 <?php 
-regGS("This article cannot be previewed. Please make sure it has the publication has a theme assigned.", "");
+regGS("This article cannot be previewed. Please make sure it has the publication has a theme assigned.", "Impossibile visualizzare l'anteprima dell'articolo. Verificare che un tema sia stato assegnato.");
 regGS("On", "On");
 regGS("Off", "Off");
 regGS("You do not have the right to moderate comments.", "non si dispone dei permessi per moderare i commenti.");
@@ -147,4 +147,7 @@ regGS("There was an error reading request parameters.", "C'e' stato un errore le
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Impossibile mostrare l'anteprima dell'articolo. Per favore assicurati che ci sia un template articolo selezionato.");
 regGS("No such article.", "L'articolo non esiste.");
 regGS("No such section.", "La sezione non esiste.");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Confermi di rimuovere l'argomento \\'$1\\' dall'articolo");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Confermi di rimuovere il file \\'$1\\' dall'articolo?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Confermi di rimuovere l'immagine \\'$1\\' dall'articolo?");
 ?>

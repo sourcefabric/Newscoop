@@ -1,11 +1,11 @@
 <?php 
-regGS("in order to be able to assigned to the issue.", "");
-regGS("default", "");
-regGS("The publishing/unpublishing can not be set the same time", "");
-regGS("The publishing schedule can not be set in the past", "");
-regGS("Please assign at least one theme to the publication", "");
-regGS("Only than the issue can be published", "");
-regGS("Issue Theme", "");
+regGS("in order to be able to assigned to the issue.", "a fin de poder asignalo a la edición.");
+regGS("default", "por defecto");
+regGS("The publishing/unpublishing can not be set the same time", "La opción de publicar/dejar de publicar no se puede determinar al mismo tiempo");
+regGS("The publishing schedule can not be set in the past", "La programación de una publicación no se puede hacer en una fecha pasada");
+regGS("Please assign at least one theme to the publication", "Por favor asigne al menos un tema a la publicación");
+regGS("Only than the issue can be published", "Solo entonces se puede publicar la edición");
+regGS("Issue Theme", "Tema de la edición");
 regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "Se eliminó la acción programada de la edición #$1: \"$2\" (Publicación: $3)");
 regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "Acción programada $1 para la edición #$2: \"$3\" (Publicación: $4)");
 regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "Edición \"$1\" ($2) actualizada en la publicación \"$3\"");
