@@ -18,11 +18,16 @@ class ListUserService
     /** @var Doctrine\ORM\EntityManager */
     protected $em;
 
+    /** @var array */
+    private $config = array();
+
     /**
+     * @param array $config
      * @param Doctrine\ORM\EntityManager $em
      */
-    public function __construct(EntityManager $em)
+    public function __construct(array $config, EntityManager $em)
     {
+        $this->config = $config;
         $this->em = $em;
     }
 
@@ -63,6 +68,11 @@ class ListUserService
         return $this->getRepository()->findOneBy($criteria);
     }
 
+    /**
+     * List active users
+     *
+     * @return array
+     */
     public function getActiveUsers($countOnly=false, $page=1, $limit=8)
     {
         $offset = ($page-1) * $limit;
@@ -87,6 +97,11 @@ class ListUserService
         return $this->getRepository()->getRandomList($limit);
     }
 
+    /**
+     * List users by first letter
+     *
+     * @return array
+     */
     public function findUsersLastNameInRange($letters, $countOnly=false, $page=1, $limit=25)
     {
         $offset = ($page-1) * $limit;
@@ -100,6 +115,11 @@ class ListUserService
         return $result;
     }
 
+    /**
+     * Find user by string
+     *
+     * @return array
+     */
     public function findUsersBySearch($search, $countOnly=false, $page=1, $limit=25)
     {
         $offset = ($page-1) * $limit;
@@ -111,6 +131,28 @@ class ListUserService
         }
 
         return $result;
+    }
+
+    /**
+     * List editors
+     *
+     * @param int $limit
+     * @param int $offset
+     * @return array
+     */
+    public function findEditors($limit = NULL, $offset = NULL)
+    {
+        return $this->getRepository()->findEditors($this->config['blog']['role'], $limit, $offset);
+    }
+
+    /**
+     * Get editors count
+     *
+     * @return int
+     */
+    public function getEditorsCount()
+    {
+        return $this->getRepository()->getEditorsCount($this->config['blog']['role']);
     }
 
     /**

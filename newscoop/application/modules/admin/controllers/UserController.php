@@ -52,6 +52,7 @@ class Admin_UserController extends Zend_Controller_Action
     {
         $form = new Admin_Form_User();
         $form->user_type->setMultioptions($this->userTypeService->getOptions());
+        $form->author->setMultioptions(array('' => getGS('None')) + $this->_helper->service('author')->getOptions());
         $form->setDefaults(array(
             'is_admin' => $this->_getParam('is_admin', 0),
             'is_public' => $this->_getParam('is_public', 0),
