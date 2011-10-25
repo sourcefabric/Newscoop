@@ -63,7 +63,7 @@ class UserSubscriptionService
         try {
             $subscriber = (int) $xml->subscriber[0]->subscriberId;
         }
-        catch($e) {
+        catch(Exception $e) {
             $subscriber = false;
         }
         
