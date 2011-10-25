@@ -68,6 +68,7 @@ class UserController extends Zend_Controller_Action
         $users = $this->service->findEditors(self::LIMIT, ($this->page - 1) * self::LIMIT);
         $this->setViewUsers($users);
         $this->setViewPaginator($count, self::LIMIT);
+        $this->view->active = 'editors';
         $this->render('index');
     }
 
