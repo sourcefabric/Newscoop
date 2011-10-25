@@ -50,15 +50,6 @@ class Application_Form_Confirm extends Zend_Form
             ),
             'errorMessages' => array("Password confirmation does not match your password."),
         ));
-        
-        $this->addElement('checkbox', 'terms_of_use', array(
-            'label' => 'Accepting terms of use',
-            'required' => true,
-            'validators' => array(
-                array('greaterThan', true, array('min' => 0)),
-            ),
-            'errorMessages' => array("You must accept terms of use to proceed."),
-        ));
 
         $this->addElement('submit', 'submit', array(
             'label' => 'Login',
