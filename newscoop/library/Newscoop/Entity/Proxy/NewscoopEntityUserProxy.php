@@ -82,6 +82,18 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
         return parent::getLastName();
     }
 
+    public function getName()
+    {
+        $this->__load();
+        return parent::getName();
+    }
+
+    public function getRealName()
+    {
+        $this->__load();
+        return parent::getRealName();
+    }
+
     public function setStatus($status)
     {
         $this->__load();
@@ -172,6 +184,18 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
         return parent::getGroups();
     }
 
+    public function addUserType(\Newscoop\Entity\User\Group $type)
+    {
+        $this->__load();
+        return parent::addUserType($type);
+    }
+
+    public function getUserTypes()
+    {
+        $this->__load();
+        return parent::getUserTypes();
+    }
+
     public function setRole(\Newscoop\Entity\Acl\Role $role)
     {
         $this->__load();
@@ -196,6 +220,12 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
         return parent::getAttribute($name);
     }
 
+    public function getAttributes()
+    {
+        $this->__load();
+        return parent::getAttributes();
+    }
+
     public function setImage($image)
     {
         $this->__load();
@@ -214,10 +244,16 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
         return parent::hasPermission($permission);
     }
 
-    public function getRealName()
+    public function getCommenters()
     {
         $this->__load();
-        return parent::getRealName();
+        return parent::getCommenters();
+    }
+
+    public function getComments()
+    {
+        $this->__load();
+        return parent::getComments();
     }
 
     public function getUserId()
@@ -232,10 +268,46 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
         return parent::__toString();
     }
 
+    public function exists()
+    {
+        $this->__load();
+        return parent::exists();
+    }
+
+    public function getProperty($p_key)
+    {
+        $this->__load();
+        return parent::getProperty($p_key);
+    }
+
+    public function setSubscriber($subscriber)
+    {
+        $this->__load();
+        return parent::setSubscriber($subscriber);
+    }
+
+    public function getSubscriber()
+    {
+        $this->__load();
+        return parent::getSubscriber();
+    }
+
+    public function setAuthor(\Newscoop\Entity\Author $author = NULL)
+    {
+        $this->__load();
+        return parent::setAuthor($author);
+    }
+
+    public function getAuthorId()
+    {
+        $this->__load();
+        return parent::getAuthorId();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'username', 'password', 'first_name', 'last_name', 'email', 'created', 'status', 'is_admin', 'is_public', 'points', 'image', 'role', 'groups', 'attributes');
+        return array('__isInitialized__', 'id', 'email', 'username', 'password', 'first_name', 'last_name', 'created', 'status', 'is_admin', 'is_public', 'points', 'image', 'role', 'groups', 'attributes', 'commenters', 'subscriber', 'author');
     }
 
     public function __clone()

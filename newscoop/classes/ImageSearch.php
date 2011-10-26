@@ -14,6 +14,7 @@ class ImageSearch {
 	var $m_orderQuery;
 	var $m_whereQuery;
 	var $m_itemsPerPage = 10;
+    var $m_whereGroups = array();
 
 	/**
 	 * This class can search for images matching specific criteria.
@@ -51,14 +52,19 @@ class ImageSearch {
 			$this->m_itemsPerPage = $p_itemsPerPage;
 		}
 
+		$whereGroups = array();
+
 		// "Search by" sql
 		$this->m_whereQuery = '';
 		if (!empty($this->m_searchString)) {
-			$this->m_whereQuery .= "WHERE Images.Description LIKE '%$this->m_searchString%'"
-								. " OR Images.Photographer LIKE '%$this->m_searchString%'"
-								. " OR Images.Place LIKE '%$this->m_searchString%'"
-								. " OR Images.Date LIKE '%$this->m_searchString%'"
-								. " OR Images.UploadedByUser LIKE '%$this->m_searchString%'";
+			$this->m_whereGroups[] = '('.implode( array
+            (
+            	"Images.Description LIKE '%$this->m_searchString%'"
+			,	"Images.Photographer LIKE '%$this->m_searchString%'"
+			,	"Images.Place LIKE '%$this->m_searchString%'"
+			,	"Images.Date LIKE '%$this->m_searchString%'"
+            ,	"Images.UploadedByUser LIKE '%$this->m_searchString%'"
+            ), " OR " ).')';
 		}
 
 		// "Order by" sql
@@ -118,6 +124,11 @@ class ImageSearch {
 	} // constructor
 
 
+	public function setFilter($col, $val, $out=false)
+	{
+	    $this->m_whereGroups[] = $col.( $out ? " <> " : " = " )."'$val'";
+	}
+
 	/**
 	 * Execute the search and return the results.
 	 *
@@ -130,6 +141,9 @@ class ImageSearch {
 		$tmpImage = new Image();
 		$columnNames = $tmpImage->getColumnNames(true);
 		$columnNames = implode(',', $columnNames);
+
+		$this->m_whereQuery = count($this->m_whereGroups) ? ' WHERE '.implode($this->m_whereGroups, ' AND ') : null;
+
 		$queryStr = 'SELECT '.$columnNames.', COUNT(ArticleImages.IdImage) AS inUse'
 				  	.' FROM Images '
 				  	.' LEFT JOIN ArticleImages On Images.Id=ArticleImages.IdImage'
