@@ -16,6 +16,8 @@ var close = function(timeout) {
     setTimeout("window.location.href = '<?php
     if ($f_publication_id > 0 && $f_issue_number > 0 && $f_section_number > 0) {
     	echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number";
+    } else if ($f_publication_id > 0) {
+    	echo "/$ADMIN/pending_articles/index.php";
     } else {
     	echo "/$ADMIN/";
     }

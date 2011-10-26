@@ -164,7 +164,8 @@ var omnibox = {
 			if (data.response == 'OK') {
 				omnibox.setMessage(omnibox.translations['login_successful']);
 				omnibox.showMessage();
-				document.location.reload();
+				document.location.hash = '#omnibox';
+                document.location.reload();
 			}
 			else {
 				omnibox.setMessage(data.response);

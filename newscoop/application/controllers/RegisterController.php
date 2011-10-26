@@ -136,7 +136,7 @@ class RegisterController extends Zend_Controller_Action
                     $adapter = $this->_helper->service('auth.adapter');
                     $adapter->setEmail($user->getEmail())->setPassword($values['password']);
                     $result = $auth->authenticate($adapter);
-                    $this->_helper->redirector('index', 'dashboard', 'default');
+                    $this->_helper->redirector('index', 'dashboard', 'default', array('first' => 1));
                 }
             } catch (\Exception $e) {
                 switch ($e->getMessage()) {

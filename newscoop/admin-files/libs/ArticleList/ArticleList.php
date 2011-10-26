@@ -8,8 +8,13 @@
  * @link http://www.sourcefabric.org
  */
 
+use Newscoop\Webcode\Manager,
+    Newscoop\Webcode\Mapper;
+
 require_once dirname(__FILE__) . '/../BaseList/BaseList.php';
 require_once WWW_DIR . '/classes/GeoMap.php';
+require_once __DIR__ . '/../../../library/Newscoop/Webcode/Manager.php';
+require_once __DIR__ . '/../../../library/Newscoop/Webcode/Mapper.php';
 
 /**
  * Article list component
@@ -72,12 +77,13 @@ class ArticleList extends BaseList
             'Language' => getGS('Language'),
             'Order' => getGS('Order'),
             'Name' => getGS('Title'),
-//             'Section' => getGS('Section'),
+            'Section' => getGS('Section'),
+            'Webcode' => getGS('Webcode'),
             'Type' => getGS('Type'),
             'Created' => getGS('Created by'),
             'Author' => getGS('Author'),
             'Status' => getGS('Status'),
-            'OnFronPage' => getGS('On Front Page'),
+            'OnFrontPage' => getGS('On Front Page'),
             'OnSectionPage' => getGS('On Section Page'),
             'Images' => getGS('Images'),
             'Topics' => getGS('Topics'),
@@ -305,31 +311,32 @@ class ArticleList extends BaseList
 		$language = new Language($article->getLanguageId());
 
 		return array(
-		$article->getArticleNumber(),
-		$article->getLanguageId(),
-		$article->getOrder(),
-		sprintf('%s <a href="%s" title="%s %s">%s</a>',
-		$article->isLocked() ? '<span class="ui-icon ui-icon-locked' . (!$lockHighlight ? ' current-user' : '' ) . '" title="' . $lockInfo . '"></span>' : '',
-		$articleLink,
-		getGS('Edit'), $article->getName() . " ({$article->getLanguageName()})",
-		$article->getName() . (empty($_REQUEST['language']) ? " ({$language->getCode()})" : '')),
-//		$article->getSection()->getName(),
-		$tmpArticleType->getDisplayName(),
-		$tmpUser->getRealName(),
-		$tmpAuthor->getName(),
-		$article->getWorkflowStatus(),
-		$onFrontPage,
-		$onSectionPage,
-		$imagesNo,
-		$topicsNo,
-		$commentsNo,
-		(int) $article->getReads(),
-		Geo_Map::GetArticleMapId($article) != NULL ? getGS('Yes') : getGS('No'),
-		(int) sizeof(Geo_Map::GetLocationsByArticle($article)),
-		$article->getCreationDate(),
-		$article->getPublishDate(),
-		$article->getLastModified(),
-		$htmlPreviewLink,
+		    $article->getArticleNumber(),
+		    $article->getLanguageId(),
+		    $article->getOrder(),
+		    sprintf('%s <a href="%s" title="%s %s">%s</a>',
+		    $article->isLocked() ? '<span class="ui-icon ui-icon-locked' . (!$lockHighlight ? ' current-user' : '' ) . '" title="' . $lockInfo . '"></span>' : '',
+		    $articleLink,
+		    getGS('Edit'), $article->getName() . " ({$article->getLanguageName()})",
+		    $article->getName() . (empty($_REQUEST['language']) ? " ({$language->getCode()})" : '')), // /sprintf
+		    $article->getSection()->getName(),
+            Manager::getWebcoder('')->encode($article->getArticleNumber()),
+		    $tmpArticleType->getDisplayName(),
+		    $tmpUser->getRealName(),
+		    $tmpAuthor->getName(),
+		    $article->getWorkflowStatus(),
+		    $onFrontPage,
+		    $onSectionPage,
+		    $imagesNo,
+		    $topicsNo,
+		    $commentsNo,
+		    (int) $article->getReads(),
+		    Geo_Map::GetArticleMapId($article) != NULL ? getGS('Yes') : getGS('No'),
+		    (int) sizeof(Geo_Map::GetLocationsByArticle($article)),
+		    $article->getCreationDate(),
+		    $article->getPublishDate(),
+		    $article->getLastModified(),
+		    $htmlPreviewLink,
 		);
 	}
 

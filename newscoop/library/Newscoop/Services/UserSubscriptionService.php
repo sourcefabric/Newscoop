@@ -52,13 +52,13 @@ class UserSubscriptionService
     
     public function fetchSubscriber($user)
     {
-        $url = 'https://abo.tageswoche.ch/dmpro/ws/subscriber/NMBA?firstname='.$user->getFirstName().'&lastname='.$user->getLastName().'&email='.$user->getEmail();
+        $url = 'https://abo.tageswoche.ch/dmpro/ws/subscriber/NMBA?firstname='.urlencode($user->getFirstName()).'&lastname='.urlencode($user->getLastName()).'&email='.urlencode($user->getEmail());
         $client = new \Zend_Http_Client();
         $client->setUri($url);
         $client->setMethod(\Zend_Http_Client::GET);
         $response = $client->request();
         
-        $xml = new \SimpleXMLElement($response->getBody());
+        $xml = new \SimpleXMLElement($response->getBody()); 
         
         $subscriber = $xml->subscriber[0] ? (int) $xml->subscriber[0]->subscriberId : false;
         if (is_numeric($subscriber)) {
@@ -85,7 +85,7 @@ class UserSubscriptionService
         $response = $client->request();
         
         $xml = new \SimpleXMLElement($response->getBody());
-        $subscriptions = $xml->subscriber->subscriptions->subscription;
+        $subscriptions = $xml->subscriber ? $xml->subscriber->subscriptions->subscription : false;
         
         return($subscriptions);
     }
