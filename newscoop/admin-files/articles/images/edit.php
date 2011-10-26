@@ -81,6 +81,15 @@ if ($f_publication_id > 0) {
 		} ?>
 	</TD>
 </TR>
+<?php if ($g_user->hasPermission('ChangeImage')) { ?>
+<TR>
+	<TD ALIGN="RIGHT" ><label for="image_status_checkbox" style="padding-right:0;cursor:pointer"><?php putGS('Approved'); ?>:</label></TD>
+	<TD>
+		<input type="hidden" name="f_image_status" value="0" />
+		<input id="image_status_checkbox" type="checkbox" name="f_image_status" value="1" <?php echo $imageObj->getStatus() == 'approved' ? 'checked="checked"' : ''; ?> />
+	</TD>
+</TR>
+<?php } ?>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS('Description'); ?>:</TD>
 	<TD>

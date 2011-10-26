@@ -27,6 +27,11 @@ class Playlist extends Entity
     protected $name;
 
     /**
+     * @OneToMany(targetEntity="Newscoop\Entity\PlaylistArticle", mappedBy="playlist", cascade={"all"})
+     */
+    private $articles;
+
+    /**
      * Returns the name of the playlist
      */
     public function getName()
