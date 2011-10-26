@@ -161,13 +161,14 @@ if ($g_user->hasPermission('EditorSpellcheckerEnabled')) {
 
 // Generate the breadcrumb
 $title = '';
-if ($f_publication_id > 0) {
+if ($f_publication_id > 0 && $f_issue_number && $f_section_number) {
     $topArray = array(
         'Pub' => $publicationObj,
         'Issue' => $issueObj,
         'Section' => $sectionObj,
         'Article' => $articleObj
     );
+
     camp_html_content_top($title, $topArray);
 } else {
     $crumbs = array();
