@@ -76,6 +76,7 @@ class Admin_PlaylistController extends Zend_Controller_Action
         $id = $this->_request->getParam('id');
         $this->view->id = $id;
         $this->playlistRepository->delete($this->playlistRepository->find($id));
+        $this->_helper->service->notifyDispatcher('playlist.delete', array('id' => $id));
     }
 
     public function listDataAction()
@@ -114,6 +115,9 @@ class Admin_PlaylistController extends Zend_Controller_Action
         $playlist = $this->playlistRepository->save($playlist, $this->_request->getParam('articles'));
         if (!($playlist instanceof \Exception))
         {
+
+            $this->_helper->service->notifyDispatcher('playlist.save', array('id' => $playlist->getId()));
+
             $this->view->playlistId = $playlist->getId();
             $this->view->playlistName = $playlist->getName();
         }

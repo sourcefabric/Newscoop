@@ -95,25 +95,23 @@ class PlaylistRepository extends EntityRepository
                 $em->flush();
             }
 
-            $query = $em->createQuery("DELETE FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.idPlaylist = ?1");
-            $query->setParameter(1, $playlist->getId());
+            $query = $em->createQuery("DELETE FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.playlist = ?1");
+            $query->setParameter(1, $playlist);
             $query->execute();
 
-            if (!is_null($articles) && is_array($articles))
-            {
+            if (!is_null($articles) && is_array($articles)) {
                 $ar = $this->getEntityManager()->getRepository('Newscoop\Entity\Article');
                 foreach ($articles as $articleId)
                 {
                     $article = new PlaylistArticle();
-//                    $article->setPlaylist($playlist->getId());
+                    $article->setPlaylist($playlist);
                     if (($a = current($ar->findBy(array("number" => $articleId)))) instanceof \Newscoop\Entity\Article) {
                         $article->setArticle($a);
                     }
-                    $em->getConnection()->executeUpdate("INSERT INTO playlist_article(id_playlist, article_no) VALUES(?, ?)", array( $playlist->getId(), $a->getId()));
-//                    $em->persist($article);
+                    //$em->getConnection()->executeUpdate("INSERT INTO playlist_article(id_playlist, article_no) VALUES(?, ?)", array( $playlist->getId(), $a->getId()));
+                    $em->persist($article);
                 }
             }
-// TODO doctrine persister not working
             $em->flush();
             $em->getConnection()->commit();
         }
