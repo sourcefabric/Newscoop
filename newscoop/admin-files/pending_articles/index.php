@@ -27,6 +27,15 @@ $articlelist->setLanguage($f_language_id);
 $articlelist->setColVis(TRUE);
 $articlelist->setSearch(TRUE);
 
+$articlelist->setHidden('Status');
+$articlelist->setHidden('OnFrontPage');
+$articlelist->setHidden('OnSectionPage');
+$articlelist->setHidden('Comments');
+$articlelist->setHidden('Reads');
+$articlelist->setHidden('UseMap');
+$articlelist->setHidden('Locations');
+$articlelist->setHidden('PublishDate');
+
 // render
 // $articlelist->renderFilters();
 $articlelist->renderActions();
