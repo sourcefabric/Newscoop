@@ -172,7 +172,7 @@ if ($f_publication_id > 0 && $f_issue_number && $f_section_number) {
     camp_html_content_top($title, $topArray);
 } else {
     $crumbs = array();
-    $crumbs[] = array(getGS('Pending Article'), '');
+    $crumbs[] = array(getGS('Pending Articles'), "/$ADMIN/pending_articles/index.php");
     $crumbs[] = array($title, '');
     echo camp_html_breadcrumbs($crumbs);
 }
