@@ -80,7 +80,8 @@ final class MetaArticle extends MetaDbObject {
     'topics'=>'getTopics',
     'type_translation'=>'getTypeTranslated',
     'seo_url_end'=>'getSEOURLEnd',
-    'url' =>'getUrl'
+    'url' =>'getUrl',
+    'webcode' => 'getWebcode'
     );
 
     /** @var Article */
@@ -119,15 +120,10 @@ final class MetaArticle extends MetaDbObject {
 
     final public function __get($p_property)
     {
-
         $property = $this->translateProperty($p_property);
         if ($this->m_state == 'type_name_error') {
             $this->m_state = null;
             return null;
-        }
-
-        if ($property == 'webcode') {
-        	return Manager::getWebcoder('')->encode($this->m_dbObject->getProperty('Number'));
         }
 
         if ($property == 'type' && $this->m_state == null) {
@@ -615,6 +611,11 @@ final class MetaArticle extends MetaDbObject {
     protected function getUrl()
     {
         return ShortURL::GetURL($this->m_dbObject->getPublicationId(), $this->m_dbObject->getLanguageId(), null, null, $this->m_dbObject->getArticleNumber());
+    }
+
+    protected function getWebcode()
+    {
+        return Manager::getWebcoder('')->encode($this->m_dbObject->getProperty('Number'));
     }
 
     public function has_topic($p_topicName) {
