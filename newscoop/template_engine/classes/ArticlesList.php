@@ -116,6 +116,7 @@ class ArticlesList extends ListObject
 	    $articleTypeName = null;
 	    $operator = null;
 	    $value = null;
+	    $switchTypeHint = false;
 	    $context = CampTemplate::singleton()->context();
 	    foreach ($p_constraints as $index=>$word) {
 	    	switch ($state) {
@@ -136,7 +137,15 @@ class ArticlesList extends ListObject
 	                		if (count($dynamicFields) == 1) {
 	                			$type = $dynamicFields[0]->getGenericType();
 	                		} else {
-                                $type = 'string';
+	                		    $type = null;
+	                		    foreach ($dynamicFields as $field) {
+	                		        $switchTypeHint = $switchTypeHint || $field->getType() == ArticleTypeField::TYPE_SWITCH;
+	                		        if (is_null($type)) {
+	                		            $type = $field->getGenericType();
+	                		        } elseif ($type != $field->getGenericType()) {
+	                		            $type = 'string';
+	                		        }
+	                		    }
 	                		}
 	                		$state = self::CONSTRAINT_OPERATOR;
 	                		break;
@@ -236,7 +245,12 @@ class ArticlesList extends ListObject
        	            } elseif ($type == 'switch') {
        	            	$value = (int)(strtolower($word) == 'on');
        	            } else {
-       	                $value = $word;
+       	                $wordLower = strtolower($word);
+       	                if ($switchTypeHint && ($wordLower == 'on' || $wordLower == 'off')) {
+       	                    $value = (int)(strtolower($word) == 'on');
+       	                } else {
+       	                    $value = $word;
+       	                }
        	            }
        	            if (!is_null($articleTypeName)) {
        	            	$attribute = "$articleTypeName.$attribute";
