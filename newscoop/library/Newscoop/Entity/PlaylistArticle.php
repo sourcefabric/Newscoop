@@ -8,7 +8,7 @@ namespace Newscoop\Entity;
 
 /**
  * Playlist entity
- * @Entity
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\PlaylistArticleRepository")
  * @Table(name="playlist_article",
  * 	uniqueConstraints={@UniqueConstraint(name="playlist_article", columns={"id_playlist", "article_no"})})
  */
@@ -29,7 +29,7 @@ class PlaylistArticle extends Entity
     protected $idPlaylist;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Playlist")
+     * @ManyToOne(targetEntity="Newscoop\Entity\Playlist", inversedBy="articles")
 	 * @JoinColumn(name="id_playlist", referencedColumnName="id_playlist")
      * @var Newscoop\Entity\Playlist
      */
@@ -42,13 +42,17 @@ class PlaylistArticle extends Entity
      */
     private $article;
 
-    public function setPlaylist($idPlaylist)
+    /**
+     * set playlist
+     * @return Newscoop\Entity\PlaylistArticle
+     */
+    public function setPlaylist(Playlist $playlist)
     {
-        $this->idPlaylist = $idPlaylist;
+        $this->playlist = $playlist;
         return $this;
     }
 
-    /**
+	/**
      * get playlist
      * @return Newscoop\Entity\Playlist
      */
@@ -57,10 +61,23 @@ class PlaylistArticle extends Entity
         return $this->playlist;
     }
 
+    /**
+     * set article
+     * @return Newscoop\Entity\PlaylistArticle
+     */
     public function setArticle(Article $article)
     {
         $this->article = $article;
         return $this;
+    }
+
+	/**
+     * get article
+     * @return Newscoop\Entity\Article
+     */
+    public function getArticle()
+    {
+        return $this->article;
     }
 
     public function __toString(){ return 'playlist_article'; }

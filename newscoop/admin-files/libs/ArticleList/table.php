@@ -112,7 +112,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         },
         { // status workflow
             'fnRender': function(obj) {
-                switch (obj.aData[7]) {
+                switch (obj.aData[9]) {
                     case 'Y':
                         return '<?php putGS('Published'); ?>';
                     case 'N':
@@ -122,17 +122,17 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
                     case 'M': return '<?php putGS('Publish with issue'); ?>';
                 }
             },
-            'aTargets': [7]
+            'aTargets': [9]
         },
         { // hide columns
             'bVisible': false,
-            'aTargets': [<?php if (!self::$renderActions) { ?>0, <?php } ?>1, 2, 5, 10, 11, 16, 18,
+            'aTargets': [<?php if (!self::$renderActions) { ?>0, <?php } ?>1, 2, 7, 12, 13, 18, 20,
                 <?php echo implode(', ', $this->hidden); ?>
             ]
         },
         { // not sortable
             'bSortable': false,
-            'aTargets': [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 14, 15, 18, 19]
+            'aTargets': [0, 1, 2, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 16, 17, 20, 21]
         },
         { // id
             'sClass': 'id',
@@ -146,17 +146,17 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         },
         { // type & author
             'sWidth': '8em',
-            'aTargets': [4, 6]
+            'aTargets': [4, 5, 6, 8]
         },
         { // short
             'sClass': 'flag',
             'sWidth': '5em',
-            'aTargets': [7, 8, 9, 10, 11, 12, 13, 14, 15, 19]
+            'aTargets': [9, 10, 11, 12, 13, 14, 15, 16, 17, 21]
         },
         { // dates
             'sClass': 'date',
             'sWidth': '5em',
-            'aTargets': [16, 17, 18]
+            'aTargets': [18, 19, 20]
         }
     ],
     'fnDrawCallback': function() {
@@ -247,6 +247,9 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         $(nRow).attr('id', 'article_' + id);
         return nRow;
     },
+    <?php } ?>
+    <?php if ($this->workflow_status == 'pending') { ?>
+    'bStateSave': true,
     <?php } ?>
     'bJQueryUI': true
 }).css('position', 'relative').css('width', '100%');

@@ -83,9 +83,21 @@ $showComments = FALSE;
 $showCommentControls = FALSE;
 if ($f_publication_id > 0) {
     $publicationObj = new Publication($f_publication_id);
-    $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
-    $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
-    $languageObj = new Language($articleObj->getLanguageId());
+    if ($publicationObj->exists()) {
+        $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
+        if ($issueObj->exists()) {
+            $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+            if ($sectionObj->exists()) {
+                $languageObj = new Language($articleObj->getLanguageId());
+            } else {
+                $sectionObj = null;
+            }
+        } else {
+            $issueObj = null;
+        }
+    } else {
+        $publicationObj = null;
+    }
 
     $showCommentControls = ($publicationObj->commentsEnabled() && $articleType->commentsEnabled());
     $showComments = $showCommentControls && $articleObj->commentsEnabled();
@@ -161,17 +173,18 @@ if ($g_user->hasPermission('EditorSpellcheckerEnabled')) {
 
 // Generate the breadcrumb
 $title = '';
-if ($f_publication_id > 0) {
+if ($f_publication_id > 0 && $f_issue_number && $f_section_number) {
     $topArray = array(
         'Pub' => $publicationObj,
         'Issue' => $issueObj,
         'Section' => $sectionObj,
         'Article' => $articleObj
     );
+
     camp_html_content_top($title, $topArray);
 } else {
     $crumbs = array();
-    $crumbs[] = array(getGS('Pending Article'), '');
+    $crumbs[] = array(getGS('Pending Articles'), "/$ADMIN/pending_articles/index.php");
     $crumbs[] = array($title, '');
     echo camp_html_breadcrumbs($crumbs);
 }

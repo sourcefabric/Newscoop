@@ -46,6 +46,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         $this->m_customProperties['is_admin'] = 'isAdmin';
         $this->m_customProperties['defined'] = 'isDefined';
         $this->m_customProperties['posts_count'] = 'getPostsCount';
+        $this->m_customProperties['is_author'] = 'isAuthor';
 
         $this->m_skipFilter[] = "name";
     }
@@ -282,5 +283,15 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     public function offsetUnset($offset)
     {
+    }
+
+    /**
+     * Test if user is author
+     *
+     * @return bool
+     */
+    public function isAuthor()
+    {
+        return $this->m_dbObject->getAuthorId() && $this->isAdmin();
     }
 }

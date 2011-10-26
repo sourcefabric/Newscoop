@@ -691,6 +691,12 @@ class Article extends DatabaseObject {
 
             ContextBoxArticle::OnArticleDelete($this->m_data['Number']);
 
+            // Delete the article from playlists
+            $em = Zend_Registry::get('doctrine')->getEntityManager();
+            $repository = $em->getRepository('Newscoop\Entity\PlaylistArticle');
+            $repository->deleteArticle($this->m_data['Number']);
+            $em->flush();
+
             // Delete indexes
             ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueNumber(),
                 $this->getSectionNumber(), $this->getLanguageId(), $this->getArticleNumber());
@@ -886,8 +892,18 @@ class Article extends DatabaseObject {
         $section = new Section($this->getPublicationId(), $this->getIssueNumber(),
         $this->getLanguageId(), $this->getSectionNumber());
         if (!$section->exists()) {
-            $sections = Section::GetSections($this->getPublicationId(), $this->getIssueNumber());
-            if (count($sections) > 0) {
+            $params = array(
+                new ComparisonOperation('idpublication', new Operator('is', 'integer'), $this->getPublicationId()),
+                new ComparisonOperation('idlanguage', new Operator('is', 'integer'), $this->getLanguageId()),
+                new ComparisonOperation('number', new Operator('is', 'integer'), $this->getSectionNumber()),
+            );
+
+            if ($this->getIssueNumber()) {
+                $params[] = new ComparisonOperation('nrissue', new Operator('is', 'integer'), $this->getIssueNumber());
+            }
+
+            $sections = Section::GetList($params, null, 0, 1, $count = 0);
+            if (!empty($sections)) {
                 return $sections[0];
             }
         }

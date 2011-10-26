@@ -220,6 +220,7 @@ class BaseList
                 }
             }
         }
+
         return $this;
     }
 

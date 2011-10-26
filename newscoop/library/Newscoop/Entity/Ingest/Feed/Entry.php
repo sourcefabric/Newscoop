@@ -218,6 +218,16 @@ class Entry
     }
 
     /**
+     * Get feed
+     *
+     * @return Newscoop\Entity\Ingest\Feed\Entry
+     */
+    public function getFeed()
+    {
+        return $this->feed;
+    }
+
+    /**
      * Set feed
      *
      * @param Newscoop\Entity\Ingest\Feed $feed

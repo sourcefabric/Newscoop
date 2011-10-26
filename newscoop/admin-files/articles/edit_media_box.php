@@ -24,7 +24,7 @@
                     <img src="<?php p($image->getThumbnailUrl()); ?>" />
                     <?php } ?>
                 </div>
-                <strong><?php echo $articleImage->getTemplateId(); ?></strong><br />
+                <strong><?php echo $articleImage->getTemplateId(); ?></strong> <small><?php $image->getStatus() == 'approved' ? putGS('Approved') : putGS('Unapproved'); ?></small><br />
                 <?php echo htmlspecialchars($image->getDescription()); ?><br />
                 <?php echo $imageSize[0], ' x ', $imageSize[1]; ?>
 

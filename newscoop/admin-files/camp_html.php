@@ -202,6 +202,12 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
 	$sectionObj = camp_array_get_value($p_objArray, 'Section', null);
 	$articleObj = camp_array_get_value($p_objArray, 'Article', null);
 
+	if (is_null($publicationObj) || !$publicationObj->exists()
+	|| is_null($issueObj) || !$issueObj->exists()
+	|| is_null($sectionObj) || !$sectionObj->exists()) {
+	    return;
+	}
+
 	$breadcrumbs = array();
 	$breadcrumbs[] = array("Content", "");
 	if (!is_null($publicationObj)) {

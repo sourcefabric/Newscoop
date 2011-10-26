@@ -29,6 +29,7 @@ $f_image_description = trim(Input::Get('f_image_description', 'string', null, tr
 $f_image_photographer = trim(Input::Get('f_image_photographer', 'string', null, true));
 $f_image_place = trim(Input::Get('f_image_place', 'string', null, true));
 $f_image_date = Input::Get('f_image_date', 'string', null, true);
+$f_image_status = Input::Get('f_image_status', 'int', 0);
 
 $backLink = "/$ADMIN/articles/images/edit.php?"
 		. "f_publication_id=" . $f_publication_id
@@ -60,6 +61,7 @@ if (!is_null($f_image_description) && $g_user->hasPermission('ChangeImage')) {
 	$attributes['Photographer'] = $f_image_photographer;
 	$attributes['Place'] = $f_image_place;
 	$attributes['Date'] = $f_image_date;
+    $attributes['Status'] = $f_image_status ? 'approved' : 'unapproved';
 	$imageObj->update($attributes);
 }
 

@@ -368,18 +368,21 @@ class CampURIShortNames extends CampURI
             $article_no = $encoder->decode($webcode);
             $metaArticle = new MetaArticle($webcodeLanguageId, $article_no);
             $this->m_article = $metaArticle;
-            $this->m_language = $this->m_article->language;
-            $this->m_publication = $this->m_article->publication;
+            if ($metaArticle->defined()) {
+                $this->m_language = $this->m_article->language;
+                $this->m_publication = $this->m_article->publication;
+            } else {
+                $this->m_language = $this->_getLanguage($metaArticle->language, $this->m_publication);
+            }
             $this->m_issue = $this->m_article->issue;
             $this->m_section = $this->m_article->section;
-            $this->m_template = $this->_getTemplate();
         } else {
             $this->m_language = $this->_getLanguage($language, $this->m_publication);
             $this->m_issue = $this->_getIssue($request->getParam('issue'), $this->m_language, $this->m_publication);
             $this->m_section = $this->_getSection($request->getParam('section'), $this->m_issue, $this->m_language, $this->m_publication);
             $this->m_article = $this->_getArticle($request->getParam('articleNo'), $this->m_language);
-            $this->m_template = $this->_getTemplate();
         }
+        $this->m_template = $this->_getTemplate();
 
     }
 
