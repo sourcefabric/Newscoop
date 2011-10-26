@@ -691,6 +691,12 @@ class Article extends DatabaseObject {
 
             ContextBoxArticle::OnArticleDelete($this->m_data['Number']);
 
+            // Delete the article from playlists
+            $em = Zend_Registry::get('doctrine')->getEntityManager();
+            $repository = $em->getRepository('Newscoop\Entity\PlaylistArticle');
+            $repository->deleteArticle($this->m_data['Number']);
+            $em->flush();
+
             // Delete indexes
             ArticleIndex::OnArticleDelete($this->getPublicationId(), $this->getIssueNumber(),
                 $this->getSectionNumber(), $this->getLanguageId(), $this->getArticleNumber());

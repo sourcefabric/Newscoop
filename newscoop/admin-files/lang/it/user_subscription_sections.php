@@ -1,18 +1,18 @@
 <?php 
-regGS("saved", "");
-regGS("deleted", "");
-regGS("Subscribed sections: $1", "");
-regGS("Start Date", "");
-regGS("Select sections for subscribing", "");
-regGS("Sections saved", "");
-regGS("Section $1", "");
-regGS("No sections to edit", "");
-regGS("Edit section", "");
-regGS("Edit all sections", "");
-regGS("Add new subscription section", "");
-regGS("Add new section", "");
-regGS("Regardless of the language", "");
-regGS("Individual languages", "");
-regGS("All languages", "");
-regGS("Paid Days", "");
+regGS("saved", "salvato");
+regGS("deleted", "eliminato");
+regGS("Subscribed sections: $1", "Sezioni sottoscritte: $1");
+regGS("Start Date", "Data inizio");
+regGS("Select sections for subscribing", "Seleziona le sezioni da sottoscrivere");
+regGS("Sections saved", "Sezioni salvate");
+regGS("Section $1", "Sezione $1");
+regGS("No sections to edit", "Nessuna sezione da modificare");
+regGS("Edit section", "Modifica sezione");
+regGS("Edit all sections", "Modifica sezioni");
+regGS("Add new subscription section", "Aggiungi sezione sottoscritta");
+regGS("Add new section", "Aggiungi sezione");
+regGS("Regardless of the language", "Ignora lingue");
+regGS("Individual languages", "Lingue individuali");
+regGS("All languages", "Tutte le lingue");
+regGS("Paid Days", "Giorni pagati");
 ?>

@@ -535,6 +535,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         if (isset($Campsite['system_preferences'])) {
             unset($Campsite['system_preferences']['NewsImportUsage']);
         }
+        SystemPref::Set('NewsImportUsage', '0');
         SystemPref::Set('NewsImportUsage', '1');
         SystemPref::Set('NewsImportUsage', '1');
 
@@ -556,6 +557,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         if (isset($Campsite['system_preferences'])) {
             unset($Campsite['system_preferences']['NewsImportUsage']);
         }
+        SystemPref::Set('NewsImportUsage', '1');
         SystemPref::Set('NewsImportUsage', '0');
         SystemPref::Set('NewsImportUsage', '0');
 

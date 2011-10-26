@@ -950,6 +950,13 @@ class KinoData_Parser_SimpleXML {
                             $one_movie_other[] = $one_movie_oth_one;
                         }
                     }
+
+                    $one_movie_age = trim('' . $one_movie->movcatnam);
+                    $one_movie_age_matches = array();
+                    if (preg_match('/^([^\s]+)[\s]*J$/i', $one_movie_age, $one_movie_age_matches)) {
+                        $one_movie_age = $one_movie_age_matches[1];
+                    }
+
                     $one_movie_dates = trim('' . $one_movie->prolis);
                     if (empty($one_movie_dates)) {
                         continue;
@@ -1005,6 +1012,8 @@ class KinoData_Parser_SimpleXML {
                         'desc' => $one_movie_desc,
                         'other' => $one_movie_other,
                         'dates' => $one_screen_dates,
+
+                        'allowed_age' => $one_movie_age,
                     );
                 }
 
@@ -1467,13 +1476,13 @@ hh.mm:langs:flags
                 $one_event['description'] = str_replace("\n", "\n<br />\n", $one_use_desc);
                 $one_event['other'] = $one_screen['other'];
                 foreach ($one_mov_trailers as $cur_trailer) {
-                    $one_event['other'][] = $this->makeLink($cur_trailer, 'trailer');
+                    $one_event['other'][] = $this->makeLink($cur_trailer, 'Trailer');
                 }
 
                 $one_event['genre'] = $one_mov_genre;
                 $one_event['languages'] = '';
                 $one_event['prices'] = '';
-                $one_event['minimal_age'] = '';
+                $one_event['minimal_age'] = $one_screen['allowed_age'];
 
                 $one_event['canceled'] = false;
                 $one_event['rated'] = $e_rated;
