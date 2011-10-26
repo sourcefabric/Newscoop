@@ -654,6 +654,13 @@ class Image extends DatabaseObject
             }
 	        return new PEAR_Error($ex->getMessage(), $ex->getCode());
 	    }
+
+        $user = Zend_Registry::get('container')->getService('user')->getCurrentUser();
+        if ($user && $user->isAdmin()) {
+            $image->m_data['Status'] = 'approved';
+            $image->m_data['Source'] = 'local';
+        }
+
         $image->commit();
 		$logtext = getGS('The image "$1" ($2) has been added.',
 				 $image->m_data['Description'], $image->m_data['Id']);

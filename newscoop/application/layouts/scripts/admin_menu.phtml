@@ -100,6 +100,13 @@ $pages[1]['pages'][] = array(
 );
 
 $pages[1]['pages'][] = array(
+    'label' => getGS('Pending articles'),
+    'module' => 'admin',
+    'controller' => 'pending_articles',
+    'action' => 'index.php',
+);
+
+$pages[1]['pages'][] = array(
     'label' => 'Newswires',
     'module' => 'admin',
     'controller' => 'ingest',
@@ -539,7 +546,7 @@ if (!empty($plugin_pages)) {
 }
 
 // change menu for blogger
-$blogService = Zend_Registry::get('container')->getService('blog');  
+$blogService = Zend_Registry::get('container')->getService('blog');
 if ($blogService->isBlogger($g_user)) {
     $pages = array(
         array(

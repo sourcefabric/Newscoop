@@ -91,6 +91,7 @@ class DashboardController extends Zend_Controller_Action
                 
         $this->view->form = $form;
         $this->view->user = new MetaUser($this->user);
+        $this->view->first_time = $this->_getParam('first', false);
     }
 
     public function updateTopicsAction()
