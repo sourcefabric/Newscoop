@@ -248,6 +248,9 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         return nRow;
     },
     <?php } ?>
+    <?php if ($this->workflow_status == 'pending') { ?>
+    'bStateSave': true,
+    <?php } ?>
     'bJQueryUI': true
 }).css('position', 'relative').css('width', '100%');
 
