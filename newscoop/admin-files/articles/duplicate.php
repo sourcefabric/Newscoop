@@ -113,16 +113,20 @@ if ($f_publication_id > 0) {
 		exit;
 	}
 
-	$issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
-	if (!$issueObj->exists()) {
-		camp_html_display_error(getGS('Issue does not exist.'));
-		exit;
-	}
+	if ($f_issue_number > 0) {
+	    $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
+	    if (!$issueObj->exists()) {
+	        camp_html_display_error(getGS('Issue does not exist.'));
+	        exit;
+	    }
 
-	$sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
-	if (!$sectionObj->exists()) {
-		camp_html_display_error(getGS('Section does not exist.'));
-		exit;
+	    if ($f_section_number > 0) {
+	        $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+	        if (!$sectionObj->exists()) {
+	            camp_html_display_error(getGS('Section does not exist.'));
+	            exit;
+	        }
+	    }
 	}
 }
 
@@ -137,7 +141,7 @@ if (count($allPublications) == 1) {
 // Get the most recent issues.
 $allIssues = array();
 if ($f_destination_publication_id > 0) {
-	$allIssues = Issue::GetIssues($f_destination_publication_id, $firstArticle->getLanguageId(), null, null, null, false, array("LIMIT" => 300, "ORDER BY" => array("Number" => "DESC")), true);
+	$allIssues = Issue::GetIssues($f_destination_publication_id, null, null, null, null, false, array("LIMIT" => 300, "ORDER BY" => array("Number" => "DESC"), 'GROUP BY' => 'Number'), true);
 	// Automatically select the issue if there is only one.
 	if (count($allIssues) == 1) {
 		$tmpIssue = camp_array_peek($allIssues);
@@ -149,7 +153,7 @@ if ($f_destination_publication_id > 0) {
 $allSections = array();
 if ($f_destination_issue_number > 0) {
     $destIssue = new Issue($f_destination_publication_id);
-    $allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_number, $firstArticle->getLanguageId(), null, null, array("ORDER BY" => array("Number" => "DESC")), true);
+    $allSections = Section::GetSections($f_destination_publication_id, $f_destination_issue_number, null, null, null, array("ORDER BY" => array("Number" => "DESC"), 'GROUP BY' => 'Number'), true);
     // Automatically select the section if there is only one.
     if (count($allSections) == 1) {
         $tmpSection = camp_array_peek($allSections);
@@ -589,7 +593,8 @@ foreach ($articles as $languageArray) {
 
 		<tr>
 			<td colspan="2"><?php
-				if ( ($f_publication_id == $f_destination_publication_id) && ($f_issue_number == $f_destination_issue_number) && ($f_section_number == $f_destination_section_number)) {
+				if ( ($f_publication_id == $f_destination_publication_id) && ($f_issue_number == $f_destination_issue_number)
+				&& ($f_section_number == $f_destination_section_number) && ($f_section_number > 0)) {
 					putGS("The destination section is the same as the source section."); echo "<BR>\n";
 				}
 			?></td>

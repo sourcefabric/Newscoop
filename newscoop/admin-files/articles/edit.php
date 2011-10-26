@@ -83,9 +83,21 @@ $showComments = FALSE;
 $showCommentControls = FALSE;
 if ($f_publication_id > 0) {
     $publicationObj = new Publication($f_publication_id);
-    $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
-    $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
-    $languageObj = new Language($articleObj->getLanguageId());
+    if ($publicationObj->exists()) {
+        $issueObj = new Issue($f_publication_id, $f_language_id, $f_issue_number);
+        if ($issueObj->exists()) {
+            $sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
+            if ($sectionObj->exists()) {
+                $languageObj = new Language($articleObj->getLanguageId());
+            } else {
+                $sectionObj = null;
+            }
+        } else {
+            $issueObj = null;
+        }
+    } else {
+        $publicationObj = null;
+    }
 
     $showCommentControls = ($publicationObj->commentsEnabled() && $articleType->commentsEnabled());
     $showComments = $showCommentControls && $articleObj->commentsEnabled();
