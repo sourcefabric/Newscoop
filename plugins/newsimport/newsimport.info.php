@@ -60,6 +60,7 @@ $info = array(
     'disable' => 'plugin_newsimport_disable',
     'uninstall' => 'plugin_newsimport_uninstall',
     'enabled_by_default' => false,
+    'upgrade' => 'plugin_newsimport_upgrade',
 );
 
 if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
@@ -511,6 +512,24 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         plugin_newsimport_demo_data();
 */
     } // fn plugin_newsimport_install
+
+    function plugin_newsimport_upgrade($enabled)
+    {
+        if (!$enabled) {
+            return;
+        }
+
+        global $Campsite;
+        if (isset($Campsite['system_preferences'])) {
+            unset($Campsite['system_preferences']['NewsImportUsage']);
+        }
+        SystemPref::Set('NewsImportUsage', '0');
+        SystemPref::Set('NewsImportUsage', '1');
+        SystemPref::Set('NewsImportUsage', '1');
+
+        plugin_newsimport_set_cron(true);
+    }
+
 
 	/**
      * plugin enabling
