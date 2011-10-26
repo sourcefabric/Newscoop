@@ -149,7 +149,7 @@ $event_data_limits = array(
             'other' => array('regions' => newsimport_getBaselRegions()),
         ),
         'dates' => array(
-            'past' => 31, // 30 days old
+            'past' => 31, // 31 days old
             //'past' => 2, // 2 days old, testing
             'next' => 93, // 93 days adv
         ),
@@ -160,7 +160,7 @@ $event_data_limits = array(
             //'*' => array('regions' => newsimport_getBaselRegions()),
         ),
         'dates' => array(
-            'past' => 1, // 1 day old
+            'past' => 2, // 2 days old
             'next' => 7, // 7 days adv
         ),
     ),

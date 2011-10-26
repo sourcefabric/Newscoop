@@ -650,13 +650,13 @@ class KinoData_Parser_SimpleXML {
             //$one_mov_xml = simplexml_load_file($one_mov_file);
             $one_mov_xml = simplexml_load_string(FileLoad::LoadFix($one_mov_file));
             foreach ($one_mov_xml->movie as $one_movie) {
-                $one_mov_id = trim('' . $one_movie->movid);
-                if (empty($one_mov_id)) {
+                $one_mov_key = trim('' . $one_movie->movkey);
+                if (empty($one_mov_key)) {
                     continue;
                 }
                 $one_mov_info = array();
-                if (isset($movies_infos[$one_mov_id])) {
-                    $one_mov_info = $movies_infos[$one_mov_id];
+                if (isset($movies_infos[$one_mov_key])) {
+                    $one_mov_info = $movies_infos[$one_mov_key];
                 }
 
                 $one_mov_desc = trim('' . $one_movie->movsyd);
@@ -677,7 +677,7 @@ class KinoData_Parser_SimpleXML {
                     }
                 }
 
-                $movies_infos[$one_mov_id] = $one_mov_info;
+                $movies_infos[$one_mov_key] = $one_mov_info;
 
             }
         }
@@ -710,13 +710,13 @@ class KinoData_Parser_SimpleXML {
             }
 
             foreach ($one_mov_xml->movie as $one_movie) {
-                $one_mov_id = trim('' . $one_movie->movid);
-                if (empty($one_mov_id)) {
+                $one_mov_key = trim('' . $one_movie->movkey);
+                if (empty($one_mov_key)) {
                     continue;
                 }
                 $one_mov_info = array();
-                if (isset($movies_infos[$one_mov_id])) {
-                    $one_mov_info = $movies_infos[$one_mov_id];
+                if (isset($movies_infos[$one_mov_key])) {
+                    $one_mov_info = $movies_infos[$one_mov_key];
                 }
 
                 $one_mov_genres = array();
@@ -735,7 +735,7 @@ class KinoData_Parser_SimpleXML {
 
                 if (!empty($one_mov_genres)) {
                     $one_mov_info['genres'] = $one_mov_genres;
-                    $movies_infos[$one_mov_id] = $one_mov_info;
+                    $movies_infos[$one_mov_key] = $one_mov_info;
                 }
 
             }
@@ -746,29 +746,29 @@ class KinoData_Parser_SimpleXML {
             //$one_lnk_xml = simplexml_load_file($one_lnk_file);
             $one_lnk_xml = simplexml_load_string(FileLoad::LoadFix($one_lnk_file));
             foreach ($one_lnk_xml->movie as $one_movie) {
-                $one_mov_id = trim('' . $one_movie->m_movid);
-                if (empty($one_mov_id)) {
+                $one_mov_key = trim('' . $one_movie->m_movkey);
+                if (empty($one_mov_key)) {
                     continue;
                 }
                 $one_mov_info = array();
-                if (isset($movies_infos[$one_mov_id])) {
-                    $one_mov_info = $movies_infos[$one_mov_id];
+                if (isset($movies_infos[$one_mov_key])) {
+                    $one_mov_info = $movies_infos[$one_mov_key];
                 }
                 $one_mov_url = trim('' . $one_movie->m_movurl);
                 if (!empty($one_mov_url)) {
                     $one_mov_info['link_url'] = $one_mov_url;
-                    $movies_infos[$one_mov_id] = $one_mov_info;
+                    $movies_infos[$one_mov_key] = $one_mov_info;
                 }
             }
 
             foreach ($one_lnk_xml->image as $one_lnk_image) {
-                $one_mov_id = trim('' . $one_lnk_image->i_movid);
-                if (empty($one_mov_id)) {
+                $one_mov_key = trim('' . $one_lnk_image->i_movkey);
+                if (empty($one_mov_key)) {
                     continue;
                 }
                 $one_mov_info = array();
-                if (isset($movies_infos[$one_mov_id])) {
-                    $one_mov_info = $movies_infos[$one_mov_id];
+                if (isset($movies_infos[$one_mov_key])) {
+                    $one_mov_info = $movies_infos[$one_mov_key];
                 }
                 $one_mov_info_images = array();
                 if (isset($one_mov_info['link_images'])) {
@@ -788,18 +788,18 @@ class KinoData_Parser_SimpleXML {
                 if (!empty($one_img_url)) {
                     $one_mov_info_images[$one_img_id] = array('url' => $one_img_url, 'width' => $one_img_w, 'height' => $one_img_h, 'type' => $one_img_type);
                     $one_mov_info['link_images'] = $one_mov_info_images;
-                    $movies_infos[$one_mov_id] = $one_mov_info;
+                    $movies_infos[$one_mov_key] = $one_mov_info;
                 }
             }
 
             foreach ($one_lnk_xml->trailer as $one_lnk_trailer) {
-                $one_mov_id = trim('' . $one_lnk_trailer->t_movid);
-                if (empty($one_mov_id)) {
+                $one_mov_key = trim('' . $one_lnk_trailer->t_movkey);
+                if (empty($one_mov_key)) {
                     continue;
                 }
                 $one_mov_info = array();
-                if (isset($movies_infos[$one_mov_id])) {
-                    $one_mov_info = $movies_infos[$one_mov_id];
+                if (isset($movies_infos[$one_mov_key])) {
+                    $one_mov_info = $movies_infos[$one_mov_key];
                 }
                 $one_trl_w = trim('' . $one_lnk_trailer->t_movtrw);
                 $one_trl_h = trim('' . $one_lnk_trailer->t_movtrh);
@@ -807,7 +807,7 @@ class KinoData_Parser_SimpleXML {
                 $one_trl_url = trim('' . $one_lnk_trailer->t_traurl);
                 if (!empty($one_trl_url)) {
                     $one_mov_info['link_trailer'] = array('url' => $one_trl_url, 'width' => $one_trl_w, 'height' => $one_trl_h, 'format' => $one_trl_format);
-                    $movies_infos[$one_mov_id] = $one_mov_info;
+                    $movies_infos[$one_mov_key] = $one_mov_info;
                 }
             }
         }
@@ -846,8 +846,8 @@ class KinoData_Parser_SimpleXML {
 
         ksort($movies_info);
 
-        $cre_req = 'CREATE TABLE IF NOT EXISTS ' . $table_name . ' (movie_id PRIMARY KEY, movie_key TEXT UNIQUE, movie_info TEXT)';
-        $ins_req = 'INSERT OR REPLACE INTO ' . $table_name . ' (movie_id, movie_key, movie_info) VALUES (:movie_id, :movie_key, :movie_info)';
+        $cre_req = 'CREATE TABLE IF NOT EXISTS ' . $table_name . ' (movie_key TEXT PRIMARY KEY, movie_info TEXT)';
+        $ins_req = 'INSERT OR REPLACE INTO ' . $table_name . ' (movie_key, movie_info) VALUES (:movie_key, :movie_info)';
 
         @$db = new PDO ('sqlite:' . $sqlite_name);
         $stmt = $db->prepare($cre_req);
@@ -856,16 +856,34 @@ class KinoData_Parser_SimpleXML {
             return false;
         }
 
+        $movies_to_preload = array();
+        foreach ($movies_info as $mov_key => $mov_info) {
+            $movies_to_preload[$mov_key] = true;
+        }
+        $movies_preloaded = $this->loadMoviesByKeys($movies_to_preload, $p_moviesDatabase);
+        foreach ($movies_preloaded as $mov_key => $one_movie_data_pre) {
+            if (isset($movies_info[$mov_key])) {
+                $mov_info = $movies_info[$mov_key];
+                foreach ($one_movie_data_pre as $mov_pre_key => $mov_pre_value) {
+                    $mov_new_value = (isset($mov_info[$mov_pre_key])) ? $mov_info[$mov_pre_key] : '';
+                    if ( (empty($mov_new_value)) && (!empty($mov_pre_value)) ) {
+                        $mov_info[$mov_pre_key] = $mov_pre_value;
+                    }
+                }
+                $movies_info[$mov_key] = $mov_info;
+            }
+        }
+
         $db->beginTransaction();
         $stmt = $db->prepare($ins_req);
-        foreach ($movies_info as $mov_id => $mov_info) {
-            $mov_key = '';
-            if (isset($mov_info['key'])) {
-                $mov_key = $mov_info['key'];
-            }
+        foreach ($movies_info as $mov_key => $mov_info) {
+            //$mov_key = '';
+            //if (isset($mov_info['key'])) {
+            //    $mov_key = $mov_info['key'];
+            //}
             $mov_info = json_encode($mov_info);
 
-            $stmt->bindParam(':movie_id', $mov_id, PDO::PARAM_INT);
+            //$stmt->bindParam(':movie_id', $mov_id, PDO::PARAM_INT);
             $stmt->bindParam(':movie_key', $mov_key, PDO::PARAM_STR);
             $stmt->bindParam(':movie_info', $mov_info, PDO::PARAM_STR);
 
@@ -933,6 +951,13 @@ class KinoData_Parser_SimpleXML {
                 $one_kino_latitude = trim('' . $one_kino->theaterlat);
                 $one_kino_longitude = trim('' . $one_kino->theaterlong);
                 $one_kino_phone = trim('' . $one_kino->theaterphone);
+                $k_telcost = trim('' . $one_kino->theatertelcostde);
+                if (empty($k_telcost)) {
+                    $k_telcost = trim('' . $one_kino->theatertelcost);
+                }
+                if (!empty($k_telcost)) {
+                    $one_kino_phone .= ' ' . $k_telcost;
+                }
                 $one_kino_url = trim('' . $one_kino->theaterurl);
 
                 foreach ($one_kino->movie as $one_movie) {
