@@ -220,7 +220,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	if ($p_user->hasPermission('EditorTable')) {
 	    $toolbar3[] = "tablecontrols";
 	}
-	$toolbar3[] = 'iframe';
+	$toolbar2[] = 'iframe';
 
 	$theme_buttons1 = (count($toolbar1) > 0) ? implode(',', $toolbar1) : '';
 	$theme_buttons2 = (count($toolbar2) > 0) ? implode(',', $toolbar2) : '';
