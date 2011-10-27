@@ -119,6 +119,9 @@ $install = new CampInstallation();
 $install->initSession();
 $step = $install->execute();
 
+// update plugins environment
+CampPlugin::OnAfterUpgrade();
+
 CampTemplate::singleton()->clearCache();
 
 // replace javascript by js in .htaccess file
