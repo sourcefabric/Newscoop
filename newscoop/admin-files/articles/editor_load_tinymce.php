@@ -205,9 +205,9 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 
 	if ($p_user->hasPermission('EditorFontFace')) {
 	    $toolbar2[] = "|";
-	    $toolbar2[] = "styleselect";
+	    //$toolbar2[] = "styleselect";
 	    $toolbar2[] = "formatselect";
-	    $toolbar2[] = "fontselect";
+	    //$toolbar2[] = "fontselect";
 	}
 	if ($p_user->hasPermission('EditorFontSize')) {
 	    $toolbar2[] = "fontsizeselect";

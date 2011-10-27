@@ -59,8 +59,7 @@ class PlaylistRepository extends EntityRepository
     public function getArticlePlaylists($articleId)
     {
         $em = $this->getEntityManager();
-        $article = new Article();
-        $article->setId($articleId);
+        $article = $em->getRepository('Newscoop\Entity\Article')->findOneBy(array('number' => $articleId));
         $query = $em->createQuery("SELECT pa FROM Newscoop\Entity\PlaylistArticle pa JOIN pa.playlist p WHERE pa.article = ?1");
         $query->setParameter(1, $article);
         try
