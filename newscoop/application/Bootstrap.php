@@ -55,6 +55,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         }
     }
 
+    /**
+     * TODO the name of this method is named confusing, container for what? a zend navigation container? obviously not..
+     */
     protected function _initContainer()
     {
         $this->bootstrap('autoloader');
@@ -146,7 +149,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('email'))
             ->addArgument(new sfServiceReference('comment'))
             ->addArgument(new sfServiceReference('user'));
-        
+
         $container->register('user_subscription', 'Newscoop\Services\UserSubscriptionService')
             ->addArgument(new sfServiceReference('em'));
 
@@ -209,6 +212,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ), array(
                 'webcode' => '^@[a-z]{5,6}',
             )));
+
+         $router->addRoute
+         (
+            'postfinance',
+            new Zend_Controller_Router_Route_Static('postfinance', array( 'controller' => 'payment', 'action' => 'postfinance', 1 => null ))
+         );
 
          $router->addRoute(
             'language/webcode',
