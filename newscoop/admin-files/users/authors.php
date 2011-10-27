@@ -293,9 +293,12 @@ function deleteAuthor(id) {
     if (!confirm('<?php echo getGS('Are you sure you want to delete this author?')?>')) {
         return false;
     }
-    $.post('?del_id=' + id, function(data) {
+
+    $.post('?del_id=' + id, function(data, textStatus, jqXHR) {
         window.location.replace("?");
     });
+
+    return false;
 }
 
 function getRow(id) {
