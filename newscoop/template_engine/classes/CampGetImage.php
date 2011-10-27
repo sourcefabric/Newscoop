@@ -273,6 +273,10 @@ class CampGetImage
      */
     private function PushImage()
     {
+        header('Cache-Control: public, max-age=3600');
+        header('Pragma: cache');
+        header('Expires: ' . gmdate("D, d M Y H:i:s", gmmktime( gmdate("H")+1)) . ' GMT');
+
         header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
         header('Content-type: ' . $this->m_image->getContentType());
 
