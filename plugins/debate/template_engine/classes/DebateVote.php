@@ -137,6 +137,17 @@ class DebateVote extends DatabaseObject
     } // fn delete
 
     /**
+     * delete by debate number
+     */
+    function deleteByDebate($debateNr)
+    {
+        global $g_ado_db;
+        if (!$debateNr) return false;
+        $query = "DELETE FROM plugin_debate_vote WHERE `fk_debate_nr` = '$debateNr'";
+        return $g_ado_db->execute($query);
+    }
+
+    /**
      * Trigger to delete votes on answer vote
      * @param int $p_fk_debate_nr
      * @param int $p_fk_answer_nr

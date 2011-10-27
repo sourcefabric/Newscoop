@@ -1084,6 +1084,7 @@ class Debate extends DatabaseObject
      */
     public function reset()
     {
+        DebateVote::deleteByDebate($this->getNumber());
         foreach ($this->getAnswers() as $PollAnswer) {
             $PollAnswer->setProperty('nr_of_votes', 0);
             $PollAnswer->setProperty('percentage', 0);
