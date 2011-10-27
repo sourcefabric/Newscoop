@@ -43,8 +43,7 @@ function smarty_function_article_pdf($params, &$smarty)
             $html2pdf->writeHTML($content);
             $html2pdf->Output($pdf_file, 'F');
         } catch (HTML2PDF_exception $e) {
-            echo $e;
-            exit;
+            return '';
         }
     }
 

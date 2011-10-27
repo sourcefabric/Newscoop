@@ -47,8 +47,7 @@ class PlaylistArticleRepository extends EntityRepository
     public function deleteArticle($articleId)
     {
         $em = $this->getEntityManager();
-        $article = new Article();
-        $article->setId($articleId);
+        $article = $em->getRepository('Newscoop\Entity\Article')->findOneBy(array('number' => $articleId));
         $query = $em->createQuery("DELETE FROM Newscoop\Entity\PlaylistArticle pa WHERE pa.article = ?1");
         $query->setParameter(1, $article);
         try
