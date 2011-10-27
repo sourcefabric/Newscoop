@@ -616,6 +616,7 @@ echo "done.\n";
 // upgrade plugins
 echo " * Updating plugins (if necessary)...";
 @CampPlugin::OnUpgrade();
+@CampPlugin::OnAfterUpgrade();
 echo "   done.\n";
 
 //
