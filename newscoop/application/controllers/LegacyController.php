@@ -80,6 +80,11 @@ class LegacyController extends Zend_Controller_Action
 
     public function postDispatch()
     {
+        // register page popularity
+        if ($this->_getParam('language') && $this->_getParam('articleNo')) {
+            //$this->_helper->service('article.popularity')->register($this->getRequest());
+        }
+
         // run internal cron scheduler
         if (SystemPref::Get('ExternalCronManagement') == 'N') {
             camp_cron();

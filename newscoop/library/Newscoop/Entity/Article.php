@@ -77,6 +77,13 @@ class Article
     private $date;
 
     /**
+     * @Column(name="comments_enabled")
+     * @var int
+     */
+    private $comments_enabled;
+
+
+    /**
      * Set article id
      *
      * @param int $p_id
@@ -226,7 +233,7 @@ class Article
         return $this->name;
     }
 
-	/**
+    /**
      * Get date
      *
      * @return string
@@ -234,5 +241,15 @@ class Article
     public function getDate()
     {
         return $this->date;
+    }
+
+    /**
+     * Get whether commenting is enabled
+     *
+     * @return int
+     */
+    public function commentsEnabled()
+    {
+        return (int) $this->comments_enabled;
     }
 }

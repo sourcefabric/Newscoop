@@ -15,12 +15,10 @@ namespace Newscoop\Entity;
  */
 class Language
 {
-	/**
-	 * Provides the class name as a constant.
-	 */
-	const NAME = __CLASS__;
-
-	/* --------------------------------------------------------------- */
+    /**
+     * Provides the class name as a constant.
+     */
+    const NAME = __CLASS__;
 
     /**
      * @id @generatedValue
