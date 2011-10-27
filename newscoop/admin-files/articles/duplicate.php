@@ -373,9 +373,14 @@ if ($f_publication_id > 0) {
 	if (count($articles) > 1) {
 		$crumbs = array(getGS("Articles") => "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_id=$f_language_id&f_language_selected=$f_language_selected");
 		camp_html_content_top($title, $topArray, true, false, $crumbs);
-	} else {
+	} elseif ($f_issue_number > 0 && $f_section_number > 0) {
 		$topArray['Article'] = camp_array_peek(camp_array_peek($articles));
 		camp_html_content_top($title, $topArray);
+	} else {
+	    $crumbs = array();
+	    $crumbs[] = array(getGS("Pending articles"), "/$ADMIN/pending_articles");
+	    $crumbs[] = array($title, "");
+	    echo camp_html_breadcrumbs($crumbs);
 	}
 } else {
 	$crumbs = array();

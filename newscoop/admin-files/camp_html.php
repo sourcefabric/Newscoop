@@ -202,12 +202,6 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
 	$sectionObj = camp_array_get_value($p_objArray, 'Section', null);
 	$articleObj = camp_array_get_value($p_objArray, 'Article', null);
 
-	if (is_null($publicationObj) || !$publicationObj->exists()
-	|| is_null($issueObj) || !$issueObj->exists()
-	|| is_null($sectionObj) || !$sectionObj->exists()) {
-	    return;
-	}
-
 	$breadcrumbs = array();
 	$breadcrumbs[] = array("Content", "");
 	if (!is_null($publicationObj)) {
@@ -217,7 +211,7 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
     	$breadcrumbs[] = array($name, "/$ADMIN/pub/edit.php?Pub=".$publicationObj->getPublicationId());
 	}
 
-	if (!is_null($issueObj)) {
+	if ($issueObj instanceof Issue) {
 	    $prompt = getGS("Issue").":";
     	$breadcrumbs[] = array($prompt,
     	       "/$ADMIN/issues/"
@@ -233,7 +227,7 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
     	       ."&Issue=".$issueObj->getIssueNumber()
     	       ."&Language=".$issueObj->getLanguageId());
 	}
-	if (!is_null($sectionObj)) {
+	if ($sectionObj instanceof Section) {
 	    $prompt = getGS("Section").":";
 		$breadcrumbs[] = array($prompt,
 		        "/$ADMIN/sections/"
@@ -250,13 +244,13 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
                 ."&Language=".$sectionObj->getLanguageId()
                 ."&Section=".$sectionObj->getSectionNumber());
 	}
-	if (!is_null($articleObj)) {
+	if ($articleObj instanceof Article) {
 	    $prompt = getGS("Article").":";
 		$breadcrumbs[] = array($prompt,
                 "/$ADMIN/articles/index.php"
                 ."?f_publication_id=" . $articleObj->getPublicationId()
                 ."&f_issue_number=".$articleObj->getIssueNumber()
-                ."&f_language_id=".$sectionObj->getLanguageId()
+                ."&f_language_id=".$articleObj->getLanguageId()
                 ."&f_section_number=".$articleObj->getSectionNumber()
                 ."&f_article_number=".$articleObj->getArticleNumber(),
                 false);
@@ -266,7 +260,7 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
                 "/$ADMIN/articles/edit.php"
                 ."?f_publication_id=" . $articleObj->getPublicationId()
                 ."&f_issue_number=".$articleObj->getIssueNumber()
-                ."&f_language_id=".$sectionObj->getLanguageId()
+                ."&f_language_id=".$articleObj->getLanguageId()
                 ."&f_section_number=".$articleObj->getSectionNumber()
                 ."&f_article_number=".$articleObj->getArticleNumber()
                 ."&f_language_selected=".$articleObj->getLanguageId());
