@@ -94,8 +94,24 @@ GeoPopups.set_embed_tag = function(attrs, geo_obj)
 
 };
 
+GeoPopups.escape_ampersands = function(text) {
+    var text_arr = text.split("&");
+    var text_arr_count = text_arr.length;
+    text = text_arr[0];
+    for (var tind = 1; tind < text_arr_count; tind++) {
+        text += "&";
+        var tpart = text_arr[tind];
+        if (null === tpart.match(/^#[\d]+;/)) {
+            text += "amp;";
+        }
+        text += tpart;
+    }
+    return text;
+};
+
 GeoPopups.escape_desc_text = function(text, soft) {
-    text = text.replace(/&/gi, "&amp;");
+    //text = text.replace(/&/gi, "&amp;");
+    text = GeoPopups.escape_ampersands(text);
     text = text.replace(/>/gi, "&gt;");
     text = text.replace(/</gi, "&lt;");
 
@@ -113,7 +129,8 @@ GeoPopups.escape_desc_text = function(text, soft) {
 };
 
 GeoPopups.escape_label_text = function(text) {
-    text = text.replace(/&/gi, "&amp;");
+    //text = text.replace(/&/gi, "&amp;");
+    text = GeoPopups.escape_ampersands(text);
     text = text.replace(/>/gi, "&gt;");
     text = text.replace(/</gi, "&lt;");
     return text;

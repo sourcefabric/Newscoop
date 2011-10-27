@@ -19,16 +19,10 @@ class NewsImport
     private static $s_already_run = false;
 
     /**
-     * To omit a possible double run if it would happened.
-     * @var mixed
-     */
-    //private static $s_lockfile = null;
-
-	/**
      * Makes necessary initialization for Newscoop
      *
-	 * @return void
-	 */
+    * @return void
+    */
     private static function LoadInit()
     {
         // it looks that just the localizer path is missing in the include_path here
@@ -37,12 +31,12 @@ class NewsImport
 
     } // fn LoadInit
 
-	/**
+    /**
      * Checks whether a request for event import, calls that import if asked
      *
-	 * @param bool $p_importOnly
-	 * @return mixed
-	 */
+    * @param bool $p_importOnly
+    * @return mixed
+    */
     public static function ProcessImport(&$p_importOnly) {
 
         global $Campsite;
@@ -457,36 +451,10 @@ class NewsImport
             $article_data->setProperty('Ftown', $one_event['town']);
             $article_data->setProperty('Fstreet', $one_event['street']);
 
-/*
-            $e_region = '';
-            if (isset($one_event['region'])) {
-                $e_region = $one_event['region'];
-            }
-            $article_data->setProperty('Fregion', $e_region);
-            $e_subregion = '';
-            if (isset($one_event['subregion'])) {
-                $e_subregion = $one_event['subregion'];
-            }
-            $article_data->setProperty('Fsubregion', $e_subregion);
-*/
-
             $article_data->setProperty('Fdate', $one_event['date']);
-            //$article_data->setProperty('Fdate_year', $one_event['date_year']);
-            //$article_data->setProperty('Fdate_month', $one_event['date_month']);
-            //$article_data->setProperty('Fdate_day', $one_event['date_day']);
             $article_data->setProperty('Ftime', $one_event['time']);
 
             $article_data->setProperty('Fdate_time_text', $one_event['date_time_text']);
-
-/*
-            if ($scr_type == $art_type) {
-                $e_date_time_tree = '';
-                if (isset($one_event['date_time_tree'])) {
-                    $e_date_time_tree = $one_event['date_time_tree'];
-                }
-                $article_data->setProperty('Fdate_time_tree', $e_date_time_tree);
-            }
-*/
 
             $article_data->setProperty('Fweb', $one_event['web']);
             $article_data->setProperty('Femail', $one_event['email']);
@@ -875,15 +843,6 @@ class NewsImport
             $Campsite = array();
         }
 
-/*
-        // whether we can start now
-        $locks_path_dir = NewsImportEnv::AbsolutePath($newsimport_default_locks);
-        if (!self::Start($locks_path_dir)) {
-            $msg = 'newsimport_locked';
-            return $msg;
-        }
-*/
-
         $cache_path_dir = NewsImportEnv::AbsolutePath($newsimport_default_cache);
         $img_cache_path = $cache_path_dir . 'images_info.sqlite';
         self::$s_img_cache = new EventImage($img_cache_path);
@@ -1048,8 +1007,6 @@ class NewsImport
         }
 
         self::$s_img_cache = null;
-
-        //self::Stop($locks_path_dir);
 
         return '';
 

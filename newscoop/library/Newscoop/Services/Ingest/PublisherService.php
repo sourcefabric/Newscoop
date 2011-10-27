@@ -68,7 +68,7 @@ class PublisherService
         $article->setProperty('time_updated', $entry->getUpdated()->format(self::DATETIME_FORMAT));
         $article->setKeywords($entry->getCatchWord());
         $this->setArticleData($article, $entry);
-        $this->setArticleAuthors($article, $entry->getAuthors());
+        $this->setArticleAuthors($article, $entry);
         $this->setArticleImages($article, $entry->getImages());
         $entry->setPublished(new \DateTime());
         return $article;
@@ -196,10 +196,10 @@ class PublisherService
      * Set article authors
      *
      * @param Article $article
-     * @param string $authors
+     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
      * @return void
      */
-    private function setArticleAuthors(\Article $article, $entry)
+    private function setArticleAuthors(\Article $article, Entry $entry)
     {
         $name = $entry->getFeed()->getTitle();
         $author = new \Author($name);

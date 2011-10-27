@@ -43,9 +43,6 @@ class EventData_Parser {
      */
     var $m_saved_parts = array('dif' => 'gen_dif', 'all' => 'gen_set');
 
-    //var $m_regionInfo = array();
-    //var $m_regionTopics = array();
-
 	/**
 	 * constructor
 	 * @param array $p_source
@@ -69,8 +66,6 @@ class EventData_Parser {
 	 * @return bool
 	 */
     public function prepare($p_categories, $p_limits, $p_cancels, $p_env, $p_regionObj, $p_regionTopics) {
-        //$this->m_regionInfo = $p_regionObj;
-        //$this->m_regionTopics = $p_regionTopics;
 
         // we need that conf info
         if ((!isset($this->m_dirs['source'])) || (!isset($this->m_dirs['source']['events']))) {
@@ -577,17 +572,7 @@ class EventData_Parser_SimpleXML {
                 // region info
                 $e_region = '';
                 $e_subregion = '';
-/*
-                $e_region_info = RegionInfo::ZipRegion($event_info['zipcode'], $event_info['country']);
-                if (!empty($e_region_info)) {
-                    if (isset($e_region_info['region'])) {
-                        $e_region = $e_region_info['region'];
-                    }
-                    if (isset($e_region_info['subregion'])) {
-                        $e_subregion = $e_region_info['subregion'];
-                    }
-                }
-*/
+
                 $event_info['region'] = $e_region;
                 $event_info['subregion'] = $e_subregion;
 

@@ -65,8 +65,11 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	        $plugins[] = 'campsiteimage';
             $plugins[] = 'media';
 	}
+        if ($p_user->hasPermission('EditorFontColor')) {
+            $plugins[] = 'codehighlighting';
+        }
 	$plugins[] = 'iframe';
-	$plugins[] = 'codehighlighting';
+
 	$plugins_list = implode(",", $plugins);
 
 	$statusbar_location = "none";
@@ -91,6 +94,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	}
 	if ($p_user->hasPermission('EditorStrikethrough')) {
 	    $toolbar1[] = "strikethrough";
+            $toolbar1[] = "blockquote";
 	}
 	if ($p_user->hasPermission('EditorTextAlignment')) {
 	    $toolbar1[] = "|";
@@ -103,7 +107,6 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	    $toolbar1[] = "|";
 	    $toolbar1[] = "outdent";
 	    $toolbar1[] = "indent";
-	    $toolbar1[] = "blockquote";
 	}
 	if ($p_user->hasPermission('EditorCopyCutPaste')) {
 	    $toolbar1[] = "|";
@@ -152,6 +155,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	if ($p_user->hasPermission('EditorFontColor')) {
 	    $toolbar1[] = "forecolor";
 	    $toolbar1[] = "backcolor";
+            $toolbar1[] = 'codehighlighting';
 	}
 	if ($p_user->hasPermission('EditorSubscript')) {
 	    $toolbar1[] = "sub";
@@ -216,8 +220,7 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
 	if ($p_user->hasPermission('EditorTable')) {
 	    $toolbar3[] = "tablecontrols";
 	}
-	$toolbar3[] = 'iframe';
-	$toolbar3[] = 'codehighlighting';
+	$toolbar2[] = 'iframe';
 
 	$theme_buttons1 = (count($toolbar1) > 0) ? implode(',', $toolbar1) : '';
 	$theme_buttons2 = (count($toolbar2) > 0) ? implode(',', $toolbar2) : '';
