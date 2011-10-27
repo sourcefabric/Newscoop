@@ -568,6 +568,15 @@ class CampPlugin extends DatabaseObject
             }
         }
 
+    }
+
+    /**
+     * Updates plugins environment if needed
+     * @return void
+     */
+    public static function OnAfterUpgrade()
+    {
+
         foreach (self::GetPluginsInfo() as $info) {
             if (isset($info['upgrade'])) {
                 if (!isset($info['name'])) {
