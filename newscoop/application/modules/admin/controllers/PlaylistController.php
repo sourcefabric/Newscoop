@@ -63,6 +63,9 @@ class Admin_PlaylistController extends Zend_Controller_Action
         }
     }
 
+    /**
+     * @Acl(resource="playlist", action="manage")
+     */
     public function articleAction()
     {
         $articleRepo = $this->_helper->entity->getRepository('Newscoop\Entity\Article');

@@ -32,17 +32,20 @@
 				</li>
                 <?php endforeach; ?>
 			</ul>
+			</label>
 
+			<?php if ($inEditMode && $GLOBALS['controller']->getHelper('acl')->isAllowed('playlist', 'manage')) : ?>
+			<label>
             <span id="playlist-default-message" <?php if (count($playlistsData)) : ?>style="display:none"<?php endif; ?>>
 			    <?php putGS('Add article to a playlist'); ?>
 			</span>
-
 			</label>
 
     		<a class="iframe ui-state-default icon-button right-floated"
     			popup-width="600"
         		href="<?php echo camp_html_article_url($articleObj, $f_language_id, "playlist/popup.php"); ?>">
        		<span class="ui-icon ui-icon-pencil"></span><?php putGS('Edit'); ?></a>
+       		<?php endif; ?>
 		</div>
 	</div>
 </div>
