@@ -66,7 +66,7 @@ class UserSubscriptionService
                 $user->setSubscriber($subscriber);
                 $this->em->persist($user);
                 $this->em->flush();
-            }
+            }   
             return($subscriber);
         }
         else {

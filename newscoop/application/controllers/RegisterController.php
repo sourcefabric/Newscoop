@@ -63,6 +63,7 @@ class RegisterController extends Zend_Controller_Action
     public function createUserAction()
     {
         $parameters = $this->getRequest()->getParams();
+        
         $user = $this->_helper->service('user')->createPending($parameters['email'], $parameters['first_name'], $parameters['last_name']);
         $this->_helper->service('email')->sendConfirmationToken($user);
         
