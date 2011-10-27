@@ -35,6 +35,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         $this->m_customProperties['last_name'] = 'getLastName';
         $this->m_customProperties['uname'] = 'getUsername';
         $this->m_customProperties['email'] = 'getEmail';
+        $this->m_customProperties['subscriber'] = 'getSubscriber';
 
         $this->m_customProperties['name'] = 'getDisplayName';
         $this->m_customProperties['created'] = 'getCreated';
@@ -69,6 +70,11 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     protected function getEmail()
     {
         return $this->m_dbObject->getEmail();
+    }
+    
+    protected function getSubscriber()
+    {
+        return $this->m_dbObject->getSubscriber();
     }
 
     /**
