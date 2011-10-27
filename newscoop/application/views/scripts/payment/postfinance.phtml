@@ -1,0 +1,53 @@
+<!DOCTYPE div PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<style type="text/css">
+body {
+    color: #000000;
+    font-family: Georgia,"Times New Roman",Times,serif;
+    font-size-adjust: none;
+    font-style: normal;
+    font-variant: normal;
+}
+.main {
+border-color: #F5F5F5;
+border-style: solid;
+border-width: 1px;
+width: 400px;
+margin:auto; 
+background-color:#FAFAFA; 
+height: 75px;
+}
+</style>
+</head>
+
+<body>
+<div class="main">
+
+	<div style='width:100%; padding:10px;'>
+	<strong>Total: CHF <?php echo $this->realAmount; ?></strong>
+	</div>
+	
+	<input
+		type="button" value="Zurück" onclick="history.back()" style="margin-left:10px" />
+	
+	<form
+		method="post"
+		action="https://e-payment.postfinance.ch/ncol/test/orderstandard.asp"
+		id="PSForm"><!-- general parameters --> <input type="hidden"
+		name="PSPID" value="<?php echo $this->PSPID; ?>"> <input type="hidden"
+		name="orderID" value='<?php echo $this->orderID; ?>'> <input
+		type="hidden" name="amount" value="<?php echo $this->amount; ?>"> <input
+		type="hidden" name="currency" value="CHF"> <input type="hidden"
+		name="language" value="<?php echo $this->language; ?>"> <!-- check before the payment: see Security: Check before the Payment -->
+	<input type="hidden" name="SHASign"
+		value="<?php echo $this->SHASign; ?>" id='SHASign'> <!-- post payment redirection: see Transaction Feedback to the Customer -->
+	<input type="hidden" name="accepturl"
+		value="<?php echo $this->accepturl; ?>"> <input type="submit"
+		id="submit2" name="submit2" value="Postfinance"
+		style="background-color: #FFCC00; font-weight: bold; color: black; float: left; margin-left: 130px; margin-top: -25px;">
+	</form>
+	
+</div>
+</body>
+</html>
