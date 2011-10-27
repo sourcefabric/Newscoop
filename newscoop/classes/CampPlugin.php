@@ -573,12 +573,8 @@ class CampPlugin extends DatabaseObject
                 if (!isset($info['name'])) {
                     continue;
                 }
-                $plugin = new $CampPlugin($info['name']);
-                if (!$plugin) {
-                    continue;
-                }
 
-                $enabled = $plugin->isEnabled();
+                $enabled = self::IsPluginEnabled($info['name']);
 
                 $upgrade_func_name = $info['upgrade'];
                 if (function_exists($upgrade_func_name)) {

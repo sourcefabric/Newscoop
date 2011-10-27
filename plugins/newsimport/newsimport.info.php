@@ -513,7 +513,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 */
     } // fn plugin_newsimport_install
 
-    function plugin_newsimport_upgrade($enabled)
+    function plugin_newsimport_upgrade($enabled = false)
     {
         if (!$enabled) {
             return;
