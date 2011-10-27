@@ -37,10 +37,6 @@ class KinoData_Parser {
      */
     var $m_saved_parts = array('dif' => 'cin_dif', 'all' => 'cin_set');
 
-    //var $m_regionInfo = array();
-    //var $m_regionTopics = array();
-
-
     /**
      * constructor
      * @param array $p_source
@@ -105,8 +101,6 @@ class KinoData_Parser {
 	 */
     public function prepare($p_categories, $p_limits, $p_cancels, $p_env, $p_regionObj, $p_regionTopics)
     {
-        //$this->m_regionInfo = $p_regionObj;
-        //$this->m_regionTopics = $p_regionTopics;
 
         // we need that conf info
         if ((!isset($this->m_dirs['source'])) || (!isset($this->m_dirs['source']['programs']))) {
@@ -1171,24 +1165,6 @@ class KinoData_Parser_SimpleXML {
             // region info
             $e_region = '';
             $e_subregion = '';
-/*
-            $e_region_info = RegionInfo::ZipRegion($one_screen['kino_zip'], $kino_country);
-
-            if (!empty($e_region_info)) {
-                if (isset($e_region_info['region'])) {
-                    $e_region = $e_region_info['region'];
-                }
-                if (isset($e_region_info['subregion'])) {
-                    $e_subregion = $e_region_info['subregion'];
-                }
-            }
-
-            if (isset($p_catLimits['*']) && isset($p_catLimits['*']['regions'])) {
-                if (!in_array($e_region, $p_catLimits['*']['regions'])) {
-                    continue;
-                }
-            }
-*/
 
             $topics_regions = array();
             $loc_regions = $this->m_region_info->ZipRegions($one_screen['kino_zip'], $kino_country);
@@ -1233,35 +1209,6 @@ class KinoData_Parser_SimpleXML {
                     continue;
                 }
 
-/*
-                $one_cat_skip = false;
-                $one_cat_key = $one_category['key'];
-                foreach ($p_catLimits as $cat_lim_key => $cat_lim_spec) {
-                    if ($cat_lim_key != $one_cat_key) {
-                        continue;
-                    }
-                    if (array_key_exists('towns', $cat_lim_spec)) {
-                        if (!in_array($cur_town, $cat_lim_spec['towns'])) {
-                            $one_cat_skip = true;
-                            break;
-                        }
-                    }
-                }
-
-                if ($one_cat_skip) {
-                    continue;
-                }
-
-                if (array_key_exists('fixed', $one_category)) {
-                    $event_topics[] = $one_category['fixed'];
-                    continue;
-                }
-
-                if (array_key_exists('other', $one_category)) {
-                    $c_other = $one_category['other'];
-                    continue;
-                }
-*/
                 foreach ($x_genres as $x_catnam) {
                     $x_catnam = strtolower(trim($x_catnam));
                     if ((array_key_exists('match_xml', $one_category)) && (array_key_exists('match_topic', $one_category))) {
@@ -1289,28 +1236,6 @@ class KinoData_Parser_SimpleXML {
                     $event_topics[] = $c_other;
                 }
             }
-
-/*
-            if (empty($event_topics)) {
-                if (!empty($c_other)) {
-                    $event_topics[] = $c_other;
-                }
-            }
-
-            if (empty($event_topics)) {
-                continue;
-            }
-*/
-/*
-            $one_movie = null;
-
-            if (isset($one_screen['movie_key']) && (!empty($one_screen['movie_key']))) {
-                $one_mov_key = $one_screen['movie_key'];
-                if (isset($movies_infos[$one_mov_key]) && (!empty($movies_infos[$one_mov_key]))) {
-                    $one_movie = $movies_infos[$one_mov_key];
-                }
-            }
-*/
 
             foreach ($topics_regions as $one_regtopic) {
                 $event_topics[] = $one_regtopic;
@@ -1361,17 +1286,9 @@ class KinoData_Parser_SimpleXML {
             }
 
             $one_event = array();
-            //$one_event_date_def = '0000-00-00';
-            //$one_event['date'] = $one_event_date_def;
             $one_event['date'] = $set_date;
-            //$one_date = $set_date;
-            //$one_date = '';
-            //$one_event_screen = array();
 
             foreach ($one_screen['dates'] as $one_date => $one_times) {
-                //if ($one_event_date_def == $one_event['date']) {
-                //    $one_event['date'] = $one_date;
-                //}
                 if (!isset($set_date_times[$one_date])) {
                     $set_date_times[$one_date] = array(); // this shall not occur
                 }
@@ -1383,8 +1300,6 @@ class KinoData_Parser_SimpleXML {
             }
             ksort($set_date_times);
 
-            //$one_event['date_time_tree'] = json_encode($one_event_screen);
-            //$one_event['date_time_text'] = json_encode($one_event_screen);
             $one_event['date_time_tree'] = json_encode($set_date_times);
             $one_event['date_time_text'] = $this->formatDateText($set_date_times);
 
@@ -1401,17 +1316,8 @@ hh.mm:langs:flags
 hh.mm:langs:flags
 ....
 */
-            //foreach ($one_screen['dates'] as $one_date => $one_times) {
-            //}
             {
-/*
-                $one_date_part = str_replace('-', '', $one_date);
-*/
-
-                //$one_event = array();
                 $one_event['provider_id'] = $provider_id;
-                //$one_event['event_id'] = '' . $one_date_part . str_pad($one_screen['kino_id'], 6, '0', STR_PAD_LEFT) . str_pad($one_screen['movie_id'], 6, '0', STR_PAD_LEFT);
-                //$one_event['event_id'] = '' . $one_date_part . '-' . $one_screen['kino_id'] . '-' . $one_screen['movie_id'];
                 $one_event['event_id'] = '' . $one_screen['kino_id'] . '-' . $one_screen['movie_id'];
 
                 $one_event['tour_id'] = $one_screen['movie_id'];
@@ -1428,54 +1334,11 @@ hh.mm:langs:flags
                 $one_event['town'] = $one_screen['kino_town'];
                 $one_event['street'] = $one_screen['kino_street'];
 
-/*
-                // region info
-                $e_region = '';
-                $e_subregion = '';
-                $e_region_info = RegionInfo::ZipRegion($one_event['zipcode'], $one_event['country']);
-                if (!empty($e_region_info)) {
-                    if (isset($e_region_info['region'])) {
-                        $e_region = $e_region_info['region'];
-                    }
-                    if (isset($e_region_info['subregion'])) {
-                        $e_subregion = $e_region_info['subregion'];
-                    }
-                }
-*/
                 $one_event['region'] = $e_region;
                 $one_event['subregion'] = $e_subregion;
 
-/*
-                $scr_times = '';
-                foreach ($one_times as $one_scr_time) {
-                    if (!empty($scr_times)) {
-                        $scr_times .= ',';
-                    }
-                    $scr_times .= $one_scr_time['time'];
-                    if (isset($one_scr_time['lang']) && (!empty($one_scr_time['lang']))) {
-                        $scr_times .= ':' . $one_scr_time['lang'];
-                    }
-                    if (isset($one_scr_time['flag']) && (!empty($one_scr_time['flag']))) {
-                        $scr_times .= ':' . $one_scr_time['flag'];
-                    }
-                }
-*/
-
-/*
-                $one_date_year = '0000';
-                $one_date_month = '00';
-                $one_date_day = '00';
-                $one_date_arr = explode('-', $one_date);
-                if (3 == count($one_date_arr)) {
-                    $one_date_year = $one_date_arr[0];
-                    $one_date_month = ltrim($one_date_arr[1], '0');
-                    $one_date_day = ltrim($one_date_arr[2], '0');
-                }
-*/
-
                 if ($limit_date_start) {
                     if ($one_date < $limit_date_start) {
-// TODO: commented out just for debugging purposes
                         continue;
                     }
                 }
@@ -1485,14 +1348,7 @@ hh.mm:langs:flags
                     }
                 }
 
-                //$one_event['date'] = $one_date;
-                //$one_event['date_year'] = $one_date_year;
-                //$one_event['date_month'] = $one_date_month;
-                //$one_event['date_day'] = $one_date_day;
-                //$one_event['time'] = $scr_times;
                 $one_event['time'] = '';
-
-                //$one_event['date_time_text'] = '';
 
                 $one_event['web'] = $this->makeLink($one_screen['kino_url'], null);
                 $one_event['email'] = '';

@@ -1,8 +1,14 @@
 <?php
 
+/*
+ * Auxiliary XML load methods
+ */
 class FileLoad
 {
 
+/*
+ * Loads XML files with fixing ecnoding errors
+ */
     public static function LoadFix($p_fileName)
     {
         $content = '';
