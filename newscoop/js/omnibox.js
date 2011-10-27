@@ -8,7 +8,7 @@ var omnibox = {
 	publication: false,
 	section: false,
 	article: false,
-	baseUrl: false,
+	baseUrl: '',
 	status: false,
 	translations: {},
 	type: 'comment',
@@ -128,7 +128,7 @@ var omnibox = {
             $('#ob_main').show(400);
             this.status = true;
 			if (this.elements.ob_file_upload_container) this.elements.ob_file_upload_container.innerHTML = '<input type="button" id="ob_file_upload" value="'+this.translations['attach_file']+'">';
-            this.elements.ob_handle_image.src = this.baseUrl + '/public/css/img/green-triangle-close.png';
+            this.elements.ob_handle_image.src = '/public/css/img/green-triangle-close.png';
             setTimeout('omnibox.showUploader();', 200);
 		}
 		else {
@@ -137,7 +137,7 @@ var omnibox = {
             $('#ob_main').hide(400);
 			this.status = false;
 			this.hideUploader();
-            this.elements.ob_handle_image.src = this.baseUrl + '/public/css/img/green-triangle.png';
+            this.elements.ob_handle_image.src = '/public/css/img/green-triangle.png';
 		}
 	},
 	switchCommentFeedback: function() {
