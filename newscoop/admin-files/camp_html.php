@@ -392,8 +392,10 @@ function camp_html_goto_page($p_link, $p_exit = true, array $p_params = array())
         $p_link = rtrim($p_link, '&');
     }
 
-    if (strpos($p_link, 'http://') === FALSE) { // location header must be absolute for ie
-        $p_link = 'http://' . $Campsite['HOSTNAME'] . $p_link;
+    preg_match("`http(s?)://`", $p_link, $linkm);
+    //if (strpos($p_link, 'http://') === FALSE) { // location header must be absolute for ie
+    if (!count($linkm)) {
+        $p_link = (!empty($_SERVER['HTTPS']) ? 'https' :'http') .'://'. $Campsite['HOSTNAME'] . $p_link;
     }
 
 	header("Location: $p_link");
