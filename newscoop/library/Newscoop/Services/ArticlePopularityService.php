@@ -71,6 +71,10 @@ class ArticlePopularityService
             ->findOneBy(array('code' => $request->getParam('language')));
 
         $article = $this->findArticle($request->getParam('articleNo'), $language);
+        if (!$article) {
+            return $this;
+        }
+
         $data = array(
             'article_id' => $article->getId(),
             'language_id' => $language->getId(),
