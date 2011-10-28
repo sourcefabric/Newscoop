@@ -28,7 +28,7 @@ class PaymentController extends Zend_Controller_Action
         }
         
         
-        $shaPass = 'nzzonline123456#';
+        $shaPass = 'nzzonline123456#$';
         
         $accepturl = $params['accepturl'];
         $amount = $params['amount'];

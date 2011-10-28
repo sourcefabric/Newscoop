@@ -36,6 +36,8 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
      */
     public function update($campsiteVector)
     {
+        // FIXME: cache updater is disabled temporary
+        return;
         $queryStr = 'DELETE FROM Cache WHERE ' . self::vectorToWhereString($campsiteVector);
         $this->_ado_db->Execute($queryStr);
 
