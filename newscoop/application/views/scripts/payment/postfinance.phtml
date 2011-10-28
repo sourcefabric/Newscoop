@@ -25,15 +25,15 @@ height: 75px;
 <div class="main">
 
 	<div style='width:100%; padding:10px;'>
-	<strong>Total: CHF <?php echo $this->realAmount; ?></strong>
+	<strong>Gesamtbetrag: <?php echo $this->realAmount; ?> CHF</strong>
 	</div>
 	
 	<input
-		type="button" value="Zurück" onclick="history.back()" style="margin-left:10px" />
+		type="button" value="Abbrechen" onclick="history.back()" style="margin-left:10px" />
 	
 	<form
 		method="post"
-		action="https://e-payment.postfinance.ch/ncol/test/orderstandard.asp"
+		action="https://e-payment.postfinance.ch/ncol/prod/orderstandard.asp"
 		id="PSForm"><!-- general parameters --> <input type="hidden"
 		name="PSPID" value="<?php echo $this->PSPID; ?>"> <input type="hidden"
 		name="orderID" value='<?php echo $this->orderID; ?>'> <input

@@ -113,8 +113,36 @@ JS;
 	        	{$acceptMsg}
 	        	</div>
 				<div style="width:100%">
-	        		
-	        	<div style="width:45%; float:left; text-align:center;">
+	        		<div style="width:32%; float:left; text-align: right;">
+	        			<div style="width: 110px; float:right;">
+						<form method="post" action="{$shaEncodePath}" id="PSForm"
+						onsubmit="$('#postfinance_final_amount').val( $('#postfinance_amount').val() * 100 ); return true;"
+						>
+							<!-- general parameters -->
+							<input type="hidden" name="PSPID" value="medienbasel">
+							<input type="hidden" name="orderID" value='{$orderId}'>
+							<input type="hidden" name="amount" id='postfinance_final_amount' value="300">
+							<input type="hidden" name="currency" value="CHF">
+							<input type="hidden" name="language" value="de_DE">
+							
+							<!-- check before the payment: see Security: Check before the Payment -->
+							<input type="hidden" name="SHASign" value="" id='SHASign'>
+							
+							<!-- post payment redirection: see Transaction Feedback to the Customer -->
+							<input type="hidden" name="accepturl" value="{$acceptUrl}">
+							
+							
+							<input type="submit" id="submit2" name="submit2"
+							 value="Postfinance" style="background-color: #FFCC00; font-weight: bold; color: black; float:left;";>
+						</form>
+						
+						
+							<label for='postfinance_amount' style='float: left; margin-top:5px; margin-right:2px;'>CHF</label>
+        					<input type="text" value="3" id='postfinance_amount' name='postfinance_amount' style='width:35px; float: left; margin-top:2px;'/>
+					
+					</div>
+	        	</div>
+	        	<div style="width:32%; float:left; text-align:center;">
 					<form action="https://www.paypal.com/cgi-bin/webscr" method="post"> 
 					<input type="hidden" name="cmd" value="_s-xclick"> 
 					<input type="hidden" name="hosted_button_id" value="GJVQTYU3LMQJ6"> 
@@ -122,7 +150,7 @@ JS;
 					<img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1"> 
 					</form>  
 				</div>
-	        	<div style="width:45%; float:left; text-align:center;">
+	        	<div style="width:32%; float:left; text-align:left;">
 						<a href="http://flattr.com/thing/421328/tageswoche-ch" target="_blank"> 
 							<img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" />
 						</a>
@@ -136,24 +164,6 @@ JS;
 </div>
 
 <script>
-
-function submitPSForm() {
-	console.log('SUBMITPS form');
-	$('#PSForm').submit();
-	$('#postfinance_final_amount').val( $('#postfinance_amount').val() * 100 );
-	
-	var data = $('#PSForm').serialize();
-	
-	$.ajax({
-	  url: '{$shaEncodePath}',
-	  data: data,
-	  dataType: 'JSON',
-	  success: function(data) {
-	  	$('#SHASign').val(data.sha1);
-	  	$('#PSForm').submit();
-	  }
-	});
-}
 
 $(function() {
 	$('head').append(
