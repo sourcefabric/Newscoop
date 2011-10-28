@@ -54,7 +54,7 @@ class AuthController extends Zend_Controller_Action
             $this->_redirect($url);
         }
 
-        $this->_helper->redirector('index', 'index');
+        $this->_helper->redirector->gotoUrl('?t=' . time());
     }
 
     public function socialAction()
