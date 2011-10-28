@@ -48,10 +48,11 @@ final class CampTemplate extends Smarty
 
         // cache settings
         $cacheHandler = SystemPref::Get('TemplateCacheHandler');
-        if ($cacheHandler) {
+        $auth = Zend_Auth::getInstance();
+        if ($cacheHandler && !$auth->hasIdentity()) {
             $this->caching = 1;
             $this->caching_type = 'newscoop';
-            require_once APPLICATION_PATH . "/../classes/cache/TemplateCacheHandler_$cacheHandler.php";
+            CampTemplateCache::factory();
         } else {
             $this->caching = 0;
         }
