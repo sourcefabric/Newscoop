@@ -3093,6 +3093,10 @@ class Article extends DatabaseObject {
                     $dbField = 'RequestObjects.request_count';
                     $p_otherTables['RequestObjects'] = array('object_id'=>'object_id');
                     break;
+                case 'byranking':
+                    $dbField = 'article_popularity.popularity';
+                    $p_otherTables['article_popularity'] = array('Number' => 'fk_article_id');
+                    break;
                 case 'bykeywords':
                     $dbField = 'Articles.Keywords';
                     break;
