@@ -108,30 +108,20 @@ class UserTopicService
     {
         $repository = $this->em->getRepository('Newscoop\Entity\UserTopic');
         $userTopics = $repository->findBy(array('user' => $user->getId()));
+        $em = $this->em;
         foreach ($topics as $topicId => $status) {
-            if ($status == "true") {
-                foreach ($userTopics as $userTopic) {
-                    try {
-                        if ($userTopic->getTopic()->getTopicId() == $topicId) {
-                            continue 2;
-                        }
-                    } catch (\Exception $e) {
-                        $this->em->remove($userTopic);
-                    }
+            $matching = array_filter($userTopics, function ($userTopic) use ($topicId, $em) {
+                try {
+                    return $topicId == $userTopic->getTopic()->getTopicId();
+                } catch (\Doctrine\ORM\EntityNotFoundException $e) { // relation to deleted topic
+                    $em->remove($userTopic);
                 }
+            });
 
+            if ($status === 'true' && !$matching) {
                 $this->em->persist(new UserTopic($user, $this->findTopic($topicId)));
-            } else {
-                foreach ($userTopics as $userTopic) {
-                    try {
-                        if ($userTopic->getTopic()->getTopicId() == $topicId) {
-                            $this->em->remove($userTopic);
-                            break;
-                        }
-                    } catch (\Exception $e) {
-                        $this->em->remove($userTopic);
-                    }
-                }
+            } elseif ($status === 'false' && $matching) {
+                $this->em->remove($matching[0]);
             }
         }
 
