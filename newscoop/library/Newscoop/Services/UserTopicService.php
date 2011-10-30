@@ -111,17 +111,25 @@ class UserTopicService
         foreach ($topics as $topicId => $status) {
             if ($status == "true") {
                 foreach ($userTopics as $userTopic) {
-                    if ($userTopic->getTopic()->getTopicId() == $topicId) {
-                        continue 2;
+                    try {
+                        if ($userTopic->getTopic()->getTopicId() == $topicId) {
+                            continue 2;
+                        }
+                    } catch (\Exception $e) {
+                        $this->em->remove($userTopic);
                     }
                 }
 
                 $this->em->persist(new UserTopic($user, $this->findTopic($topicId)));
             } else {
                 foreach ($userTopics as $userTopic) {
-                    if ($userTopic->getTopic()->getTopicId() == $topicId) {
+                    try {
+                        if ($userTopic->getTopic()->getTopicId() == $topicId) {
+                            $this->em->remove($userTopic);
+                            break;
+                        }
+                    } catch (\Exception $e) {
                         $this->em->remove($userTopic);
-                        break;
                     }
                 }
             }
