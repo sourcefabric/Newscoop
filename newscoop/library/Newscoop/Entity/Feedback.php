@@ -47,7 +47,7 @@ class Feedback
     private $publication;
     
     /**
-     * @manyToOne(targetEntity="Newscoop\Entity\Article", fetch="EAGER")
+     * @manyToOne(targetEntity="Newscoop\Entity\Article")
      * @JoinColumns({
      *     @JoinColumn(name="article_number", referencedColumnName="Number"),
      *     @JoinColumn(name="article_language", referencedColumnName="IdLanguage")

@@ -45,6 +45,8 @@ class Admin_FeedbackController extends Zend_Controller_Action
      */
     public function tableAction()
     {
+        $this->getHelper('contextSwitch')->addActionContext('table', 'json')->initContext();
+
         $view = $this->view;
         $table = $this->getHelper('datatable');
         /* @var $table Action_Helper_Datatable */
@@ -96,7 +98,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
 					$banned = false;
 				}
 
-                $result = array(
+                return array(
                     'index' => $index++,
                     'user' => array(
                         'username' => $user->getUsername(),
@@ -129,15 +131,14 @@ class Admin_FeedbackController extends Zend_Controller_Action
                         ),
                         'url' => $url,
                         'publication' => $publication->getName(),
-                        'section' => ($section) ? $section->getName() : getGS('None'),
+                        'section' => getGS('None'),//($section) ? $section->getName() : getGS('None'),
                         'article' => array(
-							'name' => ($article) ? $article->getName() : getGS('None'),
-							'url' => ($article) ? $view->baseUrl("admin/articles/get.php?") . $view->linkArticle($article) : $view->baseUrl("admin/feedback")
+							'name' => '',//($article) ? $article->getName() : getGS('None'),
+							'url' => '',//($article) ? $view->baseUrl("admin/articles/get.php?") . $view->linkArticle($article) : $view->baseUrl("admin/feedback")
 						)
                     ),
                     'attachment' => $attachment
                 );
-                return($result);
             });
 
         $table->setOption('fnDrawCallback', 'datatableCallback.draw')
@@ -149,7 +150,13 @@ class Admin_FeedbackController extends Zend_Controller_Action
                 ->toggleAutomaticWidth(false)
                 ->setDataProp(array('index' => null, 'user' => null, 'message' => null, 'url' => null))
                 ->setClasses(array('index' => 'commentId', 'user' => 'commentUser', 'message' => 'commentTimeCreated', 'url' => 'commentThread'));
-        $table->dispatch();
+
+        try {
+            $table->dispatch();
+        } catch (Exception $e) {
+            var_dump($e);
+            exit;
+        }
         //$this->editForm->setSimpleDecorate()->setAction($this->_helper->url('update'));
         //$this->view->editForm = $this->editForm;
     }

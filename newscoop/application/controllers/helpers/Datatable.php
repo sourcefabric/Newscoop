@@ -40,9 +40,9 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
     public function init()
     {
         try {
-			$this->getActionController()->getHelper('contextSwitch')
-            ->addActionContext('table', 'json')
-            ->initContext();
+		    $this->getActionController()->getHelper('contextSwitch')
+                ->addActionContext('table', 'json')
+                ->initContext();
 		}
         catch (Exception $e) {
 			echo($e);
@@ -51,7 +51,7 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
 
         $view = $this->getActionController()->initView();
         $this->iOptions = array(
-            'sAjaxSource' => $view->url(array('action' => 'index', 'format' => 'json')),
+            'sAjaxSource' => $view->url(array('action' => 'index', 'format' => 'json')) . '?format=json',
             'bServerSide' => true,
             'bJQueryUI' => true,
             'bAutoWidth' => true,
@@ -349,7 +349,6 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
         $handle = $this->handle;
 
         $data = $this->dataSource->getData($params, $this->cols);
-
         foreach ($data as $entity) {
             $rows[] = $handle($entity);
         }
