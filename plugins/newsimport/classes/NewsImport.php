@@ -690,11 +690,12 @@ class NewsImport
             $article->setCommentsEnabled($status_comments);
             //$article->setIsIndexed(true);
 
-            if ($article_new) {
+            // unless edited (and thus already skipped) we force to publish it; oterwise problems come along issue moving!
+            //if ($article_new) {
                 if ($status_publish) {
                     $article->setWorkflowStatus('Y');
                 }
-            }
+            //}
 
             if ($status_publish_by_event_date) {
                 if ($article->isPublished()) {
