@@ -9,21 +9,22 @@ function smarty_function_pay_what_you_like($p_params, &$p_smarty)
 {
     // get request params for checking the return from payment site
     $params = Zend_Controller_Front::getInstance()->getRequest()->getParams();
+    $orderId = str_replace(".", "", uniqid('', true));
     $acceptMsg = '';
     $acceptUrl = 'http://'.$_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'].'?payment=yes';
     if ( array_key_exists('payment', $params)) {
     	if ($params['payment'] == 'yes') {
     		$js = "
-    			$('#pay-what-you-want').trigger('click');
+    			$('#pay-what-you-want-{$orderId}').trigger('click');
     		";
     		$acceptMsg = 'Vielen Dank für Ihre Zahlung!';
     		$acceptUrl = 'http://'.$_SERVER['SERVER_NAME'] . $_SERVER['REQUEST_URI'];
-    	}  
+    	}
     }
     /*
      *
      */
-   
+
 
     $campsite = $p_smarty->getTemplateVars('gimme');
 
@@ -43,27 +44,27 @@ function smarty_function_pay_what_you_like($p_params, &$p_smarty)
     $markup = '';
     if ($p_smarty->getVariable('pay-what-you-like-js-set') instanceof Undefined_Smarty_Variable)
     {
-    	 
+
         $markup = <<<JS
 <script type='text/javascript'>
 
 
 $(function()
-{	
-	
+{
+
 });
 </script>
 JS;
         $p_smarty->assign('pay-what-you-like-js-set', true, true);
     }
-    
+
     //taking out the getGS('') because we want to get rid really fast of the (*) signs
-    
+
 	$linktext = 'tageswoche.ch honorieren';
     if (isset($p_params['linktext'])) {
         $linktext = $p_params['linktext'];
     }
-    
+
     $title = 'tageswoche.ch honorieren';
 	if (isset($p_params['title'])) {
         $linktext = $p_params['title'];
@@ -84,31 +85,29 @@ JS;
     if (isset($p_params['notext'])) {
         $descNo = $p_params['notext'];
     }
-    
-    		
-    $orderId = uniqid('', true);
-    
+
+
     $p_smarty->smarty->loadPlugin('smarty_function_uri');
 	$pwylUri = smarty_function_uri( array('static_file' => "_css/tw2011/img/thumb_tw-pwyl.png"), $p_smarty);
-	
-	
+
+
 
 	//BUILDING THE SHASign
 	$shaEncodePath =  $GLOBALS['Campsite']['SUBDIR'].'/postfinance';
-	
-	
-    
+
+
+
 	$markup .= <<<HTML
 <div style="display: block; margin-bottom: 25px">
 	<img style="float: left; margin-right: 10px" alt="pwyl" src="{$pwylUri}" />
-	<p><a href="#pay-what-you-want-popup" id="pay-what-you-want">{$linktext}</a></p>
+	<p><a href="#pay-what-you-want-popup-{$orderId}" id="pay-what-you-want-{$orderId}">{$linktext}</a></p>
 
 	<div style="display:none">
-		<div class="pay-what-you-want-popup" id="pay-what-you-want-popup">
+		<div class="pay-what-you-want-popup" id="pay-what-you-want-popup-{$orderId}">
 	    	<article>
 	        	<header><p>{$title}</p></header>
 	        	<p>{$pre}</p>
-	        	
+
 	        	<div style="width:90%; text-align: center; height:35px;">
 	        	{$acceptMsg}
 	        	</div>
@@ -124,34 +123,34 @@ JS;
 							<input type="hidden" name="amount" id='postfinance_final_amount' value="300">
 							<input type="hidden" name="currency" value="CHF">
 							<input type="hidden" name="language" value="de_DE">
-							
+
 							<!-- check before the payment: see Security: Check before the Payment -->
 							<input type="hidden" name="SHASign" value="" id='SHASign'>
-							
+
 							<!-- post payment redirection: see Transaction Feedback to the Customer -->
 							<input type="hidden" name="accepturl" value="{$acceptUrl}">
-							
-							
+
+
 							<input type="submit" id="submit2" name="submit2"
 							 value="Postfinance" style="background-color: #FFCC00; font-weight: bold; color: black; float:left;";>
 						</form>
-						
-						
+
+
 							<label for='postfinance_amount' style='float: left; margin-top:5px; margin-right:2px;'>CHF</label>
         					<input type="text" value="3" id='postfinance_amount' name='postfinance_amount' style='width:35px; float: left; margin-top:2px;'/>
-					
+
 					</div>
 	        	</div>
 	        	<div style="width:32%; float:left; text-align:center;">
-					<form action="https://www.paypal.com/cgi-bin/webscr" method="post"> 
-					<input type="hidden" name="cmd" value="_s-xclick"> 
-					<input type="hidden" name="hosted_button_id" value="GJVQTYU3LMQJ6"> 
-					<input type="image" src="https://www.paypalobjects.com/de_DE/CH/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen – mit PayPal."> 
-					<img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1"> 
-					</form>  
+					<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+					<input type="hidden" name="cmd" value="_s-xclick">
+					<input type="hidden" name="hosted_button_id" value="GJVQTYU3LMQJ6">
+					<input type="image" src="https://www.paypalobjects.com/de_DE/CH/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="Jetzt einfach, schnell und sicher online bezahlen – mit PayPal.">
+					<img alt="" border="0" src="https://www.paypalobjects.com/de_DE/i/scr/pixel.gif" width="1" height="1">
+					</form>
 				</div>
 	        	<div style="width:32%; float:left; text-align:left;">
-						<a href="http://flattr.com/thing/421328/tageswoche-ch" target="_blank"> 
+						<a href="http://flattr.com/thing/421328/tageswoche-ch" target="_blank">
 							<img src="http://api.flattr.com/button/flattr-badge-large.png" alt="Flattr this" title="Flattr this" border="0" />
 						</a>
 	        	</div>
@@ -167,20 +166,20 @@ JS;
 
 $(function() {
 	$('head').append(
-	"<script type='text/javascript'>" +  
-	"/* <![CDATA[ */ " +  
-	    "(function() { " +  
-	        "var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];" + 
-	        "s.type = 'text/javascript';" +  
-	        "s.async = true;" +  
-	        "s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';" +  
-	        "t.parentNode.insertBefore(s, t);" +  
-	    "})();" +  
-	"/* ]]> */ " + 
+	"<script type='text/javascript'>" +
+	"/* <![CDATA[ */ " +
+	    "(function() { " +
+	        "var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];" +
+	        "s.type = 'text/javascript';" +
+	        "s.async = true;" +
+	        "s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';" +
+	        "t.parentNode.insertBefore(s, t);" +
+	    "})();" +
+	"/* ]]> */ " +
 	'<' + '/' + 'script>');
-		
-	$('#pay-what-you-want').fancybox();
-	
+
+	$('#pay-what-you-want-{$orderId}').fancybox();
+
 	$("#postfinance_amount").keydown(function(event) {
         // Allow only backspace and delete
         if ( event.keyCode == 46 || event.keyCode == 8 ) {
@@ -189,7 +188,7 @@ $(function() {
         else {
             // Ensure that it is a number and stop the keypress
             if ((event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105 )) {
-                event.preventDefault(); 
+                event.preventDefault();
             }
         }
     });
