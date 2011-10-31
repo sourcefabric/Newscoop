@@ -21,6 +21,10 @@ class ArticlesList extends ListObject
                                                               'type'=>'date'),
                                          'publish_date'=>array('field'=>'PublishDate',
                                                               'type'=>'date'),
+                                         'publish_datetime' => array(
+                                             'field' => 'PublishDate',
+                                             'type' => 'datetime',
+                                         ),
                                          'public'=>array('field'=>'Public',
                                                          'type'=>'switch'),
                                          'type'=>array('field'=>'Type',
@@ -119,7 +123,9 @@ class ArticlesList extends ListObject
 	    $value = null;
 	    $switchTypeHint = false;
 	    $context = CampTemplate::singleton()->context();
-	    foreach ($p_constraints as $index=>$word) {
+	    for ($index = 0; $index < count($p_constraints); $index++) {
+            $word = $p_constraints[$index];
+
 	    	switch ($state) {
 	    		case self::CONSTRAINT_ATTRIBUTE_NAME: // reading the parameter name
 	    			$attribute = strtolower($word);
@@ -214,6 +220,13 @@ class ArticlesList extends ListObject
 	                $state = self::CONSTRAINT_VALUE;
 	                break;
 	            case self::CONSTRAINT_VALUE: // reading the value to compare against
+                    if ($attribute == 'publish_datetime' && $index + 1 < count($p_constraints)) { // add time to date
+                        if (preg_match('/^[0-2][0-9]:[0-5][0-9](:[0-5][0-9])?$/', $p_constraints[$index + 1])) {
+                            $word .= ' ' . $p_constraints[$index + 1];
+                            $index++; // skip next value
+                        }
+                    }
+
 	                $metaClassName = 'Meta'.ucfirst($type);
 	                try {
     	                $valueObj = new $metaClassName($word);

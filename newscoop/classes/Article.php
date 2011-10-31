@@ -102,6 +102,7 @@ class Article extends DatabaseObject {
                                                 'number'=>'Articles.Number',
                                                 'upload_date'=>'DATE(Articles.UploadDate)',
                                                 'publish_date'=>'DATE(Articles.PublishDate)',
+                                                'publish_datetime' => 'Articles.PublishDate',
                                                 'type'=>'Articles.Type',
                                                 'keyword'=>'Articles.Keywords',
                                                 'onfrontpage'=>'Articles.OnFrontPage',
