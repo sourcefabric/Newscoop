@@ -44,12 +44,12 @@ class DebateDaysList extends ListObject
         $dateResults = array();
         if (count($dateVotes) < count($dateRange))
         {
-            foreach ($dateRange as $timetamp)
+            foreach ($dateRange as $timestamp)
             {
                 $found = 0;
                 foreach ($dateVotes as $vote)
                 {
-                    if ($vote['time'] == $timetamp)
+                    if (ceil($vote['time']/86400) == ceil($timestamp/86400))
                     {
                         $found = $vote;
                         break;
@@ -59,7 +59,7 @@ class DebateDaysList extends ListObject
                     $dateResults[] = $found;
                 }
                 else {
-                    $dateResults[] = array( 'time' => $timetamp, 'total_count' => 0 );
+                    $dateResults[] = array( 'time' => $timestamp, 'total_count' => 0 );
                 }
             }
         }
