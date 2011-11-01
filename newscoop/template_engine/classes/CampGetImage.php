@@ -275,17 +275,18 @@ class CampGetImage
     {
         header('Cache-Control: public, max-age=3600');
         header('Pragma: cache');
-        header('Expires: ' . gmdate("D, d M Y H:i:s", gmmktime( gmdate("H")+1)) . ' GMT');
-
-        header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
-        header('Content-type: ' . $this->m_image->getContentType());
 
         if ($this->m_isLocal && $this->m_ratio == 100 && $this->m_resizeWidth == 0 && $this->m_resizeHeight == 0 && $this->m_crop == null && $this->m_resizeCrop == null) {
             // do not cache local 100% images
+            header('Content-type: ' . $this->m_image->getContentType());
+            header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
+
             readfile($this->getSourcePath());
-        } else {
+        }
+        else {
             $this->imageCacheHandler();
         }
+
     }  // fn PushImage
 
 	/**
@@ -552,8 +553,23 @@ class CampGetImage
 
     private function sendCachedImage()
     {
-        header('Newscoop-Image-Cache: Cache created at '.date('r', filemtime($this->getTargetPath())));
-        return readfile($this->getTargetPath()) !== false;
+        // Getting headers sent by the client.
+        $headers = apache_request_headers();
+        $fmt = filemtime($this->getTargetPath());
+
+        // Checking if the client is validating his cache and if it is current.
+        if (isset($headers['If-Modified-Since']) && (strtotime($headers['If-Modified-Since']) == $fmt)) {
+            // Client's cache IS current, so we just respond '304 Not Modified'.
+            header('Last-Modified: '.gmdate('D, d M Y H:i:s', $fmt).' GMT', true, 304);
+        }
+        else {
+            // Image not cached or cache outdated, we respond '200 OK' and output the image.
+            header('Last-Modified: '.gmdate('D, d M Y H:i:s', $fmt).' GMT', true, 200);
+            header('Content-Length: '.filesize($this->getTargetPath()));
+            header('Content-Type: '.$this->m_image->getContentType());
+
+            return readfile($this->getTargetPath()) !== false;
+        }
     }
 
     private function createImage($p_target=null)
@@ -574,9 +590,13 @@ class CampGetImage
         $function = 'image'.$func_ending;
 
         if (!$p_target) {
+            header('Content-type: ' . $this->m_image->getContentType());
+            header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
+
             header('Newscoop-Image-Cache: disabled');
             return $function($t);
-        } else {
+        }
+        else {
             $function($t, $p_target);
             return $this->sendCachedImage();
         }
