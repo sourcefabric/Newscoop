@@ -80,7 +80,7 @@ foreach ($articleTopics as $topic) {
 	    
 	    ?>
 	    </select>
-        <select name="f_language_selected">
+        <select name="f_language_selected" id="f_language_selected">
             <?php
             $languages = Language::GetLanguages(null, null, null, array(), array(), true);
             foreach ($languages as $language) {
