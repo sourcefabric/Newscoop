@@ -149,7 +149,7 @@
 			var one_day, diff;
 			
 			one_day=1000*60*60*24; //one day in milliseconds.
-			diff = (date.getTime() - _start.getTime())/one_day;
+			diff = Math.round((date.getTime() - _start.getTime())/one_day);
 			
 			return _date_cache[diff];
 		}
