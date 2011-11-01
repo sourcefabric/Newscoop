@@ -227,8 +227,8 @@ class TemplateConverterIfBlock
             'addok' => array(
                 'new_object' => 'edit_user_action',
                 'attribute' => 'ok'),
-            'blockedfromcomments' => array(
-                'attribute' => 'blocked_from_comments'),
+            'isblockedfromcomments' => array(
+                'attribute' => 'is_blocked_from_comments'),
             'loggedin' => array(
                 'attribute' => 'logged_in'),
             'modifyaction' => array(
