@@ -40,7 +40,6 @@ foreach ($articleTopics as $topic) {
 <form action="/<?php echo $ADMIN; ?>/articles/topics/do_edit.php" method="post">
 <?php echo SecurityToken::FormParameter(); ?>
 <input type="hidden" name="f_article_number" value="<?php p($f_article_number); ?>" />
-<input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />
 <div class="fixed-top">
 <h1><?php putGS("Attach Topics"); ?></h1>
 
@@ -81,6 +80,19 @@ foreach ($articleTopics as $topic) {
 	    
 	    ?>
 	    </select>
+        <select name="f_language_selected">
+            <?php
+            $languages = Language::GetLanguages(null, null, null, array(), array(), true);
+            foreach ($languages as $language) {
+                if ($f_language_selected == $language->getLanguageId()) {
+                    echo("<option value='". $language->getLanguageId() ."' selected='selected'>". $language->getName() ."</option>");
+                }
+                else {
+                    echo("<option value='". $language->getLanguageId() ."'>". $language->getName() ."</option>");
+                }
+            }
+            ?>
+        </select>
 	    <input type="text" name="f_topic_name" id="f_topic_name" value="" class="input_text" size="20" title="<?php putGS('You must enter a name for the topic.'); ?>" style="width: 360px"/>
 	    <input type="button" name="add" value="<?php putGS("Add"); ?>" class="button" id='submit_new_topic'/>
     </div>
