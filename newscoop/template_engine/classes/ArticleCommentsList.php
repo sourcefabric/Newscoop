@@ -148,6 +148,7 @@ class ArticleCommentsList extends ListObject
                     break;
                 case 'recommended':
 					if ($value == 'true' || $value == 'false') $parameters[$parameter] = $value;
+                    break;
                 default:
     				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_article_comments", $p_smarty);
     		}
