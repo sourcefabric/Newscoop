@@ -10,7 +10,7 @@ namespace Newscoop\Entity;
 /**
  * Article entity
  *
- * @Entity
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\ArticlePopularityRepository")
  * @Table(name="Articles")
  */
 class Article
