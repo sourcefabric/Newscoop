@@ -21,7 +21,7 @@ use Doctrine\ORM\EntityManager,
  */
 class ArticlePopularityService
 {
-    const SITE_URL = 'http://dev.tageswoche.ch';
+    const SITE_URL = 'http://www.tageswoche.ch';
 
     const TWITTER_QUERY_URL = 'http://urls.api.twitter.com/1/urls/count.json?url=';
 
@@ -262,7 +262,7 @@ class ArticlePopularityService
                 'ga:timeOnPage',
                 'ga:avgTimeOnPage'
             );
-            $reportURL = 'https://www.google.com/analytics/feeds/data?ids=ga:48980166&dimensions=' . @implode(',', $dimensions) . '&metrics=' . @implode(',', $metrics) . '&start-date=2011-07-01&end-date=2011-09-20&filters=ga:pagePath%3D%3D' . urlencode($uri);
+            $reportURL = 'https://www.google.com/analytics/feeds/data?ids=ga:48980166&dimensions=' . @implode(',', $dimensions) . '&metrics=' . @implode(',', $metrics) . '&start-date=2011-10-28&end-date=2011-11-02&filters=ga:pagePath%3D%3D' . urlencode($uri);
             $xml = $gdClient->getFeed($reportURL);
 
             $dom = new DOMDocument();
