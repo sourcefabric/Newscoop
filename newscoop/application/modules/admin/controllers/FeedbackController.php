@@ -10,7 +10,7 @@
 use Newscoop\Entity\Feedback;
 
 /**
- * @Acl(resource="feedback", action="view")
+ * @Acl(resource="feedback", action="manage")
  */
 class Admin_FeedbackController extends Zend_Controller_Action
 {

@@ -92,8 +92,8 @@ system php ./transfer_phorum.php
 system php ./javascript_js_cleanup.php
 
 -- add new acl rule for feedback messages
-INSERT INTO `acl_rule` VALUES (null,'allow',1,'feedback','view');
-INSERT INTO `acl_rule` VALUES (null,'allow',2,'feedback','view');
+INSERT INTO `acl_rule` VALUES (null,'allow',1,'feedback','manage');
+INSERT INTO `acl_rule` VALUES (null,'allow',2,'feedback','manage');
 
 -- add new acl rule for user points
 INSERT INTO `acl_rule` VALUES (null,'allow',1,'user-points','manage');
