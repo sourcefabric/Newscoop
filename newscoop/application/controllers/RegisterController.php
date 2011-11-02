@@ -64,10 +64,19 @@ class RegisterController extends Zend_Controller_Action
     {
         $parameters = $this->getRequest()->getParams();
         
-        $user = $this->_helper->service('user')->createPending($parameters['email'], $parameters['first_name'], $parameters['last_name']);
-        $this->_helper->service('email')->sendConfirmationToken($user);
+        $user = $this->_helper->service('user')->findBy(array(
+            'email' => $parameters['email'],
+        ));
         
-        echo('1');die;
+        if ($user) {
+            echo '0';
+            exit;
+        } else {
+            $user = $this->_helper->service('user')->createPending($parameters['email'], $parameters['first_name'], $parameters['last_name']);
+            $this->_helper->service('email')->sendConfirmationToken($user);
+            echo '1';
+            exit;
+        }
     }
 
     public function afterAction()
