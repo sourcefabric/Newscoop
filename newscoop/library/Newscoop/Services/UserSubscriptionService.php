@@ -36,11 +36,9 @@ class UserSubscriptionService
     public function setKey($user, $key)
     {
         // send request
-        $subscriber = $user->getSubscriber();
+        //$subscriber = $user->getSubscriber();
         
-        if (!$subscriber) {
-            $subscriber = $this->fetchSubscriber($user);
-        }
+        $subscriber = $this->fetchSubscriber($user);
         
         $url = 'https://abo.tageswoche.ch/dmpro/ws/subscriber/NMBA/' . $subscriber . '?userkey=' . $key;        
         $client = new \Zend_Http_Client();
@@ -52,7 +50,7 @@ class UserSubscriptionService
     
     public function fetchSubscriber($user)
     {
-        $url = 'https://abo.tageswoche.ch/dmpro/ws/subscriber/NMBA?firstname='.urlencode($user->getFirstName()).'&lastname='.urlencode($user->getLastName()).'&email='.urlencode($user->getEmail());
+        $url = 'https://abo.tageswoche.ch/dmpro/ws/subscriber/NMBA?email='.urlencode($user->getEmail());
         $client = new \Zend_Http_Client();
         $client->setUri($url);
         $client->setMethod(\Zend_Http_Client::GET);
