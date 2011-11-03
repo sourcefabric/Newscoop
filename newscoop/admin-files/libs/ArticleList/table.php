@@ -264,7 +264,18 @@ $('input#filter_newswires_articles_<?php echo $this->id; ?>').change(function() 
     filters['<?php echo $this->id; ?>']['showtype'] = $(this).attr('checked') ? 'newswires' : '';
     tables['<?php echo $this->id; ?>'].fnDraw(true);
 });
-<?php } ?>
 
+var searchInput = $('#table-<?php echo $this->id; ?>_filter input:text')
+    .unbind('keyup');
+
+$('<button />')
+    .html(<?php echo json_encode(getGS("Search")); ?>)
+    .insertAfter(searchInput)
+    .click(function(e) {
+        e.preventDefault();
+        tables['<?php echo $this->id; ?>'].fnFilter(searchInput.val());
+    });
+
+<?php } ?>
 });
 --></script>

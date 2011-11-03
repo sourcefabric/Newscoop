@@ -45,7 +45,6 @@ class UserSubscriptionService
         $client->setUri($url);
         $client->setMethod(\Zend_Http_Client::PUT);
         $response = $client->request();
-
     }
     
     public function fetchSubscriber($user)
@@ -54,7 +53,12 @@ class UserSubscriptionService
         $client = new \Zend_Http_Client();
         $client->setUri($url);
         $client->setMethod(\Zend_Http_Client::GET);
-        $response = $client->request();
+        try {
+            $response = $client->request();
+        }
+        catch (\Zend_Exception $e) {
+            return(false);
+        }
         
         $xml = new \SimpleXMLElement($response->getBody()); 
         
