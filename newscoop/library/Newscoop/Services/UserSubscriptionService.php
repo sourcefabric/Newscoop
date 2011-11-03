@@ -56,7 +56,7 @@ class UserSubscriptionService
         try {
             $response = $client->request();
         }
-        catch (Exception $e) {
+        catch (\Zend_Http_Client_Adapter_Exception $e) {
             return(false);
         }
         
