@@ -203,5 +203,16 @@ $(document).ready(function()
         'bJQueryUI': true
     }).css('position', 'relative').css('width', '100%');
 
+    var searchInput = $('#table-<?php echo $this->id; ?>_filter input:text')
+        .unbind('keyup');
+
+    $('<button />')
+        .html(<?php echo json_encode(getGS("Search")); ?>)
+        .insertAfter(searchInput)
+        .click(function(e) {
+            e.preventDefault();
+            tables['<?php echo $this->id; ?>'].fnFilter(searchInput.val());
+        });
+
 });
 --></script>
