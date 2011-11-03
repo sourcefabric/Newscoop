@@ -114,13 +114,11 @@ JS;
 				<div style="width:100%">
 	        		<div style="width:32%; float:left; text-align: right;">
 	        			<div style="width: 110px; float:right;">
-						<form method="post" action="{$shaEncodePath}" id="PSForm"
-						onsubmit="$('#postfinance_final_amount').val( $('#postfinance_amount').val() * 100 ); return true;"
-						>
+						<form method="post" action="{$shaEncodePath}" id="PSForm_{$orderId}" >
 							<!-- general parameters -->
 							<input type="hidden" name="PSPID" value="medienbasel">
 							<input type="hidden" name="orderID" value='{$orderId}'>
-							<input type="hidden" name="amount" id='postfinance_final_amount' value="300">
+							<input type="hidden" name="amount" id='postfinance_final_amount_{$orderId}' value="300">
 							<input type="hidden" name="currency" value="CHF">
 							<input type="hidden" name="language" value="de_DE">
 
@@ -129,16 +127,11 @@ JS;
 
 							<!-- post payment redirection: see Transaction Feedback to the Customer -->
 							<input type="hidden" name="accepturl" value="{$acceptUrl}">
-
-
-							<input type="submit" id="submit2" name="submit2"
-							 value="Postfinance" style="background-color: #FFCC00; font-weight: bold; color: black; float:left;";>
+							
+							<input type="button" value="Postfinance" style="background-color: #FFCC00; font-weight: bold; color: black; float:left;" onclick="submitPSForm_{$orderId}();" />
 						</form>
-
-
 							<label for='postfinance_amount' style='float: left; margin-top:5px; margin-right:2px;'>CHF</label>
-        					<input type="text" value="3" id='postfinance_amount' name='postfinance_amount' style='width:35px; float: left; margin-top:2px;'/>
-
+        					<input type="text" value="" id='postfinance_amount_{$orderId}' name='postfinance_amount' style='width:35px; float: left; margin-top:2px;'/>
 					</div>
 	        	</div>
 	        	<div style="width:32%; float:left; text-align:center;">
@@ -164,6 +157,18 @@ JS;
 
 <script>
 
+function submitPSForm_{$orderId}() {
+    var postfinanceFinalAmount = $('#postfinance_amount_{$orderId}').val();
+    if ( postfinanceFinalAmount <= 0 ) {
+        alert('Bitte geben Sie einen Betrag ein.');
+        $('#postfinance_amount_{$orderId}').focus();
+    } else {
+        $('#postfinance_final_amount_{$orderId}').val( $('#postfinance_amount_{$orderId}').val() * 100 );
+        $('#PSForm_{$orderId}').submit();
+    }
+    return false;
+}
+
 $(function() {
 	$('head').append(
 	"<script type='text/javascript'>" +
@@ -177,13 +182,14 @@ $(function() {
 	    "})();" +
 	"/* ]]> */ " +
 	'<' + '/' + 'script>');
-
+	
 	$('#pay-what-you-want-{$orderId}').fancybox();
-
-	$("#postfinance_amount").keydown(function(event) {
+	
+	$("#postfinance_amount_{$orderId}").keydown(function(event) {
         // Allow only backspace and delete
         if ( event.keyCode == 46 || event.keyCode == 8 ) {
             // let it happen, don't do anything
+            return true;
         }
         else {
             // Ensure that it is a number and stop the keypress
