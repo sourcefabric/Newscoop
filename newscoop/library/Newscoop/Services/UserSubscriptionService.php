@@ -49,11 +49,11 @@ class UserSubscriptionService
     
     public function fetchSubscriber($user)
     {
-        $url = 'https://abo.tageswoche.ch/dmpro/ws/subscriber/NMBA?email='.urlencode($user->getEmail());
-        $client = new \Zend_Http_Client();
-        $client->setUri($url);
-        $client->setMethod(\Zend_Http_Client::GET);
         try {
+            $url = 'https://abo.tageswoche.ch/dmpro/ws/subscriber/NMBA?email='.urlencode($user->getEmail());
+            $client = new \Zend_Http_Client();
+            $client->setUri($url);
+            $client->setMethod(\Zend_Http_Client::GET);
             $response = $client->request();
         }
         catch (\Zend_Exception $e) {
