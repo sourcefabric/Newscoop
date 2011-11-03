@@ -2600,11 +2600,14 @@ class Article extends DatabaseObject {
                 $selectClauseObj->addWhere('Articles.Number = ArticleAuthors.fk_article_number');
                 $selectClauseObj->addWhere('Articles.IdLanguage = ArticleAuthors.fk_language_id');
             } elseif ($leftOperand == 'search_phrase') {
-                $searchQuery = ArticleIndex::SearchQuery($comparisonOperation['right'], $comparisonOperation['symbol']);
-                $otherTables["($searchQuery)"] = array('__TABLE_ALIAS'=>'search',
+                $searchPhrase = trim($comparisonOperation['right']);
+                if (!empty($searchPhrase)) {
+                    $searchQuery = ArticleIndex::SearchQuery($searchPhrase, $comparisonOperation['symbol']);
+                    $otherTables["($searchQuery)"] = array('__TABLE_ALIAS'=>'search',
                                                        '__JOIN'=>'INNER JOIN',
                                                        'Number'=>'NrArticle',
                                                        'IdLanguage'=>'IdLanguage');
+                }
             } elseif ($leftOperand == 'location') {
                 $num = '[-+]?[0-9]+(?:\.[0-9]+)?';
                 if (preg_match("/($num) ($num), ($num) ($num)/",
@@ -2963,6 +2966,12 @@ class Article extends DatabaseObject {
                                            $p_countOnly = false)
     {
         global $g_ado_db;
+
+        $p_searchPhrase = trim($p_searchPhrase);
+        if (empty($p_searchPhrase)) {
+            $p_count = 0;
+            return array();
+        }
 
         $selectClauseObj = new SQLSelectClause();
 
