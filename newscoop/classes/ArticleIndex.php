@@ -49,6 +49,11 @@ class ArticleIndex extends DatabaseObject {
 	{
 	    global $g_ado_db;
 
+	    $p_searchPhrase = trim($p_searchPhrase);
+	    if (empty($p_searchPhrase)) {
+	        return null;
+	    }
+
 	    $matchAll = false;
 
         $keywords = preg_split('/[\s,.-]/', $p_searchPhrase);
@@ -58,6 +63,9 @@ class ArticleIndex extends DatabaseObject {
         }
 
         $keywords = array_diff($keywords, array("", ""));
+        if (count($keywords) < 1) {
+            return null;
+        }
 
         // specifically match webcode (first one)
 	    $webcodeMatches = preg_grep("`^\s*@`", $keywords);

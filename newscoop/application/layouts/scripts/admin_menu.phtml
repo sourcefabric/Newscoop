@@ -82,7 +82,9 @@ $pages[1]['pages'][] = array(
     'label' => getGS('Feedback'),
     'module' => 'admin',
     'controller' => 'feedback',
-    'action' => 'index'
+    'action' => 'index',
+    'resource' => 'feedback',
+    'privilege' => 'manage',
 );
 
 $pages[1]['pages'][] = array(
@@ -111,6 +113,8 @@ $pages[1]['pages'][] = array(
     'module' => 'admin',
     'controller' => 'ingest',
     'action' => 'index',
+    'resource' => 'ingest',
+    'privilege' => 'manage',
 );
 
 $pages[1]['pages'][] = array(

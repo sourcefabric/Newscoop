@@ -98,6 +98,10 @@ INSERT INTO `acl_rule` VALUES (null,'allow',2,'feedback','manage');
 -- add new acl rule for user points
 INSERT INTO `acl_rule` VALUES (null,'allow',1,'user-points','manage');
 
+-- add new acl rule for newswires ingest
+INSERT INTO `acl_rule` VALUES (null,'allow',1,'ingest','manage');
+INSERT INTO `acl_rule` VALUES (null,'allow',2,'ingest','manage');
+
 -- update images
 UPDATE `Images` SET `Source` = 'local', `Status` = 'approved' WHERE 1;
 
