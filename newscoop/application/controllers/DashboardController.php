@@ -68,7 +68,6 @@ class DashboardController extends Zend_Controller_Action
             }
         }
         
-        /*
         $userSubscriptionService = $this->_helper->service('user_subscription');
         
         $this->view->subscriber = $this->user->getSubscriber();
@@ -89,7 +88,6 @@ class DashboardController extends Zend_Controller_Action
             $this->view->user_last_name = $this->user->getLastName();
             $this->view->user_email = $this->user->getEmail();
         }
-        */
                 
         $this->view->form = $form;
         $this->view->user = new MetaUser($this->user);
