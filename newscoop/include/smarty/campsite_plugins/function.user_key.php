@@ -11,13 +11,9 @@ function smarty_function_user_key($p_params, &$p_smarty)
     
     if ($user) {
         $userSubscriptionKey = $userSubscriptionService->createKey($user);
-        try {
-            $userSubscriptionService->setKey($user, $userSubscriptionKey);
-            return($userSubscriptionKey);
-        }
-        catch ($e) {
-            return('0');
-        }
+        $userSubscriptionService->setKey($user, $userSubscriptionKey);
+        
+        return($userSubscriptionKey);
     }
     else {
         return('');
