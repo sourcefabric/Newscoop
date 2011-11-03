@@ -2600,13 +2600,12 @@ class Article extends DatabaseObject {
                 $selectClauseObj->addWhere('Articles.Number = ArticleAuthors.fk_article_number');
                 $selectClauseObj->addWhere('Articles.IdLanguage = ArticleAuthors.fk_language_id');
             } elseif ($leftOperand == 'search_phrase') {
-                $searchPhrase = trim($comparisonOperation['right']);
-                if (!empty($searchPhrase)) {
-                    $searchQuery = ArticleIndex::SearchQuery($searchPhrase, $comparisonOperation['symbol']);
+                $searchQuery = ArticleIndex::SearchQuery($comparisonOperation['right'], $comparisonOperation['symbol']);
+                if (!empty($searchQuery)) {
                     $otherTables["($searchQuery)"] = array('__TABLE_ALIAS'=>'search',
-                                                       '__JOIN'=>'INNER JOIN',
-                                                       'Number'=>'NrArticle',
-                                                       'IdLanguage'=>'IdLanguage');
+                                                           '__JOIN'=>'INNER JOIN',
+                                                           'Number'=>'NrArticle',
+                                                           'IdLanguage'=>'IdLanguage');
                 }
             } elseif ($leftOperand == 'location') {
                 $num = '[-+]?[0-9]+(?:\.[0-9]+)?';
@@ -2967,12 +2966,6 @@ class Article extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $p_searchPhrase = trim($p_searchPhrase);
-        if (empty($p_searchPhrase)) {
-            $p_count = 0;
-            return array();
-        }
-
         $selectClauseObj = new SQLSelectClause();
 
         // set tables and joins between tables
@@ -2982,6 +2975,10 @@ class Article extends DatabaseObject {
             $p_searchPhrase = '__match_all ' . $p_searchPhrase;
         }
         $searchQuery = ArticleIndex::SearchQuery($p_searchPhrase);
+        if (empty($searchQuery)) {
+            $p_count = 0;
+            return array();
+        }
         $selectClauseObj->addJoin("INNER JOIN ($searchQuery) AS search ON Articles.Number = search.NrArticle"
         . " AND Articles.IdLanguage = search.IdLanguage");
 
