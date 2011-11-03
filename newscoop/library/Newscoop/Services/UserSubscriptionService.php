@@ -49,28 +49,27 @@ class UserSubscriptionService
     
     public function fetchSubscriber($user)
     {
-        $url = 'https://abo.tageswoche.ch/dmpro/ws/subscriber/NMBA?email='.urlencode($user->getEmail());
-        
-        if ($this->checkURL($url)) {
+        try {
+            $url = 'https://abo.tageswoche.ch/dmpro/ws/subscriber/NMBA?email='.urlencode($user->getEmail());
             $client = new \Zend_Http_Client();
             $client->setUri($url);
             $client->setMethod(\Zend_Http_Client::GET);
             $response = @$client->request();
-            
-            $xml = new \SimpleXMLElement($response->getBody()); 
-            
-            $subscriber = $xml->subscriber[0] ? (int) $xml->subscriber[0]->subscriberId : false;
-            if (is_numeric($subscriber)) {
-                if (!$user->getSubscriber()) {
-                    $user->setSubscriber($subscriber);
-                    $this->em->persist($user);
-                    $this->em->flush();
-                }   
-                return($subscriber);
-            }
-            else {
-                return(false);
-            }
+        }
+        catch (\Zend_Exception $e) {
+            return(false);
+        }
+        
+        $xml = new \SimpleXMLElement($response->getBody()); 
+        
+        $subscriber = $xml->subscriber[0] ? (int) $xml->subscriber[0]->subscriberId : false;
+        if (is_numeric($subscriber)) {
+            if (!$user->getSubscriber()) {
+                $user->setSubscriber($subscriber);
+                $this->em->persist($user);
+                $this->em->flush();
+            }   
+            return($subscriber);
         }
         else {
             return(false);
@@ -96,16 +95,5 @@ class UserSubscriptionService
     private function getRepository()
     {
         return $this->em->getRepository('Newscoop\Entity\UserSubscription');
-    }
-    
-    public function checkURL($url)
-    {
-        $response = file_get_contents($url);
-        if ($response) {
-            return(true);
-        }
-        else {
-            return(false);
-        }
     }
 }
