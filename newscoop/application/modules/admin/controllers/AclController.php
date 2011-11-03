@@ -48,6 +48,7 @@ class Admin_AclController extends Zend_Controller_Action
                 'article' => getGS('Articles'),
                 'image' => getGS('Images'),
                 'comment' => getGS('Comments'),
+                'feedback' => getGS('Feedback Messages'),
                 'file' => getGS('Files'),
                 'editor' => getGS('Rich-Text Editor Preferences'),
             ),

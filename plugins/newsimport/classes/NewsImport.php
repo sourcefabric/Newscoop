@@ -382,9 +382,9 @@ class NewsImport
             $p_count = 0;
             $event_art_list = Article::GetList(array(
                 new ComparisonOperation('idlanguage', new Operator('is', 'sql'), $art_lang),
-                new ComparisonOperation('IdPublication', new Operator('is', 'sql'), $art_publication),
+                //new ComparisonOperation('IdPublication', new Operator('is', 'sql'), $art_publication),
                 //new ComparisonOperation('NrIssue', new Operator('is', 'sql'), $art_issue),
-                new ComparisonOperation('NrSection', new Operator('is', 'sql'), $art_section),
+                //new ComparisonOperation('NrSection', new Operator('is', 'sql'), $art_section),
                 new ComparisonOperation('Type', new Operator('is', 'sql'), $art_type),
                 new ComparisonOperation($art_type . '.event_id', new Operator('is', 'sql'), $one_event['event_id']),
                 new ComparisonOperation($art_type . '.provider_id', new Operator('is', 'sql'), $one_event['provider_id']),
@@ -405,6 +405,12 @@ class NewsImport
                 if ($article->getIssueNumber() != $art_issue) {
                     $article->setIssueNumber($art_issue);
                 }
+                if ($article->getSectionNumber() != $art_section) {
+                    $article->setSectionNumber($art_section);
+                }
+                if ($article->getPublicationId() != $art_publication) {
+                    $article->setPublicationId($art_publication);
+                }
             }
 
             if ($article && $event_data_test) {
@@ -419,6 +425,9 @@ class NewsImport
                 $article = new Article($art_lang);
                 $article->create($art_type, $art_name, $art_publication, $art_issue, $art_section);
                 $article_new = true;
+            }
+            else {
+                $article->setTitle($art_name);
             }
 
             $art_number = $article->getArticleNumber();
@@ -526,10 +535,13 @@ class NewsImport
                 }
 
                 Geo_Map::UpdateMap($ev_map_id, $art_number, $ev_map_info);
-                $ev_poi_desc = mb_substr($one_event['description'], 0, (0 + $geo_sys_def['poi_desc_len']));
-                if ($ev_poi_desc != $one_event['description']) {
-                    $ev_poi_desc .= ' ...';
-                }
+                //$ev_poi_desc = mb_substr($one_event['description'], 0, (0 + $geo_sys_def['poi_desc_len']));
+                //if ($ev_poi_desc != $one_event['description']) {
+                //    $ev_poi_desc .= ' ...';
+                //}
+                $ev_poi_desc = $one_event['street'] . ', ' . $one_event['zipcode'] . ' ' . $one_event['town'];
+                $ev_poi_desc .= "\n";
+                $ev_poi_desc .= $one_event['organizer'];
 
                 $ev_points = array(
                     array(
