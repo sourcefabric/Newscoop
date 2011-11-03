@@ -42,27 +42,24 @@ class DebateDaysList extends ListObject
 	    $dateVotes = DebateVote::getResults($context->debate->number, $context->debate->language_id, $dateStart, $dateEnd+86399);
 
         $dateResults = array();
-        //if (count($dateVotes) < count($dateRange))
-        //{
-            foreach ($dateRange as $timestamp)
+        foreach ($dateRange as $timestamp)
+        {
+            $found = 0;
+            foreach ($dateVotes as $vote)
             {
-                $found = 0;
-                foreach ($dateVotes as $vote)
+                if (strftime('%D', $vote['time']) == strftime('%D', $timestamp))
                 {
-                    if (ceil($vote['time']/86400) == ceil($timestamp/86400))
-                    {
-                        $found = $vote;
-                        break;
-                    }
-                }
-                if ($found) {
-                    $dateResults[] = $found;
-                }
-                else {
-                    $dateResults[] = array( 'time' => $timestamp, 'total_count' => 0 );
+                    $found = $vote;
+                    break;
                 }
             }
-        //}
+            if ($found) {
+                $dateResults[] = $found;
+            }
+            else {
+                $dateResults[] = array( 'time' => $timestamp, 'total_count' => 0 );
+            }
+        }
 
 
         $dateArray = array();
