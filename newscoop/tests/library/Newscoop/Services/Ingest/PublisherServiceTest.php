@@ -8,6 +8,7 @@
 namespace Newscoop\Services\Ingest;
 
 use Newscoop\Entity\Ingest\Feed\Entry,
+    Newscoop\Entity\Ingest\Feed,
     Newscoop\Ingest\Parser\NewsMlParser,
     Newscoop\Ingest\Parser\NewsMlParserTest;
 
@@ -24,11 +25,18 @@ class PublisherServiceTest extends \RepositoryTestCase
     /** @var array */
     protected $config;
 
+    /** @var Newscoop\Entity\Ingest\Feed */
+    private $feed;
+
     public function setUp()
     {
-        parent::setUp('Newscoop\Entity\Comment');
+        parent::setUp('Newscoop\Entity\Comment', 'Newscoop\Entity\Ingest\Feed', 'Newscoop\Entity\Ingest\Feed\Entry');
         $this->config = \Zend_Registry::get('container')->getParameter('ingest_publisher');
         $this->service = new PublisherService($this->config);
+        
+        $this->feed = new Feed('test');
+        $this->em->persist($this->feed);
+        $this->em->flush();
     }
 
     public function testService()
@@ -77,6 +85,7 @@ class PublisherServiceTest extends \RepositoryTestCase
             'getSubject' => self::SECTION_SPORT,
             'getCreated' => $created,
         ));
+        $this->feed->addEntry($entry);
 
         $orig = $this->service->publish($entry, 'N');
         $entry->update(new NewsMlParser(APPLICATION_PATH . NewsMlParserTest::NEWSML));
@@ -169,6 +178,7 @@ class PublisherServiceTest extends \RepositoryTestCase
             'getLanguage' => 'en',
             'getSubject' => self::SECTION_SPORT,
         ));
+        $this->feed->addEntry($entry);
 
         $article = $this->service->publish($entry, 'N');
         $this->service->delete($entry);
@@ -183,6 +193,7 @@ class PublisherServiceTest extends \RepositoryTestCase
             'getLanguage' => 'de',
             'getSubject' => self::SECTION_SPORT,
         ));
+        $this->feed->addEntry($entry);
 
         $article = $this->service->publish($entry);
         $this->assertEquals($this->config['section_sport'], $article->getSectionNumber());
@@ -194,6 +205,7 @@ class PublisherServiceTest extends \RepositoryTestCase
             'getLanguage' => 'de',
             'getSubject' => self::SECTION_CULTURE,
         ));
+        $this->feed->addEntry($entry);
 
         $article = $this->service->publish($entry);
         $this->assertEquals($this->config['section_culture'], $article->getSectionNumber());
@@ -206,6 +218,7 @@ class PublisherServiceTest extends \RepositoryTestCase
             'getSubject' => 1,
             'getCountry' => 'CZ',
         ));
+        $this->feed->addEntry($entry);
 
         $article = $this->service->publish($entry);
         $this->assertEquals($this->config['section_international'], $article->getSectionNumber());
@@ -219,6 +232,7 @@ class PublisherServiceTest extends \RepositoryTestCase
             'getCountry' => 'CH',
             'getProduct' => 'Regionaldienst Nord',
         ));
+        $this->feed->addEntry($entry);
 
         $article = $this->service->publish($entry);
         $this->assertEquals($this->config['section_basel'], $article->getSectionNumber());
@@ -232,6 +246,7 @@ class PublisherServiceTest extends \RepositoryTestCase
             'getCountry' => 'CH',
             'getProduct' => '',
         ));
+        $this->feed->addEntry($entry);
 
         $article = $this->service->publish($entry);
         $this->assertEquals($this->config['section_other'], $article->getSectionNumber());
