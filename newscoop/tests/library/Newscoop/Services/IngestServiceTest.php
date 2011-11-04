@@ -80,7 +80,14 @@ class IngestServiceTest extends \RepositoryTestCase
 
     public function testPublish()
     {
-        $entry = new Entry('title', 'content');
+        $feed = new Feed('feed_title');
+        $entry = new Entry('entity_title', 'content');
+        $feed->addEntry($entry);
+
+        $this->em->persist($feed);
+        $this->em->persist($entry);
+        $this->em->flush();
+
         $this->assertFalse($entry->isPublished());
 
         $article = $this->service->publish($entry);
@@ -93,7 +100,14 @@ class IngestServiceTest extends \RepositoryTestCase
 
     public function testPrepare()
     {
-        $entry = new Entry('title', 'content');
+        $feed = new Feed('feed_title');
+        $entry = new Entry('entity_title', 'content');
+        $feed->addEntry($entry);
+
+        $this->em->persist($feed);
+        $this->em->persist($entry);
+        $this->em->flush();
+
         $article = $this->service->publish($entry, 'N');
         $this->assertFalse($article->isPublished());
         $this->assertTrue($entry->isPublished());

@@ -72,7 +72,8 @@ class RegisterController extends Zend_Controller_Action
             echo '0';
             exit;
         } else {
-            $user = $this->_helper->service('user')->createPending($parameters['email'], $parameters['first_name'], $parameters['last_name']);
+            $user = $this->_helper->service('user')->createPending($parameters['email'], $parameters['first_name'], $parameters['last_name'], $parameters['subscriber_id']);
+            
             $this->_helper->service('email')->sendConfirmationToken($user);
             echo '1';
             exit;

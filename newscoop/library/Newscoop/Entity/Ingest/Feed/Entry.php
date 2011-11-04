@@ -220,7 +220,7 @@ class Entry
     /**
      * Get feed
      *
-     * @return Newscoop\Entity\Ingest\Feed\Entry
+     * @return Newscoop\Entity\Ingest\Feed
      */
     public function getFeed()
     {
@@ -231,7 +231,7 @@ class Entry
      * Set feed
      *
      * @param Newscoop\Entity\Ingest\Feed $feed
-     * @return Newscoop\Entity\Ingest\Feed\Entry
+     * @return Newscoop\Entity\Ingest\Feed
      */
     public function setFeed(Feed $feed)
     {
