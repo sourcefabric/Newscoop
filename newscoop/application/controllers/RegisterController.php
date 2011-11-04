@@ -64,10 +64,20 @@ class RegisterController extends Zend_Controller_Action
     {
         $parameters = $this->getRequest()->getParams();
         
-        $user = $this->_helper->service('user')->createPending($parameters['email'], $parameters['first_name'], $parameters['last_name']);
-        $this->_helper->service('email')->sendConfirmationToken($user);
+        $user = $this->_helper->service('user')->findBy(array(
+            'email' => $parameters['email'],
+        ));
         
-        echo('1');die;
+        if ($user) {
+            echo '0';
+            exit;
+        } else {
+            $user = $this->_helper->service('user')->createPending($parameters['email'], $parameters['first_name'], $parameters['last_name'], $parameters['subscriber_id']);
+            
+            $this->_helper->service('email')->sendConfirmationToken($user);
+            echo '1';
+            exit;
+        }
     }
 
     public function afterAction()
@@ -110,6 +120,7 @@ class RegisterController extends Zend_Controller_Action
         }
         $form->populate($values);
         
+        $this->view->terms = false;
         if ($user->getFirstName() || $user->getLastName()) {
             $form->addElement('checkbox', 'terms_of_use', array(
                 'label' => 'Accepting terms of use',
@@ -117,9 +128,10 @@ class RegisterController extends Zend_Controller_Action
                 'validators' => array(
                     array('greaterThan', true, array('min' => 0)),
                 ),
-                 'errorMessages' => array("You have to accept terms of use to proceed."),
+                 'errorMessages' => array("Sie können sich nur registrieren, wenn Sie unseren Nutzungsbedingungen zustimmen. Dies geschieht zu Ihrer und unserer Sicherheit. Bitten setzen Sie im entsprechenden Feld ein Häkchen."),
             ));
-            $form->getElement('terms_of_use')->setOrder(6);
+            
+            $this->view->terms = true;
         }
 
         if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {

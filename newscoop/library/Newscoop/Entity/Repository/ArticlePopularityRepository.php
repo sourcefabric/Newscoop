@@ -8,7 +8,8 @@
 namespace Newscoop\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\ArticlePopularity;
+    Newscoop\Entity\ArticlePopularity,
+    Newscoop\Entity\Article;
 
 /**
  * ArticlePopularity repository

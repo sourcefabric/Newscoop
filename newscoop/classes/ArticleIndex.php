@@ -6,6 +6,8 @@
 /**
  * Includes
  */
+use Newscoop\Webcode\Manager;
+
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 
 /**
@@ -47,15 +49,39 @@ class ArticleIndex extends DatabaseObject {
 	{
 	    global $g_ado_db;
 
+	    $p_searchPhrase = trim($p_searchPhrase);
+	    if (empty($p_searchPhrase)) {
+	        return null;
+	    }
+
 	    $matchAll = false;
+
         $keywords = preg_split('/[\s,.-]/', $p_searchPhrase);
         if (isset($keywords[0]) && strtolower($keywords[0]) == '__match_all') {
             $matchAll = true;
             array_shift($keywords);
         }
 
+        $keywords = array_diff($keywords, array("", ""));
+        if (count($keywords) < 1) {
+            return null;
+        }
+
+        // specifically match webcode (first one)
+	    $webcodeMatches = preg_grep("`^\s*@`", $keywords);
+	    if (count($webcodeMatches)) {
+            $encoder = Manager::getWebcoder('');
+            $article_no = $encoder->decode(current($webcodeMatches));
+            if (is_numeric($article_no)) {
+                $selectKeywordClauseObj = new SQLSelectClause();
+                $selectKeywordClauseObj->addColumn('DISTINCT AI1.NrArticle');
+                $selectKeywordClauseObj->addColumn('AI1.IdLanguage');
+                $selectKeywordClauseObj->setTable('ArticleIndex AS AI1');
+                $selectKeywordClauseObj->addConditionalWhere("AI1.NrArticle = '$article_no'");
+            }
+	    }
         // set search keywords
-        if ($matchAll && count($keywords) > 1) {
+        elseif ($matchAll && count($keywords) > 1) {
             $selectKeywordClauseObj = new SQLSelectClause();
             $selectKeywordClauseObj->addColumn('DISTINCT AI1.NrArticle');
             $selectKeywordClauseObj->addColumn('AI1.IdLanguage');

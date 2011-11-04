@@ -147,6 +147,11 @@ class PublisherService
                 break;
         }
 
+        //has to be before country checking.
+        if ($entry->getProduct() == "swissinfo") {
+            return $this->config['section_swiss_info'];
+        }
+
         if ($entry->getCountry() != 'CH')  {
             return $this->config['section_international'];
         }

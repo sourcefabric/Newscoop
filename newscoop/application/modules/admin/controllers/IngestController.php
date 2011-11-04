@@ -9,7 +9,7 @@ use Newscoop\Entity\Ingest\Feed,
     Newscoop\Services\IngestService;
 
 /**
- * @Acl(ignore=1)
+ * @Acl(resource="ingest", action="manage")
  */
 class Admin_IngestController extends Zend_Controller_Action
 {

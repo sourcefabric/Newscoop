@@ -10,7 +10,7 @@
 use Newscoop\Entity\Feedback;
 
 /**
- * @Acl(resource="feedback", action="view")
+ * @Acl(resource="feedback", action="manage")
  */
 class Admin_FeedbackController extends Zend_Controller_Action
 {
@@ -71,7 +71,23 @@ class Admin_FeedbackController extends Zend_Controller_Action
                 $publication = $feedback->getPublication();
                 $section = $feedback->getSection();
                 $article = $feedback->getArticle();
-
+                
+                if ($article) {
+                    $article_name = $article->getName();
+                    $article_url = $view->linkArticle($article);
+                }
+                else {
+                    $article_name = getGS('None');
+                    $article_url = $view->baseUrl('admin/feedback');
+                }
+                
+                if ($section) {
+                    $section_name = $section->getName();
+                }
+                else {
+                    $section_name = getGS('None');
+                }
+                
                 $attachment = array();
 
                 $attachment['type'] = $feedback->getAttachmentType();
@@ -131,10 +147,10 @@ class Admin_FeedbackController extends Zend_Controller_Action
                         ),
                         'url' => $url,
                         'publication' => $publication->getName(),
-                        'section' => getGS('None'),//($section) ? $section->getName() : getGS('None'),
+                        'section' => $section_name,
                         'article' => array(
-							'name' => '',//($article) ? $article->getName() : getGS('None'),
-							'url' => '',//($article) ? $view->baseUrl("admin/articles/get.php?") . $view->linkArticle($article) : $view->baseUrl("admin/feedback")
+							'name' => $article_name,
+							'url' => $article_url
 						)
                     ),
                     'attachment' => $attachment

@@ -87,7 +87,7 @@ if (empty($_REQUEST['showtype']) || $_REQUEST['showtype'] != 'newswires') { // l
 if (isset($_REQUEST['sSearch']) && strlen($_REQUEST['sSearch']) > 0) {
     $search_phrase = $_REQUEST['sSearch'];
     //$articlesParams[] = new ComparisonOperation('search_phrase', new Operator('is', 'integer'), $search_phrase);
-    $articlesParams[] = new ComparisonOperation('search_phrase', new Operator('like', 'string'), $search_phrase);
+    $articlesParams[] = new ComparisonOperation('search_phrase', new Operator('like', 'string'), "__match_all.".$search_phrase);
 }
 
 // sorting

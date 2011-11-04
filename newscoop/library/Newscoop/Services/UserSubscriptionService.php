@@ -36,29 +36,31 @@ class UserSubscriptionService
     public function setKey($user, $key)
     {
         // send request
-        $subscriber = $user->getSubscriber();
+        //$subscriber = $user->getSubscriber();
         
-        if (!$subscriber) {
-            $subscriber = $this->fetchSubscriber($user);
-        }
+        $subscriber = $this->fetchSubscriber($user);
         
         $url = 'https://abo.tageswoche.ch/dmpro/ws/subscriber/NMBA/' . $subscriber . '?userkey=' . $key;        
         $client = new \Zend_Http_Client();
         $client->setUri($url);
         $client->setMethod(\Zend_Http_Client::PUT);
         $response = $client->request();
-
     }
     
     public function fetchSubscriber($user)
     {
-        $url = 'https://abo.tageswoche.ch/dmpro/ws/subscriber/NMBA?firstname='.urlencode($user->getFirstName()).'&lastname='.urlencode($user->getLastName()).'&email='.urlencode($user->getEmail());
-        $client = new \Zend_Http_Client();
-        $client->setUri($url);
-        $client->setMethod(\Zend_Http_Client::GET);
-        $response = $client->request();
+        try {
+            $url = 'https://abo.tageswoche.ch/dmpro/ws/subscriber/NMBA?email='.urlencode($user->getEmail()).'&firstname='.urlencode($user->getFirstName()).'&lastname='.urlencode($user->getLastName());
+            $client = new \Zend_Http_Client();
+            $client->setUri($url);
+            $client->setMethod(\Zend_Http_Client::GET);
+            $response = $client->request();
+        }
+        catch (\Zend_Exception $e) {
+            return(false);
+        }
         
-        $xml = new \SimpleXMLElement($response->getBody()); 
+        $xml = new \SimpleXMLElement($response->getBody());
         
         $subscriber = $xml->subscriber[0] ? (int) $xml->subscriber[0]->subscriberId : false;
         if (is_numeric($subscriber)) {

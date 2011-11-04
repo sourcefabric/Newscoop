@@ -49,7 +49,7 @@ editAreaLoader.load_syntax["smarty"] = {
 			'photographer', 'place', 'article_index', 'imageurl', 'thumbnailurl', 'uname', 'gender',
 			'email', 'city', 'str_address', 'state', 'phone', 'fax', 'country', 'country_code',
 			'second_phone', 'postal_code', 'field1', 'field2', 'field3', 'field4', 'field5',
-			'text1', 'text2', 'text3', 'pref1', 'pref2', 'pref3', 'pref4', 'logged_in', 'blocked_from_comments',
+			'text1', 'text2', 'text3', 'pref1', 'pref2', 'pref3', 'pref4', 'logged_in', 'is_blocked_from_comments',
 			'is_admin', 'has_permission', 'start_date', 'expiration_date', 'is_active', 'is_valid',
 			'has_section', 'at_beginning', 'at_end', 'has_next_elements', 'has_previous_elements',
 			'previous_start', 'next_start', 'current', 'end', 'index', 'row', 'is_error', 'error_code',

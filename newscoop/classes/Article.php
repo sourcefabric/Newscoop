@@ -102,6 +102,7 @@ class Article extends DatabaseObject {
                                                 'number'=>'Articles.Number',
                                                 'upload_date'=>'DATE(Articles.UploadDate)',
                                                 'publish_date'=>'DATE(Articles.PublishDate)',
+                                                'publish_datetime' => 'Articles.PublishDate',
                                                 'type'=>'Articles.Type',
                                                 'keyword'=>'Articles.Keywords',
                                                 'onfrontpage'=>'Articles.OnFrontPage',
@@ -2600,10 +2601,12 @@ class Article extends DatabaseObject {
                 $selectClauseObj->addWhere('Articles.IdLanguage = ArticleAuthors.fk_language_id');
             } elseif ($leftOperand == 'search_phrase') {
                 $searchQuery = ArticleIndex::SearchQuery($comparisonOperation['right'], $comparisonOperation['symbol']);
-                $otherTables["($searchQuery)"] = array('__TABLE_ALIAS'=>'search',
-                                                       '__JOIN'=>'INNER JOIN',
-                                                       'Number'=>'NrArticle',
-                                                       'IdLanguage'=>'IdLanguage');
+                if (!empty($searchQuery)) {
+                    $otherTables["($searchQuery)"] = array('__TABLE_ALIAS'=>'search',
+                                                           '__JOIN'=>'INNER JOIN',
+                                                           'Number'=>'NrArticle',
+                                                           'IdLanguage'=>'IdLanguage');
+                }
             } elseif ($leftOperand == 'location') {
                 $num = '[-+]?[0-9]+(?:\.[0-9]+)?';
                 if (preg_match("/($num) ($num), ($num) ($num)/",
@@ -2972,6 +2975,10 @@ class Article extends DatabaseObject {
             $p_searchPhrase = '__match_all ' . $p_searchPhrase;
         }
         $searchQuery = ArticleIndex::SearchQuery($p_searchPhrase);
+        if (empty($searchQuery)) {
+            $p_count = 0;
+            return array();
+        }
         $selectClauseObj->addJoin("INNER JOIN ($searchQuery) AS search ON Articles.Number = search.NrArticle"
         . " AND Articles.IdLanguage = search.IdLanguage");
 

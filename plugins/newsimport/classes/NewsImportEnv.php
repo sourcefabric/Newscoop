@@ -337,7 +337,18 @@ class NewsImportEnv
         $working_path = $p_lockDir . self::$s_working;
         $working_path_date = $p_lockDir . self::$s_working_date;
 
-        $lock_file = fopen($working_path, 'a');
+        $lock_file = null;
+
+        try {
+            $lock_file = fopen($working_path, 'a');
+        }
+        catch (Exception $exc) {
+            return false;
+        }
+        if (!$lock_file) {
+            return false;
+        }
+
         $locked = flock($lock_file, LOCK_EX); // the LOCK_NB does not work, see https://bugs.php.net/bug.php?id=54453
         if (!$locked) {
             fclose($lock_file);

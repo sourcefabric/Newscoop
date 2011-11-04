@@ -75,10 +75,16 @@ class PlaylistList extends ListObject
 
         $articlesList = $repo->articles($playlist, false, $length, $start);
 
+        $preview = CampTemplate::singleton()->context()->preview;
+
         $metaArticlesList = array();
 	    foreach ($articlesList as $article) {
 	        $metaArticle = new MetaArticle($lang->getId(), $article['articleId']);
-	        if ($metaArticle->defined() && $metaArticle->is_published) {
+	        if ($metaArticle->defined()
+	        && ($metaArticle->is_published
+	            || ($preview && $metaArticle->section->defined() && $metaArticle->issue->defined())
+	           )
+	        ) {
 	            $metaArticlesList[] = $metaArticle;
 	        }
 	    }

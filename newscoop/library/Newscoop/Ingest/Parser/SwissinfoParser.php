@@ -143,7 +143,7 @@ class SwissinfoParser implements Parser
 
     public function getLanguage()
     {
-        return "en";
+        return "de";
     }
 
     public function getSubject()
@@ -158,7 +158,7 @@ class SwissinfoParser implements Parser
 
     public function getProduct()
     {
-        return "";
+        return "swissinfo";
     }
 
     public function getSubtitle()

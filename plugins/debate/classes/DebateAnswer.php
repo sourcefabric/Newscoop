@@ -64,8 +64,39 @@ class DebateAnswer extends DatabaseObject
             $this->fetch();
         }
         $this->m_data['user_id'] = $userId;
+        $this->setPercentageFromVotes();
     } // constructor
 
+    /**
+     * does just what it says the hard way
+     */
+    public function setPercentageFromVotes()
+    {
+        if (!$this->getDebateNumber() || !$this->getNumber()) return false;
+
+        global $g_ado_db;
+
+        $debateObj = new Debate($this->m_data['fk_language_id'], $this->m_data['fk_debate_nr']);
+        $begin = $debateObj->getProperty('date_begin');
+        $end = $debateObj->getProperty('date_end');
+        $query =
+        "
+        	SELECT * FROM plugin_debate_vote
+        	WHERE
+        		`fk_debate_nr` = '".$this->getDebateNumber()."'
+        		%s
+        		AND `added` >= '$begin' AND `added` < '$end'
+        ";
+        $res = $g_ado_db->Execute(sprintf($query,"AND `fk_answer_nr` = '".$this->getNumber()."'"));
+        /* @var $res ADORecordSet_mysql */
+        $answers = $res->RowCount();
+
+        $res = $g_ado_db->Execute(sprintf($query, ""));
+        /* @var $res ADORecordSet_mysql */
+        $total = $res->RowCount();
+
+        $this->m_data['percentage'] = 100*$answers/$total;
+    }
 
     /**
      * A way for internal functions to call the superclass create function.

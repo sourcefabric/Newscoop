@@ -40,7 +40,7 @@
     <p>{{ $gimme->comment->content }}</p>
 {{ /if *}}
 
-{{ if $gimme->user->blocked_from_comments }}
+{{ if $gimme->user->is_blocked_from_comments }}
     <div class="message messagecomment messageerror">This user has been banned from writing comments.</div>
 {{ else }}
 
