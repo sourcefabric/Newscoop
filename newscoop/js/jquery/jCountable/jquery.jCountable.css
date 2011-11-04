@@ -13,6 +13,6 @@
     color: #D40D12;
 }
 
-.ft {
-    float: left;
-}
+.rt { display: inline; vertical-align: bottom; margin-left: 15px; }
+
+.ft { float: left; }

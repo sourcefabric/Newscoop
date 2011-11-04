@@ -105,7 +105,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
 	  <a class="ui-state-default icon-button" href="#" onclick="window.open('<?php echo $previewLinkURL; ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=780, height=660'); return false;"><span class="ui-icon ui-icon-extlink"></span><?php putGS('Preview'); ?></a>
 	  <?php } ?>
     </div>
-    <div class="j-countable" id="f_article_count">&nbsp;</div>
+    <div id="f_article_count" class="j-countable rt">&nbsp;</div>
   </div>
   <!-- END Article Title and Saving buttons bar //-->
 
