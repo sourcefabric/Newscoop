@@ -196,7 +196,11 @@ $(document).ready(function() {
         var ids = [];
         var used = false;
         items.each(function() {
-            ids.push($(this).attr('value'));
+            if ($('.used', $(this).closest('tr')).size()) {
+                used = true;
+            } else {
+                ids.push($(this).attr('value'));
+            }
         });
 
         if (!ids.length) { // only used selected, nothing to delete
@@ -205,8 +209,10 @@ $(document).ready(function() {
         }
 
         // confirm
-        if (!confirm('<?php putGS('Are you sure you want to update selected items?'); ?>')) {
+        if (!used && !confirm('<?php putGS('Are you sure you want to update selected items?'); ?>')) {
             return false;
+        } else if (used && !confirm("<?php echo getGS("You can't update used files."), ' ', getGS("Do you want to update unused only?"); ?>")) {
+            return false; // delete canceled
         }
 
         // delete
