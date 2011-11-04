@@ -83,6 +83,7 @@ class IngestServiceTest extends \RepositoryTestCase
         $feed = new Feed('test');
         $entry = new Entry('title', 'content');
         $feed->addEntry($entry);
+
         $this->assertFalse($entry->isPublished());
 
         $article = $this->service->publish($entry);
@@ -98,7 +99,9 @@ class IngestServiceTest extends \RepositoryTestCase
         $feed = new Feed('test');
         $entry = new Entry('title', 'content');
         $feed->addEntry($entry);
+
         $article = $this->service->publish($entry, 'N');
+
         $this->assertFalse($article->isPublished());
         $this->assertTrue($entry->isPublished());
     }

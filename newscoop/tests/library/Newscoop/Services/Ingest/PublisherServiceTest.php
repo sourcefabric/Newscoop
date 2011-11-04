@@ -50,7 +50,14 @@ class PublisherServiceTest extends \RepositoryTestCase
             $oldArticle->delete();
         }
 
+        $feed = new Feed('feed_title');
         $entry = Entry::create(new NewsMlParser(APPLICATION_PATH . NewsMlParserTest::NEWSML));
+        $feed->addEntry($entry);
+
+        $this->em->persist($feed);
+        $this->em->persist($entry);
+        $this->em->flush();
+
         $article = $this->service->publish($entry);
 
         $this->assertInstanceOf('Article', $article);
@@ -70,7 +77,7 @@ class PublisherServiceTest extends \RepositoryTestCase
 
         $this->checkData($article, $entry);
         $this->checkImages(1, $article);
-        $this->checkAuthors(2, $article);
+        $this->checkAuthors(2, $article, $feed);
 
         $article->delete();
     }
@@ -79,13 +86,23 @@ class PublisherServiceTest extends \RepositoryTestCase
     {
         $updated = new \DateTime(NewsMlParserTest::UPDATED);
         $created = new \DateTime(NewsMlParserTest::CREATED);
+
+        $feed = new Feed('feed_title');
+
         $entry = $this->getEntry(array(
             'getTitle' => uniqid(),
+            'getContent' => 'hello',
             'getLanguage' => 'de',
             'getSubject' => self::SECTION_SPORT,
             'getCreated' => $created,
         ));
         $this->feed->addEntry($entry);
+
+        $feed->addEntry($entry);
+
+        $this->em->persist($feed);
+        $this->em->persist($entry);
+        $this->em->flush();
 
         $orig = $this->service->publish($entry, 'N');
         $entry->update(new NewsMlParser(APPLICATION_PATH . NewsMlParserTest::NEWSML));
@@ -103,12 +120,12 @@ class PublisherServiceTest extends \RepositoryTestCase
 
         $this->checkData($next, $entry);
         $this->checkImages(1, $next);
-        $this->checkAuthors(2, $next);
+        $this->checkAuthors(2, $next, $feed);
 
         // test replacing images/authors
         $next = $this->service->update($entry);
         $this->checkImages(1, $next);
-        $this->checkAuthors(2, $next);
+        $this->checkAuthors(2, $next, $feed);
 
         $next->delete();
     }
@@ -117,6 +134,7 @@ class PublisherServiceTest extends \RepositoryTestCase
     {
         $entry = $this->getEntry(array(
             'getTitle' => 'new',
+            'getContent' => 'hello',
             'getLanguage' => 'de',
             'getSubject' => self::SECTION_SPORT,
             'getCreated' => new \DateTime(),
@@ -130,6 +148,7 @@ class PublisherServiceTest extends \RepositoryTestCase
     {
         $entry = $this->getEntry(array(
             'getTitle' => 'new',
+            'getContent' => 'hello',
             'getLanguage' => 'de',
             'getSubject' => self::SECTION_SPORT,
             'getCreated' => new \DateTime(),
@@ -164,21 +183,30 @@ class PublisherServiceTest extends \RepositoryTestCase
     /**
      * Test article authors
      */
-    private function checkAuthors($count, \Article $article)
+    private function checkAuthors($count, \Article $article, Feed $feed)
     {
         $authors = \ArticleAuthor::GetAuthorsByArticle($article->getArticleNumber(), $article->getLanguageId());
         $this->assertEquals(1, count($authors));
-        $this->assertEquals('ingest', $authors[0]->getName());
+        $this->assertEquals($feed->getTitle(), $authors[0]->getName());
     }
 
     public function testDelete()
     {
+        $feed = new Feed('feed_title');
+
         $entry = $this->getEntry(array(
             'getTitle' => uniqid(),
+            'getContent' => 'hello',
             'getLanguage' => 'en',
             'getSubject' => self::SECTION_SPORT,
         ));
         $this->feed->addEntry($entry);
+
+        $feed->addEntry($entry);
+
+        $this->em->persist($feed);
+        $this->em->persist($entry);
+        $this->em->flush();
 
         $article = $this->service->publish($entry, 'N');
         $this->service->delete($entry);
@@ -189,11 +217,21 @@ class PublisherServiceTest extends \RepositoryTestCase
 
     public function testPublishSectionSport()
     {
+        $feed = new Feed('feed_title');
+
         $entry = $this->getEntry(array(
+            'getTitle' => uniqid(),
+            'getContent' => 'hello',
             'getLanguage' => 'de',
             'getSubject' => self::SECTION_SPORT,
         ));
         $this->feed->addEntry($entry);
+
+        $feed->addEntry($entry);
+
+        $this->em->persist($feed);
+        $this->em->persist($entry);
+        $this->em->flush();
 
         $article = $this->service->publish($entry);
         $this->assertEquals($this->config['section_sport'], $article->getSectionNumber());
@@ -201,11 +239,21 @@ class PublisherServiceTest extends \RepositoryTestCase
 
     public function testPublishSectionCulture()
     {
+        $feed = new Feed('feed_title');
+
         $entry = $this->getEntry(array(
+            'getTitle' => uniqid(),
+            'getContent' => 'hello',
             'getLanguage' => 'de',
             'getSubject' => self::SECTION_CULTURE,
         ));
         $this->feed->addEntry($entry);
+
+        $feed->addEntry($entry);
+
+        $this->em->persist($feed);
+        $this->em->persist($entry);
+        $this->em->flush();
 
         $article = $this->service->publish($entry);
         $this->assertEquals($this->config['section_culture'], $article->getSectionNumber());
@@ -213,12 +261,22 @@ class PublisherServiceTest extends \RepositoryTestCase
 
     public function testPublishSectionInternational()
     {
+        $feed = new Feed('feed_title');
+
         $entry = $this->getEntry(array(
+            'getTitle' => uniqid(),
+            'getContent' => 'hello',
             'getLanguage' => 'de',
             'getSubject' => 1,
             'getCountry' => 'CZ',
         ));
         $this->feed->addEntry($entry);
+
+        $feed->addEntry($entry);
+
+        $this->em->persist($feed);
+        $this->em->persist($entry);
+        $this->em->flush();
 
         $article = $this->service->publish($entry);
         $this->assertEquals($this->config['section_international'], $article->getSectionNumber());
@@ -226,7 +284,11 @@ class PublisherServiceTest extends \RepositoryTestCase
 
     public function testPublishSectionBasel()
     {
+        $feed = new Feed('feed_title');
+
         $entry = $this->getEntry(array(
+            'getTitle' => uniqid(),
+            'getContent' => 'hello',
             'getLanguage' => 'de',
             'getSubject' => 1,
             'getCountry' => 'CH',
@@ -234,19 +296,35 @@ class PublisherServiceTest extends \RepositoryTestCase
         ));
         $this->feed->addEntry($entry);
 
+        $feed->addEntry($entry);
+
+        $this->em->persist($feed);
+        $this->em->persist($entry);
+        $this->em->flush();
+
         $article = $this->service->publish($entry);
         $this->assertEquals($this->config['section_basel'], $article->getSectionNumber());
     }
 
     public function testPublishSectionOther()
     {
+        $feed = new Feed('feed_title');
+
         $entry = $this->getEntry(array(
+            'getTitle' => uniqid(),
+            'getContent' => 'hello',
             'getLanguage' => 'de',
             'getSubject' => 1,
             'getCountry' => 'CH',
             'getProduct' => '',
         ));
         $this->feed->addEntry($entry);
+
+        $feed->addEntry($entry);
+
+        $this->em->persist($feed);
+        $this->em->persist($entry);
+        $this->em->flush();
 
         $article = $this->service->publish($entry);
         $this->assertEquals($this->config['section_other'], $article->getSectionNumber());

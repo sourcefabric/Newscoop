@@ -111,6 +111,9 @@ class IngestService
             return;
             //throw new \Exception("Swiss info http error {$e->getMessage()}");
         }
+        catch(\Exception $e) {
+            return;
+        }
 
         //get articles for each available section
         $url = $this->config['swissinfo_latest'];
@@ -138,14 +141,14 @@ class IngestService
                     }
                 }
             }
-            catch (Exception $e) {
+            catch (\Exception $e) {
                 //throw new \Exception("Swiss info feed error {$e->getMessage()}");
+                return;
             }
         }
 
         $feed->setUpdated(new \DateTime());
         $this->em->persist($feed);
-
         $this->em->flush();
     }
 

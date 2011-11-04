@@ -46,6 +46,7 @@ class Admin_AclController extends Zend_Controller_Action
         $this->resources = array(
             'authoring' => array(
                 'article' => getGS('Articles'),
+                'ingest' => getGS('Newswires Ingest'),
                 'image' => getGS('Images'),
                 'comment' => getGS('Comments'),
                 'feedback' => getGS('Feedback Messages'),

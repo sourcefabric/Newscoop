@@ -35,6 +35,13 @@ class ImageController extends Zend_Controller_Action
         }
         $image->crop('50%', '50%', $width, $height);
         $image->save($dest);
+
+        $fmt = filemtime($dest);
+
+        header('Cache-Control: public, max-age=3600');
+        header('Pragma: cache');
+        header('Last-Modified: '.gmdate('D, d M Y H:i:s', $fmt).' GMT', true);
+
         $image->send();
         exit;
     }

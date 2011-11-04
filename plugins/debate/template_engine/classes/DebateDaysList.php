@@ -33,36 +33,34 @@ class DebateDaysList extends ListObject
 	    }
 
 	    $dateStart = $context->debate->date_begin;
-	    $dateEnd = ( $t = strtotime('tomorrow') ) > $context->debate->date_end ? $context->debate->date_end : $t;
-	    if ($p_limit != 0) {
-	        $dateStart = $dateEnd - ($rangeUnit*($p_limit-1));
-	    }
+	    //$dateEnd = ( $t = strtotime('tomorrow') ) > $context->debate->date_end ? $context->debate->date_end : $t;
+	    $dateEnd = ($p_limit != 0) ? strtotime(strftime('%D', $dateStart).' + '.($p_limit-1).' days') : $context->debate->date_end;
+	    //if ($p_limit != 0) {
+	    //    $dateStart = $dateEnd - ($rangeUnit*($p_limit-1));
+	    //}
 	    $dateRange = range($dateStart, $dateEnd, $rangeUnit);
 
 	    $dateVotes = DebateVote::getResults($context->debate->number, $context->debate->language_id, $dateStart, $dateEnd+86399);
 
         $dateResults = array();
-        //if (count($dateVotes) < count($dateRange))
-        //{
-            foreach ($dateRange as $timestamp)
+        foreach ($dateRange as $timestamp)
+        {
+            $found = 0;
+            foreach ($dateVotes as $vote)
             {
-                $found = 0;
-                foreach ($dateVotes as $vote)
+                if (strftime('%D', $vote['time']) == strftime('%D', $timestamp))
                 {
-                    if (ceil($vote['time']/86400) == ceil($timestamp/86400))
-                    {
-                        $found = $vote;
-                        break;
-                    }
-                }
-                if ($found) {
-                    $dateResults[] = $found;
-                }
-                else {
-                    $dateResults[] = array( 'time' => $timestamp, 'total_count' => 0 );
+                    $found = $vote;
+                    break;
                 }
             }
-        //}
+            if ($found) {
+                $dateResults[] = $found;
+            }
+            else {
+                $dateResults[] = array( 'time' => $timestamp, 'total_count' => 0 );
+            }
+        }
 
 
         $dateArray = array();

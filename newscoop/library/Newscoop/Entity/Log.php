@@ -194,7 +194,11 @@ class Log
      */
     public function getUserName()
     {
-        return $this->getUser() ? $this->getUser()->getName() : '';
+        try {
+            return $this->getUser() instanceof User ? $this->getUser()->getName() : '';
+        } catch (\Doctrine\ORM\EntityNotFoundException $e) {
+            return null;
+        }
     }
 }
 
