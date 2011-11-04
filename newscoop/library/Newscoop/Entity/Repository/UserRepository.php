@@ -76,17 +76,6 @@ class UserRepository extends EntityRepository
     }
 
     /**
-     * Get total count for given criteria
-     *
-     * @param array $criteria
-     * @return int
-     */
-    public function countBy(array $criteria)
-    {
-        return count($this->findBy($criteria));
-    }
-
-    /**
      * Set user properties
      *
      * @param Newscoop\Entity\User $user
@@ -341,13 +330,12 @@ class UserRepository extends EntityRepository
         $query = $this->getEntityManager()
             ->createQueryBuilder()
             ->select('COUNT(u)')
-            ->from('Newscoop\Entity\User', 'u')
+            ->from($this->getEntityName(), 'u')
             ->leftJoin('u.groups', 'g', Expr\Join::WITH, 'g.id = ' . $blogRole)
             ->where('u.is_admin = :admin')
             ->andWhere('u.status = :status')
             ->andWhere('u.author IS NOT NULL')
             ->andWhere('g.id IS NULL')
-            ->orderBy('u.username', 'asc')
             ->getQuery();
 
         $query->setParameters(array(
@@ -356,5 +344,48 @@ class UserRepository extends EntityRepository
         ));
 
         return $query->getSingleScalarResult();
+    }
+
+    /**
+     * Get total users count
+     *
+     * @return int
+     */
+    public function countAll()
+    {
+        $query = $this->getEntityManager()->createQueryBuilder()
+            ->select('COUNT(u)')
+            ->from($this->getEntityName(), 'u')
+            ->getQuery();
+
+        return (int) $query->getSingleScalarResult();
+    }
+
+    /**
+     * Get users count for given criteria
+     *
+     * @param array $criteria
+     * @return int
+     */
+    public function countBy(array $criteria)
+    {
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder()
+            ->select('COUNT(u)')
+            ->from($this->getEntityName(), 'u');
+
+        foreach ($criteria as $property => $value) {
+            if (!is_array($value)) {
+                $queryBuilder->andWhere("u.$property = :$property");
+            }
+        }
+
+        $query = $queryBuilder->getQuery();
+        foreach ($criteria as $property => $value) {
+            if (!is_array($value)) {
+                $query->setParameter($property, $value);
+            }
+        }
+
+        return (int) $query->getSingleScalarResult();
     }
 }

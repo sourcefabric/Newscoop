@@ -7,15 +7,16 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity\User;
+use Doctrine\Common\Persistence\ObjectManager,
+    Newscoop\Entity\User,
+    Newscoop\Persistence\ObjectRepository;
 
 /**
  * User service
  */
-class UserService
+class UserService implements ObjectRepository
 {
-    /** @var Doctrine\ORM\EntityManager */
+    /** @var Doctrine\Common\Persistence\ObjectManager */
     private $em;
 
     /** @var Zend_Auth */
@@ -28,7 +29,7 @@ class UserService
      * @param Doctrine\ORM\EntityManager $em
      * @param Zend_Auth $auth
      */
-    public function __construct(EntityManager $em, \Zend_Auth $auth)
+    public function __construct(ObjectManager $em, \Zend_Auth $auth)
     {
         $this->em = $em;
         $this->auth = $auth;
@@ -64,14 +65,25 @@ class UserService
     }
 
     /**
+     * Find all users
+     *
+     * @return mixed
+     */
+    public function findAll()
+    {
+        return $this->getRepository()->findAll();
+    }
+
+    /**
      * Find by given criteria
      *
      * @param array $criteria
-     * @param array $orderBy
-     * @param int $limit
-     * @param int $offset
+     * @param array|null $orderBy
+     * @param int|null $limit
+     * @param int|null $offset
+     * @return mixed
      */
-    public function findBy($criteria, array $orderBy = NULL, $limit = NULL, $offset = NULL)
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
         return $this->getRepository()
             ->findBy($criteria, $orderBy, $limit, $offset);
@@ -127,7 +139,12 @@ class UserService
             throw new \InvalidArgumentException("You can't delete yourself");
         }
 
-        $user->setStatus(User::STATUS_DELETED);
+        if ($user->isPending()) {
+            $this->em->remove($user);
+        } else {
+            $user->setStatus(User::STATUS_DELETED);
+        }
+
         $this->em->flush();
     }
 
@@ -232,6 +249,27 @@ class UserService
         return $this->getRepository()->findOneBy(array(
             'author' => $authorId,
         ));
+    }
+
+    /**
+     * Count all users
+     *
+     * @return int
+     */
+    public function countAll()
+    {
+        return $this->getRepository()->countAll();
+    }
+
+    /**
+     * Count users by given criteria
+     *
+     * @param array $criteria
+     * @return int
+     */
+    public function countBy(array $criteria)
+    {
+        return $this->getRepository()->countBy($criteria);
     }
 
     /**

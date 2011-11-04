@@ -1,0 +1,24 @@
+<?php echo $this->paginator; ?>
+
+<ul class="users">
+    <?php foreach ($this->users as $user) { ?>
+    <li>
+        <div class="inline-actions">
+            <a href="<?php echo $this->url(array(
+                'action' => 'send-confirm-email',
+                'user' => $user->getId(),
+            )); ?>" class="send-confirm-email"><?php putGS('Send confirm email'); ?></a> |
+            <a href="<?php echo $this->url(array(
+                'action' => 'delete',
+                'user' => $user->getId(),
+            )); ?>" class="delete"><?php putGS('Delete'); ?></a>
+        </div>
+        <a href="<?php echo $this->url(array(
+            'action' => 'edit',
+            'user' => $user->getId(),
+        )); ?>" class="edit"><?php echo $user->getFirstName() || $user->getLastName() ? $this->escape(trim($user->getFirstName() . ' ' . $user->getLastName())) : $this->escape('<' . preg_replace('/\@.*$/', '', $user->getEmail()) . '>'); ?></a>
+        <a href="mailto:<?php echo $user->getEmail(); ?>" class="mailto"><?php echo $user->getEmail(); ?></a>
+        <span class="created"><?php echo $user->getCreated()->format('d.m.Y'); ?></span>
+    </li>
+    <?php } ?>
+</ul>

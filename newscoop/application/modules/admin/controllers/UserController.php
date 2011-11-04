@@ -14,6 +14,8 @@ use Newscoop\Entity\User;
  */
 class Admin_UserController extends Zend_Controller_Action
 {
+    const LIMIT = 25;
+
     /** @var Newscoop\Services\UserService */
     private $userService;
 
@@ -29,6 +31,8 @@ class Admin_UserController extends Zend_Controller_Action
 
         $this->userService = $this->_helper->service('user');
         $this->userTypeService = $this->_helper->service('user_type');
+
+        Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginator.phtml');
     }
 
     public function indexAction()
@@ -40,12 +44,46 @@ class Admin_UserController extends Zend_Controller_Action
                 'controller' => 'user',
                 'action' => 'create',
                 'class' => 'add',
-                'resource' => 'user',
-                'privilege' => 'manage',
             ),
         );
 
-        $this->_forward('table');
+        $this->view->activeCount = $this->_helper->service('user')->countBy(array('status' => User::STATUS_ACTIVE));
+        $this->view->pendingCount = $this->_helper->service('user')->countBy(array('status' => User::STATUS_INACTIVE));
+        $this->view->deletedCount = $this->_helper->service('user')->countBy(array('status' => User::STATUS_DELETED));
+    }
+
+    public function listAction()
+    {
+        $this->_helper->layout->disableLayout();
+
+        $filters = array(
+            'active' => User::STATUS_ACTIVE,
+            'pending' => User::STATUS_INACTIVE,
+            'deleted' => User::STATUS_DELETED,
+        );
+
+        $filter = $this->_getParam('filter', 'active');
+        if (!array_key_exists($filter, $filters)) {
+            $filter = 'active';
+        }
+
+        $page = $this->_getParam('page', 1);
+        $count = $this->_helper->service('user')->countBy(array('status' => $filters[$filter]));
+        $paginator = Zend_Paginator::factory($count);
+        $paginator->setItemCountPerPage(self::LIMIT);
+        $paginator->setCurrentPageNumber($page);
+        $paginator->setView($this->view);
+        $paginator->setDefaultScrollingStyle('Sliding');
+        $this->view->paginator = $paginator;
+
+        $this->view->users = $this->_helper->service('user')->findBy(array(
+            'status' => $filters[$filter],
+        ), array(
+            'username' => 'asc',
+            'email' => 'asc',
+        ), self::LIMIT, ($paginator->getCurrentPageNumber() - 1) * self::LIMIT);
+
+        $this->render("list-$filter");
     }
 
     public function createAction()
@@ -124,61 +162,13 @@ class Admin_UserController extends Zend_Controller_Action
 
     public function deleteAction()
     {
+        $this->_helper->contextSwitch->addActionContext($this->_getParam('action'), 'json')->initContext();
         try {
-            $user = $this->getUser();
+            $user = $this->_helper->service('user')->find($this->_getParam('user', null));
             $this->userService->delete($user);
-            $this->_helper->flashMessenger(getGS("User '$1' deleted", $user->getUsername()));
-        } catch (InvalidArgumentException $e) {
-            $this->_helper->flashMessenger(array('error', getGS("You can't delete yourself")));
+        } catch (Exception $e) {
+            $this->view->message = $e->getMessage();
         }
-        $this->_helper->redirector('index');
-    }
-
-    public function tableAction()
-    {
-        $table = $this->getHelper('datatable');
-        $table->setEntity('Newscoop\Entity\User');
-
-        $table->setCols(array(
-            'username' => getGS('Username'),
-            'first_name' => getGS('First Name'),
-            'last_name' => getGS('Last Name'),
-            'email' => getGS('Email'),
-            'status' => getGS('Status'),
-            'created' => getGS('Created'),
-            'types' => getGS('Type'),
-        ));
-        
-        $table->setSearchable(array('status' => false, 'types' => false));
-
-        $view = $this->view;
-        $statuses = array(
-            User::STATUS_INACTIVE => getGS('Pending'),
-            User::STATUS_ACTIVE => getGS('Active'),
-            User::STATUS_DELETED => getGS('Deleted'),
-        );
-
-        $table->setHandle(function(User $user) use ($view, $statuses) {
-            $groups = $user->getGroups()->toArray();
-            return array(
-                sprintf('<a href="%s">%s</a>',
-                    $view->url(array(
-                        'module' => 'admin',
-                        'controller' => 'user',
-                        'action' => 'edit',
-                        'user' => $user->getId(),
-                        'format' => null,
-                    )), $user->getUsername()),
-                $user->getFirstName(),
-                $user->getLastName(),
-                $user->getEmail(),
-                $statuses[$user->getStatus()],
-                $user->getCreated()->format('d.m.Y'),
-                !empty($groups) ? implode(", ", array_map(function($group) { return $group->getName(); }, $groups)) : '',
-            );
-        });
-
-        $table->dispatch();
     }
 
     public function profileAction()
@@ -274,6 +264,15 @@ class Admin_UserController extends Zend_Controller_Action
         
         $form->setValues($user, $banned);
         $this->view->form = $form;
+    }
+
+    public function sendConfirmEmailAction()
+    {
+        $this->_helper->contextSwitch->addActionContext($this->_getParam('action'), 'json')->initContext();
+        $user = $this->_helper->service('user')->find($this->_getParam('user', null));
+        if ($user && $user->isPending()) {
+            $this->_helper->service('email')->sendConfirmationToken($user);
+        }
     }
     
     /**

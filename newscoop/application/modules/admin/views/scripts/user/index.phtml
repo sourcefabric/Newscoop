@@ -1,0 +1,59 @@
+<?php $this->placeholder('title')->set(getGS('Users management')); ?>
+
+<ul class="filters">
+    <li class="vspace"><?php putGS('Status'); ?></li>
+    <li><a href="#active"><?php putGS('Active'); ?> (<span><?php echo $this->activeCount; ?></span>)</a></li>
+    <li><a href="#pending"><?php putGS('Pending'); ?> (<span><?php echo $this->pendingCount; ?></span>)</a></li>
+</ul>
+
+<div class="canvas"></div>
+
+<script type="text/javascript">
+$(function() {
+    var initActive = function() {
+        if (window.location.hash && $('a[href="' + window.location.hash + '"]').size()) {
+            $('a[href="' + window.location.hash + '"]').click();
+        } else {
+            $('.filters a').first().click();
+        }
+    }
+
+    $('.filters a').click(function(e) {
+        e.preventDefault();
+
+        var filter = this.hash.slice(1);
+        $('.canvas').load("<?php echo $this->url(array(
+            'action' => 'list',
+        )); ?>" + "/filter/" + filter);
+
+        $('.filters a').not(this).removeClass('active');
+        $(this).addClass('active');
+        window.location.hash = this.hash;
+    });
+
+    $('.paginationControl a').live('click', function(e) {
+        e.preventDefault();
+        $('.canvas').load($(this).attr('href'));
+    });
+
+    $('a.send-confirm-email').live('click', function(e) {
+        e.preventDefault();
+        $.getJSON(this.href, {'format': 'json'}, function(data, textStatus, jqXHR) {
+            flashMessage(<?php echo json_encode(getGS("New confirmation email was sent to user.")); ?>);
+        });
+    });
+
+    $('a.delete').live('click', function(e) {
+        e.preventDefault();
+        $.getJSON(this.href, {'format': 'json'}, function(data, textStatus, jqXHR) {
+            flashMessage(<?php echo json_encode(getGS("User was deleted.")); ?>);
+            initActive();
+            // edit count
+            var count = parseInt($('.filters a.active span').html());
+            $('.filters a.active span').html(count - 1);
+        });
+    });
+
+    initActive();
+});
+</script>

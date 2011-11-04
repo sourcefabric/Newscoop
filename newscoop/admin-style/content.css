@@ -524,3 +524,82 @@ a.view-article:hover {
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2390BD), color-stop(100%, #007FB3));
 	border: 1px solid #007FB3;
 }
+
+.content ul.filters {
+    float: left;
+    width: 180px;
+    margin: 0 0 8px 0;
+    padding: 0;
+}
+
+.content ul.filters li {
+    margin: 0 0 3px;
+    padding: 5px 8px;
+    font-size: 1.3em;
+    line-height: 1em;
+    background-color: #fff;
+}
+
+.content ul.filters li.vspace {
+    background-color: transparent;
+}
+
+.content ul.filters li a.active {
+    font-weight: bold;
+}
+
+.canvas {
+    min-width: 500px;
+    margin: 0 0 8px 188px;
+}
+
+.canvas ul.users {
+    float: left;
+    width: 100%;
+    margin: 0 0 8px;
+    padding: 0;
+}
+
+.canvas ul.users li {
+    margin: 0 0 3px;
+    padding: 5px 8px;
+    font-size: 1.3em;
+    line-height: 1em;
+    background-color: #fff;
+}
+
+.canvas ul.users li a.edit {
+    display: inline-block;
+    width: 30%;
+    min-width: 200px;
+}
+
+.canvas ul.users li a.mailto {
+    display: inline-block;
+    width: 30%;
+    min-width: 250px;
+    color: #333;
+}
+
+.canvas ul.users .inline-actions {
+    float: right;
+    color: #666
+}
+
+.canvas ul.users .created {
+    color: #666;
+}
+
+.canvas .paginationControl {
+    float: right;
+    clear: right;
+    margin: 0 0 3px;
+    padding: 5px 8px;
+    font-size: 1.3em;
+    line-height: 1em;
+    color: #333;
+}
+
+.canvas .paginationControl .disabled {
+    color: inherit;
+}
