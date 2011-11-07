@@ -30,7 +30,7 @@ class PublisherServiceTest extends \RepositoryTestCase
 
     public function setUp()
     {
-        parent::setUp('Newscoop\Entity\Comment', 'Newscoop\Entity\Ingest\Feed', 'Newscoop\Entity\Ingest\Feed\Entry');
+        parent::setUp('Newscoop\Entity\Comment', 'Newscoop\Entity\Ingest\Feed', 'Newscoop\Entity\Ingest\Feed\Entry', 'Newscoop\Entity\Article');
         $this->config = \Zend_Registry::get('container')->getParameter('ingest_publisher');
         $this->service = new PublisherService($this->config);
         
@@ -328,6 +328,18 @@ class PublisherServiceTest extends \RepositoryTestCase
 
         $article = $this->service->publish($entry);
         $this->assertEquals($this->config['section_other'], $article->getSectionNumber());
+    }
+
+    public function testPublishProgram()
+    {
+        $entry = Entry::create(new NewsMlParser(APPLICATION_PATH . '/../tests/ingest/wochenprogramm_rdn201.xml'));
+
+        $this->feed->addEntry($entry);
+        $this->em->persist($entry);
+        $this->em->flush();
+
+        $article = $this->service->publish($entry);
+        $this->assertFalse($article->isPublished());
     }
 
     /**
