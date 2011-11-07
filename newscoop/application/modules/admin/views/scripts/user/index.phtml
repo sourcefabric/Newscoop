@@ -56,11 +56,18 @@ $(function() {
     $('a.delete').live('click', function(e) {
         e.preventDefault();
         $.getJSON(this.href, {'format': 'json'}, function(data, textStatus, jqXHR) {
+            if (data.message) {
+                flashMessage(data.message, 'error');
+                return;
+            }
+
             flashMessage(<?php echo json_encode(getGS("User was deleted.")); ?>);
+            if ($('.filters a.active').size()) { // edit count
+                var count = parseInt($('.filters a.active span').html());
+                $('.filters a.active span').html(count - 1);
+            }
+
             initActive();
-            // edit count
-            var count = parseInt($('.filters a.active span').html());
-            $('.filters a.active span').html(count - 1);
         });
     });
 

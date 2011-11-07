@@ -6,10 +6,18 @@
     <?php foreach ($this->users as $user) { ?>
     <li>
         <div class="inline-actions">
+            <?php if ($user->isPending()) { ?>
+            <a href="<?php echo $this->url(array(
+                'action' => 'send-confirm-email',
+                'user' => $user->getId(),
+            )); ?>" class="send-confirm-email"><?php putGS('Send confirm email'); ?></a> |
+            <?php } ?>
+            <?php if ($user->isActive() || $user->isPending()) { ?>
             <a href="<?php echo $this->url(array(
                 'action' => 'delete',
                 'user' => $user->getId(),
             )); ?>" class="delete"><?php putGS('Delete'); ?></a>
+            <?php } ?>
         </div>
         <?php if ($user->isActive()) { ?>
         <a href="<?php echo $this->url(array(
