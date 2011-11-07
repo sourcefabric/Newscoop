@@ -1,4 +1,9 @@
-<?php $this->placeholder('title')->set(getGS('Users management')); ?>
+<?php $this->placeholder('title')->captureStart(); ?>
+<?php putGS('Users'); ?>
+<span class="inline-search">
+    <input type="text" name="q" /> <button id="user-search" class="search"><?php putGS('Search'); ?></button>
+</span>
+<?php $this->placeholder('title')->captureEnd(); ?>
 
 <ul class="filters">
     <li class="vspace"><?php putGS('Status'); ?></li>
@@ -13,6 +18,10 @@ $(function() {
     var initActive = function() {
         if (window.location.hash && $('a[href="' + window.location.hash + '"]').size()) {
             $('a[href="' + window.location.hash + '"]').click();
+        } else if (window.location.hash && window.location.hash.search('search/')) {
+            var q = window.location.hash.replace('#search/', '');
+            $('.inline-search input:text').val(q);
+            $('#user-search').click();
         } else {
             $('.filters a').first().click();
         }
@@ -28,6 +37,7 @@ $(function() {
 
         $('.filters a').not(this).removeClass('active');
         $(this).addClass('active');
+        $('.inline-search input:text').val('');
         window.location.hash = this.hash;
     });
 
@@ -52,6 +62,16 @@ $(function() {
             var count = parseInt($('.filters a.active span').html());
             $('.filters a.active span').html(count - 1);
         });
+    });
+
+    $('#user-search').click(function() {
+        var q = $(this).prev('input:text').val();
+        window.location.hash = 'search/' + q;
+        $('.canvas').load("<?php echo $this->url(array(
+            'action' => 'search',
+        )); ?>" + "/q/" + q);
+
+        $('.filters a').removeClass('active');
     });
 
     initActive();

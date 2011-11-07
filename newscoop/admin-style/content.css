@@ -549,7 +549,7 @@ a.view-article:hover {
 }
 
 .canvas {
-    min-width: 500px;
+    min-width: 600px;
     margin: 0 0 8px 188px;
 }
 
@@ -581,6 +581,12 @@ a.view-article:hover {
     color: #333;
 }
 
+.canvas ul.users .status {
+    display: inline-block;
+    width: 8%;
+    min-width: 100px;
+}
+
 .canvas ul.users .inline-actions {
     float: right;
     color: #666
@@ -602,4 +608,36 @@ a.view-article:hover {
 
 .canvas .paginationControl .disabled {
     color: inherit;
+}
+
+.canvas .controls {
+    height: 26px;
+    overflow: hidden;
+}
+
+.canvas .status.s-0 {
+    color: #f57900;
+}
+
+.canvas .status.s-1 {
+    color: #4e9a06;
+}
+
+.canvas .status.s-2 {
+    color: #cc0000;
+}
+
+h1 {
+    position: relative;
+}
+
+.inline-search {
+    position: absolute;
+    left: 210px;
+}
+
+.inline-search input {
+    padding: 3px 5px;
+    border: 1px solid #fff;
+    background-color: #fff;
 }

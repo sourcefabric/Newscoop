@@ -86,6 +86,14 @@ class Admin_UserController extends Zend_Controller_Action
         $this->render("list-$filter");
     }
 
+    public function searchAction()
+    {
+        $this->_helper->layout->disableLayout();
+
+        $q = $this->_getParam('q', null);
+        $this->view->users = $this->_helper->service('user.search')->find($q);
+    }
+
     public function createAction()
     {
         $form = new Admin_Form_User();
