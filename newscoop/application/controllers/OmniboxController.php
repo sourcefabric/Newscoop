@@ -22,6 +22,7 @@ class OmniboxController extends Zend_Controller_Action
 
     public function indexAction()
     {
+        $this->_helper->viewRenderer->setViewSuffix('tpl');
 		$this->view->gimme = $this->_getParam('gimme');
     }
 	
