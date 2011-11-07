@@ -71,6 +71,12 @@ class Article
     private $name;
 
     /**
+     * @Column(name="PublishDate")
+     * @var string
+     */
+    private $published;
+
+    /**
      * @Column(name="time_updated")
      * @var string
      */
@@ -212,7 +218,6 @@ class Article
         return ($this->language) ? $this->language->getId() : null;
     }
 
-
     /**
      * Get number
      *
@@ -231,6 +236,16 @@ class Article
     public function getTitle()
     {
         return $this->name;
+    }
+
+    /**
+     * Get created date
+     *
+     * @return string
+     */
+    public function getPublishDate()
+    {
+        return $this->published;
     }
 
     /**
