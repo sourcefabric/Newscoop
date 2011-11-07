@@ -5,11 +5,15 @@
 </span>
 <?php $this->placeholder('title')->captureEnd(); ?>
 
-<ul class="filters">
-    <li class="vspace"><?php putGS('Status'); ?></li>
-    <li><a href="#active"><?php putGS('Active'); ?> (<span><?php echo $this->activeCount; ?></span>)</a></li>
-    <li><a href="#pending"><?php putGS('Pending'); ?> (<span><?php echo $this->pendingCount; ?></span>)</a></li>
-</ul>
+<div class="aside">
+    <ul class="filters">
+        <li class="vspace"><?php putGS('Status'); ?></li>
+        <li><a href="#active"><?php putGS('Active'); ?> (<span><?php echo $this->activeCount; ?></span>)</a></li>
+        <li><a href="#pending"><?php putGS('Pending'); ?> (<span><?php echo $this->pendingCount; ?></span>)</a></li>
+    </ul>
+
+    <?php echo $this->renderActions(); ?>
+</div>
 
 <div class="canvas"></div>
 

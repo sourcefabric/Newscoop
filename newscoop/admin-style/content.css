@@ -525,14 +525,18 @@ a.view-article:hover {
 	border: 1px solid #007FB3;
 }
 
-.content ul.filters {
+.content .aside {
     float: left;
     width: 180px;
     margin: 0 0 8px 0;
+}
+
+.aside ul.filters {
+    margin: 0;
     padding: 0;
 }
 
-.content ul.filters li {
+.aside ul.filters li {
     margin: 0 0 3px;
     padding: 5px 8px;
     font-size: 1.3em;
@@ -540,12 +544,20 @@ a.view-article:hover {
     background-color: #fff;
 }
 
-.content ul.filters li.vspace {
+.aside ul.filters li.vspace {
     background-color: transparent;
 }
 
-.content ul.filters li a.active {
+.aside ul.filters li a.active {
     font-weight: bold;
+}
+
+.aside .actions {
+    margin-top: 26px;
+}
+
+.aside .actions .navigation li {
+    border-color: #f5f5f5;
 }
 
 .canvas {
