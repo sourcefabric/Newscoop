@@ -18,6 +18,7 @@ $event_data_sources = array(
             'new' => 'ftp/werbeverlags/',
             'use' => 'ftp/newsimport/events/current/',
             'old' => 'ftp/newsimport/events/processed/',
+            'lock' => 'delivery.lock',
             'ready' => array(
                 'events' => 'events_done.txt',
             ),
@@ -64,6 +65,7 @@ $event_data_sources = array(
             'new' => 'ftp/werbeverlags/',
             'use' => 'ftp/newsimport/movies/current/',
             'old' => 'ftp/newsimport/movies/processed/',
+            'lock' => 'delivery.lock',
             'ready' => array(
                 'programs' => 'wvag_cine_done.txt',
                 'movies' => 'ci_done.txt',

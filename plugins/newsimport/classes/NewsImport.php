@@ -957,6 +957,16 @@ class NewsImport
                 continue;
             }
 
+            if (isset($one_source['source_dirs'])) {
+                if (isset($one_source['source_dirs']['new']) && isset($one_source['source_dirs']['lock'])) {
+                    $remote_lock_path = $one_source['source_dirs']['new'] . $one_source['source_dirs']['lock'];
+                    while (file_exists($remote_lock_file)) {
+                        set_time_limit(0);
+                        sleep(20);
+                    }
+                }
+            }
+
             $ev_limit = 0;
             $ev_skip = 0;
             if (array_key_exists('limit', $p_otherParams)) {
