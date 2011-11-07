@@ -14,7 +14,7 @@ use Symfony\Component\Console\Input\InputArgument,
 /**
  * Article popularity update command
  */
-class UpdateArticlePopularityCommand extends Console\Command\Command
+class UpdateArticlePopularityMetricsCommand extends Console\Command\Command
 {
     /**
      * @see Console\Command\Command
@@ -22,10 +22,10 @@ class UpdateArticlePopularityCommand extends Console\Command\Command
     protected function configure()
     {
         $this
-        ->setName('popularity:update')
-        ->setDescription('Update Article Popularity.')
+        ->setName('popularity:metrics_update')
+        ->setDescription('Update Article Popularity Metrics.')
         ->setHelp(<<<EOT
-Update article popularity.
+Update article popularity metrics.
 EOT
         );
     }
@@ -37,8 +37,7 @@ EOT
     {
         $popularity = $this->getHelper('container')->getService('article.popularity');
         $popularity->updateMetrics();
-        $popularity->updateRanking();
 
-        $output->writeln('Article Popularity updated.');
+        $output->writeln('Article Popularity Metrics updated.');
     }
 }
