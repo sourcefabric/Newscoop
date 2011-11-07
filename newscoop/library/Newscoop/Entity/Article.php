@@ -10,7 +10,7 @@ namespace Newscoop\Entity;
 /**
  * Article entity
  *
- * @Entity(repositoryClass="Newscoop\Entity\Repository\ArticlePopularityRepository")
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\ArticleRepository")
  * @Table(name="Articles")
  */
 class Article
@@ -69,6 +69,12 @@ class Article
      * @var string
      */
     private $name;
+
+    /**
+     * @Column(name="PublishDate")
+     * @var string
+     */
+    private $published;
 
     /**
      * @Column(name="time_updated")
@@ -212,7 +218,6 @@ class Article
         return ($this->language) ? $this->language->getId() : null;
     }
 
-
     /**
      * Get number
      *
@@ -231,6 +236,16 @@ class Article
     public function getTitle()
     {
         return $this->name;
+    }
+
+    /**
+     * Get created date
+     *
+     * @return string
+     */
+    public function getPublishDate()
+    {
+        return $this->published;
     }
 
     /**

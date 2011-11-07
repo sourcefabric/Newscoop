@@ -82,7 +82,7 @@
 		<div class="clear"></div>
 		<div class="text_container left half">
 			{{ $view->translate('You have to be registered at TagesWoche in order to comment on articles and send messages directly to the editorial team. Please login or create a free user account on TagesWoche.') }}
-			<br><a href="{{ $view->baseUrl('/de/pages/about/3919/Dialogkultur.htm') }}">{{ $view->translate('login_link_text') }}</a>
+			<br><a href="http://www.tageswoche.ch/de/pages/about/3919/Dialogkultur.htm">{{ $view->translate('login_link_text') }}</a>
 		</div>
 		<div class="text_container right half">
                         <div class="login_label">{{ $view->translate('E-Mail') }}</div>

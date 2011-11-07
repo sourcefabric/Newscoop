@@ -214,7 +214,7 @@ class DebateVote extends DatabaseObject
             $sqlStart = "AND UNIX_TIMESTAMP(`added`) < $start";
         }
 
-        switch ($tunit)
+        switch ($tunit) // replacements for time unit, interval and start
         {
             case 'daily' :
                 $query = sprintf($query, "YEAR(added)*1000 + DAYOFYEAR(added)", $sqlLimit, $sqlStart);
