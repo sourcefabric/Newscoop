@@ -64,6 +64,12 @@ class XMLExportService
             $item->addChild('RE', $article->getSection()->getName());
             $item->addChild('LD', $data['Flede']);
             $item->addChild('TX', $data['Fbody']);
+            if ($data['Fprint'] == 1) {
+                $item->addChild('NT', 'Printed');
+            }
+            else {
+                $item->addChild('NT', 'Online');
+            }
         }
         return($xml->asXML());
     }
