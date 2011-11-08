@@ -15,7 +15,9 @@ use Doctrine\Common\Collections\ArrayCollection,
 
 /**
  * @Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
- * @Table(name="liveuser_users")
+ * @Table(name="liveuser_users", uniqueConstraints={
+ *      @UniqueConstraint(columns={"Uname"})
+ *      })
  */
 class User implements \Zend_Acl_Role_Interface
 {
@@ -581,7 +583,7 @@ class User implements \Zend_Acl_Role_Interface
             $attributes[$key] = $this->attributes[$key]->getValue();
         }
 
-        return $attributes;
+        return array_filter($attributes);
     }
 
     /**

@@ -28,7 +28,7 @@ class UserServiceTest extends \RepositoryTestCase
 
     public function setUp()
     {
-        parent::setUp('Newscoop\Entity\User', 'Newscoop\Entity\Acl\Role');
+        parent::setUp('Newscoop\Entity\User', 'Newscoop\Entity\Acl\Role', 'Newscoop\Entity\UserAttribute');
 
         $this->auth = $this->getMockBuilder('Zend_Auth')
             ->disableOriginalConstructor()
@@ -41,6 +41,8 @@ class UserServiceTest extends \RepositoryTestCase
         $this->user = new User();
         $this->user->setEmail('test@example.com');
         $this->user->setUsername('test');
+        $this->user->setFirstName('Foo');
+        $this->user->setLastName('Bar');
     }
 
     public function testUser()
@@ -95,9 +97,13 @@ class UserServiceTest extends \RepositoryTestCase
         $this->assertEquals(1, $user->getId());
     }
 
-    public function testDelete()
+    public function testDeleteActive()
     {
         $this->user->setActive(true);
+        $this->em->persist($this->user);
+        $this->em->flush();
+
+        $this->user->addAttribute('tic', 'toc');
         $this->em->persist($this->user);
         $this->em->flush();
 
@@ -110,6 +116,14 @@ class UserServiceTest extends \RepositoryTestCase
         $this->service->delete($this->user);
 
         $this->assertFalse($this->user->isActive());
+        $this->assertFalse($this->user->isPublic());
+        $this->assertFalse($this->user->isAdmin());
+
+        $this->assertEmpty($this->user->getEmail());
+        $this->assertEmpty($this->user->getFirstName());
+        $this->assertEmpty($this->user->getLastName());
+        $this->assertEmpty($this->user->getAttribute('tic'));
+        $this->assertEmpty($this->user->getAttributes());
     }
 
     /**
@@ -127,6 +141,15 @@ class UserServiceTest extends \RepositoryTestCase
             ->will($this->returnValue(1));
 
         $this->service->delete($user);
+    }
+
+    public function testDeletePending()
+    {
+        $user = $this->service->createPending('test@example.com');
+
+        $this->service->delete($user);
+
+        $this->assertEmpty($this->service->find($user->getId()));
     }
 
     public function testGenerateUsername()
@@ -173,6 +196,9 @@ class UserServiceTest extends \RepositoryTestCase
         $this->assertInstanceOf('Newscoop\Entity\User', $user);
         $this->assertTrue($user->isPublic());
         $this->assertGreaterThan(0, $user->getId());
+
+        $next = $this->service->createPending('email@example.com');
+        $this->assertEquals($user->getId(), $next->getId());
     }
 
     public function testSavePending()

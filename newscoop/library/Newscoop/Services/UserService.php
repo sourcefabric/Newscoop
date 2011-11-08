@@ -139,13 +139,7 @@ class UserService implements ObjectRepository
             throw new \InvalidArgumentException("You can't delete yourself");
         }
 
-        if ($user->isPending()) {
-            $this->em->remove($user);
-        } else {
-            $user->setStatus(User::STATUS_DELETED);
-        }
-
-        $this->em->flush();
+        $this->getRepository()->delete($user);
     }
 
     /**
@@ -196,17 +190,26 @@ class UserService implements ObjectRepository
      */
     public function createPending($email, $first_name = null, $last_name = null, $subscriber = null)
     {
-        $user = new User($email);
-        $user->setPublic(true);
+        $users = $this->findBy(array('email' => $email));
+        if (empty($users)) {
+            $user = new User($email);
+            $user->setPublic(true);
+        } else {
+            $user = $users[0];
+        }
+
         if ($first_name) {
             $user->setFirstName($first_name);
         }
+
         if ($last_name) {
             $user->setLastName($last_name);
         }
+
         if ($subscriber) {
             $user->setSubscriber($subscriber);
         }
+
         $this->em->persist($user);
         $this->em->flush();
         return $user;

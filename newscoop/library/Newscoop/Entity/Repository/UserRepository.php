@@ -388,4 +388,43 @@ class UserRepository extends EntityRepository
 
         return (int) $query->getSingleScalarResult();
     }
+
+    /**
+     * Delete user
+     *
+     * @param Newscoop\Entity\User $user
+     * @return void
+     */
+    public function delete(User $user)
+    {
+        if ($user->isPending()) {
+            $this->getEntityManager()->remove($user);
+        } else {
+            $user->setStatus(User::STATUS_DELETED);
+            $user->setEmail(null);
+            $user->setFirstName(null);
+            $user->setLastName(null);
+            $this->removeAttributes($user);
+        }
+
+        $this->getEntityManager()->flush();
+    }
+
+    /**
+     * Remove user attributes
+     *
+     * @param Newscoop\Entity\User $user
+     * @return void
+     */
+    private function removeAttributes(User $user)
+    {
+        $attributes = $this->getEntityManager()->getRepository('Newscoop\Entity\UserAttribute')->findBy(array(
+            'user' => $user->getId(),
+        ));
+
+        foreach ($attributes as $attribute) {
+            $user->addAttribute($attribute->getName(), null);
+            $this->getEntityManager()->remove($attribute);
+        }
+    }
 }
