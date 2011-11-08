@@ -374,6 +374,19 @@ class NewsImport
             $art_author->create();
         }
 
+        $movie_keys_text = array(
+            'imdb', 'suisa', 'country', 'lead', 'link',
+            'director', 'producer', 'cast', 'script', 'camera',
+            'cutter', 'sound', 'score', 'production_design',
+            'costume_design', 'visual_effects',
+        );
+        $movie_keys_numeric = array(
+            'flag', 'year', 'duration', 'oscars',
+        );
+        $movie_keys_date = array(
+            'release_ch_d', 'release_ch_f', 'release_ch_i',
+        );
+
         foreach ($p_events as $one_event) {
             $article = null;
             $article_new = false;
@@ -450,6 +463,27 @@ class NewsImport
             if ($scr_type == $art_type) {
                 $f_movie_key = (isset($one_event['movie_key']) && (!empty($one_event['movie_key']))) ? $one_event['movie_key'] : '';
                 $article_data->setProperty('Fmovie_key', $f_movie_key);
+
+                $f_movie_info = (isset($one_event['movie_info']) && (!empty($one_event['movie_info']))) ? $one_event['movie_info'] : '';
+                if (empty($f_movie_info)) {
+                    $f_movie_info = array();
+                }
+
+                foreach ($movie_keys_text as $one_movie_info_key) {
+                    $f_movie_imdb = (isset($f_movie_info[$one_movie_info_key]) && (!empty($f_movie_info[$one_movie_info_key]))) ? $f_movie_info[$one_movie_info_key] : '';
+                    $article_data->setProperty('Fmovie_' . $one_movie_info_key, $f_movie_imdb);
+                }
+
+                foreach ($movie_keys_numeric as $one_movie_info_key) {
+                    $f_movie_imdb = (isset($f_movie_info[$one_movie_info_key]) && (!empty($f_movie_info[$one_movie_info_key]))) ? $f_movie_info[$one_movie_info_key] : 0;
+                    $article_data->setProperty('Fmovie_' . $one_movie_info_key, $f_movie_imdb);
+                }
+
+                foreach ($movie_keys_date as $one_movie_info_key) {
+                    $f_movie_imdb = (isset($f_movie_info[$one_movie_info_key]) && (!empty($f_movie_info[$one_movie_info_key]))) ? $f_movie_info[$one_movie_info_key] : '0000-00-00';
+                    $article_data->setProperty('Fmovie_' . $one_movie_info_key, $f_movie_imdb);
+                }
+
             }
 
             $article_data->setProperty('Fheadline', $one_event['headline']);
@@ -957,16 +991,6 @@ class NewsImport
                 continue;
             }
 
-            if (isset($one_source['source_dirs'])) {
-                if (isset($one_source['source_dirs']['new']) && isset($one_source['source_dirs']['lock'])) {
-                    $remote_lock_path = $one_source['source_dirs']['new'] . $one_source['source_dirs']['lock'];
-                    while (file_exists($remote_lock_file)) {
-                        set_time_limit(0);
-                        sleep(20);
-                    }
-                }
-            }
-
             $ev_limit = 0;
             $ev_skip = 0;
             if (array_key_exists('limit', $p_otherParams)) {
@@ -982,6 +1006,16 @@ class NewsImport
             }
             if (empty($ev_skip)) {
                 // shoud we process something (new)
+                if (isset($one_source['source_dirs'])) {
+                    if (isset($one_source['source_dirs']['new']) && isset($one_source['source_dirs']['lock'])) {
+                        $remote_lock_path = $one_source['source_dirs']['new'] . $one_source['source_dirs']['lock'];
+                        while (file_exists($remote_lock_file)) {
+                            set_time_limit(0);
+                            sleep(20);
+                        }
+                    }
+                }
+
                 $res = $parser_obj->prepare($categories, $limits, $cancels, $import_env, $region_info, $region_topics_lang);
                 if (!$res) {
                     continue;

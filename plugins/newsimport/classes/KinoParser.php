@@ -639,7 +639,21 @@ class KinoData_Parser_SimpleXML {
         $movies_infos = array();
 
         // movies general info
-        $mov_infos_parts = array('imdb' => 'movimb', 'spec' => 'movspc', 'key' => 'movkey', 'title' => 'movtit', 'directed' => 'movdir', 'url' => 'movlnk', 'trailer' => 'movtra',);
+        $mov_infos_parts = array(
+            'key' => 'movkey', 'imdb' => 'movimb', 'suisa' => 'movsui', 'country' => 'movcou',
+            'title' => 'movtit', 'lead' => 'movlea', 'link' => 'movlnk', 'trailer' => 'movtra',
+        );
+
+        $mov_infos_people = array(
+            'director' => 'movdir', 'producer' => 'movpro', 'cast' => 'movcas', 'script' => 'movscr', 'camera' => 'movcam',
+            'cutter' => 'movcut', 'sound' => 'movsnd', 'score' => 'movsco', 'production_design' => 'movpde',
+            'costume_design' => 'movcde', 'visual_effects' => 'movvfx',
+        );
+
+        $mov_infos_times = array('release_ch_d' => 'movred', 'release_ch_f' => 'movref', 'release_ch_i' => 'movrei',);
+
+        $mov_infos_numbers = array('flag' => 'movspc', 'year' => 'movyea', 'duration' => 'movdur',  'oscars' => 'movosc',);
+
         foreach($movies_infos_files as $one_mov_file) {
             //$one_mov_xml = simplexml_load_file($one_mov_file);
             $one_mov_xml = simplexml_load_string(FileLoad::LoadFix($one_mov_file));
@@ -657,17 +671,50 @@ class KinoData_Parser_SimpleXML {
                 if (empty($one_mov_desc)) {
                     $one_mov_desc = trim('' . $one_movie->movcgd);
                 }
-                if (empty($one_mov_desc)) {
-                    $one_mov_desc = trim('' . $one_movie->movlea);
-                }
+                //if (empty($one_mov_desc)) {
+                //    $one_mov_desc = trim('' . $one_movie->movlea);
+                //}
                 if ((!isset($one_mov_info['desc'])) || (empty($one_mov_info['desc']))) {
                     $one_mov_info['desc'] = $one_mov_desc;
                 }
 
+                //specific text parts
                 foreach ($mov_infos_parts as $one_mov_infos_key => $one_mov_infos_spec) {
                     $one_mov_infos_value = trim('' . $one_movie->$one_mov_infos_spec);
-                    if ((!isset($one_mov_info[$one_mov_infos_key])) || (empty($one_mov_info[$one_mov_infos_key]))) {
-                        $one_mov_info[$one_mov_infos_key] = $one_mov_infos_value;
+                    if ((!isset($one_mov_info[$one_mov_infos_key])) || (empty($one_mov_info[$one_mov_infos_key])) || (!empty($one_mov_infos_value))) {
+                        $one_mov_info[$one_mov_infos_key] = '' . $one_mov_infos_value;
+                    }
+                }
+
+                //specific people parts
+                foreach ($mov_infos_people as $one_mov_infos_key => $one_mov_infos_spec) {
+                    $one_mov_infos_value = trim('' . $one_movie->$one_mov_infos_spec);
+                    if ((!isset($one_mov_info[$one_mov_infos_key])) || (empty($one_mov_info[$one_mov_infos_key])) || (!empty($one_mov_infos_value))) {
+                        $one_mov_info_people = array();
+                        foreach (explode("\n", '' . $one_mov_infos_value) as $one_mov_info_people_line) {
+                            $one_mov_info_people_line = trim($one_mov_info_people_line);
+                            if (empty($one_mov_info_people_line)) {continue;}
+                            $one_mov_info_people[] = $one_mov_info_people_line;
+                        }
+
+                        $one_mov_info[$one_mov_infos_key] = implode(',', $one_mov_info_people);
+
+                    }
+                }
+
+                //specific date-time parts
+                foreach ($mov_infos_times as $one_mov_infos_key => $one_mov_infos_spec) {
+                    $one_mov_infos_value = trim('' . $one_movie->$one_mov_infos_spec);
+                    if ((!isset($one_mov_info[$one_mov_infos_key])) || (empty($one_mov_info[$one_mov_infos_key])) || (!empty($one_mov_infos_value))) {
+                        $one_mov_info[$one_mov_infos_key] = gmdate('Y-m-d', $one_mov_infos_value);
+                    }
+                }
+
+                //specific numeric parts
+                foreach ($mov_infos_numbers as $one_mov_infos_key => $one_mov_infos_spec) {
+                    $one_mov_infos_value = trim('' . $one_movie->$one_mov_infos_spec);
+                    if ((!isset($one_mov_info[$one_mov_infos_key])) || (empty($one_mov_info[$one_mov_infos_key])) || (!empty($one_mov_infos_value))) {
+                        $one_mov_info[$one_mov_infos_key] = 0 + $one_mov_infos_value;
                     }
                 }
 
@@ -1324,6 +1371,7 @@ hh.mm:langs:flags
                 $one_event['location_id'] = $one_screen['kino_id'];
 
                 $one_event['movie_key'] = (isset($one_screen['movie_key']) && (!empty($one_screen['movie_key']))) ? $one_screen['movie_key'] : '';
+                $one_event['movie_info'] = $one_movie;
 
                 $one_event['headline'] = $one_screen['title'];
                 $one_event['organizer'] = $one_screen['kino_name'];
