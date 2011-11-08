@@ -19,7 +19,7 @@ class XMLExportSMDCommand extends Console\Command\Command
     private $articleType = 'news';
     private $directoryName = 'temp';
     private $fileName = '';
-    private $ftp = array('host' => 'anlieferung.smd.ch', 'username' => 'ftp.tagesWoche', 'password' => '32466tagesWoche');
+    private $ftp = array('host' => '', 'username' => '', 'password' => '');
     private $time = 999999999;
     
     /**

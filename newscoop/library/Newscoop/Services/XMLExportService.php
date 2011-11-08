@@ -29,11 +29,6 @@ class XMLExportService
         $this->em = $em;
     }
     
-    public function test()
-    {
-        return('test');
-    }
-    
     public function getArticles($type, $time)
     {
         $articles = $this->em->getRepository('Newscoop\Entity\Article')->findBy(array('type' => $type));
