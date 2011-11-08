@@ -29,11 +29,6 @@ class XMLExportService
         $this->em = $em;
     }
     
-    public function test()
-    {
-        return('test');
-    }
-    
     public function getArticles($type, $time)
     {
         $articles = $this->em->getRepository('Newscoop\Entity\Article')->findBy(array('type' => $type));
@@ -69,6 +64,12 @@ class XMLExportService
             $item->addChild('RE', $article->getSection()->getName());
             $item->addChild('LD', $data['Flede']);
             $item->addChild('TX', $data['Fbody']);
+            if ($data['Fprint'] == 1) {
+                $item->addChild('NT', 'Printed');
+            }
+            else {
+                $item->addChild('NT', 'Online');
+            }
         }
         return($xml->asXML());
     }
@@ -102,13 +103,13 @@ class XMLExportService
             mkdir($directoryName);
         }
         
-        $file = fopen($directoryName.'/'.$fileName.'.xml', 'w');
+        $file = fopen($directoryName.'/'.$fileName.date('Ymd').'.xml', 'w');
         fwrite($file, $contents);
         fclose($file);
         
         $zip = new \ZipArchive();
-        $zip->open($directoryName.'/'.$fileName.'.zip', \ZIPARCHIVE::OVERWRITE);
-        $zip->addFile($directoryName.'/'.$fileName.'.xml', $fileName.'.xml');
+        $zip->open($directoryName.'/'.$fileName.date('Ymd').'.zip', \ZIPARCHIVE::OVERWRITE);
+        $zip->addFile($directoryName.'/'.$fileName.date('Ymd').'.xml', $fileName.date('Ymd').'.xml');
         foreach ($attachments as $attachment) {
             $zip->addFile('../pdf/'.$attachment, 'pdf/'.$attachment);
         }
@@ -123,7 +124,7 @@ class XMLExportService
         ftp_pasv($connection, true);
         
         if ($connection && $login) {
-            $upload = ftp_put($connection, $fileName.'.zip', $directoryName.'/'.$fileName.'.zip', FTP_BINARY);
+            $upload = ftp_put($connection, $fileName.date('Ymd').'.zip', $directoryName.'/'.$fileName.date('Ymd').'.zip', FTP_BINARY);
         }
         
         ftp_close($connection);

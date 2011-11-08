@@ -16,19 +16,13 @@ use Symfony\Component\Console\Input\InputArgument,
  */
 class XMLExportSMDCommand extends Console\Command\Command
 {
-    private $articleType = 'news';
-    private $directoryName = 'temp';
-    private $fileName = '';
-    private $ftp = array('host' => 'anlieferung.smd.ch', 'username' => 'ftp.tagesWoche', 'password' => '32466tagesWoche');
-    private $time = 999999999;
-    
     /**
      * @see Console\Command\Command
      */
     protected function configure()
     {
         $this
-        ->setName('XML:exportSMD')
+        ->setName('XMLExportSMD')
         ->setDescription('Export XML files to SMD.')
         ->setHelp(<<<EOT
 Export XML files to SMD.
@@ -41,22 +35,21 @@ EOT
      */
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-        $this->fileName = 'tageswoche_'.date('Ymd');
-        $this->time = 7*24*60*60;
+        $configuration = parse_ini_file(APPLICATION_PATH . '/configs/XMLExportSMD.ini');
         
         $contents = array();
         $attachments = array();
         
         $xmlExportService = $this->getHelper('container')->getService('XMLExport');
         
-        $articles = $xmlExportService->getArticles($this->articleType, $this->time);
+        $articles = $xmlExportService->getArticles($configuration['articleType'], $configuration['time']);
         
-        $contents = $xmlExportService->getXML($this->articleType, $articles);
+        $contents = $xmlExportService->getXML($configuration['articleType'], $articles);
         $attachments = $xmlExportService->getAttachments($articles);
         
-        $xmlExportService->createArchive($this->directoryName, $this->fileName, $contents, $attachments);
+        $xmlExportService->createArchive($configuration['directoryName'], $configuration['fileName'], $contents, $attachments);
         
-        $xmlExportService->upload($this->directoryName, $this->fileName, $this->ftp['host'], $this->ftp['username'], $this->ftp['password']);
-        $xmlExportService->clean($this->directoryName);
+        $xmlExportService->upload($configuration['directoryName'], $configuration['fileName'], $configuration['ftpHost'], $configuration['ftpUsername'], $configuration['ftpPassword']);
+        $xmlExportService->clean($configuration['directoryName']);
     }
 }
