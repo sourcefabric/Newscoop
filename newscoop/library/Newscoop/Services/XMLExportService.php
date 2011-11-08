@@ -97,13 +97,13 @@ class XMLExportService
             mkdir($directoryName);
         }
         
-        $file = fopen($directoryName.'/'.$fileName.'.xml', 'w');
+        $file = fopen($directoryName.'/'.$fileName.date('Ymd').'.xml', 'w');
         fwrite($file, $contents);
         fclose($file);
         
         $zip = new \ZipArchive();
-        $zip->open($directoryName.'/'.$fileName.'.zip', \ZIPARCHIVE::OVERWRITE);
-        $zip->addFile($directoryName.'/'.$fileName.'.xml', $fileName.'.xml');
+        $zip->open($directoryName.'/'.$fileName.date('Ymd').'.zip', \ZIPARCHIVE::OVERWRITE);
+        $zip->addFile($directoryName.'/'.$fileName.date('Ymd').'.xml', $fileName.date('Ymd').'.xml');
         foreach ($attachments as $attachment) {
             $zip->addFile('../pdf/'.$attachment, 'pdf/'.$attachment);
         }
@@ -118,7 +118,7 @@ class XMLExportService
         ftp_pasv($connection, true);
         
         if ($connection && $login) {
-            $upload = ftp_put($connection, $fileName.'.zip', $directoryName.'/'.$fileName.'.zip', FTP_BINARY);
+            $upload = ftp_put($connection, $fileName.date('Ymd').'.zip', $directoryName.'/'.$fileName.date('Ymd').'.zip', FTP_BINARY);
         }
         
         ftp_close($connection);
