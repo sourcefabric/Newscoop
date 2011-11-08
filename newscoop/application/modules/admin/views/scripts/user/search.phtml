@@ -34,7 +34,7 @@
             } else if ($user->isPending()) {
                 putGS('Pending');
             } else {
-                putGS('Deleted');
+                putGS('Inactive');
             }
         ?></span>
         <span class="created"><?php echo $user->getCreated()->format('d.m.Y'); ?></span>

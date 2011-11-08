@@ -37,6 +37,8 @@ class Admin_UserController extends Zend_Controller_Action
 
     public function indexAction()
     {
+        $this->_helper->contextSwitch->addActionContext($this->_getParam('action'), 'json')->initContext();
+
         $this->view->actions = array(
             array(
                 'label' => getGS('Create new account'),
@@ -49,7 +51,7 @@ class Admin_UserController extends Zend_Controller_Action
 
         $this->view->activeCount = $this->_helper->service('user')->countBy(array('status' => User::STATUS_ACTIVE));
         $this->view->pendingCount = $this->_helper->service('user')->countBy(array('status' => User::STATUS_INACTIVE));
-        $this->view->deletedCount = $this->_helper->service('user')->countBy(array('status' => User::STATUS_DELETED));
+        $this->view->inactiveCount = $this->_helper->service('user')->countBy(array('status' => User::STATUS_DELETED));
     }
 
     public function listAction()
@@ -59,7 +61,7 @@ class Admin_UserController extends Zend_Controller_Action
         $filters = array(
             'active' => User::STATUS_ACTIVE,
             'pending' => User::STATUS_INACTIVE,
-            'deleted' => User::STATUS_DELETED,
+            'inactive' => User::STATUS_DELETED,
         );
 
         $filter = $this->_getParam('filter', 'active');

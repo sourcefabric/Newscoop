@@ -8,8 +8,9 @@
 <div class="aside">
     <ul class="filters">
         <li class="vspace"><?php putGS('Status'); ?></li>
-        <li><a href="#active"><?php putGS('Active'); ?> (<span><?php echo $this->activeCount; ?></span>)</a></li>
-        <li><a href="#pending"><?php putGS('Pending'); ?> (<span><?php echo $this->pendingCount; ?></span>)</a></li>
+        <li><a href="#active"><?php putGS('Active'); ?> (<span id="activeCount"><?php echo $this->activeCount; ?></span>)</a></li>
+        <li><a href="#pending"><?php putGS('Pending'); ?> (<span id="pendingCount"><?php echo $this->pendingCount; ?></span>)</a></li>
+        <li><a href="#inactive"><?php putGS('Inactive'); ?> (<span id="inactiveCount"><?php echo $this->inactiveCount; ?></span>)</a></li>
     </ul>
 
     <?php echo $this->renderActions(); ?>
@@ -76,10 +77,12 @@ $(function() {
             }
 
             flashMessage(<?php echo json_encode(getGS("User was deleted.")); ?>);
-            if ($('.filters a.active').size()) { // edit count
-                var count = parseInt($('.filters a.active span').html());
-                $('.filters a.active span').html(count - 1);
-            }
+            
+            $.getJSON("<?php echo $this->url(array('format' => 'json')); ?>", function(data, textStatus, jqXHR) {
+                $('.filters a span').each(function() {
+                    $(this).html(data[$(this).attr('id')]);
+                });
+            });
 
             initActive();
         });
