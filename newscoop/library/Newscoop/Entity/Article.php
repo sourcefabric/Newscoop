@@ -71,12 +71,6 @@ class Article
     private $name;
 
     /**
-     * @Column(name="PublishDate")
-     * @var string
-     */
-    private $published;
-
-    /**
      * @Column(name="time_updated")
      * @var string
      */
@@ -87,6 +81,18 @@ class Article
      * @var int
      */
     private $comments_enabled;
+    
+    /**
+     * @Column(name="Type")
+     * @var string
+     */
+    private $type;
+    
+    /**
+     * @Column(name="PublishDate")
+     * @var string
+     */
+    private $published;
 
 
     /**
@@ -218,6 +224,7 @@ class Article
         return ($this->language) ? $this->language->getId() : null;
     }
 
+
     /**
      * Get number
      *
@@ -239,16 +246,6 @@ class Article
     }
 
     /**
-     * Get created date
-     *
-     * @return string
-     */
-    public function getPublishDate()
-    {
-        return $this->published;
-    }
-
-    /**
      * Get date
      *
      * @return string
@@ -266,5 +263,25 @@ class Article
     public function commentsEnabled()
     {
         return (int) $this->comments_enabled;
+    }
+    
+    /**
+     * Get type
+     *
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->type;
+    }
+    
+    /**
+     * Get publishDate
+     *
+     * @return string
+     */
+    public function getPublishDate()
+    {
+        return $this->published;
     }
 }
