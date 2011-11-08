@@ -255,8 +255,8 @@ class ArticlePopularityService
      */
     public function fetchGAData($uri)
     {
-        $email = 'analytics@tageswoche.ch';
-        $pass = 'sourcefabric';
+        $email = '';
+        $pass = '';
         $client = Zend_Gdata_ClientLogin::getHttpClient($email, $pass, 'analytics');
         $gdClient = new Zend_Gdata($client);
         $gdClient->useObjectMapping(false);
