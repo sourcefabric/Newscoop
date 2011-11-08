@@ -52,6 +52,11 @@ $(function() {
 
     $('a.send-confirm-email').live('click', function(e) {
         e.preventDefault();
+
+        if (!confirm(<?php echo json_encode(getGS('Do you really want to send confirmation email?')); ?>)) {
+            return;
+        }
+
         $.getJSON(this.href, {'format': 'json'}, function(data, textStatus, jqXHR) {
             flashMessage(<?php echo json_encode(getGS("New confirmation email was sent to user.")); ?>);
         });
@@ -59,6 +64,11 @@ $(function() {
 
     $('a.delete').live('click', function(e) {
         e.preventDefault();
+
+        if (!confirm(<?php echo json_encode(getGS('Do you really want to delete user?')); ?>)) {
+            return;
+        }
+
         $.getJSON(this.href, {'format': 'json'}, function(data, textStatus, jqXHR) {
             if (data.message) {
                 flashMessage(data.message, 'error');
