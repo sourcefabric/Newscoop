@@ -147,9 +147,16 @@ class Admin_UserController extends Zend_Controller_Action
                 $this->_helper->redirector('edit', 'user', 'admin', array(
                     'user' => $user->getId(),
                 ));
-            } catch (\Exception $e) {
-                var_dump($e);
-                exit;
+            } catch (\InvalidArgumentException $e) {
+                switch ($e->getMessage()) {
+                    case 'username_conflict':
+                        $form->username->addError(getGS('Username is used already'));
+                        break;
+
+                    case 'email_conflict':
+                        $form->email->addError(getGS('Email is used already'));
+                        break;
+                }
             }
         }
 
