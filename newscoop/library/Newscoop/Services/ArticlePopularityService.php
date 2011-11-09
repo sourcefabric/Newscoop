@@ -135,8 +135,8 @@ class ArticlePopularityService
     private function initGASession()
     {
         if (is_null($this->gd)) {
-            $email = 'analytics@tageswoche.ch';
-            $pass = 'sourcefabric';
+            $email = '';
+            $pass = '';
             $client = Zend_Gdata_ClientLogin::getHttpClient($email, $pass, 'analytics');
             $this->gd = new Zend_Gdata($client);
             $this->gd->useObjectMapping(false);
