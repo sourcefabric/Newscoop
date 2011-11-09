@@ -155,6 +155,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $container->register('user_subscription', 'Newscoop\Services\UserSubscriptionService')
             ->addArgument(new sfServiceReference('em'));
+        
+        $container->register('XMLExport', 'Newscoop\Services\XMLExportService')
+            ->addArgument(new sfServiceReference('em'));
 
         Zend_Registry::set('container', $container);
         return $container;

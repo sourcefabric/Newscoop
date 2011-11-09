@@ -81,5 +81,5 @@ camp_html_add_msg(getGS("Image '$1' updated.", $imageObj->getDescription()), "ok
 ?>
 
 <script type="text/javascript">
-	window.location.href='<?php echo "/$ADMIN/articles/edit.php?f_language_id=$f_language_id&f_article_number=$f_article_number"; ?>'
+	window.location.href='<?php echo "/$ADMIN/articles/edit.php?f_language_id=$f_language_id&f_article_number=$f_article_number&f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_language_selected=$f_language_selected"; ?>'
 </script>

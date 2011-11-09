@@ -24,6 +24,7 @@ class UserTopicServiceTest extends \RepositoryTestCase
         parent::setUp('Newscoop\Entity\User', 'Newscoop\Entity\Topic', 'Newscoop\Entity\UserTopic', 'Newscoop\Entity\Acl\Role');
 
         $this->service = new UserTopicService($this->em);
+
         $this->user = new User('name');
         $this->em->persist($this->user);
         $this->em->flush();
@@ -69,6 +70,27 @@ class UserTopicServiceTest extends \RepositoryTestCase
         $topics = $this->service->getTopics($this->user);
         $this->assertEquals(1, count($topics));
         $this->assertEquals('3', current($topics)->getName());
+    }
+
+    public function testUpdateTopicsIfDeleted()
+    {
+        $topic = new Topic(1, 1, 'deleted');
+        $this->em->persist($topic);
+        $this->em->flush();
+
+        $this->service->followTopic($this->user, $topic);
+
+        $this->em->remove($topic);
+        $this->em->persist(new Topic(2, 2, 'next'));
+        $this->em->flush();
+        $this->em->clear();
+
+        $this->service->updateTopics($this->user, array(
+            2 => "false",
+        ));
+
+        $topics = $this->service->getTopics($this->user);
+        $this->assertEquals(0, count($topics));
     }
 
     public function testGetTopicsDeleted()

@@ -145,6 +145,8 @@ class ArticlePopularityService
             $this->getRepository()->save($entry, $data);
         } catch (\InvalidArgumentException $e) {
         }
+
+        print("processed: $url\n");
     }
 
     /**
@@ -159,15 +161,21 @@ class ArticlePopularityService
             $entries = array();
         }
 
+        $weekBefore = date('Y-m-d', strtotime('-7 days'));
         foreach($entries as $entry) {
+            $article = $this->getRepository()->getArticle($entry);
+            if ($article->getPublishDate() < $weekBefore) {
+                continue;
+            }
+
             $response = $this->ping($entry->getURL());
             if (!$response->isSuccessful()) {
 		continue;
             }
 
             $this->update($entry);
+            $this->em->flush();
         }
-        $this->em->flush();
     }
 
     /**
@@ -247,8 +255,8 @@ class ArticlePopularityService
      */
     public function fetchGAData($uri)
     {
-        $email = 'analytics@tageswoche.ch';
-        $pass = 'sourcefabric';
+        $email = '';
+        $pass = '';
         $client = Zend_Gdata_ClientLogin::getHttpClient($email, $pass, 'analytics');
         $gdClient = new Zend_Gdata($client);
         $gdClient->useObjectMapping(false);
@@ -262,7 +270,7 @@ class ArticlePopularityService
                 'ga:timeOnPage',
                 'ga:avgTimeOnPage'
             );
-            $reportURL = 'https://www.google.com/analytics/feeds/data?ids=ga:48980166&dimensions=' . @implode(',', $dimensions) . '&metrics=' . @implode(',', $metrics) . '&start-date=2011-10-28&end-date=2011-11-02&filters=ga:pagePath%3D%3D' . urlencode($uri);
+            $reportURL = 'https://www.google.com/analytics/feeds/data?ids=ga:48980166&dimensions=' . @implode(',', $dimensions) . '&metrics=' . @implode(',', $metrics) . '&start-date=2011-10-28&end-date=2011-11-07&filters=ga:pagePath%3D%3D' . urlencode($uri);
             $xml = $gdClient->getFeed($reportURL);
 
             $dom = new DOMDocument();
