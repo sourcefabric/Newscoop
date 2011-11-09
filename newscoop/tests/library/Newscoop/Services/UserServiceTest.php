@@ -113,6 +113,7 @@ class UserServiceTest extends \RepositoryTestCase
             ->method('getIdentity')
             ->will($this->returnValue(3));
 
+        sleep(2); // for testing difference in create/update time
         $this->service->delete($this->user);
 
         $this->assertFalse($this->user->isActive());
@@ -124,6 +125,7 @@ class UserServiceTest extends \RepositoryTestCase
         $this->assertEmpty($this->user->getLastName());
         $this->assertEmpty($this->user->getAttribute('tic'));
         $this->assertEmpty($this->user->getAttributes());
+        $this->assertGreaterThan($this->user->getCreated()->getTimestamp(), $this->user->getUpdated()->getTimestamp());
     }
 
     /**
