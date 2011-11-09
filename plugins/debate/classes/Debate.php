@@ -945,10 +945,10 @@ class Debate extends DatabaseObject
      */
     public function isVotable()
     {
-        if (strtotime($this->m_data['date_begin']) > strtotime(date('Y-m-d'))) {
+        if (strtotime($this->m_data['date_begin']) > time()) {
             return false;
         }
-        if (strtotime($this->m_data['date_end']) < strtotime(date('Y-m-d'))) {
+        if (strtotime($this->m_data['date_end']) < time()) {
             return false;
         }
 
