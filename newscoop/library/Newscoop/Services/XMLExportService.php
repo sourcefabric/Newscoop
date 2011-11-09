@@ -42,7 +42,7 @@ class XMLExportService
         return($articles);
     }
     
-    public function getXML($type, $articles)
+    public function getXML($type, $prefix, $articles)
     {
         $xml = new \SimpleXMLElement('<DDD></DDD>');
         
@@ -56,7 +56,7 @@ class XMLExportService
             $attachments = \ArticleAttachment::GetAttachmentsByArticleNumber($article->getNumber());
             foreach ($attachments as $attachment) {
                 $temp = explode('.', $attachment->getFileName());
-                if (substr($attachment->getFileName(), 0, 6) == 'pdesk_' && $temp[count($temp) - 1] == 'pdf') {
+                if (substr($attachment->getFileName(), 0, strlen($prefix)) == $prefix && $temp[count($temp) - 1] == 'pdf') {
                     $item->addChild('ME', 'pdf/'.$attachment->getFileName());
                 }
             }
