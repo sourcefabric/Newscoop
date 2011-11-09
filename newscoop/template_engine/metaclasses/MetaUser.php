@@ -48,6 +48,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         $this->m_customProperties['defined'] = 'isDefined';
         $this->m_customProperties['posts_count'] = 'getPostsCount';
         $this->m_customProperties['is_author'] = 'isAuthor';
+        $this->m_customProperties['is_active'] = 'isActive';
 
         $this->m_skipFilter[] = "name";
     }
@@ -299,5 +300,15 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     public function isAuthor()
     {
         return $this->m_dbObject->getAuthorId() && $this->isAdmin();
+    }
+
+    /**
+     * Test if user is active
+     *
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->m_dbObject->isActive();
     }
 }
