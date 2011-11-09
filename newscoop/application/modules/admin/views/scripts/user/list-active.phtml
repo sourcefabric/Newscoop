@@ -16,7 +16,7 @@
             'user' => $user->getId(),
         )); ?>" class="edit"><?php echo $user->getUsername(); ?></a>
         <a href="mailto:<?php echo $user->getEmail(); ?>" class="mailto"><?php echo $user->getEmail(); ?></a>
-        <span class="created"><?php echo $user->getCreated()->format('d.m.Y'); ?></span>
+        <span class="created"><?php echo $user->getCreated()->format('d.m.Y H:i'); ?></span>
     </li>
     <?php } ?>
 </ul>
