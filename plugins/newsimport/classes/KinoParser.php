@@ -1333,9 +1333,16 @@ class KinoData_Parser_SimpleXML {
             }
 
             $one_event = array();
-            $one_event['date'] = $set_date;
+
+            //$one_event['date'] = $set_date;
+            //$one_date_max = '0000-00-00';
+            $one_date_max = $set_date;
 
             foreach ($one_screen['dates'] as $one_date => $one_times) {
+                if ($one_date_max < $one_date) {
+                    $one_date_max = $one_date;
+                }
+
                 if (!isset($set_date_times[$one_date])) {
                     $set_date_times[$one_date] = array(); // this shall not occur
                 }
@@ -1347,6 +1354,7 @@ class KinoData_Parser_SimpleXML {
             }
             ksort($set_date_times);
 
+            $one_event['date'] = $one_date_max;
             $one_event['date_time_tree'] = json_encode($set_date_times);
             $one_event['date_time_text'] = $this->formatDateText($set_date_times);
 
