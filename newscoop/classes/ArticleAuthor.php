@@ -31,7 +31,8 @@ class ArticleAuthor extends DatabaseObject
     public $m_keyColumnNames = array('fk_article_number',
                                      'fk_language_id',
                                      'fk_author_id',
-                                     'fk_type_id');
+                                     'fk_type_id',
+                                     'order');
 
     /**
      * @var array
@@ -39,7 +40,8 @@ class ArticleAuthor extends DatabaseObject
     public $m_columnNames = array('fk_article_number',
                                   'fk_language_id',
                                   'fk_author_id',
-                                  'fk_type_id');
+                                  'fk_type_id',
+                                  'order');
 
     /**
      * @var AuthorType
@@ -55,7 +57,7 @@ class ArticleAuthor extends DatabaseObject
      * @param int $p_authorId
      * @param int $p_typeId
      */
-    public function __construct($p_articleNumber = null, $p_languageId = null, $p_authorId = null, $p_typeId = null)
+    public function __construct($p_articleNumber = null, $p_languageId = null, $p_authorId = null, $p_typeId = null, $p_order)
     {
         if (is_numeric($p_articleNumber)) {
             $this->m_data['fk_article_number'] = $p_articleNumber;
@@ -68,6 +70,9 @@ class ArticleAuthor extends DatabaseObject
         }
         if (is_numeric($p_typeId)) {
             $this->m_data['fk_type_id'] = $p_typeId;
+        }
+        if (is_numeric($p_order)) {
+            $this->m_data['order'] = $p_order;
         }
         if (!is_null($p_articleNumber) && !is_null($p_languageId)
                 && !is_null($p_authorId) && !is_null($p_typeId)) {
@@ -164,8 +169,8 @@ class ArticleAuthor extends DatabaseObject
                      JOIN ' . AuthorType::TABLE . ' AS at
                      WHERE aa.fk_article_number = '. (int) $p_articleNumber . '
                      AND (aa.fk_language_id IS NULL OR ' . $langConstraint .')
-                     AND aa.fk_type_id = at.id';
-                     // ORDER BY order_no';
+                     AND aa.fk_type_id = at.id
+                     ORDER BY `order`';
         $rows = $g_ado_db->GetAll($queryStr);
         $returnArray = array();
         if (is_array($rows)) {
@@ -299,10 +304,10 @@ class ArticleAuthor extends DatabaseObject
                                    $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
     {
         global $g_ado_db;
-
+        
         if (!$p_skipCache && CampCache::IsEnabled()) {
         	$paramsArray['parameters'] = serialize($p_parameters);
-        	$paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+        	$paramsArray['order'] = (is_null($p_order)) ? 'order' : $p_order;
         	$paramsArray['start'] = $p_start;
         	$paramsArray['limit'] = $p_limit;
         	$cacheListObj = new CampCacheList($paramsArray, __METHOD__);
@@ -431,13 +436,16 @@ class ArticleAuthor extends DatabaseObject
     private static function ProcessListOrder(array $p_order)
     {
         $order = array();
+        if (empty($p_order)) {
+            $p_order = array(array('field' => 'default', 'dir' => 'asc'));
+        }
         foreach ($p_order as $orderDesc) {
             $dbField = null;
             $field = $orderDesc['field'];
             $direction = $orderDesc['dir'];
             switch (strtolower($field)) {
             case 'default':
-                $dbField = 'first_name';
+                $dbField = '`order`';
                 break;
             case 'byfirstname':
                 $dbField = 'first_name';
