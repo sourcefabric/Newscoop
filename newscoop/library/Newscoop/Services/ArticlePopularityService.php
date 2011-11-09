@@ -211,14 +211,14 @@ class ArticlePopularityService
     public function computeRanking(ArticlePopularity $entity, array $maxs)
     {
         $values = array();
-        foreach($this->criteria as $criterion) {
+        foreach($this->criteria as $criterion => $data) {
             if (isset($maxs[$criterion]) && $maxs[$criterion] <= 0) {
                 $values[$criterion] = 0;
                 continue;
             }
 
-            $getter = $criterion['getter'];
-            $values[$criterion] = (($entity->$getter() / $maxs[$criterion]) * 100) * $criterion['factor'];
+            $getter = $data['getter'];
+            $values[$criterion] = (($entity->$getter() / $maxs[$criterion]) * 100) * $data['factor'];
         }
 
         $popularity = array_sum($values);
