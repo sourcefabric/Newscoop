@@ -1293,6 +1293,7 @@ class KinoData_Parser_SimpleXML {
             $one_mov_images = array();
 
             $one_mov_trailers = array();
+            $trailer_official = '';
 
             if (!empty($one_movie)) {
                 if (isset($one_movie['genres'])) {
@@ -1317,13 +1318,14 @@ class KinoData_Parser_SimpleXML {
                     }
                 }
 
-                if ( isset($one_movie['trailer']) && (!empty($one_movie['trailer'])) ) {
-                    $one_mov_trailers[] = $one_movie['trailer'];
-                }
                 if ( isset($one_movie['link_trailer']) && (!empty($one_movie['link_trailer'])) ) {
                     if ( isset($one_movie['link_trailer']['url']) && (!empty($one_movie['link_trailer']['url'])) ) {
                         $one_mov_trailers[] = $one_movie['link_trailer']['url'];
+                        $trailer_official = $one_movie['link_trailer']['url'];
                     }
+                }
+                if ( isset($one_movie['trailer']) && (!empty($one_movie['trailer'])) ) {
+                    $one_mov_trailers[] = $one_movie['trailer'];
                 }
             }
 
@@ -1415,6 +1417,7 @@ hh.mm:langs:flags
                 foreach ($one_mov_trailers as $cur_trailer) {
                     $one_event['other'][] = $this->makeLink($cur_trailer, 'Trailer');
                 }
+                $one_event['movie_trailer'] = $trailer_official;
 
                 $one_event['genre'] = $one_mov_genre;
                 $one_event['languages'] = '';
