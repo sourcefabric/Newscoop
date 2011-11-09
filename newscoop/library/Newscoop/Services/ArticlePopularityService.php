@@ -29,15 +29,18 @@ class ArticlePopularityService
 
     /** @var array */
     private $criteria = array(
-        'unique_views' => 'getUniqueViews',
-        'avg_time_on_page' => 'getAvgTimeOnPage',
-        'tweets' => 'getTweets',
-        'likes' => 'getLikes',
-        'comments' => 'getComments',
+        'unique_views' => array('getter' => 'getUniqueViews', 'factor' => 1.5),
+        'avg_time_on_page' => array('getter' => 'getAvgTimeOnPage', 'factor' => 0.5),
+        'tweets' => array('getter' => 'getTweets', 'factor' => 1.0),
+        'likes' => array('getter' => 'getLikes', 'factor' => 1.0),
+        'comments' => array('getter' => 'getComments', 'factor' => 1.0),
     );
 
     /** @var string */
     private $uri;
+
+    /** @var Zend_Gdata */
+    private $gd;
 
     /** @var Newscoop\Entity\Article */
     private $article;
@@ -53,6 +56,7 @@ class ArticlePopularityService
     public function __construct(EntityManager $em)
     {
         $this->em = $em;
+        $this->gd = null;
     }
 
     /**
@@ -124,6 +128,24 @@ class ArticlePopularityService
     }
 
     /**
+     * Init session in Analytics
+     *
+     * @return Zend_Gdata
+     */
+    private function initGASession()
+    {
+        if (is_null($this->gd)) {
+            $email = '';
+            $pass = '';
+            $client = Zend_Gdata_ClientLogin::getHttpClient($email, $pass, 'analytics');
+            $this->gd = new Zend_Gdata($client);
+            $this->gd->useObjectMapping(false);
+        }
+
+        return $this->gd;
+    }
+
+    /**
      * Update an entry
      *
      * @param Newscoop\Entity\ArticlePopularity $entry
@@ -132,7 +154,9 @@ class ArticlePopularityService
     public function update(ArticlePopularity $entry)
     {
         $url = $entry->getURL();
-        $ga = $this->fetchGAData($url);
+
+        $gdClient = $this->initGASession();
+        $ga = $this->fetchGAData($gdClient, $url);
         $data = array(
             'unique_views' => $ga['ga:uniquePageviews'],
             'avg_time_on_page' => $ga['ga:avgTimeOnPage'],
@@ -165,11 +189,12 @@ class ArticlePopularityService
         foreach($entries as $entry) {
             $article = $this->getRepository()->getArticle($entry);
             if ($article->getPublishDate() < $weekBefore) {
+                print "not processed\n";
                 continue;
             }
 
             $response = $this->ping($entry->getURL());
-            if (!$response->isSuccessful()) {
+            if (!$response || !$response->isSuccessful()) {
 		continue;
             }
 
@@ -186,13 +211,14 @@ class ArticlePopularityService
     public function computeRanking(ArticlePopularity $entity, array $maxs)
     {
         $values = array();
-        foreach($this->criteria as $criterion => $getter) {
+        foreach($this->criteria as $criterion) {
             if (isset($maxs[$criterion]) && $maxs[$criterion] <= 0) {
                 $values[$criterion] = 0;
                 continue;
             }
 
-            $values[$criterion] = ($entity->$getter() / $maxs[$criterion]) * 100;
+            $getter = $criterion['getter'];
+            $values[$criterion] = (($entity->$getter() / $maxs[$criterion]) * 100) * $criterion['factor'];
         }
 
         $popularity = array_sum($values);
@@ -253,30 +279,25 @@ class ArticlePopularityService
      * @param string $uri 
      * @return array 
      */
-    public function fetchGAData($uri)
+    public function fetchGAData($gdClient, $uri)
     {
-        $email = '';
-        $pass = '';
-        $client = Zend_Gdata_ClientLogin::getHttpClient($email, $pass, 'analytics');
-        $gdClient = new Zend_Gdata($client);
-        $gdClient->useObjectMapping(false);
+        $data = array();
+        if (is_null($gdClient)) {
+            return $data;
+        }
 
         try {
             $dimensions = array('ga:pagePath');
             $metrics = array(
                 'ga:uniquePageviews',
-                'ga:bounces',
-                'ga:exits',
-                'ga:timeOnPage',
                 'ga:avgTimeOnPage'
             );
-            $reportURL = 'https://www.google.com/analytics/feeds/data?ids=ga:48980166&dimensions=' . @implode(',', $dimensions) . '&metrics=' . @implode(',', $metrics) . '&start-date=2011-10-28&end-date=2011-11-07&filters=ga:pagePath%3D%3D' . urlencode($uri);
-            $xml = $gdClient->getFeed($reportURL);
+            $reportURL = 'https://www.google.com/analytics/feeds/data?ids=ga:48980166&dimensions=' . @implode(',', $dimensions) . '&metrics=' . @implode(',', $metrics) . '&start-date=2011-11-02&end-date=2011-11-09&filters=ga:pagePath%3D%3D' . urlencode($uri);
 
+            $xml = $gdClient->getFeed($reportURL);
             $dom = new DOMDocument();
             $dom->loadXML($xml); 
             $entries = $dom->getElementsByTagName('entry');
-            $data = array();
             foreach($entries as $entry) {
                 foreach($entry->getElementsByTagName('metric') as $metric) {
                     $data[$metric->getAttribute('name')] = $metric->getAttribute('value');
@@ -297,7 +318,14 @@ class ArticlePopularityService
      */
     public function fetchTweets($uri)
     {
-        $tdata = file_get_contents(self::TWITTER_QUERY_URL . self::SITE_URL . $uri);
+        $page = self::SITE_URL . $uri;
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, self::TWITTER_QUERY_URL . $page);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $tdata = curl_exec($ch);
+        curl_close($ch);
+
         $tdata = json_decode($tdata);
         return (int) $tdata->count;
     }
@@ -311,7 +339,13 @@ class ArticlePopularityService
     public function fetchLikes($uri)
     {
         $page = self::SITE_URL . $uri;
-        $fdata = file_get_contents(self::FACEBOOK_QUERY_URL . $page);
+
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, self::FACEBOOK_QUERY_URL . $page);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+        $fdata = curl_exec($ch);
+        curl_close($ch);
+
         $fdata = json_decode($fdata);
         return isset($fdata->$page->shares) ? (int) $fdata->$page->shares : 0;
     }
@@ -344,8 +378,15 @@ class ArticlePopularityService
     public function ping($uri)
     {
         $uri = self::SITE_URL . $uri;
-	$client = new \Zend_Http_Client($uri);
-        return $client->request();
+        try {
+            $client = new \Zend_Http_Client($uri);
+            $response = $client->request();
+        } catch(\Zend_Exception $e) {
+            echo 'Caught exception: ' . get_class($e) . "\n"; echo 'Message: ' . $e->getMessage() . "\n";
+            return false;
+        }
+
+        return $response;
     }
 
     /**
