@@ -177,6 +177,10 @@ contextListFilters = {}
 </fieldset>
 
 </dd>
+<dd>
+    <input type="checkbox" name="show_newswires"></input>
+    <label for="show_newswires"><?php putGS('Display Newswires') ?></label>
+</dd>
 </dl>
 </div>
 <!-- /.smartlist-filters -->
@@ -312,7 +316,17 @@ $(document).ready(function()
         var smartlistId = smartlist.attr('id').split('-')[1];
         var name = $(this).attr('name');
         var value = $(this).val();
-        filters[smartlistId][name] = value;
+
+        if ($(this).attr('type') === "checkbox" && $(this).is(':checked')) {
+        	filters[smartlistId][name] = true;
+        }
+        else if ($(this).attr('type') === "checkbox" && !$(this).is(':checked')) {
+        	filters[smartlistId][name] = false;
+        }
+        else {
+        	filters[smartlistId][name] = value;
+        }
+              
         if($(this).attr('id') == 'filter_name' || $(this).attr('id') == 'publication_filter' ) {
     		filters[smartlistId]['issue'] = 0;
     		filters[smartlistId]['section'] = 0;
