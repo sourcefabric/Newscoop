@@ -119,7 +119,10 @@ class UserTopicService
             });
 
             if ($status === 'true' && !$matching) {
-                $this->em->persist(new UserTopic($user, $this->findTopic($topicId)));
+                $topic = $this->findTopic($topicId);
+                if ($topic) {
+                    $this->em->persist(new UserTopic($user, $this->findTopic($topicId)));
+                }
             } elseif ($status === 'false' && $matching) {
                 $this->em->remove($matching[0]);
             }
