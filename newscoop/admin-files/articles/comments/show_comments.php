@@ -25,34 +25,10 @@ foreach ($hiddens as $name) {
 }
 /** @todo Replace this basic template with a doT template from jquery*/
 ?>
-<fieldset id="comment-prototype" class="plain comments-block" style="display:none">
+<fieldset id="comment-prototype" class="plain comments-block" style="display:none">----
     <input type="hidden" name="comment_id" value="${id}">
     <?php if ($inEditMode): ?>
-    <ul class="action-list clearfix">
-      <li>
-        <a class="ui-state-default icon-button right-floated" href="javascript:;"><span class="ui-icon ui-icon-disk"></span><?php putGS('Save'); ?></a>
-      </li>
-      
-      <li>
-        <input type="radio" name="comment_action_${id}" value="deleted" class="input_radio" id="deleted_${id}" ${deleted_checked}/>
-        <label class="inline-style left-floated" for="deleted_${id}"><?php putGS('Delete'); ?></label>
-      </li>
-      
-      <li>
-        <input type="radio" name="comment_action_${id}" value="hidden" class="input_radio" id="hidden_${id}" ${hidden_checked}/>
-        <label class="inline-style left-floated" for="hidden_${id}"><?php putGS('Hidden'); ?></label>
-      </li>
-
-      <li>
-      <input type="radio" name="comment_action_${id}" value="approved" class="input_radio" id="approved_${id}" ${approved_checked}/>
-        <label class="inline-style left-floated" for="approved_${id}"><?php putGS('Approved'); ?></label>
-      </li>
-
-      <li>
-      <input type="radio" name="comment_action_${id}" value="pending" class="input_radio" id="inbox_${id}" ${pending_checked}/>
-        <label class="inline-style left-floated" for="inbox_${id}"><?php putGS('New'); ?></label>
-      </li>
-    </ul>
+    
     <?php endif; //inEditMode?>
     <div class="frame clearfix">
       <dl class="inline-list" id="comment-${id}">
@@ -92,6 +68,31 @@ foreach ($hiddens as $name) {
                 'controller' => 'comment',
                 'action' => 'set-recommended',
             )); ?>/comment/${id}/recommended/${recommended_toggle}" class="ui-state-default text-button clear-margin comment-recommend status-${recommended_toggle}"><?php putGS('Recommend'); ?></a>
+            <ul class="action-list clearfix">
+              <li>
+                <a class="ui-state-default icon-button right-floated" href="javascript:;"><span class="ui-icon ui-icon-disk"></span><?php putGS('Save'); ?></a>
+              </li>
+              
+              <li>
+                <input type="radio" name="comment_action_${id}" value="deleted" class="input_radio" id="deleted_${id}" ${deleted_checked}/>
+                <label class="inline-style left-floated" for="deleted_${id}"><?php putGS('Delete'); ?></label>
+              </li>
+              
+              <li>
+                <input type="radio" name="comment_action_${id}" value="hidden" class="input_radio" id="hidden_${id}" ${hidden_checked}/>
+                <label class="inline-style left-floated" for="hidden_${id}"><?php putGS('Hidden'); ?></label>
+              </li>
+
+              <li>
+              <input type="radio" name="comment_action_${id}" value="approved" class="input_radio" id="approved_${id}" ${approved_checked}/>
+                <label class="inline-style left-floated" for="approved_${id}"><?php putGS('Approved'); ?></label>
+              </li>
+
+              <li>
+              <input type="radio" name="comment_action_${id}" value="pending" class="input_radio" id="inbox_${id}" ${pending_checked}/>
+                <label class="inline-style left-floated" for="inbox_${id}"><?php putGS('New'); ?></label>
+              </li>
+            </ul>
         </dd>
         <?php endif; //inEditMode?>
       </dl>
