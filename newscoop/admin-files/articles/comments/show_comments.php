@@ -25,7 +25,7 @@ foreach ($hiddens as $name) {
 }
 /** @todo Replace this basic template with a doT template from jquery*/
 ?>
-<fieldset id="comment-prototype" class="plain comments-block" style="display:none">----
+<fieldset id="comment-prototype" class="plain comments-block" style="display:none">
     <input type="hidden" name="comment_id" value="${id}">
     <?php if ($inEditMode): ?>
     
