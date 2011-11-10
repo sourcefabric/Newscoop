@@ -83,9 +83,6 @@ if (empty($_REQUEST['showtype']) || $_REQUEST['showtype'] != 'newswires') { // l
     $articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), 'screening');
 }
 
-// filter out PrintDesk articles
-$articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), 'printdesk');
-
 // search
 if (isset($_REQUEST['sSearch']) && strlen($_REQUEST['sSearch']) > 0) {
     $search_phrase = $_REQUEST['sSearch'];
