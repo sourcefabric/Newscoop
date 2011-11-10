@@ -16,7 +16,7 @@ class PublisherService
 {
     const DATETIME_FORMAT = 'Y-m-d H:i:s';
 
-    const PROGRAM_WEEKLY = 'Wochenprogramm';
+    const PROGRAM_TITLE = 'sda - WOCHENPROGRAMM';
 
     /** @var array */
     private $config;
@@ -40,7 +40,7 @@ class PublisherService
     {
         $article = new \Article($this->getLanguage($entry->getLanguage()));
         $article->create($this->config['article_type'], $entry->getTitle(), $this->getPublication(), $this->getIssue(), $this->getSection($entry));
-        $article->setWorkflowStatus($entry->getCatchWord() == self::PROGRAM_WEEKLY ? 'N' : $status);
+        $article->setWorkflowStatus(strpos($entry->getTitle(), self::PROGRAM_TITLE) === 0 ? 'N' : $status);
         $article->setKeywords($entry->getCatchWord());
         $article->setCommentsEnabled(TRUE);
         $this->setArticleData($article, $entry);
