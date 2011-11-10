@@ -35,17 +35,7 @@ EOT
      */
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-        //$configuration = parse_ini_file(APPLICATION_PATH . '/configs/XMLExportSMD.ini');
-        $configuration = array(
-            'articleType' => 'news',
-            'directoryName' => 'temp',
-            'attachmentPrefix' => 'pdesk_',
-            'time' => 99999999,
-            'fileName' => 'tw_',
-            'ftpHost' => '',
-            'ftpUsername' => '',
-            'ftpPassword' => ''
-        );
+        $configuration = parse_ini_file(APPLICATION_PATH . '/configs/XMLExportSMD.ini');
         
         $contents = array();
         $attachments = array();
