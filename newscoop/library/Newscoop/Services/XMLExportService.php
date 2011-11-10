@@ -96,18 +96,22 @@ class XMLExportService
         return($sql2);
     }
     
-    public function getAttachments($articles)
+    public function getAttachments($prefix, $articles)
     {
         $attachments = array();
         foreach ($articles as $article) {
             $temp_attachments = \ArticleAttachment::GetAttachmentsByArticleNumber($article->getNumber());
             foreach ($temp_attachments as $attachment) {
                 $temp = explode('.', $attachment->getFileName());
-                if (substr($attachment->getFileName(), 0, 6) == 'pdesk_' && $temp[count($temp) - 1] == 'pdf') {
-                    $attachments[] = $attachment->getFileName();
+                if (substr($attachment->getFileName(), 0, strlen($prefix)) == $prefix && $temp[count($temp) - 1] == 'pdf') {
+                    $attachments[] = array(
+                        'filename' => $attachment->getFileName(),
+                        'location' => $attachment->getStorageLocation(),
+                    );
                 }
             }
         }
+
         return($attachments);
     }
     
@@ -123,10 +127,16 @@ class XMLExportService
         
         $zip = new \ZipArchive();
         $zip->open($directoryName.'/'.$fileName.date('Ymd').'.zip', \ZIPARCHIVE::OVERWRITE);
-        $zip->addFile($directoryName.'/'.$fileName.date('Ymd').'.xml', $fileName.date('Ymd').'.xml');
-        foreach ($attachments as $attachment) {
-            $zip->addFile('../pdf/'.$attachment, 'pdf/'.$attachment);
+        if (file_exists($directoryName.'/'.$fileName.date('Ymd').'.xml')) {
+            $zip->addFile($directoryName.'/'.$fileName.date('Ymd').'.xml', $fileName.date('Ymd').'.xml');
         }
+
+        foreach ($attachments as $attachment) {
+            if (file_exists($attachment['location'])) {
+                $zip->addFile($attachment['location'], 'pdf/'.$attachment['filename']);
+            }
+        }
+
         $zip->close();
     }
     

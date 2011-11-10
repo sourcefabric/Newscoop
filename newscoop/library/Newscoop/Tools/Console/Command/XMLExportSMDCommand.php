@@ -35,7 +35,17 @@ EOT
      */
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-        $configuration = parse_ini_file(APPLICATION_PATH . '/configs/XMLExportSMD.ini');
+        //$configuration = parse_ini_file(APPLICATION_PATH . '/configs/XMLExportSMD.ini');
+        $configuration = array(
+            'articleType' => 'news',
+            'directoryName' => 'temp',
+            'attachmentPrefix' => 'pdesk_',
+            'time' => 99999999,
+            'fileName' => 'tw_',
+            'ftpHost' => '',
+            'ftpUsername' => '',
+            'ftpPassword' => ''
+        );
         
         $contents = array();
         $attachments = array();
@@ -46,9 +56,10 @@ EOT
         
         $contents = $xmlExportService->getXML($configuration['articleType'], $configuration['attachmentPrefix'], $articles);
         
-        $attachments = $xmlExportService->getAttachments($articles);
+        $attachments = $xmlExportService->getAttachments($configuration['attachmentPrefix'], $articles);
         
         $xmlExportService->createArchive($configuration['directoryName'], $configuration['fileName'], $contents, $attachments);
+        die;
         
         $xmlExportService->upload($configuration['directoryName'], $configuration['fileName'], $configuration['ftpHost'], $configuration['ftpUsername'], $configuration['ftpPassword']);
         $xmlExportService->clean($configuration['directoryName']);
