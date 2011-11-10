@@ -16,14 +16,17 @@ use Doctrine\Common\Persistence\ObjectManager,
  */
 class UserService implements ObjectRepository
 {
-    /** @var Doctrine\Common\Persistence\ObjectManager */
+    /** @var \Doctrine\Common\Persistence\ObjectManager */
     private $em;
 
-    /** @var Zend_Auth */
+    /** @var \Zend_Auth */
     private $auth;
 
-    /** @var Newscoop\Entity\User */
+    /** @var \Newscoop\Entity\User */
     private $currentUser;
+
+    /** @var \Newscoop\Entity\Repository\UserRepository */
+    private $repository;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
@@ -279,12 +282,29 @@ class UserService implements ObjectRepository
     }
 
     /**
+     * Get count of public users
+     *
+     * @return int
+     */
+    public function getPublicUserCount()
+    {
+        return $this->countBy(array(
+            'status' => User::STATUS_ACTIVE,
+            'is_public' => true,
+        ));
+    }
+
+    /**
      * Get repository for user entity
      *
      * @return Newscoop\Entity\Repository\UserRepository
      */
     private function getRepository()
     {
-        return $this->em->getRepository('Newscoop\Entity\User');
+        if (null === $this->repository) {
+            $this->repository = $this->em->getRepository('Newscoop\Entity\User');
+        }
+
+        return $this->repository;
     }
 }

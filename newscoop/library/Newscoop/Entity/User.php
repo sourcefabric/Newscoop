@@ -455,7 +455,7 @@ class User implements \Zend_Acl_Role_Interface
      * @param bool $public
      * @return Newscoop\Entity\User
      */
-    public function setPublic($public)
+    public function setPublic($public = true)
     {
         $this->is_public = (bool) $public;
         return $this;

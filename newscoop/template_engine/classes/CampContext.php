@@ -23,6 +23,9 @@ final class CampContext
      */
     public $login_action;
 
+    /** @var int */
+    private $userCount;
+
     // Defines the object types
     private static $m_objectTypes = array(
         'language'=>array('class'=>'Language',
@@ -1177,6 +1180,18 @@ final class CampContext
         return null;
     }
 
-} // class CampContext
+    /**
+     * Get active user count
+     *
+     * @return int
+     */
+    public function getUserCount()
+    {
+        if (null === $userCount) {
+            $userCount = Zend_Registry::get('container')->getService('user')
+                ->getPublicUserCount();
+        }
 
-?>
+        return (int) $userCount;
+    }
+}
