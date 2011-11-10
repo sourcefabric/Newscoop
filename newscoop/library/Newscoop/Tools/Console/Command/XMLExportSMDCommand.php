@@ -59,7 +59,6 @@ EOT
         $attachments = $xmlExportService->getAttachments($configuration['attachmentPrefix'], $articles);
         
         $xmlExportService->createArchive($configuration['directoryName'], $configuration['fileName'], $contents, $attachments);
-        die;
         
         $xmlExportService->upload($configuration['directoryName'], $configuration['fileName'], $configuration['ftpHost'], $configuration['ftpUsername'], $configuration['ftpPassword']);
         $xmlExportService->clean($configuration['directoryName']);
