@@ -32,8 +32,7 @@ class XMLExportService
     public function getArticles($type, $issue)
     {
         $articles = $this->em->getRepository('Newscoop\Entity\Article')
-            ->findBy(array('type' => $type, 'issueId' => $issue));
-
+            ->findBy(array('type' => $type, 'issueId' => $issue, 'workflowStatus' => \Newscoop\Entity\Article::STATUS_PUBLISHED));
         return $articles;
     }
     
@@ -56,7 +55,14 @@ class XMLExportService
                 }
             }
             
-            $item->addChild('RE', $article->getSection()->getName());
+            try {
+                $sectionName = $article->getSection()->getName();
+            }
+            catch(\Exception $e) {
+                $sectionName = '';
+            }
+            
+            $item->addChild('RE', $sectionName);
             $item->addChild('LD', $data['Flede']);
             $item->addChild('TX', $data['Fbody']);
             

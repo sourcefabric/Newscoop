@@ -16,6 +16,10 @@ namespace Newscoop\Entity;
 class Article
 {
 
+    const STATUS_PUBLISHED = 'Y';
+    const STATUS_NOT_PUBLISHED = 'N';
+    const STATUS_SUBMITTED = 'S';
+    
     /**
      * @Id
      * @ManyToOne(targetEntity="Newscoop\Entity\Language")
@@ -100,6 +104,12 @@ class Article
      * @var string
      */
     private $published;
+    
+    /**
+     * @Column(name="Published")
+     * @var string
+     */
+    private $workflowStatus;
 
 
     /**
