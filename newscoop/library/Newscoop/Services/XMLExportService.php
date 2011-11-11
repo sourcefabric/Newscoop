@@ -29,17 +29,11 @@ class XMLExportService
         $this->em = $em;
     }
     
-    public function getArticles($type, $time)
+    public function getArticles($type, $issue)
     {
-        $articles = $this->em->getRepository('Newscoop\Entity\Article')->findBy(array('type' => $type));
-        foreach ($articles as $key => $article) {
-            $begin = time() - $time;
-            $date = strtotime($article->getPublishDate());
-            if ($date < $begin) {
-                unset($articles[$key]);
-            }
-        }
-        return($articles);
+        $articles = $this->em->getRepository('Newscoop\Entity\Article')
+            ->findBy(array('type' => $type, 'issueId' => $issue, 'workflowStatus' => \Newscoop\Entity\Article::STATUS_PUBLISHED));
+        return $articles;
     }
     
     public function getXML($type, $prefix, $articles)
@@ -48,12 +42,6 @@ class XMLExportService
         
         foreach ($articles as $article) {
             $data = $this->getData($type, $article->getNumber(), $article->getLanguage()->getId());
-            
-            $authorNameList = array();
-            $authors = \ArticleAuthor::GetAuthorsByArticle($article->getNumber(), $article->getLanguage()->getId());
-            foreach ($authors as $author) {
-                $authorNameList[] = $author->getName();
-            }
             
             $item = $xml->addChild('DD');
             $item->addChild('DA', $article->getPublishDate());
@@ -67,22 +55,33 @@ class XMLExportService
                 }
             }
             
-            $item->addChild('RE', $article->getSection()->getName());
+            try {
+                $sectionName = $article->getSection()->getName();
+            }
+            catch(\Exception $e) {
+                $sectionName = '';
+            }
+            
+            $item->addChild('RE', $sectionName);
             $item->addChild('LD', $data['Flede']);
             $item->addChild('TX', $data['Fbody']);
-            /*
-            if ($data['Fprint'] == 1) {
-                $item->addChild('NT', 'Printed');
+            
+            try {
+                $creator = $article->getCreator();
+            } catch (\Exception $e) {
+                $creator = null;
             }
-            else {
+            
+            if ($creator == null) {
                 $item->addChild('NT', 'Online');
             }
-            */
-            if (in_array('PrintDesk', $authorNameList)) {
-                $item->addChild('NT', 'Printed');
-            }
             else {
-                $item->addChild('NT', 'Online');
+                if ($creator->getUsername() == 'printdesk') {
+                    $item->addChild('NT', 'Printed');
+                }
+                else {
+                    $item->addChild('NT', 'Online');
+                }
             }
         }
         return($xml->asXML());
