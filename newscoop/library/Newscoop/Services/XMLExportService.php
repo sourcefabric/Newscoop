@@ -33,6 +33,7 @@ class XMLExportService
     {
         $articles = $this->em->getRepository('Newscoop\Entity\Article')
             ->findBy(array('type' => $type, 'issueId' => $issue, 'workflowStatus' => \Newscoop\Entity\Article::STATUS_PUBLISHED));
+
         return $articles;
     }
     

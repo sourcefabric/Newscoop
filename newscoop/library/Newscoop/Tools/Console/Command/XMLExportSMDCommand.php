@@ -42,7 +42,7 @@ EOT
         
         $xmlExportService = $this->getHelper('container')->getService('XMLExport');
         
-        $articles = $xmlExportService->getArticles($configuration['articleType'], $configuration['time']);
+        $articles = $xmlExportService->getArticles($configuration['articleType'], $configuration['issue']);
         
         $contents = $xmlExportService->getXML($configuration['articleType'], $configuration['attachmentPrefix'], $articles);
         
