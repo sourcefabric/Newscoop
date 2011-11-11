@@ -49,12 +49,6 @@ class XMLExportService
         foreach ($articles as $article) {
             $data = $this->getData($type, $article->getNumber(), $article->getLanguage()->getId());
             
-            $authorNameList = array();
-            $authors = \ArticleAuthor::GetAuthorsByArticle($article->getNumber(), $article->getLanguage()->getId());
-            foreach ($authors as $author) {
-                $authorNameList[] = $author->getName();
-            }
-            
             $item = $xml->addChild('DD');
             $item->addChild('DA', $article->getPublishDate());
             $item->addChild('HT', $article->getName());
@@ -78,11 +72,23 @@ class XMLExportService
                 $item->addChild('NT', 'Online');
             }
             */
-            if (in_array('PrintDesk', $authorNameList)) {
-                $item->addChild('NT', 'Printed');
+            
+            try {
+                $creator = $article->getCreator();
+            } catch (\Exception $e) {
+                $creator = null;
+            }
+            
+            if ($creator == null) {
+                $item->addChild('NT', 'Online');
             }
             else {
-                $item->addChild('NT', 'Online');
+                if ($creator->getUsername() == 'printdesk') {
+                    $item->addChild('NT', 'Printed');
+                }
+                else {
+                    $item->addChild('NT', 'Online');
+                }
             }
         }
         return($xml->asXML());

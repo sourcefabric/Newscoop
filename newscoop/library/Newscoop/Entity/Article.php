@@ -44,6 +44,13 @@ class Article
      * @var Newscoop\Entity\Section
      */
     private $section;
+    
+    /**
+     * @OneToOne(targetEntity="Newscoop\Entity\User")
+     * @JoinColumn(name="IdUser", referencedColumnName="Id")
+     * @var Newscoop\Entity\User
+     */
+    private $creator;
 
     /**
      * @column(name="NrSection")
@@ -283,5 +290,28 @@ class Article
     public function getPublishDate()
     {
         return $this->published;
+    }
+    
+    /**
+     * Set creator
+     *
+     * @param  User $p_user
+     * @return Article
+     */
+    public function setCreator(User $p_user)
+    {
+        $this->creator = $p_user;
+        // return this for chaining mechanism
+        return $this;
+    }
+
+    /**
+     * Get creator
+     *
+     * @return Newscoop\Entity\User
+     */
+    public function getCreator()
+    {
+        return $this->creator;
     }
 }
