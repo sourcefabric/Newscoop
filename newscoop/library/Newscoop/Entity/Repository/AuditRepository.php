@@ -33,4 +33,32 @@ class AuditRepository extends EntityRepository
         $em->persist($event);
         $em->flush();
     }
+    
+    /**
+     * Get event count
+     *
+     * @param array $criteria
+     * @return int
+     */
+    public function countBy(array $criteria)
+    {
+        $queryBuilder = $this->getEntityManager()->createQueryBuilder()
+            ->select('COUNT(a)')
+            ->from($this->getEntityName(), 'a');
+
+        foreach ($criteria as $property => $value) {
+            if (!is_array($value)) {
+                $queryBuilder->andWhere("a.$property = :$property");
+            }
+        }
+
+        $query = $queryBuilder->getQuery();
+        foreach ($criteria as $property => $value) {
+            if (!is_array($value)) {
+                $query->setParameter($property, $value);
+            }
+        }
+
+        return (int) $query->getSingleScalarResult();
+    }
 }

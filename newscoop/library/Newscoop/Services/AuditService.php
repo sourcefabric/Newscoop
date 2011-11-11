@@ -83,4 +83,34 @@ class AuditService
         return $this->em->getRepository('Newscoop\Entity\AuditEvent')
             ->findBy($criteria, $orderBy, $limit, $offset);
     }
+    
+    public function countBy(array $criteria)
+    {
+        return $this->em->getRepository('Newscoop\Entity\AuditEvent')
+            ->countBy($criteria);
+    }
+    
+    public function getResourceTypes()
+    {
+        $resourceTypes = array();
+        $items = \Zend_Registry::get('container')->getParameter('audit');
+        
+        //var_dump($items['events']);die;
+        
+        foreach ($items['events'] as $item) {
+            $temp = explode('.', $item);
+            if (!in_array($temp[0], $resourceTypes)) {
+                $resourceTypes[] = $temp[0];
+            }
+        }
+        sort($resourceTypes);
+        return($resourceTypes);
+    }
+    
+    public function getActionTypes()
+    {
+        $actionTypes = array('create', 'delete', 'update');
+        
+        return($actionTypes);
+    }
 }

@@ -203,11 +203,6 @@ class Topic extends DatabaseObject {
 
 		if ($success) {
 			$this->m_exists = true;
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			$logtext = getGS('Topic "$1" ($2) added', implode(', ', $this->m_names), $this->m_data['id']);
-			Log::Message($logtext, null, 141);
 		}
 		CampCache::singleton()->clear('user');
 		return $success;
@@ -340,13 +335,6 @@ class Topic extends DatabaseObject {
 
 		$g_ado_db->Execute("UNLOCK TABLES");
 
-		if ($deleted) {
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			$logtext = getGS('Topic "$1" ($2) deleted', $deletedName, $topicId);
-			Log::Message($logtext, null, 142);
-		}
 		CampCache::singleton()->clear('user');
 		return $deleted;
 	} // fn delete
@@ -389,17 +377,6 @@ class Topic extends DatabaseObject {
 			$topicName = new TopicName($this->getTopicId(), $p_languageId);
 			$changed = $topicName->create(array('name'=>$p_value));
 			$this->m_names[$p_languageId] = $topicName;
-		}
-		if ($changed) {
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			if (!empty($oldName)) {
-				$logtext = getGS('Topic $1: ("$2" -> "$3") updated', $this->m_data['id'], $oldName, $this->m_names[$p_languageId]);
-			} else {
-				$logtext = getGS('Topic "$1" ($2) added', $this->m_names[$p_languageId], $this->m_data['id']);
-			}
-			Log::Message($logtext, null, 143);
 		}
 		return $changed;
 	} // fn setName

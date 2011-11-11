@@ -138,13 +138,6 @@ class User extends DatabaseObject {
             $repository = $controller->getHelper('entity')->getRepository($class);
             $repository->save($user, $values);
             $controller->getHelper('entity')->flushManager();
-
-            if (function_exists("camp_load_translation_strings")) {
-                camp_load_translation_strings("api");
-            }
-
-            $logtext = getGS('User account "$1" ($2) created', $user->getName(), $user->getUsername());
-            Log::Message($logtext, null, 51);
             return $user->getId();
         } catch (\Exception $e) {
             return false;
@@ -175,11 +168,6 @@ class User extends DatabaseObject {
                 return false;
             }
             if ($LiveUserAdmin->removeUser($permData[0]['perm_user_id'])) {
-                if (function_exists("camp_load_translation_strings")) {
-                    camp_load_translation_strings("api");
-                }
-                $logtext = getGS('The user account "$1" ($2) has been deleted.', $this->m_data['Name'], $this->m_data['UName']);
-                Log::Message($logtext, null, 52);
                 return true;
             }
         }
@@ -318,12 +306,6 @@ class User extends DatabaseObject {
             // update the user type in the user table
             $this->setProperty('fk_user_type', $p_userTypeId);
             $this->fetch();
-
-            if (function_exists("camp_load_translation_strings")) {
-                camp_load_translation_strings("api");
-            }
-            $logtext = getGS('User permissions for "$1" ($2) changed', $this->m_data['Name'], $this->m_data['UName']);
-            Log::Message($logtext, null, 55);
         }
     } // fn setUserType
 
@@ -714,11 +696,6 @@ class User extends DatabaseObject {
         $queryStr = "SELECT SHA1('".$g_ado_db->escape($p_password)."') AS PWD";
         $row = $g_ado_db->GetRow($queryStr);
         $this->setProperty('Password', $row['PWD'], $p_commit);
-        if (function_exists("camp_load_translation_strings")) {
-            camp_load_translation_strings("api");
-        }
-        $logtext = getGS('Password changed for user "$1" ($2)', $this->m_data['Name'], $this->m_data['UName']);
-        Log::Message($logtext, null, 54);
         $this->setProperty('password_reset_token','');
     }  // fn setPassword
 

@@ -63,11 +63,6 @@ class Language extends DatabaseObject {
 				return $result;
 			}
 			CampCache::singleton()->clear('user');
-			if (function_exists("camp_load_translation_strings")) {
-			        camp_load_translation_strings("api");
-			}
-			$logtext = getGS('Language "$1" ($2) added', $this->m_data['Name'], $this->m_data['OrigName']);
-			Log::Message($logtext, null, 101);
 		}
 		return $success;
 	} // fn create
@@ -88,11 +83,6 @@ class Language extends DatabaseObject {
 			return false;
 		}
 		CampCache::singleton()->clear('user');
-		if (function_exists("camp_load_translation_strings")) {
-			camp_load_translation_strings("api");
-		}
-		$logtext = getGS('Language "$1" ($2) modified', $this->m_data['Name'], $this->m_data['OrigName']);
-		Log::Message($logtext, null, 103);
 		return $success;
 	} // fn update
 
@@ -117,12 +107,7 @@ class Language extends DatabaseObject {
 		$tmpData = $this->m_data;
 		$success = parent::delete();
 		if ($success) {
-		        CampCache::singleton()->clear('user');
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			$logtext = getGS('Language "$1" ($2) deleted', $tmpData['Name'], $tmpData['OrigName']);
-			Log::Message($logtext, null, 102);
+            CampCache::singleton()->clear('user');
 		}
 		return $success;
 	} // fn delete

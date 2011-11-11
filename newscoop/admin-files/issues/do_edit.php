@@ -106,8 +106,7 @@ if($f_article_template_id != null && $f_article_template_id != '0'){
 //@New theme management
 
 if ($changed) {
-        $logtext = getGS('Issue "$1" ($2) updated in publication "$3"', $f_issue_name, $f_issue_number, $publicationObj->getName());
-	Log::Message($logtext, $g_user->getUserId(), 11);
+        
 } else {
 	$errMsg = getGS("Could not save the changes to the issue.");
 	camp_html_add_msg($errMsg);

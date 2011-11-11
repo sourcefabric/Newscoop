@@ -90,8 +90,6 @@ if ($created) {
 
         $action = ($issuePublishExists) ? 'updated' : 'added';
         $issueObj = new Issue($Pub, $Language, $Issue);
-        $logtext = getGS('Scheduled action $1 for issue #$2: "$3" (Publication: $4)', $action, $Issue, $issueObj->getName(), $Pub);
-        Log::Message($logtext, $g_user->getUserId(), 16);
         camp_html_goto_page("/$ADMIN/issues/edit.php?Pub=$Pub&Issue=$Issue&Language=$Language");
 }
 
