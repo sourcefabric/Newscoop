@@ -45,7 +45,8 @@ EOT
         $articles = $xmlExportService->getArticles($configuration['articleType'], $configuration['time']);
         
         $contents = $xmlExportService->getXML($configuration['articleType'], $configuration['attachmentPrefix'], $articles);
-        $attachments = $xmlExportService->getAttachments($articles);
+        
+        $attachments = $xmlExportService->getAttachments($configuration['attachmentPrefix'], $articles);
         
         $xmlExportService->createArchive($configuration['directoryName'], $configuration['fileName'], $contents, $attachments);
         

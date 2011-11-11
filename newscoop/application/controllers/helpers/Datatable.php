@@ -1,7 +1,6 @@
 <?php
 use Newscoop\Entity\Repository\IDatatableSource,
-    Newscoop\Entity\Repository\DatatableRepository,
-    Newscoop\Persistence\ObjectRepository;
+    Newscoop\Entity\Repository\DatatableRepository;
 
 /**
  * Datatable helper
@@ -31,12 +30,6 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
      * @var array where are keept the options
      */
     private $iOptions;
-
-    /** @var Newscoop\Persistence\ObjectRepository */
-    private $repository;
-
-    /** @var array */
-    private $criteria = array();
 
     /**
      * @return Action_Helper_Datatable
@@ -355,58 +348,5 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
         $view->iTotalDisplayRecords = $this->dataSource->getCount($params, $this->cols);
         $view->aaData = $rows;
         $view->sEcho = !empty($params['sEcho']) ? $params['sEcho'] : 0;
-    }
-
-    /**
-     */
-    public function postDispatch()
-    {
-        $view = $this->getActionController()->initView();
-        $params = $this->getRequest()->getParams();
-
-        if (empty($params['format'])) { // render table
-            $view->iOptions = $this->iOptions;
-            $view->cols = $this->cols;
-            return;
-        }
-
-        $orderBy = array();
-        $properties = array_keys($this->cols);
-        for ($i = 0; $i < (int) $params['iSortingCols']; $i++) {
-            $orderBy[$properties[$params["iSortCol_$i"]]] = $params["sSortDir_$i"];
-        }
-
-        $limit = !empty($params['iDisplayLength']) ? max(10, min(100, (int) $params['iDisplayLength'])) : 25;
-        $offset = !empty($params['iDisplayStart']) ? max(0, (int) $params['iDisplayStart']) : 0;
-        $data = array_map($this->handle, $this->repository->findBy($this->criteria, $orderBy, $limit, $offset));
-
-        $view->iTotalRecords = $this->repository->countAll();
-        $view->iTotalDisplayRecords = $this->repository->countBy($this->criteria);
-        $view->aaData = $data;
-        $view->sEcho = !empty($params['sEcho']) ? $params['sEcho'] : 0;
-    }
-
-    /**
-     * Set repository
-     *
-     * @param Newscoop\Persistence\ObjectRepository $repository
-     * @return Action_Helper_Datatable
-     */
-    public function setRepository(ObjectRepository $repository)
-    {
-        $this->repository = $repository;
-        return $this;
-    }
-
-    /**
-     * Set criteria
-     *
-     * @param array $criteria
-     * @return Action_Helper_Datatable
-     */
-    public function setCriteria(array $criteria)
-    {
-        $this->criteria = $criteria;
-        return $this;
     }
 }
