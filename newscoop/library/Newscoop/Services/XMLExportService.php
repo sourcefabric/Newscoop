@@ -29,17 +29,12 @@ class XMLExportService
         $this->em = $em;
     }
     
-    public function getArticles($type, $time)
+    public function getArticles($type, $issue)
     {
-        $articles = $this->em->getRepository('Newscoop\Entity\Article')->findBy(array('type' => $type));
-        foreach ($articles as $key => $article) {
-            $begin = time() - $time;
-            $date = strtotime($article->getPublishDate());
-            if ($date < $begin) {
-                unset($articles[$key]);
-            }
-        }
-        return($articles);
+        $articles = $this->em->getRepository('Newscoop\Entity\Article')
+            ->findBy(array('type' => $type, 'issueId' => $issue));
+
+        return $articles;
     }
     
     public function getXML($type, $prefix, $articles)
@@ -64,14 +59,6 @@ class XMLExportService
             $item->addChild('RE', $article->getSection()->getName());
             $item->addChild('LD', $data['Flede']);
             $item->addChild('TX', $data['Fbody']);
-            /*
-            if ($data['Fprint'] == 1) {
-                $item->addChild('NT', 'Printed');
-            }
-            else {
-                $item->addChild('NT', 'Online');
-            }
-            */
             
             try {
                 $creator = $article->getCreator();
