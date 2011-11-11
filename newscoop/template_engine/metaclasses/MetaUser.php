@@ -5,12 +5,9 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-/**
- * Includes
- */
-require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObject.php');
-
 use Newscoop\Entity\User;
+
+require_once __DIR__ . '/MetaDbObject.php';
 
 /**
  * Template user
@@ -49,6 +46,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         $this->m_customProperties['posts_count'] = 'getPostsCount';
         $this->m_customProperties['is_author'] = 'isAuthor';
         $this->m_customProperties['is_active'] = 'isActive';
+        $this->m_customProperties['is_blogger'] = 'isActive';
 
         $this->m_skipFilter[] = "name";
     }
@@ -167,8 +165,18 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     protected function isAdmin()
     {
-        return $this->m_dbObject->isAdmin() &&
-            !\Zend_Registry::get('container')->getService('blog')->isBlogger($this->m_dbObject);
+        return $this->m_dbObject->isAdmin() && !$this->isBlogger();
+    }
+
+    /**
+     * Test if user is blogger
+     *
+     * @return bool
+     */
+    public function isBlogger()
+    {
+        return (bool) \Zend_Registry::get('container')->getService('blog')
+            ->isBlogger($this->m_dbObject);
     }
 
     /**
