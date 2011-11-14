@@ -51,7 +51,7 @@ class EmailService
         ));
 
         // @todo use config
-        $this->send("Registrierung bei tageswoche.ch", $message, $user->getEmail());
+        $this->send("Registrierung bei domain.com", $message, $user->getEmail());
     }
 
     /**
@@ -69,7 +69,7 @@ class EmailService
         ));
 
         // @todo use config
-        $this->send("Passwort für tageswoche.ch zurücksetzen", $message, $user->getEmail());
+        $this->send("Passwort für domain.com zurücksetzen", $message, $user->getEmail());
     }
 
     /**

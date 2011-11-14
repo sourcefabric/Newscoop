@@ -79,7 +79,7 @@ class AuthController extends Zend_Controller_Action
 
         if (!$hauth->hasSession()) {
             $adapter = $hauth->setup($this->_getParam('provider'), array(
-                'hauth_return_to' => 'http://dev.tageswoche.ch/auth/social/provider/' . $this->_getParam('provider'),
+                'hauth_return_to' => 'http:///auth/social/provider/' . $this->_getParam('provider'),
             ));
             $adapter->login();
         } else {

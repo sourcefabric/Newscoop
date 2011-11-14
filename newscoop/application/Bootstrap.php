@@ -107,9 +107,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('community_feed', 'Newscoop\Services\CommunityFeedService')
             ->addArgument(new sfServiceReference('em'));
 
-        $container->register('article.popularity', 'Newscoop\Services\ArticlePopularityService')
-            ->addArgument(new sfServiceReference('em'));
-
         $container->register('dispatcher', 'Newscoop\Services\EventDispatcherService')
             ->setConfigurator(function($service) use ($container) {
                 foreach ($container->getParameter('listener') as $listener) {
@@ -156,9 +153,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('user_subscription', 'Newscoop\Services\UserSubscriptionService')
             ->addArgument(new sfServiceReference('em'));
         
-        $container->register('XMLExport', 'Newscoop\Services\XMLExportService')
-            ->addArgument(new sfServiceReference('em'));
-
         $container->register('user.search', 'Newscoop\Services\UserSearchService')
             ->addArgument(new sfServiceReference('em'));
 
@@ -221,12 +215,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ), array(
                 'webcode' => '^@[a-z]{5,6}',
             )));
-
-         $router->addRoute
-         (
-            'postfinance',
-            new Zend_Controller_Router_Route_Static('postfinance', array( 'controller' => 'payment', 'action' => 'postfinance', 1 => null ))
-         );
 
          $router->addRoute(
             'language/webcode',
