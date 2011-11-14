@@ -473,18 +473,18 @@ class NewsImport
                 }
 
                 foreach ($movie_keys_text as $one_movie_info_key) {
-                    $f_movie_imdb = (isset($f_movie_info[$one_movie_info_key]) && (!empty($f_movie_info[$one_movie_info_key]))) ? $f_movie_info[$one_movie_info_key] : '';
-                    $article_data->setProperty('Fmovie_' . $one_movie_info_key, $f_movie_imdb);
+                    $f_movie_val = (isset($f_movie_info[$one_movie_info_key]) && (!empty($f_movie_info[$one_movie_info_key]))) ? $f_movie_info[$one_movie_info_key] : '';
+                    $article_data->setProperty('Fmovie_' . $one_movie_info_key, $f_movie_val);
                 }
 
                 foreach ($movie_keys_numeric as $one_movie_info_key) {
-                    $f_movie_imdb = (isset($f_movie_info[$one_movie_info_key]) && (!empty($f_movie_info[$one_movie_info_key]))) ? $f_movie_info[$one_movie_info_key] : 0;
-                    $article_data->setProperty('Fmovie_' . $one_movie_info_key, $f_movie_imdb);
+                    $f_movie_val = (isset($f_movie_info[$one_movie_info_key]) && (!empty($f_movie_info[$one_movie_info_key]))) ? $f_movie_info[$one_movie_info_key] : 0;
+                    $article_data->setProperty('Fmovie_' . $one_movie_info_key, $f_movie_val);
                 }
 
                 foreach ($movie_keys_date as $one_movie_info_key) {
-                    $f_movie_imdb = (isset($f_movie_info[$one_movie_info_key]) && (!empty($f_movie_info[$one_movie_info_key]))) ? $f_movie_info[$one_movie_info_key] : '0000-00-00';
-                    $article_data->setProperty('Fmovie_' . $one_movie_info_key, $f_movie_imdb);
+                    $f_movie_val = (isset($f_movie_info[$one_movie_info_key]) && (!empty($f_movie_info[$one_movie_info_key]))) ? $f_movie_info[$one_movie_info_key] : '0000-00-01';
+                    $article_data->setProperty('Fmovie_' . $one_movie_info_key, $f_movie_val);
                 }
 
             }
@@ -1012,7 +1012,7 @@ class NewsImport
                 if (isset($one_source['source_dirs'])) {
                     if (isset($one_source['source_dirs']['new']) && isset($one_source['source_dirs']['lock'])) {
                         $remote_lock_path = $one_source['source_dirs']['new'] . $one_source['source_dirs']['lock'];
-                        while (file_exists($remote_lock_file)) {
+                        while (file_exists($remote_lock_path)) {
                             set_time_limit(0);
                             sleep(20);
                         }

@@ -706,7 +706,10 @@ class KinoData_Parser_SimpleXML {
                 foreach ($mov_infos_times as $one_mov_infos_key => $one_mov_infos_spec) {
                     $one_mov_infos_value = trim('' . $one_movie->$one_mov_infos_spec);
                     if ((!isset($one_mov_info[$one_mov_infos_key])) || (empty($one_mov_info[$one_mov_infos_key])) || (!empty($one_mov_infos_value))) {
-                        $one_mov_info[$one_mov_infos_key] = gmdate('Y-m-d', $one_mov_infos_value);
+                        if ( (!empty($one_mov_infos_value)) && (is_numeric($one_mov_infos_value)) ) {
+                            $one_mov_infos_value = gmdate('Y-m-d', $one_mov_infos_value);
+                        }
+                        $one_mov_info[$one_mov_infos_key] = $one_mov_infos_value;
                     }
                 }
 
