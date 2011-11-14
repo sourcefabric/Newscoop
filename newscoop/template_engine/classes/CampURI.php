@@ -1228,9 +1228,9 @@ abstract class CampURI
             $user = $userService->find($auth->getIdentity());
             if (!empty($user)) {
                 $this->m_user = new MetaUser($user);
-                $this->m_preview = CampRequest::GetVar('preview') == 'on' && True; // TODO add acl check
+                $this->m_preview = CampRequest::GetVar('preview') == 'on' && $this->m_user->isAdmin();
             }
-        } else {
+        } else if (!empty($_SERVER['REMOTE_ADDR'])) { // empty in cli
             $ipUsers = IPAccess::GetUsersHavingIP($_SERVER['REMOTE_ADDR']);
             if (!empty($ipUsers)) {
                 $user = $userService->find($ipUsers[0]->getUserId());

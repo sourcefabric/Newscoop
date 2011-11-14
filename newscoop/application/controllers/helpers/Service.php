@@ -17,9 +17,7 @@ class Action_Helper_Service extends Zend_Controller_Action_Helper_Abstract
      */
     public function init()
     {
-        $this->container = $this->getActionController()
-            ->getInvokeArg('bootstrap')
-            ->getResource('container');
+        $this->container = \Zend_Registry::get('container');
     }
 
     /**

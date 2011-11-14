@@ -44,6 +44,9 @@ final class CampRequest
      */
     const TEMPLATE_ID = 'tpl';
 
+    const REQUEST_METHOD_KEY = 'REQUEST_METHOD';
+    const REQUEST_METHOD_DEFAULT = 'GET';
+
     /**
      * Stores the input parameters
      *
@@ -160,8 +163,11 @@ final class CampRequest
      *
      * @return string
      */
-    public static function GetMethod() {
-        return $_SERVER['REQUEST_METHOD'];
+    public static function GetMethod()
+    {
+        return array_key_exists(self::REQUEST_METHOD_KEY, $_SERVER)
+            ? $_SERVER[self::REQUEST_METHOD_KEY]
+            : self::REQUEST_METHOD_DEFAULT;
     }
 
     /**

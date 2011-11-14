@@ -29,8 +29,7 @@ class EmailController extends Zend_Controller_Action
         $this->getHelper('layout')
             ->disableLayout();
 
-        $server = $this->getRequest()->getServer();
-        $this->view->publication = $server['SERVER_NAME'];
+        $this->view->publication = $this->getRequest()->getServer('SERVER_NAME', 'localhost');
 
         $this->_helper->contextSwitch()
             ->addActionContext('comment-notify', 'xml')
