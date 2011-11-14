@@ -142,6 +142,12 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
         return parent::getCreated();
     }
 
+    public function getUpdated()
+    {
+        $this->__load();
+        return parent::getUpdated();
+    }
+
     public function setAdmin($admin)
     {
         $this->__load();
@@ -304,10 +310,16 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
         return parent::getAuthorId();
     }
 
+    public function preUpdate()
+    {
+        $this->__load();
+        return parent::preUpdate();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'email', 'username', 'password', 'first_name', 'last_name', 'created', 'status', 'is_admin', 'is_public', 'points', 'image', 'role', 'groups', 'attributes', 'commenters', 'subscriber', 'author');
+        return array('__isInitialized__', 'id', 'email', 'username', 'password', 'first_name', 'last_name', 'created', 'updated', 'status', 'is_admin', 'is_public', 'points', 'image', 'role', 'groups', 'attributes', 'commenters', 'subscriber', 'author');
     }
 
     public function __clone()

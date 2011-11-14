@@ -25,14 +25,18 @@ class PublisherServiceTest extends \RepositoryTestCase
     /** @var array */
     protected $config;
 
+    /** @var Newscoop\Entity\Ingest\Feed */
+    private $feed;
+
     public function setUp()
     {
-        parent::setUp('Newscoop\Entity\Ingest\Feed',
-            'Newscoop\Entity\Ingest\Feed\Entry',
-            'Newscoop\Entity\Comment');
-
+        parent::setUp('Newscoop\Entity\Comment', 'Newscoop\Entity\Ingest\Feed', 'Newscoop\Entity\Ingest\Feed\Entry', 'Newscoop\Entity\Article');
         $this->config = \Zend_Registry::get('container')->getParameter('ingest_publisher');
         $this->service = new PublisherService($this->config);
+        
+        $this->feed = new Feed('test');
+        $this->em->persist($this->feed);
+        $this->em->flush();
     }
 
     public function testService()
@@ -92,6 +96,7 @@ class PublisherServiceTest extends \RepositoryTestCase
             'getSubject' => self::SECTION_SPORT,
             'getCreated' => $created,
         ));
+        $this->feed->addEntry($entry);
 
         $feed->addEntry($entry);
 
@@ -195,6 +200,7 @@ class PublisherServiceTest extends \RepositoryTestCase
             'getLanguage' => 'en',
             'getSubject' => self::SECTION_SPORT,
         ));
+        $this->feed->addEntry($entry);
 
         $feed->addEntry($entry);
 
@@ -219,6 +225,7 @@ class PublisherServiceTest extends \RepositoryTestCase
             'getLanguage' => 'de',
             'getSubject' => self::SECTION_SPORT,
         ));
+        $this->feed->addEntry($entry);
 
         $feed->addEntry($entry);
 
@@ -240,6 +247,7 @@ class PublisherServiceTest extends \RepositoryTestCase
             'getLanguage' => 'de',
             'getSubject' => self::SECTION_CULTURE,
         ));
+        $this->feed->addEntry($entry);
 
         $feed->addEntry($entry);
 
@@ -262,6 +270,7 @@ class PublisherServiceTest extends \RepositoryTestCase
             'getSubject' => 1,
             'getCountry' => 'CZ',
         ));
+        $this->feed->addEntry($entry);
 
         $feed->addEntry($entry);
 
@@ -285,6 +294,7 @@ class PublisherServiceTest extends \RepositoryTestCase
             'getCountry' => 'CH',
             'getProduct' => 'Regionaldienst Nord',
         ));
+        $this->feed->addEntry($entry);
 
         $feed->addEntry($entry);
 
@@ -308,6 +318,7 @@ class PublisherServiceTest extends \RepositoryTestCase
             'getCountry' => 'CH',
             'getProduct' => '',
         ));
+        $this->feed->addEntry($entry);
 
         $feed->addEntry($entry);
 
@@ -317,6 +328,18 @@ class PublisherServiceTest extends \RepositoryTestCase
 
         $article = $this->service->publish($entry);
         $this->assertEquals($this->config['section_other'], $article->getSectionNumber());
+    }
+
+    public function testPublishProgram()
+    {
+        $entry = Entry::create(new NewsMlParser(APPLICATION_PATH . '/../tests/ingest/wochenprogramm_rdn201.xml'));
+
+        $this->feed->addEntry($entry);
+        $this->em->persist($entry);
+        $this->em->flush();
+
+        $article = $this->service->publish($entry);
+        $this->assertFalse($article->isPublished());
     }
 
     /**

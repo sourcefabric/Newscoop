@@ -257,6 +257,8 @@ final class MetaSubtitle {
         $image = new MetaImage($articleImage->getImageId());
         $context->image = $image;
         $imageSize = @getimagesize($imageObj->getImageStorageLocation());
+        
+        
         unset($imageObj);
 
         $imageOptions = '';
@@ -298,6 +300,7 @@ final class MetaSubtitle {
         $imgString .= '>';
         $imgString .= (strlen($imgZoomLink) > 0) ? '<p>'.$imgZoomLink : '<p>';
         $uri->uri_parameter = "image $imageOptions";
+        
         $imgString .= '<img src="' . $uri->uri . '"';
         if (isset($detailsArray['alt']) && !empty($detailsArray['alt'])) {
             $imgString .= ' alt="' . $detailsArray['alt'] . '"';
@@ -308,7 +311,11 @@ final class MetaSubtitle {
         $imgString .= ' border="0"/>';
         $imgString .= (strlen($imgZoomLink) > 0) ? '</a></p>' : '</p>';
         if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
-            $imgString .= '<p class="cs_img_caption">';
+        	if (isset($imageSize[0])) {
+        	   $imgString .= '<p class="cs_img_caption" style="width:'.$imageSize[0].'px">';	
+        	} else {
+        		$imgString .= '<p class="cs_img_caption">';
+        	}
             $imgString .= $detailsArray['sub'] . '</p>';
         }
         if ($isCentered) {

@@ -95,7 +95,7 @@ class DebateAnswer extends DatabaseObject
         /* @var $res ADORecordSet_mysql */
         $total = $res->RowCount();
 
-        $this->m_data['percentage'] = 100*$answers/$total;
+        $this->m_data['percentage'] = $total>0 ? 100*$answers/$total : 0;
     }
 
     /**

@@ -524,3 +524,132 @@ a.view-article:hover {
     background: -webkit-gradient(linear, left top, left bottom, color-stop(0, #2390BD), color-stop(100%, #007FB3));
 	border: 1px solid #007FB3;
 }
+
+.content .aside {
+    float: left;
+    width: 180px;
+    margin: 0 0 8px 0;
+}
+
+.aside ul.filters {
+    margin: 0;
+    padding: 0;
+}
+
+.aside ul.filters li {
+    margin: 0 0 3px;
+    padding: 5px 8px;
+    font-size: 1.3em;
+    line-height: 1em;
+    background-color: #fff;
+}
+
+.aside ul.filters li.vspace {
+    background-color: transparent;
+}
+
+.aside ul.filters li a.active {
+    font-weight: bold;
+}
+
+.aside .actions {
+    margin-top: 26px;
+}
+
+.aside .actions .navigation li {
+    border-color: #f5f5f5;
+}
+
+.canvas {
+    min-width: 600px;
+    margin: 0 0 8px 188px;
+}
+
+.canvas ul.users {
+    float: left;
+    width: 100%;
+    margin: 0 0 8px;
+    padding: 0;
+}
+
+.canvas ul.users li {
+    margin: 0 0 3px;
+    padding: 5px 8px;
+    font-size: 1.3em;
+    line-height: 1em;
+    background-color: #fff;
+}
+
+.canvas ul.users li a.edit {
+    display: inline-block;
+    width: 30%;
+    min-width: 200px;
+}
+
+.canvas ul.users li a.mailto {
+    display: inline-block;
+    width: 30%;
+    min-width: 250px;
+    color: #333;
+}
+
+.canvas ul.users .status {
+    display: inline-block;
+    width: 8%;
+    min-width: 100px;
+}
+
+.canvas ul.users .inline-actions {
+    float: right;
+    color: #666
+}
+
+.canvas ul.users .created {
+    color: #666;
+}
+
+.canvas .paginationControl {
+    float: right;
+    clear: right;
+    margin: 0 0 3px;
+    padding: 5px 8px;
+    font-size: 1.3em;
+    line-height: 1em;
+    color: #333;
+}
+
+.canvas .paginationControl .disabled {
+    color: inherit;
+}
+
+.canvas .controls {
+    height: 26px;
+    overflow: hidden;
+}
+
+.canvas .status.s-0 {
+    color: #f57900;
+}
+
+.canvas .status.s-1 {
+    color: #4e9a06;
+}
+
+.canvas .status.s-2 {
+    color: #cc0000;
+}
+
+h1 {
+    position: relative;
+}
+
+.inline-search {
+    position: absolute;
+    left: 210px;
+}
+
+.inline-search input {
+    padding: 3px 5px;
+    border: 1px solid #fff;
+    background-color: #fff;
+}
