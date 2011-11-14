@@ -77,7 +77,7 @@ final class MetaCommunityFeed extends MetaDbObject
                 return sprintf('New print subscriber: %s.', $this->user->name);
 
             case 'user-register':
-                return sprintf('%s subscribed to TagesWoche.', $this->user->name);
+                return sprintf('%s subscribed.', $this->user->name);
 
             case 'topic-follow':
                 $params = $this->feed->getParams();
