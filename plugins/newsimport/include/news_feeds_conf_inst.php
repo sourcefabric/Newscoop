@@ -30,9 +30,9 @@ $event_data_sources = array(
             'theater' => array('theater', 'theatre',),
             'exhibition' => array('exhibition', 'ausstellung', 'ausstellungen',), // both museums and galleries
             'party' => array('party',),
-            'music' => array('music', 'musik',),
+            'music' => array('music', 'musik', 'concert', 'konzerte',),
             'concert' => array('concert', 'konzerte',),
-            'circus' => array('circus', 'zirkus',),
+            //'circus' => array('circus', 'zirkus',),
             'other' => 'x',
         ),
         'status' => array(
