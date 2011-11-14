@@ -1,0 +1,103 @@
+<?php $this->placeholder('title')->captureStart(); ?>
+<?php putGS('Users'); ?>
+<span class="inline-search">
+    <input type="text" name="q" /> <button id="user-search" class="search"><?php putGS('Search'); ?></button>
+</span>
+<?php $this->placeholder('title')->captureEnd(); ?>
+
+<div class="aside">
+    <ul class="filters">
+        <li class="vspace"><?php putGS('Status'); ?></li>
+        <li><a href="#active"><?php putGS('Active'); ?> (<span id="activeCount"><?php echo $this->activeCount; ?></span>)</a></li>
+        <li><a href="#pending"><?php putGS('Pending'); ?> (<span id="pendingCount"><?php echo $this->pendingCount; ?></span>)</a></li>
+        <li><a href="#inactive"><?php putGS('Inactive'); ?> (<span id="inactiveCount"><?php echo $this->inactiveCount; ?></span>)</a></li>
+    </ul>
+
+    <?php echo $this->renderActions(); ?>
+</div>
+
+<div class="canvas"></div>
+
+<script type="text/javascript">
+$(function() {
+    var initActive = function() {
+        if (window.location.hash && $('a[href="' + window.location.hash + '"]').size()) {
+            $('a[href="' + window.location.hash + '"]').click();
+        } else if (window.location.hash && window.location.hash.search('search/')) {
+            var q = window.location.hash.replace('#search/', '');
+            $('.inline-search input:text').val(q);
+            $('#user-search').click();
+        } else {
+            $('.filters a').first().click();
+        }
+    }
+
+    $('.filters a').click(function(e) {
+        e.preventDefault();
+
+        var filter = this.hash.slice(1);
+        $('.canvas').load("<?php echo $this->url(array(
+            'action' => 'list',
+        )); ?>" + "/filter/" + filter);
+
+        $('.filters a').not(this).removeClass('active');
+        $(this).addClass('active');
+        $('.inline-search input:text').val('');
+        window.location.hash = this.hash;
+    });
+
+    $('.paginationControl a').live('click', function(e) {
+        e.preventDefault();
+        $('.canvas').load($(this).attr('href'));
+    });
+
+    $('a.send-confirm-email').live('click', function(e) {
+        e.preventDefault();
+
+        if (!confirm(<?php echo json_encode(getGS('Do you really want to send confirmation email?')); ?>)) {
+            return;
+        }
+
+        $.getJSON(this.href, {'format': 'json'}, function(data, textStatus, jqXHR) {
+            flashMessage(<?php echo json_encode(getGS("New confirmation email was sent to user.")); ?>);
+        });
+    });
+
+    $('a.delete').live('click', function(e) {
+        e.preventDefault();
+
+        if (!confirm(<?php echo json_encode(getGS('Do you really want to delete user?')); ?>)) {
+            return;
+        }
+
+        $.getJSON(this.href, {'format': 'json'}, function(data, textStatus, jqXHR) {
+            if (data.message) {
+                flashMessage(data.message, 'error');
+                return;
+            }
+
+            flashMessage(<?php echo json_encode(getGS("User was deleted.")); ?>);
+            
+            $.getJSON("<?php echo $this->url(array('format' => 'json')); ?>", function(data, textStatus, jqXHR) {
+                $('.filters a span').each(function() {
+                    $(this).html(data[$(this).attr('id')]);
+                });
+            });
+
+            initActive();
+        });
+    });
+
+    $('#user-search').click(function() {
+        var q = $(this).prev('input:text').val();
+        window.location.hash = 'search/' + q;
+        $('.canvas').load("<?php echo $this->url(array(
+            'action' => 'search',
+        )); ?>" + "/q/" + q);
+
+        $('.filters a').removeClass('active');
+    });
+
+    initActive();
+});
+</script>

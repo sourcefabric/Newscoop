@@ -7,28 +7,32 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity\User;
+use Doctrine\Common\Persistence\ObjectManager,
+    Newscoop\Entity\User,
+    Newscoop\Persistence\ObjectRepository;
 
 /**
  * User service
  */
-class UserService
+class UserService implements ObjectRepository
 {
-    /** @var Doctrine\ORM\EntityManager */
+    /** @var \Doctrine\Common\Persistence\ObjectManager */
     private $em;
 
-    /** @var Zend_Auth */
+    /** @var \Zend_Auth */
     private $auth;
 
-    /** @var Newscoop\Entity\User */
+    /** @var \Newscoop\Entity\User */
     private $currentUser;
+
+    /** @var \Newscoop\Entity\Repository\UserRepository */
+    private $repository;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
      * @param Zend_Auth $auth
      */
-    public function __construct(EntityManager $em, \Zend_Auth $auth)
+    public function __construct(ObjectManager $em, \Zend_Auth $auth)
     {
         $this->em = $em;
         $this->auth = $auth;
@@ -64,14 +68,25 @@ class UserService
     }
 
     /**
+     * Find all users
+     *
+     * @return mixed
+     */
+    public function findAll()
+    {
+        return $this->getRepository()->findAll();
+    }
+
+    /**
      * Find by given criteria
      *
      * @param array $criteria
-     * @param array $orderBy
-     * @param int $limit
-     * @param int $offset
+     * @param array|null $orderBy
+     * @param int|null $limit
+     * @param int|null $offset
+     * @return mixed
      */
-    public function findBy($criteria, array $orderBy = NULL, $limit = NULL, $offset = NULL)
+    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
         return $this->getRepository()
             ->findBy($criteria, $orderBy, $limit, $offset);
@@ -127,8 +142,7 @@ class UserService
             throw new \InvalidArgumentException("You can't delete yourself");
         }
 
-        $user->setStatus(User::STATUS_DELETED);
-        $this->em->flush();
+        $this->getRepository()->delete($user);
     }
 
     /**
@@ -179,17 +193,26 @@ class UserService
      */
     public function createPending($email, $first_name = null, $last_name = null, $subscriber = null)
     {
-        $user = new User($email);
-        $user->setPublic(true);
+        $users = $this->findBy(array('email' => $email));
+        if (empty($users)) {
+            $user = new User($email);
+            $user->setPublic(true);
+        } else {
+            $user = $users[0];
+        }
+
         if ($first_name) {
             $user->setFirstName($first_name);
         }
+
         if ($last_name) {
             $user->setLastName($last_name);
         }
+
         if ($subscriber) {
             $user->setSubscriber($subscriber);
         }
+
         $this->em->persist($user);
         $this->em->flush();
         return $user;
@@ -238,12 +261,50 @@ class UserService
     }
 
     /**
+     * Count all users
+     *
+     * @return int
+     */
+    public function countAll()
+    {
+        return $this->getRepository()->countAll();
+    }
+
+    /**
+     * Count users by given criteria
+     *
+     * @param array $criteria
+     * @return int
+     */
+    public function countBy(array $criteria)
+    {
+        return $this->getRepository()->countBy($criteria);
+    }
+
+    /**
+     * Get count of public users
+     *
+     * @return int
+     */
+    public function getPublicUserCount()
+    {
+        return $this->countBy(array(
+            'status' => User::STATUS_ACTIVE,
+            'is_public' => true,
+        ));
+    }
+
+    /**
      * Get repository for user entity
      *
      * @return Newscoop\Entity\Repository\UserRepository
      */
     private function getRepository()
     {
-        return $this->em->getRepository('Newscoop\Entity\User');
+        if (null === $this->repository) {
+            $this->repository = $this->em->getRepository('Newscoop\Entity\User');
+        }
+
+        return $this->repository;
     }
 }

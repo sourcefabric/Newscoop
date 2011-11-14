@@ -9,8 +9,18 @@
  */
 class EmailController extends Zend_Controller_Action
 {
-    public function init()
+    public function preDispatch()
     {
+        $uri = CampSite::GetURIInstance();
+        $themePath = $uri->getThemePath();
+
+        $this->view = new Newscoop\SmartyView();
+        $this->view
+            ->addScriptPath(APPLICATION_PATH . '/views/scripts/')
+            ->addScriptPath(realpath(APPLICATION_PATH . "/../themes/$themePath"));
+
+        $this->view->addPath(realpath(APPLICATION_PATH . "/../themes/$themePath"));
+
         $this->getHelper('viewRenderer')
             ->setView($this->view)
             ->setViewScriptPathSpec(':controller_:action.:suffix')

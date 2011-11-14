@@ -15,7 +15,10 @@ use Doctrine\Common\Collections\ArrayCollection,
 
 /**
  * @Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
- * @Table(name="liveuser_users")
+ * @Table(name="liveuser_users", uniqueConstraints={
+ *      @UniqueConstraint(columns={"Uname"})
+ *      })
+ *  @HasLifecycleCallbacks
  */
 class User implements \Zend_Acl_Role_Interface
 {
@@ -69,6 +72,12 @@ class User implements \Zend_Acl_Role_Interface
      * @var DateTime
      */
     private $created;
+
+    /**
+     * @Column(type="datetime", name="time_updated", nullable=true)
+     * @var DateTime
+     */
+    private $updated;
 
     /**
      * @Column(type="integer", length="1")
@@ -146,7 +155,7 @@ class User implements \Zend_Acl_Role_Interface
     public function __construct($email = null)
     {
         $this->email = $email;
-        $this->created = new \DateTime();
+        $this->created = $this->updated = new \DateTime();
         $this->groups = new ArrayCollection();
         $this->attributes = new ArrayCollection();
         $this->role = new Role();
@@ -399,13 +408,23 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
-     * Get time created
+     * Get created datetime
      *
      * @return DateTime
      */
     public function getCreated()
     {
         return $this->created;
+    }
+
+    /**
+     * Get updated datetime
+     *
+     * @return DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
     }
 
     /**
@@ -436,7 +455,7 @@ class User implements \Zend_Acl_Role_Interface
      * @param bool $public
      * @return Newscoop\Entity\User
      */
-    public function setPublic($public)
+    public function setPublic($public = true)
     {
         $this->is_public = (bool) $public;
         return $this;
@@ -581,7 +600,7 @@ class User implements \Zend_Acl_Role_Interface
             $attributes[$key] = $this->attributes[$key]->getValue();
         }
 
-        return $attributes;
+        return array_filter($attributes);
     }
 
     /**
@@ -746,5 +765,13 @@ class User implements \Zend_Acl_Role_Interface
     public function getAuthorId()
     {
         return $this->author ? $this->author->getId() : null;
+    }
+
+    /**
+     * @PreUpdate
+     */
+    public function preUpdate()
+    {
+        $this->updated = new \DateTime();
     }
 }

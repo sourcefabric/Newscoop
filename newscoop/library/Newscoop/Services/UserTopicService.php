@@ -107,30 +107,20 @@ class UserTopicService
     public function updateTopics(User $user, array $topics)
     {
         $repository = $this->em->getRepository('Newscoop\Entity\UserTopic');
-        $userTopics = $repository->findBy(array('user' => $user->getId()));
         foreach ($topics as $topicId => $status) {
-            if ($status == "true") {
-                foreach ($userTopics as $userTopic) {
-                    try {
-                        if ($userTopic->getTopic()->getTopicId() == $topicId) {
-                            continue 2;
-                        }
-                    } catch (\Exception $e) {
-                        $this->em->remove($userTopic);
-                    }
-                }
+            $matches = $repository->findBy(array(
+                'user' => $user->getId(),
+                'topic_id' => $topicId,
+            ));
 
-                $this->em->persist(new UserTopic($user, $this->findTopic($topicId)));
-            } else {
-                foreach ($userTopics as $userTopic) {
-                    try {
-                        if ($userTopic->getTopic()->getTopicId() == $topicId) {
-                            $this->em->remove($userTopic);
-                            break;
-                        }
-                    } catch (\Exception $e) {
-                        $this->em->remove($userTopic);
-                    }
+            if ($status === 'false' && !empty($matches)) {
+                foreach ($matches as $match) {
+                    $this->em->remove($match);
+                }
+            } else if ($status === 'true' && empty($matches)) {
+                $topic = $this->findTopic($topicId);
+                if ($topic) {
+                    $this->em->persist(new UserTopic($user, $this->findTopic($topicId)));
                 }
             }
         }

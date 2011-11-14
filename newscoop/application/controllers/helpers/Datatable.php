@@ -27,31 +27,27 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
     private $handle;
 
     /**
-     *
      * @var array where are keept the options
      */
     private $iOptions;
 
     /**
-     * Init
-     *
      * @return Action_Helper_Datatable
      */
     public function init()
     {
-        try {
-		    $this->getActionController()->getHelper('contextSwitch')
-                ->addActionContext('table', 'json')
-                ->initContext();
-		}
-        catch (Exception $e) {
-			echo($e);
-			die;
-		}
+        $request = $this->getRequest();
+		$this->getActionController()->getHelper('contextSwitch')
+            ->addActionContext($request->getParam('action', 'table'), 'json')
+            ->initContext();
 
         $view = $this->getActionController()->initView();
         $this->iOptions = array(
-            'sAjaxSource' => $view->url(array('action' => 'index', 'format' => 'json')) . '?format=json',
+            'sAjaxSource' => $view->url(array(
+                'controller' => $request->getParam('controller'),
+                'action' => $request->getParam('action', 'index'),
+                'format' => 'json',
+            )) . '?format=json',
             'bServerSide' => true,
             'bJQueryUI' => true,
             'bAutoWidth' => true,
@@ -63,6 +59,7 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
             'sDom' => '<"H"lfri>t<"F"ip>',
             'aoColumnDefs' => array()
         );
+
         return $this;
     }
 
@@ -92,13 +89,6 @@ class Action_Helper_Datatable extends Zend_Controller_Action_Helper_Abstract
         // return this for chaining mechanism
         return $this;
     }
-
-    /*
-    public function setAdapter()
-    {
-
-    }
-    */
 
     /**
      * Set entity

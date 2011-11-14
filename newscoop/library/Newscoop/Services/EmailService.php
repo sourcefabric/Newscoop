@@ -47,6 +47,7 @@ class EmailService
         $message = $this->view->action('confirm', 'email', 'default', array(
             'user' => $user->getId(),
             'token' => $this->tokenService->generateToken($user, 'email.confirm'),
+            'format' => null,
         ));
 
         // @todo use config
@@ -64,6 +65,7 @@ class EmailService
         $message = $this->view->action('password-restore', 'email', 'default', array(
             'user' => $user->getId(),
             'token' => $this->tokenService->generateToken($user, 'password.restore'),
+            'format' => null,
         ));
 
         // @todo use config

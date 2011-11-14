@@ -45,6 +45,16 @@ class UserAttribute
     }
 
     /**
+     * Get attribute name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return (string) $this->attribute;
+    }
+
+    /**
      * Set attribute value
      *
      * @param mixed $value

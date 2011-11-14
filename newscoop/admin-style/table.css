@@ -60,3 +60,5 @@ table td.size {
 }
 
 .tabs table.templates { font-size: 1em; }
+
+table.datatable { margin-bottom: 0; }

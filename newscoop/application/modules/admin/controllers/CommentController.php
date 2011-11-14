@@ -62,6 +62,7 @@ class Admin_CommentController extends Zend_Controller_Action
      */
     public function tableAction()
     {
+        $this->getHelper('contextSwitch')->addActionContext('table', 'json')->initContext();
         $view = $this->view;
         $table = $this->getHelper('datatable');
         /* @var $table Action_Helper_Datatable */
@@ -78,7 +79,7 @@ class Admin_CommentController extends Zend_Controller_Action
         $acl['edit'] = $this->_helper->acl->isAllowed('comment', 'edit');
         $acl['enable'] = $this->_helper->acl->isAllowed('comment', 'enable');
         $acceptanceRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
-        $articleRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
+        $articleRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Article');
         $table->setHandle(function($comment) use ($view, $acl, $acceptanceRepository, &$index)
             {
                 /* var Newscoop\Entity\Comment\Commenter */

@@ -402,6 +402,8 @@ function camp_is_empty_database($p_dbName)
  */
 function camp_clean_database($p_dbName)
 {
+    $preserve_tables = array_map('strtolower', array('CityNames', 'CityLocations'));
+
     if (!mysql_select_db($p_dbName)) {
         camp_exit_with_error("camp_clean_database: can't select the database");
     }
@@ -410,6 +412,10 @@ function camp_clean_database($p_dbName)
     }
     while ($row = mysql_fetch_row($res)) {
         $table_name = $row[0];
+        if (in_array(strtolower($table_name), $preserve_tables)) {
+            continue;
+        }
+
         mysql_query("drop table `" . mysql_escape_string($table_name) . "`");
     }
 } // fn camp_clean_database

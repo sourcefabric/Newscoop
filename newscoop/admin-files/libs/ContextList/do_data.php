@@ -76,6 +76,15 @@ foreach ($filters as $name => $opts) {
     }
 }
 
+if (empty($_REQUEST['show_newswires']) || $_REQUEST['show_newswires'] == "false") {
+    $articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), 'newswire');
+    $articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), 'event');
+    $articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), 'screening');
+}
+
+// filter out PrintDesk articles
+$articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), 'printdesk');
+
 // search
 if (isset($_REQUEST['sSearch']) && strlen($_REQUEST['sSearch']) > 0) {
     $search_phrase = $_REQUEST['sSearch'];

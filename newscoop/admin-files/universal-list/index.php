@@ -1,9 +1,6 @@
 <?php
 require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 require_once LIBS_DIR . '/ArticleList/ArticleList.php';
-require_once LIBS_DIR . '/ArticleList/ArticleList.php';
-
-require_once LIBS_DIR . '/ContextList/ContextList.php';
 
 camp_load_translation_strings('articles');
 

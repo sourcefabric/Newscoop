@@ -80,12 +80,10 @@ class IngestServiceTest extends \RepositoryTestCase
 
     public function testPublish()
     {
-        $feed = new Feed('feed_title');
-        $entry = new Entry('entity_title', 'content');
+        $feed = new Feed('test');
+        $entry = new Entry('title', 'content');
         $feed->addEntry($entry);
-
         $this->em->persist($feed);
-        $this->em->persist($entry);
         $this->em->flush();
 
         $this->assertFalse($entry->isPublished());
@@ -100,15 +98,14 @@ class IngestServiceTest extends \RepositoryTestCase
 
     public function testPrepare()
     {
-        $feed = new Feed('feed_title');
-        $entry = new Entry('entity_title', 'content');
+        $feed = new Feed('test');
+        $entry = new Entry('title', 'content');
         $feed->addEntry($entry);
-
         $this->em->persist($feed);
-        $this->em->persist($entry);
         $this->em->flush();
 
         $article = $this->service->publish($entry, 'N');
+
         $this->assertFalse($article->isPublished());
         $this->assertTrue($entry->isPublished());
     }
@@ -127,7 +124,7 @@ class IngestServiceTest extends \RepositoryTestCase
 
         $this->service->updateSDA();
 
-        $this->assertEquals(6, count($feed->getEntries()));
+        $this->assertEquals(7, count($feed->getEntries()));
         $this->assertInstanceOf('DateTime', $feed->getUpdated());
     }
 
@@ -145,7 +142,7 @@ class IngestServiceTest extends \RepositoryTestCase
         $this->service->updateSDA();
         $this->service->updateSDA();
 
-        $this->assertEquals(6, count($feed->getEntries()));
+        $this->assertEquals(7, count($feed->getEntries()));
     }
 
     public function testUpdateAllTimeout()
@@ -156,7 +153,7 @@ class IngestServiceTest extends \RepositoryTestCase
         copy(APPLICATION_PATH . '/../tests/ingest/newsml1.xml', $tmpFile);
 
         $this->service->updateSDA();
-        $this->assertEquals(6, count($feed->getEntries()));
+        $this->assertEquals(7, count($feed->getEntries()));
     }
 
     public function testLiftEmbargoNew()
