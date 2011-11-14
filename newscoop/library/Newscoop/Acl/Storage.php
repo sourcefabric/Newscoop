@@ -36,9 +36,15 @@ class Storage implements StorageInterface
     {
         $em = $this->doctrine->getEntityManager();
         $repository = $em->getRepository('Newscoop\Entity\Acl\Rule');
-        return (array) $repository->findBy(array(
+        $criteria = array(
             'role' => $role->getRoleId(),
-        ));
+        );
+
+        if (is_a($role, '\Newscoop\Entity\User\Group')) { // @fix WOBS-568: ignore deny rules for roles
+            $criteria['type'] = 'allow';
+        }
+
+        return $repository->findBy($criteria);
     }
 
     /**

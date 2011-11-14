@@ -44,9 +44,11 @@ $(function() {
         });
     });
 
-    $('.resource input:checkbox').not('.toggle').change(function() {
+    $('.resource input:checkbox').not('.toggle').change(function(e) {
+        e.preventDefault();
+
         var input = $(this);
-        var type = $('input:checked', input.closest('li')).size() ? 'allow' : 'deny';
+        var type = this.checked ? 'allow' : 'deny';
         var resource = input.attr('name');
         var action = input.val();
         var context = input.closest('ul');
@@ -60,25 +62,24 @@ $(function() {
         $.post("<?php echo $this->url(array(
             'module' => 'admin',
             'controller' => 'acl',
-            'action' => 'save',
+            'action' => 'edit',
             'format' => 'json',
         )); ?>", {
-            'role': <?php echo $this->roleId; ?>,
             'type': type,
             'resource': resource,
+            'role': <?php echo $this->role->getRoleId(); ?>,
             'action': action
         }, function(data, textStatus, jqXHR) {
-            if (data.status == 'ok') {
-                flashMessage(<?php echo json_encode(getGS('Permissions updated')); ?>);
-            } else {
-                flashMessage(<?php echo json_encode(getGS('Error: ')); ?> + data.message, 'error');
+            if (data.error) {
+                flashMessage(<?php echo json_encode(getGS('Error: ')); ?> + data.error, 'error');
                 input.closest('li').removeClass('deny');
+            } else {
+                flashMessage(<?php echo json_encode(getGS('Permissions updated')); ?>);
             }
         }, 'json');
 
         // update check all checkbox on item change
         $('input:checkbox.toggle', context).attr('checked', $('input:checkbox', context).not('.toggle').size() == $('input:checkbox:checked', context).not('.toggle').size());
-        return false;
     });
 });
 </script>

@@ -142,7 +142,7 @@ class Admin_AclController extends Zend_Controller_Action
         );
 
         $this->_helper->contextSwitch()
-            ->addActionContext('save', 'json')
+            ->addActionContext('edit', 'json')
             ->initContext();
 
         $this->acl = Zend_Registry::get('acl');
@@ -152,44 +152,32 @@ class Admin_AclController extends Zend_Controller_Action
 
     public function editAction()
     {
-        if ($this->_getParam('user', false)) {
-            $role = $this->_helper->entity->find('Newscoop\Entity\User', $this->_getParam('user'));
-        } else {
-            $role = $this->_helper->entity->find('Newscoop\Entity\User\Group', $this->_getParam('group'));
+        $role = $this->_getParam('user', false)
+            ? $this->_helper->entity->find('Newscoop\Entity\User', $this->_getParam('user'))
+            : $this->_helper->entity->find('Newscoop\Entity\User\Group', $this->_getParam('group'));
+
+        if ($this->getRequest()->isPost()) {
+            $values = $this->getRequest()->getPost();
+            if ($this->isBlocker($values)) {
+                $this->view->error = getGS("You can't deny yourself to manage $1", $this->getResourceName($this->resource));
+                return;
+            }
+
+            try {
+                $this->ruleRepository->save($values, $this->_getParam('user', false));
+            } catch (\Exception $e) {
+                $this->view->error = $e->getMessage();
+            }
+
+            return;
         }
 
         $this->view->role = $role;
-        $this->view->roleId = $role->getRoleId();
         $this->view->groups = $this->groups;
         $this->view->resources = $this->resources;
         $this->view->actions = $this->acl->getResources();
         $this->view->actionNames = $this->actions;
         $this->view->acl = $this->getHelper('acl')->getAcl($role);
-    }
-
-    public function saveAction()
-    {
-        $request = $this->getRequest();
-        if (!$request->isPost()) {
-            return;
-        }
-
-        $values = $request->getPost();
-        if ($this->isBlocker($values)) {
-            $this->view->status = 'error';
-            $this->view->message = getGS("You can't deny yourself to manage $1", $this->getResourceName($this->resource));
-            return;
-        }
-
-        try {
-            $rule = new Rule();
-            $this->ruleRepository->save($rule, $values);
-            $this->_helper->entity->flushManager();
-            $this->view->status = 'ok';
-        } catch (\Exception $e) {
-            $this->view->status = 'error';
-            $this->view->message = $e->getMessage();
-        }
     }
 
     /**
