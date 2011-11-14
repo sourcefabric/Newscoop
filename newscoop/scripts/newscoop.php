@@ -50,11 +50,7 @@ $cli->setCatchExceptions(true);
 $cli->setHelperSet(new \Symfony\Component\Console\Helper\HelperSet($helperSet));
 
 $cli->addCommands(array(
-    new \Newscoop\Tools\Console\Command\UpdateIngestCommand(),
-    new \Newscoop\Tools\Console\Command\XMLExportSMDCommand(),
-    new \Newscoop\Tools\Console\Command\UpdateArticlePopularityMetricsCommand(),
-    new \Newscoop\Tools\Console\Command\UpdateArticlePopularityRankingCommand(),
-    
+    new \Newscoop\Tools\Console\Command\UpdateFooCommand(),
 ));
 
 $cli->run();
