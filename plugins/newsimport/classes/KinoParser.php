@@ -639,7 +639,21 @@ class KinoData_Parser_SimpleXML {
         $movies_infos = array();
 
         // movies general info
-        $mov_infos_parts = array('imdb' => 'movimb', 'spec' => 'movspc', 'key' => 'movkey', 'title' => 'movtit', 'directed' => 'movdir', 'url' => 'movlnk', 'trailer' => 'movtra',);
+        $mov_infos_parts = array(
+            'key' => 'movkey', 'imdb' => 'movimb', 'suisa' => 'movsui', 'country' => 'movcou',
+            'title' => 'movtit', 'lead' => 'movlea', 'link' => 'movlnk', 'trailer' => 'movtra',
+        );
+
+        $mov_infos_people = array(
+            'director' => 'movdir', 'producer' => 'movpro', 'cast' => 'movcas', 'script' => 'movscr', 'camera' => 'movcam',
+            'cutter' => 'movcut', 'sound' => 'movsnd', 'score' => 'movsco', 'production_design' => 'movpde',
+            'costume_design' => 'movcde', 'visual_effects' => 'movvfx',
+        );
+
+        $mov_infos_times = array('release_ch_d' => 'movred', 'release_ch_f' => 'movref', 'release_ch_i' => 'movrei',);
+
+        $mov_infos_numbers = array('flag' => 'movspc', 'year' => 'movyea', 'duration' => 'movdur',  'oscars' => 'movosc',);
+
         foreach($movies_infos_files as $one_mov_file) {
             //$one_mov_xml = simplexml_load_file($one_mov_file);
             $one_mov_xml = simplexml_load_string(FileLoad::LoadFix($one_mov_file));
@@ -657,17 +671,53 @@ class KinoData_Parser_SimpleXML {
                 if (empty($one_mov_desc)) {
                     $one_mov_desc = trim('' . $one_movie->movcgd);
                 }
-                if (empty($one_mov_desc)) {
-                    $one_mov_desc = trim('' . $one_movie->movlea);
-                }
+                //if (empty($one_mov_desc)) {
+                //    $one_mov_desc = trim('' . $one_movie->movlea);
+                //}
                 if ((!isset($one_mov_info['desc'])) || (empty($one_mov_info['desc']))) {
                     $one_mov_info['desc'] = $one_mov_desc;
                 }
 
+                //specific text parts
                 foreach ($mov_infos_parts as $one_mov_infos_key => $one_mov_infos_spec) {
                     $one_mov_infos_value = trim('' . $one_movie->$one_mov_infos_spec);
-                    if ((!isset($one_mov_info[$one_mov_infos_key])) || (empty($one_mov_info[$one_mov_infos_key]))) {
+                    if ((!isset($one_mov_info[$one_mov_infos_key])) || (empty($one_mov_info[$one_mov_infos_key])) || (!empty($one_mov_infos_value))) {
+                        $one_mov_info[$one_mov_infos_key] = '' . $one_mov_infos_value;
+                    }
+                }
+
+                //specific people parts
+                foreach ($mov_infos_people as $one_mov_infos_key => $one_mov_infos_spec) {
+                    $one_mov_infos_value = trim('' . $one_movie->$one_mov_infos_spec);
+                    if ((!isset($one_mov_info[$one_mov_infos_key])) || (empty($one_mov_info[$one_mov_infos_key])) || (!empty($one_mov_infos_value))) {
+                        $one_mov_info_people = array();
+                        foreach (explode("\n", '' . $one_mov_infos_value) as $one_mov_info_people_line) {
+                            $one_mov_info_people_line = trim($one_mov_info_people_line);
+                            if (empty($one_mov_info_people_line)) {continue;}
+                            $one_mov_info_people[] = $one_mov_info_people_line;
+                        }
+
+                        $one_mov_info[$one_mov_infos_key] = implode(',', $one_mov_info_people);
+
+                    }
+                }
+
+                //specific date-time parts
+                foreach ($mov_infos_times as $one_mov_infos_key => $one_mov_infos_spec) {
+                    $one_mov_infos_value = trim('' . $one_movie->$one_mov_infos_spec);
+                    if ((!isset($one_mov_info[$one_mov_infos_key])) || (empty($one_mov_info[$one_mov_infos_key])) || (!empty($one_mov_infos_value))) {
+                        if ( (!empty($one_mov_infos_value)) && (is_numeric($one_mov_infos_value)) ) {
+                            $one_mov_infos_value = gmdate('Y-m-d', $one_mov_infos_value);
+                        }
                         $one_mov_info[$one_mov_infos_key] = $one_mov_infos_value;
+                    }
+                }
+
+                //specific numeric parts
+                foreach ($mov_infos_numbers as $one_mov_infos_key => $one_mov_infos_spec) {
+                    $one_mov_infos_value = trim('' . $one_movie->$one_mov_infos_spec);
+                    if ((!isset($one_mov_info[$one_mov_infos_key])) || (empty($one_mov_info[$one_mov_infos_key])) || (!empty($one_mov_infos_value))) {
+                        $one_mov_info[$one_mov_infos_key] = 0 + $one_mov_infos_value;
                     }
                 }
 
@@ -914,7 +964,7 @@ class KinoData_Parser_SimpleXML {
         foreach ($kinos_infos_files as $one_kino_file) {
             //$one_kino_xml = simplexml_load_file($one_kino_file);
             $one_kino_xml = simplexml_load_string(FileLoad::LoadFix($one_kino_file));
-            $export_start_date = '0000-00-00';
+            $export_start_date = '0000-00-01';
             $export_start_date_time = explode('-', trim('' . $one_kino_xml->export->date_min));
             $export_start_date_info = explode('.', $export_start_date_time[0]);
             if (3 == count($export_start_date_info)) {
@@ -1246,6 +1296,7 @@ class KinoData_Parser_SimpleXML {
             $one_mov_images = array();
 
             $one_mov_trailers = array();
+            $trailer_official = '';
 
             if (!empty($one_movie)) {
                 if (isset($one_movie['genres'])) {
@@ -1270,13 +1321,14 @@ class KinoData_Parser_SimpleXML {
                     }
                 }
 
-                if ( isset($one_movie['trailer']) && (!empty($one_movie['trailer'])) ) {
-                    $one_mov_trailers[] = $one_movie['trailer'];
-                }
                 if ( isset($one_movie['link_trailer']) && (!empty($one_movie['link_trailer'])) ) {
                     if ( isset($one_movie['link_trailer']['url']) && (!empty($one_movie['link_trailer']['url'])) ) {
                         $one_mov_trailers[] = $one_movie['link_trailer']['url'];
+                        $trailer_official = $one_movie['link_trailer']['url'];
                     }
+                }
+                if ( isset($one_movie['trailer']) && (!empty($one_movie['trailer'])) ) {
+                    $one_mov_trailers[] = $one_movie['trailer'];
                 }
             }
 
@@ -1286,9 +1338,16 @@ class KinoData_Parser_SimpleXML {
             }
 
             $one_event = array();
-            $one_event['date'] = $set_date;
+
+            //$one_event['date'] = $set_date;
+            //$one_date_max = '0000-00-01';
+            $one_date_max = $set_date;
 
             foreach ($one_screen['dates'] as $one_date => $one_times) {
+                if ($one_date_max < $one_date) {
+                    $one_date_max = $one_date;
+                }
+
                 if (!isset($set_date_times[$one_date])) {
                     $set_date_times[$one_date] = array(); // this shall not occur
                 }
@@ -1300,6 +1359,7 @@ class KinoData_Parser_SimpleXML {
             }
             ksort($set_date_times);
 
+            $one_event['date'] = $one_date_max;
             $one_event['date_time_tree'] = json_encode($set_date_times);
             $one_event['date_time_text'] = $this->formatDateText($set_date_times);
 
@@ -1324,6 +1384,7 @@ hh.mm:langs:flags
                 $one_event['location_id'] = $one_screen['kino_id'];
 
                 $one_event['movie_key'] = (isset($one_screen['movie_key']) && (!empty($one_screen['movie_key']))) ? $one_screen['movie_key'] : '';
+                $one_event['movie_info'] = $one_movie;
 
                 $one_event['headline'] = $one_screen['title'];
                 $one_event['organizer'] = $one_screen['kino_name'];
@@ -1359,6 +1420,7 @@ hh.mm:langs:flags
                 foreach ($one_mov_trailers as $cur_trailer) {
                     $one_event['other'][] = $this->makeLink($cur_trailer, 'Trailer');
                 }
+                $one_event['movie_trailer'] = $trailer_official;
 
                 $one_event['genre'] = $one_mov_genre;
                 $one_event['languages'] = '';

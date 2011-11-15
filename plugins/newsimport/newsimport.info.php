@@ -317,6 +317,36 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             'movie_key' => array('type' => 'text', 'params' => array(), 'hidden' => true), // outer movie identifier, but can be empty
             // date/time - json
             // 'date_time_tree' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 0), 'hidden' => true), // puts several date, time, flags, into a single field
+            'movie_imdb' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
+            'movie_suisa' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
+
+            'movie_flag' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // some flag/spec info
+
+            //'movie_title' => array('type' => 'text', 'params' => array(), 'hidden' => false), // movie title
+            'movie_lead' => array('type' => 'text', 'params' => array(), 'hidden' => false), // lead/perex short text
+            'movie_link' => array('type' => 'text', 'params' => array(), 'hidden' => false), // link to the movie site
+            'movie_trailer' => array('type' => 'text', 'params' => array(), 'hidden' => false), // link to the (vimeo) trailer
+
+            'movie_director' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
+            'movie_producer' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
+            'movie_cast' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
+            'movie_script' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
+            'movie_camera' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
+            'movie_cutter' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
+            'movie_sound' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
+            'movie_score' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
+            'movie_production_design' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
+            'movie_costume_design' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
+            'movie_visual_effects' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
+
+            'movie_year' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), //
+            'movie_duration' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), // minutes
+            'movie_country' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
+            'movie_oscars' => array('type' => 'numeric', 'params' => array('precision' => 0), 'hidden' => false), //
+
+            'movie_release_ch_d' => array('type' => 'date', 'params' => array(), 'hidden' => false), //
+            'movie_release_ch_f' => array('type' => 'date', 'params' => array(), 'hidden' => false), //
+            'movie_release_ch_i' => array('type' => 'date', 'params' => array(), 'hidden' => false), //
         );
 
         foreach (array($evt_type_name, $scr_type_name) as $art_type_name) {
