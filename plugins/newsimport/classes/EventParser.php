@@ -516,7 +516,7 @@ class EventData_Parser_SimpleXML {
 
                 // * main date-time info
 
-                $event_date = '0000-00-00';
+                $event_date = '0000-00-01';
 
                 // year, four digits
                 $x_evedatyeanum2 = trim('' . $event->evedatyeanum2);

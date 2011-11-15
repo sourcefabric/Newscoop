@@ -964,7 +964,7 @@ class KinoData_Parser_SimpleXML {
         foreach ($kinos_infos_files as $one_kino_file) {
             //$one_kino_xml = simplexml_load_file($one_kino_file);
             $one_kino_xml = simplexml_load_string(FileLoad::LoadFix($one_kino_file));
-            $export_start_date = '0000-00-00';
+            $export_start_date = '0000-00-01';
             $export_start_date_time = explode('-', trim('' . $one_kino_xml->export->date_min));
             $export_start_date_info = explode('.', $export_start_date_time[0]);
             if (3 == count($export_start_date_info)) {
@@ -1340,7 +1340,7 @@ class KinoData_Parser_SimpleXML {
             $one_event = array();
 
             //$one_event['date'] = $set_date;
-            //$one_date_max = '0000-00-00';
+            //$one_date_max = '0000-00-01';
             $one_date_max = $set_date;
 
             foreach ($one_screen['dates'] as $one_date => $one_times) {
