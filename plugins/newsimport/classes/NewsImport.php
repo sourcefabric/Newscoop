@@ -658,7 +658,16 @@ class NewsImport
                         $one_file_fndl = fopen($one_file_path, 'w');
                         fwrite($one_file_fndl, $one_image_cont);
                         fclose($one_file_fndl);
-                        if (false === exif_imagetype($one_file_path)) {
+                        $one_image_bad = false;
+                        try {
+                            if (false === exif_imagetype($one_file_path)) {
+                                $one_image_bad = true;
+                            }
+                        }
+                        catch (Exception $exc) {
+                            $one_image_bad = true;
+                        }
+                        if ($one_image_bad) {
                             unlink($one_file_path);
                             continue;
                         }
