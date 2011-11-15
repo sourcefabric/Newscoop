@@ -374,6 +374,19 @@ class NewsImport
             $art_author->create();
         }
 
+        $movie_keys_text = array(
+            'imdb', 'suisa', 'country', 'lead', 'link',
+            'director', 'producer', 'cast', 'script', 'camera',
+            'cutter', 'sound', 'score', 'production_design',
+            'costume_design', 'visual_effects',
+        );
+        $movie_keys_numeric = array(
+            'flag', 'year', 'duration', 'oscars',
+        );
+        $movie_keys_date = array(
+            'release_ch_d', 'release_ch_f', 'release_ch_i',
+        );
+
         foreach ($p_events as $one_event) {
             $article = null;
             $article_new = false;
@@ -450,6 +463,30 @@ class NewsImport
             if ($scr_type == $art_type) {
                 $f_movie_key = (isset($one_event['movie_key']) && (!empty($one_event['movie_key']))) ? $one_event['movie_key'] : '';
                 $article_data->setProperty('Fmovie_key', $f_movie_key);
+
+                $f_movie_trailer = (isset($one_event['movie_trailer']) && (!empty($one_event['movie_trailer']))) ? $one_event['movie_trailer'] : '';
+                $article_data->setProperty('Fmovie_trailer', $f_movie_trailer);
+
+                $f_movie_info = (isset($one_event['movie_info']) && (!empty($one_event['movie_info']))) ? $one_event['movie_info'] : '';
+                if (empty($f_movie_info)) {
+                    $f_movie_info = array();
+                }
+
+                foreach ($movie_keys_text as $one_movie_info_key) {
+                    $f_movie_val = (isset($f_movie_info[$one_movie_info_key]) && (!empty($f_movie_info[$one_movie_info_key]))) ? $f_movie_info[$one_movie_info_key] : '';
+                    $article_data->setProperty('Fmovie_' . $one_movie_info_key, $f_movie_val);
+                }
+
+                foreach ($movie_keys_numeric as $one_movie_info_key) {
+                    $f_movie_val = (isset($f_movie_info[$one_movie_info_key]) && (!empty($f_movie_info[$one_movie_info_key]))) ? $f_movie_info[$one_movie_info_key] : 0;
+                    $article_data->setProperty('Fmovie_' . $one_movie_info_key, $f_movie_val);
+                }
+
+                foreach ($movie_keys_date as $one_movie_info_key) {
+                    $f_movie_val = (isset($f_movie_info[$one_movie_info_key]) && (!empty($f_movie_info[$one_movie_info_key]))) ? $f_movie_info[$one_movie_info_key] : '0000-00-01';
+                    $article_data->setProperty('Fmovie_' . $one_movie_info_key, $f_movie_val);
+                }
+
             }
 
             $article_data->setProperty('Fheadline', $one_event['headline']);
@@ -621,7 +658,16 @@ class NewsImport
                         $one_file_fndl = fopen($one_file_path, 'w');
                         fwrite($one_file_fndl, $one_image_cont);
                         fclose($one_file_fndl);
-                        if (false === exif_imagetype($one_file_path)) {
+                        $one_image_bad = false;
+                        try {
+                            if (false === exif_imagetype($one_file_path)) {
+                                $one_image_bad = true;
+                            }
+                        }
+                        catch (Exception $exc) {
+                            $one_image_bad = true;
+                        }
+                        if ($one_image_bad) {
                             unlink($one_file_path);
                             continue;
                         }
@@ -758,7 +804,7 @@ class NewsImport
             //new ComparisonOperation('NrIssue', new Operator('is', 'sql'), $art_issue),
             new ComparisonOperation('NrSection', new Operator('is', 'sql'), $art_section),
             new ComparisonOperation('Type', new Operator('is', 'sql'), $art_type),
-            new ComparisonOperation('' . $art_type . '.date', new Operator('smaller', 'sql'), $passed_date),
+            new ComparisonOperation('' . $art_type . '.date', new Operator('smaller_equal', 'sql'), $passed_date),
             new ComparisonOperation('' . $art_type . '.provider_id', new Operator('is', 'sql'), $art_provider),
         ), null, null, 0, $p_count, true);
 
@@ -777,7 +823,7 @@ class NewsImport
 
             $event_data_rem = $event_art_rem->getArticleData();
             try {
-                if (($event_data_rem->getFieldValue('date')) >= $passed_date) {
+                if (($event_data_rem->getFieldValue('date')) > $passed_date) {
                     continue;
                 }
             }
@@ -972,6 +1018,16 @@ class NewsImport
             }
             if (empty($ev_skip)) {
                 // shoud we process something (new)
+                if (isset($one_source['source_dirs'])) {
+                    if (isset($one_source['source_dirs']['new']) && isset($one_source['source_dirs']['lock'])) {
+                        $remote_lock_path = $one_source['source_dirs']['new'] . $one_source['source_dirs']['lock'];
+                        while (file_exists($remote_lock_path)) {
+                            set_time_limit(0);
+                            sleep(20);
+                        }
+                    }
+                }
+
                 $res = $parser_obj->prepare($categories, $limits, $cancels, $import_env, $region_info, $region_topics_lang);
                 if (!$res) {
                     continue;

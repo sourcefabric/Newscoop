@@ -516,7 +516,7 @@ class EventData_Parser_SimpleXML {
 
                 // * main date-time info
 
-                $event_date = '0000-00-00';
+                $event_date = '0000-00-01';
 
                 // year, four digits
                 $x_evedatyeanum2 = trim('' . $event->evedatyeanum2);
@@ -1010,6 +1010,7 @@ class EventData_Parser_SimpleXML {
 
                 $event_info['images'] = $event_images;
 
+/* asked to skip this audio/video fields of events
                 // videos
                 $x_evevid = trim('' . $event->evevid);
                 if (!empty($x_evevid)) {
@@ -1021,6 +1022,7 @@ class EventData_Parser_SimpleXML {
                 if (!empty($x_eveaud)) {
                     $event_other[] = $x_eveaud;
                 }
+*/
 
                 $event_info['other'] = $event_other;
 
