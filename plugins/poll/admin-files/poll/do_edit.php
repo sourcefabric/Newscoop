@@ -69,5 +69,5 @@ if ($poll->exists()) {
     }
 }
 $f_from = Input::Get('f_from', 'string', 'index.php');
-header('Location: '.$f_from);
+camp_html_goto_page($f_from);
 ?>
