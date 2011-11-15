@@ -68,6 +68,8 @@ foreach ($hiddens as $name) {
                 'controller' => 'comment',
                 'action' => 'set-recommended',
             )); ?>/comment/${id}/recommended/${recommended_toggle}" class="ui-state-default text-button clear-margin comment-recommend status-${recommended_toggle}"><?php putGS('Recommend'); ?></a>
+        </dd>
+        <dd>
             <ul class="action-list clearfix">
               <li>
                 <a class="ui-state-default icon-button right-floated" href="javascript:;"><span class="ui-icon ui-icon-disk"></span><?php putGS('Save'); ?></a>
@@ -151,13 +153,13 @@ function loadComments() {
 			var template = $('#comment-prototype').html();
 			for(var key in comment) {
 				if(key == 'status') {
-					template = template.replace(new RegExp("\\$({|%7B)"+comment[key]+"_checked(}|%7D)","g"),'checked="true"');
+                    template = template.replace(new RegExp("\\$({|%7B)"+comment[key]+"_checked(}|%7D)","g"),'checked="true"');
 					template = template.replace(new RegExp("\\${[^_]*_checked}","g"),'');
 				}
 				template = template.replace(new RegExp("\\$({|%7B)"+key+"(}|%7D)","g"),comment[key]);
 			}
 			$('#comment-moderate').append('<fieldset class="plain comments-block">'+template+'</fieldset>');
-
+            toggleCommentStatus(comment['id']);
 		}
 
         var referencedComment = $(document.location.hash);
@@ -167,7 +169,6 @@ function loadComments() {
 
 		if(!hasComment)
 			$('#no-comments').show();
-		toggleCommentStatus();
 
         $('.comment-recommend').each(function() {
              if ($(this).hasClass('status-0')) {
