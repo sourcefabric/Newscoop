@@ -1030,6 +1030,7 @@ class NewsImport
 
                 $res = $parser_obj->prepare($categories, $limits, $cancels, $import_env, $region_info, $region_topics_lang);
                 if (!$res) {
+                    echo $one_source_name.':none'."\n";
                     continue;
                 }
             }
