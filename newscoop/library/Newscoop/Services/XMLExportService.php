@@ -8,6 +8,7 @@
 namespace Newscoop\Services;
 
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAuthor.php');
 
 use Doctrine\ORM\EntityManager,
     Newscoop\Entity\Article;
@@ -29,10 +30,33 @@ class XMLExportService
         $this->em = $em;
     }
     
-    public function getArticles($type, $issue)
+    public function getArticles(array $config, \DateTime $start, \DateTime $end, $userid = null)
     {
-        $articles = $this->em->getRepository('Newscoop\Entity\Article')
-            ->findBy(array('type' => $type, 'issueId' => $issue, 'workflowStatus' => \Newscoop\Entity\Article::STATUS_PUBLISHED));
+        $pub = $this->em->getRepository('Newscoop\Entity\Publication')
+            ->findOneBy(array('id' => $config['publication']));
+        $query = $this->em->createQueryBuilder()
+            ->select('a')
+            ->from('Newscoop\Entity\Article', 'a')
+            ->where('a.type = :type')
+            ->andWhere('a.publication = :publication')
+            ->andWhere('a.workflowStatus = :status')
+            ->andWhere('a.published > :start_time')
+            ->andWhere('a.published < :end_time')
+            ->setParameters(array(
+                'type' => $config['articleType'],
+                'publication' => $pub,
+                'status' => Article::STATUS_PUBLISHED,
+                'start_time' => $start,
+                'end_time' => $end));
+
+        if (!is_null($userid)) {
+            $creator = $this->em->getRepository('Newscoop\Entity\User')
+                ->find($userid);
+            $query->andWhere('a.creator = :creator')
+                ->setParameter('creator', $creator);
+        }   
+
+        $articles = $query->getQuery()->getResult();
 
         return $articles;
     }
@@ -40,14 +64,23 @@ class XMLExportService
     public function getXML($type, $prefix, $articles)
     {
         $xml = new \SimpleXMLElement('<DDD></DDD>');
-        
+
         foreach ($articles as $article) {
             $data = $this->getData($type, $article->getNumber(), $article->getLanguage()->getId());
-            
+
             $item = $xml->addChild('DD');
             $item->addChild('DA', $article->getPublishDate());
+            $item->addChild('NR', $article->getId());
             $item->addChild('HT', $article->getName());
-            
+
+            $textAuthors = array();
+            $authors = \ArticleAuthor::GetAuthorsByArticle($article->getId(), $article->getLanguage());
+            foreach ($authors as $author) {
+                if (strtolower($author->getAuthorType()->getName()) == 'text') {
+                    $item->addChild('AU', $author->getName());
+                }
+            }
+
             $attachments = \ArticleAttachment::GetAttachmentsByArticleNumber($article->getNumber());
             foreach ($attachments as $attachment) {
                 $temp = explode('.', $attachment->getFileName());
@@ -55,32 +88,29 @@ class XMLExportService
                     $item->addChild('ME', 'pdf/'.$attachment->getFileName());
                 }
             }
-            
+
             try {
                 $sectionName = $article->getSection()->getName();
-            }
-            catch(\Exception $e) {
+            } catch(\Exception $e) {
                 $sectionName = '';
             }
-            
+
             $item->addChild('RE', $sectionName);
             $item->addChild('LD', $data['Flede']);
             $item->addChild('TX', $data['Fbody']);
-            
+
             try {
                 $creator = $article->getCreator();
             } catch (\Exception $e) {
                 $creator = null;
             }
-            
+
             if ($creator == null) {
                 $item->addChild('NT', 'Online');
-            }
-            else {
+            } else {
                 if ($creator->getUsername() == 'printdesk') {
                     $item->addChild('NT', 'Printed');
-                }
-                else {
+                } else {
                     $item->addChild('NT', 'Online');
                 }
             }
@@ -95,7 +125,7 @@ class XMLExportService
         $sql2 = mysql_fetch_assoc($sql1);
         return($sql2);
     }
-    
+
     public function getAttachments($prefix, $articles)
     {
         $attachments = array();
@@ -114,7 +144,7 @@ class XMLExportService
 
         return($attachments);
     }
-    
+
     public function createArchive($directoryName, $fileName, $contents, $attachments)
     {
         if (!is_dir($directoryName)) {
@@ -137,7 +167,7 @@ class XMLExportService
             }
         }
 
-        $zip->close();
+        $zip->close(); exit;
     }
     
     public function upload($directoryName, $fileName, $host, $user, $password)
