@@ -28,31 +28,7 @@ foreach ($hiddens as $name) {
 <fieldset id="comment-prototype" class="plain comments-block" style="display:none">
     <input type="hidden" name="comment_id" value="${id}">
     <?php if ($inEditMode): ?>
-    <ul class="action-list clearfix">
-      <li>
-        <a class="ui-state-default icon-button right-floated" href="javascript:;"><span class="ui-icon ui-icon-disk"></span><?php putGS('Save'); ?></a>
-      </li>
-      
-      <li>
-        <input type="radio" name="comment_action_${id}" value="deleted" class="input_radio" id="deleted_${id}" ${deleted_checked}/>
-        <label class="inline-style left-floated" for="deleted_${id}"><?php putGS('Delete'); ?></label>
-      </li>
-      
-      <li>
-        <input type="radio" name="comment_action_${id}" value="hidden" class="input_radio" id="hidden_${id}" ${hidden_checked}/>
-        <label class="inline-style left-floated" for="hidden_${id}"><?php putGS('Hidden'); ?></label>
-      </li>
-
-      <li>
-      <input type="radio" name="comment_action_${id}" value="approved" class="input_radio" id="approved_${id}" ${approved_checked}/>
-        <label class="inline-style left-floated" for="approved_${id}"><?php putGS('Approved'); ?></label>
-      </li>
-
-      <li>
-      <input type="radio" name="comment_action_${id}" value="pending" class="input_radio" id="inbox_${id}" ${pending_checked}/>
-        <label class="inline-style left-floated" for="inbox_${id}"><?php putGS('New'); ?></label>
-      </li>
-    </ul>
+    
     <?php endif; //inEditMode?>
     <div class="frame clearfix">
       <dl class="inline-list" id="comment-${id}">
@@ -92,6 +68,33 @@ foreach ($hiddens as $name) {
                 'controller' => 'comment',
                 'action' => 'set-recommended',
             )); ?>/comment/${id}/recommended/${recommended_toggle}" class="ui-state-default text-button clear-margin comment-recommend status-${recommended_toggle}"><?php putGS('Recommend'); ?></a>
+        </dd>
+        <dd>
+            <ul class="action-list clearfix">
+              <li>
+                <a class="ui-state-default icon-button right-floated" href="javascript:;"><span class="ui-icon ui-icon-disk"></span><?php putGS('Save'); ?></a>
+              </li>
+              
+              <li>
+                <input type="radio" name="comment_action_${id}" value="deleted" class="input_radio" id="deleted_${id}" ${deleted_checked}/>
+                <label class="inline-style left-floated" for="deleted_${id}"><?php putGS('Delete'); ?></label>
+              </li>
+              
+              <li>
+                <input type="radio" name="comment_action_${id}" value="hidden" class="input_radio" id="hidden_${id}" ${hidden_checked}/>
+                <label class="inline-style left-floated" for="hidden_${id}"><?php putGS('Hidden'); ?></label>
+              </li>
+
+              <li>
+              <input type="radio" name="comment_action_${id}" value="approved" class="input_radio" id="approved_${id}" ${approved_checked}/>
+                <label class="inline-style left-floated" for="approved_${id}"><?php putGS('Approved'); ?></label>
+              </li>
+
+              <li>
+              <input type="radio" name="comment_action_${id}" value="pending" class="input_radio" id="inbox_${id}" ${pending_checked}/>
+                <label class="inline-style left-floated" for="inbox_${id}"><?php putGS('New'); ?></label>
+              </li>
+            </ul>
         </dd>
         <?php endif; //inEditMode?>
       </dl>
@@ -150,13 +153,13 @@ function loadComments() {
 			var template = $('#comment-prototype').html();
 			for(var key in comment) {
 				if(key == 'status') {
-					template = template.replace(new RegExp("\\$({|%7B)"+comment[key]+"_checked(}|%7D)","g"),'checked="true"');
+                    template = template.replace(new RegExp("\\$({|%7B)"+comment[key]+"_checked(}|%7D)","g"),'checked="true"');
 					template = template.replace(new RegExp("\\${[^_]*_checked}","g"),'');
 				}
 				template = template.replace(new RegExp("\\$({|%7B)"+key+"(}|%7D)","g"),comment[key]);
 			}
 			$('#comment-moderate').append('<fieldset class="plain comments-block">'+template+'</fieldset>');
-
+            toggleCommentStatus(comment['id']);
 		}
 
         var referencedComment = $(document.location.hash);
@@ -166,7 +169,6 @@ function loadComments() {
 
 		if(!hasComment)
 			$('#no-comments').show();
-		toggleCommentStatus();
 
         $('.comment-recommend').each(function() {
              if ($(this).hasClass('status-0')) {
