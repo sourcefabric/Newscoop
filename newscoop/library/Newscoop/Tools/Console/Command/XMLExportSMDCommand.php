@@ -30,7 +30,7 @@ class XMLExportSMDCommand extends Console\Command\Command
             ->setDefinition(array(
                 new InputArgument('start', InputArgument::REQUIRED, 'Start time'),
                 new InputArgument('end', InputArgument::REQUIRED, 'End time'),
-                new InputArgument('creator', InputArgument::OPTIONAL, 'Creator user'),
+                new InputOption('mode', null, InputOption::VALUE_NONE, 'Export mode [all|online|print]'),
             ))
             ->setHelp(<<<EOT
 Export XML files to SMD.
@@ -58,15 +58,20 @@ EOT
             exit;
         }
 
-        $creator = $input->getArgument('creator') ? $input->getArgument('creator') : null;
-        $articles = $xmlExportService->getArticles($config, $start, $end, $creator);
+        $mode = $input->getOption('mode') ? $input->getOption('mode') : 'all';
+
+        $articles = $xmlExportService->getArticles($config, $start, $end, $mode);
+        if (empty($articles)) {
+            print("No articles found.\n");
+            exit;
+        }
 
         $contents = $xmlExportService->getXML($config['articleType'], $config['attachmentPrefix'], $articles);
 
         $attachments = $xmlExportService->getAttachments($config['attachmentPrefix'], $articles);
         
         $xmlExportService->createArchive($config['directoryName'], $config['fileName'], $contents, $attachments);
-        $xmlExportService->upload($config['directoryName'], $config['fileName'], $config['ftpHost'], $config['ftpUsername'], $config['ftpPassword']);
+        $xmlExportService->upload($config['directoryName'], $config['ftpHost'], $config['ftpUsername'], $config['ftpPassword']);
         $xmlExportService->clean($config['directoryName']);
     }
 }

@@ -14,12 +14,24 @@ use Doctrine\ORM\EntityManager,
     Newscoop\Entity\Article;
 
 /**
- * User service
+ * XML Export service
  */
 class XMLExportService
 {
+    const MODE_ALL = 'all';
+    const MODE_ONLINE = 'online';
+    const MODE_PRINT = 'print';
+
     /** @var Doctrine\ORM\EntityManager */
     private $em;
+
+    private $mode;
+
+    private $startTime;
+
+    private $endTime;
+
+    private $package;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
@@ -29,8 +41,8 @@ class XMLExportService
     {
         $this->em = $em;
     }
-    
-    public function getArticles(array $config, \DateTime $start, \DateTime $end, $userid = null)
+
+    public function getArticles(array $config, \DateTime $start, \DateTime $end, $mode = self::MODE_ALL)
     {
         $pub = $this->em->getRepository('Newscoop\Entity\Publication')
             ->findOneBy(array('id' => $config['publication']));
@@ -49,12 +61,27 @@ class XMLExportService
                 'start_time' => $start,
                 'end_time' => $end));
 
-        if (!is_null($userid)) {
-            $creator = $this->em->getRepository('Newscoop\Entity\User')
-                ->find($userid);
-            $query->andWhere('a.creator = :creator')
-                ->setParameter('creator', $creator);
-        }   
+        switch($mode) {
+            case self::MODE_PRINT:
+                $creator = $this->em->getRepository('Newscoop\Entity\User')
+                    ->find($config['print_userid']);
+                $query->andWhere('a.creator = :creator')
+                    ->setParameter('creator', $creator);
+                break;
+            case self::MODE_ONLINE:
+                $creator = $this->em->getRepository('Newscoop\Entity\User')
+                    ->find($config['print_userid']);
+                $query->andWhere('a.creator <> :creator')
+                    ->setParameter('creator', $creator);
+                break;
+            default:
+                $mode = self::MODE_ALL;
+                break;
+        }
+
+        $this->mode = $mode;
+        $this->startTime = $start;
+        $this->endTime = $end;
 
         $articles = $query->getQuery()->getResult();
 
@@ -74,7 +101,7 @@ class XMLExportService
             $item->addChild('HT', $article->getName());
 
             $textAuthors = array();
-            $authors = \ArticleAuthor::GetAuthorsByArticle($article->getId(), $article->getLanguage());
+            $authors = \ArticleAuthor::GetAuthorsByArticle($article->getId(), $article->getLanguage()->getId());
             foreach ($authors as $author) {
                 if (strtolower($author->getAuthorType()->getName()) == 'text') {
                     $item->addChild('AU', $author->getName());
@@ -150,27 +177,31 @@ class XMLExportService
         if (!is_dir($directoryName)) {
             mkdir($directoryName);
         }
-        
-        $file = fopen($directoryName.'/'.$fileName.date('Ymd').'.xml', 'w');
+
+        $packageName = $fileName . $this->mode . '_' . $this->startTime->format('Ymd-hi') . '_' . $this->endTime->format('Ymd-hi');
+        $xmlFile = $packageName . '.xml';
+
+        $file = fopen($directoryName . '/' . $xmlFile, 'w');
         fwrite($file, $contents);
         fclose($file);
         
         $zip = new \ZipArchive();
-        $zip->open($directoryName.'/'.$fileName.date('Ymd').'.zip', \ZIPARCHIVE::OVERWRITE);
-        if (file_exists($directoryName.'/'.$fileName.date('Ymd').'.xml')) {
-            $zip->addFile($directoryName.'/'.$fileName.date('Ymd').'.xml', $fileName.date('Ymd').'.xml');
+        $zip->open($directoryName . '/' . $packageName . '.zip', \ZIPARCHIVE::OVERWRITE);
+        if (file_exists($directoryName . '/' . $xmlFile)) {
+            $zip->addFile($directoryName.'/'.$xmlFile, $packageName . '/' . $xmlFile);
         }
 
         foreach ($attachments as $attachment) {
             if (file_exists($attachment['location'])) {
-                $zip->addFile($attachment['location'], 'pdf/'.$attachment['filename']);
+                $zip->addFile($attachment['location'], $packageName . '/pdf/' . $attachment['filename']);
             }
         }
 
-        $zip->close(); exit;
+        $this->package = $packageName;
+        $zip->close(); 
     }
     
-    public function upload($directoryName, $fileName, $host, $user, $password)
+    public function upload($directoryName, $host, $user, $password)
     {
         $connection = ftp_connect($host);
         $login = ftp_login($connection, $user, $password);
@@ -178,7 +209,7 @@ class XMLExportService
         ftp_pasv($connection, true);
         
         if ($connection && $login) {
-            $upload = ftp_put($connection, $fileName.date('Ymd').'.zip', $directoryName.'/'.$fileName.date('Ymd').'.zip', FTP_BINARY);
+            $upload = ftp_put($connection, $this->package.'.zip', $directoryName.'/'.$this->package.'.zip', FTP_BINARY);
         }
         
         ftp_close($connection);
