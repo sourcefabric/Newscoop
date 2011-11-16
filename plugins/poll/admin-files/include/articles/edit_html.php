@@ -1,6 +1,6 @@
 <?php
 camp_load_translation_strings("plugin_poll");
-global $articleObj, $f_article_number, $f_edit_mode; 
+global $articleObj, $f_article_number, $f_edit_mode, $g_user;
 ?>
 
 <div class="articlebox" title="<?php putGS('Polls'); ?>">

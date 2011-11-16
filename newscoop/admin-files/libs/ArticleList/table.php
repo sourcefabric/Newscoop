@@ -8,6 +8,55 @@
  * @link http://www.sourcefabric.org
  */
 ?>
+
+<script>
+jQuery.fn.dataTableExt.oApi.fnSetFilteringDelay = function ( oSettings, iDelay ) {
+    /*
+     * Inputs:      object:oSettings - dataTables settings object - automatically given
+     *              integer:iDelay - delay in milliseconds
+     * Usage:       $('#example').dataTable().fnSetFilteringDelay(250);
+     * Author:      Zygimantas Berziunas (www.zygimantas.com) and Allan Jardine
+     * License:     GPL v2 or BSD 3 point style
+     * Contact:     zygimantas.berziunas /AT\ hotmail.com
+     */
+    var
+        _that = this,
+        iDelay = (typeof iDelay == 'undefined') ? 250 : iDelay;
+     
+    this.each( function ( i ) {
+        $.fn.dataTableExt.iApiIndex = i;
+        var
+            $this = this, 
+            oTimerId = null, 
+            sPreviousSearch = null,
+            anControl = $( 'input', _that.fnSettings().aanFeatures.f );
+         
+            anControl.unbind( 'keyup' ).bind( 'keyup', function(event) {
+                var $$this = $this;
+                var searchKeyword;
+                var inputKeyword;
+                
+                inputKeyword = anControl.val();
+                searchKeyword = inputKeyword;
+                
+                if (sPreviousSearch === null || sPreviousSearch != anControl.val()) {
+                    window.clearTimeout(oTimerId);
+                    sPreviousSearch = anControl.val();  
+                    oTimerId = window.setTimeout(function() {
+                        $.fn.dataTableExt.iApiIndex = i;
+                        searchKeyword = inputKeyword; 
+                        _that.fnFilter( searchKeyword );
+                    }, iDelay);
+                }
+            });
+         
+        return this;
+    } );
+    return this;
+}
+
+</script>
+
 <div class="table">
 
 <table id="table-<?php echo $this->id; ?>" cellpadding="0" cellspacing="0" class="datatable">
@@ -252,7 +301,7 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
     'bStateSave': true,
     <?php } ?>
     'bJQueryUI': true
-}).css('position', 'relative').css('width', '100%');
+}).css('position', 'relative').css('width', '100%').fnSetFilteringDelay(500);
 
 <?php if ($this->items === null && !isset($this->type)) { ?>
 $('<input type="checkbox" name="showtype" value="newswires" id="filter_newswires_articles_<?php echo $this->id; ?>" /> <label for="filter_newswires_articles_<?php echo $this->id; ?>"><?php putGS("Display newswires articles"); ?></label>')
@@ -264,17 +313,6 @@ $('input#filter_newswires_articles_<?php echo $this->id; ?>').change(function() 
     filters['<?php echo $this->id; ?>']['showtype'] = $(this).attr('checked') ? 'newswires' : '';
     tables['<?php echo $this->id; ?>'].fnDraw(true);
 });
-
-var searchInput = $('#table-<?php echo $this->id; ?>_filter input:text')
-    .unbind('keyup');
-
-$('<button />')
-    .html(<?php echo json_encode(getGS("Search")); ?>)
-    .insertAfter(searchInput)
-    .click(function(e) {
-        e.preventDefault();
-        tables['<?php echo $this->id; ?>'].fnFilter(searchInput.val());
-    });
 
 <?php } ?>
 });

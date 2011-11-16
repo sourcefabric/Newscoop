@@ -12,6 +12,9 @@ $allLanguages = Language::GetLanguages();
 $f_poll_nr = Input::Get('f_poll_nr', 'int');
 $f_fk_language_id = Input::Get('f_fk_language_id', 'int');
 $f_from = Input::Get('f_from', 'string', false);
+if (empty($f_from)) {
+    $f_from = $Campsite['WEBSITE_URL'] . '/admin/poll/index.php';
+}
 
 $poll = new Poll($f_fk_language_id, $f_poll_nr);
 
@@ -39,11 +42,11 @@ if ($poll->exists()) {
 }
 
 if (empty($GLOBALS['_popup'])) {
-    $title = $poll->exists() ? getGS('Edit Poll') : getGS('Add new Poll');
+    $bcrumbs = $poll->exists() ? getGS('Edit Poll') : getGS('Add new Poll');
     echo camp_html_breadcrumbs(array(
         array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
         array(getGS('Polls'), $Campsite['WEBSITE_URL'] . '/admin/poll/index.php'),
-        array($title, ''),
+        array($bcrumbs, ''),
     ));
 }
 
