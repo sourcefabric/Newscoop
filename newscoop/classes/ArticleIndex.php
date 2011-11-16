@@ -63,6 +63,13 @@ class ArticleIndex extends DatabaseObject {
         }
 
         $keywords = array_diff($keywords, array("", ""));
+        $sKeys = array();
+        foreach ($keywords as $keyword) {
+            if (strlen($keyword) > 2) {
+                $sKeys[] = $keyword;
+            }
+        }
+        $keywords = $sKeys;
         if (count($keywords) < 1) {
             return null;
         }
@@ -109,10 +116,9 @@ class ArticleIndex extends DatabaseObject {
             $selectKeywordClauseObj->addJoin('LEFT JOIN KeywordIndex AS KI1 ON AI1.IdKeyword = KI1.Id');
 
             foreach ($keywords as $keyword) {
-                if( strtolower($p_symbol) == 'like' ) {
+                if (strtolower($p_symbol) == 'like') {
                     $keywordConstraint = "KI1.Keyword LIKE '%" . $g_ado_db->escape($keyword) . "%'";
-                }
-                else {
+                } else {
                     $keywordConstraint = "KI1.Keyword = '" . $g_ado_db->escape($keyword) . "'";
                 }
                 $selectKeywordClauseObj->addConditionalWhere($keywordConstraint);
