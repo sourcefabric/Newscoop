@@ -50,8 +50,8 @@ EOT
         
         $xmlExportService = $this->getHelper('container')->getService('XMLExport');
 
-        $start = DateTime::createFromFormat('Y-m-d h:i:s', $input->getArgument('start'));
-        $end = DateTime::createFromFormat('Y-m-d h:i:s', $input->getArgument('end'));
+        $start = DateTime::createFromFormat('Y-m-d H:i:s', $input->getArgument('start'));
+        $end = DateTime::createFromFormat('Y-m-d H:i:s', $input->getArgument('end'));
 
         if ($start === false || $end === false) {
             print("Invalid date times\n");
