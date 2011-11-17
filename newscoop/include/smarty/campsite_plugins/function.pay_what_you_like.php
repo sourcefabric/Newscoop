@@ -118,7 +118,7 @@ JS;
 							<!-- general parameters -->
 							<input type="hidden" name="PSPID" value="medienbasel">
 							<input type="hidden" name="orderID" value='{$orderId}'>
-							<input type="hidden" name="amount" id='postfinance_final_amount_{$orderId}' value="300">
+							<input type="hidden" name="amount" id='postfinance_final_amount_{$orderId}' value="500">
 							<input type="hidden" name="currency" value="CHF">
 							<input type="hidden" name="language" value="de_DE">
 
@@ -131,7 +131,7 @@ JS;
 							<input type="button" value="Postfinance" style="background-color: #FFCC00; font-weight: bold; color: black; float:left;" onclick="submitPSForm_{$orderId}();" />
 						</form>
 							<label for='postfinance_amount' style='float: left; margin-top:5px; margin-right:2px;'>CHF</label>
-        					<input type="text" value="" id='postfinance_amount_{$orderId}' name='postfinance_amount' style='width:35px; float: left; margin-top:2px;'/>
+        					<input type="text" value="5" id='postfinance_amount_{$orderId}' name='postfinance_amount' style='width:35px; float: left; margin-top:2px;'/>
 					</div>
 	        	</div>
 	        	<div style="width:32%; float:left; text-align:center;">
