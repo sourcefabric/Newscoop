@@ -97,15 +97,15 @@ class Comment
     private $article_num;
 
     /**
-     * @manyToOne(targetEntity="Article")
-     * @joinColumn(name="fk_thread_id", referencedColumnName="Number")
+     * @ManyToOne(targetEntity="Newscoop\Entity\Article")
+     * @JoinColumn(name="fk_thread_id", referencedColumnName="Number")
      * @var Newscoop\Entity\Article
      */
     private $thread;
 
     /**
-     * @manyToOne(targetEntity="Language")
-     * @joinColumn(name="fk_language_id", referencedColumnName="Id")
+     * @ManyToOne(targetEntity="Newscoop\Entity\Language")
+     * @JoinColumn(name="fk_language_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
     private $language;

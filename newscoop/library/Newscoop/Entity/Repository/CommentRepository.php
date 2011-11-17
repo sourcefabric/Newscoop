@@ -203,9 +203,13 @@ class CommentRepository extends DatatableSource
             $thread = $articleRepository->find(array('number' => $p_values['thread'], 'language' => $language->getId()));
 
             $qb = $this->createQueryBuilder('c');
-            $threadOrder = $qb->select('MAX(c.thread_order)')->andWhere('c.thread = :thread')->andWhere('c.language = :language')->setParameter('thread',
-                                                                                                                                                $thread)->setParameter('language',
-                                                                                                                                                                       $language)->getQuery()->getSingleScalarResult();
+            $threadOrder = $qb->select('MAX(c.thread_order)')
+            ->andWhere('c.thread = :thread')
+            ->andWhere('c.language = :language')
+            ->setParameter('thread', $thread)
+            ->setParameter('language', $language)
+            ->getQuery()->getSingleScalarResult();
+
             // increase by one of the current comment
             $threadOrder += 1;
 
