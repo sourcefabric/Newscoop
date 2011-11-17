@@ -78,7 +78,7 @@ class PlaylistList extends ListObject
 
         $preview = $context->preview;
 
-        $articlesList = $repo->articles($playlist, null, false, $length, $start, !$preview);
+        $articlesList = $repo->articles($playlist, $lang, false, $length, $start, !$preview);
 
         $metaArticlesList = array();
 	    foreach ($articlesList as $article) {
