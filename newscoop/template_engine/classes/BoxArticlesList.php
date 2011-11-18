@@ -48,7 +48,7 @@ class BoxArticlesList extends ListObject
 
         $contextBox = new ContextBox(null, $context->article->number);
 
-        $BoxArticlesList = ContextBoxArticle::GetList($contextBox->getId(), $this->m_order, $p_start, $p_limit, $p_count);
+        $BoxArticlesList = ContextBoxArticle::GetList($contextBox->getId(), !$preview, $this->m_order, $p_start, $p_limit, $p_count);
 	    $metaBoxArticlesList = array();
 	    foreach ($BoxArticlesList as $articleNo) {
 	        $article = new MetaArticle($languageId, $articleNo);
