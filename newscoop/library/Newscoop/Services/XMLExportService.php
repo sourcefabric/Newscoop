@@ -147,7 +147,7 @@ class XMLExportService
     
     public function getData($type, $number, $language)
     {
-        $query = "select * from X".$type." where NrArticle = '".$number."' and IdLanguage = '".$language."'";
+        $query = $query = 'SELECT * FROM X' . $type . " WHERE NrArticle = '" . $number . "' AND IdLanguage = '" . $language . "'";
         $sql1 = mysql_query($query);
         $sql2 = mysql_fetch_assoc($sql1);
         return($sql2);
@@ -178,10 +178,14 @@ class XMLExportService
             mkdir($directoryName);
         }
 
-        $packageName = $fileName . $this->mode . '_' . $this->startTime->format('Ymd-hi') . '_' . $this->endTime->format('Ymd-hi');
+        $packageName = $fileName . $this->mode . '_' . $this->startTime->format('Ymd-Hi') . '_' . $this->endTime->format('Ymd-Hi');
         $xmlFile = $packageName . '.xml';
 
         $file = fopen($directoryName . '/' . $xmlFile, 'w');
+        if ($file == false) {
+            print $directoryName . '/' . $xmlFile . "\n";
+            throw new \Exception('Failure opening the file resource.');
+        }
         fwrite($file, $contents);
         fclose($file);
         
