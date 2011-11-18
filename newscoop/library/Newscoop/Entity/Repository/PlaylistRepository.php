@@ -30,14 +30,14 @@ class PlaylistRepository extends EntityRepository
     $fullArticle = false, $limit = null, $offset = null, $publishedOnly = true)
     {
         $em = $this->getEntityManager();
-        $query = $em->createQuery
-        (	"SELECT ".( $fullArticle ? "pa, a" : "a.number articleId, a.name title, a.date date" )
+        $query = $em->createQuery("
+        	SELECT ".( $fullArticle ? "pa, a" : "a.number articleId, a.name title, a.date date" )
         .  	" FROM Newscoop\Entity\PlaylistArticle pa
         	JOIN pa.article a
         	WHERE pa.playlist = ?1 "
-        	. ($publishedOnly ? " AND a.workflowStatus = 'Y'" : "")
-        .   (is_null($lang) ? "GROUP BY a.number" : " AND a.language = ?2")
-        .	" ORDER BY pa.id "
+        .       ($publishedOnly ? " AND a.workflowStatus = 'Y'" : "")
+        .       (is_null($lang) ? " GROUP BY a.number" : " AND a.language = ?2")
+        .		" ORDER BY pa.id "
         );
 
         if (!is_null($limit)) {
@@ -64,19 +64,20 @@ class PlaylistRepository extends EntityRepository
     public function articlesCount(Playlist $playlist, Language $lang = null, $publishedOnly = true)
     {
         $em = $this->getEntityManager();
-        $query = $em->createQuery
-        (	"SELECT COUNT(a.number) FROM Newscoop\Entity\PlaylistArticle pa
+        $query = $em->createQuery("
+        	SELECT COUNT(DISTINCT pa.article) FROM Newscoop\Entity\PlaylistArticle pa
         	JOIN pa.article a
         	WHERE pa.playlist = ?1 "
-        	. ($publishedOnly ? " AND a.workflowStatus = 'Y'" : "")
-        .   (is_null($lang) ? "GROUP BY a.number" : "AND a.language = ?2")
-        .	" ORDER BY pa.id "
+        .       ($publishedOnly ? " AND a.workflowStatus = 'Y'" : "")
+        .       (is_null($lang) ? "" : " AND a.language = ?2")
+        .		" ORDER BY pa.id"
         );
 
         $query->setParameter(1, $playlist);
         if (!is_null($lang)) {
             $query->setParameter(2, $lang->getId());
         }
+
         $count = $query->getSingleScalarResult();
         return $count;
     }
