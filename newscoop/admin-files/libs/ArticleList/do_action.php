@@ -366,7 +366,7 @@ case 'context_box_load_list':
 
     $contextBoxObj = new ContextBox(null, $articleId);
     $contextId = $contextBoxObj->getId();
-    $contextArticleIds = $contextBoxObj->getArticlesList();
+    $contextArticleIds = $contextBoxObj->getArticlesList(false);
 
     foreach($contextArticleIds as $contextArticleId) {
     	$articleObj = new Article($f_language_selected, $contextArticleId);

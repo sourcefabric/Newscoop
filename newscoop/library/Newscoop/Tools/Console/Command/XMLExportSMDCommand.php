@@ -69,9 +69,14 @@ EOT
         $contents = $xmlExportService->getXML($config['articleType'], $config['attachmentPrefix'], $articles);
 
         $attachments = $xmlExportService->getAttachments($config['attachmentPrefix'], $articles);
-        
-        $xmlExportService->createArchive($config['directoryName'], $config['fileName'], $contents, $attachments);
-        $xmlExportService->upload($config['directoryName'], $config['ftpHost'], $config['ftpUsername'], $config['ftpPassword']);
-        $xmlExportService->clean($config['directoryName']);
+
+        try {
+            $xmlExportService->createArchive($config['directoryName'], $config['fileName'], $contents, $attachments);
+            $xmlExportService->upload($config['directoryName'], $config['ftpHost'], $config['ftpUsername'], $config['ftpPassword']);
+            $xmlExportService->clean($config['directoryName']);
+        } catch (\Exception $e) {
+            echo $e->getMessage() . "\n";
+            exit;
+        }
     }
 }
