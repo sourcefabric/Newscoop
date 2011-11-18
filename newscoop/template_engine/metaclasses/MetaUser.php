@@ -46,7 +46,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         $this->m_customProperties['posts_count'] = 'getPostsCount';
         $this->m_customProperties['is_author'] = 'isAuthor';
         $this->m_customProperties['is_active'] = 'isActive';
-        $this->m_customProperties['is_blogger'] = 'isActive';
+        $this->m_customProperties['is_blogger'] = 'isBlogger';
 
         $this->m_skipFilter[] = "name";
     }
