@@ -82,7 +82,7 @@ class CommentRepository extends DatatableSource
             $em->persist($p_comment);
         }
     }
-    
+
     /**
      * Method for recommending a comment
      * @param \Newscoop\Entity\Comment $p_comment
@@ -94,7 +94,7 @@ class CommentRepository extends DatatableSource
 			$this->setCommentRecommended($this->find($comment_id), $p_recommended);
 		}
     }
-    
+
     /**
      * Method for setting recommended for a comment
      * @param \Newscoop\Entity\Comment $p_comment
@@ -139,10 +139,10 @@ class CommentRepository extends DatatableSource
         $em = $this->getEntityManager();
 
         $commenterRepository = $em->getRepository('Newscoop\Entity\Comment\Commenter');
-        
+
         $commenter = new Commenter;
         $commenter = $commenterRepository->save($commenter, $p_values);
-        
+
         $p_entity->setCommenter($commenter)
 				 ->setSubject($p_values['subject'])
 				 ->setMessage($p_values['message'])
@@ -150,9 +150,9 @@ class CommentRepository extends DatatableSource
 				 ->setIp($p_values['ip'])
 				 ->setTimeCreated($p_values['time_created'])
                  ->setRecommended($p_values['recommended']);
-        
+
         $threadLevel = 0;
-        
+
         if (!empty($p_values['parent']) && (0 != $p_values['parent'])) {
             $parent = $this->find($p_values['parent']);
             // set parent of the comment
@@ -161,7 +161,7 @@ class CommentRepository extends DatatableSource
              * get the maximum thread order from the current parent
              */
             $qb = $this->createQueryBuilder('c');
-            $threadOrder = 
+            $threadOrder =
             $qb->select('MAX(c.thread_order)')
                     ->andwhere('c.parent = :parent')
                     ->andWhere('c.thread = :thread')
@@ -198,24 +198,28 @@ class CommentRepository extends DatatableSource
                 $languageRepository = $em->getRepository('Newscoop\Entity\Language');
                 $language = $languageRepository->find($p_values['language']);
             }
-            
+
             $articleRepository = $em->getRepository('Newscoop\Entity\Article');
             $thread = $articleRepository->find(array('number' => $p_values['thread'], 'language' => $language->getId()));
 
             $qb = $this->createQueryBuilder('c');
-            $threadOrder = $qb->select('MAX(c.thread_order)')->andWhere('c.thread = :thread')->andWhere('c.language = :language')->setParameter('thread',
-                                                                                                                                                $thread)->setParameter('language',
-                                                                                                                                                                       $language)->getQuery()->getSingleScalarResult();
+            $threadOrder = $qb->select('MAX(c.thread_order)')
+            ->andWhere('c.thread = :thread')
+            ->andWhere('c.language = :language')
+            ->setParameter('thread', $thread)
+            ->setParameter('language', $language)
+            ->getQuery()->getSingleScalarResult();
+
             // increase by one of the current comment
             $threadOrder += 1;
 
             $p_entity->setLanguage($language)->setForum($thread->getPublication())->setThread($thread);
         }
-        
+
         $p_entity->setThreadOrder($threadOrder)->setThreadLevel($threadLevel);
 
         $em->persist($p_entity);
-        
+
         return $p_entity;
     }
 

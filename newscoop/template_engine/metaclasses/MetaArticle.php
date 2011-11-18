@@ -71,6 +71,7 @@ final class MetaArticle extends MetaDbObject {
     'map'=>'getMap',
     'image_index'=>'getImageIndex',
     'comment_count'=>'getCommentCount',
+    'comment_count_all_lang'=>'getCommentCountAllLang',
     'recommended_comment_count'=>'getRecommendedCommentCount',
     'content_accessible'=>'isContentAccessible',
     'image'=>'getImage',
@@ -503,6 +504,21 @@ final class MetaArticle extends MetaDbObject {
             'status' => 'approved',
             'thread' => $this->m_dbObject->getArticleNumber(),
             'language' => $this->m_dbObject->getLanguageId(),
+        );
+        $params = array(
+            'sFilter' => $filter
+        );
+        $result = $repository->getCount($params);
+        return $result;
+    }
+
+
+    protected function getCommentCountAllLang() {
+        global $controller;
+        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+        $filter = array(
+            'status' => 'approved',
+            'thread' => $this->m_dbObject->getArticleNumber(),
         );
         $params = array(
             'sFilter' => $filter

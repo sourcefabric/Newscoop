@@ -295,6 +295,9 @@ class NewsImportEnv
                     if (!is_string($response)) {
                         break;
                     }
+                    if (false !== stristr($response, $one_feed.':none')) {
+                        break;
+                    }
                     if (false !== stristr($response, 'newsimport_locked')) {
                         break;
                     }

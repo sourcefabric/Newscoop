@@ -642,6 +642,7 @@ class KinoData_Parser_SimpleXML {
         $mov_infos_parts = array(
             'key' => 'movkey', 'imdb' => 'movimb', 'suisa' => 'movsui', 'country' => 'movcou',
             'title' => 'movtit', 'lead' => 'movlea', 'link' => 'movlnk', 'trailer' => 'movtra',
+            'distributor' => 'disnam', 'distributor_link' => 'dislnk',
         );
 
         $mov_infos_people = array(
@@ -1417,8 +1418,10 @@ hh.mm:langs:flags
 
                 $one_event['description'] = str_replace("\n", "\n<br />\n", $one_use_desc);
                 $one_event['other'] = $one_screen['other'];
+
+                $one_event['movie_trailers'] = array();
                 foreach ($one_mov_trailers as $cur_trailer) {
-                    $one_event['other'][] = $this->makeLink($cur_trailer, 'Trailer');
+                    $one_event['movie_trailers'][] = $this->makeLink($cur_trailer, 'Trailer', true, true);
                 }
                 $one_event['movie_trailer'] = $trailer_official;
 
@@ -1467,7 +1470,7 @@ hh.mm:langs:flags
      *
      * @return string
      */
-    private function makeLink($p_target, $p_label = '', $p_fullLink = true) {
+    private function makeLink($p_target, $p_label = '', $p_fullLink = true, $p_remote = false) {
         $link = '' . $p_target;
         if ($p_fullLink) {
             if ('http' != substr($link, 0, strlen('http'))) {
@@ -1475,7 +1478,12 @@ hh.mm:langs:flags
             }
         }
         if (!empty($p_label)) {
-            $link = '<a href="' . $link . '">' . $p_label . '</a>';
+            $target_part = '';
+            if ($p_remote) {
+                $target_part = ' target="_blank"';
+            }
+
+            $link = '<a href="' . $link . $target_part . '">' . $p_label . '</a>';
         }
 
         return $link;

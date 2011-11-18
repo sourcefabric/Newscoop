@@ -379,6 +379,7 @@ class NewsImport
             'director', 'producer', 'cast', 'script', 'camera',
             'cutter', 'sound', 'score', 'production_design',
             'costume_design', 'visual_effects',
+            'distributor', 'distributor_link',
         );
         $movie_keys_numeric = array(
             'flag', 'year', 'duration', 'oscars',
@@ -476,6 +477,9 @@ class NewsImport
                     $f_movie_val = (isset($f_movie_info[$one_movie_info_key]) && (!empty($f_movie_info[$one_movie_info_key]))) ? $f_movie_info[$one_movie_info_key] : '';
                     $article_data->setProperty('Fmovie_' . $one_movie_info_key, $f_movie_val);
                 }
+
+                $ev_movie_trailers = implode("\n<br />\n", $one_event['movie_trailers']);
+                $article_data->setProperty('Fmovie_trailers', $ev_movie_trailers);
 
                 foreach ($movie_keys_numeric as $one_movie_info_key) {
                     $f_movie_val = (isset($f_movie_info[$one_movie_info_key]) && (!empty($f_movie_info[$one_movie_info_key]))) ? $f_movie_info[$one_movie_info_key] : 0;
@@ -1030,6 +1034,7 @@ class NewsImport
 
                 $res = $parser_obj->prepare($categories, $limits, $cancels, $import_env, $region_info, $region_topics_lang);
                 if (!$res) {
+                    echo $one_source_name.':none'."\n";
                     continue;
                 }
             }

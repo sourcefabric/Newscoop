@@ -9,6 +9,8 @@ use Newscoop\Service\IOutputSettingIssueService;
 camp_load_translation_strings("articles");
 camp_load_translation_strings("logs");
 
+global $issueObj;
+
 // Check permissions
 if (!$g_user->hasPermission('ManageIssue')) {
 	camp_html_display_error(getGS('You do not have the right to change issue details.'));

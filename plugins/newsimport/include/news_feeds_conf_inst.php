@@ -75,7 +75,7 @@ $event_data_sources = array(
             'source' => array(
                 'programs' => array('tageswoche_7d.xml.gz',),
                 'movies' => array('tageswoche_mov_all.zip', 'tageswoche_mov.xml.gz',),
-                'genres' => array('tageswoche_gen.xml.gz',),
+                'genres' => array('tageswoche_gen_all.zip','tageswoche_gen.xml.gz',),
                 'timestamps' => array('tageswoche_tim_all.zip', 'tageswoche_tim.xml.gz',),
             ),
         ),

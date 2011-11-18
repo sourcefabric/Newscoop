@@ -28,10 +28,6 @@ function smarty_block_list_playlist_articles($p_params, $p_content, &$p_smarty, 
     $campContext = $p_smarty->getTemplateVars('gimme');
 	/* @var $campContext CampContext */
 
-    if (!isset($p_params['language'])) {
-        $p_params['language'] = $campContext->language->number;
-    }
-
     if (!isset($p_content))
     {
         $start = $campContext->next_list_start('PlaylistList');

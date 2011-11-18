@@ -326,6 +326,10 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             'movie_lead' => array('type' => 'text', 'params' => array(), 'hidden' => false), // lead/perex short text
             'movie_link' => array('type' => 'text', 'params' => array(), 'hidden' => false), // link to the movie site
             'movie_trailer' => array('type' => 'text', 'params' => array(), 'hidden' => false), // link to the (vimeo) trailer
+            'movie_trailers' => array('type' => 'body', 'params' => array('editor_size' => 250, 'is_content' => 1), 'hidden' => false), // all movie trailer links available
+
+            'movie_distributor' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
+            'movie_distributor_link' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
 
             'movie_director' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
             'movie_producer' => array('type' => 'text', 'params' => array(), 'hidden' => false), //

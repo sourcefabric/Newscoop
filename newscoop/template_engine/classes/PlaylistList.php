@@ -69,13 +69,16 @@ class PlaylistList extends ListObject
             $start = $p_parameters['start'];
         }
 
+        $context = CampTemplate::singleton()->context();
+
         $langRepo = $doctrine->getEntityManager()->getRepository('Newscoop\Entity\Language');
         /* @var $langRepo \Newscoop\Entity\Repository\LanguageRepository */
-        $lang = $langRepo->find($p_parameters['language']);
+        $languageId = $context->language->number;
+        $lang = $langRepo->find($context->language->number);
 
-        $articlesList = $repo->articles($playlist, false, $length, $start);
+        $preview = $context->preview;
 
-        $preview = CampTemplate::singleton()->context()->preview;
+        $articlesList = $repo->articles($playlist, $lang, false, $length, $start, !$preview);
 
         $metaArticlesList = array();
 	    foreach ($articlesList as $article) {
@@ -89,6 +92,7 @@ class PlaylistList extends ListObject
 	        }
 	    }
 
+	    $p_count = $repo->articlesCount($playlist, $lang, !$preview);
 	    return $metaArticlesList;
 	}
 
@@ -140,7 +144,6 @@ class PlaylistList extends ListObject
                     }
 	    			$parameters[$parameter] = (int)$value;
 	                break;
-	            case 'language' :
 	            case 'name' :
 	                $parameters[$parameter] = (string)$value;
 	                break;
