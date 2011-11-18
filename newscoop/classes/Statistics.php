@@ -138,12 +138,12 @@ class Statistics {
         $db_name = $dbAccess['name'];
 
         // taking info on session name and its value
-        $application_path = $newscoop_path . '/application';
-        $config = parse_ini_file($application_path . '/configs/application.ini');
+        include_once __DIR__ . '/../application.php';
+        $config = $application->getOption('session');
 
         $session_name = session_name();
-        if (isset($config['session.name'])) {
-            $session_name = $config['session.name'];
+        if (isset($config['name'])) {
+            $session_name = $config['name'];
         }
 
         session_start($session_name);

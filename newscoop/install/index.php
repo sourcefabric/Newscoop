@@ -12,43 +12,8 @@
 // some installation parts tend to take long time
 set_time_limit(0);
 
-// Define path to application directory
-defined('APPLICATION_PATH')
-    || define('APPLICATION_PATH', realpath(dirname(__FILE__) . '/../application'));
-
-// Define application environment
-defined('APPLICATION_ENV')
-    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
-
-// Ensure library/ is on include_path
-set_include_path(implode(PATH_SEPARATOR, array(
-    realpath(APPLICATION_PATH . '/../library'),
-    realpath(dirname(__FILE__) . '/../include'),
-    get_include_path(),
-)));
-if (!is_file('Zend/Application.php')) {
-	// include libzend if we dont have zend_application
-	set_include_path(implode(PATH_SEPARATOR, array(
-		'/usr/share/php/libzend-framework-php',
-		get_include_path(),
-	)));
-}
-include_once('Zend/Application.php');
-
-$oldErrorReporting = error_reporting();
-error_reporting(0);
-
-if(!class_exists('Zend_Application',false)) {
-    die('Missing dependency! Please install Zend Framework library!');
-}
-error_reporting($oldErrorReporting);
-
-// Create application, bootstrap, and run
-$application = new Zend_Application(
-    APPLICATION_ENV,
-    APPLICATION_PATH . '/configs/application.ini'
-);
-
+define('INSTALL', TRUE);
+require_once __DIR__ . '/../application.php';
 $application->bootstrap('autoloader');
 
 $GLOBALS['g_campsiteDir'] = dirname(dirname(__FILE__));
@@ -90,5 +55,3 @@ if ($step == 'finish') {
 	$template = CampTemplate::singleton();
 	$template->clear_compiled_tpl();
 }
-
-?>
