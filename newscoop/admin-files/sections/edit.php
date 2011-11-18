@@ -14,8 +14,6 @@ if (!$g_user->hasPermission('ManageSection')) {
     exit;
 }
 
-global $sectionObj;
-
 $Pub = Input::Get('Pub', 'int', 0);
 $Issue = Input::Get('Issue', 'int', 0);
 $Language = Input::Get('Language', 'int', 0);

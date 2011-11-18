@@ -57,9 +57,9 @@ Class ContextBox extends DatabaseObject
     	return $this->m_data['id'];
     }
 
-    public function getArticlesList($publishedOnly = true)
+    public function getArticlesList()
     {
-        return ContextBoxArticle::GetList($this->getId(), $publishedOnly, null, 0, 0, $p_count, FALSE);
+        return ContextBoxArticle::GetList($this->getId(), null, 0, 0, $p_count, FALSE);
     }
 
 
