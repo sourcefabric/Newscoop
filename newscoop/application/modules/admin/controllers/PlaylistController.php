@@ -93,7 +93,7 @@ class Admin_PlaylistController extends Zend_Controller_Action
 //        }
 
         $playlist->setId($this->_request->getParam('id'));
-        $this->view->items = $this->playlistRepository->articles($playlist);
+        $this->view->items = $this->playlistRepository->articles($playlist, null, false, null, null, false);
         $this->view->code = 200;
     }
 

@@ -11,6 +11,8 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ShortURL.php');
 
 require_once WWW_DIR . '/classes/GeoMap.php';
 
+global $articleObj, $f_edit_mode;
+
 camp_load_translation_strings("article_comments");
 camp_load_translation_strings("api");
 

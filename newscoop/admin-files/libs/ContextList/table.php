@@ -9,6 +9,55 @@
  */
 
 ?>
+
+<script>
+jQuery.fn.dataTableExt.oApi.fnSetFilteringDelay = function ( oSettings, iDelay ) {
+    /*
+     * Inputs:      object:oSettings - dataTables settings object - automatically given
+     *              integer:iDelay - delay in milliseconds
+     * Usage:       $('#example').dataTable().fnSetFilteringDelay(250);
+     * Author:      Zygimantas Berziunas (www.zygimantas.com) and Allan Jardine
+     * License:     GPL v2 or BSD 3 point style
+     * Contact:     zygimantas.berziunas /AT\ hotmail.com
+     */
+    var
+        _that = this,
+        iDelay = (typeof iDelay == 'undefined') ? 250 : iDelay;
+     
+    this.each( function ( i ) {
+        $.fn.dataTableExt.iApiIndex = i;
+        var
+            $this = this, 
+            oTimerId = null, 
+            sPreviousSearch = null,
+            anControl = $( 'input', _that.fnSettings().aanFeatures.f );
+         
+            anControl.unbind( 'keyup' ).bind( 'keyup', function(event) {
+	            var $$this = $this;
+	            var searchKeyword;
+	            var inputKeyword;
+	            
+	            inputKeyword = anControl.val();
+	            searchKeyword = inputKeyword;
+	            
+	            if (sPreviousSearch === null || sPreviousSearch != anControl.val()) {
+	                window.clearTimeout(oTimerId);
+	                sPreviousSearch = anControl.val();  
+	                oTimerId = window.setTimeout(function() {
+	                    $.fn.dataTableExt.iApiIndex = i;
+	                    searchKeyword = inputKeyword; 
+	                    _that.fnFilter( searchKeyword );
+	                }, iDelay);
+	            }
+	        });
+         
+        return this;
+    } );
+    return this;
+}
+
+</script>
+
 <input id="search_table_id" type="hidden" value="table-<?php echo $this->id; ?>" />
 <div class="table">
 
@@ -201,18 +250,7 @@ $(document).ready(function()
         },
         <?php } ?>
         'bJQueryUI': true
-    }).css('position', 'relative').css('width', '100%');
-
-    var searchInput = $('#table-<?php echo $this->id; ?>_filter input:text')
-        .unbind('keyup');
-
-    $('<button />')
-        .html(<?php echo json_encode(getGS("Search")); ?>)
-        .insertAfter(searchInput)
-        .click(function(e) {
-            e.preventDefault();
-            tables['<?php echo $this->id; ?>'].fnFilter(searchInput.val());
-        });
+    }).css('position', 'relative').css('width', '100%').fnSetFilteringDelay(500);
 
 });
 --></script>

@@ -32,14 +32,17 @@ class DebateDaysList extends ListObject
 	        case 'monthly' : $rangeUnit = 2629744; break;
 	    }
 
-	    $dateStart = $context->debate->date_begin;
-	    //$dateEnd = ( $t = strtotime('tomorrow') ) > $context->debate->date_end ? $context->debate->date_end : $t;
+    	$dateStart = $context->debate->date_begin;
 	    $dateEnd = ($p_limit != 0) ? strtotime(strftime('%D', $dateStart).' + '.($p_limit-1).' days') : $context->debate->date_end;
-	    //if ($p_limit != 0) {
-	    //    $dateStart = $dateEnd - ($rangeUnit*($p_limit-1));
-	    //}
-	    $dateRange = range($dateStart, $dateEnd, $rangeUnit);
 
+	    $dateRange = array($dateStart);
+	    $dateStartString = strftime('%F %T', $dateStart);
+	    while (current($dateRange) < $dateEnd)
+	    {
+	        $dateRange[] = strtotime($dateStartString.' + 1 day');
+	        $dateStartString = strftime('%F %T', next($dateRange));
+	    }
+	    // @todo check the end range here for daylight savings time thing also..
 	    $dateVotes = DebateVote::getResults($context->debate->number, $context->debate->language_id, $dateStart, $dateEnd+86399);
 
         $dateResults = array();
@@ -61,7 +64,6 @@ class DebateDaysList extends ListObject
                 $dateResults[] = array( 'time' => $timestamp, 'total_count' => 0 );
             }
         }
-
 
         $dateArray = array();
         foreach ($dateResults as $date) {

@@ -40,7 +40,7 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
     {
         return array(
             Events::postPersist,
-            Events::preUpdate,
+            //Events::preUpdate, @todo temporary fix for CS-3817
             Events::postUpdate,
             Events::preRemove,
         );
