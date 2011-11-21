@@ -66,9 +66,6 @@ class Attachment extends DatabaseObject {
 
         // Delete the record in the database
         $success = parent::delete();
-
-        $logtext = getGS('File #$1 "$2" deleted.', $tmpData['id'], $tmpData['file_name']);
-        Log::Message($logtext, null, 39);
         return $success;
     } // fn delete
 

@@ -245,9 +245,6 @@ foreach ($f_geo as $key => $value) {
     SystemPref::Set($name, $value);
 }
 
-$logtext = getGS('System preferences updated');
-Log::Message($logtext, $g_user->getUserId(), 171);
-
 // Success message if everything was ok
 if ($msg_ok == 1) {
     camp_html_add_msg(getGS("System preferences updated."), "ok");

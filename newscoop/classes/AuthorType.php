@@ -71,13 +71,6 @@ class AuthorType extends DatabaseObject
         }
         $columns['type'] = (string) $p_name;
         $result = parent::create($columns);
-        if ($result) {
-            if (function_exists("camp_load_translation_strings")) {
-                camp_load_translation_strings("api");
-            }
-            $logText = getGS('Author type "$1" created.', $p_name);
-            Log::Message($logText, null, 175);
-        }
         return $result;
     }
 
@@ -97,13 +90,6 @@ class AuthorType extends DatabaseObject
         // Delete this author type
         $authorType = $this->getName();
         $result = parent::delete();
-        if ($result) {
-            if (function_exists("camp_load_translation_strings")) {
-                camp_load_translation_strings("api");
-            }
-            $logText = getGS('Article type "$1" deleted.', $authorType);
-            Log::Message($logText, null, 176);
-        }
         return $result;
     }
 

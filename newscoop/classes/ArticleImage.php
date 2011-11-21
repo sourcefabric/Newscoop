@@ -147,13 +147,6 @@ class ArticleImage extends DatabaseObject {
         $image_id = $this->getImageId();
         $article_number = $this->getArticleNumber();
         $result = parent::delete();
-        if ($result) {
-        	if (function_exists("camp_load_translation_strings")) {
-        		camp_load_translation_strings("api");
-        	}
-            $logtext = getGS('Image $1 unlinked from article $2', $image_id, $article_number);
-        	Log::Message($logtext, null, 42);
-        }
         return $result;
     }
 
@@ -264,11 +257,6 @@ class ArticleImage extends DatabaseObject {
 		$queryStr = 'INSERT IGNORE INTO ArticleImages(NrArticle, IdImage, Number)'
 					.' VALUES('.$p_articleNumber.', '.$p_imageId.', '.$p_templateId.')';
 		$g_ado_db->Execute($queryStr);
-		if (function_exists("camp_load_translation_strings")) {
-			camp_load_translation_strings("api");
-		}
-		$logtext = getGS('Image $1 linked to article $2', $p_imageId, $p_articleNumber);
-		Log::Message($logtext, null, 41);
 	} // fn AddImageToArticle
 
 

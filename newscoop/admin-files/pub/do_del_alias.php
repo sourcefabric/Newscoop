@@ -30,9 +30,6 @@ if ($publicationObj->getDefaultAliasId() != $Alias) {
 	$deleted = $aliasObj->delete();
 
 	if ($deleted) {
-		$logtext = getGS('The alias "$1" has been deleted from publication "$2".',
-						 $aliasName, $publicationObj->getName());
-		Log::Message($logtext, $g_user->getUserId(), 152);
 		camp_html_goto_page("/$ADMIN/pub/aliases.php?Pub=$Pub");
 	} else {
 		$errorMsgs[] = getGS('The alias $1 could not be deleted.','<B>'.$aliasObj->getName().'</B>');

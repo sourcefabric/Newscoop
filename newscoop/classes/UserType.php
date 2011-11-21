@@ -104,13 +104,6 @@ class UserType extends DatabaseObject
         }
         // fetch user type data if it was successfully created
         $this->fetch();
-        if ($this->exists()) {
-            if (function_exists("camp_load_translation_strings")) {
-                camp_load_translation_strings("api");
-            }
-            $logtext = getGS('User type "$1" added', $p_name);
-            Log::Message($logtext, null, 121);
-        }
         return $success;
     } // fn create
 
@@ -128,11 +121,6 @@ class UserType extends DatabaseObject
         $filter = array('group_id' => $this->m_data['group_id']);
         if ($LiveUserAdmin->perm->removeGroup($filter)) {
             $this->m_exists = false;
-            if (function_exists("camp_load_translation_strings")) {
-                camp_load_translation_strings("api");
-            }
-            $logtext = getGS('User type "$1" deleted', $this->m_data['group_define_name']);
-            Log::Message($logtext, null, 122);
             return true;
         }
         return false;

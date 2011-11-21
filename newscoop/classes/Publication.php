@@ -73,13 +73,6 @@ class Publication extends DatabaseObject {
 	public function create($p_values = null)
 	{
 		$created = parent::create($p_values);
-		if ($created) {
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			$logtext = getGS('Publication "$1" ($2) added', $this->m_data['Name'], $this->m_data['Id']);
-			Log::Message($logtext, null, 1);
-		}
 		return $created;
 	} // fn create
 
@@ -99,13 +92,6 @@ class Publication extends DatabaseObject {
 	public function update($p_columns = null, $p_commit = true, $p_isSql = false)
 	{
 		$updated = parent::update($p_columns, $p_commit, $p_isSql);
-		if ($updated) {
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			$logtext = getGS('Publication "$1" ($2) changed', $this->m_data['Name'], $this->m_data['Id']);
-			Log::Message($logtext, null, 3);
-		}
 		return $updated;
 	} // fn update
 
@@ -125,13 +111,6 @@ class Publication extends DatabaseObject {
 		}
 		$tmpData = $this->m_data;
 		$deleted = parent::delete();
-		if ($deleted) {
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			$logtext = getGS('Publication "$1" ($2) deleted', $tmpData['Name'], $tmpData['Id']);
-			Log::Message($logtext, null, 2);
-		}
 		return $deleted;
 	} // fn delete
 
