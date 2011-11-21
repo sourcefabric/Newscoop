@@ -3083,12 +3083,12 @@ CREATE TABLE IF NOT EXISTS `user_identity` (
   PRIMARY KEY (`provider`, `provider_user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
--- Article popularity table --
+-- Article popularity table
 DROP TABLE IF EXISTS `article_popularity`;
 CREATE TABLE `article_popularity` (
   `fk_article_id` int(10) unsigned NOT NULL,
   `fk_language_id` int(10) unsigned NOT NULL,
-  `url` varchar(256) NOT NULL,
+  `url` varchar(255) NOT NULL,
   `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `unique_views` int(10) unsigned NOT NULL DEFAULT '0',
   `avg_time_on_page` float NOT NULL DEFAULT '0',
