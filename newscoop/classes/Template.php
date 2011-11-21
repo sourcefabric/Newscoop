@@ -456,11 +456,6 @@ class Template extends DatabaseObject {
 
         if ($success) {
             self::UpdateStatus();
-            if (function_exists('camp_load_translation_strings')) {
-                camp_load_translation_strings('api');
-            }
-            $logtext = getGS('Template $1 uploaded', $fileName);
-            Log::Message($logtext, null, 111);
         }
         return $success;
     } // fn OnUpload
@@ -501,11 +496,6 @@ class Template extends DatabaseObject {
         }
 
         self::UpdateStatus();
-        if (function_exists('camp_load_translation_strings')) {
-            camp_load_translation_strings('api');
-        }
-        $logtext = getGS('Template $1 uploaded', $fileName);
-        Log::Message($logtext, null, 111);
 
         return true;
     } // fn ProcessFile
@@ -640,8 +630,6 @@ class Template extends DatabaseObject {
             $fileFullPath = $this->getFullPath($Path, $Name);
             if (!self::InUse($this->getName())) {
                 if (unlink($fileFullPath)) {
-                    $logtext = getGS('Template $1 was deleted', mysql_real_escape_string($this->getName()));
-                    Log::Message($logtext, $g_user->getUserId(), 112);
                     return true;
                 }
             }
@@ -674,10 +662,6 @@ class Template extends DatabaseObject {
                         . $destinationFolder
                         . '/' . basename($this->getName());
             if (rename($currentFullPath, $destinationFullPath)) {
-                $logtext = getGS('Template $1 was moved to $2',
-                         mysql_real_escape_string($currentFolder . '/' . basename($this->getName())),
-                         mysql_real_escape_string($destinationFolder . '/' . basename($this->getName())));
-                Log::Message($logtext, $g_user->getUserId(), 117);
                 return true;
             }
         }

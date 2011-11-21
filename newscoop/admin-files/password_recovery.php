@@ -78,9 +78,6 @@ if (Input::Get("f_post_sent", "int",0)==1) {
 
             send_token($email, $token);
             $sent = true;
-
-            $logMessage = getGS('Password recovery request for $1', $email);
-            Log::Message($logMessage, NULL, 54);
         }
         else {
             $errors[] = getGS("No user is registered with this email.");

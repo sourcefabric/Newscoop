@@ -56,11 +56,6 @@ class ArticleTopic extends DatabaseObject {
 		$queryStr = 'INSERT IGNORE INTO ArticleTopics(NrArticle, TopicId)'
 					.' VALUES('.$p_articleNumber.', '.$p_topicId.')';
 		$g_ado_db->Execute($queryStr);
-		if (function_exists("camp_load_translation_strings")) {
-			camp_load_translation_strings("api");
-		}
-		$logtext = getGS('Topic $1 added to article $2', $p_topicId, $p_articleNumber);
-		Log::Message($logtext, null, 144);
 	} // fn AddTopicToArticle
 
 
@@ -75,11 +70,6 @@ class ArticleTopic extends DatabaseObject {
 		global $g_ado_db;
 		$queryStr = "DELETE FROM ArticleTopics WHERE NrArticle=$p_articleNumber AND TopicId=$p_topicId";
 		$g_ado_db->Execute($queryStr);
-		if (function_exists("camp_load_translation_strings")) {
-			camp_load_translation_strings("api");
-		}
-		$logtext = getGS('Article topic $1 deleted from article $2', $p_topicId, $p_articleNumber);
-		Log::Message($logtext, null, 145);
 	} // fn RemoveTopicFromArticle
 
 

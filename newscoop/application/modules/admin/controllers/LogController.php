@@ -9,30 +9,12 @@
  */
 class Admin_LogController extends Zend_Controller_Action
 {
-    /** @var array */
-    private $priorityNames = NULL;
-
-    /** @var Newscoop\Entity\Repository\LogRepository */
-    private $logRepository = NULL;
+    /** @var Newscoop\Services\AuditService */
+    private $auditService;
 
     public function init()
     {
-        camp_load_translation_strings('logs');
-
-        // get repository
-        $this->logRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Log');
-
-        // set priority names
-        $this->priorityNames = array(
-            getGS('Emergency'),
-            getGS('Alert'),
-            getGS('Critical'),
-            getGS('Error'),
-            getGS('Warning'),
-            getGS('Notice'),
-            getGS('Info'),
-            getGS('Debug'),
-        );
+        $this->auditService = $this->_helper->service('audit');
     }
 
     /**
@@ -40,29 +22,33 @@ class Admin_LogController extends Zend_Controller_Action
      */
     public function indexAction()
     {
-        // get priority form
-        $priority = NULL;
-        $form = $this->getPriorityForm()
-            ->setMethod('get')
-            ->setAction('');
-
-        // handle form if valid
-        if ($form->isValid($this->getRequest()->getParams())) {
-            $priority = $this->getRequest()->getParam('priority', NULL);
+        $this->view->form = $this->getForm()->setMethod('get')->setAction('');
+        
+        $criteria = array();
+        $orderBy = array('id' => 'desc');
+        $limit = 10;
+        $offset = 0;
+        
+        if ($this->view->form->isValid($this->getRequest()->getParams())) {
+            $resourceType = $this->getRequest()->getParam('resource_type', '');
+            $actionType = $this->getRequest()->getParam('action_type', '');
+            
+            $resourceTypes = $this->auditService->getResourceTypes();
+            $actionTypes = $this->auditService->getActionTypes();
+            
+            if ($resourceType != '') {
+                $criteria['resource_type'] = $resourceTypes[$resourceType];
+            }
+            if ($actionType != '') {
+                $criteria['action'] = $actionTypes[$actionType];
+            }
+            $offset = $this->getRequest()->getParam('offset', 0);
         }
-
-        $this->view->form = $form;
-        $this->view->priorityName = !empty($this->priorityNames[$priority]) ? $this->priorityNames[$priority] : '';
-        $this->view->priorityNames = $this->priorityNames;
-
-        // fetch logs
-        $limit = 15;
-        $offset = max(0, isset($_GET['offset']) ? (int) $_GET['offset'] : 0);
-        $this->view->logs = $this->logRepository->getLogs($offset, $limit, $priority);
-
-        // set pager
-        $count = $this->logRepository->getCount($priority);
-        $this->view->pager = new SimplePager($count, $limit, 'offset', isset($priority) ? "?priority={$priority}&" : '?');
+        
+        $count = $this->auditService->countBy($criteria);
+        $this->view->events = $this->auditService->findBy($criteria, $orderBy, $limit, $offset);
+        
+        $this->view->pager = new SimplePager($count, $limit, 'offset', '?');
     }
 
     /**
@@ -70,20 +56,25 @@ class Admin_LogController extends Zend_Controller_Action
      *
      * @return \Zend_Form
      */
-    private function getPriorityForm()
+    private function getForm()
     {
         $form = new Zend_Form;
 
-        $form->addElement('select', 'priority', array(
-            'multioptions' => array('' => getGS('All')) + $this->priorityNames,
-            'label' => getGS('Severity:'),
+        $resourceTypes = $this->auditService->getResourceTypes();
+        $actionTypes = $this->auditService->getActionTypes();
+        
+        $form->addElement('select', 'resource_type', array(
+            'multioptions' => array('' => getGS('All')) + $resourceTypes,
+            'label' => getGS('Resource Type:'),
+            'onChange' => 'this.form.submit();',
         ));
-
-        $form->addElement('submit', 'submit', array(
-            'ignore' => true,
-            'label' => getGS('Filter'),
+        
+        $form->addElement('select', 'action_type', array(
+            'multioptions' => array('' => getGS('All')) + $actionTypes,
+            'label' => getGS('Action Type:'),
+            'onChange' => 'this.form.submit();',
         ));
-
+        
         return $form;
     }
 }

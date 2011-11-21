@@ -334,6 +334,18 @@ fieldset .input_text, .input_text {
 	width:auto;
 }
 
+fieldset .input_text_alt, .input_text_alt {
+    background: url(images/input_bg.png) repeat-x scroll 0 0 #FFFFFF;
+	font-family:Arial, Helvetica, sans-serif;
+	border: 1px solid #9D9D9D;
+    font-size: 12px;
+    height: 23px;
+    margin: 0;
+    padding: 0;
+    text-indent: 3px;
+	width:auto;
+}
+
 fieldset.plain label, label.block-label {
     display:block;
     font-size: 13px;

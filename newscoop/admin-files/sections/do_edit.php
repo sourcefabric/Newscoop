@@ -146,9 +146,6 @@ if (!camp_html_has_msgs()) {
 		//@New theme management
 		camp_html_add_msg(getGS("Section updated"), "ok");
 	}
-	$logtext = getGS('Section "$1" ($2) updated. (Publication: $3, Issue: $4)',
-			 $cName, $Section, $publicationObj->getPublicationId(), $issueObj->getIssueNumber());
-	Log::Message($logtext, $g_user->getUserId(), 21);
 }
 camp_html_goto_page($editUrl);
 

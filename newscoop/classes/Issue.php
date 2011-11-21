@@ -72,15 +72,6 @@ class Issue extends DatabaseObject {
 			$tmpValues = array_merge($p_values, $tmpValues);
 		}
 		$success = parent::create($tmpValues);
-		if ($success) {
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			$logtext = getGS('Issue "$1" ($2) added in publication $3',
-			$this->m_data['Name'], $this->m_data['Number'],
-			$this->m_data['IdPublication']);
-			Log::Message($logtext, null, 11);
-		}
 		return $success;
 	} // fn create
 
@@ -110,13 +101,6 @@ class Issue extends DatabaseObject {
 		$tmpData = $this->m_data;
 		$success = parent::delete();
 		if ($success) {
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			$logtext = getGS('Issue "$1" ($2) from publication $3 deleted',
-			$tmpData['Name'], $tmpData['Number'],
-			$tmpData['IdPublication']);
-			Log::Message($logtext, null, 12);
 			$outputSettingIssues = $this->getOutputSettingIssueService()->findByIssue($tmpData['id']);
 			foreach($outputSettingIssues as $outputSet){
 				$this->getOutputSettingIssueService()->delete($outputSet);
@@ -468,20 +452,6 @@ class Issue extends DatabaseObject {
 			} else {
 				$this->setProperty('Published', 'N', true);
 			}
-
-			// Log message
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			if ($this->getWorkflowStatus() == 'Y') {
-				$status = getGS('Published');
-			} else {
-				$status = getGS('Not published');
-			}
-			$logtext = getGS('Issue $1 changed status to $2',
-			$this->m_data['Number'].'. '.$this->m_data['Name'].' ('.$this->getLanguageName().')',
-			$status);
-			Log::Message($logtext, null, 14);
 		}
 	} // fn setWorkflowStatus
 

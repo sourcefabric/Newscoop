@@ -23,7 +23,7 @@
       <script type="text/javascript">
       function  addAuthor(){
           var rnumber=Math.floor(Math.random()*9876)
-          $('#authorContainer ul').append('<li id="author_li' + rnumber + '"><div class="left-floated"><div style="margin-top:1px"><select name="f_article_author_type[]" id="article_author_type' + rnumber + '" class="input_select aaselect" onchange="" style="width:130px;height:100%;margin-bottom:2px;float:none"><?php echo drawComboContent(); ?></select></div></div><div class="position-helper"><input type="text" name="f_article_author[]" id="f_article_author' + rnumber + '" size="45" class="input_text aauthor" value="" autocomplete="off" /><a class="ui-state-default icon-button no-text" href="#" id="removeauthor' + rnumber + '" onclick="deleteAuthor(\'' + rnumber + '\');"><span class="ui-icon ui-icon-closethick"></span></a></div></li>');
+          $('#authorContainer ul').append('<li id="author_li' + rnumber + '"><div class="item_alt"><div><span id="author_type' + rnumber + '" style="margin-top:1px; margin-left: 20px;"><select name="f_article_author_type[]" id="article_author_typexx" class="input_select aaselect" style="width:130px;height:100%;margin-bottom:2px;float:none"><?php echo drawComboContent(); ?></select></span><input type="text" name="f_article_author[]" id="f_article_authorxx" size="45" class="input_text_alt aauthor" style="margin-left: 20px;" value="" autocomplete="off" /><a class="icon delete" href="#" id="removeauthorxx" onclick="deleteAuthor(' + rnumber + ');"><span class="ui-icon ui-icon-closethick"></span></a></div></div></li>');
       }
 
       function deleteAuthor(id, empty){
@@ -33,6 +33,29 @@
           $('#author_li' + id).remove();
           $('#article-main').addClass('changed');
       }
+      
+      $(document).ready(function() {
+          var orderChanges = {};
+          $('.sortable').sortable({
+                revert: 100,
+                distance: 5,
+                start: function(event, ui) {
+                    $(this).data( 'is-sorting', true );
+                    sorting = true;
+                    //ui.item.addClass('move');
+                },
+                stop: function(event, ui) {
+                    $(this).data( 'is-sorting', false );
+                    sorting = false;
+                    //ui.item.removeClass('move');
+                },
+                update: function(event, ui) {
+                    $('#article-main').addClass('changed');
+                },
+            });
+      }); // /document.ready
+      
+      
       </script>
       <?php
       // Get the list of authors
@@ -44,22 +67,21 @@
         <li>
           <label><?php putGS('Authors'); ?></label>
           <div id="authorContainer">
-          <ul>
+          <ul class="tree sortable">
       <?php
           if (!empty($authors)) {
               $i = 0;
               foreach ((array) $authors as $author) {
       ?>
             <li id="<?php p('author_li'.$i); ?>">
-              <div class="left-floated">
-                <div id="<?php p('author_type'.$i); ?>" style="margin-top:1px"><?php echo drawCombo($author->getAuthorType()->getId(), $i); ?></div>
-              </div>
-              <div class="position-helper">
-                 <input type="text" name="f_article_author[]"
-                   id="f_article_author<?php echo $i; ?>" size="45" class="input_text aauthor" value="<?php print htmlspecialchars($author->getName()); ?>" autocomplete="off" />
-                 <a class="ui-state-default icon-button no-text" href="#"
-                   id="removeauthor<?php echo $i;?>" onclick="deleteAuthor('<?php echo $i; ?>');"><span
-                   class="ui-icon ui-icon-closethick"></span></a>
+              <div class="item_alt">
+                <div>
+                    <span id="<?php p('author_type'.$i); ?>" style="margin-top:1px; margin-left: 20px;"><?php echo drawCombo($author->getAuthorType()->getId(), $i); ?></span>
+                    <input type="text" name="f_article_author[]" id="f_article_author<?php echo $i; ?>" size="45" class="input_text_alt aauthor" style="margin-left: 20px;" value="<?php print htmlspecialchars($author->getName()); ?>" autocomplete="off" />
+                    <a class="icon delete" href="#" id="removeauthor<?php echo $i;?>" onclick="deleteAuthor('<?php echo $i; ?>');">
+                        <span class="ui-icon ui-icon-closethick"></span>
+                    </a>
+                </div>
               </div>
             </li>
       <?php
@@ -68,21 +90,22 @@
           }
       ?>
             <li id="author_lixx">
-              <div class="left-floated">
-                <div style="margin-top:1px">
-                  <select name="f_article_author_type[]" id="article_author_typexx" class="input_select aaselect" style="width:130px;height:100%;margin-bottom:2px;float:none">
-                    <?php echo drawComboContent(); ?>
-                  </select>
+              <div class="item_alt">
+                <div>
+                    <span id="author_typexx" style="margin-top:1px; margin-left: 20px;">
+                        <select name="f_article_author_type[]" id="article_author_typexx" class="input_select aaselect" style="width:130px;height:100%;margin-bottom:2px;float:none">
+                        <?php echo drawComboContent(); ?>
+                        </select>
+                    </span>
+                    
+                    <input type="text" name="f_article_author[]" id="f_article_authorxx" size="45" class="input_text_alt aauthor" style="margin-left: 20px;" value="" autocomplete="off" />
+                    <a class="icon delete" href="#" id="removeauthorxx" onclick="deleteAuthor('xx');">
+                        <span class="ui-icon ui-icon-closethick"></span>
+                    </a>
                 </div>
               </div>
-              <div class="position-helper">
-                 <input type="text" name="f_article_author[]"
-                   id="f_article_authorxx" size="45" class="input_text aauthor" value="" autocomplete="off" />
-                 <a class="ui-state-default icon-button no-text" href="#"
-                   id="removeauthorxx" onclick="deleteAuthor('xx');"><span
-                   class="ui-icon ui-icon-closethick"></span></a>
-              </div>
             </li>
+            
           </ul>
           </div>
         </li>

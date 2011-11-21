@@ -27,7 +27,7 @@ class AuditEvent
     private $resource_type;
 
     /**
-     * @Column(length=80, nullable=True)
+     * @Column(length=80, nullable=True, name="resource_id")
      * @var string
      */
     private $resource_id;
@@ -39,7 +39,7 @@ class AuditEvent
     private $resource_title;
 
     /**
-     * @Column(type="text", nullable=True)
+     * @Column(type="text", nullable=True, name="resource_diff")
      * @var string
      */
     private $resource_diff;

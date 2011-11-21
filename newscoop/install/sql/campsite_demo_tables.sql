@@ -59,6 +59,7 @@ CREATE TABLE `ArticleAuthors` (
   `fk_language_id` int(10) unsigned NOT NULL DEFAULT '0',
   `fk_author_id` int(10) unsigned NOT NULL DEFAULT '0',
   `fk_type_id` int(10) unsigned NOT NULL DEFAULT '0',
+  `order` int(2) unsigned,
   PRIMARY KEY (`fk_article_number`,`fk_language_id`,`fk_author_id`,`fk_type_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;

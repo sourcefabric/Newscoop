@@ -39,28 +39,14 @@ class Country extends DatabaseObject {
 	public function create($p_values = null)
 	{
 		$success = parent::create($p_values);
-		if ($success) {
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			$logtext = getGS('Country $1 added', $this->m_data['Name']." (".$this->m_data['Code'].")");
-			Log::Message($logtext, null, 131);
-		}
 		return $success;
 	} // fn create
 
 
 	public function delete()
 	{
-	        $tmpData = $this->m_data;
+	    $tmpData = $this->m_data;
 		$success = parent::delete();
-		if ($success) {
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			$logtext = getGS('Country "$1" ($2) deleted', $tmpData['Name'], $tmpData['Code']);
-			Log::Message($logtext, null, 134);
-		}
 		return $success;
 	} // fn delete
 
@@ -94,13 +80,6 @@ class Country extends DatabaseObject {
 	{
 		$oldValue = $this->m_data['Name'];
 		$success = $this->setProperty('Name', $p_value);
-		if ($success) {
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			$logtext = getGS('Country name $1 changed', $this->m_data['Name']." (".$this->m_data['Code'].")");
-			Log::Message($logtext, null, 133);
-		}
 		return $success;
 	} // fn setName
 

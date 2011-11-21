@@ -124,15 +124,6 @@ if ($can_save) {
         $author->setAliases($aliases);
     }
 
-    if ($isNewAuthor) {
-        $logtext = getGS('New author "$1" ($2) created.',
-            $author->getName(), $author->getId());
-        Log::Message($logtext, $g_user->getUserId(), 172);
-    } else {
-        $logtext = getGS('Author information has been changed for "$1" ($2)',
-            $author->getName(), $author->getId());
-        Log::Message($logtext, $g_user->getUserId(), 173);
-    }
     camp_html_add_msg(getGS("Author saved."),"ok");
 } elseif ($del_id_alias < 1 && $id > -1 && !$can_save) {
     camp_html_add_msg(getGS("Please fill at least first name and last name."));

@@ -28,7 +28,7 @@ switch ($action) {
         flush();
         echo str_repeat(' ', 2048);
         echo '<pre>';
-        $options = array('--default-dir');
+        $options = array('--default-dir', '--keep-session');
         include CS_PATH_SITE.DIR_SEP . 'bin' . DIR_SEP . 'newscoop-backup';
         echo '</pre><script type="text/javascript">window.opener.location.reload();</script>';
         echo '<center><a href=# onclick="window.close()">'.getGS('Close').'</a></center>';
@@ -60,6 +60,7 @@ switch ($action) {
             'f' => true,
             'e' => true,
             'b' => $file,
+            '--keep-session'
         );
         include CS_PATH_SITE.DIR_SEP . 'bin' . DIR_SEP . 'newscoop-restore';
         echo '</pre><script type="text/javascript">window.opener.location.reload();</script>';

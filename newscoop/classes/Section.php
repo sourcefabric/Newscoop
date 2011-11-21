@@ -85,15 +85,6 @@ class Section extends DatabaseObject {
 			" AND s.`Number` = ".$this->m_data['Number'].
 			" AND s.`IdLanguage` = ".$this->m_data['IdLanguage'];
 			$g_ado_db->Execute($sql);
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			$logtext = getGS('Section "$1" ($2) added. (Publication: $3, Issue: $4)',
-					 $this->m_data['Name'],
-					 $this->m_data['Number'],
-					 $this->m_data['IdPublication'],
-					 $this->m_data['NrIssue']);
-			Log::Message($logtext, null, 21);
 		}
 		return $success;
 	} // fn create
@@ -202,13 +193,6 @@ class Section extends DatabaseObject {
 		$tmpData = $this->m_data;
 		$success = parent::delete();
 		if ($success) {
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			$logtext = getGS('Section "$1" ($2) deleted. (Publication: $3, Issue: $4)',
-					 $tmpData['Name'], $tmpData['Number'],
-					 $tmpData['IdPublication'], $tmpData['NrIssue']);
-			Log::Message($logtext, null, 22);
 			$outputSettingSections = $this->getOutputSettingSectionService()->findBySection($tmpData['id']);
 			foreach($outputSettingSections as $outputSet){
 				$this->getOutputSettingSectionService()->delete($outputSet);
