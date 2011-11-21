@@ -18,16 +18,17 @@ class RuleRepository extends EntityRepository
     /**
      * Save rule
      *
-     * @param Newscoop\Entity\Acl\Rule $rule
      * @param array $values
-     * @return void
+     * @param bool $isUser
+     * @param \Newscoop\Entity\Acl\Rule|null $rule
+     * @return \Newscoop\Entity\Acl\Rule|null
      */
-    public function save(Rule $rule, array $values)
+    public function save(array $values, $isUser = false, Rule $rule = null)
     {
-        $em = $this->getEntityManager();
-        $role = $em->getReference('Newscoop\Entity\Acl\Role', (int) $values['role']);
+        $role = $this->getEntityManager()->getReference('Newscoop\Entity\Acl\Role', (int) $values['role']);
         $resource = (string) $values['resource'];
         $action = (string) $values['action'];
+        $type = array_key_exists('type', $values) && strtolower($values['type']) == 'allow' ? 'allow' : 'deny';
 
         $conflicts = $this->findBy(array(
             'role' => (int) $values['role'],
@@ -36,17 +37,28 @@ class RuleRepository extends EntityRepository
         ));
 
         foreach ($conflicts as $conflict) {
-            $em->remove($conflict);
+            $this->getEntityManager()->remove($conflict);
         }
 
-        $em->flush();
+        $this->getEntityManager()->flush();
+
+        if ('deny' == $type && !$isUser) { // don't add deny rules for user groups
+            return;
+        }
+
+        if (null === $rule) {
+            $rule = new Rule();
+        }
 
         $rule->setType($values['type']);
         $rule->setRole($role);
         $rule->setResource($resource);
         $rule->setAction($action);
-        
-        $em->persist($rule);
+
+        $this->getEntityManager()->persist($rule);
+        $this->getEntityManager()->flush();
+
+        return $rule;
     }
 
     /**
@@ -57,8 +69,7 @@ class RuleRepository extends EntityRepository
      */
     public function delete($id)
     {
-        $em = $this->getEntityManager();
-        $proxy = $em->getReference('Newscoop\Entity\Acl\Rule', $id);
-        $em->remove($proxy);
+        $proxy = $this->getEntityManager()->getReference('Newscoop\Entity\Acl\Rule', $id);
+        $this->getEntityManager()->remove($proxy);
     }
 }
