@@ -109,22 +109,22 @@ foreach ($topics as $path) {
         $topic_level++;
     }
 
+    $currentTopic = camp_array_peek($path, false, -1);
+    $topic_id = $currentTopic->getTopicId();
+    $name = $currentTopic->getName($f_language_selected);
+    if (empty($name)) {
+        // Backwards compatibility
+        $name = $currentTopic->getName(1);
+        if (empty($name)) {
+            continue;
+        }
+    }
+
     if ($topic_level > $level) {
         echo empty($level) ? '<ul class="tree">' : '<ul>';
     } else {
         echo str_repeat('</li></ul>', $level - $topic_level), '</li>';
     }
-
-	$currentTopic = camp_array_peek($path, false, -1);
-    $topic_id = $currentTopic->getTopicId();
-	$name = $currentTopic->getName($f_language_selected);
-	if (empty($name)) {
-		// Backwards compatibility
-		$name = $currentTopic->getName(1);
-		if (empty($name)) {
-			continue;
-		}
-	}
 
     $color_class = $color && $topic_level == 1 ? ' class="odd"' : '';
     if ($topic_level == 1) {
