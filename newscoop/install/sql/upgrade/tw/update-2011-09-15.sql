@@ -7,6 +7,7 @@ ALTER TABLE `liveuser_users` CHANGE `time_created` `time_created` datetime NOT N
 ALTER TABLE `liveuser_users` CHANGE `time_updated` `time_updated` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
 ALTER TABLE `liveuser_users` ADD `image` varchar(255) DEFAULT NULL;
 ALTER TABLE `liveuser_users` ADD `subscriber` int(10) DEFAULT NULL;
+ALTER TABLE `ArticleAuthors` ADD `order` int(2) unsigned;
 
 UPDATE `liveuser_users` SET `status` = 1, `is_admin` = 1, `is_public` = 1;
 

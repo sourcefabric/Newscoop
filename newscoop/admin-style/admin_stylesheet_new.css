@@ -248,7 +248,6 @@ ul.tree.sortable .item {
     border-top-width: 0;
     cursor: move;
     background: #ffffff url(images/topics_bg.png) repeat-x 0 0; 
-
 }
 
 ul.tree.sortable .item:first-child {
@@ -262,6 +261,21 @@ ul.tree.sortable .item > div {
     margin: 0;
     padding: 6px 5px 6px 18px;
     font-size: 1.2em;
+	background: transparent url(images/topics_drag.png) no-repeat 6px 6px;
+}
+
+ul.tree.sortable .item_alt {
+    float: left;
+    clear: left;
+    background: #f8f8f8;
+    border: 1px solid #ccc;
+    cursor: move;
+}
+
+ul.tree.sortable .item_alt > div {
+    width: 600px;
+    height: 1%;
+    padding: 6px 5px 6px 18px;
 	background: transparent url(images/topics_drag.png) no-repeat 6px 6px;
 }
 
