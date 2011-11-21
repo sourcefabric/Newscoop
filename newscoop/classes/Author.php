@@ -84,15 +84,6 @@ class Author extends DatabaseObject
         $tmpData = $this->m_data;
         // Delete row from Authors table.
         $result = parent::delete();
-        if ($result) {
-            if (function_exists("camp_load_translation_strings")) {
-                camp_load_translation_strings("api");
-            }
-            $logText = getGS('Author #$1 "$2" deleted.',
-                $tmpData['id'], $tmpData['first_name'] . ' ' . $tmpData['last_name']);
-            Log::Message($logText, null, 174);
-        }
-
         return $result;
     }
 

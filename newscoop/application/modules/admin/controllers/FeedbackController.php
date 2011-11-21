@@ -259,7 +259,7 @@ class Admin_FeedbackController extends Zend_Controller_Action
 		);
 		$mailTransport = new Zend_Mail_Transport_Smtp('smtp.gmail.com',$configMail);
 		*/
-		$mail = new Zend_Mail();
+		$mail = new Zend_Mail('utf-8');
 		$mail->setSubject($subject);
 		$mail->setBodyText($message);
 		$mail->setFrom($fromEmail);

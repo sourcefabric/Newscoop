@@ -83,9 +83,6 @@ if ($LiveUserAdmin->updateUser($liveUserValues, $editUser->getPermUserId()) === 
     $editUser->commit();
 }
 
-$logtext = getGS('User account information changed for "$1"', $editUser->getUserName());
-Log::Message($logtext, $g_user->getUserId(), 56);
-
 if ($editUser->isAdmin() && $customizeRights && $canManage) {
 	$rightsFields = $editUser->GetDefaultConfig();
 	$permissions = array();
@@ -99,9 +96,6 @@ if ($editUser->isAdmin() && $customizeRights && $canManage) {
 if ($editUser->isAdmin() && $customizeRights && $canManage) {
 	// save user customized rights
 	$editUser->updatePermissions($permissions);
-
-	$logtext = getGS('Permissions changed for user "$1"',$editUser->getUserName());
-	Log::Message($logtext, $g_user->getUserId(), 55);
 }
 if ($editUser->isAdmin() && !$customizeRights && $canManage) {
 	// save user rights based on existing user type

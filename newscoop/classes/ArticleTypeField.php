@@ -96,13 +96,6 @@ class ArticleTypeField extends DatabaseObject {
 
 			$fieldName = $this->m_data['field_name'];
 			$this->setProperty('field_name', $p_newName);
-
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			$logText = getGS('The article type field "$1" has been renamed to "$2".',
-			$fieldName, $p_newName);
-			Log::Message($logText, null, 62);
 		}
 	} // fn rename
 
@@ -192,12 +185,7 @@ class ArticleTypeField extends DatabaseObject {
 		}
 
 		if ($success) {
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			$logtext = getGS('Article type field "$1" created', $this->m_data['field_name']);
-			Log::Message($logtext, null, 71);
-            CampCache::singleton()->clear('user');
+			CampCache::singleton()->clear('user');
 		}
 		return $success;
 	} // fn create
@@ -314,13 +302,6 @@ class ArticleTypeField extends DatabaseObject {
             $this->m_rootTopicId = null;
 		}
 
-		if ($success) {
-			if (function_exists("camp_load_translation_strings")) {
-				camp_load_translation_strings("api");
-			}
-			$logtext = getGS('Article type field "$1" changed', $this->m_data['field_name']);
-			Log::Message($logtext, null, 71);
-		}
 		return $success;
 	} // fn setType
 
@@ -372,12 +353,6 @@ class ArticleTypeField extends DatabaseObject {
             }
             $newOrders = array_reverse($newOrders);
 			$this->setOrders($newOrders);
-
-			if (function_exists("camp_load_translation_strings")) {
-			    camp_load_translation_strings("api");
-			}
-			$logtext = getGS('Article type field "$1" deleted', $fieldName);
-			Log::Message($logtext, null, 72);
             CampCache::singleton()->clear('user');
 		}
 		return $success;
@@ -695,14 +670,6 @@ class ArticleTypeField extends DatabaseObject {
 					$this->setProperty('fk_phrase_id', $description->getPhraseId());
 				}
 			}
-		}
-
-		if ($changed) {
-			if (function_exists("camp_load_translation_strings")) {
-			    camp_load_translation_strings("api");
-			}
-			$logtext = getGS('Field "$1" updated', $this->m_data['field_name']);
-			Log::Message($logtext, null, 143);
 		}
 
 		return $changed;

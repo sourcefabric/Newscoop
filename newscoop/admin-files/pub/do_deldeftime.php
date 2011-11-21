@@ -28,8 +28,6 @@ $publicationObj = new Publication($Pub);
 $defaultTime = new SubscriptionDefaultTime($CountryCode, $Pub);
 $defaultTime->delete();
 
-$logtext = getGS('Subscription default time for "$1":$2 deleted', $publicationObj->getName(), $CountryCode);
-Log::Message($logtext, $g_user->getUserId(), 5);
 camp_html_add_msg(getGS("Country subscription settings deleted."), "ok");
 camp_html_goto_page("/$ADMIN/pub/deftime.php?Pub=$Pub&Language=$Language");
 ?>

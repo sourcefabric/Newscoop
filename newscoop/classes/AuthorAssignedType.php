@@ -65,11 +65,6 @@ class AuthorAssignedType extends DatabaseObject
         $queryStr = 'INSERT IGNORE INTO ' . self::TABLE . ' (fk_author_id, fk_type_id)
             VALUES (' . (int) $p_authorId . ', ' . (int) $p_authorTypeId . ')';
         $g_ado_db->Execute($queryStr);
-        if (function_exists("camp_load_translation_strings")) {
-            camp_load_translation_strings("api");
-        }
-        $logText = getGS('Author type $1 linked to author $2', $p_authorTypeId, $p_authorId);
-        Log::Message($logText, null, 175);
     }
 
     /**

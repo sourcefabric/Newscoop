@@ -266,6 +266,10 @@ ALTER TABLE `Attachments`
  DROP PRIMARY KEY,
  ADD PRIMARY KEY (`id`);
 
+-- Update Article Authors
+ALTER TABLE `ArticleAuthors`
+ ADD COLUMN `order` int(2) unsigned;
+ 
 -- Upgrade templates to themes
 system php ./create_themes.php
 

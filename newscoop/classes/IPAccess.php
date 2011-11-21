@@ -109,13 +109,7 @@ class IPAccess extends DatabaseObject {
 		}
 	    $tmpValues = array('IdUser'=>$p_userId, 'StartIP'=>$startIP, 'Addresses'=>$p_addresses);
 	    $result = parent::create($tmpValues);
-	    if ($result) {
-	    	$user = $GLOBALS['controller']->getHelper('service')->getService('user')->find($p_userId);
-			$logtext = getGS('IP Group $1 added for user $2', "$startIPstring:$p_addresses",
-							 $user->getUsername());
-			Log::Message($logtext, null, 57);
-	    }
-		return $result;
+	    return $result;
 	}
 
 	public function delete()
@@ -123,10 +117,6 @@ class IPAccess extends DatabaseObject {
 		$startIPstring = $this->getStartIPstring();
 		$addresses = $this->getAddresses();
 		$result = parent::delete();
-		if ($result) {
-			$logtext = getGS('The IP address group $1 has been deleted.', "$startIPstring:$addresses");
-			Log::Message($logtext, null, 58);
-		}
 		return $result;
 	}
 
