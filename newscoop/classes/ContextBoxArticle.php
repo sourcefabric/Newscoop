@@ -67,16 +67,10 @@ class ContextBoxArticle extends DatabaseObject
      * @return array $issuesList
      *    An array of Issue objects
      */
-    public static function GetList($p_context_id, $publishedOnly, $p_order = null,
+    public static function GetList($p_context_id, $p_order = null,
     $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
     {
         global $g_ado_db;
-
-        $p_context_id = (int)$p_context_id;
-        if ($p_context_id < 1) {
-            $p_count = 0;
-            return array();
-        }
 
         if (!$p_skipCache && CampCache::IsEnabled()) {
             $paramsArray['parameters'] = serialize($p_parameters);
@@ -89,14 +83,12 @@ class ContextBoxArticle extends DatabaseObject
                 return $issuesList;
             }
         }
-        $p_start = (int)$p_start;
-        $p_limit = (int)$p_limit;
 
         $returnArray = array();
-        $queryStr = 'SELECT DISTINCT ca.fk_article_no '
-           .'FROM context_articles AS ca INNER JOIN Articles AS a ON ca.fk_article_no = a.Number'
-           ." WHERE ca.fk_context_id = '$p_context_id'" . ($publishedOnly ? " AND a.Published = 'Y'" : '')
-           ." LIMIT $p_start, $p_limit";
+        $queryStr = '
+           SELECT fk_article_no FROM context_articles'.
+           ' WHERE fk_context_id='.$p_context_id
+        ;
         $rows = $g_ado_db->GetAll($queryStr);
         if(is_array($rows)) {
             foreach($rows as $row) {
@@ -104,11 +96,7 @@ class ContextBoxArticle extends DatabaseObject
             }
         }
 
-        $queryStr = 'SELECT COUNT(DISTINCT ca.fk_article_no) '
-           .'FROM context_articles AS ca INNER JOIN Articles AS a ON ca.fk_article_no = a.Number'
-           ." WHERE ca.fk_context_id = '$p_context_id'" . ($publishedOnly ? " AND a.Published = 'Y'" : '');
-        $p_count = $g_ado_db->GetOne($queryStr);
-
+        $p_count = count($returnArray);
         return array_reverse($returnArray);
     }
 

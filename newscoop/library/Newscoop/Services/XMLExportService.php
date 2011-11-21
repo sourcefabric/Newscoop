@@ -147,7 +147,7 @@ class XMLExportService
     
     public function getData($type, $number, $language)
     {
-        $query = 'SELECT * FROM X' . $type . " WHERE NrArticle = '" . $number . "' AND IdLanguage = '" . $language . "'";
+        $query = $query = 'SELECT * FROM X' . $type . " WHERE NrArticle = '" . $number . "' AND IdLanguage = '" . $language . "'";
         $sql1 = mysql_query($query);
         $sql2 = mysql_fetch_assoc($sql1);
         return($sql2);
@@ -224,7 +224,7 @@ class XMLExportService
         $directory = opendir($directoryName);
         while (($file = readdir($directory)) !== false) {
             if ($file != '.' && $file != '..') {
-                unlink($directoryName . '/' . $file);
+                unlink($directoryName.'/'.$file);
             }
         }
         closedir($directory);
