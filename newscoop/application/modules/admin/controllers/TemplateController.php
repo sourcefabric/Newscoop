@@ -179,6 +179,7 @@ class Admin_TemplateController extends Zend_Controller_Action
         $nextRedirect->setExpirationHops(7, 'next', true);
 
         $this->view->form = $form;
+        $this->view->path = $this->view->basePath . $path;
         $this->view->isWritable = $this->service->isWritable($path);
     }
 
