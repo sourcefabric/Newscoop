@@ -204,12 +204,10 @@ class Admin_CommentController extends Zend_Controller_Action
                     $msg = getGS('Comment delete by $1 from the article $2 ($3)', Zend_Registry::get('user')->getName(),
                                  $comment->getThread()->getName(), $comment->getLanguage()->getCode());
 
-                    $this->_helper->log($msg);
                     $this->_helper->flashMessenger($msg);
                 } else {
                     $msg = getGS('Comment $4 by $1 in the article $2 ($3)', Zend_Registry::get('user')->getName(),
                                  $comment->getThread()->getName(), $comment->getLanguage()->getCode(), $status);
-                    $this->_helper->log($msg);
                     $this->_helper->flashMessenger($msg);
                 }
             }
@@ -290,7 +288,6 @@ class Admin_CommentController extends Zend_Controller_Action
         $values['time_created'] = new DateTime;
 
         if (!SecurityToken::isValid()) {
-            $this->_helper->log(getGS('Invalid security token!'));
             $this->view->status = 401;
             $this->view->message = getGS('Invalid security token!');
             return;
@@ -304,11 +301,7 @@ class Admin_CommentController extends Zend_Controller_Action
             $this->view->message = $e->getMessage();
             return;
         }
-        $this->_helper->log(getGS('Comment added by $1 to the article $2 ($3)',
-                                  Zend_Registry::get('user')->getName(),
-                                  $comment->getThread()->getName(),
-                                  $comment->getLanguage()->getCode())
-        );
+
         $this->view->status = 200;
         $this->view->message = "succcesful";
         $this->view->comment = $comment->getId();
@@ -417,8 +410,7 @@ class Admin_CommentController extends Zend_Controller_Action
             $return = array('status' => $e->getCode(), 'message' => $e->getMessage(), 'data' => array());
             $this->_helper->json($return);
         }
-        $this->_helper->log(getGS('Comment updated by $1 to the article $2 ($3)', Zend_Registry::get('user')->getName(),
-                                  $comment->getThread()->getName(), $comment->getLanguage()->getCode()));
+
         $return = array('status' => 100, 'message' => 'succesful', 'data' => array('comment' => $comment->getId()));
         $this->_helper->json($return);
     }
@@ -447,9 +439,7 @@ class Admin_CommentController extends Zend_Controller_Action
                 $this->view->message = $e->getMessage();
                 return;
             }
-            $this->_helper->log(getGS('Comment added by $1 to the article $2 ($3)',
-                                      Zend_Registry::get('user')->getName(), $comment->getThread()->getName(),
-                                      $comment->getLanguage()->getCode()));
+
             $this->view->status = 200;
             $this->view->message = "succcesful";
             $this->view->comment = $comment->getId();
