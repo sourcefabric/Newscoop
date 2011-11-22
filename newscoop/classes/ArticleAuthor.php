@@ -59,6 +59,7 @@ class ArticleAuthor extends DatabaseObject
      */
     public function __construct($p_articleNumber = null, $p_languageId = null, $p_authorId = null, $p_typeId = null, $p_order = null)
     {
+        $this->setColumnNames($this->m_columnNames);
         if (is_numeric($p_articleNumber)) {
             $this->m_data['fk_article_number'] = $p_articleNumber;
         }

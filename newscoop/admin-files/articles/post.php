@@ -128,9 +128,11 @@ if ($articleObj->isLocked() && ($g_user->getUserId() != $articleObj->getLockedBy
                                                   $articleObj->getLanguageId(),
                                                   $authorObj->getId(), $author_type, $i + 1);
             }
-            if (!$articleAuthorObj->exists()) {
+
+            if (isset($articleAuthorObj) && !$articleAuthorObj->exists()) {
                 $articleAuthorObj->create();
             }
+
             $i++;
         }
     }
