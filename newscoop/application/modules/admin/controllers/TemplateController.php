@@ -603,7 +603,7 @@ class Admin_TemplateController extends Zend_Controller_Action
         require_once APPLICATION_PATH . '/../template_engine/classes/CampTemplate.php';
 
         try {
-		    CampTemplate::singleton()->clear_compiled_tpl($filename);
+		    CampTemplate::singleton()->clearCompiledTemplate($filename);
         } catch (Exception $e) { // ignore file not found
         }
     }

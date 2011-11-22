@@ -149,8 +149,8 @@ final class CampTemplate extends Smarty
      */
     public function clearCache()
     {
-        $this->clear_compiled_tpl();
-        $this->clear_all_cache();
+        $this->clearCompiledTemplate();
+        $this->clearAllCache();
     }
 
     /**
