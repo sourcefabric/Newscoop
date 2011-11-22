@@ -57,7 +57,7 @@ class ArticleAuthor extends DatabaseObject
      * @param int $p_authorId
      * @param int $p_typeId
      */
-    public function __construct($p_articleNumber = null, $p_languageId = null, $p_authorId = null, $p_typeId = null, $p_order)
+    public function __construct($p_articleNumber = null, $p_languageId = null, $p_authorId = null, $p_typeId = null, $p_order = null)
     {
         if (is_numeric($p_articleNumber)) {
             $this->m_data['fk_article_number'] = $p_articleNumber;
