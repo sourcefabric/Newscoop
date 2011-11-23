@@ -68,37 +68,19 @@ if (!defined('PLUGIN_DEBATE_FUNCTIONS')) {
 
         $LiveUserAdmin->addRight(array('area_id' => 0, 'right_define_name' => 'plugin_debate_admin', 'has_implied' => 1));
 
-        $em = Zend_Registry::get('doctrine')->getEntityManager();
-        /* @var $em Doctrine\ORM\EntityManager */
-        $ruleRepository = $em->getRepository('Newscoop\Entity\Acl\Rule');
-        /* @var $ruleRepository Newscoop\Entity\Repository\Acl\RuleRepository */
-        $userRepository = $em->getRepository('Newscoop\Entity\User\Group');
-        /* @var $userRepository Newscoop\Entity\Repository\User\GroupRepository */
-
-        if (!is_null( $user = $userRepository->findOneByName('Administrator') ))
-        {
-            /* @var $acl \Resource_Acl */
-            $rule = new Rule();
-            $user->getRoleId();
-            $ruleRepository->save
-            (
-                $rule,
-                array
-                (
-                	"action" => "admin",
-                	"resource" => "plugin-debate",
-                	"role" => $user->getRoleId(),
-                	"type" => "allow"
-                )
-            );
-            $em->getUnitOfWork()->commit();
-        }
-
         require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallationBase.php');
         $GLOBALS['g_db'] = $GLOBALS['g_ado_db'];
 
         $errors = CampInstallationBaseHelper::ImportDB(CS_PATH_PLUGINS.DIR_SEP.'debate/install/sql/plugin_debate.sql', $error_queries);
         unset($GLOBALS['g_db']);
+
+        global $g_ado_db;
+        $res = $g_ado_db->execute("SELECT * FROM `liveuser_groups` WHERE `group_define_name` = 'Administrator'");
+        $row = $res->FetchRow();
+        if ($row) {
+            $g_ado_db->execute("INSERT INTO `acl_rule`(`action`, `resource`, `role_id`, `type`)
+    			VALUES('admin', 'plugin-debate', '{$row['role_id']}', 'allow')");
+        }
     }
 
     function plugin_debate_uninstall()
