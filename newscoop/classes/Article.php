@@ -1300,15 +1300,16 @@ class Article extends DatabaseObject {
      * Set the ID of the author who wrote this article.
      *
      * @param int $p_value
+     * @param int $order
      * @return boolean
      */
-    public function setAuthor(Author $p_author)
+    public function setAuthor(Author $p_author, $order = 0)
     {
         $defaultAuthorType = $p_author->setType();
         // Links the author to the article
         $articleAuthorObj = new ArticleAuthor($this->getArticleNumber(),
                                               $this->getLanguageId(),
-                                              $p_author->getId(), $defaultAuthorType);
+                                              $p_author->getId(), $defaultAuthorType, (int) $order);
         if (!$articleAuthorObj->exists()) {
             $articleAuthorObj->create();
         }
