@@ -301,6 +301,16 @@ $("#context_box a.iframe").fancybox({
     }
 });
 
+$("#multidate_box a.iframe").fancybox({
+    'showCloseButton' : false,
+    'width': 980,
+    'height'     : 700,
+    'scrolling' : 'auto',
+    'onClosed'      : function() {
+       loadContextBoxActileList();
+    }
+});
+
 $("#playlist a.iframe").fancybox
 ({
 	'showCloseButton' : false,

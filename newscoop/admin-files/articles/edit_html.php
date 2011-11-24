@@ -384,6 +384,10 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
       <!-- BEGIN Article Playlist table -->
       <?php require('edit_playlist.php'); ?>
       <!-- END Article Playlist table -->
+      
+      <!-- BEGIN Multi date table -->
+      <?php require('edit_multidate_box.php'); ?>
+      <!-- END Multi date table -->
 
       <?php CampPlugin::adminHook(__FILE__, array( 'articleObj' => $articleObj, 'f_edit_mode' => $f_edit_mode ) ); ?>
 

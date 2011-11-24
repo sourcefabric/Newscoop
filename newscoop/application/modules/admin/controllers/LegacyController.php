@@ -42,6 +42,7 @@ class Admin_LegacyController extends Zend_Controller_Action
             '/articles/locations/search.php',
             '/articles/locations/filter.php',
             '/articles/context_box/popup.php',
+            '/articles/multidate/popup.php',
         );
 
         CampPlugin::ExtendNoMenuScripts($no_menu_scripts);
