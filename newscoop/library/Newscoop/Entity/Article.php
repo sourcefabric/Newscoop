@@ -15,7 +15,6 @@ namespace Newscoop\Entity;
  */
 class Article
 {
-
     const STATUS_PUBLISHED = 'Y';
     const STATUS_NOT_PUBLISHED = 'N';
     const STATUS_SUBMITTED = 'S';
@@ -57,13 +56,13 @@ class Article
     private $creator;
 
     /**
-     * @column(name="NrSection")
+     * @column(name="NrSection", nullable=True)
      * @var int
      */
     private $sectionId;
 
     /**
-     * @column(name="NrIssue")
+     * @column(name="NrIssue", nullable=True)
      * @var int
      */
     private $issueId;
@@ -76,41 +75,50 @@ class Article
     private $number;
 
     /**
-     * @Column(name="Name")
+     * @Column(name="Name", nullable=True)
      * @var string
      */
     private $name;
 
     /**
-     * @Column(name="time_updated")
+     * @Column(name="time_updated", nullable=True)
      * @var string
      */
     private $date;
 
     /**
-     * @Column(name="comments_enabled")
+     * @Column(name="comments_enabled", nullable=True)
      * @var int
      */
     private $comments_enabled;
     
     /**
-     * @Column(name="Type")
+     * @Column(name="Type", nullable=True)
      * @var string
      */
     private $type;
     
     /**
-     * @Column(name="PublishDate")
+     * @Column(name="PublishDate", nullable=True)
      * @var string
      */
     private $published;
     
     /**
-     * @Column(name="Published")
+     * @Column(name="Published", nullable=True)
      * @var string
      */
     private $workflowStatus;
 
+    /**
+     * @param int $number
+     * @param Newscoop\Entity\Language $language
+     */
+    public function __construct($number, Language $language)
+    {
+        $this->number = (int) $number;
+        $this->language = $language;
+    }
 
     /**
      * Set article id

@@ -32,7 +32,7 @@ class Publication extends Entity
     protected $id;
 
     /**
-     * @Column(name="Name")
+     * @Column(name="Name", nullable=True)
      * @var string
      */
     private $name;
@@ -50,21 +50,20 @@ class Publication extends Entity
      */
     private $issues;
 
-
     /**
-     * @column(name="comments_public_enabled")
+     * @column(name="comments_public_enabled", nullable=True)
      * @var bool
      */
     private $public_enabled;
 
     /**
-     * @Column(name="comments_moderator_to")
+     * @Column(name="comments_moderator_to", nullable=True)
      * @var string
      */
     private $moderator_to;
 
     /**
-     * @Column(name="comments_moderator_from")
+     * @Column(name="comments_moderator_from", nullable=True)
      * @var string
      */
     private $moderator_from;
