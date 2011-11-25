@@ -162,19 +162,19 @@ class Comment
      * @column(length=4)
      * @var int
      */
-    private $likes;
+    private $likes = 0;
 
     /**
      * @column(length=4)
      * @var int
      */
-    private $dislikes;
+    private $dislikes = 0;
 
     /**
      * @column(length=1)
      * @var int
      */
-    private $recommended;
+    private $recommended = 0;
 
     /**
      * Set id

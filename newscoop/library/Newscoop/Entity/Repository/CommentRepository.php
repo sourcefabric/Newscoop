@@ -202,16 +202,16 @@ class CommentRepository extends DatatableSource
             $articleRepository = $em->getRepository('Newscoop\Entity\Article');
             $thread = $articleRepository->find(array('number' => $p_values['thread'], 'language' => $language->getId()));
 
-            $qb = $this->createQueryBuilder('c');
-            $threadOrder = $qb->select('MAX(c.thread_order)')
-            ->andWhere('c.thread = :thread')
-            ->andWhere('c.language = :language')
-            ->setParameter('thread', $thread)
-            ->setParameter('language', $language)
-            ->getQuery()->getSingleScalarResult();
+            $query = $this->createQueryBuilder('c')
+                ->select('MAX(c.thread_order)')
+                ->where('c.thread = :thread')
+                ->andWhere('c.language = :language')
+                ->setParameter('thread', $thread->getNumber())
+                ->setParameter('language', $language->getId())
+                ->getQuery();
 
             // increase by one of the current comment
-            $threadOrder += 1;
+            $threadOrder = $query->getSingleScalarResult() + 1;
 
             $p_entity->setLanguage($language)->setForum($thread->getPublication())->setThread($thread);
         }

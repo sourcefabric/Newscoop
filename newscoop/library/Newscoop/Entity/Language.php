@@ -28,253 +28,253 @@ class Language
     private $id;
 
     /**
-     * @column(name="Name")
+     * @column(name="Name", nullable=True)
      * @var string
      */
     private $name;
 
     /**
-     * @column(name="CodePage")
+     * @column(name="CodePage", nullable=True)
      * @var string
      */
     private $code_page;
 
     /**
-     * @column(name="OrigName")
+     * @column(name="OrigName", nullable=True)
      * @var string
      */
     private $original_name;
 
     /**
-     * @column(name="Code")
+     * @column(name="Code", nullable=True)
      * @var string
      */
     private $code;
 
     /**
-     * @column(name="Month1")
+     * @column(name="Month1", nullable=True)
      * @var string
      */
     private $month1;
 
     /**
-     * @column(name="Month2")
+     * @column(name="Month2", nullable=True)
      * @var string
      */
     private $month2;
 
     /**
-     * @column(name="Month3")
+     * @column(name="Month3", nullable=True)
      * @var string
      */
     private $month3;
 
     /**
-     * @column(name="Month4")
+     * @column(name="Month4", nullable=True)
      * @var string
      */
     private $month4;
 
     /**
-     * @column(name="Month5")
+     * @column(name="Month5", nullable=True)
      * @var string
      */
     private $month5;
 
     /**
-     * @column(name="Month6")
+     * @column(name="Month6", nullable=True)
      * @var string
      */
     private $month6;
 
     /**
-     * @column(name="Month7")
+     * @column(name="Month7", nullable=True)
      * @var string
      */
     private $month7;
 
     /**
-     * @column(name="Month8")
+     * @column(name="Month8", nullable=True)
      * @var string
      */
     private $month8;
 
     /**
-     * @column(name="Month9")
+     * @column(name="Month9", nullable=True)
      * @var string
      */
     private $month9;
 
     /**
-     * @column(name="Month10")
+     * @column(name="Month10", nullable=True)
      * @var string
      */
     private $month10;
 
     /**
-     * @column(name="Month11")
+     * @column(name="Month11", nullable=True)
      * @var string
      */
     private $month11;
 
     /**
-     * @column(name="Month12")
+     * @column(name="Month12", nullable=True)
      * @var string
      */
     private $month12;
 
     /**
-     * @column(name="ShortMonth1")
+     * @column(name="ShortMonth1", nullable=True)
      * @var string
      */
     private $short_month1;
 
     /**
-     * @column(name="ShortMonth2")
+     * @column(name="ShortMonth2", nullable=True)
      * @var string
      */
     private $short_month2;
 
     /**
-     * @column(name="ShortMonth3")
+     * @column(name="ShortMonth3", nullable=True)
      * @var string
      */
     private $short_month3;
 
     /**
-     * @column(name="ShortMonth4")
+     * @column(name="ShortMonth4", nullable=True)
      * @var string
      */
     private $short_month4;
 
     /**
-     * @column(name="ShortMonth5")
+     * @column(name="ShortMonth5", nullable=True)
      * @var string
      */
     private $short_month5;
 
     /**
-     * @column(name="ShortMonth6")
+     * @column(name="ShortMonth6", nullable=True)
      * @var string
      */
     private $short_month6;
 
     /**
-     * @column(name="ShortMonth7")
+     * @column(name="ShortMonth7", nullable=True)
      * @var string
      */
     private $short_month7;
 
     /**
-     * @column(name="ShortMonth8")
+     * @column(name="ShortMonth8", nullable=True)
      * @var string
      */
     private $short_month8;
 
     /**
-     * @column(name="ShortMonth9")
+     * @column(name="ShortMonth9", nullable=True)
      * @var string
      */
     private $short_month9;
 
     /**
-     * @column(name="ShortMonth10")
+     * @column(name="ShortMonth10", nullable=True)
      * @var string
      */
     private $short_month10;
 
     /**
-     * @column(name="ShortMonth11")
+     * @column(name="ShortMonth11", nullable=True)
      * @var string
      */
     private $short_month11;
 
     /**
-     * @column(name="ShortMonth12")
+     * @column(name="ShortMonth12", nullable=True)
      * @var string
      */
     private $short_month12;
 
     /**
-     * @column(name="WDay1")
+     * @column(name="WDay1", nullable=True)
      * @var string
      */
     private $day1;
 
     /**
-     * @column(name="WDay2")
+     * @column(name="WDay2", nullable=True)
      * @var string
      */
     private $day2;
 
     /**
-     * @column(name="WDay3")
+     * @column(name="WDay3", nullable=True)
      * @var string
      */
     private $day3;
 
     /**
-     * @column(name="WDay4")
+     * @column(name="WDay4", nullable=True)
      * @var string
      */
     private $day4;
 
     /**
-     * @column(name="WDay5")
+     * @column(name="WDay5", nullable=True)
      * @var string
      */
     private $day5;
 
     /**
-     * @column(name="WDay6")
+     * @column(name="WDay6", nullable=True)
      * @var string
      */
     private $day6;
 
     /**
-     * @column(name="WDay7")
+     * @column(name="WDay7", nullable=True)
      * @var string
      */
     private $day7;
 
     /**
-     * @column(name="ShortWDay1")
+     * @column(name="ShortWDay1", nullable=True)
      * @var string
      */
     private $short_day1;
 
     /**
-     * @column(name="ShortWDay2")
+     * @column(name="ShortWDay2", nullable=True)
      * @var string
      */
     private $short_day2;
 
     /**
-     * @column(name="ShortWDay3")
+     * @column(name="ShortWDay3", nullable=True)
      * @var string
      */
     private $short_day3;
 
     /**
-     * @column(name="ShortWDay4")
+     * @column(name="ShortWDay4", nullable=True)
      * @var string
      */
     private $short_day4;
 
     /**
-     * @column(name="ShortWDay5")
+     * @column(name="ShortWDay5", nullable=True)
      * @var string
      */
     private $short_day5;
 
     /**
-     * @column(name="ShortWDay6")
+     * @column(name="ShortWDay6", nullable=True)
      * @var string
      */
     private $short_day6;
 
     /**
-     * @column(name="ShortWDay7")
+     * @column(name="ShortWDay7", nullable=True)
      * @var string
      */
     private $short_day7;
