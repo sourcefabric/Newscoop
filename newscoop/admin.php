@@ -254,7 +254,7 @@ function camp_set_error_handler($p_function)
 
 
 /**
- * Called for all Campsite errors.
+ * Called for all Newscoop errors.
  */
 function camp_report_bug($p_number, $p_string, $p_file, $p_line)
 {

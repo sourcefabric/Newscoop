@@ -47,7 +47,7 @@ define('INVALID_VALUE_STRING', 'invalid value');
 define('OF_PROPERTY_STRING', 'of property');
 define('OF_OBJECT_STRING', 'of object');
 
-// Campsite error codes
+// Newscoop error codes
 define('CAMP_SUCCESS', 1);
 define('CAMP_ERROR', 0);
 define('CAMP_ERROR_MKDIR', -100);
