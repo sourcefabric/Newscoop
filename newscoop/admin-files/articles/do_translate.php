@@ -158,7 +158,6 @@ $articleCopy = $articleObj->createTranslation($f_translation_language, $g_user->
 
 camp_html_add_msg(getGS("Article translation created."), "ok");
 
-camp_html_goto_page(camp_html_article_url($articleCopy, $f_translation_language, 'edit.php'), false);
-
 ArticleIndex::RunIndexer(3, 10, true);
+camp_html_goto_page(camp_html_article_url($articleCopy, $f_translation_language, 'edit.php'), true);
 ?>
