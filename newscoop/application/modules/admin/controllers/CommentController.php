@@ -108,7 +108,7 @@ class Admin_CommentController extends Zend_Controller_Action
                                    'ip' => $commenter->getIp(), 'url' => $commenter->getUrl(),
                                    'banurl' => $view->url(
                                        array('controller' => 'comment-commenter', 'action' => 'toggle-ban',
-                                            'commenter' => $commenter->getId(), 'thread' => $comment->getArticleNumber()))),
+                                            'commenter' => $commenter->getId(), 'thread' => $comment->getArticleNumber(), 'language' => $comment->getLanguage()->getId()))),
                              'comment' => array('id' => $comment->getId(),
                                                 'created' =>
                                                 array('date' => $comment->getTimeCreated()->format('Y.m.d'),

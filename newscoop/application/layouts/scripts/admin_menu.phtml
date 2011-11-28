@@ -131,7 +131,7 @@ foreach ($Campsite['publications'] as $publication) {
     $pubId = $publication->getPublicationId();
     $publication_page = array(
         'label' => $publication->getName(),
-        'uri' => $view->baseUrl("admin/pub/?Pub=$pubId"),
+        'uri' => $view->baseUrl("admin/issues/?Pub=$pubId"),
     );
 
     // add content/publication/issue
