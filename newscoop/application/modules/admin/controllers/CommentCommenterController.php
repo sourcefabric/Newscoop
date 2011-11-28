@@ -152,8 +152,8 @@ class Admin_CommentCommenterController extends Zend_Controller_Action
         if (!isset($params['commenter']) && (!isset($params['article']) || !isset($params['forum']))) {
             throw new InvalidArgumentException;
         }
-        if(isset($params['thread']))
-            $publication = $this->articleRepository->find($params['thread'])->getPublication();
+        if(isset($params['thread']) && isset($params['language']))
+            $publication = $this->articleRepository->find(array('number' => $params['thread'], 'language' => $params['language']))->getPublication();
         if(isset($params['forum']))
             $publication = $this->publicationRepository->find($params['forum']);
             
