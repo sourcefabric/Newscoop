@@ -3,7 +3,7 @@
 require_once $GLOBALS['g_campsiteDir'] . '/classes/BugReporter.php';
 
 /**
- * Called for all Campsite errors.
+ * Called for all Newscoop errors.
  *
  * If the flag $Campsite['DEBUG'] is set to false, this function will
  * return minor errors (ie notices and warnings) without having
