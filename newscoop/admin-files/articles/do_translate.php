@@ -75,8 +75,8 @@ if ($f_publication_id > 0) {
 	if (!$translationIssueObj) {
 		$translationIssueObj = new Issue($f_publication_id, $f_translation_language, $f_issue_number);
 	}
-	
-	if (!$translationIssueObj->exists()) {
+    
+    if (!$translationIssueObj->exists()) {
 		if (!$g_user->hasPermission("ManageIssue")) {
 			camp_html_add_msg(getGS('An issue must be created for the selected language but you do not have the right to create an issue.'));
 			camp_html_goto_page($backLink);
@@ -87,6 +87,7 @@ if ($f_publication_id > 0) {
 			}
 		}
 		$f_issue_name = Input::Get('f_issue_name', 'string', '');
+        
 		if ($f_issue_name != '') {
 			$translationIssueObj->setName($f_issue_name);
 		}
@@ -105,6 +106,12 @@ if ($f_publication_id > 0) {
 			camp_html_goto_page($backLink);
 		}
 	}
+    else {
+        $f_issue_name = Input::Get('f_issue_name', 'string', $issueObj->getName());
+        $f_issue_urlname = Input::Get('f_issue_urlname', 'string', $issueObj->getUrlName());
+        
+        $translationIssueObj->update(array('Name' => $f_issue_name, 'ShortName' => $f_issue_urlname));
+    }
 
 	$f_section_number = $articleObj->getSectionNumber();
 	$sectionObj = new Section($f_publication_id, $f_issue_number, $f_language_id, $f_section_number);
@@ -141,6 +148,12 @@ if ($f_publication_id > 0) {
 			camp_html_goto_page($backLink);
 		}
 	}
+    else {
+        $f_section_name = Input::Get('f_section_name', 'string', $sectionObj->getName());
+		$f_section_urlname = Input::Get('f_section_urlname', 'string', $sectionObj->getUrlName());
+        
+        $translationSectionObj->update(array('Name' => $f_section_name, 'ShortName' => $f_section_urlname));
+    }
 }
 
 if( $articleObj->translationTitleExists( $f_translation_title, $f_translation_language))
