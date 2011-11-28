@@ -6,8 +6,8 @@ $languageUrl = implode('&', array(
     "f_issue_number=$f_issue_number",
     "f_section_number=$f_section_number",
     "f_article_number=$f_article_number",
-    "f_language_id=$f_language_id",
-    'f_language_selected=',
+    "f_language_id={{language}}",
+    "f_language_selected={{language}}",
 ));
 
 ?>
@@ -57,8 +57,10 @@ function change_language(select)
     if (!checkChanged()) {
         return false;
     }
-
-    var dest = '<?php p($languageUrl); ?>'+select.options[select.selectedIndex].value;
+    
+    var languageUrl = '<?php p($languageUrl); ?>';
+    
+    var dest = languageUrl.replace(/\{\{language\}\}/gi, select.options[select.selectedIndex].value);
     window.location.href = dest;
 }
 </script>
