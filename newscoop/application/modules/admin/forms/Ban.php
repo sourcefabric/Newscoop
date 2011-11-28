@@ -79,7 +79,7 @@ class Admin_Form_Ban extends Zend_Form
 
 
         $this->addElement('checkbox', 'delete_comments', array(
-            'label' => getGS(getGS('Delete commenter comments?').":"),
+            'label' => getGS(getGS('Delete all comments?').":"),
             'required' => false,
             'order' => 40,
         ));
