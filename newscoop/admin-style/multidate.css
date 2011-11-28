@@ -5,4 +5,93 @@
     margin: 0 auto;
     padding: 10px;
     width: 952px;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    color: #444444;
 }
+#multidate-box .toolbar {
+    background: none repeat scroll 0 0 transparent;
+    border: medium none;
+    box-shadow: none;
+    min-height: 35px;
+    padding: 6px 4px;
+}
+.dates {
+    width: 285px;
+    height: 100%;
+    border-right: 1px solid #CCCCCC;
+    float: left;	
+}
+#full-calendar {
+    width: 660px;
+    height: 100px;
+    float: left;
+}
+.multidate-input {
+    border: 1px solid #9D9D9D;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;	
+}
+.date-mode-switcher {
+	width:260px;
+	margin-left:12px; margin-top: 20px;
+	border: 1px solid #9D9D9D;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;
+    height: 18px;
+}
+
+.date-switch {
+	width: 128px;
+	text-align:center;
+	float:left;	
+	height: 100%;
+	cursor: pointer;
+}
+
+.border-left {	
+	border-left: 1px solid #9D9D9D;
+}
+.radio-specific {
+	width:100%;
+}
+
+.specific-radio-holder, .repeats-checkbox-holder{
+	margin-left:8px;
+	margin-top:8px;
+}
+
+.switch-active {
+    color: #FFFFFF;
+    background: none repeat scroll 0 0 #444444;	
+}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
