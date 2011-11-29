@@ -5,7 +5,13 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Newscoop\DoctrineEventDispatcherProxy;
+use Newscoop\DoctrineEventDispatcherProxy,
+    Doctrine\Common\ClassLoader,
+    Doctrine\Common\Annotations\AnnotationReader,
+    Doctrine\ODM\MongoDB\DocumentManager,
+    Doctrine\MongoDB\Connection,
+    Doctrine\ODM\MongoDB\Configuration,
+    Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
@@ -271,5 +277,32 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         ));
 
         Zend_Registry::set('Zend_Translate', $translate);
+    }
+
+    protected function _initOdm()
+    {
+        if (!extension_loaded('mongo')) {
+            return null;
+        }
+
+        $config = new Configuration();
+        $config->setProxyDir(APPLICATION_PATH . '/../cache');
+        $config->setProxyNamespace('Proxies');
+
+        $config->setHydratorDir(APPLICATION_PATH . '/../cache');
+        $config->setHydratorNamespace('Hydrators');
+
+        require_once 'Doctrine/ODM/MongoDB/Mapping/Annotations/DoctrineAnnotations.php';
+
+        $reader = new AnnotationReader();
+        $reader->setDefaultAnnotationNamespace('Doctrine\ODM\MongoDB\Mapping\Annotations\\');
+        $config->setMetadataDriverImpl(new AnnotationDriver($reader, APPLICATION_PATH . '/../library/Newscoop/Documents'));
+
+        $odm = DocumentManager::create(new Connection(), $config);
+
+        $this->bootstrap('container');
+        $this->getResource('container')->setService('odm', $odm);
+
+        return $odm;
     }
 }
