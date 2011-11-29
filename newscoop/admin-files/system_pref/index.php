@@ -85,11 +85,41 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
     <td align="left" valign="top">
         <select name="f_time_zone" class="input_select">
         <?php
+        
+        $timeZoneCities = array(
+            0 => 'London, Lisbon, Casablanca',
+            1 => 'Brussels, Copenhagen, Madrid, Paris',
+            2 => 'Athens, Istanbul, Jerusalem',
+            3 => 'Baghdad, Riyadh, Moscow, St. Petersburg',
+            4 => 'Abu Dhabi, Muscat, Baku, Tbilisi',
+            5 => 'Ekaterinburg, Islamabad, Karachi, Tashkent',
+            6 => 'Almaty, Dhaka, Colombo',
+            7 => 'Bangkok, Hanoi, Jakarta',
+            8 => 'Beijing, Perth, Singapore, Hong Kong',
+            9 => 'Tokyo, Seoul, Osaka, Sapporo, Yakutsk',
+            10 => 'Eastern Australia, Guam, Vladivostok',
+            11 => 'Magadan, Solomon Islands, New Caledonia',
+            12 => 'Auckland, Wellington, Fiji, Kamchatka',
+            -1 => 'Azores, Cape Verde Islands',
+            -2 => 'Mid-Atlantic',
+            -3 => 'Brazil, Buenos Aires, Georgetown',
+            -4 => 'Atlantic Time (Canada), Caracas, La Paz',
+            -5 => 'Eastern Time (US & Canada), Bogota, Lima',
+            -6 => 'Central Time (US & Canada), Mexico City',
+            -7 => 'Mountain Time (US & Canada)',
+            -8 => 'Pacific Time (US & Canada)',
+            -9 => 'Alaska',
+            -10 => 'Hawaii',
+            -11 => 'Midway Island, Samoa',
+            -12 => 'Eniwetok, Kwajalein',
+        );
+        
         $timeZone = SystemPref::Get('TimeZone');
         camp_html_select_option('', $timeZone, getGS('disabled'));
         for ($k = -12; $k < 13; $k++) {
             $v = $k < 0 ? $k : '+' . $k;
-            camp_html_select_option($v, $timeZone, "GMT $v:00");
+            if ($timeZoneCities[$k] != '') camp_html_select_option($v, $timeZone, "GMT $v:00 ({$timeZoneCities[$k]})");
+            else camp_html_select_option($v, $timeZone, "GMT $v:00");
         }
         ?>
         </select>
