@@ -1,4 +1,5 @@
 <div class="row" id="main-nav">
+  {{ omnibox }}
   <div class="tencol">
     <ul id="nav">
       <li{{ if $gimme->template->name == "front.tpl" }} class="current_page_item"{{ /if }}><a href="http://{{ $gimme->publication->site }}">Home</a></li>
