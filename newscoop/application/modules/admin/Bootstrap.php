@@ -130,17 +130,6 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
     }
 
     /**
-     * Init Log
-     */
-    protected function _initLog()
-    {
-        $writer = new Zend_Log_Writer_Null();
-        $log = new Zend_Log($writer);
-        \Zend_Registry::set('log', $log);
-        return $log;
-    }
-
-    /**
      * Init view placeholders
      */
     protected function _initPlaceholders()

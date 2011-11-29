@@ -305,4 +305,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         return $odm;
     }
+
+    /**
+     */
+    protected function _initLog()
+    {
+        $writer = new Zend_Log_Writer_Syslog(array('application' => 'Newscoop'));
+        $log = new Zend_Log($writer);
+        \Zend_Registry::set('log', $log);
+        return $log;
+    }
 }

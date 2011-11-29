@@ -35,7 +35,6 @@ class ErrorController extends Zend_Controller_Action
                 'errors' => $errors,
             ));
         }
-
     }
 
     public function errorAction()
@@ -51,6 +50,7 @@ class ErrorController extends Zend_Controller_Action
             $this->view->message = getGS('You have reached the error page');
             return;
         }
+
         switch ($errors->type) {
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_ROUTE:
             case Zend_Controller_Plugin_ErrorHandler::EXCEPTION_NO_CONTROLLER:
@@ -70,8 +70,8 @@ class ErrorController extends Zend_Controller_Action
 
         // Log exception, if logger available
         if ($log = $this->getLog()) {
-            $log->log($this->view->message, $priority, $errors->exception);
-            $log->log('Request Parameters', $priority, $request->getParams());
+            $params = $request->getParams();
+            $log->log(sprintf("%s (Params: %s)", $this->view->message, json_encode($request->getParams())), $priority, $errors->exception);
         }
 
         // conditionally display exceptions
@@ -89,10 +89,8 @@ class ErrorController extends Zend_Controller_Action
         if (!$bootstrap->hasResource('Log')) {
             return false;
         }
+
         $log = $bootstrap->getResource('Log');
         return $log;
     }
-
-
 }
-
