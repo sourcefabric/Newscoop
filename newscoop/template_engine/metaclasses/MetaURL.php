@@ -121,6 +121,19 @@ final class MetaURL
 
 
     /**
+    * Resets all query parameters. Returns true if the
+    * parameter can be set (is not a restricted parameter name), false otherwise.
+    *
+    * @param string $p_parameterName
+    * @return bool
+    */
+    final public function reset_parameters()
+    {
+        return $this->m_uriObj->setQuery(null);
+    }
+
+
+    /**
      *
      */
     final public function __set($p_property, $p_value)

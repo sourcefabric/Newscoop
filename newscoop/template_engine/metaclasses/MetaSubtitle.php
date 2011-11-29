@@ -257,8 +257,8 @@ final class MetaSubtitle {
         $image = new MetaImage($articleImage->getImageId());
         $context->image = $image;
         $imageSize = @getimagesize($imageObj->getImageStorageLocation());
-        
-        
+
+
         unset($imageObj);
 
         $imageOptions = '';
@@ -300,7 +300,7 @@ final class MetaSubtitle {
         $imgString .= '>';
         $imgString .= (strlen($imgZoomLink) > 0) ? '<p>'.$imgZoomLink : '<p>';
         $uri->uri_parameter = "image $imageOptions";
-        
+
         $imgString .= '<img src="' . $uri->uri . '"';
         if (isset($detailsArray['alt']) && !empty($detailsArray['alt'])) {
             $imgString .= ' alt="' . $detailsArray['alt'] . '"';
@@ -312,7 +312,7 @@ final class MetaSubtitle {
         $imgString .= (strlen($imgZoomLink) > 0) ? '</a></p>' : '</p>';
         if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
         	if (isset($imageSize[0])) {
-        	   $imgString .= '<p class="cs_img_caption" style="width:'.$imageSize[0].'px">';	
+        	   $imgString .= '<p class="cs_img_caption" style="width:'.$imageSize[0].'px">';
         	} else {
         		$imgString .= '<p class="cs_img_caption">';
         	}
@@ -343,11 +343,7 @@ final class MetaSubtitle {
         $parametersArray = array_combine($parametersArray[1], $parametersArray[2]);
 
         $uri = new MetaURL();
-        foreach ($uri->form_parameters as $parameter) {
-            if (strncmp($parameter['name'], 'st-', strlen('st-')) == 0) {
-                $uri->reset_parameter($parameter['name']);
-            }
-        }
+        $uri->reset_parameters();
         $uri->language = new MetaLanguage($parametersArray['IdLanguage']);
         $uri->publication = new MetaPublication($parametersArray[CampRequest::PUBLICATION_ID]);
         $uri->issue = new MetaIssue($parametersArray[CampRequest::PUBLICATION_ID],
