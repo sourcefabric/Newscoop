@@ -170,7 +170,7 @@ final class CampTemplate extends Smarty
         if (is_object($p_smarty)) {
             $p_smarty->trigger_error($p_message);
         } else {
-            trigger_error("Campsite error: $p_message");
+            trigger_error("Newscoop error: $p_message");
         }
     }
 

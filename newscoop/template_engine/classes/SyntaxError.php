@@ -140,8 +140,8 @@ $GLOBALS['g_errorList'] = array();
 function templateErrorHandler($p_errorCode, $p_errorString, $p_errorFile = null,
                               $p_errorLine = null, $p_errorContext = null)
 {
-    if (strncasecmp($p_errorString, 'Campsite error:', strlen("Campsite error:")) == 0) {
-        $errorString = substr($p_errorString, strlen("Campsite error:"));
+    if (strncasecmp($p_errorString, 'Newscoop error:', strlen("Newscoop error:")) == 0) {
+        $errorString = substr($p_errorString, strlen("Newscoop error:"));
     } elseif(strncasecmp($p_errorString, 'Smarty error:' ,strlen('Smarty error:')) == 0) {
         $errorString = substr($p_errorString, strlen("Smarty error:"));
     } else {
