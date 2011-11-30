@@ -5,6 +5,9 @@ ALTER TABLE `Log` CHANGE `user_ip` `user_ip` VARCHAR(39) NOT NULL DEFAULT '';
 ALTER TABLE `Log` DROP KEY `IdEvent`;
 ALTER TABLE `Log` ADD KEY `priority` (`priority`);
 
+-- Audit event table
+ALTER TABLE `audit_event` MODIFY `resource_id` VARCHAR(255);
+
 -- Add Acl Role table
 CREATE TABLE IF NOT EXISTS `acl_role` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
@@ -34,26 +37,6 @@ ALTER TABLE `liveuser_groups` CHANGE `group_id` `group_id` int(11) NOT NULL AUTO
 DROP TABLE IF EXISTS `ArticleAudioclips`;
 DROP TABLE IF EXISTS `AudioclipMetadata`;
 
-DROP TABLE IF EXISTS `article_datetimes`;
-CREATE TABLE `article_datetimes` (
-  `id_article_datetime` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `start_time` time DEFAULT NULL COMMENT 'NULL = 00:00',
-  `end_time` time DEFAULT NULL COMMENT 'NULL = 23:59',
-  `start_date` date NOT NULL,
-  `end_date` date DEFAULT NULL COMMENT 'NULL = only 1 day',
-  `recurring` enum('daily','weekly','monthly','yearly') DEFAULT NULL,
-  `article_id` int(10) unsigned NOT NULL,
-  `article_type` varchar(166) NOT NULL,
-  `field_name` varchar(166) NOT NULL,
-  PRIMARY KEY (`id_article_datetime`),
-  KEY `article_id` (`article_id`),
-  KEY `start_time` (`start_time`),
-  KEY `end_time` (`end_time`),
-  KEY `start_date` (`start_date`),
-  KEY `end_date` (`end_date`),
-  KEY `article_type` (`article_type`),
-  KEY `field_name` (`field_name`)
-) ENGINE=InnoDB;
 
 -- Add Ouput table
 CREATE TABLE IF NOT EXISTS `output` (
@@ -286,6 +269,10 @@ ALTER TABLE `Attachments`
  DROP PRIMARY KEY,
  ADD PRIMARY KEY (`id`);
 
+-- Update Article Authors
+ALTER TABLE `ArticleAuthors`
+ ADD COLUMN `order` int(2) unsigned;
+ 
 -- Upgrade templates to themes
 system php ./create_themes.php
 

@@ -5,9 +5,6 @@
 <meta http-equiv="Expires" content="now" />
 <title><?php putGS("Multi date event"); ?></title>
 <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/calendar/fullcalendar.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/calendar/timepicker.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/form.css" />
-<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/content.css" />
 
 
 
@@ -41,42 +38,9 @@ function popup_close() {
     catch (e) {window.close();}
 }
 
-function submitForm(formData) {
-	var url = '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/multidate/add';
-	$.ajax({
-        'url': url,
-        'type': 'POST',
-        'data': formData,
-        'dataType': 'json',
-        'success': function(json) {
-            
-        },
-        'error': function(json) {
-        }
-    });
-}
-
-function submitSpecificForm() {
-    formData = $('#specific-dates-form').serialize();
-    submitForm(formData);    
-}
-
-function submitDaterangeForm() {
-	formData = $('#daterange-dates-form').serialize();
-	submitForm(formData);
-}
-
 function popup_save() {
-    //alert('popup save');
+    alert('popup save');
     //callServer(['ArticleList', 'doAction'], aoData, fnSaveCallback);
-
-    if ($("#specific-dates").css('display') == 'block') {
-        submitSpecificForm();
-    } else {
-        submitDaterangeForm();
-    }
-    
-    
 }
 
 function reset_specific_start_time() {
@@ -131,18 +95,7 @@ $(function(){
 
 	reset_specific_start_time();
 	 $('#full-calendar').fullCalendar({
-		    });
-	 $("#start-date-specific").datepicker({ dateFormat: 'yy-mm-dd' });
-	 
-	 $('#start-date-daterange').datepicker({ dateFormat: 'yy-mm-dd' });
-	 $('#end-date-daterange').datepicker({ dateFormat: 'yy-mm-dd' });
-	 
-	 $('#start-time-specific').timepicker({});
-	 $('#end-time-specific').timepicker({});
-	 $('#start-time-daterange').timepicker({});
-	 $('#end-time-daterange').timepicker({});
-
-		    
+		    })
 });
 
 
@@ -173,42 +126,38 @@ $(function(){
 </div>
 
 <div class="dates" id="specific-dates" style="display:block">
-<form id="specific-dates-form" onsubmit="return false;">
-    <input type="text" class="multidate-input" id="specific-date-name" name="specific-date-name" style="width: 260px; margin-left: 12px; margin-top: 20px;"  />
-    <input type="hidden" name="article-number" value="<?php echo Input::Get('f_article_number', 'int', 1)?>" />
-    <input type="hidden" name="date-type" value="specific" />
+    <input type="text" class="multidate-input" id="specific-date-name" style="width: 260px; margin-left: 12px; margin-top: 20px;" />
+
 	<div class="date-mode-switcher">
 		<div class="date-switch date-range-switch"><?php echo putGS('Date from / to'); ?></div>
 		<div class="date-switch date-specific-switch switch-active border-left"><?php echo putGS('Specific dates'); ?></div>
 	</div>
 	
-    <input type="text" id="start-date-specific" name="start-date-specific" class="multidate-input"style="width: 125px; margin-left: 12px; margin-top: 20px;" readonly='true'/> 
-	<input type="text" id="start-time-specific" name="start-time-specific" class="multidate-input" style="width: 128px; margin-left: 2px; margin-top: 20px;" readonly='true'/> 
-	<input type="text" id="end-time-specific" name="end-time-specific" class="multidate-input" style="width: 128px; margin-left: 144px; margin-top: 20px;" readonly='true'/>
+    <input type="text" id="start-date-specific" class="multidate-input"style="width: 125px; margin-left: 12px; margin-top: 20px;" /> 
+	<input type="text" id="start-time-specific" class="multidate-input" style="width: 128px; margin-left: 2px; margin-top: 20px;" /> 
+	<input type="text" id="end-time-specific" class="multidate-input" style="width: 128px; margin-left: 144px; margin-top: 20px;" />
 	
 	<div class="specific-radio-holder">
 		<input type="radio" id="specific-radio-start-only" name="specific-radio" value="start-only" checked="checked" /><?php echo putGS('Start time'); ?><br />
 		<input type="radio" id="specific-radio-start-and-end" name="specific-radio" value="start-and-end" /><?php echo putGS('Start & end time'); ?><br />
 		<input type="radio" id="specific-radio-all-day" name="specific-radio" value="all-day" /><?php echo putGS('All day'); ?>
 	</div>
-</form>
+
 </div>
 
 <div class="dates" id="daterange-dates" style="display: none">
-<form id="daterange-dates-form" onsubmit="return false;">
-    <input type="text" class="multidate-input" id="daterange-date-name" name="daterange-date-name" style="width: 260px; margin-left: 12px; margin-top: 20px;" />
-    <input type="hidden" name="article-number" value="<?php echo Input::Get('f_article_number', 'int', 1)?>" />
-    <input type="hidden" name="date-type" value="daterange" />
+    <input type="text" class="multidate-input" id="daterange-name" style="width: 260px; margin-left: 12px; margin-top: 20px;" />
+    
     <div class="date-mode-switcher">
         <div class="date-switch date-range-switch"><?php echo putGS('Date from / to'); ?></div>
         <div class="date-switch date-specific-switch switch-active border-left"><?php echo putGS('Specific dates'); ?></div>
     </div>
     
-    <input type="text" id="start-date-daterange" name="start-date-range" class="multidate-input"style="width: 125px; margin-left: 12px; margin-top: 20px;" /> 
-    <input type="text" id="start-time-daterange" name="start-time-daterange" class="multidate-input" style="width: 128px; margin-left: 2px; margin-top: 20px;" />
+    <input type="text" id="start-date-daterange" class="multidate-input"style="width: 125px; margin-left: 12px; margin-top: 20px;" /> 
+    <input type="text" id="start-time-daterange" class="multidate-input" style="width: 128px; margin-left: 2px; margin-top: 20px;" />
     <span style="display:block; margin-left: 12px; margin-top: 10px;"><?php echo putGS('To'); ?></span> 
-    <input type="text" id="end-date-daterange" name="end-date-daterange" class="multidate-input"style="width: 125px; margin-left: 12px; margin-top: 10px;" /> 
-    <input type="text" id="end-time-daterange" name="end-time-daterange" class="multidate-input" style="width: 128px; margin-left: 2px; margin-top: 10px;" />
+    <input type="text" id="end-date-daterange" class="multidate-input"style="width: 125px; margin-left: 12px; margin-top: 10px;" /> 
+    <input type="text" id="end-time-daterange" class="multidate-input" style="width: 128px; margin-left: 2px; margin-top: 10px;" />
     
     <div class="repeats-checkbox-holder">
         <input type="checkbox" id="daterange-all-day" name="daterange-all-day" value="1" checked="checked" /><?php echo putGS('All day'); ?><br />
@@ -222,24 +171,24 @@ $(function(){
     </select>
     
      <div class="repeats-checkbox-holder">
-        <input type="checkbox" id="monday" name="day-repeat" value="moday"/>M
-        <input type="checkbox" id="tuesday" name="day-repeat" value="tuesday"/>T
-        <input type="checkbox" id="wednesday" name="day-repeat" value="wednesday"/>W
-        <input type="checkbox" id="thursday" name="day-repeat" value="thursday"/>T
-        <input type="checkbox" id="friday" name="day-repeat" value="friday"/>F
-        <input type="checkbox" id="saturday" name="day-repeat" value="saturday"/>S
-        <input type="checkbox" id="sunday" name="day-repeat" value="sunday"/>S
+        <input type="checkbox" id="monday" name="monday" value="1"/>M
+        <input type="checkbox" id="tuesday" name="tuesday" value="1"/>T
+        <input type="checkbox" id="wednesday" name="wednesday" value="1"/>W
+        <input type="checkbox" id="thursday" name="thursday" value="1"/>T
+        <input type="checkbox" id="friday" name="friday" value="1"/>F
+        <input type="checkbox" id="saturday" name="saturday" value="1"/>S
+        <input type="checkbox" id="sunday" name="sunday" value="1"/>S
     </div>
     
      <div class="repeats-checkbox-holder">
        <?php echo putGS('Ends'); ?>
-       <input type="radio" id="cycle-ends-on-set-date" name="cycle-ends"  value="on-set-date" style="display: inline; margin-left:25px;" name="cycle-ends"/><?php echo putGS('On set date');?><br />
-       <input type="radio" id="cycle-ends-counter" name="cycle-ends" value="counter" style="display: inline; margin-left:73px;" /><?php echo putGS('After');?>
-       <input type="text" class="multidate-input" name="cycle-ends" style="display: inline; width:50px;" id="occurences" /> <?php echo putGS('occurences');?>
-       <input type="radio" id="cycle-ends-never" name="cycle-ends" value="never" style="display: inline; margin-left:73px;" /><?php echo putGS('Never');?><br />
+       <input type="radio" id="cycle-ends-on-set-date" value="1" style="display: inline; margin-left:25px;" name="cycle-ends"/><?php echo putGS('On set date');?><br />
+       <input type="radio" id="cycle-ends-counter" style="display: inline; margin-left:73px;"  name="cycle-ends" /><?php echo putGS('After');?>
+       <input type="text" class="multidate-input" style="display: inline; width:50px;" id="occurences" name="cycle-ends" /> <?php echo putGS('occurences');?>
+       <input type="radio" id="cycle-ends-never" value="1" style="display: inline; margin-left:73px;" name="cycle-ends" /><?php echo putGS('Never');?><br />
        
     </div>
-</form>
+    
 </div>
 
 <div id="full-calendar" class="full-calendar"></div>
