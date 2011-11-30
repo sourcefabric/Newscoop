@@ -82,8 +82,7 @@ final class MetaArticle extends MetaDbObject {
     'type_translation'=>'getTypeTranslated',
     'seo_url_end'=>'getSEOURLEnd',
     'url' =>'getUrl',
-    'webcode' => 'getWebcode',
-    'dates' => 'getDatetime'
+    'webcode' => 'getWebcode'
     );
 
     /** @var Article */
@@ -633,17 +632,6 @@ final class MetaArticle extends MetaDbObject {
     protected function getWebcode()
     {
         return Manager::getWebcoder('')->encode($this->m_dbObject->getProperty('Number'));
-    }
-
-    private $_datetimeData;
-    protected function getDatetime()
-    {
-        if (is_null($this->_datetimeData)) {
-            $em = Zend_Registry::get('container')->getService('em');
-            $repo = $em->getRepository('Newscoop\Entity\ArticleDatetime');
-            $this->_datetimeData = new MetaArticleDatetime($repo->findBy(array('articleId'=>$this->m_dbObject->getProperty('Number'))));
-        }
-        return $this->_datetimeData;
     }
 
     public function has_topic($p_topicName) {

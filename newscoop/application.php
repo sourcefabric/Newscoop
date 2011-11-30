@@ -9,14 +9,11 @@ defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 
 // goes to install process if configuration files does not exist yet
-if (!file_exists(APPLICATION_PATH . '/../conf/configuration.php')
-    || !file_exists(APPLICATION_PATH . '/../conf/database_conf.php')) {
+if (!defined('INSTALL') && (!file_exists(APPLICATION_PATH . '/../conf/configuration.php')
+    || !file_exists(APPLICATION_PATH . '/../conf/database_conf.php'))) {
     $subdir = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/', -2));
-    
-    if (strpos($subdir, 'install') === false) { 
-        header("Location: $subdir/install/");
-        exit;
-    }
+    header("Location: $subdir/install/");
+    exit;
 }
 
 // Ensure library/ is on include_path
