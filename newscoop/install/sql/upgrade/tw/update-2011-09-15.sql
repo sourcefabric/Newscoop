@@ -7,7 +7,6 @@ ALTER TABLE `liveuser_users` CHANGE `time_created` `time_created` datetime NOT N
 ALTER TABLE `liveuser_users` CHANGE `time_updated` `time_updated` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
 ALTER TABLE `liveuser_users` ADD `image` varchar(255) DEFAULT NULL;
 ALTER TABLE `liveuser_users` ADD `subscriber` int(10) DEFAULT NULL;
-ALTER TABLE `ArticleAuthors` ADD `order` int(2) unsigned;
 
 UPDATE `liveuser_users` SET `status` = 1, `is_admin` = 1, `is_public` = 1;
 
@@ -114,3 +113,42 @@ CREATE TABLE `playlist_article` (
   UNIQUE KEY `id_playlist` (`id_playlist`,`article_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+
+-- Article popularity table --
+DROP TABLE IF EXISTS `article_popularity`;
+CREATE TABLE `article_popularity` (
+  `fk_article_id` int(10) unsigned NOT NULL,
+  `fk_language_id` int(10) unsigned NOT NULL,
+  `url` varchar(256) NOT NULL,
+  `date` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `unique_views` int(10) unsigned NOT NULL DEFAULT '0',
+  `avg_time_on_page` float NOT NULL DEFAULT '0',
+  `tweets` int(10) unsigned DEFAULT NULL,
+  `likes` int(10) unsigned DEFAULT NULL,
+  `comments` int(10) unsigned DEFAULT NULL,
+  `popularity` float NOT NULL DEFAULT '0',
+  PRIMARY KEY (`fk_article_id`,`fk_language_id`),
+  UNIQUE KEY `url` (`url`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+DROP TABLE IF EXISTS `article_datetimes`;
+CREATE TABLE `article_datetimes` (
+  `id_article_datetime` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `start_time` time DEFAULT NULL COMMENT 'NULL = 00:00',
+  `end_time` time DEFAULT NULL COMMENT 'NULL = 23:59',
+  `start_date` date NOT NULL,
+  `end_date` date DEFAULT NULL COMMENT 'NULL = only 1 day',
+  `recurring` enum('daily','weekly','monthly','yearly') DEFAULT NULL,
+  `article_id` int(10) unsigned NOT NULL,
+  `article_type` varchar(166) NOT NULL,
+  `field_name` varchar(166) NOT NULL,
+  PRIMARY KEY (`id_article_datetime`),
+  KEY `article_id` (`article_id`),
+  KEY `start_time` (`start_time`),
+  KEY `end_time` (`end_time`),
+  KEY `start_date` (`start_date`),
+  KEY `end_date` (`end_date`),
+  KEY `article_type` (`article_type`),
+  KEY `field_name` (`field_name`)
+) ENGINE=InnoDB;

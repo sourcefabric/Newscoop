@@ -18,6 +18,7 @@ class ArticleTypeField extends DatabaseObject {
     const TYPE_TEXT = 'text';
     const TYPE_BODY = 'body';
     const TYPE_DATE = 'date';
+    const TYPE_COMPLEX_DATE = 'complex_date';
     const TYPE_TOPIC = 'topic';
     const TYPE_SWITCH = 'switch';
     const TYPE_NUMERIC = 'numeric';
@@ -461,6 +462,8 @@ class ArticleTypeField extends DatabaseObject {
 	    	return getGS('Switch');
 	    case self::TYPE_NUMERIC:
 	    	return getGS('Numeric');
+	    case self::TYPE_COMPLEX_DATE:
+	    	return getGS('Complex Date');
 	    default:
 	    	return getGS("unknown");
 		}
@@ -871,7 +874,8 @@ class ArticleTypeField extends DatabaseObject {
 			 self::TYPE_DATE=>'DATE NOT NULL',
 			 self::TYPE_TOPIC=>'INTEGER UNSIGNED NOT NULL',
 			 self::TYPE_SWITCH=>'BOOLEAN NOT NULL',
-			 self::TYPE_NUMERIC=>$numericDef);
+			 self::TYPE_NUMERIC=>$numericDef,
+			 self::TYPE_COMPLEX_DATE=>'VARCHAR(255) DEFAULT NULL');
         return $types;
 	}
 } // class ArticleTypeField
