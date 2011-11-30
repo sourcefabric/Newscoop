@@ -296,7 +296,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $reader = new AnnotationReader();
         $reader->setDefaultAnnotationNamespace('Doctrine\ODM\MongoDB\Mapping\Annotations\\');
-        $config->setMetadataDriverImpl(new AnnotationDriver($reader, APPLICATION_PATH . '/../library/Newscoop/Documents'));
+        $config->setMetadataDriverImpl(new AnnotationDriver($reader, APPLICATION_PATH . '/../library/Newscoop'));
 
         $odm = DocumentManager::create(new Connection(), $config);
 
