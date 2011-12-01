@@ -64,9 +64,10 @@ abstract class Feed
     /**
      * Update feed
      *
+     * @param Doctrine\Common\Persistence\ObjectManager
      * @return void
      */
-    abstract public function update();
+    abstract public function update(\Doctrine\Common\Persistence\ObjectManager $om);
 
     /**
      * Get updated

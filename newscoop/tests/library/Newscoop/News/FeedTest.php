@@ -19,10 +19,9 @@ class FeedTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        global $application;
-
-        $this->odm = $application->getBootstrap()->getResource('odm');
-        $this->odm->getConfiguration()->setDefaultDB('phpunit');
+        $this->odm = $this->getMockBuilder('Doctrine\ODM\MongoDB\DocumentManager')
+            ->disableOriginalConstructor()
+            ->getMock();
 
         $this->feed = new TestFeed();
     }
@@ -35,20 +34,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     public function testConfiguration()
     {
         $this->feed->setConfiguration(array('key' => 'value'));
-        $this->odm->persist($this->feed);
-
-        $this->odm->flush();
-        $this->odm->clear();
-
-        $feed = $this->odm->find('Newscoop\News\TestFeed', $this->feed->getId());
-        $this->assertEquals(array('key' => 'value'), $feed->getConfiguration());
-    }
-
-    public function testUpdate()
-    {
-        $this->assertNull($this->feed->getUpdated());
-        $this->feed->update();
-        $this->assertInstanceOf('DateTime', $this->feed->getUpdated());
+        $this->assertEquals(array('key' => 'value'), $this->feed->getConfiguration());
     }
 }
 
@@ -58,8 +44,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
  */
 class TestFeed extends Feed
 {
-    public function update()
+    public function update(\Doctrine\Common\Persistence\ObjectManager $om)
     {
-        $this->updated = new \DateTime();
     }
 }

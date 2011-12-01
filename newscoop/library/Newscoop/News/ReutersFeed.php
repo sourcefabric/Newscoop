@@ -49,9 +49,10 @@ class ReutersFeed extends Feed
      *
      * @return void
      */
-    public function update()
+    public function update(\Doctrine\Common\Persistence\ObjectManager $om)
     {
         $this->updated = new \DateTime();
+        $om->flush();
     }
 
     /**
