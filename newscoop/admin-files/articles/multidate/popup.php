@@ -21,6 +21,7 @@ $f_publication_id = Input::Get('f_publication_id', 'int', 0);
 $f_issue_number = Input::Get('f_issue_number', 'int', 0);
 $f_section_number = Input::Get('f_section_number', 'int', 0);
 $f_language_id = Input::Get('f_language_id', 'int', 1);
+$articleId = Input::Get('f_article_number', 'int', 1);
 
 if (isset($_SESSION['f_language_selected'])) {
 	$f_old_language_selected = (int)$_SESSION['f_language_selected'];
@@ -32,7 +33,6 @@ $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/calendar/fullcalendar.min.js" type="text/javascript"></script>
 <script type="text/javascript">
 function popup_close() {
-    alert('popup close');
     try {
         if (parent.$.fancybox.reload) {
             parent.$.fancybox.message = '<?php putGS('Locations updated.'); ?>';
@@ -50,7 +50,7 @@ function submitForm(formData) {
         'data': formData,
         'dataType': 'json',
         'success': function(json) {
-            
+        	$('#full-calendar').fullCalendar( 'refetchEvents' );
         },
         'error': function(json) {
         }
@@ -68,16 +68,11 @@ function submitDaterangeForm() {
 }
 
 function popup_save() {
-    //alert('popup save');
-    //callServer(['ArticleList', 'doAction'], aoData, fnSaveCallback);
-
     if ($("#specific-dates").css('display') == 'block') {
         submitSpecificForm();
     } else {
         submitDaterangeForm();
     }
-    
-    
 }
 
 function reset_specific_start_time() {
@@ -131,8 +126,28 @@ $(function(){
 	
 
 	reset_specific_start_time();
-	 $('#full-calendar').fullCalendar({
-		    });
+
+	var url = '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/multidate/getdates';
+	
+	$('#full-calendar').fullCalendar({
+		 	editable: true,
+			events: {
+				url : url,
+				type : 'GET',
+				data : {
+					articleId : "<?php echo $articleId?>"
+				},
+			},
+			eventDrop: function(event, delta) {
+				alert(event.title + ' was moved ' + delta + ' days\n' +
+					'(should probably update your database)');
+			},
+			loading: function(bool) {
+				if (bool) $('#loading').show();
+				else $('#loading').hide();
+			}
+	});
+	 
 	 $("#start-date-specific").datepicker({ dateFormat: 'yy-mm-dd' });
 	 
 	 $('#start-date-daterange').datepicker({ dateFormat: 'yy-mm-dd' });
@@ -205,11 +220,11 @@ $(function(){
         <div class="date-switch date-specific-switch switch-active border-left"><?php echo putGS('Specific dates'); ?></div>
     </div>
     
-    <input type="text" id="start-date-daterange" name="start-date-range" class="multidate-input"style="width: 125px; margin-left: 12px; margin-top: 20px;" /> 
-    <input type="text" id="start-time-daterange" name="start-time-daterange" class="multidate-input" style="width: 128px; margin-left: 2px; margin-top: 20px;" />
+    <input type="text" id="start-date-daterange" name="start-date-range" class="multidate-input"style="width: 125px; margin-left: 12px; margin-top: 20px;"  readonly='true'/> 
+    <input type="text" id="start-time-daterange" name="start-time-daterange" class="multidate-input" style="width: 128px; margin-left: 2px; margin-top: 20px;" readonly='true' value="00:01"/>
     <span style="display:block; margin-left: 12px; margin-top: 10px;"><?php echo putGS('To'); ?></span> 
-    <input type="text" id="end-date-daterange" name="end-date-daterange" class="multidate-input"style="width: 125px; margin-left: 12px; margin-top: 10px;" /> 
-    <input type="text" id="end-time-daterange" name="end-time-daterange" class="multidate-input" style="width: 128px; margin-left: 2px; margin-top: 10px;" />
+    <input type="text" id="end-date-daterange" name="end-date-daterange" class="multidate-input"style="width: 125px; margin-left: 12px; margin-top: 10px;"  readonly='true'/> 
+    <input type="text" id="end-time-daterange" name="end-time-daterange" class="multidate-input" style="width: 128px; margin-left: 2px; margin-top: 10px;"  readonly='true' value="23:59"/>
     
     <div class="repeats-checkbox-holder">
         <input type="checkbox" id="daterange-all-day" name="daterange-all-day" value="1" checked="checked" /><?php echo putGS('All day'); ?><br />
@@ -222,6 +237,7 @@ $(function(){
         <option value='monthly'><?php echo putGS('Monthly'); ?></option>
     </select>
     
+    <!-- 
      <div class="repeats-checkbox-holder">
         <input type="checkbox" id="monday" name="day-repeat" value="moday"/>M
         <input type="checkbox" id="tuesday" name="day-repeat" value="tuesday"/>T
@@ -231,14 +247,12 @@ $(function(){
         <input type="checkbox" id="saturday" name="day-repeat" value="saturday"/>S
         <input type="checkbox" id="sunday" name="day-repeat" value="sunday"/>S
     </div>
+     -->
     
      <div class="repeats-checkbox-holder">
        <?php echo putGS('Ends'); ?>
-       <input type="radio" id="cycle-ends-on-set-date" name="cycle-ends"  value="on-set-date" style="display: inline; margin-left:25px;" name="cycle-ends"/><?php echo putGS('On set date');?><br />
-       <input type="radio" id="cycle-ends-counter" name="cycle-ends" value="counter" style="display: inline; margin-left:73px;" /><?php echo putGS('After');?>
-       <input type="text" class="multidate-input" name="cycle-ends" style="display: inline; width:50px;" id="occurences" /> <?php echo putGS('occurences');?>
+       <input type="radio" id="cycle-ends-on-set-date" name="cycle-ends"  value="on-set-date" style="display: inline; margin-left:25px;" name="cycle-ends" checked="checked"/><?php echo putGS('On set date');?><br />
        <input type="radio" id="cycle-ends-never" name="cycle-ends" value="never" style="display: inline; margin-left:73px;" /><?php echo putGS('Never');?><br />
-       
     </div>
 </form>
 </div>

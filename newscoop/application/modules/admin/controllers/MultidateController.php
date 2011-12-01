@@ -56,11 +56,33 @@ class Admin_MultidateController extends Zend_Controller_Action
 
     /* --------------------------------------------------------------- */
     
+    public function getDate($full)
+    {
+    	return date("Y-m-d", $full);
+    }
+    
+    public function getTime($full)
+    {
+    	return date("H:i",$full);
+    }
+
+    public function isAllDay($date)
+    {
+    	if ( $this->getTime($date->startTime->getTimestamp()) == "00:00" && $this->getTime($date->endTime->getTimestamp()) == "23:59" ) {
+    		return true;
+    	} else {
+    		return false;
+    	}
+    }
+
+    
     public function addAction() 
     {	
     	$date_type = $this->_request->getParam('date-type');
     	$articleId = $this->_request->getParam('article-number');
     	$repo = $this->_helper->entity->getRepository('Newscoop\Entity\ArticleDatetime');
+    	
+    	//print_r($_REQUEST);
     	
     	if ($date_type == 'specific') {
     		//single date
@@ -90,12 +112,25 @@ class Admin_MultidateController extends Zend_Controller_Action
     	} else {
     		$startDate = $this->_request->getParam('start-date-daterange');
     		$endDate = $this->_request->getParam('end-date-daterange');
-            $startTime = $this->_request->getParam('start-time-daterange');
-            $endTime = $this->_request->getParam('end-time-daterange');
+    		
+    		if ($this->_request->getParam('daterange-all-day') == 1) {
+    			$startTime = "00:01";
+    			$endTime = "23:59";
+    		} else {
+    			$startTime = $this->_request->getParam('start-time-daterange');
+            	$endTime = $this->_request->getParam('end-time-daterange');	
+    		}
+    		
+            
+            
+    		
+            $timeSet = array("$startDate $startTime" => "$endDate $endTime");	
+            
     	}
     	
-        var_dump( $repo->add($timeSet, $articleId, 'schedule') );
+        $repo->add($timeSet, $articleId, 'schedule');
     	
+        echo json_encode(array('code' => 200));
     	
     	die();
     }
@@ -103,17 +138,33 @@ class Admin_MultidateController extends Zend_Controller_Action
 
     public function getdatesAction() 
     {
-    	$articleId = $this->_request->getParam('article-number');
+    	$articleId = $this->_request->getParam('articleId');
         $repo = $this->_helper->entity->getRepository('Newscoop\Entity\ArticleDatetime');
         
-        $articleId = 101;
+        $return = array();
+        
+        
         
         $dates = $repo->findDates((object) array('articleId' => "$articleId"));
         
+        //echopre($dates);
+        
         foreach( $dates as $date) {
-        	//echo $date->startDate->getTimestamp();
-            //echo "<br />";
+        	$calDate = array();
+        	$calDate['id'] = $date->id;
+        	$calDate['title'] = 'Event '.$date->id;
+        	$calDate['start'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime($date->getStartTime()->getTimestamp()) );
+        	$endDate = $date->getEndDate();
+        	if ( empty($endDate)) {
+        		$calDate['end'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime($date->getEndTime()->getTimestamp()) );
+        	} else {
+        		$calDate['end'] = strtotime( $this->getDate($date->getEndDate()->getTimestamp()).' '.$this->getTime($date->getEndTime()->getTimestamp()) );	
+        	}
+        	$calDate['allDay'] = $this->isAllDay($date);
+        	$return[] = $calDate;
         }
+        
+        echo json_encode($return);
         
         die();
         
