@@ -52,7 +52,7 @@ function UpdateArticleFieldContext() {
 	    ToggleRowVisibility('is_content');
 	    ToggleBoolValue('show_is_content');
 	}
-	
+
 	var show_editor_size = my_form.elements["show_editor_size"].value
 	if ((show_editor_size == "true" && field_type != "body")
 	        || (show_editor_size == "false" && field_type == "body")) {

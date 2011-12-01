@@ -77,7 +77,6 @@ CREATE TABLE `ArticleAuthors` (
   `fk_language_id` int(10) unsigned NOT NULL DEFAULT '0',
   `fk_author_id` int(10) unsigned NOT NULL DEFAULT '0',
   `fk_type_id` int(10) unsigned NOT NULL DEFAULT '0',
-  `order` int(2) unsigned,
   PRIMARY KEY (`fk_article_number`,`fk_language_id`,`fk_author_id`,`fk_type_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -3084,6 +3083,28 @@ CREATE TABLE IF NOT EXISTS `user_identity` (
   PRIMARY KEY (`provider`, `provider_user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
+
+DROP TABLE IF EXISTS `article_datetimes`;
+CREATE TABLE `article_datetimes` (
+  `id_article_datetime` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `start_time` time DEFAULT NULL COMMENT 'NULL = 00:00',
+  `end_time` time DEFAULT NULL COMMENT 'NULL = 23:59',
+  `start_date` date NOT NULL,
+  `end_date` date DEFAULT NULL COMMENT 'NULL = only 1 day',
+  `recurring` enum('daily','weekly','monthly','yearly') DEFAULT NULL,
+  `article_id` int(10) unsigned NOT NULL,
+  `article_type` varchar(166) NOT NULL,
+  `field_name` varchar(166) NOT NULL,
+  PRIMARY KEY (`id_article_datetime`),
+  KEY `article_id` (`article_id`),
+  KEY `start_time` (`start_time`),
+  KEY `end_time` (`end_time`),
+  KEY `start_date` (`start_date`),
+  KEY `end_date` (`end_date`),
+  KEY `article_type` (`article_type`),
+  KEY `field_name` (`field_name`)
+) ENGINE=InnoDB;
+
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
 /*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
@@ -3093,3 +3114,5 @@ CREATE TABLE IF NOT EXISTS `user_identity` (
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2011-06-13 12:28:31
+
+
