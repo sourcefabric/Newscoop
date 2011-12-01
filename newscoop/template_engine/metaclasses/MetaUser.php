@@ -163,7 +163,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      *
      * @return bool
      */
-    protected function isAdmin()
+    public function isAdmin()
     {
         return $this->m_dbObject->isAdmin() && !$this->isBlogger();
     }
