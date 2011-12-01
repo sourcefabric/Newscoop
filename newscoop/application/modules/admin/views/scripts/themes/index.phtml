@@ -1,7 +1,7 @@
 <div class="actions">
     <ul class="navigation">
         <!-- li><a class="add" href="#" id="create">Create theme</a></li -->
-        <li><a class="upload" href="#" id="upload">Upload theme</a></li>
+        <li><a class="upload" href="#" id="upload">Import theme</a></li>
         <!-- li><a class="download" href="#" id="download">Download theme</a></li -->
         <!-- li><a class="duplicate" href="#" id="duplicate">Duplicate theme</a></li -->
     </ul>
@@ -36,10 +36,10 @@ $(function() {
 });
 </script>
 
-<script id="popupTmpl" type="text/x-jQuery-tmpl" title="<?php echo getGS( 'Upload theme' ) ?>">
+<script id="popupTmpl" type="text/x-jQuery-tmpl" title="<?php echo getGS( 'Import theme' ) ?>">
 	<div class="message-holder">
-		<div class="upload-error" style="display:none"><?php echo getGS( 'Upload failed!' ) ?></div>
-		<div class="upload-success" style="display:none"><?php echo getGS( 'Upload succeded!' ) ?></div>
+		<div class="upload-error" style="display:none"><?php echo getGS( 'Import failed!' ) ?></div>
+		<div class="upload-success" style="display:none"><?php echo getGS( 'Import succeded!' ) ?></div>
 	</div>
 	<?php echo $this->uploadForm->setAttrib( 'target', 'upload-frame' ); ?>
 	<iframe frameborder="0" name="upload-frame" id="upload-frame" width="0" height="0"></iframe>
@@ -169,7 +169,7 @@ $(function() {
     				    	'controller' => 'themes',
     				    	'module'     => 'admin',
     				    	'id'         => '{{id}}'
-    				    ), null, null, false )  ?>" class="download">
+    				    ), null, null, false )  ?>" class="download" style="display:none">
 						<?php echo getGS( 'Export' ) ?> (<?php echo getGS( 'zip' ) ?>)
 					</a>
 				</li>

@@ -110,6 +110,7 @@
 </div>
 <script type="text/javascript" src="{{ $view->baseUrl('/js/omnibox.js') }}"></script>
 <script>
+omnibox.setBaseUrl('{{ $view->baseUrl() }}');
 omnibox.initialize();
 {{ if $gimme->article->number && $gimme->article->comments_locked == 0 && $gimme->article->comments_enabled == 1}}
 	omnibox.setType('comment');
@@ -133,7 +134,6 @@ omnibox.setTranslation('comment_content_empty', '{{ $view->translate("The commen
 omnibox.setUploadUrl('{{ $view->baseUrl("/feedback/upload/?format=json") }}');
 omnibox.setFlashRuntime('{{ $view->baseUrl('/js/plupload/js/plupload.flash.swf') }}');
 omnibox.setSilverlightRuntime('{{ $view->baseUrl('/js/plupload/js/plupload.silverlight.xap') }}');
-omnibox.setBaseUrl('{{ $view->baseUrl() }}');
 omnibox.setLanguage('{{ $gimme->language->number }}');
 omnibox.setPublication('{{ $gimme->publication->identifier }}');
 omnibox.setSection('{{ $gimme->section->id }}');

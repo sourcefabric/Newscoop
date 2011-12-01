@@ -267,7 +267,7 @@ $( function()
 				title: $('#popupTmpl').attr( 'title' ),
 				buttons: 
 				{
-					"Upload" : function() 
+					"Import" : function() 
 					{ 
 						uploadDiv.find( 'form' ).trigger( 'submit' );
 						uploadDiv.find( 'iframe' ).load( function()

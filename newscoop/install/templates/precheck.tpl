@@ -55,38 +55,38 @@
           <td width="5%">&nbsp;</td>
           <td width="60%" valign="top">
             <table class="view_list" cellspacing="0" cellpadding="0">
+            {{ if $php_req_ok eq true }}
+            <tr><td style="text-align:left;"><h2 style="color:lightgreen;">All system requirements are met.</h2></td></tr>
+            {{ else }}
             <tr>
               <td class="first"><strong>Requirement</strong></td>
               <td>&nbsp;</td>
               <td><strong>Status</strong></td>
             </tr>
+            {{ /if }}
             {{ foreach from=$php_functions item="phpfunc" }}
             <tr>
+            {{ if $phpfunc.exists neq 'Yes' }}
               <td class="first">{{ $phpfunc.tag }}</td>
               <td>&nbsp;</td>
               <td align="center">
-              {{ if $phpfunc.exists eq 'Yes' }}
-                <span class="success">
-              {{ elseif $phpfunc.exists eq 'No' }}
+              {{ if $phpfunc.exists eq 'No' }}
                 <span class="error">
               {{ else }}
                 <span class="other">
               {{ /if }}
                 {{ $phpfunc.exists }}</span>
               </td>
+            {{ /if }}
             </tr>
             {{ /foreach }}
 
             {{ foreach from=$sys_requirements item="sysreq" }}
             <tr>
+              {{ if $sysreq.exists eq 'No' }}
               <td class="first">{{ $sysreq.tag }}</td>
               <td>&nbsp;</td>
               <td align="center">
-              {{ if $sysreq.exists eq 'Yes' }}
-                <span class="success">
-                    {{ $sysreq.exists }}
-                </span>
-              {{ elseif $sysreq.exists eq 'No' }}
                 <span class="error">
                     {{ $sysreq.exists }}
                 </span>
@@ -96,22 +96,20 @@
                   <br>
                   <i>{{ $sysreq.path }}</i>
                </small>
-              {{ /if }}
               </td>
+            {{ /if }}
             </tr>
             {{ /foreach }}
             
             {{ foreach from=$library_requirements item="libreq" }}
             <tr>
+            {{ if $libreq.exists eq 'No' }}
               <td class="first">{{ $libreq.tag }}</td>
               <td>&nbsp;</td>
               <td align="center">
-              {{ if $libreq.exists == 'Yes' }}
-                <span class="success">Yes</span>
-              {{ elseif $libreq.exists == 'No' }}
                 <span class="error">No</span>
-              {{ /if }}
               </td>
+            {{ /if }}
             </tr>
             {{ /foreach }}
 

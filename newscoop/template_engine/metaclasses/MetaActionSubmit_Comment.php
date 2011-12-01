@@ -207,17 +207,16 @@ class MetaActionSubmit_Comment extends MetaAction
         //If there is a comment idetifier set it the parent of the comment
         if($p_context->comment->identifier)
             $values['parent'] = $p_context->comment->identifier;
-
+        
         $commentObj = $repository->getPrototype();
         $comment = $repository->save($commentObj,$values);
         $repository->flush();
+        
         if (!$comment) {
             $this->m_error = new PEAR_Error('There was an internal error when submitting the comment (code 3).',
             ACTION_SUBMIT_COMMENT_ERR_INTERNAL);
             return false;
         }
-
-        $controller->getHelper('actionStack')->actionToStack("moderate-comment","notification","admin", array('comment'=>$comment->getId()));
 
         $p_context->default_url->reset_parameter('f_comment_reader_email');
         $p_context->default_url->reset_parameter('f_comment_subject');
