@@ -8,9 +8,9 @@
 namespace Newscoop\News;
 
 /**
- * Item Service
+ * NewsItem Service
  */
-class ItemService
+class NewsItemService
 {
     /**
      * @var Doctrine\Common\Persistence\ObjectManager
@@ -28,7 +28,7 @@ class ItemService
     public function __construct(\Doctrine\Common\Persistence\ObjectManager $om)
     {
         $this->om = $om;
-        $this->repository = $this->om->getRepository('Newscoop\News\Item');
+        $this->repository = $this->om->getRepository('Newscoop\News\NewsItem');
     }
 
     /**

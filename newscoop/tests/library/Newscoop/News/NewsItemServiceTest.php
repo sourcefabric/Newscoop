@@ -9,9 +9,9 @@ namespace Newscoop\News;
 
 /**
  */
-class ItemServiceTest extends \PHPUnit_Framework_TestCase
+class NewsItemServiceTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var Newscoop\News\ItemService */
+    /** @var Newscoop\News\NewsItemService */
     protected $service;
 
     /** @var Doctrine\Common\Persistance\Objectmanager */
@@ -29,15 +29,15 @@ class ItemServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->odm->expects($this->once())
             ->method('getRepository')
-            ->with($this->equalTo('Newscoop\News\Item'))
+            ->with($this->equalTo('Newscoop\News\NewsItem'))
             ->will($this->returnValue($this->repository));
 
-        $this->service = new ItemService($this->odm);
+        $this->service = new NewsItemService($this->odm);
     }
 
     public function testInstance()
     {
-        $this->assertInstanceOf('Newscoop\News\ItemService', $this->service);
+        $this->assertInstanceOf('Newscoop\News\NewsItemService', $this->service);
     }
 
     public function testFindBy()

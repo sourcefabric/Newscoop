@@ -9,7 +9,7 @@ namespace Newscoop\News;
 
 /**
  * NewsItem
- * @Document
+ * @Document(collection="news_item")
  */
 class NewsItem
 {
@@ -34,9 +34,13 @@ class NewsItem
     /**
      * @param string $id
      */
-    public function __construct($id)
+    public function __construct(\SimpleXMLElement $xml)
     {
-        $this->id = (string) $id;
+        if (empty($xml['guid'])) {
+            throw new \InvalidArgumentException("Guid can't be empty");
+        }
+
+        $this->id = (string) $xml['guid'];
     }
 
     /**
@@ -68,17 +72,5 @@ class NewsItem
     public function getFeed()
     {
         return $this->feed;
-    }
-
-    /**
-     * Create NewsItem from given xml
-     *
-     * @param SimpleXmlElement $xml
-     * @return Newscoop\News\NewsItem
-     */
-    public static function createFromXml(\SimpleXmlElement $xml)
-    {
-        $item = new NewsItem($xml['guid']);
-        return $item;
     }
 }

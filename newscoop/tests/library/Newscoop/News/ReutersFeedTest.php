@@ -26,9 +26,9 @@ class ReutersFeedTest extends \PHPUnit_Framework_TestCase
 
         $this->odm = $application->getBootstrap()->getResource('odm');
         $this->odm->getConfiguration()->setDefaultDB('phpunit');
+        $this->odm->clear();
 
-        $this->client = new \Zend_Rest_Client();
-        $this->feed = new ReutersFeed($application->getOptions(), $this->client);
+        $this->feed = new ReutersFeed($application->getOptions());
     }
 
     public function testConstructor()
@@ -45,46 +45,23 @@ class ReutersFeedTest extends \PHPUnit_Framework_TestCase
         $this->assertObjectHasAttribute('description', $channels[0]);
         $this->assertObjectHasAttribute('lastUpdate', $channels[0]);
         $this->assertObjectHasAttribute('category', $channels[0]);
+        $this->assertInstanceOf('DateTime', $channels[0]->lastUpdate);
 
         return $channels;
     }
 
-    /**
-     * @depends testGetChannels
-     */
-    public function testGetChannelItems(array $channels)
+    public function testUpdate()
     {
-        $items = $this->feed->getChannelItems($channels[0]);
-        $this->assertNotEmpty($items);
+        $this->odm->persist($this->feed);
+        $this->odm->flush();
 
-        $this->assertObjectHasAttribute('id', $items[0]);
-        $this->assertObjectHasAttribute('guid', $items[0]);
-        $this->assertObjectHasAttribute('version', $items[0]);
-        $this->assertObjectHasAttribute('dateCreated', $items[0]);
-        $this->assertObjectHasAttribute('slug', $items[0]);
-        $this->assertObjectHasAttribute('author', $items[0]);
-        $this->assertObjectHasAttribute('source', $items[0]);
-        $this->assertObjectHasAttribute('language', $items[0]);
-        $this->assertObjectHasAttribute('headline', $items[0]);
-        $this->assertObjectHasAttribute('mediaType', $items[0]);
-        $this->assertObjectHasAttribute('priority', $items[0]);
-        $this->assertObjectHasAttribute('geography', $items[0]);
-        $this->assertObjectHasAttribute('previewUrl', $items[0]);
-        $this->assertObjectHasAttribute('size', $items[0]);
-        $this->assertObjectHasAttribute('dimensions', $items[0]);
-        $this->assertObjectHasAttribute('channel', $items[0]);
+        $this->assertNotNull($this->feed->getId());
+        $this->assertNull($this->feed->getUpdated());
 
-        return $items;
-    }
+        $this->feed->update($this->odm);
+        $this->assertInstanceOf('DateTime', $this->feed->getUpdated());
 
-    /**
-     * @depends testGetChannelItems
-     */
-    public function testGetItem(array $items)
-    {
-        $item = $this->feed->getItem($items[0]->guid);
-        $this->assertInstanceOf('Newscoop\News\NewsItem', $item);
-        $this->assertEquals($items[0]->guid, $item->getId());
-        $this->assertEquals($this->feed, $item->getFeed());
+        $items = $this->odm->getRepository('Newscoop\News\NewsItem')->findBy(array('feed.id' => $this->feed->getId()));
+        $this->assertGreaterThan(0, count($items));
     }
 }
