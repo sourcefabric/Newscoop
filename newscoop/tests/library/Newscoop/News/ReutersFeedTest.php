@@ -25,6 +25,15 @@ class ReutersFeedTest extends \PHPUnit_Framework_TestCase
         global $application;
 
         $this->odm = $application->getBootstrap()->getResource('odm');
+
+        if ($this->odm === null) {
+            $this->markTestSkipped('Mongo extension not available.');
+        }
+
+        if ($application->getOption('reuters') === null) {
+            $this->markTestSkipped('API settings not available.');
+        }
+
         $this->odm->getConfiguration()->setDefaultDB('phpunit');
         $this->odm->clear();
 
