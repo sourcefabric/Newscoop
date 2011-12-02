@@ -35,9 +35,16 @@ class ReutersFeedTest extends \PHPUnit_Framework_TestCase
         }
 
         $this->odm->getConfiguration()->setDefaultDB('phpunit');
+        $this->odm->getSchemaManager()->dropDocumentDatabase('Newscoop\News\ReutersFeed');
         $this->odm->clear();
 
         $this->feed = new ReutersFeed($application->getOptions());
+    }
+
+    public function tearDown()
+    {
+        $this->odm->getSchemaManager()->dropDocumentDatabase('Newscoop\News\ReutersFeed');
+        $this->odm->clear();
     }
 
     public function testConstructor()
