@@ -672,9 +672,12 @@ class Article extends DatabaseObject {
 
         // Delete Article Comments
         // @todo change this with DOCTRINE2 CASCADE DELETE
-        $repository = Zend_Registry::get('container')->getService('em')->getRepository('Newscoop\Entity\Comment');
+        $em = Zend_Registry::get('container')->getService('em');
+        $repository = $em->getRepository('Newscoop\Entity\Comment');
         $repository->deleteArticle($this->m_data['Number'], $this->m_data['IdLanguage']);
-        $repository->flush();
+        $repository = $em->getRepository('Newscoop\Entity\ArticleDatetime');
+        $repository->deleteByArticle($this->m_data['Number']);
+        $em->flush();
 
         // is this the last translation?
         if (count($this->getLanguages()) <= 1) {
@@ -2538,6 +2541,7 @@ class Article extends DatabaseObject {
 
         // parses the given parameters in order to build the WHERE part of
         // the SQL SELECT sentence
+
         foreach ($p_parameters as $param) {
             $comparisonOperation = self::ProcessListParameters($param, $otherTables);
             $leftOperand = strtolower($comparisonOperation['left']);
@@ -2625,7 +2629,26 @@ class Article extends DatabaseObject {
                 }
             } elseif ($leftOperand == 'insection') {
                 $selectClauseObj->addWhere("Articles.NrSection IN " . $comparisonOperation['right']);
-            } else {
+            }
+            elseif ($leftOperand == 'complex_date')
+            {
+                /* @var $param ComparisonOperation */
+                $fieldName = key(($roper = $param->getRightOperand()));
+                $searchValues = array();
+                foreach ( explode(",", current($roper)) as $values) {
+                    list($key, $value) = explode(":", $values, 2);
+                    $searchValues[preg_replace("`(?<=[a-z])(_([a-z]))`e","strtoupper('\\2')",trim($key))] = trim($value);
+                }
+                $repo = Zend_Registry::get('doctrine')->getEntityManager()->getRepository('Newscoop\Entity\ArticleDatetime');
+                /* @var $repo \Newscoop\Entity\Repository\ArticleRepository */
+                $searchValues['fieldName'] = $fieldName;
+                $sqlQuery = $repo->findDates((object) $searchValues, true)->getFindDatesSQL('dt.articleId');
+                if (!is_null($sqlQuery)) {
+                    $whereCondition = "Articles.Number IN (\n$sqlQuery)";
+                    $selectClauseObj->addWhere($whereCondition);
+                }
+            }
+            else {
                 // custom article field; has a correspondence in the X[type]
                 // table fields
                 $sqlQuery = self::ProcessCustomField($comparisonOperation, $languageId);

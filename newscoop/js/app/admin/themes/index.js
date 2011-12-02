@@ -127,7 +127,7 @@ $( function()
 				$('.actions-publications li a[pub-id]:parent').show()
 				$('.copy-to-avail-themes').hide();
 				$('.actionDropDown .unassign:parent').hide();
-				$('.actionDropDown .download:parent').hide();
+				$('.actionDropDown .download:parent').show();
 				$('.actionDropDown .delete:parent').show();
 				$('.actionDropDown .edit:parent').show();
 			});

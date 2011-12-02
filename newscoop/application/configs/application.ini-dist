@@ -31,6 +31,9 @@ resources.doctrine.proxy.dir = APPLICATION_PATH "/../library/Newscoop/Entity/Pro
 resources.doctrine.proxy.namespace = "Newscoop\Entity\Proxy"
 resources.doctrine.proxy.autogenerate = false
 resources.doctrine.functions.rand = "Newscoop\Query\MysqlRandom"
+resources.doctrine.functions.dayofweek = "Newscoop\Query\MysqlDayOfWeek"
+resources.doctrine.functions.dayofmonth = "Newscoop\Query\MysqlDayOfMonth"
+resources.doctrine.functions.dayofyear = "Newscoop\Query\MysqlDayOfYear"
 
 resources.view =
 
