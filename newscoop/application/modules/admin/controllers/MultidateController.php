@@ -68,7 +68,7 @@ class Admin_MultidateController extends Zend_Controller_Action
 
     public function isAllDay($date)
     {
-    	if ( $this->getTime($date->startTime->getTimestamp()) == "00:00" && $this->getTime($date->endTime->getTimestamp()) == "23:59" ) {
+    	if ( ($this->getTime($date->startTime->getTimestamp()) == "00:00" || $this->getTime($date->startTime->getTimestamp()) == "00:01") && $this->getTime($date->endTime->getTimestamp()) == "23:59" ) {
     		return true;
     	} else {
     		return false;
@@ -81,6 +81,7 @@ class Admin_MultidateController extends Zend_Controller_Action
     	$date_type = $this->_request->getParam('date-type');
     	$articleId = $this->_request->getParam('article-number');
     	$repo = $this->_helper->entity->getRepository('Newscoop\Entity\ArticleDatetime');
+    	$multidateId = $this->_request->getParam('multidateId');
     	
     	//print_r($_REQUEST);
     	
@@ -89,6 +90,7 @@ class Admin_MultidateController extends Zend_Controller_Action
     		$startDate = $this->_request->getParam('start-date-specific');
     		$startTime = $this->_request->getParam('start-time-specific');
     		$endTime = $this->_request->getParam('end-time-specific');
+    		
     		
     		$type = $this->_request->getParam('specific-radio');
     		switch($type) {
@@ -109,10 +111,23 @@ class Admin_MultidateController extends Zend_Controller_Action
                     break;
     		}
     		
-    	} else {
-    		$startDate = $this->_request->getParam('start-date-daterange');
-    		$endDate = $this->_request->getParam('end-date-daterange');
+    		if ( $multidateId > 0) {
+    			//update
+    			$repo->update( $multidateId, array( $timeSet ));
+    		} else {
+    			//add
+    			$repo->add($timeSet, $articleId, 'schedule');	
+    		}
     		
+    		
+    	} else {
+    		
+    		$startDate = $this->_request->getParam('start-date-daterange');
+    		if ($this->_request->getParam('cycle-ends') == 'never') {
+    			$endDate = "2030-12-31";
+    		} else {
+    			$endDate = $this->_request->getParam('end-date-daterange');
+    		}
     		if ($this->_request->getParam('daterange-all-day') == 1) {
     			$startTime = "00:01";
     			$endTime = "23:59";
@@ -120,19 +135,46 @@ class Admin_MultidateController extends Zend_Controller_Action
     			$startTime = $this->_request->getParam('start-time-daterange');
             	$endTime = $this->_request->getParam('end-time-daterange');	
     		}
-    		
+    		$recurring = $this->_request->getParam('repeats-cycle');
+            $timeSet = array("$startDate $startTime" => "$endDate $endTime - $recurring");
             
-            
-    		
-            $timeSet = array("$startDate $startTime" => "$endDate $endTime");	
-            
+            if ( $multidateId > 0) {
+            	$repo->update( $multidateId, array( $timeSet ));
+            } else {
+            	$repo->add($timeSet, $articleId, 'schedule');	
+            }
     	}
-    	
-        $repo->add($timeSet, $articleId, 'schedule');
-    	
         echo json_encode(array('code' => 200));
-    	
     	die();
+    }
+    
+    public function geteventAction() {
+    	$articleDateTimeId = $this->_request->getParam('id');
+        $repo = $this->_helper->entity->getRepository('Newscoop\Entity\ArticleDatetime');
+        $jsEvent = array();
+        $event = $repo->findDates((object) array('id' => "$articleDateTimeId"));
+        if (is_array($event)) {
+        	$date = $event[0];
+        	$jsEvent['id'] = $date->id;
+        	$jsEvent['startDate'] = $this->getDate($date->getStartDate()->getTimestamp());
+        	$jsEvent['startTime'] = $this->getTime($date->getStartTime()->getTimestamp());
+	        $endDate = $date->getEndDate();
+	        if ( empty($endDate)) {
+	        	$jsEvent['endDate'] = $this->getDate($date->getStartDate()->getTimestamp());
+	        } else {
+	        	$jsEvent['endDate'] = $this->getDate($date->getEndDate()->getTimestamp());
+	        }
+	        $jsEvent['endTime'] = $this->getTime($date->getEndTime()->getTimestamp());
+	        $jsEvent['allDay'] = $this->isAllDay($date);
+	        $jsEvent['isRecurring'] = $date->getRecurring();
+        	if ($jsEvent['endDate'] == "2030-12-31") {
+	        	$jsEvent['neverEnds'] = 1;
+	        } else {
+	        	$jsEvent['neverEnds'] = 0;
+	        }
+        }
+        echo json_encode($jsEvent);
+        die();
     }
 
 
@@ -140,28 +182,56 @@ class Admin_MultidateController extends Zend_Controller_Action
     {
     	$articleId = $this->_request->getParam('articleId');
         $repo = $this->_helper->entity->getRepository('Newscoop\Entity\ArticleDatetime');
-        
         $return = array();
-        
-        
-        
         $dates = $repo->findDates((object) array('articleId' => "$articleId"));
-        
-        //echopre($dates);
-        
         foreach( $dates as $date) {
-        	$calDate = array();
-        	$calDate['id'] = $date->id;
-        	$calDate['title'] = 'Event '.$date->id;
-        	$calDate['start'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime($date->getStartTime()->getTimestamp()) );
-        	$endDate = $date->getEndDate();
-        	if ( empty($endDate)) {
-        		$calDate['end'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime($date->getEndTime()->getTimestamp()) );
+        	
+        	$recurring = $date->getRecurring();
+        	if (strlen($recurring) > 1 && $recurring != 'daily') {
+        		//daterange
+        		$start = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime($date->getStartTime()->getTimestamp()) );
+        		$end = strtotime( $this->getDate($date->getEndDate()->getTimestamp()).' '.$this->getTime($date->getEndTime()->getTimestamp()) );
+        		$itemStart = $start;
+        		$itemEnd = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime($date->getEndTime()->getTimestamp()) );
+        		
+        		switch($recurring) {
+        			case 'weekly':
+        				$step = "+1 week";
+        				break;
+        			case 'monthly':
+        				$step = "+1 month";
+        				break;
+        		}
+        		
+        		while($itemStart < $end) {
+        			$calDate = array();
+		        	$calDate['id'] = $date->id;
+		        	$calDate['title'] = 'Event '.$date->id;
+		        	$calDate['start'] = $itemStart;
+		        	$calDate['end'] = $itemEnd;
+		        	$calDate['allDay'] = $this->isAllDay($date);
+	        		$return[] = $calDate;
+		        	
+		        	$itemStart = strtotime($step, $itemStart);
+		        	$itemEnd = strtotime($step, $itemEnd);
+        		}
+        		
         	} else {
-        		$calDate['end'] = strtotime( $this->getDate($date->getEndDate()->getTimestamp()).' '.$this->getTime($date->getEndTime()->getTimestamp()) );	
+        		//specific
+        		$calDate = array();
+	        	$calDate['id'] = $date->id;
+	        	$calDate['title'] = 'Event '.$date->id;
+	        	$calDate['start'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime($date->getStartTime()->getTimestamp()) );
+	        	$endDate = $date->getEndDate();
+	        	if ( empty($endDate)) {
+	        		$calDate['end'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime($date->getEndTime()->getTimestamp()) );
+	        	} else {
+	        		$calDate['end'] = strtotime( $this->getDate($date->getEndDate()->getTimestamp()).' '.$this->getTime($date->getEndTime()->getTimestamp()) );	
+	        	}
+	        	$calDate['allDay'] = $this->isAllDay($date);
+	        	$return[] = $calDate;
         	}
-        	$calDate['allDay'] = $this->isAllDay($date);
-        	$return[] = $calDate;
+        	
         }
         
         echo json_encode($return);

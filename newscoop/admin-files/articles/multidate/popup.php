@@ -32,6 +32,44 @@ $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 ?>
 <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/calendar/fullcalendar.min.js" type="text/javascript"></script>
 <script type="text/javascript">
+
+function resetSpecificForm() {
+	$('#specific-multidate-id').val('');
+	$('#specific-radio-start-only').trigger('click');
+	$('#start-date-specific').val('');
+	$('#start-time-specific').val('');
+	$('#end-time-specific').val('');
+	//$('#specific-radio-start-only').attr('checked', true);
+	
+}
+
+function resetDaterangeForm() { 
+	$('#daterange-multidate-id').val('');
+	$('#start-time-daterange').css('display', 'inline');
+	$('#end-time-daterange').css('display', 'inline');
+	$('#end-date-daterange').css('visibility','visible');
+	$('#daterange-all-day').removeAttr('checked');
+	$('#cycle-ends-on-set-date').trigger('click');
+}
+
+function prepareDate(oldFormat) {
+	var dates = oldFormat.split('-');
+	var returnVal = dates[1]+'/'+dates[2]+'/'+dates[0];
+	return returnVal;
+}
+
+function timeOk(startDate, startTime, endDate, endTime) {
+	startDate = prepareDate(startDate);
+	endDate = prepareDate(endDate);
+	var startFull = new Date(startDate + ' ' + startTime);
+	var endFull = new Date(endDate + ' ' + endTime);
+	if ( endFull - startFull >=0 ) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
 function popup_close() {
     try {
         if (parent.$.fancybox.reload) {
@@ -58,13 +96,120 @@ function submitForm(formData) {
 }
 
 function submitSpecificForm() {
-    formData = $('#specific-dates-form').serialize();
-    submitForm(formData);    
+
+	//validating specific form
+	var valid = 1;
+	if ( $('#start-date-specific').val() == '' ) {
+		valid = 0;
+		alert("<?php echo putGS("Start date can't be empty")?>");
+		$('#start-date-specific').focus();
+	}
+	var radio = $('input:radio[name=specific-radio]:checked').val();
+	if (radio == 'start-only' || radio == 'start-and-end') {
+		if ( valid == 1) {
+			if ( $('#start-time-specific').val() == '' ) {
+				valid = 0;
+				alert("<?php echo putGS("Start time can't be empty")?>");
+				$('#start-time-specific').focus();
+			}
+		}
+		if (radio == 'start-and-end' && valid == 1) {
+			if ( $('#end-time-specific').val() == '' ) {
+				alert("<?php echo putGS("End time can't be empty")?>");
+				valid = 0;
+				$('#end-time-specific').focus();
+			}
+
+			if (valid == 1) {
+				if ( !timeOk($('#start-date-specific').val(), $('#start-time-specific').val(), $('#start-date-specific').val(), $('#end-time-specific').val()) ) {
+					valid = 0;
+					alert("<?php echo putGS("End time can't be set before start time")?>");
+					$('#end-time-specific').focus();
+				}
+			}		
+		}
+	}
+	
+	if (valid == 1) {
+		formData = $('#specific-dates-form').serialize();
+	    submitForm(formData);
+	}
+        
 }
 
 function submitDaterangeForm() {
-	formData = $('#daterange-dates-form').serialize();
-	submitForm(formData);
+
+	var valid = 1;
+	var needTime = true;
+	var needDate = true;
+
+	if ($('input:radio[name=cycle-ends]:checked').val() == 'never') {
+		needDate = false;
+	}
+	if ($('#daterange-all-day').attr('checked') == 'checked' ) {
+		needTime = false;
+	}
+	
+	//start date
+	if ( $('#start-date-daterange').val() == '' ) {
+		valid = 0;
+		alert("<?php echo putGS("Start date can't be empty")?>");
+		$('#start-date-daterange').focus();
+	}
+	//start time
+	if ( valid == 1 && needTime) {
+		if ( $('#start-time-daterange').val() == '' ) {
+			valid = 0;
+			alert("<?php echo putGS("Start time can't be empty")?>");
+			$('#start-time-daterange').focus();
+		}
+	}
+	//end date
+	if (valid == 1 && needDate) {
+		if ( $('#end-date-daterange').val() == '' ) {
+			valid = 0;
+			alert("<?php echo putGS("End date can't be empty")?>");
+			$('#end-date-daterange').focus();
+		}
+	}
+	//end time 
+	if ( valid == 1 && needTime) {
+		if ( $('#end-time-daterange').val() == '' ) {
+			valid = 0;
+			alert("<?php echo putGS("End time can't be empty")?>");
+			$('#end-time-daterange').focus();
+		}
+	}
+	//end is not set before time
+	if (valid == 1) {
+		var startDate = $('#start-date-daterange').val();
+		if (needDate) {
+			var endDate = $('#end-date-daterange').val();
+		} else {
+			var endDate = "2099-12-31";
+		}
+		if (needTime) {
+			var startTime = $('#start-time-daterange').val();
+			var endTime = $('#end-time-daterange').val();
+		} else {
+			var startTime = "00:00";
+			var endTime = "23:59";
+		}
+		
+		if ( !timeOk(startDate, startTime, endDate, endTime) ) {
+			valid = 0;
+			alert("<?php echo putGS("End time can't be set before start time")?>");
+			$('#end-date-daterange').focus();
+		}
+	}	
+	
+	
+	
+	if (valid == 1) {
+		formData = $('#daterange-dates-form').serialize();
+		submitForm(formData);
+	}
+	
 }
 
 function popup_save() {
@@ -94,6 +239,78 @@ function reset_specific_all_day() {
     $('#specific-radio-all-day').attr('checked', 'checked');
     $('#start-time-specific').css('display', 'none');
     $('#end-time-specific').css('display', 'none');
+}
+
+function loadDaterangeEvent(event) {
+	resetDaterangeForm();
+	$('.date-range-switch').trigger('click');
+	$('#daterange-multidate-id').val(event.id);
+	$('#start-date-daterange').val(event.startDate);
+	$('#start-time-daterange').val(event.startTime);
+	$('#end-date-daterange').val(event.endDate);
+	$('#end-time-daterange').val(event.endTime);
+	var repeatValue = 'recurring:'+event.isRecurring;
+	$("#repeats-cycle option[value='"+repeatValue+"']").attr('selected','selected');
+	if (event.neverEnds == 1) {
+		$('#cycle-ends-never').attr('checked', 'checked');
+		$('#end-date-daterange').css('visibility','hidden');
+	} else {
+		$('#cycle-ends-on-set-date').attr('checked', 'checked');
+		$('#end-date-daterange').css('visibility','visible');
+	}
+	if (event.allDay) {
+		$('#daterange-all-day').trigger('click');
+		$('#start-time-daterange').css('display', 'none');
+		$('#end-time-daterange').css('display', 'none');
+	}
+	
+}
+
+function doSpecificTimeRange(start, end) {
+	if ( (start == '00:00' || start == '00:01') && end == '23:59' ) {
+		$('#specific-radio-all-day').trigger('click');
+	}
+
+	if ( (start != '00:00' && start != '00:01') && end == '23:59' ) {
+		$('#specific-radio-start-only').trigger('click');
+	}
+
+	if ( (start != '00:00' && start != '00:01') && end != '23:59' ) {
+		$('#specific-radio-start-and-end').trigger('click');
+	}
+}
+
+function loadSpecificEvent(event) {
+	console.log('loading specific event');
+	$('.date-specific-switch').trigger('click');
+	$('#specific-multidate-id').val(event.id);
+	$('#start-date-specific').val(event.startDate);
+	$('#start-time-specific').val(event.startTime);
+	$('#end-time-specific').val(event.endTime);
+
+	doSpecificTimeRange(event.startTime, event.endTime);
+}
+
+function eventClick(eventId) {
+	var url = '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/multidate/getevent';
+	var data = 'id='+eventId;
+	$.ajax({
+        'url': url,
+        'type': 'POST',
+        'data': data,
+        'dataType': 'json',
+        'success': function(json) {
+        	//console.log(json);
+        	//var isRecurring = json.isRecurring;
+        	if (json.isRecurring) {
+				loadDaterangeEvent(json);
+        	} else {
+				loadSpecificEvent(json);
+        	}
+        },
+        'error': function(json) {
+        }
+    });
 }
 
 $(function(){
@@ -130,6 +347,14 @@ $(function(){
 	var url = '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/multidate/getdates';
 	
 	$('#full-calendar').fullCalendar({
+			eventClick: function(calEvent, jsEvent, view) {
+				eventClick(calEvent.id);
+			},
+			header: {
+				left: 'prev,next today',
+				center: 'title',
+				right: 'month,agendaWeek,agendaDay'
+			},
 		 	editable: true,
 			events: {
 				url : url,
@@ -158,6 +383,24 @@ $(function(){
 	 $('#start-time-daterange').timepicker({});
 	 $('#end-time-daterange').timepicker({});
 
+	 $('#daterange-all-day').click(function() {
+		 if ($('#daterange-all-day').attr('checked') != 'checked') {
+			 $('#start-time-daterange').css('display', 'inline');
+			 $('#end-time-daterange').css('display', 'inline');
+		 } else {
+			 $('#start-time-daterange').css('display', 'none');
+			 $('#end-time-daterange').css('display', 'none');
+		 }
+		
+	 });
+
+	$('#cycle-ends-on-set-date').click(function(){
+		$('#end-date-daterange').css('visibility', 'visible');
+		});
+	
+	$('#cycle-ends-never').click(function(){
+		$('#end-date-daterange').css('visibility', 'hidden');
+		});
 		    
 });
 
@@ -175,7 +418,6 @@ $(function(){
 <div class="toolbar">
 	<div class="save-button-bar">
 	    <input type="submit" name="cancel" value="<?php echo putGS('Close'); ?>" class="default-button" onclick="popup_close();" id="context_button_close">
-	    <input type="submit" name="save" value="<?php echo putGS('Save'); ?>" class="save-button-small" onclick="popup_save();" id="context_button_save">
 	</div>
 <h2><?php echo putGS('Multi date event'); ?></h2>
 </div>
@@ -193,6 +435,7 @@ $(function(){
     <input type="text" class="multidate-input" id="specific-date-name" name="specific-date-name" style="width: 260px; margin-left: 12px; margin-top: 20px;"  />
     <input type="hidden" name="article-number" value="<?php echo Input::Get('f_article_number', 'int', 1)?>" />
     <input type="hidden" name="date-type" value="specific" />
+    <input type="hidden" name="multidateId" id="specific-multidate-id" value="" />
 	<div class="date-mode-switcher">
 		<div class="date-switch date-range-switch"><?php echo putGS('Date from / to'); ?></div>
 		<div class="date-switch date-specific-switch switch-active border-left"><?php echo putGS('Specific dates'); ?></div>
@@ -207,6 +450,10 @@ $(function(){
 		<input type="radio" id="specific-radio-start-and-end" name="specific-radio" value="start-and-end" /><?php echo putGS('Start & end time'); ?><br />
 		<input type="radio" id="specific-radio-all-day" name="specific-radio" value="all-day" /><?php echo putGS('All day'); ?>
 	</div>
+	<div class="form-action-holder">
+		<input type="button" value="Reset form" onclick="resetSpecificForm()"; class="default-button" style="width:127px; margin-right:3px;"/>
+		<input type="button" class="save-button-small" onclick="popup_save();" value="Save" style="width:129px;";/>
+	</div>
 </form>
 </div>
 
@@ -215,26 +462,27 @@ $(function(){
     <input type="text" class="multidate-input" id="daterange-date-name" name="daterange-date-name" style="width: 260px; margin-left: 12px; margin-top: 20px;" />
     <input type="hidden" name="article-number" value="<?php echo Input::Get('f_article_number', 'int', 1)?>" />
     <input type="hidden" name="date-type" value="daterange" />
+    <input type="hidden" name="multidateId" id="daterange-multidate-id" value="" />
     <div class="date-mode-switcher">
         <div class="date-switch date-range-switch"><?php echo putGS('Date from / to'); ?></div>
         <div class="date-switch date-specific-switch switch-active border-left"><?php echo putGS('Specific dates'); ?></div>
     </div>
     
-    <input type="text" id="start-date-daterange" name="start-date-range" class="multidate-input"style="width: 125px; margin-left: 12px; margin-top: 20px;"  readonly='true'/> 
-    <input type="text" id="start-time-daterange" name="start-time-daterange" class="multidate-input" style="width: 128px; margin-left: 2px; margin-top: 20px;" readonly='true' value="00:01"/>
+    <input type="text" id="start-date-daterange" name="start-date-daterange" class="multidate-input"style="width: 125px; margin-left: 12px; margin-top: 20px;"  readonly='true'/> 
+    <input type="text" id="start-time-daterange" name="start-time-daterange" class="multidate-input" style="width: 128px; margin-left: 2px; margin-top: 20px;" readonly='true'/>
     <span style="display:block; margin-left: 12px; margin-top: 10px;"><?php echo putGS('To'); ?></span> 
     <input type="text" id="end-date-daterange" name="end-date-daterange" class="multidate-input"style="width: 125px; margin-left: 12px; margin-top: 10px;"  readonly='true'/> 
-    <input type="text" id="end-time-daterange" name="end-time-daterange" class="multidate-input" style="width: 128px; margin-left: 2px; margin-top: 10px;"  readonly='true' value="23:59"/>
+    <input type="text" id="end-time-daterange" name="end-time-daterange" class="multidate-input" style="width: 128px; margin-left: 2px; margin-top: 10px;"  readonly='true'/>
     
     <div class="repeats-checkbox-holder">
-        <input type="checkbox" id="daterange-all-day" name="daterange-all-day" value="1" checked="checked" /><?php echo putGS('All day'); ?><br />
-        <input type="checkbox" id="daterange-repeats" name="daterange-repeats" value="1" /><?php echo putGS('Repeats'); ?><br />
+        <input type="checkbox" id="daterange-all-day" name="daterange-all-day" value="1" /><label for="daterange-all-day"><?php echo putGS('All day'); ?></label><br />
+       <!-- <input type="checkbox" id="daterange-repeats" name="daterange-repeats" value="1" /><?php echo putGS('Repeats'); ?><br /> -->
     </div>
     
-    <select id="repeats-cycle" class="multidate-input" style="margin-left: 12px; margin-top: 10px; width: 260px;">
-        <option value='daily'><?php echo putGS('Daily'); ?></option>
-        <option value='weekly'><?php echo putGS('Weekly'); ?></option>
-        <option value='monthly'><?php echo putGS('Monthly'); ?></option>
+    <select id="repeats-cycle" class="multidate-input" style="margin-left: 12px; margin-top: 10px; width: 260px;" name="repeats-cycle">
+        <option value='recurring:daily'><?php echo putGS('Repeats daily'); ?></option>
+        <option value='recurring:weekly'><?php echo putGS('Repeats weekly'); ?></option>
+        <option value='recurring:monthly'><?php echo putGS('Repeats monthly'); ?></option>
     </select>
     
     <!-- 
@@ -254,6 +502,10 @@ $(function(){
        <input type="radio" id="cycle-ends-on-set-date" name="cycle-ends"  value="on-set-date" style="display: inline; margin-left:25px;" name="cycle-ends" checked="checked"/><?php echo putGS('On set date');?><br />
        <input type="radio" id="cycle-ends-never" name="cycle-ends" value="never" style="display: inline; margin-left:73px;" /><?php echo putGS('Never');?><br />
     </div>
+    <div class="form-action-holder">
+		<input type="reset" value="Reset form" onclick="resetDaterangeForm()"; class="default-button" style="width:127px; margin-right:3px;"/>
+		<input type="button" class="save-button-small" onclick="popup_save();" value="Save" style="width:129px;";/>
+	</div>
 </form>
 </div>
 

@@ -315,6 +315,12 @@ class ArticleDatetimeRepository extends EntityRepository
             $qb->andWhere('dt.articleId= :articleId');
             $qb->setParameter('articleId', $search->articleId);
         }
+        // search for article datetime id
+        if (isset($search->id))
+        {
+            $qb->andWhere('dt.id= :id');
+            $qb->setParameter('id', $search->id);
+        }
         // store query and return $this
         if ($dontExecute)
         {

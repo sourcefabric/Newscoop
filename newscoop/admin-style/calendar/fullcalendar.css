@@ -110,6 +110,7 @@ html .fc,
 	
 .fc-content {
 	clear: both;
+	z-index : 0;
 	}
 	
 .fc-view {
