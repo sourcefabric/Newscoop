@@ -140,8 +140,8 @@ if ($errorStr != "") {
 if ($g_user->hasPermission("ManageTempl") || $g_user->hasPermission("DeleteTempl")) {
 	// Show dual-pane view for those with template management priviledges
 ?>
-  <frameset rows="60%,*" border="2">
-    <frame src="<?php print "$url&preview=on"; ?>" name="body" frameborder="1">
+  <frameset id="frameset" rows="*, 30px" border="1">
+    <frame name="preview" src="<?php print "$url&preview=on"; ?>" name="body" frameborder="1">
     <frame name="e" src="empty.php" frameborder="1">
   </frameset>
 <?php
