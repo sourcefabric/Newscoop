@@ -42,6 +42,7 @@ if ($auth->hasIdentity() && (!$f_force_login))
 		<script type="text/javascript">
 			window.parent.g_security_token = '<?php echo SecurityToken::GetToken(); ?>';
 			window.parent.$(window.parent.document.body).data('loginDialog').dialog('close');
+            window.parent.setSecurityToken(window.parent.g_security_token);
 		</script>
 	</head>
 	<body>
