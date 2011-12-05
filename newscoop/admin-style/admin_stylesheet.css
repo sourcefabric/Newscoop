@@ -2319,3 +2319,17 @@ ul#edit-files h2 {
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.20);
     box-shadow: 0 1px 1px rgba(0,0,0,.20);
 }
+
+.comments-block .buttons a {
+    margin: 0 8px 0 0;
+}
+
+.comments-block .action-list li {
+    float: left;
+}
+
+.comments-block textarea {
+    width: 99.5%;
+    height: 8em;
+    font-size: 1.2em;
+}

@@ -47,42 +47,18 @@ foreach ($hiddens as $name) {
         <dt><?php putGS('Comment'); ?></dt>
         <dd>
             <?php if ($inEditMode): ?>
-                <textarea>${message}</textarea>
+                <textarea rows="5" cols="60">${message}</textarea>
             <?php else: ?>
                 ${message}
             <?php endif; //inEditMode?>
         </dd>
         <?php if ($inEditMode): ?>
         <dt>&nbsp;</dt>
-        <dd class="buttons">
-            <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, 'comments/reply.php', '', '&f_comment_id=${id}'); ?>" class="ui-state-default text-button clear-margin"><?php putGS('Reply to comment'); ?></a>
-            <span style="float:left">&nbsp;</span>
-
-            <?php if ($inEditMode): ?>
-                <a class="ui-state-default text-button clear-margin comment-update"><?php putGS('Update comment'); ?></a>
-                <span style="float:left">&nbsp;</span>
-            <?php endif; //inEditMode?>
-
-            <a href="<?php echo $controller->view->url(array(
-                'module' => 'admin',
-                'controller' => 'comment',
-                'action' => 'set-recommended',
-            )); ?>/comment/${id}/recommended/${recommended_toggle}" class="ui-state-default text-button clear-margin comment-recommend status-${recommended_toggle}"><?php putGS('Recommend'); ?></a>
-        </dd>
         <dd>
             <ul class="action-list clearfix">
               <li>
-                <a class="ui-state-default icon-button right-floated" href="javascript:;"><span class="ui-icon ui-icon-disk"></span><?php putGS('Save'); ?></a>
-              </li>
-              
-              <li>
-                <input type="radio" name="comment_action_${id}" value="deleted" class="input_radio" id="deleted_${id}" ${deleted_checked}/>
-                <label class="inline-style left-floated" for="deleted_${id}"><?php putGS('Delete'); ?></label>
-              </li>
-              
-              <li>
-                <input type="radio" name="comment_action_${id}" value="hidden" class="input_radio" id="hidden_${id}" ${hidden_checked}/>
-                <label class="inline-style left-floated" for="hidden_${id}"><?php putGS('Hidden'); ?></label>
+              <input type="radio" name="comment_action_${id}" value="pending" class="input_radio" id="inbox_${id}" ${pending_checked}/>
+                <label class="inline-style left-floated" for="inbox_${id}"><?php putGS('New'); ?></label>
               </li>
 
               <li>
@@ -91,10 +67,28 @@ foreach ($hiddens as $name) {
               </li>
 
               <li>
-              <input type="radio" name="comment_action_${id}" value="pending" class="input_radio" id="inbox_${id}" ${pending_checked}/>
-                <label class="inline-style left-floated" for="inbox_${id}"><?php putGS('New'); ?></label>
+                <input type="radio" name="comment_action_${id}" value="hidden" class="input_radio" id="hidden_${id}" ${hidden_checked}/>
+                <label class="inline-style left-floated" for="hidden_${id}"><?php putGS('Hidden'); ?></label>
+              </li>
+
+              <li>
+                <input type="radio" name="comment_action_${id}" value="deleted" class="input_radio" id="deleted_${id}" ${deleted_checked}/>
+                <label class="inline-style left-floated" for="deleted_${id}"><?php putGS('Delete'); ?></label>
               </li>
             </ul>
+        </dd>
+        <dd class="buttons">
+            <?php if ($inEditMode): ?>
+            <a class="ui-state-default icon-button comment-update"><span class="ui-icon ui-icon-disk"></span><?php putGS('Save comment'); ?></a>
+            <?php endif; //inEditMode?>
+
+            <a href="<?php echo $controller->view->url(array(
+                'module' => 'admin',
+                'controller' => 'comment',
+                'action' => 'set-recommended',
+            )); ?>/comment/${id}/recommended/${recommended_toggle}" class="ui-state-default text-button comment-recommend status-${recommended_toggle}"><?php putGS('Recommend'); ?></a>
+
+            <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, 'comments/reply.php', '', '&f_comment_id=${id}'); ?>" class="ui-state-default text-button"><?php putGS('Reply to comment'); ?></a>
         </dd>
         <?php endif; //inEditMode?>
       </dl>
@@ -112,18 +106,13 @@ function toggleCommentStatus(commentId) {
             var status = $('input:radio:checked', block).val();
 
             var cclass = 'comment_'+statusClassMap[status];
-            var button = $('dd.buttons', block);
 
             // set class
             $('.frame', block).removeClass('comment_inbox comment_hide comment_approve')
                 .addClass(cclass);
-            // show/hide button
-            button.hide();
-            if ((status == 'approved') && (commentSetting != 'locked')) {
-                button.show();
-            }
         }
     });
+
     //detach deleted
     $('input[value=deleted]:checked', $('#comment-moderate')).each(function() {
         $(this).closest('fieldset').slideUp(function() {
@@ -199,8 +188,9 @@ function loadComments() {
 
 	callServer(call_url, call_data, res_handle, true);
 };
-$('.action-list a').live('click',function(){
-	var el = $(this).parents('ul').find('input:checked').first();
+
+var updateStatus = function(button) {
+	var el = $(button).parents('dl').find('input:radio:checked').first();
 
 	var call_data = {
 	   "comment": el.attr('id').match(/\d+/)[0],
@@ -210,14 +200,17 @@ $('.action-list a').live('click',function(){
     var call_url = '../comment/set-status/format/json';
 
 	var res_handle = function(data) {
-		flashMessage('<?php putGS('Comments updated.'); ?>');
+		//flashMessage('<?php putGS('Comments updated.'); ?>');
 		toggleCommentStatus(el.attr('id').match(/\d+/)[0]);
 	};
 
 	callServer(call_url, call_data, res_handle, true);
-});
+};
+
 $('.comment-update').live('click',function(){
 	var comment, subject, body;
+
+    updateStatus(this);
 
     comment = $(this).parents('dl');
     subject = comment.find('input').val();
