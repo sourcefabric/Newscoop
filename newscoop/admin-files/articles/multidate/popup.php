@@ -81,6 +81,7 @@ function popup_close() {
 }
 
 function submitForm(formData) {
+	var flash = flashMessage(localizer.processing, null, true);
 	var url = '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/multidate/add';
 	$.ajax({
         'url': url,
@@ -89,8 +90,10 @@ function submitForm(formData) {
         'dataType': 'json',
         'success': function(json) {
         	$('#full-calendar').fullCalendar( 'refetchEvents' );
+        	flash.fadeOut();
         },
         'error': function(json) {
+        	flash.fadeOut();
         }
     });
 }
@@ -292,8 +295,10 @@ function loadSpecificEvent(event) {
 }
 
 function eventClick(eventId) {
+	
 	var url = '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/multidate/getevent';
 	var data = 'id='+eventId;
+	var flashClick = flashMessage(localizer.processing, null, true);
 	$.ajax({
         'url': url,
         'type': 'POST',
@@ -302,6 +307,7 @@ function eventClick(eventId) {
         'success': function(json) {
         	//console.log(json);
         	//var isRecurring = json.isRecurring;
+        	flashClick.fadeOut();
         	if (json.isRecurring) {
 				loadDaterangeEvent(json);
         	} else {
@@ -309,6 +315,7 @@ function eventClick(eventId) {
         	}
         },
         'error': function(json) {
+        	flashClick.fadeOut();
         }
     });
 }
