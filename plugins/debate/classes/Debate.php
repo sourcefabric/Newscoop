@@ -942,10 +942,7 @@ class Debate extends DatabaseObject
      */
     public function isVotable()
     {
-        if (strtotime($this->m_data['date_begin']) > time()) {
-            return false;
-        }
-        if (strtotime($this->m_data['date_end']) < time()) {
+        if (!$this->isStarted() || $this->isClosed()) {
             return false;
         }
 
