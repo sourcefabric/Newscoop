@@ -154,6 +154,14 @@ class ReutersFeed extends Feed
         $xml = $this->parseResponse($response);
         if (!empty($xml->itemSet->newsItem)) {
             return new NewsItem($xml->itemSet->newsItem);
+        } else if (!empty($xml->packageItem)) {
+            return new PackageItem($xml->packageItem);
+        } else if (!empty($xml->itemSet->packageItem)) {
+            return new PackageItem($xml->itemSet->packageItem);
+        } else {
+            var_dump('not implemented', $xml->asXML());
+            exit;
+            throw new \InvalidArgumentException("Not implemented");
         }
 
         return;

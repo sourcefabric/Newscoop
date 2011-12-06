@@ -8,19 +8,19 @@
 namespace Newscoop\News;
 
 /**
- * NewsItem
+ * PackageItem
  * @Document(collection="news_item")
  * @InheritanceType("SINGLE_COLLECTION")
  * @DiscriminatorField(fieldName="type")
  * @DiscriminatorMap({"package"="PackageItem", "news"="NewsItem"})
  */
-class NewsItem extends Item
+class PackageItem extends Item
 {
     /**
-     * @EmbedOne(targetDocument="ContentSet")
-     * @var Newscoop\News\ContentSet
+     * @EmbedOne(targetDocument="GroupSet")
+     * @var Newscoop\News\GroupSet
      */
-    protected $contentSet;
+    protected $groupSet;
 
     /**
      * @param SimpleXMLElement $xml
@@ -28,16 +28,16 @@ class NewsItem extends Item
     public function __construct(\SimpleXMLElement $xml)
     {
         parent::__construct($xml);
-        $this->contentSet = new ContentSet($xml->contentSet);
+        $this->groupSet = new GroupSet($xml->groupSet);
     }
 
     /**
-     * Get content set
+     * Get group set
      *
-     * @return Newscoop\News\ContentSet
+     * @return Newscoop\News\GroupSet
      */
-    public function getContentSet()
+    public function getGroupSet()
     {
-        return $this->contentSet;
+        return $this->groupSet;
     }
 }
