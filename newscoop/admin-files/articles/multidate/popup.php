@@ -281,7 +281,7 @@ function doSpecificTimeRange(start, end) {
 }
 
 function loadSpecificEvent(event) {
-	console.log('loading specific event');
+	//console.log('loading specific event');
 	$('.date-specific-switch').trigger('click');
 	$('#specific-multidate-id').val(event.id);
 	$('#start-date-specific').val(event.startDate);
@@ -355,7 +355,7 @@ $(function(){
 				center: 'title',
 				right: 'month,agendaWeek,agendaDay'
 			},
-		 	editable: true,
+		 	editable: false,
 			events: {
 				url : url,
 				type : 'GET',
