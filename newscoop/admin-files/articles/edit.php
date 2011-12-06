@@ -258,6 +258,7 @@ function parseTextBody($text, $articleNumber)
     return $text;
 }
 
+$hasMultiDates = false;
 include_once('edit_html.php');
 
 // Display tinymce loading code if required

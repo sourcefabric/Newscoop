@@ -1,4 +1,8 @@
 @CHARSET "UTF-8";
+body {
+    font-size: 12px;
+    color: #696969;	
+}
 #multidate-box {
     background: none repeat scroll 0 0 #FFFFFF;
     height: 660px;
@@ -7,7 +11,9 @@
     width: 952px;
     font-family: Arial,Helvetica,sans-serif;
     font-size: 12px;
+    /*
     color: #444444;
+    */
 }
 #multidate-box .toolbar {
     background: none repeat scroll 0 0 transparent;
@@ -19,43 +25,70 @@
 .dates {
     width: 285px;
     height: 100%;
+    /*
     border-right: 1px solid #CCCCCC;
+    */
     float: left;	
 }
 #full-calendar {
-    width: 660px;
+    width: 630px;
     height: 100px;
     float: left;
+    margin-left:17px;
+    margin-top:17px;
 }
 .multidate-input {
+	/*
     border: 1px solid #9D9D9D;
-    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;	
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;
+    */
+    background-color: #FFFFFF;
+    border: 1px solid #9D9D9D;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;
+    color: #333333;
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    height: 23px;
+    margin: 0;
+    padding: 0;
+    text-indent: 3px;
 }
 .date-mode-switcher {
 	width:260px;
 	margin-left:12px; margin-top: 20px;
 	border: 1px solid #9D9D9D;
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;
-    height: 18px;
+    height: 23px;
 }
 
 .date-switch {
+	border: 1px solid #9D9D9D;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;
 	width: 128px;
+	margin-top: 20px;
 	text-align:center;
 	float:left;	
-	height: 100%;
+	height: 18px;
 	cursor: pointer;
+	padding-top:5px;
 }
 
 .border-left {	
-	border-left: 1px solid #9D9D9D;
+	border-left: 0px solid #9D9D9D;
+	width: 131px!important;
 }
 .radio-specific {
 	width:100%;
 }
 
+.multidate-select {
+    margin: 0;
+    padding: 3px 5px;
+    border: 1px solid #9d9d9d;	
+}
+
 .specific-radio-holder, .repeats-checkbox-holder{
-	margin-left:8px;
+	margin-left:12px;
 	margin-top:8px;
 }
 
@@ -67,6 +100,41 @@
 	margin-left:12px;
 	margin-top:8px;
 }
+input[type="text"].date-input {
+    background-image:url(images/input_with_calendar_bg.png);
+    background-repeat:no-repeat;
+    background-position:right 0;
+}
+input[type="text"].time-input {
+    background-image:url(images/input_with_time_bg.png);
+    background-repeat:no-repeat;
+    background-position:right 0;
+}
+input[type="text"].search, input[type="text"].search-input {
+    background-image:url(images/input_with_search_bg.png);
+    background-repeat:no-repeat;
+    background-position:0 0;
+    text-indent:23px;
+}
+
+.multi-box    {
+	/*
+    background: #f5f5f5;
+    */
+    background:#f5f5f5 url(images/multi-date_bg.png) repeat-y 0 0;
+    border: 1px solid #ccc;
+    overflow:hidden;
+    box-shadow: 0 2px 2px rgba(0, 0, 0, 0.1) inset;
+    height:610px;
+}
+.multi-box2 {
+    background:#f5f5f5 url(images/multi-date_bg.png) repeat-y 0 0;
+}
+
+
+
+
+
 	
 	
 	

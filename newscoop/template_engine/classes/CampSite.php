@@ -162,16 +162,16 @@ final class CampSite extends CampSystem
                 return $preview ? CampRequest::GetVar('previewLang', null) : null;
             case 'afterRender':
                 if ($preview) {
-                    print("\n<script LANGUAGE=\"JavaScript\">parent.e.document.open();\n"
-                            . "parent.e.document.write(\"<html><head><title>Errors</title>"
-                            . "</head><body bgcolor=white text=black>\\\n<pre>\\\n"
-                            . "\\\n<b>Parse errors:</b>\\\n");
-
+                    $errorList = '';
                     foreach ($GLOBALS['g_errorList'] as $error) {
-                        print("<p>" . addslashes($error->getMessage()) . "</p>\\\n");
+                        $errorList = $errorList . '<p>' . addslashes($error->getMessage()) . '</p>';
                     }
-
-                    print("</pre></body></html>\\\n\");\nparent.e.document.close();\n</script>\n");
+                    ?>
+                        <script>
+                            parent.e.document.getElementById('error_count').innerHTML = '<?php echo(count($GLOBALS['g_errorList'])); ?>';
+                            parent.e.document.getElementById('error_list').innerHTML = '<?php echo($errorList); ?>';
+                        </script>
+                    <?php
                 }
                 break;
         }

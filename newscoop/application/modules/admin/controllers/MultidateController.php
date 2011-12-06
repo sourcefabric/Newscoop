@@ -112,8 +112,7 @@ class Admin_MultidateController extends Zend_Controller_Action
     		}
     		
     		if ( $multidateId > 0) {
-    			//update
-    			$repo->update( $multidateId, array( $timeSet ));
+    			$repo->update( $multidateId, $timeSet);
     		} else {
     			//add
     			$repo->add($timeSet, $articleId, 'schedule');	
@@ -139,7 +138,7 @@ class Admin_MultidateController extends Zend_Controller_Action
             $timeSet = array("$startDate $startTime" => "$endDate $endTime - $recurring");
             
             if ( $multidateId > 0) {
-            	$repo->update( $multidateId, array( $timeSet ));
+            	$repo->update( $multidateId, $timeSet );
             } else {
             	$repo->add($timeSet, $articleId, 'schedule');	
             }

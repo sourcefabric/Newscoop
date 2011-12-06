@@ -309,6 +309,8 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
               <?php if ($inViewMode) { ?>disabled<?php } ?> />
           </li>
         <?php
+            } elseif ( $dbColumn->getType() == ArticleTypeField::TYPE_COMPLEX_DATE ) {
+                $hasMultiDates = true;	
             }
         }
         ?>
@@ -385,8 +387,13 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
       <?php require('edit_playlist.php'); ?>
       <!-- END Article Playlist table -->
       
+      
       <!-- BEGIN Multi date table -->
-      <?php require('edit_multidate_box.php'); ?>
+      <?php 
+      if ($hasMultiDates) {
+      	require('edit_multidate_box.php');
+      }       
+      ?>
       <!-- END Multi date table -->
 
       <?php CampPlugin::adminHook(__FILE__, array( 'articleObj' => $articleObj, 'f_edit_mode' => $f_edit_mode ) ); ?>

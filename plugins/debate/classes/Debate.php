@@ -661,8 +661,7 @@ class Debate extends DatabaseObject
         $selectClauseObj = new SQLSelectClause();
 
         // sets the where conditions
-        foreach ($p_parameters as $param)
-        {
+        foreach ($p_parameters as $param) {
             $comparisonOperation = self::ProcessListParameters($param);
             if (empty($comparisonOperation)) {
                 continue;
@@ -916,24 +915,22 @@ class Debate extends DatabaseObject
 
     /**
      * Date checking for closed
+     *
+     * @return bool
      */
     public function isClosed()
     {
-        if (strtotime($this->m_data['date_end']) < strtotime(date('Y-m-d'))) {
-            return false;
-        }
-        return true;
+        return (strtotime($this->m_data['date_end']) > time()) ? false : true;
     }
 
     /**
      * Date checking for open
+     *
+     * @return bool
      */
     public function isStarted()
     {
-        if (strtotime($this->m_data['date_begin']) > strtotime(date('Y-m-d'))) {
-            return false;
-        }
-        return true;
+        return (strtotime($this->m_data['date_begin']) > time()) ? false : true;
     }
 
     /**
@@ -945,10 +942,7 @@ class Debate extends DatabaseObject
      */
     public function isVotable()
     {
-        if (strtotime($this->m_data['date_begin']) > time()) {
-            return false;
-        }
-        if (strtotime($this->m_data['date_end']) < time()) {
+        if (!$this->isStarted() || $this->isClosed()) {
             return false;
         }
 

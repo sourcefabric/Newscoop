@@ -281,7 +281,7 @@ function doSpecificTimeRange(start, end) {
 }
 
 function loadSpecificEvent(event) {
-	console.log('loading specific event');
+	//console.log('loading specific event');
 	$('.date-specific-switch').trigger('click');
 	$('#specific-multidate-id').val(event.id);
 	$('#start-date-specific').val(event.startDate);
@@ -355,7 +355,7 @@ $(function(){
 				center: 'title',
 				right: 'month,agendaWeek,agendaDay'
 			},
-		 	editable: true,
+		 	editable: false,
 			events: {
 				url : url,
 				type : 'GET',
@@ -414,7 +414,7 @@ $(function(){
 
 
 <div class="content">
-<div id="multidate-box">
+<div id="multidate-box" class="multidate-box">
 <div class="toolbar">
 	<div class="save-button-bar">
 	    <input type="submit" name="cancel" value="<?php echo putGS('Close'); ?>" class="default-button" onclick="popup_close();" id="context_button_close">
@@ -423,27 +423,20 @@ $(function(){
 </div>
 
 
-<div class="context-content" style="position: relative">
-
-<div class="date-common">
-
-
-</div>
+<div class="multi-box">
 
 <div class="dates" id="specific-dates" style="display:block">
 <form id="specific-dates-form" onsubmit="return false;">
-    <input type="text" class="multidate-input" id="specific-date-name" name="specific-date-name" style="width: 260px; margin-left: 12px; margin-top: 20px;"  />
     <input type="hidden" name="article-number" value="<?php echo Input::Get('f_article_number', 'int', 1)?>" />
     <input type="hidden" name="date-type" value="specific" />
     <input type="hidden" name="multidateId" id="specific-multidate-id" value="" />
-	<div class="date-mode-switcher">
-		<div class="date-switch date-range-switch"><?php echo putGS('Date from / to'); ?></div>
-		<div class="date-switch date-specific-switch switch-active border-left"><?php echo putGS('Specific dates'); ?></div>
-	</div>
+    
+	<div class="date-switch date-range-switch" style="margin-left: 12px;"><?php echo putGS('Date from / to'); ?></div>
+    <div class="date-switch date-specific-switch switch-active border-left"><?php echo putGS('Specific dates'); ?></div>
 	
-    <input type="text" id="start-date-specific" name="start-date-specific" class="multidate-input"style="width: 125px; margin-left: 12px; margin-top: 20px;" readonly='true'/> 
-	<input type="text" id="start-time-specific" name="start-time-specific" class="multidate-input" style="width: 128px; margin-left: 2px; margin-top: 20px;" readonly='true'/> 
-	<input type="text" id="end-time-specific" name="end-time-specific" class="multidate-input" style="width: 128px; margin-left: 144px; margin-top: 20px;" readonly='true'/>
+    <input type="text" id="start-date-specific" name="start-date-specific" class="multidate-input date-input"style="width: 125px; margin-left: 12px; margin-top: 20px;" readonly='true'/> 
+	<input type="text" id="start-time-specific" name="start-time-specific" class="multidate-input time-input" style="width: 128px; margin-left: 2px; margin-top: 20px;" readonly='true'/> 
+	<input type="text" id="end-time-specific" name="end-time-specific" class="multidate-input time-input" style="width: 128px; margin-left: 144px; margin-top: 20px; display: none" readonly='true'/>
 	
 	<div class="specific-radio-holder">
 		<input type="radio" id="specific-radio-start-only" name="specific-radio" value="start-only" checked="checked" /><?php echo putGS('Start time'); ?><br />
@@ -459,20 +452,18 @@ $(function(){
 
 <div class="dates" id="daterange-dates" style="display: none">
 <form id="daterange-dates-form" onsubmit="return false;">
-    <input type="text" class="multidate-input" id="daterange-date-name" name="daterange-date-name" style="width: 260px; margin-left: 12px; margin-top: 20px;" />
     <input type="hidden" name="article-number" value="<?php echo Input::Get('f_article_number', 'int', 1)?>" />
     <input type="hidden" name="date-type" value="daterange" />
     <input type="hidden" name="multidateId" id="daterange-multidate-id" value="" />
-    <div class="date-mode-switcher">
-        <div class="date-switch date-range-switch"><?php echo putGS('Date from / to'); ?></div>
-        <div class="date-switch date-specific-switch switch-active border-left"><?php echo putGS('Specific dates'); ?></div>
-    </div>
     
-    <input type="text" id="start-date-daterange" name="start-date-daterange" class="multidate-input"style="width: 125px; margin-left: 12px; margin-top: 20px;"  readonly='true'/> 
-    <input type="text" id="start-time-daterange" name="start-time-daterange" class="multidate-input" style="width: 128px; margin-left: 2px; margin-top: 20px;" readonly='true'/>
+    <div class="date-switch date-range-switch" style="margin-left: 12px;"><?php echo putGS('Date from / to'); ?></div>
+    <div class="date-switch date-specific-switch switch-active border-left"><?php echo putGS('Specific dates'); ?></div>
+    
+    <input type="text" id="start-date-daterange" name="start-date-daterange" class="multidate-input date-input"style="width: 125px; margin-left: 12px; margin-top: 20px;"  readonly='true'/> 
+    <input type="text" id="start-time-daterange" name="start-time-daterange" class="multidate-input time-input" style="width: 128px; margin-left: 2px; margin-top: 20px;" readonly='true'/>
     <span style="display:block; margin-left: 12px; margin-top: 10px;"><?php echo putGS('To'); ?></span> 
-    <input type="text" id="end-date-daterange" name="end-date-daterange" class="multidate-input"style="width: 125px; margin-left: 12px; margin-top: 10px;"  readonly='true'/> 
-    <input type="text" id="end-time-daterange" name="end-time-daterange" class="multidate-input" style="width: 128px; margin-left: 2px; margin-top: 10px;"  readonly='true'/>
+    <input type="text" id="end-date-daterange" name="end-date-daterange" class="multidate-input date-input"style="width: 125px; margin-left: 12px; margin-top: 10px;"  readonly='true'/> 
+    <input type="text" id="end-time-daterange" name="end-time-daterange" class="multidate-input time-input" style="width: 128px; margin-left: 2px; margin-top: 10px;"  readonly='true'/>
     
     <div class="repeats-checkbox-holder">
         <input type="checkbox" id="daterange-all-day" name="daterange-all-day" value="1" /><label for="daterange-all-day"><?php echo putGS('All day'); ?></label><br />
@@ -509,7 +500,7 @@ $(function(){
 </form>
 </div>
 
-<div id="full-calendar" class="full-calendar"></div>
+<div id="full-calendar" class="full-calendar" style=""></div>
 </div>
 </div>
 </div>
