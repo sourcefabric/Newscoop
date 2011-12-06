@@ -661,8 +661,7 @@ class Debate extends DatabaseObject
         $selectClauseObj = new SQLSelectClause();
 
         // sets the where conditions
-        foreach ($p_parameters as $param)
-        {
+        foreach ($p_parameters as $param) {
             $comparisonOperation = self::ProcessListParameters($param);
             if (empty($comparisonOperation)) {
                 continue;
