@@ -303,8 +303,8 @@ $("#context_box a.iframe").fancybox({
 
 $("#multidate_box a.iframe").fancybox({
     'showCloseButton' : false,
-    'width': 980,
-    'height'     : 700,
+    'width': 1000,
+    'height'     : 710,
     'scrolling' : 'auto',
     'onClosed'      : function() {
        loadContextBoxActileList();

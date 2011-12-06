@@ -112,8 +112,9 @@ class Admin_MultidateController extends Zend_Controller_Action
     		}
     		
     		if ( $multidateId > 0) {
-    			//update
-    			$repo->update( $multidateId, array( $timeSet ));
+    			if( $repo->update( $multidateId, array($timeSet)) instanceof \Exception ) {
+    				// mesaj de eroare
+    			};
     		} else {
     			//add
     			$repo->add($timeSet, $articleId, 'schedule');	

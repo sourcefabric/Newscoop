@@ -40,7 +40,7 @@ class ArticleDatetimeRepository extends EntityRepository
             $timeSet = (array) $timeSet;
             foreach ($timeSet as $start => $end )
             {
-                if (!is_string($start) && !is_array($end)) {
+            	if (!is_string($start) && !is_array($end)) {
                     list($start, $end) = explode(' - ', $end, 2);
                 }
                 $insertValues[] = new ArticleDatetimeHelper // some logic to capture the recurring also included
