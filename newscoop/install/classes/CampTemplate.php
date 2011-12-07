@@ -44,6 +44,7 @@ final class CampTemplate extends Smarty
             CS_PATH_SMARTY.DIR_SEP.'campsite_plugins',
         ));
         $this->template_dir = array(
+            CS_INSTALL_DIR . DIR_SEP . 'templates',
             CS_PATH_SITE . '/themes/',
             CS_PATH_SITE . '/themes/unassigned/system_templates/',
         );
