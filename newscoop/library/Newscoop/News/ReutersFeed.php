@@ -183,6 +183,17 @@ class ReutersFeed extends Feed
     }
 
     /**
+     * Get remote content src
+     *
+     * @param Newscoop\News\RemoteContent $remoteContent
+     * @return string
+     */
+    public function getRemoteContentSrc(RemoteContent $remoteContent)
+    {
+        return sprintf('%s?token=%s', $remoteContent->getHref(), $this->getToken());
+    }
+
+    /**
      * Set client
      *
      * @param Zend_Rest_Client $client

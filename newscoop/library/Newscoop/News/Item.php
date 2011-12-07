@@ -128,6 +128,16 @@ abstract class Item
     }
 
     /**
+     * Get feed
+     *
+     * @return Newscoop\News\Feed
+     */
+    public function getFeed()
+    {
+        return $this->feed;
+    }
+
+    /**
      * Get version
      *
      * @return string
