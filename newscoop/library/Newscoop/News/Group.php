@@ -14,7 +14,7 @@ namespace Newscoop\News;
 class Group
 {
     /**
-     * @Id
+     * @Id(strategy="NONE")
      * @var string
      */
     protected $id;
