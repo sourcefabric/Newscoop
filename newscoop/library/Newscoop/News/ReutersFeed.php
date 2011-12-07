@@ -15,10 +15,6 @@ class ReutersFeed extends Feed
 {
     const TOKEN_TTL = 'PT12H';
 
-    const DATE_FORMAT = 'Y.m.d.H.i';
-
-    const MAX_AGE = '5m';
-
     const STATUS_SUCCESS = 10;
     const STATUS_PARTIAL_SUCCESS = 20;
 
@@ -111,19 +107,13 @@ class ReutersFeed extends Feed
      */
     private function getChannelItems($channel)
     {
-        $params = array(
+        $response = $this->getClient()->restGet('/rmd/rest/xml/items', array(
             'token' => $this->getToken(),
             'channel' => $channel->alias,
             'fieldsRef' => 'id',
-        );
+            'maxAge' => $this->getMaxAge($this->updated),
+        ));
 
-        if ($this->updated !== null) {
-            $params['dateRange'] = $this->updated->format(self::DATE_FORMAT);
-        } else {
-            $params['maxAge'] = self::MAX_AGE;
-        }
-
-        $response = $this->getClient()->restGet('/rmd/rest/xml/items', $params);
         $xml = $this->parseResponse($response);
 
         $items = array();
@@ -247,5 +237,33 @@ class ReutersFeed extends Feed
         }
 
         return $xml;
+    }
+
+    /**
+     * Get max age
+     *
+     * @param DateTime $since
+     * @return string
+     */
+    private function getMaxAge(\DateTime $since = null)
+    {
+        $map = array( // ignoring month/year as the service limits to last 30 days
+            'd' => 60 * 60 * 24,
+            'h' => 60 * 60,
+            'i' => 60,
+            's' => 1,
+        );
+
+        if ($since === null) {
+            $since = date_create('-5min');
+        }
+
+        $seconds = 0;
+        $diff = date_create('now')->diff($since);
+        foreach ($map as $property => $factor) {
+            $seconds += $diff->$property * $factor;
+        }
+
+        return "{$seconds}s";
     }
 }
