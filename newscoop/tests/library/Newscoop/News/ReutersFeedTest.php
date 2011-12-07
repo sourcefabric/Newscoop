@@ -38,7 +38,7 @@ class ReutersFeedTest extends \PHPUnit_Framework_TestCase
         $this->odm->getSchemaManager()->dropDocumentDatabase('Newscoop\News\ReutersFeed');
         $this->odm->clear();
 
-        $this->feed = new ReutersFeed($application->getOptions());
+        $this->feed = new ReutersFeed($application->getOption('reuters'));
     }
 
     public function tearDown()
@@ -50,6 +50,15 @@ class ReutersFeedTest extends \PHPUnit_Framework_TestCase
     public function testConstructor()
     {
         $this->assertInstanceOf('Newscoop\News\ReutersFeed', $this->feed);
+    }
+
+    public function testGetName()
+    {
+        global $application;
+
+        $options = $application->getOptions();
+        $this->assertContains('Reuters', $this->feed->getName());
+        $this->assertContains($options['reuters']['username'], $this->feed->getName());
     }
 
     public function testGetChannels()
@@ -68,16 +77,21 @@ class ReutersFeedTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdate()
     {
+        $itemService = new ItemService($this->odm);
+
         $this->odm->persist($this->feed);
         $this->odm->flush();
 
         $this->assertNotNull($this->feed->getId());
         $this->assertNull($this->feed->getUpdated());
 
-        $this->feed->update($this->odm);
+        $this->feed->update($this->odm, $itemService);
         $this->assertInstanceOf('DateTime', $this->feed->getUpdated());
 
         $items = $this->odm->getRepository('Newscoop\News\NewsItem')->findBy(array('feed.id' => $this->feed->getId()));
         $this->assertGreaterThan(0, count($items));
+
+        // test with relative date
+        $this->feed->update($this->odm, $itemService);
     }
 }

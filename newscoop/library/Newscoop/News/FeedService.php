@@ -23,12 +23,19 @@ class FeedService
     protected $repository;
 
     /**
-     * @var Doctrine\Common\Persistence\ObjectManager @om
+     * @var Newscoop\News\ItemService
      */
-    public function __construct(\Doctrine\Common\Persistence\ObjectManager $om)
+    protected $itemService;
+
+    /**
+     * @var Doctrine\Common\Persistence\ObjectManager @om
+     * @var Newscoop\News\ItemService $itemService
+     */
+    public function __construct(\Doctrine\Common\Persistence\ObjectManager $om, ItemService $itemService)
     {
         $this->om = $om;
-        $this->repository = $this->om->getRepository('Newscoop\News\Feed');
+        $this->repository = $this->om->getRepository('Newscoop\News\ReutersFeed');
+        $this->itemService = $itemService;
     }
 
     /**
@@ -52,7 +59,39 @@ class FeedService
     public function updateAll()
     {
         foreach ($this->repository->findAll() as $feed) {
-            $feed->update($this->om);
+            $feed->update($this->om, $this->itemService);
         }
+    }
+
+    /**
+     * Save feed
+     *
+     * @param array $values
+     * @return Newscoop\News\Feed
+     */
+    public function save(array $values)
+    {
+        if (!array_key_exists('type', $values)) {
+            throw new \InvalidArgumentException("Feed type not specified");
+        }
+
+        $feed = $this->repository->findBy($values);
+        if (count($feed)) {
+            return $feed[0];
+        }
+
+        switch ($values['type']) {
+            case 'reuters':
+                $feed = new ReutersFeed($values['config']);
+                break;
+
+            default:
+                throw new \InvalidArgumentException("Feed type '$values[type]' not implemented");
+        }
+
+        $this->om->persist($feed);
+        $this->om->flush();
+
+        return $feed;
     }
 }

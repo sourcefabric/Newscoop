@@ -12,6 +12,8 @@ namespace Newscoop\News;
 class PackageItemTest extends \PHPUnit_Framework_TestCase
 {
     const PACKAGE_XML = 'packageItem.xml';
+    const UPDATED_XML = 'updatedPackageItem.xml';
+
 
     /** @var Newscoop\News\PackageItem */
     protected $item;
@@ -58,5 +60,14 @@ class PackageItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('stat:usable', $itemRef->getPubStatus());
         $this->assertEquals('US-EUROZONE-VISIONS', $itemRef->getSlugline());
         $this->assertEquals('Insight: Conflicting visions at core of euro zone crisis', $itemRef->getHeadline());
+    }
+
+    public function testUpdate()
+    {
+        $xml = simplexml_load_file(APPLICATION_PATH . '/../tests/fixtures/' . self::UPDATED_XML);
+        $item = new PackageItem($xml->itemSet->packageItem);
+
+        $this->item->update($item);
+        $this->assertEquals('updated', $this->item->getGroupSet()->getRootGroup()->getId());
     }
 }

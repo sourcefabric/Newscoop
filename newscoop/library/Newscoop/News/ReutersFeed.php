@@ -15,10 +15,6 @@ class ReutersFeed extends Feed
 {
     const TOKEN_TTL = 'PT12H';
 
-    const DATE_FORMAT = 'Y.m.d.H.i';
-
-    const MAX_AGE = '5m';
-
     const STATUS_SUCCESS = 10;
     const STATUS_PARTIAL_SUCCESS = 20;
 
@@ -51,9 +47,11 @@ class ReutersFeed extends Feed
     /**
      * Update feed
      *
+     * @param Doctrine\Common\Persistence\ObjectManager $om
+     * @param Newscoop\News\ItemService $itemService
      * @return void
      */
-    public function update(\Doctrine\Common\Persistence\ObjectManager $om)
+    public function update(\Doctrine\Common\Persistence\ObjectManager $om, ItemService $itemService)
     {
         foreach ($this->getChannels() as $channel) {
             if ($this->updated !== null && $this->updated->getTimestamp() > $channel->lastUpdate->getTimestamp()) {
@@ -61,14 +59,10 @@ class ReutersFeed extends Feed
             }
 
             foreach ($this->getChannelItems($channel) as $channelItem) {
-                if (empty($channelItem->guid)) {
-                    var_dump('channel', $channelItem);
-                    exit;
-                }
                 $item = $this->getItem($channelItem->guid); // get the latest revision
                 if ($item !== null) {
                     $item->setFeed($this);
-                    $om->persist($item);
+                    $itemService->persist($item);
                 }
             }
         }
@@ -111,19 +105,13 @@ class ReutersFeed extends Feed
      */
     private function getChannelItems($channel)
     {
-        $params = array(
+        $response = $this->getClient()->restGet('/rmd/rest/xml/items', array(
             'token' => $this->getToken(),
             'channel' => $channel->alias,
             'fieldsRef' => 'id',
-        );
+            'maxAge' => $this->getMaxAge($this->updated),
+        ));
 
-        if ($this->updated !== null) {
-            $params['dateRange'] = $this->updated->format(self::DATE_FORMAT);
-        } else {
-            $params['maxAge'] = self::MAX_AGE;
-        }
-
-        $response = $this->getClient()->restGet('/rmd/rest/xml/items', $params);
         $xml = $this->parseResponse($response);
 
         $items = array();
@@ -179,8 +167,8 @@ class ReutersFeed extends Feed
             $client = $this->getClient();
             $client->setUri('https://commerce.reuters.com/');
             $response = $client->restGet('/rmd/rest/xml/login', array(
-                'username' => $this->configuration['reuters']['username'],
-                'password' => $this->configuration['reuters']['password'],
+                'username' => $this->configuration['username'],
+                'password' => $this->configuration['password'],
             ));
 
             if (!$response->isSuccessful()) {
@@ -203,6 +191,16 @@ class ReutersFeed extends Feed
     public function setClient(\Zend_Rest_Client $client)
     {
         $this->client = $client;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return sprintf("Reuters [%s]", $this->configuration['username']) ;
     }
 
     /**
@@ -237,5 +235,33 @@ class ReutersFeed extends Feed
         }
 
         return $xml;
+    }
+
+    /**
+     * Get max age
+     *
+     * @param DateTime $since
+     * @return string
+     */
+    private function getMaxAge(\DateTime $since = null)
+    {
+        $map = array( // ignoring month/year as the service limits to last 30 days
+            'd' => 60 * 60 * 24,
+            'h' => 60 * 60,
+            'i' => 60,
+            's' => 1,
+        );
+
+        if ($since === null) {
+            $since = date_create('-5min');
+        }
+
+        $seconds = 0;
+        $diff = date_create('now')->diff($since);
+        foreach ($map as $property => $factor) {
+            $seconds += $diff->$property * $factor;
+        }
+
+        return "{$seconds}s";
     }
 }

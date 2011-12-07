@@ -31,6 +31,12 @@ abstract class Feed
     protected $updated;
 
     /**
+     * @Boolean
+     * @var bool
+     */
+    protected $isAutoMode = false;
+
+    /**
      * Get id
      *
      * @return string
@@ -64,10 +70,11 @@ abstract class Feed
     /**
      * Update feed
      *
-     * @param Doctrine\Common\Persistence\ObjectManager
+     * @param Doctrine\Common\Persistence\ObjectManager $om
+     * @param Newscoop\News\ItemService $itemService
      * @return void
      */
-    abstract public function update(\Doctrine\Common\Persistence\ObjectManager $om);
+    abstract public function update(\Doctrine\Common\Persistence\ObjectManager $om, ItemService $itemService);
 
     /**
      * Get updated
@@ -78,4 +85,31 @@ abstract class Feed
     {
         return $this->updated;
     }
+
+    /**
+     * Test if is auto mode active
+     *
+     * @return bool
+     */
+    public function isAutoMode()
+    {
+        return (bool) $this->isAutoMode;
+    }
+
+    /**
+     * Switch mode
+     *
+     * @return void
+     */
+    public function switchMode()
+    {
+        $this->isAutoMode = ! $this->isAutoMode();
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    abstract public function getName();
 }

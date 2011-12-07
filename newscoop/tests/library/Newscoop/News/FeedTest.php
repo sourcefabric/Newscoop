@@ -36,6 +36,18 @@ class FeedTest extends \PHPUnit_Framework_TestCase
         $this->feed->setConfiguration(array('key' => 'value'));
         $this->assertEquals(array('key' => 'value'), $this->feed->getConfiguration());
     }
+
+    public function testMode()
+    {
+        $this->assertFalse($this->feed->isAutoMode());
+        $this->feed->switchMode();
+        $this->assertTrue($this->feed->isAutoMode());
+    }
+
+    public function testName()
+    {
+        $this->assertNotEmpty($this->feed->getName());
+    }
 }
 
 /**
@@ -44,7 +56,12 @@ class FeedTest extends \PHPUnit_Framework_TestCase
  */
 class TestFeed extends Feed
 {
-    public function update(\Doctrine\Common\Persistence\ObjectManager $om)
+    public function update(\Doctrine\Common\Persistence\ObjectManager $om, ItemService $itemService)
     {
+    }
+
+    public function getName()
+    {
+        return 'test feed';
     }
 }

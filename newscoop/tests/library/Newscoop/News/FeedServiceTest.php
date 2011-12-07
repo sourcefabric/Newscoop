@@ -17,6 +17,9 @@ class FeedServiceTest extends \PHPUnit_Framework_TestCase
     /** @var Doctrine\Common\Persistance\Objectmanager */
     protected $odm;
 
+    /** @var Newscoop\News\ItemService */
+    protected $itemService;
+
     public function setUp()
     {
         $this->odm = $this->getMockBuilder('Doctrine\ODM\MongoDB\DocumentManager')
@@ -29,10 +32,14 @@ class FeedServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->odm->expects($this->once())
             ->method('getRepository')
-            ->with($this->equalTo('Newscoop\News\Feed'))
+            ->with($this->equalTo('Newscoop\News\ReutersFeed'))
             ->will($this->returnValue($this->repository));
 
-        $this->service = new FeedService($this->odm);
+        $this->itemService = $this->getMockBuilder('Newscoop\News\ItemService')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->service = new FeedService($this->odm, $this->itemService);
     }
 
     public function testInstance()
@@ -58,12 +65,41 @@ class FeedServiceTest extends \PHPUnit_Framework_TestCase
 
         $feed->expects($this->once())
             ->method('update')
-            ->with($this->odm);
+            ->with($this->equalTo($this->odm), $this->equalTo($this->itemService));
 
         $this->repository->expects($this->once())
             ->method('findAll')
             ->will($this->returnValue(array($feed)));
 
         $this->service->updateAll();
+    }
+
+    public function testSave()
+    {
+        $config = array(
+            'username' => 'tic',
+            'password' => 'toc',
+        );
+
+        $this->repository->expects($this->once())
+            ->method('findBy')
+            ->with($this->equalTo(array(
+                'type' => 'reuters',
+                'config' => $config,
+            )));
+
+        $this->odm->expects($this->once())
+            ->method('persist')
+            ->with($this->isInstanceOf('Newscoop\News\ReutersFeed'));
+
+        $this->odm->expects($this->once())
+            ->method('flush');
+
+        $feed = $this->service->save(array(
+            'type' => 'reuters',
+            'config' => $config,
+        ));
+
+        $this->assertInstanceOf('Newscoop\News\ReutersFeed', $feed);
     }
 }
