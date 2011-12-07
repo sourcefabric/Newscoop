@@ -13,7 +13,7 @@ $info = array(
         'path' => 'recaptcha/admin/recaptcha_prefs.php',
     ),
     'userDefaultConfig' => array(
-        'plugin_recaptcha' => 'N',
+        'plugin_recaptcha_admin' => 'N',
     ),
     'permissions' => array(
     /**
