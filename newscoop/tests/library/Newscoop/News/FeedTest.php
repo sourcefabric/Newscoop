@@ -56,7 +56,7 @@ class FeedTest extends \PHPUnit_Framework_TestCase
  */
 class TestFeed extends Feed
 {
-    public function update(\Doctrine\Common\Persistence\ObjectManager $om)
+    public function update(\Doctrine\Common\Persistence\ObjectManager $om, ItemService $itemService)
     {
     }
 

@@ -70,10 +70,11 @@ abstract class Feed
     /**
      * Update feed
      *
-     * @param Doctrine\Common\Persistence\ObjectManager
+     * @param Doctrine\Common\Persistence\ObjectManager $om
+     * @param Newscoop\News\ItemService $itemService
      * @return void
      */
-    abstract public function update(\Doctrine\Common\Persistence\ObjectManager $om);
+    abstract public function update(\Doctrine\Common\Persistence\ObjectManager $om, ItemService $itemService);
 
     /**
      * Get updated

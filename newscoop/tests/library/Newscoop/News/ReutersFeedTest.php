@@ -77,19 +77,21 @@ class ReutersFeedTest extends \PHPUnit_Framework_TestCase
 
     public function testUpdate()
     {
+        $itemService = new ItemService($this->odm);
+
         $this->odm->persist($this->feed);
         $this->odm->flush();
 
         $this->assertNotNull($this->feed->getId());
         $this->assertNull($this->feed->getUpdated());
 
-        $this->feed->update($this->odm);
+        $this->feed->update($this->odm, $itemService);
         $this->assertInstanceOf('DateTime', $this->feed->getUpdated());
 
         $items = $this->odm->getRepository('Newscoop\News\NewsItem')->findBy(array('feed.id' => $this->feed->getId()));
         $this->assertGreaterThan(0, count($items));
 
         // test with relative date
-        $this->feed->update($this->odm);
+        $this->feed->update($this->odm, $itemService);
     }
 }

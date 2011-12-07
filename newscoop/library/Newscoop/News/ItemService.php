@@ -8,9 +8,9 @@
 namespace Newscoop\News;
 
 /**
- * NewsItem Service
+ * Item Service
  */
-class NewsItemService
+class ItemService
 {
     /**
      * @var Doctrine\Common\Persistence\ObjectManager
@@ -42,5 +42,22 @@ class NewsItemService
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
         return $this->repository->findBy($criteria, $orderBy, $limit, $offset);
+    }
+
+    /**
+     * Persist item
+     *
+     * @param Newscoop\News\Item $item
+     * @return void
+     */
+    public function persist(Item $item)
+    {
+        $persisted = $this->repository->find($item->getId());
+        if ($persisted) {
+            $persisted->update($item);
+        } else {
+            $this->om->persist($item);
+            $persisted = $item;
+        }
     }
 }

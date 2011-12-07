@@ -17,6 +17,9 @@ class FeedServiceTest extends \PHPUnit_Framework_TestCase
     /** @var Doctrine\Common\Persistance\Objectmanager */
     protected $odm;
 
+    /** @var Newscoop\News\ItemService */
+    protected $itemService;
+
     public function setUp()
     {
         $this->odm = $this->getMockBuilder('Doctrine\ODM\MongoDB\DocumentManager')
@@ -32,7 +35,11 @@ class FeedServiceTest extends \PHPUnit_Framework_TestCase
             ->with($this->equalTo('Newscoop\News\ReutersFeed'))
             ->will($this->returnValue($this->repository));
 
-        $this->service = new FeedService($this->odm);
+        $this->itemService = $this->getMockBuilder('Newscoop\News\ItemService')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->service = new FeedService($this->odm, $this->itemService);
     }
 
     public function testInstance()
@@ -58,7 +65,7 @@ class FeedServiceTest extends \PHPUnit_Framework_TestCase
 
         $feed->expects($this->once())
             ->method('update')
-            ->with($this->odm);
+            ->with($this->equalTo($this->odm), $this->equalTo($this->itemService));
 
         $this->repository->expects($this->once())
             ->method('findAll')

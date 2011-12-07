@@ -47,9 +47,11 @@ class ReutersFeed extends Feed
     /**
      * Update feed
      *
+     * @param Doctrine\Common\Persistence\ObjectManager $om
+     * @param Newscoop\News\ItemService $itemService
      * @return void
      */
-    public function update(\Doctrine\Common\Persistence\ObjectManager $om)
+    public function update(\Doctrine\Common\Persistence\ObjectManager $om, ItemService $itemService)
     {
         foreach ($this->getChannels() as $channel) {
             if ($this->updated !== null && $this->updated->getTimestamp() > $channel->lastUpdate->getTimestamp()) {
@@ -57,14 +59,10 @@ class ReutersFeed extends Feed
             }
 
             foreach ($this->getChannelItems($channel) as $channelItem) {
-                if (empty($channelItem->guid)) {
-                    var_dump('channel', $channelItem);
-                    exit;
-                }
                 $item = $this->getItem($channelItem->guid); // get the latest revision
                 if ($item !== null) {
                     $item->setFeed($this);
-                    $om->persist($item);
+                    $itemService->persist($item);
                 }
             }
         }

@@ -23,12 +23,19 @@ class FeedService
     protected $repository;
 
     /**
-     * @var Doctrine\Common\Persistence\ObjectManager @om
+     * @var Newscoop\News\ItemService
      */
-    public function __construct(\Doctrine\Common\Persistence\ObjectManager $om)
+    protected $itemService;
+
+    /**
+     * @var Doctrine\Common\Persistence\ObjectManager @om
+     * @var Newscoop\News\ItemService $itemService
+     */
+    public function __construct(\Doctrine\Common\Persistence\ObjectManager $om, ItemService $itemService)
     {
         $this->om = $om;
         $this->repository = $this->om->getRepository('Newscoop\News\ReutersFeed');
+        $this->itemService = $itemService;
     }
 
     /**
@@ -52,7 +59,7 @@ class FeedService
     public function updateAll()
     {
         foreach ($this->repository->findAll() as $feed) {
-            $feed->update($this->om);
+            $feed->update($this->om, $this->itemService);
         }
     }
 

@@ -80,6 +80,12 @@ abstract class Item
     protected $created;
 
     /**
+     * @Date
+     * @var DateTime
+     */
+    protected $updated;
+
+    /**
      * @param SimpleXMLElement $xml
      */
     public function __construct(\SimpleXMLElement $xml)
@@ -213,5 +219,30 @@ abstract class Item
     public function getCreated()
     {
         return $this->created;
+    }
+
+    /**
+     * Update item
+     *
+     * @param Newscoop\News\Item $item
+     * @return void
+     */
+    public function update(Item $item)
+    {
+        $this->version = $item->version;
+        $this->rightsInfo = $item->rightsInfo;
+        $this->itemMeta = $item->itemMeta;
+        $this->contentMeta = $item->contentMeta;
+        $this->updated = new \DateTime();
+    }
+
+    /**
+     * Get updated
+     *
+     * @return DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
     }
 }
