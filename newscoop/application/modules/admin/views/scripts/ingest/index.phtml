@@ -13,22 +13,26 @@
     <li><a href="<?php echo $this->url(array(
             'action' => 'index',
             'feed' => $feed->getId(),
-        )); ?>" title="Switch feed"><?php echo $feed->getTitle(); ?></a>
+        )); ?>" title="Switch feed"><?php echo $feed->getName(); ?></a>
         (<?php putGS('updated'); ?> <?php echo $feed->getUpdated() ? $feed->getUpdated()->format('H:i') : getGS('Never'); ?>)
     </li>
     <li>
         <a href="<?php echo $this->url(array(
             'action' => 'switch-mode',
             'feed' => $feed->getId(),
-        )); ?>" title="Switch mode"><?php echo $feed->getMode() === "auto" ? getGS('Automatic') : getGS('Manual'); ?></a>
+        )); ?>" title="Switch mode"><?php echo $feed->isAutoMode() ? getGS('Automatic') : getGS('Manual'); ?></a>
     </li>
     <?php } ?>
+
+    <li class="add"><a href="<?php echo $this->url(array(
+        'action' => 'add-feed',
+    )); ?>">Add feed</a></li>
 </ul>
 
 </div></div><div class="main"><div class="w">
 
 <ul class="entries">
-    <?php foreach ($this->entries as $entry) { ?>
+    <?php foreach ($this->items as $item) { ?>
     <li>
         <span class="date"><?php echo $entry->getUpdated()->format('j.n. H:i'); ?></span>
         <?php if (!$entry->isPublished()) { ?>

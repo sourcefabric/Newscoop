@@ -38,7 +38,7 @@ class ReutersFeedTest extends \PHPUnit_Framework_TestCase
         $this->odm->getSchemaManager()->dropDocumentDatabase('Newscoop\News\ReutersFeed');
         $this->odm->clear();
 
-        $this->feed = new ReutersFeed($application->getOptions());
+        $this->feed = new ReutersFeed($application->getOption('reuters'));
     }
 
     public function tearDown()
@@ -50,6 +50,15 @@ class ReutersFeedTest extends \PHPUnit_Framework_TestCase
     public function testConstructor()
     {
         $this->assertInstanceOf('Newscoop\News\ReutersFeed', $this->feed);
+    }
+
+    public function testGetName()
+    {
+        global $application;
+
+        $options = $application->getOptions();
+        $this->assertContains('Reuters', $this->feed->getName());
+        $this->assertContains($options['reuters']['username'], $this->feed->getName());
     }
 
     public function testGetChannels()

@@ -13,35 +13,19 @@ use Newscoop\Entity\Ingest\Feed,
  */
 class Admin_IngestController extends Zend_Controller_Action
 {
-    /** @var Newscoop\Services\IngestService */
-    private $service;
-
     public function init()
     {
-        $this->service = $this->_helper->service('ingest');
     }
 
     public function indexAction()
     {
-        $feed_id = $this->_getParam('feed', null);
         $criteria = array(
             'published' => null,
             'status' => 'Usable',
         );
 
-        if (isset($feed_id)) {
-            $criteria['feed'] = $feed_id;
-        }
-
-        $this->view->feeds = $this->service->getFeeds();
-        $this->view->entries = $this->service->findBy($criteria, array('updated' => 'desc'), 25, 0);
-
-        $publisher = $this->_helper->service('ingest.publisher');
-        $this->view->sections = array();
-        foreach ($this->view->entries as $entry) {
-            $section = new Section($publisher->getPublication(), $publisher->getIssue(), $publisher->getLanguage($entry->getLanguage()), $publisher->getSection($entry));
-            $this->view->sections[$entry->getId()] = $section;
-        }
+        $this->view->feeds = $this->_helper->service('ingest.feed')->findBy(array());
+        $this->view->items = array();
     }
 
     public function widgetAction()
@@ -109,5 +93,19 @@ class Admin_IngestController extends Zend_Controller_Action
             var_dump($e);
             exit;
         }
+    }
+
+    public function addFeedAction()
+    {
+        $form = new Admin_Form_Ingest();
+
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $feed = $this->_helper->service('ingest.feed')->save($form->getValues());
+            $this->_helper->flashMessenger(getGS("Feed added"));
+            $this->_helper->redirector('index');
+        }
+
+        $this->view->form = $form;
     }
 }

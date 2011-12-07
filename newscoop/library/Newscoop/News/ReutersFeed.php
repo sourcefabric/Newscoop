@@ -179,8 +179,8 @@ class ReutersFeed extends Feed
             $client = $this->getClient();
             $client->setUri('https://commerce.reuters.com/');
             $response = $client->restGet('/rmd/rest/xml/login', array(
-                'username' => $this->configuration['reuters']['username'],
-                'password' => $this->configuration['reuters']['password'],
+                'username' => $this->configuration['username'],
+                'password' => $this->configuration['password'],
             ));
 
             if (!$response->isSuccessful()) {
@@ -203,6 +203,16 @@ class ReutersFeed extends Feed
     public function setClient(\Zend_Rest_Client $client)
     {
         $this->client = $client;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return sprintf("Reuters [%s]", $this->configuration['username']) ;
     }
 
     /**

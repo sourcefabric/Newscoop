@@ -28,7 +28,7 @@ class FeedService
     public function __construct(\Doctrine\Common\Persistence\ObjectManager $om)
     {
         $this->om = $om;
-        $this->repository = $this->om->getRepository('Newscoop\News\Feed');
+        $this->repository = $this->om->getRepository('Newscoop\News\ReutersFeed');
     }
 
     /**
@@ -54,5 +54,37 @@ class FeedService
         foreach ($this->repository->findAll() as $feed) {
             $feed->update($this->om);
         }
+    }
+
+    /**
+     * Save feed
+     *
+     * @param array $values
+     * @return Newscoop\News\Feed
+     */
+    public function save(array $values)
+    {
+        if (!array_key_exists('type', $values)) {
+            throw new \InvalidArgumentException("Feed type not specified");
+        }
+
+        $feed = $this->repository->findBy($values);
+        if (count($feed)) {
+            return $feed[0];
+        }
+
+        switch ($values['type']) {
+            case 'reuters':
+                $feed = new ReutersFeed($values['config']);
+                break;
+
+            default:
+                throw new \InvalidArgumentException("Feed type '$values[type]' not implemented");
+        }
+
+        $this->om->persist($feed);
+        $this->om->flush();
+
+        return $feed;
     }
 }

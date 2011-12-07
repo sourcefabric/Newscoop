@@ -24,7 +24,7 @@ class Group
      *   discriminatorMap={
      *     "group"="GroupRef",
      *     "item"="ItemRef"
-     *   }
+     *   })
      * @var Doctrine\Common\Collections\Collection
      */
     protected $refs;

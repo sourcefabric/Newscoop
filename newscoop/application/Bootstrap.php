@@ -140,13 +140,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('view'))
             ->addArgument(new sfServiceReference('user.token'));
 
-        $container->register('ingest.publisher', 'Newscoop\Services\Ingest\PublisherService')
-            ->addArgument('%ingest_publisher%');
+        $container->register('ingest.feed', 'Newscoop\News\FeedService')
+            ->addArgument(new sfServiceReference('odm'));
 
-        $container->register('ingest', 'Newscoop\Services\IngestService')
-            ->addArgument('%ingest%')
-            ->addArgument(new sfServiceReference('em'))
-            ->addArgument(new sfServiceReference('ingest.publisher'));
+        $container->register('ingest.item', 'Newscoop\News\NewsItemService')
+            ->addArgument(new sfServiceReference('odm'));
 
         $container->register('blog', 'Newscoop\Services\BlogService')
             ->addArgument('%blog%');
@@ -297,6 +295,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $reader = new AnnotationReader();
         $reader->setDefaultAnnotationNamespace('Doctrine\ODM\MongoDB\Mapping\Annotations\\');
         $config->setMetadataDriverImpl(new AnnotationDriver($reader, APPLICATION_PATH . '/../library/Newscoop'));
+
+        $config->setDefaultDB('newscoop');
 
         $odm = DocumentManager::create(new Connection(), $config);
 

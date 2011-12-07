@@ -29,7 +29,7 @@ class FeedServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->odm->expects($this->once())
             ->method('getRepository')
-            ->with($this->equalTo('Newscoop\News\Feed'))
+            ->with($this->equalTo('Newscoop\News\ReutersFeed'))
             ->will($this->returnValue($this->repository));
 
         $this->service = new FeedService($this->odm);
@@ -65,5 +65,34 @@ class FeedServiceTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue(array($feed)));
 
         $this->service->updateAll();
+    }
+
+    public function testSave()
+    {
+        $config = array(
+            'username' => 'tic',
+            'password' => 'toc',
+        );
+
+        $this->repository->expects($this->once())
+            ->method('findBy')
+            ->with($this->equalTo(array(
+                'type' => 'reuters',
+                'config' => $config,
+            )));
+
+        $this->odm->expects($this->once())
+            ->method('persist')
+            ->with($this->isInstanceOf('Newscoop\News\ReutersFeed'));
+
+        $this->odm->expects($this->once())
+            ->method('flush');
+
+        $feed = $this->service->save(array(
+            'type' => 'reuters',
+            'config' => $config,
+        ));
+
+        $this->assertInstanceOf('Newscoop\News\ReutersFeed', $feed);
     }
 }
