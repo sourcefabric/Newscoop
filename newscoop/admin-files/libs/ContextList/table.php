@@ -200,6 +200,7 @@ $(document).ready(function()
         'iDisplayLength' : 5,
         'sAjaxSource': '<?php echo $this->path; ?>/do_data.php',
         'sPaginationType': 'full_numbers',
+        'aaSorting' : [[0, 'desc']],
         'fnServerData': function (sSource, aoData, fnCallback)
         {
             var addedFilters = new Array();
