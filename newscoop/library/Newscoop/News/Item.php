@@ -74,6 +74,12 @@ abstract class Item
     protected $contentMeta;
 
     /**
+     * @Date
+     * @var DateTime
+     */
+    protected $created;
+
+    /**
      * @param SimpleXMLElement $xml
      */
     public function __construct(\SimpleXMLElement $xml)
@@ -87,6 +93,7 @@ abstract class Item
         $this->standard = (string) $xml['standard'];
         $this->standardVersion = (string) $xml['standardversion'];
         $this->conformance = isset($xml['conformance']) ? (string) $xml['conformance'] : 'core';
+        $this->created = new \DateTime();
 
         $this->setRightsInfo($xml);
         $this->itemMeta = new ItemMeta($xml->itemMeta);
@@ -196,5 +203,15 @@ abstract class Item
     public function getContentMeta()
     {
         return $this->contentMeta;
+    }
+
+    /**
+     * Get created
+     *
+     * @return DateTime
+     */
+    public function getCreated()
+    {
+        return $this->created;
     }
 }

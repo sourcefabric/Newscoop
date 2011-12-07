@@ -52,6 +52,11 @@ class NewsItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('power', $this->item->getConformance());
     }
 
+    public function testGetCreated()
+    {
+        $this->assertInstanceOf('DateTime', $this->item->getCreated());
+    }
+
     public function testGetRightsInfo()
     {
         $rightsInfo = $this->item->getRightsInfo();
