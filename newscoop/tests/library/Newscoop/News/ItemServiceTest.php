@@ -37,17 +37,53 @@ class ItemServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testFindBy()
     {
+        $qb = $this->getMockBuilder('Doctrine\ODM\MongoDB\Query\Builder')
+            ->disableOriginalConstructor()
+            ->getMock();
+
         $this->odm->expects($this->once())
-            ->method('getRepository')
+            ->method('createQueryBuilder')
             ->with($this->equalTo('Newscoop\News\NewsItem'))
-            ->will($this->returnValue($this->repository));
+            ->will($this->returnValue($qb));
 
-        $this->repository->expects($this->once())
-            ->method('findBy')
-            ->with($this->equalTo(array('foo' => 'bar')), $this->equalTo(array('id' => 'desc')), $this->equalTo(1), $this->equalTo(2))
-            ->will($this->returnValue('res'));
+        $qb->expects($this->once())
+            ->method('field')
+            ->with($this->equalTo('type'))
+            ->will($this->returnValue($qb));
 
-        $this->assertEquals('res', $this->service->findBy(array('foo' => 'bar'), array('id' => 'desc'), 1, 2));
+        $qb->expects($this->once())
+            ->method('in')
+            ->with($this->equalTo(array('news', 'package')))
+            ->will($this->returnValue($qb));
+
+        $qb->expects($this->once())
+            ->method('sort')
+            ->with($this->equalTo(array('id' => 'desc')))
+            ->will($this->returnValue($qb));
+
+        $qb->expects($this->once())
+            ->method('limit')
+            ->with($this->equalTo(25))
+            ->will($this->returnValue($qb));
+
+        $qb->expects($this->once())
+            ->method('skip')
+            ->with($this->equalTo(50))
+            ->will($this->returnValue($qb));
+
+        $query = $this->getMockBuilder('Doctrine\ODM\MongoDB\Query\Query')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $qb->expects($this->once())
+            ->method('getQuery')
+            ->will($this->returnValue($query));
+
+        $query->expects($this->once())
+            ->method('execute')
+            ->will($this->returnValue('result'));
+
+        $this->assertEquals('result', $this->service->findBy(array(), array('id' => 'desc'), 25, 50));
     }
 
     public function testSave()

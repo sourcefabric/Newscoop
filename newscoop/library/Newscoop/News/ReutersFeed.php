@@ -264,7 +264,7 @@ class ReutersFeed extends Feed
         );
 
         if ($since === null) {
-            $since = date_create('-5min');
+            $since = date_create('-10min');
         }
 
         $seconds = 0;

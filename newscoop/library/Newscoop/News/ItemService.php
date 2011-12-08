@@ -35,13 +35,31 @@ class ItemService
      *
      * @param array $criteria
      * @param mixed $orderBy
-     * @param mixed $limit
-     * @param mixed $offset
+     * @param int $limit
+     * @param int $offset
      */
-    public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+    public function findBy(array $criteria, array $orderBy = null, $limit = 25, $offset = 0)
     {
-        return $this->om->getRepository('Newscoop\News\NewsItem')
-            ->findBy($criteria, $orderBy, $limit, $offset);
+        $qb = $this->om->createQueryBuilder('Newscoop\News\NewsItem');
+
+        $criteria['type'] = array('news', 'package');
+        foreach ($criteria as $field => $value) {
+            if (is_array($value)) {
+                $qb->field($field)->in($value);
+            } else {
+                $qb->field($field)->equals($value);
+            }
+        }
+
+        if (is_array($orderBy)) {
+            $qb->sort($orderBy);
+        }
+
+        return $qb
+            ->limit($limit)
+            ->skip($offset)
+            ->getQuery()
+            ->execute();
     }
 
     /**
