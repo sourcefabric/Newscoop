@@ -84,6 +84,7 @@
         array('resource' => 'localizer', 'privilege' => 'manage'),
         array('resource' => 'plugin', 'privilege' => 'manage'),
         array('resource' => 'plugin-blog', 'privilege' => 'admin'),
+        array('resource' => 'plugin-recaptcha', 'privilege' => 'admin'),
         array('resource' => 'plugin-blog', 'privilege' => 'moderator'),
         array('resource' => 'plugin-interview', 'privilege' => 'notify'),
         array('resource' => 'plugin-interview', 'privilege' => 'admin'),

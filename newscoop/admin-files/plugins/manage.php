@@ -21,7 +21,7 @@ if (Input::Get('save')) {
 
     // delete from DB those which were uninstalled
     foreach (CampPlugin::getAll() as $CampPlugin) {
-        if (!$p_plugins[$CampPlugin->getName()]) {
+        if (!array_key_exists($CampPlugin->getName(), $p_plugins)) {
             $CampPlugin->delete();
         }
     }
