@@ -39,7 +39,7 @@ class NewsItemTest extends \PHPUnit_Framework_TestCase
 
     public function testGetVersion()
     {
-        $this->assertEquals('1827540795', $this->item->getVersion());
+        $this->assertEquals(1827540795, $this->item->getVersion());
     }
 
     public function testGetStandard()
@@ -87,7 +87,7 @@ class NewsItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('4', $contentMeta->getUrgency());
         $this->assertEquals('US-EUROZONE', $contentMeta->getSlugline());
         $this->assertEquals('S&P piles pressure on Franco-German EU budget plan', $contentMeta->getHeadline());
-        $this->assertEquals(date_create('2011-12-06 09:14:50 GMT+00:00')->getTimestamp(), $contentMeta->getDateline()->getTimestamp());
+        $this->assertEquals('2011-12-06 09:14:50 GMT+00:00', $contentMeta->getDateline());
         $this->assertEquals('Foo Bar and John Doe', $contentMeta->getBy());
         $this->assertEquals('Example creditline', $contentMeta->getCreditline());
         $this->assertEquals('US-EUROZONE:S&P piles pressure on Franco-German EU budget plan', $contentMeta->getDescription());
@@ -119,26 +119,5 @@ class NewsItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2313, $remoteContent[0]->getWidth());
         $this->assertEquals(3500, $remoteContent[0]->getHeight());
         $this->assertEquals(17478, $contentSet->getRemoteContent('rend:thumbnail')->getSize());
-    }
-
-    public function testUpdate()
-    {
-        $xml = simplexml_load_file(APPLICATION_PATH . '/../tests/fixtures/' . self::UPDATED_XML);
-        $next = new NewsItem($xml->itemSet->newsItem);
-
-        $this->assertNull($this->item->getUpdated());
-        $this->item->update($next);
-        $this->assertInstanceOf('DateTime', $this->item->getUpdated());
-
-        $this->assertEquals('18275407956', $this->item->getVersion());
-
-        $rightsInfo = $this->item->getRightsInfo();
-        $this->assertEquals('(c) Copyright Foo Bar 2012.', $rightsInfo[0]->getCopyrightNotice());
-
-        $this->assertEquals(date_create('2011-12-07T09:15:50.000Z')->getTimestamp(), $this->item->getItemMeta()->getVersionCreated()->getTimestamp());
-
-        $this->assertEquals('3', $this->item->getContentMeta()->getUrgency());
-
-        $this->assertContains('Updated paragraph', $this->item->getContentSet()->getInlineContent());
     }
 }

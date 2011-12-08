@@ -14,10 +14,22 @@ namespace Newscoop\News;
 class Group
 {
     /**
-     * @Id
+     * @Id(strategy="NONE")
      * @var string
      */
     protected $id;
+
+    /**
+     * @String
+     * @var string
+     */
+    protected $role;
+
+    /**
+     * @String
+     * @var string
+     */
+    protected $mode;
 
     /**
      * @EmbedMany(
@@ -35,7 +47,9 @@ class Group
     public function __construct(\SimpleXMLElement $xml)
     {
         $this->id = (string) $xml['id'];
+        $this->role = (string) $xml['role'];
         $this->refs = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->mode = (string) $xml['mode'];
         foreach ($xml->children() as $refXml) {
             if ($refXml->getName() === 'groupRef') {
                 $this->refs->add(new GroupRef($refXml));
@@ -55,6 +69,26 @@ class Group
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Get role
+     *
+     * @return string
+     */
+    public function getRole()
+    {
+        return $this->role;
+    }
+
+    /**
+     * Get mode
+     *
+     * @return string
+     */
+    public function getMode()
+    {
+        return $this->mode;
     }
 
     /**

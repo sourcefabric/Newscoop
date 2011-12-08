@@ -12,9 +12,9 @@ use Symfony\Component\Console\Input\InputArgument,
     Symfony\Component\Console;
 
 /**
- * Foo update command
+ * Ingest update command
  */
-class UpdateFooCommand extends Console\Command\Command
+class UpdateIngestCommand extends Console\Command\Command
 {
     /**
      * @see Console\Command\Command
@@ -22,10 +22,10 @@ class UpdateFooCommand extends Console\Command\Command
     protected function configure()
     {
         $this
-        ->setName('foo:update')
-        ->setDescription('Update Foo.')
+        ->setName('ingest:update')
+        ->setDescription('Update Ingest.')
         ->setHelp(<<<EOT
-Foo help.
+Updates all configured feeds.
 EOT
         );
     }
@@ -35,8 +35,8 @@ EOT
      */
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-        $foo = $this->getHelper('container')->getService('foo');
-        $foo->update();
-        $output->writeln('Foo updated.');
+        $this->getHelper('container')->getService('ingest.feed')
+            ->updateAll();
+        $output->writeln('Ingest updated.');
     }
 }

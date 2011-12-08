@@ -40,16 +40,4 @@ class PackageItem extends Item
     {
         return $this->groupSet;
     }
-
-    /**
-     * Update package
-     *
-     * @param Newscoop\News\PackageItem $item
-     * @return void
-     */
-    public function update(PackageItem $item)
-    {
-        $this->groupSet = $item->groupSet;
-        parent::update($item);
-    }
 }

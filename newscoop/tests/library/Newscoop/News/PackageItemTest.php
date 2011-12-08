@@ -42,6 +42,8 @@ class PackageItemTest extends \PHPUnit_Framework_TestCase
 
         $rootGroup = $groupSet->getRootGroup();
         $this->assertInstanceOf('Newscoop\News\Group', $rootGroup);
+        $this->assertEquals('grpRole:SNEP', $rootGroup->getRole());
+        $this->assertEquals('seq', $rootGroup->getMode());
         $rootGroupRefs = $rootGroup->getRefs();
         $this->assertEquals(1, count($rootGroupRefs));
         $this->assertEquals('main', $rootGroupRefs[0]->getIdRef());
@@ -49,6 +51,7 @@ class PackageItemTest extends \PHPUnit_Framework_TestCase
         $refGroup = $groupSet->getGroup($rootGroupRefs[0]);
         $refGroupRefs = $refGroup->getRefs();
         $this->assertEquals(10, count($refGroupRefs));
+
         $itemRef = $refGroupRefs[0];
         $this->assertInstanceOf('Newscoop\News\ItemRef', $itemRef);
         $this->assertEquals('tag:example.com,0000:newsml_TRE7B50LE', $itemRef->getResidRef());
@@ -60,14 +63,5 @@ class PackageItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('stat:usable', $itemRef->getPubStatus());
         $this->assertEquals('US-EUROZONE-VISIONS', $itemRef->getSlugline());
         $this->assertEquals('Insight: Conflicting visions at core of euro zone crisis', $itemRef->getHeadline());
-    }
-
-    public function testUpdate()
-    {
-        $xml = simplexml_load_file(APPLICATION_PATH . '/../tests/fixtures/' . self::UPDATED_XML);
-        $item = new PackageItem($xml->itemSet->packageItem);
-
-        $this->item->update($item);
-        $this->assertEquals('updated', $this->item->getGroupSet()->getRootGroup()->getId());
     }
 }

@@ -94,4 +94,17 @@ class ReutersFeedTest extends \PHPUnit_Framework_TestCase
         // test with relative date
         $this->feed->update($this->odm, $itemService);
     }
+
+    public function testGetRemoteContentSrc()
+    {
+        $remoteContent = $this->getMockBuilder('Newscoop\News\RemoteContent')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $remoteContent->expects($this->once())
+            ->method('getHref')
+            ->will($this->returnValue('href'));
+
+        $this->assertContains("href?token=", $this->feed->getRemoteContentSrc($remoteContent));
+    }
 }

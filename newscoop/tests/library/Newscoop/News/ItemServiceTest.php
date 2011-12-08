@@ -27,11 +27,6 @@ class ItemServiceTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->odm->expects($this->once())
-            ->method('getRepository')
-            ->with($this->equalTo('Newscoop\News\NewsItem'))
-            ->will($this->returnValue($this->repository));
-
         $this->service = new ItemService($this->odm);
     }
 
@@ -42,6 +37,11 @@ class ItemServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testFindBy()
     {
+        $this->odm->expects($this->once())
+            ->method('getRepository')
+            ->with($this->equalTo('Newscoop\News\NewsItem'))
+            ->will($this->returnValue($this->repository));
+
         $this->repository->expects($this->once())
             ->method('findBy')
             ->with($this->equalTo(array('foo' => 'bar')), $this->equalTo(array('id' => 'desc')), $this->equalTo(1), $this->equalTo(2))
@@ -50,7 +50,7 @@ class ItemServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('res', $this->service->findBy(array('foo' => 'bar'), array('id' => 'desc'), 1, 2));
     }
 
-    public function testPersist()
+    public function testSave()
     {
         $item = $this->getMockBuilder('Newscoop\News\NewsItem')
             ->disableOriginalConstructor()
@@ -60,18 +60,21 @@ class ItemServiceTest extends \PHPUnit_Framework_TestCase
             ->method('getId')
             ->will($this->returnValue('itemId'));
 
-        $this->repository->expects($this->once())
+        $this->odm->expects($this->once())
             ->method('find')
-            ->with($this->equalTo('itemId'));
+            ->with($this->equalTo('Newscoop\News\NewsItem'), $this->equalTo('itemId'));
 
         $this->odm->expects($this->once())
             ->method('persist')
             ->with($this->equalTo($item));
 
-        $this->service->persist($item);
+        $this->odm->expects($this->once())
+            ->method('flush');
+
+        $this->service->save($item);
     }
 
-    public function testPersistExisting()
+    public function testSaveExisting()
     {
         $previous = $this->getMockBuilder('Newscoop\News\NewsItem')
             ->disableOriginalConstructor()
@@ -81,14 +84,47 @@ class ItemServiceTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $this->repository->expects($this->once())
+        $this->odm->expects($this->once())
             ->method('find')
+            ->with($this->equalTo('Newscoop\News\NewsItem'))
             ->will($this->returnValue($previous));
 
         $previous->expects($this->once())
-            ->method('update')
+            ->method('getVersion')
+            ->will($this->returnValue(1));
+
+        $item->expects($this->once())
+            ->method('getVersion')
+            ->will($this->returnValue(2));
+
+        $this->odm->expects($this->once())
+            ->method('remove')
+            ->with($this->equalTo($previous));
+
+        $this->odm->expects($this->once())
+            ->method('persist')
             ->with($this->equalTo($item));
 
-        $this->service->persist($item);
+        $this->odm->expects($this->once())
+            ->method('flush');
+
+        $this->service->save($item);
+    }
+
+    public function testSavePackageItem()
+    {
+        $this->odm->expects($this->once())
+            ->method('find')
+            ->with($this->equalTo('Newscoop\News\PackageItem'), $this->equalTo('itemId'));
+
+        $item = $this->getMockBuilder('Newscoop\News\PackageItem')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $item->expects($this->once())
+            ->method('getId')
+            ->will($this->returnValue('itemId'));
+
+        $this->service->save($item);
     }
 }

@@ -62,7 +62,7 @@ class ReutersFeed extends Feed
                 $item = $this->getItem($channelItem->guid); // get the latest revision
                 if ($item !== null) {
                     $item->setFeed($this);
-                    $itemService->persist($item);
+                    $itemService->save($item);
                 }
             }
         }
@@ -180,6 +180,17 @@ class ReutersFeed extends Feed
         }
 
         return $this->token;
+    }
+
+    /**
+     * Get remote content src
+     *
+     * @param Newscoop\News\RemoteContent $remoteContent
+     * @return string
+     */
+    public function getRemoteContentSrc(RemoteContent $remoteContent)
+    {
+        return sprintf('%s?token=%s', $remoteContent->getHref(), $this->getToken());
     }
 
     /**

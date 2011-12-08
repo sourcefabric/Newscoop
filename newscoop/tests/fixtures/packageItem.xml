@@ -64,7 +64,7 @@ AUTHOR: fooexample.com
         <description role="descRole:caption">OUSTPM-LINK:OUSTPM Link List</description>
       </contentMeta>
       <groupSet root="root">
-        <group role="grpRole:SNEP" id="root">
+        <group role="grpRole:SNEP" id="root" mode="seq">
           <groupRef idref="main"/>
         </group>
         <group role="grpRole:Main" id="main">
