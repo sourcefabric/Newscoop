@@ -229,7 +229,7 @@ class Admin_MultidateController extends Zend_Controller_Action
         		while($itemStart < $end) {
         			$calDate = array();
 		        	$calDate['id'] = $date->id;
-		        	$calDate['title'] = 'Event '.$date->id;
+		        	$calDate['title'] = 'Event ';
 		        	$calDate['start'] = $itemStart;
 		        	$calDate['end'] = $itemEnd;
 		        	$calDate['allDay'] = $this->isAllDay($date);
@@ -243,7 +243,7 @@ class Admin_MultidateController extends Zend_Controller_Action
         		//specific
         		$calDate = array();
 	        	$calDate['id'] = $date->id;
-	        	$calDate['title'] = 'Event '.$date->id;
+	        	$calDate['title'] = 'Event ';
 	        	$calDate['start'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime( is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp() ));
 	        	$endDate = $date->getEndDate();
 	        	if ( empty($endDate)) {

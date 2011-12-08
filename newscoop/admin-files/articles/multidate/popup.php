@@ -92,6 +92,8 @@ function submitForm(formData) {
         'success': function(json) {
         	$('#full-calendar').fullCalendar( 'refetchEvents' );
         	flash.fadeOut();
+        	resetSpecificForm();
+        	resetDaterangeForm();
         },
         'error': function(json) {
         	flash.fadeOut();
