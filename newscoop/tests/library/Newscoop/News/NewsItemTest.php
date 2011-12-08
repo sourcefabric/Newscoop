@@ -75,7 +75,7 @@ class NewsItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('example.com', $itemMeta->getProvider());
         $this->assertEquals(date_create('2011-12-06T09:14:50.000Z')->getTimestamp(), $itemMeta->getVersionCreated()->getTimestamp());
         $this->assertEquals(date_create('2011-12-04T13:13:31.000Z')->getTimestamp(), $itemMeta->getFirstCreated()->getTimestamp());
-        $this->assertEquals('stat:usable', $itemMeta->getPubStatus());
+        $this->assertEquals('usable', $itemMeta->getPubStatus());
         $this->assertEquals('N', $itemMeta->getRole());
         $this->assertEquals('S&P piles pressure on Franco-German EU budget plan', $itemMeta->getTitle());
     }

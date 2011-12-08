@@ -224,4 +224,14 @@ abstract class Item
     {
         return $this->created;
     }
+
+    /**
+     * Test if is canceled
+     *
+     * @return bool
+     */
+    public function isCanceled()
+    {
+        return $this->itemMeta->getPubStatus() === ItemMeta::STATUS_CANCELED;
+    }
 }

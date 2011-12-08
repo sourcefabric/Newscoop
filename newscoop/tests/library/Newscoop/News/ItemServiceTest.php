@@ -163,4 +163,20 @@ class ItemServiceTest extends \PHPUnit_Framework_TestCase
 
         $this->service->save($item);
     }
+
+    public function testSaveCanceledItem()
+    {
+        $item = $this->getMockBuilder('Newscoop\News\NewsItem')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $item->expects($this->once())
+            ->method('isCanceled')
+            ->will($this->returnValue(true));
+
+        $this->odm->expects($this->never())
+            ->method('persist');
+
+        $this->service->save($item);
+    }
 }

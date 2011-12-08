@@ -70,18 +70,17 @@ class ItemService
      */
     public function save(Item $item)
     {
-        if ($item instanceof NewsItem) {
-            $persisted = $this->om->find('Newscoop\News\NewsItem', $item->getId());
-        } else {
-            $persisted = $this->om->find('Newscoop\News\PackageItem', $item->getId());
-        }
-
+        $persisted = $this->om->find($item instanceof NewsItem ? 'Newscoop\News\NewsItem' : 'Newscoop\News\PackageItem', $item->getId());
         if ($persisted !== null) {
-            if ($persisted->getVersion() >= $item->getVersion()) {
+            if ($item->getVersion() < $persisted->getVersion()) { // ignore older/same version
                 return;
-            } else {
+            } else { // remove old version
                 $this->om->remove($persisted);
             }
+        }
+
+        if ($item->isCanceled()) {
+            return;
         }
 
         $this->om->persist($item);

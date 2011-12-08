@@ -13,6 +13,10 @@ namespace Newscoop\News;
  */
 class ItemMeta
 {
+    const STATUS_USABLE = 'usable';
+    const STATUS_WITHHELD = 'withheld';
+    const STATUS_CANCELED = 'canceled';
+
     /**
      * @Id
      * @var string
@@ -70,7 +74,7 @@ class ItemMeta
         $this->provider = (string) $xml->provider['literal'];
         $this->versionCreated = new \DateTime((string) $xml->versionCreated);
         $this->firstCreated = new \DateTime((string) $xml->firstCreated);
-        $this->pubStatus = (string) $xml->pubStatus['qcode'];
+        $this->pubStatus = $this->getQCode($xml->pubStatus) ?: self::STATUS_USABLE;
         $this->role = $this->getQCode($xml->role);
         $this->title = (string) $xml->title;
     }
