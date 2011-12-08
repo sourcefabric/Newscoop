@@ -12,6 +12,7 @@ if (!$g_user->hasPermission('ManageTopics')) {
 	exit;
 }
 
+$f_confirmed = Input::Get('f_confirmed', 'int', 0);
 $f_topic_language_id = Input::Get('f_topic_language_id', 'int', 0);
 $f_topic_delete_id = Input::Get('f_topic_delete_id', 'int', 0);
 $errorMsgs = array();
@@ -22,8 +23,12 @@ if (($deleteTopic->getNumTranslations() == 1) && $deleteTopic->hasSubtopics()) {
 	$errorMsgs[] = getGS('This topic has subtopics, therefore it cannot be deleted.');
 }
 $numArticles = count(ArticleTopic::GetArticlesWithTopic($f_topic_delete_id));
-if ($numArticles > 0) {
-	$doDelete = false;
+if ($numArticles > 0 && $f_confirmed != 1) {
+	foreach (ArticleTopic::GetArticlesWithTopic($f_topic_delete_id) as $article) {
+        ArticleTopic::RemoveTopicFromArticle($f_topic_delete_id, $article->m_data['Number']);
+    }
+    
+    $doDelete = false;
 	$errorMsgs[] = getGS('There are $1 articles using the topic.', $numArticles);
 }
 
@@ -69,6 +74,14 @@ echo camp_html_breadcrumbs($crumbs);
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
 	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/topics/index.php'">
+    <?php
+        if ($numArticles > 0) {
+            ?>
+            <?php echo SecurityToken::FormParameter(); ?>
+            <INPUT TYPE="button" class="button" VALUE="<?php putGS('Delete anyway'); ?>" ONCLICK="location.href=location.href + '&f_confirmed=1'">
+            <?php
+        }
+    ?>
 	</DIV>
 	</TD>
 </TR>
