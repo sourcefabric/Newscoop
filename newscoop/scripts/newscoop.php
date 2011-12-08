@@ -29,7 +29,7 @@ $cli->setCatchExceptions(true);
 $cli->setHelperSet(new \Symfony\Component\Console\Helper\HelperSet($helperSet));
 
 $cli->addCommands(array(
-    new \Newscoop\Tools\Console\Command\UpdateFooCommand(),
+    new \Newscoop\Tools\Console\Command\UpdateIngestCommand(),
 ));
 
 $cli->run();
