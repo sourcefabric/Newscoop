@@ -71,6 +71,18 @@ class ArticleDatetimeRepository extends EntityRepository
             $em->remove($article);
         }
     }
+    
+    public function deleteById($id)
+    {
+        $em = $this->getEntityManager();
+        if(is_numeric($id)) {
+            //$entry = $this->findBy(array('id' => $id));
+            $entry = $this->find($id);
+            $em->remove($entry); 
+            $em->flush();
+        }
+        
+    }
 
     /**
      * Adds time intervals

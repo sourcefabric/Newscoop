@@ -130,6 +130,11 @@ input[type="text"].search, input[type="text"].search-input {
 .multi-box2 {
     background:#f5f5f5 url(images/multi-date_bg.png) repeat-y 0 0;
 }
+.remove-link {
+    text-decoration: underline;
+    margin-left:12px;	
+    margin-top:12px;
+}
 
 
 
