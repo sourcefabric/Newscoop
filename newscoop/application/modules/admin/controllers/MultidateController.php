@@ -151,7 +151,8 @@ class Admin_MultidateController extends Zend_Controller_Action
     
       
     
-    public function geteventAction() {
+    public function geteventAction() 
+    {
     	$articleDateTimeId = $this->_request->getParam('id');
         $repo = $this->_helper->entity->getRepository('Newscoop\Entity\ArticleDatetime');
         $jsEvent = array();
@@ -178,6 +179,21 @@ class Admin_MultidateController extends Zend_Controller_Action
 	        }
         }
         echo json_encode($jsEvent);
+        die();
+    }
+    
+    public function removeAction() 
+    {
+    	
+    	
+    	
+    	$articleDateTimeId = $this->_request->getParam('id');
+    	//echo "|".$articleDateTimeId."|";
+    	$repo = $this->_helper->entity->getRepository('Newscoop\Entity\ArticleDatetime');
+    	
+    	$repo->deleteById($articleDateTimeId);
+    	
+    	echo json_encode(array('code' => 200));
         die();
     }
 

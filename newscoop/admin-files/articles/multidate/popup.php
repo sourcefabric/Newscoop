@@ -39,17 +39,18 @@ function resetSpecificForm() {
 	$('#start-date-specific').val('');
 	$('#start-time-specific').val('');
 	$('#end-time-specific').val('');
-	//$('#specific-radio-start-only').attr('checked', true);
-	
+	$('#remove-specific-link').css('display','none');
 }
 
 function resetDaterangeForm() { 
 	$('#daterange-multidate-id').val('');
-	$('#start-time-daterange').css('display', 'inline');
-	$('#end-time-daterange').css('display', 'inline');
-	$('#end-date-daterange').css('visibility','visible');
+	$('#start-time-daterange').css('display', 'inline').val('');
+	$('#start-date-daterange').val('');
+	$('#end-time-daterange').css('display', 'inline').val('');
+	$('#end-date-daterange').css('visibility','visible').val('');
 	$('#daterange-all-day').removeAttr('checked');
 	$('#cycle-ends-on-set-date').trigger('click');
+	$('#remove-daterange-link').css('display','none');
 }
 
 function prepareDate(oldFormat) {
@@ -254,6 +255,7 @@ function loadDaterangeEvent(event) {
 	$('#end-time-daterange').val(event.endTime);
 	var repeatValue = 'recurring:'+event.isRecurring;
 	$("#repeats-cycle option[value='"+repeatValue+"']").attr('selected','selected');
+	$('#remove-daterange-link').css('display','block');
 	if (event.neverEnds == 1) {
 		$('#cycle-ends-never').attr('checked', 'checked');
 		$('#end-date-daterange').css('visibility','hidden');
@@ -290,8 +292,50 @@ function loadSpecificEvent(event) {
 	$('#start-date-specific').val(event.startDate);
 	$('#start-time-specific').val(event.startTime);
 	$('#end-time-specific').val(event.endTime);
+	$('#remove-specific-link').css('display', 'block');
 
 	doSpecificTimeRange(event.startTime, event.endTime);
+}
+
+function removeSpecificEvent() {
+	var id = $('#specific-multidate-id').val();
+	if (id.length > 0) {
+	    if ( confirm('<?php putGS("Are you sure you want to clear the event"); ?>') ) {
+	        removeEvent(id);
+	        resetSpecificForm();
+	    }
+	}
+}
+
+function removeDaterangeEvent() {
+	var id = $('#daterange-multidate-id').val();
+    if (id.length > 0) {
+        if ( confirm('<?php putGS("Are you sure you want to clear the event"); ?>' + id) ) {
+            removeEvent(id);
+            resetDaterangeForm();
+        }
+    }
+}
+
+
+function removeEvent(id) {
+	var url = '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/multidate/remove';
+	var data = 'id=' + id;
+    var flashDelete = flashMessage(localizer.processing, null, true);
+    $.ajax({
+        'url': url,
+        'type': 'POST',
+        'data': data,
+        'dataType': 'json',
+        'success': function(json) {
+            flashDelete.fadeOut();
+            $('#full-calendar').fullCalendar( 'refetchEvents' );
+            
+        },
+        'error': function(json) {
+        	flashDelete.fadeOut();
+        }
+    });
 }
 
 function eventClick(eventId) {
@@ -454,6 +498,7 @@ $(function(){
 		<input type="button" value="Reset form" onclick="resetSpecificForm()"; class="default-button" style="width:127px; margin-right:3px;"/>
 		<input type="button" class="save-button-small" onclick="popup_save();" value="Save" style="width:129px;";/>
 	</div>
+	<a href="#" onclick="removeSpecificEvent()" class="remove-link" id="remove-specific-link" style="display:none"><?php putGS("Remove event")?></a>
 </form>
 </div>
 
@@ -501,9 +546,10 @@ $(function(){
        <input type="radio" id="cycle-ends-never" name="cycle-ends" value="never" style="display: inline; margin-left:73px;" /><?php echo putGS('Never');?><br />
     </div>
     <div class="form-action-holder">
-		<input type="reset" value="Reset form" onclick="resetDaterangeForm()"; class="default-button" style="width:127px; margin-right:3px;"/>
+		<input type="button" value="Reset form" onclick="resetDaterangeForm()"; class="default-button" style="width:127px; margin-right:3px;"/>
 		<input type="button" class="save-button-small" onclick="popup_save();" value="Save" style="width:129px;";/>
 	</div>
+	<a href="#" onclick="removeDaterangeEvent()" class="remove-link" id="remove-daterange-link" style="display:none"><?php putGS("Remove event")?></a>
 </form>
 </div>
 
