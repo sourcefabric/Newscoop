@@ -28,7 +28,6 @@ class ItemService
     public function __construct(\Doctrine\Common\Persistence\ObjectManager $om)
     {
         $this->om = $om;
-        $this->repository = $this->om->getRepository('Newscoop\News\NewsItem');
     }
 
     /**
@@ -41,25 +40,33 @@ class ItemService
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
-        return $this->repository->findBy($criteria, $orderBy, $limit, $offset);
+        return $this->om->getRepository('Newscoop\News\NewsItem')
+            ->findBy($criteria, $orderBy, $limit, $offset);
     }
 
     /**
-     * Persist item
+     * Save Item
      *
      * @param Newscoop\News\Item $item
      * @return void
      */
-    public function persist(Item $item)
+    public function save(Item $item)
     {
-        $persisted = $this->repository->find($item->getId());
-        if ($persisted) {
-            if ($persisted->getVersion() < $item->getVersion()) {
-                $persisted->update($item);
-            }
+        if ($item instanceof NewsItem) {
+            $persisted = $this->om->find('Newscoop\News\NewsItem', $item->getId());
         } else {
-            $this->om->persist($item);
-            $persisted = $item;
+            $persisted = $this->om->find('Newscoop\News\PackageItem', $item->getId());
         }
+
+        if ($persisted !== null) {
+            if ($persisted->getVersion() >= $item->getVersion()) {
+                return;
+            } else {
+                $this->om->remove($persisted);
+            }
+        }
+
+        $this->om->persist($item);
+        $this->om->flush();
     }
 }

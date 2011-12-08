@@ -62,7 +62,7 @@ class ReutersFeed extends Feed
                 $item = $this->getItem($channelItem->guid); // get the latest revision
                 if ($item !== null) {
                     $item->setFeed($this);
-                    $itemService->persist($item);
+                    $itemService->save($item);
                 }
             }
         }

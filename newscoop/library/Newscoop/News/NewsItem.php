@@ -40,16 +40,4 @@ class NewsItem extends Item
     {
         return $this->contentSet;
     }
-
-    /**
-     * Update item
-     *
-     * @param Newscoop\News\NewsItem $item
-     * @return void
-     */
-    public function update(NewsItem $item)
-    {
-        $this->contentSet = $item->contentSet;
-        parent::update($item);
-    }
 }

@@ -64,13 +64,4 @@ class PackageItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('US-EUROZONE-VISIONS', $itemRef->getSlugline());
         $this->assertEquals('Insight: Conflicting visions at core of euro zone crisis', $itemRef->getHeadline());
     }
-
-    public function testUpdate()
-    {
-        $xml = simplexml_load_file(APPLICATION_PATH . '/../tests/fixtures/' . self::UPDATED_XML);
-        $item = new PackageItem($xml->itemSet->packageItem);
-
-        $this->item->update($item);
-        $this->assertEquals('updated', $this->item->getGroupSet()->getRootGroup()->getId());
-    }
 }

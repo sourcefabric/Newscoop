@@ -120,25 +120,4 @@ class NewsItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(3500, $remoteContent[0]->getHeight());
         $this->assertEquals(17478, $contentSet->getRemoteContent('rend:thumbnail')->getSize());
     }
-
-    public function testUpdate()
-    {
-        $xml = simplexml_load_file(APPLICATION_PATH . '/../tests/fixtures/' . self::UPDATED_XML);
-        $next = new NewsItem($xml->itemSet->newsItem);
-
-        $this->assertNull($this->item->getUpdated());
-        $this->item->update($next);
-        $this->assertInstanceOf('DateTime', $this->item->getUpdated());
-
-        $this->assertEquals('18275407956', $this->item->getVersion());
-
-        $rightsInfo = $this->item->getRightsInfo();
-        $this->assertEquals('(c) Copyright Foo Bar 2012.', $rightsInfo[0]->getCopyrightNotice());
-
-        $this->assertEquals(date_create('2011-12-07T09:15:50.000Z')->getTimestamp(), $this->item->getItemMeta()->getVersionCreated()->getTimestamp());
-
-        $this->assertEquals('3', $this->item->getContentMeta()->getUrgency());
-
-        $this->assertContains('Updated paragraph', $this->item->getContentSet()->getInlineContent());
-    }
 }
