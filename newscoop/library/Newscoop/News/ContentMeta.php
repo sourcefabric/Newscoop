@@ -38,8 +38,8 @@ class ContentMeta
     protected $headline;
 
     /**
-     * @Date
-     * @var DateTime
+     * @String
+     * @var string
      */
     protected $dateline;
 
@@ -69,7 +69,7 @@ class ContentMeta
         $this->urgency = (string) $xml->urgency;
         $this->slugline = (string) $xml->slugline;
         $this->headline = (string) $xml->headline;
-        $this->dateline = new \DateTime((string) $xml->dateline);
+        $this->dateline = (string) $xml->dateline;
         $this->creditline = (string) $xml->creditline;
         $this->by = (string) $xml->by;
         $this->description = (string) $xml->description;
@@ -108,7 +108,7 @@ class ContentMeta
     /**
      * Get dateline
      *
-     * @return DateTime
+     * @return string
      */
     public function getDateline()
     {

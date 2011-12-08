@@ -32,7 +32,7 @@ abstract class Item
     protected $feed;
 
     /**
-     * @String
+     * @Int
      * @var string
      */
     protected $version;
@@ -95,7 +95,7 @@ abstract class Item
         }
 
         $this->id = (string) $xml['guid'];
-        $this->version =  isset($xml['version']) ? (string) $xml['version'] : '1';
+        $this->version =  isset($xml['version']) ? (int) $xml['version'] : 1;
         $this->standard = (string) $xml['standard'];
         $this->standardVersion = (string) $xml['standardversion'];
         $this->conformance = isset($xml['conformance']) ? (string) $xml['conformance'] : 'core';
@@ -140,7 +140,7 @@ abstract class Item
     /**
      * Get version
      *
-     * @return string
+     * @return int
      */
     public function getVersion()
     {

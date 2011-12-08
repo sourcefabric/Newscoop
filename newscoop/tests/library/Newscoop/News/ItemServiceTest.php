@@ -86,6 +86,14 @@ class ItemServiceTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($previous));
 
         $previous->expects($this->once())
+            ->method('getVersion')
+            ->will($this->returnValue(1));
+
+        $item->expects($this->once())
+            ->method('getVersion')
+            ->will($this->returnValue(2));
+
+        $previous->expects($this->once())
             ->method('update')
             ->with($this->equalTo($item));
 

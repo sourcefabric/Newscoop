@@ -54,7 +54,9 @@ class ItemService
     {
         $persisted = $this->repository->find($item->getId());
         if ($persisted) {
-            $persisted->update($item);
+            if ($persisted->getVersion() < $item->getVersion()) {
+                $persisted->update($item);
+            }
         } else {
             $this->om->persist($item);
             $persisted = $item;

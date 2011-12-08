@@ -39,7 +39,7 @@ class NewsItemTest extends \PHPUnit_Framework_TestCase
 
     public function testGetVersion()
     {
-        $this->assertEquals('1827540795', $this->item->getVersion());
+        $this->assertEquals(1827540795, $this->item->getVersion());
     }
 
     public function testGetStandard()
@@ -87,7 +87,7 @@ class NewsItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('4', $contentMeta->getUrgency());
         $this->assertEquals('US-EUROZONE', $contentMeta->getSlugline());
         $this->assertEquals('S&P piles pressure on Franco-German EU budget plan', $contentMeta->getHeadline());
-        $this->assertEquals(date_create('2011-12-06 09:14:50 GMT+00:00')->getTimestamp(), $contentMeta->getDateline()->getTimestamp());
+        $this->assertEquals('2011-12-06 09:14:50 GMT+00:00', $contentMeta->getDateline());
         $this->assertEquals('Foo Bar and John Doe', $contentMeta->getBy());
         $this->assertEquals('Example creditline', $contentMeta->getCreditline());
         $this->assertEquals('US-EUROZONE:S&P piles pressure on Franco-German EU budget plan', $contentMeta->getDescription());
