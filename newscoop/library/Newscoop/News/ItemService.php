@@ -72,10 +72,11 @@ class ItemService
     {
         $persisted = $this->om->find($item instanceof NewsItem ? 'Newscoop\News\NewsItem' : 'Newscoop\News\PackageItem', $item->getId());
         if ($persisted !== null) {
-            if ($item->getVersion() < $persisted->getVersion()) { // ignore older/same version
+            if ($item->getVersion() < $persisted->getVersion()) {
                 return;
-            } else { // remove old version
+            } else { // @todo handle append signal
                 $this->om->remove($persisted);
+                $this->om->flush();
             }
         }
 

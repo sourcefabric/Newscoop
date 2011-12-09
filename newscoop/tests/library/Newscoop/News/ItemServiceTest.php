@@ -141,7 +141,7 @@ class ItemServiceTest extends \PHPUnit_Framework_TestCase
             ->method('persist')
             ->with($this->equalTo($item));
 
-        $this->odm->expects($this->once())
+        $this->odm->expects($this->atLeastOnce())
             ->method('flush');
 
         $this->service->save($item);
