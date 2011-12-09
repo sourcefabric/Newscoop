@@ -31,7 +31,22 @@ class ItemService
     }
 
     /**
-     * Find feeds by set of criteria
+     * Find item by given id
+     *
+     * @param string $id
+     * @return Newscoop\News\Item
+     */
+    public function find($id)
+    {
+        $items = $this->findBy(array(
+            'id' => $id,
+        ), null, 1, 0);
+
+        return count($items) ? $items->getNext() : null;
+    }
+
+    /**
+     * Find items by set of criteria
      *
      * @param array $criteria
      * @param mixed $orderBy
@@ -63,7 +78,7 @@ class ItemService
     }
 
     /**
-     * Save Item
+     * Save item
      *
      * @param Newscoop\News\Item $item
      * @return void

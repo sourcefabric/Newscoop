@@ -13,7 +13,7 @@ namespace Newscoop\News;
  */
 class ReutersFeed extends Feed
 {
-    const TOKEN_TTL = 'PT12H';
+    const TOKEN_TTL = 12; // hours
 
     const STATUS_SUCCESS = 10;
     const STATUS_PARTIAL_SUCCESS = 20;
@@ -162,8 +162,7 @@ class ReutersFeed extends Feed
      */
     private function getToken()
     {
-        if ($this->token === null
-            || ($this->tokenUpdated !== null && $this->tokenUpdated->add(new \DateInterval(self::TOKEN_TTL))->getTimestamp() > time())) {
+        if ($this->token === null || !$this->tokenIsValid()) {
             $client = $this->getClient();
             $client->setUri('https://commerce.reuters.com/');
             $response = $client->restGet('/rmd/rest/xml/login', array(
@@ -180,6 +179,22 @@ class ReutersFeed extends Feed
         }
 
         return $this->token;
+    }
+
+    /**
+     * Test if token is valid
+     *
+     * @return bool
+     */
+    private function tokenIsValid()
+    {
+        $diff = date_create()->diff($this->tokenUpdated);
+
+        if ($diff->y || $diff->m || $diff->d) {
+            return false;
+        }
+
+        return $diff->h <= self::TOKEN_TTL;
     }
 
     /**

@@ -37,52 +37,7 @@ class ItemServiceTest extends \PHPUnit_Framework_TestCase
 
     public function testFindBy()
     {
-        $qb = $this->getMockBuilder('Doctrine\ODM\MongoDB\Query\Builder')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->odm->expects($this->once())
-            ->method('createQueryBuilder')
-            ->with($this->equalTo('Newscoop\News\NewsItem'))
-            ->will($this->returnValue($qb));
-
-        $qb->expects($this->once())
-            ->method('field')
-            ->with($this->equalTo('type'))
-            ->will($this->returnValue($qb));
-
-        $qb->expects($this->once())
-            ->method('in')
-            ->with($this->equalTo(array('news', 'package')))
-            ->will($this->returnValue($qb));
-
-        $qb->expects($this->once())
-            ->method('sort')
-            ->with($this->equalTo(array('id' => 'desc')))
-            ->will($this->returnValue($qb));
-
-        $qb->expects($this->once())
-            ->method('limit')
-            ->with($this->equalTo(25))
-            ->will($this->returnValue($qb));
-
-        $qb->expects($this->once())
-            ->method('skip')
-            ->with($this->equalTo(50))
-            ->will($this->returnValue($qb));
-
-        $query = $this->getMockBuilder('Doctrine\ODM\MongoDB\Query\Query')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $qb->expects($this->once())
-            ->method('getQuery')
-            ->will($this->returnValue($query));
-
-        $query->expects($this->once())
-            ->method('execute')
-            ->will($this->returnValue('result'));
-
+        $this->expectFindBy(array(), array('id' => 'desc'), 25, 50, 'result');
         $this->assertEquals('result', $this->service->findBy(array(), array('id' => 'desc'), 25, 50));
     }
 
@@ -178,5 +133,66 @@ class ItemServiceTest extends \PHPUnit_Framework_TestCase
             ->method('persist');
 
         $this->service->save($item);
+    }
+
+    public function testFind()
+    {
+        $this->expectFindBy(array('id' => 'id'), null, 1, 0, null);
+        $this->assertEquals(null, $this->service->find('id'));
+    }
+
+    private function expectFindBy(array $criteria, $orderBy, $limit, $offset, $return = 'result')
+    {
+        $qb = $this->getMockBuilder('Doctrine\ODM\MongoDB\Query\Builder')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $this->odm->expects($this->once())
+            ->method('createQueryBuilder')
+            ->with($this->equalTo('Newscoop\News\NewsItem'))
+            ->will($this->returnValue($qb));
+
+        $criteria['type'] = array('news', 'package');
+        $qb->expects($this->exactly(count($criteria)))
+            ->method('field')
+            ->with($this->logicalOr($this->equalTo('type'), $this->equalTo('id')))
+            ->will($this->returnValue($qb));
+
+        $qb->expects($this->any())
+            ->method('in')
+            ->will($this->returnValue($qb));
+
+        $qb->expects($this->any())
+            ->method('equals')
+            ->will($this->returnValue($qb));
+
+        if ($orderBy) {
+            $qb->expects($this->once())
+                ->method('sort')
+                ->with($this->equalTo($orderBy))
+                ->will($this->returnValue($qb));
+        }
+
+        $qb->expects($this->once())
+            ->method('limit')
+            ->with($this->equalTo($limit))
+            ->will($this->returnValue($qb));
+
+        $qb->expects($this->once())
+            ->method('skip')
+            ->with($this->equalTo($offset))
+            ->will($this->returnValue($qb));
+
+        $query = $this->getMockBuilder('Doctrine\ODM\MongoDB\Query\Query')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $qb->expects($this->once())
+            ->method('getQuery')
+            ->will($this->returnValue($query));
+
+        $query->expects($this->once())
+            ->method('execute')
+            ->will($this->returnValue($return));
     }
 }
