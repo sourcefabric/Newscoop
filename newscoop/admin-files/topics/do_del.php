@@ -73,12 +73,18 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<BLOCKQUOTE>
-	<?php foreach ($errorMsgs as $errorMsg) { ?>
-		<li><?php p($errorMsg); ?></li>
-		<li><?php putGS("Topic and all subtopics will be detached from all articles, and deleted."); ?></li>
-		<?PHP
-	}
-	?>
+	<?php
+        if (!empty($errorMsgs)) {
+            foreach ($errorMsgs as $errorMsg) {
+                ?>
+                <li><?php p($errorMsg); ?></li>
+                <?php
+            }
+            ?>
+            <li><?php putGS("If you continue, topic and all subtopics will be detached from all articles, and deleted."); ?></li>
+            <?php
+        }
+    ?>
 	</BLOCKQUOTE>
 	</TD>
 </TR>
