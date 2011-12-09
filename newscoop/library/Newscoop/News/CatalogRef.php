@@ -1,0 +1,45 @@
+<?php
+/**
+ * @package Newscoop
+ * @copyright 2011 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
+
+namespace Newscoop\News;
+
+/**
+ * CatalogRef
+ * @EmbeddedDocument
+ */
+class CatalogRef
+{
+    /**
+     * @Id
+     * @var string
+     */
+    protected $id;
+
+    /**
+     * @String
+     * @var string
+     */
+    protected $href;
+
+    /**
+     * @param SimpleXMLElement $xml
+     */
+    public function __construct(\SimpleXMLElement $xml)
+    {
+        $this->href = (string) $xml['href'];
+    }
+
+    /**
+     * Get href
+     *
+     * @return string
+     */
+    public function getHref()
+    {
+        return $this->href;
+    }
+}

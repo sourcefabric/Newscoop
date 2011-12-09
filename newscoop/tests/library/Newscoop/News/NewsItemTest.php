@@ -67,16 +67,24 @@ class NewsItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('(c) Copyright Foo Bar 2011.', $rightsInfo[0]->getCopyrightNotice());
     }
 
+    public function testGetCatalogs()
+    {
+        $catalogRefs = $this->item->getCatalogRefs();
+        $this->assertEquals(1, count($catalogRefs));
+        $this->assertInstanceOf('Newscoop\News\CatalogRef', $catalogRefs[0]);
+        $this->assertEquals('http://www.iptc.org/std/catalog/catalog.IPTC-G2-Standards_3.xml', $catalogRefs[0]->getHref());
+    }
+
     public function testGetItemMeta()
     {
         $itemMeta = $this->item->getItemMeta();
         $this->assertInstanceOf('Newscoop\News\ItemMeta', $itemMeta);
-        $this->assertEquals('text', $itemMeta->getItemClass());
+        $this->assertEquals('icls:text', $itemMeta->getItemClass());
         $this->assertEquals('example.com', $itemMeta->getProvider());
         $this->assertEquals(date_create('2011-12-06T09:14:50.000Z')->getTimestamp(), $itemMeta->getVersionCreated()->getTimestamp());
         $this->assertEquals(date_create('2011-12-04T13:13:31.000Z')->getTimestamp(), $itemMeta->getFirstCreated()->getTimestamp());
-        $this->assertEquals('usable', $itemMeta->getPubStatus());
-        $this->assertEquals('N', $itemMeta->getRole());
+        $this->assertEquals('stat:usable', $itemMeta->getPubStatus());
+        $this->assertEquals('itemRole:N', $itemMeta->getRole());
         $this->assertEquals('S&P piles pressure on Franco-German EU budget plan', $itemMeta->getTitle());
     }
 

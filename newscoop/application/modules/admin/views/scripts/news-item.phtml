@@ -1,8 +1,12 @@
 <?php if ($this->item->getContentSet()->getInlineContent()) { ?>
 <div class="content">
 <?php
-$contentArray = explode("\n", $this->item->getContentSet()->getInlineContent());
+$contentArray = array_filter(explode("\n", $this->item->getContentSet()->getInlineContent()));
 for ($i = 0; $i < 5; $i++) {
+    if ( ! isset($contentArray[$i])) {
+        break;
+    }
+
     echo $contentArray[$i];
 }
 ?>

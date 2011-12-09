@@ -13,9 +13,9 @@ namespace Newscoop\News;
  */
 class ItemMeta
 {
-    const STATUS_USABLE = 'usable';
-    const STATUS_WITHHELD = 'withheld';
-    const STATUS_CANCELED = 'canceled';
+    const STATUS_USABLE = 'stat:usable';
+    const STATUS_WITHHELD = 'stat:withheld';
+    const STATUS_CANCELED = 'stat:canceled';
 
     /**
      * @Id
@@ -70,12 +70,12 @@ class ItemMeta
      */
     public function __construct(\SimpleXMLElement $xml)
     {
-        $this->itemClass = $this->getQCode($xml->itemClass);
+        $this->itemClass = (string) $xml->itemClass['qcode'];
         $this->provider = (string) $xml->provider['literal'];
         $this->versionCreated = new \DateTime((string) $xml->versionCreated);
         $this->firstCreated = new \DateTime((string) $xml->firstCreated);
-        $this->pubStatus = $this->getQCode($xml->pubStatus) ?: self::STATUS_USABLE;
-        $this->role = $this->getQCode($xml->role);
+        $this->pubStatus = (string) $xml->pubStatus['qcode'] ?: self::STATUS_USABLE;
+        $this->role = (string) $xml->role['qcode'];
         $this->title = (string) $xml->title;
     }
 
@@ -147,16 +147,5 @@ class ItemMeta
     public function getTitle()
     {
         return $this->title;
-    }
-
-    /**
-     * Get qcode
-     *
-     * @param SimpleXMLElement $xml
-     * @return string
-     */
-    private function getQCode(\SimpleXMLElement $xml)
-    {
-        return array_pop(explode(':', (string) $xml['qcode']));
     }
 }

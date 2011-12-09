@@ -80,6 +80,12 @@ abstract class Item
     protected $created;
 
     /**
+     * @EmbedMany(targetDocument="CatalogRef")
+     * @var Doctrine\Common\Collections\Collection
+     */
+    protected $catalogRefs;
+
+    /**
      * @param SimpleXMLElement $xml
      */
     public function __construct(\SimpleXMLElement $xml)
@@ -98,6 +104,7 @@ abstract class Item
         $this->setRightsInfo($xml);
         $this->itemMeta = new ItemMeta($xml->itemMeta);
         $this->contentMeta = new ContentMeta($xml->contentMeta);
+        $this->setCatalogRefs($xml);
     }
 
     /**
@@ -233,5 +240,29 @@ abstract class Item
     public function isCanceled()
     {
         return $this->itemMeta->getPubStatus() === ItemMeta::STATUS_CANCELED;
+    }
+
+    /**
+     * Set catalog refs
+     *
+     * @param SimpleXMLElement $xml
+     * @return void
+     */
+    public function setCatalogRefs(\SimpleXMLElement $xml)
+    {
+        $this->catalogRefs = new \Doctrine\Common\Collections\ArrayCollection();
+        foreach ($xml->catalogRef as $catalogRefXml) {
+            $this->catalogRefs->add(new CatalogRef($catalogRefXml));
+        }
+    }
+
+    /**
+     * Get catalog references
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCatalogRefs()
+    {
+        return $this->catalogRefs;
     }
 }
