@@ -75,6 +75,7 @@ echo camp_html_breadcrumbs($crumbs);
 	<BLOCKQUOTE>
 	<?php foreach ($errorMsgs as $errorMsg) { ?>
 		<li><?php p($errorMsg); ?></li>
+		<li><?php putGS("Topic and all subtopics will be detached from all articles, and deleted."); ?></li>
 		<?PHP
 	}
 	?>
