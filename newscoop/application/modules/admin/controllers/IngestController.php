@@ -21,7 +21,7 @@ class Admin_IngestController extends Zend_Controller_Action
     {
         $this->view->feeds = $this->_helper->service('ingest.feed')->findBy(array());
         $this->view->items = $this->_helper->service('ingest.item')->findBy(array(
-            'itemMeta.pubStatus' => 'usable',
+            'itemMeta.pubStatus' => \Newscoop\News\ItemMeta::STATUS_USABLE,
         ), array(
             'itemMeta.firstCreated' => 'desc',
         ), 50);
