@@ -71,6 +71,18 @@ class ArticleTopic extends DatabaseObject {
 		$queryStr = "DELETE FROM ArticleTopics WHERE NrArticle=$p_articleNumber AND TopicId=$p_topicId";
 		$g_ado_db->Execute($queryStr);
 	} // fn RemoveTopicFromArticle
+    
+    /**
+	 * Unlink a topic from all articles.
+	 * @param int $p_topicId
+	 * @return void
+	 */
+	public static function RemoveTopicFromArticles($p_topicId)
+	{
+		global $g_ado_db;
+		$queryStr = "DELETE FROM ArticleTopics WHERE TopicId=$p_topicId";
+		$g_ado_db->Execute($queryStr);
+	} // fn RemoveTopicFromArticles
 
 
 	/**
