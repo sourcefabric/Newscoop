@@ -19,13 +19,12 @@ class Admin_IngestController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $criteria = array(
-            'published' => null,
-            'status' => 'Usable',
-        );
-
         $this->view->feeds = $this->_helper->service('ingest.feed')->findBy(array());
-        $this->view->items = array();
+        $this->view->items = $this->_helper->service('ingest.item')->findBy(array(
+            'itemMeta.pubStatus' => 'usable',
+        ), array(
+            'itemMeta.firstCreated' => 'desc',
+        ), 50);
     }
 
     public function widgetAction()
@@ -41,7 +40,11 @@ class Admin_IngestController extends Zend_Controller_Action
     public function detailAction()
     {
         $this->_helper->layout->setLayout('iframe');
-        $this->view->entry = $this->service->find($this->_getParam('entry'));
+        $this->view->item = $this->_helper->service('ingest.item')->find($this->_getParam('item'));
+        if (!$this->view->item) {
+            var_dump($this->_getParam('item'));
+            exit;
+        }
     }
 
     public function switchModeAction()
@@ -107,5 +110,11 @@ class Admin_IngestController extends Zend_Controller_Action
         }
 
         $this->view->form = $form;
+    }
+
+    public function updateAction()
+    {
+        $this->_helper->service('ingest.feed')->updateAll();
+        $this->_helper->redirector('index');
     }
 }

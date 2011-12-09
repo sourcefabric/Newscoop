@@ -1,0 +1,12 @@
+<?php echo $this->group->getRole(); ?>
+<ul>
+    <?php foreach ($this->group->getRefs() as $ref) { ?>
+    <li>
+        <?php if ($ref instanceof \Newscoop\News\GroupRef) { ?>
+            <?php $this->renderPackageItemGroup($this->item->getGroupSet()->getGroup($ref), $this->item); ?>
+        <?php } else { ?>
+            <?php echo $ref->getHeadline(); ?> [<?php echo $ref->getItemClass(); ?>]
+        <?php } ?>
+    </li>
+    <?php } ?>
+</ul>

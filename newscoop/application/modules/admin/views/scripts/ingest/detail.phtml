@@ -1,9 +1,12 @@
 <div class="ingest">
 
-<span class="date"><?php echo $this->entry->getUpdated()->format('H:i'); ?></span>
-<h2><?php echo $this->entry->getTitle(); ?></h2>
-<p class="summary"><?php echo $this->entry->getSummary(); ?></p>
+<span class="created"><?php echo $this->item->getItemMeta()->getFirstCreated()->format('d/m H:i'); ?></span>
+<h1><?php echo $this->item->getContentMeta()->getHeadline(); ?></a></h1>
 
-<?php echo $this->entry->getContent(); ?>
+<?php if ($this->item instanceof \Newscoop\News\PackageItem) { ?>
+    <?php $this->renderPackageItem($this->item); ?>
+<?php } else { ?>
+    <?php $this->renderNewsItem($this->item); ?>
+<?php } // /if ?>
 
 </div>

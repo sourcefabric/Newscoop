@@ -1,0 +1,18 @@
+<?php if ($this->item->getContentSet()->getInlineContent()) { ?>
+<div class="content">
+<?php
+$contentArray = explode("\n", $this->item->getContentSet()->getInlineContent());
+for ($i = 0; $i < 5; $i++) {
+    echo $contentArray[$i];
+}
+?>
+</div>
+
+<?php } else if ($this->item->getContentSet()->getRemoteContent('rend:thumbnail')) { ?>
+<div class="thumbnail"><img src="<?php echo $this->item->getFeed()->getRemoteContentSrc($this->item->getContentSet()->getRemoteContent('rend:thumbnail')); ?>" /></div>
+<em>available sizes:
+    <?php foreach ($this->item->getContentSet()->getRemoteContent() as $remoteContent) { ?>
+    <a href="<?php echo $this->item->getFeed()->getRemoteContentSrc($remoteContent); ?>" target="_blank"><?php echo $remoteContent->getWidth(), 'x', $remoteContent->getHeight(); ?></a>
+    <?php } ?>
+</em>
+<?php } ?>

@@ -1,0 +1,7 @@
+<ul class="groups">
+    <?php foreach ($this->item->getGroupSet()->getRootGroup()->getRefs() as $rootRef) { ?>
+    <li>
+        <?php $this->renderPackageItemGroup($this->item->getGroupSet()->getGroup($rootRef), $this->item); ?>
+    </li>
+    <?php } ?>
+</ul>

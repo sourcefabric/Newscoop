@@ -1,14 +1,16 @@
-<?php $this->placeholder('title')->set('Newswires'); ?>
+<?php $this->placeholder('title')->set('News Desk'); ?>
 
 <div class="ingest"><div class="control"><div class="w">
 
 <h2><?php putGS('Feeds'); ?></h2>
 <ul class="feeds">
+    <?php /*
     <li><a href="<?php echo $this->url(array(
             'action' => 'index',
             'feed' => null
         )); ?>" title="Switch feed"><?php echo getGS('All'); ?></a>
     </li>
+     */ ?>
     <?php foreach ($this->feeds as $feed) { ?>
     <li><a href="<?php echo $this->url(array(
             'action' => 'index',
@@ -16,12 +18,14 @@
         )); ?>" title="Switch feed"><?php echo $feed->getName(); ?></a>
         (<?php putGS('updated'); ?> <?php echo $feed->getUpdated() ? $feed->getUpdated()->format('H:i') : getGS('Never'); ?>)
     </li>
+    <?php /*
     <li>
         <a href="<?php echo $this->url(array(
             'action' => 'switch-mode',
             'feed' => $feed->getId(),
         )); ?>" title="Switch mode"><?php echo $feed->isAutoMode() ? getGS('Automatic') : getGS('Manual'); ?></a>
     </li>
+    */ ?>
     <?php } ?>
 
     <li class="add"><a href="<?php echo $this->url(array(
@@ -31,40 +35,27 @@
 
 </div></div><div class="main"><div class="w">
 
-<ul class="entries">
+<ul class="items">
     <?php foreach ($this->items as $item) { ?>
-    <li>
-        <span class="date"><?php echo $entry->getUpdated()->format('j.n. H:i'); ?></span>
-        <?php if (!$entry->isPublished()) { ?>
-        <a href="<?php echo $this->url(array(
-            'action' => 'publish',
-            'entry' => $entry->getId(),
-        )); ?>" title="<?php putGS("Publish '$1'", $entry->getTitle()); ?>" class="publish">Publish</a>
-        <a href="<?php echo $this->url(array(
-            'action' => 'prepare',
-            'entry' => $entry->getId(),
-        )); ?>" title="<?php putGS("Prepare '$1' for publishing", $entry->getTitle()); ?>" class="prepare">Prepare</a>
-        <a href="<?php echo $this->url(array(
-            'action' => 'delete',
-            'entry' => $entry->getId(),
-        )); ?>" title="<?php putGS("Delete '$1'", $entry->getTitle()); ?>" class="delete">Delete</a>
+    <li class="<?php echo $item->getItemMeta()->getItemClass(); ?>">
+        <span class="created"><?php echo $item->getItemMeta()->getFirstCreated()->format('d/m H:i'); ?></span>
+        <h3><?php echo $item->getContentMeta()->getHeadline(); ?></h3>
+        <address>by <?php echo $item->getItemMeta()->getProvider(); ?></address>
+        <?php if ($item instanceof \Newscoop\News\PackageItem) { ?>
+            <?php $this->renderPackageItem($item); ?>
         <?php } else { ?>
-        <em>published: <?php echo $entry->getPublished()->format('d.m.Y H:i:s'); ?></em>
+            <?php $this->renderNewsItem($item); ?>
         <?php } ?>
-        <span class="title p-<?php echo $entry->getPriority(); ?>"><a href="<?php echo $this->url(array(
-            'action' => 'detail',
-            'entry' => $entry->getId(),
-        )); ?>" class="iframe"><?php echo $entry->getTitle(); ?></a></span><br />
-        <small><?php echo $this->sections[$entry->getId()]->getName(); ?></small>
-        <p><?php echo $entry->getSummary(); ?></p>
     </li>
-    <?php } ?>
+    <?php } // /foreach ?>
 </ul>
 
 </div></div></div>
 
 <script>
-$('.ingest .title a').fancybox({
-    hideOnContentClick: false
+$(function() {
+    $('.items h3 a').fancybox({
+        hideOnContentClick: false
+    });
 });
 </script>

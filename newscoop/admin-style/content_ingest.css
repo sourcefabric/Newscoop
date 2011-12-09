@@ -155,3 +155,39 @@
     font-size: 1em;
     color: #555753;
 }
+
+.ingest .items {
+    font-size: 1.2em;
+}
+
+.ingest .items li {
+    margin: 0 0 3px;
+    border-top: 1px solid #ccc;
+}
+
+.ingest .items li:first-child {
+    border-top: none;
+}
+
+.ingest .items strong {
+    font-size: 1.1em;
+    font-weight: normal;
+}
+
+.ingest .items ul {
+    margin-left: 8px;
+}
+
+.ingest .items .created {
+    float: right;
+}
+
+.ingest .items address {
+    margin-bottom: 0.75em;
+    font-size: 1em;
+}
+
+.ingest .feeds .add {
+    margin-top: 1em;
+    background-color: transparent;
+}
