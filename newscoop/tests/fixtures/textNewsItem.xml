@@ -63,44 +63,15 @@ AUTHOR: example.com
         <altId type="idType:USN" rtr:isOriginal="1">TRE7B30AO</altId>
         <language tag="en-US"/>
         <subject qcode="MCC:a"/>
-        <subject qcode="MCC:f"/>
-        <subject qcode="MCC:i"/>
-        <subject qcode="OCC:OLRTXT"/>
-        <subject qcode="N2:EUROP"/>
-        <subject qcode="N2:WEU"/>
-        <subject qcode="N2:EU"/>
-        <subject qcode="N2:EZ"/>
-        <subject qcode="N2:EZC"/>
         <subject qcode="N2:NEWS"/>
         <subject qcode="N2:AAA"/>
         <subject qcode="subj:11000000"/>
         <subject qcode="subj:04016036"/>
-        <subject qcode="N2:DE" type="cptType:5">
-          <facet qcode="geoProp:5"/>
-        </subject>
         <subject qcode="N2:FR" type="cptType:5">
           <facet qcode="geoProp:5"/>
         </subject>
         <subject qcode="N2:IT" type="cptType:5">
-          <facet qcode="geoProp:5"/>
-        </subject>
-        <subject qcode="N2:AT" type="cptType:5">
-          <facet qcode="geoProp:5"/>
-        </subject>
-        <subject qcode="N2:BE" type="cptType:5">
-          <facet qcode="geoProp:5"/>
-        </subject>
-        <subject qcode="N2:FI" type="cptType:5">
-          <facet qcode="geoProp:5"/>
-        </subject>
-        <subject qcode="N2:NL" type="cptType:5">
-          <facet qcode="geoProp:5"/>
-        </subject>
-        <subject qcode="N2:LU" type="cptType:5">
-          <facet qcode="geoProp:5"/>
-        </subject>
-        <subject qcode="N2:CY" type="cptType:5">
-          <facet qcode="geoProp:5"/>
+            <name>testSub</name>
         </subject>
         <slugline separator="-">US-EUROZONE</slugline>
         <headline>S&amp;P piles pressure on Franco-German EU budget plan</headline>

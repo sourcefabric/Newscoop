@@ -62,6 +62,12 @@ class ContentMeta
     protected $description;
 
     /**
+     * @EmbedMany(targetDocument="Subject")
+     * @var Doctrine\Common\Collections\Collection
+     */
+    protected $subjects;
+
+    /**
      * @param SimpleXMLElement $xml
      */
     public function __construct(\SimpleXMLElement $xml)
@@ -73,6 +79,7 @@ class ContentMeta
         $this->creditline = (string) $xml->creditline;
         $this->by = (string) $xml->by;
         $this->description = (string) $xml->description;
+        $this->setSubjects($xml);
     }
 
     /**
@@ -143,5 +150,29 @@ class ContentMeta
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set subjects
+     *
+     * @param SimpleXMLElement $xml
+     * @return void
+     */
+    protected function setSubjects(\SimpleXMLElement $xml)
+    {
+        $this->subjects = new \Doctrine\Common\Collections\ArrayCollection();
+        foreach ($xml->subject as $subjectXml) {
+            $this->subjects->add(new Subject($subjectXml));
+        }
+    }
+
+    /**
+     * Get subjects
+     *
+     * @return Doctrine\Common\Collections\Collection
+     */
+    public function getSubjects()
+    {
+        return $this->subjects;
     }
 }

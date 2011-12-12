@@ -99,6 +99,14 @@ class NewsItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('Foo Bar and John Doe', $contentMeta->getBy());
         $this->assertEquals('Example creditline', $contentMeta->getCreditline());
         $this->assertEquals('US-EUROZONE:S&P piles pressure on Franco-German EU budget plan', $contentMeta->getDescription());
+
+        $subjects = $contentMeta->getSubjects();
+        $this->assertEquals(7, count($subjects));
+        $this->assertEquals('MCC:a', $subjects[0]->getQCode());
+        $this->assertNull($subjects[0]->getType());
+        $this->assertNull($subjects[0]->getName());
+        $this->assertEquals('cptType:5', $subjects[6]->getType());
+        $this->assertEquals('testSub', $subjects[6]->getName());
     }
 
     public function testGetContentSet()
