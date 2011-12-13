@@ -68,18 +68,23 @@ class ContentMeta
     protected $subjects;
 
     /**
+     * Factory
+     *
      * @param SimpleXMLElement $xml
+     * @return Newscoop\News\ContentMeta
      */
-    public function __construct(\SimpleXMLElement $xml)
+    public static function createFromXml(\SimpleXMLElement $xml)
     {
-        $this->urgency = (string) $xml->urgency;
-        $this->slugline = (string) $xml->slugline;
-        $this->headline = (string) $xml->headline;
-        $this->dateline = (string) $xml->dateline;
-        $this->creditline = (string) $xml->creditline;
-        $this->by = (string) $xml->by;
-        $this->description = (string) $xml->description;
-        $this->setSubjects($xml);
+        $meta = new self();
+        $meta->urgency = (string) $xml->urgency;
+        $meta->slugline = (string) $xml->slugline;
+        $meta->headline = (string) $xml->headline;
+        $meta->dateline = (string) $xml->dateline;
+        $meta->creditline = (string) $xml->creditline;
+        $meta->by = (string) $xml->by;
+        $meta->description = (string) $xml->description;
+        $meta->setSubjects($xml);
+        return $meta;
     }
 
     /**
@@ -162,7 +167,7 @@ class ContentMeta
     {
         $this->subjects = new \Doctrine\Common\Collections\ArrayCollection();
         foreach ($xml->subject as $subjectXml) {
-            $this->subjects->add(new Subject($subjectXml));
+            $this->subjects->add(Subject::createFromXml($subjectXml));
         }
     }
 

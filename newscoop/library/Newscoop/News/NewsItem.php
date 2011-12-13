@@ -9,10 +9,7 @@ namespace Newscoop\News;
 
 /**
  * NewsItem
- * @Document(collection="news_item")
- * @InheritanceType("SINGLE_COLLECTION")
- * @DiscriminatorField(fieldName="type")
- * @DiscriminatorMap({"package"="PackageItem", "news"="NewsItem"})
+ * @Document
  */
 class NewsItem extends Item
 {
@@ -23,12 +20,25 @@ class NewsItem extends Item
     protected $contentSet;
 
     /**
-     * @param SimpleXMLElement $xml
+     * @param string $id
+     * @param int $version
      */
-    public function __construct(\SimpleXMLElement $xml)
+    public function __construct($id, $version = 1)
     {
-        parent::__construct($xml);
-        $this->contentSet = new ContentSet($xml->contentSet);
+        parent::__construct($id, $version);
+    }
+
+    /**
+     * Factory
+     *
+     * @param SimpleXMLElement $xml
+     * @return Newscoop\News\NewsItem
+     */
+    public static function createFromXml(\SimpleXMLElement $xml)
+    {
+        $item = parent::createFromXml($xml);
+        $item->contentSet = ContentSet::createFromXml($xml->contentSet);
+        return $item;
     }
 
     /**

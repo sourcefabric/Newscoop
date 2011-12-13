@@ -32,12 +32,17 @@ class GroupSet
     protected $groups;
 
     /**
+     * Factory
+     *
      * @param SimpleXMLElement $xml
+     * @return Newscoop\News\GroupSet
      */
-    public function __construct(\SimpleXMLElement $xml)
+    public static function createFromXml(\SimpleXMLElement $xml)
     {
-        $this->root = (string) $xml['root'];
-        $this->setGroups($xml);
+        $set = new self();
+        $set->root = (string) $xml['root'];
+        $set->setGroups($xml);
+        return $set;
     }
 
     /**
@@ -50,7 +55,7 @@ class GroupSet
     {
         $this->groups = new \Doctrine\Common\Collections\ArrayCollection();
         foreach ($xml->children() as $groupXml) {
-            $this->groups->add(new Group($groupXml));
+            $this->groups->add(Group::createFromXml($groupXml));
         }
     }
 

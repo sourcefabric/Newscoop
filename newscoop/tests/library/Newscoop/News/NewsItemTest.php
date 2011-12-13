@@ -24,7 +24,7 @@ class NewsItemTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->xml = simplexml_load_file(APPLICATION_PATH . '/../tests/fixtures/' . self::TEXT_XML);
-        $this->item = new NewsItem($this->xml->itemSet->newsItem);
+        $this->item = NewsItem::createFromXml($this->xml->itemSet->newsItem);
     }
 
     public function testInstance()
@@ -120,7 +120,7 @@ class NewsItemTest extends \PHPUnit_Framework_TestCase
     public function testGetContentSetRemoteContent()
     {
         $xml = simplexml_load_file(APPLICATION_PATH . '/../tests/fixtures/' . self::PICTURE_XML);
-        $item = new NewsItem($xml->itemSet->newsItem);
+        $item = NewsItem::createFromXml($xml->itemSet->newsItem);
         $contentSet = $item->getContentSet();
         $remoteContent = $contentSet->getRemoteContent();
         $this->assertEquals(3, count($remoteContent));

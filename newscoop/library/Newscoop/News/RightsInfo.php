@@ -32,12 +32,17 @@ class RightsInfo
     protected $copyrightNotice;
 
     /**
+     * Factory
+     *
      * @param SimpleXMLElement $xml
+     * @return Newscoop\News\RightsInfo
      */
-    public function __construct(\SimpleXMLElement $xml)
+    public static function createFromXml(\SimpleXMLElement $xml)
     {
-        $this->copyrightHolder = (string) $xml->copyrightHolder['literal'];
-        $this->copyrightNotice = (string) $xml->copyrightNotice;
+        $info = new self();
+        $info->copyrightHolder = (string) $xml->copyrightHolder['literal'];
+        $info->copyrightNotice = (string) $xml->copyrightNotice;
+        return $info;
     }
 
     /**

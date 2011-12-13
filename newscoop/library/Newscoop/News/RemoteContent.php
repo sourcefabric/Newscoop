@@ -74,19 +74,24 @@ class RemoteContent
     protected $height;
 
     /**
+     * Factory
+     *
      * @param SimpleXMLElement $xml
+     * @return Newscoop\News\RemoteContent
      */
-    public function __construct(\SimpleXMLElement $xml)
+    public static function createFromXml(\SimpleXMLElement $xml)
     {
-        $this->residref = (string) $xml['residref'];
-        $this->href = (string) $xml['href'];
-        $this->size = (int) $xml['size'];
-        $this->rendition = (string) $xml['rendition'];
-        $this->contentType = (string) $xml['contenttype'];
-        $this->format = (string) $xml['format'];
-        $this->generator = (string) $xml['generator'];
-        $this->width = (int) $xml['width'];
-        $this->height = (int) $xml['height'];
+        $content = new self();
+        $content->residref = (string) $xml['residref'];
+        $content->href = (string) $xml['href'];
+        $content->size = (int) $xml['size'];
+        $content->rendition = (string) $xml['rendition'];
+        $content->contentType = (string) $xml['contenttype'];
+        $content->format = (string) $xml['format'];
+        $content->generator = (string) $xml['generator'];
+        $content->width = (int) $xml['width'];
+        $content->height = (int) $xml['height'];
+        return $content;
     }
 
     /**

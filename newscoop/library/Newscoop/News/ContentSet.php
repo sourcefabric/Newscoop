@@ -32,17 +32,23 @@ class ContentSet
     protected $remoteContent;
 
     /**
+     * Factory
+     *
      * @param SimpleXMLElement $xml
+     * @return Newscoop\News\ContentSet
      */
-    public function __construct(\SimpleXMLElement $xml)
+    public static function createFromXml(\SimpleXMLElement $xml)
     {
+        $contentSet = new self();
         if ($xml->inlineXML->count()) {
-            $this->setInlineContent($xml->inlineXML->html->body);
+            $contentSet->setInlineContent($xml->inlineXML->html->body);
         } else if ($xml->remoteContent->count()) {
-            $this->setRemoteContent($xml);
+            $contentSet->setRemoteContent($xml);
         } else {
             throw new \InvalidArgumentException("Unknown content in " . $xml->asXML());
         }
+
+        return $contentSet;
     }
 
     /**
@@ -55,7 +61,7 @@ class ContentSet
     {
         $this->remoteContent = new \Doctrine\Common\Collections\ArrayCollection();
         foreach ($xml->children() as $remoteContentXml) {
-            $this->remoteContent->add(new RemoteContent($remoteContentXml)); 
+            $this->remoteContent->add(RemoteContent::createFromXml($remoteContentXml)); 
         }
     }
 

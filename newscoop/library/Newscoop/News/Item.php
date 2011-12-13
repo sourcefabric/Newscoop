@@ -9,9 +9,12 @@ namespace Newscoop\News;
 
 /**
  * anyItem
- * @MappedSuperclass
+ * @Document(collection="news_item")
+ * @InheritanceType("SINGLE_COLLECTION")
+ * @DiscriminatorField(fieldName="type")
+ * @DiscriminatorMap({"package"="PackageItem", "news"="NewsItem"})
  */
-abstract class Item
+class Item
 {
     /**
      * @Id(strategy="NONE")
@@ -86,25 +89,39 @@ abstract class Item
     protected $catalogRefs;
 
     /**
-     * @param SimpleXMLElement $xml
+     * @param string $id
+     * @param int $version
      */
-    public function __construct(\SimpleXMLElement $xml)
+    protected function __construct($id, $version = 1)
+    {
+        $this->id = (string) $id;
+        $this->version = max(1, (int) $version);
+    }
+
+    /**
+     * Factory
+     *
+     * @param SimpleXMLElement $xml
+     * @return Newscoop\News\Item
+     */
+    protected static function createFromXml(\SimpleXMLElement $xml)
     {
         if (empty($xml['guid'])) {
             throw new \InvalidArgumentException("Guid can't be empty");
         }
 
-        $this->id = (string) $xml['guid'];
-        $this->version =  isset($xml['version']) ? (int) $xml['version'] : 1;
-        $this->standard = (string) $xml['standard'];
-        $this->standardVersion = (string) $xml['standardversion'];
-        $this->conformance = isset($xml['conformance']) ? (string) $xml['conformance'] : 'core';
-        $this->created = new \DateTime();
+        $item = new static($xml['guid'], $xml['version']);
 
-        $this->setRightsInfo($xml);
-        $this->itemMeta = new ItemMeta($xml->itemMeta);
-        $this->contentMeta = new ContentMeta($xml->contentMeta);
-        $this->setCatalogRefs($xml);
+        $item->standard = (string) $xml['standard'];
+        $item->standardVersion = (string) $xml['standardversion'];
+        $item->conformance = isset($xml['conformance']) ? (string) $xml['conformance'] : 'core';
+        $item->created = new \DateTime();
+
+        $item->setRightsInfo($xml);
+        $item->itemMeta = ItemMeta::createFromXml($xml->itemMeta);
+        $item->contentMeta = ContentMeta::createFromXml($xml->contentMeta);
+        $item->setCatalogRefs($xml);
+        return $item;
     }
 
     /**
@@ -188,7 +205,7 @@ abstract class Item
     {
         $this->rightsInfo = new \Doctrine\Common\Collections\ArrayCollection();
         foreach ($xml->rightsInfo as $rightsInfoXml) {
-            $this->rightsInfo->add(new RightsInfo($rightsInfoXml));
+            $this->rightsInfo->add(RightsInfo::createFromXml($rightsInfoXml));
         }
     }
 
@@ -200,6 +217,17 @@ abstract class Item
     public function getRightsInfo()
     {
         return $this->rightsInfo;
+    }
+
+    /**
+     * Set item meta
+     *
+     * @param Newscoop\News\ItemMeta $itemMeta
+     * @return void
+     */
+    public function setItemMeta(ItemMeta $itemMeta)
+    {
+        $this->itemMeta = $itemMeta;
     }
 
     /**
@@ -239,7 +267,7 @@ abstract class Item
      */
     public function isCanceled()
     {
-        return $this->itemMeta->getPubStatus() === ItemMeta::STATUS_CANCELED;
+        return isset($this->itemMeta) && $this->itemMeta->getPubStatus() === ItemMeta::STATUS_CANCELED;
     }
 
     /**
@@ -252,7 +280,7 @@ abstract class Item
     {
         $this->catalogRefs = new \Doctrine\Common\Collections\ArrayCollection();
         foreach ($xml->catalogRef as $catalogRefXml) {
-            $this->catalogRefs->add(new CatalogRef($catalogRefXml));
+            $this->catalogRefs->add(new CatalogRef($catalogRefXml['href']));
         }
     }
 

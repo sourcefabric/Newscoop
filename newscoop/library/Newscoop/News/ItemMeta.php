@@ -66,17 +66,22 @@ class ItemMeta
     protected $title;
 
     /**
+     * Factory
+     *
      * @param SimpleXMLElement $xml
+     * @return Newscoop\News\ItemMeta
      */
-    public function __construct(\SimpleXMLElement $xml)
+    public static function createFromXml(\SimpleXMLElement $xml)
     {
-        $this->itemClass = (string) $xml->itemClass['qcode'];
-        $this->provider = (string) $xml->provider['literal'];
-        $this->versionCreated = new \DateTime((string) $xml->versionCreated);
-        $this->firstCreated = new \DateTime((string) $xml->firstCreated);
-        $this->pubStatus = (string) $xml->pubStatus['qcode'] ?: self::STATUS_USABLE;
-        $this->role = (string) $xml->role['qcode'];
-        $this->title = (string) $xml->title;
+        $meta = new static();
+        $meta->itemClass = (string) $xml->itemClass['qcode'];
+        $meta->provider = (string) $xml->provider['literal'];
+        $meta->versionCreated = new \DateTime((string) $xml->versionCreated);
+        $meta->firstCreated = new \DateTime((string) $xml->firstCreated);
+        $meta->pubStatus = (string) $xml->pubStatus['qcode'] ?: self::STATUS_USABLE;
+        $meta->role = (string) $xml->role['qcode'];
+        $meta->title = (string) $xml->title;
+        return $meta;
     }
 
     /**
@@ -117,6 +122,17 @@ class ItemMeta
     public function getFirstCreated()
     {
         return $this->firstCreated;
+    }
+
+    /**
+     * Set pub status
+     *
+     * @param string $status
+     * @return void
+     */
+    public function setPubStatus($pubStatus)
+    {
+        $this->pubStatus = (string) $pubStatus;
     }
 
     /**

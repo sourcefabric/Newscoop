@@ -26,11 +26,11 @@ class GroupRef
     protected $idRef;
 
     /**
-     * @param SimpleXMLElement $xml
+     * @param string $idRef
      */
-    public function __construct(\SimpleXMLElement $xml)
+    public function __construct($idRef)
     {
-        $this->idRef = (string) $xml['idref'];
+        $this->idRef = (string) $idRef;
     }
 
     /**

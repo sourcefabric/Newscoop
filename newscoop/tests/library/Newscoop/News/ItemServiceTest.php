@@ -7,9 +7,11 @@
 
 namespace Newscoop\News;
 
+require_once __DIR__ . '/TestCase.php';
+
 /**
  */
-class ItemServiceTest extends \PHPUnit_Framework_TestCase
+class ItemServiceTest extends TestCase
 {
     /** @var Newscoop\News\ItemService */
     protected $service;
@@ -19,14 +21,7 @@ class ItemServiceTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->odm = $this->getMockBuilder('Doctrine\ODM\MongoDB\DocumentManager')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->repository = $this->getMockBuilder('Doctrine\ODM\MongoDB\DocumentRepository')
-            ->disableOriginalConstructor()
-            ->getMock();
-
+        $this->odm = $this->setUpOdm();
         $this->service = new ItemService($this->odm);
     }
 
@@ -35,164 +30,73 @@ class ItemServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Newscoop\News\ItemService', $this->service);
     }
 
+    public function testFind()
+    {
+        $this->assertNull($this->service->find('item'));
+
+        $this->service->save(new NewsItem('item'));
+        $this->odm->clear();
+
+        $this->assertNotNull($this->service->find('item'));
+
+    }
+
+    public function testFindPackageItem()
+    {
+        $this->service->save(new PackageItem('package'));
+        $this->odm->clear();
+        $this->assertNotNull($this->service->find('package'));
+    }
+
     public function testFindBy()
     {
-        $this->expectFindBy(array(), array('id' => 'desc'), 25, 50, 'result');
-        $this->assertEquals('result', $this->service->findBy(array(), array('id' => 'desc'), 25, 50));
+        $this->assertEquals(0, count($this->service->findBy(array())));
+
+        $item = new NewsItem('item:1');
+        $this->service->save($item);
+
+        $item = new PackageItem('item:2');
+        $this->service->save($item);
+
+        $this->odm->clear();
+
+        $items = $this->service->findBy(array(), array('id' => 'asc'));
+        $this->assertEquals(2, count($items));
+        $this->assertInstanceOf('Newscoop\News\NewsItem', $items->getNext());
+        $this->assertInstanceOf('Newscoop\News\PackageItem', $items->getNext());
     }
 
     public function testSave()
     {
-        $item = $this->getMockBuilder('Newscoop\News\NewsItem')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $item->expects($this->once())
-            ->method('getId')
-            ->will($this->returnValue('itemId'));
-
-        $this->odm->expects($this->once())
-            ->method('find')
-            ->with($this->equalTo('Newscoop\News\NewsItem'), $this->equalTo('itemId'));
-
-        $this->odm->expects($this->once())
-            ->method('persist')
-            ->with($this->equalTo($item));
-
-        $this->odm->expects($this->once())
-            ->method('flush');
-
+        $item = new NewsItem('tag:id');
         $this->service->save($item);
+        $this->assertEquals($item, $this->service->find('tag:id'));
     }
 
     public function testSaveExisting()
     {
-        $previous = $this->getMockBuilder('Newscoop\News\NewsItem')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $item = $this->getMockBuilder('Newscoop\News\NewsItem')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->odm->expects($this->once())
-            ->method('find')
-            ->with($this->equalTo('Newscoop\News\NewsItem'))
-            ->will($this->returnValue($previous));
-
-        $previous->expects($this->once())
-            ->method('getVersion')
-            ->will($this->returnValue(1));
-
-        $item->expects($this->once())
-            ->method('getVersion')
-            ->will($this->returnValue(2));
-
-        $this->odm->expects($this->once())
-            ->method('remove')
-            ->with($this->equalTo($previous));
-
-        $this->odm->expects($this->once())
-            ->method('persist')
-            ->with($this->equalTo($item));
-
-        $this->odm->expects($this->atLeastOnce())
-            ->method('flush');
-
+        $previous = new NewsItem('tag:id');
+        $item = new NewsItem('tag:id', 2);
         $this->service->save($item);
+        $this->assertEquals($item, $this->service->find('tag:id'));
     }
 
     public function testSavePackageItem()
     {
-        $this->odm->expects($this->once())
-            ->method('find')
-            ->with($this->equalTo('Newscoop\News\PackageItem'), $this->equalTo('itemId'));
-
-        $item = $this->getMockBuilder('Newscoop\News\PackageItem')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $item->expects($this->once())
-            ->method('getId')
-            ->will($this->returnValue('itemId'));
-
+        $item = new PackageItem('tag:id');
         $this->service->save($item);
+        $this->assertEquals($item, $this->service->find('tag:id'));
     }
 
     public function testSaveCanceledItem()
     {
-        $item = $this->getMockBuilder('Newscoop\News\NewsItem')
-            ->disableOriginalConstructor()
-            ->getMock();
+        $meta = new ItemMeta();
+        $meta->setPubStatus(ItemMeta::STATUS_CANCELED);
 
-        $item->expects($this->once())
-            ->method('isCanceled')
-            ->will($this->returnValue(true));
-
-        $this->odm->expects($this->never())
-            ->method('persist');
-
+        $item = new NewsItem('tag:id');
+        $item->setItemMeta($meta);
         $this->service->save($item);
-    }
 
-    public function testFind()
-    {
-        $this->expectFindBy(array('id' => 'id'), null, 1, 0, null);
-        $this->assertEquals(null, $this->service->find('id'));
-    }
-
-    private function expectFindBy(array $criteria, $orderBy, $limit, $offset, $return = 'result')
-    {
-        $qb = $this->getMockBuilder('Doctrine\ODM\MongoDB\Query\Builder')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $this->odm->expects($this->once())
-            ->method('createQueryBuilder')
-            ->with($this->equalTo('Newscoop\News\NewsItem'))
-            ->will($this->returnValue($qb));
-
-        $criteria['type'] = array('news', 'package');
-        $qb->expects($this->exactly(count($criteria)))
-            ->method('field')
-            ->with($this->logicalOr($this->equalTo('type'), $this->equalTo('id')))
-            ->will($this->returnValue($qb));
-
-        $qb->expects($this->any())
-            ->method('in')
-            ->will($this->returnValue($qb));
-
-        $qb->expects($this->any())
-            ->method('equals')
-            ->will($this->returnValue($qb));
-
-        if ($orderBy) {
-            $qb->expects($this->once())
-                ->method('sort')
-                ->with($this->equalTo($orderBy))
-                ->will($this->returnValue($qb));
-        }
-
-        $qb->expects($this->once())
-            ->method('limit')
-            ->with($this->equalTo($limit))
-            ->will($this->returnValue($qb));
-
-        $qb->expects($this->once())
-            ->method('skip')
-            ->with($this->equalTo($offset))
-            ->will($this->returnValue($qb));
-
-        $query = $this->getMockBuilder('Doctrine\ODM\MongoDB\Query\Query')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $qb->expects($this->once())
-            ->method('getQuery')
-            ->will($this->returnValue($query));
-
-        $query->expects($this->once())
-            ->method('execute')
-            ->will($this->returnValue($return));
+        $this->assertEquals(0, count($this->service->findBy(array())));
     }
 }

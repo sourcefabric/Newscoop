@@ -24,7 +24,7 @@ class PackageItemTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->xml = simplexml_load_file(APPLICATION_PATH . '/../tests/fixtures/' . self::PACKAGE_XML);
-        $this->item = new PackageItem($this->xml->itemSet->packageItem);
+        $this->item = PackageItem::createFromXml($this->xml->itemSet->packageItem);
     }
 
     public function testInstance()

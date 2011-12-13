@@ -42,23 +42,26 @@ class Group
     protected $refs;
 
     /**
-     * @param SimpleXMLElement $xml
+     * @param string $id
      */
-    public function __construct(\SimpleXMLElement $xml)
+    public function __construct($id)
     {
-        $this->id = (string) $xml['id'];
-        $this->role = (string) $xml['role'];
-        $this->refs = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->mode = (string) $xml['mode'];
-        foreach ($xml->children() as $refXml) {
-            if ($refXml->getName() === 'groupRef') {
-                $this->refs->add(new GroupRef($refXml));
-            } else if ($refXml->getName() === 'itemRef') {
-                $this->refs->add(new ItemRef($refXml));
-            } else {
-                throw new \InvalidArgumentException("Expected group or item ref, got '{$refXml->getName()}'");
-            }
-        }
+        $this->id = (string) $id;
+    }
+
+    /**
+     * Factory
+     *
+     * @param SimpleXMLElement $xml
+     * @return Newscoop\News\Group
+     */
+    public static function createFromXml(\SimpleXMLElement $xml)
+    {
+        $group = new self($xml['id']);
+        $group->role = (string) $xml['role'];
+        $group->mode = (string) $xml['mode'];
+        $group->setRefs($xml);
+        return $group;
     }
 
     /**
@@ -89,6 +92,26 @@ class Group
     public function getMode()
     {
         return $this->mode;
+    }
+
+    /**
+     * Set refs
+     *
+     * @param SimpleXMLElement $xml
+     * @return void
+     */
+    public function setRefs($xml)
+    {
+        $this->refs = new \Doctrine\Common\Collections\ArrayCollection();
+        foreach ($xml->children() as $refXml) {
+            if ($refXml->getName() === 'groupRef') {
+                $this->refs->add(new GroupRef($refXml['idref']));
+            } else if ($refXml->getName() === 'itemRef') {
+                $this->refs->add(ItemRef::createFromXml($refXml));
+            } else {
+                throw new \InvalidArgumentException("Expected group or item ref, got '{$refXml->getName()}'");
+            }
+        }
     }
 
     /**

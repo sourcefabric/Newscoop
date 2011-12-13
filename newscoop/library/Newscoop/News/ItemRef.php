@@ -74,19 +74,24 @@ class ItemRef
     protected $headline;
 
     /**
+     * Factory
+     *
      * @param SimpleXMLElement $xml
+     * @return Newscoop\News\ItemRef
      */
-    public function __construct(\SimpleXMLElement $xml)
+    public static function createFromXml(\SimpleXMLElement $xml)
     {
-        $this->residRef = (string) $xml['residref'];
-        $this->version = (string) $xml['version'];
-        $this->contentType = (string) $xml['contenttype'];
-        $this->itemClass = (string) $xml->itemClass['qcode'];
-        $this->provider = (string) $xml->provider['literal'];
-        $this->versionCreated = new \DateTime((string) $xml->versionCreated);
-        $this->pubStatus = (string) $xml->pubStatus['qcode'];
-        $this->slugline = (string) $xml->slugline;
-        $this->headline = (string) $xml->headline;
+        $ref = new self();
+        $ref->residRef = (string) $xml['residref'];
+        $ref->version = (string) $xml['version'];
+        $ref->contentType = (string) $xml['contenttype'];
+        $ref->itemClass = (string) $xml->itemClass['qcode'];
+        $ref->provider = (string) $xml->provider['literal'];
+        $ref->versionCreated = new \DateTime((string) $xml->versionCreated);
+        $ref->pubStatus = (string) $xml->pubStatus['qcode'];
+        $ref->slugline = (string) $xml->slugline;
+        $ref->headline = (string) $xml->headline;
+        return $ref;
     }
 
     /**

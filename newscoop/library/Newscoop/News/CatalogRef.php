@@ -26,11 +26,11 @@ class CatalogRef
     protected $href;
 
     /**
-     * @param SimpleXMLElement $xml
+     * @param string $href
      */
-    public function __construct(\SimpleXMLElement $xml)
+    public function __construct($href)
     {
-        $this->href = (string) $xml['href'];
+        $this->href = (string) $href;
     }
 
     /**

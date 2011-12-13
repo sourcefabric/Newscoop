@@ -141,11 +141,11 @@ class ReutersFeed extends Feed
 
         $xml = $this->parseResponse($response);
         if (!empty($xml->itemSet->newsItem)) {
-            return new NewsItem($xml->itemSet->newsItem);
+            return NewsItem::createFromXml($xml->itemSet->newsItem);
         } else if (!empty($xml->packageItem)) {
-            return new PackageItem($xml->packageItem);
+            return PackageItem::createFromXml($xml->packageItem);
         } else if (!empty($xml->itemSet->packageItem)) {
-            return new PackageItem($xml->itemSet->packageItem);
+            return PackageItem::createFromXml($xml->itemSet->packageItem);
         } else {
             var_dump('not implemented', $xml->asXML());
             exit;

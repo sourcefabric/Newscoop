@@ -38,13 +38,18 @@ class Subject
     protected $name;
 
     /**
+     * Factory
+     *
      * @param SimpleXMLElement $xml
+     * @return Newscoop\News\Subject
      */
-    public function __construct(\SimpleXMLElement $xml)
+    public static function createFromXml(\SimpleXMLElement $xml)
     {
-        $this->qcode = isset($xml['qcode']) ? (string) $xml['qcode'] : null;
-        $this->type = isset($xml['type']) ? (string) $xml['type'] : null;
-        $this->name = $xml->name ? (string) $xml->name : null;
+        $subject = new self();
+        $subject->qcode = isset($xml['qcode']) ? (string) $xml['qcode'] : null;
+        $subject->type = isset($xml['type']) ? (string) $xml['type'] : null;
+        $subject->name = $xml->name ? (string) $xml->name : null;
+        return $subject;
     }
 
     /**

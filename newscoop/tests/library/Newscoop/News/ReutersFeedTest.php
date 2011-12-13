@@ -7,9 +7,11 @@
 
 namespace Newscoop\News;
 
+require_once __DIR__ . '/TestCase.php';
+
 /**
  */
-class ReutersFeedTest extends \PHPUnit_Framework_TestCase
+class ReutersFeedTest extends TestCase
 {
     /** @var Zend_Rest_Client */
     protected $client;
@@ -24,27 +26,18 @@ class ReutersFeedTest extends \PHPUnit_Framework_TestCase
     {
         global $application;
 
-        $this->odm = $application->getBootstrap()->getResource('odm');
-
-        if ($this->odm === null) {
-            $this->markTestSkipped('Mongo extension not available.');
-        }
-
         if ($application->getOption('reuters') === null) {
             $this->markTestSkipped('API settings not available.');
         }
 
-        $this->odm->getConfiguration()->setDefaultDB('phpunit');
-        $this->odm->getSchemaManager()->dropDocumentDatabase('Newscoop\News\ReutersFeed');
-        $this->odm->clear();
+        $this->odm = $this->setUpOdm();
 
         $this->feed = new ReutersFeed($application->getOption('reuters'));
     }
 
     public function tearDown()
     {
-        $this->odm->getSchemaManager()->dropDocumentDatabase('Newscoop\News\ReutersFeed');
-        $this->odm->clear();
+        $this->tearDownOdm($this->odm);
     }
 
     public function testConstructor()

@@ -28,6 +28,7 @@ class ItemService
     public function __construct(\Doctrine\Common\Persistence\ObjectManager $om)
     {
         $this->om = $om;
+        $this->repository = $this->om->getRepository('Newscoop\News\Item');
     }
 
     /**
@@ -38,11 +39,7 @@ class ItemService
      */
     public function find($id)
     {
-        $items = $this->findBy(array(
-            'id' => $id,
-        ), null, 1, 0);
-
-        return count($items) ? $items->getNext() : null;
+        return $this->repository->find($id);
     }
 
     /**
@@ -55,26 +52,7 @@ class ItemService
      */
     public function findBy(array $criteria, array $orderBy = null, $limit = 25, $offset = 0)
     {
-        $qb = $this->om->createQueryBuilder('Newscoop\News\NewsItem');
-
-        $criteria['type'] = array('news', 'package');
-        foreach ($criteria as $field => $value) {
-            if (is_array($value)) {
-                $qb->field($field)->in($value);
-            } else {
-                $qb->field($field)->equals($value);
-            }
-        }
-
-        if (is_array($orderBy)) {
-            $qb->sort($orderBy);
-        }
-
-        return $qb
-            ->limit($limit)
-            ->skip($offset)
-            ->getQuery()
-            ->execute();
+        return $this->repository->findBy($criteria, $orderBy, $limit, $offset);
     }
 
     /**
@@ -85,7 +63,7 @@ class ItemService
      */
     public function save(Item $item)
     {
-        $persisted = $this->om->find($item instanceof NewsItem ? 'Newscoop\News\NewsItem' : 'Newscoop\News\PackageItem', $item->getId());
+        $persisted = $this->repository->find($item->getId());
         if ($persisted !== null) {
             if ($item->getVersion() < $persisted->getVersion()) {
                 return;
