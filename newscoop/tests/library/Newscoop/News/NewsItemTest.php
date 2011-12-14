@@ -113,8 +113,14 @@ class NewsItemTest extends \PHPUnit_Framework_TestCase
     {
         $contentSet = $this->item->getContentSet();
         $this->assertInstanceOf('Newscoop\News\ContentSet', $contentSet);
-        $this->assertContains("<p>Content text</p>", $contentSet->getInlineContent());
-        $this->assertContains("<p>Next paragraph</p>", $contentSet->getInlineContent());
+
+        $inlineContent = $contentSet->getInlineContent();
+        $this->assertInstanceOf('Newscoop\News\InlineContent', $inlineContent);
+        $this->assertEquals('application/xhtml+html', $inlineContent->getContentType());
+        $this->assertEquals(1106, $inlineContent->getWordCount());
+        $this->assertContains("<p>Content text</p>", (string) $inlineContent);
+        $this->assertContains("<p>Next paragraph</p>", (string) $inlineContent);
+        $this->assertNotContains("<body>", (string) $inlineContent);
     }
 
     public function testGetContentSetRemoteContent()

@@ -20,8 +20,8 @@ class ContentSet
     protected $id;
 
     /**
-     * @String
-     * @var string
+     * @EmbedOne(targetDocument="InlineContent")
+     * @var Newscoop\News\InlineContent
      */
     protected $inlineContent;
 
@@ -41,7 +41,7 @@ class ContentSet
     {
         $contentSet = new self();
         if ($xml->inlineXML->count()) {
-            $contentSet->setInlineContent($xml->inlineXML->html->body);
+            $contentSet->setInlineContent($xml->inlineXML);
         } else if ($xml->remoteContent->count()) {
             $contentSet->setRemoteContent($xml);
         } else {
@@ -94,18 +94,13 @@ class ContentSet
      */
     private function setInlineContent(\SimpleXMLElement $xml)
     {
-        $childrens = array();
-        foreach ($xml->children() as $children) {
-            $childrens[] = $children->asXML();
-        }
-
-        $this->inlineContent = implode("\n", $childrens);
+        $this->inlineContent = InlineContent::createFromXml($xml);
     }
 
     /**
      * Get inline content
      *
-     * @return string
+     * @return Newscoop\News\InlineContent
      */
     public function getInlineContent()
     {
