@@ -20,15 +20,6 @@ class PackageItem extends Item
     protected $groupSet;
 
     /**
-     * @param string $id
-     * @param int $version
-     */
-    public function __construct($id, $version = 1)
-    {
-        parent::__construct($id, $version);
-    }
-
-    /**
      * Factory
      *
      * @param SimpleXMLElement $xml

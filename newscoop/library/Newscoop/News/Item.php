@@ -14,7 +14,7 @@ namespace Newscoop\News;
  * @DiscriminatorField(fieldName="type")
  * @DiscriminatorMap({"package"="PackageItem", "news"="NewsItem"})
  */
-class Item
+abstract class Item
 {
     /**
      * @Id(strategy="NONE")
@@ -92,7 +92,7 @@ class Item
      * @param string $id
      * @param int $version
      */
-    protected function __construct($id, $version = 1)
+    public function __construct($id, $version = 1)
     {
         $this->id = (string) $id;
         $this->version = max(1, (int) $version);
