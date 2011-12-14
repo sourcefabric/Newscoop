@@ -161,6 +161,15 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('user.search', 'Newscoop\Services\UserSearchService')
             ->addArgument(new sfServiceReference('em'));
 
+        $container->register('content.publication', 'Newscoop\Content\PublicationService')
+            ->addArgument(new sfServiceReference('em'));
+
+        $container->register('content.section', 'Newscoop\Content\SectionService')
+            ->addArgument(new sfServiceReference('em'));
+
+        $container->register('content.type', 'Newscoop\Content\ContentTypeService')
+            ->addArgument(new sfServiceReference('em'));
+
         Zend_Registry::set('container', $container);
         return $container;
     }
@@ -295,7 +304,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $reader = new AnnotationReader();
         $reader->setDefaultAnnotationNamespace('Doctrine\ODM\MongoDB\Mapping\Annotations\\');
-        $config->setMetadataDriverImpl(new AnnotationDriver($reader, APPLICATION_PATH . '/../library/Newscoop'));
+        $config->setMetadataDriverImpl(new AnnotationDriver($reader, APPLICATION_PATH . '/../library/Newscoop/News'));
 
         $config->setDefaultDB('newscoop');
 
