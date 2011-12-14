@@ -53,6 +53,7 @@ class ReutersFeed extends Feed
      */
     public function update(\Doctrine\Common\Persistence\ObjectManager $om, ItemService $itemService)
     {
+        $updated = new \DateTime();
         foreach ($this->getChannels() as $channel) {
             if ($this->updated !== null && $this->updated->getTimestamp() > $channel->lastUpdate->getTimestamp()) {
                 continue;
@@ -67,7 +68,7 @@ class ReutersFeed extends Feed
             }
         }
 
-        $this->updated = new \DateTime();
+        $this->updated = $updated;
         $om->flush();
     }
 
