@@ -1,4 +1,25 @@
-3.6.0-RC3 (August 9, 2011)
+4.0.0-beta (December 14, 2011)
+  New Fetures
+  -----------
+  Community features
+  Activity feed widget
+  Article playlists
+  Related articles
+  Pending articles
+  Article Webcodes
+  Feedback messages
+
+  Improvements
+  ------------
+  Themes importing and exporting
+  Users management UI and Users rating
+  Recommended comments
+  Template engine uses now Smarty 3
+
+  Bug fixes
+  ---------
+  Tons of bug fixes since the last public release. Complete list will be available in
+  a further release, meanwhile please check http://dev.sourcefabric.org/browse/CS
 
 3.6.0-RC2 (July 26, 2011)
   Improvements
