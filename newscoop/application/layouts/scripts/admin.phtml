@@ -95,7 +95,7 @@
         });
     //--></script>
 </head>
-<body<?php echo $this->placeholder('sidebar') != '' ? ' class="with-sidebar"' : ''; ?>>
+<body id="<?php echo $this->placeholder('bodyId'); ?>"<?php echo $this->placeholder('sidebar') != '' ? ' class="with-sidebar"' : ''; ?>>
 <div class="meta-bar">
     <ul>
         <li><a href="<?php echo $this->url(array('controller' => 'auth', 'action' => 'logout')); ?>"><?php putGS('Logout'); ?></a></li>

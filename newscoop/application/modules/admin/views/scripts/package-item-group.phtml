@@ -5,7 +5,11 @@
         <?php if ($ref instanceof \Newscoop\News\GroupRef) { ?>
             <?php $this->renderPackageItemGroup($this->item->getGroupSet()->getGroup($ref), $this->item); ?>
         <?php } else { ?>
-            <?php echo $ref->getHeadline(); ?> [<?php echo $ref->getItemClass(); ?>]
+            <?php $item = $this->item->getFeed()->getItem($ref->getResidRef()); ?>
+            <?php echo $item->getContentMeta()->getHeadline(); ?>
+            <?php if ($item instanceof \Newscoop\News\NewsItem && !$item->getContentSet()->getInlineContent() && $thumbnail = $item->getContentSet()->getRemoteContent('rend:thumbnail')) { ?>
+            <div class="thumbnail"><img src="<?php echo $this->item->getFeed()->getRemoteContentSrc($thumbnail); ?>" width="<?php echo $thumbnail->getWidth(); ?>" height="<?php echo $thumbnail->getHeight(); ?>" alt="" /></div>
+            <?php } ?>
         <?php } ?>
     </li>
     <?php } ?>

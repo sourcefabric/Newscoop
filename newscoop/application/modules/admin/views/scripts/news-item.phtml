@@ -1,19 +1,10 @@
 <?php if ($this->item->getContentSet()->getInlineContent()) { ?>
 <div class="content">
-<?php
-$contentArray = array_filter(explode("\n", $this->item->getContentSet()->getInlineContent()));
-for ($i = 0; $i < 5; $i++) {
-    if ( ! isset($contentArray[$i])) {
-        break;
-    }
-
-    echo $contentArray[$i];
-}
-?>
+<?php echo $this->item->getContentSet()->getInlineContent(); ?>
 </div>
 
-<?php } else if ($this->item->getContentSet()->getRemoteContent('rend:thumbnail')) { ?>
-<div class="thumbnail"><img src="<?php echo $this->item->getFeed()->getRemoteContentSrc($this->item->getContentSet()->getRemoteContent('rend:thumbnail')); ?>" /></div>
+<?php } else if ($thumbnail = $this->item->getContentSet()->getRemoteContent('rend:thumbnail')) { ?>
+<div class="thumbnail"><img src="<?php echo $this->item->getFeed()->getRemoteContentSrc($thumbnail); ?>" width="<?php echo $thumbnail->getWidth(); ?>" height="<?php echo $thumbnail->getHeight(); ?>" alt="" /></div>
 <em>available sizes:
     <?php foreach ($this->item->getContentSet()->getRemoteContent() as $remoteContent) { ?>
     <a href="<?php echo $this->item->getFeed()->getRemoteContentSrc($remoteContent); ?>" target="_blank"><?php echo $remoteContent->getWidth(), 'x', $remoteContent->getHeight(); ?></a>

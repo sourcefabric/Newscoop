@@ -1,12 +1,14 @@
+<?php $this->placeholder('title')->set($this->item->getContentMeta()->getHeadline()); ?>
+
 <div class="ingest">
 
-<span class="created"><?php echo $this->item->getItemMeta()->getFirstCreated()->format('d/m H:i'); ?></span>
-<h1><?php echo $this->item->getContentMeta()->getHeadline(); ?></a></h1>
+<div class="detail">
 
 <?php if ($this->item instanceof \Newscoop\News\PackageItem) { ?>
     <?php $this->renderPackageItem($this->item); ?>
 <?php } else { ?>
     <?php $this->renderNewsItem($this->item); ?>
 <?php } // /if ?>
+</div>
 
 </div>

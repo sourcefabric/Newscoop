@@ -13,38 +13,30 @@ use Newscoop\Entity\Ingest\Feed,
  */
 class Admin_IngestController extends Zend_Controller_Action
 {
-    public function init()
-    {
-    }
-
     public function indexAction()
     {
-        $this->view->feeds = $this->_helper->service('ingest.feed')->findBy(array());
-        $this->view->items = $this->_helper->service('ingest.item')->findBy(array(
+        $constraints = array(
             'itemMeta.pubStatus' => \Newscoop\News\ItemMeta::STATUS_USABLE,
-        ), array(
+        );
+
+        $class = $this->_getParam('class', null);
+        if ($class) {
+            $constraints['itemMeta.itemClass'] = $class;
+        }
+
+        $this->view->class = $class;
+        $this->view->items = $this->_helper->service('ingest.item')->findBy($constraints, array(
             'itemMeta.firstCreated' => 'desc',
-        ), 50);
-    }
+        ), 50, $this->_getParam('offset', 0));
 
-    public function widgetAction()
-    {
-        $entries = $this->service->findBy(array(
-            'published' => null,
-            'status' => 'Usable',
-        ), array('updated' => 'desc'), 8, 0);
-
-        $this->view->entries = $entries;
+        $this->view->feeds = $this->_helper->service('ingest.feed')->findBy(array());
+        $this->view->publishers = array();
     }
 
     public function detailAction()
     {
-        $this->_helper->layout->setLayout('iframe');
+        //$this->_helper->layout->setLayout('iframe');
         $this->view->item = $this->_helper->service('ingest.item')->find($this->_getParam('item'));
-        if (!$this->view->item) {
-            var_dump($this->_getParam('item'));
-            exit;
-        }
     }
 
     public function switchModeAction()
@@ -105,7 +97,7 @@ class Admin_IngestController extends Zend_Controller_Action
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $feed = $this->_helper->service('ingest.feed')->save($form->getValues());
-            $this->_helper->flashMessenger(getGS("Feed added"));
+            $this->_helper->flashMessenger(getGS('Feed saved'));
             $this->_helper->redirector('index');
         }
 
@@ -116,5 +108,22 @@ class Admin_IngestController extends Zend_Controller_Action
     {
         $this->_helper->service('ingest.feed')->updateAll();
         $this->_helper->redirector('index');
+    }
+
+    public function createPublisherAction()
+    {
+        $form = new Admin_Form_Ingest_Publisher();
+        $form->args->publication->setMultiOptions($this->_helper->service('content.publication')->getOptions());
+        $form->args->section->setMultiOptions($this->_helper->service('content.section')->getOptions());
+        $form->args->article_type->setMultiOptions($this->_helper->service('content.type')->getOptions());
+
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $this->_helper->service('ingest.publisher')->save($form->getValues());
+            $this->_helper->flashMessenger(getGS('Publisher saved'));
+            $this->_helper->redirector('index');
+        }
+
+        $this->view->form = $form;
     }
 }

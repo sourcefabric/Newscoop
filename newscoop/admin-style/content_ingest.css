@@ -1,6 +1,4 @@
 .ingest {
-    height: 1%;
-    overflow: hidden;
 }
 
 .ingest ul {
@@ -163,6 +161,7 @@
 .ingest .items li {
     margin: 0 0 3px;
     border-top: 1px solid #ccc;
+    background-color: #fff;
 }
 
 .ingest .items li:first-child {
@@ -190,4 +189,140 @@
 .ingest .feeds .add {
     margin-top: 1em;
     background-color: transparent;
+}
+
+#ingest .outputs {
+    position: fixed;
+    top: 70px;
+    left: 33%;
+    font-size: 1.1em;
+}
+
+#ingest .outputs li {
+    min-width: 50px;
+    max-width: 160px;
+    min-height: 50px;
+    margin: 0 0 5px;
+    padding: 5px;
+    text-align: right;
+    border: 1px solid #9d9d9d;
+    background-color: #fff;
+    z-index: 1000;
+}
+
+#ingest .outputs li.active {
+}
+
+#ingest .outputs li.hover {
+    background: #efefef none;
+}
+
+#ingest .outputs li div {
+    margin: 3px 0 0;
+    padding: 3px 3px 0;
+    border-top: 1px solid #ccc;
+}
+
+.ingest .pictures {
+    height: 1%;
+    overflow: hidden;
+}
+
+.ingest .pictures li {
+    float: left;
+    margin: 0 3px 3px 0;
+    padding: 0;
+    height: 180px;
+    width: 150px;
+    text-align: center;
+}
+
+.ingest .detail p {
+    width: 60em;
+}
+
+#ingest .items {
+    margin: 13px 0;
+    padding: 0;
+}
+
+#ingest .clearfix {
+    clear: both;
+}
+
+#ingest .items > li {
+    float: left;
+    margin: 0 8px 8px 0;
+    padding: 0;
+    background-color: #fff;
+}
+
+#ingest .items a {
+    display: block;
+    padding: 5px;
+    color: #333;
+    background-color: #fff;
+    position: relative;
+}
+
+#ingest .items a:hover {
+    color: #fff;
+    background-color: #000;
+}
+
+#ingest .items .preview {
+    width: 150px;
+    height: 150px;
+    overflow: hidden;
+}
+
+#ingest .items .preview p {
+    margin: 0;
+    padding: 0;
+    font-size: 1.5em;
+    font-family: serif;
+}
+
+#ingest .items .preview p:first-line {
+    margin-right: 40px;
+}
+
+#ingest .items time {
+    float: right;
+    padding: 3px;
+    opacity: 0.8;
+    color: #fff;
+    background-color: #000;
+}
+
+#ingest .items .icls_picture time {
+    float: none;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+}
+
+#ingest .items .urgency {
+    position: absolute;
+    left: 5px;
+    bottom: 5px;
+    padding: 3px;
+    color: #fff;
+    background-color: #000;
+    opacity: 0.8;
+}
+
+#ingest .items .urgency.level-1 {
+    background-color: #f57900;
+    opacity: 1;
+}
+
+#ingest .items .urgency.level-2,
+#ingest .items .urgency.level-3 {
+    background-color: #75507b;
+}
+
+#ingest .items .urgency.level-4,
+#ingest .items .urgency.level-5 {
+    background-color: #3465a4;
 }

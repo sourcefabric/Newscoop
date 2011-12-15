@@ -1,16 +1,46 @@
 <?php $this->placeholder('title')->set('News Desk'); ?>
+<?php $this->placeholder('bodyId')->set('ingest'); ?>
 
-<div class="ingest"><div class="control"><div class="w">
+<div class="filters">
+    <a href="<?php echo $this->url(array(
+        'class' => null,
+    )); ?>">Any</a> |
+    <a href="<?php echo $this->url(array(
+        'class' => 'icls:text',
+    )); ?>">Texts</a> |
+    <a href="<?php echo $this->url(array(
+        'class' => 'icls:picture',
+    )); ?>">Pictures</a> |
+    <a href="<?php echo $this->url(array(
+        'class' => 'icls:composite',
+    )); ?>">Packages</a>
+</div>
+
+<ul class="items">
+    <?php foreach ($this->items as $item) { ?>
+    <li class="<?php echo str_replace(':', '_', $item->getItemMeta()->getItemClass()); ?>" id="<?php echo $item->getId(); ?>">
+    <a href="<?php echo $this->url(array(
+        'action' => 'detail',
+        'item' => $item->getId(),
+    )); ?>" title="<?php echo $item->getContentMeta()->getDescription(); ?>">
+        <div class="preview">
+            <?php $this->renderDate($item->getItemMeta()->getFirstCreated()); ?>
+            <?php if ($item->getItemMeta()->getItemClass() === 'icls:composite') { ?>
+            <p><?php echo $item->getContentMeta()->getDescription(); ?></p>
+            <?php } else if ($thumbnail = $item->getContentSet()->getRemoteContent('rend:thumbnail')) { ?>
+            <img src="<?php echo $item->getFeed()->getRemoteContentSrc($thumbnail); ?>" width="<?php echo $thumbnail->getWidth(); ?>" height="<?php echo $thumbnail->getHeight(); ?>" alt="<?php echo $item->getContentMeta()->getHeadline(); ?>" />
+            <?php } else { ?>
+            <p><?php echo $item->getContentMeta()->getDescription(); ?></p>
+            <?php } ?>
+            <div class="urgency level-<?php echo $item->getContentMeta()->getUrgency(); ?>">Urgency: <?php echo $item->getContentMeta()->getUrgency(); ?></div>
+        </div>
+    </a></li>
+    <?php } ?>
+</ul>
+<div class="clearfix"></div>
 
 <h2><?php putGS('Feeds'); ?></h2>
 <ul class="feeds">
-    <?php /*
-    <li><a href="<?php echo $this->url(array(
-            'action' => 'index',
-            'feed' => null
-        )); ?>" title="Switch feed"><?php echo getGS('All'); ?></a>
-    </li>
-     */ ?>
     <?php foreach ($this->feeds as $feed) { ?>
     <li><a href="<?php echo $this->url(array(
             'action' => 'index',
@@ -18,44 +48,48 @@
         )); ?>" title="Switch feed"><?php echo $feed->getName(); ?></a>
         (<?php putGS('updated'); ?> <?php echo $feed->getUpdated() ? $feed->getUpdated()->format('H:i') : getGS('Never'); ?>)
     </li>
-    <?php /*
-    <li>
-        <a href="<?php echo $this->url(array(
-            'action' => 'switch-mode',
-            'feed' => $feed->getId(),
-        )); ?>" title="Switch mode"><?php echo $feed->isAutoMode() ? getGS('Automatic') : getGS('Manual'); ?></a>
-    </li>
-    */ ?>
     <?php } ?>
 
     <li class="add"><a href="<?php echo $this->url(array(
         'action' => 'add-feed',
-    )); ?>">Add feed</a></li>
+    )); ?>"><?php putGS('Add feed'); ?></a></li>
 </ul>
 
-</div></div><div class="main"><div class="w">
-
-<ul class="items">
-    <?php foreach ($this->items as $item) { ?>
-    <li class="<?php echo $item->getItemMeta()->getItemClass(); ?>">
-        <span class="created"><?php echo $item->getItemMeta()->getFirstCreated()->format('d/m H:i'); ?></span>
-        <h3><?php echo $item->getContentMeta()->getHeadline(); ?></h3>
-        <address>by <?php echo $item->getItemMeta()->getProvider(); ?></address>
-        <?php if ($item instanceof \Newscoop\News\PackageItem) { ?>
-            <?php $this->renderPackageItem($item); ?>
-        <?php } else { ?>
-            <?php $this->renderNewsItem($item); ?>
-        <?php } ?>
-    </li>
-    <?php } // /foreach ?>
+<ul class="outputs">
+    <li id="web">Web</li>
 </ul>
 
-</div></div></div>
+<ul class="publishers">
+    <?php foreach ($this->publishers as $publisher) { ?>
+    <li><?php echo $publisher; ?></li>
+    <?php } ?>
+
+    <li class="add"><a href="<?php echo $this->url(array(
+        'action' => 'create-publisher',
+    )); ?>"><?php putGS('Add publisher'); ?></a></li>
+</ul>
 
 <script>
 $(function() {
     $('.items h3 a').fancybox({
         hideOnContentClick: false
     });
+
+    $('.items li').draggable({
+        revert: true,
+        cursor: 'move',
+        opacity: 0.5,
+        snap: true,
+        zIndex: 2000
+    });
+
+    $('.outputs li').droppable({
+        activeClass: 'active',
+        hoverClass: 'hover',
+        tolerance: 'pointer',
+        drop: function(event, ui) {
+            $(this).append($('<div />').html(ui.draggable.find('a').attr('title')).addClass(ui.draggable.attr('id')));
+        }
+    }).hide();
 });
 </script>
