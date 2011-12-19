@@ -249,6 +249,25 @@ camp_html_display_msgs();
 
 <P>
 <script>
+function prepareDate(oldFormat)
+{
+    var dates = oldFormat.split('-');
+    var returnVal = dates[1] + '/' + dates[2] + '/' + dates[0];
+    return returnVal;
+}
+
+function timeOk(startDate, startTime, endDate, endTime)
+{
+    startDate = prepareDate(startDate);
+    endDate = prepareDate(endDate);
+    var startFull = new Date(startDate + ' ' + startTime);
+    var endFull = new Date(endDate + ' ' + endTime);
+    if (endFull - startFull >= 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 $('#edit-debate-form #input-title').focus();
 $('#answer-row').data('answers', <?php echo isset($answers) ? json_encode(array_map( 'htmlspecialchars', array_values($answers))) : "[]" ?>);
@@ -281,13 +300,24 @@ $('.answer-row input[type=text]').live('blur', function()
 });
 $('#edit-debate-form').submit( function()
 {
-	if ($('.answer-row').length < 2)
-	{
-		alert('<?php putGS('Please input at least 2 answers')?>');
-		return false;
-	}
-	$(this).find('#answer-tpl-input').remove();
-	return <?php camp_html_fvalidate(); ?>;
+    var startDate = $('#f_date_begin').val();
+    var startTime = $('#f_time_begin').val();
+    var endDate = $('#f_date_end').val();
+    var endTime = $('#f_time_end').val();
+    if (!timeOk(startDate, startTime, endDate, endTime)) {
+        valid = 0;
+        alert("<?php putGS('End time cannot be set before start time'); ?>");
+        $('#f_date_end').focus();
+        return false;
+    }
+
+    if ($('.answer-row').length < 2) {
+        alert('<?php putGS('Please input at least 2 answers')?>');
+        return false;
+    }
+    $(this).find('#answer-tpl-input').remove();
+
+    return <?php camp_html_fvalidate(); ?>;
 })
 
 $(function()
