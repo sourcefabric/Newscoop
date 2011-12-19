@@ -13,16 +13,31 @@ require_once __DIR__ . '/TestCase.php';
  */
 class ItemServiceTest extends TestCase
 {
+    const TEXT_XML = 'textNewsItem.xml';
+
     /** @var Newscoop\News\ItemService */
     protected $service;
 
-    /** @var Doctrine\Common\Persistance\Objectmanager */
+    /** @var Doctrine\ODM\MongoDB\DocumentManager */
     protected $odm;
+
+    /** @var Doctrine\ORM\EntityManager */
+    protected $orm;
 
     public function setUp()
     {
         $this->odm = $this->setUpOdm();
         $this->service = new ItemService($this->odm);
+    }
+
+    public function tearDown()
+    {
+        $this->tearDownOdm($this->odm);
+
+        if ($this->orm !== null) {
+            $this->tearDownOrm($this->orm);
+            $this->orm = null;
+        }
     }
 
     public function testInstance()
@@ -98,5 +113,45 @@ class ItemServiceTest extends TestCase
         $this->service->save($item);
 
         $this->assertEquals(0, count($this->service->findBy(array())));
+    }
+
+    public function testPublish()
+    {
+        $this->orm = $this->setUpOrm('Newscoop\Entity\Article', 'Newscoop\Entity\Comment', 'Newscoop\Entity\ArticleDatetime');
+
+        $xml = simplexml_load_file(APPLICATION_PATH . '/../tests/fixtures/' . self::TEXT_XML);
+        $item = NewsItem::createFromXml($xml->itemSet->newsItem);
+
+        $articles = \Article::GetByName($item->getContentMeta()->getHeadline(), null, null, null, null, true);
+        foreach ($articles as $article) {
+            $article->delete();
+        }
+
+        $this->assertFalse($item->isPublished());
+
+        $article = $this->service->publish($item);
+
+        $this->assertTrue($item->isPublished());
+        $this->assertInstanceOf('DateTime', $item->getPublished());
+
+        $articles = \Article::GetByName($item->getContentMeta()->getHeadline(), null, null, null, null, true);
+        $this->assertEquals(1, count($articles));
+
+        $article = $articles[0];
+        $this->assertEquals($item->getContentMeta()->getHeadline(), $article->getTitle());
+        $this->assertEquals('newsml', $article->getType());
+        $this->assertEquals($item->getItemMeta()->getFirstCreated()->format('Y-m-d H:i:s'), $article->getCreationDate());
+
+        $articleData = $article->getArticleData();
+        $this->assertEquals($item->getId(), $articleData->getFieldValue('guid'));
+        $this->assertEquals($item->getVersion(), $articleData->getFieldValue('version'));
+        $this->assertEquals($item->getContentMeta()->getUrgency(), $articleData->getFieldValue('urgency'));
+        $this->assertEquals($item->getRightsInfo()->first()->getCopyrightNotice(), $articleData->getFieldValue('copyright'));
+        $this->assertEquals($item->getItemMeta()->getProvider(), $articleData->getFieldValue('provider'));
+        $this->assertEquals($item->getContentMeta()->getDescription(), $articleData->getFieldValue('description'));
+        $this->assertEquals($item->getContentMeta()->getDateline(), $articleData->getFieldValue('dateline'));
+        $this->assertEquals($item->getContentMeta()->getByline(), $articleData->getFieldValue('byline'));
+        $this->assertEquals($item->getContentMeta()->getCreditline(), $articleData->getFieldValue('creditline'));
+        $this->assertEquals((string) $item->getContentSet()->getInlineContent(), $articleData->getFieldValue('inlinecontent'));
     }
 }

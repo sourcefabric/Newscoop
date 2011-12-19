@@ -45,9 +45,10 @@ class ContentMeta
 
     /**
      * @String
+     * @AlsoLoad("by")
      * @var string
      */
-    protected $by;
+    protected $byline;
 
     /**
      * @String
@@ -68,6 +69,12 @@ class ContentMeta
     protected $subjects;
 
     /**
+     * @String
+     * @var string
+     */
+    protected $language;
+
+    /**
      * Factory
      *
      * @param SimpleXMLElement $xml
@@ -81,9 +88,10 @@ class ContentMeta
         $meta->headline = (string) $xml->headline;
         $meta->dateline = (string) $xml->dateline;
         $meta->creditline = (string) $xml->creditline;
-        $meta->by = (string) $xml->by;
+        $meta->byline = (string) $xml->by;
         $meta->description = (string) $xml->description;
         $meta->setSubjects($xml);
+        $meta->language = (string) $xml->language['tag'];
         return $meta;
     }
 
@@ -128,13 +136,13 @@ class ContentMeta
     }
 
     /**
-     * Get by
+     * Get byline
      *
      * @return string
      */
-    public function getBy()
+    public function getByline()
     {
-        return $this->by;
+        return $this->byline;
     }
 
     /**
@@ -179,5 +187,15 @@ class ContentMeta
     public function getSubjects()
     {
         return $this->subjects;
+    }
+
+    /**
+     * Get language
+     *
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
     }
 }

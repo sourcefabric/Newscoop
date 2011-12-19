@@ -1,13 +1,11 @@
 <?php camp_load_translation_strings('home'); ?>
-<?php echo $this->doctype(); ?>
+<!DOCTYPE html>
 <html lang="<?php echo $this->locale; ?>" dir="ltr">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="utf-8" />
     <?php echo $this->headTitle(); ?>
 
-    <meta http-equiv="Expires" content="now" />
-
-    <script type="text/javascript"><!--
+    <script>
         // set vars
         var popupFlash = false;
         var website_url = '<?php echo $this->baseUrl(); ?>';
@@ -33,28 +31,28 @@
             window.close();
         }
         <?php } ?>
-    //--></script>
+    </script>
 
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/jquery-ui-1.8.6.custom.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/js/jquery/fancybox/jquery.fancybox-1.3.4.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/ColVis.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/admin_stylesheet_new.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/admin_stylesheet.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/admin-style/jquery-ui-1.8.6.custom.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/js/jquery/fancybox/jquery.fancybox-1.3.4.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/admin-style/ColVis.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/admin-style/admin_stylesheet_new.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/admin-style/admin_stylesheet.css'); ?>" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/action_buttons.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/content.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/fg.menu.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/form.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/layout.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/sidebar.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/widgets.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/zend_admin_stylesheet.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/admin-style/action_buttons.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/admin-style/content.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/admin-style/fg.menu.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/admin-style/form.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/admin-style/layout.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/admin-style/sidebar.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/admin-style/widgets.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/admin-style/zend_admin_stylesheet.css'); ?>" />
     <?php if (!$this->legacy) { ?>
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/form.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/layout.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/content.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/sidebar.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/misc-pages.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/admin-style/form.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/admin-style/layout.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/admin-style/content.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/admin-style/sidebar.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/admin-style/misc-pages.css'); ?>" />
     <?php
         $headLink = $this->headLink();
         if(!isset($headLink['table']))
@@ -64,29 +62,29 @@
         echo $headLink;
     ?>
     <?php } ?>
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/js/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css'); ?>" />
+    <link rel="stylesheet" media="screen" href="<?php echo $this->baseUrl('/js/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css'); ?>" />
 	<!--[if IE 6]>
 	<style type="text/css">
 		.fg-menu-ipod .fg-menu li { width: 95%; }
 		.fg-menu-ipod .ui-widget-content { border:0; }
 	</style> <![endif]-->
 
-    <script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/jquery-1.6.4.min.js'); ?>"></script>
-    <script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/jquery-ui-1.8.6.custom.min.js'); ?>"></script>
-    <script type="text/javasctipt" src="<?php echo $this->baseUrl('/js/jquery/i18n/jquery.ui.datepicker-' . $this->locale . '.js'); ?>"></script>
-    <script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/jquery-ui-timepicker-addon.min.js'); ?>"></script>
-    <script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/fg.menu.js'); ?>"></script>
-    <script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/jquery.cookie.js'); ?>"></script>
-    <script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/jquery.dataTables.min.js'); ?>"></script>
-    <script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/ColVis.min.js'); ?>"></script>
-    <script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/jquery.widgets.js'); ?>"></script>
-    <script type="text/javascript" src="<?php echo $this->baseUrl('/js/jquery/fancybox/jquery.fancybox-1.3.4.pack.js'); ?>"></script>
-    <script type="text/javascript" src="<?php echo $this->baseUrl('/js/admin.js'); ?>"></script>
+    <script src="<?php echo $this->baseUrl('/js/jquery/jquery-1.6.4.min.js'); ?>"></script>
+    <script src="<?php echo $this->baseUrl('/js/jquery/jquery-ui-1.8.6.custom.min.js'); ?>"></script>
+    <script src="<?php echo $this->baseUrl('/js/jquery/i18n/jquery.ui.datepicker-' . $this->locale . '.js'); ?>"></script>
+    <script src="<?php echo $this->baseUrl('/js/jquery/jquery-ui-timepicker-addon.min.js'); ?>"></script>
+    <script src="<?php echo $this->baseUrl('/js/jquery/fg.menu.js'); ?>"></script>
+    <script src="<?php echo $this->baseUrl('/js/jquery/jquery.cookie.js'); ?>"></script>
+    <script src="<?php echo $this->baseUrl('/js/jquery/jquery.dataTables.min.js'); ?>"></script>
+    <script src="<?php echo $this->baseUrl('/js/jquery/ColVis.min.js'); ?>"></script>
+    <script src="<?php echo $this->baseUrl('/js/jquery/jquery.widgets.js'); ?>"></script>
+    <script src="<?php echo $this->baseUrl('/js/jquery/fancybox/jquery.fancybox-1.3.4.pack.js'); ?>"></script>
+    <script src="<?php echo $this->baseUrl('/js/admin.js'); ?>"></script>
     <?php
         echo $this->headStyle();
         echo $this->headScript();
     ?>
-    <script type="text/javascript"><!--
+    <script><!--
         $(function() {
             <?php if ($this->locale != 'en') { ?>
             // init datepicker

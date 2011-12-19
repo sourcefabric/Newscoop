@@ -79,8 +79,13 @@ class InlineContent
     {
         switch ($this->contentType) {
             case 'application/xhtml+html':
+            case 'application/xhtml+xml':
                 return $this->getContentBody();
                 break;
+
+            default:
+                var_dump($this);
+                exit;
         }
     }
 

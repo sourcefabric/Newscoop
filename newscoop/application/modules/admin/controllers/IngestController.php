@@ -13,6 +13,13 @@ use Newscoop\Entity\Ingest\Feed,
  */
 class Admin_IngestController extends Zend_Controller_Action
 {
+    const LIMIT = 50;
+
+    public function init()
+    {
+        Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginator.phtml');
+    }
+
     public function indexAction()
     {
         $constraints = array(
@@ -24,13 +31,18 @@ class Admin_IngestController extends Zend_Controller_Action
             $constraints['itemMeta.itemClass'] = $class;
         }
 
-        $this->view->class = $class;
+        $page = $this->_getParam('page', 1);
+        $count = count($this->_helper->service('ingest.item')->findBy($constraints));
+        $paginator = Zend_Paginator::factory($count);
+        $paginator->setItemCountPerPage(self::LIMIT);
+        $paginator->setCurrentPageNumber($page);
+        $paginator->setView($this->view);
+        $paginator->setDefaultScrollingStyle('Sliding');
+        $this->view->paginator = $paginator;
+
         $this->view->items = $this->_helper->service('ingest.item')->findBy($constraints, array(
             'itemMeta.firstCreated' => 'desc',
-        ), 50, $this->_getParam('offset', 0));
-
-        $this->view->feeds = $this->_helper->service('ingest.feed')->findBy(array());
-        $this->view->publishers = array();
+        ), self::LIMIT, ($paginator->getCurrentPageNumber() - 1) * self::LIMIT);
     }
 
     public function detailAction()
@@ -50,19 +62,6 @@ class Admin_IngestController extends Zend_Controller_Action
         $this->service->switchMode($feed_id);
 
         $this->_helper->redirector('index');
-    }
-
-    public function publishAction()
-    {
-        try {
-            $entry = $this->service->find($this->_getParam('entry'));
-            $this->service->publish($entry);
-            $this->_helper->flashMessenger(getGS("Entry '$1' published", $entry->getTitle()));
-            $this->_helper->redirector('index', $this->_getParam('return', 'ingest'));
-        } catch (Exception $e) {
-            var_dump($e);
-            exit;
-        }
     }
 
     public function prepareAction()
@@ -110,20 +109,13 @@ class Admin_IngestController extends Zend_Controller_Action
         $this->_helper->redirector('index');
     }
 
-    public function createPublisherAction()
+    public function publishAction()
     {
-        $form = new Admin_Form_Ingest_Publisher();
-        $form->args->publication->setMultiOptions($this->_helper->service('content.publication')->getOptions());
-        $form->args->section->setMultiOptions($this->_helper->service('content.section')->getOptions());
-        $form->args->article_type->setMultiOptions($this->_helper->service('content.type')->getOptions());
-
-        $request = $this->getRequest();
-        if ($request->isPost() && $form->isValid($request->getPost())) {
-            $this->_helper->service('ingest.publisher')->save($form->getValues());
-            $this->_helper->flashMessenger(getGS('Publisher saved'));
-            $this->_helper->redirector('index');
-        }
-
-        $this->view->form = $form;
+        $item = $this->_helper->service('ingest.item')->find($this->_getParam('item', null));
+        $this->_helper->service('ingest.item')->publish($item);
+        $this->_helper->flashMessenger(getGS('Item published'));
+        $this->_helper->redirector('index', 'ingest', 'admin', array(
+            'item' => null,
+        ));
     }
 }

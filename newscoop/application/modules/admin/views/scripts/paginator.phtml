@@ -7,7 +7,7 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=itempagination
  
 <!-- First page link -->
 <?php if (isset($this->previous)): ?>
-  <a href="<?php echo $this->url(array('page' => $this->first)); ?>">
+  <a href="<?php echo $this->url(array('page' => null)); ?>">
     <?php putGS('First'); ?>
   </a> |
 <?php else: ?>
@@ -16,7 +16,7 @@ See http://developer.yahoo.com/ypatterns/pattern.php?pattern=itempagination
  
 <!-- Previous page link -->
 <?php if (isset($this->previous)): ?>
-  <a href="<?php echo $this->url(array('page' => $this->previous)); ?>">
+  <a href="<?php echo $this->url(array('page' => $this->previous > 1 ? $this->previous : null)); ?>">
     &lt; <?php putGS('Previous'); ?>
   </a> |
 <?php else: ?>

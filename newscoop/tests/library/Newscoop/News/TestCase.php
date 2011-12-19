@@ -7,6 +7,10 @@
 
 namespace Newscoop\News;
 
+use Doctrine\ORM\Mapping\ClassMetadataFactory,
+    Doctrine\ORM\Tools\SchemaTool,
+    Doctrine\Common\Cache\ArrayCache as Cache;
+
 /**
  */
 abstract class TestCase extends \PHPUnit_Framework_TestCase
@@ -42,5 +46,49 @@ abstract class TestCase extends \PHPUnit_Framework_TestCase
     {
         $odm->getSchemaManager()->dropDatabases();
         $odm->clear();
+    }
+
+    /**
+     * Set up entity manager
+     *
+     * @return Doctrine\ORM\EntityManager
+     */
+    protected function setUpOrm()
+    {
+        global $application;
+
+        $orm = $application->getBootstrap()->getResource('doctrine')->getEntityManager();
+        $orm->clear();
+
+        $tool = new SchemaTool($orm);
+        $tool->dropDatabase();
+
+        $classes = func_get_args();
+        if (!empty($classes)) {
+            $metadataFactory = new ClassMetadataFactory();
+            $metadataFactory->setEntityManager($orm);
+            $metadataFactory->setCacheDriver(new Cache());
+
+            $metadata = array();
+            foreach ((array) $classes as $class) {
+                $metadata[] = $metadataFactory->getMetadataFor($class);
+            }
+
+            $tool->createSchema($metadata);
+        }
+
+        return $orm;
+    }
+
+    /**
+     * Tear down entity manager
+     *
+     * @param Doctrine\ORM\EntityManager $orm
+     * @return void
+     */
+    protected function tearDownOrm(\Doctrine\ORM\EntityManager $orm)
+    {
+        $tool = new SchemaTool($orm);
+        $tool->dropDatabase();
     }
 }

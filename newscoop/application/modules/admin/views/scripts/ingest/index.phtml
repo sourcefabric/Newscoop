@@ -1,18 +1,26 @@
 <?php $this->placeholder('title')->set('News Desk'); ?>
 <?php $this->placeholder('bodyId')->set('ingest'); ?>
 
+<div class="controls">
+    <?php echo $this->paginator; ?>
+</div>
+
 <div class="filters">
     <a href="<?php echo $this->url(array(
         'class' => null,
+        'page' => null,
     )); ?>">Any</a> |
     <a href="<?php echo $this->url(array(
         'class' => 'icls:text',
+        'page' => null,
     )); ?>">Texts</a> |
     <a href="<?php echo $this->url(array(
         'class' => 'icls:picture',
+        'page' => null,
     )); ?>">Pictures</a> |
     <a href="<?php echo $this->url(array(
         'class' => 'icls:composite',
+        'page' => null,
     )); ?>">Packages</a>
 </div>
 
@@ -22,74 +30,21 @@
     <a href="<?php echo $this->url(array(
         'action' => 'detail',
         'item' => $item->getId(),
-    )); ?>" title="<?php echo $item->getContentMeta()->getDescription(); ?>">
+    )); ?>" title="<?php echo $this->escape($item->getContentMeta()->getDescription()); ?>">
         <div class="preview">
             <?php $this->renderDate($item->getItemMeta()->getFirstCreated()); ?>
             <?php if ($item->getItemMeta()->getItemClass() === 'icls:composite') { ?>
-            <p><?php echo $item->getContentMeta()->getDescription(); ?></p>
+            <p><?php echo $this->escape($item->getContentMeta()->getDescription()); ?></p>
             <?php } else if ($thumbnail = $item->getContentSet()->getRemoteContent('rend:thumbnail')) { ?>
-            <img src="<?php echo $item->getFeed()->getRemoteContentSrc($thumbnail); ?>" width="<?php echo $thumbnail->getWidth(); ?>" height="<?php echo $thumbnail->getHeight(); ?>" alt="<?php echo $item->getContentMeta()->getHeadline(); ?>" />
+            <img src="<?php echo $item->getFeed()->getRemoteContentSrc($thumbnail); ?>" width="<?php echo $thumbnail->getWidth(); ?>" height="<?php echo $thumbnail->getHeight(); ?>" alt="<?php echo $this->escape($item->getContentMeta()->getHeadline()); ?>" />
             <?php } else { ?>
-            <p><?php echo $item->getContentMeta()->getDescription(); ?></p>
+            <p><?php echo $this->escape($item->getContentMeta()->getDescription()); ?></p>
             <?php } ?>
             <div class="urgency level-<?php echo $item->getContentMeta()->getUrgency(); ?>">Urgency: <?php echo $item->getContentMeta()->getUrgency(); ?></div>
+            <?php if ($item->isPublished()) { ?>
+            <div class="status published">Published</div>
+            <?php } ?>
         </div>
     </a></li>
     <?php } ?>
 </ul>
-<div class="clearfix"></div>
-
-<h2><?php putGS('Feeds'); ?></h2>
-<ul class="feeds">
-    <?php foreach ($this->feeds as $feed) { ?>
-    <li><a href="<?php echo $this->url(array(
-            'action' => 'index',
-            'feed' => $feed->getId(),
-        )); ?>" title="Switch feed"><?php echo $feed->getName(); ?></a>
-        (<?php putGS('updated'); ?> <?php echo $feed->getUpdated() ? $feed->getUpdated()->format('H:i') : getGS('Never'); ?>)
-    </li>
-    <?php } ?>
-
-    <li class="add"><a href="<?php echo $this->url(array(
-        'action' => 'add-feed',
-    )); ?>"><?php putGS('Add feed'); ?></a></li>
-</ul>
-
-<ul class="outputs">
-    <li id="web">Web</li>
-</ul>
-
-<ul class="publishers">
-    <?php foreach ($this->publishers as $publisher) { ?>
-    <li><?php echo $publisher; ?></li>
-    <?php } ?>
-
-    <li class="add"><a href="<?php echo $this->url(array(
-        'action' => 'create-publisher',
-    )); ?>"><?php putGS('Add publisher'); ?></a></li>
-</ul>
-
-<script>
-$(function() {
-    $('.items h3 a').fancybox({
-        hideOnContentClick: false
-    });
-
-    $('.items li').draggable({
-        revert: true,
-        cursor: 'move',
-        opacity: 0.5,
-        snap: true,
-        zIndex: 2000
-    });
-
-    $('.outputs li').droppable({
-        activeClass: 'active',
-        hoverClass: 'hover',
-        tolerance: 'pointer',
-        drop: function(event, ui) {
-            $(this).append($('<div />').html(ui.draggable.find('a').attr('title')).addClass(ui.draggable.attr('id')));
-        }
-    }).hide();
-});
-</script>

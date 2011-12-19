@@ -89,6 +89,12 @@ abstract class Item
     protected $catalogRefs;
 
     /**
+     * @Date
+     * @var DateTime
+     */
+    protected $published;
+
+    /**
      * @param string $id
      * @param int $version
      */
@@ -292,5 +298,36 @@ abstract class Item
     public function getCatalogRefs()
     {
         return $this->catalogRefs;
+    }
+
+    /**
+     * Set published
+     *
+     * @param DateTime $published
+     * @return void
+     */
+    public function setPublished(\DateTime $published)
+    {
+        $this->published = $published;
+    }
+
+    /**
+     * Get published
+     *
+     * @return DateTime
+     */
+    public function getPublished()
+    {
+        return $this->published;
+    }
+
+    /**
+     * Test if is published
+     *
+     * @return bool
+     */
+    public function isPublished()
+    {
+        return $this->published !== null;
     }
 }

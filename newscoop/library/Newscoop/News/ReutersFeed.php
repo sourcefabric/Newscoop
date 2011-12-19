@@ -133,7 +133,7 @@ class ReutersFeed extends Feed
      * @param string $id
      * @return Newscoop\News\NewsItem
      */
-    private function getItem($id)
+    public function getItem($id)
     {
         $response = $this->getClient()->restGet('/rmd/rest/xml/item', array(
             'token' => $this->getToken(),

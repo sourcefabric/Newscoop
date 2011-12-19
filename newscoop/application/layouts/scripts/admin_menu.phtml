@@ -109,12 +109,20 @@ $pages[1]['pages'][] = array(
 );
 
 $pages[1]['pages'][] = array(
-    'label' => 'Newswires',
+    'label' => 'News Desk',
     'module' => 'admin',
     'controller' => 'ingest',
     'action' => 'index',
     'resource' => 'ingest',
     'privilege' => 'manage',
+    'reset_params' => false,
+    'params' => array('item' => null),
+    'pages' => array(array(
+        'label' => getGS('Detail'),
+        'module' => 'admin',
+        'controller' => 'ingest',
+        'action' => 'detail',
+    )),
 );
 
 $pages[1]['pages'][] = array(

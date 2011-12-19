@@ -1,14 +1,23 @@
-<?php $this->placeholder('title')->set($this->item->getContentMeta()->getHeadline()); ?>
-
-<div class="ingest">
+<?php $this->placeholder('title')->set($this->escape($this->item->getContentMeta()->getHeadline())); ?>
+<?php $this->placeholder('bodyId')->set('ingest'); ?>
 
 <div class="detail">
+
+<div class="controls">
+    <?php if (!$this->item->isPublished()) { ?>
+    <a href="<?php echo $this->url(array(
+        'action' => 'publish',
+        'item' => $this->item->getId(),
+    )); ?>" title="Push '<?php echo $this->escape($this->item->getContentMeta()->getHeadline()); ?>' to Web" class="publish">Push to Web</a>
+    <?php } else { ?>
+    <span class="publish">Pushed to Web (<?php $this->renderDate($this->item->getPublished()); ?>)</span>
+    <?php } ?>
+</div>
 
 <?php if ($this->item instanceof \Newscoop\News\PackageItem) { ?>
     <?php $this->renderPackageItem($this->item); ?>
 <?php } else { ?>
     <?php $this->renderNewsItem($this->item); ?>
 <?php } // /if ?>
-</div>
 
 </div>

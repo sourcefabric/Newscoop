@@ -96,9 +96,10 @@ class NewsItemTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('US-EUROZONE', $contentMeta->getSlugline());
         $this->assertEquals('S&P piles pressure on Franco-German EU budget plan', $contentMeta->getHeadline());
         $this->assertEquals('2011-12-06 09:14:50 GMT+00:00', $contentMeta->getDateline());
-        $this->assertEquals('Foo Bar and John Doe', $contentMeta->getBy());
+        $this->assertEquals('Foo Bar and John Doe', $contentMeta->getByline());
         $this->assertEquals('Example creditline', $contentMeta->getCreditline());
         $this->assertEquals('US-EUROZONE:S&P piles pressure on Franco-German EU budget plan', $contentMeta->getDescription());
+        $this->assertEquals('en-US', $contentMeta->getLanguage());
 
         $subjects = $contentMeta->getSubjects();
         $this->assertEquals(7, count($subjects));

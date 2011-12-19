@@ -1,13 +1,18 @@
 <?php if ($this->item->getContentSet()->getInlineContent()) { ?>
-<div class="content">
-<?php echo $this->item->getContentSet()->getInlineContent(); ?>
+
+<div class="inline-content">
+<?php echo nl2br($this->item->getContentSet()->getInlineContent()); ?>
 </div>
 
 <?php } else if ($thumbnail = $this->item->getContentSet()->getRemoteContent('rend:thumbnail')) { ?>
 <div class="thumbnail"><img src="<?php echo $this->item->getFeed()->getRemoteContentSrc($thumbnail); ?>" width="<?php echo $thumbnail->getWidth(); ?>" height="<?php echo $thumbnail->getHeight(); ?>" alt="" /></div>
-<em>available sizes:
-    <?php foreach ($this->item->getContentSet()->getRemoteContent() as $remoteContent) { ?>
-    <a href="<?php echo $this->item->getFeed()->getRemoteContentSrc($remoteContent); ?>" target="_blank"><?php echo $remoteContent->getWidth(), 'x', $remoteContent->getHeight(); ?></a>
-    <?php } ?>
-</em>
+<div class="renditions">
+<?php foreach ($this->item->getContentSet()->getRemoteContent() as $remoteContent) { ?>
+<?php if ($remoteContent->getRendition() === 'rend:thumbnail') {
+    continue;
+} ?>
+    <a href="<?php echo $this->item->getFeed()->getRemoteContentSrc($remoteContent); ?>"><?php echo $remoteContent->getWidth(), 'x', $remoteContent->getHeight(); ?></a>
 <?php } ?>
+</div>
+
+<?php } // remote content ?>
