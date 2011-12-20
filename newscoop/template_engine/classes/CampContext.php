@@ -1187,11 +1187,11 @@ final class CampContext
      */
     public function getUserCount()
     {
-        if (null === $userCount) {
-            $userCount = Zend_Registry::get('container')->getService('user')
+        if (null === $this->userCount) {
+            $this->userCount = Zend_Registry::get('container')->getService('user')
                 ->getPublicUserCount();
         }
 
-        return (int) $userCount;
+        return (int) $this->userCount;
     }
 }
