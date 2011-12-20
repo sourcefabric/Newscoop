@@ -47,6 +47,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         $this->m_customProperties['is_author'] = 'isAuthor';
         $this->m_customProperties['is_active'] = 'isActive';
         $this->m_customProperties['is_blogger'] = 'isBlogger';
+        $this->m_customProperties['author'] = 'getAuthor';
 
         $this->m_skipFilter[] = "name";
     }
@@ -308,6 +309,20 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     public function isAuthor()
     {
         return $this->m_dbObject->getAuthorId() && $this->isAdmin();
+    }
+
+    /**
+     * Get user related author
+     *
+     * @return MetaAuthor
+     */
+    public function getAuthor()
+    {
+        try {
+            return new \MetaAuthor($this->m_dbObject->getAuthorId());
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 
     /**
