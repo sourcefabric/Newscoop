@@ -95,7 +95,7 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
 
         switch ($action) {
             case 'read':
-                if ($campsiteVector['language'] && $campsiteVector['publication']) {
+                if (isset($campsiteVector['language']) && isset($campsiteVector['publication'])) {
                     $whereStr = self::vectorToWhereString($campsiteVector);
                     $whereStr .= " AND template = '$tpl_file'";
 
