@@ -320,7 +320,7 @@ if($themePath != null && $themePath != '0'){
 		<TR class="table_list_header">
 			<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Date/Time"); ?></B></TD>
 			<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Action"); ?></B></TD>
-			<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Publish articles"); ?></B></TD>
+            <TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Publish all articles"); ?></B></TD>
 			<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
 		</TR>
 		<?php
@@ -415,11 +415,13 @@ if($themePath != null && $themePath != '0'){
 			</TD>
 		</TR>
 		<TR>
-			<TD ALIGN="RIGHT" ><?php  putGS("Publish articles"); ?>:</TD>
+            <TD ALIGN="RIGHT">
+                <abbr title="<?php putGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published."); ?>"><?php putGS("Publish all articles:"); ?></abbr>
+            </TD>
 			<TD>
 			<SELECT NAME="publish_articles" class="input_select">
 				<OPTION VALUE="Y"><?php putGS("Yes"); ?></OPTION>
-				<OPTION VALUE="N"><?php putGS("No"); ?></OPTION>
+				<OPTION VALUE="N" selected="selected"><?php putGS("No"); ?></OPTION>
 			</SELECT>
 			</TD>
 		</TR>
