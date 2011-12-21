@@ -7,11 +7,9 @@
 
 namespace Newscoop\News;
 
-require_once __DIR__ . '/TestCase.php';
-
 /**
  */
-class ItemServiceTest extends TestCase
+class ItemServiceTest extends \TestCase
 {
     const TEXT_XML = 'textNewsItem.xml';
 
@@ -27,7 +25,8 @@ class ItemServiceTest extends TestCase
     public function setUp()
     {
         $this->odm = $this->setUpOdm();
-        $this->service = new ItemService($this->odm);
+        $settingsService = new SettingsService($this->odm);
+        $this->service = new ItemService($this->odm, $settingsService);
     }
 
     public function tearDown()

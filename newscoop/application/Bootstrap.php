@@ -140,8 +140,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('view'))
             ->addArgument(new sfServiceReference('user.token'));
 
-        $container->register('ingest.item', 'Newscoop\News\ItemService')
+        $container->register('ingest.settings', 'Newscoop\News\SettingsService')
             ->addArgument(new sfServiceReference('odm'));
+
+        $container->register('ingest.item', 'Newscoop\News\ItemService')
+            ->addArgument(new sfServiceReference('odm'))
+            ->addArgument(new sfServiceReference('ingest.settings'));
 
         $container->register('ingest.feed', 'Newscoop\News\FeedService')
             ->addArgument(new sfServiceReference('odm'))

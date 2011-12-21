@@ -7,11 +7,9 @@
 
 namespace Newscoop\News;
 
-require_once __DIR__ . '/TestCase.php';
-
 /**
  */
-class ReutersFeedTest extends TestCase
+class ReutersFeedTest extends \TestCase
 {
     /** @var Zend_Rest_Client */
     protected $client;
@@ -70,7 +68,8 @@ class ReutersFeedTest extends TestCase
 
     public function testUpdate()
     {
-        $itemService = new ItemService($this->odm);
+        $settingsService = new SettingsService($this->odm);
+        $itemService = new ItemService($this->odm, $settingsService);
 
         $this->odm->persist($this->feed);
         $this->odm->flush();

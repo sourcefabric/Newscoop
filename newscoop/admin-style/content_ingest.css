@@ -172,3 +172,20 @@
     opacity: 0.8;
     font-size: 1.3em;
 }
+
+#ingest h1 .settings {
+    float: right;
+    font-size: 0.75em;
+}
+
+#ingest .feeds {
+    margin: 0 0 13px;
+    padding: 0;
+}
+
+#ingest .feeds li {
+    margin: 0 0 8px;
+    padding: 5px;
+    background-color: #fff;
+    font-size: 1.3em;
+}

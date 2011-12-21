@@ -1,5 +1,10 @@
-<?php $this->placeholder('title')->set('News Desk'); ?>
 <?php $this->placeholder('bodyId')->set('ingest'); ?>
+<?php $this->placeholder('title')->captureStart(); ?>
+<a href="<?php echo $this->url(array(
+    'action' => 'settings',
+)); ?>" class="settings"><?php putGS('Settings'); ?></a>
+<?php putGS('News Desk'); ?>
+<?php $this->placeholder('title')->captureEnd(); ?>
 
 <div class="controls">
     <?php echo $this->paginator; ?>

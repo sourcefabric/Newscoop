@@ -118,4 +118,27 @@ class Admin_IngestController extends Zend_Controller_Action
             'item' => null,
         ));
     }
+
+    public function settingsAction()
+    {
+        $settings = $this->_helper->service('ingest.settings')->find('ingest');
+        $form = new Admin_Form_IngestSettings();
+        $form->publication->addMultiOptions($this->_helper->service('content.publication')->getOptions());
+        $form->section->addMultiOptions($this->_helper->service('content.section')->getOptions());
+        $form->setDefaults(array(
+            'article_type' => $settings->getArticleTypeName(),
+            'publication' => $settings->getPublicationId(),
+            'section' => $settings->getSectionNumber(),
+        ));
+
+        $request = $this->getRequest();
+        if ($request->isPost() && $form->isValid($request->getPost())) {
+            $this->_helper->service('ingest.settings')->save($form->getValues(), $settings);
+            $this->_helper->flashMessenger(getGS('Settings saved'));
+            $this->_helper->redirector('settings');
+        }
+
+        $this->view->form = $form;
+        $this->view->feeds = $this->_helper->service('ingest.feed')->findBy(array());
+    }
 }

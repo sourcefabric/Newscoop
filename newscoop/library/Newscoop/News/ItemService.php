@@ -23,20 +23,19 @@ class ItemService
     protected $repository;
 
     /**
-     * @var array
+     * @var Newscoop\News\Settings
      */
-    protected $settings = array(
-        'article_type' => 'newsml',
-        'publication' => 1,
-    );
+    protected $settings;
 
     /**
      * @var Doctrine\Common\Persistence\ObjectManager $odm
+     * @var Newscoop\News\SettingsService
      */
-    public function __construct(\Doctrine\ODM\MongoDB\DocumentManager $odm)
+    public function __construct(\Doctrine\ODM\MongoDB\DocumentManager $odm, SettingsService $settingsService)
     {
         $this->odm = $odm;
         $this->repository = $this->odm->getRepository('Newscoop\News\Item');
+        $this->settings = $settingsService->find('ingest');
     }
 
     /**
@@ -119,8 +118,9 @@ class ItemService
      */
     private function publishArticle(Item $item)
     {
+        $issueNumber = $this->settings->getPublicationId() ? \Issue::GetCurrentIssue($this->settings->getPublicationId())->getIssueNumber() : null;
         $article = new \Article($this->findLanguageId($item->getContentMeta()->getLanguage()));
-        $article->create($this->settings['article_type'], $item->getContentMeta()->getHeadline());
+        $article->create($this->settings->getArticleTypeName(), $item->getContentMeta()->getHeadline(), $this->settings->getPublicationId(), $issueNumber, $this->settings->getSectionNumber());
         $article->setKeywords($item->getContentMeta()->getSlugline());
         $article->setCreationDate($item->getItemMeta()->getFirstCreated()->format('Y-m-d H:i:s'));
         $this->setArticleData($article, $item);

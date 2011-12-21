@@ -12,3 +12,4 @@ $application->bootstrap();
 clearstatcache();
 
 require_once __DIR__ . '/../RepositoryTestCase.php';
+require_once __DIR__ . '/../TestCase.php';

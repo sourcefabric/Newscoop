@@ -5,15 +5,13 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\News;
-
 use Doctrine\ORM\Mapping\ClassMetadataFactory,
     Doctrine\ORM\Tools\SchemaTool,
     Doctrine\Common\Cache\ArrayCache as Cache;
 
 /**
  */
-abstract class TestCase extends \PHPUnit_Framework_TestCase
+abstract class TestCase extends PHPUnit_Framework_TestCase
 {
     /**
      * Set up document manager

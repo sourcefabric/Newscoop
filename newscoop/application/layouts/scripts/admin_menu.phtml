@@ -122,6 +122,18 @@ $pages[1]['pages'][] = array(
         'module' => 'admin',
         'controller' => 'ingest',
         'action' => 'detail',
+        'visible' => false,
+    ), array(
+        'label' => getGS('Settings'),
+        'module' => 'admin',
+        'controller' => 'ingest',
+        'action' => 'settings',
+        'pages' => array(array(
+            'label' => getGS('Add feed'),
+            'module' => 'admin',
+            'controller' => 'ingest',
+            'action' => 'add-feed',
+        )),
     )),
 );
 
