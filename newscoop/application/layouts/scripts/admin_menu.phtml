@@ -458,6 +458,12 @@ if( Saas::singleton()->hasPrivilege('themes' , 'index') ) {
             'privilege' => 'view',
         );
     }
+    
+    $pages[3]['pages'][] = array(
+        'label' => getGS('Support'),
+        'module' => 'admin',
+        'controller' => 'support'
+    );
 } else {
     unset($pages[3]);
 }
