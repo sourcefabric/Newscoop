@@ -2333,3 +2333,8 @@ ul#edit-files h2 {
     height: 8em;
     font-size: 1.2em;
 }
+
+abbr {
+    border-bottom: 0.1em dotted;
+    cursor: help;
+}
