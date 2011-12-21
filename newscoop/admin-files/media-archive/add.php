@@ -60,7 +60,7 @@ camp_html_display_msgs();
 <?php $this->view->plupload('', array(
     'url' => './uploader.php',
     'filters' => array(
-        getGS('Image files') => "jpg,gif,png",
+        getGS('Image files') => "jpg,jpeg,gif,png",
     ),
 )); ?>
 
