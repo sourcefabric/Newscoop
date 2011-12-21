@@ -27,7 +27,7 @@ class Smarty_CacheResource_Newscoop {
         static $cache_content = array();
         if ($content) {
             $cache_content[$template] = $content;
-        } else {
+        } elseif (isset($cache_content[$template])) {
             return $cache_content[$template];
         }
     }
