@@ -95,15 +95,18 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
     <div class="save-button-bar">
       <input type="submit" class="save-button" value="<?php putGS('Save All'); ?>" id="save" name="save" <?php if (!$inEditMode) { ?> disabled style="opacity: 0.3"<?php } ?> />
       <input type="submit" class="save-button" value="<?php $inEditMode ? putGS('Save and Close') : putGS('Close'); ?>" id="save_and_close" name="save_and_close" />
+      <?php if ($inEditMode) { ?>
+        <input type="submit" class="save-button" value="<?php putGS('Close'); ?>" id="close" name="close" />
+      <?php } ?>
     </div>
     <div class="top-button-bar">
       <input type="button" name="edit" value="<?php putGS('Edit'); ?>" <?php if ($inEditMode || ! $articleObj->userCanModify($g_user)) {?> disabled="disabled" class="default-button disabled"<?php } else { ?> onclick="location.href='<?php p($switchModeUrl); ?>';" class="default-button"<?php } ?> />
       <input type="button" name="edit" value="<?php putGS('View'); ?>" <?php if ($inViewMode) {?> disabled="disabled" class="default-button disabled"<?php } else { ?> onclick="location.href='<?php p($switchModeUrl); ?>';" class="default-button"<?php } ?> />
       <?php if ($doPreviewLink == 'live') { ?>
-	  <a class="ui-state-default icon-button" target="_blank" href="<?php echo $previewLinkURL; ?>"><span class="ui-icon ui-icon-extlink"></span><?php putGS('Go to live article'); ?></a>
-	  <?php } elseif ($doPreviewLink == 'preview') { ?>
-	  <a class="ui-state-default icon-button" href="#" onclick="window.open('<?php echo $previewLinkURL; ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=780, height=660'); return false;"><span class="ui-icon ui-icon-extlink"></span><?php putGS('Preview'); ?></a>
-	  <?php } ?>
+      <a class="ui-state-default icon-button" target="_blank" href="<?php echo $previewLinkURL; ?>"><span class="ui-icon ui-icon-extlink"></span><?php putGS('Go to live article'); ?></a>
+      <?php } elseif ($doPreviewLink == 'preview') { ?>
+      <a class="ui-state-default icon-button" href="#" onclick="window.open('<?php echo $previewLinkURL; ?>', 'fpreview', 'resizable=yes, menubar=no, toolbar=no, width=780, height=660'); return false;"><span class="ui-icon ui-icon-extlink"></span><?php putGS('Preview'); ?></a>
+      <?php } ?>
     </div>
     <div id="f_article_count" class="j-countable rt">&nbsp;</div>
   </div>
@@ -112,7 +115,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
 <div class="wrapper">
   <!-- BEGIN Info/Messaging bar //-->
   <div class="info-bar">
-	<span class="info-text" id="info-text"></span>
+    <span class="info-text" id="info-text"></span>
   </div>
   <!-- END Infor/Messaging bar //-->
 
@@ -194,8 +197,8 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
               autocomplete="off"
               style="width:70%;"
               <?php if($dbColumn->getMaxSize()!=0 && $dbColumn->getMaxSize()!=''): ?>
-              	maxlength="<?php echo $dbColumn->getMaxSize(); ?>"
-              	class="input_text countableft"
+                maxlength="<?php echo $dbColumn->getMaxSize(); ?>"
+                class="input_text countableft"
              <?php else: ?>
               class="input_text"
              <?php endif; ?>
@@ -240,9 +243,9 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
                 $text = parseTextBody($unparsedText, $f_article_number);
                 $editorSize = str_replace('editor_size=', '', $dbColumn->m_data['field_type_param']);
                 if (!is_numeric($editorSize)) {
-					require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTypeField.php');
-					$editorSize = ArticleTypeField::BODY_ROWS_MEDIUM;
-				}
+                    require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTypeField.php');
+                    $editorSize = ArticleTypeField::BODY_ROWS_MEDIUM;
+                }
         ?>
           <li>
             <label><?php echo htmlspecialchars($dbColumn->getDisplayName($articleObj->getLanguageId())); ?></label>
