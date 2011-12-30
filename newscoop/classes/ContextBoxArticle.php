@@ -42,9 +42,9 @@ class ContextBoxArticle extends DatabaseObject
     public static function insertList($p_context_id, $p_article_no_array) {
     	Global $g_ado_db;
     	foreach($p_article_no_array as $p_article_no) {
-    		$queryStr = 'INSERT INTO context_articles'
-    		          . ' VALUES ('.$p_context_id.','.$p_article_no.')';
-    		$g_ado_db->Execute($queryStr);
+            $sql = 'INSERT INTO context_articles (fk_context_id, fk_article_no)
+                    VALUES ('.$p_context_id.','.$p_article_no.')';
+            $g_ado_db->Execute($sql);
     	}
     }
 
@@ -74,7 +74,7 @@ class ContextBoxArticle extends DatabaseObject
 
         if (!$p_skipCache && CampCache::IsEnabled()) {
             $paramsArray['parameters'] = serialize($p_parameters);
-            $paramsArray['order'] = (is_null($p_order)) ? 'null' : $p_order;
+            $paramsArray['order'] = (is_null($p_order)) ? 'id desc' : $p_order;
             $paramsArray['start'] = $p_start;
             $paramsArray['limit'] = $p_limit;
             $cacheListObj = new CampCacheList($paramsArray, __METHOD__);
@@ -85,12 +85,11 @@ class ContextBoxArticle extends DatabaseObject
         }
 
         $returnArray = array();
-        $queryStr = '
-           SELECT fk_article_no FROM context_articles'.
-           ' WHERE fk_context_id='.$p_context_id
-        ;
-        $rows = $g_ado_db->GetAll($queryStr);
-        if(is_array($rows)) {
+        $sql = 'SELECT fk_article_no FROM context_articles
+                WHERE fk_context_id = ' . $p_context_id . '
+                ORDER BY id desc';
+        $rows = $g_ado_db->GetAll($sql);
+        if (is_array($rows)) {
             foreach($rows as $row) {
                 $returnArray[] = $row['fk_article_no'];
             }
