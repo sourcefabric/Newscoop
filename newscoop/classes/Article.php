@@ -1827,7 +1827,7 @@ class Article extends DatabaseObject {
         $fromState = $p_publish ? 'M' : 'Y';
         $toState = $p_publish ? 'Y' : 'M';
 
-        $sql = "UPDATE Articles SET Published = '$toState' WHERE "
+        $sql = "UPDATE Articles SET Published = '$toState', PublishDate = NOW() WHERE "
         . "IdPublication = $p_publicationId AND IdLanguage = $p_languageId"
         . " AND NrIssue = $p_issueNo AND Published = '$fromState'";
         $res = $g_ado_db->Execute($sql);
