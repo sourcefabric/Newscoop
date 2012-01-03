@@ -202,7 +202,7 @@ function unlockArticle(doAction) {
 $('.save-button-bar input').click(function() {
     $('form#article-keywords').submit();
     $('form#article-switches').submit();
-
+    
     if ($(this).attr('id') == 'save_and_close') {
         if (articleChanged()) {
             unlockArticle();
@@ -225,6 +225,9 @@ $('.save-button-bar input').click(function() {
             echo "/$ADMIN/";
         }
         ?>';
+    } else if ($(this).attr('id') == 'save') {
+        save_and_close = false;
+        $('form#article-main').submit();
     }
 
     return false;
