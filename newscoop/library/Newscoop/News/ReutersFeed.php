@@ -279,7 +279,8 @@ class ReutersFeed extends Feed
             's' => 1,
         );
 
-        if ($since === null) {
+        $limit = new \DateTime('-6 day'); // can't be older than 7 days
+        if ($since === null || $since->getTimestamp() < $limit->getTimestamp()) {
             $since = date_create('-10min');
         }
 

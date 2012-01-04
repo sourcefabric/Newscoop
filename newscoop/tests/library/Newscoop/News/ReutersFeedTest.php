@@ -87,6 +87,20 @@ class ReutersFeedTest extends \TestCase
         $this->feed->update($this->odm, $itemService);
     }
 
+    public function testUpdateAfter7Days()
+    {
+        $settingsService = new SettingsService($this->odm);
+        $itemService = new ItemService($this->odm, $settingsService);
+
+        $updated = new \ReflectionProperty($this->feed, 'updated');
+        $updated->setAccessible(true);
+        $updated->setValue($this->feed, new \DateTime('-8 day'));
+        $this->odm->persist($this->feed);
+        $this->odm->flush();
+
+        $this->feed->update($this->odm, $itemService);
+    }
+
     public function testGetRemoteContentSrc()
     {
         $remoteContent = $this->getMockBuilder('Newscoop\News\RemoteContent')
