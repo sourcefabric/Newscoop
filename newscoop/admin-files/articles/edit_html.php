@@ -94,10 +94,10 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
     <span class="comments"><?php p(count(isset($comments) ? $comments : array())); ?></span>
     <div class="save-button-bar">
       <input type="submit" class="save-button" value="<?php putGS('Save All'); ?>" id="save" name="save" <?php if (!$inEditMode) { ?> disabled style="opacity: 0.3"<?php } ?> />
-      <input type="submit" class="save-button" value="<?php $inEditMode ? putGS('Save and Close') : putGS('Close'); ?>" id="save_and_close" name="save_and_close" />
       <?php if ($inEditMode) { ?>
         <input type="submit" class="save-button" value="<?php putGS('Close'); ?>" id="close" name="close" />
       <?php } ?>
+      <input type="submit" class="save-button" value="<?php $inEditMode ? putGS('Save and Close') : putGS('Close'); ?>" id="save_and_close" name="save_and_close" />
     </div>
     <div class="top-button-bar">
       <input type="button" name="edit" value="<?php putGS('Edit'); ?>" <?php if ($inEditMode || ! $articleObj->userCanModify($g_user)) {?> disabled="disabled" class="default-button disabled"<?php } else { ?> onclick="location.href='<?php p($switchModeUrl); ?>';" class="default-button"<?php } ?> />
