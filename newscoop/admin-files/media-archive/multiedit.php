@@ -18,7 +18,7 @@ if (!$g_user->hasPermission('AddImage')) {
 }
 
 // get all images without set date (0000-00-00)
-$imageSearch = new ImageSearch('0000', 'id');
+$imageSearch = new ImageSearch('0000', 'id', 'ASC', 0, 100);
 $imageSearch->run();
 $imageData = $imageSearch->getImages();
 
