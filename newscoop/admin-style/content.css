@@ -250,10 +250,11 @@ dl dd .info-text	{
     margin: 6px 0 0 0;
 }
 #template-edit-area-element textarea {
-	width:1000px;    margin: 0;
+	margin: 0;
     padding: 5px 0 0 0;
-    width: 998px;
+    //width: 998px;
 	text-indent: 3px;
+    width: 90%; min-width: 1000px;
 }
 }
 
