@@ -354,6 +354,8 @@ class DatabaseObject
 			if ($g_ado_db->databaseType == 'mysql') {
 			    $whereParts[] = '`' . $columnName . "`='"
                     .mysql_real_escape_string($value) ."'";
+            } else if ($g_ado_db->databaseType === 'sqlite') {
+                $whereParts[] = "`{$columnName}` = '" . sqlite_escape_string($value) . "'";
 			} else {
 			    $whereParts[] = '`' . $columnName . "`='"
                     .mysqli_real_escape_string($g_ado_db->_connectionID, $value) ."'";

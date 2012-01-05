@@ -101,6 +101,10 @@ class ItemService
                 $this->publishArticle($item);
                 break;
 
+            case 'icls:picture':
+                $this->publishPicture($item);
+                break;
+
             default:
                 throw new \InvalidArgumentException("Can't publish {$item->getItemMeta()->getItemClass()}");
                 break;
@@ -125,6 +129,40 @@ class ItemService
         $article->setCreationDate($item->getItemMeta()->getFirstCreated()->format('Y-m-d H:i:s'));
         $this->setArticleData($article, $item);
         $article->commit();
+    }
+
+    /**
+     * Publish picture to media archive
+     *
+     * @param Newscoop\News\Item $item
+     * @return void
+     */
+    private function publishPicture(Item $item)
+    {
+        $rendition = $item->getContentSet()->getRemoteContent('rend:baseImage') ?: $item->getContentSet()->getRemoteContent('rend:viewImage');
+        $realpath = tempnam('/tmp', 'picture');
+        file_put_contents($realpath, file_get_contents($item->getFeed()->getRemoteContentSrc($rendition)));
+
+        $imagesize = getimagesize($realpath);
+        $info = array(
+            'name' => uniqid(),
+            'type' => $imagesize['mime'],
+            'tmp_name' => $realpath,
+            'size' => filesize($realpath),
+            'error' => 0,
+        );
+
+        $attributes = array(
+            'Photographer' => $item->getContentMeta()->getByline(),
+            'Description' => $item->getContentMeta()->getHeadline(),
+            'Source' => \Newscoop\Entity\Picture::SOURCE_INGEST,
+            'Caption' => $item->getContentMeta()->getDescription(),
+            'Status' => \Newscoop\Entity\Picture::STATUS_APPROVED,
+            'Date' => $item->getItemMeta()->getFirstCreated()->format('Y-m-d H:i:s'),
+            'Place' => $item->getContentMeta()->getSubject('cptType:5')->getName(),
+        );
+
+        $image = \Image::OnImageUpload($info, $attributes, null, null, true);
     }
 
     /**

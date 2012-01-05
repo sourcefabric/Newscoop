@@ -64,4 +64,9 @@ class TestFeed extends Feed
     {
         return 'test feed';
     }
+
+    public function getRemoteContentSrc(RemoteContent $remoteContent)
+    {
+        return '';
+    }
 }

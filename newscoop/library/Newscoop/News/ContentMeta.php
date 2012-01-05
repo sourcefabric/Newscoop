@@ -190,6 +190,21 @@ class ContentMeta
     }
 
     /**
+     * Get subject by given code
+     *
+     * @param string $code
+     * @return Newscoop\News\Subject
+     */
+    public function getSubject($code)
+    {
+        foreach ($this->subjects as $subject) {
+            if ($subject->getQCode() === $code || $subject->getType() === $code) {
+                return $subject;
+            }
+        }
+    }
+
+    /**
      * Get language
      *
      * @return string

@@ -48,7 +48,7 @@ class Subject
         $subject = new self();
         $subject->qcode = isset($xml['qcode']) ? (string) $xml['qcode'] : null;
         $subject->type = isset($xml['type']) ? (string) $xml['type'] : null;
-        $subject->name = $xml->name ? (string) $xml->name : null;
+        $subject->name = $xml->name ? (string) $xml->name : (!empty($xml['literal']) ? (string) $xml['literal'] : null);
         return $subject;
     }
 

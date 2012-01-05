@@ -12,6 +12,7 @@ namespace Newscoop\News;
 class ItemServiceTest extends \TestCase
 {
     const TEXT_XML = 'textNewsItem.xml';
+    const PICTURE_XML = 'pictureNewsItem.xml';
 
     /** @var Newscoop\News\ItemService */
     protected $service;
@@ -114,7 +115,7 @@ class ItemServiceTest extends \TestCase
         $this->assertEquals(0, count($this->service->findBy(array())));
     }
 
-    public function testPublish()
+    public function testPublishText()
     {
         $this->orm = $this->setUpOrm('Newscoop\Entity\Article', 'Newscoop\Entity\Comment', 'Newscoop\Entity\ArticleDatetime');
 
@@ -128,7 +129,7 @@ class ItemServiceTest extends \TestCase
 
         $this->assertFalse($item->isPublished());
 
-        $article = $this->service->publish($item);
+        $this->service->publish($item);
 
         $this->assertTrue($item->isPublished());
         $this->assertInstanceOf('DateTime', $item->getPublished());
@@ -152,5 +153,43 @@ class ItemServiceTest extends \TestCase
         $this->assertEquals($item->getContentMeta()->getByline(), $articleData->getFieldValue('byline'));
         $this->assertEquals($item->getContentMeta()->getCreditline(), $articleData->getFieldValue('creditline'));
         $this->assertEquals((string) $item->getContentSet()->getInlineContent(), $articleData->getFieldValue('inlinecontent'));
+    }
+
+    public function testPublishPicture()
+    {
+        $xml = simplexml_load_file(APPLICATION_PATH . '/../tests/fixtures/' . self::PICTURE_XML);
+        $item = NewsItem::createFromXml($xml->itemSet->newsItem);
+
+        global $g_ado_db;
+        $this->orm = $this->setUpOrm('Newscoop\Entity\Picture');
+        $g_ado_db = new \AdoDbDoctrineAdapter($this->orm);
+
+        $feed = $this->getMockBuilder('Newscoop\News\Feed')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $feed->expects($this->once())
+            ->method('getRemoteContentSrc')
+            ->with($this->equalTo($item->getContentSet()->getRemoteContent('rend:baseImage')))
+            ->will($this->returnValue(APPLICATION_PATH . '/../tests/fixtures/picture.jpg'));
+
+        $item->setFeed($feed);
+
+        $this->service->publish($item);
+        $this->assertTrue($item->isPublished());
+        $this->assertInstanceOf('DateTime', $item->getPublished());
+
+        $pictures = $this->orm->getRepository('Newscoop\Entity\Picture')->findAll();
+        $this->assertEquals(1, count($pictures));
+
+        $picture = $pictures[0];
+        $this->assertEquals('Alex Blackburn-Smith arrives at Croydon Magistrates Court in southeast London', $picture->getHeadline());
+        $this->assertEquals('Alex Blackburn-Smith arrives at Croydon Magistrates Court in southeast London December 6, 2011. Blackburn-Smith pleaded guilty to failing to ensure a dog�s welfare, as well as being in possession of a banned pitbull terrier.   example/Luke MacGregor  (BRITAIN - Tags: CRIME LAW)', $picture->getCaption());
+        $this->assertEquals('image/jpeg', $picture->getContentType());
+        $this->assertEquals('LUKE MACGREGOR', $picture->getPhotographer());
+        $this->assertEquals('newsfeed', $picture->getSource());
+        $this->assertTrue($picture->isApproved());
+        $this->assertEquals(date_create('2011-12-06T13:32:23.000Z')->format('Y-m-d H:i'), $picture->getDate()->format('Y-m-d H:i'));
+        $this->assertEquals('LONDON', $picture->getPlace());
     }
 }
