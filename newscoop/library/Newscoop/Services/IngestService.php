@@ -292,6 +292,7 @@ class IngestService
             $previous = Entry::create($parser);
             $previous->setFeed($feed);
             $this->em->persist($previous);
+            $this->em->flush();
         }
 
         return $previous;
