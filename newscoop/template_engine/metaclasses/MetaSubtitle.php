@@ -311,8 +311,8 @@ final class MetaSubtitle {
         $imgString .= ' border="0"/>';
         $imgString .= (strlen($imgZoomLink) > 0) ? '</a></p>' : '</p>';
         if (isset($detailsArray['sub']) && !empty($detailsArray['sub'])) {
-        	if (isset($imageSize[0])) {
-        	   $imgString .= '<p class="cs_img_caption" style="width:'.$imageSize[0].'px">';
+        	if (isset($detailsArray['width'])) {
+        	   $imgString .= '<p class="cs_img_caption" style="width:'.$detailsArray['width'].'px">';
         	} else {
         		$imgString .= '<p class="cs_img_caption">';
         	}
