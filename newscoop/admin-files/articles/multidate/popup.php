@@ -431,10 +431,10 @@ $(function(){
 	 $('#start-date-daterange').datepicker({ dateFormat: 'yy-mm-dd' });
 	 $('#end-date-daterange').datepicker({ dateFormat: 'yy-mm-dd' });
 	 
-	 $('#start-time-specific').timepicker({});
-	 $('#end-time-specific').timepicker({});
-	 $('#start-time-daterange').timepicker({});
-	 $('#end-time-daterange').timepicker({});
+	 $('#start-time-specific').timepicker({stepHour: 1, stepMinute: 1});
+	 $('#end-time-specific').timepicker({stepHour: 1, stepMinute: 1});
+	 $('#start-time-daterange').timepicker({stepHour: 1, stepMinute: 1});
+	 $('#end-time-daterange').timepicker({stepHour: 1, stepMinute: 1});
 
 	 $('#daterange-all-day').click(function() {
 		 if ($('#daterange-all-day').attr('checked') != 'checked') {
