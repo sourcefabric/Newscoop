@@ -423,7 +423,8 @@ $(function(){
 			loading: function(bool) {
 				if (bool) $('#loading').show();
 				else $('#loading').hide();
-			}
+			},
+			timeFormat: 'H(:mm)'
 	});
 	 
 	 $("#start-date-specific").datepicker({ dateFormat: 'yy-mm-dd' });
