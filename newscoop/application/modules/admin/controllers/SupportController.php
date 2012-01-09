@@ -61,7 +61,8 @@ class Admin_SupportController extends Zend_Controller_Action
         $form = new Zend_Form;
 
         $form->addElement('checkbox', 'send_support_feedback', array(
-            'onChange' => 'fixPromote();fixSubmit();',
+            //'onChange' => 'fixPromote();fixSubmit();',
+            'onChange' => 'fixSubmit();',
             'value' => $supportSend
         ));
         /*
