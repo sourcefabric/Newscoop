@@ -344,6 +344,53 @@ if (isset($_REQUEST["action_button"])) {
 		}
 		ArticleIndex::RunIndexer(3, 10, true);
 		camp_html_goto_page($url);
+	} elseif ($f_action == "submit") {
+
+		// Submit all the articles requested.
+		$tmpArticles = array();
+		foreach ($doAction as $articleNumber => $languageArray) {
+			foreach ($languageArray as $languageId => $action) {
+				$tmpArticle = new Article($languageId, $articleNumber);
+				$tmpArticle->setTitle($articleNames[$articleNumber][$languageId]);
+
+				// Check if the name already exists in the destination section.
+				$conflictingArticles = Article::GetByName($tmpArticle->getTitle(),
+								          $f_destination_publication_id,
+							 	          $f_destination_issue_number,
+								          $f_destination_section_number, null, true);
+				if (count($conflictingArticles) > 0) {
+					$conflictingArticle = array_pop($conflictingArticles);
+					$conflictingArticleLink = camp_html_article_url($conflictingArticle,
+									$conflictingArticle->getLanguageId(),
+									"edit.php");
+    				camp_html_add_msg(getGS("The article could not be submitted.")." ".getGS("You cannot have two articles in the same section with the same name.  The article name you specified is already in use by the article '$1'.",
+     						"<a href='$conflictingArticleLink'>".$conflictingArticle->getName()."</a>"));
+     				$args = $_REQUEST;
+     				unset($args["action_button"]);
+					unset($args["f_article_code"]);
+					$argsStr = camp_implode_keys_and_values($args, "=", "&");
+					foreach ($_REQUEST["f_article_code"] as $code) {
+						$argsStr .= "&f_article_code[]=$code";
+					}
+					$backLink = "/$ADMIN/articles/duplicate.php?$argsStr";
+					camp_html_goto_page($backLink);
+				} else {
+					$tmpArticle->move($f_destination_publication_id,
+					 	              $f_destination_issue_number,
+								      $f_destination_section_number);
+					$tmpArticle->setWorkflowStatus('S');
+					$tmpArticles[] = $tmpArticle;
+				}
+			}
+		}
+		$tmpArticle = camp_array_peek($tmpArticles);
+		if ($f_mode == "single") {
+			$url = camp_html_article_url($tmpArticle, $tmpArticle->getLanguageId(), "edit.php");
+		} else {
+			$url = $destArticleIndexUrl;
+		}
+		ArticleIndex::RunIndexer(3, 10, true);
+		camp_html_goto_page($url);
 	}
 } // END perform the action
 
@@ -356,6 +403,8 @@ if (count($doAction) > 1) {
 		$title = getGS("Move articles");
 	} elseif ($f_action == "publish") {
 		$title = getGS("Publish articles");
+	} elseif ($f_action == "submit") {
+		$title = getGS("Submit articles");
 	}
 } else {
 	if ($f_action == "duplicate") {
@@ -364,6 +413,8 @@ if (count($doAction) > 1) {
 		$title = getGS("Move article");
 	} elseif ($f_action == "publish") {
 		$title = getGS("Publish article");
+	} elseif ($f_action == "submit") {
+		$title = getGS("Submit article");
 	}
 }
 

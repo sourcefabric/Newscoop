@@ -131,6 +131,13 @@ if (!is_null($f_action_workflow)) {
 			$argsStr .= "&f_mode=single&f_action=publish";
 			camp_html_goto_page("/$ADMIN/articles/duplicate.php?".$argsStr);
 		}
+        else if (($f_action_workflow == "S") && (($articleObj->getPublicationId() == 0) || ($articleObj->getIssueNumber() == 0) || ($articleObj->getSectionNumber() == 0))) {
+			$args = $_REQUEST;
+			$argsStr = camp_implode_keys_and_values($_REQUEST, "=", "&");
+			$argsStr .= "&f_article_code[]=".$f_article_number."_".$f_language_selected;
+			$argsStr .= "&f_mode=single&f_action=submit";
+			camp_html_goto_page("/$ADMIN/articles/duplicate.php?".$argsStr);
+		}
 
 		$articleObj->setWorkflowStatus($f_action_workflow);
 		camp_html_add_msg(getGS("Article status set to '$1'", $articleObj->getWorkflowDisplayString()), "ok");
