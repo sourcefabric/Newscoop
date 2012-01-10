@@ -4,20 +4,47 @@
 <div class="detail">
 
 <div class="controls">
-    <?php if (!$this->item->isPublished()) { ?>
+    <?php if (!$this->item->isPublished() && $this->item->isUsable()) { ?>
     <a href="<?php echo $this->url(array(
         'action' => 'publish',
         'item' => $this->item->getId(),
     )); ?>" title="Push '<?php echo $this->escape($this->item->getContentMeta()->getHeadline()); ?>' to Web" class="publish">Push to Web</a>
-    <?php } else { ?>
+    <?php } else if ($this->item->isPublished()) { ?>
     <span class="publish">Pushed to Web (<?php $this->renderDate($this->item->getPublished()); ?>)</span>
     <?php } ?>
 </div>
 
+<div class="item">
 <?php if ($this->item instanceof \Newscoop\News\PackageItem) { ?>
     <?php $this->renderPackageItem($this->item); ?>
 <?php } else { ?>
     <?php $this->renderNewsItem($this->item); ?>
 <?php } // /if ?>
+</div>
+
+<dl class="meta">
+    <dt><?php putGS('Slug:'); ?></dt>
+    <dd><?php echo $this->item->getContentMeta()->getSlugline(); ?></dd>
+    <?php if ($this->item->getContentMeta()->getByline()) { ?>
+    <dt><?php putGS('By:'); ?></dt>
+    <dd><?php echo $this->item->getContentMeta()->getByline(); ?></dd>
+    <?php } ?>
+    <dt><?php putGS('Urgency:'); ?></dt>
+    <dd><?php echo $this->item->getContentMeta()->getUrgency(); ?></dd>
+    <dt><?php putGS('Status:'); ?></dt>
+    <dd><?php echo $this->item->getItemMeta()->getPubStatus(); ?></dd>
+    <dt><?php putGS('Provider:'); ?></dt>
+    <dd><?php echo $this->item->getItemMeta()->getProvider(); ?></dd>
+    <dt><?php putGS('Created:'); ?></dt>
+    <dd><?php echo $this->item->getItemMeta()->getFirstCreated()->format('Y-m-d H:i'); ?></dd>
+    <?php if ($this->item->getItemMeta()->getFirstCreated()->getTimestamp() !== $this->item->getItemMeta()->getVersionCreated()->getTimestamp()) { ?>
+    <dt><?php putGS('Updated:'); ?></dt>
+    <dd><?php echo $this->item->getItemMeta()->getVersionCreated()->format('Y-m-d H:i'); ?></dd>
+    <?php } ?>
+    <dt><?php putGS('Description:'); ?></dt>
+    <dd><?php echo $this->item->getContentMeta()->getDescription(); ?></dd>
+    <dt><?php putGS('Copyright:'); ?></dt>
+    <dd><?php echo $this->item->getRightsInfo()->first()->getCopyrightNotice(); ?></dd>
+</dl>
 
 </div>

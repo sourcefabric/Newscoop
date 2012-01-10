@@ -58,6 +58,11 @@ class NewsItemTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('DateTime', $this->item->getCreated());
     }
 
+    public function testIsUsable()
+    {
+        $this->assertTrue($this->item->isUsable());
+    }
+
     public function testGetRightsInfo()
     {
         $rightsInfo = $this->item->getRightsInfo();

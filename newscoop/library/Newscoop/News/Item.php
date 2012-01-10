@@ -332,4 +332,14 @@ abstract class Item
     {
         return $this->published !== null;
     }
+
+    /**
+     * Test if is usable
+     *
+     * @return bool
+     */
+    public function isUsable()
+    {
+        return $this->getItemMeta()->getPubStatus() === 'stat:usable';
+    }
 }

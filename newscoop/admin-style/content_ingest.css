@@ -195,3 +195,33 @@
     width: auto;
     height: auto;
 }
+
+#ingest .detail .item {
+    float: left;
+}
+
+#ingest .detail .meta {
+    float: left;
+    width: 200px;
+    margin: 0 13px;
+    padding: 5px;
+    background-color: #fff;
+    border: none;
+}
+
+#ingest .detail .meta dt {
+    margin-top: 8px;
+}
+
+#ingest .detail .meta dt:first-child {
+    margin-top: 0;
+}
+
+#ingest .detail .meta dd {
+    margin-top: 2px;
+}
+
+#ingest .detail {
+    height: 1%;
+    overflow: hidden;
+}
