@@ -4,15 +4,13 @@
 <?php echo nl2br($this->item->getContentSet()->getInlineContent()); ?>
 </div>
 
-<?php } else if ($thumbnail = $this->item->getContentSet()->getRemoteContent('rend:thumbnail')) { ?>
+<?php } else if ($thumbnail = $this->item->getContentSet()->getRemoteContent('rend:viewImage')) { ?>
 <div class="thumbnail"><img src="<?php echo $this->item->getFeed()->getRemoteContentSrc($thumbnail); ?>" width="<?php echo $thumbnail->getWidth(); ?>" height="<?php echo $thumbnail->getHeight(); ?>" alt="" /></div>
 <div class="renditions">
 <?php foreach ($this->item->getContentSet()->getRemoteContent() as $remoteContent) { ?>
-<?php if ($remoteContent->getRendition() === 'rend:thumbnail') {
-    continue;
-} ?>
+<?php if ($remoteContent->getRendition() === 'rend:baseImage') { ?>
     <a href="<?php echo $this->item->getFeed()->getRemoteContentSrc($remoteContent); ?>"><?php echo $remoteContent->getWidth(), 'x', $remoteContent->getHeight(); ?></a>
-<?php } ?>
+<?php }} ?>
 </div>
 
 <?php } // remote content ?>

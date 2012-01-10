@@ -307,7 +307,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         require_once 'Doctrine/ODM/MongoDB/Mapping/Annotations/DoctrineAnnotations.php';
 
         $reader = new AnnotationReader();
-        $reader->setDefaultAnnotationNamespace('Doctrine\ODM\MongoDB\Mapping\Annotations\\');
         $config->setMetadataDriverImpl(new AnnotationDriver($reader, APPLICATION_PATH . '/../library/Newscoop/News'));
 
         $config->setDefaultDB('newscoop');

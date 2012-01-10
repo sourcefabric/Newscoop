@@ -54,19 +54,14 @@ class Log extends DatabaseObject {
 		} elseif (isset($_SERVER['REMOTE_ADDR'])) {
 			$userIP = $_SERVER['REMOTE_ADDR'];
 		} else {
-			$userIP = null;
+			$userIP = '';
 		}
 
-		$queryStr = "INSERT INTO Log SET "
-					." time_created=NOW(), "
-					." fk_event_id=$p_eventId,"
-					." fk_user_id=$p_userId, "
-					." text='".$g_ado_db->escape($p_text)."'";
-		if (!is_null($userIP)) {
-            $ip_ary = explode('/', (string) $userIP);
-            $userIP = substr($ip_ary[0], 0, 39); // IPv6
-			$queryStr .= ", user_ip='" . $g_ado_db->escape($userIP) . "'";
-		}
+        $ip_ary = explode('/', (string) $userIP);
+        $userIP = substr($ip_ary[0], 0, 39); // IPv6
+
+        $queryStr = "INSERT INTO Log (time_created, fk_event_id, fk_user_id, text, user_ip) VALUES
+                    (NOW(), {$p_eventId}, {$p_userId}, '" . $g_ado_db->escape($p_text) . "', '" . $g_ado_db->escape($userIP) . "')";
 		$g_ado_db->Execute($queryStr);
 	} // fn Message
 

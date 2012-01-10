@@ -7,20 +7,22 @@
 
 namespace Newscoop\News;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
 /**
  * CatalogRef
- * @EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class CatalogRef
 {
     /**
-     * @Id
+     * @ODM\Id
      * @var string
      */
     protected $id;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $href;

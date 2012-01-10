@@ -7,26 +7,28 @@
 
 namespace Newscoop\News;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
 /**
  * RightsInfo
- * @EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class RightsInfo
 {
     /**
-     * @Id
+     * @ODM\Id
      * @var string
      */
     protected $id;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $copyrightHolder;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $copyrightNotice;

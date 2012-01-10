@@ -7,9 +7,11 @@
 
 namespace Newscoop\News;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
 /**
  * Reuters feed
- * @Document(collection="news_feed")
+ * @ODM\Document(collection="news_feed")
  */
 class ReutersFeed extends Feed
 {
@@ -24,13 +26,13 @@ class ReutersFeed extends Feed
     protected $client;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $token;
 
     /**
-     * @Date
+     * @ODM\Date
      * @var DateTime
      */
     protected $tokenUpdated;

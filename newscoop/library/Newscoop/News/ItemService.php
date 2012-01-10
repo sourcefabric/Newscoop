@@ -123,8 +123,9 @@ class ItemService
     private function publishArticle(Item $item)
     {
         $issueNumber = $this->settings->getPublicationId() ? \Issue::GetCurrentIssue($this->settings->getPublicationId())->getIssueNumber() : null;
+        $type = $this->getArticleType($this->settings->getArticleTypeName());
         $article = new \Article($this->findLanguageId($item->getContentMeta()->getLanguage()));
-        $article->create($this->settings->getArticleTypeName(), $item->getContentMeta()->getHeadline(), $this->settings->getPublicationId(), $issueNumber, $this->settings->getSectionNumber());
+        $article->create($type->getTypeName(), $item->getContentMeta()->getHeadline(), $this->settings->getPublicationId(), $issueNumber, $this->settings->getSectionNumber());
         $article->setKeywords($item->getContentMeta()->getSlugline());
         $article->setCreationDate($item->getItemMeta()->getFirstCreated()->format('Y-m-d H:i:s'));
         $this->setArticleData($article, $item);
@@ -185,8 +186,7 @@ class ItemService
      */
     private function setArticleData(\Article $article, Item $item)
     {
-        $this->createArticleType($article->getType());
-        $data = $article->getArticleData();
+        $data = $this->getArticleData($article);
         $data->setProperty('Fguid', $item->getId());
         $data->setProperty('Fversion', $item->getVersion());
         $data->setProperty('Furgency', $item->getContentMeta()->getUrgency());
@@ -204,11 +204,11 @@ class ItemService
      * Create article type if does not exist
      *
      * @param string $typeName
-     * @return void
+     * @return ArticleType
      */
-    private function createArticleType($typeName)
+    private function getArticleType($typeName)
     {
-        static $requiredFields = array(
+        $requiredFields = array(
             'guid' => 'text',
             'version' => 'text',
             'urgency' => 'text',
@@ -228,10 +228,29 @@ class ItemService
 
         $fields = $type->getUserDefinedColumns(null, true, true);
         foreach ($requiredFields as $fieldName => $fieldType) {
-            if (!array_key_exists('urgency', $fields)) {
+            if (!array_key_exists($fieldName, $fields)) {
                 $field = new \ArticleTypeField($type->getTypeName(), $fieldName);
-                $field->create($fieldType, array());
+                $field->create($fieldType);
             }
         }
+
+        return $type;
+    }
+
+    /**
+     * Get article data
+     *
+     * @param Article $article
+     * @return ArticleData
+     */
+    private function getArticleData(\Article $article)
+    {
+        $data = $article->getArticleData();
+
+        if (!$data->exists()) {
+            $data->create();
+        }
+
+        return $data;
     }
 }

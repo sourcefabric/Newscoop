@@ -42,16 +42,22 @@ class AdoDbDoctrineAdapter
      * Execute query
      *
      * @param string $statement
-     * @return void
+     * @return bool
      */
     public function execute($statement)
     {
+        $ignore = strpos($statement, 'IGNORE') !== false;
+
         $statement = str_replace(array(
             'INSERT IGNORE',
             'NOW()',
+            'LAST_INSERT_ID(ArticleId + 1)',
+            'DEFAULT CHARSET=utf8',
         ), array(
             'INSERT',
             "datetime('now')",
+            '(SELECT MAX(ArticleId) + 1 FROM AutoId)',
+            '',
         ), $statement);
 
 
@@ -62,9 +68,15 @@ class AdoDbDoctrineAdapter
         try {
             $this->affectedRows = $this->connection->exec($statement);
         } catch (\Exception $e) {
-            var_dump($statement, $e->getMessage());
-            exit;
+            if (!$ignore) {
+                var_dump($statement, $e->getMessage(), array_slice($e->getTrace(), 0, 5));
+                exit;
+            }
+
+            return $ignore;
         }
+
+        return true;
     }
 
     /**
@@ -88,13 +100,35 @@ class AdoDbDoctrineAdapter
     }
 
     /**
-     * Get one row
+     * Get single value
      *
      * @param string $statement
-     * @return array
+     * @return mixed
      */
     public function GetOne($statement)
     {
         return $this->connection->fetchColumn($statement);
+    }
+
+    /**
+     * Get all 
+     *
+     * @param string $statement
+     * @return array
+     */
+    public function GetAll($statement)
+    {
+        return $this->connection->fetchAll($statement);
+    }
+
+    /**
+     * Get row
+     *
+     * @param string $statement
+     * @return array
+     */
+    public function GetRow($statement)
+    {
+        return $this->connection->fetchAssoc($statement);
     }
 }

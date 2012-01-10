@@ -21,13 +21,13 @@ class UserAttribute
     private $user;
 
     /**
-     * @Id @Column(type="string", length="255")
+     * @Id @Column(type="string", length=255)
      * @var string
      */
     private $attribute;
 
     /**
-     * @Column(type="string", length="255", nullable=True)
+     * @Column(type="string", length=255, nullable=True)
      * @var string
      */
     private $value;

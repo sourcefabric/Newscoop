@@ -7,68 +7,70 @@
 
 namespace Newscoop\News;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
 /**
  * RemoteContent
- * @EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class RemoteContent
 {
     /**
-     * @Id
+     * @ODM\Id
      * @var string
      */
     protected $id;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $residref;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $href;
 
     /**
-     * @Int
+     * @ODM\Int
      * @var int
      */
     protected $size;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $rendition;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $contentType;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $format;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $generator;
 
     /**
-     * @Int
+     * @ODM\Int
      * @var int
      */
     protected $width;
 
     /**
-     * @Int
+     * @ODM\Int
      * @var int
      */
     protected $height;

@@ -70,12 +70,12 @@ class ArticleType {
 		if (strlen($this->m_dbTableName) <= 1) {
 			return false;
 		}
-		$queryStr = 'DROP TABLE `'.$this->m_dbTableName.'`';
+		$queryStr = 'DROP TABLE IF EXISTS `'.$this->m_dbTableName.'`';
 		$g_ado_db->Execute($queryStr);
 
 		$queryStr = "CREATE TABLE `".$this->m_dbTableName."` (\n"
-                  . "    NrArticle INT UNSIGNED NOT NULL,\n"
-                  . "    IdLanguage INT UNSIGNED NOT NULL,\n"
+                  . "    NrArticle INT NOT NULL,\n"
+                  . "    IdLanguage INT NOT NULL,\n"
                   . "    PRIMARY KEY(NrArticle, IdLanguage)\n"
                   . ") DEFAULT CHARSET=utf8";
 		$success = $g_ado_db->Execute($queryStr);

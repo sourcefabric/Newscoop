@@ -81,6 +81,12 @@ class Article
     private $name;
 
     /**
+     * @Column(name="ShortName", nullable=True)
+     * @var string
+     */
+    private $shortName;
+
+    /**
      * @Column(name="time_updated", nullable=True)
      * @var string
      */
@@ -109,6 +115,73 @@ class Article
      * @var string
      */
     private $workflowStatus;
+
+    /**
+     * @Column(type="integer", name="ArticleOrder", nullable=True)
+     * @var int
+     */
+    private $articleOrder;
+
+    /**
+     * @Column(name="Public", nullable=True)
+     * @var string
+     */
+    private $public;
+
+    /**
+     * @Column(name="OnFrontPage", nullable=True)
+     * @var string
+     */
+    private $onFrontPage;
+
+    /**
+     * @Column(name="OnSection", nullable=True)
+     * @var string
+     */
+    private $onSection;
+
+    /**
+     * @Column(type="datetime", name="UploadDate", nullable=True)
+     * @var DateTime
+     */
+    private $uploaded;
+
+    /**
+     * @Column(name="Keywords", nullable=True)
+     * @var string
+     */
+    private $keywords;
+
+    /**
+     * @Column(name="IsIndexed", nullable=True)
+     * @var string
+     */
+    private $isIndexed;
+
+    /**
+     * @ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @JoinColumn(name="LockUser", referencedColumnName="Id")
+     * @var Newscoop\Entity\User
+     */
+    private $lockUser;
+
+    /**
+     * @Column(type="datetime", name="LockTime", nullable=True)
+     * @var DateTime
+     */
+    private $lockTime;
+
+    /**
+     * @Column(type="integer", name="comments_locked", nullable=True)
+     * @var int
+     */
+    private $commentsLocked;
+
+    /**
+     * @Column(type="integer", name="object_id", nullable=True)
+     * @var int
+     */
+    private $objectId;
 
     /**
      * @param int $number
