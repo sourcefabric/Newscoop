@@ -159,18 +159,6 @@ class Publication extends Entity
     private $commentsSpamBlockingEnabled;
 
     /**
-     * @Column(name="moderator_from", nullable=True)
-     * @var string
-     */
-    private $moderatorFrom;
-
-    /**
-     * @Column(name="moderator_to", nullable=True)
-     * @var string
-     */
-    private $moderatorTo;
-
-    /**
      * @Column(type="integer", name="url_error_tpl_id", nullable=True)
      * @var int
      */
