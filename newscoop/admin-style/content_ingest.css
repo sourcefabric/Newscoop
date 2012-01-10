@@ -189,3 +189,9 @@
     background-color: #fff;
     font-size: 1.3em;
 }
+
+#ingest .detail .thumbnail {
+    display: inline-block;
+    width: auto;
+    height: auto;
+}
