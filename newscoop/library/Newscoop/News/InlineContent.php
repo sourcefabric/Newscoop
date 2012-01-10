@@ -7,32 +7,34 @@
 
 namespace Newscoop\News;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
 /**
  * InlineContent
- * @EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class InlineContent
 {
     /**
-     * @Id
+     * @ODM\Id
      * @var string
      */
     protected $id;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $contentType;
 
     /**
-     * @Int
+     * @ODM\Int
      * @var int
      */
     protected $wordCount;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $content;

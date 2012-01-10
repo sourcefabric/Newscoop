@@ -7,26 +7,28 @@
 
 namespace Newscoop\News;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
 /**
  * GroupSet
- * @EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class GroupSet
 {
     /**
-     * @Id
+     * @ODM\Id
      * @var string
      */
     protected $id;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $root;
 
     /**
-     * @EmbedMany(targetDocument="Group")
+     * @ODM\EmbedMany(targetDocument="Group")
      * @var Doctrine\Common\Collections\Collection
      */
     protected $groups;

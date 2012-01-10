@@ -7,32 +7,34 @@
 
 namespace Newscoop\News;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
 /**
  * Subject
- * @EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class Subject
 {
     /**
-     * @Id
+     * @ODM\Id
      * @var string
      */
     protected $id;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $qcode;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $type;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $name;

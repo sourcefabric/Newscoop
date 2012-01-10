@@ -7,89 +7,91 @@
 
 namespace Newscoop\News;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
 /**
  * anyItem
- * @Document(collection="news_item")
- * @InheritanceType("SINGLE_COLLECTION")
- * @DiscriminatorField(fieldName="type")
- * @DiscriminatorMap({"package"="PackageItem", "news"="NewsItem"})
+ * @ODM\Document(collection="news_item")
+ * @ODM\InheritanceType("SINGLE_COLLECTION")
+ * @ODM\DiscriminatorField(fieldName="type")
+ * @ODM\DiscriminatorMap({"package"="PackageItem", "news"="NewsItem"})
  */
 abstract class Item
 {
     /**
-     * @Id(strategy="NONE")
+     * @ODM\Id(strategy="NONE")
      * @var string
      */
     protected $id;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $guid;
 
     /**
-     * @ReferenceOne(targetDocument="ReutersFeed")
+     * @ODM\ReferenceOne(targetDocument="ReutersFeed")
      * @var Newscoop\News\ReutersFeed
      */
     protected $feed;
 
     /**
-     * @Int
+     * @ODM\Int
      * @var string
      */
     protected $version;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $standard;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $standardVersion;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $conformance;
 
     /**
-     * @EmbedMany(targetDocument="RightsInfo")
+     * @ODM\EmbedMany(targetDocument="RightsInfo")
      * @var Doctrine\Common\Collections\Collection
      */
     protected $rightsInfo;
 
     /**
-     * @EmbedOne(targetDocument="ItemMeta")
+     * @ODM\EmbedOne(targetDocument="ItemMeta")
      * @var Newscoop\News\ItemMeta
      */
     protected $itemMeta;
 
     /**
-     * @EmbedOne(targetDocument="ContentMeta")
+     * @ODM\EmbedOne(targetDocument="ContentMeta")
      * @var Newscoop\News\ContentMeta
      */
     protected $contentMeta;
 
     /**
-     * @Date
+     * @ODM\Date
      * @var DateTime
      */
     protected $created;
 
     /**
-     * @EmbedMany(targetDocument="CatalogRef")
+     * @ODM\EmbedMany(targetDocument="CatalogRef")
      * @var Doctrine\Common\Collections\Collection
      */
     protected $catalogRefs;
 
     /**
-     * @Date
+     * @ODM\Date
      * @var DateTime
      */
     protected $published;

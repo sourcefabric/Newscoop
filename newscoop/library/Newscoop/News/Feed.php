@@ -7,31 +7,33 @@
 
 namespace Newscoop\News;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
 /**
- * @MappedSuperclass
+ * @ODM\MappedSuperclass
  */
 abstract class Feed
 {
     /**
-     * @Id
+     * @ODM\Id
      * @var string
      */
     protected $id;
 
     /**
-     * @Hash
+     * @ODM\Hash
      * @var array
      */
     protected $configuration = array();
 
     /**
-     * @Date
+     * @ODM\Date
      * @var DateTime
      */
     protected $updated;
 
     /**
-     * @Boolean
+     * @ODM\Boolean
      * @var bool
      */
     protected $isAutoMode = false;

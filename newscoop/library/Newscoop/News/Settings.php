@@ -7,32 +7,34 @@
 
 namespace Newscoop\News;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
 /**
  * Settings
- * @Document
+ * @ODM\Document
  */
 class Settings
 {
     /**
-     * @Id(strategy="NONE")
+     * @ODM\Id(strategy="NONE")
      * @var string
      */
     protected $id = 'ingest';
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $articleTypeName = 'newsml';
 
     /**
-     * @Int
+     * @ODM\Int
      * @var int
      */
     protected $publicationId;
 
     /**
-     * @Int
+     * @ODM\Int
      * @var int
      */
     protected $sectionNumber;

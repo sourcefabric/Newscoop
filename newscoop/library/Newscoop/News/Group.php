@@ -7,32 +7,34 @@
 
 namespace Newscoop\News;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
 /**
  * Group
- * @EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class Group
 {
     /**
-     * @Id(strategy="NONE")
+     * @ODM\Id(strategy="NONE")
      * @var string
      */
     protected $id;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $role;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $mode;
 
     /**
-     * @EmbedMany(
+     * @ODM\EmbedMany(
      *   discriminatorMap={
      *     "group"="GroupRef",
      *     "item"="ItemRef"

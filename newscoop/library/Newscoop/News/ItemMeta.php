@@ -7,9 +7,11 @@
 
 namespace Newscoop\News;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
 /**
  * ItemMeta
- * @EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class ItemMeta
 {
@@ -18,49 +20,49 @@ class ItemMeta
     const STATUS_CANCELED = 'stat:canceled';
 
     /**
-     * @Id
+     * @ODM\Id
      * @var string
      */
     protected $id;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $itemClass;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $provider;
 
     /**
-     * @Date
+     * @ODM\Date
      * @var DateTime
      */
     protected $versionCreated;
 
     /**
-     * @Date
+     * @ODM\Date
      * @var DateTime
      */
     protected $firstCreated;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $pubStatus;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $role;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $title;

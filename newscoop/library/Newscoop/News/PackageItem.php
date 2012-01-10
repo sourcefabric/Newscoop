@@ -7,14 +7,16 @@
 
 namespace Newscoop\News;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
 /**
  * PackageItem
- * @Document
+ * @ODM\Document
  */
 class PackageItem extends Item
 {
     /**
-     * @EmbedOne(targetDocument="GroupSet")
+     * @ODM\EmbedOne(targetDocument="GroupSet")
      * @var Newscoop\News\GroupSet
      */
     protected $groupSet;

@@ -7,26 +7,28 @@
 
 namespace Newscoop\News;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
 /**
  * ContentSet
- * @EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class ContentSet
 {
     /**
-     * @Id
+     * @ODM\Id
      * @var string
      */
     protected $id;
 
     /**
-     * @EmbedOne(targetDocument="InlineContent")
+     * @ODM\EmbedOne(targetDocument="InlineContent")
      * @var Newscoop\News\InlineContent
      */
     protected $inlineContent;
 
     /**
-     * @EmbedMany(targetDocument="RemoteContent")
+     * @ODM\EmbedMany(targetDocument="RemoteContent")
      * @var Doctrine\Common\Collections\Collection
      */
     protected $remoteContent;

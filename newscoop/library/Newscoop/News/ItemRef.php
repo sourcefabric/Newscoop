@@ -7,68 +7,70 @@
 
 namespace Newscoop\News;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
 /**
  * ItemRef
- * @EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class ItemRef
 {
     /**
-     * @Id
+     * @ODM\Id
      * @var string
      */
     protected $id;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $residRef;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $version;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $contentType;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $itemClass;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $provider;
 
     /**
-     * @Date
+     * @ODM\Date
      * @var DateTime
      */
     protected $versionCreated;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $pubStatus;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $slugline;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $headline;

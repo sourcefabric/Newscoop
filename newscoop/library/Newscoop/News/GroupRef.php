@@ -7,20 +7,22 @@
 
 namespace Newscoop\News;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
 /**
  * GroupRef
- * @EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class GroupRef
 {
     /**
-     * @Id
+     * @ODM\Id
      * @var string
      */
     protected $id;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $idRef;

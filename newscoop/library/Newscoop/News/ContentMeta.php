@@ -7,69 +7,71 @@
 
 namespace Newscoop\News;
 
+use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
+
 /**
  * ContentMeta
- * @EmbeddedDocument
+ * @ODM\EmbeddedDocument
  */
 class ContentMeta
 {
     /**
-     * @Id
+     * @ODM\Id
      * @var string
      */
     protected $id;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $urgency;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $slugline;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $headline;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $dateline;
 
     /**
-     * @String
-     * @AlsoLoad("by")
+     * @ODM\String
+     * @ODM\AlsoLoad("by")
      * @var string
      */
     protected $byline;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $creditline;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $description;
 
     /**
-     * @EmbedMany(targetDocument="Subject")
+     * @ODM\EmbedMany(targetDocument="Subject")
      * @var Doctrine\Common\Collections\Collection
      */
     protected $subjects;
 
     /**
-     * @String
+     * @ODM\String
      * @var string
      */
     protected $language;
