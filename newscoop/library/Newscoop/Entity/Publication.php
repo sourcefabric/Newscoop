@@ -69,6 +69,120 @@ class Publication extends Entity
     private $moderator_from;
 
     /**
+     * @Column(name="TimeUnit", nullable=True)
+     * @var string
+     */
+    private $timeUnit;
+
+    /**
+     * @Column(type="decimal", name="UnitCost", nullable=True)
+     * @var float
+     */
+    private $unitCost;
+
+    /**
+     * @Column(type="decimal", name="UnitCostAllLang", nullable=True)
+     * @var float
+     */
+    private $unitCostAll;
+
+    /**
+     * @Column(name="Currency", nullable=True)
+     * @var string
+     */
+    private $currency;
+
+    /**
+     * @Column(type="integer", name="TrialTime", nullable=True)
+     * @var int
+     */
+    private $trialTime;
+
+    /**
+     * @Column(type="integer", name="PaidTime", nullable=True)
+     * @var int
+     */
+    private $paidTime;
+
+    /**
+     * @Column(type="integer", name="IdDefaultAlias", nullable=True)
+     * @var int
+     */
+    private $defaultAliasId;
+
+    /**
+     * @Column(type="integer", name="IdURLType", nullable=True)
+     * @var int
+     */
+    private $urlTypeId;
+
+    /**
+     * @Column(type="integer", name="fk_forum_id", nullable=True)
+     * @var int
+     */
+    private $forumId;
+
+    /**
+     * @Column(type="boolean", name="comments_enabled", nullable=True)
+     * @var bool
+     */
+    private $commentsEnabled;
+
+    /**
+     * @Column(type="boolean", name="comments_article_default_enabled", nullable=True)
+     * @var bool
+     */
+    private $commentsArticleDefaultEnabled;
+
+    /**
+     * @Column(type="boolean", name="comments_subscribers_moderated", nullable=True)
+     * @var bool
+     */
+    private $commentsSubscribersModerated;
+
+    /**
+     * @Column(type="boolean", name="comments_public_moderated", nullable=True)
+     * @var bool
+     */
+    private $commentsPublicModerated;
+
+    /**
+     * @Column(type="boolean", name="comments_captcha_enabled", nullable=True)
+     * @var bool
+     */
+    private $commentsCaptchaEnabled;
+
+    /**
+     * @Column(type="boolean", name="comments_spam_blocking_enabled", nullable=True)
+     * @var bool
+     */
+    private $commentsSpamBlockingEnabled;
+
+    /**
+     * @Column(name="moderator_from", nullable=True)
+     * @var string
+     */
+    private $moderatorFrom;
+
+    /**
+     * @Column(name="moderator_to", nullable=True)
+     * @var string
+     */
+    private $moderatorTo;
+
+    /**
+     * @Column(type="integer", name="url_error_tpl_id", nullable=True)
+     * @var int
+     */
+    private $urlErrorTemplateId;
+
+    /**
+     * @Column(nullable=True)
+     * @var int
+     */
+    private $seo;
+
+    /**
      */
     public function __construct()
     {

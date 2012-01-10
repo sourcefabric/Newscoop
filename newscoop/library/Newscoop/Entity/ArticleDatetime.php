@@ -32,25 +32,25 @@ class ArticleDatetime extends Entity
     protected $startDate;
 
     /**
-     * @Column( type="date", name="end_date", nullable="true" )
+     * @Column( type="date", name="end_date", nullable=True )
      * @var string
      */
     protected $endDate;
 
     /**
-     * @Column( type="time", name="start_time", nullable="true" )
+     * @Column( type="time", name="start_time", nullable=True )
      * @var string
      */
     protected $startTime;
 
     /**
-     * @Column( type="time", name="end_time", nullable="true" )
+     * @Column( type="time", name="end_time", nullable=True )
      * @var string
      */
     protected $endTime;
 
     /**
-     * @Column( type="string", name="recurring", nullable="true" )
+     * @Column( type="string", name="recurring", nullable=True )
      * @var string
      */
     protected $recurring;

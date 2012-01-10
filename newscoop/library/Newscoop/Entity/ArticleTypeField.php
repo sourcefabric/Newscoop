@@ -40,14 +40,50 @@ class ArticleTypeField
     private $typeHack;
 
     /**
-     * @Column(type="integer",name="max_size")
+     * @Column(type="integer", name="max_size", nullable=True)
      */
     private $length;
 
     /**
-     * @Column(type="string",name="field_type")
+     * @Column(type="string",name="field_type", nullable=True)
      */
     private $type;
+
+    /**
+     * @Column(type="integer", name="field_weight", nullable=True)
+     * @var int
+     */
+    private $fieldWeight;
+
+    /**
+     * @Column(type="integer", name="is_hidden", nullable=True)
+     * @var int
+     */
+    private $isHidden;
+
+    /**
+     * @Column(type="integer", name="comments_enabled", nullable=True)
+     * @var int
+     */
+    private $commentsEnabled;
+
+    /**
+     * @Column(type="integer", name="fk_phrase_id", nullable=True)
+     * @var int
+     */
+    private $phraseId;
+
+    /**
+     * @Column(name="field_type_param", nullable=True)
+     * @var string
+     */
+    private $fieldTypeParam;
+
+    /**
+     * @Column(type="integer", name="is_content_field", nullable=True)
+     * @var int
+     */
+    private $isContentField;
 
     /**
      * Get the article type
