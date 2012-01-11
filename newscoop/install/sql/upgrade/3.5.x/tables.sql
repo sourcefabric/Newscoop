@@ -291,3 +291,89 @@ system php ./create_themes.php
 
 -- Importing the stored function for 'Point in Polygon' checking
 system php ./checkpp.php
+
+-- Update from 3.6
+ALTER TABLE `liveuser_users` ADD `last_name` varchar(80) DEFAULT NULL;
+ALTER TABLE `liveuser_users` ADD `status` tinyint(1) NOT NULL DEFAULT '0';
+ALTER TABLE `liveuser_users` ADD `is_admin` boolean NOT NULL DEFAULT '0';
+ALTER TABLE `liveuser_users` ADD `is_public` boolean NOT NULL DEFAULT '0';
+ALTER TABLE `liveuser_users` ADD `points` int(10) DEFAULT '0';
+ALTER TABLE `liveuser_users` CHANGE `time_created` `time_created` datetime NOT NULL;
+ALTER TABLE `liveuser_users` CHANGE `time_updated` `time_updated` timestamp DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
+ALTER TABLE `liveuser_users` ADD `image` varchar(255) DEFAULT NULL;
+ALTER TABLE `liveuser_users` ADD `subscriber` int(10) DEFAULT NULL;
+
+UPDATE `liveuser_users` SET `status` = 1, `is_admin` = 1, `is_public` = 1;
+
+DROP TABLE IF EXISTS `audit_event`;
+CREATE TABLE IF NOT EXISTS `audit_event` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  `resource_type` varchar(80) NOT NULL,
+  `resource_id` varchar(80) DEFAULT NULL,
+  `resource_title` varchar(255) DEFAULT NULL,
+  `resource_diff` longtext,
+  `action` varchar(80) NOT NULL,
+  `created` datetime NOT NULL,
+  `is_public` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `user_attribute`;
+CREATE TABLE IF NOT EXISTS `user_attribute` (
+  `user_id` int(11) unsigned NOT NULL,
+  `attribute` varchar(255) NOT NULL,
+  `value` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`user_id`,`attribute`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `community_ticker_event`;
+CREATE TABLE IF NOT EXISTS `community_ticker_event` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `event` varchar(80) NOT NULL,
+  `params` text,
+  `created` datetime NOT NULL,
+  `user_id` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `user_points_index`;
+CREATE TABLE IF NOT EXISTS `user_points_index` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `action` varchar(255) NOT NULL,
+  `name` varchar(255) NOT NULL DEFAULT '',
+  `points` int(10) NOT NULL DEFAULT '0',
+  `enabled` tinyint(1) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `user_token`;
+CREATE TABLE IF NOT EXISTS `user_token` (
+  `user_id` int(11) unsigned NOT NULL,
+  `action` varchar(40) NOT NULL,
+  `token` varchar(40) NOT NULL,
+  `created` datetime NOT NULL,
+  PRIMARY KEY (`user_id`,`action`,`token`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `article_datetimes`;
+CREATE TABLE `article_datetimes` (
+  `id_article_datetime` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `start_time` time DEFAULT NULL COMMENT 'NULL = 00:00',
+  `end_time` time DEFAULT NULL COMMENT 'NULL = 23:59',
+  `start_date` date NOT NULL,
+  `end_date` date DEFAULT NULL COMMENT 'NULL = only 1 day',
+  `recurring` enum('daily','weekly','monthly','yearly') DEFAULT NULL,
+  `article_id` int(10) unsigned NOT NULL,
+  `article_type` varchar(166) NOT NULL,
+  `field_name` varchar(166) NOT NULL,
+  PRIMARY KEY (`id_article_datetime`),
+  KEY `article_id` (`article_id`),
+  KEY `start_time` (`start_time`),
+  KEY `end_time` (`end_time`),
+  KEY `start_date` (`start_date`),
+  KEY `end_date` (`end_date`),
+  KEY `article_type` (`article_type`),
+  KEY `field_name` (`field_name`)
+) ENGINE=InnoDB;
