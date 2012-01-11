@@ -206,7 +206,7 @@ final class CampInstallationView
         $zendFramework = CampInstallationViewHelper::CheckZendFramework();
         $success = ($zendFramework == 'Yes') ? $success : false;
         $libraryRequirements[] = array(
-			'tag' => 'Zend Framework',
+			'tag' => 'Zend Framework (1.11.5 or newer)',
 			'exists' => $zendFramework
 		);
 
@@ -243,7 +243,7 @@ final class CampInstallationView
         $isPHP5 = CampInstallationViewHelper::CheckPHPVersion();
         $success = ($isPHP5 == 'Yes') ? $success : false;
         $phpFunctions[] = array(
-                                'tag' => 'PHP >= 5.2',
+                                'tag' => 'PHP (5.2 or newer)',
                                 'exists' => $isPHP5
                                 );
 
@@ -397,7 +397,7 @@ final class CampInstallationViewHelper
 
     public static function CheckZendFramework()
     {
-        return (class_exists('Zend_Application')) ? 'Yes' : 'No';
+        return (class_exists('Zend_Application') && Zend_Version::compareVersion('1.11.5') <= 0) ? 'Yes' : 'No';
     } // fn checkZendFramework
 
     public static function CheckAdoDb()

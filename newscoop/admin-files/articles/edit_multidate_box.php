@@ -1,7 +1,7 @@
 <?php if (empty($userIsBlogger)) { ?>
 <div class="articlebox" title="<?php putGS('Multi date event'); ?>"><div>
 <div id="multidate_box">
-    <div id="contextBoxArticlesList" style="display:block; padding-bottom:8px;">
+    <div id="multiDateEventList" style="display:block; padding-bottom:8px;">
 
     </div>
 
