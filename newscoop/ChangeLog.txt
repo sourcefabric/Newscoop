@@ -1,3 +1,52 @@
+4.0-beta2 (January 11, 2012)
+  New Features
+  ------------
+  CS-3858: Multiple dates fields for articles
+
+  Improvements
+  ------------
+  CS-3317: Improve comments user experience
+
+  Bug fixes
+  ---------
+  CS-3944: Install process is broken after choosing Zen theme
+  CS-3945: Installer does not check for valid Zend version
+  CS-3886: Upgrade process from 3.5.3 generates error
+  CS-3933: Saving of author fails when no theme is installed
+  CS-2769: Require that pending articles be assigned to publication/issue/section when changing status to submitted
+  CS-3938: Template cache handler generates an error for certain pages
+  CS-3936: Multi upload does not accept *.JPEG (not JPG)
+  CS-3939: Multi image upload: Only 10 images shown after to add descriptions
+  CS-3908: Image is not rendered properly when inserted via WYSIWYG editor
+  CS-3942: Edit template window is too narrow
+  CS-3929: Multi dates: User must click 20x right arrow to change time by +1
+  CS-3927: Multi dates: Day does not show am/pm time for start/end
+  CS-3826: Multi dates: Time format is not consistent throughout the UI
+  CS-3928: Article editor does not show dates for multi-date format
+
+4.0-beta1 (December 14, 2011)
+  New Fetures
+  -----------
+  Community features
+  Activity feed widget
+  Article playlists
+  Related articles
+  Pending articles
+  Article Webcodes
+  Feedback messages
+
+  Improvements
+  ------------
+  Themes importing and exporting
+  Users management UI and Users rating
+  Recommended comments
+  Template engine uses now Smarty 3
+
+  Bug fixes
+  ---------
+  Tons of bug fixes since last public release. Complete list will be available in
+  a further release, meanwhile please check http://dev.sourcefabric.org/browse/CS
+
 3.6.0-RC3 (August 9, 2011)
 
 3.6.0-RC2 (July 26, 2011)
