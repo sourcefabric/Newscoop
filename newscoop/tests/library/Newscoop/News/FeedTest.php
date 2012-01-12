@@ -7,6 +7,8 @@
 
 namespace Newscoop\News;
 
+require_once __DIR__ . '/TestFeed.php';
+
 /**
  */
 class FeedTest extends \PHPUnit_Framework_TestCase
@@ -47,26 +49,5 @@ class FeedTest extends \PHPUnit_Framework_TestCase
     public function testName()
     {
         $this->assertNotEmpty($this->feed->getName());
-    }
-}
-
-/**
- * Test feed
- * @Document
- */
-class TestFeed extends Feed
-{
-    public function update(\Doctrine\Common\Persistence\ObjectManager $om, ItemService $itemService)
-    {
-    }
-
-    public function getName()
-    {
-        return 'test feed';
-    }
-
-    public function getRemoteContentSrc(RemoteContent $remoteContent)
-    {
-        return '';
     }
 }

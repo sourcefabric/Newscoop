@@ -12,6 +12,8 @@ namespace Newscoop\News;
  */
 class ItemService
 {
+    const DATE_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @var Doctrine\ODM\MongoDB\DocumentManager
      */
@@ -47,6 +49,28 @@ class ItemService
     public function find($id)
     {
         return $this->repository->find($id);
+    }
+
+    /**
+     * Find item by given itemRef
+     *
+     * @param Newscoop\News\ItemRef $itemRef
+     * @param Newscoop\News\Feed $feed
+     * @return Newscoop\News\Item
+     */
+    public function findByItemRef(ItemRef $itemRef, Feed $feed)
+    {
+        $item = $this->find($itemRef->getResidRef());
+        if (!$item) {
+            $item = $feed->getItem($itemRef->getResidRef());
+            if ($item) {
+                $item->setFeed($feed);
+                $this->odm->persist($item);
+                $this->odm->flush();
+            }
+        }
+
+        return $item;
     }
 
     /**
@@ -92,17 +116,22 @@ class ItemService
      * Publish item
      *
      * @param Newscoop\News\Item $item
-     * @return void
+     * @return mixed
      */
     public function publish(Item $item)
     {
+        $return = null;
         switch ($item->getItemMeta()->getItemClass()) {
-            case 'icls:text':
-                $this->publishArticle($item);
+            case ItemMeta::CLASS_TEXT:
+                $return = $this->publishText($item);
                 break;
 
-            case 'icls:picture':
-                $this->publishPicture($item);
+            case ItemMeta::CLASS_PICTURE:
+                $return = $this->publishPicture($item);
+                break;
+
+            case ItemMeta::CLASS_PACKAGE:
+                $return = $this->publishPackage($item);
                 break;
 
             default:
@@ -112,33 +141,37 @@ class ItemService
 
         $item->setPublished(new \DateTime());
         $this->odm->flush();
+        return $return;
     }
 
     /**
-     * Publish item as article
+     * Publish text item
      *
-     * @param Newscoop\News\Item $item
-     * @return void
+     * @param Newscoop\News\NewsItem $item
+     * @return Article
      */
-    private function publishArticle(Item $item)
+    private function publishText(NewsItem $item)
     {
         $issueNumber = $this->settings->getPublicationId() ? \Issue::GetCurrentIssue($this->settings->getPublicationId())->getIssueNumber() : null;
         $type = $this->getArticleType($this->settings->getArticleTypeName());
         $article = new \Article($this->findLanguageId($item->getContentMeta()->getLanguage()));
         $article->create($type->getTypeName(), $item->getContentMeta()->getHeadline(), $this->settings->getPublicationId(), $issueNumber, $this->settings->getSectionNumber());
         $article->setKeywords($item->getContentMeta()->getSlugline());
-        $article->setCreationDate($item->getItemMeta()->getFirstCreated()->format('Y-m-d H:i:s'));
+        $article->setCreationDate($item->getItemMeta()->getFirstCreated()->format(self::DATE_FORMAT));
+        $article->setPublishDate(null);
+        $article->setProperty('time_updated', date_create('now')->format(self::DATE_FORMAT));
         $this->setArticleData($article, $item);
         $article->commit();
+        return $article;
     }
 
     /**
-     * Publish picture to media archive
+     * Publish picture item
      *
-     * @param Newscoop\News\Item $item
-     * @return void
+     * @param Newscoop\News\NewsItem $item
+     * @return Image
      */
-    private function publishPicture(Item $item)
+    private function publishPicture(NewsItem $item)
     {
         $rendition = $item->getContentSet()->getRemoteContent('rend:baseImage') ?: $item->getContentSet()->getRemoteContent('rend:viewImage');
         $realpath = tempnam('/tmp', 'picture');
@@ -159,11 +192,64 @@ class ItemService
             'Source' => \Newscoop\Entity\Picture::SOURCE_INGEST,
             'Caption' => $item->getContentMeta()->getDescription(),
             'Status' => \Newscoop\Entity\Picture::STATUS_APPROVED,
-            'Date' => $item->getItemMeta()->getFirstCreated()->format('Y-m-d H:i:s'),
+            'Date' => $item->getItemMeta()->getFirstCreated()->format(self::DATE_FORMAT),
             'Place' => $item->getContentMeta()->getSubject('cptType:5')->getName(),
         );
 
-        $image = \Image::OnImageUpload($info, $attributes, null, null, true);
+        return \Image::OnImageUpload($info, $attributes, null, null, true);
+    }
+
+    /**
+     * Publish package item
+     *
+     * @param Newscoop\News\PackageItem $item
+     * @return void
+     */
+    private function publishPackage(PackageItem $item)
+    {
+        $root = $item->getGroupSet()->getRootGroup();
+        foreach ($root->getRefs() as $ref) {
+            $this->publishGroup($ref, $item);
+        }
+
+        $item->setPublished(new \DateTime());
+        $this->odm->flush();
+    }
+
+    /**
+     * Publish group
+     *
+     * @param Newscoop\News\GroupRef $groupRef
+     * @param Newscoop\News\Item $item
+     * @return void
+     */
+    private function publishGroup(GroupRef $groupRef, Item $item)
+    {
+        $group = $item->getGroupSet()->getGroup($groupRef);
+        $items = array();
+        foreach ($group->getRefs() as $ref) {
+            if ($ref instanceof ItemRef) {
+                $groupItem = $this->findByItemRef($ref, $item->getFeed());
+                if ($groupItem === null) {
+                    continue;
+                }
+
+                $groupItem->setPublished(new \DateTime());
+                switch ($groupItem->getItemMeta()->getItemClass()) {
+                    case ItemMeta::CLASS_PICTURE:
+                        $image = $this->publishPicture($groupItem);
+                        \ArticleImage::AddImageToArticle($image->getImageId(), $items[0]->getArticleNumber());
+                        break;
+
+                    case ItemMeta::CLASS_TEXT:
+                        $article = $this->publishText($groupItem);
+                        $items[] = $article;
+                        break;
+                }
+            } else {
+                $this->publishGroup($ref, $item);
+            }
+        }
     }
 
     /**
@@ -226,15 +312,26 @@ class ItemService
             $type->create();
         }
 
-        $fields = $type->getUserDefinedColumns(null, true, true);
-        foreach ($requiredFields as $fieldName => $fieldType) {
-            if (!array_key_exists($fieldName, $fields)) {
-                $field = new \ArticleTypeField($type->getTypeName(), $fieldName);
-                $field->create($fieldType);
-            }
+        $missingFields = array_diff(array_keys($requiredFields), $this->getFieldNames($type));
+        foreach ($missingFields as $fieldName) {
+            $field = new \ArticleTypeField($type->getTypeName(), $fieldName);
+            $field->create($requiredFields[$fieldName]);
         }
 
         return $type;
+    }
+
+    /**
+     * Get defined field names for type
+     *
+     * @param ArticleType $type
+     * @return array
+     */
+    private function getFieldNames(\ArticleType $type)
+    {
+        return array_map(function($field) {
+            return $field->getPrintName();
+        }, $type->getUserDefinedColumns(null, true, true));
     }
 
     /**

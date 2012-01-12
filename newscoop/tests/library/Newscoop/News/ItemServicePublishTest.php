@@ -7,12 +7,17 @@
 
 namespace Newscoop\News;
 
+require_once __DIR__ . '/TestFeed.php';
+require_once __DIR__ . '/NewsItemTest.php';
+
 /**
  */
 class ItemServicePublishTest extends \TestCase
 {
-    const TEXT_XML = 'textNewsItem.xml';
+    const TEXT_XML = NewsItemTest::TEXT_XML;
     const PICTURE_XML = 'pictureNewsItem.xml';
+    const PACKAGE_XML = 'packageItem.xml';
+    const PACKAGE_MAIN_SIDEBARS_XML = 'tag:reuters.com,0000:newsml_TRE7BB014.xml';
 
     /** @var Newscoop\News\ItemService */
     protected $service;
@@ -40,7 +45,8 @@ class ItemServicePublishTest extends \TestCase
             'Newscoop\Entity\ArticleTypeField',
             'Newscoop\Entity\Publication',
             'Newscoop\Entity\Language',
-            'Newscoop\Entity\Log'
+            'Newscoop\Entity\Log',
+            'Newscoop\Entity\ArticleImage'
         );
         $g_ado_db = new \AdoDbDoctrineAdapter($this->orm);
     }
@@ -125,5 +131,44 @@ class ItemServicePublishTest extends \TestCase
         $this->assertTrue($picture->isApproved());
         $this->assertEquals(date_create('2011-12-06T13:32:23.000Z')->format('Y-m-d H:i'), $picture->getDate()->format('Y-m-d H:i'));
         $this->assertEquals('LONDON', $picture->getPlace());
+    }
+
+    public function testPublishPackageMainWithSidebars()
+    {
+        $this->saveNewsItem(self::TEXT_XML);
+        $picture = $this->saveNewsItem(self::PICTURE_XML);
+
+        $xml = simplexml_load_file(APPLICATION_PATH . '/../tests/fixtures/' . self::PACKAGE_MAIN_SIDEBARS_XML);
+        $item = PackageItem::createFromXml($xml->itemSet->packageItem);
+
+        $feed = new TestFeed();
+        $item->setFeed($feed);
+        $picture->setFeed($feed);
+
+        $this->service->publish($item);
+        $this->assertTrue($item->isPublished());
+
+        $articles = \Article::GetArticles();
+        $this->assertEquals(1, count($articles));
+
+        $main = array_pop($articles);
+        $this->assertEquals('S&P piles pressure on Franco-German EU budget plan', $main->getTitle());
+
+        $images = \ArticleImage::GetImagesByArticleNumber($main->getArticleNumber());
+        $this->assertEquals(1, count($images));
+    }
+
+    /**
+     * Save news item from given xml file
+     *
+     * @param string $filename
+     * @return Newscoop\News\Item
+     */
+    private function saveNewsItem($filename)
+    {
+        $xml = simplexml_load_file(APPLICATION_PATH . "/../tests/fixtures/{$filename}");
+        $item = NewsItem::createFromXml($xml->itemSet->newsItem);
+        $this->service->save($item);
+        return $item;
     }
 }

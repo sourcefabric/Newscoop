@@ -11,7 +11,7 @@ namespace Newscoop\News;
  */
 class NewsItemTest extends \PHPUnit_Framework_TestCase
 {
-    const TEXT_XML = 'textNewsItem.xml';
+    const TEXT_XML = 'tag:examle.com,0000:newsml_TRE7B30AO.xml';
     const UPDATED_XML = 'updatedTextNewsItem.xml';
     const PICTURE_XML = 'pictureNewsItem.xml';
 
