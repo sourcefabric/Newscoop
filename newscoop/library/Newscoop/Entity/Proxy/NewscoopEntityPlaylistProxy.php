@@ -55,7 +55,7 @@ class NewscoopEntityPlaylistProxy extends \Newscoop\Entity\Playlist implements \
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'name');
+        return array('__isInitialized__', 'id', 'name', 'articles');
     }
 
     public function __clone()

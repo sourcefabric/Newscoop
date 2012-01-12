@@ -160,7 +160,7 @@ class NewscoopEntityUserProxy extends \Newscoop\Entity\User implements \Doctrine
         return parent::isAdmin();
     }
 
-    public function setPublic($public)
+    public function setPublic($public = true)
     {
         $this->__load();
         return parent::setPublic($public);

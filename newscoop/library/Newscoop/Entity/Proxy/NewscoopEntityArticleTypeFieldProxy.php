@@ -85,7 +85,7 @@ class NewscoopEntityArticleTypeFieldProxy extends \Newscoop\Entity\ArticleTypeFi
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'name', 'typeHack', 'length', 'type');
+        return array('__isInitialized__', 'name', 'typeHack', 'length', 'type', 'fieldWeight', 'isHidden', 'commentsEnabled', 'phraseId', 'fieldTypeParam', 'isContentField');
     }
 
     public function __clone()
