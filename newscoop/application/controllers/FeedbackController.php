@@ -124,7 +124,7 @@ class FeedbackController extends Zend_Controller_Action
 
 		if ($type[0] == 'image') {
 			$file = Plupload::OnMultiFileUploadCustom($Campsite['IMAGE_DIRECTORY']);
-			$image = Image::ProcessFile($_FILES['file']['name'], $_FILES['file']['name'], $userId, array('Source' => 'feedback', 'Status' => 'Unapproved'));
+			$image = Image::ProcessFile($_FILES['file']['name'], $_FILES['file']['name'], $userId, array('Source' => 'feedback', 'Status' => 'Unapproved', 'Date' => date('Y-m-d')));
 			$this->view->response = $image->getImageId();
 		}
 		else if ($type[1] == 'pdf') {
