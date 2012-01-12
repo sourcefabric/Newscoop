@@ -122,4 +122,12 @@ abstract class Feed
      * @return string
      */
     abstract public function getRemoteContentSrc(RemoteContent $remoteContent);
+
+    /**
+     * Get item
+     *
+     * @param string $id
+     * @return Newscoop\News\Item
+     */
+    abstract public function getItem($id);
 }

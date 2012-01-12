@@ -19,6 +19,10 @@ class ItemMeta
     const STATUS_WITHHELD = 'stat:withheld';
     const STATUS_CANCELED = 'stat:canceled';
 
+    const CLASS_TEXT = 'icls:text';
+    const CLASS_PICTURE = 'icls:picture';
+    const CLASS_PACKAGE = 'icls:composite';
+
     /**
      * @ODM\Id
      * @var string

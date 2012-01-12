@@ -409,7 +409,7 @@ class Image extends DatabaseObject
 	        if (PEAR::isError($result)) {
 	            throw new Exception($result->getMessage(), $result->getCode());
 	        }
-	        chmod($thumbnail, 0644);
+            self::chmod($thumbnail, 0644);
         } catch (Exception $ex) {
             if (file_exists($thumbnail)) {
                 @unlink($thumbnail);
@@ -607,7 +607,8 @@ class Image extends DatabaseObject
     	    							CAMP_ERROR_CREATE_FILE);
     	        }
     	    }
-    		chmod($target, 0644);
+
+            self::chmod($target, 0644);
 
     		$createMethodName = Image::__GetImageTypeCreateMethod($imageInfo[2]);
     		if (!isset($createMethodName)) {
@@ -631,7 +632,7 @@ class Image extends DatabaseObject
                 throw new Exception($result->getMessage(), $result->getCode());
             }
 
-            chmod($thumbnail, 0644);
+            self::chmod($thumbnail, 0644);
 	    } catch (Exception $ex) {
 	        if (file_exists($target)) {
 	            @unlink($target);
@@ -901,7 +902,7 @@ class Image extends DatabaseObject
         }
 
         if (file_exists($thumbnail)) {
-            chmod($thumbnail, 0644);
+            self::chmod($thumbnail, 0644);
         }
 
         unlink($tmpname);
@@ -909,31 +910,6 @@ class Image extends DatabaseObject
 
 	    return $image;
 	} // fn OnAddRemoteImage
-
-
-	/**
-	 * Get an array of users who have uploaded images.
-	 * @return array
-	 * @todo does anyone need this method? liveuser_users table is now just called users.
-	 */
-	/*
-	public static function GetUploadUsers()
-	{
-		$tmpUser = new User();
-		$columnNames = $tmpUser->getColumnNames();
-		$queryColumnNames = array();
-		foreach ($columnNames as $columnName) {
-			$queryColumnNames[] = 'liveuser_users.'.$columnName;
-		}
-		$queryColumnNames = implode(",", $queryColumnNames);
-		$queryStr = 'SELECT DISTINCT liveuser_users.Id, '.$queryColumnNames
-					.' FROM Images, liveuser_users '
-                    .' WHERE Images.UploadedByUser = liveuser_users.Id';
-		$users = DbObjectArray::Create('User', $queryStr);
-		return $users;
-	} // fn GetUploadUsers
-	*/
-
 
     /**
      * Get an array of Images uploaded by the user with $user_id.
@@ -1261,6 +1237,17 @@ class Image extends DatabaseObject
 
     } // fn ProcessImage
 
-} // class Image
-
-?>
+    /**
+     * Chmod if user has rights
+     *
+     * @param string $path
+     * @param int $mode
+     * @return void
+     */
+    private static function chmod($path, $mode)
+    {
+        if (posix_getuid() === fileowner($path)) {
+            chmod($path, $mode);
+        }
+    }
+}
