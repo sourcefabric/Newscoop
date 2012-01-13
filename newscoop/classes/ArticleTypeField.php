@@ -876,7 +876,7 @@ class ArticleTypeField extends DatabaseObject {
             self::TYPE_BODY => $g_ado_db->databaseType === 'sqlite' ? 'TEXT DEFAULT NULL' : 'MEDIUMBLOB DEFAULT NULL',
             self::TYPE_DATE => 'DATE DEFAULT NULL',
             self::TYPE_TOPIC => 'INTEGER DEFAULT NULL',
-            self::TYPE_SWITCH => "BOOLEAN NOT NULL DEFAULT 'FALSE'",
+            self::TYPE_SWITCH => "BOOLEAN NOT NULL DEFAULT FALSE",
             self::TYPE_NUMERIC => $numericDef,
             self::TYPE_COMPLEX_DATE => 'VARCHAR(255) DEFAULT NULL',
         );
