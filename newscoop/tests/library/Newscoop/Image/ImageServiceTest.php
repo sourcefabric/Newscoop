@@ -36,17 +36,18 @@ class ImageServiceTest extends \TestCase
 
     public function testGetSrc()
     {
-        $this->assertEquals($this->config['cache_url'] . '/300x300/center_center/' . rawurlencode(self::PICTURE), $this->service->getSrc(self::PICTURE, 300, 300));
+        $src = $this->service->getSrc(self::PICTURE, 300, 300);
+        $this->assertEquals('300x300/center_center/' . rawurlencode(rawurlencode(self::PICTURE)), $src);
     }
 
     public function testGenerateImage()
     {
-        $url = $this->config['cache_url'] . '/300x300/center_center/' . rawurlencode(self::PICTURE);
+        $src = '300x300/center_center/' . rawurlencode(rawurlencode(self::PICTURE));
 
-        $image = $this->generateImage($url);
+        $image = $this->generateImage($src);
         $info = $this->getInfo($image);
 
-        $this->assertFileExists($this->config['cache_path'] . "/$url");
+        $this->assertFileExists($this->config['cache_path'] . "/$src");
         $this->assertEquals(300, $info[0]);
         $this->assertEquals(300, $info[1]);
     }

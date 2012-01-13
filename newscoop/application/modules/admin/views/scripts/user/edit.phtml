@@ -8,7 +8,7 @@
         'module' => 'admin',
         'controller' => 'user',
         'action' => 'profile',
-    )); ?>" class="iframe"><img src="<?php echo $this->image ?: $this->baseUrl('admin-style/NoPicture.gif'); ?>" width="80" height="80" /><br /><?php putGS('Edit profile'); ?></a>
+    )); ?>" class="iframe"><img src="<?php echo $this->url(array('src' => $this->image), 'image', false, false) ?: $this->baseUrl('admin-style/NoPicture.gif'); ?>" width="80" height="80" /><br /><?php putGS('Edit profile'); ?></a>
 </div>
 <?php } ?>
 

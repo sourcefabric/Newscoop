@@ -226,6 +226,9 @@ blog.issue = 3
 blog.type = "bloginfo"
 blog.article_type = "blog"
 
+image.cache_url = "images/cache"
+image.cache_path = APPLICATION_PATH "/../images/cache"
+
 [staging : production]
 
 [testing : production]

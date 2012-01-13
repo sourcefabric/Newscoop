@@ -77,8 +77,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $this->bootstrap('view');
         $container->setService('view', $this->getResource('view'));
 
-        $container->register('image', 'Newscoop\Services\ImageService')
-            ->addArgument(new sfServiceReference('view'));
+        $container->register('image', 'Newscoop\Image\ImageService')
+            ->addArgument('%image%');
 
         $container->register('user', 'Newscoop\Services\UserService')
             ->addArgument(new sfServiceReference('em'))
@@ -213,6 +213,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         $front = Zend_Controller_Front::getInstance();
         $router = $front->getRouter();
+        $options = $this->getOptions();
 
         $router->addRoute(
             'content',
@@ -262,17 +263,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'action' => 'profile',
             )));
 
-        $router->addRoute(
-            'image',
-            new Zend_Controller_Router_Route_Regex('media/image/cache/(\d+)_(\d+)_(.+)', array(
+        $router->addRoute('image',
+            new Zend_Controller_Router_Route_Regex($options['image']['cache_url'] . '/(.*)', array(
                 'module' => 'default',
                 'controller' => 'image',
                 'action' => 'cache',
             ), array(
-                1 => 'width',
-                2 => 'height',
-                3 => 'image',
-            ), 'media/image/cache/%d_%d_%s'));
+                1 => 'src',
+            ), $options['image']['cache_url'] . '/%s'));
     }
 
     protected function _initActionHelpers()
