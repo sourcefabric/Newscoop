@@ -15,11 +15,11 @@ document.getElementById('date-last-modified').innerHTML = '<?php putGS('Last mod
 var close = function(timeout) {
     setTimeout("window.location.href = '<?php
     if ($f_publication_id > 0 && $f_issue_number > 0 && $f_section_number > 0) {
-    	echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number";
+        echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number";
     } else if ($f_publication_id > 0) {
-    	echo "/$ADMIN/pending_articles/index.php";
+        echo "/$ADMIN/pending_articles/index.php";
     } else {
-    	echo "/$ADMIN/";
+        echo "/$ADMIN/";
     }
     ?>'", timeout);
 };
@@ -121,7 +121,7 @@ cleanTextContents = function()
         if (!editor_obj) {
             break;
         }
-		editor_obj.isNotDirty = true;
+        editor_obj.isNotDirty = true;
         editor_rank += 1;
     }
 };
@@ -134,7 +134,7 @@ window.ajax_had_problems = false;
 
 // main form submit
 $('form#article-main').submit(function() {
-	window.save_had_problems = false;
+    window.save_had_problems = false;
     var form = $(this);
     if (!articleChanged()) {
         flashMessage('<?php putGS('Article saved.'); ?>');
@@ -142,13 +142,13 @@ $('form#article-main').submit(function() {
             close(1);
         }
     } else {
-		// tinymce should know that the current state is the correct one
-		cleanTextContents();
+        // tinymce should know that the current state is the correct one
+        cleanTextContents();
 
-		//fix breadcrumbs title
+        //fix breadcrumbs title
         $('.breadcrumbs li:last a').html($('#f_article_title').attr('value') + ' (' + $('#article_language').html() + ')');
 
-    	 // ping for connection
+         // ping for connection
         callServer('ping', [], function(json) {
             $.ajax({
                 type: 'POST',
@@ -162,7 +162,7 @@ $('form#article-main').submit(function() {
                     }
                 },
                 error: function (rq, status, error) {
-					window.save_had_problems = true;
+                    window.save_had_problems = true;
                     if (status == 0 || status == -1) {
                         flashMessage('<?php putGS('Unable to reach Newscoop. Please check your internet connection.'); ?>', 'error');
                     }
@@ -183,15 +183,15 @@ $('form#article-main').submit(function() {
  * @return void
  */
 function unlockArticle(doAction) {
-	doAction = typeof(doAction) != 'undefined' ? doAction : 'none';
+    doAction = typeof(doAction) != 'undefined' ? doAction : 'none';
     callServer(['Article', 'setIsLocked'], [
         <?php echo $f_language_selected; ?>,
         <?php echo $articleObj->getArticleNumber(); ?>,
         0,
         <?php echo $g_user->getUserId(); ?>], function() {
-    	   if(doAction == 'close') {
-    		    close(1);
-    	   }
+           if(doAction == 'close') {
+                close(1);
+           }
         });
 };
 
@@ -202,17 +202,31 @@ function unlockArticle(doAction) {
 $('.save-button-bar input').click(function() {
     $('form#article-keywords').submit();
     $('form#article-switches').submit();
-
+    
     if ($(this).attr('id') == 'save_and_close') {
-    	if (articleChanged()) {
-    		unlockArticle();
-	    	save_and_close = true;
-	        $('form#article-main').submit();
-    	} else {
-    		unlockArticle('close');
-    	}
-    } else {
-    	save_and_close = false;
+        if (articleChanged()) {
+            unlockArticle();
+            save_and_close = true;
+            $('form#article-main').submit();
+        } else {
+            unlockArticle('close');
+        }
+    } else if ($(this).attr('id') == 'close') {
+        callServer(['Article', 'setIsLocked'], [
+        <?php echo $f_language_selected; ?>,
+        <?php echo $articleObj->getArticleNumber(); ?>,
+        0,
+        <?php echo $g_user->getUserId(); ?>]);
+        window.location.href = '<?php if ($f_publication_id > 0 && $f_issue_number > 0 && $f_section_number > 0) {
+            echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number";
+        } else if ($f_publication_id > 0) {
+            echo "/$ADMIN/pending_articles/index.php";
+        } else {
+            echo "/$ADMIN/";
+        }
+        ?>';
+    } else if ($(this).attr('id') == 'save') {
+        save_and_close = false;
         $('form#article-main').submit();
     }
 
@@ -292,12 +306,12 @@ $('#topic_box_frame a.iframe').each(function() {
 });
 
 $("#context_box a.iframe").fancybox({
-	'showCloseButton' : false,
+    'showCloseButton' : false,
     'width': 1150,
     'height'     : 700,
     'scrolling' : 'auto',
     'onClosed'      : function() {
-	   loadContextBoxActileList();
+       loadContextBoxActileList();
     }
 });
 
@@ -314,7 +328,7 @@ $("#multidate_box a.iframe").fancybox({
 
 $("#playlist a.iframe").fancybox
 ({
-	'showCloseButton' : false,
+    'showCloseButton' : false,
     'type' : 'iframe',
     'width' : 700,
     'height' : 700,
@@ -364,15 +378,15 @@ function editorsChanged()
  */
 function articleChanged()
 {
-	if (window.save_had_problems || window.ajax_had_problems) {
-		return true;
-	}
+    if (window.save_had_problems || window.ajax_had_problems) {
+        return true;
+    }
 
     if ((!editorsChanged()) && ($('form.changed').size() == 0)) {
-		return false;
-	}
+        return false;
+    }
 
-	return true;
+    return true;
 };
 
 window.article_confirm_question = '<?php putGS('Your work has not been saved. Do you want to continue and lose your changes?'); ?>';
@@ -438,18 +452,18 @@ $(document).ready(function() {
 });
 
 function fnLoadContextBoxArticleList(data) {
-	var items = data.items;
-	if(items.length > 0) {
-		var injectHtml = '<ul class="block-list">';
-	    for(var i=0; i<items.length; i++) {
-	        var item = items[i];
-	        injectHtml += '<li>'+item.title+'</li>';
-	    }
-	    injectHtml += '</ul>';
-	    $("#contextBoxArticlesList").html(injectHtml);
-	} else  {
-		$("#contextBoxArticlesList").html('');
-	}
+    var items = data.items;
+    if(items.length > 0) {
+        var injectHtml = '<ul class="block-list">';
+        for(var i=0; i<items.length; i++) {
+            var item = items[i];
+            injectHtml += '<li>'+item.title+'</li>';
+        }
+        injectHtml += '</ul>';
+        $("#contextBoxArticlesList").html(injectHtml);
+    } else  {
+        $("#contextBoxArticlesList").html('');
+    }
 }
 
 function loadContextBoxActileList() {
