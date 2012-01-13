@@ -1,0 +1,81 @@
+<?php
+/**
+ * @package Newscoop
+ * @copyright 2012 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
+
+namespace Newscoop\Image;
+
+/**
+ */
+class ImageServiceTest extends \TestCase
+{
+    const PICTURE = 'tests/fixtures/picture.jpg';
+
+    /** @var Newscoop\Image\ImageService */
+    protected $service;
+
+    /** @var array */
+    protected $config = array();
+
+    public function setUp()
+    {
+        $this->config = array(
+            'cache_url' => 'images/cache',
+            'cache_path' => sys_get_temp_dir() . '/' . uniqid(),
+        );
+
+        $this->service = new ImageService($this->config);
+    }
+
+    public function testInstance()
+    {
+        $this->assertInstanceOf('Newscoop\Image\ImageService', $this->service);
+    }
+
+    public function testGetSrc()
+    {
+        $this->assertEquals($this->config['cache_url'] . '/300x300/center_center/' . rawurlencode(self::PICTURE), $this->service->getSrc(self::PICTURE, 300, 300));
+    }
+
+    public function testGenerateImage()
+    {
+        $url = $this->config['cache_url'] . '/300x300/center_center/' . rawurlencode(self::PICTURE);
+
+        $image = $this->generateImage($url);
+        $info = $this->getInfo($image);
+
+        $this->assertFileExists($this->config['cache_path'] . "/$url");
+        $this->assertEquals(300, $info[0]);
+        $this->assertEquals(300, $info[1]);
+    }
+
+    /**
+     * Generates image
+     *
+     * @param string $url
+     * @return string
+     */
+    private function generateImage($url)
+    {
+        ob_start();
+        $this->service->generateFromSrc($url);
+        return ob_get_clean();
+    }
+
+    /**
+     * Get image info
+     *
+     * @param string $image
+     * @return array
+     */
+    private function getInfo($image)
+    {
+        $tmpfile = tempnam(sys_get_temp_dir(), 'img');
+        file_put_contents($tmpfile, $image);
+        $info = getimagesize($tmpfile);
+        unlink($tmpfile);
+        return $info;
+    }
+}
