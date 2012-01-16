@@ -22,6 +22,11 @@ class ImageService
     private $config = array();
 
     /**
+     * @var Doctrine\ORM\EntityManager
+     */
+    private $orm;
+
+    /**
      * @var array
      */
     private $supportedTypes = array(
@@ -32,10 +37,12 @@ class ImageService
 
     /**
      * @param array $config
+     * @param Doctrine\ORM\EntityManager $orm
      */
-    public function __construct(array $config)
+    public function __construct(array $config, \Doctrine\ORM\EntityManager $orm)
     {
         $this->config = $config;
+        $this->orm = $orm;
     }
 
     /**
@@ -105,6 +112,18 @@ class ImageService
         }
 
         return $name;
+    }
+
+    /**
+     * Find image entity
+     *
+     * @param int $id
+     * @return Newscoop\Image\Image
+     */
+    public function find($id)
+    {
+        return $this->orm->getRepository('Newscoop\Image\Image')
+            ->find($id);
     }
 
     /**

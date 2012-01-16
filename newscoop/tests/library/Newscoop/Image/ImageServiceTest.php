@@ -19,6 +19,9 @@ class ImageServiceTest extends \TestCase
     /** @var array */
     protected $config = array();
 
+    /** @var Doctrine\ORM\EntityManager */
+    protected $orm;
+
     public function setUp()
     {
         $this->config = array(
@@ -26,7 +29,9 @@ class ImageServiceTest extends \TestCase
             'cache_path' => sys_get_temp_dir() . '/' . uniqid(),
         );
 
-        $this->service = new ImageService($this->config);
+        $this->orm = $this->setUpOrm('Newscoop\Image\Image');
+
+        $this->service = new ImageService($this->config, $this->orm);
     }
 
     public function testInstance()
@@ -50,6 +55,15 @@ class ImageServiceTest extends \TestCase
         $this->assertFileExists($this->config['cache_path'] . "/$src");
         $this->assertEquals(300, $info[0]);
         $this->assertEquals(300, $info[1]);
+    }
+
+    public function testFind()
+    {
+        $image = new Image('path');
+        $this->orm->persist($image);
+        $this->orm->flush($image);
+
+        $this->assertContains('path', $this->service->find($image->getId())->getPath());
     }
 
     /**
