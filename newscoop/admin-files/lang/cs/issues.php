@@ -1,4 +1,9 @@
 <?php 
+regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "");
+regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "");
+regGS("Publish all articles:", "");
+regGS("Publish all articles", "");
+regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "");
 regGS("in order to be able to assigned to the issue.", "");
 regGS("default", "");
 regGS("The publishing/unpublishing can not be set the same time", "");
@@ -6,9 +11,6 @@ regGS("The publishing schedule can not be set in the past", "");
 regGS("Please assign at least one theme to the publication", "");
 regGS("Only than the issue can be published", "");
 regGS("Issue Theme", "");
-regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "Plánovaná činnost odstraněna z vydání #$1: \"$2\" (Publikace: $3)");
-regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "Plánovaná činnost $1 pro vydání #$2: \"$3\" (Publikace: $4)");
-regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "Vydání \"$1\" ($2) aktualizováno v publikaci \"$3\"");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Hodnoty, které se snažíte nastavit, jsou v rozporu s vydáním \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Číslo musí být jedinečné pro každé vydání v této publikaci stejného jazyka.");
 regGS("The language and URL name must be unique for each issue in this publication.", "Jazyk a URL musí být jedinečné pro každé vydání v této publikaci.");
@@ -49,7 +51,6 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "Kopírovat předchozí vydání");
 regGS("No previous issue.", "Žádné předchozí vydání");
 regGS("Copy structure from issue number $1", "Kopírovat strukturu z vydání č. $1");
-regGS("New issue $1 from $2 in publication $3", "Nové vydání $1 z $1 v publikaci $3");
 regGS("Delete entry", "Odstranit vztup");
 regGS("Issue Publishing Schedule", "Rozvrh Publikování Vydání");
 regGS("Invalid Input: $1", "Neplatný vztup: $1");

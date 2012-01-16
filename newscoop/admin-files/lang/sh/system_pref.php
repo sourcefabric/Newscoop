@@ -64,7 +64,6 @@ regGS("SMTP Port", "SMTP Port");
 regGS("SMTP Host:", "SMTP Host:");
 regGS("SMTP Host must be at least four character.", "SMTP host mora imati najmanje četiri karaktera");
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "Unesite vrednost između 0 i $1 (maksimalna vrednost je definisana u 'php.ini'). Koristite 'K' za kilobajte, 'M' za megabajte i 'g' za gigabajte, bez razmaka između vrednosti i odgovarajućeg slova, npr. '3M'. ");
-regGS("System preferences updated", "Postavke sistema izmenjene");
 regGS("Reader subscriptions managed externally?", "Korisničke pretplate se uređuju eksterno?");
 regGS("Maximum upload file size:", "Maksimalna veličina fajla za upload:");
 regGS("Max Upload File Size", "Maksimalna veličina fajla za upload");

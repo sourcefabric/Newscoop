@@ -1,4 +1,8 @@
 <?php 
+regGS("Unrecommend", "");
+regGS("Save comment", "");
+regGS("Recommend", "");
+regGS("Comment updated.", "");
 regGS("Comment saved.", "Commento salvato.");
 regGS("Comments updated.", "Commenti aggiornati.");
 regGS("Post a Comment", "Pubblica un commento");

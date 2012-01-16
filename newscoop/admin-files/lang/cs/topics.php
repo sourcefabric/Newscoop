@@ -1,4 +1,6 @@
 <?php 
+regGS("If you continue, topic and all subtopics will be detached from all articles, and deleted.", "");
+regGS("Delete anyway", "");
 regGS("Reset order", "Přenastavit pořadí");
 regGS("Order changes will be lost. Are you sure you want to continue?", "Požadované změny budou ztraceny. Jste si jisti, že chcete pokračovat?");
 regGS("Topics order saved.", "Pořadí témat uloženo.");

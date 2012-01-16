@@ -1,4 +1,5 @@
 <?php 
+regGS("News Desk", "");
 regGS("Go", "");
 regGS("Wikipedia Search", "Пошук па Wikipedia");
 regGS("Files", "Файлы");

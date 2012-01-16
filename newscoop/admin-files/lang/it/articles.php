@@ -1,5 +1,18 @@
 <?php 
-regGS("This article cannot be previewed. Please make sure it has the publication has a theme assigned.", "Impossibile visualizzare l'anteprima dell'articolo. Verificare che un tema sia stato assegnato.");
+regGS("You're not allowed to edit article.", "");
+regGS("Webcode", "");
+regGS("Unapproved", "");
+regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "");
+regGS("The article could not be submitted.", "");
+regGS("Submit articles", "");
+regGS("Submit article", "");
+regGS("Related Articles", "");
+regGS("Pending articles", "");
+regGS("Pending Articles", "");
+regGS("Multi date event", "");
+regGS("Context Box updated", "");
+regGS("Article Playlist", "");
+regGS("Add article to a playlist", "");
 regGS("On", "On");
 regGS("Off", "Off");
 regGS("You do not have the right to moderate comments.", "non si dispone dei permessi per moderare i commenti.");
@@ -10,7 +23,6 @@ regGS("There already is an article with the same name. Please change the name an
 regGS("Please be aware that all scheduled publishing events for this article will be deleted when you set this article to \"New\" state. Please confirm the state change.", "Tutti gli eventi di pubblicazione per questo articolo verranno cancellati se il suo stato viene impostato a \"Nuovo\". Per favore confermi il cambio di stato.");
 regGS("Geolocation", "Geolocazione");
 regGS("Newscoop", "Newscoop");
-regGS("Pending Article", "Articolo in attesa");
 regGS("Overwrite articles with matching names", "Sovrascrivi articoli con nomi corrispondenti");
 regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "Articolo\"<i>$1</i>\" già esistente, non sarà sovrascritto.<br />");
 regGS("Files", "files");
@@ -147,7 +159,4 @@ regGS("There was an error reading request parameters.", "C'e' stato un errore le
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Impossibile mostrare l'anteprima dell'articolo. Per favore assicurati che ci sia un template articolo selezionato.");
 regGS("No such article.", "L'articolo non esiste.");
 regGS("No such section.", "La sezione non esiste.");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Confermi di rimuovere l'argomento \\'$1\\' dall'articolo");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Confermi di rimuovere il file \\'$1\\' dall'articolo?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Confermi di rimuovere l'immagine \\'$1\\' dall'articolo?");
 ?>

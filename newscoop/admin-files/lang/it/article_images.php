@@ -1,4 +1,5 @@
 <?php 
+regGS("Show all", "");
 regGS("The image has been removed from the article.", "L'immagine è stata rimossa dall'articolo.");
 regGS("Unable to add new image.", "Impossibile aggiungere una immagine.");
 regGS("Image number '$1' already exists", "L'immagine numero '$1' esiste già");

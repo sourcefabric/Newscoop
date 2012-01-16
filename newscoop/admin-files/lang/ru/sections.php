@@ -5,8 +5,6 @@ regGS("You have to assign a theme to the issue", "");
 regGS("The section number $1 was already in use.", "Рубрика № $1 уже используется.");
 regGS("Delete all articles written in $1 language from this section", "Удалить все статьи, написанные на языке $1, из этой рубрики");
 regGS("Delete all articles and all of their translations", "Удалить все статьи и все переводы для этой статьи");
-regGS("Section \"$1\" has been duplicated to $2. \"$3\" of \"$4\"", "Рубрика \"$1\" была дублирована в $2. \"$3\" of \"$4\"");
-regGS("Section \"$1\" ($2) updated. (Publication: $3, Issue: $4)", "Рубрика \"$1\" ($2) обновлена. (Издание: $3, Выпуск: $4)");
 regGS("Delete only this section ($1)", "Удалить только эту рубрику ($1)");
 regGS("Delete all translations of this section", "Удалить все переводы из этой рубрики");
 regGS("No. of Articles<BR><SMALL>(Published/Total)</SMALL>", "Количество статей <BR><SMALL>(Опубликованных/Общее)</SMALL>");

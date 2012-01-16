@@ -5,8 +5,6 @@ regGS("You have to assign a theme to the issue", "");
 regGS("The section number $1 was already in use.", "Рубрика број $1 је већ у употреби.");
 regGS("Delete all articles written in $1 language from this section", "Обриши све текстове из ове рубрике написане на језику: $1");
 regGS("Delete all articles and all of their translations", "Обриши све текстове и њихове преводе");
-regGS("Section \"$1\" has been duplicated to $2. \"$3\" of \"$4\"", "Рубрика \"$1\" је дуплирана у  $2. \"$3\" од \"$4\"");
-regGS("Section \"$1\" ($2) updated. (Publication: $3, Issue: $4)", "Рубрика \"$1\" ($2) измењена. (Публикација: $3, Издање: $4)");
 regGS("Delete only this section ($1)", "Обриши само ову рубрику ($1)");
 regGS("Delete all translations of this section", "Обриши преводе ове рубрике");
 regGS("No. of Articles<BR><SMALL>(Published/Total)</SMALL>", "Број текстова<BR><SMALL>(публикованих/укупно)</SMALL>");

@@ -1,4 +1,5 @@
 <?php 
+regGS("Show all", "");
 regGS("The image has been removed from the article.", "Слика је уклоњена из текста");
 regGS("Unable to add new image.", "Није могуће додати нову слику.");
 regGS("Image number '$1' already exists", "Слика број '$1' већ постоји");
@@ -25,5 +26,4 @@ regGS("Delete image $1", "Избриши слику $1");
 regGS("Click one of the ", "Кликните на један од понуђених 'додај слику'линкова");
 regGS("Are you sure you want to delete the image '$1'?", "Да ли сте сигурни да желите да обришете слику '$1'?");
 regGS("Unlink image $1", "Уклони везу слике $1");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Да ли сте сигурни да желите да уконите слику \\'$1\\' из текста?");
 ?>

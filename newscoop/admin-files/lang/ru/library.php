@@ -1,4 +1,12 @@
 <?php 
+regGS("Webcode", "");
+regGS("View article", "");
+regGS("Source", "");
+regGS("Select type", "");
+regGS("On", "");
+regGS("Off", "");
+regGS("Display newswires articles", "");
+regGS("Display Newswires", "");
 regGS("Title", "");
 regGS("No video playback capabilities, please download the video below", "");
 regGS("Article status set to '$1' for $2 articles", "Статус статьи '$1' установлен для $2 статей");

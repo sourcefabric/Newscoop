@@ -1,11 +1,6 @@
 <?php 
 regGS("Make sure to enter the \"Moderator Address\" below", "Inserisci l'indirizzo del moderatore di seguito");
 regGS("click to see issues", "clicca per vedere l'edizione");
-regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "L'alias del sito per la pubblicazione \"$1\" è stato modificato in \"$2\"");
-regGS("The site alias \"$1\" has been added to publication \"$2\".", "L'alias del sito  \"$1\" è stato aggiunto alla pubblicazione \"$2\"");
-regGS("The alias \"$1\" has been deleted from publication \"$2\".", "L'alias del sito  \"$1\" è stato eliminato dalla pubblicazione \"$2\"");
-regGS("Subscription default time for \"$1\":$2 deleted", "Orario predefinito per la sottoscrizione \"$1\":$2 eliminato");
-regGS("Default subscription time for \"$1\":$2 changed", "Orario predefinito per la sottoscrizione \"$1\":$2 eliminato");
 regGS("Moderator Address", "Indirizzo moderatore");
 regGS("From Address", "Da indirizzo");
 regGS("Use CAPTCHA to prevent spam?", "Usare CAPTCHA per prevenire lo spam?");

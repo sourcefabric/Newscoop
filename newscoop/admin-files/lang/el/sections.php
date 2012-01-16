@@ -5,8 +5,6 @@ regGS("You have to assign a theme to the issue", "");
 regGS("The section number $1 was already in use.", "Ο αριθμός ενότητας $1 βρισκόταν ήδη σε χρήση.");
 regGS("Delete all articles written in $1 language from this section", "Διαγραφή όλων των άρθρων, γραμμένων στη $1 γλώσσα, από αυτή την ενότητα");
 regGS("Delete all articles and all of their translations", "Διαγραφή όλων των άρθρων και των μεταφράσεων τους");
-regGS("Section \"$1\" has been duplicated to $2. \"$3\" of \"$4\"", "Η ενότητα \"$1\" έχει αντιγραφεί σε $2. \"$3\" από \"$4\"");
-regGS("Section \"$1\" ($2) updated. (Publication: $3, Issue: $4)", "Ηενότητα \"$1\" ($2) ανανεώθηκε. (Δημοσίευση: $3, Τεύχος: $4)");
 regGS("Delete only this section ($1)", "Διαγραφή μόνο αυτής της ενότητας ($1)");
 regGS("Delete all translations of this section", "Διαγραφή όλων των μεταφράσεων αυτής της ενότητας");
 regGS("No. of Articles<BR><SMALL>(Published/Total)</SMALL>", "Αρ. Άρθρων<BR><SMALL>(Δημοσιεύτηκαν/Συνολικά)</SMALL>");

@@ -1,4 +1,8 @@
 <?php 
+regGS("Unrecommend", "");
+regGS("Save comment", "");
+regGS("Recommend", "");
+regGS("Comment updated.", "");
 regGS("Comment saved.", "");
 regGS("Unable to reach Newscoop. Please check your internet connection.", "Nie można połączyć z Newscoop. Sprawdź swoje połączenie z Internetem.");
 regGS("Comments updated.", "Komentarze uaktulnione.");

@@ -1,4 +1,6 @@
 <?php 
+regGS("If you continue, topic and all subtopics will be detached from all articles, and deleted.", "");
+regGS("Delete anyway", "");
 regGS("Reset order", "Reihenfolge zurücksetzen");
 regGS("Order changes will be lost. Are you sure you want to continue?", "Änderungen gehen verloren. Wirklich fortsetzen?");
 regGS("Topics order saved.", "Themen Reihenfolge gespeichert.");

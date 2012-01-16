@@ -1,11 +1,6 @@
 <?php 
 regGS("Make sure to enter the \"Moderator Address\" below", "Обавезно унесите адресу модератора ниже доле");
 regGS("click to see issues", "кликните да видите издања");
-regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "Сајт алиас за публикацију \"$1\" је промењен у \"$2\".");
-regGS("The site alias \"$1\" has been added to publication \"$2\".", "Сајт алиас \"$1\" је додат публикацији \"$2\".");
-regGS("The alias \"$1\" has been deleted from publication \"$2\".", "Алиас \"$1\" је обрисан из публикације \"$2\".");
-regGS("Subscription default time for \"$1\":$2 deleted", "Подразумевано трајање претплате за  \"$1\":$2 је обрисано");
-regGS("Default subscription time for \"$1\":$2 changed", "Подразумевано трајање претплате за  \"$1\":$2 је промењено");
 regGS("Moderator Address", "Адреса модератора");
 regGS("From Address", "Адреса са које се шаље");
 regGS("Use CAPTCHA to prevent spam?", "Користи CAPTCHA за превенцију спама?");

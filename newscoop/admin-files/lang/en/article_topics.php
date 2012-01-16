@@ -1,4 +1,9 @@
 <?php 
+regGS("You must enter a name for the topic.", "You must enter a name for the topic.");
+regGS("Show All", "Show All");
+regGS("Select the parent of the topic", "Select the parent of the topic");
+regGS("None", "None");
+regGS("Add new topic", "Add new topic");
 regGS("No topics have been created yet.", "No topics have been created yet.");
 regGS("Topics updated.", "Topics updated.");
 regGS("Topic does not exist.", "Topic does not exist.");

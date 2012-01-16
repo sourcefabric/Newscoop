@@ -1,4 +1,9 @@
 <?php 
+regGS("You must enter a name for the topic.", "");
+regGS("Show All", "");
+regGS("Select the parent of the topic", "");
+regGS("None", "");
+regGS("Add new topic", "");
 regGS("No topics have been created yet.", "Δεν έχουν δημιουργηθεί ακόμη θέματα.");
 regGS("Topics updated.", "Τα θέματα ανανεώθηκαν.");
 regGS("Topic does not exist.", "Το θέμα δεν υπάρχει.");

@@ -1,5 +1,18 @@
 <?php 
-regGS("This article cannot be previewed. Please make sure it has the publication has a theme assigned.", "");
+regGS("You're not allowed to edit article.", "");
+regGS("Webcode", "");
+regGS("Unapproved", "");
+regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "");
+regGS("The article could not be submitted.", "");
+regGS("Submit articles", "");
+regGS("Submit article", "");
+regGS("Related Articles", "");
+regGS("Pending articles", "");
+regGS("Pending Articles", "");
+regGS("Multi date event", "");
+regGS("Context Box updated", "");
+regGS("Article Playlist", "");
+regGS("Add article to a playlist", "");
 regGS("On", "");
 regGS("Off", "");
 regGS("You do not have the right to moderate comments.", "");
@@ -10,7 +23,6 @@ regGS("There already is an article with the same name. Please change the name an
 regGS("Please be aware that all scheduled publishing events for this article will be deleted when you set this article to \"New\" state. Please confirm the state change.", "");
 regGS("Geolocation", "Geolocalización");
 regGS("Newscoop", "Newscoop");
-regGS("Pending Article", "Artículo pendiente");
 regGS("Overwrite articles with matching names", "Sobreescribir artículos con nombres idénticos");
 regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "Ya existe el artículo \"<i>$1</i>\" y no fue sobreescrito.<br />");
 regGS("Files", "Archivos");
@@ -150,7 +162,4 @@ regGS("No such section.", "No existe sección");
 regGS("Reorder", "");
 regGS("Author", "");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "¿Está seguro de que desea eliminar el tópico \\'$1\\' del artículo?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "¿Está seguro de que desea eliminar el archivo \\'$1\\' del artículo?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "¿Está seguro de que desea eliminar la imagen \\'$1\\' del artículo?");
 ?>

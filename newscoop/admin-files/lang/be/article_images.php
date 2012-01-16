@@ -1,4 +1,5 @@
 <?php 
+regGS("Show all", "");
 regGS("The image has been removed from the article.", "Гэта фота было выдаленае з артыкула.");
 regGS("Unable to add new image.", "Немагчыма дадаць новы графiчны файл.");
 regGS("Image number '$1' already exists", "Графiчны файл з нумарам '$1'  ужо не існуе.");
@@ -27,5 +28,4 @@ regGS("Unlink", "Адвязаць");
 regGS("Back to article details", "Назад да падрабязнасьцяў артыкулу.");
 regGS("Are you sure you want to delete the image \'$1\'?", "Цi Вы ўпэўненыя, што жадаеце выдалiць графiчны файл \'$1\'?");
 regGS("Click one of the ", "");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Цi Вы ўпэўненыя, што жадаеце выдалiць графiчны файл \\'$1\\'?");
 ?>

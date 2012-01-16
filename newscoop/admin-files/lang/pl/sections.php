@@ -5,8 +5,6 @@ regGS("You have to assign a theme to the issue", "");
 regGS("The section number $1 was already in use.", "Numer sekcji $1 jest już w użyciu.");
 regGS("Delete all articles written in $1 language from this section", "Usuń wszystkie artykuły w języku $1 z tej sekcji.");
 regGS("Delete all articles and all of their translations", "Usuń wszystkie artykuły oraz ich tłumaczenia");
-regGS("Section \"$1\" has been duplicated to $2. \"$3\" of \"$4\"", "Sekcja \"$1\" została zduplikowana do $2. \"$3\" z \"$4\"");
-regGS("Section \"$1\" ($2) updated. (Publication: $3, Issue: $4)", "Sekcja \"$1\" ($2) zaktualizowana. (Publikacja: $3, Wydanie: $4)");
 regGS("Delete only this section ($1)", "Usuń tylko tę sekcję ($1)");
 regGS("Delete all translations of this section", "Usuń wszystkie tłumaczenia tej sekcji");
 regGS("No. of Articles<BR><SMALL>(Published/Total)</SMALL>", "Liczba artykułów<BR><SMALL>(Opublikowane/Wszystkie)</SMALL>");

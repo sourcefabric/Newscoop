@@ -1,11 +1,6 @@
 <?php 
 regGS("Make sure to enter the \"Moderator Address\" below", "Φροντίστε να εισάγετε παρακάτω την \"Διεύθυνση Συντονιστή\" ");
 regGS("click to see issues", "Κάντε κλίκ για να δείτε να τεύχη");
-regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "Το ψευδώνυμο ιστότοπου για τη δημοσίευση \"$1\" έχει τροποποιηθεί σε \"$2\". ");
-regGS("The site alias \"$1\" has been added to publication \"$2\".", "Το ψευδώνυμο ιστότοπου \"$1\" έχει προστεθεί στη δημοσίευση \"$2\".");
-regGS("The alias \"$1\" has been deleted from publication \"$2\".", "Το ψευδώνυμο \"$1\" έχει διαγραφεί από την δημοσίευση \"$2\".");
-regGS("Subscription default time for \"$1\":$2 deleted", "Η συνδρομή προεπιλεγμένου χρόνου για \"$1\":  $2 διαγράφτηκε");
-regGS("Default subscription time for \"$1\":$2 changed", "Η προεπιλογή χρόνου συνδρομής για \"$1\": $2 άλλαξε");
 regGS("Moderator Address", "Διεύθυνση Διαχειριστή");
 regGS("From Address", "Από Διεύθυνση");
 regGS("Use CAPTCHA to prevent spam?", "Χρήση CAPTCHA για την πρόληψη ανεπιθύμητων email (spam);");

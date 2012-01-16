@@ -64,7 +64,6 @@ regGS("SMTP Port", "Porta SMTP");
 regGS("SMTP Host:", "Host SMTP:");
 regGS("SMTP Host must be at least four character.", "L'host SMTP deve essere lungo almeno 4 caratteri.");
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "Inserire un valore tra 0 e $1 (dimensione massima specificata in php.ini). Per favore usa la 'K' per kilobytes, 'M' per Megabytes, 'G' per gigabytes, senza spazi tra valore e lettera, ad esempio '3M'.");
-regGS("System preferences updated", "Preferenze di sistema aggiornate");
 regGS("Reader subscriptions managed externally?", "Sottoscrizioni gestite esternamente?");
 regGS("Maximum upload file size:", "Dimensione file massima:");
 regGS("Max Upload File Size", "Dimensione file max");

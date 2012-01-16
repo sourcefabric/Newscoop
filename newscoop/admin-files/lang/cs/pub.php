@@ -1,11 +1,6 @@
 <?php 
 regGS("Make sure to enter the \"Moderator Address\" below", "Ujistěte se, že jste zadali níže uvedenou \"Adresu Moderátora\"");
 regGS("click to see issues", "klikněte pro zobrazení vydání");
-regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "Alias stránky pro publikaci \"$1\" byl změněn na \"$2\".");
-regGS("The site alias \"$1\" has been added to publication \"$2\".", "Alias stránky \"$1\" byl přidán k publikaci \"$2\".");
-regGS("The alias \"$1\" has been deleted from publication \"$2\".", "Alias \"$1\" byl odstraněn z publikace \"$2\".");
-regGS("Subscription default time for \"$1\":$2 deleted", "Defaultní čas předplatného pro \"$1\":$2 odstraněno");
-regGS("Default subscription time for \"$1\":$2 changed", "Defaultní čas předplatného pro \"$1\":$2 změněno");
 regGS("Moderator Address", "Adresa Moderátora");
 regGS("From Address", "Z Adresy");
 regGS("Use CAPTCHA to prevent spam?", "Použít CAPTCHA pro prevenci spamu?");

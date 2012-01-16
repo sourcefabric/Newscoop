@@ -1,4 +1,19 @@
 <?php 
+regGS("Pending articles", "");
+regGS("Manage Users", "");
+regGS("Manage User Types", "");
+regGS("Manage User Points System", "");
+regGS("Last", "");
+regGS("First", "");
+regGS("Feedback", "");
+regGS("Edit your password", "");
+regGS("Edit user", "");
+regGS("Edit permissions", "");
+regGS("Detail", "");
+regGS("Create new user", "");
+regGS("Create new account", "");
+regGS("Article Playlists", "");
+regGS("Add feed", "");
 regGS("Upload of file $1 was not successful.", "");
 regGS("The file $1 could not be moved. Check you have enough of disk space.", "");
 regGS("MiB", "");
@@ -6,7 +21,6 @@ regGS("Download was not successful. Check please that the server is not out of d
 regGS("User name", "");
 regGS("Newscoop", "");
 regGS("Campsite", "");
-regGS("Password recovery request for $1", "בקשת שיחזור סיסמא ל-$1");
 regGS("Your password has been reset.", "סיסמתך אופסה");
 regGS("Proceed to login.", "התקדם לכניסה");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "שלום, לשיחזור סיסמא, לחץ על הקישור: $1");

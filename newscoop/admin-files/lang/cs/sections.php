@@ -5,8 +5,6 @@ regGS("You have to assign a theme to the issue", "");
 regGS("The section number $1 was already in use.", "Číslo rubriky $1 se již používá.");
 regGS("Delete all articles written in $1 language from this section", "Odstranit všechny články psány v jazyku $1 z této rubriky");
 regGS("Delete all articles and all of their translations", "Odstranit všechny články a všechny jejich překlady");
-regGS("Section \"$1\" has been duplicated to $2. \"$3\" of \"$4\"", "Rubrika \"$1\" byla duplikována do $2. \"$3\" z \"$4\"");
-regGS("Section \"$1\" ($2) updated. (Publication: $3, Issue: $4)", "Rubrika \"$1\" ($2) aktualizována. (Publikace: $3, Vydání: $4)");
 regGS("Delete only this section ($1)", "Odstranit pouze tuto rubriku ($1)");
 regGS("Delete all translations of this section", "Odstranit všechny překlady této rubriky");
 regGS("No. of Articles<BR><SMALL>(Published/Total)</SMALL>", "Počet Článků <BR><SMALL>(Publikováno/Celkem)</SMALL>");

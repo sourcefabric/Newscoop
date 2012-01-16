@@ -1,4 +1,14 @@
 <?php 
+regGS("You can't update used files.", "");
+regGS("Source", "");
+regGS("Local", "");
+regGS("Items updated.", "");
+regGS("Feedback", "");
+regGS("Do you want to update unused only?", "");
+regGS("Display Newswires images", "");
+regGS("Disapprove selected", "");
+regGS("Are you sure you want to update selected items?", "");
+regGS("Approve selected", "");
 regGS("Image files", "File imamgini");
 regGS("Fix all thumbnails", "Aggiorna le anteprime");
 regGS("You do not have the right to add files.", "Nno si dispone dei diritti per aggiornare i file.");

@@ -1,4 +1,9 @@
 <?php 
+regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "");
+regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "");
+regGS("Publish all articles:", "");
+regGS("Publish all articles", "");
+regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "");
 regGS("in order to be able to assigned to the issue.", "per poter essere assegnato all'edizione.");
 regGS("default", "predefinito");
 regGS("The publishing/unpublishing can not be set the same time", "La pubblicazione e la rimozione non possono avere lo stesso orario.");
@@ -6,9 +11,6 @@ regGS("The publishing schedule can not be set in the past", "La pubblicazione no
 regGS("Please assign at least one theme to the publication", "Per favore assegna un tema alla pubblicazione");
 regGS("Only than the issue can be published", "Solo l'edizione può essere pubblicata");
 regGS("Issue Theme", "Tema edizione");
-regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "Azione programmata eliminata dall'edizione #$1: \"$2\" (Pubblicazione: $3)");
-regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "Programmata l'azione $1 per l'edizione #$2: \"$3\" (Pubblicazione: $4)");
-regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "Edizione \"$1\" ($2) aggiornata nella pubblicazione  \"$3\"");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Il valore che si sta tentando di inserire va in conflitto con l'edizione \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Il numero deve essere unico per ogni edizione in questa publicazione nella stessa lingua.");
 regGS("The language and URL name must be unique for each issue in this publication.", "La lingua e l'indirizzo URL devono essere unici per ogni edizione di questa pubblicazione.");
@@ -49,7 +51,6 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "copia l'edizione precedente");
 regGS("No previous issue.", "Nessuna edizione precedente.");
 regGS("Copy structure from issue number $1", "Copia struttura dall'edizione numero $1");
-regGS("New issue $1 from $2 in publication $3", "Nuova edizione $1 da $2 in pubblicazione $3");
 regGS("Delete entry", "Elimina voce");
 regGS("Issue Publishing Schedule", "Programmazione di pubblicazione dell'edizione");
 regGS("Invalid Input: $1", "Valore non valido: $1");

@@ -1,4 +1,9 @@
 <?php 
+regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "");
+regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "");
+regGS("Publish all articles:", "");
+regGS("Publish all articles", "");
+regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "");
 regGS("in order to be able to assigned to the issue.", "");
 regGS("default", "");
 regGS("The publishing/unpublishing can not be set the same time", "");
@@ -6,9 +11,6 @@ regGS("The publishing schedule can not be set in the past", "");
 regGS("Please assign at least one theme to the publication", "");
 regGS("Only than the issue can be published", "");
 regGS("Issue Theme", "");
-regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "Zakazana akcija obrisana iz izdanja #$1: \"$2\" (Publikacija: $3)");
-regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "Zakazana akcija $1 za izdanje #$2: \"$3\" (Publikacija: $4)");
-regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "Izdanje \"$1\" ($2) izmenjeno u publikaciji \"$3\"");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Vrednosti koje pokušavate da podesite su u konfliktu sa izdanjem \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Broj mora biti jedinstven za svako izdanje u ovoj publikaciji za isti jezik.");
 regGS("The language and URL name must be unique for each issue in this publication.", "Jezik i URL naziv moraju biti jedinstveni za svako izdanje u publikaciji.");
@@ -49,7 +51,6 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "Prekopiraj prethodno izdanje");
 regGS("No previous issue.", "Nema prethodnog izdanja.");
 regGS("Copy structure from issue number $1", "Prekopiraj strukturu iz izdanja $1");
-regGS("New issue $1 from $2 in publication $3", "Novo izdanje $1 iz $2 u publikaciji $3");
 regGS("Delete entry", "Obriši unos");
 regGS("Issue Publishing Schedule", "Raspored automatskog objavljivanja izdanja");
 regGS("Invalid Input: $1", "Pogrešan unos: $1");

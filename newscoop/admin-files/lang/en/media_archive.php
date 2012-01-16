@@ -1,4 +1,14 @@
 <?php 
+regGS("You can't update used files.", "You can't update used files.");
+regGS("Source", "Source");
+regGS("Local", "Local");
+regGS("Items updated.", "Items updated.");
+regGS("Feedback", "Feedback");
+regGS("Do you want to update unused only?", "Do you want to update unused only?");
+regGS("Display Newswires images", "Display Newswires images");
+regGS("Disapprove selected", "Disapprove selected");
+regGS("Are you sure you want to update selected items?", "Are you sure you want to update selected items?");
+regGS("Approve selected", "Approve selected");
 regGS("Image files", "Image files");
 regGS("Fix all thumbnails", "Fix all thumbnails");
 regGS("You do not have the right to add files.", "You do not have the right to add files.");

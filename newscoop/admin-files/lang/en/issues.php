@@ -1,4 +1,9 @@
 <?php 
+regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "This issue cannot be previewed. Please make sure the publication has a theme assigned.");
+regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "This issue cannot be previewed. Please make sure it has the front template selected.");
+regGS("Publish all articles:", "Publish all articles:");
+regGS("Publish all articles", "Publish all articles");
+regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.");
 regGS("in order to be able to assigned to the issue.", "in order to be able to assigned to the issue.");
 regGS("default", "default");
 regGS("The publishing/unpublishing can not be set the same time", "The publishing/unpublishing can not be set the same time");
@@ -6,9 +11,6 @@ regGS("The publishing schedule can not be set in the past", "The publishing sche
 regGS("Please assign at least one theme to the publication", "Please assign at least one theme to the publication");
 regGS("Only than the issue can be published", "Only than the issue can be published");
 regGS("Issue Theme", "Issue Theme");
-regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)");
-regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)");
-regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "Issue \"$1\" ($2) updated in publication \"$3\"");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "The number must be unique for each issue in this publication of the same language.");
 regGS("The language and URL name must be unique for each issue in this publication.", "The language and URL name must be unique for each issue in this publication.");
@@ -49,7 +51,6 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "Copy previous issue");
 regGS("No previous issue.", "No previous issue.");
 regGS("Copy structure from issue number $1", "Copy structure from issue number $1");
-regGS("New issue $1 from $2 in publication $3", "New issue $1 from $2 in publication $3");
 regGS("Delete entry", "Delete entry");
 regGS("Issue Publishing Schedule", "Issue Publishing Schedule");
 regGS("Invalid Input: $1", "Invalid Input: $1");

@@ -1,4 +1,7 @@
 <?php 
+regGS("Newswires Ingest", "");
+regGS("Feedback Messages", "");
+regGS("Article Playlists", "");
 regGS("Check all", "");
 regGS("view", "");
 regGS("undo/redo", "");

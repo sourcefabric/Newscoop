@@ -64,7 +64,6 @@ regGS("SMTP Port", "SMTP порт");
 regGS("SMTP Host:", "SMTP хост:");
 regGS("SMTP Host must be at least four character.", "SMTP хост павінен мець прынамсі 4 знака.");
 regGS("Enter a value between 0 and $1 (the maximum size is specified in 'php.ini'). Please use 'K' for kilobytes, 'M' for megabytes and 'G' for gigabytes, without white spaces between the value and the corresponding letter, e.g. '3M'.", "Увядзіце значэнне паміж 0 і $1 (максімальны памер вызначаны ў 'php.ini'). Выкарыстайце \"К\" для кілабайта, \"М\" для мегабайта і \"Г\" для гігабайта без знакаў прабелу паміж значэннямі і вышэйапісанымі літарамі, напрыклад 3М.");
-regGS("System preferences updated", "Наладкі сыстэмы абноўленыя");
 regGS("Reader subscriptions managed externally?", "Кiраваньне падпiскай чытачоў ажыцьцяўляецца звонку?");
 regGS("Maximum upload file size:", "Максімальна магчымы памер загружанага файла:");
 regGS("Max Upload File Size", "Максімальна магчымы памер загружанага файла");

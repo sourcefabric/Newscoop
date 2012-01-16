@@ -1,4 +1,8 @@
 <?php 
+regGS("Import theme", "");
+regGS("Import succeded!", "");
+regGS("Import failed!", "");
+regGS("Edit template: $1", "");
 regGS("Set new name to", "");
 regGS("Rename file", "");
 regGS("Caching templates in:", "");

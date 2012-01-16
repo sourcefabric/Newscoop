@@ -1,4 +1,6 @@
 <?php 
+regGS("If you continue, topic and all subtopics will be detached from all articles, and deleted.", "");
+regGS("Delete anyway", "");
 regGS("Reset order", "Поништи редослед");
 regGS("Order changes will be lost. Are you sure you want to continue?", "Измене редоследа ће бити поништене. Да ли сте сигурни да желите да наставите?");
 regGS("Topics order saved.", "Редослед тема је сниљен.");

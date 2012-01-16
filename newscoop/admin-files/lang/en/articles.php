@@ -1,5 +1,18 @@
 <?php 
-regGS("This article cannot be previewed. Please make sure it has the publication has a theme assigned.", "This article cannot be previewed. Please make sure it has the publication has a theme assigned.");
+regGS("You're not allowed to edit article.", "You're not allowed to edit article.");
+regGS("Webcode", "Webcode");
+regGS("Unapproved", "Unapproved");
+regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "This issue cannot be previewed. Please make sure the publication has a theme assigned.");
+regGS("The article could not be submitted.", "The article could not be submitted.");
+regGS("Submit articles", "Submit articles");
+regGS("Submit article", "Submit article");
+regGS("Related Articles", "Related Articles");
+regGS("Pending articles", "Pending articles");
+regGS("Pending Articles", "Pending Articles");
+regGS("Multi date event", "Multi date event");
+regGS("Context Box updated", "Context Box updated");
+regGS("Article Playlist", "Article Playlist");
+regGS("Add article to a playlist", "Add article to a playlist");
 regGS("On", "On");
 regGS("Off", "Off");
 regGS("You do not have the right to moderate comments.", "You do not have the right to moderate comments.");
@@ -10,7 +23,6 @@ regGS("There already is an article with the same name. Please change the name an
 regGS("Please be aware that all scheduled publishing events for this article will be deleted when you set this article to \"New\" state. Please confirm the state change.", "Please be aware that all scheduled publishing events for this article will be deleted when you set this article to \"New\" state. Please confirm the state change.");
 regGS("Geolocation", "Geolocation");
 regGS("Newscoop", "Newscoop");
-regGS("Pending Article", "Pending Article");
 regGS("Overwrite articles with matching names", "Overwrite articles with matching names");
 regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "Article \"<i>$1</i>\" already exists, and was not overwritten.<br />");
 regGS("Files", "Files");

@@ -1,11 +1,6 @@
 <?php 
 regGS("Make sure to enter the \"Moderator Address\" below", "");
 regGS("click to see issues", "");
-regGS("The site alias for publication \"$1\" has been modified to \"$2\".", "");
-regGS("The site alias \"$1\" has been added to publication \"$2\".", "");
-regGS("The alias \"$1\" has been deleted from publication \"$2\".", "");
-regGS("Subscription default time for \"$1\":$2 deleted", "");
-regGS("Default subscription time for \"$1\":$2 changed", "");
 regGS("Moderator Address", "Adresa moderatorului");
 regGS("From Address", "Adresa de la care se trimite");
 regGS("Use CAPTCHA to prevent spam?", "Vrei să foloseşti CAPTCHA pentru a opri mesajele nesolicitate?");

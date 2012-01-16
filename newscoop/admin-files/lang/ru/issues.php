@@ -1,4 +1,9 @@
 <?php 
+regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "");
+regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "");
+regGS("Publish all articles:", "");
+regGS("Publish all articles", "");
+regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "");
 regGS("in order to be able to assigned to the issue.", "");
 regGS("default", "");
 regGS("The publishing/unpublishing can not be set the same time", "");
@@ -6,9 +11,6 @@ regGS("The publishing schedule can not be set in the past", "");
 regGS("Please assign at least one theme to the publication", "");
 regGS("Only than the issue can be published", "");
 regGS("Issue Theme", "");
-regGS("Scheduled action deleted from issue #$1: \"$2\" (Publication: $3)", "Запланированное действие удалено из выпуска #$1: \"$2\" (Издание: $3)");
-regGS("Scheduled action $1 for issue #$2: \"$3\" (Publication: $4)", "Запланированное действие $1 для выпуска #$2: \"$3\" (Издание: $4)");
-regGS("Issue \"$1\" ($2) updated in publication \"$3\"", "Выпуск \"$1\" ($2) обновлено в издании \"$3\"");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Величины, которые вы пытаетесь установить, конфликтуют с выпуском \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Номер должен быть уникальным для каждого выпуска этого издания на том же языке.");
 regGS("The language and URL name must be unique for each issue in this publication.", "Язык и URL доолжен быть уникальным для каждого выпуска этого издания.");
@@ -49,7 +51,6 @@ regGS("You must define an issue type for each language and then sections for the
 regGS("Copy previous issue", "Скопировать предыдущий выпуск");
 regGS("No previous issue.", "Нет предыдущего выпуска.");
 regGS("Copy structure from issue number $1", "Скопировать структуру из выпуска №$1");
-regGS("New issue $1 from $2 in publication $3", "Новый выпуск $1 из $2 в издании $3");
 regGS("Delete entry", "Удалить запись");
 regGS("Issue Publishing Schedule", "Публикация выпуска запланирована");
 regGS("Invalid Input: $1", "Неправильный ввод: $1");

@@ -1,4 +1,12 @@
 <?php 
+regGS("Webcode", "");
+regGS("View article", "");
+regGS("Source", "");
+regGS("Select type", "");
+regGS("On", "");
+regGS("Off", "");
+regGS("Display newswires articles", "");
+regGS("Display Newswires", "");
 regGS("Title", "Título");
 regGS("No video playback capabilities, please download the video below", "No es posible reproducir archivos de video, por favor descarga el video que aparece a continuación");
 regGS("Article status set to '$1' for $2 articles", "El estatus del artículo sí se configuró en '$1' para los $2 artículos.");
