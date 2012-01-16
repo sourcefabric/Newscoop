@@ -1,0 +1,40 @@
+<ul class="renditions">
+    <?php foreach ($this->renditions as $rendition) { ?>
+    <li><div class="preview" style="width: <?php echo $rendition->getWidth(); ?>px; height: <?php echo $rendition->getHeight(); ?>px"></div><h3 class="rendition-name"><?php echo $this->escape($rendition->getName()); ?></h3></li>
+    <?php } ?>
+</ul>
+
+<pre style="clear: both; font-size: 1.3em">&uarr; Renditions &darr; Images</pre>
+
+<ul class="thumbnails">
+    <?php foreach ($this->images as $image) { ?>
+    <li id="image-<?php echo $image->getImageId(); ?>"><?php $thumbnail = $this->thumbnail('images/' . $image->getImageFileName(), 150, 150, 'fit'); ?>
+        <img src="<?php echo $this->url(array(
+            'src' => $thumbnail->src,
+        ), 'image', true, false); ?>" width="<?php echo $thumbnail->width; ?>" height="<?php echo $thumbnail->height; ?>" alt="" />
+    </li>
+    <?php } ?>
+</ul>
+
+<script>
+$(function() {
+    $('.renditions li').droppable({
+        hoverClass: 'ui-state-active',
+        drop: function(event, ui) {
+            $.post("<?php echo $this->url(array(
+                'module' => 'admin',
+                'controller' => 'image',
+                'action' => 'set-rendition',
+            )); ?>", {
+                'image': ui.draggable.attr('id'),
+                'rendition': $(this).find('.rendition-name').text()
+            }, function (data, textStatus) {
+            });
+        }
+    });
+
+    $('.thumbnails li').draggable({
+        revert: true
+    });
+});
+</script>

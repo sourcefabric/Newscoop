@@ -654,3 +654,26 @@ h1 {
     border: 1px solid #fff;
     background-color: #fff;
 }
+
+.renditions {
+}
+
+.renditions li {
+    list-style-type: none;
+    float: left;
+    margin: 8px;
+}
+
+.renditions .preview {
+    border: 1px solid #ccc;
+}
+
+.thumbnails {
+    clear: both;
+}
+
+.thumbnails li {
+    list-style-type: none;
+    float: left;
+    margin: 8px;
+}
