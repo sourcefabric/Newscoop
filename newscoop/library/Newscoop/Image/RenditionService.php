@@ -18,47 +18,53 @@ class RenditionService
     protected $orm;
 
     /**
+     * @var Newscoop\Image\ImageService
+     */
+    protected $imageService;
+
+    /**
      * @param Doctrine\ORM\EntityManager $orm
      */
-    public function __construct(\Doctrine\ORM\EntityManager $orm)
+    public function __construct(\Doctrine\ORM\EntityManager $orm, ImageService $imageService)
     {
         $this->orm = $orm;
+        $this->imageService = $imageService;
     }
 
     /**
      * Set article rendition
      *
-     * @param int $articleNumber
      * @param Newscoop\Image\Rendition $rendition
-     * @param Newscoop\Image\Image $image
-     * @return void
+     * @param Newscoop\Image\ArticleImage $image
+     * @return Newscoop\Image\ArticleImageRendition
      */
-    public function setArticleRendition($articleNumber, Rendition $rendition, Image $image)
+    public function setRenditionImage(Rendition $rendition, ArticleImage $image)
     {
-        $old = $this->getArticleRendition($articleNumber, $rendition);
+        $old = $this->getRenditionImage($rendition, $image->getArticleNumber());
         if ($old !== null) {
             $this->orm->remove($old);
             $this->orm->flush($old);
         }
 
-        $articleRendition = new ArticleRendition($articleNumber, $rendition, $image);
-        $this->orm->persist($articleRendition);
-        $this->orm->flush($articleRendition);
+        $articleImageRendition = new ArticleImageRendition($image, $rendition);
+        $this->orm->persist($articleImageRendition);
+        $this->orm->flush($articleImageRendition);
+        return $articleImageRendition;
     }
 
     /**
      * Get article rendition
      *
-     * @param int $articleNumber
      * @param Newscoop\Image\Rendition $rendition
-     * @return Newscoop\Image\ArticleRendition
+     * @param int $articleNumber
+     * @return Newscoop\Image\ArticleImageRendition
      */
-    public function getArticleRendition($articleNumber, Rendition $rendition)
+    public function getRenditionImage(Rendition $rendition, $articleNumber)
     {
         try {
-            return $this->orm->getRepository('Newscoop\Image\ArticleRendition')->findOneBy(array(
+            return $this->orm->getRepository('Newscoop\Image\ArticleImageRendition')->findOneBy(array(
+                'rendition' => (string) $rendition,
                 'articleNumber' => (int) $articleNumber,
-                'renditionName' => (string) $rendition,
             ));
         } catch (\Exception $e) {
             $this->createSchemaIfMissing($e);
@@ -75,20 +81,15 @@ class RenditionService
     public function getArticleRenditions($articleNumber)
     {
         try {
-            $articleRenditions = $this->orm->getRepository('Newscoop\Image\ArticleRendition')->findBy(array(
+            $articleRenditions = $this->orm->getRepository('Newscoop\Image\ArticleImageRendition')->findBy(array(
                 'articleNumber' => (int) $articleNumber,
             ));
         } catch (\Exception $e) {
             $this->createSchemaIfMissing($e);
-            return array();
+            $articleRenditions = array();
         }
 
-        $return = array();
-        foreach ($articleRenditions as $articleRendition) {
-            $return[$articleRendition->getRenditionName()] = $articleRendition;
-        }
-
-        return $return;
+        return new ArticleRenditionCollection($articleNumber, $articleRenditions, $this->imageService->getDefaultArticleImage($articleNumber));
     }
 
 
@@ -104,7 +105,7 @@ class RenditionService
             try {
                 $schemaTool = new \Doctrine\ORM\Tools\SchemaTool($this->orm);
                 $schemaTool->createSchema(array(
-                    $this->orm->getClassMetadata('Newscoop\Image\ArticleRendition'),
+                    $this->orm->getClassMetadata('Newscoop\Image\ArticleImageRendition'),
                 ));
             } catch (\Exception $e) { // ignore possible errors - foreign key to Images table
             }

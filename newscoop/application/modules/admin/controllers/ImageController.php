@@ -27,24 +27,17 @@ class Admin_ImageController extends Zend_Controller_Action
     public function articleAction()
     {
         $this->_helper->layout->setLayout('iframe');
-
         $this->view->renditions = $this->renditions;
-        $this->view->images = array_map(function($articleImage) {
-            return $articleImage->getImage();
-        }, \ArticleImage::GetImagesByArticleNumber($this->_getParam('article_number')));
-
+        $this->view->images = $this->_helper->service('image')->findByArticle($this->_getParam('article_number'));
         $this->view->articleRenditions = $this->_helper->service('image.rendition')->getArticleRenditions($this->_getParam('article_number'));
     }
 
     public function setRenditionAction()
     {
-        $rendition = $this->renditions[array_shift(explode(' ', $this->_getParam('rendition')))];
-        $image = $this->_helper->service('image')->find(array_pop(explode('-', $this->_getParam('image'))));
-
-        $this->_helper->service('image.rendition')->setArticleRendition($this->_getParam('article_number'), $rendition, $image);
-
         $this->_helper->layout->disableLayout();
-        $this->view->image = $image;
+        $rendition = $this->renditions[array_shift(explode(' ', $this->_getParam('rendition')))];
+        $image = $this->_helper->service('image')->getArticleImage($this->_getParam('article_number'), array_pop(explode('-', $this->_getParam('image'))));
+        $this->view->imageRendition = $this->_helper->service('image.rendition')->setRenditionImage($rendition, $image);
         $this->view->rendition = $rendition;
     }
 }

@@ -119,7 +119,7 @@ class ImageService
     }
 
     /**
-     * Find image entity
+     * Find image by id
      *
      * @param int $id
      * @return Newscoop\Image\Image
@@ -128,6 +128,71 @@ class ImageService
     {
         return $this->orm->getRepository('Newscoop\Image\Image')
             ->find($id);
+    }
+
+    /**
+     * Add article image
+     *
+     * @param int $articleNumber
+     * @param Newscoop\Image\Image $image
+     * @param int $number
+     * @return Newscoop\Image\ArticleImage
+     */
+    public function addArticleImage($articleNumber, Image $image, $number = 1)
+    {
+        if ($image->getId() === null) {
+            $this->orm->persist($image);
+            $this->orm->flush($image);
+        }
+
+        $articleImage = new ArticleImage($articleNumber, $image, $number);
+        $this->orm->persist($articleImage);
+        $this->orm->flush($articleImage);
+        return $articleImage;
+    }
+
+    /**
+     * Get article image
+     *
+     * @param int $articleNumber
+     * @param int $imageId
+     * @return Newscoop\Image\ArticleImage
+     */
+    public function getArticleImage($articleNumber, $imageId)
+    {
+        return $this->orm->getRepository('Newscoop\Image\ArticleImage')
+            ->findOneBy(array(
+                'articleNumber' => (int) $articleNumber,
+                'image' => $imageId,
+            ));
+    }
+
+    /**
+     * Find images by article
+     *
+     * @param int $articleNumber
+     * @return array
+     */
+    public function findByArticle($articleNumber)
+    {
+        return $this->orm->getRepository('Newscoop\Image\ArticleImage')
+            ->findBy(array(
+                'articleNumber' => (int) $articleNumber,
+            ), array('number' => 'asc'));
+    }
+
+    /**
+     * Get default article image
+     *
+     * @param int $articleNumber
+     * @return Newscoop\Image\ArticleImage
+     */
+    public function getDefaultArticleImage($articleNumber)
+    {
+        return array_shift($this->orm->getRepository('Newscoop\Image\ArticleImage')
+            ->findBy(array(
+                'articleNumber' => (int) $articleNumber,
+            ), array('number' => 'asc'), 1));
     }
 
     /**

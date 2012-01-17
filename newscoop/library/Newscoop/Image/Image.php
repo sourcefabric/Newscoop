@@ -12,7 +12,7 @@ namespace Newscoop\Image;
  * @Entity
  * @Table(name="Images")
  */
-class Image
+class Image implements ImageInterface
 {
     /**
      * @Id @Column(type="integer", name="Id") @GeneratedValue

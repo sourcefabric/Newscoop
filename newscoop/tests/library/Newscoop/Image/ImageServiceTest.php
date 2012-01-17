@@ -30,7 +30,7 @@ class ImageServiceTest extends \TestCase
             'cache_path' => sys_get_temp_dir() . '/' . uniqid(),
         );
 
-        $this->orm = $this->setUpOrm('Newscoop\Image\Image');
+        $this->orm = $this->setUpOrm('Newscoop\Image\Image', 'Newscoop\Image\ArticleImage');
 
         $this->service = new ImageService($this->config, $this->orm);
     }
@@ -82,6 +82,29 @@ class ImageServiceTest extends \TestCase
         $this->orm->flush($image);
 
         $this->assertContains('path', $this->service->find($image->getId())->getPath());
+    }
+
+    public function testFindByArticle()
+    {
+        $this->assertEquals(0, count($this->service->findByArticle(1)));
+
+        $image = new Image('test');
+        $this->orm->persist($image);
+        $this->orm->flush($image);
+
+        $articleImage = new ArticleImage(1, $image);
+        $this->orm->persist($articleImage);
+        $this->orm->flush($articleImage);
+
+        $this->assertEquals(1, count($this->service->findByArticle(1)));
+        $this->assertEquals($articleImage, $this->service->getArticleImage(1, $image->getId()));
+    }
+
+    public function testGetDefaultArticleImage()
+    {
+        $this->assertNull($this->service->getDefaultArticleImage(1));
+        $this->assertInstanceOf('Newscoop\Image\ArticleImage', $this->service->addArticleImage(1, new Image('default')));
+        $this->assertContains('default', $this->service->getDefaultArticleImage(1)->getPath());
     }
 
     public function testGetThumbnail()

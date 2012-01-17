@@ -1,7 +1,7 @@
 <ul class="renditions">
     <?php foreach ($this->renditions as $rendition) { ?>
     <li>
-        <?php echo $this->rendition($rendition, 150, 150, isset($this->articleRenditions[$rendition->getName()]) ? $this->articleRenditions[$rendition->getName()]->getImage() : null); ?>
+        <?php echo $this->rendition($rendition, 150, 150, $this->articleRenditions[$rendition]); ?>
         <h3 class="rendition-name"><?php echo $this->escape($rendition->getName()); ?> <small>(<?php echo $rendition->getWidth(), 'x', $rendition->getHeight(); ?>)</small></h3></li>
     </li>
     <?php } ?>
@@ -12,7 +12,7 @@
 <ul class="thumbnails">
     <?php foreach ($this->images as $image) { ?>
     <li id="image-<?php echo $image->getImageId(); ?>">
-        <?php echo $this->thumbnail('images/' . $image->getImageFileName(), 150, 150, 'fit')->getImg($this); ?>
+        <?php echo $this->thumbnail($image->getPath(), 150, 150, 'fit')->getImg($this); ?>
     </li>
     <?php } ?>
 </ul>

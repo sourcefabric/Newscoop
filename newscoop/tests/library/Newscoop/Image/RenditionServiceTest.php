@@ -11,16 +11,22 @@ namespace Newscoop\Image;
  */
 class RenditionServiceTest extends \TestCase
 {
+    const ARTICLE_NUMBER = 123;
+
     /** @var Newscoop\Image\RenditionService */
     protected $service;
 
     /** @var Doctrine\ORM\EntityManager */
     protected $orm;
 
+    /** @var Newscoop\Image\ImageService */
+    protected $imageService;
+
     public function setUp()
     {
-        $this->orm = $this->setUpOrm('Newscoop\Image\Image', 'Newscoop\Image\ArticleRendition');
-        $this->service = new RenditionService($this->orm);
+        $this->orm = $this->setUpOrm('Newscoop\Image\Image', 'Newscoop\Image\ArticleImageRendition', 'Newscoop\Image\ArticleImage');
+        $this->imageService = new ImageService(array(), $this->orm);
+        $this->service = new RenditionService($this->orm, $this->imageService);
     }
 
     public function tearDown()
@@ -33,40 +39,51 @@ class RenditionServiceTest extends \TestCase
         $this->assertInstanceOf('Newscoop\Image\RenditionService', $this->service);
     }
 
-    public function testArticleRendition()
+    public function testArticleRenditionNoDefault()
     {
-        $image = new Image('path');
-        $this->orm->persist($image);
-        $this->orm->flush($image);
-
         $rendition = new Rendition(200, 200, 'fit', 'thumbnail');
+        $renditions = $this->service->getArticleRenditions(self::ARTICLE_NUMBER);
+        $this->assertFalse(isset($renditions[$rendition]));
+        $this->assertNull($this->service->getRenditionImage($rendition, self::ARTICLE_NUMBER));
+    }
 
-        $this->assertNull($this->service->getArticleRendition(12, $rendition));
-        $this->assertEmpty($this->service->getArticleRenditions(12));
+    public function testArticleRenditionWithDefault()
+    {
+        $this->imageService->addArticleImage(self::ARTICLE_NUMBER, new Image('default'));
+        $rendition = new Rendition(200, 200, 'fit', 'thumbnail');
+        $renditions = $this->service->getArticleRenditions(self::ARTICLE_NUMBER);
+        $this->assertTrue(isset($renditions[$rendition]));
+        $this->assertContains('default', $renditions[$rendition]->getImage()->getPath());
+    }
 
-        $this->service->setArticleRendition(12, $rendition, $image);
+    public function testArticleRenditions()
+    {
+        $imageDefault = $this->imageService->addArticleImage(self::ARTICLE_NUMBER, new Image('default'));
+        $imageTest = $this->imageService->addArticleImage(self::ARTICLE_NUMBER, new Image('test'));
+        $renditionThumbnail = new Rendition(200, 200, 'fit', 'thumbnail');
+        $renditionLandscape = new Rendition(400, 300, 'fit', 'landscape');
 
-        $articleRendition = $this->service->getArticleRendition(12, $rendition);
-        $this->assertNotNull($articleRendition);
-        $this->assertEquals('images/path', $articleRendition->getImage()->getPath());
+        $this->assertInstanceOf('Newscoop\Image\ArticleImageRendition', $this->service->setRenditionImage($renditionLandscape, $imageTest));
+        $renditions = $this->service->getArticleRenditions(self::ARTICLE_NUMBER);
 
-        $this->assertEquals(1, count($this->service->getArticleRenditions(12)));
-        $this->assertTrue(array_key_exists('thumbnail', $this->service->getArticleRenditions(12)));
+        $this->assertContains('default', $renditions[$renditionThumbnail]->getImage()->getPath());
+        $this->assertTrue($renditions[$renditionThumbnail]->isDefault());
 
+        $this->assertContains('test', $renditions[$renditionLandscape]->getImage()->getPath());
+        $this->assertFalse($renditions[$renditionLandscape]->isDefault());
     }
 
     public function testArticleRenditionTwice()
     {
-        $image1 = new Image('path1');
-        $image2 = new Image('path2');
-        $this->orm->persist($image1);
-        $this->orm->persist($image2);
-        $this->orm->flush();
+        $image1 = $this->imageService->addArticleImage(self::ARTICLE_NUMBER, new Image('first'), 1);
+        $image2 = $this->imageService->addArticleImage(self::ARTICLE_NUMBER, new Image('second'), 2);
 
-        $rendition = new Rendition(200, 200, 'fit');
+        $rendition = new Rendition(200, 200, 'fit', 'thumb');
 
-        $this->service->setArticleRendition(12, $rendition, $image1);
-        $this->service->setArticleRendition(12, $rendition, $image2);
-        $this->assertContains('path2', $this->service->getArticleRendition(12, $rendition)->getImage()->getPath());
+        $this->service->setRenditionImage($rendition, $image1);
+        $this->assertContains('first', $this->service->getRenditionImage($rendition, self::ARTICLE_NUMBER)->getImage()->getPath());
+
+        $this->service->setRenditionImage($rendition, $image2);
+        $this->assertContains('second', $this->service->getRenditionImage($rendition, self::ARTICLE_NUMBER)->getImage()->getPath());
     }
 }
