@@ -13,11 +13,6 @@ namespace Newscoop\Image;
 class Rendition implements RenditionInterface
 {
     /**
-     * @var string
-     */
-    private $name;
-
-    /**
      * @var int
      */
     private $width;
@@ -33,17 +28,22 @@ class Rendition implements RenditionInterface
     private $specs;
 
     /**
-     * @param string $name
+     * @var string
+     */
+    private $name;
+
+    /**
      * @param int $width
      * @param int $height
      * @param string $specs
+     * @param string $name
      */
-    public function __construct($name, $width, $height, $specs = 'crop')
+    public function __construct($width, $height, $specs = 'fit', $name = null)
     {
-        $this->name = (string) $name;
         $this->width = (int) $width;
         $this->height = (int) $height;
         $this->specs = (string) $specs;
+        $this->name = (string) $name;
     }
 
     /**
@@ -52,16 +52,6 @@ class Rendition implements RenditionInterface
     public function __toString()
     {
         return $this->getName();
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
     }
 
     /**
@@ -92,5 +82,15 @@ class Rendition implements RenditionInterface
     public function getSpecs()
     {
         return $this->specs;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 }

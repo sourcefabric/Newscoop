@@ -13,12 +13,12 @@ class RenditionTest extends \TestCase
 {
     public function testInstance()
     {
-        $this->assertInstanceOf('Newscoop\Image\Rendition', new Rendition('test', 1, 1));
+        $this->assertInstanceOf('Newscoop\Image\Rendition', new Rendition(1, 1));
     }
 
     public function testProperties()
     {
-        $rendition = new Rendition('test', 200, 150, 'crop');
+        $rendition = new Rendition(200, 150, 'crop', 'test');
         $this->assertEquals('test', $rendition->getName());
         $this->assertEquals(200, $rendition->getWidth());
         $this->assertEquals(150, $rendition->getHeight());

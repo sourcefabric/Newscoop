@@ -87,7 +87,7 @@ class ImageServiceTest extends \TestCase
     public function testGetThumbnail()
     {
         global $application;
-        $rendition = new Rendition('test', 300, 300, 'fill');
+        $rendition = new Rendition(300, 300, 'fill');
         $thumbnail = $this->service->getThumbnail(self::PICTURE_LANDSCAPE, $rendition);
 
         $this->assertInstanceOf('Newscoop\Image\Thumbnail', $thumbnail);

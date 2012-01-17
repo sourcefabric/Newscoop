@@ -39,7 +39,7 @@ class RenditionServiceTest extends \TestCase
         $this->orm->persist($image);
         $this->orm->flush($image);
 
-        $rendition = new Rendition('thumbnail', 200, 200, 'fit');
+        $rendition = new Rendition(200, 200, 'fit', 'thumbnail');
 
         $this->assertNull($this->service->getArticleRendition(12, $rendition));
         $this->assertEmpty($this->service->getArticleRenditions(12));
@@ -63,7 +63,7 @@ class RenditionServiceTest extends \TestCase
         $this->orm->persist($image2);
         $this->orm->flush();
 
-        $rendition = new Rendition('thumbnail', 200, 200, 'fit');
+        $rendition = new Rendition(200, 200, 'fit');
 
         $this->service->setArticleRendition(12, $rendition, $image1);
         $this->service->setArticleRendition(12, $rendition, $image2);

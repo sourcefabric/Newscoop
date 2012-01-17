@@ -60,16 +60,6 @@ class RenditionPreview implements RenditionInterface
     }
 
     /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->rendition->getName();
-    }
-
-    /**
      * Get width
      *
      * @return int
@@ -97,5 +87,15 @@ class RenditionPreview implements RenditionInterface
     public function getSpecs()
     {
         return $this->rendition->getSpecs();
+    }
+
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->rendition->getName();
     }
 }

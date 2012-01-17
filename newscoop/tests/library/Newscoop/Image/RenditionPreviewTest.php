@@ -63,6 +63,6 @@ class RenditionPreviewTest extends \TestCase
      */
     private function getPreview($renditionWidth, $renditionHeight, $previewWidth, $previewHeight)
     {
-       return new RenditionPreview(new Rendition('test', $renditionWidth, $renditionHeight), $previewWidth, $previewHeight);
+       return new RenditionPreview(new Rendition($renditionWidth, $renditionHeight), $previewWidth, $previewHeight);
     }
 }
