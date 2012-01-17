@@ -1,20 +1,20 @@
 <?php 
-regGS("Translate from", "");
-regGS("Total articles", "");
-regGS("Skype", "");
-regGS("Save All", "");
-regGS("Reset", "");
-regGS("Please enter the last name", "");
-regGS("Please enter the first name", "");
-regGS("No records found", "");
-regGS("Last name", "");
-regGS("Jabber", "");
-regGS("General", "");
-regGS("First name", "");
-regGS("Email", "");
-regGS("Delete author", "");
-regGS("Contacts", "");
-regGS("Biography", "");
-regGS("Aliases", "");
-regGS("AIM", "");
+regGS("Translate from", "თარგმანის ფორმა");
+regGS("Total articles", "სულ სტატიები");
+regGS("Skype", "სკაიპი");
+regGS("Save All", "ყველაფრის დამახსოვრება");
+regGS("Reset", "საწყის მდგომარეობაში დაბრუნება");
+regGS("Please enter the last name", "შეიყვანეთ გვარი");
+regGS("Please enter the first name", "შეიყვანეთ სახელი");
+regGS("No records found", "მონაცემები არ მოიძებნა");
+regGS("Last name", "გვარი");
+regGS("Jabber", "Jabber");
+regGS("General", "ზოგადი");
+regGS("First name", "სახელი");
+regGS("Email", "იმეილი");
+regGS("Delete author", "ავტორის წაშლა");
+regGS("Contacts", "კონტაქტები");
+regGS("Biography", "ბიოგრაფია");
+regGS("Aliases", "ფსევდონიმები");
+regGS("AIM", "AIM");
 ?>

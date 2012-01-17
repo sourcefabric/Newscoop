@@ -1,13 +1,13 @@
 <?php 
-regGS("Files attached.", "");
-regGS("File '$1' unattached.", "");
-regGS("Attach new file", "");
-regGS("Attach existing file", "");
-regGS("$1 file/s attached to article", "");
-regGS("File attached.", "");
-regGS("The maximum file upload size was not configured in Newscoop.", "");
-regGS("File #$1 \"$2\" unattached", "");
-regGS("File #$1 \"$2\" attached to article", "");
+regGS("Files attached.", "სურათი მიეკრა");
+regGS("File '$1' unattached.", "'$1' ფაილი მოიხსნა");
+regGS("Attach new file", "ახალი ფაილის დამატება");
+regGS("Attach existing file", "არსებული ფაილის მიკვრა");
+regGS("$1 file/s attached to article", "$1 ფაილ(ები) მიეკრა სტატიას");
+regGS("File attached.", "ფაილი მიეკრა");
+regGS("The maximum file upload size was not configured in Newscoop.", "ასატვირთი ფაილის მაქსიმალური ზომა არ განსაზღვრულა");
+regGS("File #$1 \"$2\" unattached", "ფაილი #$1 \"$2\" მოიხსნა");
+regGS("File #$1 \"$2\" attached to article", "ფაილი #$1 \"$2\" დაემატა სტატიას");
 regGS("Unable to add attachment.", "შეუძლებელია ათთაჩმენთის დამატება ");
 regGS("There was a problem uploading the file.", "პრობლემა იყო ფაილის ატვირთვისას");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "ატვირთული ფაილი მხოლოდ ნაწილობრივ აიტვირთა. ეს მაშინ ხდება, როცა ფაილის ასატვირთი მაქსიმალური დრო არ შეესაბამება  ფაილის ზომას, რომლის ატვირთვასაც ცდილობთ. შეტანის მაქსიმალური დრო განსაზღვრულია'php.ini' –ში ");
