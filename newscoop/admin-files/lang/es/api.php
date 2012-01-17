@@ -1,7 +1,7 @@
 <?php 
-regGS("Topic created", "");
-regGS("The topic name is already in use by another topic.", "");
-regGS("Complex Date", "");
+regGS("Topic created", "Tópico creado");
+regGS("The topic name is already in use by another topic.", "Este nombre de tópico ya está en uso.");
+regGS("Complex Date", "Fecha compleja");
 regGS("vertices", "vertices");
 regGS("There was a problem trying to execute the XML RPC function.", "Surgió un problema al tratar de ejecutar la función XML RPC.");
 regGS("The Campcaster server configuration is invalid.", "La configuración del servidor Campcaster es inválida.");

@@ -1,10 +1,10 @@
 <?php 
-regGS("You must enter a name for the topic.", "");
-regGS("Show All", "");
-regGS("Select the parent of the topic", "");
-regGS("None", "");
-regGS("Add new topic", "");
-regGS("No topics have been created yet.", "");
+regGS("You must enter a name for the topic.", "Morate uneti ime topika.");
+regGS("Show All", "Prikaži sve");
+regGS("Select the parent of the topic", "Izaberite matični topik");
+regGS("None", "Nijedan");
+regGS("Add new topic", "dodaj novi topik");
+regGS("No topics have been created yet.", "Nema kreiranih topika");
 regGS("Topics updated.", "Tema izmenjena.");
 regGS("Topic does not exist.", "tema ne postoji.");
 regGS("The topic '$1' has been removed from article.", "tema '$1' je uklonjena iz članka.");

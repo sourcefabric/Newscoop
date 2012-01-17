@@ -1,9 +1,9 @@
 <?php 
-regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "");
-regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "");
-regGS("Publish all articles:", "");
-regGS("Publish all articles", "");
-regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "");
+regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "No es posible previsualizar esta edición.  Por favor asegúrese de que la publicación tiene un tema asignado.");
+regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "No es posible previsualizar esta edición.  Por favor asegúrese de que ha seleccionado una plantilla para la portada.");
+regGS("Publish all articles:", "Publicar todos los artículos:");
+regGS("Publish all articles", "Publicar todos los artículos");
+regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "Forzar la publicación de todos los artículos.  Si tienen la configuración \"no\", solo se publicarán los marcados con \"Publicar con edición\".");
 regGS("in order to be able to assigned to the issue.", "a fin de poder asignalo a la edición.");
 regGS("default", "por defecto");
 regGS("The publishing/unpublishing can not be set the same time", "La opción de publicar/dejar de publicar no se puede determinar al mismo tiempo");

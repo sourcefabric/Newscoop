@@ -1,16 +1,16 @@
 <?php 
-regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "");
-regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "");
-regGS("Publish all articles:", "");
-regGS("Publish all articles", "");
-regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "");
-regGS("in order to be able to assigned to the issue.", "");
-regGS("default", "");
-regGS("The publishing/unpublishing can not be set the same time", "");
-regGS("The publishing schedule can not be set in the past", "");
-regGS("Please assign at least one theme to the publication", "");
-regGS("Only than the issue can be published", "");
-regGS("Issue Theme", "");
+regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Ovo izdanje ne može biti pregledano. Proverite da li publikacija ima dodeljenu temu.");
+regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "Ovo izdanje ne može biti pregledano. Proverite da li ima dodeljen šablon za prikaz prve strane.");
+regGS("Publish all articles:", "Objavi sve tekstove:");
+regGS("Publish all articles", "Objavi sve tekstove");
+regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "Forsiraj objavljivanje svih tekkstova. Ako je postavljeno na 'Ne', samo tekstovi sa statusom 'Objavi zajedno sa izdanjem' biće objavljeni.");
+regGS("in order to be able to assigned to the issue.", "da bi se dodelio izdanju.");
+regGS("default", "podrqazumevano");
+regGS("The publishing/unpublishing can not be set the same time", "Objavljivanje/povlačenje ne može biti postavljeno na isto vreme");
+regGS("The publishing schedule can not be set in the past", "Redosled objavljivanja ne može biti podešen na datum u prošlosti");
+regGS("Please assign at least one theme to the publication", "Molimo dodelite najmanje jednu temu publikaciji");
+regGS("Only than the issue can be published", "Tek tada izdanje može biti objavljeno");
+regGS("Issue Theme", "Tema izdanja");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Vrednosti koje pokušavate da podesite su u konfliktu sa izdanjem \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Broj mora biti jedinstven za svako izdanje u ovoj publikaciji za isti jezik.");
 regGS("The language and URL name must be unique for each issue in this publication.", "Jezik i URL naziv moraju biti jedinstveni za svako izdanje u publikaciji.");
