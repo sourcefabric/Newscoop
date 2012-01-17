@@ -76,7 +76,7 @@ class ImageService
             return;
         }
 
-        list(, $width, $height, $instructions, $imagePath) = $matches;
+        list(, $width, $height, $specs, $imagePath) = $matches;
 
         $destFolder = rtrim($this->config['cache_path'], '/') . '/' . dirname(ltrim($src, './'));
 
@@ -89,7 +89,11 @@ class ImageService
         }
 
         $image = NetteImage::fromFile(APPLICATION_PATH . '/../' . $this->decodePath($imagePath));
-        $image->resize($width, $height, NetteImage::FILL)->crop('50%', '50%', $width, $height);
+        $image->resize($width, $height, $this->getFlags($specs));
+        if ($this->getFlags($specs) === NetteImage::FILL) {
+            $image->crop('50%', '50%', $width, $height);
+        }
+
         $image->save($destFolder . '/' . $imagePath);
         $image->send();
     }
@@ -135,10 +139,12 @@ class ImageService
      */
     public function getThumbnail($image, RenditionInterface $rendition)
     {
+        $info = getimagesize(APPLICATION_PATH . '/../' . $image);
+        list($width, $height) = NetteImage::calculateSize($info[0], $info[1], $rendition->getWidth(), $rendition->getHeight(), $this->getFlags($rendition->getSpecs()));
         return new Thumbnail(
             $this->getSrc($image, $rendition->getWidth(), $rendition->getHeight(), $rendition->getSpecs()),
-            $rendition->getWidth(),
-            $rendition->getHeight()
+            min($width, $rendition->getWidth()),
+            min($height, $rendition->getHeight())
         );
     }
 
@@ -162,5 +168,27 @@ class ImageService
     private function decodePath($path)
     {
         return rawurldecode(rawurldecode($path));
+    }
+
+    /**
+     * Get flags
+     *
+     * @param string $specs
+     * @return int
+     */
+    private function getFlags($specs)
+    {
+        switch ($specs) {
+            case 'fill':
+                $flags = NetteImage::FILL;
+                break;
+
+            case 'fit':
+            default:
+                $flags = NetteImage::FIT;
+                break;
+        }
+
+        return $flags;
     }
 }

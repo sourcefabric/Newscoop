@@ -11,7 +11,8 @@ namespace Newscoop\Image;
  */
 class ImageServiceTest extends \TestCase
 {
-    const PICTURE = 'tests/fixtures/picture.jpg';
+    const PICTURE_LANDSCAPE = 'tests/fixtures/picture_landscape.jpg';
+    const PICTURE_PORTRAIT = 'tests/fixtures/picture_portrait.jpg';
 
     /** @var Newscoop\Image\ImageService */
     protected $service;
@@ -34,6 +35,13 @@ class ImageServiceTest extends \TestCase
         $this->service = new ImageService($this->config, $this->orm);
     }
 
+    public function tearDown()
+    {
+        if (realpath($this->config['cache_path'])) {
+            system('rm -r ' . $this->config['cache_path']);
+        }
+    }
+
     public function testInstance()
     {
         $this->assertInstanceOf('Newscoop\Image\ImageService', $this->service);
@@ -41,20 +49,30 @@ class ImageServiceTest extends \TestCase
 
     public function testGetSrc()
     {
-        $src = $this->service->getSrc(self::PICTURE, 300, 300);
-        $this->assertEquals('300x300/center_center/' . rawurlencode(rawurlencode(self::PICTURE)), $src);
+        $src = $this->service->getSrc(self::PICTURE_LANDSCAPE, 300, 300);
+        $this->assertEquals('300x300/center_center/' . rawurlencode(rawurlencode(self::PICTURE_LANDSCAPE)), $src);
     }
 
-    public function testGenerateImage()
+    public function testGenerateImageFill()
     {
-        $src = '300x300/center_center/' . rawurlencode(rawurlencode(self::PICTURE));
+        $src = '200x200/fill/' . rawurlencode(rawurlencode(self::PICTURE_LANDSCAPE));
 
         $image = $this->generateImage($src);
         $info = $this->getInfo($image);
 
         $this->assertFileExists($this->config['cache_path'] . "/$src");
-        $this->assertEquals(300, $info[0]);
-        $this->assertEquals(300, $info[1]);
+        $this->assertEquals(200, $info[0], 'width');
+        $this->assertEquals(200, $info[1], 'height');
+    }
+
+    public function testGenerateImageFit()
+    {
+        $src = '200x200/fit/' . rawurlencode(rawurlencode(self::PICTURE_LANDSCAPE));
+        $image = $this->generateImage($src);
+        $info = $this->getInfo($image);
+
+        $this->assertEquals(200, $info[0], 'width');
+        $this->assertEquals(133, $info[1], 'height');
     }
 
     public function testFind()
@@ -69,15 +87,19 @@ class ImageServiceTest extends \TestCase
     public function testGetThumbnail()
     {
         global $application;
-        $rendition = new Rendition('test', 200, 150, 'crop');
-        $thumbnail = $this->service->getThumbnail('image.jpg', $rendition);
+        $rendition = new Rendition('test', 300, 300, 'fill');
+        $thumbnail = $this->service->getThumbnail(self::PICTURE_LANDSCAPE, $rendition);
+
         $this->assertInstanceOf('Newscoop\Image\Thumbnail', $thumbnail);
-        $this->assertContains('200x150', $thumbnail->src);
+        $this->assertContains('300x300', $thumbnail->src);
+        $this->assertEquals(300, $thumbnail->width, 'thumbnail_width');
+        $this->assertEquals(300, $thumbnail->height, 'thumbnail_height');
+
         $img = $thumbnail->getImg($application->getBootstrap()->getResource('view'));
         $this->assertContains('<img', $img);
-        $this->assertContains('image.jpg', $img);
-        $this->assertContains('width="200"', $img);
-        $this->assertContains('height="150"', $img);
+        $this->assertContains(rawurlencode(rawurlencode(self::PICTURE_LANDSCAPE)), $img);
+        $this->assertContains('width="300"', $img);
+        $this->assertContains('height="300"', $img);
         $this->assertContains('alt="', $img);
     }
 

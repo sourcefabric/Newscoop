@@ -11,10 +11,8 @@
 
 <ul class="thumbnails">
     <?php foreach ($this->images as $image) { ?>
-    <li id="image-<?php echo $image->getImageId(); ?>"><?php $thumbnail = $this->thumbnail('images/' . $image->getImageFileName(), 150, 150, 'fit'); ?>
-        <img src="<?php echo $this->url(array(
-            'src' => $thumbnail->src,
-        ), 'image', true, false); ?>" width="<?php echo $thumbnail->width; ?>" height="<?php echo $thumbnail->height; ?>" alt="" />
+    <li id="image-<?php echo $image->getImageId(); ?>">
+        <?php echo $this->thumbnail('images/' . $image->getImageFileName(), 150, 150, 'fit')->getImg($this); ?>
     </li>
     <?php } ?>
 </ul>

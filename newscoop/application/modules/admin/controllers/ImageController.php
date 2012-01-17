@@ -17,10 +17,10 @@ class Admin_ImageController extends Zend_Controller_Action
     public function init()
     {
         $this->renditions = array(
-            'thumbnail' => new Rendition('thumbnail', 75, 75, 'crop'),
-            'square' => new Rendition('square', 150, 150, 'crop'),
-            'landscape' => new Rendition('landscape', 400, 300, 'crop'),
-            'portrait' => new Rendition('portrait', 300, 400, 'crop'),
+            'thumbnail' => new Rendition('thumbnail', 75, 75, 'fill'),
+            'square' => new Rendition('square', 150, 150, 'fill'),
+            'landscape' => new Rendition('landscape', 400, 300, 'fill'),
+            'portrait' => new Rendition('portrait', 300, 400, 'fill'),
         );
     }
 
