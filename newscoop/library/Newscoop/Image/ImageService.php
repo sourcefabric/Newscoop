@@ -7,10 +7,6 @@
 
 namespace Newscoop\Image;
 
-use Nette\Image as NetteImage;
-
-require_once __DIR__ . '/../../Nette/exceptions.php';
-
 /**
  * Image Service
  */
@@ -79,7 +75,6 @@ class ImageService
         list(, $width, $height, $specs, $imagePath) = $matches;
 
         $destFolder = rtrim($this->config['cache_path'], '/') . '/' . dirname(ltrim($src, './'));
-
         if (!realpath($destFolder)) {
             mkdir($destFolder, 0755, true);
         }
@@ -88,12 +83,8 @@ class ImageService
             throw new \RuntimeException("Can't create folder '$destFolder'.");
         }
 
-        $image = NetteImage::fromFile(APPLICATION_PATH . '/../' . $this->decodePath($imagePath));
-        $image->resize($width, $height, $this->getFlags($specs));
-        if ($this->getFlags($specs) === NetteImage::FILL) {
-            $image->crop('50%', '50%', $width, $height);
-        }
-
+        $rendition = new Rendition($width, $height, $specs);
+        $image = $rendition->generateImage($this->decodePath($imagePath));
         $image->save($destFolder . '/' . $imagePath);
         $image->send();
     }
@@ -187,18 +178,12 @@ class ImageService
      * Get thumbnail for given image and rendition
      *
      * @param string $image
-     * @param Newscoop\Image\RenditionInterface $rendition
+     * @param Newscoop\Image\Rendition $rendition
      * @return Newscoop\Image\Thumbnail
      */
-    public function getThumbnail($image, RenditionInterface $rendition)
+    public function getThumbnail(Rendition $rendition, $image)
     {
-        $info = getimagesize(APPLICATION_PATH . '/../' . $image);
-        list($width, $height) = NetteImage::calculateSize($info[0], $info[1], $rendition->getWidth(), $rendition->getHeight(), $this->getFlags($rendition->getSpecs()));
-        return new Thumbnail(
-            $this->getSrc($image, $rendition->getWidth(), $rendition->getHeight(), $rendition->getSpecs()),
-            min($width, $rendition->getWidth()),
-            min($height, $rendition->getHeight())
-        );
+        return $rendition->getThumbnail($image, $this);
     }
 
     /**
@@ -221,27 +206,5 @@ class ImageService
     private function decodePath($path)
     {
         return rawurldecode(rawurldecode($path));
-    }
-
-    /**
-     * Get flags
-     *
-     * @param string $specs
-     * @return int
-     */
-    private function getFlags($specs)
-    {
-        switch ($specs) {
-            case 'fill':
-                $flags = NetteImage::FILL;
-                break;
-
-            case 'fit':
-            default:
-                $flags = NetteImage::FIT;
-                break;
-        }
-
-        return $flags;
     }
 }

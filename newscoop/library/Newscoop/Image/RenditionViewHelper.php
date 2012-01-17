@@ -31,13 +31,13 @@ class RenditionViewHelper extends \Zend_View_Helper_Abstract
      * @param Newscoop\Image\Rendition $rendition
      * @param int $width
      * @param int $height
-     * @param Newscoop\Image\Image $image
+     * @param Newscoop\Image\ArticleImageRendition $articleImageRendition
      * @return string
      */
     public function rendition(Rendition $rendition, $width, $height, ArticleImageRendition $articleImageRendition = null)
     {
-        $preview = new RenditionPreview($rendition, $width, $height);
-        $thumbnail = $articleImageRendition !== null ? $this->imageService->getThumbnail($articleImageRendition->getImage()->getPath(), $preview) : null;
+        $preview = $rendition->getPreview($width, $height);
+        $thumbnail = $articleImageRendition !== null ? $this->imageService->getThumbnail($preview, $articleImageRendition->getImage()->getPath()) : null;
         return sprintf('<div class="preview" style="width: %dpx; height: %dpx;">%s</div>', $preview->getWidth(), $preview->getHeight(), $thumbnail !== null ? $thumbnail->getImg($this->view) : '');
     }
 }
