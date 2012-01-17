@@ -21,7 +21,7 @@ class ArticleImage implements ImageInterface
     private $articleNumber;
 
     /**
-     * @Id @ManyToOne(targetEntity="Newscoop\Image\Image")
+     * @Id @ManyToOne(targetEntity="Newscoop\Image\Image", fetch="EAGER")
      * @JoinColumn(name="IdImage", referencedColumnName="Id")
      * @var Newscoop\Image\Image
      */
@@ -70,13 +70,13 @@ class ArticleImage implements ImageInterface
      *
      * @return int
      */
-    public function getImageId()
+    public function getId()
     {
         return $this->image->getId();
     }
 
     /**
-     * Get path
+     * Get image path
      *
      * @return string
      */

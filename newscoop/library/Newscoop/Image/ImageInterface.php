@@ -13,6 +13,13 @@ namespace Newscoop\Image;
 interface ImageInterface
 {
     /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId();
+
+    /**
      * Get path
      *
      * @return string

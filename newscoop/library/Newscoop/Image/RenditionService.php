@@ -59,7 +59,7 @@ class RenditionService
      * @param int $articleNumber
      * @return Newscoop\Image\ArticleImageRendition
      */
-    public function getRenditionImage(Rendition $rendition, $articleNumber)
+    private function getRenditionImage(Rendition $rendition, $articleNumber)
     {
         try {
             return $this->orm->getRepository('Newscoop\Image\ArticleImageRendition')->findOneBy(array(

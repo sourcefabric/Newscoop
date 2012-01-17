@@ -44,7 +44,6 @@ class RenditionServiceTest extends \TestCase
         $rendition = new Rendition(200, 200, 'fit', 'thumbnail');
         $renditions = $this->service->getArticleRenditions(self::ARTICLE_NUMBER);
         $this->assertFalse(isset($renditions[$rendition]));
-        $this->assertNull($this->service->getRenditionImage($rendition, self::ARTICLE_NUMBER));
     }
 
     public function testArticleRenditionWithDefault()
@@ -81,9 +80,9 @@ class RenditionServiceTest extends \TestCase
         $rendition = new Rendition(200, 200, 'fit', 'thumb');
 
         $this->service->setRenditionImage($rendition, $image1);
-        $this->assertContains('first', $this->service->getRenditionImage($rendition, self::ARTICLE_NUMBER)->getImage()->getPath());
-
         $this->service->setRenditionImage($rendition, $image2);
-        $this->assertContains('second', $this->service->getRenditionImage($rendition, self::ARTICLE_NUMBER)->getImage()->getPath());
+
+        $renditions = $this->service->getArticleRenditions(self::ARTICLE_NUMBER);
+        $this->assertContains('second', $renditions[$rendition]->getImage()->getPath());
     }
 }

@@ -11,6 +11,7 @@ namespace Newscoop\Image;
  */
 class ImageServiceTest extends \TestCase
 {
+    const ARTICLE_NUMBER = 123;
     const PICTURE_LANDSCAPE = 'tests/fixtures/picture_landscape.jpg';
     const PICTURE_PORTRAIT = 'tests/fixtures/picture_portrait.jpg';
 
@@ -31,7 +32,6 @@ class ImageServiceTest extends \TestCase
         );
 
         $this->orm = $this->setUpOrm('Newscoop\Image\Image', 'Newscoop\Image\ArticleImage');
-
         $this->service = new ImageService($this->config, $this->orm);
     }
 
@@ -50,12 +50,12 @@ class ImageServiceTest extends \TestCase
     public function testGetSrc()
     {
         $src = $this->service->getSrc(self::PICTURE_LANDSCAPE, 300, 300);
-        $this->assertEquals('300x300/center_center/' . rawurlencode(rawurlencode(self::PICTURE_LANDSCAPE)), $src);
+        $this->assertEquals('300x300/fit/' . $this->encode(self::PICTURE_LANDSCAPE), $src);
     }
 
     public function testGenerateImageFill()
     {
-        $src = '200x200/fill/' . rawurlencode(rawurlencode(self::PICTURE_LANDSCAPE));
+        $src = '200x200/fill/' . $this->encode(self::PICTURE_LANDSCAPE);
 
         $image = $this->generateImage($src);
         $info = $this->getInfo($image);
@@ -67,7 +67,7 @@ class ImageServiceTest extends \TestCase
 
     public function testGenerateImageFit()
     {
-        $src = '200x200/fit/' . rawurlencode(rawurlencode(self::PICTURE_LANDSCAPE));
+        $src = '200x200/fit/' . $this->encode(self::PICTURE_LANDSCAPE);
         $image = $this->generateImage($src);
         $info = $this->getInfo($image);
 
@@ -75,29 +75,13 @@ class ImageServiceTest extends \TestCase
         $this->assertEquals(133, $info[1], 'height');
     }
 
-    public function testFind()
-    {
-        $image = new Image('path');
-        $this->orm->persist($image);
-        $this->orm->flush($image);
-
-        $this->assertContains('path', $this->service->find($image->getId())->getPath());
-    }
-
     public function testFindByArticle()
     {
-        $this->assertEquals(0, count($this->service->findByArticle(1)));
-
-        $image = new Image('test');
-        $this->orm->persist($image);
-        $this->orm->flush($image);
-
-        $articleImage = new ArticleImage(1, $image);
-        $this->orm->persist($articleImage);
-        $this->orm->flush($articleImage);
-
-        $this->assertEquals(1, count($this->service->findByArticle(1)));
-        $this->assertEquals($articleImage, $this->service->getArticleImage(1, $image->getId()));
+        $this->assertEquals(0, count($this->service->findByArticle(self::ARTICLE_NUMBER)));
+        $this->service->addArticleImage(self::ARTICLE_NUMBER, new Image('test'));
+        $articleImages = $this->service->findByArticle(self::ARTICLE_NUMBER);
+        $this->assertEquals(1, count($articleImages));
+        $this->assertInstanceOf('Newscoop\Image\ArticleImage', $articleImages[0]);
     }
 
     public function testGetDefaultArticleImage()
@@ -120,7 +104,7 @@ class ImageServiceTest extends \TestCase
 
         $img = $thumbnail->getImg($application->getBootstrap()->getResource('view'));
         $this->assertContains('<img', $img);
-        $this->assertContains(rawurlencode(rawurlencode(self::PICTURE_LANDSCAPE)), $img);
+        $this->assertContains($this->encode(self::PICTURE_LANDSCAPE), $img);
         $this->assertContains('width="300"', $img);
         $this->assertContains('height="300"', $img);
         $this->assertContains('alt="', $img);
@@ -152,5 +136,16 @@ class ImageServiceTest extends \TestCase
         $info = getimagesize($tmpfile);
         unlink($tmpfile);
         return $info;
+    }
+
+    /**
+     * Encode filepath for url
+     *
+     * @param string $filepath
+     * @return string
+     */
+    private function encode($filepath)
+    {
+        return rawurlencode(rawurlencode($filepath));
     }
 }

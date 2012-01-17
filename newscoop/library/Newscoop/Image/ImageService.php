@@ -51,14 +51,14 @@ class ImageService
      * @param string $image
      * @param int $width
      * @param int $height
-     * @param string $instructions
+     * @param string $specs
      * @return string
      */
-    public function getSrc($image, $width, $height, $instructions = 'center_center')
+    public function getSrc($image, $width, $height, $specs = 'fit')
     {
         return implode('/', array(
             "{$width}x{$height}",
-            $instructions,
+            $specs,
             $this->encodePath($image),
         ));
     }
@@ -116,18 +116,6 @@ class ImageService
         }
 
         return $name;
-    }
-
-    /**
-     * Find image by id
-     *
-     * @param int $id
-     * @return Newscoop\Image\Image
-     */
-    public function find($id)
-    {
-        return $this->orm->getRepository('Newscoop\Image\Image')
-            ->find($id);
     }
 
     /**

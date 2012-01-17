@@ -11,7 +11,7 @@
 
 <ul class="thumbnails">
     <?php foreach ($this->images as $image) { ?>
-    <li id="image-<?php echo $image->getImageId(); ?>">
+    <li id="image-<?php echo $image->getId(); ?>">
         <?php echo $this->thumbnail($image->getPath(), 150, 150, 'fit')->getImg($this); ?>
     </li>
     <?php } ?>
