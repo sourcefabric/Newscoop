@@ -127,6 +127,22 @@ class ImageService
     }
 
     /**
+     * Get thumbnail for given image and rendition
+     *
+     * @param string $image
+     * @param Newscoop\Image\RenditionInterface $rendition
+     * @return Newscoop\Image\Thumbnail
+     */
+    public function getThumbnail($image, RenditionInterface $rendition)
+    {
+        return new Thumbnail(
+            $this->getSrc($image, $rendition->getWidth(), $rendition->getHeight(), $rendition->getSpecs()),
+            $rendition->getWidth(),
+            $rendition->getHeight()
+        );
+    }
+
+    /**
      * Encode path
      *
      * @param string $path

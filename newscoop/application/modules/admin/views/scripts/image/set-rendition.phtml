@@ -1,4 +1,1 @@
-<?php $thumbnail = $this->thumbnail($this->image->getPath(), $this->rendition->getWidth(), $this->rendition->getHeight(), $this->rendition->getSpecs()); ?>
-<img src="<?php echo $this->url(array(
-    'src' => $thumbnail->src,
-), 'image', true, false); ?>" width="<?php echo $thumbnail->width; ?>" height="<?php echo $thumbnail->height; ?>" alt="" />
+<?php echo $this->rendition($this->rendition, 150, 150, $this->image); ?>

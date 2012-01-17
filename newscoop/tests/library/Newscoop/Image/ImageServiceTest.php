@@ -66,6 +66,21 @@ class ImageServiceTest extends \TestCase
         $this->assertContains('path', $this->service->find($image->getId())->getPath());
     }
 
+    public function testGetThumbnail()
+    {
+        global $application;
+        $rendition = new Rendition('test', 200, 150, 'crop');
+        $thumbnail = $this->service->getThumbnail('image.jpg', $rendition);
+        $this->assertInstanceOf('Newscoop\Image\Thumbnail', $thumbnail);
+        $this->assertContains('200x150', $thumbnail->src);
+        $img = $thumbnail->getImg($application->getBootstrap()->getResource('view'));
+        $this->assertContains('<img', $img);
+        $this->assertContains('image.jpg', $img);
+        $this->assertContains('width="200"', $img);
+        $this->assertContains('height="150"', $img);
+        $this->assertContains('alt="', $img);
+    }
+
     /**
      * Generates image
      *

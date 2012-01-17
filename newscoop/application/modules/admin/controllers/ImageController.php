@@ -17,9 +17,10 @@ class Admin_ImageController extends Zend_Controller_Action
     public function init()
     {
         $this->renditions = array(
-            'thumbnail' => new Rendition('thumbnail', 150, 150, 'fit'),
-            'square' => new Rendition('square', 200, 200, 'crop'),
-            'main' => new Rendition('main', 400, 300, 'crop'),
+            'thumbnail' => new Rendition('thumbnail', 75, 75, 'crop'),
+            'square' => new Rendition('square', 150, 150, 'crop'),
+            'landscape' => new Rendition('landscape', 400, 300, 'crop'),
+            'portrait' => new Rendition('portrait', 300, 400, 'crop'),
         );
     }
 
@@ -37,7 +38,7 @@ class Admin_ImageController extends Zend_Controller_Action
 
     public function setRenditionAction()
     {
-        $rendition = $this->renditions[$this->_getParam('rendition')];
+        $rendition = $this->renditions[array_shift(explode(' ', $this->_getParam('rendition')))];
         $image = $this->_helper->service('image')->find(array_pop(explode('-', $this->_getParam('image'))));
 
         $this->_helper->service('image.rendition')->setArticleRendition($this->_getParam('article_number'), $rendition, $image);

@@ -36,10 +36,6 @@ class ThumbnailViewHelper extends \Zend_View_Helper_Abstract
      */
     public function thumbnail($image, $width, $height, $specs)
     {
-        return (object) array(
-            'src' => $this->imageService->getSrc($image, $width, $height, $specs),
-            'width' => $width,
-            'height' => $height,
-        );
+        return $this->imageService->getThumbnail($image, new Rendition(uniqid(), $width, $height, $specs));
     }
 }

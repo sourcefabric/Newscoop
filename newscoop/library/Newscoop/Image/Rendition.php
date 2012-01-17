@@ -10,7 +10,7 @@ namespace Newscoop\Image;
 /**
  * Rendition
  */
-class Rendition
+class Rendition implements RenditionInterface
 {
     /**
      * @var string

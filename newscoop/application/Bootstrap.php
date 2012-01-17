@@ -181,6 +181,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('view.helper.thumbnail', 'Newscoop\Image\ThumbnailViewHelper')
             ->addArgument(new sfServiceReference('image'));
 
+        $container->register('view.helper.rendition', 'Newscoop\Image\RenditionViewHelper')
+            ->addArgument(new sfServiceReference('image'));
+
         $container->register('image.rendition', 'Newscoop\Image\RenditionService')
             ->addArgument(new sfServiceReference('em'));
 
