@@ -18,6 +18,10 @@ AddType video/webm .webm
     RewriteCond %{REQUEST_URI} /+attachment/+
     RewriteRule . attachment.php [L]
 
+    RewriteCond %{REQUEST_URI} /+images/+cache
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule . index.php [L]
+
     RewriteCond %{REQUEST_URI} !\.php$
     RewriteCond %{REQUEST_URI} !\.html$
     RewriteCond %{REQUEST_URI} !\.css$
