@@ -17,10 +17,10 @@ class Admin_ImageController extends Zend_Controller_Action
     public function init()
     {
         $this->renditions = array(
-            'thumbnail' => new Rendition(75, 75, 'fill', 'thumbnail'),
-            'square' => new Rendition(150, 150, 'fill', 'square'),
-            'landscape' => new Rendition(400, 300, 'fill', 'landscape'),
-            'portrait' => new Rendition(300, 400, 'fill', 'portrait'),
+            'thumbnail' => new Rendition(75, 75, 'fill_crop', 'thumbnail'),
+            'square' => new Rendition(150, 150, 'fill_crop', 'square'),
+            'landscape' => new Rendition(400, 300, 'fill_crop', 'landscape'),
+            'portrait' => new Rendition(300, 400, 'fill_crop', 'portrait'),
         );
     }
 
@@ -39,5 +39,14 @@ class Admin_ImageController extends Zend_Controller_Action
         $image = $this->_helper->service('image')->getArticleImage($this->_getParam('article_number'), array_pop(explode('-', $this->_getParam('image'))));
         $this->view->imageRendition = $this->_helper->service('image.rendition')->setRenditionImage($rendition, $image);
         $this->view->rendition = $rendition;
+    }
+
+    public function editAction()
+    {
+        $this->_helper->layout->setLayout('iframe');
+        $rendition = $this->renditions[$this->_getParam('rendition')];
+        $renditions = $this->_helper->service('image.rendition')->getArticleRenditions($this->_getParam('article_number'));
+        $this->view->rendition = $rendition;
+        $this->view->image = $renditions[$rendition]->getImage();
     }
 }

@@ -113,11 +113,11 @@ class ImageService
      * Add article image
      *
      * @param int $articleNumber
-     * @param Newscoop\Image\Image $image
+     * @param Newscoop\Image\LocalImage $image
      * @param int $number
      * @return Newscoop\Image\ArticleImage
      */
-    public function addArticleImage($articleNumber, Image $image, $number = 1)
+    public function addArticleImage($articleNumber, LocalImage $image, $number = 1)
     {
         if ($image->getId() === null) {
             $this->orm->persist($image);

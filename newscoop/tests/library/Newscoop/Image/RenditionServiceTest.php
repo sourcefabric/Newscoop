@@ -24,7 +24,7 @@ class RenditionServiceTest extends \TestCase
 
     public function setUp()
     {
-        $this->orm = $this->setUpOrm('Newscoop\Image\Image', 'Newscoop\Image\ArticleImageRendition', 'Newscoop\Image\ArticleImage');
+        $this->orm = $this->setUpOrm('Newscoop\Image\LocalImage', 'Newscoop\Image\ArticleImageRendition', 'Newscoop\Image\ArticleImage');
         $this->imageService = new ImageService(array(), $this->orm);
         $this->service = new RenditionService($this->orm, $this->imageService);
     }
@@ -48,7 +48,7 @@ class RenditionServiceTest extends \TestCase
 
     public function testArticleRenditionWithDefault()
     {
-        $this->imageService->addArticleImage(self::ARTICLE_NUMBER, new Image('default'));
+        $this->imageService->addArticleImage(self::ARTICLE_NUMBER, new LocalImage('default'));
         $rendition = new Rendition(200, 200, 'fit', 'thumbnail');
         $renditions = $this->service->getArticleRenditions(self::ARTICLE_NUMBER);
         $this->assertTrue(isset($renditions[$rendition]));
@@ -57,8 +57,8 @@ class RenditionServiceTest extends \TestCase
 
     public function testArticleRenditions()
     {
-        $imageDefault = $this->imageService->addArticleImage(self::ARTICLE_NUMBER, new Image('default'));
-        $imageTest = $this->imageService->addArticleImage(self::ARTICLE_NUMBER, new Image('test'));
+        $imageDefault = $this->imageService->addArticleImage(self::ARTICLE_NUMBER, new LocalImage('default'));
+        $imageTest = $this->imageService->addArticleImage(self::ARTICLE_NUMBER, new LocalImage('test'));
         $renditionThumbnail = new Rendition(200, 200, 'fit', 'thumbnail');
         $renditionLandscape = new Rendition(400, 300, 'fit', 'landscape');
 
@@ -74,8 +74,8 @@ class RenditionServiceTest extends \TestCase
 
     public function testArticleRenditionTwice()
     {
-        $image1 = $this->imageService->addArticleImage(self::ARTICLE_NUMBER, new Image('first'), 1);
-        $image2 = $this->imageService->addArticleImage(self::ARTICLE_NUMBER, new Image('second'), 2);
+        $image1 = $this->imageService->addArticleImage(self::ARTICLE_NUMBER, new LocalImage('first'), 1);
+        $image2 = $this->imageService->addArticleImage(self::ARTICLE_NUMBER, new LocalImage('second'), 2);
 
         $rendition = new Rendition(200, 200, 'fit', 'thumb');
 

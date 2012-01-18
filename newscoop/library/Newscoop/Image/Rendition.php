@@ -134,7 +134,12 @@ class Rendition
     {
         $info = getimagesize(APPLICATION_PATH . '/../' . $image);
         list($width, $height) = NetteImage::calculateSize($info[0], $info[1], $this->width, $this->height, $this->getFlags($this->specs));
-        return new Thumbnail($imageService->getSrc($image, $this->width, $this->height, $this->specs), min($width, $this->width), min($height, $this->height));
+        if ($this->specs === 'fill_crop') {
+            $width = min($width, $this->width);
+            $height = min($height, $this->height);
+        }
+
+        return new Thumbnail($imageService->getSrc($image, $this->width, $this->height, $this->specs), $width, $height);
     }
 
     /**
@@ -147,11 +152,46 @@ class Rendition
     {
         $image = NetteImage::fromFile(APPLICATION_PATH . '/../' . $imagePath);
         $image->resize($this->width, $this->height, $this->getFlags($this->specs));
-        if ($this->getFlags($this->specs) === NetteImage::FILL) {
+        if ($this->specs === 'fill_crop') {
             $image->crop('50%', '50%', $this->width, $this->height);
         }
 
         return $image;
+    }
+
+    /**
+     * Generate image
+     *
+     * @param Newscoop\Image\ImageInterface $image
+     * @return Nette\Image
+     */
+    public function generate(ImageInterface $image)
+    {
+        return $this->generateImage($image->getPath());
+    }
+
+    /**
+     * Get aspect ratio
+     *
+     * @return float
+     */
+    public function getAspectRatio()
+    {
+        return (float) $this->width / (float) $this->height;
+    }
+
+    /**
+     * Get select area
+     *
+     * @param Newscoop\Image\ImageInterface $image
+     * @return array
+     */
+    public function getSelectArea(ImageInterface $image)
+    {
+        list($width, $height) = NetteImage::calculateSize($image->getWidth(), $image->getHeight(), $this->width, $this->height, $this->getFlags($this->specs));
+        $minx = ($width - $this->width) / 2;
+        $miny = ($height - $this->height) / 2;
+        return array($minx, $miny, $minx + $this->width, $miny + $this->height);
     }
 
     /**
@@ -164,6 +204,7 @@ class Rendition
     {
         switch ($specs) {
             case 'fill':
+            case 'fill_crop':
                 $flags = NetteImage::FILL;
                 break;
 

@@ -1,9 +1,14 @@
 <ul class="renditions">
     <?php foreach ($this->renditions as $rendition) { ?>
-    <li>
+    <li><a href="<?php echo $this->url(array(
+            'module' => 'admin',
+            'controller' => 'image',
+            'action' => 'edit',
+            'rendition' => $rendition->getName(),
+        )); ?>" title="<?php putGS("Edit $1", $rendition->getName()); ?>">
         <?php echo $this->rendition($rendition, 150, 150, $this->articleRenditions[$rendition]); ?>
         <h3 class="rendition-name"><?php echo $this->escape($rendition->getName()); ?> <small>(<?php echo $rendition->getWidth(), 'x', $rendition->getHeight(); ?>)</small></h3></li>
-    </li>
+    </a></li>
     <?php } ?>
 </ul>
 

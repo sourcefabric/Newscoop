@@ -1,0 +1,17 @@
+<?php
+$this->headLink()->appendStylesheet($this->baseUrl('/js/tapmodo-Jcrop-5e58bc9/css/jquery.Jcrop.css'));
+$this->headScript()->appendFile($this->baseUrl('/js/tapmodo-Jcrop-5e58bc9/js/jquery.Jcrop.min.js'));
+?>
+
+<div id="editor">
+    <?php echo $this->thumbnail($this->image->getPath(), $this->rendition->getWidth(), $this->rendition->getHeight(), 'fill')->getImg($this); ?>
+</div>
+
+<script>
+$(function() {
+    $('#editor img').Jcrop({
+        aspectRatio: <?php echo $this->rendition->getAspectRatio(); ?>,
+        setSelect: <?php echo json_encode($this->rendition->getSelectArea($this->image)); ?>
+    });
+});
+</script>

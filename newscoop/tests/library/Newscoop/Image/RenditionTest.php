@@ -11,6 +11,9 @@ namespace Newscoop\Image;
  */
 class RenditionTest extends \TestCase
 {
+    const PICTURE_LANDSCAPE = 'tests/fixtures/picture_landscape.jpg';
+    const PICTURE_PORTRAIT = 'tests/fixtures/picture_portrait.jpg';
+
     public function testInstance()
     {
         $this->assertInstanceOf('Newscoop\Image\Rendition', new Rendition(1, 1));
@@ -61,6 +64,65 @@ class RenditionTest extends \TestCase
         $this->assertEquals(150, $preview->getHeight());
     }
 
+    public function testGenerateImageFill()
+    {
+        $rendition = new Rendition(200, 200, 'fill');
+        $image = $rendition->generate(new LocalImage(self::PICTURE_LANDSCAPE));
+
+        $this->assertEquals(300, $image->getWidth());
+        $this->assertEquals(200, $image->getHeight());
+    }
+
+    public function testGenerateImageFit()
+    {
+        $rendition = new Rendition(200, 200, 'fit');
+        $image = $rendition->generate(new LocalImage(self::PICTURE_LANDSCAPE));
+
+        $this->assertEquals(200, $image->getWidth());
+        $this->assertEquals(133, $image->getHeight());
+    }
+
+    public function testGenerateImageFillCrop()
+    {
+        $rendition = new Rendition(200, 200, 'fill_crop');
+        $image = $rendition->generate(new LocalImage(self::PICTURE_LANDSCAPE));
+
+        $this->assertEquals(200, $image->getWidth());
+        $this->assertEquals(200, $image->getHeight());
+    }
+
+    public function testAspectRatio()
+    {
+        $rendition = new Rendition(400, 300, 'fit');
+        $this->assertEquals((float) 400 / (float) 300, $rendition->getAspectRatio());
+    }
+
+    public function testGetSelectAreaLandscape()
+    {
+        $rendition = new Rendition(400, 300, 'fill');
+        $this->assertEquals(array(25, 0, 425, 300), $rendition->getSelectArea(new LocalImage(self::PICTURE_LANDSCAPE)));
+    }
+
+    public function testGetThumbnail()
+    {
+        $imageService = $this->getMockBuilder('Newscoop\Image\ImageService')
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $imageService->expects($this->once())
+            ->method('getSrc')
+            ->with($this->equalTo(self::PICTURE_LANDSCAPE), $this->equalTo(300), $this->equalTo(300), $this->equalTo('fill_crop'))
+            ->will($this->returnValue('300x300/fill_crop/' . rawurlencode(rawurlencode(self::PICTURE_LANDSCAPE))));
+
+        $rendition = new Rendition(300, 300, 'fill_crop');
+        $thumbnail = $rendition->getThumbnail(self::PICTURE_LANDSCAPE, $imageService);
+
+        $this->assertInstanceOf('Newscoop\Image\Thumbnail', $thumbnail);
+        $this->assertContains('300x300', $thumbnail->src);
+        $this->assertEquals(300, $thumbnail->width, 'thumbnail_width');
+        $this->assertEquals(300, $thumbnail->height, 'thumbnail_height');
+    }
+
     /**
      * Get preview
      *
@@ -74,5 +136,16 @@ class RenditionTest extends \TestCase
     {
         $rendition = new Rendition($renditionWidth, $renditionHeight);
         return $rendition->getPreview($previewWidth, $previewHeight);
+    }
+
+    /**
+     * Encode filepath for url
+     *
+     * @param string $filepath
+     * @return string
+     */
+    private function encode($filepath)
+    {
+        return rawurlencode(rawurlencode($filepath));
     }
 }
