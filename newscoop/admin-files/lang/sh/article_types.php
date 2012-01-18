@@ -1,6 +1,6 @@
 <?php 
-regGS("Hide human-readable field names", "");
-regGS("Edit and translate human-readable field names", "");
+regGS("Hide human-readable field names", "Sakri nazive polja prilagođene ljudima");
+regGS("Edit and translate human-readable field names", "Uredi i prevedi nazive polja prilagođene ljudima");
 regGS("The template name may only contain letters and the underscore (_) character.", "Ime šablona može sadržati isključivo slova i donju crtu (_).");
 regGS("Rename article type '$1'", "Preimenuj tip teksta '$1'");
 regGS("Invalid article type '$1'.", "Pogrešan tip teksta '$1'.");
