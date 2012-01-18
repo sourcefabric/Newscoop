@@ -147,6 +147,11 @@ class ArticleDatetimeRepository extends EntityRepository
             return $e;
         }
     }
+    
+    public function getEmpty() {
+        $articleDatetime = new ArticleDatetime();
+        return($articleDatetime);
+    }
 
     /**
      * Update entry by id

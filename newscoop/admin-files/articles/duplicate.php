@@ -223,8 +223,13 @@ if (isset($_REQUEST["action_button"])) {
 	}
 
 	if ($f_action == "duplicate") {
-		foreach ($doAction as $articleNumber => $languageArray) {
-			$languageArray = array_keys($languageArray);
+		global $controller;
+        $em = Zend_Registry::get('container')->getService('em');
+        $ArticleDatetimeRepository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\ArticleDatetime');
+        foreach ($doAction as $articleNumber => $languageArray) {
+			$events = $ArticleDatetimeRepository->findBy(array('articleId' => $articleNumber));
+            
+            $languageArray = array_keys($languageArray);
 			//echo "<pre>"; print_r($languageArray); echo "</pre>";
 
 			$tmpLanguageId = camp_array_peek($languageArray);
@@ -257,7 +262,21 @@ if (isset($_REQUEST["action_button"])) {
                     $commentDefault = $tmpPub->commentsArticleDefaultEnabled();
                     $newArticle->setCommentsEnabled($commentDefault);
             	}
-
+                
+                foreach ($events as $event) {
+                    //$repo->add($timeSet, $articleId, 'schedule');
+                    $newEvent = $ArticleDatetimeRepository->getEmpty();
+                    $newEvent->setArticleId($newArticle->getArticleNumber());
+                    $newEvent->setArticleType($event->getArticleType());
+                    $newEvent->setStartDate($event->getStartDate());
+                    $newEvent->setStartTime($event->getStartTime());
+                    $newEvent->setEndDate($event->getEndDate());
+                    $newEvent->setEndTime($event->getEndTime());
+                    $newEvent->setRecurring($event->getRecurring());
+                    $newEvent->setFieldName($event->getFieldName());
+                    $em->persist($newEvent);
+                    $em->flush();
+                }
 			}
 		}
 		if ($f_mode == "single") {

@@ -150,4 +150,29 @@ class ArticleDatetime extends Entity
         }
         return $this->$getMethod();
     }
+    
+    public function setStartDate($startDate) {
+        $this->startDate = $startDate;
+    }
+    public function setStartTime($startTime) {
+        $this->startTime = $startTime;
+    }
+    public function setEndDate($endDate) {
+        $this->endDate = $endDate;
+    }
+    public function setEndTime($endTime) {
+        $this->endTime = $endTime;
+    }
+    public function setRecurring($recurring) {
+        $this->recurring = $recurring;
+    }
+    public function setArticleId($articleId) {
+        $this->articleId = $articleId;
+    }
+    public function setArticleType($articleType) {
+        $this->articleType = $articleType;
+    }
+    public function setFieldName($fieldName) {
+        $this->fieldName = $fieldName;
+    }
 }
