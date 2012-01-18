@@ -111,13 +111,16 @@ class RenditionTest extends \TestCase
         $this->assertEquals(array(25, 0, 425, 300), $rendition->getSelectArea(new LocalImage(self::PICTURE_LANDSCAPE)));
 
         $rendition = new Rendition(200, 200, 'crop_0_0_333_333');
-        $this->assertEquals(array(0, 0, 200, 200), $rendition->getSelectArea(new LocalImage(self::PICTURE_LANDSCAPE)));
+        $this->assertEquals(array(0, 0, 333, 333), $rendition->getSelectArea(new LocalImage(self::PICTURE_LANDSCAPE)));
     }
 
     public function testGetMinSize()
     {
         $rendition = new Rendition(200, 200, 'fill');
-        $this->assertEquals(array(120, 120), $rendition->getMinSize(new LocalImage(self::PICTURE_LANDSCAPE)));
+        $this->assertEquals(array(200, 200), $rendition->getMinSize(new LocalImage(self::PICTURE_LANDSCAPE)));
+
+        $rendition = new Rendition(400, 300, 'fill');
+        $this->assertEquals(array(400, 300), $rendition->getMinSize(new LocalImage(self::PICTURE_LANDSCAPE)));
     }
 
     public function testGetThumbnail()

@@ -19,10 +19,13 @@ $(function() {
     var jcrop;
     $('#editor img').Jcrop({
         aspectRatio: <?php echo $this->rendition->getAspectRatio(); ?>,
-        setSelect: <?php echo json_encode($this->rendition->getSelectArea($this->image)); ?>,
         minSize: <?php echo json_encode($this->rendition->getMinSize($this->image)); ?>,
         trueSize: <?php echo json_encode(array($this->image->getWidth(), $this->image->getHeight())); ?>
-    }, function() { jcrop = this; });
+    }, function() {
+        jcrop = this;
+        jcrop.setSelect(<?php echo json_encode($this->rendition->getSelectArea($this->image)); ?>);
+    });
+
 
     $('#save-jcrop').click(function() {
         $.post("<?php echo $this->url(array(

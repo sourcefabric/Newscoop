@@ -202,10 +202,7 @@ class Rendition
             $cropSpecs = explode('_', $this->specs);
             if (count($cropSpecs) > 1) {
                 array_shift($cropSpecs);
-                $ratio = min($width / (float) $image->getWidth(), $height / (float) $image->getHeight());
-                return array_map(function($value) use ($ratio) {
-                    return round($value * $ratio);
-                }, $cropSpecs);
+                return $cropSpecs;
             }
         }
         $minx = ($width - $this->width) / 2;
@@ -223,7 +220,7 @@ class Rendition
     {
         list($width, $height) = NetteImage::calculateSize($image->getWidth(), $image->getHeight(), $this->width, $this->height, $this->getFlags());
         $ratio = max($width / (float) $image->getWidth(), $height / (float) $image->getHeight());
-        return array(round($ratio * $this->width), round($ratio * $this->height));
+        return array($this->width, $this->height);
     }
 
     /**
