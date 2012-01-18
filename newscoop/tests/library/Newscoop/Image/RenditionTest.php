@@ -109,6 +109,9 @@ class RenditionTest extends \TestCase
     {
         $rendition = new Rendition(400, 300, 'fill');
         $this->assertEquals(array(25, 0, 425, 300), $rendition->getSelectArea(new LocalImage(self::PICTURE_LANDSCAPE)));
+
+        $rendition = new Rendition(200, 200, 'crop_0_0_333_333');
+        $this->assertEquals(array(0, 0, 200, 200), $rendition->getSelectArea(new LocalImage(self::PICTURE_LANDSCAPE)));
     }
 
     public function testGetMinSize()

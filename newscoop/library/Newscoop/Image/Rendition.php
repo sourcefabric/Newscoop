@@ -198,6 +198,16 @@ class Rendition
     public function getSelectArea(ImageInterface $image)
     {
         list($width, $height) = NetteImage::calculateSize($image->getWidth(), $image->getHeight(), $this->width, $this->height, $this->getFlags());
+        if ($this->isCrop()) {
+            $cropSpecs = explode('_', $this->specs);
+            if (count($cropSpecs) > 1) {
+                array_shift($cropSpecs);
+                $ratio = min($width / (float) $image->getWidth(), $height / (float) $image->getHeight());
+                return array_map(function($value) use ($ratio) {
+                    return round($value * $ratio);
+                }, $cropSpecs);
+            }
+        }
         $minx = ($width - $this->width) / 2;
         $miny = ($height - $this->height) / 2;
         return array($minx, $miny, $minx + $this->width, $miny + $this->height);

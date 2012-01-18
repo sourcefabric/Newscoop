@@ -59,7 +59,7 @@ class Admin_ImageController extends Zend_Controller_Action
             return;
         }
 
-        $this->view->rendition = $rendition;
+        $this->view->rendition = $renditions[$rendition]->getRendition();
         $this->view->image = $renditions[$rendition]->getImage();
     }
 }
