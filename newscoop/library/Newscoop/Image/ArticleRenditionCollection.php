@@ -21,19 +21,19 @@ class ArticleRenditionCollection implements \ArrayAccess
     /** @var array */
     private $renditions = array();
 
-    /** @var Newscoop\Image\ArticleImage */
+    /** @var Newscoop\Image\ImageInterface */
     private $defaultImage;
 
     /**
      * @param int $articleNumber
      * @param array $articleRenditions
-     * @param Newscoop\Image\ArticleImage $defaultImage
+     * @param Newscoop\Image\ImageInterface $defaultImage
      */
-    public function __construct($articleNumber, array $articleRenditions = array(), ArticleImage $defaultImage = null)
+    public function __construct($articleNumber, array $articleRenditions = array(), ImageInterface $defaultImage = null)
     {
         $this->articleNumber = (int) $articleNumber;
-        $this->defaultImage = $defaultImage;
         $this->setArticleRenditions($articleRenditions);
+        $this->defaultImage = $defaultImage;
     }
 
     /**
@@ -57,7 +57,7 @@ class ArticleRenditionCollection implements \ArrayAccess
     {
         return isset($this->renditions[(string) $rendition])
             ? $this->renditions[(string) $rendition]
-            : ($this->defaultImage !== null ? new DefaultArticleImageRendition($this->defaultImage, $rendition) : null);
+            : ($this->defaultImage !== null ? $this->renditions[$rendition->getName()] = new DefaultArticleRendition($this->articleNumber, $rendition, $this->defaultImage) : null);
     }
 
     /**

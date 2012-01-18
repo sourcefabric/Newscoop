@@ -133,8 +133,8 @@ class Rendition
     public function getThumbnail($image, ImageService $imageService)
     {
         $info = getimagesize(APPLICATION_PATH . '/../' . $image);
-        list($width, $height) = NetteImage::calculateSize($info[0], $info[1], $this->width, $this->height, $this->getFlags($this->specs));
-        if ($this->specs === 'fill_crop') {
+        list($width, $height) = NetteImage::calculateSize($info[0], $info[1], $this->width, $this->height, $this->getFlags());
+        if ($this->isCrop()) {
             $width = min($width, $this->width);
             $height = min($height, $this->height);
         }
@@ -151,9 +151,18 @@ class Rendition
     public function generateImage($imagePath)
     {
         $image = NetteImage::fromFile(APPLICATION_PATH . '/../' . $imagePath);
-        $image->resize($this->width, $this->height, $this->getFlags($this->specs));
-        if ($this->specs === 'fill_crop') {
-            $image->crop('50%', '50%', $this->width, $this->height);
+        if ($this->isCrop()) {
+            $cropSpecs = explode('_', $this->specs);
+            if (count($cropSpecs) === 1) {
+                $image->resize($this->width, $this->height, $this->getFlags());
+                $image->crop('50%', '50%', $this->width, $this->height);
+            } else {
+                list(, $x0, $y0, $x1, $y1) = $cropSpecs;
+                $image->crop($x0, $y0, $x1 - $x0, $y1 - $y0);
+                $image->resize($this->width, $this->height, $this->getFlags());
+            }
+        } else {
+            $image->resize($this->width, $this->height, $this->getFlags());
         }
 
         return $image;
@@ -188,23 +197,36 @@ class Rendition
      */
     public function getSelectArea(ImageInterface $image)
     {
-        list($width, $height) = NetteImage::calculateSize($image->getWidth(), $image->getHeight(), $this->width, $this->height, $this->getFlags($this->specs));
+        list($width, $height) = NetteImage::calculateSize($image->getWidth(), $image->getHeight(), $this->width, $this->height, $this->getFlags());
         $minx = ($width - $this->width) / 2;
         $miny = ($height - $this->height) / 2;
         return array($minx, $miny, $minx + $this->width, $miny + $this->height);
     }
 
     /**
+     * Get min size
+     *
+     * @param Newscoop\Image\ImageInterface $image
+     * @return array
+     */
+    public function getMinSize(ImageInterface $image)
+    {
+        list($width, $height) = NetteImage::calculateSize($image->getWidth(), $image->getHeight(), $this->width, $this->height, $this->getFlags());
+        $ratio = max($width / (float) $image->getWidth(), $height / (float) $image->getHeight());
+        return array(round($ratio * $this->width), round($ratio * $this->height));
+    }
+
+    /**
      * Get flags
      *
-     * @param string $specs
      * @return int
      */
-    private function getFlags($specs)
+    private function getFlags()
     {
+        $specs = array_shift(explode('_', $this->specs, 2));
         switch ($specs) {
             case 'fill':
-            case 'fill_crop':
+            case 'crop':
                 $flags = NetteImage::FILL;
                 break;
 
@@ -215,5 +237,15 @@ class Rendition
         }
 
         return $flags;
+    }
+
+    /**
+     * Test if is crop defined
+     *
+     * @return bool
+     */
+    private function isCrop()
+    {
+        return strpos($this->specs, 'crop') === 0;
     }
 }

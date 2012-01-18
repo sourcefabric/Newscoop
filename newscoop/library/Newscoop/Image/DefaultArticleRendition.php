@@ -10,7 +10,7 @@ namespace Newscoop\Image;
 /**
  * Default Article Rendition
  */
-class DefaultArticleImageRendition extends ArticleImageRendition
+class DefaultArticleRendition extends ArticleRendition
 {
     /**
      * Test if is default picture

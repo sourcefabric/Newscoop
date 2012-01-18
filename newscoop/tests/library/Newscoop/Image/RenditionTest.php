@@ -84,9 +84,17 @@ class RenditionTest extends \TestCase
 
     public function testGenerateImageFillCrop()
     {
-        $rendition = new Rendition(200, 200, 'fill_crop');
+        $rendition = new Rendition(200, 200, 'crop');
         $image = $rendition->generate(new LocalImage(self::PICTURE_LANDSCAPE));
 
+        $this->assertEquals(200, $image->getWidth());
+        $this->assertEquals(200, $image->getHeight());
+    }
+
+    public function testGenerateImageSpecificCrop()
+    {
+        $rendition = new Rendition(200, 200, 'crop_0_0_200_200');
+        $image = $rendition->generate(new LocalImage(self::PICTURE_LANDSCAPE));
         $this->assertEquals(200, $image->getWidth());
         $this->assertEquals(200, $image->getHeight());
     }
@@ -103,6 +111,12 @@ class RenditionTest extends \TestCase
         $this->assertEquals(array(25, 0, 425, 300), $rendition->getSelectArea(new LocalImage(self::PICTURE_LANDSCAPE)));
     }
 
+    public function testGetMinSize()
+    {
+        $rendition = new Rendition(200, 200, 'fill');
+        $this->assertEquals(array(120, 120), $rendition->getMinSize(new LocalImage(self::PICTURE_LANDSCAPE)));
+    }
+
     public function testGetThumbnail()
     {
         $imageService = $this->getMockBuilder('Newscoop\Image\ImageService')
@@ -111,10 +125,10 @@ class RenditionTest extends \TestCase
 
         $imageService->expects($this->once())
             ->method('getSrc')
-            ->with($this->equalTo(self::PICTURE_LANDSCAPE), $this->equalTo(300), $this->equalTo(300), $this->equalTo('fill_crop'))
-            ->will($this->returnValue('300x300/fill_crop/' . rawurlencode(rawurlencode(self::PICTURE_LANDSCAPE))));
+            ->with($this->equalTo(self::PICTURE_LANDSCAPE), $this->equalTo(300), $this->equalTo(300), $this->equalTo('crop'))
+            ->will($this->returnValue('300x300/crop/' . rawurlencode(rawurlencode(self::PICTURE_LANDSCAPE))));
 
-        $rendition = new Rendition(300, 300, 'fill_crop');
+        $rendition = new Rendition(300, 300, 'crop');
         $thumbnail = $rendition->getThumbnail(self::PICTURE_LANDSCAPE, $imageService);
 
         $this->assertInstanceOf('Newscoop\Image\Thumbnail', $thumbnail);
