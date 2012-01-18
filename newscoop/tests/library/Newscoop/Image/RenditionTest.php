@@ -108,10 +108,13 @@ class RenditionTest extends \TestCase
     public function testGetSelectAreaLandscape()
     {
         $rendition = new Rendition(400, 300, 'fill');
-        $this->assertEquals(array(25, 0, 425, 300), $rendition->getSelectArea(new LocalImage(self::PICTURE_LANDSCAPE)));
+        $this->assertEquals(array(28, 0, 472, 333), $rendition->getSelectArea(new LocalImage(self::PICTURE_LANDSCAPE)));
 
         $rendition = new Rendition(200, 200, 'crop_0_0_333_333');
         $this->assertEquals(array(0, 0, 333, 333), $rendition->getSelectArea(new LocalImage(self::PICTURE_LANDSCAPE)));
+
+        $rendition = new Rendition(150, 150, 'fill');
+        $this->assertEquals(array(0, 84, 333,  417), $rendition->getSelectArea(new LocalImage(self::PICTURE_PORTRAIT)));
     }
 
     public function testGetMinSize()
