@@ -5,13 +5,13 @@
     'rendition' => $this->rendition->getName(),
     'format' => null,
 )); ?>" <?php } ?>title="<?php echo $this->escape(getGS("Edit $1", $this->rendition->getName())); ?>">
-<div class="preview" style="width: <?php echo $this->preview->getWidth(); ?>px; height: <?php echo $this->preview->getHeight(); ?>px;">
+<div class="preview-wrap"><div class="preview" style="width: <?php echo $this->preview->getWidth(); ?>px; height: <?php echo $this->preview->getHeight(); ?>px;">
 <?php if ($this->thumbnail !== null) {
     echo $this->thumbnail->getImg($this);
 } ?>
-</div>
-</a>
+</div></div>
 <h3 class="rendition-name"><?php echo $this->escape($this->rendition->getName()); ?> <small>(<?php echo $this->rendition->getWidth(), 'x', $this->rendition->getHeight(); ?>)</small></h3>
+</a>
 <?php if (!$this->isDefault) { ?>
 <a href="<?php echo $this->url(array(
     'module' => 'admin',

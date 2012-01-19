@@ -656,24 +656,118 @@ h1 {
 }
 
 .renditions {
+    height: 1%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 .renditions li {
     list-style-type: none;
     float: left;
+    width: 102px;
     margin: 8px;
+    padding: 4px;
+    background-color: #fff;
+    position: relative;
+    border: 1px solid #fff;
+}
+
+.renditions li.state-active {
+    color: #fff;
+    background-color: #000;
+}
+
+.renditions .preview-wrap {
+    height: 102px;
 }
 
 .renditions .preview {
     border: 1px solid #ccc;
 }
 
+.renditions li.state-active .preview {
+    border-color: #fff;
+}
+
+.renditions h3 {
+    margin: 3px 0 0;
+    padding: 0;
+}
+
+.renditions li.state-active h3 {
+    color: #fff;
+}
+
+.renditions .reset {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    padding: 3px;
+    color: #fff;
+    background-color: #c00;
+    opacity: 0.8;
+}
+
+.renditions .reset:hover {
+    opacity: 1;
+}
+
+.renditions h3 {
+    font-size: 1.1em;
+}
+
 .thumbnails {
     clear: both;
+    margin: 0;
+    padding: 0;
 }
 
 .thumbnails li {
     list-style-type: none;
     float: left;
+    width: 102px;
     margin: 8px;
+    padding: 5px;
+    background-color: #fff;
+}
+
+.thumbnails img {
+    border: 1px solid #ccc;
+}
+
+.thumbnails figure {
+    margin: 0;
+    padding: 0;
+}
+
+.thumbnails figcaption {
+    padding: 3px 0 0;
+}
+
+#renditions h2 {
+    clear: both;
+    margin: 8px;
+    padding: 5px;
+    background-color: #fff;
+}
+
+#renditions .controls {
+    clear: both;
+    margin: 8px;
+    padding: 5px;
+    background-color: #fff;
+    font-size: 1.3em;
+}
+
+#renditions #editor {
+    float: left;
+    margin: 8px;
+    padding: 5px;
+    background-color: #000;
+}
+
+#renditions h2 .back {
+    float: right;
+    font-size: 0.5em;
 }

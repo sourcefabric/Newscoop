@@ -1,16 +1,23 @@
 <?php
 $this->headLink()->appendStylesheet($this->baseUrl('/js/tapmodo-Jcrop-5e58bc9/css/jquery.Jcrop.css'));
 $this->headScript()->appendFile($this->baseUrl('/js/tapmodo-Jcrop-5e58bc9/js/jquery.Jcrop.min.js'));
+$this->placeholder('bodyId')->set('renditions');
 ?>
 
-<a href="<?php echo $this->url(array(
-    'action' => 'article',
-    'rendition' => null,
-)); ?>"><h3><?php putGS('Back'); ?></h3></a>
+<div class="controls">
+    <a href="<?php echo $this->url(array(
+        'action' => 'article',
+        'rendition' => null,
+    ));  ?>" class="back">&larr; <?php putGS('Back'); ?></a>
+</div>
 
+<h2><?php echo $this->escape($this->rendition->getName()); ?> (<?php echo $this->rendition->getWidth(), 'x',  $this->rendition->getHeight(); ?>) / <?php echo $this->image->getWidth(), 'x', $this->image->getHeight(); ?></h2>
 
 <div id="editor">
     <?php echo $this->thumbnail($this->image->getPath(), $this->rendition->getWidth(), $this->rendition->getHeight(), 'fill')->getImg($this); ?>
+</div>
+
+<div class="controls">
     <button id="save-jcrop">Save</button>
 </div>
 

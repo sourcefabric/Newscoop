@@ -1,9 +1,12 @@
+<?php $this->placeholder('bodyId')->set('renditions'); ?>
+
 <ul class="renditions">
     <?php foreach ($this->renditions as $rendition) { ?>
     <li><?php echo $this->rendition($rendition, $this->previewWidth, $this->previewHeight, $this->articleRenditions[$rendition]); ?></li>
     <?php } ?>
 </ul>
 
+<h2><?php putGS("Assigned images"); ?></h2>
 <ul class="thumbnails">
     <?php foreach ($this->images as $image) { ?>
     <li id="image-<?php echo $image->getId(); ?>">
@@ -18,7 +21,7 @@
 <script>
 $(function() {
     $('.renditions li').droppable({
-        hoverClass: 'ui-state-active',
+        hoverClass: 'state-active',
         drop: function(event, ui) {
             var li = $(this);
             $.post("<?php echo $this->url(array(
@@ -42,6 +45,7 @@ $(function() {
 
     $('.thumbnails li').draggable({
         revert: true,
+        opacity: 0.8,
         zIndex: 1000
     });
 
