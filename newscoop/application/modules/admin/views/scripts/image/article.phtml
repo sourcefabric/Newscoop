@@ -1,23 +1,16 @@
 <ul class="renditions">
     <?php foreach ($this->renditions as $rendition) { ?>
-    <li><a href="<?php echo $this->url(array(
-            'module' => 'admin',
-            'controller' => 'image',
-            'action' => 'edit',
-            'rendition' => $rendition->getName(),
-        )); ?>" title="<?php putGS("Edit $1", $rendition->getName()); ?>">
-        <?php echo $this->rendition($rendition, 150, 150, $this->articleRenditions[$rendition]); ?>
-        <h3 class="rendition-name"><?php echo $this->escape($rendition->getName()); ?> <small>(<?php echo $rendition->getWidth(), 'x', $rendition->getHeight(); ?>)</small></h3></li>
-    </a></li>
+    <li><?php echo $this->rendition($rendition, $this->previewWidth, $this->previewHeight, $this->articleRenditions[$rendition]); ?></li>
     <?php } ?>
 </ul>
-
-<pre style="clear: both; font-size: 1.3em">&uarr; Renditions &darr; Images</pre>
 
 <ul class="thumbnails">
     <?php foreach ($this->images as $image) { ?>
     <li id="image-<?php echo $image->getId(); ?>">
-        <?php echo $this->thumbnail($image->getPath(), 150, 150, 'fit')->getImg($this); ?>
+        <figure>
+            <?php echo $this->thumbnail($image->getPath(), 100, 100, 'fit')->getImg($this); ?>
+            <figcaption><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></figcaption>
+        </figure>
     </li>
     <?php } ?>
 </ul>
@@ -32,18 +25,32 @@ $(function() {
                 'module' => 'admin',
                 'controller' => 'image',
                 'action' => 'set-rendition',
+                'format' => 'json',
             )); ?>", {
                 'image': ui.draggable.attr('id'),
                 'rendition': li.find('.rendition-name').text()
             }, function (data, textStatus) {
-                li.find('.preview').html($(data).html());
-            });
+                if (data.exception != undefined) {
+                    alert(data.exception);
+                    return;
+                }
+
+                li.html(data.rendition);
+            }, 'json');
         }
     });
 
     $('.thumbnails li').draggable({
         revert: true,
         zIndex: 1000
+    });
+
+    $('.renditions .reset').live('click', function(e) {
+        e.preventDefault();
+        var li = $(this).closest('li');
+        $.post($(this).attr('href'), function(data, textStatus) {
+            li.html(data.rendition);
+        }, 'json');
     });
 });
 </script>

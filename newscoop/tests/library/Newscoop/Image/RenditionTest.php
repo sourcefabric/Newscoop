@@ -14,6 +14,16 @@ class RenditionTest extends \TestCase
     const PICTURE_LANDSCAPE = 'tests/fixtures/picture_landscape.jpg';
     const PICTURE_PORTRAIT = 'tests/fixtures/picture_portrait.jpg';
 
+    /** @var Newscoop\Image\ImageService */
+    private $imageService;
+
+    public function setUp()
+    {
+        $this->imageService = $this->getMockBuilder('Newscoop\Image\ImageService')
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
     public function testInstance()
     {
         $this->assertInstanceOf('Newscoop\Image\Rendition', new Rendition(1, 1));
@@ -128,22 +138,27 @@ class RenditionTest extends \TestCase
 
     public function testGetThumbnail()
     {
-        $imageService = $this->getMockBuilder('Newscoop\Image\ImageService')
-            ->disableOriginalConstructor()
-            ->getMock();
-
-        $imageService->expects($this->once())
+        $this->imageService->expects($this->once())
             ->method('getSrc')
             ->with($this->equalTo(self::PICTURE_LANDSCAPE), $this->equalTo(300), $this->equalTo(300), $this->equalTo('crop'))
             ->will($this->returnValue('300x300/crop/' . rawurlencode(rawurlencode(self::PICTURE_LANDSCAPE))));
 
         $rendition = new Rendition(300, 300, 'crop');
-        $thumbnail = $rendition->getThumbnail(self::PICTURE_LANDSCAPE, $imageService);
+        $thumbnail = $rendition->getThumbnail(new LocalImage(self::PICTURE_LANDSCAPE), $this->imageService);
 
         $this->assertInstanceOf('Newscoop\Image\Thumbnail', $thumbnail);
         $this->assertContains('300x300', $thumbnail->src);
         $this->assertEquals(300, $thumbnail->width, 'thumbnail_width');
         $this->assertEquals(300, $thumbnail->height, 'thumbnail_height');
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testGetThumbnailWrongSize()
+    {
+        $rendition = new Rendition(1000, 1000, 'crop');
+        $rendition->getThumbnail(new LocalImage(self::PICTURE_LANDSCAPE), $this->imageService);
     }
 
     /**

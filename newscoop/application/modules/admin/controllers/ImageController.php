@@ -25,7 +25,12 @@ class Admin_ImageController extends Zend_Controller_Action
 
         $this->_helper->contextSwitch()
             ->addActionContext('edit', 'json')
+            ->addActionContext('set-rendition', 'json')
+            ->addActionContext('remove-rendition', 'json')
             ->initContext();
+
+        $this->view->previewWidth = 100;
+        $this->view->previewHeight = 100;
     }
 
     public function articleAction()
@@ -39,10 +44,24 @@ class Admin_ImageController extends Zend_Controller_Action
     public function setRenditionAction()
     {
         $this->_helper->layout->disableLayout();
-        $rendition = $this->renditions[array_shift(explode(' ', $this->_getParam('rendition')))];
-        $image = $this->_helper->service('image')->getArticleImage($this->_getParam('article_number'), array_pop(explode('-', $this->_getParam('image'))));
-        $this->view->articleRendition = $this->_helper->service('image.rendition')->setArticleRendition($this->_getParam('article_number'), $rendition, $image->getImage());
-        $this->view->rendition = $rendition;
+
+        try {
+            $rendition = $this->renditions[array_shift(explode(' ', $this->_getParam('rendition')))];
+            $image = $this->_helper->service('image')->getArticleImage($this->_getParam('article_number'), array_pop(explode('-', $this->_getParam('image'))));
+            $articleRendition = $this->_helper->service('image.rendition')->setArticleRendition($this->_getParam('article_number'), $rendition, $image->getImage());
+            $this->view->rendition = $this->view->rendition($rendition, $this->view->previewWidth, $this->view->previewHeight, $articleRendition);
+        } catch (\InvalidArgumentException $e) {
+            $this->view->exception= $e->getMessage();
+        }
+    }
+
+    public function removeRenditionAction()
+    {
+        $this->_helper->layout->disableLayout();
+        $this->_helper->service('image.rendition')->unsetArticleRendition($this->_getParam('article_number'), $this->_getParam('rendition'));
+        $rendition = $this->renditions[$this->_getParam('rendition')];
+        $renditions = $this->_helper->service('image.rendition')->getArticleRenditions($this->_getParam('article_number'));
+        $this->view->rendition = $this->view->rendition($rendition, $this->view->previewWidth, $this->view->previewHeight, $renditions[$rendition]);
     }
 
     public function editAction()

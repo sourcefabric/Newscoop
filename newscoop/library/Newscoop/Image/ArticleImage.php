@@ -28,7 +28,7 @@ class ArticleImage implements ImageInterface
     private $image;
 
     /**
-     * @Id @Column(type="integer", name="Number")
+     * @Column(type="integer", name="Number")
      * @var int
      */
     private $number;
@@ -92,6 +92,7 @@ class ArticleImage implements ImageInterface
      */
     public function getWidth()
     {
+        return $this->image->getWidth();
     }
 
     /**
@@ -101,5 +102,6 @@ class ArticleImage implements ImageInterface
      */
     public function getHeight()
     {
+        return $this->image->getHeight();
     }
 }

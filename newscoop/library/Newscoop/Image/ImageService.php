@@ -177,11 +177,11 @@ class ImageService
     /**
      * Get thumbnail for given image and rendition
      *
-     * @param string $image
      * @param Newscoop\Image\Rendition $rendition
+     * @param Newscoop\Image\ImageInterface $image
      * @return Newscoop\Image\Thumbnail
      */
-    public function getThumbnail(Rendition $rendition, $image)
+    public function getThumbnail(Rendition $rendition, ImageInterface $image)
     {
         return $rendition->getThumbnail($image, $this);
     }

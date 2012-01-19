@@ -41,6 +41,10 @@ class RenditionService
      */
     public function setArticleRendition($articleNumber, Rendition $rendition, ImageInterface $image)
     {
+        if ($image->getWidth() < $rendition->getWidth() || $image->getHeight() < $rendition->getHeight()) {
+            throw new \InvalidArgumentException("Image too small.");
+        }
+
         $old = $this->getArticleRendition($articleNumber, $rendition);
         if ($old !== null) {
             $this->orm->remove($old);
@@ -54,13 +58,29 @@ class RenditionService
     }
 
     /**
+     * Unset article rendition
+     *
+     * @param int $articleNumber
+     * @param string $rendition
+     * @return void
+     */
+    public function unsetArticleRendition($articleNumber, $rendition)
+    {
+        $articleRendition = $this->getArticleRendition($articleNumber, $rendition);
+        if ($articleRendition !== null) {
+            $this->orm->remove($articleRendition);
+            $this->orm->flush($articleRendition);
+        }
+    }
+
+    /**
      * Get article rendition
      *
      * @param int $articleNumber
-     * @param Newscoop\Image\Rendition $rendition
+     * @param string $rendition
      * @return Newscoop\Image\ArticleRendition
      */
-    private function getArticleRendition($articleNumber, Rendition $rendition)
+    private function getArticleRendition($articleNumber, $rendition)
     {
         try {
             return $this->orm->getRepository('Newscoop\Image\ArticleRendition')->findOneBy(array(

@@ -69,4 +69,15 @@ class ImageServiceTest extends \TestCase
         $this->assertInstanceOf('Newscoop\Image\ArticleImage', $this->service->addArticleImage(1, new LocalImage('default')));
         $this->assertContains('default', $this->service->getDefaultArticleImage(1)->getPath());
     }
+
+    public function testGetThumbnail()
+    {
+        $rendition = new Rendition(200, 200, 'crop');
+        $image = new LocalImage(self::PICTURE_LANDSCAPE);
+        $thumbnail = $this->service->getThumbnail($rendition, $image);
+
+        $this->assertEquals($this->service->getSrc(self::PICTURE_LANDSCAPE, 200, 200, 'crop'), $thumbnail->src);
+        $this->assertEquals(200, $thumbnail->width);
+        $this->assertEquals(200, $thumbnail->height);
+    }
 }

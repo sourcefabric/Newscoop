@@ -37,7 +37,19 @@ class RenditionViewHelper extends \Zend_View_Helper_Abstract
     public function rendition(Rendition $rendition, $width, $height, ArticleRendition $articleRendition = null)
     {
         $preview = $articleRendition !== null ? $articleRendition->getRendition()->getPreview($width, $height) : $rendition->getPreview($width, $height);
-        $thumbnail = $articleRendition !== null ? $this->imageService->getThumbnail($preview, $articleRendition->getImage()->getPath()) : null;
-        return sprintf('<div class="preview" style="width: %dpx; height: %dpx;">%s</div>', $preview->getWidth(), $preview->getHeight(), $thumbnail !== null ? $thumbnail->getImg($this->view) : '');
+        $thumbnail = $articleRendition !== null ? $this->imageService->getThumbnail($preview, $articleRendition->getImage()) : null;
+        if ($thumbnail !== null) { // test size
+            try {
+                $rendition->getThumbnail($articleRendition->getImage(), $this->imageService);
+            } catch (\InvalidArgumentException $e) {
+                $thumbnail = null;
+            }
+        }
+
+        $this->view->isDefault = $thumbnail === null || $articleRendition->isDefault();
+        $this->view->preview = $preview;
+        $this->view->rendition = $rendition;
+        $this->view->thumbnail = $thumbnail;
+        return $this->view->render('image/rendition.phtml');
     }
 }

@@ -126,20 +126,23 @@ class Rendition
     /**
      * Get thumbnail
      *
-     * @param string $image
+     * @param Newscoop\Image\ImageInterface $image
      * @param Newscoop\Image\ImageService $imageService
      * @return Newscoop\Image\Thumbnail
      */
-    public function getThumbnail($image, ImageService $imageService)
+    public function getThumbnail(ImageInterface $image, ImageService $imageService)
     {
-        $info = getimagesize(APPLICATION_PATH . '/../' . $image);
-        list($width, $height) = NetteImage::calculateSize($info[0], $info[1], $this->width, $this->height, $this->getFlags());
+        if ($image->getWidth() < $this->width || $image->getHeight() < $this->height) {
+            throw new \InvalidArgumentException("Image is too small.");
+        }
+
+        list($width, $height) = NetteImage::calculateSize($image->getWidth(), $image->getHeight(), $this->width, $this->height, $this->getFlags());
         if ($this->isCrop()) {
             $width = min($width, $this->width);
             $height = min($height, $this->height);
         }
 
-        return new Thumbnail($imageService->getSrc($image, $this->width, $this->height, $this->specs), $width, $height);
+        return new Thumbnail($imageService->getSrc($image->getPath(), $this->width, $this->height, $this->specs), $width, $height);
     }
 
     /**

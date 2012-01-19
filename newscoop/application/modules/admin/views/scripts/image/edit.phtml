@@ -28,6 +28,8 @@ $(function() {
 
 
     $('#save-jcrop').click(function() {
+        var button = $(this);
+        button.text(<?php echo json_encode(getGS("Saving...")); ?>);
         $.post("<?php echo $this->url(array(
             'module' => 'admin',
             'controller' => 'image',
@@ -35,7 +37,10 @@ $(function() {
             'image' => $this->image->getId(),
             'format' => 'json',
         )); ?>", jcrop.tellSelect(), function (data, textStatus) {
-            alert(textStatus);
+            button.text(<?php echo json_encode(getGS("Saved")); ?>);
+            window.setTimeout(function() {
+                button.text(<?php echo json_encode(getGS("Save")); ?>);
+            }, 3000);
         });
     });
 });
