@@ -85,14 +85,14 @@ class Admin_MultidateController extends Zend_Controller_Action
     	$articleId = $this->_request->getParam('article-number');
     	$repo = $this->_helper->entity->getRepository('Newscoop\Entity\ArticleDatetime');
     	$multidateId = $this->_request->getParam('multidateId');
-    	
-    	//print_r($_REQUEST);
+    	$multidateField = $this->_request->getParam('multidatefield');
     	
     	if ($date_type == 'specific') {
     		//single date
     		$startDate = $this->_request->getParam('start-date-specific');
     		$startTime = $this->_request->getParam('start-time-specific');
     		$endTime = $this->_request->getParam('end-time-specific');
+    		
 
     		$type = $this->_request->getParam('specific-radio');
     		switch($type) {
@@ -117,7 +117,7 @@ class Admin_MultidateController extends Zend_Controller_Action
     			$repo->update( $multidateId, $timeSet);
     		} else {
     			//add
-    			$repo->add($timeSet, $articleId, 'schedule');	
+    			$repo->add($timeSet, $articleId, $multidateField);	
     		}
     		
     		
@@ -142,7 +142,7 @@ class Admin_MultidateController extends Zend_Controller_Action
             if ( $multidateId > 0) {
             	$repo->update( $multidateId, $timeSet );
             } else {
-            	$repo->add($timeSet, $articleId, 'schedule');	
+            	$repo->add($timeSet, $articleId, $multidateField);	
             }
     	}
         echo json_encode(array('code' => 200));

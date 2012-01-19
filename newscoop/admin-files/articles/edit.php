@@ -259,6 +259,7 @@ function parseTextBody($text, $articleNumber)
 }
 
 $hasMultiDates = false;
+$multiDatesField = NULL;
 include_once('edit_html.php');
 
 // Display tinymce loading code if required

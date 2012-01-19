@@ -179,6 +179,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
       <fieldset class="plain">
         <ul>
         <?php
+        
         foreach ($dbColumns as $dbColumn) {
             // Single line text fields
             if ($dbColumn->getType() == ArticleTypeField::TYPE_TEXT) {
@@ -313,7 +314,10 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
           </li>
         <?php
             } elseif ( $dbColumn->getType() == ArticleTypeField::TYPE_COMPLEX_DATE ) {
-                $hasMultiDates = true;	
+                $hasMultiDates = true;
+                if ( is_null($multiDatesField) ) {
+                    $multiDatesField = $dbColumn->getName();	
+                }
             }
         }
         ?>

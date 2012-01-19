@@ -312,7 +312,7 @@ function removeSpecificEvent() {
 function removeDaterangeEvent() {
 	var id = $('#daterange-multidate-id').val();
     if (id.length > 0) {
-        if ( confirm('<?php putGS("Are you sure you want to clear the event"); ?>' + id) ) {
+        if ( confirm('<?php putGS("Are you sure you want to clear the event"); ?>' ) ) {
             removeEvent(id);
             resetDaterangeForm();
         }
@@ -484,6 +484,7 @@ $(function(){
     <input type="hidden" name="article-number" value="<?php echo Input::Get('f_article_number', 'int', 1)?>" />
     <input type="hidden" name="date-type" value="specific" />
     <input type="hidden" name="multidateId" id="specific-multidate-id" value="" />
+    <input type="hidden" name="multidatefield" id="multidatefield" value="<?php echo Input::Get('multidatefield', 'string', '')?>" />
     
 	<div class="date-switch date-range-switch" style="margin-left: 12px;"><?php echo putGS('Date from / to'); ?></div>
     <div class="date-switch date-specific-switch switch-active border-left"><?php echo putGS('Specific dates'); ?></div>
@@ -510,6 +511,7 @@ $(function(){
     <input type="hidden" name="article-number" value="<?php echo Input::Get('f_article_number', 'int', 1)?>" />
     <input type="hidden" name="date-type" value="daterange" />
     <input type="hidden" name="multidateId" id="daterange-multidate-id" value="" />
+    <input type="hidden" name="multidatefield" id="multidatefield" value="<?php echo Input::Get('multidatefield', 'string', '')?>" />
     
     <div class="date-switch date-range-switch" style="margin-left: 12px;"><?php echo putGS('Date from / to'); ?></div>
     <div class="date-switch date-specific-switch switch-active border-left"><?php echo putGS('Specific dates'); ?></div>
