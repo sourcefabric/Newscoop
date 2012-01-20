@@ -1,17 +1,17 @@
 <?php 
-regGS("Topic created", "");
-regGS("The topic name is already in use by another topic.", "");
+regGS("Topic created", "Námět vytvořen");
+regGS("The topic name is already in use by another topic.", "Název námětu je již užíván u jiného námětu.");
 regGS("Complex Date", "");
 regGS("vertices", "");
 regGS("There was a problem trying to execute the XML RPC function.", "Vyskytl se problém při pokusu o provedení XML RPC funkce.");
-regGS("The Campcaster server configuration is invalid.", "");
+regGS("The Campcaster server configuration is invalid.", "Campcaster konfigurace serveru je neplatná.");
 regGS("Pan Map", "");
-regGS("Open large map", "");
-regGS("No news available.", "");
-regGS("Edit Polygon", "");
-regGS("Create Polygon", "");
+regGS("Open large map", "Otevřená velká mapa");
+regGS("No news available.", "Žádné novinky k dispozici.");
+regGS("Edit Polygon", "Upravit Polygon");
+regGS("Create Polygon", "Vytvořit Polygon");
 regGS("Communication error: ", "Komunikační eror:");
-regGS("Can't fetch news from '$1'", "");
+regGS("Can't fetch news from '$1'", "Není možné získat zprávy z '$1' ");
 regGS("Loading...", "Nahrává se...");
 regGS("Version", "Verze");
 regGS("License", "Licence");

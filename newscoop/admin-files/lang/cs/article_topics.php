@@ -1,9 +1,9 @@
 <?php 
-regGS("You must enter a name for the topic.", "");
-regGS("Show All", "");
-regGS("Select the parent of the topic", "");
-regGS("None", "");
-regGS("Add new topic", "");
+regGS("You must enter a name for the topic.", "Musíte vložit název námětu.");
+regGS("Show All", "Ukázat vše");
+regGS("Select the parent of the topic", "Vybrat tvůrce námětu");
+regGS("None", "Žádné");
+regGS("Add new topic", "Přidat nový námět");
 regGS("No topics have been created yet.", "Žádná témata ještě nebyla vytvořena.");
 regGS("Topics updated.", "Téma aktulizováno.");
 regGS("Topic does not exist.", "Téma neexistuje.");

@@ -1,16 +1,16 @@
 <?php 
-regGS("saved", "");
-regGS("deleted", "");
-regGS("Subscribed sections: $1", "");
-regGS("Start Date", "");
-regGS("Select sections for subscribing", "");
-regGS("Sections saved", "");
-regGS("Section $1", "");
-regGS("No sections to edit", "");
-regGS("Edit section", "");
-regGS("Edit all sections", "");
-regGS("Add new subscription section", "");
-regGS("Add new section", "");
+regGS("saved", "snimljeno");
+regGS("deleted", "obrisano");
+regGS("Subscribed sections: $1", "Pretplaćene rubrike: $1");
+regGS("Start Date", "Početni datum");
+regGS("Select sections for subscribing", "Izaberi rubrike za pretplaćivanje");
+regGS("Sections saved", "Rubrike snimljene");
+regGS("Section $1", "Rubrika $1");
+regGS("No sections to edit", "Nema rubrika za uređivanje");
+regGS("Edit section", "Uredi rubriku");
+regGS("Edit all sections", "Uredi sve rubrike");
+regGS("Add new subscription section", "Dodaj novu pretplatu na rubriku");
+regGS("Add new section", "Dodaj novu rubriku");
 regGS("Regardless of the language", "Nezavisno od jezika");
 regGS("Individual languages", "Pojedinačni jezici");
 regGS("All languages", "Svi jezici");

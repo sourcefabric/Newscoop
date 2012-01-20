@@ -1,14 +1,14 @@
 <?php 
 regGS("Webcode", "");
-regGS("View article", "");
-regGS("Source", "");
-regGS("Select type", "");
-regGS("On", "");
-regGS("Off", "");
+regGS("View article", "Ukázat článek");
+regGS("Source", "Zdroj");
+regGS("Select type", "Vyber typ");
+regGS("On", "Zapnout");
+regGS("Off", "Vypnout");
 regGS("Display newswires articles", "");
 regGS("Display Newswires", "");
-regGS("Title", "");
-regGS("No video playback capabilities, please download the video below", "");
+regGS("Title", "Název");
+regGS("No video playback capabilities, please download the video below", "Žádné možnosti přehrání videa, prosím stáhněte si video níže");
 regGS("Article status set to '$1' for $2 articles", "Stav článku je nastaven '$1' na $2 článků");
 regGS("Article status not set to '$1' for $2 articles", "Stav článku není nastaven '$1' na $2 článků");
 regGS("$1 toggled for $2 articles.", "$1 byl přepnut na $2 články");

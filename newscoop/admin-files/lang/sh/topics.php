@@ -1,6 +1,6 @@
 <?php 
-regGS("If you continue, topic and all subtopics will be detached from all articles, and deleted.", "");
-regGS("Delete anyway", "");
+regGS("If you continue, topic and all subtopics will be detached from all articles, and deleted.", "Ukoliko nastavite, topik i svi pod-topici će biti uklonjeni iz svih tekstova, i obrisani.");
+regGS("Delete anyway", "Svejedno, obriši");
 regGS("Reset order", "Poništi redosled");
 regGS("Order changes will be lost. Are you sure you want to continue?", "Izmene redosleda će biti poništene. Da li ste sigurni da želite da nastavite?");
 regGS("Topics order saved.", "Redosled tema je snimljen.");

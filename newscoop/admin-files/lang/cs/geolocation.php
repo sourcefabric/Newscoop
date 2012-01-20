@@ -1,7 +1,7 @@
 <?php 
 regGS("selected marker icon", "");
 regGS("add location to map", "");
-regGS("Video source", "");
+regGS("Video source", "Zdroj k videu");
 regGS("The point will be removed from all translations of the article.", "");
 regGS("Specify country (optional)", "");
 regGS("Sorry, that place was not found. Check your spelling or search again.", "");
