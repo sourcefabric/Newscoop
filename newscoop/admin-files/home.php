@@ -19,6 +19,10 @@ echo camp_html_breadcrumbs(array(
     array(getGS('Dashboard'), ''),
 ));
 
+if (!SystemPref::get('installation_id')) {
+    $installationId = sha1($_SERVER['SERVER_SOFTWARE'].$_SERVER['SERVER_ADDR'].$_SERVER['SERVER_NAME'].mt_rand());
+    SystemPref::set('installation_id', $installationId);
+}
 if (!SystemPref::get('support_set')) {
     $this->_helper->redirector('index', 'support', 'admin');
 }
