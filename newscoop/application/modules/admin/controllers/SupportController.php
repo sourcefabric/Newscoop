@@ -72,6 +72,7 @@ class Admin_SupportController extends Zend_Controller_Action
         $stats['attachments'] = $this->getAttachments();
         $stats['topics'] = $this->getTopics();
         $stats['comments'] = $this->getComments();
+        $stats['hits'] = $this->getHits();
         
         return($stats);
     }
@@ -176,6 +177,38 @@ class Admin_SupportController extends Zend_Controller_Action
             $installMethod = 'debian';
         }
         return($installMethod);
+    }
+    
+    public function getHits()
+    {
+        global $Campsite;
+        if (empty($Campsite)) {
+            $Campsite = array('db' => array());
+        }
+        
+        $newscoop_path = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
+        require_once($newscoop_path . '/conf/database_conf.php');
+        
+        $dbAccess = $Campsite['db'];
+        $db_host = $dbAccess['host'];
+        $db_port = $dbAccess['port'];
+        $db_user = $dbAccess['user'];
+        $db_pwd = $dbAccess['pass'];
+        $db_name = $dbAccess['name'];
+        
+        $dbh = new PDO(
+            "mysql:host=$db_host;port=$db_port;dbname=$db_name", 
+            "$db_user",
+            "$db_pwd",
+            array(PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8')
+        );
+        
+        $query = "SELECT SUM(`request_count`) as 'hits' FROM `RequestObjects`";
+        $sth = $dbh->prepare($query);
+        $res = $sth->execute();
+        $hits = $sth->fetch(PDO::FETCH_ASSOC);
+        
+        return($hits['hits']);
     }
     
     /**
