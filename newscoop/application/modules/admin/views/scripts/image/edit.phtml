@@ -11,12 +11,13 @@ $this->placeholder('bodyId')->set('renditions');
     ));  ?>" class="back">&larr; <?php putGS('Back'); ?></a>
 </div>
 
-<h2><?php echo $this->escape($this->rendition->getName()); ?> (<?php echo $this->rendition->getWidth(), 'x',  $this->rendition->getHeight(); ?>) / <?php echo $this->image->getWidth(), 'x', $this->image->getHeight(); ?></h2>
+<h2><?php echo $this->escape($this->rendition->getName()); ?><br /><small><?php echo array_shift(explode('_', $this->rendition->getSpecs())); ?> <?php echo $this->rendition->getWidth(), 'x',  $this->rendition->getHeight(); ?> / <?php putGS('original'); ?> <?php echo $this->image->getWidth(), 'x', $this->image->getHeight(); ?></h2>
 
 <div id="editor">
-    <?php echo $this->thumbnail($this->image->getPath(), $this->rendition->getWidth(), $this->rendition->getHeight(), 'fill')->getImg($this); ?>
+    <?php echo $this->thumbnail($this->image->getPath(), $this->rendition->getWidth(), $this->rendition->getHeight(), $this->rendition->isCrop() ? 'fill' : $this->rendition->getSpecs())->getImg($this); ?>
 </div>
 
+<?php if ($this->rendition->isCrop()) { ?>
 <div class="controls">
     <button id="save-jcrop">Save</button>
 </div>
@@ -52,3 +53,4 @@ $(function() {
     });
 });
 </script>
+<?php } ?>

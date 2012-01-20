@@ -684,6 +684,7 @@ h1 {
 
 .renditions .preview {
     border: 1px solid #ccc;
+    overflow: hidden;
 }
 
 .renditions li.state-active .preview {

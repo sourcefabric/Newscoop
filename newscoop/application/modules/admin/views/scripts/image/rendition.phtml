@@ -10,7 +10,7 @@
     echo $this->thumbnail->getImg($this);
 } ?>
 </div></div>
-<h3 class="rendition-name"><?php echo $this->escape($this->rendition->getName()); ?> <small>(<?php echo $this->rendition->getWidth(), 'x', $this->rendition->getHeight(); ?>)</small></h3>
+<h3><span class="rendition-name"><?php echo $this->escape($this->rendition->getName()); ?></span><br /><small><?php echo array_shift(explode('_', $this->rendition->getSpecs())); ?> <?php echo $this->rendition->getWidth(), 'x', $this->rendition->getHeight(); ?></small></h3>
 </a>
 <?php if (!$this->isDefault) { ?>
 <a href="<?php echo $this->url(array(

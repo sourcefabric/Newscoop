@@ -41,7 +41,7 @@ class Admin_ImageController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
 
         try {
-            $rendition = $this->renditions[array_shift(explode(' ', $this->_getParam('rendition')))];
+            $rendition = $this->renditions[$this->_getParam('rendition')];
             $image = $this->_helper->service('image')->getArticleImage($this->_getParam('article_number'), array_pop(explode('-', $this->_getParam('image'))));
             $articleRendition = $this->_helper->service('image.rendition')->setArticleRendition($this->_getParam('article_number'), $rendition, $image->getImage());
             $this->view->rendition = $this->view->rendition($rendition, $this->view->previewWidth, $this->view->previewHeight, $articleRendition);
