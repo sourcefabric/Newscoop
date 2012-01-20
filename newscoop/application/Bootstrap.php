@@ -169,6 +169,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $container->register('content.type', 'Newscoop\Content\ContentTypeService')
             ->addArgument(new sfServiceReference('em'));
+        
+        $container->register('stat', 'Newscoop\Services\StatService')
+            ->addArgument(new sfServiceReference('em'));
 
         Zend_Registry::set('container', $container);
         return $container;
