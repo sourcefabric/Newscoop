@@ -27,5 +27,6 @@ class ArticleImageTest extends \TestCase
         $this->assertEquals(LocalImageTest::PICTURE_LANDSCAPE, $image->getPath());
         $this->assertEquals(500, $image->getWidth());
         $this->assertEquals(333, $image->getHeight());
+        $this->assertFalse($image->isDefault());
     }
 }

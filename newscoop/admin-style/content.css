@@ -742,8 +742,24 @@ h1 {
     padding: 0;
 }
 
+.thumbnails figure div {
+    min-height: 103px;
+}
+
+.thumbnails figure img {
+    display: block;
+}
+
 .thumbnails figcaption {
-    padding: 3px 0 0;
+    padding: 5px 0 0;
+}
+
+.thumbnails figure label {
+    font-size: 1em;
+}
+
+.thumbnails input {
+    float: right;
 }
 
 #renditions h2 {

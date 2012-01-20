@@ -6,17 +6,30 @@
     <?php } ?>
 </ul>
 
+<form action="<?php echo $this->url(array(
+    'module' => 'admin',
+    'controller' => 'image',
+    'action' => 'set-default-image',
+)); ?>" method="POST">
+
 <h2><?php putGS("Assigned images"); ?></h2>
 <ul class="thumbnails">
     <?php foreach ($this->images as $image) { ?>
     <li id="image-<?php echo $image->getId(); ?>">
         <figure>
-            <?php echo $this->thumbnail($image->getPath(), 100, 100, 'fit')->getImg($this); ?>
-            <figcaption><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></figcaption>
+            <div><?php echo $this->thumbnail($image->getPath(), 100, 100, 'fit')->getImg($this); ?></div>
+            <input type="radio" id="default-<?php echo $image->getId(); ?>" name="default-image" value="<?php echo $image->getId(); ?>" <?php if ($image->isDefault()) { echo 'checked'; } ?> title="<?php putGS('Set as default'); ?>" />
+            <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></label></figcaption>
         </figure>
     </li>
     <?php } ?>
 </ul>
+
+<div class="controls">
+    <button id="set-default"><?php putGS('Set selected as default image'); ?></button>
+</div>
+
+</form>
 
 <script>
 $(function() {

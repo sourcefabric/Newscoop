@@ -65,9 +65,9 @@ class ImageServiceTest extends \TestCase
 
     public function testGetDefaultArticleImage()
     {
-        $this->assertNull($this->service->getDefaultArticleImage(1));
-        $this->assertInstanceOf('Newscoop\Image\ArticleImage', $this->service->addArticleImage(1, new LocalImage('default')));
-        $this->assertContains('default', $this->service->getDefaultArticleImage(1)->getPath());
+        $this->assertNull($this->service->getDefaultArticleImage(self::ARTICLE_NUMBER));
+        $this->assertInstanceOf('Newscoop\Image\ArticleImage', $this->service->addArticleImage(self::ARTICLE_NUMBER, new LocalImage('default')));
+        $this->assertContains('default', $this->service->getDefaultArticleImage(self::ARTICLE_NUMBER)->getPath());
     }
 
     public function testGetThumbnail()
@@ -79,5 +79,34 @@ class ImageServiceTest extends \TestCase
         $this->assertEquals($this->service->getSrc(self::PICTURE_LANDSCAPE, 200, 200, 'crop'), $thumbnail->src);
         $this->assertEquals(200, $thumbnail->width);
         $this->assertEquals(200, $thumbnail->height);
+    }
+
+    public function testDefaultImage()
+    {
+        $this->assertNull($this->service->getDefaultArticleImage(self::ARTICLE_NUMBER));
+
+        $this->service->addArticleImage(self::ARTICLE_NUMBER, new LocalImage('first'));
+        $this->assertContains('first', $this->service->getDefaultArticleImage(self::ARTICLE_NUMBER)->getPath());
+        $this->assertTrue($this->service->getDefaultArticleImage(self::ARTICLE_NUMBER)->isDefault());
+
+        $image = $this->service->addArticleImage(self::ARTICLE_NUMBER, new LocalImage('second'));
+        $this->service->setDefaultArticleImage(self::ARTICLE_NUMBER, $image);
+
+        $this->assertTrue($image->isDefault());
+        $this->assertContains('second', $this->service->getDefaultArticleImage(self::ARTICLE_NUMBER)->getPath());
+    }
+
+    public function testSetDefaultImageForFindByArticleWithoutSetDefault()
+    {
+        $this->orm->persist($imageTic = new LocalImage('tic'));
+        $this->orm->persist($imageToc = new LocalImage('toc'));
+        $this->orm->flush();
+
+        $this->orm->persist(new ArticleImage(self::ARTICLE_NUMBER, $imageTic));
+        $this->orm->persist(new ArticleImage(self::ARTICLE_NUMBER, $imageToc));
+        $this->orm->flush();
+
+        $images = $this->service->findByArticle(self::ARTICLE_NUMBER);
+        $this->assertTrue($images[0]->isDefault());
     }
 }

@@ -28,21 +28,27 @@ class ArticleImage implements ImageInterface
     private $image;
 
     /**
-     * @Column(type="integer", name="Number")
+     * @Column(type="integer", name="Number", nullable=True)
      * @var int
      */
     private $number;
 
     /**
+     * @Column(type="boolean", name="is_default", nullable=True)
+     * @var bool
+     */
+    private $isDefault;
+
+    /**
      * @param int $articleNumber
      * @param Newscoop\Image\LocalImage $image
-     * @param int $number
+     * @param bool $isDefault
      */
-    public function __construct($articleNumber, LocalImage $image, $number = 1)
+    public function __construct($articleNumber, LocalImage $image, $isDefault = false)
     {
         $this->articleNumber = (int) $articleNumber;
         $this->image = $image;
-        $this->number = (int) $number;
+        $this->isDefault = (bool) $isDefault;
     }
 
     /**
@@ -103,5 +109,26 @@ class ArticleImage implements ImageInterface
     public function getHeight()
     {
         return $this->image->getHeight();
+    }
+
+    /**
+     * Set is default image
+     *
+     * @param bool $isDefault
+     * @return void
+     */
+    public function setIsDefault($isDefault = false)
+    {
+        $this->isDefault = (bool) $isDefault;
+    }
+
+    /**
+     * Test if is default image for article
+     *
+     * @return bool
+     */
+    public function isDefault()
+    {
+        return $this->isDefault;
     }
 }

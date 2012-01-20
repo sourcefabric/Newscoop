@@ -76,4 +76,13 @@ class Admin_ImageController extends Zend_Controller_Action
         $this->view->rendition = $renditions[$rendition]->getRendition();
         $this->view->image = $renditions[$rendition]->getImage();
     }
+
+    public function setDefaultImageAction()
+    {
+        $image = $this->_helper->service('image')->getArticleImage($this->_getParam('article_number'), $this->_getParam('default-image'));
+        $this->_helper->service('image')->setDefaultArticleImage($this->_getParam('article_number'), $image);
+        $this->_helper->redirector('article', 'image', 'admin', array(
+            'article_number' => $this->_getParam('article_number'),
+        ));
+    }
 }
