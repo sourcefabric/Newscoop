@@ -249,7 +249,7 @@ function parseTextBody($text, $articleNumber)
             if (!isset($fakeTemplateId)) {
                 $fakeTemplateId = $templateId;
             }
-            $text = preg_replace("/<!\*\*\s*Image\s*".$templateId."\s*/i", '<img src="'.$imageUrl.'" id="'.$fakeTemplateId.'" ', $text);
+            $text = preg_replace("/<!\*\*\s*Image\s*".$templateId."\s+/i", '<img src="'.$imageUrl.'" id="'.$fakeTemplateId.'" ', $text);
         }
         if ($formattingErrors) {
             print ('<script type="text/javascript">window.location.reload();</script>');
