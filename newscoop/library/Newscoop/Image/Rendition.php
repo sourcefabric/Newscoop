@@ -132,7 +132,7 @@ class Rendition
      */
     public function getThumbnail(ImageInterface $image, ImageService $imageService)
     {
-        if ($image->getWidth() < $this->width || $image->getHeight() < $this->height) {
+        if (!$this->fits($image)) {
             throw new \InvalidArgumentException("Image is too small.");
         }
 
@@ -257,8 +257,19 @@ class Rendition
      *
      * @return bool
      */
-    private function isCrop()
+    public function isCrop()
     {
         return strpos($this->specs, 'crop') === 0;
+    }
+
+    /**
+     * Test if rendition fits image
+     *
+     * @param ImageInterface $image
+     * @return bool
+     */
+    public function fits(ImageInterface $image)
+    {
+        return $image->getWidth() >= $this->width && $image->getHeight() >= $this->height;
     }
 }

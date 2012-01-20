@@ -44,7 +44,7 @@ class ArticleRenditionCollection implements \ArrayAccess
      */
     public function offsetExists($rendition)
     {
-        return isset($this->renditions[(string) $rendition]) || $this->defaultImage !== null;
+        return array_key_exists((string) $rendition, $this->renditions) || ($this->defaultImage !== null && $rendition->fits($this->defaultImage));
     }
 
     /**
@@ -55,9 +55,9 @@ class ArticleRenditionCollection implements \ArrayAccess
      */
     public function offsetGet($rendition)
     {
-        return isset($this->renditions[(string) $rendition])
+        return array_key_exists((string) $rendition, $this->renditions)
             ? $this->renditions[(string) $rendition]
-            : ($this->defaultImage !== null ? $this->renditions[(string) $rendition] = new DefaultArticleRendition($this->articleNumber, $rendition, $this->defaultImage) : null);
+            : ($this->defaultImage !== null && $rendition->fits($this->defaultImage) ? $this->renditions[(string) $rendition] = new DefaultArticleRendition($this->articleNumber, $rendition, $this->defaultImage) : null);
     }
 
     /**
@@ -73,7 +73,7 @@ class ArticleRenditionCollection implements \ArrayAccess
      */
     public function offsetUnset($offset)
     {
-        $this->offsetGet();
+        throw new \BadMethodCallException("Collection not editable");
     }
 
     /**
