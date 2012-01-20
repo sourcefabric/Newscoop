@@ -51,7 +51,14 @@ class Admin_SupportController extends Zend_Controller_Action
     public function getStats()
     {
         $stats = array();
-        $stats['serverSoftware'] = $_SERVER['SERVER_SOFTWARE'];
+        $stats['installationId'] = SystemPref::get('installation_id');
+        $stats['logTime'] = time();
+        $stats['server'] = $_SERVER['SERVER_SOFTWARE'];
+        $stats['ipAddress'] = $_SERVER['SERVER_ADDR'];
+        $stats['ramUsed'] = round((memory_get_usage()/(1024*1024)), 2);
+        $stats['ramTotal'] = str_replace('M', '', ini_get('memory_limit'));
+        $stats['version'] = \Newscoop\Version::VERSION;
+        $stats['installMethod'] = $this->getInstallMethod();
         $stats['publications'] = $this->getPublications();
         $stats['issues'] = $this->getIssues();
         $stats['averageSections'] = $this->getAverageSections();
@@ -160,6 +167,15 @@ class Admin_SupportController extends Zend_Controller_Action
         $comments = $commentRepository->findAll();
         
         return(count($comments));
+    }
+    
+    public function getInstallMethod()
+    {
+        $installMethod = 'tarball';
+        if (file_exists('debian')) {
+            $installMethod = 'debian';
+        }
+        return($installMethod);
     }
     
     /**
