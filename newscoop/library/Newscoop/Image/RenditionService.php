@@ -13,6 +13,11 @@ namespace Newscoop\Image;
 class RenditionService
 {
     /**
+     * @var array
+     */
+    protected $config;
+
+    /**
      * @var Doctrine\ORM\EntityManager
      */
     protected $orm;
@@ -25,8 +30,9 @@ class RenditionService
     /**
      * @param Doctrine\ORM\EntityManager $orm
      */
-    public function __construct(\Doctrine\ORM\EntityManager $orm, ImageService $imageService)
+    public function __construct(array $config, \Doctrine\ORM\EntityManager $orm, ImageService $imageService)
     {
+        $this->config = $config;
         $this->orm = $orm;
         $this->imageService = $imageService;
     }
@@ -114,6 +120,25 @@ class RenditionService
         return new ArticleRenditionCollection($articleNumber, $articleRenditions, $defaultArticleImage ? $defaultArticleImage->getImage() : null);
     }
 
+    /**
+     * Get renditions
+     *
+     * @return array
+     */
+    public function getRenditions()
+    {
+        $renditions = array();
+        foreach (glob($this->config['theme_path'] . '/publication_*/theme_*/theme.xml') as $themeInfo) {
+            $xml = simplexml_load_file($themeInfo);
+            foreach ($xml->renditions->rendition as $rendition) {
+                if (!isset($renditions[(string) $rendition['name']])) {
+                    $renditions[(string) $rendition['name']] = new Rendition($rendition['width'], $rendition['height'], $rendition['specs'], $rendition['name']);
+                }
+            }
+        }
+
+        return $renditions;
+    }
 
     /**
      * Create schema for article rendition

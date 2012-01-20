@@ -57,7 +57,7 @@ class ArticleRenditionCollection implements \ArrayAccess
     {
         return isset($this->renditions[(string) $rendition])
             ? $this->renditions[(string) $rendition]
-            : ($this->defaultImage !== null ? $this->renditions[$rendition->getName()] = new DefaultArticleRendition($this->articleNumber, $rendition, $this->defaultImage) : null);
+            : ($this->defaultImage !== null ? $this->renditions[(string) $rendition] = new DefaultArticleRendition($this->articleNumber, $rendition, $this->defaultImage) : null);
     }
 
     /**

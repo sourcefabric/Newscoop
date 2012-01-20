@@ -16,12 +16,7 @@ class Admin_ImageController extends Zend_Controller_Action
 
     public function init()
     {
-        $this->renditions = array(
-            'thumbnail' => new Rendition(75, 75, 'crop', 'thumbnail'),
-            'square' => new Rendition(150, 150, 'crop', 'square'),
-            'landscape' => new Rendition(400, 300, 'crop', 'landscape'),
-            'portrait' => new Rendition(300, 400, 'crop', 'portrait'),
-        );
+        $this->renditions = $this->_helper->service('image.rendition')->getRenditions();
 
         $this->_helper->contextSwitch()
             ->addActionContext('edit', 'json')

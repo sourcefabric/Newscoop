@@ -28,7 +28,9 @@ class RenditionServiceTest extends \TestCase
     {
         $this->orm = $this->setUpOrm('Newscoop\Image\LocalImage', 'Newscoop\Image\ArticleRendition', 'Newscoop\Image\ArticleImage');
         $this->imageService = new ImageService(array(), $this->orm);
-        $this->service = new RenditionService($this->orm, $this->imageService);
+        $this->service = new RenditionService(array(
+            'theme_path' => APPLICATION_PATH . '/../tests/fixtures/themes',
+        ), $this->orm, $this->imageService);
     }
 
     public function tearDown()
@@ -132,5 +134,15 @@ class RenditionServiceTest extends \TestCase
 
         $rendition = new Rendition(900, 600, 'test');
         $this->service->setArticleRendition(self::ARTICLE_NUMBER, $rendition, $image);
+    }
+
+    public function testGetRenditions()
+    {
+        $renditions = $this->service->getRenditions();
+        $this->assertEquals(5, count($renditions));
+        $this->assertEquals(400, $renditions['landscape']->getWidth());
+        $this->assertEquals(300, $renditions['landscape']->getHeight());
+        $this->assertEquals('crop', $renditions['landscape']->getSpecs());
+        $this->assertEquals('landscape', $renditions['landscape']->getName());
     }
 }
