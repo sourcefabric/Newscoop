@@ -516,6 +516,17 @@ class Attachment extends DatabaseObject {
         }
 
     } // fn ProcessImage
+    
+    /**
+	 * @return int
+	 */
+	public static function GetTotalAttachments()
+	{
+		global $g_ado_db;
+		$queryStr = 'SHOW TABLE STATUS LIKE "Attachments"';
+		$result = $g_ado_db->GetRow($queryStr);
+		return $result['Rows'];
+	} // fn GetTotalAttachments
 
 } // class Attachment
 

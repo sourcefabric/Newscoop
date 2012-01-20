@@ -18,6 +18,8 @@ class Admin_SupportController extends Zend_Controller_Action
 
     public function indexAction()
     {
+        $this->view->stats = $this->getStats();
+        
         if ($this->getRequest()->isPost()) {
             $values = $this->getRequest()->getPost();
             
@@ -44,6 +46,120 @@ class Admin_SupportController extends Zend_Controller_Action
                 $this->view->first = true;
             }
         }
+    }
+    
+    public function getStats()
+    {
+        $stats = array();
+        $stats['serverSoftware'] = $_SERVER['SERVER_SOFTWARE'];
+        $stats['publications'] = $this->getPublications();
+        $stats['issues'] = $this->getIssues();
+        $stats['averageSections'] = $this->getAverageSections();
+        $stats['articles'] = $this->getArticles();
+        $stats['publishedArticles'] = $this->getArticles(true);
+        $stats['languages'] = $this->getLanguages();
+        $stats['authors'] = $this->getAuthors();
+        $stats['subscribers'] = $this->getSubscribers();
+        $stats['backendUsers'] = $this->getSubscribers(1);
+        $stats['images'] = $this->getImages();
+        $stats['attachments'] = $this->getAttachments();
+        $stats['topics'] = $this->getTopics();
+        $stats['comments'] = $this->getComments();
+        
+        return($stats);
+    }
+    
+    public function getPublications()
+    {
+        $publicationRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Publication');
+        $publications = $publicationRepository->findAll();
+        return(count($publications));
+    }
+    
+    public function getIssues()
+    {
+        $issues = \Issue::GetNumIssues();
+        return($issues);
+    }
+    
+    public function getAverageSections()
+    {
+        $averageSections = round(\Section::GetTotalSections() / $this->getIssues(), 2);
+        return($averageSections);
+    }
+    
+    public function getArticles($published = null)
+    {
+        $articleRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Article');
+        $articles = $articleRepository->findAll();
+        
+        if ($published) {
+            foreach ($articles as $key => $article) {
+                if ($article->getWorkflowStatus() != 'Y') {
+                    unset($articles[$key]);
+                }
+            }
+        }
+        return(count($articles));
+    }
+    
+    public function getLanguages()
+    {
+        $languages = array();
+        
+        $articleRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Article');
+        $articles = $articleRepository->findAll();
+        
+        foreach ($articles as $article) {
+            $language = $article->getLanguage()->getName();
+            if (!in_array($language, $languages)) {
+                $languages[] = $language;
+            }
+        }
+        
+        $languages = implode(', ', $languages);
+        
+        return($languages);
+    }
+    
+    public function getAuthors()
+    {
+        $authors = \Author::GetAuthors();
+        return(count($authors));
+    }
+    
+    public function getSubscribers($isAdmin = 0)
+    {
+        $userRepository = $this->_helper->entity->getRepository('Newscoop\Entity\User');
+        $subscribers = $userRepository->findBy(array('is_admin' => $isAdmin));
+        
+        return(count($subscribers));
+    }
+    
+    public function getImages()
+    {
+        $images = \Image::GetTotalImages();
+        return($images);
+    }
+    
+    public function getAttachments()
+    {
+        $attachments = \Attachment::GetTotalAttachments();
+        return($attachments);
+    }
+    
+    public function getTopics()
+    {
+        $topics = \Topic::GetTopics(null, null, null, null, 5, null, null, true, false);
+        return($topics['count']);
+    }
+    
+    public function getComments()
+    {
+        $commentRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment');
+        $comments = $commentRepository->findAll();
+        
+        return(count($comments));
     }
     
     /**

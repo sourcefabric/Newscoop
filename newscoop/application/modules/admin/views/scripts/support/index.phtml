@@ -28,7 +28,15 @@
         <br>
         <fieldset>
             <legend><?php echo(getGS('Sample support feedback')); ?></legend>
-            <div id="feedback" style="overflow: auto;">
+            <div id="feedback" style="overflow: auto; height: 100px;">
+                <table style="width: 100%;">
+                <?php foreach ($this->stats as $key => $value) { ?>
+                <tr>
+                    <td><?php echo($key); ?></td>
+                    <td><?php echo($value); ?></td>
+                </tr>
+                <?php } ?>
+                </table>
             </div>
         </fieldset>
         </p>
