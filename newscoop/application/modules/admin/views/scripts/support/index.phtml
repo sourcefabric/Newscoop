@@ -13,6 +13,12 @@
 
 <?php $this->placeholder('title')->set(getGS('Support')); ?>
 
+<?php if ($this->first) { ?>
+<dl class="zend_form">
+    <?php echo(getGS('Because this is your first time logging into the admin panel, you need to fill in support details.')); ?>
+</dl><br>
+<?php } ?>
+
 <form action="<?php echo($this->form->getAction()); ?>" method="post">
     <dl class="zend_form">
         

@@ -19,6 +19,10 @@ echo camp_html_breadcrumbs(array(
     array(getGS('Dashboard'), ''),
 ));
 
+if (!SystemPref::get('support_set')) {
+    $this->_helper->redirector('index', 'support', 'admin');
+}
+
 // clear cache
 $clearCache = Input::Get('clear_cache', 'string', 'no', true);
 if ((CampCache::IsEnabled() || CampTemplateCache::factory()) && ($clearCache == 'yes')

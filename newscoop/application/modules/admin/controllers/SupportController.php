@@ -21,6 +21,8 @@ class Admin_SupportController extends Zend_Controller_Action
         if ($this->getRequest()->isPost()) {
             $values = $this->getRequest()->getPost();
             
+            SystemPref::set('support_set', 1);
+            
             SystemPref::set('support_send', $values['send_support_feedback']);
             SystemPref::set('support_promote', $values['promote']);
             if ($values['promote'] == '1') {
@@ -37,6 +39,10 @@ class Admin_SupportController extends Zend_Controller_Action
         }
         else {
             $this->view->form = $this->getForm();
+            $this->view->first = false;
+            if (!SystemPref::get('support_set')) {
+                $this->view->first = true;
+            }
         }
     }
     
