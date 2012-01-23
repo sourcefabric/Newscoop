@@ -33,7 +33,6 @@ class StatService
         
         $stats = array();
         $stats['installationId'] = $this->getInstallationId();
-        $stats['logTime'] = $this->getLogTime();
         $stats['server'] = $this->getServer();
         $stats['ipAddress'] = $this->getIp();
         $stats['ramUsed'] = $this->getRamUsed();
@@ -44,7 +43,7 @@ class StatService
         $stats['issues'] = $this->getIssues();
         $stats['averageSections'] = $this->getAverageSections();
         $stats['articles'] = $this->getArticles();
-        $stats['publishedArticles'] = $this->getArticles(true);
+        $stats['articlesPublished'] = $this->getArticles(true);
         $stats['languages'] = $this->getLanguages();
         $stats['authors'] = $this->getAuthors();
         $stats['subscribers'] = $this->getSubscribers();
@@ -61,11 +60,6 @@ class StatService
     public function getInstallationId()
     {
         return(\SystemPref::get('installation_id'));
-    }
-    
-    public function getLogTime()
-    {
-        return(time());
     }
     
     public function getServer()
@@ -115,16 +109,20 @@ class StatService
     public function getArticles($published = null)
     {
         $articleRepository = $this->em->getRepository('Newscoop\Entity\Article');
-        $articles = $articleRepository->findAll();
         
         if ($published) {
-            foreach ($articles as $key => $article) {
-                if ($article->getWorkflowStatus() != 'Y') {
-                    unset($articles[$key]);
-                }
-            }
+            return $articleRepository->createQueryBuilder('a')
+            ->select('COUNT(a)')
+            ->where('a.workflowStatus = \'Y\'')
+            ->getQuery()
+            ->getSingleScalarResult();
         }
-        return(count($articles));
+        else {
+            return $articleRepository->createQueryBuilder('a')
+            ->select('COUNT(a)')
+            ->getQuery()
+            ->getSingleScalarResult();
+        }
     }
     
     public function getLanguages()
@@ -155,9 +153,12 @@ class StatService
     public function getSubscribers($isAdmin = 0)
     {
         $userRepository = $this->em->getRepository('Newscoop\Entity\User');
-        $subscribers = $userRepository->findBy(array('is_admin' => $isAdmin));
         
-        return(count($subscribers));
+        return $userRepository->createQueryBuilder('u')
+        ->select('COUNT(u)')
+        ->where('u.is_admin = \'{$isAdmin}\'')
+        ->getQuery()
+        ->getSingleScalarResult();
     }
     
     public function getImages()
@@ -181,9 +182,10 @@ class StatService
     public function getComments()
     {
         $commentRepository = $this->em->getRepository('Newscoop\Entity\Comment');
-        $comments = $commentRepository->findAll();
-        
-        return(count($comments));
+        return $commentRepository->createQueryBuilder('c')
+        ->select('COUNT(c)')
+        ->getQuery()
+        ->getSingleScalarResult();
     }
     
     public function getInstallMethod()
