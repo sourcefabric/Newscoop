@@ -2,6 +2,7 @@
 
 require_once('ListObject.php');
 require_once($GLOBALS['g_campsiteDir'] . '/classes/CampCache.php');
+require_once($GLOBALS['g_campsiteDir'] . '/classes/Article.php');
 
 
 /**
@@ -310,7 +311,13 @@ class ArticlesList extends ListObject
 	        switch ($state) {
                 case 1: // reading the order field
 	                if (array_search(strtolower($word), ArticlesList::$s_orderFields) === false) {
-	                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_articles, order parameter");
+                        $checked_info = Article::CheckCustomOrder($word);
+                        if (!$checked_info['status']) {
+		                    CampTemplate::singleton()->trigger_error("invalid order field $word in list_articles, order parameter");
+                        }
+                        // ordering by custom fields; runs the same way as other order specs
+                        $orderField = $word;
+                        $state = 2;
 	                } else {
     	                $orderField = $word;
                         $state = 2;
