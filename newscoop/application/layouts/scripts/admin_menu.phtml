@@ -28,7 +28,8 @@ $showUserMenu = ($g_user->hasPermission('ManageUsers')
     || $g_user->hasPermission('DeleteUsers')
     || $g_user->hasPermission('ManageSubscriptions')
     || $g_user->hasPermission('ManageUserTypes')
-    || $g_user->hasPermission('ManageReaders'));
+    || $g_user->hasPermission('ManageReaders')
+    || $g_user->hasPermission('EditAuthors'));
 
 $showAdminActions = (($g_user->hasPermission('ManageIssue') && $g_user->hasPermission('AddArticle'))
     || (CampCache::IsEnabled() && $g_user->hasPermission('ClearCache')));
@@ -549,14 +550,17 @@ if ($showUserMenu) {
         'module' => 'admin',
         'controller' => 'user-points',
         'action' => 'index',
+        'privilege' => 'manage',
     );
 
-    $pages[4]['pages'][] = array(
-        'label' => getGS('Create new account'),
-        'module' => 'admin',
-        'controller' => 'user',
-        'action' => 'create',
-    );
+    if ($g_user->hasPermission('ManageUsers') || $g_user->hasPermission('DeleteUsers')) {
+        $pages[4]['pages'][] = array(
+            'label' => getGS('Create new account'),
+            'module' => 'admin',
+            'controller' => 'user',
+            'action' => 'create',
+        );
+    }
 } else {
     unset($pages[4]);
 }
