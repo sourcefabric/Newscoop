@@ -122,7 +122,7 @@ class Issue extends Entity
      */
     public function getPublicationId()
     {
-        return $this->publication->getId();
+        return $this->publication !== null ? $this->publication->getId() : null;
     }
     /**
      * Get sections

@@ -276,7 +276,7 @@ $('a.iframe').each(function() {
     if (!$(this).attr('custom')) {
         $(this).fancybox({
             hideOnContentClick: false,
-            width: 660,
+            width: 800,
             height: 500,
             onStart: function() { // check if there are any changes
                 return checkChanged();
