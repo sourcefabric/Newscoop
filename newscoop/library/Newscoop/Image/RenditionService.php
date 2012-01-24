@@ -130,6 +130,10 @@ class RenditionService
         $renditions = array();
         foreach (glob($this->config['theme_path'] . '/publication_*/theme_*/theme.xml') as $themeInfo) {
             $xml = simplexml_load_file($themeInfo);
+            if (!$xml->renditions) {
+                continue;
+            }
+
             foreach ($xml->renditions->rendition as $rendition) {
                 if (!isset($renditions[(string) $rendition['name']])) {
                     $renditions[(string) $rendition['name']] = new Rendition($rendition['width'], $rendition['height'], $rendition['specs'], $rendition['name']);
