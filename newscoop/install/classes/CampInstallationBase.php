@@ -566,7 +566,8 @@ XML;
                           'newscoop_indexer',
                           'newscoop_notifyendsubs',
                           'newscoop_notifyevents',
-                          'newscoop_statistics');
+                          'newscoop_statistics',
+                          'newscoop_stats');
 
         $template = CampTemplate::singleton();
         $campsiteBinDir = CS_PATH_SITE.DIR_SEP.'bin';

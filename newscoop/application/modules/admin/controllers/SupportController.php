@@ -20,6 +20,11 @@ class Admin_SupportController extends Zend_Controller_Action
     {
         $this->view->stats = $this->_helper->service('stat')->getAll();
         
+        // saving them here to retrieve later, because these are not evailable when run in cli
+        SystemPref::set('support_stats_server', $this->view->stats['server']);
+        SystemPref::set('support_stats_ip_address', $this->view->stats['ipAddress']);
+        SystemPref::set('support_stats_ram_total', $this->view->stats['ramTotal']);
+        
         if ($this->getRequest()->isPost()) {
             $values = $this->getRequest()->getPost();
             
