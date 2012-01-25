@@ -39,7 +39,7 @@ EOT
         if ($supportSend) {
             $stats = $this->getHelper('container')->getService('stat')->getAll();
             
-            $statUrl = 'http://stat.sourcefabric.org';
+            $statsUrl = 'http://stat.sourcefabric.org';
             $parameters = array('p' => 'newscoop');
             $parameters['installation_id'] = $stats['installationId'];
             $parameters['server'] = \SystemPref::get('support_stats_server');
@@ -63,16 +63,11 @@ EOT
             $parameters['comments'] = $stats['comments'];
             $parameters['hits'] = $stats['hits'];
             
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $statUrl);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, $parameters);
-            $output = curl_exec($ch);
-            $info = curl_getinfo($ch);
-            curl_close($ch);
-            
-            echo($output);
+            $client = new \Zend_Http_Client();
+            $client->setUri($statsUrl);
+            $client->setParameterPost($parameters);
+            $response = $client->request('POST');
+            echo($response->getBody());
         }
     }
 }
