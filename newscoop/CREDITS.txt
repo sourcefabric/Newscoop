@@ -1,7 +1,45 @@
-Copyright (C) 2010-2011 Sourcefabric o.p.s
+Copyright (C) 2010-2012 Sourcefabric o.p.s
 Copyright (C) 2002-2009 Media Development Loan Fund
 
 Newscoop Credits (by Version Number)
+
+-------------------------------------------
+Newscoop 4.0-RC1 Credits
+-------------------------------------------
+Developers:
+- Holman Romero <holman.romero@sourcefabric.org>
+- Ozan Ozbek <ozan.ozbek@sourcefabric.org>
+- Petr Jašek <petr.jasek@sourcefabric.org>
+- Vlad Nicoara <vlad.nicoara@sourcefabric.org>
+
+QA / Testing
+- Ofir Gal <ofir.gal@sourcefabric.org>
+- Sebastian Šimon <sebastian.simon@sourcefabric.org>
+
+Features Concept and Design
+- Sava Tatic <sava.tatic@sourcefabric.org>
+
+-------------------------------------------
+Newscoop 4.0-beta1 and 4.0-beta2 Credits
+-------------------------------------------
+Developers:
+- Holman Romero <holman.romero@sourcefabric.org>
+- Martin Saturka <martin.saturka@sourcefabric.org>
+- Mihai Balaceanu <mihai.balaceanu@sourcefabric.org>
+- Mugur Rus <mugur.rus@sourcefabric.org>
+- Ozan Ozbek <ozan.ozbek@sourcefabric.org>
+- Petr Jašek <petr.jasek@sourcefabric.org>
+- Vlad Nicoara <vlad.nicoara@sourcefabric.org>
+
+User Interface:
+- Vladimir Stefanovic <vladimir.stefanovic@sourcefabric.org>
+
+QA / Testing
+- Ofir Gal <ofir.gal@sourcefabric.org>
+- Sebastian Šimon <sebastian.simon@sourcefabric.org>
+
+Project Management
+- Paul Baranowski <paul.baranowski@sourcefabric.org>
 
 -------------------------------------------
 Newscoop 3.6.0-RC1, RC2 and RC3 Credits
