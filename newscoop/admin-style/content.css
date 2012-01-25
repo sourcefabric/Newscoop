@@ -788,3 +788,27 @@ h1 {
     float: right;
     font-size: 0.5em;
 }
+
+#slideshow .slideshow {
+    height: 1%;
+    min-height: 100px;
+    overflow: hidden;
+}
+
+#slideshow .slideshow li {
+    float: left;
+    margin: 8px;
+    padding: 5px;
+    width: 100px;
+    height: 100px;
+    background-color: #fff;
+}
+
+#slideshow .placeholder {
+    min-width: 100px;
+    min-height: 100px;
+}
+
+#slideshow .slideshow figure {
+    margin: 0;
+}

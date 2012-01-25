@@ -1,0 +1,76 @@
+<?php $this->placeholder('bodyId')->set('slideshow'); ?>
+
+<?php echo $this->form; ?>
+
+<ul id="slideshow-items" class="slideshow">
+    <?php foreach ($this->slideshow->getItems() as $item) { ?>
+    <?php echo $this->packageItem($item); ?>
+    <?php } ?>
+</ul>
+
+<h2><?php putGS("Article images"); ?></h2>
+<ul class="thumbnails">
+    <?php foreach ($this->images as $image) { ?>
+    <li id="image-<?php echo $image->getId(); ?>">
+        <figure>
+            <div><?php echo $this->thumbnail($image->getPath(), 100, 100, 'fit')->getImg($this); ?></div>
+            <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></label></figcaption>
+        </figure>
+    </li>
+    <?php } ?>
+</ul>
+
+<script>
+/**
+ * Set order of items
+ *
+ * @return void
+ */
+function setOrder() {
+    $.post("<?php echo $this->url(array(
+        'module' => 'admin',
+        'controller' => 'slideshow',
+        'action' => 'set-order',
+        'format' => 'json',
+    )); ?>", {
+        order: $('#slideshow-items').sortable('toArray'),
+    }, function (data, textStatus) {
+    }, 'json');
+}
+
+$(function() {
+    $('.slideshow').sortable({
+        placeholder: 'placeholder',
+        receive: function(event, ui) {
+            var imageId = ui.item.attr('id');
+            $.post("<?php echo $this->url(array(
+                'module' => 'admin',
+                'controller' => 'slideshow',
+                'action' => 'add-item',
+                'format' => 'json',
+            )); ?>", {
+                image: imageId,
+            }, function (data, textStatus) {
+                $('#slideshow-items #' + imageId).replaceWith(data.item);
+                setOrder();
+            }, 'json');
+        },
+        update: setOrder
+    });
+
+    $('.thumbnails li').draggable({
+        revert: true,
+        connectToSortable: 'ul.slideshow',
+        opacity: 0.8,
+        helper: 'clone'
+    });
+
+    $('#slideshow-items .remove').live('click', function(e) {
+        e.preventDefault();
+        var link = $(this);
+        $.post(link.attr('href') + '?format=json', function (data, textStatus) {
+            link.closest('li').detach();
+        });
+    });
+});
+</script>

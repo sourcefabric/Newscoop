@@ -109,4 +109,14 @@ class ImageServiceTest extends \TestCase
         $images = $this->service->findByArticle(self::ARTICLE_NUMBER);
         $this->assertTrue($images[0]->isDefault());
     }
+
+    public function testFind()
+    {
+        $this->assertNull($this->service->find(1));
+
+        $this->orm->persist(new LocalImage(self::PICTURE_LANDSCAPE));
+        $this->orm->flush();
+
+        $this->assertNotNull($this->service->find(1));
+    }
 }

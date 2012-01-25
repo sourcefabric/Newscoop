@@ -251,6 +251,18 @@ class ImageService
     }
 
     /**
+     * Find image
+     *
+     * @param int $id
+     * @return Newscoop\Image\LocalImage
+     */
+    public function find($id)
+    {
+        return $this->orm->getRepository('Newscoop\Image\LocalImage')
+            ->find($id);
+    }
+
+    /**
      * Encode path
      *
      * @param string $path

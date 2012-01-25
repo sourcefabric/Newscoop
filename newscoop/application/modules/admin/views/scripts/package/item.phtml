@@ -1,0 +1,9 @@
+<li id="item-<?php echo $this->item->getId(); ?>">
+    <?php echo $this->thumbnail($this->item->getImage()->getPath(), 100, 100, 'fit')->getImg($this); ?>
+    <a href="<?php echo $this->url(array(
+        'module' => 'admin',
+        'controller' => 'slideshow',
+        'action' => 'remove-item',
+        'item' => $this->item->getId(),
+    )); ?>" class="remove">Remove</a>
+</li>
