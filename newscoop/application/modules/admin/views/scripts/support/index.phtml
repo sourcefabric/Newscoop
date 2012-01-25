@@ -8,8 +8,6 @@
 
 <form action="<?php echo($this->form->getAction()); ?>" method="post">
     <dl class="zend_form">
-        <?php echo($this->form->agree); ?>
-        
         <p>
         <?php echo(getGS('Help Newscoop improve by letting us know you are using it. This info will be collected regularly in order to improve your user experience.')); ?>
         <br>
@@ -27,6 +25,15 @@
             </div>
         </fieldset>
         </p>
+        
+        <b><?php echo(getGS('Current status: ')); ?></b>
+        <?php if ($this->agree) {
+            echo(getGS('You are sending daily statistics.'));
+        } else {
+            echo(getGS('You are NOT sending daily statistics.'));
+        } ?>
+        <?php echo($this->form->agree); ?>
+        
         <?php echo($this->form->save); ?>
         <?php echo($this->form->cancel); ?>
         

@@ -25,6 +25,8 @@ class Admin_SupportController extends Zend_Controller_Action
         SystemPref::set('support_stats_ip_address', $this->view->stats['ipAddress']);
         SystemPref::set('support_stats_ram_total', $this->view->stats['ramTotal']);
         
+        $this->view->agree = SystemPref::get('support_send');
+        
         if ($this->getRequest()->isPost()) {
             $values = $this->getRequest()->getPost();
             
