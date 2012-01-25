@@ -82,6 +82,12 @@ class NewscoopEntityArticleProxy extends \Newscoop\Entity\Article implements \Do
         return parent::getIssueId();
     }
 
+    public function getWorkflowStatus()
+    {
+        $this->__load();
+        return parent::getWorkflowStatus();
+    }
+
     public function setLanguage(\Newscoop\Entity\Language $p_language)
     {
         $this->__load();
