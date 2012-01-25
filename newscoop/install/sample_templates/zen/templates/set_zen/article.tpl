@@ -78,6 +78,10 @@ Location(s):
     </div><!--eightcol-->
     <div class="fourcol last">
 
+<div class="block">
+{{ include file="_tpl/article-meta.tpl" }}
+</div>
+
 {{ if $gimme->article->has_map }}
   <div class="block">
     <h3>Locations</h3>
