@@ -1,0 +1,118 @@
+<style>
+    dt {
+        display: inline;
+    }
+    dd {
+        display: inline;
+    }
+    .textAreaFix {
+        width: 80%;
+        height: 100px;
+    }
+</style>
+
+<?php $this->placeholder('title')->set(getGS('Support')); ?>
+
+<?php if ($this->first) { ?>
+<dl class="zend_form">
+    <?php echo(getGS('Because this is your first time logging into the admin panel, you need to fill in support details.')); ?>
+</dl><br>
+<?php } ?>
+
+<form action="<?php echo($this->form->getAction()); ?>" method="post">
+    <dl class="zend_form">
+        
+        <p>
+        <?php echo(getGS('Help Newscoop improve by letting us know you are using it. This info will be collected regularly in order to improve your user experience.')); ?>
+        <br>
+        <fieldset>
+            <legend><?php echo(getGS('Sample support feedback')); ?></legend>
+            <div id="feedback" style="overflow: auto; height: 100px;">
+                <table style="width: 100%;">
+                <?php foreach ($this->stats as $key => $value) { ?>
+                <tr>
+                    <td><?php echo($key); ?></td>
+                    <td><?php echo($value); ?></td>
+                </tr>
+                <?php } ?>
+                </table>
+            </div>
+        </fieldset>
+        </p>
+        <!--
+        <p>
+        <?php echo(getGS('Click the box below to advertise your site on Sourcefabric.org. This data will be collected in addition to the support feedback.')); ?>
+        <?php echo($this->form->promote); ?><label for="promote"><?php echo(getGS('Promote website on Sourcefabric.org')); ?></label>
+        <br>
+        <div id="promote_details">
+        <fieldset>
+            <legend><?php echo(getGS('Details')); ?></legend>
+            <?php echo($this->form->promote_name); ?><br>
+            <?php echo($this->form->promote_description); ?><br>
+            <?php echo($this->form->promote_country); ?><br>
+            <?php echo($this->form->promote_city); ?><br>
+            <?php echo($this->form->promote_phone); ?><br>
+            <?php echo($this->form->promote_email); ?><br>
+        </fieldset>
+        </div>
+        </p>
+        -->
+        <p>
+        <?php echo($this->form->send_support_feedback); ?><label for="send_support_feedback"><?php echo(getGS('Send support feedback')); ?></label><br>
+        <?php echo($this->form->agree_policy); ?><label for="agree_policy"><?php echo(getGS('By checking this box, I agree to Sourcefabric\'s privacy policy.')); ?></label>
+        </p>
+        
+        <?php echo($this->form->save); ?>
+        
+    </dl>
+</form>
+
+<script>
+    /*
+    function fixPromote() {
+        var status = document.getElementById('send_support_feedback').checked;
+        if (status) {
+            document.getElementById('promote').disabled = false;
+        }
+        else {
+            document.getElementById('promote').checked = false;
+            document.getElementById('promote').disabled = true;
+        }
+        fixPromoteDetails();
+    }
+    function fixPromoteDetails() {
+        var status = document.getElementById('promote').checked;
+        if (status) {
+            document.getElementById('promote_details').style.display = 'block';
+        }
+        else {
+            document.getElementById('promote_details').style.display = 'none';
+        }
+    }
+    */
+    function fixSubmit() {
+        var supportStatus = document.getElementById('send_support_feedback').checked;
+        if (supportStatus) {
+            var agreeStatus = document.getElementById('agree_policy').checked;         
+            if (agreeStatus) {
+                document.getElementById('save').style.color = '#ffffff';
+                document.getElementById('save').disabled = false;
+            }
+            else {
+                document.getElementById('save').style.color = '#c0c0c0';
+                document.getElementById('save').disabled = true;
+            }
+        }
+        else {
+            document.getElementById('save').style.color = '#ffffff';
+            document.getElementById('save').disabled = false;
+        }
+    }
+    //
+    $(document).ready(function() {
+        //fixPromote();
+        //fixPromoteDetails();
+        //showFeedback(0);
+        fixSubmit();
+    });
+</script>
