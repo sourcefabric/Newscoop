@@ -136,6 +136,7 @@ label { font-size: 0.8em; width: 30%; float: left; }
 .comment-info { margin-left: 30%; font-size: 0.8em; }
 #comments_wrap li { list-style: none; min-height: 60px; margin: 1em 0; padding: 10px; border-left: 0px solid #ddd; }
 #comments_wrap li.odd { background: #f7f7f7; }
+#comments_wrap li.recommended { background: #e0e0e0; }
 #comments_wrap .user-meta { color: #999; font-size: 0.8em;}
 .posterrorcode { font-style: italic; font-size: 0.8em; color: #aaa;}
 .commentimage { border: 1px solid #ddd; float: left; margin-right: 10px; }

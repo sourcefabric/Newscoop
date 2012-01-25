@@ -49,8 +49,6 @@ Location(s):
 
 </div>
 {{ if $gimme->article->content_accessible }}
-{{* display comment errors also on top, so user sees them *}}
-{{ include file="_tpl/article-comments-errorcheck.tpl" }}
   {{ include file="_tpl/article-ifvideo.tpl" }}
   <div class="full_text">
     <div class="articleinset">
