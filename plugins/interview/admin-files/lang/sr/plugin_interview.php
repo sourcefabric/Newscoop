@@ -1,5 +1,5 @@
 <?php 
-regGS("User receives notification about new interviews", "");
+regGS("User receives notification about new interviews", "Корисник добија обавештења о интервјуима");
 regGS("User is interview moderator", "Корисник је модератор интервјуа");
 regGS("User is interview guest", "Корисник је гост интервјуа");
 regGS("User is interview admin", "Корисник је администратор интервјуа");

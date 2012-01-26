@@ -1,5 +1,5 @@
 <?php 
-regGS("Show all", "");
+regGS("Show all", "Прикажи све");
 regGS("The image has been removed from the article.", "Слика је уклоњена из текста");
 regGS("Unable to add new image.", "Није могуће додати нову слику.");
 regGS("Image number '$1' already exists", "Слика број '$1' већ постоји");
