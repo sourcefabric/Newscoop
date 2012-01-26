@@ -102,8 +102,13 @@ class StatService
     
     public function getAverageSections()
     {
-        $averageSections = round(\Section::GetTotalSections() / $this->getIssues(), 2);
-        return($averageSections);
+        $issues = $this->getIssues();
+        if ($issues == 0) {
+            return(0);
+        }
+        else {
+            return(round(\Section::GetTotalSections() / $this->getIssues(), 2));
+        }
     }
     
     public function getArticles($published = null)
