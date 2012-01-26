@@ -1,5 +1,11 @@
 <li id="item-<?php echo $this->item->getId(); ?>">
-    <?php echo $this->thumbnail($this->item->getImage()->getPath(), 100, 100, 'fit')->getImg($this); ?>
+    <?php echo $this->action('rendition', 'image', 'admin', array(
+        'rendition' => $this->item->getRendition(),
+        'image' => $this->item->getImage(),
+        'width' => 100,
+        'height' => 100,
+    )); ?>
+
     <a href="<?php echo $this->url(array(
         'module' => 'admin',
         'controller' => 'slideshow',

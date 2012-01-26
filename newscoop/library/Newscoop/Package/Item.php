@@ -41,12 +41,35 @@ class Item
     private $offset;
 
     /**
+     * @Column(nullable=True)
+     * @var string
+     */
+    private $caption;
+
+    /**
+     * @Column(nullable=True)
+     * @var string
+     */
+    private $coords;
+
+    /**
+     * @Column(nullable=True, name="video_url")
+     * @var string
+     */
+    private $videoUrl;
+
+    /**
      * @param Newscoop\Package\Package $package
      * @param mixed $item
      */
     public function __construct(Package $package, $item)
     {
-        $this->image = $item;
+        if (is_a($item, 'Newscoop\Image\LocalImage')) {
+            $this->image = $item;
+        } else {
+            $this->videoUrl = $item->getUrl();
+        }
+
         $this->package = $package;
         $this->offset = (int) count($this->package->getItems());
         $this->package->getItems()->set($this->offset, $this);
@@ -92,5 +115,79 @@ class Item
     public function getOffset()
     {
         return $this->offset;
+    }
+
+    /**
+     * Get rendition
+     *
+     * @return Newscoop\Image\Rendition
+     */
+    public function getRendition()
+    {
+        $rendition = $this->package->getRendition();
+        $rendition->setCoords($this->coords);
+        return $rendition;
+    }
+
+    /**
+     * Set caption
+     *
+     * @param string $caption
+     * @return void
+     */
+    public function setCaption($caption)
+    {
+        $this->caption = (string) $caption;
+    }
+
+    /**
+     * Get caption
+     *
+     * @return string
+     */
+    public function getCaption()
+    {
+        return $this->caption;
+    }
+
+    /**
+     * Set crop coordinates
+     *
+     * @param string $coords
+     * @return void
+     */
+    public function setCoords($coords)
+    {
+        $this->coords = (string) $coords;
+    }
+
+    /**
+     * Test if item is video
+     *
+     * @return bool
+     */
+    public function isVideo()
+    {
+        return $this->videoUrl !== null;
+    }
+
+    /**
+     * Test if item is image
+     *
+     * @return bool
+     */
+    public function isImage()
+    {
+        return !$this->isVideo();
+    }
+
+    /**
+     * Get video url
+     *
+     * @return string
+     */
+    public function getVideoUrl()
+    {
+        return $this->videoUrl;
     }
 }

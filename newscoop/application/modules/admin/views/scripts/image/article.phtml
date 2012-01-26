@@ -44,7 +44,7 @@ $(function() {
                 'format' => 'json',
             )); ?>", {
                 'image': ui.draggable.attr('id'),
-                'rendition': li.find('.rendition-name').text()
+                'rendition': li.find('.name').text()
             }, function (data, textStatus) {
                 if (data.exception != undefined) {
                     alert(data.exception);

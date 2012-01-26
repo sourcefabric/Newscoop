@@ -4,52 +4,27 @@ $this->headScript()->appendFile($this->baseUrl('/js/tapmodo-Jcrop-5e58bc9/js/jqu
 $this->placeholder('bodyId')->set('renditions');
 ?>
 
-<div class="controls">
-    <a href="<?php echo $this->url(array(
-        'action' => 'article',
-        'rendition' => null,
-    ));  ?>" class="back">&larr; <?php putGS('Back'); ?></a>
-</div>
-
 <h2><?php echo $this->escape($this->rendition->getName()); ?><br /><small><?php echo array_shift(explode('_', $this->rendition->getSpecs())); ?> <?php echo $this->rendition->getWidth(), 'x',  $this->rendition->getHeight(); ?> / <?php putGS('original'); ?> <?php echo $this->image->getWidth(), 'x', $this->image->getHeight(); ?></small></h2>
 
 <div id="editor">
     <?php echo $this->thumbnail($this->image->getPath(), $this->rendition->getWidth(), $this->rendition->getHeight(), $this->rendition->isCrop() ? 'fill' : $this->rendition->getSpecs())->getImg($this); ?>
+    <input id="image-editor-coords" type="hidden" name="coords" value="" />
 </div>
 
 <?php if ($this->rendition->isCrop()) { ?>
-<div class="controls">
-    <button id="save-jcrop">Save</button>
-</div>
-
 <script>
 $(function() {
     var jcrop;
     $('#editor img').Jcrop({
         aspectRatio: <?php echo $this->rendition->getAspectRatio(); ?>,
         minSize: <?php echo json_encode($this->rendition->getMinSize($this->image)); ?>,
-        trueSize: <?php echo json_encode(array($this->image->getWidth(), $this->image->getHeight())); ?>
+        trueSize: <?php echo json_encode(array($this->image->getWidth(), $this->image->getHeight())); ?>,
+        onChange: function(c) {
+            $('#image-editor-coords').val([c.x, c.y, c.x2, c.y2].join('_'));
+        }
     }, function() {
         jcrop = this;
         jcrop.setSelect(<?php echo json_encode($this->rendition->getSelectArea($this->image)); ?>);
-    });
-
-
-    $('#save-jcrop').click(function() {
-        var button = $(this);
-        button.text(<?php echo json_encode(getGS("Saving...")); ?>);
-        $.post("<?php echo $this->url(array(
-            'module' => 'admin',
-            'controller' => 'image',
-            'action' => 'edit',
-            'image' => $this->image->getId(),
-            'format' => 'json',
-        )); ?>", jcrop.tellSelect(), function (data, textStatus) {
-            button.text(<?php echo json_encode(getGS("Saved")); ?>);
-            window.setTimeout(function() {
-                button.text(<?php echo json_encode(getGS("Save")); ?>);
-            }, 3000);
-        });
     });
 });
 </script>

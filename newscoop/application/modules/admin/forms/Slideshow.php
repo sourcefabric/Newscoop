@@ -18,9 +18,28 @@ class Admin_Form_Slideshow extends Zend_Form
             'required' => true,
         ));
 
+        $this->addElement('text', 'description', array(
+            'label' => getGS('Description'),
+        ));
+
         $this->addElement('submit', 'submit', array(
             'label' => getGS('Save'),
             'ignore' => true,
         ));
+    }
+
+    /**
+     * Set defaults by given entity
+     *
+     * @param Newscoop\Package\Package $package
+     * @return Admin_Form_Slideshow
+     */
+    public function setDefaultsFromEntity(\Newscoop\Package\Package $package)
+    {
+        $this->setDefaults(array(
+            'headline' => $package->getHeadline(),
+        ));
+
+        return $this;
     }
 }

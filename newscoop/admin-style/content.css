@@ -678,25 +678,39 @@ h1 {
     background-color: #000;
 }
 
-.renditions .preview-wrap {
-    height: 102px;
+dl.rendition {
+    margin: 0;
+    padding: 0;
 }
 
-.renditions .preview {
-    border: 1px solid #ccc;
-    overflow: hidden;
+dl.rendition dt {
+    margin: 0;
+    padding: 0;
 }
 
-.renditions li.state-active .preview {
-    border-color: #fff;
-}
-
-.renditions h3 {
+dl.rendition dd {
     margin: 3px 0 0;
     padding: 0;
 }
 
-.renditions li.state-active h3 {
+dl.rendition .preview {
+    height: 102px;
+}
+
+dl.rendition .preview {
+    border: 1px solid #ccc;
+    overflow: hidden;
+}
+
+dl.rendition dt {
+    height: 102px;
+}
+
+li.state-active dl.rendition .preview {
+    border-color: #fff;
+}
+
+li.state-active dl.rendition dd.name {
     color: #fff;
 }
 
@@ -800,7 +814,6 @@ h1 {
     margin: 8px;
     padding: 5px;
     width: 100px;
-    height: 100px;
     background-color: #fff;
 }
 

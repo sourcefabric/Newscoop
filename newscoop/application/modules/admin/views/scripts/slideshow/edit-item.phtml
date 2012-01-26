@@ -1,0 +1,38 @@
+<form id="edit-form" method="<?php echo $this->form->getMethod(); ?>">
+
+<div class="controls">
+    <a href="<?php echo $this->url(array(
+        'action' => 'edit',
+        'item' => null,
+    ));  ?>" class="back">&larr; <?php putGS('Back'); ?></a>
+</div>
+
+<?php echo $this->item->isImage() ? $this->imageEditor($this->rendition, $this->image) : $this->videoPreview($this->item->getVideoUrl(), $this->rendition->getWidth(), $this->rendition->getHeight()); ?>
+
+<dl>
+    <?php echo $this->form->caption; ?>
+</dl>
+
+<div class="controls">
+    <button><?php putGS('Save'); ?></button>
+</div>
+
+</form>
+
+<script>
+$(function() {
+    $('#edit-form').submit(function(e) {
+        e.preventDefault();
+        var button = $(this).find('button');
+        button.text(<?php echo json_encode(getGS("Saving...")); ?>);
+        var values = $(this).serializeArray();
+        $.post('<?php echo $this->url(array()); ?>', values, function(data, textStatus) {
+            button.text(<?php echo json_encode(getGS("Saved")); ?>);
+            window.setTimeout(function() {
+                button.text(<?php echo json_encode(getGS("Save")); ?>);
+            }, 3000);
+
+        }, 'json');
+    });
+});
+</script>

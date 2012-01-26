@@ -26,7 +26,7 @@ class RenditionServiceTest extends \TestCase
 
     public function setUp()
     {
-        $this->orm = $this->setUpOrm('Newscoop\Image\LocalImage', 'Newscoop\Image\ArticleRendition', 'Newscoop\Image\ArticleImage');
+        $this->orm = $this->setUpOrm('Newscoop\Image\LocalImage', 'Newscoop\Image\ArticleRendition', 'Newscoop\Image\ArticleImage', 'Newscoop\Image\Rendition');
         $this->imageService = new ImageService(array(), $this->orm);
         $this->service = new RenditionService(array(
             'theme_path' => APPLICATION_PATH . '/../tests/fixtures/themes',
@@ -144,5 +144,13 @@ class RenditionServiceTest extends \TestCase
         $this->assertEquals(300, $renditions['landscape']->getHeight());
         $this->assertEquals('crop', $renditions['landscape']->getSpecs());
         $this->assertEquals('landscape', $renditions['landscape']->getName());
+    }
+
+    public function testGetOptions()
+    {
+        $options = $this->service->getOptions();
+        $this->assertEquals(5, count($options));
+        $this->assertArrayHasKey('landscape', $options);
+        $this->assertInstanceOf('Newscoop\Image\Rendition', $this->service->getRendition('landscape'));
     }
 }

@@ -28,6 +28,11 @@ class RenditionService
     protected $imageService;
 
     /**
+     * @var array
+     */
+    protected $renditions;
+
+    /**
      * @param Doctrine\ORM\EntityManager $orm
      */
     public function __construct(array $config, \Doctrine\ORM\EntityManager $orm, ImageService $imageService)
@@ -127,21 +132,56 @@ class RenditionService
      */
     public function getRenditions()
     {
-        $renditions = array();
-        foreach (glob($this->config['theme_path'] . '/publication_*/theme_*/theme.xml') as $themeInfo) {
-            $xml = simplexml_load_file($themeInfo);
-            if (!$xml->renditions) {
-                continue;
-            }
+        if ($this->renditions === null) {
+            $this->renditions = array();
+            foreach (glob($this->config['theme_path'] . '/publication_*/theme_*/theme.xml') as $themeInfo) {
+                $xml = simplexml_load_file($themeInfo);
+                if (!$xml->renditions) {
+                    continue;
+                }
 
-            foreach ($xml->renditions->rendition as $rendition) {
-                if (!isset($renditions[(string) $rendition['name']])) {
-                    $renditions[(string) $rendition['name']] = new Rendition($rendition['width'], $rendition['height'], $rendition['specs'], $rendition['name']);
+                foreach ($xml->renditions->rendition as $rendition) {
+                    if (!isset($this->renditions[(string) $rendition['name']])) {
+                        $this->renditions[(string) $rendition['name']] = new Rendition($rendition['width'], $rendition['height'], $rendition['specs'], $rendition['name']);
+                    }
                 }
             }
         }
 
-        return $renditions;
+        return $this->renditions;
+    }
+
+    /**
+     * Get rendition by given name
+     *
+     * @param string $name
+     * @return Newscoop\Image\Rendition
+     */
+    public function getRendition($name)
+    {
+        $renditions = $this->getRenditions();
+        $rendition = array_key_exists($name, $renditions) ? $renditions[$name] : null;
+        if ($rendition !== null && !$this->orm->contains($rendition)) {
+            $this->orm->persist($rendition);
+            $this->orm->flush($rendition);
+        }
+
+        return $rendition;
+    }
+
+    /**
+     * Get options
+     *
+     * @return array
+     */
+    public function getOptions()
+    {
+        $options = array();
+        foreach ($this->getRenditions() as $name => $rendition) {
+            $options[$name] = sprintf('%s (%s %dx%d)', $name, array_shift(explode('_', $rendition->getSpecs())), $rendition->getWidth(), $rendition->getHeight());
+        }
+
+        return $options;
     }
 
     /**

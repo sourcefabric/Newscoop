@@ -13,20 +13,32 @@ require_once __DIR__ . '/../../Nette/exceptions.php';
 
 /**
  * Rendition
+ * @Entity
+ * @Table(name="rendition")
  */
 class Rendition
 {
     /**
+     * @Id
+     * @Column(type="string")
+     * @var string
+     */
+    private $name;
+
+    /**
+     * @Column(type="integer")
      * @var int
      */
     private $width;
 
     /**
+     * @Column(type="integer")
      * @var int
      */
     private $height;
 
     /**
+     * @Column(type="text")
      * @var string
      */
     private $specs;
@@ -34,7 +46,7 @@ class Rendition
     /**
      * @var string
      */
-    private $name;
+    private $coords;
 
     /**
      * @param int $width
@@ -85,7 +97,7 @@ class Rendition
      */
     public function getSpecs()
     {
-        return $this->specs;
+        return $this->coords !== null && $this->isCrop() ? 'crop_' . $this->coords :  $this->specs;
     }
 
     /**
@@ -96,6 +108,17 @@ class Rendition
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set coordinates for image
+     *
+     * @param string $coords
+     * @return void
+     */
+    public function setCoords($coords)
+    {
+        $this->coords = $coords;
     }
 
     /**
@@ -120,7 +143,7 @@ class Rendition
             $height = round((float) $ratio * (float) $this->height);
         }
 
-        return new Rendition($width, $height, $this->specs);
+        return new Rendition($width, $height, $this->getSpecs());
     }
 
     /**
@@ -142,7 +165,7 @@ class Rendition
             $height = min($height, $this->height);
         }
 
-        return new Thumbnail($imageService->getSrc($image->getPath(), $this->width, $this->height, $this->specs), $width, $height);
+        return new Thumbnail($imageService->getSrc($image->getPath(), $this->width, $this->height, $this->getSpecs()), $width, $height);
     }
 
     /**
@@ -155,7 +178,7 @@ class Rendition
     {
         $image = NetteImage::fromFile(APPLICATION_PATH . '/../' . $imagePath);
         if ($this->isCrop()) {
-            $cropSpecs = explode('_', $this->specs);
+            $cropSpecs = explode('_', $this->getSpecs());
             if (count($cropSpecs) === 1) {
                 $image->resize($this->width, $this->height, $this->getFlags());
                 $image->crop('50%', '50%', $this->width, $this->height);
@@ -201,7 +224,7 @@ class Rendition
     public function getSelectArea(ImageInterface $image)
     {
         if ($this->isCrop()) {
-            $cropSpecs = explode('_', $this->specs);
+            $cropSpecs = explode('_', $this->getSpecs());
             if (count($cropSpecs) > 1) {
                 array_shift($cropSpecs);
                 return $cropSpecs;
@@ -236,7 +259,7 @@ class Rendition
      */
     private function getFlags()
     {
-        $specs = array_shift(explode('_', $this->specs, 2));
+        $specs = array_shift(explode('_', $this->getSpecs(), 2));
         switch ($specs) {
             case 'fill':
             case 'crop':

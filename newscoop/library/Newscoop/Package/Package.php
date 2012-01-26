@@ -7,6 +7,8 @@
 
 namespace Newscoop\Package;
 
+use Newscoop\Image\Rendition;
+
 /**
  * @Entity
  * @Table(name="package")
@@ -20,6 +22,17 @@ class Package
     private $id;
 
     /**
+     * @Column * @var string
+     */
+    private $headline;
+
+    /**
+     * @Column(type="text", nullable=True)
+     * @var string
+     */
+    private $description;
+
+    /**
      * @Column(type="integer", nullable=True)
      * @var int
      */
@@ -31,6 +44,13 @@ class Package
      * @return Doctrine\Common\Collections\Collection
      */
     private $items;
+
+    /**
+     * @ManyToOne(targetEntity="Newscoop\Image\Rendition")
+     * @JoinColumn(referencedColumnName="name")
+     * @var Newscoop\Image\Rendition
+     */
+    private $rendition;
 
     /**
      */
@@ -55,6 +75,27 @@ class Package
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set headline
+     *
+     * @param string $headline
+     * @return void
+     */
+    public function setHeadline($headline)
+    {
+        $this->headline = (string) $headline;
+    }
+
+    /**
+     * Get headline
+     *
+     * @return string
+     */
+    public function getHeadline()
+    {
+        return $this->headline;
     }
 
     /**
@@ -86,5 +127,26 @@ class Package
     public function getItems()
     {
         return $this->items;
+    }
+
+    /**
+     * Set rendition
+     *
+     * @param Newscoop\Image\Rendition $rendition
+     * @return void
+     */
+    public function setRendition(Rendition $rendition)
+    {
+        $this->rendition = $rendition;
+    }
+
+    /**
+     * Get rendition
+     *
+     * @return Newscoop\Image\Rendition
+     */
+    public function getRendition()
+    {
+        return $this->rendition;
     }
 }

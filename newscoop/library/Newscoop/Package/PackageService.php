@@ -55,6 +55,7 @@ class PackageService
                     $schemaTool->createSchema(array(
                         $this->orm->getClassMetadata('Newscoop\Package\Package'),
                         $this->orm->getClassMetadata('Newscoop\Package\Item'),
+                        $this->orm->getClassMetadata('Newscoop\Image\Rendition'),
                     ));
                 } catch (\Exception $e) {
                 }
@@ -83,6 +84,14 @@ class PackageService
             $package->setArticleNumber($values['article']);
         }
 
+        if (array_key_exists('headline', $values)) {
+            $package->setHeadline($values['headline']);
+        }
+
+        if (array_key_exists('rendition', $values)) {
+            $package->setRendition($values['rendition']);
+        }
+
         $this->orm->flush($package);
         return $package;
     }
@@ -97,7 +106,7 @@ class PackageService
      */
     public function addItem(Package $package, $item)
     {
-        if (!$this->orm->contains($item)) {
+        if (is_a($item, 'Newscoop\Image\LocalImage') && !$this->orm->contains($item)) {
             $this->orm->persist($item);
             $this->orm->flush($item);
         }
@@ -149,5 +158,36 @@ class PackageService
                 return;
             }
         }
+    }
+
+    /**
+     * Find item by given id
+     *
+     * @param int $id
+     * @return Newscoop\Package\Item
+     */
+    public function findItem($id)
+    {
+        return $this->orm->getRepository('Newscoop\Package\Item')->find($id);
+    }
+
+    /**
+     * Save item
+     *
+     * @param array $values
+     * @param Newscoop\Package\Item $item
+     * @return void
+     */
+    public function saveItem(array $values, Item $item)
+    {
+        if (array_key_exists('caption', $values)) {
+            $item->setCaption($values['caption']);
+        }
+
+        if (array_key_exists('coords', $values)) {
+            $item->setCoords($values['coords']);
+        }
+
+        $this->orm->flush($item);
     }
 }
