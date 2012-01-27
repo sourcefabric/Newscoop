@@ -52,10 +52,22 @@ class NewscoopImageLocalImageProxy extends \Newscoop\Image\LocalImage implements
         return parent::getHeight();
     }
 
+    public function setDescription($description)
+    {
+        $this->__load();
+        return parent::setDescription($description);
+    }
+
+    public function getDescription()
+    {
+        $this->__load();
+        return parent::getDescription();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'basename');
+        return array('__isInitialized__', 'id', 'basename', 'description');
     }
 
     public function __clone()

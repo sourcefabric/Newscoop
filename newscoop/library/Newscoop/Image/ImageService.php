@@ -263,6 +263,36 @@ class ImageService
     }
 
     /**
+     * Find images by a set of criteria
+     *
+     * @param array $criteria
+     * @param array $orderBy
+     * @param int $limit
+     * @param int $offset
+     * @return array
+     */
+    public function findBy(array $criteria, $orderBy = null, $limit = 25, $offset = 0)
+    {
+        return $this->orm->getRepository('Newscoop\Image\LocalImage')
+            ->findBy($criteria, $orderBy, $limit, $offset);
+    }
+
+    /**
+     * Get count of images for a set of criteria
+     *
+     * @param array $criteria
+     * @return int
+     */
+    public function getCountBy(array $criteria)
+    {
+        return (int) $this->orm->getRepository('Newscoop\Image\LocalImage')
+            ->createQueryBuilder('i')
+            ->select('COUNT(i)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
+    /**
      * Encode path
      *
      * @param string $path

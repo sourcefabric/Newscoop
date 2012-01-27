@@ -111,6 +111,10 @@ class PackageService
             $this->orm->flush($item);
         }
 
+        if ($package->getRendition() !== null && is_a($item, 'Newscoop\Image\LocalImage') && !$package->getRendition()->fits($item)) {
+            throw new \InvalidArgumentException("Image too small.");
+        }
+
         $packageItem = new Item($package, $item);
         $this->orm->persist($packageItem);
         $this->orm->flush();

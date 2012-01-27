@@ -8,7 +8,10 @@
 namespace Newscoop\Package;
 
 use Newscoop\Image\LocalImage,
-    Newscoop\Image\Rendition;
+    Newscoop\Image\Rendition,
+    Newscoop\Image\LocalImageTest;
+
+require_once __DIR__ . '/../Image/LocalImageTest.php';
 
 /**
  */
@@ -122,7 +125,7 @@ class PackageServiceTest extends \TestCase
             'rendition' => $rendition,
         ));
 
-        $this->service->addItem($package, new LocalImage('test'));
+        $this->service->addItem($package, new LocalImage(LocalImageTest::PICTURE_LANDSCAPE));
         $this->assertEquals($rendition, $package->getItems()->first()->getRendition());
     }
 
@@ -131,7 +134,7 @@ class PackageServiceTest extends \TestCase
         $this->assertNull($this->service->findItem(1));
 
         $package = $this->service->save(array('headline' => 'test'));
-        $this->service->addItem($package, new LocalImage('test'));
+        $this->service->addItem($package, new LocalImage(LocalImageTest::PICTURE_LANDSCAPE));
 
         $this->assertNotNull($this->service->findItem(1));
     }
@@ -144,7 +147,7 @@ class PackageServiceTest extends \TestCase
             'rendition' => $rendition,
         ));
 
-        $item = $this->service->addItem($package, new LocalImage('test'));
+        $item = $this->service->addItem($package, new LocalImage(LocalImageTest::PICTURE_LANDSCAPE));
 
         $this->service->saveItem(array(
             'caption' => 'testcap',
@@ -165,6 +168,19 @@ class PackageServiceTest extends \TestCase
         $this->assertTrue($youtube->isVideo());
         $this->assertFalse($youtube->isImage());
         $this->assertEquals('http://youtu.be/1XsPVO61e9w', $youtube->getVideoUrl());
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testAddSmallImage()
+    {
+        $package = $this->service->save(array(
+            'headline' => 'test',
+            'rendition' => $this->getRendition(800, 600, 'fit', 'test'),
+        ));
+
+        $this->service->addItem($package, new LocalImage(LocalImageTest::PICTURE_LANDSCAPE));
     }
 
     /**

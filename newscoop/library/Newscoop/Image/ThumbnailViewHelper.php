@@ -36,6 +36,10 @@ class ThumbnailViewHelper extends \Zend_View_Helper_Abstract
      */
     public function thumbnail($image, $width, $height, $specs)
     {
-        return $this->imageService->getThumbnail(new Rendition($width, $height, $specs), new LocalImage($image));
+        if (!is_a($image, 'Newscoop\Image\LocalImage')) {
+            $image = new LocalImage($image);
+        }
+
+        return $this->imageService->getThumbnail(new Rendition($width, $height, $specs), $image);
     }
 }

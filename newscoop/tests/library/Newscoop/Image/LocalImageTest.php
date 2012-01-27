@@ -28,10 +28,17 @@ class LocalImageTest extends \TestCase
         $this->assertEquals(self::PICTURE_LANDSCAPE, $image->getPath());
     }
 
-    public function testDimensions()
+    public function testGetDimensions()
     {
         $image = new LocalImage(self::PICTURE_LANDSCAPE);
         $this->assertEquals(500, $image->getWidth());
         $this->assertEquals(333, $image->getHeight());
+    }
+
+    public function testSetGetDescription()
+    {
+        $image = new LocalImage(self::PICTURE_LANDSCAPE);
+        $image->setDescription('desc');
+        $this->assertEquals('desc', $image->getDescription());
     }
 }

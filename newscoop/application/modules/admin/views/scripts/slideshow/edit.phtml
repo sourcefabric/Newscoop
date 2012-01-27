@@ -17,18 +17,6 @@
     <input type="text" name="url" /> <button><?php putGS('Add video'); ?></button>
 </div></form>
 
-<h2><?php putGS('Attached images'); ?></h2>
-<ul class="thumbnails">
-    <?php foreach ($this->images as $image) { ?>
-    <li id="image-<?php echo $image->getId(); ?>">
-        <figure>
-            <div><?php echo $this->thumbnail($image->getPath(), 100, 100, 'fit')->getImg($this); ?></div>
-            <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></label></figcaption>
-        </figure>
-    </li>
-    <?php } ?>
-</ul>
-
 <script>
 /**
  * Set order of items
@@ -60,6 +48,12 @@ $(function() {
             )); ?>", {
                 image: imageId,
             }, function (data, textStatus) {
+                if (data.error_message) {
+                    $('#slideshow-items #' + imageId).detach();
+                    alert(data.error_message);
+                    return;
+                }
+
                 $('#slideshow-items #' + imageId).replaceWith(data.item);
                 setOrder();
             }, 'json');
@@ -68,7 +62,7 @@ $(function() {
         cursor: 'move'
     });
 
-    $('.thumbnails li').draggable({
+    $('.thumbnails li, .images.archive li').draggable({
         revert: true,
         connectToSortable: 'ul.slideshow',
         opacity: 0.8,
@@ -85,3 +79,17 @@ $(function() {
     });
 });
 </script>
+
+<h2><?php putGS('Attached images'); ?></h2>
+<ul class="thumbnails">
+    <?php foreach ($this->images as $image) { ?>
+    <li id="image-<?php echo $image->getId(); ?>">
+        <figure>
+            <div><?php echo $this->thumbnail($image->getPath(), 100, 100, 'fit')->getImg($this); ?></div>
+            <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></label></figcaption>
+        </figure>
+    </li>
+    <?php } ?>
+</ul>
+
+<?php echo $this->action('list-images', 'media-archive', 'admin'); ?>

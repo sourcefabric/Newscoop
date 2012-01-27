@@ -734,6 +734,7 @@ li.state-active dl.rendition dd.name {
 }
 
 .thumbnails {
+    clear: both;
     height: 1%;
     overflow: hidden;
     margin: 0 0 8px;
@@ -780,7 +781,6 @@ li.state-active dl.rendition dd.name {
 }
 
 #next h2 {
-    clear: both;
     margin: 13px 0 0;
     padding: 0 13px;
     font-size: 1.5em;
@@ -989,4 +989,9 @@ li.state-active dl.rendition dd.name {
 
 .renditions .active, .slideshow .active {
     background-color: #d9eaf9;
+}
+
+.archive.images figcaption {
+    height: 2.2em;
+    overflow: hidden;
 }

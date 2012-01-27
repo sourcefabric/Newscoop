@@ -1,0 +1,13 @@
+<div class="image-archive">
+<h2><?php putGS('Archived images'); ?></h2>
+<ul class="thumbnails archive images">
+    <?php foreach ($this->images as $image) { ?>
+    <li id="image-<?php echo $image->getId(); ?>">
+        <figure>
+            <div><?php echo $this->thumbnail($image, 100, 100, 'fit')->getImg($this); ?></div>
+            <figcaption><?php echo $image->getDescription(); ?></figcaption>
+        </figure>
+    </li>
+    <?php } ?>
+</ul>
+</div>

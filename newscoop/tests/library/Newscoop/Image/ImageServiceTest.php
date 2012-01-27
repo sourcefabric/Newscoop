@@ -119,4 +119,16 @@ class ImageServiceTest extends \TestCase
 
         $this->assertNotNull($this->service->find(1));
     }
+
+    public function testFindBy()
+    {
+        $this->assertEquals(0, count($this->service->findBy(array())));
+        $this->assertEquals(0, $this->service->getCountBy(array()));
+
+        $this->orm->persist(new LocalImage(self::PICTURE_LANDSCAPE));
+        $this->orm->flush();
+
+        $this->assertEquals(1, count($this->service->findBy(array())));
+        $this->assertEquals(1, $this->service->getCountBy(array()));
+    }
 }

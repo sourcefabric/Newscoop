@@ -72,10 +72,16 @@ class Admin_SlideshowController extends Zend_Controller_Action
     {
         $slideshow = $this->getSlideshow();
         $image = $this->_helper->service('image')->find(array_pop(explode('-', $this->_getParam('image'))));
-        $item = $this->_helper->service('package')->addItem($slideshow, $image);
-        $this->_helper->json(array(
-            'item' => $this->view->slideshowItem($item),
-        ));
+        try {
+            $item = $this->_helper->service('package')->addItem($slideshow, $image);
+            $this->_helper->json(array(
+                'item' => $this->view->slideshowItem($item),
+            ));
+        } catch (\InvalidArgumentException $e) {
+            $this->_helper->json(array(
+                'error_message' => getGS('Image too small.'),
+            ));
+        }
     }
 
     public function addVideoItemAction()

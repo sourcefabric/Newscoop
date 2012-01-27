@@ -27,6 +27,12 @@ class LocalImage implements ImageInterface
     private $basename;
 
     /**
+     * @Column(nullable=True, name="Description")
+     * @var string
+     */
+    private $description;
+
+    /**
      * @var array
      */
     private $info;
@@ -95,5 +101,26 @@ class LocalImage implements ImageInterface
     private function getInfo()
     {
         return $this->info = getimagesize(APPLICATION_PATH . '/../' . $this->getPath());
+    }
+
+    /**
+     * Set description
+     *
+     * @param string $description
+     * @return void
+     */
+    public function setDescription($description)
+    {
+        $this->description = (string) $description;
+    }
+
+    /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
     }
 }
