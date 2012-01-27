@@ -188,6 +188,10 @@ class PackageService
             $item->setCoords($values['coords']);
         }
 
+        if (!empty($values['url'])) {
+            $item->setVideoUrl($values['url']);
+        }
+
         $this->orm->flush($item);
     }
 }

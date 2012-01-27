@@ -15,6 +15,10 @@ class Admin_Form_SlideshowItem extends Zend_Form
     {
         $this->addElement('hidden', 'coords');
 
+        $this->addElement('text', 'url', array(
+            'label' => getGS('URL'),
+        ));
+
         $this->addElement('text', 'caption', array(
             'label' => getGS('Caption'),
         ));
@@ -30,6 +34,7 @@ class Admin_Form_SlideshowItem extends Zend_Form
     {
         $this->setDefaults(array(
             'caption' => $item->getCaption(),
+            'url' => $item->getVideoUrl(),
         ));
         return $this;
     }

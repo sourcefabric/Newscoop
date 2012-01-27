@@ -1,4 +1,4 @@
-<li id="item-<?php echo $this->item->getId(); ?>">
+<li id="item-<?php echo $this->item->getId(); ?>"<?php echo $this->current !== null && $this->current->getId() === $this->item->getId() ? ' class="active"' : ''; ?>>
     <a href="<?php echo $this->url(array(
         'module' => 'admin',
         'controller' => 'slideshow',
@@ -7,7 +7,7 @@
     )); ?>">
         <figure>
             <?php echo $this->item->isImage() ? $this->renditionPreview($this->item->getRendition(), 100, 100, $this->item->getImage()) : $this->videoPreview($this->item->getVideoUrl()); ?>
-            <figcaption><?php echo $this->item->getCaption() ?: getGS('Edit caption'); ?></figcaption>
+            <figcaption><?php echo $this->item->getCaption() ?: getGS('no caption'); ?></figcaption>
         </figure>
     </a>
     <a href="<?php echo $this->url(array(
@@ -15,5 +15,5 @@
         'controller' => 'slideshow',
         'action' => 'remove-item',
         'item' => $this->item->getId(),
-    )); ?>" class="remove">Remove</a>
+    )); ?>" class="remove"><?php putGS('Remove'); ?></a>
 </li>

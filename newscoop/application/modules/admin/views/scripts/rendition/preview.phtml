@@ -1,11 +1,5 @@
-<dl class="rendition">
-    <dt>
-        <div class="preview" style="width: <?php echo $this->preview->getWidth(); ?>px; height: <?php echo $this->preview->getHeight(); ?>px;">
-        <?php if ($this->thumbnail !== null) {
-            echo $this->thumbnail->getImg($this);
-        } ?>
-        </div>
-    </dt>
-    <dd class="name"><?php echo $this->escape($this->rendition->getName()); ?></dd>
-    <dd><small><?php echo array_shift(explode('_', $this->rendition->getSpecs())); ?> <?php echo $this->rendition->getWidth(), 'x', $this->rendition->getHeight(); ?></small></dd>
-</dl>
+<div class="rendition-preview" style="width: <?php echo $this->preview->getWidth(); ?>px; height: <?php echo $this->preview->getHeight(); ?>px;">
+<?php if ($this->thumbnail !== null) {
+    echo $this->thumbnail->getImg($this);
+} ?>
+</div>

@@ -149,4 +149,39 @@ class Package
     {
         return $this->rendition;
     }
+
+    /**
+     * Get previous item
+     *
+     * @param Newscoop\Package\Item $currentItem
+     * @return Newscoop\Package\Item
+     */
+    public function getPrev(Item $currentItem)
+    {
+        $prev = null;
+        foreach ($this->items as $item) {
+            if ($item === $currentItem) {
+                return $prev;
+            }
+
+            $prev = $item;
+        }
+    }
+
+    /**
+     * Get next item
+     *
+     * @param Newscoop\Package\Item $currentItem
+     * @return Newscoop\Package\Item
+     */
+    public function getNext(Item $currentItem)
+    {
+        $iterator = $this->items->getIterator();
+        foreach ($iterator as $item) {
+            if ($item === $currentItem) {
+                $iterator->next();
+                return $iterator->valid() ? $iterator->current() : null;
+            }
+        }
+    }
 }

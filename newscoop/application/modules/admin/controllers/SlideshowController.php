@@ -22,6 +22,8 @@ class Admin_SlideshowController extends Zend_Controller_Action
 
         $this->view->previewWidth = 100;
         $this->view->previewHeight = 100;
+
+        $this->_helper->layout->setLayout('iframe');
     }
 
     public function boxAction()
@@ -52,8 +54,6 @@ class Admin_SlideshowController extends Zend_Controller_Action
 
     public function editAction()
     {
-        $this->_helper->layout->setLayout('iframe');
-
         $slideshow = $this->getSlideshow();
         $form = new Admin_Form_Slideshow();
         $form->setDefaultsFromEntity($slideshow);
@@ -73,7 +73,9 @@ class Admin_SlideshowController extends Zend_Controller_Action
         $slideshow = $this->getSlideshow();
         $image = $this->_helper->service('image')->find(array_pop(explode('-', $this->_getParam('image'))));
         $item = $this->_helper->service('package')->addItem($slideshow, $image);
-        $this->view->item = $this->view->slideshowItem($item);
+        $this->_helper->json(array(
+            'item' => $this->view->slideshowItem($item),
+        ));
     }
 
     public function addVideoItemAction()
@@ -109,8 +111,6 @@ class Admin_SlideshowController extends Zend_Controller_Action
 
     public function editItemAction()
     {
-        $this->_helper->layout->setLayout('iframe');
-
         $slideshow = $this->getSlideshow();
         $item = $this->_helper->service('package')->findItem($this->_getParam('item'));
 
@@ -121,8 +121,9 @@ class Admin_SlideshowController extends Zend_Controller_Action
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $this->_helper->service('package')->saveItem($form->getValues(), $item);
-            $this->_helper->json(array(
-                'status' => 'ok',
+            $this->_helper->redirector('edit-item', 'slideshow', 'admin', array(
+                'slideshow' => $slideshow->getId(),
+                'item' => $item->getId(),
             ));
         }
 
@@ -130,6 +131,7 @@ class Admin_SlideshowController extends Zend_Controller_Action
         $this->view->form = $form;
         $this->view->image = $item->getImage();
         $this->view->rendition = $item->isImage() ? $item->getRendition() : $slideshow->getRendition();
+        $this->view->package = $slideshow;
     }
 
     /**

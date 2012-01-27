@@ -16,7 +16,7 @@
             'controller' => 'slideshow',
             'action' => 'edit',
             'slideshow' => $slideshow->getId(),
-        )); ?>"><?php echo $slideshow->getHeadline(); ?></a></li>
+        )); ?>" class="iframe" title="<?php putGS('Edit $1', $slideshow->getHeadline()); ?>"><?php echo $slideshow->getHeadline(); ?></a></li>
         <?php } ?>
     </ul>
     <?php } ?>

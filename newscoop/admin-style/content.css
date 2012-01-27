@@ -254,8 +254,8 @@ dl dd .info-text	{
     padding: 5px 0 0 0;
     //width: 998px;
 	text-indent: 3px;
-    width: 90%; min-width: 1000px;
-}
+    width: 90%;
+    min-width: 1000px;
 }
 
 .edit-image  {
@@ -659,18 +659,19 @@ h1 {
     height: 1%;
     overflow: hidden;
     margin: 0;
-    padding: 0;
+    padding: 0 4px;
+    background-color: #d0d0d0;
 }
 
 .renditions li {
     list-style-type: none;
     float: left;
     width: 102px;
-    margin: 8px;
+    margin: 8px 4px 8px;
     padding: 4px;
     background-color: #fff;
     position: relative;
-    border: 1px solid #fff;
+    border: 1px solid #b0b0b0;
 }
 
 .renditions li.state-active {
@@ -698,7 +699,7 @@ dl.rendition .preview {
 }
 
 dl.rendition .preview {
-    border: 1px solid #ccc;
+    border: 1px solid #4e4e4e;
     overflow: hidden;
 }
 
@@ -720,7 +721,7 @@ li.state-active dl.rendition dd.name {
     top: 4px;
     padding: 3px;
     color: #fff;
-    background-color: #c00;
+    background-color: #4e4e4e;
     opacity: 0.8;
 }
 
@@ -733,18 +734,20 @@ li.state-active dl.rendition dd.name {
 }
 
 .thumbnails {
-    clear: both;
-    margin: 0;
-    padding: 0;
+    height: 1%;
+    overflow: hidden;
+    margin: 0 0 8px;
+    padding: 0 4px;
 }
 
 .thumbnails li {
     list-style-type: none;
     float: left;
     width: 102px;
-    margin: 8px;
-    padding: 5px;
+    margin: 8px 4px 8px;
+    padding: 4px;
     background-color: #fff;
+    border: 1px solid #9d9d9d;
 }
 
 .thumbnails img {
@@ -776,52 +779,214 @@ li.state-active dl.rendition dd.name {
     float: right;
 }
 
-#renditions h2 {
+#next h2 {
     clear: both;
-    margin: 8px;
-    padding: 5px;
-    background-color: #fff;
+    margin: 13px 0 0;
+    padding: 0 13px;
+    font-size: 1.5em;
 }
 
-#renditions .controls {
-    clear: both;
-    margin: 8px;
-    padding: 5px;
-    background-color: #fff;
-    font-size: 1.3em;
+#next h2 small {
+    font-size: 1em;
 }
 
-#renditions #editor {
-    float: left;
-    margin: 8px;
+#next .editarea h2 {
+    margin-bottom: 5px;
+    padding: 0 5px;
+}
+
+#next #editor {
+    display: inline-block;
+    margin: 5px 0;
     padding: 5px;
     background-color: #000;
 }
 
-#renditions h2 .back {
-    float: right;
-    font-size: 0.5em;
+#next .editarea .video-preview {
+    display: inline-block;
+    margin: 5px 0;
+    padding: 5px;
+    background-color: #000;
 }
 
-#slideshow .slideshow {
+.slideshow {
+    clear: both;
     height: 1%;
     min-height: 100px;
     overflow: hidden;
+    margin: 8px 0;
+    padding: 4px;
+    background-color: #d0d0d0;
 }
 
-#slideshow .slideshow li {
+.slideshow li {
     float: left;
-    margin: 8px;
-    padding: 5px;
-    width: 100px;
+    margin: 4px 4px;
+    padding: 13px 4px 4px;
+    width: 102px;
     background-color: #fff;
+    border: 1px solid #9c9c9c;
+    position: relative;
 }
 
-#slideshow .placeholder {
-    min-width: 100px;
-    min-height: 100px;
+.slideshow .placeholder {
+    width: 100px;
+    height: 116px;
+    border: 2px dashed #b0b0b0;
+    background-color: transparent;
 }
 
-#slideshow .slideshow figure {
+.slideshow .rendition-preview, .slideshow .video-preview {
+    border: 1px solid #9d9d9d;
+}
+
+.slideshow .video-preview {
+    height: 100px;
+    overflow: hidden;
+}
+
+.slideshow a figcaption {
+    margin: 3px 0 0;
+    font-size: 1.1em;
+    color: #000;
+}
+
+.slideshow figure {
     margin: 0;
+}
+
+.slideshow .remove {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 3px;
+    color: #fff;
+    background-color: #000;
+    opacity: 0.8;
+}
+
+.slideshow .remove:hover {
+    opacity: 1;
+}
+
+#next.iframe {
+    background-color: #f5f5f5;
+}
+
+#next.iframe.dark {
+    background-color: #d0d0d0;
+}
+
+#next.iframe .content {
+    margin: 0;
+}
+
+#next.iframe h1 {
+    height: auto;
+    min-height: 1%;
+    line-height: 1em;
+    margin: 0;
+    padding: 5px 8px 13px;
+    background: #fff none;
+    font-size: 2em;
+    box-shadow: none;
+    border: none;
+}
+
+#next .inline {
+    float: none;
+    width: auto;
+    margin: 8px 0;
+    padding: 0 8px;
+}
+
+#next input[type="text"] {
+    min-width: 21em;
+    margin: 3px 0 5px;
+    padding: 3px;
+    border: 1px solid #ccc;
+}
+
+#next .editarea input[type="text"] {
+    width: 98%;
+}
+
+#next .editarea {
+    padding-bottom: 5px;
+    text-align: center;
+    position: relative;
+    background-color: #f5f5f5;
+}
+
+#next .editarea > div {
+    display: inline-block;
+    text-align: left;
+    min-width: 500px;
+}
+
+.editarea button {
+    margin: 3px 0;
+}
+
+.editarea .next, .editarea .prev {
+    position: absolute;
+    width: 52px;
+    height: 67px;
+    overflow: hidden;
+    top: 34%;
+}
+
+.editarea .next span, .editarea .prev span {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 52px;
+    height: 67px;
+    background: transparent none no-repeat 0 0;
+}
+
+.editarea .prev { left: 0; }
+.editarea .next { right: 0; }
+
+.editarea .prev span { background-image: url('images/arrow_prev.png'); }
+.editarea .next span { background-image: url('images/arrow_next.png'); }
+
+.slideshow.editor { margin: 0; }
+.slideshow.editor .remove { display: none; }
+
+.editarea .done {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+#next button, .editarea .done {
+    display: inline-block;
+    margin: 0;
+    padding: 3px 5px;
+    font-size: 1.3em;
+    color: #444;
+    background-color: #f9f9f9;
+    border: 1px solid #9d9d9d;
+    cursor: pointer;
+}
+
+#editor input[type="radio"] { display: none; }
+
+.slideshows {
+    clear: both;
+    margin: 0;
+    padding: 0;
+}
+
+.slideshows li {
+    margin: 3px 0 0;
+    font-size: 1.3em;
+}
+
+.renditions.editor .reset { display: none; }
+
+.renditions .active, .slideshow .active {
+    background-color: #d9eaf9;
 }

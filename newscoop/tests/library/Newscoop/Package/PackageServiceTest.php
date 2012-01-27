@@ -149,10 +149,12 @@ class PackageServiceTest extends \TestCase
         $this->service->saveItem(array(
             'caption' => 'testcap',
             'coords' => '0_0_120_120',
+            'url' => 'tic',
         ), $item);
 
         $this->assertEquals('testcap', $item->getCaption());
         $this->assertEquals('crop_0_0_120_120', $item->getRendition()->getSpecs());
+        $this->assertEquals('tic', $item->getVideoUrl());
     }
 
     public function testAddVideo()

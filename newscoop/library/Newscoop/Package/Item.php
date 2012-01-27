@@ -182,6 +182,17 @@ class Item
     }
 
     /**
+     * Set video url
+     *
+     * @param string $url
+     * @return void
+     */
+    public function setVideoUrl($url)
+    {
+        $this->videoUrl = (string) $url;
+    }
+
+    /**
      * Get video url
      *
      * @return string
@@ -189,5 +200,15 @@ class Item
     public function getVideoUrl()
     {
         return $this->videoUrl;
+    }
+
+    /**
+     * Get package items
+     *
+     * @return array
+     */
+    public function getPackageItems()
+    {
+        return $this->package->getItems();
     }
 }

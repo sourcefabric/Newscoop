@@ -67,14 +67,19 @@ class Admin_ImageController extends Zend_Controller_Action
         $image = $renditions[$rendition]->getImage();
 
         if ($this->getRequest()->isPost()) {
-            $specs = 'crop_' . implode('_', array_slice($this->getRequest()->getPost(), 0, 4));
+            $specs = 'crop_' . $this->getRequest()->getPost('coords');
             $this->_helper->service('image.rendition')
                 ->setArticleRendition($this->_getParam('article_number'), new Rendition($rendition->getWidth(), $rendition->getHeight(), $specs, $rendition->getName()), $image);
-            return;
+            $this->_helper->redirector('edit', 'image', 'admin', array(
+                'article_number' => $this->_getParam('article_number'),
+                'rendition' => $this->_getParam('rendition'),
+            ));
         }
 
         $this->view->rendition = $renditions[$rendition]->getRendition();
         $this->view->image = $renditions[$rendition]->getImage();
+        $this->view->renditions = $this->renditions;
+        $this->view->articleRenditions = $this->_helper->service('image.rendition')->getArticleRenditions($this->_getParam('article_number'));
     }
 
     public function setDefaultImageAction()

@@ -1,38 +1,43 @@
+<?php $this->placeholder('bodyId')->set('next'); $this->placeholder('bodyClass')->set('dark'); ?>
+<h1><?php putGS('Slideshow'); ?></h1>
 <form id="edit-form" method="<?php echo $this->form->getMethod(); ?>">
 
-<div class="controls">
+<div class="editarea">
+    <div>
+        <?php if ($this->item->isVideo()) { ?>
+        <h2>Video: <?php echo $this->item->getVideoUrl(); ?></h2>
+        <?php } ?>
+        <?php echo $this->item->isImage() ? $this->imageEditor($this->rendition, $this->image) : $this->videoPreview($this->item->getVideoUrl(), $this->rendition->getWidth(), $this->rendition->getHeight()); ?><br />
+        <?php if ($this->item->isVideo()) { ?>
+        <input type="text" name="url" value="<?php echo $this->form->url->getValue(); ?>" /><br />
+        <?php } ?>
+        <input type="text" name="caption" value="<?php echo $this->form->caption->getValue(); ?>" placeholder="<?php putGS('Add caption'); ?>" /><br />
+        <button><?php putGS('Save'); ?></button>
+    </div>
+
+    <?php if (($prev = $this->package->getPrev($this->item)) !== null) { ?>
+    <a href="<?php echo $this->url(array(
+        'item' => $this->package->getPrev($this->item)->getId(),
+    )); ?>" class="prev"><span></span><?php putGS('Previous'); ?></a>
+    <?php } ?>
+
+    <?php if (($next = $this->package->getNext($this->item)) !== null) { ?>
+    <a href="<?php echo $this->url(array(
+        'item' => $next->getId(),
+    )); ?>" class="next"><span></span><?php putGS('Next'); ?></a>
+    <?php } ?>
+
     <a href="<?php echo $this->url(array(
         'action' => 'edit',
         'item' => null,
-    ));  ?>" class="back">&larr; <?php putGS('Back'); ?></a>
-</div>
-
-<?php echo $this->item->isImage() ? $this->imageEditor($this->rendition, $this->image) : $this->videoPreview($this->item->getVideoUrl(), $this->rendition->getWidth(), $this->rendition->getHeight()); ?>
-
-<dl>
-    <?php echo $this->form->caption; ?>
-</dl>
-
-<div class="controls">
-    <button><?php putGS('Save'); ?></button>
+    )); ?>" class="done"><?php putGS('Done editing'); ?></a>
 </div>
 
 </form>
 
-<script>
-$(function() {
-    $('#edit-form').submit(function(e) {
-        e.preventDefault();
-        var button = $(this).find('button');
-        button.text(<?php echo json_encode(getGS("Saving...")); ?>);
-        var values = $(this).serializeArray();
-        $.post('<?php echo $this->url(array()); ?>', values, function(data, textStatus) {
-            button.text(<?php echo json_encode(getGS("Saved")); ?>);
-            window.setTimeout(function() {
-                button.text(<?php echo json_encode(getGS("Save")); ?>);
-            }, 3000);
-
-        }, 'json');
-    });
-});
-</script>
+<?php $this->currentItem = $this->item; ?>
+<ul class="slideshow editor">
+    <?php foreach ($this->item->getPackageItems() as $item) { ?>
+    <?php echo $this->slideshowItem($item, $this->currentItem); ?>
+    <?php } ?>
+</ul>

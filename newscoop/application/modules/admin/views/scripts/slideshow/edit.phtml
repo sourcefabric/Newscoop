@@ -1,6 +1,9 @@
-<?php $this->placeholder('bodyId')->set('slideshow'); ?>
+<?php $this->placeholder('bodyId')->set('next'); ?>
+<h1><?php putGS('Slideshow'); ?></h1>
 
-<?php echo $this->form; ?>
+<form method="<?php echo $this->form->getMethod(); ?>"><div class="inline">
+    <input type="text" name="headline" value="<?php echo $this->form->headline->getValue(); ?>" /> <button><?php putGS('Save'); ?></button>
+</div></form>
 
 <ul id="slideshow-items" class="slideshow">
     <?php foreach ($this->slideshow->getItems() as $item) { ?>
@@ -8,9 +11,13 @@
     <?php } ?>
 </ul>
 
-<?php echo $this->action('add-video-item', 'slideshow', 'admin'); ?>
+<form method="<?php echo $this->form->getMethod(); ?>" action="<?php echo $this->url(array(
+    'action' => 'add-video-item',
+)); ?>"><div class="inline">
+    <input type="text" name="url" /> <button><?php putGS('Add video'); ?></button>
+</div></form>
 
-<h2><?php putGS("Article images"); ?></h2>
+<h2><?php putGS('Attached images'); ?></h2>
 <ul class="thumbnails">
     <?php foreach ($this->images as $image) { ?>
     <li id="image-<?php echo $image->getId(); ?>">
