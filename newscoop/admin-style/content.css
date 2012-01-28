@@ -855,6 +855,11 @@ li.state-active dl.rendition dd.name {
     margin: 0;
 }
 
+.slideshow figure > div {
+    height: 102px;
+    overflow: hidden;
+}
+
 .slideshow .remove {
     position: absolute;
     top: 0;
@@ -902,7 +907,7 @@ li.state-active dl.rendition dd.name {
 
 #next input[type="text"] {
     min-width: 21em;
-    margin: 3px 0 5px;
+    margin: 3px 5px 5px 0;
     padding: 3px;
     border: 1px solid #ccc;
 }
@@ -991,7 +996,23 @@ li.state-active dl.rendition dd.name {
     background-color: #d9eaf9;
 }
 
+.archive.images {
+    min-width: 34em;
+}
+
 .archive.images figcaption {
     height: 2.2em;
     overflow: hidden;
+}
+
+#image-archive {
+    display: inline-block;
+    position: relative;
+}
+
+#image-archive .paginationControl {
+    position: absolute;
+    top: -13px;
+    right: 13px;
+    font-size: 1.1em;
 }

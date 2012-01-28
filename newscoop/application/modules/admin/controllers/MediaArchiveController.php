@@ -19,6 +19,8 @@ class Admin_MediaArchiveController extends Zend_Controller_Action
 
     public function listImagesAction()
     {
+        $this->_helper->layout->disableLayout();
+
         $page = $this->_getParam('page', 1);
         $count = $this->_helper->service('image')->getCountBy(array());
         $paginator = Zend_Paginator::factory($count);

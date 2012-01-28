@@ -1,0 +1,18 @@
+<div id="image-archive"></div>
+<script>
+$(function() {
+    $('#image-archive').load('<?php echo $this->url(array(
+        'controller' => 'media-archive',
+        'action' => 'list-images',
+    )); ?>', function() {
+        $('#image-archive li').draggable(draggableOptions);
+    });
+
+    $('#image-archive .paginationControl a').live('click', function(e) {
+        e.preventDefault();
+        $('#image-archive').load($(this).attr('href'), function() {
+            $('#image-archive li').draggable(draggableOptions);
+        });
+    });
+});
+</script>

@@ -6,7 +6,7 @@
         'item' => $this->item->getId(),
     )); ?>">
         <figure>
-            <?php echo $this->item->isImage() ? $this->renditionPreview($this->item->getRendition(), 100, 100, $this->item->getImage()) : $this->videoPreview($this->item->getVideoUrl()); ?>
+            <div><?php echo $this->item->isImage() ? $this->renditionPreview($this->item->getRendition(), 100, 100, $this->item->getImage()) : $this->videoPreview($this->item->getVideoUrl()); ?></div>
             <figcaption><?php echo $this->item->getCaption() ?: getGS('no caption'); ?></figcaption>
         </figure>
     </a>

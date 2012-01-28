@@ -35,6 +35,14 @@ function setOrder() {
     }, 'json');
 }
 
+var draggableOptions = {
+    revert: true,
+    connectToSortable: 'ul.slideshow',
+    opacity: 0.8,
+    helper: 'clone',
+    cursor: 'move'
+};
+
 $(function() {
     $('.slideshow').sortable({
         placeholder: 'placeholder',
@@ -62,13 +70,7 @@ $(function() {
         cursor: 'move'
     });
 
-    $('.thumbnails li, .images.archive li').draggable({
-        revert: true,
-        connectToSortable: 'ul.slideshow',
-        opacity: 0.8,
-        helper: 'clone',
-        cursor: 'move'
-    });
+    $('.thumbnails li').draggable(draggableOptions);
 
     $('#slideshow-items .remove').live('click', function(e) {
         e.preventDefault();
@@ -92,4 +94,5 @@ $(function() {
     <?php } ?>
 </ul>
 
-<?php echo $this->action('list-images', 'media-archive', 'admin'); ?>
+<h2><?php putGS('Archived images'); ?></h2>
+<?php echo $this->imageArchive(); ?>

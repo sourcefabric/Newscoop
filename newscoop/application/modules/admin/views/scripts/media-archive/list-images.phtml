@@ -1,5 +1,4 @@
-<div class="image-archive">
-<h2><?php putGS('Archived images'); ?></h2>
+<?php echo $this->paginator; ?>
 <ul class="thumbnails archive images">
     <?php foreach ($this->images as $image) { ?>
     <li id="image-<?php echo $image->getId(); ?>">
@@ -10,4 +9,3 @@
     </li>
     <?php } ?>
 </ul>
-</div>
