@@ -46,6 +46,7 @@ class PackageServiceTest extends \TestCase
             'article' => self::ARTICLE_NUMBER,
             'headline' => 'headline',
             'rendition' => $rendition,
+            'slug' => 'SLUG',
         ));
 
         $this->assertInstanceOf('Newscoop\Package\Package', $package);
@@ -57,6 +58,7 @@ class PackageServiceTest extends \TestCase
         $this->assertEquals(333, $package->getRendition()->getHeight());
         $this->assertEquals('crop', $package->getRendition()->getSpecs());
         $this->assertEquals('square', $package->getRendition()->getName());
+        $this->assertEquals('SLUG', $package->getSlug());
 
         $this->assertEquals(1, count($this->service->findByArticle(self::ARTICLE_NUMBER)));
     }
@@ -181,6 +183,22 @@ class PackageServiceTest extends \TestCase
         ));
 
         $this->service->addItem($package, new LocalImage(LocalImageTest::PICTURE_LANDSCAPE));
+    }
+
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testUniqueSlug()
+    {
+        $this->service->save(array('headline' => 'test', 'slug' => 'test'));
+        $this->service->save(array('headline' => 'test', 'slug' => 'test'));
+    }
+
+    public function testFindBySlug()
+    {
+        $this->assertNull($this->service->findBySlug('abc'));
+        $this->service->save(array('headline' => 'test', 'slug' => 'abc'));
+        $this->assertNotNull($this->service->findBySlug('abc'));
     }
 
     /**

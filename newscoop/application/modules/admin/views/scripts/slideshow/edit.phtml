@@ -2,7 +2,9 @@
 <h1><?php putGS('Slideshow'); ?></h1>
 
 <form method="<?php echo $this->form->getMethod(); ?>"><div class="inline">
-    <input type="text" name="headline" value="<?php echo $this->form->headline->getValue(); ?>" /> <button><?php putGS('Save'); ?></button>
+    <input type="text" class="<?php echo $this->form->headline->hasErrors() ? ' error' : ''; ?>" name="headline" value="<?php echo $this->form->headline->getValue(); ?>" title="<?php echo $this->form->headline->hasErrors() ? implode(", ", $this->form->headline->getMessages()) : getGS('Slideshow headline'); ?>" />
+    <input type="text" class="short<?php echo $this->form->slug->hasErrors() ? ' error' : ''; ?>" name="slug" value="<?php echo $this->form->slug->getValue(); ?>" placeholder="<?php putGS('Slug'); ?>" title="<?php echo $this->form->slug->hasErrors() ? implode(", ", $this->form->slug->getMessages()) : getGS("Used for identification, e.g. 'basel'"); ?>" />
+    <button><?php putGS('Save'); ?></button>
 </div></form>
 
 <ul id="slideshow-items" class="slideshow">
@@ -14,7 +16,7 @@
 <form method="<?php echo $this->form->getMethod(); ?>" action="<?php echo $this->url(array(
     'action' => 'add-video-item',
 )); ?>"><div class="inline">
-    <input type="text" name="url" /> <button><?php putGS('Add video'); ?></button>
+    <input type="text" name="url" title="<?php putGS("Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)"); ?>" placeholder="<?php putGS('Video URL'); ?>" /> <button><?php putGS('Add video'); ?></button>
 </div></form>
 
 <script>

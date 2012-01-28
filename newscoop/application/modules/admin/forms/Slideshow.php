@@ -18,6 +18,10 @@ class Admin_Form_Slideshow extends Zend_Form
             'required' => true,
         ));
 
+        $this->addElement('text', 'slug', array(
+            'label' => getGS('Slug'),
+        ));
+
         $this->addElement('text', 'description', array(
             'label' => getGS('Description'),
         ));
@@ -38,6 +42,7 @@ class Admin_Form_Slideshow extends Zend_Form
     {
         $this->setDefaults(array(
             'headline' => $package->getHeadline(),
+            'slug' => $package->getSlug(),
         ));
 
         return $this;

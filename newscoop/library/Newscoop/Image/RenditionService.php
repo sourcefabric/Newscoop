@@ -134,21 +134,40 @@ class RenditionService
     {
         if ($this->renditions === null) {
             $this->renditions = array();
-            foreach (glob($this->config['theme_path'] . '/publication_*/theme_*/theme.xml') as $themeInfo) {
-                $xml = simplexml_load_file($themeInfo);
-                if (!$xml->renditions) {
-                    continue;
-                }
+            foreach ($this->orm->getRepository('Newscoop\Image\Rendition')->findAll() as $rendition) {
+                $this->renditions[$rendition->getName()] = $rendition;
+            }
 
-                foreach ($xml->renditions->rendition as $rendition) {
-                    if (!isset($this->renditions[(string) $rendition['name']])) {
-                        $this->renditions[(string) $rendition['name']] = new Rendition($rendition['width'], $rendition['height'], $rendition['specs'], $rendition['name']);
-                    }
-                }
+            if (empty($this->renditions)) {
+                $this->registerRenditions();
             }
         }
 
         return $this->renditions;
+    }
+
+    /**
+     * Register renditions
+     *
+     * @return void
+     */
+    public function registerRenditions()
+    {
+        $this->renditions = array();
+        foreach (glob($this->config['theme_path'] . '/publication_*/theme_*/theme.xml') as $themeInfo) {
+            $xml = simplexml_load_file($themeInfo);
+            if (!$xml->renditions) {
+                continue;
+            }
+
+            foreach ($xml->renditions->rendition as $rendition) {
+                if (!isset($this->renditions[(string) $rendition['name']])) {
+                    $this->orm->persist($this->renditions[(string) $rendition['name']] = new Rendition($rendition['width'], $rendition['height'], $rendition['specs'], $rendition['name']));
+                }
+            }
+        }
+
+        $this->orm->flush();
     }
 
     /**
@@ -161,7 +180,8 @@ class RenditionService
     {
         $renditions = $this->getRenditions();
         $rendition = array_key_exists($name, $renditions) ? $renditions[$name] : null;
-        if ($rendition !== null && !$this->orm->contains($rendition)) {
+        if ($rendition !== null) {
+            $rendition = $this->orm->getRepository('Newscoop\Image\Rendition')->find($rendition->getName());
             $this->orm->persist($rendition);
             $this->orm->flush($rendition);
         }

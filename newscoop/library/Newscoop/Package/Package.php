@@ -11,7 +11,13 @@ use Newscoop\Image\Rendition;
 
 /**
  * @Entity
- * @Table(name="package")
+ * @Table(name="package",
+ *      uniqueConstraints={
+ *          @UniqueConstraint(columns={"slug"})
+ *      },
+ *      indexes={
+ *          @Index(columns={"articleNumber"})
+ *      })
  */
 class Package
 {
@@ -51,6 +57,12 @@ class Package
      * @var Newscoop\Image\Rendition
      */
     private $rendition;
+
+    /**
+     * @Column(nullable=True)
+     * @var string
+     */
+    private $slug;
 
     /**
      */
@@ -183,5 +195,26 @@ class Package
                 return $iterator->valid() ? $iterator->current() : null;
             }
         }
+    }
+
+    /**
+     * Set slug
+     *
+     * @param string $slug
+     * @return void
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = (string) $slug;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 }

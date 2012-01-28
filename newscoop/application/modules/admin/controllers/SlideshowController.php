@@ -5,7 +5,8 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Newscoop\Image\Rendition;
+use Newscoop\Image\Rendition,
+    Newscoop\Package\PackageService;
 
 /**
  * @Acl(ignore=True)
@@ -60,7 +61,15 @@ class Admin_SlideshowController extends Zend_Controller_Action
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
-            $this->_helper->service('package')->save($form->getValues(), $slideshow);
+            try {
+                $this->_helper->service('package')->save($form->getValues(), $slideshow);
+            } catch (\InvalidArgumentException $e) {
+                switch ($e->getCode()) {
+                    case PackageService::CODE_UNIQUE_SLUG:
+                        $form->slug->addError(getGS('Slug must be unique'));
+                        break;
+                }
+            }
         }
 
         $this->view->form = $form;

@@ -12,6 +12,8 @@ namespace Newscoop\Package;
  */
 class PackageService
 {
+    const CODE_UNIQUE_SLUG = 1;
+
     /**
      * @var Doctrine\ORM\EntityManager
      */
@@ -92,8 +94,16 @@ class PackageService
             $package->setRendition($values['rendition']);
         }
 
-        $this->orm->flush($package);
-        return $package;
+        if (array_key_exists('slug', $values)) {
+            $package->setSlug($values['slug']);
+        }
+
+        try {
+            $this->orm->flush($package);
+            return $package;
+        } catch (\PDOException $e) {
+            throw new \InvalidArgumentException("Slug must be unique", self::CODE_UNIQUE_SLUG);
+        }
     }
 
     /**
@@ -197,5 +207,19 @@ class PackageService
         }
 
         $this->orm->flush($item);
+    }
+
+    /**
+     * Find package by slug
+     *
+     * @param string $slug
+     * @return Newscoop\Package\Package
+     */
+    public function findBySlug($slug)
+    {
+        return $this->orm->getRepository('Newscoop\Package\Package')
+            ->findOneBy(array(
+                'slug' => $slug,
+            ));
     }
 }
