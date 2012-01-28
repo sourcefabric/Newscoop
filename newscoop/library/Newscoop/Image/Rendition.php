@@ -38,7 +38,7 @@ class Rendition
     private $height;
 
     /**
-     * @Column(type="text")
+     * @Column
      * @var string
      */
     private $specs;
