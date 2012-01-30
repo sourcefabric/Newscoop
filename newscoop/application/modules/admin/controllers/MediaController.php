@@ -8,7 +8,7 @@
 /**
  * @Acl(ignore=True)
  */
-class Admin_MediaArchiveController extends Zend_Controller_Action
+class Admin_MediaController extends Zend_Controller_Action
 {
     const LIMIT = 8;
 

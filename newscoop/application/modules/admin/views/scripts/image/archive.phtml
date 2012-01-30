@@ -2,7 +2,7 @@
 <script>
 $(function() {
     $('#image-archive').load('<?php echo $this->url(array(
-        'controller' => 'media-archive',
+        'controller' => 'media',
         'action' => 'list-images',
     )); ?>', function() {
         $('#image-archive li').draggable(draggableOptions);
