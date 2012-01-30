@@ -3,6 +3,7 @@
         'module' => 'admin',
         'controller' => 'slideshow',
         'action' => 'edit-item',
+        'slideshow' => $this->item->getPackageId(),
         'item' => $this->item->getId(),
     )); ?>">
         <figure>
@@ -14,6 +15,7 @@
         'module' => 'admin',
         'controller' => 'slideshow',
         'action' => 'remove-item',
+        'slideshow' => $this->item->getPackageId(),
         'item' => $this->item->getId(),
     )); ?>" class="remove"><?php putGS('Remove'); ?></a>
 </li>

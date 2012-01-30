@@ -211,4 +211,24 @@ class Item
     {
         return $this->package->getItems();
     }
+
+    /**
+     * Get image specs
+     *
+     * @return string
+     */
+    public function getImageSpecs()
+    {
+        return trim($this->package->getRendition()->getSpecs() . '_' . $this->coords, '_');
+    }
+
+    /**
+     * Get package id
+     *
+     * @return int
+     */
+    public function getPackageId()
+    {
+        return $this->package->getId();
+    }
 }

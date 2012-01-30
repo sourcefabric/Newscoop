@@ -1,0 +1,23 @@
+<a href="<?php echo $this->url(array(
+    'module' => 'admin',
+    'controller' => 'slideshow',
+    'action' => 'create',
+)); ?>" class="create-slideshow">+ Create slideshow</a>
+
+<ul class="slideshows">
+    <?php foreach ($this->slideshows as $slideshow) { ?>
+    <li>
+        <a href="<?php echo $this->url(array(
+            'module' => 'admin',
+            'controller' => 'slideshow',
+            'action' => 'edit',
+            'slideshow' => $slideshow->getId(),
+        )); ?>" class="edit"><?php echo $this->escape($slideshow->getHeadline()); ?> <?php if ($slideshow->getSlug()) { ?><small>(#<?php echo $this->escape($slideshow->getSlug()); ?>)</small><?php } ?></a>
+        <div class="slideshow-preview">
+            <?php foreach ($slideshow->getItems() as $item) { ?>
+            <?php echo $item->isImage() ? $this->renditionPreview($item->getRendition(), 100, 100, $item->getImage()) : $this->videoPreview($item->getVideoUrl()); ?>
+            <?php } ?>
+        </div>
+    </li>
+    <?php } ?>
+</ul>

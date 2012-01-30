@@ -1025,3 +1025,48 @@ li.state-active dl.rendition dd.name {
     right: 13px;
     font-size: 1.1em;
 }
+
+#slideshows .slideshows {
+    margin: 8px;
+}
+
+#slideshows .slideshows > li {
+    height: 1%;
+    overflow: hidden;
+    margin: 8px 0 0;
+    padding: 5px;
+    background-color: #fff;
+}
+
+#slideshows .slideshows a {
+    float: left;
+    display: inline-block;
+    padding: 3px 5px;
+    color: #fff;
+    background-color: #000;
+    font-size: 0.85em;
+}
+
+#slideshows .slideshows a small {
+    font-size: 0.8em;
+}
+
+#slideshows .slideshow-preview {
+    float: left;
+    clear: left;
+    padding: 0 0 5px 5px;
+    background-color: #2e3436;
+}
+
+#slideshows .slideshow-preview .rendition-preview {
+    float: left;
+    margin: 5px 5px 0 0;
+}
+
+a.create-slideshow {
+    display: inline-block;
+    margin: 13px 13px 5px;
+    padding: 3px 5px;
+    color: #fff;
+    background-color: #4e9a06;
+}

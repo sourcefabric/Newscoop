@@ -15,6 +15,10 @@ class Admin_MediaController extends Zend_Controller_Action
     public function init()
     {
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginator.phtml');
+
+        $this->_helper->contextSwitch
+            ->addActionContext('list-slideshows', 'json')
+            ->initContext();
     }
 
     public function listImagesAction()
@@ -31,5 +35,22 @@ class Admin_MediaController extends Zend_Controller_Action
 
         $this->view->paginator = $paginator;
         $this->view->images = $this->_helper->service('image')->findBy(array(), array('id' => 'desc'), self::LIMIT, ($paginator->getCurrentPageNumber() - 1) * self::LIMIT);
+    }
+
+    public function listSlideshowsAction()
+    {
+        $criteria = array();
+        $paginator = Zend_Paginator::factory($this->_helper->service('package')->getCountBy($criteria));
+        $paginator->setItemCountPerPage(25);
+        $paginator->setCurrentPageNumber($this->_getParam('page', 1));
+        $paginator->setView($this->view);
+        $paginator->setDefaultScrollingStyle('Sliding');
+        $this->view->paginator = $paginator;
+        $this->view->slideshows = $this->_helper->service('package')->findBy(
+            $criteria,
+            array('id' => 'desc'),
+            $paginator->getCurrentItemCount(),
+            ($paginator->getCurrentPageNumber() - 1) * $paginator->getItemCountPerPage()
+        );
     }
 }

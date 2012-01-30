@@ -10,7 +10,7 @@ namespace Newscoop\Package;
 use Newscoop\Image\Rendition;
 
 /**
- * @Entity
+ * @Entity(repositoryClass="Newscoop\Package\PackageRepository")
  * @Table(name="package",
  *      uniqueConstraints={
  *          @UniqueConstraint(columns={"slug"})
@@ -28,7 +28,8 @@ class Package
     private $id;
 
     /**
-     * @Column * @var string
+     * @Column
+     * @var string
      */
     private $headline;
 
@@ -63,6 +64,11 @@ class Package
      * @var string
      */
     private $slug;
+
+    /**
+     * @var int
+     */
+    private $itemsCount;
 
     /**
      */
@@ -216,5 +222,26 @@ class Package
     public function getSlug()
     {
         return $this->slug;
+    }
+
+    /**
+     * Set items count
+     *
+     * @param int $count
+     * @return void
+     */
+    public function setItemsCount($count)
+    {
+        $this->itemsCount = (int) $count;
+    }
+
+    /**
+     * Get items count
+     *
+     * @return int
+     */
+    public function getItemsCount()
+    {
+        return $this->itemsCount !== null ? $this->itemsCount : count($this->items);
     }
 }

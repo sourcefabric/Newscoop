@@ -31,6 +31,11 @@ class PackageServiceTest extends \TestCase
         $this->service = new PackageService($this->orm);
     }
 
+    public function tearDown()
+    {
+        $this->tearDownOrm($this->orm);
+    }
+
     public function testInstance()
     {
         $this->assertInstanceOf('Newscoop\Package\PackageService', $this->service);
@@ -199,6 +204,33 @@ class PackageServiceTest extends \TestCase
         $this->assertNull($this->service->findBySlug('abc'));
         $this->service->save(array('headline' => 'test', 'slug' => 'abc'));
         $this->assertNotNull($this->service->findBySlug('abc'));
+    }
+
+    public function testFindBy()
+    {
+        $this->assertEmpty($this->service->findBy(array()));
+        $this->service->save(array('headline' => 'head'));
+        $this->assertEquals(1, count($this->service->findBy(array())));
+    }
+
+    public function testGetCountBy()
+    {
+        $this->assertEquals(0, $this->service->getCountBy(array()));
+        $this->service->save(array('headline' => 'head'));
+        $this->assertEquals(1, $this->service->getCountBy(array()));
+        $this->assertEquals(0, $this->service->getCountBy(array('headline' => 'xyz')));
+        $this->assertEquals(1, $this->service->getCountBy(array('headline' => 'head')));
+    }
+
+    public function testGetItemsCountInList()
+    {
+        $this->service->save(array('headline' => 'tic'));
+        $package = $this->service->save(array('headline' => 'toc'));
+        $this->service->addItem($package, new LocalImage(LocalImageTest::PICTURE_LANDSCAPE));
+
+        $packages = $this->service->findBy(array(), array('headline' => 'asc'));
+        $this->assertEquals(0, $packages[0]->getItemsCount());
+        $this->assertEquals(1, $packages[1]->getItemsCount());
     }
 
     /**

@@ -7,7 +7,8 @@
 
 namespace Newscoop\Package;
 
-use Newscoop\Image\LocalImage;
+use Newscoop\Image\LocalImage,
+    Newscoop\Image\Rendition;
 
 /**
  */
@@ -33,5 +34,17 @@ class ItemTest extends \TestCase
         $item = new Item($this->package, new LocalImage('test'));
         $this->assertEquals(1, count($item->getPackageItems()));
         $this->assertContains($item, $item->getPackageItems());
+        $this->assertNull($item->getPackageId());
+    }
+
+    public function testGetImageSpecs()
+    {
+        $rendition = new Rendition(200, 200, 'crop', 'test');
+        $this->package->setRendition($rendition);
+
+        $item = new Item($this->package, new LocalImage('test'));
+        $item->setCoords('0_0_200_200');
+
+        $this->assertEquals('crop_0_0_200_200', $item->getImageSpecs());
     }
 }

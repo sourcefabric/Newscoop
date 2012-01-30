@@ -20,11 +20,17 @@ class PackageService
     private $orm;
 
     /**
+     * @var Doctrine\ORM\EntityRepository
+     */
+    private $repository;
+
+    /**
      * @param Doctrine\ORM\EntityManager $orm
      */
     public function __construct(\Doctrine\ORM\EntityManager $orm)
     {
         $this->orm = $orm;
+        $this->repository = $this->orm->getRepository('Newscoop\Package\Package');
     }
 
     /**
@@ -35,7 +41,7 @@ class PackageService
      */
     public function find($id)
     {
-        return $this->orm->getRepository('Newscoop\Package\Package')->find($id);
+        return $this->repository->find($id);
     }
 
     /**
@@ -47,7 +53,7 @@ class PackageService
     public function findByArticle($articleNumber)
     {
         try {
-            return $this->orm->getRepository('Newscoop\Package\Package')->findBy(array(
+            return $this->repository->findBy(array(
                 'articleNumber' => $articleNumber,
             ), array('id' => 'asc'));
         } catch (\Exception $e) {
@@ -102,7 +108,11 @@ class PackageService
             $this->orm->flush($package);
             return $package;
         } catch (\PDOException $e) {
-            throw new \InvalidArgumentException("Slug must be unique", self::CODE_UNIQUE_SLUG);
+            if (strpos($e->getMessage(), 'slug is not unique') !== false) {
+                throw new \InvalidArgumentException("Slug is not unique", self::CODE_UNIQUE_SLUG);
+            }
+
+            throw $e;
         }
     }
 
@@ -217,9 +227,33 @@ class PackageService
      */
     public function findBySlug($slug)
     {
-        return $this->orm->getRepository('Newscoop\Package\Package')
-            ->findOneBy(array(
-                'slug' => $slug,
-            ));
+        return $this->repository->findOneBy(array(
+            'slug' => $slug,
+        ));
+    }
+
+    /**
+     * Find package by a set of criteria
+     *
+     * @param array $criteria
+     * @param array $orderBy
+     * @param int $limit
+     * @param int $offset
+     * @return array
+     */
+    public function findBy(array $criteria, array $orderBy = array(), $limit = 25, $offset = 0)
+    {
+        return $this->repository->findBy($criteria, $orderBy, $limit, $offset);
+    }
+
+    /**
+     * Get count by a set of criteria
+     *
+     * @param array $criteria
+     * @return int
+     */
+    public function getCountBy(array $criteria = array())
+    {
+        return (int) $this->repository->getCountBy($criteria);
     }
 }

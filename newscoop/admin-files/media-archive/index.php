@@ -14,6 +14,7 @@ camp_html_content_top(getGS('Media Archive'), NULL);
 <div id="archive">
 <ul>
     <li><a href="#images"><?php putGS('Images'); ?></a></li>
+    <li><a href="#slideshows"><?php putGS('Slideshows'); ?></a></li>
     <li><a href="#files"><?php putGS('Files'); ?></a></li>
 </ul>
 
@@ -43,6 +44,10 @@ camp_html_content_top(getGS('Media Archive'), NULL);
     </fieldset>
     <?php } ?>
 </div><!-- /#images -->
+
+<div id="slideshows">
+    <?php echo $this->view->action('list-slideshows', 'media', 'admin'); ?>
+</div>
 
 <div id="files">
     <?php if ($g_user->hasPermission('AddFile')) { ?>
