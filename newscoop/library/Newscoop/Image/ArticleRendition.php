@@ -27,42 +27,30 @@ class ArticleRendition
     protected $image;
 
     /**
-     * @Id @Column(name="rendition_name")
+     * @Column(nullable=True)
      * @var string
      */
-    protected $renditionName;
+    protected $imageSpecs;
 
     /**
-     * @Column(type="integer", name="rendition_width")
-     * @var int
+     * @Id @ManyToOne(targetEntity="Newscoop\Image\Rendition", fetch="EAGER")
+     * @JoinColumn(referencedColumnName="name")
+     * @var Newscoop\Image\Rendition
      */
-    protected $renditionWidth;
-
-    /**
-     * @Column(type="integer", name="rendition_height")
-     * @var int
-     */
-    protected $renditionHeight;
-
-    /**
-     * @Column(name="rendition_specs")
-     * @var int
-     */
-    protected $renditionSpecs;
+    protected $rendition;
 
     /**
      * @param int $articleNumber
      * @param Newscoop\Image\Rendition $rendition
      * @param Newscoop\Image\ImageInterface $image
+     * @param string $imageSpecs
      */
-    public function __construct($articleNumber, Rendition $rendition, ImageInterface $image)
+    public function __construct($articleNumber, Rendition $rendition, ImageInterface $image, $imageSpecs = null)
     {
         $this->articleNumber = (int) $articleNumber;
+        $this->rendition = $rendition;
         $this->image = $image;
-        $this->renditionName = $rendition->getName();
-        $this->renditionWidth = $rendition->getWidth();
-        $this->renditionHeight = $rendition->getHeight();
-        $this->renditionSpecs = $rendition->getSpecs();
+        $this->imageSpecs = $imageSpecs;
     }
 
     /**
@@ -72,7 +60,7 @@ class ArticleRendition
      */
     public function getName()
     {
-        return $this->renditionName;
+        return $this->rendition->getName();
     }
 
     /**
@@ -92,7 +80,19 @@ class ArticleRendition
      */
     public function getRendition()
     {
-        return new Rendition($this->renditionWidth, $this->renditionHeight, $this->renditionSpecs, $this->renditionName);
+        $rendition = clone $this->rendition;
+        $rendition->setCoords($this->imageSpecs);
+        return $rendition;
+    }
+
+    /**
+     * Get specs
+     *
+     * @return string
+     */
+    public function getImageSpecs()
+    {
+        return $this->imageSpecs;
     }
 
     /**

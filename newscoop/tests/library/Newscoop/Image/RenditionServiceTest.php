@@ -65,8 +65,9 @@ class RenditionServiceTest extends \TestCase
         $this->orm->persist($imageTest = new LocalImage(LocalImageTest::PICTURE_PORTRAIT));
         $this->orm->flush();
 
-        $renditionThumbnail = new Rendition(200, 200, 'fit', 'thumbnail');
-        $renditionLandscape = new Rendition(200, 200, 'fill', 'landscape');
+        $this->orm->persist($renditionThumbnail = new Rendition(200, 200, 'fit', 'thumbnail'));
+        $this->orm->persist($renditionLandscape = new Rendition(200, 200, 'fill', 'landscape'));
+        $this->orm->flush();
 
         $this->assertInstanceOf('Newscoop\Image\ArticleRendition', $this->service->setArticleRendition(self::ARTICLE_NUMBER, $renditionLandscape, $imageTest));
         $renditions = $this->service->getArticleRenditions(self::ARTICLE_NUMBER);
@@ -86,7 +87,8 @@ class RenditionServiceTest extends \TestCase
         $this->orm->persist($image2 = new LocalImage(LocalImageTest::PICTURE_PORTRAIT));
         $this->orm->flush();
 
-        $rendition = new Rendition(200, 200, 'fit', 'thumb');
+        $this->orm->persist($rendition = new Rendition(200, 200, 'fit', 'thumb'));
+        $this->orm->flush();
 
         $this->service->setArticleRendition(self::ARTICLE_NUMBER, $rendition, $image1);
         $this->service->setArticleRendition(self::ARTICLE_NUMBER, $rendition, $image2);
@@ -99,8 +101,11 @@ class RenditionServiceTest extends \TestCase
     {
         $this->orm->persist($image = new LocalImage(LocalImageTest::PICTURE_LANDSCAPE));
         $this->orm->flush();
+        
+        $this->orm->persist($rendition = new Rendition(300, 300, 'crop_0_15_300_315', 'test'));
+        $this->orm->flush();
 
-        $this->service->setArticleRendition(self::ARTICLE_NUMBER, new Rendition(300, 300, 'crop_0_15_300_315', 'test'), $image);
+        $this->service->setArticleRendition(self::ARTICLE_NUMBER, $rendition, $image);
         $renditions = $this->service->getArticleRenditions(self::ARTICLE_NUMBER);
         $rendition = $renditions['test']->getRendition();
 
@@ -112,10 +117,11 @@ class RenditionServiceTest extends \TestCase
 
     public function testUnsetArticleRendition()
     {
+        $this->orm->persist($rendition = new Rendition(300, 300, 'crop_0_15_300_315', 'test'));
         $this->orm->persist($image = new LocalImage(LocalImageTest::PICTURE_LANDSCAPE));
         $this->orm->flush();
 
-        $this->service->setArticleRendition(self::ARTICLE_NUMBER, new Rendition(300, 300, 'crop_0_15_300_315', 'test'), $image);
+        $this->service->setArticleRendition(self::ARTICLE_NUMBER, $rendition, $image);
         $renditions = $this->service->getArticleRenditions(self::ARTICLE_NUMBER);
         $this->assertTrue(isset($renditions['test']));
 
@@ -152,5 +158,22 @@ class RenditionServiceTest extends \TestCase
         $this->assertEquals(5, count($options));
         $this->assertArrayHasKey('landscape', $options);
         $this->assertInstanceOf('Newscoop\Image\Rendition', $this->service->getRendition('landscape'));
+    }
+
+    public function testSetRenditionImageSpecs()
+    {
+        $this->orm->persist($rendition = new Rendition(200, 200, 'crop', 'rend'));
+        $this->orm->persist($image = new LocalImage(LocalImageTest::PICTURE_LANDSCAPE));
+        $this->orm->flush();
+
+        $this->service->setArticleRendition(self::ARTICLE_NUMBER, $rendition, $image, '0_0_200_200');
+
+        $renditions = $this->service->getArticleRenditions(self::ARTICLE_NUMBER);
+        $articleRendition = $renditions[$rendition];
+
+        $this->assertEquals($rendition->getName(), $articleRendition->getRendition()->getName());
+        $this->assertEquals('0_0_200_200', $articleRendition->getImageSpecs());
+        $this->assertEquals('crop_0_0_200_200', $articleRendition->getRendition()->getSpecs());
+        $this->assertEquals('crop', $rendition->getSpecs());
     }
 }

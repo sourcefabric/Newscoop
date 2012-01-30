@@ -41,7 +41,7 @@ class Admin_ImageController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
 
         try {
-            $rendition = $this->renditions[$this->_getParam('rendition')];
+            $rendition = $this->_helper->service('image.rendition')->getRendition($this->_getParam('rendition'));
             $image = $this->_helper->service('image')->getArticleImage($this->_getParam('article_number'), array_pop(explode('-', $this->_getParam('image'))));
             $articleRendition = $this->_helper->service('image.rendition')->setArticleRendition($this->_getParam('article_number'), $rendition, $image->getImage());
             $this->view->rendition = $this->view->rendition($rendition, $this->view->previewWidth, $this->view->previewHeight, $articleRendition);
@@ -62,14 +62,13 @@ class Admin_ImageController extends Zend_Controller_Action
     public function editAction()
     {
         $this->_helper->layout->setLayout('iframe');
-        $rendition = $this->renditions[$this->_getParam('rendition')];
+        $rendition = $this->_helper->service('image.rendition')->getRendition($this->_getParam('rendition'));
         $renditions = $this->_helper->service('image.rendition')->getArticleRenditions($this->_getParam('article_number'));
         $image = $renditions[$rendition]->getImage();
 
         if ($this->getRequest()->isPost()) {
-            $specs = 'crop_' . $this->getRequest()->getPost('coords');
             $this->_helper->service('image.rendition')
-                ->setArticleRendition($this->_getParam('article_number'), new Rendition($rendition->getWidth(), $rendition->getHeight(), $specs, $rendition->getName()), $image);
+                ->setArticleRendition($this->_getParam('article_number'), $rendition, $image, $this->getRequest()->getPost('coords'));
             $this->_helper->redirector('edit', 'image', 'admin', array(
                 'article_number' => $this->_getParam('article_number'),
                 'rendition' => $this->_getParam('rendition'),

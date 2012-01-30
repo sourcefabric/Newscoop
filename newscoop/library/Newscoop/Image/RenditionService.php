@@ -48,9 +48,10 @@ class RenditionService
      * @param int $articleNumber
      * @param Newscoop\Image\Rendition $rendition
      * @param Newscoop\Image\ImageInterface $image
+     * @param string $imageSpecs
      * @return Newscoop\Image\ArticleRendition
      */
-    public function setArticleRendition($articleNumber, Rendition $rendition, ImageInterface $image)
+    public function setArticleRendition($articleNumber, Rendition $rendition, ImageInterface $image, $imageSpecs = null)
     {
         if ($image->getWidth() < $rendition->getWidth() || $image->getHeight() < $rendition->getHeight()) {
             throw new \InvalidArgumentException("Image too small.");
@@ -62,7 +63,7 @@ class RenditionService
             $this->orm->flush($old);
         }
 
-        $articleRendition = new ArticleRendition($articleNumber, $rendition, $image);
+        $articleRendition = new ArticleRendition($articleNumber, $rendition, $image, $imageSpecs);
         $this->orm->persist($articleRendition);
         $this->orm->flush($articleRendition);
         return $articleRendition;
@@ -96,7 +97,7 @@ class RenditionService
         try {
             return $this->orm->getRepository('Newscoop\Image\ArticleRendition')->findOneBy(array(
                 'articleNumber' => (int) $articleNumber,
-                'renditionName' => (string) $rendition,
+                'rendition' => (string) $rendition,
             ));
         } catch (\Exception $e) {
             $this->createSchemaIfMissing($e);
