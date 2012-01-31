@@ -15,12 +15,12 @@
 
 <h2><?php putGS("Attached images"); ?></h2>
 
-<ul class="thumbnails">
+<ul id="attached-thumbnails" class="thumbnails">
     <?php foreach ($this->images as $image) { ?>
     <li id="image-<?php echo $image->getId(); ?>">
         <figure>
             <div><?php echo $this->thumbnail($image->getPath(), 100, 100, 'fit')->getImg($this); ?></div>
-            <input type="radio" id="default-<?php echo $image->getId(); ?>" name="default-image" value="<?php echo $image->getId(); ?>" <?php if ($image->isDefault()) { echo 'checked'; } ?> title="<?php putGS('Set as default'); ?>" />
+            <input type="radio" id="default-<?php echo $image->getId(); ?>" name="default-image" value="<?php echo $image->getId(); ?>" <?php if ($image->isDefault()) { echo 'checked="checked"'; } ?> title="<?php putGS('Set as default'); ?>" />
             <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></label></figcaption>
         </figure>
     </li>
@@ -62,7 +62,6 @@ $(function() {
         revert: true,
         opacity: 0.8,
         zIndex: 1000,
-        helper: 'clone',
         cursor: 'move'
     });
 

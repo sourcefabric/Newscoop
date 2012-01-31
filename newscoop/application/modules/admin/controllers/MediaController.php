@@ -26,7 +26,7 @@ class Admin_MediaController extends Zend_Controller_Action
         $this->_helper->layout->disableLayout();
 
         $page = $this->_getParam('page', 1);
-        $count = $this->_helper->service('image')->getCountBy(array());
+        $count = $this->_getParam('q', false) ? 0 : $this->_helper->service('image')->getCountBy(array());
         $paginator = Zend_Paginator::factory($count);
         $paginator->setItemCountPerPage(self::LIMIT);
         $paginator->setCurrentPageNumber($page);
@@ -34,7 +34,12 @@ class Admin_MediaController extends Zend_Controller_Action
         $paginator->setDefaultScrollingStyle('Sliding');
 
         $this->view->paginator = $paginator;
-        $this->view->images = $this->_helper->service('image')->findBy(array(), array('id' => 'desc'), self::LIMIT, ($paginator->getCurrentPageNumber() - 1) * self::LIMIT);
+
+        if ($this->_getParam('q', false)) {
+            $this->view->images = $this->_helper->service('image.search')->find($this->_getParam('q'));
+        } else {
+            $this->view->images = $this->_helper->service('image')->findBy(array(), array('id' => 'desc'), self::LIMIT, ($paginator->getCurrentPageNumber() - 1) * self::LIMIT);
+        }
     }
 
     public function listSlideshowsAction()

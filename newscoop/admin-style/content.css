@@ -735,15 +735,13 @@ li.state-active dl.rendition dd.name {
 
 .thumbnails {
     clear: both;
-    height: 1%;
-    overflow: hidden;
     margin: 0 0 8px;
     padding: 0 4px;
 }
 
 .thumbnails li {
     list-style-type: none;
-    float: left;
+    display: inline-block;
     width: 102px;
     margin: 8px 4px 8px;
     padding: 4px;
@@ -1069,4 +1067,22 @@ a.create-slideshow {
     padding: 3px 5px;
     color: #fff;
     background-color: #4e9a06;
+}
+
+#next .ui-tabs {
+    border: none;
+    font-size: 1em;
+}
+
+#next .ui-tabs-nav {
+    font-size: 1.1em;
+}
+
+#next #image-search {
+    margin: 8px 8px 0;
+}
+
+#next #image-archive .info {
+    margin: 8px;
+    font-size: 1.1em;
 }

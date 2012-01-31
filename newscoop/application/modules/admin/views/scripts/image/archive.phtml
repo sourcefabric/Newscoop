@@ -1,3 +1,11 @@
+<div id="image-search">
+    <form method="GET" action="<?php echo $this->url(array(
+        'controller' => 'media',
+        'action' => 'list-images',
+    )); ?>">
+        <input type="text" name="q" placeholder="<?php putGS('Search'); ?>" /> <button><?php putGS('Search'); ?></button>
+    </form>
+</div>
 <div id="image-archive"></div>
 <script>
 $(function() {
@@ -11,6 +19,14 @@ $(function() {
     $('#image-archive .paginationControl a').live('click', function(e) {
         e.preventDefault();
         $('#image-archive').load($(this).attr('href'), function() {
+            $('#image-archive li').draggable(draggableOptions);
+        });
+    });
+
+    $('#image-search form').submit(function(e) {
+        e.preventDefault();
+        $.get(this.action, $(this).serializeArray(), function(data, textStatus) {
+            $('#image-archive').html(data);
             $('#image-archive li').draggable(draggableOptions);
         });
     });

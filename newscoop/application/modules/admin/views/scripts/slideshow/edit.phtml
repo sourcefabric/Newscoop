@@ -81,20 +81,31 @@ $(function() {
             link.closest('li').detach();
         });
     });
+
+    $('#select-image').tabs();
 });
 </script>
 
-<h2><?php putGS('Attached images'); ?></h2>
-<ul class="thumbnails">
-    <?php foreach ($this->images as $image) { ?>
-    <li id="image-<?php echo $image->getId(); ?>">
-        <figure>
-            <div><?php echo $this->thumbnail($image->getPath(), 100, 100, 'fit')->getImg($this); ?></div>
-            <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></label></figcaption>
-        </figure>
-    </li>
-    <?php } ?>
-</ul>
+<div id="select-image">
+    <ul>
+        <li><a href="#attached-images"><?php putGS('Attached images'); ?></a></li>
+        <li><a href="#media-archive"><?php putGS('Media Archive'); ?></a></li>
+    </ul>
 
-<h2><?php putGS('Archived images'); ?></h2>
-<?php echo $this->imageArchive(); ?>
+    <div id="attached-images">
+        <ul class="thumbnails">
+            <?php foreach ($this->images as $image) { ?>
+            <li id="image-<?php echo $image->getId(); ?>">
+                <figure>
+                    <div><?php echo $this->thumbnail($image->getPath(), 100, 100, 'fit')->getImg($this); ?></div>
+                    <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></label></figcaption>
+                </figure>
+            </li>
+            <?php } ?>
+        </ul>
+    </div>
+
+    <div id="media-archive">
+        <?php echo $this->imageArchive(); ?>
+    </div>
+</div>

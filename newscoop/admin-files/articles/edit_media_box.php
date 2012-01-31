@@ -1,6 +1,7 @@
 <div class="articlebox" title="<?php putGS('Media'); ?>"><div class="tabs">
     <ul>
         <li><a href="#media-images"><?php putGS('Images'); ?></a></li>
+        <li><a href="#media-slideshows"><?php putGS('Slideshows'); ?></a></li>
         <li><a href="#media-attachments"><?php putGS('Files'); ?></a></li>
     </ul>
     <div id="media-images">
@@ -41,6 +42,15 @@
             </li>
             <?php } ?>
         </ul>
+    </div>
+
+    <div id="media-slideshows">
+    <!-- BEGIN Slideshows -->
+    <?php echo $this->view->action('box', 'slideshow', 'admin', array(
+        'article_number' => $articleObj->getArticleNumber(),
+    )); ?>
+    <!-- END Slideshows -->
+
     </div>
 
     <div id="media-attachments">

@@ -1,23 +1,22 @@
-<div class="articlebox slideshowbox" title="<?php echo $this->escape(getGS('Slideshows')); ?>">
-    <a class="iframe ui-state-default icon-button right-floated" href="<?php echo $this->url(array(
+<a class="iframe ui-state-default icon-button right-floated" href="<?php echo $this->url(array(
+    'module' => 'admin',
+    'controller' => 'slideshow',
+    'action' => 'create',
+    'article_number' => $this->articleNumber,
+)); ?>"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Create'); ?></a>
+
+<?php if (empty($this->slideshows)) { ?>
+<p><?php putGS('No slideshows'); ?></p>
+
+<?php } else { ?>
+<ul class="slideshows">
+    <?php foreach ($this->slideshows as $slideshow) { ?>
+    <li><a href="<?php echo $this->url(array(
         'module' => 'admin',
         'controller' => 'slideshow',
-        'action' => 'create',
-        'article_number' => $this->articleNumber,
-    )); ?>"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Create'); ?></a>
-
-    <?php if (empty($this->slideshows)) { ?>
-    <p><?php putGS('No slideshows'); ?></p>
-    <?php } else { ?>
-    <ul class="slideshows">
-        <?php foreach ($this->slideshows as $slideshow) { ?>
-        <li><a href="<?php echo $this->url(array(
-            'module' => 'admin',
-            'controller' => 'slideshow',
-            'action' => 'edit',
-            'slideshow' => $slideshow->getId(),
-        )); ?>" class="iframe" title="<?php putGS('Edit $1', $slideshow->getHeadline()); ?>"><?php echo $slideshow->getHeadline(); ?></a></li>
-        <?php } ?>
-    </ul>
+        'action' => 'edit',
+        'slideshow' => $slideshow->getId(),
+    )); ?>" class="iframe" title="<?php putGS('Edit $1', $slideshow->getHeadline()); ?>"><?php echo $slideshow->getHeadline(); ?></a></li>
     <?php } ?>
-</div>
+</ul>
+<?php } ?>

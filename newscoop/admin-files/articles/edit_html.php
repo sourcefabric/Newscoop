@@ -386,12 +386,6 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
       <?php require('edit_media_box.php'); ?>
       <!-- END Images table -->
 
-    <!-- BEGIN Slideshows -->
-    <?php echo $this->view->action('box', 'slideshow', 'admin', array(
-        'article_number' => $articleObj->getArticleNumber(),
-    )); ?>
-    <!-- END Slideshows -->
-
       <!-- BEGIN Context Box table -->
       <?php require('edit_context_box.php'); ?>
       <!-- END Context Box table -->

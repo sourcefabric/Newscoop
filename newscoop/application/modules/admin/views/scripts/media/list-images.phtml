@@ -1,4 +1,6 @@
 <?php echo $this->paginator; ?>
+
+<?php if (!empty($this->images)) { ?>
 <ul class="thumbnails archive images">
     <?php foreach ($this->images as $image) { ?>
     <li id="image-<?php echo $image->getId(); ?>">
@@ -9,3 +11,7 @@
     </li>
     <?php } ?>
 </ul>
+
+<?php } else { ?>
+<div class="info"><?php putGS('No images'); ?></div>
+<?php } ?>
