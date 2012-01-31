@@ -61,4 +61,23 @@ class AuditRepository extends EntityRepository
 
         return (int) $query->getSingleScalarResult();
     }
+
+    /**
+     * Get events to archive
+     *
+     * @param DateTime $date
+     * @return array
+     */
+    public function getFlushableEvents(\DateTime $date)
+    {
+        $date = $date->format('Y-m-d H:i:s');
+
+        $query = $this->getEntityManager()->createQueryBuilder()
+            ->select('e')
+            ->from($this->getEntityName(), 'e')
+            ->where('e.created < :when')
+            ->setParameters(array('when' => $date));
+
+        return $query->getQuery()->getResult();
+    }
 }
