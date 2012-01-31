@@ -89,6 +89,9 @@ final class MetaArticle extends MetaDbObject {
     /** @var Article */
     private $bloginfo;
 
+    /** @var array */
+    private $renditions;
+
     public function __construct($p_languageId = null, $p_articleId = null)
     {
     	$this->m_properties = self::$m_baseProperties;
@@ -792,5 +795,19 @@ final class MetaArticle extends MetaDbObject {
         }
 
         return $this->bloginfo;
+    }
+
+    /**
+     * Get article renditions
+     *
+     * @return array
+     */
+    public function getRenditions()
+    {
+        if ($this->renditions === null) {
+            $this->renditions = Zend_Registry::get('container')->getService('image.rendition')->getArticleRenditions($this->m_dbObject->getArticleNumber());
+        }
+
+        return $this->renditions;
     }
 }
