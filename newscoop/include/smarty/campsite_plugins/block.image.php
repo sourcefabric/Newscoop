@@ -4,14 +4,20 @@
  */
 
 /**
- * Get image
+ * Image block
  *
  * @param array $params
+ * @param string $content
  * @param Smarty_Internal_Template $smarty
- * @return string
+ * @param bool $repeat
+ * @return void
  */
-function smarty_function_image(array $params, Smarty_Internal_Template $smarty)
+function smarty_block_image(array $params, $content, Smarty_Internal_Template $smarty, $repeat)
 {
+    if (!$repeat) {
+        return $content;
+    }
+
     if (!array_key_exists('rendition', $params)) {
         throw new \InvalidArgumentException("Rendition not set");
     }
@@ -36,10 +42,9 @@ function smarty_function_image(array $params, Smarty_Internal_Template $smarty)
         $thumbnail = $articleRendition->getRendition()->getThumbnail($articleRendition->getImage(), Zend_Registry::get('container')->getService('image'));
     }
 
-    return sprintf('<img src="%s" width="%d" height="%d" alt="%s" />',
-        Zend_Registry::get('view')->url(array('src' => $thumbnail->src), 'image', true, false),
-        $thumbnail->width,
-        $thumbnail->height,
-        array_key_exists('alt', $params) ? $params['alt'] : ''
-    );
+    $smarty->assign('thumbnail', (object) array(
+        'src' => Zend_Registry::get('view')->url(array('src' => $thumbnail->src), 'image', true, false),
+        'width' => $thumbnail->width,
+        'height' => $thumbnail->height,
+    ));
 }

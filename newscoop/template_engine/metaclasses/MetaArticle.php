@@ -1,23 +1,19 @@
 <?php
 /**
- * @package Campsite
+ * @package Newscoop
  */
 
 use Newscoop\Webcode\Manager;
 
-/**
- * Includes
- */
-require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMap.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Template.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
-require_once($GLOBALS['g_campsiteDir'].'/template_engine/metaclasses/MetaDbObject.php');
-
+require_once __DIR__ . '/../../classes/Article.php';
+require_once __DIR__ . '/../../classes/ArticleAttachment.php';
+require_once __DIR__ . '/../../classes/GeoMap.php';
+require_once __DIR__ . '/../../classes/Template.php';
+require_once __DIR__ . '/../../classes/Language.php';
+require_once __DIR__ . '/MetaDbObject.php';
+require_once __DIR__ . '/MetaArticleSlideshowList.php';
 
 /**
- * @package Campsite
  */
 final class MetaArticle extends MetaDbObject {
     private $m_articleData = null;
@@ -92,6 +88,9 @@ final class MetaArticle extends MetaDbObject {
     /** @var array */
     private $renditions;
 
+    /** @var array */
+    public $slideshows;
+
     public function __construct($p_languageId = null, $p_articleId = null)
     {
     	$this->m_properties = self::$m_baseProperties;
@@ -120,6 +119,8 @@ final class MetaArticle extends MetaDbObject {
         	}
         	$this->m_articleData = new ArticleData(null, null, null);
         }
+
+        $this->slideshows = new MetaArticleSlideshowList($p_articleId);
     } // fn __construct
 
 
