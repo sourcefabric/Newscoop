@@ -3216,7 +3216,7 @@ class Article extends DatabaseObject {
      * @return string
      *      The string containing processed values of the condition
      */
-    private static function GetCustomOrder(string $p_fieldType, string $p_articleType, string $p_fieldName, string $p_defaultValue)
+    private static function GetCustomOrder($p_fieldType, $p_articleType, $p_fieldName, $p_defaultValue)
     {
         $p_fieldType = strtolower($p_fieldType);
         if (!in_array($p_fieldType, array('ci', 'cs', 'num'))) {
