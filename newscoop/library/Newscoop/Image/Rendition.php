@@ -176,7 +176,8 @@ class Rendition
      */
     public function generateImage($imagePath)
     {
-        $image = NetteImage::fromFile(APPLICATION_PATH . '/../' . $imagePath);
+        $path = is_file(APPLICATION_PATH . '/../' . $imagePath) ? APPLICATION_PATH . '/../' . $imagePath : $imagePath;
+        $image = NetteImage::fromFile($path);
         if ($this->isCrop()) {
             $cropSpecs = explode('_', $this->getSpecs());
             if (count($cropSpecs) === 1) {

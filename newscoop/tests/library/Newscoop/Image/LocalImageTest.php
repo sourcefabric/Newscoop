@@ -41,4 +41,13 @@ class LocalImageTest extends \TestCase
         $image->setDescription('desc');
         $this->assertEquals('desc', $image->getDescription());
     }
+
+    public function testRemoteImage()
+    {
+        $url = 'file://' . realpath(APPLICATION_PATH . '/../' . self::PICTURE_LANDSCAPE);
+        $image = new LocalImage($url);
+        $this->assertEquals(500, $image->getWidth());
+        $this->assertEquals(333, $image->getHeight());
+        $this->assertEquals($url, $image->getPath());
+    }
 }

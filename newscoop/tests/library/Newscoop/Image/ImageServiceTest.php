@@ -126,9 +126,10 @@ class ImageServiceTest extends \TestCase
         $this->assertEquals(0, $this->service->getCountBy(array()));
 
         $this->orm->persist(new LocalImage(self::PICTURE_LANDSCAPE));
+        $this->orm->persist(new LocalImage('file://' . realpath(APPLICATION_PATH . '/../' . self::PICTURE_LANDSCAPE)));
         $this->orm->flush();
 
-        $this->assertEquals(1, count($this->service->findBy(array())));
-        $this->assertEquals(1, $this->service->getCountBy(array()));
+        $this->assertEquals(2, count($this->service->findBy(array())));
+        $this->assertEquals(2, $this->service->getCountBy(array()));
     }
 }

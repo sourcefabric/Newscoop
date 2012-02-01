@@ -21,10 +21,22 @@ class LocalImage implements ImageInterface
     private $id;
 
     /**
-     * @Column(name="ImageFileName")
+     * @Column(name="Location")
+     * @var string
+     */
+    private $location;
+
+    /**
+     * @Column(name="ImageFileName", nullable=True)
      * @var string
      */
     private $basename;
+
+    /**
+     * @Column(name="URL", nullable=True)
+     * @var string
+     */
+    private $url;
 
     /**
      * @Column(nullable=True, name="Description")
@@ -38,11 +50,17 @@ class LocalImage implements ImageInterface
     private $info;
 
     /**
-     * @param string $basename
+     * @param string $image
      */
-    public function __construct($basename)
+    public function __construct($image)
     {
-        $this->basename = (string) $basename;
+        if (strpos($image, 'http://') === 0 || strpos($image, 'https://') === 0 || strpos($image, 'file://') === 0) {
+            $this->location = 'remote';
+            $this->url = (string) $image;
+        } else {
+            $this->location = 'local';
+            $this->basename = (string) $image;
+        }
     }
 
     /**
@@ -62,7 +80,11 @@ class LocalImage implements ImageInterface
      */
     public function getPath()
     {
-        return basename($this->basename) === $this->basename ? 'images/' . $this->basename : $this->basename;
+        if ($this->isLocal()) {
+            return basename($this->basename) === $this->basename ? 'images/' . $this->basename : $this->basename;
+        } else {
+            return $this->url;
+        }
     }
 
     /**
@@ -100,7 +122,11 @@ class LocalImage implements ImageInterface
      */
     private function getInfo()
     {
-        return $this->info = getimagesize(APPLICATION_PATH . '/../' . $this->getPath());
+        if ($this->isLocal()) {
+            return $this->info = getimagesize(APPLICATION_PATH . '/../' . $this->getPath());
+        } else {
+            return $this->info = getimagesize($this->url);
+        }
     }
 
     /**
@@ -122,5 +148,15 @@ class LocalImage implements ImageInterface
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Test if is local image
+     *
+     * @return bool
+     */
+    public function isLocal()
+    {
+        return $this->location === 'local';
     }
 }
