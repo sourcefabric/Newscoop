@@ -1,9 +1,9 @@
-<a class="iframe ui-state-default icon-button right-floated" href="<?php echo $this->url(array(
+<a class="ui-state-default icon-button right-floated" href="<?php echo $this->url(array(
     'module' => 'admin',
     'controller' => 'slideshow',
     'action' => 'create',
     'article_number' => $this->articleNumber,
-)); ?>"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Create'); ?></a>
+)); ?>" id="create-slideshow"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Create'); ?></a>
 
 <?php if (empty($this->slideshows)) { ?>
 <p><?php putGS('No slideshows'); ?></p>
@@ -16,7 +16,26 @@
         'controller' => 'slideshow',
         'action' => 'edit',
         'slideshow' => $slideshow->getId(),
-    )); ?>" class="iframe" title="<?php putGS('Edit $1', $slideshow->getHeadline()); ?>"><?php echo $slideshow->getHeadline(); ?></a></li>
+    )); ?>" title="<?php putGS('Edit $1', $slideshow->getHeadline()); ?>"><?php echo $slideshow->getHeadline(); ?></a></li>
     <?php } ?>
 </ul>
 <?php } ?>
+
+<script type="text/javascript">
+    $(function() {
+        $('#media-slideshows a').fancybox({
+            hideOnContentClick: false,
+            width: 960,
+            height: 600,
+            type: 'iframe',
+            onClosed: function() {
+                $('#media-slideshows').load("<?php echo $this->url(array(
+                    'module' => 'admin',
+                    'controller' => 'slideshow',
+                    'action' => 'box',
+                    'article_number' => $this->articleNumber,
+                )); ?>");
+            }
+        });
+    });
+</script>

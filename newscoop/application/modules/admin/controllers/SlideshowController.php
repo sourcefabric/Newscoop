@@ -29,6 +29,7 @@ class Admin_SlideshowController extends Zend_Controller_Action
 
     public function boxAction()
     {
+        $this->_helper->layout->disableLayout();
         $this->view->articleNumber = $this->_getParam('article_number');
         $this->view->slideshows = $this->_helper->service('package')->findByArticle($this->_getParam('article_number'));
     }

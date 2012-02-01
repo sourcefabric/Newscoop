@@ -44,14 +44,19 @@
         </ul>
     </div>
 
-    <div id="media-slideshows">
     <!-- BEGIN Slideshows -->
-    <?php echo $this->view->action('box', 'slideshow', 'admin', array(
-        'article_number' => $articleObj->getArticleNumber(),
-    )); ?>
+    <div id="media-slideshows"></div>
+    <script type="text/javascript">
+    $(function() {
+        $('#media-slideshows').load("<?php echo $this->view->url(array(
+            'module' => 'admin',
+            'controller' => 'slideshow',
+            'action' => 'box',
+            'article_number' => $articleObj->getArticleNumber(),
+        )); ?>");
+    });
+    </script>
     <!-- END Slideshows -->
-
-    </div>
 
     <div id="media-attachments">
         <?php if ($inEditMode && $g_user->hasPermission('AddFile')) {  ?>
