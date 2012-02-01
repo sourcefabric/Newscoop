@@ -273,8 +273,17 @@ class ImageService
      */
     public function findBy(array $criteria, $orderBy = null, $limit = 25, $offset = 0)
     {
-        return $this->orm->getRepository('Newscoop\Image\LocalImage')
-            ->findBy($criteria, $orderBy, $limit, $offset);
+        $qb = $this->orm->getRepository('Newscoop\Image\LocalImage')->createQueryBuilder('i')
+            ->where("i.basename <> ''");
+
+        foreach ($orderBy as $column => $dir) {
+            $qb->orderBy("i.{$column}", $dir);
+        }
+
+        $qb->setMaxResults($limit);
+        $qb->setFirstResult($offset);
+
+        return $qb->getQuery()->getResult();
     }
 
     /**
