@@ -211,7 +211,7 @@ class Package
      */
     public function setSlug($slug)
     {
-        $this->slug = (string) $slug;
+        $this->slug = empty($slug) ? null : (string) $slug;
     }
 
     /**

@@ -233,6 +233,19 @@ class PackageServiceTest extends \TestCase
         $this->assertEquals(1, $packages[1]->getItemsCount());
     }
 
+    public function testSaveSlugTwice()
+    {
+        $this->service->save(array('headline' => 'tic', 'slug' => ''));
+        $this->service->save(array('headline' => 'toc', 'slug' => ''));
+
+        $packages = $this->service->findBy(array());
+        $this->assertEquals(2, count($packages));
+
+        foreach ($packages as $package) {
+            $this->assertNull($package->getSlug());
+        }
+    }
+
     /**
      * Get rendition
      *
