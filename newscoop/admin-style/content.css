@@ -1017,13 +1017,6 @@ li.state-active dl.rendition dd.name {
     position: relative;
 }
 
-#image-archive .paginationControl {
-    position: absolute;
-    top: -13px;
-    right: 13px;
-    font-size: 1.1em;
-}
-
 #slideshows .slideshows {
     margin: 8px;
 }
