@@ -16,6 +16,8 @@ class Admin_ImageController extends Zend_Controller_Action
 
     public function init()
     {
+        camp_load_translation_strings('article_images');
+
         $this->renditions = $this->_helper->service('image.rendition')->getRenditions();
 
         $this->_helper->contextSwitch()

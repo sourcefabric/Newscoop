@@ -15,6 +15,8 @@ class Admin_SlideshowController extends Zend_Controller_Action
 {
     public function init()
     {
+        camp_load_translation_strings('article_images');
+
         $this->_helper->contextSwitch()
             ->addActionContext('add-item', 'json')
             ->addActionContext('set-order', 'json')
