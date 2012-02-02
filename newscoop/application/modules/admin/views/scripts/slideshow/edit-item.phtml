@@ -1,3 +1,4 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); ?>
 <?php $this->placeholder('bodyId')->set('next'); $this->placeholder('bodyClass')->set('dark'); ?>
 <h1><?php putGS('Slideshow'); ?></h1>
 <form id="edit-form" method="<?php echo $this->form->getMethod(); ?>">
@@ -12,7 +13,7 @@
         <input type="text" name="url" value="<?php echo $this->form->url->getValue(); ?>" /><br />
         <?php } ?>
         <input type="text" name="caption" value="<?php echo $this->form->caption->getValue(); ?>" placeholder="<?php putGS('Add caption'); ?>" /><br />
-        <button><?php putGS('Save'); ?></button>
+        <button class="save-button"><?php putGS('Save'); ?></button>
     </div>
 
     <?php if (($prev = $this->package->getPrev($this->item)) !== null) { ?>
@@ -30,7 +31,7 @@
     <a href="<?php echo $this->url(array(
         'action' => 'edit',
         'item' => null,
-    )); ?>" class="done"><?php putGS('Done editing'); ?></a>
+    )); ?>" class="done button"><?php putGS('Done editing'); ?></a>
 </div>
 
 </form>

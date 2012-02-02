@@ -1,3 +1,4 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); ?>
 <?php $this->placeholder('bodyId')->set('next'); $this->placeholder('bodyClass')->set('dark'); ?>
 <h1><?php putGS('Place images'); ?></h1>
 
@@ -7,14 +8,14 @@
     <div>
         <?php echo $this->imageEditor($this->rendition, $this->image); ?>
         <?php if ($this->rendition->isCrop()) { ?>
-        <br /><button id="save-jcrop">Save</button>
+        <button id="save-jcrop save-button">Save</button>
         <?php } ?>
     </div>
 
     <a href="<?php echo $this->url(array(
         'action' => 'article',
         'rendition' => null,
-    )); ?>" class="done"><?php putGS('Done editing'); ?></a>
+    )); ?>" class="done button"><?php putGS('Done editing'); ?></a>
 </div>
 
 </form>
