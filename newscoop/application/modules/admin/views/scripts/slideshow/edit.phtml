@@ -88,10 +88,11 @@ $(function() {
 
 <div id="select-image">
     <ul>
-        <li><a href="#attached-images"><?php putGS('Attached images'); ?></a></li>
+        <?php if (!empty($this->images)) { ?><li><a href="#attached-images"><?php putGS('Attached images'); ?></a></li><?php } ?>
         <li><a href="#media-archive"><?php putGS('Media Archive'); ?></a></li>
     </ul>
 
+    <?php if (!empty($this->images)) { ?>
     <div id="attached-images">
         <ul class="thumbnails">
             <?php foreach ($this->images as $image) { ?>
@@ -104,6 +105,7 @@ $(function() {
             <?php } ?>
         </ul>
     </div>
+    <?php } ?>
 
     <div id="media-archive">
         <?php echo $this->imageArchive(); ?>

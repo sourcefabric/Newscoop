@@ -7,13 +7,14 @@
     <?php } ?>
 </ul>
 
+<h2><?php putGS("Attached images"); ?></h2>
+
+<?php if (!empty($this->images)) { ?>
 <form action="<?php echo $this->url(array(
     'module' => 'admin',
     'controller' => 'image',
     'action' => 'set-default-image',
 )); ?>" method="POST">
-
-<h2><?php putGS("Attached images"); ?></h2>
 
 <ul id="attached-thumbnails" class="thumbnails">
     <?php foreach ($this->images as $image) { ?>
@@ -32,6 +33,9 @@
 </div>
 
 </form>
+<?php } else { ?>
+<p style="margin-left: 8px"><?php putGS('No images attached to article.'); ?></p>
+<?php } ?>
 
 <script>
 $(function() {
