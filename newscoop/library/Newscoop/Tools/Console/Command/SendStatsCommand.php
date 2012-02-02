@@ -67,7 +67,6 @@ EOT
             $client->setUri($statsUrl);
             $client->setParameterPost($parameters);
             $response = $client->request('POST');
-            echo($response->getBody());
         }
     }
 }
