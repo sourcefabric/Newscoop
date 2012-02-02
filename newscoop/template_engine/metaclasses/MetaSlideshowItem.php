@@ -18,29 +18,19 @@ final class MetaSlideshowItem
     public $is_image;
 
     /**
-     * @var string
-     */
-    public $src;
-
-    /**
      * @var bool
      */
     public $is_video;
 
     /**
-     * @var string
+     * @var object
      */
-    public $video_url;
+    public $video;
 
     /**
-     * @var int
+     * @var object
      */
-    public $width;
-
-    /**
-     * @var int
-     */
-    public $height;
+    public $image;
 
     /**
      * @var Newscoop\Package\Item
@@ -58,15 +48,20 @@ final class MetaSlideshowItem
 
         if ($item->isImage()) {
             $thumbnail = $item->getRendition()->getThumbnail($item->getImage(), Zend_Registry::get('container')->getService('image'));
-            $this->src = Zend_Registry::get('view')->url(array(
-                'src' => $thumbnail->src,
-            ), 'image', true, false);
-            $this->width = $thumbnail->width;
-            $this->height = $thumbnail->height;
+            $this->image = (object) array(
+                'src' => Zend_Registry::get('view')->url(array(
+                    'src' => $thumbnail->src,
+                ), 'image', true, false),
+                'width' => $thumbnail->width,
+                'height' => $thumbnail->height,
+                'original' => $item->getImage()->getPath(),
+            );
         } else {
-            $this->width = $item->getRendition()->getWidth();
-            $this->height = $item->getRendition()->getHeight();
-            $this->video_url = $item->getVideoUrl();
+            $this->video = (object) array(
+                'url' => $item->getVideoUrl(),
+                'width' => $item->getRendition()->getWidth(),
+                'height' => $item->getRendition()->getHeight(),
+            );
         }
     }
 }
