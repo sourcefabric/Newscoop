@@ -37,10 +37,12 @@ class CommentController extends Zend_Controller_Action
 
 		if ($auth->getIdentity()) {
 			$acceptanceRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Comment\Acceptance');
-			$user = new User($auth->getIdentity());
+            $userRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\User');
+            
+            $user = $userRepository->find($auth->getIdentity());
 
 			$userIp = getIp();
-			if ($acceptanceRepository->checkParamsBanned($user->m_data['Name'], $user->m_data['EMail'], $userIp, $article->getPublicationId())) {
+            if ($acceptanceRepository->checkParamsBanned($user->getName(), $user->getEmail(), $userIp, $article->getPublicationId())) {
 				$errors[] = $this->view->translate('You have been banned from writing comments.');
 			}
 		}
