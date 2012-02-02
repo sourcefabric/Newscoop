@@ -84,10 +84,11 @@ ul.slideshow {
 .popup-tabs {
 	padding-top:10px;
 	background:#f5f5f5;
-	border:#cccccc solid 1px;
+	border:#cccccc solid 1px !important;
+	border-width:1px 0 0 0 !important;
 	}
 	.popup-tabs ul.ui-tabs-nav {
-		padding:3px 0 0; margin-bottom:10px;
+		padding:3px 0 0; margin: 0 6px 6px 8px;
 		background:none;
 		border:0; border-bottom:#9d9d9d solid 1px;
 		}
@@ -147,11 +148,10 @@ ul.slideshow {
 		}
 		
 #image-archive {
-	padding-top:30px;
+	padding-top:10px;
 	}
 	#image-archive .paginationControl {
-		left:8px; right:auto; top:-9px;
-		padding:10px 0;
+		padding:3px 0 4px 8px;
 		}
 		#image-archive .paginationControl span,
 		#image-archive .paginationControl a {
@@ -164,3 +164,16 @@ ul.slideshow {
 				color:#dbdbdb;
 				border:#e5e5e5 solid 1px;
 				}
+
+#next .inline {
+	padding: 0 10px;
+}
+#next .inline.top-shadow {
+	padding: 10px;
+}
+#next #image-search {
+	margin: 12px 8px 0 8px;
+}
+#next #image-search button {
+	font-size:13px !important;
+}
