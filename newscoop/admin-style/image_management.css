@@ -130,7 +130,7 @@ ul.slideshow {
 		}
 	#next .editarea div#editor {
 		display:block;
-		padding:6px 6px 2px 6px;
+		padding:6px 126px 6px 6px;
 		background:#d9d9d9;
 		border:1px solid #b0b0b0;
 		box-shadow:inset 0 1px 2px rgba(0,0,0,0.2);
@@ -151,6 +151,7 @@ ul.slideshow {
 	padding-top:10px;
 	}
 	#image-archive .paginationControl {
+        color: #f5f5f5;
 		padding:3px 0 4px 8px;
 		}
 		#image-archive .paginationControl span,
