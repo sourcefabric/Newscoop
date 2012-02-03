@@ -1,0 +1,11 @@
+<dl class="slideshow-preview">
+    <dt><?php echo $this->escape($this->helperSlideshow->getHeadline()); ?> (<?php echo $this->helperSlideshow->getItemsCount(), ' ',  $this->translate(array(
+        getGS('Item'),
+        getGS('Items'),
+        $this->helperSlideshow->getItemsCount(),
+    )); ?>)</dt>
+    <?php $counter = 0; ?>
+    <?php foreach ($this->helperSlideshow->getItems() as $item) { ?>
+    <dd<?php echo $counter++ === 0 ? ' class="first"' : ''; ?>><?php echo $this->slideshowItemPreview($item); ?></dd>
+    <?php } ?>
+</dl>

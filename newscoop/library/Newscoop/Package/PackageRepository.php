@@ -58,6 +58,23 @@ class PackageRepository extends \Doctrine\ORM\EntityRepository
     }
 
     /**
+     * Find available for article
+     *
+     * @param Newscoop\Package\Article $article
+     * @return array
+     */
+    public function findAvailableForArticle(Article $article)
+    {
+        $queryBuilder = $this->createQueryBuilder('p');
+        $attachedIds = array_map(function($package) { return $package->getId(); }, $article->getPackages()->toArray());
+        if (!empty($attachedIds)) {
+            $queryBuilder->where($queryBuilder->expr()->notIn('p.id', implode(', ', $attachedIds)));
+        }
+        $queryBuilder->orderBy('p.id', 'desc');
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    /**
      * Set criteria for query builder
      *
      * @param Doctrine\ORM\QueryBuilder $queryBuilder

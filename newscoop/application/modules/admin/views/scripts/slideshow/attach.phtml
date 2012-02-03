@@ -1,0 +1,48 @@
+<?php $this->placeholder('bodyId')->set('next'); ?>
+
+<?php if (empty($this->slideshows)) { ?>
+<div class="empty"><?php putGS('No slideshows to attach'); ?></div>
+
+<div class="buttons">
+    <button id="close-button"><?php putGS('Close'); ?></button>
+</div>
+
+<?php } else { ?>
+<ul id="attach-slideshow-list" class="slideshows">
+    <?php foreach ($this->slideshows as $slideshow) { ?>
+    <li id="slideshow-<?php echo $slideshow->getId(); ?>">
+        <?php echo $this->slideshow($slideshow); ?>
+    </li>
+    <?php } ?>
+</ul>
+
+<div class="buttons">
+    <button id="attach-button"><?php putGS('Attach selected slideshows'); ?></button>
+    <button id="close-button"><?php putGS('Close'); ?></button>
+</div>
+<?php } ?>
+
+<script>
+    $(function() {
+        $('#attach-slideshow-list').selectable();
+
+        $('#attach-button').click(function() {
+            var selected = [];
+            $('#attach-slideshow-list li.ui-selected').each(function() {
+                selected.push($(this).attr('id').split('-')[1]);
+            });
+
+            if (selected.length) {
+                $.post(<?php echo json_encode($this->url()); ?>, {'slideshows': selected}, function(data, textStatus) {
+                    parent.$.fancybox.close();
+                });
+            } else {
+                parent.$.fancybox.close();
+            }
+        });
+
+        $('#close-button').click(function() {
+            parent.$.fancybox.close();
+        });
+    });
+</script>

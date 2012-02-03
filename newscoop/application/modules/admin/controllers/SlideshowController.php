@@ -45,8 +45,10 @@ class Admin_SlideshowController extends Zend_Controller_Action
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $values = $form->getValues();
             $values['rendition'] = $this->_helper->service('image.rendition')->getRendition($values['rendition']);
-            $values['article'] = $this->_getParam('article_number');
             $slideshow = $this->_helper->service('package')->save($values);
+            if ($this->_getParam('article_number', false)) {
+                $this->_helper->service('package')->addArticle($slideshow, $this->_getParam('article_number'));
+            }
             $this->_helper->redirector('edit', 'slideshow', 'admin', array(
                 'slideshow' => $slideshow->getId(),
                 'article_number' => $this->_getParam('article_number'),
@@ -76,7 +78,7 @@ class Admin_SlideshowController extends Zend_Controller_Action
         }
 
         $this->view->form = $form;
-        $this->view->images = $this->_helper->service('image')->findByArticle($slideshow->getArticleNumber());
+        $this->view->images = $this->_helper->service('image')->findByArticle($this->_getParam('article_number'));
         $this->view->slideshow = $slideshow;
     }
 
@@ -150,6 +152,31 @@ class Admin_SlideshowController extends Zend_Controller_Action
         $this->view->image = $item->getImage();
         $this->view->rendition = $item->isImage() ? $item->getRendition() : $slideshow->getRendition();
         $this->view->package = $slideshow;
+    }
+
+    public function attachAction()
+    {
+        $request = $this->getRequest();
+        if ($request->isPost()) {
+            foreach ($request->getPost('slideshows', array()) as $slideshowId) {
+                $slideshow = $this->_helper->service('package')->find($slideshowId);
+                $this->_helper->service('package')->addArticle($slideshow, $this->_getParam('article_number'));
+            }
+
+            $this->_helper->redirector('attach', 'slideshow', 'admin', array(
+                'article_number' => $this->_getParam('article_number'),
+            ));
+        }
+
+        $this->view->slideshows = $this->_helper->service('package')->findAvailableForArticle($this->_getParam('article_number'));
+    }
+
+    public function detachAction()
+    {
+        $slideshow = $this->_helper->service('package')->find($this->_getParam('slideshow'));
+        $this->_helper->service('package')->removeArticle($slideshow, $this->_getParam('article_number'));
+        $this->_helper->json((object) array(
+        ));
     }
 
     /**

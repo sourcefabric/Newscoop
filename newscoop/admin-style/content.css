@@ -1079,3 +1079,72 @@ a.create-slideshow {
     margin: 8px;
     font-size: 1.1em;
 }
+
+dl.slideshow-preview {
+    margin: 0;
+    padding: 0;
+    height: 1%;
+    overflow: hidden;
+}
+
+dl.slideshow-preview dt {
+    float: left;
+    clear: right;
+    padding: 3px 5px;
+    color: #fff;
+    background-color: #000;
+}
+
+dl.slideshow-preview dd {
+    float: left;
+    margin: 0;
+    padding: 5px 5px 5px 0;
+    color: #eeeeec;
+    background-color: #2e3436;
+}
+
+dl.slideshow-preview dd.first {
+    clear: left;
+    padding-left: 5px;
+}
+
+dl.slideshow-preview figure {
+    margin: 0;
+}
+
+dl.slideshow-preview figure > div > * {
+    display: block;
+    border: 1px solid #babdb6;
+}
+
+.ui-selected dl.slideshow-preview {
+    opacity: 0.5;
+}
+
+#attach-slideshow-list {
+    margin: 13px 8px;
+}
+
+#next .buttons {
+    margin: 0 8px 13px;
+}
+
+#media-slideshows .slideshows {
+    margin-top: 34px;
+    font-size: 0.8em;
+}
+
+#media-slideshows .slideshows .detach {
+    float: right;
+    color: #a40000;
+}
+
+#media-slideshows .slideshows li {
+    margin: 8px 0 0;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+#media-slideshows .slideshows a {
+    color: #2e3436;
+}

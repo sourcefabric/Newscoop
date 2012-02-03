@@ -53,9 +53,8 @@ class PackageService
     public function findByArticle($articleNumber)
     {
         try {
-            return $this->repository->findBy(array(
-                'articleNumber' => $articleNumber,
-            ), array('id' => 'asc'));
+            $article = $this->getArticle($articleNumber);
+            return $article->getPackages();
         } catch (\Exception $e) {
             if ($e->getCode() === '42S02') {
                 $schemaTool = new \Doctrine\ORM\Tools\SchemaTool($this->orm);
@@ -86,10 +85,6 @@ class PackageService
         if ($package === null) {
             $package = new Package();
             $this->orm->persist($package);
-        }
-
-        if (array_key_exists('article', $values)) {
-            $package->setArticleNumber($values['article']);
         }
 
         if (array_key_exists('headline', $values)) {
@@ -255,5 +250,82 @@ class PackageService
     public function getCountBy(array $criteria = array())
     {
         return (int) $this->repository->getCountBy($criteria);
+    }
+
+    /**
+     * Add package to article
+     *
+     * @param Newscoop\Package\Package $package
+     * @param int $articleNumber
+     * @return void
+     */
+    public function addArticle(Package $package, $articleNumber)
+    {
+        $article = $this->getArticle($articleNumber);
+        if (!$article->getPackages()->contains($package)) {
+            $article->getPackages()->add($package);
+            $this->orm->flush($article);
+        }
+    }
+
+    /**
+     * Remove package from article
+     *
+     * @param Newscoop\Package\Package $package
+     * @param int $articleNumber
+     * @return void
+     */
+    public function removeArticle(Package $package, $articleNumber)
+    {
+        $article = $this->getArticle($articleNumber);
+        $article->getPackages()->removeElement($package);
+        $this->orm->flush($article);
+    }
+
+    /**
+     * Find packages not attached to article
+     *
+     * @param int $articleNumber
+     * @return array
+     */
+    public function findAvailableForArticle($articleNumber)
+    {
+        $article = $this->getArticle($articleNumber);
+        return $this->orm->getRepository('Newscoop\Package\Package')->findAvailableForArticle($article);
+    }
+
+    /**
+     * Get article entity
+     *
+     * @param int $articleNumber
+     * @return Newscoop\Package\Article
+     */
+    private function getArticle($articleNumber)
+    {
+        try {
+            $article = $this->orm->getRepository('Newscoop\Package\Article')
+                ->findOneBy(array('id' => $articleNumber));
+        } catch (\Exception $e) {
+            if ($e->getCode() === '42S02') {
+                $schemaTool = new \Doctrine\ORM\Tools\SchemaTool($this->orm);
+                try {
+                    $schemaTool->createSchema(array(
+                        $this->orm->getClassMetadata('Newscoop\Package\Article'),
+                    ));
+                } catch (\Exception $e) {
+                }
+                $article = null;
+            } else {
+                throw $e;
+            }
+        }
+
+        if ($article === null) {
+            $article = new Article($articleNumber);
+            $this->orm->persist($article);
+            $this->orm->flush($article);
+        }
+
+        return $article;
     }
 }

@@ -14,9 +14,6 @@ use Newscoop\Image\Rendition;
  * @Table(name="package",
  *      uniqueConstraints={
  *          @UniqueConstraint(columns={"slug"})
- *      },
- *      indexes={
- *          @Index(columns={"articleNumber"})
  *      })
  */
 class Package
@@ -38,12 +35,6 @@ class Package
      * @var string
      */
     private $description;
-
-    /**
-     * @Column(type="integer", nullable=True)
-     * @var int
-     */
-    private $articleNumber;
 
     /**
      * @OneToMany(targetEntity="Newscoop\Package\Item", mappedBy="package")
@@ -114,27 +105,6 @@ class Package
     public function getHeadline()
     {
         return $this->headline;
-    }
-
-    /**
-     * Set article number
-     *
-     * @param int $articleNumber
-     * @return void
-     */
-    public function setArticleNumber($articleNumber)
-    {
-        $this->articleNumber = (int) $articleNumber;
-    }
-
-    /**
-     * Get article number
-     *
-     * @return int
-     */
-    public function getArticleNumber()
-    {
-        return $this->articleNumber;
     }
 
     /**
