@@ -265,7 +265,16 @@ function edit(field, id) {
     
     element.data('old', value);
     element.hide();
-    previous.after('<td id="edit_'+field+'_'+id+'"><input id="input_'+field+'_'+id+'" value="'+value+'"><br><button onClick="save(\''+field+'\', '+id+');"><?php putGS('Save'); ?></button><button class="cancel" onClick="view(\''+field+'\', '+id+');"><?php putGS('Cancel'); ?></button></td>');
+    if (field == 'date') {
+        previous.after('<td id="edit_'+field+'_'+id+'"><input id="input_'+field+'_'+id+'" value="'+value+'"><br><button onClick="save(\''+field+'\', '+id+');"><?php putGS('Save'); ?></button><button class="cancel" onClick="view(\''+field+'\', '+id+');"><?php putGS('Cancel'); ?></button></td>');
+        $('#input_'+field+'_'+id).datepicker({
+            dateFormat : 'yy-mm-dd',
+            defaultDate: 'value'
+        });
+    }
+    else {
+        previous.after('<td id="edit_'+field+'_'+id+'"><input id="input_'+field+'_'+id+'" value="'+value+'"><br><button onClick="save(\''+field+'\', '+id+');"><?php putGS('Save'); ?></button><button class="cancel" onClick="view(\''+field+'\', '+id+');"><?php putGS('Cancel'); ?></button></td>');
+    }
 }
 
 function save(field, id) {
