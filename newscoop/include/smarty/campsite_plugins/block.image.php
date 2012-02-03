@@ -42,7 +42,7 @@ function smarty_block_image(array $params, $content, Smarty_Internal_Template $s
         $thumbnail = $articleRendition->getRendition()->getThumbnail($articleRendition->getImage(), Zend_Registry::get('container')->getService('image'));
     }
 
-    $smarty->assign('thumbnail', (object) array(
+    $smarty->assign('image', (object) array(
         'src' => Zend_Registry::get('view')->url(array('src' => $thumbnail->src), 'image', true, false),
         'width' => $thumbnail->width,
         'height' => $thumbnail->height,
