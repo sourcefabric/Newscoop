@@ -84,6 +84,7 @@ if ($result != NULL) {
         <?php 
             if ($f_place == 1) {
                 ?>
+                parent.$.fancybox.reload = true;
                 document.location = '../image/article/article_number/<?php echo($f_article_number); ?>/language_id/<?php echo($f_language_id); ?>';
                 <?php
             }
