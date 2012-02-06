@@ -177,12 +177,26 @@ class RenditionServiceTest extends \TestCase
         $this->assertEquals('crop', $rendition->getSpecs());
     }
 
-    public function testSetOrder()
+    public function testOrder()
     {
         $order = array('preview', 'square', 'portrait', 'landscape', 'thumbnail');
         $this->service->getRenditions(); // load into db
         $this->service->setRenditionsOrder($order);
         $renditions = $this->service->getRenditions();
         $this->assertEquals($order, array_keys($renditions));
+    }
+
+    public function testLabels()
+    {
+        $renditions = $this->service->getRenditions();
+        foreach ($renditions as $renditionName => $rendition) {
+            $this->assertEquals($renditionName, $rendition->getLabel());
+        }
+
+        $this->service->setRenditionsLabels(array(
+            'preview' => 'Test',
+        ));
+
+        $this->assertEquals('Test', $renditions['preview']->getLabel());
     }
 }

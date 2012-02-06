@@ -124,10 +124,22 @@ class NewscoopImageRenditionProxy extends \Newscoop\Image\Rendition implements \
         return parent::setOffset($offset);
     }
 
+    public function setLabel($label)
+    {
+        $this->__load();
+        return parent::setLabel($label);
+    }
+
+    public function getLabel()
+    {
+        $this->__load();
+        return parent::getLabel();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'name', 'width', 'height', 'specs', 'offset');
+        return array('__isInitialized__', 'name', 'width', 'height', 'specs', 'offset', 'label');
     }
 
     public function __clone()

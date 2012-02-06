@@ -55,6 +55,12 @@ class Rendition
     private $offset;
 
     /**
+     * @Column(nullable=True)
+     * @var string
+     */
+    private $label;
+
+    /**
      * @param int $width
      * @param int $height
      * @param string $specs
@@ -312,5 +318,26 @@ class Rendition
     public function setOffset($offset)
     {
         $this->offset = (int) $offset;
+    }
+
+    /**
+     * Set label
+     *
+     * @param string $label
+     * @return void
+     */
+    public function setLabel($label)
+    {
+        $this->label = empty($label) ? null : (string) $label;
+    }
+
+    /**
+     * Get label
+     *
+     * @return string
+     */
+    public function getLabel()
+    {
+        return $this->label !== null ? $this->label : $this->getName();
     }
 }

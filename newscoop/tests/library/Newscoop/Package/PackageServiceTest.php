@@ -180,7 +180,7 @@ class PackageServiceTest extends \TestCase
     {
         $package = $this->service->save(array(
             'headline' => 'test',
-            'rendition' => $this->getRendition(800, 600, 'fit', 'test'),
+            'rendition' => $this->getRendition(800, 600, 'crop', 'test'),
         ));
 
         $this->service->addItem($package, new LocalImage(LocalImageTest::PICTURE_LANDSCAPE));

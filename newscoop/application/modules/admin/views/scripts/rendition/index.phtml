@@ -1,28 +1,35 @@
 <?php $this->placeholder('title')->set('Renditions'); ?>
 
+<form id="rendition-list-form" method="POST">
+
 <ul id="rendition-list">
     <?php foreach ($this->renditions as $rendition) { ?>
-    <li id="<?php echo $rendition->getName(); ?>"><?php echo $this->escape($rendition->getName()); ?> <small><?php echo $rendition->getSpecs(); ?> <?php echo $rendition->getWidth(), 'x', $rendition->getHeight(); ?></small></li>
+    <li id="<?php echo $rendition->getName(); ?>"><input type="text" name="<?php echo $this->escape($rendition->getName()); ?>" value="<?php echo $rendition->getLabel(); ?>" placeholder="<?php echo $this->escape($rendition->getName()); ?>" /> <?php echo $this->escape($rendition->getName()); ?> <small><?php echo $rendition->getSpecs(); ?> <?php echo $rendition->getWidth(), 'x', $rendition->getHeight(); ?></small> 
+    
+    </li>
     <?php } ?>
 </ul>
 
-<button id="rendition-list-button"><?php putGS('Save order'); ?></button>
+<button><?php putGS('Save'); ?></button>
+
+</form>
 
 <script type="text/javascript">
 $(function() {
     $('#rendition-list').sortable({cursor: 'move'});
-    $('#rendition-list-button').click(function() {
-        var button = $(this);
-        var originalText = button.text();
+    $('#rendition-list-form').submit(function(e) {
+        e.preventDefault();
+        var form = $(this);
+        var button = form.find('button');
         button.text(<?php echo json_encode(getGS('Saving...')); ?>);
         $.post(<?php echo json_encode($this->url(array(
             'module' => 'admin',
             'controller' => 'rendition',
             'action' => 'index',
-        ))); ?>, {'order': $('#rendition-list').sortable('toArray')}, function(data, textStatus) {
+        ))); ?>, {'order': $('#rendition-list').sortable('toArray'), 'labels': form.serializeArray()}, function(data, textStatus) {
             button.text(<?php echo json_encode(getGS('Saved')); ?>);
             window.setTimeout(function() {
-                button.text(originalText);
+                button.text(<?php echo json_encode(getGS('Save')); ?>);
             }, 3000);
         });
     });

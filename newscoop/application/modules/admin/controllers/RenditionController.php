@@ -16,8 +16,19 @@ class Admin_RenditionController extends Zend_Controller_Action
 
         $request = $this->getRequest();
         if ($request->isPost()) {
+            $this->_helper->service('image.rendition')->setRenditionsLabels($this->getLabels());
             $this->_helper->service('image.rendition')->setRenditionsOrder($request->getPost('order', array()));
             $this->_helper->json(array());
         }
+    }
+
+    private function getLabels()
+    {
+        $labels = array();
+        foreach ($this->getRequest()->getPost('labels', array()) as $label) {
+            $labels[$label['name']] = $label['value'];
+        }
+
+        return $labels;
     }
 }

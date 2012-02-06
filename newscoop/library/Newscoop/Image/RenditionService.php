@@ -225,6 +225,25 @@ class RenditionService
     }
 
     /**
+     * Set renditions labels
+     *
+     * @param array $labels
+     * @return void
+     */
+    public function setRenditionsLabels(array $labels)
+    {
+        $renditions = $this->getRenditions();
+        foreach ($labels as $renditionName => $label) {
+            if (array_key_exists($renditionName, $renditions)) {
+                $renditions[$renditionName]->setLabel($label);
+            }
+        }
+
+        $this->orm->flush();
+        $this->renditions = null;
+    }
+
+    /**
      * Create schema for article rendition
      *
      * @param Exception $e

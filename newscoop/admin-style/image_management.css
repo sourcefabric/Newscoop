@@ -32,10 +32,13 @@ ul.slideshow {
 			}
 			ul.renditions li dl.rendition .preview,
 			ul.renditions li.state-active dl.rendition .preview {border-color:#4e4e4e;}
-			ul.renditions li dl dd.name {display:none;}
+			ul.renditions li dl dd.name {
+                padding: 5px 0 0;
+				font-size:12px; color:#2e2e2e; text-shadow:0 1px 1px #fff; text-align:center;
+            }
 			ul.renditions li dl.rendition dd small {
 				display:block;
-				padding:5px 0;
+				padding: 0 0 5px;
 				font-size:12px; color:#2e2e2e; text-shadow:0 1px 1px #fff; text-align:center;
 				}
 	ul.thumbnails li {background:#fff;}
