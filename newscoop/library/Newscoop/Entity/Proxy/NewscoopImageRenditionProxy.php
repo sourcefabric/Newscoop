@@ -118,10 +118,16 @@ class NewscoopImageRenditionProxy extends \Newscoop\Image\Rendition implements \
         return parent::fits($image);
     }
 
+    public function setOffset($offset)
+    {
+        $this->__load();
+        return parent::setOffset($offset);
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'name', 'width', 'height', 'specs');
+        return array('__isInitialized__', 'name', 'width', 'height', 'specs', 'offset');
     }
 
     public function __clone()

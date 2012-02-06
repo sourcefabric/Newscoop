@@ -135,7 +135,7 @@ class RenditionService
     {
         if ($this->renditions === null) {
             $this->renditions = array();
-            foreach ($this->orm->getRepository('Newscoop\Image\Rendition')->findAll() as $rendition) {
+            foreach ($this->orm->getRepository('Newscoop\Image\Rendition')->findBy(array(), array('offset' => 'asc', 'name' => 'asc')) as $rendition) {
                 $this->renditions[$rendition->getName()] = $rendition;
             }
 
@@ -203,6 +203,25 @@ class RenditionService
         }
 
         return $options;
+    }
+
+    /**
+     * Set renditions order
+     *
+     * @param array $order
+     * @return void
+     */
+    public function setRenditionsOrder(array $order)
+    {
+        $renditions = $this->getRenditions();
+        foreach ($order as $offset => $renditionName) {
+            if (array_key_exists($renditionName, $renditions)) {
+                $renditions[$renditionName]->setOffset($offset);
+            }
+        }
+
+        $this->orm->flush();
+        $this->renditions = null;
     }
 
     /**

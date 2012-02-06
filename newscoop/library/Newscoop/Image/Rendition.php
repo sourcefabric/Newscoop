@@ -49,6 +49,12 @@ class Rendition
     private $coords;
 
     /**
+     * @Column(type="integer", nullable=True)
+     * @var int
+     */
+    private $offset;
+
+    /**
      * @param int $width
      * @param int $height
      * @param string $specs
@@ -295,5 +301,16 @@ class Rendition
     public function fits(ImageInterface $image)
     {
         return $image->getWidth() >= $this->width && $image->getHeight() >= $this->height;
+    }
+
+    /**
+     * Set offset
+     *
+     * @param int $offset
+     * @return void
+     */
+    public function setOffset($offset)
+    {
+        $this->offset = (int) $offset;
     }
 }

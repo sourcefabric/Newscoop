@@ -1154,3 +1154,17 @@ dl.slideshow-preview figure > div > * {
     margin: 0;
     padding: 13px 0 0;
 }
+
+#rendition-list {
+    list-style-type: none;
+    margin: 8px 0;
+    padding: 0;
+    max-width: 60em;
+}
+
+#rendition-list > li {
+    margin: 3px 0 0;
+    padding: 5px;
+    background-color: #fff;
+    font-size: 1.3em;
+}

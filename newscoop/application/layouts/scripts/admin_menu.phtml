@@ -471,11 +471,17 @@ if( Saas::singleton()->hasPrivilege('themes' , 'index') ) {
             'privilege' => 'view',
         );
     }
-    
+
     $pages[3]['pages'][] = array(
         'label' => getGS('Support'),
         'module' => 'admin',
-        'controller' => 'support'
+        'controller' => 'support',
+    }
+
+    $pages[3]['pages'][] = array(
+        'label' => getGS('Renditions'),
+        'module' => 'admin',
+        'controller' => 'rendition',
     );
 } else {
     unset($pages[3]);
