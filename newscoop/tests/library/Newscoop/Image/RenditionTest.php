@@ -13,6 +13,7 @@ class RenditionTest extends \TestCase
 {
     const PICTURE_LANDSCAPE = 'tests/fixtures/picture_landscape.jpg';
     const PICTURE_PORTRAIT = 'tests/fixtures/picture_portrait.jpg';
+    const PICTURE_MONA_LISA = 'tests/fixtures/picture_mona_lisa.jpg';
 
     /** @var Newscoop\Image\ImageService */
     private $imageService;
@@ -167,6 +168,20 @@ class RenditionTest extends \TestCase
         $thumbnail = $rendition->getThumbnail(new LocalImage(self::PICTURE_LANDSCAPE), $this->imageService);
         $this->assertEquals(500, $thumbnail->width);
         $this->assertEquals(333, $thumbnail->height);
+    }
+
+    public function testGetPreviewComputing()
+    {
+        $image = new LocalImage(self::PICTURE_MONA_LISA);
+        $rendition = new Rendition(300, 131, 'crop', 'dossier');
+
+        $preview = $rendition->getPreview(150, 150);
+        $this->assertEquals(150, $preview->getWidth());
+        $this->assertEquals(66, $preview->getHeight());
+
+        $thumbnail = $preview->getThumbnail($image, $this->imageService);
+        $this->assertEquals(150, $thumbnail->width);
+        $this->assertEquals(66, $thumbnail->height);
     }
 
     /**

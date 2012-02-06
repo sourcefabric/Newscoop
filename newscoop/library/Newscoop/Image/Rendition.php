@@ -142,19 +142,7 @@ class Rendition
      */
     public function getPreview($width, $height)
     {
-        if ($this->width <= $width && $this->height <= $height) { // original smaller
-            $width = $this->width;
-            $height = $this->height;
-        } else if ($this->height <= $height) { // original width bigger
-            $height = round((float) $height * (float) $width / (float) $this->width);
-        } else if ($this->width <= $width) { // original height bigger
-            $width = round((float) $width * (float) $height / (float) $this->height);
-        } else {
-            $ratio = min((float) $width / (float) $this->width, (float) $height / (float) $this->height);
-            $width = round((float) $ratio * (float) $this->width);
-            $height = round((float) $ratio * (float) $this->height);
-        }
-
+        list($width, $height) = NetteImage::calculateSize($this->width, $this->height, $width, $height);
         return new Rendition($width, $height, $this->getSpecs());
     }
 
@@ -172,6 +160,7 @@ class Rendition
         }
 
         list($width, $height) = NetteImage::calculateSize($image->getWidth(), $image->getHeight(), $this->width, $this->height, $this->getFlags());
+        var_dump(array($image->getWidth(), $image->getHeight(), $this->width, $this->height, $width, $height));
         if ($this->isCrop()) {
             $width = min($width, $this->width);
             $height = min($height, $this->height);
