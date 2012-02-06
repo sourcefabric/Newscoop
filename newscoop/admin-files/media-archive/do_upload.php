@@ -29,6 +29,7 @@ $f_section_number = $_POST['f_section_number'];
 $f_language_id = $_POST['f_language_id'];
 $f_language_selected = $_POST['f_language_selected'];
 $f_article_number = $_POST['f_article_number'];
+$f_place = $_POST['f_place'];
 
 if (empty($f_image_url) && empty($nrOfFiles)) {
 	camp_html_add_msg(getGS("You must select an image file to upload."));
@@ -80,11 +81,22 @@ if ($result != NULL) {
         
         ?>
         <script type="text/javascript">
-        try {
-            parent.$.fancybox.reload = true;
-            parent.$.fancybox.message = "<?php putGS("Image added."); ?>";
-            parent.$.fancybox.close();
-        } catch (e) {}
+        <?php 
+            if ($f_place == 1) {
+                ?>
+                document.location = '../image/article/article_number/<?php echo($f_article_number); ?>/language_id/<?php echo($f_language_id); ?>';
+                <?php
+            }
+            else {
+                ?>
+                try {
+                    parent.$.fancybox.reload = true;
+                    parent.$.fancybox.message = "<?php putGS("Image added."); ?>";
+                    parent.$.fancybox.close();
+                } catch (e) {}
+                <?php
+            }
+        ?>
         </script>
         <?php
     }

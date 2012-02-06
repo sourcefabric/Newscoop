@@ -53,13 +53,15 @@ camp_html_display_msgs();
 <input type="hidden" name="f_language_id" value="<?php echo($f_language_id); ?>">
 <input type="hidden" name="f_language_selected" value="<?php echo($f_language_selected); ?>">
 <input type="hidden" name="f_article_number" value="<?php echo($f_article_number); ?>">
+<input type="hidden" name="f_place" value="0" id="f_place">
 <div id="uploader"></div>
 <div id="uploader_error"></div>
 
 
 <div class="plupload-addon-bottom clearfix">
   <div class="buttons">
-    <input type="submit" value="<?php putGS('Done'); ?>" name="save" class="save-button">
+    <input type="submit" value="<?php putGS('Attach'); ?>" name="save" class="save-button">
+    <input type="submit" value="<?php putGS('Attach & Place'); ?>" name="save" class="save-button" onClick="document.getElementById('f_place').value = 1;">
   </div>
 </div>
 
