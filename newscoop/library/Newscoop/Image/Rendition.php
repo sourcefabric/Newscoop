@@ -160,7 +160,6 @@ class Rendition
         }
 
         list($width, $height) = NetteImage::calculateSize($image->getWidth(), $image->getHeight(), $this->width, $this->height, $this->getFlags());
-        var_dump(array($image->getWidth(), $image->getHeight(), $this->width, $this->height, $width, $height));
         if ($this->isCrop()) {
             $width = min($width, $this->width);
             $height = min($height, $this->height);
