@@ -21,3 +21,17 @@
     </li>
     <?php } ?>
 </ul>
+
+<script type="text/javascript">
+$(function() {
+    $('.slideshows .edit').fancybox({
+        hideOnContentClick: false,
+        width: 1300,
+        height: 800,
+        type: 'iframe',
+        onClosed: function() {
+            parent.window.location = parent.window.location + '#slideshows';
+        }
+    });
+});
+</script>

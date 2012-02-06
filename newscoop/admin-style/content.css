@@ -1148,3 +1148,9 @@ dl.slideshow-preview figure > div > * {
 #media-slideshows .slideshows a {
     color: #2e3436;
 }
+
+#media-slideshows .empty {
+    clear: both;
+    margin: 0;
+    padding: 13px 0 0;
+}

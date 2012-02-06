@@ -13,7 +13,7 @@
 )); ?>" id="attach-slideshow"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Attach'); ?></a>
 
 <?php if (count($this->slideshows) === 0) { ?>
-<p><?php putGS('No slideshows'); ?></p>
+<p class="empty"><?php putGS('No slideshows'); ?></p>
 
 <?php } else { ?>
 <ul class="slideshows">
@@ -50,8 +50,8 @@
     $(function() {
         $('#media-slideshows a').not('.detach').fancybox({
             hideOnContentClick: false,
-            width: 960,
-            height: 600,
+            width: 1300,
+            height: 800,
             type: 'iframe',
             onClosed: loadSlideshows
         });
