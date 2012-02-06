@@ -50,4 +50,12 @@ class LocalImageTest extends \TestCase
         $this->assertEquals(333, $image->getHeight());
         $this->assertEquals($url, $image->getPath());
     }
+
+    public function testHasGetWidth()
+    {
+        $image = new LocalImage(self::PICTURE_LANDSCAPE);
+        $this->assertFalse($image->hasWidth());
+        $image->getWidth();
+        $this->assertTrue($image->hasWidth());
+    }
 }

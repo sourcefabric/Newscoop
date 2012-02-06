@@ -45,9 +45,16 @@ class LocalImage implements ImageInterface
     private $description;
 
     /**
-     * @var array
+     * @Column(type="integer", nullable=True)
+     * @var int
      */
-    private $info;
+    private $width;
+
+    /**
+     * @Column(type="integer", nullable=True)
+     * @var int
+     */
+    private $height;
 
     /**
      * @param string $image
@@ -94,11 +101,11 @@ class LocalImage implements ImageInterface
      */
     public function getWidth()
     {
-        if ($this->info === null) {
+        if ($this->width === null) {
             $this->getInfo();
         }
 
-        return $this->info[0];
+        return $this->width;
     }
 
     /**
@@ -108,11 +115,11 @@ class LocalImage implements ImageInterface
      */
     public function getHeight()
     {
-        if ($this->info === null) {
+        if ($this->height === null) {
             $this->getInfo();
         }
 
-        return $this->info[1];
+        return $this->height;
     }
 
     /**
@@ -122,11 +129,14 @@ class LocalImage implements ImageInterface
      */
     private function getInfo()
     {
-        if ($this->isLocal()) {
-            return $this->info = getimagesize(APPLICATION_PATH . '/../' . $this->getPath());
-        } else {
-            return $this->info = getimagesize($this->url);
-        }
+        $info = $this->isLocal() ?
+            getimagesize(APPLICATION_PATH . '/../' . $this->getPath()) : getimagesize($this->url);
+
+        $this->width = (int) $info[0];
+        $this->height = (int) $info[1];
+
+        // @todo remove once on image upload is refactored
+        \Zend_Registry::get('container')->getService('em')->flush($this);
     }
 
     /**
@@ -158,5 +168,15 @@ class LocalImage implements ImageInterface
     public function isLocal()
     {
         return $this->location === 'local';
+    }
+
+    /**
+     * Test if image has defined width
+     *
+     * @return bool
+     */
+    public function hasWidth()
+    {
+        return $this->width !== null;
     }
 }

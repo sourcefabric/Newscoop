@@ -161,6 +161,14 @@ class RenditionTest extends \TestCase
         $rendition->getThumbnail(new LocalImage(self::PICTURE_LANDSCAPE), $this->imageService);
     }
 
+    public function testGetThumbnailFit()
+    {
+        $rendition = new Rendition(1000, 1000, 'fit');
+        $thumbnail = $rendition->getThumbnail(new LocalImage(self::PICTURE_LANDSCAPE), $this->imageService);
+        $this->assertEquals(500, $thumbnail->width);
+        $this->assertEquals(333, $thumbnail->height);
+    }
+
     /**
      * Get preview
      *

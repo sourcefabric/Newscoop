@@ -300,7 +300,7 @@ class Rendition
      */
     public function fits(ImageInterface $image)
     {
-        return $image->getWidth() >= $this->width && $image->getHeight() >= $this->height;
+        return $this->specs === 'fit' || ($image->getWidth() >= $this->width && $image->getHeight() >= $this->height);
     }
 
     /**
