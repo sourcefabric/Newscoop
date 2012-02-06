@@ -26,8 +26,8 @@ class Admin_ImageController extends Zend_Controller_Action
             ->addActionContext('remove-rendition', 'json')
             ->initContext();
 
-        $this->view->previewWidth = 100;
-        $this->view->previewHeight = 100;
+        $this->view->previewWidth = 150;
+        $this->view->previewHeight = 150;
     }
 
     public function articleAction()

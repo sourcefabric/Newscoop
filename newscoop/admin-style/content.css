@@ -666,7 +666,7 @@ h1 {
 .renditions li {
     list-style-type: none;
     float: left;
-    width: 102px;
+    width: 152px;
     margin: 8px 4px 8px;
     padding: 4px;
     background-color: #fff;
@@ -695,7 +695,7 @@ dl.rendition dd {
 }
 
 dl.rendition .preview {
-    height: 102px;
+    height: 152px;
 }
 
 dl.rendition .preview {
@@ -704,7 +704,7 @@ dl.rendition .preview {
 }
 
 dl.rendition dt {
-    height: 102px;
+    height: 152px;
 }
 
 li.state-active dl.rendition .preview {
@@ -742,7 +742,7 @@ li.state-active dl.rendition dd.name {
 .thumbnails li {
     list-style-type: none;
     display: inline-block;
-    width: 102px;
+    width: 152px;
     margin: 8px 4px 8px;
     padding: 4px;
     background-color: #fff;
@@ -759,7 +759,7 @@ li.state-active dl.rendition dd.name {
 }
 
 .thumbnails figure div {
-    min-height: 103px;
+    min-height: 153px;
 }
 
 .thumbnails figure img {
@@ -810,7 +810,7 @@ li.state-active dl.rendition dd.name {
 .slideshow {
     clear: both;
     height: 1%;
-    min-height: 100px;
+    min-height: 150px;
     overflow: hidden;
     margin: 8px 0;
     padding: 4px;
@@ -821,15 +821,15 @@ li.state-active dl.rendition dd.name {
     float: left;
     margin: 4px 4px;
     padding: 13px 4px 4px;
-    width: 102px;
+    width: 152px;
     background-color: #fff;
     border: 1px solid #9c9c9c;
     position: relative;
 }
 
 .slideshow .placeholder {
-    width: 100px;
-    height: 116px;
+    width: 150px;
+    height: 166px;
     border: 2px dashed #b0b0b0;
     background-color: transparent;
 }
@@ -839,7 +839,7 @@ li.state-active dl.rendition dd.name {
 }
 
 .slideshow .video-preview {
-    height: 100px;
+    height: 150px;
     overflow: hidden;
 }
 
@@ -854,7 +854,7 @@ li.state-active dl.rendition dd.name {
 }
 
 .slideshow figure > div {
-    height: 102px;
+    height: 152px;
     overflow: hidden;
 }
 

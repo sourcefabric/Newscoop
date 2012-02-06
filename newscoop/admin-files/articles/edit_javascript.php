@@ -294,11 +294,19 @@ $('a.iframe').each(function() {
         });
     }
 });
+
 $('#locations_box a.iframe').each(function() {
     $(this).data('fancybox').showCloseButton = false;
     $(this).data('fancybox').width = 1100;
     $(this).data('fancybox').height = 660;
 
+});
+
+$('#place-images').fancybox({
+    hideOnContentClick: false,
+    width: 1300,
+    height: 800,
+    type: 'iframe'
 });
 
 $('#topic_box_frame a.iframe').each(function() {

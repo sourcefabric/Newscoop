@@ -5,7 +5,7 @@
     <?php foreach ($this->images as $image) { ?>
     <li id="image-<?php echo $image->getId(); ?>">
         <figure>
-            <div><?php echo $this->thumbnail($image, 100, 100, 'fit')->getImg($this); ?></div>
+            <div><?php echo $this->thumbnail($image, 150, 150, 'fit')->getImg($this); ?></div>
             <figcaption><?php echo $image->getDescription(); ?></figcaption>
         </figure>
     </li>

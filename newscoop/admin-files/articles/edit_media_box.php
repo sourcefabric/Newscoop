@@ -7,7 +7,7 @@
     <div id="media-images">
         <?php if ($inEditMode && $g_user->hasPermission('AttachImageToArticle')) { ?>
         <a class="iframe ui-state-default icon-button right-floated" href="<?php echo camp_html_article_url($articleObj, $f_language_id, "images/popup.php"); ?>"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Attach'); ?></a>
-        <a class="iframe ui-state-default icon-button right-floated" href="<?php echo $this->view->url(array(
+        <a id="place-images" class="ui-state-default icon-button right-floated" href="<?php echo $this->view->url(array(
             'module' => 'admin',
             'controller' => 'image',
             'action' => 'article',
