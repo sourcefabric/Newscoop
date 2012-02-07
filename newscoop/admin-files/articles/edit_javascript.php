@@ -479,16 +479,26 @@ function loadContextBoxActileList() {
 }
 
 function loadMultiDateEvents() {
-	var url = '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/multidate/getdates';
+<?php
+    $f_language_id = Input::Get('f_language_id', 'int', 1);
+    $f_language_selected = (int)camp_session_get('f_language_selected', 0);
+
+    $article_language_use = $f_language_selected;
+    if (empty($article_language_use)) {
+        $article_language_use = $f_language_id;
+    }
+?>
+
+    var url = '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/multidate/getdates';
     $.ajax({
         type: 'GET',
         url: url,
         dataType: 'json',
         data: {
-            articleId : "<?php echo Input::Get('f_article_number', 'int', 1)?>"
+            articleId : "<?php echo Input::Get('f_article_number', 'int', 1)?>",
+            languageId : "<?php echo $article_language_use; ?>"
         },
         success: function(data) {
-
         	var eventList = '';
         	eventList += '<ul class="block-list">';
             
@@ -499,23 +509,40 @@ function loadMultiDateEvents() {
                 var item = data[i];
                 
                 var start = new Date(item.start * 1000);                
-                var minutes = start.getMinutes();
-                if (minutes < 10) {
-                    minutes = '0' + minutes;
-                }
-                var month = ( start.getMonth() + 1 );
-                var startString = (month + '/' + start.getDate() + '/' + start.getFullYear() + ' ' + start.getHours() + ':' + minutes );
-
                 var end = new Date(item.end * 1000);
-                var minutes = end.getMinutes();
-                if (minutes < 10) {
-                    minutes = '0' + minutes;;
-                }
-                var month = ( end.getMonth() + 1 );
-                var endString = (month + '/' + end.getDate() + '/' + end.getFullYear() + ' ' + end.getHours() + ':' + minutes );
 
-                var eventString = startString + ' - ' + endString;
-                eventList += '<li>' + eventString + '</li>';
+                var start_values = {
+                    'month': start.getMonth() + 1,
+                    'day': start.getDate(),
+                    'hour': start.getHours(),
+                    'minute': start.getMinutes()
+                };
+                var end_values = {
+                    'month': end.getMonth() + 1,
+                    'day': end.getDate(),
+                    'hour': end.getHours(),
+                    'minute': end.getMinutes()
+                };
+                for (var start_key in start_values) {
+                    if (start_values[start_key] < 10) {
+                        start_values[start_key] = '0' + start_values[start_key];
+                    }
+                }
+                for (var end_key in end_values) {
+                    if (end_values[end_key] < 10) {
+                        end_values[end_key] = '0' + end_values[end_key];
+                    }
+                }
+
+                var startString = '<span style="float:left">' + (start.getFullYear() + '-' + start_values['month'] + '-' + start_values['day'] + ' ' + start_values['hour'] + ':' + start_values['minute'] ) + '</span>';
+                var endString = '<span style="float:left">' + (end.getFullYear() + '-' + end_values['month'] + '-' + end_values['day'] + ' ' + end_values['hour'] + ':' + end_values['minute'] ) + '</span>';
+
+                var eventString = startString + '<span style="float:left" class="ui-icon ui-icon-arrowthick-1-e"></span>' + endString;
+
+<?php
+                //eventList += '<li class="multidate_item_field_' + item.field_name + '" style="background-color:'+item.backgroundColor+'; color:'+item.textColor+';">' + item.field_name + ': ' + eventString + '</li>';
+?>
+                eventList += '<li style="background-color:'+item.backgroundColor+'; color:'+item.textColor+';"><span style="float:right">' + item.field_name + '</span>' + eventString + '</li>';
             }
             $('#multiDateEventList').html('');
             $('#multiDateEventList').append(eventList + '</ul>');              

@@ -46,6 +46,7 @@ class ArticleTypeField extends DatabaseObject {
     private $m_rootTopicId = null;
     private $m_precision = null;
     private $m_editorSize = null;
+    private $m_colorValue = null;
 
 
 	public function __construct($p_articleTypeName = null, $p_fieldName = null)
@@ -126,9 +127,60 @@ class ArticleTypeField extends DatabaseObject {
 				$this->m_editorSize = (int) $params[1];
 			}
 		}
+		if ($success && $this->getType() == self::TYPE_COMPLEX_DATE) {
+			$params = explode(';', $this->m_data['field_type_param']);
+                        foreach ($params as $one_param) {
+                            $one_param_parts = explode('=', $one_param);
+			    if (isset($one_param_parts[1]) && $one_param_parts[0] == 'color') {
+			        $this->m_colorValue = '' . $one_param_parts[1];
+			    }
+			}
+		}
 		return $success;
 	}
 
+        public function setColor($p_color) {
+            $this->m_colorValue = '' . $p_color;
+            if ($this->getType() == self::TYPE_COMPLEX_DATE) {
+                $this->setProperty('field_type_param', 'color=' . $this->m_colorValue);
+                return true;
+            }
+            return false;
+        }
+
+        public function getColor() {
+            $default_color = '#f0a040';
+            $color = '' . $this->m_colorValue;
+            if (empty($color)) {
+                $color = $default_color;
+            }
+            return $color;
+        }
+
+        public static function SetFieldColor($p_article_type, $p_field_name, $p_color_value) {
+            $p_color_value = trim(strtolower('' . $p_color_value));
+
+            $is_color = false;
+            if (7 == strlen($p_color_value)) {
+                if (preg_match('/^#[0-9a-f]{6}$/', $p_color_value)) {
+                    $is_color = true;
+                }
+            }
+            if (!$is_color) {
+                return getGS('Not a color');
+            }
+
+            $field = new ArticleTypeField($p_article_type, $p_field_name);
+            if (!$field->exists()) {
+                return getGS('No such field');
+            }
+
+            $res = $field->setColor($p_color_value);
+            if (!$res) {
+                return getGS('Color not saved');
+            }
+            return getGS('Color saved');
+        }
 
 	/**
 	 * Create a column in the table.
@@ -881,4 +933,4 @@ class ArticleTypeField extends DatabaseObject {
             self::TYPE_COMPLEX_DATE => 'VARCHAR(255) DEFAULT NULL',
         );
 	}
-}
+} // class ArticleTypeField

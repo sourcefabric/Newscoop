@@ -3,18 +3,38 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta http-equiv="Expires" content="now" />
-<title><?php putGS("Multi date event"); ?></title>
+<title><?php putGS("Multi date events"); ?></title>
 <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/calendar/fullcalendar.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/calendar/timepicker.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/form.css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/content.css" />
 
-
+<style type="text/css">
+.type-holder {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+select#multidatefield_specific {
+    font-weight: bold;
+}
+select#multidatefield_range {
+    font-weight: bold;
+}
+.comment-holder {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+div.comment-holder textarea {
+    font-size: 13px;
+    border: 1px solid #9D9D9D;
+}
+</style>
 
 <?php
 $f_multidate_box = 1;
 require_once($GLOBALS['g_campsiteDir']. "/$ADMIN_DIR/html_head.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
 
 
 $f_publication_id = Input::Get('f_publication_id', 'int', 0);
@@ -29,6 +49,19 @@ if (isset($_SESSION['f_language_selected'])) {
 	$f_old_language_selected = 0;
 }
 $f_language_selected = (int)camp_session_get('f_language_selected', 0);
+
+$article_language_use = $f_language_selected;
+if (empty($article_language_use)) {
+    $article_language_use = $f_language_id;
+}
+
+$article = new Article($article_language_use, $articleId);
+
+$article_type_name = $article->getType();
+$article_type = new ArticleType($article_type_name);
+$article_type_columns = $article_type->getUserDefinedColumns();
+//var_dump($article_type_columns);
+
 ?>
 <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/calendar/fullcalendar.min.js" type="text/javascript"></script>
 <script type="text/javascript">
@@ -40,6 +73,8 @@ function resetSpecificForm() {
 	$('#start-time-specific').val('');
 	$('#end-time-specific').val('');
 	$('#remove-specific-link').css('display','none');
+    $('#multidatefield_specific option').eq(0).attr('selected', 'selected');
+    $('#event_comment_specific').val('');
 }
 
 function resetDaterangeForm() { 
@@ -51,6 +86,8 @@ function resetDaterangeForm() {
 	$('#daterange-all-day').removeAttr('checked');
 	$('#cycle-ends-on-set-date').trigger('click');
 	$('#remove-daterange-link').css('display','none');
+    $('#multidatefield_range option').eq(0).attr('selected', 'selected');
+    $('#event_comment_range').val('');
 }
 
 function prepareDate(oldFormat) {
@@ -230,21 +267,24 @@ function reset_specific_start_time() {
 	//console.log('specific start time');
     $('#specific-radio-start-only').attr('checked', 'checked');
     $('#start-time-specific').css('display', 'inline');
-    $('#end-time-specific').css('display', 'none');
+    //$('#end-time-specific').css('display', 'none');
+    $('#end-time-specific').css('visibility', 'hidden');
 }
 
 function reset_specific_start_end_time() {
 	//console.log('specific start end time');
     $('#specific-radio-start-and-end').attr('checked', 'checked');
     $('#start-time-specific').css('display', 'inline');
-    $('#end-time-specific').css('display', 'inline');
+    //$('#end-time-specific').css('display', 'inline');
+    $('#end-time-specific').css('visibility', 'visible');
 }
 
 function reset_specific_all_day() {
 	//console.log('specific all day');
     $('#specific-radio-all-day').attr('checked', 'checked');
     $('#start-time-specific').css('display', 'none');
-    $('#end-time-specific').css('display', 'none');
+    //$('#end-time-specific').css('display', 'none');
+    $('#end-time-specific').css('visibility', 'hidden');
 }
 
 function loadDaterangeEvent(event) {
@@ -270,6 +310,8 @@ function loadDaterangeEvent(event) {
 		$('#start-time-daterange').css('display', 'none');
 		$('#end-time-daterange').css('display', 'none');
 	}
+    $('#multidatefield_range').val(event.field_name);
+    $('#event_comment_range').val(event.event_comment);
 	
 }
 
@@ -297,6 +339,8 @@ function loadSpecificEvent(event) {
 	$('#remove-specific-link').css('display', 'block');
 
 	doSpecificTimeRange(event.startTime, event.endTime);
+    $('#multidatefield_specific').val(event.field_name);
+    $('#event_comment_specific').val(event.event_comment);
 }
 
 function removeSpecificEvent() {
@@ -413,7 +457,8 @@ $(function(){
 				url : url,
 				type : 'GET',
 				data : {
-					articleId : "<?php echo $articleId?>"
+					articleId : "<?php echo $articleId?>",
+                                        languageId : "<?php echo $article->getLanguageId(); ?>"
 				},
 			},
 			eventDrop: function(event, delta) {
@@ -473,7 +518,7 @@ $(function(){
 	<div class="save-button-bar">
 	    <input type="submit" name="cancel" value="<?php echo putGS('Close'); ?>" class="default-button" onclick="popup_close();" id="context_button_close">
 	</div>
-<h2><?php echo putGS('Multi date event'); ?></h2>
+<h2><?php echo putGS('Multi date events'); ?></h2>
 </div>
 
 
@@ -484,20 +529,39 @@ $(function(){
     <input type="hidden" name="article-number" value="<?php echo Input::Get('f_article_number', 'int', 1)?>" />
     <input type="hidden" name="date-type" value="specific" />
     <input type="hidden" name="multidateId" id="specific-multidate-id" value="" />
-    <input type="hidden" name="multidatefield" id="multidatefield" value="<?php echo Input::Get('multidatefield', 'string', '')?>" />
     
 	<div class="date-switch date-range-switch" style="margin-left: 12px;"><?php echo putGS('Date from / to'); ?></div>
     <div class="date-switch date-specific-switch switch-active border-left"><?php echo putGS('Specific dates'); ?></div>
 	
     <input type="text" id="start-date-specific" name="start-date-specific" class="multidate-input date-input"style="width: 125px; margin-left: 12px; margin-top: 20px;" readonly='true'/> 
 	<input type="text" id="start-time-specific" name="start-time-specific" class="multidate-input time-input" style="width: 128px; margin-left: 2px; margin-top: 20px;" readonly='true'/> 
-	<input type="text" id="end-time-specific" name="end-time-specific" class="multidate-input time-input" style="width: 128px; margin-left: 144px; margin-top: 20px; display: none" readonly='true'/>
+<!--	<input type="text" id="end-time-specific" name="end-time-specific" class="multidate-input time-input" style="width: 128px; margin-left: 144px; margin-top: 20px; display: none" readonly='true'/>-->
+	<input type="text" id="end-time-specific" name="end-time-specific" class="multidate-input time-input" style="width: 128px; margin-left: 144px; margin-top: 20px; visibility: hidden" readonly='true'/>
 	
 	<div class="specific-radio-holder">
-		<input type="radio" id="specific-radio-start-only" name="specific-radio" value="start-only" checked="checked" /><?php echo putGS('Start time'); ?><br />
-		<input type="radio" id="specific-radio-start-and-end" name="specific-radio" value="start-and-end" /><?php echo putGS('Start & end time'); ?><br />
-		<input type="radio" id="specific-radio-all-day" name="specific-radio" value="all-day" /><?php echo putGS('All day'); ?>
+		<input type="radio" id="specific-radio-start-only" name="specific-radio" value="start-only" checked="checked" /><label for="specific-radio-start-only"><?php echo putGS('Start time'); ?></label><br />
+		<input type="radio" id="specific-radio-start-and-end" name="specific-radio" value="start-and-end" /><label for="specific-radio-start-and-end"><?php echo putGS('Start & end time'); ?><br /></label>
+		<input type="radio" id="specific-radio-all-day" name="specific-radio" value="all-day" /><label for="specific-radio-all-day"><?php echo putGS('All day'); ?></label>
 	</div>
+
+        <div class="type-holder">
+            <select name="multidatefield" id="multidatefield_specific" title="<?php putGS('Event type'); ?>">
+<?php
+    foreach ($article_type_columns as $one_column_type) {
+        if (ArticleTypeField::TYPE_COMPLEX_DATE != $one_column_type->getType()) {
+            continue;
+        }
+        $field_name = $one_column_type->getPrintName();
+        $option_str = '<option value="' . $field_name . '">' . $field_name . '';
+        echo $option_str . "\n";
+    }
+?>
+            </select>
+        </div>
+        <div class="comment-holder">
+            <textarea name="event-comment" id="event_comment_specific" rows="4" cols="30" title="<?php putGS('Event comment'); ?>"></textarea>
+        </div>
+
 	<div class="form-action-holder">
 		<input type="button" value="Reset form" onclick="resetSpecificForm()"; class="default-button" style="width:127px; margin-right:3px;"/>
 		<input type="button" class="save-button-small" onclick="popup_save();" value="Save" style="width:129px;";/>
@@ -511,7 +575,6 @@ $(function(){
     <input type="hidden" name="article-number" value="<?php echo Input::Get('f_article_number', 'int', 1)?>" />
     <input type="hidden" name="date-type" value="daterange" />
     <input type="hidden" name="multidateId" id="daterange-multidate-id" value="" />
-    <input type="hidden" name="multidatefield" id="multidatefield" value="<?php echo Input::Get('multidatefield', 'string', '')?>" />
     
     <div class="date-switch date-range-switch" style="margin-left: 12px;"><?php echo putGS('Date from / to'); ?></div>
     <div class="date-switch date-specific-switch switch-active border-left"><?php echo putGS('Specific dates'); ?></div>
@@ -547,9 +610,28 @@ $(function(){
     
      <div class="repeats-checkbox-holder">
        <?php echo putGS('Ends'); ?>
-       <input type="radio" id="cycle-ends-on-set-date" name="cycle-ends"  value="on-set-date" style="display: inline; margin-left:25px;" name="cycle-ends" checked="checked"/><?php echo putGS('On set date');?><br />
-       <input type="radio" id="cycle-ends-never" name="cycle-ends" value="never" style="display: inline; margin-left:73px;" /><?php echo putGS('Never');?><br />
+       <input type="radio" id="cycle-ends-on-set-date" name="cycle-ends"  value="on-set-date" style="display: inline; margin-left:25px;" name="cycle-ends" checked="checked"/><label for="cycle-ends-on-set-date"><?php echo putGS('On set date');?></label><br />
+       <input type="radio" id="cycle-ends-never" name="cycle-ends" value="never" style="display: inline; margin-left:73px;" /><label for="cycle-ends-never"><?php echo putGS('Never');?></label><br />
     </div>
+
+        <div class="type-holder">
+            <select name="multidatefield" id="multidatefield_range" title="<?php putGS('Event type'); ?>">
+<?php
+    foreach ($article_type_columns as $one_column_type) {
+        if (ArticleTypeField::TYPE_COMPLEX_DATE != $one_column_type->getType()) {
+            continue;
+        }
+        $field_name = $one_column_type->getPrintName();
+        $option_str = '<option value="' . $field_name . '">' . $field_name . '';
+        echo $option_str . "\n";
+    }
+?>
+            </select>
+        </div>
+        <div class="comment-holder">
+            <textarea name="event-comment" id="event_comment_range" rows="4" cols="30" title="<?php putGS('Event comment'); ?>"></textarea>
+        </div>
+
     <div class="form-action-holder">
 		<input type="button" value="Reset form" onclick="resetDaterangeForm()"; class="default-button" style="width:127px; margin-right:3px;"/>
 		<input type="button" class="save-button-small" onclick="popup_save();" value="Save" style="width:129px;";/>

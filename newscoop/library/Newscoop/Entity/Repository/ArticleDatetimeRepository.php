@@ -105,9 +105,10 @@ class ArticleDatetimeRepository extends EntityRepository
      * @param string $recurring
      * @param bool $overwrite
      */
-    public function add( $timeSet, $articleId, $fieldName = null, $recurring = null, $overwrite=false )
+    public function add( $timeSet, $articleId, $fieldName = null, $recurring = null, $overwrite=false, $otherInfo=null )
     {
         $insertValues = $this->buildInsertValues($timeSet, $recurring);
+        $article = null;
 
         $em = $this->getEntityManager();
         // check article
@@ -115,7 +116,7 @@ class ArticleDatetimeRepository extends EntityRepository
             $article = $em->getRepository('Newscoop\Entity\Article')->findOneBy(array('number' => $articleId));
             /* @var $article Newscoop\Entity\Article */
         }
-        elseif ($articleId instanceof Article) {
+        elseif ($articleId instanceof \Article) {
             $article = $articleId;
         }
         if (is_null($article)) {
@@ -133,7 +134,7 @@ class ArticleDatetimeRepository extends EntityRepository
                 foreach (array_merge(array($dateValue), $dateValue->getSpawns()) as $dateValue)
                 {
                     $articleDatetime = new ArticleDatetime();
-                    $articleDatetime->setValues($dateValue, $article, $fieldName);
+                    $articleDatetime->setValues($dateValue, $article, $fieldName, $otherInfo);
                     $em->persist($articleDatetime);
                 }
             }
@@ -161,7 +162,7 @@ class ArticleDatetimeRepository extends EntityRepository
      * @param string $fieldName
      * @param string $recurring
      */
-    public function update($id, $timeSet, $articleId=null, $fieldName=null, $recurring=null)
+    public function update($id, $timeSet, $articleId=null, $fieldName=null, $recurring=null, $otherInfo=null)
     {
         $em = $this->getEntityManager();
 
@@ -186,7 +187,7 @@ class ArticleDatetimeRepository extends EntityRepository
                 foreach (array_merge(array($dateValue), $dateValue->getSpawns()) as $dateValue)
                 {
                     $articleDatetime = new ArticleDatetime();
-                    $articleDatetime->setValues($dateValue, $articleId, $fieldName, $entry->getArticleType());
+                    $articleDatetime->setValues($dateValue, $articleId, $fieldName, $entry->getArticleType(), $otherInfo);
                     $em->persist($articleDatetime);
                 }
             }
