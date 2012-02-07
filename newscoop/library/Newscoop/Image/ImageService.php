@@ -6,7 +6,6 @@
  */
 
 namespace Newscoop\Image;
-
 /**
  * Image Service
  */
@@ -68,7 +67,7 @@ class ImageService
     public function generateFromSrc($src)
     {
         $matches = array();
-        if (!preg_match('#^([0-9]+)x([0-9]+)/([_a-z0-9]+)/([-_.~%a-zA-Z0-9]+)$#', $src, $matches)) {
+        if (!preg_match('#^([0-9]+)x([0-9]+)/([_a-z0-9]+)/([-_.:~%|a-zA-Z0-9]+)$#', $src, $matches)) {
             return;
         }
 
@@ -300,7 +299,7 @@ class ImageService
      */
     private function encodePath($path)
     {
-        return rawurlencode(rawurlencode($path)); // must be done twice for apache
+        return str_replace('/', '|', $path);
     }
 
     /**
@@ -311,7 +310,7 @@ class ImageService
      */
     private function decodePath($path)
     {
-        return rawurldecode(rawurldecode($path));
+        return str_replace('|', '/', $path);
     }
 
     /**

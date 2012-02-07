@@ -51,7 +51,7 @@ class ImageServiceTest extends \TestCase
     {
         $image = 'images/picture.jpg';
         $src = $this->service->getSrc($image, 300, 300);
-        $this->assertEquals('300x300/fit/' . rawurlencode(rawurlencode($image)), $src);
+        $this->assertEquals('300x300/fit/' . str_replace('/', '|', $image), $src);
     }
 
     public function testFindByArticle()

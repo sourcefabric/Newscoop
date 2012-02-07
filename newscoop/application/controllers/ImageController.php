@@ -11,14 +11,11 @@ class ImageController extends Zend_Controller_Action
 {
     public function cacheAction()
     {
-        $src = $this->_getParam('src');
-        if (substr_count($src, '/') > 2) {
-            $srcAry = explode('/', $src, 3);
-            $srcAry[2] = rawurlencode(rawurlencode($srcAry[2]));
-            $src = implode('/', $srcAry);
-        }
+        header('Cache-Control: public, max-age=3600');
+        header('Pragma: cache');
+        header('Last-Modified: '.gmdate('D, d M Y H:i:s').' GMT', true);
 
-        $this->_helper->service('image')->generateFromSrc($src);
+        $this->_helper->service('image')->generateFromSrc($this->_getParam('src'));
         exit;
     }
 }
