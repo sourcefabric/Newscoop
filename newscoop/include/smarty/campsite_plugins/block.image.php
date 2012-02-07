@@ -34,6 +34,10 @@ function smarty_block_image(array $params, $content, Smarty_Internal_Template $s
 
     $articleRenditions = $article->getRenditions();
     $articleRendition = $articleRenditions[$renditions[$params['rendition']]];
+    if ($articleRendition === null) {
+        $repeat = false;
+        return;
+    }
 
     if (array_key_exists('width', $params) && array_key_exists('height', $params)) {
         $preview = $articleRendition->getRendition()->getPreview($params['width'], $params['height']);
