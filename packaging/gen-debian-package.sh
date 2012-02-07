@@ -1,5 +1,5 @@
 #!/bin/bash
-# usage from git-repo: 
+# usage from git-repo:
 #  ./gen-debian-package.sh -rfakeroot -sa
 
 #
@@ -10,6 +10,7 @@ DEBRELEASE=$(head -n1 debian/changelog | cut -d ' ' -f 2 | sed 's/[()]*//g')
 DEBVERSION=$(echo $DEBRELEASE | sed 's/-.*$//g;s/~test[0-9]*//g')
 UPSTREAMVERSION=$(echo $DEBVERSION | sed 's/~/-/g')
 UPSTREAMDIST=$(echo $UPSTREAMVERSION | sed 's/^\([0-9]*\.[0-9]*\).*$/\1/')
+SFOCUSTOM="-RC1"
 DEBPATH=`pwd`/debian # TODO check dirname $0
 MIRRORPATH=/tmp
 
@@ -23,7 +24,7 @@ if test ! -d ${DEBPATH}; then
 fi
 
 echo "Debian Release:   ${DEBRELEASE}"
-echo "Upstream Version: ${UPSTREAMVERSION}"
+echo "Upstream Version: ${UPSTREAMVERSION}${SFOCUSTOM}"
 echo "Major:            ${UPSTREAMDIST}"
 echo "debuild opts:     $@"
 echo "build folder:     /tmp/newscoop-$DEBVERSION"
@@ -42,9 +43,9 @@ echo " +++ downloading upstream release.."
 if [ -f ${MIRRORPATH}/newscoop-$UPSTREAMVERSION.tar.gz ]; then
 	echo "using local file ${MIRRORPATH}/newscoop-$UPSTREAMVERSION.tar.gz"
   tar xzf ${MIRRORPATH}/newscoop-$UPSTREAMVERSION.tar.gz
-elif [ -f ${MIRRORPATH}/newscoop-$UPSTREAMDIST.tar.gz ]; then
-	echo "using local file ${MIRRORPATH}/newscoop-$UPSTREAMDIST.tar.gz"
-  tar xzf ${MIRRORPATH}/newscoop-$UPSTREAMDIST.tar.gz
+elif [ -f ${MIRRORPATH}/newscoop-$UPSTREAMDIST$SFOCUSTOM.tar.gz ]; then
+	echo "using local file ${MIRRORPATH}/newscoop-$UPSTREAMDIST$SFOCUSTOM.tar.gz"
+  tar xzf ${MIRRORPATH}/newscoop-$UPSTREAMDIST$SFOCUSTOM.tar.gz
 elif [ -n "$CUSTOMURL" ]; then
 	echo "download ${CUSTOMURL}"
 	curl -L ${CUSTOMURL} \
@@ -53,10 +54,12 @@ elif [ -n "$CUSTOMURL" ]; then
 else
 	echo "download from sourceforge."
   #curl -L http://downloads.sourceforge.net/project/newscoop/$UPSTREAMDIST/newscoop-$UPSTREAMVERSION.tar.gz | tar xzf -
-  curl -L http://downloads.sourceforge.net/project/newscoop/$UPSTREAMVERSION/newscoop-$UPSTREAMVERSION.tar.gz \
-		| tee ${MIRRORPATH}/newscoop-$UPSTREAMVERSION.tar.gz \
+  curl -L http://downloads.sourceforge.net/project/newscoop/$UPSTREAMVERSION/newscoop-$UPSTREAMDIST$SFOCUSTOM.tar.gz \
+		| tee ${MIRRORPATH}/newscoop-$UPSTREAMDIST$SFOCUSTOM.tar.gz \
 		| tar xzf - || exit
 fi
+
+mv ${MIRRORPATH}/newscoop-$UPSTREAMVERSION/newscoop-$UPSTREAMDIST$SFOCUSTOM/ ${MIRRORPATH}/newscoop-$UPSTREAMVERSION/newscoop/
 
 # done in README.debian
 rm newscoop/INSTALL.txt
@@ -89,16 +92,33 @@ if test "${UPSTREAMVERSION}" == "3.5.1"; then
 	rm newscoop/javascript/tinymce/plugins/codehighlighting/img/Thumbs.db
 fi
 
+### fixes for 4.0.0-RC1 ###
+if test "${UPSTREAMVERSION}" == "4.0.0"; then
+	rm newscoop/js/editarea/edit_area/plugins/test/images/Thumbs.db
+
+        chmod -x newscoop/install/templates/license.tpl
+	chmod -x newscoop/admin-files/libs/ContextList/do_action.php
+        chmod -x newscoop/admin-files/articles/context_box/popup.php
+        chmod -x newscoop/admin-files/libs/ContextList/do_data.php
+        chmod -x newscoop/install/include/js/install.js
+        chmod -x newscoop/admin-files/libs/ContextList/ContextList.php
+        chmod -x newscoop/admin-files/libs/ContextList/do_order.php
+        chmod -x newscoop/admin-files/libs/ContextList/table.php
+        chmod -x newscoop/admin-files/libs/ContextList/actions.php
+        chmod -x newscoop/admin-files/libs/ContextList/filters.php
+        chmod -x newscoop/admin-style/content.css
+fi
+
 ############################
 
 cp -avi $DEBPATH ./ || exit
-debuild $@ || exit
+debuild -k174C1854 $@ || exit
 
 ls -l /tmp/newscoop*deb
 ls -l /tmp/newscoop*changes
 
 lintian -i --pedantic /tmp/newscoop_${DEBRELEASE}_*.changes | tee /tmp/newscoop-${DEBRELEASE}.issues
 
-echo -n "UPLOAD? [enter|CTRL-C]" ; read
+#echo -n "UPLOAD? [enter|CTRL-C]" ; read
 
-dput rg42 /tmp/newscoop_${DEBRELEASE}_*.changes 
+#dput sfo /tmp/newscoop_${DEBRELEASE}_*.changes

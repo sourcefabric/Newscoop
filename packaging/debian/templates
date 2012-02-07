@@ -1,7 +1,7 @@
 Template: newscoop/dbsetup
 Type: boolean
 Default: false
-Description: Create mysql database-account?
+_Description: Create mysql database-account?
  Automatically generate a local mysql-account for newscoop.
  .
  This option allows to create a database-user and password
@@ -12,10 +12,10 @@ Description: Create mysql database-account?
 
 Template: newscoop/apache-setup
 Type: select
-Choices: dedicated v-host, system-wide (all vhosts), no thanks
+_Choices: dedicated v-host, system-wide (all vhosts), no thanks
 Choices-de.UTF-8: v-host einrichten, system-weit (alle v-hosts), nein danke
 Default: system-wide (all vhosts)
-Description: Create apache2 config:
+_Description: Create apache2 config:
  This setup script can perform apache web-server configuration
  so that you can connect to newscoop directly after this installation.
  .
@@ -36,7 +36,7 @@ Description-de.UTF-8: Erzeugen einer apache2 konfiuration:
 Template: newscoop/apache-servername
 Type: string
 Default: localhost
-Description: FQDN - apache-vhost ServerName:
+_Description: FQDN - apache-vhost ServerName:
  Enter the main hostname of the web server. 
  The DNS of this name must resolve to the apache server running on this
  machine.
@@ -51,7 +51,7 @@ Description: FQDN - apache-vhost ServerName:
 Template: newscoop/apache-serveradmin
 Type: string
 Default: root@localhost
-Description: Email of the vhost-admin - ServerAdmin:
+_Description: Email of the vhost-admin - ServerAdmin:
  required for dedicated vhost-setup.
  .
  more info soon..
@@ -59,7 +59,7 @@ Description: Email of the vhost-admin - ServerAdmin:
 Template: newscoop/cronjob
 Type: boolean
 Default: true
-Description: install cron-job for newscoop?
+_Description: install cron-job for newscoop?
  Run periodic events for newscoop.
  .
  This includes Newscoop's autopublish, indexer, statistics and
