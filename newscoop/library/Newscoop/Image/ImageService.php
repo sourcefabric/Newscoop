@@ -299,7 +299,7 @@ class ImageService
      */
     private function encodePath($path)
     {
-        return str_replace('/', '|', $path);
+        return rawurlencode(str_replace('/', '|', $path));
     }
 
     /**
@@ -310,7 +310,7 @@ class ImageService
      */
     private function decodePath($path)
     {
-        return str_replace('|', '/', $path);
+        return str_replace('|', '/', rawurldecode($path));
     }
 
     /**
