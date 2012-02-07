@@ -4,7 +4,7 @@
 
 <ul class="renditions">
     <?php foreach ($this->renditions as $rendition) { ?>
-    <li><?php echo $this->rendition($rendition, $this->previewWidth, $this->previewHeight, $this->articleRenditions[$rendition]); ?></li>
+    <li id="<?php echo $rendition->getName(); ?>"><?php echo $this->rendition($rendition, $this->previewWidth, $this->previewHeight, $this->articleRenditions[$rendition]); ?></li>
     <?php } ?>
 </ul>
 
@@ -51,7 +51,7 @@ $(function() {
                 'format' => 'json',
             )); ?>", {
                 'image': ui.draggable.attr('id'),
-                'rendition': li.find('.name').text()
+                'rendition': li.attr('id')
             }, function (data, textStatus) {
                 if (data.exception != undefined) {
                     alert(data.exception);
