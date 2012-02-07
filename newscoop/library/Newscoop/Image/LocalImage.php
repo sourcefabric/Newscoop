@@ -57,6 +57,12 @@ class LocalImage implements ImageInterface
     private $height;
 
     /**
+     * @Column(nullable=True, name="Photographer")
+     * @var string
+     */
+    private $photographer;
+
+    /**
      * @param string $image
      */
     public function __construct($image)
@@ -178,5 +184,27 @@ class LocalImage implements ImageInterface
     public function hasWidth()
     {
         return $this->width !== null;
+    }
+
+    /**
+     * Get photographer
+     *
+     * @return string
+     */
+    public function getPhotographer()
+    {
+        return $this->photographer;
+    }
+
+    /**
+     * Get caption
+     *
+     * @proxy to getDescription
+     *
+     * @return string
+     */
+    public function getCaption()
+    {
+        return $this->getDescription();
     }
 }
