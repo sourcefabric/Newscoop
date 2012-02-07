@@ -144,6 +144,7 @@ class Admin_SlideshowController extends Zend_Controller_Action
             $this->_helper->redirector('edit-item', 'slideshow', 'admin', array(
                 'slideshow' => $slideshow->getId(),
                 'item' => $item->getId(),
+                'article_number' => $this->_getParam('article_number'),
             ));
         }
 
