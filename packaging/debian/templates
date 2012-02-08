@@ -12,7 +12,7 @@ _Description: Create mysql database-account?
 
 Template: newscoop/apache-setup
 Type: select
-_Choices: dedicated v-host, system-wide (all vhosts), no thanks
+__Choices: dedicated v-host, system-wide (all vhosts), no thanks
 Choices-de.UTF-8: v-host einrichten, system-weit (alle v-hosts), nein danke
 Default: system-wide (all vhosts)
 _Description: Create apache2 config:

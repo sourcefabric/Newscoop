@@ -1,5 +1,5 @@
-newscoop/* var/lib/newscoop/
-newscoop/.htaccess var/lib/newscoop/
+newscoop/* usr/share/newscoop/
+newscoop/.htaccess usr/share/newscoop/
 debian/etc/apache.conf /etc/newscoop/3.5
 debian/etc/newscoop.ini /etc/newscoop/3.5
 debian/etc/apache.vhost.tpl /etc/newscoop/3.5

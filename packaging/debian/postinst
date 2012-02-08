@@ -20,8 +20,8 @@ WEB_USER=www-data
 WEB_GROUP=www-data
 
 package_name="newscoop"
-datadir="/var/lib/${package_name}"
-configdir="/etc/newscoop/3.5"
+datadir="/usr/share/${package_name}"
+configdir="/etc/newscoop/4.0"
 includefile="${configdir}/apache.conf"
 a2tplfile="${configdir}/apache.vhost.tpl"
 crontplfile="${configdir}/newscoop.cron.tpl"
@@ -67,7 +67,7 @@ case "$1" in
       SN=$RET
       db_get newscoop/apache-serveradmin
       SA=$RET
-      
+
       if [ ! -d /etc/$webserver/sites-available/ ]; then
         install -d -m755 /etc/$webserver/sites-available/
       fi
@@ -89,11 +89,11 @@ case "$1" in
 
     # .htaccess file
     echo -ne "/RewriteBase/d\nwq\n\n" \
-    | ed /var/lib/newscoop/.htaccess &>/dev/null || true
+    | ed /usr/share/newscoop/.htaccess &>/dev/null || true
 
     if [ -n "${dohtaccess}" ]; then
       echo -ne "/RewriteEngine/\n+1i\n    RewriteBase ${dohtaccess}\n.\nwq\n" \
-      | ed /var/lib/newscoop/.htaccess &>/dev/null || true
+      | ed /usr/share/newscoop/.htaccess &>/dev/null || true
     fi
 
 # for now - use NS's installer to set up the cron-jobs

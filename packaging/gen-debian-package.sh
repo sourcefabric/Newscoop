@@ -13,6 +13,7 @@ UPSTREAMDIST=$(echo $UPSTREAMVERSION | sed 's/^\([0-9]*\.[0-9]*\).*$/\1/')
 SFOCUSTOM="-RC1"
 DEBPATH=`pwd`/debian # TODO check dirname $0
 MIRRORPATH=/tmp
+BUILDDEST=/tmp/newscoop-${DEBVERSION}/
 
 #if test "${UPSTREAMDIST}" == "3.5"; then
 #	CUSTOMURL=http://www.sourcefabric.org/attachment2/000000024.gz
@@ -107,9 +108,15 @@ if test "${UPSTREAMVERSION}" == "4.0.0"; then
         chmod -x newscoop/admin-files/libs/ContextList/actions.php
         chmod -x newscoop/admin-files/libs/ContextList/filters.php
         chmod -x newscoop/admin-style/content.css
+
+	rm -r newscoop/include/html2pdf/_tcpdf_5.0.002/fonts/utils/
 fi
 
 ############################
+
+cd ../
+tar czf newscoop_${UPSTREAMVERSION}.orig.tar.gz  newscoop-${DEBVERSION}/newscoop/
+cd ${BUILDDEST} || exit
 
 cp -avi $DEBPATH ./ || exit
 debuild -k174C1854 $@ || exit

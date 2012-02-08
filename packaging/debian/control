@@ -1,9 +1,9 @@
 Source: newscoop
 Section: web
 Priority: optional
-Maintainer: Alessio Treglia <alessio@debian.org>, Robin Gareus <robin@gareus.org>, Daniel James <daniel@64studio.com>
+Maintainer: Daniel James <daniel@64studio.com>
 Build-Depends: debhelper (>= 7), po-debconf
-Standards-Version: 3.9.1
+Standards-Version: 3.8.4
 Homepage: http://www.sourcefabric.org/en/products/newscoop_overview/
 
 Package: newscoop
