@@ -75,7 +75,7 @@ class ArticleIndex extends DatabaseObject {
         }
 
         // specifically match webcode (first one)
-	    $webcodeMatches = preg_grep("`^\s*@`", $keywords);
+	    $webcodeMatches = preg_grep("`^\s*[\+@]`", $keywords);
 	    if (count($webcodeMatches)) {
             $encoder = Manager::getWebcoder('');
             $article_no = $encoder->decode(current($webcodeMatches));

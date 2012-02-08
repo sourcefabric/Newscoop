@@ -71,12 +71,12 @@ class Mapper implements Webcode
         for ($i = 0; $i < (5 - strlen($letterCode)); $i ++) {
         	$returnCode = self::$map[0] . $returnCode;
         }
-        return strtolower('@'.$returnCode);
+        return strtolower('+'.$returnCode);
     }
 
     public static function decode($webcode)
     {
-        $webcode = trim($webcode, '@');
+        $webcode = preg_replace('/^\+/', '', $webcode);
     	$decodeMap = array_flip(self::$map);
         $article_no = array();
         $webcode = str_split(ltrim($webcode, 'aA'));
@@ -89,7 +89,7 @@ class Mapper implements Webcode
     }
 
     public static function isWebcode($string) {
-        if (preg_match('/^@[a-zA-Z]{5}$/', $string) == 1) {
+        if (preg_match('/^[\+@][a-zA-Z]{5,6}$/', $string) == 1) {
             return TRUE;
         } else {
             return FALSE;
