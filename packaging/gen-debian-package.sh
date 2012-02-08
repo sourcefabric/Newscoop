@@ -64,8 +64,33 @@ mv ${MIRRORPATH}/newscoop-$UPSTREAMVERSION/newscoop-$UPSTREAMDIST$SFOCUSTOM/ ${M
 
 # done in README.debian
 rm newscoop/INSTALL.txt
+
+# covered by debian/copyright
+rm newscoop/COPYING.txt
+rm newscoop/install/sample_templates/zen/templates/set_zen/_tpl/player/LICENSE.txt
+rm newscoop/install/sample_templates/zen/templates/set_zen/license.txt
+rm newscoop/themes/unassigned/set_zen/_tpl/player/LICENSE.txt
+rm newscoop/themes/unassigned/set_zen/license.txt
+
+# third party licences covered by debian/copyright
+rm newscoop/include/html2pdf/_tcpdf_5.0.002/LICENSE.TXT
+rm newscoop/js/domTT/LICENSE
+
+# to do
+#rm newscoop/js/flowplayer/LICENSE.txt
+#rm newscoop/js/geocoding/openlayers/license.txt
+#rm newscoop/js/plupload/license.txt
+#rm newscoop/js/tinymce/license.txt
+#rm newscoop/library/Nette/license.txt
+#rm newscoop/library/Symfony/Component/Console/LICENSE
+#rm newscoop/library/Symfony/Component/Yaml/LICENSE
+#rm newscoop/library/fabpot-dependency-injection-07ff9ba/LICENSE
+#rm newscoop/library/fabpot-dependency-injection-07ff9ba/doc/E-License.markdown
+#rm newscoop/library/fabpot-event-dispatcher-782a5ef/LICENSE
+#rm newscoop/library/fabpot-event-dispatcher-782a5ef/doc/A-License.markdown
+
 # documentation for /usr/share/doc/newscoop
-for file in ChangeLog CREDITS COPYING README UPGRADE; do
+for file in ChangeLog CREDITS README UPGRADE; do
   mv -vi newscoop/${file}.txt ./${file}
 done
 cp -vi newscoop/htaccess newscoop/.htaccess

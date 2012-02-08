@@ -1,0 +1,2 @@
+# Despite the name, this is not actually a license file
+newscoop binary: extra-license-file usr/share/newscoop/install/templates/license.tpl
