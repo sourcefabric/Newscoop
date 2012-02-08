@@ -122,10 +122,10 @@ case "$1" in
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/install/cron_jobs
     dpkg-statoverride --list $datadir/images &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/images
-    dpkg-statoverride --list $datadir/templates &>/dev/null || \
-    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/templates
-    dpkg-statoverride --list $datadir/templates_cache &>/dev/null || \
-    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/templates_cache
+    dpkg-statoverride --list $datadir/themes &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/themes
+    #dpkg-statoverride --list $datadir/templates_cache &>/dev/null || \
+    #dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/templates_cache
     dpkg-statoverride --list $datadir/plugins &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0750 $datadir/plugins
     dpkg-statoverride --list $datadir/backup &>/dev/null || \

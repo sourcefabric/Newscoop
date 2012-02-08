@@ -63,10 +63,10 @@ case "$1" in
     dpkg-statoverride --remove $datadir/install/cron_jobs || true
     dpkg-statoverride --list $datadir/images &>/dev/null && \
     dpkg-statoverride --remove $datadir/images || true
-    dpkg-statoverride --list $datadir/templates &>/dev/null && \
-    dpkg-statoverride --remove $datadir/templates || true
-    dpkg-statoverride --list $datadir/templates_cache &>/dev/null && \
-    dpkg-statoverride --remove $datadir/templates_cache || true
+    dpkg-statoverride --list $datadir/themes &>/dev/null && \
+    dpkg-statoverride --remove $datadir/themes || true
+    #dpkg-statoverride --list $datadir/templates_cache &>/dev/null && \
+    #dpkg-statoverride --remove $datadir/templates_cache || true
     dpkg-statoverride --list $datadir/plugins &>/dev/null && \
     dpkg-statoverride --remove $datadir/plugins || true
     dpkg-statoverride --list $datadir/backup &>/dev/null && \

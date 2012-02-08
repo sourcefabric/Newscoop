@@ -4,11 +4,11 @@
 
       ServerAdmin __SERVER_ADMIN__
 
-      DocumentRoot /var/lib/newscoop
+      DocumentRoot /usr/share/newscoop
       DirectoryIndex index.php index.html
-      Alias /javascript /var/lib/newscoop/javascript/
+      Alias /javascript /usr/share/newscoop/javascript/
 
-      <Directory /var/lib/newscoop>
+      <Directory /usr/share/newscoop>
               Options -Indexes FollowSymLinks MultiViews
               AllowOverride All
               Order allow,deny
