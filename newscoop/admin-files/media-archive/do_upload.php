@@ -10,7 +10,13 @@
 
 camp_load_translation_strings("media_archive");
 
-if (!SecurityToken::isValid()) {
+$f_image_url = Input::Get('f_image_url', 'string', '', true);
+$nrOfFiles = isset($_POST['uploader_count']) ? $_POST['uploader_count'] : 0;
+$f_article_edit = $_POST['f_article_edit'];
+$f_language_id = $_POST['f_language_id'];
+$f_article_number = $_POST['f_article_number'];
+
+if (!SecurityToken::isValid() && !isset($f_article_edit)) {
     camp_html_display_error(getGS('Invalid security token!'));
     exit;
 }
@@ -19,17 +25,6 @@ if (!$g_user->hasPermission('AddImage')) {
 	camp_html_display_error(getGS("You do not have the right to add images."));
 	exit;
 }
-
-$f_image_url = Input::Get('f_image_url', 'string', '', true);
-$nrOfFiles = isset($_POST['uploader_count']) ? $_POST['uploader_count'] : 0;
-$f_article_edit = $_POST['f_article_edit'];
-$f_publication_id = $_POST['f_publication_id'];
-$f_issue_number = $_POST['f_issue_number'];
-$f_section_number = $_POST['f_section_number'];
-$f_language_id = $_POST['f_language_id'];
-$f_language_selected = $_POST['f_language_selected'];
-$f_article_number = $_POST['f_article_number'];
-$f_place = $_POST['f_place'];
 
 if (empty($f_image_url) && empty($nrOfFiles)) {
 	camp_html_add_msg(getGS("You must select an image file to upload."));
@@ -74,32 +69,15 @@ if ($result != NULL) {
         require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/Publication.php');
         
+        //$imageIdList = array();
         foreach ($images as $image) {
             $ImageTemplateId = ArticleImage::GetUnusedTemplateId($f_article_number);
             ArticleImage::AddImageToArticle($image->getImageId(), $f_article_number, $ImageTemplateId);
+            //$imageIdList[] = $image->getImageId();
         }
-        
-        ?>
-        <script type="text/javascript">
-        <?php 
-            if ($f_place == 1) {
-                ?>
-                parent.$.fancybox.reload = true;
-                document.location = '../image/article/article_number/<?php echo($f_article_number); ?>/language_id/<?php echo($f_language_id); ?>';
-                <?php
-            }
-            else {
-                ?>
-                try {
-                    parent.$.fancybox.reload = true;
-                    parent.$.fancybox.message = "<?php putGS("Image added."); ?>";
-                    parent.$.fancybox.close();
-                } catch (e) {}
-                <?php
-            }
-        ?>
-        </script>
-        <?php
+        //$imageIdList = implode(',',$imageIdList);
+        //camp_html_goto_page('/'.$ADMIN.'/image/edit-image-data/images/'.$imageIdList);
+        camp_html_goto_page('/'.$ADMIN.'/image/edit-image-data');
     }
     else {
         camp_html_goto_page("/$ADMIN/media-archive/multiedit.php");

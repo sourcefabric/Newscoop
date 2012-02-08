@@ -20,6 +20,7 @@ class Admin_MediaController extends Zend_Controller_Action
 
         $this->_helper->contextSwitch
             ->addActionContext('list-slideshows', 'json')
+            ->addActionContext('list-images', 'json')
             ->initContext();
     }
 

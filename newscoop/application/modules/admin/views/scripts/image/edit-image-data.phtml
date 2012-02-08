@@ -1,0 +1,44 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); ?>
+
+<?php $this->placeholder('bodyId')->set('next'); ?>
+
+<h1><?php putGS("Edit Image Data"); ?></h1>
+
+<?php if (!empty($this->images)) { ?>
+
+<ul class="thumbnails">
+    <?php foreach ($this->images as $image) { ?>
+    <li id="image-<?php echo $image->getId(); ?>" style="width: 210px;">
+        <figure>
+            <div><?php echo $this->thumbnail($image, 150, 150, 'fit')->getImg($this); ?></div>
+            <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></label></figcaption>
+        </figure>
+        <div class="image-data">
+            <form method="post" action="<?php echo($this->url(array(
+                'module' => 'admin',
+                'controller' => 'image',
+                'action' => 'edit-image-data'
+            ))); ?>">
+                <input type="hidden" name="image_id" value="<?php echo $image->getId(); ?>">
+                
+                <label for="image_description_<?php echo $image->getId(); ?>" style="font-size: 10px;"><?php echo(getGS('Description: ')); ?></label><br>
+                <input name="image_description" class="image-description" id="image_description_<?php echo $image->getId(); ?>" value="<?php echo $image->getDescription(); ?>" style="float: none;"><br>
+                
+                <label for="image_place_<?php echo $image->getId(); ?>" style="font-size: 10px;"><?php echo(getGS('Place: ')); ?></label><br>
+                <input name="image_place" class="image-place" id="image_place_<?php echo $image->getId(); ?>" value="<?php echo $image->getPlace(); ?>" style="float: none;"><br>
+                
+                <label for="image_photographer_<?php echo $image->getId(); ?>" style="font-size: 10px;"><?php echo(getGS('Photographer: ')); ?></label><br>
+                <input name="image_photographer" class="image-photographer" id="image_photographer_<?php echo $image->getId(); ?>" value="<?php echo $image->getPhotographer(); ?>" style="float: none;"><br>
+                
+                <input type="submit" value="<?php echo(getGS('Save')); ?>" style="float: none;">
+            </form>
+        </div>
+    </li>
+    <?php } ?>
+</ul>
+
+<?php } else { ?>
+    <script>
+        document.location = parent.$('#place-images').attr('href');
+    </script>
+<?php } ?>

@@ -61,6 +61,18 @@ class LocalImage implements ImageInterface
      * @var string
      */
     private $photographer;
+    
+    /**
+     * @Column(nullable=True, name="Place")
+     * @var string
+     */
+    private $place;
+    
+    /**
+     * @Column(nullable=True, name="Date")
+     * @var string
+     */
+    private $date;
 
     /**
      * @param string $image
@@ -187,6 +199,17 @@ class LocalImage implements ImageInterface
     }
 
     /**
+     * Set photographer
+     *
+     * @param string $photographer
+     * @return void
+     */
+    public function setPhotographer($photographer)
+    {
+        $this->photographer = (string) $photographer;
+    }
+    
+    /**
      * Get photographer
      *
      * @return string
@@ -194,6 +217,48 @@ class LocalImage implements ImageInterface
     public function getPhotographer()
     {
         return $this->photographer;
+    }
+    
+    /**
+     * Set place
+     *
+     * @param string $place
+     * @return void
+     */
+    public function setPlace($place)
+    {
+        $this->place = (string) $place;
+    }
+    
+    /**
+     * Get place
+     *
+     * @return string
+     */
+    public function getPlace()
+    {
+        return $this->place;
+    }
+    
+    /**
+     * Set date
+     *
+     * @param string $date
+     * @return void
+     */
+    public function setDate($date)
+    {
+        $this->date = (string) $date;
+    }
+    
+    /**
+     * Get date
+     *
+     * @return string
+     */
+    public function getDate()
+    {
+        return $this->date;
     }
 
     /**
