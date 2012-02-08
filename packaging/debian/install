@@ -1,6 +1,6 @@
 newscoop/* usr/share/newscoop/
 newscoop/.htaccess usr/share/newscoop/
-debian/etc/apache.conf /etc/newscoop/3.5
-debian/etc/newscoop.ini /etc/newscoop/3.5
-debian/etc/apache.vhost.tpl /etc/newscoop/3.5
-debian/etc/newscoop.cron.tpl /etc/newscoop/3.5
+debian/etc/apache.conf /etc/newscoop/4.0/
+debian/etc/newscoop.ini /etc/newscoop/4.0/
+debian/etc/apache.vhost.tpl /etc/newscoop/4.0/
+debian/etc/newscoop.cron.tpl /etc/newscoop/4.0/
