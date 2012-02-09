@@ -135,17 +135,18 @@ class Admin_ImageController extends Zend_Controller_Action
     public function editImageDataAction()
     {
         if ($this->getRequest()->isPost()) {
-            $imageId = $this->_getParam('image_id');
-            $imageDescription = $this->_getParam('image_description');
-            $imagePlace = $this->_getParam('image_place');
-            $imagePhotographer = $this->_getParam('image_photographer');
+            $data = $this->_getParam('data');
             
-            $image = $this->_helper->service('image')->find($imageId);
+            foreach ($data as $id => $values) {
+                if (!empty($values['description']) || !empty($values['place']) || !empty($values['photographer'])) {
+                    $image = $this->_helper->service('image')->find($id);
             
-            $image->setDescription($imageDescription);
-            $image->setPlace($imagePlace);
-            $image->setPhotographer($imagePhotographer);
-            $image->setDate(date('Y-m-d'));
+                    $image->setDescription($values['description']);
+                    $image->setPlace($values['place']);
+                    $image->setPhotographer($values['photographer']);
+                    $image->setDate(date('Y-m-d'));
+                }
+            }
             
             $this->_helper->entity->flushManager();
         }
