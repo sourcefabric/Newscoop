@@ -2,58 +2,62 @@
 
 use Newscoop\ArticleDatetime;
 use Doctrine\Common\Util\Debug;
-use Newscoop\Service\IThemeManagementService;
-use Newscoop\Service\IOutputService;
-use Newscoop\Service\ILanguageService;
-use Newscoop\Service\ISyncResourceService;
-use Newscoop\Service\IPublicationService;
-use Newscoop\Service\IThemeService;
-use Newscoop\Service\IOutputSettingIssueService;
-use Newscoop\Service\IOutputSettingSectionService;
-use Newscoop\Service\IIssueService;
-use Newscoop\Service\ISectionService;
-use Newscoop\Service\ITemplateSearchService;
-use Newscoop\Entity\Publication;
-use Newscoop\Entity\Theme;
-use Newscoop\Entity\Resource;
+//use Newscoop\Service\IThemeManagementService;
+//use Newscoop\Service\IOutputService;
+//use Newscoop\Service\ILanguageService;
+//use Newscoop\Service\ISyncResourceService;
+//use Newscoop\Service\IPublicationService;
+//use Newscoop\Service\IThemeService;
+//use Newscoop\Service\IOutputSettingIssueService;
+//use Newscoop\Service\IOutputSettingSectionService;
+//use Newscoop\Service\IIssueService;
+//use Newscoop\Service\ISectionService;
+//use Newscoop\Service\ITemplateSearchService;
+//use Newscoop\Entity\Publication;
+//use Newscoop\Entity\Theme;
+//use Newscoop\Entity\Resource;
 
 /**
- * @Acl(resource="theme", action="manage")
+ * @Acl(resource="article", action="edit")
  */
 class Admin_MultidateController extends Zend_Controller_Action
 {
 
     /** @var Newscoop\Services\Resource\ResourceId */
-    private $resourceId = NULL;
+//    private $resourceId = NULL;
     /** @var Newscoop\Service\IThemeService */
-    private $themeService = NULL;
+//    private $themeService = NULL;
     /** @var Newscoop\Service\IThemeManagementService */
-    private $themeManagementService = NULL;
+//    private $themeManagementService = NULL;
     /** @var Newscoop\Service\IPublicationService */
-    private $publicationService = NULL;
+//    private $publicationService = NULL;
     /** @var Newscoop\Service\ILanguageService */
-    private $languageService = NULL;
+//    private $languageService = NULL;
     /** @var Newscoop\Service\IIssueService */
-    private $issueService = NULL;
+//    private $issueService = NULL;
     /** @var Newscoop\Service\ISectionService */
-    private $sectionService = NULL;
+//    private $sectionService = NULL;
     /** @var Newscoop\Service\IOutputService */
-    private $outputService = NULL;
+//    private $outputService = NULL;
     /** @var Newscoop\Service\IOutputSettingSectionService */
-    private $outputSettingSectionService = NULL;
+//    private $outputSettingSectionService = NULL;
     /** @var Newscoop\Service\IOutputSettingIssueService */
-    private $outputSettingIssueService = NULL;
+//    private $outputSettingIssueService = NULL;
     /** @var Newscoop\Service\ITemplateSearchService */
-    private $templateSearchService = NULL;
+//    private $templateSearchService = NULL;
     /** @var Newscoop\Service\ISyncResourceService */
-    private $syncResourceService = NULL;
+//    private $syncResourceService = NULL;
     
     /** @var variable set to a timestamp with 0 h and 0 m */
     public $tz;
+    /** @var variable set to a timestamp with a distant future date */
+    public $distant;
 
     public function init()
     {
         $this->tz = mktime(0, 0, 0, 1, 1, 98);
+        $current_year = date('Y');
+        $this->distant = mktime(0, 0, 0, 12, 31, $current_year + 10); // it must be at most 2037, on 32bit systems
     }
 
     /* --------------------------------------------------------------- */
@@ -70,9 +74,10 @@ class Admin_MultidateController extends Zend_Controller_Action
 
     public function isAllDay($date)
     {
-return false; // TODO: fix crash herein
+//return false;
 
-    	if ( $this->getTime( is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp() ) == "00:00" && $this->getTime($date->endTime->getTimestamp()) == "23:59" ) {
+    	//if ( $this->getTime( is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp() ) == "00:00" && $this->getTime($date->endTime->getTimestamp()) == "23:59" ) {
+        if ( $this->getTime( is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp() ) == '00:00' && $date->endTime === null ) {
     		return true;
     	} else {
     		return false;
@@ -89,6 +94,7 @@ return false; // TODO: fix crash herein
     	$multidateField = $this->_request->getParam('multidatefield');
     	$eventComment = $this->_request->getParam('event-comment');
     	
+        $timeSet = array();
     	if ($date_type == 'specific') {
     		//single date
     		$startDate = $this->_request->getParam('start-date-specific');
@@ -96,29 +102,46 @@ return false; // TODO: fix crash herein
     		$endTime = $this->_request->getParam('end-time-specific');
     		
 
-    		$type = $this->_request->getParam('specific-radio');
-    		switch($type) {
-    			case 'start-only':
-    				$timeSet = array(
-    				    "$startDate" => array( "$startTime" => "23:59" )
-    				);
-    				break;
-    			case 'start-and-end':
-    				$timeSet = array(
-                        "$startDate" => array("$startTime" => "$endTime")
+            $type = $this->_request->getParam('specific-radio');
+            switch($type) {
+                case 'start-only':
+                    $timeSet = array(
+                        //"$startDate" => array( "$startTime" => "23:59" )
+                        //$startDate => array( $startTime => null )
+                        'start_date' => $startDate,
+                        'end_date' => $startDate,
+                        'start_time' => $startTime,
+                    );
+                break;
+                case 'start-and-end':
+                    $timeSet = array(
+                        //"$startDate" => array("$startTime" => "$endTime")
+                        'start_date' => $startDate,
+                        'end_date' => $startDate,
+                        'start_time' => $startTime,
+                        'end_time' => $endTime,
                     );
                     break;
-    			case 'all-day':
-    				$timeSet = array(
-                        "$startDate" => array( "00:00" => "23:59" )
+            case 'all-day':
+                    $timeSet = array(
+                        //"$startDate" => array( "00:00" => "23:59" )
+                        //$startDate => array( '00:00' => null )
+                        'start_date' => $startDate,
+                        'end_date' => $startDate,
                     );
                     break;
     		}
     		
+            $timeSet = new ArticleDatetime($timeSet);
+
     		if ( $multidateId > 0) {
-                $repo->update( $multidateId, $timeSet, null, null, null, array('eventComment' => $eventComment) );
+//echo json_encode(array('code' => 200, 'content' => 'www1112222wwwwwwwwwwwwwwwwww'));
+//die();
+                $repo->update( $multidateId, $timeSet, null, $multidateField, null, array('eventComment' => $eventComment) );
     		} else {
     			//add
+//echo json_encode(array('code' => 200, 'timeSet' => $timeSet, 'articleId' => $articleId, 'multidateField' => $multidateField));
+//die();
                 $repo->add($timeSet, $articleId, $multidateField, null, false, array('eventComment' => $eventComment) );
     		}
     		
@@ -127,22 +150,33 @@ return false; // TODO: fix crash herein
     		
     		$startDate = $this->_request->getParam('start-date-daterange');
     		if ($this->_request->getParam('cycle-ends') == 'never') {
-    			$endDate = "2030-12-31";
+    			//$endDate = '2130-12-31';
+    			$endDate = null;
     		} else {
     			$endDate = $this->_request->getParam('end-date-daterange');
     		}
     		if ($this->_request->getParam('daterange-all-day') == 1) {
-    			$startTime = "00:00";
-    			$endTime = "23:59";
+    			$startTime = '00:00';
+    			//$endTime = "23:59";
+    			$endTime = null;
     		} else {
     			$startTime = $this->_request->getParam('start-time-daterange');
             	$endTime = $this->_request->getParam('end-time-daterange');	
     		}
     		$recurring = $this->_request->getParam('repeats-cycle');
-            $timeSet = array("$startDate $startTime" => "$endDate $endTime - $recurring");
-            
+            //$timeSet = array("$startDate $startTime" => "$endDate $endTime - $recurring");
+            $timeSet = array(
+                //"$startDate" => array("$startTime" => "$endTime")
+                'start_date' => $startDate,
+                'end_date' => $endDate,
+                'start_time' => $startTime,
+                'end_time' => $endTime,
+                'recurring' => $recurring,
+            );
+            $timeSet = new ArticleDatetime($timeSet);
+
             if ( $multidateId > 0) {
-                $repo->update( $multidateId, $timeSet, null, null, null, array('eventComment' => $eventComment) );
+                $repo->update( $multidateId, $timeSet, null, $multidateField, null, array('eventComment' => $eventComment) );
             } else {
                 $repo->add($timeSet, $articleId, $multidateField, null, false, array('eventComment' => $eventComment) );
             }
@@ -156,25 +190,32 @@ return false; // TODO: fix crash herein
     public function geteventAction() 
     {
     	$articleDateTimeId = $this->_request->getParam('id');
+//var_dump($articleDateTimeId);
         $repo = $this->_helper->entity->getRepository('Newscoop\Entity\ArticleDatetime');
         $jsEvent = array();
         $event = $repo->findDates((object) array('id' => "$articleDateTimeId"));
-        if (is_array($event)) {
+        if (is_array($event) && isset($event[0]) && (!empty($event[0]))) {
+//var_dump($event);
+//die();
         	$date = $event[0];
+//var_dump($date);
+//die();
         	$jsEvent['id'] = $date->id;
         	$jsEvent['startDate'] = $this->getDate($date->getStartDate()->getTimestamp());
         	$jsEvent['startTime'] = $this->getTime(is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp());
         	
 	        $endDate = $date->getEndDate();
 	        if ( empty($endDate)) {
-	        	$jsEvent['endDate'] = $this->getDate($date->getStartDate()->getTimestamp());
+	        	//$jsEvent['endDate'] = $this->getDate($date->getStartDate()->getTimestamp());
+	        	$jsEvent['endDate'] = null;
 	        } else {
 	        	$jsEvent['endDate'] = $this->getDate($date->getEndDate()->getTimestamp());
 	        }
 	        $jsEvent['endTime'] = $this->getTime(is_null($date->getEndTime()) ? $this->tz : $date->getEndTime()->getTimestamp());
 	        $jsEvent['allDay'] = $this->isAllDay($date);
 	        $jsEvent['isRecurring'] = $date->getRecurring();
-        	if ($jsEvent['endDate'] == "2030-12-31") {
+        	//if ($jsEvent['endDate'] == '2130-12-31') {}
+        	if ($jsEvent['endDate'] === null) {
 	        	$jsEvent['neverEnds'] = 1;
 	        } else {
 	        	$jsEvent['neverEnds'] = 0;
@@ -206,6 +247,8 @@ return false; // TODO: fix crash herein
 
     public function getdatesAction() 
     {
+//echo '[]';
+//die();
     	
     	//is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp();
 
@@ -227,27 +270,31 @@ return false; // TODO: fix crash herein
         $return = array();
         $dates = $repo->findDates((object) array('articleId' => "$articleId"));
         foreach( $dates as $date) {
-        	
-        	$recurring = $date->getRecurring();
 
-                $itemField = $date->getFieldName();
-                $itemColor = '#';
-                if (array_key_exists($itemField, $field_background_colors)) {
-                    $itemColor = $field_background_colors[$itemField];
-                }
-                else {
-                    $field_obj = new \ArticleTypeField($article_type, $itemField);
-                    $itemColor = $field_obj->getColor();
-                    $field_background_colors[$itemField] = $itemColor;
-                }
+            $recurring = $date->getRecurring();
 
-        	if (strlen($recurring) > 1 && $recurring != 'daily') {
+            $event_comment = $date->getEventComment();
+
+            $itemField = $date->getFieldName();
+            $itemColor = '#';
+            if (array_key_exists($itemField, $field_background_colors)) {
+                $itemColor = $field_background_colors[$itemField];
+            }
+            else {
+                $field_obj = new \ArticleTypeField($article_type, $itemField);
+                $itemColor = $field_obj->getColor();
+                $field_background_colors[$itemField] = $itemColor;
+            }
+
+        	//if (strlen($recurring) > 1 && $recurring != 'daily') {}
+        	if (strlen($recurring) > 1) {
         		//daterange
         		$start = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime(is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp()) );
-        		$end = strtotime( $this->getDate($date->getEndDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? $this->tz : $date->getEndTime()->getTimestamp()) );
+        		$end = strtotime( $this->getDate(is_null($date->getEndDate()) ? ($this->distant) : $date->getEndDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? ($this->tz + 86399) : $date->getEndTime()->getTimestamp()) );
         		$itemStart = $start;
-        		$itemEnd = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? $this->tz : $date->getEndTime()->getTimestamp()) );
+        		$itemEnd = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? ($this->tz + 86399) : $date->getEndTime()->getTimestamp()) );
         		
+                $step = "+1 day";
         		switch($recurring) {
         			case 'weekly':
         				$step = "+1 week";
@@ -256,33 +303,35 @@ return false; // TODO: fix crash herein
         				$step = "+1 month";
         				break;
         		}
-        		
-        		while($itemStart < $end) {
-        			$calDate = array();
-		        	$calDate['id'] = $date->id;
-		        	//$calDate['title'] = 'Event ';
-                                $calDate['title'] = $itemField;
-		        	$calDate['start'] = $itemStart;
-		        	$calDate['end'] = $itemEnd;
-		        	$calDate['allDay'] = $this->isAllDay($date);
-                                $calDate['field_name'] = $itemField;
-                                $calDate['backgroundColor'] = $itemColor;
-                                $calDate['textColor'] = '#000000';
-	        		$return[] = $calDate;
-		        	
-		        	$itemStart = strtotime($step, $itemStart);
-		        	$itemEnd = strtotime($step, $itemEnd);
-        		}
-        		
-        	} else {
+
+                while($itemStart <= $end) {
+                    $calDate = array();
+                    $calDate['id'] = $date->id;
+                    //$calDate['title'] = 'Event ';
+                    $calDate['title'] = $itemField;
+                    $calDate['start'] = $itemStart;
+                    $calDate['end'] = $itemEnd;
+                    $calDate['allDay'] = $this->isAllDay($date);
+                    $calDate['field_name'] = $itemField;
+                    $calDate['backgroundColor'] = $itemColor;
+                    $calDate['textColor'] = '#000000';
+                    $calDate['event_comment'] = $event_comment;
+                    $return[] = $calDate;
+
+                    $itemStart = strtotime($step, $itemStart);
+                    $itemEnd = strtotime($step, $itemEnd);
+                }
+
+            } else {
         		//specific
         		$calDate = array();
 	        	$calDate['id'] = $date->id;
 	        	//$calDate['title'] = 'Event ';
-                        $calDate['title'] = $itemField;
+                $calDate['title'] = $itemField;
 	        	$calDate['start'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime( is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp() ));
 	        	//$calDate['start'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' ');
 	        	$endDate = $date->getEndDate();
+                // TODO: at this moment, specific dates without end dates are taken as single-date dates, even though they should be taken as never-ending continuous events
 	        	if ( empty($endDate)) {
 	        		$calDate['end'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? $this->tz : $date->getEndTime()->getTimestamp()) );
 	        		//$calDate['end'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' ' );
@@ -290,19 +339,18 @@ return false; // TODO: fix crash herein
 	        		$calDate['end'] = strtotime( $this->getDate($date->getEndDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? $this->tz : $date->getEndTime()->getTimestamp()) );	
 	        		//$calDate['end'] = strtotime( $this->getDate($date->getEndDate()->getTimestamp()).' ' );	
 	        	}
-	        	//$calDate['allDay'] = $this->isAllDay($date);
-	        	$calDate['allDay'] = false;
-                        $calDate['field_name'] = $itemField;
-                        $calDate['backgroundColor'] = $itemColor;
-                        $calDate['textColor'] = '#000000';
-                        if (in_array($itemColor, $dark_blues)) {
-                            $calDate['textColor'] = $yellow;
-                        }
-
-                        //$calDate['className'] = 'event_type_' . substr($itemField, 0);
-	        	$return[] = $calDate;
-        	}
-        	
+                $calDate['allDay'] = $this->isAllDay($date);
+                //$calDate['allDay'] = false;
+                $calDate['field_name'] = $itemField;
+                $calDate['backgroundColor'] = $itemColor;
+                $calDate['textColor'] = '#000000';
+                if (in_array($itemColor, $dark_blues)) {
+                    $calDate['textColor'] = $yellow;
+                }
+                $calDate['event_comment'] = $event_comment;
+                //$calDate['className'] = 'event_type_' . substr($itemField, 0);
+                $return[] = $calDate;
+            }
         }
 
         $res = usort($return, 'self::EventOrder');

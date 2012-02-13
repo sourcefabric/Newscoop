@@ -134,7 +134,7 @@ class ArticleDatetimeRepository extends EntityRepository
                 foreach (array_merge(array($dateValue), $dateValue->getSpawns()) as $dateValue)
                 {
                     $articleDatetime = new ArticleDatetime();
-                    $articleDatetime->setValues($dateValue, $article, $fieldName, $otherInfo);
+                    $articleDatetime->setValues($dateValue, $article, $fieldName, null, $otherInfo);
                     $em->persist($articleDatetime);
                 }
             }
@@ -219,14 +219,29 @@ class ArticleDatetimeRepository extends EntityRepository
      */
     public function findDates($search, $dontExecute=false)
     {
+/* Notices:
+ *  by now, 'NULL' means 'no end', i.e. till the end of day for end_time, forever for end_date
+ *  when no recurring, then it is continuously from start_date/start_time till end_date/end_time
+ *      start_date and date_end are usually the same then ... must be for a single day event.
+ *
+ *  this search is wrong on situations where we search for a short time interval and an recurring event starts before and ends after,
+ *      but does not recur at the specified (short) interval, like:
+ *          a) having an event yearly from 2000, each January 1st
+ *          b) searching for events 2012-04-01 till 2012-04-30
+ *          c) without specifying any recurrence
+ *      the search will take that event even though it does not occur at the specified interval
+ */
+
         $qb = $this->createQueryBuilder('dt');
 
-        // just one day
-        if (isset($search->startDate) && isset($search->endDate))
+        // is/starts at specific day
+        if (isset($search->startDate) && !isset($search->endDate))
         {
-            $qb->add('where',  $qb->expr()->andx('dt.startDate = :startDate', 'dt.endDate is null'));
+            //$qb->add('where',  $qb->expr()->andx('dt.startDate = :startDate', 'dt.endDate is null'));
+            $qb->andWhere('dt.startDate = :startDate');
             $qb->setParameter('startDate', new \DateTime($search->startDate));
         }
+
         // date interval
         if (isset($search->startDate) && isset($search->endDate))
         {
