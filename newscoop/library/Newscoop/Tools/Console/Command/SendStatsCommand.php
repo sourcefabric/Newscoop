@@ -50,7 +50,7 @@ EOT
             $parameters['install_method'] = $stats['installMethod'];
             $parameters['publications'] = $stats['publications'];
             $parameters['issues'] = $stats['issues'];
-            $parameters['average_sections'] = $stats['averageSections'];
+            $parameters['sections'] = $stats['sections'];
             $parameters['articles'] = $stats['articles'];
             $parameters['articles_published'] = $stats['articlesPublished'];
             $parameters['languages'] = $stats['languages'];
