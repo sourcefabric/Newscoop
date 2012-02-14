@@ -253,6 +253,111 @@ class ArticleDatetimeRepository extends EntityRepository
                 ));
             $qb->setParameter('startDate', new \DateTime($search->startDate));
             $qb->setParameter('endDate', new \DateTime($search->endDate));
+
+            if (!isset($search->daily) && !isset($search->weekly) && !isset($search->monthly) && !isset($search->yearly) && ($search->startDate <= $search->endDate)) {
+
+                $interval_one_day = new \DateInterval('P1D');
+                $start_date = new \DateTime($search->startDate);
+                $end_date = new \DateTime($search->endDate);
+                $end_date_plus = clone $end_date;
+                $end_date_plus->add($interval_one_day);
+
+                $weeks_to_check = true;
+                $months_to_check = true;
+                $years_to_check = true;
+
+                $weekly_days_check_str = '1';
+                $monthly_days_check_str = '1';
+                $yearly_days_check_str = '1';
+
+                // taking covered days of year
+
+                $start_year = $start_date->format('Y');
+                $start_month_day = $start_date->format('m-d');
+
+                $end_year = $end_date->format('Y');
+                $end_month_day = $end_date->format('m-d');
+
+                if (($start_year + 2) <= $end_year) {
+                    $weeks_to_check = false;
+                    $months_to_check = false;
+                    $years_to_check = false;
+                }
+                elseif (($start_year + 1) == $end_year) {
+                    if ($start_month_day <= $end_month_day) {
+                        $weeks_to_check = false;
+                        $months_to_check = false;
+                        $years_to_check = false;
+                    }
+                    else {
+                        $yearly_days_check_str = 'DATE_FORMAT(dt.startDate, "%m-%d") >= "' . $start_month_day . '" OR DATE_FORMAT(dt.startDate, "%m-%d") <= "' . $end_month_day . '"';
+                    }
+                }
+                else {
+                    $yearly_days_check_str = 'DATE_FORMAT(dt.startDate, "%m-%d") >= "' . $start_month_day . '" AND DATE_FORMAT(dt.startDate, "%m-%d") <= "' . $end_month_day . '"';
+                }
+
+                // taking covered days of month
+
+                if ($months_to_check) {
+                    $start_end_period = new \DatePeriod($start_date, $interval_one_day, $end_date);
+
+                    $allowed_month_days = array();
+
+                    foreach($start_end_period as $one_day_in) {
+                        $one_day_in_month = $one_day_in->format('j');
+                        $allowed_month_days[$one_day_in_month] = $one_day_in_month;
+                    }
+
+                    if (31 > count($allowed_month_days)) {
+                        $monthly_days_check_str = 'DAYOFMONTH(dt.startDate) IN (' . implode(',', $allowed_month_days) . ')';
+                    }
+                }
+
+                // taking covered days of week
+
+                if ($weeks_to_check) {
+
+                    $start_day_of_week = $start_date->format('w') + 1;
+                    $end_day_of_week = $end_date->format('w') + 1;
+
+                    foreach (array(1,2,3,4,5,6,7) as $one_week_day) {
+                        if (($one_week_day >= $start_day_of_week) && ($one_week_day <= $end_day_of_week)) {
+                            $allowed_week_days[] = $one_week_day;
+                            continue;
+                        }
+                        if ($start_day_of_week > $end_day_of_week) {
+                            if (($one_week_day >= $start_day_of_week) || ($one_week_day <= $end_day_of_week)) {
+                                $allowed_week_days[] = $one_week_day;
+                                continue;
+                            }
+                        }
+                    }
+
+                    if (7 > count($allowed_week_days)) {
+                        $weekly_days_check_str = 'DAYOFWEEK(dt.startDate) IN (' . implode(',', $allowed_week_days) . ')';
+                    }
+
+                }
+
+                // put the check parts in
+
+                $qb->add('where',
+                    $qb->expr()->orx
+                    (
+                        'dt.recurring IS NULL',
+                        'dt.recurring == :recurring_daily', // it is ok for daily repeating events; and if time specified, it is set below
+                        $qb->expr()->addx('dt.recurring == :recurring_weekly', $weekly_days_check_str),
+                        $qb->expr()->andx('dt.recurring == :recurring_monthly', $monthly_days_check_str),
+                        $qb->expr()->addx('dt.recurring == :recurring_yearly', $yearly_days_check_str)
+                    )
+                );
+                $qb->setParameter('recurring_daily', self::RECURRING_DAILY);
+                $qb->setParameter('recurring_weekly', self::RECURRING_WEEKLY);
+                $qb->setParameter('recurring_monthly', self::RECURRING_MONTHLY);
+                $qb->setParameter('recurring_yearly', self::RECURRING_YEARLY);
+            }
+
         }
         $hasStartTimeQuery = false;
         if (isset($search->startTime))
@@ -314,7 +419,7 @@ class ArticleDatetimeRepository extends EntityRepository
             if (is_string($search->monthly))
             {
                 $dayOfMonth = new \DateTime($search->monthly);
-                $dayOfMonth = $dayOfMonth->format('d');
+                $dayOfMonth = $dayOfMonth->format('j');
                 $qb->setParameter('dayOfMonth', $dayOfMonth);
             }
             else {
@@ -323,13 +428,14 @@ class ArticleDatetimeRepository extends EntityRepository
         }
         if (isset($search->yearly))
         {
-            $qb->andWhere('DAYOFYEAR(dt.startDate) <= :dayOfYear');
+            //$qb->andWhere('DAYOFYEAR(dt.startDate) <= :dayOfYear');
+            $qb->andWhere('DATE_FORMAT(dt.startDate, "%m-%d") = :dayOfYear');
             $qb->andWhere('dt.recurring = :recurringYearly');
             $qb->setParameter('recurringYearly', self::RECURRING_YEARLY);
             if (is_string($search->yearly))
             {
                 $dayOfYear = new \DateTime($search->yearly);
-                $dayOfYear = $dayOfYear->format('z');
+                $dayOfYear = $dayOfYear->format('m-d');
                 $qb->setParameter('dayOfYear', $dayOfYear);
             }
             else {

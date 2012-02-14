@@ -479,6 +479,10 @@ function loadContextBoxActileList() {
 }
 
 function loadMultiDateEvents() {
+    if ((window.has_multidates === undefined) || (!window.has_multidates)) {
+        return;
+    }
+
 <?php
     $f_language_id = Input::Get('f_language_id', 'int', 1);
     $f_language_selected = (int)camp_session_get('f_language_selected', 0);
@@ -490,20 +494,24 @@ function loadMultiDateEvents() {
 ?>
 
     var url = '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/multidate/getdates';
-    $.ajax({
-        type: 'GET',
-        url: url,
-        dataType: 'json',
-        data: {
+    callServer(
+        {
+            method: 'GET',
+            url: url
+        },
+        {
             articleId : "<?php echo Input::Get('f_article_number', 'int', 1)?>",
             languageId : "<?php echo $article_language_use; ?>"
         },
-        success: function(data) {
+        function(data) {
         	var eventList = '';
         	eventList += '<ul class="block-list">';
+
+            var dispalyed_all = true;
             
             for(var i=0; i<data.length; i++) {
                 if (i >= 20 ) {
+                    dispalyed_all = false;
                     break;
                 }
                 var item = data[i];
@@ -534,6 +542,11 @@ function loadMultiDateEvents() {
                     }
                 }
 
+                if (item.allDay) {
+                    end_values['hour'] = '24';
+                    end_values['minute'] = '00';
+                }
+
                 var startString = '<span style="float:left">' + (start.getFullYear() + '-' + start_values['month'] + '-' + start_values['day'] + ' ' + start_values['hour'] + ':' + start_values['minute'] ) + '</span>';
                 var endString = '<span style="float:left">' + (end.getFullYear() + '-' + end_values['month'] + '-' + end_values['day'] + ' ' + end_values['hour'] + ':' + end_values['minute'] ) + '</span>';
 
@@ -542,13 +555,25 @@ function loadMultiDateEvents() {
 <?php
                 //eventList += '<li class="multidate_item_field_' + item.field_name + '" style="background-color:'+item.backgroundColor+'; color:'+item.textColor+';">' + item.field_name + ': ' + eventString + '</li>';
 ?>
-                eventList += '<li style="background-color:'+item.backgroundColor+'; color:'+item.textColor+';"><span style="float:right">' + item.field_name + '</span>' + eventString + '</li>';
+                var event_comment = item.event_comment;
+                if (null === event_comment) {
+                    event_comment = '';
+                }
+                event_comment = event_comment.replace('"', "&quot;")
+                event_comment = event_comment.replace("'", "&apos;")
+                eventList += '<li style="background-color:'+item.backgroundColor+'; color:'+item.textColor+';" title="' + event_comment + '"><span style="float:right">' + item.field_name + '</span>' + eventString + '</li>';
             }
+
+            var other_notice = '';
+            if (!dispalyed_all) {
+                other_notice = '<li><span class="ui-icon ui-icon-grip-dotted-horizontal"></span></li>';
+            }
+
             $('#multiDateEventList').html('');
-            $('#multiDateEventList').append(eventList + '</ul>');              
-        }
-        
-    });    
+            $('#multiDateEventList').append(eventList + other_notice + '</ul>');              
+        },
+        true
+    );    
 }
 
 </script>

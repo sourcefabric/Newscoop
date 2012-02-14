@@ -318,8 +318,27 @@ class Admin_MultidateController extends Zend_Controller_Action
                     $calDate['event_comment'] = $event_comment;
                     $return[] = $calDate;
 
-                    $itemStart = strtotime($step, $itemStart);
-                    $itemEnd = strtotime($step, $itemEnd);
+                    if ('+1 month' == $step) {
+                        $curr_start_year = date('Y', $itemStart);
+                        $curr_start_month = date('n', $itemStart);
+                        $curr_start_day = date('j', $itemStart);
+                        while (true) {
+                            $curr_start_month += 1;
+                            if (13 == $curr_start_month) {
+                                $curr_start_month = 1;
+                                $curr_start_year += 1;
+                            }
+                            if (checkdate($curr_start_month, $curr_start_day, $curr_start_year)) {
+                                $itemStart = mktime(date('G', $itemStart), 0 + ltrim(date('i', $itemStart), '0'), 0, $curr_start_month, $curr_start_day, $curr_start_year);
+                                $itemEnd = mktime(date('G', $itemEnd), 0 + ltrim(date('i', $itemEnd), '0'), 0, $curr_start_month, $curr_start_day, $curr_start_year);
+                                break;
+                            }
+                        }
+                    }
+                    else {
+                        $itemStart = strtotime($step, $itemStart);
+                        $itemEnd = strtotime($step, $itemEnd);
+                    }
                 }
 
             } else {

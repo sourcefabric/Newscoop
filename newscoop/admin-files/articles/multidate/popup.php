@@ -585,7 +585,7 @@ $(function(){
 });
 
 window.load_events = function(start, end, callback, url) {
-
+// TODO: use start/end to limit the amount of loaded data
     callServer(
         {
             'url': url,
