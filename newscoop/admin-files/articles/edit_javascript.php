@@ -313,7 +313,10 @@ $('#attach-images').fancybox({
     hideOnContentClick: false,
     width: 1300,
     height: 800,
-    type: 'iframe'
+    type: 'iframe',
+    onClosed: function() {
+		window.location.reload();
+	}
 });
 
 $('#topic_box_frame a.iframe').each(function() {
