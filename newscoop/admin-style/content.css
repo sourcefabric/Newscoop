@@ -1181,3 +1181,23 @@ dl.slideshow-preview figure > div > * {
     border: 1px solid #ccc;
     padding: 2px 5px;
 }
+
+/* modal popup styles */
+
+#modal-top {
+    background: #fff;
+    margin: 0 auto;
+}
+#modal-top .toolbar {
+    min-height: 35px;
+    padding: 6px 20px 6px 0px;
+    background: #fff;
+    box-shadow: none;
+    border: none;
+}
+#modal-top h2 {
+    color: #444444;
+    width: 50%;
+    margin: 0 6px;
+}
+

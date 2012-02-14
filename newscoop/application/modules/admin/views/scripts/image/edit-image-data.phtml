@@ -2,36 +2,43 @@
 
 <?php $this->placeholder('bodyId')->set('next'); ?>
 
-<h1><?php putGS("Edit Image Data"); ?></h1>
+<div id="modal-top">
+    <div class="toolbar fixed-top">
+    <div class="save-button-bar">
+    <?php if (!empty($this->images)) { ?>
+        <form method="post" action="<?php echo($this->url(array(
+            'module' => 'admin',
+            'controller' => 'image',
+            'action' => 'edit-image-data'
+        ))); ?>">
+        <input type="submit" 
+            value="<?php echo putGS('Save all'); ?>" class="default-button">
+    <?php } ?>
+    </div>
+    <h2><?php putGS('Edit Image Data'); ?></h2>
+    </div>
+</div>
 
 <?php if (!empty($this->images)) { ?>
 
-<form method="post" action="<?php echo($this->url(array(
-    'module' => 'admin',
-    'controller' => 'image',
-    'action' => 'edit-image-data'
-))); ?>">
-
-<div style="margin: 4px;">
-    <input type="submit" value="<?php echo(getGS('Save all')); ?>" class="button" style="float: none;">
-</div>
+<div style="margin-top:40px;">&nbsp;</div>
 
 <ul class="thumbnails">
     <?php foreach ($this->images as $image) { ?>
-    <li id="image-<?php echo $image->getId(); ?>" style="width: 210px;">
+    <li id="image-<?php echo $image->getId(); ?>" style="width: 390px;">
         <figure>
             <div><?php echo $this->thumbnail($image, 150, 150, 'fit')->getImg($this); ?></div>
-            <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></label></figcaption>
+            <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), ' x ', $image->getHeight(); ?></label></figcaption>
         </figure>
         <div class="image-data">
-                <label for="" style="font-size: 10px;"><?php echo(getGS('Description: ')); ?><a style="float: right;" href="javascript:useForAll('description', <?php echo $image->getId(); ?>);"> <?php echo(getGS('Use for all')); ?></a></label><br>
-                <input name="data[<?php echo $image->getId(); ?>][description]" id="image_description_<?php echo $image->getId(); ?>" class="image-description" value="<?php echo $image->getDescription(); ?>" style="float: none;"><br>
+                <label for="" style="font-size: 11px;"><?php echo(getGS('Description: ')); ?><a style="float: right;" href="javascript:useForAll('description', <?php echo $image->getId(); ?>);"> <?php echo(getGS('Use for all')); ?></a></label><br>
+                <textarea name="data[<?php echo $image->getId(); ?>][description]" id="image_description_<?php echo $image->getId(); ?>" rows="4" class="image-description" style="float:none; width:380px;"><?php echo $image->getDescription(); ?></textarea><br/>
                 
-                <label for="" style="font-size: 10px;"><?php echo(getGS('Place: ')); ?><a style="float: right;" href="javascript:useForAll('place', <?php echo $image->getId(); ?>);"> <?php echo(getGS('Use for all')); ?></a></label><br>
-                <input name="data[<?php echo $image->getId(); ?>][place]" id="image_place_<?php echo $image->getId(); ?>" class="image-place" value="<?php echo $image->getPlace(); ?>" style="float: none;"><br>
+                <label for="" style="font-size: 11px;"><?php echo(getGS('Place: ')); ?><a style="float: right;" href="javascript:useForAll('place', <?php echo $image->getId(); ?>);"> <?php echo(getGS('Use for all')); ?></a></label><br/>
+                <input name="data[<?php echo $image->getId(); ?>][place]" id="image_place_<?php echo $image->getId(); ?>" class="image-place" value="<?php echo $image->getPlace(); ?>" style="float:none; width:380px;"><br>
                 
-                <label for="" style="font-size: 10px;"><?php echo(getGS('Photographer: ')); ?><a style="float: right;" href="javascript:useForAll('photographer', <?php echo $image->getId(); ?>);"> <?php echo(getGS('Use for all')); ?></a></label><br>
-                <input name="data[<?php echo $image->getId(); ?>][photographer]" id="image_photographer_<?php echo $image->getId(); ?>" class="image-photographer" value="<?php echo $image->getPhotographer(); ?>" style="float: none;"><br>
+                <label for="" style="font-size: 11px;"><?php echo(getGS('Photographer: ')); ?><a style="float: right;" href="javascript:useForAll('photographer', <?php echo $image->getId(); ?>);"> <?php echo(getGS('Use for all')); ?></a></label><br>
+                <input name="data[<?php echo $image->getId(); ?>][photographer]" id="image_photographer_<?php echo $image->getId(); ?>" class="image-photographer" value="<?php echo $image->getPhotographer(); ?>" style="float:none; width:380px"><br/>
         </div>
     </li>
     <?php } ?>
