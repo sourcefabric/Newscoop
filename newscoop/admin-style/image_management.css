@@ -5,6 +5,15 @@
 	margin: 0 5px 0 0;
 	}
 
+#next input[type=submit] {
+	padding: 3px 9px 2px 9px;
+	color: #444444; font-family: Arial,Helvetica,sans-serif; font-size: 12px; font-weight: normal; line-height: 17px;
+	margin: 0 6px 0 0;
+	outline: medium none;
+	background: -moz-linear-gradient(center top , #FAFAFA 0pt, #F6F6F6 100%) repeat scroll 0 0 transparent;
+	border: 1px solid #9D9D9D;
+}
+
 ul.renditions,
 ul.slideshow {
 	padding:5px 7px; margin:0;

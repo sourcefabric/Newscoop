@@ -77,7 +77,7 @@ if ($result != NULL) {
         }
         //$imageIdList = implode(',',$imageIdList);
         //camp_html_goto_page('/'.$ADMIN.'/image/edit-image-data/images/'.$imageIdList);
-        camp_html_goto_page('/'.$ADMIN.'/image/edit-image-data');
+        camp_html_goto_page('/'.$ADMIN.'/image/edit-image-data/article_number/'.$f_article_number.'/language_id/'.$f_language_id);
     }
     else {
         camp_html_goto_page("/$ADMIN/media-archive/multiedit.php");

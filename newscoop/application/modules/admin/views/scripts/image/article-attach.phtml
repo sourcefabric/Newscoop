@@ -33,22 +33,29 @@
 	</ul>
 	<div id="tabs-1">
         <form id="upload_form" method="POST" action="<?php echo $this->baseUrl('/admin/media-archive/do_upload.php'); ?>" enctype="multipart/form-data">
+        <div style="margin: 8px;">
+        <input type="submit" value="<?php putGS('Next: Upload and Edit Metadata'); ?>" name="save">
+        </div>
         <input type="hidden" name="f_article_edit" value="1">
         <input type="hidden" name="f_language_id" value="<?php echo($this->languageId); ?>">
         <input type="hidden" name="f_article_number" value="<?php echo($this->article); ?>">
         <div id="uploader"></div>
         <div id="uploader_error"></div>
 
-        <div class="plupload-addon-bottom clearfix">
-          <div class="buttons">
-            <input type="submit" value="<?php putGS('Save All'); ?>" name="save" class="save-button">
-          </div>
-        </div>
-
         </form>
         
 	</div>
 	<div id="tabs-2">
+        
+        <div style="margin: 8px;">
+        <input type="submit" value="<?php putGS('Next: Place Images'); ?>" name="save" onClick="document.location = '<?php echo($this->url(array(
+            'module' => 'admin',
+            'controller' => 'image',
+            'action' => 'article',
+            'article_number' => $this->article,
+            'language_id' => $this->languageId,
+        ))); ?>';">
+        </div>
         
         <?php if (!empty($this->images)) { ?>
         
