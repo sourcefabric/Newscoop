@@ -12,9 +12,9 @@
 
 <ul id="attached-thumbnails" class="thumbnails">
     <?php foreach ($this->articleImages as $articleImage) { ?>
-    <li class="image-detach" id="attached-image-<?php echo $articleImage->getId(); ?>" style="cursor: pointer;">
+    <li class="image-detach small" id="attached-image-<?php echo $articleImage->getId(); ?>" style="cursor: pointer;">
         <figure>
-            <div><?php echo $this->thumbnail($articleImage, 150, 150, 'fit')->getImg($this); ?></div>
+            <div class="small"><?php echo $this->thumbnail($articleImage, 75, 75, 'fit')->getImg($this); ?></div>
             <figcaption><label for="default-<?php echo $articleImage->getId(); ?>"><?php echo $articleImage->getWidth(), 'x', $articleImage->getHeight(); ?></label></figcaption>
         </figure>
         <span class="info">&nbsp;</span>
@@ -28,10 +28,27 @@
 
 <div id="tabs">
 	<ul>
-		<li><a href="#tabs-1"><?php putGS("Attach Existing Image"); ?></a></li>
-        <li><a href="#tabs-2"><?php putGS("Attach New Image"); ?></a></li>
+		<li><a href="#tabs-1"><?php putGS("Add New Image"); ?></a></li>
+        <li><a href="#tabs-2"><?php putGS("Media Archive"); ?></a></li>
 	</ul>
 	<div id="tabs-1">
+        <form id="upload_form" method="POST" action="<?php echo $this->baseUrl('/admin/media-archive/do_upload.php'); ?>" enctype="multipart/form-data">
+        <input type="hidden" name="f_article_edit" value="1">
+        <input type="hidden" name="f_language_id" value="<?php echo($this->languageId); ?>">
+        <input type="hidden" name="f_article_number" value="<?php echo($this->article); ?>">
+        <div id="uploader"></div>
+        <div id="uploader_error"></div>
+
+        <div class="plupload-addon-bottom clearfix">
+          <div class="buttons">
+            <input type="submit" value="<?php putGS('Save All'); ?>" name="save" class="save-button">
+          </div>
+        </div>
+
+        </form>
+        
+	</div>
+	<div id="tabs-2">
         
         <?php if (!empty($this->images)) { ?>
         
@@ -54,23 +71,6 @@
         <?php } else { ?>
         <p style="margin-left: 8px"><?php putGS('No images found.'); ?></p>
         <?php } ?>
-        
-	</div>
-	<div id="tabs-2">
-        <form id="upload_form" method="POST" action="<?php echo $this->baseUrl('/admin/media-archive/do_upload.php'); ?>" enctype="multipart/form-data">
-        <input type="hidden" name="f_article_edit" value="1">
-        <input type="hidden" name="f_language_id" value="<?php echo($this->languageId); ?>">
-        <input type="hidden" name="f_article_number" value="<?php echo($this->article); ?>">
-        <div id="uploader"></div>
-        <div id="uploader_error"></div>
-
-        <div class="plupload-addon-bottom clearfix">
-          <div class="buttons">
-            <input type="submit" value="<?php putGS('Save All'); ?>" name="save" class="save-button">
-          </div>
-        </div>
-
-        </form>
         
 	</div>
 </div>
@@ -146,7 +146,7 @@ $('.image-attach').click(function() {
 });
 
 $('.image-attach').mouseover(function() {
-    $(this).find('.info').html('<?php putGS("Click to attach"); ?>');
+    $(this).find('.info').html('<?php putGS("Attach"); ?>');
 });
 
 $('.image-attach').mouseout(function() {
@@ -176,7 +176,7 @@ $('.image-detach').click(function() {
 });
 
 $('.image-detach').mouseover(function() {
-    $(this).find('.info').html('<?php putGS("Click to detach"); ?>');
+    $(this).find('.info').html('<?php putGS("Detach"); ?>');
 });
 
 $('.image-detach').mouseout(function() {

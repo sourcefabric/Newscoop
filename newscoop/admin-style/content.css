@@ -749,6 +749,10 @@ li.state-active dl.rendition dd.name {
     border: 1px solid #9d9d9d;
 }
 
+.thumbnails li.small {
+    width: 77px;
+}
+
 .thumbnails img {
     border: 1px solid #ccc;
 }
@@ -760,6 +764,10 @@ li.state-active dl.rendition dd.name {
 
 .thumbnails figure div {
     min-height: 153px;
+}
+
+.thumbnails figure div.small {
+    min-height: 78px;
 }
 
 .thumbnails figure img {
