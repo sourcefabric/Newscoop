@@ -78,6 +78,9 @@
 <script>
 $(function() {
     $("#tabs").tabs();
+    if (document.location.hash == '#media-archive') {
+		$("#tabs").tabs('option', 'selected', 'tabs-2');
+	}
     
     var form = $('#upload_form');
     var uploader = $('#uploader');

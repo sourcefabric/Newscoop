@@ -52,7 +52,7 @@ class Admin_ImageController extends Zend_Controller_Action
     {
         $this->_helper->layout->setLayout('iframe');
         
-        Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginator.phtml');
+        Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginator-hash.phtml');
         
         $page = $this->_getParam('page', 1);
         $count = $this->_helper->service('image')->getCountBy(array());

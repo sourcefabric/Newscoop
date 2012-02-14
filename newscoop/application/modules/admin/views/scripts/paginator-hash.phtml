@@ -1,0 +1,45 @@
+<!--
+See http://developer.yahoo.com/ypatterns/pattern.php?pattern=itempagination
+-->
+ 
+<?php if ($this->pageCount): ?>
+<div class="paginationControl">
+ 
+<!-- First page link -->
+<?php if (isset($this->previous)): ?>
+  <a href="<?php echo $this->url(array('page' => $this->first)); ?>#media-archive">
+    <?php putGS('First'); ?>
+  </a> |
+<?php else: ?>
+  <span class="disabled"><?php putGS('First'); ?></span> |
+<?php endif; ?>
+ 
+<!-- Previous page link -->
+<?php if (isset($this->previous)): ?>
+  <a href="<?php echo $this->url(array('page' => $this->previous)); ?>#media-archive">
+    &lt; <?php putGS('Previous'); ?>
+  </a> |
+<?php else: ?>
+  <span class="disabled">&lt; <?php putGS('Previous'); ?></span> |
+<?php endif; ?>
+ 
+<!-- Next page link -->
+<?php if (isset($this->next)): ?>
+  <a href="<?php echo $this->url(array('page' => $this->next)); ?>#media-archive">
+    <?php putGS('Next'); ?> &gt;
+  </a> |
+<?php else: ?>
+  <span class="disabled"><?php putGS('Next'); ?> &gt;</span> |
+<?php endif; ?>
+ 
+<!-- Last page link -->
+<?php if (isset($this->next)): ?>
+  <a href="<?php echo $this->url(array('page' => $this->last)); ?>#media-archive">
+    <?php putGS('Last'); ?>
+  </a>
+<?php else: ?>
+  <span class="disabled"><?php putGS('Last'); ?></span>
+<?php endif; ?>
+ 
+</div>
+<?php endif; ?>
