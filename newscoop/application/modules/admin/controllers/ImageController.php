@@ -68,20 +68,15 @@ class Admin_ImageController extends Zend_Controller_Action
         $this->view->languageId = $this->_getParam('language_id');
         
         $this->view->articleImages = $this->_helper->service('image')->findByArticle($this->_getParam('article_number'));
-        $this->view->images = $this->_helper->service('image')->findBy(array(), array('id' => 'desc'), self::LIMIT, ($paginator->getCurrentPageNumber() - 1) * self::LIMIT);
         
-        /*
-        $articleImageList = array();
-        foreach ($this->view->articleImages as $articleImage) {
-            $articleImageList[] = $articleImage->getImage()->getId();
+        $this->view->q = '';
+        if ($this->_getParam('q', false)) {
+            $this->view->images = $this->_helper->service('image.search')->find($this->_getParam('q'));
+            $this->view->q = $this->_getParam('q');
         }
-        
-        foreach ($this->view->images as $key => $image) {
-            if (in_array($image->getId(), $articleImageList)) {
-                unset($this->view->images[$key]);
-            }
+        else {
+            $this->view->images = $this->_helper->service('image')->findBy(array(), array('id' => 'desc'), self::LIMIT, ($paginator->getCurrentPageNumber() - 1) * self::LIMIT);
         }
-        */
     }
     
     public function setAttachAction()

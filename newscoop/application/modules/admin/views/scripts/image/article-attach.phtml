@@ -67,8 +67,18 @@
         <div style="margin: 8px;">
         </div>
         
+        <form method="post" action="<?php echo($this->url(array(
+            'module' => 'admin',
+            'controller' => 'image',
+            'action' => 'article-attach',
+            'article_number' => $this->article,
+            'language_id' => $this->languageId,
+        ))); ?>">
+        <input type="text" placeholder="<?php echo(getGS('Search')); ?>" name="q" value="<?php if ($this->q) echo($this->q); ?>">
+        <input type="submit" value="<?php echo(getGS('Search')); ?>">
+        </form>
+        <br>
         <?php if (!empty($this->images)) { ?>
-        
         <div id="image-archive">
         <?php echo $this->paginator; ?>
         </div>
@@ -94,8 +104,10 @@
 
 <script>
 $(function() {
+    var q = '<?php echo($this->q); ?>';
+    
     $("#tabs").tabs();
-    if (document.location.hash == '#media-archive') {
+    if (document.location.hash == '#media-archive' || q != '') {
 		$("#tabs").tabs('option', 'selected', 'tabs-2');
         $('#tab_1_submit').hide();
         $('#tab_2_submit').show();
