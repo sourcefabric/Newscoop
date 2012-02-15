@@ -1,6 +1,18 @@
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); ?>
 <?php $this->placeholder('bodyId')->set('next'); ?>
-<h1><?php putGS('Place images'); ?></h1>
+
+<div id="modal-top">
+    <div class="toolbar fixed-top">
+    <div class="save-button-bar"></div>
+    <h1>
+        <?php putGS('Place Images'); ?>
+        <span style="float: right;">
+        <input type="button" value="<?php echo putGS('Finish'); ?>" class="save-button" onClick="parent.$.fancybox.close();">
+        </span>
+    </h1>
+    </div>
+</div>
+<div style="margin-top:40px;">&nbsp;</div>
 
 <ul class="renditions">
     <?php foreach ($this->renditions as $rendition) { ?>

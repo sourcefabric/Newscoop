@@ -6,7 +6,25 @@
 
 <?php $this->placeholder('bodyId')->set('next'); ?>
 
-<h1><?php putGS("Attached images"); ?></h1>
+<div id="modal-top">
+    <div class="toolbar fixed-top">
+    <div class="save-button-bar"></div>
+    <h1>
+        <?php putGS("Attached images"); ?>
+        <span style="float: right;">
+        <input id="tab_1_submit" type="button" value="<?php putGS('Next: Upload and Edit Metadata'); ?>" class="save-button" style="display: none;" onClick="$('#upload_form').submit();">
+        <input id="tab_2_submit" type="button" value="<?php putGS('Next: Place Images'); ?>" class="save-button" style="display: none;" onClick="document.location = '<?php echo($this->url(array(
+            'module' => 'admin',
+            'controller' => 'image',
+            'action' => 'article',
+            'article_number' => $this->article,
+            'language_id' => $this->languageId,
+        ))); ?>';">
+        </span>
+    </h1>
+    </div>
+</div>
+<div style="margin-top:40px;">&nbsp;</div>
 
 <?php if (!empty($this->articleImages)) { ?>
 
@@ -34,13 +52,12 @@
 	<div id="tabs-1">
         <form id="upload_form" method="POST" action="<?php echo $this->baseUrl('/admin/media-archive/do_upload.php'); ?>" enctype="multipart/form-data">
         <div style="margin: 8px;">
-        <input type="submit" value="<?php putGS('Next: Upload and Edit Metadata'); ?>" name="save">
         </div>
         <input type="hidden" name="f_article_edit" value="1">
         <input type="hidden" name="f_language_id" value="<?php echo($this->languageId); ?>">
         <input type="hidden" name="f_article_number" value="<?php echo($this->article); ?>">
-        <div id="uploader"></div>
-        <div id="uploader_error"></div>
+        <div id="uploader" style="border: 0px;"></div>
+        <div id="uploader_error" style="border: 0px;"></div>
 
         </form>
         
@@ -48,13 +65,6 @@
 	<div id="tabs-2">
         
         <div style="margin: 8px;">
-        <input type="submit" value="<?php putGS('Next: Place Images'); ?>" name="save" onClick="document.location = '<?php echo($this->url(array(
-            'module' => 'admin',
-            'controller' => 'image',
-            'action' => 'article',
-            'article_number' => $this->article,
-            'language_id' => $this->languageId,
-        ))); ?>';">
         </div>
         
         <?php if (!empty($this->images)) { ?>
@@ -87,7 +97,26 @@ $(function() {
     $("#tabs").tabs();
     if (document.location.hash == '#media-archive') {
 		$("#tabs").tabs('option', 'selected', 'tabs-2');
+        $('#tab_1_submit').hide();
+        $('#tab_2_submit').show();
 	}
+    else {
+        $('#tab_1_submit').show();
+        $('#tab_2_submit').hide();
+    }
+    
+    $("#tabs").tabs({
+        select: function(event, ui) {
+            if (ui.index == 0) {
+                $('#tab_1_submit').show();
+                $('#tab_2_submit').hide();
+            }
+            if (ui.index == 1) {
+                $('#tab_1_submit').hide();
+                $('#tab_2_submit').show();
+            }
+        }
+    });
     
     var form = $('#upload_form');
     var uploader = $('#uploader');

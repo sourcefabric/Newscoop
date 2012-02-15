@@ -147,26 +147,19 @@ class Admin_ImageController extends Zend_Controller_Action
                     $image->setDate(date('Y-m-d'));
                 }
             }
-            
-            $this->_helper->entity->flushManager();
+
+            $next = $this->_getParam('edit_image_data_next');
+            if ($next == 1) {
+                $this->_helper->redirector('article', 'image', 'admin', array(
+                    'article_number' => $this->_getParam('article_number')
+                ));
+            }
         }
         
         $this->view->article = $this->_getParam('article_number');
         $this->view->languageId = $this->_getParam('language_id');
         
         $this->_helper->layout->setLayout('iframe');
-        
-        /*
-        // image service doesnt work for this...
-        $imageSearch = new ImageSearch('0000', 'id', 'ASC', 0, 100);
-        $imageSearch->run();
-        $imageData = $imageSearch->getImages();
-        
-        $images = array();
-        foreach ($imageData as $item) {
-            $images[] = $this->_helper->service('image')->find($item['id']);
-        }
-        */
         
         $images = array();
         $articleImages = $this->_helper->service('image')->findByArticle($this->_getParam('article_number'));

@@ -4,39 +4,29 @@
 
 <div id="modal-top">
     <div class="toolbar fixed-top">
-    <div class="save-button-bar">
-    <?php if (!empty($this->images)) { ?>
-        <form method="post" action="<?php echo($this->url(array(
-            'module' => 'admin',
-            'controller' => 'image',
-            'action' => 'edit-image-data'
-        ))); ?>">
-        <input type="submit" 
-            value="<?php echo putGS('Save all'); ?>" class="default-button">
-    <?php } ?>
-    </div>
-    <h2><?php putGS('Edit Image Data'); ?></h2>
+    <div class="save-button-bar"></div>
+    <h1>
+        <?php putGS('Edit Image Data'); ?>
+        <span style="float: right;">
+        <input type="button" value="<?php echo putGS('Save'); ?>" class="save-button" onClick="$('#edit_image_data_form').submit();">
+        <input type="button" value="<?php echo putGS('Next: Place Images'); ?>" class="save-button" onClick="$('#edit_image_data_next').val(1);$('#edit_image_data_form').submit();">
+        </span>
+    </h1>
     </div>
 </div>
+<div style="margin-top:40px;">&nbsp;</div>
 
 <?php if (!empty($this->images)) { ?>
 
-<form method="post" action="<?php echo($this->url(array(
+<form id="edit_image_data_form" method="post" action="<?php echo($this->url(array(
     'module' => 'admin',
     'controller' => 'image',
     'action' => 'edit-image-data'
 ))); ?>">
 
-<div style="margin: 8px;">
-    <input type="submit" value="<?php echo(getGS('Save all')); ?>" class="button" style="float: none;">
-    <input type="button" value="<?php echo(getGS('Next: Place Images')); ?>" class="button" style="float: none;" onClick="document.location = '<?php echo($this->url(array(
-            'module' => 'admin',
-            'controller' => 'image',
-            'action' => 'article',
-            'article_number' => $this->article,
-            'language_id' => $this->languageId,
-        ))); ?>';">
-</div>
+<input type="hidden" name="article_number" value="<?php echo($this->article); ?>">
+<input type="hidden" name="language_id" value="<?php echo($this->languageId); ?>">
+<input id="edit_image_data_next" type="hidden" name="next" value="0">
 
 <ul class="thumbnails">
     <?php foreach ($this->images as $image) { ?>
