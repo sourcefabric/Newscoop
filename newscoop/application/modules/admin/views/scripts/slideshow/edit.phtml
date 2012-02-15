@@ -1,10 +1,23 @@
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); ?>
 <?php $this->placeholder('bodyId')->set('next'); ?>
-<h1><?php putGS('Slideshow'); ?></h1>
 
-<form method="<?php echo $this->form->getMethod(); ?>"><div class="inline">
+<div id="modal-top">
+    <div class="toolbar fixed-top">
+    <div class="save-button-bar"></div>
+    <h1>
+        <?php putGS('Slideshow'); ?>
+        <form id="edit_slideshow_form" method="<?php echo $this->form->getMethod(); ?>">
+        <span style="float: right;">
+        <input type="submit" value="<?php echo putGS('Save and Close'); ?>" class="save-button" onClick="parent.$.fancybox.close();">
+        </span>
+    </h1>
+    </div>
+</div>
+<div style="margin-top:40px;">&nbsp;</div>
+
+<div class="inline">
     <input type="text" class="<?php echo $this->form->headline->hasErrors() ? ' error' : ''; ?>" name="headline" value="<?php echo $this->form->headline->getValue(); ?>" title="<?php echo $this->form->headline->hasErrors() ? implode(", ", $this->form->headline->getMessages()) : getGS('Slideshow headline'); ?>" />
-    <button class="button"><?php putGS('Save'); ?></button>
+    <button class="button"><?php putGS('Save headline'); ?></button>
 </div></form>
 
 <ul id="slideshow-items" class="slideshow">
