@@ -41,7 +41,7 @@ class StatService
         $stats['installMethod'] = $this->getInstallMethod();
         $stats['publications'] = $this->getPublications();
         $stats['issues'] = $this->getIssues();
-        $stats['averageSections'] = $this->getAverageSections();
+        $stats['sections'] = $this->getSections();
         $stats['articles'] = $this->getArticles();
         $stats['articlesPublished'] = $this->getArticles(true);
         $stats['languages'] = $this->getLanguages();
@@ -100,15 +100,9 @@ class StatService
         return($issues);
     }
     
-    public function getAverageSections()
+    public function getSections()
     {
-        $issues = $this->getIssues();
-        if ($issues == 0) {
-            return(0);
-        }
-        else {
-            return(round(\Section::GetTotalSections() / $this->getIssues(), 2));
-        }
+        return(\Section::GetTotalSections());
     }
     
     public function getArticles($published = null)
