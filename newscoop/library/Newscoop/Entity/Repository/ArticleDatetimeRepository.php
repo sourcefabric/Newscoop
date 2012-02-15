@@ -224,12 +224,13 @@ class ArticleDatetimeRepository extends EntityRepository
  *  when no recurring, then it is continuously from start_date/start_time till end_date/end_time
  *      start_date and date_end are usually the same then ... must be for a single day event.
  *
- *  this search is wrong on situations where we search for a short time interval and an recurring event starts before and ends after,
+ *  this search would be wrong on situations where we search for a short time interval and an recurring event starts before and ends after,
  *      but does not recur at the specified (short) interval, like:
  *          a) having an event yearly from 2000, each January 1st
  *          b) searching for events 2012-04-01 till 2012-04-30
  *          c) without specifying any recurrence
- *      the search will take that event even though it does not occur at the specified interval
+ *      the search would take that event even though it does not occur at the specified interval
+ *      thus the addition below, at part where just start-end is set
  */
 
         $qb = $this->createQueryBuilder('dt');
@@ -237,7 +238,6 @@ class ArticleDatetimeRepository extends EntityRepository
         // is/starts at specific day
         if (isset($search->startDate) && !isset($search->endDate))
         {
-            //$qb->add('where',  $qb->expr()->andx('dt.startDate = :startDate', 'dt.endDate is null'));
             $qb->andWhere('dt.startDate = :startDate');
             $qb->setParameter('startDate', new \DateTime($search->startDate));
         }
@@ -428,7 +428,6 @@ class ArticleDatetimeRepository extends EntityRepository
         }
         if (isset($search->yearly))
         {
-            //$qb->andWhere('DAYOFYEAR(dt.startDate) <= :dayOfYear');
             $qb->andWhere('DATE_FORMAT(dt.startDate, "%m-%d") = :dayOfYear');
             $qb->andWhere('dt.recurring = :recurringYearly');
             $qb->setParameter('recurringYearly', self::RECURRING_YEARLY);
@@ -494,4 +493,33 @@ class ArticleDatetimeRepository extends EntityRepository
         $qb = $this->getEntityManager()->createQuery($lastDQL);
         return $qb->getSQL();
     }
+
+    public function renameField($p_articleType, $p_fieldNames) {
+        $qb = $this->createQueryBuilder('dt')
+            ->update()
+            ->set('dt.fieldName', ':fieldNameNew')
+            ->setParameter('fieldNameNew', $p_fieldNames['new'])
+            ->andWhere('dt.articleType = :articleType')
+            ->setParameter('articleType', $p_articleType)
+            ->andWhere('dt.fieldName = :fieldNameOld')
+            ->setParameter('fieldNameOld', $p_fieldNames['old']);
+
+        $q = $qb->getQuery();
+        $q->execute();
+
+    }
+
+    public function deleteField($p_articleType, $p_fieldNames) {
+        $qb = $this->createQueryBuilder('dt')
+            ->delete()
+            ->andWhere('dt.articleType = :articleType')
+            ->setParameter('articleType', $p_articleType)
+            ->andWhere('dt.fieldName = :fieldNameOld')
+            ->setParameter('fieldNameOld', $p_fieldNames['old']);
+
+        $q = $qb->getQuery();
+        $q->execute();
+    }
+
+
 }

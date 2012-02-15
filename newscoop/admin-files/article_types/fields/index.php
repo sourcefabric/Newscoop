@@ -50,9 +50,6 @@ field_ids.push("translate_field_"+<?php p($i); ?>);
     display: none;
 }
 .color_sel_visible {
-/*
-    margin-bottom: 20px;
-*/
     margin-top: -8px;
     border-color: #c0c0c0;
     border-width: 8px;
@@ -85,25 +82,12 @@ field_ids.push("translate_field_"+<?php p($i); ?>);
 <script type="text/javascript">
 
 window.save_field_color = function(article_type, field_name, color_value) {
-    //alert(type_name +"\n"+ field_name +"\n"+ color_value);
+
     var url = '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/multidate/setfieldcolor?f_article_type=' + article_type + '&f_field_name=' + field_name + '&f_color_value=' + color_value;
-/*
-    $.ajax({
-        'url': url,
-        'type': 'GET',
-        'dataType': 'text',
-        'success': function(data) {
-            alert("ok: " + data);
-        },
-        'error': function(data) {
-            alert("error");
-        }
-    });
-*/
+
     callServer(['ArticleTypeField', 'SetFieldColor'], [
         article_type, field_name, color_value
     ], function(msg) {
-        //alert(msg);
         flashMessage(msg);
     });
 
@@ -113,20 +97,6 @@ window.save_field_color = function(article_type, field_name, color_value) {
 
 <?php
 
-//$default_color = '#f0a040';
-
-//$basic_color_parts = array('40', '80', 'a0', 'ff');
-$basic_color_parts = array('80', 'a0', 'ff');
-/*
-$color_list = array();
-foreach ($basic_color_parts as $part_r) {
-  foreach ($basic_color_parts as $part_g) {
-    foreach ($basic_color_parts as $part_b) {
-      $color_list[] = '#' . $part_r . $part_g . $part_b;
-    }
-  }
-}
-*/
 $color_list = array(
 '#ff4040',
 '#ff4080',
@@ -308,16 +278,10 @@ foreach ($fields as $field) {
     }
     else {
         $cur_color = $field->getColor();
-        //if (empty($cur_color)) {
-        //    $cur_color = $default_color; //'#f0a040';
-        //}
-
         $color_div = '';
 
         $color_div .= '<div id="color_sel_' . $row_rank . '" class="color_sel_hidden color_sel_visible">';
-        //foreach (array('#ffa040', '#ff40a0', '#a0ff40', '#40ffa0', '#a040ff', '#40a0ff') as $one_color) {}
         foreach ($color_list as $one_color) {
-            //$color_div .= '<div style="float:right;background:' . $one_color . ';width:14px;height:14px;cursor:pointer" onClick="$(\'#color_val_' . $row_rank . '\').css(\'backgroundColor\', \'' . $one_color . '\'); $(\'#color_sel_' . $row_rank . '\').addClass(\'color_sel_hidden\'); window.save_field_color(\'' . urlencode($articleTypeName) . '\', \'' . urlencode($field->getPrintName()) . '\', \'' . urlencode($one_color) . '\'); return false;";></div>';
             $color_div .= '<div class="color_one_list" style="background:' . $one_color . ';" onClick="$(\'#color_val_' . $row_rank . '\').css(\'backgroundColor\', \'' . $one_color . '\'); $(\'#color_sel_' . $row_rank . '\').addClass(\'color_sel_hidden\'); window.save_field_color(\'' . $articleTypeName . '\', \'' . $field->getPrintName() . '\', \'' . $one_color . '\'); return false;";></div>';
         }
         $color_div .= '</div>';

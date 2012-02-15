@@ -34,13 +34,6 @@ $f_edit_mode = Input::Get('f_edit_mode', 'string', 'edit', true);
 // Selected language of the article
 $f_language_selected = (int)camp_session_get('f_language_selected', 0);
 
-/*
-$article_language_use = $f_language_selected;
-if (empty($article_language_use)) {
-    $article_language_use = $f_language_id;
-}
-*/
-
 if (!Input::IsValid()) {
     camp_html_display_error(getGS('Invalid input: $1', Input::GetErrorString()), $_SERVER['REQUEST_URI']);
     exit;

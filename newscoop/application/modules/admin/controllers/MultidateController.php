@@ -2,51 +2,12 @@
 
 use Newscoop\ArticleDatetime;
 use Doctrine\Common\Util\Debug;
-//use Newscoop\Service\IThemeManagementService;
-//use Newscoop\Service\IOutputService;
-//use Newscoop\Service\ILanguageService;
-//use Newscoop\Service\ISyncResourceService;
-//use Newscoop\Service\IPublicationService;
-//use Newscoop\Service\IThemeService;
-//use Newscoop\Service\IOutputSettingIssueService;
-//use Newscoop\Service\IOutputSettingSectionService;
-//use Newscoop\Service\IIssueService;
-//use Newscoop\Service\ISectionService;
-//use Newscoop\Service\ITemplateSearchService;
-//use Newscoop\Entity\Publication;
-//use Newscoop\Entity\Theme;
-//use Newscoop\Entity\Resource;
 
 /**
  * @Acl(resource="article", action="edit")
  */
 class Admin_MultidateController extends Zend_Controller_Action
 {
-
-    /** @var Newscoop\Services\Resource\ResourceId */
-//    private $resourceId = NULL;
-    /** @var Newscoop\Service\IThemeService */
-//    private $themeService = NULL;
-    /** @var Newscoop\Service\IThemeManagementService */
-//    private $themeManagementService = NULL;
-    /** @var Newscoop\Service\IPublicationService */
-//    private $publicationService = NULL;
-    /** @var Newscoop\Service\ILanguageService */
-//    private $languageService = NULL;
-    /** @var Newscoop\Service\IIssueService */
-//    private $issueService = NULL;
-    /** @var Newscoop\Service\ISectionService */
-//    private $sectionService = NULL;
-    /** @var Newscoop\Service\IOutputService */
-//    private $outputService = NULL;
-    /** @var Newscoop\Service\IOutputSettingSectionService */
-//    private $outputSettingSectionService = NULL;
-    /** @var Newscoop\Service\IOutputSettingIssueService */
-//    private $outputSettingIssueService = NULL;
-    /** @var Newscoop\Service\ITemplateSearchService */
-//    private $templateSearchService = NULL;
-    /** @var Newscoop\Service\ISyncResourceService */
-//    private $syncResourceService = NULL;
     
     /** @var variable set to a timestamp with 0 h and 0 m */
     public $tz;
@@ -74,10 +35,7 @@ class Admin_MultidateController extends Zend_Controller_Action
 
     public function isAllDay($date)
     {
-//return false;
-
-    	//if ( $this->getTime( is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp() ) == "00:00" && $this->getTime($date->endTime->getTimestamp()) == "23:59" ) {
-        if ( $this->getTime( is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp() ) == '00:00' && $date->endTime === null ) {
+        if ( ($this->getTime( is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp() ) == '00:00') && ($date->endTime === null) ) {
     		return true;
     	} else {
     		return false;
@@ -106,8 +64,6 @@ class Admin_MultidateController extends Zend_Controller_Action
             switch($type) {
                 case 'start-only':
                     $timeSet = array(
-                        //"$startDate" => array( "$startTime" => "23:59" )
-                        //$startDate => array( $startTime => null )
                         'start_date' => $startDate,
                         'end_date' => $startDate,
                         'start_time' => $startTime,
@@ -115,7 +71,6 @@ class Admin_MultidateController extends Zend_Controller_Action
                 break;
                 case 'start-and-end':
                     $timeSet = array(
-                        //"$startDate" => array("$startTime" => "$endTime")
                         'start_date' => $startDate,
                         'end_date' => $startDate,
                         'start_time' => $startTime,
@@ -124,8 +79,6 @@ class Admin_MultidateController extends Zend_Controller_Action
                     break;
             case 'all-day':
                     $timeSet = array(
-                        //"$startDate" => array( "00:00" => "23:59" )
-                        //$startDate => array( '00:00' => null )
                         'start_date' => $startDate,
                         'end_date' => $startDate,
                     );
@@ -135,13 +88,8 @@ class Admin_MultidateController extends Zend_Controller_Action
             $timeSet = new ArticleDatetime($timeSet);
 
     		if ( $multidateId > 0) {
-//echo json_encode(array('code' => 200, 'content' => 'www1112222wwwwwwwwwwwwwwwwww'));
-//die();
                 $repo->update( $multidateId, $timeSet, null, $multidateField, null, array('eventComment' => $eventComment) );
     		} else {
-    			//add
-//echo json_encode(array('code' => 200, 'timeSet' => $timeSet, 'articleId' => $articleId, 'multidateField' => $multidateField));
-//die();
                 $repo->add($timeSet, $articleId, $multidateField, null, false, array('eventComment' => $eventComment) );
     		}
     		
@@ -150,23 +98,19 @@ class Admin_MultidateController extends Zend_Controller_Action
     		
     		$startDate = $this->_request->getParam('start-date-daterange');
     		if ($this->_request->getParam('cycle-ends') == 'never') {
-    			//$endDate = '2130-12-31';
     			$endDate = null;
     		} else {
     			$endDate = $this->_request->getParam('end-date-daterange');
     		}
     		if ($this->_request->getParam('daterange-all-day') == 1) {
     			$startTime = '00:00';
-    			//$endTime = "23:59";
     			$endTime = null;
     		} else {
     			$startTime = $this->_request->getParam('start-time-daterange');
             	$endTime = $this->_request->getParam('end-time-daterange');	
     		}
     		$recurring = $this->_request->getParam('repeats-cycle');
-            //$timeSet = array("$startDate $startTime" => "$endDate $endTime - $recurring");
             $timeSet = array(
-                //"$startDate" => array("$startTime" => "$endTime")
                 'start_date' => $startDate,
                 'end_date' => $endDate,
                 'start_time' => $startTime,
@@ -190,31 +134,30 @@ class Admin_MultidateController extends Zend_Controller_Action
     public function geteventAction() 
     {
     	$articleDateTimeId = $this->_request->getParam('id');
-//var_dump($articleDateTimeId);
         $repo = $this->_helper->entity->getRepository('Newscoop\Entity\ArticleDatetime');
         $jsEvent = array();
         $event = $repo->findDates((object) array('id' => "$articleDateTimeId"));
         if (is_array($event) && isset($event[0]) && (!empty($event[0]))) {
-//var_dump($event);
-//die();
         	$date = $event[0];
-//var_dump($date);
-//die();
         	$jsEvent['id'] = $date->id;
         	$jsEvent['startDate'] = $this->getDate($date->getStartDate()->getTimestamp());
         	$jsEvent['startTime'] = $this->getTime(is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp());
         	
 	        $endDate = $date->getEndDate();
 	        if ( empty($endDate)) {
-	        	//$jsEvent['endDate'] = $this->getDate($date->getStartDate()->getTimestamp());
 	        	$jsEvent['endDate'] = null;
 	        } else {
 	        	$jsEvent['endDate'] = $this->getDate($date->getEndDate()->getTimestamp());
 	        }
 	        $jsEvent['endTime'] = $this->getTime(is_null($date->getEndTime()) ? $this->tz : $date->getEndTime()->getTimestamp());
 	        $jsEvent['allDay'] = $this->isAllDay($date);
+            $jsEvent['restOfDay'] = false;
+            if ((!$jsEvent['isRecurring']) && (!$jsEvent['allDay'])) {
+                if (is_null($date->getEndTime())) {
+                    $jsEvent['restOfDay'] = true;
+                }
+            }
 	        $jsEvent['isRecurring'] = $date->getRecurring();
-        	//if ($jsEvent['endDate'] == '2130-12-31') {}
         	if ($jsEvent['endDate'] === null) {
 	        	$jsEvent['neverEnds'] = 1;
 	        } else {
@@ -235,7 +178,6 @@ class Admin_MultidateController extends Zend_Controller_Action
     	
     	
     	$articleDateTimeId = $this->_request->getParam('id');
-    	//echo "|".$articleDateTimeId."|";
     	$repo = $this->_helper->entity->getRepository('Newscoop\Entity\ArticleDatetime');
     	
     	$repo->deleteById($articleDateTimeId);
@@ -247,14 +189,12 @@ class Admin_MultidateController extends Zend_Controller_Action
 
     public function getdatesAction() 
     {
-//echo '[]';
-//die();
-    	
-    	//is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp();
 
         require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTypeField.php');
-        $field_background_colors = array();
+
+        $field_ranks = array();
+        $field_infos = array();
 
         $dark_blues = array('#4040ff', '#8040ff');
         $yellow = '#ffff40';
@@ -277,16 +217,38 @@ class Admin_MultidateController extends Zend_Controller_Action
 
             $itemField = $date->getFieldName();
             $itemColor = '#';
-            if (array_key_exists($itemField, $field_background_colors)) {
-                $itemColor = $field_background_colors[$itemField];
+            $itemRank = 0;
+            $itemHidden = false;
+
+            if (array_key_exists($itemField, $field_ranks)) {
+                $itemRank = $field_ranks[$itemField];
+            }
+            else {
+                $field_obj = new \ArticleTypeField($article_type, $itemField);
+                $allItemRanks = $field_obj->getOrders();
+                foreach ($allItemRanks as $one_weight => $one_field) {
+                    $field_ranks[$one_field] = $one_weight;
+                    if ($one_field == $itemField) {
+                        $itemRank = $one_weight;
+                    }
+                }
+            }
+
+            if (array_key_exists($itemField, $field_infos)) {
+                $itemColor = $field_infos[$itemField]['background_color'];
+                $itemHidden = $field_infos[$itemField]['hidden_status'];
             }
             else {
                 $field_obj = new \ArticleTypeField($article_type, $itemField);
                 $itemColor = $field_obj->getColor();
-                $field_background_colors[$itemField] = $itemColor;
+                $itemHidden = $field_obj->isHidden();
+                $field_infos[$itemField] = array('background_color' => $itemColor, 'hidden_status' => $itemHidden);
             }
 
-        	//if (strlen($recurring) > 1 && $recurring != 'daily') {}
+            if ($itemHidden) {
+                continue;
+            }
+
         	if (strlen($recurring) > 1) {
         		//daterange
         		$start = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime(is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp()) );
@@ -307,15 +269,16 @@ class Admin_MultidateController extends Zend_Controller_Action
                 while($itemStart <= $end) {
                     $calDate = array();
                     $calDate['id'] = $date->id;
-                    //$calDate['title'] = 'Event ';
                     $calDate['title'] = $itemField;
                     $calDate['start'] = $itemStart;
+                    $calDate['start_day'] = date('m-d', $calDate['start']);
                     $calDate['end'] = $itemEnd;
                     $calDate['allDay'] = $this->isAllDay($date);
                     $calDate['field_name'] = $itemField;
                     $calDate['backgroundColor'] = $itemColor;
                     $calDate['textColor'] = '#000000';
                     $calDate['event_comment'] = $event_comment;
+                    $calDate['weight'] = $itemRank;
                     $return[] = $calDate;
 
                     if ('+1 month' == $step) {
@@ -345,21 +308,18 @@ class Admin_MultidateController extends Zend_Controller_Action
         		//specific
         		$calDate = array();
 	        	$calDate['id'] = $date->id;
-	        	//$calDate['title'] = 'Event ';
                 $calDate['title'] = $itemField;
 	        	$calDate['start'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime( is_null($date->getStartTime()) ? $this->tz : $date->getStartTime()->getTimestamp() ));
-	        	//$calDate['start'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' ');
+	        	$calDate['start_day'] = date('m-d', $calDate['start']);
+
 	        	$endDate = $date->getEndDate();
                 // TODO: at this moment, specific dates without end dates are taken as single-date dates, even though they should be taken as never-ending continuous events
 	        	if ( empty($endDate)) {
 	        		$calDate['end'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? $this->tz : $date->getEndTime()->getTimestamp()) );
-	        		//$calDate['end'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' ' );
 	        	} else {
 	        		$calDate['end'] = strtotime( $this->getDate($date->getEndDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? $this->tz : $date->getEndTime()->getTimestamp()) );	
-	        		//$calDate['end'] = strtotime( $this->getDate($date->getEndDate()->getTimestamp()).' ' );	
 	        	}
                 $calDate['allDay'] = $this->isAllDay($date);
-                //$calDate['allDay'] = false;
                 $calDate['field_name'] = $itemField;
                 $calDate['backgroundColor'] = $itemColor;
                 $calDate['textColor'] = '#000000';
@@ -367,7 +327,7 @@ class Admin_MultidateController extends Zend_Controller_Action
                     $calDate['textColor'] = $yellow;
                 }
                 $calDate['event_comment'] = $event_comment;
-                //$calDate['className'] = 'event_type_' . substr($itemField, 0);
+                $calDate['weight'] = $itemRank;
                 $return[] = $calDate;
             }
         }
@@ -378,6 +338,24 @@ class Admin_MultidateController extends Zend_Controller_Action
     }
 
     public static function EventOrder($a, $b) {
+        if (isset($a['start_day']) && isset($b['start_day'])) {
+            if ($a['start_day'] > $b['start_day']) {
+                return 1;
+            }
+            if ($a['start_day'] < $b['start_day']) {
+                return -1;
+            }
+        }
+
+        if (isset($a['weight']) && isset($b['weight'])) {
+            if ($a['weight'] > $b['weight']) {
+                return 1;
+            }
+            if ($a['weight'] < $b['weight']) {
+                return -1;
+            }
+        }
+
         if (isset($a['start']) && isset($b['start'])) {
             if ($a['start'] > $b['start']) {
                 return 1;
@@ -387,34 +365,8 @@ class Admin_MultidateController extends Zend_Controller_Action
             }
         }
 
-        if (isset($a['title']) && isset($b['title'])) {
-            if ($a['title'] > $b['title']) {
-                return 1;
-            }
-            if ($a['title'] < $b['title']) {
-                return -1;
-            }
-        }
-
         return 0;
     }
 
-/*
-    public function setfieldcolorAction () {
-
-        require_once($GLOBALS['g_campsiteDir'].DIRECTORY_SEPARATOR.'classes'.DIRECTORY_SEPARATOR.'ArticleTypeField.php');
-
-        $article_type = $this->_request->getParam('f_article_type');
-        $field_name = $this->_request->getParam('f_field_name');
-        $color_value = $this->_request->getParam('f_color_value');
-
-        $atf = new \ArticleTypeField($article_type, $field_name);
-        $atf->setColor($color_value);
-
-        //ArticleType::setFieldColor($article_type, $field_name, $color_value);
-        echo "saved";
-        die();
-    }
-*/
 }
 

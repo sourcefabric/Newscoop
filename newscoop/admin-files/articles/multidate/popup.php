@@ -141,14 +141,10 @@ function submitForm(formData) {
 	var flash = flashMessage(localizer.processing, null, true);
 	var url = '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/multidate/add';
 
-    console.log(formData);
     callServer(
         url,
         formData,
         function(res) {
-//alert("" + res.responseText);
-//console.log("" + res.responseText);
-//            console.log(res);
         	$('#full-calendar').fullCalendar( 'refetchEvents' );
         	flash.fadeOut();
         	resetSpecificForm();
@@ -156,24 +152,6 @@ function submitForm(formData) {
         },
         true
     );
-
-/*
-	$.ajax({
-        'url': url,
-        'type': 'POST',
-        'data': formData,
-        'dataType': 'json',
-        'success': function(json) {
-        	$('#full-calendar').fullCalendar( 'refetchEvents' );
-        	flash.fadeOut();
-        	resetSpecificForm();
-        	resetDaterangeForm();
-        },
-        'error': function(json) {
-        	flash.fadeOut();
-        }
-    });
-*/
 }
 
 function submitSpecificForm() {
@@ -304,26 +282,20 @@ function popup_save() {
 }
 
 function reset_specific_start_time() {
-	//console.log('specific start time');
     $('#specific-radio-start-only').attr('checked', 'checked');
     $('#start-time-specific').css('display', 'inline');
-    //$('#end-time-specific').css('display', 'none');
     $('#end-time-specific').css('visibility', 'hidden');
 }
 
 function reset_specific_start_end_time() {
-	//console.log('specific start end time');
     $('#specific-radio-start-and-end').attr('checked', 'checked');
     $('#start-time-specific').css('display', 'inline');
-    //$('#end-time-specific').css('display', 'inline');
     $('#end-time-specific').css('visibility', 'visible');
 }
 
 function reset_specific_all_day() {
-	//console.log('specific all day');
     $('#specific-radio-all-day').attr('checked', 'checked');
     $('#start-time-specific').css('display', 'none');
-    //$('#end-time-specific').css('display', 'none');
     $('#end-time-specific').css('visibility', 'hidden');
 }
 
@@ -335,7 +307,6 @@ function loadDaterangeEvent(event) {
 	$('#start-time-daterange').val(event.startTime);
 	$('#end-date-daterange').val(event.endDate);
 	$('#end-time-daterange').val(event.endTime);
-	//var repeatValue = 'recurring:'+event.isRecurring;
 	var repeatValue = ''+event.isRecurring;
 	$("#repeats-cycle option[value='"+repeatValue+"']").attr('selected','selected');
 	$('#remove-daterange-link').css('display','block');
@@ -356,22 +327,21 @@ function loadDaterangeEvent(event) {
 	
 }
 
-function doSpecificTimeRange(start, end) {
-	if ( (start == '00:00' || start == '00:01') && end == '23:59' ) {
+function doSpecificTimeRange(all_day, rest_of_day, start, end) {
+    if ( all_day ) {
 		$('#specific-radio-all-day').trigger('click');
+        return;
 	}
 
-	if ( (start != '00:00' && start != '00:01') && end == '23:59' ) {
+    if ( rest_of_day ) {
 		$('#specific-radio-start-only').trigger('click');
+        return;
 	}
 
-	if ( (start != '00:00' && start != '00:01') && end != '23:59' ) {
-		$('#specific-radio-start-and-end').trigger('click');
-	}
+	$('#specific-radio-start-and-end').trigger('click');
 }
 
 function loadSpecificEvent(event) {
-	//console.log('loading specific event');
 	$('.date-specific-switch').trigger('click');
 	$('#specific-multidate-id').val(event.id);
 	$('#start-date-specific').val(event.startDate);
@@ -379,7 +349,7 @@ function loadSpecificEvent(event) {
 	$('#end-time-specific').val(event.endTime);
 	$('#remove-specific-link').css('display', 'block');
 
-	doSpecificTimeRange(event.startTime, event.endTime);
+    doSpecificTimeRange(event.allDay, event.restOfDay, event.startTime, event.endTime);
     $('#multidatefield_specific').val(event.field_name);
     $('#event_comment_specific').val(event.event_comment);
 }
@@ -414,44 +384,23 @@ function removeEvent(id) {
         url,
         data,
         function(res) {
-            //console.log(res);
             flashDelete.fadeOut();
             $('#full-calendar').fullCalendar( 'refetchEvents' );
         },
         true
     );
-
-
-/*
-    $.ajax({
-        'url': url,
-        'type': 'POST',
-        'data': data,
-        'dataType': 'json',
-        'success': function(json) {
-            flashDelete.fadeOut();
-            $('#full-calendar').fullCalendar( 'refetchEvents' );
-            
-        },
-        'error': function(json) {
-        	flashDelete.fadeOut();
-        }
-    });
-*/
 }
 
 function eventClick(eventId) {
 	
 	var url = '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/multidate/getevent';
 	var data = {'id': eventId};
-    //console.log(data);
 	var flashClick = flashMessage(localizer.processing, null, true);
 
     callServer(
         url,
         data,
         function(res) {
-            //console.log(res);
             var isRecurring = res.isRecurring;
             flashClick.fadeOut();
             if (res.isRecurring) {
@@ -462,31 +411,6 @@ function eventClick(eventId) {
         },
         true
     );
-/*
-	$.ajax({
-        'url': url,
-        'type': 'POST',
-        'data': data,
-        'dataType': 'json',
-        'success': function(json) {
-        	console.log(json);
-        	//var isRecurring = json.isRecurring;
-        	flashClick.fadeOut();
-        	if (json.isRecurring) {
-				loadDaterangeEvent(json);
-        	} else {
-				loadSpecificEvent(json);
-        	}
-        },
-        'error': function(data) {
-            if (data.getResponseHeader('Not-Logged-In')) {
-                alert('LIB!');
-            }
-            console.log(data);
-            flashClick.fadeOut();
-        }
-    });
-*/
 }
 
 $(function(){
@@ -533,7 +457,6 @@ $(function(){
 				right: 'month,agendaWeek,agendaDay'
 			},
 		 	editable: false,
-			//events: events,
             events: function (start, end, callback) {
                 window.load_events(start, end, callback, url);
             },
@@ -561,13 +484,9 @@ $(function(){
 
 	 $('#daterange-all-day').click(function() {
 		 if ($('#daterange-all-day').attr('checked') != 'checked') {
-			 //$('#start-time-daterange').css('display', 'inline');
-			 //$('#end-time-daterange').css('display', 'inline');
 			 $('#start-time-daterange').css('visibility','visible');
 			 $('#end-time-daterange').css('visibility','visible');
 		 } else {
-			 //$('#start-time-daterange').css('display', 'none');
-			 //$('#end-time-daterange').css('display', 'none');
 			 $('#start-time-daterange').css('visibility','hidden');
 			 $('#end-time-daterange').css('visibility','hidden');
 		 }
@@ -596,42 +515,12 @@ window.load_events = function(start, end, callback, url) {
             languageId : "<?php echo $article->getLanguageId(); ?>"
         },
         function(res) {
-            //console.log(res);
             callback(res);
-            //window.display_events(res);
         },
         true
     );
 
 };
-
-/*
-window.display_events = function(events) {
-
-	$('#full-calendar').fullCalendar({
-			eventClick: function(calEvent, jsEvent, view) {
-				eventClick(calEvent.id);
-			},
-			header: {
-				left: 'prev,next today',
-				center: 'title',
-				right: 'month,agendaWeek,agendaDay'
-			},
-		 	editable: false,
-			events: events,
-			eventDrop: function(event, delta) {
-				alert(event.title + ' was moved ' + delta + ' days\n' +
-					'(should probably update your database)');
-			},
-			loading: function(bool) {
-				if (bool) $('#loading').show();
-				else $('#loading').hide();
-			},
-			timeFormat: 'H(:mm)'
-	});
-
-};
-*/
 
 </script>
 
@@ -664,7 +553,6 @@ window.display_events = function(events) {
 	
     <input type="text" id="start-date-specific" name="start-date-specific" class="multidate-input date-input" style="width: 125px; margin-left: 12px; margin-top: 20px;" readonly='true' title="<?php echo putGS('Event date'); ?>" /> 
 	<input type="text" id="start-time-specific" name="start-time-specific" class="multidate-input time-input" style="width: 128px; margin-left: 2px; margin-top: 20px;" readonly='true' title="<?php echo putGS('Event start time'); ?>" /> 
-<!--	<input type="text" id="end-time-specific" name="end-time-specific" class="multidate-input time-input" style="width: 128px; margin-left: 144px; margin-top: 20px; display: none" readonly='true'/>-->
 	<input type="text" id="end-time-specific" name="end-time-specific" class="multidate-input time-input" style="width: 128px; margin-left: 144px; margin-top: 20px; visibility: hidden" readonly='true' title="<?php echo putGS('Event end time'); ?>" />
 	
 	<div class="specific-radio-holder">
@@ -680,6 +568,9 @@ window.display_events = function(events) {
 <?php
     foreach ($article_type_columns as $one_column_type) {
         if (ArticleTypeField::TYPE_COMPLEX_DATE != $one_column_type->getType()) {
+            continue;
+        }
+        if ($one_column_type->isHidden()) {
             continue;
         }
         $field_name = $one_column_type->getPrintName();
@@ -709,27 +600,18 @@ window.display_events = function(events) {
     
     <div class="date-switch date-specific-switch switch-active border-left" style="margin-left: 10px; margin-bottom: 10px;"><?php echo putGS('Specific dates'); ?></div>
     <div class="date-switch date-range-switch" style="margin-left: 4px; margin-bottom: 10px;"><?php echo putGS('Recurring'); ?></div>
-<!--
-    <div><hr style="width: 260px; margin-bottom: 0px;"></div>
--->
     
     <input type="text" id="start-date-daterange" name="start-date-daterange" class="multidate-input date-input"style="width: 125px; margin-left: 12px; margin-top: 10px;"  readonly='true' title="<?php echo putGS('Event first date'); ?>" /> 
     <input type="text" id="start-time-daterange" name="start-time-daterange" class="multidate-input time-input" style="width: 128px; margin-left: 2px; margin-top: 10px;" readonly='true' title="<?php echo putGS('Event start time'); ?>" />
     
     <div class="repeats-checkbox-holder">
         <input type="checkbox" id="daterange-all-day" name="daterange-all-day" value="1" / style="margin-top: 12px;"><label for="daterange-all-day"><?php echo putGS('All day'); ?></label>
-       <!-- <input type="checkbox" id="daterange-repeats" name="daterange-repeats" value="1" /><?php echo putGS('Repeats'); ?><br /> -->
         <input type="text" id="end-time-daterange" name="end-time-daterange" class="multidate-input time-input" style="float: right; width: 128px; margin-right: 11px; margin-top: 12px; margin-bottom: 20px;"  readonly='true' title="<?php echo putGS('Event end time'); ?>" />
     </div>
 
     <div><hr style="width: 260px; margin-bottom: 10px;"></div>
 
     <select id="repeats-cycle" class="multidate-input" style="margin-left: 12px; margin-top: 10px; width: 260px;" name="repeats-cycle">
-<!--
-        <option value='recurring:daily'><?php echo putGS('Repeats daily'); ?></option>
-        <option value='recurring:weekly'><?php echo putGS('Repeats weekly'); ?></option>
-        <option value='recurring:monthly'><?php echo putGS('Repeats monthly'); ?></option>
--->
         <option value='daily'><?php echo putGS('Repeats daily'); ?></option>
         <option value='weekly'><?php echo putGS('Repeats weekly'); ?></option>
         <option value='monthly'><?php echo putGS('Repeats monthly'); ?></option>
@@ -763,6 +645,9 @@ window.display_events = function(events) {
 <?php
     foreach ($article_type_columns as $one_column_type) {
         if (ArticleTypeField::TYPE_COMPLEX_DATE != $one_column_type->getType()) {
+            continue;
+        }
+        if ($one_column_type->isHidden()) {
             continue;
         }
         $field_name = $one_column_type->getPrintName();

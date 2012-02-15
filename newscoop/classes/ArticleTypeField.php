@@ -2,6 +2,7 @@
 /**
  * @package Campsite
  */
+use Newscoop\ArticleDatetime as ArticleDatetime;
 
 /**
  * Includes
@@ -84,6 +85,7 @@ class ArticleTypeField extends DatabaseObject {
 		}
 
 		$types = self::DatabaseTypes(null, $this->m_precision);
+        $oldFieldName = $this->m_data['field_name'];
 
 		$queryStr = "ALTER TABLE `X". $this->m_data['type_name']."` CHANGE COLUMN `"
 		. $this->getName() ."` `F$p_newName` ". $types[$this->getType()];
@@ -98,6 +100,12 @@ class ArticleTypeField extends DatabaseObject {
 
 			$fieldName = $this->m_data['field_name'];
 			$this->setProperty('field_name', $p_newName);
+
+            if ($this->getType() == self::TYPE_COMPLEX_DATE) {
+                $em = Zend_Registry::get('container')->getService('em');
+                $repo = $em->getRepository('Newscoop\Entity\ArticleDatetime');
+                $repo->renameField($this->m_data['type_name'], array('old' => $oldFieldName, 'new' => $p_newName));
+            }
 		}
 	} // fn rename
 
@@ -148,8 +156,12 @@ class ArticleTypeField extends DatabaseObject {
             return false;
         }
 
+        public static function getDefaultColor() {
+            return '#f0a040';
+        }
+
         public function getColor() {
-            $default_color = '#f0a040';
+            $default_color = self::getDefaultColor();
             $color = '' . $this->m_colorValue;
             if (empty($color)) {
                 $color = $default_color;
@@ -237,6 +249,12 @@ class ArticleTypeField extends DatabaseObject {
 			$success = parent::create($data);
 		}
 
+        if ($success) {
+            if ($p_type == self::TYPE_COMPLEX_DATE && isset($p_params['event_color'])) {
+                $success = $this->setColor($p_params['event_color']);
+            }
+        }
+
 		if ($success) {
 			CampCache::singleton()->clear('user');
 		}
@@ -262,6 +280,8 @@ class ArticleTypeField extends DatabaseObject {
 			case self::TYPE_SWITCH:
 				return array();
 			case self::TYPE_NUMERIC:
+				return array();
+			case self::TYPE_COMPLEX_DATE:
 				return array();
 		}
 		return false;
@@ -370,6 +390,10 @@ class ArticleTypeField extends DatabaseObject {
 			return false;
 		}
 
+        $oldFieldName = $this->m_data['field_name'];
+        $typeName = $this->m_data['type_name'];
+        $typeType = $this->getType();
+
 		$orders = $this->getOrders();
 
         $translation = new Translation(null, $this->getPhraseId());
@@ -394,6 +418,14 @@ class ArticleTypeField extends DatabaseObject {
 			$fieldName = $this->m_data['field_name'];
 			$success = parent::delete();
 		}
+
+		if ($success) {
+            if ($typeType == self::TYPE_COMPLEX_DATE) {
+                $em = Zend_Registry::get('container')->getService('em');
+                $repo = $em->getRepository('Newscoop\Entity\ArticleDatetime');
+                $repo->deleteField($typeName, array('old' => $oldFieldName));
+            }
+        }
 
 		// reorder
 		if ($success) {

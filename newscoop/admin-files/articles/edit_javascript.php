@@ -552,9 +552,6 @@ function loadMultiDateEvents() {
 
                 var eventString = startString + '<span style="float:left" class="ui-icon ui-icon-arrowthick-1-e"></span>' + endString;
 
-<?php
-                //eventList += '<li class="multidate_item_field_' + item.field_name + '" style="background-color:'+item.backgroundColor+'; color:'+item.textColor+';">' + item.field_name + ': ' + eventString + '</li>';
-?>
                 var event_comment = item.event_comment;
                 if (null === event_comment) {
                     event_comment = '';
