@@ -66,6 +66,7 @@ class Item
     {
         if (is_a($item, 'Newscoop\Image\LocalImage')) {
             $this->image = $item;
+            $this->setCaption($item->getCaption());
         } else {
             $this->videoUrl = $item->getUrl();
         }
