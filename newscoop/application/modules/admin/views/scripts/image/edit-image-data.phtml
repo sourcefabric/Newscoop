@@ -8,7 +8,7 @@
     <h1>
         <?php putGS('Edit Image Data'); ?>
         <span style="float: right;">
-        <input type="button" value="<?php echo putGS('Save'); ?>" class="save-button" onClick="$('#edit_image_data_form').submit();">
+        <!--<input type="button" value="<?php //echo putGS('Save'); ?>" class="save-button" onClick="$('#edit_image_data_form').submit();">//-->
         <input type="button" value="<?php echo putGS('Next: Place Images'); ?>" class="save-button" onClick="$('#edit_image_data_next').val(1);$('#edit_image_data_form').submit();">
         </span>
     </h1>
@@ -39,8 +39,8 @@
                 <label for="" style="font-size: 11px;"><?php echo(getGS('Description: ')); ?><a style="float: right;" href="javascript:useForAll('description', <?php echo $image->getId(); ?>);"> <?php echo(getGS('Use for all')); ?></a></label><br>
                 <textarea name="data[<?php echo $image->getId(); ?>][description]" id="image_description_<?php echo $image->getId(); ?>" rows="4" class="image-description" style="float:none; width:380px;"><?php echo $image->getDescription(); ?></textarea><br/>
                 
-                <label for="" style="font-size: 11px;"><?php echo(getGS('Place: ')); ?><a style="float: right;" href="javascript:useForAll('place', <?php echo $image->getId(); ?>);"> <?php echo(getGS('Use for all')); ?></a></label><br/>
-                <input name="data[<?php echo $image->getId(); ?>][place]" id="image_place_<?php echo $image->getId(); ?>" class="image-place" value="<?php echo $image->getPlace(); ?>" style="float:none; width:380px;"><br>
+                <!--<label for="" style="font-size: 11px;"><?php //echo(getGS('Place: ')); ?><a style="float: right;" href="javascript:useForAll('place', <?php //echo $image->getId(); ?>);"> <?php //echo(getGS('Use for all')); ?></a></label><br/>//-->
+                <input type="hidden" name="data[<?php echo $image->getId(); ?>][place]" id="image_place_<?php echo $image->getId(); ?>" class="image-place" value="<?php echo $image->getPlace(); ?>">
                 
                 <label for="" style="font-size: 11px;"><?php echo(getGS('Photographer: ')); ?><a style="float: right;" href="javascript:useForAll('photographer', <?php echo $image->getId(); ?>);"> <?php echo(getGS('Use for all')); ?></a></label><br>
                 <input name="data[<?php echo $image->getId(); ?>][photographer]" id="image_photographer_<?php echo $image->getId(); ?>" class="image-photographer" value="<?php echo $image->getPhotographer(); ?>" style="float:none; width:380px"><br/>
