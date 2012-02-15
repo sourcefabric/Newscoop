@@ -19,7 +19,7 @@
             'action' => 'article',
             'article_number' => $articleObj->getArticleNumber(),
             'language_id' => $f_language_id,
-        )); ?>"><span class="ui-icon ui-icon-image"></span><?php putGS('Place'); ?></a>
+        )); ?>"><span class="ui-icon ui-icon-image"></span><?php putGS('Place images'); ?></a>
         <div class="clear"></div>
         <?php } ?>
 
