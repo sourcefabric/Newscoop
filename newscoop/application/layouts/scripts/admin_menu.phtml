@@ -476,6 +476,7 @@ if( Saas::singleton()->hasPrivilege('themes' , 'index') ) {
         'label' => getGS('Support'),
         'module' => 'admin',
         'controller' => 'support',
+        'id' => 'stat'
     );
 
     $pages[3]['pages'][] = array(
@@ -632,3 +633,9 @@ $view->navigation()->breadcrumbs()
 </div>
 
 <?php } ?>
+
+<script>
+$(document).ready(function() {
+    $('#menu-stat').fancybox();
+});
+</script>

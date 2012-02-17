@@ -19,12 +19,16 @@ echo camp_html_breadcrumbs(array(
     array(getGS('Dashboard'), ''),
 ));
 
+if (!SystemPref::get('stat_ask_time')) SystemPref::set('stat_ask_time', 0);
+
 if (!SystemPref::get('installation_id')) {
     $installationId = sha1($_SERVER['SERVER_ADDR'].$_SERVER['SERVER_NAME'].mt_rand());
     SystemPref::set('installation_id', $installationId);
 }
-if (!SystemPref::get('support_set')) {
-    $this->_helper->redirector('index', 'support', 'admin');
+if (!SystemPref::get('support_send') && SystemPref::get('stat_ask_time') + 60*60*24*7 <= time()) {
+    ?>
+    <a style="display: none;" id="dummy_stat_link" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/support/index"></a>
+    <?php
 }
 
 // clear cache
@@ -93,6 +97,7 @@ $(document).ready(function() {
             info: '<?php putGS('Widget info'); ?>',
         }
     });
+    $('#dummy_stat_link').fancybox().trigger('click');
 });
 </script>
 
