@@ -50,8 +50,8 @@ class Admin_SlideshowController extends Zend_Controller_Action
                 $this->_helper->service('package')->addArticle($slideshow, $this->_getParam('article_number'));
             }
             $this->_helper->redirector('edit', 'slideshow', 'admin', array(
-                'slideshow' => $slideshow->getId(),
                 'article_number' => $this->_getParam('article_number'),
+                'slideshow' => $slideshow->getId(),
             ));
         }
 
@@ -110,6 +110,7 @@ class Admin_SlideshowController extends Zend_Controller_Action
             $slideshow = $this->getSlideshow();
             $this->_helper->service('package')->addItem($slideshow, new \Newscoop\Package\RemoteVideo($form->url->getValue()));
             $this->_helper->redirector('edit', 'slideshow', 'admin', array(
+                'article_number' => $this->_getParam('article_number'),
                 'slideshow' => $slideshow->getId(),
             ));
         }
@@ -142,9 +143,9 @@ class Admin_SlideshowController extends Zend_Controller_Action
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $this->_helper->service('package')->saveItem($form->getValues(), $item);
             $this->_helper->redirector('edit-item', 'slideshow', 'admin', array(
+                'article_number' => $this->_getParam('article_number'),
                 'slideshow' => $slideshow->getId(),
                 'item' => $item->getId(),
-                'article_number' => $this->_getParam('article_number'),
             ));
         }
 
