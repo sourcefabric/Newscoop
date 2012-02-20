@@ -3,10 +3,11 @@ Name: Newscoop
 Maintainer: Sourcefabric <newscoop-dev@lists.sourcefabric.org>
 Source: http://sourceforge.net/projects/newscoop/files/
 
+Files: *
 Copyright:
- 2010 Sourcefabric o.p.s
+ 2010-2012 Sourcefabric o.p.s
  2004-2009 Media Development Loan Fund
-License: GPL-2+
+License: GPL-3
 
 Files: ./src/classes/Cron.php
 Copyright: 2002 Klaus P. Pieper <klaus_p.pieper@t-online.de>
@@ -217,6 +218,22 @@ Copyright:
  2010 Robin Gareus <robin@gareus.org>
 License: GPL-2+
 
+License: GPL-3
+ This program is free software: you can redistribute it and/or modify
+ it under the terms of the GNU General Public License version 3 as
+ published by the Free Software Foundation.
+ .
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+Comment:
+ You should have received a copy of the GNU General Public License
+ along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ .
+ On Debian systems, the complete text of the GNU General Public
+ License can be found in `/usr/share/common-licenses/GPL-3'.
+
 License: GPL-2+
  This package is free software; you can redistribute it and/or modify
  it under the terms of the GNU General Public License as published by
@@ -234,3 +251,4 @@ License: GPL-2+
  02110-1301, USA.
 X-Comment: On Debian systems, the complete text of the GNU General
  Public License can be found in `/usr/share/common-licenses/GPL-2'.
+
