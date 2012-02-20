@@ -1,5 +1,10 @@
 <?php $this->placeholder('title')->set('Renditions'); ?>
 
+<?php if (count($this->renditions) === 0) {
+echo '<p class="message">', getGS('No renditions defined.'), '</p>';
+return;
+} ?>
+
 <form id="rendition-list-form" method="POST">
 
 <ul id="rendition-list">

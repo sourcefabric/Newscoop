@@ -244,6 +244,16 @@ class RenditionService
     }
 
     /**
+     * Test if there are renditions defined
+     *
+     * @return bool
+     */
+    public function hasRenditions()
+    {
+        return count($this->getRenditions()) !== 0;
+    }
+
+    /**
      * Create schema for article rendition
      *
      * @param Exception $e

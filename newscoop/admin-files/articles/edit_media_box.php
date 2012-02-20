@@ -13,6 +13,8 @@
             'article_number' => $articleObj->getArticleNumber(),
             'language_id' => $f_language_id,
         )); ?>"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Attach'); ?></a>
+
+        <?php if ($this->_helper->service('image.rendition')->hasRenditions()) { ?>
         <a id="place-images" class="ui-state-default icon-button right-floated" href="<?php echo $this->view->url(array(
             'module' => 'admin',
             'controller' => 'image',
@@ -20,6 +22,8 @@
             'article_number' => $articleObj->getArticleNumber(),
             'language_id' => $f_language_id,
         )); ?>"><span class="ui-icon ui-icon-image"></span><?php putGS('Place images'); ?></a>
+        <?php } ?>
+
         <div class="clear"></div>
         <?php } ?>
 
