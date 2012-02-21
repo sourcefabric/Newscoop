@@ -4,3 +4,4 @@ debian/etc/apache.conf /etc/newscoop/4.0/
 debian/etc/newscoop.ini /etc/newscoop/4.0/
 debian/etc/apache.vhost.tpl /etc/newscoop/4.0/
 debian/etc/newscoop.cron.tpl /etc/newscoop/4.0/
+debian/usr/newscoop /usr/share/lintian/overrides/

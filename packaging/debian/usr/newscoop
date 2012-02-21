@@ -1,2 +1,2 @@
-# Despite the name, this is not actually a license file
+# newscoop/install/templates/license.tpl is not a duplicate license text
 newscoop binary: extra-license-file usr/share/newscoop/install/templates/license.tpl
