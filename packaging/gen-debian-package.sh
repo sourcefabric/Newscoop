@@ -84,6 +84,8 @@ rm newscoop/library/Symfony/Component/Console/LICENSE
 rm newscoop/library/Symfony/Component/Yaml/LICENSE
 rm newscoop/library/fabpot-dependency-injection-07ff9ba/LICENSE
 rm newscoop/library/fabpot-event-dispatcher-782a5ef/LICENSE
+rm newscoop/include/html2pdf/_tcpdf_5.0.002/fonts/dejavu-fonts-ttf-2.30/LICENSE
+rm newscoop/include/html2pdf/_tcpdf_5.0.002/fonts/freefont-20090104/COPYING
 
 # documentation under Creative Commons licenses
 rm -r newscoop/library/fabpot-dependency-injection-07ff9ba/doc/
