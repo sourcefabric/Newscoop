@@ -22,7 +22,6 @@ Depends: apache2 | httpd,
 Recommends: php-apc | php5-xcache
 Suggests: mysql-server | virtual-mysql-server
 Description: The open content management system for professional journalists
- Newscoop is the open content management system for professional journalists.
  Features for the modern newsroom include multiple author management,
  issue-and-section based publishing, geolocation and multilingual content 
  management. The enterprise-standard journalist’s dashboard and a templating
