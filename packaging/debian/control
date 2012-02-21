@@ -9,15 +9,16 @@ Homepage: http://www.sourcefabric.org/en/products/newscoop_overview/
 Package: newscoop
 Architecture: all
 Depends: apache2 | httpd,
+ curl,
+ default-mta | mail-transport-agent,
+ graphicsmagick | imagemagick,
  libapache2-mod-php5 | php5,
+ mysql-client | virtual-mysql-client,
  php5-mysql,
  php5-cli,
  php5-gd,
- mysql-client | virtual-mysql-client,
- graphicsmagick | imagemagick,
- default-mta | mail-transport-agent,
+ ttf-bitstream-vera,
  wwwconfig-common,
- curl,
  ${misc:Depends}
 Recommends: php-apc | php5-xcache
 Suggests: mysql-server | virtual-mysql-server
