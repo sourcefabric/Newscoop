@@ -62,7 +62,7 @@ fi
 
 mv ${MIRRORPATH}/newscoop-$UPSTREAMVERSION/newscoop-$UPSTREAMDIST$SFOCUSTOM/ ${MIRRORPATH}/newscoop-$UPSTREAMVERSION/newscoop/
 
-# done in README.debian
+# done in README.Debian
 rm newscoop/INSTALL.txt
 
 # Sourcefabric licenses covered by debian/copyright
