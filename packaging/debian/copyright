@@ -127,6 +127,14 @@ Files: ./newscoop/library/fabpot-event-dispatcher-782a5ef/
 Copyright: 2008-2009 Fabien Potencier http://fabien.potencier.org
 License: Expat
 
+Files: ./newscoop/js/tapmodo-Jcrop-5e58bc9/
+Copyright: 2011 Tapmodo Interactive LLC http://github.com/tapmodo/Jcrop
+License: Expat
+
+Files: ./newscoop/js/tapmodo-Jcrop-5e58bc9/build/
+Copyright: 2008-2011 Kelly Hallman <khallman@gmail.com>
+License: Expat
+
 Files: ./newscoop/classes/Cron.php
 Copyright: 2002 Klaus P. Pieper <klaus_p.pieper@t-online.de>
 License: GPL-2+
