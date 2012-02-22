@@ -1,4 +1,5 @@
 <?php 
+regGS("Support", "");
 regGS("Pending articles", "Текстови на чекању");
 regGS("Manage Users", "Управљање корисницима");
 regGS("Manage User Types", "Управљање типовима корисника");
@@ -52,7 +53,7 @@ regGS("Newscoop", "Newscoop");
 regGS("Campsite", "Кемпсајт");
 regGS("Your password has been reset.", "Лозинка је ресетована.");
 regGS("Proceed to login.", "Настави са пријављивањем.");
-regGS("Hi, \n\nfor password recovery, please follow this link: $1", "");
+regGS("Hi, \n\nfor password recovery, please follow this link: $1", "Здраво, \n\nза повраћај лозинке, молимо следите овај линк: $1");
 regGS("Go to login", "Иди на пријављивање");
 regGS("Back to login.", "Назад на пријављивање.");
 regGS("Back to login", "Назад на пријављивање");
@@ -144,5 +145,4 @@ regGS("Login failed", "Неуспешна пријава");
 regGS("Please make sure that you typed the correct user name and password.", "Проверите да ли сте исправно уписали корисничко име и лозинку");
 regGS("If your problem persists please contact the site administrator $1", "Ако се проблем понови контактирајте администратора сајта $1");
 regGS("Backup/Restore", "Бекап/враћање");
-regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Здраво, \\n\\nза повраћај лозинке, молимо следите овај линк: $1");
 ?>

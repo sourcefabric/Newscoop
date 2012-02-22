@@ -2,10 +2,10 @@
 regGS("Topic created", "Námět vytvořen");
 regGS("The topic name is already in use by another topic.", "Název námětu je již užíván u jiného námětu.");
 regGS("Complex Date", "");
-regGS("vertices", "");
+regGS("vertices", "vrchol");
 regGS("There was a problem trying to execute the XML RPC function.", "Vyskytl se problém při pokusu o provedení XML RPC funkce.");
 regGS("The Campcaster server configuration is invalid.", "Campcaster konfigurace serveru je neplatná.");
-regGS("Pan Map", "");
+regGS("Pan Map", "Pan Mapa");
 regGS("Open large map", "Otevřená velká mapa");
 regGS("No news available.", "Žádné novinky k dispozici.");
 regGS("Edit Polygon", "Upravit Polygon");
