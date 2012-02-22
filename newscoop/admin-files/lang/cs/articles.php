@@ -57,7 +57,7 @@ regGS("You must select a file to upload.", "Zvolte soubor k nahrání.");
 regGS("You must select a XML input file.", "Zvolte XML vstupní soubor.");
 regGS("You do not have the right to import XML archives.", "Nemáte oprávnění k importování XML archivy.");
 regGS("There was a problem uploading the file.", "Vyskytl se problé při uploadování souboru.");
-regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Nahrávaný soubor není celý. K tomuto dochází, kdyžje překročen maximální povolený čas k nahrání souboru. Maximalní čas lze upravit v 'php.ini'.");
+regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Nahrávaný soubor není celý. K tomuto dochází, když je překročen maximální povolený čas k nahrání souboru. Maximalní čas lze upravit v 'php.ini'.");
 regGS("The file exceeds the allowed max file size.", "Soubor překračuje maximální povolenou velikost.");
 regGS("Optional", "Volitelné");
 regGS("Input File", "Vstupní Soubor");

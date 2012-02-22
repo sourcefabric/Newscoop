@@ -1,6 +1,6 @@
 <?php 
-regGS("Themes", "");
-regGS("Area to localize", "");
+regGS("Themes", "Támata");
+regGS("Area to localize", "Oblast k lokalizace");
 regGS("Dashboard", "Hlavní panel");
 regGS("Authors", "Autoři");
 regGS("Libraries", "Knihovny");

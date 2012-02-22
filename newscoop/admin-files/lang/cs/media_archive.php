@@ -2,15 +2,15 @@
 regGS("You can't update used files.", "Nemůžete aktualizovat použité soubory.");
 regGS("Source", "Zdroj");
 regGS("Local", "Lokální");
-regGS("Items updated.", "");
+regGS("Items updated.", "Položky aktualizovány.");
 regGS("Feedback", "Zpětná vazba");
 regGS("Do you want to update unused only?", "Chcete aktualizovat pouze nepoužité?");
-regGS("Display Newswires images", "");
+regGS("Display Newswires images", "Zobrazit Newswire obrázky");
 regGS("Disapprove selected", "Neodsouhlasit vybrané");
 regGS("Are you sure you want to update selected items?", "Jste si jisti, že chcete aktualizovat vybrané položky?");
 regGS("Approve selected", "Odsouhlasit vybrané");
 regGS("Image files", "Zobrazit soubory");
-regGS("Fix all thumbnails", "");
+regGS("Fix all thumbnails", "Všechny thumbnails opraveny");
 regGS("You do not have the right to add files.", "Nemáte oprávění přidávat články.");
 regGS("Should this file only be available for this translation of the article, or for all translations?", "Měla by být tato složka zpřístupněna pro tento překlad nebo pro všechny překlady?");
 regGS("Please enter a description for the file: '$1'.", "Prosím zadejte popis složky: '$1'.");

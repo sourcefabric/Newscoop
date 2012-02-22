@@ -1,5 +1,5 @@
 <?php 
-regGS("You have no installed plugins.", "");
+regGS("You have no installed plugins.", "Nemáte nainstalované žádné pluginy.");
 regGS("Some plugins have to be updated. Please press the save button.", "Některé pluginy je třeba aktualizovat. Prosím klikněte na tlačítko uložit.");
 regGS("Please confirm the plugin $1 uninstall. All plugin data will be deleted!", "Prosím potvrďte odinstalaci pluinu $1? Všechna data pluginu budou odstraněna!");
 regGS("You do not have the right to manage plugins.", "Nemáte oprávnění spravovat pluginy.");

@@ -1,6 +1,6 @@
 <?php 
-regGS("News Desk", "");
-regGS("Go", "");
+regGS("News Desk", "Redakce");
+regGS("Go", "Jít");
 regGS("Wikipedia Search", "Hledat ve Wikipedii");
 regGS("Files", "Složky");
 regGS("Sourcefabric.org newsletter subscription", "Předplatné informačních bulletinů na Sourcefabric.org");
@@ -18,6 +18,6 @@ regGS("Media files", "Soubory médií");
 regGS("Hello world!", "Ahoj světe!");
 regGS("Hello World!", "Ahoj Světe!");
 regGS("Google gadget", "Google zlepšovák");
-regGS("Feed url", "");
+regGS("Feed url", "Vložit URL");
 regGS("Access Denied", "Vstup zamítnut");
 ?>

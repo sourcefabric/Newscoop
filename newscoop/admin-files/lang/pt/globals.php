@@ -1,4 +1,6 @@
 <?php 
+regGS("Plugins", "Plugins");
+regGS("Manage Plugins", "Gerenciar plugins");
 regGS("Account", "Conta");
 regGS("Items per page", "Items por página");
 regGS("Add new", "Adicionar Novo");
@@ -253,8 +255,11 @@ regGS("Thank you.", "Abrigado.");
 regGS("Please take a minute to send us an email.", "Por favor perca um minuto enviando-nos uma mensagem.");
 regGS("(optional)", "(opcional)");
 regGS("The URL you entered is invalid: '$1'", "O Endereço introduzido é inválido: '$1'");
-regGS("Reads", "");
-regGS("Plugins", "");
+regGS("Reads", "Leituras");
+regGS("Publish with issue", "");
+regGS("Universal List", "");
+regGS("Invalid security token!", "");
+regGS("Authors", "Autores");
 regGS("User name", "Nome de Utilizador");
 regGS("User Types", "Tipo de Utilizadores");
 regGS("Subscription Default Time", "Tempo padrão para Assinatura");
@@ -269,8 +274,5 @@ regGS("There are $1 issue(s) left.", "Existe(m) ainda $1 Edição(ões).");
 regGS("There are $1 keyword(s) left.", "Existe(m) ainda $1 Palavra(s)-Chave.");
 regGS("Name<BR><SMALL>(click to edit)</SMALL>", "Nome <br> (Carregue para Alterar)");
 regGS("New field", "Novo Campo");
-regGS("Publish with issue", "");
-regGS("Universal List", "");
-regGS("Invalid security token!", "");
-regGS("Authors", "");
+regGS("Are you sure you want to delete the image \\'$1\\'?", "Confirma eliminação da imagem \\'$1\\'?");
 ?>
