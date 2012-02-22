@@ -398,7 +398,10 @@ function eventClick(eventId) {
 	var flashClick = flashMessage(localizer.processing, null, true);
 
     callServer(
-        url,
+        {
+            'url': url,
+            'method': 'GET'
+        },
         data,
         function(res) {
             var isRecurring = res.isRecurring;

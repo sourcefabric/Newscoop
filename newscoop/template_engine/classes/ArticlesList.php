@@ -344,7 +344,7 @@ class ArticlesList extends ListObject
 	 */
 	protected function ProcessParameters(array $p_parameters)
 	{
-
+        self::ReadArticleTypes();
 		$parameters = array();
 		$parameters['ignore_publication'] = false;
         $parameters['ignore_issue'] = false;

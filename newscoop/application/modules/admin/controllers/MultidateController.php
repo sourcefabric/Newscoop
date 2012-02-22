@@ -110,6 +110,46 @@ class Admin_MultidateController extends Zend_Controller_Action
             	$endTime = $this->_request->getParam('end-time-daterange');	
     		}
     		$recurring = $this->_request->getParam('repeats-cycle');
+            if (($endDate !== null) && ('weekly' == $recurring)) {
+                $start_week_day = date('w', date_timestamp_get(date_create($startDate)));
+                $end_week_day = date('w', date_timestamp_get(date_create($endDate)));
+                if ($start_week_day != $end_week_day) {
+                    $days_sub = (7 + $end_week_day - $start_week_day) % 7;
+                    $end_date_new = date_create($endDate);
+                    $sub_interval = new \DateInterval('P'.$days_sub.'D');
+                    $end_date_new->sub($sub_interval);
+                    $endDate = date('Y-m-d', date_timestamp_get($end_date_new));
+                }
+            }
+            if (($endDate !== null) && ('monthly' == $recurring)) {
+                $start_month_day = date('j', date_timestamp_get(date_create($startDate)));
+                $orig_end_date = date_create($endDate);
+                $end_month_day = date('j', date_timestamp_get($orig_end_date));
+                if ($start_month_day != $end_month_day) {
+                    $end_month_month = date('n', date_timestamp_get($orig_end_date));
+                    $end_month_year = date('Y', date_timestamp_get($orig_end_date));
+
+                    if ($start_month_day < $end_month_day) {
+                        $end_month_day = $start_month_day;
+                    }
+                    else {
+                        $end_month_day = $start_month_day;
+                        while (true) {
+                            $end_month_month -= 1;
+                            if (0 == $end_month_month) {
+                                $end_month_month = 12;
+                                $end_month_year -= 1;
+                            }
+                            if (checkdate($end_month_month, $end_month_day, $end_month_year)) {
+                                break;
+                            }
+                        }
+                    }
+                    $new_end_date = mktime(0, 0, 0, $end_month_month, $end_month_day, $end_month_year);
+                    $endDate = date('Y-m-d', $new_end_date);
+                }
+            }
+
             $timeSet = array(
                 'start_date' => $startDate,
                 'end_date' => $endDate,
@@ -152,12 +192,12 @@ class Admin_MultidateController extends Zend_Controller_Action
 	        $jsEvent['endTime'] = $this->getTime(is_null($date->getEndTime()) ? $this->tz : $date->getEndTime()->getTimestamp());
 	        $jsEvent['allDay'] = $this->isAllDay($date);
             $jsEvent['restOfDay'] = false;
+	        $jsEvent['isRecurring'] = $date->getRecurring();
             if ((!$jsEvent['isRecurring']) && (!$jsEvent['allDay'])) {
                 if (is_null($date->getEndTime())) {
                     $jsEvent['restOfDay'] = true;
                 }
             }
-	        $jsEvent['isRecurring'] = $date->getRecurring();
         	if ($jsEvent['endDate'] === null) {
 	        	$jsEvent['neverEnds'] = 1;
 	        } else {
