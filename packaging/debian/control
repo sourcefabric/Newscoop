@@ -17,11 +17,11 @@ Depends: apache2 | httpd,
  php5-mysql,
  php5-cli,
  php5-gd,
- ttf-bitstream-vera,
+ ttf-dejavu-core,
  wwwconfig-common,
  ${misc:Depends}
 Recommends: php-apc | php5-xcache
-Suggests: mysql-server | virtual-mysql-server
+Suggests: mysql-server | virtual-mysql-server, flite
 Description: The open content management system for professional journalists
  Features for the modern newsroom include multiple author management,
  issue-and-section based publishing, geolocation and multilingual content 
