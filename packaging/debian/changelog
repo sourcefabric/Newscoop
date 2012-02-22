@@ -1,8 +1,13 @@
 newscoop (4.0.0-1) unstable; urgency=low
 
-  * Upstream 4.0.0-RC1 release
+  * Upstream 4.0.0-RC2 release
+  * Strip CAPTCHA fonts, depend on font package (CS-3997)
+  * Suggest flite package for audio CAPTCHA
+  * Change settings path to /etc/newscoop/4.0/
+  * Change document root to /usr/share/
+  * Set permissions for new directory structure (e.g. themes)
 
- -- Daniel James <daniel@64studio.com>  Tue, 07 Feb 2012 12:56:20 +0000
+ -- Daniel James <daniel@64studio.com>  Tue, 22 Feb 2012 14:40:20 +0000
 
 newscoop (3.5.1-1) 64studio; urgency=low
   * update to upstream 3.5.1

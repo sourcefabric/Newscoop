@@ -10,7 +10,7 @@ DEBRELEASE=$(head -n1 debian/changelog | cut -d ' ' -f 2 | sed 's/[()]*//g')
 DEBVERSION=$(echo $DEBRELEASE | sed 's/-.*$//g;s/~test[0-9]*//g')
 UPSTREAMVERSION=$(echo $DEBVERSION | sed 's/~/-/g')
 UPSTREAMDIST=$(echo $UPSTREAMVERSION | sed 's/^\([0-9]*\.[0-9]*\).*$/\1/')
-SFOCUSTOM="-RC1"
+SFOCUSTOM="-RC2"
 DEBPATH=`pwd`/debian # TODO check dirname $0
 MIRRORPATH=/tmp
 BUILDDEST=/tmp/newscoop-${DEBVERSION}/
@@ -86,6 +86,8 @@ rm newscoop/library/fabpot-dependency-injection-07ff9ba/LICENSE
 rm newscoop/library/fabpot-event-dispatcher-782a5ef/LICENSE
 rm newscoop/include/html2pdf/_tcpdf_5.0.002/fonts/dejavu-fonts-ttf-2.30/LICENSE
 rm newscoop/include/html2pdf/_tcpdf_5.0.002/fonts/freefont-20090104/COPYING
+rm newscoop/js/tapmodo-Jcrop-5e58bc9/MIT-LICENSE.txt
+rm newscoop/js/tapmodo-Jcrop-5e58bc9/build/LICENSE
 
 # remove documentation under Creative Commons licenses
 rm -r newscoop/library/fabpot-dependency-injection-07ff9ba/doc/
@@ -95,7 +97,7 @@ rm -r newscoop/library/fabpot-event-dispatcher-782a5ef/doc/
 rm -r newscoop/include/captcha/fonts/
 
 # fix the font path for captcha
-sed -i "5s:('fonts/VeraBd.ttf', 'fonts/VeraIt.ttf', 'fonts/Vera.ttf'):('/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-Bold.ttf', '/usr/share/fonts/truetype/ttf-dejavu/DejaVuSansMono.ttf', '/usr/share/fonts/truetype/ttf-dejavu/DejaVuSerif.ttf'):g" newscoop/include/capture/image.php
+sed -i "5s:('fonts/VeraBd.ttf', 'fonts/VeraIt.ttf', 'fonts/Vera.ttf'):('/usr/share/fonts/truetype/ttf-dejavu/DejaVuSans-Bold.ttf', '/usr/share/fonts/truetype/ttf-dejavu/DejaVuSansMono.ttf', '/usr/share/fonts/truetype/ttf-dejavu/DejaVuSerif.ttf'):g" newscoop/include/captcha/image.php
 
 # documentation for /usr/share/doc/newscoop
 for file in ChangeLog CREDITS README UPGRADE; do
@@ -126,7 +128,7 @@ if test "${UPSTREAMVERSION}" == "3.5.1"; then
 	rm newscoop/javascript/tinymce/plugins/codehighlighting/img/Thumbs.db
 fi
 
-### fixes for 4.0.0-RC1 ###
+### fixes for 4.0.0-RC2 ###
 if test "${UPSTREAMVERSION}" == "4.0.0"; then
 	rm newscoop/js/editarea/edit_area/plugins/test/images/Thumbs.db
 
@@ -141,6 +143,8 @@ if test "${UPSTREAMVERSION}" == "4.0.0"; then
         chmod -x newscoop/admin-files/libs/ContextList/actions.php
         chmod -x newscoop/admin-files/libs/ContextList/filters.php
         chmod -x newscoop/admin-style/content.css
+	chmod -x newscoop/js/tapmodo-Jcrop-5e58bc9/demos/demo_files/sago.jpg
+	chmod -x newscoop/js/tapmodo-Jcrop-5e58bc9/demos/demo_files/flowers.jpg
 
 	rm -r newscoop/include/html2pdf/_tcpdf_5.0.002/fonts/utils/
 fi
