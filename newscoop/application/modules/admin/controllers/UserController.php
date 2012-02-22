@@ -162,7 +162,7 @@ class Admin_UserController extends Zend_Controller_Action
 
         $this->view->form = $form;
         $this->view->user = $user;
-        $this->view->image = $this->_helper->service('image')->getSrc($user->getImage(), 80, 80);
+        $this->view->image = $this->_helper->service('image')->getSrc('images/' . $user->getImage(), 80, 80);
         $this->view->actions = array(
             array(
                 'label' => getGS('Edit permissions'),

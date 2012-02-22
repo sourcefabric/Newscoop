@@ -24,6 +24,8 @@ session.cookie_path = "/"
 
 translation.path = APPLICATION_PATH "/languages"
 
+theme_path = APPLICATION_PATH "/../themes"
+
 ; doctrine resource
 resources.doctrine.cache = "Doctrine\Common\Cache\ArrayCache";
 resources.doctrine.entity.dir = APPLICATION_PATH "/../library/Newscoop/Entity"
@@ -226,6 +228,9 @@ blog.publication = 5
 blog.issue = 3
 blog.type = "bloginfo"
 blog.article_type = "blog"
+
+image.cache_url = "images/cache"
+image.cache_path = APPLICATION_PATH "/../images/cache"
 
 [staging : production]
 

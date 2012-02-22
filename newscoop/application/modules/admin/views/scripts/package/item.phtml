@@ -1,0 +1,15 @@
+<li id="item-<?php echo $this->item->getId(); ?>">
+    <?php echo $this->action('rendition', 'image', 'admin', array(
+        'rendition' => $this->item->getRendition(),
+        'image' => $this->item->getImage(),
+        'width' => 100,
+        'height' => 100,
+    )); ?>
+
+    <a href="<?php echo $this->url(array(
+        'module' => 'admin',
+        'controller' => 'slideshow',
+        'action' => 'remove-item',
+        'item' => $this->item->getId(),
+    )); ?>" class="remove">Remove</a>
+</li>

@@ -1,5 +1,8 @@
 <?php
 camp_load_translation_strings("article_images");
+camp_load_translation_strings("media_archive");
+require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ImageSearch.php');
 require_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/articles/article_common.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/ArticleImage.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Image.php");
@@ -38,92 +41,49 @@ $q_now = $g_ado_db->GetOne("SELECT LEFT(NOW(), 10)");
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
 camp_html_display_msgs();
-?>
-<script>
-function checkAddForm(form) {
-	retval = ((form.f_image_url.value != '') || (form.f_image_file.value != ''));
-	if (!retval) {
-	    alert('<?php putGS("You must select an image file to upload."); ?>');
-	    return retval;
-	}
-	retval = retval && <?php camp_html_fvalidate(); ?>;
-	return retval;
-} // fn checkAddForm
-</script>
 
-<P>
-<FORM NAME="image_add" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/articles/images/do_add.php" ENCTYPE="multipart/form-data" onsubmit="return checkAddForm(this);">
+?>
+
+<form method="POST" action="/<?php echo $ADMIN; ?>/media-archive/do_upload.php" enctype="multipart/form-data">
 <?php echo SecurityToken::FormParameter(); ?>
-<TABLE BORDER="0" CELLSPACING="0" CELLPADDING="0" class="box_table">
-<TR>
-	<TD COLSPAN="2">
-		<B><?php  putGS("Add New Image"); ?></B>
-		<HR NOSHADE SIZE="1" COLOR="BLACK">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Number"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" NAME="f_image_template_id" VALUE="<?php p($ImageTemplateId); ?>" SIZE="5" class="input_text" alt="number|0" emsg="<?php putGS('Please enter a number for the image.'); ?>">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Description"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="Image <?php  p($maxId); ?>" SIZE="32" class="input_text" alt="blank" emsg="<?php putGS("Please enter a description for the image."); ?>">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Photographer"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" NAME="f_image_photographer" SIZE="32" VALUE="<?php echo $g_user->getRealName(); ?>" class="input_text">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Place"); ?>:</TD>
-	<TD>
-	<INPUT TYPE="TEXT" NAME="f_image_place" SIZE="32" class="input_text">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
-	<TD>
-		<input type="text" name="f_image_date" value="<?php  p($q_now); ?>" class="input_text date" size="11" maxlength="10" />
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php putGS("URL"); ?>:</TD>
-	<TD>
-		<INPUT TYPE="TEXT" NAME="f_image_url" VALUE="" class="input_text" SIZE="32">
-	</TD>
-</TR>
-<TR>
-	<TD ALIGN="RIGHT" ><?php putGS("Image"); ?>:</TD>
-	<TD>
-		<INPUT TYPE="FILE" NAME="f_image_file" SIZE="32" class="input_file" alt="file|jpg,jpeg,jpe,gif,png,tif,tiff|bok" emsg="<?php putGS("You must select an image file to upload."); ?>">
-	</TD>
-</TR>
-<TR>
-	<TD COLSPAN="2">
-	<DIV ALIGN="CENTER">
-    <INPUT TYPE="HIDDEN" NAME="f_publication_id" VALUE="<?php  p($f_publication_id); ?>">
-    <INPUT TYPE="HIDDEN" NAME="f_issue_number" VALUE="<?php  p($f_issue_number); ?>">
-    <INPUT TYPE="HIDDEN" NAME="f_section_number" VALUE="<?php  p($f_section_number); ?>">
-    <INPUT TYPE="HIDDEN" NAME="f_article_number" VALUE="<?php  p($f_article_number); ?>">
-    <INPUT TYPE="HIDDEN" NAME="f_language_id" VALUE="<?php  p($f_language_id); ?>">
-    <INPUT TYPE="HIDDEN" NAME="f_language_selected" VALUE="<?php  p($f_language_selected); ?>">
-    <INPUT TYPE="HIDDEN" NAME="BackLink" VALUE="<?php  p($_SERVER['REQUEST_URI']); ?>">
-<?php if (is_writable($Campsite['FILE_DIRECTORY'])) { ?>
-	<INPUT TYPE="submit" NAME="Save" VALUE="<?php  putGS('Save'); ?>" class="button">
-<?php } else { ?>
-	<INPUT TYPE="button" NAME="Cancel" VALUE="<?php  putGS('Cancel'); ?>" class="button" onclick="window.close();">
-<?php } ?>
-	</DIV>
-	</TD>
-</TR>
-</TABLE>
-</FORM>
-<script>
-document.forms.image_add.f_image_template_id.focus();
-</script>
-<P>&nbsp;</P>
+<input type="hidden" name="f_article_edit" value="1">
+<input type="hidden" name="f_publication_id" value="<?php echo($f_publication_id); ?>">
+<input type="hidden" name="f_issue_number" value="<?php echo($f_issue_number); ?>">
+<input type="hidden" name="f_section_number" value="<?php echo($f_section_number); ?>">
+<input type="hidden" name="f_language_id" value="<?php echo($f_language_id); ?>">
+<input type="hidden" name="f_language_selected" value="<?php echo($f_language_selected); ?>">
+<input type="hidden" name="f_article_number" value="<?php echo($f_article_number); ?>">
+<input type="hidden" name="f_place" value="0" id="f_place">
+<div id="uploader"></div>
+<div id="uploader_error"></div>
+
+
+<div class="plupload-addon-bottom clearfix">
+  <div class="buttons">
+    <input type="submit" value="<?php putGS('Attach'); ?>" name="save" class="save-button">
+    <input type="submit" value="<?php putGS('Attach & Place'); ?>" name="save" class="save-button" onClick="document.getElementById('f_place').value = 1;">
+  </div>
+</div>
+
+</form>
+<p>&nbsp;</p>
+<script type="text/javascript" src="../../../js/jquery/jquery-1.6.4.min.js"></script>
+<script type="text/javascript" src="../../../js/jquery/jquery-ui-1.8.6.custom.min.js"></script>
+<script type="text/javasctipt" src="../../../js/jquery/i18n/jquery.ui.datepicker-' . $this->locale . '.js"></script>
+<script type="text/javascript" src="../../../js/jquery/jquery-ui-timepicker-addon.min.js"></script>
+<script type="text/javascript" src="../../../js/jquery/fg.menu.js"></script>
+<script type="text/javascript" src="../../../js/jquery/jquery.cookie.js"></script>
+<script type="text/javascript" src="../../../js/jquery/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../../js/jquery/ColVis.min.js"></script>
+<script type="text/javascript" src="../../../js/jquery/jquery.widgets.js"></script>
+<script type="text/javascript" src="../../../js/jquery/fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+<script type="text/javascript" src="../../../js/admin.js"></script>
+
+<link rel="stylesheet" type="text/css" media="screen" href="../../../js/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css" />
+
+<?php $this->view->plupload('', array(
+    'url' => '../../media-archive/uploader.php',
+    'filters' => array(
+        getGS('Image files') => "jpg,gif,png",
+    ),
+)); ?>

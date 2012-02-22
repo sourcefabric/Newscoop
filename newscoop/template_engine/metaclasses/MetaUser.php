@@ -218,12 +218,15 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     public function image($width = 80, $height = 80)
     {
+        global $controller;
+
         if (!$this->m_dbObject->getImage()) {
             return '';
         }
 
-        return $GLOBALS['controller']->getHelper('service')->getService('image')
-            ->getSrc($this->m_dbObject->getImage(), $width, $height);
+        return $controller->view->url(array(
+            'src' => $controller->getHelper('service')->getService('image')->getSrc('images/' . $this->m_dbObject->getImage(), $width, $height),
+        ), 'image', false, false);
     }
 
     /**

@@ -1,0 +1,8 @@
+<theme>
+    <renditions>
+        <rendition name="thumbnail" width="75" height="75" specs="crop" />
+        <rendition name="landscape" width="400" height="300" specs="crop" />
+        <rendition name="portrait" width="300" height="400" specs="crop" />
+        <rendition name="square" width="300" height="300" specs="crop" />
+    </renditions>
+</theme>

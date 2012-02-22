@@ -1,0 +1,28 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); ?>
+<?php $this->placeholder('bodyId')->set('next'); $this->placeholder('bodyClass')->set('dark'); ?>
+<h1><?php putGS('Place images'); ?></h1>
+
+<form method="POST">
+
+<div class="editarea">
+    <div>
+        <?php echo $this->imageEditor($this->rendition, $this->image); ?>
+        <?php if ($this->rendition->isCrop()) { ?>
+        <button id="save-jcrop" class="save-button">Save</button>
+        <?php } ?>
+    </div>
+
+    <a href="<?php echo $this->url(array(
+        'action' => 'article',
+        'rendition' => null,
+    )); ?>" class="done button"><?php putGS('Done editing'); ?></a>
+</div>
+
+</form>
+
+<?php $this->currentRendition = $this->rendition; ?>
+<ul class="renditions editor">
+    <?php foreach ($this->renditions as $rendition) { ?>
+    <li<?php echo $rendition->getName() === $this->currentRendition->getName() ? ' class="active"' : ''; ?>><?php echo $this->rendition($rendition, $this->previewWidth, $this->previewHeight, $this->articleRenditions[$rendition]); ?></li>
+    <?php } ?>
+</ul>

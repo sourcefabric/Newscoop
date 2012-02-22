@@ -276,7 +276,7 @@ $('a.iframe').each(function() {
     if (!$(this).attr('custom')) {
         $(this).fancybox({
             hideOnContentClick: false,
-            width: 660,
+            width: 800,
             height: 500,
             onStart: function() { // check if there are any changes
                 return checkChanged();
@@ -294,11 +294,29 @@ $('a.iframe').each(function() {
         });
     }
 });
+
 $('#locations_box a.iframe').each(function() {
     $(this).data('fancybox').showCloseButton = false;
     $(this).data('fancybox').width = 1100;
     $(this).data('fancybox').height = 660;
 
+});
+
+$('#place-images').fancybox({
+    hideOnContentClick: false,
+    width: 1300,
+    height: 800,
+    type: 'iframe'
+});
+
+$('#attach-images').fancybox({
+    hideOnContentClick: false,
+    width: 1300,
+    height: 800,
+    type: 'iframe',
+    onClosed: function() {
+		window.location.reload();
+	}
 });
 
 $('#topic_box_frame a.iframe').each(function() {

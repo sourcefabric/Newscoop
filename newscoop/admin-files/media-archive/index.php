@@ -2,18 +2,21 @@
 camp_load_translation_strings('media_archive');
 camp_load_translation_strings('api');
 camp_load_translation_strings('library');
-
 require_once LIBS_DIR . '/ImageList/ImageList.php';
 require_once LIBS_DIR . '/MediaList/MediaList.php';
 
 camp_html_content_top(getGS('Media Archive'), NULL);
 ?>
+<script>
+    var adminUrl = '<?php global $ADMIN; echo($ADMIN); ?>';
+</script>
 
 <?php camp_html_display_msgs(); ?>
 
 <div id="archive">
 <ul>
     <li><a href="#images"><?php putGS('Images'); ?></a></li>
+    <li><a href="#slideshows"><?php putGS('Slideshows'); ?></a></li>
     <li><a href="#files"><?php putGS('Files'); ?></a></li>
 </ul>
 
@@ -43,6 +46,10 @@ camp_html_content_top(getGS('Media Archive'), NULL);
     </fieldset>
     <?php } ?>
 </div><!-- /#images -->
+
+<div id="slideshows">
+    <?php echo $this->view->action('list-slideshows', 'media', 'admin'); ?>
+</div>
 
 <div id="files">
     <?php if ($g_user->hasPermission('AddFile')) { ?>
@@ -237,6 +244,44 @@ $(document).ready(function() {
         tables[smartlistId].fnDraw(true);
     });
 });
+
+function view(field, id, value) {
+    console.log(value);
+    if (!value) {
+        value = $('#row_' + id).find('.' + field).data('old');
+    }
+    var element = $('#row_' + id).find('.' + field);
+    var editElement = $('#edit_'+field+'_'+id);
+    
+    editElement.remove();
+    element.html(value);
+    element.show();
+}
+
+function edit(field, id) {
+    var element = $('#row_' + id).find('.' + field);
+    var previous = element.prev();
+    var value = element.html();
+    
+    element.data('old', value);
+    element.hide();
+    if (field == 'date') {
+        previous.after('<td id="edit_'+field+'_'+id+'"><input id="input_'+field+'_'+id+'" value="'+value+'"><br><button onClick="save(\''+field+'\', '+id+');"><?php putGS('Save'); ?></button><button class="cancel" onClick="view(\''+field+'\', '+id+');"><?php putGS('Cancel'); ?></button></td>');
+        $('#input_'+field+'_'+id).datepicker({
+            dateFormat : 'yy-mm-dd',
+            defaultDate: 'value'
+        });
+    }
+    else {
+        previous.after('<td id="edit_'+field+'_'+id+'"><input id="input_'+field+'_'+id+'" value="'+value+'"><br><button onClick="save(\''+field+'\', '+id+');"><?php putGS('Save'); ?></button><button class="cancel" onClick="view(\''+field+'\', '+id+');"><?php putGS('Cancel'); ?></button></td>');
+    }
+}
+
+function save(field, id) {
+    var value = $('#input_' + field + '_' + id).val();
+    $.get('/' + adminUrl + '/media-archive/ajax_save.php', {f_image_id: id, f_field: field, f_value: value});
+    view(field, id, value);
+}
 
 /**
  * Function to be called from popup after file is uploaded

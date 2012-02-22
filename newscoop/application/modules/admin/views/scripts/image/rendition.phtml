@@ -1,0 +1,26 @@
+<dl class="rendition">
+    <dt>
+        <div class="preview" style="width: <?php echo $this->preview->getWidth(); ?>px; height: <?php echo $this->preview->getHeight(); ?>px;">
+            <?php if ($this->thumbnail !== null) { ?>
+            <a href="<?php echo $this->url(array(
+                'module' => 'admin',
+                'controller' => 'image',
+                'action' => 'edit',
+                'rendition' => $this->rendition->getName(),
+                'format' => null,
+            )); ?>" title="<?php echo $this->escape(getGS("Edit $1", $this->rendition->getName())); ?>"><?php echo $this->thumbnail->getImg($this); ?></a>
+            <?php } ?>
+        </div>
+    </dt>
+    <dd class="name"><?php echo $this->escape($this->rendition->getLabel()); ?></dd>
+    <dd><small><?php echo array_shift(explode('_', $this->rendition->getSpecs())); ?> <?php echo $this->rendition->getWidth(), 'x', $this->rendition->getHeight(); ?></small></dd>
+</dl>
+<?php if (!$this->isDefault) { ?>
+<a href="<?php echo $this->url(array(
+    'module' => 'admin',
+    'controller' => 'image',
+    'action' => 'remove-rendition',
+    'rendition' => $this->rendition->getName(),
+    'format' => 'json',
+)); ?>" class="reset"><?php putGS('Use default'); ?></a>
+<?php } ?>

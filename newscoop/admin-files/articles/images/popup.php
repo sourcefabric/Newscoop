@@ -33,7 +33,7 @@ $articleObj = new Article($f_language_selected, $f_article_number);
   <title><?php putGS("Attach Image To Article"); ?></title>
 </head>
 <body>
-<?php camp_html_display_msgs(); ?>
+<?php camp_html_display_msgs(); ?> 
 <table style="margin-top: 10px; margin-left: 5px;" cellpadding="0" cellspacing="0">
 <tr>
 	<?php if ($g_user->hasPermission('AddImage')) { ?>
@@ -42,17 +42,14 @@ $articleObj = new Article($f_language_selected, $f_article_number);
 
 	<td style="padding: 3px; background-color: #EEE; border-top: 1px solid #8baed1; border-right: 1px solid #8baed1; border-left: 1px solid #8baed1; <?php if ($f_image_attach_mode != "existing") { ?>border-bottom: 1px solid #8baed1;<?php } ?>"><a href="<?php echo camp_html_article_url($articleObj, $f_language_id, "images/popup.php", "", "&f_image_attach_mode=existing"); ?>"><img src="<?php p($Campsite['ADMIN_IMAGE_BASE_URL']); ?>/add.png" border="0"><b><?php putGS("Attach Existing Image"); ?></b></a></td>
 </tr>
-<tr>
-	<td colspan="2" style="background-color: #EEE; padding-top: 5px; border-bottom: 1px solid #8baed1; border-right: 1px solid #8baed1; border-left: 1px solid #8baed1;">
-		<?php
-		if ($f_image_attach_mode == "existing") {
-			include("search.php");
-		} else {
-			include("add.php");
-		}?>
-	</td>
-</tr>
 </table>
+
+<?php
+if ($f_image_attach_mode == "existing") {
+    include("search.php");
+} else {
+    include("add.php");
+}?>
 
 </body>
 </html>

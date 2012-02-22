@@ -100,27 +100,39 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         { // id
             'sClass': 'id',
             'aTargets': [0]
-        }
+        },
     ],
     'fnDrawCallback': function() {
         $('#table-<?php echo $this->id; ?> tbody tr').click(function(event) {
-            if (event.target.type == 'checkbox') {
-                return; // checkbox click, handled by it's change
-            }
-
-            var input = $('input:checkbox', $(this));
-            if (input.attr('checked')) {
-                input.removeAttr('checked');
-            } else {
-                input.attr('checked', 'checked');
-            }
-            input.change();
+            
         }).each(function() {
-            var tr = $(this);
-            // detect locks
-            if ($('.name .ui-icon-locked', tr).not('.current-user').size()) {
-                tr.addClass('locked');
-            }
+            <?php if ($this->type == 'image') { ?>
+                // set 'row_' + id as row id
+                var id = $(this).find('.id').find('input').val();
+                $(this).attr('id', 'row_' + id);
+                $($(this).children()[2]).addClass('description');
+                $($(this).children()[3]).addClass('photographer');
+                $($(this).children()[4]).addClass('place');
+                $($(this).children()[5]).addClass('date');
+            <?php } ?>
+        });
+        
+        $('#table-<?php echo $this->id; ?> tbody tr td').click(function(event) {
+            <?php if ($this->type == 'image') { ?>
+                var id = $(this).parent().find('.id').find('input').val();
+                if ($(this).hasClass('description')) {
+                    edit('description', id);
+                }
+                if ($(this).hasClass('photographer')) {
+                    edit('photographer', id);
+                }
+                if ($(this).hasClass('place')) {
+                    edit('place', id);
+                }
+                if ($(this).hasClass('date')) {
+                    edit('date', id);
+                }
+            <?php } ?>
         });
 
         $('#table-<?php echo $this->id; ?> tbody input:checkbox').change(function() {
@@ -142,13 +154,6 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
                 $(this).change();
             });
         });
-
-        <?php if (!$this->clickable) { ?>
-        $('#table-<?php echo $this->id; ?> tbody a').click(function() {
-            $(this).closest('tr').click();
-            return false;
-        }).css('cursor', 'default');
-        <?php } ?>
     },
 	'fnCookieCallback': function (sName, oData, sExpires, sPath) {
         oData['abVisCols'] = []; // don't save visibility

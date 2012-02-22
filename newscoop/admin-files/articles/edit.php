@@ -81,6 +81,7 @@ if ($today['year'] != $savedOn['year'] || $today['mon'] != $savedOn['mon'] || $t
     $savedToday = FALSE;
 }
 
+$sectionObj = null;
 $showComments = FALSE;
 $showCommentControls = FALSE;
 if ($f_publication_id > 0) {

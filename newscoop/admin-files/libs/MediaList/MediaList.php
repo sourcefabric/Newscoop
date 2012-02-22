@@ -46,6 +46,7 @@ class MediaList extends BaseList
 
         $this->defaultSorting = 5;
         $this->defaultSortingDir = 'desc';
+        $this->type = 'media';
     }
 
     /**
