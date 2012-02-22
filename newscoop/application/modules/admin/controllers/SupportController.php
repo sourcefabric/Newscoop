@@ -60,15 +60,16 @@ class Admin_SupportController extends Zend_Controller_Action
         $form->addElement('hidden', 'agree', array('value' => 1));
 
         $form->addElement('submit', 'save', array(
-            'label' => getGS('I agree to Sourcefabric\'s privacy policy and approve sending daily statistics'),
-            'style' => 'font-size: 10px;',
+            'label' => getGS('Yes, help Newscoop'),
+            'class' => 'submit-group',
+            'style' => 'font-size: 12px;',
             'onClick' => 'agree();'
         ));
         
         $form->addElement('submit', 'cancel', array(
             'label' => getGS('Remind me in 1 week'),
-            'class' => 'submit',
-            'style' => 'font-size: 10px;',
+            'class' => 'submit-group',
+            'style' => 'font-size: 12px;',
             'onClick' => 'disagree();'
         ));
         

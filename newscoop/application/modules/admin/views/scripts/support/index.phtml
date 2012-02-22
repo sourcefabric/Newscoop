@@ -1,19 +1,16 @@
-<?php $this->placeholder('title')->set(getGS('Support')); ?>
+<?php $this->placeholder('title')->set(getGS('Support Feedback')); ?>
 
 <form action="<?php echo($this->form->getAction()); ?>" method="post">
     <dl class="zend_form">
         <p>
         <?php echo(getGS('Help Newscoop improve by letting us know you are using it. This info will be collected regularly in order to improve your user experience.')); ?>
         <br><br>
-        <a id="feedback_show" href="#" onClick="$('#feedback_container').toggle();$('#feedback_show').toggle();$('#feedback_hide').toggle();"><?php echo(getGS('Show sample feedback')); ?></a>
-        <a id="feedback_hide" href="#" onClick="$('#feedback_container').toggle();$('#feedback_show').toggle();$('#feedback_hide').toggle();" style="display: none;"><?php echo(getGS('Hide sample feedback')); ?></a>
+        <a id="feedback_show" href="#" onClick="$('#feedback_container').toggle();$('#feedback_show').toggle();$('#feedback_hide').toggle();"><?php echo(getGS('Show feedback data to be sent')); ?></a>
+        <a id="feedback_hide" href="#" onClick="$('#feedback_container').toggle();$('#feedback_show').toggle();$('#feedback_hide').toggle();" style="display: none;"><?php echo(getGS('Hide feedback data')); ?></a>
         <br>
         
         <div id="feedback_container" style="display: none;">
             <fieldset>
-                <legend>
-                    <?php echo(getGS('Sample support feedback')); ?>
-                </legend>
                 <div id="feedback" style="overflow: auto; height: 100px;">
                     <table style="width: 100%;">
                     <?php foreach ($this->stats as $key => $value) { ?>
@@ -34,6 +31,9 @@
         } else {
             echo(getGS('You are NOT sending daily statistics.'));
         } ?>
+
+        <p><i><?php putGS('By clicking on "Yes, help Newscoop" button, I agree to Sourcefabric\'s privacy policy'); ?></i></p>
+
         <?php echo($this->form->agree); ?>
         
         <?php echo($this->form->save); ?>
