@@ -361,6 +361,7 @@ class ArticleDatetimeRepository extends EntityRepository
                     $qb->expr()->orx
                     (
                         'dt.recurring IS NULL',
+                        'dt.recurring = 0',
                         'dt.recurring = :recurring_daily' // it is ok for daily repeating events; and if time specified, it is set below
                         $qb->expr()->andx('dt.recurring = :recurring_weekly', $qb->expr()->in('DAYOFWEEK(dt.startDate)', ':allowed_week_days')),
                         $qb->expr()->andx('dt.recurring = :recurring_monthly', $qb->expr()->in('DAYOFMONTH(dt.startDate)', ':allowed_month_days')),
@@ -370,6 +371,7 @@ class ArticleDatetimeRepository extends EntityRepository
 */
                 $outerOr = $qb->expr()->orx();
                 $outerOr->add('dt.recurring IS NULL');
+                $outerOr->add('dt.recurring = 0');
                 $outerOr->add('dt.recurring = :recurring_daily');
                 $useOuter = true;
 
