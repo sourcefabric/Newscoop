@@ -144,6 +144,9 @@ case "$1" in
     dpkg-statoverride --list $datadir/videos &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir/videos
 
+    # Installer needs to own all theme files, not just the themes directory
+    chown -R $WEB_USER.$WEB_GROUP $datadir/themes/ || true
+
 # newscoop-3.5 does not yet support that
 #   # database setup
 #   db_get newscoop/dbsetup
