@@ -20,7 +20,7 @@ class Article
     private $id;
 
     /**
-     * @ManyToMany(targetEntity="Package")
+     * @ManyToMany(targetEntity="Package", inversedBy="articles")
      * @JoinTable(name="package_article_package")
      * @var array
      */

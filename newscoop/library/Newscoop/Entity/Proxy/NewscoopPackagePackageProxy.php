@@ -52,18 +52,6 @@ class NewscoopPackagePackageProxy extends \Newscoop\Package\Package implements \
         return parent::getHeadline();
     }
 
-    public function setArticleNumber($articleNumber)
-    {
-        $this->__load();
-        return parent::setArticleNumber($articleNumber);
-    }
-
-    public function getArticleNumber()
-    {
-        $this->__load();
-        return parent::getArticleNumber();
-    }
-
     public function getItems()
     {
         $this->__load();
@@ -121,7 +109,7 @@ class NewscoopPackagePackageProxy extends \Newscoop\Package\Package implements \
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'headline', 'description', 'articleNumber', 'items', 'rendition', 'slug');
+        return array('__isInitialized__', 'id', 'headline', 'description', 'items', 'rendition', 'slug', 'articles');
     }
 
     public function __clone()

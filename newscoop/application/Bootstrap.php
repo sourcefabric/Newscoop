@@ -193,7 +193,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('em'));
 
         $container->register('package', 'Newscoop\Package\PackageService')
-            ->addArgument(new sfServiceReference('em'));
+            ->addArgument(new sfServiceReference('em'))
+            ->addArgument(new sfServiceReference('image'));
 
         Zend_Registry::set('container', $container);
         return $container;
@@ -289,6 +290,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ), array(
                 1 => 'src',
             ), $options['image']['cache_url'] . '/%s'));
+
+         $router->addRoute('rest',
+             new Zend_Rest_Route($front, array(), array(
+                 'admin' => array(
+                     'slideshow-rest',
+                 ),
+             )));
     }
 
     protected function _initActionHelpers()

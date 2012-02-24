@@ -1,0 +1,8 @@
+<script type="text/template" id="slideshow-template">
+<h3><%= headline %></h3>
+<ul>
+    <% _.each(items, function(item) { %>
+    <li><img src="<?php echo $this->baseUrl('/images/cache/'); ?><%= item.thumbnail.src %>" alt="<%= item.caption %>" width="<%= item.thumbnail.width %>" height="<%= item.thumbnail.height %>" /></li>
+    <% }); %>
+</ul>
+</script>

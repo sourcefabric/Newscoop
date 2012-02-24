@@ -48,7 +48,15 @@ camp_html_content_top(getGS('Media Archive'), NULL);
 </div><!-- /#images -->
 
 <div id="slideshows">
-    <?php echo $this->view->action('list-slideshows', 'media', 'admin'); ?>
+<?php
+    $limit = 25;
+    $paginator = Zend_Paginator::factory($this->_helper->service('package')->getCountBy(array()));
+    $paginator->setItemCountPerPage($limit);
+    $paginator->setCurrentPageNumber(1);
+    echo $this->view->partial('slideshow-list.phtml', array(
+        'slideshows' => $this->_helper->service('package')->findBy(array(), array(), $limit, 0),
+        'pages' => $paginator->count(),
+    )); ?>
 </div>
 
 <div id="files">

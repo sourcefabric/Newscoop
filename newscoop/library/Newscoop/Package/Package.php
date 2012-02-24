@@ -37,7 +37,7 @@ class Package
     private $description;
 
     /**
-     * @OneToMany(targetEntity="Newscoop\Package\Item", mappedBy="package")
+     * @OneToMany(targetEntity="Newscoop\Package\Item", mappedBy="package", cascade={"remove"})
      * @OrderBy({"offset"="ASC"})
      * @return Doctrine\Common\Collections\Collection
      */
@@ -62,10 +62,17 @@ class Package
     private $itemsCount;
 
     /**
+     * @ManyToMany(targetEntity="Article", mappedBy="packages", cascade={"remove"})
+     * @var array
+     */
+    private $articles;
+
+    /**
      */
     public function __construct()
     {
         $this->items = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->articles = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
