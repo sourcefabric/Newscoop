@@ -1,4 +1,5 @@
 <?php 
+regGS("Renditions", "");
 regGS("Support", "");
 regGS("Pending articles", "Artículos pendientes");
 regGS("Manage Users", "Administrar usuarios");

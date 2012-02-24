@@ -80,6 +80,8 @@ regGS("Authoring", "");
 regGS("Allow", "");
 regGS("User types", "Benutzertypen");
 regGS("No user types.", "Keine Benutzertypen");
+regGS("unlock", "");
+regGS("Printdesk", "");
 regGS("You do not have the right to add user types.", "Keine Berechtigung Benutzertypen hinzuzufügen");
 regGS("Adding new user type", "Neuer Benutzertyp wird hinzugefügt");
 regGS("The user type $1 has been added.", "Benutzertyp $1 wurde hinzugefügt");

@@ -20,4 +20,5 @@ regGS("Hello World!", "Hallo Welt!");
 regGS("Google gadget", "Google Gadget");
 regGS("Feed url", "URL eingeben");
 regGS("Access Denied", "Zugang verweigert");
+regGS("TagesWoche Quick Links", "");
 ?>

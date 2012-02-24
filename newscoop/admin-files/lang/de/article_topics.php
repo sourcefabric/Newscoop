@@ -1,10 +1,10 @@
 <?php 
-regGS("You must enter a name for the topic.", "");
-regGS("Show All", "");
-regGS("Select the parent of the topic", "");
-regGS("None", "");
-regGS("Add new topic", "");
-regGS("No topics have been created yet.", "");
+regGS("You must enter a name for the topic.", "Sie müssen einen Namen für das Thema vergeben. ");
+regGS("Show All", "Alle anzeigen");
+regGS("Select the parent of the topic", "Übergeordnetes Thema auswählen");
+regGS("None", "Keine");
+regGS("Add new topic", "Neues Thema hinzufügen. ");
+regGS("No topics have been created yet.", "Es wurden noch keine Themen angelegt. ");
 regGS("Topics updated.", "Themen aktualisiert.");
 regGS("Topic does not exist.", "Thema existiert nicht.");
 regGS("The topic '$1' has been removed from article.", "Das Thema '$1' wurde vom Artikel entfernt.");
