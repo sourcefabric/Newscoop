@@ -59,7 +59,7 @@ class PackageService
     public function findByArticle($articleNumber)
     {
         $article = $this->getArticle($articleNumber);
-        return array_map(array($this, 'formatPackage'), $article->getPackages()->toArray());
+        return $article->getPackages()->toArray();
     }
 
     /**
@@ -227,7 +227,7 @@ class PackageService
      */
     public function findBy(array $criteria, array $orderBy = array(), $limit = 25, $offset = 0)
     {
-        return array_map(array($this, 'formatPackage'), $this->repository->findBy($criteria, $orderBy, $limit, $offset));
+        return $this->repository->findBy($criteria, $orderBy, $limit, $offset);
     }
 
     /**
@@ -331,38 +331,5 @@ class PackageService
         }
 
         return $article;
-    }
-
-    /**
-     * Format package
-     *
-     * @param Newscoop\Package\Package $package
-     * @return object
-     */
-    private function formatPackage(\Newscoop\Package\Package $slideshow)
-    {
-        return (object) array(
-            'id' => $slideshow->getId(),
-            'headline' => $slideshow->getHeadline(),
-            'itemsCount' => $slideshow->getItemsCount(),
-            'slug' => $slideshow->getSlug(),
-            'item' => array_shift(array_map(array($this, 'formatPackageItem'), array_filter($slideshow->getItems()->toArray(), function($item) {
-                return $item->isImage();
-            }))),
-        );
-    }
-
-    /**
-     * Format package item
-     *
-     * @param Newscoop\Package\Item $item
-     * @return object
-     */
-    private function formatPackageItem(\Newscoop\Package\Item $item)
-    {
-        return (object) array(
-            'caption' => $item->getCaption(),
-            'thumbnail' => $item->getRendition()->getPreview(150, 150)->getThumbnail($item->getImage(), $this->imageService),
-        );
     }
 }

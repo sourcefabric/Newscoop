@@ -16,7 +16,7 @@ class Admin_SlideshowRestController extends Zend_Rest_Controller
     public function indexAction()
     {
         $limit = 25;
-        $this->_helper->json($this->_helper->service('package')->findBy(array(), array(), $limit, ($this->_getParam('page', 1) - 1) * $limit));
+        $this->_helper->json($this->view->slideshowsJson($this->_helper->service('package')->findBy(array(), array(), $limit, ($this->_getParam('page', 1) - 1) * $limit)));
     }
 
     public function getAction()

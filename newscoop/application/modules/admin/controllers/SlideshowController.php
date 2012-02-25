@@ -32,7 +32,7 @@ class Admin_SlideshowController extends Zend_Controller_Action
 
     public function boxAction()
     {
-        $this->_helper->json($this->_helper->service('package')->findByArticle($this->_getParam('article_number')));
+        $this->_helper->json($this->view->slideshowsJson($this->_helper->service('package')->findByArticle($this->_getParam('article_number'))));
     }
 
     public function createAction()
@@ -47,10 +47,10 @@ class Admin_SlideshowController extends Zend_Controller_Action
             $slideshow = $this->_helper->service('package')->save($values);
             if ($this->_getParam('article_number', false)) {
                 $slideshows = $this->_helper->service('package')->findByArticle($this->_getParam('article_number'));
-                $slideshows[] = (object) array('id' => $slideshow->getId());
+                $slideshows[] = $slideshow;
                 $this->_helper->service('package')->saveArticle(array(
                     'id' => $this->_getParam('article_number'),
-                    'slideshows' => array_map(function($slideshow) { return $slideshow->id; }, $slideshows),
+                    'slideshows' => array_map(function($slideshow) { return $slideshow->getId(); }, $slideshows),
                 ));
             }
             $this->_helper->redirector('edit', 'slideshow', 'admin', array(
@@ -201,7 +201,7 @@ class Admin_SlideshowController extends Zend_Controller_Action
 
         $limit = 25;
         if ($this->_getParam('format') === 'json') {
-            $this->_helper->json(array_map(array($this, 'formatSlideshow'), $this->_helper->service('package')->findBy(array(), array(), $limit, ($this->_getParam('page', 1) - 1) * $limit)));
+            $this->_helper->json($this->view->slideshowsJson($this->_helper->service('package')->findBy(array(), array(), $limit, ($this->_getParam('page', 1) - 1) * $limit)));
         }
 
         $paginator = Zend_Paginator::factory($this->_helper->service('package')->getCountBy(array()));
@@ -213,7 +213,7 @@ class Admin_SlideshowController extends Zend_Controller_Action
         $this->view->article = array(
             'id' => $this->_getParam('article_number'),
             'slideshows' => array_map(function($slideshow) {
-                return $slideshow->id;
+                return $slideshow->getId();
             }, $this->_helper->service('package')->findByArticle($this->_getParam('article_number'))),
         );
     }

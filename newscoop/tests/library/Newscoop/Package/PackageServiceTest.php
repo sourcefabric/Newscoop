@@ -231,8 +231,8 @@ class PackageServiceTest extends \TestCase
         $this->service->addItem($package, new RemoteVideo('url'));
 
         $packages = $this->service->findBy(array(), array('headline' => 'asc'));
-        $this->assertEquals(0, $packages[0]->itemsCount);
-        $this->assertEquals(1, $packages[1]->itemsCount);
+        $this->assertEquals(0, $packages[0]->getItemsCount());
+        $this->assertEquals(1, $packages[1]->getItemsCount());
     }
 
     public function testSaveSlugTwice()
@@ -244,7 +244,7 @@ class PackageServiceTest extends \TestCase
         $this->assertEquals(2, count($packages));
 
         foreach ($packages as $package) {
-            $this->assertNull($package->slug);
+            $this->assertNull($package->getSlug());
         }
     }
 

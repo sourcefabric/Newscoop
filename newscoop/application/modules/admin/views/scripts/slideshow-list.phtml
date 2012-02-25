@@ -14,7 +14,7 @@
 <div class="preview">
     <% if (!itemsCount) { %>
     <span class="blank"></span>
-    <% } else if (item.thumbnail) { %>
+    <% } else if (item) { %>
     <img src="<?php echo $this->baseUrl('/images/cache/'); ?><%= item.thumbnail.src %>" alt="" width="<%= item.thumbnail.width %>" height="<%= item.thumbnail.height %>" />
     <% } else { %>
     <span class="video"></span>
@@ -30,6 +30,15 @@
      * Slideshow model
      */
     var Slideshow = Backbone.Model.extend({
+        defaults: {
+            item: null
+        },
+
+        initialize: function() {
+            if (this.get('items')) {
+                this.set('item', this.get('items')[0]);
+            }
+        }
     });
 
     /**

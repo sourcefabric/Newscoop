@@ -97,7 +97,7 @@
 
     $(function() {
         window.slideshowCollection = new SlideshowCollection();
-        var slideshowView = new SlideshowListView({collection: slideshowCollection, slideshows: <?php echo json_encode($this->slideshows); ?>});
+        var slideshowView = new SlideshowListView({collection: slideshowCollection, slideshows: <?php echo json_encode($this->slideshowsJson($this->slideshows)); ?>});
         $('#media-slideshows a').fancybox({
             hideOnContentClick: false,
             width: 1300,

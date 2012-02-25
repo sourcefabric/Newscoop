@@ -19,7 +19,7 @@
 <div class="preview">
     <% if (!itemsCount) { %>
     <span class="blank"></span>
-    <% } else if (item.thumbnail) { %>
+    <% } else if (item) { %>
     <img src="<?php echo $this->baseUrl('/images/cache/'); ?><%= item.thumbnail.src %>" alt="" width="<%= item.thumbnail.width %>" height="<%= item.thumbnail.height %>" />
     <% } else { %>
     <span class="video"></span>
@@ -52,6 +52,10 @@
         initialize: function() {
             if (window.article) {
                 this.set('attached', _.indexOf(article.get('slideshows'), this.get('id')) !== -1);
+            }
+
+            if (this.get('items')) {
+                this.set('item', this.get('items')[0]);
             }
         },
 
@@ -183,7 +187,7 @@
         var app = new ArticleView({article: article});
         var slideshowCollection = new SlideshowCollection();
         var paginatorView = new PaginatorView({pages: <?php echo $this->pages; ?>, collection: slideshowCollection, el: $('body > nav')});
-        var slideshowView = new SlideshowListView({collection: slideshowCollection, slideshows: <?php echo json_encode($this->slideshows); ?>});
+        var slideshowView = new SlideshowListView({collection: slideshowCollection, slideshows: <?php echo json_encode($this->slideshowsJson($this->slideshows)); ?>});
     });
 })(jQuery);
 </script>
