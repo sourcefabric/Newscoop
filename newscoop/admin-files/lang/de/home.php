@@ -1,4 +1,8 @@
 <?php 
+regGS("Create slideshow", "");
+regGS("Create", "");
+regGS("Attach/Detach", "");
+regGS("Are you sure you want to delete slideshow?", "");
 regGS("Renditions", "Bildzuschnitte (Renditions)");
 regGS("Support", "");
 regGS("Pending articles", "Artikel in Warteschleife (Pending Articles)");
