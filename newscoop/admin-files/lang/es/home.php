@@ -1,6 +1,6 @@
 <?php 
-regGS("Renditions", "");
-regGS("Support", "");
+regGS("Renditions", "Rendiciones");
+regGS("Support", "Soporte");
 regGS("Pending articles", "Artículos pendientes");
 regGS("Manage Users", "Administrar usuarios");
 regGS("Manage User Types", "Administrar tipos de usuario");
@@ -146,4 +146,5 @@ regGS("Login failed", "Acceso fallido");
 regGS("Please make sure that you typed the correct user name and password.", "Por favor asegurese de que escribio correctamente su nombre de usuario y clave.");
 regGS("If your problem persists please contact the site administrator $1", "Si su problema persiste favor contacte al administrador del sistema $1");
 regGS("Backup/Restore", "Respaldar/Restablecer");
+regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Hola, \\n\\n para recuperar tu contraseña, sigue el siguiente enlace $1");
 ?>
