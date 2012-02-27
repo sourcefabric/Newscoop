@@ -61,6 +61,8 @@ echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' . "\n";
 
 </div><!-- end of map_mappart_outer_filter -->
 
+<div class="geo_filter_texts" style="height:150px;overflow-y:auto;overflow-x:hidden">
+
 <div class="polygon_info">
 <div id="geo_polygons_info">&nbsp;</div>
 </div><!-- end of polygon_info -->
@@ -73,6 +75,8 @@ echo '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">' . "\n";
 </div><!-- end of polygon_append -->
 
 </div><!-- end of map_show_filter -->
+
+</div><!-- end of geo_filter_texts -->
 
 </body>
 </html>
