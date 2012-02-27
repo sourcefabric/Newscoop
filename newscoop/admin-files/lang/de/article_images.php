@@ -1,4 +1,6 @@
 <?php 
+regGS("Items: ", "");
+regGS("Attach slideshows", "");
 regGS("original size:", "Originalgrösse");
 regGS("no caption", "Bildlegende fehlt");
 regGS("Video URL", "Video URL (youtu.be/... oder vimeo.com/...)");
@@ -15,8 +17,6 @@ regGS("Saved", "Gespeichert");
 regGS("Save headline", "Name speichern");
 regGS("Place images", "Bilder zuschneiden");
 regGS("Place Images", "Bilder zuschneiden");
-regGS("No slideshows to attach", "Keine Slideshows verfügbar");
-regGS("No slideshows", "Keine Slideshows angehängt");
 regGS("No renditions defined.", "");
 regGS("No images found.", "Keine Bilder gefunden");
 regGS("No images attached to article.", "Keine Bilder angehängt");
@@ -35,12 +35,10 @@ regGS("Finish", "Fertig");
 regGS("Edit Image Data", "Bildinformationen bearbeiten");
 regGS("Edit $1", "Bearbeiten");
 regGS("Done editing", "Schliessen");
-regGS("Detach $1", "$1 entfernen");
 regGS("Detach", "Entfernen");
 regGS("Create", "Erstellen");
 regGS("Caption", "Bildlegende");
 regGS("Attached images", "Bilder dieses Artikels");
-regGS("Attach selected slideshows", "Ausgewählte Slideshows anhängen");
 regGS("Attach & Place", "Anhängen und platzieren");
 regGS("Add video url (e.g. http://vimeo.com/25083275 for Vimeo, http://youtu.be/1XsPVO61e9w for YouTube)", "Video URL (youtu.be/... oder vimeo.com/...)");
 regGS("Add video", "Video hinzufügen");

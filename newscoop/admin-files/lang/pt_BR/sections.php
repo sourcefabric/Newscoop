@@ -50,9 +50,9 @@ regGS("The section number specified already exists, please specify a different v
 regGS("Warning", "Aviso");
 regGS("You must select a section.", "Selecione uma secção.");
 regGS("You must specify a name for the section.", "Tem de indicar um nome para a secção.");
+regGS("The section could not be added.", "Esta Secção não pode ser Adicionada.");
+regGS("Add new section", "Criar Secção");
 regGS("Please check if another section with the same number does not already exist.", "Verifique se já não existe uma secção com o mesmo numero.");
 regGS("Change section name", "Alterar nome da Secção");
 regGS("Destination section number", "Numero da Secção de destino");
-regGS("The section could not be added.", "Esta Secção não pode ser Adicionada.");
-regGS("Add new section", "Criar Secção");
 ?>

@@ -81,4 +81,6 @@ regGS("Keyword separator must be at least one character.", "");
 regGS("You do not have the right to change system preferences.", "");
 regGS("Number of failed login attempts before showing CAPTCHA :", "");
 regGS("Keyword separator:", "");
+regGS("Time Zone:", "");
+regGS("disabled", "");
 ?>

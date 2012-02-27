@@ -69,6 +69,7 @@ regGS("Saturday", "Sábado");
 regGS("Sunday", "Domingo");
 regGS("You do not have the right to add new languages.", "Não tem permissões para adicionar idiomas.");
 regGS("There are $1 issue(s) left.", "Existe(m) ainda $1 Edição(ões).");
+regGS("Native name", "Nome Nativo");
 regGS("The language $1 has been successfuly added.", "O Idioma $1 foi adicionado");
 regGS("Please check if a language with the same name does not already exist.", "Verifique se já não existe um idioma como mesmo nome");
 regGS("The language could not be added.", "Não foi possivel adicionar o idioma");
@@ -78,5 +79,4 @@ regGS("Updating language information", "Actualizando informações do Idioma");
 regGS("Language information has been successfuly updated.", "Informações do Idioma actualizadas");
 regGS("Language information could not be updated.", "Informações Idioma não podem ser actualizadas");
 regGS("A language with the same name already exists.", "Já existe um idioma com o mesmo nome");
-regGS("Native name", "Nome Nativo");
 ?>
