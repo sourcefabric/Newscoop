@@ -256,9 +256,9 @@ regGS("Please take a minute to send us an email.", "Por favor perca um minuto en
 regGS("(optional)", "(opcional)");
 regGS("The URL you entered is invalid: '$1'", "O Endereço introduzido é inválido: '$1'");
 regGS("Reads", "Leituras");
-regGS("Publish with issue", "");
-regGS("Universal List", "");
-regGS("Invalid security token!", "");
+regGS("Publish with issue", "Publicar com a edição");
+regGS("Universal List", "Lista universal");
+regGS("Invalid security token!", "Token de segurança inválido!");
 regGS("Authors", "Autores");
 regGS("User name", "Nome de Utilizador");
 regGS("User Types", "Tipo de Utilizadores");
