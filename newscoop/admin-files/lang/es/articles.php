@@ -1,4 +1,6 @@
 <?php 
+regGS("Slideshows", "");
+regGS("Place images", "");
 regGS("You're not allowed to edit article.", "No tiene permitido editar un artículo.");
 regGS("Webcode", "Webcode");
 regGS("Unapproved", "No aprobado");
@@ -162,7 +164,4 @@ regGS("No such section.", "No existe sección");
 regGS("Reorder", "");
 regGS("Author", "");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "¿Está seguro de que desea eliminar el tópico \\'$1\\' del artículo?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "¿Está seguro de que desea eliminar el archivo \\'$1\\' del artículo?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "¿Está seguro de que desea eliminar la imagen \\'$1\\' del artículo?");
 ?>

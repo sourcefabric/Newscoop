@@ -1,48 +1,193 @@
-<?php $this->placeholder('bodyId')->set('next'); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('js/views/PaginatorView.js')); ?>
 
-<?php if (empty($this->slideshows)) { ?>
-<div class="empty"><?php putGS('No slideshows to attach'); ?></div>
+<header>
+    <h1><?php putGS('Attach slideshows'); ?></h1>
+    <div id="app">
+        <button id="attach-slideshows-button" class="prime"><?php putGS('Save'); ?></button>
+        <button id="close-button"><?php putGS('Close'); ?></button>
+    </div>
+</header>
 
-<div class="buttons">
-    <button id="close-button"><?php putGS('Close'); ?></button>
+<nav class="top-fixed"></nav>
+
+<section>
+    <ul id="slideshow-list" class="list-view grid"></ul>
+</section>
+
+<script type="text/template" id="slideshow-template">
+<h3 class="title"><%= headline %> <small>(<?php putGS('Items: '); ?><%= itemsCount %>)</small></h3>
+<div class="preview">
+    <% if (!itemsCount) { %>
+    <span class="blank"></span>
+    <% } else if (item) { %>
+    <img src="<?php echo $this->baseUrl('/images/cache/'); ?><%= item.thumbnail.src %>" alt="" width="<%= item.thumbnail.width %>" height="<%= item.thumbnail.height %>" />
+    <% } else { %>
+    <span class="video"></span>
+    <% } %>
 </div>
+</script>
+<?php echo $this->render('paginator-template.phtml'); ?>
 
-<?php } else { ?>
-<ul id="attach-slideshow-list" class="slideshows">
-    <?php foreach ($this->slideshows as $slideshow) { ?>
-    <li id="slideshow-<?php echo $slideshow->getId(); ?>">
-        <?php echo $this->slideshow($slideshow); ?>
-    </li>
-    <?php } ?>
-</ul>
-
-<div class="buttons">
-    <button id="attach-button"><?php putGS('Attach selected slideshows'); ?></button>
-    <button id="close-button"><?php putGS('Close'); ?></button>
-</div>
-<?php } ?>
-
-<script>
-    $(function() {
-        $('#attach-slideshow-list').selectable();
-
-        $('#attach-button').click(function() {
-            var selected = [];
-            $('#attach-slideshow-list li.ui-selected').each(function() {
-                selected.push($(this).attr('id').split('-')[1]);
-            });
-
-            if (selected.length) {
-                $.post(<?php echo json_encode($this->url()); ?>, {'slideshows': selected}, function(data, textStatus) {
-                    parent.$.fancybox.close();
-                });
-            } else {
-                parent.$.fancybox.close();
-            }
-        });
-
-        $('#close-button').click(function() {
-            parent.$.fancybox.close();
-        });
+<script type="text/javascript">
+(function($) {
+    /**
+     * Article model
+     */
+    var Article = Backbone.Model.extend({
+        url: <?php echo json_encode($this->url(array('action' => 'article'))); ?>,
+        defaults: {
+            slideshows: []
+        }
     });
+
+    /**
+     * Slideshow model
+     */
+    var Slideshow = Backbone.Model.extend({
+        defaults: {
+            item: null,
+            attached: false
+        },
+
+        initialize: function() {
+            if (window.article) {
+                this.set('attached', _.indexOf(article.get('slideshows'), this.get('id')) !== -1);
+            }
+
+            if (this.get('items')) {
+                this.set('item', this.get('items')[0]);
+            }
+        },
+
+        toggle: function() {
+            var index = _.indexOf(article.get('slideshows'), this.get('id'));
+            if (index === -1) {
+                this.set('attached', true);
+                article.get('slideshows').push(this.get('id'));
+            } else {
+                this.set('attached', false);
+                article.get('slideshows').splice(index, 1);
+            }
+        }
+    });
+
+    /**
+     * Slideshow collection
+     */
+    var SlideshowCollection = Backbone.Collection.extend({
+        model: Slideshow,
+        url: <?php echo json_encode($this->url(array('format' => 'json'))); ?>
+    });
+
+    /**
+     * Slideshow view
+     */
+    var SlideshowView = Backbone.View.extend({
+        tagName: "li",
+
+        events: {
+            'click': 'toggleAttached',
+        },
+
+        initialize: function() {
+            this.model.bind('change', this.render, this);
+            this.template = _.template($('#slideshow-template').html());
+        },
+
+        render: function() {
+            $(this.el).html(this.template(this.model.toJSON()));
+            this.setSelected();
+            return this;
+        },
+
+        toggleAttached: function() {
+            this.model.toggle();
+            this.setSelected();
+        },
+
+        setSelected: function() {
+            if (this.model.get('attached')) {
+                $(this.el).addClass('selected');
+            } else {
+                $(this.el).removeClass('selected');
+            }
+        }
+    });
+
+    /**
+     * Slideshow list view
+     */
+    var SlideshowListView = Backbone.View.extend({
+        initialize: function() {
+            this.collection = this.options.collection;
+            this.collection.bind('reset', this.render, this);
+            this.collection.reset(this.options.slideshows);
+        },
+
+        render: function() {
+            $('#slideshow-list').empty();
+            this.collection.each(function(slideshow) {
+                var view = new SlideshowView({model: slideshow});
+                $('#slideshow-list').append(view.render().el);
+            });
+            return this;
+        }
+    });
+
+    /**
+     * Message view
+     */
+    var Message = Backbone.View.extend({
+        initialize: function() {
+            $('body > #message').detach();
+            var message = $('<div id="message"></div>').appendTo($('body'));
+            $('<span></span>').text(this.options.message).appendTo(message);
+            window.setTimeout(function() {
+                message.fadeOut('slow', function() {
+                    message.detach();
+                });
+            }, 3000);
+        }
+    });
+
+    /**
+     * Article view
+     */
+    var ArticleView = Backbone.View.extend({
+        el: $('#app'),
+
+        events: {
+            'click #attach-slideshows-button': 'saveArticle',
+            'click #close-button': 'close'
+        },
+
+        initialize: function() {
+            this.article = this.options.article;
+            this.article.bind('sync', this.saveMessage, this);
+        },
+
+        saveArticle: function() {
+            this.article.save();
+        },
+
+        saveMessage: function() {
+            new Message(<?php echo json_encode(array(
+                'message' => getGS('Saved'),
+                'timeout' => 3000,
+            )); ?>);
+        },
+
+        close: function() {
+            parent.$.fancybox.close();
+        }
+    });
+
+    $(function() {
+        window.article = new Article(<?php echo json_encode($this->article); ?>);
+        var app = new ArticleView({article: article});
+        var slideshowCollection = new SlideshowCollection();
+        var paginatorView = new PaginatorView({pages: <?php echo $this->pages; ?>, collection: slideshowCollection, el: $('body > nav')});
+        var slideshowView = new SlideshowListView({collection: slideshowCollection, slideshows: <?php echo json_encode($this->slideshowsJson($this->slideshows)); ?>});
+    });
+})(jQuery);
 </script>

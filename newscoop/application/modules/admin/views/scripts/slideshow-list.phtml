@@ -1,0 +1,140 @@
+<?php $this->headScript()->appendFile($this->baseUrl('js/underscore.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('js/backbone.js')); ?>
+<?php $this->headScript()->appendFile($this->baseUrl('js/views/PaginatorView.js')); ?>
+
+<div id="slideshow-app">
+    <div id="slideshow-paginator"></div><br />
+    <a id="add-slideshow" href="<?php echo $this->url(array('controller' => 'slideshow', 'action' => 'create')); ?>" class="modal button"><?php putGS('Create slideshow'); ?></a>
+</div>
+
+<ul id="slideshow-list" class="list-view grid"></ul>
+
+<script type="text/template" id="slideshow-template">
+<h3 class="title"><a href="<?php echo $this->url(array('controller' => 'slideshow', 'action' => 'edit')); ?>/slideshow/<%= id %>" class="edit"><%= headline %></a></h3>
+<div class="preview">
+    <% if (!itemsCount) { %>
+    <span class="blank"></span>
+    <% } else if (item) { %>
+    <img src="<?php echo $this->baseUrl('/images/cache/'); ?><%= item.thumbnail.src %>" alt="" width="<%= item.thumbnail.width %>" height="<%= item.thumbnail.height %>" />
+    <% } else { %>
+    <span class="video"></span>
+    <% } %>
+</div>
+<a href="#" class="delete"><?php putGS('Delete'); ?></a>
+</script>
+<?php echo $this->render('paginator-template.phtml'); ?>
+
+<script type="text/javascript">
+(function($) {
+    /**
+     * Slideshow model
+     */
+    var Slideshow = Backbone.Model.extend({
+        defaults: {
+            item: null
+        },
+
+        initialize: function() {
+            if (this.get('items')) {
+                this.set('item', this.get('items')[0]);
+            }
+        }
+    });
+
+    /**
+     * Slideshow collection
+     */
+    var SlideshowCollection = Backbone.Collection.extend({
+        url: <?php echo json_encode($this->url(array('module' => 'admin', 'controller' => 'slideshow-rest'), 'rest')); ?>,
+        model: Slideshow
+    });
+
+    /**
+     * Slideshow view
+     */
+    var SlideshowView = Backbone.View.extend({
+        tagName: "li",
+
+        events: {
+            'click .delete': 'delete',
+        },
+
+        initialize: function() {
+            this.model.bind('change', this.render, this);
+            this.template = _.template($('#slideshow-template').html());
+        },
+
+        render: function() {
+            $(this.el).html(this.template(this.model.toJSON()));
+            $(this.el).find('.title .edit').fancybox({
+                hideOnContentClick: false,
+                width: 1300,
+                height: 800,
+                type: 'iframe',
+                onClosed: function() {
+                    slideshowCollection.fetch();
+                }
+            });
+            return this;
+        },
+
+        delete: function(e) {
+            e.preventDefault();
+            if (confirm(<?php echo json_encode(getGS('Are you sure you want to delete slideshow?')); ?>)) {
+                this.model.destroy();
+                this.remove();
+            }
+        }
+    });
+
+    /**
+     * Slideshow list view
+     */
+    var SlideshowListView = Backbone.View.extend({
+        initialize: function() {
+            this.collection = this.options.collection;
+            this.collection.bind('reset', this.render, this);
+            this.collection.bind('remove', this.handleRemove, this);
+            this.collection.reset(this.options.slideshows);
+        },
+
+        render: function() {
+            $('#slideshow-list').empty();
+            this.collection.each(function(slideshow) {
+                var view = new SlideshowView({model: slideshow});
+                $('#slideshow-list').append(view.render().el);
+            });
+            return this;
+        },
+
+        handleRemove: function() {
+            this.collection.fetch();
+        }
+    });
+
+    /**
+     * Controls
+     */
+    var AppView = Backbone.View.extend({
+        el: $('#slideshow-app'),
+        initialize: function() {
+            $(this.el).find('a').fancybox({
+                hideOnContentClick: false,
+                width: 1300,
+                height: 800,
+                type: 'iframe',
+                onClosed: function() {
+                    slideshowCollection.fetch();
+                }
+            });
+        }
+    });
+
+    $(function() {
+        window.slideshowCollection = new SlideshowCollection();
+        var paginator = new PaginatorView({pages: <?php echo $this->pages; ?>, collection: slideshowCollection, el: $('#slideshow-paginator')});
+        var view = new SlideshowListView({collection: slideshowCollection, slideshows: <?php echo json_encode($this->slideshows); ?>});
+        var app = new AppView();
+    });
+})(jQuery);
+</script>

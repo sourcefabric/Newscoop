@@ -1,11 +1,11 @@
 <?php 
-regGS("Maximal zoom for auto-focusing:", "");
-regGS("Map border for auto-focusing:", "");
-regGS("Map auto-focusing as the default behavior:", "");
-regGS("Include CSS file for map view", "");
-regGS("Collect statistics:", "");
-regGS("Please enter password recovery from email.", "");
-regGS("From email address:", "");
+regGS("Maximal zoom for auto-focusing:", "Maximaler Zoom für Auto-Schärfe");
+regGS("Map border for auto-focusing:", "Kartengrenze für Auto-Schärfe:");
+regGS("Map auto-focusing as the default behavior:", "Karten Auto-Schärfe als Standard-Verhalten. ");
+regGS("Include CSS file for map view", "CSS-Datei bei Kartenansicht einschließen. ");
+regGS("Collect statistics:", "Statistiken sammeln:");
+regGS("Please enter password recovery from email.", "Bitte geben Sie die Passwort-Wiederherstellung aus der Email ein. ");
+regGS("From email address:", "Aus der Email-Adresse");
 regGS("Run scheduled tasks externally?", "Geplante Aufgaben extern ausführen?");
 regGS("Setting up a Newscoop Replication Server?", "Newscoop Replication Server erstellen?");
 regGS("Newscoop Online Server Database", "Newscoop Online Server Datenbank");

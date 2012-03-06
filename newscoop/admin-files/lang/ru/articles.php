@@ -1,4 +1,6 @@
 <?php 
+regGS("Slideshows", "");
+regGS("Place images", "");
 regGS("You're not allowed to edit article.", "");
 regGS("Webcode", "");
 regGS("Unapproved", "");

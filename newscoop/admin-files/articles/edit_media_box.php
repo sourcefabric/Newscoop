@@ -55,17 +55,12 @@
     </div>
 
     <!-- BEGIN Slideshows -->
-    <div id="media-slideshows"></div>
-    <script type="text/javascript">
-    $(function() {
-        $('#media-slideshows').load("<?php echo $this->view->url(array(
-            'module' => 'admin',
-            'controller' => 'slideshow',
-            'action' => 'box',
-            'article_number' => $articleObj->getArticleNumber(),
-        )); ?>");
-    });
-    </script>
+    <div id="media-slideshows">
+        <?php echo $this->view->partial('slideshow-box.phtml', array(
+            'articleNumber' => $articleObj->getArticleNumber(),
+            'slideshows' => $this->_helper->service('package')->findByArticle($articleObj->getArticleNumber()),
+        )); ?>
+    </div>
     <!-- END Slideshows -->
 
     <div id="media-attachments">

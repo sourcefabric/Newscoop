@@ -1,16 +1,16 @@
 <?php 
-regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "");
-regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "");
-regGS("Publish all articles:", "");
-regGS("Publish all articles", "");
-regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "");
-regGS("in order to be able to assigned to the issue.", "");
-regGS("default", "");
-regGS("The publishing/unpublishing can not be set the same time", "");
-regGS("The publishing schedule can not be set in the past", "");
-regGS("Please assign at least one theme to the publication", "");
-regGS("Only than the issue can be published", "");
-regGS("Issue Theme", "");
+regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Es kann keine Vorschau der Ausgabe erstellt werden. Please make sure the publication has a theme assigned.");
+regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "Es kann keine Vorschau der Ausgabe erstellt werden. Please make sure it has the front template selected.");
+regGS("Publish all articles:", "Alle Artikel veröffentlichen: ");
+regGS("Publish all articles", "Alle Artikel veröffentlichen");
+regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "Veröffentlichung aller Artikel erzwingen. Wenn auf 'Nein' werden nur die Artikel mit dem Status 'Mit der Ausgabe veröffentlichen' mit der Ausgabe veröffentlicht. ");
+regGS("in order to be able to assigned to the issue.", "um der Ausgabe zugeordnet werden zu können. ");
+regGS("default", "Standard");
+regGS("The publishing/unpublishing can not be set the same time", "Der Zeitpunkt der Veröffentlichung / Unveröffentlichung kann nicht identisch sein. ");
+regGS("The publishing schedule can not be set in the past", "Der Veröffentlichungszeitraum kann nicht in der Vergangenheit liegen. ");
+regGS("Please assign at least one theme to the publication", "Bitte weisen Sie der Publikation mindestens ein Thema zu. ");
+regGS("Only than the issue can be published", "Nur dann kann die Ausgabe veröffentlicht werden. ");
+regGS("Issue Theme", "Thema der Ausgabe");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Die gewählten Werte stehen im Widerspruch zur Ausgabe \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Nummern für jede Ausgabe in dieser Publikation und Sprache müssen unterschiedlich sein.");
 regGS("The language and URL name must be unique for each issue in this publication.", "Sprache und URL-Name für jede Ausgabe in dieser Publikation müssen unterschiedlich sein.");

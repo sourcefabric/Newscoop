@@ -1,14 +1,14 @@
 <?php 
-regGS("show", "");
-regGS("hide", "");
-regGS("Title", "");
-regGS("Resource Type:", "");
-regGS("Resource Type", "");
-regGS("Resource", "");
-regGS("Diff", "");
-regGS("Broken data", "");
-regGS("Action Type:", "");
-regGS("No logs.", "");
+regGS("show", "zeigen");
+regGS("hide", "verbergen");
+regGS("Title", "Titel");
+regGS("Resource Type:", "Ressourcentyp");
+regGS("Resource Type", "Ressourcentyp");
+regGS("Resource", "Ressource");
+regGS("Diff", "Diff");
+regGS("Broken data", "Kaputte Daten");
+regGS("Action Type:", "Aktionstyp: ");
+regGS("No logs.", "Keine Logs. ");
 regGS("User", "User");
 regGS("Date/Time", "Datum/Uhrzeit");
 ?>

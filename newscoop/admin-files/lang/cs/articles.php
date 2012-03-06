@@ -1,4 +1,6 @@
 <?php 
+regGS("Slideshows", "");
+regGS("Place images", "");
 regGS("You're not allowed to edit article.", "Nemáte povolení k úpravě článku.");
 regGS("Webcode", "Webcode");
 regGS("Unapproved", "Neschválené");
@@ -160,7 +162,4 @@ regGS("This article cannot be previewed. Please make sure it has the article tem
 regGS("No such article.", "Článek neexistuje");
 regGS("No such section.", "Rubrika neexistuje.");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit téma \\'$1\\' z článku?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit soubor \\'$1\\' z článku?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Opravdu chcete obrázek \\'$1\\' z článku odstranit?");
 ?>

@@ -1,4 +1,6 @@
 <?php 
+regGS("Slideshows", "");
+regGS("Place images", "");
 regGS("You're not allowed to edit article.", "Немате право уређивања текста");
 regGS("Webcode", "Веб код");
 regGS("Unapproved", "Неодобрен");
@@ -163,7 +165,4 @@ regGS("Reorder", "Промени распоред");
 regGS("Author", "аутор");
 regGS("Are you sure you want to delete this scheduled action?", " ");
 regGS("Are you sure you want to remove the image '$1' from the article?", "Да ли сте сигурни да желите да обришете слику  '$1'  из текста? ");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Да ли сте сигурни да из текста желите да уклоните тему \\'$1\\'?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Да ли сте сигурни да из текста желите да уклоните фајл \\'$1\\'?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Да ли сте сигурни да из текста желите да уклоните слику \\'$1\\'?");
 ?>

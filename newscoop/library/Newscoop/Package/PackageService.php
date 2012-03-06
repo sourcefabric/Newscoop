@@ -25,12 +25,18 @@ class PackageService
     private $repository;
 
     /**
+     * @var Newscoop\Image\ImageService
+     */
+    private $imageService;
+
+    /**
      * @param Doctrine\ORM\EntityManager $orm
      */
-    public function __construct(\Doctrine\ORM\EntityManager $orm)
+    public function __construct(\Doctrine\ORM\EntityManager $orm, \Newscoop\Image\ImageService $imageService)
     {
         $this->orm = $orm;
         $this->repository = $this->orm->getRepository('Newscoop\Package\Package');
+        $this->imageService = $imageService;
     }
 
     /**
@@ -52,25 +58,8 @@ class PackageService
      */
     public function findByArticle($articleNumber)
     {
-        try {
-            $article = $this->getArticle($articleNumber);
-            return $article->getPackages();
-        } catch (\Exception $e) {
-            if ($e->getCode() === '42S02') {
-                $schemaTool = new \Doctrine\ORM\Tools\SchemaTool($this->orm);
-                try {
-                    $schemaTool->createSchema(array(
-                        $this->orm->getClassMetadata('Newscoop\Package\Package'),
-                        $this->orm->getClassMetadata('Newscoop\Package\Item'),
-                        $this->orm->getClassMetadata('Newscoop\Image\Rendition'),
-                    ));
-                } catch (\Exception $e) {
-                }
-                return array();
-            } else {
-                throw $e;
-            }
-        }
+        $article = $this->getArticle($articleNumber);
+        return $article->getPackages()->toArray();
     }
 
     /**
@@ -253,19 +242,21 @@ class PackageService
     }
 
     /**
-     * Add package to article
+     * Save article packages
      *
-     * @param Newscoop\Package\Package $package
-     * @param int $articleNumber
+     * @param array $articleArray
      * @return void
      */
-    public function addArticle(Package $package, $articleNumber)
+    public function saveArticle(array $articleArray)
     {
-        $article = $this->getArticle($articleNumber);
-        if (!$article->getPackages()->contains($package)) {
+        $article = $this->getArticle($articleArray['id']);
+        $article->getPackages()->clear();
+        foreach ($articleArray['slideshows'] as $packageId) {
+            $package = $this->orm->find('Newscoop\Package\Package', $packageId);
             $article->getPackages()->add($package);
-            $this->orm->flush($article);
         }
+
+        $this->orm->flush();
     }
 
     /**
@@ -292,6 +283,19 @@ class PackageService
     {
         $article = $this->getArticle($articleNumber);
         return $this->orm->getRepository('Newscoop\Package\Package')->findAvailableForArticle($article);
+    }
+
+    /**
+     * Delete package
+     *
+     * @param int $id
+     * @return void
+     */
+    public function delete($id)
+    {
+        $package = $this->orm->getRepository('Newscoop\Package\Package')->find($id);
+        $this->orm->remove($package);
+        $this->orm->flush();
     }
 
     /**

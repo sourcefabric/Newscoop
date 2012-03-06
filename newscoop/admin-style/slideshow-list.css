@@ -1,0 +1,52 @@
+#slideshow-list img {
+    display: block;
+    border: none;
+}
+
+#slideshow-list small {
+    color: #ccc;
+}
+
+#slideshow-list .title {
+    margin: 0 0 5px;
+    padding: 0;
+    font-size: 13px;
+    font-weight: normal;
+}
+
+#slideshow-list .preview {
+    height: 150px;
+    width: 150px;
+    overflow: hidden;
+}
+
+#slideshow-list .video {
+    display: block;
+    min-height: 100px;
+    background: #797979 url('images/slideshow-preview-video.png') no-repeat 50% 50%;
+}
+
+#message {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 1000;
+}
+
+#message > span {
+    display: inline-block;
+    margin: 0;
+    padding: 3px 5px;
+    color: #fff;
+    background-color: #5c3566;
+    font-size: 0.8em;
+}
+
+#slideshow-app {
+    margin: 13px 13px 0;
+}
+
+#add-slideshow {
+}

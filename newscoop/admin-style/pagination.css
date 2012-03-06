@@ -1,0 +1,44 @@
+@charset "utf-8";
+/* CSS Document */
+
+dl.slideshow-preview figure > div > * {
+    border: 1px solid #BABDB6;
+    display: block;
+	}
+	
+/* Pagination ////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////*/
+
+.paginationControl {
+	color: rgba(255, 255, 255, 0);
+	font-size:1px;
+	}
+	.paginationControl span, .paginationControl a {
+		border: 1px solid #9D9D9D;
+		color: #3B3B3B;
+		display: inline-block;
+		font-size: 12px;
+		padding: 3px 12px;
+		font-size:12px;
+		line-height: 17px;
+		}
+		.paginationControl a {
+			background: -moz-linear-gradient(center top , #FAFAFA 0%, #F6F6F6 100%);
+			background: linear-gradient(top, #FAFAFA 0%, #F6F6F6 100%);
+			background: -webkit-linear-gradient(top, #FAFAFA 0%, #F6F6F6 100%);
+			text-decoration:none;
+			}
+			.paginationControl a:hover {
+				background: -moz-linear-gradient(center top , #FAFAFA 0%, #eaeaea 100%);
+				background: linear-gradient(top, #FAFAFA 0%, #eaeaea 100%);
+				background: -webkit-linear-gradient(top, #FAFAFA 0%, #eaeaea 100%);
+				border: 1px solid #818181;
+				}
+		.paginationControl span {
+			border: 1px solid #E5E5E5;
+			background: rgba(255, 255, 255, 0.5);
+			color: #DBDBDB;
+			}
+nav .paginationControl {
+	float:left;
+	}
