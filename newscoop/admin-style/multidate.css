@@ -74,7 +74,7 @@ body {
 }
 
 .border-left {	
-	border-left: 0px solid #9D9D9D;
+	border-left: 1px solid #9D9D9D;
 	width: 131px!important;
 }
 .radio-specific {

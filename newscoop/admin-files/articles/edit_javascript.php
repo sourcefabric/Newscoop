@@ -564,6 +564,10 @@ function loadMultiDateEvents() {
                     end_values['hour'] = '24';
                     end_values['minute'] = '00';
                 }
+                if ((item.restOfDay !== undefined) && item.restOfDay) {
+                    end_values['hour'] = '24';
+                    end_values['minute'] = '00';
+                }
 
                 var startString = '<span style="float:left">' + (start.getFullYear() + '-' + start_values['month'] + '-' + start_values['day'] + ' ' + start_values['hour'] + ':' + start_values['minute'] ) + '</span>';
                 var endString = '<span style="float:left">' + (end.getFullYear() + '-' + end_values['month'] + '-' + end_values['day'] + ' ' + end_values['hour'] + ':' + end_values['minute'] ) + '</span>';

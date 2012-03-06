@@ -355,11 +355,18 @@ class Admin_MultidateController extends Zend_Controller_Action
 	        	$endDate = $date->getEndDate();
                 // TODO: at this moment, specific dates without end dates are taken as single-date dates, even though they should be taken as never-ending continuous events
 	        	if ( empty($endDate)) {
-	        		$calDate['end'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? $this->tz : $date->getEndTime()->getTimestamp()) );
+	        		$calDate['end'] = strtotime( $this->getDate($date->getStartDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? ($this->tz + 86399) : $date->getEndTime()->getTimestamp()) );
 	        	} else {
-	        		$calDate['end'] = strtotime( $this->getDate($date->getEndDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? $this->tz : $date->getEndTime()->getTimestamp()) );	
+	        		$calDate['end'] = strtotime( $this->getDate($date->getEndDate()->getTimestamp()).' '.$this->getTime(is_null($date->getEndTime()) ? ($this->tz + 86399) : $date->getEndTime()->getTimestamp()) );	
 	        	}
                 $calDate['allDay'] = $this->isAllDay($date);
+                $calDate['restOfDay'] = false;
+                if (!$calDate['allDay']) {
+                    if (is_null($date->getEndTime())) {
+                        $calDate['restOfDay'] = true;
+                    }
+                }
+
                 $calDate['field_name'] = $itemField;
                 $calDate['backgroundColor'] = $itemColor;
                 $calDate['textColor'] = '#000000';
