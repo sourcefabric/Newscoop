@@ -34,27 +34,6 @@ ALTER TABLE `liveuser_groups` CHANGE `group_id` `group_id` int(11) NOT NULL AUTO
 DROP TABLE IF EXISTS `ArticleAudioclips`;
 DROP TABLE IF EXISTS `AudioclipMetadata`;
 
-DROP TABLE IF EXISTS `article_datetimes`;
-CREATE TABLE `article_datetimes` (
-  `id_article_datetime` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `start_time` time DEFAULT NULL COMMENT 'NULL = 00:00',
-  `end_time` time DEFAULT NULL COMMENT 'NULL = 23:59',
-  `start_date` date NOT NULL,
-  `end_date` date DEFAULT NULL COMMENT 'NULL = only 1 day',
-  `recurring` enum('daily','weekly','monthly','yearly') DEFAULT NULL,
-  `article_id` int(10) unsigned NOT NULL,
-  `article_type` varchar(166) NOT NULL,
-  `field_name` varchar(166) NOT NULL,
-  `event_comment` TEXT,
-  PRIMARY KEY (`id_article_datetime`),
-  KEY `article_id` (`article_id`),
-  KEY `start_time` (`start_time`),
-  KEY `end_time` (`end_time`),
-  KEY `start_date` (`start_date`),
-  KEY `end_date` (`end_date`),
-  KEY `article_type` (`article_type`),
-  KEY `field_name` (`field_name`)
-) ENGINE=InnoDB;
 
 -- Add Ouput table
 CREATE TABLE IF NOT EXISTS `output` (
@@ -364,9 +343,9 @@ DROP TABLE IF EXISTS `article_datetimes`;
 CREATE TABLE `article_datetimes` (
   `id_article_datetime` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `start_time` time DEFAULT NULL COMMENT 'NULL = 00:00',
-  `end_time` time DEFAULT NULL COMMENT 'NULL = 23:59',
+  `end_time` time DEFAULT NULL COMMENT 'NULL = 24:00',
   `start_date` date NOT NULL,
-  `end_date` date DEFAULT NULL COMMENT 'NULL = only 1 day',
+  `end_date` date DEFAULT NULL COMMENT 'NULL = no end',
   `recurring` enum('daily','weekly','monthly','yearly') DEFAULT NULL,
   `article_id` int(10) unsigned NOT NULL,
   `article_type` varchar(166) NOT NULL,
