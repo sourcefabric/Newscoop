@@ -3162,6 +3162,14 @@ class Article extends DatabaseObject {
                     $order[] = array('field' => 'newswires.urgency', 'dir' => 'asc');
                     $order[] = array('field' => 'Articles.PublishDate', 'dir' => 'desc');
                     break;
+                default: // 'bycustom.ci/cs/num.__custom_field__.__default_value__'
+                    $field_parts = self::CheckCustomOrder($field);
+                    if (!$field_parts['status']) {
+                        break;
+                    }
+
+                    $dbField = self::GetCustomOrder($field_parts['field_type'], null, $field_parts['field_name'], $field_parts['default_value']);
+                    break;
             }
             if (!is_null($dbField)) {
                 $direction = !empty($direction) ? $direction : 'asc';
@@ -3171,6 +3179,92 @@ class Article extends DatabaseObject {
         return $order;
     }
 
+    public static function CheckCustomOrder($p_field) {
+        $res = array('status' => false, 'field_type' => '', 'field_name' => '', 'default_value' => null);
+
+        $field_parts = explode('.', $p_field);
+        if (4 != count($field_parts)) {
+            return $res;
+        }
+
+        if ('bycustom' != strtolower($field_parts[0])) {
+            return $res;
+        }
+
+        if (!in_array(strtolower($field_parts[1]), array('ci', 'cs', 'num'))) {
+            return $res;
+        }
+
+        if ('' == trim($field_parts[2])) {
+            return $res;
+        }
+
+        $res['status'] = true;
+        $res['field_type'] = strtolower($field_parts[1]);
+        $res['field_name'] = trim($field_parts[2]);
+        $res['default_value'] = $field_parts[3];
+
+        return $res;
+    }
+
+    /**
+     * Processes an order directive on custom data fields.
+     *
+     * @param string $p_fieldName
+     * @param string $p_defaultValue
+     *
+     * @return string
+     *      The string containing processed values of the condition
+     */
+    private static function GetCustomOrder($p_fieldType, $p_articleType, $p_fieldName, $p_defaultValue)
+    {
+        $p_fieldType = strtolower($p_fieldType);
+        if (!in_array($p_fieldType, array('ci', 'cs', 'num'))) {
+            $p_fieldType = 'ci';
+        }
+
+        $queries = array();
+
+        // all possible custom fields are taken alike for constraints
+        $fields = ArticleTypeField::FetchFields($p_fieldName, $p_articleType, null, false, false, false, true, true);
+
+        if (!empty($fields)) {
+            foreach ($fields as $fieldObj) {
+                $art_type = 'X' . $fieldObj->getArticleType();
+
+                $query = '        SELECT ' . $art_type . '.' . $fieldObj->getName() . ' FROM ' . $art_type . ' '
+                        . 'WHERE ' . $art_type . '.NrArticle = Articles.Number '
+                        . 'AND ' . $art_type . '.IdLanguage = Articles.IdLanguage';
+                $queries[] = $query;
+            }
+        }
+        if (empty($queries)) {
+            $queries[] = 'SELECT 1';
+        }
+        $queries_str = implode("       union\n", $queries);
+
+        $res_query = '';
+
+        if ('num' == $p_fieldType) {
+            $p_defaultValue = 0 + $p_defaultValue;
+            // if no table/row is find, the default value is used, this is done numerically
+            $res_query = '(SELECT 0 + COALESCE((' . $queries_str . '), ' . $p_defaultValue . '))';
+        }
+        elseif ('cs' == $p_fieldType) {
+            // <p> tag is removed, since it can be the initial tag at text area fields
+            $p_defaultValue = str_replace('\'', '\'\'', $p_defaultValue);
+            // if no table/row is find, the default value is used, this is done case sensitive
+            $res_query = '(SELECT REPLACE(COALESCE((' . $queries_str . '), \'' . $p_defaultValue . '\'), "<p>", ""))';
+        }
+        else { // 'ci'
+            // <p> tag is removed, since it can be the initial tag at text area fields
+            $p_defaultValue = strtolower(str_replace('\'', '\'\'', $p_defaultValue));
+            // if no table/row is find, the default value is used, this is done case insensitive
+            $res_query = '(SELECT REPLACE(LOWER(CONVERT(COALESCE((' . $queries_str . '), \'' . $p_defaultValue . '\') USING utf8)), "<p>", ""))';
+        }
+
+        return $res_query;
+    }
 
     /**
      * Performs a search against the given article field using the given

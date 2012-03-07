@@ -75,6 +75,12 @@ class ArticleDatetime extends Entity
     protected $fieldName;
 
     /**
+     * @Column( type="string", name="event_comment" )
+     * @var string
+     */
+    protected $eventComment;
+
+    /**
      * @return int
      */
     public function getArticleId()
@@ -88,6 +94,14 @@ class ArticleDatetime extends Entity
     public function getFieldName()
     {
         return $this->fieldName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEventComment()
+    {
+        return $this->eventComment;
     }
 
 	/**
@@ -127,7 +141,7 @@ class ArticleDatetime extends Entity
      * @param array $articleData
      * @param ArticleDatetime $dateData
      */
-    public function setValues($dateData, $article, $fieldName, $articleType=null)
+    public function setValues($dateData, $article, $fieldName, $articleType=null, $otherInfo=null)
     {
         if (is_null($articleType) && !($article instanceof Article)) {
             return false;
@@ -140,6 +154,11 @@ class ArticleDatetime extends Entity
         $this->startTime = $dateData->getStartTime();
         $this->endTime = $dateData->getEndTime();
         $this->recurring = $dateData->getRecurring();
+
+        $this->eventComment = null;
+        if ( (is_array($otherInfo)) && isset($otherInfo['eventComment']) ) {
+            $this->eventComment = $otherInfo['eventComment'];
+        }
     }
 
     public function __get($name)
@@ -174,5 +193,8 @@ class ArticleDatetime extends Entity
     }
     public function setFieldName($fieldName) {
         $this->fieldName = $fieldName;
+    }
+    public function setEventComment($eventComment) {
+        $this->eventComment = $eventComment;
     }
 }
