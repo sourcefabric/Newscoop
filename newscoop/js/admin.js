@@ -316,7 +316,16 @@ function callServer(p_callback, p_args, p_handle, p_direct)
 		p_direct = false;
 	}
 
+    var use_method = 'POST';
+
 	var use_url = (p_direct) ? (p_callback) : (g_admin_url + '/json.php');
+
+    if(typeof(use_url) == 'object') {
+        if (typeof use_url['method'] != 'undefined') {
+            use_method = use_url['method'];
+        }
+        use_url = use_url['url'];
+    }
 
 	var default_data = {
             'callback': p_callback,
@@ -328,7 +337,7 @@ function callServer(p_callback, p_args, p_handle, p_direct)
     var flash = flashMessage(localizer.processing, null, true);
     $.ajax({
         'url': use_url,
-        'type': 'POST',
+        'type': use_method,
 		'data': use_data,
         'dataType': 'json',
         'success': function(json) {

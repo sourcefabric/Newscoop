@@ -24,9 +24,10 @@ class Admin_Form_Template extends Zend_Form
         ));
 
         $this->addElement('button', 'geo_filtering', array(
-            'label' => getGS('Geo Filtering'),
+            'label' => '<span class="ui-icon-polygon"></span>' . getGS('Geo Filtering'),
             'class' => 'geo_filtering_button',
             'ignore' => TRUE,
+            'escape' => false,
         ));
 
         $this->addElement('submit', 'submit', array(

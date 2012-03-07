@@ -69,6 +69,7 @@ try {
     $serverRequest->allow('Article::setKeywords');
     $serverRequest->allow('Article::setIsLocked');
     $serverRequest->allow('ArticleData::setProperty');
+    $serverRequest->allow('ArticleTypeField::SetFieldColor', 'ManageArticleTypes');
     // execute
     echo json_encode($serverRequest->execute());
 } catch (Exception $e) {

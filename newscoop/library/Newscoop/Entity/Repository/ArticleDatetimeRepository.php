@@ -105,9 +105,10 @@ class ArticleDatetimeRepository extends EntityRepository
      * @param string $recurring
      * @param bool $overwrite
      */
-    public function add( $timeSet, $articleId, $fieldName = null, $recurring = null, $overwrite=false )
+    public function add( $timeSet, $articleId, $fieldName = null, $recurring = null, $overwrite=false, $otherInfo=null )
     {
         $insertValues = $this->buildInsertValues($timeSet, $recurring);
+        $article = null;
 
         $em = $this->getEntityManager();
         // check article
@@ -115,7 +116,7 @@ class ArticleDatetimeRepository extends EntityRepository
             $article = $em->getRepository('Newscoop\Entity\Article')->findOneBy(array('number' => $articleId));
             /* @var $article Newscoop\Entity\Article */
         }
-        elseif ($articleId instanceof Article) {
+        elseif ($articleId instanceof \Article) {
             $article = $articleId;
         }
         if (is_null($article)) {
@@ -133,7 +134,7 @@ class ArticleDatetimeRepository extends EntityRepository
                 foreach (array_merge(array($dateValue), $dateValue->getSpawns()) as $dateValue)
                 {
                     $articleDatetime = new ArticleDatetime();
-                    $articleDatetime->setValues($dateValue, $article, $fieldName);
+                    $articleDatetime->setValues($dateValue, $article, $fieldName, null, $otherInfo);
                     $em->persist($articleDatetime);
                 }
             }
@@ -161,7 +162,7 @@ class ArticleDatetimeRepository extends EntityRepository
      * @param string $fieldName
      * @param string $recurring
      */
-    public function update($id, $timeSet, $articleId=null, $fieldName=null, $recurring=null)
+    public function update($id, $timeSet, $articleId=null, $fieldName=null, $recurring=null, $otherInfo=null)
     {
         $em = $this->getEntityManager();
 
@@ -186,7 +187,7 @@ class ArticleDatetimeRepository extends EntityRepository
                 foreach (array_merge(array($dateValue), $dateValue->getSpawns()) as $dateValue)
                 {
                     $articleDatetime = new ArticleDatetime();
-                    $articleDatetime->setValues($dateValue, $articleId, $fieldName, $entry->getArticleType());
+                    $articleDatetime->setValues($dateValue, $articleId, $fieldName, $entry->getArticleType(), $otherInfo);
                     $em->persist($articleDatetime);
                 }
             }
@@ -218,36 +219,223 @@ class ArticleDatetimeRepository extends EntityRepository
      */
     public function findDates($search, $dontExecute=false)
     {
+/* Notices:
+ *  by now, 'NULL' means 'no end', i.e. till the end of day for end_time, forever for end_date
+ *  when no recurring, then it is continuously from start_date/start_time till end_date/end_time
+ *      start_date and date_end are usually the same then ... must be for a single day event.
+ *
+ *  this search would be wrong on situations where we search for a short time interval and an recurring event starts before and ends after,
+ *      but does not recur at the specified (short) interval, like:
+ *          a) having an event yearly from 2000, each January 1st
+ *          b) searching for events 2012-04-01 till 2012-04-30
+ *          c) without specifying any recurrence
+ *      the search would take that event even though it does not occur at the specified interval
+ *      thus the addition below, at part where just start-end is set
+ */
+
         $qb = $this->createQueryBuilder('dt');
 
-        // just one day
-        if (isset($search->startDate) && isset($search->endDate))
+        // interval from a date till infinity
+        if (isset($search->startDate) && !isset($search->endDate))
         {
-            $qb->add('where',  $qb->expr()->andx('dt.startDate = :startDate', 'dt.endDate is null'));
+            $qb->andWhere('dt.endDate >= :startDate');
             $qb->setParameter('startDate', new \DateTime($search->startDate));
         }
+
         // date interval
         if (isset($search->startDate) && isset($search->endDate))
         {
+
             $qb->add('where',
                 $qb->expr()->andx
                 (
-					'dt.startDate <= :startDate',
-                    $qb->expr()->orx('dt.endDate >= :endDate', 'dt.endDate is null')
+                    'dt.startDate <= :endDate',
+                    $qb->expr()->orx('dt.endDate >= :startDate', 'dt.endDate is null')
                 ));
             $qb->setParameter('startDate', new \DateTime($search->startDate));
             $qb->setParameter('endDate', new \DateTime($search->endDate));
+
+            if (!isset($search->daily) && !isset($search->weekly) && !isset($search->monthly) && !isset($search->yearly) && ($search->startDate <= $search->endDate)) {
+
+                $interval_one_day = new \DateInterval('P1D');
+                $start_date = new \DateTime($search->startDate);
+                $end_date = new \DateTime($search->endDate);
+                $end_date_plus = clone $end_date;
+                $end_date_plus->add($interval_one_day);
+
+                $weeks_to_check = true;
+                $months_to_check = true;
+                $years_to_check = true;
+
+                $yearly_days_check_str = '1 = 1';
+
+                // taking covered days of year
+
+                $start_year = $start_date->format('Y');
+                $start_month_day = $start_date->format('m-d');
+
+                $end_year = $end_date->format('Y');
+                $end_month_day = $end_date->format('m-d');
+
+                $yearly_checking = null;
+
+                if (($start_year + 2) <= $end_year) {
+                    $weeks_to_check = false;
+                    $months_to_check = false;
+                    $years_to_check = false;
+                }
+                elseif (($start_year + 1) == $end_year) {
+                    if ($start_month_day <= $end_month_day) {
+                        $weeks_to_check = false;
+                        $months_to_check = false;
+                        $years_to_check = false;
+                    }
+                    else {
+                        $yearly_checking = $qb->expr()->andx();
+                        $yearly_checking->add('dt.recurring = :recurring_yearly');
+                        $yearly_checking->add($qb->expr()->orx(
+                            $qb->expr()->gte('DATE_FORMAT(dt.startDate, "%m-%d")', '"' . $start_month_day . '"'),
+                            $qb->expr()->lte('DATE_FORMAT(dt.startDate, "%m-%d")', '"' . $end_month_day . '"')
+                        ));
+
+                        //$yearly_days_check_str = 'dt.recurring = :recurring_yearly AND (DATE_FORMAT(dt.startDate, "%m-%d") >= "' . $start_month_day . '") OR (DATE_FORMAT(dt.startDate, "%m-%d") <= "' . $end_month_day . '")';
+                    }
+                }
+                else {
+                    $yearly_checking = $qb->expr()->andx();
+                    $yearly_checking->add('dt.recurring = :recurring_yearly');
+                    $yearly_checking->add($qb->expr()->gte('DATE_FORMAT(dt.startDate, "%m-%d")', '"' . $start_month_day . '"'));
+                    $yearly_checking->add($qb->expr()->lte('DATE_FORMAT(dt.startDate, "%m-%d")', '"' . $end_month_day . '"'));
+
+                    //$yearly_days_check_str = 'dt.recurring = :recurring_yearly AND (DATE_FORMAT(dt.startDate, "%m-%d") >= "' . $start_month_day . '") AND (DATE_FORMAT(dt.startDate, "%m-%d") <= "' . $end_month_day . '")';
+                }
+
+                // taking covered days of month
+
+                if ($months_to_check) {
+                    $start_end_period = new \DatePeriod($start_date, $interval_one_day, $end_date_plus);
+
+                    $allowed_month_days = array();
+
+                    foreach($start_end_period as $one_day_in) {
+
+                        $one_day_in_month = $one_day_in->format('j');
+                        $allowed_month_days[$one_day_in_month] = $one_day_in_month;
+                    }
+
+                    if (31 <= count($allowed_month_days)) {
+                        $months_to_check = false;
+                    }
+                }
+
+                // taking covered days of week
+
+                if ($weeks_to_check) {
+
+                    $start_day_of_week = $start_date->format('w') + 1;
+                    $end_day_of_week = $end_date->format('w') + 1;
+
+                    foreach (array(1,2,3,4,5,6,7) as $one_week_day) {
+                        if (($one_week_day >= $start_day_of_week) && ($one_week_day <= $end_day_of_week)) {
+                            $allowed_week_days[] = $one_week_day;
+                            continue;
+                        }
+                        if ($start_day_of_week > $end_day_of_week) {
+                            if (($one_week_day >= $start_day_of_week) || ($one_week_day <= $end_day_of_week)) {
+                                $allowed_week_days[] = $one_week_day;
+                                continue;
+                            }
+                        }
+                    }
+
+                    if (7 <= count($allowed_week_days)) {
+                        $weeks_to_check = false;
+                    }
+
+                }
+
+                // put the check parts in
+/*
+                // current doctrine is broken on 'IN' statement
+                $qb->andWhere(
+                    $qb->expr()->orx
+                    (
+                        'dt.recurring IS NULL',
+                        'dt.recurring = 0',
+                        'dt.recurring = :recurring_daily' // it is ok for daily repeating events; and if time specified, it is set below
+                        $qb->expr()->andx('dt.recurring = :recurring_weekly', $qb->expr()->in('DAYOFWEEK(dt.startDate)', ':allowed_week_days')),
+                        $qb->expr()->andx('dt.recurring = :recurring_monthly', $qb->expr()->in('DAYOFMONTH(dt.startDate)', ':allowed_month_days')),
+                        $qb->expr()->andx('dt.recurring = :recurring_yearly', $yearly_days_check_str)* /
+                    )
+                );
+*/
+                $outerOr = $qb->expr()->orx();
+                $outerOr->add('dt.recurring IS NULL');
+                $outerOr->add('dt.recurring = 0');
+                $outerOr->add('dt.recurring = :recurring_daily');
+                $useOuter = true;
+
+                if ($weeks_to_check) {
+                    $innerWeekOr = $qb->expr()->orx();
+                    foreach ($allowed_week_days as $one_allowed_week_day) {
+                        $innerWeekOr->add($qb->expr()->eq('DAYOFWEEK(dt.startDate)', $one_allowed_week_day));
+                    }
+
+                    $outerWeekAnd = $qb->expr()->andx();
+                    $outerWeekAnd->add('dt.recurring = :recurring_weekly');
+                    $outerWeekAnd->add($innerWeekOr);
+
+                    $outerOr->add($outerWeekAnd);
+                    $useOuter = true;
+                }
+
+                if ($months_to_check) {
+                    $innerMonthOr = $qb->expr()->orx();
+                    foreach ($allowed_month_days as $one_allowed_month_day) {
+                        $innerMonthOr->add($qb->expr()->eq('DAYOFMONTH(dt.startDate)', $one_allowed_month_day));
+                    }
+
+                    $outerMonthAnd = $qb->expr()->andx();
+                    $outerMonthAnd->add('dt.recurring = :recurring_monthly');
+                    $outerMonthAnd->add($innerMonthOr);
+
+                    $outerOr->add($outerMonthAnd);
+                    $useOuter = true;
+                }
+
+/*
+                // TODO: doctrine do not work with date_format, even when the function is user created and set in resources
+                //       but we do not have support for year-repeating events in UI anyway
+                if ($years_to_check) {
+                    $outerOr->add($yearly_checking);
+                    $useOuter = true;
+                }
+*/
+
+                if ($useOuter) {
+                    $qb->andWhere($outerOr);
+                    //$qb->where($outerOr);
+                }
+
+                $qb->setParameter('recurring_daily', self::RECURRING_DAILY);
+                $qb->setParameter('recurring_weekly', self::RECURRING_WEEKLY);
+                $qb->setParameter('recurring_monthly', self::RECURRING_MONTHLY);
+                $qb->setParameter('recurring_yearly', self::RECURRING_YEARLY);
+
+                //var_dump($qb->getDQL());
+            }
+
         }
         $hasStartTimeQuery = false;
         if (isset($search->startTime))
         {
-            $qb->andWhere('dt.startTime <= :startTime');
+            $qb->andWhere('dt.startTime >= :startTime');
             $qb->setParameter('startTime', new \DateTime($search->startTime));
             $hasStartTimeQuery = true;
         }
         if (isset($search->endTime))
         {
-            $qb->andWhere('dt.endTime >= :endTime');
+            $qb->andWhere('dt.endTime <= :endTime');
             $qb->setParameter('endTime', new \DateTime($search->endTime));
         }
         if (isset($search->daily))
@@ -258,7 +446,7 @@ class ArticleDatetimeRepository extends EntityRepository
             if (is_string($search->daily)) // replace start time with daily string value
             {
                 if (!$hasStartTimeQuery) {
-                    $qb->andWhere('dt.startTime <= :startTime');
+                    $qb->andWhere('dt.startTime >= :startTime');
                 }
                 $qb->setParameter('startTime', new \DateTime($search->daily));
             }
@@ -268,7 +456,7 @@ class ArticleDatetimeRepository extends EntityRepository
                 $orSqlParts = array();
                 foreach ($search->daily as $startTime => $endTime)
                 {
-                    $orSqlParts[] = "( dt.startTime <= ?".($paraCount+1)." and (dt.endTime >= ?".($paraCount+2)." or dt.endTime is null) )";
+                    $orSqlParts[] = "( dt.startTime >= ?".($paraCount+1)." and (dt.startTime <= ?".($paraCount+2).") )";
                     $qb->setParameter(++$paraCount, new \DateTime($startTime));
                     $qb->setParameter(++$paraCount, new \DateTime($endTime));
                 }
@@ -298,7 +486,7 @@ class ArticleDatetimeRepository extends EntityRepository
             if (is_string($search->monthly))
             {
                 $dayOfMonth = new \DateTime($search->monthly);
-                $dayOfMonth = $dayOfMonth->format('d');
+                $dayOfMonth = $dayOfMonth->format('j');
                 $qb->setParameter('dayOfMonth', $dayOfMonth);
             }
             else {
@@ -307,13 +495,13 @@ class ArticleDatetimeRepository extends EntityRepository
         }
         if (isset($search->yearly))
         {
-            $qb->andWhere('DAYOFYEAR(dt.startDate) <= :dayOfYear');
+            $qb->andWhere('DATE_FORMAT(dt.startDate, "%m-%d") = :dayOfYear');
             $qb->andWhere('dt.recurring = :recurringYearly');
             $qb->setParameter('recurringYearly', self::RECURRING_YEARLY);
             if (is_string($search->yearly))
             {
                 $dayOfYear = new \DateTime($search->yearly);
-                $dayOfYear = $dayOfYear->format('z');
+                $dayOfYear = $dayOfYear->format('m-d');
                 $qb->setParameter('dayOfYear', $dayOfYear);
             }
             else {
@@ -372,4 +560,33 @@ class ArticleDatetimeRepository extends EntityRepository
         $qb = $this->getEntityManager()->createQuery($lastDQL);
         return $qb->getSQL();
     }
+
+    public function renameField($p_articleType, $p_fieldNames) {
+        $qb = $this->createQueryBuilder('dt')
+            ->update()
+            ->set('dt.fieldName', ':fieldNameNew')
+            ->setParameter('fieldNameNew', $p_fieldNames['new'])
+            ->andWhere('dt.articleType = :articleType')
+            ->setParameter('articleType', $p_articleType)
+            ->andWhere('dt.fieldName = :fieldNameOld')
+            ->setParameter('fieldNameOld', $p_fieldNames['old']);
+
+        $q = $qb->getQuery();
+        $q->execute();
+
+    }
+
+    public function deleteField($p_articleType, $p_fieldNames) {
+        $qb = $this->createQueryBuilder('dt')
+            ->delete()
+            ->andWhere('dt.articleType = :articleType')
+            ->setParameter('articleType', $p_articleType)
+            ->andWhere('dt.fieldName = :fieldNameOld')
+            ->setParameter('fieldNameOld', $p_fieldNames['old']);
+
+        $q = $qb->getQuery();
+        $q->execute();
+    }
+
+
 }

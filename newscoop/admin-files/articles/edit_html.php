@@ -315,9 +315,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
         <?php
             } elseif ( $dbColumn->getType() == ArticleTypeField::TYPE_COMPLEX_DATE ) {
                 $hasMultiDates = true;
-                if ( is_null($multiDatesField) ) {
-                    $multiDatesField = $dbColumn->getName();	
-                }
+                $multiDatesFields[] = $dbColumn->getPrintName();
             }
         }
         ?>
@@ -398,6 +396,10 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
       <!-- BEGIN Multi date table -->
       <?php 
       if ($hasMultiDates) {
+          echo '
+  <script type="text/javascript">
+    window.has_multidates = true;
+  </script>';
       	require('edit_multidate_box.php');
       }       
       ?>
