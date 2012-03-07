@@ -36,6 +36,7 @@ resources.doctrine.functions.rand = "Newscoop\Query\MysqlRandom"
 resources.doctrine.functions.dayofweek = "Newscoop\Query\MysqlDayOfWeek"
 resources.doctrine.functions.dayofmonth = "Newscoop\Query\MysqlDayOfMonth"
 resources.doctrine.functions.dayofyear = "Newscoop\Query\MysqlDayOfYear"
+resources.doctrine.functions.date_format = "Newscoop\Query\MysqlDateFormat"
 
 resources.view =
 

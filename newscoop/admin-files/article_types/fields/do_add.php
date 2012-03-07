@@ -26,6 +26,7 @@ $precision = Input::Get('f_precision');
 $editorSize = Input::Get('f_editor_size');
 $editorSizeCustom = Input::Get('f_editor_size_custom');
 $maxsize = Input::Get('f_maxsize');
+$eventColor = Input::Get('f_event_color');
 
 $field = new ArticleTypeField($articleTypeName, $fieldName);
 
@@ -61,7 +62,7 @@ if ($correct) {
     else $editorSize = ArticleTypeField::BODY_ROWS_MEDIUM;
     
     $params = array('root_topic_id'=>$rootTopicId, 'is_content'=>strtolower($isContent) == 'on',
-	'precision'=>$precision, 'maxsize'=>$maxsize, 'editor_size' => $editorSize);
+	'precision'=>$precision, 'maxsize'=>$maxsize, 'editor_size' => $editorSize, 'event_color' => $eventColor);
 	$field->create($fieldType, $params);
 	camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
 }
