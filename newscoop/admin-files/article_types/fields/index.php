@@ -29,6 +29,8 @@ $crumbs[] = array(getGS("Article type fields"), "");
 
 echo camp_html_breadcrumbs($crumbs);
 
+$row_rank = 0;
+
 if ($g_user->hasPermission("ManageArticleTypes")) {
 	include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 	?>
@@ -42,6 +44,85 @@ for ($i = 0; $i < count($fields); $i++) { ?>
 field_ids.push("translate_field_"+<?php p($i); ?>);
 </script>
 <?php } ?>
+
+<style type="text/css">
+.color_sel_hidden {
+    display: none;
+}
+.color_sel_visible {
+    margin-top: -8px;
+    border-color: #c0c0c0;
+    border-width: 8px;
+    border-style: solid;
+    margin-left: 25px;
+    position: absolute;
+}
+.color_one_current {
+    border-color: #404040;
+    border-width: 1px;
+    border-style: solid;
+
+    float:left;
+    width:14px;
+    height:14px;
+    cursor:pointer
+}
+.color_one_list {
+    border-color: #404040;
+    border-width: 1px;
+    border-style: solid;
+
+    float:right;
+    width:14px;
+    height:14px;
+    cursor:pointer
+}
+
+</style>
+<script type="text/javascript">
+
+window.save_field_color = function(article_type, field_name, color_value) {
+
+    var url = '<?php echo $Campsite['WEBSITE_URL']; ?>/admin/multidate/setfieldcolor?f_article_type=' + article_type + '&f_field_name=' + field_name + '&f_color_value=' + color_value;
+
+    callServer(['ArticleTypeField', 'SetFieldColor'], [
+        article_type, field_name, color_value
+    ], function(msg) {
+        flashMessage(msg);
+    });
+
+};
+
+</script>
+
+<?php
+
+$color_list = array(
+'#ff4040',
+'#ff4080',
+'#ff8040',
+'#ff8080',
+
+'#ff40ff',
+
+'#40ff40',
+'#80ff40',
+'#40ff80',
+'#80ff80',
+
+'#ffff40',
+
+'#4040ff',
+'#8040ff',
+'#4080ff',
+'#8080ff',
+
+'#40ffff',
+
+'#808080',
+);
+
+?>
 
 <TABLE class="action_buttons" STYLE="padding-top: 5px;" BORDER="0" CELLPADDING="1" CELLSPACING="0">
 <TBODY>
@@ -103,6 +184,7 @@ field_ids.push("translate_field_"+<?php p($i); ?>);
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Display Name"); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Translate"); ?></B></TD>
     <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Is Content"); ?></B></TD>
+    <TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Event Color"); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Show/Hide"); ?></B></TD>
 
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
@@ -113,6 +195,8 @@ $color= 0;
 $i = 0;
 $duplicateFieldsCount = 0;
 foreach ($fields as $field) {
+        $row_rank += 1;
+
 	if ($field->getStatus() == 'hidden') {
 		$hideShowText = getGS('show');
 		$hideShowStatus = 'show';
@@ -186,6 +270,26 @@ foreach ($fields as $field) {
         <?php putGS('N/A'); ?>
         <?php } ?>
     </TD>
+
+<TD>
+<?php
+    if ($field->getType() != ArticleTypeField::TYPE_COMPLEX_DATE) {
+        putGS('N/A');
+    }
+    else {
+        $cur_color = $field->getColor();
+        $color_div = '';
+
+        $color_div .= '<div id="color_sel_' . $row_rank . '" class="color_sel_hidden color_sel_visible">';
+        foreach ($color_list as $one_color) {
+            $color_div .= '<div class="color_one_list" style="background:' . $one_color . ';" onClick="$(\'#color_val_' . $row_rank . '\').css(\'backgroundColor\', \'' . $one_color . '\'); $(\'#color_sel_' . $row_rank . '\').addClass(\'color_sel_hidden\'); window.save_field_color(\'' . $articleTypeName . '\', \'' . $field->getPrintName() . '\', \'' . $one_color . '\'); return false;";></div>';
+        }
+        $color_div .= '</div>';
+        $color_div .= '<div class="color_one_current" id="color_val_' . $row_rank . '" style="background-color:' . $cur_color . ';" href="#" onClick="$(\'#color_sel_' . $row_rank . '\').toggleClass(\'color_sel_hidden\')"; return false;"></div>';
+        echo $color_div;
+    }
+?>
+</TD>
 
 	<TD ALIGN="CENTER">
 		<A HREF="/<?php p($ADMIN); ?>/article_types/fields/do_hide.php?f_article_type=<?php print urlencode($articleTypeName); ?>&f_field_name=<?php  print urlencode($field->getPrintName()); ?>&f_status=<?php print $hideShowStatus; ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to $1 the article type field $2?', $hideShowText, $field->getPrintName()); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php echo $hideShowImage; ?>" BORDER="0" ALT="<?php  putGS('$1 article type field $2', ucfirst($hideShowText), $field->getPrintName()); ?>" TITLE="<?php  putGS('$1 article type $2', ucfirst($hideShowText), $field->getPrintName()); ?>" ></A>
