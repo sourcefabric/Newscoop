@@ -66,6 +66,10 @@ regGS("You do not have the right to add images", "Keine Berechtigung Bilder hinz
 regGS("Place: ", "Ort");
 regGS("Photographer: ", "FotografIn");
 regGS("Description: ", "Bildlegende");
+regGS("No slideshows to attach", "Keine Slideshows verfügbar");
+regGS("Detach $1", "$1 entfernen");
+regGS("Attach selected slideshows", "Ausgewählte Slideshows anhängen");
+regGS("No slideshows", "Keine Slideshows angehängt");
 regGS("Delete image $1", "Bild $1 löschen");
 regGS("Click one of the ", "");
 regGS("Are you sure you want to delete the image \'$1\'?", "");
