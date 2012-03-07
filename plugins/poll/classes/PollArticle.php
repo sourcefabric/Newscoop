@@ -164,6 +164,7 @@ class PollArticle extends DatabaseObject {
     {
         global $g_ado_db;
         $records = array();
+        $where = '';
         
         $PollArticle = new PollArticle();
         
