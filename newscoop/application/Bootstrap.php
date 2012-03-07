@@ -77,8 +77,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $this->bootstrap('view');
         $container->setService('view', $this->getResource('view'));
 
-        $container->register('image', 'Newscoop\Services\ImageService')
-            ->addArgument(new sfServiceReference('view'));
+        $container->register('image', 'Newscoop\Image\ImageService')
+            ->addArgument('%image%')
+            ->addArgument(new sfServiceReference('em'));
 
         $container->register('user', 'Newscoop\Services\UserService')
             ->addArgument(new sfServiceReference('em'))
@@ -111,6 +112,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('em'));
 
         $container->register('community_feed', 'Newscoop\Services\CommunityFeedService')
+            ->addArgument(new sfServiceReference('em'));
+
+        $container->register('audit.maintenance', 'Newscoop\Services\AuditMaintenanceService')
             ->addArgument(new sfServiceReference('em'));
 
         $container->register('dispatcher', 'Newscoop\Services\EventDispatcherService')
@@ -159,9 +163,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('comment'))
             ->addArgument(new sfServiceReference('user'));
 
-        $container->register('user_subscription', 'Newscoop\Services\UserSubscriptionService')
-            ->addArgument(new sfServiceReference('em'));
-        
         $container->register('user.search', 'Newscoop\Services\UserSearchService')
             ->addArgument(new sfServiceReference('em'));
 
@@ -173,6 +174,27 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $container->register('content.type', 'Newscoop\Content\ContentTypeService')
             ->addArgument(new sfServiceReference('em'));
+        
+        $container->register('stat', 'Newscoop\Services\StatService')
+            ->addArgument(new sfServiceReference('em'));
+
+        $container->register('view.helper.thumbnail', 'Newscoop\Image\ThumbnailViewHelper')
+            ->addArgument(new sfServiceReference('image'));
+
+        $container->register('view.helper.rendition', 'Newscoop\Image\RenditionViewHelper')
+            ->addArgument(new sfServiceReference('image'));
+
+        $container->register('image.rendition', 'Newscoop\Image\RenditionService')
+            ->addArgument('%config%')
+            ->addArgument(new sfServiceReference('em'))
+            ->addArgument(new sfServiceReference('image'));
+
+        $container->register('image.search', 'Newscoop\Image\ImageSearchService')
+            ->addArgument(new sfServiceReference('em'));
+
+        $container->register('package', 'Newscoop\Package\PackageService')
+            ->addArgument(new sfServiceReference('em'))
+            ->addArgument(new sfServiceReference('image'));
 
         Zend_Registry::set('container', $container);
         return $container;
@@ -210,6 +232,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         $front = Zend_Controller_Front::getInstance();
         $router = $front->getRouter();
+        $options = $this->getOptions();
 
         $router->addRoute(
             'content',
@@ -259,17 +282,21 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 'action' => 'profile',
             )));
 
-        $router->addRoute(
-            'image',
-            new Zend_Controller_Router_Route_Regex('media/image/cache/(\d+)_(\d+)_(.+)', array(
+        $router->addRoute('image',
+            new Zend_Controller_Router_Route_Regex($options['image']['cache_url'] . '/(.*)', array(
                 'module' => 'default',
                 'controller' => 'image',
                 'action' => 'cache',
             ), array(
-                1 => 'width',
-                2 => 'height',
-                3 => 'image',
-            ), 'media/image/cache/%d_%d_%s'));
+                1 => 'src',
+            ), $options['image']['cache_url'] . '/%s'));
+
+         $router->addRoute('rest',
+             new Zend_Rest_Route($front, array(), array(
+                 'admin' => array(
+                     'slideshow-rest',
+                 ),
+             )));
     }
 
     protected function _initActionHelpers()

@@ -1,0 +1,3 @@
+<figure>
+    <div><?php echo $this->itemHelper->isImage() ? $this->renditionPreview($this->itemHelper->getRendition(), 75, 75, $this->itemHelper->getImage()) : $this->videoPreview($this->itemHelper->getVideoUrl(), 75, 75); ?></div>
+</figure>

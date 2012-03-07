@@ -1,4 +1,10 @@
 <?php 
+regGS("Create slideshow", "Create slideshow");
+regGS("Create", "Create");
+regGS("Attach/Detach", "Attach/Detach");
+regGS("Are you sure you want to delete slideshow?", "Are you sure you want to delete slideshow?");
+regGS("Renditions", "Renditions");
+regGS("Support", "Support");
 regGS("Pending articles", "Pending articles");
 regGS("Manage Users", "Manage Users");
 regGS("Manage User Types", "Manage User Types");

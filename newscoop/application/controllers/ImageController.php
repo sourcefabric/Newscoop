@@ -5,44 +5,20 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Nette\Image;
-
-require_once APPLICATION_PATH . '/../library/Nette/exceptions.php';
-
 /**
  */
 class ImageController extends Zend_Controller_Action
 {
     public function cacheAction()
     {
-        // @todo add token for generating to prevent DoS attacks
-        $width = $this->_getParam('width');
-        $height = $this->_getParam('height');
-        $image = $this->_getParam('image');
-
-        // @todo make some path maps according to type (user/author/etc)
-        $src = APPLICATION_PATH . '/../images/' . $image;
-        $dest = APPLICATION_PATH . '/../images/cache/' . "{$width}_{$height}_{$image}";
-        if (!file_exists(APPLICATION_PATH . '/../images/cache/')) {
-            mkdir(APPLICATION_PATH . '/../images/cache/');
+        $src = $this->_getParam('src');
+        if (substr_count($src, '/') > 2) {
+            $srcAry = explode('/', $src, 3);
+            $srcAry[2] = rawurlencode(rawurlencode($srcAry[2]));
+            $src = implode('/', $srcAry);
         }
 
-        $image = Image::fromFile($src);
-        if ($image->width > $image->height) {
-            $image->resize(null, $height);
-        } else {
-            $image->resize($width, null);
-        }
-        $image->crop('50%', '50%', $width, $height);
-        $image->save($dest);
-
-        $fmt = filemtime($dest);
-
-        header('Cache-Control: public, max-age=3600');
-        header('Pragma: cache');
-        header('Last-Modified: '.gmdate('D, d M Y H:i:s', $fmt).' GMT', true);
-
-        $image->send();
+        $this->_helper->service('image')->generateFromSrc($src);
         exit;
     }
 }

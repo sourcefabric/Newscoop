@@ -94,7 +94,8 @@ class ArticleList extends BaseList
             'CreateDate' => getGS('Create Date'),
             'PublishDate' => getGS('Publish Date'),
             'LastModified' => getGS('Last Modified'),
-		    'Preview' => getGS('Preview')
+		    'Preview' => getGS('Preview'),
+		    'Translate' => getGS('Translate')
 		);
 	}
 
@@ -251,9 +252,13 @@ class ArticleList extends BaseList
 		. '&amp;f_issue_number=' . $article->getIssueNumber() . '&amp;f_section_number=' . $article->getSectionNumber()
 		. '&amp;f_article_number=' . $article->getArticleNumber() . '&amp;f_language_id=' . $article->getLanguageId()
 		. '&amp;f_language_selected=' . $article->getLanguageId();
+        $articleLinkParamsTranslate = $articleLinkParams.'&amp;f_action=translate&amp;f_action_workflow=' . $article->getWorkflowStatus()
+        . '&amp;f_article_code=' . $article->getArticleNumber() . '_' . $article->getLanguageId();
 		$articleLink = $Campsite['WEBSITE_URL'].'/admin/articles/edit.php' . $articleLinkParams;
 		$previewLink = $Campsite['WEBSITE_URL'].'/admin/articles/preview.php' . $articleLinkParams;
 		$htmlPreviewLink = '<a href="'.$previewLink.'" target="_blank" title="'.getGS('Preview').'">'.getGS('Preview').'</a>';
+        $translateLink = $Campsite['WEBSITE_URL'].'/admin/articles/translate.php' . $articleLinkParamsTranslate;
+        $htmlTranslateLink = '<a href="'.$translateLink.'" target="_blank" title="'.getGS('Translate').'">'.getGS('Translate').'</a>';
 
 		$lockInfo = '';
 		$lockHighlight = false;
@@ -337,6 +342,7 @@ class ArticleList extends BaseList
 		    $article->getPublishDate(),
 		    $article->getLastModified(),
 		    $htmlPreviewLink,
+            $htmlTranslateLink
 		);
 	}
 

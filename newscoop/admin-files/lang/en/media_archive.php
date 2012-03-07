@@ -1,4 +1,5 @@
 <?php 
+regGS("Slideshows", "Slideshows");
 regGS("You can't update used files.", "You can't update used files.");
 regGS("Source", "Source");
 regGS("Local", "Local");

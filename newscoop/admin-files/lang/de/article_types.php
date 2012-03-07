@@ -1,6 +1,6 @@
 <?php 
-regGS("Hide human-readable field names", "");
-regGS("Edit and translate human-readable field names", "");
+regGS("Hide human-readable field names", "Verberge von Menschen lesbare Feldnamen");
+regGS("Edit and translate human-readable field names", "Bearbeite und übersetze von Menschen lesbare Feldnamen");
 regGS("The template name may only contain letters and the underscore (_) character.", "Der Templatename darf nur Buchstaben und Unterstriche (_) enthalten.");
 regGS("Rename article type '$1'", "Artikeltyp '$1' umbenennen");
 regGS("Invalid article type '$1'.", "Ungültiger Artikeltyp '$1'.");

@@ -102,6 +102,7 @@ CREATE TABLE `ArticleImages` (
   `NrArticle` int(10) unsigned NOT NULL DEFAULT '0',
   `IdImage` int(10) unsigned NOT NULL DEFAULT '0',
   `Number` int(10) unsigned NOT NULL DEFAULT '0',
+  `is_default` int(1) DEFAULT NULL,
   PRIMARY KEY (`NrArticle`,`IdImage`),
   UNIQUE KEY `ArticleImage` (`NrArticle`,`Number`),
   KEY `IdImage` (`IdImage`)
@@ -783,6 +784,8 @@ CREATE TABLE `Images` (
   `TimeCreated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `Source` enum('local','feedback','newsfeed') not null default 'local',
   `Status` enum('unapproved','approved') not null default 'approved',
+  `width` int(5) DEFAULT NULL,
+  `height` int(5) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   FULLTEXT KEY `Description` (`Description`),
   FULLTEXT KEY `Photographer` (`Photographer`),
@@ -3105,6 +3108,81 @@ CREATE TABLE `article_datetimes` (
   KEY `article_type` (`article_type`),
   KEY `field_name` (`field_name`)
 ) ENGINE=InnoDB;
+
+-- --------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `ArticleRendition` (
+  `image_id` int(11) NOT NULL,
+  `rendition_id` varchar(255) NOT NULL,
+  `articleNumber` int(11) NOT NULL,
+  `imageSpecs` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`articleNumber`,`image_id`,`rendition_id`),
+  KEY `IDX_794B8A6C3DA5256D` (`image_id`),
+  KEY `IDX_794B8A6CFD656AA1` (`rendition_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `package` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `rendition_id` varchar(255) DEFAULT NULL,
+  `headline` varchar(255) NOT NULL,
+  `description` longtext,
+  `slug` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UNIQ_DE686795989D9B62` (`slug`),
+  KEY `IDX_DE686795FD656AA1` (`rendition_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+
+-- --------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `package_article` (
+  `id` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `package_article_package` (
+  `article_id` int(11) NOT NULL,
+  `package_id` int(11) NOT NULL,
+  PRIMARY KEY (`article_id`,`package_id`),
+  KEY `IDX_BB5F0F827294869C` (`article_id`),
+  KEY `IDX_BB5F0F82F44CABFF` (`package_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `package_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `package_id` int(11) DEFAULT NULL,
+  `image_id` int(11) DEFAULT NULL,
+  `offset` int(11) NOT NULL,
+  `caption` varchar(255) DEFAULT NULL,
+  `coords` varchar(255) DEFAULT NULL,
+  `video_url` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `IDX_A45640D6F44CABFF` (`package_id`),
+  KEY `IDX_A45640D63DA5256D` (`image_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+
+-- --------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `rendition` (
+  `name` varchar(255) NOT NULL,
+  `width` int(11) NOT NULL,
+  `height` int(11) NOT NULL,
+  `specs` varchar(255) NOT NULL,
+  `offset` int(11) DEFAULT NULL,
+  `label` varchar(80) DEFAULT NULL,
+  PRIMARY KEY (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+--
+-- Omezení pro tabulku `package_article_package`
+--
+ALTER TABLE `package_article_package`
+  ADD CONSTRAINT `package_article_package_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `package_article` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `package_article_package_ibfk_2` FOREIGN KEY (`package_id`) REFERENCES `package` (`id`) ON DELETE CASCADE;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

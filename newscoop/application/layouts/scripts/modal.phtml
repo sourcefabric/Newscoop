@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title><?php echo $this->translate("Slideshows"); ?></title>
+
+    <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/pagination.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/buttons.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/lists.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/modal-window.css'); ?>" />
+    <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/slideshow-list.css'); ?>" />
+    <?php echo $this->headStyle(); ?>
+
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+    <script type="text/javascript" src="<?php echo $this->baseUrl('/js/underscore.js'); ?>"></script>
+    <script type="text/javascript" src="<?php echo $this->baseUrl('/js/backbone.js'); ?>"></script>
+    <?php echo $this->headScript(); ?>
+</head>
+<body class="modal-window">
+    <?php echo $this->layout()->content; ?>
+</body>
+</html>

@@ -1,0 +1,57 @@
+@charset "utf-8";
+/* CSS Document */
+html, body {
+	height:100%;
+}
+body.modal-window {
+	background:#f5f5f5;
+	position:relative;
+	margin:0;
+	padding: 45px 1px 10px 1px;
+	box-shadow:0 0 0 1px #ccc inset;
+	font-family:Arial, Helvetica, sans-serif;
+	}
+	.modal-window header {
+		position:fixed;
+		top:0;
+		left:0;
+		right:0;
+		height: 35px;
+    	padding: 9px 12px 0 12px;
+		background:#FFF;
+		z-index:1000;
+		border-bottom:1px solid #cccccc;
+		box-shadow:0 1px 3px rgba(0, 0, 0, 0.1);
+		}
+		.modal-window header button, .modal-window header input[type="submit"],.modal-window header button.prime, .modal-window header input[type="submit"].prime {
+			float:right;
+			margin:0 0 0 6px;
+			}
+		.modal-window header h1 {
+			float:left;
+			margin:0;
+			font-size:20px;
+			font-weight:normal;
+			font-family:Arial, Helvetica, sans-serif;
+			}
+	.modal-window nav {
+		background: #efefef;
+		border-bottom: 1px solid #e5e5e5;
+		box-shadow:0 1px 0 rgba(255, 255, 255, 1);
+		padding:6px 10px 0 10px;
+		min-height:30px;
+		}
+		.modal-window nav.top-fixed {
+			position:fixed;
+			top:45px;
+			left:1px;
+			right:1px;
+			z-index:999;
+			}	
+			.modal-window nav.top-fixed + section {
+				margin-top:40px;
+				}
+
+
+
+		

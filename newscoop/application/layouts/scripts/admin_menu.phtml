@@ -471,6 +471,19 @@ if( Saas::singleton()->hasPrivilege('themes' , 'index') ) {
             'privilege' => 'view',
         );
     }
+
+    $pages[3]['pages'][] = array(
+        'label' => getGS('Support'),
+        'module' => 'admin',
+        'controller' => 'support',
+        'id' => 'stat'
+    );
+
+    $pages[3]['pages'][] = array(
+        'label' => getGS('Renditions'),
+        'module' => 'admin',
+        'controller' => 'rendition',
+    );
 } else {
     unset($pages[3]);
 }
@@ -620,3 +633,9 @@ $view->navigation()->breadcrumbs()
 </div>
 
 <?php } ?>
+
+<script>
+$(document).ready(function() {
+    $('#menu-stat').fancybox();
+});
+</script>

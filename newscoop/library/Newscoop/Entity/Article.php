@@ -288,6 +288,11 @@ class Article
     {
         return $this->issueId;
     }
+    
+    public function getWorkflowStatus()
+    {
+        return $this->workflowStatus;
+    }
 
     /**
      * Set language

@@ -89,7 +89,8 @@ $(function() {
     });
 
     $('#user-search').click(function() {
-        var q = $(this).prev('input:text').val();
+        var q = $.trim($(this).prev('input:text').val());
+        q = q.replace(/\s+/g, '+');
         window.location.hash = 'search/' + q;
         $('.canvas').load("<?php echo $this->url(array(
             'action' => 'search',

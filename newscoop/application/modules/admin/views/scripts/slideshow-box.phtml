@@ -1,0 +1,112 @@
+<div id="slideshow-controls">
+    <a class="ui-state-default icon-button right-floated" href="<?php echo $this->url(array(
+        'module' => 'admin',
+        'controller' => 'slideshow',
+        'action' => 'create',
+        'article_number' => $this->articleNumber,
+    )); ?>" id="create-slideshow"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Create'); ?></a>
+
+    <a class="ui-state-default icon-button right-floated" href="<?php echo $this->url(array(
+        'module' => 'admin',
+        'controller' => 'slideshow',
+        'action' => 'attach',
+        'article_number' => $this->articleNumber,
+    )); ?>" id="attach-slideshow"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Attach/Detach'); ?></a>
+</div>
+
+<div class="clear"></div>
+<ul id="slideshow-list" class="block-list"></ul>
+
+<script type="text/template" id="slideshow-template">
+<a href="<?php echo $this->url(array(
+    'module' => 'admin',
+    'controller' => 'slideshow',
+    'action' => 'edit',
+    'article_number' => $this->articleNumber,
+)); ?>/slideshow/<%= id %>" title="<?php putGS('Edit'); ?> <%= headline %>"><%= headline %></a>
+</script>
+<script type="text/javascript" src="<?php echo $this->baseUrl('/js/underscore.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl('/js/backbone.js'); ?>"></script>
+<script type="text/javascript">
+(function($) {
+    /**
+     * Slideshow model
+     */
+    var Slideshow = Backbone.Model.extend({
+    });
+
+    /**
+     * Slideshow collection
+     */
+    var SlideshowCollection = Backbone.Collection.extend({
+        model: Slideshow,
+        url: <?php echo json_encode($this->url(array('controller' => 'slideshow', 'action' => 'box', 'article_number' => $this->articleNumber, 'format' => 'json'))); ?>
+    });
+
+    /**
+     * Slideshow view
+     */
+    var SlideshowView = Backbone.View.extend({
+        tagName: "li",
+
+        initialize: function() {
+            this.model.bind('change', this.render, this);
+            this.template = _.template($('#slideshow-template').html());
+        },
+
+        render: function() {
+            $(this.el).html(this.template(this.model.toJSON()));
+            $(this.el).find('a').fancybox({
+                hideOnContentClick: false,
+                width: 1300,
+                height: 800,
+                type: 'iframe',
+                onClosed: function() {
+                    slideshowCollection.fetch();
+                }
+            });
+            return this;
+        }
+    });
+
+    /**
+     * Slideshow list view
+     */
+    var SlideshowListView = Backbone.View.extend({
+        initialize: function() {
+            this.collection = this.options.collection;
+            this.collection.bind('reset', this.render, this);
+            this.collection.reset(this.options.slideshows);
+        },
+
+        render: function() {
+            $('#slideshow-list').empty();
+            this.collection.each(function(slideshow) {
+                var view = new SlideshowView({model: slideshow});
+                $('#slideshow-list').append(view.render().el);
+            });
+            return this;
+        }
+    });
+
+    /**
+     * Slideshow controls
+     */
+    var SlideshowControls = Backbone.View.extend({
+    });
+
+    $(function() {
+        window.slideshowCollection = new SlideshowCollection();
+        var slideshowView = new SlideshowListView({collection: slideshowCollection, slideshows: <?php echo json_encode($this->slideshowsJson($this->slideshows)); ?>});
+        $('#media-slideshows a').fancybox({
+            hideOnContentClick: false,
+            width: 1300,
+            height: 800,
+            type: 'iframe',
+            onClosed: function() {
+                slideshowCollection.fetch();
+            }
+        });
+    });
+})(jQuery);
+</script>

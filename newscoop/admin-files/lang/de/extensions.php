@@ -1,7 +1,7 @@
 <?php 
-regGS("News Desk", "");
-regGS("Go", "");
-regGS("Wikipedia Search", "");
+regGS("News Desk", "News Desk");
+regGS("Go", "Starten");
+regGS("Wikipedia Search", "Wikipedia Suche");
 regGS("Files", "Dateien");
 regGS("Sourcefabric.org newsletter subscription", "Sourcefabric.org Newsletter");
 regGS("Maps search", "Karten-Suche");
@@ -20,4 +20,6 @@ regGS("Hello World!", "Hallo Welt!");
 regGS("Google gadget", "Google Gadget");
 regGS("Feed url", "URL eingeben");
 regGS("Access Denied", "Zugang verweigert");
+regGS("Articles by popularity", "Artikel nach Popularität");
+regGS("TagesWoche Quick Links", "TagesWoche Quick Links");
 ?>

@@ -1,11 +1,11 @@
 <?php 
-regGS("You have reached the error page", "");
-regGS("Stack trace:", "");
-regGS("Request Parameters:", "");
-regGS("Page not found", "");
-regGS("Exception information:", "");
-regGS("Application error", "");
-regGS("An error occurred", "");
+regGS("You have reached the error page", "Sie sind auf der Fehlerseite angekommen");
+regGS("Stack trace:", "Stacktrace: ");
+regGS("Request Parameters:", "Parameter anfordern: ");
+regGS("Page not found", "Seite nicht gefunden");
+regGS("Exception information:", "Ausnahme Information:");
+regGS("Application error", "Anwendungsfehler");
+regGS("An error occurred", "Es ist ein Fehler aufgetreten. ");
 regGS("Newscoop has encountered a problem.", "Newscoop ist auf ein Problem gestoßen.");
 regGS("In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.", "Um dem Newscoop Team bei der Bearbeitung zu helfen, nehmen Sie sich bitte einen Moment Zeit um das Problem zu schildern.");
 regGS("What were you trying to do when this happened?", "Was wollten Sie gerade machen, als das Problem auftrat?");

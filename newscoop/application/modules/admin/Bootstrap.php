@@ -186,4 +186,11 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 
         Zend_Form::setDefaultTranslator($translate);
     }
+
+    protected function _initNewscoopViewHelpers()
+    {
+        $this->bootstrap('view');
+        $this->getResource('view')->registerHelper(Zend_Registry::get('container')->getService('view.helper.thumbnail'), 'thumbnail');
+        $this->getResource('view')->registerHelper(Zend_Registry::get('container')->getService('view.helper.rendition'), 'rendition');
+    }
 }

@@ -1,4 +1,6 @@
 <?php 
+regGS("Slideshows", "");
+regGS("Place images", "");
 regGS("You're not allowed to edit article.", "Nemáte povolení k úpravě článku.");
 regGS("Webcode", "Webcode");
 regGS("Unapproved", "Neschválené");
@@ -57,7 +59,7 @@ regGS("You must select a file to upload.", "Zvolte soubor k nahrání.");
 regGS("You must select a XML input file.", "Zvolte XML vstupní soubor.");
 regGS("You do not have the right to import XML archives.", "Nemáte oprávnění k importování XML archivy.");
 regGS("There was a problem uploading the file.", "Vyskytl se problé při uploadování souboru.");
-regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Nahrávaný soubor není celý. K tomuto dochází, kdyžje překročen maximální povolený čas k nahrání souboru. Maximalní čas lze upravit v 'php.ini'.");
+regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "Nahrávaný soubor není celý. K tomuto dochází, když je překročen maximální povolený čas k nahrání souboru. Maximalní čas lze upravit v 'php.ini'.");
 regGS("The file exceeds the allowed max file size.", "Soubor překračuje maximální povolenou velikost.");
 regGS("Optional", "Volitelné");
 regGS("Input File", "Vstupní Soubor");
@@ -160,7 +162,4 @@ regGS("This article cannot be previewed. Please make sure it has the article tem
 regGS("No such article.", "Článek neexistuje");
 regGS("No such section.", "Rubrika neexistuje.");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit téma \\'$1\\' z článku?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Jste si jistí, že chcete odstranit soubor \\'$1\\' z článku?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Opravdu chcete obrázek \\'$1\\' z článku odstranit?");
 ?>

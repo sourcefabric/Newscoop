@@ -1,4 +1,10 @@
 <?php 
+regGS("Create slideshow", "");
+regGS("Create", "");
+regGS("Attach/Detach", "");
+regGS("Are you sure you want to delete slideshow?", "");
+regGS("Renditions", "");
+regGS("Support", "");
 regGS("Pending articles", "Tekstovi na čekanju");
 regGS("Manage Users", "Upravljanje korisnicima");
 regGS("Manage User Types", "Upravljanje tipovima korisnika");
@@ -144,5 +150,4 @@ regGS("Login failed", "Neuspešna prijava");
 regGS("Please make sure that you typed the correct user name and password.", "Proverite da li ste ispravno upisali korisničko ime i lozinku");
 regGS("If your problem persists please contact the site administrator $1", "Ako se problem ponovi kontaktirajte administratora sajta $1");
 regGS("Backup/Restore", "Bekap/Vraćanje");
-regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Zdravo, \\n\\nza ppovraćaj lozinke, molimo sledite ovaj link: $1");
 ?>

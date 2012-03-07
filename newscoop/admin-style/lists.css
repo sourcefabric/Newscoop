@@ -1,0 +1,53 @@
+@charset "utf-8";
+/* CSS Document */
+
+
+/* List View ////////////////////////////////////////////////////////////////////
+
+Basic list for switching between list view and grid view. 
+
+////////////////////////////////////////////////////////////////////////////////*/
+
+.list-view {
+	list-style-type:none;
+	margin:0;
+	padding:0;
+}
+.list-view.list > li {
+	margin:0;
+	padding:8px 10px;
+	border-bottom:1px solid #ccc;
+	}
+	.list-view.list > li:hover  {
+		background:#fff;
+		}
+	.list-view.list > li.selected, .list-view.list > li.active,
+	.list-view.list > li.selected:hover, .list-view.list > li.activeHover  {
+		background:#d9eaf9;
+		}
+
+/*.rounded li { border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px;}*/
+
+.list-view.grid {
+    padding: 6px 8px 0 8px;
+	}
+	.list-view.grid > li {
+		background:#fff;
+		border: 1px solid #b0b0b0;
+		display: inline-block;
+		margin: 7px 5px;
+		padding: 4px 4px 12px 4px;
+		width: 152px;
+		min-height:164px;
+		border-radius:3px; -moz-border-radius:3px; -webkit-border-radius:3px;
+		}
+		.list-view.grid > li:hover {
+			border:#808080 solid 1px;
+			box-shadow:0 1px 3px rgba(0,0,0,0.15);
+			}
+		.list-view.grid > li.selected, .list-view.grid > li.active,
+		.list-view.grid > li.selected:hover, .list-view.grid > li.activeHover  {
+			background:#d9eaf9;
+			border:#007fb3 solid 1px !important;
+			box-shadow:0 1px 5px rgba(0,0,0,0.25);
+			}

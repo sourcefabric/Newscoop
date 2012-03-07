@@ -210,8 +210,8 @@ ul.resource label {
     border: 1px solid #9D9D9D;
     color: #444444;
     cursor: pointer;
-    margin: 0 6px 0 0;
-    padding: 3px 12px 4px;
+    margin: -6px 6px 0 0;
+    padding: 6px 7px 3px 4px;
 }
 
 .theme-edit .zend_form dd input[type="button"]:hover,
@@ -254,8 +254,8 @@ dl dd .info-text	{
     padding: 5px 0 0 0;
     //width: 998px;
 	text-indent: 3px;
-    width: 90%; min-width: 1000px;
-}
+    width: 90%;
+    min-width: 1000px;
 }
 
 .edit-image  {
@@ -289,6 +289,32 @@ dl dd .info-text	{
 	margin-left:25px;
 }
 
+button:hover .ui-icon-polygon,
+.ui-icon-polygon:hover {
+    background: transparent url(images/geo_polygon_blue.png) no-repeat;
+}
+
+.ui-icon-polygon {
+    float: left;
+    margin: -3px 6px 0px 3px;
+
+    display: block;
+    text-indent: -99999px;
+    overflow: hidden;
+    background-repeat: no-repeat;
+
+    height: 22px;
+    width: 24px;
+
+    background: transparent url(images/geo_polygon_off.png) no-repeat;
+}
+
+.geo_filtering_button {
+    background: #f6f6f6;
+}
+
+.geo_filtering-label {
+}
 
 
 
@@ -654,3 +680,550 @@ h1 {
     border: 1px solid #fff;
     background-color: #fff;
 }
+
+.renditions {
+    height: 1%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0 4px;
+    background-color: #d0d0d0;
+}
+
+.renditions li {
+    list-style-type: none;
+    float: left;
+    width: 152px;
+    margin: 8px 4px 8px;
+    padding: 4px;
+    background-color: #fff;
+    position: relative;
+    border: 1px solid #b0b0b0;
+}
+
+.renditions li.state-active {
+    color: #fff;
+    background-color: #000;
+}
+
+dl.rendition {
+    margin: 0;
+    padding: 0;
+}
+
+dl.rendition dt {
+    margin: 0;
+    padding: 0;
+}
+
+dl.rendition dd {
+    margin: 3px 0 0;
+    padding: 0;
+}
+
+dl.rendition .preview {
+    height: 152px;
+}
+
+dl.rendition .preview {
+    border: 1px solid #4e4e4e;
+    overflow: hidden;
+}
+
+dl.rendition dt {
+    height: 152px;
+}
+
+li.state-active dl.rendition .preview {
+    border-color: #fff;
+}
+
+li.state-active dl.rendition dd.name {
+    color: #fff;
+}
+
+.renditions .reset {
+    position: absolute;
+    right: 4px;
+    top: 4px;
+    padding: 3px;
+    color: #fff;
+    background-color: #4e4e4e;
+    opacity: 0.8;
+}
+
+.renditions .reset:hover {
+    opacity: 1;
+}
+
+.renditions h3 {
+    font-size: 1.1em;
+}
+
+.thumbnails {
+    clear: both;
+    margin: 0 0 8px;
+    padding: 0 4px;
+}
+
+.thumbnails li {
+    list-style-type: none;
+    display: inline-block;
+    width: 152px;
+    margin: 8px 4px 8px;
+    padding: 4px;
+    background-color: #fff;
+    border: 1px solid #9d9d9d;
+}
+
+.thumbnails li.small {
+    width: 77px;
+}
+
+.thumbnails img {
+    border: 1px solid #ccc;
+}
+
+.thumbnails figure {
+    margin: 0;
+    padding: 0;
+}
+
+.thumbnails figure div {
+    min-height: 153px;
+}
+
+.thumbnails figure div.small {
+    min-height: 78px;
+}
+
+.thumbnails figure img {
+    display: block;
+}
+
+.thumbnails figcaption {
+    padding: 5px 0 0;
+}
+
+.thumbnails figure label {
+    font-size: 1em;
+}
+
+.thumbnails input {
+    float: right;
+}
+
+#next h2 {
+    margin: 13px 0 0;
+    padding: 0 13px;
+    font-size: 1.5em;
+}
+
+#next h2 small {
+    font-size: 1em;
+}
+
+#next .editarea h2 {
+    margin-bottom: 5px;
+    padding: 0 5px;
+}
+
+#next #editor {
+    display: inline-block;
+    margin: 5px 0;
+    padding: 5px;
+    background-color: #000;
+}
+
+#next .editarea .video-preview {
+    display: inline-block;
+    margin: 5px 0;
+    padding: 5px;
+    background-color: #000;
+}
+
+.slideshow {
+    clear: both;
+    height: 1%;
+    min-height: 150px;
+    overflow: hidden;
+    margin: 8px 0;
+    padding: 4px;
+    background-color: #d0d0d0;
+}
+
+.slideshow li {
+    float: left;
+    margin: 4px 4px;
+    padding: 13px 4px 4px;
+    width: 152px;
+    background-color: #fff;
+    border: 1px solid #9c9c9c;
+    position: relative;
+}
+
+.slideshow .placeholder {
+    width: 150px;
+    height: 166px;
+    border: 2px dashed #b0b0b0;
+    background-color: transparent;
+}
+
+.slideshow .rendition-preview, .slideshow .video-preview {
+    border: 1px solid #9d9d9d;
+}
+
+.slideshow .video-preview {
+    height: 150px;
+    overflow: hidden;
+}
+
+.slideshow a figcaption {
+    margin: 3px 0 0;
+    font-size: 1.1em;
+    color: #000;
+}
+
+.slideshow figure {
+    margin: 0;
+}
+
+.slideshow figure > div {
+    height: 152px;
+    overflow: hidden;
+}
+
+.slideshow .remove {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 3px;
+    color: #fff;
+    background-color: #000;
+    opacity: 0.8;
+}
+
+.slideshow .remove:hover {
+    opacity: 1;
+}
+
+#next.iframe {
+    background-color: #f5f5f5;
+}
+
+#next.iframe.dark {
+    background-color: #d0d0d0;
+}
+
+#next.iframe .content {
+    margin: 0;
+}
+
+#next.iframe h1 {
+    height: auto;
+    min-height: 1%;
+    line-height: 1em;
+    margin: 0;
+    padding: 5px 8px 13px;
+    background: #fff none;
+    font-size: 2em;
+    box-shadow: none;
+    border: none;
+}
+
+#next .inline {
+    float: none;
+    width: auto;
+    margin: 8px 0;
+    padding: 0 8px;
+}
+
+#next input[type="text"] {
+    min-width: 21em;
+    margin: 3px 5px 5px 0;
+    padding: 3px;
+    border: 1px solid #ccc;
+}
+
+#next .editarea input[type="text"] {
+    width: 98%;
+}
+
+#next input[type="text"].short {
+    min-width: 50px;
+}
+
+#next input[type="text"].error {
+    color: #a40000;
+    border-color: #a40000;
+}
+
+#next .editarea {
+    padding-bottom: 5px;
+    text-align: center;
+    position: relative;
+    background-color: #f5f5f5;
+}
+
+#next .editarea > div {
+    display: inline-block;
+    text-align: left;
+    min-width: 500px;
+}
+
+.editarea button {
+    margin: 3px 0;
+}
+
+.editarea .next, .editarea .prev {
+    position: absolute;
+    width: 52px;
+    height: 67px;
+    overflow: hidden;
+    top: 34%;
+}
+
+.editarea .next span, .editarea .prev span {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 52px;
+    height: 67px;
+    background: transparent none no-repeat 0 0;
+}
+
+.editarea .prev { left: 0; }
+.editarea .next { right: 0; }
+
+.editarea .prev span { background-image: url('images/arrow_prev.png'); }
+.editarea .next span { background-image: url('images/arrow_next.png'); }
+
+.slideshow.editor { margin: 0; }
+.slideshow.editor .remove { display: none; }
+
+.editarea .done {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+}
+
+#next button, .editarea .done {
+    display: inline-block;
+    margin: 0;
+    padding: 3px 5px;
+    font-size: 1.3em;
+    color: #444;
+    background-color: #f9f9f9;
+    border: 1px solid #9d9d9d;
+    cursor: pointer;
+}
+
+#editor input[type="radio"] { display: none; }
+
+.slideshows {
+    clear: both;
+    margin: 0;
+    padding: 0;
+}
+
+.slideshows li {
+    margin: 3px 0 0;
+    font-size: 1.3em;
+}
+
+.renditions.editor .reset { display: none; }
+
+.renditions .active, .slideshow .active {
+    background-color: #d9eaf9;
+}
+
+.archive.images {
+    min-width: 34em;
+}
+
+.archive.images figcaption {
+    height: 2.2em;
+    overflow: hidden;
+}
+
+#image-archive {
+    display: inline-block;
+    position: relative;
+}
+
+#slideshows .slideshows {
+    margin: 8px;
+}
+
+#slideshows .slideshows > li {
+    height: 1%;
+    overflow: hidden;
+    margin: 8px 0 0;
+    padding: 5px;
+    background-color: #fff;
+}
+
+#slideshows .slideshows a {
+    float: left;
+    display: inline-block;
+    padding: 3px 5px;
+    color: #fff;
+    background-color: #000;
+    font-size: 0.85em;
+}
+
+#slideshows .slideshows a small {
+    font-size: 0.8em;
+}
+
+#slideshows .slideshow-preview {
+    float: left;
+    clear: left;
+    padding: 0 0 5px 5px;
+    background-color: #2e3436;
+}
+
+#slideshows .slideshow-preview .rendition-preview {
+    float: left;
+    margin: 5px 5px 0 0;
+}
+
+a.create-slideshow {
+    display: inline-block;
+    margin: 13px 13px 5px;
+    padding: 3px 5px;
+    color: #fff;
+    background-color: #4e9a06;
+}
+
+#next .ui-tabs {
+    border: none;
+    font-size: 1em;
+}
+
+#next .ui-tabs-nav {
+    font-size: 1.1em;
+}
+
+#next #image-search {
+    margin: 8px 8px 0;
+}
+
+#next #image-archive .info {
+    margin: 8px;
+    font-size: 1.1em;
+}
+
+dl.slideshow-preview {
+    margin: 0;
+    padding: 0;
+    height: 1%;
+    overflow: hidden;
+}
+
+dl.slideshow-preview dt {
+    float: left;
+    clear: right;
+    padding: 3px 5px;
+    color: #fff;
+    background-color: #000;
+}
+
+dl.slideshow-preview dd {
+    float: left;
+    margin: 0;
+    padding: 5px 5px 5px 0;
+    color: #eeeeec;
+    background-color: #2e3436;
+}
+
+dl.slideshow-preview dd.first {
+    clear: left;
+    padding-left: 5px;
+}
+
+dl.slideshow-preview figure {
+    margin: 0;
+}
+
+dl.slideshow-preview figure > div > * {
+    display: block;
+    border: 1px solid #babdb6;
+}
+
+.ui-selected dl.slideshow-preview {
+    opacity: 0.5;
+}
+
+#attach-slideshow-list {
+    margin: 13px 8px;
+}
+
+#next .buttons {
+    margin: 0 8px 13px;
+}
+
+#media-slideshows .slideshows {
+    margin-top: 34px;
+    font-size: 0.8em;
+}
+
+#media-slideshows .slideshows .detach {
+    float: right;
+    color: #a40000;
+}
+
+#media-slideshows .slideshows li {
+    margin: 8px 0 0;
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+#media-slideshows .slideshows a {
+    color: #2e3436;
+}
+
+#media-slideshows .empty {
+    clear: both;
+    margin: 0;
+    padding: 13px 0 0;
+}
+
+#rendition-list {
+    list-style-type: none;
+    margin: 8px 0;
+    padding: 0;
+    max-width: 60em;
+}
+
+#rendition-list > li {
+    margin: 3px 0 0;
+    padding: 5px;
+    background-color: #fff;
+    font-size: 1.3em;
+}
+
+#rendition-list input {
+    border: 1px solid #ccc;
+    padding: 2px 5px;
+}
+
+/* modal popup styles */
+
+#modal-top {
+    background: #fff;
+    margin: 0 auto;
+}
+#modal-top .toolbar {
+    min-height: 35px;
+    padding: 6px 20px 6px 0px;
+    background: #fff;
+    box-shadow: none;
+    border: none;
+}
+#modal-top h2 {
+    color: #444444;
+    width: 50%;
+    margin: 0 6px;
+}
+

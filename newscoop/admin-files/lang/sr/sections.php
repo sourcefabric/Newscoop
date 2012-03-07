@@ -1,7 +1,7 @@
 <?php 
-regGS("default", "");
-regGS("before you can configure the section templates.", "");
-regGS("You have to assign a theme to the issue", "");
+regGS("default", "подразумевано");
+regGS("before you can configure the section templates.", "пре него што подесите шаблон за рубрику.");
+regGS("You have to assign a theme to the issue", "Морате додлеити тему издању");
 regGS("The section number $1 was already in use.", "Рубрика број $1 је већ у употреби.");
 regGS("Delete all articles written in $1 language from this section", "Обриши све текстове из ове рубрике написане на језику: $1");
 regGS("Delete all articles and all of their translations", "Обриши све текстове и њихове преводе");

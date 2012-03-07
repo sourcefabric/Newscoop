@@ -1,4 +1,6 @@
 <?php 
+regGS("Slideshows", "");
+regGS("Place images", "");
 regGS("You're not allowed to edit article.", "Nemate pravo uređivanja teksta");
 regGS("Webcode", "Web kod");
 regGS("Unapproved", "Neodobren");
@@ -161,7 +163,4 @@ regGS("No such article.", "Nema takvog teksta.");
 regGS("No such section.", "Nema te rubrike.");
 regGS("Are you sure you want to delete this scheduled action?", " ");
 regGS("Are you sure you want to remove the image '$1' from the article?", "Da li ste sigurni da želite da obrišete sliku $1 iz članka?");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Da li ste sigurni da iz teksta želite da uklonite temu \\'$1\\'?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Da li ste sigurni da iz teksta želite da uklonite fajl \\'$1\\'?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Da li ste sigurni da iz teksta želite da uklonite sliku \\'$1\\'?");
 ?>

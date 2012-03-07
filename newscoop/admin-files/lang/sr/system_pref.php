@@ -1,11 +1,11 @@
 <?php 
-regGS("Maximal zoom for auto-focusing:", "");
-regGS("Map border for auto-focusing:", "");
-regGS("Map auto-focusing as the default behavior:", "");
-regGS("Include CSS file for map view", "");
-regGS("Collect statistics:", "");
-regGS("Please enter password recovery from email.", "");
-regGS("From email address:", "");
+regGS("Maximal zoom for auto-focusing:", "Највеће увећање при аутоматском центрирању:");
+regGS("Map border for auto-focusing:", "Оквир мапе за аутоматско центрирање:");
+regGS("Map auto-focusing as the default behavior:", "Ауто центрирање мапе као подразумевано понашање:");
+regGS("Include CSS file for map view", "Додај ЦСС фајл за приказ мапе");
+regGS("Collect statistics:", "Прикупљај статистику:");
+regGS("Please enter password recovery from email.", "Унесите лозинку из имејла");
+regGS("From email address:", "Са имејл адресе:");
 regGS("Run scheduled tasks externally?", "Екстерно покретање планираних акција?");
 regGS("Setting up a Newscoop Replication Server?", "Подешавање Newscoop репликационог сервера?");
 regGS("Newscoop Online Server Database", "Newscoop база података на онлајн серверу");

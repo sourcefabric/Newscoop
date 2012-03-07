@@ -75,6 +75,7 @@ CREATE TABLE `ArticleImages` (
   `NrArticle` int(10) unsigned NOT NULL DEFAULT '0',
   `IdImage` int(10) unsigned NOT NULL DEFAULT '0',
   `Number` int(10) unsigned NOT NULL DEFAULT '0',
+  `is_default` int(1) DEFAULT NULL,
   PRIMARY KEY (`NrArticle`,`IdImage`),
   UNIQUE KEY `ArticleImage` (`NrArticle`,`Number`),
   KEY `IdImage` (`IdImage`)
@@ -384,6 +385,8 @@ CREATE TABLE `Images` (
   `TimeCreated` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
   `Source` enum('local','feedback','newsfeed') not null default 'local',
   `Status` enum('unapproved','approved') not null default 'approved',
+  `width` int(5) DEFAULT NULL,
+  `height` int(5) DEFAULT NULL,
   PRIMARY KEY (`Id`),
   FULLTEXT KEY `Description` (`Description`),
   FULLTEXT KEY `Photographer` (`Photographer`),

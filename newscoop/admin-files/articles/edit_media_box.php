@@ -1,11 +1,29 @@
 <div class="articlebox" title="<?php putGS('Media'); ?>"><div class="tabs">
     <ul>
         <li><a href="#media-images"><?php putGS('Images'); ?></a></li>
+        <li><a href="#media-slideshows"><?php putGS('Slideshows'); ?></a></li>
         <li><a href="#media-attachments"><?php putGS('Files'); ?></a></li>
     </ul>
     <div id="media-images">
         <?php if ($inEditMode && $g_user->hasPermission('AttachImageToArticle')) { ?>
-        <a class="iframe ui-state-default icon-button right-floated" href="<?php echo camp_html_article_url($articleObj, $f_language_id, "images/popup.php"); ?>"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Attach'); ?></a>
+        <a id="attach-images" class="ui-state-default icon-button right-floated" href="<?php echo $this->view->url(array(
+            'module' => 'admin',
+            'controller' => 'image',
+            'action' => 'article-attach',
+            'article_number' => $articleObj->getArticleNumber(),
+            'language_id' => $f_language_id,
+        )); ?>"><span class="ui-icon ui-icon-plusthick"></span><?php putGS('Attach'); ?></a>
+
+        <?php if ($this->_helper->service('image.rendition')->hasRenditions()) { ?>
+        <a id="place-images" class="ui-state-default icon-button right-floated" href="<?php echo $this->view->url(array(
+            'module' => 'admin',
+            'controller' => 'image',
+            'action' => 'article',
+            'article_number' => $articleObj->getArticleNumber(),
+            'language_id' => $f_language_id,
+        )); ?>"><span class="ui-icon ui-icon-image"></span><?php putGS('Place images'); ?></a>
+        <?php } ?>
+
         <div class="clear"></div>
         <?php } ?>
 
@@ -35,6 +53,15 @@
             <?php } ?>
         </ul>
     </div>
+
+    <!-- BEGIN Slideshows -->
+    <div id="media-slideshows">
+        <?php echo $this->view->partial('slideshow-box.phtml', array(
+            'articleNumber' => $articleObj->getArticleNumber(),
+            'slideshows' => $this->_helper->service('package')->findByArticle($articleObj->getArticleNumber()),
+        )); ?>
+    </div>
+    <!-- END Slideshows -->
 
     <div id="media-attachments">
         <?php if ($inEditMode && $g_user->hasPermission('AddFile')) {  ?>

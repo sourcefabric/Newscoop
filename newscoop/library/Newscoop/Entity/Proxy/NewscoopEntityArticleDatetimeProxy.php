@@ -88,6 +88,54 @@ class NewscoopEntityArticleDatetimeProxy extends \Newscoop\Entity\ArticleDatetim
         return parent::__get($name);
     }
 
+    public function setStartDate($startDate)
+    {
+        $this->__load();
+        return parent::setStartDate($startDate);
+    }
+
+    public function setStartTime($startTime)
+    {
+        $this->__load();
+        return parent::setStartTime($startTime);
+    }
+
+    public function setEndDate($endDate)
+    {
+        $this->__load();
+        return parent::setEndDate($endDate);
+    }
+
+    public function setEndTime($endTime)
+    {
+        $this->__load();
+        return parent::setEndTime($endTime);
+    }
+
+    public function setRecurring($recurring)
+    {
+        $this->__load();
+        return parent::setRecurring($recurring);
+    }
+
+    public function setArticleId($articleId)
+    {
+        $this->__load();
+        return parent::setArticleId($articleId);
+    }
+
+    public function setArticleType($articleType)
+    {
+        $this->__load();
+        return parent::setArticleType($articleType);
+    }
+
+    public function setFieldName($fieldName)
+    {
+        $this->__load();
+        return parent::setFieldName($fieldName);
+    }
+
     public function getId()
     {
         $this->__load();

@@ -1,0 +1,37 @@
+<a href="<?php echo $this->url(array(
+    'module' => 'admin',
+    'controller' => 'slideshow',
+    'action' => 'create',
+)); ?>" class="create-slideshow">+ Create slideshow</a>
+
+<ul class="slideshows">
+    <?php foreach ($this->slideshows as $slideshow) { ?>
+    <li>
+        <a href="<?php echo $this->url(array(
+            'module' => 'admin',
+            'controller' => 'slideshow',
+            'action' => 'edit',
+            'slideshow' => $slideshow->getId(),
+        )); ?>" class="edit"><?php echo $this->escape($slideshow->getHeadline()); ?> <?php if ($slideshow->getSlug()) { ?><small>(#<?php echo $this->escape($slideshow->getSlug()); ?>)</small><?php } ?></a>
+        <div class="slideshow-preview">
+            <?php foreach ($slideshow->getItems() as $item) { ?>
+            <?php echo $item->isImage() ? $this->renditionPreview($item->getRendition(), 75, 75, $item->getImage()) : $this->videoPreview($item->getVideoUrl()); ?>
+            <?php } ?>
+        </div>
+    </li>
+    <?php } ?>
+</ul>
+
+<script type="text/javascript">
+$(function() {
+    $('.slideshows .edit').fancybox({
+        hideOnContentClick: false,
+        width: 1300,
+        height: 800,
+        type: 'iframe',
+        onClosed: function() {
+            parent.window.location = parent.window.location + '#slideshows';
+        }
+    });
+});
+</script>

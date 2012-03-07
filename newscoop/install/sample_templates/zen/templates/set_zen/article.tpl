@@ -49,8 +49,6 @@ Location(s):
 
 </div>
 {{ if $gimme->article->content_accessible }}
-{{* display comment errors also on top, so user sees them *}}
-{{ include file="_tpl/article-comments-errorcheck.tpl" }}
   {{ include file="_tpl/article-ifvideo.tpl" }}
   <div class="full_text">
     <div class="articleinset">
@@ -78,14 +76,19 @@ Location(s):
     </div><!--eightcol-->
     <div class="fourcol last">
 
-{{ if $gimme->article->has_map }}
-  <div class="block">
-    <h3>Locations</h3>
-    {{ map show_locations_list="true" show_reset_link="Show initial Map" width="100%" height="250" }}
-  </div>
-{{ else }}
-{{ include file="_tpl/_banner300x250.tpl" }}
-{{ /if }}
+      <div class="block">
+      {{ include file="_tpl/article-meta.tpl" }}
+      </div>
+
+      {{ if $gimme->article->has_map }}
+      <div class="block">
+        <h3>Locations</h3>
+       {{ map show_locations_list="true" show_reset_link="Show initial Map" width="100%" height="250" }}
+      </div>
+     {{ else }}
+       {{ include file="_tpl/_banner300x250.tpl" }}
+     {{ /if }}
+     {{ include file="_tpl/article-related.tpl" }}
     </div><!--fourcol-->
   </div><!--row-->
 
@@ -96,7 +99,7 @@ Location(s):
 {{ include file="_tpl/article-comments.tpl" }}
     </div><!--eightcol-->
     <div class="fourcol last">
-{{ include file="_tpl/sidebar-related.tpl" }}
+{{* include file="_tpl/sidebar-related.tpl" *}}
 {{* include file="_tpl/sidebar-pages.tpl" *}}
 {{* include file="_tpl/sidebar-blogroll.tpl" *}}
     </div><!--fourcol-->

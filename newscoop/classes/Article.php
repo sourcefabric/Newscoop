@@ -1701,7 +1701,7 @@ class Article extends DatabaseObject {
                     break;
     		}
     	}
-    	$urlEnd = preg_replace('/[,\/\.\?"\+&%:#]/', '', trim($urlEnd));
+        $urlEnd = preg_replace('/[\\\\,\/\.\?"\+&%:#]/', '', trim($urlEnd));
     	$urlEnd = str_replace(' ', '-', $urlEnd) . '.htm';
 		return $urlEnd;
     }

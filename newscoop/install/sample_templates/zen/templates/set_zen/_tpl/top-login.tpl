@@ -10,6 +10,6 @@
     {{ camp_edit object="login" attribute="password" html_code="id=\"loginpassword\" placeholder=\"pass\"" }}
   {{ /login_form }}
 {{ else }}
-  <p>Welcome, <a href="{{ uri options="template register.tpl" }}">{{ $gimme->user->name }}</a> | <a href="{{ $view->url(['controller' => 'auth', 'action' => 'logout'], 'default') }}" }}">logout</a></p>
+  <p>Welcome, <a title="My profile" href="{{ $view->url(['controller' => 'dashboard', 'action' => 'index'], 'default') }}">{{ $gimme->user->name }}</a> | <a href="{{ $view->url(['controller' => 'auth', 'action' => 'logout'], 'default') }}" }}">logout</a></p>
 {{ /if }}
 </div><!-- /#logintop -->

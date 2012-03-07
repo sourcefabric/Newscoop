@@ -1,0 +1,237 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/js/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css')); ?>
+
+<script type="text/javascript" src="<?php echo $this->baseUrl('/js/plupload/js/plupload.full.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl('/js/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js'); ?>"></script>
+
+<?php $this->placeholder('bodyId')->set('next'); ?>
+
+<div id="modal-top">
+    <div class="toolbar fixed-top">
+    <div class="save-button-bar"></div>
+    <h1>
+        <?php putGS("Attached images"); ?>
+        <span style="float: right;">
+        <input id="tab_1_submit" type="button" value="<?php putGS('Next: Upload and Edit Metadata'); ?>" class="save-button" style="display: none;" onClick="$('#upload_form').submit();">
+        <input id="tab_2_submit" type="button" value="<?php putGS('Next: Place Images'); ?>" class="save-button" style="display: none;" onClick="document.location = '<?php echo($this->url(array(
+            'module' => 'admin',
+            'controller' => 'image',
+            'action' => 'article',
+            'article_number' => $this->article,
+            'language_id' => $this->languageId,
+        ))); ?>';">
+        </span>
+    </h1>
+    </div>
+</div>
+<div style="margin-top:40px;">&nbsp;</div>
+
+<?php if (!empty($this->articleImages)) { ?>
+
+<ul id="attached-thumbnails" class="thumbnails">
+    <?php foreach ($this->articleImages as $articleImage) { ?>
+    <li class="image-detach small" id="attached-image-<?php echo $articleImage->getId(); ?>" style="cursor: pointer;">
+        <figure>
+            <div class="small"><?php echo $this->thumbnail($articleImage, 75, 75, 'fit')->getImg($this); ?></div>
+            <figcaption><label for="default-<?php echo $articleImage->getId(); ?>"><?php echo $articleImage->getWidth(), 'x', $articleImage->getHeight(); ?></label></figcaption>
+        </figure>
+        <span class="info">&nbsp;</span>
+    </li>
+    <?php } ?>
+</ul>
+
+<?php } else { ?>
+<p style="margin-left: 8px"><?php putGS('No images attached to article.'); ?></p>
+<?php } ?>
+
+<div id="tabs">
+	<ul>
+		<li><a href="#tabs-1"><?php putGS("Add New Image"); ?></a></li>
+        <li><a href="#tabs-2"><?php putGS("Media Archive"); ?></a></li>
+	</ul>
+	<div id="tabs-1">
+        <form id="upload_form" method="POST" action="<?php echo $this->baseUrl('/admin/media-archive/do_upload.php'); ?>" enctype="multipart/form-data">
+        <div style="margin: 8px;">
+        </div>
+        <input type="hidden" name="f_article_edit" value="1">
+        <input type="hidden" name="f_language_id" value="<?php echo($this->languageId); ?>">
+        <input type="hidden" name="f_article_number" value="<?php echo($this->article); ?>">
+        <div id="uploader" style="border: 0px;"></div>
+        <div id="uploader_error" style="border: 0px;"></div>
+
+        </form>
+        
+	</div>
+	<div id="tabs-2">
+        
+        <div style="margin: 8px;">
+        </div>
+        
+        <form method="post" action="<?php echo($this->url(array(
+            'module' => 'admin',
+            'controller' => 'image',
+            'action' => 'article-attach',
+            'article_number' => $this->article,
+            'language_id' => $this->languageId,
+        ))); ?>">
+        <input type="text" placeholder="<?php echo(getGS('Search')); ?>" name="q" value="<?php if ($this->q) echo($this->q); ?>">
+        <input type="submit" value="<?php echo(getGS('Search')); ?>">
+        </form>
+        <br>
+        <?php if (!empty($this->images)) { ?>
+        <div id="image-archive">
+        <?php echo $this->paginator; ?>
+        </div>
+        
+        <ul id="thumbnails" class="thumbnails">
+            <?php foreach ($this->images as $image) { ?>
+            <li id="image-<?php echo $image->getId(); ?>" class="image-attach" style="cursor: pointer;">
+                <figure>
+                    <div><?php echo $this->thumbnail($image, 150, 150, 'fit')->getImg($this); ?></div>
+                    <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></label></figcaption>
+                </figure>
+                <span class="info">&nbsp;</span>
+            </li>
+            <?php } ?>
+        </ul>
+
+        <?php } else { ?>
+        <p style="margin-left: 8px"><?php putGS('No images found.'); ?></p>
+        <?php } ?>
+        
+	</div>
+</div>
+
+<script>
+$(function() {
+    var q = '<?php echo($this->q); ?>';
+    
+    $("#tabs").tabs();
+    if (document.location.hash == '#media-archive' || q != '') {
+		$("#tabs").tabs('option', 'selected', 'tabs-2');
+        $('#tab_1_submit').hide();
+        $('#tab_2_submit').show();
+	}
+    else {
+        $('#tab_1_submit').show();
+        $('#tab_2_submit').hide();
+    }
+    
+    $("#tabs").tabs({
+        select: function(event, ui) {
+            if (ui.index == 0) {
+                $('#tab_1_submit').show();
+                $('#tab_2_submit').hide();
+            }
+            if (ui.index == 1) {
+                $('#tab_1_submit').hide();
+                $('#tab_2_submit').show();
+            }
+        }
+    });
+    
+    var form = $('#upload_form');
+    var uploader = $('#uploader');
+
+    uploader.pluploadQueue({
+        runtimes : "html5, html4",
+        unique_names : true,
+        max_file_size: '2mb',
+        chunk_size: '500kb',
+
+        url : '<?php echo($this->url(array(
+            'module' => 'admin',
+            'controller' => 'image',
+            'action' => 'upload',
+            'format' => 'json',
+        ))); ?>',
+
+        flash_swf_url: "<?php echo $this->baseUrl('/js/plupload/js/plupload.flash.swf'); ?>",
+        silverlight_xap_url: "<?php echo $this->baseUrl('/js/plupload/js/plupload.silverlight.xap'); ?>",
+        
+        filters: [{title: '<?php putGS('Image Files: '); ?>', extensions: 'jpg,gif,png'}]
+    });
+
+    // Client side form validation
+    $('#upload_form').submit(function(e) {
+        var uploader = $('#uploader').pluploadQueue();
+
+        // Files in queue upload them first
+        if ((0 < uploader.files.length) && ((uploader.total.uploaded + uploader.total.failed) != uploader.files.length)) {
+            // When all files are uploaded submit form
+            uploader.bind('StateChanged', function() {
+                if ((uploader.total.uploaded + uploader.total.failed) == uploader.files.length) {
+                    $('#upload_form').submit();
+                }
+            });
+            uploader.start();
+            if (e && e.preventDefault) {
+                e.preventDefault();
+            }
+            return false;
+        }
+
+        return true;
+    });
+});
+
+$('.image-attach').click(function() {
+    var imageId = $(this).attr('id').replace('image-', '');
+    
+    $.post("<?php echo $this->url(array(
+        'module' => 'admin',
+        'controller' => 'image',
+        'action' => 'set-attach',
+        'format' => 'json',
+    )); ?>", {
+        'image_id': imageId,
+        'article_number': <?php echo($this->article); ?>
+    }, function (data, textStatus) {
+        if (data.exception != undefined) {
+            alert(data.exception);
+            return;
+        }
+
+        window.location.hash = '#media-archive';
+        window.location.reload();
+    }, 'json');
+});
+
+$('.image-attach').mouseover(function() {
+    $(this).find('.info').html('<?php putGS("Attach"); ?>');
+});
+
+$('.image-attach').mouseout(function() {
+    $(this).find('.info').html('&nbsp;');
+});
+
+$('.image-detach').click(function() {
+    var imageId = $(this).attr('id').replace('attached-image-', '');
+    
+    $.post("<?php echo $this->url(array(
+        'module' => 'admin',
+        'controller' => 'image',
+        'action' => 'set-detach',
+        'format' => 'json',
+    )); ?>", {
+        'image_id': imageId,
+        'article_number': <?php echo($this->article); ?>,
+        'language_id': <?php echo($this->languageId); ?>
+    }, function (data, textStatus) {
+        if (data.exception != undefined) {
+            alert(data.exception);
+            return;
+        }
+
+        window.location.reload();
+    }, 'json');
+});
+
+$('.image-detach').mouseover(function() {
+    $(this).find('.info').html('<?php putGS("Detach"); ?>');
+});
+
+$('.image-detach').mouseout(function() {
+    $(this).find('.info').html('&nbsp;');
+});
+</script>

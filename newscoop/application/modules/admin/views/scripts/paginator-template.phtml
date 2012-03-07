@@ -1,0 +1,23 @@
+<script type="text/template" id="paginator-template">
+<div class="paginationControl">
+    <!-- Previous page link -->
+    <% if (prev) { %>
+    <a href="#" class="first"><?php putGS('First'); ?></a> |
+    <a href="#" class="prev">&lt; <?php putGS('Previous'); ?></a> |
+    
+    <% } else { %>
+    <span class="disabled"><?php putGS('First'); ?></span> |
+    <span class="disabled">&lt; <?php putGS('Previous'); ?></span> |
+    <% } %>
+ 
+    <!-- Next page link -->
+    <% if (next) { %>
+    <a href="#" class="next"><?php putGS('Next'); ?> &gt; </a> |
+    <a href="#" class="last"><?php putGS('Last'); ?></a>
+
+    <% } else { %>
+    <span class="disabled"><?php putGS('Next'); ?> &gt;</span> |
+    <span class="disabled"><?php putGS('Last'); ?></span>
+    <% } %>
+</div>
+</script>

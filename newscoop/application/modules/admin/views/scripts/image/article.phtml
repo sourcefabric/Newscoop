@@ -1,0 +1,93 @@
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); ?>
+<?php $this->placeholder('bodyId')->set('next'); ?>
+
+<div id="modal-top">
+    <div class="toolbar fixed-top">
+    <div class="save-button-bar"></div>
+    <h1>
+        <?php putGS('Place Images'); ?>
+        <span style="float: right;">
+        <input type="button" value="<?php echo putGS('Finish'); ?>" class="save-button" onClick="parent.$.fancybox.close();">
+        </span>
+    </h1>
+    </div>
+</div>
+<div style="margin-top:40px;">&nbsp;</div>
+
+<ul class="renditions">
+    <?php foreach ($this->renditions as $rendition) { ?>
+    <li id="<?php echo $rendition->getName(); ?>"><?php echo $this->rendition($rendition, $this->previewWidth, $this->previewHeight, $this->articleRenditions[$rendition]); ?></li>
+    <?php } ?>
+</ul>
+
+<h2><?php putGS("Attached images"); ?></h2>
+
+<?php if (!empty($this->images)) { ?>
+<form action="<?php echo $this->url(array(
+    'module' => 'admin',
+    'controller' => 'image',
+    'action' => 'set-default-image',
+)); ?>" method="POST">
+
+<ul id="attached-thumbnails" class="thumbnails">
+    <?php foreach ($this->images as $image) { ?>
+    <li id="image-<?php echo $image->getId(); ?>">
+        <figure>
+            <div><?php echo $this->thumbnail($image, 150, 150, 'fit')->getImg($this); ?></div>
+            <input type="radio" id="default-<?php echo $image->getId(); ?>" name="default-image" value="<?php echo $image->getId(); ?>" <?php if ($image->isDefault()) { echo 'checked="checked"'; } ?> title="<?php putGS('Set as default'); ?>" />
+            <figcaption><label for="default-<?php echo $image->getId(); ?>"><?php echo $image->getWidth(), 'x', $image->getHeight(); ?></label></figcaption>
+        </figure>
+    </li>
+    <?php } ?>
+</ul>
+
+<div class="inline">
+    <button id="set-default"><?php putGS('Set selected as default image'); ?></button>
+</div>
+
+</form>
+<?php } else { ?>
+<p style="margin-left: 8px"><?php putGS('No images attached to article.'); ?></p>
+<?php } ?>
+
+<script>
+$(function() {
+    $('.renditions li').droppable({
+        hoverClass: 'state-active',
+        drop: function(event, ui) {
+            var li = $(this);
+            $.post("<?php echo $this->url(array(
+                'module' => 'admin',
+                'controller' => 'image',
+                'action' => 'set-rendition',
+                'format' => 'json',
+            )); ?>", {
+                'image': ui.draggable.attr('id'),
+                'rendition': li.attr('id')
+            }, function (data, textStatus) {
+                if (data.exception != undefined) {
+                    alert(data.exception);
+                    return;
+                }
+
+                li.html(data.rendition);
+            }, 'json');
+        }
+    });
+
+    $('.thumbnails li').draggable({
+        revert: true,
+        opacity: 0.8,
+        zIndex: 1000,
+        cursor: 'move'
+    });
+
+    $('.renditions .reset').live('click', function(e) {
+        e.preventDefault();
+        var li = $(this).closest('li');
+        $.post($(this).attr('href'), function(data, textStatus) {
+            li.html(data.rendition);
+        }, 'json');
+    });
+});
+</script>

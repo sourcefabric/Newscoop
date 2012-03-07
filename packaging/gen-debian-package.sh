@@ -89,6 +89,9 @@ if test "${UPSTREAMVERSION}" == "3.5.1"; then
 	rm newscoop/javascript/tinymce/plugins/codehighlighting/img/Thumbs.db
 fi
 
+### notify phone home metrics about debian
+touch newscoop/debian
+
 ############################
 
 cp -avi $DEBPATH ./ || exit
