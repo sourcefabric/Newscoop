@@ -119,7 +119,7 @@ class MetaActionSubmit_Comment extends MetaAction
         $user = $p_context->user;
         $userIp = getIp();
 
-        if ($user->defined && $this->m_properties['is_anonymous'] != null)
+        if ($user->defined)
         {
             $userId = $user->identifier;
             $userEmail = $user->email;
