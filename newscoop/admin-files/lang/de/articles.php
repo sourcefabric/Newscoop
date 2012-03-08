@@ -5,9 +5,9 @@ regGS("You're not allowed to edit article.", "Sie haben keine Berechtigung um ei
 regGS("Webcode", "Webcode");
 regGS("Unapproved", "Nicht genehmigt");
 regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Vom Artikel kann keine Vorschau erstellt werden. Bitte stellen Sie sicher, dass er einem Thema zugeordnet wurde. ");
-regGS("The article could not be submitted.", "");
-regGS("Submit articles", "");
-regGS("Submit article", "");
+regGS("The article could not be submitted.", "Der Artikel konnte nicht eingepflegt werden");
+regGS("Submit articles", "Artikel einpflegen");
+regGS("Submit article", "Artikel einpflegen");
 regGS("Related Articles", "Verwandte Artikel");
 regGS("Pending articles", "Pending articles");
 regGS("Pending Articles", "Pending articles");
@@ -165,4 +165,7 @@ regGS("This article cannot be previewed. Please make sure the article has an iss
 regGS("Reorder", "Nachbestellen");
 regGS("Author", "AutorIn");
 regGS("Are you sure you want to delete this scheduled action?", "");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Soll das Thema \\'$1\\' von diesem Artikel entkoppelt werden?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Soll die Datei \\'$1\\' von diesem Artikel entkoppelt werden?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Soll das Bild \\'$1\\' vom Artikel entkoppelt werden?");
 ?>

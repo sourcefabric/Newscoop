@@ -9,7 +9,7 @@ regGS("default", "");
 regGS("The publishing/unpublishing can not be set the same time", "");
 regGS("The publishing schedule can not be set in the past", "");
 regGS("Please assign at least one theme to the publication", "");
-regGS("Only than the issue can be published", "");
+regGS("Only then the issue can be published", "");
 regGS("Issue Theme", "");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Valorile pe care încerci să le impui intră în conflict cu numărul \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Numărul trebuie să fie unic pentru fiecare ediţie din această publicaţie în aceeaşi limbă.");

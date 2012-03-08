@@ -4,7 +4,7 @@ regGS("Create", "Erstellen");
 regGS("Attach/Detach", "Anhängen/Entkoppeln");
 regGS("Are you sure you want to delete slideshow?", "Sind Sie sicher, dass Sie die Slideshow löschen wollen?");
 regGS("Renditions", "Bildzuschnitte (Renditions)");
-regGS("Support", "");
+regGS("Support", "Support");
 regGS("Pending articles", "Artikel in Warteschleife (Pending Articles)");
 regGS("Manage Users", "User verwalten");
 regGS("Manage User Types", "User Typen verwalten");
@@ -15,11 +15,11 @@ regGS("Feedback", "Feedback");
 regGS("Edit your password", "Passwort bearbeiten");
 regGS("Edit user", "User bearbeiten");
 regGS("Edit permissions", "Erlaubnis bearbeiten");
-regGS("Detail", "");
+regGS("Detail", "Detail");
 regGS("Create new user", "Neuen User anlegen");
 regGS("Create new account", "Neuen Account anlegen");
 regGS("Article Playlists", "Artikel Playlist");
-regGS("Add feed", "");
+regGS("Add feed", "Feed hinzufügen");
 regGS("Upload of file $1 was not successful.", "Die Datei $1 wurde nicht hochgeladen.");
 regGS("The file $1 could not be moved. Check you have enough of disk space.", "Die Datei $1 konnte nicht verschoben werden. ");
 regGS("MiB", "MiB");
@@ -55,7 +55,7 @@ regGS("'%value%' is more than %max% characters long", "%value%' ist mehr als  %m
 regGS("'%value%' is less than %min% characters long", "'%value%' ist weniger als  %min% Zeichen lang");
 regGS("User name", "User Name");
 regGS("Newscoop", "Newscoop");
-regGS("Campsite", "");
+regGS("Campsite", "Campsite");
 regGS("Your password has been reset.", "Ihr Passwort würde zurück gesetzt. ");
 regGS("Proceed to login.", "Weiter zum Login. ");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "Hallo, \n\nfor um das Passwort wiederherzustellen, folgen Sie bitte diesem Link: $1");
@@ -151,4 +151,5 @@ regGS("Please make sure that you typed the correct user name and password.", "Bi
 regGS("If your problem persists please contact the site administrator $1", "Sollte dieses Problem bestehen bleiben, bitte den Administrator $1 kontaktieren.");
 regGS("Backup/Restore", "Backup/Wiederherstellung");
 regGS("Printdesk", "Printdesk");
+regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Hallo, \\n\\nfor um das Passwort wiederherzustellen, folgen Sie bitte diesem Link: $1");
 ?>
