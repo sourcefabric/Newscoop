@@ -34,6 +34,43 @@ if (!Input::IsValid()) {
 $imageObj = new Image($f_image_id);
 $articles = ArticleImage::GetArticlesThatUseImage($f_image_id);
 
+$exif = exif_read_data($imageObj->getImageUrl());
+if (isset($exif['DateTime'])) {
+    $exifDate = date('Y-m-d', strtotime($exif['DateTime']));
+}
+
+$size = getimagesize($imageObj->getImageUrl(), $info);
+$iptc = array();
+foreach ($info as $key => $value) {
+    $iptc[$key] = iptcparse($value);
+}
+if (isset($iptc['APP13'])) {
+    $iptc = $iptc['APP13'];
+}
+if (isset($iptc['2#055'])) {
+    $iptcDate = $iptc['2#055'][0];
+    $iptcDate = date('Y-m-d', strtotime($iptcDate));
+}
+if (isset($iptc['2#080'])) {
+    $iptcPhotographer = $iptc['2#080'][0];
+}
+if (isset($iptc['2#120'])) {
+    $iptcDescription = $iptc['2#120'][0];
+}
+if (isset($iptc['2#090']) || isset($iptc['2#092']) || isset($iptc['2#101'])) {
+    $iptcPlace = array();
+    if (isset($iptc['2#101'])) {
+        $iptcPlace[] = $iptc['2#101'][0];
+    }
+    if (isset($iptc['2#090'])) {
+        $iptcPlace[] = $iptc['2#090'][0];
+    }
+    if (isset($iptc['2#092'])) {
+        $iptcPlace[] = $iptc['2#092'][0];
+    }
+    $iptcPlace = implode(', ', $iptcPlace);
+}
+
 $crumbs = array();
 $crumbs[] = array(getGS("Content"), "");
 $crumbs[] = array(getGS("Media Archive"), "/$ADMIN/media-archive/index.php");
@@ -89,27 +126,74 @@ echo $breadcrumbs;
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Description"); ?>:</TD>
 	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_description" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" SIZE="32" class="input_text">
+	<INPUT TYPE="TEXT" NAME="f_image_description" id="f_image_description" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" SIZE="32" class="input_text">
+    <?php
+        if ($iptcDescription) {
+            ?>
+            <small><a style="float:right;" href="javascript:void(0);" onClick="document.getElementById('f_image_description').value='<?php echo($iptcDescription); ?>';">IPTC</a></small>
+            <?php
+        }
+    ?>
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Photographer"); ?>:</TD>
 	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_photographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" SIZE="32" class="input_text">
+	<INPUT TYPE="TEXT" NAME="f_image_photographer" id="f_image_photographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" SIZE="32" class="input_text">
+    <?php
+        if ($iptcPhotographer) {
+            ?>
+            <small><a style="float:right;" href="javascript:void(0);" onClick="document.getElementById('f_image_photographer').value='<?php echo($iptcPhotographer); ?>';">IPTC</a></small>
+            <?php
+        }
+    ?>
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Place"); ?>:</TD>
 	<TD align="left">
-	<INPUT TYPE="TEXT" NAME="f_image_place" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" SIZE="32" class="input_text">
+	<INPUT TYPE="TEXT" NAME="f_image_place" id="f_image_place" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" SIZE="32" class="input_text">
+    <?php
+        if ($iptcPlace) {
+            ?>
+            <small><a style="float:right;" href="javascript:void(0);" onClick="document.getElementById('f_image_place').value='<?php echo($iptcPlace); ?>';">IPTC</a></small>
+            <?php
+        }
+    ?>
 	</TD>
 </TR>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Date"); ?>:</TD>
 	<TD align="left">
-	<input type="text" name="f_image_date" value="<?php echo htmlspecialchars($imageObj->getDate()); ?>" size="11" maxlength="10" class="input_text date" />
+	<input type="text" id="f_image_date" name="f_image_date" value="<?php echo htmlspecialchars($imageObj->getDate()); ?>" size="11" maxlength="10" class="input_text date" />
+    <?php
+        if ($exifDate) {
+            ?>
+            <small><a style="float:right;" href="javascript:void(0);" onClick="document.getElementById('f_image_date').value='<?php echo($exifDate); ?>';">&nbsp;EXIF</a></small>
+            <?php
+        }
+        if ($iptcDate) {
+            ?>
+            <small><a style="float:right;" href="javascript:void(0);" onClick="document.getElementById('f_image_date').value='<?php echo($iptcDate); ?>';">IPTC</a></small>
+            <?php
+        }
+    ?>
 	</TD>
 </TR>
+<?php
+    if ($iptcDescription || $iptcPhotographer || $iptcPlace || $iptcDate) {
+        ?>
+        
+        <TR>
+            <TD ALIGN="RIGHT" ></TD>
+            <TD align="left">
+            <small><a style="float:right;" href="javascript:void(0);" onClick="document.getElementById('f_image_date').value='<?php echo($iptcDate); ?>';document.getElementById('f_image_place').value='<?php echo($iptcPlace); ?>';document.getElementById('f_image_photographer').value='<?php echo($iptcPhotographer); ?>';document.getElementById('f_image_description').value='<?php echo($iptcDescription); ?>';">Import all IPTC</a></small>
+            </TD>
+        </TR>
+        
+        <?php
+    }
+?>
 <TR>
 	<TD ALIGN="RIGHT" ><?php  putGS("Status"); ?>:</TD>
 	<TD align="left">

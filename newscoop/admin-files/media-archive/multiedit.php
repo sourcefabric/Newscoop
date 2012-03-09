@@ -48,6 +48,63 @@ camp_html_display_msgs();
 <?php echo SecurityToken::FormParameter(); ?>
 <ul id="edit-images">
     <?php foreach ($imageData as $image): ?>
+    <?php
+        $imageObj = new Image($image['id']);
+        $exif = exif_read_data($imageObj->getImageUrl());
+        if (isset($exif['DateTime'])) {
+            $exifDate = date('Y-m-d', strtotime($exif['DateTime']));
+        }
+
+        $size = getimagesize($imageObj->getImageUrl(), $info);
+        $iptc = array();
+        foreach ($info as $key => $value) {
+            $iptc[$key] = iptcparse($value);
+        }
+        if (isset($iptc['APP13'])) {
+            $iptc = $iptc['APP13'];
+        }
+        if (isset($iptc['2#055'])) {
+            $iptcDate = $iptc['2#055'][0];
+            $iptcDate = date('Y-m-d', strtotime($iptcDate));
+        }
+        if (isset($iptc['2#080'])) {
+            $iptcPhotographer = $iptc['2#080'][0];
+        }
+        if (isset($iptc['2#120'])) {
+            $iptcDescription = $iptc['2#120'][0];
+        }
+        if (isset($iptc['2#090']) || isset($iptc['2#092']) || isset($iptc['2#101'])) {
+            $iptcPlace = array();
+            if (isset($iptc['2#101'])) {
+                $iptcPlace[] = $iptc['2#101'][0];
+            }
+            if (isset($iptc['2#090'])) {
+                $iptcPlace[] = $iptc['2#090'][0];
+            }
+            if (isset($iptc['2#092'])) {
+                $iptcPlace[] = $iptc['2#092'][0];
+            }
+            $iptcPlace = implode(', ', $iptcPlace);
+        }
+        
+        $image['date'] = date('Y-m-d');
+        
+        if ($exifDate) {
+            $image['date'] = $exifDate;
+        }
+        if ($iptcDate) {
+            $image['date'] = $iptcDate;
+        }
+        if ($iptcDescription) {
+            $image['description'] = $iptcDescription;
+        }
+        if ($iptcPhotographer) {
+            $image['photographer'] = $iptcPhotographer;
+        }
+        if ($iptcPlace) {
+            $image['place'] = $iptcPlace;
+        }
+    ?>
     <?php if (!empty($image['Description']) || empty($image['thumbnail_url'])) { continue; } ?>
     <li>
         <div><img src="<?php echo $image['thumbnail_url']; ?>" border="0"></div>
@@ -73,7 +130,7 @@ camp_html_display_msgs();
 		    <dl>
 		        <dt><?php  putGS("Date"); ?>:</dt>
                 <dd>
-                    <input type="text" name="image[<?php echo $image['id']; ?>][f_date]" value="<?php echo date('Y-m-d'); ?>" size="11" maxlength="10" class="input_text copy datepicker">
+                    <input type="text" name="image[<?php echo $image['id']; ?>][f_date]" value="<?php echo htmlspecialchars($image['date']); ?>" size="11" maxlength="10" class="input_text copy datepicker">
                 </dd>
 		    </dl>
 		</fieldset>
