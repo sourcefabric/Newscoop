@@ -8,7 +8,7 @@ regGS("More...", "المزيد...");
 regGS("Content", "المحتوى");
 regGS("Languages", "اللغات");
 regGS("Countries", "الدول");
-regGS("Templates", "القوالب");
+regGS("Themes", "القوالب");
 regGS("Topics", "المواضيع");
 regGS("Configure", "إعداد");
 regGS("Image Archive", "أرشيف الصور");

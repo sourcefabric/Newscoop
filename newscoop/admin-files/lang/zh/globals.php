@@ -8,7 +8,7 @@ regGS("More...", "");
 regGS("Content", "");
 regGS("Languages", "语言");
 regGS("Countries", "国家");
-regGS("Templates", "模版");
+regGS("Themes", "模版");
 regGS("Topics", "主题");
 regGS("Configure", "");
 regGS("Image Archive", "");

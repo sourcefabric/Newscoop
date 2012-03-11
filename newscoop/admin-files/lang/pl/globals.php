@@ -10,7 +10,7 @@ regGS("More...", "Więcej");
 regGS("Content", "Kontent");
 regGS("Languages", "Języki");
 regGS("Countries", "Państwa");
-regGS("Templates", "Szablony");
+regGS("Themes", "Szablony");
 regGS("Topics", "Tematy");
 regGS("Configure", "Konfiguracja");
 regGS("Image Archive", "Archiwum zdjęć");

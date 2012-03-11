@@ -10,7 +10,7 @@ regGS("More...", "Περισσότερα...");
 regGS("Content", "Περιεχόμενο");
 regGS("Languages", "Γλώσσες");
 regGS("Countries", "Χώρες");
-regGS("Templates", "Πρότυπα");
+regGS("Themes", "Πρότυπα");
 regGS("Topics", "Θέματα");
 regGS("Configure", "Διαμόρφωση");
 regGS("Image Archive", "Αρχείο Εικόνων");
@@ -260,5 +260,4 @@ regGS("Publish with issue", "Δημοσίευση με τεύχος");
 regGS("Universal List", "Καθολική λίστα");
 regGS("Invalid security token!", "Άκυρο τεκμήριο ασφαλείας!");
 regGS("Authors", "Συγγραφείς");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Είστε σίγουρος/η ότι θέλετε να διαγράψετε την εικόνα \\'$1\\';");
 ?>

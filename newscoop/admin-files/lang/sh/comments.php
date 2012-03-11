@@ -1,5 +1,5 @@
 <?php 
-regGS("Ip", "");
+regGS("IP", "");
 regGS("Bans can be applied to a user's name, email address or IP address.", "Zabrane mogu biti primenjene na korisničko ime, email adresu ili IP adresu.");
 regGS("at", "u");
 regGS("You are about to permanently delete multiple comments.", "Nepovaratno ćete Izbrisati više komentara.");

@@ -8,7 +8,7 @@ regGS("More...", "Meer...");
 regGS("Content", "Inhoud");
 regGS("Languages", "Talen");
 regGS("Countries", "Landen");
-regGS("Templates", "Sjablonen");
+regGS("Themes", "Sjablonen");
 regGS("Topics", "Onderwerpen");
 regGS("Configure", "Instellingen");
 regGS("Image Archive", "Afbeelding archief");
