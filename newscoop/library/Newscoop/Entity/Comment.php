@@ -82,7 +82,7 @@ class Comment
     private $forum;
 
     /**
-     * @manyToOne(targetEntity="Comment")
+     * @manyToOne(targetEntity="Comment", cascade={"persist"})
      * @joinColumn(name="fk_parent_id", referencedColumnName="id")
      * @var Newscoop\Entity\Comment
      */
