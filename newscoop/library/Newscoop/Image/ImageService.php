@@ -85,7 +85,8 @@ class ImageService
         $rendition = new Rendition($width, $height, $specs);
         $image = $rendition->generateImage($this->decodePath($imagePath));
         $image->save($destFolder . '/' . $imagePath);
-        $image->send();
+
+        return $image;
     }
 
     /**
