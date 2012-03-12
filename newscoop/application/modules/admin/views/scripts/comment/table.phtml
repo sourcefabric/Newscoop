@@ -81,8 +81,10 @@
                                 <img src="{{commenter.avatar}}">
                             </div>
                             <p>
-                                <p><b>{{commenter.username}}</b></p>
-                                <p class="{% if (commenter.is.banned.name) %}user-blocked-avatar{% endif %}">{{commenter.name}}</p>
+                                <p class="{% if (commenter.is.banned.name) %}user-blocked-avatar{% endif %}">
+                                    {% if (commenter.username) %}<a href="<?php echo($this->baseUrl('/profile/')); ?>{{commenter.usernameEncoded}}">{{commenter.username}}</a>{% endif %}
+                                    {% if (!commenter.username) %}{{commenter.name}} (Anonymous){% endif %}
+                                </p>
                                 <p class="{% if (commenter.is.banned.ip) %}user-blocked-avatar{% endif %}"><a target="_blank" href="{{commenter.trace.ip}}">{{commenter.ip}}</a></p>
                                 <p class="{% if (commenter.is.banned.email) %}user-blocked-avatar{% endif %}"><a href="mailto:{{commenter.email}}">{{commenter.email}}</a></p>
                                 <p><a href="{{commenter.url}}">{{commenter.url}}</a></p>
