@@ -8,7 +8,7 @@ regGS("More...", "Više...");
 regGS("Content", "Sadržej");
 regGS("Languages", "Jezici");
 regGS("Countries", "Zemlje");
-regGS("Templates", "Predlošci");
+regGS("Themes", "Predlošci");
 regGS("Topics", "Teme");
 regGS("Configure", "Podešavanje");
 regGS("Image Archive", "Arhiva slika");

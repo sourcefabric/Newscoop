@@ -1,5 +1,6 @@
 <?php 
-regGS("Items: ", "");
+regGS("Specify image url if you want to load it.", "Geben Sie die URL für das Bild an, das Sie laden wollen");
+regGS("Items: ", "Objekte");
 regGS("Attach slideshows", "Slideshows anhängen");
 regGS("original size:", "Originalgrösse");
 regGS("no caption", "Bildlegende fehlt");

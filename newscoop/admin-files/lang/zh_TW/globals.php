@@ -10,7 +10,7 @@ regGS("More...", "更多…");
 regGS("Content", "內容");
 regGS("Languages", "語言");
 regGS("Countries", "國家");
-regGS("Templates", "模版");
+regGS("Themes", "模版");
 regGS("Topics", "主題");
 regGS("Configure", "設置");
 regGS("Image Archive", "");

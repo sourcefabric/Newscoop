@@ -8,7 +8,7 @@ regGS("More...", "زۆر تر");
 regGS("Content", "ناوه رۆك");
 regGS("Languages", "زمان");
 regGS("Countries", "وڵات");
-regGS("Templates", "شیرازه");
+regGS("Themes", "شیرازه");
 regGS("Topics", "بابه ته کان");
 regGS("Configure", "داڕشتن");
 regGS("Image Archive", " ئاڕشیڤی وێنه کان");

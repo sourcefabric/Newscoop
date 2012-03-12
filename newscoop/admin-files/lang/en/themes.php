@@ -1,4 +1,5 @@
 <?php 
+regGS("Templates", "Templates");
 regGS("Import theme", "Import theme");
 regGS("Import succeded!", "Import succeded!");
 regGS("Import failed!", "Import failed!");

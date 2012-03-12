@@ -1,4 +1,5 @@
 <?php 
+regGS("Specify image url if you want to load it.", "");
 regGS("Items: ", "");
 regGS("Attach slideshows", "");
 regGS("original size:", "");
