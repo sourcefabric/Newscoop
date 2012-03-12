@@ -383,7 +383,12 @@ class CommentRepository extends DatatableSource
             $params['language'] = $p_language;
         }
         $comments = $this->findBy($params);
-        foreach ($comments as $comment) $this->setCommentStatus($comment, 'deleted');
+        foreach ($comments as $comment) {
+            $comment->setParent();
+        }
+        foreach ($comments as $comment) {
+            $this->setCommentStatus($comment, 'deleted');
+        }
     }
 
     /**

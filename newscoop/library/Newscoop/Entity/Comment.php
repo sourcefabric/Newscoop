@@ -82,8 +82,8 @@ class Comment
     private $forum;
 
     /**
-     * @manyToOne(targetEntity="Comment", cascade={"persist"})
-     * @joinColumn(name="fk_parent_id", referencedColumnName="id")
+     * @manyToOne(targetEntity="Comment")
+     * @joinColumn(name="fk_parent_id", referencedColumnName="id", onDelete="SET NULL")
      * @var Newscoop\Entity\Comment
      */
     private $parent;
@@ -535,7 +535,7 @@ class Comment
      *
      * @return Newscoop\Entity\Comment
      */
-    public function setParent(Comment $p_parent)
+    public function setParent(Comment $p_parent = null)
     {
         $this->parent = $p_parent;
         // return this for chaining mechanism
