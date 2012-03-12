@@ -1,4 +1,5 @@
 <?php 
+regGS("IP", "");
 regGS("Bans can be applied to a user's name, email address or IP address.", "Zákazy mohou být aplikované na uřivatelské jméno, emailovou nebo IP adresu.");
 regGS("at", "");
 regGS("You are about to permanently delete multiple comments.", "Právě se chystáte permanentně vymazat hromadné komentáře.");
@@ -28,7 +29,6 @@ regGS("Recommended", "Doporučené");
 regGS("Recommend", "Doporučeno");
 regGS("Quick edit", "Rychlá editace ");
 regGS("Parent", "Ústřední");
-regGS("Ip", "IP");
 regGS("ID", "ID");
 regGS("Go to edit article", "Jděte upravit článek");
 regGS("Full article", "Celý článek");

@@ -1,6 +1,7 @@
 <?php 
-regGS("Items: ", "");
-regGS("Attach slideshows", "");
+regGS("Specify image url if you want to load it.", "Geben Sie die URL für das Bild an, das Sie laden wollen");
+regGS("Items: ", "Objekte");
+regGS("Attach slideshows", "Slideshows anhängen");
 regGS("original size:", "Originalgrösse");
 regGS("no caption", "Bildlegende fehlt");
 regGS("Video URL", "Video URL (youtu.be/... oder vimeo.com/...)");
@@ -17,14 +18,14 @@ regGS("Saved", "Gespeichert");
 regGS("Save headline", "Name speichern");
 regGS("Place images", "Bilder zuschneiden");
 regGS("Place Images", "Bilder zuschneiden");
-regGS("No renditions defined.", "");
+regGS("No renditions defined.", "Keine Zuschnitte definiert. ");
 regGS("No images found.", "Keine Bilder gefunden");
 regGS("No images attached to article.", "Keine Bilder angehängt");
 regGS("No images", "Keine Bilder vorhanden");
 regGS("Next: Upload and Edit Metadata", "Weiter (Bildlegende erfassen)");
 regGS("Next: Place Images", "Weiter (Bilder zuschneiden)");
 regGS("Media Archive", "Medienarchiv");
-regGS("Location", "");
+regGS("Location", "Ort");
 regGS("Items", "Elemente");
 regGS("Item", "Element");
 regGS("Image too small.", "Das Bild ist zu klein");

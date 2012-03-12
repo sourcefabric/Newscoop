@@ -1,4 +1,5 @@
 <?php 
+regGS("Templates", "");
 regGS("Import theme", "Uvezi temu");
 regGS("Import succeded!", "Uspešan uvoz!");
 regGS("Import failed!", "Uvoz nije uspeo!");

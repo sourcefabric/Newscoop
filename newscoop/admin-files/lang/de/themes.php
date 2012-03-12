@@ -1,9 +1,10 @@
 <?php 
+regGS("Templates", "Themes");
 regGS("Import theme", "Theme importieren");
 regGS("Import succeded!", "Import erfolgreich. ");
 regGS("Import failed!", "Import fehlgeschlagen. ");
 regGS("Edit template: $1", "Template bearbeiten: $1");
-regGS("Set new name to", "Neuen Namen einstellen auf");
+regGS("Set new name to", "Neuen Namen einstellen für");
 regGS("Rename file", "Datei umbenennen");
 regGS("Caching templates in:", "Templates Caching in: ");
 regGS("Caching templates finished", "Caching des Templates abgeschlossen");

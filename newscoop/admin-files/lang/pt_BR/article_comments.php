@@ -1,12 +1,12 @@
 <?php 
-regGS("Unrecommend", "");
-regGS("Save comment", "");
-regGS("Recommend", "");
-regGS("Comment updated.", "");
-regGS("Comment saved.", "");
-regGS("Comments updated.", "");
-regGS("Post a Comment", "");
-regGS("From", "");
-regGS("Reply to comment", "");
-regGS("No comments posted.", "");
+regGS("Unrecommend", "Não recomendo");
+regGS("Save comment", "Salvar o comentário");
+regGS("Recommend", "Recomendo");
+regGS("Comment updated.", "Comentário atualizado.");
+regGS("Comment saved.", "Comentário guardado.");
+regGS("Comments updated.", "Comentários atualizados.");
+regGS("Post a Comment", "Postar o comentário");
+regGS("From", "De");
+regGS("Reply to comment", "Responder ao comentário");
+regGS("No comments posted.", "Nenhum comentário postado.");
 ?>

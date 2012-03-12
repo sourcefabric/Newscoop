@@ -1,7 +1,7 @@
 <?php 
 regGS("Topic created", "Námět vytvořen");
 regGS("The topic name is already in use by another topic.", "Název námětu je již užíván u jiného námětu.");
-regGS("Complex Date", "");
+regGS("Complex Date", "Komplexní datum");
 regGS("vertices", "vrchol");
 regGS("There was a problem trying to execute the XML RPC function.", "Vyskytl se problém při pokusu o provedení XML RPC funkce.");
 regGS("The Campcaster server configuration is invalid.", "Campcaster konfigurace serveru je neplatná.");

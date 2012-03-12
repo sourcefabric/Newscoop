@@ -10,7 +10,7 @@ regGS("More...", "Mer...");
 regGS("Content", "Innehåll");
 regGS("Languages", "Språk");
 regGS("Countries", "Länder");
-regGS("Templates", "Mallar");
+regGS("Themes", "Mallar");
 regGS("Topics", "Teman");
 regGS("Configure", "Inställningar");
 regGS("Image Archive", "Bildarkiv");

@@ -8,7 +8,7 @@ regGS("More...", "더보기");
 regGS("Content", "콘텐트");
 regGS("Languages", "언어");
 regGS("Countries", "국가");
-regGS("Templates", "템플레이트 ");
+regGS("Themes", "템플레이트 ");
 regGS("Topics", "토픽 ");
 regGS("Configure", "구성");
 regGS("Image Archive", "이미지 아카이브 ");

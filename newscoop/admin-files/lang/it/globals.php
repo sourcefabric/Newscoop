@@ -10,7 +10,7 @@ regGS("More...", "Continua...");
 regGS("Content", "Contenuto");
 regGS("Languages", "Lingue");
 regGS("Countries", "Nazioni");
-regGS("Templates", "Templates");
+regGS("Themes", "Templates");
 regGS("Topics", "Temi");
 regGS("Configure", "Configura");
 regGS("Image Archive", "Archivio Immagini");
@@ -260,5 +260,4 @@ regGS("Publish with issue", "Pubblica nell'edizione");
 regGS("Universal List", "Lista universale");
 regGS("Invalid security token!", "Security token non valido!");
 regGS("Authors", "Autori");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Confermi di voler eliminare l'immagine \\'$1\\'?");
 ?>
