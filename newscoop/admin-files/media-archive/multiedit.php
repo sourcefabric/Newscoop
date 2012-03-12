@@ -49,44 +49,56 @@ camp_html_display_msgs();
 <ul id="edit-images">
     <?php foreach ($imageData as $image): ?>
     <?php
-        $imageObj = new Image($image['id']);
-        $exif = exif_read_data($imageObj->getImageUrl());
-        if (isset($exif['DateTime'])) {
-            $exifDate = date('Y-m-d', strtotime($exif['DateTime']));
-        }
-
-        $size = getimagesize($imageObj->getImageUrl(), $info);
-        $iptc = array();
-        foreach ($info as $key => $value) {
-            $iptc[$key] = iptcparse($value);
-        }
-        if (isset($iptc['APP13'])) {
-            $iptc = $iptc['APP13'];
-        }
-        if (isset($iptc['2#055'])) {
-            $iptcDate = $iptc['2#055'][0];
-            $iptcDate = date('Y-m-d', strtotime($iptcDate));
-        }
-        if (isset($iptc['2#080'])) {
-            $iptcPhotographer = $iptc['2#080'][0];
-        }
-        if (isset($iptc['2#120'])) {
-            $iptcDescription = $iptc['2#120'][0];
-        }
-        if (isset($iptc['2#090']) || isset($iptc['2#092']) || isset($iptc['2#101'])) {
-            $iptcPlace = array();
-            if (isset($iptc['2#101'])) {
-                $iptcPlace[] = $iptc['2#101'][0];
-            }
-            if (isset($iptc['2#090'])) {
-                $iptcPlace[] = $iptc['2#090'][0];
-            }
-            if (isset($iptc['2#092'])) {
-                $iptcPlace[] = $iptc['2#092'][0];
-            }
-            $iptcPlace = implode(', ', $iptcPlace);
-        }
+        unset($exifDate);
+        unset($iptcDate);
+        unset($iptcPlace);
+        unset($iptcPhotographer);
+        unset($iptcDescription);
         
+        $imageObj = new Image($image['id']);
+        $allowedExtensions = array('jpg', 'jpeg', 'tiff', 'tif');
+        $imagePathParts = explode('.', $imageObj->getImageFileName());
+        $imageExtension = strtolower($imagePathParts[count($imagePathParts) - 1]);
+        
+        if (in_array($imageExtension, $allowedExtensions)) {
+            $exif = exif_read_data($imageObj->getImageUrl());
+            if (isset($exif['DateTime'])) {
+                $exifDate = date('Y-m-d', strtotime($exif['DateTime']));
+            }
+
+            $size = getimagesize($imageObj->getImageUrl(), $info);
+            $iptc = array();
+            foreach ($info as $key => $value) {
+                $iptc[$key] = iptcparse($value);
+            }
+            if (isset($iptc['APP13'])) {
+                $iptc = $iptc['APP13'];
+            }
+            if (isset($iptc['2#055'])) {
+                $iptcDate = $iptc['2#055'][0];
+                $iptcDate = date('Y-m-d', strtotime($iptcDate));
+            }
+            if (isset($iptc['2#080'])) {
+                $iptcPhotographer = $iptc['2#080'][0];
+            }
+            if (isset($iptc['2#120'])) {
+                $iptcDescription = $iptc['2#120'][0];
+            }
+            if (isset($iptc['2#090']) || isset($iptc['2#092']) || isset($iptc['2#101'])) {
+                $iptcPlace = array();
+                if (isset($iptc['2#101'])) {
+                    $iptcPlace[] = $iptc['2#101'][0];
+                }
+                if (isset($iptc['2#090'])) {
+                    $iptcPlace[] = $iptc['2#090'][0];
+                }
+                if (isset($iptc['2#092'])) {
+                    $iptcPlace[] = $iptc['2#092'][0];
+                }
+                $iptcPlace = implode(', ', $iptcPlace);
+            }
+        }
+                
         $image['date'] = date('Y-m-d');
         
         if ($exifDate) {

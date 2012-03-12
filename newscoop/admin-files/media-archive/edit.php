@@ -34,41 +34,47 @@ if (!Input::IsValid()) {
 $imageObj = new Image($f_image_id);
 $articles = ArticleImage::GetArticlesThatUseImage($f_image_id);
 
-$exif = exif_read_data($imageObj->getImageUrl());
-if (isset($exif['DateTime'])) {
-    $exifDate = date('Y-m-d', strtotime($exif['DateTime']));
-}
+$allowedExtensions = array('jpg', 'jpeg', 'tiff', 'tif');
+$imagePathParts = explode('.', $imageObj->getImageFileName());
+$imageExtension = strtolower($imagePathParts[count($imagePathParts) - 1]);
 
-$size = getimagesize($imageObj->getImageUrl(), $info);
-$iptc = array();
-foreach ($info as $key => $value) {
-    $iptc[$key] = iptcparse($value);
-}
-if (isset($iptc['APP13'])) {
-    $iptc = $iptc['APP13'];
-}
-if (isset($iptc['2#055'])) {
-    $iptcDate = $iptc['2#055'][0];
-    $iptcDate = date('Y-m-d', strtotime($iptcDate));
-}
-if (isset($iptc['2#080'])) {
-    $iptcPhotographer = $iptc['2#080'][0];
-}
-if (isset($iptc['2#120'])) {
-    $iptcDescription = $iptc['2#120'][0];
-}
-if (isset($iptc['2#090']) || isset($iptc['2#092']) || isset($iptc['2#101'])) {
-    $iptcPlace = array();
-    if (isset($iptc['2#101'])) {
-        $iptcPlace[] = $iptc['2#101'][0];
+if (in_array($imageExtension, $allowedExtensions)) {
+    $exif = exif_read_data($imageObj->getImageUrl());
+    if (isset($exif['DateTime'])) {
+        $exifDate = date('Y-m-d', strtotime($exif['DateTime']));
     }
-    if (isset($iptc['2#090'])) {
-        $iptcPlace[] = $iptc['2#090'][0];
+
+    $size = getimagesize($imageObj->getImageUrl(), $info);
+    $iptc = array();
+    foreach ($info as $key => $value) {
+        $iptc[$key] = iptcparse($value);
     }
-    if (isset($iptc['2#092'])) {
-        $iptcPlace[] = $iptc['2#092'][0];
+    if (isset($iptc['APP13'])) {
+        $iptc = $iptc['APP13'];
     }
-    $iptcPlace = implode(', ', $iptcPlace);
+    if (isset($iptc['2#055'])) {
+        $iptcDate = $iptc['2#055'][0];
+        $iptcDate = date('Y-m-d', strtotime($iptcDate));
+    }
+    if (isset($iptc['2#080'])) {
+        $iptcPhotographer = $iptc['2#080'][0];
+    }
+    if (isset($iptc['2#120'])) {
+        $iptcDescription = $iptc['2#120'][0];
+    }
+    if (isset($iptc['2#090']) || isset($iptc['2#092']) || isset($iptc['2#101'])) {
+        $iptcPlace = array();
+        if (isset($iptc['2#101'])) {
+            $iptcPlace[] = $iptc['2#101'][0];
+        }
+        if (isset($iptc['2#090'])) {
+            $iptcPlace[] = $iptc['2#090'][0];
+        }
+        if (isset($iptc['2#092'])) {
+            $iptcPlace[] = $iptc['2#092'][0];
+        }
+        $iptcPlace = implode(', ', $iptcPlace);
+    }
 }
 
 $crumbs = array();
