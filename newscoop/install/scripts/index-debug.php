@@ -45,7 +45,7 @@ $start3 = microtime(true);
 // starts the session
 $campsite->initSession();
 
-if (file_exists(CS_PATH_SITE.DIR_SEP.'upgrade.php')) {
+if (file_exists(CS_PATH_SITE.DIR_SEP.'conf'.DIR_SEP.'upgrading.php')) {
     camp_upgrade();
     exit(0);
 }

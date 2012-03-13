@@ -283,6 +283,22 @@ class CampInstallationBase
                                             );
         require_once($GLOBALS['g_campsiteDir'].'/bin/cli_script_lib.php');
         camp_remove_dir(CS_PATH_TEMPLATES.DIR_SEP.'*', null, array('system_templates', 'unassigned'));
+
+        $db_versions = array_map('basename', glob($GLOBALS['g_campsiteDir'] . '/install/sql/upgrade/[2-9].[0-9]*'));
+        if (!empty($db_versions)) {
+            usort($db_versions, 'camp_version_compare');
+            $db_last_version = array_pop($db_versions);
+            $db_last_version_dir = $GLOBALS['g_campsiteDir'] . "/install/sql/upgrade/$db_last_version/";
+            $db_last_roll = '';
+            $db_rolls = camp_search_db_rolls($db_last_version_dir, '');
+            if (!empty($db_rolls)) {
+                $db_last_roll_info = array_slice($db_rolls, -1, 1, true);
+                $db_last_roll_info_keys = array_keys($db_last_roll_info);
+                $db_last_roll = $db_last_roll_info_keys[0];
+            }
+            camp_save_database_version($g_db, $db_last_version, $db_last_roll);
+        }
+
         return true;
     } // fn databaseConfiguration
 
@@ -547,8 +563,8 @@ XML;
             return false;
         }
 
-        if (file_exists(CS_PATH_SITE . DIR_SEP . 'upgrade.php')) {
-            @unlink(CS_PATH_SITE . DIR_SEP . 'upgrade.php');
+        if (file_exists(CS_PATH_SITE . DIR_SEP . 'conf' . DIR_SEP . 'upgrading.php')) {
+            @unlink(CS_PATH_SITE . DIR_SEP . 'conf' . DIR_SEP . 'upgrading.php');
         }
 
         return true;

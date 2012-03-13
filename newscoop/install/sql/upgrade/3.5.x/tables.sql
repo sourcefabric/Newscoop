@@ -350,7 +350,7 @@ CREATE TABLE `article_datetimes` (
   `article_id` int(10) unsigned NOT NULL,
   `article_type` varchar(166) NOT NULL,
   `field_name` varchar(166) NOT NULL,
-  `event_comment` TEXT,
+--  `event_comment` TEXT, -- being set a 3.6.x upgrade roll set
   PRIMARY KEY (`id_article_datetime`),
   KEY `article_id` (`article_id`),
   KEY `start_time` (`start_time`),

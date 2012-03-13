@@ -9,6 +9,13 @@
  * @link http://www.campware.org
  */
 
+
+
+if (!file_exists(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'conf' . DIRECTORY_SEPARATOR . 'upgrading.php')) {
+    header('Location: index.php');
+    exit(0);
+}
+
 require_once __DIR__ . '/application.php';
 
 $application->bootstrap('autoloader');

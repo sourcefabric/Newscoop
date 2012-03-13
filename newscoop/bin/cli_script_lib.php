@@ -462,10 +462,14 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
         return "The upgrade process is already running.";
     }
 
-    if (!($res = camp_detect_database_version($p_dbName, $old_version)) == 0) {
+    $old_version = ''; // what version was imported before running the upgrade
+    $old_roll = ''; // what roll was imported before running the upgrade
+    if (!($res = camp_detect_database_version($p_dbName, $old_version, $old_roll)) == 0) {
         flock($lockFile, LOCK_UN); // release the lock
         return $res;
     }
+    $last_db_version = $old_version; // keeping the last imported version throughout the upgrade process
+    $last_db_roll = $old_roll; // keeping the last imported roll throughout the upgrade process
 
     $db_host = $Campsite['DATABASE_SERVER_ADDRESS'];
     $db_port = $Campsite['DATABASE_SERVER_PORT'];
@@ -477,13 +481,43 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
     $skipped = array();
     $versions = array_map('basename', glob($campsite_dir . '/install/sql/upgrade/[2-9].[0-9]*'));
     usort($versions, 'camp_version_compare');
+
+    if ((0 < count($versions)) && ()) {
+        if (-1 == camp_version_compare($old_version, '3.5.x')) {
+            return "Can not upgrade from version older than 3.5.\nUpgrade into Newscoop 3.5 first.\n";
+        }
+    }
+
+    // the $db_version, $db_roll are for keeping the last imported db changes
+    // when $db_version is lesser then 3.5.x, we do not support upgrade
+    // for $db_version 3.5.x and greater, the rolls can be:
+    //     ''    ... no changes from the $db_version yet applied => apply both main and all the roll updates
+    //     '.'   ... just the main changes applied => apply just all the roll updates
+    //     roll  ... applied the main changes, plus rolls upto the given roll => apply roll updates greater then the current roll
+    // it is supposed that from 3.6.x on, we will not use db change sets in the $db_version directory itslef
+    // when (in the upgrade cycle) going to a greater version, roll is set to '', since all changes there have to be applied
+
     foreach ($versions as $index=>$db_version) {
-        if ($old_version > $db_version) {
+        //if ($old_version > $db_version) {
+        //    continue;
+        //}
+        if (-1 == camp_version_compare($db_version, $old_version)) {
             continue;
         }
+
+        $last_db_version = $db_version;
+        $last_db_roll = '';
+
+        $cur_old_roll = ''; // the roll of the running version that was imported before the upgrade ($old_roll or '')
         if ($first) {
+            $last_db_roll = $old_roll;
+            $cur_old_roll = $old_roll;
             if (!$p_silent) {
-                echo "\n\t* Upgrading the database from version $db_version...";
+                $db_ver_roll_info = "$db_version";
+                if (!in_array($old_roll, array('', '.'))) {
+                    $db_ver_roll_info .= ", roll $old_roll";
+                }
+                echo "\n\t* Upgrading the database from version $db_ver_roll_info...";
             }
             if ($old_version < '3.4.x') {
                 $res = camp_utf8_convert(null, $skipped);
@@ -496,23 +530,31 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
         }
         $output = array();
 
-        $upgrade_dir = $campsite_dir . "/install/sql/upgrade/$db_version/";
+        $upgrade_dir_set = array();
+        $upgrade_base_dir = $campsite_dir . "/install/sql/upgrade/$db_version/";
+
+        $rolls = camp_search_db_rolls($upgrade_base_dir, $cur_old_roll);
+
         $db_conf_file = $etc_dir . '/database_conf.php';
         $install_conf_file = $etc_dir . "/install_conf.php";
 
         // run upgrade scripts
         $sql_scripts = array("tables.sql", "data-required.sql", "data-optional.sql", "tables-post.sql");
-        foreach ($sql_scripts as $index=>$script) {
-            if (!is_file($upgrade_dir . $script)) {
-                continue;
-            }
-            $error_queries = array();
-            $sq_file = $upgrade_dir . $script;
-            $err_count = camp_import_dbfile($db_host . ":" . $db_port, $db_username, $db_userpass, $db_database, $sq_file, $error_queries);
+        foreach ($upgrade_dir_set as $upgrade_dir_roll => $upgrade_dir_path) {
+            $upgrade_dir = $upgrade_dir_path . DIRECTORY_SEPARATOR;
+            $last_db_roll = $upgrade_dir_roll;
+            foreach ($sql_scripts as $index=>$script) {
+                if (!is_file($upgrade_dir . $script)) {
+                    continue;
+                }
+                $error_queries = array();
+                $sq_file = $upgrade_dir . $script;
+                $err_count = camp_import_dbfile($db_host . ":" . $db_port, $db_username, $db_userpass, $db_database, $sq_file, $error_queries);
 
-            if ($err_count && ($script != "data-optional.sql")) {
-                flock($lockFile, LOCK_UN); // release the lock
-                return "$script ($db_version) errors on:\n" . implode("\n", $error_queries);
+                if ($err_count && ($script != "data-optional.sql")) {
+                    flock($lockFile, LOCK_UN); // release the lock
+                    return "$script ($db_version) errors on:\n" . implode("\n", $error_queries);
+                }
             }
         }
     }
@@ -541,10 +583,52 @@ Please save the following list of skipped queries:\n";
         echo "-- end of queries list --\n";
     }
 
+    camp_save_database_version($p_dbName, $last_db_version, $last_db_roll);
+
     flock($lockFile, LOCK_UN); // release the lock
     return 0;
 } // fn camp_upgrade_database
 
+
+
+function camp_save_database_version($p_db, $version, $roll)
+{
+
+    $version = str_replace(array('"', '\''), array('_', '_'), $version);
+    $roll = str_replace(array('"', '\''), array('_', '_'), $roll);
+
+    $ins_db_version = 'INSERT (name, version) INTO Versions ("last_db_version", "' . $version . '") ON DUPLICATE KEY UPDATE';
+    $ins_db_roll = 'INSERT (name, version) INTO Versions ("last_db_roll", "' . $roll . '") ON DUPLICATE KEY UPDATE';
+
+    if (!is_string($p_db)) {
+        $p_db->Execute($ins_db_version);
+        $p_db->Execute($ins_db_roll);
+        return true;
+    }
+
+    $p_dbName = $p_db;
+
+    if (!mysql_select_db($p_dbName)) {
+        return "Can't select the database $p_dbName";
+    }
+
+    if (!$res_ver1 = mysql_query("SHOW TABLES LIKE 'Versions'")) {
+        return "Unable to query the database $p_dbName";
+    }
+    if (mysql_num_rows($res_ver1) == 0) {
+        return "No 'Versions' table in the database $p_dbName";
+    }
+
+    if (!$res = mysql_query($ins_db_version)) {
+        return "Unable to update versions in the database $p_dbName";
+    }
+    if (!$res = mysql_query($ins_db_roll)) {
+        return "Unable to update versions in the database $p_dbName";
+    }
+
+    return 0;
+
+}
 
 /**
  * Find out which version is the given database.
@@ -554,11 +638,49 @@ Please save the following list of skipped queries:\n";
  *
  * @return mixed
  */
-function camp_detect_database_version($p_dbName, &$version)
+function camp_detect_database_version($p_dbName, &$version, &$roll)
 {
+    $version = '';
+
     if (!mysql_select_db($p_dbName)) {
         return "Can't select the database $p_dbName";
     }
+
+    if (!$res_ver1 = mysql_query("SHOW TABLES LIKE 'Versions'")) {
+        return "Unable to query the database $p_dbName";
+    }
+    if (mysql_num_rows($res_ver1) > 0) {
+        $got_versions = 0;
+
+        $sel_db_version = 'SELECT version FROM Versions WHERE name = "last_db_version"';
+        $sel_db_roll = 'SELECT version FROM Versions WHERE name = "last_db_roll"';
+
+        if (!$res_ver2 = mysql_query($sel_db_version)) {
+            return "Unable to query the database $p_dbName";
+        }
+        if (mysql_num_rows($res_ver2) > 0) {
+            $got_versions += 1;
+            $row = mysql_fetch_assoc($res_ver2);
+            $version = $row['version'];
+            mysql_free_result($res_ver2);
+        }
+
+        if (!$res_ver2 = mysql_query($sel_db_roll)) {
+            return "Unable to query the database $p_dbName";
+        }
+        if (mysql_num_rows($res_ver2) > 0) {
+            $got_versions += 1;
+            $row = mysql_fetch_assoc($res_ver2);
+            $roll = $row['version'];
+            mysql_free_result($res_ver2);
+        }
+
+        if (2 == $got_versions) {
+            return 0;
+        }
+    }
+
+    $roll = '';
 
     if (!$res = mysql_query("SHOW TABLES")) {
         return "Unable to query the database $p_dbName";
@@ -693,11 +815,14 @@ function camp_detect_database_version($p_dbName, &$version)
         if (mysql_num_rows($res2) > 0) {
             $version = "3.5.x";
         }
+
         if (!$res2 = mysql_query("SHOW TABLES LIKE 'output'")) {
             return "Unable to query the database $p_dbName";
         }
         if (mysql_num_rows($res2) > 0) {
             $version = "3.6.x";
+            //$version = "3.5.x";
+            //$roll = '.';
         }
     }
     return 0;
@@ -970,6 +1095,47 @@ function camp_restore_database($p_sqlFile, $p_silent = false)
                       true, $p_silent);
     return true;
 }
+
+function camp_search_db_rolls($roll_base_dir, $last_db_roll) {
+    $rolls = array(); // roll_name => roll_path
+
+    $roll_dir_names = scandir($roll_base_dir);
+    if (empty($roll_dir_names)) {
+        return $rolls;
+    }
+
+    $avoid_starts = array('.', '_');
+
+    $some_top_files = false;
+    foreach ($roll_dir_names as $one_rol_dir) {
+        $cur_rol_path = $roll_base_dir . DIRECTORY_SEPARATOR . $one_rol_dir;
+        if (is_file($cur_rol_path) && ('sql' == pathinfo($cur_rol_path, PATHINFO_EXTENSION))) {
+            $some_top_files = true;
+        }
+
+        if ((!is_dir($cur_rol_path)) || (in_array(substr($one_rol_dir, 0, 1), $avoid_starts))) {
+            continue;
+        }
+
+        if ((!empty($last_db_roll)) && ($one_rol_dir <= $last_db_roll)) {
+            continue;
+        }
+
+        $rolls[$one_rol_dir] = $cur_rol_path;
+    }
+
+    ksort($rolls);
+
+    if (empty($last_db_roll)) {
+        if ($some_top_files) {
+            $rolls = array_merge(array('.' => $roll_base_dir), $rolls);
+        }
+    }
+
+    return rolls;
+
+} // fn camp_search_db_rolls
+
 
 /**
  * Compares versions of Newscoop for upgrades

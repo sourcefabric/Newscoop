@@ -43,7 +43,7 @@ class LegacyController extends Zend_Controller_Action
         // starts the session
         $campsite->initSession();
 
-        if (file_exists(CS_PATH_SITE.DIR_SEP.'upgrade.php')) {
+        if (file_exists(CS_PATH_SITE.DIR_SEP.'conf'.DIR_SEP.'upgrading.php')) {
             $this->upgrade();
             exit(0);
         }

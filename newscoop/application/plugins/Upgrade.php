@@ -17,7 +17,7 @@ class Application_Plugin_Upgrade extends Zend_Controller_Plugin_Abstract
     {
         $module = $request->getModuleName();
 
-        if (!file_exists(APPLICATION_PATH . '/../upgrade.php')) {
+        if (!file_exists(APPLICATION_PATH . '/../conf/upgrading.php')) {
             return;
         }
 
