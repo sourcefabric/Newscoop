@@ -94,7 +94,7 @@ class Admin_CommentController extends Zend_Controller_Action
                 $section = $thread->getSection();
                 return array('index' => $index++, 'can' => array('enable' => $acl['enable'], 'edit' => $acl['edit']),
                              'commenter' =>
-                             array('username' => $commenter->getUsername(), 'name' => $commenter->getName(),
+                             array('username' => $commenter->getUsername(), 'name' => $commenter->getName(), 'usernameEncoded' => urlencode($commenter->getUsername()),
                                    'email' => $commenter->getEmail(),
                                    'avatar' => (string)$view->getAvatar($commenter->getEmail(), array('img_size' => 50,
                                                                                                      'default_img' => 'wavatar')),
