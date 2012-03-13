@@ -12,7 +12,7 @@
  * @param bool $repeat
  * @return void
  */
-function smarty_block_image(array $params, $content, Smarty_Internal_Template $smarty, $repeat)
+function smarty_block_image(array $params, $content, Smarty_Internal_Template $smarty, &$repeat)
 {
     if (!$repeat) {
         $content = $smarty->getTemplateVars('image') ? $content : '';
@@ -38,6 +38,7 @@ function smarty_block_image(array $params, $content, Smarty_Internal_Template $s
     $articleRendition = $articleRenditions[$renditions[$params['rendition']]];
     if ($articleRendition === null) {
         $smarty->assign('image', false);
+        $repeat = false;
         return;
     }
 
