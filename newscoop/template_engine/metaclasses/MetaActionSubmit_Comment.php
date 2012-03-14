@@ -30,11 +30,6 @@ class MetaActionSubmit_Comment extends MetaAction
 
         $p_input += array('f_comment_is_anonymous' => false);
 
-        if (!isset($p_input['f_comment_subject']) || empty($p_input['f_comment_subject'])) {
-            $this->m_error = new PEAR_Error('The comment subject was not filled in.',
-            ACTION_SUBMIT_COMMENT_ERR_NO_SUBJECT);
-            return;
-        }
         if (!isset($p_input['f_comment_content']) || empty($p_input['f_comment_content'])) {
             $this->m_error = new PEAR_Error('The comment content was not filled in.',
             ACTION_SUBMIT_COMMENT_ERR_NO_CONTENT);
@@ -119,7 +114,7 @@ class MetaActionSubmit_Comment extends MetaAction
         $user = $p_context->user;
         $userIp = getIp();
 
-        if ($user->defined && $this->m_properties['is_anonymous'] != null)
+        if ($user->defined)
         {
             $userId = $user->identifier;
             $userEmail = $user->email;

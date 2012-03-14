@@ -74,6 +74,12 @@ function UpdateArticleFieldContext() {
         ToggleBoolValue('show_maxsize');
     }
 
+    if (field_type == "complex_date") {
+        $('#event_color_part').removeClass('color_sel_hidden');
+    }
+    else {
+        $('#event_color_part').addClass('color_sel_hidden');
+    }
 }
 </script>
 
@@ -132,6 +138,96 @@ foreach ($topics as $topicPath) {
 ?>
 		</select>
 	</td>
+</tr>
+
+<style type="text/css">
+.color_sel_hidden {
+    display: none;
+}
+.color_sel_visible {
+    margin-top: -8px;
+    border-color: #c0c0c0;
+    border-width: 8px;
+    border-style: solid;
+    margin-left: 25px;
+    position: absolute;
+}
+.color_one_current {
+    border-color: #404040;
+    border-width: 1px;
+    border-style: solid;
+
+    float:left;
+    width:14px;
+    height:14px;
+    cursor:pointer
+}
+.color_one_list {
+    border-color: #404040;
+    border-width: 1px;
+    border-style: solid;
+
+    float:right;
+    width:14px;
+    height:14px;
+    cursor:pointer
+}
+
+</style>
+
+<script type="text/javascript">
+window.set_field_color = function(color) {
+    $('#f_event_color').val(color);
+}
+</script>
+
+<tr class="color_sel_hidden" id="event_color_part">
+    <td align="right"><?php putGS('Event Color'); ?>:</td><td>
+<?php
+
+$color_list = array(
+'#ff4040',
+'#ff4080',
+'#ff8040',
+'#ff8080',
+
+'#ff40ff',
+
+'#40ff40',
+'#80ff40',
+'#40ff80',
+'#80ff80',
+
+'#ffff40',
+
+'#4040ff',
+'#8040ff',
+'#4080ff',
+'#8080ff',
+
+'#40ffff',
+
+'#808080',
+);
+
+
+        $cur_color = ArticleTypeField::getDefaultColor();
+
+        $row_rank = 0;
+        $color_div = '';
+
+        $color_div .= '<div id="color_sel_' . $row_rank . '" class="color_sel_hidden color_sel_visible">';
+        foreach ($color_list as $one_color) {
+            $color_div .= '<div class="color_one_list" style="background:' . $one_color . ';" onClick="$(\'#color_val_' . $row_rank . '\').css(\'backgroundColor\', \'' . $one_color . '\'); $(\'#color_sel_' . $row_rank . '\').addClass(\'color_sel_hidden\'); window.set_field_color(\'' . $one_color . '\'); return false;";></div>';
+        }
+        $color_div .= '</div>';
+        $color_div .= '<div class="color_one_current" id="color_val_' . $row_rank . '" style="background-color:' . $cur_color . ';" href="#" onClick="$(\'#color_sel_' . $row_rank . '\').toggleClass(\'color_sel_hidden\')"; return false;"></div>';
+        echo $color_div;
+?>
+
+    <input type="text" style="display: none" id="f_event_color" name="f_event_color" value="<?php echo $cur_color; ?>">
+</td>
+
 </tr>
 <tr style="display: none;" id="is_content">
     <td align="right"><?php putGS('Is Content'); ?>:</td>

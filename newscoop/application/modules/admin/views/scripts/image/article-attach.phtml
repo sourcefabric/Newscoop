@@ -1,3 +1,8 @@
+
+<?php
+camp_load_translation_strings("media_archive");
+?>
+
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); ?>
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/js/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css')); ?>
 
@@ -56,8 +61,18 @@
         <input type="hidden" name="f_article_edit" value="1">
         <input type="hidden" name="f_language_id" value="<?php echo($this->languageId); ?>">
         <input type="hidden" name="f_article_number" value="<?php echo($this->article); ?>">
+        <?php echo SecurityToken::FormParameter(); ?>
         <div id="uploader" style="border: 0px;"></div>
         <div id="uploader_error" style="border: 0px;"></div>
+
+        <div class="plupload-addon-bottom clearfix">
+          <div class="info">
+            <?php putGS('Specify image url if you want to load it.'); ?>
+          </div>
+          <div class="inputs">
+            <label for="form-url"><?php putGS('URL'); ?>:</label><input type="text" class="input_text" size="32" name="f_image_url" id="form-url">
+          </div>
+        </div>
 
         </form>
         

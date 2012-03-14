@@ -10,7 +10,7 @@ regGS("More...", "Даље...");
 regGS("Content", "Садржаји");
 regGS("Languages", "Језици");
 regGS("Countries", "Државе");
-regGS("Templates", "Шаблони");
+regGS("Themes", "Шаблони");
 regGS("Topics", "Топици");
 regGS("Configure", "Подешавања");
 regGS("Image Archive", "Фото архива");
@@ -266,5 +266,4 @@ regGS("Add new user account", "Додај новог корисника");
 regGS("Schedule a new publish action", "Закажи нову акцију објављивања");
 regGS("User may add/change user accounts and passwords", "Корисник може да додаје/мења корисничке налоге и лозинке");
 regGS("User may delete user accounts", "Корисник може да брише корисничке налоге");
-regGS("Are you sure you want to delete the image \\'$1\\'?", "Да ли сте сигурни да желите да обришете слику \\'$1\\'?");
 ?>

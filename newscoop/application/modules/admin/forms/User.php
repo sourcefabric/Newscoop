@@ -86,6 +86,7 @@ class Admin_Form_User extends Zend_Form
         $this->addElement('submit', 'submit', array(
             'label' => getGS('Save'),
             'ignore' => true,
+            'id' => 'save_button'
         ));
     }
 

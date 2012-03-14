@@ -1,4 +1,5 @@
 <?php 
+regGS("IP", "");
 regGS("Bans can be applied to a user's name, email address or IP address.", "");
 regGS("at", "-ზე");
 regGS("You are about to permanently delete multiple comments.", "კომენტარები სამუდამოდ წაიშლება.");
@@ -28,7 +29,6 @@ regGS("Recommended", "");
 regGS("Recommend", "");
 regGS("Quick edit", "სწრაფი რედაქტირება");
 regGS("Parent", "საწყისი");
-regGS("Ip", "Ip");
 regGS("ID", "ID");
 regGS("Go to edit article", "სტატიის რედაქტირებაზე გადასვლა");
 regGS("Full article", "მთლიანი სტატია");

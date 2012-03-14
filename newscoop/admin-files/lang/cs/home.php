@@ -1,9 +1,9 @@
 <?php 
-regGS("Create slideshow", "");
-regGS("Create", "");
-regGS("Attach/Detach", "");
-regGS("Are you sure you want to delete slideshow?", "");
-regGS("Renditions", "");
+regGS("Create slideshow", "Vytvořit slideshow");
+regGS("Create", "Vytvořit");
+regGS("Attach/Detach", "Připojit/Odpojit");
+regGS("Are you sure you want to delete slideshow?", "Jste si jisti, že chcete vymazat slideshow?");
+regGS("Renditions", "Formáty");
 regGS("Support", "Podpora");
 regGS("Pending articles", "Dosud nevyřízené články");
 regGS("Manage Users", "Správa uživatelů");
@@ -18,8 +18,8 @@ regGS("Edit permissions", "Upravit povolení");
 regGS("Detail", "Detail");
 regGS("Create new user", "Vytvořit nového uživatele");
 regGS("Create new account", "Vytvořit nový účet");
-regGS("Article Playlists", "");
-regGS("Add feed", "");
+regGS("Article Playlists", "Přehled zobrazení článků");
+regGS("Add feed", "Přidat zdroj");
 regGS("Upload of file $1 was not successful.", "Nahrávání souboru $1 nebylo úspěšné.");
 regGS("The file $1 could not be moved. Check you have enough of disk space.", "Soubor $1 nemůže být posunut. Zkontrolujte zda máte dostatek místa na disku.");
 regGS("MiB", "MiB");
@@ -150,4 +150,5 @@ regGS("Login failed", "Přihlášení neproběhlo");
 regGS("Please make sure that you typed the correct user name and password.", "Zkontrolujte, zda jste správně zadali uživatelské jméno a heslo");
 regGS("If your problem persists please contact the site administrator $1", "Pokud vaše problémy přetrvávají, prosím kontaktujte administrátora");
 regGS("Backup/Restore", "Zálohovat/Obnovit");
+regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Nazdárek, \\n\\nfor obnovení hesla, prosím mrkněte se na link: $1");
 ?>

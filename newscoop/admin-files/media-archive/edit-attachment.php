@@ -16,20 +16,19 @@ if (!Input::IsValid()) {
 
 $object = new Attachment($f_attachment_id);
 
-$crumbs = array();
-$crumbs[] = array(getGS("Content"), "");
-$crumbs[] = array(getGS("Media Archive"), "/$ADMIN/media-archive/index.php#files");
+$label_text = '';
 if ($g_user->hasPermission('ChangeImage')) {
-    $crumbs[] = array(getGS('Change attachment information'), "");
+    $label_text = getGS('Change attachment information');
 }
 else {
-    $crumbs[] = array(getGS('View attachment'), "");
+    $label_text = getGS('View attachment');
 }
-$breadcrumbs = camp_html_breadcrumbs($crumbs);
 
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/html_head.php");
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
-echo $breadcrumbs;
+echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text . '</span></div>';
+
 ?>
 
 <?php camp_html_display_msgs(); ?>
@@ -89,6 +88,5 @@ echo $breadcrumbs;
 
 </div></div><!-- /.main-content-wrapper /.wrapper -->
 
-<?php camp_html_copyright_notice(); ?>
 </body>
 </html>

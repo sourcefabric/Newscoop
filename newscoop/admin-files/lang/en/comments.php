@@ -1,4 +1,5 @@
 <?php 
+regGS("IP", "IP");
 regGS("Bans can be applied to a user's name, email address or IP address.", "Bans can be applied to a user's name, email address or IP address.");
 regGS("at", "at");
 regGS("You are about to permanently delete multiple comments.", "You are about to permanently delete multiple comments.");
@@ -28,7 +29,6 @@ regGS("Recommended", "Recommended");
 regGS("Recommend", "Recommend");
 regGS("Quick edit", "Quick edit");
 regGS("Parent", "Parent");
-regGS("Ip", "Ip");
 regGS("ID", "ID");
 regGS("Go to edit article", "Go to edit article");
 regGS("Full article", "Full article");

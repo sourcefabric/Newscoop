@@ -16,7 +16,7 @@ $f_article_edit = $_POST['f_article_edit'];
 $f_language_id = $_POST['f_language_id'];
 $f_article_number = $_POST['f_article_number'];
 
-if (!SecurityToken::isValid() && !isset($f_article_edit)) {
+if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
     exit;
 }
@@ -31,6 +31,8 @@ if (empty($f_image_url) && empty($nrOfFiles)) {
 	camp_html_goto_page("/$ADMIN/media-archive/add.php");
 }
 
+$images = array();
+
 // process image url
 if (!empty($f_image_url)) {
     $attributes = array(
@@ -42,12 +44,12 @@ if (!empty($f_image_url)) {
 
 	if (camp_is_valid_url($f_image_url)) {
 		$result = Image::OnAddRemoteImage($f_image_url, $attributes, $g_user->getUserId());
+        $images[] = $result;
 	} else {
 		camp_html_add_msg(getGS("The URL you entered is invalid: '$1'", htmlspecialchars($f_image_url)));
 	}
 }
 
-$images = array();
 // process uploaded images
 for ($i = 0; $i < $nrOfFiles; $i++) {
     $tmpnameIdx = 'uploader_' . $i . '_tmpname';
@@ -59,8 +61,8 @@ for ($i = 0; $i < $nrOfFiles; $i++) {
     }
 }
 
-if ($result != NULL) {
-    camp_html_add_msg(getGS('"$1" files uploaded.', $nrOfFiles), "ok");
+if (!empty($images)) {
+    camp_html_add_msg(getGS('"$1" files uploaded.', count($images)), "ok");
     if ($f_article_edit) {
         require_once($GLOBALS['g_campsiteDir'].'/classes/Article.php');
         require_once($GLOBALS['g_campsiteDir'].'/classes/Image.php');

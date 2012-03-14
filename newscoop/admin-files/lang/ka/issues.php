@@ -9,7 +9,7 @@ regGS("default", "საწყისი");
 regGS("The publishing/unpublishing can not be set the same time", "გამოცემა/არგამოცემა არ შეიძლება იყოს ერთ დროს");
 regGS("The publishing schedule can not be set in the past", "გამოცემის გრაფიკი არ შეიძლება იყოს წარსულში");
 regGS("Please assign at least one theme to the publication", "გთხოვთ მიუთითოთ მინიმუმ ერთი თემა");
-regGS("Only than the issue can be published", "მხოლოდ ამის შემდეგ შეიძლება გამოცემის პუბლიკაცია");
+regGS("Only then the issue can be published", "მხოლოდ ამის შემდეგ შეიძლება გამოცემის პუბლიკაცია");
 regGS("Issue Theme", "გამოცემის თემა");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "");
 regGS("The number must be unique for each issue in this publication of the same language.", "ამ პუბლიკაციაში რიცხვი უნდა იყოს უნიკალური ყოველი, იგივე ენის, გამოცემისთვის");

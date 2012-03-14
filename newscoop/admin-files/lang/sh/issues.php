@@ -9,7 +9,7 @@ regGS("default", "podrqazumevano");
 regGS("The publishing/unpublishing can not be set the same time", "Objavljivanje/povlačenje ne može biti postavljeno na isto vreme");
 regGS("The publishing schedule can not be set in the past", "Redosled objavljivanja ne može biti podešen na datum u prošlosti");
 regGS("Please assign at least one theme to the publication", "Molimo dodelite najmanje jednu temu publikaciji");
-regGS("Only than the issue can be published", "Tek tada izdanje može biti objavljeno");
+regGS("Only then the issue can be published", "Tek tada izdanje može biti objavljeno");
 regGS("Issue Theme", "Tema izdanja");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Vrednosti koje pokušavate da podesite su u konfliktu sa izdanjem \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Broj mora biti jedinstven za svako izdanje u ovoj publikaciji za isti jezik.");

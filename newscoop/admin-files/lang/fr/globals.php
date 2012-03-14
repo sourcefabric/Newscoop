@@ -8,7 +8,7 @@ regGS("More...", "Plus...");
 regGS("Content", "Contenu");
 regGS("Languages", "Langues");
 regGS("Countries", "Pays");
-regGS("Templates", "Templates");
+regGS("Themes", "Templates");
 regGS("Topics", "Sujets");
 regGS("Configure", "Configurer");
 regGS("Image Archive", "Archive d'image");

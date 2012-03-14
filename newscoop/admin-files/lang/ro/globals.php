@@ -10,7 +10,7 @@ regGS("More...", "Mai mult...");
 regGS("Content", "Conţinut");
 regGS("Languages", "Limbi");
 regGS("Countries", "Ţări");
-regGS("Templates", "Şabloane");
+regGS("Themes", "Şabloane");
 regGS("Topics", "Subiecte de discuţie");
 regGS("Configure", "Configurează");
 regGS("Image Archive", "Arhiva de imagini");

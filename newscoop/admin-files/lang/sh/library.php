@@ -1,6 +1,6 @@
 <?php 
 regGS("Webcode", "Web kod");
-regGS("View article", "ogledaj tekst");
+regGS("View article", "Pogledaj tekst");
 regGS("Source", "Izvor");
 regGS("Select type", "Izaberi tip");
 regGS("On", "Na");
@@ -19,7 +19,7 @@ regGS("$1 Article(s) unlocked", "$1 tekst(ova) otključano");
 regGS("$1 Article(s) not unlocked", "$1 tekst(ova) nije otključano");
 regGS("$1 Article(s) duplicated", "$1 tekst(ova) duplirano");
 regGS("Download file", "Preuzmi fajl");
-regGS("You do not have the right to delete articles.", "Nemate pravo da brišete tekst.");
+regGS("You do not have the right to delete articles.", "Nemate pravo da brišete tekstove.");
 regGS("You do not have the right to change this article status. Once submitted an article can only be changed by authorized users.", "Nemate pravo da menjate status teksta. Predat tekst može biti izmenjen samo od strane autorizovanih korisnika.");
 regGS("Use Map", "Koristi mapu");
 regGS("Toggle: 'On Section Page'", "Izmeni 'Na strani rubrike'");

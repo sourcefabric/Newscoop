@@ -1,4 +1,5 @@
 <?php 
+regGS("IP", "");
 regGS("Bans can be applied to a user's name, email address or IP address.", "Забране могу бити примењене на корисничко име, имејл адресу или ИП адресу");
 regGS("at", "у");
 regGS("You are about to permanently delete multiple comments.", "Неповратно ћете избрисати више коментара.");
@@ -28,7 +29,6 @@ regGS("Recommended", "Препоручени");
 regGS("Recommend", "Препоручи");
 regGS("Quick edit", "Брзо уређивање");
 regGS("Parent", "Матични");
-regGS("Ip", "Ип");
 regGS("ID", "Ид");
 regGS("Go to edit article", "Иди на уређивање текста");
 regGS("Full article", "Цео текст");

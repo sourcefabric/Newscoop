@@ -260,7 +260,7 @@ function parseTextBody($text, $articleNumber)
 }
 
 $hasMultiDates = false;
-$multiDatesField = NULL;
+$multiDatesFields = array();
 include_once('edit_html.php');
 
 // Display tinymce loading code if required

@@ -9,7 +9,7 @@ regGS("default", "por defecto");
 regGS("The publishing/unpublishing can not be set the same time", "La opción de publicar/dejar de publicar no se puede determinar al mismo tiempo");
 regGS("The publishing schedule can not be set in the past", "La programación de una publicación no se puede hacer en una fecha pasada");
 regGS("Please assign at least one theme to the publication", "Por favor asigne al menos un tema a la publicación");
-regGS("Only than the issue can be published", "Solo entonces se puede publicar la edición");
+regGS("Only then the issue can be published", "Solo entonces se puede publicar la edición");
 regGS("Issue Theme", "Tema de la edición");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Los valores que intenta establecer tienen conflicto con la edición \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Cada edición de esta publicación del mismo idioma debe tener un número único.");
