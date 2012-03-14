@@ -482,10 +482,8 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
     $versions = array_map('basename', glob($campsite_dir . '/install/sql/upgrade/[2-9].[0-9]*'));
     usort($versions, 'camp_version_compare');
 
-    if ((0 < count($versions)) && ()) {
-        if (-1 == camp_version_compare($old_version, '3.5.x')) {
-            return "Can not upgrade from version older than 3.5.\nUpgrade into Newscoop 3.5 first.\n";
-        }
+    if (-1 == camp_version_compare($old_version, '3.5.x')) {
+        return "Can not upgrade from version older than 3.5.\nUpgrade into Newscoop 3.5 first.\n";
     }
 
     // the $db_version, $db_roll are for keeping the last imported db changes
@@ -530,9 +528,7 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
         }
         $output = array();
 
-        $upgrade_dir_set = array();
         $upgrade_base_dir = $campsite_dir . "/install/sql/upgrade/$db_version/";
-
         $rolls = camp_search_db_rolls($upgrade_base_dir, $cur_old_roll);
 
         $db_conf_file = $etc_dir . '/database_conf.php';
@@ -540,7 +536,7 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
 
         // run upgrade scripts
         $sql_scripts = array("tables.sql", "data-required.sql", "data-optional.sql", "tables-post.sql");
-        foreach ($upgrade_dir_set as $upgrade_dir_roll => $upgrade_dir_path) {
+        foreach ($rolls as $upgrade_dir_roll => $upgrade_dir_path) {
             $upgrade_dir = $upgrade_dir_path . DIRECTORY_SEPARATOR;
             $last_db_roll = $upgrade_dir_roll;
             foreach ($sql_scripts as $index=>$script) {
@@ -583,7 +579,10 @@ Please save the following list of skipped queries:\n";
         echo "-- end of queries list --\n";
     }
 
-    camp_save_database_version($p_dbName, $last_db_version, $last_db_roll);
+    $res = camp_save_database_version($p_dbName, $last_db_version, $last_db_roll);
+    if (0 !== $res) {
+        echo $res;
+    }
 
     flock($lockFile, LOCK_UN); // release the lock
     return 0;
@@ -593,14 +592,13 @@ Please save the following list of skipped queries:\n";
 
 function camp_save_database_version($p_db, $version, $roll)
 {
-
     $version = str_replace(array('"', '\''), array('_', '_'), $version);
     $roll = str_replace(array('"', '\''), array('_', '_'), $roll);
 
-    $ins_db_version = 'INSERT (name, version) INTO Versions ("last_db_version", "' . $version . '") ON DUPLICATE KEY UPDATE';
-    $ins_db_roll = 'INSERT (name, version) INTO Versions ("last_db_roll", "' . $roll . '") ON DUPLICATE KEY UPDATE';
+    $ins_db_version = 'INSERT INTO Versions (ver_name, ver_value) VALUES ("last_db_version", "' . $version . '") ON DUPLICATE KEY UPDATE ver_value = "' . $version . '"';
+    $ins_db_roll = 'INSERT INTO Versions (ver_name, ver_value) VALUES ("last_db_roll", "' . $roll . '") ON DUPLICATE KEY UPDATE ver_value = "' . $roll . '"';
 
-    if (!is_string($p_db)) {
+    if (is_object($p_db)) {
         $p_db->Execute($ins_db_version);
         $p_db->Execute($ins_db_roll);
         return true;
@@ -611,14 +609,12 @@ function camp_save_database_version($p_db, $version, $roll)
     if (!mysql_select_db($p_dbName)) {
         return "Can't select the database $p_dbName";
     }
-
     if (!$res_ver1 = mysql_query("SHOW TABLES LIKE 'Versions'")) {
         return "Unable to query the database $p_dbName";
     }
     if (mysql_num_rows($res_ver1) == 0) {
         return "No 'Versions' table in the database $p_dbName";
     }
-
     if (!$res = mysql_query($ins_db_version)) {
         return "Unable to update versions in the database $p_dbName";
     }
@@ -627,7 +623,6 @@ function camp_save_database_version($p_db, $version, $roll)
     }
 
     return 0;
-
 }
 
 /**
@@ -638,7 +633,7 @@ function camp_save_database_version($p_db, $version, $roll)
  *
  * @return mixed
  */
-function camp_detect_database_version($p_dbName, &$version, &$roll)
+function camp_detect_database_version($p_dbName, &$version, &$roll = '')
 {
     $version = '';
 
@@ -652,8 +647,8 @@ function camp_detect_database_version($p_dbName, &$version, &$roll)
     if (mysql_num_rows($res_ver1) > 0) {
         $got_versions = 0;
 
-        $sel_db_version = 'SELECT version FROM Versions WHERE name = "last_db_version"';
-        $sel_db_roll = 'SELECT version FROM Versions WHERE name = "last_db_roll"';
+        $sel_db_version = 'SELECT ver_value FROM Versions WHERE ver_name = "last_db_version"';
+        $sel_db_roll = 'SELECT ver_value FROM Versions WHERE ver_name = "last_db_roll"';
 
         if (!$res_ver2 = mysql_query($sel_db_version)) {
             return "Unable to query the database $p_dbName";
@@ -661,7 +656,7 @@ function camp_detect_database_version($p_dbName, &$version, &$roll)
         if (mysql_num_rows($res_ver2) > 0) {
             $got_versions += 1;
             $row = mysql_fetch_assoc($res_ver2);
-            $version = $row['version'];
+            $version = $row['ver_value'];
             mysql_free_result($res_ver2);
         }
 
@@ -671,7 +666,7 @@ function camp_detect_database_version($p_dbName, &$version, &$roll)
         if (mysql_num_rows($res_ver2) > 0) {
             $got_versions += 1;
             $row = mysql_fetch_assoc($res_ver2);
-            $roll = $row['version'];
+            $roll = $row['ver_value'];
             mysql_free_result($res_ver2);
         }
 
@@ -820,9 +815,9 @@ function camp_detect_database_version($p_dbName, &$version, &$roll)
             return "Unable to query the database $p_dbName";
         }
         if (mysql_num_rows($res2) > 0) {
-            $version = "3.6.x";
-            //$version = "3.5.x";
-            //$roll = '.';
+            //$version = "3.6.x";
+            $version = "3.5.x";
+            $roll = '.';
         }
     }
     return 0;
@@ -1132,7 +1127,7 @@ function camp_search_db_rolls($roll_base_dir, $last_db_roll) {
         }
     }
 
-    return rolls;
+    return $rolls;
 
 } // fn camp_search_db_rolls
 

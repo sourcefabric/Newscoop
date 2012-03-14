@@ -1820,6 +1820,23 @@ INSERT INTO `URLTypes` VALUES (1,'template path',''),(2,'short names','');
 UNLOCK TABLES;
 
 --
+-- Table structure for table `Versions`
+--
+
+DROP TABLE IF EXISTS `Versions`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `Versions` (
+    `id` integer unsigned NOT NULL auto_increment,
+    `ver_name` varchar(255) NOT NULL,
+    `ver_value` varchar(255) NOT NULL default '',
+    `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `ver_name` (`ver_name`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `Widget`
 --
 
@@ -3108,7 +3125,7 @@ CREATE TABLE `article_datetimes` (
   KEY `end_date` (`end_date`),
   KEY `article_type` (`article_type`),
   KEY `field_name` (`field_name`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -3120,7 +3137,7 @@ CREATE TABLE IF NOT EXISTS `ArticleRendition` (
   PRIMARY KEY (`articleNumber`,`image_id`,`rendition_id`),
   KEY `IDX_794B8A6C3DA5256D` (`image_id`),
   KEY `IDX_794B8A6CFD656AA1` (`rendition_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `package` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -3131,14 +3148,14 @@ CREATE TABLE IF NOT EXISTS `package` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_DE686795989D9B62` (`slug`),
   KEY `IDX_DE686795FD656AA1` (`rendition_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 -- --------------------------------------------------------
 
 CREATE TABLE IF NOT EXISTS `package_article` (
   `id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -3148,7 +3165,7 @@ CREATE TABLE IF NOT EXISTS `package_article_package` (
   PRIMARY KEY (`article_id`,`package_id`),
   KEY `IDX_BB5F0F827294869C` (`article_id`),
   KEY `IDX_BB5F0F82F44CABFF` (`package_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- --------------------------------------------------------
 
@@ -3163,7 +3180,7 @@ CREATE TABLE IF NOT EXISTS `package_item` (
   PRIMARY KEY (`id`),
   KEY `IDX_A45640D6F44CABFF` (`package_id`),
   KEY `IDX_A45640D63DA5256D` (`image_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 -- --------------------------------------------------------
 
@@ -3175,7 +3192,7 @@ CREATE TABLE IF NOT EXISTS `rendition` (
   `offset` int(11) DEFAULT NULL,
   `label` varchar(80) DEFAULT NULL,
   PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 --

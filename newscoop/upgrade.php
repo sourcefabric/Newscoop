@@ -10,8 +10,8 @@
  */
 
 
-
-if (!file_exists(dirname(__FILE__) . DIRECTORY_SEPARATOR . 'conf' . DIRECTORY_SEPARATOR . 'upgrading.php')) {
+$upgrade_trigger_path = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'conf' . DIRECTORY_SEPARATOR . 'upgrading.php';
+if (!file_exists($upgrade_trigger_path)) {
     header('Location: index.php');
     exit(0);
 }
@@ -39,11 +39,17 @@ require_once($g_documentRoot.'/install/classes/CampInstallation.php');
 require_once($g_documentRoot.'/classes/User.php');
 require_once($g_documentRoot.'/classes/CampPlugin.php');
 
-$res = camp_detect_database_version($Campsite['DATABASE_NAME'], $dbVersion);
+$dbVersion = '';
+$dbRoll = '';
+$res = camp_detect_database_version($Campsite['DATABASE_NAME'], $dbVersion, $dbRoll);
 if ($res !== 0) {
     $dbVersion = '[unknown]';
 }
-echo "Upgrading the database from version $dbVersion...";
+$dbInfo = $dbVersion;
+if (!in_array($dbRoll, array('', '.'))) {
+    $dbInfo .= ', roll ' . $dbRoll;
+}
+echo "Upgrading the database from version $dbInfo...";
 
 // initiates the campsite site
 $campsite = new CampSite();
@@ -104,8 +110,8 @@ if (upgrade_htaccess($htaccesspath) == false) {
         . 'be apply for this specific version of Newscoop.', FALSE);
 }
 
-if (file_exists(__FILE__)) {
-    @unlink(__FILE__);
+if (file_exists($upgrade_trigger_path)) {
+    @unlink($upgrade_trigger_path);
 }
 
 function display_upgrade_error($p_errorMessage, $exit = TRUE) {

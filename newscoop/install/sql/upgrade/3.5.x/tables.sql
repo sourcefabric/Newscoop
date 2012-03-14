@@ -359,7 +359,7 @@ CREATE TABLE `article_datetimes` (
   KEY `end_date` (`end_date`),
   KEY `article_type` (`article_type`),
   KEY `field_name` (`field_name`)
-) ENGINE=InnoDB;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Image renditions
 
@@ -371,7 +371,7 @@ CREATE TABLE IF NOT EXISTS `ArticleRendition` (
   PRIMARY KEY (`articleNumber`,`image_id`,`rendition_id`),
   KEY `IDX_794B8A6C3DA5256D` (`image_id`),
   KEY `IDX_794B8A6CFD656AA1` (`rendition_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `package` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -382,12 +382,12 @@ CREATE TABLE IF NOT EXISTS `package` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_DE686795989D9B62` (`slug`),
   KEY `IDX_DE686795FD656AA1` (`rendition_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=4 ;
 
 CREATE TABLE IF NOT EXISTS `package_article` (
   `id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `package_article_package` (
   `article_id` int(11) NOT NULL,
@@ -395,7 +395,7 @@ CREATE TABLE IF NOT EXISTS `package_article_package` (
   PRIMARY KEY (`article_id`,`package_id`),
   KEY `IDX_BB5F0F827294869C` (`article_id`),
   KEY `IDX_BB5F0F82F44CABFF` (`package_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `package_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -408,7 +408,7 @@ CREATE TABLE IF NOT EXISTS `package_item` (
   PRIMARY KEY (`id`),
   KEY `IDX_A45640D6F44CABFF` (`package_id`),
   KEY `IDX_A45640D63DA5256D` (`image_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=6 ;
 
 CREATE TABLE IF NOT EXISTS `rendition` (
   `name` varchar(255) NOT NULL,
@@ -418,7 +418,7 @@ CREATE TABLE IF NOT EXISTS `rendition` (
   `offset` int(11) DEFAULT NULL,
   `label` varchar(80) DEFAULT NULL,
   PRIMARY KEY (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 ALTER TABLE `Images`
     ADD `width` int(5) DEFAULT NULL,
