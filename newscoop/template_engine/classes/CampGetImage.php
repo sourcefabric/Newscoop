@@ -265,6 +265,25 @@ class CampGetImage
         return $func_ending;
     }
 
+    private function GetHeaders()
+    {
+        $headers = array();
+
+        if (function_exists('apache_request_headers')) {
+            $headers = apache_request_headers();
+        }
+        else {
+            foreach($_SERVER as $key => $value) {
+                if (strtolower(substr($key, 0, 5)) == 'http_') {
+                    $key = str_replace(' ', '-' , ucwords(strtolower(str_replace('_', ' ', substr($key,5)))));
+                    $headers[$key] = $value;
+                } else {
+                    $headers[$key] = $value;
+                }
+            }
+        }
+        return $headers;
+    }
 
     /**
      * Sends headers and output image
@@ -280,7 +299,7 @@ class CampGetImage
             // do not cache local 100% images
 
             // Getting headers sent by the client.
-            $headers = apache_request_headers();
+            $headers = $this->GetHeaders();
             $fmt = filemtime($this->getSourcePath());
 
             // Checking if the client is validating his cache and if it is current.
@@ -569,7 +588,7 @@ class CampGetImage
     private function sendCachedImage()
     {
         // Getting headers sent by the client.
-        $headers = apache_request_headers();
+        $headers = $this->GetHeaders();
         $fmt = filemtime($this->getTargetPath());
 
         // Checking if the client is validating his cache and if it is current.

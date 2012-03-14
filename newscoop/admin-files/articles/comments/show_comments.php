@@ -191,10 +191,11 @@ function loadComments() {
 
 var updateStatus = function(button) {
 	var el = $(button).parents('dl').find('input:radio:checked').first();
+    var wanted_status = el.val();
 
 	var call_data = {
 	   "comment": el.attr('id').match(/\d+/)[0],
-	   "status": el.val()
+	   "status": wanted_status
 	};
 
     var call_url = '../comment/set-status/format/json';
@@ -202,15 +203,24 @@ var updateStatus = function(button) {
 	var res_handle = function(data) {
 		//flashMessage('<?php putGS('Comments updated.'); ?>');
 		toggleCommentStatus(el.attr('id').match(/\d+/)[0]);
+        if ('deleted' == wanted_status) {
+            loadComments();
+        }
+
 	};
 
 	callServer(call_url, call_data, res_handle, true);
+
+    return wanted_status;
 };
 
 $('.comment-update').live('click',function(){
 	var comment, subject, body;
 
-    updateStatus(this);
+    var wanted_status = updateStatus(this);
+    if ('deleted' == wanted_status) {
+        return;
+    }
 
     comment = $(this).parents('dl');
     subject = comment.find('input').val();

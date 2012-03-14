@@ -40,7 +40,21 @@ class CommentRepository extends DatatableSource
      */
     public function setStatus(array $p_comment_ids, $p_status)
     {
-        foreach ($p_comment_ids as $comment_id) $this->setCommentStatus($this->find($comment_id), $p_status);
+        $comments = array();
+        foreach (array_unique($p_comment_ids) as $comment_id) {
+            $one_comment = $this->find($comment_id);
+            if (!empty($one_comment)) {
+                $comments[] = $one_comment;
+            }
+        }
+        if ('deleted' == $p_status) {
+            foreach ($comments as $one_comment) {
+                $one_comment->setParent();
+            }
+        }
+        foreach ($comments as $one_comment) {
+            $this->setCommentStatus($one_comment, $p_status);
+        }
     }
 
     /**
@@ -383,7 +397,12 @@ class CommentRepository extends DatatableSource
             $params['language'] = $p_language;
         }
         $comments = $this->findBy($params);
-        foreach ($comments as $comment) $this->setCommentStatus($comment, 'deleted');
+        foreach ($comments as $comment) {
+            $comment->setParent();
+        }
+        foreach ($comments as $comment) {
+            $this->setCommentStatus($comment, 'deleted');
+        }
     }
 
     /**
