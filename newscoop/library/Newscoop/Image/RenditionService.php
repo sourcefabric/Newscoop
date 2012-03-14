@@ -86,6 +86,27 @@ class RenditionService
     }
 
     /**
+     * Unset article-image rendition
+     *
+     * @param int $articleNumber
+     * @param int $image
+     * @return void
+     */
+    public function unsetArticleImageRenditions($articleNumber, $image)
+    {
+
+        $renditions = $this->orm->getRepository('Newscoop\Image\ArticleRendition')->findBy(array(
+            'articleNumber' => (int) $articleNumber,
+            'image' => (int) $image,
+        ));
+
+        foreach ($renditions as $one_rend) {
+            $this->orm->remove($one_rend);
+            $this->orm->flush($one_rend);
+        }
+    }
+
+    /**
      * Get article rendition
      *
      * @param int $articleNumber

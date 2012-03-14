@@ -35,6 +35,8 @@ $imageObj = new Image($f_image_id);
 $articleImage = new ArticleImage($f_article_number, $f_image_id, $f_image_template_id);
 $articleImage->delete();
 
+Zend_Registry::get('container')->getService('image.rendition')->unsetArticleImageRenditions($f_article_number, $f_image_id);
+
 camp_html_add_msg(getGS('The image has been removed from the article.'), "ok");
 camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, 'edit.php'));
 ?>
