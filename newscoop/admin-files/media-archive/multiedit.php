@@ -61,12 +61,12 @@ camp_html_display_msgs();
         $imageExtension = strtolower($imagePathParts[count($imagePathParts) - 1]);
         
         if (in_array($imageExtension, $allowedExtensions)) {
-            $exif = exif_read_data($imageObj->getImageUrl());
+            $exif = exif_read_data($imageObj->getImageStorageLocation());
             if (isset($exif['DateTime'])) {
                 $exifDate = date('Y-m-d', strtotime($exif['DateTime']));
             }
 
-            $size = getimagesize($imageObj->getImageUrl(), $info);
+            $size = getimagesize($imageObj->getImageStorageLocation(), $info);
             $iptc = array();
             foreach ($info as $key => $value) {
                 $iptc[$key] = iptcparse($value);
