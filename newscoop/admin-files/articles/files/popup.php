@@ -121,7 +121,7 @@ camp_html_display_msgs();
       <input type="submit" name="Save" value="<?php  putGS('Save'); ?>" class="button" />
       &nbsp;&nbsp;
       <?php } ?>
-      <input type="button" name="Cancel" value="<?php putGS('Cancel'); ?>" class="button" onclick="window.close();" />
+      <input type="button" name="Cancel" value="<?php putGS('Cancel'); ?>" class="button" onclick="parent.$.fancybox.close();" />
     </div>
   </td>
 </tr>
