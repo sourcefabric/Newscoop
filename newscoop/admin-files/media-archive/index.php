@@ -54,7 +54,7 @@ camp_html_content_top(getGS('Media Archive'), NULL);
     $paginator->setItemCountPerPage($limit);
     $paginator->setCurrentPageNumber(1);
     echo $this->view->partial('slideshow-list.phtml', array(
-        'slideshows' => $this->view->slideshowsJson($this->_helper->service('package')->findBy(array(), array(), $limit, 0)),
+        'slideshows' => $this->view->slideshowsJson($this->_helper->service('package')->findBy(array(), array('id' => 'desc'), $limit, 0)),
         'pages' => $paginator->count(),
     )); ?>
 </div>

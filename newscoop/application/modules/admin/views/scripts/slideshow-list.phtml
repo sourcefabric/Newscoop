@@ -7,7 +7,7 @@
     <a id="add-slideshow" href="<?php echo $this->url(array('controller' => 'slideshow', 'action' => 'create')); ?>" class="modal button"><?php putGS('Create slideshow'); ?></a>
 </div>
 
-<ul id="slideshow-list" class="list-view grid"></ul>
+<ul id="slideshow-list" class="list-view grid slideshow-list"></ul>
 
 <script type="text/template" id="slideshow-template">
 <h3 class="title"><a href="<?php echo $this->url(array('controller' => 'slideshow', 'action' => 'edit')); ?>/slideshow/<%= id %>" class="edit"><%= headline %></a></h3>

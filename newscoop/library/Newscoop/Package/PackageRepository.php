@@ -28,6 +28,13 @@ class PackageRepository extends \Doctrine\ORM\EntityRepository
             ->groupBy('p.id');
 
         $this->setCriteria($queryBuilder, $criteria);
+
+        if (!empty($orderBy)) {
+            foreach ($orderBy as $sort => $order) {
+                $queryBuilder->orderBy("p.{$sort}", $order);
+            }
+        }
+
         $queryBuilder->setFirstResult($offset);
         $queryBuilder->setMaxResults($limit);
 
