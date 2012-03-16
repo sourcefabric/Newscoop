@@ -3,15 +3,18 @@
 <header>
     <h1><?php putGS('Attach slideshows'); ?></h1>
     <div id="app">
-        <button id="attach-slideshows-button" class="prime"><?php putGS('Save'); ?></button>
-        <button id="close-button"><?php putGS('Close'); ?></button>
+        <button id="attach-slideshows-button" class="prime"><?php putGS('Done'); ?></button>
     </div>
 </header>
 
-<nav class="top-fixed"></nav>
+<section class="dark">
+    <ul id="article-slideshows" class="list-view grid slideshow-list"></ul>
+</section>
+
+<nav></nav>
 
 <section>
-    <ul id="slideshow-list" class="list-view grid"></ul>
+    <ul id="slideshow-list" class="list-view grid slideshow-list"></ul>
 </section>
 
 <script type="text/template" id="slideshow-template">
@@ -31,16 +34,6 @@
 <script type="text/javascript">
 (function($) {
     /**
-     * Article model
-     */
-    var Article = Backbone.Model.extend({
-        url: <?php echo json_encode($this->url(array('action' => 'article'))); ?>,
-        defaults: {
-            slideshows: []
-        }
-    });
-
-    /**
      * Slideshow model
      */
     var Slideshow = Backbone.Model.extend({
@@ -50,24 +43,19 @@
         },
 
         initialize: function() {
-            if (window.article) {
-                this.set('attached', _.indexOf(article.get('slideshows'), this.get('id')) !== -1);
-            }
-
             if (this.get('items')) {
                 this.set('item', this.get('items')[0]);
             }
         },
 
-        toggle: function() {
-            var index = _.indexOf(article.get('slideshows'), this.get('id'));
-            if (index === -1) {
-                this.set('attached', true);
-                article.get('slideshows').push(this.get('id'));
-            } else {
-                this.set('attached', false);
-                article.get('slideshows').splice(index, 1);
+        addToArticle: function(article) {
+            if (!article.get('slideshows').get(this.get('id'))) {
+                article.get('slideshows').add(this);
             }
+        },
+
+        removeFromArticle: function(article) {
+            article.get('slideshows').remove(this.get('id'));
         }
     });
 
@@ -76,7 +64,21 @@
      */
     var SlideshowCollection = Backbone.Collection.extend({
         model: Slideshow,
-        url: <?php echo json_encode($this->url(array('format' => 'json'))); ?>
+        url: <?php echo json_encode($this->url(array('format' => 'json'))); ?>,
+        comparator: function(slideshow) {
+            return -1 * slideshow.get('id');
+        }
+    });
+
+    /**
+     * Article model
+     */
+    var Article = Backbone.Model.extend({
+        url: <?php echo json_encode($this->url(array('action' => 'article'))); ?>,
+
+        initialize: function(params) {
+            this.set('slideshows', new SlideshowCollection(this.get('slideshows')));
+        }
     });
 
     /**
@@ -86,7 +88,7 @@
         tagName: "li",
 
         events: {
-            'click': 'toggleAttached',
+            'click': 'action',
         },
 
         initialize: function() {
@@ -96,21 +98,19 @@
 
         render: function() {
             $(this.el).html(this.template(this.model.toJSON()));
-            this.setSelected();
             return this;
-        },
+        }
+    });
 
-        toggleAttached: function() {
-            this.model.toggle();
-            this.setSelected();
-        },
+    var AddSlideshowView = SlideshowView.extend({
+        action: function() {
+            this.model.addToArticle(window.article);
+        }
+    });
 
-        setSelected: function() {
-            if (this.model.get('attached')) {
-                $(this.el).addClass('selected');
-            } else {
-                $(this.el).removeClass('selected');
-            }
+    var RemoveSlideshowView = SlideshowView.extend({
+        action: function() {
+            this.model.removeFromArticle(window.article);
         }
     });
 
@@ -127,7 +127,7 @@
         render: function() {
             $('#slideshow-list').empty();
             this.collection.each(function(slideshow) {
-                var view = new SlideshowView({model: slideshow});
+                var view = new AddSlideshowView({model: slideshow});
                 $('#slideshow-list').append(view.render().el);
             });
             return this;
@@ -135,18 +135,25 @@
     });
 
     /**
-     * Message view
+     * Article slideshows view
      */
-    var Message = Backbone.View.extend({
+    var ArticleSlideshowsView = Backbone.View.extend({
         initialize: function() {
-            $('body > #message').detach();
-            var message = $('<div id="message"></div>').appendTo($('body'));
-            $('<span></span>').text(this.options.message).appendTo(message);
-            window.setTimeout(function() {
-                message.fadeOut('slow', function() {
-                    message.detach();
-                });
-            }, 3000);
+            this.collection = this.options.collection;
+            this.collection.bind('add', this.render, this);
+            this.collection.bind('remove', this.render, this);
+            this.render();
+        },
+
+        render: function() {
+            var list = $(this.el);
+            list.empty();
+            this.collection.each(function(slideshow) {
+                var view = new RemoveSlideshowView({model: slideshow});
+                list.append(view.render().el);
+            });
+
+            return this;
         }
     });
 
@@ -157,24 +164,16 @@
         el: $('#app'),
 
         events: {
-            'click #attach-slideshows-button': 'saveArticle',
-            'click #close-button': 'close'
+            'click #attach-slideshows-button': 'saveArticle'
         },
 
         initialize: function() {
             this.article = this.options.article;
-            this.article.bind('sync', this.saveMessage, this);
+            this.article.bind('sync', this.close, this);
         },
 
         saveArticle: function() {
             this.article.save();
-        },
-
-        saveMessage: function() {
-            new Message(<?php echo json_encode(array(
-                'message' => getGS('Saved'),
-                'timeout' => 3000,
-            )); ?>);
         },
 
         close: function() {
@@ -188,6 +187,7 @@
         var slideshowCollection = new SlideshowCollection();
         var paginatorView = new PaginatorView({pages: <?php echo $this->pages; ?>, collection: slideshowCollection, el: $('body > nav')});
         var slideshowView = new SlideshowListView({collection: slideshowCollection, slideshows: <?php echo json_encode($this->slideshowsJson($this->slideshows)); ?>});
+        var articleSlideshowsView = new ArticleSlideshowsView({collection: article.get('slideshows'), el: $('#article-slideshows')});
     });
 })(jQuery);
 </script>

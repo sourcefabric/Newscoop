@@ -251,8 +251,8 @@ class PackageService
     {
         $article = $this->getArticle($articleArray['id']);
         $article->getPackages()->clear();
-        foreach ($articleArray['slideshows'] as $packageId) {
-            $package = $this->orm->find('Newscoop\Package\Package', $packageId);
+        foreach ($articleArray['slideshows'] as $slideshow) {
+            $package = $this->orm->find('Newscoop\Package\Package', $slideshow['id']);
             $article->getPackages()->add($package);
         }
 
