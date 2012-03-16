@@ -18,6 +18,33 @@ class Admin_SupportController extends Zend_Controller_Action
 
     public function indexAction()
     {
+        SystemPref::set('stat_ask_time', time());
+        
+        $this->view->stats = $this->_helper->service('stat')->getAll();
+        
+        // saving them here to retrieve later, because these are not available when run in cli
+        SystemPref::set('support_stats_server', $this->view->stats['server']);
+        SystemPref::set('support_stats_ip_address', $this->view->stats['ipAddress']);
+        SystemPref::set('support_stats_ram_total', $this->view->stats['ramTotal']);
+        
+        $values = $this->getRequest()->getPost();
+        
+        if (isset($values['support_send'])) {
+            SystemPref::set('support_send', $values['support_send']);
+            
+            $this->_helper->flashMessenger(getGS('Support settings saved.'));
+            
+            if ($values['redirect'] == 1) {
+                $this->_helper->redirector('index', '');
+            }
+        }
+        
+        $this->view->support_send = SystemPref::get('support_send');
+        $this->view->redirect = 0;
+    }
+    
+    public function popupAction()
+    {
         $this->_helper->layout->setLayout('iframe');
         
         SystemPref::set('stat_ask_time', time());
@@ -29,51 +56,10 @@ class Admin_SupportController extends Zend_Controller_Action
         SystemPref::set('support_stats_ip_address', $this->view->stats['ipAddress']);
         SystemPref::set('support_stats_ram_total', $this->view->stats['ramTotal']);
         
-        $this->view->agree = SystemPref::get('support_send');
+        $this->view->support_send = SystemPref::get('support_send');
+        $this->view->redirect = 1;
         
-        if ($this->getRequest()->isPost()) {
-            $values = $this->getRequest()->getPost();
-            
-            if ($values['agree']) {
-                SystemPref::set('support_send', $values['agree']);
-            }
-            
-            $this->_helper->flashMessenger(getGS('Support settings saved.'));
-            echo("<script>parent.$.fancybox.close();</script>");
-        }
-        else {
-            $this->view->form = $this->getForm();
-        }
-    }
-    
-    /**
-     * Get priority form
-     *
-     * @return \Zend_Form
-     */
-    private function getForm()
-    {
-        $supportSend = (SystemPref::get('support_send')) ? SystemPref::get('support_send') : 0;
-        
-        $form = new Zend_Form;
-        
-        $form->addElement('hidden', 'agree', array('value' => 1));
-
-        $form->addElement('submit', 'save', array(
-            'label' => getGS('Yes, help Newscoop'),
-            'class' => 'submit-group',
-            'style' => 'font-size: 12px;',
-            'onClick' => 'agree();'
-        ));
-        
-        $form->addElement('submit', 'cancel', array(
-            'label' => getGS('Remind me in 1 week'),
-            'class' => 'submit-group',
-            'style' => 'font-size: 12px;',
-            'onClick' => 'disagree();'
-        ));
-        
-        return $form;
+        $this->render('index');
     }
 }
 
