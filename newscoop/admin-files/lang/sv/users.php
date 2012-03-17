@@ -1,4 +1,5 @@
 <?php 
+regGS("Templates", "");
 regGS("Username", "");
 regGS("Public profile", "");
 regGS("Last Name", "");

@@ -1,4 +1,5 @@
 <?php 
+regGS("Multi date events", "");
 regGS("Slideshows", "");
 regGS("Place images", "");
 regGS("You're not allowed to edit article.", "");
@@ -11,7 +12,6 @@ regGS("Submit article", "");
 regGS("Related Articles", "");
 regGS("Pending articles", "");
 regGS("Pending Articles", "");
-regGS("Multi date event", "");
 regGS("Context Box updated", "");
 regGS("Article Playlist", "");
 regGS("Add article to a playlist", "");

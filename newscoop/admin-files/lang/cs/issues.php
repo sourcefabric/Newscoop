@@ -1,4 +1,5 @@
 <?php 
+regGS("Only than the issue can be published", "");
 regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Toto vydání nemůže být zobrazeno. Prosím ujistěte se, že publikace má přidelen námět.");
 regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "Toto vydání nemůže být zobrazeno. Prosím ujistěte se, že je vybrána přední šablona.");
 regGS("Publish all articles:", "Publikovat všechny články:");
@@ -9,7 +10,6 @@ regGS("default", "default");
 regGS("The publishing/unpublishing can not be set the same time", "Publikování/nepublikování nemůže být nastaveno najednou");
 regGS("The publishing schedule can not be set in the past", "Publikační harmonogram nemůže být nastaven v minulosti");
 regGS("Please assign at least one theme to the publication", "Prosím zadejte alespoň jeden námět do publikace");
-regGS("Only then the issue can be published", "Jenom pak je može být vydání publikované");
 regGS("Issue Theme", "Téma vydání");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Hodnoty, které se snažíte nastavit, jsou v rozporu s vydáním \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Číslo musí být jedinečné pro každé vydání v této publikaci stejného jazyka.");

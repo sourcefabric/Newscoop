@@ -1,4 +1,5 @@
 <?php 
+regGS("Multi date events", "");
 regGS("Slideshows", "Slideshows");
 regGS("Place images", "");
 regGS("You're not allowed to edit article.", "Você não tem permissão de editar o artigo.");
@@ -11,7 +12,6 @@ regGS("Submit article", "Entregar artigo");
 regGS("Related Articles", "Artigos relacionados");
 regGS("Pending articles", "Artigos pendentes");
 regGS("Pending Articles", "Artigos pendentes");
-regGS("Multi date event", "");
 regGS("Context Box updated", "");
 regGS("Article Playlist", "");
 regGS("Add article to a playlist", "");
@@ -162,7 +162,4 @@ regGS("This article cannot be previewed. Please make sure it has the article tem
 regGS("No such article.", "Artigo Desconhecido.");
 regGS("No such section.", "Secção Desconhecida.");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Tem certeza que quer remover o tópico \\'$1\\' do artigo?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Tem certeza que quer remover o arquivo \\'$1\\' do artigo?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Confirma a eliminação da imagem \\'$1\\' do artigo?");
 ?>

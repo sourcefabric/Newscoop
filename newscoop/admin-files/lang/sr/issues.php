@@ -1,4 +1,5 @@
 <?php 
+regGS("Only than the issue can be published", "");
 regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Ово издање не може бити прегледано. Проверите да ли публикација има додељену тему.");
 regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "Ово издање не може бити прегледано. Проверите да ли има додељен шаблон за приказ прве стране.");
 regGS("Publish all articles:", "Објави све текстове:");
@@ -9,7 +10,6 @@ regGS("default", "подразумевано");
 regGS("The publishing/unpublishing can not be set the same time", "Објављивање/повлачење не може бити постављено на исто време");
 regGS("The publishing schedule can not be set in the past", "Редослед објављивања не може бити подешен на датум у прошлости");
 regGS("Please assign at least one theme to the publication", "Молимо доделите најмање једну тему публикацији");
-regGS("Only then the issue can be published", "Тек тада издање може бити објављено");
 regGS("Issue Theme", "Тема издања");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Вредности које покушавате да подесите су у конфликту са издањем \"$1 $2. $3 ($4) $5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Број мора бити јединствен за свако издање у овој публикацији за исти језик.");

@@ -1,4 +1,5 @@
 <?php 
+regGS("Templates", "");
 regGS("Create slideshow", "Создать слайд-шоу");
 regGS("Create", "Создать");
 regGS("Attach/Detach", "Прикрепить/Удалить");
@@ -150,5 +151,4 @@ regGS("Login failed", "Ошибка входа");
 regGS("Please make sure that you typed the correct user name and password.", "Пожалуйста, убедитесь в правильности ввода логина и пароля.");
 regGS("If your problem persists please contact the site administrator $1", "Если проблема не решена, обратитесь к администратору сайта $1");
 regGS("Backup/Restore", "Резервное копирование");
-regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Добрый день, \\n\\n для восстановления пароля, следуйте по ссылке: $1");
 ?>

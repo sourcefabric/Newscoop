@@ -1,4 +1,5 @@
 <?php 
+regGS("Event Color", "");
 regGS("You must input a number greater than $1 and less than $2 into the $3 field.", "Devi inserire un numero piu' grande di $1 e minore di $2 nel campo $3.");
 regGS("You do not have the right to translate article types.", "Non si dispone dei diritti per tradurre tipi di articolo");
 regGS("You do not have the right to reorder article types.", "Non si dispone dei diritti per riordinare i tipi articolo.");

@@ -1,4 +1,5 @@
 <?php 
+regGS("Templates", "Templates");
 regGS("Newswires Ingest", "Newswires Ingest");
 regGS("Feedback Messages", "Feedback Messages");
 regGS("Article Playlists", "Article Playlists");

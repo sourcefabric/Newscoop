@@ -1,4 +1,5 @@
 <?php 
+regGS("Multi date events", "");
 regGS("Slideshows", "Slideshows");
 regGS("Place images", "Bilder platzieren");
 regGS("You're not allowed to edit article.", "Sie haben keine Berechtigung um einen Artikel zu bearbeiten. ");
@@ -11,7 +12,6 @@ regGS("Submit article", "Artikel einpflegen");
 regGS("Related Articles", "Verwandte Artikel");
 regGS("Pending articles", "Pending articles");
 regGS("Pending Articles", "Pending articles");
-regGS("Multi date event", "Multi date event");
 regGS("Context Box updated", "Content Box aktualisiert");
 regGS("Article Playlist", "Artikel Playlist");
 regGS("Add article to a playlist", "Artikel zur Playlist hinzufügen. ");
@@ -165,7 +165,4 @@ regGS("This article cannot be previewed. Please make sure the article has an iss
 regGS("Reorder", "Nachbestellen");
 regGS("Author", "AutorIn");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Soll das Thema \\'$1\\' von diesem Artikel entkoppelt werden?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Soll die Datei \\'$1\\' von diesem Artikel entkoppelt werden?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Soll das Bild \\'$1\\' vom Artikel entkoppelt werden?");
 ?>

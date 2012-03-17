@@ -1,4 +1,5 @@
 <?php 
+regGS("Multi date events", "");
 regGS("Slideshows", "");
 regGS("Place images", "");
 regGS("You're not allowed to edit article.", "No tiene permitido editar un artículo.");
@@ -11,7 +12,6 @@ regGS("Submit article", "Enviar artículo");
 regGS("Related Articles", "Artículos relacionados");
 regGS("Pending articles", "Artículos pendientes");
 regGS("Pending Articles", "Artículos pendientes");
-regGS("Multi date event", "Evento con fechas múltiples");
 regGS("Context Box updated", "Se actualizó la Casilla de Contexto");
 regGS("Article Playlist", "Lista de reproducción de artículos");
 regGS("Add article to a playlist", "Añadir artículo a la lista de reproducción");

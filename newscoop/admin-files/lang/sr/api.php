@@ -1,4 +1,8 @@
 <?php 
+regGS("Not a color", "");
+regGS("No such field", "");
+regGS("Color saved", "");
+regGS("Color not saved", "");
 regGS("Topic created", "Топик креиран");
 regGS("The topic name is already in use by another topic.", "Име за топик је већ у употреби");
 regGS("Complex Date", "Сложен датум");

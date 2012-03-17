@@ -1,4 +1,5 @@
 <?php 
+regGS("Only than the issue can be published", "");
 regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "");
 regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "");
 regGS("Publish all articles:", "");
@@ -9,7 +10,6 @@ regGS("default", "");
 regGS("The publishing/unpublishing can not be set the same time", "");
 regGS("The publishing schedule can not be set in the past", "");
 regGS("Please assign at least one theme to the publication", "");
-regGS("Only then the issue can be published", "");
 regGS("Issue Theme", "");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Велічынi, якiя Вы спрабуеце ўстанавіць, канфлiктуюць з выпускам \"$1$2. $3 ($4)$5\". ");
 regGS("The number must be unique for each issue in this publication of the same language.", "Нумар павiнен быць унікальным для кожнага выпуску гэтага выданьня на гэтай жа мове.");
