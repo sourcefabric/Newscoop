@@ -11,8 +11,6 @@ use Newscoop\Image\LocalImage,
     Newscoop\Image\Rendition,
     Newscoop\Image\LocalImageTest;
 
-require_once __DIR__ . '/../Image/LocalImageTest.php';
-
 /**
  */
 class PackageServiceTest extends \TestCase
@@ -131,7 +129,7 @@ class PackageServiceTest extends \TestCase
             'rendition' => $rendition,
         ));
 
-        $this->service->addItem($package, new LocalImage(LocalImageTest::PICTURE_LANDSCAPE));
+        $this->service->addItem($package, new LocalImage(self::PICTURE_LANDSCAPE));
         $this->assertEquals($rendition, $package->getItems()->first()->getRendition());
     }
 
@@ -140,7 +138,7 @@ class PackageServiceTest extends \TestCase
         $this->assertNull($this->service->findItem(1));
 
         $package = $this->service->save(array('headline' => 'test'));
-        $this->service->addItem($package, new LocalImage(LocalImageTest::PICTURE_LANDSCAPE));
+        $this->service->addItem($package, new LocalImage(self::PICTURE_LANDSCAPE));
 
         $this->assertNotNull($this->service->findItem(1));
     }
@@ -153,7 +151,7 @@ class PackageServiceTest extends \TestCase
             'rendition' => $rendition,
         ));
 
-        $item = $this->service->addItem($package, new LocalImage(LocalImageTest::PICTURE_LANDSCAPE));
+        $item = $this->service->addItem($package, new LocalImage(self::PICTURE_LANDSCAPE));
 
         $this->service->saveItem(array(
             'caption' => 'testcap',
@@ -186,7 +184,7 @@ class PackageServiceTest extends \TestCase
             'rendition' => $this->getRendition(800, 600, 'crop', 'test'),
         ));
 
-        $this->service->addItem($package, new LocalImage(LocalImageTest::PICTURE_LANDSCAPE));
+        $this->service->addItem($package, new LocalImage(self::PICTURE_LANDSCAPE));
     }
 
     /**

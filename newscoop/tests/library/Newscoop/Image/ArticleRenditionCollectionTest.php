@@ -7,8 +7,6 @@
 
 namespace Newscoop\Image;
 
-require_once __DIR__ . '/LocalImageTest.php';
-
 /**
  */
 class ArticleRenditionCollectionTest extends \TestCase
@@ -16,7 +14,7 @@ class ArticleRenditionCollectionTest extends \TestCase
     public function testUsingSmallDefaultImageForRendition()
     {
         $rendition = new Rendition(800, 600, 'crop', 'test');
-        $renditions = new ArticleRenditionCollection(1, array(), new LocalImage(LocalImageTest::PICTURE_LANDSCAPE));
+        $renditions = new ArticleRenditionCollection(1, array(), new LocalImage(self::PICTURE_LANDSCAPE));
         $this->assertFalse(isset($renditions[$rendition]));
         $this->assertNull($renditions[$rendition]);
     }

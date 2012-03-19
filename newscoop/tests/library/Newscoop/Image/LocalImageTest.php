@@ -11,9 +11,6 @@ namespace Newscoop\Image;
  */
 class LocalImageTest extends \TestCase
 {
-    const PICTURE_LANDSCAPE = 'tests/fixtures/picture_landscape.jpg';
-    const PICTURE_PORTRAIT = 'tests/fixtures/picture_portrait.jpg';
-
     public function testInstance()
     {
         $this->assertInstanceOf('Newscoop\Image\LocalImage', new LocalImage(self::PICTURE_LANDSCAPE));

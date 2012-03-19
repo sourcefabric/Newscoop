@@ -130,6 +130,12 @@ class NewscoopEntityArticleProxy extends \Newscoop\Entity\Article implements \Do
         return parent::commentsEnabled();
     }
 
+    public function setType($type)
+    {
+        $this->__load();
+        return parent::setType($type);
+    }
+
     public function getType()
     {
         $this->__load();
@@ -152,6 +158,18 @@ class NewscoopEntityArticleProxy extends \Newscoop\Entity\Article implements \Do
     {
         $this->__load();
         return parent::getCreator();
+    }
+
+    public function addAuthor(\Newscoop\Entity\Author $author)
+    {
+        $this->__load();
+        return parent::addAuthor($author);
+    }
+
+    public function setStatus($status)
+    {
+        $this->__load();
+        return parent::setStatus($status);
     }
 
 

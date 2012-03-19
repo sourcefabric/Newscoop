@@ -118,6 +118,12 @@ class NewscoopEntityCommentCommenterProxy extends \Newscoop\Entity\Comment\Comme
         return parent::getUserName();
     }
 
+    public function getLoginName()
+    {
+        $this->__load();
+        return parent::getLoginName();
+    }
+
     public function getUserId()
     {
         $this->__load();

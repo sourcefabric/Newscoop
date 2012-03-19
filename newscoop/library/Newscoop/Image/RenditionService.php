@@ -171,9 +171,10 @@ class RenditionService
     /**
      * Register renditions
      *
+     * @param array $existing
      * @return void
      */
-    public function registerRenditions()
+    public function registerRenditions(array $existing = array())
     {
         $this->renditions = array();
         foreach (glob($this->config['theme_path'] . '/publication_*/theme_*/theme.xml') as $themeInfo) {
@@ -183,8 +184,16 @@ class RenditionService
             }
 
             foreach ($xml->renditions->rendition as $rendition) {
-                if (!isset($this->renditions[(string) $rendition['name']])) {
-                    $this->orm->persist($this->renditions[(string) $rendition['name']] = new Rendition($rendition['width'], $rendition['height'], $rendition['specs'], $rendition['name']));
+                $renditionName = (string) $rendition['name'];
+                if (!isset($this->renditions[$renditionName])) {
+                    if (array_key_exists($renditionName, $existing)) {
+                        $existing[$renditionName]->setWidth($rendition['width']);
+                        $existing[$renditionName]->setHeight($rendition['height']);
+                        $existing[$renditionName]->setSpecs($rendition['specs']);
+                        $this->renditions[$renditionName] = $existing[$renditionName];
+                    } else {
+                        $this->orm->persist($this->renditions[$renditionName] = new Rendition($rendition['width'], $rendition['height'], $rendition['specs'], $rendition['name']));
+                    }
                 }
             }
         }
@@ -272,6 +281,62 @@ class RenditionService
     public function hasRenditions()
     {
         return count($this->getRenditions()) !== 0;
+    }
+
+    /**
+     * Force reload of rendition specs
+     *
+     * @return void
+     */
+    public function reloadRenditions()
+    {
+        $this->getRenditions();
+        $this->registerRenditions($this->renditions);
+        $this->removeOrphanedArticleRenditions(array_keys($this->renditions));
+        $this->removeOrphanedRenditions(array_keys($this->renditions));
+        $this->renditions = null;
+    }
+
+    /**
+     * Remove orphaned article renditions
+     *
+     * @param array $names
+     * @return void
+     */
+    private function removeOrphanedArticleRenditions(array $names)
+    {
+        $this->orm->createQuery('DELETE FROM Newscoop\Image\ArticleRendition ar WHERE ar.rendition NOT IN (:names)')
+            ->setParameter('names', $names)
+            ->execute();
+    }
+
+    /**
+     * Remove orphaned renditions
+     *
+     * @param array $names
+     * @return void
+     */
+    private function removeOrphanedRenditions(array $names)
+    {
+        $this->orm->createQuery('DELETE FROM Newscoop\Image\Rendition r WHERE r.name NOT IN (:names)')
+            ->setParameter('names', array_merge($names, $this->getPackageRenditionNames()))
+            ->execute();
+    }
+
+    /**
+     * Get renditions names used by packages
+     *
+     * @return array
+     */
+    private function getPackageRenditionNames()
+    {
+        $names = array();
+        foreach ($this->orm->createQuery('SELECT p FROM Newscoop\Package\Package p')->getResult() as $package) {
+            $id = $this->orm->getUnitOfWork()->getEntityIdentifier($package->getRendition());
+            $names[] = $id['name'];
+        }
+
+        return $names;
     }
 
     /**

@@ -76,10 +76,40 @@ class NewscoopImageLocalImageProxy extends \Newscoop\Image\LocalImage implements
         return parent::hasWidth();
     }
 
+    public function setPhotographer($photographer)
+    {
+        $this->__load();
+        return parent::setPhotographer($photographer);
+    }
+
     public function getPhotographer()
     {
         $this->__load();
         return parent::getPhotographer();
+    }
+
+    public function setPlace($place)
+    {
+        $this->__load();
+        return parent::setPlace($place);
+    }
+
+    public function getPlace()
+    {
+        $this->__load();
+        return parent::getPlace();
+    }
+
+    public function setDate($date)
+    {
+        $this->__load();
+        return parent::setDate($date);
+    }
+
+    public function getDate()
+    {
+        $this->__load();
+        return parent::getDate();
     }
 
     public function getCaption()
@@ -91,7 +121,7 @@ class NewscoopImageLocalImageProxy extends \Newscoop\Image\LocalImage implements
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'location', 'basename', 'url', 'description', 'width', 'height', 'photographer');
+        return array('__isInitialized__', 'id', 'location', 'basename', 'url', 'description', 'width', 'height', 'photographer', 'place', 'date');
     }
 
     public function __clone()

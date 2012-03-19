@@ -13,6 +13,9 @@ use Doctrine\ORM\Mapping\ClassMetadataFactory,
  */
 abstract class TestCase extends PHPUnit_Framework_TestCase
 {
+    const PICTURE_LANDSCAPE = 'tests/fixtures/picture_landscape.jpg';
+    const PICTURE_PORTRAIT = 'tests/fixtures/picture_portrait.jpg';
+
     /**
      * Set up document manager
      *

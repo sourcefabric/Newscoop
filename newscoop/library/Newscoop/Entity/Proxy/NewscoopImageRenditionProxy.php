@@ -34,16 +34,34 @@ class NewscoopImageRenditionProxy extends \Newscoop\Image\Rendition implements \
         return parent::__toString();
     }
 
+    public function setWidth($width)
+    {
+        $this->__load();
+        return parent::setWidth($width);
+    }
+
     public function getWidth()
     {
         $this->__load();
         return parent::getWidth();
     }
 
+    public function setHeight($height)
+    {
+        $this->__load();
+        return parent::setHeight($height);
+    }
+
     public function getHeight()
     {
         $this->__load();
         return parent::getHeight();
+    }
+
+    public function setSpecs($specs)
+    {
+        $this->__load();
+        return parent::setSpecs($specs);
     }
 
     public function getSpecs()

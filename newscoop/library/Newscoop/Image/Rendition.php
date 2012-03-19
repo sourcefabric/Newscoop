@@ -83,6 +83,17 @@ class Rendition
     }
 
     /**
+     * Set width
+     *
+     * @param int $width
+     * @return void
+     */
+    public function setWidth($width)
+    {
+        $this->width = (int) $width;
+    }
+
+    /**
      * Get width
      *
      * @return void
@@ -93,6 +104,17 @@ class Rendition
     }
 
     /**
+     * Set height
+     *
+     * @param int $height
+     * @return void
+     */
+    public function setHeight($height)
+    {
+        $this->height = (int) $height;
+    }
+
+    /**
      * Get height
      *
      * @return int
@@ -100,6 +122,17 @@ class Rendition
     public function getHeight()
     {
         return $this->height;
+    }
+
+    /**
+     * Set specification
+     *
+     * @param string $specs
+     * @return void
+     */
+    public function setSpecs($specs)
+    {
+        $this->specs = (string) $specs;
     }
 
     /**

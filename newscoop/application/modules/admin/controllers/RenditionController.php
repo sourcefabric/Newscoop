@@ -31,4 +31,15 @@ class Admin_RenditionController extends Zend_Controller_Action
 
         return $labels;
     }
+
+    public function reloadRenditionsAction()
+    {
+        if (!$this->getRequest()->isPost()) {
+            throw new \Zend_Controller_Action_Exception('POST required', 405);
+        }
+
+        $this->_helper->service('image.rendition')->reloadRenditions();
+        $this->_helper->flashMessenger(getGS('Renditions reloaded'));
+        $this->_helper->redirector('index', 'rendition', 'admin');
+    }
 }

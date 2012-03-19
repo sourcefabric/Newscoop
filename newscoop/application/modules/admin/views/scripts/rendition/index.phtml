@@ -5,12 +5,18 @@ echo '<p class="message">', getGS('No renditions defined.'), '</p>';
 return;
 } ?>
 
+<form method="POST" action="<?php echo $this->url(array(
+    'controller' => 'rendition',
+    'action' => 'reload-renditions',
+)); ?>">
+    <button><?php putGS('Reload renditions'); ?></button>
+</form>
+
 <form id="rendition-list-form" method="POST">
 
 <ul id="rendition-list">
     <?php foreach ($this->renditions as $rendition) { ?>
     <li id="<?php echo $rendition->getName(); ?>"><input type="text" name="<?php echo $this->escape($rendition->getName()); ?>" value="<?php echo $rendition->getLabel(); ?>" placeholder="<?php echo $this->escape($rendition->getName()); ?>" /> <?php echo $this->escape($rendition->getName()); ?> <small><?php echo $rendition->getSpecs(); ?> <?php echo $rendition->getWidth(), 'x', $rendition->getHeight(); ?></small> 
-    
     </li>
     <?php } ?>
 </ul>

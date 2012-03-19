@@ -214,7 +214,7 @@ class NewscoopEntityCommentProxy extends \Newscoop\Entity\Comment implements \Do
         return parent::getLanguage();
     }
 
-    public function setParent(\Newscoop\Entity\Comment $p_parent)
+    public function setParent(\Newscoop\Entity\Comment $p_parent = NULL)
     {
         $this->__load();
         return parent::setParent($p_parent);

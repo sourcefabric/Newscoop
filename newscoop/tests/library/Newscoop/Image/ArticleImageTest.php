@@ -7,8 +7,6 @@
 
 namespace Newscoop\Image;
 
-require_once __DIR__ . '/LocalImageTest.php';
-
 /**
  */
 class ArticleImageTest extends \TestCase
@@ -17,14 +15,14 @@ class ArticleImageTest extends \TestCase
 
     public function testInstance()
     {
-        $this->assertInstanceOf('Newscoop\Image\ArticleImage', new ArticleImage(self::ARTICLE_NUMBER, new LocalImage(LocalImageTest::PICTURE_LANDSCAPE)));
+        $this->assertInstanceOf('Newscoop\Image\ArticleImage', new ArticleImage(self::ARTICLE_NUMBER, new LocalImage(self::PICTURE_LANDSCAPE)));
     }
 
     public function testImageInterface()
     {
-        $image = new ArticleImage(self::ARTICLE_NUMBER, new LocalImage(LocalImageTest::PICTURE_LANDSCAPE));
+        $image = new ArticleImage(self::ARTICLE_NUMBER, new LocalImage(self::PICTURE_LANDSCAPE));
 
-        $this->assertEquals(LocalImageTest::PICTURE_LANDSCAPE, $image->getPath());
+        $this->assertEquals(self::PICTURE_LANDSCAPE, $image->getPath());
         $this->assertEquals(500, $image->getWidth());
         $this->assertEquals(333, $image->getHeight());
         $this->assertFalse($image->isDefault());
