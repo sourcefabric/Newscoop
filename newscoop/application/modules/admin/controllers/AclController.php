@@ -89,6 +89,7 @@ class Admin_AclController extends Zend_Controller_Action
                 'pluginpoll' => getGS('Polls'),
                 'plugin-interview' => getGS('Interviews'),
                 'plugin-recaptcha' => getGS('ReCaptcha'),
+                'plugin-soundcloud' => getGS('Soundcloud'),
             ),
         );
 

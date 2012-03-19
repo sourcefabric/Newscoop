@@ -3129,6 +3129,7 @@ CREATE TABLE `article_datetimes` (
 
 -- --------------------------------------------------------
 
+DROP TABLE IF EXISTS `ArticleRendition`;
 CREATE TABLE IF NOT EXISTS `ArticleRendition` (
   `image_id` int(11) NOT NULL,
   `rendition_id` varchar(255) NOT NULL,
@@ -3139,6 +3140,9 @@ CREATE TABLE IF NOT EXISTS `ArticleRendition` (
   KEY `IDX_794B8A6CFD656AA1` (`rendition_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
+DROP TABLE IF EXISTS `package`;
 CREATE TABLE IF NOT EXISTS `package` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `rendition_id` varchar(255) DEFAULT NULL,
@@ -3152,6 +3156,7 @@ CREATE TABLE IF NOT EXISTS `package` (
 
 -- --------------------------------------------------------
 
+DROP TABLE IF EXISTS `package_article`;
 CREATE TABLE IF NOT EXISTS `package_article` (
   `id` int(11) NOT NULL,
   PRIMARY KEY (`id`)
@@ -3159,6 +3164,7 @@ CREATE TABLE IF NOT EXISTS `package_article` (
 
 -- --------------------------------------------------------
 
+DROP TABLE IF EXISTS `package_article_package`;
 CREATE TABLE IF NOT EXISTS `package_article_package` (
   `article_id` int(11) NOT NULL,
   `package_id` int(11) NOT NULL,
@@ -3169,6 +3175,7 @@ CREATE TABLE IF NOT EXISTS `package_article_package` (
 
 -- --------------------------------------------------------
 
+DROP TABLE IF EXISTS `package_item`;
 CREATE TABLE IF NOT EXISTS `package_item` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `package_id` int(11) DEFAULT NULL,
@@ -3184,6 +3191,7 @@ CREATE TABLE IF NOT EXISTS `package_item` (
 
 -- --------------------------------------------------------
 
+DROP TABLE IF EXISTS `rendition`;
 CREATE TABLE IF NOT EXISTS `rendition` (
   `name` varchar(255) NOT NULL,
   `width` int(11) NOT NULL,
