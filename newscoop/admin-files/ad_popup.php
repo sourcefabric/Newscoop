@@ -5,6 +5,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 $ADReason = Input::Get('ADReason', 'string', getGS('You do not have the right to access this page.'), true);
 ?>
 <head>
+	<link rel="shortcut icon" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/7773658c3ccbf03954b4dacb029b2229.ico" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/admin_stylesheet.css" />
 	<title><?php putGS("Error"); ?></title>
 </head>
