@@ -226,10 +226,10 @@ class Admin_ImageController extends Zend_Controller_Action
                 if ($iptcPlace) {
                     $image->setPlace($iptcPlace);
                 }
-                if ($exifDate) {
+                if (isset($exifDate)) {
                     $image->setDate($exifDate);
                 }
-                if ($iptcDate) {
+                if (isset($iptcDate)) {
                     $image->setDate($iptcDate);
                 }
                 
