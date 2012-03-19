@@ -103,6 +103,12 @@ class Admin_Form_User extends Zend_Form
             $types[] = $type->getId();
         }
 
+        try {
+            $user->getAuthorId();
+        } catch (\Doctrine\ORM\EntityNotFoundException $e) { // deleted author
+            $user->setAuthor(null);
+        }
+
         return $this->setDefaults(array(
             'first_name' => $user->getFirstName(),
             'last_name' => $user->getLastName(),
