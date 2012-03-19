@@ -25,9 +25,10 @@ if (!SystemPref::get('installation_id')) {
     $installationId = sha1($_SERVER['SERVER_ADDR'].$_SERVER['SERVER_NAME'].mt_rand());
     SystemPref::set('installation_id', $installationId);
 }
+
 if (!SystemPref::get('support_send') && SystemPref::get('stat_ask_time') + 60*60*24*7 <= time()) {
     ?>
-    <a style="display: none;" id="dummy_stat_link" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/support/index"></a>
+    <a style="display: none;" id="dummy_stat_link" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/support/popup"></a>
     <?php
 }
 

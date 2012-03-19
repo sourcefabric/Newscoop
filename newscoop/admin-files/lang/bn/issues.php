@@ -1,4 +1,5 @@
 <?php 
+regGS("Only than the issue can be published", "");
 regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "");
 regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "");
 regGS("Publish all articles:", "");

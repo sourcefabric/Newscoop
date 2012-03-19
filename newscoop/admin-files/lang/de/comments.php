@@ -1,5 +1,5 @@
 <?php 
-regGS("IP", "IP");
+regGS("Ip", "");
 regGS("Bans can be applied to a user's name, email address or IP address.", "Sperren können auf einen Benutzernamen, eine Email-Adresse oder eine IP-Adresse angewendet werden. ");
 regGS("at", "auf");
 regGS("You are about to permanently delete multiple comments.", "Sie sind im Begriff mehrere Kommentare permant zu löschen. ");

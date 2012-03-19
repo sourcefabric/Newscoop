@@ -1,4 +1,5 @@
 <?php 
+regGS("Multi date events", "");
 regGS("Slideshows", "");
 regGS("Place images", "");
 regGS("You're not allowed to edit article.", "Nemate pravo uređivanja teksta");
@@ -11,7 +12,6 @@ regGS("Submit article", "Predaj tekst");
 regGS("Related Articles", "Vezani tekstovi");
 regGS("Pending articles", "Tekstovi na čekanju");
 regGS("Pending Articles", "Tekstovi na čekanju");
-regGS("Multi date event", "višednevni događaj ");
 regGS("Context Box updated", "Kontekst boks izmenjen");
 regGS("Article Playlist", "Plejlista tekstova");
 regGS("Add article to a playlist", "Dodaj tekst u plejlistu.");

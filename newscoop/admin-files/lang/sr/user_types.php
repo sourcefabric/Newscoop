@@ -1,4 +1,5 @@
 <?php 
+regGS("Templates", "");
 regGS("Newswires Ingest", "Преузимање вести са дистрибутивних канала");
 regGS("Feedback Messages", "Поруке са повратном информацијом");
 regGS("Article Playlists", "Плејлисте текстова");

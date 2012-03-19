@@ -1,4 +1,5 @@
 <?php 
+regGS("Templates", "");
 regGS("Create slideshow", "");
 regGS("Create", "");
 regGS("Attach/Detach", "");

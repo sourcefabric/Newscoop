@@ -49,6 +49,7 @@ foreach ($articleTopics as $topic) {
     <input type="text" name="search" class="autocomplete topics input_text" />
     <input type="button" class="default-button" value="<?php putGS('Search'); ?>" />
     <input type="button" class="default-button" value="<?php putGS('Show All'); ?>" id="show_all_topics" style="padding: 3px 0px;"/>
+    <?php if ($g_user->hasPermission('ManageTopics')) { ?>
     <input type="button" class="default-button" value="<?php putGS('Add new topic'); ?>" id="add_new_topic" style="padding: 3px 0px;"/>
     <div style="width:100%; margin-top:10px;display:none" id="new_topic_holder">
 	    <?php putGS('Select the parent of the topic'); ?>
@@ -96,6 +97,9 @@ foreach ($articleTopics as $topic) {
 	    <input type="text" name="f_topic_name" id="f_topic_name" value="" class="input_text" size="20" title="<?php putGS('You must enter a name for the topic.'); ?>" style="width: 360px"/>
 	    <input type="button" name="add" value="<?php putGS("Add"); ?>" class="button" id='submit_new_topic'/>
     </div>
+    <?php } else { ?>
+    <input type="hidden" name="f_language_selected" value="<?php p($f_language_selected); ?>" />
+    <?php } ?>
 </fieldset>
 </div>
 
@@ -188,6 +192,7 @@ $(document).ready(function() {
     });
 });
 
+<?php if ($g_user->hasPermission('ManageTopics')) { ?>
 $('#submit_new_topic').click(function(){
     var f_topic_name = $('#f_topic_name').val();
     if (f_topic_name.length == 0) {
@@ -212,7 +217,7 @@ $('#submit_new_topic').click(function(){
             });
     }
 });
-
+<?php } ?>
 </script>
 
 <?php } else { ?>

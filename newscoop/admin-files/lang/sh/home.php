@@ -1,4 +1,5 @@
 <?php 
+regGS("Templates", "");
 regGS("Create slideshow", "");
 regGS("Create", "Napravi");
 regGS("Attach/Detach", "Prikači/Otkači");
@@ -150,5 +151,4 @@ regGS("Login failed", "Neuspešna prijava");
 regGS("Please make sure that you typed the correct user name and password.", "Proverite da li ste ispravno upisali korisničko ime i lozinku");
 regGS("If your problem persists please contact the site administrator $1", "Ako se problem ponovi kontaktirajte administratora sajta $1");
 regGS("Backup/Restore", "Bekap/Vraćanje");
-regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Zdravo, \\n\\nza ppovraćaj lozinke, molimo sledite ovaj link: $1");
 ?>

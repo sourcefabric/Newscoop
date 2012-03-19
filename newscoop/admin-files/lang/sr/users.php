@@ -1,4 +1,5 @@
 <?php 
+regGS("Templates", "");
 regGS("Username", "Корисничко име");
 regGS("Public profile", "Јавни профил");
 regGS("Last Name", "Презиме");

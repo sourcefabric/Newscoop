@@ -1,4 +1,5 @@
 <?php 
+regGS("Only than the issue can be published", "");
 regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Es kann keine Vorschau der Ausgabe erstellt werden. Please make sure the publication has a theme assigned.");
 regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "Es kann keine Vorschau der Ausgabe erstellt werden. Please make sure it has the front template selected.");
 regGS("Publish all articles:", "Alle Artikel veröffentlichen: ");
@@ -9,7 +10,6 @@ regGS("default", "Standard");
 regGS("The publishing/unpublishing can not be set the same time", "Der Zeitpunkt der Veröffentlichung / Unveröffentlichung kann nicht identisch sein. ");
 regGS("The publishing schedule can not be set in the past", "Der Veröffentlichungszeitraum kann nicht in der Vergangenheit liegen. ");
 regGS("Please assign at least one theme to the publication", "Bitte weisen Sie der Publikation mindestens ein Thema zu. ");
-regGS("Only then the issue can be published", "Nur dann kann die Ausgabe veröffentlicht werden. ");
 regGS("Issue Theme", "Thema der Ausgabe");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Die gewählten Werte stehen im Widerspruch zur Ausgabe \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Nummern für jede Ausgabe in dieser Publikation und Sprache müssen unterschiedlich sein.");

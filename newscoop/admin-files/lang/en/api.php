@@ -1,4 +1,8 @@
 <?php 
+regGS("Not a color", "Not a color");
+regGS("No such field", "No such field");
+regGS("Color saved", "Color saved");
+regGS("Color not saved", "Color not saved");
 regGS("Topic created", "Topic created");
 regGS("The topic name is already in use by another topic.", "The topic name is already in use by another topic.");
 regGS("Complex Date", "Complex Date");
