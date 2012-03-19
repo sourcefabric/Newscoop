@@ -28,6 +28,9 @@ if (!$g_user->hasPermission('AddImage')) {
 
 if (empty($f_image_url) && empty($nrOfFiles)) {
 	camp_html_add_msg(getGS("You must select an image file to upload."));
+    if ($f_article_edit) {
+        camp_html_goto_page('/'.$ADMIN.'/image/article-attach/article_number/'.$f_article_number.'/language_id/'.$f_language_id);
+    }
 	camp_html_goto_page("/$ADMIN/media-archive/add.php");
 }
 
@@ -85,8 +88,13 @@ if (!empty($images)) {
         camp_html_goto_page("/$ADMIN/media-archive/multiedit.php");
     }
 } else {
-    camp_html_add_msg($f_path . DIR_SEP . basename($newFilePath));
-    camp_html_goto_page($backLink);
+    if ($f_article_edit) {
+        camp_html_goto_page('/'.$ADMIN.'/image/article-attach/article_number/'.$f_article_number.'/language_id/'.$f_language_id);
+    }
+    else {
+        camp_html_add_msg($f_path . DIR_SEP . basename($newFilePath));
+        camp_html_goto_page($backLink);
+    }
 }
 
 ?>
