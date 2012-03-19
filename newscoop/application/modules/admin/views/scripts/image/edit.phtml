@@ -1,6 +1,21 @@
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); ?>
 <?php $this->placeholder('bodyId')->set('next'); $this->placeholder('bodyClass')->set('dark'); ?>
-<h1><?php putGS('Place images'); ?></h1>
+
+<div id="modal-top">
+    <div class="toolbar fixed-top">
+    <div class="save-button-bar"></div>
+    <h1>
+        <?php putGS('Edit images'); ?>
+        <span style="float: right;">
+        <a href="<?php echo $this->url(array(
+            'action' => 'article',
+            'rendition' => null,
+        )); ?>" class="save-button"><?php putGS('Done editing'); ?></a>
+        </span>
+    </h1>
+    </div>
+</div>
+<div style="margin-top:40px;">&nbsp;</div>
 
 <form method="POST">
 
@@ -12,10 +27,6 @@
         <?php } ?>
     </div>
 
-    <a href="<?php echo $this->url(array(
-        'action' => 'article',
-        'rendition' => null,
-    )); ?>" class="done button"><?php putGS('Done editing'); ?></a>
 </div>
 
 </form>
