@@ -12,14 +12,14 @@
 </div>
 <?php } ?>
 
-<?php echo $this->form; ?>
+<?php echo $this->form->setAttrib('id', 'edit-form'); ?>
 
 <script>
 $('.edit-image a').fancybox({
     hideOnContentClick: false
 });
 
-$('#save_button').click(function(){
+$('#edit-form').submit(function() {
     $('#save_button').attr('disabled', 'disabled');
 });
 </script>

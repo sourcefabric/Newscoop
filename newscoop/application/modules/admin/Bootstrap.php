@@ -181,6 +181,8 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
                 "Value is required and can't be empty" => getGS("Value is required and can't be empty"),
                 "'%value%' is less than %min% characters long" => getGS("'%value%' is less than %min% characters long"),
                 "'%value%' is more than %max% characters long" => getGS("'%value%' is more than %max% characters long"),
+                "The two given tokens do not match" => getGS("Security token expired. Please resubmit the form."),
+                "No token was provided to match against" => getGS("Security token expired. Please resubmit the form."),
             ),
         ));
 
