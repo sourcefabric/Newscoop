@@ -67,7 +67,7 @@ camp_html_display_msgs();
 
 </form>
 <p>&nbsp;</p>
-<script type="text/javascript" src="../../../js/jquery/jquery-1.6.4.min.js"></script>
+<script type="text/javascript" src="../../../js/jquery/jquery-1.7.1.min.js"></script>
 <script type="text/javascript" src="../../../js/jquery/jquery-ui-1.8.6.custom.min.js"></script>
 <script type="text/javasctipt" src="../../../js/jquery/i18n/jquery.ui.datepicker-' . $this->locale . '.js"></script>
 <script type="text/javascript" src="../../../js/jquery/jquery-ui-timepicker-addon.min.js"></script>
