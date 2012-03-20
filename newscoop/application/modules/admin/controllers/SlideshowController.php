@@ -50,7 +50,7 @@ class Admin_SlideshowController extends Zend_Controller_Action
                 $slideshows[] = $slideshow;
                 $this->_helper->service('package')->saveArticle(array(
                     'id' => $this->_getParam('article_number'),
-                    'slideshows' => array_map(function($slideshow) { return $slideshow->getId(); }, $slideshows),
+                    'slideshows' => array_map(function($slideshow) { return array('id' => $slideshow->getId()); }, $slideshows),
                 ));
             }
             $this->_helper->redirector('edit', 'slideshow', 'admin', array(
