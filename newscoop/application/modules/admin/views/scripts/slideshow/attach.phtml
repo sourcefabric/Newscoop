@@ -18,7 +18,8 @@
 </section>
 
 <script type="text/template" id="slideshow-template">
-<h3 class="title"><%= headline %> <small>(<?php putGS('Items: '); ?><%= itemsCount %>)</small></h3>
+<h3 class="title"><%= headline.substring(0, 22) %><% if (headline.length > 22) { %>..<% } %></h3>
+<small>(<?php putGS('Items: '); ?><%= itemsCount %>)</small>
 <div class="preview">
     <% if (!itemsCount) { %>
     <span class="blank"></span>

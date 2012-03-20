@@ -4,7 +4,10 @@
 }
 
 .slideshow-list small {
+    display: block;
+    margin: -5px 0 5px;
     color: #ccc;
+    font-size: 11px;
 }
 
 .slideshow-list .title {
