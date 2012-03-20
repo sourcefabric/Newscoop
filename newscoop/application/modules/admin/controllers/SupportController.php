@@ -18,8 +18,6 @@ class Admin_SupportController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        SystemPref::set('stat_ask_time', time());
-        
         $this->view->stats = $this->_helper->service('stat')->getAll();
         
         // saving them here to retrieve later, because these are not available when run in cli
@@ -30,6 +28,7 @@ class Admin_SupportController extends Zend_Controller_Action
         $values = $this->getRequest()->getPost();
         
         if (isset($values['support_send'])) {
+            SystemPref::set('stat_ask_time', time());
             SystemPref::set('support_send', $values['support_send']);
             
             $this->_helper->flashMessenger(getGS('Support settings saved.'));
@@ -46,8 +45,6 @@ class Admin_SupportController extends Zend_Controller_Action
     public function popupAction()
     {
         $this->_helper->layout->setLayout('iframe');
-        
-        SystemPref::set('stat_ask_time', time());
         
         $this->view->stats = $this->_helper->service('stat')->getAll();
         
