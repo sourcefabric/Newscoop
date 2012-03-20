@@ -32,6 +32,8 @@ $locale = !empty($_COOKIE['TOL_Language']) ? $_COOKIE['TOL_Language'] : 'en';
     <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery.widgets.js" type="text/javascript"></script>
     <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/fancybox/jquery.fancybox-1.3.4.pack.js" type="text/javascript"></script>
 
+    <link rel="shortcut icon" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/7773658c3ccbf03954b4dacb029b2229.ico" />
+
     <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/fg.menu.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/widgets.css" />
     <link rel="stylesheet" type="text/css" href="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/fancybox/jquery.fancybox-1.3.4.css" />

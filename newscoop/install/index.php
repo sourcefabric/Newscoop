@@ -32,6 +32,7 @@ if (!is_writable($templates_cache)) {
     echo '<!DOCTYPE html>';
     echo '<html><head><meta charset="utf-8" />';
     echo '<title>Install requirement</title>';
+    echo '<link rel="shortcut icon" href="' . $GLOBALS['g_campsiteDir'] . '/admin-style/images/7773658c3ccbf03954b4dacb029b2229.ico" />';
     echo '</head><body>';
     echo '<h1>Install requirement</h1>';
     echo "<p>Directory '$templates_cache' is not writable.</p>";

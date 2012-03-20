@@ -5,9 +5,16 @@ camp_load_translation_strings("media_archive");
 
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); ?>
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/js/plupload/js/jquery.plupload.queue/css/jquery.plupload.queue.css')); ?>
+<?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/admin_stylesheet.css')); ?>
 
 <script type="text/javascript" src="<?php echo $this->baseUrl('/js/plupload/js/plupload.full.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo $this->baseUrl('/js/plupload/js/jquery.plupload.queue/jquery.plupload.queue.js'); ?>"></script>
+
+<style type="text/css">
+#error_holder > table {
+    border: 0px;
+}
+</style>
 
 <?php $this->placeholder('bodyId')->set('next'); ?>
 
@@ -30,7 +37,11 @@ camp_load_translation_strings("media_archive");
     </div>
 </div>
 <div style="margin-top:40px;">&nbsp;</div>
-
+<?php if(camp_html_has_msgs()) { ?>
+<div id="error_holder" style="margin-left: 20px; margin-top: 0px;">
+<?php camp_html_display_msgs(); ?>
+</div>
+<?php } ?>
 <?php if (!empty($this->articleImages)) { ?>
 
 <ul id="attached-thumbnails" class="thumbnails">
