@@ -1,5 +1,5 @@
 <?php 
-regGS("selected marker icon", "");
+regGS("selected marker icon", "ícono marcador seleccionado");
 regGS("add location to map", "");
 regGS("Video source", "");
 regGS("The point will be removed from all translations of the article.", "");
