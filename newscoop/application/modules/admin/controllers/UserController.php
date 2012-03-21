@@ -221,6 +221,9 @@ class Admin_UserController extends Zend_Controller_Action
         $this->view->form = $form;
     }
 
+    /**
+     * @Acl(ignore=true)
+     */
     public function editPasswordAction()
     {
         $user = $this->_helper->service('user')->getCurrentUser();
