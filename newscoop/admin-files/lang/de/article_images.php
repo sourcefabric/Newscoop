@@ -1,4 +1,7 @@
 <?php 
+regGS("Renditions reloaded", "");
+regGS("Reload renditions", "");
+regGS("Edit images", "");
 regGS("Specify image url if you want to load it.", "Geben Sie die URL für das Bild an, das Sie laden wollen");
 regGS("Items: ", "Objekte");
 regGS("Attach slideshows", "Slideshows anhängen");
@@ -16,7 +19,6 @@ regGS("Set as default", "Als Standardbild definiert");
 regGS("Saving...", "Wird gespeichert...");
 regGS("Saved", "Gespeichert");
 regGS("Save headline", "Name speichern");
-regGS("Place images", "Bilder zuschneiden");
 regGS("Place Images", "Bilder zuschneiden");
 regGS("No renditions defined.", "Keine Zuschnitte definiert. ");
 regGS("No images found.", "Keine Bilder gefunden");

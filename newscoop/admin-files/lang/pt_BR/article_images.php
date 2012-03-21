@@ -1,4 +1,7 @@
 <?php 
+regGS("Renditions reloaded", "");
+regGS("Reload renditions", "");
+regGS("Edit images", "");
 regGS("Specify image url if you want to load it.", "");
 regGS("Items: ", "itens:");
 regGS("Attach slideshows", "Anexar slideshows");
@@ -16,7 +19,6 @@ regGS("Set as default", "Definir como padrão");
 regGS("Saving...", "Carregando...");
 regGS("Saved", "Salvo");
 regGS("Save headline", "Salvar manchete");
-regGS("Place images", "");
 regGS("Place Images", "");
 regGS("No renditions defined.", "");
 regGS("No images found.", "Nenhuma imagem encontrada");

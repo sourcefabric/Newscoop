@@ -1,4 +1,5 @@
 <?php 
+regGS("Soundcloud", "");
 regGS("Templates", "");
 regGS("Newswires Ingest", "");
 regGS("Feedback Messages", "");
