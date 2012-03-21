@@ -98,7 +98,9 @@ $(document).ready(function() {
             info: '<?php putGS('Widget info'); ?>',
         }
     });
-    $('#dummy_stat_link').fancybox().trigger('click');
+    $('#dummy_stat_link').fancybox({
+        'showCloseButton' : false
+    }).trigger('click');
 });
 </script>
 

@@ -10,7 +10,7 @@
 <ul id="slideshow-list" class="list-view grid slideshow-list"></ul>
 
 <script type="text/template" id="slideshow-template">
-<h3 class="title"><a href="<?php echo $this->url(array('controller' => 'slideshow', 'action' => 'edit')); ?>/slideshow/<%= id %>" class="edit"><%= headline %></a></h3>
+<h3 class="title"><a href="<?php echo $this->url(array('controller' => 'slideshow', 'action' => 'edit')); ?>/slideshow/<%= id %>" class="edit" title="<%= headline %>"><%= headline.substr(0, 22) %><% if (headline.length > 22) { %>..<% } %></a></h3>
 <div class="preview">
     <% if (!itemsCount) { %>
     <span class="blank"></span>

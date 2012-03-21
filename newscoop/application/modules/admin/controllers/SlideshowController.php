@@ -50,7 +50,7 @@ class Admin_SlideshowController extends Zend_Controller_Action
                 $slideshows[] = $slideshow;
                 $this->_helper->service('package')->saveArticle(array(
                     'id' => $this->_getParam('article_number'),
-                    'slideshows' => array_map(function($slideshow) { return $slideshow->getId(); }, $slideshows),
+                    'slideshows' => array_map(function($slideshow) { return array('id' => $slideshow->getId()); }, $slideshows),
                 ));
             }
             $this->_helper->redirector('edit', 'slideshow', 'admin', array(
@@ -201,20 +201,18 @@ class Admin_SlideshowController extends Zend_Controller_Action
 
         $limit = 25;
         if ($this->_getParam('format') === 'json') {
-            $this->_helper->json($this->view->slideshowsJson($this->_helper->service('package')->findBy(array(), array(), $limit, ($this->_getParam('page', 1) - 1) * $limit)));
+            $this->_helper->json($this->view->slideshowsJson($this->_helper->service('package')->findBy(array(), array('id' => 'desc'), $limit, ($this->_getParam('page', 1) - 1) * $limit)));
         }
 
         $paginator = Zend_Paginator::factory($this->_helper->service('package')->getCountBy(array()));
         $paginator->setItemCountPerPage($limit);
         $paginator->setCurrentPageNumber(1);
-        $this->view->slideshows = $this->_helper->service('package')->findBy(array(), array(), $limit, 0);
+        $this->view->slideshows = $this->_helper->service('package')->findBy(array(), array('id' => 'desc'), $limit, 0);
         $this->view->pages = $paginator->count();
 
         $this->view->article = array(
             'id' => $this->_getParam('article_number'),
-            'slideshows' => array_map(function($slideshow) {
-                return $slideshow->getId();
-            }, $this->_helper->service('package')->findByArticle($this->_getParam('article_number'))),
+            'slideshows' => $this->view->slideshowsJson($this->_helper->service('package')->findByArticle($this->_getParam('article_number'))),
         );
     }
 

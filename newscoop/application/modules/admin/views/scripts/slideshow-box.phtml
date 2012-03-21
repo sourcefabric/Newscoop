@@ -40,7 +40,10 @@
      */
     var SlideshowCollection = Backbone.Collection.extend({
         model: Slideshow,
-        url: <?php echo json_encode($this->url(array('controller' => 'slideshow', 'action' => 'box', 'article_number' => $this->articleNumber, 'format' => 'json'))); ?>
+        url: <?php echo json_encode($this->url(array('controller' => 'slideshow', 'action' => 'box', 'article_number' => $this->articleNumber, 'format' => 'json'))); ?>,
+        comparator: function(slideshow) {
+            return -1 * slideshow.get('id');
+        }
     });
 
     /**

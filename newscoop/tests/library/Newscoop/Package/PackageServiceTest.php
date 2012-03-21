@@ -253,7 +253,7 @@ class PackageServiceTest extends \TestCase
         $package = $this->service->save(array('headline' => 'tic'));
         $this->service->saveArticle(array(
             'id' => 1,
-            'slideshows' => array($package->getId()),
+            'slideshows' => array(array('id' => $package->getId())),
         ));
 
         $this->assertEquals(1, count($this->service->findByArticle(1)));
@@ -272,7 +272,7 @@ class PackageServiceTest extends \TestCase
         $this->service->addItem($package, new LocalImage(self::PICTURE_LANDSCAPE));
         $this->service->saveArticle(array(
             'id' => 1,
-            'slideshows' => array($package->getId()),
+            'slideshows' => array(array('id' => $package->getId())),
         ));
 
         $this->service->delete($package->getId());
