@@ -101,19 +101,19 @@ camp_html_display_msgs();
                 
         $image['date'] = date('Y-m-d');
         
-        if ($exifDate) {
+        if (isset($exifDate)) {
             $image['date'] = $exifDate;
         }
-        if ($iptcDate) {
+        if (isset($iptcDate)) {
             $image['date'] = $iptcDate;
         }
-        if ($iptcDescription) {
+        if (isset($iptcDescription)) {
             $image['description'] = $iptcDescription;
         }
-        if ($iptcPhotographer) {
+        if (isset($iptcPhotographer)) {
             $image['photographer'] = $iptcPhotographer;
         }
-        if ($iptcPlace) {
+        if (isset($iptcPlace)) {
             $image['place'] = $iptcPlace;
         }
     ?>

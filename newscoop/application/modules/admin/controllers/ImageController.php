@@ -217,13 +217,13 @@ class Admin_ImageController extends Zend_Controller_Action
             }
             
 			if ($image->getDate() == '0000-00-00') {
-				if ($iptcPhotographer) {
+				if (isset($iptcPhotographer)) {
                     $image->setPhotographer($iptcPhotographer);
                 }
-                if ($iptcDescription) {
+                if (isset($iptcDescription)) {
                     $image->setDescription($iptcDescription);
                 }
-                if ($iptcPlace) {
+                if (isset($iptcPlace)) {
                     $image->setPlace($iptcPlace);
                 }
                 if (isset($exifDate)) {
