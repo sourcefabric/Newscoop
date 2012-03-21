@@ -99,7 +99,7 @@ $(document).ready(function() {
         }
     });
     $('#dummy_stat_link').fancybox({
-        'showCloseButton' : false
+        'modal' : true
     }).trigger('click');
 });
 </script>
