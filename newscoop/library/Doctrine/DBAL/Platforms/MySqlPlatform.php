@@ -108,22 +108,22 @@ class MySqlPlatform extends AbstractPlatform
 
     public function getDateAddDaysExpression($date, $days)
     {
-        return 'DATE_ADD(' . $date . ', INTERVAL ' . (int)$days . ' DAY)';
+        return 'DATE_ADD(' . $date . ', INTERVAL ' . $days . ' DAY)';
     }
 
     public function getDateSubDaysExpression($date, $days)
     {
-        return 'DATE_SUB(' . $date . ', INTERVAL ' . (int)$days . ' DAY)';
+        return 'DATE_SUB(' . $date . ', INTERVAL ' . $days . ' DAY)';
     }
 
     public function getDateAddMonthExpression($date, $months)
     {
-        return 'DATE_ADD(' . $date . ', INTERVAL ' . (int)$months . ' MONTH)';
+        return 'DATE_ADD(' . $date . ', INTERVAL ' . $months . ' MONTH)';
     }
 
     public function getDateSubMonthExpression($date, $months)
     {
-        return 'DATE_SUB(' . $date . ', INTERVAL ' . (int)$months . ' MONTH)';
+        return 'DATE_SUB(' . $date . ', INTERVAL ' . $months . ' MONTH)';
     }
 
     public function getListDatabasesSQL()
@@ -610,23 +610,6 @@ class MySqlPlatform extends AbstractPlatform
     {
         return 'ALTER TABLE ' . $table . ' DROP PRIMARY KEY';
     }
-    
-    /**
-     * Gets the SQL to drop a table.
-     *
-     * @param string $table The name of table to drop.
-     * @override
-     */
-    public function getDropTableSQL($table)
-    {
-        if ($table instanceof \Doctrine\DBAL\Schema\Table) {
-            $table = $table->getQuotedName($this);
-        } else if(!is_string($table)) {
-            throw new \InvalidArgumentException('MysqlPlatform::getDropTableSQL() expects $table parameter to be string or \Doctrine\DBAL\Schema\Table.');
-        }
-
-        return 'DROP TABLE ' . $table;
-    }
 
     public function getSetTransactionIsolationSQL($level)
     {
@@ -685,5 +668,26 @@ class MySqlPlatform extends AbstractPlatform
     protected function getReservedKeywordsClass()
     {
         return 'Doctrine\DBAL\Platforms\Keywords\MySQLKeywords';
+    }
+
+    /**
+     * Get SQL to safely drop a temporary table WITHOUT implicitly committing an open transaction.
+     *
+     * MySQL commits a transaction implicitly when DROP TABLE is executed, however not
+     * if DROP TEMPORARY TABLE is executed.
+     *
+     * @throws \InvalidArgumentException
+     * @param $table
+     * @return string
+     */
+    public function getDropTemporaryTableSQL($table)
+    {
+        if ($table instanceof \Doctrine\DBAL\Schema\Table) {
+            $table = $table->getQuotedName($this);
+        } else if(!is_string($table)) {
+            throw new \InvalidArgumentException('getDropTableSQL() expects $table parameter to be string or \Doctrine\DBAL\Schema\Table.');
+        }
+
+        return 'DROP TEMPORARY TABLE ' . $table;
     }
 }

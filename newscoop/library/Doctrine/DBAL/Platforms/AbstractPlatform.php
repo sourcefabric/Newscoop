@@ -830,7 +830,8 @@ abstract class AbstractPlatform
 
     /**
      * Drop a Table
-     * 
+     *
+     * @throws \InvalidArgumentException
      * @param  Table|string $table
      * @return string
      */
@@ -838,9 +839,22 @@ abstract class AbstractPlatform
     {
         if ($table instanceof \Doctrine\DBAL\Schema\Table) {
             $table = $table->getQuotedName($this);
+        } else if(!is_string($table)) {
+            throw new \InvalidArgumentException('getDropTableSQL() expects $table parameter to be string or \Doctrine\DBAL\Schema\Table.');
         }
 
         return 'DROP TABLE ' . $table;
+    }
+
+    /**
+     * Get SQL to safely drop a temporary table WITHOUT implicitly committing an open transaction.
+     *
+     * @param Table|string $table 
+     * @return string
+     */
+    public function getDropTemporaryTableSQL($table)
+    {
+        return $this->getDropTableSQL($table);
     }
 
     /**
@@ -973,7 +987,7 @@ abstract class AbstractPlatform
         $sql = $this->_getCreateTableSQL($tableName, $columns, $options);
         if ($this->supportsCommentOnStatement()) {
             foreach ($table->getColumns() AS $column) {
-                if ($column->getComment()) {
+                if ($this->getColumnComment($column)) {
                     $sql[] = $this->getCommentOnColumnSQL($tableName, $column->getName(), $this->getColumnComment($column));
                 }
             }
@@ -1166,7 +1180,7 @@ abstract class AbstractPlatform
     {
         $c = $this->getIdentifierQuoteCharacter();
 
-        return $c . $str . $c;
+        return $c . str_replace($c, $c.$c, $str) . $c;
     }
 
     /**

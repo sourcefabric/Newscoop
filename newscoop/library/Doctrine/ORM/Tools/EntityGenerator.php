@@ -189,6 +189,8 @@ public function <methodName>()
 
         if ( ! $this->_isNew) {
             $this->_parseTokensInEntityFile(file_get_contents($path));
+        } else {
+            $this->_staticReflection[$metadata->name] = array('properties' => array(), 'methods' => array());
         }
 
         if ($this->_backupExisting && file_exists($path)) {
@@ -438,7 +440,7 @@ public function <methodName>()
 
             if ($inClass) {
                 $inClass = false;
-                $lastSeenClass = $lastSeenNamespace . '\\' . $token[1];
+                $lastSeenClass = $lastSeenNamespace . ($lastSeenNamespace ? '\\' : '') . $token[1];
                 $this->_staticReflection[$lastSeenClass]['properties'] = array();
                 $this->_staticReflection[$lastSeenClass]['methods'] = array();
             }
@@ -451,7 +453,7 @@ public function <methodName>()
             } else if ($token[0] == T_FUNCTION) {
                 if ($tokens[$i+2][0] == T_STRING) {
                     $this->_staticReflection[$lastSeenClass]['methods'][] = $tokens[$i+2][1];
-                } else if ($tokens[$i+2][0] == T_AMPERSAND && $tokens[$i+3][0] == T_STRING) {
+                } else if ($tokens[$i+2] == "&" && $tokens[$i+3][0] == T_STRING) {
                     $this->_staticReflection[$lastSeenClass]['methods'][] = $tokens[$i+3][1];
                 }
             } else if (in_array($token[0], array(T_VAR, T_PUBLIC, T_PRIVATE, T_PROTECTED)) && $tokens[$i+2][0] != T_FUNCTION) {
@@ -462,6 +464,14 @@ public function <methodName>()
 
     private function _hasProperty($property, ClassMetadataInfo $metadata)
     {
+        if ($this->_extendsClass()) {
+            // don't generate property if its already on the base class.
+            $reflClass = new \ReflectionClass($this->_getClassToExtend());
+            if ($reflClass->hasProperty($property)) {
+                return true;
+            }
+        }
+
         return (
             isset($this->_staticReflection[$metadata->name]) &&
             in_array($property, $this->_staticReflection[$metadata->name]['properties'])
@@ -470,6 +480,14 @@ public function <methodName>()
 
     private function _hasMethod($method, ClassMetadataInfo $metadata)
     {
+        if ($this->_extendsClass()) {
+            // don't generate method if its already on the base class.
+            $reflClass = new \ReflectionClass($this->_getClassToExtend());
+            if ($reflClass->hasMethod($method)) {
+                return true;
+            }
+        }
+
         return (
             isset($this->_staticReflection[$metadata->name]) &&
             in_array($method, $this->_staticReflection[$metadata->name]['methods'])
@@ -686,11 +704,18 @@ public function <methodName>()
 
     private function _generateEntityStubMethod(ClassMetadataInfo $metadata, $type, $fieldName, $typeHint = null)
     {
-        $methodName = $type . Inflector::classify($fieldName);
+        if ($type == "add") {
+            $addMethod = explode("\\", $typeHint);
+            $addMethod = end($addMethod);
+            $methodName = $type . $addMethod;
+        } else {
+            $methodName = $type . Inflector::classify($fieldName);
+        }
 
         if ($this->_hasMethod($methodName, $metadata)) {
             return;
         }
+        $this->_staticReflection[$metadata->name]['methods'][] = $methodName;
 
         $var = sprintf('_%sMethodTemplate', $type);
         $template = self::$$var;
@@ -723,6 +748,7 @@ public function <methodName>()
         if ($this->_hasMethod($methodName, $metadata)) {
             return;
         }
+        $this->_staticReflection[$metadata->name]['methods'][] = $methodName;
 
         $replacements = array(
             '<name>'        => $this->_annotationsPrefix . $name,
@@ -759,7 +785,7 @@ public function <methodName>()
         }
 
         if (isset($joinColumn['onDelete'])) {
-            $joinColumnAnnot[] = 'onDelete=' . ($joinColumn['onDelete'] ? 'true' : 'false');
+            $joinColumnAnnot[] = 'onDelete="' . ($joinColumn['onDelete'] . '"');
         }
 
         if (isset($joinColumn['onUpdate'])) {

@@ -86,7 +86,7 @@ class XmlDriver extends AbstractFileDriver
         if (isset($xmlRoot['schema'])) {
             $metadata->table['schema'] = (string)$xmlRoot['schema'];
         }*/
-        
+
         if (isset($xmlRoot['inheritance-type'])) {
             $inheritanceType = (string)$xmlRoot['inheritance-type'];
             $metadata->setInheritanceType(constant('Doctrine\ORM\Mapping\ClassMetadata::INHERITANCE_TYPE_' . $inheritanceType));
@@ -210,7 +210,7 @@ class XmlDriver extends AbstractFileDriver
         $associationIds = array();
         foreach ($xmlRoot->id as $idElement) {
             if ((bool)$idElement['association-key'] == true) {
-                $associationIds[(string)$idElement['fieldName']] = true;
+                $associationIds[(string)$idElement['name']] = true;
                 continue;
             }
 
@@ -285,8 +285,8 @@ class XmlDriver extends AbstractFileDriver
                     $mapping['cascade'] = $this->_getCascadeMappings($oneToOneElement->cascade);
                 }
 
-                if (isset($oneToOneElement->{'orphan-removal'})) {
-                    $mapping['orphanRemoval'] = (bool)$oneToOneElement->{'orphan-removal'};
+                if (isset($oneToOneElement['orphan-removal'])) {
+                    $mapping['orphanRemoval'] = (bool)$oneToOneElement['orphan-removal'];
                 }
 
                 $metadata->mapOneToOne($mapping);
@@ -310,8 +310,8 @@ class XmlDriver extends AbstractFileDriver
                     $mapping['cascade'] = $this->_getCascadeMappings($oneToManyElement->cascade);
                 }
 
-                if (isset($oneToManyElement->{'orphan-removal'})) {
-                    $mapping['orphanRemoval'] = (bool)$oneToManyElement->{'orphan-removal'};
+                if (isset($oneToManyElement['orphan-removal'])) {
+                    $mapping['orphanRemoval'] = (bool)$oneToManyElement['orphan-removal'];
                 }
 
                 if (isset($oneToManyElement->{'order-by'})) {
@@ -322,8 +322,10 @@ class XmlDriver extends AbstractFileDriver
                     $mapping['orderBy'] = $orderBy;
                 }
 
-                if (isset($oneToManyElement->{'index-by'})) {
-                    $mapping['indexBy'] = (string)$oneToManyElement->{'index-by'};
+                if (isset($oneToManyElement['index-by'])) {
+                    $mapping['indexBy'] = (string)$oneToManyElement['index-by'];
+                } else if (isset($oneToManyElement->{'index-by'})) {
+                    throw new \InvalidArgumentException("<index-by /> is not a valid tag");
                 }
 
                 $metadata->mapOneToMany($mapping);
@@ -429,8 +431,10 @@ class XmlDriver extends AbstractFileDriver
                     $mapping['orderBy'] = $orderBy;
                 }
 
-                if (isset($manyToManyElement->{'index-by'})) {
-                    $mapping['indexBy'] = (string)$manyToManyElement->{'index-by'};
+                if (isset($manyToManyElement['index-by'])) {
+                    $mapping['indexBy'] = (string)$manyToManyElement['index-by'];
+                } else if (isset($manyToManyElement->{'index-by'})) {
+                    throw new \InvalidArgumentException("<index-by /> is not a valid tag");
                 }
 
                 $metadata->mapManyToMany($mapping);

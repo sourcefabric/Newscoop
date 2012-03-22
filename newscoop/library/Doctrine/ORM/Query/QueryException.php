@@ -72,6 +72,11 @@ class QueryException extends \Doctrine\ORM\ORMException
         return new self("Invalid parameter: token ".$key." is not defined in the query.");
     }
 
+    public static function parameterTypeMissmatch()
+    {
+        return new self("DQL Query parameter and type numbers missmatch, but have to be exactly equal.");
+    }
+
     public static function invalidPathExpression($pathExpr)
     {
         return new self(
@@ -84,7 +89,7 @@ class QueryException extends \Doctrine\ORM\ORMException
     }
 
     /**
-     * @param Doctrine\ORM\Mapping\AssociationMapping $assoc
+     * @param \Doctrine\ORM\Mapping\AssociationMapping $assoc
      */
     public static function iterateWithFetchJoinCollectionNotAllowed($assoc)
     {
@@ -135,7 +140,7 @@ class QueryException extends \Doctrine\ORM\ORMException
             "in the query."
         );
     }
-    
+
     public static function instanceOfUnrelatedClass($className, $rootClass)
     {
         return new self("Cannot check if a child of '" . $rootClass . "' is instanceof '" . $className . "', " .

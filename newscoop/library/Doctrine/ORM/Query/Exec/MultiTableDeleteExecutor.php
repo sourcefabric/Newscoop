@@ -98,13 +98,13 @@ class MultiTableDeleteExecutor extends AbstractSqlExecutor
         }
         $this->_createTempTableSql = $platform->getCreateTemporaryTableSnippetSQL() . ' ' . $tempTable . ' ('
                 . $platform->getColumnDeclarationListSQL($columnDefinitions) . ')';
-        $this->_dropTempTableSql = 'DROP TABLE ' . $tempTable;
+        $this->_dropTempTableSql = $platform->getDropTemporaryTableSQL($tempTable);
     }
 
     /**
      * Executes all SQL statements.
      *
-     * @param Doctrine\DBAL\Connection $conn The database connection that is used to execute the queries.
+     * @param \Doctrine\DBAL\Connection $conn The database connection that is used to execute the queries.
      * @param array $params The parameters.
      * @override
      */

@@ -58,7 +58,7 @@ abstract class AbstractHydrator
     /**
      * Initializes a new instance of a class derived from <tt>AbstractHydrator</tt>.
      *
-     * @param Doctrine\ORM\EntityManager $em The EntityManager to use.
+     * @param \Doctrine\ORM\EntityManager $em The EntityManager to use.
      */
     public function __construct(EntityManager $em)
     {
@@ -164,6 +164,11 @@ abstract class AbstractHydrator
      * field names during this procedure as well as any necessary conversions on
      * the values applied.
      *
+     * @param array $data SQL Result Row
+     * @param array &$cache Cache for column to field result information
+     * @param array &$id Dql-Alias => ID-Hash
+     * @param array &$nonemptyComponents Does this DQL-Alias has at least one non NULL value?
+     *
      * @return array  An array with all the fields (name => value) of the data row,
      *                grouped by their component alias.
      */
@@ -211,8 +216,11 @@ abstract class AbstractHydrator
             }
 
             if (isset($cache[$key]['isMetaColumn'])) {
-                if (!isset($rowData[$dqlAlias][$cache[$key]['fieldName']]) || $value !== null) {
+                if ( ! isset($rowData[$dqlAlias][$cache[$key]['fieldName']]) && $value !== null) {
                     $rowData[$dqlAlias][$cache[$key]['fieldName']] = $value;
+                    if ($cache[$key]['isIdentifier']) {
+                        $nonemptyComponents[$dqlAlias] = true;
+                    }
                 }
                 continue;
             }
@@ -286,5 +294,26 @@ abstract class AbstractHydrator
         }
 
         return $rowData;
+    }
+    
+    protected function registerManaged($class, $entity, $data)
+    {
+        if ($class->isIdentifierComposite) {
+            $id = array();
+            foreach ($class->identifier as $fieldName) {
+                if (isset($class->associationMappings[$fieldName])) {
+                    $id[$fieldName] = $data[$class->associationMappings[$fieldName]['joinColumns'][0]['name']];
+                } else {
+                    $id[$fieldName] = $data[$fieldName];
+                }
+            }
+        } else {
+            if (isset($class->associationMappings[$class->identifier[0]])) {
+                $id = array($class->identifier[0] => $data[$class->associationMappings[$class->identifier[0]]['joinColumns'][0]['name']]);
+            } else {
+                $id = array($class->identifier[0] => $data[$class->identifier[0]]);
+            }
+        }
+        $this->_em->getUnitOfWork()->registerManaged($entity, $id, $data);
     }
 }
