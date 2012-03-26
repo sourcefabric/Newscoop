@@ -1,7 +1,21 @@
-Copyright (C) 2010-2011 Sourcefabric o.p.s
+Copyright (C) 2010-2012 Sourcefabric o.p.s
 Copyright (C) 2002-2009 Media Development Loan Fund
 
 Newscoop Credits (by Version Number)
+
+------------------------------------
+Newscoop 3.5.4 Credits
+------------------------------------
+Developers:
+- Andrey Podshivalov <andrey.podshivalov@sourcefabric.org>
+- Holman Romero <holman.romero@sourcefabric.org>
+- Martin Saturka <martin.saturka@sourcefabric.org>
+- Mugurel Rus <mugur.rus@sourcefabric.org>
+- Ozan Ozbek <ozan.ozbek@sourcefabric.org>
+- Petr Jašek <petr.jasek@sourcefabric.org>
+
+QA / Testing:
+- Sebastian Šimon <sebastian.simon@sourcefabric.org>
 
 ------------------------------------
 Newscoop 3.5.3 Credits
@@ -18,10 +32,10 @@ Developers:
 User Interface:
 - Vladimir Stefanovic <vladimir.stefanovic@sourcefabric.org>
 
-QA / Testing
+QA / Testing:
 - Ofir Gal <ofir.gal@sourcefabric.org>
 
-Project Management
+Project Management:
 - Paul Baranowski <paul.baranowski@sourcefabric.org>
 
 ------------------------------------

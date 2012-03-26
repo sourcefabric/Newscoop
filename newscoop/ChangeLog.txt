@@ -1,3 +1,17 @@
+3.5.4 (Mar 27, 2012)
+  Tasks
+  -----
+  * [CS-3813] Upgrade tinymce editor to fix issue with Firefox 11
+
+  Bug Fixes
+  ---------
+  [CS-3126] The attachment URI tag in the template engine returns invalid value
+  [CS-3822] Cron scripts generate unneeded PHP sessions
+  [CS-3045] Change localizer wording. Screen > Area to localize
+  [CS-3058] ReCaptcha configuration page text modification
+  [CS-3115] Wrong language codes
+  [CS-3901] Change error messages
+
 3.5.3 (May 19, 2011)
   Tasks
   -----
