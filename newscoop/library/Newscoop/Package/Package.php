@@ -13,7 +13,7 @@ use Newscoop\Image\Rendition;
  * @Entity(repositoryClass="Newscoop\Package\PackageRepository")
  * @Table(name="package",
  *      uniqueConstraints={
- *          @UniqueConstraint(columns={"slug"})
+ *          @UniqueConstraint(name="slug_idx", columns={"slug"})
  *      })
  */
 class Package
