@@ -1,4 +1,7 @@
 <?php 
+regGS("Renditions reloaded", "");
+regGS("Reload renditions", "");
+regGS("Edit images", "");
 regGS("Specify image url if you want to load it.", "");
 regGS("Items: ", "");
 regGS("Attach slideshows", "Připojit slideshows");
@@ -16,7 +19,6 @@ regGS("Set as default", "Nastavit defaultně");
 regGS("Saving...", "Ukládání...");
 regGS("Saved", "Uloženo");
 regGS("Save headline", "Uložit headline");
-regGS("Place images", "Umístit obrázky");
 regGS("Place Images", "Umístit obrázky");
 regGS("No renditions defined.", "");
 regGS("No images found.", "Obrázky nenalezeny");

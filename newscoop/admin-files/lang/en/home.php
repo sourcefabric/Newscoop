@@ -1,4 +1,5 @@
 <?php 
+regGS("Security token expired. Please resubmit the form.", "Security token expired. Please resubmit the form.");
 regGS("Templates", "Templates");
 regGS("Create slideshow", "Create slideshow");
 regGS("Create", "Create");

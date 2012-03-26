@@ -1,3 +1,54 @@
+4.0-RC3 (March 21, 2012)
+  New Features
+  ------------
+  CS-4094: Integrate the New Custodian as default sample theme
+
+  Improvements
+  ------------
+  CS-4056: Send proper cache headers for image/cache
+  CS-4084: Place Images should also save when clicking the 'next' buttons  
+  CS-4010: Adding image(s) by URL address
+
+  Tasks
+  -----
+  CS-4023: Add reload renditions action to renditions manager
+  CS-4121: Use newer jQuery to not cause "event.layerX/Y" warnings at WebKit
+  CS-4068: Adjustments to database upgrade scripts
+
+  Bug fixes
+  ---------
+  CS-4058: Admin user does not have right to manage playlists by default
+  CS-4098: Application error makes users disappear
+  CS-4106: Media Archive does not load
+  CS-4020: Error Invalid security token! after admin login
+  CS-4071: Cannot delete Issue - gives server error
+  CS-4072: Image disappears from "Attached Images", still present in "Place Images"
+  CS-4096: User can add a new topic even if user does not have permission
+  CS-4120: Problems on attaching, uploading and cropping images within an article
+  CS-3992: User cannot remove slideshows
+  CS-4043: Enabled poll plugin crashes article edit screen
+  CS-4026: Newscoop error is showed after try to edit some type of article type field
+  CS-4075: Attach image is broken by png file with empty background
+  CS-4076: When comment has child
+  CS-4129: Attach images process shows error after click on Next: "Upload and edit metadata"
+  CS-3474: Put some nice styling for the Geo-Filtering button at template editing page
+  CS-4044: Front-end image loading for non-Apache servers
+  CS-4092: Files -> Attach -> Cancel does not close the pop-up
+  CS-4081: Occasional error message upon saving profile information (Zend)
+  CS-4024: Basic menu is showed after click on name of file in "Attach existing file" window
+  CS-4028: Error ID:2:Newscoop:4.0-RC2:Loader.php:198
+  CS-4062: Exception info displayed for missing image via image/cache route instead of proper 404 page
+  CS-4078: Smarty image block is rendered even if no image is attached to article - causing error
+  CS-4064: Fix image cache file path escaping for better caching
+  CS-4103: Database is not overwrite even if user want to do it
+  CS-4074: Button Attach does not show alert that article changes can user losing
+  CS-4095: Not possible to set permissions for the Soundcloud plugin
+  CS-4047: Slideshow done editing: "Save and Close" does not work
+  CS-4109: Changing user roles in Chrome does not work
+  CS-3985: Popup keeps showing up if user do not submit the form
+  CS-4082: When file is not uploaded in Image Attach, the next screen does not display properly
+  CS-4091: Apache shows "File does not exist", even if file is there
+
 4.0-RC2 (February 22, 2012)
   New Features
   ------------
