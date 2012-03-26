@@ -52,7 +52,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 
         if (!defined('IN_PHPUNIT') && !getenv('PLZSTOPTHISERRORHANDLERBIZNIS') ) {
             set_error_handler(function($p_number, $p_string, $p_file, $p_line) {
-                if (($p_string & error_reporting()) === 0) {
+                if (($p_number & error_reporting()) === 0) {
                     return; // respect php settings
                 }
 
