@@ -22,20 +22,9 @@ if (!file_exists($GLOBALS['g_campsiteDir'].'/conf/configuration.php')
     exit;
 }
 
-// set include path for local pear packages
-set_include_path(
-    $GLOBALS['g_campsiteDir'] . '/library' . PATH_SEPARATOR .
-    '/usr/share/php/libzend-framework-php' . PATH_SEPARATOR .
-    get_include_path() . PATH_SEPARATOR . dirname(__FILE__));
-
-if (!is_file('Zend/Application.php')) {
-	// include libzend if we dont have zend_application
-	set_include_path(implode(PATH_SEPARATOR, array(
-		'/usr/share/php/libzend-framework-php',
-		get_include_path(),
-	)));
+if (!defined('APPLICATION_PATH')) {
+    require_once __DIR__ . '/../application.php';
 }
-require_once 'Zend/Application.php';
 
 require_once($GLOBALS['g_campsiteDir'].'/conf/configuration.php');
 require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
