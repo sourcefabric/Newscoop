@@ -198,6 +198,19 @@ class Publication extends Entity
     }
 
     /**
+     * Add issue
+     *
+     * @param Newscoop\Entity\Issue $issue
+     * @return void
+     */
+    public function addIssue(Issue $issue)
+    {
+        if (!$this->issues->contains($issue)) {
+            $this->issues->add($issue);
+        }
+    }
+
+    /**
      * Get issues
      *
      * @return array
@@ -216,10 +229,21 @@ class Publication extends Entity
     {
         $languages = array();
         foreach ($this->issues as $issue) {
-            $languages[] = $issue->getLanguage();
+            $languages[$issue->getLanguage()->getId()] = $issue->getLanguage();
         }
 
-        return $languages;
+        return array_values($languages);
+    }
+
+    /**
+     * Set default language
+     *
+     * @param Newscoop\Entity\Language $language
+     * @return void
+     */
+    public function setDefaultLanguage(Language $language)
+    {
+        $this->language = $language;
     }
 
     /**
@@ -229,7 +253,7 @@ class Publication extends Entity
      */
     public function getDefaultLanguage()
     {
-        return $this->default_language;
+        return $this->language;
     }
 
     /**

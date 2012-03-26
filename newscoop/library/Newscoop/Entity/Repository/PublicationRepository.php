@@ -18,15 +18,30 @@ class PublicationRepository extends EntityRepository
     /**
      * Get subscriber options
      *
-     * @param Newscoop\Entity\User\Subscriber $user
+     * @param Newscoop\Entity\User $user
      * @return array
      */
-    public function getSubscriberOptions(Subscriber $user)
+    public function getSubscriberOptions(User $user)
     {
         $em = $this->getEntityManager();
 
+        $query = $this->createQueryBuilder('p')
+            ->andWhere('p.id NOT IN (:subscribed)')
+            ->getQuery();
+
+        $query->setParameter('subscribed', $this->getSubscribedPublications($user));
+
+        $publications = array();
+        foreach ($query->getResult() as $publication) {
+            $publications[$publication->getId()] = $publication->getName();
+        }
+
+        return $publications;
+    }
+    /**
+
         // get publications subscribed already
-        $query = $em->createQuery('SELECT p.id FROM Newscoop\Entity\Subscription s JOIN s.subscriber u JOIN s.publication p WHERE u.id = ?1');
+        $query = $em->createQuery('SELECT p.id FROM Newscoop\Subscription s JOIN s.subscriber u JOIN s.publication p WHERE u.id = ?1');
         $query->setParameter(1, $user->getId());
         $rows = $query->getResult();
         $ids = array_reduce($rows, function($next, $current) {
@@ -45,11 +60,5 @@ class PublicationRepository extends EntityRepository
         $rows = $query->getResult();
 
         // format options
-        $publications = array();
-        foreach ($rows as $publication) {
-            $publications[$publication->getId()] = $publication->getName();
-        }
-
-        return $publications;
-    }
+        // */
 }

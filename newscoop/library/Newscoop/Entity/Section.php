@@ -76,11 +76,19 @@ class Section extends Entity
     /**
      * @param int $number
      * @param string $name
+     * @param Newscoop\Entity\Issue $issue
      */
-    public function __construct($number, $name)
+    public function __construct($number, $name, $issue = null)
     {
         $this->number = (int) $number;
         $this->name = (string) $name;
+
+        if ($issue !== null) {
+            $this->issue = $issue;
+            $this->issue->addSection($this);
+            $this->publication = $this->issue->getPublication();
+            $this->language = $this->issue->getLanguage();
+        }
     }
 
     /**

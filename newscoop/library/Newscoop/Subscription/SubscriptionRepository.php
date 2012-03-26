@@ -1,16 +1,14 @@
 <?php
 /**
  * @package Newscoop
- * @copyright 2011 Sourcefabric o.p.s.
+ * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\Entity\Repository;
+namespace Newscoop\Subscription;
 
 use Doctrine\ORM\EntityRepository,
-    Newscoop\Entity\Subscription,
-    Newscoop\Entity\User\Subscriber,
-    Newscoop\Entity\SubscriptionSection;
+    Newscoop\Entity\User;
 
 /**
  * Subscription repository
@@ -129,5 +127,22 @@ class SubscriptionRepository extends EntityRepository
         }
 
         $em->remove($subscription);
+    }
+
+    /**
+     * Find by user
+     *
+     * @param Newscoop\Entity\User|int $user
+     * @return array
+     */
+    public function findByUser($user)
+    {
+        if (empty($user)) {
+            return array();
+        }
+
+        return $this->findBy(array(
+            'user' => is_numeric($user) ? $user : $user->getId(),
+        ), array('id' => 'desc'), 1000);
     }
 }

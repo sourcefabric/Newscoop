@@ -20,6 +20,14 @@ class NewscoopEntityPublicationProxy extends \Newscoop\Entity\Publication implem
     {
         if (!$this->__isInitialized__ && $this->_entityPersister) {
             $this->__isInitialized__ = true;
+
+            if (method_exists($this, "__wakeup")) {
+                // call this after __isInitialized__to avoid infinite recursion
+                // but before loading to emulate what ClassMetadata::newInstance()
+                // provides.
+                $this->__wakeup();
+            }
+
             if ($this->_entityPersister->load($this->_identifier, $this) === null) {
                 throw new \Doctrine\ORM\EntityNotFoundException();
             }
@@ -40,6 +48,12 @@ class NewscoopEntityPublicationProxy extends \Newscoop\Entity\Publication implem
         return parent::getLanguage();
     }
 
+    public function addIssue(\Newscoop\Entity\Issue $issue)
+    {
+        $this->__load();
+        return parent::addIssue($issue);
+    }
+
     public function getIssues()
     {
         $this->__load();
@@ -50,6 +64,12 @@ class NewscoopEntityPublicationProxy extends \Newscoop\Entity\Publication implem
     {
         $this->__load();
         return parent::getLanguages();
+    }
+
+    public function setDefaultLanguage(\Newscoop\Entity\Language $language)
+    {
+        $this->__load();
+        return parent::setDefaultLanguage($language);
     }
 
     public function getDefaultLanguage()

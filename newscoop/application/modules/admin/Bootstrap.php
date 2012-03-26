@@ -52,6 +52,10 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
 
         if (!defined('IN_PHPUNIT') && !getenv('PLZSTOPTHISERRORHANDLERBIZNIS') ) {
             set_error_handler(function($p_number, $p_string, $p_file, $p_line) {
+                if (($p_string & error_reporting()) === 0) {
+                    return; // respect php settings
+                }
+
                 global $ADMIN_DIR, $Campsite;
                 require_once $Campsite['HTML_DIR'] . "/$ADMIN_DIR/bugreporter/bug_handler_main.php";
                 camp_bug_handler_main($p_number, $p_string, $p_file, $p_line);

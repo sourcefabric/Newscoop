@@ -88,11 +88,18 @@ class Issue extends Entity
 
     /**
      * @param int $number
+     * @param Newscoop\Entity\Publication $publication
      */
-    public function __construct($number)
+    public function __construct($number, \Newscoop\Entity\Publication $publication = null, \Newscoop\Entity\Language $language = null)
     {
         $this->number = (int) $number;
         $this->sections = new ArrayCollection;
+
+        if ($publication !== null) {
+            $this->publication = $publication;
+            $this->language = $language !== null ? $language : $this->publication->getDefaultLanguage();
+            $this->publication->addIssue($this);
+        }
     }
 
     /**
@@ -103,6 +110,16 @@ class Issue extends Entity
     public function getLanguage()
     {
         return $this->language;
+    }
+
+    /**
+     * Get language id
+     *
+     * @return int
+     */
+    public function getLanguageId()
+    {
+        return $this->language !== null ? $this->language->getId() : null;
     }
 
     /**
@@ -124,6 +141,20 @@ class Issue extends Entity
     {
         return $this->publication !== null ? $this->publication->getId() : null;
     }
+
+    /**
+     * Add section
+     *
+     * @param Newscoop\Entity\Section $section
+     * @return void
+     */
+    public function addSection(Section $section)
+    {
+        if (!$this->sections->contains($section)) {
+            $this->sections->add($section);
+        }
+    }
+
     /**
      * Get sections
      *

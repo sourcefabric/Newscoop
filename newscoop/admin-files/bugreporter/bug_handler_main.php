@@ -1,6 +1,6 @@
 <?php
 
-require_once $GLOBALS['g_campsiteDir'] . '/classes/BugReporter.php';
+require_once __DIR__ . '/../../classes/BugReporter.php';
 
 /**
  * Called for all Newscoop errors.
@@ -36,6 +36,7 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
 
     // throw exception instead of raising error
     if (defined('APPLICATION_ENV') && APPLICATION_ENV == 'development') {
+        require_once __DIR__ . '/../../library/Newscoop/Utils/Exception.php';
         $exception = new \Newscoop\Utils\Exception($p_string, $p_number);
         $exception->setFile($p_file);
         $exception->setLine($p_line);

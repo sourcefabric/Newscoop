@@ -5,16 +5,14 @@
  * @license http://www.gnu.org/licenses/gpl.txt
  */
 
-namespace Newscoop\Entity;
-
-use Newscoop\Entity\Subscription;
+namespace Newscoop\Subscription;
 
 /**
  * Subscription Section relation entity
  * @Entity(repositoryClass="Newscoop\Entity\Repository\SubscriptionSectionRepository")
  * @Table(name="SubsSections")
  */
-class SubscriptionSection
+class Section
 {
     /**
      * @Id @GeneratedValue
@@ -24,9 +22,9 @@ class SubscriptionSection
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Subscription")
+     * @ManyToOne(targetEntity="Newscoop\Subscription\Subscription")
      * @JoinColumn(name="IdSubscription", referencedColumnName="Id")
-     * @var Newscoop\Entity\Subscription
+     * @var Newscoop\Subscription\Subscription
      */
     private $subscription;
 
@@ -65,7 +63,21 @@ class SubscriptionSection
      * @Column(name="NoticeSent")
      * @var string
      */
-    private $noticeSent = 'N';
+    private $noticeSent;
+
+    /**
+     * @param Newscoop\Subscription\Subscription $subscription
+     * @param Newscoop\Entity\Section $section
+     */
+    public function __construct(Subscription $subscription, \Newscoop\Entity\Section $section)
+    {
+        $this->subscription = $subscription;
+        $this->subscription->addSection($this);
+        $this->sectionNumber = $section->getNumber();
+
+        $this->noticeSent = 'N';
+        $this->paidDays = 0;
+    }
 
     /**
      * Get id
@@ -75,30 +87,6 @@ class SubscriptionSection
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set subscription
-     *
-     * @param Newscoop\Entity\Subscription
-     * @return Newscoop\Entity\SubscriptionSection
-     */
-    public function setSubscription(Subscription $subscription)
-    {
-        $this->subscription = $subscription;
-        return $this;
-    }
-
-    /**
-     * Set section number
-     *
-     * @param int $number
-     * @return Newscoop\Entity\SubscriptionSection
-     */
-    public function setSectionNumber($number)
-    {
-        $this->sectionNumber = (int) $number;
-        return $this;
     }
 
     /**
@@ -115,12 +103,11 @@ class SubscriptionSection
      * Set language
      *
      * @param Newscoop\Entity\Language $language
-     * @return Newscoop\Entity\SubscriptionSection
+     * @return void
      */
-    public function setLanguage(Language $language)
+    public function setLanguage(\Newscoop\Entity\Language $language)
     {
         $this->language = $language;
-        return $this;
     }
 
     /**
@@ -152,6 +139,26 @@ class SubscriptionSection
     }
 
     /**
+     * Get language
+     *
+     * @return Newscoop\Entity\Language
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * Test if has language set
+     *
+     * @return bool
+     */
+    public function hasLanguage()
+    {
+        return $this->language !== null;
+    }
+
+    /**
      * Set start date
      *
      * @param DateTime $date
@@ -160,7 +167,6 @@ class SubscriptionSection
     public function setStartDate(\DateTime $date)
     {
         $this->startDate = $date;
-        return $this;
     }
 
     /**

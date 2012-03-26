@@ -196,6 +196,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('image'));
 
+        $container->register('subscription', 'Newscoop\Subscription\SubscriptionFacade')
+            ->addArgument(new sfServiceReference('em'));
+
         Zend_Registry::set('container', $container);
         return $container;
     }
@@ -295,6 +298,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
              new Zend_Rest_Route($front, array(), array(
                  'admin' => array(
                      'slideshow-rest',
+                     'subscription-rest',
+                     'subscription-section-rest',
                  ),
              )));
     }
@@ -323,6 +328,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         if (!extension_loaded('mongo')) {
             return null;
         }
+
+        return null;
 
         $config = new Configuration();
         $config->setProxyDir(APPLICATION_PATH . '/../cache');

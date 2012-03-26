@@ -21,29 +21,15 @@ class Admin_SubscriptionController extends Zend_Controller_Action
 
         $currency = new Zend_Currency('en_US');
         Zend_Registry::set('Zend_Currency', $currency);
+
+        $this->_helper->layout->setLayout('modal');
     }
 
     public function indexAction()
     {
-        $subscriber = $this->_helper->entity->get('Newscoop\Entity\User\Subscriber', 'user');
-        $this->view->subscriber = $subscriber;
-
-        $next = $this->_getParam('next');
-        $this->view->next = $next;
-
-        $this->view->actions = array(
-            array(
-                'label' => getGS('Add new subscription'),
-                'module' => 'admin',
-                'controller' => 'subscription',
-                'action' => 'add',
-                'reset_params' => false,
-                'class' => 'add',
-                'params' => array(
-                    'next' => $next,
-                ),
-            ),
-        );
+        $this->view->user = $this->_getParam('user');
+        $this->view->subscriptions = $this->_helper->service('subscription')->findByUser($this->_getParam('user'));
+        $this->view->publications = $this->_helper->service('content.publication')->findAll();
     }
 
     public function addAction()

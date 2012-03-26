@@ -45,4 +45,15 @@ class PublicationService
 
         return $options;
     }
+
+    /**
+     * Find all publications
+     *
+     * @return array
+     */
+    public function findAll()
+    {
+        return $this->orm->getRepository('Newscoop\Entity\Publication')
+            ->findAll();
+    }
 }

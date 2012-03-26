@@ -16,7 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection,
 /**
  * @Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
  * @Table(name="liveuser_users", uniqueConstraints={
- *      @UniqueConstraint(columns={"Uname"})
+ *      @UniqueConstraint(name="username_idx", columns={"Uname"})
  *      })
  *  @HasLifecycleCallbacks
  */

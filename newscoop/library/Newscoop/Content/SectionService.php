@@ -45,4 +45,29 @@ class SectionService
 
         return $options;
     }
+
+    /**
+     * Get name
+     *
+     * @param int $number
+     * @param Newscoop\Entity\Publication $publication
+     * @param Newscoop\Entity\Language $language
+     * @return string
+     */
+    public function getName($number, \Newscoop\Entity\Publication $publication, \Newscoop\Entity\Langauge $language = null)
+    {
+        foreach ($publication->getIssues() as $issue) {
+            if ($language !== null && $issue->getLanguage() !== $language) {
+                continue;
+            }
+
+            foreach ($issue->getSections() as $section) {
+                if ($section->getNumber() == $number) {
+                    return $section->getName();
+                }
+            }
+        }
+
+        return null;
+    }
 }
