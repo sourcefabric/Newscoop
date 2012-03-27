@@ -10,7 +10,7 @@ DEBRELEASE=$(head -n1 debian/changelog | cut -d ' ' -f 2 | sed 's/[()]*//g')
 DEBVERSION=$(echo $DEBRELEASE | sed 's/-.*$//g;s/~test[0-9]*//g')
 UPSTREAMVERSION=$(echo $DEBVERSION | sed 's/~/-/g')
 UPSTREAMDIST=$(echo $UPSTREAMVERSION | sed 's/^\([0-9]*\.[0-9]*\).*$/\1/')
-SFOCUSTOM="-RC2"
+SFOCUSTOM="-RC3"
 DEBPATH=`pwd`/debian # TODO check dirname $0
 MIRRORPATH=/tmp
 BUILDDEST=/tmp/newscoop-${DEBVERSION}/
@@ -67,11 +67,9 @@ rm newscoop/INSTALL.txt
 
 # Sourcefabric licenses covered by debian/copyright
 rm newscoop/COPYING.txt
-rm newscoop/install/sample_templates/zen/templates/set_zen/license.txt
 rm newscoop/themes/unassigned/set_zen/license.txt
 
 # third party licences covered by debian/copyright
-rm newscoop/install/sample_templates/zen/templates/set_zen/_tpl/player/LICENSE.txt
 rm newscoop/themes/unassigned/set_zen/_tpl/player/LICENSE.txt
 rm newscoop/include/html2pdf/_tcpdf_5.0.002/LICENSE.TXT
 rm newscoop/js/domTT/LICENSE
@@ -128,7 +126,7 @@ if test "${UPSTREAMVERSION}" == "3.5.1"; then
 	rm newscoop/javascript/tinymce/plugins/codehighlighting/img/Thumbs.db
 fi
 
-### fixes for 4.0.0-RC2 ###
+### fixes for 4.0.0-RC3 ###
 if test "${UPSTREAMVERSION}" == "4.0.0"; then
 	rm newscoop/js/editarea/edit_area/plugins/test/images/Thumbs.db
 
@@ -147,6 +145,9 @@ if test "${UPSTREAMVERSION}" == "4.0.0"; then
 	chmod -x newscoop/js/tapmodo-Jcrop-5e58bc9/demos/demo_files/flowers.jpg
 
 	rm -r newscoop/include/html2pdf/_tcpdf_5.0.002/fonts/utils/
+
+	rm newscoop/install/sample_templates/the_custodian/templates/set_the_custodian/_img/.gitignore
+	rm newscoop/install/sample_templates/the_custodian/templates/set_the_custodian/_js/mylibs/.gitignore
 fi
 
 ############################
