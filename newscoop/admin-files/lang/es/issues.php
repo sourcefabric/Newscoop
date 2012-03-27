@@ -1,5 +1,5 @@
 <?php 
-regGS("Only than the issue can be published", "");
+regGS("Only than the issue can be published", "Sólo una edición puede ser publicada.");
 regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "No es posible previsualizar esta edición.  Por favor asegúrese de que la publicación tiene un tema asignado.");
 regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "No es posible previsualizar esta edición.  Por favor asegúrese de que ha seleccionado una plantilla para la portada.");
 regGS("Publish all articles:", "Publicar todos los artículos:");
@@ -14,7 +14,7 @@ regGS("Issue Theme", "Tema de la edición");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Los valores que intenta establecer tienen conflicto con la edición \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Cada edición de esta publicación del mismo idioma debe tener un número único.");
 regGS("The language and URL name must be unique for each issue in this publication.", "El idioma y el nombre del URL deben ser únicos para cada edición en esta publicación.");
-regGS("Issue created.", "Se creo una nueva edición.");
+regGS("Issue created.", "Se creó una nueva edición.");
 regGS("Issue updated", "Se actualizó la edición.");
 regGS("Could not save the changes to the issue.", "No fue posible almacenar los cambios a la edición.");
 regGS("Unpublish on: $1", "Despublicar el:  $1");
@@ -30,14 +30,14 @@ regGS("A total of $1 articles were deleted.", "Se eliminó un total de $1 artíc
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Nombre<BR><SMALL>(clic para ver secciones)</SMALL> ");
 regGS("Delete issue $1", "Borrar edición $1");
 regGS("Publish articles", "Publicar artículos");
-regGS("You do not have the right to change issues.", "No tiene privilegios para cambiar ediciones.");
+regGS("You do not have the right to change issues.", "No tiene autorización para cambiar ediciones.");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "¿está seguro que desea cambiar el status de la edición $1 de $2 a $3?");
 regGS("Add new translation", "Agregar nueva traducción");
-regGS("You do not have the right to add issues.", "No tiene privilegios para agregar ediciones");
+regGS("You do not have the right to add issues.", "No tiene autorización para agregar ediciones");
 regGS("The issue $1 has been successfuly added.", "La edición $1 ha sido agregada con éxito");
 regGS("The issue could not be added.", "La edición no pudo ser agregada");
 regGS("Change issue details", "Cambiar detalles de la edición");
-regGS("You do not have the right to change issue details.", "No tiene derechos para cambiar detalles de la edición");
+regGS("You do not have the right to change issue details.", "No tiene autorización para cambiar detalles de la edición");
 regGS("Publication date<BR><SMALL>(yyyy-mm-dd)</SMALL>", "Fecha de Publicación<BR><SMALL>(yyyy-mm-dd)</SMALL> ");
 regGS("Front Page Template", "Plantilla de portada");
 regGS("You do not have the right to delete issues.", "No tiene privilegios para borrar ediciones");

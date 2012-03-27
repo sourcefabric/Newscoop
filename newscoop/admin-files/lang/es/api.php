@@ -1,8 +1,8 @@
 <?php 
-regGS("Not a color", "");
-regGS("No such field", "");
-regGS("Color saved", "");
-regGS("Color not saved", "");
+regGS("Not a color", "No es un color");
+regGS("No such field", "No existe ese campo");
+regGS("Color saved", "Color guardado");
+regGS("Color not saved", "No pudo guardarse el color");
 regGS("Topic created", "Tópico creado");
 regGS("The topic name is already in use by another topic.", "Este nombre de tópico ya está en uso.");
 regGS("Complex Date", "Fecha compleja");

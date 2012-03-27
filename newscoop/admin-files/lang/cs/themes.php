@@ -1,5 +1,5 @@
 <?php 
-regGS("Templates", "");
+regGS("Templates", "Šablony");
 regGS("Import theme", "Importovat téma");
 regGS("Import succeded!", "Import úspěšný!");
 regGS("Import failed!", "Neúspěšný import!");

@@ -6,7 +6,7 @@ regGS("Include CSS file for map view", "Incluir archivo CSS para vista del mapa"
 regGS("Collect statistics:", "Reunir estadísticas");
 regGS("Please enter password recovery from email.", "Por favor ingrese la recuperación de contraseña del correo electrónico.");
 regGS("From email address:", "De la cuenta de correo electrónico:");
-regGS("Run scheduled tasks externally?", "¿Correr tareas programads de forma externa?");
+regGS("Run scheduled tasks externally?", "¿Correr tareas programadas de forma externa?");
 regGS("Setting up a Newscoop Replication Server?", "¿Desea configurar un servidor de replicación para Newscoop?");
 regGS("Newscoop Online Server Database", "Base de datos del servidor en línea de Newscoop");
 regGS("Allow Google Streets Map Provider:", "Permitir el uso de Google Streets Map:");

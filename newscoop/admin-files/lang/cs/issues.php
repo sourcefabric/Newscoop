@@ -1,5 +1,5 @@
 <?php 
-regGS("Only than the issue can be published", "");
+regGS("Only than the issue can be published", "Až potom může být vydání publikováno");
 regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Toto vydání nemůže být zobrazeno. Prosím ujistěte se, že publikace má přidelen námět.");
 regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "Toto vydání nemůže být zobrazeno. Prosím ujistěte se, že je vybrána přední šablona.");
 regGS("Publish all articles:", "Publikovat všechny články:");
