@@ -69,17 +69,13 @@
         },
 
         validate: function(attr) {
-            if (attr.days < 1) {
-                throw <?php echo json_encode(getGS("Days must be bigger than 0")); ?>;
+            if (attr.days < 0) {
+                throw <?php echo json_encode(getGS("Days must be number")); ?>;
             }
         },
 
         defaults: {
             subscription: <?php echo json_encode($this->subscription->getId()); ?>
-        },
-
-        comparator: function(section) {
-            return section.get('section').number;
         }
     });
 
@@ -88,7 +84,11 @@
      */
     var SubscriptionSectionCollection = Backbone.Collection.extend({
         model: SubscriptionSection,
-        url: <?php echo json_encode($this->url(array('module' => 'admin', 'controller' => 'subscription-section-rest'), 'rest')); ?>
+        url: <?php echo json_encode($this->url(array('module' => 'admin', 'controller' => 'subscription-section-rest'), 'rest')); ?>,
+
+        comparator: function(section) {
+            return section.get('section').number;
+        }
     });
 
     /**
