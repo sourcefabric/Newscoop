@@ -76,7 +76,7 @@
                     	<img rel="resizable" style="max-width:100%;" alt="{{ $gimme->author->name }}" src="{{ $gimme->author->picture->imageurl }}" />
                 	</figure>
                     <div class="ninecol last">
-                	<h4>{{ if $gimme->author->user->defined }}<a href="{{ $view->url(['username' => $gimme->author->user->uname], 'user') }}">{{ /if }}{{ $gimme->author->name }}{{ if $gimme->author->user->defined }}</a>{{ /if }}</h4>
+                	<h4>{{ if $gimme->author->user->defined }}<a href="{{ $view->url(['username' => $gimme->author->user->uname], 'user') }}{{ url options="template author.tpl" }}">{{ /if }}{{ $gimme->author->name }}{{ if $gimme->author->user->defined }}</a>{{ /if }}</h4>
                   
                 	<p>{{ $gimme->author->biography->text|strip_tags:false|truncate:200 }}</p>
                     </div>
