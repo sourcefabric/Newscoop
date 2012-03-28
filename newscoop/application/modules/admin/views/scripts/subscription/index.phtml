@@ -1,11 +1,338 @@
 <?php $this->placeholder('title')->set(getGS('Subscriptions')); ?>
 
-<a id="add-new" href="#subscription/new"><?php putGS('Add subscription'); ?></a>
-
 <div id="app">
 </div>
 
+<script type="text/javascript">
+(function($) {
+    var Publication = Backbone.Model.extend({
+    });
+
+    var PublicationCollection = Backbone.Collection.extend({model: Publication});
+
+    var Subscription = Backbone.Model.extend({
+        initialize: function(attributes) {
+            this.sections = new SectionCollection(attributes.sections);
+        },
+
+        defaults: {
+            publication: null,
+            start_date: <?php echo json_encode(date('Y-m-d')); ?>,
+            type: '',
+            days: 1,
+            active: true,
+            user: <?php echo json_encode($this->user); ?>,
+            toPay: 0.0,
+            add_sections: false,
+            individual_languages: false,
+            languages: [],
+            active: false
+        },
+
+        parse: function(response) {
+            this.sections.reset(response.sections);
+            return response;
+        },
+
+        validate: function(attrs) {
+            if (!attrs.start_date) {
+                throw "Provide start date";
+            }
+
+            if (!attrs.days || attrs.days < 1) {
+                throw "Days must be > 0";
+            }
+
+            if (attrs.individual_languages && attrs.languages.length == 0) {
+                throw "You must select a languages for individual subscription.";
+            }
+        }
+    });
+
+    var SubscriptionCollection = Backbone.Collection.extend({
+        model: Subscription,
+        url: <?php echo json_encode($this->url(array('module' => 'admin', 'controller' => 'subscription-rest'), 'rest')); ?>
+    });
+
+    var Section = Backbone.Model.extend({
+    });
+
+    var SectionCollection = Backbone.Collection.extend({
+        model: Section
+    });
+
+    var ToPayView = Backbone.View.extend({
+        events: {
+            'click button': 'save'
+        },
+
+        render: function() {
+            this.input = $('<input type="text" name="toPay" />').val(this.model.get('toPay').toFixed(1)).appendTo($(this.el)).focus();
+            $('<button />').text("Ok").appendTo($(this.el));
+            return this;
+        },
+
+        save: function() {
+            this.model.save({toPay: parseFloat(this.input.val())});
+            $(this.el).parent().text(this.model.get('toPay').toFixed(1));
+            this.remove();
+        }
+    });
+
+    var SubscriptionRowView = Backbone.View.extend({
+        tagName: "tr",
+
+        events: {
+            'click .toPay > span': 'setToPay',
+            'click .active': 'toggleActive',
+            'click .delete': 'delete'
+            
+        },
+
+        initialize: function() {
+            this.model.bind('change', this.render, this);
+            this.model.bind('sync', this.render, this);
+            this.template = _.template($('#subscription-row-template').html());
+        },
+
+        render: function() {
+            $(this.el).html(this.template(this.model.toJSON()));
+
+            if (this.model.get('active')) {
+                $(this.el).addClass('active');
+            } else {
+                $(this.el).removeClass('active');
+            }
+
+            return this;
+        },
+
+        setToPay: function() {
+            view = new ToPayView({model: this.model, row: this});
+            $(this.el).find('.toPay').html(view.render().el);
+        },
+
+        toggleActive: function() {
+            this.model.save({active: !this.model.get('active')});
+        },
+
+        delete: function() {
+            this.model.destroy();
+            this.collection.remove(this.model);
+        }
+    });
+
+    var TableView = Backbone.View.extend({
+        initialize: function() {
+            this.collection.bind('remove', this.render, this);
+            this.collection.bind('add', this.render, this);
+            this.template = _.template($('#subscription-list-template').html());
+        },
+
+        render: function() {
+            $(this.el).html(this.template());
+
+            var collection = this.collection;
+            var tbody = $(this.el).find('tbody').empty();
+            this.collection.each(function(subscription) {
+                view = new SubscriptionRowView({model: subscription, collection: collection});
+                tbody.append(view.render().el);
+            });
+
+            if (this.collection.length === 0) {
+                tbody.html('<tr><td colspan="5">' + <?php echo json_encode(getGS('No subscriptions')); ?> + '</td></tr>');
+            }
+
+            return this;
+        }
+    });
+
+    var PublicationSelectView = Backbone.View.extend({
+    });
+
+
+    var EditView = Backbone.View.extend({
+        events: {
+            'click #save-sections': 'save'
+        },
+
+        initialize: function() {
+            this.template = _.template($('#edit-subscription-template').html());
+
+            this.model.sections.bind('add', this.renderTable, this);
+            this.model.sections.bind('remove', this.renderTable, this);
+            this.model.sections.bind('reset', this.renderTable, this);
+        },
+
+        render: function() {
+            $(this.el).html(this.template(this.model.toJSON()));
+            this.renderTable();
+            return this;
+        },
+
+        renderTable: function() {
+            var table = $(this.el).find('tbody').empty();
+            var sections = this.model.sections;
+            this.model.sections.each(function(section) {
+                var view = new SectionView({model: section, sections: sections});
+                table.append(view.render().el);
+            });
+        },
+
+        save: function() {
+            this.model.save({sections: this.model.sections.toJSON()});
+            window.router.navigate('', true);
+        }
+    });
+
+    var AddView = Backbone.View.extend({
+        events: {
+            'click button': 'save',
+            'change #pubs': 'renderLanguages',
+            'change #il': 'toggleLanguages'
+        },
+
+        initialize: function() {
+            this.template = _.template($('#new-subscription-template').html());
+        },
+
+        render: function(publications) {
+            this.options.publications = publications;
+
+            $(this.el).html(this.template());
+
+            var select = $(this.el).find('select[name="publication"]');
+            this.options.publications.each(function(publication) {
+                select.append($('<option />').attr('value', publication.get('id')).text(publication.get('name')));
+            });
+
+            this.renderLanguages();
+
+            return this;
+        },
+
+        renderLanguages: function() {
+            var select = $(this.el).find('select[name="languages"]').empty();
+            var selectedId = $(this.el).find('select[name="publication"]').val();
+            this.options.publications.each(function(publication) {
+                if (publication.get('id') == selectedId) {
+                    _.each(publication.get('languages'), function(language) {
+                        select.append($('<option />').attr('value', language.id).text(language.name));
+                    });
+                }
+            });
+        },
+
+        save: function(e) {
+            e.preventDefault();
+
+            try {
+                window.subscriptions.create({
+                    publication: parseInt($(this.el).find('select[name="publication"]').val()),
+                    active: $(this.el).find('input[name="active"]:checked').size() == 1,
+                    start_date: $(this.el).find('input[name="start_date"]').val(),
+                    type: $(this.el).find('select[name="type"]').val(),
+                    days: parseInt($(this.el).find('input[name="days"]').val()),
+                    add_sections: $(this.el).find('input[name="add_sections"]:checked').val() == 'true',
+                    individual_languages: $(this.el).find('input[name="individual_languages"]:checked').val() == 'true',
+                    languages: $(this.el).find('select[name="languages"]').val() || []
+                }, {wait: true});
+
+                router.navigate('', true);
+            } catch (error) {
+                alert(error);
+            }
+        },
+
+        toggleLanguages: function(e) {
+            if (e.target.checked) {
+                $(this.el).find('select[name="languages"]').show();
+            } else {
+                $(this.el).find('select[name="languages"]').hide();
+            }
+        }
+    });
+
+    var SectionView = Backbone.View.extend({
+        tagName: "tr",
+
+        events: {
+            'click button.delete': 'delete'
+        },
+
+        initialize: function() {
+            this.template = _.template($('#section-row-template').html());
+        },
+
+        render: function() {
+            $(this.el).html(this.template(this.model.toJSON()));
+            return this;
+        },
+
+        delete: function() {
+            this.options.sections.remove(this.model);
+            this.remove();
+        }
+    });
+
+    var Workspace = Backbone.Router.extend({
+        routes: {
+            'subscription/new': 'new',
+            '': 'index'
+        },
+
+        initialize: function() {
+            this.tableView = new TableView({collection: window.subscriptions});
+            this.addView = new AddView();
+        },
+
+        index: function() {
+            $('#app').html(this.tableView.render().el);
+        },
+
+        'new': function() {
+            var subscribed = window.subscriptions.map(function(subscription) {
+                return subscription.get('publication').id;
+            }) || [];
+
+            var available = new PublicationCollection();
+            window.publications.each(function(publication) {
+                if (subscribed.indexOf(publication.get('id')) === -1) {
+                    available.add(publication);
+                }
+            });
+
+            if (available.length !== 0) {
+                $('#app').html(this.addView.render(available).el);
+            } else {
+                alert(<?php echo json_encode(getGS("You have subscription for all available publications")); ?>);
+                this.navigate('');
+            }
+        }
+    });
+
+    $(function() {
+        window.subscriptions = new SubscriptionCollection(<?php echo json_encode(array_map(array($this, 'subscriptionJson'), $this->subscriptions)); ?>);
+        window.publications = new PublicationCollection(<?php echo json_encode(array_map(function($publication) {
+            return array(
+                'id' => $publication->getId(),
+                'name' => $publication->getName(),
+                'languages' => array_map(function($language) {
+                    return array(
+                        'id' => $language->getId(),
+                        'name' => $language->getName(),
+                    );
+                }, $publication->getLanguages()),
+            );
+        }, $this->publications)); ?>);
+        window.router = new Workspace();
+        Backbone.history.start();
+    });
+})(jQuery);
+</script>
+
 <script type="text/template" id="subscription-list-template">
+<a id="add-new" href="#subscription/new"><?php putGS('Add subscription'); ?></a>
 <table id="subscription-table">
     <thead>
         <tr>
@@ -22,7 +349,7 @@
 </script>
 
 <script type="text/template" id="subscription-row-template">
-<td class="publication"><a href="#subscription/<%= id %>"><%= publication.name %></a></td>
+<td class="publication"><a href="<%= link.href %>"><%= publication.name %></a></td>
 <td class="toPay"><span><%= toPay.toFixed(1) %></span></td>
 <td class="type"><%= type === 'P' ? <?php echo json_encode(getGS('Paid')), ':', json_encode(getGS('Trial')); ?> %></td>
 <td class="active"><%= active ? <?php echo json_encode(getGS('Yes')), ':', json_encode(getGS('No')); ?> %></td>
@@ -74,305 +401,4 @@
     <dd><button><?php putGS('Save'); ?></button></dd>
 </dl>
 </form>
-</script>
-
-<script type="text/template" id="edit-subscription-template">
-<h1>Edit subscription sections</h1>
-<button id="add-sections"><?php putGS('Add section'); ?></button>
-<button id="edit-all-sections"><?php putGS('Edit all sections'); ?></button>
-<table id="sections"><tbody></tbody></table>
-</script>
-
-<script type="text/javascript">
-(function($) {
-    var Publication = Backbone.Model.extend({
-    });
-
-    var PublicationCollection = Backbone.Collection.extend({model: Publication});
-
-    var Subscription = Backbone.Model.extend({
-        defaults: {
-            publication: null,
-            start_date: <?php echo json_encode(date('Y-m-d')); ?>,
-            type: '',
-            days: 1,
-            active: true,
-            user: <?php echo json_encode($this->user); ?>,
-            toPay: 0.0,
-            add_sections: false,
-            individual_languages: false,
-            languages: [],
-            active: false
-        },
-
-        validate: function(attrs) {
-            if (!attrs.start_date) {
-                throw "Provide start date";
-            }
-
-            if (!attrs.days || attrs.days < 1) {
-                throw "Days must be > 0";
-            }
-
-            if (attrs.individual_languages && attrs.languages.length == 0) {
-                throw "You must select a languages for individual subscription.";
-            }
-        }
-    });
-
-    var SubscriptionCollection = Backbone.Collection.extend({
-        model: Subscription,
-        url: <?php echo json_encode($this->url(array('module' => 'admin', 'controller' => 'subscription-rest'), 'rest')); ?>
-    });
-
-    var Section = Backbone.Model.extend({
-    });
-
-    var SectionCollection = Backbone.Collection.extend({
-        model: Section
-    })
-
-    var ToPayView = Backbone.View.extend({
-        events: {
-            'click button': 'save'
-        },
-
-        render: function() {
-            this.input = $('<input type="text" name="toPay" />').val(this.model.get('toPay').toFixed(1)).appendTo($(this.el)).focus();
-            $('<button />').text("Ok").appendTo($(this.el));
-            return this;
-        },
-
-        save: function() {
-            this.model.save({toPay: parseFloat(this.input.val())});
-            $(this.el).parent().text(this.model.get('toPay').toFixed(1));
-            this.remove();
-        }
-    });
-
-    var SubscriptionRowView = Backbone.View.extend({
-        tagName: "tr",
-        template: _.template($('#subscription-row-template').html()),
-
-        events: {
-            'click .toPay > span': 'setToPay',
-            'click .active': 'toggleActive',
-            'click .delete': 'delete'
-            
-        },
-
-        initialize: function() {
-            this.model.bind('change', this.render, this);
-            this.model.bind('sync', this.render, this);
-        },
-
-        render: function() {
-            $(this.el).html(this.template(this.model.toJSON()));
-
-            if (this.model.get('active')) {
-                $(this.el).addClass('active');
-            } else {
-                $(this.el).removeClass('active');
-            }
-
-            return this;
-        },
-
-        setToPay: function() {
-            view = new ToPayView({model: this.model, row: this});
-            $(this.el).find('.toPay').html(view.render().el);
-        },
-
-        toggleActive: function() {
-            this.model.save({active: !this.model.get('active')});
-        },
-
-        delete: function() {
-            this.model.destroy();
-            this.collection.remove(this.model);
-        }
-    });
-
-    var TableView = Backbone.View.extend({
-        template: _.template($('#subscription-list-template').html()),
-
-        initialize: function() {
-            this.collection.bind('remove', this.render, this);
-            this.collection.bind('add', this.render, this);
-        },
-
-        render: function() {
-            $(this.el).html(this.template());
-
-            var collection = this.collection;
-            var tbody = $(this.el).find('tbody').empty();
-            this.collection.each(function(subscription) {
-                view = new SubscriptionRowView({model: subscription, collection: collection});
-                tbody.append(view.render().el);
-            });
-
-            if (this.collection.length === 0) {
-                tbody.html('<tr><td colspan="5">' + <?php echo json_encode(getGS('No subscriptions')); ?> + '</td></tr>');
-            }
-
-            return this;
-        }
-    });
-
-    var PublicationSelectView = Backbone.View.extend({
-    });
-
-
-    var EditView = Backbone.View.extend({
-        template: _.template($('#edit-subscription-template').html()),
-
-        initialize: function() {
-            this.collection.bind('add', this.renderTable, this);
-            this.collection.bind('remove', this.renderTable, this);
-        },
-
-        render: function() {
-            $(this.el).html(this.template(this.model.toJSON()));
-
-            this.renderTable();
-
-            return this;
-        },
-
-        renderTable: function() {
-            var table = $(this.el).find('tbody');
-            this.collection.each(function(section) {
-                var view = new SectionView({model: section});
-                table.append(view.render().el);
-            });
-        }
-    });
-
-    var AddView = Backbone.View.extend({
-        template: _.template($('#new-subscription-template').html()),
-
-        events: {
-            'click button': 'save',
-            'change #pubs': 'renderLanguages',
-            'change #il': 'toggleLanguages'
-        },
-
-        render: function(publications) {
-            this.options.publications = publications;
-
-            $(this.el).html(this.template());
-
-            var select = $(this.el).find('select[name="publication"]');
-            this.options.publications.each(function(publication) {
-                select.append($('<option />').attr('value', publication.get('id')).text(publication.get('name')));
-            });
-
-            this.renderLanguages();
-
-            return this;
-        },
-
-        renderLanguages: function() {
-            var select = $(this.el).find('select[name="languages"]').empty();
-            var selectedId = $(this.el).find('select[name="publication"]').val();
-            this.options.publications.each(function(publication) {
-                if (publication.get('id') == selectedId) {
-                    _.each(publication.get('languages'), function(language) {
-                        select.append($('<option />').attr('value', language.id).text(language.name));
-                    });
-                }
-            });
-        },
-
-        save: function(e) {
-            e.preventDefault();
-
-            window.subscriptions.create({
-                publication: $(this.el).find('select[name="publication"]').val(),
-                active: $(this.el).find('input[name="active"]:checked').size() == 1,
-                start_date: $(this.el).find('input[name="start_date"]').val(),
-                type: $(this.el).find('select[name="type"]').val(),
-                days: parseInt($(this.el).find('input[name="days"]').val()),
-                add_sections: $(this.el).find('input[name="add_sections"]:checked').val() == 'true',
-                individual_languages: $(this.el).find('input[name="individual_languages"]:checked').val() == 'true',
-                languages: $(this.el).find('select[name="languages"]').val() || []
-            }, {wait: true});
-
-            router.navigate('', true);
-        },
-
-        toggleLanguages: function(e) {
-            if (e.target.checked) {
-                $(this.el).find('select[name="languages"]').show();
-            } else {
-                $(this.el).find('select[name="languages"]').hide();
-            }
-        }
-    });
-
-    var Workspace = Backbone.Router.extend({
-        routes: {
-            'subscription/new': 'new',
-            'subscription/:id': 'edit',
-            '': 'index'
-        },
-
-        initialize: function() {
-            this.tableView = new TableView({collection: window.subscriptions});
-            this.addView = new AddView();
-        },
-
-        index: function() {
-            $('#app').html(this.tableView.render().el);
-        },
-
-        'new': function() {
-            var subscribed = window.subscriptions.map(function(subscription) {
-                return subscription.get('publication').id;
-            }) || [];
-
-            var available = new PublicationCollection();
-            window.publications.each(function(publication) {
-                if (subscribed.indexOf(publication.get('id')) === -1) {
-                    available.add(publication);
-                }
-            });
-
-            if (available.length !== 0) {
-                $('#app').html(this.addView.render(available).el);
-            } else {
-                alert(<?php echo json_encode(getGS("You have subscription for all available publications")); ?>);
-                this.navigate('');
-            }
-        },
-
-        edit: function(id) {
-            var subscription = window.subscriptions.get(id);
-            subscription.fetch({
-                success: function() {
-                    view = new EditView({model: subscription, collection: new SectionCollection(subscription.get('sections'))});
-                    $('#app').html(view.render().el)
-                }
-            });
-        }
-    });
-
-    $(function() {
-        window.subscriptions = new SubscriptionCollection(<?php echo json_encode(array_map(array($this, 'subscriptionJson'), $this->subscriptions)); ?>);
-        window.publications = new PublicationCollection(<?php echo json_encode(array_map(function($publication) {
-            return array(
-                'id' => $publication->getId(),
-                'name' => $publication->getName(),
-                'languages' => array_map(function($language) {
-                    return array(
-                        'id' => $language->getId(),
-                        'name' => $language->getName(),
-                    );
-                }, $publication->getLanguages()),
-            );
-        }, $this->publications)); ?>);
-        window.router = new Workspace();
-        Backbone.history.start();
-    });
-})(jQuery);
 </script>

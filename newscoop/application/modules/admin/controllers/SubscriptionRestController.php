@@ -20,23 +20,7 @@ class Admin_SubscriptionRestController extends Zend_Rest_Controller
     public function getAction()
     {
         $subscription = $this->_helper->service('subscription')->find($this->_getParam('id'));
-        $data = $this->view->subscriptionJson($subscription);
-
-        $data['sections'] = array();
-        foreach ($subscription->getSections() as $section) {
-            $data['sections'][] = array(
-                'id' => $section->getId(),
-                'language' => $section->hasLanguage() ? $section->getLangaugeName() : null,
-                'start' => $section->getStartDate()->format('Y-m-d'),
-                'days' => $section->getDays(),
-                'paid_days' => $section->getPaidDays(),
-                'name' => $this->_helper->service('content.section')->getName($section->getSectionNumber(), $subscription->getPublication(), $section->getLanguage()),
-            );
-        }
-
-        $this->_helper->json($data);
-
-        var_dump('tic'); exit;
+        $this->_helper->json($this->view->subscriptionJson($subscription));
     }
 
     public function postAction()

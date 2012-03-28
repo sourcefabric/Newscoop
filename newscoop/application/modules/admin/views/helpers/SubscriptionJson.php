@@ -19,6 +19,15 @@ class Admin_View_Helper_SubscriptionJson extends Zend_View_Helper_Abstract
                 'id' => $subscription->getPublicationId(),
                 'name' => $subscription->getPublicationName(),
             ),
+            'link' => array(
+                'rel' => 'edit',
+                'href' => $this->view->url(array(
+                    'module' => 'admin',
+                    'controller' => 'subscription',
+                    'action' => 'edit',
+                    'subscription' => $subscription->getId(),
+                ), 'default'),
+            ),
             'toPay' => $subscription->getToPay(),
             'type' => $subscription->getType(),
             'active' => $subscription->isActive(),

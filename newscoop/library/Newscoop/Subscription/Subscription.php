@@ -259,7 +259,7 @@ class Subscription
                     continue;
                 }
 
-                $subSection = new Section($this, $section);
+                $subSection = new Section($this, $section->getNumber());
                 $subSection->setStartDate(new \DateTime($values['start_date']));
                 $subSection->setDays($values['days']);
 
@@ -270,6 +270,25 @@ class Subscription
                 if (!empty($languages)) {
                     $subSection->setLanguage($issue->getLanguage());
                 }
+            }
+        }
+    }
+
+    /**
+     * Set sections
+     *
+     * @param array $values
+     * @return void
+     */
+    public function setSections(array $values)
+    {
+        $ids = array_map(function($section) {
+            return !empty($section['id']) ? $section['id'] : null;
+        }, $values);
+
+        foreach ($this->sections as $key => $section) {
+            if (!in_array($section->getId(), $ids)) {
+                $this->sections->remove($key);
             }
         }
     }

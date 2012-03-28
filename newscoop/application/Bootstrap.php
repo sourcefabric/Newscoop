@@ -199,6 +199,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('subscription', 'Newscoop\Subscription\SubscriptionFacade')
             ->addArgument(new sfServiceReference('em'));
 
+        $container->register('subscription.section', 'Newscoop\Subscription\SectionFacade')
+            ->addArgument(new sfServiceReference('em'));
+
         Zend_Registry::set('container', $container);
         return $container;
     }

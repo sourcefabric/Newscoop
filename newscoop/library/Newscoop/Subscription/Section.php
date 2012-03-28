@@ -67,14 +67,14 @@ class Section
 
     /**
      * @param Newscoop\Subscription\Subscription $subscription
-     * @param Newscoop\Entity\Section $section
+     * @param int $sectionNumber
      */
-    public function __construct(Subscription $subscription, \Newscoop\Entity\Section $section)
+    public function __construct(Subscription $subscription, $sectionNumber)
     {
         $this->subscription = $subscription;
         $this->subscription->addSection($this);
-        $this->sectionNumber = $section->getNumber();
 
+        $this->sectionNumber = (int) $sectionNumber;
         $this->noticeSent = 'N';
         $this->paidDays = 0;
     }
@@ -221,5 +221,40 @@ class Section
     {
         return $this->paidDays;
     }
-}
 
+    /**
+     * Get name
+     *
+     * @return string
+     */
+    public function getName()
+    {
+        if ($this->subscription->getPublication() === null) {
+            return '';
+        }
+
+        foreach ($this->subscription->getPublication()->getIssues() as $issue) {
+            if ($this->hasLanguage() && $issue->getLanguage() !== $this->language) {
+                continue;
+            }
+
+            foreach ($issue->getSections() as $section) {
+                if ($section->getNumber() == $this->sectionNumber) {
+                    return $section->getName();
+                }
+            }
+        }
+
+        return '';
+    }
+
+    /**
+     * Get subscription
+     *
+     * @return Newscoop\Subscription\Subscription
+     */
+    public function getSubscription()
+    {
+        return $this->subscription;
+    }
+}

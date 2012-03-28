@@ -32,6 +32,32 @@ class Admin_SubscriptionController extends Zend_Controller_Action
         $this->view->publications = $this->_helper->service('content.publication')->findAll();
     }
 
+    public function editAction()
+    {
+        $subscription = $this->_helper->service('subscription')->find($this->_getParam('subscription'));
+        $sections = array();
+        foreach ($subscription->getPublication()->getIssues() as $issue) {
+            foreach ($issue->getSections() as $section) {
+                $id = implode(':', array($section->getNumber(), $issue->getLanguage()->getId()));
+                if (array_key_exists($id, $sections)) {
+                    continue;
+                }
+
+                $sections[$id] = array(
+                    'number' => $section->getNumber(),
+                    'name' => $section->getName(),
+                    'language' => array(
+                        'id' => $issue->getLanguage()->getId(),
+                        'name' => $issue->getLanguage()->getName(),
+                    ),
+                );
+            }
+        }
+
+        $this->view->sections = array_values($sections);
+        $this->view->subscription = $subscription;
+    }
+
     public function addAction()
     {
         $subscriber = $this->_helper->entity->get('Newscoop\Entity\User\Subscriber', 'user');
@@ -62,7 +88,7 @@ class Admin_SubscriptionController extends Zend_Controller_Action
         $this->view->form = $form;
     }
 
-    public function editAction()
+    public function _editAction()
     {
         $subscription = $this->_helper->entity->get('Newscoop\Entity\Subscription', 'subscription');
 

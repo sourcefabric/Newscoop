@@ -63,6 +63,18 @@ class SubscriptionFacadeTest extends \TestCase
         $this->assertFalse($subscription->isActive());
     }
 
+    public function testSaveAssignIdPublication()
+    {
+        $subscription = $this->facade->save(array(
+            'user' => 1,
+            'publication' => 1,
+        ));
+
+        $this->assertEquals(1, $subscription->getId());
+        $this->assertEquals($this->publication->getId(), $subscription->getPublicationId());
+        $this->assertEquals($this->publication->getName(), $subscription->getPublicationName());
+    }
+
     public function testSaveUpdate()
     {
         $subscription = $this->facade->save(array(

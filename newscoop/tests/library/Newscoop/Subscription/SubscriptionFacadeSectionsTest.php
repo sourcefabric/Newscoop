@@ -39,13 +39,13 @@ class SubscriptionFacadeSectionsTest extends \TestCase
 
         $issue = new Issue(1, $this->publication, $this->language);
         $this->orm->persist($issue);
-        $this->orm->persist(new Section(1, '1', $issue));
-        $this->orm->persist(new Section(2, '2', $issue));
+        $this->orm->persist(new Section(1, 'sec1', $issue));
+        $this->orm->persist(new Section(2, 'sec2', $issue));
         $this->orm->flush();
 
         $issue2 = new Issue(2, $this->publication, $this->anotherLanguage);
         $this->orm->persist($issue2);
-        $this->orm->persist(new Section(21, '21', $issue2));
+        $this->orm->persist(new Section(21, 'sec21', $issue2));
         $this->orm->flush();
 
         $this->assertEquals(2, count($this->publication->getIssues()));
@@ -78,6 +78,7 @@ class SubscriptionFacadeSectionsTest extends \TestCase
             $this->assertEquals(self::DAYS, $section->getPaidDays());
             $this->assertEquals(self::DATE, $section->getStartDate()->format('Y-m-d'));
             $this->assertFalse($section->hasLanguage());
+            $this->assertContains($section->getName(), array('sec1', 'sec2', 'sec21'));
         }
     }
 

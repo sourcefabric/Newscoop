@@ -1,3 +1,351 @@
-<?php $this->placeholder('title')->set(getGS('Edit subscription')); ?>
+<?php $this->placeholder('title')->set(getGS('Subscriptions')); ?>
 
-<?php echo $this->form; ?>
+
+<div id="app">
+</div>
+
+<script type="text/javascript">
+(function($) {
+    /**
+     * Section model
+     */
+    var Section = Backbone.Model.extend({
+    });
+
+    /**
+     * Section collection
+     */
+    var SectionCollection = Backbone.Collection.extend({
+        model: Section,
+
+        availableSections: function(subscribedSections, language_set) {
+            var available = [];
+            this.each(function(section) {
+                if (subscribedSections.where({section_number: section.get('number'), language_id: null}).length) { // contains section for any language
+                    return;
+                }
+
+                if (language_set == 'select' && subscribedSections.where({section_number: section.get('number'), language_id: section.get('language').id}).length) {
+                    return;
+                }
+
+                available.push(section);
+            });
+
+            return available;
+        },
+
+        comparator: function(section) {
+            return section.get('number');
+        },
+
+        findSectionName: function(number) {
+            var matches = this.where({number: number});
+            return matches.length ? matches[0].get('name') : '';
+        },
+
+        findLanguageName: function(id) {
+            for (var i = 0; i < this.length; i++) {
+                var section = this.at(i);
+                for (var j = 0; j < section.get('languages').length; j++) {
+                    var language = section.get('languages')[j];
+                    if (language.id == id) {
+                        return language.name;
+                    }
+                }
+            }
+
+            return '';
+        }
+    });
+
+    /**
+     * Subscription section model
+     */
+    var SubscriptionSection = Backbone.Model.extend({
+        initialize: function() {
+            this.set('section_number', this.get('section').number);
+            this.set('language_id', this.get('language') ? this.get('language').id : null);
+        },
+
+        validate: function(attr) {
+            if (attr.days < 1) {
+                throw <?php echo json_encode(getGS("Days must be bigger than 0")); ?>;
+            }
+        },
+
+        defaults: {
+            subscription: <?php echo json_encode($this->subscription->getId()); ?>
+        },
+
+        comparator: function(section) {
+            return section.get('section').number;
+        }
+    });
+
+    /**
+     * Subscription section collection
+     */
+    var SubscriptionSectionCollection = Backbone.Collection.extend({
+        model: SubscriptionSection,
+        url: <?php echo json_encode($this->url(array('module' => 'admin', 'controller' => 'subscription-section-rest'), 'rest')); ?>
+    });
+
+    /**
+     * Section row view
+     */
+    var SectionView = Backbone.View.extend({
+        tagName: 'tr',
+
+        events: {
+            'click button.delete': 'delete',
+            'blur input': 'update'
+        },
+
+        initialize: function() {
+            this.template = _.template($('#section-row-template').html());
+            this.model.bind('change', this.render, this);
+        },
+
+        render: function() {
+            $(this.el).html(this.template(this.model.toJSON()));
+            return this;
+        },
+
+        delete: function() {
+            this.model.destroy();
+            this.remove();
+        },
+
+        update: function(e) {
+            var attributes = {};
+            attributes[$(e.target).attr('name')] = $(e.target).val();
+            this.model.save(attributes);
+        }
+    });
+
+    /**
+     * Section list view
+     */
+    var TableView = Backbone.View.extend({
+        initialize: function() {
+            this.template = _.template($('#table-view-template').html());
+            this.collection.bind('remove', this.render, this);
+            this.collection.bind('add', this.render, this);
+        },
+
+        render: function() {
+            $(this.el).html(this.template());
+
+            var tbody = $(this.el).find('tbody').empty();
+            this.collection.each(function(section) {
+                var view = new SectionView({model: section});
+                tbody.append(view.render().el);
+            });
+
+            return this;
+        }
+    });
+
+    /**
+     * Section edit view
+     */
+    var EditView = Backbone.View.extend({
+        events: {
+            'change #language_set': 'setSections',
+            'click button': 'save'
+        },
+
+        initialize: function() {
+            this.template = _.template($('#edit-view-template').html());
+        },
+
+        render: function() {
+            $(this.el).html(this.template());
+            this.setSections();
+            return this;
+        },
+
+        setSections: function() {
+            console.log(JSON.stringify(this.collection));
+            var language_set = $(this.el).find('#language_set').val();
+            var sections = $(this.el).find('#sections').empty();
+            var availableSections = window.sections.availableSections(this.collection, language_set);
+            _.each(availableSections, function(section) {
+                var text = [section.get('number'), section.get('name')];
+                var id = [section.get('number')];
+                if (language_set == 'select') {
+                    text.push('(' + section.get('language').name + ')');
+                    id.push(section.get('language').id);
+                } else if (sections.find('option[value="' + section.get('number') + '"]').size()) {
+                    return;
+                }
+
+                $('<option />').val(id.join(':')).text(text.join(' ')).appendTo(sections);
+            });
+        },
+
+        save: function() {
+            var days = $(this.el).find('#days').val();
+            var start = $(this.el).find('#start').val();
+            var collection = this.collection;
+            $(this.el).find('select[name="sections"] > option:selected').each(function() {
+                var number = parseInt($(this).val().split(':', 2)[0]);
+                var language = parseInt($(this).val().split(':', 2)[1]) || null;
+
+                if (language == null) {
+                    var matches = collection.where({section_number: number});
+                    for (var i = 0; i < matches.length; i++) {
+                        collection.get(matches[i].id).destroy();
+                    }
+                }
+
+                try {
+                    collection.create({
+                        section: {
+                            number: number,
+                        },
+                        language: language ? {
+                            id: language,
+                        } : null,
+                        days: days,
+                        startDate: start,
+                        paidDays: days
+                    }, {wait: true});
+                    window.router.navigate('', true);
+                } catch (err) {
+                    alert(err);
+                }
+            });
+        }
+    });
+
+    var EditAllView = Backbone.View.extend({
+        events: {
+            'click button': 'save'
+        },
+
+        initialize: function() {
+            this.template = _.template($('#edit-all-view-template').html());
+        },
+
+        render: function() {
+            $(this.el).html(this.template());
+            return this;
+        },
+
+        save: function(e) {
+            var start = $(this.el).find('#start-date').val();
+            var days = parseInt($(this.el).find('#days').val());
+            var paidDays = parseInt($(this.el).find('#paid-days').val());
+            this.collection.each(function(section) {
+                section.save({
+                    startDate: start,
+                    days: days,
+                    paidDays: paidDays
+                });
+            });
+            window.router.navigate('', true);
+        }
+    });
+
+    var Workspace = Backbone.Router.extend({
+        routes: {
+            'section/new': 'edit',
+            'section/:id': 'edit',
+            'sections': 'edit-all',
+            '': 'index'
+        },
+
+        initialize: function() {
+            this.tableView = new TableView({collection: window.subscriptionSections});
+        },
+
+        index: function() {
+            $('#app').html(this.tableView.render().el);
+        },
+
+        edit: function(id) {
+            var view = new EditView({collection: window.subscriptionSections});
+            $('#app').html(view.render().el);
+        },
+
+        'edit-all': function() {
+            var view = new EditAllView({collection: window.subscriptionSections});
+            $('#app').html(view.render().el);
+        }
+    });
+
+    $(function() {
+        window.subscriptionSections = new SubscriptionSectionCollection(<?php echo json_encode(array_map(array($this, 'subscriptionSectionJson'), $this->subscription->getSections()->toArray())); ?>);
+        window.sections = new SectionCollection(<?php echo json_encode($this->sections); ?>);
+        window.router = new Workspace();
+        Backbone.history.start();
+    });
+})(jQuery);
+</script>
+
+<script type="text/template" id="table-view-template">
+
+<a href="#section/new"><?php putGS('Add section'); ?></a> | <a href="#sections"><?php putGS('Edit all sections'); ?></a>
+
+<table id="sections">
+<thead>
+    <tr>
+        <th><?php putGS('Section'); ?></th>
+        <th><?php putGS('Language'); ?></th>
+        <th><?php putGS('Start Date'); ?><br /><small>(yyyy-mm-dd)</small></th>
+        <th><?php putGS('Days'); ?></th>
+        <th><?php putGS('Paid days'); ?></th>
+        <th>&nbsp;</th>
+    </tr>
+</thead>
+<tbody></tbody></table>
+</script>
+
+<script type="text/template" id="section-row-template">
+<td><%= section.name %></td>
+<td><%= language ? language.name : <?php echo json_encode(getGS('Any')); ?> %></td>
+<td><input type="text" name="startDate" class="start-date" value="<%= startDate %>" /></td>
+<td><input type="number" name="days" class="days" min="1" value="<%= days %>" /></td>
+<td><input type="number" name="paidDays" class="paid-days" min="0" value="<%= paidDays %>" /></td>
+<td><button class="delete"><?php putGS('Delete'); ?></button></td>
+</script>
+
+<script type="text/template" id="edit-view-template">
+<dl>
+    <dt><label for="language_set"><?php putGS('Languages:'); ?></dt>
+    <dd><select id="language_set" name="language_set">
+        <option value="select"><?php putGS('Individual languages'); ?></option>
+        <option value="all"><?php putGS('Regardless of the language'); ?></option>
+    </select></dd>
+    
+    <dt><label for="sections"><?php putGS('Sections:'); ?></dt>
+    <dd><select id="sections" name="sections" multiple size="5"></select></dd>
+
+    <dt><label for="start"><?php putGS('Start:'); ?></dt>
+    <dd><input type="date" id="start" name="start" value="<?php echo date('Y-m-d'); ?>" /></dd>
+
+    <dt><label for="days"><?php putGS('Days:'); ?></dt>
+    <dd><input type="number" min="1" name="days" id="days" /></dd>
+
+    <dt></dt>
+    <dd><button><?php putGS('Save'); ?></button></dd>
+</dl>
+</script>
+
+<script type="text/template" id="edit-all-view-template">
+<dl>
+    <dt><label for="start-date"><?php putGS('Start:'); ?></dt>
+    <dd><input type="date" id="start-date" name="start" value="<?php echo date('Y-m-d'); ?>" /></dd>
+
+    <dt><label for="days"><?php putGS('Days:'); ?></dt>
+    <dd><input type="number" min="1" name="days" id="days" /></dd>
+
+    <dt><label for="paid-days"><?php putGS('Paid Days:'); ?></dt>
+    <dd><input type="number" min="1" name="paidDays" id="paid-days" /></dd>
+
+    <dt></dt>
+    <dd><button><?php putGS('Save'); ?></button></dd>
+</dl>
+</script>
