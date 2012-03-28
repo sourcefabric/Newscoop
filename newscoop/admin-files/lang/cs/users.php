@@ -1,5 +1,5 @@
 <?php 
-regGS("Templates", "");
+regGS("Templates", "Šablony");
 regGS("Username", "Uživatelské jméno");
 regGS("Public profile", "Veřejný profil");
 regGS("Last Name", "Přijmení");
@@ -19,7 +19,7 @@ regGS("Newscoop Subhead", "Podtitul Newscoop");
 regGS("Edit staff member $1", "Upravit zaměstnance '$1'");
 regGS("Delete staff member $1", "Vymazat zaměstnance '$1'");
 regGS("Could not save user '$1'. Please make sure it doesn't already exist", "Nebylo možné uložit uživatele '$1'. Prosím, ujistěte se, že takový již neexistuje.");
-regGS("Changing user type would prevent you to manage users. Aborted.", "");
+regGS("Changing user type would prevent you to manage users. Aborted.", "Změna uživatelského typu by vám bránila v řízení uživatelů. Zrušeno.");
 regGS("Accout Name", "Název účtu");
 regGS("Filters", "Filtry");
 regGS("Add new Author", "Přidat nového autora");

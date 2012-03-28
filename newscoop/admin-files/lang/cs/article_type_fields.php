@@ -1,5 +1,5 @@
 <?php 
-regGS("Event Color", "");
+regGS("Event Color", "Barva události");
 regGS("You must input a number greater than $1 and less than $2 into the $3 field.", "Musíte vložit číslo větší než  $1 a menší než  $2 do políčka  $3.");
 regGS("You do not have the right to translate article types.", "Nemáte oprávnění k překladání těchto typů článků.");
 regGS("You do not have the right to reorder article types.", "Nemáte oprávnění k reorganizovat tyto typy článků.");

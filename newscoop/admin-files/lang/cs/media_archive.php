@@ -1,5 +1,5 @@
 <?php 
-regGS("Slideshows", "");
+regGS("Slideshows", "Slideshows");
 regGS("You can't update used files.", "Nemůžete aktualizovat použité soubory.");
 regGS("Source", "Zdroj");
 regGS("Local", "Lokální");

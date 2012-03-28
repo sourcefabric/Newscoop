@@ -15,6 +15,8 @@
       </div><!-- /#maincol -->
         
       <div id="sidebar" class="community fourcol last">
+      
+      {{ include file="_tpl/sidebar-loginbox.tpl" }} 
 
 {{ if !($userindex == 1) }}                  
 {{ if $user->isAuthor() }}
@@ -22,16 +24,35 @@
 <dl class="profile">
     {{ foreach $profile as $label => $value }} 
     {{ if !empty($value) }}
+
+    {{ if $label == "bio" }}
+      <dd>{{ $value }}</dd>
+      
+    {{ elseif $label == "birth_date" }}
+      <dt>Date of birth:</dt>
+      <dd>{{ $value|default:"n/a" }}</dd>
+      
+    {{ elseif $label == "comment_delivered" }}
+      <dt>Comments sent:</dt>
+      <dd>{{ $value|default:"n/a" }}</dd>
+      
+    {{ elseif $label == "comment_recommended" }}
+      <dt>Recommended comments:</dt>
+      <dd>{{ $value|default:"n/a" }}</dd>
     
-    {{ if $label == "website" }}
-      <dt>{{ $label }}:</dt>
+    {{ elseif $label == "gender" }}
+      <dt>Gender:</dt>
+      <dd>{{ $value|default:"n/a" }}</dd>
+    
+    {{ elseif $label == "organisation" }}
+      <dt>Organisation:</dt>
+      <dd>{{ $value|default:"n/a" }}</dd>
+    
+    {{ elseif $label == "website" }}
+      <dt>Website:</dt>
       <dd><a rel="nofollow" href="http://{{ $profile['website']|escape:url }}">{{ $profile['website']|escape }}</a></dd>
-    {{ else }}       
+    {{ /if }}       
        
-    {{ if !($label == "bio") }}<dt>{{ $label }}:</dt>{{ /if }}
-    <dd>{{ $value|default:"n/a" }}</dd>
-    
-    {{ /if }}
     {{ /if }}
     {{ /foreach }}
 </dl>

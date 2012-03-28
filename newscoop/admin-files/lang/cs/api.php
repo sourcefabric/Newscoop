@@ -1,8 +1,8 @@
 <?php 
 regGS("Not a color", "");
 regGS("No such field", "");
-regGS("Color saved", "");
-regGS("Color not saved", "");
+regGS("Color saved", "Barva uložena");
+regGS("Color not saved", "Barva neuložena");
 regGS("Topic created", "Námět vytvořen");
 regGS("The topic name is already in use by another topic.", "Název námětu je již užíván u jiného námětu.");
 regGS("Complex Date", "Komplexní datum");

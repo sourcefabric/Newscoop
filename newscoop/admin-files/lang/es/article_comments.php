@@ -1,9 +1,9 @@
 <?php 
-regGS("Unrecommend", "");
-regGS("Save comment", "");
-regGS("Recommend", "");
-regGS("Comment updated.", "");
-regGS("Comment saved.", "");
+regGS("Unrecommend", "No recomendar");
+regGS("Save comment", "Guardar comentario");
+regGS("Recommend", "Recomendar");
+regGS("Comment updated.", "Comentario actualizado");
+regGS("Comment saved.", "Comentario guardado");
 regGS("Comments updated.", "Se actualizaron los comentarios.");
 regGS("Post a Comment", "Publicar un comentario");
 regGS("From", "De");

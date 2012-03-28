@@ -1,7 +1,7 @@
 <?php 
-regGS("Multi date events", "");
-regGS("Slideshows", "");
-regGS("Place images", "");
+regGS("Multi date events", "Eventos con múltiples fechas");
+regGS("Slideshows", "Diapositivas");
+regGS("Place images", "Colocar imágenes");
 regGS("You're not allowed to edit article.", "No tiene permitido editar un artículo.");
 regGS("Webcode", "Webcode");
 regGS("Unapproved", "No aprobado");
@@ -17,12 +17,12 @@ regGS("Article Playlist", "Lista de reproducción de artículos");
 regGS("Add article to a playlist", "Añadir artículo a la lista de reproducción");
 regGS("On", "Encendido");
 regGS("Off", "Apagado");
-regGS("You do not have the right to moderate comments.", "");
-regGS("You can not schedule opposing events at the same time", "");
-regGS("Unable to reach Newscoop. Please check your internet connection.", "");
-regGS("Title", "");
-regGS("There already is an article with the same name. Please change the name and try again.", "");
-regGS("Please be aware that all scheduled publishing events for this article will be deleted when you set this article to \"New\" state. Please confirm the state change.", "");
+regGS("You do not have the right to moderate comments.", "No tienes autorización para moderar comentarios.");
+regGS("You can not schedule opposing events at the same time", "No puedes asignar eventos opuestos en el mismo horario");
+regGS("Unable to reach Newscoop. Please check your internet connection.", "No se pudo conectar a Newscoop. Por favor, verifica tu conexión a Internet.");
+regGS("Title", "Título");
+regGS("There already is an article with the same name. Please change the name and try again.", "Ya existe un archivo con ese nombre. Por favor, cámbialo e intenta de nuevo.");
+regGS("Please be aware that all scheduled publishing events for this article will be deleted when you set this article to \"New\" state. Please confirm the state change.", "Por favor, recuerda que todos los eventos de publicación calendarizados para este artículo serán eliminados cuando cambies el estado a 'Nuevo\". Confirma el cambio de estado.");
 regGS("Geolocation", "Geolocalización");
 regGS("Newscoop", "Newscoop");
 regGS("Overwrite articles with matching names", "Sobreescribir artículos con nombres idénticos");
@@ -164,4 +164,7 @@ regGS("No such section.", "No existe sección");
 regGS("Reorder", "");
 regGS("Author", "");
 regGS("Are you sure you want to delete this scheduled action?", "");
+regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "¿Está seguro de que desea eliminar el tópico \\'$1\\' del artículo?");
+regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "¿Está seguro de que desea eliminar el archivo \\'$1\\' del artículo?");
+regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "¿Está seguro de que desea eliminar la imagen \\'$1\\' del artículo?");
 ?>

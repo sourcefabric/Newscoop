@@ -12,5 +12,5 @@ regGS("To use this plugin you need", "Pro použití tohoto pluginu potřebujete"
 regGS("Enter your reCAPTCHA public key", "Zadejte svů reCAPTCHA veřejný klíč");
 regGS("Enter your reCAPTCHA private key", "Zadejte svůj reCAPTCHA soukrový klíč");
 regGS("Enable reCAPTCHA for comments", "Umožnit reCAPTCHA pro komentáře");
-regGS("Enable it and input the reCAPTCHA key in the form below. If you do not have yet your key, you can create it", "");
+regGS("Enable it and input the reCAPTCHA key in the form below. If you do not have yet your key, you can create it", "Umožnit a zadat reCAPTCHA klíč do formuláře dole. Pokud nemáte ještě svůj klíč můžete si ho vytvořit.");
 ?>
