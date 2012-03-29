@@ -70,3 +70,14 @@
 	border-bottom:1px solid #b2b2b2;
 	margin-bottom:-1px;
 }
+
+.slideshow-list .info {
+    display: inline-block;
+    min-height: 13px;
+    margin-top: -10px;
+    position: relative;
+    top: 10px;
+    font-size: 11px;
+    font-style: italic;
+    color: #7c7c7c;
+}

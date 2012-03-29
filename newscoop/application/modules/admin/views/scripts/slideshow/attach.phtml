@@ -43,6 +43,7 @@
     <span class="video"></span>
     <% } %>
 </div>
+<span class="info"></span>
 </script>
 <?php echo $this->render('paginator-template.phtml'); ?>
 
@@ -104,6 +105,8 @@
 
         events: {
             'click': 'action',
+            'mouseout': 'removeHint',
+            'mouseover': 'addHint'
         },
 
         initialize: function() {
@@ -114,16 +117,28 @@
         render: function() {
             $(this.el).html(this.template(this.model.toJSON()));
             return this;
+        },
+
+        addHint: function() { // no-op
+            $(this.el).find('.info').text(this.hint ? this.hint : '');
+        },
+
+        removeHint: function() {
+            $(this.el).find('.info').text('');
         }
     });
 
     var AddSlideshowView = SlideshowView.extend({
+        hint: <?php echo json_encode(getGS('Attach')); ?>,
+
         action: function() {
             this.model.addToArticle(window.article);
         }
     });
 
     var RemoveSlideshowView = SlideshowView.extend({
+        hint: <?php echo json_encode(getGS('Detach')); ?>,
+
         action: function() {
             this.model.removeFromArticle(window.article);
         }
