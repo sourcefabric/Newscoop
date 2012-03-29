@@ -207,7 +207,15 @@ class Admin_SlideshowController extends Zend_Controller_Action
         $paginator = Zend_Paginator::factory($this->_helper->service('package')->getCountBy(array()));
         $paginator->setItemCountPerPage($limit);
         $paginator->setCurrentPageNumber(1);
-        $this->view->slideshows = $this->_helper->service('package')->findBy(array(), array('id' => 'desc'), $limit, 0);
+
+        $this->view->q = '';
+        if ($this->_getParam('q', false)) {
+            $this->view->slideshows = $this->_helper->service('package.search')->find($this->_getParam('q'));
+            $this->view->q = $this->_getParam('q');
+            $this->view->article_number = $this->_getParam('article_number');
+        } else {
+            $this->view->slideshows = $this->_helper->service('package')->findBy(array(), array('id' => 'desc'), $limit, 0);
+        }
         $this->view->pages = $paginator->count();
 
         $this->view->article = array(

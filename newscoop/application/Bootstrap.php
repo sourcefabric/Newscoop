@@ -196,6 +196,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('image'));
 
+        $container->register('package.search', 'Newscoop\Package\PackageSearchService')
+            ->addArgument(new sfServiceReference('em'));
+
         $container->register('subscription', 'Newscoop\Subscription\SubscriptionFacade')
             ->addArgument(new sfServiceReference('em'));
 
