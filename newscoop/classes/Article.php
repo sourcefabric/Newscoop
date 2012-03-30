@@ -791,9 +791,9 @@ class Article extends DatabaseObject {
         } else {
             $this->setProperty('LockUser', '0', false);
             $this->setProperty('LockTime', '0', false);
-            $this->commit();
         }
         $this->setProperty('time_updated', $lastModified);
+        $this->commit();
     } // fn setIsLocked
 
 
