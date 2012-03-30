@@ -1379,6 +1379,15 @@ LOCK TABLES `user_subscription` WRITE;
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `user_topic`
+--
+
+LOCK TABLES `user_topic` WRITE;
+/*!40000 ALTER TABLE `user_topic` DISABLE KEYS */;
+/*!40000 ALTER TABLE `user_topic` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `user_token`
 --
 

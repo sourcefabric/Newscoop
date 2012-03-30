@@ -235,6 +235,15 @@ CREATE TABLE `user_subscription` (
    PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
+-- User topics table
+DROP TABLE IF EXISTS `user_topic`;
+CREATE TABLE `user_topic` (
+  `user_id` int(11) unsigned NOT NULL,
+  `topic_id` int(11) unsigned NOT NULL,
+  `topic_language` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`user_id`,`topic_id`,`topic_language`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 -- Article playlist tables 
 DROP TABLE IF EXISTS `playlist`;
 CREATE TABLE `playlist` (

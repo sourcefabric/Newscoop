@@ -2682,4 +2682,18 @@ CREATE TABLE `user_token` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Table structure for table `user_topic`
+--
+DROP TABLE IF EXISTS `user_topic`
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `user_topic` (
+  `user_id` int(11) unsigned NOT NULL,
+  `topic_id` int(11) unsigned NOT NULL,
+  `topic_language` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`user_id`,`topic_id`,`topic_language`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
 -- Dump completed on 2012-03-15 11:02:44
