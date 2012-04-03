@@ -26,9 +26,10 @@ if (!SystemPref::get('installation_id')) {
     SystemPref::set('installation_id', $installationId);
 }
 
-if (!SystemPref::get('support_send') && SystemPref::get('stat_ask_time') + 60*60*24*7 <= time()) {
+if (!SystemPref::get('support_send') && SystemPref::get('stat_ask_time') + 60*60*24*7 <= time() && !$_SESSION['statDisplayed']) {
+    $statUrl = $Campsite['WEBSITE_URL'].'/admin/support/popup';
     ?>
-    <a style="display: none;" id="dummy_stat_link" href="<?php echo $Campsite['WEBSITE_URL']; ?>/admin/support/popup"></a>
+    <a style="display: none;" id="dummy_stat_link" href="<?php echo($statUrl); ?>"></a>
     <?php
 }
 
@@ -92,15 +93,33 @@ $(function() {
 <script src="<?php echo $Campsite['WEBSITE_URL']; ?>/js/jquery/jquery.cookie.js" type="text/javascript"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+    $('#dummy_stat_link').fancybox({
+        showCloseButton: true,
+        overlayShow: true,
+        hideOnOverlayClick: false,
+        hideOnContentClick: false,
+        enableEscapeButton: false,
+        centerOnScroll: true,
+        onClosed: function() {
+            $.get("<?php echo($Campsite['WEBSITE_URL'].'/admin/support/close'); ?>");
+        },
+        overlayOpacity: 0.8,
+        overlayColor: '#666',
+        onStart: function(){
+            $("#fancybox-overlay").css({
+                'background-color': '#666',
+                opacity: 0.8,
+                height: $(document).height()
+            }).show();
+        }
+    }).trigger('click');
+    
     $('.context').widgets({
         localizer: {
             remove: '<?php putGS('Remove widget'); ?>',
             info: '<?php putGS('Widget info'); ?>',
         }
     });
-    $('#dummy_stat_link').fancybox({
-        'modal' : true
-    }).trigger('click');
 });
 </script>
 

@@ -21,6 +21,8 @@ class Admin_AuthController extends Zend_Controller_Action
         if ($auth->hasIdentity()) {
             Article::UnlockByUser((int) $auth->getIdentity());
             $auth->clearIdentity();
+            
+            unset($_SESSION['statDisplayed']);
         }
 
         $this->_helper->FlashMessenger(getGS('You were logged out.'));

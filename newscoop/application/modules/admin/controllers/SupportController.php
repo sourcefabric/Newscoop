@@ -58,5 +58,12 @@ class Admin_SupportController extends Zend_Controller_Action
         
         $this->render('index');
     }
+    
+    public function closeAction()
+    {
+        $this->_helper->layout->setLayout('iframe');
+        
+        $_SESSION['statDisplayed'] = 1;
+    }
 }
 
