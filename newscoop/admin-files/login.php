@@ -180,8 +180,8 @@ if (file_exists($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/demo_login.php")) {
     <?php if ($error_code != "upgrade") { ?>
     <input type="text" name="f_user_name" size="32" class="input_text" alt="blank" style="width:250px;" emsg="<?php putGS("Please enter your user name."); ?>" />
     <?php } else { ?>
-    <input type="hidden" name="f_user_name" value="<?php p($f_user_name); ?>" />
-    <?php echo p(htmlspecialchars($f_user_name)); ?>
+    <input type="hidden" name="f_user_name" value="<?php p(htmlspecialchars($f_user_name, ENT_QUOTES)); ?>" />
+    <?php echo p(htmlspecialchars($f_user_name, ENT_QUOTES)); ?>
     <?php } ?>
   </td>
 </tr>
