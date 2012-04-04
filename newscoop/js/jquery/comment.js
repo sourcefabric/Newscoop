@@ -14,7 +14,7 @@ var datatableCallback = {
     addServerData: function (sSource, aoData, fnCallback) {
         that = datatableCallback;
         for (i in that.serverData) {
-			if (i == 'pending' || i == 'processed' || i == 'starred' || i == 'deleted') {
+			if (i == 'pending' || i == 'processed' || i == 'starred' || i == 'deleted' || i == 'approved' || i == 'hidden') {
 				if (that.serverData[i]) {
 					aoData.push({
 						"name": "sFilter[status][]",
