@@ -61,8 +61,8 @@ if (SystemPref::Get("PasswordRecovery") == 'N') {
 </head>
 <body>
   <form name="login_form" method="post" onsubmit="return <?php camp_html_fvalidate(); ?>;">
-  <input type="hidden" name="email" value="<?php echo $email; ?>" />
-  <input type="hidden" name="token" value="<?php echo $token; ?>" />
+  <input type="hidden" name="email" value="<?php echo htmlentities($email, ENT_QUOTES); ?>" />
+  <input type="hidden" name="token" value="<?php echo htmlentities($token, ENT_QUOTES); ?>" />
   <div class="login_box">
     <div class="logobox"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/sign_big.gif" border="0" alt="" /></div>
     <h2><?php putGS("Password Recovery"); ?></h2>
