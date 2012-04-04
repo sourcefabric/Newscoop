@@ -835,7 +835,7 @@ class DatabaseObject
 			foreach ($p_columns as $item) {
 				if (count($item) == 2) {
 					list($columnName, $value) = $item;
-					$contraints[] = "`$columnName`='$value'";
+					$contraints[] = "`$columnName`='" . mysql_real_escape_string($value) . "'";
 				}
 			}
 			$queryStr .= " WHERE ".implode(" AND ", $contraints);
