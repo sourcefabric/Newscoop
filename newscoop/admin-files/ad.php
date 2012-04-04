@@ -1,10 +1,11 @@
 <?php
-require_once($GLOBALS['g_campsiteDir']."/db_connect.php");
+require_once dirname(__FILE__) . '/../db_connect.php';
+require_once dirname(__FILE__) . '/../classes/Input.php';
+
 camp_load_translation_strings("home");
-require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
+
 $ADReason = Input::Get('ADReason', 'string', getGS('You do not have the right to access this page.'), true);
 $BackLink = Input::Get('Back', 'string', "/$ADMIN/home.php", true);
-
 ?>
 <p>
 <FORM>
@@ -12,7 +13,7 @@ $BackLink = Input::Get('Back', 'string', "/$ADMIN/home.php", true);
 <TABLE BORDER="0" CELLSPACING="0" CELLPADDING="8" class="message_box" ALIGN="CENTER" style="margin-top: 50px; margin-bottom: 50px;">
 <TR>
 	<TD COLSPAN="2">
-		<B><font color="red"><?php  putGS("Error"); ?> </font></B>
+		<B><font color="red"><?php putGS("Error"); ?> </font></B>
 		<HR NOSHADE SIZE="1" COLOR="BLACK">
 	</TD>
 </TR>
@@ -20,7 +21,7 @@ $BackLink = Input::Get('Back', 'string', "/$ADMIN/home.php", true);
 	<TD COLSPAN="2">
 		<BLOCKQUOTE>
 		<font color="red">
-		<li><?php  print htmlspecialchars($ADReason); ?></li>
+		<li><?php print htmlspecialchars($ADReason, ENT_QUOTES); ?></li>
 		</font>
 		</BLOCKQUOTE>
 	</TD>
@@ -28,21 +29,23 @@ $BackLink = Input::Get('Back', 'string', "/$ADMIN/home.php", true);
 <TR>
 	<TD COLSPAN="2" align="center">
 		<DIV ALIGN="CENTER">
-		<!--
-
- 		-->
-		<?php
-			if($BackLink != "/$ADMIN/home.php") {
-				?>
-					<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='<?php p($BackLink); ?>'">
-			<?php } else { ?>
-					<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="window.history.back()">
-		<?php } ?>
+            <INPUT id="ok-button" TYPE="button" class="button" NAME="OK" VALUE="<?php putGS('OK'); ?>" />
+            <script type="text/javascript">
+            $(function() {
+                $('#ok-button').click(function() {
+		            <?php if ($BackLink != "/$ADMIN/home.php") { ?>
+                    location.href = <?php echo json_encode($BackLink); ?>;
+                    <?php } else { ?>
+                    window.history.back();
+                    <?php } ?>
+                });
+            });
+            </script>
 		</DIV>
 	</TD>
 </TR>
 </TABLE>
 </CENTER>
 </FORM>
-
+</p>
 <?php camp_html_copyright_notice(); ?>
