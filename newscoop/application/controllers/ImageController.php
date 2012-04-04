@@ -11,6 +11,21 @@ class ImageController extends Zend_Controller_Action
 {
     const DATE_FORMAT = 'D, d M Y H:i:s \G\M\T';
 
+    /**
+     * @var string
+     */
+    private $path;
+
+    /**
+     * @var array
+     */
+    private $types = array(
+        'png',
+        'gif',
+        'tiff',
+        'bmp',
+    );
+
     public function cacheAction()
     {
         $this->getResponse()->clearHeaders();
@@ -20,9 +35,9 @@ class ImageController extends Zend_Controller_Action
 
         try {
             $image = $this->_helper->service('image')->generateFromSrc($this->_getParam('src'));
-            $this->getResponse()->setBody($image->toString());
-            $this->getResponse()->setHeader('Content-Type', image_type_to_mime_type($image->getFormatFromString($this->getResponse()->getBody())), true);
+            $this->getResponse()->setHeader('Content-Type', $this->getContentType($this->getPath()), true);
             $this->getResponse()->sendHeaders();
+            $this->getResponse()->setBody(file_get_contents($this->getPath()));
         } catch (\Exception $e) {
             $this->getResponse()->clearHeaders();
             $this->getResponse()->setHttpResponseCode(404);
@@ -30,5 +45,45 @@ class ImageController extends Zend_Controller_Action
 
         $this->getResponse()->sendResponse();
         exit;
+    }
+
+    /**
+     * Get image path
+     *
+     * @return string
+     */
+    private function getPath()
+    {
+        if ($this->path === null) {
+            $options = $this->getInvokeArg('bootstrap')->getOptions('image');
+            $this->path = implode('/', array(
+                rtrim($options['image']['cache_path'], '/'),
+                $this->_getParam('src'),
+            ));
+        }
+
+        return $this->path;
+    }
+
+    /**
+     * Get content type for given file
+     *
+     * @param string $path
+     * @return string
+     */
+    private function getContentType($path)
+    {
+        if (file_exists($path)) {
+            $info = getimagesize($path);
+            return $info['mime'];
+        }
+
+        foreach ($this->types as $type) {
+            if (preg_match("/\.{$type}\$/i", $src)) {
+                return "image/{$type}";
+            }
+        }
+
+        return 'image/jpeg';
     }
 }

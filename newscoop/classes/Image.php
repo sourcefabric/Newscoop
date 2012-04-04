@@ -714,6 +714,8 @@ class Image extends DatabaseObject
 	public static function ResizeImage($p_image, $p_maxWidth, $p_maxHeight,
 	                                   $p_keepRatio = true, $type = IMAGETYPE_JPEG)
 	{
+        require_once APPLICATION_PATH . '/../library/Nette/Image.php';
+
 		$origImageWidth = imagesx($p_image);
 		$origImageHeight = imagesy($p_image);
 		if ($origImageWidth <= 0 || $origImageHeight <= 0) {
@@ -740,22 +742,14 @@ class Image extends DatabaseObject
 			$newImageHeight = $p_maxHeight;
 		}
 
-		$newImage = imagecreatetruecolor($newImageWidth, $newImageHeight);
+		$newImage = \Nette\Image::fromBlank($newImageWidth, $newImageHeight);
+        $newImage->alphaBlending(false);
+        $newImage->saveAlpha(true);
 
-        // fix transparent backgrounds for png/gif
-        if (in_array($type, array(IMAGETYPE_PNG, IMAGETYPE_GIF))) {
-            imagesavealpha($newImage, TRUE);
-            $color = imagecolorallocatealpha($newImage, 0, 0, 0, 127);
-
-            imagealphablending($newImage, FALSE);
-            imagefilledrectangle($newImage, 0, 0, $newImageWidth - 1, $newImageHeight - 1, $color);
-            imagealphablending($newImage, TRUE);
-            imagecolortransparent($newImage, $color);
-        }
-
-		imagecopyresampled($newImage, $p_image, 0, 0, 0, 0, $newImageWidth, $newImageHeight,
+		imagecopyresampled($newImage->getImageResource(), $p_image, 0, 0, 0, 0, $newImageWidth, $newImageHeight,
 						   $origImageWidth, $origImageHeight);
-		return $newImage;
+
+		return $newImage->getImageResource();
 	}
 
 

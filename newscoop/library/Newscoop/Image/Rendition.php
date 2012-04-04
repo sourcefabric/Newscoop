@@ -211,6 +211,9 @@ class Rendition
     {
         $path = is_file(APPLICATION_PATH . '/../' . $imagePath) ? APPLICATION_PATH . '/../' . $imagePath : $imagePath;
         $image = NetteImage::fromFile($path);
+        $image->alphaBlending(false);
+        $image->saveAlpha(true);
+
         if ($this->isCrop()) {
             $cropSpecs = explode('_', $this->getSpecs());
             if (count($cropSpecs) === 1) {

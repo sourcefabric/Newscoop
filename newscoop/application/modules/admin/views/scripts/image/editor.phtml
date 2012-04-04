@@ -13,6 +13,7 @@
 $(function() {
     var jcrop;
     $('#editor img').Jcrop({
+        bgColor: 'transparent',
         aspectRatio: <?php echo $this->rendition->getAspectRatio(); ?>,
         minSize: <?php echo json_encode($this->rendition->getMinSize($this->image)); ?>,
         trueSize: <?php echo json_encode(array($this->image->getWidth(), $this->image->getHeight())); ?>,
