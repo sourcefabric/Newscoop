@@ -971,7 +971,10 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
                         if(strncmp($dir, self::FOLDER_THEME_PREFIX, $length) == 0){
                             $themeNr = substr($dir, $length);
                             if(is_numeric($themeNr)){
-                                $number = ((int)$themeNr) + 1;
+                                $number_test = ((int)$themeNr) + 1;
+                                if ($number < $number_test) {
+                                    $number = $number_test;
+                                }
                             }
                         }
                     }
