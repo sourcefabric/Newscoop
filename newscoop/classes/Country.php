@@ -163,7 +163,7 @@ class Country extends DatabaseObject {
 		}
 		$constraints = array();
 		if (!is_null($p_languageId)) {
-			$constraints[] = array('IdLanguage', $p_languageId);
+			$constraints[] = array('IdLanguage', (int) $p_languageId);
 		}
 		if (!is_null($p_code)) {
 			$constraints[] = array('Code', $p_code);
