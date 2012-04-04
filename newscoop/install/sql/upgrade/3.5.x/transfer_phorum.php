@@ -11,7 +11,7 @@ function transfer_phorum_3_6($p_parentId = 0)
     global $g_ado_db;
     $g_ado_db->StartTrans();
     $comments = array();
-    $status_mapper = array( 2=>0, 1=>1, 0=>2);
+    $status_mapper = array(-2 => 2, -1 => 1,  2=>0, 1=>1, 0=>2);
     $sql = 'SELECT * FROM `phorum_messages` `p` JOIN `ArticleComments` `ac` ON `p`.`message_id` = `ac`.`fk_comment_id` ORDER BY `p`.`message_id` ASC';
     $rows = $g_ado_db->GetAll($sql);
     foreach ($rows as $row) {
