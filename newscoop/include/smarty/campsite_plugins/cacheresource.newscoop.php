@@ -1,19 +1,5 @@
 <?php
 
-/**
- * Smarty Internal Plugin CacheResource File
- *
- * Implements the file system as resource for the HTML cache
- * Version ussing nocache inserts
- *
- * @package Smarty
- * @subpackage Cacher
- * @author Uwe Tews
- */
-
-/**
- * This class does contain all necessary methods for the HTML cache on file system
- */
 class Smarty_CacheResource_Newscoop {
 
     function __construct(&$smarty)
@@ -94,9 +80,8 @@ class Smarty_CacheResource_Newscoop {
      */
     public function clearAll($exp_time = null)
     {
-        return;
         $handler = $this->cacheClass;
-        $handler::handler('clean', $this->smarty, null, null, null, null, null);
+        return $handler::handler('clean', $this->smarty, null, null, null, null, null);
     }
 
     /**
@@ -110,9 +95,8 @@ class Smarty_CacheResource_Newscoop {
      */
     public function clear($resource_name, $cache_id, $compile_id, $exp_time)
     {
-        return;
         $handler = $this->cacheClass;
-        $handler::handler('clean', $this->smarty, null, $resource_name, null, null, null);
+        return $handler::handler('clean', $this->smarty, null, $resource_name, null, null, null);
     }
 }
 
