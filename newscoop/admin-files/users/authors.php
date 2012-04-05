@@ -152,6 +152,11 @@ $(document).ready(function(){
         $(this).toggleClass("close");
         return false;
     }).next().hide();
+
+    $(function(){
+        $(".search-box input").attr("placeholder", "Search authors").addClass("context-search search");
+    });
+
 });
 </script>
 <?php camp_html_display_msgs('1em', '0'); ?>
