@@ -85,7 +85,6 @@ class Admin_AclController extends Zend_Controller_Action
             ),
             'plugins' => array(
                 'plugin' => getGS('Plugins'),
-                'plugin-blog' => getGS('Blogs'),
                 'pluginpoll' => getGS('Polls'),
                 'plugin-interview' => getGS('Interviews'),
                 'plugin-recaptcha' => getGS('ReCaptcha'),
