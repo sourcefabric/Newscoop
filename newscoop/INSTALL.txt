@@ -22,11 +22,11 @@ host (localhost).
 
 Example of virtual host configuration:
 <VirtualHost *>
-    DocumentRoot /var/www/newscoop
+    DocumentRoot /var/www/newscoop-[version_number]
     ServerName [site_name]
     ServerAlias [site_alias]
     DirectoryIndex index.php index.html
-    <Directory /var/www/newscoop>
+    <Directory /var/www/newscoop-[version_number]>
             Options -Indexes FollowSymLinks MultiViews
             AllowOverride All
             Order allow,deny
@@ -35,9 +35,9 @@ Example of virtual host configuration:
 </VirtualHost>
 
 2. Unzip and Untar the newscoop file. This will generate a folder
-named 'newscoop'.
+named 'newscoop-[version_number]'.
 
-3. Open the 'newscoop' directory.
+3. Open the 'newscoop-[version_number]' directory.
 
 4. Copy the content of newscoop directory into the document
 root directory of the apache virtual host.

@@ -1,3 +1,34 @@
+4.0-RC4 (April 05, 2012)
+  Improvements
+  ------------
+  CS-4170: Add searching capabilities to slideshows attachment screen
+  CS-4201: User types search box needs default text: "Search authors"
+
+  Bug fixes
+  ---------
+  CS-4184: Admin login XSS vulnerability
+  CS-4183: XSS vulnerability in password check token
+  CS-4181: SQL injection in country manager
+  CS-4182: XSS vulnerability in admin/ad.php
+  CS-4171: Article "Last modified" date changes when closing
+  CS-4187: Assigning a theme unassigns an existing theme if two themes are already assigned
+  CS-4073: PNG files display blank instead of transparent background
+  CS-4204: Comments management doesn't show correctly approved or hidden comments, if user marks Approved or Hidden.
+  CS-4159: Database error when upgrading
+  CS-4028: Error Newscoop loader
+  CS-4108: Space replace '.' in username
+  CS-4177: user_topic table is missing
+  CS-4162: Feedback popup: block the interface, cancel button needed, checkbox for privacy policy is missing, wording changes
+
+  Tasks
+  -----
+  CS-4130: Update doctrine
+  CS-4145: Clean up themes included in the release package
+  CS-4155: Test newscoop on php 5.4
+  CS-4164: Updating New Custodian theme
+  CS-4174: Take the blog plugin out of default installation
+  CS-4198: Deck wysiwyg ediro size should be 250px in default installation
+
 4.0-RC3 (March 21, 2012)
   New Features
   ------------
