@@ -4,6 +4,15 @@ Copyright (C) 2002-2009 Media Development Loan Fund
 Newscoop Credits (by Version Number)
 
 ------------------------------------
+Newscoop 3.5.5 Credits
+------------------------------------
+Developers:
+- Petr Jašek <petr.jasek@sourcefabric.org>
+
+QA / Testing:
+- Ofir Gal <ofir.gal@sourcefabric.org>
+
+------------------------------------
 Newscoop 3.5.4 Credits
 ------------------------------------
 Developers:

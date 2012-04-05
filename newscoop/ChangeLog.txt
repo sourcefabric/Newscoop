@@ -1,3 +1,11 @@
+3.5.5 (Apr 05, 2012)
+  Bug Fixes
+  ---------
+  * [CS-4182] XSS vulnerability in admin/ad.php
+  * [CS-4181] SQL injection in country manager
+  * [CS-4183] XSS vulnerability in password check token
+  * [CS-4184] Admin login XSS vulnerability
+
 3.5.4 (Mar 27, 2012)
   Tasks
   -----
@@ -5,12 +13,12 @@
 
   Bug Fixes
   ---------
-  [CS-3126] The attachment URI tag in the template engine returns invalid value
-  [CS-3822] Cron scripts generate unneeded PHP sessions
-  [CS-3045] Change localizer wording. Screen > Area to localize
-  [CS-3058] ReCaptcha configuration page text modification
-  [CS-3115] Wrong language codes
-  [CS-3901] Change error messages
+  * [CS-3126] The attachment URI tag in the template engine returns invalid value
+  * [CS-3822] Cron scripts generate unneeded PHP sessions
+  * [CS-3045] Change localizer wording. Screen > Area to localize
+  * [CS-3058] ReCaptcha configuration page text modification
+  * [CS-3115] Wrong language codes
+  * [CS-3901] Change error messages
 
 3.5.3 (May 19, 2011)
   Tasks
