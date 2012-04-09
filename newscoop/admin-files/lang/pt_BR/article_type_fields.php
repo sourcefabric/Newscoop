@@ -1,5 +1,5 @@
 <?php 
-regGS("Event Color", "");
+regGS("Event Color", "Cor do evento");
 regGS("You must input a number greater than $1 and less than $2 into the $3 field.", "Você tem que digitar um número maior que $1 e menor que $2 no campo $3.");
 regGS("You do not have the right to translate article types.", "Você não tem o direito de traduzir tipos de artigos.");
 regGS("You do not have the right to reorder article types.", "Você não tem o direito de mudar a ordem dos tipos de artigos.");
@@ -10,12 +10,12 @@ regGS("You do not have the right to delete article types.", "Você não tem o di
 regGS("Small ($1 pixels)", "Pequeno ($1 pixels)");
 regGS("Medium ($1 pixels)", "Médio ($1 pixels)");
 regGS("Large ($1 pixels)", "Grande ($1 pixels)");
-regGS("Hide human-readable field names", "");
+regGS("Hide human-readable field names", "Esconder nomes de campos que podem ser lidos pelas pessoas");
 regGS("Editor size", "Tamanho do editor");
-regGS("Edit and translate human-readable field names", "");
-regGS("Custom", "");
+regGS("Edit and translate human-readable field names", "Editar e traduzir campos que podem ser lidos pelas pessoas");
+regGS("Custom", "Customisado");
 regGS("Characters limit", "Limite de caracteres");
-regGS("The template name may only contain letters and the underscore (_) character.", "");
+regGS("The template name may only contain letters and the underscore (_) character.", "O nome do template pode ter apenas letras e o underscore (_).");
 regGS("The field name was already in use as a base property of the article. The field content will not be displayed in the templates.", "");
 regGS("The property '$1' is already in use.", "A propriedade '$1' já está em uso.");
 regGS("Precision", "Precisão");
@@ -32,14 +32,14 @@ regGS("You do not have the right to reassign a field type.", "Você não tem dir
 regGS("Translating field", "Traduzindo o campo");
 regGS("The translation could not be added.", "Não foi possível adicionar a tradução");
 regGS("The field $1 does not exist.", "Campo $1 não existe.");
-regGS("The $1 field may only contain letters and underscore (_) character.", "");
-regGS("Template Field Name", "");
+regGS("The $1 field may only contain letters and underscore (_) character.", "O campo $1 pode ter apenas letras e o underscore (_).");
+regGS("Template Field Name", "Nome do campo de template");
 regGS("Show/Hide", "Mostrar/esconder");
 regGS("Renaming article type field", "Renomeando o campo de tipo de artigo");
 regGS("Rename field", "Mude o nome do campo");
-regGS("Reassign a field type", "");
-regGS("Display Name", "");
-regGS("Are you sure you want to $1 the article type field $2?", "");
+regGS("Reassign a field type", "Reatribuir o tipo de campo");
+regGS("Display Name", "Mostrar nome");
+regGS("Are you sure you want to $1 the article type field $2?", "Tem certeza que quer $1 o campo do tipo do artigo $2?");
 regGS("Adding new article type", "Adicionando o novo tipo de artigo");
 regGS("Add translation:", "Adicionar a tradução:");
 regGS("$1 article type field $2", "$1 campo do artigo do tipo $2");

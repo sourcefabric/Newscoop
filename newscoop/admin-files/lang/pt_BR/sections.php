@@ -1,6 +1,6 @@
 <?php 
 regGS("default", "padrão");
-regGS("before you can configure the section templates.", "");
+regGS("before you can configure the section templates.", "antes de você poder configurar os templates da seção.");
 regGS("You have to assign a theme to the issue", "Você tem que designar um tema para a edição");
 regGS("The section number $1 was already in use.", "Seção número $1 já estava em uso.");
 regGS("Delete all articles written in $1 language from this section", "Remover dessa seção todos os artigos escritos em língua $1");

@@ -18,8 +18,8 @@ regGS("You do not have the right to manage the localizer.", "Nemate pravo da upr
 regGS("API", "API");
 regGS("User Subscriptions Sections", "Pretplate korisnika na rubrike");
 regGS("User Subscriptions", "Pretplate korsnika");
-regGS("Translate to:", "Prevedi u:");
-regGS("Translate from:", "Prevedi iz:");
+regGS("Translate to:", "Prevedi na:");
+regGS("Translate from:", "Prevedi sa:");
 regGS("The following strings are not used:", "Sledeći stringovi se ne koriste:");
 regGS("The following strings are missing from the translation files:", "Sledeći stringovi fale u fajlovima za prevođenje:");
 regGS("No source strings found.", "Nije pronađen izvorni string.");

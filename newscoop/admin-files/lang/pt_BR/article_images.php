@@ -1,8 +1,8 @@
 <?php 
 regGS("Renditions reloaded", "");
 regGS("Reload renditions", "");
-regGS("Edit images", "");
-regGS("Specify image url if you want to load it.", "");
+regGS("Edit images", "Editar imagens");
+regGS("Specify image url if you want to load it.", "Especifique o endereço url da imagem se quer fazer o load dela.");
 regGS("Items: ", "itens:");
 regGS("Attach slideshows", "Anexar slideshows");
 regGS("original size:", "tamanho original:");
@@ -20,7 +20,7 @@ regGS("Saving...", "Carregando...");
 regGS("Saved", "Salvo");
 regGS("Save headline", "Salvar manchete");
 regGS("Place Images", "");
-regGS("No renditions defined.", "");
+regGS("No renditions defined.", "Nenhum formato foi definido.");
 regGS("No images found.", "Nenhuma imagem encontrada");
 regGS("No images attached to article.", "O artigo não tem imagens anexadas.");
 regGS("No images", "Não há imagens");

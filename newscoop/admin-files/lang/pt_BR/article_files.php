@@ -12,7 +12,7 @@ regGS("Unable to add attachment.", "Não foi possível adicionar o anexo.");
 regGS("There was a problem uploading the file.", "Ocorreu um problema durante o upload do aquivo.");
 regGS("The uploaded file was only partially uploaded. This is common when the maximum time to upload a file is low in contrast with the file size you are trying to input. The maximum input time is specified in 'php.ini'", "O upload do arquivo foi apenas parcial. Isso acontece quando o tempo máximo para fazer upload é curto comparado com o tamanho do arquivo que você está tentando mandar. O tempo máximo do upload é definido no 'php.ini'.");
 regGS("The file exceeds the allowed max file size.", "O tamanho do arquivo é maior do que permitido.");
-regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "");
+regGS("Please make sure you upgraded the database correctly: run $1 in a shell.", "Por favor verifique se atualizou a base de dados corretamente: executar $1 na cápsula.");
 regGS("Maximum Upload Size", "Tamanho máximo para upload");
 regGS("File Size", "Tamanho do arquivo");
 regGS("File Name", "Nome do arquivo");

@@ -1,11 +1,11 @@
 <?php 
-regGS("Only than the issue can be published", "");
+regGS("Only than the issue can be published", "Somente então a edição pode ser publicada");
 regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Essa edição não pode ser visualizada. Por favor verifique se existe um tema designado para essa publicação.");
-regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "");
+regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "Esta edição não pode ser visualisada. Por favor assegure que o template de frente está selecionado.");
 regGS("Publish all articles:", "Publicar todos os artigos:");
 regGS("Publish all articles", "Publicar todos os artigos");
 regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "Publicação forçada de todos os artigos. Se for definida como 'Não', somente os artigos com status 'Publicar com essa edição' serão publicados.");
-regGS("in order to be able to assigned to the issue.", "");
+regGS("in order to be able to assigned to the issue.", "para poder atribuir à edição.");
 regGS("default", "padrão");
 regGS("The publishing/unpublishing can not be set the same time", "A hora da publicação/não publicação não pode ser a mesma");
 regGS("The publishing schedule can not be set in the past", "Horário de publicação não pode ser no passado");
@@ -17,7 +17,7 @@ regGS("The language and URL name must be unique for each issue in this publicati
 regGS("Issue created.", "Edição criada.");
 regGS("Issue updated", "Edição atualizada");
 regGS("Could not save the changes to the issue.", "Não foi possível salvar modificações na edição.");
-regGS("Unpublish on: $1", "");
+regGS("Unpublish on: $1", "Remover publicação em: $1");
 regGS("There are $1 articles in this issue.", "Total de $1 artigos nesta edição.");
 regGS("The issue $1 has been deleted.", "Edição $1 foi apagada.");
 regGS("Schedule", "Cronograma");
