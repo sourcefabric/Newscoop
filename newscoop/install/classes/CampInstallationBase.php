@@ -130,6 +130,8 @@ class CampInstallationBase
                 $this->saveConfiguration();
                 self::InstallPlugins();
 
+                $this->initRenditions();
+
                 require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
                 SystemPref::DeleteSystemPrefsFromCache();
 
@@ -766,6 +768,17 @@ XML;
         }
     }
 
+    /**
+     * Init renditions
+     *
+     * @return void
+     */
+    protected function initRenditions()
+    {
+        global $application;
+        $application->bootstrap('container');
+        $application->getBootstrap()->getResource('container')->getService('image.rendition')->reloadRenditions();
+    }
 } // fn ClassInstallationBase
 
 
@@ -967,7 +980,4 @@ class CampInstallationBaseHelper
 
         return true;
     } // fn CopyFiles
-
-} // class CampInstallationBaseHelper
-
-?>
+}

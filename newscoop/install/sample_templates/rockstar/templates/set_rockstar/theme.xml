@@ -16,9 +16,9 @@
 	</output>
 	
 	<renditions>
-		<rendition name="big" width="600" height="400" specs="crop"/>
-		<rendition name="onethird" width="290" height="190" specs="crop"/>
-		<rendition name="onehalf" width="450" height="295" specs="crop"/>
-		<rendition name="square" width="130" height="130" specs="crop"/>
+		<rendition name="rockstar_big" width="600" height="400" specs="crop"/>
+		<rendition name="rockstar_onethird" width="290" height="190" specs="crop"/>
+		<rendition name="rockstar_onehalf" width="450" height="295" specs="crop"/>
+		<rendition name="rockstar_square" width="130" height="130" specs="crop"/>
 	</renditions>	
 </theme>
