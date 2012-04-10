@@ -250,7 +250,7 @@ class Admin_ImageController extends Zend_Controller_Action
             $articleRendition = $this->_helper->service('image.rendition')->setArticleRendition($this->_getParam('article_number'), $rendition, $image->getImage());
             $this->view->rendition = $this->view->rendition($rendition, $this->view->previewWidth, $this->view->previewHeight, $articleRendition);
         } catch (\InvalidArgumentException $e) {
-            $this->view->exception= $e->getMessage();
+            $this->view->exception= sprintf(getGS('Sorry that image is too small. Image needs to be at least %dx%d.'), $rendition->getWidth(), $rendition->getHeight());
         }
     }
 

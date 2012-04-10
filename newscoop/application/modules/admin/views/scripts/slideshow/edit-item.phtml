@@ -1,6 +1,6 @@
 <?php $this->headLink()->appendStylesheet($this->baseUrl('/admin-style/image_management.css')); ?>
 <?php $this->placeholder('bodyId')->set('next'); $this->placeholder('bodyClass')->set('dark'); ?>
-<h1><?php putGS('Slideshow'); ?></h1>
+<h1><?php putGS('Slideshow'); ?> <small id="slideshow-rendition-info"><?php echo $this->package->getRendition()->getInfo(); ?></small></h1>
 <form id="edit-form" method="<?php echo $this->form->getMethod(); ?>">
 
 <div class="editarea">

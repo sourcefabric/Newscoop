@@ -1336,7 +1336,6 @@ UNLOCK TABLES;
 
 LOCK TABLES `rendition` WRITE;
 /*!40000 ALTER TABLE `rendition` DISABLE KEYS */;
-INSERT INTO `rendition` (`name`, `width`, `height`, `specs`, `offset`, `label`) VALUES ('articlebig',600,400,'crop',0,'articlebig'),('sectionthumb',250,167,'crop',2,'sectionthumb'),('square',150,150,'crop',1,'square'),('thumb',150,100,'crop',3,'thumb'),('topfront',500,333,'crop',4,'topfront');
 /*!40000 ALTER TABLE `rendition` ENABLE KEYS */;
 UNLOCK TABLES;
 
