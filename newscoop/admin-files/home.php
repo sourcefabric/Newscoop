@@ -26,8 +26,10 @@ if (!SystemPref::get('installation_id')) {
     SystemPref::set('installation_id', $installationId);
 }
 
-if (!SystemPref::get('support_send') && SystemPref::get('stat_ask_time') + 60*60*24*7 <= time() && !$_SESSION['statDisplayed']) {
+$request_only = false;
+if (!SystemPref::get('support_send') && SystemPref::get('stat_ask_time') + 60*60*24*7 <= time() && !(isset($_SESSION['statDisplayed']) && $_SESSION['statDisplayed'])) {
     $statUrl = $Campsite['WEBSITE_URL'].'/admin/support/popup';
+    $request_only = true;
     ?>
     <a style="display: none;" id="dummy_stat_link" href="<?php echo($statUrl); ?>"></a>
     <?php
@@ -75,15 +77,19 @@ $(function() {
 
 <div class="column">
 <?php
+if (!$request_only) {
     $context = new WidgetContext('dashboard1');
     $context->render();
+}
 ?>
 </div>
 
 <div class="column">
 <?php
+if (!$request_only) {
     $context = new WidgetContext('dashboard2');
     $context->render();
+}
 ?>
 </div>
 
@@ -102,6 +108,7 @@ $(document).ready(function() {
         centerOnScroll: true,
         onClosed: function() {
             $.get("<?php echo($Campsite['WEBSITE_URL'].'/admin/support/close'); ?>");
+            window.location.reload();
         },
         overlayOpacity: 0.8,
         overlayColor: '#666',
