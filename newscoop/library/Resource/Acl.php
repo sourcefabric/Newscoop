@@ -118,8 +118,11 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
                 throw new InvalidArgumentException;
             }
 
-            $type = $rule->getType();
-            $acl->$type($role, $rule->getResource(), $rule->getAction());
+            try {
+                $type = $rule->getType();
+                $acl->$type($role, $rule->getResource(), $rule->getAction());
+            } catch (\Zend_Acl_Exception $e) { // ignore missing resources
+            }
         }
     }
 
