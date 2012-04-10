@@ -1,6 +1,6 @@
 <?php $this->placeholder('title')->set(getGS('Help')); ?>
 
-<img src="/admin-style/images/newscoop_logo_big.png" style="float:left;">
+<img src="<?php echo $this->baseUrl('/admin-style/images/newscoop_logo_big.png') ?>" style="float:left;">
 
 <dl class="metadata">
   <dt><?php putGS('Version'); ?>:</dt> <dd><?php echo $this->version; ?></dd>
@@ -18,4 +18,3 @@
 
   <li><p><?php putGS('To support us in other ways, visit our Community page'); ?> <a href="http://www.sourcefabric.org/en/community/joinus/" target="_blank">http://www.sourcefabric.org/en/community/joinus/</a>.</p></li>
 </ol>
-
