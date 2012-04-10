@@ -19,6 +19,7 @@ class Admin_Form_SlideshowCreate extends Zend_Form
         ));
 
         $this->addElement('select', 'rendition', array(
+            'label' => getGS('Slideshow rendition'),
             'required' => true,
         ));
 
