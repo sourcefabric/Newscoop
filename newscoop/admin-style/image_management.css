@@ -190,3 +190,9 @@ ul.slideshow {
 #next #image-search button {
 	font-size:13px !important;
 }
+
+#slideshow-rendition-info {
+    padding-left: 1em;
+    font-size: 0.8em;
+    color: #ccc;
+}

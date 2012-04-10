@@ -364,4 +364,18 @@ class Rendition
     {
         return $this->label !== null ? $this->label : $this->getName();
     }
+
+    /**
+     * Get info
+     *
+     * @return string
+     */
+    public function getInfo()
+    {
+        return sprintf('%s: %s %dx%d',
+            $this->getLabel(),
+            $this->getSpecs(),
+            $this->getWidth(),
+            $this->getHeight());
+    }
 }

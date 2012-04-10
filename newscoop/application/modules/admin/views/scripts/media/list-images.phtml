@@ -6,7 +6,7 @@
     <li id="image-<?php echo $image->getId(); ?>">
         <figure>
             <div><?php echo $this->thumbnail($image, 150, 150, 'fit')->getImg($this); ?></div>
-            <figcaption><?php echo $image->getDescription(); ?></figcaption>
+            <figcaption><?php echo $image->getDescription(); ?> (<?php echo $image->getWidth(), 'x', $image->getHeight(); ?>)</figcaption>
         </figure>
     </li>
     <?php } ?>

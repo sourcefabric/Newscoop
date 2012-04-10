@@ -42,6 +42,12 @@ class NewscoopEntityIssueProxy extends \Newscoop\Entity\Issue implements \Doctri
         return parent::getLanguage();
     }
 
+    public function getLanguageId()
+    {
+        $this->__load();
+        return parent::getLanguageId();
+    }
+
     public function getPublication()
     {
         $this->__load();
@@ -52,6 +58,12 @@ class NewscoopEntityIssueProxy extends \Newscoop\Entity\Issue implements \Doctri
     {
         $this->__load();
         return parent::getPublicationId();
+    }
+
+    public function addSection(\Newscoop\Entity\Section $section)
+    {
+        $this->__load();
+        return parent::addSection($section);
     }
 
     public function getSections()

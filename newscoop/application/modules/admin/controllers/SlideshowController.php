@@ -97,7 +97,7 @@ class Admin_SlideshowController extends Zend_Controller_Action
             ));
         } catch (\InvalidArgumentException $e) {
             $this->_helper->json(array(
-                'error_message' => getGS('Image too small.'),
+                'error_message' => sprintf(getGS('Sorry that image is too small. Image needs to be at least %dx%d.'), $slideshow->getRendition()->getWidth(), $slideshow->getRendition()->getHeight()),
             ));
         }
     }
