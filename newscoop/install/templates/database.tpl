@@ -43,6 +43,9 @@
 
               <p>We STRONGLY recommend to create a dedicated MySQL username
               with password instead of use the default MySQL user (root).</p>
+
+              <p><a href="http://www.geonames.org/" target="_blank">GeoNames</a>
+              data for geo-search are imported during database preparation.</p>
             </div>
           </td>
           <td width="5%">&nbsp;</td>

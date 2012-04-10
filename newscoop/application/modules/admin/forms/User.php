@@ -64,15 +64,15 @@ class Admin_Form_User extends Zend_Form
         ));
 
         $this->addElement('checkbox', 'status', array(
-            'label' => getGS('Active'),
+            'label' => getGS('User account is active'),
         ));
 
         $this->addElement('checkbox', 'is_admin', array(
-            'label' => getGS('Admin access'),
+            'label' => getGS('Allow user access to login to site backend'),
         ));
 
         $this->addElement('checkbox', 'is_public', array(
-            'label' => getGS('Public profile'),
+            'label' => getGS("Allow user's profile to be publicly displayed"),
         ));
 
         $this->addElement('multiCheckbox', 'user_type', array(

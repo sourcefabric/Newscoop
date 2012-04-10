@@ -243,7 +243,7 @@ final class CampInstallationView
         $isPHP5 = CampInstallationViewHelper::CheckPHPVersion();
         $success = ($isPHP5 == 'Yes') ? $success : false;
         $phpFunctions[] = array(
-                                'tag' => 'PHP (5.2 or newer)',
+                                'tag' => 'PHP (5.3.2 or newer)',
                                 'exists' => $isPHP5
                                 );
 
@@ -412,7 +412,7 @@ final class CampInstallationViewHelper
 
     public static function CheckPHPVersion()
     {
-        return (phpversion() > '5.2') ? 'Yes' : 'No';
+        return (-1 == version_compare(phpversion(), '5.3.2')) ? 'No' : 'Yes';
     } // fn checkPHPVersion
 
 
