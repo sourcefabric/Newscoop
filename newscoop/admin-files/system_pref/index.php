@@ -229,7 +229,25 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <?php putGS("Session Lifetime:"); ?>
     </td>
     <td align="left" valign="top">
-        <input type="text" name="f_session_lifetime" value="<?php p(SystemPref::Get("SiteSessionLifeTime")); ?>" maxlength="4" size="5" class="input_text" alt="number|0|0" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("Session Lifetime")); ?>" />
+<?php
+    $sp_session_lifetime = 0 + SystemPref::Get('SiteSessionLifeTime');
+    $php_ini_max_seconds = 0;
+    $php_ini_gc_works = ini_get('session.gc_probability');
+    if (!empty($php_ini_gc_works)) {
+        $php_ini_max_seconds = 0 + ini_get('session.gc_maxlifetime');
+        if (!empty($php_ini_max_seconds)) {
+            if ($sp_session_lifetime > $php_ini_max_seconds) {
+                $sp_session_lifetime = $php_ini_max_seconds;
+            }
+        }
+    }
+?>
+        <input type="text" name="f_session_lifetime" value="<?php p($sp_session_lifetime); ?>" maxlength="4" size="5" class="input_text" alt="number|0|0" emsg="<?php putGS("Please enter a positive number for the '$1' field.", getGS("Session Lifetime")); ?>" />
+<?php
+    if (!empty($php_ini_max_seconds)) {
+        echo '<span style="margin-top:8px;"><= ' . $php_ini_max_seconds . ', ' . getGS('according to php.ini settings') . '</span>';
+    }
+?>
     </td>
 </tr>
 <tr>
