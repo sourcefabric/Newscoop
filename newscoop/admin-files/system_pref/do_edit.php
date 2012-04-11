@@ -58,6 +58,15 @@ $f_site_metadescription = strip_tags(Input::Get('f_site_metadescription'));
 $f_time_zone = Input::Get('f_time_zone');
 $f_secret_key = strip_tags(Input::Get('f_secret_key'));
 $f_session_lifetime = Input::Get('f_session_lifetime', 'int');
+$php_ini_gc_works = ini_get('session.gc_probability');
+if (!empty($php_ini_gc_works)) {
+    $php_ini_max_seconds = 0 + ini_get('session.gc_maxlifetime');
+    if (!empty($php_ini_max_seconds)) {
+        if ($f_session_lifetime > $php_ini_max_seconds) {
+            $f_session_lifetime = $php_ini_max_seconds;
+        }
+    }
+}
 $f_imagecache_lifetime = Input::Get('f_imagecache_lifetime', 'int');
 $f_keyword_separator = strip_tags(Input::Get('f_keyword_separator'));
 $f_login_num = Input::Get('f_login_num', 'int');

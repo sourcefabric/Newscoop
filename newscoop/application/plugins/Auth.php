@@ -95,6 +95,17 @@ class Application_Plugin_Auth extends Zend_Controller_Plugin_Abstract
 
         $session = new Zend_Session_Namespace($storage->getNamespace());
         $seconds = SystemPref::Get('SiteSessionLifeTime');
+
+        $gc_works = ini_get('session.gc_probability');
+        if (!empty($gc_works)) {
+            $max_seconds = 0 + ini_get('session.gc_maxlifetime');
+            if (!empty($max_seconds)) {
+                if ($seconds > $max_seconds) {
+                    $seconds = $max_seconds;
+                }
+            }
+        }
+
         if ($seconds > 0) {
             $session->setExpirationSeconds($seconds);
         }
