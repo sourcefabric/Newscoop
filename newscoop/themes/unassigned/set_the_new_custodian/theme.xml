@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<theme name="The New Custodian" designer="Sourcefabric" version="1.0" require="4.0">
+<theme name="The Custodian" designer="Sourcefabric" version="1.0" require="4.0">
     <description>The mother of all themes</description>
     
     <presentation-img src="themethumbs/front.jpg" name="Front page"/>

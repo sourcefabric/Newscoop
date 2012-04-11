@@ -44,8 +44,10 @@
 
 
   <!-- CSS: implied media="all" -->
-  <link rel="stylesheet" href="{{ url static_file='_css/main.css?v=2' }}">
+  <link rel="stylesheet" href="{{ url static_file='_css/style.css?v=2' }}">
 
+  <!-- fluid, 12 col grid -->
+  <link rel="stylesheet" href="{{ url static_file='_css/1140.css?v=2' }}">
 
   <!-- Uncomment if you are specifically targeting less enabled mobile browsers
   <link rel="stylesheet" media="handheld" href="{{ url static_file='_css/handheld.css?v=2' }}"> -->

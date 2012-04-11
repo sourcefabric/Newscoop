@@ -7,7 +7,9 @@
           <section id="most-comm">
                         <p><em>These are recently commented articles</em></p>
                         <ul>
-                        
+
+{{ local }}
+{{ unset_topic }}                        
 {{ list_articles length="5" ignore_issue="true" ignore_section="true" order="byLastComment desc" constraints="type is news" }}
                        
                             <li>{{ list_article_comments length="1" order="bydate desc"}}<b>{{ if $gimme->comment->user->identifier }}
@@ -24,7 +26,6 @@
                         <p><em>These are most opened articles in last issue</em></p>                    
                         <ul>
                         
-{{ local }}
 {{ set_current_issue }}
 {{ list_articles length="5" ignore_section="true" order="bypopularity desc" constraints="type is news" }}
                        

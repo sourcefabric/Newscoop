@@ -32,7 +32,7 @@ https://wiki.sourcefabric.org/display/CS/Dynamic+maps+-+Display *}}
     show_locations_list=false
     show_reset_link=true
     area_show="focus"
-    width="100%"
+    width="754"
     height="250"
     show_open_link=true
     open_map_on_click=false

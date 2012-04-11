@@ -32,7 +32,7 @@
     {{ local }}
     {{ set_current_issue }}
     {{ list_sections }}              
-                  <li{{ if ($gimme->section->number == $gimme->default_section->number) && ($gimme->template->name == "section.tpl" || $gimme->template->name == "article.tpl") }} class="selected"{{ /if }}><a href="{{ uri options="section" }}" title="View all posts filed under {{ $gimme->section->name }}">{{ $gimme->section->name }}</a></li>
+                  <li{{ if $gimme->section->number == $gimme->default_section->number }} class="selected"{{ /if }}><a href="{{ uri options="section" }}" title="View all posts filed under {{ $gimme->section->name }}">{{ $gimme->section->name }}</a></li>
     {{ /list_sections }}
     {{ /local }}
                   <li><a href="{{ $view->url(['controller' => 'user', 'action' => 'index'], 'default') }}" title="Community index">Community</a></li>

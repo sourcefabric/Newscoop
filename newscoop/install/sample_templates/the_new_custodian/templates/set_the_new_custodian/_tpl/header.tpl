@@ -1,8 +1,11 @@
     <header id="global" class="row">
             <ul id="secnav" class="clearfix right">
+            	 {{ local }}
+    				 {{ unset_topic }}
                 {{ list_articles ignore_issue="true" ignore_section="true" constraints="issue is 1 section is 5"}}
                 <li><a href="{{ uri options="article" }}" title="{{ $gimme->article->name }}">{{ $gimme->article->name }}</a></li>
-                {{ /list_articles }}          
+                {{ /list_articles }} 
+                {{ /local }}         
                 <li><a href="{{ uri options="template archive.tpl" }}">Archives</a></li>
             </ul><!-- /#secnav -->
     
@@ -29,7 +32,7 @@
     {{ local }}
     {{ set_current_issue }}
     {{ list_sections }}              
-                  <li{{ if $gimme->section->number == $gimme->default_section->number }} class="selected"{{ /if }}><a href="{{ uri options="section" }}" title="View all posts filed under {{ $gimme->section->name }}">{{ $gimme->section->name }}</a></li>
+                  <li{{ if ($gimme->section->number == $gimme->default_section->number) && ($gimme->template->name == "section.tpl" || $gimme->template->name == "article.tpl") }} class="selected"{{ /if }}><a href="{{ uri options="section" }}" title="View all posts filed under {{ $gimme->section->name }}">{{ $gimme->section->name }}</a></li>
     {{ /list_sections }}
     {{ /local }}
                   <li><a href="{{ $view->url(['controller' => 'user', 'action' => 'index'], 'default') }}" title="Community index">Community</a></li>
@@ -41,6 +44,7 @@
           <li><a href="/">Home</a></li>
           {{ if $layout == "true" }}<li><a href="{{ $view->url(['controller' => 'user', 'action' => 'index'], 'default') }}">Community</a></li>
           {{ elseif $gimme->template->name == "search.tpl" }}<li><a href="{{ url }}">Search</a></li>
+          {{ elseif $gimme->template->name == "topic.tpl" }}<li><a href="{{ url }}">Topic</a></li>
           {{ elseif $gimme->template->name == "archive.tpl" }}<li><a href="{{ url }}">Archive</a></li>
           {{ elseif $gimme->template->name == "issue.tpl" }}<li><a href="{{ url options="issue" }}">{{ $gimme->issue->name }}</a></li>
           {{ elseif $gimme->template->name == "404.tpl" }}<li><a href="{{ url }}">Error page</a></li>

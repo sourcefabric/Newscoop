@@ -67,34 +67,13 @@
     {{ foreach $profile as $label => $value }} 
     {{ if !empty($value) }}
     
-    {{ if $label == "bio" }}
-      <dd>{{ $value }}</dd>
-      
-    {{ elseif $label == "birth_date" }}
-      <dt>Date of birth:</dt>
-      <dd>{{ $value|default:"n/a" }}</dd>
-      
-    {{ elseif $label == "comment_delivered" }}
-      <dt>Comments sent:</dt>
-      <dd>{{ $value|default:"n/a" }}</dd>
-      
-    {{ elseif $label == "comment_recommended" }}
-      <dt>Recommended comments:</dt>
-      <dd>{{ $value|default:"n/a" }}</dd>
-    
-    {{ elseif $label == "gender" }}
-      <dt>Gender:</dt>
-      <dd>{{ $value|default:"n/a" }}</dd>
-    
-    {{ elseif $label == "organisation" }}
-      <dt>Organisation:</dt>
-      <dd>{{ $value|default:"n/a" }}</dd>
-    
-    {{ elseif $label == "website" }}
-      <dt>Website:</dt>
+    {{ if $label == "website" }}
+      <dt>{{ $label }}:</dt>
       <dd><a rel="nofollow" href="http://{{ $profile['website']|escape:url }}">{{ $profile['website']|escape }}</a></dd>
-    {{ /if }}   
-
+    {{ else }}       
+    {{ if !($label == "bio") }}<dt>{{ $label }}:</dt>{{ /if }}
+    <dd>{{ $value|default:"n/a" }}</dd>
+    {{ /if }}
     {{ /if }}
     {{ /foreach }}
 </dl>

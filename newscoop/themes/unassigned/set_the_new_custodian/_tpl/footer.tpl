@@ -7,10 +7,15 @@
           <li><a href="{{ $view->url(['controller' => 'user', 'action' => 'index'], 'default') }}" title="Community index">Community</a></li>
       </ul>
       <ul class="clearfix sec-nav">
+      	 {{ local }}
+    		 {{ unset_topic }}
           {{ list_articles ignore_issue="true" ignore_section="true" constraints="issue is 1 section is 5"}}
           <li><a href="{{ uri options="article" }}" title="{{ $gimme->article->name }}">{{ $gimme->article->name }}</a></li>
-          {{ /list_articles }}          
+          {{ /list_articles }}
+                   
           <li><a href="{{ uri options="template archive.tpl" }}">Archives</a></li>
       </ul>      
-    <p>Powered by <a href="http://newscoop.sourcefabric.org/">Newscoop</a>. Designed by <a href="http://www.sourcefabric.org/">Sourcefabric</a>. Last update: March 6th, 2012</p>
+    <p>Powered by <a href="http://newscoop.sourcefabric.org/">Newscoop</a>. Designed by <a href="http://www.sourcefabric.org/">Sourcefabric</a>. Last update: {{ list_articles length="1" ignore_issue="true" ignore_section="true"  order="bypublishdate desc" }}{{ $gimme->article->modify_date|camp_date_format:"%M %y, %Y" }}{{ /list_articles }}</p>
+
+    		 {{ /local }} 
     </footer>

@@ -25,14 +25,6 @@
     {{ /if }}            
 {{ /list_article_comments }}
 
-{{* ReCATCHA styling: https://developers.google.com/recaptcha/docs/customization *}}
-<script type="text/javascript">
- var RecaptchaOptions = {
-    theme : 'white',
-    custom_theme_widget: 'recaptcha_widget'
- };
-</script>
-
 {{ if !$gimme->publication->public_comments }}
     <!-- public comments are not allowed-->
     {{ if $gimme->user->logged_in }}
@@ -53,7 +45,6 @@
             {{ /if }}
           
             <h3>Leave a reply</h3>
-
             {{ comment_form html_code="id=\"commentform\"" submit_button="submit" button_html_code="tabindex=\"6\"" }}
                 <div class="form-element clearfix">
                     <label for="comment">Comment</label>
@@ -93,8 +84,7 @@
                 {{ /if }}   
             {{ /if }}
           
-            <h3>Leave a reply</h3>         
-            
+            <h3>Leave a reply</h3>
             {{ comment_form html_code="id=\"commentform\"" submit_button="submit" button_html_code="tabindex=\"6\"" }}
                 <div class="form-element clearfix">
                     <label for="comment">Comment</label>
@@ -128,8 +118,7 @@
                 {{ /if }}   
             {{ /if }}
           
-            <h3>Leave a reply</h3>           
-            
+            <h3>Leave a reply</h3>
             {{ comment_form html_code="id=\"commentform\"" submit_button="submit" button_html_code="tabindex=\"6\"" }}
                 <div class="form-element clearfix">
                     <label for="author"><small>Name (required)</small></label>

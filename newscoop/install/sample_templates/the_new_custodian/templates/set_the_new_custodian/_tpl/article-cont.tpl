@@ -7,6 +7,9 @@
                          {{ if $gimme->article->has_map }} 
                         <p>Location(s): {{ list_article_locations }}{{ if $gimme->location->enabled }}{{ $gimme->location->name }}{{ if $gimme->current_list->at_end }}{{ else }}, {{ /if }}{{ /if }}{{ /list_article_locations }}</p>
                         {{ /if }}
+                        
+                        {{ list_article_topics }}{{ if $gimme->current_list->at_beginning }}<p>Topic(s): {{ /if }}<a href="{{ url options="template topic.tpl" }}">{{ $gimme->topic->name }}</a>{{ if $gimme->current_list->at_end }}{{ else }}, {{ /if }}{{ /list_article_topics }}</p>                        
+                        
                         {{ /if }}
                     </hgroup>
                 </header>

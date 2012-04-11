@@ -1,8 +1,541 @@
-@charset "utf-8";
-/* CSS Document */
+/**
+ * HTML5 ✰ Boilerplate
+ *
+ * style.css contains a reset, font normalization and some base styles.
+ *
+ * Credit is left where credit is due.
+ * Much inspiration was taken from these projects:
+ * - yui.yahooapis.com/2.8.1/build/base/base.css
+ * - camendesign.com/design/
+ * - praegnanz.de/weblog/htmlcssjs-kickstart
+ */
+
+/**
+* Instead of html5docotor.com style reset, we are using 
+* http://necolas.github.com/normalize.css/
+
+/*! normalize.css 2011-06-27T20:08 UTC · http://github.com/necolas/normalize.css */
+
+/* =============================================================================
+   HTML5 element display
+   ========================================================================== */
+
+/*
+ * Corrects block display not defined in IE6/7/8/9 & FF3
+ */
+
+article, aside, details, figcaption, figure, footer, 
+header, hgroup, nav, section {
+    display: block;
+}
+
+/*
+ * Corrects inline-block display not defined in IE6/7/8/9 & FF3
+ * Known limitation: IE6 will not apply style for 'audio[controls]'
+ */
+
+audio[controls], canvas, video {
+    display: inline-block;
+    *display: inline;
+    *zoom: 1;
+}
+
+/* =============================================================================
+   Base
+   ========================================================================== */
+
+/*
+ * 1. Corrects text resizing oddly in IE6/7 when body font-size is set using em units
+ *    http://clagnut.com/blog/348/#c790
+ * 2. Keeps page centred in all browsers regardless of content height
+ * 3. Removes Android and iOS tap highlight color to prevent entire container being highlighted
+ *    www.yuiblog.com/blog/2010/10/01/quick-tip-customizing-the-mobile-safari-tap-highlight-color/
+ * 4. Prevents iOS text size adjust after orientation change, without disabling user zoom
+ *    www.456bereastreet.com/archive/201012/controlling_text_size_in_safari_for_ios_without_disabling_user_zoom/
+ */
+
+html {
+    font-size: 100%; /* 1 */
+    overflow-y: scroll; /* 2 */
+    -webkit-tap-highlight-color: rgba(0,0,0,0); /* 3 */
+    -webkit-text-size-adjust: 100%; /* 4 */
+    -ms-text-size-adjust: 100%; /* 4 */
+}
+
+/*
+ * Addresses margins handled incorrectly in IE6/7
+ */
 
 body {
-	background-color: #fff;
+    margin: 0;
+	font-family:Georgia, "Times New Roman", Times, serif;
+}
+
+/* 
+ * Addresses font-family inconsistency between 'textarea' and other form elements.
+ */
+
+button, input, select, textarea {
+    font-family:  Arial, Helvetica, sans-serif !important;
+}
+
+/* =============================================================================
+   Links
+   ========================================================================== */
+
+a {color:#31827d; outline:none;}
+a:visited {color:#008000;}
+a:focus {outline:none;}
+a:hover, a:active {outline:none;}
+
+/* =============================================================================
+   Typography
+   ========================================================================== */
+
+/*
+ * Addresses styling not present in IE7/8/9, S5, Chrome
+ */
+
+abbr[title] {
+    border-bottom: 1px dotted;
+}
+
+/*
+ * Addresses style set to 'bolder' in FF3/4, S4/5, Chrome
+*/
+
+b, 
+strong { 
+    font-weight: bold; 
+}
+
+blockquote {
+    margin: 1em 40px;
+}
+
+/*
+ * Addresses styling not present in S5, Chrome
+ */
+
+dfn {
+    font-style: italic;
+}
+
+/*
+ * Addresses styling not present in IE6/7/8/9
+ */
+
+mark {
+    background: #ff0;
+    color: #000;
+}
+
+/*
+ * Corrects font family set oddly in IE6, S5, Chrome
+ * en.wikipedia.org/wiki/User:Davidgothberg/Test59
+ */
+
+pre, code, kbd, samp {
+    font-family: monospace, monospace;
+    _font-family: 'courier new', monospace;
+    font-size: 1em;
+}
+
+/*
+ * Improves readability of pre-formatted text in all browsers
+ */
+
+pre {
+    white-space: pre;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/*
+ * 1. Addresses CSS quotes not supported in IE6/7
+ * 2. Addresses quote property not supported in S4
+ */
+
+/* 1 */
+
+q {
+    quotes: none;
+}
+
+/* 2 */
+
+q:before, q:after {
+    content: '';
+    content: none;
+}
+
+small {
+    font-size: 75%;
+}
+
+/*
+ * Prevents sub and sup affecting line-height in all browsers
+ * gist.github.com/413930
+ */
+
+sub,
+sup {
+    font-size: 75%;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+}
+
+sup {
+    top: -0.5em;
+}
+
+sub {
+    bottom: -0.25em;
+}
+
+
+/* =============================================================================
+   Lists
+   ========================================================================== */
+
+ul,
+ol {
+    margin: 1em 0;
+    padding: 0 0 0 40px;
+}
+
+dd {
+    margin: 0 0 0 40px;
+}
+
+nav ul,
+nav ol {
+    list-style: none;
+}
+
+
+/* =============================================================================
+   Embedded content
+   ========================================================================== */
+
+/*
+ * 1. Removes border when inside 'a' element in IE6/7/8/9
+ * 2. Improves image quality when scaled in IE7
+ *    code.flickr.com/blog/2008/11/12/on-ui-quality-the-little-things-client-side-image-resizing/
+ */
+
+img {
+    border: 0; /* 1 */
+    -ms-interpolation-mode: bicubic; /* 2 */
+}
+
+/*
+ * Corrects overflow displayed oddly in IE9 
+ */
+
+svg:not(:root) {
+    overflow: hidden;
+}
+
+
+/* =============================================================================
+   Figures
+   ========================================================================== */
+
+/*
+ * Addresses margin not present in IE6/7/8/9, S5, O11
+ */
+
+figure {
+    margin: 0;
+}
+figcaption {
+    margin: 0;
+	font-size:0.75em;
+	color:#828282;
+}
+
+/* =============================================================================
+   Forms
+   ========================================================================== */
+
+/*
+ * Corrects margin displayed oddly in IE6/7
+ */
+
+form {
+    margin: 0;
+}
+
+/*
+ * Define consistent margin and padding
+ */
+
+fieldset {
+    margin: 0 2px;
+    padding: 0.35em 0.625em 0.75em;
+	border:1px solid #D3D3D3;
+}
+
+/*
+ * 1. Corrects color not being inherited in IE6/7/8/9
+ * 2. Corrects alignment displayed oddly in IE6/7
+ */
+
+legend {
+    border: 0; /* 1 */
+    *margin-left: -7px; /* 2 */
+}
+
+	
+	
+
+/*
+ * 1. Corrects font size not being inherited in all browsers
+ * 2. Addresses margins set differently in IE6/7, F3/4, S5, Chrome
+ * 3. Improves appearance and consistency in all browsers
+ */
+
+button,input,select,textarea {
+    vertical-align: baseline; /* 3 */
+    *vertical-align: middle; /* 3 */
+}
+input[type="text"], input[type="password"], textarea {
+    font-size: 0.75em; /* 1 */
+    line-height: 1.25em;
+    font-family: Arial, Helvetica, sans-serif; /* 1 */
+    margin: 0; /* 2 */
+    border: 1px solid #999999;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2) inset;
+	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2) inset;
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2) inset;
+	padding:4px 3px 3px;
+	}
+	input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
+		border: 1px solid #31827d;
+		outline:none;
+		}
+button, input[type="submit"] {
+    font-size: 0.875em; /* 1 */
+    line-height: 130%;
+    margin: 0; /* 2 */
+    border: 1px solid #1f6661;
+    background: #31827d;
+	color:#fff;
+	padding:0.2em 1.5em 0.4em 1.5em;
+	font-family: Georgia,"Times New Roman",Times,serif !important;
+}
+button.big, input[type="submit"].big {
+    font-size: 1em;
+	padding:0.2em 2em 0.3em 2em;
+}
+button:hover , input[type="submit"]:hover {
+    border: 1px solid #1f6661;
+    background: #1f6661;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
+}
+::-webkit-input-placeholder {color:#aaaaaa; outline:none; font-style:italic;}
+input:-moz-placeholder {color:#aaaaaa; outline:none; font-style:italic;}
+/*
+ * 1. Addresses FF3/4 setting line-height using !important in the UA stylesheet
+ * 2. Corrects inner spacing displayed oddly in IE6/7
+ */
+
+button,
+input {
+    line-height: normal; /* 1 */
+    *overflow: visible;  /* 2 */
+}
+
+/*
+ * 1. Improves usability and consistency of cursor style between image-type 'input' and others
+ * 2. Corrects inability to style clickable 'input' types in iOS
+ */
+
+button,input[type="button"],input[type="reset"],input[type="submit"] {
+    cursor: pointer; /* 1 */
+    -webkit-appearance: button; /* 2 */
+}
+
+/*
+ * Addresses box sizing set to content-box in IE8/9
+ */
+
+input[type="checkbox"],
+input[type="radio"] {
+    box-sizing: border-box;
+}
+
+/*
+ * 1. Addresses appearance set to searchfield in S5, Chrome
+ * 2. Addresses box sizing set to border-box in S5, Chrome (include -moz to future-proof)
+ */
+
+input[type="search"] {
+    -webkit-appearance: textfield; /* 1 */
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box; /* 2 */
+    box-sizing: content-box;
+}
+
+/*
+ * Corrects inner padding displayed oddly in S5, Chrome on OSX
+ */
+
+input[type="search"]::-webkit-search-decoration {
+    -webkit-appearance: none;
+}
+
+/*
+ * Corrects inner padding and border displayed oddly in FF3/4
+ * www.sitepen.com/blog/2008/05/14/the-devils-in-the-details-fixing-dojos-toolbar-buttons/
+ */
+
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
+/*
+ * 1. Removes default vertical scrollbar in IE6/7/8/9
+ * 2. Improves readability and alignment in all browsers
+ */
+
+textarea {
+    overflow: auto; /* 1 */
+    vertical-align: top; /* 2 */
+}
+
+
+/* =============================================================================
+   Tables
+   ========================================================================== */
+
+/* 
+ * Remove most spacing between table cells
+ */
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+
+/**
+ * Font normalization inspired by YUI Library fonts.css: developer.yahoo.com/yui/
+ */
+
+/* Normalize monospace sizing:
+   en.wikipedia.org/wiki/MediaWiki_talk:Common.css/Archive_11#Teletype_style_fix_for_Chrome */
+pre, code, kbd, samp { font-family: monospace, sans-serif; }
+
+
+/**
+ * Minimal base styles.
+ */
+
+/* Always force a scrollbar in non-IE */
+html { overflow-y: scroll; }
+
+/* Accessible focus treatment: people.opera.com/patrickl/experiments/keyboard/test */
+a:hover, a:active { outline: none; }
+
+ul, ol { margin-left: 2em; }
+ol { list-style-type: decimal; }
+
+/* Remove margins for navigation lists */
+nav ul, nav li { margin: 0; list-style:none; list-style-image: none; }
+
+small { font-size: 85%; }
+strong, th { font-weight: bold; }
+
+td { vertical-align: top; }
+
+/* Set sub, sup without affecting line-height: gist.github.com/413930 */
+sub, sup { font-size: 75%; line-height: 0; position: relative; }
+sup { top: -0.5em; }
+sub { bottom: -0.25em; }
+
+pre {
+  /* www.pathf.com/blogs/2008/05/formatting-quoted-code-in-blog-posts-css21-white-space-pre-wrap/ */
+  white-space: pre; white-space: pre-wrap; word-wrap: break-word;
+  padding: 15px;
+}
+
+textarea { overflow: auto; } /* www.sitepoint.com/blogs/2010/08/20/ie-remove-textarea-scrollbars/ */
+
+.ie6 legend, .ie7 legend { margin-left: -7px; } 
+
+/* Align checkboxes, radios, text inputs with their label by: Thierry Koblentz tjkdesign.com/ez-css/css/base.css  */
+input[type="radio"] { vertical-align: text-bottom; }
+input[type="checkbox"] { vertical-align: bottom; }
+.ie7 input[type="checkbox"] { vertical-align: baseline; }
+.ie6 input { vertical-align: text-bottom; }
+
+/* Hand cursor on clickable input elements */
+label, input[type="button"], input[type="submit"], input[type="image"], button { cursor: pointer; }
+
+/* Webkit browsers add a 2px margin outside the chrome of form elements */
+button, input, select, textarea { margin: 0; }
+
+/* Colors for form validity */
+input:valid, textarea:valid   {  }
+input:invalid, textarea:invalid {
+   border-radius: 1px; -moz-box-shadow: 0px 0px 5px red; -webkit-box-shadow: 0px 0px 5px red; box-shadow: 0px 0px 5px red;
+}
+.no-boxshadow input:invalid, .no-boxshadow textarea:invalid { background-color: #f0dddd; }
+
+
+/* These selection declarations have to be separate
+   No text-shadow: twitter.com/miketaylr/status/12228805301
+   Also: hot pink! */
+::-moz-selection{ background: #49f0ff; color:#fff; text-shadow: none; }
+::selection { background:#49f0ff; color:#fff; text-shadow: none; }
+
+/* j.mp/webkit-tap-highlight-color */
+a:link { -webkit-tap-highlight-color: #FF5E99; }
+
+/* Make buttons play nice in IE:
+   www.viget.com/inspire/styling-the-button-element-in-internet-explorer/ */
+button {  width: auto; overflow: visible; }
+
+/* Bicubic resizing for non-native sized IMG:
+   code.flickr.com/blog/2008/11/12/on-ui-quality-the-little-things-client-side-image-resizing/ */
+.ie7 img { -ms-interpolation-mode: bicubic; }
+
+/**
+ * You might tweak these..
+ */
+
+select, input, textarea {
+  /* #444 looks better than black: twitter.com/H_FJ/statuses/11800719859 */
+  color: #444;
+  /* Set your base font here, to apply evenly */
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Headers (h1, h2, etc) have no default font-size or margin; define those yourself */
+h1, h2, h3, h4, h5, h6 { font-weight: normal; font-family: Arial, Helvetica, sans-serif; margin: 0; line-height: 1.15em; color:#464646; }
+
+h1 {font-family: Georgia,"Times New Roman", Times, serif;} 
+
+a, a:active, a:visited { color: #31827d; text-decoration: none}
+a:hover { color: #1f6661; text-decoration: underline}
+
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {text-decoration: none;}
+
+/**
+ * Primary styles
+ *
+ * Author: sourcefabric.org
+ */
+ 
+ body {
+  background-color: #fff;
  }
  
 img, object {
@@ -23,51 +556,50 @@ header#global hgroup {
 	margin-bottom:0;
 	}
 	header#global hgroup h1 {
-		margin-bottom: 0 !important;
-		}
+	margin-bottom: 0 !important;
+	}
  
 header#global hgroup img {
-	clear: both;
+  clear: both;
  }
  
 header#global hgroup a {
   text-decoration: none;
+  color: #666;
  }
+ 
+header#global hgroup a:hover {
+  color: #000;
+ }
+ 
 .left {
-	float: left;
+  float: left;
 }
 
 .right {
-	float: right;
+  float: right;
 }
 
 .noleftmarg {
-	margin-left: 0!important;
+  margin-left: 0!important;
 }
 
 .norightmarg {
-	margin-right: 0!important;
+  margin-right: 0!important;
 }
 
 .clearall {
-	clear: both;
+  clear: both;
 }
 
-a, a:active, a:visited { text-decoration: none}
-a:hover { text-decoration: underline}
-
-h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover {text-decoration: none;}
-h1, h2, h3, h4, h5, h6 { font-weight: normal; font-family: Arial, Helvetica, sans-serif; margin: 0; line-height: 1.15em;}
-
 h1 {
-	font-size: 2em;
-	margin-bottom: .5em;
-	font-weight:normal;
-	font-family: Georgia,"Times New Roman", Times, serif;
+  font-size: 2em;
+  margin-bottom: .5em;
+  font-weight:normal;
 }
 
 h2 {
-	font-size: 1.5em;
+  font-size: 1.5em;
 }
 
 h3 {
@@ -82,30 +614,31 @@ h4 {
 	}
 
 h5 {
-	font-size: 1.0em;
+  font-size: 1.0em;
 }
 
 h6 {
-	font-size: 0.85em;
+  font-size: 0.85em;
 }
 
 ul#secnav {
-	list-style: none;
-	padding-left: 0; 
-	margin: 5px 0 0 0; 
+  list-style: none;
+  padding-left: 0; 
+  margin: 5px 0 0 0; 
 }
  
 ul#secnav li {
-	float: right;
-	font-size: 0.825em; 
-	margin: 0 10px;
-	font-family: Arial, Helvetica, sans-serif;
+  float: right;
+  font-size: 0.825em; 
+  margin: 0 10px;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 div#search-box {
 	text-align: right;
 	padding: 0 32px 0 0;
 	margin: 24px 0 0;
+	background: #f2f2f2;
 	border:1px solid #d3d3d3;
 	position:relative;
 	height:40px;
@@ -135,39 +668,6 @@ div#search-box {
 		}
 
 /* =============================================================================
-   Inputs
-   ========================================================================== */
-
-input[type="text"], input[type="password"], textarea {
-    border: 1px solid;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2) inset;
-	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2) inset;
-	-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2) inset;
-	padding:4px 3px 3px;
-	}
-	input[type="text"]:focus, input[type="password"]:focus, textarea:focus {
-		border: 1px solid;
-		outline:none;
-		}
-
-button, input[type="submit"] {
-    border: 1px solid;
-	padding:0.2em 1.5em 0.4em 1.5em;
-	font-family: Georgia,"Times New Roman",Times,serif !important;
-	}
-	button.big, input[type="submit"].big {
-		font-size: 1em;
-		padding:0.2em 2em 0.3em 2em;
-		}
-	button:hover , input[type="submit"]:hover {
-		border: 1px solid;
-		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-		-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-		-webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
-		}
-
-
-/* =============================================================================
    Main navigation
    ========================================================================== */
 
@@ -176,6 +676,7 @@ nav#main {
 	border-top: 1px dotted #999;
 	border-bottom: 1px dotted #999;  
 	clear: both;
+	background:#5a9b97;
 	}
 	nav#main ul {
 		list-style: none;
@@ -186,19 +687,36 @@ nav#main {
 			float: left;
 			text-transform: uppercase;
 			font-size: 0.75em;
+			background:#5a9b97;
 			}
 			nav#main ul li:last-child {
 				float: right;
 				}
 				nav#main ul li a {
+					color: #555555;
+					color: #fff;
 					text-decoration: none;
 					margin: 0;
 					padding: 0.5em 1em 0.4em 1em;
 					display: block;
 					letter-spacing:0.075em;
+					
 					}
-
-
+					nav#main ul li a:hover {
+						color: #fff;
+						background-color: #464646;
+						}
+		nav#main ul li.selected {
+			color: #fff;
+			background-color: #31827d;
+			}
+			nav#main ul li.selected a {
+				color: #fff;
+				}
+				nav#main ul li.selected a:hover {
+					color: #fff;
+					background-color: #1f6661;
+					}
 
 nav#main .nav-header {
 	display: none;
@@ -208,14 +726,14 @@ nav#main .nav-header {
 		display: block;
 		cursor:pointer;
 		font-family: Arial, Helvetica, sans-serif;
+		color:#fff;
+		background:#31827d;
 		text-transform: uppercase;
 		font-size: 0.8125em;
 		font-weight:bold;
 		padding: 0.7em 1em 0.6em 1em;
 		letter-spacing:0.0825em;
-		background-image: url(../_img/icon_nav-button.png);
-		background-repeat:no-repeat;
-		background-position:right center;
+		background: #464646 url(../_img/icon_nav-button.png) no-repeat right center;
 		text-decoration:none !important;
 		}
 /* =============================================================================
@@ -235,6 +753,7 @@ nav#main .nav-header {
 		}
 		#breadcrumbs li:before {
 			content:'/';
+			color:#D3D3D3;
 			padding-right: 0.7em;
 			}
 			#breadcrumbs li:first-child:before {
@@ -293,6 +812,7 @@ section#topstory {
  	border-bottom: 1px dotted #999;
  	padding: 3px 0;
  	font-size: 0.875em;
+ 	color: #636363;
 	}
 	
 #highlights li {
@@ -343,6 +863,7 @@ section.sections {
 
 #login-box {
 	border: 1px solid #adcdcb;
+	background:#f4f9f8;
 	padding: 7px 10px;
 	}
 	#login-box p {
@@ -471,6 +992,7 @@ footer {
   }
   footer p {
 	font-size:0.75em;
+	color:#636363;
 	}
   footer ul {
 	list-style: none;
@@ -503,6 +1025,7 @@ footer {
 		.art-item header p {
 			border:1px dotted #aaaaaa;
 			border-width:1px 0;
+			color:#555555;
 			margin:0 0 12px 0; padding: 5px 0 4px;
 			}
 			.art-item header p + p {
@@ -512,6 +1035,7 @@ footer {
 p.cs_img_caption {
 	margin-top:-12px;
 	font-size:0.875em;
+	color:#636363;
 }
 				
 /* section page styles */
@@ -541,6 +1065,7 @@ p.cs_img_caption {
 .form-element {
   margin: 5px 0;
   clear: both;
+  background: #f6f6f6;
   border:1px solid #d3d3d3;
   padding:10px;
 }
@@ -620,16 +1145,23 @@ ul.pagination {
       font-size: 12px;
       border:#31827d solid 1px;
 	  color:#31827d;
+	  
       }
 	  ul.pagination li span {
-		border:solid 1px;
-		}
+		  border:#e7e7e7 solid 1px;
+		  background:#fff;
+		  color:#e7e7e7;
+		  }
 	  ul.pagination li a:hover {
-		border:solid 1px;
-		text-decoration:none !important;
-		}
+		  border:#31827d solid 1px;
+		  background:#83b4b1;
+		  color:#fff !important;
+		  text-decoration:none !important;
+		  }
       ul.pagination li.selected a, ul.pagination li.selected a:hover {
-        border:solid 1px;
+        color:#fff !important;
+        background:#31827d;
+        border:#31827d solid 1px;
 		cursor:default;
 		text-decoration:none !important;
         }
@@ -645,14 +1177,14 @@ ul.pagination {
         margin:0 16px 0 0;
         background-position:center 0;
         }
-        ul.pagination li.prev a:hover {background-position:center -21px !important;}
+        ul.pagination li.prev a:hover {background-position:center -21px;}
       
       ul.pagination li.next a {
         position:relative;
         margin:0 0 0 16px;
         background-position:center -42px;
         }
-        ul.pagination li.next a:hover {background-position:center -63px !important;}
+        ul.pagination li.next a:hover {background-position:center -63px;}
 
     ul.pagination li.prev span,
     ul.pagination li.next span {
@@ -733,6 +1265,7 @@ aside p, #sidebar p, aside dl.profile, #sidebar dl.profile {
 		}
 		.community_ticker ul li small{
 			display:block;
+			color:#636363;
 			font-style:italic;
 			font-size:80%;
 			}
@@ -766,6 +1299,7 @@ li.registered, li.commented {
 		margin-right:10px;
 		}
 	#comment-list time {
+		color:#808080;
 		font-size: 0.8125em;
 		font-family: Arial, Helvetica, sans-serif !important;
 		}
@@ -902,6 +1436,7 @@ label input[type="radio"], label input[type="checkbox"] {
 			}
 			.users li h5 small {
 				font-size: 0.875em;
+				color:#636363;
 				padding:0 0 0 8px;			
 				}
 		.users li p {
@@ -910,6 +1445,7 @@ label input[type="radio"], label input[type="checkbox"] {
 .user-search {
 	padding: 10px;
 	margin: 10px 0 0;
+	background: #F2F2F2;
 	border: 1px solid #d3d3d3;			
 	}
 	.user-search form {
@@ -945,15 +1481,11 @@ label input[type="radio"], label input[type="checkbox"] {
 	border-bottom: 2px solid #AAAAAA;
 	padding:0 0 4px;
 }
-
-.community#sidebar h3 {
-	margin-top: 8px;
-}
-
 .user-image {padding-top:12px;}
 
 
 fieldset.background-block, .register-block {
+    background:#F2F2F2;
     border: 1px solid #D3D3D3;
     margin: 4px 0 10px;
     padding: 12px;
@@ -974,7 +1506,8 @@ ul.social {
 .alert {
 	padding: 14px;
 	margin: 6px 0 12px 0;
-	border: 1px solid;
+	background-color: #fcf8e3;
+	border: 1px solid #fbeed5;
 	-webkit-border-radius: 3px;
 	-moz-border-radius: 3px;
 	border-radius: 3px;
@@ -993,7 +1526,28 @@ ul.social {
 		.alert p:last-child {
 			margin-bottom:0;
 			}
-
+.alert-success {
+	background-color: #edf9e7;
+	border-color: #d6e9c6;
+	}
+	.alert-success, .alert-success h5 {
+		color: #278f29;
+		}
+.alert-danger, .alert-error {
+	background-color: #f6e8e8;
+	border-color: #eed3d7;
+	}
+	.alert-danger, .alert-error,
+	.alert-danger h5, .alert-error h5, .error-info {
+		color: #a42323;
+		}
+.alert-info {
+	background-color: #e4f2f9;
+	border-color: #bce8f1;
+	}
+	.alert-info, .alert-info h5 {
+		color: #31827d;
+		}
 /* -------------------
 END ALERT BOX -------*/	
 
@@ -1032,7 +1586,9 @@ ul.errors {
 	list-style-type:none;
 	}
 	ul.errors li {
-		border:1px solid;
+		background-color: #f6e8e8;
+		border:1px solid #eed3d7;
+		color: #a42323;
 		font-size:0.8125em !important;
 		padding:5px;
 		margin-bottom:4px;
@@ -1074,8 +1630,9 @@ ul.errors {
 	padding: 0.6em 0 0;
 }
 .user-profile-data p.date {
-	border-bottom: 1px dotted #999999;
+    border-bottom: 1px dotted #999999;
     border-top: 1px dotted #999999;
+    color: #636363;
 	font-size:0.9375em !important;
     font-size: 0.875em;
     padding: 3px 0 5px 0;
@@ -1099,9 +1656,11 @@ aside .profile dt, aside .profile dd,
 	.user-profile-data .profile dt, aside .profile dt, #sidebar .profile dt {
 		float:left;
 		margin:0 0.6em 0 0;
+		color:#000;
 		}
 	.user-profile-data .profile dd, aside .profile dd, #sidebar .profile dd {
 		margin:0;
+		color:#555555;
 		}
 .user-profile-posts {
 	margin-top:30px;	
@@ -1135,6 +1694,7 @@ aside .profile dt, aside .profile dd,
 		.item-list.article li time  {
 		    border-bottom: 1px dotted #999999;
 			border-top: 1px dotted #999999;
+			color: #636363;
 			font-size: 0.9375em !important;
 			margin: 0.4em 0 0.7em;
 			padding: 2px 0 5px;
@@ -1156,7 +1716,8 @@ aside .profile dt, aside .profile dd,
    ========================================================================== */
 .collapsible h6 {
 	cursor:pointer;
-	}
+	background-color:#F2F2F2;
+}
 .collapsible i {
 	display: inline-block;
 	width: 14px;
@@ -1183,10 +1744,10 @@ aside .profile dt, aside .profile dd,
 .geomap_map {clear:both;}
 .location-list p {line-height:120%}
 .location-list p:first-child {margin-top:2px;}
-.location-list p small {font-size:0.875em; padding-left:0.75em;}
+.location-list p small {color:#636363; font-size:0.875em; padding-left:0.75em;}
 
 .location-list h4 {font-size: 1.0625em; margin: -2px 0 10px 0; font-weight:normal; font-family: Georgia,"Times New Roman",Times,serif;}
-.location-list h6 {font-size: 0.9375em; margin-bottom:5px; font-weight:normal; padding:5px 10px 5px 4px;}
+.location-list h6 {font-size: 0.9375em; margin-bottom:5px; font-weight:normal; padding:5px 10px 5px 4px; background-color:#F2F2F2;}
 
 .location-list .location-content ul {
 	list-style-type:none;
@@ -1199,6 +1760,7 @@ aside .profile dt, aside .profile dd,
 		}
 	.location-list .location-content ul li:before {
 		content:'»';
+		color:#cb0201;
 		padding-right:5px;
 		}
 	.location-list .location-content ul li a {
@@ -1226,6 +1788,7 @@ aside .profile dt, aside .profile dd,
 	.issue-archive article h4 {
 		font-weight: normal;
 		font-family: Georgia,"Times New Roman",Times,serif;
+		color:#636363;
 		font-size:1.125em;
 		}
 .issue-content ul {
@@ -1247,14 +1810,17 @@ aside .profile dt, aside .profile dd,
 			font-size: 0.9375em;
 			margin: 0;
 			padding: 0 0.2em 0 0;
+			color: #636363;
 			}
 			.issue-content ul li .posts {
+				color: #252525;
 				}
 			.issue-content ul li time {
 				font-style:italic;
 				}
 			.issue-content ul li time:before, .issue-content ul li .posts:before {
 				content:'/';
+				color:#D3D3D3;
 				padding-right: 0.4em;
 				font-style:normal !important;
 				}
@@ -1271,6 +1837,7 @@ aside .profile dt, aside .profile dd,
 }
 .ui-tabs-nav.ui-widget-header .ui-state-default {
 	background-image:none !important;
+	background:#FFF !important;
 }
 .ui-tabs .ui-tabs-nav li {
 	margin-right: 0.4em !important;
@@ -1281,7 +1848,11 @@ aside .profile dt, aside .profile dd,
 .ui-tabs .ui-tabs-panel {
     padding: 4px !important;
 }
+.ui-widget-content a {
+    color: #000000;
+}
 .ui-tabs .ui-tabs-panel a {
+    color: #31827d !important;
     text-decoration: none;
 	}	
 	.ui-tabs .ui-tabs-panel a:hover {
@@ -1374,7 +1945,7 @@ nav:before, nav:after {
 @media print {
   * { background: transparent !important; color: black !important; text-shadow: none !important; filter:none !important;
   -ms-filter: none !important; } /* Black prints faster: sanbeiji.com/archives/953 */
-  a, a:visited { text-decoration: underline; }
+  a, a:visited { color: #444 !important; text-decoration: underline; }
   a[href]:after { content: " (" attr(href) ")"; }
   abbr[title]:after { content: " (" attr(title) ")"; }
   .ir a:after, a[href^="javascript:"]:after, a[href^="#"]:after { content: ""; }  /* Don't show links for images, or javascript/internal links */
