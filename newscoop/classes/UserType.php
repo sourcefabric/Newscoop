@@ -180,7 +180,12 @@ class UserType extends DatabaseObject
 
         // translate to resource/action
         require_once dirname(__FILE__) . '/../library/Newscoop/Utils/PermissionToAcl.php';
-        list($resource, $action) = Newscoop\Utils\PermissionToAcl::translate($p_varName);
+
+        try {
+            list($resource, $action) = Newscoop\Utils\PermissionToAcl::translate($p_varName);
+        } catch (\InvalidArgumentException $e) {
+            return;
+        }
 
         // get type
         $type = $p_value ? 'allow' : 'deny';

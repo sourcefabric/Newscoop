@@ -59,7 +59,12 @@ class Storage implements StorageInterface
 
         $resources = array();
         foreach ($repository->findAll() as $permission) {
-            list($resource, $action) = PermissionToAcl::translate($permission);
+            try {
+                list($resource, $action) = PermissionToAcl::translate($permission);
+            } catch (\InvalidArgumentException $e) { // ignore obsolete permissions
+                continue;
+            }
+
             if (!isset($resources[$resource])) {
                 $resources[$resource] = array();
             }

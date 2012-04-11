@@ -31,7 +31,12 @@ foreach ($groups as $group) {
     $rights = $g_ado_db->GetAll($sql);
     foreach ($rights as $right) {
         $rightName = $right['right_define_name'];
-        list($resource, $action) = array_map('strtolower', PermissionToAcl::translate($rightName));
+        try {
+            list($resource, $action) = array_map('strtolower', PermissionToAcl::translate($rightName));
+        } catch (\InvalidArgumentException $e) {
+            continue;
+        }
+
         $rules[] = array('allow', $roleId, $resource, $action);
 
         if ($resource == 'template' && $action == 'manage') {
@@ -58,7 +63,12 @@ foreach ($users as $user) {
     $rights = $g_ado_db->GetAll($sql);
     foreach ($rights as $right) {
         $rightName = $right['right_define_name'];
-        list($resource, $action) = array_map('strtolower', PermissionToAcl::translate($rightName));
+        try {
+            list($resource, $action) = array_map('strtolower', PermissionToAcl::translate($rightName));
+        } catch (\InvalidArgumentException $e) {
+            continue;
+        }
+
         $rules[] = array('allow', $roleId, $resource, $action);
 
         if ($resource == 'template' && $action == 'manage') {
