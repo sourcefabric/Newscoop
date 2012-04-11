@@ -87,7 +87,12 @@ class LiveUserMock
         $permission = $this->db->GetOne($sql);
 
         // remove acl rules
-        list($resource,) = PermissionToAcl::translate($permission);
+        try {
+            list($resource,) = PermissionToAcl::translate($permission);
+        } catch (\InvalidArgumentException $e) {
+            return;
+        }
+
         $sql = 'DELETE
                 FROM ' . self::RULES . "
                 WHERE resource = '$resource'";
