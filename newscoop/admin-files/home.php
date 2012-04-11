@@ -107,8 +107,9 @@ $(document).ready(function() {
         enableEscapeButton: false,
         centerOnScroll: true,
         onClosed: function() {
-            $.get("<?php echo($Campsite['WEBSITE_URL'].'/admin/support/close'); ?>");
-            window.location.reload();
+            $.get("<?php echo($Campsite['WEBSITE_URL'].'/admin/support/close'); ?>", function(data) {
+                window.location.reload();
+            });
         },
         overlayOpacity: 0.8,
         overlayColor: '#666',
