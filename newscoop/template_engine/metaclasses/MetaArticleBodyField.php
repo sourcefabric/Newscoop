@@ -167,6 +167,11 @@ final class MetaArticleBodyField {
             try {
                 // note that an analogy to SessionRequest::Create() is run at the js-based stats now, at Statistics::WriteStats();
                 if ($updateArticle) {
+                    $requestObject = new RequestObject($requestObjectId);
+                    if (!$requestObject->exists()) {
+                        $requestObject->create(array('object_type_id'=>$objectType->getObjectTypeId()));
+                        $requestObjectId = $requestObject->getObjectId();
+                    }
                     $this->m_parent_article->setProperty('object_id', $requestObjectId);
                 }
 
