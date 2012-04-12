@@ -121,8 +121,9 @@ function camp_bug_handler_main($p_number, $p_string, $p_file, $p_line)
 
     define('IN_BUG_HANDLE', TRUE);
 
-    // --- Don't print out the previous screen (in which the error occurred). ---
-    ob_end_clean();
+    if (ob_get_length() !== false) { // --- Don't print out the previous screen (in which the error occurred). ---
+        ob_end_clean();
+    }
 
     if (is_object($g_user)) {
 	    require_once($Campsite['HTML_DIR'] . "/$ADMIN_DIR/menu.php");
