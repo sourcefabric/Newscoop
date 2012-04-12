@@ -305,6 +305,12 @@ class RenditionService
      */
     private function removeOrphanedArticleRenditions(array $names)
     {
+        if (empty($names)) {
+            $this->orm->createQuery('DELETE FROM Newscoop\Image\ArticleRendition ar')
+                ->execute();
+            return;
+        }
+
         $this->orm->createQuery('DELETE FROM Newscoop\Image\ArticleRendition ar WHERE ar.rendition NOT IN (:names)')
             ->setParameter('names', $names)
             ->execute();
@@ -318,6 +324,12 @@ class RenditionService
      */
     private function removeOrphanedRenditions(array $names)
     {
+        if (empty($names)) {
+            $this->orm->createQuery('DELETE FROM Newscoop\Image\Rendition r')
+                ->execute();
+            return;
+        }
+
         $this->orm->createQuery('DELETE FROM Newscoop\Image\Rendition r WHERE r.name NOT IN (:names)')
             ->setParameter('names', array_merge($names, $this->getPackageRenditionNames()))
             ->execute();
