@@ -85,7 +85,9 @@ final class CampTemplate extends Smarty
             APPLICATION_PATH . self::SCRIPTS,
         );
 
-        $this->assign('view', $GLOBALS['controller']->view);
+        if (isset($GLOBALS['controller'])) {
+            $this->assign('view', $GLOBALS['controller']->view);
+        }
     }
 
     /**
