@@ -1,5 +1,5 @@
 <?php 
-regGS("Themes", "");
+regGS("Themes", "Temas");
 regGS("Area to localize", "Área para traducir");
 regGS("Dashboard", "Tablero");
 regGS("Authors", "Autores");

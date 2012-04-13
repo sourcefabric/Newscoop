@@ -1,6 +1,6 @@
 <?php 
-regGS("News Desk", "");
-regGS("Go", "");
+regGS("News Desk", "Escritorio");
+regGS("Go", "Ir");
 regGS("Wikipedia Search", "Búsqueda en Wikipedia");
 regGS("Files", "Archivos");
 regGS("Sourcefabric.org newsletter subscription", "Suscripción al boletín de Sourcefabric.org");
