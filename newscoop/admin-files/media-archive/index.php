@@ -21,30 +21,27 @@ camp_html_content_top(getGS('Media Archive'), NULL);
 </ul>
 
 <div id="images">
-
+    <fieldset class="actions">
     <?php if ($g_user->hasPermission('AddImage')) { ?>
-    <p class="actions">
-        <a href="/<?php echo $ADMIN; ?>/media-archive/add.php" title="<?php putGS('Add new image'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new image'); ?>"><?php putGS('Add new image'); ?></a>
-        &nbsp;
+    <span class="actions" style="margin-right:20px;">
+        <a href="/<?php echo $ADMIN; ?>/media-archive/add.php" title="<?php putGS('Add new image'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new image'); ?>">&nbsp;<?php putGS('Add new image'); ?></a>
+        &nbsp;&nbsp;
         <a href="/<?php echo $ADMIN; ?>/media-archive/edit.php?f_fix_thumbs=1" title="<?php putGS('Fix all thumbnails'); ?>"><?php putGS('Fix all thumbnails'); ?></a>
-    </p>
+    </span>
     <?php } ?>
 
-    <p><input type="checkbox" id="newswires-images" /> <label for="newswires-images"><?php putGS('Display Newswires images'); ?></label></p>
+    <?php if ($g_user->hasPermission('DeleteImage')) { ?>
+        <input type="submit" class="button" name="delete" value="<?php putGS('Delete selected'); ?>" />
+        <input type="submit" class="button" name="approve" value="<?php putGS('Approve selected'); ?>" />
+        <input type="submit" class="button" name="disapprove" value="<?php putGS('Disapprove selected'); ?>" />
+    <?php } ?>
+    </fieldset>
 
     <?php
         $list = new ImageList;
         $list->setSearch(TRUE);
         $list->render();
     ?>
-
-    <?php if ($g_user->hasPermission('DeleteImage')) { ?>
-    <fieldset class="actions">
-        <input type="submit" name="delete" value="<?php putGS('Delete selected'); ?>" />
-        <input type="submit" name="approve" value="<?php putGS('Approve selected'); ?>" />
-        <input type="submit" name="disapprove" value="<?php putGS('Disapprove selected'); ?>" />
-    </fieldset>
-    <?php } ?>
 </div><!-- /#images -->
 
 <div id="slideshows">
@@ -60,10 +57,11 @@ camp_html_content_top(getGS('Media Archive'), NULL);
 </div>
 
 <div id="files">
+    <fieldset class="actions">
     <?php if ($g_user->hasPermission('AddFile')) { ?>
-    <p class="actions">
-        <a href="/<?php echo $ADMIN; ?>/media-archive/add_file.php" title="<?php putGS('Add new file'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new file'); ?>"><?php putGS('Add new file'); ?></a>
-    </p>
+    <span class="actions" style="margin-right:20px;">
+        <a href="/<?php echo $ADMIN; ?>/media-archive/add_file.php" title="<?php putGS('Add new file'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new file'); ?>">&nbsp;<?php putGS('Add new file'); ?></a>
+    </span>
     <script type="text/javascript"><!--
         $(document).ready(function() {
             $('a#new_file').click(function() {
@@ -75,20 +73,19 @@ camp_html_content_top(getGS('Media Archive'), NULL);
     //--></script>
     <?php } ?>
 
+    <?php if ($g_user->hasPermission('DeleteFile')) { ?>
+        <input type="submit" class="button" name="delete" value="<?php putGS('Delete selected'); ?>" />
+        <input type="submit" class="button" name="approve" value="<?php putGS('Approve selected'); ?>" />
+        <input type="submit" class="button" name="disapprove" value="<?php putGS('Disapprove selected'); ?>" />
+    <?php } ?>
+    </fieldset>
+
     <?php
         $list = new MediaList;
         $list->setColVis(TRUE);
         $list->setSearch(TRUE);
         $list->render();
     ?>
-
-    <?php if ($g_user->hasPermission('DeleteFile')) { ?>
-    <fieldset class="actions">
-        <input type="submit" name="delete" value="<?php putGS('Delete selected'); ?>" />
-        <input type="submit" name="approve" value="<?php putGS('Approve selected'); ?>" />
-        <input type="submit" name="disapprove" value="<?php putGS('Disapprove selected'); ?>" />
-    </fieldset>
-    <?php } ?>
 </div><!-- /#files -->
 
 </div><!-- /#archive -->
@@ -244,12 +241,6 @@ $(document).ready(function() {
         });
 
         return false;
-    });
-
-    $('#newswires-images').change(function() {
-        $.smartlist_filter = $(this).attr('checked') ? 'sda' : '';
-        var smartlistId = $('.smartlist', $(this).closest('#images')).attr('id').split('-')[1];
-        tables[smartlistId].fnDraw(true);
     });
 });
 
