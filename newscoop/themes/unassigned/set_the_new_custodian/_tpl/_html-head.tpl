@@ -44,10 +44,8 @@
 
 
   <!-- CSS: implied media="all" -->
-  <link rel="stylesheet" href="{{ url static_file='_css/style.css?v=2' }}">
+  <link rel="stylesheet" href="{{ url static_file='_css/main.css?v=2' }}">
 
-  <!-- fluid, 12 col grid -->
-  <link rel="stylesheet" href="{{ url static_file='_css/1140.css?v=2' }}">
 
   <!-- Uncomment if you are specifically targeting less enabled mobile browsers
   <link rel="stylesheet" media="handheld" href="{{ url static_file='_css/handheld.css?v=2' }}"> -->
@@ -71,7 +69,7 @@
   <script src="{{ url static_file='_js/libs/modernizr-1.7.min.js' }}"></script>
 
   <!-- Video.js -->
-  <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
-  <script src="http://vjs.zencdn.net/c/video.js"></script>
+  <link href="{{ url static_file="_css/video-js.css" }}" rel="stylesheet">
+  <script src="{{ url static_file="_js/video.js" }}"></script>
 
 </head>
