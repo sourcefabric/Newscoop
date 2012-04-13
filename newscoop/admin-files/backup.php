@@ -5,7 +5,7 @@ require_once(CS_PATH_SITE.DIR_SEP . 'scripts' . DIR_SEP . 'file_processing.php')
 
 // check permission
 if (!$g_user->hasPermission('ManageBackup')) {
-    camp_html_display_error(getGS("You do not have the right to manage backup."));
+    camp_html_display_error(getGS("You do not have the right to manage backups."));
     exit;
 }
 
@@ -121,7 +121,7 @@ switch ($action) {
 					catch (Exception $exc) {}
 				}
             } else {
-                camp_html_add_msg(getGS("You have tried to upload wrong backup file."));
+                camp_html_add_msg(getGS("You have tried to upload an invalid backup file."));
             }
         }
         $files = getBackupList();
@@ -147,9 +147,9 @@ echo $breadcrumbs;
     <td valign="bottom"><b><?php echo getGS("Free disk space") . ': '
         . ceil(disk_free_space($Campsite['CAMPSITE_DIR'])/1024/1024) . ' ' . getGS('MiB');?></b></td>
     <td valign="bottom" style="padding-left: 10px;">
-        <a href="#" onclick="if (confirm('<?php putGS('Are you sure you want to make new backup?')?>')) window.open('backup.php?action=backup', 'Backup', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=550, top=100, left=100');">
+        <a href="#" onclick="if (confirm('<?php putGS('Are you sure you want to make a new backup?')?>')) window.open('backup.php?action=backup', 'Backup', 'scrollbars=yes, resizable=yes, menubar=no, toolbar=no, width=700, height=550, top=100, left=100');">
         <img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" border="0">
-        <b><?php putGS("Make new backup")?></b>
+        <b><?php putGS("Make a new backup")?></b>
         </a>
     </td>
     <td valign="bottom" style="padding-left: 10px;">
