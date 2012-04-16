@@ -1,5 +1,68 @@
 <?php $this->placeholder('title')->set(getGS('Subscriptions')); ?>
 
+<script type="text/template" id="table-view-template">
+<a href="#section/new"><?php putGS('Add section'); ?></a> | <a href="#sections"><?php putGS('Edit all sections'); ?></a>
+
+<table id="sections">
+<thead>
+    <tr>
+        <th><?php putGS('Section'); ?></th>
+        <th><?php putGS('Language'); ?></th>
+        <th><?php putGS('Start Date'); ?><br /><small>(yyyy-mm-dd)</small></th>
+        <th><?php putGS('Days'); ?></th>
+        <th><?php putGS('Paid days'); ?></th>
+        <th>&nbsp;</th>
+    </tr>
+</thead>
+<tbody></tbody></table>
+</script>
+
+<script type="text/template" id="section-row-template">
+<td><%= section.name %></td>
+<td><%= language ? language.name : <?php echo json_encode(getGS('Any')); ?> %></td>
+<td><input type="text" name="startDate" class="start-date" value="<%= startDate %>" /></td>
+<td><input type="number" name="days" class="days" min="1" value="<%= days %>" /></td>
+<td><input type="number" name="paidDays" class="paid-days" min="0" value="<%= paidDays %>" /></td>
+<td><button class="delete"><?php putGS('Delete'); ?></button></td>
+</script>
+
+<script type="text/template" id="edit-view-template">
+<dl class="zend_form">
+    <dt><label for="language_set"><?php putGS('Languages:'); ?></dt>
+    <dd><select id="language_set" name="language_set">
+        <option value="select"><?php putGS('Individual languages'); ?></option>
+        <option value="all"><?php putGS('Regardless of the language'); ?></option>
+    </select></dd>
+    
+    <dt><label for="sections"><?php putGS('Sections:'); ?></dt>
+    <dd><select id="sections" name="sections" multiple size="5"></select></dd>
+
+    <dt><label for="start"><?php putGS('Start:'); ?></dt>
+    <dd><input type="date" id="start" name="start" value="<?php echo date('Y-m-d'); ?>" /></dd>
+
+    <dt><label for="days"><?php putGS('Days:'); ?></dt>
+    <dd><input type="number" min="1" name="days" id="days" /></dd>
+
+    <dt></dt>
+    <dd><button><?php putGS('Save'); ?></button></dd>
+</dl>
+</script>
+
+<script type="text/template" id="edit-all-view-template">
+<dl class="zend_form">
+    <dt><label for="start-date"><?php putGS('Start:'); ?></dt>
+    <dd><input type="date" id="start-date" name="start" value="<?php echo date('Y-m-d'); ?>" /></dd>
+
+    <dt><label for="days"><?php putGS('Days:'); ?></dt>
+    <dd><input type="number" min="1" name="days" id="days" /></dd>
+
+    <dt><label for="paid-days"><?php putGS('Paid Days:'); ?></dt>
+    <dd><input type="number" min="1" name="paidDays" id="paid-days" /></dd>
+
+    <dt></dt>
+    <dd><button><?php putGS('Save'); ?></button></dd>
+</dl>
+</script>
 
 <div id="app">
 </div>
@@ -96,6 +159,7 @@
      */
     var SectionView = Backbone.View.extend({
         tagName: 'tr',
+        template: _.template($('#section-row-template').html()),
 
         events: {
             'click button.delete': 'delete',
@@ -103,7 +167,6 @@
         },
 
         initialize: function() {
-            this.template = _.template($('#section-row-template').html());
             this.model.bind('change', this.render, this);
         },
 
@@ -128,8 +191,9 @@
      * Section list view
      */
     var TableView = Backbone.View.extend({
+        template: _.template($('#table-view-template').html()),
+
         initialize: function() {
-            this.template = _.template($('#table-view-template').html());
             this.collection.bind('remove', this.render, this);
             this.collection.bind('add', this.render, this);
         },
@@ -151,13 +215,11 @@
      * Section edit view
      */
     var EditView = Backbone.View.extend({
+        template: _.template($('#edit-view-template').html()),
+
         events: {
             'change #language_set': 'setSections',
             'click button': 'save'
-        },
-
-        initialize: function() {
-            this.template = _.template($('#edit-view-template').html());
         },
 
         render: function() {
@@ -167,7 +229,6 @@
         },
 
         setSections: function() {
-            console.log(JSON.stringify(this.collection));
             var language_set = $(this.el).find('#language_set').val();
             var sections = $(this.el).find('#sections').empty();
             var availableSections = window.sections.availableSections(this.collection, language_set);
@@ -225,9 +286,7 @@
             'click button': 'save'
         },
 
-        initialize: function() {
-            this.template = _.template($('#edit-all-view-template').html());
-        },
+        template: _.template($('#edit-all-view-template').html()),
 
         render: function() {
             $(this.el).html(this.template());
@@ -271,6 +330,11 @@
         },
 
         'edit-all': function() {
+            if (window.subscriptionSections.length == 0) {
+                this.navigate('', {trigger: true});
+                return;
+            }
+
             var view = new EditAllView({collection: window.subscriptionSections});
             $('#app').html(view.render().el);
         }
@@ -283,69 +347,4 @@
         Backbone.history.start();
     });
 })(jQuery);
-</script>
-
-<script type="text/template" id="table-view-template">
-
-<a href="#section/new"><?php putGS('Add section'); ?></a> | <a href="#sections"><?php putGS('Edit all sections'); ?></a>
-
-<table id="sections">
-<thead>
-    <tr>
-        <th><?php putGS('Section'); ?></th>
-        <th><?php putGS('Language'); ?></th>
-        <th><?php putGS('Start Date'); ?><br /><small>(yyyy-mm-dd)</small></th>
-        <th><?php putGS('Days'); ?></th>
-        <th><?php putGS('Paid days'); ?></th>
-        <th>&nbsp;</th>
-    </tr>
-</thead>
-<tbody></tbody></table>
-</script>
-
-<script type="text/template" id="section-row-template">
-<td><%= section.name %></td>
-<td><%= language ? language.name : <?php echo json_encode(getGS('Any')); ?> %></td>
-<td><input type="text" name="startDate" class="start-date" value="<%= startDate %>" /></td>
-<td><input type="number" name="days" class="days" min="1" value="<%= days %>" /></td>
-<td><input type="number" name="paidDays" class="paid-days" min="0" value="<%= paidDays %>" /></td>
-<td><button class="delete"><?php putGS('Delete'); ?></button></td>
-</script>
-
-<script type="text/template" id="edit-view-template">
-<dl>
-    <dt><label for="language_set"><?php putGS('Languages:'); ?></dt>
-    <dd><select id="language_set" name="language_set">
-        <option value="select"><?php putGS('Individual languages'); ?></option>
-        <option value="all"><?php putGS('Regardless of the language'); ?></option>
-    </select></dd>
-    
-    <dt><label for="sections"><?php putGS('Sections:'); ?></dt>
-    <dd><select id="sections" name="sections" multiple size="5"></select></dd>
-
-    <dt><label for="start"><?php putGS('Start:'); ?></dt>
-    <dd><input type="date" id="start" name="start" value="<?php echo date('Y-m-d'); ?>" /></dd>
-
-    <dt><label for="days"><?php putGS('Days:'); ?></dt>
-    <dd><input type="number" min="1" name="days" id="days" /></dd>
-
-    <dt></dt>
-    <dd><button><?php putGS('Save'); ?></button></dd>
-</dl>
-</script>
-
-<script type="text/template" id="edit-all-view-template">
-<dl>
-    <dt><label for="start-date"><?php putGS('Start:'); ?></dt>
-    <dd><input type="date" id="start-date" name="start" value="<?php echo date('Y-m-d'); ?>" /></dd>
-
-    <dt><label for="days"><?php putGS('Days:'); ?></dt>
-    <dd><input type="number" min="1" name="days" id="days" /></dd>
-
-    <dt><label for="paid-days"><?php putGS('Paid Days:'); ?></dt>
-    <dd><input type="number" min="1" name="paidDays" id="paid-days" /></dd>
-
-    <dt></dt>
-    <dd><button><?php putGS('Save'); ?></button></dd>
-</dl>
 </script>

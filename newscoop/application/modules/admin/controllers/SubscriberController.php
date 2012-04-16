@@ -29,7 +29,8 @@ class Admin_SubscriberController extends Zend_Controller_Action
         foreach (Country::GetCountries(1) as $country) {
             $countries[$country->getCode()] = $country->getName();
         }
-        $this->form->getElement('country')->setMultioptions($countries);
+
+        //$this->form->getElement('country')->setMultioptions($countries);
     }
 
     public function indexAction()

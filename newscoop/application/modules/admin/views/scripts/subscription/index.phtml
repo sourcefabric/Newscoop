@@ -1,5 +1,77 @@
 <?php $this->placeholder('title')->set(getGS('Subscriptions')); ?>
 
+<script type="text/template" id="subscription-list-template">
+<a id="add-new" href="#subscription/new"><?php putGS('Add subscription'); ?></a>
+<table id="subscription-table">
+    <thead>
+        <tr>
+            <th><?php putGS('Publication'); ?></th>
+            <th><?php putGS('Left to pay'); ?></th>
+            <th><?php putGS('Type'); ?></th>
+            <th><?php putGS('Active'); ?></th>
+            <th><?php putGS('Delete'); ?></th>
+        </tr>
+    </thead>
+    <tbody>
+    </tbody>
+</table>
+</script>
+
+<script type="text/template" id="subscription-row-template">
+<td class="publication"><a href="<%= link.href %>"><%= publication.name %></a></td>
+<td class="toPay"><input type="number" step="0.01" min="0" value="<%= toPay.toFixed(1) %>" /></td>
+<td class="type"><%= type === 'P' ? <?php echo json_encode(getGS('Paid')), ':', json_encode(getGS('Trial')); ?> %></td>
+<td class="active"><%= active ? <?php echo json_encode(getGS('Yes')), ':', json_encode(getGS('No')); ?> %></td>
+<td class="delete"><button><?php putGS('Delete'); ?></button></td>
+</script>
+
+<script type="text/template" id="new-subscription-template">
+<form method="POST" id="add-view-form">
+<dl>
+    <dt><?php putGS('Publication:'); ?></dt>
+    <dd><select name="publication" id="pubs"></select></dd>
+</dl>
+<dl>
+    <dt><?php putGS('Languages:'); ?></dt>
+    <dd>
+        <input type="checkbox" name="individual_languages" value="true" id="il" checked /> <label for="il"><?php putGS('Individual languages'); ?></label><br />
+        <select name="languages" size="5" multiple></select>
+    </dd>
+</dl>
+<dl>
+    <dt><?php putGS('Sections'); ?></dt>
+    <dd>
+        <input type="radio" name="add_sections" value="true" checked id="sections_1" /> <label for="sections_1"><?php putGS('Add sections now'); ?></label>
+        <input type="radio" name="add_sections" value="false" id="sections_2" /> <label for="sections_2"><?php putGS('Add sections later'); ?></label>
+    </dd>
+</dl>
+<dl>
+    <dt><?php putGS('Start'); ?></dt>
+    <dd><input type="date" name="start_date" value="<?php echo date('Y-m-d'); ?>" /></dd>
+</dl>
+<dl>
+    <dt><?php putGS('Subscription type:'); ?></dt>
+    <dd><select name="type">
+        <option value="PN"><?php putGS('Paid (confirm payment now)'); ?></option>
+        <option value="P"><?php putGS('Paid (payment will be confirmed later)'); ?></option>
+        <option value="T"><?php putGS('Trial'); ?></option>
+    </select></dd>
+</dl>
+<dl>
+    <dt><?php putGS('Days:'); ?></dt>
+    <dd><input type="number" name="days" min="1" value="1" /></dd>
+</dl>
+<dl>
+    <dt></dt>
+    <dd><input type="checkbox" name="active" value="1" checked id="active" /> <label for="active"><?php putGS('Active'); ?></label></dd>
+</dl>
+<dl>
+    <dt></dt>
+    <dd><button><?php putGS('Save'); ?></button></dd>
+</dl>
+</form>
+</script>
+
 <div id="app">
 </div>
 
@@ -311,76 +383,4 @@
         Backbone.history.start();
     });
 })(jQuery);
-</script>
-
-<script type="text/template" id="subscription-list-template">
-<a id="add-new" href="#subscription/new"><?php putGS('Add subscription'); ?></a>
-<table id="subscription-table">
-    <thead>
-        <tr>
-            <th><?php putGS('Publication'); ?></th>
-            <th><?php putGS('Left to pay'); ?></th>
-            <th><?php putGS('Type'); ?></th>
-            <th><?php putGS('Active'); ?></th>
-            <th><?php putGS('Delete'); ?></th>
-        </tr>
-    </thead>
-    <tbody>
-    </tbody>
-</table>
-</script>
-
-<script type="text/template" id="subscription-row-template">
-<td class="publication"><a href="<%= link.href %>"><%= publication.name %></a></td>
-<td class="toPay"><input type="number" step="0.01" min="0" value="<%= toPay.toFixed(1) %>" /></td>
-<td class="type"><%= type === 'P' ? <?php echo json_encode(getGS('Paid')), ':', json_encode(getGS('Trial')); ?> %></td>
-<td class="active"><%= active ? <?php echo json_encode(getGS('Yes')), ':', json_encode(getGS('No')); ?> %></td>
-<td class="delete"><button><?php putGS('Delete'); ?></button></td>
-</script>
-
-<script type="text/template" id="new-subscription-template">
-<form method="POST" id="add-view-form">
-<dl>
-    <dt><?php putGS('Publication:'); ?></dt>
-    <dd><select name="publication" id="pubs"></select></dd>
-</dl>
-<dl>
-    <dt><?php putGS('Languages:'); ?></dt>
-    <dd>
-        <input type="checkbox" name="individual_languages" value="true" id="il" checked /> <label for="il"><?php putGS('Individual languages'); ?></label><br />
-        <select name="languages" size="5" multiple></select>
-    </dd>
-</dl>
-<dl>
-    <dt><?php putGS('Sections'); ?></dt>
-    <dd>
-        <input type="radio" name="add_sections" value="true" checked id="sections_1" /> <label for="sections_1"><?php putGS('Add sections now'); ?></label>
-        <input type="radio" name="add_sections" value="false" id="sections_2" /> <label for="sections_2"><?php putGS('Add sections later'); ?></label>
-    </dd>
-</dl>
-<dl>
-    <dt><?php putGS('Start'); ?></dt>
-    <dd><input type="date" name="start_date" value="<?php echo date('Y-m-d'); ?>" /></dd>
-</dl>
-<dl>
-    <dt><?php putGS('Subscription type:'); ?></dt>
-    <dd><select name="type">
-        <option value="PN"><?php putGS('Paid (confirm payment now)'); ?></option>
-        <option value="P"><?php putGS('Paid (payment will be confirmed later)'); ?></option>
-        <option value="T"><?php putGS('Trial'); ?></option>
-    </select></dd>
-</dl>
-<dl>
-    <dt><?php putGS('Days:'); ?></dt>
-    <dd><input type="number" name="days" min="1" value="1" /></dd>
-</dl>
-<dl>
-    <dt></dt>
-    <dd><input type="checkbox" name="active" value="1" checked id="active" /> <label for="active"><?php putGS('Active'); ?></label></dd>
-</dl>
-<dl>
-    <dt></dt>
-    <dd><button><?php putGS('Save'); ?></button></dd>
-</dl>
-</form>
 </script>
