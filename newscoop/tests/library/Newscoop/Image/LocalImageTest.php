@@ -11,6 +11,11 @@ namespace Newscoop\Image;
  */
 class LocalImageTest extends \TestCase
 {
+    public function tearDown()
+    {
+        system(sprintf('rm -f %s', APPLICATION_PATH . '/../images/phpunit*'));
+    }
+
     public function testInstance()
     {
         $this->assertInstanceOf('Newscoop\Image\LocalImage', new LocalImage(self::PICTURE_LANDSCAPE));
@@ -54,5 +59,46 @@ class LocalImageTest extends \TestCase
         $this->assertFalse($image->hasWidth());
         $image->getWidth();
         $this->assertTrue($image->hasWidth());
+    }
+
+    /**
+     * @ticket WOBS-1189
+     */
+    public function testGetWidthAfterStoring0()
+    {
+        $image = new LocalImage(self::PICTURE_LANDSCAPE);
+
+        $width = new \ReflectionProperty($image, 'width');
+        $width->setAccessible(true);
+        $width->setValue($image, 0);
+
+        $this->assertEquals(500, $image->getWidth());
+    }
+
+    /**
+     * @ticket WOBS-1189
+     */
+    public function testGetHeightAfterStoring0()
+    {
+        $image = new LocalImage(self::PICTURE_LANDSCAPE);
+
+        $height = new \ReflectionProperty($image, 'height');
+        $height->setAccessible(true);
+        $height->setValue($image, 0);
+
+        $this->assertEquals(333, $image->getHeight());
+    }
+
+    /**
+     * @ticket WOBS-1189
+     * @expectedException RuntimeException
+     */
+    public function testGetImageSizeWrongImage()
+    {
+        $tmp = tempnam(APPLICATION_PATH . '/../images/', 'phpunit');
+        file_put_contents($tmp, '');
+
+        $image = new LocalImage(basename($tmp));
+        $image->getWidth();
     }
 }

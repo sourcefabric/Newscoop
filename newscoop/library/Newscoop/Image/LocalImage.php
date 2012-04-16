@@ -119,7 +119,7 @@ class LocalImage implements ImageInterface
      */
     public function getWidth()
     {
-        if ($this->width === null) {
+        if (empty($this->width)) {
             $this->getInfo();
         }
 
@@ -133,7 +133,7 @@ class LocalImage implements ImageInterface
      */
     public function getHeight()
     {
-        if ($this->height === null) {
+        if (empty($this->height)) {
             $this->getInfo();
         }
 
@@ -147,8 +147,17 @@ class LocalImage implements ImageInterface
      */
     private function getInfo()
     {
+        $error_reporting = error_reporting();
+        error_reporting(0);
+
         $info = $this->isLocal() ?
             getimagesize(APPLICATION_PATH . '/../' . $this->getPath()) : getimagesize($this->url);
+
+        error_reporting($error_reporting);
+
+        if (!is_array($info) || empty($info[0]) || empty($info[1])) {
+            throw new \RuntimeException(sprintf("Can't read size of image %s (#%d)", $this->getPath(), $this->getId()));
+        }
 
         $this->width = (int) $info[0];
         $this->height = (int) $info[1];
