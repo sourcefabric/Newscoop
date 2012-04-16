@@ -180,19 +180,17 @@ class RegisterController extends Zend_Controller_Action
 
         $userData = $this->_getParam('userData');
         $form->setDefaults(array(
-            'first_name' => $userData->profile->firstName,
-            'last_name' => $userData->profile->lastName,
-            'email' => $userData->profile->email,
+            'first_name' => $userData->firstName,
+            'last_name' => $userData->lastName,
+            'username' => $this->_helper->service('user')->generateUsername($userData->firstName, $userData->lastName),
+            'email' => $userData->email,
         ));
 
-        if (!empty($userData->profile->email)) { // try to find user by email
-            $user = $this->_helper->service('user')->findBy(array('email' => $userData->profile->email));
+        if (!empty($userData->email)) { // try to find user by email
+            $user = $this->_helper->service('user')->findBy(array('email' => $userData->email));
             if (!empty($user)) { // we have user for given email, add him login
                 $user = array_pop($user);
-                $this->_helper->service('auth.adapter.social')->addIdentity($user, $userData->providerId, $userData->providerUID);
-                $adapter = $this->_helper->service('auth.adapter.social');
-                $adapter->setProvider($userData->providerId)->setProviderUserId($userData->providerUID);
-                Zend_Auth::getInstance()->authenticate($adapter);
+                $this->authSocial($user, $userData);
                 $this->_helper->redirector('index', 'dashboard');
             }
         }
@@ -201,17 +199,29 @@ class RegisterController extends Zend_Controller_Action
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $user = $this->_helper->service('user')->save($form->getValues() + array('is_public' => 1));
             $this->_helper->service('user')->setActive($user);
-            $this->_helper->service('auth.adapter.social')->addIdentity($user, $userData->providerId, $userData->providerUID);
-            $adapter = $this->_helper->service('auth.adapter.social');
-            $adapter->setProvider($userData->providerId)->setProviderUserId($userData->providerUID);
-            Zend_Auth::getInstance()->authenticate($adapter);
+            $this->authSocial($user, $userData);
             $this->_helper->redirector('index', 'dashboard');
         }
 
-        $this->view->name = $userData->profile->displayName;
+        $this->view->name = $userData->displayName;
         $this->view->form = $form;
     }
 
+    /**
+     * Auth via social adapter
+     *
+     * @param Newscoop\Entity\User $user
+     * @param object $userData
+     * @return void
+     */
+    private function authSocial($user, $userData)
+    {
+        $this->_helper->service('auth.adapter.social')->addIdentity($user, $this->_getParam('provider'), $userData->identifier);
+        $adapter = $this->_helper->service('auth.adapter.social');
+        $adapter->setProvider($this->_getParam('provider'))->setProviderUserId($userData->identifier);
+        Zend_Auth::getInstance()->authenticate($adapter);
+    }
+    
     public function pendingAction()
     {
         if ($this->_getParam('email')) {

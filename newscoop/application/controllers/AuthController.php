@@ -59,37 +59,21 @@ class AuthController extends Zend_Controller_Action
 
     public function socialAction()
     {
-        // hack to import all GLOBAL_HYBRID_ into global namespace
-        foreach (token_get_all(file_get_contents(APPLICATION_PATH . '/../hybridauth/hybridauth.php')) as $token) {
-            if ($token[0] == T_VARIABLE) {
-                $var = substr($token[1], 1);
-                if (strstr($var, 'GLOBAL_HYBRID_AUTH_') !== FALSE) {
-                    global $$var;
-                }
-            }
+        require_once 'Hybrid/Auth.php';
+
+        if ($this->auth->hasIdentity()) {
+            $this->_helper->redirector('index', 'index');
+            return;
         }
 
-        require_once APPLICATION_PATH . '/../hybridauth/hybridauth.php';
+        try {
+            $hauth = new Hybrid_Auth(APPLICATION_PATH . '/../hybridauth/config.php');
+            $adapter = $hauth->authenticate($this->_getParam('provider'));
+            $userData = $adapter->getUserProfile();
 
-        $hauth = new Hybrid_Auth();
-        if ($hauth->hasError()) {
-            var_dump($hauth->getErrorMessage());
-            exit;
-        }
-
-        if (!$hauth->hasSession()) {
-            $adapter = $hauth->setup($this->_getParam('provider'), array(
-                'hauth_return_to' => 'http:///auth/social/provider/' . $this->_getParam('provider'),
-            ));
-            $adapter->login();
-        } else {
-            $adapter = $hauth->wakeup();
-            $userData = $adapter->user();
-
-            $adapter = $this->_helper->service('auth.adapter.social');
-            $adapter->setProvider($userData->providerId)->setProviderUserId($userData->providerUID);
-            $result = $this->auth->authenticate($adapter);
-
+            $socialAdapter = $this->_helper->service('auth.adapter.social');
+            $socialAdapter->setProvider($adapter->id)->setProviderUserId($userData->identifier);
+            $result = $this->auth->authenticate($socialAdapter);
             if ($result->getCode() == Zend_Auth_Result::SUCCESS) {
                 $this->_helper->redirector('index', 'dashboard');
             }
@@ -97,6 +81,9 @@ class AuthController extends Zend_Controller_Action
             $this->_forward('social', 'register', 'default', array(
                 'userData' => $userData,
             ));
+        } catch (\Exception $e) {
+            var_dump($e->getMessage(), $e->getTraceAsString());
+            exit;
         }
     }
 
