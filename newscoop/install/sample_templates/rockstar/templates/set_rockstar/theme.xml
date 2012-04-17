@@ -2,9 +2,9 @@
 <theme name="Rockstar" designer="default" version="1.0" require="4.0">
     <description/>
     
-    <presentation-img src="front.jpg" name="Front page"/>
-    <presentation-img src="section.jpg" name="Section page"/>
-    <presentation-img src="article.jpg" name="Article"/>
+    <presentation-img src="themethumbs/front.jpg" name="Front page"/>
+    <presentation-img src="themethumbs/section.jpg" name="Section page"/>
+    <presentation-img src="themethumbs/article.jpg" name="Article"/>
     
     <!-- =============================== -->
     
