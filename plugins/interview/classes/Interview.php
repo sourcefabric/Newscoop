@@ -807,18 +807,15 @@ class Interview extends DatabaseObject {
                         return false;
                     }
 
-                    $rule = new Rule();
                     list($resource, $action) = PermissionToAcl::translate("plugin_interview_{$type}");
                     $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\Acl\Rule');
-                    $user = $controller->getHelper('entity')->find('Newscoop\Entity\User\Staff', $uid);
-                    $repository->save($rule, array(
+                    $user = $controller->getHelper('entity')->find('Newscoop\Entity\User', $uid);
+                    $repository->save(array(
                         'role' => $user->getRoleId(),
                         'type' => 'allow',
                         'resource' => $resource,
                         'action' => $action,
-                    ));
-
-                    $controller->getHelper('entity')->flushManager();
+                    ), true);
 
                     $userid[$type] = $uid;
                 } else {
@@ -866,7 +863,7 @@ class Interview extends DatabaseObject {
                     $data['f_status']
                 );
 
-                if (strlen($passwd)) {
+                if (!empty($passwd)) {
                     $this->setProperty('invitation_password', $passwd);
                 }
 
@@ -1394,7 +1391,7 @@ class Interview extends DatabaseObject {
         global $controller;
 
         $acl = \Zend_Registry::get('acl');
-        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\User\Staff');
+        $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\User');
 
         try {
             list($resource, $action) = PermissionToAcl::translate($p_permission);
@@ -1405,7 +1402,7 @@ class Interview extends DatabaseObject {
         $users = array();
         foreach ($repository->findAll() as $user) {
             if ($acl->isAllowed($user, $resource, $action)) {
-                $users[$user->identifier] = $user->getName();
+                $users[$user->getId()] = $user->getName();
             }
         }
 

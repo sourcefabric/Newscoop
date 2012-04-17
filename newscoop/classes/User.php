@@ -125,17 +125,9 @@ class User extends DatabaseObject {
 
         $values['perm_type'] = 1;
 
-        if (array_key_exists('Reader', $values)) {
-            $class = $values['Reader'] == 'N' ? 'Newscoop\Entity\User\Staff' : 'Newscoop\Entity\User\Subscriber';
-        } else {
-        	$class = 'Newscoop\Entity\User\Subscriber';
-        }
-
-
-
         try {
-            $user = new $class;
-            $repository = $controller->getHelper('entity')->getRepository($class);
+            $user = new Newscoop\Entity\User();
+            $repository = $controller->getHelper('entity')->getRepository('Newscoop\Entity\User');
             $repository->save($user, $values);
             $controller->getHelper('entity')->flushManager();
             return $user->getId();

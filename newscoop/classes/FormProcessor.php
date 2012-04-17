@@ -36,6 +36,10 @@ class FormProcessor
     static public function ParseArr2Form(&$form, &$mask, $side='client')
     {
         foreach($mask as $k=>$v) {
+            if (!is_array($v)) {
+                $v = (array) $v;
+            }
+
             $v += array(
                 'groupit' => false,
                 'label' => '',

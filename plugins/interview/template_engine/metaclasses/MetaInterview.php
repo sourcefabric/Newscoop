@@ -72,16 +72,26 @@ final class MetaInterview extends MetaDbObject {
         return $Language;
     }
 
+    /**
+     * Get meta user for given user id
+     *
+     * @param int $id
+     * @return MetaUser
+     */
+    private function getMetaUser($id)
+    {
+        $user = \Zend_Registry::get('container')->getService('em')->find('Newscoop\Entity\User', (int) $id);
+        return new MetaUser($user);
+    }
+
     public function getModerator()
     {
-        $Moderator = new MetaUser($this->m_dbObject->getProperty('fk_moderator_user_id'));
-        return $Moderator;
+        return $this->getMetaUser($this->m_dbObject->getProperty('fk_moderator_user_id'));
     }
 
     public function getGuest()
     {
-        $Guest = new MetaUser($this->m_dbObject->getProperty('fk_guest_user_id'));
-        return $Guest;
+        return $this->getMetaUser($this->m_dbObject->getProperty('fk_guest_user_id'));
     }
 
     public function getImage()
