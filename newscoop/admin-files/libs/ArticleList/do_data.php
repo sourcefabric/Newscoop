@@ -12,6 +12,8 @@
 require_once dirname(__FILE__) . '/ArticleList.php';
 require_once WWW_DIR . '/classes/Article.php';
 
+$list = new ArticleList(TRUE);
+
 // start >= 0
 $start = max(0,
     empty($_REQUEST['iDisplayStart']) ? 0 : (int) $_REQUEST['iDisplayStart']);
@@ -91,14 +93,15 @@ if (isset($_REQUEST['sSearch']) && strlen($_REQUEST['sSearch']) > 0) {
 }
 
 // sorting
+$cols = $list->getColumnKeys();
 $sortOptions = array(
-    0 => 'bynumber',
-    2 => 'bysectionorder',
-    3 => 'byname',
-    12 => 'bycomments',
-    13 => 'bypopularity',
-    16 => 'bycreationdate',
-    17 => 'bypublishdate',
+    'Number' => 'bynumber',
+    'Order' => 'bysectionorder',
+    'Name' => 'byname',
+    'Comments' => 'bycomments',
+    'Reads' => 'bypopularity',
+    'CreateDate' => 'bycreationdate',
+    'PublishDate' => 'bypublishdate',
 );
 
 $sortBy = 'bysectionorder';
@@ -106,8 +109,8 @@ $sortDir = 'asc';
 $sortingCols = min(1, (int) $_REQUEST['iSortingCols']);
 for ($i = 0; $i < $sortingCols; $i++) {
     $sortOptionsKey = (int) $_REQUEST['iSortCol_' . $i];
-    if (!empty($sortOptions[$sortOptionsKey])) {
-        $sortBy = $sortOptions[$sortOptionsKey];
+    if (!empty($sortOptions[$cols[$sortOptionsKey]])) {
+        $sortBy = $sortOptions[$cols[$sortOptionsKey]];
         $sortDir = $_REQUEST['sSortDir_' . $i];
         break;
     }
@@ -117,7 +120,6 @@ for ($i = 0; $i < $sortingCols; $i++) {
 // get articles
 $articles = Article::GetList($articlesParams, array(array('field' => $sortBy, 'dir' => $sortDir)), $start, $limit, $articlesCount, true);
 
-$list = new ArticleList(TRUE);
 $return = array();
 foreach($articles as $article) {
     $return[] = $list->processItem($article);

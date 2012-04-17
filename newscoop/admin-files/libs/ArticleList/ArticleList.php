@@ -489,4 +489,14 @@ class ArticleList extends BaseList
 		global $ADMIN_DIR;
 		return require_once dirname(__FILE__) . '/do_order.php';
 	}
+
+    /**
+     * Get column keys
+     *
+     * @return array
+     */
+    public function getColumnKeys()
+    {
+        return array_keys($this->cols);
+    }
 }
