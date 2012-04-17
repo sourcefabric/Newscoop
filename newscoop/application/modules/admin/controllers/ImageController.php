@@ -150,7 +150,8 @@ class Admin_ImageController extends Zend_Controller_Action
                 }
                 $this->_helper->entity->flushManager();
             }
-            $next = $this->_getParam('edit_image_data_next');
+            $parameters = $this->getRequest()->getParams();
+            $next = $parameters['next'];
             if ($next == 1) {
                 $this->_helper->redirector('article', 'image', 'admin', array(
                     'article_number' => $this->_getParam('article_number')
