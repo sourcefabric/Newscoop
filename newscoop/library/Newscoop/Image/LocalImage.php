@@ -75,6 +75,18 @@ class LocalImage implements ImageInterface
     private $date;
 
     /**
+     * @OneToMany(targetEntity="Newscoop\Image\ArticleRendition", mappedBy="image", cascade={"remove"})
+     * @var Doctrine\Common\Collections\Collection
+     */
+    private $renditions;
+
+    /**
+     * @OneToMany(targetEntity="Newscoop\Package\Item", mappedBy="image", cascade={"remove"})
+     * @var Doctrine\Common\Collections\Collection
+     */
+    private $items;
+
+    /**
      * @param string $image
      */
     public function __construct($image)
@@ -86,6 +98,9 @@ class LocalImage implements ImageInterface
             $this->location = 'local';
             $this->basename = (string) $image;
         }
+
+        $this->renditions = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->items = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**

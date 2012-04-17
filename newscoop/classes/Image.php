@@ -109,6 +109,13 @@ class Image extends DatabaseObject
 
 		$imageId = $this->getImageId();
 		$imageDescription = $this->getDescription();
+
+        // @ticket CS-4225
+        $em = \Zend_Registry::get('container')->getService('em');
+        $entity = $em->find('Newscoop\Image\LocalImage', $imageId);
+        $em->remove($entity);
+        $em->flush();
+
 		// Delete the record in the database
 		if (!parent::delete()) {
 			return new PEAR_Error(getGS("Could not delete record from the database."));

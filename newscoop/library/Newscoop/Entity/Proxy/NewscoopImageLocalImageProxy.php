@@ -129,7 +129,7 @@ class NewscoopImageLocalImageProxy extends \Newscoop\Image\LocalImage implements
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'location', 'basename', 'url', 'description', 'width', 'height', 'photographer', 'place', 'date');
+        return array('__isInitialized__', 'id', 'location', 'basename', 'url', 'description', 'width', 'height', 'photographer', 'place', 'date', 'renditions', 'items');
     }
 
     public function __clone()

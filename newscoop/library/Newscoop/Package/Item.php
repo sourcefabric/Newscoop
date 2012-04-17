@@ -28,7 +28,7 @@ class Item
     private $package;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Image\LocalImage")
+     * @ManyToOne(targetEntity="Newscoop\Image\LocalImage", inversedBy="items")
      * @JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Image\LocalImage
      */

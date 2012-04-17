@@ -20,7 +20,7 @@ class ArticleRendition
     protected $articleNumber;
 
     /**
-     * @Id @ManyToOne(targetEntity="Newscoop\Image\LocalImage", fetch="EAGER")
+     * @Id @ManyToOne(targetEntity="Newscoop\Image\LocalImage", fetch="EAGER", inversedBy="renditions")
      * @JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Image\Image
      */
