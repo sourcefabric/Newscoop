@@ -9,7 +9,6 @@
  */
 
 require_once LIBS_DIR . '/ArticleList/ArticleList.php';
-require_once dirname(__FILE__) . '/PendingArticlesWidget.php';
 
 /**
  * Articles widget base class
@@ -35,6 +34,7 @@ abstract class ArticlesWidget extends Widget
             $articlelist->setHidden('PublishDate');
         }
 
+        require_once dirname(__FILE__) . '/PendingArticlesWidget.php';
         if ($this instanceof PendingArticlesWidget) {
             $articlelist->setHidden('Preview');
         }
