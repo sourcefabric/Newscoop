@@ -10,14 +10,14 @@
     
       <div id="maincol" class="community eightcol clearfix">
     
-        {{ block content }}{{ /block }}
+        {{block content}}{{/block}}
         
       </div><!-- /#maincol -->
         
       <div id="sidebar" class="community fourcol last">
 
-{{ if !($userindex == 1) }}                  
-{{ if $user->isAuthor() }}
+{{ if empty($userindex) }}                  
+{{ if !empty($user) && $user->isAuthor() }}
 <h3>About {{ $user->first_name }}</h3>
 <dl class="profile">
     {{ foreach $profile as $label => $value }} 

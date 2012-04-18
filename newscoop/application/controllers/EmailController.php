@@ -30,6 +30,7 @@ class EmailController extends Zend_Controller_Action
             ->disableLayout();
 
         $this->view->publication = $this->getRequest()->getServer('SERVER_NAME', 'localhost');
+        $this->view->site = \SystemPref::Get('SiteTitle');
 
         $this->_helper->contextSwitch()
             ->addActionContext('comment-notify', 'xml')

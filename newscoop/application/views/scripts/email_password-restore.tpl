@@ -1,8 +1,8 @@
 Hello,
 
-to reset your password, follow link below:
+reset your password by clicking on the link below:
 
 http://{{ $publication }}{{ $view->url(['controller' => 'auth', 'action' => 'password-restore-finish', 'user' => $user, 'token' => $token], 'default') }}
 
 Thanks!
-{{ $view->placeholder('subject')->set('Restore password') }}
+{{ $view->placeholder('subject')->set(sprintf("Restore password at %s", $site)) }}

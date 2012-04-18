@@ -1,6 +1,6 @@
-{{ extends file="layout.tpl" }}
+{{extends file="layout.tpl"}}
 
-{{ block content }}
+{{block content}}
 {{ assign var="userindex" value=1 }}
 <header>
 	<h3>Set new Password</h3>
@@ -15,7 +15,7 @@
     </fieldset>
     <fieldset class="fixBackground background-block login">
         <dl>
-                {{ $form->password->setLabel("Neues Passwort")->removeDecorator('Errors') }}
+                {{ $form->password->setLabel("New Password")->removeDecorator('Errors') }}
                 {{ if $form->password->hasErrors() }}
                 <dt class="info-block">&nbsp;</dt>
                 <dd class="info-block">
@@ -39,4 +39,4 @@
     </fieldset>
     </form>
 
-{{ /block }}
+{{/block}}
