@@ -6,9 +6,9 @@ $t = array
 (
 	'view-article' => getGS('View article'),
 	'drag-here' => getGS('Drag here to add to list'),
-	'playlist-updated' => getGS('Playlist updated.'),
-    'list-saved' => getGS('Playlist saved'),
-	'list-save-failed' => getGS('Could not save playlist'),
+	'playlist-updated' => getGS('List updated.'),
+    'list-saved' => getGS('List saved'),
+	'list-save-failed' => getGS('Could not save the list'),
     'delete' => getGS('Delete'),
     'cancel' => getGS('Cancel'),
     'duplicate-entry' => getGS('Duplicate article entry found')
@@ -257,13 +257,13 @@ $this->headScript()->appendScript( $js, "text/javascript" );
 			</div>
 
 			<h2 style="width:700px">
-			    <?php echo getGS('Article Playlist'); ?>
+			    <?php echo getGS('Featured Article List'); ?>
 				<span style="float:right">
-					<label for="playlist-name"><?php echo getGS('Playlist Name') ?>:</label>
+					<label for="playlist-name"><?php echo getGS('List Name') ?>:</label>
 					<input name="playlist-name" id="playlist-name" value="<?php echo $this->playlistName ?>"
 						style="font-size: 12px; width: 250px" />
 					<?php if(isset($this->playlistId)) : ?>
-					<label for="playlist-id"><?php echo getGS('Playlist ID')?>:</label>
+					<label for="playlist-id"><?php echo getGS('List ID')?>:</label>
 					<input id="playlist-id" style="font-size:12px; width:50px"
 						readonly="readonly"	value="<?php echo $this->playlistId ?>">
 					<?php endif; ?>
@@ -344,7 +344,7 @@ $this->headScript()->appendScript( $js, "text/javascript" );
 			</script>
 
     		<div class="context-block context-list">
-    			<h3><?php echo getGS('Playlist Articles'); ?></h3>
+    			<h3><?php echo getGS('List Articles'); ?></h3>
     			<div class="context-list-results">
     				<div class="save-button-bar" style="display: block;"><input
     					type="submit" name="delete-all" value="Delete all"
@@ -382,8 +382,8 @@ $this->headScript()->appendScript( $js, "text/javascript" );
 	</div>
 </div>
 
-<div id="dialog-confirm" style="display:none" title="<?php echo getGS('Remove playlist') ?>">
-	<p><?php echo getGS('Are you sure you want to delete this playlist?') ?></p>
+<div id="dialog-confirm" style="display:none" title="<?php echo getGS('Remove list') ?>">
+	<p><?php echo getGS('Are you sure you want to delete this list?') ?></p>
 </div>
 
 

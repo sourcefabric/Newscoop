@@ -1,12 +1,12 @@
-<?php $this->placeholder( 'title' )->set( getGS( 'Article playlists' ) ); ?>
+<?php $this->placeholder( 'title' )->set( getGS( 'Featured Article Lists' ) ); ?>
 <div class="actions">
 	<form autocomplete="off">
     <ul class="navigation">
-        <li><a class="add" href="#" id="add-ctrl"><?php echo getGS('Add playlist') ?></a></li>
-        <!-- li><a class="copy" href="#" id="duplicate-ctrl"><?php echo getGS('Duplicate playlist') ?></a></li-->
+        <li><a class="add" href="#" id="add-ctrl"><?php echo getGS('Add list') ?></a></li>
+        <!-- li><a class="copy" href="#" id="duplicate-ctrl"><?php echo getGS('Duplicate list') ?></a></li-->
         <li>
 			<select id="playlists" style="font-size:14px;padding:2px;border:none;">
-            	<option style="color: #aaa" value="" selected="selected"><?php echo getGS('Select a playlist') ?></option>
+            	<option style="color: #aaa" value="" selected="selected"><?php echo getGS('Select a list') ?></option>
                 <?php foreach ($this->playlists as $pl) : ?>
             		<option value="<?php echo $pl->getId() ?>"><?php echo $pl->getName() ?></option>
                 <?php endforeach; ?>
