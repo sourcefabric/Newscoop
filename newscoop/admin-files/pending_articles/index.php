@@ -33,6 +33,7 @@ $articlelist->setHidden('Reads');
 $articlelist->setHidden('UseMap');
 $articlelist->setHidden('Locations');
 $articlelist->setHidden('PublishDate');
+$articlelist->setHidden('Preview');
 
 // render
 //$articlelist->renderFilters();
