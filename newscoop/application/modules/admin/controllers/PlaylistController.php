@@ -34,6 +34,9 @@ class Admin_PlaylistController extends Zend_Controller_Action
 
     public function init()
     {
+        camp_load_translation_strings('api');
+        camp_load_translation_strings('articles');
+
         $this->playlistRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Playlist');
         $this->playlistArticleRepository = $this->_helper->entity->getRepository('Newscoop\Entity\PlaylistArticle');
         $this->_helper->contextSwitch

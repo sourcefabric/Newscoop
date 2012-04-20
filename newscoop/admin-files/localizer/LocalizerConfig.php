@@ -73,7 +73,11 @@ $mapPrefixToDir = array(
     'pub' => '/admin-files/pub',
     'issues' => '/admin-files/issues',
     'sections' => '/admin-files/sections',
-    'articles' => '/admin-files/articles',
+    'articles' => array(
+        '/admin-files/articles',
+        '/application/modules/admin/controllers/PlaylistController.php',
+        '/application/modules/admin/views/scripts/playlist',
+    ),
     'article_images' => array(
         '/admin-files/articles/images',
         '/application/modules/admin/controllers/ImageController.php',
