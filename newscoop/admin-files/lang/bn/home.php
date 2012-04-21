@@ -1,4 +1,8 @@
 <?php 
+regGS("You have tried to upload an invalid backup file.", "");
+regGS("You do not have the right to manage backups.", "");
+regGS("Make a new backup", "");
+regGS("Are you sure you want to make a new backup?", "");
 regGS("Security token expired. Please resubmit the form.", "");
 regGS("Templates", "");
 regGS("Create slideshow", "");

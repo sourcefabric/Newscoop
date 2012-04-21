@@ -1,4 +1,8 @@
 <?php 
+regGS("You have tried to upload an invalid backup file.", "");
+regGS("You do not have the right to manage backups.", "");
+regGS("Make a new backup", "");
+regGS("Are you sure you want to make a new backup?", "");
 regGS("Security token expired. Please resubmit the form.", "");
 regGS("Templates", "");
 regGS("Create slideshow", "");
@@ -74,7 +78,6 @@ regGS("Newscoop has upgraded its security measures.  In order to upgrade your ac
 regGS("Newscoop cache was cleaned up", "Cache Newscoop został usunięty");
 regGS("Dashboard", "Dashboard");
 regGS("Your changes will be saved after login.", "Twoje zmiany zostaną zapisane po zalogowaniu.");
-regGS("You have tried to upload wrong backup file.", "Próbowałeś wgrać zły blik kopii zapasowej.");
 regGS("Upload backup file", "Wgraj plik kopii zapasowej");
 regGS("The file $1 has been uploaded successfully.", "Plik $1 został dodany pomyślnie.");
 regGS("Media Archive", "Archiwum Mediów");
@@ -97,21 +100,18 @@ regGS("Forgot your password?", "Zapomanieł hasła?");
 regGS("Email: incorrect format.", "Email: niepoprawny format.");
 regGS("Email", "Email");
 regGS("Bad input parameters.", "Złe parametry wejściowe.");
-regGS("You do not have the right to manage backup.", "Nie masz aby zarządząć kopią zapasową.");
 regGS("There was an error trying to delete the file $1.", "Wystąpił błąd podczas usuwania pliku $1.");
 regGS("The file $1 was deleted successfully.", "Plik $1 został usunięty pomyślnie.");
 regGS("Size", "Rozmiar");
 regGS("Restore file", "Przywróć plik");
 regGS("Restore", "Przywróć");
 regGS("Mb", "Mb");
-regGS("Make new backup", "Wykonaj nową kopię");
 regGS("Free disk space", "Wolna przestrzeń dysku");
 regGS("Download file", "Pobierz plik");
 regGS("Download", "Pobierz");
 regGS("Delete file", "Usuń plik");
 regGS("Backup list is empty.", "Lista backuou jest pusta");
 regGS("Are you sure you want to restore the file $1?", "Czy na pewno chcesz przywrócić plik $1?");
-regGS("Are you sure you want to make new backup?", "Na pewno chcesz wykonać nową kopię zapasową?");
 regGS("Are you sure you want to delete the file $1?", "Czy na pewno chcesz usunąć plik $1?");
 regGS("Import XML", "Improtuj XML");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "Musisz posiadać uprawnienia do dodawania/zmieniania publikacji aby ustawić autorów dla wszystkich artykułów.");

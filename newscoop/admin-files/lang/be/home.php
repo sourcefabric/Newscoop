@@ -1,4 +1,8 @@
 <?php 
+regGS("You have tried to upload an invalid backup file.", "");
+regGS("You do not have the right to manage backups.", "");
+regGS("Make a new backup", "");
+regGS("Are you sure you want to make a new backup?", "");
 regGS("Security token expired. Please resubmit the form.", "");
 regGS("Templates", "");
 regGS("Create slideshow", "");
@@ -74,7 +78,6 @@ regGS("Newscoop has upgraded its security measures.  In order to upgrade your ac
 regGS("Newscoop cache was cleaned up", "Кэш Newscoop быў ачышчаны.");
 regGS("Dashboard", "Мой Newscoop");
 regGS("Your changes will be saved after login.", "Змены будуць захаваны пасля ўваходу ў сістэму.");
-regGS("You have tried to upload wrong backup file.", "Вы спрабавалі загрузіць няправільны файл рэзервнай копіі сайта.");
 regGS("Upload backup file", "Загрузіць файл рэзервнай копіі");
 regGS("The file $1 has been uploaded successfully.", "Файл $ 1 быў паспяхова загружаны.");
 regGS("Media Archive", "Медыя-архіў");
@@ -97,21 +100,18 @@ regGS("Forgot your password?", "Забыўся пароль?");
 regGS("Email: incorrect format.", "Email: няправільны фармат.");
 regGS("Email", "Email");
 regGS("Bad input parameters.", "Няправільныя ўваходныя параметры.");
-regGS("You do not have the right to manage backup.", "Вы ня маеце права доступу для кіравання рэзервным капіраваннем.");
 regGS("There was an error trying to delete the file $1.", "Памылка пры выдаленні файла $1.");
 regGS("The file $1 was deleted successfully.", "Файл $1 ");
 regGS("Size", "Памер");
 regGS("Restore file", "Аднавіць файл");
 regGS("Restore", "Аднавіць");
 regGS("Mb", "Мб");
-regGS("Make new backup", "Стварыць новую рэзервную копію");
 regGS("Free disk space", "Даступнае прастору на дыску");
 regGS("Download file", "Загрузіць файл");
 regGS("Download", "Загрузіць");
 regGS("Delete file", "Выдаліць файл");
 regGS("Backup list is empty.", "Спіс пусты.");
 regGS("Are you sure you want to restore the file $1?", "Цi Вы ўпэўнены, што жадаеце аднавіць $1?");
-regGS("Are you sure you want to make new backup?", "Цi Вы ўпэўнены, што жадаеце стварыць рэзервную копію?");
 regGS("Are you sure you want to delete the file $1?", "Цi Вы ўпэўнены, што жадаеце выдалiць файл $1?");
 regGS("Import XML", "Імпарт XML ");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "У вас павінны быць правы карыстальніка для дадавання/змянення выпускаў і артыкулаў для таго, каб вызначыць аўтара для артыкулаў.");

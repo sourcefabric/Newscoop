@@ -1,4 +1,6 @@
 <?php 
+regGS("Sorry that image is too small. Image needs to be at least %dx%d.", "Lo siento, esa imagen es muy pequeña.  Cada imagen debe ser de al menos  %dx%d.");
+regGS("Slideshow rendition", "Rendición del slideshow");
 regGS("Renditions reloaded", "Rendiciones recargadas");
 regGS("Reload renditions", "Recargar rendiciones");
 regGS("Edit images", "Editar imágenes");
@@ -10,8 +12,8 @@ regGS("no caption", "sin leyenda");
 regGS("Video URL", "URL de video");
 regGS("Use for all", "Usar en todo");
 regGS("Use default", "Uso predeterminado");
-regGS("Slug must be unique", "");
-regGS("Slug", "");
+regGS("Slug must be unique", "Enlace amigable (slug) debe ser único.");
+regGS("Slug", "Enlace amigable (slug)");
 regGS("Slideshow headline", "Encabezado de presentación");
 regGS("Slideshow", "Presentación");
 regGS("Set selected as default image", "Fijar selección como imagen predeterminada");
@@ -30,7 +32,6 @@ regGS("Media Archive", "Archivo multimedia");
 regGS("Location", "Locación");
 regGS("Items", "Objetos");
 regGS("Item", "Objeto");
-regGS("Image too small.", "La imágen es demasiado  pequeña.");
 regGS("Image files", "Archivos de imagen");
 regGS("Image Files: ", "Archivos de imagen:");
 regGS("Headline", "Encabezado");

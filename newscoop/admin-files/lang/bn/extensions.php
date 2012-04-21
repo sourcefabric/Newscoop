@@ -1,3 +1,2 @@
 <?php 
-regGS("News Desk", "");
 ?>

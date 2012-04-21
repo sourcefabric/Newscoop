@@ -1,4 +1,8 @@
 <?php 
+regGS("You have tried to upload an invalid backup file.", "");
+regGS("You do not have the right to manage backups.", "");
+regGS("Make a new backup", "");
+regGS("Are you sure you want to make a new backup?", "");
 regGS("Security token expired. Please resubmit the form.", "");
 regGS("Templates", "");
 regGS("Create slideshow", "");
@@ -74,7 +78,6 @@ regGS("Newscoop has upgraded its security measures.  In order to upgrade your ac
 regGS("Newscoop cache was cleaned up", "");
 regGS("Dashboard", "Panou");
 regGS("Your changes will be saved after login.", "Modificările vor fi salvate dupa reinițializarea sesiunii.");
-regGS("You have tried to upload wrong backup file.", "Ați încercat să încărcați un fișier arhivă invalid.");
 regGS("Upload backup file", "Încarcă un fișier arhivă.");
 regGS("The file $1 has been uploaded successfully.", "Fișierul $1 a fost incărcat cu succes.");
 regGS("Media Archive", "Arhivă media");
@@ -97,21 +100,18 @@ regGS("Forgot your password?", "");
 regGS("Email: incorrect format.", "");
 regGS("Email", "Email");
 regGS("Bad input parameters.", "Parametrii de intrare invalizi.");
-regGS("You do not have the right to manage backup.", "Nu ai dreptul să gestionezi arhivele.");
 regGS("There was an error trying to delete the file $1.", "Eroare la ștergerea fișierului $1.");
 regGS("The file $1 was deleted successfully.", "Fișierul $1 a fost șters.");
 regGS("Size", "Mărime");
 regGS("Restore file", "Restaurează fișierul");
 regGS("Restore", "Restaurează");
 regGS("Mb", "Mb");
-regGS("Make new backup", "Crează o arhivă");
 regGS("Free disk space", "Spațiu liber pe disc");
 regGS("Download file", "Salvează fișierul local");
 regGS("Download", "Salvează local");
 regGS("Delete file", "Șterge fișierul");
 regGS("Backup list is empty.", "Lista de arhive este goală.");
 regGS("Are you sure you want to restore the file $1?", "Doriți restaurarea fișierului $1?");
-regGS("Are you sure you want to make new backup?", "Doriți crearea unei arhive?");
 regGS("Are you sure you want to delete the file $1?", "Doriți să ștergeți fișierul $1?");
 regGS("Import XML", "Importă XML");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "");

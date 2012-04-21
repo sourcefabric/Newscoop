@@ -1,4 +1,8 @@
 <?php 
+regGS("You have tried to upload an invalid backup file.", "");
+regGS("You do not have the right to manage backups.", "");
+regGS("Make a new backup", "");
+regGS("Are you sure you want to make a new backup?", "");
 regGS("Security token expired. Please resubmit the form.", "");
 regGS("Templates", "");
 regGS("Create slideshow", "");
@@ -74,7 +78,6 @@ regGS("Newscoop has upgraded its security measures.  In order to upgrade your ac
 regGS("Newscoop cache was cleaned up", "Η προσωρινή μνήμη Newscoop εκκαθαρίστηκε");
 regGS("Dashboard", "Πίνακας");
 regGS("Your changes will be saved after login.", "Οι αλλαγές σας θα αποθηκευτούν μετά την είσοδο.");
-regGS("You have tried to upload wrong backup file.", "Προσπαθήσατε να ανεβάσετε λάθος αρχείο αντιγράφου ασφαλείας.");
 regGS("Upload backup file", "Ανέβασμα αρχείο αντιγράφου ασφαλείας");
 regGS("The file $1 has been uploaded successfully.", "Το αρχείο $1 ανέβηκε επιτυχώς.");
 regGS("Media Archive", "Αρχείο Media");
@@ -97,21 +100,18 @@ regGS("Forgot your password?", "Ξεχάσατε τον κωδικό πρόσβ�
 regGS("Email: incorrect format.", "Email: λάθος μορφή.");
 regGS("Email", "Email");
 regGS("Bad input parameters.", "Κακή εισαγωγή παραμέτρων.");
-regGS("You do not have the right to manage backup.", "Δεν έχετε το δικαίωμα να διαχειριστείτε το αντίγραφο ασφαλείας.");
 regGS("There was an error trying to delete the file $1.", "Υπήρξε πρόβλημα στην προσπάθεια διαγραφής του αρχείου $1.");
 regGS("The file $1 was deleted successfully.", "Το αρχείο $1 διαγράφηκε επιτυχώς.");
 regGS("Size", "Μέγεθος");
 regGS("Restore file", "Επαναφορά αρχείου");
 regGS("Restore", "Επαναφορά");
 regGS("Mb", "Mb");
-regGS("Make new backup", "Δημιουργία νέου αντιγράφου ασφαλείας");
 regGS("Free disk space", "Ελεύθερος χώρος δίσκου");
 regGS("Download file", "Κατέβασμα αρχείου");
 regGS("Download", "Κατέβασμα");
 regGS("Delete file", "Διαγραφή αρχείου");
 regGS("Backup list is empty.", "Η λίστα του αντιγράφου ασφαλείας είναι άδεια.");
 regGS("Are you sure you want to restore the file $1?", "Είστε σίγουρος/η ότι θέλετε να επαναφέρετε το αρχείο $1;");
-regGS("Are you sure you want to make new backup?", "Είστε σίγουρος/η ότι θέλετε να δημιουργήσετε νέο αντίγραφο ασφαλείας;");
 regGS("Are you sure you want to delete the file $1?", "Είστε σίγουρος/η ότι θέλετε να διαγράψετε το αρχείο $1;");
 regGS("Import XML", "Εισαγωγή XML");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "Πρέπει να έχετε την άδεια για προσθήκη/αλλαγή τευχών και άρθρων για να ρυθμίσετε τον συγγραφέα όλων των άρθρων.");

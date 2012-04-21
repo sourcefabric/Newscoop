@@ -1,4 +1,8 @@
 <?php 
+regGS("You have tried to upload an invalid backup file.", "");
+regGS("You do not have the right to manage backups.", "");
+regGS("Make a new backup", "");
+regGS("Are you sure you want to make a new backup?", "");
 regGS("Security token expired. Please resubmit the form.", "Bezpečnostní token vypršel. Formulář prosím znovu připojte.");
 regGS("Templates", "Šablony");
 regGS("Create slideshow", "Vytvořit slideshow");
@@ -74,7 +78,6 @@ regGS("Newscoop has upgraded its security measures.  In order to upgrade your ac
 regGS("Newscoop cache was cleaned up", "Paměť Newscoopu byla vyrovnána");
 regGS("Dashboard", "Hlavní panel");
 regGS("Your changes will be saved after login.", "Změny budou uloženy po přihlášení se do systému.");
-regGS("You have tried to upload wrong backup file.", "Pokusili jste se nahrát špatný zálohovací soubor.");
 regGS("Upload backup file", "Nahrát zálohovací soubor");
 regGS("The file $1 has been uploaded successfully.", "Soubor $1 byl úspěšně nahrán.");
 regGS("Media Archive", "Archiv médií");
@@ -97,21 +100,18 @@ regGS("Forgot your password?", "Zapoměli jste heslo?");
 regGS("Email: incorrect format.", "Email: nesprávný formát");
 regGS("Email", "Email");
 regGS("Bad input parameters.", "Nesprávné vstupní parametry.");
-regGS("You do not have the right to manage backup.", "Nemáte oprávnění spravovat zálohování.");
 regGS("There was an error trying to delete the file $1.", "Stala se chyba při pokusu vymazat soubor $1.");
 regGS("The file $1 was deleted successfully.", "Soubor $1 byl úspěšně vymazán.");
 regGS("Size", "Velikost ");
 regGS("Restore file", "Obnovit soubor");
 regGS("Restore", "Obnovit");
 regGS("Mb", "Mb");
-regGS("Make new backup", "Vytvořit novou zálohu");
 regGS("Free disk space", "Volné místo na disku");
 regGS("Download file", "Stáhnout soubor");
 regGS("Download", "Stáhnout");
 regGS("Delete file", "Smazat soubor");
 regGS("Backup list is empty.", "Záložní seznam je prázdný.");
 regGS("Are you sure you want to restore the file $1?", "Jste si jisti, že chcete obnovit soubor $1?");
-regGS("Are you sure you want to make new backup?", "Jste si jisti, že chcete vytvořit nový záložní soubor?");
 regGS("Are you sure you want to delete the file $1?", "Jste si jisti, že chcete vymazat soubor $1?");
 regGS("Import XML", "Importujte XML");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "Musíte mít povolení přidat/změnit vydání a články, aby bylo možné určit autora pro všechny články.");
@@ -152,5 +152,4 @@ regGS("Login failed", "Přihlášení neproběhlo");
 regGS("Please make sure that you typed the correct user name and password.", "Zkontrolujte, zda jste správně zadali uživatelské jméno a heslo");
 regGS("If your problem persists please contact the site administrator $1", "Pokud vaše problémy přetrvávají, prosím kontaktujte administrátora");
 regGS("Backup/Restore", "Zálohovat/Obnovit");
-regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Nazdárek, \\n\\nfor obnovení hesla, prosím mrkněte se na link: $1");
 ?>

@@ -1,4 +1,8 @@
 <?php 
+regGS("You have tried to upload an invalid backup file.", "");
+regGS("You do not have the right to manage backups.", "");
+regGS("Make a new backup", "");
+regGS("Are you sure you want to make a new backup?", "");
 regGS("Security token expired. Please resubmit the form.", "");
 regGS("Templates", "");
 regGS("Create slideshow", "");
@@ -74,7 +78,6 @@ regGS("Newscoop has upgraded its security measures.  In order to upgrade your ac
 regGS("Newscoop cache was cleaned up", "Newscoop кеш је очишћен");
 regGS("Dashboard", "Контролна табла");
 regGS("Your changes will be saved after login.", "Ваше измене ће бити снимљене после пријављивања.");
-regGS("You have tried to upload wrong backup file.", "Покушали сте да аплудујете погрешан бекап фајл");
 regGS("Upload backup file", "Аплоудуј бекап фајл");
 regGS("The file $1 has been uploaded successfully.", "Фајл $1 је успешно аплоудован");
 regGS("Media Archive", "Архива медијских записа");
@@ -97,21 +100,18 @@ regGS("Forgot your password?", "Заборавили сте лозинку?");
 regGS("Email: incorrect format.", "Имејл: погрешан формат.");
 regGS("Email", "Имејл");
 regGS("Bad input parameters.", "Погрешни параметри уноса.");
-regGS("You do not have the right to manage backup.", "Немате право управљања бекаповима.");
 regGS("There was an error trying to delete the file $1.", "Дошло је до грешке при покушају брисања фајла $1.");
 regGS("The file $1 was deleted successfully.", "Фајл $1 је успешно обрисан.");
 regGS("Size", "Величина");
 regGS("Restore file", "Врати фајл");
 regGS("Restore", "Врати");
 regGS("Mb", "Мб");
-regGS("Make new backup", "Направи нови бекап");
 regGS("Free disk space", "Слободно простора на диску");
 regGS("Download file", "Преузми фајл");
 regGS("Download", "Преузимање");
 regGS("Delete file", "Обриши фајл");
 regGS("Backup list is empty.", "Листа бекапова је празна");
 regGS("Are you sure you want to restore the file $1?", "Да ли сте сигурни да желите да вратите фајл $1?");
-regGS("Are you sure you want to make new backup?", "Да ли сте сигурни да желите да направите нови бекап?");
 regGS("Are you sure you want to delete the file $1?", "Да ли сте сигурни да желите да обришете фајл $1?");
 regGS("Import XML", "Увези XML");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "Морате имати одобрења за додавање/мењање издања и текстова да бисте били у могућности да подешавате аутора свих текстова.");

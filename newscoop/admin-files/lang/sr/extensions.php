@@ -1,5 +1,4 @@
 <?php 
-regGS("News Desk", "Редакција");
 regGS("Go", "Иди");
 regGS("Wikipedia Search", "Претрага Википедије");
 regGS("Files", "Фајлови");

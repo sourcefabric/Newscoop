@@ -1,4 +1,8 @@
 <?php 
+regGS("You have tried to upload an invalid backup file.", "You have tried to upload an invalid backup file.");
+regGS("You do not have the right to manage backups.", "You do not have the right to manage backups.");
+regGS("Make a new backup", "Make a new backup");
+regGS("Are you sure you want to make a new backup?", "Are you sure you want to make a new backup?");
 regGS("Security token expired. Please resubmit the form.", "Security token expired. Please resubmit the form.");
 regGS("Templates", "Templates");
 regGS("Create slideshow", "Create slideshow");
@@ -74,7 +78,6 @@ regGS("Newscoop has upgraded its security measures.  In order to upgrade your ac
 regGS("Newscoop cache was cleaned up", "Newscoop cache was cleaned up");
 regGS("Dashboard", "Dashboard");
 regGS("Your changes will be saved after login.", "Your changes will be saved after login.");
-regGS("You have tried to upload wrong backup file.", "You have tried to upload wrong backup file.");
 regGS("Upload backup file", "Upload backup file");
 regGS("The file $1 has been uploaded successfully.", "The file $1 has been uploaded successfully.");
 regGS("Media Archive", "Media Archive");
@@ -97,21 +100,18 @@ regGS("Forgot your password?", "Forgot your password?");
 regGS("Email: incorrect format.", "Email: incorrect format.");
 regGS("Email", "Email");
 regGS("Bad input parameters.", "Bad input parameters.");
-regGS("You do not have the right to manage backup.", "You do not have the right to manage backup.");
 regGS("There was an error trying to delete the file $1.", "There was an error trying to delete the file $1.");
 regGS("The file $1 was deleted successfully.", "The file $1 was deleted successfully.");
 regGS("Size", "Size");
 regGS("Restore file", "Restore file");
 regGS("Restore", "Restore");
 regGS("Mb", "Mb");
-regGS("Make new backup", "Make new backup");
 regGS("Free disk space", "Free disk space");
 regGS("Download file", "Download file");
 regGS("Download", "Download");
 regGS("Delete file", "Delete file");
 regGS("Backup list is empty.", "Backup list is empty.");
 regGS("Are you sure you want to restore the file $1?", "Are you sure you want to restore the file $1?");
-regGS("Are you sure you want to make new backup?", "Are you sure you want to make new backup?");
 regGS("Are you sure you want to delete the file $1?", "Are you sure you want to delete the file $1?");
 regGS("Import XML", "Import XML");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "You must have the permissions to add/change issues and articles in order to set the author for all articles.");

@@ -1,4 +1,8 @@
 <?php 
+regGS("You have tried to upload an invalid backup file.", "");
+regGS("You do not have the right to manage backups.", "");
+regGS("Make a new backup", "");
+regGS("Are you sure you want to make a new backup?", "");
 regGS("Security token expired. Please resubmit the form.", "");
 regGS("Templates", "");
 regGS("Create slideshow", "");
@@ -74,7 +78,6 @@ regGS("Newscoop has upgraded its security measures.  In order to upgrade your ac
 regGS("Newscoop cache was cleaned up", "ნიუსქუფის ქეში გაიწმინდა");
 regGS("Dashboard", "დეშბორდი");
 regGS("Your changes will be saved after login.", "თქვენი ცვლილები ავტორიზაციის შემდეგ შეინახება.");
-regGS("You have tried to upload wrong backup file.", "თქვენ ატვირთეთ არასწორი სათადარიგო ფაილი");
 regGS("Upload backup file", "ატვირთეთ სათადარიგო ფაილი");
 regGS("The file $1 has been uploaded successfully.", "$1 ფაილი წარმატებით აიტვირთა");
 regGS("Media Archive", "მედია არქივი");
@@ -97,21 +100,18 @@ regGS("Forgot your password?", "პაროლი დაგავიწყდ�
 regGS("Email: incorrect format.", "იმეილი: არასწორი ფორმატი.");
 regGS("Email", "იმეილი");
 regGS("Bad input parameters.", "არასწორი პარამეტრები");
-regGS("You do not have the right to manage backup.", "თქვენ არ გაქვთ სათადარიგო ფაილების მართვის უფლება");
 regGS("There was an error trying to delete the file $1.", "ფაილი $1 წაშლის დროს დაფიქსირდა შეცდომა");
 regGS("The file $1 was deleted successfully.", "ფაილი $1 წარმატებით წაიშალა");
 regGS("Size", "ზომა");
 regGS("Restore file", "ფაილის აღდგენა");
 regGS("Restore", "აღდგენა");
 regGS("Mb", "მბ");
-regGS("Make new backup", "ახალი სათადარიგო ფაილების შექმნა");
 regGS("Free disk space", "თავისუფალი სივრცე დისკზე");
 regGS("Download file", "ფაილის ჩამოტვირთვა");
 regGS("Download", "ჩამოტვირთვა");
 regGS("Delete file", "ფაილის წაშლა");
 regGS("Backup list is empty.", "სათადარიგო სია ცარიელია.");
 regGS("Are you sure you want to restore the file $1?", "დარწმუნებული ხართ რომ გსულრთ $1 ფაილის აღდგენა?");
-regGS("Are you sure you want to make new backup?", "დარწმუნებული ხართ რომ გსურთ ახალი სათადარიგო ფაილების შექმნა?");
 regGS("Are you sure you want to delete the file $1?", "დარწმუნებული ხართ რომ გსურთ $1 ფაილის წაშლა");
 regGS("Import XML", "XML-ის იმპორტირება");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "თქვენ უნდა გქონდეთ გამოცემების და სტატიების დამატების/შეცვლის უფლება, რათა მიუთითოთ ავტორები.");

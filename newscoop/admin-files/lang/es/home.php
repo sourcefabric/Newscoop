@@ -1,4 +1,8 @@
 <?php 
+regGS("You have tried to upload an invalid backup file.", "Has tratado de subir un archivo de respaldo inválido.");
+regGS("You do not have the right to manage backups.", "No tienes los permisos para administrar archivos de respaldo.");
+regGS("Make a new backup", "Haz un nueva copia de respaldo.");
+regGS("Are you sure you want to make a new backup?", "¿Realmente deseas realizar una nueva copia de respaldo?");
 regGS("Security token expired. Please resubmit the form.", "El código de seguridad ha expirado. Por favor, regrese al foro.");
 regGS("Templates", "Plantillas");
 regGS("Create slideshow", "Crear presentación");
@@ -74,7 +78,6 @@ regGS("Newscoop has upgraded its security measures.  In order to upgrade your ac
 regGS("Newscoop cache was cleaned up", "Se vació el cache de Newscoop");
 regGS("Dashboard", "Tablero");
 regGS("Your changes will be saved after login.", "Sus cambios se almacenarán después de ingresar");
-regGS("You have tried to upload wrong backup file.", "Ha intentado subir un archivo de respaldo incorrecto");
 regGS("Upload backup file", "Suba un archivo de respaldo");
 regGS("The file $1 has been uploaded successfully.", "El archivo $1 se ha cargado con éxito.");
 regGS("Media Archive", "Archivo multimedia");
@@ -97,21 +100,18 @@ regGS("Forgot your password?", "¿Olvidó su clave de acceso?");
 regGS("Email: incorrect format.", "Correo electrónico:  formato incorrecto");
 regGS("Email", "Correo electrónico");
 regGS("Bad input parameters.", "Los parámetros de la entrada son incorrectos");
-regGS("You do not have the right to manage backup.", "No está autorizado para administrar archivos de respaldo.");
 regGS("There was an error trying to delete the file $1.", "Se registró un error al tratar de eliminar el archivo $1.");
 regGS("The file $1 was deleted successfully.", "El archivo $1 se eliminó con éxito.");
 regGS("Size", "Tamaño");
 regGS("Restore file", "Restablecer archivo");
 regGS("Restore", "Restablecer");
 regGS("Mb", "Mb");
-regGS("Make new backup", "Realice un nuevo respaldo");
 regGS("Free disk space", "Espacio libre en el disco");
 regGS("Download file", "Descargue archivo");
 regGS("Download", "Descargar");
 regGS("Delete file", "Eliminar archivo");
 regGS("Backup list is empty.", "La lista de respaldo está vacía");
 regGS("Are you sure you want to restore the file $1?", "¿Realmente desea recuperar el archivo $1?");
-regGS("Are you sure you want to make new backup?", "¿Realmente desea crear un nuevo respaldo?");
 regGS("Are you sure you want to delete the file $1?", "¿Realmente desea eliminar el archivo $1?");
 regGS("Import XML", "Importar XML");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "Debe tener los permisos para añadir/cambiar notas y artículos para poder poner el autor de todos los artículos.");

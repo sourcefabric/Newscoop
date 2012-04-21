@@ -1,4 +1,6 @@
 <?php 
+regGS("Sorry that image is too small. Image needs to be at least %dx%d.", "Sorry that image is too small. Image needs to be at least %dx%d.");
+regGS("Slideshow rendition", "Slideshow rendition");
 regGS("Renditions reloaded", "Renditions reloaded");
 regGS("Reload renditions", "Reload renditions");
 regGS("Edit images", "Edit images");
@@ -30,7 +32,6 @@ regGS("Media Archive", "Media Archive");
 regGS("Location", "Location");
 regGS("Items", "Items");
 regGS("Item", "Item");
-regGS("Image too small.", "Image too small.");
 regGS("Image files", "Image files");
 regGS("Image Files: ", "Image Files: ");
 regGS("Headline", "Headline");

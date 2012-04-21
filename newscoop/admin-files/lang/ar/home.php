@@ -1,4 +1,8 @@
 <?php 
+regGS("You have tried to upload an invalid backup file.", "");
+regGS("You do not have the right to manage backups.", "");
+regGS("Make a new backup", "");
+regGS("Are you sure you want to make a new backup?", "");
 regGS("Security token expired. Please resubmit the form.", "");
 regGS("Templates", "");
 regGS("Create slideshow", "");
@@ -74,7 +78,6 @@ regGS("Newscoop has upgraded its security measures.  In order to upgrade your ac
 regGS("Newscoop cache was cleaned up", "");
 regGS("Dashboard", "");
 regGS("Your changes will be saved after login.", "");
-regGS("You have tried to upload wrong backup file.", "");
 regGS("Upload backup file", "");
 regGS("The file $1 has been uploaded successfully.", "");
 regGS("Media Archive", "");
@@ -97,21 +100,18 @@ regGS("Forgot your password?", "");
 regGS("Email: incorrect format.", "");
 regGS("Email", "");
 regGS("Bad input parameters.", "");
-regGS("You do not have the right to manage backup.", "");
 regGS("There was an error trying to delete the file $1.", "");
 regGS("The file $1 was deleted successfully.", "");
 regGS("Size", "");
 regGS("Restore file", "");
 regGS("Restore", "");
 regGS("Mb", "");
-regGS("Make new backup", "");
 regGS("Free disk space", "");
 regGS("Download file", "");
 regGS("Download", "");
 regGS("Delete file", "");
 regGS("Backup list is empty.", "");
 regGS("Are you sure you want to restore the file $1?", "");
-regGS("Are you sure you want to make new backup?", "");
 regGS("Are you sure you want to delete the file $1?", "");
 regGS("Import XML", "");
 regGS("You must have the permissions to add/change issues and articles in order to set the author for all articles.", "");

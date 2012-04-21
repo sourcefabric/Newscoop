@@ -1,4 +1,6 @@
 <?php 
+regGS("Sorry that image is too small. Image needs to be at least %dx%d.", "");
+regGS("Slideshow rendition", "");
 regGS("Renditions reloaded", "Formáty znovu nahrány");
 regGS("Reload renditions", "Znovu nahrané formáty");
 regGS("Edit images", "Editovat obrázky");
@@ -30,7 +32,6 @@ regGS("Media Archive", "Archiv Médií");
 regGS("Location", "Lokace");
 regGS("Items", "");
 regGS("Item", "");
-regGS("Image too small.", "Obrázek příliš malý");
 regGS("Image files", "Soubory obrázků");
 regGS("Image Files: ", "Soboury obrázků:");
 regGS("Headline", "Titulek");
