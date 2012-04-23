@@ -1504,8 +1504,10 @@ DROP TABLE IF EXISTS `context_articles`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `context_articles` (
+  `id` INT(10) NOT NULL AUTO_INCREMENT,
   `fk_context_id` int(10) NOT NULL,
-  `fk_article_no` int(10) NOT NULL
+  `fk_article_no` int(10) NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
