@@ -1,4 +1,5 @@
 <?php 
+regGS("Featured Article Lists", "");
 regGS("You have tried to upload an invalid backup file.", "");
 regGS("You do not have the right to manage backups.", "");
 regGS("Make a new backup", "");
@@ -24,7 +25,6 @@ regGS("Edit permissions", "");
 regGS("Detail", "");
 regGS("Create new user", "");
 regGS("Create new account", "");
-regGS("Article Playlists", "");
 regGS("Add feed", "");
 regGS("Upload of file $1 was not successful.", "");
 regGS("The file $1 could not be moved. Check you have enough of disk space.", "");
@@ -151,4 +151,5 @@ regGS("You do not have the right to access this page.", "Vous n'avez pas le droi
 regGS("Login failed", "Connexion échouée");
 regGS("Please make sure that you typed the correct user name and password.", "Assurez vous svp que vous avez correctement tapé le nom d'utlisateur et le mot de passe.");
 regGS("If your problem persists please contact the site administrator $1", "Si votre problème persiste contactez svp l'administrateur du site $1.");
+regGS("Backup/Restore", "");
 ?>

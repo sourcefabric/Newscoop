@@ -1,8 +1,8 @@
 <?php 
-regGS("Unrecommend", "");
-regGS("Save comment", "");
-regGS("Recommend", "");
-regGS("Comment updated.", "");
+regGS("Unrecommend", "Sconsiglia");
+regGS("Save comment", "Salva commento");
+regGS("Recommend", "Consiglia");
+regGS("Comment updated.", "Commento aggiornato.");
 regGS("Comment saved.", "Commento salvato.");
 regGS("Comments updated.", "Commenti aggiornati.");
 regGS("Post a Comment", "Pubblica un commento");

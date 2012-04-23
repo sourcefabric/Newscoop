@@ -1,11 +1,12 @@
 <?php 
+regGS("User account is active", "");
+regGS("Allow user's profile to be publicly displayed", "");
+regGS("Allow user access to login to site backend", "");
 regGS("Templates", "Šablony");
 regGS("Username", "Uživatelské jméno");
-regGS("Public profile", "Veřejný profil");
 regGS("Last Name", "Přijmení");
 regGS("First Name", "Křestní jméno");
 regGS("Email", "Email");
-regGS("Admin access", "Přístup ro admin");
 regGS("Could not save user with e-mail address '$1'. Please make sure it doesn't already exist", "Nebylo možné uložit uživatele s emailovou adresou  '$1'. Prosím ujistěte se, že již takový to neexistuje.");
 regGS("You were logged out.", "Byl jste odhlášen.");
 regGS("That $1 already exists, please choose a different $2.", "Tento $1 již existuje, prosím vyberte jiný  $2.");

@@ -76,7 +76,6 @@ regGS("Deny", "");
 regGS("Delete user type $1", "");
 regGS("Can not delete a user type with assigned users.", "");
 regGS("Cache", "");
-regGS("Blogs", "");
 regGS("Backup", "");
 regGS("Authoring", "");
 regGS("Allow", "Povolit");

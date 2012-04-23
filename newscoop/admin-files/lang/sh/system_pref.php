@@ -1,4 +1,5 @@
 <?php 
+regGS("according to php.ini settings", "");
 regGS("Maximal zoom for auto-focusing:", "Najveće uvećanje pri automatskom centriranju:");
 regGS("Map border for auto-focusing:", "Okvir mape za auomatsko centriranje:");
 regGS("Map auto-focusing as the default behavior:", "Auto centriranje mape kao podrazumevano ponašanje:");

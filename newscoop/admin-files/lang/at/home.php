@@ -1,4 +1,5 @@
 <?php 
+regGS("Featured Article Lists", "");
 regGS("You have tried to upload an invalid backup file.", "");
 regGS("You do not have the right to manage backups.", "");
 regGS("Make a new backup", "");
@@ -24,7 +25,6 @@ regGS("Edit permissions", "");
 regGS("Detail", "");
 regGS("Create new user", "");
 regGS("Create new account", "");
-regGS("Article Playlists", "");
 regGS("Add feed", "");
 regGS("User name", "");
 regGS("Newscoop", "");

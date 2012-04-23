@@ -1,4 +1,25 @@
 <?php 
+regGS("View article", "");
+regGS("Select a list", "");
+regGS("Remove list", "");
+regGS("Please select a list", "");
+regGS("Playlist", "");
+regGS("List updated.", "");
+regGS("List saved", "");
+regGS("List Name", "");
+regGS("List ID", "");
+regGS("Item already exists in the list", "");
+regGS("Featured Articles", "");
+regGS("Featured Article Lists", "");
+regGS("Featured Article List", "");
+regGS("Duplicate list", "");
+regGS("Duplicate article entry found", "");
+regGS("Drag here to add to list", "");
+regGS("Could not save the list", "");
+regGS("Available Articles", "");
+regGS("Are you sure you want to delete this list?", "");
+regGS("Add to list", "");
+regGS("Add list", "");
 regGS("Multi date events", "Eventi con date multiple");
 regGS("Slideshows", "Gallerie di immagini");
 regGS("Place images", "Posiziona immagini");
@@ -161,7 +182,4 @@ regGS("There was an error reading request parameters.", "C'e' stato un errore le
 regGS("This article cannot be previewed. Please make sure it has the article template selected.", "Impossibile mostrare l'anteprima dell'articolo. Per favore assicurati che ci sia un template articolo selezionato.");
 regGS("No such article.", "L'articolo non esiste.");
 regGS("No such section.", "La sezione non esiste.");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Confermi di rimuovere l'argomento \\'$1\\' dall'articolo");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Confermi di rimuovere il file \\'$1\\' dall'articolo?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Confermi di rimuovere l'immagine \\'$1\\' dall'articolo?");
 ?>

@@ -1,4 +1,5 @@
 <?php 
+regGS("Featured Article Lists", "");
 regGS("You have tried to upload an invalid backup file.", "");
 regGS("You do not have the right to manage backups.", "");
 regGS("Make a new backup", "");
@@ -24,7 +25,6 @@ regGS("Edit permissions", "");
 regGS("Detail", "");
 regGS("Create new user", "");
 regGS("Create new account", "");
-regGS("Article Playlists", "");
 regGS("Add feed", "");
 regGS("Upload of file $1 was not successful.", "$1 ფაილის ატვირთვა უშედეგოდ დასრულდა");
 regGS("The file $1 could not be moved. Check you have enough of disk space.", "$1 ფაილის გადაადგილება ვერ ხერხდება. შეამოწმეთ გაქვთ თუ არა საკმარისი სივრცე დისკზე");

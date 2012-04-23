@@ -76,7 +76,6 @@ regGS("Deny", "უარყოფა");
 regGS("Delete user type $1", "$1 მომხმარებლის ტიპის წაშლა");
 regGS("Can not delete a user type with assigned users.", "შეუძლებელია მომხმარებლის ტიპის წაშლა, რომელსაც მომხმარებლები აქვს მიბმული.");
 regGS("Cache", "ქეში");
-regGS("Blogs", "ბლოგები");
 regGS("Backup", "ბექაფი");
 regGS("Authoring", "");
 regGS("Allow", "ნების დართვა");

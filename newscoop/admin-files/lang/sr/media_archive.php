@@ -6,7 +6,6 @@ regGS("Local", "Локални");
 regGS("Items updated.", "Ставке измењене");
 regGS("Feedback", "Повратна информација");
 regGS("Do you want to update unused only?", "Да ли желите да мењате само некоришћене?");
-regGS("Display Newswires images", "Прикажи слике из дистрибутивног канала");
 regGS("Disapprove selected", "Неодобри изабрано");
 regGS("Are you sure you want to update selected items?", "Да ли сте сигурни да желите да измените изабране ставке?");
 regGS("Approve selected", "Одобри изабрано");

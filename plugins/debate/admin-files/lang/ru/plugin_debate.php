@@ -1,4 +1,20 @@
 <?php 
+regGS("You must fill in the $1 field %s.", "");
+regGS("Weekly", "");
+regGS("Week", "");
+regGS("Results", "");
+regGS("Please input at least 2 answers", "");
+regGS("Monthly", "");
+regGS("Month", "");
+regGS("End time cannot be set before start time", "");
+regGS("Day", "");
+regGS("Daily", "");
+regGS("Attach Debate", "");
+regGS("Are you sure you want to reset counters on the selected debatess?", "");
+regGS("Are you sure you want to delete the selected debatess?", "");
+regGS("Answer %s", "");
+regGS("Answer", "");
+regGS("Allow not logged in users", "");
 regGS("Are you sure you want to delete the debate \"$1\"?", "Вы уверены, что хотите удалить опрос \"$1\"?");
 regGS("click to edit", "кликните для редактирования");
 regGS("Debates", "Опросы");
@@ -75,11 +91,8 @@ regGS("Copy", "Копировать");
 regGS("Begin", "Начать");
 regGS("Attach debate", "Присоединить опрос");
 regGS("Attach Debates", "Присоединить опросы");
-regGS("Are you sure you want to reset counters on the selected debates?", "Вы уверены, что хотите переустановить счетчики на выбранных опросах?");
-regGS("Are you sure you want to delete the selected debates?", "Вы уверены, что хотите удалить выбранные опросы?");
 regGS("Answer $1", "Ответ $1");
 regGS("Add new Debate", "Добавить новый Опрос");
 regGS("---Select---", "---Выбрать---");
 regGS("$1/$2 debates assigned/unassigned.", "Голосования $1/$2 определены/деактивированы");
-regGS("Are you sure you want to remove the file \\'$1\\' from the debate answer?", "Вы уверены, что хотите удалить файл \\'$1\\' из ответа этого опроса?");
 ?>

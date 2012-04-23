@@ -1,4 +1,5 @@
 <?php 
+regGS("Featured Article Lists", "");
 regGS("You have tried to upload an invalid backup file.", "");
 regGS("You do not have the right to manage backups.", "");
 regGS("Make a new backup", "");
@@ -24,7 +25,6 @@ regGS("Edit permissions", "Upravit povolení");
 regGS("Detail", "Detail");
 regGS("Create new user", "Vytvořit nového uživatele");
 regGS("Create new account", "Vytvořit nový účet");
-regGS("Article Playlists", "Přehled zobrazení článků");
 regGS("Add feed", "Přidat zdroj");
 regGS("Upload of file $1 was not successful.", "Nahrávání souboru $1 nebylo úspěšné.");
 regGS("The file $1 could not be moved. Check you have enough of disk space.", "Soubor $1 nemůže být posunut. Zkontrolujte zda máte dostatek místa na disku.");

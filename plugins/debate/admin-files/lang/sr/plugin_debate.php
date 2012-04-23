@@ -1,4 +1,20 @@
 <?php 
+regGS("You must fill in the $1 field %s.", "");
+regGS("Weekly", "");
+regGS("Week", "");
+regGS("Results", "");
+regGS("Please input at least 2 answers", "");
+regGS("Monthly", "");
+regGS("Month", "");
+regGS("End time cannot be set before start time", "");
+regGS("Day", "");
+regGS("Daily", "");
+regGS("Attach Debate", "");
+regGS("Are you sure you want to reset counters on the selected debatess?", "");
+regGS("Are you sure you want to delete the selected debatess?", "");
+regGS("Answer %s", "");
+regGS("Answer", "");
+regGS("Allow not logged in users", "");
 regGS("Are you sure you want to delete the debate \"$1\"?", "Да ли сте сигурни да желите обришете анкету \"$1\"?");
 regGS("click to edit", "клик з ауређивање");
 regGS("Debates", "Анкете");
@@ -75,11 +91,8 @@ regGS("Copy", "копирај");
 regGS("Begin", "почетак");
 regGS("Attach debate", "закачи анкету");
 regGS("Attach Debates", "закачи анкете");
-regGS("Are you sure you want to reset counters on the selected debates?", "да ли сте сигурни да желите да поништите бројаче на изабраним анкетама?");
-regGS("Are you sure you want to delete the selected debates?", "Да ли сте сигурни да желите да обришете изабране анкете?");
 regGS("Answer $1", "Одговор $1");
 regGS("Add new Debate", "Додај нову анкету");
 regGS("---Select---", "--Изабери--");
 regGS("$1/$2 debates assigned/unassigned.", "$1/$2 анкета додељено/уклоњено");
-regGS("Are you sure you want to remove the file \\'$1\\' from the debate answer?", "да ли сте сигурни да желите да уклоните фајл \\'$1\\' из понуђеног одговора?");
 ?>

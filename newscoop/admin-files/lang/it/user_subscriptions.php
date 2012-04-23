@@ -13,7 +13,7 @@ regGS("Languages:", "Lingue:");
 regGS("Edit all sections", "Modifica tutte le sezioni");
 regGS("Days:", "Giorni");
 regGS("Days must be number", "I giorni devono essere un numero");
-regGS("Any", "");
+regGS("Any", "Tutte");
 regGS("Add subscription", "Aggiungi iscrizione");
 regGS("Add section", "Aggiungi sezione");
 regGS("saved", "salvato");

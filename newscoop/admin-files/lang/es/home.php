@@ -1,4 +1,5 @@
 <?php 
+regGS("Featured Article Lists", "");
 regGS("You have tried to upload an invalid backup file.", "Has tratado de subir un archivo de respaldo inválido.");
 regGS("You do not have the right to manage backups.", "No tienes los permisos para administrar archivos de respaldo.");
 regGS("Make a new backup", "Haz un nueva copia de respaldo.");
@@ -24,7 +25,6 @@ regGS("Edit permissions", "Edite los permisos");
 regGS("Detail", "Detalle");
 regGS("Create new user", "Crear nuevo usuario");
 regGS("Create new account", "Crear nueva cuenta");
-regGS("Article Playlists", "Lista de reproducción de artículos");
 regGS("Add feed", "Añadir feed");
 regGS("Upload of file $1 was not successful.", "La carga del archivo $1 no se realizó de forma exitosa.");
 regGS("The file $1 could not be moved. Check you have enough of disk space.", "No se pudo mover el archivo $1.  Verifique que exista suficiente espacio en el disco.");
@@ -152,5 +152,4 @@ regGS("Login failed", "Acceso fallido");
 regGS("Please make sure that you typed the correct user name and password.", "Por favor asegúrese de que escribió correctamente su nombre de usuario y contraseña.");
 regGS("If your problem persists please contact the site administrator $1", "Si su problema persiste favor contacte al administrador del sistema $1");
 regGS("Backup/Restore", "Respaldar/Restablecer");
-regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Hola, \\n\\n para recuperar su contraseña, siga el siguiente enlace $1");
 ?>

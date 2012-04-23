@@ -1,4 +1,20 @@
 <?php 
+regGS("You must fill in the $1 field %s.", "");
+regGS("Weekly", "");
+regGS("Week", "");
+regGS("Results", "");
+regGS("Please input at least 2 answers", "");
+regGS("Monthly", "");
+regGS("Month", "");
+regGS("End time cannot be set before start time", "");
+regGS("Day", "");
+regGS("Daily", "");
+regGS("Attach Debate", "");
+regGS("Are you sure you want to reset counters on the selected debatess?", "");
+regGS("Are you sure you want to delete the selected debatess?", "");
+regGS("Answer %s", "");
+regGS("Answer", "");
+regGS("Allow not logged in users", "");
 regGS("Are you sure you want to delete the debate \"$1\"?", "Είστε σίγουρος/η ότι θέλετε να διαγράψετε την δημοσκόπηση \"$1\";");
 regGS("click to edit", "κάντε κλίκ για επεξεργασία");
 regGS("Debates", "Δημοσκοπήσεις");
@@ -75,11 +91,8 @@ regGS("Copy", "Αντιγραφή");
 regGS("Begin", "Αρχή");
 regGS("Attach debate", "Επισύναψη δημοσκόπησης");
 regGS("Attach Debates", "Επισύναψη Δημοσκοπήσεων");
-regGS("Are you sure you want to reset counters on the selected debates?", "Είστε σίγουρος/η ότι θέλετε να επαναφέρετε τους μετρητές στις επιλεγμένες δημοσκοπήσεις;");
-regGS("Are you sure you want to delete the selected debates?", "Είστε σίγουρος/η ότι θέλετε να διαγράψετε τις επιλεγμένες δημοσκοπήσεις;");
 regGS("Answer $1", "Απάντηση $1");
 regGS("Add new Debate", "Προσθήκη νέας Δημοσκόπησης");
 regGS("---Select---", "---Επιλογή---");
 regGS("$1/$2 debates assigned/unassigned.", "$1/$2 δημοσκοπήσεις εκχωρήθηκαν/δεν εκχωρήθηκαν.");
-regGS("Are you sure you want to remove the file \\'$1\\' from the debate answer?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε το αρχείο \\'$1\\' από την απάντηση της δημοσκόπησης;");
 ?>

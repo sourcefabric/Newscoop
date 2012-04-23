@@ -1,4 +1,25 @@
 <?php 
+regGS("View article", "View article");
+regGS("Select a list", "Select a list");
+regGS("Remove list", "Remove list");
+regGS("Please select a list", "Please select a list");
+regGS("Playlist", "Playlist");
+regGS("List updated.", "List updated.");
+regGS("List saved", "List saved");
+regGS("List Name", "List Name");
+regGS("List ID", "List ID");
+regGS("Item already exists in the list", "Item already exists in the list");
+regGS("Featured Articles", "Featured Articles");
+regGS("Featured Article Lists", "Featured Article Lists");
+regGS("Featured Article List", "Featured Article List");
+regGS("Duplicate list", "Duplicate list");
+regGS("Duplicate article entry found", "Duplicate article entry found");
+regGS("Drag here to add to list", "Drag here to add to list");
+regGS("Could not save the list", "Could not save the list");
+regGS("Available Articles", "Available Articles");
+regGS("Are you sure you want to delete this list?", "Are you sure you want to delete this list?");
+regGS("Add to list", "Add to list");
+regGS("Add list", "Add list");
 regGS("Multi date events", "Multi date events");
 regGS("Slideshows", "Slideshows");
 regGS("Place images", "Place images");

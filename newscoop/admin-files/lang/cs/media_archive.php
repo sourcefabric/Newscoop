@@ -6,7 +6,6 @@ regGS("Local", "Lokální");
 regGS("Items updated.", "Položky aktualizovány.");
 regGS("Feedback", "Zpětná vazba");
 regGS("Do you want to update unused only?", "Chcete aktualizovat pouze nepoužité?");
-regGS("Display Newswires images", "Zobrazit Newswire obrázky");
 regGS("Disapprove selected", "Neodsouhlasit vybrané");
 regGS("Are you sure you want to update selected items?", "Jste si jisti, že chcete aktualizovat vybrané položky?");
 regGS("Approve selected", "Odsouhlasit vybrané");

@@ -1,4 +1,25 @@
 <?php 
+regGS("View article", "");
+regGS("Select a list", "");
+regGS("Remove list", "");
+regGS("Please select a list", "");
+regGS("Playlist", "");
+regGS("List updated.", "");
+regGS("List saved", "");
+regGS("List Name", "");
+regGS("List ID", "");
+regGS("Item already exists in the list", "");
+regGS("Featured Articles", "");
+regGS("Featured Article Lists", "");
+regGS("Featured Article List", "");
+regGS("Duplicate list", "");
+regGS("Duplicate article entry found", "");
+regGS("Drag here to add to list", "");
+regGS("Could not save the list", "");
+regGS("Available Articles", "");
+regGS("Are you sure you want to delete this list?", "");
+regGS("Add to list", "");
+regGS("Add list", "");
 regGS("Multi date events", "Eventos de datas múltiplas");
 regGS("Slideshows", "Slideshows");
 regGS("Place images", "");
@@ -162,7 +183,4 @@ regGS("This article cannot be previewed. Please make sure it has the article tem
 regGS("No such article.", "Artigo Desconhecido.");
 regGS("No such section.", "Secção Desconhecida.");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Tem certeza que quer remover o tópico \\'$1\\' do artigo?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Tem certeza que quer remover o arquivo \\'$1\\' do artigo?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Confirma a eliminação da imagem \\'$1\\' do artigo?");
 ?>

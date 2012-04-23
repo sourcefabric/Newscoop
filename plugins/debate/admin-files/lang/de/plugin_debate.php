@@ -1,4 +1,20 @@
 <?php 
+regGS("You must fill in the $1 field %s.", "Sie müssen das $1 Feld %s ausfüllen. ");
+regGS("Weekly", "Wöchentlich");
+regGS("Week", "Woche");
+regGS("Results", "Ergebnisse");
+regGS("Please input at least 2 answers", "Bitte tragen Sie mindestens zwei mögliche Antworten ein.");
+regGS("Monthly", "Monatlich");
+regGS("Month", "Monat");
+regGS("End time cannot be set before start time", "Die Endzeit kann nicht vor der Startzeit liegen.");
+regGS("Day", "Tag");
+regGS("Daily", "Täglich");
+regGS("Attach Debate", "Debatte hinzufügen");
+regGS("Are you sure you want to reset counters on the selected debatess?", "Wollen Sie wirklich den Zähler der ausgewählten Debatten zurücksetzen?");
+regGS("Are you sure you want to delete the selected debatess?", "Wollen Sie wirklich die ausgewählten Debatten löschen?");
+regGS("Answer %s", "Antwort");
+regGS("Answer", "Antwort");
+regGS("Allow not logged in users", "Nicht eingeloggte Nutzer zulassen.");
 regGS("Are you sure you want to delete the debate \"$1\"?", "Wirklich die Umfrage \"$1\" löschen?");
 regGS("click to edit", "Zum Bearbeiten klicken");
 regGS("Debates", "Umfragen");
@@ -75,11 +91,8 @@ regGS("Copy", "Kopieren");
 regGS("Begin", "Starten");
 regGS("Attach debate", "Umfrage anhängen");
 regGS("Attach Debates", "Umfragen anhängen");
-regGS("Are you sure you want to reset counters on the selected debates?", "Wirklich Zähler der ausgewählten Umfragen zurücksetzen?");
-regGS("Are you sure you want to delete the selected debates?", "Wirklich ausgewählte Umfrage löschen?");
 regGS("Answer $1", "Antwort $1");
 regGS("Add new Debate", "Neue Umfrage hinzufügen");
 regGS("---Select---", "---Auswählen---");
 regGS("$1/$2 debates assigned/unassigned.", "$1/$2 Umfragen zugewiesen/nicht zugewiesen");
-regGS("Are you sure you want to remove the file \\'$1\\' from the debate answer?", "Wirklich Datei \\'$1\\' aus der Umfrageantwort entfernen?");
 ?>

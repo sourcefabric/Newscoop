@@ -6,7 +6,6 @@ regGS("Local", "Local");
 regGS("Items updated.", "Itens atualizados");
 regGS("Feedback", "Feedback");
 regGS("Do you want to update unused only?", "Quer atualizar apenas os que não são usados?");
-regGS("Display Newswires images", "Exibir imagens das newswires");
 regGS("Disapprove selected", "Não aprovar selecionados");
 regGS("Are you sure you want to update selected items?", "Tem certeza que quer atualizar itens selecionados?");
 regGS("Approve selected", "Aprovar selecionados");

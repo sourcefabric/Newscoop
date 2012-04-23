@@ -1,9 +1,10 @@
 <?php 
+regGS("Featured Article Lists", "Vetrina di articoli");
 regGS("You have tried to upload an invalid backup file.", "Il file che hai cercato di caricare non è un backup valido.");
 regGS("You do not have the right to manage backups.", "Non hai il permesso di gestire i backup.");
 regGS("Make a new backup", "Esegui un nuovo backup");
 regGS("Are you sure you want to make a new backup?", "Vuoi davvero eseguire un nuovo backup?");
-regGS("Security token expired. Please resubmit the form.", "");
+regGS("Security token expired. Please resubmit the form.", "Il token di sicurezza è scaduto. Rispedisci la form.");
 regGS("Templates", "Template");
 regGS("Create slideshow", "Crea galleria di immagini");
 regGS("Create", "Crea");
@@ -24,7 +25,6 @@ regGS("Edit permissions", "Modifica permessi");
 regGS("Detail", "Dettagli");
 regGS("Create new user", "Crea nuovo utente");
 regGS("Create new account", "Crea nuovo account");
-regGS("Article Playlists", "Raccolta di articoli");
 regGS("Add feed", "Aggiungi feed");
 regGS("Upload of file $1 was not successful.", "Il caricamento del file $1 è fallito.");
 regGS("The file $1 could not be moved. Check you have enough of disk space.", "Il file $1 non è stato spostato. Controlla se c'è abbastanza spazio libero.");

@@ -1,4 +1,5 @@
 <?php 
+regGS("according to php.ini settings", "");
 regGS("Maximal zoom for auto-focusing:", "Zoom massimo per auto-focus:");
 regGS("Map border for auto-focusing:", "Bordo mappa per auto-focus:");
 regGS("Map auto-focusing as the default behavior:", "Autofocus come comportamento standard:");

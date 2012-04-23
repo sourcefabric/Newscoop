@@ -76,7 +76,6 @@ regGS("Deny", "Оспори");
 regGS("Delete user type $1", "Обриши тип корисника $1");
 regGS("Can not delete a user type with assigned users.", "Није могуће обрисати тип корисника са додељеним корисницима.");
 regGS("Cache", "Кеш");
-regGS("Blogs", "Блогови");
 regGS("Backup", "Бекап");
 regGS("Authoring", "Ауторизовање");
 regGS("Allow", "Дозволи");

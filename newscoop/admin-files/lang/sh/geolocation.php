@@ -1,4 +1,5 @@
 <?php 
+regGS("Based on GeoNames.org data", "");
 regGS("selected marker icon", "izabrana marker oznaka");
 regGS("add location to map", "dodaj lokaciju na mapu");
 regGS("Video source", "Video izvor");

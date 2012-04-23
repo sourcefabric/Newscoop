@@ -1,4 +1,5 @@
 <?php 
+regGS("Featured Article Lists", "");
 regGS("You have tried to upload an invalid backup file.", "");
 regGS("You do not have the right to manage backups.", "");
 regGS("Make a new backup", "");
@@ -24,7 +25,6 @@ regGS("Edit permissions", "Erlaubnis bearbeiten");
 regGS("Detail", "Detail");
 regGS("Create new user", "Neuen User anlegen");
 regGS("Create new account", "Neuen Account anlegen");
-regGS("Article Playlists", "Artikel Playlist");
 regGS("Add feed", "Feed hinzufügen");
 regGS("Upload of file $1 was not successful.", "Die Datei $1 wurde nicht hochgeladen.");
 regGS("The file $1 could not be moved. Check you have enough of disk space.", "Die Datei $1 konnte nicht verschoben werden. ");

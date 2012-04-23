@@ -1,4 +1,20 @@
 <?php 
+regGS("You must fill in the $1 field %s.", "");
+regGS("Weekly", "");
+regGS("Week", "");
+regGS("Results", "");
+regGS("Please input at least 2 answers", "");
+regGS("Monthly", "");
+regGS("Month", "");
+regGS("End time cannot be set before start time", "");
+regGS("Day", "");
+regGS("Daily", "");
+regGS("Attach Debate", "");
+regGS("Are you sure you want to reset counters on the selected debatess?", "");
+regGS("Are you sure you want to delete the selected debatess?", "");
+regGS("Answer %s", "");
+regGS("Answer", "");
+regGS("Allow not logged in users", "");
 regGS("Are you sure you want to delete the debate \"$1\"?", "Вы ўпэўненыя, што жадаеце выдаліць апытанне \"$1\"?");
 regGS("click to edit", "клікніце для рэдагавання");
 regGS("Debates", "Апытанні");
@@ -75,11 +91,8 @@ regGS("Copy", "Капіраваць");
 regGS("Begin", "Пачаць");
 regGS("Attach debate", "Дадаць апытанне");
 regGS("Attach Debates", "Дадаць апытанні");
-regGS("Are you sure you want to reset counters on the selected debates?", "Вы ўпеўненыя, што хочаце пераўсталяваць лічыльнікі для абраных пытанняў?");
-regGS("Are you sure you want to delete the selected debates?", "Вы ўпеўненыя, што хочаце выдаліць вылучаныя апытанні?");
 regGS("Answer $1", "Адказ $1");
 regGS("Add new Debate", "Дадаць новае апытанне");
 regGS("---Select---", "---Абраць--- ");
 regGS("$1/$2 debates assigned/unassigned.", "Апытанні  $1/$2 размеркаваныя /неразмеркаваныя");
-regGS("Are you sure you want to remove the file \\'$1\\' from the debate answer?", "Вы упэўнены, што хаціце выдаліць файл \\'$1\\' з адказу гэтага апытання?");
 ?>

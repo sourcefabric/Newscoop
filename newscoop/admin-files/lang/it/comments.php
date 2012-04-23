@@ -1,7 +1,7 @@
 <?php 
 regGS("Ip", "IP");
 regGS("Bans can be applied to a user's name, email address or IP address.", "Possono essere applicati blocchi a nomi utente, ad indirizzi e-mail o ad indirizzi IP.");
-regGS("at", "");
+regGS("at", "in");
 regGS("You are about to permanently delete multiple comments.", "Stai per eliminare definitivamente alcuni commenti.");
 regGS("You are about to permanently delete a comment.", "Stai per eliminare definitivamente un commento.");
 regGS("Website", "Sito web");
@@ -56,14 +56,14 @@ regGS("Comment $4 by $1 in the article $2 ($3)", "Commento $4 da $1 nell'articol
 regGS("Comment \"$1\" saved.", "Commento \"$1\" salvato.");
 regGS("Column", "Colonna");
 regGS("Change subscriber information", "Cambia informazioni iscritto");
-regGS("Ban user", "");
-regGS("Ban for commenter \"$1\" saved.", "");
-regGS("Ban", "");
-regGS("Are you sure you want to do it?", "");
-regGS("Add rating", "");
-regGS("Add new comment commenter", "");
-regGS("Add new comment", "");
-regGS("Add new acceptance criteria", "");
-regGS("Acceptance \"$1\" saved.", "");
-regGS("Acceptance \"$1\" deleted.", "");
+regGS("Ban user", "Blocca utente");
+regGS("Ban for commenter \"$1\" saved.", "Blocco per il commentatore \"$1\" salvato.");
+regGS("Ban", "Blocco");
+regGS("Are you sure you want to do it?", "Sei sicuro di volerlo fare?");
+regGS("Add rating", "Aggiungi voto");
+regGS("Add new comment commenter", "Aggiungi nuovo commentatore al commento");
+regGS("Add new comment", "Aggiungi un nuovo commento");
+regGS("Add new acceptance criteria", "Aggiungi nuovo criterio di accettazione");
+regGS("Acceptance \"$1\" saved.", "Accettazione \"$1\" salvata.");
+regGS("Acceptance \"$1\" deleted.", "Accettazione \"$1\" cancellata.");
 ?>

@@ -1,11 +1,12 @@
 <?php 
+regGS("User account is active", "");
+regGS("Allow user's profile to be publicly displayed", "");
+regGS("Allow user access to login to site backend", "");
 regGS("Templates", "");
 regGS("Username", "Корисничко име");
-regGS("Public profile", "Јавни профил");
 regGS("Last Name", "Презиме");
 regGS("First Name", "Име");
 regGS("Email", "Имејл");
-regGS("Admin access", "Приступ администраторском делу");
 regGS("Could not save user with e-mail address '$1'. Please make sure it doesn't already exist", "Није могуће снимити корисника са имејлом '$1'. Проверите да ли већ није у употреби");
 regGS("You were logged out.", "Сада сте одјављени");
 regGS("That $1 already exists, please choose a different $2.", "Тај $1 већ постоји, изаберите различити $2.");

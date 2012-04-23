@@ -1,11 +1,12 @@
 <?php 
+regGS("User account is active", "");
+regGS("Allow user's profile to be publicly displayed", "");
+regGS("Allow user access to login to site backend", "");
 regGS("Templates", "");
 regGS("Username", "");
-regGS("Public profile", "");
 regGS("Last Name", "");
 regGS("First Name", "");
 regGS("Email", "");
-regGS("Admin access", "");
 regGS("Could not save user with e-mail address '$1'. Please make sure it doesn't already exist", "მომხმარებლის დამახსოვრება იმეილით '$1' ვერ ხერხდება. გადაამოწმეთ, რომ ეს იმეილი არ არის გამოყენებული.");
 regGS("You were logged out.", "თქვენ გამოხვედით სისტემიდან.");
 regGS("That $1 already exists, please choose a different $2.", "$1 უკვე არსებობს, აირჩიეთ სხვა $2");

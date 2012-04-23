@@ -1,11 +1,12 @@
 <?php 
+regGS("User account is active", "");
+regGS("Allow user's profile to be publicly displayed", "");
+regGS("Allow user access to login to site backend", "");
 regGS("Templates", "Plantillas");
 regGS("Username", "Nombre de usuario");
-regGS("Public profile", "Perfil público");
 regGS("Last Name", "Apellido");
 regGS("First Name", "Primer nombre");
 regGS("Email", "Correo electrónico");
-regGS("Admin access", "Acceso de administrador");
 regGS("Could not save user with e-mail address '$1'. Please make sure it doesn't already exist", "No se pudo guardar el usuario con la dirección '$1'.Por favor compruebe que no esté en uso.");
 regGS("You were logged out.", "Se ha cerrado sesión.");
 regGS("That $1 already exists, please choose a different $2.", "Ese $1 ya existe. Por favor escoja un $2 diferente.");

@@ -1,4 +1,5 @@
 <?php 
+regGS("according to php.ini settings", "");
 regGS("Maximal zoom for auto-focusing:", "Maximaler Zoom für Auto-Schärfe");
 regGS("Map border for auto-focusing:", "Kartengrenze für Auto-Schärfe:");
 regGS("Map auto-focusing as the default behavior:", "Karten Auto-Schärfe als Standard-Verhalten. ");

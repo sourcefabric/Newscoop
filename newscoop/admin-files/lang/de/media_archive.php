@@ -6,7 +6,6 @@ regGS("Local", "Lokal");
 regGS("Items updated.", "Einträge aktualisiert. ");
 regGS("Feedback", "Feedback");
 regGS("Do you want to update unused only?", "Möchten Sie nur ungenutzte aktualisieren? ");
-regGS("Display Newswires images", "Zeige Newswire Bilder");
 regGS("Disapprove selected", "Ausgewählte ablehnen. ");
 regGS("Are you sure you want to update selected items?", "Sind Sie sicher dass Sie die ausgewählten Einträge aktualisieren wollen? ");
 regGS("Approve selected", "Ausgewählte genehmigen.");

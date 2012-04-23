@@ -1,4 +1,5 @@
 <?php 
+regGS("Featured Article Lists", "");
 regGS("You have tried to upload an invalid backup file.", "");
 regGS("You do not have the right to manage backups.", "");
 regGS("Make a new backup", "");
@@ -24,7 +25,6 @@ regGS("Edit permissions", "Уреди корисничка права");
 regGS("Detail", "Детаљи");
 regGS("Create new user", "Направи новог корисника");
 regGS("Create new account", "Направи нови налог");
-regGS("Article Playlists", "Плејлиста текстова");
 regGS("Add feed", "Додај feed");
 regGS("Upload of file $1 was not successful.", "Аплоуд фајла $1 није био успешан.");
 regGS("The file $1 could not be moved. Check you have enough of disk space.", "Фајл $1 не може бити премештен. Проверите да ли имате довољно простора на диску.");
