@@ -19,7 +19,49 @@ require_once dirname(__FILE__) . '/GeoMap.php';
 /**
  * @package Campsite
  */
-class Article extends DatabaseObject {
+class Article extends DatabaseObject
+{
+    /** @var array */
+    static $urlMap = array(
+        'ä' => 'ae',
+        'Ä' => 'ae',
+        'á' => 'a',
+        'à' => 'a',
+        'â' => 'a',
+        'æ' => 'a',
+        'é' => 'e',
+        'é' => 'e',
+        'è' => 'e',
+        'è' => 'e',
+        'ü' => 'ue',
+        'Ü' => 'ue',
+        'ö' => 'oe',
+        'Ö' => 'oe',
+        'ß' => 'ss',
+        'ç' => 'c',
+        'ê' => 'e',
+        'ê' => 'e',
+        'ì' => 'i',
+        'ì' => 'i',
+        'í' => 'i',
+        'í' => 'i',
+        'ô' => 'o',
+        'ô' => 'o',
+        'œ' => 'o',
+        'ò' => 'o',
+        'ò' => 'o',
+        'ó' => 'o',
+        'ó' => 'o',
+        'ù' => 'u',
+        'ù' => 'u',
+        'û' => 'u',
+        'û' => 'u',
+        'ú' => 'u',
+        'ú' => 'u',
+        'ÿ' => 'y',
+        'Ÿ' => 'y',
+    );
+
     /**
      * The column names used for the primary key.
      * @var array
@@ -1230,6 +1272,20 @@ class Article extends DatabaseObject {
         return $this->m_data['Name'];
     } // fn getTitle
 
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return void
+     */
+    public function setName($name)
+    {
+        if (!defined('IN_PHPUNIT')) {
+            throw new BadMethodCallException("Restricted to PHPUnit");
+        }
+
+        $this->m_data['Name'] = $name;
+    }
 
     /**
      * Alias for getTitle().
@@ -1674,8 +1730,30 @@ class Article extends DatabaseObject {
         return $this->m_data['ShortName'];
     } // fn getUrlName
 
+    /**
+     * Get SEO URL end
+     *
+     * @param array $fields
+     * @param int $languageId
+     * @return string
+     */
+    public function getSEOURLEnd(array $fields, $languageId)
+    {
+        list($url,) = explode('.', $this->getLegacySEOURLEnd($fields, $languageId), 2);
+        $url = strtolower($url);
+        $url = str_replace(array_keys(self::$urlMap), array_values(self::$urlMap), $url);
+        $url = preg_replace('#[^-a-z0-9.]#', '-', $url);
+        $url = preg_replace('#[-]{2,}#', '-', $url);
+        return trim($url, '-') . '.htm';
+    }
 
-    public function getSEOURLEnd(array $seoFields, $languageId)
+    /**
+     * Get seo url end
+     *
+     * @return string
+     * @deprecated
+     */
+    public function getLegacySEOURLEnd(array $seoFields, $languageId)
     {
     	$urlEnd = '';
     	foreach ($seoFields as $field => $value) {

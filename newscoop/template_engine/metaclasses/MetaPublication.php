@@ -136,7 +136,7 @@ final class MetaPublication extends MetaDbObject {
     }
 
 
-    protected function getSeo() {
+    public function getSeo() {
         return $this->m_dbObject->getSeo();
     }
 } // class MetaPublication

@@ -312,16 +312,36 @@ class CampURIShortNames extends CampURI
      */
     private function _getArticle($articleNo, MetaLanguage $language)
     {
+        global $controller;
+
         if (empty($articleNo)) {
             return null;
         }
 
         $articleObj = new Article($language->number, $articleNo);
         if (!$articleObj->exists() || (!$this->m_preview && !$articleObj->isPublished())) {
+            $controller->getResponse()->setHttpResponseCode(404);
             throw new InvalidArgumentException("Invalid article identifier in URL.", self::INVALID_ARTICLE);
         }
 
-        return new MetaArticle($language->number, $articleObj->getArticleNumber());
+        $urlMatch = function($url, $end) {
+            return substr($url, strlen($end) * -1) === $end;
+        };
+
+        $fields = $this->m_publication->getSeo();
+
+        if ($urlMatch($this->m_uri, $articleObj->getSEOURLEnd($fields, $language->number))) {
+            return new MetaArticle($language->number, $articleObj->getArticleNumber());
+        }
+
+        if ($urlMatch($this->m_uri, $articleObj->getLegacySEOURLEnd($fields, $language->number))) { // old url -> redirect
+            $controller->getHelper('redirector')->gotoUrlAndExit(str_replace($articleObj->getLegacySEOURLEnd($fields, $language->number), $articleObj->getSEOURLEnd($fields, $language->number), $this->m_uri), array(
+                'code' => 301,
+            ));
+        }
+
+        $controller->getResponse()->setHttpResponseCode(404);
+        throw new InvalidArgumentException("Invalid article identifier in URL.", self::INVALID_ARTICLE);
     }
 
     /**
@@ -382,8 +402,8 @@ class CampURIShortNames extends CampURI
             $this->m_section = $this->_getSection($request->getParam('section'), $this->m_issue, $this->m_language, $this->m_publication);
             $this->m_article = $this->_getArticle($request->getParam('articleNo'), $this->m_language);
         }
-        $this->m_template = $this->_getTemplate();
 
+        $this->m_template = $this->_getTemplate();
     }
 
     /**
