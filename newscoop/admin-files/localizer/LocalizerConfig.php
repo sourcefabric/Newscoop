@@ -147,12 +147,12 @@ $mapPrefixToDir = array(
     ),
     'users' => array(
         '/admin-files/users',
-        '/application/modules/admin/controllers/StaffController.php',
+        '/application/modules/admin/controllers/UserController.php',
         '/application/modules/admin/controllers/AuthController.php',
-        '/application/modules/admin/views/scripts/staff',
+        '/application/modules/admin/views/scripts/user',
         '/application/modules/admin/views/scripts/auth',
         '/application/modules/admin/forms/User.php',
-        '/application/modules/admin/forms/Staff.php',
+        '/application/modules/admin/forms/Profile.php',
     ),
     'user_subscriptions' => array(
         '/admin-files/users/subscriptions',
