@@ -30,6 +30,8 @@ class Admin_CommentAcceptanceController extends Zend_Controller_Action
 
     public function init()
     {
+        camp_load_translation_strings('comments');
+
         // get comment repository
         $this->repository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Acceptance');
         $this->form = new Admin_Form_CommentAcceptance;

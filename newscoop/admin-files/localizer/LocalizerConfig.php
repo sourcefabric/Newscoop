@@ -76,7 +76,11 @@ $mapPrefixToDir = array(
     'articles' => array(
         '/admin-files/articles',
         '/application/modules/admin/controllers/PlaylistController.php',
+        '/application/modules/admin/controllers/BlogController.php',
+        '/application/modules/admin/controllers/MultidateController.php',
         '/application/modules/admin/views/scripts/playlist',
+        '/application/modules/admin/views/scripts/blog',
+        '/application/modules/admin/views/scripts/blog',
     ),
     'article_images' => array(
         '/admin-files/articles/images',
@@ -102,6 +106,7 @@ $mapPrefixToDir = array(
         '/application/modules/admin/views/scripts/comment',
         '/application/modules/admin/views/scripts/comment-commenter',
         '/application/modules/admin/views/scripts/comment-acceptance',
+        '/application/modules/admin/views/scripts/feedback',
         '/application/modules/admin/forms/Ban.php',
         '/application/modules/admin/forms/Comment.php',
         '/application/modules/admin/forms/Commenter.php',
@@ -110,6 +115,7 @@ $mapPrefixToDir = array(
         '/application/modules/admin/controllers/CommentController.php',
         '/application/modules/admin/controllers/CommentAcceptanceController.php',
         '/application/modules/admin/controllers/CommentCommenterController.php',
+        '/application/modules/admin/controllers/FeedbackController.php',
     ),
     'system_pref' => '/admin-files/system_pref',
     'themes' => array(
@@ -185,6 +191,14 @@ $mapPrefixToDir = array(
     'plugins' => '/admin-files/plugins',
     'extensions' => '/extensions/*',
     'authors' => '/admin-files/users/authors_ajax',
+    'help' => array(
+        '/application/modules/admin/controllers/ApplicationController.php',
+        '/application/modules/admin/views/scripts/application',
+    ),
+    'support' => array(
+        '/application/modules/admin/controllers/SupportController.php',
+        '/application/modules/admin/views/scripts/support',
+    ),
 );
 
 foreach (CampPlugin::GetPluginsInfo(true) as $info) {

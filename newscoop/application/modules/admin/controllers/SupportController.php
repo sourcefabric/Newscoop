@@ -13,7 +13,7 @@ class Admin_SupportController extends Zend_Controller_Action
 
     public function init()
     {
-        
+        camp_load_translation_strings('support');
     }
 
     public function indexAction()

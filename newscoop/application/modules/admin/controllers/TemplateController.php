@@ -23,6 +23,8 @@ class Admin_TemplateController extends Zend_Controller_Action
 
     public function init()
     {
+        camp_load_translation_strings('themes');
+
         $resource = new ResourceId(__CLASS__);
         $themeService = $resource->getService(IThemeService::NAME);
         /* @var $themeService Newscoop\Service\Implementation\ThemeServiceLocalFileSystem */
