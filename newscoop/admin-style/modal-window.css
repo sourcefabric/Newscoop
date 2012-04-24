@@ -23,7 +23,7 @@ body.modal-window {
 		border-bottom:1px solid #cccccc;
 		box-shadow:0 1px 3px rgba(0, 0, 0, 0.1);
 		}
-		.modal-window header button, .modal-window header input[type="submit"],.modal-window header button.prime, .modal-window header input[type="submit"].prime {
+		.modal-window header button, .modal-window header input[type="submit"],.modal-window header .prime {
 			float:right;
 			margin:0 0 0 6px;
 			}

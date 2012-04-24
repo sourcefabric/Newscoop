@@ -1,7 +1,17 @@
 <?php $this->placeholder('title')->set(getGS('Subscriptions')); ?>
+<header>
+    <h1><?php putGS('Subscriptions'); ?></h1>
+    <button id="close-button" class="prime"><?php putGS('Done'); ?></button>
+</header>
 
+<section>
+    <div id="app"></div>
+</section>
+
+<script type="text/javascript" src="<?php echo $this->baseUrl('/js/underscore.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl('/js/backbone.js'); ?>"></script>
 <script type="text/template" id="subscription-list-template">
-<a id="add-new" href="#subscription/new"><?php putGS('Add subscription'); ?></a>
+<a id="add-new" href="#subscription/new"><?php putGS('Add new'); ?></a>
 <table id="subscription-table">
     <thead>
         <tr>
@@ -17,6 +27,35 @@
 </table>
 </script>
 
+<script type="text/template" id="ips-list-template">
+<h3><?php putGS('User IP access list management'); ?></h3>
+<a id="add-new" href="#"><?php putGS('Add new'); ?></a>
+<table id="ips-table">
+    <thead>
+        <tr>
+            <th><?php putGS('Start IP'); ?></th>
+            <th><?php putGS('Number of addresses'); ?></th>
+            <th><?php putGS('Delete'); ?></th>
+        </tr>
+    </thead>
+    <tbody></tbody>
+</table>
+</script>
+
+<script type="text/template" id="new-ip-list-template">
+<tr class="new">
+    <td><input type="number" name="ip[]" min="1" max="255" class="ip" />.<input type="number" name="ip[]" min="0" max="255" class="ip" />.<input type="number" name="ip[]" min="0" max="255" class="ip" />.<input type="number" name="ip[]" min="0" max="255" class="ip" /></td>
+    <td><input type="number" name="number" min="1" /></td>
+    <td><button class="save"><?php putGS('Add new'); ?></button> <button class="cancel"><?php putGS('Cancel'); ?></button></td>
+</tr>
+</script>
+
+<script type="text/template" id="ip-template">
+<td><%= ip %></td>
+<td><%= number %></td>
+<td><button><?php putGS('Delete'); ?></button></td>
+</script>
+
 <script type="text/template" id="subscription-row-template">
 <td class="publication"><a href="<%= link.href %>"><%= publication.name %></a></td>
 <td class="toPay"><input type="number" step="0.01" min="0" value="<%= toPay.toFixed(1) %>" /></td>
@@ -27,53 +66,36 @@
 
 <script type="text/template" id="new-subscription-template">
 <form method="POST" id="add-view-form">
-<dl>
+<dl class="zend_form">
     <dt><?php putGS('Publication:'); ?></dt>
     <dd><select name="publication" id="pubs"></select></dd>
-</dl>
-<dl>
     <dt><?php putGS('Languages:'); ?></dt>
     <dd>
         <input type="checkbox" name="individual_languages" value="true" id="il" checked /> <label for="il"><?php putGS('Individual languages'); ?></label><br />
         <select name="languages" size="5" multiple></select>
     </dd>
-</dl>
-<dl>
     <dt><?php putGS('Sections'); ?></dt>
     <dd>
         <input type="radio" name="add_sections" value="true" checked id="sections_1" /> <label for="sections_1"><?php putGS('Add sections now'); ?></label>
         <input type="radio" name="add_sections" value="false" id="sections_2" /> <label for="sections_2"><?php putGS('Add sections later'); ?></label>
     </dd>
-</dl>
-<dl>
     <dt><?php putGS('Start'); ?></dt>
     <dd><input type="date" name="start_date" value="<?php echo date('Y-m-d'); ?>" /></dd>
-</dl>
-<dl>
     <dt><?php putGS('Subscription type:'); ?></dt>
     <dd><select name="type">
         <option value="PN"><?php putGS('Paid (confirm payment now)'); ?></option>
         <option value="P"><?php putGS('Paid (payment will be confirmed later)'); ?></option>
         <option value="T"><?php putGS('Trial'); ?></option>
     </select></dd>
-</dl>
-<dl>
     <dt><?php putGS('Days:'); ?></dt>
     <dd><input type="number" name="days" min="1" value="1" /></dd>
-</dl>
-<dl>
     <dt></dt>
     <dd><input type="checkbox" name="active" value="1" checked id="active" /> <label for="active"><?php putGS('Active'); ?></label></dd>
-</dl>
-<dl>
     <dt></dt>
-    <dd><button><?php putGS('Save'); ?></button></dd>
+    <dd><button class="save"><?php putGS('Save'); ?></button> <button class="cancel"><?php putGS('Cancel') ?></button></dd>
 </dl>
 </form>
 </script>
-
-<div id="app">
-</div>
 
 <script type="text/javascript">
 (function($) {
@@ -131,6 +153,34 @@
 
     var SectionCollection = Backbone.Collection.extend({
         model: Section
+    });
+
+    var Ip = Backbone.Model.extend({
+        defaults: {
+            user: <?php echo json_encode($this->user); ?>
+        },
+
+        validate: function(attrs) {
+            var ip = attrs.ip.split('.');
+            <?php foreach (array(getGS('first'), getGS('second'), getGS('third'), getGS('forth')) as $id => $order) { ?>
+            if (isNaN(parseInt(ip[<?php echo $id; ?>])) || parseInt(ip[<?php echo $id; ?>]) < 1 || parseInt(ip[<?php echo $id; ?>]) > 255) {
+                throw <?php echo json_encode(getGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", $order)); ?>;
+            }
+            <?php } ?>
+
+            if (isNaN(attrs.number) || attrs.number < 1) {
+                throw <?php echo json_encode(getGS("You must input a number greater than 0 into the Number of addresses field.")); ?>;
+            }
+
+            if (window.ips.where({ip: attrs.ip}).length) {
+                throw <?php echo json_encode(getGS("The IP address group conflicts with another existing group.")); ?>;
+            }
+        }
+    });
+
+    var IpsCollection = Backbone.Collection.extend({
+        model: Ip,
+        url: <?php echo json_encode($this->url(array('module' => 'admin', 'controller' => 'subscription-ip-rest'), 'rest')); ?>
     });
 
     var SubscriptionRowView = Backbone.View.extend({
@@ -241,7 +291,8 @@
 
     var AddView = Backbone.View.extend({
         events: {
-            'click button': 'save',
+            'click button.save': 'save',
+            'click button.cancel': 'cancel',
             'change #pubs': 'renderLanguages',
             'change #il': 'toggleLanguages'
         },
@@ -297,6 +348,10 @@
                 alert(error);
             }
         },
+        
+        cancel: function() {
+            router.navigate('', true);
+        },
 
         toggleLanguages: function(e) {
             if (e.target.checked) {
@@ -329,6 +384,81 @@
         }
     });
 
+    var IpView = Backbone.View.extend({
+        tagName: "tr",
+        template: _.template($('#ip-template').html()),
+
+        events: {
+            'click button': 'delete'
+        },
+
+        render: function() {
+            $(this.el).html(this.template(this.model.toJSON()));
+            return this;
+        },
+
+        delete: function() {
+            this.model.destroy();
+            this.remove();
+        }
+    });
+
+    var IpsView = Backbone.View.extend({
+        events: {
+            'click #add-new': 'add',
+            'click .save': 'save',
+            'click .cancel': 'cancel'
+        },
+
+        template: _.template($('#ips-list-template').html()),
+
+        initialize: function() {
+            this.collection.bind('add', this.render, this);
+            this.collection.bind('remove', this.render, this);
+        },
+
+        render: function() {
+            $(this.el).html(this.template());
+            var tbody = $(this.el).find('tbody').empty();
+            this.collection.each(function(ip) {
+                var view = new IpView({model: ip});
+                tbody.append(view.render().el);
+            });
+
+            if (this.collection.length === 0) {
+                tbody.append('<tr />').html('<td colspan="3">' + <?php echo json_encode(getGS('No records.')); ?> + '</td>');
+            }
+
+            return this;
+        },
+
+        add: function(e) {
+            var template = _.template($('#new-ip-list-template').html());
+            $(this.el).find('tbody').append(template());
+        },
+
+        save: function() {
+            var ip = [];
+            $(this.el).find('tr.new td:first input').each(function() {
+                ip.push(parseInt($(this).val()));
+            });
+
+            try {
+                this.collection.create({
+                    ip: ip.join('.'),
+                    number: parseInt($(this.el).find('tr.new input[name="number"]').val())
+                }, {wait: true});
+                $(this.el).find('tr.new').detach();
+            } catch (err) {
+                alert(err);
+            }
+        },
+        
+        cancel: function() {
+            $(this.el).find('.new').detach();
+        }
+    });
+
     var Workspace = Backbone.Router.extend({
         routes: {
             'subscription/new': 'new',
@@ -337,11 +467,13 @@
 
         initialize: function() {
             this.tableView = new TableView({collection: window.subscriptions});
+            this.ipsView = new IpsView({collection: window.ips});
             this.addView = new AddView();
         },
 
         index: function() {
             $('#app').html(this.tableView.render().el);
+            $('#app').append(this.ipsView.render().el);
         },
 
         'new': function() {
@@ -379,8 +511,12 @@
                 }, $publication->getLanguages()),
             );
         }, $this->publications)); ?>);
+        window.ips = new IpsCollection(<?php echo json_encode(array_map(array($this, 'subscriptionIpJson'), $this->ips)); ?>);
         window.router = new Workspace();
         Backbone.history.start();
+        $('#close-button').click(function() {
+            parent.$.fancybox.close();
+        });
     });
 })(jQuery);
 </script>

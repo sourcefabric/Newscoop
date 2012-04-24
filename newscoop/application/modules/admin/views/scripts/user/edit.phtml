@@ -12,20 +12,13 @@
 </div>
 <?php } ?>
 
-<div class="edit-subscriptions">
-    <a href="<?php echo $this->url(array(
-        'module' => 'admin',
-        'controller' => 'subscription',
-        'action' => 'index',
-        'user' => $this->user->getId(),
-    )); ?>" title="<?php putGS('Edit subscriptions'); ?>">Edit subscriptions</a>
-</div>
-
 <?php echo $this->form->setAttrib('id', 'edit-form'); ?>
 
 <script>
-$('.edit-image a').fancybox({
-    hideOnContentClick: false
+$('.content a.iframe').fancybox({
+    hideOnContentClick: false,
+    width: 900,
+    height: 600
 });
 
 $('#edit-form').submit(function() {

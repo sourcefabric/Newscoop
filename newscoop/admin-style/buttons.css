@@ -2,7 +2,7 @@
 /* CSS Document */
 
 
-button, input[type="submit"], button.prime, input[type="submit"].prime {
+button, input[type="submit"], button.prime, input[type="submit"].prime, .btn.prime {
 	margin:0 6px 0 0;
 	background: -moz-linear-gradient(center top , #FAFAFA 0%, #F6F6F6 100%);
 	background: linear-gradient(top, #FAFAFA 0%, #F6F6F6 100%);
@@ -33,26 +33,28 @@ button, input[type="submit"], button.prime, input[type="submit"].prime {
 		color: #000;
 		box-shadow:0 1px 2px rgba(0, 0, 0, 0.3) inset;
 		}
-button.prime, input[type="submit"].prime {
+button.prime, input[type="submit"].prime, .btn.prime {
 	background: -moz-linear-gradient(center top , #2290bd 0%, #007fb3 100%);
 	background: linear-gradient(top, #2290bd 0%, #007fb3 100%);
 	background: -webkit-linear-gradient(top, #2290bd 0%, #007fb3 100%);
 	border: 1px solid #007fb3;
 	color: #FFF;
 	}
-	button.prime:hover, input[type="submit"].prime:hover {
+	button.prime:hover, input[type="submit"].prime:hover, .btn.prime:hover {
 		background: -moz-linear-gradient(center top , #409FC6 0%, #007fb3 100%);
 		background: linear-gradient(top, #409FC6 0%, #007fb3 100%);
 		background: -webkit-linear-gradient(top, #409FC6 0%, #007fb3 100%);
 		border: 1px solid #005E85;
 		box-shadow:0 1px 2px rgba(0, 0, 0, 0.2), 0 1px 0px rgba(255, 255, 255, 0.3) inset;
+	    color: #FFF;
 		}
-	button.prime:active, input[type="submit"].prime:active {
+	button.prime:active, input[type="submit"].prime:active, .btn.prime:active {
 		background: -moz-linear-gradient(center top , #409FC6 0%, #007fb3 100%);
 		background: linear-gradient(top, #409FC6 0%, #007fb3 100%);
 		background: -webkit-linear-gradient(top, #409FC6 0%, #007fb3 100%);
 		border: 1px solid #005E85;
 		box-shadow:0 1px 2px rgba(0, 0, 0, 0.4) inset;
+	    color: #FFF;
 		}
 
 

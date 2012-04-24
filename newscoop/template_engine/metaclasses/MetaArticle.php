@@ -549,17 +549,32 @@ final class MetaArticle extends MetaDbObject {
     }
 
 
-    protected function isContentAccessible() {
+    /**
+     * Test if content is accessible for current user
+     *
+     * @return bool
+     */
+    protected function isContentAccessible()
+    {
     	if ($this->m_dbObject->isPublic() && $this->getIsPublished()) {
             return (int)true;
         }
+
         $context = CampTemplate::singleton()->context();
         if ($context->preview) {
         	return (int)true;
         }
+
         $user = $context->user;
-        return (int)($user->defined && $user->subscription->is_valid
-        && $user->subscription->has_section($context->section->number));
+        if (!$user->defined) {
+            return false;
+        }
+
+        if ($user->isAdmin()) {
+            return true;
+        }
+
+        return (int) ($user->subscription->is_valid && $user->subscription->has_section($context->section->number));
     }
 
 

@@ -174,6 +174,16 @@ class Admin_UserController extends Zend_Controller_Action
                     'role' => $user->getRoleId(),
                 ),
             ),
+            array(
+                'label' => getGS('Edit subscriptions'),
+                'module' => 'admin',
+                'controller' => 'subscription',
+                'action' => 'index',
+                'class' => 'iframe',
+                'params' => array(
+                    'user' => $user->getId(),
+                ),
+            ),
         );
     }
 

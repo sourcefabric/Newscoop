@@ -1,4 +1,13 @@
-<?php $this->placeholder('title')->set(getGS('Subscriptions')); ?>
+<?php $this->placeholder('title')->set(getGS('Subscription sections')); ?>
+<header>
+    <h1><?php putGS('Subscriptions'); ?></h1>
+    <a class="btn prime" href="<?php echo $this->url(array('controller' => 'subscription', 'action' => 'index', 'subscription' => null)); ?>"><?php putGS('Done'); ?></a>
+</header>
+
+<section>
+    <div id="app"></div>
+</section>
+
 
 <script type="text/template" id="table-view-template">
 <a href="#section/new"><?php putGS('Add section'); ?></a> | <a href="#sections"><?php putGS('Edit all sections'); ?></a>
@@ -44,7 +53,7 @@
     <dd><input type="number" min="1" name="days" id="days" /></dd>
 
     <dt></dt>
-    <dd><button><?php putGS('Save'); ?></button></dd>
+    <dd><button class="save"><?php putGS('Save'); ?></button> <button class="cancel"><?php putGS('Cancel'); ?></button></dd>
 </dl>
 </script>
 
@@ -60,7 +69,7 @@
     <dd><input type="number" min="1" name="paidDays" id="paid-days" /></dd>
 
     <dt></dt>
-    <dd><button><?php putGS('Save'); ?></button></dd>
+    <dd><button class="save"><?php putGS('Save'); ?></button> <button class="cancel"><?php putGS('Cancel'); ?></button></dd>
 </dl>
 </script>
 
@@ -219,7 +228,8 @@
 
         events: {
             'change #language_set': 'setSections',
-            'click button': 'save'
+            'click button.save': 'save',
+            'click button.cancel': 'cancel'
         },
 
         render: function() {
@@ -278,12 +288,17 @@
                     alert(err);
                 }
             });
+        },
+
+        cancel: function() {
+            window.router.navigate('', true);
         }
     });
 
     var EditAllView = Backbone.View.extend({
         events: {
-            'click button': 'save'
+            'click button.save': 'save',
+            'click button.cancel': 'cancel'
         },
 
         template: _.template($('#edit-all-view-template').html()),
@@ -304,6 +319,10 @@
                     paidDays: paidDays
                 });
             });
+            window.router.navigate('', true);
+        },
+
+        cancel: function() {
             window.router.navigate('', true);
         }
     });

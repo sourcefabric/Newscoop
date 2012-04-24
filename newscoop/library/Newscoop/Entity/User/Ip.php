@@ -9,7 +9,7 @@ namespace Newscoop\Entity\User;
 
 /**
  * Ip entity
- * @Entity(repositoryClass="Newscoop\Entity\Repository\User\IpRepository")
+ * @Entity
  * @Table(name="SubsByIP")
  */
 class Ip
@@ -18,9 +18,9 @@ class Ip
      * @Id
      * @ManyToOne(targetEntity="Newscoop\Entity\User")
      * @JoinColumn(name="IdUser", referencedColumnName="Id")
-     * @var Newscoop\Entity\User\Subscriber
+     * @var Newscoop\Entity\User
      */
-    private $subscriber;
+    private $user;
 
     /**
      * @Id
@@ -36,14 +36,24 @@ class Ip
     private $number;
 
     /**
-     * Set subscriber
+     * @param string $ip
+     * @param int $number
+     */
+    public function __construct($ip, $number)
+    {
+        $this->setIp($ip);
+        $this->setNumber($number);
+    }
+
+    /**
+     * Set user
      *
-     * @param Newscoop\Entity\User\Subscriber $subscriber
+     * @param Newscoop\Entity\User $user
      * @return Newscoop\Entity\User\Ip
      */
-    public function setSubscriber(Subscriber $subscriber)
+    public function setUser(\Newscoop\Entity\User $user)
     {
-        $this->subscriber = $subscriber;
+        $this->user = $user;
         return $this;
     }
 
@@ -100,5 +110,14 @@ class Ip
     {
         return $this->getIp();
     }
-}
 
+    /**
+     * Get user id
+     *
+     * @return int
+     */
+    public function getUserId()
+    {
+        return $this->user !== null ? $this->user->getId() : null;
+    }
+}

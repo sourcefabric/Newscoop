@@ -2,10 +2,11 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title><?php echo $this->translate("Slideshows"); ?></title>
+    <title><?php echo strip_tags($this->placeholder('title')); ?></title>
 
     <link rel="shortcut icon" href="<?php echo $this->baseUrl('/admin-style/images/7773658c3ccbf03954b4dacb029b2229.ico'); ?>" />
 
+    <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/app.css'); ?>" />
     <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/table.css'); ?>" />
     <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/form.css'); ?>" />
     <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/layout.css'); ?>" />

@@ -30,6 +30,7 @@ class Admin_SubscriptionController extends Zend_Controller_Action
         $this->view->user = $this->_getParam('user');
         $this->view->subscriptions = $this->_helper->service('subscription')->findByUser($this->_getParam('user'));
         $this->view->publications = $this->_helper->service('content.publication')->findAll();
+        $this->view->ips = $this->_helper->service('subscription.ip')->findByUser($this->_getParam('user'));
     }
 
     public function editAction()

@@ -205,6 +205,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('subscription.section', 'Newscoop\Subscription\SectionFacade')
             ->addArgument(new sfServiceReference('em'));
 
+        $container->register('subscription.ip', 'Newscoop\Subscription\IpFacade')
+            ->addArgument(new sfServiceReference('em'));
+
         Zend_Registry::set('container', $container);
         return $container;
     }
@@ -306,6 +309,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                      'slideshow-rest',
                      'subscription-rest',
                      'subscription-section-rest',
+                     'subscription-ip-rest',
                  ),
              )));
     }
