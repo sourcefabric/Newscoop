@@ -1,5 +1,5 @@
 <?php if (empty($userIsBlogger)) : ?>
-<div class="articlebox" title="<?php putGS('Article Playlist'); ?>">
+<div class="articlebox" title="<?php putGS('Featured Article Lists'); ?>">
 	<div>
 		<div id="playlist" style="margin-left:8px">
     		<div id="playlistArticles" style="display:block; padding-bottom:8px;">
@@ -37,7 +37,7 @@
 			<?php if ($inEditMode && $GLOBALS['controller']->getHelper('acl')->isAllowed('playlist', 'manage')) : ?>
 			<label>
             <span id="playlist-default-message" <?php if (count($playlistsData)) : ?>style="display:none"<?php endif; ?>>
-			    <?php putGS('Add article to a playlist'); ?>
+			    <?php putGS('Add article to a list'); ?>
 			</span>
 			</label>
 
