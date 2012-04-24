@@ -282,11 +282,11 @@ if($themePath != null && $themePath != '0'){
 			<INPUT TYPE="hidden" NAME="f_section_template_id" VALUE="0"/>
 			<INPUT TYPE="hidden" NAME="f_article_template_id" VALUE="0"/>
 			<TD ALIGN="LEFT" colspan="2" style="color: red;">
-			<?php putGS("Please assign at least one theme to the publication");?>
+			<?php putGS("Please assign at least one theme to the publication");?>,
 			<br/>
-			<?php putGS("in order to be able to assigned to the issue.");?>
+			<?php putGS("so that default templates can be assigned to the issue.");?>
 			<br/>
-			<?php putGS("Only than the issue can be published");?>
+			<?php putGS("Once this is done, the issue can be published");?>
 			</TD>
 		</TR>
 		<?php }

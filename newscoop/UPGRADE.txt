@@ -46,3 +46,4 @@ please read the manual.
 
 The template language is fully backward compatible with the older 3.x
 versions.
+

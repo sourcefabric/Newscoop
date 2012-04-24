@@ -51,3 +51,4 @@ steps.
 INSTALLATION of multiple instances
 
 You will have to perform one installation for each Newscoop instance.
+

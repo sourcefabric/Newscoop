@@ -88,7 +88,7 @@
                                 <p class="{% if (commenter.is.banned.ip) %}user-blocked-avatar{% endif %}"><a target="_blank" href="{{commenter.trace.ip}}">{{commenter.ip}}</a></p>
                                 <p class="{% if (commenter.is.banned.email) %}user-blocked-avatar{% endif %}"><a href="mailto:{{commenter.email}}">{{commenter.email}}</a></p>
                                 <p><a href="{{commenter.url}}">{{commenter.url}}</a></p>
-                                <p><a href="{{commenter.banurl}}" class="banUser"><span><?php putGS('Ban user'); ?></span></a></p>
+                                <p><a href="{{commenter.banurl}}" class="banUser"><span><?php putGS('Ban/Unban user'); ?></span></a></p>
                             </p>
                         </div>
                     </td>

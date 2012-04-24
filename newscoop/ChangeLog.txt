@@ -2473,3 +2473,4 @@
         - This is a small cgi; it receives requests, connects to
         campsite_server, read the response from campsite_server and forwards
         the response (HTML page)
+
