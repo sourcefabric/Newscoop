@@ -1,9 +1,9 @@
 <?php 
-regGS("Sorry that image is too small. Image needs to be at least %dx%d.", "");
-regGS("Slideshow rendition", "");
-regGS("Renditions reloaded", "");
-regGS("Reload renditions", "");
-regGS("Edit images", "");
+regGS("Sorry that image is too small. Image needs to be at least %dx%d.", "Das Bild ist leider zu klein. Das Bild muss mindestens  %dx%d groß sein.");
+regGS("Slideshow rendition", "Bildzuschnitt für Slideshow ");
+regGS("Renditions reloaded", "Bildzuschnitte neu geladen");
+regGS("Reload renditions", "Bildzuschnitte neu laden");
+regGS("Edit images", "Bilder bearbeiten");
 regGS("Specify image url if you want to load it.", "Geben Sie die URL für das Bild an, das Sie laden wollen");
 regGS("Items: ", "Objekte");
 regGS("Attach slideshows", "Slideshows anhängen");

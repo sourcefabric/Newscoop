@@ -2,10 +2,10 @@
 regGS("You have reached the error page", "");
 regGS("Stack trace:", "");
 regGS("Request Parameters:", "");
-regGS("Page not found", "");
+regGS("Page not found", "Η σελίδα δεν βρέθηκε");
 regGS("Exception information:", "");
 regGS("Application error", "");
-regGS("An error occurred", "");
+regGS("An error occurred", "Παρουσιάστηκε σφάλμα");
 regGS("Newscoop has encountered a problem.", "Το Campsite αντιμετώπισε κάποιο πρόβλημα.");
 regGS("In order to help the Newscoop team investigate and pinpoint the issue please take a moment to describe what happened.", "Για να βοηθήσετε την ομάδα Newscoop να εξετάσει και να εντοπίσει το ζήτημα, παρακαλούμε αφιερώστε λίγο χρόνο για να περιγράψετε τι συνέβη:");
 regGS("What were you trying to do when this happened?", "Τί προσπαθούσατε να κάνετε όταν αυτό συνέβη;");

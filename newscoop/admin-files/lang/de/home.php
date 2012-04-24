@@ -1,11 +1,11 @@
 <?php 
-regGS("Featured Article Lists", "");
-regGS("You have tried to upload an invalid backup file.", "");
-regGS("You do not have the right to manage backups.", "");
-regGS("Make a new backup", "");
-regGS("Are you sure you want to make a new backup?", "");
-regGS("Security token expired. Please resubmit the form.", "");
-regGS("Templates", "");
+regGS("Featured Article Lists", "Listen ausgewählter Artikel ");
+regGS("You have tried to upload an invalid backup file.", "Sie haben versucht eine ungültige Backup-Datei hochzuladen. ");
+regGS("You do not have the right to manage backups.", "Sie haben keine Berechtigung um Backups zu bearbeiten. ");
+regGS("Make a new backup", "Backup erstellen");
+regGS("Are you sure you want to make a new backup?", "Wollen Sie wirklich ein neues  Backup erstellen? ");
+regGS("Security token expired. Please resubmit the form.", "Sicherheitstoken abgelaufen. Bitte Formular erneut abschicken. ");
+regGS("Templates", "Templates");
 regGS("Create slideshow", "Slideshow erstellen");
 regGS("Create", "Erstellen");
 regGS("Attach/Detach", "Anhängen/Entkoppeln");
@@ -153,4 +153,5 @@ regGS("Please make sure that you typed the correct user name and password.", "Bi
 regGS("If your problem persists please contact the site administrator $1", "Sollte dieses Problem bestehen bleiben, bitte den Administrator $1 kontaktieren.");
 regGS("Backup/Restore", "Backup/Wiederherstellung");
 regGS("Printdesk", "Printdesk");
+regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Hallo, \\n\\nfor um das Passwort wiederherzustellen, folgen Sie bitte diesem Link: $1");
 ?>

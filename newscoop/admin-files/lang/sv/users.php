@@ -136,6 +136,7 @@ regGS("User may insert horizontal rules", "Användaren får lägga in horisontal
 regGS("User may change the font color", "Användaren får ändra textfärg");
 regGS("User may use superscripts", "Användaren får använda övertexter");
 regGS("User may use subscripts", "Användaren får använda undertexter");
+regGS("User may backup and restore the site data", "");
 regGS("Miscellaneous", "Blandat");
 regGS("Staff/Subscribers Management", "Stab/Prenumeranthantering");
 regGS("Editor Basic Settings", "Textredigerare grundläggande inställningar");

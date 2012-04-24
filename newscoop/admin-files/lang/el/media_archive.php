@@ -1,15 +1,15 @@
 <?php 
-regGS("Slideshows", "");
-regGS("You can't update used files.", "");
-regGS("Source", "");
+regGS("Slideshows", "Slideshows");
+regGS("You can't update used files.", "Δεν μπορείτε να ενημερώσετε χρησιμοποιημένα αρχεία.");
+regGS("Source", "Πηγή");
 regGS("Local", "");
 regGS("Items updated.", "");
-regGS("Feedback", "");
+regGS("Feedback", "Feedback");
 regGS("Do you want to update unused only?", "");
-regGS("Disapprove selected", "");
+regGS("Disapprove selected", "Απόρριψη επιλεγμένων");
 regGS("Are you sure you want to update selected items?", "");
-regGS("Approve selected", "");
-regGS("Image files", "");
+regGS("Approve selected", "Έγκριση επιλεγμένων");
+regGS("Image files", "Αρχεία εικόνων");
 regGS("Fix all thumbnails", "");
 regGS("You do not have the right to add files.", "Δεν έχετε το δικαίωμα να προσθέσετε αρχεία.");
 regGS("Should this file only be available for this translation of the article, or for all translations?", "Αυτό το αρχείο να είναι διαθέσιμο μόνο για αυτή τη μετάφραση του άρθρου, ή για όλες τις μεταφράσεις;");

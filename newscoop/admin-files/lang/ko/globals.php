@@ -1,4 +1,6 @@
 <?php 
+regGS("Plugins", "");
+regGS("Manage Plugins", "");
 regGS("Account", "아이디 ");
 regGS("Items per page", "페이지당 아이템");
 regGS("Add new", "신규로 추가");
@@ -254,7 +256,6 @@ regGS("Please take a minute to send us an email.", "");
 regGS("(optional)", "");
 regGS("The URL you entered is invalid: '$1'", "");
 regGS("Reads", "");
-regGS("Plugins", "");
 regGS("Publish with issue", "");
 regGS("Universal List", "");
 regGS("Invalid security token!", "");

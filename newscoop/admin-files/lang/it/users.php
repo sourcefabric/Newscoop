@@ -1,7 +1,7 @@
 <?php 
 regGS("User account is active", "L'account utente è attivo");
 regGS("Allow user's profile to be publicly displayed", "Consenti la visualizzazione al pubblico dei profili utente");
-regGS("Allow user access to login to site backend", "");
+regGS("Allow user access to login to site backend", "Consenti all'utente di accedere al login del backend del sito");
 regGS("Templates", "Template");
 regGS("Username", "Nome utente");
 regGS("Last Name", "Cognome");
@@ -9,7 +9,7 @@ regGS("First Name", "Nome");
 regGS("Email", "E-mail");
 regGS("Could not save user with e-mail address '$1'. Please make sure it doesn't already exist", "Impossibile salvare l'utente con l'indirizzo email \"$1\". Controlla che non esista già.");
 regGS("You were logged out.", "Ti sei scollegato.");
-regGS("That $1 already exists, please choose a different $2.", "$1 esiste già, per favore scegli un $2 differente.");
+regGS("That $1 already exists, please choose a different $2.", "Questo $1 esiste già, per favore scegli un $2 differente.");
 regGS("Staff member saved.", "Membro staff salvato.");
 regGS("Staff member deleted.", "Membro staff eliminato.");
 regGS("Self-delete is not permitted.", "Non è consentito cancellare sé stessi.");

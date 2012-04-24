@@ -83,7 +83,6 @@ regGS("User Type", "Type d'utilisateur");
 regGS("Change user account information", "Changer l'information  du compte d'utilisateur");
 regGS("The IP address group $1:$2 conflicts with another existing group.", "Le groupe d'adresse IP $1:$2 est en conflit avec un autre groupe existant. ");
 regGS("Creation Date", "Date de Création ");
-regGS("User Name", "");
 regGS("User may add/change publications", "L'utilisateur peut ajouter/changer des publications");
 regGS("Invalid value of user type parameter", "Valeur incorrecte pour le paramètre du type utilisateur");
 regGS("User may delete publications", "L'utilisateur peut supprimer des publications");
@@ -137,6 +136,7 @@ regGS("User may insert horizontal rules", "L'utilisteur peut insérer des traits
 regGS("User may change the font color", "L'utilisateur peut changer la couleur de la police");
 regGS("User may use superscripts", "L'utilisateur peut employer des indices supérieurs");
 regGS("User may use subscripts", "L'utilisateur peut employer des indices inférieurs");
+regGS("User may backup and restore the site data", "");
 regGS("Miscellaneous", "Divers");
 regGS("Staff/Subscribers Management", "Gestion Staffl/Abonnés ");
 regGS("Editor Basic Settings", "Editeur des Paramètres de Base");
@@ -146,4 +146,5 @@ regGS("Administrative tasks", "Tâches administratives");
 regGS("User will be notified on several events", "L'utilisateur sera notifié sur plusieurs événements");
 regGS("Editor Miscellaneous Settings", "Editeur des Paramètres Divers");
 regGS("No such user account.", "Pas  un tel compte utilisateur.");
+regGS("User Name", "");
 ?>

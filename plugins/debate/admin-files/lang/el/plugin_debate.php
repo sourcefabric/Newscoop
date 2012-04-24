@@ -1,13 +1,13 @@
 <?php 
 regGS("You must fill in the $1 field %s.", "");
 regGS("Weekly", "");
-regGS("Week", "");
-regGS("Results", "");
+regGS("Week", "Εβδομάδα");
+regGS("Results", "Αποτελέσματα");
 regGS("Please input at least 2 answers", "");
 regGS("Monthly", "");
-regGS("Month", "");
+regGS("Month", "Μήνας");
 regGS("End time cannot be set before start time", "");
-regGS("Day", "");
+regGS("Day", "Ημέρα");
 regGS("Daily", "");
 regGS("Attach Debate", "");
 regGS("Are you sure you want to reset counters on the selected debatess?", "");
@@ -95,4 +95,5 @@ regGS("Answer $1", "Απάντηση $1");
 regGS("Add new Debate", "Προσθήκη νέας Δημοσκόπησης");
 regGS("---Select---", "---Επιλογή---");
 regGS("$1/$2 debates assigned/unassigned.", "$1/$2 δημοσκοπήσεις εκχωρήθηκαν/δεν εκχωρήθηκαν.");
+regGS("Are you sure you want to remove the file \\'$1\\' from the debate answer?", "Είστε σίγουρος/η ότι θέλετε να αφαιρέσετε το αρχείο \\'$1\\' από την απάντηση της δημοσκόπησης;");
 ?>

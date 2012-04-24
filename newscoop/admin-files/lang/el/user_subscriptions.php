@@ -11,7 +11,7 @@ regGS("Paid", "");
 regGS("No subscriptions", "");
 regGS("Languages:", "");
 regGS("Edit all sections", "");
-regGS("Days:", "");
+regGS("Days:", "Ημέρες:");
 regGS("Days must be number", "");
 regGS("Any", "");
 regGS("Add subscription", "");

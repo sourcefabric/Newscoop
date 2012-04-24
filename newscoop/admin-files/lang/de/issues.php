@@ -1,5 +1,5 @@
 <?php 
-regGS("Only than the issue can be published", "");
+regGS("Only than the issue can be published", "Die Ausgabe kann erst dann veröffentlicht werden. ");
 regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Es kann keine Vorschau der Ausgabe erstellt werden. Please make sure the publication has a theme assigned.");
 regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "Es kann keine Vorschau der Ausgabe erstellt werden. Please make sure it has the front template selected.");
 regGS("Publish all articles:", "Alle Artikel veröffentlichen: ");

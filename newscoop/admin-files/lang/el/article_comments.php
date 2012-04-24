@@ -1,9 +1,9 @@
 <?php 
-regGS("Unrecommend", "");
-regGS("Save comment", "");
-regGS("Recommend", "");
-regGS("Comment updated.", "");
-regGS("Comment saved.", "");
+regGS("Unrecommend", "Δεν συνιστάται");
+regGS("Save comment", "Αποθήκευση σχολίου");
+regGS("Recommend", "Συνιστάται");
+regGS("Comment updated.", "Το σχόλιο ενημερώθηκε.");
+regGS("Comment saved.", "Το σχόλιο αποθηκεύτηκε.");
 regGS("Comments updated.", "Τα σχόλια ενημερώθηκαν.");
 regGS("Post a Comment", "Σχολιάστε");
 regGS("From", "Από");
