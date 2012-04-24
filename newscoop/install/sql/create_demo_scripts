@@ -84,8 +84,6 @@ TABLES="
  plugin_blog_entry\
  plugin_blog_entry_topic\
  plugin_blog_topic\
- plugin_interview_interviews\
- plugin_interview_items\
  plugin_poll\
  plugin_poll_answer\
  plugin_poll_article\

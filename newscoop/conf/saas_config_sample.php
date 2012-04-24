@@ -26,12 +26,6 @@
         /*plugin poll*/
         'plugin_poll',
 
-        /*plugin interview*/
-        'plugin_interview_notify',
-        'plugin_interview_guest',
-        'plugin_interview_moderator',
-        'plugin_interview_admin',
-
         /*plugin recaptcha*/
         'plugin_recaptcha_admin',
 
@@ -86,9 +80,6 @@
         array('resource' => 'plugin-blog', 'privilege' => 'admin'),
         array('resource' => 'plugin-recaptcha', 'privilege' => 'admin'),
         array('resource' => 'plugin-blog', 'privilege' => 'moderator'),
-        array('resource' => 'plugin-interview', 'privilege' => 'notify'),
-        array('resource' => 'plugin-interview', 'privilege' => 'admin'),
-        array('resource' => 'plugin-interview', 'privilege' => 'guest'),
         array('resource' => 'plugin-recaptcha', 'privilege' => 'admin'),
 
     )
