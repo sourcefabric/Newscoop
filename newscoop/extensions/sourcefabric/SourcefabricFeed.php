@@ -13,4 +13,9 @@ class SourcefabricFeed extends FeedWidget
      * @label Number
      */
     protected $count = 5;
+
+    public function __construct()
+    {
+        $this->title = getGS('Sourcefabric.org News reader');
+    }
 }

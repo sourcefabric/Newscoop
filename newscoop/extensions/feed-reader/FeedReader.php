@@ -21,4 +21,9 @@ class FeedReader extends FeedWidget
      * @label Number
      */
     protected $count = 5;
+
+    public function __construct()
+    {
+        $this->title = getGS('Feed reader');
+    }
 }

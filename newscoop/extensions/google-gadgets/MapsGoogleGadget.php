@@ -21,6 +21,11 @@ class MapsGoogleGadget extends GoogleGadget
      */
     protected $location = 'Praha, Salvatorska 10';
 
+    public function __construct()
+    {
+       $this->title = getGS('Maps search');
+    }
+
     /**
      * gadget code
      */

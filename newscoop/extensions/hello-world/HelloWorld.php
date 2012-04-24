@@ -18,6 +18,11 @@
  */
 class HelloWorld extends Widget
 {
+    public function __construct()
+    {
+        $this->title = getGS('Hello World!');
+    }
+
     public function render()
     {
         echo '<p>', $this->getGS('Hello world!'), '</p>';
