@@ -232,23 +232,18 @@ class Admin_ThemesController extends Zend_Controller_Action
                 'fnServerData'	 => "newscoopDatatables.callbackServerData"
             ) )
             ->setWidths( array( 'image' => 215, 'name' => 235, 'description' => 280, 'actions' => 115 ) )
-            ->setRowHandler
-            (
-                function( $theme, $index = null )
-                {
-                    return array
-                    (
-                    	"id"       => $theme['id'],
-                    	"images"   => $theme['images'],
-                        "title"    => $theme['title'],
-                        "designer" => $theme['designer'],
-                        "version"  => $theme['version'],
-                    	"compat"   => $theme['subTitle'],
-                    	"text"     => $theme['description'],
-                        "pubId"	   => $theme['pubId']
-                    );
-                }
-            )
+            ->setRowHandler(function($theme, $index = null) {
+                return array(
+                    "id" => $theme['id'],
+                    "images" => $theme['images'],
+                    "title" => htmlspecialchars($theme['title']),
+                    "designer" => htmlspecialchars($theme['designer']),
+                    "version" => htmlspecialchars($theme['version']),
+                    "compat" => htmlspecialchars($theme['subTitle']),
+                    "text" => htmlspecialchars($theme['description']),
+                    "pubId" => $theme['pubId'],
+                );
+            })
             ->setParams( $this->_request->getParams() );
 
         if( ( $this->view->mytable = $datatable->dispatch() ) )
@@ -380,9 +375,9 @@ class Admin_ThemesController extends Zend_Controller_Action
         $themeMngService = $this->getThemeService();
         /* @var $themeMngService Newscoop\Service\Implementation\ThemeManagementServiceLocal */
         $theme = $themeMngService->getById($themeId);
-        $this->view->placeholder( 'title' )->append( ": ".$theme->getName() );
+        $this->view->placeholder( 'title' )->append( ": " . $this->view->escape($theme->getName()) );
         if (($publication = $themeMngService->getThemePublication($theme))) {
-            $this->view->placeholder( 'title' )->append( " - ".$publication->getName() );
+            $this->view->placeholder( 'title' )->append( " - ".$this->view->escape($publication->getName()) );
         }
     }
 
