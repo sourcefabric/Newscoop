@@ -1,8 +1,8 @@
 <div id="comments" class="twelvecol">
 
+<h3>{{ $gimme->article->comment_count }} Response(s) to “{{ $gimme->article->name }}”</h3>
 {{ list_article_comments order="bydate desc"}}
     {{ if $gimme->current_list->at_beginning }}
-        <h3>{{ $gimme->article->comment_count }} Response(s) to “{{ $gimme->article->name }}”</h3>       
         <section id="comment-list">
     {{ /if }}
 
