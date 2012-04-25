@@ -57,6 +57,7 @@ class Admin_SubscriptionController extends Zend_Controller_Action
 
         $this->view->sections = array_values($sections);
         $this->view->subscription = $subscription;
+        $this->view->subscriber = $this->_getParam('user');
     }
 
     public function addAction()
