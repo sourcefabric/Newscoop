@@ -4,6 +4,24 @@ Copyright (C) 2002-2009 Media Development Loan Fund
 Newscoop Credits (by Version Number)
 
 -----------------------------------------
+Newscoop 4.0 Credits
+-----------------------------------------
+Developers:
+- Holman Romero <holman.romero@sourcefabric.org>
+- Martin Saturka <martin.saturka@sourcefabric.org>
+- Ozan Ozbek <ozan.ozbek@sourcefabric.org>
+- Petr Jašek <petr.jasek@sourcefabric.org>
+
+QA / Testing:
+- Michael Karapetian <michael.karapetian@sourcefabric.org>
+- Ofir Gal <ofir.gal@sourcefabric.org>
+- Sebastian Šimon <sebastian.simon@sourcefabric.org>
+
+Release Coordination:
+- Adam Thomas <adam.thomas@sourcefabric.org>
+- Paul Baranowski <paul.baranowski@sourcefabric.org>
+
+-----------------------------------------
 Newscoop 4.0-RC4 Credits
 -----------------------------------------
 Developers:
