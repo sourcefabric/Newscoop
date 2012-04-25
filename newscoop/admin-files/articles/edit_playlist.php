@@ -28,7 +28,7 @@
             <ul id="added-to-playlists">
 	            <?php foreach ($playlistsData as $playlist) : ?>
 				<li playlist-id="<?php echo $playlist->id ?>">
-		            <?php echo $playlist->name ?>
+		            <?php echo $this->view->escape($playlist->name); ?>
 				</li>
                 <?php endforeach; ?>
 			</ul>

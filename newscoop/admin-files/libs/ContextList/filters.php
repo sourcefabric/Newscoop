@@ -65,7 +65,7 @@ contextListFilters = {}
 	<?php if ($publicationsNo > 0) { ?>
 	<option value="0"><?php p($menuPubTitle); ?></option>
 	<?php foreach($publications as $tmpPublication) { ?>
-	<option value="<?php echo $tmpPublication->getPublicationId(); ?>"><?php echo $tmpPublication->getName(); ?></option>
+	<option value="<?php echo $tmpPublication->getPublicationId(); ?>"><?php echo htmlspecialchars($tmpPublication->getName()); ?></option>
 	<?php }
 	} ?>
 </select> <select name="issue" id="issue_filter">
@@ -73,7 +73,7 @@ contextListFilters = {}
 	<option value="0"><?php p($menuIssueTitle); ?></option>
 	<?php foreach($issues as $issue) { ?>
 	<option
-		value="<?php echo $issue->getPublicationId().'_'.$issue->getIssueNumber().'_'.$issue->getLanguageId(); ?>"><?php echo $issue->getName(); ?></option>
+		value="<?php echo $issue->getPublicationId().'_'.$issue->getIssueNumber().'_'.$issue->getLanguageId(); ?>"><?php echo htmlspecialchars($issue->getName()); ?></option>
 		<?php }
 } ?>
 </select> <select name="section" id="section_filter">
@@ -81,7 +81,7 @@ contextListFilters = {}
 	<option value="0"><?php p($menuSectionTitle); ?></option>
 	<?php foreach($sections as $section) { ?>
 	<option
-		value="<?php echo $section->getPublicationId().'_'.$section->getIssueNumber().'_'.$section->getLanguageId().'_'.$section->getSectionNumber(); ?>"><?php echo $section->getName(); ?></option>
+		value="<?php echo $section->getPublicationId().'_'.$section->getIssueNumber().'_'.$section->getLanguageId().'_'.$section->getSectionNumber(); ?>"><?php echo htmlspecialchars($section->getName()); ?></option>
 		<?php }
 } ?>
 </select>
@@ -96,7 +96,7 @@ contextListFilters = {}
             	<option value=""><?php echo getGS('Select type'); ?></option>
             	<?php if (count($articleTypes)) foreach ($articleTypes as $atype) : ?>
             		<option <?php if (strtolower($atype)==$filterValue) : ?>selected="selected"<?php endif ?>">
-            		    <?php echo $atype ?>
+            		    <?php echo htmlspecialchars($atype) ?>
             		</option>
             	<?php endforeach; ?>
             </select>
@@ -130,7 +130,7 @@ contextListFilters = {}
 	<dd><select name="author">
 		<option value=""><?php putGS('All'); ?></option>
 		<?php foreach (Author::GetAuthors() as $author) { ?>
-		<option value="<?php echo $author->getName(); ?>"><?php echo $author->getName(); ?></option>
+		<option value="<?php echo htmlspecialchars($author->getName()); ?>"><?php echo htmlspecialchars($author->getName()); ?></option>
 		<?php } ?>
 	</select></dd>
 </dl>
@@ -139,7 +139,7 @@ contextListFilters = {}
 	<dd><select name="creator">
 		<option value=""><?php putGS('All'); ?></option>
 		<?php foreach (User::GetUsers() as $creator) { ?>
-		<option value="<?php echo $creator->getUserId(); ?>"><?php echo $creator->getRealName(); ?></option>
+		<option value="<?php echo $creator->getUserId(); ?>"><?php echo htmlspecialchars($creator->getRealName()); ?></option>
 		<?php } ?>
 	</select></dd>
 </dl>
@@ -158,7 +158,7 @@ contextListFilters = {}
 	<dd><select name="topic">
 		<option value=""><?php putGS('All'); ?></option>
 		<?php foreach ($topics as $id => $topic) { ?>
-		<option value="<?php echo $id; ?>"><?php echo $topic; ?></option>
+		<option value="<?php echo $id; ?>"><?php echo htmlspecialchars($topic); ?></option>
 		<?php } ?>
 	</select></dd>
 </dl>
@@ -167,7 +167,7 @@ contextListFilters = {}
 	<dd><select id="filter_name" name="language">
 		<option value=""><?php putGS('All'); ?></option>
 		<?php foreach(Language::GetLanguages() as $language) { ?>
-		<option value="<?php echo $language->getLanguageId(); ?>"><?php echo $language->getNativeName(); ?></option>
+		<option value="<?php echo $language->getLanguageId(); ?>"><?php echo htmlspecialchars($language->getNativeName()); ?></option>
 		<?php } ?>
 	</select></dd>
 </dl>

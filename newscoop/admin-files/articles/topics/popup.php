@@ -74,7 +74,7 @@ foreach ($articleTopics as $topic) {
 	            }
 	        }
 	        ?>
-	        <option value="<?php echo $topic_id; ?>"><?php echo str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $topic_level).$name;?></option>
+	        <option value="<?php echo $topic_id; ?>"><?php echo str_repeat('&nbsp;&nbsp;&nbsp;&nbsp;', $topic_level). $this->view->escape($name);?></option>
 	        <?php
 	        $level = $topic_level;
 	    }
@@ -86,10 +86,10 @@ foreach ($articleTopics as $topic) {
             $languages = Language::GetLanguages(null, null, null, array(), array(), true);
             foreach ($languages as $language) {
                 if ($f_language_selected == $language->getLanguageId()) {
-                    echo("<option value='". $language->getLanguageId() ."' selected='selected'>". $language->getName() ."</option>");
+                    echo("<option value='". $language->getLanguageId() ."' selected='selected'>". $this->view->escape($language->getName()) ."</option>");
                 }
                 else {
-                    echo("<option value='". $language->getLanguageId() ."'>". $language->getName() ."</option>");
+                    echo("<option value='". $language->getLanguageId() ."'>". $this->view->escape($language->getName()) ."</option>");
                 }
             }
             ?>
@@ -144,7 +144,7 @@ foreach ($topics as $path) {
 
     <li<?php echo $color_class; ?>>
         <input id="f_topic_ids-<?php echo $topic_id; ?>" type="checkbox" name="f_topic_ids[]" value="<?php echo $topic_id; ?>"<?php echo $checked_str; ?> />
-        <label for="f_topic_ids-<?php echo $topic_id; ?>"><?php echo $name; ?></label>
+        <label for="f_topic_ids-<?php echo $topic_id; ?>"><?php echo $this->view->escape($name); ?></label>
 	<?php
     $level = $topic_level;
 }

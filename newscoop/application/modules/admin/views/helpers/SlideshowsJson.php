@@ -15,10 +15,11 @@ class Admin_View_Helper_SlideshowsJson extends Zend_View_Helper_Abstract
      */
     public function SlideshowsJson(array $slideshows, $width = 150, $height = 150)
     {
-        return array_map(function($slideshow) use ($width, $height) {
+        $view = $this->view;
+        return array_map(function($slideshow) use ($width, $height, $view) {
             return (object) array(
                 'id' => $slideshow->getId(),
-                'headline' => $slideshow->getHeadline(),
+                'headline' => $view->escape($slideshow->getHeadline()),
                 'itemsCount' => $slideshow->getItemsCount(),
                 'slug' => $slideshow->getSlug(),
                 'items' => array_map(function($item) use ($width, $height) {

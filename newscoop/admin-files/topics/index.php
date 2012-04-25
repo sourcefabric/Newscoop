@@ -59,7 +59,7 @@ camp_html_display_msgs("0.5em", 0);
         <?php foreach ($allLanguages as $tmpLanguage) {
             camp_html_select_option($tmpLanguage->getLanguageId(),
                                     $loginLanguageId,
-                                    $tmpLanguage->getNativeName());
+                                    $this->view->escape($tmpLanguage->getNativeName()));
         } ?>
 	</select>
 
@@ -139,7 +139,7 @@ foreach ($topics as $topicPath) {
 
             <fieldset class="subtopic">
                 <legend><?php putGS("Add subtopic:"); ?></legend>
-                <label><?php p($topicLanguage->getNativeName()); ?></label>
+                <label><?php echo $this->view->escape($topicLanguage->getNativeName()); ?></label>
                 <input type="text" name="f_topic_name" value="" class="input_text" size="15" title="<?php putGS('You must enter a name for the topic.'); ?>" />
                 <input type="submit" name="f_submit" value="<?php putGS("Add"); ?>" class="button" />
             </fieldset>

@@ -89,10 +89,10 @@ function appendItemToContextList(article_id, article_date, article_title)
         '</div>'+
         '<a href="#" class="corner-button" style="display: block" '+
         	'onClick="$(this).parent(\'div\').parent(\'li.item\').remove();toggleDragZonePlaceHolder();"><span class="ui-icon ui-icon-closethick"></span></a>'+
-        '<div class="context-item-summary">'+article_title+'</div>'+
+        '<div class="context-item-summary"></div>'+
         '</div>'+
     	'</li>'
-	);
+	).find('#' + article_id + ' .context-item-summary').text(article_title);
     closeArticle();
 }
 function deleteContextList()

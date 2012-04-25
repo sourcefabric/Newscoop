@@ -15,7 +15,7 @@
         	</li>
         	<?php foreach( $this->publications as $pub ) : ?>
         		<li class="ui-state-default ui-corner-top">
-        		    <a href="javascript:void(0)" pub-id="<?php echo $pub->getId(); ?>"><?php echo $pub->getName(); ?></a>
+        		    <a href="javascript:void(0)" pub-id="<?php echo $pub->getId(); ?>"><?php echo $this->escape($pub->getName()); ?></a>
         		</li>
         	<?php endforeach; ?>
 		</ul>

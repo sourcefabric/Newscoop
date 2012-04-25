@@ -146,7 +146,7 @@ $('form#article-main').submit(function() {
         cleanTextContents();
 
         //fix breadcrumbs title
-        $('.breadcrumbs li:last a').html($('#f_article_title').attr('value') + ' (' + $('#article_language').html() + ')');
+        $('.breadcrumbs li:last a').text($('#f_article_title').val() + ' (' + $('#article_language').text() + ')');
 
          // ping for connection
         callServer('ping', [], function(json) {
@@ -479,7 +479,9 @@ function fnLoadContextBoxArticleList(data) {
         var injectHtml = '<ul class="block-list">';
         for(var i=0; i<items.length; i++) {
             var item = items[i];
-            injectHtml += '<li>'+item.title+'</li>';
+            injectHtml += '<li>';
+            injectHtml += $('<li />').text(item.title).html();
+            injectHtml += '</li>';
         }
         injectHtml += '</ul>';
         $("#contextBoxArticlesList").html(injectHtml);

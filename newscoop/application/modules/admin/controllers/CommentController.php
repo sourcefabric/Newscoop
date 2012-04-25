@@ -123,12 +123,12 @@ class Admin_CommentController extends Zend_Controller_Action
                                                     array('action' => 'update', 'format' => 'json')),
                                                                   'reply' => $view->url(
                                                                       array('action' => 'reply', 'format' => 'json')))),
-                             'thread' => array('name' => $article->getName(),
+                             'thread' => array('name' => $view->escape($article->getName()),
                                                'link' => array
                                                ('edit' => $view->baseUrl("admin/articles/edit.php?") . $view->linkArticleObj($article),
                                                 'get' => $view->baseUrl("admin/articles/get.php?") . $view->linkArticleObj($article)),
-                                               'forum' => array('name' => $forum->getName()),
-                                               'section' => array('name' => ($section) ? $section->getName() : null)),);
+                                               'forum' => array('name' => $view->escape($forum->getName())),
+                                               'section' => array('name' => ($section) ? $view->escape($section->getName()) : null)),);
             });
 
         $table->setOption('fnDrawCallback', 'datatableCallback.draw')
