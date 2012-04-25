@@ -16,7 +16,7 @@
 <div style="margin-top:40px;">&nbsp;</div>
 
 <div class="inline">
-    <input type="text" class="<?php echo $this->form->headline->hasErrors() ? ' error' : ''; ?>" name="headline" value="<?php echo $this->form->headline->getValue(); ?>" title="<?php echo $this->form->headline->hasErrors() ? implode(", ", $this->form->headline->getMessages()) : getGS('Slideshow headline'); ?>" />
+    <input type="text" class="<?php echo $this->form->headline->hasErrors() ? ' error' : ''; ?>" name="headline" value="<?php echo $this->escape($this->form->headline->getValue()); ?>" title="<?php echo $this->form->headline->hasErrors() ? implode(", ", $this->form->headline->getMessages()) : getGS('Slideshow headline'); ?>" />
     <button class="button"><?php putGS('Save headline'); ?></button>
 </div></form>
 
