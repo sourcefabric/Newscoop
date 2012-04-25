@@ -1,4 +1,5 @@
 <?php 
+regGS("Image Rendering", "");
 regGS("Featured Article Lists", "");
 regGS("You have tried to upload an invalid backup file.", "");
 regGS("You do not have the right to manage backups.", "");
@@ -10,7 +11,6 @@ regGS("Create slideshow", "");
 regGS("Create", "");
 regGS("Attach/Detach", "");
 regGS("Are you sure you want to delete slideshow?", "");
-regGS("Renditions", "");
 regGS("Support", "");
 regGS("Pending articles", "");
 regGS("Manage Users", "");
@@ -61,7 +61,6 @@ regGS("'%value%' is more than %max% characters long", "");
 regGS("'%value%' is less than %min% characters long", "");
 regGS("User name", "");
 regGS("Newscoop", "");
-regGS("Campsite", "");
 regGS("Your password has been reset.", "");
 regGS("Proceed to login.", "");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "");

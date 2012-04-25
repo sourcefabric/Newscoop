@@ -1,4 +1,5 @@
 <?php 
+regGS("Support", "");
 regGS("Themes", "Temas");
 regGS("Area to localize", "Área para localizar");
 regGS("Dashboard", "");

@@ -1,4 +1,5 @@
 <?php 
+regGS("Support", "");
 regGS("Themes", "თემები");
 regGS("Area to localize", "ლოკალიზების დამატება");
 regGS("Dashboard", "დეშბორდი");

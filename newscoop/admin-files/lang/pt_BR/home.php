@@ -1,4 +1,5 @@
 <?php 
+regGS("Image Rendering", "");
 regGS("Featured Article Lists", "");
 regGS("You have tried to upload an invalid backup file.", "");
 regGS("You do not have the right to manage backups.", "");
@@ -10,7 +11,6 @@ regGS("Create slideshow", "Criar slideshow");
 regGS("Create", "Criar");
 regGS("Attach/Detach", "Anexar/Remover anexo");
 regGS("Are you sure you want to delete slideshow?", "Tem certeza que quer apagar o slideshow?");
-regGS("Renditions", "Formatos");
 regGS("Support", "Suporte");
 regGS("Pending articles", "Artigos");
 regGS("Manage Users", "Gerenciar usuários");
@@ -61,7 +61,6 @@ regGS("'%value%' is more than %max% characters long", "'%value%' tem mais que %m
 regGS("'%value%' is less than %min% characters long", "'%value%' tem menos que %max% caracteres ");
 regGS("User name", "Nome de usuário");
 regGS("Newscoop", "Newscoop");
-regGS("Campsite", "Campsite");
 regGS("Your password has been reset.", "Sua senha foi atualizada");
 regGS("Proceed to login.", "Vá para o login");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "Olá,  \n\nfor password recovery, por favor siga este link: $1 ");

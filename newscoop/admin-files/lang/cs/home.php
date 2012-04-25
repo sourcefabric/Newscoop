@@ -1,4 +1,5 @@
 <?php 
+regGS("Image Rendering", "");
 regGS("Featured Article Lists", "");
 regGS("You have tried to upload an invalid backup file.", "");
 regGS("You do not have the right to manage backups.", "");
@@ -10,7 +11,6 @@ regGS("Create slideshow", "Vytvořit slideshow");
 regGS("Create", "Vytvořit");
 regGS("Attach/Detach", "Připojit/Odpojit");
 regGS("Are you sure you want to delete slideshow?", "Jste si jisti, že chcete vymazat slideshow?");
-regGS("Renditions", "Formáty");
 regGS("Support", "Podpora");
 regGS("Pending articles", "Dosud nevyřízené články");
 regGS("Manage Users", "Správa uživatelů");
@@ -61,7 +61,6 @@ regGS("'%value%' is more than %max% characters long", " '%value%' je víc než %
 regGS("'%value%' is less than %min% characters long", " '%value%' je méně než %min% znaků dlouhá");
 regGS("User name", "Jméno uživatele");
 regGS("Newscoop", "Newscoop");
-regGS("Campsite", "Campsite");
 regGS("Your password has been reset.", "Vaše heslo bylo obnoveno");
 regGS("Proceed to login.", "Pokračujte na přihlášení se do systému.");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "Nazdárek, \n\nfor obnovení hesla, prosím mrkněte se na link: $1");

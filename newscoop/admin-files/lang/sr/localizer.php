@@ -1,4 +1,5 @@
 <?php 
+regGS("Support", "");
 regGS("Themes", "Теме");
 regGS("Area to localize", "Подручје за локализацију");
 regGS("Dashboard", "Контролна табла");

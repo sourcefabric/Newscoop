@@ -1,4 +1,5 @@
 <?php 
+regGS("Image Rendering", "");
 regGS("Featured Article Lists", "");
 regGS("You have tried to upload an invalid backup file.", "");
 regGS("You do not have the right to manage backups.", "");
@@ -10,7 +11,6 @@ regGS("Create slideshow", "Создать слайд-шоу");
 regGS("Create", "Создать");
 regGS("Attach/Detach", "Прикрепить/Удалить");
 regGS("Are you sure you want to delete slideshow?", "Вы уверены, что хотите удалить это слайд-шоу?");
-regGS("Renditions", "Набор размеров изображения");
 regGS("Support", "Поддержка");
 regGS("Pending articles", "Статьи в процессе редактирования");
 regGS("Manage Users", "Управление пользователями");
@@ -61,7 +61,6 @@ regGS("'%value%' is more than %max% characters long", "'%value%' больше ч
 regGS("'%value%' is less than %min% characters long", "'%value%' меньше чем на %min% символов больше требуемого");
 regGS("User name", "Имя пользователя");
 regGS("Newscoop", "Newscoop");
-regGS("Campsite", "Campsite");
 regGS("Your password has been reset.", "Ваш пароль переустановлен.");
 regGS("Proceed to login.", "Войти.");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "Добрый день, \n\n для восстановления пароля, следуйте по ссылке: $1");
