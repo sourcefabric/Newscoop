@@ -260,7 +260,7 @@ $this->headScript()->appendScript( $js, "text/javascript" );
 			    <?php echo getGS('Featured Article List'); ?>
 				<span style="float:right">
 					<label for="playlist-name"><?php echo getGS('List Name') ?>:</label>
-					<input name="playlist-name" id="playlist-name" value="<?php echo $this->playlistName ?>"
+					<input name="playlist-name" id="playlist-name" value="<?php echo $this->escape($this->playlistName) ?>"
 						style="font-size: 12px; width: 250px" />
 					<?php if(isset($this->playlistId)) : ?>
 					<label for="playlist-id"><?php echo getGS('List ID')?>:</label>
