@@ -330,11 +330,13 @@ class CampURIShortNames extends CampURI
 
         $fields = $this->m_publication->getSeo();
 
-        if ($urlMatch($this->m_uri, $articleObj->getSEOURLEnd($fields, $language->number))) {
+        $uri_parts = explode('?', $this->m_uri);
+
+        if ($urlMatch($uri_parts[0], $articleObj->getSEOURLEnd($fields, $language->number))) {
             return new MetaArticle($language->number, $articleObj->getArticleNumber());
         }
 
-        if ($urlMatch($this->m_uri, $articleObj->getLegacySEOURLEnd($fields, $language->number))) { // old url -> redirect
+        if ($urlMatch($usri_parts[0], $articleObj->getLegacySEOURLEnd($fields, $language->number))) { // old url -> redirect
             $controller->getHelper('redirector')->gotoUrlAndExit(str_replace($articleObj->getLegacySEOURLEnd($fields, $language->number), $articleObj->getSEOURLEnd($fields, $language->number), $this->m_uri), array(
                 'code' => 301,
             ));
