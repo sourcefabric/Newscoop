@@ -67,7 +67,6 @@ class ArticleTest extends \TestCase
             $article = new Article();
             $article->setName($title);
             $this->assertEquals("$url.htm", $article->getSEOURLEnd($this->fields, self::LANGUAGE_ID));
-            $this->assertEquals("$title.htm", $article->getLegacySEOURLEnd($this->fields, self::LANGUAGE_ID), 'legacy');
         }
     }
 }

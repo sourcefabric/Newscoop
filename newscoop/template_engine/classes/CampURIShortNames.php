@@ -324,26 +324,16 @@ class CampURIShortNames extends CampURI
             throw new InvalidArgumentException("Invalid article identifier in URL.", self::INVALID_ARTICLE);
         }
 
-        $urlMatch = function($url, $end) {
-            return substr($url, strlen($end) * -1) === $end;
-        };
-
-        $fields = $this->m_publication->getSeo();
-
-        $uri_parts = explode('?', $this->m_uri);
-
-        if ($urlMatch($uri_parts[0], $articleObj->getSEOURLEnd($fields, $language->number))) {
-            return new MetaArticle($language->number, $articleObj->getArticleNumber());
+        $url = parse_url($this->m_uri);
+        $seo = $articleObj->getSEOURLEnd($this->m_publication->getSeo(), $language->number);
+        $meta = new MetaArticle($language->number, $articleObj->getArticleNumber());
+        if (substr($url['path'], strlen($seo) * -1) === $seo) {
+            return $meta;
         }
 
-        if ($urlMatch($usri_parts[0], $articleObj->getLegacySEOURLEnd($fields, $language->number))) { // old url -> redirect
-            $controller->getHelper('redirector')->gotoUrlAndExit(str_replace($articleObj->getLegacySEOURLEnd($fields, $language->number), $articleObj->getSEOURLEnd($fields, $language->number), $this->m_uri), array(
-                'code' => 301,
-            ));
-        }
-
-        $controller->getResponse()->setHttpResponseCode(404);
-        throw new InvalidArgumentException("Invalid article identifier in URL.", self::INVALID_ARTICLE);
+        $controller->getHelper('redirector')->gotoUrlAndExit(sprintf('%s%s%s', $meta->url, $seo, !empty($url['query']) ? '?' . $url['query'] : ''), array(
+            'code' => 301,
+        ));
     }
 
     /**
