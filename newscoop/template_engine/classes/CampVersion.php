@@ -27,7 +27,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_release = '4.0';
+    private $m_release = '4.0.0';
 
     /**
      * @var string
@@ -37,7 +37,7 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_codeName = '';
+    private $m_codeName = 'Majda';
 
     /**
      * @var string
