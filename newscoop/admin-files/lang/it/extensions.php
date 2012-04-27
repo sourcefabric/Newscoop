@@ -1,8 +1,11 @@
 <?php 
+regGS("Sourcefabric.org blog reader", "Lettore del blog di Sourcefabric.org");
+regGS("Sourcefabric.org News reader", "Lettore delle news di Sourcefabric.org");
+regGS("Feed reader", "Lettore del feed");
 regGS("Go", "Vai");
 regGS("Wikipedia Search", "Ricerca Wikipedia");
 regGS("Files", "Files");
-regGS("Sourcefabric.org newsletter subscription", "Sottoscrizione newsletter Sourcefabric.org");
+regGS("Sourcefabric.org newsletter subscription", "Iscrizione alla newsletter di Sourcefabric.org");
 regGS("Maps search", "Cerca mappe");
 regGS("Default location", "Locazione predefinita");
 regGS("Title", "Titolo");

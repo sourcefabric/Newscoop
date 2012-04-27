@@ -1,11 +1,11 @@
 <?php 
-regGS("Only than the issue can be published", "Only than the issue can be published");
+regGS("so that default templates can be assigned to the issue.", "so that default templates can be assigned to the issue.");
+regGS("Once this is done, the issue can be published", "Once this is done, the issue can be published");
 regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "This issue cannot be previewed. Please make sure the publication has a theme assigned.");
 regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "This issue cannot be previewed. Please make sure it has the front template selected.");
 regGS("Publish all articles:", "Publish all articles:");
 regGS("Publish all articles", "Publish all articles");
 regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.");
-regGS("in order to be able to assigned to the issue.", "in order to be able to assigned to the issue.");
 regGS("default", "default");
 regGS("The publishing/unpublishing can not be set the same time", "The publishing/unpublishing can not be set the same time");
 regGS("The publishing schedule can not be set in the past", "The publishing schedule can not be set in the past");

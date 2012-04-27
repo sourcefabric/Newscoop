@@ -1,4 +1,5 @@
 <?php 
+regGS("Add article to a list", "");
 regGS("View article", "");
 regGS("Select a list", "");
 regGS("Remove list", "");
@@ -34,8 +35,6 @@ regGS("Related Articles", "Artigos relacionados");
 regGS("Pending articles", "Artigos pendentes");
 regGS("Pending Articles", "Artigos pendentes");
 regGS("Context Box updated", "");
-regGS("Article Playlist", "");
-regGS("Add article to a playlist", "");
 regGS("On", "Ligar");
 regGS("Off", "Desligar");
 regGS("You do not have the right to moderate comments.", "Você não tem o direito de moderar os comentários.");

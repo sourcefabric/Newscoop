@@ -1,4 +1,5 @@
 <?php 
+regGS("Add article to a list", "");
 regGS("View article", "");
 regGS("Select a list", "");
 regGS("Remove list", "");
@@ -34,8 +35,6 @@ regGS("Related Articles", "Související články");
 regGS("Pending articles", "Dosud nevyřízené články");
 regGS("Pending Articles", "Dosud nevyřízené články");
 regGS("Context Box updated", "Kontext Box aktualizován");
-regGS("Article Playlist", "");
-regGS("Add article to a playlist", "");
 regGS("On", "Vypnout");
 regGS("Off", "Zapnout");
 regGS("You do not have the right to moderate comments.", "Nemáte právo zmírnit komentáře.");

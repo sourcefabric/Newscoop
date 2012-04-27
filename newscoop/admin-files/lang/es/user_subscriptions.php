@@ -1,4 +1,14 @@
 <?php 
+regGS("third", "tercero");
+regGS("second", "segundo");
+regGS("forth", "cuarto");
+regGS("first", "primero");
+regGS("You must input a number greater than 0 into the Number of addresses field.", "Debes ingresar un número mayor a 0 en el campo de número de direcciones.");
+regGS("You must input a number between 0 and 255 into the Start IP address' $1 field.", "Debes ingresar un número entre 0 y 255 en el campo $1 de la dirección IP de inicio");
+regGS("User IP access list management", "administración de la lista de IP de los usuarios con acceso");
+regGS("The IP address group conflicts with another existing group.", "La dirección IP del grupo tiene conflictos con otro grupo existente.");
+regGS("Subscription sections", "secciones de las suscripciones");
+regGS("No records.", "Sin registros.");
 regGS("You have subscription for all available publications", "Ya tiene una subscripción para todas las publicaciones disponibles.");
 regGS("Subscription type:", "Tipo de subscripción:");
 regGS("Start:", "Inicio:");
@@ -14,7 +24,6 @@ regGS("Edit all sections", "Editar todas las secciones");
 regGS("Days:", "Días:");
 regGS("Days must be number", "Los días deben ser numerados");
 regGS("Any", "Cualquiera");
-regGS("Add subscription", "Añadir subscripción");
 regGS("Add section", "Añadir sección");
 regGS("saved", "guardado");
 regGS("removed", "removido");

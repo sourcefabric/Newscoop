@@ -1,4 +1,5 @@
 <?php 
+regGS("Image Rendering", "");
 regGS("Featured Article Lists", "");
 regGS("You have tried to upload an invalid backup file.", "Προσπαθήσατε να ανεβάσετε ένα άκυρο αρχείο αντιγράφου ασφαλείας.");
 regGS("You do not have the right to manage backups.", "Δεν έχετε το δικαίωμα διαχείρισης αντιγράφων ασφαλείας.");
@@ -10,12 +11,11 @@ regGS("Create slideshow", "Δημιουργία slideshow");
 regGS("Create", "Δημιουργία");
 regGS("Attach/Detach", "Επισύναψη/Αφαίρεση");
 regGS("Are you sure you want to delete slideshow?", "Είστε σίγουρος/η ότι θέλετε να διαγράψετε το slideshow;");
-regGS("Renditions", "");
 regGS("Support", "Υποστήριξη");
 regGS("Pending articles", "Εκκρεμή Άρθρα");
 regGS("Manage Users", "Διαχείριση Χρηστών");
 regGS("Manage User Types", "Διαχείριση Τύπου Χρηστών");
-regGS("Manage User Points System", "");
+regGS("Manage User Points System", "Διαχείριση Συστήματος Σημείων Χρήστη");
 regGS("Last", "");
 regGS("First", "");
 regGS("Feedback", "Feedback");
@@ -68,7 +68,7 @@ regGS("Hi, \n\nfor password recovery, please follow this link: $1", "Καλήσ�
 regGS("Go to login", "");
 regGS("Back to login.", "");
 regGS("Back to login", "");
-regGS("An email with instructions on how to recover you password has been sent to your inbox.", "");
+regGS("An email with instructions on how to recover you password has been sent to your inbox.", "Ένα mail με οδηγίες για το πώς να ανακτήσετε τον κωδικό πρόσβασης, σας έχει σταλεί στα εισερχόμενά σας.");
 regGS("Session expired.", "Η συνεδρία έληξε.");
 regGS("Processing...", "Επεξεργασία...");
 regGS("Please", "Παρακαλούμε");

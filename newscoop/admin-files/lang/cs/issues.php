@@ -1,11 +1,11 @@
 <?php 
-regGS("Only than the issue can be published", "Až potom může být vydání publikováno");
+regGS("so that default templates can be assigned to the issue.", "");
+regGS("Once this is done, the issue can be published", "");
 regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Toto vydání nemůže být zobrazeno. Prosím ujistěte se, že publikace má přidelen námět.");
 regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "Toto vydání nemůže být zobrazeno. Prosím ujistěte se, že je vybrána přední šablona.");
 regGS("Publish all articles:", "Publikovat všechny články:");
 regGS("Publish all articles", "Publikovat všechny články");
 regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "Nucené publikování všech článků. Pokud nastaveno 'Ne', pouze články se statusem 'Publikovat s vydáním' budou uveřejněny.");
-regGS("in order to be able to assigned to the issue.", "aby bylo možné přiřazení k vydání.");
 regGS("default", "default");
 regGS("The publishing/unpublishing can not be set the same time", "Publikování/nepublikování nemůže být nastaveno najednou");
 regGS("The publishing schedule can not be set in the past", "Publikační harmonogram nemůže být nastaven v minulosti");

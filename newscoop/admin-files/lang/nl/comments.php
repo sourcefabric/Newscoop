@@ -1,4 +1,5 @@
 <?php 
+regGS("Ban/Unban user", "");
 regGS("Ip", "");
 regGS("Bans can be applied to a user's name, email address or IP address.", "");
 regGS("at", "");

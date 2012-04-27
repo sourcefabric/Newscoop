@@ -7,7 +7,7 @@ regGS("Resource Type", "");
 regGS("Resource", "");
 regGS("Diff", "");
 regGS("Broken data", "Σπασμένα δεδομένα");
-regGS("Action Type:", "");
-regGS("No logs.", "");
+regGS("Action Type:", "Τύπος Ενέργειας:");
+regGS("No logs.", "Δεν υπάρχουν logs.");
 regGS("User", "Χρήστης");
 ?>

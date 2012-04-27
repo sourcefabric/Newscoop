@@ -1,19 +1,19 @@
 <?php 
-regGS("You must fill in the $1 field %s.", "");
+regGS("You must fill in the $1 field %s.", "Πρέπει να συμπληρώσετε το στο πεδίο $1 %s.");
 regGS("Weekly", "");
 regGS("Week", "Εβδομάδα");
 regGS("Results", "Αποτελέσματα");
-regGS("Please input at least 2 answers", "");
+regGS("Please input at least 2 answers", "Παρακαλούμε εισάγετε τουλάχιστον 2 απαντήσεις");
 regGS("Monthly", "");
 regGS("Month", "Μήνας");
-regGS("End time cannot be set before start time", "");
+regGS("End time cannot be set before start time", "Ο χρόνος λήξης δεν μπορέι να ρυθμιστεί πρίν το χρόνο έναρξης");
 regGS("Day", "Ημέρα");
 regGS("Daily", "");
-regGS("Attach Debate", "");
+regGS("Attach Debate", "Σύναψη Debate");
 regGS("Are you sure you want to reset counters on the selected debatess?", "");
 regGS("Are you sure you want to delete the selected debatess?", "");
-regGS("Answer %s", "");
-regGS("Answer", "");
+regGS("Answer %s", "Απάντηση %s");
+regGS("Answer", "Απάντηση");
 regGS("Allow not logged in users", "");
 regGS("Are you sure you want to delete the debate \"$1\"?", "Είστε σίγουρος/η ότι θέλετε να διαγράψετε την δημοσκόπηση \"$1\";");
 regGS("click to edit", "κάντε κλίκ για επεξεργασία");

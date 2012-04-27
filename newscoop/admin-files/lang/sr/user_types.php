@@ -67,7 +67,6 @@ regGS("Permissions updated", "Права измењена");
 regGS("Notification", "Обавештења");
 regGS("Log", "Лог");
 regGS("Layout", "Изглед");
-regGS("Interviews", "Интервјуи");
 regGS("Global", "Глобално");
 regGS("Files", "Фајлови");
 regGS("Error: ", "Грешка:");

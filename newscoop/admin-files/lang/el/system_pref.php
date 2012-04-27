@@ -1,12 +1,12 @@
 <?php 
-regGS("according to php.ini settings", "");
-regGS("Maximal zoom for auto-focusing:", "");
-regGS("Map border for auto-focusing:", "");
-regGS("Map auto-focusing as the default behavior:", "");
-regGS("Include CSS file for map view", "");
-regGS("Collect statistics:", "");
-regGS("Please enter password recovery from email.", "");
-regGS("From email address:", "");
+regGS("according to php.ini settings", "σύμφωνα με τις ρυθμίσεις  php.ini");
+regGS("Maximal zoom for auto-focusing:", "Μέγιστο ζούμ για αυτόματη εστίαση:");
+regGS("Map border for auto-focusing:", "Χάρτης συνόρων για αυτόματη εστίαση:");
+regGS("Map auto-focusing as the default behavior:", "Χάρτης αυτόματης εστίασης ως προεπιλογή:");
+regGS("Include CSS file for map view", "Συμπεριλάβετε το αρχείο CSS για προβολή χάρτη");
+regGS("Collect statistics:", "Συλλογή στατιστικών:");
+regGS("Please enter password recovery from email.", "Παρακαλούμε εισάγετε τον κωδικό ανάκτησης από το email σας.");
+regGS("From email address:", "Από διεύθυνση ηλεκτρονικού ταχυδρομίου:");
 regGS("Run scheduled tasks externally?", "Εκτέλεση προγραμματισμένων εργασιών εξωτερικά;");
 regGS("Setting up a Newscoop Replication Server?", "Ρύθμιση Αντιγράφου του Διακομιστή Newscoop;");
 regGS("Newscoop Online Server Database", "Βάση Δεδομένων του Online Διακομιστή Newscoop ");

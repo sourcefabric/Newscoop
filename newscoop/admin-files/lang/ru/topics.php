@@ -1,6 +1,6 @@
 <?php 
-regGS("If you continue, topic and all subtopics will be detached from all articles, and deleted.", "");
-regGS("Delete anyway", "");
+regGS("If you continue, topic and all subtopics will be detached from all articles, and deleted.", "если вы продолжите, темы и подтемы будут откреплены от всех статей и удалены.");
+regGS("Delete anyway", "Удалить в любом случае");
 regGS("Reset order", "Переустановка порядка следования");
 regGS("Order changes will be lost. Are you sure you want to continue?", "Изменения порядка были утеряны. Вы уверены, что хотите продолжить?");
 regGS("Topics order saved.", "Порядок тем сохранен.");

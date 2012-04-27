@@ -1,5 +1,8 @@
 <?php 
-regGS("Go", "");
+regGS("Sourcefabric.org blog reader", "Блоги на Sourcefabric.org");
+regGS("Sourcefabric.org News reader", "Новости Sourcefabric.org");
+regGS("Feed reader", "Новостная лента");
+regGS("Go", "Идти");
 regGS("Wikipedia Search", "Поиск по Wikipedia");
 regGS("Files", "Файлы");
 regGS("Sourcefabric.org newsletter subscription", "Подписка на новости из Sourcfabric");

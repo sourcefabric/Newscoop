@@ -1,11 +1,11 @@
 <?php 
-regGS("Only than the issue can be published", "");
+regGS("so that default templates can be assigned to the issue.", "");
+regGS("Once this is done, the issue can be published", "");
 regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Ovo izdanje ne može biti pregledano. Proverite da li publikacija ima dodeljenu temu.");
 regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "Ovo izdanje ne može biti pregledano. Proverite da li ima dodeljen šablon za prikaz prve strane.");
 regGS("Publish all articles:", "Objavi sve tekstove:");
 regGS("Publish all articles", "Objavi sve tekstove");
 regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "Forsiraj objavljivanje svih tekkstova. Ako je postavljeno na 'Ne', samo tekstovi sa statusom 'Objavi zajedno sa izdanjem' biće objavljeni.");
-regGS("in order to be able to assigned to the issue.", "da bi se dodelio izdanju.");
 regGS("default", "podrqazumevano");
 regGS("The publishing/unpublishing can not be set the same time", "Objavljivanje/povlačenje ne može biti postavljeno na isto vreme");
 regGS("The publishing schedule can not be set in the past", "Redosled objavljivanja ne može biti podešen na datum u prošlosti");

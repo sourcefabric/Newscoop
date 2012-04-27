@@ -1,4 +1,5 @@
 <?php 
+regGS("Add article to a list", "Add article to a list");
 regGS("View article", "View article");
 regGS("Select a list", "Select a list");
 regGS("Remove list", "Remove list");
@@ -34,8 +35,6 @@ regGS("Related Articles", "Related Articles");
 regGS("Pending articles", "Pending articles");
 regGS("Pending Articles", "Pending Articles");
 regGS("Context Box updated", "Context Box updated");
-regGS("Article Playlist", "Article Playlist");
-regGS("Add article to a playlist", "Add article to a playlist");
 regGS("On", "On");
 regGS("Off", "Off");
 regGS("You do not have the right to moderate comments.", "You do not have the right to moderate comments.");

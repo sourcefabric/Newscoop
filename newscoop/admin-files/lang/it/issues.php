@@ -1,11 +1,11 @@
 <?php 
-regGS("Only than the issue can be published", "Può essere pubblicata solo una edizione per volta");
+regGS("so that default templates can be assigned to the issue.", "in modo che il template predefinito possa essere assegnato all'edizione.");
+regGS("Once this is done, the issue can be published", "Quando sarà stato fatto, l'edizione potrà essere pubblicata");
 regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Non posso mostrare l'anteprima dell'edizione. Verifica che la pubblicazione abbia un tema assegnato.");
 regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "Non posso mostrare l'anteprima dell'edizione. Verifica che sia stato scelto il template di prima pagina.");
 regGS("Publish all articles:", "Pubblica tutti gli articoli:");
 regGS("Publish all articles", "Pubblica tutti gli articoli");
 regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "Forza la pubblicazione di tutti gli articoli. Se impostato a \"No\", verranno pubblicati solo gli articoli con stati \"Pubblica con l'edizione\".");
-regGS("in order to be able to assigned to the issue.", "per poter essere assegnato all'edizione.");
 regGS("default", "predefinito");
 regGS("The publishing/unpublishing can not be set the same time", "Pubblicazione e rimozione non possono avere lo stesso orario.");
 regGS("The publishing schedule can not be set in the past", "La pubblicazione non può essere impostata nel passato.");

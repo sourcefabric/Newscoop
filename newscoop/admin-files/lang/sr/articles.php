@@ -1,4 +1,5 @@
 <?php 
+regGS("Add article to a list", "");
 regGS("View article", "");
 regGS("Select a list", "");
 regGS("Remove list", "");
@@ -34,8 +35,6 @@ regGS("Related Articles", "Везани текстови");
 regGS("Pending articles", "Текстови на чекању");
 regGS("Pending Articles", "Текстови на чекању");
 regGS("Context Box updated", "Контекст бокс измењен");
-regGS("Article Playlist", "Плејлиста текстова");
-regGS("Add article to a playlist", "Додај текст у плејлисту:");
 regGS("On", "Укључено");
 regGS("Off", "Искључено");
 regGS("You do not have the right to moderate comments.", "Немате право модерисања коментара");

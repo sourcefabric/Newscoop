@@ -1,4 +1,5 @@
 <?php 
+regGS("Ban/Unban user", "Blocca/sblocca utente");
 regGS("Ip", "IP");
 regGS("Bans can be applied to a user's name, email address or IP address.", "Possono essere applicati blocchi a nomi utente, ad indirizzi e-mail o ad indirizzi IP.");
 regGS("at", "in");
@@ -56,7 +57,6 @@ regGS("Comment $4 by $1 in the article $2 ($3)", "Commento $4 da $1 nell'articol
 regGS("Comment \"$1\" saved.", "Commento \"$1\" salvato.");
 regGS("Column", "Colonna");
 regGS("Change subscriber information", "Cambia informazioni iscritto");
-regGS("Ban user", "Blocca utente");
 regGS("Ban for commenter \"$1\" saved.", "Blocco per il commentatore \"$1\" salvato.");
 regGS("Ban", "Blocco");
 regGS("Are you sure you want to do it?", "Sei sicuro di volerlo fare?");

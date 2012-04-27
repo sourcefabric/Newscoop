@@ -1,7 +1,7 @@
 <?php 
-regGS("User account is active", "");
-regGS("Allow user's profile to be publicly displayed", "");
-regGS("Allow user access to login to site backend", "");
+regGS("User account is active", "La cuenta del usuario está activa");
+regGS("Allow user's profile to be publicly displayed", "Permitir que el perfil del usuario sea público");
+regGS("Allow user access to login to site backend", "Permitir el acceso de los usuarios al backend del sitio");
 regGS("Templates", "Plantillas");
 regGS("Username", "Nombre de usuario");
 regGS("Last Name", "Apellido");

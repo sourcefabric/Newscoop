@@ -1,4 +1,5 @@
 <?php 
+regGS("Image Rendering", "");
 regGS("Featured Article Lists", "");
 regGS("You have tried to upload an invalid backup file.", "");
 regGS("You do not have the right to manage backups.", "");
@@ -10,7 +11,6 @@ regGS("Create slideshow", "Vytvořit slideshow");
 regGS("Create", "Vytvořit");
 regGS("Attach/Detach", "Připojit/Odpojit");
 regGS("Are you sure you want to delete slideshow?", "Jste si jisti, že chcete vymazat slideshow?");
-regGS("Renditions", "Formáty");
 regGS("Support", "Podpora");
 regGS("Pending articles", "Dosud nevyřízené články");
 regGS("Manage Users", "Správa uživatelů");

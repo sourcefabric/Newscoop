@@ -1,4 +1,5 @@
 <?php 
+regGS("Image Rendering", "Rendering delle immagini");
 regGS("Featured Article Lists", "Vetrina di articoli");
 regGS("You have tried to upload an invalid backup file.", "Il file che hai cercato di caricare non è un backup valido.");
 regGS("You do not have the right to manage backups.", "Non hai il permesso di gestire i backup.");
@@ -10,7 +11,6 @@ regGS("Create slideshow", "Crea galleria di immagini");
 regGS("Create", "Crea");
 regGS("Attach/Detach", "Allega/Scollega");
 regGS("Are you sure you want to delete slideshow?", "Vuoi davvero eliminare la galleria di immagini?");
-regGS("Renditions", "Rendition");
 regGS("Support", "Supporto");
 regGS("Pending articles", "Articoli in attesa");
 regGS("Manage Users", "Gestisci utenti");

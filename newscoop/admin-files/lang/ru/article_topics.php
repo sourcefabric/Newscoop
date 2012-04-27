@@ -1,9 +1,9 @@
 <?php 
-regGS("You must enter a name for the topic.", "");
-regGS("Show All", "");
-regGS("Select the parent of the topic", "");
-regGS("None", "");
-regGS("Add new topic", "");
+regGS("You must enter a name for the topic.", "Вы должны ввести название темы.");
+regGS("Show All", "Показать все");
+regGS("Select the parent of the topic", "Выбрать верхний уровень темы");
+regGS("None", "Ни один");
+regGS("Add new topic", "Добавить новую тему");
 regGS("No topics have been created yet.", "Нет тем, созданных пользователями.");
 regGS("Topics updated.", "Темы обновлены.");
 regGS("Topic does not exist.", "Тема не существует.");

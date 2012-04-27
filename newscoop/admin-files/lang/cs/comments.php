@@ -1,4 +1,5 @@
 <?php 
+regGS("Ban/Unban user", "");
 regGS("Ip", "IP");
 regGS("Bans can be applied to a user's name, email address or IP address.", "Zákazy mohou být aplikované na uřivatelské jméno, emailovou nebo IP adresu.");
 regGS("at", "");
@@ -56,7 +57,6 @@ regGS("Comment $4 by $1 in the article $2 ($3)", "Komentář \"$4\"");
 regGS("Comment \"$1\" saved.", "Komentář \"$1\" uložen.");
 regGS("Column", "Odstavec ");
 regGS("Change subscriber information", "Změna informací registrovaného");
-regGS("Ban user", "Zakázat uživatele");
 regGS("Ban for commenter \"$1\" saved.", "Zákaz pro komentátora \"$1\" uloženo.");
 regGS("Ban", "Zakázat");
 regGS("Are you sure you want to do it?", "Jste si jisti, že to chcete udělat?");

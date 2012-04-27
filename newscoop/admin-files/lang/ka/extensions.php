@@ -1,4 +1,7 @@
 <?php 
+regGS("Sourcefabric.org blog reader", "");
+regGS("Sourcefabric.org News reader", "");
+regGS("Feed reader", "");
 regGS("Go", "გადასვლა");
 regGS("Wikipedia Search", "ვიკიპედიის ძიება");
 regGS("Files", "ფაილები");

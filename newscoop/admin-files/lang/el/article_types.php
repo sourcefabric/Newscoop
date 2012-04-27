@@ -1,6 +1,6 @@
 <?php 
-regGS("Hide human-readable field names", "");
-regGS("Edit and translate human-readable field names", "");
+regGS("Hide human-readable field names", "Απόκρυψη ανθρωπίνως αναγνώσιμων ονομάτων πεδίων");
+regGS("Edit and translate human-readable field names", "Επεξεργασία και μετάφραση ανθρωπίνως αναγνώσιμων ονομάτων πεδίων");
 regGS("The template name may only contain letters and the underscore (_) character.", "Το όνομα προτύπου μπορεί να περιλαμβάνει μόνο γράμματα και τον χαρακτήρα υπογραμμισης (_).");
 regGS("Rename article type '$1'", "Μετονομασία τύπου άρθρου '$1'");
 regGS("Invalid article type '$1'.", "Μη έγκυρος τύπος άρθρου'$1'.");

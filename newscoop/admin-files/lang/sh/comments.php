@@ -1,4 +1,5 @@
 <?php 
+regGS("Ban/Unban user", "");
 regGS("Ip", "");
 regGS("Bans can be applied to a user's name, email address or IP address.", "Zabrane mogu biti primenjene na korisničko ime, email adresu ili IP adresu.");
 regGS("at", "u");
@@ -56,7 +57,6 @@ regGS("Comment $4 by $1 in the article $2 ($3)", "Komentar $4 od $1 u tekstu $2 
 regGS("Comment \"$1\" saved.", "Komentar \"$1\" snimljen.");
 regGS("Column", "Kolona");
 regGS("Change subscriber information", "Promeni informacije o pretplatniku");
-regGS("Ban user", "Zabrani korisnika");
 regGS("Ban for commenter \"$1\" saved.", "Zabrana za komentatora \"$1\" sačuvana.");
 regGS("Ban", "Zabrani");
 regGS("Are you sure you want to do it?", "Siguri ste da želite to da uradite?");

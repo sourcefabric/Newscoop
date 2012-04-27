@@ -1,16 +1,16 @@
 <?php 
-regGS("Only than the issue can be published", "");
+regGS("so that default templates can be assigned to the issue.", "");
+regGS("Once this is done, the issue can be published", "");
 regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Δεν είναι δυνατή η προεπισκόπηση αυτού του τεύχους. Παρακαλούμε βεβαιωθείτε ότι έχει αποδοθεί κάποιο θέμα στην έκδοση.");
 regGS("This issue cannot be previewed. Please make sure it has the front template selected.", "");
 regGS("Publish all articles:", "Δημοσίευση όλων των άρθρων:");
 regGS("Publish all articles", "Δημοσίευση όλων των άρθρων");
 regGS("Force publishing of all articles. If set to 'No', only articles with 'Publish with Issue' status will be published.", "");
-regGS("in order to be able to assigned to the issue.", "");
 regGS("default", "προεπιλογή");
 regGS("The publishing/unpublishing can not be set the same time", "");
-regGS("The publishing schedule can not be set in the past", "");
+regGS("The publishing schedule can not be set in the past", "Το πρόγραμμα δημοσιεύσεων δεν μπορεί να οριστεί στο παρελθόν");
 regGS("Please assign at least one theme to the publication", "");
-regGS("Issue Theme", "");
+regGS("Issue Theme", "Θέμα Τεύχους");
 regGS("The values you are trying to set conflict with issue \"$1$2. $3 ($4)$5\".", "Οι αξίες που προσπαθείτε να ορίσετε, έρχονται σε σγκρουση με το τεύχος \"$1$2. $3 ($4)$5\".");
 regGS("The number must be unique for each issue in this publication of the same language.", "Ο αριθμός πρέπει να είναι μοναδικός για κάθε τεύχος σε αυτή τη δημοσίευση της ίδιας γλώσσας.");
 regGS("The language and URL name must be unique for each issue in this publication.", "Η γλώσσα και το όνομα URL πρέπει να είναι μοναδικά για κάθε τεύχος σε αυτή τη δημοσίευση.");

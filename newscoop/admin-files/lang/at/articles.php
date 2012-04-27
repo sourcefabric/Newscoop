@@ -1,4 +1,5 @@
 <?php 
+regGS("Add article to a list", "");
 regGS("View article", "");
 regGS("Select a list", "");
 regGS("Remove list", "");
@@ -34,8 +35,6 @@ regGS("Related Articles", "");
 regGS("Pending articles", "");
 regGS("Pending Articles", "");
 regGS("Context Box updated", "");
-regGS("Article Playlist", "");
-regGS("Add article to a playlist", "");
 regGS("Newscoop", "");
 regGS("Overwrite articles with matching names", "");
 regGS("Article \"<i>$1</i>\" already exists, and was not overwritten.<br />", "");

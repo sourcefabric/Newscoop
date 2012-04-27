@@ -67,7 +67,6 @@ regGS("Permissions updated", "");
 regGS("Notification", "");
 regGS("Log", "");
 regGS("Layout", "");
-regGS("Interviews", "");
 regGS("Global", "");
 regGS("Files", "");
 regGS("Error: ", "");

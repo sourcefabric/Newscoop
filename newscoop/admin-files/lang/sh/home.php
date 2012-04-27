@@ -1,4 +1,5 @@
 <?php 
+regGS("Image Rendering", "");
 regGS("Featured Article Lists", "");
 regGS("You have tried to upload an invalid backup file.", "");
 regGS("You do not have the right to manage backups.", "");
@@ -10,7 +11,6 @@ regGS("Create slideshow", "");
 regGS("Create", "Napravi");
 regGS("Attach/Detach", "Prikači/Otkači");
 regGS("Are you sure you want to delete slideshow?", "");
-regGS("Renditions", "");
 regGS("Support", "Podrška");
 regGS("Pending articles", "Tekstovi na čekanju");
 regGS("Manage Users", "Upravljanje korisnicima");

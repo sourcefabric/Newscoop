@@ -67,7 +67,6 @@ regGS("Permissions updated", "უფლებები განახლდა"
 regGS("Notification", "შეტყობინება");
 regGS("Log", "აღრიცხვა");
 regGS("Layout", "გეგმა");
-regGS("Interviews", "ინტერვიუები");
 regGS("Global", "გლობალური");
 regGS("Files", "ფაილები");
 regGS("Error: ", "შეცდომა:");

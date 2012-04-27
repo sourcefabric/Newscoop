@@ -1,4 +1,5 @@
 <?php 
+regGS("Ban/Unban user", "");
 regGS("Ip", "");
 regGS("Bans can be applied to a user's name, email address or IP address.", "");
 regGS("at", "-ზე");
@@ -56,7 +57,6 @@ regGS("Comment $4 by $1 in the article $2 ($3)", "$2 ($3) სტატიის 
 regGS("Comment \"$1\" saved.", "კომენტარი \"$1\" დამახსოვრდა");
 regGS("Column", "სვეტი");
 regGS("Change subscriber information", "გამომწერის ინფორმაციის შეცვლა");
-regGS("Ban user", "მომხმარებლის დაბლოკვა");
 regGS("Ban for commenter \"$1\" saved.", "\"$1\" კომენტატორს ბანი დაედო.");
 regGS("Ban", "ბანი");
 regGS("Are you sure you want to do it?", "დაადასტურეთ, რომ გსურთ ამის გაკეთება.");

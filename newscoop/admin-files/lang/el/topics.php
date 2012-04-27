@@ -1,6 +1,6 @@
 <?php 
 regGS("If you continue, topic and all subtopics will be detached from all articles, and deleted.", "Εάν συνεχίσετε, το θέμα και όλα τα επιμέρους θέματά του θα αφαιρεθούν από όλα τα άρθρα και θα διαγραφούν.");
-regGS("Delete anyway", "");
+regGS("Delete anyway", "Διαγραφή ούτως ή άλλως");
 regGS("Reset order", "Επαναρρύθμιση εντολής");
 regGS("Order changes will be lost. Are you sure you want to continue?", "Οι αλλαγές εντολής θα χαθούν. Είστε σίγουρος/η ότι θέλετε να συνεχίσετε;");
 regGS("Topics order saved.", "Η εντολή θεμάτων αποθηκεύτηκε.");

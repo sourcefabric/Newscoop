@@ -1,4 +1,5 @@
 <?php 
+regGS("Image Rendering", "Image Rendering");
 regGS("Featured Article Lists", "Featured Article Lists");
 regGS("You have tried to upload an invalid backup file.", "You have tried to upload an invalid backup file.");
 regGS("You do not have the right to manage backups.", "You do not have the right to manage backups.");
@@ -10,7 +11,6 @@ regGS("Create slideshow", "Create slideshow");
 regGS("Create", "Create");
 regGS("Attach/Detach", "Attach/Detach");
 regGS("Are you sure you want to delete slideshow?", "Are you sure you want to delete slideshow?");
-regGS("Renditions", "Renditions");
 regGS("Support", "Support");
 regGS("Pending articles", "Pending articles");
 regGS("Manage Users", "Manage Users");

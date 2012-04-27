@@ -1,16 +1,16 @@
 <?php 
-regGS("Featured Article Lists", "");
-regGS("You have tried to upload an invalid backup file.", "");
-regGS("You do not have the right to manage backups.", "");
-regGS("Make a new backup", "");
-regGS("Are you sure you want to make a new backup?", "");
-regGS("Security token expired. Please resubmit the form.", "");
-regGS("Templates", "");
+regGS("Image Rendering", "Обработка изображения");
+regGS("Featured Article Lists", "Cписки Избранных статей");
+regGS("You have tried to upload an invalid backup file.", "Неудачная попытка загрузки файла резервной копии.");
+regGS("You do not have the right to manage backups.", "У вас нет прав доступа для управления резервными копиями.");
+regGS("Make a new backup", "Создайте новую резервную копию");
+regGS("Are you sure you want to make a new backup?", "Вы уверены, что хотите создать новую резервную копию?");
+regGS("Security token expired. Please resubmit the form.", "Маркер доступа недействителен. Пожалуйста, повторите отправку формы.");
+regGS("Templates", "Шаблоны");
 regGS("Create slideshow", "Создать слайд-шоу");
 regGS("Create", "Создать");
 regGS("Attach/Detach", "Прикрепить/Удалить");
 regGS("Are you sure you want to delete slideshow?", "Вы уверены, что хотите удалить это слайд-шоу?");
-regGS("Renditions", "Набор размеров изображения");
 regGS("Support", "Поддержка");
 regGS("Pending articles", "Статьи в процессе редактирования");
 regGS("Manage Users", "Управление пользователями");

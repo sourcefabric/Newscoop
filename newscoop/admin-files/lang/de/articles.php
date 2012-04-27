@@ -1,4 +1,5 @@
 <?php 
+regGS("Add article to a list", "");
 regGS("View article", "Artikel ansehen");
 regGS("Select a list", "Liste auswählen");
 regGS("Remove list", "Liste entfernen");
@@ -34,8 +35,6 @@ regGS("Related Articles", "Verwandte Artikel");
 regGS("Pending articles", "Pending articles");
 regGS("Pending Articles", "Pending articles");
 regGS("Context Box updated", "Content Box aktualisiert");
-regGS("Article Playlist", "Artikel Playlist");
-regGS("Add article to a playlist", "Artikel zur Playlist hinzufügen. ");
 regGS("On", "An");
 regGS("Off", "Aus");
 regGS("You do not have the right to moderate comments.", "Sie haben keine Berechtigung Kommentare zu moderieren. ");
@@ -186,7 +185,4 @@ regGS("This article cannot be previewed. Please make sure the article has an iss
 regGS("Reorder", "Nachbestellen");
 regGS("Author", "AutorIn");
 regGS("Are you sure you want to delete this scheduled action?", "");
-regGS("Are you sure you want to remove the topic \\'$1\\' from the article?", "Soll das Thema \\'$1\\' von diesem Artikel entkoppelt werden?");
-regGS("Are you sure you want to remove the file \\'$1\\' from the article?", "Soll die Datei \\'$1\\' von diesem Artikel entkoppelt werden?");
-regGS("Are you sure you want to remove the image \\'$1\\' from the article?", "Soll das Bild \\'$1\\' vom Artikel entkoppelt werden?");
 ?>
