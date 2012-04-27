@@ -1,11 +1,6 @@
 <?php 
-<<<<<<< HEAD
 regGS("Image Rendering", "Generación de imagen");
 regGS("Featured Article Lists", "Lista de articulos seleccionados");
-=======
-regGS("Image Rendering", "");
-regGS("Featured Article Lists", "");
->>>>>>> 21206a7089996e10429eedd8e8f1fb546b55da87
 regGS("You have tried to upload an invalid backup file.", "Has tratado de subir un archivo de respaldo inválido.");
 regGS("You do not have the right to manage backups.", "No tienes los permisos para administrar archivos de respaldo.");
 regGS("Make a new backup", "Haz un nueva copia de respaldo.");

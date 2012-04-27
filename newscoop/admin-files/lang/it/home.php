@@ -1,9 +1,5 @@
 <?php 
-<<<<<<< HEAD
 regGS("Image Rendering", "Rendering delle immagini");
-=======
-regGS("Image Rendering", "");
->>>>>>> 21206a7089996e10429eedd8e8f1fb546b55da87
 regGS("Featured Article Lists", "Vetrina di articoli");
 regGS("You have tried to upload an invalid backup file.", "Il file che hai cercato di caricare non è un backup valido.");
 regGS("You do not have the right to manage backups.", "Non hai il permesso di gestire i backup.");

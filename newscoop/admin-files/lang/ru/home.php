@@ -1,5 +1,4 @@
 <?php 
-<<<<<<< HEAD
 regGS("Image Rendering", "Обработка изображения");
 regGS("Featured Article Lists", "Cписки Избранных статей");
 regGS("You have tried to upload an invalid backup file.", "Неудачная попытка загрузки файла резервной копии.");
@@ -8,16 +7,6 @@ regGS("Make a new backup", "Создайте новую резервную ко�
 regGS("Are you sure you want to make a new backup?", "Вы уверены, что хотите создать новую резервную копию?");
 regGS("Security token expired. Please resubmit the form.", "Маркер доступа недействителен. Пожалуйста, повторите отправку формы.");
 regGS("Templates", "Шаблоны");
-=======
-regGS("Image Rendering", "");
-regGS("Featured Article Lists", "");
-regGS("You have tried to upload an invalid backup file.", "");
-regGS("You do not have the right to manage backups.", "");
-regGS("Make a new backup", "");
-regGS("Are you sure you want to make a new backup?", "");
-regGS("Security token expired. Please resubmit the form.", "");
-regGS("Templates", "");
->>>>>>> 21206a7089996e10429eedd8e8f1fb546b55da87
 regGS("Create slideshow", "Создать слайд-шоу");
 regGS("Create", "Создать");
 regGS("Attach/Detach", "Прикрепить/Удалить");
