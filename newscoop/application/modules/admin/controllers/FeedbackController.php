@@ -26,6 +26,8 @@ class Admin_FeedbackController extends Zend_Controller_Action
 
     public function init()
     {
+        camp_load_translation_strings('comments');
+
         // get feedback repository
         $this->feedbackRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Feedback');
 

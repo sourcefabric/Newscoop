@@ -150,8 +150,6 @@ audit.events[] = topic.create
 audit.events[] = topic.delete
 audit.events[] = translation.create
 audit.events[] = translation.delete
-audit.events[] = user.create
-audit.events[] = user.delete
 
 community_feed.events[] = user.register
 community_feed.events[] = print.subscribe

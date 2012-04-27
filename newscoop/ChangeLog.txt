@@ -1,3 +1,63 @@
+4.0 (April 25, 2012)
+  Improvements
+  ------------
+  CS-4176: Integrate the Rockstar to the list of available themes
+  CS-4194: User role checkboxes need clarifying: Active, Admin access, Public Profile
+  CS-4191: Default permissions for Journalists, editors etc. need reviewing
+  CS-4242: Configure -> Renditions would be much more obvious if the menu said Configure -> Image Rendering
+  CS-4203: Slideshow management page should display which rendition was used to create slideshow
+  CS-3958: Order by custom fields
+  CS-4215: Limit session time php session cleaning time
+
+  Bug fixes
+  ---------
+  CS-4020: Error Invalid security token! after admin login
+  CS-4225: Media Archive page crashed with PHP Fatal error: Uncaught exception, after deleting some images
+  CS-4238: Newscoop 4 is not support attachments on front-end
+  CS-4223: Preview of pending articles from Dashboard does not work
+  CS-4279: Application error is showed if user edit Start date in subscription
+  CS-4284: Input fields that are not html escaped on output (javascript injection)
+  CS-4281: Users->manage Users-> Creating a new account leads to an internal error
+  CS-4158: Logs shows Application error in back-end
+  CS-4209: Installation checks PHP 5.2 even if newscoop needs to have PHP 5.3.2 or newer
+  CS-4221: Add new interview link is broken, causes blank pop-up window to open
+  CS-4273: Missing translation strings
+  CS-4227: Column sort chevrons in Article List do not work
+  CS-4247: Putting certain JS injection in Configure->Themes-> Edit Theme name - crashes the page
+  CS-3121: list_article_comments ignores ignore_language and ignore_article
+  CS-4228: New Custodian theme comment counter doesn't work
+  CS-4125: Email confirmation is in German and gets immediately marked as spam
+  CS-4210: Console and Yaml libraries are included twice in the same tarball
+  CS-4189: Next: Place images action fails silently if the user does not enter metadata
+  CS-4212: New Custodian theme pulls video.js from a third-party site
+  CS-4162: Feedback popup: block the interface, cancel button needed, checkbox for privacy policy is missing, wording changes
+  CS-4213: Upgrade from Campsite 3.3.3 fails
+  CS-4138: WYSIWYG editor can't add image for updated newscoop from RC2 to RC3
+  CS-4208: Images URL has incorrect address for back-end when newscoop is installed as sub-folder
+  CS-4211: Slideshow create dialog has no label for rendition
+  CS-3995: Janitorial fixes required for packaging for Debian/Ubuntu distributions
+  CS-4217: Support pop-up is showed again after close this pop-up in FF
+  CS-4206: List of submenu items isn't automatic hidden. This is only until users go to somewhere in newscoop
+  CS-4226: Add new image link is crowded in Media Archive
+  CS-4244: UserManagement-> Improperly designed pages available
+  CS-4233: News Desk widget still appears and brings up error when added
+  CS-4253: Not all the fields are translated when you log in in different languages
+  CS-4205: Error log file doesnt give same information as production as development
+  CS-4286: The New Custodian: Comments->Submitting wrong CAPTCHA page contains some internal address which must be removed
+  CS-4230: Fix empty object_id at statistics
+  CS-4264: Make it more clear how to unban a user in the comments moderation
+  CS-4265: Publication which has no Theme associated triggers error message having wrong spelling
+  CS-4222: Backup warning has poor English grammar
+  CS-4245: Users-> Manage Users -> Edit Subscriptions is in wrong place
+  CS-4219: Theme 'Rockstar' hasn't preview for issue page, section page and article page
+
+  Tasks
+  -----
+  CS-3906: Update subscriptions to work with refactored Users
+  CS-4192: Rename Article Playlists to Featured Article Lists
+  CS-4266: Update database for sample themes
+  CS-4241: Delete plugin Interview from list of plugins
+
 4.0-RC4 (April 05, 2012)
   Improvements
   ------------

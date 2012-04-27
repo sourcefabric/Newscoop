@@ -227,9 +227,9 @@ if (count($polls)) {
                     }
                     ?>
                     <a href="edit.php?f_poll_nr=<?php p($poll->getNumber()); ?>&amp;f_fk_language_id=<?php p($poll->getLanguageId()); ?>">
-                        <?php p($poll->getProperty('title')); ?>
+                        <?php echo htmlspecialchars($poll->getProperty('title')); ?>
                     </a>
-                    &nbsp; (<?php p($poll->getLanguageName()); ?>)
+                    &nbsp; (<?php echo htmlspecialchars($poll->getLanguageName()); ?>)
                 </td>
 
                 <td align="center"><?php p($poll->getProperty('date_begin')); ?></td>

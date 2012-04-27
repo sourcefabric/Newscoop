@@ -61,7 +61,6 @@ regGS("'%value%' is more than %max% characters long", "%value%' ist mehr als  %m
 regGS("'%value%' is less than %min% characters long", "'%value%' ist weniger als  %min% Zeichen lang");
 regGS("User name", "User Name");
 regGS("Newscoop", "Newscoop");
-regGS("Campsite", "Campsite");
 regGS("Your password has been reset.", "Ihr Passwort würde zurück gesetzt. ");
 regGS("Proceed to login.", "Weiter zum Login. ");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "Hallo, \n\nfor um das Passwort wiederherzustellen, folgen Sie bitte diesem Link: $1");

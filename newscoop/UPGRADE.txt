@@ -47,3 +47,9 @@ please read the manual.
 The template language is fully backward compatible with the older 3.x
 versions.
 
+In version 4.0 the old templates system was replaced by themes, when upgrading
+this may generate problems when rendering the front-end pages as it was
+impossible to cover all cases. If you get into this situation you should
+modify your templates manually to adjust certain paths. You can always ask
+in our forums for support, we will be glad to help you out!
+

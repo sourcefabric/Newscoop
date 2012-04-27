@@ -1,4 +1,5 @@
 <?php 
+regGS("Support", "");
 regGS("Themes", "Θέματα");
 regGS("Area to localize", "");
 regGS("Dashboard", "Πίνακας");

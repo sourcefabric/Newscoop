@@ -45,7 +45,7 @@
             {{ /if }}
 
             {{ if $gimme->submit_comment_action->is_error }}
-                <p><em>{{ $gimme->submit_comment_action->error_message }}</em> {{ $gimme->submit_comment_action->error_code }}</p>
+                <p><em>{{ $gimme->submit_comment_action->error_message }}</em></p>
             {{ else }}
                 {{ if $gimme->submit_comment_action->defined }}
                     {{ if $gimme->publication->moderated_comments }}
@@ -84,7 +84,7 @@
             {{ /if }}
 
             {{ if $gimme->submit_comment_action->is_error }}
-                <p><em>{{ $gimme->submit_comment_action->error_message }}</em> {{ $gimme->submit_comment_action->error_code }}</p>
+                <p><em>{{ $gimme->submit_comment_action->error_message }}</em></p>
             {{ else }}
                 {{ if $gimme->submit_comment_action->defined }}
                     {{ if $gimme->publication->moderated_comments }}
@@ -117,7 +117,7 @@
             {{ /if }}
 
             {{ if $gimme->submit_comment_action->is_error }}
-                <p><em>{{ $gimme->submit_comment_action->error_message }}</em> {{ $gimme->submit_comment_action->error_code }}</p>
+                <p><em>{{ $gimme->submit_comment_action->error_message }}</em></p>
             {{ else }}
                 {{ if $gimme->submit_comment_action->defined }}
                     {{ if $gimme->publication->moderated_comments }}

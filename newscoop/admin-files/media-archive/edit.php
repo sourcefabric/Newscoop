@@ -134,7 +134,7 @@ echo $breadcrumbs;
 	<TD align="left">
 	<INPUT TYPE="TEXT" NAME="f_image_description" id="f_image_description" VALUE="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" SIZE="32" class="input_text">
     <?php
-        if ($iptcDescription) {
+        if (!empty($iptcDescription)) {
             ?>
             <small><a style="float:right;" href="javascript:void(0);" onClick="document.getElementById('f_image_description').value='<?php echo($iptcDescription); ?>';">IPTC</a></small>
             <?php
@@ -147,7 +147,7 @@ echo $breadcrumbs;
 	<TD align="left">
 	<INPUT TYPE="TEXT" NAME="f_image_photographer" id="f_image_photographer" VALUE="<?php echo htmlspecialchars($imageObj->getPhotographer());?>" SIZE="32" class="input_text">
     <?php
-        if ($iptcPhotographer) {
+        if (!empty($iptcPhotographer)) {
             ?>
             <small><a style="float:right;" href="javascript:void(0);" onClick="document.getElementById('f_image_photographer').value='<?php echo($iptcPhotographer); ?>';">IPTC</a></small>
             <?php
@@ -160,7 +160,7 @@ echo $breadcrumbs;
 	<TD align="left">
 	<INPUT TYPE="TEXT" NAME="f_image_place" id="f_image_place" VALUE="<?php echo htmlspecialchars($imageObj->getPlace()); ?>" SIZE="32" class="input_text">
     <?php
-        if ($iptcPlace) {
+        if (!empty($iptcPlace)) {
             ?>
             <small><a style="float:right;" href="javascript:void(0);" onClick="document.getElementById('f_image_place').value='<?php echo($iptcPlace); ?>';">IPTC</a></small>
             <?php
@@ -173,12 +173,12 @@ echo $breadcrumbs;
 	<TD align="left">
 	<input type="text" id="f_image_date" name="f_image_date" value="<?php echo htmlspecialchars($imageObj->getDate()); ?>" size="11" maxlength="10" class="input_text date" />
     <?php
-        if ($exifDate) {
+        if (!empty($exifDate)) {
             ?>
             <small><a style="float:right;" href="javascript:void(0);" onClick="document.getElementById('f_image_date').value='<?php echo($exifDate); ?>';">&nbsp;EXIF</a></small>
             <?php
         }
-        if ($iptcDate) {
+        if (!empty($iptcDate)) {
             ?>
             <small><a style="float:right;" href="javascript:void(0);" onClick="document.getElementById('f_image_date').value='<?php echo($iptcDate); ?>';">IPTC</a></small>
             <?php
@@ -187,7 +187,7 @@ echo $breadcrumbs;
 	</TD>
 </TR>
 <?php
-    if ($iptcDescription || $iptcPhotographer || $iptcPlace || $iptcDate) {
+    if (!empty($iptcDescription) || !empty($iptcPhotographer) || !empty($iptcPlace) || !empty($iptcDate)) {
         ?>
         
         <TR>
@@ -279,8 +279,8 @@ if (count($articles) > 0) {
 			else {
 				echo '<td>';
 			}
-			echo "<a href=\"".camp_html_article_url($translation, $translation->getLanguageId(), "edit.php").'">'.htmlspecialchars($translation->getTitle()).'</a></td>';
-			echo "<td>".$translation->getLanguageName()."</td>";
+			echo "<a href=\"".camp_html_article_url($translation, $translation->getLanguageId(), "edit.php").'">'.$this->view->escape($translation->getTitle()).'</a></td>';
+			echo "<td>".$this->view->escape($translation->getLanguageName())."</td>";
 			echo "</tr>";
 			$previousArticleNumber = $translation->getArticleNumber();
 		}

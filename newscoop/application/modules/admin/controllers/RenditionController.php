@@ -10,6 +10,11 @@
  */
 class Admin_RenditionController extends Zend_Controller_Action
 {
+    public function init()
+    {
+        camp_load_translation_strings('article_images');
+    }
+
     public function indexAction()
     {
         $this->view->renditions = $this->_helper->service('image.rendition')->getRenditions();

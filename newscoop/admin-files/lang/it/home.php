@@ -1,5 +1,9 @@
 <?php 
+<<<<<<< HEAD
 regGS("Image Rendering", "Rendering delle immagini");
+=======
+regGS("Image Rendering", "");
+>>>>>>> 21206a7089996e10429eedd8e8f1fb546b55da87
 regGS("Featured Article Lists", "Vetrina di articoli");
 regGS("You have tried to upload an invalid backup file.", "Il file che hai cercato di caricare non è un backup valido.");
 regGS("You do not have the right to manage backups.", "Non hai il permesso di gestire i backup.");
@@ -61,7 +65,6 @@ regGS("'%value%' is more than %max% characters long", "'%value%' è più lungo d
 regGS("'%value%' is less than %min% characters long", "'%value%' è più corto di %min% caratteri");
 regGS("User name", "Nome utente");
 regGS("Newscoop", "Newscoop");
-regGS("Campsite", "Campsite");
 regGS("Your password has been reset.", "La tua password è stata resettata.");
 regGS("Proceed to login.", "Prosegui con il login.");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "Salve, \n\n per il recupero della password, per favore segui questo link: $1");
@@ -152,5 +155,4 @@ regGS("Login failed", "Login fallito");
 regGS("Please make sure that you typed the correct user name and password.", "Verifica di aver digitato nome utente e password corretti.");
 regGS("If your problem persists please contact the site administrator $1", "Se il problema persiste, contatta l'amministratore $1");
 regGS("Backup/Restore", "Backup/Ripristino");
-regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Salve, \\n\\n per il recupero della password, per favore segui questo link: $1");
 ?>

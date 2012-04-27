@@ -227,9 +227,9 @@ if (count($debates)) {
                     }
                     ?>
                     <a href="edit.php?f_debate_nr=<?php p($debate->getNumber()); ?>&amp;f_fk_language_id=<?php p($debate->getLanguageId()); ?>">
-                        <?php p($debate->getProperty('title')); ?>
+                        <?php echo htmlspecialchars($debate->getProperty('title')); ?>
                     </a>
-                    &nbsp; (<?php p($debate->getLanguageName()); ?>)
+                    &nbsp; (<?php echo htmlspecialchars($debate->getLanguageName()); ?>)
                 </td>
 
                 <td align="center"><?php p($debate->getProperty('date_begin')); ?></td>

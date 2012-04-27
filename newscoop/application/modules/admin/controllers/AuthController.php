@@ -12,7 +12,7 @@ class Admin_AuthController extends Zend_Controller_Action
 {
     public function init()
     {
-        camp_load_translation_strings('api');
+        camp_load_translation_strings('users');
     }
 
     public function logoutAction()

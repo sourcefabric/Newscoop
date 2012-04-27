@@ -49,6 +49,8 @@ class Admin_CommentCommenterController extends Zend_Controller_Action
 
     public function init()
     {
+        camp_load_translation_strings('comments');
+
         // get commenter repository
         $this->commenterRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Comment\Commenter');
 

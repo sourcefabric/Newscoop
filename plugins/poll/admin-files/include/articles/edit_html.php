@@ -14,7 +14,7 @@ global $articleObj, $f_article_number, $f_edit_mode, $g_user;
 <?php foreach (PollArticle::getAssignments(null, $articleObj->getLanguageId(), $articleObj->getArticleNumber()) as $pollArticle) {
     $poll = $pollArticle->getPoll($articleObj->getLanguageId());
 ?>
-<li><?php echo $poll->getName(), ' (', $poll->getLanguageName(), ')'; ?></li>
+<li><?php echo htmlspecialchars($poll->getName()), ' (', htmlspecialchars($poll->getLanguageName()), ')'; ?></li>
 <?php } ?>
 </ul>
 

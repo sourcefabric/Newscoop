@@ -61,7 +61,6 @@ regGS("'%value%' is more than %max% characters long", "%value% შეიცა�
 regGS("'%value%' is less than %min% characters long", "%value% შეიცავს %min%-ზე ნაკლებ სიმბოლოს");
 regGS("User name", "მომხმარებლის სახელი");
 regGS("Newscoop", "ნიუსქუფი");
-regGS("Campsite", "ბანა");
 regGS("Your password has been reset.", "თქვენი პაროლი გადაიტვირთვა");
 regGS("Proceed to login.", "განაგრძეთ ავტორიზაციისკენ");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "გამარჯობა, \n\nfor პაროლის აღდგენა, მიჰყევით ამ ლინკს $1");

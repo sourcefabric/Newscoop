@@ -61,7 +61,6 @@ regGS("'%value%' is more than %max% characters long", "Η αξία '%value%'  ε
 regGS("'%value%' is less than %min% characters long", "Η αξία '%value%'  είναι μικρότερη από %max% χαρακτήρες");
 regGS("User name", "Όνομα Χρήστη");
 regGS("Newscoop", "Newscoop");
-regGS("Campsite", "Campsite");
 regGS("Your password has been reset.", "Έγινε επαναφορά του κωδικού πρόσβασής σας.");
 regGS("Proceed to login.", "");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "Καλήσπέρα, \n\nγια ανάκτηση του κωδικού πρόσβασης, παρακαλούμε ακολουθήστε τον παρακάτω σύνδεσμο: $1");
@@ -152,5 +151,4 @@ regGS("Login failed", "Η είσοδος απέτυχε");
 regGS("Please make sure that you typed the correct user name and password.", "Παρακαλούμε επιβεβαιωθείτε ότι πληκτρολογήσατε το σωστό όνομα χρήστη και κωδικό πρόσβασης.");
 regGS("If your problem persists please contact the site administrator $1", "Αν το πρόβλημα παραμένει, παρακαλούμε επικοινωνήστε με τον διαχειριστή του ιστοτόπου $1");
 regGS("Backup/Restore", "Αντίγραφο ασφαλείας/ Επαναφορά");
-regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Καλήσπέρα, \\n\\nγια ανάκτηση του κωδικού πρόσβασης, παρακαλούμε ακολουθήστε τον παρακάτω σύνδεσμο: $1");
 ?>

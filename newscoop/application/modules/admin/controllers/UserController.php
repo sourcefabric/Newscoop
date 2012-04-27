@@ -26,7 +26,6 @@ class Admin_UserController extends Zend_Controller_Action
      */
     public function init()
     {
-        camp_load_translation_strings('api');
         camp_load_translation_strings('users');
 
         $this->userService = $this->_helper->service('user');

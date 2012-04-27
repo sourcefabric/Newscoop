@@ -10,6 +10,11 @@
  */
 class Admin_ApplicationController extends Zend_Controller_Action
 {
+    public function init()
+    {
+        camp_load_translation_strings('api');
+    }
+
     public function indexAction()
     {
         $this->_forward('help');

@@ -1,5 +1,10 @@
 <?php 
+<<<<<<< HEAD
 regGS("Themes", "Темы");
+=======
+regGS("Support", "");
+regGS("Themes", "");
+>>>>>>> 21206a7089996e10429eedd8e8f1fb546b55da87
 regGS("Area to localize", "Район локализации");
 regGS("Dashboard", "Мой Newscoop");
 regGS("Authors", "Авторы");

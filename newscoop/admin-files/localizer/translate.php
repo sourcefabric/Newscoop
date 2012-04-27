@@ -132,6 +132,7 @@ function translationForm($p_request)
     $mapPrefixToDisplay["plugins"] = getGS("Plugins");
     $mapPrefixToDisplay["extensions"] = getGS("Extensions");
     $mapPrefixToDisplay["authors"] = getGS("Authors");
+    $mapPrefixToDisplay["support"] = getGS("Support");
 
     foreach (CampPlugin::GetPluginsInfo(true) as $info) {
     	if (array_key_exists('localizer', $info) && is_array($info['localizer'])) {

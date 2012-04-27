@@ -13,7 +13,7 @@ camp_load_translation_strings("plugin_debate");
 <?php foreach (DebateArticle::getAssignments(null, $articleObj->getLanguageId(), $articleObj->getArticleNumber()) as $debateArticle) {
     $debate = $debateArticle->getDebate($articleObj->getLanguageId());
 ?>
-<li><?php echo $debate->getName(), ' (', $debate->getLanguageName(), ')'; ?></li>
+<li><?php echo htmlspecialchars($debate->getName()), ' (', htmlspecialchars($debate->getLanguageName()), ')'; ?></li>
 <?php } ?>
 </ul>
 

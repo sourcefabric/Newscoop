@@ -32,7 +32,6 @@ regGS("MiB", "");
 regGS("Download was not successful. Check please that the server is not out of disk space.", "");
 regGS("User name", "");
 regGS("Newscoop", "");
-regGS("Campsite", "");
 regGS("Your password has been reset.", "סיסמתך אופסה");
 regGS("Proceed to login.", "התקדם לכניסה");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "שלום, לשיחזור סיסמא, לחץ על הקישור: $1");

@@ -206,7 +206,7 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
 	$breadcrumbs[] = array("Content", "");
 	if (!is_null($publicationObj)) {
 	    $prompt =  getGS("Publication").":";
-	    $name = htmlspecialchars($publicationObj->getName(), ENT_NOQUOTES);
+	    $name = $publicationObj->getName();
     	$breadcrumbs[] = array($prompt, "/$ADMIN/pub/", false);
     	$breadcrumbs[] = array($name, "/$ADMIN/pub/edit.php?Pub=".$publicationObj->getPublicationId());
 	}
@@ -219,8 +219,7 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
     	       ."&Issue=".$issueObj->getIssueNumber()
     	       ."&Language=".$issueObj->getLanguageId(),
     	       false);
-	    $name = htmlspecialchars($issueObj->getName(), ENT_NOQUOTES) .
-                ' (' . htmlspecialchars($issueObj->getLanguageName(), ENT_NOQUOTES) . ')';
+	    $name = $issueObj->getName() . ' (' . $issueObj->getLanguageName() . ')';
         $breadcrumbs[] = array($name,
     	       "/$ADMIN/issues/edit.php"
     	       ."?Pub=".$issueObj->getPublicationId()
@@ -236,7 +235,7 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
                 ."&Language=".$sectionObj->getLanguageId()
                 ."&Section=".$sectionObj->getSectionNumber(),
                 false);
-	    $name = htmlspecialchars($sectionObj->getName(), ENT_NOQUOTES);
+	    $name = $sectionObj->getName();
         $breadcrumbs[] = array($name,
                 "/$ADMIN/sections/edit.php"
                 ."?Pub=".$sectionObj->getPublicationId()
@@ -254,8 +253,7 @@ function camp_html_content_top($p_title, $p_objArray, $p_includeLinks = true,
                 ."&f_section_number=".$articleObj->getSectionNumber()
                 ."&f_article_number=".$articleObj->getArticleNumber(),
                 false);
-	    $name = htmlspecialchars($articleObj->getName(), ENT_NOQUOTES) .
-                ' (' . htmlspecialchars($articleObj->getLanguageName(), ENT_NOQUOTES) . ')';
+	    $name = $articleObj->getName() . ' (' . $articleObj->getLanguageName() . ')';
         $breadcrumbs[] = array($name,
                 "/$ADMIN/articles/edit.php"
                 ."?f_publication_id=" . $articleObj->getPublicationId()

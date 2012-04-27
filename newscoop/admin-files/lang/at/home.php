@@ -28,7 +28,6 @@ regGS("Create new account", "");
 regGS("Add feed", "");
 regGS("User name", "");
 regGS("Newscoop", "");
-regGS("Campsite", "");
 regGS("Your password has been reset.", "");
 regGS("Proceed to login.", "");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "");

@@ -1,6 +1,11 @@
 <?php 
+<<<<<<< HEAD
 regGS("Image Rendering", "Generación de imagen");
 regGS("Featured Article Lists", "Lista de articulos seleccionados");
+=======
+regGS("Image Rendering", "");
+regGS("Featured Article Lists", "");
+>>>>>>> 21206a7089996e10429eedd8e8f1fb546b55da87
 regGS("You have tried to upload an invalid backup file.", "Has tratado de subir un archivo de respaldo inválido.");
 regGS("You do not have the right to manage backups.", "No tienes los permisos para administrar archivos de respaldo.");
 regGS("Make a new backup", "Haz un nueva copia de respaldo.");
@@ -61,7 +66,6 @@ regGS("'%value%' is more than %max% characters long", "'%value%' es mayor a %max
 regGS("'%value%' is less than %min% characters long", "'%value%' es menor a %max% caracteres de largo");
 regGS("User name", "Usuario");
 regGS("Newscoop", "Newscoop");
-regGS("Campsite", "Campsite");
 regGS("Your password has been reset.", "Se ha restablecido su contraseña.");
 regGS("Proceed to login.", "Proceda al ingreso.");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "Hola, \n\n para recuperar su contraseña, siga el siguiente enlace $1");

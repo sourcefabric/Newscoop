@@ -153,6 +153,8 @@ class Admin_ThemesController extends Zend_Controller_Action
     public $instId = null;
     public function init()
     {
+        camp_load_translation_strings('themes');
+
         $this->getThemeService();
 
         // TODO move this + callbacks from here to a higher level

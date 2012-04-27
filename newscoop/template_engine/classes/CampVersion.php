@@ -27,22 +27,22 @@ final class CampVersion
     /**
      * @var string
      */
-    private $m_release = '4.0';
+    private $m_release = '4.0.0';
 
     /**
      * @var string
      */
-    private $m_devStatus = 'RC4';
+    private $m_devStatus = '';
 
     /**
      * @var string
      */
-    private $m_codeName = '';
+    private $m_codeName = 'Majda';
 
     /**
      * @var string
      */
-    private $m_releaseDate = '2012-04-05';
+    private $m_releaseDate = '2012-04-25';
 
     /**
      * @var string

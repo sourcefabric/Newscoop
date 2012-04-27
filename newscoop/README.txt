@@ -1,6 +1,6 @@
 Newscoop
-version     : 4.0-RC4
-release date: April 05, 2012
+version     : 4.0
+release date: April 25, 2012
 contact     : contact@sourcefabric.org
 url         : http://www.sourcefabric.org
 copyright   : (C) 2010-2012 Sourcefabric o.p.s, 2004-2009 Media Development Loan Fund

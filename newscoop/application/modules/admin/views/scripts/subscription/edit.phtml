@@ -1,7 +1,7 @@
 <?php $this->placeholder('title')->set(getGS('Subscription sections')); ?>
 <header>
     <h1><?php putGS('Subscriptions'); ?></h1>
-    <a class="btn prime" href="<?php echo $this->url(array('controller' => 'subscription', 'action' => 'index', 'subscription' => null)); ?>"><?php putGS('Done'); ?></a>
+    <a class="btn prime" href="<?php echo $this->url(array('controller' => 'subscription', 'action' => 'index', 'subscription' => null, 'user' => $this->subscriber)); ?>"><?php putGS('Done'); ?></a>
 </header>
 
 <section>

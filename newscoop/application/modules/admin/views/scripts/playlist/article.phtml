@@ -81,7 +81,7 @@ function loadContextList(playlistId)
 }
 function appendItemToContextList(article_id, article_date, article_title, prepend)
 {
-	var newItem = '<li class="item" id="'+article_id+'">'+
+	var newItem = $('<li class="item" id="'+article_id+'">'+
 		'<input type="hidden" name="article-id[]" value="'+article_id+'" />'+
     	'<div class="context-item">'+
         '<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>'+
@@ -92,9 +92,10 @@ function appendItemToContextList(article_id, article_date, article_title, prepen
         '</div>'+
         '<a href="#" class="corner-button" style="display: block" '+
         	'onClick="$(this).parent(\'div\').parent(\'li.item\').remove();toggleDragZonePlaceHolder();"><span class="ui-icon ui-icon-closethick"></span></a>'+
-        '<div class="context-item-summary">'+article_title+'</div>'+
+        '<div class="context-item-summary"></div>'+
         '</div>'+
-    	'</li>';
+        '</li>');
+    newItem.find('.context-item-summary').text(article_title);
 
 	if( typeof prepend != 'undefined' )
     	$("#context_list").prepend( newItem );

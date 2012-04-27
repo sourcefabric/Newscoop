@@ -61,7 +61,6 @@ regGS("'%value%' is more than %max% characters long", "'%value%' je duži od %ma
 regGS("'%value%' is less than %min% characters long", "'%value%' je kraća od %min% karaktera");
 regGS("User name", "Korisničko ime");
 regGS("Newscoop", "Newscoop");
-regGS("Campsite", "Kempsajt");
 regGS("Your password has been reset.", "Lozinka je resetovana.");
 regGS("Proceed to login.", "Nastavi sa prijavljivanjem.");
 regGS("Hi, \n\nfor password recovery, please follow this link: $1", "Zdravo, \n\nza ppovraćaj lozinke, molimo sledite ovaj link: $1");

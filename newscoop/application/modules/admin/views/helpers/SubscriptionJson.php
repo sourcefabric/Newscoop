@@ -26,6 +26,7 @@ class Admin_View_Helper_SubscriptionJson extends Zend_View_Helper_Abstract
                     'controller' => 'subscription',
                     'action' => 'edit',
                     'subscription' => $subscription->getId(),
+                    'user' => $subscription->getUser()->getId(),
                 ), 'default'),
             ),
             'toPay' => $subscription->getToPay(),
