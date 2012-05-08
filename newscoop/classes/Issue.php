@@ -655,7 +655,7 @@ class Issue extends DatabaseObject {
 		$columnNames = $tmpIssue->getColumnNames(true);
 		$queryStr = 'SELECT '.implode(',', $columnNames);
 		if (!is_null($p_preferredLanguage)) {
-			$queryStr .= ", abs(IdLanguage-$p_preferredLanguage) as LanguageOrder";
+                        $queryStr .= ", ABS(CAST(IdLanguage AS SIGNED) - $p_preferredLanguage) as LanguageOrder";
 			$p_sqlOptions['ORDER BY'] = array('Number' => 'DESC', 'LanguageOrder' => 'ASC');
 		}
 		// We have to display the language name so oftern that we might
