@@ -180,8 +180,11 @@ class Article extends DatabaseObject {
      */
     public function setProperty($p_dbColumnName, $p_value, $p_commit = true, $p_isSql = false)
     {
+        $ignoreFields = array('LockUser', 'LockTime', 'IsIndexed', 'time_updated');
+        if (!in_array($p_dbColumnName, $ignoreFields)) {
+            $this->m_cacheUpdate = true;
+        }
         $status = parent::setProperty($p_dbColumnName, $p_value, $p_commit, $p_isSql);
-        $this->m_cacheUpdate = true;
         return $status;
     }
 
@@ -1157,7 +1160,6 @@ class Article extends DatabaseObject {
     public function setIssueNumber($p_value)
     {
         if (is_numeric($p_value)) {
-            $this->m_cacheUpdate = true;
             return $this->setProperty('NrIssue', (int)$p_value);
         } else {
             return false;
@@ -1185,7 +1187,6 @@ class Article extends DatabaseObject {
     public function setSectionNumber($p_value)
     {
         if (is_numeric($p_value)) {
-            $this->m_cacheUpdate = true;
             return $this->setProperty('NrSection', (int)$p_value);
         } else {
             return false;
@@ -1250,7 +1251,6 @@ class Article extends DatabaseObject {
      */
     public function setTitle($p_title)
     {
-        $this->m_cacheUpdate = true;
         return parent::setProperty('Name', $p_title);
     } // fn setTitle
 
@@ -1351,7 +1351,6 @@ class Article extends DatabaseObject {
      */
     public function setOnFrontPage($p_value)
     {
-        $this->m_cacheUpdate = true;
         return parent::setProperty('OnFrontPage', $p_value?'Y':'N');
     } // fn setOnFrontPage
 
@@ -1374,7 +1373,6 @@ class Article extends DatabaseObject {
      */
     public function setOnSectionPage($p_value)
     {
-        $this->m_cacheUpdate = true;
         return parent::setProperty('OnSection', $p_value?'Y':'N');
     } // fn setOnSectionPage
 
@@ -1486,7 +1484,6 @@ class Article extends DatabaseObject {
         }
 
         CampCache::singleton()->clear('user');
-        $this->m_cacheUpdate = true;
 
         if (function_exists("camp_load_translation_strings")) {
             camp_load_translation_strings("api");
@@ -1712,7 +1709,6 @@ class Article extends DatabaseObject {
      */
     public function setUrlName($p_value)
     {
-        $this->m_cacheUpdate = true;
         return parent::setProperty('ShortName', $p_value);
     } // fn setUrlName
 

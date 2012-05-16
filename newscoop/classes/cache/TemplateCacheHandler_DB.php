@@ -36,7 +36,7 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
      */
     public function update($campsiteVector)
     {
-        $queryStr = 'DELETE FROM Cache WHERE ' . self::vectorToWhereString($campsiteVector);
+        $queryStr = 'UPDATE Cache SET status = "E" WHERE ' . self::vectorToWhereString($campsiteVector);
         $this->_ado_db->Execute($queryStr);
 
         if (!empty($campsiteVector['language']) && !empty($campsiteVector['publication'])) {
@@ -46,19 +46,19 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
             :'issue IS NULL AND ';
 
             // clear language, publication, issue, section, null vector
-            if (!empty($campsiteVector['section'])) {
-                $queryStr = 'DELETE FROM Cache WHERE ' . $whereStr . "section = {$campsiteVector['section']} AND ";
+            if (isset($campsiteVector['section'])) {
+                $queryStr = 'UPDATE Cache SET status = "E" WHERE ' . $whereStr . "section = {$campsiteVector['section']} AND ";
                 $queryStr .= "article IS NULL";
                 $this->_ado_db->Execute($queryStr);
             }
 
             // clear language, publication, issue, null, null vector
-            $queryStr = 'DELETE FROM Cache WHERE ' . $whereStr . "section IS NULL AND article IS NULL";
+            $queryStr = 'UPDATE Cache SET status = "E" WHERE ' . $whereStr . "section IS NULL AND article IS NULL";
             $this->_ado_db->Execute($queryStr);
 
             // clear language, publication, null, null, null vector
-            if (!empty($campsiteVector['issue'])) {
-                $queryStr = 'DELETE FROM Cache WHERE language = '. "{$campsiteVector['language']} AND "
+            if (isset($campsiteVector['issue'])) {
+                $queryStr = 'UPDATE Cache SET status = "E" WHERE language = '. "{$campsiteVector['language']} AND "
                 . "publication = {$campsiteVector['publication']} AND issue IS NULL AND section IS NULL AND article IS NULL";
                 $this->_ado_db->Execute($queryStr);
             }
@@ -80,7 +80,7 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
         $compile_id = null, $exp_time = 0)
     {
         global $g_ado_db;
-        static $cacheExists;
+        static $cacheParams = array();
         $exp_time += time();
 
         $return = false;
@@ -97,13 +97,29 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
                     $whereStr = self::vectorToWhereString($campsiteVector);
                     $whereStr .= " AND template = '$tpl_file'";
 
-                    $queryStr = 'SELECT expired, content FROM Cache WHERE ' . $whereStr;
+                    $cacheParams[$tpl_file] = array();
+                    $cacheParams[$tpl_file]['where'] = $whereStr;
+
+                    $queryStr = 'SELECT expired, content, status FROM Cache WHERE ' . $whereStr;
                     $result = $g_ado_db->GetRow($queryStr);
                     if ($result) {
                         if ($result['expired'] > time()) {
-                            $cacheExists[$tpl_file] = true;
-                            $cache_content = $result['content'];
-                            $return = $result['expired'];
+                            if ($result['status'] == 'E') {
+                                $queryStr = 'UPDATE Cache SET status = "U" WHERE ' . $whereStr;
+                                $queryStr .= 'AND status = "E"';
+                                $g_ado_db->Execute($queryStr);
+                                if ($g_ado_db->Affected_Rows() > 0) {
+                                    $cacheParams[$tpl_file]['update'] = true;
+                                    $return = false;
+                                } else {
+                                    $cache_content = $result['content'];
+                                    $return = $result['expired'];
+                                }
+                            } else {
+                                $cacheParams[$tpl_file]['cached'] = true;
+                                $cache_content = $result['content'];
+                                $return = $result['expired'];
+                            }
                         } else {
                             // clear expired cache
                             $queryStr = 'DELETE FROM Cache WHERE expired <= '. time();
@@ -115,21 +131,29 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
                 break;
 
             case 'write':
-                // in case template changing should delete old cached templates
-                if (isset($cacheExists[$tpl_file])) {
-                    $queryStr = 'DELETE FROM Cache WHERE template = ' . "'$tpl_file'";
+                // in case template changing the old cached templates should be updated
+                if (isset($cacheParams[$tpl_file]['cached']) ) {
+                    $queryStr = 'UPDATE Cache SET status = "E" WHERE template = ' . "'$tpl_file'";
                     $g_ado_db->Execute($queryStr);
+                    $cacheParams[$tpl_file]['update'] = true;
                 }
                 if ($exp_time > time() && !empty($campsiteVector['language']) && !empty($campsiteVector['publication'])) {
 
-                    // insert new cached template
-                    $queryStr = 'INSERT IGNORE INTO Cache ';
-                    $queryStr .= '(' . implode(',', array_keys($campsiteVector));
-                    $queryStr .=  ',template,expired,content) VALUES (';
-                    foreach ($campsiteVector as $key => $value) {
-                        $queryStr .= !isset($value) ? 'NULL,' : $value . ',';
+                    // update/insert new cached content
+                    if (isset($cacheParams[$tpl_file]['update'])) {
+                        $queryStr = 'UPDATE Cache SET status = null, expired = ' . $exp_time . ', ';
+                        $queryStr .= "content = '" . addslashes($cache_content) . "' WHERE ";
+                        $queryStr .= $cacheParams[$tpl_file]['where'];
+                    } else {
+                        $queryStr = 'INSERT IGNORE INTO Cache ';
+                        $queryStr .= '(' . implode(',', array_keys($campsiteVector));
+                        $queryStr .=  ',template,expired,content) VALUES (';
+                        foreach ($campsiteVector as $key => $value) {
+                            $queryStr .= !isset($value) ? 'NULL,' : $value . ',';
+                        }
+                        $queryStr .= "'$tpl_file',$exp_time,'" . addslashes($cache_content) . "')";
                     }
-                    $queryStr .= "'$tpl_file',$exp_time,'" . addslashes($cache_content) . "')";
+                    unset($cacheParams[$tpl_file]);
                     $g_ado_db->Execute($queryStr);
                     $return = $g_ado_db->Affected_Rows() > 0;
                 }
