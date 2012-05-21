@@ -136,8 +136,8 @@ public static function GetMapInfo($p_htmlDir = '', $p_websiteUrl = '', $p_mapPro
         $one_prov_include_async = '';
         if ('googlev3' == $one_prov_name)
         {
-            $one_prov_include = 'http://maps.google.com/maps/api/js?v=3.2&sensor=false';
-            $one_prov_include_async = 'http://maps.google.com/maps/api/js?v=3.2&sensor=false&callback=initialize_gv3async';
+            $one_prov_include = 'http://maps.google.com/maps/api/js?v=3.9&sensor=false';
+            $one_prov_include_async = 'http://maps.google.com/maps/api/js?v=3.9&sensor=false&callback=initialize_gv3async';
             $map_prov_gv3_async_method = 'initialize_gv3async';
             $map_prov_gv3_async = true;
         }
@@ -176,8 +176,8 @@ public static function GetMapInfo($p_htmlDir = '', $p_websiteUrl = '', $p_mapPro
         }
 
         $map_prov_default = 'googlev3';
-        $map_prov_includes[] = 'http://maps.google.com/maps/api/js?v=3.2&sensor=false';
-        $map_prov_includes_async[] = 'http://maps.google.com/maps/api/js?v=3.2&sensor=false&callback=initialize_gv3async';
+        $map_prov_includes[] = 'http://maps.google.com/maps/api/js?v=3.9&sensor=false';
+        $map_prov_includes_async[] = 'http://maps.google.com/maps/api/js?v=3.9&sensor=false&callback=initialize_gv3async';
         $map_prov_gv3_async_method = 'initialize_gv3async';
         $map_prov_gv3_async = true;
 
