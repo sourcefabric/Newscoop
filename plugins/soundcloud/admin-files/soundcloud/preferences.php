@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Newscoop
- * @subpackage Soundcloud plugin
+ * @subpackage SoundCloud plugin
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
@@ -10,7 +10,7 @@ require_once CS_PATH_PLUGINS.DIR_SEP.'soundcloud'.DIR_SEP.'classes'.DIR_SEP.'sou
 camp_load_translation_strings('plugin_soundcloud');
 
 if (!$g_user->hasPermission('plugin_soundcloud_preferences')) {
-    camp_html_display_error(getGS('You do not have the right to manage Soundcloud preferences.'));
+    camp_html_display_error(getGS('You do not have the right to manage SoundCloud preferences.'));
     exit;
 }
 
@@ -34,19 +34,19 @@ if (Input::Get('save') || Input::Get('check')) {
     if (Input::Get('check')) {
         $soundcloud = new SoundcloudAPI();
         if ($soundcloud->login()) {
-            camp_html_add_msg(getGS('Soundcloud checked successfully.'), 'ok');
+            camp_html_add_msg(getGS('SoundCloud checked successfully.'), 'ok');
         } else {
-            camp_html_add_msg(getGS('Soundcloud reports an error:') . ' ' . $soundcloud->error, 'error');
+            camp_html_add_msg(getGS('SoundCloud reports an error:') . ' ' . $soundcloud->error, 'error');
         }
     } else {
-        camp_html_add_msg(getGS('Soundcloud preferences updated.'), 'ok');
+        camp_html_add_msg(getGS('SoundCloud preferences updated.'), 'ok');
     }
 }
 
 echo camp_html_breadcrumbs(array(
     array(getGS('Plugins'), $Campsite['WEBSITE_URL'] . '/admin/plugins/manage.php'),
-    array(getGS('Soundcloud'), ''),
-    array(getGS('Soundcloud Preferences'), ''),
+    array(getGS('SoundCloud'), ''),
+    array(getGS('SoundCloud Preferences'), ''),
 ));
 
 camp_html_display_msgs();

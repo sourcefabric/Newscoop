@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Newscoop
- * @subpackage Soundcloud plugin
+ * @subpackage SoundCloud plugin
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
@@ -313,7 +313,7 @@ class SoundcloudAPI
     private static function _checkCURL()
     {
         if (!function_exists('curl_init')) {
-            camp_html_display_error(getGS('Soundcloud plugin requires php_curl module.'));
+            camp_html_display_error(getGS('SoundCloud plugin requires php_curl module.'));
             exit;
         }
         return true;

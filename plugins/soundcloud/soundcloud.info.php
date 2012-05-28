@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Newscoop
- * @subpackage Soundcloud plugin
+ * @subpackage SoundCloud plugin
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
@@ -9,11 +9,11 @@
 $info = array(
     'name' => 'soundcloud',
     'version' => '0.1.0',
-    'label' => 'Soundcloud',
-    'description' => 'This plugin provides Soundcloud integration.',
+    'label' => 'SoundCloud',
+    'description' => 'This plugin provides SoundCloud integration.',
     'menu' => array(
         'name' => 'soundcloud',
-        'label' => 'Soundcloud',
+        'label' => 'SoundCloud',
         'icon' => '',
         'permission' => 'plugin_soundcloud_browser',
         'path' => 'soundcloud/manager.php',
@@ -38,17 +38,17 @@ $info = array(
     'permissions' => array(
     /**
      * Do not remove this comment: it is needed for the localizer
-     * getGS('User may manage Soundcloud preferences');
-     * getGS('User may browse Soundcloud tracks');
-     * getGS('User may upload tracks to Soundcloud');
-     * getGS('User may update Soundcloud track data');
-     * getGS('User may delete Soundcloud tracks');
+     * getGS('User may manage SoundCloud preferences');
+     * getGS('User may browse SoundCloud tracks');
+     * getGS('User may upload tracks to SoundCloud');
+     * getGS('User may update SoundCloud track data');
+     * getGS('User may delete SoundCloud tracks');
      */
-        'plugin_soundcloud_preferences' => 'User may manage Soundcloud preferences',
-        'plugin_soundcloud_browser' => 'User may browse Soundcloud tracks',
-        'plugin_soundcloud_upload' => 'User may upload tracks to Soundcloud',
-        'plugin_soundcloud_update' => 'User may update Soundcloud track data',
-        'plugin_soundcloud_delete' => 'User may delete Soundcloud tracks',
+        'plugin_soundcloud_preferences' => 'User may manage SoundCloud preferences',
+        'plugin_soundcloud_browser' => 'User may browse SoundCloud tracks',
+        'plugin_soundcloud_upload' => 'User may upload tracks to SoundCloud',
+        'plugin_soundcloud_update' => 'User may update SoundCloud track data',
+        'plugin_soundcloud_delete' => 'User may delete SoundCloud tracks',
     ),
     'template_engine' => array(
         'objecttypes' => array(),
@@ -58,7 +58,7 @@ $info = array(
     'localizer' => array(
         'id' => 'plugin_soundcloud',
         'path' => '/plugins/soundcloud/*/*/*/*/*',
-        'screen_name' => 'Soundcloud'
+        'screen_name' => 'SoundCloud'
     ),
     'no_menu_scripts' => array(
         '/soundcloud/controller.php',

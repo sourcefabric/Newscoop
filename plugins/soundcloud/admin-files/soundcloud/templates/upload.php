@@ -1,6 +1,6 @@
         <form id="upload-form" name="upload-form" method="post" action="" enctype="multipart/form-data">
         <div class="clear"></div>
-        <h2><? putGS('Upload Track to Soundcloud'); ?></h2>
+        <h2><? putGS('Upload Track to SoundCloud'); ?></h2>
         <div class="clear"></div>
         <fieldset class="upload-field clearfix">
            <ul class="form-group">
