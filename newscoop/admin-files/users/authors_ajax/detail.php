@@ -255,7 +255,8 @@ if ($id > 0) {
                 . '&f_issue_number=' . $authoringItem['article']->getIssueNumber()
                 . '&f_section_number=' . $authoringItem['article']->getSectionNumber()
                 . '&f_article_number=' . $authoringItem['article']->getArticleNumber()
-                . '&f_language_id=' . $authoringItem['article']->getLanguageId();
+                . '&f_language_id=' . $authoringItem['article']->getLanguageId()
+                . '&f_language_selected=' . $authoringItem['article']->getLanguageId();
     ?>
         <li>
           <label><?php echo $authoringItem['type']->getName(); ?></label>
