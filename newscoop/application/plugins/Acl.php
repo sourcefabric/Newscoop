@@ -45,7 +45,8 @@ class Application_Plugin_Acl extends Zend_Controller_Plugin_Abstract
         $user= Zend_Registry::get('container')->getService('user')->getCurrentUser();
         $blogService = Zend_Registry::get('container')->getService('blog');
         if ($blogService->isBlogger($user)) {
-            if (!$blogService->isAllowed($request, $user)) {
+            // f_article_edit condition should be removed once file upload is moved to a final place where bloggers can access.
+            if (!$blogService->isAllowed($request, $user) && !isset($_REQUEST['f_article_edit'])) {
                 $request->setModuleName('admin')
                     ->setControllerName('blog')
                     ->setActionName('index')

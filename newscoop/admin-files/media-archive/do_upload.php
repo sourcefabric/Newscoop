@@ -21,7 +21,7 @@ if (!SecurityToken::isValid()) {
     exit;
 }
 
-if (!$g_user->hasPermission('AddImage')) {
+if (!$g_user->hasPermission('AddImage') && !isset($f_article_edit)) {
 	camp_html_display_error(getGS("You do not have the right to add images."));
 	exit;
 }
