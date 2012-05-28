@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Newscoop
- * @subpackage Soundcloud plugin
+ * @subpackage SoundCloud plugin
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
@@ -13,7 +13,7 @@ camp_load_translation_strings('plugin_soundcloud');
 if (!$g_user->hasPermission('plugin_soundcloud_browser')) {
     jsonOutput(null, array(
         'title' => getGS('Error'),
-        'text' => getGS('You do not have the right to manage Soundcloud tracks.'),
+        'text' => getGS('You do not have the right to manage SoundCloud tracks.'),
         'type' => 'error',
     ));
     exit;
@@ -37,7 +37,7 @@ if ($action == 'addtoset') {
     if (!$g_user->hasPermission('plugin_soundcloud_update')) {
         jsonOutput(null, array(
             'title' => getGS('Error'),
-            'text' => getGS('You do not have the right to update Soundcloud tracks.'),
+            'text' => getGS('You do not have the right to update SoundCloud tracks.'),
             'type' => 'error',
         ), null, array(), true);
         exit;
@@ -52,7 +52,7 @@ if ($action == 'addtoset') {
     }
     if (!$setTracks || !$result = $soundcloud->setUpdate($setTracks)) {
         jsonOutput(null, array(
-            'title' => getGS('Soundcloud reports an error:'),
+            'title' => getGS('SoundCloud reports an error:'),
             'text' => $soundcloud->error,
             'type' => 'error',
         ));
@@ -65,7 +65,7 @@ if ($action == 'removefromset') {
     if (!$g_user->hasPermission('plugin_soundcloud_update')) {
         jsonOutput(null, array(
             'title' => getGS('Error'),
-            'text' => getGS('You do not have the right to update Soundcloud tracks.'),
+            'text' => getGS('You do not have the right to update SoundCloud tracks.'),
             'type' => 'error',
         ), null, array(), true);
         exit;
@@ -84,7 +84,7 @@ if ($action == 'removefromset') {
     }
     if (!$setTracks || !$result = $soundcloud->setUpdate($setTracks)) {
         jsonOutput(null, array(
-            'title' => getGS('Soundcloud reports an error:'),
+            'title' => getGS('SoundCloud reports an error:'),
             'text' => $soundcloud->error,
             'type' => 'error',
         ));
@@ -137,7 +137,7 @@ if ($action == 'delete') {
     if (!$g_user->hasPermission('plugin_soundcloud_delete')) {
         jsonOutput(null, array(
             'title' => getGS('Error'),
-            'text' => getGS('You do not have the right to delete Soundcloud tracks.'),
+            'text' => getGS('You do not have the right to delete SoundCloud tracks.'),
             'type' => 'error',
         ));
         exit;
@@ -145,7 +145,7 @@ if ($action == 'delete') {
     Soundcloud::deleteAllTracks($track);
     if (!$soundcloud->trackDelete($track)) {
         jsonOutput(null, array(
-            'title' => getGS('Soundcloud reports an error:'),
+            'title' => getGS('SoundCloud reports an error:'),
             'text' => $soundcloud->error,
             'type' => 'error',
         ));
@@ -159,7 +159,7 @@ if ($action == 'save') {
     if (!$g_user->hasPermission('plugin_soundcloud_update')) {
         jsonOutput(null, array(
             'title' => getGS('Error'),
-            'text' => getGS('You do not have the right to update Soundcloud tracks.'),
+            'text' => getGS('You do not have the right to update SoundCloud tracks.'),
             'type' => 'error',
         ), null, array(), true);
         exit;
@@ -199,7 +199,7 @@ if ($action == 'save') {
         if (empty($result['id'])) {
             jsonOutput(null, array(
                 'title' => getGS('Save error'),
-                'text' => getGS('Soundcloud reports an error:') . $soundcloud->error,
+                'text' => getGS('SoundCloud reports an error:') . $soundcloud->error,
                 'type' => 'error',
             ), null, array(), true);
             exit;
@@ -222,7 +222,7 @@ if ($action == 'save') {
             }
             jsonOutput(null, array (
                 'title' => $messageTitle,
-                'text' => getGS('Track has been updated on Soundcloud'),
+                'text' => getGS('Track has been updated on SoundCloud'),
                 'type' => 'success',
             ), null, array('ok' => true), false);
         }
@@ -294,7 +294,7 @@ if ($action == 'edit') {
     if (!$g_user->hasPermission('plugin_soundcloud_update')) {
         jsonOutput(null, array(
             'title' => getGS('Error'),
-            'text' => getGS('You do not have the right to update Soundcloud tracks.'),
+            'text' => getGS('You do not have the right to update SoundCloud tracks.'),
             'type' => 'error',
         ));
         exit;

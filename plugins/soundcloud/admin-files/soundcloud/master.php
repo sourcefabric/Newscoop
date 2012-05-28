@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Newscoop
- * @subpackage Soundcloud plugin
+ * @subpackage SoundCloud plugin
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
@@ -11,7 +11,7 @@ require_once CS_PATH_PLUGINS.DIR_SEP.'soundcloud'.DIR_SEP.'classes'.DIR_SEP.'sou
 camp_load_translation_strings('plugin_soundcloud');
 
 if (!$g_user->hasPermission('plugin_soundcloud_browser')) {
-    camp_html_display_error(getGS('You do not have the right to manage Soundcloud tracks.'));
+    camp_html_display_error(getGS('You do not have the right to manage SoundCloud tracks.'));
     exit;
 }
 
@@ -45,7 +45,7 @@ $track = array(
 );
 if ($action) {
     if (!$g_user->hasPermission('plugin_soundcloud_upload')) {
-        camp_html_display_error(getGS('You do not have the right to upload Soundcloud tracks.'));
+        camp_html_display_error(getGS('You do not have the right to upload SoundCloud tracks.'));
         exit;
     }
 
@@ -100,14 +100,14 @@ if ($action) {
         if (!$result) {
             $showMessage = array (
                 'title' => getGS('Upload error'),
-                'message' => getGS('Soundcloud reports an error:') . ' ' . $soundcloud->error,
+                'message' => getGS('SoundCloud reports an error:') . ' ' . $soundcloud->error,
                 'type' => 'error',
                 'fixed' => 'true',
             );
         } else {
             $showMessage = array (
                 'title' => getGS('Upload successful'),
-                'message' => getGS('Track $1 has been uploaded to Soundcloud. Click to close', $result['id']),
+                'message' => getGS('Track $1 has been uploaded to SoundCloud. Click to close', $result['id']),
                 'type' => 'success',
                 'fixed' => 'true',
             );
