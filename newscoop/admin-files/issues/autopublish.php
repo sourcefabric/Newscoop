@@ -97,7 +97,7 @@ camp_html_content_top(getGS('Issue Publishing Schedule'), array('Pub' => $public
 	</TD>
 </TR>
 <TR>
-	<TD ALIGN="RIGHT" ><?php  putGS("Publish articles"); ?>:</TD>
+	<TD ALIGN="RIGHT" ><?php  putGS("Publish all articles"); ?>:</TD>
 	<TD>
 	<SELECT NAME="publish_articles" class="input_select">
 		<OPTION VALUE="Y" <?php if ($publish_articles == "Y") echo "SELECTED"; ?>><?php putGS("Yes"); ?></OPTION>
