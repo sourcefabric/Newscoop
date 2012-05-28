@@ -68,6 +68,9 @@ function editor_load_tinymce($p_dbColumns, $p_user, $p_articleNumber,
         if ($p_user->hasPermission('EditorFontColor')) {
             $plugins[] = 'codehighlighting';
         }
+        if ($p_user->hasPermission('EditorTextDirection')) {
+            $plugins[] = 'directionality';
+        }
 	$plugins[] = 'iframe';
 
 	$plugins_list = implode(",", $plugins);
