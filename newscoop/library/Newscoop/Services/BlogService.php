@@ -177,6 +177,18 @@ class BlogService
     private function isRequestedArticleEditable(\Zend_Controller_Request_Abstract $request, User $user)
     {
         $article = new \Article($request->getParam('f_language_selected'), $request->getParam('f_article_number'));
+        return $this->isUsersArticle($article, $user);
+    }
+
+    /**
+     * Test if given article is from users blog
+     *
+     * @param Article $article
+     * @param Newscoop\Entity\User $user
+     * @return bool
+     */
+    public function isUsersArticle(\Article $article, User $user)
+    {
         $section = $this->getSection($user);
         return $section->getSectionNumber() == $article->getSectionNumber()
             && $section->getPublicationId() == $article->getPublicationId()

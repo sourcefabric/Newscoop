@@ -1228,7 +1228,12 @@ abstract class CampURI
             $user = $userService->find($auth->getIdentity());
             if (!empty($user)) {
                 $this->m_user = new MetaUser($user);
-                $this->m_preview = CampRequest::GetVar('preview') == 'on' && $this->m_user->isAdmin();
+                $this->m_preview = CampRequest::GetVar('preview') === 'on' && $this->m_user->isAdmin();
+                if (!$this->m_preview && CampRequest::GetVar('preview') === 'on' && $controller->getHelper('service')->getService('blog')->isBlogger($user)) {
+                    $lang = \Language::GetLanguageIdByCode($controller->getRequest()->getParam('language'));
+                    $article = new \Article($lang, $controller->getRequest()->getParam('articleNo'));
+                    $this->m_preview = $controller->getHelper('service')->getService('blog')->isUsersArticle($article, $user);
+                }
             }
         } else if (!empty($_SERVER['REMOTE_ADDR'])) { // empty in cli
             $ipUsers = IPAccess::GetUsersHavingIP($_SERVER['REMOTE_ADDR']);
