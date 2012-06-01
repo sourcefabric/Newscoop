@@ -176,10 +176,11 @@ class BlogService
      */
     private function isRequestedArticleEditable(\Zend_Controller_Request_Abstract $request, User $user)
     {
+        $article = new \Article($request->getParam('f_language_selected'), $request->getParam('f_article_number'));
         $section = $this->getSection($user);
-        return $section->getSectionNumber() == $request->getParam('f_section_number')
-            && $section->getPublicationId() == $request->getParam('f_publication_id')
-            && $section->getIssueNumber() == $request->getParam('f_issue_number')
-            && $section->getLanguageId() == $request->getParam('f_language_id');
+        return $section->getSectionNumber() == $article->getSectionNumber()
+            && $section->getPublicationId() == $article->getPublicationId()
+            && $section->getIssueNumber() == $article->getIssueNumber()
+            && $section->getLanguageId() == $article->getLanguageId();
     }
 }
