@@ -1,4 +1,5 @@
 <?php 
+regGS("Campsite", "");
 regGS("Image Rendering", "");
 regGS("Featured Article Lists", "");
 regGS("You have tried to upload an invalid backup file.", "Προσπαθήσατε να ανεβάσετε ένα άκυρο αρχείο αντιγράφου ασφαλείας.");

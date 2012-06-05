@@ -1,4 +1,5 @@
 <?php 
+regGS("Blog management", "");
 regGS("Add article to a list", "");
 regGS("View article", "Artikel ansehen");
 regGS("Select a list", "Liste auswählen");
