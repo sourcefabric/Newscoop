@@ -30,7 +30,7 @@
       <dt><?php putGS('Created by'); ?></dt>
       <dd><?php p(htmlspecialchars($articleCreator->getRealName())); ?></dd>
       <dt><?php putGS('Webcode'); ?></dt>
-      <dd><?php p( Manager::getWebcoder('')->encode($f_article_number) ) ?></dd>
+      <dd><?php echo '@', $articleObj->getWebcode(); ?></dd>
     </dl>
   </div>
 </div>

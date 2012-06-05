@@ -184,6 +184,13 @@ class Article
     private $objectId;
 
     /**
+     * @OneToOne(targetEntity="Newscoop\Entity\Webcode")
+     * @JoinColumn(name="webcode", referencedColumnName="webcode")
+     * @var Newscoop\Entity\Webcode
+     */
+    private $webcode;
+
+    /**
      * @param int $number
      * @param Newscoop\Entity\Language $language
      */
@@ -409,5 +416,36 @@ class Article
     public function getCreator()
     {
         return $this->creator;
+    }
+
+    /**
+     * Set webcode
+     *
+     * @param Newscoop\Entity\Webcode $webcode
+     * @return void
+     */
+    public function setWebcode($webcode)
+    {
+        $this->webcode = $webcode;
+    }
+
+    /**
+     * Get webcode
+     *
+     * @return string
+     */
+    public function getWebcode()
+    {
+        return (string) $this->webcode;
+    }
+
+    /**
+     * Test if article has webcode
+     *
+     * @return bool
+     */
+    public function hasWebcode()
+    {
+        return isset($this->webcode);
     }
 }
