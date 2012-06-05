@@ -8,13 +8,8 @@
  * @link http://www.sourcefabric.org
  */
 
-use Newscoop\Webcode\Manager,
-    Newscoop\Webcode\Mapper;
-
 require_once dirname(__FILE__) . '/../BaseList/BaseList.php';
 require_once WWW_DIR . '/classes/GeoMap.php';
-require_once __DIR__ . '/../../../library/Newscoop/Webcode/Manager.php';
-require_once __DIR__ . '/../../../library/Newscoop/Webcode/Mapper.php';
 
 /**
  * Article list component
@@ -325,7 +320,7 @@ class ArticleList extends BaseList
 		    getGS('Edit'), htmlspecialchars($article->getName() . " ({$article->getLanguageName()})"),
 		    htmlspecialchars($article->getName() . (empty($_REQUEST['language']) ? " ({$language->getCode()})" : ''))), // /sprintf
 		    htmlspecialchars($article->getSection()->getName()),
-            Manager::getWebcoder('')->encode($article->getArticleNumber()),
+            $article->getWebcode(),
 		    htmlspecialchars($tmpArticleType->getDisplayName()),
 		    htmlspecialchars($tmpUser->getRealName()),
 		    htmlspecialchars($tmpAuthor->getName()),

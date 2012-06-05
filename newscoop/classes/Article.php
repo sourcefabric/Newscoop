@@ -3432,6 +3432,20 @@ class Article extends DatabaseObject {
         }
         return $order;
     }
-} // class Article
 
-?>
+    /**
+     * Get article webcode
+     *
+     * @return string
+     */
+    public function getWebcode()
+    {
+        $em = Zend_Registry::get('container')->getService('em');
+        $article = $em->getRepository('Newscoop\Entity\Article')->find(array(
+            'number' => $this->getArticleNumber(),
+            'language' => $this->getLanguageId(),
+        ));
+
+        return Zend_Registry::get('container')->getService('webcode')->getArticleWebcode($article);
+    }
+}

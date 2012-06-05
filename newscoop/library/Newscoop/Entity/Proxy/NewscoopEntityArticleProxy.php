@@ -162,10 +162,28 @@ class NewscoopEntityArticleProxy extends \Newscoop\Entity\Article implements \Do
         return parent::getCreator();
     }
 
+    public function setWebcode($webcode)
+    {
+        $this->__load();
+        return parent::setWebcode($webcode);
+    }
+
+    public function getWebcode()
+    {
+        $this->__load();
+        return parent::getWebcode();
+    }
+
+    public function hasWebcode()
+    {
+        $this->__load();
+        return parent::hasWebcode();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'language', 'publication', 'issue', 'section', 'creator', 'sectionId', 'issueId', 'number', 'name', 'shortName', 'date', 'comments_enabled', 'type', 'published', 'workflowStatus', 'articleOrder', 'public', 'onFrontPage', 'onSection', 'uploaded', 'keywords', 'isIndexed', 'lockUser', 'lockTime', 'commentsLocked', 'objectId');
+        return array('__isInitialized__', 'language', 'publication', 'issue', 'section', 'creator', 'sectionId', 'issueId', 'number', 'name', 'shortName', 'date', 'comments_enabled', 'type', 'published', 'workflowStatus', 'articleOrder', 'public', 'onFrontPage', 'onSection', 'uploaded', 'keywords', 'isIndexed', 'lockUser', 'lockTime', 'commentsLocked', 'objectId', 'webcode');
     }
 
     public function __clone()

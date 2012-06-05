@@ -13,7 +13,6 @@
 use Newscoop\Service\Resource\ResourceId;
 use Newscoop\Service\ISyncResourceService;
 use Newscoop\Entity\Resource;
-use Newscoop\Webcode\Manager;
 
 /**
  * Includes
@@ -350,22 +349,27 @@ class CampURIShortNames extends CampURI
     private function setURL(Zend_Controller_Request_Abstract $request)
     {
         $this->setQueryVar('acid', null);
-        $encoder = Manager::getWebcoder('');
         $this->m_publication = $this->_getPublication();
-        $webcode = $request->getParam('webcode');
         $controller = $request->getParam('controller');
         if ($controller != 'index') {
             $language = $controller;
         } else {
             $language = $request->getParam('language');
         }
-        if (!empty( $webcode ) ) {
-            if (!empty( $language )) {
+        if ($request->getParam('webcode')) {
+            if (!empty($language)) {
                 $webcodeLanguageId = Language::GetLanguageIdByCode($language);
             } else {
                 $webcodeLanguageId = $this->m_publication->default_language->number;
             }
-            $article_no = $encoder->decode($webcode);
+
+            $webcode = trim($request->getParam('webcode'), '@');
+            $article = Zend_Registry::get('container')->getService('webcode')->findArticleByWebcode($webcode);
+            if ($article) {
+                $article_no = $article->getNumber();
+                $webcodeLanguageId = $article->getLanguageId();
+            }
+
             $metaArticle = new MetaArticle($webcodeLanguageId, $article_no);
             $this->m_article = $metaArticle;
             if ($metaArticle->defined()) {

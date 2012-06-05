@@ -208,6 +208,12 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('subscription.ip', 'Newscoop\Subscription\IpFacade')
             ->addArgument(new sfServiceReference('em'));
 
+        $container->register('random', 'Newscoop\Random');
+
+        $container->register('webcode', 'Newscoop\WebcodeFacade')
+            ->addArgument(new sfServiceReference('em'))
+            ->addArgument(new sfServiceReference('random'));
+
         Zend_Registry::set('container', $container);
         return $container;
     }
@@ -266,7 +272,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             new Zend_Controller_Router_Route(':webcode', array(
                 'module' => 'default'
             ), array(
-                'webcode' => '[\+\s@][a-z]{5,6}',
+                'webcode' => '[\+\s@][0-9a-z]{5,6}',
             )));
 
          $router->addRoute(
@@ -275,7 +281,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ), array(
                 'module' => 'default',
                 'language' => '[a-z]{2}',
-                'webcode' => '^[\+\s@][a-z]{5,6}',
+                'webcode' => '^[\+\s@][0-9a-z]{5,6}',
             )));
 
         $router->addRoute(
