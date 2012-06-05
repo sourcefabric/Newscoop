@@ -1,4 +1,5 @@
 <?php 
+regGS("Campsite", "");
 regGS("Image Rendering", "");
 regGS("Featured Article Lists", "Listen ausgewählter Artikel ");
 regGS("You have tried to upload an invalid backup file.", "Sie haben versucht eine ungültige Backup-Datei hochzuladen. ");
