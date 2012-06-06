@@ -8,7 +8,11 @@
 require_once APPLICATION_PATH . '/../library/Newscoop/Webcode.php';
 require_once APPLICATION_PATH . '/../library/Newscoop/Webcode/Mapper.php';
 
+global $application;
+
+$application->bootstrap('container');
 $em = Zend_Registry::get('container')->getService('em');
+
 foreach ($em->getRepository('Newscoop\Entity\Article')->findAll() as $article) {
     try {
         Zend_Registry::get('container')->getService('webcode')->setArticleWebcode($article, trim(Newscoop\Webcode\Mapper::encode($article->getNumber()), '@'));

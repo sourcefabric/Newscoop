@@ -213,6 +213,7 @@ CREATE TABLE `Articles` (
   `comments_locked` tinyint(1) NOT NULL DEFAULT '0',
   `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `object_id` int(11) DEFAULT NULL,
+  `webcode` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`IdPublication`,`NrIssue`,`NrSection`,`Number`,`IdLanguage`),
   UNIQUE KEY `IdPublication` (`IdPublication`,`NrIssue`,`NrSection`,`IdLanguage`,`Name`),
   UNIQUE KEY `Number` (`Number`,`IdLanguage`),
@@ -2640,5 +2641,12 @@ CREATE TABLE `user_topic` (
   PRIMARY KEY (`user_id`,`topic_id`,`topic_language`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
+
+CREATE TABLE IF NOT EXISTS `webcode` (
+  `webcode` varchar(10) NOT NULL,
+  `article_number` int(10) unsigned NOT NULL,
+  `language_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`webcode`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- Dump completed on 2012-03-15 11:02:44
