@@ -266,6 +266,7 @@ CREATE TABLE `Articles` (
   `comments_locked` tinyint(1) NOT NULL DEFAULT '0',
   `time_updated` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `object_id` int(11) DEFAULT NULL,
+  `webcode` varchar(10) DEFAULT NULL,
   PRIMARY KEY (`IdPublication`,`NrIssue`,`NrSection`,`Number`,`IdLanguage`),
   UNIQUE KEY `IdPublication` (`IdPublication`,`NrIssue`,`NrSection`,`IdLanguage`,`Name`),
   UNIQUE KEY `Number` (`Number`,`IdLanguage`),
@@ -3159,6 +3160,13 @@ CREATE TABLE IF NOT EXISTS `rendition` (
 ALTER TABLE `package_article_package`
   ADD CONSTRAINT `package_article_package_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `package_article` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `package_article_package_ibfk_2` FOREIGN KEY (`package_id`) REFERENCES `package` (`id`) ON DELETE CASCADE;
+
+CREATE TABLE IF NOT EXISTS `webcode` (
+  `webcode` varchar(10) NOT NULL,
+  `article_number` int(10) unsigned NOT NULL,
+  `language_id` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`webcode`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

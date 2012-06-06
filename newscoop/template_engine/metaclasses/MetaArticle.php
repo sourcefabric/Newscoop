@@ -651,7 +651,7 @@ final class MetaArticle extends MetaDbObject {
 
     protected function getWebcode()
     {
-        return Manager::getWebcoder('')->encode($this->m_dbObject->getProperty('Number'));
+        return $this->m_dbObject->getWebcode();
     }
 
     private $_datetimeData;
