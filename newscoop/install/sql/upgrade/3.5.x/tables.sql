@@ -370,17 +370,6 @@ CREATE TABLE `article_datetimes` (
   KEY `field_name` (`field_name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- System versions
-DROP TABLE IF EXISTS `Versions`;
-CREATE TABLE `Versions` (
-    `id` integer unsigned NOT NULL auto_increment,
-    `ver_name` varchar(255) NOT NULL,
-    `ver_value` varchar(255) NOT NULL default '',
-    `last_modified` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`),
-    UNIQUE KEY `ver_name` (`ver_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
 -- Image renditions
 
 CREATE TABLE IF NOT EXISTS `ArticleRendition` (
@@ -450,8 +439,4 @@ ALTER TABLE `ArticleImages`
 ALTER TABLE `package_article_package`
   ADD CONSTRAINT `package_article_package_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `package_article` (`id`) ON DELETE CASCADE,
   ADD CONSTRAINT `package_article_package_ibfk_2` FOREIGN KEY (`package_id`) REFERENCES `package` (`id`) ON DELETE CASCADE;
-
-ALTER TABLE `article_datetimes` ADD COLUMN `event_comment` TEXT;
-
-ALTER TABLE `Cache` ADD COLUMN `status` CHAR(1) DEFAULT NULL;
 
