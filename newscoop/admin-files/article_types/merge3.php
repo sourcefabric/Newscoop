@@ -394,7 +394,11 @@ if ($ok) {
         			</tr>
         			<?php
         			} elseif ($dbColumn->getType() == ArticleTypeField::TYPE_SWITCH) {
-                        $checked = $srcArticleData->getFieldValue($dbColumn->getPrintName()) ? 'checked' : '';
+                        try {
+                            $checked = $srcArticleData->getFieldValue($dbColumn->getPrintName()) ? 'checked' : '';
+                        } catch (\InvalidPropertyException $e) {
+                            $checked = '';
+                        }
                     ?>
                     <tr>
                     <TD ALIGN="RIGHT" VALIGN="TOP" style="padding-top: 8px; padding-right: 5px;">
