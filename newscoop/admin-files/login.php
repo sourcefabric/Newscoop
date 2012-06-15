@@ -133,6 +133,7 @@ $siteTitle = (!empty($Campsite['site']['title'])) ? htmlspecialchars($Campsite['
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en" xml:lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta name="robots" content="noindex, nofollow">
   <title><?php p($siteTitle.' - ').putGS("Login"); ?></title>
 
   <link rel="shortcut icon" href="<?php echo $Campsite['ADMIN_STYLE_URL']; ?>/images/7773658c3ccbf03954b4dacb029b2229.ico" />
