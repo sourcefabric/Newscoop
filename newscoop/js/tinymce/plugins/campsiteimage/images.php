@@ -13,29 +13,6 @@ header("Pragma: no-cache");
 $GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
 
-// Define path to application directory
-defined('APPLICATION_PATH')
-    || define('APPLICATION_PATH', realpath(dirname(dirname(dirname(dirname(__FILE__)))) . '/../application'));
-
-// Define application environment
-defined('APPLICATION_ENV')
-    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
-
-// Ensure library/ is on include_path
-set_include_path(implode(PATH_SEPARATOR, array(
-    realpath(APPLICATION_PATH . '/../library'),
-    realpath(dirname(__FILE__) . '/../include'),
-    get_include_path(),
-)));
-if (!is_file('Zend/Application.php')) {
-	// include libzend if we dont have zend_application
-	set_include_path(implode(PATH_SEPARATOR, array(
-		'/usr/share/php/libzend-framework-php',
-		get_include_path(),
-	)));
-}
-require_once 'Zend/Application.php';
-
 // function to escape javascript parameters in function called in attribute
 function escape_js_param($str) {
     $str = str_replace('"','\x22',$str);
@@ -44,23 +21,18 @@ function escape_js_param($str) {
     $str = str_replace('&quot;','\x22',$str);
     return $str;
 }
+
+require_once $GLOBALS['g_campsiteDir'] . '/application.php';
+$application->bootstrap();
+
 // Only logged in admin users allowed
-
-include_once("Zend/Auth.php");
-include_once("Zend/Auth/Storage/Session.php");
-
-// setup the correct namespace for the zend auth session
-Zend_Auth::getInstance()->setStorage(new Zend_Auth_Storage_Session( 'Zend_Auth_Storage' ) );
 $userId = Zend_Auth::getInstance()->getIdentity();
-
-    $userId = Zend_Auth::getInstance()->getIdentity();
-    $userTmp = new User($userId);
-    if (!$userTmp->exists() || !$userTmp->isAdmin()) {
-        header("Location: /$ADMIN/login.php");
-        exit(0);
-    }
-    unset($userTmp);
-
+$userTmp = new User($userId);
+if (!$userTmp->exists() || !$userTmp->isAdmin()) {
+    header("Location: /$ADMIN/login.php");
+    exit(0);
+}
+unset($userTmp);
 
 require_once('config.inc.php');
 require_once('classes/ImageManager.php');

@@ -90,10 +90,8 @@ class Application_Plugin_Auth extends Zend_Controller_Plugin_Abstract
      */
     private function setSessionLifetime()
     {
-        $storage = new Zend_Auth_Storage_Session('Zend_Auth_Storage');
-        Zend_Auth::getInstance()->setStorage($storage);
-
-        $session = new Zend_Session_Namespace($storage->getNamespace());
+        $auth = Zend_Auth::getInstance();
+        $session = new Zend_Session_Namespace($auth->getStorage()->getNamespace());
         $seconds = SystemPref::Get('SiteSessionLifeTime');
 
         $gc_works = ini_get('session.gc_probability');

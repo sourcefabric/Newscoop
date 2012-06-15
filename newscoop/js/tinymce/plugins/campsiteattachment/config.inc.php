@@ -4,14 +4,13 @@
  * @author $Author: holman $
  */
 $GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
-require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
 
-require_once __DIR__ . '/../../../../application.php';
+require_once $GLOBALS['g_campsiteDir'] . '/application.php';
 $application->bootstrap();
 
-Zend_Auth::getInstance()->setStorage(new Zend_Auth_Storage_Session( 'Zend_Auth_Storage' ));
-$userId = Zend_Auth::getInstance()->getIdentity();
+require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
 
+$userId = Zend_Auth::getInstance()->getIdentity();
 $userTmp = new User($userId);
 if (!$userTmp->exists() || !$userTmp->isAdmin()) {
 	header("Location: /$ADMIN/login.php");
