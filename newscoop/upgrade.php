@@ -39,6 +39,7 @@ require_once($g_documentRoot.'/install/classes/CampInstallation.php');
 require_once($g_documentRoot.'/classes/User.php');
 require_once($g_documentRoot.'/classes/CampPlugin.php');
 
+set_time_limit(0);
 $dbVersion = '';
 $dbRoll = '';
 $res = camp_detect_database_version($Campsite['DATABASE_NAME'], $dbVersion, $dbRoll);
