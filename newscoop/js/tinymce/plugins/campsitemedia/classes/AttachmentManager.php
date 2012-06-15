@@ -90,7 +90,7 @@ class AttachmentManager
 	}
 	$articleAttachments = ArticleAttachment::GetAttachmentsByArticleNumber($p_articleId, $p_languageId);
 	foreach ($articleAttachments as $articleAttachment) {
-	    if (!$this->config['validate_files']) {
+	    if (!$this->m_config['validate_files']) {
 	        if (in_array($articleAttachment->getExtension(), $mediaFormats)) {
 		  $file['attachment'] = $articleAttachment;
 		  $file['url'] = $articleAttachment->getAttachmentUrl();
