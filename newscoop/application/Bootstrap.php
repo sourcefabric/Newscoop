@@ -378,4 +378,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         \Zend_Registry::set('log', $log);
         return $log;
     }
+
+    protected function _initAuthStorage()
+    {
+        $storage = new Zend_Auth_Storage_Session('Zend_Auth_Storage');
+        Zend_Auth::getInstance()->setStorage($storage);
+    }
 }

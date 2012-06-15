@@ -49,6 +49,7 @@ class TemplateRepository extends EntityRepository
             $template = new Template($key);
             $em = $this->getEntityManager();
             $em->persist($template);
+            $em->flush();
         }
 
         return $template;
