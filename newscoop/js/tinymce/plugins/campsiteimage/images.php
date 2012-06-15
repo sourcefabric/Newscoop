@@ -10,9 +10,6 @@ header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 header("Cache-Control: no-cache");
 header("Pragma: no-cache");
 
-$GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
-require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
-
 // function to escape javascript parameters in function called in attribute
 function escape_js_param($str) {
     $str = str_replace('"','\x22',$str);
@@ -22,6 +19,7 @@ function escape_js_param($str) {
     return $str;
 }
 
+$GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 require_once $GLOBALS['g_campsiteDir'] . '/application.php';
 $application->bootstrap();
 
