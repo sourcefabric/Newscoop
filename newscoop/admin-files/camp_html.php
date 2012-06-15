@@ -61,10 +61,7 @@ function camp_html_copyright_notice($p_displayBorder = true)
     <a href="http://newscoop.sourcefabric.org/" target="_blank">
     <?php
       echo $campVersion->getPackage();
-      ?></a>&nbsp;<?php
-      echo $campVersion->getVersion() . ',';
-      ?>
-    the open content management system for professional journalists.
+      ?></a>, the open content management system for professional journalists.
       <br />
       <?php
       echo $campVersion->getCopyright() . '&nbsp;';
