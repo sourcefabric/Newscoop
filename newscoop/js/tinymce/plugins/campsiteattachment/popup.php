@@ -4,6 +4,8 @@ $GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__))))
 require_once $GLOBALS['g_campsiteDir'] . '/application.php';
 $application->bootstrap();
 
+require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
+
 $userId = Zend_Auth::getInstance()->getIdentity();
 $userTmp = new User($userId);
 if (!$userTmp->exists() || !$userTmp->isAdmin()) {

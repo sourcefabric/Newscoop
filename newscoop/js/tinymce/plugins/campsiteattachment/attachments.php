@@ -8,7 +8,6 @@
 $_SERVER['SCRIPT_NAME'] = preg_replace('#js/.*$#', 'admin.php', $_SERVER['SCRIPT_NAME']);
 
 $GLOBALS['g_campsiteDir'] = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
-require_once($GLOBALS['g_campsiteDir'].'/classes/User.php');
 
 require_once $GLOBALS['g_campsiteDir'] . '/application.php';
 $application->bootstrap();
