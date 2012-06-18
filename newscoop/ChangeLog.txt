@@ -12,7 +12,7 @@
   CS-4320: All issues disappear when translated into different language
   CS-4346: Authors are missing in articles and new ones cannot be attached
   CS-4368: Missing database field for Cache table
-  CS-4366: Searching by webcode in admin interface returns no results
+  CS-4366: Searching by webcode in admin interface and front-end pages returns no results
   WOBS-1697: assigning topics to blogs does not work for external bloggers
   WOBS-1115: Server shows 501 after try to Preview a blog article
   CS-4268: Inconsistent lables in Issue publishing schedule box for "Publish articles"
