@@ -1,4 +1,36 @@
-4.0 (April 25, 2012)
+4.0.1 (June 18, 2012)
+  Improvements
+  ------------
+  CS-4042: Translated article has same webcode as origin article
+  WOBS-992: replace prefix for by plus sign
+
+  Bug fixes
+  ---------
+  CS-4275: Saving template changes for first time leads to internal error page
+  CS-4362: Insert Image does not work for tarball installation
+  CS-4276: Merge article types crashes
+  CS-4320: All issues disappear when translated into different language
+  CS-4346: Authors are missing in articles and new ones cannot be attached
+  CS-4368: Missing database field for Cache table
+  CS-4366: Searching by webcode in admin interface returns no results
+  WOBS-1697: assigning topics to blogs does not work for external bloggers
+  WOBS-1115: Server shows 501 after try to Preview a blog article
+  CS-4268: Inconsistent lables in Issue publishing schedule box for "Publish articles"
+  CS-4357: Insert Media plugin for TinyMCE crashes when the file icon is clicked
+  CS-4365: Tinymce plugin for inserting attachments displays blank page
+  CS-4271: Rich Text Editor toggling on/off text directionality has no effect
+  CS-4046: 404 page shown after clicking on article in Author Content list
+  CS-4352: Compiled templates clearing functionality is not compatible with Smarty3
+  CS-4356: Assure the ArticleAuthors table has added 'order' field just when it is missing
+  CS-4007: Wording in soundcloud plugin should be changed from "Soundcloud" to "SoundCloud"
+  CS-3993: Adding process of images is interrupted for bloggers
+
+  Tasks
+  -----
+  CS-4359: Add no-limit to the upgrade process
+  CS-4355: Remove version number string from login page to prevent attackers searching for vulnerable systems
+
+4.0.0 (April 25, 2012)
   Improvements
   ------------
   CS-4176: Integrate the Rockstar to the list of available themes
