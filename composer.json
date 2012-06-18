@@ -1,0 +1,6 @@
+{
+    "require": {
+        "doctrine/orm": "2.1.*",
+        "doctrine/mongodb-odm": "*"
+    }
+}

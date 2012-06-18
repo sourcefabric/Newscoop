@@ -289,9 +289,6 @@ class StorageTest extends \PHPUnit_Framework_TestCase
     public function testIsWritable()
     {
         $this->assertTrue($this->storage->isWritable('/'));
-
-        $storage = new Storage('/dev');
-        $this->assertFalse($storage->isWritable('/'));
     }
 
     public function testCreateDir()

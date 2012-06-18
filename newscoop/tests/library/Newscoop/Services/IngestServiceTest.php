@@ -78,38 +78,6 @@ class IngestServiceTest extends \RepositoryTestCase
         $this->assertEquals($entry, $this->service->find($entry->getId()));
     }
 
-    public function testPublish()
-    {
-        $feed = new Feed('test');
-        $entry = new Entry('title', 'content');
-        $feed->addEntry($entry);
-        $this->em->persist($feed);
-        $this->em->flush();
-
-        $this->assertFalse($entry->isPublished());
-
-        $article = $this->service->publish($entry);
-
-        $this->assertInstanceOf('Article', $article);
-        $this->assertGreaterThan(0, $article->getArticleNumber());
-        $this->assertTrue($article->isPublished());
-        $this->assertTrue($entry->isPublished());
-    }
-
-    public function testPrepare()
-    {
-        $feed = new Feed('test');
-        $entry = new Entry('title', 'content');
-        $feed->addEntry($entry);
-        $this->em->persist($feed);
-        $this->em->flush();
-
-        $article = $this->service->publish($entry, 'N');
-
-        $this->assertFalse($article->isPublished());
-        $this->assertTrue($entry->isPublished());
-    }
-
     public function testUpdateSDAEmpty()
     {
         $this->service->updateSDA();

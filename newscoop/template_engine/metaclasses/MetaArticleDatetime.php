@@ -1,8 +1,6 @@
 <?php
 
-use Newscoop\Entity\ArticleDatetime,
-    ArrayIterator,
-    IteratorAggregate;
+use Newscoop\Entity\ArticleDatetime;
 
 class MetaArticleDatetime implements IteratorAggregate
 {
