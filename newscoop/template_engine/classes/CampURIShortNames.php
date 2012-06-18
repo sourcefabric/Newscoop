@@ -363,7 +363,7 @@ class CampURIShortNames extends CampURI
                 $webcodeLanguageId = $this->m_publication->default_language->number;
             }
 
-            $webcode = trim($request->getParam('webcode'), '@');
+            $webcode = trim(trim($request->getParam('webcode'), '@+'));
             $article = Zend_Registry::get('container')->getService('webcode')->findArticleByWebcode($webcode);
             if ($article) {
                 $article_no = $article->getNumber();

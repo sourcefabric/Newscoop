@@ -15,7 +15,7 @@ $em = Zend_Registry::get('container')->getService('em');
 
 foreach ($em->getRepository('Newscoop\Entity\Article')->findAll() as $article) {
     try {
-        Zend_Registry::get('container')->getService('webcode')->setArticleWebcode($article, trim(Newscoop\Webcode\Mapper::encode($article->getNumber()), '@'));
+        Zend_Registry::get('container')->getService('webcode')->setArticleWebcode($article, trim(Newscoop\Webcode\Mapper::encode($article->getNumber()), '@+'));
     } catch (\InvalidArgumentException $e) { // generate new on duplicate
         Zend_Registry::get('container')->getService('webcode')->setArticleWebcode($article);
     }
