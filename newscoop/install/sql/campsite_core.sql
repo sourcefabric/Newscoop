@@ -494,6 +494,7 @@ CREATE TABLE `Cache` (
   `template` varchar(128) NOT NULL,
   `expired` int(11) NOT NULL,
   `content` mediumtext,
+  `status` char(1) DEFAULT NULL,
   UNIQUE KEY `index` (`language`,`publication`,`issue`,`section`,`article`,`params`,`template`),
   KEY `expired` (`expired`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
