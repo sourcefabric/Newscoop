@@ -1,5 +1,5 @@
 <?php 
-regGS("according to php.ini settings", "");
+regGS("according to php.ini settings", "podle php.ini nastavení");
 regGS("Maximal zoom for auto-focusing:", "Maximální zoom pro automatické zaostření:");
 regGS("Map border for auto-focusing:", "Hranice mapy pro automatické zaostření:");
 regGS("Map auto-focusing as the default behavior:", "Automaticke zaostření pro mapu jako defaultní chování:");

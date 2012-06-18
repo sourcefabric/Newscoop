@@ -29,7 +29,6 @@ regGS("Click here to publish this issue", "");
 regGS("A total of $1 articles were deleted.", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Nom<BR><SMALL>(cliquer pour voir les sections)</SMALL>");
 regGS("Delete issue $1", "Supprimer édition $1");
-regGS("Publish articles", "Publier articles");
 regGS("You do not have the right to change issues.", "Vous n'avez pas le droit de changer des éditions");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "Etes-vous sûr de vouloir changer le statut de l'édition $1 de $2 à $3?");
 regGS("Add new translation", "Ajouter une nouvelle traduction");

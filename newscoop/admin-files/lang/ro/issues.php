@@ -29,7 +29,6 @@ regGS("Click here to publish this issue", "Apasă aici pentru a publica această
 regGS("A total of $1 articles were deleted.", "Un număr de $1 articole au fost şterse.");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Nume<BR><SMALL>(clic pentru a vedea secţiunile)</SMALL>");
 regGS("Delete issue $1", "Şterge ediţia $1");
-regGS("Publish articles", "Publică articolele");
 regGS("You do not have the right to change issues.", "Nu ai dreptul de a modifica ediţiile.");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "Eşti sigur că vrei să schimbi starea ediţiei $1 de la $2 la $3?");
 regGS("Add new translation", "Adaugă o traducere nouă");

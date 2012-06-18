@@ -1,6 +1,6 @@
 <?php 
-regGS("Not a color", "");
-regGS("No such field", "");
+regGS("Not a color", "To není barva");
+regGS("No such field", "Žádné takové pole");
 regGS("Color saved", "Barva uložena");
 regGS("Color not saved", "Barva neuložena");
 regGS("Topic created", "Námět vytvořen");

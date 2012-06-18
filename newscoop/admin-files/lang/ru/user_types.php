@@ -1,7 +1,6 @@
 <?php 
 regGS("Soundcloud", "Soundcloud");
 regGS("Templates", "Шаблоны ");
-regGS("Newswires Ingest", "Прием информационной ленты");
 regGS("Feedback Messages", "Сообщения обратной связи");
 regGS("Article Playlists", "Плейлисты статьи");
 regGS("Check all", "Проверить все");

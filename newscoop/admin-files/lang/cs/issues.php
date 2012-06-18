@@ -29,7 +29,6 @@ regGS("Click here to publish this issue", "Klikněte zde pro publikaci vydání"
 regGS("A total of $1 articles were deleted.", "Celkem $1 článků odstraněno.");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Název publikace<BR><SMALL>(klikněte pro zobrazení rubrik)</SMALL> ");
 regGS("Delete issue $1", "Odstranit vydání $1");
-regGS("Publish articles", "Publikovat články");
 regGS("You do not have the right to change issues.", "Nemáte právo měnit vydání");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "Určitě chcete změnit stav vydání $1 z $2 na $3?");
 regGS("Add new translation", "Přidat překlad");

@@ -29,7 +29,6 @@ regGS("Click here to publish this issue", "");
 regGS("A total of $1 articles were deleted.", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "      ( الاسم <br> (إضغط لترى الإصدارات");
 regGS("Delete issue $1", "الغاء  الإصدار$1");
-regGS("Publish articles", "نشر المقالات");
 regGS("You do not have the right to change issues.", "لا يحق لك تغيير الإصدارات");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "هل أنت متأكد من أنك تريد تغيير وضع الإصدار  $1 من $2 إلى $3؟");
 regGS("Add new translation", "إضافة ترجمة جديدة");

@@ -29,7 +29,6 @@ regGS("Click here to publish this issue", "");
 regGS("A total of $1 articles were deleted.", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "");
 regGS("Delete issue $1", "");
-regGS("Publish articles", "");
 regGS("You do not have the right to change issues.", "");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "");
 regGS("Add new translation", "");

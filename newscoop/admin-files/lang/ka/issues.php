@@ -29,7 +29,6 @@ regGS("Click here to publish this issue", "გამოცემის გამ
 regGS("A total of $1 articles were deleted.", "$1 სტატია წაიშალა");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "სახელი<BR><SMALL>(დააჭირეთ სექციების სანახავად)</SMALL>");
 regGS("Delete issue $1", "$1 გამოცემის წაშლა");
-regGS("Publish articles", "სტატიების გამოქვეყნება");
 regGS("You do not have the right to change issues.", "თქვენ არ გაქვს გამოცემების ცვლილების უფლება.");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "დარწმუნებული ხართ რომ $1 გამოცემის სტატუსის ცვლილება გსურთ საწყისი სტატუსიდან: $2, ახალ სტატუსზე: $3");
 regGS("Add new translation", "ახალი თარგმნის დამატება");

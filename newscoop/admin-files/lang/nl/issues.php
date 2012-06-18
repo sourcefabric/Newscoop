@@ -29,7 +29,6 @@ regGS("Click here to publish this issue", "");
 regGS("A total of $1 articles were deleted.", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Naam<BR><SMALL>(klik om de secties te zien)</SMALL>");
 regGS("Delete issue $1", "Verwijder uitgave $1");
-regGS("Publish articles", "Publiceer artikelen");
 regGS("You do not have the right to change issues.", "Je hebt niet de rechten om de uitgaven te veranderen.");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "Weet je zeker dat je de uitgave $1 status van $2 naar $3 wilt veranderen?");
 regGS("Add new translation", "Voeg nieuwe vertaling toe");

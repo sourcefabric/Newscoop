@@ -29,7 +29,6 @@ regGS("Click here to publish this issue", "Tryck här för att publicera denna u
 regGS("A total of $1 articles were deleted.", "Totalt $1 artiklar raderades.");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Namn<BR><SMALL>(klicka för att se sektioner)</SMALL>");
 regGS("Delete issue $1", "Radera utgåva $1");
-regGS("Publish articles", "Publicera artiklar");
 regGS("You do not have the right to change issues.", "Du har inte rätt att ändra på utgåvor.");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "Är du säker att du vill ändra status på utgåvan $1 från $2 till $3");
 regGS("Add new translation", "Lägg till ny översättning");

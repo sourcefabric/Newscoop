@@ -29,7 +29,6 @@ regGS("Click here to publish this issue", "Κάντε κλίκ εδώ για δ�
 regGS("A total of $1 articles were deleted.", "Συνολικά $1 άρθρα διαγράφτηκαν.");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Όνομα<BR><SMALL>(κάντε κλίκ για επεξεργασία)</SMALL>");
 regGS("Delete issue $1", "Διαγραφή τεύχους $1");
-regGS("Publish articles", "Δημοσίευση άρθρων");
 regGS("You do not have the right to change issues.", "Δεν έχετε το δικαίωμα να αλλάξετε τεύχη.");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "Είστε σίγουρος/η ότι θέλετε να αλλάξετε την κατάσταση του τεύχους $1 από $2 σε $3;");
 regGS("Add new translation", "Προσθήκη νέας μετάφρασης");

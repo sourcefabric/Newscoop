@@ -29,7 +29,6 @@ regGS("Click here to publish this issue", "");
 regGS("A total of $1 articles were deleted.", "");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "이름<BR><SMALL>(이슈보려면클릭)</SMALL>");
 regGS("Delete issue $1", "이슈  $1  삭제");
-regGS("Publish articles", "기사 출판");
 regGS("You do not have the right to change issues.", "이슈를 수정할 권한이 없습니다. ");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "이슈 $1 상태를 $2 에서 $3 로 변경합니까?");
 regGS("Add new translation", "새로운 번역 추가");

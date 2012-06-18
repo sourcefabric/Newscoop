@@ -29,7 +29,6 @@ regGS("Click here to publish this issue", "Кликни овде да објав
 regGS("A total of $1 articles were deleted.", "Укупно $1 текстова је обрисано.");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Назив<br><small>(кликните за преглед рубрика)</small>");
 regGS("Delete issue $1", "Обриши издање $1");
-regGS("Publish articles", "Објави текстове");
 regGS("You do not have the right to change issues.", "Немате право да мењате податке о издању");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "Да ли сте сигурни да желите да промените статус издања $1 из $2 у $3?");
 regGS("Add new translation", "Додај нови превод");

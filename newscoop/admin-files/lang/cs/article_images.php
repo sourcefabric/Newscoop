@@ -1,11 +1,11 @@
 <?php 
-regGS("Sorry that image is too small. Image needs to be at least %dx%d.", "");
-regGS("Slideshow rendition", "");
+regGS("Sorry that image is too small. Image needs to be at least %dx%d.", "Obrázek je příliš malý, jeho velikost musí být alespoň %dx%d");
+regGS("Slideshow rendition", "Ukázat slideshow");
 regGS("Renditions reloaded", "Formáty znovu nahrány");
 regGS("Reload renditions", "Znovu nahrané formáty");
 regGS("Edit images", "Editovat obrázky");
 regGS("Specify image url if you want to load it.", "Specifikujte URL obrázku, pokud ho chcete nahrát.");
-regGS("Items: ", "");
+regGS("Items: ", "Položky:");
 regGS("Attach slideshows", "Připojit slideshows");
 regGS("original size:", "originální velikost:");
 regGS("no caption", "žádný titulek");
@@ -30,8 +30,8 @@ regGS("Next: Upload and Edit Metadata", "Další: Nahrát a Editovat Metadata");
 regGS("Next: Place Images", "Další: Umístit obrázky");
 regGS("Media Archive", "Archiv Médií");
 regGS("Location", "Lokace");
-regGS("Items", "");
-regGS("Item", "");
+regGS("Items", "Položky");
+regGS("Item", "Položka");
 regGS("Image files", "Soubory obrázků");
 regGS("Image Files: ", "Soboury obrázků:");
 regGS("Headline", "Titulek");

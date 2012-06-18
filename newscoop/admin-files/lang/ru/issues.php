@@ -29,7 +29,6 @@ regGS("Click here to publish this issue", "Щелкните здесь для п
 regGS("A total of $1 articles were deleted.", "Всего статей было удалено: $1");
 regGS("Name<BR><SMALL>(click to see sections)</SMALL>", "Название<BR><SMALL>(щелкните для просмотра секций)</SMALL>");
 regGS("Delete issue $1", "Удаление выпуска $1");
-regGS("Publish articles", "Опубликовать статьи");
 regGS("You do not have the right to change issues.", "Вы не имеете прав доступа к изменению выпуска.");
 regGS("Are you sure you want to change the issue $1 status from $2 to $3?", "Вы уверены, что хотите поменять статус выпуска $1 с $2 на $3?");
 regGS("Add new translation", "Добавить новый перевод");

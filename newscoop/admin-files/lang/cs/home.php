@@ -2,10 +2,10 @@
 regGS("Campsite", "");
 regGS("Image Rendering", "");
 regGS("Featured Article Lists", "");
-regGS("You have tried to upload an invalid backup file.", "");
-regGS("You do not have the right to manage backups.", "");
-regGS("Make a new backup", "");
-regGS("Are you sure you want to make a new backup?", "");
+regGS("You have tried to upload an invalid backup file.", "Pokusil jste se nahrát neplatný zálohovaný soubor.");
+regGS("You do not have the right to manage backups.", "Nemáte opravnění pracovat se zálohováním dat.");
+regGS("Make a new backup", "Vytvořit novou zálohu dat");
+regGS("Are you sure you want to make a new backup?", "Jste si jist, že chcete provést novou zálohu dat?");
 regGS("Security token expired. Please resubmit the form.", "Bezpečnostní token vypršel. Formulář prosím znovu připojte.");
 regGS("Templates", "Šablony");
 regGS("Create slideshow", "Vytvořit slideshow");
@@ -152,4 +152,5 @@ regGS("Login failed", "Přihlášení neproběhlo");
 regGS("Please make sure that you typed the correct user name and password.", "Zkontrolujte, zda jste správně zadali uživatelské jméno a heslo");
 regGS("If your problem persists please contact the site administrator $1", "Pokud vaše problémy přetrvávají, prosím kontaktujte administrátora");
 regGS("Backup/Restore", "Zálohovat/Obnovit");
+regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Nazdárek, \\n\\nfor obnovení hesla, prosím mrkněte se na link: $1");
 ?>
