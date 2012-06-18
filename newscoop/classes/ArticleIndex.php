@@ -75,10 +75,11 @@ class ArticleIndex extends DatabaseObject {
         }
 
         // specifically match webcode (first one)
-	    $webcodeMatches = preg_grep("`^\s*[\+@]`", $keywords);
-	    if (count($webcodeMatches)) {
-            $encoder = Manager::getWebcoder('');
-            $article_no = $encoder->decode(current($webcodeMatches));
+        $webcodeMatches = preg_grep("`^\s*[\+@]`", $keywords);
+        if (count($webcodeMatches)) {
+            $wcode = ltrim(current($webcodeMatches), '@+');
+            $za = Zend_Registry::get('container')->getService('webcode')->findArticleByWebcode($wcode);
+            $article_no = $za->getId();
             if (is_numeric($article_no)) {
                 $selectKeywordClauseObj = new SQLSelectClause();
                 $selectKeywordClauseObj->addColumn('DISTINCT AI1.NrArticle');
@@ -86,7 +87,7 @@ class ArticleIndex extends DatabaseObject {
                 $selectKeywordClauseObj->setTable('ArticleIndex AS AI1');
                 $selectKeywordClauseObj->addConditionalWhere("AI1.NrArticle = '$article_no'");
             }
-	    }
+        }
         // set search keywords
         elseif ($matchAll && count($keywords) > 1) {
             $selectKeywordClauseObj = new SQLSelectClause();

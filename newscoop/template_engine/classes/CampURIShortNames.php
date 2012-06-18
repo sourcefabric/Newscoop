@@ -311,28 +311,16 @@ class CampURIShortNames extends CampURI
      */
     private function _getArticle($articleNo, MetaLanguage $language)
     {
-        global $controller;
-
         if (empty($articleNo)) {
             return null;
         }
 
         $articleObj = new Article($language->number, $articleNo);
         if (!$articleObj->exists() || (!$this->m_preview && !$articleObj->isPublished())) {
-            $controller->getResponse()->setHttpResponseCode(404);
             throw new InvalidArgumentException("Invalid article identifier in URL.", self::INVALID_ARTICLE);
         }
 
-        $url = parse_url($this->m_uri);
-        $seo = $articleObj->getSEOURLEnd($this->m_publication->getSeo(), $language->number);
-        $meta = new MetaArticle($language->number, $articleObj->getArticleNumber());
-        if (substr($url['path'], strlen($seo) * -1) === $seo) {
-            return $meta;
-        }
-
-        $controller->getHelper('redirector')->gotoUrlAndExit(sprintf('%s%s%s', $meta->url, $seo, !empty($url['query']) ? '?' . $url['query'] : ''), array(
-            'code' => 301,
-        ));
+        return new MetaArticle($language->number, $articleObj->getArticleNumber());
     }
 
     /**
@@ -375,7 +363,7 @@ class CampURIShortNames extends CampURI
                 $webcodeLanguageId = $this->m_publication->default_language->number;
             }
 
-            $webcode = trim($request->getParam('webcode'), '@');
+            $webcode = trim(trim($request->getParam('webcode'), '@+'));
             $article = Zend_Registry::get('container')->getService('webcode')->findArticleByWebcode($webcode);
             if ($article) {
                 $article_no = $article->getNumber();
@@ -398,8 +386,8 @@ class CampURIShortNames extends CampURI
             $this->m_section = $this->_getSection($request->getParam('section'), $this->m_issue, $this->m_language, $this->m_publication);
             $this->m_article = $this->_getArticle($request->getParam('articleNo'), $this->m_language);
         }
-
         $this->m_template = $this->_getTemplate();
+
     }
 
     /**

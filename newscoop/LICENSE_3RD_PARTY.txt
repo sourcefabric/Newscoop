@@ -83,6 +83,8 @@ Javascript
   * DataTables - GPL v.2 or BSD (not yet in Debian?)
   * FancyBox - MIT or GPL v.2 (not yet in Debian?)
 
+* Backbone.js - (http://backbonejs.org) - MIT License
+
 * EditArea - GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1 (Debian: libjs-edit-area)
 
 * Prototype - MIT style: https://github.com/sstephenson/prototype/raw/master/LICENSE (Debian: libjs-prototype)
