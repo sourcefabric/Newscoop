@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(E_ALL & ~E_DEPRECATED & ~E_STRICT);
+
 define('APPLICATION_ENV', 'testing');
 define('IN_PHPUNIT', true);
 
