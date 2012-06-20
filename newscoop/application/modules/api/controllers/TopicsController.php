@@ -9,9 +9,9 @@
  */
 class Api_TopicsController extends Zend_Controller_Action
 {
-    const LANGUAGE = 1;
+    const LANGUAGE = 5;
 
-    const ARTICLE_TOPICS = 101;
+    const ARTICLE_TOPICS = 412233;
     
     /** @var Zend_Controller_Request_Http */
     private $request;
