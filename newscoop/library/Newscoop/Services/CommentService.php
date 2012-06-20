@@ -213,7 +213,7 @@ class CommentService
             ->where('c.article_num IN (:ids)')
             ->groupBy('c.article_num')
             ->getQuery()
-            ->setParameter('ids', $ids)
+            ->setParameter('ids', array_values($ids))
             ->getResult();
 
         $counts = array();
