@@ -38,9 +38,11 @@ class ArticleRepository extends DatatableSource implements \Newscoop\Search\Repo
                 ->andWhere('a.indexed IS NOT NULL')
                 ->orderBy('a.indexed', 'ASC')
                 ->getQuery()
-                ->setMaxResults(self::BATCH_COUNT, count($batch))
+                ->setMaxResults(self::BATCH_COUNT - count($batch))
                 ->getResult();
         }
+
+        return $batch;
     }
 
     /**
