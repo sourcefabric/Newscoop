@@ -17,6 +17,8 @@ use DateTime,
  */
 class ArticleRepository extends DatatableSource implements \Newscoop\Search\RepositoryInterface
 {
+    const BATCH_COUNT = 50;
+
     /**
      * Get articles for indexing
      *
@@ -24,12 +26,21 @@ class ArticleRepository extends DatatableSource implements \Newscoop\Search\Repo
      */
     public function getBatch()
     {
-        return $this->createQueryBuilder('a')
+        $batch = $this->createQueryBuilder('a')
             ->andWhere('a.indexed IS NULL OR a.indexed < a.date')
             ->orderBy('a.number', 'DESC')
             ->getQuery()
-            ->setMaxResults(50)
+            ->setMaxResults(self::BATCH_COUNT)
             ->getResult();
+
+        if (count($batch) < self::BATCH_COUNT) { // update oldest
+            $batch += $this->createQueryBuilder('a')
+                ->andWhere('a.indexed IS NOT NULL')
+                ->orderBy('a.indexed', 'ASC')
+                ->getQuery()
+                ->setMaxResults(self::BATCH_COUNT, count($batch))
+                ->getResult();
+        }
     }
 
     /**
