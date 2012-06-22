@@ -82,7 +82,7 @@ class Api_FeedbackController extends Zend_Controller_Action
                             'attachment_id' => 0
                         );
                         
-                        /*
+                        
                         if (!empty($_FILES)) {
                             $_FILES['image_data']['name'] = preg_replace('/[^\w\._]+/', '', $_FILES['image_data']['name']);
                             
@@ -92,7 +92,6 @@ class Api_FeedbackController extends Zend_Controller_Action
                             $values['attachment_type'] = 'image';
                             $values['attachment_id'] = $image->getImageId();
                         }
-                        */
                         
                         $feedbackRepository->save($feedback, $values);
                         $feedbackRepository->flush();
@@ -130,7 +129,6 @@ class Api_FeedbackController extends Zend_Controller_Action
         $mail->setFrom($fromEmail);
         $mail->addTo($toEmail);
         
-        /*
         if ($values['attachment_type'] == 'image') {
             $item = new Image($values['attachment_id']);
             $location = $item->getImageStorageLocation();
@@ -165,7 +163,7 @@ class Api_FeedbackController extends Zend_Controller_Action
              
             $mail->addAttachment($at);
         }
-        */
+        
         try {
 			$mail->send();
 		}
