@@ -252,7 +252,7 @@ class UserRepository extends EntityRepository implements \Newscoop\Search\Reposi
             ->andWhere('u.is_public = :public');
 
         $qb->setParameters(array(
-            'q' => trim($search),
+            'q' => '%' . trim($search, '%') . '%',
             'status' => User::STATUS_ACTIVE,
             'public' => TRUE,
         ));
@@ -263,8 +263,7 @@ class UserRepository extends EntityRepository implements \Newscoop\Search\Reposi
                 ->getSingleScalarResult();
         }
 
-        $qb->orderBy('u.last_name', 'ASC');
-        $qb->addOrderBy('u.first_name', 'ASC');
+        $qb->orderBy('u.username', 'ASC');
         $qb->addOrderBy('u.id', 'DESC');
 
         $qb->setFirstResult($offset);
