@@ -243,7 +243,7 @@ class Api_OmnitickerController extends OmnitickerController
     protected function buildSolrParams()
     {
         return array_merge(parent::buildSolrParams(), array(
-            'rows' => $this->_getParam('start_date') || $this->_getParam('query_string') ? 200 : 30,
+            'rows' => $this->_getParam('start_date') && !$this->_getParam('query_string') ? 200 : 30,
         ));
     }
 
