@@ -63,7 +63,7 @@ class Api_OmnitickerController extends OmnitickerController
                 'module' => 'api',
                 'controller' => 'comments',
                 'action' => 'list',
-            )) . sprintf('?article_id=%d&client=%s&version=%s', $id, $this->getClient(), $this->getVersion())) : null,
+            )) . sprintf('?article_id=%d&version=%s', $id, $this->getVersion())) : null,
             'comment_count' => isset($this->commentStats[$id]) ? $this->commentStats[$id]['normal'] : null,
             'recommended_comment_count' => isset($this->commentStats[$id]) ? $this->commentStats[$id]['recommended'] : null,
             'source' => $this->formatType($doc),
