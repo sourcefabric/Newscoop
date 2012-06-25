@@ -123,6 +123,8 @@ class Api_EventsController extends Zend_Controller_Action
                 $one_email = null;
             }
 
+            $one_event_id = urlencode($one_data->getProperty('Fevent_id'));
+
             $event_list_data[] = array(
                 'title' => $one_data->getProperty('Fheadline'),
                 'description' => $one_description,
@@ -133,6 +135,7 @@ class Api_EventsController extends Zend_Controller_Action
                 'zipcode' => $one_data->getProperty('Fzipcode'),
                 'date_time' => $one_date_time,
                 'web' => $one_web,
+                'event_detail_url' => self::BASE_URL . '/event?id=' . $one_event_id . '&date=' . urlencode($this->req_date),
                 'email' => $one_email,
                 'canceled' => $one_canceled,
             );
@@ -186,7 +189,14 @@ class Api_EventsController extends Zend_Controller_Action
         $param_date = $this->_request->getParam('date');
         $param_region = $this->_request->getParam('region');
         $param_type = $this->_request->getParam('genre'); // $this->_request->getParam('type'); // not required ?
-        if (empty($param_date) || empty($param_region) || empty($param_type)) {
+        if (empty($param_date)) {
+            $param_date = date('Y-m-d');
+        }
+        if (empty($param_region)) {
+            $param_region = 'kanton-basel-stadt';
+        }
+
+        if (empty($param_type)) {
             return $empty_res;
         }
 
