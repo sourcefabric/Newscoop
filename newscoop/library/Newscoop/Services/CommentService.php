@@ -7,7 +7,8 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\EntityManager,
+    Newscoop\Entity\Comment;
 
 /**
  * User service
@@ -195,32 +196,70 @@ class CommentService
     }
 
     /**
-     * Get articles comment count
+     * Get comments statistics for articles
      * 
      * @param mixed $ids
      * @return array
      */
-    public function getArticlesCommentCount($ids)
+    public function getArticleStats($ids)
     {
         $ids = (array) $ids;
         if (empty($ids)) {
             return array();
         }
 
-        $rows = $this->em->getRepository('Newscoop\Entity\Comment')
-            ->createQueryBuilder('c')
-            ->select('COUNT(c), c.article_num')
-            ->where('c.article_num IN (:ids)')
-            ->groupBy('c.article_num')
-            ->getQuery()
-            ->setParameter('ids', array_values($ids))
-            ->getResult();
-
-        $counts = array();
-        foreach ($rows as $row) {
-            $counts[$row['article_num']] = (int) $row[1];
+        $stats = array();
+        foreach ($ids as $id) {
+            $stats[$id] = array(
+                'normal' => 0,
+                'recommended' => 0,
+            );
         }
 
-        return $counts;
+        foreach (array('normal' => false, 'recommended' => true) as $key => $recommended) {
+            $rows = $this->getCommentCounts($ids, $recommended);
+            foreach ($rows as $row) {
+                $stats[(int) $row['article_num']][$key] = (int) $row[1];
+            }
+        }
+
+        return $stats;
+    }
+
+    /**
+     * Get articles comment counts
+     *
+     * @param array $ids
+     * @return array
+     */
+    private function getCommentCounts(array $ids, $recommended = false)
+    {
+        $qb = $this->getCommentsRepository()
+            ->createQueryBuilder('c')
+            ->select('COUNT(c), c.article_num')
+            ->andWhere('c.article_num IN (:ids)')
+            ->andWhere('c.status = :status');
+
+        if ($recommended) {
+            $qb->andWhere('c.recommended = 1');
+        } else {
+            $qb->andWhere('c.recommended <> 1');
+        }
+
+        return $qb->groupBy('c.article_num')
+            ->setParameter('ids', array_values($ids))
+            ->setParameter('status', Comment::STATUS_APPROVED)
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Get comments repository
+     *
+     * @return Doctrine\ORM\EntityRepository
+     */
+    private function getCommentsRepository()
+    {
+        return $this->em->getRepository('Newscoop\Entity\Comment');
     }
 }
