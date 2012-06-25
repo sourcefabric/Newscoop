@@ -40,12 +40,12 @@ class Comment implements \Newscoop\Search\DocumentInterface
 
     /**
      * Constants for status
-
+     */
     const STATUS_APPROVED   = 0;
     const STATUS_PENDING    = 1;
     const STATUS_HIDDEN     = 2;
     const STATUS_DELETED    = 3;
-     */
+
     /**
      * @var string to code mapper for status
     static $status_enum = array(

@@ -11,8 +11,6 @@ require_once __DIR__ . '/../../../controllers/OmnitickerController.php';
  */
 class Api_OmnitickerController extends OmnitickerController
 {
-    const ROWS = 30;
-
     const TYPE_TWITTER = 'tweet';
     const TYPE_NEWSWIRE = 'newswire';
     const TYPE_LINK = 'link';
@@ -28,12 +26,12 @@ class Api_OmnitickerController extends OmnitickerController
     private $rank = 1;
 
     /** @var array */
-    private $commentCounts = array();
+    private $commentStats = array();
 
     public function indexAction()
     {
         parent::indexAction();
-        $this->commentCounts = $this->_helper->service('comment')->getArticlesCommentCount(array_filter(array_map(function($doc) {
+        $this->commentStats = $this->_helper->service('comment')->getArticleStats(array_filter(array_map(function($doc) {
             return Api_OmnitickerController::getArticleId($doc);
         }, $this->view->result['response']['docs'])));
         $this->getResponse()->setHeader('Expires', $this->getExpires(), true);
@@ -65,8 +63,9 @@ class Api_OmnitickerController extends OmnitickerController
                 'module' => 'api',
                 'controller' => 'comments',
                 'action' => 'list',
-            )) . sprintf('?article_id=%d', $id)) : null,
-            'comment_count' => isset($this->commentCounts[$id]) ? $this->commentCounts[$id] : null,
+            )) . sprintf('?article_id=%d&version=%s', $id, $this->getVersion())) : null,
+            'comment_count' => isset($this->commentStats[$id]) ? $this->commentStats[$id]['normal'] : null,
+            'recommended_comment_count' => isset($this->commentStats[$id]) ? $this->commentStats[$id]['recommended'] : null,
             'source' => $this->formatType($doc),
             'rank' => $this->rank++,
             'published' => $this->formatPublished($doc),
@@ -90,7 +89,7 @@ class Api_OmnitickerController extends OmnitickerController
             'module' => 'api',
             'controller' => 'articles',
             'action' => 'item',
-        )) . sprintf('?article_id=%d&side=%s', $articleId, $isFront ? 'front' : 'back'));
+        )) . sprintf('?article_id=%d&side=%s&client=%s&version=%s', $articleId, $isFront ? 'front' : 'back', $this->getClient(), $this->getVersion()));
     }
 
     /**
@@ -244,7 +243,7 @@ class Api_OmnitickerController extends OmnitickerController
     protected function buildSolrParams()
     {
         return array_merge(parent::buildSolrParams(), array(
-            'rows' => self::ROWS,
+            'rows' => $this->_getParam('start_date') && !$this->_getParam('query_string') ? 200 : 30,
         ));
     }
 
@@ -288,5 +287,25 @@ class Api_OmnitickerController extends OmnitickerController
     public static function getArticleId(array $doc)
     {
         return strpos($doc['id'], 'article-') === 0 ? (int) preg_replace('/(^article-)|([0-9]+-$)/', '', $doc['id']) : null;
+    }
+
+    /**
+     * Get client identifier
+     *
+     * @return string
+     */
+    protected function getClient()
+    {
+        return $this->_getParam('client', 'iphone');
+    }
+
+    /**
+     * Get api version
+     *
+     * @return string
+     */
+    protected function getVersion()
+    {
+        return sprintf('%.1f', $this->_getParam('version', 1.0));
     }
 }
