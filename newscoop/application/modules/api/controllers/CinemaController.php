@@ -236,7 +236,7 @@ class Api_CinemaController extends Zend_Controller_Action
 
                 $one_image_url = null;
                 if (!empty($one_image_id)) {
-                    $one_image_url = '/get_img?ImageWidth=188&ImageId=' . $one_image_id;
+                    $one_image_url = '/get_img?ImageHeight=300&ImageId=' . $one_image_id;
                 }
 
                 $one_movie_data = array(
