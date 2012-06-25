@@ -1420,7 +1420,7 @@ class NewsImport
                     }
                 }
 
-                foreach ($md_removals_wd as $one_md_wd) {
+                foreach ($md_schedule_wd as $one_md_wd) {
                     $repository->deleteById($one_md_wd);
                 }
 
