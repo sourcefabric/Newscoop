@@ -6,6 +6,7 @@
  */
 
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
 
 /**
  */
@@ -227,6 +228,17 @@ class Api_CinemaController extends Zend_Controller_Action
                     $one_rating = 0 + $one_rating;
                 }
 
+                $one_image_id = null;
+                $articleImage = new \ArticleImage($one_movie->getArticleNumber(), null, 1);
+                if ($articleImage->exists()) {
+                    $one_image_id = $articleImage->getImageId();
+                }
+
+                $one_image_url = null;
+                if (!empty($one_image_id)) {
+                    $one_image_url = '/get_img?ImageHeight=300&ImageId=' . $one_image_id;
+                }
+
                 $one_movie_data = array(
                     'suisa' => $one_suisa,
                     'title' => $one_data->getProperty('Fheadline'),
@@ -235,6 +247,8 @@ class Api_CinemaController extends Zend_Controller_Action
                     'genres' => $one_movie_types,
                     'minimal_age' => $one_min_age,
                     'trailer_url' => $one_movie_trailer,
+                    'image_url' => $one_image_url, // 'http://www.tageswoche.ch/images/cache/555x370/crop/images%7Ccms-image-000042058.png',
+                    'movie_detail_url' => self::BASE_URL . '/movie?key=' . urlencode('' . $one_data->getProperty('Fmovie_key')),
                     'director' => $one_movie_director,
                     'actors' => $one_movie_cast,
                     'year' => $one_year,
@@ -338,8 +352,11 @@ class Api_CinemaController extends Zend_Controller_Action
         $param_date = $this->_request->getParam('date');
         $param_region = $this->_request->getParam('region');
         //$param_type = $this->_request->getParam('genre'); // $this->_request->getParam('type'); // not required ?
-        if (empty($param_date) || empty($param_region)) {
-            return $empty_res;
+        if (empty($param_date)) {
+            $param_date = date('Y-m-d');
+        }
+        if (empty($param_region)) {
+            $param_region = 'kanton-basel-stadt';
         }
 
         $this->req_date = $this->m_service->getRequestDate($param_date);
