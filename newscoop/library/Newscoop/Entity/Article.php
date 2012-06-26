@@ -440,6 +440,16 @@ class Article implements \Newscoop\Search\DocumentInterface
     }
 
     /**
+     * Get published
+     *
+     * @return DateTime
+     */
+    public function getPublished()
+    {
+        return !empty($this->published) ? new \DateTime($this->published) : null;
+    }
+
+    /**
      * Set published
      *
      * @param DateTime $published

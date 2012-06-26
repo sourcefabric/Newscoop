@@ -265,7 +265,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('http.client_factory'))
             ->addArgument('%config%');
 
-        $container->register('mobile.issue', 'Tageswoche\Mobile\IssueFacade');
+        $container->register('mobile.issue', 'Tageswoche\Mobile\IssueFacade')
+            ->addArgument(new sfServiceReference('em'));
 
         $container->register('mobile.free_upgrade', 'Tageswoche\Mobile\FreeUpgradeFacade')
             ->addArgument(new sfServiceReference('em'));
@@ -394,6 +395,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                      'slideshow-rest',
                  ),
              )));
+
+        $router->addRoute('api.issues', new Zend_Controller_Router_Route('api/issues/:id/:action', array(
+            'module' => 'api',
+            'controller' => 'issues',
+            'id' => null,
+            'action' => 'index',
+        )));
     }
 
     protected function _initActionHelpers()
