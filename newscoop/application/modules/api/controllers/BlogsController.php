@@ -65,28 +65,15 @@ class Api_BlogsController extends Zend_Controller_Action
                 $lastModified = '0000-00-00 00:00:00';
                 $articleImages = ArticleImage::GetImagesByArticleNumber($articles[0]->getNumber());
                 $imageUrl = $articleImages[0]->getImage()->getImageUrl();
-                
-                if ($posts[0]) {
-                    $lastModified = $posts[0]->getPublishDate();
-                    $authors = $posts[0]->getAuthors();
-                    
-                    $authorList = array();
-                    foreach ($authors as $author) {
-                        $authorList[] = $author->getfullName();
-                    }
-                    
-                    $authorNames = implode(', ', $authorList);
-                }
-                
+
                 $response[] = array(
                     'id' => $section->getNumber(),
                     'url' => $this->url.'/api/blogs/posts?blog_id='.$section->getNumber(),
-                    'short_name' => $blogInfo->getFieldValue('short_name'),
-                    'motto' => $blogInfo->getFieldValue('motto'),
+                    'title' => $articles[0]->getTitle(),
+                    'description' => trim($blogInfo->getFieldValue('infolong')),
                     'rank' => $rank,
                     'image_url' => $imageUrl,
-                    'author_names' => $authorNames,
-                    'last_modified' => $lastModified
+                    'published' => $articles[0]->getPublishDate(),
                 );
                 
                 $rank = $rank + 1;

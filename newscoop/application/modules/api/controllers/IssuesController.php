@@ -14,6 +14,8 @@ require_once __DIR__ . '/AbstractController.php';
  */
 class Api_IssuesController extends AbstractController
 {
+    const LANGUAGE_ID = 1;
+
     /**
      * @var int
      */
@@ -47,12 +49,18 @@ class Api_IssuesController extends AbstractController
             $this->sendError();
         }
 
-        $issue = $this->service->find($this->_getParam('id'));
-        if (empty($issue)) {
+        $this->issue = $this->service->find($this->_getParam('id'));
+        if (empty($this->issue)) {
             $this->sendError('Issue not found.', 404);
         }
 
-        $this->_helper->json($this->formatTocIssue($issue));
+        $this->_helper->json($this->formatTocIssue($this->issue));
+    }
+
+    public function articlesAction()
+    {
+        $this->_helper->layout->disableLayout();
+        $this->view->article = new MetaArticle(self::LANGUAGE_ID, (int) $this->_getParam('article_id'));
     }
 
     /**
@@ -65,7 +73,9 @@ class Api_IssuesController extends AbstractController
     {
         return array(
             'issue_id' => $issue->getNumber(),
-            'url' => $this->view->serverUrl($this->view->baseUrl(sprintf('/issues/%d', $issue->getNumber()))),
+            'url' => $this->view->serverUrl($this->view->url(array(
+                'id' => $issue->getNumber(),
+            ), 'api.issues')),
             'cover_url' => null,
             'title' => $issue->getTitle(),
             'year' => (int) $issue->getPublished()->format('Y'),
@@ -99,7 +109,11 @@ class Api_IssuesController extends AbstractController
     {
         return array(
             'article_id' => $article->getNumber(),
-            'url' => '',
+            'url' => $this->view->serverUrl($this->view->url(array(
+                'id' => $this->issue->getNumber(),
+                'action' => 'articles',
+                'article_id' => $article->getNumber(),
+            ), 'api.issues')),
             'dateline' => '',
             'short_name' => $article->getTitle(),
             'website_url' => $this->_helper->service('article.link')->getLink($article),

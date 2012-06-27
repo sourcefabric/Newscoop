@@ -1,7 +1,8 @@
 <?php
 
-define('APPLICATION_ENV', 'cli');
+use Newscoop\Tools\Console\Command;
 
+define('APPLICATION_ENV', 'cli');
 require_once __DIR__ . '/../application.php';
 $application->bootstrap();
 
@@ -17,7 +18,6 @@ $cli = new \Symfony\Component\Console\Application(
 try {
     // Bootstrapping Console HelperSet
     $helperSet = array();
-
     if (($em = $container) !== null) {
         $helperSet['container'] = new \Newscoop\Tools\Console\Helper\ServiceContainerHelper($application->getBootstrap()->getResource('container'));
     }
@@ -29,14 +29,15 @@ $cli->setCatchExceptions(true);
 $cli->setHelperSet(new \Symfony\Component\Console\Helper\HelperSet($helperSet));
 
 $cli->addCommands(array(
-    new \Newscoop\Tools\Console\Command\UpdateIngestCommand(),
-    new \Newscoop\Tools\Console\Command\XMLExportSMDCommand(),
-    new \Newscoop\Tools\Console\Command\UpdateArticlePopularityMetricsCommand(),
-    new \Newscoop\Tools\Console\Command\UpdateArticlePopularityRankingCommand(),
-    new \Newscoop\Tools\Console\Command\LogMaintenanceCommand(),    
-    new \Newscoop\Tools\Console\Command\UpdateIndexCommand(),
-    new \Newscoop\Tools\Console\Command\ClearIndexCommand(),
-    new \Newscoop\Tools\Console\Command\UpdateWeatherCommand(),
+    new Command\UpdateIngestCommand(),
+    new Command\XMLExportSMDCommand(),
+    new Command\UpdateArticlePopularityMetricsCommand(),
+    new Command\UpdateArticlePopularityRankingCommand(),
+    new Command\LogMaintenanceCommand(),
+    new Command\UpdateIndexCommand(),
+    new Command\ClearIndexCommand(),
+    new Command\UpdateWeatherCommand(),
+    new Tageswoche\Console\Command\GenerateOfflineIssueCommand(),
 ));
 
 $cli->run();

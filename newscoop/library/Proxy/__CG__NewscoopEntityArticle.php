@@ -201,6 +201,12 @@ class Article extends \Newscoop\Entity\Article implements \Doctrine\ORM\Proxy\Pr
         return parent::getPublishDate();
     }
 
+    public function getPublished()
+    {
+        $this->__load();
+        return parent::getPublished();
+    }
+
     public function setPublished(\DateTime $published)
     {
         $this->__load();
