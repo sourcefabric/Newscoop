@@ -99,6 +99,23 @@ class ContextBoxArticle extends DatabaseObject
         return array_reverse($returnArray);
     }
 
+    public static function OnArticleCopy($origArticle, $destArticle)
+    {
+        global $g_ado_db;
+
+        $contextBox = new ContextBox(null, $destArticle);
+        $sql = 'SELECT ca.fk_article_no as article_number
+            FROM context_boxes cb, context_articles ca
+            WHERE cb.id = ca.fk_context_id AND cb.fk_article_no = ' . $origArticle;
+        $rows = $g_ado_db->GetAll($sql);
+
+        foreach ($rows as $row) {
+            $sql = 'INSERT IGNORE INTO context_articles (fk_context_id, fk_article_no) '
+                . 'VALUES (' . $contextBox->getId() . ', ' . $row['article_number'] . ')';
+            $g_ado_db->Execute($sql);
+        }
+    }
+
 
 	/**
 	 * Remove the article from any related articles list.
