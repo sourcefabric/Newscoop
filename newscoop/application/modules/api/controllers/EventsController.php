@@ -19,6 +19,17 @@ class Api_EventsController extends Zend_Controller_Action
     const EV_SECTION = 71; // events
     const EV_TYPE = 'event';
 
+    CONST IMAGE_THUMBNAIL_WIDTH_NORMAL = '105';
+    CONST IMAGE_THUMBNAIL_HEIGHT_NORMAL = '70';
+    CONST IMAGE_WIDTH_NORMAL = '210';
+    CONST IMAGE_HEIGHT_NORMAL = '300';
+
+    CONST IMAGE_THUMBNAIL_WIDTH_RETINA = '210';
+    CONST IMAGE_THUMBNAIL_HEIGHT_RETINA = '140';
+    CONST IMAGE_WIDTH_RETINA = '210';
+    CONST IMAGE_HEIGHT_RETINA = '300';
+
+
     /** @var Zend_Controller_Request_Http */
     private $request;
 
@@ -30,6 +41,11 @@ class Api_EventsController extends Zend_Controller_Action
 
     private $req_date;
 
+    private $client_image_thumbnail_height;
+    private $client_image_thumbnail_width;
+    private $client_image_height;
+    private $client_image_width;
+
     /**
      *
      */
@@ -38,6 +54,20 @@ class Api_EventsController extends Zend_Controller_Action
         global $Campsite;
 
         $this->m_service = $this->_helper->service('agenda');
+
+
+        $this->client_image_thumbnail_width = self::IMAGE_THUMBNAIL_WIDTH_NORMAL;
+        $this->client_image_thumbnail_height = self::IMAGE_THUMBNAIL_HEIGHT_NORMAL;
+        $this->client_image_width = self::IMAGE_WIDTH_NORMAL;
+        $this->client_image_height = self::IMAGE_HEIGHT_NORMAL;
+
+        $param_client = $this->_request->getParam('client');
+        if (in_array($param_client, array('iphone_retina', 'ipad_retina'))) {
+            $this->client_image_thumbnail_width = self::IMAGE_THUMBNAIL_WIDTH_RETINA;
+            $this->client_image_thumbnail_height = self::IMAGE_THUMBNAIL_HEIGHT_RETINA;
+            $this->client_image_width = self::IMAGE_WIDTH_RETINA;
+            $this->client_image_height = self::IMAGE_HEIGHT_RETINA;
+        }
 
         //$this->_helper->layout->disableLayout();
         //$this->params = $this->getRequest()->getParams();
@@ -125,6 +155,31 @@ class Api_EventsController extends Zend_Controller_Action
 
             $one_event_id = urlencode($one_data->getProperty('Fevent_id'));
 
+            $one_image_ids = array();
+            $one_image_rank = 0;
+            while (true) {
+                $one_image_rank += 1;
+                $articleImage = new \ArticleImage($one_event->getArticleNumber(), null, $one_image_rank);
+                if ($articleImage->exists()) {
+                    //$one_image_ids[] = str_pad($articleImage->getImageId(), 9, '0', STR_PAD_LEFT);
+                    $one_image_ids[] = $articleImage->getImageId();
+                }
+                else {
+                    break;
+                }
+            }
+
+            $one_image_thumbnail_url = null;
+            $one_image_urls = null;
+            if (!empty($one_image_ids)) {
+                //$one_thumbnail_url = '/images/cache/' . $this->client_res_thumb . '/crop/images%7Ccms-image-' . $one_image_ids[0] . '.png';
+                $one_image_thumbnail_url = '/get_img?ImageHeight=' . $this->client_image_thumbnail_height . '&ImageWidth=' . $this->client_image_thumbnail_width . '&ImageCrop=center&ImageId=' . $one_image_ids[0];
+                $one_image_urls = array();
+                foreach ($one_image_ids as $cur_one_img_id) {
+                    $one_image_urls[] = '/get_img?ImageHeight=' . $this->client_image_height . '&ImageWidth=' . $this->client_image_width . '&ImageCrop=center&ImageId=' . $cur_one_img_id;
+                }
+            }
+
             $event_list_data[] = array(
                 'title' => $one_data->getProperty('Fheadline'),
                 'description' => $one_description,
@@ -135,7 +190,9 @@ class Api_EventsController extends Zend_Controller_Action
                 'zipcode' => $one_data->getProperty('Fzipcode'),
                 'date_time' => $one_date_time,
                 'web' => $one_web,
-                'event_detail_url' => self::BASE_URL . '/event?id=' . $one_event_id . '&date=' . urlencode($this->req_date),
+                //'event_detail_url' => self::BASE_URL . '/event?id=' . $one_event_id . '&date=' . urlencode($this->req_date),
+                'event_image_thumbnail_url' => $one_image_thumbnail_url,
+                'event_image_urls' => $one_image_urls,
                 'email' => $one_email,
                 'canceled' => $one_canceled,
             );

@@ -20,6 +20,20 @@ class Api_CinemaController extends Zend_Controller_Action
     const EV_SECTION = 72; // movies
     const EV_TYPE = 'screening';
 
+    CONST POSTER_THUMBNAIL_WIDTH_NORMAL = '95';
+    CONST POSTER_THUMBNAIL_HEIGHT_NORMAL = '135';
+    CONST POSTER_WIDTH_NORMAL = '198';
+    CONST POSTER_HEIGHT_NORMAL = '283';
+    CONST IMAGE_WIDTH_NORMAL = '300';
+    CONST IMAGE_HEIGHT_NORMAL = '450';
+
+    CONST POSTER_THUMBNAIL_WIDTH_RETINA = '190';
+    CONST POSTER_THUMBNAIL_HEIGHT_RETINA = '270';
+    CONST POSTER_WIDTH_RETINA = '198';
+    CONST POSTER_HEIGHT_RETINA = '283';
+    CONST IMAGE_WIDTH_RETINA = '300';
+    CONST IMAGE_HEIGHT_RETINA = '450';
+
     /** @var Zend_Controller_Request_Http */
     private $request;
 
@@ -31,6 +45,13 @@ class Api_CinemaController extends Zend_Controller_Action
 
     private $req_date;
 
+    private $client_poster_thumbnail_height;
+    private $client_poster_thumbnail_width;
+    private $client_poster_height;
+    private $client_poster_width;
+    private $client_image_height;
+    private $client_image_width;
+
     /**
      *
      */
@@ -39,6 +60,24 @@ class Api_CinemaController extends Zend_Controller_Action
         global $Campsite;
 
         $this->m_service = $this->_helper->service('agenda');
+
+
+        $this->client_poster_thumbnail_width = self::POSTER_THUMBNAIL_WIDTH_NORMAL;
+        $this->client_poster_thumbnail_height = self::POSTER_THUMBNAIL_HEIGHT_NORMAL;
+        $this->client_poster_width = self::POSTER_WIDTH_NORMAL;
+        $this->client_poster_height = self::POSTER_HEIGHT_NORMAL;
+        $this->client_image_width = self::IMAGE_WIDTH_NORMAL;
+        $this->client_image_height = self::IMAGE_HEIGHT_NORMAL;
+
+        $param_client = $this->_request->getParam('client');
+        if (in_array($param_client, array('iphone_retina', 'ipad_retina'))) {
+            $this->client_poster_thumbnail_width = self::POSTER_THUMBNAIL_WIDTH_RETINA;
+            $this->client_poster_thumbnail_height = self::POSTER_THUMBNAIL_HEIGHT_RETINA;
+            $this->client_poster_width = self::POSTER_WIDTH_RETINA;
+            $this->client_poster_height = self::POSTER_HEIGHT_RETINA;
+            $this->client_image_width = self::IMAGE_WIDTH_RETINA;
+            $this->client_image_height = self::IMAGE_HEIGHT_RETINA;
+        }
 
         //$this->_helper->layout->disableLayout();
         //$this->params = $this->getRequest()->getParams();
@@ -228,6 +267,7 @@ class Api_CinemaController extends Zend_Controller_Action
                     $one_rating = 0 + $one_rating;
                 }
 
+/*
                 $one_image_id = null;
                 $articleImage = new \ArticleImage($one_movie->getArticleNumber(), null, 1);
                 if ($articleImage->exists()) {
@@ -238,6 +278,59 @@ class Api_CinemaController extends Zend_Controller_Action
                 if (!empty($one_image_id)) {
                     $one_image_url = '/get_img?ImageHeight=300&ImageId=' . $one_image_id;
                 }
+*/
+
+                $one_poster_ids = array();
+                $one_image_ids = array();
+                $one_image_rank = 0;
+                while (true) {
+                    $one_image_rank += 1;
+                    $articleImage = new \ArticleImage($one_movie->getArticleNumber(), null, $one_image_rank);
+                    if ($articleImage->exists()) {
+                        $cur_image_id = $articleImage->getImageId();
+                        $cur_image = new \Image($cur_image_id);
+                        $cur_image_path = $cur_image->getImageStorageLocation();
+                        $cur_image_sizes = getimagesize($cur_image_path);
+                        $cur_image_width = $cur_image_sizes[0];
+                        $cur_image_height = $cur_image_sizes[1];
+
+                        if (1 == $one_image_rank) {
+                            if ((450 == $cur_image_width) && (300 == $cur_image_height)) {
+                                $one_image_ids[] = $cur_image_id;
+                            }
+                            else {
+                                $one_poster_ids[] = $cur_image_id;
+                            }
+                        }
+                        else {
+                            if ((210 == $cur_image_width) && (300 == $cur_image_height)) {
+                                $one_poster_ids[] = $cur_image_id;
+                            }
+                            else {
+                                $one_image_ids[] = $cur_image_id;
+                            }
+                        }
+
+                    }
+                    else {
+                        break;
+                    }
+                }
+
+                $one_poster_thumbnail_url = null;
+                $one_poster_url = null;
+                $one_image_urls = null;
+                if (!empty($one_poster_ids)) {
+                    $one_poster_thumbnail_url = '/get_img?ImageHeight=' . $this->client_poster_thumbnail_height . '&ImageWidth=' . $this->client_poster_thumbnail_width . '&ImageCrop=center&ImageId=' . $one_poster_ids[0];
+                    $one_poster_url = '/get_img?ImageHeight=' . $this->client_poster_height . '&ImageWidth=' . $this->client_poster_width . '&ImageCrop=center&ImageId=' . $one_poster_ids[0];
+                }
+
+                if (!empty($one_image_ids)) {
+                    $one_image_urls = array();
+                    foreach ($one_image_ids as $cur_one_img_id) {
+                        $one_image_urls[] = '/get_img?ImageHeight=' . $this->client_image_height . '&ImageWidth=' . $this->client_image_width . '&ImageCrop=center&ImageId=' . $cur_one_img_id;
+                    }
+                }
 
                 $one_movie_data = array(
                     'suisa' => $one_suisa,
@@ -247,8 +340,11 @@ class Api_CinemaController extends Zend_Controller_Action
                     'genres' => $one_movie_types,
                     'minimal_age' => $one_min_age,
                     'trailer_url' => $one_movie_trailer,
-                    'image_url' => $one_image_url, // 'http://www.tageswoche.ch/images/cache/555x370/crop/images%7Ccms-image-000042058.png',
-                    'movie_detail_url' => self::BASE_URL . '/movie?key=' . urlencode('' . $one_data->getProperty('Fmovie_key')),
+                    //'image_url' => $one_image_url, // 'http://www.tageswoche.ch/images/cache/555x370/crop/images%7Ccms-image-000042058.png',
+                    //'movie_detail_url' => self::BASE_URL . '/movie?key=' . urlencode('' . $one_data->getProperty('Fmovie_key')),
+                    'movie_poster_thumbnail_url' => $one_poster_thumbnail_url,
+                    'movie_poster_url' => $one_poster_url,
+                    'movie_image_urls' => $one_image_urls,
                     'director' => $one_movie_director,
                     'actors' => $one_movie_cast,
                     'year' => $one_year,
