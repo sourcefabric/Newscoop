@@ -7,6 +7,8 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection as Collection;
+
 /**
  * Article entity
  *
@@ -150,6 +152,16 @@ class Article implements \Newscoop\Search\DocumentInterface
     private $keywords;
 
     /**
+     * @ManyToMany(targetEntity="Newscoop\Image\LocalImage")
+     * @JoinTable(name="ArticleImages",
+     *      joinColumns={@JoinColumn(name="NrArticle", referencedColumnName="Number")},
+     *      inverseJoinColumns={@JoinColumn(name="IdImage", referencedColumnName="Id")}
+     *  )
+     *  @var Doctrine\Common\Collections\Collection
+     */
+    private $images;
+
+    /**
      * @param int $number
      * @param Newscoop\Entity\Language $language
      */
@@ -157,10 +169,11 @@ class Article implements \Newscoop\Search\DocumentInterface
     {
         $this->number = (int) $number;
         $this->language = $language;
-        $this->authors = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->authors = new Collection();
 
         $this->created = $this->date = date_create()->format(self::DATE_FORMAT); 
-        $this->topics = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->topics = new Collection();
+        $this->images = new Collection();
     }
 
     /**
@@ -399,6 +412,16 @@ class Article implements \Newscoop\Search\DocumentInterface
     }
 
     /**
+     * Get last update datetime
+     *
+     * @return DateTime
+     */
+    public function getUpdated()
+    {
+        return $this->date ? new \DateTime($this->date) : null;
+    }
+
+    /**
      * Get whether commenting is enabled
      *
      * @return int
@@ -609,7 +632,7 @@ class Article implements \Newscoop\Search\DocumentInterface
     {
         $names = array();
         foreach ($this->topics as $topic) {
-            $names[] = $topic->getName($this->getLanguage());
+            $names[$topic->getId()] = $topic->getName($this->getLanguage());
         }
 
         return array_filter($names);
@@ -634,5 +657,15 @@ class Article implements \Newscoop\Search\DocumentInterface
     public function getKeywords()
     {
         return $this->keywords;
+    }
+
+    /**
+     * Get article image
+     *
+     * @return Newscoop\Image\LocalImage
+     */
+    public function getImage()
+    {
+        return $this->images->isEmpty() ? null : $this->images->first();
     }
 }

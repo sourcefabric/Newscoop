@@ -26,6 +26,11 @@ class Api_IssuesController extends AbstractController
      */
     private $service;
 
+    /**
+     * @var array
+     */
+    private $commentStats = array();
+
     public function init()
     {
         $this->service = $this->_helper->service('mobile.issue');
@@ -75,13 +80,25 @@ class Api_IssuesController extends AbstractController
             'issue_id' => $issue->getNumber(),
             'url' => $this->view->serverUrl($this->view->url(array(
                 'id' => $issue->getNumber(),
-            ), 'api.issues')),
-            'cover_url' => null,
+            ), 'api.issues')) . $this->getClientVersionParams(),
+            'cover_url' => $this->getCoverUrl($issue),
             'title' => $issue->getTitle(),
             'year' => (int) $issue->getPublished()->format('Y'),
             'month' => (int) $issue->getPublished()->format('m'),
             'rank' => $this->rank++,
         );
+    }
+
+    /**
+     * Get cover image url
+     *
+     * @param Newscoop\Entity\Article $issue
+     * @return string
+     */
+    private function getCoverUrl(Article $issue)
+    {
+        $image = $issue->getImage();
+        return $image ? $this->view->serverUrl($this->view->baseUrl($image->getPath())) : null;
     }
 
     /**
@@ -92,11 +109,18 @@ class Api_IssuesController extends AbstractController
      */
     private function formatTocIssue(Article $issue)
     {
-        return array_merge($this->formatIndexIssue($issue), array(
-            'single_issue_product_id' => null,
+        $articles = $this->service->getArticles($issue);
+        $this->commentStats = $this->_helper->service('comment')->getArticleStats(array_map(function($article) {
+            return $article->getNumber();
+        }, $articles));
+
+        return array(
+            'cover_url' => $this->getCoverUrl($issue),
+            'single_issue_product_id' => $issue->getData('issue_product_id'),
             'publication_date' => $issue->getPublished()->format('Y-m-d'),
-            'articles' => array_map(array($this, 'formatArticle'), $this->service->getArticles($issue)),
-        ));
+            'last_modified' => $issue->getUpdated()->format(self::DATE_FORMAT),
+            'articles' => array_map(array($this, 'formatArticle'), $articles),
+        );
     }
 
     /**
@@ -113,15 +137,45 @@ class Api_IssuesController extends AbstractController
                 'id' => $this->issue->getNumber(),
                 'action' => 'articles',
                 'article_id' => $article->getNumber(),
-            ), 'api.issues')),
-            'dateline' => '',
+            ), 'api.issues')) . $this->getClientVersionParams(),
+            'dateline' => $article->getData('dateline'),
             'short_name' => $article->getTitle(),
+            'section_id' => $article->getSectionId(),
+            'section_name' => $article->getSectionName(),
+            'section_rank' => $this->rank++,
+            'rank' => $this->rank,
             'website_url' => $this->_helper->service('article.link')->getLink($article),
-            'image_url' => '',
-            'topics' => array(),
-            'comment_count' => 0,
-            'comment_url' => '',
+            'image_url' => $this->getCoverUrl($article),
+            'topics' => $this->getTopics($article),
+            'comment_count' => isset($this->commentStats[$article->getNumber()]) ? $this->commentStats[$article->getNumber()]['normal'] : null,
+            'recommended_comment_count' => isset($this->commentStats[$article->getNumber()]) ? $this->commentStats[$article->getNumber()]['recommended'] : null,
+            'comment_url' => $this->view->serverUrl($this->view->url(array(
+                'module' => 'api',
+                'controller' => 'comments',
+                'action' => 'list',
+            ), 'default') . sprintf('?article_id=%d&version=%s', $article->getNumber(), $this->_getParam('version', '1.0'))),
             'article_quality' => 'prominent',
+            'last_modified' => $article->getUpdated()->format(self::DATE_FORMAT),
+            'published' => $article->getPublished()->format(self::DATE_FORMAT),
         );
+    }
+
+    /**
+     * Get topics
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return array
+     */
+    private function getTopics(Article $article)
+    {
+        $topics = array();
+        foreach ($article->getTopicNames() as $id => $name) {
+            $topics[] = array(
+                'topic_id' => $id,
+                'topic_name' => $name,
+            );
+        }
+
+        return $topics;
     }
 }

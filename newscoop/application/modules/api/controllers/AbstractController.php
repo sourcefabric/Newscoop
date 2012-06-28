@@ -11,6 +11,8 @@ abstract class AbstractController extends Zend_Controller_Action
 {
     const DIGITAL_UPGRADE = '_digital_upgrade';
 
+    const DATE_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * Get user by username and password params
      *
@@ -64,5 +66,16 @@ abstract class AbstractController extends Zend_Controller_Action
         if (!$this->getRequest()->isSecure()) {
             $this->sendError('Secure connection required');
         }
+    }
+
+    /**
+     * Get client and version params
+     *
+     * @param bool $onlyParams
+     * @return string
+     */
+    protected function getClientVersionParams($onlyParams = true)
+    {
+        return sprintf('%sclient=%s&version=%s', $onlyParams ? '?' : '&', $this->_getParam('client', 'ipad'), $this->_getParam('version', '1.0'));
     }
 }
