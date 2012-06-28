@@ -114,13 +114,19 @@ class Api_IssuesController extends AbstractController
             return $article->getNumber();
         }, $articles));
 
-        return array(
+        $toc = array(
             'cover_url' => $this->getCoverUrl($issue),
             'single_issue_product_id' => $issue->getData('issue_product_id'),
             'publication_date' => $issue->getPublished()->format('Y-m-d'),
             'last_modified' => $issue->getUpdated()->format(self::DATE_FORMAT),
             'articles' => array_map(array($this, 'formatArticle'), $articles),
         );
+
+        $toc['last_modified'] = array_reduce($toc['articles'], function($prev, $article) {
+            return $prev > $article['last_modified'] ? $prev : $article['last_modified'];
+        }, '0000');
+
+        return $toc;
     }
 
     /**
