@@ -271,6 +271,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('mobile.free_upgrade', 'Tageswoche\Mobile\FreeUpgradeFacade')
             ->addArgument(new sfServiceReference('em'));
 
+        $container->register('mobile.issue.offline', 'Tageswoche\Mobile\OfflineIssueService')
+            ->addArgument(new sfServiceReference('http.client_factory'))
+            ->addArgument(new sfServiceReference('view'));
+
         Zend_Registry::set('container', $container);
         return $container;
     }
@@ -396,12 +400,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                  ),
              )));
 
-        $router->addRoute('api.issues', new Zend_Controller_Router_Route('api/issues/:id/:action/:article_id', array(
+        $router->addRoute('api', new Zend_Controller_Router_Route('api/:controller/:action/:id', array(
             'module' => 'api',
-            'controller' => 'issues',
-            'id' => null,
-            'action' => 'index',
-            'article_id' => null,
         )));
     }
 

@@ -12,7 +12,7 @@ require_once __DIR__ . '/AbstractController.php';
 /**
  * Issues Service
  */
-class Api_IssuesController extends AbstractController
+class Api_OnlineController extends AbstractController
 {
     const LANGUAGE_ID = 1;
 
@@ -43,7 +43,7 @@ class Api_IssuesController extends AbstractController
         }
     }
 
-    public function indexAction()
+    public function issuesAction()
     {
         $this->_helper->json(array_map(array($this, 'formatIndexIssue'), $this->service->findAll()));
     }
@@ -65,7 +65,7 @@ class Api_IssuesController extends AbstractController
     public function articlesAction()
     {
         $this->_helper->layout->disableLayout();
-        $this->view->article = new MetaArticle(self::LANGUAGE_ID, (int) $this->_getParam('article_id'));
+        $this->view->article = new MetaArticle(self::LANGUAGE_ID, (int) $this->_getParam('id'));
     }
 
     /**
@@ -79,8 +79,10 @@ class Api_IssuesController extends AbstractController
         return array(
             'issue_id' => $issue->getNumber(),
             'url' => $this->view->serverUrl($this->view->url(array(
+                'controller' => 'online',
+                'action' => 'toc',
                 'id' => $issue->getNumber(),
-            ), 'api.issues')) . $this->getClientVersionParams(),
+            ), 'api')) . $this->getClientVersionParams(),
             'cover_url' => $this->getCoverUrl($issue),
             'title' => $issue->getTitle(),
             'year' => (int) $issue->getPublished()->format('Y'),
@@ -115,6 +117,7 @@ class Api_IssuesController extends AbstractController
         }, $articles));
 
         $toc = array(
+            'issue_id' => $issue->getNumber(),
             'cover_url' => $this->getCoverUrl($issue),
             'single_issue_product_id' => $issue->getData('issue_product_id'),
             'publication_date' => $issue->getPublished()->format('Y-m-d'),
@@ -124,7 +127,7 @@ class Api_IssuesController extends AbstractController
 
         $toc['last_modified'] = array_reduce($toc['articles'], function($prev, $article) {
             return $prev > $article['last_modified'] ? $prev : $article['last_modified'];
-        }, '0000');
+        });
 
         return $toc;
     }
@@ -140,16 +143,16 @@ class Api_IssuesController extends AbstractController
         return array(
             'article_id' => $article->getNumber(),
             'url' => $this->view->serverUrl($this->view->url(array(
-                'id' => $this->issue->getNumber(),
+                'controller' => 'online',
                 'action' => 'articles',
-                'article_id' => $article->getNumber(),
-            ), 'api.issues')) . $this->getClientVersionParams(),
+                'id' => $article->getNumber(),
+            ), 'api')) . $this->getClientVersionParams(),
             'dateline' => $article->getData('dateline'),
             'short_name' => $article->getTitle(),
             'section_id' => $article->getSectionId(),
             'section_name' => $article->getSectionName(),
-            'section_rank' => $this->rank++,
-            'rank' => $this->rank,
+            'section_rank' => $this->rank,
+            'rank' => $this->rank++,
             'website_url' => $this->_helper->service('article.link')->getLink($article),
             'image_url' => $this->getCoverUrl($article),
             'topics' => $this->getTopics($article),
