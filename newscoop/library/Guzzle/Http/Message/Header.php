@@ -9,7 +9,9 @@ class Header implements \IteratorAggregate, \Countable
 {
     protected $values = array();
     protected $header;
-    protected $glue = ', ';
+    protected $glue;
+    protected $stringCache;
+    protected $arrayCache;
 
     /**
      * Construct a new header object
@@ -18,7 +20,7 @@ class Header implements \IteratorAggregate, \Countable
      * @param string $values Values of the header
      * @param string $glue   Glue used to combine multiple values into a string
      */
-    public function __construct($header, $values = array(), $glue = ', ')
+    public function __construct($header, $values = array(), $glue = '; ')
     {
         $this->header = $header;
         $this->glue = $glue;
@@ -46,26 +48,35 @@ class Header implements \IteratorAggregate, \Countable
      */
     public function __toString()
     {
-        return implode($this->glue, $this->toArray());
+        if (!$this->stringCache) {
+            $this->stringCache = implode($this->glue, $this->toArray());
+        }
+
+        return $this->stringCache;
     }
 
     /**
      * Add a value to the list of header values
      *
-     * @param string $value Value to add
-     * @param string $header (optional) The exact header casing to add with.
+     * @param string $value  Value to add
+     * @param string $header The exact header casing to add with.
      *     Defaults to the name of the header.
      *
      * @return Header
      */
     public function add($value, $header = null)
     {
-        $header = $header ?: $this->getName();
-
-        if (!$this->hasExactHeader($header)) {
-            $this->values[$header] = array();
+        if (!$header) {
+            $header = $this->getName();
         }
-        $this->values[$header][] = $value;
+
+        if (!array_key_exists($header, $this->values)) {
+            $this->values[$header] = array($value);
+        } else {
+            $this->values[$header][] = $value;
+        }
+
+        $this->clearCache();
 
         return $this;
     }
@@ -90,6 +101,7 @@ class Header implements \IteratorAggregate, \Countable
     public function setGlue($glue)
     {
         $this->glue = $glue;
+        $this->stringCache = null;
 
         return $this;
     }
@@ -111,6 +123,7 @@ class Header implements \IteratorAggregate, \Countable
      */
     public function normalize()
     {
+        $this->clearCache();
         $this->values = array(
             $this->getName() => $this->toArray()
         );
@@ -137,23 +150,45 @@ class Header implements \IteratorAggregate, \Countable
     /**
      * Check if the collection of headers has a particular value
      *
-     * @param string $searchValue Value to search for
-     * @param bool   $caseInsensitive (optional) Set to TRUE to use a case
+     * @param string $searchValue     Value to search for
+     * @param bool   $caseInsensitive Set to TRUE to use a case
      *     insensitive search
      *
      * @return bool
      */
     public function hasValue($searchValue, $caseInsensitive = false)
     {
-        foreach ($this->getIterator() as $value) {
-            if ($caseInsensitive && !strcasecmp($value, $searchValue)) {
+        foreach ($this->toArray() as $value) {
+            if ($value == $searchValue) {
                 return true;
-            } elseif ($value == $searchValue) {
+            } elseif ($caseInsensitive && !strcasecmp($value, $searchValue)) {
                 return true;
             }
         }
 
         return false;
+    }
+
+    /**
+     * Remove a specific value from the header
+     *
+     * @param string $value Value to remove
+     *
+     * @return self
+     */
+    public function removeValue($searchValue)
+    {
+        foreach ($this->values as $key => $values) {
+            foreach ($values as $index => $value) {
+                if ($value == $searchValue) {
+                    unset($this->values[$key][$index]);
+                    $this->clearCache();
+                    break 2;
+                }
+            }
+        }
+
+        return $this;
     }
 
     /**
@@ -163,7 +198,16 @@ class Header implements \IteratorAggregate, \Countable
      */
     public function toArray()
     {
-        return $this->getIterator()->getArrayCopy();
+        if (!$this->arrayCache) {
+            $this->arrayCache = array();
+            foreach ($this->values as $values) {
+                foreach ($values as $value) {
+                    $this->arrayCache[] = $value;
+                }
+            }
+        }
+
+        return $this->arrayCache;
     }
 
     /**
@@ -185,7 +229,7 @@ class Header implements \IteratorAggregate, \Countable
      */
     public function count()
     {
-        return count($this->getIterator());
+        return count($this->toArray());
     }
 
     /**
@@ -195,13 +239,15 @@ class Header implements \IteratorAggregate, \Countable
      */
     public function getIterator()
     {
-        $result = array();
-        foreach ($this->values as $values) {
-            foreach ($values as $value) {
-                $result[] = $value;
-            }
-        }
+        return new \ArrayIterator($this->toArray());
+    }
 
-        return new \ArrayIterator($result);
+    /**
+     * Clear the internal header cache
+     */
+    private function clearCache()
+    {
+        $this->arrayCache = null;
+        $this->stringCache = null;
     }
 }

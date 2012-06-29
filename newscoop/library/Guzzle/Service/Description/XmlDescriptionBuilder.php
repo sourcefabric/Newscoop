@@ -11,6 +11,14 @@ use Guzzle\Service\Exception\DescriptionBuilderException;
 class XmlDescriptionBuilder implements DescriptionBuilderInterface
 {
     /**
+     * {@inheritdoc}
+     */
+    public function build($config, array $options = null)
+    {
+        return ServiceDescription::factory($this->parseXmlFile($config));
+    }
+
+    /**
      * Convert an XML file to an array of service data
      *
      * @param string $file XML filename to parse
@@ -18,29 +26,17 @@ class XmlDescriptionBuilder implements DescriptionBuilderInterface
      * @return array
      * @throws InvalidArgumentException
      */
-    public static function parseXmlFile($file)
+    protected function parseXmlFile($file)
     {
         if (!file_exists($file)) {
             throw new DescriptionBuilderException('Unable to open ' . $file . ' for reading');
         }
 
         $xml = new \SimpleXMLElement($file, null, true);
-        $data = array(
+        $config = array(
             'types' => array(),
             'commands' => array()
         );
-
-        // Handle XML includes
-        $includes = $xml->includes->include;
-        if ($includes) {
-            foreach ($includes as $includeFile) {
-                $path = (string) $includeFile->attributes()->path;
-                if ($path[0] != DIRECTORY_SEPARATOR) {
-                    $path = dirname($file) . DIRECTORY_SEPARATOR . $path;
-                }
-                $data = array_merge_recursive(self::parseXmlFile($path), $data);
-            }
-        }
 
         // Register any custom type definitions
         $types = $xml->types->type;
@@ -48,9 +44,9 @@ class XmlDescriptionBuilder implements DescriptionBuilderInterface
             foreach ($types as $type) {
                 $attr = $type->attributes();
                 $name = (string) $attr->name;
-                $data['types'][$name] = array();
+                $config['types'][$name] = array();
                 foreach ($attr as $key => $value) {
-                    $data['types'][$name][(string) $key] = (string) $value;
+                    $config['types'][$name][(string) $key] = (string) $value;
                 }
             }
         }
@@ -61,33 +57,37 @@ class XmlDescriptionBuilder implements DescriptionBuilderInterface
             foreach ($commands as $command) {
                 $attr = $command->attributes();
                 $name = (string) $attr->name;
-                $data['commands'][$name] = array(
+                $config['commands'][$name] = array(
                     'params' => array()
                 );
                 foreach ($attr as $key => $value) {
-                    $data['commands'][$name][(string) $key] = (string) $value;
+                    $config['commands'][$name][(string) $key] = (string) $value;
                 }
-                $data['commands'][$name]['doc'] = (string) $command->doc;
+                $config['commands'][$name]['doc'] = (string) $command->doc;
                 foreach ($command->param as $param) {
                     $attr = $param->attributes();
                     $paramName = (string) $attr['name'];
-                    $data['commands'][$name]['params'][$paramName] = array();
+                    $config['commands'][$name]['params'][$paramName] = array();
                     foreach ($attr as $pk => $pv) {
                         $pv = (string) $pk == 'required' ? (string) $pv === 'true' : (string) $pv;
-                        $data['commands'][$name]['params'][$paramName][(string) $pk] = (string) $pv;
+                        $config['commands'][$name]['params'][$paramName][(string) $pk] = (string) $pv;
                     }
                 }
             }
         }
 
-        return $data;
-    }
+        // Handle XML includes
+        $includes = $xml->includes->include;
+        if ($includes) {
+            foreach ($includes as $includeFile) {
+                $path = (string) $includeFile->attributes()->path;
+                if ($path[0] != DIRECTORY_SEPARATOR) {
+                    $path = dirname($file) . DIRECTORY_SEPARATOR . $path;
+                }
+                $config = array_merge_recursive(self::parseXmlFile($path), $config);
+            }
+        }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function build($filename)
-    {
-        return ServiceDescription::factory(self::parseXmlFile($filename));
+        return $config;
     }
 }

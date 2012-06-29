@@ -2,7 +2,7 @@
 
 namespace Guzzle\Http\CookieJar;
 
-use Guzzle\Common\Collection;
+use Guzzle\Common\Exception\RuntimeException;
 
 /**
  * Persists cookies using a JSON formatted file
@@ -12,18 +12,18 @@ class FileCookieJar extends ArrayCookieJar
     /**
      * @var string filename
      */
-    protected $file;
+    protected $filename;
 
     /**
      * Create a new FileCookieJar object
      *
      * @param string $cookieFile File to store the cookie data
      *
-     * @throws HttpException if the file cannot be found or created
+     * @throws RuntimeException if the file cannot be found or created
      */
     public function __construct($cookieFile)
     {
-        $this->file = $cookieFile;
+        $this->filename = $cookieFile;
         $this->load();
     }
 
@@ -38,41 +38,31 @@ class FileCookieJar extends ArrayCookieJar
     /**
      * Save the contents of the data array to the file
      *
-     * @throws HttpException if the file cannot be found or created
+     * @throws RuntimeException if the file cannot be found or created
      */
     protected function persist()
     {
-        $handle = fopen($this->file, 'w+');
-        // @codeCoverageIgnoreStart
-        if ($handle === false) {
-            throw new HttpException('Unable to open file ' . $this->file);
+        if (false === file_put_contents($this->filename, $this->serialize())) {
+            // @codeCoverageIgnoreStart
+            throw new RuntimeException('Unable to open file ' . $this->filename);
+            // @codeCoverageIgnoreEnd
         }
-        // @codeCoverageIgnoreEnd
-
-        fwrite($handle, json_encode($this->getCookies(null, null, null, true, true)));
-        fclose($handle);
     }
 
     /**
      * Load the contents of the json formatted file into the data array and
-     * discard the unsaved state of the jar object
+     * discard the unsaved state of the cookieJar object
      */
     protected function load()
     {
-        $handle = fopen($this->file, 'c+');
-        // @codeCoverageIgnoreStart
-        if ($handle === false) {
-            throw new HttpException('Unable to open file ' . $this->file);
-        }
-        // @codeCoverageIgnoreEnd
-
-        $json = '';
-        while ($data = fread($handle, 8096)) {
-            $json .= $data;
+        $json = file_get_contents($this->filename);
+        if (false === $json) {
+            // @codeCoverageIgnoreStart
+            throw new RuntimeException('Unable to open file ' . $this->filename);
+            // @codeCoverageIgnoreEnd
         }
 
-        fclose($handle);
-
-        $this->cookies = $json ? json_decode($json, true) : array();
+        $this->unserialize($json);
+        $this->cookies = $this->cookies ?: array();
     }
 }

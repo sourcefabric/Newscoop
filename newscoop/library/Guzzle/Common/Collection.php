@@ -7,10 +7,6 @@ namespace Guzzle\Common;
  */
 class Collection implements \ArrayAccess, \IteratorAggregate, \Countable
 {
-    const MATCH_EXACT = 0;
-    const MATCH_IGNORE_CASE = 1;
-    const MATCH_REGEX = 2;
-
     /**
      * @var array Data associated with the object.
      */
@@ -23,7 +19,11 @@ class Collection implements \ArrayAccess, \IteratorAggregate, \Countable
      */
     public function __construct(array $data = null)
     {
-        $this->data = $data ?: array();
+        if (!$data) {
+            $this->data = array();
+        } else {
+            $this->data = $data;
+        }
     }
 
     /**
@@ -41,8 +41,8 @@ class Collection implements \ArrayAccess, \IteratorAggregate, \Countable
      * already been added, the key value will be converted into an array
      * and the new value will be pushed to the end of the array.
      *
-     * @param string $key Key to add
-     * @param mixed $value Value to add to the key
+     * @param string $key   Key to add
+     * @param mixed  $value Value to add to the key
      *
      * @return Collection Returns a reference to the object.
      */
@@ -91,8 +91,8 @@ class Collection implements \ArrayAccess, \IteratorAggregate, \Countable
      * return Boolean TRUE or FALSE for each value.
      *
      * @param Closure $closure Closure evaluation function
-     * @param bool $static Set to TRUE to use the same class as the return
-     *      rather than returning a Collection object
+     * @param bool    $static  Set to TRUE to use the same class as the return
+     *                         rather than returning a Collection object
      *
      * @return Collection
      */
@@ -121,35 +121,16 @@ class Collection implements \ArrayAccess, \IteratorAggregate, \Countable
     /**
      * Get a specific key value.
      *
-     * @param string $key Key to retrieve.  $key can be a string or a
-     *      regular expression.
-     * @param mixed $default (optional) If the key is not found, set this
-     *      value to specify a default
-     * @param int $match (optional) Bitwise match setting:
-     *      0 - Exact match
-     *      1 - Case insensitive match
-     *      2 - Regular expression match
+     * @param string $key     Key to retrieve.
+     * @param mixed  $default If the key is not found, set this
+     *                        value to specify a default
      *
      * @return mixed|null Value of the key or NULL
      */
-    public function get($key, $default = null, $match = self::MATCH_EXACT)
+    public function get($key, $default = null)
     {
-        if ($match == self::MATCH_EXACT) {
-            if (array_key_exists($key, $this->data)) {
-                return $this->data[$key];
-            }
-        } else if ($match == self::MATCH_IGNORE_CASE) {
-            foreach ($this->data as $k => $value) {
-                if (strcasecmp($k, $key) === 0) {
-                    return $value;
-                }
-            }
-        } else if ($match == self::MATCH_REGEX) {
-            foreach ($this->data as $k => $value) {
-                if (preg_match($key, $k)) {
-                    return $value;
-                }
-            }
+        if (array_key_exists($key, $this->data)) {
+            return $this->data[$key];
         }
 
         return $default;
@@ -158,41 +139,22 @@ class Collection implements \ArrayAccess, \IteratorAggregate, \Countable
     /**
      * Get all or a subset of matching key value pairs
      *
-     * @param array|string|int $keys (optional) Pass an array of keys to
-     *      retrieve only a particular subset of kvp.
-     * @param int $match (optional) Key match setting:
-     *      0 - Exact match
-     *      1 - Case insensitive match
-     *      2 - Regular expression match
+     * @param array $keys Pass a single key or an array of keys to retrieve
+     *                    only a particular subset of key value pair.
      *
-     * @return array Returns an array of all key value pairs if no $keys array
-     *      is specified, or an array of only the key value pairs matching the
-     *      values in the $keys array.
+     * @return array Returns an array of all matching key value pairs
      */
-    public function getAll($keys = null, $match = false)
+    public function getAll(array $keys = null)
     {
         if (!$keys) {
             return $this->data;
         }
+
         $matches = array();
         $allKeys = $this->getKeys();
-        foreach ((array) $keys as $expression) {
-            if ($match == self::MATCH_EXACT) {
-                if (in_array($expression, $allKeys)) {
-                    $matches[$expression] = $this->data[$expression];
-                }
-            } else if ($match == self::MATCH_IGNORE_CASE) {
-                foreach ($allKeys as $key) {
-                    if (strcasecmp($expression, $key) === 0) {
-                        $matches[$key] = $this->data[$key];
-                    }
-                }
-            } else if ($match == self::MATCH_REGEX) {
-                foreach ($allKeys as $key) {
-                    if (preg_match($expression, $key)) {
-                        $matches[$key] = $this->data[$key];
-                    }
-                }
+        foreach ($keys as $key) {
+            if (in_array($key, $allKeys)) {
+                $matches[$key] = $this->data[$key];
             }
         }
 
@@ -200,56 +162,39 @@ class Collection implements \ArrayAccess, \IteratorAggregate, \Countable
     }
 
     /**
-     * Get all or a subset of matching keys
+     * Get all keys in the collection
      *
-     * @param string $regexp (optional) Pass a regular expression to return
-     *      only keys matching the expression.
-     *
-     * @return array Returns an array of matching keys
+     * @return array
      */
-    public function getKeys($regexp = null)
+    public function getKeys()
     {
-        $keys = array_keys($this->data);
-
-        // If a regular expression was set, filter the keys
-        if ($regexp) {
-            $keys = array_filter($keys, function($key) use ($regexp) {
-                return preg_match($regexp, $key);
-            });
-        }
-
-        return $keys;
+        return array_keys($this->data);
     }
 
     /**
      * Returns whether or not the specified key is present.
      *
      * @param string $key The key for which to check the existence.
-     * @param int $match (optional) Bitwise key match setting:
-     *      0 - Exact match
-     *      1 - Case insensitive match
-     *      2 - Regular expression match
      *
-     * @return int|string Returns the key value if the key is present or FALSE
-     *      if the key is not.  Use === matching to check if false.
+     * @return bool
      */
-    public function hasKey($key, $match = self::MATCH_EXACT)
+    public function hasKey($key)
     {
-        if ($match == self::MATCH_EXACT) {
-            if (array_key_exists($key, $this->data)) {
-                return $key;
-            }
-        } else if ($match == self::MATCH_IGNORE_CASE) {
-            foreach (array_keys($this->data) as $k) {
-                if (strcasecmp($k, $key) === 0) {
-                    return $k;
-                }
-            }
-        } else if ($match == self::MATCH_REGEX) {
-            foreach (array_keys($this->data) as $k) {
-                if (preg_match($key, $k)) {
-                    return $k;
-                }
+        return array_key_exists($key, $this->data);
+    }
+
+    /**
+     * Case insensitive search the keys in the collection
+     *
+     * @param string $key Key to search for
+     *
+     * @return false|string Returns false if not found, otherwise returns the key
+     */
+    public function keySearch($key)
+    {
+        foreach (array_keys($this->data) as $k) {
+            if (!strcasecmp($k, $key)) {
+                return $k;
             }
         }
 
@@ -261,8 +206,8 @@ class Collection implements \ArrayAccess, \IteratorAggregate, \Countable
      *
      * @param string $value Value to search for
      *
-     * @return mixed Returns the key if the value was found FALSE if
-     *      the value was not found.
+     * @return mixed Returns the key if the value was found FALSE if the value
+     *               was not found.
      */
     public function hasValue($value)
     {
@@ -276,9 +221,9 @@ class Collection implements \ArrayAccess, \IteratorAggregate, \Countable
      * return a modified value
      *
      * @param Closure $closure Closure to apply
-     * @param array $context (optional) Context to pass to the closure
-     * @param bool $static Set to TRUE to use the same class as the return
-     *      rather than returning a Collection object
+     * @param array   $context Context to pass to the closure
+     * @param bool    $static  Set to TRUE to use the same class as the return
+     *                         rather than returning a Collection object
      *
      * @return Collection
      */
@@ -305,7 +250,7 @@ class Collection implements \ArrayAccess, \IteratorAggregate, \Countable
     {
         if ($data instanceof self) {
             $data = $data->getAll();
-        } else if (!is_array($data)) {
+        } elseif (!is_array($data)) {
             return $this;
         }
 
@@ -350,7 +295,7 @@ class Collection implements \ArrayAccess, \IteratorAggregate, \Countable
      * ArrayAccess implementation of offsetGet()
      *
      * @param string $offset Array key
-     * @param mixed $value Value to set
+     * @param mixed  $value  Value to set
      */
     public function offsetSet($offset, $value)
     {
@@ -370,21 +315,13 @@ class Collection implements \ArrayAccess, \IteratorAggregate, \Countable
     /**
      * Remove a specific key value pair
      *
-     * @param array|string $key A key, regexp, or array of keys to remove
-     * @param int $match (optional) Bitwise key match setting:
-     *     0 - Exact match
-     *     1 - Case insensitive match
-     *     2 - Regular expression match
+     * @param string $key A key to remove
      *
-     * @return Collection Returns a reference to the object
+     * @return Collection
      */
-    public function remove($key, $match = self::MATCH_EXACT)
+    public function remove($key)
     {
-        foreach ((array) $key as $k) {
-            if (false !== $matched = $this->hasKey($k, $match)) {
-                unset($this->data[$matched]);
-            }
-        }
+        unset($this->data[$key]);
 
         return $this;
     }
@@ -406,8 +343,8 @@ class Collection implements \ArrayAccess, \IteratorAggregate, \Countable
     /**
      * Set a key value pair
      *
-     * @param string $key Key to set
-     * @param mixed $value Value to set
+     * @param string $key   Key to set
+     * @param mixed  $value Value to set
      *
      * @return Collection Returns a reference to the object
      */
@@ -416,5 +353,35 @@ class Collection implements \ArrayAccess, \IteratorAggregate, \Countable
         $this->data[$key] = $value;
 
         return $this;
+    }
+
+    /**
+     * Inject configuration settings into an input string
+     *
+     * @param string     $input  Input to inject
+     * @param Collection $config Configuration data to inject into the input
+     *
+     * @return string
+     */
+    public function inject($input)
+    {
+        // Only perform the preg callback if needed
+        if (strpos($input, '{') === false) {
+            return $input;
+        }
+
+        return preg_replace_callback('/{\s*([A-Za-z_\-\.0-9]+)\s*}/', array($this, 'getPregMatchValue'), $input);
+    }
+
+    /**
+     * Return a collection value for a match array of a preg_replace function
+     *
+     * @param array $matches preg_replace* matches
+     *
+     * @return mixed
+     */
+    public function getPregMatchValue(array $matches)
+    {
+        return $this->get($matches[1]);
     }
 }

@@ -2,7 +2,6 @@
 
 namespace Guzzle\Http\Message;
 
-use Guzzle\Common\Collection;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\QueryString;
 use Guzzle\Http\Exception\RequestException;
@@ -23,6 +22,11 @@ class EntityEnclosingRequest extends Request implements EntityEnclosingRequestIn
     protected $postFields;
 
     /**
+     * @var array POST files to send with the request
+     */
+    protected $postFiles = array();
+
+    /**
      * {@inheritdoc}
      */
     public function __construct($method, $url, $headers = array())
@@ -39,23 +43,24 @@ class EntityEnclosingRequest extends Request implements EntityEnclosingRequestIn
      */
     public function __toString()
     {
-        return parent::__toString()
-            . (count($this->getPostFields()) ? $this->postFields : $this->body);
+        // Only attempt to include the POST data if it's only fields
+        if (count($this->postFields) && empty($this->postFiles)) {
+            return parent::__toString() . (string) $this->postFields;
+        }
+
+        return parent::__toString() . $this->body;
     }
 
     /**
      * Set the body of the request
      *
-     * @param string|resource|EntityBody $body Body to use in the entity body
-     *      of the request
-     * @param string $contentType (optional) Content-Type to set.  Leave null
-     *      to use an existing Content-Type or to guess the Content-Type
-     * @param bool $tryChunkedTransfer (optional) Set to TRUE to try to use
-     *      Tranfer-Encoding chunked
+     * @param string|resource|EntityBody $body               Body to use in the entity body of the request
+     * @param string                     $contentType        Content-Type to set.  Leave null to use an existing
+     *                                                       Content-Type or to guess the Content-Type
+     * @param bool                       $tryChunkedTransfer Set to TRUE to try to use Transfer-Encoding chunked
      *
      * @return EntityEnclosingRequest
-     * @throws RequestException if the protocol is < 1.1 and Content-Length can
-     *      not be determined
+     * @throws RequestException if the protocol is < 1.1 and Content-Length can not be determined
      */
     public function setBody($body, $contentType = null, $tryChunkedTransfer = false)
     {
@@ -73,9 +78,9 @@ class EntityEnclosingRequest extends Request implements EntityEnclosingRequestIn
             $this->removeHeader('Transfer-Encoding');
             // Set the Content-Length header if it can be determined
             $size = $this->body->getContentLength();
-            if ($size !== null && !is_bool($size)) {
+            if ($size !== null && $size !== false) {
                 $this->setHeader('Content-Length', $size);
-            } else if ('1.1' == $this->protocolVersion) {
+            } elseif ('1.1' == $this->protocolVersion) {
                 $this->setHeader('Transfer-Encoding', 'chunked');
             } else {
                 throw new RequestException('Cannot determine entity body '
@@ -101,7 +106,7 @@ class EntityEnclosingRequest extends Request implements EntityEnclosingRequestIn
     /**
      * Get a POST field from the request
      *
-     * @param string $field Field to retrive
+     * @param string $field Field to retrieve
      *
      * @return mixed|null
      */
@@ -113,46 +118,17 @@ class EntityEnclosingRequest extends Request implements EntityEnclosingRequestIn
     /**
      * Get the post fields that will be used in the request
      *
-     * @return array
+     * @return QueryString
      */
     public function getPostFields()
     {
-        return $this->postFields->getAll();
-    }
-
-    /**
-     * Returns an associative array of POST field names and file paths
-     *
-     * @return array
-     */
-    public function getPostFiles()
-    {
-        return $this->postFields->filter(function($key, $value) {
-            return $value && is_string($value) && $value[0] == '@';
-        })->map(function($key, $value) {
-            return str_replace('@', '', $value);
-        })->getAll();
-    }
-
-    /**
-     * Add POST fields to use in the request
-     *
-     * @param QueryString|array $fields POST fields
-     *
-     * @return EntityEnclosingRequest
-     */
-    public function addPostFields($fields)
-    {
-        $this->postFields->merge($fields);
-        $this->processPostFields();
-
-        return $this;
+        return $this->postFields;
     }
 
     /**
      * Set a POST field value
      *
-     * @param string $key Key to set
+     * @param string $key   Key to set
      * @param string $value Value to set
      *
      * @return EntityEnclosingRequest
@@ -166,33 +142,15 @@ class EntityEnclosingRequest extends Request implements EntityEnclosingRequestIn
     }
 
     /**
-     * Add POST files to use in the upload
+     * Add POST fields to use in the request
      *
-     * @param array $files An array of filenames to POST
+     * @param QueryString|array $fields POST fields
      *
      * @return EntityEnclosingRequest
-     * @throws BodyException if the file cannot be read
      */
-    public function addPostFiles(array $files)
+    public function addPostFields($fields)
     {
-        foreach ((array) $files as $key => $file) {
-
-            if (is_numeric($key)) {
-                $key = 'file';
-            }
-
-            $found = ($file[0] == '@')
-                ? is_readable(substr($file, 1))
-                : is_readable($file);
-            if (!$found) {
-                throw new RequestException('File cannot be opened for reading: ' . $file);
-            }
-            if ($file[0] != '@') {
-                $file = '@' . $file;
-            }
-            $this->postFields->add($key, $file);
-        }
-
+        $this->postFields->merge($fields);
         $this->processPostFields();
 
         return $this;
@@ -214,19 +172,122 @@ class EntityEnclosingRequest extends Request implements EntityEnclosingRequestIn
     }
 
     /**
+     * Returns an associative array of POST field names to an array of PostFileInterface objects
+     *
+     * @return array
+     */
+    public function getPostFiles()
+    {
+        return $this->postFiles;
+    }
+
+    /**
+     * Get a POST file from the request
+     *
+     * @param string $fieldName POST fields to retrieve
+     *
+     * @return PostFileInterface|null Returns an array wrapping PostFileInterface objects
+     */
+    public function getPostFile($fieldName)
+    {
+        return isset($this->postFiles[$fieldName]) ? $this->postFiles[$fieldName] : null;
+    }
+
+    /**
+     * Remove a POST file from the request
+     *
+     * @param string $fieldName POST file field name to remove
+     *
+     * @return EntityEnclosingRequest
+     */
+    public function removePostFile($fieldName)
+    {
+        unset($this->postFiles[$fieldName]);
+        $this->processPostFields();
+
+        return $this;
+    }
+
+    /**
+     * Add a POST file to the upload
+     *
+     * @param string|PostFileUpload $field       POST field to use (e.g. file) or PostFileInterface object.
+     * @param string                $filename    Full path to the file. Do not include the @ symbol.
+     * @param string                $contentType Optional Content-Type to add to the Content-Disposition.
+     *                                           Default behavior is to guess. Set to false to not specify.
+     * @param bool                  $process     Set to false to not process POST fields immediately.
+     *
+     * @return EntityEnclosingRequest
+     * @throws RequestException if the file cannot be read
+     */
+    public function addPostFile($field, $filename = null, $contentType = null, $process = true)
+    {
+        $data = null;
+
+        if ($field instanceof PostFileInterface) {
+            $data = $field;
+        } elseif (!is_string($filename)) {
+            throw new RequestException('The path to a file must be a string');
+        } elseif (!empty($filename)) {
+            // Adding an empty file will cause cURL to error out
+            $data = new PostFile($field, $filename, $contentType);
+        }
+
+        if ($data) {
+            if (!isset($this->postFiles[$data->getFieldName()])) {
+                $this->postFiles[$data->getFieldName()] = array($data);
+            } else {
+                $this->postFiles[$data->getFieldName()][] = $data;
+            }
+            if ($process) {
+                $this->processPostFields();
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add POST files to use in the upload
+     *
+     * @param array $files An array of POST fields => filenames where filename can be a string or PostFileInterfaces
+     *
+     * @return EntityEnclosingRequest
+     * @throws RequestException if the file cannot be read
+     */
+    public function addPostFiles(array $files)
+    {
+        foreach ($files as $key => $file) {
+            if ($file instanceof PostFileInterface) {
+                $this->addPostFile($file, null, null, false);
+            } elseif (is_string($file)) {
+                // Convert non-associative array keys into 'file'
+                if (is_numeric($key)) {
+                    $key = 'file';
+                }
+                $this->addPostFile($key, $file, null, false);
+            } else {
+                throw new RequestException('File must be a string or instance of PostFileInterface');
+            }
+        }
+
+        $this->processPostFields();
+
+        return $this;
+    }
+
+    /**
      * Determine what type of request should be sent based on post fields
      */
     protected function processPostFields()
     {
-        if (0 == count($this->getPostFiles())) {
+        if (empty($this->postFiles)) {
             $this->setHeader('Content-Type', 'application/x-www-form-urlencoded');
             $this->removeHeader('Expect');
-            $this->getCurlOptions()->set(CURLOPT_POSTFIELDS, (string) $this->postFields);
         } else {
-            $this->setHeader('Expect', '100-Continue');
-            $this->setHeader('Content-Type', 'multipart/form-data');
+            $this->setHeader('Expect', '100-Continue')
+                 ->setHeader('Content-Type', 'multipart/form-data');
             $this->postFields->setEncodeFields(false)->setEncodeValues(false);
-            $this->getCurlOptions()->set(CURLOPT_POSTFIELDS, $this->postFields->getAll());
         }
     }
 }

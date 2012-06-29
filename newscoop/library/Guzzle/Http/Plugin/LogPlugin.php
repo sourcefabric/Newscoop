@@ -4,7 +4,6 @@ namespace Guzzle\Http\Plugin;
 
 use Guzzle\Common\Event;
 use Guzzle\Common\Log\LogAdapterInterface;
-use Guzzle\Http\Curl\CurlHandle;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 use Guzzle\Http\Message\RequestInterface;
@@ -58,7 +57,7 @@ class LogPlugin implements EventSubscriberInterface
      * Construct a new LogPlugin
      *
      * @param LogAdapterInterface $logAdapter Adapter object used to log message
-     * @param int $settings (optional) Bitwise settings to use for logging
+     * @param int                 $settings   Bitwise settings to use for logging
      */
     public function __construct(LogAdapterInterface $logAdapter, $settings = self::LOG_CONTEXT)
     {
@@ -83,7 +82,7 @@ class LogPlugin implements EventSubscriberInterface
     /**
      * Change the log settings of the plugin
      *
-     * @param int $settings (optional) Bitwise settings to control what's logged
+     * @param int $settings Bitwise settings to control what's logged
      *
      * @return LogPlugin
      */
@@ -140,6 +139,9 @@ class LogPlugin implements EventSubscriberInterface
     public function onRequestBeforeSend(Event $event)
     {
         $request = $event['request'];
+        // Ensure that curl IO events are emitted
+        $request->getParams()->set('curl.emit_io', true);
+        $request->getCurlOptions()->set('debug', true);
         // We need to make special handling for content wiring and
         // non-repeatable streams.
         if ($this->settings & self::LOG_BODY) {
@@ -173,8 +175,8 @@ class LogPlugin implements EventSubscriberInterface
     /**
      * Log a message based on a request and response
      *
-     * @param RequestInterface $request Request to log
-     * @param Response $response (optional) Response to log
+     * @param RequestInterface $request  Request to log
+     * @param Response         $response Response to log
      */
     private function log(RequestInterface $request, Response $response = null)
     {
@@ -183,7 +185,7 @@ class LogPlugin implements EventSubscriberInterface
         if ($this->settings & self::LOG_CONTEXT) {
             // Log common contextual information
             $message = $request->getHost() . ' - "' .  $request->getMethod()
-                . ' ' . $request->getResourceUri() . ' '
+                . ' ' . $request->getResource() . ' '
                 . strtoupper($request->getScheme()) . '/'
                 . $request->getProtocolVersion() . '"';
 
@@ -240,26 +242,28 @@ class LogPlugin implements EventSubscriberInterface
         $message = '';
         $handle = $request->getParams()->get('curl_handle');
         $stderr = $handle->getStderr(true);
-        rewind($stderr);
-        $addedBody = false;
-        while ($line = fgets($stderr)) {
-            // * - Debug | < - Downstream | > - Upstream
-            if ($line[0] == '*') {
-                if ($this->settings & self::LOG_DEBUG) {
+        if ($stderr) {
+            rewind($stderr);
+            $addedBody = false;
+            while ($line = fgets($stderr)) {
+                // * - Debug | < - Downstream | > - Upstream
+                if ($line[0] == '*') {
+                    if ($this->settings & self::LOG_DEBUG) {
+                        $message .= $line;
+                    }
+                } elseif ($this->settings & self::LOG_HEADERS) {
                     $message .= $line;
                 }
-            } else if ($this->settings & self::LOG_HEADERS) {
-                $message .= $line;
-            }
-            // Add the request body if needed
-            if ($this->settings & self::LOG_BODY) {
-                if (trim($line) == '' && $request instanceof EntityEnclosingRequestInterface) {
-                    if ($request->getParams()->get('request_wire')) {
-                        $message .= (string) $request->getParams()->get('request_wire') . "\r\n";
-                    } else {
-                        $message .= (string) $request->getBody() . "\r\n";
+                // Add the request body if needed
+                if ($this->settings & self::LOG_BODY) {
+                    if (trim($line) == '' && $request instanceof EntityEnclosingRequestInterface) {
+                        if ($request->getParams()->get('request_wire')) {
+                            $message .= (string) $request->getParams()->get('request_wire') . "\r\n";
+                        } else {
+                            $message .= (string) $request->getBody() . "\r\n";
+                        }
+                        $addedBody = true;
                     }
-                    $addedBody = true;
                 }
             }
         }

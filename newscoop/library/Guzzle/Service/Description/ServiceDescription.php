@@ -2,49 +2,81 @@
 
 namespace Guzzle\Service\Description;
 
-use Guzzle\Service\Exception\DescriptionBuilderException;
-
 /**
  * A ServiceDescription stores service information based on a service document
  */
-class ServiceDescription
+class ServiceDescription implements ServiceDescriptionInterface
 {
-    const DEFAULT_COMMAND_CLASS = 'Guzzle\\Service\\Command\\DynamicCommand';
-
     /**
      * @var array Array of ApiCommand objects
      */
     protected $commands = array();
 
     /**
-     * {@inheritdoc}
-     * @param string|array $filename File to build or array of command information
-     * @throws DescriptionBuilderException when the type is not recognized
+     * @var ServiceDescriptionFactoryInterface Factory used in factory method
      */
-    public static function factory($filename)
+    protected static $descriptionFactory;
+
+    /**
+     * {@inheritdoc}
+     * @param string|array $config  File to build or array of command information
+     * @param array        $options Service description factory options
+     */
+    public static function factory($config, array $options = null)
     {
-        if (is_array($filename)) {
-            return ArrayDescriptionBuilder::build($filename);
+        // @codeCoverageIgnoreStart
+        if (!self::$descriptionFactory) {
+            self::$descriptionFactory = new ServiceDescriptionAbstractFactory();
         }
+        // @codeCoverageIgnoreEnd
 
-        $ext = pathinfo($filename, PATHINFO_EXTENSION);
-        if ($ext == 'js' || $ext == 'json') {
-            return JsonDescriptionBuilder::build($filename);
-        } else if ($ext == 'xml') {
-            return XmlDescriptionBuilder::build($filename);
-        }
-
-        throw new DescriptionBuilderException('Unable to load service description due to unknown file extension: ' . $ext);
+        return self::$descriptionFactory->build($config);
     }
 
     /**
      * Create a new ServiceDescription
      *
-     * @param array $commands (optional) Array of {@see ApiCommand} objects
+     * @param array $commands Array of {@see ApiCommand} objects
      */
     public function __construct(array $commands = array())
     {
         $this->commands = $commands;
+    }
+
+    /**
+     * Serialize the service description
+     *
+     * @return string
+     */
+    public function serialize()
+    {
+        return json_encode(array_map(function($command) {
+            // Convert ApiCommands into arrays
+            $data = $command->toArray();
+            // Convert ApiParams into arrays
+            $data['params'] = array_map(function($param) {
+                return $param->toArray();
+            }, $data['params']);
+
+            return $data;
+        }, $this->commands));
+    }
+
+    /**
+     * Unserialize the service description
+     *
+     * @param string|array $json JSON data
+     */
+    public function unserialize($json)
+    {
+        $this->commands = array_map(function($data) {
+            // Convert params to ApiParam objects
+            $data['params'] = array_map(function($param) {
+                return new ApiParam($param);
+            }, $data['params']);
+            // Convert commands into ApiCommands
+            return new ApiCommand($data);
+        }, json_decode($json, true));
     }
 
     /**

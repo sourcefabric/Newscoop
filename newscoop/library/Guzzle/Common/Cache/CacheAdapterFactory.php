@@ -2,6 +2,7 @@
 
 namespace Guzzle\Common\Cache;
 
+use Guzzle\Common\FromConfigInterface;
 use Guzzle\Common\Exception\InvalidArgumentException;
 use Guzzle\Common\Exception\RuntimeException;
 
@@ -10,7 +11,7 @@ use Guzzle\Common\Exception\RuntimeException;
  * configuration data.  This can be useful for creating cache adapters
  * in client configuration files.
  */
-class CacheAdapterFactory
+class CacheAdapterFactory implements FromConfigInterface
 {
     /**
      * Create a Guzzle cache adapter based on an array of options
@@ -19,24 +20,30 @@ class CacheAdapterFactory
      *
      * @return CacheAdapterInterface
      */
-    public static function factory(array $config)
+    public static function factory($config = array())
     {
-        foreach (array('cache.adapter', 'cache.provider') as $required) {
-            // Validate that the required parameters were set
-            if (!isset($config[$required])) {
-                throw new InvalidArgumentException("{$required} is a required CacheAdapterFactory option");
-            }
-
-            // Ensure that the cache adapter and provider are actual classes
-            if (is_string($config[$required]) && !class_exists($config[$required])) {
-                throw new InvalidArgumentException("{$config[$required]} is not a valid class for {$required}");
-            }
+        if (!is_array($config)) {
+            throw new InvalidArgumentException('$config must be an array');
         }
 
-        // Instantiate the cache provider
-        if (is_string($config['cache.provider'])) {
-            $args = isset($config['cache.provider.args']) ? $config['cache.provider.args'] : null;
-            $config['cache.provider'] = self::createObject($config['cache.provider'], $args);
+        if (!isset($config['cache.adapter']) && !isset($config['cache.provider'])) {
+            $config['cache.adapter'] = 'Guzzle\\Common\\Cache\\NullCacheAdapter';
+            $config['cache.provider'] = null;
+        } else {
+            // Validate that the options are valid
+            foreach (array('cache.adapter', 'cache.provider') as $required) {
+                if (!isset($config[$required])) {
+                    throw new InvalidArgumentException("{$required} is a required CacheAdapterFactory option");
+                }
+                if (is_string($config[$required]) && !class_exists($config[$required])) {
+                    throw new InvalidArgumentException("{$config[$required]} is not a valid class for {$required}");
+                }
+            }
+            // Instantiate the cache provider
+            if (is_string($config['cache.provider'])) {
+                $args = isset($config['cache.provider.args']) ? $config['cache.provider.args'] : null;
+                $config['cache.provider'] = self::createObject($config['cache.provider'], $args);
+            }
         }
 
         // Instantiate the cache adapter using the provider and options

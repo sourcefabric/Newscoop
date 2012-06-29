@@ -2,22 +2,21 @@
 
 namespace Guzzle\Http\Message;
 
-use Guzzle\Guzzle;
 use Guzzle\Common\Event;
 use Guzzle\Common\Collection;
 use Guzzle\Common\Exception\InvalidArgumentException;
 use Guzzle\Common\Exception\RuntimeException;
+use Guzzle\Http\Utils;
 use Guzzle\Http\Exception\RequestException;
-use Guzzle\Http\Exception\CurlException;
 use Guzzle\Http\Exception\BadResponseException;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\QueryString;
-use Guzzle\Http\Cookie;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\Url;
 
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\EventDispatcher\EventDispatcher;
+use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * HTTP request class to send requests
@@ -60,11 +59,6 @@ class Request extends AbstractMessage implements RequestInterface
     protected $state;
 
     /**
-     * @var Cookie Cookies to send with the request
-     */
-    protected $cookie;
-
-    /**
      * @param string Auth username
      */
     protected $username;
@@ -101,8 +95,6 @@ class Request extends AbstractMessage implements RequestInterface
             'request.exception',
             // Received response status line
             'request.receive.status_line',
-            // Received response header
-            'request.receive.header',
             // Manually set a response
             'request.set_response'
         );
@@ -111,11 +103,11 @@ class Request extends AbstractMessage implements RequestInterface
     /**
      * Create a new request
      *
-     * @param string $method HTTP method
-     * @param string|Url $url HTTP URL to connect to.  The URI scheme, host
+     * @param string     $method HTTP method
+     * @param string|Url $url    HTTP URL to connect to.  The URI scheme, host
      *      header, and URI are parsed from the full URL.  If query string
      *      parameters are present they will be parsed as well.
-     * @param array|Collection $headers (optional) HTTP headers
+     * @param array|Collection $headers HTTP headers
      */
     public function __construct($method, $url, $headers = array())
     {
@@ -129,8 +121,16 @@ class Request extends AbstractMessage implements RequestInterface
             foreach ($headers as $key => $value) {
                 $lkey = strtolower($key);
                 // Deal with collisions with Host and Authorization
-                if ($lkey == 'host' || $lkey == 'authorization') {
+                if ($lkey == 'host') {
                     $this->setHeader($key, $value);
+                } elseif ($lkey == 'authorization') {
+                    $parts = explode(' ', $value);
+                    if ($parts[0] == 'Basic' && isset($parts[1])) {
+                        list($user, $pass) = explode(':', base64_decode($parts[1]));
+                        $this->setAuth($user, $pass);
+                    } else {
+                        $this->setHeader($key, $value);
+                    }
                 } else {
                     foreach ((array) $value as $v) {
                         $this->addHeader($key, $v);
@@ -140,10 +140,9 @@ class Request extends AbstractMessage implements RequestInterface
         }
 
         if (!$this->hasHeader('User-Agent', true)) {
-            $this->setHeader('User-Agent', Guzzle::getDefaultUserAgent());
+            $this->setHeader('User-Agent', Utils::getDefaultUserAgent());
         }
 
-        $this->cookie = Cookie::factory($this->getHeader('Cookie'));
         $this->setState(self::STATE_NEW);
     }
 
@@ -233,7 +232,7 @@ class Request extends AbstractMessage implements RequestInterface
      */
     public function getRawHeaders()
     {
-        $raw = $this->method . ' ' . $this->getResourceUri();
+        $raw = $this->method . ' ' . $this->getResource();
         $protocolVersion = $this->protocolVersion ?: '1.1';
         $raw = trim($raw) . ' ' . strtoupper(str_replace('https', 'http', $this->url->getScheme())) . '/' . $protocolVersion . "\r\n";
         $raw .= $this->getHeaderString();
@@ -253,23 +252,21 @@ class Request extends AbstractMessage implements RequestInterface
      */
     public function setUrl($url)
     {
-        if (is_string($url)) {
-            $this->url = Url::factory($url);
-        } else if ($url instanceof Url) {
+        if ($url instanceof Url) {
             $this->url = $url;
         } else {
-            throw new InvalidArgumentException('Invalid URL sent to ' . __METHOD__);
+            $this->url = Url::factory($url);
         }
 
-        $this->setHost($this->url->getHost());
+        // Update the port and host header
         $this->setPort($this->url->getPort());
-        if ($this->url->getUsername() && $this->url->getPassword()) {
-            $this->setAuth($this->url->getUsername(), $this->url->getPassword());
-        }
 
-        // Remove the auth info from the URL
-        $this->url->setUsername(null);
-        $this->url->setPassword(null);
+        if ($this->url->getUsername() || $this->url->getPassword()) {
+            $this->setAuth($this->url->getUsername(), $this->url->getPassword());
+            // Remove the auth info from the URL
+            $this->url->setUsername(null);
+            $this->url->setPassword(null);
+        }
 
         return $this;
     }
@@ -278,7 +275,7 @@ class Request extends AbstractMessage implements RequestInterface
      * Send the request
      *
      * @return Response
-     * @throws RequestException on a request error
+     * @throws RuntimeException if a client is not associated with the request
      */
     public function send()
     {
@@ -304,7 +301,7 @@ class Request extends AbstractMessage implements RequestInterface
      * Get the collection of key value pairs that will be used as the query
      * string in the request
      *
-     * @param bool $asString (optional) Set to TRUE to get the query as string
+     * @param bool $asString Set to TRUE to get the query as string
      *
      * @return QueryString|string
      */
@@ -445,7 +442,8 @@ class Request extends AbstractMessage implements RequestInterface
 
         // Include the port in the Host header if it is not the default port
         // for the scheme of the URL
-        if (($this->url->getScheme() == 'http' && $port != 80) || ($this->url->getScheme() == 'https' && $port != 443)) {
+        $scheme = $this->url->getScheme();
+        if (($scheme == 'http' && $port != 80) || ($scheme == 'https' && $port != 443)) {
             $this->headers['host'] = new Header('Host', $this->url->getHost() . ':' . $port);
         } else {
             $this->headers['host'] = new Header('Host', $this->url->getHost());
@@ -477,14 +475,13 @@ class Request extends AbstractMessage implements RequestInterface
     /**
      * Set HTTP authorization parameters
      *
-     * @param string|false $user (optional) User name or false disable authentication
-     * @param string $password (optional) Password
-     * @param string $scheme (optional) Curl authentication scheme to use
+     * @param string|false $user     User name or false disable authentication
+     * @param string       $password Password
+     * @param string       $scheme   Curl authentication scheme to use
      *
      * @return Request
      *
      * @see http://www.ietf.org/rfc/rfc2617.txt
-     * @throws RequestException
      */
     public function setAuth($user, $password = '', $scheme = CURLAUTH_BASIC)
     {
@@ -510,12 +507,12 @@ class Request extends AbstractMessage implements RequestInterface
     }
 
     /**
-     * Get the URI of the request (e.g. '/', '/index.html', '/index.html?q=1)
-     * This is the path plus the query string, fragment
+     * Get the resource part of the the request, including the path, query
+     * string, and fragment
      *
      * @return string
      */
-    public function getResourceUri()
+    public function getResource()
     {
         return $this->url->getPath() . (string) $this->url->getQuery();
     }
@@ -524,7 +521,7 @@ class Request extends AbstractMessage implements RequestInterface
      * Get the full URL of the request (e.g. 'http://www.guzzle-project.com/')
      * scheme://username:password@domain:port/path?query_string#fragment
      *
-     * @param bool $asObject (optional) Set to TRUE to retrieve the URL as
+     * @param bool $asObject Set to TRUE to retrieve the URL as
      *     a clone of the URL object owned by the request
      *
      * @return string|Url
@@ -556,7 +553,7 @@ class Request extends AbstractMessage implements RequestInterface
         $this->state = $state;
         if ($this->state == self::STATE_NEW) {
             $this->responseBody = $this->response = null;
-        } else if ($this->state == self::STATE_COMPLETE) {
+        } elseif ($this->state == self::STATE_COMPLETE) {
             $this->processResponse();
         }
 
@@ -582,15 +579,14 @@ class Request extends AbstractMessage implements RequestInterface
      */
     public function receiveResponseHeader($data)
     {
+        static $normalize = array("\r", "\n");
         $this->state = self::STATE_TRANSFER;
         $length = strlen($data);
+        $data = str_replace($normalize, '', $data);
 
-        // Normalize line endings
-        $data = preg_replace("/([^\r])(\n)\b/", "$1\r\n", $data);
+        if (strpos($data, 'HTTP/') === 0) {
 
-        if (preg_match('/^\HTTP\/1\.[0|1]\s\d{3}\s.+$/', $data)) {
-
-            list($dummy, $code, $status) = explode(' ', str_replace("\r\n", '', $data), 3);
+            list($dummy, $code, $status) = explode(' ', $data, 3);
 
             // Only download the body of the response to the specified response
             // body when a successful response is received.
@@ -610,13 +606,10 @@ class Request extends AbstractMessage implements RequestInterface
                 'previous_response' => $previousResponse
             ));
 
-        } else if ($length > 2) {
-            list($header, $value) = array_map('trim', explode(':', trim($data), 2));
-            $this->response->addHeader($header, $value);
-            $this->dispatch('request.receive.header', array(
-                'header' => $header,
-                'value'  => $value
-            ), true);
+        } elseif (strpos($data, ':') !== false) {
+
+            list($header, $value) = explode(':', $data, 2);
+            $this->response->addHeader(trim($header), trim($value));
         }
 
         return $length;
@@ -630,7 +623,7 @@ class Request extends AbstractMessage implements RequestInterface
      * bypass the actual sending of a request.
      *
      * @param Response $response Response object to set
-     * @param bool $queued (optional) Set to TRUE to keep the request in a stat
+     * @param bool     $queued   Set to TRUE to keep the request in a stat
      *      of not having been sent, but queue the response for send()
      *
      * @return Request Returns a reference to the object.
@@ -683,74 +676,76 @@ class Request extends AbstractMessage implements RequestInterface
     }
 
     /**
-     * Get an array of Cookies or a specific cookie from the request
+     * Get an array of cookies
      *
-     * @param string $name (optional) Cookie to retrieve
-     *
-     * @return null|string|Cookie Returns null if not found by name, a Cookie
-     *      object if no $name is supplied, or the cookie value by name if found
-     *      If a Cookie object is returned, changes to the cookie object does
-     *      not modify the request's cookies.  You will need to set the cookie
-     *      back on the request after modifying the object.
+     * @return array
      */
-    public function getCookie($name = null)
+    public function getCookies()
     {
-        return !$name ? clone $this->cookie : $this->cookie->get($name);
+        $cookieData = new Collection();
+        if ($cookies = $this->getHeader('Cookie')) {
+            foreach ($cookies as $cookie) {
+                $parts = explode('=', $cookie, 2);
+                $cookieData->add($parts[0], isset($parts[1]) ? $parts[1] : '');
+            }
+        }
+
+        return $cookieData->getAll();
     }
 
     /**
-     * Set the Cookie header using an array or Cookie object
+     * Get a cookie value by name
      *
-     * @param array|Cookie $cookies Cookie data to set on the request
+     * @param string $name Cookie to retrieve
      *
-     * @return Request
+     * @return null|string|array
      */
-    public function setCookie($cookies)
+    public function getCookie($name)
     {
-        if ($cookies instanceof Cookie) {
-            $this->cookie = $cookies;
-        } else if (is_array($cookies)) {
-            $this->cookie->replace($cookies);
-        } else {
-            throw new InvalidArgumentException('Invalid cookie data');
-        }
+        $cookies = $this->getCookies();
 
-        $this->headers['cookie'] = new Header('Cookie', (string) $this->cookie);
-
-        return $this;
+        return isset($cookies[$name]) ? $cookies[$name] : null;
     }
 
     /**
      * Add a Cookie value by name to the Cookie header
      *
-     * @param string $name Name of the cookie to add
+     * @param string $name  Name of the cookie to add
      * @param string $value Value to set
      *
      * @return Request
      */
     public function addCookie($name, $value)
     {
-        $this->cookie->add($name, $value);
-        $this->headers['cookie'] = new Header('Cookie', (string) $this->cookie);
+        if (!$this->hasHeader('Cookie')) {
+            $this->setHeader('Cookie', "{$name}={$value}");
+        } else {
+            $this->getHeader('Cookie')->add("{$name}={$value}");
+        }
 
         return $this;
     }
 
     /**
-     * Remove the cookie header or a specific cookie value by name
+     * Remove a specific cookie value by name
      *
-     * @param string $name (optional) Cookie to remove by name.  If no value is
-     *      provided, the entire Cookie header is removed from the request
+     * @param string $name Cookie to remove by name
      *
      * @return Request
      */
-    public function removeCookie($name = null)
+    public function removeCookie($name)
     {
-        $this->cookie->remove($name);
-        $this->headers['cookie'] = new Header('Cookie', (string) $this->cookie);
+        if ($cookie = $this->getHeader('Cookie')) {
+            foreach ($cookie as $cookieValue) {
+                if (strpos($cookieValue, $name . '=') === 0) {
+                    $cookie->removeValue($cookieValue);
+                }
+            }
+        }
 
         return $this;
     }
+
 
     /**
      * Returns whether or not the response served to the request can be cached
@@ -806,23 +801,24 @@ class Request extends AbstractMessage implements RequestInterface
 
     /**
      * {@inheritdoc}
+     * @codeCoverageIgnore
      */
-    protected function changedHeader($action, $keyOrArray)
+    public function addSubscriber(EventSubscriberInterface $subscriber)
     {
-        $keys = (array) $keyOrArray;
-        parent::changedHeader($action, $keys);
+        $this->getEventDispatcher()->addSubscriber($subscriber);
 
-        // Be sure to get an cookie updates and update the internal Cookie
-        if (in_array('cookie', $keys)) {
-            if ($action == 'set') {
-                $this->cookie = Cookie::factory($this->getHeader('Cookie'));
-            } else if ($this->cookie) {
-                $this->cookie->clear();
-            }
-        }
+        return $this;
+    }
 
-        // If the Host header was changed, be sure to update the internal URL
-        if (in_array('host', $keys)) {
+    /**
+     * {@inheritdoc}
+     */
+    protected function changedHeader($action, $header)
+    {
+        parent::changedHeader($action, $header);
+
+        if ($header === 'host') {
+            // If the Host header was changed, be sure to update the internal URL
             $this->setHost((string) $this->getHeader('Host'));
         }
     }
@@ -866,7 +862,7 @@ class Request extends AbstractMessage implements RequestInterface
             $this->response = $this->getParams()->get('queued_response');
             $this->responseBody = $this->response->getBody();
             $this->getParams()->remove('queued_response');
-        } else if (!$this->response) {
+        } elseif (!$this->response) {
             // If no response, then processResponse shouldn't have been called
             $e = new RequestException('Error completing request');
             $e->setRequest($this);

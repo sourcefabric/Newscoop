@@ -18,8 +18,8 @@ class BadResponseException extends RequestException
     /**
      * Factory method to create a new response exception based on the response code.
      *
-     * @param RequestInterface $request Request
-     * @param Response $response Response received
+     * @param RequestInterface $request  Request
+     * @param Response         $response Response received
      *
      * @return BadResponseException
      */
@@ -28,7 +28,7 @@ class BadResponseException extends RequestException
         if ($response->isClientError()) {
             $label = 'Client error response';
             $class = __NAMESPACE__ . '\\ClientErrorResponseException';
-        } else if ($response->isServerError()) {
+        } elseif ($response->isServerError()) {
             $label = 'Server error response';
             $class = __NAMESPACE__ . '\\ServerErrorResponseException';
         } else {

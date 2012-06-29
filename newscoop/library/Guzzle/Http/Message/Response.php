@@ -3,9 +3,9 @@
 namespace Guzzle\Http\Message;
 
 use Guzzle\Common\Collection;
-use Guzzle\Common\Exception\InvalidArgumentException;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\Exception\BadResponseException;
+use Guzzle\Http\Parser\ParserRegistry;
 
 /**
  * Guzzle HTTP response object
@@ -99,46 +99,23 @@ class Response extends AbstractMessage
      *
      * @param string $message Response message
      *
-     * @return Response
-     * @throws InvalidArgumentException if an empty $message is provided
+     * @return Response|bool Returns false on error
      */
     public static function fromMessage($message)
     {
-        if (!$message) {
-            throw new InvalidArgumentException('No response message provided');
+        $data = ParserRegistry::get('message')->parseResponse($message);
+        if (!$data) {
+            return false;
         }
 
-        // Normalize line endings
-        $message = preg_replace("/([^\r])(\n)\b/", "$1\r\n", $message);
-        $protocol = $code = $status = '';
-        $parts = explode("\r\n\r\n", $message, 2);
-        $headers = new Collection();
+        // Always set the appropriate Content-Length
+        unset($data['headers']['Content-Length']);
+        unset($data['headers']['content-length']);
+        $data['headers']['Content-Length'] = strlen($data['body']);
 
-        foreach (array_values(array_filter(explode("\r\n", $parts[0]))) as $i => $line) {
-            // Remove newlines from headers
-            $line = implode(' ', explode("\n", $line));
-            if ($i === 0) {
-                // Check the status line
-                list($protocol, $code, $status) = array_map('trim', explode(' ', $line, 3));
-            } else if (strpos($line, ':')) {
-                // Add a header
-                list($key, $value) = array_map('trim', explode(':', $line, 2));
-                // Headers are case insensitive
-                $headers->add($key, $value);
-            }
-        }
-
-        $body = null;
-
-        if (isset($parts[1]) && $parts[1] != "\n") {
-            $body = EntityBody::factory(trim($parts[1]));
-            // Always set the appropriate Content-Length if Content-Legnth
-            $headers['Content-Length'] = $body->getSize();
-        }
-
-        $response = new static(trim($code), $headers, $body);
-        $response->setProtocol($protocol)
-                 ->setStatus($code, $status);
+        $response = new static($data['code'], $data['headers'], $data['body']);
+        $response->setProtocol($data['protocol'], $data['version'])
+                 ->setStatus($data['code'], $data['reason_phrase']);
 
         return $response;
     }
@@ -146,27 +123,17 @@ class Response extends AbstractMessage
     /**
      * Construct the response
      *
-     * @param string $statusCode The response status code (e.g. 200, 404, etc)
-     * @param Collection|array $headers (optional) The response headers
-     * @param string|resource|EntityBody $body (optional) The body of the response
+     * @param string                     $statusCode The response status code (e.g. 200, 404, etc)
+     * @param Collection|array           $headers    The response headers
+     * @param string|resource|EntityBody $body       The body of the response
      *
      * @throws BadResponseException if an invalid response code is given
      */
     public function __construct($statusCode, $headers = null, $body = null)
     {
-        if (!array_key_exists($statusCode, self::$statusTexts)) {
-            throw new BadResponseException(
-                'Invalid response code: ' . $statusCode
-            );
-        }
-
         $this->setStatus($statusCode);
         $this->params = new Collection();
-        if ($body) {
-            $this->body = EntityBody::factory($body);
-        } else {
-            $this->body = EntityBody::factory();
-        }
+        $this->body = EntityBody::factory($body ?: '');
 
         if ($headers) {
             if (!is_array($headers) && !($headers instanceof Collection)) {
@@ -204,13 +171,15 @@ class Response extends AbstractMessage
     /**
      * Set the protocol and protocol version of the response
      *
-     * @param string $protocol Response protocol and version (e.g. HTTP/1.1)
+     * @param string $protocol Response protocol
+     * @param string $version  Protocol version
      *
      * @return Response
      */
-    public function setProtocol($protocol)
+    public function setProtocol($protocol, $version)
     {
-        list($this->protocol, $this->protocolVersion) = array_map('trim', explode('/', $protocol, 2));
+        $this->protocol = $protocol;
+        $this->protocolVersion = $version;
 
         return $this;
     }
@@ -238,7 +207,7 @@ class Response extends AbstractMessage
     /**
      * Get a cURL transfer information
      *
-     * @param string $key (optional) A single statistic to check
+     * @param string $key A single statistic to check
      *
      * @return array|string|null Returns all stats if no key is set, a single
      *      stat if a key is set, or null if a key is set and not found
@@ -248,7 +217,7 @@ class Response extends AbstractMessage
     {
         if ($key === null) {
             return $this->info;
-        } else if (array_key_exists($key, $this->info)) {
+        } elseif (array_key_exists($key, $this->info)) {
             return $this->info[$key];
         } else {
             return null;
@@ -272,22 +241,21 @@ class Response extends AbstractMessage
     /**
      * Set the response status
      *
-     * @param int $statusCode Response status code to set
-     * @param string $reasonPhrase (optional) Response reason phrase
+     * @param int    $statusCode   Response status code to set
+     * @param string $reasonPhrase Response reason phrase
      *
      * @return Response
      * @throws BadResponseException when an invalid response code is received
      */
     public function setStatus($statusCode, $reasonPhrase = '')
     {
-        $statusCode = (int) trim($statusCode);
+        $this->statusCode = (int) $statusCode;
 
-        if (!array_key_exists($statusCode, self::$statusTexts)) {
-            throw new BadResponseException('Invalid response code: ' . $statusCode);
+        if (!$reasonPhrase && array_key_exists($this->statusCode, self::$statusTexts)) {
+            $this->reasonPhrase = self::$statusTexts[$this->statusCode];
+        } else {
+            $this->reasonPhrase = $reasonPhrase;
         }
-
-        $this->statusCode = $statusCode;
-        $this->reasonPhrase = $reasonPhrase ? $reasonPhrase : self::$statusTexts[$statusCode];
 
         return $this;
     }
@@ -368,7 +336,7 @@ class Response extends AbstractMessage
     /**
      * Get the Age HTTP header
      *
-     * @param bool $headerOnly (optional) Set to TRUE to only retrieve the
+     * @param bool $headerOnly Set to TRUE to only retrieve the
      *      Age header rather than calculating the age
      *
      * @return integer|null Returns the age the object has been in a proxy cache
@@ -816,11 +784,6 @@ class Response extends AbstractMessage
         // Never cache no-store resources (this is a private cache, so private
         // can be cached)
         if ($this->hasCacheControlDirective('no-store')) {
-            return false;
-        }
-
-        // HTTPS responses must send a Cache-Control: public value for caching
-        if ($this->getRequest() && $this->getRequest()->getScheme() == 'https' && !$this->hasCacheControlDirective('public')) {
             return false;
         }
 

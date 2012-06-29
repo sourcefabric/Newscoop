@@ -4,7 +4,6 @@ namespace Guzzle\Http\Plugin;
 
 use Guzzle\Common\Event;
 use Guzzle\Common\Exception\UnexpectedValueException;
-use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\Response;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
@@ -28,12 +27,12 @@ class Md5ValidatorPlugin implements EventSubscriberInterface
     /**
      * Constructor
      *
-     * @param bool $calcContentEncoded (optional) Calculating the MD5 hash of an
+     * @param bool $calcContentEncoded Calculating the MD5 hash of an
      *      entity body where a Content-Encoding was applied is a more expensive
      *      comparison because the entity body will need to be compressed in
      *      order to get the correct hash.  Set to FALSE to not validate
      *      the MD5 hash of an entity body with an applied Content-Encoding.
-     * @param int $contentLengthCutoff (optional) Maximum Content-Length (bytes)
+     * @param int $contentLengthCutoff Maximum Content-Length (bytes)
      *      in which a MD5 hash will be validated.  Any response with a
      *      Content-Length greater than this value will not be validated
      *      because it will be deemed too memory intensive
@@ -70,7 +69,7 @@ class Md5ValidatorPlugin implements EventSubscriberInterface
             return false;
         }
 
-        // Make sure that the request's size is under the cutoff size
+        // Make sure that the size of the request is under the cutoff size
         $size = $response->getContentLength() ?: $response->getBody()->getSize();
         if (!$size || $size > $this->contentLengthCutoff) {
             return;
@@ -78,11 +77,11 @@ class Md5ValidatorPlugin implements EventSubscriberInterface
 
         if (!$contentEncoding) {
             $hash = $response->getBody()->getContentMd5();
-        } else if ($contentEncoding == 'gzip') {
+        } elseif ($contentEncoding == 'gzip') {
             $response->getBody()->compress('zlib.deflate');
             $hash = $response->getBody()->getContentMd5();
             $response->getBody()->uncompress();
-        } else if ($contentEncoding == 'compress') {
+        } elseif ($contentEncoding == 'compress') {
             $response->getBody()->compress('bzip2.compress');
             $hash = $response->getBody()->getContentMd5();
             $response->getBody()->uncompress();

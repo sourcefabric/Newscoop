@@ -15,11 +15,36 @@ class RequestMediator
     protected $request;
 
     /**
+     * @var bool Whether or not to emit read/write events
+     */
+    protected $emitIo;
+
+    /**
+     * @var CurlHandle
+     */
+    protected $curlHandle;
+
+    /**
      * @param RequestInterface $request Request to mediate
      */
     public function __construct(RequestInterface $request)
     {
         $this->request = $request;
+        $this->emitIo = $request->getParams()->get('curl.emit_io');
+    }
+
+    /**
+     * Set the associated CurlHandle object
+     *
+     * @param CurlHandle $handle Curl handle
+     *
+     * @return RequestMediator
+     */
+    public function setCurlHandle(CurlHandle $handle)
+    {
+        $this->curlHandle = $handle;
+
+        return $this;
     }
 
     /**
@@ -47,6 +72,7 @@ class RequestMediator
     {
         $this->request->dispatch('curl.callback.progress', array(
             'request'       => $this->request,
+            'handle'        => $this->curlHandle,
             'download_size' => $downloadSize,
             'downloaded'    => $downloaded,
             'upload_size'   => $uploadSize,
@@ -64,10 +90,12 @@ class RequestMediator
      */
     public function writeResponseBody($curl, $write)
     {
-        $this->request->dispatch('curl.callback.write', array(
-            'request' => $this->request,
-            'write'   => $write
-        ));
+        if ($this->emitIo) {
+            $this->request->dispatch('curl.callback.write', array(
+                'request' => $this->request,
+                'write'   => $write
+            ));
+        }
 
         return $this->request->getResponse()->getBody()->write($write);
     }
@@ -87,10 +115,12 @@ class RequestMediator
 
         if ($this->request->getBody()) {
             $read = $this->request->getBody()->read($length);
-            $this->request->dispatch('curl.callback.read', array(
-                'request' => $this->request,
-                'read'    => $read
-            ));
+            if ($this->emitIo) {
+                $this->request->dispatch('curl.callback.read', array(
+                    'request' => $this->request,
+                    'read'    => $read
+                ));
+            }
         }
 
         return !$read ? '' : $read;

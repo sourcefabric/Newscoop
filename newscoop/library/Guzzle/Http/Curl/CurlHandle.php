@@ -2,10 +2,11 @@
 
 namespace Guzzle\Http\Curl;
 
-use Guzzle\Guzzle;
 use Guzzle\Common\Exception\InvalidArgumentException;
+use Guzzle\Common\Exception\RuntimeException;
 use Guzzle\Common\Collection;
 use Guzzle\Http\Message\RequestInterface;
+use Guzzle\Http\Parser\ParserRegistry;
 use Guzzle\Http\Message\EntityEnclosingRequestInterface;
 use Guzzle\Http\Url;
 
@@ -30,7 +31,19 @@ class CurlHandle
     protected $errorNo = CURLE_OK;
 
     /**
-     * Factory method to create a new curl handle based on an HTTP request
+     * Factory method to create a new curl handle based on an HTTP request.
+     *
+     * Note that the HTTP request may be modified by this method
+     *
+     * There are some helpful options you can set to enable specific behavior:
+     *
+     *    - disabled_wire: This is a performance improvement that will disable
+     *                     some debugging functionality with cURL.  The
+     *                     functionality it disabled allows you to see the
+     *                     exact HTTP request sent over the wire.
+     *    - progress:      Set to true to enable progress function callbacks.
+     *                     Most people don't need this, so it has been disabled
+     *                     by default.
      *
      * @param RequestInterface $request Request
      *
@@ -38,9 +51,9 @@ class CurlHandle
      */
     public static function factory(RequestInterface $request)
     {
-        $handle = curl_init();
         $mediator = new RequestMediator($request);
-        $protocolVersion = $request->getProtocolVersion() === '1.0' ? CURL_HTTP_VERSION_1_0 : CURL_HTTP_VERSION_1_1;
+        $requestCurlOptions = $request->getCurlOptions();
+        $tempHeaders = array();
 
         // Array of default cURL options.
         $curlOptions = array(
@@ -52,14 +65,27 @@ class CurlHandle
             CURLOPT_USERAGENT => (string) $request->getHeader('User-Agent'),
             CURLOPT_ENCODING => '', // Supports all encodings
             CURLOPT_PORT => $request->getPort(),
-            CURLOPT_HTTP_VERSION => $protocolVersion,
-            CURLOPT_NOPROGRESS => false,
-            CURLOPT_STDERR => fopen('php://temp', 'r+'),
-            CURLOPT_VERBOSE => true,
+            CURLOPT_HTTP_VERSION => $request->getProtocolVersion() === '1.0' ? CURL_HTTP_VERSION_1_0 : CURL_HTTP_VERSION_1_1,
             CURLOPT_HTTPHEADER => array(),
-            CURLOPT_HEADERFUNCTION => array($mediator, 'receiveResponseHeader'),
-            CURLOPT_PROGRESSFUNCTION => array($mediator, 'progress')
+            CURLOPT_HEADERFUNCTION => array($mediator, 'receiveResponseHeader')
         );
+
+        // Enable the progress function if the 'progress' param was set
+        if ($requestCurlOptions->get('progress')) {
+            $curlOptions[CURLOPT_PROGRESSFUNCTION] = array($mediator, 'progress');
+            $curlOptions[CURLOPT_NOPROGRESS] = false;
+        }
+
+        // Enable curl debug information if the 'debug' param was set
+        if ($requestCurlOptions->get('debug')) {
+            $curlOptions[CURLOPT_STDERR] = fopen('php://temp', 'r+');
+            // @codeCoverageIgnoreStart
+            if (false === $curlOptions[CURLOPT_STDERR]) {
+                throw new RuntimeException('Unable to create a stream for CURLOPT_STDERR');
+            }
+            // @codeCoverageIgnoreEnd
+            $curlOptions[CURLOPT_VERBOSE] = true;
+        }
 
         // HEAD requests need no response body, everything else might
         if ($request->getMethod() != 'HEAD') {
@@ -68,13 +94,11 @@ class CurlHandle
 
         // Account for PHP installations with safe_mode or open_basedir enabled
         // @codeCoverageIgnoreStart
-        if (Guzzle::getCurlInfo('follow_location')) {
+        if (CurlVersion::getInstance()->get('follow_location')) {
             $curlOptions[CURLOPT_FOLLOWLOCATION] = true;
             $curlOptions[CURLOPT_MAXREDIRS] = 5;
         }
         // @codeCoverageIgnoreEnd
-
-        $headers = $request->getHeaders()->getAll();
 
         // Specify settings according to the HTTP method
         switch ($request->getMethod()) {
@@ -83,36 +107,62 @@ class CurlHandle
                 break;
             case 'HEAD':
                 $curlOptions[CURLOPT_NOBODY] = true;
-                unset($curlOptions[CURLOPT_WRITEFUNCTION]);
                 break;
             case 'POST':
                 $curlOptions[CURLOPT_POST] = true;
+
+                // Special handling for POST specific fields and files
+                if (count($request->getPostFiles())) {
+
+                    $fields = $request->getPostFields()->urlEncode();
+                    foreach ($request->getPostFiles() as $key => $data) {
+                        $prefixKeys = count($data) > 1;
+                        foreach ($data as $index => $file) {
+                            // Allow multiple files in the same key
+                            $fieldKey = $prefixKeys ? "{$key}[{$index}]" : $key;
+                            $fields[$fieldKey] = $file->getCurlString();
+                        }
+                    }
+
+                    $curlOptions[CURLOPT_POSTFIELDS] = $fields;
+                    $request->removeHeader('Content-Length');
+
+                } elseif (count($request->getPostFields())) {
+                    $curlOptions[CURLOPT_POSTFIELDS] = (string) $request->getPostFields();
+                    $request->removeHeader('Content-Length');
+                }
                 break;
             case 'PUT':
             case 'PATCH':
                 $curlOptions[CURLOPT_UPLOAD] = true;
-                if ($request->hasHeader('Content-Length')) {
-                    unset($headers['Content-Length']);
-                    $curlOptions[CURLOPT_INFILESIZE] = (int) (string) $request->getHeader('Content-Length');
+                // Let cURL handle setting the Content-Length header
+                $contentLength = $request->getHeader('Content-Length');
+                if ($contentLength != null) {
+                    $contentLength = (int) (string) $contentLength;
+                    $curlOptions[CURLOPT_INFILESIZE] = $contentLength;
+                    $tempHeaders['Content-Length'] = $contentLength;
+                    $request->removeHeader('Content-Length');
                 }
-
                 break;
         }
 
+        // Special handling for requests sending raw data
         if ($request instanceof EntityEnclosingRequestInterface) {
 
-            // If no body is being sent, always send Content-Length of 0
-            if (!$request->getBody() && !count($request->getPostFields())) {
-                $headers['Content-Length'] = 0;
-                unset($headers['Transfer-Encoding']);
-                // Need to remove CURLOPT_UPLOAD to prevent chunked encoding
-                unset($curlOptions[CURLOPT_UPLOAD]);
-                unset($curlOptions[CURLOPT_POST]);
-                // Not reading from a callback when using empty body
-                unset($curlOptions[CURLOPT_READFUNCTION]);
-            } else {
-                // Add a callback for curl to read data to send with the request
-                $curlOptions[CURLOPT_READFUNCTION] = array($mediator, 'readRequestBody');
+            // Don't modify POST requests using POST fields and files via cURL
+            if (!isset($curlOptions[CURLOPT_POSTFIELDS])) {
+                if ($request->getBody()) {
+                    // Add a callback for curl to read data to send with the request
+                    // only if a body was specified
+                    $curlOptions[CURLOPT_READFUNCTION] = array($mediator, 'readRequestBody');
+                } else {
+                    // If no body is being sent, always send Content-Length of 0
+                    $request->setHeader('Content-Length', 0);
+                    $request->removeHeader('Transfer-Encoding');
+                    // Need to remove CURLOPT_UPLOAD to prevent chunked encoding
+                    unset($curlOptions[CURLOPT_UPLOAD]);
+                    unset($curlOptions[CURLOPT_POST]);
+                }
             }
 
             // If the Expect header is not present, prevent curl from adding it
@@ -122,45 +172,62 @@ class CurlHandle
         }
 
         // Set custom cURL options
-        foreach ($request->getCurlOptions() as $key => $value) {
-            $curlOptions[$key] = $value;
+        foreach ($requestCurlOptions as $key => $value) {
+            if (is_numeric($key)) {
+                $curlOptions[$key] = $value;
+            }
         }
 
         // Check if any headers or cURL options are blacklisted
         $client = $request->getClient();
-        if ($client && $client->getConfig('curl.blacklist')) {
-            foreach ($client->getConfig('curl.blacklist') as $value) {
-                if (strpos($value, 'header.') === 0) {
-                    $blacklistHeader = substr($value, 7);
-                    // Remove headers that may have previously been set
-                    // but are supposed to be blacklisted
-                    unset($headers[$blacklistHeader]);
-                    $headers[$blacklistHeader] = '';
-                } else {
-                    unset($curlOptions[$value]);
+        if ($client) {
+            $blacklist = $client->getConfig('curl.blacklist');
+            if ($blacklist) {
+                foreach ($blacklist as $value) {
+                    if (strpos($value, 'header.') === 0) {
+                        // Remove headers that may have previously been set
+                        // but are supposed to be blacklisted
+                        $key = substr($value, 7);
+                        $request->removeHeader($key);
+                        $curlOptions[CURLOPT_HTTPHEADER][] = $key . ':';
+                    } else {
+                        unset($curlOptions[$value]);
+                    }
                 }
             }
         }
 
-        // Add any custom headers to the request. Emtpy headers will cause curl to
+        // Add any custom headers to the request. Empty headers will cause curl to
         // not send the header at all.
-        foreach ($headers as $key => $value) {
-            foreach ((array) $value as $val) {
-                $curlOptions[CURLOPT_HTTPHEADER][] = trim("{$key}: {$val}");
+        foreach ($request->getHeaders() as $headerName => $values) {
+            foreach ($values as $value) {
+                $curlOptions[CURLOPT_HTTPHEADER][] = trim("{$headerName}: {$value}");
             }
         }
 
-        // Apply the options to the cURL handle.
+        // Apply the options to a new cURL handle.
+        $handle = curl_init();
         curl_setopt_array($handle, $curlOptions);
         $request->getParams()->set('curl.last_options', $curlOptions);
 
-        return new static($handle, $curlOptions);
+        // Some fields need to be removed from the request in order to properly
+        // send a cURL request message.  The fields that were removed for this
+        // purpose (e.g. Content-Length) should be aggregated in this array and
+        // added back to the request. Does not apply to blacklisted headers.
+        foreach ($tempHeaders as $key => $value) {
+            $request->setHeader($key, $value);
+        }
+
+        $handle = new static($handle, $curlOptions);
+        $mediator->setCurlHandle($handle);
+
+        return $handle;
     }
 
     /**
      * Construct a new CurlHandle object that wraps a cURL handle
      *
-     * @param resource $handle Configured cURL handle resource
+     * @param resource         $handle  Configured cURL handle resource
      * @param Collection|array $options Curl options to use with the handle
      *
      * @throws InvalidArgumentException
@@ -172,7 +239,7 @@ class CurlHandle
         }
         if (is_array($options)) {
             $this->options = new Collection($options);
-        } else if ($options instanceof Collection) {
+        } elseif ($options instanceof Collection) {
             $this->options = $options;
         } else {
             throw new InvalidArgumentException('Expected array or Collection');
@@ -206,7 +273,7 @@ class CurlHandle
      */
     public function isAvailable()
     {
-        return is_resource($this->handle) && false != curl_getinfo($this->handle, CURLINFO_EFFECTIVE_URL);
+        return is_resource($this->handle);
     }
 
     /**
@@ -250,8 +317,9 @@ class CurlHandle
     /**
      * Get cURL curl_getinfo data
      *
-     * @param int $option (optional) Option to retrieve.  Pass null to retrieve
-     *      retrieve all data as an array or pass a CURLINFO_* constant
+     * @param int $option Option to retrieve.  Pass null to retrieve
+     *                    retrieve all data as an array or pass a CURLINFO_*
+     *                    constant
      *
      * @return array|mixed
      */
@@ -271,7 +339,7 @@ class CurlHandle
     /**
      * Get the stderr output
      *
-     * @param bool $asResource (optional) Set to TRUE to get an fopen resource
+     * @param bool $asResource Set to TRUE to get an fopen resource
      *
      * @return string|resource|null
      */
@@ -310,7 +378,7 @@ class CurlHandle
      */
     public function getHandle()
     {
-        return $this->handle && $this->isAvailable() ? $this->handle : null;
+        return $this->isAvailable() ? $this->handle : null;
     }
 
     /**
@@ -322,5 +390,52 @@ class CurlHandle
     public function getOptions()
     {
         return $this->options;
+    }
+
+    /**
+     * Update a request based on the log messages of the CurlHandle
+     *
+     * @param RequestInterface $request Request to update
+     */
+    public function updateRequestFromTransfer(RequestInterface $request)
+    {
+        $log = $this->getStderr(true);
+
+        if (!$log || !$request->getResponse()) {
+            return;
+        }
+
+        // Update the transfer stats of the response
+        $request->getResponse()->setInfo($this->getInfo());
+
+        // Parse the cURL stderr output for outgoing requests
+        $headers = '';
+        fseek($log, 0);
+        while (($line = fgets($log)) !== false) {
+            if ($line && $line[0] == '>') {
+                $headers = substr(trim($line), 2) . "\r\n";
+                while (($line = fgets($log)) !== false) {
+                    if ($line[0] == '*' || $line[0] == '<') {
+                        break;
+                    } else {
+                        $headers .= trim($line) . "\r\n";
+                    }
+                }
+            }
+        }
+
+        // Add request headers to the request exactly as they were sent
+        if ($headers) {
+            $parsed = ParserRegistry::get('message')->parseRequest($headers);
+            if (!empty($parsed['headers'])) {
+                $request->setHeaders(array());
+                foreach ($parsed['headers'] as $name => $value) {
+                    $request->setHeader($name, $value);
+                }
+            }
+            if (!empty($parsed['version'])) {
+                $request->setProtocolVersion($parsed['version']);
+            }
+        }
     }
 }

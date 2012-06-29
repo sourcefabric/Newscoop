@@ -6,7 +6,6 @@ use Guzzle\Common\HasDispatcherInterface;
 use Guzzle\Http\ClientInterface;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\QueryString;
-use Guzzle\Http\Cookie;
 
 /**
  * Generic HTTP request interface
@@ -17,8 +16,7 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
     const STATE_COMPLETE = 'complete';
     const STATE_TRANSFER = 'transfer';
     const STATE_ERROR = 'error';
-    const AUTH_BASIC = 'Basic';
-    const AUTH_DIGEST = 'Digest';
+
     const GET = 'GET';
     const PUT = 'PUT';
     const POST = 'POST';
@@ -32,11 +30,11 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
     /**
      * Create a new request
      *
-     * @param string $method HTTP method
-     * @param string|Url $url HTTP URL to connect to.  The URI scheme, host
+     * @param string     $method HTTP method
+     * @param string|Url $url    HTTP URL to connect to.  The URI scheme, host
      *      header, and URI are parsed from the full URL.  If query string
      *      parameters are present they will be parsed as well.
-     * @param array|Collection $headers (optional) HTTP headers
+     * @param array|Collection $headers HTTP headers
      */
     function __construct($method, $url, $headers = array());
 
@@ -197,9 +195,9 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
     /**
      * Set HTTP authorization parameters
      *
-     * @param string|false $user (optional) User name or false disable authentication
-     * @param string $password (optional) Password
-     * @param string $scheme (optional) Authentication scheme to use (Basic, Digest)
+     * @param string|false $user     User name or false disable authentication
+     * @param string       $password Password
+     * @param string       $scheme   Authentication scheme to use (Basic, Digest)
      *
      * @return Request
      *
@@ -216,18 +214,18 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
     function getPassword();
 
     /**
-     * Get the URI of the request (e.g. '/', '/index.html', '/index.html?q=1)
-     * This is the path plus the query string, fragment
+     * Get the resource part of the the request, including the path, query
+     * string, and fragment
      *
      * @return string
      */
-    function getResourceUri();
+    function getResource();
 
     /**
      * Get the full URL of the request (e.g. 'http://www.guzzle-project.com/')
      * scheme://username:password@domain:port/path?query_string#fragment
      *
-     * @param bool $asObject (optional) Set to TRUE to retrieve the URL as
+     * @param bool $asObject Set to TRUE to retrieve the URL as
      *     a clone of the URL object owned by the request.
      *
      * @return string|Url
@@ -295,7 +293,7 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
      * bypass the actual sending of a request.
      *
      * @param Response $response Response object to set
-     * @param bool $queued (optional) Set to TRUE to keep the request in a stat
+     * @param bool     $queued   Set to TRUE to keep the request in a stat
      *      of not having been sent, but queue the response for send()
      *
      * @return RequestInterface Returns a reference to the object.
@@ -303,31 +301,25 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
     function setResponse(Response $response, $queued = false);
 
     /**
-     * Get an array of Cookies or a specific cookie from the request
+     * Get an array of Cookies
      *
-     * @param string $name (optional) Cookie to retrieve
-     *
-     * @return null|string|Cookie Returns null if not found by name, a Cookie
-     *      object if no $name is supplied, or the cookie value by name if found
-     *      If a Cookie object is returned, changes to the cookie object does
-     *      not modify the request's cookies.  You will need to set the cookie
-     *      back on the request after modifying the object.
+     * @return array
      */
-    function getCookie($name = null);
+    function getCookies();
 
     /**
-     * Set the Cookie header using an array or Cookie object
+     * Get a cookie value by name
      *
-     * @param array|Cookie $cookies Cookie data to set on the request
+     * @param string $name Cookie to retrieve
      *
-     * @return RequestInterface
+     * @return null|string
      */
-    function setCookie($cookies);
+    function getCookie($name);
 
     /**
      * Add a Cookie value by name to the Cookie header
      *
-     * @param string $name Name of the cookie to add
+     * @param string $name  Name of the cookie to add
      * @param string $value Value to set
      *
      * @return RequestInterface
@@ -335,14 +327,13 @@ interface RequestInterface extends MessageInterface, HasDispatcherInterface
     function addCookie($name, $value);
 
     /**
-     * Remove the cookie header or a specific cookie value by name
+     * Remove a specific cookie value by name
      *
-     * @param string $name (optional) Cookie to remove by name.  If no value is
-     *      provided, the entire Cookie header is removed from the request
+     * @param string $name Cookie to remove by name
      *
      * @return RequestInterface
      */
-    function removeCookie($name = null);
+    function removeCookie($name);
 
     /**
      * Returns whether or not the response served to the request can be cached

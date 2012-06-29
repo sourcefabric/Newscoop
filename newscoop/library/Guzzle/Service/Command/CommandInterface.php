@@ -3,6 +3,7 @@
 namespace Guzzle\Service\Command;
 
 use Guzzle\Common\Collection;
+use Guzzle\Common\Exception\InvalidArgumentException;
 use Guzzle\Http\Message\Response;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Service\ClientInterface;
@@ -18,11 +19,23 @@ interface CommandInterface
     /**
      * Constructor
      *
-     * @param array|Collection $parameters (optional) Collection of parameters
+     * @param array|Collection $parameters Collection of parameters
      *      to set on the command
-     * @param ApiCommand $apiCommand (optional) Command definition from description
+     * @param ApiCommand $apiCommand Command definition from description
      */
     function __construct($parameters = null, ApiCommand $apiCommand = null);
+
+    /**
+     * Specify a callable to execute when the command completes
+     *
+     * @param mixed $callable Callable to execute when the command completes.
+     *     The callable must accept a {@see CommandInterface} object as the
+     *     only argument.
+     *
+     * @return CommandInterface
+     * @throws InvalidArgumentException
+     */
+    function setOnComplete($callable);
 
     /**
      * Get the short form name of the command
@@ -34,14 +47,14 @@ interface CommandInterface
     /**
      * Get the API command information about the command
      *
-     * @return ApiCommand|NullObject
+     * @return ApiCommand
      */
     function getApiCommand();
 
     /**
-     * Execute the command
+     * Execute the command and return the result
      *
-     * @return Command
+     * @return mixed Returns the result of {@see CommandInterface::execute}ß
      * @throws CommandException if a client has not been associated with the command
      */
     function execute();
@@ -54,9 +67,9 @@ interface CommandInterface
     function getClient();
 
     /**
-     * Set the client objec that will execute the command
+     * Set the client object that will execute the command
      *
-     * @param ClientInterface $client The client objec that will execute the command
+     * @param ClientInterface $client The client object that will execute the command
      *
      * @return Command
      */
@@ -86,6 +99,15 @@ interface CommandInterface
      * @throws CommandException if the command has not been executed
      */
     function getResult();
+
+    /**
+     * Set the result of the command
+     *
+     * @param mixed $result Result to set
+     *
+     * @return self
+     */
+    function setResult($result);
 
     /**
      * Returns TRUE if the command has been prepared for executing

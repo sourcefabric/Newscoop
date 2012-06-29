@@ -2,6 +2,8 @@
 
 namespace Guzzle\Http;
 
+use Guzzle\Http\Parser\ParserRegistry;
+
 /**
  * Parses and generates URLs based on URL parts.  In favor of performance,
  * URL parts are not validated.
@@ -30,71 +32,16 @@ class Url
      */
     public static function factory($url)
     {
-        $parts = (array) self::parseUrl($url);
-        $parts['scheme'] = isset($parts['scheme']) ? $parts['scheme'] : null;
-        $parts['host'] = isset($parts['host']) ? $parts['host'] : null;
-        $parts['path'] = isset($parts['path']) ? $parts['path'] : null;
-        $parts['port'] = isset($parts['port']) ? $parts['port'] : null;
-        $parts['query'] = isset($parts['query']) ? $parts['query'] : null;
-        $parts['user'] = isset($parts['user']) ? $parts['user'] : null;
-        $parts['pass'] = isset($parts['pass']) ? $parts['pass'] : null;
-        $parts['fragment'] = isset($parts['fragment']) ? $parts['fragment'] : null;
+        $parts = ParserRegistry::get('url')->parseUrl($url);
 
+        // Convert the query string into a QueryString object
         if ($parts['query']) {
-            $parts['query'] = self::parseQuery($parts['query']);
+            $parts['query'] = QueryString::fromString($parts['query']);
         }
 
         return new self($parts['scheme'], $parts['host'], $parts['user'],
             $parts['pass'], $parts['port'], $parts['path'], $parts['query'],
             $parts['fragment']);
-    }
-
-    /**
-     * Parse a URL using special handling for a subset of UTF-8 characters in
-     * the query string if needed.
-     *
-     * @param string $url URL to parse
-     *
-     * @return array
-     */
-    public static function parseUrl($url)
-    {
-        $parts = parse_url($url);
-
-        // need to handle query parsing specially for UTF-8 requirements
-        if (isset($parts['query'])) {
-            $queryPos = strpos($url, '?');
-            if (isset($parts['fragment'])) {
-                $parts['query'] = substr($url, $queryPos + 1, strpos($url, '#') - $queryPos - 1);
-            } else {
-                $parts['query'] = substr($url, $queryPos + 1);
-            }
-        }
-
-        return $parts;
-    }
-
-    /**
-     * Parse a query string into a QueryString object
-     *
-     * @param string $query Query string
-     *
-     * @return QueryString
-     */
-    public static function parseQuery($query)
-    {
-        $q = new QueryString();
-        foreach (explode('&', $query) as $kvp) {
-            $parts = explode('=', $kvp);
-            $key = rawurldecode($parts[0]);
-            if (substr($key, -2) == '[]') {
-                $key = substr($key, 0, -2);
-            }
-            $value = array_key_exists(1, $parts) ? rawurldecode($parts[1]) : null;
-            $q->add($key, $value);
-        }
-
-        return $q;
     }
 
     /**
@@ -152,7 +99,8 @@ class Url
             $url .= $parts['query'];
         }
 
-        if (isset($parts['fragment'])) {
+        // Ensure that # is only added to the url if fragment contains anything.
+        if (isset($parts['fragment']) && !empty($parts['fragment'])) {
             $url .= '#' . $parts['fragment'];
         }
 
@@ -162,16 +110,14 @@ class Url
     /**
      * Create a new URL from URL parts
      *
-     * @param string $scheme Scheme of the URL
-     * @param string $host Host of the URL
-     * @param string $username (optional) Username of the URL
-     * @param string $password (optional) Password of the URL
-     * @param int $port (optional) Port of the URL
-     * @param string $path (optional) Path of the URL
-     * @param QueryString|array|string $query (optional) Query string of the URL
-     * @param string $fragment (optional) Fragment of the URL
-     *
-     * @throws HttpException
+     * @param string                   $scheme   Scheme of the URL
+     * @param string                   $host     Host of the URL
+     * @param string                   $username Username of the URL
+     * @param string                   $password Password of the URL
+     * @param int                      $port     Port of the URL
+     * @param string                   $path     Path of the URL
+     * @param QueryString|array|string $query    Query string of the URL
+     * @param string                   $fragment Fragment of the URL
      */
     public function __construct($scheme, $host, $username = null, $password = null, $port = null, $path = null, QueryString $query = null, $fragment = null)
     {
@@ -304,9 +250,9 @@ class Url
     {
         if ($this->port) {
             return $this->port;
-        } else if ($this->scheme == 'http') {
+        } elseif ($this->scheme == 'http') {
             return 80;
-        } else if ($this->scheme == 'https') {
+        } elseif ($this->scheme == 'https') {
             return 443;
         }
 
@@ -496,9 +442,9 @@ class Url
             $output = null;
             parse_str($query, $output);
             $this->query = new QueryString($output);
-        } else if (is_array($query)) {
+        } elseif (is_array($query)) {
             $this->query = new QueryString($query);
-        } else if ($query instanceof QueryString) {
+        } elseif ($query instanceof QueryString) {
             $this->query = $query;
         }
 

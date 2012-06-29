@@ -2,14 +2,15 @@
 
 namespace Guzzle\Http;
 
-use Guzzle\Guzzle;
 use Guzzle\Common\Collection;
 use Guzzle\Common\AbstractHasDispatcher;
 use Guzzle\Common\Exception\ExceptionCollection;
 use Guzzle\Common\Exception\InvalidArgumentException;
+use Guzzle\Http\Utils;
 use Guzzle\Http\Url;
-use Guzzle\Http\UriTemplate;
 use Guzzle\Http\EntityBody;
+use Guzzle\Http\Parser\ParserRegistry;
+use Guzzle\Http\Parser\UriTemplate\UriTemplateInterface;
 use Guzzle\Http\Message\RequestInterface;
 use Guzzle\Http\Message\RequestFactory;
 use Guzzle\Http\Message\RequestFactoryInterface;
@@ -63,8 +64,8 @@ class Client extends AbstractHasDispatcher implements ClientInterface
     /**
      * Client constructor
      *
-     * @param string $baseUrl (optional) Base URL of the web service
-     * @param array|Collection $config (optional) Configuration settings
+     * @param string           $baseUrl Base URL of the web service
+     * @param array|Collection $config  Configuration settings
      */
     public function __construct($baseUrl = '', $config = null)
     {
@@ -85,9 +86,9 @@ class Client extends AbstractHasDispatcher implements ClientInterface
     /**
      * Set the configuration object to use with the client
      *
-     * @param array|Collection|string $config Parameters that define how the
-     *      client behaves and connects to a webservice.  Pass an array or a
-     *      Collection object.
+     * @param array|Collection|string $config Parameters that define how the client
+     *                                        behaves and connects to a webservice.
+     *                                        Pass an array or a Collection object.
      *
      * @return Client
      */
@@ -96,7 +97,7 @@ class Client extends AbstractHasDispatcher implements ClientInterface
         // Set the configuration object
         if ($config instanceof Collection) {
             $this->config = $config;
-        } else if (is_array($config)) {
+        } elseif (is_array($config)) {
             $this->config = new Collection($config);
         } else {
             throw new InvalidArgumentException(
@@ -111,8 +112,9 @@ class Client extends AbstractHasDispatcher implements ClientInterface
      * Get a configuration setting or all of the configuration settings
      *
      * @param bool|string $key Configuration value to retrieve.  Set to FALSE
-     *      to retrieve all values of the client.  The object return can be
-     *      modified, and modifications will affect the client's config.
+     *                         to retrieve all values of the client.  The
+     *                         object return can be modified, and modifications
+     *                         will affect the client's config.
      *
      * @return mixed|Collection
      */
@@ -142,7 +144,7 @@ class Client extends AbstractHasDispatcher implements ClientInterface
     {
         if ($headers instanceof Collection) {
             $this->defaultHeaders = $headers;
-        } else if (is_array($headers)) {
+        } elseif (is_array($headers)) {
             $this->defaultHeaders = new Collection($headers);
         } else {
             throw new InvalidArgumentException('Headers must be an array or Collection');
@@ -154,8 +156,8 @@ class Client extends AbstractHasDispatcher implements ClientInterface
     /**
      * Expand a URI template using client configuration data
      *
-     * @param string $template URI template to expand
-     * @param array $variables (optional) Additional variables to use in the expansion
+     * @param string $template  URI template to expand
+     * @param array  $variables Additional variables to use in the expansion
      *
      * @return string
      */
@@ -166,19 +168,17 @@ class Client extends AbstractHasDispatcher implements ClientInterface
             $expansionVars = array_merge($expansionVars, $variables);
         }
 
-        return $this->getUriTemplate()
-            ->setTemplate($template)
-            ->expand($expansionVars);
+        return $this->getUriTemplate()->expand($template, $expansionVars);
     }
 
     /**
      * Set the URI template expander to use with the client
      *
-     * @param UriTemplate $uriTemplate
+     * @param UriTemplateInterface $uriTemplate URI template expander
      *
      * @return Client
      */
-    public function setUriTemplate(UriTemplate $uriTemplate)
+    public function setUriTemplate(UriTemplateInterface $uriTemplate)
     {
         $this->uriTemplate = $uriTemplate;
 
@@ -189,33 +189,34 @@ class Client extends AbstractHasDispatcher implements ClientInterface
      * Get the URI template expander used by the client.  A default UriTemplate
      * object will be created if one does not exist.
      *
-     * @return UriTemplate
+     * @return UriTemplateInterface
      */
     public function getUriTemplate()
     {
         if (!$this->uriTemplate) {
-            $this->uriTemplate = new UriTemplate();
+            $this->uriTemplate = ParserRegistry::get('uri_template');
         }
 
         return $this->uriTemplate;
     }
 
     /**
-     * Create and return a new {@see RequestInterface} configured for the client
+     * Create and return a new {@see RequestInterface} configured for the client.
      *
-     * @param string $method (optional) HTTP method.  Defaults to GET
-     * @param string|array $uri (optional) Resource URI.  Use an absolute path
-     *      to override the base path of the client, or a relative path to
-     *      append to the base path of the client.  The URI can contain the
-     *      querystring as well.  Use an array to provide a URI template and
-     *      additional variables to use in the URI template expansion.
-     * @param array|Collection $headers (optional) HTTP headers
-     * @param string|resource|array|EntityBody $body (optional) Entity body of
-     *      request (POST/PUT) or response (GET)
+     * Use an absolute path to override the base path of the client, or a
+     * relative path to append to the base path of the client.  The URI can
+     * contain the query string as well.  Use an array to provide a URI
+     * template and additional variables to use in the URI template expansion.
+     *
+     * @param string                           $method  HTTP method.  Defaults to GET
+     * @param string|array                     $uri     Resource URI.
+     * @param array|Collection                 $headers HTTP headers
+     * @param string|resource|array|EntityBody $body    Entity body of request (POST/PUT) or response (GET)
      *
      * @return RequestInterface
      * @throws InvalidArgumentException if a URI array is passed that does not
-     *     contain exactly two elements: the URI followed by template variables
+     *                                  contain exactly two elements: the URI
+     *                                  followed by template variables
      */
     public function createRequest($method = RequestInterface::GET, $uri = null, $headers = null, $body = null)
     {
@@ -223,30 +224,31 @@ class Client extends AbstractHasDispatcher implements ClientInterface
             $templateVars = null;
         } else {
             if (count($uri) != 2 || !is_array($uri[1])) {
-                throw new InvalidArgumentException('You must provide a URI'
-                    . ' template followed by an array of template variables'
-                    . ' when using an array for a URI template');
+                throw new InvalidArgumentException(
+                    'You must provide a URI template followed by an array of template variables '
+                    . 'when using an array for a URI template'
+                );
             }
             list($uri, $templateVars) = $uri;
         }
 
         if (!$uri) {
             $url = $this->getBaseUrl();
-        } else if (strpos($uri, 'http') === 0) {
+        } elseif (strpos($uri, 'http') === 0) {
             // Use absolute URLs as-is
             $url = $this->expandTemplate($uri, $templateVars);
         } else {
             $url = Url::factory($this->getBaseUrl())->combine($this->expandTemplate($uri, $templateVars));
         }
 
-        // If default headers are provided, then merge them into exising headers
+        // If default headers are provided, then merge them into existing headers
         // If a collision occurs, the header is completely replaced
         if (count($this->defaultHeaders)) {
             if ($headers instanceof Collection) {
                 $headers = array_merge($this->defaultHeaders->getAll(), $headers->getAll());
-            } else if (is_array($headers)) {
+            } elseif (is_array($headers)) {
                  $headers = array_merge($this->defaultHeaders->getAll(), $headers);
-            } else if ($headers === null) {
+            } elseif ($headers === null) {
                 $headers = $this->defaultHeaders;
             }
         }
@@ -269,18 +271,21 @@ class Client extends AbstractHasDispatcher implements ClientInterface
         $request->setClient($this);
 
         foreach ($this->getConfig()->getAll() as $key => $value) {
-            // Add any curl options that might in the config to the request
-            if (strpos($key, 'curl.') === 0 && $key != 'curl.blacklist') {
-                $curlOption = str_replace('curl.', '', $key);
-                if (defined($curlOption)) {
-                    $curlValue = is_string($value) && defined($value) ? constant($value) : $value;
-                    $request->getCurlOptions()->set(constant($curlOption), $curlValue);
-                }
+            if ($key == 'curl.blacklist') {
+                continue;
             }
-            // Add any cache options from the config to the request
             // Add any curl options that might in the config to the request
-            if (strpos($key, 'cache.') === 0) {
-                $request->getParams()->set($key, $value);
+            if (strpos($key, 'curl.') === 0) {
+                $curlOption = substr($key, 5);
+                // Convert constants represented as string to constant int values
+                if (defined($curlOption)) {
+                    $value = is_string($value) && defined($value) ? constant($value) : $value;
+                    $curlOption = constant($curlOption);
+                }
+                $request->getCurlOptions()->set($curlOption, $value);
+            } elseif (strpos($key, 'params.') === 0) {
+                // Add request specific parameters to all requests (prefix with 'params.')
+                $request->getParams()->set(substr($key, 7), $value);
             }
         }
 
@@ -298,8 +303,8 @@ class Client extends AbstractHasDispatcher implements ClientInterface
     /**
      * Get the client's base URL as either an expanded or raw URI template
      *
-     * @param bool $expand (optional) Set to FALSE to get the raw base URL
-     *    without URI template expansion
+     * @param bool $expand Set to FALSE to get the raw base URL without URI
+     *                     template expansion
      *
      * @return string|null
      */
@@ -324,18 +329,17 @@ class Client extends AbstractHasDispatcher implements ClientInterface
 
     /**
      * Set the name of your application and application version that will be
-     * appended to the User-Agent header of all reqeusts.
+     * appended to the User-Agent header of all requests.
      *
-     * @param string $userAgent User agent string
-     * @param bool $includeDefault (optional) Set to TRUE to append the default
-     *    Guzzle user agent
+     * @param string $userAgent      User agent string
+     * @param bool   $includeDefault Set to TRUE to append the default Guzzle use agent
      *
      * @return Client
      */
     public function setUserAgent($userAgent, $includeDefault = false)
     {
         if ($includeDefault) {
-            $userAgent .= ' ' . Guzzle::getDefaultUserAgent();
+            $userAgent .= ' ' . Utils::getDefaultUserAgent();
         }
         $this->defaultHeaders->set('User-Agent', $userAgent);
 
@@ -345,15 +349,12 @@ class Client extends AbstractHasDispatcher implements ClientInterface
     /**
      * Create a GET request for the client
      *
-     * @param string|array $uri (optional) Resource URI of the request.  Use an
-     *      absolute path to override the base path, or a relative path to
-     *      append.  Use an array to provide a URI template and additional
-     *      variables to use in the URI template expansion.
-     * @param array|Collection $headers (optional) HTTP headers
-     * @param string|resource|array|EntityBody $body (optional) Where to store
-     *      the response entity body
+     * @param string|array                     $uri     Resource URI
+     * @param array|Collection                 $headers HTTP headers
+     * @param string|resource|array|EntityBody $body    Where to store the response entity body
      *
      * @return Request
+     * @see    Guzzle\Http\Client::createRequest()
      */
     public function get($uri = null, $headers = null, $body = null)
     {
@@ -363,13 +364,11 @@ class Client extends AbstractHasDispatcher implements ClientInterface
     /**
      * Create a HEAD request for the client
      *
-     * @param string|array $uri (optional) Resource URI of the request.  Use an
-     *      absolute path to override the base path, or a relative path to
-     *      append.  Use an array to provide a URI template and additional
-     *      variables to use in the URI template expansion.
-     * @param array|Collection $headers (optional) HTTP headers
+     * @param string|array     $uri     Resource URI
+     * @param array|Collection $headers HTTP headers
      *
      * @return Request
+     * @see    Guzzle\Http\Client::createRequest()
      */
     public function head($uri = null, $headers = null)
     {
@@ -379,13 +378,11 @@ class Client extends AbstractHasDispatcher implements ClientInterface
     /**
      * Create a DELETE request for the client
      *
-     * @param string|array $uri (optional) Resource URI of the request.  Use an
-     *      absolute path to override the base path, or a relative path to
-     *      append.  Use an array to provide a URI template and additional
-     *      variables to use in the URI template expansion.
-     * @param array|Collection $headers (optional) HTTP headers
+     * @param string|array     $uri     Resource URI
+     * @param array|Collection $headers HTTP headers
      *
      * @return Request
+     * @see    Guzzle\Http\Client::createRequest()
      */
     public function delete($uri = null, $headers = null)
     {
@@ -395,14 +392,12 @@ class Client extends AbstractHasDispatcher implements ClientInterface
     /**
      * Create a PUT request for the client
      *
-     * @param string|array $uri (optional) Resource URI of the request.  Use an
-     *      absolute path to override the base path, or a relative path to
-     *      append.  Use an array to provide a URI template and additional
-     *      variables to use in the URI template expansion.
-     * @param array|Collection $headers (optional) HTTP headers
-     * @param string|resource|EntityBody $body Body to send in the request
+     * @param string|array               $uri     Resource URI
+     * @param array|Collection           $headers HTTP headers
+     * @param string|resource|EntityBody $body    Body to send in the request
      *
      * @return EntityEnclosingRequest
+     * @see    Guzzle\Http\Client::createRequest()
      */
     public function put($uri = null, $headers = null, $body = null)
     {
@@ -412,14 +407,12 @@ class Client extends AbstractHasDispatcher implements ClientInterface
     /**
      * Create a PATCH request for the client
      *
-     * @param string|array $uri (optional) Resource URI of the request.  Use an
-     *      absolute path to override the base path, or a relative path to
-     *      append.  Use an array to provide a URI template and additional
-     *      variables to use in the URI template expansion.
-     * @param array|Collection $headers (optional) HTTP headers
-     * @param string|resource|EntityBody $body Body to send in the request
+     * @param string|array               $uri     Resource URI
+     * @param array|Collection           $headers HTTP headers
+     * @param string|resource|EntityBody $body    Body to send in the request
      *
      * @return EntityEnclosingRequest
+     * @see    Guzzle\Http\Client::createRequest()
      */
     public function patch($uri = null, $headers = null, $body = null)
     {
@@ -429,17 +422,16 @@ class Client extends AbstractHasDispatcher implements ClientInterface
     /**
      * Create a POST request for the client
      *
-     * @param string|array $uri (optional) Resource URI of the request.  Use an
-     *      absolute path to override the base path, or a relative path to
-     *      append.  Use an array to provide a URI template and additional
-     *      variables to use in the URI template expansion.
-     * @param array|Collection $headers (optional) HTTP headers
-     * @param array|Collection|string|EntityBody $postBody (optional) POST
-     *      body.  Can be a string, EntityBody, or associative array of POST
-     *      fields to send in the body of the request.  Prefix a value in the
-     *      array with the @ symbol reference a file.
+     * @param string|array                       $uri      Resource URI
+     * @param array|Collection                   $headers  HTTP headers
+     * @param array|Collection|string|EntityBody $postBody POST body. Can be a string, EntityBody,
+     *                                                     or associative array of POST fields to
+     *                                                     send in the body of the request.  Prefix
+     *                                                     a value in the array with the @ symbol
+     *                                                     reference a file.
      *
      * @return EntityEnclosingRequest
+     * @see    Guzzle\Http\Client::createRequest()
      */
     public function post($uri = null, $headers = null, $postBody = null)
     {
@@ -449,12 +441,10 @@ class Client extends AbstractHasDispatcher implements ClientInterface
     /**
      * Create an OPTIONS request for the client
      *
-     * @param string|array $uri (optional) Resource URI of the request.  Use an
-     *      absolute path to override the base path, or a relative path to
-     *      append.  Use an array to provide a URI template and additional
-     *      variables to use in the URI template expansion.
+     * @param string|array $uri Resource URI
      *
      * @return Request
+     * @see    Guzzle\Http\Client::createRequest()
      */
     public function options($uri = null)
     {
@@ -471,7 +461,7 @@ class Client extends AbstractHasDispatcher implements ClientInterface
     public function send($requests)
     {
         $curlMulti = $this->getCurlMulti();
-        $multipleRequests = is_array($requests);
+        $multipleRequests = !($requests instanceof RequestInterface);
         if (!$multipleRequests) {
             $requests = array($requests);
         }
@@ -499,7 +489,7 @@ class Client extends AbstractHasDispatcher implements ClientInterface
      * Set a curl multi object to be used internally by the client for
      * transferring requests.
      *
-     * @param CurlMultiInterface $curlMulti Mulit object
+     * @param CurlMultiInterface $curlMulti multi object
      *
      * @return Client
      */

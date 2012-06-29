@@ -40,7 +40,7 @@ interface MessageInterface
      * all headers.
      *
      * @param string $header Header to retrieve.
-     * @param bool   $string (optional) Set to true to get the header as a string
+     * @param bool   $string Set to true to get the header as a string
      *
      * @return string|Header|null Returns NULL if no matching header is found.
      *     Returns a string if $string is set to TRUE.  Returns a Header object
@@ -52,10 +52,9 @@ interface MessageInterface
      * Get a tokenized header as a Collection
      *
      * @param string $header Header to retrieve
-     * @param string $token  (optional) Token separator
+     * @param string $token  Token separator
      *
-     * @return Collection|null Returns a Collection object containing the
-     *     tokenized values if the header was found.  Returns NULL otherwise.
+     * @return Collection|null
      */
     function getTokenizedHeader($header, $token = ';');
 
@@ -63,9 +62,9 @@ interface MessageInterface
      * Set a tokenized header on the request that implodes a Collection of data
      * into a string separated by a token.
      *
-     * @param string $header Header to set
-     * @param array|Collection $data Header data
-     * @param string $token (optional) Token delimiter
+     * @param string           $header Header to set
+     * @param array|Collection $data   Header data
+     * @param string           $token  Token delimiter
      *
      * @return MessageInterface
      * @throws InvalidArgumentException if data is not an array or Collection
@@ -73,16 +72,11 @@ interface MessageInterface
     function setTokenizedHeader($header, $data, $token = ';');
 
     /**
-     * Get all or all matching headers.
+     * Get all headers as a collection
      *
-     * @param array $names (optional) Pass an array of header names to retrieve
-     *     only a particular subset of headers.
-     *
-     * @return Collection Returns a {@see Collection} of all headers if no
-     *      $headers array is specified, or a Collection of only the headers
-     *      matching the headers in the $headers array.
+     * @return Collection Returns a {@see Collection} of all headers
      */
-    function getHeaders(array $headers = null);
+    function getHeaders();
 
     /**
      * Check if the specified header is present.
@@ -149,8 +143,8 @@ interface MessageInterface
     /**
      * Add a Cache-Control directive on the message
      *
-     * @param string $directive Directive to set
-     * @param bool|string $value Value to set
+     * @param string      $directive Directive to set
+     * @param bool|string $value     Value to set
      *
      * @return MessageInterface
      */

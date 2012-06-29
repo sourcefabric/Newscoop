@@ -13,7 +13,7 @@ class MapFactory implements FactoryInterface
     protected $map;
 
     /**
-     * @param array $map (optional) Associative array mapping command names to
+     * @param array $map Associative array mapping command names to
      *     classes
      */
     public function __construct(array $map)
@@ -28,6 +28,7 @@ class MapFactory implements FactoryInterface
     {
         if (isset($this->map[$name])) {
             $class = $this->map[$name];
+
             return new $class($args);
         }
     }

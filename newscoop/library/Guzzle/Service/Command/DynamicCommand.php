@@ -2,28 +2,16 @@
 
 namespace Guzzle\Service\Command;
 
-use Guzzle\Guzzle;
-use Guzzle\Common\Exception\InvalidArgumentException;
 use Guzzle\Http\EntityBody;
 use Guzzle\Http\Url;
-use Guzzle\Http\UriTemplate;
-use Guzzle\Service\Inspector;
+use Guzzle\Http\Parser\ParserRegistry;
+use Guzzle\Http\Message\PostFileInterface;
 
 /**
  * A command that creates requests based on ApiCommands
  */
 class DynamicCommand extends AbstractCommand
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function init()
-    {
-        if (!$this->apiCommand) {
-            throw new InvalidArgumentException('An API command must be passed');
-        }
-    }
-
     /**
      * {@inheritdoc}
      */
@@ -36,14 +24,14 @@ class DynamicCommand extends AbstractCommand
             // Get the path values and use the client config settings
             $variables = $this->getClient()->getConfig()->getAll();
             foreach ($this->apiCommand->getParams() as $name => $arg) {
-                if (is_scalar($this->get($name))) {
-                    $variables[$name] = $arg->get('prepend') . $this->get($name) . $arg->get('append');
+                $configValue = $this->get($name);
+                if (is_scalar($configValue)) {
+                    $variables[$name] = $arg->getPrepend() . $configValue . $arg->getAppend();
                 }
             }
 
             // Expand the URI template using the URI values
-            $template = new UriTemplate($this->apiCommand->getUri());
-            $uri = $template->expand($variables);
+            $uri = ParserRegistry::get('uri_template')->expand($this->apiCommand->getUri(), $variables);
 
             // Merge the client's base URL with the URI template
             $url = Url::factory($this->getClient()->getBaseUrl());
@@ -57,22 +45,25 @@ class DynamicCommand extends AbstractCommand
         // Add arguments to the request using the location attribute
         foreach ($this->apiCommand->getParams() as $name => $arg) {
 
-            if (!$this->get($name) || !$arg->get('location')) {
+            $configValue = $this->get($name);
+            $location = $arg->getLocation();
+
+            if (!$configValue || !$location) {
                 continue;
             }
 
             // Create the value based on prepend and append settings
-            $value = $arg->get('prepend') . $this->get($name) . $arg->get('append');
+            if ($arg->getPrepend() || $arg->getAppend()) {
+                $value = $arg->getPrepend() . $configValue . $arg->getAppend();
+            } else {
+                $value = $configValue;
+            }
 
-            // Determine the location and key setting location[:key]
-            $parts = explode(':', $arg->get('location'));
-            $place = $parts[0];
-
-            // If a key is specified (using location:key), use it
-            $key = isset($parts[1]) ? $parts[1] : $name;
+            // If a location key mapping is set, then use it
+            $key = $arg->getLocationKey() ?: $name;
 
             // Add the parameter to the request
-            switch ($place) {
+            switch ($location) {
                 case 'body':
                     $this->request->setBody(EntityBody::factory($value));
                     break;
@@ -81,6 +72,16 @@ class DynamicCommand extends AbstractCommand
                     break;
                 case 'query':
                     $this->request->getQuery()->set($key, $value);
+                    break;
+                case 'post_field':
+                    $this->request->setPostField($key, $value);
+                    break;
+                case 'post_file':
+                    if ($value instanceof PostFileInterface) {
+                        $this->request->addPostFile($value);
+                    } else {
+                        $this->request->addPostFile($key, $value);
+                    }
                     break;
             }
         }

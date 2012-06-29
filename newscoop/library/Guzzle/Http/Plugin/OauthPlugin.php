@@ -12,7 +12,7 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 /**
  * OAuth signing plugin
- * @see http://oauth.net/core/1.0/#rfc.section.9.1.1
+ * @link http://oauth.net/core/1.0/#rfc.section.9.1.1
  */
 class OauthPlugin implements EventSubscriberInterface
 {
@@ -25,14 +25,13 @@ class OauthPlugin implements EventSubscriberInterface
      * Create a new OAuth 1.0 plugin
      *
      * @param array $config Configuration array containing these parameters:
-     *     string 'consumer_key'     Consumer key
-     *     string 'consumer_secret'  Consumer secret
-     *     string 'token'            Token
-     *     string 'token_secret'     Token secret
-     *     string 'version'          (optional) OAuth version.  Defaults to 1.0
-     *     string 'signature_method' (optional) Custom signature method
-     *     array|Closure 'signature_callback' (optional) Custom signature callback
-     *         that accepts a string to sign and a signing key
+     *     - string 'consumer_key'     Consumer key
+     *     - string 'consumer_secret'  Consumer secret
+     *     - string 'token'            Token
+     *     - string 'token_secret'     Token secret
+     *     - string 'version'          OAuth version.  Defaults to 1.0
+     *     - string 'signature_method' Custom signature method
+     *     - array|Closure 'signature_callback' Custom signature callback that accepts a string to sign and a signing key
      */
     public function __construct($config)
     {
@@ -73,7 +72,7 @@ class OauthPlugin implements EventSubscriberInterface
         $authString = 'OAuth ';
         foreach(array(
             'oauth_consumer_key'     => $this->config['consumer_key'],
-            'oauth_nonce'            => sha1($timestamp),
+            'oauth_nonce'            => $this->generateNonce($event['request'], $timestamp),
             'oauth_signature'        => $this->getSignature($event['request'], $timestamp),
             'oauth_signature_method' => $this->config['signature_method'],
             'oauth_timestamp'        => $timestamp,
@@ -90,8 +89,8 @@ class OauthPlugin implements EventSubscriberInterface
     /**
      * Calculate signature for request
      *
-     * @param RequestInterface $request Request to generate a signature for
-     * @param int $timestamp Timestamp to use for nonce
+     * @param RequestInterface $request   Request to generate a signature for
+     * @param int              $timestamp Timestamp to use for nonce
      *
      * @return string
      */
@@ -106,8 +105,8 @@ class OauthPlugin implements EventSubscriberInterface
     /**
      * Calculate string to sign
      *
-     * @param RequestInterface $request Request to generate a signature for
-     * @param int $timestamp Timestamp to use for nonce
+     * @param RequestInterface $request   Request to generate a signature for
+     * @param int              $timestamp Timestamp to use for nonce
      *
      * @return string
      */
@@ -115,7 +114,7 @@ class OauthPlugin implements EventSubscriberInterface
     {
         $params = new Collection(array(
             'oauth_consumer_key'     => $this->config['consumer_key'],
-            'oauth_nonce'            => sha1($timestamp),
+            'oauth_nonce'            => $this->generateNonce($request, $timestamp),
             'oauth_signature_method' => $this->config['signature_method'],
             'oauth_timestamp'        => $timestamp,
             'oauth_token'            => $this->config['token'],
@@ -152,5 +151,20 @@ class OauthPlugin implements EventSubscriberInterface
         return strtoupper($request->getMethod()) . '&'
              . rawurlencode($url) . '&'
              . rawurlencode(implode('&', $parameterString));
+    }
+
+    /**
+     * Returns a Nonce Based on the Timestamp and URL.  This will allow for
+     * multiple requests in parallel with the same exact timestamp to use
+     * separate nonce's.
+     *
+     * @param RequestInterface $request   Request to generate a nonce for
+     * @param int              $timestamp Timestamp to use for nonce
+     *
+     * @return string
+     */
+    protected function generateNonce(RequestInterface $request, $timestamp)
+    {
+        return sha1($timestamp . $request->getUrl());
     }
 }
