@@ -51,18 +51,21 @@ class Api_DossiersController extends Zend_Controller_Action
         $articles = $this->_helper->service('article')->findBy(array('type' => self::ARTICLE_TYPE));
         
         $response = array();
-        
+
+        $rank = 1;
         foreach ($articles as $article) {
             $articleData = new ArticleData(self::ARTICLE_TYPE, $article->getNumber(), self::LANGUAGE);
             $articleImages = ArticleImage::GetImagesByArticleNumber($article->getNumber());
             $imageUrl = isset($articleImages[0]) ? $articleImages[0]->getImage()->getImageUrl() : '';
 
             $response[] = array(
-                'id' => $article->getNumber(),
+                'dossier_id' => $article->getNumber(),
                 'url' => $this->url.'/api/dossiers/articles?dossier_id='.$article->getNumber(),
                 'title' => $article->getTitle(),
-                'teaser' => $articleData->getFieldValue('lede'),
-                'image_url' => $imageUrl
+                'description' => trim(strip_tags($articleData->getFieldValue('lede'))),
+                'image_url' => $imageUrl,
+                'published' => $article->getPublishDate(),
+                'rank' => $rank++,
             );
         }
         

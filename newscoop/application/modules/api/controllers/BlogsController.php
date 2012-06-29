@@ -17,6 +17,11 @@ class Api_BlogsController extends Zend_Controller_Action
     private $request;
     
     private $url;
+
+    /**
+     * @var array
+     */
+    private $commentStats = array();
     
     /**
      * Init controller.
@@ -66,6 +71,7 @@ class Api_BlogsController extends Zend_Controller_Action
                 $imageUrl = $articleImages[0]->getImage()->getImageUrl();
 
                 $response[] = array(
+                    'blog_id' => $section->getNumber(),
                     'url' => $this->url.'/api/blogs/posts?blog_id='.$section->getNumber(),
                     'title' => $articles[0]->getTitle(),
                     'description' => trim(strip_tags($blogInfo->getFieldValue('infolong'))),
@@ -110,8 +116,15 @@ class Api_BlogsController extends Zend_Controller_Action
         $sections = $this->_helper->service('section')->findBy(array('publication' => self::PUBLICATION, 'number' => $blogId));
         if ($sections[0]) {
             $section = $sections[0];
-            $posts = $this->_helper->service('article')->findBy(array('section' => $section->getNumber(), 'type' => 'blog'), array('published' => 'desc'));
-            
+            $posts = $this->_helper->service('article')->findBy(
+                array('section' => $section->getNumber(), 'type' => 'blog'),
+                array('published' => 'desc'),
+                30);
+            $this->commentStats = $this->_helper->service('comment')->getArticleStats(array_map(function($post) {
+                return $post->getNumber();
+            }, $posts));
+
+            $rank = 1;
             foreach ($posts as $post) {
                 $postData = new ArticleData('blog', $post->getNumber(), self::LANGUAGE);
                 $postImages = ArticleImage::GetImagesByArticleNumber($post->getNumber());
@@ -126,21 +139,32 @@ class Api_BlogsController extends Zend_Controller_Action
                     $teaser = null;
                 }
 
+                $authors = array();
+                foreach($post->getAuthors() as $author) {
+                    $authors[] = $author->getFullName();
+                }
+
+                $normalComments = isset($this->commentStats[$post->getNumber()]) ? $this->commentStats[$post->getNumber()]['normal'] : 0;
+                $recommendedComments = isset($this->commentStats[$post->getNumber()]) ? $this->commentStats[$post->getNumber()]['recommended'] : 0;
+
                 $response[] = array( // add url
                     'blogpost_id' => $post->getNumber(),
                     'url' => $this->url . '/api/blogs/posts?post_id=' . $post->getNumber(),
                     'short_name' => $shortName,
+                    'author_name' => implode(',', $authors),
                     'teaser' => $teaser,
                     'image_url' => $imageUrl,
                     'published' => $post->getPublishDate(),
-                    'comment_count' => isset($this->commentStats[$post->getNumber()]) ? $this->commentStats[$post->getNumber()]['normal'] : null,
-                    'recommended_comment_count' => isset($this->commentStats[$post->getNumber()]) ? $this->commentStats[$post->getNumber()]['recommended'] : null,
+                    'comment_count' => $normalComments + $recommendedComments,
+                    'recommended_comment_count' => $recommendedComments,
                     'comment_url' => $this->view->serverUrl($this->view->url(array(
                         'module' => 'api',
                         'controller' => 'comments',
                         'action' => 'list',
                     ), 'default') . sprintf('?article_id=%d&version=%s', $post->getNumber(), $this->_getParam('version', '1.0'))),
-                    'rank' => $rank,
+                    'blog_id' => $section->getNumber(),
+                    'blog_name' => $section->getName(),
+                    'rank' => $rank++,
                 );
             }
         }
