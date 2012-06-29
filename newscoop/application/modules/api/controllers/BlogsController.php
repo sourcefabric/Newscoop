@@ -52,7 +52,6 @@ class Api_BlogsController extends Zend_Controller_Action
         $sections = $this->_helper->service('section')->findBy(array('publication' => self::PUBLICATION));
         //$sections = $this->_helper->service('section')->findBy(array('publication' => self::PUBLICATION, 'language' => self::LANGUAGE));
         //$sections = $this->_helper->service('section')->findBy(array('publication' => self::PUBLICATION, 'issue' => self::ISSUE, 'language' => self::LANGUAGE));
-        
         $publication = new Publication(self::PUBLICATION);
         $alias = new Alias($publication->getDefaultAliasId());
         
@@ -67,21 +66,18 @@ class Api_BlogsController extends Zend_Controller_Action
                 $imageUrl = $articleImages[0]->getImage()->getImageUrl();
 
                 $response[] = array(
-                    'id' => $section->getNumber(),
                     'url' => $this->url.'/api/blogs/posts?blog_id='.$section->getNumber(),
                     'title' => $articles[0]->getTitle(),
-                    'description' => trim($blogInfo->getFieldValue('infolong')),
+                    'description' => trim(strip_tags($blogInfo->getFieldValue('infolong'))),
                     'rank' => $rank,
                     'image_url' => $imageUrl,
                     'published' => $articles[0]->getPublishDate(),
                 );
                 
-                $rank = $rank + 1;
+                $rank++;
             }
         }
-        
-        //die;
-        
+
         $this->_helper->json($response);
     }
     
@@ -93,8 +89,7 @@ class Api_BlogsController extends Zend_Controller_Action
         $parameters = $this->request->getParams();
         if (in_array('blog_id', array_keys($parameters))) {
             $this->_forward('posts-list');
-        }
-        else if (in_array('post_id', array_keys($parameters))) {
+        } else if (in_array('post_id', array_keys($parameters))) {
             $this->_forward('posts-item');
         }
     }
@@ -120,20 +115,32 @@ class Api_BlogsController extends Zend_Controller_Action
             foreach ($posts as $post) {
                 $postData = new ArticleData('blog', $post->getNumber(), self::LANGUAGE);
                 $postImages = ArticleImage::GetImagesByArticleNumber($post->getNumber());
-                if ($postImages[0]) {
-                    $imageUrl = $postImages[0]->getImage()->getImageUrl();
+                $imageUrl = ($postImages[0]) ? $imageUrl = $postImages[0]->getImage()->getImageUrl() : null;
+                $shortName = $postData->getFieldValue('short_name');
+                if (empty($shortName)) {
+                    $shortName = $post->getTitle();
                 }
-                else {
-                    $imageUrl = '';
+
+                $teaser = trim(strip_tags($postData->getFieldValue('lede')));
+                if (empty($teaser)) {
+                    $teaser = null;
                 }
+
                 $response[] = array( // add url
-                    'url' => $this->url.'/api/blogs/posts?post_id='.$post->getNumber(),
-                    'id' => $post->getNumber(),
-                    'title' => $post->getTitle(),
-                    'short_name' => $postData->getFieldValue('short_name'),
-                    'lede' => $postData->getFieldValue('lede'),
+                    'blogpost_id' => $post->getNumber(),
+                    'url' => $this->url . '/api/blogs/posts?post_id=' . $post->getNumber(),
+                    'short_name' => $shortName,
+                    'teaser' => $teaser,
                     'image_url' => $imageUrl,
-                    'last_modified' => $post->getPublishDate()
+                    'published' => $post->getPublishDate(),
+                    'comment_count' => isset($this->commentStats[$post->getNumber()]) ? $this->commentStats[$post->getNumber()]['normal'] : null,
+                    'recommended_comment_count' => isset($this->commentStats[$post->getNumber()]) ? $this->commentStats[$post->getNumber()]['recommended'] : null,
+                    'comment_url' => $this->view->serverUrl($this->view->url(array(
+                        'module' => 'api',
+                        'controller' => 'comments',
+                        'action' => 'list',
+                    ), 'default') . sprintf('?article_id=%d&version=%s', $post->getNumber(), $this->_getParam('version', '1.0'))),
+                    'rank' => $rank,
                 );
             }
         }
