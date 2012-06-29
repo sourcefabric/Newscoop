@@ -15,8 +15,6 @@ use Newscoop\Entity\Article,
  */
 class OfflineIssueService
 {
-    const SERVER_URL = 'http://localhost';
-
     /**
      * @var Newscoop\Http\ClientFactory
      */
@@ -28,12 +26,22 @@ class OfflineIssueService
     private $view;
 
     /**
-     * @param Newscoop\Http\ClientFactory $clientFactory
+     * @var array
      */
-    public function __construct(ClientFactory $clientFactory, Zend_View $view)
+    private $config = array(
+        'site_url' => 'http://localhost/newscoop/newscoop/',
+    );
+
+    /**
+     * @param Newscoop\Http\ClientFactory $clientFactory
+     * @param Zend_View $view
+     * @param array $config
+     */
+    public function __construct(ClientFactory $clientFactory, Zend_View $view, array $config = array())
     {
         $this->clientFactory = $clientFactory;
         $this->view = $view;
+        $this->config = array_merge($this->config, $config);
     }
 
     /**
@@ -44,7 +52,7 @@ class OfflineIssueService
      */
     public function isIssueGenerated(Article $issue)
     {
-        return file_exists($this->getIssuePath($issue));
+        return file_exists($this->getIssueZipPath($issue));
     }
 
     /**
@@ -53,9 +61,20 @@ class OfflineIssueService
      * @param Newscoop\Entity\Article $issue
      * @return string
      */
-    public function getIssuePath(Article $issue)
+    public function getIssueZipPath(Article $issue)
     {
-        return sprintf('/tmp/issues/issue-%d.zip', $issue->getNumber());
+        return sprintf('/tmp/issues/issue_%d.zip', $issue->getNumber());
+    }
+
+    /**
+     * Get article zip path
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return string
+     */
+    public function getArticleZipPath($article)
+    {
+        return sprintf('/tmp/issues/article_%d.zip', is_numeric($article) ? $article : $article->article_id);
     }
 
     /**
@@ -73,26 +92,40 @@ class OfflineIssueService
         )));
 
         $dir = $this->getIssueDir($toc);
+
         foreach ($toc->articles as $article) {
-            $this->generateArticle($article, $dir);
+            $articleDir = $this->getArticleDir($article, $dir);
+            $this->generateArticle($article, $articleDir);
+            $this->zip($articleDir, $this->getArticleZipPath($article));
         }
 
         file_put_contents("$dir/toc.json", json_encode($toc));
+        $this->zip($dir, $this->getIssueZipPath($issue));
+    }
 
-        chdir($dir);
-        system(sprintf('zip -r %s *', $this->getIssuePath($issue)));
+    /**
+     * Zip given directory
+     *
+     * @param string $dir
+     * @param string $desc
+     * @return void
+     */
+    private function zip($dir, $dest)
+    {
+        chdir(dirname($dir));
+        $command = sprintf('zip -r %s %s', $dest, basename($dir));
+        `$command`; // runs without outputing
     }
 
     /**
      * Generate article in given folder
      *
      * @param object $article
-     * @param string $issueDir
+     * @param string $dir
      * @return void
      */
-    public function generateArticle($article, $issueDir)
+    public function generateArticle($article, $dir)
     {
-        $dir = $this->getArticleDir($article, $issueDir);
         $this->generateArticleContent($article, $dir);
         if ($article->image_url) {
             $ext = pathinfo($article->image_url, PATHINFO_EXTENSION);
@@ -180,7 +213,7 @@ class OfflineIssueService
      */
     private function getIssueDir($toc)
     {
-        return $this->createDir(sprintf('/tmp/issues/issue-%d', $toc->issue_id));
+        return $this->createDir(sprintf('/tmp/issues/issue_%d', $toc->issue_id));
     }
 
     /**
@@ -203,6 +236,6 @@ class OfflineIssueService
      */
     private function getApiUrl(array $params)
     {
-        return sprintf('%s/%s', 'http://localhost/newscoop/newscoop', $this->view->url($params, 'api'));
+        return sprintf('%s/%s', rtrim($this->config['site_url'], '/'), ltrim($this->view->url($params, 'api'), '/'));
     }
 }

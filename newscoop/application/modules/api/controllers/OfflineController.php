@@ -14,6 +14,9 @@ require_once __DIR__ . '/AbstractController.php';
  */
 class Api_OfflineController extends AbstractController
 {
+    const NOT_FOUND = 'Not found';
+    const NOT_FOUND_CODE = 404;
+
     /**
      * @var Tageswoche\Mobile\OfflineIssueService
      */
@@ -24,30 +27,50 @@ class Api_OfflineController extends AbstractController
         $this->service = $this->_helper->service('mobile.issue.offline');
     }
 
+    /**
+     * @todo validate subscription
+     */
+    public function preDispatch()
+    {
+    }
+
     public function articlesAction()
     {
-        var_dump($this->getRequest()->getParams());
-        exit;
+        if (!$this->_getParam('id') || !is_numeric($this->_getParam('id'))) {
+            $this->sendError(self::NOT_FOUND, self::NOT_FOUND_CODE);
+        }
+
+        $this->sendZip($this->service->getArticleZipPath($this->_getParam('id')));
     }
 
     public function issuesAction()
     {
         $issue = $this->_helper->service('mobile.issue')->find($this->_getParam('id'));
         if (!$issue) {
-            $this->sendError("Issue not found.", 404);
+            $this->sendError(self::NOT_FOUND, self::NOT_FOUND_CODE);
         }
 
-        if (!$this->service->isIssueGenerated($issue)) {
-            $this->sendError("Issue not generated.", 503);
+        $this->sendZip($this->service->getIssueZipPath($issue));
+    }
+
+    /**
+     * Send zip file to browser
+     *
+     * @param string $zip
+     * @return void
+     */
+    private function sendZip($zip)
+    {
+        if (!file_exists($zip)) {
+            $this->sendError(self::NOT_FOUND, self::NOT_FOUND_CODE);
         }
 
         $this->getResponse()->setHeader('Content-Type', 'application/zip', true);
-        $this->getResponse()->setHeader('Content-Disposition', sprintf('attachment; filename=issue-%d.zip', $issue->getNumber()));
-        $this->getResponse()->setHeader('Content-Length', filesize($this->service->getIssuePath($issue)));
+        $this->getResponse()->setHeader('Content-Disposition', sprintf('attachment; filename=%s', basename($zip)));
+        $this->getResponse()->setHeader('Content-Length', filesize($zip));
         $this->getResponse()->sendHeaders();
 
-        readfile($this->service->getIssuePath($issue));
+        readfile($zip);
         exit;
-        //$this->getResponse()->setBody(file_get_contents($this->service->getIssuePath($issue)));
     }
 }
