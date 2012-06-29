@@ -73,6 +73,19 @@ class ArticleService
     }
 
     /**
+     * Find article by given number
+     *
+     * @param int $number
+     * @return Newscoop\Entity\Article
+     */
+    public function findOneByNumber($number)
+    {
+        return $this->getRepository()->findOneBy(array(
+            'number' => $number,
+        ));
+    }
+
+    /**
      * Get repository
      *
      * @return Doctrine\ORM\EntityRepository

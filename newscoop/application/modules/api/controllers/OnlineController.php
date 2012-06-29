@@ -65,7 +65,12 @@ class Api_OnlineController extends AbstractController
     public function articlesAction()
     {
         $this->_helper->layout->disableLayout();
-        $this->view->article = new MetaArticle(self::LANGUAGE_ID, (int) $this->_getParam('id'));
+        $article = $this->_helper->service('article')->findOneByNumber($this->_getParam('id'));
+        if (!$article) {
+            $this->sendError('Article not found.', 404);
+        }
+
+        $this->view->article = new MetaArticle($article->getLanguageId(), $article->getNumber());
     }
 
     /**
