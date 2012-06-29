@@ -273,7 +273,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $container->register('mobile.issue.offline', 'Tageswoche\Mobile\OfflineIssueService')
             ->addArgument(new sfServiceReference('http.client_factory'))
-            ->addArgument(new sfServiceReference('view'));
+            ->addArgument(new sfServiceReference('view'))
+            ->addArgument('%offline%');
 
         Zend_Registry::set('container', $container);
         return $container;
