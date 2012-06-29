@@ -7,7 +7,8 @@
 
 namespace Newscoop\Http;
 
-use Guzzle\Http\Client;
+use Guzzle\Http\Client,
+    Guzzle\Http\Plugin\CurlAuthPlugin;
 
 /**
  */
@@ -21,5 +22,19 @@ class ClientFactory
     public function getClient()
     {
         return new Client();
+    }
+
+    /**
+     * Get auth client
+     *
+     * @param string $username
+     * @param string $password
+     * @return Guzzle\Http\Client
+     */
+    public function getAuthClient($username, $password)
+    {
+        $client = $this->getClient();
+        $client->addSubscriber(new CurlAuthPlugin($username, $password));
+        return $client;
     }
 }

@@ -45,17 +45,6 @@ class OfflineIssueService
     }
 
     /**
-     * Test if issue package is generated
-     *
-     * @param Newscoop\Entity\Article $issue
-     * @return bool
-     */
-    public function isIssueGenerated(Article $issue)
-    {
-        return file_exists($this->getIssueZipPath($issue));
-    }
-
-    /**
      * Get issue path
      *
      * @param Newscoop\Entity\Article $issue
@@ -129,7 +118,7 @@ class OfflineIssueService
         $this->generateArticleContent($article, $dir);
         if ($article->image_url) {
             $ext = pathinfo($article->image_url, PATHINFO_EXTENSION);
-            file_put_contents("{$dir}/image.{$ext}", file_get_contents($article->image_url));
+            file_put_contents("{$dir}/image.{$ext}", $this->fetch($article->image_url));
             $article->image_url = basename("image.{$ext}");
         }
 
@@ -183,7 +172,9 @@ class OfflineIssueService
      */
     private function getClient()
     {
-        return $this->clientFactory->getClient();
+        return isset($this->config['auth_username'])
+            ? $this->clientFactory->getAuthClient($this->config['auth_username'], $this->config['auth_password'])
+            : $this->clientFactory->getClient();
     }
 
     /**
