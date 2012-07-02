@@ -94,6 +94,10 @@ abstract class AbstractController extends Zend_Controller_Action
 
         if ($this->_getParam('username') && $this->_getParam('password')) {
             $user = $this->getUser();
+            if ($this->_helper->service('mobile.free_upgrade')->hasIssue($user, $this->_helper->service('mobile.issue')->getCurrentIssueId())) {
+                return;
+            }
+
             if ($this->_helper->service('user_subscription')->isActiveSubscriber($user)) {
                 return;
             }

@@ -82,6 +82,25 @@ class FreeUpgradeFacade
     }
 
     /**
+     * Test if user has upgrade for given issue
+     *
+     * @param Newscoop\Entity\User $user
+     * @param int $issue
+     * @return bool
+     */
+    public function hasIssue(User $user, $issue)
+    {
+        return (bool) $this->getRepository()->createQueryBuilder('f')
+            ->select('COUNT(f)')
+            ->andWhere('f.user = :user')
+            ->andWhere('f.issue = :issue')
+            ->getQuery()
+            ->setParameter('user', $user)
+            ->setParameter('issue', $issue)
+            ->getSingleScalarResult();
+    }
+
+    /**
      * Get repository
      *
      * @return Doctrine\ORM\EntityRepository
