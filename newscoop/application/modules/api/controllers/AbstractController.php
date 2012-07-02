@@ -13,6 +13,8 @@ abstract class AbstractController extends Zend_Controller_Action
 
     const DATE_FORMAT = 'Y-m-d H:i:s';
 
+    const SECRET_PARAM = '_secret';
+
     /**
      * Get user by username and password params
      *
@@ -86,6 +88,11 @@ abstract class AbstractController extends Zend_Controller_Action
      */
     protected function assertIsSubscriber()
     {
+        $options = $this->getInvokeArg('bootstrap')->getOption('offline');
+        if (isset($options['secret']) && $this->_getParam(self::SECRET_PARAM) === $options['secret']) {
+            return;
+        }
+
         if ($this->_getParam('receipt_data') && $this->_getParam('device_id')) {
             if ($this->_helper->service('mobile.purchase')->isValid($this->_getParam('receipt_data'))) {
                 return;

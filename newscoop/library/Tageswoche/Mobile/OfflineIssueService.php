@@ -30,6 +30,7 @@ class OfflineIssueService
      */
     private $config = array(
         'site_url' => 'http://localhost/newscoop/newscoop/',
+        'secret' => '',
     );
 
     /**
@@ -148,6 +149,7 @@ class OfflineIssueService
      */
     private function fetch($url)
     {
+        $url .= sprintf('%s_secret=%s', strpos($url, '?') !== false ? '&' : '?', $this->config['secret']);
         $client = $this->getClient();
         $response = $client->get($url)->send();
         return $response->isSuccessful() ? $response->getBody(TRUE) : null;
