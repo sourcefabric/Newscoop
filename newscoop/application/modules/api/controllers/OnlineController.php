@@ -34,13 +34,7 @@ class Api_OnlineController extends AbstractController
     public function init()
     {
         $this->service = $this->_helper->service('mobile.issue');
-    }
-
-    public function preDispatch()
-    {
-        if ($this->getRequest()->getActionName() === 'index' && $this->_getParam('id')) {
-            $this->_forward('toc');
-        }
+        $this->_helper->layout->disableLayout();
     }
 
     public function issuesAction()
@@ -64,7 +58,8 @@ class Api_OnlineController extends AbstractController
 
     public function articlesAction()
     {
-        $this->_helper->layout->disableLayout();
+        $this->assertIsSubscriber();
+
         $article = $this->_helper->service('article')->findOneByNumber($this->_getParam('id'));
         if (!$article) {
             $this->sendError('Article not found.', 404);

@@ -67,6 +67,18 @@ class PurchaseFacade
     }
 
     /**
+     * Test if receipt is valid
+     *
+     * @param string $receipt
+     * @return bool
+     */
+    public function isValid($receipt)
+    {
+        $status = $this->validate($receipt);
+        return $status['receipt_valid'];
+    }
+
+    /**
      * Get response for validate request
      *
      * @param string $url

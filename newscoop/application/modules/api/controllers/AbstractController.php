@@ -78,4 +78,27 @@ abstract class AbstractController extends Zend_Controller_Action
     {
         return sprintf('%sclient=%s&version=%s', $onlyParams ? '?' : '&', $this->_getParam('client', 'ipad'), $this->_getParam('version', '1.0'));
     }
+
+    /**
+     * Assert that user is subscriber and can consume premium content
+     *
+     * @return void
+     */
+    protected function assertIsSubscriber()
+    {
+        if ($this->_getParam('receipt_data') && $this->_getParam('device_id')) {
+            if ($this->_helper->service('mobile.purchase')->isValid($this->_getParam('receipt_data'))) {
+                return;
+            }
+        }
+
+        if ($this->_getParam('username') && $this->_getParam('password')) {
+            $user = $this->getUser();
+            if ($this->_helper->service('user_subscription')->isActiveSubscriber($user)) {
+                return;
+            }
+        }
+
+        $this->sendError('Unauthorized.', 401);
+    }
 }

@@ -27,15 +27,10 @@ class Api_OfflineController extends AbstractController
         $this->service = $this->_helper->service('mobile.issue.offline');
     }
 
-    /**
-     * @todo validate subscription
-     */
-    public function preDispatch()
-    {
-    }
-
     public function articlesAction()
     {
+        $this->assertIsSubscriber();
+
         if (!$this->_getParam('id') || !is_numeric($this->_getParam('id'))) {
             $this->sendError(self::NOT_FOUND, self::NOT_FOUND_CODE);
         }
@@ -48,6 +43,10 @@ class Api_OfflineController extends AbstractController
         $issue = $this->_helper->service('mobile.issue')->find($this->_getParam('id'));
         if (!$issue) {
             $this->sendError(self::NOT_FOUND, self::NOT_FOUND_CODE);
+        }
+
+        if ($issue->getNumber() == $this->_helper->service('mobile.issue')->getCurrentIssueId()) {
+            $this->assertIsSubscriber();
         }
 
         $this->sendZip($this->service->getIssueZipPath($issue));

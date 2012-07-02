@@ -15,6 +15,8 @@ use Doctrine\ORM\EntityManager,
  */
 class UserSubscriptionService
 {
+    const STATUS_ACTIVE = 1;
+
     /** @var Doctrine\ORM\EntityManager */
     private $em;
 
@@ -149,5 +151,17 @@ class UserSubscriptionService
     public function getActiveSubscription(User $user)
     {
         return null;
+    }
+
+    /**
+     * Test if user is active subscriber
+     *
+     * @param Newscoop\Entity\User $user
+     * @return bool
+     */
+    public function isActiveSubscriber(User $user)
+    {
+        $subscription = $this->fetchSubscriptions($user);
+        return !empty($subscription) ? (int) $subscription->statusCode === self::STATUS_ACTIVE : false;
     }
 }
