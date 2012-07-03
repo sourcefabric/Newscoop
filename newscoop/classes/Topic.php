@@ -496,12 +496,13 @@ class Topic extends DatabaseObject {
 	 */
 	public static function GetByFullName($p_fullName)
 	{
-	    $components = preg_split('/:/', trim($p_fullName));
-	    if (count($components) < 2) {
-	        return null;
-	    }
-	    $name = $components[0];
-	    $languageCode = $components[1];
+        $p_fullName = trim($p_fullName);
+        $last_colon_pos = strrpos($p_fullName, ':');
+        if (!$last_colon_pos) { // both none colon and a single colon as a string start are wrong
+            return null;
+        }
+        $name = substr($p_fullName, 0, $last_colon_pos);
+        $languageCode = substr($p_fullName, $last_colon_pos + 1);
 
 	    $languages = Language::GetLanguages(null, $languageCode, null, array(), array(), false);
 	    if (count($languages) < 1) {
