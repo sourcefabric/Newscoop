@@ -17,6 +17,8 @@ use Doctrine\ORM\EntityManager,
  */
 class UserTopicService
 {
+    const DUPLICATE_KEY_CODE = '23000';
+
     /** @var Doctrine\ORM\EntityManager */
     private $em;
 
@@ -46,7 +48,33 @@ class UserTopicService
             $this->em->persist(new UserTopic($user, $topic));
             $this->em->flush();
             $this->notify($user, $topic);
-        } catch (Exception $e) { // ignore if exists
+        } catch (\PDOException $e) {
+            if ($e->getCode() === self::DUPLICATE_KEY_CODE) { // ignore if exists
+                return;
+            }
+
+            throw $e;
+        }
+    }
+
+    /**
+     * Unfollow topic
+     *
+     * @param Newscoop\Entity\User $user
+     * @param Newscoop\Entity\Topic $topic
+     * @return void
+     */
+    public function unfollowTopic(User $user, Topic $topic)
+    {
+        $userTopic = $this->em->getRepository('Newscoop\Entity\UserTopic')
+            ->findOneBy(array(
+                'user' => $user,
+                'topic_id' => $topic->getTopicId(),
+            ));
+
+        if ($userTopic) {
+            $this->em->remove($userTopic);
+            $this->em->flush();
         }
     }
 

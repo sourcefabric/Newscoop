@@ -5,9 +5,11 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+require_once __DIR__ . '/AbstractController.php';
+
 /**
  */
-class Api_TopicsController extends Zend_Controller_Action
+class Api_TopicsController extends AbstractController
 {
     const LANGUAGE = 5;
 
@@ -78,31 +80,47 @@ class Api_TopicsController extends Zend_Controller_Action
     /**
      * Subscribe to a topic.
      *
-     * @return json
+     * @return void
      */
     public function subscribeAction()
     {
-        $this->getHelper('contextSwitch')->addActionContext('list', 'json')->initContext();
-        
-        $response = array();
-        
-        $parameters = $this->request->getParams();
-        
-        if (isset($parameters['username']) && isset($parameters['password']) && isset($parameters['topic_id'])) {
-            $user = $this->_helper->service('user')->findOneBy(array('username' => $parameters['username']));
-            if ($user->checkPassword($parameters['password'])) {
-                $topic = $this->_helper->service('user.topic')->findTopic($parameters['topic_id']);
-                $this->_helper->service('user.topic')->followTopic($user, $topic);
-                $response = 1;
-            }
-            else {
-                $response = 0;
-            }
+        $this->assertIsSecure();
+        $this->assertIsPost();
+
+        $this->_helper->service('user.topic')->followTopic($this->getUser(), $this->getTopic());
+        $this->_helper->json(array(
+            'status' => 200,
+        ));
+    }
+
+    /**
+     * Unsubscribe from a topic.
+     *
+     * @return void
+     */
+    public function unsubscribeAction()
+    {
+        $this->assertIsSecure();
+        $this->assertIsPost();
+
+        $this->_helper->service('user.topic')->unfollowTopic($this->getUser(), $this->getTopic());
+        $this->_helper->json(array(
+            'status' => 200,
+        ));
+    }
+
+    /**
+     * Get topic
+     *
+     * @return Newscoop\Entity\UserTopic
+     */
+    private function getTopic()
+    {
+        $topic = $this->_helper->service('user.topic')->findTopic($this->_getParam('topic_id'));
+        if (!$topic) {
+            $this->sendError('Topic not found.', 404);
         }
-        else {
-            $response = 0;
-        }
-        
-        $this->_helper->json($response);
+
+        return $topic;
     }
 }

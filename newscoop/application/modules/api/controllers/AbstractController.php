@@ -66,7 +66,19 @@ abstract class AbstractController extends Zend_Controller_Action
         }
 
         if (!$this->getRequest()->isSecure()) {
-            $this->sendError('Secure connection required');
+            $this->sendError('Secure connection required.');
+        }
+    }
+
+    /**
+     * Assert request is post
+     *
+     * @return void
+     */
+    protected function assertIsPost()
+    {
+        if (!$this->getRequest()->isPost()) {
+            $this->sendError('POST required.');
         }
     }
 
