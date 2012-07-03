@@ -12,13 +12,10 @@ require_once __DIR__ . '/AbstractController.php';
 class Api_BlogsController extends AbstractController
 {
     const PUBLICATION = 5;
-    const ISSUE = 3;
     const LANGUAGE = 5;
     
     /** @var Zend_Controller_Request_Http */
     private $request;
-    
-    private $url;
 
     /**
      * @var array
@@ -30,11 +27,8 @@ class Api_BlogsController extends AbstractController
      */
     public function init()
     {
-        global $Campsite;
-        
         $this->_helper->layout->disableLayout();
         $this->request = $this->getRequest();
-        $this->url = $Campsite['WEBSITE_URL'];
     }
 
     /**
@@ -57,8 +51,6 @@ class Api_BlogsController extends AbstractController
         $response = array();
         
         $sections = $this->_helper->service('section')->findBy(array('publication' => self::PUBLICATION));
-        //$sections = $this->_helper->service('section')->findBy(array('publication' => self::PUBLICATION, 'language' => self::LANGUAGE));
-        //$sections = $this->_helper->service('section')->findBy(array('publication' => self::PUBLICATION, 'issue' => self::ISSUE, 'language' => self::LANGUAGE));
         $publication = new Publication(self::PUBLICATION);
         $alias = new Alias($publication->getDefaultAliasId());
         
@@ -74,7 +66,11 @@ class Api_BlogsController extends AbstractController
 
                 $response[] = array(
                     'blog_id' => $section->getNumber(),
-                    'url' => $this->url.'/api/blogs/posts?blog_id='.$section->getNumber(),
+                    'url' => $this->view->serverUrl($this->view->url(array(
+                        'module' => 'api',
+                        'controller' => 'blogs',
+                        'action' => 'posts',
+                    ), 'default') . sprintf('?blog_id=%d&version=%s', $section->getNumber(), $this->_getParam('version', '1.0'))),
                     'title' => $articles[0]->getTitle(),
                     'description' => trim(strip_tags($blogInfo->getFieldValue('infolong'))),
                     'rank' => $rank,
@@ -116,13 +112,13 @@ class Api_BlogsController extends AbstractController
         if (isset($params['blog_id'])) {
             $sections = $this->_helper->service('section')->findBy(array('publication' => self::PUBLICATION, 'number' => $params['blog_id']));
             if (empty($sections)) {
-                $this->sendError('Blog not found');
+                $this->sendError('Blog not found', 404);
             }
 
             $section = $sections[0]->getNumber();
             $blogInfo = $this->getBlogInfo($section);
             if (!$blogInfo['active']) {
-                $this->sendError('Blog not found');
+                $this->sendError('Blog not found', 404);
             }
 
             $posts = $this->_helper->service('article')->findBy(
@@ -172,7 +168,11 @@ class Api_BlogsController extends AbstractController
 
             $response[] = array( // add url
                 'blogpost_id' => $post->getNumber(),
-                'url' => $this->url . '/api/blogs/posts?post_id=' . $post->getNumber(),
+                'url' => $this->view->serverUrl($this->view->url(array(
+                    'module' => 'api',
+                    'controller' => 'blogs',
+                    'action' => 'posts',
+                ), 'default') . sprintf('?post_id=%d&version=%s', $post->getNumber(), $this->_getParam('version', '1.0'))),
                 'short_name' => $shortName,
                 'author_name' => implode(',', $authors),
                 'teaser' => $teaser,
@@ -245,7 +245,7 @@ class Api_BlogsController extends AbstractController
     {
         $blogInfos = $this->_helper->service('article')->findBy(array('section' => $blogId, 'type' => 'bloginfo'));
         if (empty($blogInfos)) {
-            $this->sendError('Blog not found');
+            $this->sendError('Blog not found', 404);
         }
 
         $blogInfoData = new ArticleData('bloginfo', $blogInfos[0]->getNumber(), self::LANGUAGE);
