@@ -7,6 +7,8 @@
 
 namespace Newscoop\Image;
 
+use Newscoop\Entity\User;
+
 /**
  * Image Service
  */
@@ -354,5 +356,18 @@ class ImageService implements \Doctrine\Common\EventSubscriber
                 $this->orm->getConnection()->exec('ALTER TABLE ArticleImages ADD is_default INT(1) DEFAULT NULL');
             }
         }
+    }
+
+    /**
+     * Get user image
+     *
+     * @param Newscoop\Entity\User $user
+     * @param int $width
+     * @param int $height
+     * @return string
+     */
+    public function getUserImage(User $user, $width = 65, $height = 65)
+    {
+        return $user->getImage() !== null ? $this->getSrc('images/' . $user->getImage(), $width, $height, 'crop') : null;
     }
 }

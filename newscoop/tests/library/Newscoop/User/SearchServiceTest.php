@@ -42,8 +42,8 @@ class SearchServiceTest extends \TestCase
         $user->addAttribute('bio', 'abc');
 
         $this->imageService->expects($this->once())
-            ->method('getSrc')
-            ->with($this->equalTo('images/someimage.jpg'), $this->equalTo(65), $this->equalTo(65), $this->equalTo('crop'))
+            ->method('getUserImage')
+            ->with($this->equalTo($user))
             ->will($this->returnValue('imagesrc'));
 
         $this->assertEquals(array(

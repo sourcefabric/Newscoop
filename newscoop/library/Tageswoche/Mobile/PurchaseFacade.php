@@ -7,7 +7,8 @@
 
 namespace Tageswoche\Mobile;
 
-use Newscoop\Http\ClientFactory;
+use Newscoop\Http\ClientFactory,
+    Newscoop\Entity\User;
 
 /**
  */

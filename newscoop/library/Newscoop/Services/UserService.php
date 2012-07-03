@@ -31,6 +31,17 @@ class UserService
     /** @var Newscoop\Entity\Repository\UserRepository */
     private $repository;
 
+    /** @var array */
+    private $attributes = array(
+        'birth_date',
+        'facebook',
+        'google',
+        'twitter',
+        'website',
+        'bio',
+        'email_public',
+    );
+
     /**
      * @param array $config
      * @param Doctrine\ORM\EntityManager $em
@@ -460,5 +471,39 @@ class UserService
     public function getFacebookLoginCount()
     {
         return $this->repository->getExternalLoginCount();
+    }
+
+    /**
+     * Update user profile
+     *
+     * @param array $values
+     * @param Newscoop\Entity\User $user
+     * @return void
+     */
+    public function updateProfile(array $values, User $user)
+    {
+        if (isset($values['first_name'])) {
+            $user->setFirstName($values['first_name']);
+        }
+
+        if (isset($values['last_name'])) {
+            $user->setLastName($values['last_name']);
+        }
+
+        if (isset($values['customer_id'])) {
+            $user->setSubscriber($values['customer_id']);
+        }
+
+        if (isset($values['image'])) {
+            $user->setImage($values['image']);
+        }
+
+        foreach ($this->attributes as $attribute) {
+            if (isset($values[$attribute])) {
+                $user->addAttribute($attribute, $values[$attribute]);
+            }
+        }
+
+        $this->em->flush();
     }
 }
