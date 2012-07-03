@@ -57,7 +57,7 @@ class Api_OmnitickerController extends OmnitickerController
             'backside_url' => $this->formatUrl($id, false),
             'link_url' => $this->formatLinkUrl($doc),
             'website_url' => !empty($doc['link']) ? $doc['link'] : null,
-            'section_id' => !empty($doc['section_id']) ? $doc['section_id'] : null,
+            'section_id' => !empty($doc['section_id']) ? (int) $doc['section_id'] : null,
             'section_name' => !empty($doc['section_name']) ? $doc['section_name'] : null,
             'comment_url' => $id ? $this->view->serverUrl($this->view->url(array(
                 'module' => 'api',
