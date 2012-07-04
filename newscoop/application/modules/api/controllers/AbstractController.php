@@ -15,6 +15,32 @@ abstract class AbstractController extends Zend_Controller_Action
 
     const SECRET_PARAM = '_secret';
 
+    const CLIENT_DEFAULT = 'iphone';
+    const VERSION_DEFAULT = '1.0';
+
+    const FRONT_SIDE = 'front';
+    const BACK_SIDE = 'back';
+
+    const IMAGE_STANDARD_RENDITION = 'rubrikenseite';
+
+    const IMAGE_STANDARD_WIDTH = 105;
+    const IMAGE_STANDARD_HEIGHT = 70;
+    const IMAGE_RETINA_FACTOR = 2;
+
+    /** @var int */
+    private $rank = 1;
+
+    /** @var array */
+    private $fields = array(
+        'teaser' => array(
+            'newswire' => 'DataLead',
+            'blog' => 'lede',
+        ),
+    );
+
+    /** @var array */
+    private $clientSize = array();
+
     /**
      * Get user by username and password params
      *
@@ -123,5 +149,332 @@ abstract class AbstractController extends Zend_Controller_Action
         }
 
         $this->sendError('Unauthorized.', 401);
+    }
+
+    /**
+     * Get topic api url
+     *
+     * @param Newscoop\Entity\Topic $topic
+     * @return string
+     */
+    protected function getTopicUrl($topic)
+    {
+        return $this->view->serverUrl($this->view->url(array(
+            'module' => 'api',
+            'controller' => 'articles',
+            'action' => 'list',
+        ), 'default') . $this->getApiQueryString(array(
+            'topic_id' => $topic->getTopicId(),
+        )));
+    }
+
+    /**
+     * Get article api url
+     *
+     * @param Newscoop\Entity\Article $article
+     * @param string $side
+     * @return string
+     */
+    protected function getArticleUrl($article, $side = self::FRONT_SIDE)
+    {
+        return $this->view->serverUrl($this->view->url(array(
+            'module' => 'api',
+            'controller' => 'articles',
+            'action' => 'item',
+        ), 'default') . $this->getApiQueryString(array(
+            'article_id' => $article->getNumber(),
+            'side' => $side,
+        )));
+    }
+
+    /**
+     * Get article comments api url
+     *
+     * @param mixed $article
+     * @return string
+     */
+    protected function getCommentsUrl($article)
+    {
+        return $this->view->serverUrl($this->view->url(array(
+            'module' => 'api',
+            'controller' => 'comments',
+            'action' => 'list',
+        ), 'default') . $this->getApiQueryString(array(
+            'article_id' => $article->getNumber(),
+        )));
+    }
+
+    /**
+     * Get api query string
+     *
+     * @param array $params
+     * @return string
+     */
+    protected function getApiQueryString(array $params = array())
+    {
+        $params = array_filter(array_merge($params, array(
+            'client' => $this->_getParam('client'),
+            'version' => $this->_getParam('version'),
+        )));
+
+        return empty($params) ? '' : '?' . implode('&', array_map(function($key) use ($params) {
+            return sprintf('%s=%s', $key, $params[$key]);
+        }, array_keys($params)));
+    }
+
+    /**
+     * Get article dateline
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return string
+     */
+    protected function getDateline($article)
+    {
+        try {
+            return $article->getData('dateline');
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * Get article website url
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return string
+     */
+    protected function getWebsiteUrl($article)
+    {
+        return $this->_helper->service('article.link')->getLink($article);
+    }
+
+    /**
+     * Get topics
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return array
+     */
+    protected function getTopics(Article $article)
+    {
+        $topics = array();
+        foreach ($article->getTopicNames() as $id => $name) {
+            $topics[] = array(
+                'topic_id' => $id,
+                'topic_name' => $name,
+            );
+        }
+
+        return $topics;
+    }
+
+    /**
+     * Get article image
+     *
+     * @param Article $article
+     * @return string $thumbnail
+     */
+    protected function getImage($article, $rendition)
+    {
+        $renditions = Zend_Registry::get('container')->getService('image.rendition')->getRenditions();
+        if (!array_key_exists($rendition, $renditions)) {
+            return null;
+        }
+
+        $articleRenditions = Zend_Registry::get('container')
+            ->getService('image.rendition')->getArticleRenditions($article->getId());
+        $articleRendition = $articleRenditions[$renditions[$rendition]];
+
+        if ($articleRendition === null) {
+            return null;
+        }
+
+        $thumbnail = $articleRendition->getRendition()->
+            getThumbnail($articleRendition->getImage(), Zend_Registry::get('container')->getService('image'));
+
+        return $thumbnail;
+    }
+
+    /**
+     * Get article image url
+     *
+     * @param mixed $article
+     * @param string $rendition
+     * @param int $width
+     * @param int $height
+     * @return string
+     */
+    protected function getImageUrl($article, $rendition = self::IMAGE_STANDARD_RENDITION)
+    {
+        $image = $this->getImage($article, $rendition);
+        if (empty($image)) {
+            return null;
+        }
+
+        $imageUrl = $this->view->url(array(
+            'src' => $this->getHelper('service')->getService('image')->getSrc(basename($image->src), $this->getClientWidth(), $this->getClientHeight(), 'crop'),
+        ), 'image', false, false);
+
+        return $this->view->serverUrl($imageUrl);
+    }
+
+    /**
+     * Get comments count
+     *
+     * @param mixed Article
+     * @param bool $recommended
+     * @return int
+     */
+    protected function getCommentsCount($article, $recommended = false)
+    {
+        $constraints = array('thread' => $article->getNumber());
+
+        if ($recommended) {
+            $constraints['recommended'] = 1;
+        }
+
+        return Zend_Registry::get('container')->getService('comment')->countBy($constraints);
+    }
+
+    /**
+     * Format article for api
+     *
+     * @param mixed $article
+     * @return array
+     */
+    protected function formatArticle($article)
+    {
+        $bodyField = 'body';
+        $teaserField = 'teaser';
+        $datelineField = 'dateline';
+        switch($article->getType()) {
+            case 'newswire':
+                $bodyField = 'DataContent';
+                $teaserField = 'DataLead';
+                break;
+
+            case 'blog':
+                $teaserField = 'lede';
+                $datelineField = 'short_name';
+                break;
+        }
+
+        $data = array(
+            'article_id' => $article->getNumber(),
+            'url' => $this->getArticleUrl($article),
+            'backside_url' => $this->getArticleUrl($article, 'back'),
+            'dateline' => $this->getDateline($article),
+            'short_name' => $this->getShortname($article),
+            'rank' => $this->rank++,
+            'website_url' => $this->getWebsiteUrl($article),
+            'image_url' => $this->getImageUrl($article),
+            'comment_count' => $this->getCommentsCount($article),
+            'recommended_comment_count' => $this->getCommentsCount($article, true),
+            'comment_url' => $this->getCommentsUrl($article),
+        );
+
+        if (!$this->isIphoneClient()) {
+            $data['teaser'] = $this->getTeaser($article);
+        }
+
+        return $data;
+    }
+
+    /**
+     * Get teaser
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return string
+     */
+    protected function getTeaser($article)
+    {
+        try {
+            $field = isset($this->fields['teaser'][$article->getType()])
+                ? $this->fields['teaser'][$article->getType()]
+                : 'teaser';
+            return preg_replace('/(<p>|<p [^>]*>|<\\/p>)/', '', $article->getData($field));
+        } catch (\Exception $e) {
+            return null;
+        }
+    }
+
+    /**
+     * Test if client is iphone
+     *
+     * @return bool
+     */
+    protected function isIphoneClient()
+    {
+        return strpos($this->_getParam('client', 'iphone'), 'iphone') !== false;
+    }
+
+    /**
+     * Get client width
+     *
+     * @return int
+     */
+    protected function getClientWidth()
+    {
+        if (empty($this->clientSize)) {
+            $this->initClientSize();
+        }
+
+        return $this->clientSize['width'];
+    }
+
+    /**
+     * Get client height
+     *
+     * @return int
+     */
+    protected function getClientHeight()
+    {
+        if (empty($this->clientSize)) {
+            $this->initClientSize();
+        }
+
+        return $this->clientSize['height'];
+    }
+
+    /**
+     * Init client size
+     *
+     * @return void
+     */
+    private function initClientSize()
+    {
+        $this->clientSize = array(
+            'width' => self::IMAGE_STANDARD_WIDTH,
+            'height' => self::IMAGE_STANDARD_HEIGHT,
+        );
+
+        if ($this->isRetinaClient()) {
+            $this->clientSize['width'] *= self::IMAGE_RETINA_FACTOR;
+            $this->clientSize['height'] *= self::IMAGE_RETINA_FACTOR;
+        }
+    }
+
+    /**
+     * Test if client is retina
+     *
+     * @return bool
+     */
+    private function isRetinaClient()
+    {
+        return strpos($this->_getParam('client', self::CLIENT_DEFAULT), 'retina') !== false;
+    }
+
+    /**
+     * Get article shortname
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return string
+     */
+    protected function getShortname($article)
+    {
+        try {
+            return $article->getData('short_name');
+        } catch (\Exception $e) {
+            return $article->getTitle();
+        }
     }
 }

@@ -9,7 +9,8 @@ namespace Newscoop\Services;
 
 use Doctrine\ORM\EntityManager,
     Newscoop\Entity\Article,
-    Newscoop\Entity\Language;
+    Newscoop\Entity\Language,
+    Newscoop\Entity\Topic;
 
 /**
  * Article service
@@ -70,6 +71,25 @@ class ArticleService
     public function findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
     {
         return $this->getRepository()->findBy($criteria, $orderBy, $limit, $offset);
+    }
+
+    /**
+     * Find by given topic
+     *
+     * @param Newscoop\Entity\Topic $topic
+     * @param int $limit
+     * @return array
+     */
+    public function findByTopic(Topic $topic, $limit)
+    {
+        return $this->getRepository()->createQueryBuilder('a')
+            ->innerJoin('a.topics', 't')
+            ->where('t.topic = :topic')
+            ->orderBy('a.published', 'DESC')
+            ->getQuery()
+            ->setParameter('topic', $topic->getTopicId())
+            ->setMaxResults($limit)
+            ->getResult();
     }
 
     /**

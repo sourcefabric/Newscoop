@@ -147,13 +147,13 @@ class Api_OnlineController extends AbstractController
                 'action' => 'articles',
                 'id' => $article->getNumber(),
             ), 'api')) . $this->getClientVersionParams(),
-            'dateline' => $article->getData('dateline'),
+            'dateline' => $this->getDateline($article),
             'short_name' => $article->getTitle(),
             'section_id' => $article->getSectionId(),
             'section_name' => $article->getSectionName(),
             'section_rank' => $this->rank,
             'rank' => $this->rank++,
-            'website_url' => $this->_helper->service('article.link')->getLink($article),
+            'website_url' => $this->getWebsiteUrl($article),
             'image_url' => $this->getCoverUrl($article),
             'topics' => $this->getTopics($article),
             'comment_count' => isset($this->commentStats[$article->getNumber()]) ? $this->commentStats[$article->getNumber()]['normal'] : null,
@@ -167,24 +167,5 @@ class Api_OnlineController extends AbstractController
             'last_modified' => $article->getUpdated()->format(self::DATE_FORMAT),
             'published' => $article->getPublished()->format(self::DATE_FORMAT),
         );
-    }
-
-    /**
-     * Get topics
-     *
-     * @param Newscoop\Entity\Article $article
-     * @return array
-     */
-    private function getTopics(Article $article)
-    {
-        $topics = array();
-        foreach ($article->getTopicNames() as $id => $name) {
-            $topics[] = array(
-                'topic_id' => $id,
-                'topic_name' => $name,
-            );
-        }
-
-        return $topics;
     }
 }

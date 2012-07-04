@@ -5,6 +5,8 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 require_once __DIR__ . '/AbstractController.php';
 
 /**
@@ -19,6 +21,9 @@ class Api_TopicsController extends AbstractController
     private $request;
     
     private $url;
+
+    /** @var int */
+    private $rank = 1;
 
     /**
      * Init controller.
@@ -107,6 +112,28 @@ class Api_TopicsController extends AbstractController
         $this->_helper->json(array(
             'status' => 200,
         ));
+    }
+
+    /**
+     * Get user topics
+     *
+     * @return void
+     */
+    public function mytopicsAction()
+    {
+        $user = $this->getUser();
+        $articles = new ArrayCollection();
+        foreach ($this->_helper->service('user.topic')->getTopics($user) as $topic) {
+            foreach ($this->_helper->service('article')->findByTopic($topic, 3) as $article) {
+                $articles->add(array_merge($this->formatArticle($article), array(
+                    'topic_id' => $topic->getTopicId(),
+                    'topic_name' => $topic->getName(),
+                    'topic_url' => $this->getTopicUrl($topic),
+                )));
+            }
+        }
+
+        $this->_helper->json($articles->toArray());
     }
 
     /**

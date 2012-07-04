@@ -8,12 +8,13 @@
 use Newscoop\Entity\Article;
 use Newscoop\Webcode\Manager;
 
+require_once __DIR__ . '/AbstractController.php';
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
 
 /**
  */
-class Api_ArticlesController extends Zend_Controller_Action
+class Api_ArticlesController extends AbstractController
 {
     const API_VERSION = 1;
 
@@ -23,11 +24,6 @@ class Api_ArticlesController extends Zend_Controller_Action
     const ITEM_URI_PATH = 'api/articles/item';
 
     const LIST_LIMIT = 15;
-
-    const IMAGE_STANDARD_RENDITION = 'rubrikenseite';
-    const IMAGE_STANDARD_WIDTH = 105;
-    const IMAGE_STANDARD_HEIGHT = 70;
-    const IMAGE_RETINA_FACTOR = 2;
 
     private $client;
 
@@ -105,52 +101,12 @@ class Api_ArticlesController extends Zend_Controller_Action
             $articles = \Article::GetList($criteria, null, 0, self::LIST_LIMIT, $count = 0, false, false);
         }
 
-        $rank = 1;
         foreach ($articles as $item) {
             $articleNumber = isset($playlist) ? $item['articleId'] : $item['number'];
             $article = $this->articleService->find($this->language, $articleNumber);
-            if (empty($article)) continue;
-
-            $image = $this->getImageUrl($article, self::IMAGE_STANDARD_RENDITION, $this->client['image_width'], $this->client['image_height']);
-
-            // gets article custom data
-            $articleData = new ArticleData($article->getType(), $article->getId(), self::LANGUAGE);
-
-            $bodyField = 'body';
-            $teaserField = 'teaser';
-            $datelineField = 'dateline';
-            switch($article->getType()) {
-                case 'newswire':
-                    $bodyField = 'DataContent';
-                    $teaserField = 'DataLead';
-                    break;
-                case 'blog':
-                    $teaserField = 'lede';
-                    $datelineField = 'short_name';
-                    break;
+            if (!empty($article)) {
+                $this->response[] = $this->formatArticle($article);
             }
-
-            $response = array(
-                'article_id' => $article->getId(),
-                'url' => $this->url . '/' . self::ITEM_URI_PATH . '?article_id=' . $article->getId() . '&client=' . $this->client['name'] . '&version=' . self::API_VERSION,
-                'backside_url' => $this->url . '/' . self::ITEM_URI_PATH . '?article_id=' . $article->getId() . '&side=back&client=' . $this->client['name'] . '&version=' . self::API_VERSION,
-                'dateline' => $articleData->getFieldValue($datelineField),
-                'short_name' => $articleData->getFieldValue('short_name'),
-                'teaser' => preg_replace('/(<p>|<p [^>]*>|<\\/p>)/', '', $articleData->getFieldValue($teaserField)),
-                'image_url' => $image,
-                'website_url' => $this->_helper->service('article.link')->getLink($article),
-                'topics' => $this->getTopics($article),
-                'comment_count' => $this->getCommentsCount($article),
-                'recommended_comment_count' => $this->getCommentsCount($article, true),
-                'comment_url' => $this->url . '/api/comments/list?article_id=' . $article->getId() . '&client=' . $this->client['name'] . '&version=' . self::API_VERSION,
-                'rank' => $rank++,
-            );
-
-            if ($this->client['type'] == 'iphone') {
-                unset($response['teaser']);
-            }
-
-            $this->response[] = $response;
         }
 
         $this->_helper->json($this->response);
@@ -233,8 +189,6 @@ class Api_ArticlesController extends Zend_Controller_Action
 
     private function getFrontside(Article $article, \ArticleData $adata)
     {
-        $image = $this->getImageUrl($article, self::IMAGE_STANDARD_RENDITION, $this->client['image_width'], $this->client['image_height']);
-
         $comments = Zend_Registry::get('container')->getService('comment')->countBy(array(
             'language' => $this->language->getId(),
             'thread' => $article->getId(),
@@ -255,77 +209,12 @@ class Api_ArticlesController extends Zend_Controller_Action
             'last_modified' => $article->getDate(),
             'teaser' => $adata->getFieldValue($teaserField),
             'body' => $adata->getFieldValue($bodyField),
-            'image_url' => $image,
+            'image_url' => $this->getImageUrl($article),
+
             'comment_count' => $comments,
         );
 
         return $data;
-    }
-
-    private function getImageUrl(Article $article, $rendition, $width, $height)
-    {
-        $image = $this->getImage($article, $rendition);
-        if (empty($image)) {
-            return null;
-        }
-
-        $imageUrl = $this->view->url(array(
-            'src' => $this->getHelper('service')->getService('image')->getSrc(basename($image->src), $width, $height, 'crop'),
-            ),
-            'image', false, false);
-
-        return $this->url . $imageUrl;
-    }
-
-    /**
-     * Return image url
-     *
-     * @param Article $article
-     * @return string $thumbnail
-     */
-    private function getImage(Article $article, $rendition)
-    {
-        $renditions = Zend_Registry::get('container')->getService('image.rendition')->getRenditions();
-        if (!array_key_exists($rendition, $renditions)) {
-            return null;
-        }
-
-        $articleRenditions = Zend_Registry::get('container')
-            ->getService('image.rendition')->getArticleRenditions($article->getId());
-        $articleRendition = $articleRenditions[$renditions[$rendition]];
-
-        if ($articleRendition === null) {
-            return null;
-        }
-
-        $thumbnail = $articleRendition->getRendition()->
-            getThumbnail($articleRendition->getImage(), Zend_Registry::get('container')->getService('image'));
-
-        return $thumbnail;
-    }
-
-    private function getTopics(Article $article)
-    {
-        $topics = array();
-        $topicList = ArticleTopic::GetArticleTopics($article->getNumber());
-        foreach ($topicList as $topic) {
-            $topics[] = array(
-                'topic_id' => (int) $topic->getTopicId(),
-                'topic_name' => $topic->getName(self::LANGUAGE),
-            );
-        }
-
-        return empty($topics) ? null : $topics;
-    }
-
-    private function getCommentsCount(Article $article, $recommended = false)
-    {
-        $constraints = array('language' => $this->language->getId(), 'thread' => $article->getId());
-        if ($recommended == true) {
-            $constraints['recommended'] = 1;
-        }
-
-        return Zend_Registry::get('container')->getService('comment')->countBy($constraints);
     }
 
     private function initClient($client)
@@ -340,18 +229,6 @@ class Api_ArticlesController extends Zend_Controller_Action
         $this->client = array(
             'name' => $client,
             'type' => $type,
-            'image_width' => self::IMAGE_STANDARD_WIDTH,
-            'image_height' => self::IMAGE_STANDARD_HEIGHT,
         );
-
-        if ($this->isClientRetina()) {
-            $this->client['image_width'] = $this->client['image_width'] * self::IMAGE_RETINA_FACTOR;
-            $this->client['image_height'] = $this->client['image_height'] * self::IMAGE_RETINA_FACTOR;
-        }
-    }
-
-    private function isClientRetina()
-    {
-        return $this->client['name'] == 'ipad_retina' || $this->client['name'] == 'iphone_retina';
     }
 }

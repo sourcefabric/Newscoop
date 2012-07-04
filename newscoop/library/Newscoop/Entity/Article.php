@@ -125,10 +125,10 @@ class Article implements \Newscoop\Search\DocumentInterface
     private $authors;
 
     /**
-     * @ManyToMany(targetEntity="Newscoop\Entity\TopicTree")
+     * @ManyToMany(targetEntity="Newscoop\Entity\Topic")
      * @JoinTable(name="ArticleTopics",
      *      joinColumns={@JoinColumn(name="NrArticle", referencedColumnName="Number")},
-     *      inverseJoinColumns={@JoinColumn(name="TopicId", referencedColumnName="id")}
+     *      inverseJoinColumns={@JoinColumn(name="TopicId", referencedColumnName="fk_topic_id")}
      *  )
      * @var Doctrine\Common\Collections\Collection
      */
