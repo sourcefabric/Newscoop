@@ -145,7 +145,7 @@ class Api_ProfileController extends AbstractController
      *
      * @return string
      */
-    private function getImage()
+    protected function getImage()
     {
         if (empty($_POST[self::IMAGE_FIELD])) {
             return null;
