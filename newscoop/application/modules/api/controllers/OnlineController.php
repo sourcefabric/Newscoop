@@ -31,6 +31,9 @@ class Api_OnlineController extends AbstractController
      */
     private $commentStats = array();
 
+    /** @var array */
+    private $sections = array();
+
     public function init()
     {
         $this->service = $this->_helper->service('mobile.issue');
@@ -146,13 +149,48 @@ class Api_OnlineController extends AbstractController
                 'action' => 'articles',
                 'id' => $article->getNumber(),
             ), 'api')) . $this->getClientVersionParams(),
-            'section_id' => $article->getSectionId(),
-            'section_name' => $article->getSectionName(),
+            'section_id' => $this->getSectionId($article),
+            'section_name' => $this->getSectionName($article),
             'section_rank' => $this->rank,
             'image_url' => $this->getCoverUrl($article),
             'article_quality' => 'prominent',
             'last_modified' => $article->getUpdated()->format(self::DATE_FORMAT),
             'published' => $article->getPublished()->format(self::DATE_FORMAT),
         ));
+    }
+
+    /**
+     * Get section id
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return int
+     */
+    protected function getSectionId($article)
+    {
+        $section = $this->getSectionName($article);
+        if ($section === null) {
+            return null;
+        }
+
+        if (!isset($this->sections[$section])) {
+            $this->sections[$section] = count($this->sections) + 1;
+        }
+
+        return $this->sections[$section];
+    }
+
+    /**
+     * Get section name
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return string
+     */
+    protected function getSectionName($article)
+    {
+        try {
+            return $article->getData('printsection');
+        } catch (\Exception $e) {
+            return null;
+        }
     }
 }
