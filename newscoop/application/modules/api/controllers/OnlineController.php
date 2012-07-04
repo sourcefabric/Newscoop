@@ -138,34 +138,21 @@ class Api_OnlineController extends AbstractController
      * @param Newscoop\Entity\Article $article
      * @return array
      */
-    private function formatArticle(Article $article)
+    protected function formatArticle(Article $article)
     {
-        return array(
-            'article_id' => $article->getNumber(),
+        return array_merge(parent::formatArticle($article), array(
             'url' => $this->view->serverUrl($this->view->url(array(
                 'controller' => 'online',
                 'action' => 'articles',
                 'id' => $article->getNumber(),
             ), 'api')) . $this->getClientVersionParams(),
-            'dateline' => $this->getDateline($article),
-            'short_name' => $article->getTitle(),
             'section_id' => $article->getSectionId(),
             'section_name' => $article->getSectionName(),
             'section_rank' => $this->rank,
-            'rank' => $this->rank++,
-            'website_url' => $this->getWebsiteUrl($article),
             'image_url' => $this->getCoverUrl($article),
-            'topics' => $this->getTopics($article),
-            'comment_count' => isset($this->commentStats[$article->getNumber()]) ? $this->commentStats[$article->getNumber()]['normal'] : null,
-            'recommended_comment_count' => isset($this->commentStats[$article->getNumber()]) ? $this->commentStats[$article->getNumber()]['recommended'] : null,
-            'comment_url' => $this->view->serverUrl($this->view->url(array(
-                'module' => 'api',
-                'controller' => 'comments',
-                'action' => 'list',
-            ), 'default') . sprintf('?article_id=%d&version=%s', $article->getNumber(), $this->_getParam('version', '1.0'))),
             'article_quality' => 'prominent',
             'last_modified' => $article->getUpdated()->format(self::DATE_FORMAT),
             'published' => $article->getPublished()->format(self::DATE_FORMAT),
-        );
+        ));
     }
 }
