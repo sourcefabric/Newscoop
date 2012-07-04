@@ -5,6 +5,8 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+use Newscoop\Entity\Article;
+
 require_once __DIR__ . '/AbstractController.php';
 
 /**
@@ -40,29 +42,25 @@ class Api_BlogsController extends AbstractController
     }
 
     /**
-     * Return list of articles.
+     * Returns list of articles.
      *
      * @return json
      */
     public function listAction()
     {
         $this->getHelper('contextSwitch')->addActionContext('list', 'json')->initContext();
-        
+
         $response = array();
-        
         $sections = $this->_helper->service('section')->findBy(array('publication' => self::PUBLICATION));
-        $publication = new Publication(self::PUBLICATION);
-        $alias = new Alias($publication->getDefaultAliasId());
-        
+
         $rank = 1;
         foreach ($sections as $section) {
-            $articles = $this->_helper->service('article')->findBy(array('section' => $section->getNumber(), 'type' => 'bloginfo'));
-            if ($articles[0]) {
-                $blogInfo = new ArticleData('bloginfo', $articles[0]->getNumber(), self::LANGUAGE);
+            $blogs = $this->_helper->service('article')->findBy(array('section' => $section->getNumber(), 'type' => 'bloginfo'));
+            if ($blogs[0]) {
+                $blogData = new ArticleData('bloginfo', $blogs[0]->getNumber(), self::LANGUAGE);
                 $posts = $this->_helper->service('article')->findBy(array('section' => $section->getNumber(), 'type' => 'blog'), array('published' => 'desc'));
-                $lastModified = '0000-00-00 00:00:00';
-                $articleImages = ArticleImage::GetImagesByArticleNumber($articles[0]->getNumber());
-                $imageUrl = $articleImages[0]->getImage()->getImageUrl();
+                $blogImages = ArticleImage::GetImagesByArticleNumber($blogs[0]->getNumber());
+                $imageUrl = isset($blogImages[0]) ? $blogImages[0]->getImage()->getImageUrl() : null;
 
                 $response[] = array(
                     'blog_id' => $section->getNumber(),
@@ -70,15 +68,13 @@ class Api_BlogsController extends AbstractController
                         'module' => 'api',
                         'controller' => 'blogs',
                         'action' => 'posts',
-                    ), 'default') . sprintf('?blog_id=%d&version=%s', $section->getNumber(), $this->_getParam('version', '1.0'))),
-                    'title' => $articles[0]->getTitle(),
-                    'description' => trim(strip_tags($blogInfo->getFieldValue('infolong'))),
-                    'rank' => $rank,
+                    ), 'default') . sprintf('?blog_id=%d', $section->getNumber()) . $this->getClientVersionParams(false)),
+                    'title' => $blogs[0]->getTitle(),
+                    'description' => trim(strip_tags($blogData->getFieldValue('infolong'))),
+                    'rank' => $rank++,
                     'image_url' => $imageUrl,
-                    'published' => $articles[0]->getPublishDate(),
+                    'published' => $blogs[0]->getPublishDate(),
                 );
-                
-                $rank++;
             }
         }
 
@@ -86,7 +82,7 @@ class Api_BlogsController extends AbstractController
     }
     
     /**
-     * Routes to PostsList or PostsItem
+     * Routes to PostsList or PostsItem.
      */
     public function postsAction()
     {
@@ -99,7 +95,7 @@ class Api_BlogsController extends AbstractController
     }
     
     /**
-     * Return list of posts.
+     * Returns list of posts.
      *
      * @return json
      */
@@ -121,15 +117,9 @@ class Api_BlogsController extends AbstractController
                 $this->sendError('Blog not found', 404);
             }
 
-            $posts = $this->_helper->service('article')->findBy(
-                array('section' => $section, 'type' => 'blog'),
-                array('published' => 'desc'),
-                30);
+            $posts = $this->_helper->service('article')->findBy(array('section' => $section, 'type' => 'blog'), array('published' => 'desc'), 30);
         } else {
-            $posts = $this->_helper->service('article')->findBy(
-                array('type' => 'blog'),
-                array('published' => 'desc'),
-                30);
+            $posts = $this->_helper->service('article')->findBy(array('type' => 'blog'), array('published' => 'desc'), 30);
         }
 
         $this->commentStats = $this->_helper->service('comment')->getArticleStats(array_map(function($post) {
@@ -158,11 +148,6 @@ class Api_BlogsController extends AbstractController
                 $teaser = null;
             }
 
-            $authors = array();
-            foreach($post->getAuthors() as $author) {
-                $authors[] = $author->getFullName();
-            }
-
             $normalComments = isset($this->commentStats[$post->getNumber()]) ? $this->commentStats[$post->getNumber()]['normal'] : 0;
             $recommendedComments = isset($this->commentStats[$post->getNumber()]) ? $this->commentStats[$post->getNumber()]['recommended'] : 0;
 
@@ -172,9 +157,9 @@ class Api_BlogsController extends AbstractController
                     'module' => 'api',
                     'controller' => 'blogs',
                     'action' => 'posts',
-                ), 'default') . sprintf('?post_id=%d&version=%s', $post->getNumber(), $this->_getParam('version', '1.0'))),
+                ), 'default') . sprintf('?post_id=%d', $post->getNumber()) . $this->getClientVersionParams(false)),
                 'short_name' => $shortName,
-                'author_name' => implode(',', $authors),
+                'author_name' => implode(',', $this->getAuthors($post)),
                 'teaser' => $teaser,
                 'image_url' => $imageUrl,
                 'published' => $post->getPublishDate(),
@@ -184,7 +169,7 @@ class Api_BlogsController extends AbstractController
                     'module' => 'api',
                     'controller' => 'comments',
                     'action' => 'list',
-                ), 'default') . sprintf('?article_id=%d&version=%s', $post->getNumber(), $this->_getParam('version', '1.0'))),
+                ), 'default') . sprintf('?article_id=%d', $post->getNumber()) . $this->getClientVersionParams(false)),
                 'blog_id' => $blogInfo['id'],
                 'blog_name' => $blogInfo['name'],
                 'blog_image_url' => $blogInfo['image_url'],
@@ -196,7 +181,7 @@ class Api_BlogsController extends AbstractController
     }
     
     /**
-     * Return post.
+     * Returns post.
      *
      * @return json
      */
@@ -236,7 +221,7 @@ class Api_BlogsController extends AbstractController
     }
 
     /**
-     * Return the response data for the requested bloginfo
+     * Returns the response data for the requested bloginfo.
      *
      * @param int $blogId
      * @return array
@@ -258,5 +243,21 @@ class Api_BlogsController extends AbstractController
             'image_url' => $blogInfoImageUrl,
             'active' => $blogInfoData->getFieldValue('active') ? true : false,
         );
+    }
+
+    /**
+     * Returns blog author names.
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return array
+     */
+    private function getAuthors(Article $post)
+    {
+        $authors = array();
+        foreach($post->getAuthors() as $author) {
+            $authors[] = $author->getFullName();
+        }
+
+        return $authors;
     }
 }
