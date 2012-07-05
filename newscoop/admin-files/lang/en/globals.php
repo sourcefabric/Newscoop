@@ -50,8 +50,6 @@ regGS("No issues", "No issues");
 regGS("---Select issue---", "---Select issue---");
 regGS("No sections", "No sections");
 regGS("---Select section---", "---Select section---");
-regGS("No articles", "No articles");
-regGS("---Select article---", "---Select article---");
 regGS("Language", "Language");
 regGS("Country", "Country");
 regGS("Account name", "Account name");
