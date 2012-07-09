@@ -398,4 +398,43 @@ class AgendaService
         );
     }
 
+
+    public function splitDescs($p_desc)
+    {
+        $res_texts = array();
+        $res_links = array();
+
+        $desc_text = preg_replace('/<a[^<>]*>[^<>]*<\/a>/i', '', $p_desc);
+
+        $link_matches = array();
+        $got_links = preg_match_all('/<a[^<>]*href=[\'"]([^<>\'"]*)[\'"][^<>]*>([^<>]*)<\/a>/i', $p_desc, $link_matches, PREG_SET_ORDER);
+        if ($got_links) {
+            foreach ($link_matches as $one_link_info) {
+                $one_label = str_ireplace(array('http://'), array(''), $one_link_info[2]);
+                $res_links[] = array('link' => $one_link_info[1], 'label' => $one_label);
+            }
+        }
+
+
+        $multi_desc_text = strip_tags(str_replace(array('<'), array("\n\n<"), $desc_text));
+        foreach (explode("\n\n", $multi_desc_text) as $one_desc_part) {
+            $cur_part = array();
+
+            foreach (explode("\n", $one_desc_part) as $one_desc_line) {
+                $test_line = trim($one_desc_line);
+                if (empty($test_line)) {
+                    continue;
+                }
+                $cur_part[] = $one_desc_line;
+            }
+
+            if (!empty($cur_part)) {
+                $res_texts[] = implode("\n", $cur_part);
+            }
+
+        }
+
+        return array('texts' => $res_texts, 'links' => $res_links);
+    }
+
 }

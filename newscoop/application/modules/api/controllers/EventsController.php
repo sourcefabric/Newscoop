@@ -180,9 +180,27 @@ class Api_EventsController extends Zend_Controller_Action
                 }
             }
 
+            $one_descs_data = $this->m_service->splitDescs($one_description ."\n<br>\n". $one_data->getProperty('Fother'));
+
+            $one_synopsis = null;
+            $one_descriptions_all = null;
+            if (!empty($one_descs_data['texts'])) {
+                $one_synopsis = $one_descs_data['texts'][0];
+                $one_descriptions_all = $one_descs_data['texts'];
+            }
+            $one_links = null;
+            if (!empty($one_descs_data['links'])) {
+                $one_links = array();
+                foreach ($one_descs_data['links'] as $one_link_info) {
+                    $one_links[] = $one_link_info['link'];
+                }
+            }
+
             $event_list_data[] = array(
                 'title' => $one_data->getProperty('Fheadline'),
-                'description' => $one_description,
+                'description' => $one_synopsis,
+                'description_all' => $one_descriptions_all,
+                'links' => $one_links,
                 'organizer' => $one_data->getProperty('Forganizer'),
                 'street' => $one_data->getProperty('Fstreet'),
                 'town' => $one_data->getProperty('Ftown'),

@@ -332,10 +332,42 @@ class Api_CinemaController extends Zend_Controller_Action
                     }
                 }
 
+                $link_part_str = '';
+                $link_parts = array();
+                $cur_link = trim('' . $one_data->getProperty('Fmovie_link'));
+                if ($cur_link) {
+                    $link_parts[] = $cur_link;
+                }
+                $cur_link = trim('' . $one_data->getProperty('Fmovie_distributor_link'));
+                if ($cur_link) {
+                    $link_parts[] = $cur_link;
+                }
+                foreach ($link_parts as $one_cur_link) {
+                    $link_part_str .= "\n<br>\n" . '<a href="' . $one_cur_link . '">' . $one_cur_link . '</a>';
+                }
+
+                $one_descs_data = $this->m_service->splitDescs($one_data->getProperty('Fdescription') ."\n<br>\n". $one_data->getProperty('Fother') . $link_part_str);
+
+                $one_synopsis = null;
+                $one_descriptions_all = null;
+                if (!empty($one_descs_data['texts'])) {
+                    $one_synopsis = $one_descs_data['texts'][0];
+                    $one_descriptions_all = $one_descs_data['texts'];
+                }
+                $one_links = null;
+                if (!empty($one_descs_data['links'])) {
+                    $one_links = array();
+                    foreach ($one_descs_data['links'] as $one_link_info) {
+                        $one_links[] = $one_link_info['link'];
+                    }
+                }
+
                 $one_movie_data = array(
                     'suisa' => $one_suisa,
                     'title' => $one_data->getProperty('Fheadline'),
-                    'synopsis' => $one_data->getProperty('Fdescription'),
+                    'synopsis' => $one_synopsis,
+                    'synopsis_all' => $one_descriptions_all,
+                    'links' => $one_links,
                     //'organizer' => $one_data->getProperty('Forganizer'),
                     'genres' => $one_movie_types,
                     'minimal_age' => $one_min_age,
@@ -495,8 +527,6 @@ class Api_CinemaController extends Zend_Controller_Action
         print Zend_Json::encode($events);
 */
     }
-
-
 
 /*
     private function initClient($client)
