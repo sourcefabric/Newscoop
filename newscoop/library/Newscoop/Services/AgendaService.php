@@ -425,7 +425,14 @@ class AgendaService
                 if (empty($test_line)) {
                     continue;
                 }
-                $cur_part[] = $one_desc_line;
+                $cur_one_line = '';
+                try {
+                    $cur_one_line = mb_convert_encoding($one_desc_line, 'UTF-8', 'HTML-ENTITIES');
+                }
+                catch (\Exception $exc) {
+                    continue;
+                }
+                $cur_part[] = $cur_one_line;
             }
 
             if (!empty($cur_part)) {

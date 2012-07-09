@@ -362,9 +362,17 @@ class Api_CinemaController extends Zend_Controller_Action
                     }
                 }
 
+                $one_title = '';
+                try {
+                    $one_title = mb_convert_encoding($one_data->getProperty('Fheadline'), 'UTF-8', 'HTML-ENTITIES');
+                }
+                catch (\Exception $exc) {
+                    $one_title = '';
+                }
+
                 $one_movie_data = array(
                     'suisa' => $one_suisa,
-                    'title' => $one_data->getProperty('Fheadline'),
+                    'title' => $one_title,
                     'synopsis' => $one_synopsis,
                     'synopsis_all' => $one_descriptions_all,
                     'links' => $one_links,
