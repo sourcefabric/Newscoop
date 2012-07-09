@@ -209,6 +209,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('search.index'));
 
+        $mailchimpOptions = $this->getOption('mailchimp');
+        $container->register('mailchimp.api', 'MCAPI')
+            ->addArgument($mailchimpOptions['api_key']);
+
+        $container->register('mailchimp', 'Newscoop\MailChimp\MailChimpFacade')
+            ->addArgument(new sfServiceReference('mailchimp.api'));
+
         Zend_Registry::set('container', $container);
         return $container;
     }

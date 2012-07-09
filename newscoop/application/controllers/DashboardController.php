@@ -41,7 +41,6 @@ class DashboardController extends Zend_Controller_Action
     {
         $form = $this->_helper->form('profile');
         $form->setMethod('POST');
-
         $form->setDefaults((array) $this->user->getView());
 
         $request = $this->getRequest();
@@ -72,6 +71,16 @@ class DashboardController extends Zend_Controller_Action
         $this->view->form = $form;
     }
 
+    public function newsletterAction()
+    {
+        $this->mailchimpGroups = $this->_helper->service('mailchimp')->getListGroups($this->getMailChimpListId());
+        $this->userGroups = $this->_helper->service('mailchimp')->getUserGroups($this->user, $this->getMailChimpListId());
+        $form->setMailChimpGroups($this->mailchimpGroups, $this->userGroups);
+
+        $request = $this->getRequest();
+        $this->saveMailchimp($values);
+    }
+
     public function updateTopicsAction()
     {
         try {
@@ -97,5 +106,45 @@ class DashboardController extends Zend_Controller_Action
 
         $this->_helper->flashMessenger("Topic added to followed");
         $this->_helper->redirector->gotoUrl($_SERVER['HTTP_REFERER']);
+    }
+
+    public function addTopicByNameAction()
+    {
+        if (!$this->_getParam('topic')) {
+            $this->_helper->json(array());
+            return;
+        }
+
+        $topic = $this->_helper->service('em')->getRepository('Newscoop\Entity\Topic')->findOneBy(array(
+            'name' => $this->_getParam('topic'),
+        ));
+
+        if ($topic !== null) {
+            $this->_helper->service('user.topic')->followTopic($this->user, $topic);
+        }
+
+        $this->_helper->json(array());
+    }
+
+    /**
+     * Get mailchimp list id
+     *
+     * @return string
+     */
+    private function getMailChimpListId()
+    {
+        $mailchimpOptions = $this->getInvokeArg('bootstrap')->getOption('mailchimp');
+        return $mailchimpOptions['list_id'];
+    }
+
+    /**
+     * Save mailchimp info
+     *
+     * @param array $values
+     * @return void
+     */
+    private function saveMailchimp(array $values)
+    {
+        $this->_helper->service('mailchimp')->subscribe($this->user, $this->getMailChimpListId(), $values['mailchimp']);
     }
 }
