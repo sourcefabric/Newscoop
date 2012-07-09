@@ -632,7 +632,7 @@ class Article implements \Newscoop\Search\DocumentInterface
     {
         $names = array();
         foreach ($this->topics as $topic) {
-            $names[$topic->getId()] = $topic->getName($this->getLanguage());
+            $names[$topic->getTopicId()] = $topic->getName($this->getLanguage());
         }
 
         return array_filter($names);
