@@ -26,10 +26,10 @@ $event_data_cancel = array(
 $event_data_limits = array(
     'events_1' => array(
         'categories' => array(
-            'party' => array('regions' => newsimport_getBaselRegions()),
-            'music' => array('regions' => newsimport_getBaselRegions()),
-            'circus' => array('regions' => newsimport_getBaselRegions()),
-            'other' => array('regions' => newsimport_getBaselRegions()),
+            //'party' => array('regions' => newsimport_getBaselRegions()),
+            //'music' => array('regions' => newsimport_getBaselRegions()),
+            //'circus' => array('regions' => newsimport_getBaselRegions()),
+            //'other' => array('regions' => newsimport_getBaselRegions()),
         ),
         'dates' => array(
             'past' => 31, // removing 31 days old
