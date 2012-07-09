@@ -207,8 +207,8 @@ class Api_EventsController extends Zend_Controller_Action
             $event_list_data[] = array(
                 'title' => $one_title,
                 'description' => $one_synopsis,
-                'description_all' => $one_descriptions_all,
-                'links' => $one_links,
+                //'description_all' => $one_descriptions_all,
+                //'links' => $one_links,
                 'organizer' => $one_data->getProperty('Forganizer'),
                 'street' => $one_data->getProperty('Fstreet'),
                 'town' => $one_data->getProperty('Ftown'),
