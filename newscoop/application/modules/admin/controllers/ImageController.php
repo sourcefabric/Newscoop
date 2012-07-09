@@ -179,7 +179,7 @@ class Admin_ImageController extends Zend_Controller_Action
             $imageExtension = strtolower($imagePathParts[count($imagePathParts) - 1]);
             
             if (in_array($imageExtension, $allowedExtensions)) {
-                $exif = exif_read_data($image->getPath());
+                $exif = @exif_read_data($image->getPath());
                 if (isset($exif['DateTime'])) {
                     $exifDate = date('Y-m-d', strtotime($exif['DateTime']));
                 }

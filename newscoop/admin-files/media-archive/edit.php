@@ -39,7 +39,7 @@ $imagePathParts = explode('.', $imageObj->getImageFileName());
 $imageExtension = strtolower($imagePathParts[count($imagePathParts) - 1]);
 
 if (in_array($imageExtension, $allowedExtensions)) {
-    $exif = exif_read_data($imageObj->getImageStorageLocation());
+    $exif = @exif_read_data($imageObj->getImageStorageLocation());
     if (isset($exif['DateTime'])) {
         $exifDate = date('Y-m-d', strtotime($exif['DateTime']));
     }
