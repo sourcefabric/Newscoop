@@ -61,6 +61,18 @@ class TopicTree
     }
 
     /**
+     * Get topic id
+     *
+     * proxy to getId method
+     *
+     * @return int
+     */
+    public function getTopicId()
+    {
+        return $this->getId();
+    }
+
+    /**
      * Get left
      *
      * @return int
