@@ -127,8 +127,9 @@ class Admin_CommentController extends Zend_Controller_Action
                                                 'created' =>
                                                 array('date' => $comment->getTimeCreated()->format('Y.m.d'),
                                                       'time' => $comment->getTimeCreated()->format('H:i:s')),
-                                                'subject' => $comment->getSubject(),
-                                                'message' => $comment->getMessage(), 'likes' => '', 'dislikes' => '',
+                                                'subject' => htmlspecialchars($comment->getSubject()),
+                                                'message' => htmlspecialchars($comment->getMessage()),
+                                                'likes' => '', 'dislikes' => '',
                                                 'status' => $comment->getStatus(),
                                                 'recommended' => $comment->getRecommended(),
                                                 'good_comment' => $goodComment,
@@ -387,8 +388,8 @@ class Admin_CommentController extends Zend_Controller_Action
                 'ip' => $commenter->getIp(),
                 'id' => $comment->getId(),
                 'status' => $comment->getStatus(),
-                'subject' => $comment->getSubject(),
-                'message' => $comment->getMessage(),
+                'subject' => htmlspecialchars($comment->getSubject()),
+                'message' => htmlspecialchars($comment->getMessage()),
                 'time_created' => $comment->getTimeCreated()->format('Y-m-d H:i:s'),
                 'recommended_toggle' => (int) !$comment->getRecommended(),
                 'good_comment' => $goodComment
