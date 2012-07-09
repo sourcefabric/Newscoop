@@ -39,10 +39,14 @@ class DashboardController extends Zend_Controller_Action
 
     public function indexAction()
     {
+        $this->mailchimpGroups = $this->_helper->service('mailchimp')->getListGroups($this->getMailChimpListId());
+        $this->userGroups = $this->_helper->service('mailchimp')->getUserGroups($this->user, $this->getMailChimpListId());
+
         $form = new Application_Form_Profile();
         $form->setMethod('POST');
 
         $form->setDefaultsFromEntity($this->user);
+        $form->setMailChimpGroups($this->mailchimpGroups, $this->userGroups);
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
@@ -54,6 +58,7 @@ class DashboardController extends Zend_Controller_Action
                     $values['image'] = $this->_helper->service('image')->save($imageInfo);
                 }
                 $this->service->save($values, $this->user);
+                $this->saveMailchimp($values);
                 $this->_helper->redirector('index');
             } catch (\InvalidArgumentException $e) {
                 switch ($e->getMessage()) {
@@ -148,5 +153,27 @@ class DashboardController extends Zend_Controller_Action
         }
 
         $this->_helper->json(array());
+    }
+
+    /**
+     * Get mailchimp list id
+     *
+     * @return string
+     */
+    private function getMailChimpListId()
+    {
+        $mailchimpOptions = $this->getInvokeArg('bootstrap')->getOption('mailchimp');
+        return $mailchimpOptions['list_id'];
+    }
+
+    /**
+     * Save mailchimp info
+     *
+     * @param array $values
+     * @return void
+     */
+    private function saveMailchimp(array $values)
+    {
+        $this->_helper->service('mailchimp')->subscribe($this->user, $this->getMailChimpListId(), $values['mailchimp']);
     }
 }

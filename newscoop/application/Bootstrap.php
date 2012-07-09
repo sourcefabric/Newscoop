@@ -39,6 +39,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             }
         }, 'Smarty');
 
+        $autoloader->pushAutoloader(function($class) {
+            require_once APPLICATION_PATH . '/../library/MailChimp/MCAPI.class.php';
+        }, 'MCAPI');
+
         $GLOBALS['g_campsiteDir'] = realpath(APPLICATION_PATH . '/../');
 
         return $autoloader;
@@ -275,6 +279,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('http.client_factory'))
             ->addArgument(new sfServiceReference('view'))
             ->addArgument('%offline%');
+
+        $mailchimpOptions = $this->getOption('mailchimp');
+        $container->register('mailchimp.api', 'MCAPI')
+            ->addArgument($mailchimpOptions['api_key']);
+
+        $container->register('mailchimp', 'Newscoop\MailChimp\MailChimpFacade')
+            ->addArgument(new sfServiceReference('mailchimp.api'));
 
         Zend_Registry::set('container', $container);
         return $container;
