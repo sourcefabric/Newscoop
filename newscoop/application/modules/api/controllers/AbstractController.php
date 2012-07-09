@@ -254,7 +254,7 @@ abstract class AbstractController extends Zend_Controller_Action
      * @param Newscoop\Entity\Article $article
      * @return array
      */
-    protected function getTopics(Article $article)
+    protected function getTopics($article)
     {
         $topics = array();
         foreach ($article->getTopicNames() as $id => $name) {
@@ -370,6 +370,7 @@ abstract class AbstractController extends Zend_Controller_Action
             'comment_count' => $this->getCommentsCount($article),
             'recommended_comment_count' => $this->getCommentsCount($article, true),
             'comment_url' => $this->getCommentsUrl($article),
+            'topics' => $this->getTopics($article),
         );
 
         if (!$this->isIphoneClient()) {
