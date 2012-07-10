@@ -51,6 +51,10 @@ class Api_PurchaseController extends AbstractController
 
         if ($this->_getParam('username')) {
             $user = $this->getUser();
+            if (!$this->_helper->service('user_subscription')->isActiveSubscriber($user)) {
+                $this->sendError('Given user is not a susbscriber');
+            }
+
             if ($data['receipt_valid']) {
                 $user->addAttribute(self::DIGITAL_UPGRADE, time());
                 $this->_helper->service('em')->flush($user);
