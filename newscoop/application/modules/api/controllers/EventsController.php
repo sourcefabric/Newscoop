@@ -198,7 +198,8 @@ class Api_EventsController extends Zend_Controller_Action
 
             $one_title = '';
             try {
-                $one_title = mb_convert_encoding($one_data->getProperty('Fheadline'), 'UTF-8', 'HTML-ENTITIES');
+                //$one_title = mb_convert_encoding($one_data->getProperty('Fheadline'), 'UTF-8', 'HTML-ENTITIES');
+                $one_title = $one_data->getProperty('Fheadline');
             }
             catch (\Exception $exc) {
                 $one_title = '';
