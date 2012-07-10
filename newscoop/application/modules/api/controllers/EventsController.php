@@ -209,7 +209,7 @@ class Api_EventsController extends Zend_Controller_Action
                 'description' => $one_synopsis,
                 //'description_all' => $one_descriptions_all,
                 //'links' => $one_links,
-                'organizer' => $one_data->getProperty('Forganizer'),
+                'organizer' => $this->m_service->entities2Utf8($one_data->getProperty('Forganizer')),
                 'street' => $one_data->getProperty('Fstreet'),
                 'town' => $one_data->getProperty('Ftown'),
                 'country' => ('ch' == strtolower($one_data->getProperty('Fcountry'))) ? 'Schweiz' : $one_data->getProperty('Fcountry'),

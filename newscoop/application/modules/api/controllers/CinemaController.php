@@ -187,7 +187,7 @@ class Api_CinemaController extends Zend_Controller_Action
                 $movie_locations_used[$one_location_id] = true;
                 $movie_locations_data[] = array(
                     'location_id' => $one_location_id,
-                    'location_name' => $one_data->getProperty('Forganizer'),
+                    'location_name' => $this->m_service->entities2Utf8($one_data->getProperty('Forganizer')),
                     'zipcode' => $one_data->getProperty('Fzipcode'),
                     'town' => $one_data->getProperty('Ftown'),
                     'street' => $one_data->getProperty('Fstreet'),
