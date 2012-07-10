@@ -40,6 +40,7 @@ class UserService
         'website',
         'bio',
         'email_public',
+        'customer_id',
     );
 
     /**
@@ -488,10 +489,6 @@ class UserService
 
         if (isset($values['last_name'])) {
             $user->setLastName($values['last_name']);
-        }
-
-        if (isset($values['customer_id'])) {
-            $user->setSubscriber($values['customer_id']);
         }
 
         if (isset($values['image'])) {

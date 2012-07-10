@@ -41,7 +41,7 @@ class Api_ProfileController extends AbstractController
         $this->_helper->json(array(
             'first_name' => $user->getFirstName(),
             'last_name' => $user->getLastName(),
-            'customer_id' => $user->getSubscriber(),
+            'customer_id' => $user->getAttribute('customer_id'),
             'birth_date' => $user->getAttribute('birth_date'),
             'facebook' => $user->getAttribute('facebook'),
             'google' => $user->getAttribute('google'),
@@ -58,7 +58,7 @@ class Api_ProfileController extends AbstractController
             'print_subscription_valid_until' => $subscriptionValidUntil !== null ? $subscriptionValidUntil->format('Y-m-d') : null,
             'digital_upgrade' => (bool) $user->getAttribute(self::DIGITAL_UPGRADE),
             'free_digital_upgrade_consumed' => $this->_helper->service('mobile.free_upgrade')->isConsumed($user),
-            'subscriber_topics' => array_map(function($topic) {
+            'subscribed_topics' => array_map(function($topic) {
                 return array(
                     'topic_id' => $topic->getTopicId(),
                     'topic_name' => $topic->getName(),

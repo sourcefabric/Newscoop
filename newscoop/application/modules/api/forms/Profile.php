@@ -23,5 +23,6 @@ class Api_Form_Profile extends Application_Form_Profile
         $this->addElement('text', 'bio');
         $this->addElement('text', 'email_public');
         $this->addElement('text', 'profile_image_data');
+        $this->addElement('text', 'customer_id');
     }
 }
