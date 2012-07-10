@@ -427,7 +427,7 @@ class AgendaService
                 }
                 $cur_one_line = '';
                 try {
-                    $cur_one_line = html_entity_decode($one_desc_line);
+                    $cur_one_line = $this->entities2Utf8($one_desc_line);
                 }
                 catch (\Exception $exc) {
                     continue;
@@ -442,6 +442,31 @@ class AgendaService
         }
 
         return array('texts' => $res_texts, 'links' => $res_links);
+    }
+
+    public function entities2Utf8($p_text)
+    {
+        //$forbidden_contractions = array('38', '60', '62', '150', '151', '132', '146', '147'); // do not translate into &, <, >, dashes, and some other ones
+        $forbidden_contractions = array();
+
+        $p_text = iconv('UTF-8','UTF-8//IGNORE', $p_text);
+        $p_text = html_entity_decode($p_text, ENT_QUOTES, 'UTF-8');
+
+        $content_lines = explode('&#', $p_text);
+        $content = array_shift($content_lines);
+        foreach ($content_lines as $one_line) {
+            $one_line_parts = explode(';', $one_line, 2);
+            if ( (2 == count($one_line_parts)) && (is_numeric($one_line_parts[0])) && (!in_array($one_line_parts[0], $forbidden_contractions)) ) {
+                $content .= mb_convert_encoding('&#' . intval($one_line_parts[0]) . ';', 'UTF-8', 'HTML-ENTITIES');
+                $content .= $one_line_parts[1];
+            }
+            else {
+                $content .= '&#' . $one_line;
+            }
+
+        }
+
+        return $content;
     }
 
 }
