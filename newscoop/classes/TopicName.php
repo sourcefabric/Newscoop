@@ -122,10 +122,11 @@ class TopicName extends DatabaseObject {
 
         foreach ($p_topicNames as $one_name) {
             $one_name = str_replace('"', '""', trim($one_name));
-            $one_name_parts = explode(":", $one_name);
-            if (2 <= count($one_name_parts)) {
-                $topic_name = $one_name_parts[0];
-                $topic_lang = $one_name_parts[1];
+
+            $one_last_colon_pos = strrpos($one_name, ':');
+            if ($one_last_colon_pos && (3 == (strlen($one_name) - $one_last_colon_pos))) {
+                $topic_name = substr($one_name, 0, $one_last_colon_pos);
+                $topic_lang = substr($one_name, $one_last_colon_pos + 1);
                 $topic_names_full[] = "(name = \"$topic_name\" AND fk_language_id IN (SELECT Id FROM Languages WHERE Code = \"$topic_lang\"))";
             }
             elseif (0 < strlen($one_name)) {
