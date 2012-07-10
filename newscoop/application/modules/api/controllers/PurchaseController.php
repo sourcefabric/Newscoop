@@ -68,16 +68,19 @@ class Api_PurchaseController extends AbstractController
         $this->assertIsSecure();
 
         $user = $this->getUser();
-        $subscriber = $user->getSubscriber() ?: $this->_getParam('customer_id');
-        if (empty($subscriber)) {
-            $this->_helper->json(array('status' => 'invalid_customer_id'));
+
+        if (!$this->_getParam('customer_id')
+            || !$this->_helper->service('user_subscription')->isValidCustomer($this->_getParam('customer_id'))) {
+            $this->sendStatus('invalid_customer_id');
         }
 
-        // @todo validate $subscriber
-        // $this->_helper->service('user')->setSubscriber($user, $subscriber);
+        if ($this->_getParam('customer_id') !== $user->getAttribute('customer_id')) {
+            $this->_helper->service('user')->updateProfile(array(
+                'customer_id' => $this->_getParam('customer_id'),
+            ), $user);
+        }
 
-        $device = $this->_getParam('device_id');
-        if (empty($device)) {
+        if (!$this->_getParam('device_id')) {
             $this->sendError("No 'device_id' provided");
         }
 
@@ -86,10 +89,23 @@ class Api_PurchaseController extends AbstractController
             $this->sendError('No issue available for upgrading', 500);
         }
 
-        if ($this->_helper->service('mobile.free_upgrade')->addDevice($device, $user, $issue)) {
-            $this->_helper->json(array('status' => 'ok'));
+        if ($this->_helper->service('mobile.free_upgrade')->addDevice($this->_getParam('device_id'), $user, $issue)) {
+            $this->sendStatus('ok');
         }
 
-        $this->_helper->json(array('status' => 'max_devices_reached'));
+        $this->sendStatus('max_devices_reached');
+    }
+
+    /**
+     * Send status response
+     *
+     * @param string $status
+     * @return void
+     */
+    private function sendStatus($status)
+    {
+        $this->_helper->json(array(
+            'status' => (string) $status,
+        ));
     }
 }

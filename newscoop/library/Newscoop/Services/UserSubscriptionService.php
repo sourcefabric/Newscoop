@@ -17,6 +17,7 @@ class UserSubscriptionService
 {
     const STATUS_ACTIVE = 1;
     const API_URL = 'https://abo.tageswoche.ch/dmpro/ws/subscriber/NMBA';
+    const CUSTOMER_API_URL = 'https://abo.tageswoche.ch/dmpro/ws/NMBA/subscriber/NMBA';
 
     /** @var Doctrine\ORM\EntityManager */
     private $em;
@@ -209,5 +210,24 @@ class UserSubscriptionService
         }
 
         return date_create($subscription->validUntilFormated);
+    }
+
+    /**
+     * Test if given id is valid customer
+     *
+     * @param string $id
+     * @return bool
+     */
+    public function isValidCustomer($id)
+    {
+        $xml = $this->fetchXml(self::CUSTOMER_API_URL . '/' . $id);
+        if (!$xml) {
+            return false;
+        }
+
+        return isset($xml->subscriber)
+            && isset($xml->subscriber->subscriptions)
+            && isset($xml->subscriber->subscriptions->subscription)
+            && $xml->subscriber->subscriptions->subscription->statusCode === (string) self::STATUS_ACTIVE;
     }
 }
