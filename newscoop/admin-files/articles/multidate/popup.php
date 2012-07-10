@@ -676,10 +676,20 @@ window.load_events = function(start, end, callback, url) {
 </div>
 </div>
 </div>
+
+<script type="text/javascript">
+    $('input.time-input').click(function(e) {
+        $('input.time-input').removeClass('clicked');
+        $(e.target).addClass('clicked');
+    });
+
+    $('.ui-datepicker-close').live('click', function() {
+        var input = $('input.time-input.clicked').first();
+        if (input.val() == '') {
+            input.val('00:00');
+            input.removeClass('clicked');
+        }
+    });
+</script>
 </body>
 </html>
-
-
-
-
-
