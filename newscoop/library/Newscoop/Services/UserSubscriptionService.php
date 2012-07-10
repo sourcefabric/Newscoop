@@ -225,9 +225,14 @@ class UserSubscriptionService
             return false;
         }
 
-        return isset($xml->subscriber)
-            && isset($xml->subscriber->subscriptions)
-            && isset($xml->subscriber->subscriptions->subscription)
-            && $xml->subscriber->subscriptions->subscription->statusCode === (string) self::STATUS_ACTIVE;
+        foreach ($xml->subscriber as $subscriber) {
+            foreach ((array) $subscriber->subscriptions as $subscription) {
+                if ((string) $subscription->statusCode === (string) self::STATUS_ACTIVE) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }
