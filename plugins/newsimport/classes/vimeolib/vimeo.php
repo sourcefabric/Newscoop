@@ -171,7 +171,7 @@ class phpVimeo
             if (strpos($k, 'oauth_') === 0) {
                 $oauth_params[$k] = $v;
             }
-            else {
+            else if ($call_params[$k] !== null) {
                 $api_params[$k] = $v;
             }
         }
@@ -478,11 +478,38 @@ class phpVimeo
 
         // Make sure our file sizes match up
         foreach ($verify->ticket->chunks as $chunk_check) {
-            $chunk = $chunks[$chunk_check->id];
+            $chunk_check_id = 0;
+            $chunk_check_size = 0;
+            $chunk_check_def = false;
+            if (is_object($chunk_check)) {
+                $chunk_check_id = $chunk_check->id;
+                $chunk_check_size = $chunk_check->size;
+                $chunk_check_def = true;
+            }
+            if (is_array($chunk_check)) {
+                $chunk_check_id = $chunk_check['id'];
+                $chunk_check_size = $chunk_check['size'];
+                $chunk_check_def = true;
+            }
+            if (!$chunk_check_def) {
+                echo 'Current chunk of unknown type<br>' . "\n";
+                continue;
+            }
 
-            if ($chunk['size'] != $chunk_check->size) {
+            if (!isset($chunks[$chunk_check_id])) {
+                echo 'Chunk id ' . $chunk_check_id . ' not defined in chunks<br>' . "\n";
+                //var_dump($chunks);
+                //echo "\n";
+                //var_dump($chunk_check);
+                //echo "\n\n";
+                continue;
+            }
+
+            $chunk = $chunks[$chunk_check_id];
+
+            if ($chunk['size'] != $chunk_check_size) {
                 // size incorrect, uh oh
-                echo "Chunk {$chunk_check->id} is actually {$chunk['size']} but uploaded as {$chunk_check->size}<br>";
+                echo "Chunk {$chunk_check_id} is actually {$chunk['size']} but uploaded as {$chunk_check_size}<br>";
             }
         }
 

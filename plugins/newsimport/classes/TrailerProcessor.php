@@ -26,8 +26,8 @@ class TrailerProcessor {
 
     private static $s_table_name = 'trailers';
 
-    //private static $s_max_run = 100;
-    private static $s_max_run = 10;
+    private static $s_max_run = 100;
+    //private static $s_max_run = 10;
     //private static $s_max_run = 2;
     private static $s_max_errors = 5;
 
