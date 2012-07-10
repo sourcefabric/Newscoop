@@ -51,6 +51,12 @@ class TopicTree extends \Newscoop\Entity\TopicTree implements \Doctrine\ORM\Prox
         return parent::getId();
     }
 
+    public function getTopicId()
+    {
+        $this->__load();
+        return parent::getTopicId();
+    }
+
     public function getLeft()
     {
         $this->__load();
