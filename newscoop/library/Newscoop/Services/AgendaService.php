@@ -427,8 +427,7 @@ class AgendaService
                 }
                 $cur_one_line = '';
                 try {
-                    //$cur_one_line = mb_convert_encoding($one_desc_line, 'UTF-8', 'HTML-ENTITIES');
-                    $cur_one_line = $one_desc_line;
+                    $cur_one_line = html_entity_decode($one_desc_line);
                 }
                 catch (\Exception $exc) {
                     continue;
