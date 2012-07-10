@@ -52,7 +52,10 @@ if( isset($_REQUEST['issue']) && $_REQUEST['issue'] > 0 ) {
 	if($_REQUEST['issue'] != 0) {
 		$issueFiltersArray = explode('_', $_REQUEST['issue']);
 		if(count($issueFiltersArray) > 1) {
-			$_REQUEST['publication'] = $issueFiltersArray[0];
+            if (empty($_REQUEST['publication'])) {
+			    $_REQUEST['publication'] = $issueFiltersArray[0];
+            }
+
 			$_REQUEST['issue'] = $issueFiltersArray[1];
 			$_REQUEST['language'] = $issueFiltersArray[2];
 		}
@@ -64,8 +67,14 @@ if( isset($_REQUEST['section']) && $_REQUEST['section'] > 0 ) {
 	if($_REQUEST['section'] != 0) {
 		$sectionFiltersArray = explode('_', $_REQUEST['section']);
 		if(count($sectionFiltersArray) > 1) {
-			$_REQUEST['publication'] = $sectionFiltersArray[0];
-			$_REQUEST['language'] = $sectionFiltersArray[2];
+            if (empty($_REQUEST['publication'])) {
+			    $_REQUEST['publication'] = $sectionFiltersArray[0];
+            }
+
+            if (empty($_REQUEST['language'])) {
+			    $_REQUEST['language'] = $sectionFiltersArray[2];
+            }
+
 			$_REQUEST['section'] = $sectionFiltersArray[3];
 		}
 	}
@@ -115,7 +124,6 @@ for ($i = 0; $i < $sortingCols; $i++) {
         break;
     }
 }
-
 
 // get articles
 $articles = Article::GetList($articlesParams, array(array('field' => $sortBy, 'dir' => $sortDir)), $start, $limit, $articlesCount, true);
