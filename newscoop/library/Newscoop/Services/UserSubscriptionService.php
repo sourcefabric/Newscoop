@@ -192,6 +192,10 @@ class UserSubscriptionService
     public function isActiveSubscriber(User $user)
     {
         $subscription = $this->fetchSubscriptions($user);
+        if (empty($subscription) && $user->getAttribute('customer_id')) {
+            return $this->isValidCustomer($user->getAttribute('customer_id'));
+        }
+
         return !empty($subscription) ? (int) $subscription->statusCode === self::STATUS_ACTIVE : false;
     }
 
