@@ -64,6 +64,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
             $previewLinkURL .= $articleEndLink;
         }
 
+        $previewLinkURL = preg_replace('/^https/', 'http', $previewLinkURL);
         if (!is_string($previewLinkURL) && PEAR::isError($previewLinkURL)) {
             $doLiveLink = '';
         }
