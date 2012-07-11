@@ -6,13 +6,13 @@
  */
 
 /**
- * Response code setter
+ * Set http response code
  *
  * @param array $params
  * @param object $smarty
  * @return void
  */
-function smarty_function_set_response_code($params, $smarty)
+function smarty_function_set_http_response_code($params, $smarty)
 {
     if (!isset($params['code']) || !is_numeric($params['code'])) {
         return;
