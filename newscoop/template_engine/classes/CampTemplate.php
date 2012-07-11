@@ -91,7 +91,6 @@ final class CampTemplate extends Smarty
 
         if (isset($GLOBALS['controller'])) {
             $this->assign('view', $GLOBALS['controller']->view);
-            $this->assign('response', $GLOBALS['controller']->getResponse());
         }
     }
 
