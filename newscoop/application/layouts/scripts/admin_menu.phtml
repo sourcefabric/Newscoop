@@ -153,7 +153,7 @@ $pages[1]['pages'][] = array(
 foreach ($Campsite['publications'] as $publication) {
     $pubId = $publication->getPublicationId();
     $publication_page = array(
-        'label' => $view->escape($publication->getName()),
+        'label' => $publication->getName(),
         'uri' => $view->baseUrl("admin/issues/?Pub=$pubId"),
     );
 
@@ -163,10 +163,10 @@ foreach ($Campsite['publications'] as $publication) {
             $issueId = $issue->getIssueNumber();
             $languageId = $issue->getLanguageId();
             $issue_page = array(
-                'label' => $view->escape(sprintf('%d. %s (%s)',
+                'label' => sprintf('%d. %s (%s)',
                     $issue->getIssueNumber(),
                     $issue->getName(),
-                    $issue->getLanguageName())),
+                    $issue->getLanguageName()),
                 'uri' => $view->baseUrl("admin/sections/?Pub=$pubId&Issue=$issueId&Language=$languageId"),
             );
 
@@ -175,9 +175,9 @@ foreach ($Campsite['publications'] as $publication) {
                 foreach ($Campsite['sections'][$pubId][$issueId][$languageId] as $section) {
                     $sectionId = $section->getSectionNumber();
                     $section_page = array(
-                        'label' => $view->escape(sprintf('%d. %s',
+                        'label' => sprintf('%d. %s',
                             $section->getSectionNumber(),
-                            $section->getName())),
+                            $section->getName()),
                         'uri' => $view->baseUrl("admin/articles/?f_publication_id=$pubId&f_issue_number=$issueId&f_language_id=$languageId&f_section_number=$sectionId"),
                     );
                     $issue_page['pages'][] = $section_page;
