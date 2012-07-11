@@ -9,10 +9,6 @@ branches:
 notifications:
   email: false
 
-before_install:
-  - sudo apt-get update
-  - sudo apt-get install libzend-framework-php
-
 before_script:
   - ./scripts/ci/before_script.sh
   - curl -s http://getcomposer.org/installer | php
