@@ -77,7 +77,11 @@ final class CampTemplate extends Smarty
         $this->config_dir = APPLICATION_PATH . '/../configs';
         $this->compile_dir = APPLICATION_PATH . '/../cache';
 
-        $this->plugins_dir = array_merge((array) $this->plugins_dir, array(APPLICATION_PATH . self::PLUGINS), self::getPluginsPluginsDir());
+        $this->plugins_dir = array_merge(
+            (array) $this->plugins_dir,
+            array(APPLICATION_PATH . self::PLUGINS),
+            self::getPluginsPluginsDir()
+        );
 
         $this->template_dir = array(
             APPLICATION_PATH . '/../themes/',
@@ -87,6 +91,7 @@ final class CampTemplate extends Smarty
 
         if (isset($GLOBALS['controller'])) {
             $this->assign('view', $GLOBALS['controller']->view);
+            $this->assign('response', $GLOBALS['controller']->getResponse());
         }
     }
 
