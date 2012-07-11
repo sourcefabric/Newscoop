@@ -11,7 +11,7 @@
 <script type="text/javascript" src="<?php echo $this->baseUrl('/js/underscore.js'); ?>"></script>
 <script type="text/javascript" src="<?php echo $this->baseUrl('/js/backbone.js'); ?>"></script>
 <script type="text/template" id="subscription-list-template">
-<a id="add-new" href="#subscription/new"><?php putGS('Add new'); ?></a>
+<a class="add-new" href="#subscription/new"><?php putGS('Add new'); ?></a>
 <table id="subscription-table">
     <thead>
         <tr>
@@ -29,7 +29,7 @@
 
 <script type="text/template" id="ips-list-template">
 <h3><?php putGS('User IP access list management'); ?></h3>
-<a id="add-new" href="#"><?php putGS('Add new'); ?></a>
+<a class="add-new" href="#"><?php putGS('Add new'); ?></a>
 <table id="ips-table">
     <thead>
         <tr>
@@ -405,7 +405,7 @@
 
     var IpsView = Backbone.View.extend({
         events: {
-            'click #add-new': 'add',
+            'click .add-new': 'add',
             'click .save': 'save',
             'click .cancel': 'cancel'
         },
@@ -474,6 +474,7 @@
         index: function() {
             $('#app').html(this.tableView.render().el);
             $('#app').append(this.ipsView.render().el);
+            this.ipsView.delegateEvents();
         },
 
         'new': function() {
