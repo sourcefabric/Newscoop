@@ -23,9 +23,14 @@ if (!defined('INSTALL') && (!file_exists(APPLICATION_PATH . '/../conf/configurat
 set_include_path(implode(PATH_SEPARATOR, array(
     realpath(APPLICATION_PATH . '/../library'),
     realpath(APPLICATION_PATH . '/../include'),
+    realpath(APPLICATION_PATH . '/../../dependencies/include'),
     get_include_path(),
 )));
 
+//require Composer autoloader
+require_once realpath(APPLICATION_PATH . '/../../vendor/autoload.php');
+
+/*
 if (!function_exists('stream_resolve_include_paths')) {
     function stream_resolve_include_paths($filename) {
         foreach (explode(PATH_SEPARATOR, get_include_path()) as $include_path) {
@@ -38,23 +43,22 @@ if (!function_exists('stream_resolve_include_paths')) {
         return false;
     }
 }
-
-if (!stream_resolve_include_paths('Zend/Application.php')) {
+*/
+/*if (!stream_resolve_include_paths('Zend/Application.php')) {
 	// include libzend if we don't have zend_application
 	set_include_path(implode(PATH_SEPARATOR, array(
 		'/usr/share/php/libzend-framework-php',
 		get_include_path(),
 	)));
 }
-
+*/
 /** Zend_Application */
-require_once 'Zend/Application.php';
 
 if (defined('INSTALL')) {
     $oldErrorReporting = error_reporting();
     error_reporting(0);
 
-    if (!class_exists('Zend_Application', FALSE)) {
+    if (!class_exists('Zend_Application', TRUE)) {
         die('Missing dependency! Please install Zend Framework library!');
     }
 
@@ -66,7 +70,7 @@ $application = new \Zend_Application(APPLICATION_ENV);
 
 // Set config
 $setConfig = function(\Zend_Application $application) {
-    require_once 'Zend/Config/Ini.php';
+
     $defaultConfig = new \Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini-dist', APPLICATION_ENV);
     $config = $defaultConfig->toArray();
     if (is_readable(APPLICATION_PATH . '/configs/application.ini')) {
