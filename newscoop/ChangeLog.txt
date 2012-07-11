@@ -1,3 +1,24 @@
+4.0.2 (July 12, 2012)
+  Improvements
+  ------------
+  CS-4393: Allow setting http response code from template
+
+  Bug fixes
+  ---------
+  CS-4157: Newscoop does not work correctly with PHP 5.4
+  CS-3973: Hidden filter in comments management displays all comments
+  CS-4027: Related articles for a translated article have title 'null'
+  CS-4370: Edit Article page auto-fills the Author field with login name rather than Author name
+  CS-4377: HTML characters are not rendered properly in the navigation menu
+  CS-4376: Un-escaped strings in theme manager
+  CS-4031: Comment are approved by default, even though moderation is enabled
+  CS-4392: Adding an image to the media archive throws exif error
+  CS-4252: Search->Filtering does NOT work with issues/articles different than default language
+  CS-4345: Save works erratically on Article Edit page
+  CS-4380: Related articles are not copied from original article by action duplicate
+  CS-4297: After adding a new subscription, it is not possible to add an IP address restriction
+  CS-3917: Not possible to add "daterange" event with start time set to "00:00" on multi-date fields
+
 4.0.1 (June 18, 2012)
   Improvements
   ------------
