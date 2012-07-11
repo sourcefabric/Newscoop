@@ -126,7 +126,7 @@ $(function() {
         		    		    'pub-id'     => $pub->getId(),
         		    		    'theme-id'	 => '{{id}}'
         		    		), null, null, false )?>"
-							pub-id="<?php echo $pub->getId(); ?>" class="assign-ctrl"><?php echo $pub->getName(); ?></a>
+							pub-id="<?php echo $pub->getId(); ?>" class="assign-ctrl"><?php echo $this->escape($pub->getName()); ?></a>
         				</li>
         	            <?php endforeach; ?>
 						<li class="copy-to-avail-themes" style="display:none">
