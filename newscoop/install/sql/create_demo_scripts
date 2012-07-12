@@ -67,14 +67,10 @@ TABLES="
  comment_acceptance\
  liveuser_grouprights\
  liveuser_groups\
- liveuser_groups_group_id_seq\
  liveuser_groupusers\
  liveuser_perm_users\
- liveuser_perm_users_perm_user_id_seq\
  liveuser_rights\
- liveuser_rights_right_id_seq\
  liveuser_users\
- liveuser_users_auth_user_id_seq\
  output\
  output_issue\
  output_section\
