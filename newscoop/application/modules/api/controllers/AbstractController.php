@@ -231,7 +231,8 @@ abstract class AbstractController extends Zend_Controller_Action
     protected function getDateline($article)
     {
         try {
-            return $article->getData('dateline');
+            $dateline = $article->getData('dateline');
+            return !empty($dateline) ? $dateline : null;
         } catch (\Exception $e) {
             return null;
         }
@@ -473,7 +474,8 @@ abstract class AbstractController extends Zend_Controller_Action
     protected function getShortname($article)
     {
         try {
-            return $article->getData('short_name');
+            $shortname = $article->getData('short_name');
+            return !empty($shortname) ? $shortname : $article->getTitle();
         } catch (\Exception $e) {
             return $article->getTitle();
         }

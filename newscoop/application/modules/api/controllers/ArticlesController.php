@@ -16,14 +16,13 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleAttachment.php');
  */
 class Api_ArticlesController extends AbstractController
 {
-    const API_VERSION = 1;
-
     const LANGUAGE = 5;
 
     const LIST_URI_PATH = 'api/articles/list';
     const ITEM_URI_PATH = 'api/articles/item';
 
-    const LIST_LIMIT = 15;
+    const LIST_LIMIT_DEFAULT = 15;
+    const LIST_LIMIT_BYTOPIC = 30;
 
     private $client;
 
@@ -48,14 +47,12 @@ class Api_ArticlesController extends AbstractController
         $this->params = $this->request->getParams();
 
         if (empty($this->params['client'])) {
-            $this->_helper->json($this->response);
-            exit;
+            $this->sendError('Not client provided', 500);
         }
 
         $this->initClient($this->params['client']);
         if (is_null($this->client['type'])) {
-            $this->_helper->json($this->response);
-            exit;
+            $this->sendError('Invalid client', 500);
         }
     }
 
@@ -77,18 +74,18 @@ class Api_ArticlesController extends AbstractController
         $this->getHelper('contextSwitch')->addActionContext('list', 'json')->initContext();
 
         $criteria = array();
+        $criteria[] = new ComparisonOperation('workflow_status', new Operator('is'), 'published');
         $params = $this->request->getParams();
 
         if (!empty($params['section_id'])) {
             $playlist = $this->_helper->entity->getRepository('Newscoop\Entity\Playlist')
                 ->find($params['section_id']);
             if (empty($playlist)) {
-                $this->_helper->json($this->response);
-                exit;
+                $this->sendError('Section not found', 404);
             }
 
             $articles = $this->_helper->entity->getRepository('Newscoop\Entity\Playlist')
-                ->articles($playlist, null, false, self::LIST_LIMIT);
+                ->articles($playlist, null, false, self::LIST_LIMIT_DEFAULT);
         } else {
             if (!empty($params['type'])) {
                 $criteria[] = new ComparisonOperation('type', new Operator('is'), (string) $params['type']);
@@ -98,7 +95,7 @@ class Api_ArticlesController extends AbstractController
                 $criteria[] = new ComparisonOperation('topic', new Operator('is'), $params['topic_id']);
             }
 
-            $articles = \Article::GetList($criteria, null, 0, self::LIST_LIMIT, $count = 0, false, false);
+            $articles = \Article::GetList($criteria, null, 0, self::LIST_LIMIT_BYTOPIC, $count = 0, false, false);
         }
 
         foreach ($articles as $item) {
@@ -210,7 +207,6 @@ class Api_ArticlesController extends AbstractController
             'teaser' => $adata->getFieldValue($teaserField),
             'body' => $adata->getFieldValue($bodyField),
             'image_url' => $this->getImageUrl($article),
-
             'comment_count' => $comments,
         );
 
