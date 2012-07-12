@@ -10,10 +10,10 @@
         "php": ">=5.3.0",
         "zendframework/zendframework1":">=1.12",
         "Smarty3":"3.0.8",
-        "symfony/dependency-injection":"2.0",
-        "symfony/event-dispatcher":"2.0",
         "doctrine/orm":"2.1.*",
-        "doctrine/mongodb-odm":"*"
+        "doctrine/mongodb-odm":"*",
+        "sfDependencyInjection":"2.0",
+        "sfEventDispatcher":"2.0"
     },
     "repositories":[
         {
@@ -60,7 +60,7 @@
     ],
 
     "autoload":{
-        "classmap":["vendor/symfony/dependency-injection/lib", "vendor/symfony/event-dispatcher/lib", "vendor/Smarty3/libs"]
+        "classmap":["vendor/sfDependencyInjection", "vendor/sfEventDispatcher", "vendor/Smarty3/libs"]
     },
     "minimum-stability":"dev"
 }

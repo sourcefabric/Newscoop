@@ -1,5 +1,5 @@
 {
-    "hash": "4f2c05b5c936076983f33bdcf9137eb8",
+    "hash": "798a977135b446de71cac7c5f7e3676c",
     "packages": [
         {
             "package": "Smarty3",
@@ -36,18 +36,18 @@
             "commit-date": "1341323303"
         },
         {
+            "package": "sfDependencyInjection",
+            "version": "2.0"
+        },
+        {
+            "package": "sfEventDispatcher",
+            "version": "2.0"
+        },
+        {
             "package": "symfony/console",
             "version": "dev-master",
             "source-reference": "4458137cead530271007bf82711dcd718d263a16",
             "commit-date": "1341926729"
-        },
-        {
-            "package": "symfony/dependency-injection",
-            "version": "2.0"
-        },
-        {
-            "package": "symfony/event-dispatcher",
-            "version": "2.0"
         },
         {
             "package": "symfony/yaml",
