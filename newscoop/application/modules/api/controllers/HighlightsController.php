@@ -7,15 +7,14 @@
 
 use Newscoop\Entity\Article;
 
+require_once __DIR__ . '/AbstractController.php';
+
 /**
  */
-class Api_HighlightsController extends Zend_Controller_Action
+class Api_HighlightsController extends AbstractController
 {
-    const API_VERSION = 1;
     const LANGUAGE = 5;
     const PUBLICATION = 1;
-
-    const LIST_LIMIT = 15;
 
     const IMAGE_TOP_RENDITION = 'topfront';
     const IMAGE_STANDARD_RENDITION = 'rubrikenseite';
@@ -31,18 +30,13 @@ class Api_HighlightsController extends Zend_Controller_Action
     /** @var array */
     private $response = array();
 
-    private $url;
-
     /**
      * Init controller.
      */
     public function init()
     {
-        global $Campsite;
-
         $this->_helper->layout->disableLayout();
         $this->request = $this->getRequest();
-        $this->url = $Campsite['WEBSITE_URL'];
         $this->params = $this->request->getParams();
 
         if (empty($this->params['client'])) {
@@ -82,7 +76,7 @@ class Api_HighlightsController extends Zend_Controller_Action
             $sectionIds = array(6, 7, 8, 9, 10, 11, 25); // @todo config
         }
 
-        $section_rank = 1;
+        $sectionRank = 1;
         foreach ($sectionIds as $sectionId) {
             $playlistRepository = $this->_helper->entity->getRepository('Newscoop\Entity\Playlist');
             $playlist = $playlistRepository->findOneBy(array('id' => $sectionId));
@@ -92,79 +86,34 @@ class Api_HighlightsController extends Zend_Controller_Action
                 foreach ($articleArray as $articleItem) {
                     $articles = $this->_helper->service('article')->findBy(array('number' => $articleItem['articleId']));
                     $article = $articles[0];
-                    $articleData = new ArticleData($article->getType(), $article->getId(), $article->getLanguageId());
 
                     // gets the article image in the proper size
                     if ($sectionId == 6 && $rank == 1) {
                         $width = $this->isClientRetina() ? self::IMAGE_TOP_WIDTH * self::IMAGE_RETINA_FACTOR : self::IMAGE_TOP_WIDTH;
                         $height = $this->isClientRetina() ? self::IMAGE_TOP_HEIGHT * self::IMAGE_RETINA_FACTOR : self::IMAGE_TOP_HEIGHT;
-                        $image = $this->getImageUrl($article, self::IMAGE_TOP_RENDITION, $width, $height);
+                        $image = $this->lookforImageUrl($article, self::IMAGE_TOP_RENDITION, $width, $height);
                     } else {
-                        $image = $this->getImageUrl($article, self::IMAGE_STANDARD_RENDITION, $this->client['image_width'], $this->client['image_height']);
-                    }
-
-                    $comments = Zend_Registry::get('container')->getService('comment')->countBy(array(
-                        'language' => $article->getLanguageId(),
-                        'thread' => $article->getId(),
-                    ));
-
-                    $recommended = Zend_Registry::get('container')->getService('comment')->countBy(array(
-                        'language' => $article->getLanguageId(),
-                        'thread' => $article->getId(),
-                        'recommended' => 1,
-                    ));
-
-                    try {
-                        $dateline = $articleData->getFieldValue('dateline');
-                    } catch (\InvalidPropertyException $e) {
-                        $dateline = '';
-                    }
-
-                    try {
-                        $short_name = $articleData->getFieldValue('short_name');
-                    } catch (\InvalidPropertyException $e) {
-                        $short_name = $article->getTitle();
-                    }
-
-                    $topics = array();
-                    $topicList = ArticleTopic::GetArticleTopics($article->getNumber());
-                    foreach ($topicList as $topic) {
-                        $topics[] = array(
-                            'topic_id' => (int) $topic->getTopicId(),
-                            'topic_name' => $topic->getName(self::LANGUAGE),
-                        );
-                    }
-
-                    $bodyField = 'body';
-                    $teaserField = 'teaser';
-                    switch($article->getType()) {
-                        case 'newswire':
-                            $bodyField = 'DataContent';
-                            $teaserField = 'DataLead';
-                            break;
-                        case 'blog':
-                            $teaserField = 'lede';
-                            break;
+                        $image = $this->lookforImageUrl($article, self::IMAGE_STANDARD_RENDITION, $this->client['image_width'], $this->client['image_height']);
                     }
 
                     $response = array(
                         'article_id' => (int) $article->getNumber(),
-                        'url' => $this->url . '/api/articles/item?article_id=' . $article->getNumber() . '&client=' . $this->client['name'] . '&version=' . self::API_VERSION,
-                        'backside_url' => $this->url . '/api/articles/item?article_id=' . $article->getNumber() . '&side=back&client=' . $this->client['name'] . '&version=' . self::API_VERSION,
-                        'dateline' => $dateline,
-                        'short_name' => empty($short_name) ? $article->getTitle() : $short_name,
-                        'teaser' => preg_replace('/(<p>|<p [^>]*>|<\\/p>)/', '', $articleData->getFieldValue($teaserField)),
+                        'url' => $this->getArticleUrl($article),
+                        'backside_url' => $this->getArticleUrl($article, self::BACK_SIDE),
+                        'dateline' => $this->getDateline($article),
+                        'short_name' => $this->getShortname($article),
+                        'teaser' => $this->getTeaser($article),
                         'image_url' => $image,
                         'website_url' => $this->_helper->service('article.link')->getLink($article),
-                        'comment_count' => $comments,
-                        'recommended_comment_count' => $recommended,
-                        'comment_url' => $this->url . '/api/comments/list?article_id=' . $article->getNumber() . '&client=' . $this->client['name'] . '&version=' . self::API_VERSION,
-                        'topics' => $topics,
+                        'comment_count' => $this->getCommentsCount($article),
+                        'recommended_comment_count' => $this->getCommentsCount($article, true),
+                        'comment_url' => $this->getCommentsUrl($article),
+                        'topics' => $this->getTopics($article),
                         'rank' => $rank++,
                         'section_id' => (int) $sectionId,
                         'section_name' => $playlist->getName(),
-                        'section_url' => $this->url . '/api/articles/list?section_id=' . $sectionId . '&client=' . $this->client['name'] . '&version=' . self::API_VERSION,
-                        'section_rank' => $section_rank,
+                        'section_url' => $this->getSectionUrl($sectionId),
+                        'section_rank' => $sectionRank,
                     );
 
                     if ($this->client['type'] == 'iphone') {
@@ -173,26 +122,25 @@ class Api_HighlightsController extends Zend_Controller_Action
 
                     $this->response[] = $response;
                 }
-                $section_rank++;
+                $sectionRank++;
             }
         }
 
         $this->_helper->json($this->response);
     }
 
-    private function getImageUrl(Article $article, $rendition, $width, $height)
+    private function lookforImageUrl(Article $article, $rendition, $width, $height)
     {
-        $image = $this->getImage($article, $rendition);
+        $image = $this->lookforImage($article, $rendition);
         if (empty($image)) {
             return null;
         }
 
         $imageUrl = $this->view->url(array(
             'src' => $this->getHelper('service')->getService('image')->getSrc(basename($image->src), $width, $height, 'crop'),
-            ),
-            'image', false, false);
+        ), 'image', false, false);
 
-        return $this->url . $imageUrl;
+        return $this->view->serverUrl($imageUrl);
     }
 
     /**
@@ -201,7 +149,7 @@ class Api_HighlightsController extends Zend_Controller_Action
      * @param Article $article
      * @return string $thumbnail
      */
-    private function getImage(Article $article, $rendition)
+    private function lookforImage(Article $article, $rendition)
     {
         $renditions = Zend_Registry::get('container')->getService('image.rendition')->getRenditions();
         if (!array_key_exists($rendition, $renditions)) {
@@ -220,6 +168,23 @@ class Api_HighlightsController extends Zend_Controller_Action
             getThumbnail($articleRendition->getImage(), Zend_Registry::get('container')->getService('image'));
 
         return $thumbnail;
+    }
+
+    /**
+     * Get article comments api url
+     *
+     * @param int $section Section (playlist) identifier
+     * @return string
+     */
+    protected function getSectionUrl($section)
+    {
+        return $this->view->serverUrl($this->view->url(array(
+            'module' => 'api',
+            'controller' => 'articles',
+            'action' => 'list',
+        ), 'default') . $this->getApiQueryString(array(
+            'section_id' => $section,
+        )));
     }
 
     private function initClient($client)
@@ -249,3 +214,4 @@ class Api_HighlightsController extends Zend_Controller_Action
         return $this->client['name'] == 'ipad_retina' || $this->client['name'] == 'iphone_retina';
     }
 }
+
