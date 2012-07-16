@@ -51,14 +51,12 @@ abstract class AbstractController extends Zend_Controller_Action
         $username = $this->_getParam('username');
         $password = $this->_getParam('password');
         if (empty($username) || empty($password)) {
-            $this->getResponse()->getHttpResponseCode(401);
-            $this->_helper->json(array('status' => 'invalid_credentials'));
+            $this->sendError('Invalid credentials.', 401);
         }
 
         $user = $this->_helper->service('auth.adapter')->findByCredentials($username, $password);
         if (empty($user)) {
-            $this->getResponse()->getHttpResponseCode(401);
-            $this->_helper->json(array('status' => 'invalid_credentials'));
+            $this->sendError('Invalid credentials.', 401);
         }
 
         return $user;
