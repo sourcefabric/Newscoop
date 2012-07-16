@@ -363,6 +363,7 @@ abstract class AbstractController extends Zend_Controller_Action
             'backside_url' => $this->getArticleUrl($article, 'back'),
             'dateline' => $this->getDateline($article),
             'short_name' => $this->getShortname($article),
+            'published' => $this->formatDate($article->getPublished()),
             'rank' => $this->rank++,
             'website_url' => $this->getWebsiteUrl($article),
             'image_url' => $this->getImageUrl($article),
@@ -377,6 +378,18 @@ abstract class AbstractController extends Zend_Controller_Action
         }
 
         return $data;
+    }
+
+    /**
+     * Format datetime
+     *
+     * @param DateTime $date
+     * @return string
+     */
+    protected function formatDate(\DateTime $date)
+    {
+        $date->setTimezone(new DateTimeZone('Europe/Berlin'));
+        return $date->format('Y-m-d H:i:s');
     }
 
     /**

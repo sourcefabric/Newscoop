@@ -102,6 +102,7 @@ class Api_HighlightsController extends AbstractController
                         'backside_url' => $this->getArticleUrl($article, self::BACK_SIDE),
                         'dateline' => $this->getDateline($article),
                         'short_name' => $this->getShortname($article),
+                        'published' => $this->formatDate($article->getPublished()),
                         'teaser' => $this->getTeaser($article),
                         'image_url' => $image,
                         'website_url' => $this->_helper->service('article.link')->getLink($article),
