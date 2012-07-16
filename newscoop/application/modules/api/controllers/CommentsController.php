@@ -5,103 +5,97 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-/**
- */
-
 use Newscoop\Entity\Comment;
 
-require_once($GLOBALS['g_campsiteDir'].'/include/get_ip.php');
+require_once __DIR__ . '/AbstractController.php';
+require_once __DIR__ . '/../../../../include/get_ip.php';
 
-class Api_CommentsController extends Zend_Controller_Action
+/**
+ */
+class Api_CommentsController extends AbstractController
 {
     const LANGUAGE = 5;
-    
+    const LIST_LIMIT = 20;
+
     /** @var Zend_Controller_Request_Http */
     private $request;
 
     /** @var Newscoop\Services\CommentService */
     private $service;
 
+    /** @var integer */
+    private $rank = 1;
+
     /**
-     *
      */
     public function init()
     {
-        global $Campsite;
-
         $this->_helper->layout->disableLayout();
         $this->request = $this->getRequest();
         $this->service = $this->_helper->service('comment');
-        $this->url = $Campsite['WEBSITE_URL'];
     }
 
     /**
+     * Routes depending on request type.
      */
     public function indexAction()
     {
-        if ($this->request->isPost()) {
-            $this->_forward('compose');
-        } else {
-            $this->_forward('list');
-        }
+        $action = $this->request->isPost() ? 'compose' : 'list';
+        $this->_forward($action);
     }
 
     /**
+     * Lists comments.
+     *
+     * If article identifier given, returns all comments posted for the article,
+     * otherwise returns the latest 20 posted comments.
      */
     public function listAction()
     {
         $this->getHelper('contextSwitch')->addActionContext('list', 'json')->initContext();
 
-        $response = array();
-
         $id = $this->request->getParam('article_id');
         if (is_null($id)) {
-            $comments = $this->service->findBy(
-                array('status' => 0),
-                array('time_created' => 'desc'),
-                20);
+            $comments = $this->service->findBy(array('status' => 0), array('time_created' => 'desc'), self::LIST_LIMIT);
         } else {
-            $comments = $this->service->findBy(
-                array('article_num' => $id, 'status' => 0),
-                array('time_created' => 'desc'));
+            $comments = $this->service->findBy(array('article_num' => $id, 'status' => 0), array('time_created' => 'desc'));
         }
 
-        if (empty($comments)) {
-            $this->_helper->json($response);
-            return;
-        }
-
-        $rank = 1;
+        $response = array();
         foreach($comments as $comment) {
-            $created_time = $comment->getTimeCreated()->format('Y-m-d H:i:s');
-            $last_modified = $created_time;
+            $created = $comment->getTimeCreated()->format('Y-m-d H:i:s');
+            $modified = $created;
             if ($comment->getTimeUpdated()->getTimestamp() !== false && $comment->getTimeCreated()->getTimestamp() < $comment->getTimeUpdated()->getTimestamp()) {
-                $last_modified = $comment->getTimeUpdated()->format('Y-m-d H:i:s');
+                $modified = $comment->getTimeUpdated()->format('Y-m-d H:i:s');
             }
 
-            $profile_image = $comment->getCommenter()->getUser()->getImage();
-            if (!empty($profile_image)) {
-                $profile_image = $this->view->url(array(
-                    'src' => $this->getHelper('service')->getService('image')->getSrc('images/' . $profile_image, 125, 125, 'fit'),
-                ), 'image', false, false);
-                $profile_image = $this->url . $profile_image;
-            } else {
-                $profile_image = null;
+            $profileImage = $comment->getCommenter()->getUser()->getImage();
+            if (!empty($profileImage)) {
+                $profileImage = $this->view->serverUrl($this->view->url(array(
+                    'src' => $this->getHelper('service')->getService('image')->getSrc('images/' . $profileImage, 125, 125, 'fit'),
+                ), 'image', false, false));
             }
 
-            $this->response[] = array(
+            $response[] = array(
                 'author_name' => $comment->getCommenterName(),
-                'author_image_url' => $profile_image,
+                'author_image_url' => $profileImage,
+                'public_profile_url' => $this->view->serverUrl($this->view->url(array(
+                    'module' => 'api',
+                    'controller' => 'profile',
+                    'action' => 'public',
+                ), 'default') . $this->getApiQueryString(array(
+                   'user_id' => $comment->getCommenter()->getUser()->getId(),
+                ))),
                 'subject' => $comment->getSubject(),
                 'message'=> $comment->getMessage(),
                 'recommended' => $comment->getRecommended() ? true : false,
-                'created_time' => $created_time,
-                'last_modified' => $last_modified,
-                'rank' => $rank++,
+                'created_time' => $created,
+                'last_modified' => $modified,
+                'rank' => $this->rank++,
             );
         }
 
-        $this->_helper->json($this->response);
+        $this->_helper->json($response);
     }
     
     /**
@@ -111,15 +105,6 @@ class Api_CommentsController extends Zend_Controller_Action
         $this->getHelper('contextSwitch')->addActionContext('list', 'json')->initContext('json');
 
         $parameters = $this->getRequest()->getPost();
-        
-        /*
-        $parameters = array();
-        $parameters['username'] = 'admin';
-        $parameters['password'] = 'admin';
-        $parameters['article_id'] = 71;
-        $parameters['message'] = 'zxczxczxc';
-        */
-        
         if (isset($parameters['username']) && isset($parameters['password'])) {
             $user = $this->_helper->service('user')->findOneBy(array('username' => $parameters['username']));
             if ($user->checkPassword($parameters['password'])) {
