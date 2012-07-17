@@ -316,24 +316,38 @@ $().ready(function() {
 
         <?php if ($p_user->hasPermission('EditorSubhead') && $p_objectType == 'article') { ?>
         setup : function(ed) {
+            var text = '';
+            var wordcount = false;
+
             ed.onInit.add(function(){
-				ed.controlManager.setDisabled('pasteword', true);
-					if (tinymce.isIE) {
-						tinymce.dom.Event.add(ed.getBody(), "dragenter", function(e) {
-							return tinymce.dom.Event.cancel(e);
-						});
-					} else {
-					   tinymce.dom.Event.add(ed.getBody().parentNode, "drop", function(e) {
-							tinymce.dom.Event.cancel(e);
-							tinymce.dom.Event.stop(e);
-						});
-					}
-			});
+                ed.controlManager.setDisabled('pasteword', true);
+                    if (tinymce.isIE) {
+                        tinymce.dom.Event.add(ed.getBody(), "dragenter", function(e) {
+                            return tinymce.dom.Event.cancel(e);
+                        });
+                    } else {
+                        tinymce.dom.Event.add(ed.getBody().parentNode, "drop", function(e) {
+                            tinymce.dom.Event.cancel(e);
+                            tinymce.dom.Event.stop(e);
+                    });
+                }
+            });
+
             ed.onNodeChange.add(function(){ed.controlManager.setDisabled('pasteword', true);});
 
             ed.onKeyUp.add(function(ed, l) {
                 var idx = ed.id.lastIndexOf('_');
                 var buttonId = ed.id.substr(0, idx);
+                var row = tinymce.DOM.get(tinyMCE.activeEditor.id + '_path_row');
+
+                if (!wordcount) {
+                    tinymce.DOM.add(row.parentNode, 'div', {'style': 'float: right'}, 'Characters: ' + '<span id="' + tinyMCE.activeEditor.id + '-wordcount">0</span>');
+                    wordcount = true;
+                }
+                text = ed.getContent().replace(/(< ([^>]+)<)/g,"").replace(/\s+/g," ");
+                text = $.trim(text);
+                if (row)
+                    tinymce.DOM.setHTML(tinyMCE.activeEditor.id + '-wordcount', text.length);
             });
 
             ed.addButton('campsite-subhead', {
