@@ -151,6 +151,9 @@ case "$1" in
     dpkg-statoverride --list $datadir/videos &>/dev/null || \
     dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0755 $datadir/videos
 
+    dpkg-statoverride --list $datadir/.htaccess &>/dev/null || \
+    dpkg-statoverride --add --force --update $WEB_USER $WEB_GROUP 0644 $datadir/.htaccess
+
     # Installer needs to own all theme files, not just the themes directory
     chown -R $WEB_USER.$WEB_GROUP $datadir/themes/ || true
 
