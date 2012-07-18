@@ -108,7 +108,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('em'));
 
         $container->register('user_points', 'Newscoop\Services\UserPointsService')
-            ->addArgument(new sfServiceReference('em'));
+            ->addArgument(new sfServiceReference('em'))
+            ->addArgument(new sfServiceReference('user'));
 
         $container->register('user_attributes', 'Newscoop\Services\UserAttributeService')
             ->addArgument(new sfServiceReference('em'));
@@ -286,6 +287,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $container->register('mailchimp', 'Newscoop\MailChimp\MailChimpFacade')
             ->addArgument(new sfServiceReference('mailchimp.api'));
+
+        $container->register('article.authors', 'Newscoop\Article\AuthorsFacade')
+            ->addArgument(new sfServiceReference('em'))
+            ->addArgument(new sfServiceReference('user'))
+            ->addArgument(new sfServiceReference('blog'));
 
         Zend_Registry::set('container', $container);
         return $container;

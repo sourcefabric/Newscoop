@@ -1,7 +1,7 @@
-DROP PROCEDURE IF EXISTS set_user_points;
-DROP PROCEDURE IF EXISTS set_user_points_all;
 DROP TRIGGER IF EXISTS author_update;
 DROP TRIGGER IF EXISTS comment_insert;
+DROP PROCEDURE IF EXISTS set_user_points;
+DROP PROCEDURE IF EXISTS set_user_points_all;
 
 DELIMITER $
 CREATE PROCEDURE set_user_points(IN user INT)

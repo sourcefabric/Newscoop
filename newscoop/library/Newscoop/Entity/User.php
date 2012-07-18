@@ -506,7 +506,7 @@ class User implements \Zend_Acl_Role_Interface, \Newscoop\Search\DocumentInterfa
             throw new \InvalidArgumentException("Points must be an integer: '$points'");
         }
 
-        $this->points = $points;
+        $this->points = max(0, (int) $points);
         return $this;
     }
 

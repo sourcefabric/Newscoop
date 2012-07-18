@@ -39,10 +39,27 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
     public function getSubscribedEvents()
     {
         return array(
+            Events::prePersist,
             Events::postPersist,
             Events::postUpdate,
+            Events::preRemove,
             Events::postRemove,
         );
+    }
+
+    /**
+     * Dispatch entity.prePersist event
+     *
+     * @param Doctrine\ORM\Event\LifecycleEventArgs $args
+     * @return void
+     */
+    public function prePersist(LifecycleEventArgs $args)
+    {
+        $entityName = $this->getEntityName($args->getEntity());
+        $this->dispatcher->notify(new \sfEvent($this, "{$entityName}.preCreate", array(
+            'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
+            'entity' => $args->getEntity(),
+        )));
     }
 
     /**
@@ -90,6 +107,21 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
         $this->dispatcher->notify(new \sfEvent($this, "{$entityName}.update", array(
             'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
             'title' => $this->getEntityTitle($args->getEntity()),
+            'entity' => $args->getEntity(),
+        )));
+    }
+
+    /**
+     * Dispatch entity.preRemove event
+     *
+     * @param Doctrine\ORM\Event\LifecycleEventArgs $args
+     * @return void
+     */
+    public function preRemove(LifecycleEventArgs $args)
+    {
+        $entityName = $this->getEntityName($args->getEntity());
+        $this->dispatcher->notify(new \sfEvent($this, "{$entityName}.preRemove", array(
+            'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
             'entity' => $args->getEntity(),
         )));
     }

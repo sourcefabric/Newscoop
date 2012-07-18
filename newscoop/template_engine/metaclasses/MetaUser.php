@@ -14,6 +14,10 @@ require_once __DIR__ . '/MetaDbObject.php';
  */
 final class MetaUser extends MetaDbObject implements ArrayAccess
 {
+    /**
+     * @var Newscoop\Entity\User
+     */
+    private $user;
 
     /**
      * @param Newscoop\Entity\User $user
@@ -23,7 +27,8 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         if (is_null($user)) {
             $user = new User;
         }
-        $this->m_dbObject = $user;
+
+        $this->m_dbObject = $this->user = $user;
 
         $this->m_properties = array();
 
@@ -274,13 +279,9 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      *
      * @return int
      */
-    protected function getPostsCount()
+    public function getPostsCount($update = false)
     {
-        if (!$this->m_dbObject->getId()) {
-            return 0;
-        }
-
-        return $this->m_dbObject->getPoints();
+        return (int) $this->user->getPoints();
     }
 
     /**

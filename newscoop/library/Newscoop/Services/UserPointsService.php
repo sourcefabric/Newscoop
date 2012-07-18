@@ -7,8 +7,9 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity\UserPoints;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Entity\UserPoints;
+use Newscoop\Services\UserService;
 
 /**
  * User service
@@ -19,11 +20,18 @@ class UserPointsService
     private $em;
 
     /**
-     * @param Doctrine\ORM\EntityManager $em
+     * @var Newscoop\Services\UserService
      */
-    public function __construct(EntityManager $em)
+    private $userService;
+
+    /**
+     * @param Doctrine\ORM\EntityManager $em
+     * @param Newscoop\Services\UserService $userService;
+     */
+    public function __construct(EntityManager $em, UserService $userService)
     {
         $this->em = $em;
+        $this->userService = $userService;
     }
 
     /**
@@ -59,26 +67,43 @@ class UserPointsService
      */
     public function update(\sfEvent $event)
     {
+        switch ($event->getName()) {
+            case 'articleauthor.preCreate':
+                $user = $this->getEventUser($event);
+                $this->addUserPoints($user, 1);
+                break;
+
+            case 'articleauthor.preRemove':
+                $user = $this->getEventUser($event);
+                $this->addUserPoints($user, -1);
+                break;
+        }
+    }
+
+    /**
+     * Get user related to author
+     *
+     * @param sfEvent $event
+     * @return Newscoop\Entity\User
+     */
+    private function getEventUser($event)
+    {
         $params = $event->getParameters();
+        return $this->userService->findByAuthor($params['id']['authorId']);
+    }
 
-        $action =  str_replace(".", "_", $event->getName());
-        $user = $params['user'];
-
-        if (is_int($user)) {
-            $user_repo = $this->em->getRepository('Newscoop\Entity\User');
-            $user = $user_repo->find($user);
+    /**
+     * Add points to user
+     *
+     * @param Newscoop\Entity\User $user
+     * @param int $points
+     * @return void
+     */
+    private function addUserPoints($user = null, $points = 1)
+    {
+        if ($user !== null) {
+            $user->setPoints($user->getPoints() + (int) $points);
         }
-
-        if (empty($user)) {
-            return;
-        }
-
-        $points = $user->getPoints();
-        $points_action = $this->getRepository()->getPointValueForAction($action);
-
-        $user->setPoints($points+$points_action);
-
-        $this->em->flush();
     }
 
     /**
@@ -92,7 +117,7 @@ class UserPointsService
         $entries = $this->findAll();
 
         foreach ($entries as $entry) {
-            if(isset($values[$entry->getAction()])) {
+            if (isset($values[$entry->getAction()])) {
                 $points = $values[$entry->getAction()];
                 $entry->setPoints($points);
             }
