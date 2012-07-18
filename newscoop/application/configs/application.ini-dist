@@ -177,6 +177,8 @@ search_indexer_user.events[] = user.delete
 
 user_points.events[] = articleauthor.preCreate
 user_points.events[] = articleauthor.preRemove
+user_points.events[] = comment.preCreate
+user_points.events[] = comment.preRemove
 
 ; autoloader dirs
 autoloader.dirs[] = APPLICATION_PATH "/../classes"

@@ -69,12 +69,22 @@ class UserPointsService
     {
         switch ($event->getName()) {
             case 'articleauthor.preCreate':
-                $user = $this->getEventUser($event);
+                $user = $this->getAuthorEventUser($event);
                 $this->addUserPoints($user, 1);
                 break;
 
             case 'articleauthor.preRemove':
-                $user = $this->getEventUser($event);
+                $user = $this->getAuthorEventUser($event);
+                $this->addUserPoints($user, -1);
+                break;
+
+            case 'comment.preCreate':
+                $user = $this->getCommentEventUser($event);
+                $this->addUserPoints($user, 1);
+                break;
+
+            case 'comment.preRemove':
+                $user = $this->getCommentEventUser($event);
                 $this->addUserPoints($user, -1);
                 break;
         }
@@ -86,10 +96,22 @@ class UserPointsService
      * @param sfEvent $event
      * @return Newscoop\Entity\User
      */
-    private function getEventUser($event)
+    private function getAuthorEventUser($event)
     {
         $params = $event->getParameters();
         return $this->userService->findByAuthor($params['id']['authorId']);
+    }
+
+    /**
+     * Get user related to comment
+     *
+     * @param sfEvent $event
+     * @return Newscoop\Entity\User
+     */
+    private function getCommentEventUser($event)
+    {
+        $params = $event->getParameters();
+        return $params['entity']->getCommenter()->getUser();
     }
 
     /**
