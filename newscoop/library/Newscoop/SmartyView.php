@@ -7,8 +7,6 @@
 
 namespace Newscoop;
 
-require_once 'smarty3/Smarty.class.php';
-
 /**
  */
 class SmartyView extends \Zend_View_Abstract

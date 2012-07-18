@@ -1,40 +1,40 @@
 {
-    "hash": "5a694f758b53c0b9f7ce611a2d97633e",
+    "hash": "3b2340b2553fc6c6b856ffdd0665a3eb",
     "packages": [
+        {
+            "package": "Smarty3",
+            "version": "3.0.8"
+        },
         {
             "package": "doctrine/common",
             "version": "2.1.x-dev",
-            "source-reference": "41794945e795e108060eddb3342c9e13524b9b3e"
+            "source-reference": "41794945e795e108060eddb3342c9e13524b9b3e",
+            "commit-date": "1331851788"
         },
         {
             "package": "doctrine/dbal",
             "version": "2.1.x-dev",
-            "source-reference": "76799960a54af583e82bedcf246e8c9c18006e94"
-        },
-        {
-            "package": "doctrine/mongodb",
-            "version": "dev-master",
-            "source-reference": "1a8380ff6b8a2ccdb09ebde375ad5b0b9449e3f1"
-        },
-        {
-            "package": "doctrine/mongodb-odm",
-            "version": "dev-parent_document_property",
-            "source-reference": "f3ba4317bf61333c79ee2905651b82470fa36cff"
+            "source-reference": "76799960a54af583e82bedcf246e8c9c18006e94",
+            "commit-date": "1338146238"
         },
         {
             "package": "doctrine/orm",
             "version": "2.1.x-dev",
-            "source-reference": "417b6b0e5e81c4da90745728b3f05bd5fcb5cccd"
+            "source-reference": "ab851ab91464596b8b3f2d25644764e360d704b7",
+            "commit-date": "1341323303"
         },
         {
-            "package": "symfony/console",
-            "version": "dev-master",
-            "source-reference": "afc5ecf2967bf3510363535c0389ddc0f6284784"
+            "package": "sfDependencyInjection",
+            "version": "2.0"
         },
         {
-            "package": "symfony/yaml",
-            "version": "dev-master",
-            "source-reference": "8272d98f8087878db37e8e5f6d4e37c5cc783dc3"
+            "package": "sfEventDispatcher",
+            "version": "2.0"
+        },
+        {
+            "package": "zendframework/zendframework1",
+            "version": "dev-trunk",
+            "source-reference": "/trunk/@25021"
         }
     ],
     "packages-dev": null,

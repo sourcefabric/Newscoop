@@ -22,24 +22,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $autoloader = Zend_Loader_Autoloader::getInstance();
         $autoloader->setFallbackAutoloader(TRUE);
 
-        // autoload symfony service container
-        $autoloader->pushAutoloader(function($class) {
-            require_once APPLICATION_PATH . "/../library/fabpot-dependency-injection-07ff9ba/lib/{$class}.php";
-        }, 'sfService');
-
-        // autoload symfony event dispatcher
-        $autoloader->pushAutoloader(function($class) {
-            require_once APPLICATION_PATH . "/../library/fabpot-event-dispatcher-782a5ef/lib/{$class}.php";
-        }, 'sfEvent');
-
         // fix adodb loading error
         $autoloader->pushAutoloader(function($class) {
             return;
         }, 'ADO');
-
-        $autoloader->pushAutoloader(function($class) {
-            require_once 'smarty3/sysplugins/' . strtolower($class) . '.php';
-        }, 'Smarty');
 
         $GLOBALS['g_campsiteDir'] = realpath(APPLICATION_PATH . '/../');
 
