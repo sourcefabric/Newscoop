@@ -69,13 +69,17 @@ class UserPointsService
     {
         switch ($event->getName()) {
             case 'articleauthor.preCreate':
-                $user = $this->getAuthorEventUser($event);
-                $this->addUserPoints($user, 1);
+                if ($this->isCountableAuthorEvent($event)) {
+                    $user = $this->getAuthorEventUser($event);
+                    $this->addUserPoints($user, 1);
+                }
                 break;
 
             case 'articleauthor.preRemove':
-                $user = $this->getAuthorEventUser($event);
-                $this->addUserPoints($user, -1);
+                if ($this->isCountableAuthorEvent($event)) {
+                    $user = $this->getAuthorEventUser($event);
+                    $this->addUserPoints($user, -1);
+                }
                 break;
 
             case 'comment.preCreate':
@@ -88,6 +92,32 @@ class UserPointsService
                 $this->addUserPoints($user, -1);
                 break;
         }
+    }
+
+    /**
+     * Test if event is related to article type which is being counted
+     *
+     * @param sfEvent $event
+     * @return bool
+     */
+    private function isCountableAuthorEvent($event)
+    {
+        $params = $event->getParameters();
+        $query = $this->em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a')
+            ->select('a.type')
+            ->where('a.number = :number')
+            ->andWhere('a.language = :language')
+            ->setMaxResults(1)
+            ->getQuery();
+
+        $query->setParameters(array(
+            'number' => $params['id']['articleNumber'],
+            'language' => $params['id']['languageId'],
+        ));
+
+        $type = $query->getSingleScalarResult();
+        return in_array($type, array('news', 'blog'));
     }
 
     /**
