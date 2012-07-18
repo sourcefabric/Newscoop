@@ -30,28 +30,6 @@ set_include_path(implode(PATH_SEPARATOR, array(
 //require Composer autoloader
 require_once realpath(APPLICATION_PATH . '/../../vendor/autoload.php');
 
-/*
-if (!function_exists('stream_resolve_include_paths')) {
-    function stream_resolve_include_paths($filename) {
-        foreach (explode(PATH_SEPARATOR, get_include_path()) as $include_path) {
-            $realpath = realpath("{$include_path}/{$filename}");
-            if ($realpath !== false) {
-                return $realpath;
-            }
-        }
-
-        return false;
-    }
-}
-*/
-/*if (!stream_resolve_include_paths('Zend/Application.php')) {
-	// include libzend if we don't have zend_application
-	set_include_path(implode(PATH_SEPARATOR, array(
-		'/usr/share/php/libzend-framework-php',
-		get_include_path(),
-	)));
-}
-*/
 /** Zend_Application */
 
 if (defined('INSTALL')) {
