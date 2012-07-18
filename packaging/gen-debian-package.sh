@@ -125,8 +125,8 @@ if test "${UPSTREAMVERSION}" == "3.5.1"; then
 	rm newscoop/javascript/tinymce/plugins/codehighlighting/img/Thumbs.db
 fi
 
-### fixes for 4.0.1 ###
-if test "${UPSTREAMVERSION}" == "4.0.1"; then
+### fixes for 4.0.2 ###
+if test "${UPSTREAMVERSION}" == "4.0.2"; then
 
 	rm newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/.DS_Store
 	rm newscoop/install/sample_templates/rockstar/templates/set_rockstar/assets/css/.DS_Store
