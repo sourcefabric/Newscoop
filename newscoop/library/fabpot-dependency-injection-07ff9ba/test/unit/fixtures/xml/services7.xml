@@ -1,7 +1,0 @@
-<?xml version="1.0" ?>
-
-<container xmlns="http://symfony-project.org/2.0/container">
-  <services>
-    <service id="foo" class="BarClass" />
-  </services>
-</container>
