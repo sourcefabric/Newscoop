@@ -10,12 +10,14 @@ use Newscoop\Entity\Article;
 require_once __DIR__ . '/AbstractController.php';
 
 /**
+ * Blogs API service controller.
  */
 class Api_BlogsController extends AbstractController
 {
     const PUBLICATION = 5;
     const LANGUAGE = 5;
-    
+    const LIST_LIMIT = 30;
+
     /** @var Zend_Controller_Request_Http */
     private $request;
 
@@ -23,7 +25,7 @@ class Api_BlogsController extends AbstractController
      * @var array
      */
     private $commentStats = array();
-    
+
     /**
      * Init controller.
      */
@@ -56,7 +58,7 @@ class Api_BlogsController extends AbstractController
         $rank = 1;
         foreach ($sections as $section) {
             $blogs = $this->_helper->service('article')->findBy(array('section' => $section->getNumber(), 'type' => 'bloginfo'));
-            if ($blogs[0]) {
+            if (isset($blogs[0])) {
                 $blogData = new ArticleData('bloginfo', $blogs[0]->getNumber(), self::LANGUAGE);
                 $posts = $this->_helper->service('article')->findBy(array('section' => $section->getNumber(), 'type' => 'blog'), array('published' => 'desc'));
                 $blogImages = ArticleImage::GetImagesByArticleNumber($blogs[0]->getNumber());
@@ -68,7 +70,7 @@ class Api_BlogsController extends AbstractController
                         'module' => 'api',
                         'controller' => 'blogs',
                         'action' => 'posts',
-                    ), 'default') . sprintf('?blog_id=%d', $section->getNumber()) . $this->getClientVersionParams(false)),
+                    ), 'default') . $this->getApiQueryString(array('blog_id' => $section->getNumber()))),
                     'title' => $blogs[0]->getTitle(),
                     'description' => trim(strip_tags($blogData->getFieldValue('infolong'))),
                     'rank' => $rank++,
@@ -93,7 +95,7 @@ class Api_BlogsController extends AbstractController
             $this->_forward('posts-list');
         }
     }
-    
+
     /**
      * Returns list of posts.
      *
@@ -117,9 +119,13 @@ class Api_BlogsController extends AbstractController
                 $this->sendError('Blog not found', 404);
             }
 
-            $posts = $this->_helper->service('article')->findBy(array('section' => $section, 'type' => 'blog'), array('published' => 'desc'), 30);
+            $posts = $this->_helper->service('article')->findBy(
+                array('section' => $section, 'type' => 'blog'),
+                array('published' => 'desc'), self::LIST_LIMIT);
         } else {
-            $posts = $this->_helper->service('article')->findBy(array('type' => 'blog'), array('published' => 'desc'), 30);
+            $posts = $this->_helper->service('article')->findBy(
+                array('type' => 'blog'),
+                array('published' => 'desc'), self::LIST_LIMIT);
         }
 
         $this->commentStats = $this->_helper->service('comment')->getArticleStats(array_map(function($post) {
@@ -143,11 +149,6 @@ class Api_BlogsController extends AbstractController
                 $shortName = $post->getTitle();
             }
 
-            $teaser = trim(strip_tags($postData->getFieldValue('lede')));
-            if (empty($teaser)) {
-                $teaser = null;
-            }
-
             $normalComments = isset($this->commentStats[$post->getNumber()]) ? $this->commentStats[$post->getNumber()]['normal'] : 0;
             $recommendedComments = isset($this->commentStats[$post->getNumber()]) ? $this->commentStats[$post->getNumber()]['recommended'] : 0;
 
@@ -160,7 +161,7 @@ class Api_BlogsController extends AbstractController
                 ), 'default') . sprintf('?post_id=%d', $post->getNumber()) . $this->getClientVersionParams(false)),
                 'short_name' => $shortName,
                 'author_name' => implode(',', $this->getAuthors($post)),
-                'teaser' => $teaser,
+                'teaser' => $this->getTeaser($post),
                 'image_url' => $imageUrl,
                 'published' => $post->getPublishDate(),
                 'comment_count' => $normalComments + $recommendedComments,
@@ -169,7 +170,7 @@ class Api_BlogsController extends AbstractController
                     'module' => 'api',
                     'controller' => 'comments',
                     'action' => 'list',
-                ), 'default') . sprintf('?article_id=%d', $post->getNumber()) . $this->getClientVersionParams(false)),
+                ), 'default') . $this->getApiQueryString(array('article_id' => $post->getNumber()))),
                 'blog_id' => $blogInfo['id'],
                 'blog_name' => $blogInfo['name'],
                 'blog_image_url' => $blogInfo['image_url'],
