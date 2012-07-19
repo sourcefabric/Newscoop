@@ -1,5 +1,5 @@
 {
-    "hash": "3b2340b2553fc6c6b856ffdd0665a3eb",
+    "hash": "42730895b50fad06468d72f3768b42d7",
     "packages": [
         {
             "package": "Smarty3",
@@ -33,8 +33,8 @@
         },
         {
             "package": "zendframework/zendframework1",
-            "version": "dev-trunk",
-            "source-reference": "/trunk/@25021"
+            "version": "dev-release-1.11",
+            "source-reference": "/branches/release-1.11/@25000"
         }
     ],
     "packages-dev": null,
@@ -42,7 +42,7 @@
 
     ],
     "minimum-stability": "dev",
-    "stability-flags": [
-
-    ]
+    "stability-flags": {
+        "zendframework/zendframework1": 20
+    }
 }
