@@ -1,5 +1,5 @@
 <?php 
-regGS("Blog management", "");
+regGS("Blog management", "Управление блогами");
 regGS("Add article to a list", "Добавить статью к списку");
 regGS("View article", "Просмотр статьи");
 regGS("Select a list", "Выбрать список");
@@ -28,7 +28,7 @@ regGS("Place images", "Поместить изображения");
 regGS("You're not allowed to edit article.", "У вас нет прав редактирования статьи.");
 regGS("Webcode", "Web-код");
 regGS("Unapproved", "Не утверждено");
-regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Предварительный просмотр выпуска невозможен. Пожалуйста, убедитесь, что для публикации назначена тема.");
+regGS("This issue cannot be previewed. Please make sure the publication has a theme assigned.", "Предварительный просмотр выпуска невозможен. Пожалуйста, убедитесь, что для издания существует нужный шаблон.");
 regGS("The article could not be submitted.", "Невозможно отправить статью.");
 regGS("Submit articles", "Отправить статьи");
 regGS("Submit article", "Отправить статью");

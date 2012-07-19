@@ -1,5 +1,5 @@
 <?php 
-regGS("Campsite", "");
+regGS("Campsite", "Campsite");
 regGS("Image Rendering", "Обработка изображения");
 regGS("Featured Article Lists", "Cписки Избранных статей");
 regGS("You have tried to upload an invalid backup file.", "Неудачная попытка загрузки файла резервной копии.");
@@ -34,7 +34,7 @@ regGS("Download was not successful. Check please that the server is not out of d
 regGS("try again later", "повторите попытку позже");
 regGS("at", "в");
 regGS("You must at least upload one file.", "Вы обязаны загрузить не менее одного файла.");
-regGS("Warning: the existing data and themes will be deleted!", "Внимание: существующие данные и шаблоны будут удалены!");
+regGS("Warning: the existing data and themes will be deleted!", "Внимание: существующие данные и типовые шаблоны будут удалены!");
 regGS("Value is required and can't be empty", "Требуется значение, поле не может быть пустым.");
 regGS("Upload", "Загрузить");
 regGS("Update comment", "Обновить комментарий");
