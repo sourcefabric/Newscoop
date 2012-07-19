@@ -37,11 +37,9 @@ class Api_ProfileController extends AbstractController
             $this->_helper->json($form->getErrors());
         }
 
-        $subscriptionValidUntil = $this->_helper->service('user_subscription')->getValidUntilDate($user);
-        $this->_helper->json(array(
+        $this->_helper->json(array_merge(array(
             'first_name' => $user->getFirstName(),
             'last_name' => $user->getLastName(),
-            'customer_id' => $user->getAttribute('customer_id'),
             'birth_date' => $user->getAttribute('birth_date'),
             'facebook' => $user->getAttribute('facebook'),
             'google' => $user->getAttribute('google'),
@@ -54,17 +52,14 @@ class Api_ProfileController extends AbstractController
             'account_type' => $this->getUserType($user),
             'profile_image_url' => $this->getUserImage($user),
             'verified' => (bool) $user->getAttribute('is_verified'),
-            'print_subscription' => $subscriptionValidUntil !== null,
-            'print_subscription_valid_until' => $subscriptionValidUntil !== null ? $subscriptionValidUntil->format('Y-m-d') : null,
-            'digital_upgrade' => (bool) $user->getAttribute(self::DIGITAL_UPGRADE),
-            'free_digital_upgrade_consumed' => $this->_helper->service('mobile.free_upgrade')->isConsumed($user),
+
             'subscribed_topics' => array_map(function($topic) {
                 return array(
                     'topic_id' => $topic->getTopicId(),
                     'topic_name' => $topic->getName(),
                 );
             }, $this->_helper->service('user.topic')->getTopics($user)),
-        ));
+        ), $this->getUserSubscriptionInfo($user)));
     }
 
     /**
@@ -102,18 +97,12 @@ class Api_ProfileController extends AbstractController
 
     /**
      */
-    public function subscriptionstatusAction()
+    public function subscriptioninfoAction()
     {
         $this->assertIsSecure();
-
-        $user = $this->getUser();
-        $subscription = $this->_helper->service('user_subscription')->getActiveSubscription($user);
-
-        $this->_helper->json(array(
-            'print_subscription' => !empty($subscription),
-            'print_subscription_valid_until' => !empty($subscription) ? $subscription['valid_until'] : null,
-            'digital_upgrade' => !empty($subscription) ? (bool) $user->getAttribute(self::DIGITAL_UPGRADE) : false,
-            'free_digital_upgrade_consumed' => $this->_helper->service('mobile.free_upgrade')->isConsumed($user),
+        $this->_helper->json(array_merge(
+            $this->_getParam('username') !== null ? $this->getUserSubscriptionInfo($this->getUser()) : array(),
+            $this->getAvailableSubscriptions()
         ));
     }
 
@@ -163,5 +152,33 @@ class Api_ProfileController extends AbstractController
             'name' => uniqid() . '.' . $this->getImageExtension($info['mime']),
             'type' => $info['mime'],
         ));
+    }
+
+    /**
+     * Get available subscriptions
+     *
+     * @return array
+     */
+    private function getAvailableSubscriptions()
+    {
+        return json_decode(file_get_contents(__DIR__ . '/subscriptions.json'), true);
+    }
+
+    /**
+     * Get user subscription info
+     *
+     * @param Newscoop\Entity\User $user
+     * @return array
+     */
+    private function getUserSubscriptionInfo($user)
+    {
+        $validUntil = $this->_helper->service('user_subscription')->getValidUntilDate($user);
+        return array(
+            'customer_id' => $user->getAttribute('customer_id'),
+            'print_subscription' => $validUntil !== null,
+            'print_subscription_valid_until' => $validUntil !== null ? $validUntil->format('Y-m-d') : null,
+            'digital_upgrade' => (bool) $user->getAttribute(self::DIGITAL_UPGRADE),
+            'free_digital_upgrade_consumed' => $this->_helper->service('mobile.free_upgrade')->isConsumed($user),
+        );
     }
 }
