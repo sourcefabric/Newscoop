@@ -1,1 +1,3 @@
 newscoop/cache/*
+vendor/*
+composer.phar
