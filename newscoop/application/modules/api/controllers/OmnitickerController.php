@@ -28,6 +28,11 @@ class Api_OmnitickerController extends OmnitickerController
     /** @var array */
     private $commentStats = array();
 
+    /**
+     * @var array
+     */
+    private $topicTypes = array('newswire', 'news', 'blog', 'dossier');
+
     public function indexAction()
     {
         parent::indexAction();
@@ -69,6 +74,7 @@ class Api_OmnitickerController extends OmnitickerController
             'source' => $this->formatType($doc),
             'rank' => $this->rank++,
             'published' => $this->formatPublished($doc),
+            'topics' => $this->formatTopics($doc),
         );
     }
 
@@ -101,7 +107,7 @@ class Api_OmnitickerController extends OmnitickerController
     private function formatLinkUrl(array $doc)
     {
         if (!empty($doc['link_url'])) {
-           return $doc['link_url'];
+            return $doc['link_url'];
         }
 
         if (!empty($doc['tweet'])) {
@@ -307,5 +313,34 @@ class Api_OmnitickerController extends OmnitickerController
     protected function getVersion()
     {
         return sprintf('%.1f', $this->_getParam('version', 1.0));
+    }
+
+    /**
+     * Format topics
+     *
+     * @param array $doc
+     * @return array
+     */
+    protected function formatTopics($doc)
+    {
+        if (!in_array($doc['type'], $this->topicTypes)) {
+            return array();
+        }
+
+        $ids = explode('-', $doc['id']);
+        $article = $this->_helper->service('article')->findOneByNumber($ids[1]);
+        if (empty($article)) {
+            return array();
+        }
+
+        $topics = array();
+        foreach ($article->getTopicNames() as $id => $name) {
+            $topics[] = array(
+                'topic_id' => $id,
+                'topic_name' => $name,
+            );
+        }
+
+        return $topics;
     }
 }
