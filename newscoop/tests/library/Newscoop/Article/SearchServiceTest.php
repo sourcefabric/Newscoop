@@ -111,7 +111,7 @@ class SearchServiceTest extends \TestCase
             'section_name' => 'Sport',
             'section_id' => self::SECTION,
             'keyword' => array('key', 'words'),
-            'topic' => array('test'),
+            'topic' => array(1 => 'test'),
         ), $this->service->getDocument($article));
     }
 

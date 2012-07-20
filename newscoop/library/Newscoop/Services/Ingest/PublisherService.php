@@ -145,6 +145,10 @@ class PublisherService
      */
     public function getSection(Entry $entry)
     {
+        if (strpos($entry->getNewsItemId(), 'lto') !== false) {
+            return $this->config['section_lto'];
+        }
+
         switch ($entry->getSubject()) {
             case '15000000':
                 return $this->config['section_sport'];

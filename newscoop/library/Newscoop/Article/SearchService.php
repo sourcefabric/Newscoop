@@ -49,6 +49,13 @@ class SearchService implements \Newscoop\Search\ServiceInterface
     );
 
     /**
+     * @var array
+     */
+    private $sectionBlacklist = array(
+        41, // lto
+    );
+
+    /**
      * @param Newscoop\Webcode\Mapper $webcoder
      * @param Newscoop\Image\RenditionService $renditionService
      * @param Newscoop\Article\LinkService $linkService
@@ -84,7 +91,8 @@ class SearchService implements \Newscoop\Search\ServiceInterface
     {
         return $article->isPublished()
             && in_array($article->getType(), $this->config['type'])
-            && $article->getSectionNumber() > 0;
+            && $article->getSectionNumber() > 0
+            && !in_array($article->getSectionNumber(), $this->sectionBlacklist);
     }
 
     /**
