@@ -1,11 +1,11 @@
 {
-    "single_issue": {
+    "single_issue_product": {
         "product_id": "ch.tageswoche.issue.2012.test",
         "title": "Einzelausgabe",
         "description": "Einzelausgabe"
     },
 
-    "digital_upgrade": {
+    "digital_upgrade_product": {
         "product_id": "ch.tageswoche.digital_upgrade",
         "title": "Digitales Upgrade",
         "description": "Das Pendant zu Ihrem Print Abonnement"
