@@ -404,7 +404,7 @@ abstract class AbstractController extends Zend_Controller_Action
             $field = isset($this->fields['teaser'][$article->getType()])
                 ? $this->fields['teaser'][$article->getType()]
                 : 'teaser';
-            return preg_replace('/(<p>|<p [^>]*>|<\\/p>)/', '', $article->getData($field));
+            return preg_replace('/(<p>|<p [^>]*>|<\\/p>)/', '', trim($article->getData($field)));
         } catch (\Exception $e) {
             return null;
         }
