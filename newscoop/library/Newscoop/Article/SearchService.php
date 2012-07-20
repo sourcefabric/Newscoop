@@ -120,7 +120,7 @@ class SearchService implements \Newscoop\Search\ServiceInterface
             'section_name' => in_array($article->getType(), $this->config['blogs']) ? 'Blog' : $article->getSectionName(),
             'section_id' => $article->getSectionNumber(),
             'keyword' => explode(',', $article->getKeywords()),
-            'topic' => $article->getTopicNames(),
+            'topic' => array_values($article->getTopicNames()),
             'switches' => $this->getArticleSwitches($article),
         );
 
