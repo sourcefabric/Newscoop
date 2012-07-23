@@ -183,6 +183,17 @@ class Api_CinemaController extends Zend_Controller_Action
                 $one_location_id = $one_data->getProperty('Flocation_id');
             }
 
+            $one_phone = null;
+            $one_phone_costinformation = null;
+            $one_phone_info = $this->m_service->entities2Utf8('' . $one_data->getProperty('Fphone'));
+            $one_phone_info_arr = $this->m_service->getPhoneParts($one_phone_info);
+            if (!empty($one_phone_info_arr['phone'])) {
+                $one_phone = $one_phone_info_arr['phone'];
+            }
+            if (!empty($one_phone_info_arr['cost'])) {
+                $one_phone_costinformation = $one_phone_info_arr['cost'];
+            }
+
             if (!isset($movie_locations_used[$one_location_id])) {
                 $movie_locations_used[$one_location_id] = true;
                 $movie_locations_data[] = array(
@@ -192,7 +203,9 @@ class Api_CinemaController extends Zend_Controller_Action
                     'town' => $one_data->getProperty('Ftown'),
                     'street' => $one_data->getProperty('Fstreet'),
                     'web' => $one_web,
-                    'email' => $one_email,
+                    //'email' => $one_email,
+                    'phone' => $one_phone,
+                    'phone_costinformation' => $one_phone_costinformation,
                 );
             }
 
@@ -352,7 +365,7 @@ class Api_CinemaController extends Zend_Controller_Action
                 $one_descriptions_all = null;
                 if (!empty($one_descs_data['texts'])) {
                     $one_synopsis = $one_descs_data['texts'][0];
-                    $one_descriptions_all = $one_descs_data['texts'];
+                    $one_descriptions_all = implode("\n\n", $one_descs_data['texts']);
                 }
                 $one_links = null;
                 if (!empty($one_descs_data['links'])) {
@@ -373,8 +386,7 @@ class Api_CinemaController extends Zend_Controller_Action
                 $one_movie_data = array(
                     'suisa' => $one_suisa,
                     'title' => $one_title,
-                    'synopsis' => $one_synopsis,
-                    //'synopsis_all' => $one_descriptions_all,
+                    'synopsis' => $one_descriptions_all,
                     //'links' => $one_links,
                     //'organizer' => $one_data->getProperty('Forganizer'),
                     'genres' => $one_movie_types,

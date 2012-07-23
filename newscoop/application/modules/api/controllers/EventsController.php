@@ -186,7 +186,7 @@ class Api_EventsController extends Zend_Controller_Action
             $one_descriptions_all = null;
             if (!empty($one_descs_data['texts'])) {
                 $one_synopsis = $one_descs_data['texts'][0];
-                $one_descriptions_all = $one_descs_data['texts'];
+                $one_descriptions_all = implode("\n\n", $one_descs_data['texts']);
             }
             $one_links = null;
             if (!empty($one_descs_data['links'])) {
@@ -206,9 +206,8 @@ class Api_EventsController extends Zend_Controller_Action
 
             $event_list_data[] = array(
                 'title' => $one_title,
-                'description' => $one_synopsis,
-                //'description_all' => $one_descriptions_all,
-                //'links' => $one_links,
+                'description' => $one_descriptions_all,
+                'description_links' => $one_links,
                 'organizer' => $this->m_service->entities2Utf8($one_data->getProperty('Forganizer')),
                 'street' => $one_data->getProperty('Fstreet'),
                 'town' => $one_data->getProperty('Ftown'),

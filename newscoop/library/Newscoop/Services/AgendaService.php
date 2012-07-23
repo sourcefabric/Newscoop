@@ -469,4 +469,44 @@ class AgendaService
         return $content;
     }
 
+    public function getPhoneParts($p_phoneDesc)
+    {
+        $p_phoneDesc = trim($p_phoneDesc);
+
+        foreach (array('tel.', 'tel') as $one_start_omit) {
+            if (strncmp($one_start_omit, $p_phoneDesc, strlen($one_start_omit))) {
+                $p_phoneDesc = substr($p_phoneDesc, strlen($one_start_omit));
+            }
+        }
+
+        $p_phoneDesc = trim($p_phoneDesc);
+
+        $num_len = strspn($p_phoneDesc, '+-. 0123456789');
+
+        $phone_number_part = '';
+        $phone_cost_part = '';
+
+        if (0 < $num_len) {
+            $phone_number_part_test = substr($p_phoneDesc, 0, $num_len);
+            $phone_number_part_rev = strrev($phone_number_part_test);
+            $non_num_len = strcspn($phone_number_part_rev, '0123456789');
+            if (0 < $non_num_len) {
+                $num_len -= $non_num_len;
+            }
+        }
+
+        if ((0 == $num_len) || (strlen($p_phoneDesc) == $num_len)) {
+            $phone_number_part = $p_phoneDesc;
+        }
+        else {
+            $phone_number_part = substr($p_phoneDesc, 0, $num_len);
+            $phone_cost_part = substr($p_phoneDesc, $num_len + 1);
+        }
+
+        return array(
+            'phone' => trim($phone_number_part),
+            'cost' => trim($phone_cost_part),
+        );
+    }
+
 }
