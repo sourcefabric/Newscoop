@@ -263,12 +263,28 @@ class CampInstallationBase
         // load geonames
         set_time_limit(0);
         foreach (array('CityNames', 'CityLocations') as $table) {
-            $g_db->Execute("TRUNCATE `$table`");
-            $g_db->Execute("ALTER TABLE `$table` DISABLE KEYS");
+            $conn_specs = 'mysql:host='.$db_hostname.';';
+            if (!empty($db_hostport)) {
+                $conn_specs .= 'port='.$db_hostport.';';
+            }
+            $conn_specs .= 'dbname='.$db_database.'';
+
+            $l_db = new PDO(
+                $conn_specs,
+                $db_username,
+                $db_userpass,
+                array(
+                    PDO::MYSQL_ATTR_LOCAL_INFILE => 1,
+                    PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES utf8',
+                )
+            );
+
+            $l_db->exec("TRUNCATE `$table`");
+            $l_db->exec("ALTER TABLE `$table` DISABLE KEYS");
             $csvFile = CS_INSTALL_DIR.DIR_SEP.'sql'.DIR_SEP."$table.csv";
             $csvFile = str_replace("\\", "\\\\", $csvFile);
-            $g_db->Execute("LOAD DATA LOCAL INFILE '$csvFile' INTO TABLE $table FIELDS TERMINATED BY ';' ENCLOSED BY '\"'");
-            $g_db->Execute("ALTER TABLE `$table` ENABLE KEYS");
+            $l_db->exec("LOAD DATA LOCAL INFILE '$csvFile' INTO TABLE $table FIELDS TERMINATED BY ';' ENCLOSED BY '\"'");
+            $l_db->exec("ALTER TABLE `$table` ENABLE KEYS");
         }
 
         { // installing the stored function for 'point in polygon' checking
