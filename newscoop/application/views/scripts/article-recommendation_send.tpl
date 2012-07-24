@@ -3,7 +3,7 @@
 <div id="email-popup-box" class="popup-box">
         	
     <h3>Empfehlung versandt</h3>
-    <p>Vielen Dank für Ihr Interesse an diesem Artikel dies ist ein Blindtext.</p>
+    <p>Danke, dass Sie uns weiterempfehlen.</p>
     <a href="javascript:parent.$.fancybox.close();" class="button right">Zurück zum Artikel</a>
     <br><br><br>
 
