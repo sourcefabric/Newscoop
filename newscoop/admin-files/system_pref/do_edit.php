@@ -3,6 +3,7 @@ camp_load_translation_strings("system_pref");
 require_once($GLOBALS['g_campsiteDir']."/classes/SystemPref.php");
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
+require_once($GLOBALS['g_campsiteDir']."/classes/GeoNames.php");
 
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
@@ -253,6 +254,11 @@ foreach ($f_geo as $key => $value) {
         $name .= ucfirst($part);
     }
     SystemPref::Set($name, $value);
+}
+$f_mysql_client_command_path = Input::Get('f_mysql_client_command_path', 'string');
+SystemPref::Set('MysqlClientCommandPath', $f_mysql_command_path);
+if ((!Geo_Names::GeodataLoaded()) || (!empty($f_mysql_command_path))) {
+    Geo_Names::LoadGeodata($f_mysql_client_command_path);
 }
 
 $keys = array(

@@ -7,6 +7,7 @@ require_once($GLOBALS['g_campsiteDir']."/classes/Input.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/Log.php");
 require_once(dirname(dirname(dirname(__FILE__))).'/classes/cache/CacheEngine.php');
 require_once($GLOBALS['g_campsiteDir']."/classes/GeoPreferences.php");
+require_once($GLOBALS['g_campsiteDir']."/classes/GeoNames.php");
 
 if (!$g_user->hasPermission('ChangeSystemPreferences')) {
     camp_html_display_error(getGS("You do not have the right to change system preferences."));
@@ -451,6 +452,26 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
         <strong><?php putGS("Geolocation Settings"); ?></strong>
     </td>
 </tr>
+<?php
+    if (!Geo_Names::GeodataLoaded()) {
+
+    $mysql_client_command_path_def = '/usr/bin/mysql';
+    $mysql_client_command_path = SystemPref::Get('MysqlClientCommandPath');
+    if ((empty($mysql_client_command_path)) && (file_exists($mysql_client_command_path_def))) {
+        $mysql_client_command_path = $mysql_client_command_path_def;
+    }
+?>
+<tr>
+    <td align="left" width="400px" title="<?php putGS("to load geo-names data"); ?>" style="color:#b06000">
+        <?php putGS("MySQL client command path"); ?>
+    </td>
+    <td align="left" valign="top">
+        <input type="text" name="f_mysql_client_command_path" value="<?php p($mysql_client_command_path); ?>" maxlength="200" size="40" class="input_text" />
+    </td>
+</tr>
+<?php
+    }
+?>
 <tr>
     <td align="left" width="400px">
         <?php putGS("Map Center Latitude:"); ?>
