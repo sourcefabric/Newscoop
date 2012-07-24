@@ -293,6 +293,26 @@ function onUpload()
     flashMessage('<?php putGS('File uploaded.'); ?>');
 }
 
+/**
+ * Callback function used in datatable "fnDrawCallback" callback
+ * @param  object element table jquery object
+ */
+function newscoop_media_archive_data_table (element) {
+    var fancyBoxSelector;
+    if (element.hasClass('imagelist')) {
+        fancyBoxSelector = $('#images table td a');
+    } else if (element.hasClass('medialist')) {
+        fancyBoxSelector = $('#files a');
+    }
+
+    fancyBoxSelector.fancybox({
+        hideOnContentClick: false,
+        width: 1300,
+        height: 800,
+        type: 'iframe'
+    });
+};
+
 //-->
 </script>
 

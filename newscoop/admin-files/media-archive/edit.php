@@ -77,20 +77,16 @@ if (in_array($imageExtension, $allowedExtensions)) {
     }
 }
 
-$crumbs = array();
-$crumbs[] = array(getGS("Content"), "");
-$crumbs[] = array(getGS("Media Archive"), "/$ADMIN/media-archive/index.php");
 if ($g_user->hasPermission('ChangeImage')) {
-	$crumbs[] = array(getGS('Change image information'), "");
+	$label_text = getGS('Change image information');
+} else {
+	$label_text = getGS('View image');
 }
-else {
-	$crumbs[] = array(getGS('View image'), "");
-}
-$breadcrumbs = camp_html_breadcrumbs($crumbs);
 
+include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/html_head.php");
 include_once($GLOBALS['g_campsiteDir']."/$ADMIN_DIR/javascript_common.php");
 
-echo $breadcrumbs;
+echo '<div class="toolbar clearfix"><span class="article-title">' . $label_text . '</span></div>';
 
 ?>
 <p></p>
@@ -117,7 +113,7 @@ echo $breadcrumbs;
 
 <?php camp_html_display_msgs(); ?>
 <p></p>
-<IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" style="padding-left:15px">
+<IMG SRC="<?php echo $imageObj->getImageUrl(); ?>" BORDER="0" ALT="<?php echo htmlspecialchars($imageObj->getDescription()); ?>" style="padding-left:15px; max-width: 800px">
 <P>
 <?php if ($g_user->hasPermission('ChangeImage')) { ?>
 <FORM NAME="image_edit" METHOD="POST" ACTION="/<?php echo $ADMIN; ?>/media-archive/do_edit.php" ENCTYPE="multipart/form-data">
@@ -287,8 +283,4 @@ if (count($articles) > 0) {
 	}
 	?>
 	</table>
-<?php
-}
-
-camp_html_copyright_notice();
-?>
+<?php } ?>
