@@ -832,9 +832,10 @@ class KinoData_Parser_SimpleXML {
                 $one_img_url = trim('' . $one_lnk_image->i_imgurl);
                 $one_img_w = trim('' . $one_lnk_image->i_imgsizsxm);
                 $one_img_h = trim('' . $one_lnk_image->i_imgsizsym);
+                $one_img_time = trim('' . $one_lnk_image->i_imgtim);
 
                 if (!empty($one_img_url)) {
-                    $one_mov_info_images[$one_img_id] = array('url' => $one_img_url, 'width' => $one_img_w, 'height' => $one_img_h, 'type' => $one_img_type);
+                    $one_mov_info_images[$one_img_id] = array('url' => $one_img_url, 'width' => $one_img_w, 'height' => $one_img_h, 'type' => $one_img_type, 'time' => $one_img_time);
                     $one_mov_info['link_images'] = $one_mov_info_images;
                     $movies_infos[$one_mov_key] = $one_mov_info;
                 }
@@ -1533,6 +1534,9 @@ class KinoData_Parser_SimpleXML {
                             $one_link_url = $one_img_info['url'];
                             $one_link_label = '';
                             $one_link_image = array('url' => $one_link_url, 'label' => $one_link_label);
+                            if (isset($one_img_info['time'])) {
+                                $one_link_image['time'] = $one_img_info['time'];
+                            }
                             if (isset($one_img_info['type']) && ($this->m_poster_spec == $one_img_info['type'])) {
                                 array_unshift($one_mov_images, $one_link_image);
                             }

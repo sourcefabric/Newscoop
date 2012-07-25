@@ -1065,7 +1065,11 @@ class NewsImport
                     $image_found = false;
                     $use_image_obj = null;
 
-                    $img_used = self::$s_img_cache->checkImageInfoCache($one_image['url']);
+                    $img_time = 0;
+                    if (isset($one_image['time']) && (!empty($one_image['time']))) {
+                        $img_time = $one_image['time'];
+                    }
+                    $img_used = self::$s_img_cache->checkImageInfoCache($one_image['url'], $img_time);
                     if (!empty($img_used)) {
                         $images_local_check = '' . ($images_local ? 1 : 0);
                         foreach ($img_used as $one_img_used) {
@@ -1161,7 +1165,11 @@ class NewsImport
                                 'url' => $one_image['url'],
                                 'label' => (isset($one_image['label']) ? $one_image['label'] : ''),
                                 'provider_id' => $one_event['provider_id'],
+                                'time' => 0,
                             );
+                            if (isset($one_image['time']) && (!empty($one_image['time']))) {
+                                $one_image_info['time'] = $one_image['time'];
+                            }
                             self::$s_img_cache->insertImageIntoCache($one_image_info);
                             $one_img_res = ArticleImage::AddImageToArticle($one_image_obj->getImageId(), $art_number, null);
                         }

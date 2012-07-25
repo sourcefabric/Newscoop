@@ -35,7 +35,7 @@ class EventImage {
      */
     public function prepareImageInfoCache()
     {
-        $cre_req = 'CREATE TABLE IF NOT EXISTS ' . $this->m_table_name . ' (image_id INTEGER PRIMARY KEY, local INTEGER, url TEXT KEY, label TEXT, provider_id INTEGER)';
+        $cre_req = 'CREATE TABLE IF NOT EXISTS ' . $this->m_table_name . ' (image_id INTEGER PRIMARY KEY, local INTEGER, url TEXT KEY, label TEXT, provider_id INTEGER, source_timestamp INTEGER DEFAULT 0)';
 
         @$db = new PDO ('sqlite:' . $this->m_sqlite_name);
         $stmt = $db->prepare($cre_req);
@@ -53,16 +53,24 @@ class EventImage {
      * @param string $p_url
      * @return array
      */
-    public function checkImageInfoCache($p_url)
+    public function checkImageInfoCache($p_url, $p_time = 0)
     {
         $images = array();
 
+        $p_time = 0 + $p_time;
+
         $sel_req = 'SELECT image_id, local, url, label, provider_id FROM ' . $this->m_table_name . ' WHERE url = :url';
+        if (0 < $p_time) {
+            $sel_req .= ' AND source_timestamp >= :source_timestamp';
+        }
 
         @$db = new PDO ('sqlite:' . $this->m_sqlite_name);
         $stmt = $db->prepare($sel_req);
 
         $stmt->bindParam(':url', $p_url, PDO::PARAM_STR);
+        if (0 < $p_time) {
+            $stmt->bindParam(':source_timestamp', $p_time, PDO::PARAM_INT);
+        }
         $res = $stmt->execute();
         if ($res) {
             while (true) {
@@ -90,7 +98,12 @@ class EventImage {
      */
     public function insertImageIntoCache($p_imageInfo)
     {
-        $ins_req = 'INSERT OR REPLACE INTO ' . $this->m_table_name . ' (image_id, local, url, label, provider_id) VALUES (:image_id, :local, :url, :label, :provider_id)';
+        $ins_req = 'INSERT OR REPLACE INTO ' . $this->m_table_name . ' (image_id, local, url, label, provider_id, source_timestamp) VALUES (:image_id, :local, :url, :label, :provider_id, :source_timestamp)';
+
+        $img_time = 0;
+        if (isset($p_imageInfo['time']) && (!empty($p_imageInfo['time']))) {
+            $img_time = 0 + $p_imageInfo['time'];
+        }
 
         @$db = new PDO ('sqlite:' . $this->m_sqlite_name);
         $stmt = $db->prepare($ins_req);
@@ -101,6 +114,7 @@ class EventImage {
         $stmt->bindParam(':url', $p_imageInfo['url'], PDO::PARAM_STR);
         $stmt->bindParam(':label', $p_imageInfo['label'], PDO::PARAM_STR);
         $stmt->bindParam(':provider_id', $p_imageInfo['provider_id'], PDO::PARAM_INT);
+        $stmt->bindParam(':source_timestamp', $img_time, PDO::PARAM_INT);
 
         $res = $stmt->execute();
         if (!$res) {
