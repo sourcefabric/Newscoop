@@ -89,7 +89,7 @@ class AuthorsFacade
                     $article->getArticleNumber(),
                     $article->getLanguageId(),
                     $authorObj->getId(),
-                    $authorObj->getType(),
+                    $authorTypes[$i],
                     $i + 1
                 );
 
