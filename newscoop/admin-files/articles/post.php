@@ -68,10 +68,13 @@ foreach ($dbColumns as $dbColumn) {
         if($dbColumn->getType() == ArticleTypeField::TYPE_TEXT
             && $dbColumn->getMaxSize()!=0
             && $dbColumn->getMaxSize()!='') {
-                $articleFields[$dbColumn->getName()] = substr(trim(Input::Get($dbColumnParam)), 0, $dbColumn->getMaxSize());
-            }
-        else
+                $fieldValue = trim(Input::Get($dbColumnParam));
+                $articleFields[$dbColumn->getName()] = mb_strlen($fieldValue, 'utf8') > $dbColumn->getMaxSize()
+                    ? substr($fieldValue, 0, $dbColumn->getMaxSize())
+                    : $fieldValue;
+        } else {
             $articleFields[$dbColumn->getName()] = trim(Input::Get($dbColumnParam));
+        }
     } else {
         unset($articleFields[$dbColumn->getName()]); // ignore if not set
     }
