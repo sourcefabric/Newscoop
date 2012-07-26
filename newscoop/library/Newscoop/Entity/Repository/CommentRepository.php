@@ -181,9 +181,10 @@ class CommentRepository extends DatatableSource implements \Newscoop\Search\Repo
                     ->andWhere('c.thread = :thread')
                     ->andWhere('c.language = :language')
                     ->setParameter('parent', $parent)
-                    ->setParameter('thread', $parent->getThread())
-                    ->setParameter('language', $parent->getLanguage())
-            ->getQuery()->getSingleScalarResult();
+                    ->setParameter('thread', $parent->getThread()->getId())
+                    ->setParameter('language', $parent->getLanguage()->getId());
+
+            $threadOrder = $threadOrder->getQuery()->getSingleScalarResult();
             // if the comment parent doesn't have children then use the parent thread order
             if (empty($threadOrder)) {
                 $threadOrder = $parent->getThreadOrder();
@@ -199,8 +200,8 @@ class CommentRepository extends DatatableSource implements \Newscoop\Search\Repo
                ->andwhere('c.thread_order >= :thread_order')
                ->andWhere('c.thread = :thread')
                ->andWhere('c.language = :language')
-                    ->setParameter('language', $parent->getLanguage())
-                    ->setParameter('thread', $parent->getThread())
+                    ->setParameter('language', $parent->getLanguage()->getId())
+                    ->setParameter('thread', $parent->getThread()->getId())
                     ->setParameter('thread_order', $threadOrder);
             $qb->getQuery()->execute();
             // set the thread level the thread level of the parent plus one the current level
@@ -231,8 +232,8 @@ class CommentRepository extends DatatableSource implements \Newscoop\Search\Repo
         }
 
         $p_entity->setThreadOrder($threadOrder)->setThreadLevel($threadLevel);
-
         $em->persist($p_entity);
+
 
         return $p_entity;
     }
