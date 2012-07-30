@@ -154,6 +154,13 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
                 $(this).change();
             });
         });
+
+        /**
+         * hack for loading fancy box for datatable elements
+         */
+        if( typeof newscoop_media_archive_data_table == 'function') {
+            newscoop_media_archive_data_table(this);
+        }
     },
 	'fnCookieCallback': function (sName, oData, sExpires, sPath) {
         oData['abVisCols'] = []; // don't save visibility
