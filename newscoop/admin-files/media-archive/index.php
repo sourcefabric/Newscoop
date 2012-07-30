@@ -297,7 +297,7 @@ function onUpload()
  * Callback function used in datatable "fnDrawCallback" callback
  * @param  object element table jquery object
  */
-function newscoop_media_archive_data_table (element) {
+function newscoopMediaArchiveDataTable (element) {
     var fancyBoxSelector;
     if (element.hasClass('imagelist')) {
         fancyBoxSelector = $('#images table td a');
