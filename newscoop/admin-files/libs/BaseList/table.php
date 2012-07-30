@@ -158,8 +158,8 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
         /**
          * hack for loading fancy box for datatable elements
          */
-        if( typeof newscoop_media_archive_data_table == 'function') {
-            newscoop_media_archive_data_table(this);
+        if( typeof newscoopMediaArchiveDataTable == 'function') {
+            newscoopMediaArchiveDataTable(this);
         }
     },
 	'fnCookieCallback': function (sName, oData, sExpires, sPath) {
