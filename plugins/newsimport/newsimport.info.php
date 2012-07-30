@@ -366,6 +366,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
 
             'movie_distributor' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
             'movie_distributor_link' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
+            'movie_distributor_copyright' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
 
             'movie_director' => array('type' => 'text', 'params' => array(), 'hidden' => false), //
             'movie_producer' => array('type' => 'text', 'params' => array(), 'hidden' => false), //

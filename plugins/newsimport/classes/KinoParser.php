@@ -645,7 +645,7 @@ class KinoData_Parser_SimpleXML {
         $mov_infos_parts = array(
             'key' => 'movkey', 'imdb' => 'movimb', 'suisa' => 'movsui', 'country' => 'movcou',
             'title' => 'movtit', 'lead' => 'movlea', 'link' => 'movlnk', 'trailer' => 'movtra',
-            'distributor' => 'disnam', 'distributor_link' => 'dislnk',
+            'distributor' => 'disnam', 'distributor_link' => 'dislnk', 'distributor_copyright' => 'discpy',
         );
 
         $mov_infos_people = array(
