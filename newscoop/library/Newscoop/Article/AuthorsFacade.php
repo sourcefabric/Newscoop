@@ -147,4 +147,22 @@ class AuthorsFacade
 
         return $this->blogInfo;
     }
+
+    /**
+     * Get author posts count
+     *
+     * @param int $authorId
+     * @return int
+     */
+    public function getAuthorPostsCount($authorId)
+    {
+        $query =  $this->em->getRepository('Newscoop\Entity\ArticleAuthor')->createQueryBuilder('aa')
+            ->select('COUNT(aa)')
+            ->where('aa.authorId = :author')
+            ->getQuery();
+
+        $query->setParameter('author', $authorId);
+
+        return $query->getSingleScalarResult();
+    }
 }

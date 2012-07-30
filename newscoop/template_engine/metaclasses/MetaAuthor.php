@@ -32,10 +32,11 @@ final class MetaAuthor extends MetaDbObject
         'user' => 'getUser',
         'has_url' => 'hasUrl',
         'url' => 'getUrl',
+        'posts_count' => 'getPostsCount',
     );
 
     /** @var AuthorBiography **/
-    private $m_biography = NULL;
+    private $m_biography = null;
 
     /** @var MetaUser */
     private $user;
@@ -43,7 +44,7 @@ final class MetaAuthor extends MetaDbObject
     /** @var string */
     private $url;
 
-    public function __construct($p_idOrName = NULL, $p_type = NULL)
+    public function __construct($p_idOrName = null, $p_type = null)
     {
         $this->m_properties = self::$m_baseProperties;
         $this->m_customProperties = self::$m_defaultCustomProperties;
@@ -57,7 +58,7 @@ final class MetaAuthor extends MetaDbObject
 
     protected function getName($p_format = '%_FIRST_NAME %_LAST_NAME')
     {
-    	return $this->m_dbObject->getName($p_format);
+        return $this->m_dbObject->getName($p_format);
     }
 
 
@@ -115,7 +116,7 @@ final class MetaAuthor extends MetaDbObject
     public function getUrl()
     {
         if ($this->url === null) {
-           $user = $this->getUser();
+            $user = $this->getUser();
             if (!$user->defined || !$user->is_active) {
                 $this->url = '';
             } else {
@@ -126,5 +127,20 @@ final class MetaAuthor extends MetaDbObject
         }
 
         return $this->url;
+    }
+
+    /**
+     * Get author posts count
+     *
+     * @return int
+     */
+    protected function getPostsCount()
+    {
+        if (!$this->m_dbObject->exists()) {
+            return 0;
+        }
+
+        return \Zend_Registry::get('container')->getService('article.authors')
+            ->getAuthorPostsCount($this->m_dbObject->getId());
     }
 }
