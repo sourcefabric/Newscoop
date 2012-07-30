@@ -53,6 +53,8 @@ class Api_EventsController extends Zend_Controller_Action
     {
         global $Campsite;
 
+        $this->url = $Campsite['WEBSITE_URL'];
+
         $this->m_service = $this->_helper->service('agenda');
 
 
@@ -173,10 +175,10 @@ class Api_EventsController extends Zend_Controller_Action
             $one_image_urls = null;
             if (!empty($one_image_ids)) {
                 //$one_thumbnail_url = '/images/cache/' . $this->client_res_thumb . '/crop/images%7Ccms-image-' . $one_image_ids[0] . '.png';
-                $one_image_thumbnail_url = '/get_img?ImageHeight=' . $this->client_image_thumbnail_height . '&ImageWidth=' . $this->client_image_thumbnail_width . '&ImageCrop=center&ImageId=' . $one_image_ids[0];
+                $one_image_thumbnail_url = $this->url . '/get_img?ImageHeight=' . $this->client_image_thumbnail_height . '&ImageWidth=' . $this->client_image_thumbnail_width . '&ImageCrop=center&ImageId=' . $one_image_ids[0];
                 $one_image_urls = array();
                 foreach ($one_image_ids as $cur_one_img_id) {
-                    $one_image_urls[] = '/get_img?ImageHeight=' . $this->client_image_height . '&ImageWidth=' . $this->client_image_width . '&ImageCrop=center&ImageId=' . $cur_one_img_id;
+                    $one_image_urls[] = $this->url . '/get_img?ImageHeight=' . $this->client_image_height . '&ImageWidth=' . $this->client_image_width . '&ImageCrop=center&ImageId=' . $cur_one_img_id;
                 }
             }
 
