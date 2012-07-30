@@ -151,7 +151,7 @@ class MetaAction
         foreach ($basePaths as $basePath) {
             $directoryPath = $GLOBALS['g_campsiteDir'].'/'.$basePath.'/template_engine/metaclasses';
             $actionIncludeFiles = glob(realpath($directoryPath) . '/MetaAction*.php');
-            foreach ($actionIncludeFiles as $includeFile) {
+            foreach ((array)$actionIncludeFiles as $includeFile) {
                 if (preg_match('/MetaAction([^.]+)\.php/', $includeFile, $matches) == 0
                 || strtolower($matches[1]) == 'request') {
                     continue;
