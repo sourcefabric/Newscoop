@@ -59,6 +59,8 @@ class Api_CinemaController extends Zend_Controller_Action
     {
         global $Campsite;
 
+        $this->url = $Campsite['WEBSITE_URL'];
+
         $this->m_service = $this->_helper->service('agenda');
 
 
@@ -289,7 +291,7 @@ class Api_CinemaController extends Zend_Controller_Action
 
                 $one_image_url = null;
                 if (!empty($one_image_id)) {
-                    $one_image_url = '/get_img?ImageHeight=300&ImageId=' . $one_image_id;
+                    $one_image_url = $this->url . '/get_img?ImageHeight=300&ImageId=' . $one_image_id;
                 }
 */
 
@@ -334,14 +336,14 @@ class Api_CinemaController extends Zend_Controller_Action
                 $one_poster_url = null;
                 $one_image_urls = null;
                 if (!empty($one_poster_ids)) {
-                    $one_poster_thumbnail_url = '/get_img?ImageHeight=' . $this->client_poster_thumbnail_height . '&ImageWidth=' . $this->client_poster_thumbnail_width . '&ImageCrop=center&ImageId=' . $one_poster_ids[0];
-                    $one_poster_url = '/get_img?ImageHeight=' . $this->client_poster_height . '&ImageWidth=' . $this->client_poster_width . '&ImageCrop=center&ImageId=' . $one_poster_ids[0];
+                    $one_poster_thumbnail_url = $this->url . '/get_img?ImageHeight=' . $this->client_poster_thumbnail_height . '&ImageWidth=' . $this->client_poster_thumbnail_width . '&ImageCrop=center&ImageId=' . $one_poster_ids[0];
+                    $one_poster_url = $this->url . '/get_img?ImageHeight=' . $this->client_poster_height . '&ImageWidth=' . $this->client_poster_width . '&ImageCrop=center&ImageId=' . $one_poster_ids[0];
                 }
 
                 if (!empty($one_image_ids)) {
                     $one_image_urls = array();
                     foreach ($one_image_ids as $cur_one_img_id) {
-                        $one_image_urls[] = '/get_img?ImageHeight=' . $this->client_image_height . '&ImageWidth=' . $this->client_image_width . '&ImageCrop=center&ImageId=' . $cur_one_img_id;
+                        $one_image_urls[] = $this->url . '/get_img?ImageHeight=' . $this->client_image_height . '&ImageWidth=' . $this->client_image_width . '&ImageCrop=center&ImageId=' . $cur_one_img_id;
                     }
                 }
 
