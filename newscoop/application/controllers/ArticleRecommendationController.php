@@ -40,18 +40,22 @@ class ArticleRecommendationController extends Zend_Controller_Action
             $articles = $this->_helper->service('article')->findBy(array('number' => $parameters['article_number']));
             $article = $articles[0];
             $link = $this->_helper->service('link')->getLinkCanonical($article);
-            
-            $subject = 'Lesetipp: '.$article->getName();
+
             $body = '';
-            $body = $body.$parameters['message']."<br><br>";
-            $body = $body.$article->getName()."<br>";
-            $body = $body.$article->getData('lede')."<br><br>";
-            $body = $body."Lesen: <a href='".$link."'>".$link."</a>"."<br><br>";
-            $body = $body."Diese Email wurde von ".$parameters['sender_name']." via tageswoche.ch versandt.<br>";
+            $body .= $parameters['message']."<br><br>";
+            $body .= $article->getName()."<br>";
+            try {
+                $body .= $article->getType() === 'newswire' ? $article->getData('DataLead') : $article->getData('lede');
+                $body .= '<br /><br />';
+            } catch (\Exception $e) { // no lead for given article type
+            }
+
+            $body .= "Lesen: <a href='".$link."'>".$link."</a>"."<br><br>";
+            $body .= "Diese Email wurde von ".$parameters['sender_name']." via tageswoche.ch versandt.<br>";
             
             try {
                 $mail = new \Zend_Mail('utf-8');
-                $mail->setSubject($subject);
+                $mail->setSubject('Lesetipp: '.$article->getName());
                 $mail->setBodyHtml($body);
                 $mail->setFrom($parameters['sender_email']);
                 $mail->addTo($parameters['recipient_email']);
