@@ -409,7 +409,7 @@ class NewsImport
             'director', 'producer', 'cast', 'script', 'camera',
             'cutter', 'sound', 'score', 'production_design',
             'costume_design', 'visual_effects',
-            'distributor', 'distributor_link',
+            'distributor', 'distributor_link', 'distributor_copyright',
         );
         $movie_keys_numeric = array(
             'flag', 'year', 'duration', 'oscars',
