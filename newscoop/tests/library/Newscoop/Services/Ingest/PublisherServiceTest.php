@@ -65,16 +65,13 @@ class PublisherServiceTest extends \RepositoryTestCase
         $this->assertGreaterThan(0, $article->getSectionNumber());
         $this->assertEquals($entry->getCreated()->format('Y-m-d H:i:s'), $article->getCreationDate());
         $this->assertEquals($entry->getUpdated()->format('Y-m-d H:i:s'), $article->getLastModified());
-        $this->assertEquals('Y', $article->getWorkflowStatus());
-        $this->assertNotEmpty($article->getPublishDate());
         $this->assertTrue($article->isPublic());
         $this->assertEquals($entry->getArticleNumber(), $article->getArticleNumber());
         $this->assertEquals(NewsMlParserTest::TITLE, $article->getTitle());
         $this->assertEquals(NewsMlParserTest::CATCH_WORD, $article->getKeywords());
 
         $this->checkData($article, $entry);
-        $this->checkImages(1, $article);
-        $this->checkAuthors(2, $article, $this->feed);
+        $this->checkAuthors(1, $article, 'sda');
 
         $article->delete();
     }
@@ -110,13 +107,11 @@ class PublisherServiceTest extends \RepositoryTestCase
         $this->assertEquals($created->format('Y-m-d H:i:s'), $next->getCreationDate());
 
         $this->checkData($next, $entry);
-        $this->checkImages(1, $next);
-        $this->checkAuthors(2, $next, $this->feed);
+        $this->checkAuthors(2, $next, 'test');
 
         // test replacing images/authors
         $next = $this->service->update($entry);
-        $this->checkImages(1, $next);
-        $this->checkAuthors(2, $next, $this->feed);
+        $this->checkAuthors(2, $next, 'test');
 
         $next->delete();
     }
@@ -168,20 +163,20 @@ class PublisherServiceTest extends \RepositoryTestCase
     private function checkImages($count, \Article $article)
     {
         $images = \ArticleImage::GetImagesByArticleNumber($article->getArticleNumber());
-        $this->assertEquals($count, count($images));
+        $this->assertEquals($count, count($images), 'Images count');
         foreach ($images as $image) {
-            $this->assertTrue($image->getImage()->isApproved(), "Image not approved");
+            $this->assertTrue($image->getImage()->isApproved(), 'Image not approved');
         }
     }
 
     /**
      * Test article authors
      */
-    private function checkAuthors($count, \Article $article, Feed $feed)
+    private function checkAuthors($count, \Article $article, $name)
     {
         $authors = \ArticleAuthor::GetAuthorsByArticle($article->getArticleNumber(), $article->getLanguageId());
-        $this->assertEquals(1, count($authors), 'Authors count fails.');
-        $this->assertEquals($feed->getTitle(), $authors[0]->getName());
+        $this->assertEquals($count, count($authors), 'Authors count fails.');
+        $this->assertEquals($name, $authors[0]->getName());
     }
 
     public function testDelete()
@@ -329,5 +324,21 @@ class PublisherServiceTest extends \RepositoryTestCase
     private function getEntry(array $expects)
     {
         return Entry::create($this->getParser($expects));
+    }
+
+    public function testSiAuthor()
+    {
+        $entry = $this->getEntry(array(
+            'getTitle' => uniqid(),
+            'getContent' => 'hello',
+            'getLanguage' => 'de',
+            'getProvider' => 'Si',
+        ));
+        $entry->setFeed($this->feed);
+        $this->em->persist($entry);
+        $this->em->flush();
+
+        $article = $this->service->publish($entry);
+        $this->checkAuthors(1, $article, 'Si');
     }
 }
