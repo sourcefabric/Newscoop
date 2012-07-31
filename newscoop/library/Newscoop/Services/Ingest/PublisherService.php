@@ -46,7 +46,7 @@ class PublisherService
         $this->setArticleData($article, $entry);
         $this->setArticleDates($article, $entry);
         $this->setArticleAuthors($article, $entry);
-        $this->setArticleImages($article, $entry->getImages());
+        $this->setArticleImages($article, $entry);
         $entry->setArticleNumber($article->getArticleNumber());
         $article->commit();
         return $article;
@@ -74,7 +74,7 @@ class PublisherService
         $article->setKeywords($entry->getCatchWord());
         $this->setArticleData($article, $entry);
         $this->setArticleAuthors($article, $entry);
-        $this->setArticleImages($article, $entry->getImages());
+        $this->setArticleImages($article, $entry);
         $entry->setPublished(new \DateTime());
         return $article;
     }
@@ -218,7 +218,7 @@ class PublisherService
      */
     private function setArticleAuthors(\Article $article, Entry $entry)
     {
-        $name = $entry->getFeed()->getTitle();
+        $name = $entry->getProvider() ?: $entry->getFeed()->getTitle();
         $author = new \Author($name);
         if (!$author->exists()) {
             $author->create();
@@ -231,11 +231,12 @@ class PublisherService
      * Set article images
      *
      * @param Article $article
-     * @param array $images
+     * @param Newscoop\Entity\Ingest\Feed\Entry $entry
      * @return void
      */
-    private function setArticleImages(\Article $article, $images)
+    private function setArticleImages(\Article $article, Entry $entry)
     {
+        $images = $entry->getImages();
         if (empty($images)) {
             return;
         }
@@ -262,7 +263,7 @@ class PublisherService
             );
 
             $attributes = array(
-                'Photographer' => 'sda',
+                'Photographer' => $entry->getProvider() === 'Si' ? 'Si' : 'sda',
                 'Description' => $caption,
                 'Source' => 'newsfeed',
                 'Status' => 'approved',
