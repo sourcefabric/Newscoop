@@ -173,7 +173,27 @@ END:VCALENDAR';
             return $no_event;
         }
 
-        $event_address = $found_event_data->getProperty('Fstreet') . ', ' . $found_event_data->getProperty('Ftown') . ' ' . $found_event_data->getProperty('Fzipcode');
+        $event_address_parts = array();
+        $event_address_street = '' . $found_event_data->getProperty('Fstreet');
+        if (!empty($event_address_street)) {
+            $event_address_parts[] = $event_address_street;
+        }
+
+        $event_address_town_parts = array();
+        $event_address_town_name = '' . $found_event_data->getProperty('Ftown');
+        if (!empty($event_address_town_name)) {
+            $event_address_town_parts[] = $event_address_town_name;
+        }
+        $event_address_town_zip = '' . $found_event_data->getProperty('Fzipcode');
+        if (!empty($event_address_town_zip)) {
+            $event_address_town_parts[] = $event_address_town_zip;
+        }
+        $event_address_town = implode(' ', $event_address_town_parts);
+        if (!empty($event_address_town)) {
+            $event_address_parts[] = $event_address_town;
+        }
+
+        $event_address = implode(', ', $event_address_parts);
 
         $event_desc = '';
         $event_desc_array = explode("\n", '' . $found_event_data->getProperty('Fdescription'));
