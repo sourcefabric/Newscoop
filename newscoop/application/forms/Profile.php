@@ -40,73 +40,6 @@ class Application_Form_Profile extends Zend_Form
             'maxfilesize' => $this->getMaxFileSize(),
         ));
 
-        $profile = new Zend_Form_SubForm();
-
-        $profile->addElement('radio', 'gender', array(
-            'label' => 'Gender',
-            'multioptions' => array(
-                'male' => 'Male',
-                'female' => 'Female',
-            ),
-        ));
-
-        $profile->addElement('textarea', 'bio', array(
-            'label' => 'About me',
-            'filters' => array('stringTrim'),
-            'cols' => 60,
-            'rows' => 4,
-        ));
-
-        $profile->addElement('text', 'birth_date', array(
-            'label' => 'Date of birth',
-            'class' => 'date',
-            'filters' => array('stringTrim'),
-        ));
-
-        $profile->addElement('text', 'organisation', array(
-            'label' => 'Organisation',
-            'filters' => array('stringTrim'),
-        ));
-
-        $profile->addElement('text', 'website', array(
-            'label' => 'Website',
-            'filters' => array('stringTrim'),
-        ));
-
-        $profile->addElement('text', 'twitter', array(
-            'label' => 'Twitter',
-            'filters' => array('stringTrim'),
-        ));
-
-        $profile->addElement('text', 'facebook', array(
-            'label' => 'Facebook',
-            'filters' => array('stringTrim'),
-        ));
-
-        $profile->addElement('text', 'google', array(
-            'label' => 'Google+',
-            'filters' => array('stringTrim'),
-        ));
-
-        $profile->addElement('text', 'geolocation', array(
-            'label' => 'Geolocation',
-            'filters' => array('stringTrim'),
-        ));
-
-        $profile->addElement('checkbox', 'first_name_public', array(
-            'label' => 'First Name Public',
-        ));
-
-        $profile->addElement('checkbox', 'last_name_public', array(
-            'label' => 'Last Name Public',
-        ));
-
-        $profile->addElement('checkbox', 'email_public', array(
-            'label' => 'Allow sending emails',
-        ));
-
-        $this->addSubForm($profile, 'attributes');
-
         $this->addElement('submit', 'submit', array(
             'label' => 'Save profile',
             'ignore' => true,
@@ -115,19 +48,12 @@ class Application_Form_Profile extends Zend_Form
 
     public function setDefaultsFromEntity(User $user)
     {
-        $defaults = array(
+        $this->setDefaults(array(
             'first_name' => $user->getFirstName(),
             'last_name' => $user->getLastName(),
             'username' => $user->getUsername(),
-            'attributes' => array(),
-        );
-
-        $profile = $this->getSubForm('attributes');
-        foreach ($profile as $field) {
-            $defaults['attributes'][$field->getName()] = (string) $user->getAttribute($field->getName());
-        }
-
-        $this->setDefaults($defaults);
+            'attributes' => $user->getAttributes(),
+        ));
     }
 
     /**
