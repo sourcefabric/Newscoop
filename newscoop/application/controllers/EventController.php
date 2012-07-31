@@ -86,9 +86,20 @@ class EventController extends Zend_Controller_Action
         $ical_uid = 'event_' . $ical_info['spec'] . '@tageswoche.ch';
 
         $ical_name = $ical_info['name'];
+        $ical_name = str_replace(array('\\'), array('\\\\'), $ical_name);
+        $ical_name = str_replace(array(','), array('\\,'), $ical_name);
+
         $ical_desc = $ical_info['desc'];
+        $ical_desc = str_replace(array('\\'), array('\\\\'), $ical_desc);
+        $ical_desc = str_replace(array(','), array('\\,'), $ical_desc);
+
         $ical_location = $ical_info['addr'];
+        $ical_location = str_replace(array('\\'), array('\\\\'), $ical_location);
+        $ical_location = str_replace(array(','), array('\\,'), $ical_location);
+
         $ical_organizer = $ical_info['orgn'];
+        $ical_organizer = str_replace(array('\\'), array('\\\\'), $ical_organizer);
+        $ical_organizer = str_replace(array(','), array('\\,'), $ical_organizer);
 
         $ical_str = 'BEGIN:VCALENDAR
 VERSION:2.0
