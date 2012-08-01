@@ -11,9 +11,13 @@ namespace Newscoop;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
+/**
+ * ServiceContainer class.
+ *
+ * Provides wrapper methods for symfony's ContainerBuilder.
+ */
 class ServiceContainer extends ContainerBuilder
 {
-
     /**
     * Construct object.
     *
@@ -29,7 +33,7 @@ class ServiceContainer extends ContainerBuilder
     *
     * Wrapper for ContainerBuilder::set method.
     *
-    * @param string $id      The service identifier
+    * @param string $id The service identifier
     * @param object $service The service instance
     */
     public function setService($id, $service)
@@ -43,8 +47,7 @@ class ServiceContainer extends ContainerBuilder
     * Wrapper for ContainerBuilder::has method.
     *
     * @param string $id The service identifier
-    *
-    * @return Boolean true if the service is defined, false otherwise
+    * @return boolean True if the service is defined, false otherwise
     */
     public function hasService($id)
     {
@@ -56,8 +59,7 @@ class ServiceContainer extends ContainerBuilder
     *
     * Wrapper for ContainerBuilder::get method.
     *
-    * @param string  $id              The service identifier
-    *
+    * @param string  $id The service identifier
     * @return object The associated service
     */
     public function getService($id)
@@ -83,7 +85,7 @@ class ServiceContainer extends ContainerBuilder
     * Wrapper for ContainerBuilder::setAlias method.
     *
     * @param string $alias The alias to create
-    * @param mixed  $id    The service to alias
+    * @param mixed  $id The service to alias
     */
     public function setAlias($alias, $id)
     {
@@ -109,7 +111,7 @@ class ServiceContainer extends ContainerBuilder
     * This methods allows for simple registration of service definition
     * with a fluid interface.
     *
-    * @param string $id    The service identifier
+    * @param string $id The service identifier
     * @param string $class The service class
     */
     public function register($id, $class = null)
