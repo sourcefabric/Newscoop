@@ -478,6 +478,7 @@ class NewsImport
                 }
             }
             $art_name = $one_event['headline'] . $art_name_date_part . ' (' . $one_event['event_id'] . ')';
+            $art_name = NewsImportEnv::entities2Utf8($art_name, array('60', '62'));
 
             if (!$article) {
                 $article = new Article($art_lang);

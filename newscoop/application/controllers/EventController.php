@@ -85,10 +85,21 @@ class EventController extends Zend_Controller_Action
         //$ical_uid = md5(uniqid(mt_rand(), true)) . '@tageswoche.ch';
         $ical_uid = 'event_' . $ical_info['spec'] . '@tageswoche.ch';
 
-        $ical_name = $ical_info['name'];
-        $ical_desc = $ical_info['desc'];
-        $ical_location = $ical_info['addr'];
-        $ical_organizer = $ical_info['orgn'];
+        $ical_name = $this->entities2Utf8($ical_info['name']);
+        $ical_name = str_replace(array('\\'), array('\\\\'), $ical_name);
+        $ical_name = str_replace(array(','), array('\\,'), $ical_name);
+
+        $ical_desc = $this->entities2Utf8($ical_info['desc']);
+        $ical_desc = str_replace(array('\\'), array('\\\\'), $ical_desc);
+        $ical_desc = str_replace(array(','), array('\\,'), $ical_desc);
+
+        $ical_location = $this->entities2Utf8($ical_info['addr']);
+        $ical_location = str_replace(array('\\'), array('\\\\'), $ical_location);
+        $ical_location = str_replace(array(','), array('\\,'), $ical_location);
+
+        $ical_organizer = $this->entities2Utf8($ical_info['orgn']);
+        $ical_organizer = str_replace(array('\\'), array('\\\\'), $ical_organizer);
+        $ical_organizer = str_replace(array(','), array('\\,'), $ical_organizer);
 
         $ical_str = 'BEGIN:VCALENDAR
 VERSION:2.0
@@ -243,6 +254,77 @@ END:VCALENDAR';
 
         return $event_ical_info;
 
+    }
+
+    public function entities2Utf8($p_text)
+    {
+        //$forbidden_contractions = array('38', '60', '62', '150', '151', '132', '146', '147'); // do not translate into &, <, >, dashes, and some other ones
+        $forbidden_contractions = array();
+
+        $p_text = iconv('UTF-8','UTF-8//IGNORE', $p_text);
+        //$p_text = html_entity_decode($p_text, ENT_QUOTES, 'UTF-8');
+
+        $content_lines = explode('&#', $p_text);
+        $content = array_shift($content_lines);
+        foreach ($content_lines as $one_line) {
+            $one_line_parts = explode(';', $one_line, 2);
+            if ( (2 == count($one_line_parts)) && (is_numeric($one_line_parts[0])) && (!in_array($one_line_parts[0], $forbidden_contractions)) ) {
+                $content .= mb_convert_encoding('&#' . $this->altToUtf8(intval($one_line_parts[0])) . ';', 'UTF-8', 'HTML-ENTITIES');
+                $content .= $one_line_parts[1];
+            }
+            else {
+                $content .= '&#' . $one_line;
+            }
+
+        }
+
+        $content = html_entity_decode($content, ENT_QUOTES, 'UTF-8');
+
+        return $content;
+    }
+
+    private function altToUtf8($p_code)
+    {
+        // we get many bad data, like &#150; for dash. see next info:
+        // http://www.php.net/manual/en/function.html-entity-decode.php#68491
+        // http://en.wikipedia.org/wiki/Dash
+
+        $code = $p_code;
+
+        if ($code==128) { $code=8364; }
+        elseif ($code==129) { $code=160; } // not affected
+        elseif ($code==130) { $code=8218; }
+        elseif ($code==131) { $code=402; }
+        elseif ($code==132) { $code=8222; }
+        elseif ($code==133) { $code=8230; }
+        elseif ($code==134) { $code=8224; }
+        elseif ($code==135) { $code=8225; }
+        elseif ($code==136) { $code=710; }
+        elseif ($code==137) { $code=8240; }
+        elseif ($code==138) { $code=352; }
+        elseif ($code==139) { $code=8249; }
+        elseif ($code==140) { $code=338; }
+        elseif ($code==141) { $code=160; } // not affected
+        elseif ($code==142) { $code=381; }
+        elseif ($code==143) { $code=160; } // not affected
+        elseif ($code==144) { $code=160; } // not affected
+        elseif ($code==145) { $code=8216; }
+        elseif ($code==146) { $code=8217; }
+        elseif ($code==147) { $code=8220; }
+        elseif ($code==148) { $code=8221; }
+        elseif ($code==149) { $code=8226; }
+        elseif ($code==150) { $code=8211; }
+        elseif ($code==151) { $code=8212; }
+        elseif ($code==152) { $code=732; }
+        elseif ($code==153) { $code=8482; }
+        elseif ($code==154) { $code=353; }
+        elseif ($code==155) { $code=8250; }
+        elseif ($code==156) { $code=339; }
+        elseif ($code==157) { $code=160; } // not affected
+        elseif ($code==158) { $code=382; }
+        elseif ($code==159) { $code=376; }
+
+        return $code;
     }
 
 }
