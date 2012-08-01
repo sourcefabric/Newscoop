@@ -11,10 +11,10 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\MongoDB\Connection;
 use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Newscoop\DoctrineEventDispatcherProxy;
 use Newscoop\ServiceContainer;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
@@ -58,7 +58,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $this->bootstrap('autoloader');
         $container = new ServiceContainer($this->getOptions());
         $container->setParameter('config', $this->getOptions());
-
+        
         $this->bootstrap('doctrine');
         $doctrine = $this->getResource('doctrine');
         $container->setService('em', $doctrine->getEntityManager());
