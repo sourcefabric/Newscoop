@@ -12,7 +12,6 @@
         "Smarty3":"3.0.8",
         "doctrine/orm":"2.1.*",
         "sfEventDispatcher":"2.0",
-
         "symfony/dependency-injection": "2.1.*",
         "symfony/yaml": "2.1.*",
         "symfony/config": "2.1.*"
