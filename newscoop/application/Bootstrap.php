@@ -5,13 +5,16 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Newscoop\DoctrineEventDispatcherProxy,
-    Doctrine\Common\ClassLoader,
-    Doctrine\Common\Annotations\AnnotationReader,
-    Doctrine\ODM\MongoDB\DocumentManager,
-    Doctrine\MongoDB\Connection,
-    Doctrine\ODM\MongoDB\Configuration,
-    Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
+use Doctrine\Common\ClassLoader;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\ODM\MongoDB\DocumentManager;
+use Doctrine\MongoDB\Connection;
+use Doctrine\ODM\MongoDB\Configuration;
+use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
+use Newscoop\DoctrineEventDispatcherProxy;
+use Newscoop\ServiceContainer;
+use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
@@ -47,61 +50,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         }
     }
 
-    /**
-     * TODO the name of this method is named confusing, container for what? a zend navigation container? obviously not..
-     */
-    protected function _initContainer()
+    protected function _initDependencyContainer()
     {
         $this->bootstrap('autoloader');
-        $container = new sfServiceContainerBuilder($this->getOptions());
-        $container['config'] = $this->getOptions();
-
+        $container = new ServiceContainer($this->getOptions());
+        $container->setParameter('config', $this->getOptions());
+        
         $this->bootstrap('doctrine');
         $doctrine = $this->getResource('doctrine');
         $container->setService('em', $doctrine->getEntityManager());
 
         $this->bootstrap('view');
         $container->setService('view', $this->getResource('view'));
-
-        $container->register('image', 'Newscoop\Image\ImageService')
-            ->addArgument('%image%')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('user', 'Newscoop\Services\UserService')
-            ->addArgument(new sfServiceReference('em'))
-            ->addArgument(Zend_Auth::getInstance());
-
-        $container->register('user.list', 'Newscoop\Services\ListUserService')
-            ->addArgument('%config%')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('user.token', 'Newscoop\Services\UserTokenService')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('user_type', 'Newscoop\Services\UserTypeService')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('user_points', 'Newscoop\Services\UserPointsService')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('user_attributes', 'Newscoop\Services\UserAttributeService')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('author', 'Newscoop\Services\AuthorService')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('audit', 'Newscoop\Services\AuditService')
-            ->addArgument(new sfServiceReference('em'))
-            ->addArgument(new sfServiceReference('user'));
-
-        $container->register('comment', 'Newscoop\Services\CommentService')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('community_feed', 'Newscoop\Services\CommunityFeedService')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('audit.maintenance', 'Newscoop\Services\AuditMaintenanceService')
-            ->addArgument(new sfServiceReference('em'));
 
         $container->register('dispatcher', 'Newscoop\Services\EventDispatcherService')
             ->setConfigurator(function($service) use ($container) {
@@ -114,91 +74,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 }
             });
 
-        $container->register('user.topic', 'Newscoop\Services\UserTopicService')
-            ->addArgument(new sfServiceReference('em'))
-            ->addArgument(new sfServiceReference('dispatcher'));
-
-
-        $container->register('auth.adapter', 'Newscoop\Services\Auth\DoctrineAuthService')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('auth.adapter.social', 'Newscoop\Services\Auth\SocialAuthService')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('email', 'Newscoop\Services\EmailService')
-            ->addArgument('%email%')
-            ->addArgument(new sfServiceReference('view'))
-            ->addArgument(new sfServiceReference('user.token'));
-
-        $container->register('ingest.settings', 'Newscoop\News\SettingsService')
-            ->addArgument(new sfServiceReference('odm'));
-
-        $container->register('ingest.item', 'Newscoop\News\ItemService')
-            ->addArgument(new sfServiceReference('odm'))
-            ->addArgument(new sfServiceReference('ingest.settings'));
-
-        $container->register('ingest.feed', 'Newscoop\News\FeedService')
-            ->addArgument(new sfServiceReference('odm'))
-            ->addArgument(new sfServiceReference('ingest.item'));
-
-        $container->register('blog', 'Newscoop\Services\BlogService')
-            ->addArgument('%blog%');
-
-        $container->register('comment_notification', 'Newscoop\Services\CommentNotificationService')
-            ->addArgument(new sfServiceReference('email'))
-            ->addArgument(new sfServiceReference('comment'))
-            ->addArgument(new sfServiceReference('user'));
-
-        $container->register('user.search', 'Newscoop\Services\UserSearchService')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('content.publication', 'Newscoop\Content\PublicationService')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('content.section', 'Newscoop\Content\SectionService')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('content.type', 'Newscoop\Content\ContentTypeService')
-            ->addArgument(new sfServiceReference('em'));
-        
-        $container->register('stat', 'Newscoop\Services\StatService')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('view.helper.thumbnail', 'Newscoop\Image\ThumbnailViewHelper')
-            ->addArgument(new sfServiceReference('image'));
-
-        $container->register('view.helper.rendition', 'Newscoop\Image\RenditionViewHelper')
-            ->addArgument(new sfServiceReference('image'));
-
-        $container->register('image.rendition', 'Newscoop\Image\RenditionService')
-            ->addArgument('%config%')
-            ->addArgument(new sfServiceReference('em'))
-            ->addArgument(new sfServiceReference('image'));
-
-        $container->register('image.search', 'Newscoop\Image\ImageSearchService')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('package', 'Newscoop\Package\PackageService')
-            ->addArgument(new sfServiceReference('em'))
-            ->addArgument(new sfServiceReference('image'));
-
-        $container->register('package.search', 'Newscoop\Package\PackageSearchService')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('subscription', 'Newscoop\Subscription\SubscriptionFacade')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('subscription.section', 'Newscoop\Subscription\SectionFacade')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('subscription.ip', 'Newscoop\Subscription\IpFacade')
-            ->addArgument(new sfServiceReference('em'));
-
-        $container->register('random', 'Newscoop\Random');
-
-        $container->register('webcode', 'Newscoop\WebcodeFacade')
-            ->addArgument(new sfServiceReference('em'))
-            ->addArgument(new sfServiceReference('random'));
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
+        $loader->load('configs/services.yml');
 
         Zend_Registry::set('container', $container);
         return $container;
