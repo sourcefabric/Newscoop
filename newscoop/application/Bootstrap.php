@@ -50,10 +50,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         }
     }
 
-    /**
-     * TODO the name of this method is named confusing, container for what? a zend navigation container? obviously not..
-     */
-    protected function _initContainer()
+    protected function _initDependencyContainer()
     {
         $this->bootstrap('autoloader');
         $container = new ServiceContainer($this->getOptions());
