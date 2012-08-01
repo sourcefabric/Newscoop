@@ -215,6 +215,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
         $request_files = array();
         $request_files['general'] = dirname(__FILE__).DIRECTORY_SEPARATOR.'admin-files'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'cron'.DIRECTORY_SEPARATOR.'request_import.php';
         $request_files['trailers'] = dirname(__FILE__).DIRECTORY_SEPARATOR.'admin-files'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'cron'.DIRECTORY_SEPARATOR.'process_trailers.php';
+        $request_files['preload'] = dirname(__FILE__).DIRECTORY_SEPARATOR.'admin-files'.DIRECTORY_SEPARATOR.'newsimport'.DIRECTORY_SEPARATOR.'cron'.DIRECTORY_SEPARATOR.'preload_agenda.php';
 
         $new_cron = array();
         foreach ($cron_output as $one_cron_line) {
