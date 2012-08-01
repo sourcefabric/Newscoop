@@ -39,14 +39,19 @@ class DashboardController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $this->mailchimpGroups = $this->_helper->service('mailchimp')->getListGroups($this->getMailChimpListId());
-        $this->userGroups = $this->_helper->service('mailchimp')->getUserGroups($this->user, $this->getMailChimpListId());
-
         $form = new Application_Form_Profile();
         $form->setMethod('POST');
 
+        $this->addProfileFields($form);
+
         $form->setDefaultsFromEntity($this->user);
-        $form->setMailChimpGroups($this->mailchimpGroups, $this->userGroups);
+
+        if ($this->getMailChimpListId()) {
+            $form->setMailChimpGroups(
+                $this->_helper->service('mailchimp')->getListGroups($this->getMailChimpListId()),
+                $this->_helper->service('mailchimp')->getUserGroups($this->user, $this->getMailChimpListId())
+            );
+        }
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
@@ -174,6 +179,21 @@ class DashboardController extends Zend_Controller_Action
      */
     private function saveMailchimp(array $values)
     {
-        $this->_helper->service('mailchimp')->subscribe($this->user, $this->getMailChimpListId(), $values['mailchimp']);
+        if (!empty($values['mailchimp'])) {
+            $this->_helper->service('mailchimp')
+                ->subscribe($this->user, $this->getMailChimpListId(), $values['mailchimp']);
+        }
+    }
+
+    /**
+     * Add profile fields to form
+     *
+     * @param Zend_Form $form
+     * @return void
+     */
+    private function addProfileFields(Zend_Form $form)
+    {
+        $config = new Zend_Config_Xml($this->_helper->theme->getFilePath('_forms/profile.xml'), 'user');
+        $form->addSubForm(new Zend_Form_SubForm($config->profile), 'attributes');
     }
 }

@@ -28,20 +28,16 @@ class Action_Helper_Smarty extends Zend_Controller_Action_Helper_Abstract
             return;
         }
 
-        if (!in_array($request->getParam('module', 'default'), $this->modules) || !array_key_exists('module', $request->getParams())) {
+        if (!in_array($request->getParam('module', 'default'), $this->modules)
+            || !array_key_exists('module', $request->getParams())) {
             return;
         }
 
-        $uri = CampSite::GetURIInstance();
-        $themePath = rtrim($uri->getThemePath(), '/');
-
         $controller->view = new Newscoop\SmartyView();
-        $controller->view
-            ->addScriptPath(APPLICATION_PATH . '/views/scripts/')
-            ->addScriptPath(APPLICATION_PATH . "/../themes/{$themePath}/_views");
-
-        $controller->view->addPath(APPLICATION_PATH . "/../themes/{$themePath}");
-        $controller->view->addPath(APPLICATION_PATH . "/../themes/{$themePath}/_views");
+        $controller->view->addScriptPath(APPLICATION_PATH . '/views/scripts/');
+        $controller->view->addScriptPath($controller->getHelper('theme')->getFilePath('_views'));
+        $controller->view->addPath($controller->getHelper('theme')->getPath());
+        $controller->view->addPath($controller->getHelper('theme')->getFilePath('_views'));
 
         $controller->getHelper('viewRenderer')
             ->setView($controller->view)
