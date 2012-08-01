@@ -50,7 +50,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         }
     }
 
-    protected function _initDependencyContainer()
+    /**
+     * Name must be _initContainer because bootstrap create resource named "container", 
+     * and if we change function name, then resource name will be also changed.
+     *
+     * TODO: refactor name.
+     */
+    protected function _initContainer()
     {
         $this->bootstrap('autoloader');
         $container = new ServiceContainer($this->getOptions());
@@ -65,6 +71,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $container->register('dispatcher', 'Newscoop\Services\EventDispatcherService')
             ->setConfigurator(function($service) use ($container) {
+                
                 foreach ($container->getParameter('listener') as $listener) {
                     $listenerService = $container->getService($listener);
                     $listenerParams = $container->getParameter($listener);
