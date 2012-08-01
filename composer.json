@@ -11,8 +11,10 @@
         "zendframework/zendframework1":"dev-release-1.11",
         "Smarty3":"3.0.8",
         "doctrine/orm":"2.1.*",
-        "sfDependencyInjection":"2.0",
-        "sfEventDispatcher":"2.0"
+        "sfEventDispatcher":"2.0",
+        "symfony/dependency-injection": "2.1.*",
+        "symfony/yaml": "2.1.*",
+        "symfony/config": "2.1.*"
     },
     "repositories":[
         {
@@ -64,7 +66,14 @@
             "Resource": "newscoop/library",
             "Nette": "newscoop/library"
         },
-        "classmap":["vendor/sfDependencyInjection", "vendor/sfEventDispatcher", "vendor/Smarty3/libs", "newscoop/classes","dependencies/include/adodb","newscoop/template_engine","newscoop/plugins"]
+        "classmap":[
+            "vendor/sfEventDispatcher", 
+            "vendor/Smarty3/libs", 
+            "newscoop/classes",
+            "dependencies/include/adodb",
+            "newscoop/template_engine",
+            "newscoop/plugins"
+        ]
     },
     "minimum-stability":"dev"
 }

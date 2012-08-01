@@ -1,5 +1,5 @@
 {
-    "hash": "42730895b50fad06468d72f3768b42d7",
+    "hash": "b6c9a8595d1df591ca74d8456769335c",
     "packages": [
         {
             "package": "Smarty3",
@@ -20,16 +20,48 @@
         {
             "package": "doctrine/orm",
             "version": "2.1.x-dev",
-            "source-reference": "ab851ab91464596b8b3f2d25644764e360d704b7",
-            "commit-date": "1341323303"
-        },
-        {
-            "package": "sfDependencyInjection",
-            "version": "2.0"
+            "source-reference": "1c0f88f2b398a9709d32c6d62896c4db9f9f3c9a",
+            "commit-date": "1343556552"
         },
         {
             "package": "sfEventDispatcher",
             "version": "2.0"
+        },
+        {
+            "package": "symfony/config",
+            "version": "dev-master",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/config",
+            "version": "dev-master",
+            "source-reference": "cb15ab7da9a69b123433c4edca68e23564345a31",
+            "commit-date": "1343512949"
+        },
+        {
+            "package": "symfony/dependency-injection",
+            "version": "dev-master",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/dependency-injection",
+            "version": "dev-master",
+            "source-reference": "ea5acc90c1c1937e8574968d577a5bbe9c6f680c",
+            "commit-date": "1343512949"
+        },
+        {
+            "package": "symfony/yaml",
+            "version": "dev-master",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/yaml",
+            "version": "dev-master",
+            "source-reference": "v2.1.0-BETA4",
+            "commit-date": "1342347231"
         },
         {
             "package": "zendframework/zendframework1",
