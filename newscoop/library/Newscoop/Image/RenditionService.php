@@ -272,6 +272,7 @@ class RenditionService
         $originalRendition = new Rendition($rendition->getImage()->getWidth(), $rendition->getImage()->getHeight());
 
         return array(
+            'id' => $rendition->getImage()->getId(),
             'src' => $thumbnail->src,
             'width' => $thumbnail->width,
             'height' => $thumbnail->height,

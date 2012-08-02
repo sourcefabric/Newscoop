@@ -7,6 +7,8 @@
 
 namespace Newscoop\Image;
 
+use Doctrine\Common\Collection\ArrayCollection;
+
 /**
  * Local Image
  * @Entity
@@ -81,6 +83,18 @@ class LocalImage implements ImageInterface
     private $date;
 
     /**
+     * @Column(nullable=true, name="Status")
+     * @var string
+     */
+    private $status;
+
+    /**
+     * @OneToMany(targetEntity="ArticleImageCaption", mappedBy="image")
+     * @var array
+     */
+    private $captions;
+
+    /**
      * @param string $image
      */
     public function __construct($image)
@@ -92,6 +106,8 @@ class LocalImage implements ImageInterface
             $this->location = 'local';
             $this->basename = (string) $image;
         }
+
+        $this->captions = new ArrayCollection();
     }
 
     /**
@@ -291,6 +307,32 @@ class LocalImage implements ImageInterface
     }
 
     /**
+     * Get captions
+     *
+     * @return array
+     */
+    public function getCaptions()
+    {
+        $captions = array();
+        foreach ($this->captions as $languageId => $caption) {
+            $captions[$languageId] = $caption->getCaption();
+        }
+
+        return $captions;
+    }
+
+    /**
+     * Set photographer url
+     *
+     * @param string $url
+     * @return void
+     */
+    public function setPhotographerUrl($url)
+    {
+        $this->photographerUrl = (string) $url;
+    }
+
+    /**
      * Get photographer url
      *
      * @return string
@@ -298,5 +340,26 @@ class LocalImage implements ImageInterface
     public function getPhotographerUrl()
     {
         return $this->photographerUrl;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     * @return void
+     */
+    public function setStatus($status)
+    {
+        $this->status = strtolower($status);
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

@@ -24,10 +24,8 @@ final class MetaImage extends MetaDbObject {
         $this->m_properties['number'] = 'Id';
         $this->m_properties['photographer'] = 'Photographer';
         $this->m_properties['place'] = 'Place';
-        $this->m_properties['description'] = 'Description';
         $this->m_properties['date'] = 'Date';
         $this->m_properties['last_update'] = 'LastModified';
-        $this->m_properties['caption'] = 'Caption';
         $this->m_properties['photographer_url'] = 'photographer_url';
 
         $this->m_customProperties['year'] = 'getYear';
@@ -48,6 +46,8 @@ final class MetaImage extends MetaDbObject {
         $this->m_customProperties['is_local'] = 'isLocal';
         $this->m_customProperties['type'] = 'getType';
         $this->m_customProperties['photographer_url'] = 'getPhotographerUrl';
+        $this->m_customProperties['description'] = 'getCaption';
+        $this->m_customProperties['caption'] = 'getCaption';
     } // fn __construct
 
 
@@ -166,8 +166,28 @@ final class MetaImage extends MetaDbObject {
      * @return int
      */
     protected function getArticleIndex() {
-        return CampTemplate::singleton()->context()->article->image_index;
+        return $this->getContext()->article->image_index;
     }
-} // class MetaSection
 
-?>
+    /**
+     * Get article specific caption
+     *
+     * @return string
+     */
+    protected function getCaption()
+    {
+        $article = $this->getContext()->article;
+        return Zend_Registry::get('container')->getService('image')
+            ->getCaption($this->m_dbObject->getImageId(), $article->number, $article->language->number);
+    }
+
+    /**
+     * Get context
+     *
+     * @return object
+     */
+    private function getContext()
+    {
+        return CampTemplate::singleton()->context();
+    }
+}

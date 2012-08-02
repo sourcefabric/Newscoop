@@ -7,6 +7,9 @@
 
 namespace Newscoop\Image;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Newscoop\Entity\Language;
+
 /**
  * Article Image
  * @Entity
@@ -15,13 +18,19 @@ namespace Newscoop\Image;
 class ArticleImage implements ImageInterface
 {
     /**
-     * @Id @Column(type="integer", name="NrArticle")
+     * @Id @Column(type="integer") @GeneratedValue
+     * @var int
+     */
+    private $id;
+
+    /**
+     * @Column(type="integer", name="NrArticle")
      * @var int
      */
     private $articleNumber;
 
     /**
-     * @Id @ManyToOne(targetEntity="Newscoop\Image\LocalImage", fetch="EAGER")
+     * @ManyToOne(targetEntity="Newscoop\Image\LocalImage", fetch="EAGER")
      * @JoinColumn(name="IdImage", referencedColumnName="Id")
      * @var Newscoop\Image\Image
      */
@@ -40,6 +49,12 @@ class ArticleImage implements ImageInterface
     private $isDefault;
 
     /**
+     * @OneToMany(targetEntity="ArticleImageCaption", mappedBy="articleImage", indexBy="languageId", cascade={"persist"})
+     * @var Doctrine\Common\Collections\Collection
+     */
+    private $captions;
+
+    /**
      * @param int $articleNumber
      * @param Newscoop\Image\LocalImage $image
      * @param bool $isDefault
@@ -49,6 +64,7 @@ class ArticleImage implements ImageInterface
         $this->articleNumber = (int) $articleNumber;
         $this->image = $image;
         $this->isDefault = (bool) $isDefault;
+        $this->captions = new ArrayCollection();
     }
 
     /**
@@ -130,5 +146,62 @@ class ArticleImage implements ImageInterface
     public function isDefault()
     {
         return $this->isDefault;
+    }
+
+    /**
+     * Set caption
+     *
+     * @param string $caption
+     * @param Newscoop\Entity\Language $language
+     * @return void
+     */
+    public function setCaption($caption, Language $language)
+    {
+        if (!isset($this->captions[$language->getId()])) {
+            $this->captions[$language->getId()] = new ArticleImageCaption($this, $language);
+        }
+
+        $this->captions[$language->getId()]->setCaption($caption);
+    }
+
+    /**
+     * Get caption
+     *
+     * @return string
+     */
+    public function getCaption($languageId)
+    {
+        return isset($this->captions[$languageId]) ? $this->captions[$languageId]->getCaption() : null;
+    }
+
+    /**
+     * Set number
+     *
+     * @param int $number
+     * @return void
+     */
+    public function setNumber($number)
+    {
+        $this->number = (int) $this->number;
+    }
+
+    /**
+     * Get number
+     *
+     * @return int
+     */
+    public function getNumber()
+    {
+        return $this->number;
+    }
+
+    /**
+     * Get image id
+     *
+     * @return int
+     */
+    public function getImageId()
+    {
+        return $this->image->getId();
     }
 }

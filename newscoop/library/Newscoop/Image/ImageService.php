@@ -7,6 +7,7 @@
 
 namespace Newscoop\Image;
 
+use Doctrine\ORM\NoResultException;
 use Newscoop\Entity\User;
 
 /**
@@ -156,8 +157,6 @@ class ImageService implements \Doctrine\Common\EventSubscriber
      */
     public function findByArticle($articleNumber)
     {
-        $this->updateSchema($articleNumber);
-
         $images = $this->orm->getRepository('Newscoop\Image\ArticleImage')
             ->findBy(array(
                 'articleNumber' => (int) $articleNumber,
@@ -340,25 +339,6 @@ class ImageService implements \Doctrine\Common\EventSubscriber
     }
 
     /**
-     * Update schema if needed
-     *
-     * @return void
-     */
-    private function updateSchema($articleNumber)
-    {
-        try {
-            $this->orm->getRepository('Newscoop\Image\ArticleImage')
-                ->findOneBy(array(
-                    'articleNumber' => (int) $articleNumber,
-                ));
-        } catch (\Exception $e) {
-            if ($e->getCode() === '42S22') {
-                $this->orm->getConnection()->exec('ALTER TABLE ArticleImages ADD is_default INT(1) DEFAULT NULL');
-            }
-        }
-    }
-
-    /**
      * Get user image
      *
      * @param Newscoop\Entity\User $user
@@ -369,5 +349,86 @@ class ImageService implements \Doctrine\Common\EventSubscriber
     public function getUserImage(User $user, $width = 65, $height = 65)
     {
         return $user->getImage() !== null ? $this->getSrc('images/' . $user->getImage(), $width, $height, 'crop') : null;
+    }
+
+    /**
+     * Save image
+     *
+     * @param array $values
+     * @param Newscoop\Image\LocalImage $image
+     * @return void
+     */
+    public function saveImage(array $values, LocalImage $image)
+    {
+        $image->setStatus($values['status']);
+        $image->setDescription($values['description']);
+        $image->setPhotographer($values['photographer']);
+        $image->setPhotographerUrl($values['photographer_url']);
+        $image->setPlace($values['place']);
+        $image->setDate($values['date']);
+        $this->orm->flush($image);
+    }
+
+    /**
+     * Save article image
+     *
+     * @param array $values
+     * @param Newscoop\Image\ArticleImage $articleImage
+     * @return void
+     */
+    public function saveArticleImage(array $values, ArticleImage $articleImage)
+    {
+        $language = $this->orm->getReference('Newscoop\Entity\Language', $values['language']);
+        $articleImage->setNumber($values['number']);
+        $articleImage->setCaption($values['caption'], $language);
+        $this->orm->flush();
+    }
+
+    /**
+     * Get image caption
+     *
+     * @param int $imageId
+     * @param int $articleNumber
+     * @param int $languageId
+     * @return string
+     */
+    public function getCaption($imageId, $articleNumber, $languageId)
+    {
+        $caption = $this->getArticleImageCaption($imageId, $articleNumber, $languageId);
+        if (!empty($caption)) {
+            return $caption;
+        }
+
+        $image = $this->orm->getRepository('Newscoop\Image\LocalImage')->find($imageId);
+        return $image ? $image->getDescription() : '';
+    }
+
+    /**
+     * Get article specific image caption
+     *
+     * @param int $imageId
+     * @param int $articleNumber
+     * @param int $languageId
+     * @return string
+     */
+    private function getArticleImageCaption($imageId, $articleNumber, $languageId)
+    {
+        $query = $this->orm->getRepository('Newscoop\Image\ArticleImageCaption')->createQueryBuilder('c')
+            ->select('c.caption')
+            ->where('c.articleNumber = :article')
+            ->andWhere('c.image = :image')
+            ->andWhere('c.languageId = :language')
+            ->getQuery();
+
+        $query->setParameters(array(
+            'article' => $articleNumber,
+            'image' => $imageId,
+            'language' => $languageId,
+        ));
+
+        try {
+            return $query->getSingleScalarResult();
+        } catch (NoResultException $e) { // no caption
+        }
     }
 }

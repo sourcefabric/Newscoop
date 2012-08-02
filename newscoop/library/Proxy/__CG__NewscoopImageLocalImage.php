@@ -135,10 +135,40 @@ class LocalImage extends \Newscoop\Image\LocalImage implements \Doctrine\ORM\Pro
         return parent::getCaption();
     }
 
+    public function getCaptions()
+    {
+        $this->__load();
+        return parent::getCaptions();
+    }
+
+    public function setPhotographerUrl($url)
+    {
+        $this->__load();
+        return parent::setPhotographerUrl($url);
+    }
+
+    public function getPhotographerUrl()
+    {
+        $this->__load();
+        return parent::getPhotographerUrl();
+    }
+
+    public function setStatus($status)
+    {
+        $this->__load();
+        return parent::setStatus($status);
+    }
+
+    public function getStatus()
+    {
+        $this->__load();
+        return parent::getStatus();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'location', 'basename', 'url', 'description', 'width', 'height', 'photographer', 'place', 'date');
+        return array('__isInitialized__', 'id', 'location', 'basename', 'url', 'description', 'width', 'height', 'photographer', 'photographerUrl', 'place', 'date', 'status', 'captions');
     }
 
     public function __clone()

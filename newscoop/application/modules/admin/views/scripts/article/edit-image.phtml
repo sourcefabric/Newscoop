@@ -1,0 +1,52 @@
+<?php $this->placeholder('bodyId')->set('next'); ?>
+
+<div id="modal-top">
+    <div class="toolbar fixed-top">
+        <div class="save-button-bar"></div>
+        <h1><?php putGS('Edit image metadata'); ?>
+        <span style="float: right;">
+            <input id="save-button" type="button" value="<?php echo putGS('Save'); ?>" class="save-button">
+        </span>
+</h1>
+    </div>
+</div>
+<div style="margin-top:40px;">&nbsp;</div>
+
+<div id="article-image-edit-thumbnail">
+    <?php echo $this->thumbnail($this->image, 400, 400, 'fit')->getImg($this); ?></div>
+</div>
+
+<div id="article-image-edit-form">
+    <?php echo $this->form; ?>
+</div>
+
+<script type="text/javascript">
+$(function() {
+    var currentCaption = <?php echo json_encode($this->form->article->caption->getValue() ?: $this->form->article->caption->getAttrib('placeholder')); ?>;
+    var captions = <?php echo json_encode(array_values($this->image->getCaptions())); ?>.filter(function(caption) {
+        return caption.length && caption !== currentCaption;
+    });
+
+    if (captions.length) {
+        var dl = $('#article-caption-element').closest('dl');
+        $('<dt />').text(<?php echo json_encode(getGS('Other captions')); ?>).appendTo(dl);
+
+        for (var i = 0; i < captions.length; i++) {
+            var dd = $('<dd />').appendTo(dl).addClass('caption-reuse');
+            $('<input type="text" />').val(captions[i]).attr('disabled', 'disabled').appendTo(dd);
+            $('<button />').text(<?php echo json_encode(getGS('Use')); ?>).appendTo(dd).click(function(e) {
+                $('#article-caption').val($(e.target).prev('input').val());
+                return false;
+            });
+        }
+    }
+
+    $('#save-button').click(function(e) {
+        $('#article-image-edit-form form').submit();
+    });
+
+    if (parent) { // updates parent view
+        parent.$(<?php echo json_encode(sprintf('#image-%d-caption', $this->image->getId())); ?>).text(currentCaption);
+    }
+});
+</script>

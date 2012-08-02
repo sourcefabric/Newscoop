@@ -19,7 +19,7 @@ require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
 class ArticleImage extends DatabaseObject {
 	var $m_keyColumnNames = array('NrArticle','IdImage');
 	var $m_dbTableName = 'ArticleImages';
-	var $m_columnNames = array('NrArticle', 'IdImage', 'Number');
+	var $m_columnNames = array('NrArticle', 'IdImage', 'Number', 'id');
 	var $m_image = null;
 
     private static $s_defaultOrder = array(array('field'=>'default', 'dir'=>'ASC'));
@@ -212,7 +212,9 @@ class ArticleImage extends DatabaseObject {
 			$selectStr = "COUNT(*)";
 		} else {
 			$tmpImage = new Image();
-			$selectStr = implode(',', $tmpImage->getColumnNames());
+            $selectStr = implode(',', array_map(function($column) {
+                return 'Images.' . $column;
+            }, $tmpImage->getColumnNames()));
 			$selectStr .= ', ArticleImages.Number, ArticleImages.NrArticle, ArticleImages.IdImage';
 		}
 		$queryStr = 'SELECT '.$selectStr

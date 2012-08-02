@@ -26,20 +26,27 @@
         <ul class="block-list">
             <?php foreach ((array) $articleImages as $articleImage) {
                 $image = $articleImage->getImage();
-                $imageEditUrl = "/$ADMIN/articles/images/edit.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_image_id=".$image->getImageId()."&f_language_id=$f_language_id&f_language_selected=$f_language_selected&f_image_template_id=".$articleImage->getTemplateId();
+                $imageEditUrl = $this->view->url(array(
+                    'module' => 'admin',
+                    'controller' => 'article',
+                    'action' => 'edit-image',
+                    'article' => $f_article_number,
+                    'image' => $image->getImageId(),
+                    'language' => $f_language_selected,
+                ), 'default');
                 $detachUrl = "/$ADMIN/articles/images/do_unlink.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_section_number=$f_section_number&f_article_number=$f_article_number&f_image_id=".$image->getImageId()."&f_language_selected=$f_language_selected&f_language_id=$f_language_id&f_image_template_id=".$articleImage->getTemplateId().'&'.SecurityToken::URLParameter();
                 $imageSize = getimagesize($image->getImageStorageLocation());
             ?>
             <li>
                 <div class="image-thumbnail-container">
                     <?php if ($inEditMode) { ?>
-                    <a href="<?php echo $imageEditUrl; ?>"><img src="<?php p($image->getThumbnailUrl()); ?>" /></a>
+                    <a href="<?php echo $imageEditUrl; ?>" class="image-edit"><img src="<?php p($image->getThumbnailUrl()); ?>" /></a>
                     <?php } else { ?>
                     <img src="<?php p($image->getThumbnailUrl()); ?>" />
                     <?php } ?>
                 </div>
                 <small><?php $image->getStatus() == 'approved' ? putGS('Approved') : putGS('Unapproved'); ?></small><br />
-                <?php echo htmlspecialchars($image->getDescription()); ?><br />
+                <span id="image-<?php echo $image->getImageId(); ?>-caption"><?php echo $this->view->escape($this->_helper->service('image')->getCaption($image->getImageid(), $f_article_number, $f_language_selected)); ?></span><br />
                 <?php echo $imageSize[0], ' x ', $imageSize[1]; ?>
 
                 <?php if (($inEditMode) && $g_user->hasPermission('AttachImageToArticle')) { ?>
@@ -49,6 +56,16 @@
             <?php } ?>
         </ul>
     </div>
+    <script type="text/javascript">
+        $(function() {
+            $('#media-images a.image-edit').fancybox({
+                hideOnContentClick: false,
+                width: 1300,
+                height: 800,
+                type: 'iframe'
+            });
+        });
+    </script>
 
     <!-- BEGIN Slideshows -->
     <div id="media-slideshows">
