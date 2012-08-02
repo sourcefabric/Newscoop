@@ -6,6 +6,7 @@
  */
 
 use Newscoop\Entity\User;
+use Newscoop\Event\Event\GenericEvent;
 
 /**
  */
@@ -266,9 +267,9 @@ class RegisterController extends Zend_Controller_Action
      */
     private function notifyDispatcher(User $user)
     {
-        $this->_helper->service('dispatcher')
-            ->notify(new sfEvent($this, 'user.register', array(
-            'user' => $user,
-        )));
+        $dispatcher = $this->_helper->service('dispatcher');
+            ->notify('user.register', new GenericEvent($this, array(
+                'user' => $user,
+            )));
     }
 }

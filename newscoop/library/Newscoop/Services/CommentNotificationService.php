@@ -7,6 +7,8 @@
 
 namespace Newscoop\Services;
 
+use Newscoop\Event\Event\GenericEvent;
+
 /**
  */
 class CommentNotificationService
@@ -34,10 +36,10 @@ class CommentNotificationService
     /**
      * Update
      *
-     * @param sfEvent $event
+     * @param GenericEvent $event
      * @return void
      */
-    public function update(\sfEvent $event)
+    public function update(GenericEvent $event)
     {
         $comment = $this->commentService->find($event['id']);
         $article = new \Article($comment->getLanguage()->getId(), $comment->getThread()->getNumber());

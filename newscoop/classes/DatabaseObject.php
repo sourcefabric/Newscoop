@@ -10,6 +10,9 @@ require_once dirname(__FILE__) . '/SystemPref.php';
 require_once dirname(__FILE__) . '/CampCache.php';
 require_once dirname(__FILE__) . '/Exceptions.php';
 
+use \Newscoop\Event\Dispatcher\EventDispatcher;
+use \Newscoop\Event\Event\GenericEvent;
+
 /**
  */
 class DatabaseObject
@@ -74,7 +77,7 @@ class DatabaseObject
 	 */
 	private static $m_cacheEngine = null;
 
-    /** @var sfEventDispatcher */
+    /** @var EventDispatcher */
     protected static $eventDispatcher = null;
 
     /** @var array */
@@ -1104,10 +1107,10 @@ class DatabaseObject
     /**
      * Set event dispatcher.
      *
-     * @param sfEventDispatcher $dispatcher
+     * @param EventDispatcher $dispatcher
      * @return void
      */
-    public static function setEventDispatcher(sfEventDispatcher $dispatcher)
+    public static function setEventDispatcher(EventDispatcher $dispatcher)
     {
         self::$eventDispatcher = $dispatcher;
     }
@@ -1125,7 +1128,7 @@ class DatabaseObject
             return;
         }
 
-        self::$eventDispatcher->notify(new sfEvent($subject, $event, $params));
+        self::$eventDispatcher->notify($event, new GenericEvent($subject, $params));
     }
 
     /**

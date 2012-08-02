@@ -7,8 +7,9 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity\UserPoints;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Entity\UserPoints;
+use Newscoop\Event\Event\GenericEvent;
 
 /**
  * User service
@@ -54,14 +55,14 @@ class UserPointsService
     /**
      * Receives notifications of points events.
      *
-     * @param sfEvent $event
+     * @param GenericEvent $event
      * @return void
      */
-    public function update(\sfEvent $event)
+    public function update(GenericEvent $event)
     {
-        $params = $event->getParameters();
+        $params = $event->getArguments();
 
-        $action =  str_replace(".", "_", $event->getName());
+        $action =  str_replace('.', '_', $event->getName());
         $user = $params['user'];
 
         if (is_int($user)) {

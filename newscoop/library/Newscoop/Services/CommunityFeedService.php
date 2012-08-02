@@ -7,8 +7,9 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity\Events\CommunityTickerEvent;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Entity\Events\CommunityTickerEvent;
+use Newscoop\Event\Event\GenericEvent;
 
 /**
  * Community Feed Service
@@ -29,12 +30,12 @@ class CommunityFeedService
     /**
      * Update community ticker
      *
-     * @param sfEvent $event
+     * @param GenericEvent $event
      * @return void
      */
-    public function update(\sfEvent $event)
+    public function update(GenericEvent $event)
     {
-        $params = $event->getParameters();
+        $params = $event->getArguments();
 
         $user = array_key_exists('user', $params) ? $params['user'] : null;
         unset($params['user']);

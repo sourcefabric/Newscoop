@@ -28,10 +28,12 @@ function smarty_function_form_register($params, $smarty)
                 $values = $formConfirm->getValues();
                 $values['password'] = empty($values['password_change']) ? $session->password : $values['password_change'];
                 $user = $userService->create($values);
+
                 $dispatcher = $controller->getHelper('service')->getService('dispatcher');
-                $dispatcher->notify(new sfEvent($smarty, 'user.register', array(
+                $dispatcher->notify('user.register', new \Newscoop\Event\Event\GenericEvent($smarty, array(
                     'user' => $user,
                 )));
+
                 $controller->getHelper('redirector')->gotoSimple('index', 'index', 'default');
             } elseif (!$request->has('username')) { // init confirm form
                 $values = $formRegister->getValues();

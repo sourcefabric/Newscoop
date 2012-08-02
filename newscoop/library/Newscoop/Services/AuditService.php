@@ -7,8 +7,9 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity\AuditEvent;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Entity\AuditEvent;
+use Newscoop\Event\Event\GenericEvent;
 
 /**
  * Audit service
@@ -34,14 +35,14 @@ class AuditService
     /**
      * Update audit
      *
-     * @param sfEvent $event
+     * @param GenericEvent $event
      * @return void
      */
-    public function update(\sfEvent $event)
+    public function update(GenericEvent $event)
     {
         list($resource, $action) = explode('.', $event->getName());
         $user = isset($event['user']) ? $event['user'] : $this->userService->getCurrentUser();
-        $params = $event->getParameters();
+        $params = $event->getArguments();
 
         $auditEvent = new AuditEvent();
         $values = array(
