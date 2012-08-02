@@ -120,7 +120,7 @@ class OfflineIssueService
         if ($article->image_url) {
             $ext = pathinfo($article->image_url, PATHINFO_EXTENSION);
             file_put_contents("{$dir}/image.{$ext}", $this->fetch($article->image_url));
-            $article->image_url = basename("image.{$ext}");
+            $article->image_url = basename($dir) . '/' . basename("image.{$ext}");
         }
 
         file_put_contents("$dir/comments.json", $this->fetch($article->comment_url));

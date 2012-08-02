@@ -143,40 +143,24 @@ class Api_OnlineController extends AbstractController
      */
     protected function formatArticle(Article $article)
     {
+        $sectionId = sha1($this->getSectionName($article));
+        $storyId = sha1($sectionId . $this->getStoryName($article));
         return array_merge(parent::formatArticle($article), array(
             'url' => $this->view->serverUrl($this->view->url(array(
                 'controller' => 'online',
                 'action' => 'articles',
                 'id' => $article->getNumber(),
             ), 'api')) . $this->getClientVersionParams(),
-            'section_id' => $this->getSectionId($article),
+            'section_id' => $sectionId,
             'section_name' => $this->getSectionName($article),
-            'section_rank' => $this->rank,
+            'section_rank' => $this->rank++,
             'image_url' => $this->getCoverUrl($article),
             'article_quality' => 'prominent',
             'last_modified' => $article->getUpdated()->format(self::DATE_FORMAT),
             'published' => $article->getPublished()->format(self::DATE_FORMAT),
+            'story_name' => $this->getStoryName($article),
+            'story_id' => $storyId,
         ));
-    }
-
-    /**
-     * Get section id
-     *
-     * @param Newscoop\Entity\Article $article
-     * @return int
-     */
-    protected function getSectionId($article)
-    {
-        $section = $this->getSectionName($article);
-        if ($section === null) {
-            return null;
-        }
-
-        if (!isset($this->sections[$section])) {
-            $this->sections[$section] = count($this->sections) + 1;
-        }
-
-        return $this->sections[$section];
     }
 
     /**
@@ -189,8 +173,23 @@ class Api_OnlineController extends AbstractController
     {
         try {
             return $article->getData('printsection');
-        } catch (\Exception $e) {
-            return null;
+        } catch (Exception $e) {
+            return '';
+        }
+    }
+
+    /**
+     * Get story name
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return string
+     */
+    protected function getStoryName($article)
+    {
+        try {
+            return $article->getData('printstory');
+        } catch (Exception $e) {
+            return '';
         }
     }
 }
