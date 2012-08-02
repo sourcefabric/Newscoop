@@ -5,18 +5,26 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+require_once __DIR__ . '/AbstractController.php';
+
 /**
+ * Api Debates service controller.
  */
-class Api_DebatesController extends Zend_Controller_Action
+class Api_DebatesController extends AbstractController
 {
-    const PUBLICATION = 2;
+    const PUBLICATION = 1;
     const LANGUAGE = 5;
     const SECTION = 81;
-    
+
     /** @var Zend_Controller_Request_Http */
     private $request;
-    
-    private $url;
+
+    private $answers = array(
+        'yes' => 1,
+        'no' => 2,
+    );
+
+    private $rank = 1;
 
     /**
      * Init controller.
@@ -24,7 +32,7 @@ class Api_DebatesController extends Zend_Controller_Action
     public function init()
     {
         global $Campsite;
-        
+
         $this->_helper->layout->disableLayout();
         $this->request = $this->getRequest();
         $this->url = $Campsite['WEBSITE_URL'];
@@ -47,26 +55,35 @@ class Api_DebatesController extends Zend_Controller_Action
     {
         $this->getHelper('contextSwitch')->addActionContext('list', 'json')->initContext();
         $response = array();
-        
-        $articles = $this->_helper->service('article')->findBy(array('type' => 'deb_moderator', 'publication' => self::PUBLICATION, 'section' => self::SECTION));
-        
-        $rank = 1;
+
+        $articles = $this->_helper->service('article')->
+            findBy(array('type' => 'deb_moderator', 'publication' => self::PUBLICATION, 'section' => self::SECTION));
+
         foreach ($articles as $article) {
+            $votes = $this->getVotes($article);
             $response[] = array(
-                'id' => $article->getNumber(),
-                'url' => $this->url.'/api/debates/item?debate_id='.$article->getNumber(),
+                'debate_id' => $article->getNumber(),
+                'url' => $this->view->serverUrl($this->view->url(array(
+                    'module' => 'api',
+                    'controller' => 'debates',
+                    'action' => 'item',
+                ), 'default') . $this->getApiQueryString(array(
+                    'debate_id' => $article->getNumber(),
+                ))),
                 'title' => $article->getName(),
+                'image_url' => $this->getImageUrl($article),
+                'total_pro_votes' => $votes['yes'],
+                'total_con_votes' => $votes['no'],
+                'comment_count' => $this->getCommentsCount($article),
                 'year' => '',
                 'month' => '',
-                'rank' => $rank
+                'rank' => $this->rank++,
             );
-            
-            $rank = $rank + 1;
         }
-        
+
         $this->_helper->json($response);
     }
-    
+
     /**
      * Returns a single debate.
      *
@@ -74,44 +91,28 @@ class Api_DebatesController extends Zend_Controller_Action
      */
     public function itemAction()
     {
-        $this->getHelper('contextSwitch')->addActionContext('list', 'json')->initContext();
-        $response = array();
-        
-        $parameters = $this->request->getParams();
-        
-        if ($parameters['debate_id']) {
-            $articles = $this->_helper->service('article')->findBy(array('number' => $parameters['debate_id']));
-            $article = $articles[0];
+        /** @todo */
+    }
+
+    /**
+     * Gets number of votes for the given debate.
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return array
+     */
+    private function getVotes($article)
+    {
+        $debate = \DebateArticle::getAssignments(null, self::LANGUAGE, $article->getNumber(), 0, 1);
+        if (empty($debate)) {
+            break;
         }
-        else {
-            $articles = $this->_helper->service('article')->findBy(array('type' => 'deb_moderator', 'publication' => self::PUBLICATION, 'section' => self::SECTION), array('published' => 'desc'));
-            $article = $articles[0];
+
+        $votes = array('yes' => 0, 'no' => 0);
+        foreach($this->answers as $name => $id) {
+            $answer = new \DebateAnswer(self::LANGUAGE, $debate[0]->getDebateNumber(), $id);
+            $votes[$name] = (int) $answer->getProperty('nr_of_votes');
         }
-        
-        $response['id'] = $article->getNumber();
-        $response['title'] = $article->getName();
-        
-        $proArticles = $this->_helper->service('article')->findBy(array('type' => 'deb_statement', 'publication' => self::PUBLICATION, 'section' => self::SECTION, 'name' => 'Pro', 'issueId' => $article->getIssueId()));
-        $proArticle = $proArticles[0];
-        $proAuthors = $proArticle->getAuthors();
-        $proAuthor = $proAuthors[0];
-        //$proUser = $this->_helper->service('user')->findBy(array('author' => $proAuthor->getId()));
-        //var_dump($proUser);die;
-        
-        $response['pro'] = array(
-            'author' => $proAuthor->getFullName(),
-            'description' => '',
-            'image_url' => '',
-            'votes' => ''
-        );
-        
-        var_dump($proAuthor->getFullName());die;
-        
-        $conArticles = $this->_helper->service('article')->findBy(array('type' => 'deb_statement', 'publication' => self::PUBLICATION, 'section' => self::SECTION, 'name' => 'Contra', 'issueId' => $article->getIssueId()));
-        $conArticle = $conArticles[0];
-        $conAuthors = $conArticle->getAuthors();
-        $conAuthor = $conAuthors[0];
-        
-        $this->_helper->json($response);
+
+        return $votes;
     }
 }
