@@ -93,4 +93,26 @@ class Api_DebatesController extends AbstractController
     {
         /** @todo */
     }
+
+    /**
+     * Gets number of votes for the given debate.
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return array
+     */
+    private function getVotes($article)
+    {
+        $debate = \DebateArticle::getAssignments(null, self::LANGUAGE, $article->getNumber(), 0, 1);
+        if (empty($debate)) {
+            break;
+        }
+
+        $votes = array('yes' => 0, 'no' => 0);
+        foreach($this->answers as $name => $id) {
+            $answer = new \DebateAnswer(self::LANGUAGE, $debate[0]->getDebateNumber(), $id);
+            $votes[$name] = (int) $answer->getProperty('nr_of_votes');
+        }
+
+        return $votes;
+    }
 }
