@@ -9,7 +9,7 @@ namespace Newscoop\Services;
 
 use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\AuditEvent;
-use Newscoop\Event\Event\GenericEvent;
+use Newscoop\EventDispatcher\Events\GenericEvent;
 
 /**
  * Audit service

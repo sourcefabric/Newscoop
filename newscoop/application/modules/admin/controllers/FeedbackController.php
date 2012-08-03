@@ -7,7 +7,7 @@
  *
  *
  */
-use Newscoop\Event\Event\GenericEvent;
+use Newscoop\EventDispatcher\Events\GenericEvent;
 use Newscoop\Entity\Feedback;
 
 /**

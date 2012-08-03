@@ -10,7 +10,7 @@
  */
 
 use Newscoop\Entity\Feedback;
-use Newscoop\Event\Event\GenericEvent;
+use Newscoop\EventDispatcher\Events\GenericEvent;
 
 require_once($GLOBALS['g_campsiteDir'].'/include/captcha/php-captcha.inc.php');
 require_once($GLOBALS['g_campsiteDir'].'/include/get_ip.php');

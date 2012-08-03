@@ -12,7 +12,7 @@
  */
 use Newscoop\Entity\Language;
 use Newscoop\Entity\Playlist;
-use Newscoop\Event\Event\GenericEvent;
+use Newscoop\EventDispatcher\Events\GenericEvent;
 use Newscoop\Service\Implementation\ArticleTypeServiceDoctrine;
 use Newscoop\Service\Implementation\var_hook;
 use Newscoop\Utils\Exception;
