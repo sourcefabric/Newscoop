@@ -110,6 +110,7 @@ class SearchService implements \Newscoop\Search\ServiceInterface
             'title' => $article->getTitle(),
             'type' => in_array($article->getType(), $this->config['blogs']) ? 'blog' : $article->getType(),
             'published' => gmdate(self::DATE_FORMAT, date_create($article->getPublishDate())->getTimestamp()),
+            'updated' => gmdate(self::DATE_FORMAT, date_create($article->getDate())->getTimestamp()),
             'author' => array_map(function($author) {
                 return $author->getFullName();
             }, $article->getAuthors()),
@@ -155,6 +156,7 @@ class SearchService implements \Newscoop\Search\ServiceInterface
             case 'event':
                 $doc['event_organizer'] = $article->getData('organizer');
                 $doc['event_town'] = $article->getData('town');
+                $doc['link_url'] = $article->getData('web');
 
                 $date = $this->getArticleDateTime($article);
                 if ($date !== null) {

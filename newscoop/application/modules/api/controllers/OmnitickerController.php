@@ -14,13 +14,23 @@ class Api_OmnitickerController extends OmnitickerController
     const TYPE_TWITTER = 'tweet';
     const TYPE_NEWSWIRE = 'newswire';
     const TYPE_LINK = 'link';
+    const TYPE_DOSSIER = 'dossier';
+    const TYPE_COMMENT = 'comment';
+    const TYPE_USER = 'user';
+    const TYPE_EVENT = 'event';
 
     const EN_SECTION_ID = 90;
     const EN_SECTION_NAME = 'Swissinfo';
     const EN_SECTION_TYPE = 'english_news';
 
     /** @var array */
-    private $literalTypes = array(self::TYPE_TWITTER, self::TYPE_LINK, self::TYPE_NEWSWIRE, 'dossier', 'comment', 'event');
+    private $literalTypes = array(
+        self::TYPE_TWITTER,
+        self::TYPE_LINK,
+        self::TYPE_NEWSWIRE,
+        self::TYPE_COMMENT,
+        self::TYPE_EVENT,
+    );
 
     /** @var int */
     private $rank = 1;
@@ -32,6 +42,32 @@ class Api_OmnitickerController extends OmnitickerController
      * @var array
      */
     private $topicTypes = array('newswire', 'news', 'blog', 'dossier');
+
+    /**
+     * @var array
+     */
+    private $fields = array(
+        'community' => array(
+            'short_title',
+            'teaser',
+            'link_url',
+        ),
+        'link' => array(
+            'short_title',
+            'teaser',
+            'link_url',
+        ),
+        'event' => array(
+            'short_title',
+            'teaser',
+            'link_url',
+        ),
+        'comment' => array(
+            'short_title',
+            'teaser',
+            'website_url',
+        ),
+    );
 
     public function indexAction()
     {
@@ -54,7 +90,7 @@ class Api_OmnitickerController extends OmnitickerController
     private function formatDoc(array $doc)
     {
         $id = self::getArticleId($doc);
-        return array(
+        return $this->filterDoc(array(
             'article_id' => $id,
             'short_title' => $this->formatTitle($doc),
             'teaser' => $this->formatTeaser($doc),
@@ -73,9 +109,30 @@ class Api_OmnitickerController extends OmnitickerController
             'recommended_comment_count' => isset($this->commentStats[$id]) ? $this->commentStats[$id]['recommended'] : null,
             'source' => $this->formatType($doc),
             'rank' => $this->rank++,
+            'last_modified' => null,
             'published' => $this->formatPublished($doc),
             'topics' => $this->formatTopics($doc),
-        );
+        ));
+    }
+
+    /**
+     * Filter out unused fields
+     *
+     * @param array $doc
+     * @return array
+     */
+    private function filterDoc(array $doc)
+    {
+        if (isset($this->fields[$doc['source']])) {
+            foreach (array_keys($doc) as $key) {
+                if (!in_array($key, $this->fields[$doc['source']])
+                    && !in_array($key, array('source', 'rank'))) {
+                    unset($doc[$key]);
+                }
+            }
+        }
+
+        return $doc;
     }
 
     /**
@@ -117,7 +174,12 @@ class Api_OmnitickerController extends OmnitickerController
             }
         }
 
-        return null;
+        switch ($doc['type']) {
+            case self::TYPE_USER:
+                return $this->view->serverUrl($this->view->url(array(
+                    'username' => $doc['user'],
+                ), 'user'));
+        }
     }
 
     /**
@@ -148,6 +210,12 @@ class Api_OmnitickerController extends OmnitickerController
             case self::TYPE_LINK:
                 return $doc['title'];
 
+            case self::TYPE_COMMENT:
+                return $doc['subject'];
+
+            case self::TYPE_USER:
+                return $doc['user'];
+
             default:
                 return !empty($doc['title']) ? $doc['title'] : null;
         }
@@ -168,6 +236,20 @@ class Api_OmnitickerController extends OmnitickerController
             case self::TYPE_LINK:
                 return $doc['link_description'];
 
+            case self::TYPE_COMMENT:
+                return $doc['message'];
+
+            case self::TYPE_USER:
+                return $doc['bio'];
+
+            case self::TYPE_EVENT:
+                return sprintf('%s %s, %s %s %s',
+                    $doc['event_organizer'],
+                    $doc['event_town'],
+                    $doc['event_date'],
+                    $doc['event_time'],
+                    empty($doc['event_time']) ? '' : 'Uhr');
+
             default:
                 return !empty($doc['lead']) ? $doc['lead'] : null;
         }
@@ -187,15 +269,29 @@ class Api_OmnitickerController extends OmnitickerController
             return $doc['type'];
         }
 
-        if ($doc['type'] === 'user') {
+        if ($doc['type'] === self::TYPE_USER) {
             return 'community';
         }
 
-        if ($doc['type'] === 'blog' && $this->getRequest()->getControllerName() === 'search') {
+        if ($doc['type'] === self::TYPE_BLOG && $this->isSearch()) {
             return 'blogpost';
         }
 
-        return $this->getRequest()->getControllerName() === 'search' ? 'article' : 'tageswoche';
+        if ($doc['type'] === self::TYPE_DOSSIER && $this->isSearch()) {
+            return self::TYPE_DOSSIER;
+        }
+
+        return $this->isSearch() ? 'article' : 'tageswoche';
+    }
+
+    /**
+     * Test if is search
+     *
+     * @return bool
+     */
+    protected function isSearch()
+    {
+        return $this->getRequest()->getControllerName() === 'search';
     }
 
     /**

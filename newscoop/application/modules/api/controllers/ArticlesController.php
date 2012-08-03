@@ -198,10 +198,16 @@ class Api_ArticlesController extends AbstractController
             $bodyField = 'DataContent';
         }
 
-        $data = array(
+        try {
+            $dateline = $adata->getFieldValue('dateline');
+        } catch (InvalidArgumentException $e) {
+            $dateline = null;
+        }
+
+        return array(
             'article_id' => $article->getId(),
             'title' => $article->getTitle(),
-            'dateline' => $adata->getFieldValue('dateline'),
+            'dateline' => $dateline,
             'publish_date' => $article->getPublishDate(),
             'last_modified' => $article->getDate(),
             'teaser' => $adata->getFieldValue($teaserField),
@@ -209,8 +215,6 @@ class Api_ArticlesController extends AbstractController
             'image_url' => $this->getImageUrl($article),
             'comment_count' => $comments,
         );
-
-        return $data;
     }
 
     private function initClient($client)

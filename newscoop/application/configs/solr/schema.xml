@@ -208,6 +208,7 @@
    <field name="content" type="text_general" indexed="false" stored="false" />
    <field name="author" type="text_ws" indexed="true" stored="true" multiValued="true" />
    <field name="published" type="tdate" indexed="true" stored="true" />
+   <field name="updated" type="tdate" indexed="true" stored="true" />
    <field name="section" type="text_ws" indexed="true" stored="false" />
    <field name="section_name" type="string" indexed="false" stored="true" />
    <field name="section_id" type="string" indexed="false" stored="true" />
