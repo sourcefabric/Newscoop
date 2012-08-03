@@ -18,6 +18,7 @@ class Api_OmnitickerController extends OmnitickerController
     const TYPE_COMMENT = 'comment';
     const TYPE_USER = 'user';
     const TYPE_EVENT = 'event';
+    const TYPE_BLOG = 'blog';
 
     const EN_SECTION_ID = 90;
     const EN_SECTION_NAME = 'Swissinfo';
