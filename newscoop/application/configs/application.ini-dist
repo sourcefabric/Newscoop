@@ -94,7 +94,6 @@ listener[] = comment_notification
 listener[] = search_indexer_article
 listener[] = search_indexer_comment
 listener[] = search_indexer_user
-listener[] = user_points
 
 subscriber = 0
 
@@ -174,11 +173,6 @@ comment_notification.events[] = comment.create
 search_indexer_article.events[] = article.delete
 search_indexer_comment.events[] = comment.delete
 search_indexer_user.events[] = user.delete
-
-user_points.events[] = articleauthor.preCreate
-user_points.events[] = articleauthor.preRemove
-user_points.events[] = comment.preCreate
-user_points.events[] = comment.preRemove
 
 ; autoloader dirs
 autoloader.dirs[] = APPLICATION_PATH "/../classes"

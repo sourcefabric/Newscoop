@@ -7,10 +7,10 @@
 
 namespace Newscoop\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository,
-    Doctrine\ORM\Query\Expr,
-    Newscoop\Entity\User,
-    Newscoop\Entity\Article;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr;
+use Newscoop\Entity\User;
+use Newscoop\Entity\Article;
 
 /**
  * User repository
@@ -101,7 +101,8 @@ class UserRepository extends EntityRepository implements \Newscoop\Search\Reposi
      */
     private function setAttributes(User $user, array $attributes)
     {
-        if (!$user->getId()) { // must persist user before adding attributes
+        if (!$user->getId()) {
+            // must persist user before adding attributes
             $this->getEntityManager()->persist($user);
             $this->getEntityManager()->flush();
         }
@@ -173,11 +174,22 @@ class UserRepository extends EntityRepository implements \Newscoop\Search\Reposi
             return $qb->getQuery()->getSingleScalarResult();
         }
 
-        $qb->orderBy('u.points', 'DESC');
+        $qb->select('u, ' . $this->getUserPointsSelect());
+        $qb->orderBy('comments', 'DESC');
         $qb->addOrderBy('u.id', 'ASC');
+        $qb->groupBy('u.id');
         $qb->setFirstResult($offset);
         $qb->setMaxResults($limit);
-        return $qb->getQuery()->getResult();
+
+        $users = array();
+        $results = $qb->getQuery()->getResult();
+        foreach ($results as $result) {
+            $user = $result[0];
+            $user->setPoints($result['comments'] + $result['articles']);
+            $users[] = $user;
+        }
+
+        return $users;
     }
 
     public function findVerifiedUsers($countOnly, $offset, $limit)
@@ -587,5 +599,49 @@ class UserRepository extends EntityRepository implements \Newscoop\Search\Reposi
             ->where('ui.user IS NOT NULL')
             ->getQuery()
             ->getSingleScalarResult();
+    }
+
+    /**
+     * Get user points
+     *
+     * @param Newscoop\Entity\User $user
+     * @return void
+     */
+    public function getUserPoints(User $user)
+    {
+        $query = $this->createQueryBuilder('u')
+            ->select('u.id, ' . $this->getUserPointsSelect())
+            ->where('u.id = :user')
+            ->getQuery();
+
+        $query->setParameter('user', $user->getId());
+        $result = $query->getSingleResult();
+        $user->setPoints($result['comments'] + $result['articles']);
+    }
+
+    /**
+     * Get user points select statement
+     *
+     * @return string
+     */
+    private function getUserPointsSelect()
+    {
+        $commentsCount = "(SELECT COUNT(c)";
+        $commentsCount .= " FROM Newscoop\Entity\Comment c, Newscoop\Entity\Comment\Commenter cc";
+        $commentsCount .= " WHERE c.commenter = cc AND cc.user = u) as comments";
+
+        $articlesCount = "(SELECT COUNT(a)";
+        $articlesCount .= " FROM Newscoop\Entity\Article a, Newscoop\Entity\ArticleAuthor aa";
+        $articlesCount .= " WHERE ";
+        $articlesCount .= implode(' AND ', array(
+            'a.number = aa.articleNumber',
+            'a.language = aa.languageId',
+            'aa.authorId = u.author',
+            "a.type IN ('news', 'blog')",
+            sprintf("a.workflowStatus = '%s'", Article::STATUS_PUBLISHED),
+        ));
+        $articlesCount .= ") as articles";
+
+        return "{$commentsCount}, {$articlesCount}";
     }
 }

@@ -98,7 +98,6 @@ class User implements \Zend_Acl_Role_Interface, \Newscoop\Search\DocumentInterfa
     private $is_public;
 
     /**
-     * @Column(type="integer")
      * @var int
      */
     private $points;
@@ -491,7 +490,7 @@ class User implements \Zend_Acl_Role_Interface, \Newscoop\Search\DocumentInterfa
      */
     public function getPoints()
     {
-        return (int) $this->points;
+        return $this->points;
     }
 
     /**

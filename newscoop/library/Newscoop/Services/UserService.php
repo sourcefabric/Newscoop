@@ -503,4 +503,19 @@ class UserService
 
         $this->em->flush();
     }
+
+    /**
+     * Get user points
+     *
+     * @param Newscoop\Entity\User $user
+     * @return int
+     */
+    public function getUserPoints(User $user)
+    {
+        if ($user->getPoints() === null) {
+            $this->em->getRepository('Newscoop\Entity\User')->getUserPoints($user);
+        }
+
+        return $user->getPoints();
+    }
 }

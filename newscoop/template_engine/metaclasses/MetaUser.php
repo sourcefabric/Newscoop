@@ -281,7 +281,7 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     public function getPostsCount($update = false)
     {
-        return (int) $this->user->getPoints();
+        return (int) \Zend_Registry::get('container')->getService('user')->getUserPoints($this->user);
     }
 
     /**
