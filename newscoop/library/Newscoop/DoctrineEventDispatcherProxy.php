@@ -26,7 +26,7 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
     /**
      * @param EventDispatcher $dispatcher
      */
-    public function __construct(\Newscoop\Event\Dispatcher\EventDispatcher $dispatcher)
+    public function __construct(\Newscoop\Event\EventDispatcher $dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }

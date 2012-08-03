@@ -6,7 +6,7 @@ services:
         factory_class: Zend_Auth
         factory_method: getInstance
     dispatcher:
-        class:      Newscoop\Event\Dispatcher\EventDispatcher
+        class:      Newscoop\Event\EventDispatcher
     user:
         class:      Newscoop\Services\UserService
         arguments:  ["@em", "@zend_auth"]

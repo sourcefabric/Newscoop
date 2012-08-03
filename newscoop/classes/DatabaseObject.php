@@ -10,7 +10,7 @@ require_once dirname(__FILE__) . '/SystemPref.php';
 require_once dirname(__FILE__) . '/CampCache.php';
 require_once dirname(__FILE__) . '/Exceptions.php';
 
-use \Newscoop\Event\Dispatcher\EventDispatcher;
+use \Newscoop\Event\EventDispatcher;
 use \Newscoop\Event\Event\GenericEvent;
 
 /**
