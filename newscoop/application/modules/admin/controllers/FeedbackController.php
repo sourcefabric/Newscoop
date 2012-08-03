@@ -7,8 +7,8 @@
  *
  *
  */
-use Newscoop\Entity\Feedback;
 use Newscoop\Event\Event\GenericEvent;
+use Newscoop\Entity\Feedback;
 
 /**
  * @Acl(resource="feedback", action="manage")
