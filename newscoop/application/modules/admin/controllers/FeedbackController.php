@@ -8,6 +8,7 @@
  *
  */
 use Newscoop\Entity\Feedback;
+use Newscoop\Event\Event\GenericEvent;
 
 /**
  * @Acl(resource="feedback", action="manage")
@@ -96,25 +97,25 @@ class Admin_FeedbackController extends Zend_Controller_Action
                 $attachment['id'] = $feedback->getAttachmentId();
 
                 if ($attachment['type'] == 'image') {
-					$image = new Image($attachment['id']);
-					$attachment['name'] = $image->getImageFileName();
-					$attachment['status'] = $image->getStatus();
-					$attachment['thumbnail'] = $image->getThumbnailUrl();
-					$attachment['approve_url'] = $view->url(array('action' => 'approve', 'type' => 'image', 'format' => 'json', 'id' => $attachment['id']));
-				}
-				if ($attachment['type'] == 'document') {
-					$document = new Attachment($attachment['id']);
-					$attachment['name'] = $document->getFileName();
-					$attachment['status'] = $document->getStatus();
-					$attachment['approve_url'] = $view->url(array('action' => 'approve', 'type' => 'document', 'format' => 'json', 'id' => $attachment['id']));
-				}
+                    $image = new Image($attachment['id']);
+                    $attachment['name'] = $image->getImageFileName();
+                    $attachment['status'] = $image->getStatus();
+                    $attachment['thumbnail'] = $image->getThumbnailUrl();
+                    $attachment['approve_url'] = $view->url(array('action' => 'approve', 'type' => 'image', 'format' => 'json', 'id' => $attachment['id']));
+                }
+                if ($attachment['type'] == 'document') {
+                    $document = new Attachment($attachment['id']);
+                    $attachment['name'] = $document->getFileName();
+                    $attachment['status'] = $document->getStatus();
+                    $attachment['approve_url'] = $view->url(array('action' => 'approve', 'type' => 'document', 'format' => 'json', 'id' => $attachment['id']));
+                }
 
                 $banned = $acceptanceRepository->checkBanned(array('name' => $user->getName(), 'email' => '', 'ip' => ''), $publication);
                 if ($banned['name'] == true) {
-					$banned = true;
-				} else {
-					$banned = false;
-				}
+                    $banned = true;
+                } else {
+                    $banned = false;
+                }
 
                 return array(
                     'index' => $index++,
@@ -124,12 +125,12 @@ class Admin_FeedbackController extends Zend_Controller_Action
                         'email' => $user->getEmail(),
                         'avatar' => (string)$view->getAvatar($user->getEmail(), array('img_size' => 50, 'default_img' => 'wavatar')),
                         'banurl' => $view->url(array(
-							'controller' => 'user',
-							'action' => 'toggle-ban',
-							'user' => $user->getId(),
-							'publication' => $publication->getId()
-						)),
-						'is_banned' => $banned
+                            'controller' => 'user',
+                            'action' => 'toggle-ban',
+                            'user' => $user->getId(),
+                            'publication' => $publication->getId()
+                        )),
+                        'is_banned' => $banned
                     ),
                     'message' => array(
                         'id' => $feedback->getId(),
@@ -151,9 +152,9 @@ class Admin_FeedbackController extends Zend_Controller_Action
                         'publication' => $publication->getName(),
                         'section' => $section_name,
                         'article' => array(
-							'name' => $article_name,
-							'url' => $article_url
-						)
+                            'name' => $article_name,
+                            'url' => $article_url
+                        )
                     ),
                     'attachment' => $attachment
                 );
@@ -217,69 +218,75 @@ class Admin_FeedbackController extends Zend_Controller_Action
      */
     public function replyAction()
     {
-		$this->getHelper('contextSwitch')->addActionContext('reply', 'json')->initContext();
+        $this->getHelper('contextSwitch')->addActionContext('reply', 'json')->initContext();
 
-		$auth = Zend_Auth::getInstance();
-		$user = new User($auth->getIdentity());
-		$fromEmail = $user->getEmail();
+        $auth = Zend_Auth::getInstance();
+        $user = new User($auth->getIdentity());
+        $fromEmail = $user->getEmail();
 
-		$feedbackId = $this->getRequest()->getParam('parent');
-		$subject = $this->getRequest()->getParam('subject');
-		$message = $this->getRequest()->getParam('message');
+        $feedbackId = $this->getRequest()->getParam('parent');
+        $subject = $this->getRequest()->getParam('subject');
+        $message = $this->getRequest()->getParam('message');
 
-		$feedback = $this->feedbackRepository->find($feedbackId);
-		$user = $feedback->getUser();
-		$toEmail = $user->getEmail();
+        $feedback = $this->feedbackRepository->find($feedbackId);
+        $user = $feedback->getUser();
+        $toEmail = $user->getEmail();
 
-		/*
-		$configMail = array( 'auth' => 'login',
-							 'username' => 'user@gmail.com',
-							 'password' => 'password',
-							 'ssl' => 'ssl',
-							 'port' => 465
-		);
-		$mailTransport = new Zend_Mail_Transport_Smtp('smtp.gmail.com',$configMail);
-		*/
-		$mail = new Zend_Mail('utf-8');
-		$mail->setSubject($subject);
-		$mail->setBodyText($message);
-		$mail->setFrom($fromEmail);
-		$mail->addTo($toEmail);
-		try {
-			$mail->send();
-			$this->view->status = 200;
-			$this->view->message = 'succcesful';
-		}
-		catch (Exception $e) {
-			$this->view->status = 200;
-			$this->view->message = 'succcesful?';
-		}
-	}
+        /*
+        $configMail = array( 'auth' => 'login',
+                             'username' => 'user@gmail.com',
+                             'password' => 'password',
+                             'ssl' => 'ssl',
+                             'port' => 465
+        );
+        $mailTransport = new Zend_Mail_Transport_Smtp('smtp.gmail.com',$configMail);
+        */
+        $mail = new Zend_Mail('utf-8');
+        $mail->setSubject($subject);
+        $mail->setBodyText($message);
+        $mail->setFrom($fromEmail);
+        $mail->addTo($toEmail);
+        try {
+            $mail->send();
+            $this->view->status = 200;
+            $this->view->message = 'succcesful';
+        }
+        catch (Exception $e) {
+            $this->view->status = 200;
+            $this->view->message = 'succcesful?';
+        }
+    }
 
-	/**
+    /**
      * Approve action
      */
     public function approveAction()
     {
-		$this->getHelper('contextSwitch')->addActionContext('approve', 'json')->initContext();
+        $this->getHelper('contextSwitch')->addActionContext('approve', 'json')->initContext();
 
-		$parameters = $this->getRequest()->getParams();
+        $parameters = $this->getRequest()->getParams();
 
-		if ($parameters['type'] == 'image') {
-			$image = new Image($parameters['id']);
-			$image->update(array('Status' => 'approved'));
+        if ($parameters['type'] == 'image') {
+            $image = new Image($parameters['id']);
+            $image->update(array('Status' => 'approved'));
 
-			$user_id = $image->getUploadingUserId();
-			$user = $this->_helper->service('user')->find($user_id);
-			$this->_helper->service->notifyDispatcher("image.approved", array('user' => $user));
-		}
-		if ($parameters['type'] == 'document') {
-			$document = new Attachment($parameters['id']);
-			$document->update(array('Status' => 'approved'));
+            $user_id = $image->getUploadingUserId();
+            $user = $this->_helper->service('user')->find($user_id);
+            $this->_helper->service->getService('dispatcher')
+                ->notify('image.approved', new GenericEvent($this, array(
+                    'user' => $user
+                )));
+        }
+        if ($parameters['type'] == 'document') {
+            $document = new Attachment($parameters['id']);
+            $document->update(array('Status' => 'approved'));
 
-			$user_id = $document->getUploadingUserId();
-			$user = $this->_helper->service('user')->find($user_id);
-			$this->_helper->service->notifyDispatcher("document.approved", array('user' => $user));
-		}
-	}
+            $user_id = $document->getUploadingUserId();
+            $user = $this->_helper->service('user')->find($user_id);
+            $this->_helper->service->getService('dispatcher')
+                ->notify('document.approved', new GenericEvent($this, array(
+                    'user' => $user
+                )));
+        }
+    }
 }

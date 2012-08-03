@@ -10,11 +10,13 @@
  * PlaylistController
  * @Acl(resource="playlist", action="manage")
  */
-use Newscoop\Service\Implementation\ArticleTypeServiceDoctrine;
-use Newscoop\Utils\Exception;
-use Newscoop\Service\Implementation\var_hook;
 use Newscoop\Entity\Language;
 use Newscoop\Entity\Playlist;
+use Newscoop\Event\Event\GenericEvent;
+use Newscoop\Service\Implementation\ArticleTypeServiceDoctrine;
+use Newscoop\Service\Implementation\var_hook;
+use Newscoop\Utils\Exception;
+
 
 class Admin_PlaylistController extends Zend_Controller_Action
 {
@@ -82,7 +84,10 @@ class Admin_PlaylistController extends Zend_Controller_Action
         $id = $this->_request->getParam('id');
         $this->view->id = $id;
         $this->playlistRepository->delete($this->playlistRepository->find($id));
-        $this->_helper->service->notifyDispatcher('playlist.delete', array('id' => $id));
+        $this->_helper->service->getService('dispatcher')
+            ->notify('playlist.delete', new GenericEvent($this, array(
+                'id' => $id
+            )));
     }
 
     public function listDataAction()
@@ -106,28 +111,26 @@ class Admin_PlaylistController extends Zend_Controller_Action
         $playlist = null;
         $playlistName = $this->_request->getParam('name', '');
         // TODO make a service
-        if (is_numeric($playlistId))
-        {
+        if (is_numeric($playlistId)) {
             $playlist = $this->playlistRepository->find($playlistId);
             if (!is_null($playlist) && trim($playlistName)!='') {
                 $playlist->setName($playlistName);
             }
-        }
-        else
-        {
+        } else {
             $playlist = new Playlist();
             $playlist->setName(trim($playlistName)!='' ? $playlistName:getGS('Playlist').strftime('%F') );
         }
-        $playlist = $this->playlistRepository->save($playlist, $this->_request->getParam('articles'));
-        if (!($playlist instanceof \Exception))
-        {
 
-            $this->_helper->service->notifyDispatcher('playlist.save', array('id' => $playlist->getId()));
+        $playlist = $this->playlistRepository->save($playlist, $this->_request->getParam('articles'));
+        if (!($playlist instanceof \Exception)) {
+            $this->_helper->service->getService('dispatcher')
+                ->notify('playlist.save', new GenericEvent($this, array(
+                    'id' => $playlist->getId()
+                )));
 
             $this->view->playlistId = $playlist->getId();
             $this->view->playlistName = $playlist->getName();
-        }
-        else {
+        } else {
             $this->view->error = $playlist->getFile().":".$playlist->getLine()." ".$playlist->getMessage();
         }
     }
@@ -137,11 +140,11 @@ class Admin_PlaylistController extends Zend_Controller_Action
         $articleId = $this->_getParam('id');
         $languageId = $this->_getParam('lang');
         $article = new Article($languageId, $articleId);
-        $this->_helper->redirector->gotoUrl
-        (
+        $this->_helper->redirector->gotoUrl(
             $this->view->baseUrl("admin/articles/get.php?") . $this->view->linkArticleObj($article),
-            array( 'prependBase' => false )
+            array('prependBase' => false)
         );
+        
         $this->_helper->viewRenderer->setNoRender(true);
         $this->_helper->layout->disableLayout(true);
     }
