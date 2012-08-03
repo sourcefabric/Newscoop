@@ -15,6 +15,7 @@ class Api_DebatesController extends AbstractController
     const PUBLICATION = 1;
     const LANGUAGE = 5;
     const SECTION = 81;
+    const IMAGE_RENDITION = 'dossierteaser';
 
     /** @var Zend_Controller_Request_Http */
     private $request;
@@ -47,7 +48,7 @@ class Api_DebatesController extends AbstractController
     }
 
     /**
-     * Return list of debates.
+     * Returns list of debates.
      *
      * @return json
      */
@@ -71,12 +72,12 @@ class Api_DebatesController extends AbstractController
                     'debate_id' => $article->getNumber(),
                 ))),
                 'title' => $article->getName(),
-                'image_url' => $this->getImageUrl($article),
+                'image_url' => $this->getImageUrl($article, self::IMAGE_RENDITION),
                 'total_pro_votes' => $votes['yes'],
                 'total_con_votes' => $votes['no'],
                 'comment_count' => $this->getCommentsCount($article),
-                'year' => '',
-                'month' => '',
+                'year' => (int) $this->getPublishDate($article)->format('Y'),
+                'month' => (int) $this->getPublishDate($article)->format('n'),
                 'rank' => $this->rank++,
             );
         }
@@ -114,5 +115,17 @@ class Api_DebatesController extends AbstractController
         }
 
         return $votes;
+    }
+
+    /**
+     * Gets the debate publish date as DateTime object.
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return DateTime
+     */
+    private function getPublishDate($article)
+    {
+        $date = $article->getData('date_opening');
+        return new DateTime($date);
     }
 }
