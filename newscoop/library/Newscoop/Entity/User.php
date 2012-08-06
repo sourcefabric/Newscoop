@@ -30,6 +30,8 @@ class User implements \Zend_Acl_Role_Interface, \Newscoop\Search\DocumentInterfa
     const HASH_SEP = '$';
     const HASH_ALGO = 'sha1';
 
+    const RANDOM_CHARS = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+
     /**
      * @Id @GeneratedValue
      * @Column(type="integer", name="Id")
@@ -237,13 +239,14 @@ class User implements \Zend_Acl_Role_Interface, \Newscoop\Search\DocumentInterfa
      */
     public function checkPassword($password)
     {
-        if (sizeof(explode(self::HASH_SEP, $this->password)) != 3) { // fallback
-            if ($this->password == sha1($password)) { // update old password on success
+        if (sizeof(explode(self::HASH_SEP, $this->password)) != 3) {
+            // update old password on success
+            if ($this->password == sha1($password)) {
                 $this->setPassword($password);
-                return TRUE;
+                return true;
             }
 
-            return FALSE;
+            return false;
         }
 
         list($algo, $salt, $password_hash) = explode(self::HASH_SEP, $this->password);
@@ -257,7 +260,7 @@ class User implements \Zend_Acl_Role_Interface, \Newscoop\Search\DocumentInterfa
      * @param string $allowed_chars
      * @return string
      */
-    final public function generateRandomString($length = 12, $allowed_chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789')
+    final public function generateRandomString($length = 12, $allowed_chars = self::RANDOM_CHARS)
     {
         $return = '';
         for ($i = 0; $i < $length; $i++) {
@@ -329,7 +332,7 @@ class User implements \Zend_Acl_Role_Interface, \Newscoop\Search\DocumentInterfa
      */
     public function getRealName()
     {
-        return (string)  $this->first_name.' '.$this->last_name;
+        return string($this->first_name . ' ' . $this->last_name);
     }
 
 
@@ -532,6 +535,19 @@ class User implements \Zend_Acl_Role_Interface, \Newscoop\Search\DocumentInterfa
     }
 
     /**
+     * Test if user has group
+     *
+     * @param int $groupId
+     * @return bool
+     */
+    public function hasGroup($groupId)
+    {
+        return $this->groups->exists(function($group) use ($groupId) {
+            return $group->getId() === (int) $groupId;
+        });
+    }
+
+    /**
      * Add user type
      *
      * @param Newscoop\Entity\User\Group $type
@@ -541,6 +557,17 @@ class User implements \Zend_Acl_Role_Interface, \Newscoop\Search\DocumentInterfa
     {
         $this->groups->add($type);
         return $this;
+    }
+
+    /**
+     * Add user group - alias to addUserType
+     *
+     * @param Group $group
+     * @return void
+     */
+    public function addGroup(Group $group)
+    {
+        $this->addUserType($group);
     }
 
     /**
@@ -665,21 +692,25 @@ class User implements \Zend_Acl_Role_Interface, \Newscoop\Search\DocumentInterfa
         $acl = \Zend_Registry::get('acl')->getAcl($this);
         try {
             list($resource, $action) = PermissionToAcl::translate($permission);
-            if($acl->isAllowed($this, strtolower($resource), strtolower($action))) {
-				return \SaaS::singleton()->hasPermission($permission);
+            if ($acl->isAllowed($this, strtolower($resource), strtolower($action))) {
+                return \SaaS::singleton()->hasPermission($permission);
             } else {
-            	return FALSE;
+                return false;
             }
         } catch (\Exception $e) {
-            return FALSE;
+            return false;
         }
     }
 
+    /**
+     * Get related comment commenters
+     *
+     * @return array
+     */
     public function getCommenters()
     {
-       return $this->commenters;
+        return $this->commenters;
     }
-
 
     /**
      * Get a User's comments which are associated with his User account.

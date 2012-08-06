@@ -22,6 +22,11 @@ class RegisterController extends Zend_Controller_Action
     /** @var Newscoop\Services\UserTokenService */
     private $tokenService;
 
+    /**
+     * @var array
+     */
+    private $allowedRoles = array();
+
     public function init()
     {
         $this->_helper->contextSwitch
@@ -31,6 +36,9 @@ class RegisterController extends Zend_Controller_Action
             ->addActionContext('pending', 'json')
             ->addActionContext('create-user', 'json')
             ->initContext();
+
+        $rolesConfig = $this->_helper->config('role')->allowedRoles;
+        $this->allowedRoles = $rolesConfig instanceof Zend_Config ? $rolesConfig->toArray() : array();
     }
 
     public function indexAction()
@@ -75,6 +83,10 @@ class RegisterController extends Zend_Controller_Action
                 $user = array_pop($users);
             } else {
                 $user = $this->_helper->service('user')->createPending($values['email']);
+            }
+
+            if (isset($values['role']) && in_array($values['role'], $this->allowedRoles)) {
+                $this->_helper->service('user')->addUserGroup($user, $values['role']);
             }
 
             if (!$user->isPending()) {

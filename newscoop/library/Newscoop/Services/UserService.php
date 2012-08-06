@@ -63,7 +63,7 @@ class UserService
      */
     public function getCurrentUser()
     {
-        if ($this->currentUser === NULL) {
+        if ($this->currentUser === null) {
             if ($this->auth->hasIdentity()) {
                 $this->currentUser = $this->repository->find($this->auth->getIdentity());
             }
@@ -127,7 +127,7 @@ class UserService
      */
     public function save(array $data, User $user = null)
     {
-        if (NULL === $user) {
+        if (null === $user) {
             $user = new User();
         }
 
@@ -176,7 +176,7 @@ class UserService
         $user->setUsername(trim($firstName) . ' ' . trim($lastName));
         $username = $user->getUsername();
 
-        for ($i = '';; $i++) {
+        for ($i = ''; $i < 1000; $i++) {
             $conflict = $this->repository->findOneBy(array(
                 'username' => "$username{$i}",
             ));
@@ -345,7 +345,7 @@ class UserService
      * @param int $offset
      * @return array
      */
-    public function findEditors($limit = NULL, $offset = NULL)
+    public function findEditors($limit = null, $offset = null)
     {
         return $this->repository->findEditors($this->config['editorRoles'], $limit, $offset);
     }
@@ -517,5 +517,20 @@ class UserService
         }
 
         return $user->getPoints();
+    }
+
+    /**
+     * Add group to user by given group id
+     *
+     * @param Newscoop\Entity\User $user
+     * @param int $groupId
+     * @return void
+     */
+    public function addUserGroup(User $user, $groupId)
+    {
+        if (!$user->hasGroup($groupId)) {
+            $user->addGroup($this->em->getReference('Newscoop\Entity\User\Group', $groupId));
+            $this->em->flush($user);
+        }
     }
 }
