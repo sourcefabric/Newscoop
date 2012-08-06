@@ -28,7 +28,8 @@ class EventDispatcher extends SymfonyEventDispatcher
      * @param callable $listener The listener
      * @param integer $priority The higher this value, the earlier an event listener will be triggered in the chain (defaults to 0)
      */
-    public function connect($eventName, $listener, $priority = 0) {
+    public function connect($eventName, $listener, $priority = 0) 
+    {
         parent::addListener($eventName, $listener, $priority);
     }
 
@@ -42,7 +43,8 @@ class EventDispatcher extends SymfonyEventDispatcher
      *
      * @return Event
      */
-    public function notify($eventName, Event $event) {
+    public function notify($eventName, Event $event) 
+    {
         return parent::dispatch($eventName, $event);
     }
 }
