@@ -67,7 +67,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->setService('em', $doctrine->getEntityManager());
 
         $this->bootstrap('view');
-        $container->setService('view', $this->getResource('view'));            
+        $container->setService('view', $this->getResource('view'));
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
         $loader->load('configs/services.yml');

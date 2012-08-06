@@ -8,7 +8,7 @@
 namespace Newscoop\Services;
 
 use Doctrine\ORM\EntityManager;
-use Newscoop\Event\Dispatcher\EventDispatcher;
+use Newscoop\Event\EventDispatcher;
 use Newscoop\Entity\Topic;
 use Newscoop\Entity\User;
 use Newscoop\Entity\UserTopic;
@@ -22,12 +22,12 @@ class UserTopicService
     /** @var Doctrine\ORM\EntityManager */
     private $em;
 
-    /** @var Newscoop\Event\Dispatcher\EventDispatcher */
+    /** @var Newscoop\Event\EventDispatcher */
     private $dispatcher;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
-     * @param Newscoop\Event\Dispatcher\EventDispatcher $dispatcher
+     * @param Newscoop\Event\EventDispatcher $dispatcher
      */
     public function __construct(EntityManager $em, EventDispatcher $dispatcher = null)
     {
