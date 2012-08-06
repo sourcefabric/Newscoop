@@ -241,7 +241,7 @@ class Api_OmnitickerController extends OmnitickerController
                 return $doc['message'];
 
             case self::TYPE_USER:
-                return $doc['bio'];
+                return isset($doc['bio']) ? $doc['bio'] : null;
 
             case self::TYPE_EVENT:
                 return sprintf('%s %s, %s %s %s',
