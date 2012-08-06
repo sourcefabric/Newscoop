@@ -103,7 +103,9 @@ services:
     subscription:
         class:      Newscoop\Subscription\SubscriptionFacade
         arguments:  ["@em"]
-        alias:      subscription.section
+    subscription.section:
+        class:      Newscoop\Subscription\SubscriptionFacade
+        arguments:  ["@em"]
     subscription.ip:
         class:      Newscoop\Subscription\IpFacade
         arguments:  ["@em"]
