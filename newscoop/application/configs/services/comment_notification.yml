@@ -1,0 +1,6 @@
+services:
+    comment_notification:
+        class:      Newscoop\Services\CommentNotificationService
+        arguments:  ["@email", "@comment", "@user"]
+        tags:
+            -  { name: event_listener, event: comment.create, method: update }

@@ -12,9 +12,11 @@ use Doctrine\MongoDB\Connection;
 use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Newscoop\DoctrineEventDispatcherProxy;
-use Newscoop\ServiceContainer;
+use Newscoop\DependencyInjection\ContainerBuilder;
+use Newscoop\DependencyInjection\Compiler\RegisterListenersPass;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
@@ -59,48 +61,36 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initContainer()
     {
         $this->bootstrap('autoloader');
-        $container = new ServiceContainer($this->getOptions());
+
+        $container = new ContainerBuilder($this->getOptions());
+        $container->addCompilerPass(new RegisterListenersPass());
         $container->setParameter('config', $this->getOptions());
         
         $this->bootstrap('doctrine');
         $doctrine = $this->getResource('doctrine');
         $container->setService('em', $doctrine->getEntityManager());
 
+        $this->bootstrap('odm');
+
         $this->bootstrap('view');
         $container->setService('view', $this->getResource('view'));
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
-        $loader->load('configs/services.yml');
-
-        Zend_Registry::set('container', $container);
-        return $container;
-    }
-
-    /**
-     * @todo pass container to allow lazy dispatcher loading
-     */
-    protected function _initEventDispatcher()
-    {
-        $this->bootstrap('container');
-        $container = $this->getResource('container');
-
-        $container->getDefinition('dispatcher')
-            ->setConfigurator(function($eventDispatcher) use ($container) {
-            foreach ($container->getParameter('listener') as $listener) {
-                $listenerService = $container->getService($listener);
-                $listenerParams = $container->getParameter($listener);
-                foreach ((array) $listenerParams['events'] as $event) {
-                    $eventDispatcher->connect($event, array($listenerService, 'update'));
-                }
-            }
-        });
+        $services = glob(__DIR__ ."/configs/services/*.yml");
+        foreach ($services as $service) {
+            $loader->load($service);
+        }
 
         DatabaseObject::setEventDispatcher($container->getService('dispatcher'));
         DatabaseObject::setResourceNames($container->getParameter('resourceNames'));
 
         $container->getService('em')
             ->getEventManager()
-            ->addEventSubscriber(new DoctrineEventDispatcherProxy($container->getService('dispatcher')));
+            ->addEventSubscriber(new DoctrineEventDispatcherProxy($container->get('dispatcher')));
+
+
+        Zend_Registry::set('container', $container);
+        return $container;
     }
 
     protected function _initPlugins()

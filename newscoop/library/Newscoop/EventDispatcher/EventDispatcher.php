@@ -8,8 +8,8 @@
 
 namespace Newscoop\EventDispatcher;
 
-
-use Symfony\Component\EventDispatcher\EventDispatcher as SymfonyEventDispatcher;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher;
 use Symfony\Component\EventDispatcher\Event;
 
 /**
@@ -17,7 +17,7 @@ use Symfony\Component\EventDispatcher\Event;
  *
  * Provides wrapper methods for symfony's EventDispatcher.
  */
-class EventDispatcher extends SymfonyEventDispatcher
+class EventDispatcher extends ContainerAwareEventDispatcher
 {
     /**
      * Adds an event listener that listens on the specified events.

@@ -3,10 +3,12 @@ services:
         class:      Newscoop\Image\ImageService
         arguments:  ["%image%", "@em"]
     zend_auth:
+        class:      Zend_Auth
         factory_class: Zend_Auth
         factory_method: getInstance
     dispatcher:
         class:      Newscoop\EventDispatcher\EventDispatcher
+        arguments:  ["@service_container"]
     user:
         class:      Newscoop\Services\UserService
         arguments:  ["@em", "@zend_auth"]
@@ -19,23 +21,8 @@ services:
     user_type:
         class:      Newscoop\Services\UserTypeService
         arguments:  ["@em"]
-    user_points:
-        class:      Newscoop\Services\UserPointsService
-        arguments:  ["@em"]
-    user_attributes:
-        class:      Newscoop\Services\UserAttributeService
-        arguments:  ["@em"]
     author:
         class:      Newscoop\Services\AuthorService
-        arguments:  ["@em"]
-    audit:
-        class:      Newscoop\Services\AuditService
-        arguments:  ["@em", "@user"]
-    comment:
-        class:      Newscoop\Services\CommentService
-        arguments:  ["@em"]
-    community_feed:
-        class:      Newscoop\Services\CommunityFeedService
         arguments:  ["@em"]
     audit.maintenance:
         class:      Newscoop\Services\AuditMaintenanceService
@@ -54,19 +41,16 @@ services:
         arguments:  ["%email%", "@view", "@user.token"]
     ingest.settings:
         class:      Newscoop\News\SettingsService
-        arguments:  ["@odm"]
+        arguments:  ["@?odm"]
     ingest.item:
         class:      Newscoop\News\ItemService
-        arguments:  ["@odm", "@ingest.settings"]
+        arguments:  ["@?odm", "@ingest.settings"]
     ingest.feed:
         class:      Newscoop\News\FeedService
-        arguments:  ["@odm", "@ingest.item"];
+        arguments:  ["@?odm", "@ingest.item"]
     blog:
         class:      Newscoop\Services\BlogService
-        arguments:  ["%blog%"];
-    comment_notification:
-        class:      Newscoop\Services\CommentNotificationService
-        arguments:  ["@email", "@comment", "@user"];
+        arguments:  ["%blog%"]
     user.search:
         class:      Newscoop\Services\UserSearchService
         arguments:  ["@em"]
@@ -104,6 +88,9 @@ services:
         class:      Newscoop\Subscription\SubscriptionFacade
         arguments:  ["@em"]
         alias:      subscription.section
+    subscription.section:
+        class:      Newscoop\Subscription\SectionFacade
+        arguments:  ["@em"]
     subscription.ip:
         class:      Newscoop\Subscription\IpFacade
         arguments:  ["@em"]

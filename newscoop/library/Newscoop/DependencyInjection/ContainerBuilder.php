@@ -6,17 +6,17 @@
  * @license http://www.gnu.org/licenses/gpl.txt
  */
 
-namespace Newscoop;
+namespace Newscoop\DependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerBuilder as SymfonyContainerBuilder;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 /**
- * ServiceContainer class.
+ * ContainerBuilder class.
  *
  * Provides wrapper methods for symfony's ContainerBuilder.
  */
-class ServiceContainer extends ContainerBuilder
+class ContainerBuilder extends SymfonyContainerBuilder
 {
     /**
     * Construct object.
@@ -101,7 +101,7 @@ class ServiceContainer extends ContainerBuilder
     */
     public function getAliases()
     {
-        return parrent::getAliases();
+        return parent::getAliases();
     }
 
     /**
