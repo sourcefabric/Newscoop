@@ -26,7 +26,7 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
     /**
      * @param EventDispatcher $dispatcher
      */
-    public function __construct(\Newscoop\Event\EventDispatcher $dispatcher)
+    public function __construct(\Newscoop\EventDispatcher\EventDispatcher $dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }
@@ -55,7 +55,7 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
     public function postPersist(LifecycleEventArgs $args)
     {
         $entityName = $this->getEntityName($args->getEntity());
-        $this->dispatcher->notify("{$entityName}.create", new \Newscoop\Event\Event\GenericEvent($this, array(
+        $this->dispatcher->notify("{$entityName}.create", new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
             'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
             'title' => $this->getEntityTitle($args->getEntity()),
         )));
@@ -70,7 +70,7 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entityName = $this->getEntityName($args->getEntity());
-        $this->events["{$entityName}.update"] = new \Newscoop\Event\Event\GenericEvent($args->getEntity(), array(
+        $this->events["{$entityName}.update"] = new \Newscoop\EventDispatcher\Events\GenericEvent($args->getEntity(), array(
             'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
             'diff' => $args->getEntityChangeSet(),
             'title' => $this->getEntityTitle($args->getEntity()),
@@ -99,7 +99,7 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
     public function preRemove(LifecycleEventArgs $args)
     {
         $entityName = $this->getEntityName($args->getEntity());
-        $this->dispatcher->notify("{$entityName}.delete", new \Newscoop\Event\Event\GenericEvent($this, array(
+        $this->dispatcher->notify("{$entityName}.delete", new \Newscoop\EventDispatcher\Events\GenericEvent($this, array(
             'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
             'diff' => $this->getEntityProperties($args->getEntity(), $args->getEntityManager()),
             'title' => $this->getEntityTitle($args->getEntity()),

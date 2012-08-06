@@ -30,7 +30,7 @@ function smarty_function_form_register($params, $smarty)
                 $user = $userService->create($values);
 
                 $dispatcher = $controller->getHelper('service')->getService('dispatcher');
-                $dispatcher->notify('user.register', new \Newscoop\Event\Event\GenericEvent($smarty, array(
+                $dispatcher->notify('user.register', new \Newscoop\EventDispatcher\Events\GenericEvent($smarty, array(
                     'user' => $user,
                 )));
 

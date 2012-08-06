@@ -9,7 +9,7 @@
  *
  */
 use Newscoop\Entity\Comment;
-use Newscoop\Event\Event\GenericEvent;
+use Newscoop\EventDispatcher\Events\GenericEvent;
 
 /**
  * @Acl(resource="comment", action="moderate")

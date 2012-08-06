@@ -6,7 +6,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-namespace Newscoop\Event\Event;
+namespace Newscoop\EventDispatcher\Events;
 
 use Symfony\Component\EventDispatcher\GenericEvent as SymfonyGenericEvent;
 

@@ -7,7 +7,7 @@
 
 namespace Newscoop\Services;
 
-use Newscoop\Event\Event\GenericEvent;
+use Newscoop\EventDispatcher\Events\GenericEvent;
 
 class CommunityFeedServiceTest extends \PHPUnit_Framework_TestCase
 {

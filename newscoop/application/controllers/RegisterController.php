@@ -6,7 +6,7 @@
  */
 
 use Newscoop\Entity\User;
-use Newscoop\Event\Event\GenericEvent;
+use Newscoop\EventDispatcher\Events\GenericEvent;
 
 /**
  */

@@ -5,7 +5,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Newscoop\Event\Event\GenericEvent;
+use Newscoop\EventDispatcher\Events\GenericEvent;
 
 /**
  * Service container action helper
