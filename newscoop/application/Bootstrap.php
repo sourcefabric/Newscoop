@@ -86,7 +86,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $container->getService('em')
             ->getEventManager()
-            ->addEventSubscriber(new DoctrineEventDispatcherProxy($container->get('dispatcher')));
+            ->addEventSubscriber(new DoctrineEventDispatcherProxy($container->getService('dispatcher')));
 
 
         Zend_Registry::set('container', $container);
