@@ -19,6 +19,9 @@ final class MetaMap extends MetaDbObject
         'number' => 'id',
         'name' => 'MapName',
         'provider' => 'MapProvider',
+        'center_lon' => 'MapCenterLongitude',
+        'center_lat' => 'MapCenterLatitude',
+        'resolution' => 'MapDisplayResolution',
     );
 
     /**
