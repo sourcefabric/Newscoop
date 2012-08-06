@@ -76,8 +76,10 @@ class Api_DebatesController extends AbstractController
                 'total_pro_votes' => $votes['yes'],
                 'total_con_votes' => $votes['no'],
                 'comment_count' => $this->getCommentsCount($article),
+                'published' => $this->formatDate($this->getPublishDate($article)),
                 'year' => (int) $this->getPublishDate($article)->format('Y'),
                 'month' => (int) $this->getPublishDate($article)->format('n'),
+                'week' => (int) $this->getPublishDate($article)->format('W'),
                 'rank' => $this->rank++,
             );
         }
