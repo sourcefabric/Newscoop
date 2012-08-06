@@ -177,6 +177,12 @@ class Article extends \Newscoop\Entity\Article implements \Doctrine\ORM\Proxy\Pr
         return parent::getDate();
     }
 
+    public function getUpdated()
+    {
+        $this->__load();
+        return parent::getUpdated();
+    }
+
     public function commentsEnabled()
     {
         $this->__load();
@@ -303,10 +309,16 @@ class Article extends \Newscoop\Entity\Article implements \Doctrine\ORM\Proxy\Pr
         return parent::getKeywords();
     }
 
+    public function getImage()
+    {
+        $this->__load();
+        return parent::getImage();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'sectionId', 'issueId', 'number', 'name', 'date', 'comments_enabled', 'type', 'published', 'workflowStatus', 'indexed', 'keywords', 'language', 'publication', 'issue', 'section', 'creator', 'authors', 'topics');
+        return array('__isInitialized__', 'sectionId', 'issueId', 'number', 'name', 'date', 'comments_enabled', 'type', 'published', 'workflowStatus', 'indexed', 'keywords', 'language', 'publication', 'issue', 'section', 'creator', 'authors', 'topics', 'images');
     }
 
     public function __clone()

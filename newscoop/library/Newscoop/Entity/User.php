@@ -520,6 +520,18 @@ class User implements \Zend_Acl_Role_Interface, \Newscoop\Search\DocumentInterfa
     }
 
     /**
+     * Get group names
+     *
+     * @return array
+     */
+    public function getGroupNames()
+    {
+        return $this->groups->map(function($group) {
+            return $group->getName();
+        })->toArray();
+    }
+
+    /**
      * Add user type
      *
      * @param Newscoop\Entity\User\Group $type

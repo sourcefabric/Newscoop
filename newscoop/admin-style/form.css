@@ -240,3 +240,18 @@ h1 .inline #name {
 h1 .inline #submit {
 
 }
+
+.form-errors {
+    margin: 8px;
+    padding: 5px;
+    background-color: #fff;
+}
+
+.form-errors > li {
+    font-size: 1.3em;
+    padding: 5px;
+}
+
+.form-errors.permissions > li {
+    color: #005e85;
+}
