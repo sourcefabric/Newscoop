@@ -1,5 +1,5 @@
 {
-    "hash": "b6c9a8595d1df591ca74d8456769335c",
+    "hash": "314acee753a94e6ebe608912a2ad0a88",
     "packages": [
         {
             "package": "Smarty3",
@@ -24,10 +24,6 @@
             "commit-date": "1343556552"
         },
         {
-            "package": "sfEventDispatcher",
-            "version": "2.0"
-        },
-        {
             "package": "symfony/config",
             "version": "dev-master",
             "alias-pretty-version": "2.1.x-dev",
@@ -50,6 +46,18 @@
             "version": "dev-master",
             "source-reference": "ea5acc90c1c1937e8574968d577a5bbe9c6f680c",
             "commit-date": "1343512949"
+        },
+        {
+            "package": "symfony/event-dispatcher",
+            "version": "dev-master",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/event-dispatcher",
+            "version": "dev-master",
+            "source-reference": "v2.1.0-BETA4",
+            "commit-date": "1342739894"
         },
         {
             "package": "symfony/yaml",
