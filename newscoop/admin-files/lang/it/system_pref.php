@@ -1,4 +1,6 @@
 <?php 
+regGS("to load geo-names data", "");
+regGS("MySQL client command path", "");
 regGS("according to php.ini settings", "secondo le impostazioni in php.ini");
 regGS("Maximal zoom for auto-focusing:", "Zoom massimo per auto-focus:");
 regGS("Map border for auto-focusing:", "Bordo mappa per auto-focus:");
