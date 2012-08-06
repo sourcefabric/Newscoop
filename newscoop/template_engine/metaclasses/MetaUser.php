@@ -20,11 +20,16 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     private $user;
 
     /**
+     * @var array
+     */
+    private $systemGroupNames;
+
+    /**
      * @param Newscoop\Entity\User $user
      */
-    public function __construct(User $user = NULL)
+    public function __construct(User $user = null)
     {
-        if (is_null($user)) {
+        if ($user === null) {
             $user = new User;
         }
 
@@ -90,13 +95,11 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     protected function getDisplayName()
     {
         $url = $GLOBALS['controller']->view->url(array('username' => $this->m_dbObject->getUsername()), 'user');
-
         $name = trim($this->m_dbObject->getFirstName() . ' ' . $this->m_dbObject->getLastName());
 
         if ($this->m_dbObject->isPublic()) {
-            return "<a href='{$url}'>{$name}</a>";
-        }
-        else {
+            return sprintf('<a href="%s">%s</a>', $url, $name);
+        } else {
             return $name;
         }
     }
@@ -141,7 +144,9 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
 
         $publicationId = CampTemplate::singleton()->context()->publication->identifier;
         $subscriptions = Subscription::GetSubscriptions($publicationId, $this->m_dbObject->getId());
-        return empty($subscriptions) ? new MetaSubscription() : new MetaSubscription($subscriptions[0]->getSubscriptionId());
+        return empty($subscriptions)
+            ? new MetaSubscription()
+            : new MetaSubscription($subscriptions[0]->getSubscriptionId());
     }
 
     /**
@@ -227,10 +232,17 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         global $controller;
 
         $userIp = getIp();
-        $publication_id = CampTemplate::singleton()->context()->publication->identifier;
-        $repositoryAcceptance = $controller->getHelper('user')->getRepository('Newscoop\user\Comment\Acceptance');
-        $repository = $controller->getHelper('user')->getRepository('Newscoop\user\Comment');
-        return (int) $repositoryAcceptance->checkParamsBanned($this->name, $this->email, $userIp, $publication_id);
+        $publication_id = CampTemplate::singleton()->context()
+            ->publication->identifier;
+        $repositoryAcceptance = $controller->getHelper('user')
+            ->getRepository('Newscoop\user\Comment\Acceptance');
+        $repository = $controller->getHelper('user')
+            ->getRepository('Newscoop\user\Comment');
+        return (int) $repositoryAcceptance->checkParamsBanned(
+            $this->name,
+            $this->email,
+            $userIp,
+            $publication_id);
     }
 
     /**
@@ -250,7 +262,8 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
         }
 
         return $controller->view->url(array(
-            'src' => $controller->getHelper('service')->getService('image')->getSrc('images/' . $this->m_dbObject->getImage(), $width, $height, $specs),
+            'src' => $controller->getHelper('service')->getService('image')
+            ->getSrc('images/' . $this->m_dbObject->getImage(), $width, $height, $specs),
         ), 'image', false, false);
     }
 
@@ -281,7 +294,8 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     public function getPostsCount($update = false)
     {
-        return (int) \Zend_Registry::get('container')->getService('user')->getUserPoints($this->user);
+        return (int) \Zend_Registry::get('container')->getService('user')
+            ->getUserPoints($this->user);
     }
 
     /**
@@ -354,5 +368,31 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     public function isActive()
     {
         return $this->m_dbObject->isActive();
+    }
+
+    /**
+     * Test if user is a given type
+     *
+     * @param string $type
+     * @return bool
+     */
+    public function is($type)
+    {
+        return in_array($type, $this->getSystemGroupNames());
+    }
+
+    /**
+     * Get system group names
+     *
+     * @return array
+     */
+    private function getSystemGroupNames()
+    {
+        if ($this->systemGroupNames === null) {
+            $this->systemGroupNames = array_map('strtolower',
+                $this->user->getGroupNames());
+        }
+
+        return $this->systemGroupNames;
     }
 }
