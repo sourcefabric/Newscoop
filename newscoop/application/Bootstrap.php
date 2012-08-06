@@ -84,9 +84,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $this->bootstrap('container');
         $container = $this->getResource('container');
 
-        /**
-         * 
-         */
         $container->getDefinition('dispatcher')
             ->setConfigurator(function($eventDispatcher) use ($container) {
             foreach ($container->getParameter('listener') as $listener) {
