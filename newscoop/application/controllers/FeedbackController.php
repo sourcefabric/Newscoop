@@ -26,8 +26,6 @@ class FeedbackController extends Zend_Controller_Action
 
     public function saveAction()
     {
-        global $_SERVER;
-
         $this->_helper->layout->disableLayout();
         $parameters = $this->getRequest()->getParams();
 
@@ -45,8 +43,7 @@ class FeedbackController extends Zend_Controller_Action
             if ($acceptanceRepository->checkParamsBanned($user->m_data['Name'], $user->m_data['EMail'], $userIp, $parameters['f_publication'])) {
                 $errors[] = $this->view->translate('You have been banned from writing feedbacks.');
             }
-        }
-        else {
+        } else {
             $errors[] = $this->view->translate('You are not logged in.');
         }
 
