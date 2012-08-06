@@ -13,7 +13,7 @@ use Newscoop\Annotations\Acl;
 class Admin_ArticleController extends Zend_Controller_Action
 {
     /**
-     * @Acl(resource="image", action="edit")
+     * @Acl(ignore=true)
      */
     public function editImageAction()
     {
@@ -30,10 +30,26 @@ class Admin_ArticleController extends Zend_Controller_Action
 
         if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
             $values = $form->getValues();
-            $this->_helper->service('image')->saveImage($values['image'], $articleImage->getImage());
-            $this->_helper->service('image')->saveArticleImage($values['article'], $articleImage);
+
+            if ($this->_helper->acl->isAllowed('image', 'edit')) {
+                $this->_helper->service('image')->saveImage($values['image'], $articleImage->getImage());
+            }
+
+            if ($this->_helper->acl->isAllowed('image', 'attach')) {
+                $this->_helper->service('image')->saveArticleImage($values['article'], $articleImage);
+            }
+
             $this->_helper->flashMessenger(getGS('Image data saved.'));
             $this->_helper->redirector->gotoRoute();
+        }
+
+        if (!$this->_helper->acl->isAllowed('image', 'edit')
+            && !$this->_helper->acl->isAllowed('image', 'attach')) {
+            $form->addError(getGS("You're not allowed to make any changes."));
+        } elseif (!$this->_helper->acl->isAllowed('image', 'edit')) {
+            $form->addError(getGS("You're not allowed to edit global image metadata."));
+        } elseif (!$this->_helper->acl->isAllowed('image', 'attach')) {
+            $form->addError(getGS("You're not allowed to edit article specific data."));
         }
 
         $this->view->articleImage = $articleImage;

@@ -57,15 +57,11 @@
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/widgets.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/zend_admin_stylesheet.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/lists.css'); ?>" />
-<?php if ( !(isset($this->comment_part) && ($this->comment_part)) ) { // slideshow css interfere with comment parts ?>
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/slideshow-list.css'); ?>" />
-<?php } ?>
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/pagination.css'); ?>" />
+    <?php if ( !(isset($this->comment_part) && ($this->comment_part)) ) { // slideshow css interfere with comment parts ?>
+    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/slideshow-list.css'); ?>" />
+    <?php } ?>
     <?php if (!$this->legacy) { ?>
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/form.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/layout.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/content.css'); ?>" />
-    <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/sidebar.css'); ?>" />
     <link rel="stylesheet" type="text/css" media="screen" href="<?php echo $this->baseUrl('/admin-style/misc-pages.css'); ?>" />
     <?php
         $headLink = $this->headLink();
