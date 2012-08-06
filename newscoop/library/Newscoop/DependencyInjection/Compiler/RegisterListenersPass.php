@@ -17,7 +17,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 class RegisterListenersPass implements CompilerPassInterface
 {
     /**
-     * Register serives as events listeners.
+     * Register services as events listeners.
      *
      * @param  ContainerBuilder $container
      */
