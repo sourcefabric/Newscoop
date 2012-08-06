@@ -34,12 +34,12 @@ regGS("Download was not successful. Check please that the server is not out of d
 regGS("try again later", "повторите попытку позже");
 regGS("at", "в");
 regGS("You must at least upload one file.", "Вы обязаны загрузить не менее одного файла.");
-regGS("Warning: the existing data and themes will be deleted!", "Внимание: существующие данные и типовые шаблоны будут удалены!");
+regGS("Warning: the existing data and themes will be deleted!", "Внимание: существующие данные и темы (шаблоны) будут удалены!");
 regGS("Value is required and can't be empty", "Требуется значение, поле не может быть пустым.");
 regGS("Upload", "Загрузить");
 regGS("Update comment", "Обновить комментарий");
 regGS("Time created", "Время создания");
-regGS("Themes", "Шаблоны");
+regGS("Themes", "Темы (Шаблоны)");
 regGS("Stop current upload", "Отсановить текущую загрузку");
 regGS("Start uploading queue", "Начать загрузку списка");
 regGS("Start upload", "Начать загрузку");
@@ -152,4 +152,5 @@ regGS("Login failed", "Ошибка входа");
 regGS("Please make sure that you typed the correct user name and password.", "Пожалуйста, убедитесь в правильности ввода логина и пароля.");
 regGS("If your problem persists please contact the site administrator $1", "Если проблема не решена, обратитесь к администратору сайта $1");
 regGS("Backup/Restore", "Резервное копирование");
+regGS("Hi, \\n\\nfor password recovery, please follow this link: $1", "Добрый день, \\n\\n для восстановления пароля, следуйте по ссылке: $1");
 ?>
