@@ -7,10 +7,12 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity\User,
-    Newscoop\Entity\Topic,
-    Newscoop\Entity\UserTopic;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Event\Dispatcher\EventDispatcher;
+use Newscoop\Entity\Topic;
+use Newscoop\Entity\User;
+use Newscoop\Entity\UserTopic;
+
 
 /**
  * User service
@@ -20,14 +22,14 @@ class UserTopicService
     /** @var Doctrine\ORM\EntityManager */
     private $em;
 
-    /** @var Newscoop\Services\EventDispatcherService */
+    /** @var Newscoop\Event\Dispatcher\EventDispatcher */
     private $dispatcher;
 
     /**
      * @param Doctrine\ORM\EntityManager $em
-     * @param Newscoop\Services\EventDispatcherService $dispatcher
+     * @param Newscoop\Event\Dispatcher\EventDispatcher $dispatcher
      */
-    public function __construct(EntityManager $em, EventDispatcherService $dispatcher = null)
+    public function __construct(EntityManager $em, EventDispatcher $dispatcher = null)
     {
         $this->em = $em;
         $this->dispatcher = $dispatcher;
@@ -140,7 +142,7 @@ class UserTopicService
             return;
         }
 
-        $this->dispatcher->notify(new \sfEvent($this, 'topic.follow', array(
+        $this->dispatcher->notify('topic.follow', new \Newscoop\Event\Event\GenericEvent($this, array(
             'topic_name' => $topic->getName(),
             'topic_id' => $topic->getTopicId(),
             'user' => $user,

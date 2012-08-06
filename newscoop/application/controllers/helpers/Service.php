@@ -5,6 +5,8 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+use Newscoop\Event\Event\GenericEvent;
+
 /**
  * Service container action helper
  */
@@ -42,7 +44,7 @@ class Action_Helper_Service extends Zend_Controller_Action_Helper_Abstract
      */
     public function notifyDispatcher($event_name, $params)
     {
-        $this->getService('dispatcher')->notify(new sfEvent($this, $event_name, $params));
+        $this->getService('dispatcher')->notify($event_name, new GenericEvent($this, $params));
     }
 
     /**

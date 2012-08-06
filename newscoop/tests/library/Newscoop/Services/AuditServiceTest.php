@@ -7,6 +7,8 @@
 
 namespace Newscoop\Services;
 
+use Newscoop\Event\Event\GenericEvent;
+
 class AuditServiceTest extends \PHPUnit_Framework_TestCase
 {
     /** @var Doctrine\ORM\EntityManager */
@@ -58,8 +60,8 @@ class AuditServiceTest extends \PHPUnit_Framework_TestCase
             ->method('flush')
             ->with();
 
-        $event = new \sfEvent($this, 'event.test');
-        $this->service->update($event);
+        $event = new GenericEvent($this);
+        $this->service->update('event.test', $event);
     }
 
     public function testFindAll()

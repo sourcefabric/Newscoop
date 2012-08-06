@@ -7,8 +7,9 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity\UserAttribute;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Entity\UserAttribute;
+use Newscoop\Event\Event\GenericEvent;
 
 /**
  * User service
@@ -30,12 +31,12 @@ class UserAttributeService
     /**
      * Receives notifications of points events.
      *
-     * @param sfEvent $event
+     * @param GenericEvent $event
      * @return void
      */
-    public function update(\sfEvent $event)
+    public function update(GenericEvent $event)
     {
-        $params = $event->getParameters();
+        $params = $event->getArguments();
 
         $attribute_name =  str_replace(".", "_", $event->getName());
         $user = $params['user'];

@@ -17,16 +17,16 @@ use Doctrine\Common\EventSubscriber,
  */
 class DoctrineEventDispatcherProxy implements EventSubscriber
 {
-    /** @var sfEventDispatcher */
+    /** @var EventDispatcher */
     private $dispatcher;
 
     /** @var array */
     private $events = array();
 
     /**
-     * @param sfEventDispatcher $dispatcher
+     * @param EventDispatcher $dispatcher
      */
-    public function __construct(\sfEventDispatcher $dispatcher)
+    public function __construct(\Newscoop\Event\Dispatcher\EventDispatcher $dispatcher)
     {
         $this->dispatcher = $dispatcher;
     }
@@ -55,7 +55,7 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
     public function postPersist(LifecycleEventArgs $args)
     {
         $entityName = $this->getEntityName($args->getEntity());
-        $this->dispatcher->notify(new \sfEvent($this, "{$entityName}.create", array(
+        $this->dispatcher->notify("{$entityName}.create", new \Newscoop\Event\Event\GenericEvent($this, array(
             'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
             'title' => $this->getEntityTitle($args->getEntity()),
         )));
@@ -70,7 +70,7 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
     public function preUpdate(PreUpdateEventArgs $args)
     {
         $entityName = $this->getEntityName($args->getEntity());
-        $this->events[] = new \sfEvent($args->getEntity(), "{$entityName}.update", array(
+        $this->events["{$entityName}.update"] = new \Newscoop\Event\Event\GenericEvent($args->getEntity(), array(
             'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
             'diff' => $args->getEntityChangeSet(),
             'title' => $this->getEntityTitle($args->getEntity()),
@@ -85,8 +85,8 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
      */
     public function postUpdate(LifecycleEventArgs $args)
     {
-        foreach ($this->events as $event) {
-            $this->dispatcher->notify($event);
+        foreach ($this->events as $eventName =>  $event) {
+            $this->dispatcher->notify($eventName, $event);
         }
     }
 
@@ -99,7 +99,7 @@ class DoctrineEventDispatcherProxy implements EventSubscriber
     public function preRemove(LifecycleEventArgs $args)
     {
         $entityName = $this->getEntityName($args->getEntity());
-        $this->dispatcher->notify(new \sfEvent($this, "{$entityName}.delete", array(
+        $this->dispatcher->notify("{$entityName}.delete", new \Newscoop\Event\Event\GenericEvent($this, array(
             'id' => $this->getEntityId($args->getEntity(), $args->getEntityManager()),
             'diff' => $this->getEntityProperties($args->getEntity(), $args->getEntityManager()),
             'title' => $this->getEntityTitle($args->getEntity()),

@@ -7,6 +7,8 @@
 
 namespace Newscoop\Services;
 
+use Newscoop\Event\Event\GenericEvent;
+
 class CommunityFeedServiceTest extends \PHPUnit_Framework_TestCase
 {
     protected $em;
@@ -46,14 +48,14 @@ class CommunityFeedServiceTest extends \PHPUnit_Framework_TestCase
             ->method('save')
             ->with();
 
-        $event = new \sfEvent($this, 'event.test', array(
+        $event = new GenericEvent($this, array(
             'user' => 1,
             'params' => array(
                 'title' => 'Test',
             ),
         ));
 
-        $this->service->update($event);
+        $this->service->update('event.test', $event);
     }
 
     public function testFindBy()

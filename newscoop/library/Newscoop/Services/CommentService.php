@@ -8,6 +8,7 @@
 namespace Newscoop\Services;
 
 use Doctrine\ORM\EntityManager;
+use Newscoop\Event\Event\GenericEvent;
 
 /**
  * User service
@@ -107,15 +108,13 @@ class CommentService
     /**
      * Receives notifications of points events.
      *
-     * @param sfEvent $event
+     * @param GenericEvent $event
      * @return void
      */
-    public function update(\sfEvent $event)
+    public function update(GenericEvent $event)
     {
-        $params = $event->getParameters();
-        list($resource, $action) = explode('.', $event->getName());
-
-        $method = $resource."_".$action;
+        $params = $event->getArguments();
+        $method = str_replace('.', '_', $event->getName());
         $this->$method($params);
 
         $this->em->flush();

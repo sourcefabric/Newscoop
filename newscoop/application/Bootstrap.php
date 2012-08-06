@@ -67,19 +67,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->setService('em', $doctrine->getEntityManager());
 
         $this->bootstrap('view');
-        $container->setService('view', $this->getResource('view'));
-
-        $container->register('dispatcher', 'Newscoop\Services\EventDispatcherService')
-            ->setConfigurator(function($service) use ($container) {
-                
-                foreach ($container->getParameter('listener') as $listener) {
-                    $listenerService = $container->getService($listener);
-                    $listenerParams = $container->getParameter($listener);
-                    foreach ((array) $listenerParams['events'] as $event) {
-                        $service->connect($event, array($listenerService, 'update'));
-                    }
-                }
-            });
+        $container->setService('view', $this->getResource('view'));            
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
         $loader->load('configs/services.yml');
@@ -95,6 +83,20 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     {
         $this->bootstrap('container');
         $container = $this->getResource('container');
+
+        /**
+         * 
+         */
+        $container->getDefinition('dispatcher')
+            ->setConfigurator(function($eventDispatcher) use ($container) {
+            foreach ($container->getParameter('listener') as $listener) {
+                $listenerService = $container->getService($listener);
+                $listenerParams = $container->getParameter($listener);
+                foreach ((array) $listenerParams['events'] as $event) {
+                    $eventDispatcher->connect($event, array($listenerService, 'update'));
+                }
+            }
+        });
 
         DatabaseObject::setEventDispatcher($container->getService('dispatcher'));
         DatabaseObject::setResourceNames($container->getParameter('resourceNames'));
