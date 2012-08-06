@@ -104,7 +104,7 @@ services:
         class:      Newscoop\Subscription\SubscriptionFacade
         arguments:  ["@em"]
     subscription.section:
-        class:      Newscoop\Subscription\SubscriptionFacade
+        class:      Newscoop\Subscription\SectionFacade
         arguments:  ["@em"]
     subscription.ip:
         class:      Newscoop\Subscription\IpFacade
