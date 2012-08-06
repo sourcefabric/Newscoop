@@ -38,16 +38,6 @@ class Action_Helper_Service extends Zend_Controller_Action_Helper_Abstract
     }
 
     /**
-     * Notify event dispatcher about an event
-     *
-     * @return void
-     */
-    public function notifyDispatcher($event_name, $params)
-    {
-        $this->getService('dispatcher')->notify($event_name, new GenericEvent($this, $params));
-    }
-
-    /**
      * Direct get service
      *
      * @param string $service
