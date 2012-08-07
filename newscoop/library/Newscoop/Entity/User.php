@@ -332,10 +332,8 @@ class User implements \Zend_Acl_Role_Interface, \Newscoop\Search\DocumentInterfa
      */
     public function getRealName()
     {
-        return string($this->first_name . ' ' . $this->last_name);
+        return trim(sprintf('%s %s', $this->first_name, $this->last_name));
     }
-
-
 
     /**
      * Set status
