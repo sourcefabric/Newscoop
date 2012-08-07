@@ -12,7 +12,7 @@ use Newscoop\EventDispatcher\Events\GenericEvent;
  */
 class Action_Helper_Service extends Zend_Controller_Action_Helper_Abstract
 {
-    /** @var sfServiceContainerInterface */
+    /** @var Symfony\Component\DependencyInjection\Container */
     private $container;
 
     /**
