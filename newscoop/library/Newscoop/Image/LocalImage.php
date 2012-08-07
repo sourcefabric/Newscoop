@@ -7,7 +7,7 @@
 
 namespace Newscoop\Image;
 
-use Doctrine\Common\Collection\ArrayCollection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Local Image
