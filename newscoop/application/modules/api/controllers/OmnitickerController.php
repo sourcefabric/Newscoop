@@ -52,21 +52,31 @@ class Api_OmnitickerController extends OmnitickerController
             'short_title',
             'teaser',
             'link_url',
+            'published',
         ),
         'link' => array(
             'short_title',
             'teaser',
             'link_url',
+            'published',
         ),
         'event' => array(
             'short_title',
             'teaser',
             'link_url',
+            'published',
         ),
         'comment' => array(
             'short_title',
             'teaser',
             'website_url',
+            'published',
+        ),
+        'tweet' => array(
+            'short_title',
+            'teaser',
+            'link_url',
+            'published',
         ),
     );
 
@@ -110,8 +120,8 @@ class Api_OmnitickerController extends OmnitickerController
             'recommended_comment_count' => isset($this->commentStats[$id]) ? $this->commentStats[$id]['recommended'] : null,
             'source' => $this->formatType($doc),
             'rank' => $this->rank++,
-            'last_modified' => null,
-            'published' => $this->formatPublished($doc),
+            'last_modified' => $this->formatDate($doc, 'updated'),
+            'published' => $this->formatDate($doc, 'published'),
             'topics' => $this->formatTopics($doc),
         ));
     }
@@ -184,16 +194,26 @@ class Api_OmnitickerController extends OmnitickerController
     }
 
     /**
-     * Format published datetime
+     * Format date
      *
      * @param array $doc
+     * @param string $key
      * @return string
      */
-    private function formatPublished(array $doc)
+    private function formatDate(array $doc, $key)
     {
-        $published = new DateTime($doc['published']);
-        $published->setTimezone(new DateTimeZone('Europe/Berlin'));
-        return $published->format('Y-m-d H:i:s');
+        if (!isset($doc[$key])) {
+            return null;
+        }
+
+        try {
+            $date = new DateTime($doc[$key]);
+        } catch (Exception $e) {
+            return null;
+        }
+
+        $date->setTimezone(new DateTimeZone('Europe/Berlin'));
+        return $date->format('Y-m-d H:i:s');
     }
 
     /**
