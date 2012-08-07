@@ -205,7 +205,7 @@ class Api_ArticlesController extends AbstractController
             'publish_date' => $article->getPublishDate(),
             'last_modified' => $article->getDate(),
             'teaser' => $this->getFieldValue($adata, $teaserField),
-            'body' => $this->getFieldValud($adata, $bodyField),
+            'body' => $this->getFieldValue($adata, $bodyField),
             'image_url' => $this->getImageUrl($article),
             'comment_count' => $comments,
         );
