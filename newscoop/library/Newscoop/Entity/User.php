@@ -593,15 +593,22 @@ class User implements \Zend_Acl_Role_Interface
      */
     public function getAttributes()
     {
+        return array_filter($this->getRawAttributes());
+    }
+
+    /**
+     * Get raw user attributes
+     *
+     * @return array
+     */
+    public function getRawAttributes()
+    {
         $attributes = array();
-
-        $keys = $this->attributes->getKeys();
-
-        foreach ($keys as $key) {
+        foreach ($this->attributes->getKeys() as $key) {
             $attributes[$key] = $this->attributes[$key]->getValue();
         }
 
-        return array_filter($attributes);
+        return $attributes;
     }
 
     /**
