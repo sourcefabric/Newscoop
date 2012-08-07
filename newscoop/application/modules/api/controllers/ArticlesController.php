@@ -198,23 +198,33 @@ class Api_ArticlesController extends AbstractController
             $bodyField = 'DataContent';
         }
 
-        try {
-            $dateline = $adata->getFieldValue('dateline');
-        } catch (Exception $e) {
-            $dateline = null;
-        }
-
         return array(
             'article_id' => $article->getId(),
             'title' => $article->getTitle(),
-            'dateline' => $dateline,
+            'dateline' => $this->getFieldValue($adata, 'dateline'),
             'publish_date' => $article->getPublishDate(),
             'last_modified' => $article->getDate(),
-            'teaser' => $adata->getFieldValue($teaserField),
-            'body' => $adata->getFieldValue($bodyField),
+            'teaser' => $this->getFieldValue($adata, $teaserField),
+            'body' => $this->getFieldValud($adata, $bodyField),
             'image_url' => $this->getImageUrl($article),
             'comment_count' => $comments,
         );
+    }
+
+    /**
+     * Get article data field value
+     *
+     * @param ArticleData $data
+     * @param string $field
+     * @return mixed
+     */
+    private function getFieldValue(ArticleData $data, $field)
+    {
+        try {
+            return $data->getFieldValue($field);
+        } catch (Exception $e) {
+            return null;
+        }
     }
 
     private function initClient($client)
