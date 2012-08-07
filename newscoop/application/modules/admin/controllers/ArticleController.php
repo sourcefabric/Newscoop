@@ -20,9 +20,10 @@ class Admin_ArticleController extends Zend_Controller_Action
         $this->_helper->layout->setLayout('iframe');
 
         camp_load_translation_strings('article_images');
-        require_once ADMIN_PATH . '/articles/article_common.php';
+        require_once APPLICATION_PATH . '/../admin-files/articles/article_common.php';
 
-        $articleImage = $this->_helper->service('image')->getArticleImage($this->_getParam('article'), $this->_getParam('image'));
+        $articleImage = $this->_helper->service('image')
+            ->getArticleImage($this->_getParam('article'), $this->_getParam('image'));
 
         $form = new Admin_Form_ArticleImageForm();
         $form->setDefaultsFromEntity($articleImage, $this->_getParam('language'));
