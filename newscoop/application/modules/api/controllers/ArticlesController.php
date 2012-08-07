@@ -200,7 +200,7 @@ class Api_ArticlesController extends AbstractController
 
         try {
             $dateline = $adata->getFieldValue('dateline');
-        } catch (InvalidArgumentException $e) {
+        } catch (Exception $e) {
             $dateline = null;
         }
 
