@@ -11,6 +11,8 @@ use Newscoop\Entity\User;
  */
 class DashboardController extends Zend_Controller_Action
 {
+    const ATTRIBUTE_QUESTIONNAIRE = '_finished_questionnaire';
+
     /** @var Newscoop\Services\UserService */
     private $service;
 
@@ -35,15 +37,19 @@ class DashboardController extends Zend_Controller_Action
         if (empty($this->user)) {
             $this->_helper->redirector('index', 'auth');
         }
+
+        if ($this->getRequest()->getActionName() === 'index'
+            && $this->userIsPolitician()
+            && !$this->user->getAttribute(self::ATTRIBUTE_QUESTIONNAIRE)) {
+            $this->_forward('politikprofil');
+        }
     }
 
     public function indexAction()
     {
         $form = new Application_Form_Profile();
         $form->setMethod('POST');
-
         $this->addProfileFields($form);
-
         $form->setDefaultsFromEntity($this->user);
 
         if ($this->getMailChimpListId()) {
@@ -92,8 +98,7 @@ class DashboardController extends Zend_Controller_Action
         
         try {
             $userSubscriptionService->testConnection();
-        }
-        catch(\Exception $e) {
+        } catch(\Exception $e) {
             $this->view->subscriptionService = false;
             restore_error_handler();
         }
@@ -160,6 +165,44 @@ class DashboardController extends Zend_Controller_Action
         $this->_helper->json(array());
     }
 
+    public function politprofilAction()
+    {
+        $form = new Zend_Form();
+        $this->addProfileFields($form);
+        $form->setDefaults(array(
+            'attributes' => $this->user->getAttributes(),
+        ));
+
+        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
+            $values = $form->getValues();
+            $this->_helper->service('user')->save($values, $this->user);
+            $this->_helper->redirector('questionnaire');
+        }
+
+        $this->view->form = $form;
+        $this->view->user = new MetaUser($this->user);
+    }
+
+    public function questionnaireAction()
+    {
+        $form = new Zend_Form($this->getThemeFormConfig('questionnaire')->form);
+        $form->setDefaults($this->user->getAttributes());
+
+        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
+            $values = $form->getValues();
+            $values[self::ATTRIBUTE_QUESTIONNAIRE] = 1;
+            $this->_helper->service('user')->save(array(
+                'attributes' => $values,
+            ), $this->user);
+
+            $this->_helper->flashMessenger($form->getAttrib('message'));
+            $this->_helper->redirector('questionnaire');
+        }
+
+        $this->view->messages = $this->_helper->flashMessenger->getMessages();
+        $this->view->form = $form;
+    }
+
     /**
      * Get mailchimp list id
      *
@@ -193,7 +236,33 @@ class DashboardController extends Zend_Controller_Action
      */
     private function addProfileFields(Zend_Form $form)
     {
-        $config = new Zend_Config_Xml($this->_helper->theme->getFilePath('_forms/profile.xml'), 'user');
-        $form->addSubForm(new Zend_Form_SubForm($config->profile), 'attributes');
+        $section = $this->userIsPolitician() ? 'politician' : 'user';
+        $form->addSubForm(
+            new Zend_Form_SubForm($this->getThemeFormConfig('profile', $section)->profile),
+            'attributes');
+    }
+
+    /**
+     * Get theme form config
+     *
+     * @param string $form
+     * @param string $section
+     * @return Zend_Config
+     */
+    private function getThemeFormConfig($form, $section = null)
+    {
+        return new Zend_Config_Xml(
+            $this->_helper->theme->getFilePath('_forms/' . $form . '.xml'),
+            $section);
+    }
+
+    /**
+     * Test if user is politician
+     *
+     * @return bool
+     */
+    private function userIsPolitician()
+    {
+        return $this->user->hasGroup($this->_helper->config('role')->politician);
     }
 }

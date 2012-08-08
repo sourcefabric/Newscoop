@@ -7,11 +7,11 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection,
-    Newscoop\Utils\PermissionToAcl,
-    Newscoop\Entity\Acl\Role,
-    Newscoop\Entity\User\Group,
-    Newscoop\Entity\Author;
+use Doctrine\Common\Collections\ArrayCollection;
+use Newscoop\Utils\PermissionToAcl;
+use Newscoop\Entity\Acl\Role;
+use Newscoop\Entity\User\Group;
+use Newscoop\Entity\Author;
 
 /**
  * @Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
@@ -540,9 +540,13 @@ class User implements \Zend_Acl_Role_Interface, \Newscoop\Search\DocumentInterfa
      */
     public function hasGroup($groupId)
     {
-        return $this->groups->exists(function($group) use ($groupId) {
-            return $group->getId() === (int) $groupId;
-        });
+        foreach ($this->groups as $group) {
+            if ($group->getId() === (int) $groupId) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     /**

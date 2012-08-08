@@ -143,6 +143,7 @@ class RegisterController extends Zend_Controller_Action
 
         $this->view->form = $form;
         $this->view->img = $this->getUserImageSrc($user);
+        $this->view->user = new MetaUser($user);
     }
 
     public function generateUsernameAction()

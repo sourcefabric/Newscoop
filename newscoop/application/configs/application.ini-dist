@@ -241,6 +241,9 @@ communityExcludedRoles[] = 1
 communityExcludedRoles[] = 2
 communityExcludedRoles[] = 3
 
+role.politician = 10
+role.allowedRoles[] = 10
+
 characterGroup.a = "a ä à â æ"
 characterGroup.c = "c ç"
 characterGroup.e = "e è é ê ë"
@@ -322,6 +325,9 @@ session.cookie_domain = ""
 
 solr_select = "http://lab.sourcefabric.org/solr/select/"
 solr_update = "http://lab.sourcefabric.org/solr/update/json?commit=true"
+
+role.politician = 6
+role.allowedRoles[] = 6
 
 [cli : production]
 resources.doctrine.cache = "Doctrine\Common\Cache\ArrayCache";

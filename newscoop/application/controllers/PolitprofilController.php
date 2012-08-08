@@ -9,6 +9,13 @@
  */
 class PolitprofilController extends Zend_Controller_Action
 {
+    public function preDispatch()
+    {
+        if ($this->_helper->service('user')->getCurrentUser() !== null) {
+            $this->_helper->redirector('index', 'dashboard');
+        }
+    }
+
     public function indexAction()
     {
         $this->view->role = $this->_helper->config('role')->politician;

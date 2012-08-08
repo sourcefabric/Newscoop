@@ -20,11 +20,6 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
     private $user;
 
     /**
-     * @var array
-     */
-    private $systemGroupNames;
-
-    /**
      * @param Newscoop\Entity\User $user
      */
     public function __construct(User $user = null)
@@ -378,21 +373,11 @@ final class MetaUser extends MetaDbObject implements ArrayAccess
      */
     public function is($type)
     {
-        return in_array($type, $this->getSystemGroupNames());
-    }
-
-    /**
-     * Get system group names
-     *
-     * @return array
-     */
-    private function getSystemGroupNames()
-    {
-        if ($this->systemGroupNames === null) {
-            $this->systemGroupNames = array_map('strtolower',
-                $this->user->getGroupNames());
+        $role = Zend_Registry::get('container')->getParameter('role');
+        if (empty($role) || !isset($role[$type])) {
+            return false;
         }
 
-        return $this->systemGroupNames;
+        return $this->user->hasGroup($role[$type]);
     }
 }

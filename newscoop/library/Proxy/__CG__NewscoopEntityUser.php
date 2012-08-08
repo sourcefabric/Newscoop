@@ -204,10 +204,28 @@ class User extends \Newscoop\Entity\User implements \Doctrine\ORM\Proxy\Proxy
         return parent::getGroups();
     }
 
+    public function getGroupNames()
+    {
+        $this->__load();
+        return parent::getGroupNames();
+    }
+
+    public function hasGroup($groupId)
+    {
+        $this->__load();
+        return parent::hasGroup($groupId);
+    }
+
     public function addUserType(\Newscoop\Entity\User\Group $type)
     {
         $this->__load();
         return parent::addUserType($type);
+    }
+
+    public function addGroup(\Newscoop\Entity\User\Group $group)
+    {
+        $this->__load();
+        return parent::addGroup($group);
     }
 
     public function getUserTypes()
@@ -244,6 +262,12 @@ class User extends \Newscoop\Entity\User implements \Doctrine\ORM\Proxy\Proxy
     {
         $this->__load();
         return parent::getAttributes();
+    }
+
+    public function getRawAttributes()
+    {
+        $this->__load();
+        return parent::getRawAttributes();
     }
 
     public function setImage($image)
@@ -351,7 +375,7 @@ class User extends \Newscoop\Entity\User implements \Doctrine\ORM\Proxy\Proxy
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'email', 'username', 'password', 'first_name', 'last_name', 'created', 'updated', 'status', 'is_admin', 'is_public', 'points', 'image', 'subscriber', 'indexed', 'role', 'groups', 'attributes', 'commenters', 'author', 'identities');
+        return array('__isInitialized__', 'id', 'email', 'username', 'password', 'first_name', 'last_name', 'created', 'updated', 'status', 'is_admin', 'is_public', 'image', 'subscriber', 'indexed', 'role', 'groups', 'attributes', 'commenters', 'author', 'identities');
     }
 
     public function __clone()
