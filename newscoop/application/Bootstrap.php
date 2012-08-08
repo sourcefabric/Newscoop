@@ -199,10 +199,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('em'));
 
         $container->register('solr.client.update', 'Zend_Http_Client')
-            ->addArgument('http://localhost:8983/solr/update/json?commit=true');
+            ->addArgument('%solr_update%');
 
         $container->register('solr.client.select', 'Zend_Http_Client')
-            ->addArgument('http://localhost:8983/solr/select/');
+            ->addArgument('%solr_select%');
 
         $container->register('search.index', 'Newscoop\Search\Index')
             ->addArgument(new sfServiceReference('solr.client.update'));

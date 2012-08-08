@@ -269,6 +269,9 @@ search.article.rendition = "rubrikenseite"
 
 twitter.id = "tageswoche"
 
+solr_select = "http://localhost:8983/solr/select/"
+solr_update = "http://localhost:8983/solr/update/json?commit=true"
+
 [staging : production]
 
 [testing : production]
@@ -316,6 +319,9 @@ resources.doctrine.cache = "Doctrine\Common\Cache\ArrayCache";
 admin.resources.acl.cache = "Doctrine\Common\Cache\ArrayCache"
 
 session.cookie_domain = ""
+
+solr_select = "http://lab.sourcefabric.org/solr/select/"
+solr_update = "http://lab.sourcefabric.org/solr/update/json?commit=true"
 
 [cli : production]
 resources.doctrine.cache = "Doctrine\Common\Cache\ArrayCache";
