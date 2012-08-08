@@ -162,13 +162,36 @@ class Topic extends DatabaseObject {
 	 * @param array $p_values
 	 * @return boolean
 	 */
-	public function create($p_values = null)
+	public function create($p_values = null, $p_allNamesRequired = false)
 	{
 		global $g_ado_db;
 
-		if (!isset($p_values['names'])) {
+		if ((!isset($p_values['names'])) || (!is_array($p_values['names']))) {
 			return false;
 		}
+
+        $names_available = array();
+        $names_occupied = array();
+        foreach ($p_values['names'] as $check_lang_id => $check_topic_name) {
+            $check_name_obj = new \TopicName($check_topic_name, $check_lang_id);
+            if ($check_name_obj->exists()) {
+                $names_occupied[$check_lang_id] = $check_topic_name;
+            }
+            else {
+                $names_available[$check_lang_id] = $check_topic_name;
+            }
+            unset($check_name_obj);
+        }
+        if (empty($names_available)) {
+            return false;
+        }
+        if ($p_allNamesRequired) {
+            if (!empty($names_occupied)) {
+                return false;
+            }
+        }
+
+        $p_values['names'] = $names_available;
 
 		$g_ado_db->Execute("LOCK TABLE Topics WRITE, TopicNames WRITE");
 
@@ -189,15 +212,42 @@ class Topic extends DatabaseObject {
 		$this->m_data['node_left'] = $parentLeft + 1;
 		$this->m_data['node_right'] = $parentLeft + 2;
 
+        $some_name_set = false;
+        $some_name_not_set = false;
 		// create node
 		if ($success = parent::create($p_values)) {
 			// create topic names
 			foreach ($p_values['names'] as $languageId=>$name) {
 				$topicName = new TopicName($this->getTopicId(), $languageId);
-				$topicName->create(array('name'=>$name));
-				$this->m_names[$languageId] = $topicName;
+				$res = $topicName->create(array('name'=>$name));
+                if ($res) {
+                    $some_name_set = true;
+                    $this->m_names[$languageId] = $topicName;
+                }
+                else {
+                    $some_name_not_set = true;
+                }
 			}
+
+            if ($p_allNamesRequired && $some_name_not_set) {
+                \TopicName::DeleteTopicNames($this->getTopicId());
+                $success = false;
+            }
+
+            if (!$some_name_set) {
+                $success = false;
+            }
+
+            if (!$success) {
+                $g_ado_db->Execute("DELETE FROM Topics WHERE id = ".$this->getTopicId());
+            }
+
 		}
+
+        if (!$success) {
+            $g_ado_db->Execute("UPDATE Topics SET node_left = node_left - 2 WHERE node_left > ($parentLeft + 2)");
+            $g_ado_db->Execute("UPDATE Topics SET node_right = node_right - 2 WHERE node_right > ($parentLeft + 2)");
+        }
 
 		$g_ado_db->Execute("UNLOCK TABLES");
 
