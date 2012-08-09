@@ -41,7 +41,7 @@ class DashboardController extends Zend_Controller_Action
         if ($this->getRequest()->getActionName() === 'index'
             && $this->userIsPolitician()
             && !$this->user->getAttribute(self::ATTRIBUTE_QUESTIONNAIRE)) {
-            $this->_forward('politikprofil');
+            $this->_helper->redirector('politprofil');
         }
     }
 
@@ -188,9 +188,17 @@ class DashboardController extends Zend_Controller_Action
         $form = new Zend_Form($this->getThemeFormConfig('questionnaire')->form);
         $form->setDefaults($this->user->getAttributes());
 
+
+        if (!$this->user->getAttribute(self::ATTRIBUTE_QUESTIONNAIRE)) {
+            $this->_helper->service('user')->save(array(
+                'attributes' => array(
+                    self::ATTRIBUTE_QUESTIONNAIRE => 1,
+                ),
+            ), $this->user);
+        }
+
         if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
             $values = $form->getValues();
-            $values[self::ATTRIBUTE_QUESTIONNAIRE] = 1;
             $this->_helper->service('user')->save(array(
                 'attributes' => $values,
             ), $this->user);
