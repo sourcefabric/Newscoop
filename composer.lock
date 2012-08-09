@@ -1,5 +1,5 @@
 {
-    "hash": "07e11412f7a487ce7ae98dcc1eb2a978",
+    "hash": "43b61282b5f71be75a4653e604c877c4",
     "packages": [
         {
             "package": "Smarty3",
@@ -14,16 +14,6 @@
         {
             "package": "doctrine/dbal",
             "version": "2.2.0-RC3"
-        },
-        {
-            "package": "doctrine/mongodb",
-            "version": "1.0.0-BETA1"
-        },
-        {
-            "package": "doctrine/mongodb-odm",
-            "version": "dev-master",
-            "source-reference": "612229ac4fe65337352d0b4ba2dbdbd662d195de",
-            "commit-date": "1344437604"
         },
         {
             "package": "doctrine/orm",
@@ -103,7 +93,6 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
-        "doctrine/mongodb-odm": 20,
         "zendframework/zendframework1": 20
     }
 }

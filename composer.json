@@ -14,7 +14,6 @@
         "symfony/config": "2.1.*",
         "symfony/console": "2.1.*",
         "doctrine/orm":"2.2.*",
-        "doctrine/mongodb-odm": "dev-master",
         "zendframework/zendframework1":"dev-release-1.11",
         "Smarty3":"3.0.8"
     },
