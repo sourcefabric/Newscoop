@@ -149,6 +149,11 @@ class Api_BlogsController extends AbstractController
                 $shortName = $post->getTitle();
             }
 
+            $teaser = trim(strip_tags($postData->getFieldValue('lede')));
+            if (empty($teaser)) {
+                $teaser = null;
+            }
+
             $normalComments = isset($this->commentStats[$post->getNumber()]) ? $this->commentStats[$post->getNumber()]['normal'] : 0;
             $recommendedComments = isset($this->commentStats[$post->getNumber()]) ? $this->commentStats[$post->getNumber()]['recommended'] : 0;
 
@@ -161,7 +166,7 @@ class Api_BlogsController extends AbstractController
                 ), 'default') . sprintf('?post_id=%d', $post->getNumber()) . $this->getClientVersionParams(false)),
                 'short_name' => $shortName,
                 'author_name' => implode(',', $this->getAuthors($post)),
-                'teaser' => $this->getTeaser($post),
+                'teaser' => $teaser,
                 'image_url' => $imageUrl,
                 'published' => $post->getPublishDate(),
                 'comment_count' => $normalComments + $recommendedComments,
@@ -199,11 +204,10 @@ class Api_BlogsController extends AbstractController
             $post = $posts[0];
             $postData = new ArticleData('blog', $post->getNumber(), self::LANGUAGE);
             $postImages = ArticleImage::GetImagesByArticleNumber($post->getNumber());
-            if ($postImages[0]) {
+            if (isset($postImages[0])) {
                 $imageUrl = $postImages[0]->getImage()->getImageUrl();
-            }
-            else {
-                $imageUrl = '';
+            } else {
+                $imageUrl = null;
             }
             
             $response = array(
