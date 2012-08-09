@@ -5,8 +5,9 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Newscoop\Image\Rendition,
-    Newscoop\Package\PackageService;
+use Newscoop\Annotations\Acl;
+use Newscoop\Image\Rendition;
+use Newscoop\Package\PackageService;
 
 /**
  * @Acl(resource="subscription", action="manage")

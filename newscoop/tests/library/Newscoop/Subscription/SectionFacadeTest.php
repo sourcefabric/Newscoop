@@ -90,8 +90,10 @@ class SectionFacadeTest extends \TestCase
     public function testDelete()
     {
         $section = $this->facade->save($this->values);
-        $this->assertNotNull($this->facade->find($section->getId()));
-        $this->facade->delete($section->getId());
-        $this->assertNull($this->facade->find($section->getId()));
+        $id = $section->getId();
+
+        $this->assertNotNull($this->facade->find($id));
+        $this->facade->delete($id);
+        $this->assertNull($this->facade->find($id));
     }
 }

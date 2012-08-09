@@ -15,7 +15,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @Entity(repositoryClass="Newscoop\Entity\Repository\PublicationRepository")
  * @Table(name="Publications")
  */
-class Publication extends Entity
+class Publication
 {
     /**
      * Provides the class name as a constant.
@@ -25,11 +25,11 @@ class Publication extends Entity
     /* --------------------------------------------------------------- */
 
     /**
-     * @id @generatedValue
+     * @Id @GeneratedValue
      * @Column(name="Id", type="integer")
      * @var int
      */
-    protected $id;
+    private $id;
 
     /**
      * @Column(name="Name", nullable=True)
@@ -174,7 +174,7 @@ class Publication extends Entity
      */
     public function __construct()
     {
-        $this->issues = new ArrayCollection;
+        $this->issues = new ArrayCollection();
     }
 
     /**
@@ -289,14 +289,14 @@ class Publication extends Entity
         return $sections;
     }
 
+    /**
+     * Get id
+     *
+     * @return int
+     */
     public function getId()
     {
         return $this->id;
-    }
-
-    public function setId($id)
-    {
-        return $this->id = $id;
     }
 
     /**
