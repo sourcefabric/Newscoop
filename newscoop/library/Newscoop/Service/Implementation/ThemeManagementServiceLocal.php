@@ -699,7 +699,7 @@ class ThemeManagementServiceLocal extends ThemeServiceLocalFileSystem implements
     protected function getEntityManager()
     {
         if($this->em === NULL){
-            $this->em = Zend_Registry::get('container')->getService('em');
+            $this->em = \Zend_Registry::get('container')->getService('em');
         }
         return $this->em;
     }
