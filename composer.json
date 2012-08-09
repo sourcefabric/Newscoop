@@ -14,7 +14,10 @@
         "symfony/config": "2.1.*",
         "doctrine/orm":"2.1.*",
         "zendframework/zendframework1":"dev-release-1.11",
-        "Smarty3":"3.0.8"
+        "Smarty3":"3.0.8",
+        "behat/behat":           ">=2.4.0",
+        "behat/common-contexts": "*",
+        "kriswallsmith/buzz":    ">=0.7"
     },
     "repositories":[
         {
@@ -48,5 +51,6 @@
             "newscoop/plugins"
         ]
     },
-    "minimum-stability":"dev"
+    "minimum-stability":"dev",
+    "config": { "bin-dir": "vendor/bin/" }
 }

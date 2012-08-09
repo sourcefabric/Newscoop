@@ -169,14 +169,23 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ), $options['image']['cache_url'] . '/%s'));
 
          $router->addRoute('rest',
-             new Zend_Rest_Route($front, array(), array(
-                 'admin' => array(
-                     'slideshow-rest',
-                     'subscription-rest',
-                     'subscription-section-rest',
-                     'subscription-ip-rest',
-                 ),
-             )));
+            new Zend_Rest_Route($front, array(), array(
+                'admin' => array(
+                    'slideshow-rest',
+                    'subscription-rest',
+                    'subscription-section-rest',
+                    'subscription-ip-rest',
+                ),
+            ))
+        );
+
+        $router->addRoute(
+            'gimmw',
+            new Zend_Controller_Router_Route('user/profile/:username/:action', array(
+                'module' => 'default',
+                'controller' => 'user',
+                'action' => 'profile',
+            )));
     }
 
     protected function _initActionHelpers()
