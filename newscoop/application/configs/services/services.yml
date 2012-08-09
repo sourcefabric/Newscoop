@@ -3,17 +3,20 @@ services:
         class:      Newscoop\Doctrine\Doctrine
         arguments:  ["%config%"]
     doctrine.em:
+        class:      Newscoop\Doctrine\Doctrine
         factory_service:  doctrine
         factory_method:   getEntityManager
     em:
         alias: doctrine.em
     doctrine.event_manager:
+        class:      Newscoop\Doctrine\Doctrine
         factory_service:  doctrine.em
         factory_method:   getEventManager
     newscoop.doctrine.event_dispatcher_proxy:
         class: Newscoop\Doctrine\EventDispatcherProxy
         arguments:  ["@dispatcher"]
     doctrine.event_subscriber:
+        class:      Newscoop\Doctrine\Doctrine
         factory_service:  doctrine.event_manager
         factory_method:   addEventSubscriber
         arguments:  ["@newscoop.doctrine.event_dispatcher_proxy"]
@@ -84,6 +87,10 @@ services:
     stat:
         class:      Newscoop\Services\StatService
         arguments:  ["@em"]
+    view:
+        class:      Newscoop\View\View
+        factory_class:  Newscoop\View\View
+        factory_method:   getView
     view.helper.thumbnail:
         class:      Newscoop\Image\ThumbnailViewHelper
         arguments:  ["@image"]
