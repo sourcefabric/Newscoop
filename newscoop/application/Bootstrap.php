@@ -11,7 +11,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\MongoDB\Connection;
 use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
-use Newscoop\DoctrineEventDispatcherProxy;
+use Newscoop\Doctrine\EventDispatcherProxy;
 use Newscoop\DependencyInjection\ContainerBuilder;
 use Newscoop\DependencyInjection\Compiler\RegisterListenersPass;
 use Symfony\Component\Config\FileLocator;
@@ -65,10 +65,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container = new ContainerBuilder($this->getOptions());
         $container->addCompilerPass(new RegisterListenersPass());
         $container->setParameter('config', $this->getOptions());
-        
-        $this->bootstrap('doctrine');
-        $doctrine = $this->getResource('doctrine');
-        $container->setService('em', $doctrine->getEntityManager());
 
         $this->bootstrap('odm');
 
@@ -81,16 +77,14 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             $loader->load($service);
         }
 
-        DatabaseObject::setEventDispatcher($container->getService('dispatcher'));
-        DatabaseObject::setResourceNames($container->getParameter('resourceNames'));
-
-        $container->getService('em')
-            ->getEventManager()
-            ->addEventSubscriber(new DoctrineEventDispatcherProxy($container->getService('dispatcher')));
-
-
         Zend_Registry::set('container', $container);
         return $container;
+    }
+
+    protected function _initDatabaseObject() {
+        $container = $this->getResource('container');
+        DatabaseObject::setEventDispatcher($container->getService('dispatcher'));
+        DatabaseObject::setResourceNames($container->getParameter('resourceNames'));
     }
 
     protected function _initPlugins()

@@ -1,4 +1,22 @@
 services:
+    doctrine:
+        class:      Newscoop\Doctrine\Doctrine
+        arguments:  ["%config%"]
+    doctrine.em:
+        factory_service:  doctrine
+        factory_method:   getEntityManager
+    em:
+        alias: doctrine.em
+    doctrine.event_manager:
+        factory_service:  doctrine.em
+        factory_method:   getEventManager
+    newscoop.doctrine.event_dispatcher_proxy:
+        class: Newscoop\Doctrine\EventDispatcherProxy
+        arguments:  ["@dispatcher"]
+    doctrine.event_subscriber:
+        factory_service:  doctrine.event_manager
+        factory_method:   addEventSubscriber
+        arguments:  ["@newscoop.doctrine.event_dispatcher_proxy"]
     image:
         class:      Newscoop\Image\ImageService
         arguments:  ["%image%", "@em"]

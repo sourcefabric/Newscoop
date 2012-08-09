@@ -7,7 +7,7 @@ require_once __DIR__ . '/../application.php';
 $application->bootstrap();
 
 // Retrieve Doctrine Container resource
-$container = Zend_Registry::get('doctrine')->getEntityManager();
+$em = Zend_Registry::get('container')->getService('em');
 
 // Console
 $cli = new \Symfony\Component\Console\Application(
@@ -19,11 +19,11 @@ try {
     // Bootstrapping Console HelperSet
     $helperSet = array();
 
-    if (($dbal = $container->getConnection()) !== null) {
+    if (($dbal = $em->getConnection()) !== null) {
         $helperSet['db'] = new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($dbal);
     }
 
-    if (($em = $container) !== null) {
+    if ($em !== null) {
         $helperSet['em'] = new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($em);
     }
 } catch (\Exception $e) {

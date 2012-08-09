@@ -70,7 +70,7 @@ final class MetaTemplate extends MetaDbObject
      */
     protected function getByTemplateIdOrName($tplId)
     {
-        $doctrine = Zend_Registry::get('doctrine');
+        $doctrine = Zend_Registry::get('container')->getService('doctrine');
         if( is_numeric($tplId) ) {
             $tpl = $doctrine->getEntityManager()->getRepository('Newscoop\Entity\Template')->find($tplId);
         } else {

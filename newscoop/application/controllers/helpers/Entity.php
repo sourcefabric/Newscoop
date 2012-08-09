@@ -46,8 +46,7 @@ class Action_Helper_Entity extends Zend_Controller_Action_Helper_Abstract
     public function getManager()
     {
         if ($this->em === NULL) {
-            $doctrine = Zend_Registry::get('doctrine');
-            $this->setManager($doctrine->getEntityManager());
+            $this->setManager(Zend_Registry::get('container')->getService('em'));
         }
 
         return $this->em;
