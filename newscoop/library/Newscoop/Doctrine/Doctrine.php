@@ -19,7 +19,8 @@ class Doctrine
     private $em;
     private $options;
 
-    public function __construct($options) {
+    public function __construct($options) 
+    {
         $this->options = $options['doctrine'];
     }
 
@@ -30,7 +31,7 @@ class Doctrine
      */
     public function getEntityManager()
     {
-        if ($this->em !== NULL && $this->em->isOpen()) {
+        if ($this->em !== null && $this->em->isOpen()) {
             return $this->em;
         }
 
@@ -42,7 +43,8 @@ class Doctrine
      * 
      * @return @return Doctrine\ORM\EntityManager
      */
-    private function _configureEntityManager() {
+    private function _configureEntityManager() 
+    {
         global $Campsite;
         
         $config = new Configuration();

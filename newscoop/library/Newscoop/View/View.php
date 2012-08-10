@@ -16,7 +16,8 @@ class View
      * Get view from Zend Registry
      * @return object Zend_View
      */
-    public function getView() {
+    public function getView() 
+    {
         return Zend_Registry::set('view');
     }
 }

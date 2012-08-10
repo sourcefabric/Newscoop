@@ -81,7 +81,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
             $container->compile();
 
-            if(!(defined('APPLICATION_ENV') && APPLICATION_ENV == 'development')) {
+            if (!(defined('APPLICATION_ENV') && APPLICATION_ENV == 'development')) {
                 $dumper = new PhpDumper($container);
                 file_put_contents($file, $dumper->dump(array(
                     'class' => 'NewscoopCachedContainer',
@@ -94,7 +94,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         return $container;
     }
 
-    protected function _initDatabaseObject() {
+    protected function _initDatabaseObject() 
+    {
         $container = $this->getResource('container');
         DatabaseObject::setEventDispatcher($container->getService('dispatcher'));
         DatabaseObject::setResourceNames($container->getParameter('resourceNames'));
