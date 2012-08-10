@@ -22,7 +22,7 @@ class Item
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Package\Package")
+     * @ManyToOne(targetEntity="Newscoop\Package\Package", inversedBy="items")
      * @var Newscoop\Package\Package
      */
     private $package;
