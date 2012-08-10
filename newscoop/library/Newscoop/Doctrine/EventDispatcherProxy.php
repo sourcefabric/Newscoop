@@ -5,13 +5,14 @@
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+
 namespace Newscoop\Doctrine;
 
-use Doctrine\Common\EventSubscriber,
-    Doctrine\ORM\EntityManager,
-    Doctrine\ORM\Events,
-    Doctrine\ORM\Event\LifecycleEventArgs,
-    Doctrine\ORM\Event\PreUpdateEventArgs;
+use Doctrine\Common\EventSubscriber;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Events;
+use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PreUpdateEventArgs;
 
 /**
  * Doctrine Event Dispatcher Proxy dispatches sfEvents on certain doctrine events.

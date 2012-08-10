@@ -88,8 +88,8 @@ services:
         class:      Newscoop\Services\StatService
         arguments:  ["@em"]
     view:
-        class:      Newscoop\View\View
-        factory_class:  Newscoop\View\View
+        class:      Newscoop\View\ViewFactory
+        factory_class:  Newscoop\View\ViewFactory
         factory_method:   getView
     view.helper.thumbnail:
         class:      Newscoop\Image\ThumbnailViewHelper

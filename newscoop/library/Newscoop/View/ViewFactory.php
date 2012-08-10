@@ -5,12 +5,13 @@
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+
 namespace Newscoop\View;
 
 /**
  * Zend View wrapper for setting in container.
  */
-class View
+class ViewFactory
 {
     /**
      * Get view from Zend Registry
@@ -18,6 +19,6 @@ class View
      */
     public function getView() 
     {
-        return Zend_Registry::set('view');
+        return Zend_Registry::get('view');
     }
 }

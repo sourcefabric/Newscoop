@@ -5,6 +5,7 @@
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+
 namespace Newscoop\Doctrine;
 
 use Doctrine\ORM\Configuration,
@@ -41,7 +42,7 @@ class Doctrine
     /**
      * Configure doctrine entity manager
      * 
-     * @return @return Doctrine\ORM\EntityManager
+     * @return Doctrine\ORM\EntityManager
      */
     private function _configureEntityManager() 
     {
