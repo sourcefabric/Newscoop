@@ -1,5 +1,5 @@
 {
-    "hash": "314acee753a94e6ebe608912a2ad0a88",
+    "hash": "c695701e5564e713e68e1e1c5e6c4774",
     "packages": [
         {
             "package": "Smarty3",
@@ -7,69 +7,67 @@
         },
         {
             "package": "doctrine/common",
-            "version": "2.1.x-dev",
-            "source-reference": "41794945e795e108060eddb3342c9e13524b9b3e",
-            "commit-date": "1331851788"
+            "version": "2.2.x-dev",
+            "source-reference": "b846809f90b35a9415910cebcfcfe51b7c9a6efc",
+            "commit-date": "1343558619"
         },
         {
             "package": "doctrine/dbal",
-            "version": "2.1.x-dev",
-            "source-reference": "76799960a54af583e82bedcf246e8c9c18006e94",
-            "commit-date": "1338146238"
+            "version": "2.2.0-RC3"
         },
         {
             "package": "doctrine/orm",
-            "version": "2.1.x-dev",
-            "source-reference": "1c0f88f2b398a9709d32c6d62896c4db9f9f3c9a",
-            "commit-date": "1343556552"
+            "version": "2.2.x-dev",
+            "source-reference": "7d343302a8f886be9cfb2a9c8345a95740dcfde9",
+            "commit-date": "1343560954"
         },
         {
-            "package": "symfony/config",
+            "package": "sensio/distribution-bundle",
+            "version": "dev-master",
+            "source-reference": "57190e5baa0cc1d8ef6095ce57e6719a5eae2b79",
+            "commit-date": "1344240835"
+        },
+        {
+            "package": "sensio/framework-extra-bundle",
             "version": "dev-master",
             "alias-pretty-version": "2.1.x-dev",
             "alias-version": "2.1.9999999.9999999-dev"
         },
         {
-            "package": "symfony/config",
+            "package": "sensio/framework-extra-bundle",
             "version": "dev-master",
-            "source-reference": "cb15ab7da9a69b123433c4edca68e23564345a31",
-            "commit-date": "1343512949"
+            "source-reference": "ade2d53b20a9fc3428f04c863b3fd4fca0b62181",
+            "commit-date": "1344072374"
         },
         {
-            "package": "symfony/dependency-injection",
+            "package": "sensio/generator-bundle",
+            "version": "dev-master",
+            "source-reference": "d8fc1666f3cdb403f1b2d4320c45ddd6adbdf6a5",
+            "commit-date": "1343980150"
+        },
+        {
+            "package": "symfony/symfony",
             "version": "dev-master",
             "alias-pretty-version": "2.1.x-dev",
             "alias-version": "2.1.9999999.9999999-dev"
         },
         {
-            "package": "symfony/dependency-injection",
+            "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "ea5acc90c1c1937e8574968d577a5bbe9c6f680c",
-            "commit-date": "1343512949"
+            "source-reference": "dd9afddfd9a9f169832c4634d1094f50f34d5df4",
+            "commit-date": "1344494996"
         },
         {
-            "package": "symfony/event-dispatcher",
+            "package": "twig/twig",
             "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
+            "alias-pretty-version": "1.9.x-dev",
+            "alias-version": "1.9.9999999.9999999-dev"
         },
         {
-            "package": "symfony/event-dispatcher",
+            "package": "twig/twig",
             "version": "dev-master",
-            "source-reference": "v2.1.0-BETA4",
-            "commit-date": "1342739894"
-        },
-        {
-            "package": "symfony/yaml",
-            "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
-        },
-        {
-            "package": "symfony/yaml",
-            "version": "dev-master",
-            "source-reference": "v2.1.0-BETA4",
-            "commit-date": "1342347231"
+            "source-reference": "f2f698c820d4396f519ef4175ad6fe79fcfb9ecf",
+            "commit-date": "1344328685"
         },
         {
             "package": "zendframework/zendframework1",
@@ -83,6 +81,9 @@
     ],
     "minimum-stability": "dev",
     "stability-flags": {
+        "sensio/distribution-bundle": 20,
+        "sensio/generator-bundle": 20,
+        "sensio/framework-extra-bundle": 20,
         "zendframework/zendframework1": 20
     }
 }

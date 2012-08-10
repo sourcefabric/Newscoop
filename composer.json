@@ -8,11 +8,11 @@
     "authors":[],
     "require":{
         "php": ">=5.3.0",
-        "symfony/dependency-injection": "2.1.*",
-        "symfony/event-dispatcher" : "2.1.*",
-        "symfony/yaml": "2.1.*",
-        "symfony/config": "2.1.*",
-        "doctrine/orm":"2.1.*",
+        "symfony/symfony": "2.1.*",
+        "sensio/distribution-bundle": "dev-master",
+        "sensio/generator-bundle": "dev-master",
+        "sensio/framework-extra-bundle": "dev-master",
+        "doctrine/orm":"2.2.*",
         "zendframework/zendframework1":"dev-release-1.11",
         "Smarty3":"3.0.8"
     },
@@ -37,6 +37,7 @@
     "autoload":{
         "psr-0": {
             "Newscoop": "newscoop/library",
+            "Newscoop": "gimme/src",
             "Resource": "newscoop/library",
             "Nette": "newscoop/library"
         },
@@ -48,5 +49,26 @@
             "newscoop/plugins"
         ]
     },
-    "minimum-stability":"dev"
+    "scripts": {
+        "post-install-cmd": [
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ],
+        "post-update-cmd": [
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
+            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
+        ]
+    },
+    "minimum-stability": "dev",
+    "config": {
+        "bin-dir": "bin"
+    },
+    "extra": {
+        "symfony-app-dir": "gimme/app",
+        "symfony-web-dir": "gimme/web"
+    }
 }

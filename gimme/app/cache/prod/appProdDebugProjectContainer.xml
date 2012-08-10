@@ -1,0 +1,431 @@
+<?xml version="1.0" encoding="utf-8"?>
+<container xmlns="http://symfony.com/schema/dic/services" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+  <parameters>
+    <parameter key="kernel.root_dir">/var/www/newscoop-4.0/gimme/app</parameter>
+    <parameter key="kernel.environment">prod</parameter>
+    <parameter key="kernel.debug">true</parameter>
+    <parameter key="kernel.name">app</parameter>
+    <parameter key="kernel.cache_dir">/var/www/newscoop-4.0/gimme/app/cache/prod</parameter>
+    <parameter key="kernel.logs_dir">/var/www/newscoop-4.0/gimme/app/logs</parameter>
+    <parameter key="kernel.bundles" type="collection">
+      <parameter key="FrameworkBundle">Symfony\Bundle\FrameworkBundle\FrameworkBundle</parameter>
+    </parameter>
+    <parameter key="kernel.charset">UTF-8</parameter>
+    <parameter key="kernel.container_class">appProdDebugProjectContainer</parameter>
+    <parameter key="controller_resolver.class">Symfony\Bundle\FrameworkBundle\Controller\ControllerResolver</parameter>
+    <parameter key="controller_name_converter.class">Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser</parameter>
+    <parameter key="response_listener.class">Symfony\Component\HttpKernel\EventListener\ResponseListener</parameter>
+    <parameter key="streamed_response_listener.class">Symfony\Component\HttpKernel\EventListener\StreamedResponseListener</parameter>
+    <parameter key="locale_listener.class">Symfony\Component\HttpKernel\EventListener\LocaleListener</parameter>
+    <parameter key="event_dispatcher.class">Symfony\Component\EventDispatcher\ContainerAwareEventDispatcher</parameter>
+    <parameter key="http_kernel.class">Symfony\Bundle\FrameworkBundle\HttpKernel</parameter>
+    <parameter key="filesystem.class">Symfony\Component\Filesystem\Filesystem</parameter>
+    <parameter key="cache_warmer.class">Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerAggregate</parameter>
+    <parameter key="cache_clearer.class">Symfony\Component\HttpKernel\CacheClearer\ChainCacheClearer</parameter>
+    <parameter key="file_locator.class">Symfony\Component\HttpKernel\Config\FileLocator</parameter>
+    <parameter key="translator.class">Symfony\Bundle\FrameworkBundle\Translation\Translator</parameter>
+    <parameter key="translator.identity.class">Symfony\Component\Translation\IdentityTranslator</parameter>
+    <parameter key="translator.selector.class">Symfony\Component\Translation\MessageSelector</parameter>
+    <parameter key="translation.loader.php.class">Symfony\Component\Translation\Loader\PhpFileLoader</parameter>
+    <parameter key="translation.loader.yml.class">Symfony\Component\Translation\Loader\YamlFileLoader</parameter>
+    <parameter key="translation.loader.xliff.class">Symfony\Component\Translation\Loader\XliffFileLoader</parameter>
+    <parameter key="translation.loader.po.class">Symfony\Component\Translation\Loader\PoFileLoader</parameter>
+    <parameter key="translation.loader.mo.class">Symfony\Component\Translation\Loader\MoFileLoader</parameter>
+    <parameter key="translation.loader.qt.class">Symfony\Component\Translation\Loader\QtTranslationsLoader</parameter>
+    <parameter key="translation.loader.csv.class">Symfony\Component\Translation\Loader\CsvFileLoader</parameter>
+    <parameter key="translation.loader.res.class">Symfony\Component\Translation\Loader\IcuResFileLoader</parameter>
+    <parameter key="translation.loader.dat.class">Symfony\Component\Translation\Loader\IcuDatFileLoader</parameter>
+    <parameter key="translation.loader.ini.class">Symfony\Component\Translation\Loader\IniFileLoader</parameter>
+    <parameter key="translation.dumper.php.class">Symfony\Component\Translation\Dumper\PhpFileDumper</parameter>
+    <parameter key="translation.dumper.xliff.class">Symfony\Component\Translation\Dumper\XliffFileDumper</parameter>
+    <parameter key="translation.dumper.po.class">Symfony\Component\Translation\Dumper\PoFileDumper</parameter>
+    <parameter key="translation.dumper.mo.class">Symfony\Component\Translation\Dumper\MoFileDumper</parameter>
+    <parameter key="translation.dumper.yml.class">Symfony\Component\Translation\Dumper\YamlFileDumper</parameter>
+    <parameter key="translation.dumper.qt.class">Symfony\Component\Translation\Dumper\QtFileDumper</parameter>
+    <parameter key="translation.dumper.csv.class">Symfony\Component\Translation\Dumper\CsvFileDumper</parameter>
+    <parameter key="translation.dumper.ini.class">Symfony\Component\Translation\Dumper\IniFileDumper</parameter>
+    <parameter key="translation.dumper.res.class">Symfony\Component\Translation\Dumper\IcuResFileDumper</parameter>
+    <parameter key="translation.extractor.php.class">Symfony\Bundle\FrameworkBundle\Translation\PhpExtractor</parameter>
+    <parameter key="translation.loader.class">Symfony\Bundle\FrameworkBundle\Translation\TranslationLoader</parameter>
+    <parameter key="translation.extractor.class">Symfony\Component\Translation\Extractor\ChainExtractor</parameter>
+    <parameter key="translation.writer.class">Symfony\Component\Translation\Writer\TranslationWriter</parameter>
+    <parameter key="debug.event_dispatcher.class">Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher</parameter>
+    <parameter key="debug.stopwatch.class">Symfony\Component\HttpKernel\Debug\Stopwatch</parameter>
+    <parameter key="debug.container.dump">/var/www/newscoop-4.0/gimme/app/cache/prod/appProdDebugProjectContainer.xml</parameter>
+    <parameter key="debug.controller_resolver.class">Symfony\Bundle\FrameworkBundle\Controller\TraceableControllerResolver</parameter>
+    <parameter key="kernel.secret">sadfdsfgdsgfgdsfgdsfgdsfger3ewtr</parameter>
+    <parameter key="kernel.trust_proxy_headers">false</parameter>
+    <parameter key="kernel.default_locale">en</parameter>
+    <parameter key="router.class">Symfony\Bundle\FrameworkBundle\Routing\Router</parameter>
+    <parameter key="router.request_context.class">Symfony\Component\Routing\RequestContext</parameter>
+    <parameter key="routing.loader.class">Symfony\Bundle\FrameworkBundle\Routing\DelegatingLoader</parameter>
+    <parameter key="routing.resolver.class">Symfony\Component\Config\Loader\LoaderResolver</parameter>
+    <parameter key="routing.loader.xml.class">Symfony\Component\Routing\Loader\XmlFileLoader</parameter>
+    <parameter key="routing.loader.yml.class">Symfony\Component\Routing\Loader\YamlFileLoader</parameter>
+    <parameter key="routing.loader.php.class">Symfony\Component\Routing\Loader\PhpFileLoader</parameter>
+    <parameter key="router.options.generator_class">Symfony\Component\Routing\Generator\UrlGenerator</parameter>
+    <parameter key="router.options.generator_base_class">Symfony\Component\Routing\Generator\UrlGenerator</parameter>
+    <parameter key="router.options.generator_dumper_class">Symfony\Component\Routing\Generator\Dumper\PhpGeneratorDumper</parameter>
+    <parameter key="router.options.matcher_class">Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher</parameter>
+    <parameter key="router.options.matcher_base_class">Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher</parameter>
+    <parameter key="router.options.matcher_dumper_class">Symfony\Component\Routing\Matcher\Dumper\PhpMatcherDumper</parameter>
+    <parameter key="router.cache_warmer.class">Symfony\Bundle\FrameworkBundle\CacheWarmer\RouterCacheWarmer</parameter>
+    <parameter key="router.options.matcher.cache_class">appprodUrlMatcher</parameter>
+    <parameter key="router.options.generator.cache_class">appprodUrlGenerator</parameter>
+    <parameter key="router_listener.class">Symfony\Component\HttpKernel\EventListener\RouterListener</parameter>
+    <parameter key="router.request_context.host">localhost</parameter>
+    <parameter key="router.request_context.scheme">http</parameter>
+    <parameter key="router.resource">/var/www/newscoop-4.0/gimme/app/config/routing.yml</parameter>
+    <parameter key="request_listener.http_port">80</parameter>
+    <parameter key="request_listener.https_port">443</parameter>
+    <parameter key="annotations.reader.class">Doctrine\Common\Annotations\AnnotationReader</parameter>
+    <parameter key="annotations.cached_reader.class">Doctrine\Common\Annotations\CachedReader</parameter>
+    <parameter key="annotations.file_cache_reader.class">Doctrine\Common\Annotations\FileCacheReader</parameter>
+  </parameters>
+  <services>
+    <service id="controller_name_converter" class="Symfony\Bundle\FrameworkBundle\Controller\ControllerNameParser" public="false">
+      <tag name="monolog.logger" channel="request"/>
+      <argument type="service" id="kernel"/>
+    </service>
+    <service id="controller_resolver" class="Symfony\Bundle\FrameworkBundle\Controller\TraceableControllerResolver">
+      <tag name="monolog.logger" channel="request"/>
+      <argument type="service" id="service_container"/>
+      <argument type="service" id="controller_name_converter"/>
+      <argument type="service" id="debug.stopwatch"/>
+      <argument>null</argument>
+    </service>
+    <service id="response_listener" class="Symfony\Component\HttpKernel\EventListener\ResponseListener">
+      <tag name="kernel.event_subscriber"/>
+      <argument>UTF-8</argument>
+    </service>
+    <service id="streamed_response_listener" class="Symfony\Component\HttpKernel\EventListener\StreamedResponseListener">
+      <tag name="kernel.event_subscriber"/>
+    </service>
+    <service id="locale_listener" class="Symfony\Component\HttpKernel\EventListener\LocaleListener">
+      <tag name="kernel.event_subscriber"/>
+      <argument>en</argument>
+      <argument type="service" id="router"/>
+    </service>
+    <service id="event_dispatcher" class="Symfony\Component\HttpKernel\Debug\ContainerAwareTraceableEventDispatcher">
+      <tag name="monolog.logger" channel="event"/>
+      <argument type="service" id="service_container"/>
+      <argument type="service" id="debug.stopwatch"/>
+      <argument>null</argument>
+      <call method="addSubscriberService">
+        <argument>response_listener</argument>
+        <argument>Symfony\Component\HttpKernel\EventListener\ResponseListener</argument>
+      </call>
+      <call method="addSubscriberService">
+        <argument>streamed_response_listener</argument>
+        <argument>Symfony\Component\HttpKernel\EventListener\StreamedResponseListener</argument>
+      </call>
+      <call method="addSubscriberService">
+        <argument>locale_listener</argument>
+        <argument>Symfony\Component\HttpKernel\EventListener\LocaleListener</argument>
+      </call>
+      <call method="addSubscriberService">
+        <argument>router_listener</argument>
+        <argument>Symfony\Component\HttpKernel\EventListener\RouterListener</argument>
+      </call>
+    </service>
+    <service id="http_kernel" class="Symfony\Bundle\FrameworkBundle\HttpKernel">
+      <argument type="service" id="event_dispatcher"/>
+      <argument type="service" id="service_container"/>
+      <argument type="service" id="controller_resolver"/>
+    </service>
+    <service id="cache_warmer" class="Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerAggregate">
+      <argument type="collection">
+        <argument type="service">
+          <service class="Symfony\Bundle\FrameworkBundle\CacheWarmer\RouterCacheWarmer" public="false">
+            <tag name="kernel.cache_warmer"/>
+            <argument type="service" id="router"/>
+          </service>
+        </argument>
+      </argument>
+    </service>
+    <service id="cache_clearer" class="Symfony\Component\HttpKernel\CacheClearer\ChainCacheClearer">
+      <argument type="collection"/>
+    </service>
+    <service id="request" scope="request"/>
+    <service id="service_container"/>
+    <service id="kernel"/>
+    <service id="filesystem" class="Symfony\Component\Filesystem\Filesystem"/>
+    <service id="file_locator" class="Symfony\Component\HttpKernel\Config\FileLocator">
+      <argument type="service" id="kernel"/>
+      <argument>/var/www/newscoop-4.0/gimme/app/Resources</argument>
+    </service>
+    <service id="translator.default" class="Symfony\Bundle\FrameworkBundle\Translation\Translator">
+      <argument type="service" id="service_container"/>
+      <argument type="service" id="translator.selector"/>
+      <argument type="collection">
+        <argument key="translation.loader.php" type="collection">
+          <argument>php</argument>
+        </argument>
+        <argument key="translation.loader.yml" type="collection">
+          <argument>yml</argument>
+        </argument>
+        <argument key="translation.loader.xliff" type="collection">
+          <argument>xlf</argument>
+          <argument>xliff</argument>
+        </argument>
+        <argument key="translation.loader.po" type="collection">
+          <argument>po</argument>
+        </argument>
+        <argument key="translation.loader.mo" type="collection">
+          <argument>mo</argument>
+        </argument>
+        <argument key="translation.loader.qt" type="collection">
+          <argument>ts</argument>
+        </argument>
+        <argument key="translation.loader.csv" type="collection">
+          <argument>csv</argument>
+        </argument>
+        <argument key="translation.loader.res" type="collection">
+          <argument>res</argument>
+        </argument>
+        <argument key="translation.loader.dat" type="collection">
+          <argument>dat</argument>
+        </argument>
+        <argument key="translation.loader.ini" type="collection">
+          <argument>ini</argument>
+        </argument>
+      </argument>
+      <argument type="collection">
+        <argument key="cache_dir">/var/www/newscoop-4.0/gimme/app/cache/prod/translations</argument>
+        <argument key="debug">true</argument>
+      </argument>
+    </service>
+    <service id="translator" class="Symfony\Component\Translation\IdentityTranslator">
+      <argument type="service" id="translator.selector"/>
+    </service>
+    <service id="translator.selector" class="Symfony\Component\Translation\MessageSelector" public="false"/>
+    <service id="translation.loader.php" class="Symfony\Component\Translation\Loader\PhpFileLoader">
+      <tag name="translation.loader" alias="php"/>
+    </service>
+    <service id="translation.loader.yml" class="Symfony\Component\Translation\Loader\YamlFileLoader">
+      <tag name="translation.loader" alias="yml"/>
+    </service>
+    <service id="translation.loader.xliff" class="Symfony\Component\Translation\Loader\XliffFileLoader">
+      <tag name="translation.loader" alias="xlf" legacy-alias="xliff"/>
+    </service>
+    <service id="translation.loader.po" class="Symfony\Component\Translation\Loader\PoFileLoader">
+      <tag name="translation.loader" alias="po"/>
+    </service>
+    <service id="translation.loader.mo" class="Symfony\Component\Translation\Loader\MoFileLoader">
+      <tag name="translation.loader" alias="mo"/>
+    </service>
+    <service id="translation.loader.qt" class="Symfony\Component\Translation\Loader\QtTranslationsLoader">
+      <tag name="translation.loader" alias="ts"/>
+    </service>
+    <service id="translation.loader.csv" class="Symfony\Component\Translation\Loader\CsvFileLoader">
+      <tag name="translation.loader" alias="csv"/>
+    </service>
+    <service id="translation.loader.res" class="Symfony\Component\Translation\Loader\IcuResFileLoader">
+      <tag name="translation.loader" alias="res"/>
+    </service>
+    <service id="translation.loader.dat" class="Symfony\Component\Translation\Loader\IcuResFileLoader">
+      <tag name="translation.loader" alias="dat"/>
+    </service>
+    <service id="translation.loader.ini" class="Symfony\Component\Translation\Loader\IniFileLoader">
+      <tag name="translation.loader" alias="ini"/>
+    </service>
+    <service id="translation.dumper.php" class="Symfony\Component\Translation\Dumper\PhpFileDumper">
+      <tag name="translation.dumper" alias="php"/>
+    </service>
+    <service id="translation.dumper.xliff" class="Symfony\Component\Translation\Dumper\XliffFileDumper">
+      <tag name="translation.dumper" alias="xlf"/>
+    </service>
+    <service id="translation.dumper.po" class="Symfony\Component\Translation\Dumper\PoFileDumper">
+      <tag name="translation.dumper" alias="po"/>
+    </service>
+    <service id="translation.dumper.mo" class="Symfony\Component\Translation\Dumper\MoFileDumper">
+      <tag name="translation.dumper" alias="mo"/>
+    </service>
+    <service id="translation.dumper.yml" class="Symfony\Component\Translation\Dumper\YamlFileDumper">
+      <tag name="translation.dumper" alias="yml"/>
+    </service>
+    <service id="translation.dumper.qt" class="Symfony\Component\Translation\Dumper\QtFileDumper">
+      <tag name="translation.dumper" alias="ts"/>
+    </service>
+    <service id="translation.dumper.csv" class="Symfony\Component\Translation\Dumper\CsvFileDumper">
+      <tag name="translation.dumper" alias="csv"/>
+    </service>
+    <service id="translation.dumper.ini" class="Symfony\Component\Translation\Dumper\IniFileDumper">
+      <tag name="translation.dumper" alias="ini"/>
+    </service>
+    <service id="translation.dumper.res" class="Symfony\Component\Translation\Dumper\IcuResFileDumper">
+      <tag name="translation.dumper" alias="res"/>
+    </service>
+    <service id="translation.extractor.php" class="Symfony\Bundle\FrameworkBundle\Translation\PhpExtractor">
+      <tag name="translation.extractor" alias="php"/>
+    </service>
+    <service id="translation.loader" class="Symfony\Bundle\FrameworkBundle\Translation\TranslationLoader">
+      <call method="addLoader">
+        <argument>php</argument>
+        <argument type="service" id="translation.loader.php"/>
+      </call>
+      <call method="addLoader">
+        <argument>yml</argument>
+        <argument type="service" id="translation.loader.yml"/>
+      </call>
+      <call method="addLoader">
+        <argument>xlf</argument>
+        <argument type="service" id="translation.loader.xliff"/>
+      </call>
+      <call method="addLoader">
+        <argument>xliff</argument>
+        <argument type="service" id="translation.loader.xliff"/>
+      </call>
+      <call method="addLoader">
+        <argument>po</argument>
+        <argument type="service" id="translation.loader.po"/>
+      </call>
+      <call method="addLoader">
+        <argument>mo</argument>
+        <argument type="service" id="translation.loader.mo"/>
+      </call>
+      <call method="addLoader">
+        <argument>ts</argument>
+        <argument type="service" id="translation.loader.qt"/>
+      </call>
+      <call method="addLoader">
+        <argument>csv</argument>
+        <argument type="service" id="translation.loader.csv"/>
+      </call>
+      <call method="addLoader">
+        <argument>res</argument>
+        <argument type="service" id="translation.loader.res"/>
+      </call>
+      <call method="addLoader">
+        <argument>dat</argument>
+        <argument type="service" id="translation.loader.dat"/>
+      </call>
+      <call method="addLoader">
+        <argument>ini</argument>
+        <argument type="service" id="translation.loader.ini"/>
+      </call>
+    </service>
+    <service id="translation.extractor" class="Symfony\Component\Translation\Extractor\ChainExtractor">
+      <call method="addExtractor">
+        <argument>php</argument>
+        <argument type="service" id="translation.extractor.php"/>
+      </call>
+    </service>
+    <service id="translation.writer" class="Symfony\Component\Translation\Writer\TranslationWriter">
+      <call method="addDumper">
+        <argument>php</argument>
+        <argument type="service" id="translation.dumper.php"/>
+      </call>
+      <call method="addDumper">
+        <argument>xlf</argument>
+        <argument type="service" id="translation.dumper.xliff"/>
+      </call>
+      <call method="addDumper">
+        <argument>po</argument>
+        <argument type="service" id="translation.dumper.po"/>
+      </call>
+      <call method="addDumper">
+        <argument>mo</argument>
+        <argument type="service" id="translation.dumper.mo"/>
+      </call>
+      <call method="addDumper">
+        <argument>yml</argument>
+        <argument type="service" id="translation.dumper.yml"/>
+      </call>
+      <call method="addDumper">
+        <argument>ts</argument>
+        <argument type="service" id="translation.dumper.qt"/>
+      </call>
+      <call method="addDumper">
+        <argument>csv</argument>
+        <argument type="service" id="translation.dumper.csv"/>
+      </call>
+      <call method="addDumper">
+        <argument>ini</argument>
+        <argument type="service" id="translation.dumper.ini"/>
+      </call>
+      <call method="addDumper">
+        <argument>res</argument>
+        <argument type="service" id="translation.dumper.res"/>
+      </call>
+    </service>
+    <service id="debug.stopwatch" class="Symfony\Component\HttpKernel\Debug\Stopwatch"/>
+    <service id="routing.loader" class="Symfony\Bundle\FrameworkBundle\Routing\DelegatingLoader">
+      <tag name="monolog.logger" channel="router"/>
+      <argument type="service" id="controller_name_converter"/>
+      <argument>null</argument>
+      <argument type="service">
+        <service class="Symfony\Component\Config\Loader\LoaderResolver" public="false">
+          <call method="addLoader">
+            <argument type="service">
+              <service class="Symfony\Component\Routing\Loader\XmlFileLoader" public="false">
+                <tag name="routing.loader"/>
+                <argument type="service" id="file_locator"/>
+              </service>
+            </argument>
+          </call>
+          <call method="addLoader">
+            <argument type="service">
+              <service class="Symfony\Component\Routing\Loader\YamlFileLoader" public="false">
+                <tag name="routing.loader"/>
+                <argument type="service" id="file_locator"/>
+              </service>
+            </argument>
+          </call>
+          <call method="addLoader">
+            <argument type="service">
+              <service class="Symfony\Component\Routing\Loader\PhpFileLoader" public="false">
+                <tag name="routing.loader"/>
+                <argument type="service" id="file_locator"/>
+              </service>
+            </argument>
+          </call>
+        </service>
+      </argument>
+    </service>
+    <service id="router.request_context" class="Symfony\Component\Routing\RequestContext" public="false">
+      <argument></argument>
+      <argument>GET</argument>
+      <argument>localhost</argument>
+      <argument>http</argument>
+      <argument>80</argument>
+      <argument>443</argument>
+    </service>
+    <service id="router_listener" class="Symfony\Component\HttpKernel\EventListener\RouterListener">
+      <tag name="kernel.event_subscriber"/>
+      <tag name="monolog.logger" channel="request"/>
+      <argument type="service" id="router"/>
+      <argument type="service" id="router.request_context"/>
+      <argument>null</argument>
+    </service>
+    <service id="router" class="Symfony\Bundle\FrameworkBundle\Routing\Router">
+      <tag name="monolog.logger" channel="router"/>
+      <argument type="service" id="service_container"/>
+      <argument>/var/www/newscoop-4.0/gimme/app/config/routing.yml</argument>
+      <argument type="collection">
+        <argument key="cache_dir">/var/www/newscoop-4.0/gimme/app/cache/prod</argument>
+        <argument key="debug">true</argument>
+        <argument key="generator_class">Symfony\Component\Routing\Generator\UrlGenerator</argument>
+        <argument key="generator_base_class">Symfony\Component\Routing\Generator\UrlGenerator</argument>
+        <argument key="generator_dumper_class">Symfony\Component\Routing\Generator\Dumper\PhpGeneratorDumper</argument>
+        <argument key="generator_cache_class">appprodUrlGenerator</argument>
+        <argument key="matcher_class">Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher</argument>
+        <argument key="matcher_base_class">Symfony\Bundle\FrameworkBundle\Routing\RedirectableUrlMatcher</argument>
+        <argument key="matcher_dumper_class">Symfony\Component\Routing\Matcher\Dumper\PhpMatcherDumper</argument>
+        <argument key="matcher_cache_class">appprodUrlMatcher</argument>
+        <argument key="strict_requirements">true</argument>
+      </argument>
+      <argument type="service" id="router.request_context"/>
+      <argument>null</argument>
+    </service>
+    <service id="annotation_reader" class="Doctrine\Common\Annotations\FileCacheReader">
+      <argument type="service">
+        <service class="Doctrine\Common\Annotations\AnnotationReader" public="false"/>
+      </argument>
+      <argument>/var/www/newscoop-4.0/gimme/app/cache/prod/annotations</argument>
+      <argument>true</argument>
+    </service>
+    <service id="debug.event_dispatcher" alias="event_dispatcher"/>
+    <service id="debug.controller_resolver" alias="controller_resolver"/>
+  </services>
+</container>
