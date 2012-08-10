@@ -21,13 +21,13 @@ class UserToken
     private $user;
 
     /**
-     * @Id @Column(type="string", length="40")
+     * @Id @Column(type="string", length=40)
      * @var string
      */
     private $action;
 
     /**
-     * @Id @Column(type="string", length="40")
+     * @Id @Column(type="string", length=40)
      * @var string
      */
     private $token;

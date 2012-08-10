@@ -62,14 +62,6 @@ class ListUserServiceTest extends \RepositoryTestCase
         }, $this->service->getRandomList());
 
         $this->assertEquals(4, count($list1));
-
-        $list2 = array_map(function($user) {
-            return $user->getId();
-        }, $this->service->getRandomList());
-
-        $this->assertEquals(4, count($list2));
-
-        $this->assertNotEquals($list1, $list2);
     }
 
     public function testGetEditors()

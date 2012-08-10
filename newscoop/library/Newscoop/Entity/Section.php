@@ -12,7 +12,7 @@ namespace Newscoop\Entity;
  * @Entity(repositoryClass="Newscoop\Entity\Repository\SectionRepository")
  * @Table(name="Sections")
  */
-class Section extends Entity
+class Section
 {
     /**
      * Provides the class name as a constant.
@@ -20,7 +20,7 @@ class Section extends Entity
     const NAME = __CLASS__;
 
     /**
-     * @Id @generatedValue
+     * @Id @GeneratedValue
      * @Column(name="id", type="integer")
      * @var int
      */
@@ -34,7 +34,7 @@ class Section extends Entity
     private $publication;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Issue")
+     * @ManyToOne(targetEntity="Newscoop\Entity\Issue", inversedBy="sections")
      * @JoinColumn(name="fk_issue_id", referencedColumnName="id")
      * @var Newscoop\Entity\Issue
      */

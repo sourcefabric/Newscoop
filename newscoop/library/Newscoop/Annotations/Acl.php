@@ -11,6 +11,8 @@ use Doctrine\Common\Annotations\Annotation;
 
 /**
  * Acl annotation class
+ *
+ * @Annotation
  */
 class Acl extends Annotation
 {

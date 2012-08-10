@@ -5,8 +5,9 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Newscoop\Entity\Subscription,
-    Newscoop\Entity\User\Subscriber;
+use Newscoop\Annotations\Acl;
+use Newscoop\Entity\Subscription;
+use Newscoop\Entity\User\Subscriber;
 
 /**
  * @Acl(action="manage")

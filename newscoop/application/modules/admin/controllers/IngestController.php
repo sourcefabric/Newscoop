@@ -5,8 +5,9 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Newscoop\Entity\Ingest\Feed,
-    Newscoop\Services\IngestService;
+use Newscoop\Annotations\Acl;
+use Newscoop\Entity\Ingest\Feed;
+use Newscoop\Services\IngestService;
 
 /**
  * @Acl(resource="ingest", action="manage")

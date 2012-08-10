@@ -22,7 +22,7 @@ class Section
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Subscription\Subscription")
+     * @ManyToOne(targetEntity="Newscoop\Subscription\Subscription", inversedBy="sections")
      * @JoinColumn(name="IdSubscription", referencedColumnName="Id")
      * @var Newscoop\Subscription\Subscription
      */

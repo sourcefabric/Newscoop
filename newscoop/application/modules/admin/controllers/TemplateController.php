@@ -5,11 +5,12 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+use Newscoop\Annotations\Acl;
 use Newscoop\Service\IThemeManagementService;
-use Newscoop\Service\Template,
-    Newscoop\Storage,
-    Newscoop\Service\Resource\ResourceId,
-    Newscoop\Service\IThemeService;
+use Newscoop\Service\Template;
+use Newscoop\Storage;
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\IThemeService;
 
 /**
  * @Acl(resource="template", action="manage")

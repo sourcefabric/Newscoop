@@ -118,11 +118,8 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
                 throw new InvalidArgumentException;
             }
 
-            try {
-                $type = $rule->getType();
-                $acl->$type($role, $rule->getResource(), $rule->getAction());
-            } catch (\Zend_Acl_Exception $e) { // ignore missing resources
-            }
+            $type = $rule->getType();
+            $acl->$type($role, $rule->getResource(), $rule->getAction());
         }
     }
 
@@ -339,7 +336,6 @@ class Resource_Acl extends Zend_Application_Resource_ResourceAbstract
         if ($this->reader === NULL) {
             AnnotationRegistry::registerAutoloadNamespace('Newscoop\Annotations\\', APPLICATION_PATH . '/../library/');
             $this->reader = new AnnotationReader();
-            $this->reader->setDefaultAnnotationNamespace('Newscoop\Annotations\\');
         }
 
         return $this->reader;

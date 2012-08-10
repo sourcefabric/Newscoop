@@ -177,8 +177,10 @@ class LocalImage implements ImageInterface
         $this->width = (int) $info[0];
         $this->height = (int) $info[1];
 
-        // @todo remove once on image upload is refactored
-        \Zend_Registry::get('container')->getService('em')->flush($this);
+        if ($this->id !== null) {
+            // @todo remove once on image upload is refactored
+            \Zend_Registry::get('container')->getService('em')->flush($this);
+        }
     }
 
     /**

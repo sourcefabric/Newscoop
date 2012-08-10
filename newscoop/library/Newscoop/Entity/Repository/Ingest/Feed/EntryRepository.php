@@ -7,6 +7,7 @@
 
 namespace Newscoop\Entity\Repository\Ingest\Feed;
 
+use DateTime;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -27,9 +28,9 @@ class EntryRepository extends EntityRepository
             return;
         }
 
-        $now = new \DateTime();
+        $now = new DateTime();
         $updated = array_filter($embargoed, function($entry) use ($now) {
-            $liftEmbargo = new \DateTime($entry['embargoed']);
+            $liftEmbargo = $entry['embargoed'] instanceof DateTime ? $entry['embargoed'] : new DateTime($entry['embargoed']);
             return $now->getTimestamp() >= $liftEmbargo->getTimestamp();
         });
 

@@ -61,7 +61,8 @@ class AuditServiceTest extends \PHPUnit_Framework_TestCase
             ->with();
 
         $event = new GenericEvent($this);
-        $this->service->update('event.test', $event);
+        $event->setName('event.test');
+        $this->service->update($event);
     }
 
     public function testFindAll()

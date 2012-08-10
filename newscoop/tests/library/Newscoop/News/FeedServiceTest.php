@@ -22,6 +22,11 @@ class FeedServiceTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        if (!extension_loaded('mongo')) {
+            $this->markTestSkipped('No mongo');
+            return;
+        }
+
         $this->odm = $this->getMockBuilder('Doctrine\ODM\MongoDB\DocumentManager')
             ->disableOriginalConstructor()
             ->getMock();

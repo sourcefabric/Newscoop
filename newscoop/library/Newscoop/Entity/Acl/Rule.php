@@ -39,13 +39,13 @@ class Rule implements RuleInterface
     private $role;
 
     /**
-     * @column(length="80")
+     * @column(length=80)
      * @var string
      */
     private $resource;
 
     /**
-     * @column(length="80")
+     * @column(length=80)
      * @var string
      */
     private $action;

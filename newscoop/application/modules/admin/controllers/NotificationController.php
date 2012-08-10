@@ -4,12 +4,12 @@
  * @subpackage Subscriptions
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
- *
- *
  */
-use Newscoop\Entity\Comment,
-    Newscoop\Entity\Publication,
-    Newscoop\Entity\Notification;
+
+use Newscoop\Annotations\Acl;
+use Newscoop\Entity\Comment;
+use Newscoop\Entity\Publication;
+use Newscoop\Entity\Notification;
 
 /**
  */

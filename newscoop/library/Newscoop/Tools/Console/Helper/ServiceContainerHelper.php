@@ -8,7 +8,7 @@
 namespace Newscoop\Tools\Console\Helper;
 
 use Symfony\Component\Console\Helper\Helper;
-use Symfony\Component\DependencyInjection\Container
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Service Container Helper

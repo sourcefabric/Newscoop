@@ -22,7 +22,8 @@ class EventDispatcherProxyTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->dispatcher = $this->getMockBuilder('\Newscoop\EventDispatcher\EventDispatcher')
+        $this->dispatcher = $this->getMockBuilder('Newscoop\EventDispatcher\EventDispatcher')
+            ->disableOriginalConstructor()
             ->getMock();
 
         $this->proxy = new EventDispatcherProxy($this->dispatcher);

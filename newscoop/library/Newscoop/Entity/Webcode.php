@@ -17,7 +17,7 @@ class Webcode
 {
     /**
      * @Id
-     * @Column(type="string", length="80")
+     * @Column(type="string", length=80)
      * @var string
      */
     private $webcode;

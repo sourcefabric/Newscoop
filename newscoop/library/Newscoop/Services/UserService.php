@@ -302,9 +302,19 @@ class UserService implements ObjectRepository
     private function getRepository()
     {
         if (null === $this->repository) {
-            $this->repository = $this->em->getRepository('Newscoop\Entity\User');
+            $this->repository = $this->em->getRepository($this->getClassName());
         }
 
         return $this->repository;
+    }
+
+    /**
+     * Get user class name
+     *
+     * @return string
+     */
+    public function getClassName()
+    {
+        return 'Newscoop\Entity\User';
     }
 }

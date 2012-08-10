@@ -5,6 +5,8 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+use Newscoop\Annotations\Acl;
+
 require_once APPLICATION_PATH . '/../admin-files/libs/ArticleList/ArticleList.php';
 
 /**

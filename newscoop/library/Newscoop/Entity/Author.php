@@ -21,13 +21,13 @@ class Author
     private $id;
 
     /**
-     * @Column(type="string", length="80", nullable=True)
+     * @Column(type="string", length=80, nullable=True)
      * @var string
      */
     private $first_name;
 
     /**
-     * @Column(type="string", length="80", nullable=True)
+     * @Column(type="string", length=80, nullable=True)
      * @var string
      */
     private $last_name;

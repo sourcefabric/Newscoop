@@ -90,6 +90,13 @@ class Doctrine
         }
 
         $this->em = EntityManager::create($database, $config);
+
+        // fix http://wildlyinaccurate.com/doctrine-2-resolving-unknown-database-type-enum-requested
+        $platform = $this->em->getConnection()->getDatabasePlatform();
+        $platform->registerDoctrineTypeMapping('enum', 'string');
+        $platform->registerDoctrineTypeMapping('point', 'string');
+        $platform->registerDoctrineTypeMapping('geometry', 'string');
+
         return $this->em;
     }
 }

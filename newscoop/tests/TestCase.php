@@ -58,7 +58,8 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     {
         global $application;
 
-        $orm = $application->getBootstrap()->getResource('doctrine')->getEntityManager();
+        $doctrine = $application->getBootstrap()->getResource('container')->getService('doctrine');
+        $orm = $doctrine->getEntityManager();
         $orm->clear();
 
         $tool = new SchemaTool($orm);
