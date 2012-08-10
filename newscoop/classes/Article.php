@@ -702,7 +702,7 @@ class Article extends DatabaseObject {
             ContextBoxArticle::OnArticleDelete($this->m_data['Number']);
 
             // Delete the article from playlists
-            $em = Zend_Registry::get('doctrine')->getEntityManager();
+            $em = Zend_Registry::get('container')->getService('em');
             $repository = $em->getRepository('Newscoop\Entity\PlaylistArticle');
             $repository->deleteArticle($this->m_data['Number']);
             $em->flush();
@@ -2638,7 +2638,7 @@ class Article extends DatabaseObject {
                     list($key, $value) = explode(":", $values, 2);
                     $searchValues[preg_replace("`(?<=[a-z])(_([a-z]))`e","strtoupper('\\2')",trim($key))] = trim($value);
                 }
-                $repo = Zend_Registry::get('doctrine')->getEntityManager()->getRepository('Newscoop\Entity\ArticleDatetime');
+                $repo = Zend_Registry::get('container')->getService('em')->getRepository('Newscoop\Entity\ArticleDatetime');
                 /* @var $repo \Newscoop\Entity\Repository\ArticleRepository */
                 $searchValues['fieldName'] = $fieldName;
                 $sqlQuery = $repo->findDates((object) $searchValues, true)->getFindDatesSQL('dt.articleId');

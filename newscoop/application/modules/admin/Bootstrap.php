@@ -164,7 +164,7 @@ class Admin_Bootstrap extends Zend_Application_Module_Bootstrap
      */
     protected function _initAclStorage()
     {
-        $doctrine = Zend_Registry::get('doctrine');
+        $doctrine = Zend_Registry::get('container')->getService('doctrine');
 
         $this->bootstrap('acl');
         $acl = $this->getResource('acl');

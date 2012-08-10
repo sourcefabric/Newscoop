@@ -95,8 +95,7 @@ abstract class AEntityBaseServiceDoctrine
     protected function getEntityManager()
     {
         if ($this->em === NULL) {
-            $doctrine = \Zend_Registry::get('doctrine');
-            $this->em = $doctrine->getEntityManager();
+            $this->em = \Zend_Registry::get('container')->getService('em');
         }
         return $this->em;
     }

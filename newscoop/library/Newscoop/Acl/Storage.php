@@ -7,21 +7,22 @@
 
 namespace Newscoop\Acl;
 
-use Resource\Acl\StorageInterface,
-    Newscoop\Utils\PermissionToAcl;
+use Resource\Acl\StorageInterface;
+use Newscoop\Utils\PermissionToAcl;
+use Newscoop\Doctrine\Doctrine;
 
 /**
  * Acl storage
  */
 class Storage implements StorageInterface
 {
-    /** @var Resource_Doctrine */
+    /** @var Newscoop\Doctrine\Doctrine */
     private $doctrine;
 
     /**
-     * @var Resource_Doctrine $doctrine
+     * @var Newscoop\Doctrine\Doctrine $doctrine
      */
-    public function __construct(\Resource_Doctrine $doctrine)
+    public function __construct(Doctrine $doctrine)
     {
         $this->doctrine = $doctrine;
     }

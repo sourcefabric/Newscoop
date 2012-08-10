@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping\ClassMetadataFactory,
  */
 abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 {
-    /** @var Resource_Doctrine */
+    /** @var Newscoop\Doctrine\Doctrine */
     protected $doctrine;
 
     /** @var Doctrine\ORM\EntityManager */
@@ -26,7 +26,7 @@ abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->doctrine = Zend_Registry::get('doctrine');
+        $this->doctrine = Zend_Registry::get('container')->getService('doctrine');
         $this->em = $this->doctrine->getEntityManager();
         $this->em->clear();
 

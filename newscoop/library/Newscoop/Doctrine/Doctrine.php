@@ -1,28 +1,28 @@
 <?php
 /**
- * @package Resource
- * @copyright 2011 Sourcefabric o.p.s.
+ * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
+ * @package Newscoop
+ * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Doctrine\ORM\Configuration,
-    Doctrine\ORM\EntityManager;
+namespace Newscoop\Doctrine;
+
+use Doctrine\ORM\Configuration;
+use Doctrine\ORM\EntityManager;
 
 /**
- * Doctrine Zend application resource
+ * Doctrine Configuration
  */
-class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
+class Doctrine
 {
     /** @var Doctrine\ORM\EntityManager */
     private $em;
+    private $options;
 
-    /**
-     * Init doctrine
-     */
-    public function init()
+    public function __construct($options) 
     {
-        Zend_Registry::set('doctrine', $this);
-        return $this;
+        $this->options = $options['doctrine'];
     }
 
     /**
@@ -32,26 +32,35 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
      */
     public function getEntityManager()
     {
-        global $Campsite;
-
-        if ($this->em !== NULL && $this->em->isOpen()) {
+        if ($this->em !== null && $this->em->isOpen()) {
             return $this->em;
         }
 
-        $config = new Configuration();
-        $options = $this->getOptions();
+        return $this->_configureEntityManager();
+    }
 
+    /**
+     * Configure doctrine entity manager
+     * 
+     * @return Doctrine\ORM\EntityManager
+     */
+    private function _configureEntityManager() 
+    {
+        global $Campsite;
+        
+        $config = new Configuration();
+        
         // set annotations reader
-        $metadata = $config->newDefaultAnnotationDriver(realpath($options['entity']['dir']));
+        $metadata = $config->newDefaultAnnotationDriver(realpath($this->options['entity']['dir']));
         $config->setMetadataDriverImpl($metadata);
 
         // set proxy
-        $config->setProxyDir(realpath($options['proxy']['dir']));
-        $config->setProxyNamespace($options['proxy']['namespace']);
-        $config->setAutoGenerateProxyClasses($options['proxy']['autogenerate']);
+        $config->setProxyDir(realpath($this->options['proxy']['dir']));
+        $config->setProxyNamespace($this->options['proxy']['namespace']);
+        $config->setAutoGenerateProxyClasses($this->options['proxy']['autogenerate']);
 
         // set cache
-        $cache = new $options['cache'];
+        $cache = new $this->options['cache'];
         $config->setMetadataCacheImpl($cache);
         $config->setQueryCacheImpl($cache);
 
@@ -72,12 +81,13 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
             ),
         );
 
-        if (isset($options['database'])) {
-            $database = $options['database'];
+        if (isset($this->options['database'])) {
+            $database = $this->options['database'];
         }
 
-        foreach ($options['functions'] as $function => $value)
+        foreach ($this->options['functions'] as $function => $value) {
             $config->addCustomNumericFunction(strtoupper($function), $value);
+        }
 
         $this->em = EntityManager::create($database, $config);
         return $this->em;

@@ -10,8 +10,7 @@
 			<?php
 			    try
 			    {
-    			    $playlists = Zend_Registry::get('doctrine')
-    			        ->getEntityManager()
+    			    $playlists = Zend_Registry::get('container')->getService('em')
     			        ->getRepository('Newscoop\Entity\Playlist')
     			        ->getArticlePlaylists(Input::Get('f_article_number', 'int', 1));
                     $playlistsData = array();
