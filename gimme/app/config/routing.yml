@@ -1,7 +1,3 @@
 NewscoopGimmeBundle:
     resource: "@NewscoopGimmeBundle/Resources/config/routing.yml"
     prefix:   /gimme/
-
-# newscoop_gimme_index:
-#     pattern:   /gimme/
-#     defaults:  { _controller: Newscoop\Gimme\Controller\IndexController::indexAction }
