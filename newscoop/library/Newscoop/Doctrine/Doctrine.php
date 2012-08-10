@@ -8,8 +8,8 @@
 
 namespace Newscoop\Doctrine;
 
-use Doctrine\ORM\Configuration,
-    Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Configuration;
+use Doctrine\ORM\EntityManager;
 
 /**
  * Doctrine Configuration

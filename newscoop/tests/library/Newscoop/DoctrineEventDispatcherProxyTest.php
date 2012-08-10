@@ -8,7 +8,7 @@
 namespace Newscoop;
 
 use Doctrine\ORM\Events;
-use Newscoop\Doctrine\EventDispatcherProxy
+use Newscoop\Doctrine\EventDispatcherProxy;
 
 /**
  */
