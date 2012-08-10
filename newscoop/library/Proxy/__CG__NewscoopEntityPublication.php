@@ -96,6 +96,12 @@ class Publication extends \Newscoop\Entity\Publication implements \Doctrine\ORM\
         return parent::getSections();
     }
 
+    public function setId($id)
+    {
+        $this->__load();
+        return parent::setId($id);
+    }
+
     public function getId()
     {
         if ($this->__isInitialized__ === false) {

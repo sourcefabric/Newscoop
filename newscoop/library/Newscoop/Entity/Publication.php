@@ -290,6 +290,17 @@ class Publication
     }
 
     /**
+     * Set id
+     *
+     * @param int $id
+     * @return void
+     */
+    public function setId($id)
+    {
+        $this->id = (int) $id;
+    }
+
+    /**
      * Get id
      *
      * @return int
