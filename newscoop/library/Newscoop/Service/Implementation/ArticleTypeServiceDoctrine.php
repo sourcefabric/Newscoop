@@ -64,8 +64,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
     protected function getEntityManager()
     {
         if ($this->em === NULL) {
-            $doctrine = \Zend_Registry::get( 'doctrine' );
-            $this->em = $doctrine->getEntityManager();
+            $this->em = \Zend_Registry::get('container')->getService('em');
         }
         return $this->em;
     }
@@ -87,7 +86,7 @@ class ArticleTypeServiceDoctrine implements IArticleTypeService
         $qb = $this->getEntityManager()->createQueryBuilder();
         $qb ->select( self::ALIAS )
             ->from( '\Newscoop\Entity\ArticleTypeField', self::ALIAS )
-            ->where( self::ALIAS . '.typeHack = ?1' . ' AND ' . self::ALIAS . ".name IS NOT NULL" . ' AND ' . self::ALIAS . ".name <> 'NULL'" )->setParameter( 1, $type );
+            ->where( self::ALIAS . '.typeHack = ?1' . ' AND ' . self::ALIAS . ".name IS NOT NULL" . ' AND ' . self::ALIAS . ".name <> 'NULL'" )->setParameter( 1, $type->getName() );
 
         /**
          * @todo at refactor @see hack from \Newscoop\Entity\ArticleTypeField
