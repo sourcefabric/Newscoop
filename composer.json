@@ -14,7 +14,10 @@
         "sensio/framework-extra-bundle": "dev-master",
         "doctrine/orm":"2.2.*",
         "zendframework/zendframework1":"dev-release-1.11",
-        "Smarty3":"3.0.8"
+        "Smarty3":"3.0.8",
+        "behat/behat":           ">=2.4.0",
+        "behat/common-contexts": "*",
+        "kriswallsmith/buzz":    ">=0.7"
     },
     "repositories":[
         {
@@ -65,7 +68,7 @@
     },
     "minimum-stability": "dev",
     "config": {
-        "bin-dir": "bin"
+        "bin-dir": "vendor/bin"
     },
     "extra": {
         "symfony-app-dir": "gimme/app",

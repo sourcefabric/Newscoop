@@ -1,9 +1,25 @@
 {
-    "hash": "c695701e5564e713e68e1e1c5e6c4774",
+    "hash": "9ad861ecdb2695e4d9b305ba4f28fab6",
     "packages": [
         {
             "package": "Smarty3",
             "version": "3.0.8"
+        },
+        {
+            "package": "behat/behat",
+            "version": "dev-master",
+            "source-reference": "v2.4.3",
+            "commit-date": "1343494428"
+        },
+        {
+            "package": "behat/common-contexts",
+            "version": "dev-master",
+            "source-reference": "fdd34724890828bd8442a443fd59f8af81daed17",
+            "commit-date": "1339965382"
+        },
+        {
+            "package": "behat/gherkin",
+            "version": "v2.2.4"
         },
         {
             "package": "doctrine/common",
@@ -22,16 +38,16 @@
             "commit-date": "1343560954"
         },
         {
-            "package": "sensio/distribution-bundle",
+            "package": "kriswallsmith/buzz",
             "version": "dev-master",
-            "source-reference": "57190e5baa0cc1d8ef6095ce57e6719a5eae2b79",
-            "commit-date": "1344240835"
+            "source-reference": "2ba5da13b1b03590f0164b3fb61578078d671fcc",
+            "commit-date": "1341070218"
         },
         {
-            "package": "sensio/framework-extra-bundle",
+            "package": "sensio/distribution-bundle",
             "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
+            "source-reference": "cc4eda1b49df3125fed9e440aeb49e8f057a912e",
+            "commit-date": "1344855180"
         },
         {
             "package": "sensio/framework-extra-bundle",
@@ -54,8 +70,8 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "dd9afddfd9a9f169832c4634d1094f50f34d5df4",
-            "commit-date": "1344494996"
+            "source-reference": "7bc6d6d18265cf76553421b41fd3b6a1d6959eb0",
+            "commit-date": "1344860541"
         },
         {
             "package": "twig/twig",

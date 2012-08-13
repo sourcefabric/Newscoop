@@ -9,7 +9,6 @@ class AppKernel extends Kernel
     {
         $bundles =  array(
         	new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
-            
             new Newscoop\GimmeBundle\NewscoopGimmeBundle(),
         );
 
