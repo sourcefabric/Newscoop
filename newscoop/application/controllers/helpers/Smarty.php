@@ -18,6 +18,9 @@ class Action_Helper_Smarty extends Zend_Controller_Action_Helper_Abstract
      */
     public function preDispatch()
     {
+        $controller = $this->getActionController();
+        $GLOBALS['controller'] = $controller;
+
         $request = $this->getRequest();
 
         if ($request->getParam('format') === 'json') {
@@ -39,8 +42,7 @@ class Action_Helper_Smarty extends Zend_Controller_Action_Helper_Abstract
      */
     public function setSmartyView()
     {
-        $GLOBALS['controller'] = $controller = $this->getActionController();
-
+        $controller = $this->getActionController();
         $controller->view = new Newscoop\SmartyView();
         $controller->view->addScriptPath(APPLICATION_PATH . '/views/scripts/');
         $controller->view->addScriptPath($controller->getHelper('theme')->getFilePath('_views'));
