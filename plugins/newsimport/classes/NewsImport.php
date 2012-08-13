@@ -468,7 +468,7 @@ class NewsImport
                 $uses_multidates = true;
             }
 
-            $one_event['headline'] = str_replace(array('\\', '&#92;'), array('\'', '&#39;'), $one_event['headline']);
+            // $one_event['headline'] = str_replace(array('\\', '&#92;'), array('\'', '&#39;'), $one_event['headline']); // this was already fixed upstream
 
             // no date part for movie screenings (all together), and may be the same way for events too lately
             $art_name_date_part = '';
@@ -478,7 +478,7 @@ class NewsImport
                 }
             }
             $art_name = $one_event['headline'] . $art_name_date_part . ' (' . $one_event['event_id'] . ')';
-            $art_name = NewsImportEnv::entities2Utf8($art_name, array('60', '62'));
+            $art_name = NewsImportEnv::entities2Utf8($art_name, array());
 
             if (!$article) {
                 $article = new Article($art_lang);
@@ -492,7 +492,7 @@ class NewsImport
             $art_number = $article->getArticleNumber();
 
             if (isset($one_event['keywords']) && (null !== $one_event['keywords'])) {
-                $cur_keywords = $one_event['keywords'];
+                $cur_keywords = NewsImportEnv::entities2Utf8($one_event['keywords'], array());
                 if (is_array($cur_keywords)) {
                     $cur_keywords = implode(',', $cur_keywords);
                 }
@@ -617,13 +617,13 @@ class NewsImport
 
             }
 
-            $article_data->setProperty('Fheadline', $one_event['headline']);
-            $article_data->setProperty('Forganizer', $one_event['organizer']);
+            $article_data->setProperty('Fheadline', NewsImportEnv::entities2Utf8($one_event['headline'], array()));
+            $article_data->setProperty('Forganizer', NewsImportEnv::entities2Utf8($one_event['organizer'], array()));
 
-            $article_data->setProperty('Fcountry', $one_event['country']);
-            $article_data->setProperty('Fzipcode', $one_event['zipcode']);
-            $article_data->setProperty('Ftown', $one_event['town']);
-            $article_data->setProperty('Fstreet', $one_event['street']);
+            $article_data->setProperty('Fcountry', NewsImportEnv::entities2Utf8($one_event['country'], array()));
+            $article_data->setProperty('Fzipcode', NewsImportEnv::entities2Utf8($one_event['zipcode'], array()));
+            $article_data->setProperty('Ftown', NewsImportEnv::entities2Utf8($one_event['town'], array()));
+            $article_data->setProperty('Fstreet', NewsImportEnv::entities2Utf8($one_event['street'], array()));
 
             if (!$uses_multidates) {
                 $article_data->setProperty('Fdate', $one_event['date']);
