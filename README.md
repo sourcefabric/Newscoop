@@ -8,11 +8,11 @@ production and publishing system.
 
 Quick links to our resources are:
 
-Manuals for Newscoop http://manuals.sourcefabric.org
-Forums and mailing lists: http://forum.sourcefabric.org
-Bug Tracking: http://dev.sourcefabric.org
-Code view/review: http://code.sourcefabric.org
-Public source code hosting: http://github.com/sourcefabric
-Download link: https://sourceforge.net/projects/newscoop/
-Developer's wiki: http://wiki.sourcefabric.org
+* Manuals for Newscoop http://manuals.sourcefabric.org
+* Forums and mailing lists: http://forum.sourcefabric.org
+* Bug Tracking: http://dev.sourcefabric.org
+* Code view/review: http://code.sourcefabric.org
+* Public source code hosting: http://github.com/sourcefabric
+* Download link: https://sourceforge.net/projects/newscoop/
+* Developer's wiki: http://wiki.sourcefabric.org
 
