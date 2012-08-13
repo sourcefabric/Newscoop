@@ -21,7 +21,7 @@ class Template
     private $id;
 
     /**
-     * @Column(length="255", name="Name")
+     * @Column(length=255, name="Name")
      * @var string
      */
     private $key;

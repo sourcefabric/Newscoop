@@ -22,7 +22,6 @@ class PlaylistArticle extends Entity
     protected $id;
 
 	/**
-     * @Id
      * @Column(type="integer", name="id_playlist")
      * @var int
      */

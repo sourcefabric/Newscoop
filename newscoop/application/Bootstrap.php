@@ -11,7 +11,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\MongoDB\Connection;
 use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
-use Newscoop\DoctrineEventDispatcherProxy;
+use Newscoop\Doctrine\EventDispatcherProxy;
 use Newscoop\DependencyInjection\ContainerBuilder;
 use Newscoop\DependencyInjection\Compiler\RegisterListenersPass;
 use Symfony\Component\Config\FileLocator;
@@ -55,42 +55,50 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     /**
      * Name must be _initContainer because bootstrap create resource named "container", 
      * and if we change function name, then resource name will be also changed.
-     *
-     * TODO: refactor name.
      */
     protected function _initContainer()
     {
         $this->bootstrap('autoloader');
 
-        $container = new ContainerBuilder($this->getOptions());
-        $container->addCompilerPass(new RegisterListenersPass());
-        $container->setParameter('config', $this->getOptions());
-        
-        $this->bootstrap('doctrine');
-        $doctrine = $this->getResource('doctrine');
-        $container->setService('em', $doctrine->getEntityManager());
+        $file = __DIR__ .'/../cache/container.php';
 
-        $this->bootstrap('odm');
+        /**
+         * Use cached container if exists, and env is set up on production
+         */
+        if (APPLICATION_ENV === 'production' && file_exists($file)) {
+            require_once $file;
+            $container = new NewscoopCachedContainer();
+        } else {
+            $container = new ContainerBuilder($this->getOptions());
+            $container->addCompilerPass(new RegisterListenersPass());
+            $container->setParameter('config', $this->getOptions());
 
-        $this->bootstrap('view');
-        $container->setService('view', $this->getResource('view'));
+            $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
+            $services = glob(__DIR__ ."/configs/services/*.yml");
+            foreach ($services as $service) {
+                $loader->load($service);
+            }
 
-        $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
-        $services = glob(__DIR__ ."/configs/services/*.yml");
-        foreach ($services as $service) {
-            $loader->load($service);
+            $container->compile();
+
+            if (APPLICATION_ENV === 'production') {
+                $dumper = new PhpDumper($container);
+                file_put_contents($file, $dumper->dump(array(
+                    'class' => 'NewscoopCachedContainer',
+                    'base_class' => 'Newscoop\DependencyInjection\ContainerBuilder'
+                )));
+            }
         }
-
-        DatabaseObject::setEventDispatcher($container->getService('dispatcher'));
-        DatabaseObject::setResourceNames($container->getParameter('resourceNames'));
-
-        $container->getService('em')
-            ->getEventManager()
-            ->addEventSubscriber(new DoctrineEventDispatcherProxy($container->getService('dispatcher')));
-
 
         Zend_Registry::set('container', $container);
         return $container;
+    }
+
+    protected function _initDatabaseObject() 
+    {
+        $container = $this->getResource('container');
+        DatabaseObject::setEventDispatcher($container->getService('dispatcher'));
+        DatabaseObject::setResourceNames($container->getParameter('resourceNames'));
     }
 
     protected function _initPlugins()

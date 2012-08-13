@@ -8,12 +8,13 @@
 namespace Newscoop;
 
 use Doctrine\ORM\Events;
+use Newscoop\Doctrine\EventDispatcherProxy;
 
 /**
  */
-class DoctrineEventDispatcherProxyTest extends \PHPUnit_Framework_TestCase
+class EventDispatcherProxyTest extends \PHPUnit_Framework_TestCase
 {
-    /** @var Newscoop\DoctrineEventDispatcherProxy */
+    /** @var Newscoop\Doctrine\EventDispatcherProxy */
     protected $proxy;
 
     /** @var sfEventDispatcher */
@@ -21,15 +22,16 @@ class DoctrineEventDispatcherProxyTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->dispatcher = $this->getMockBuilder('sfEventDispatcher')
+        $this->dispatcher = $this->getMockBuilder('Newscoop\EventDispatcher\EventDispatcher')
+            ->disableOriginalConstructor()
             ->getMock();
 
-        $this->proxy = new DoctrineEventDispatcherProxy($this->dispatcher);
+        $this->proxy = new EventDispatcherProxy($this->dispatcher);
     }
 
     public function testEventDoctrineDispatcherProxy()
     {
-        $this->assertInstanceOf('Newscoop\DoctrineEventDispatcherProxy', $this->proxy);
+        $this->assertInstanceOf('Newscoop\Doctrine\EventDispatcherProxy', $this->proxy);
         $this->assertInstanceOf('Doctrine\Common\EventSubscriber', $this->proxy);
     }
 

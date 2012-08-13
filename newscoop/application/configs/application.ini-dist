@@ -27,16 +27,16 @@ translation.path = APPLICATION_PATH "/languages"
 theme_path = APPLICATION_PATH "/../themes"
 
 ; doctrine resource
-resources.doctrine.cache = "Doctrine\Common\Cache\ArrayCache";
-resources.doctrine.entity.dir = APPLICATION_PATH "/../library/Newscoop/Entity"
-resources.doctrine.proxy.dir = APPLICATION_PATH "/../library/Newscoop/Entity/Proxy"
-resources.doctrine.proxy.namespace = "Newscoop\Entity\Proxy"
-resources.doctrine.proxy.autogenerate = false
-resources.doctrine.functions.rand = "Newscoop\Query\MysqlRandom"
-resources.doctrine.functions.dayofweek = "Newscoop\Query\MysqlDayOfWeek"
-resources.doctrine.functions.dayofmonth = "Newscoop\Query\MysqlDayOfMonth"
-resources.doctrine.functions.dayofyear = "Newscoop\Query\MysqlDayOfYear"
-resources.doctrine.functions.date_format = "Newscoop\Query\MysqlDateFormat"
+doctrine.cache = "Doctrine\Common\Cache\ArrayCache";
+doctrine.entity.dir = APPLICATION_PATH "/../library/Newscoop"
+doctrine.proxy.dir = APPLICATION_PATH "/../library/Proxy"
+doctrine.proxy.namespace = "Proxy"
+doctrine.proxy.autogenerate = false
+doctrine.functions.rand = "Newscoop\Query\MysqlRandom"
+doctrine.functions.dayofweek = "Newscoop\Query\MysqlDayOfWeek"
+doctrine.functions.dayofmonth = "Newscoop\Query\MysqlDayOfMonth"
+doctrine.functions.dayofyear = "Newscoop\Query\MysqlDayOfYear"
+doctrine.functions.date_format = "Newscoop\Query\MysqlDateFormat"
 
 resources.view =
 
@@ -84,95 +84,6 @@ resourceNames.Templates = template
 resourceNames.Topics = topic
 resourceNames.Translations = translation
 resourceNames.Translations = translation
-
-; event dispatcher listeners
-listener[] = audit
-listener[] = comment
-listener[] = community_feed
-listener[] = user_points
-listener[] = user_attributes
-listener[] = comment_notification
-
-; audit events
-audit.events[] = comment.update
-audit.events[] = comment.delete
-audit.events[] = alias.create
-audit.events[] = alias.update
-audit.events[] = alias.delete
-audit.events[] = article-attachment.create
-audit.events[] = article-attachment.delete
-audit.events[] = article-author.create
-audit.events[] = article-author.delete
-audit.events[] = article-image.create
-audit.events[] = article-image.delete
-audit.events[] = article-publish.create
-audit.events[] = article.create
-audit.events[] = article.delete
-audit.events[] = article-topic.create
-audit.events[] = article-topic.delete
-audit.events[] = article-metadata.create
-audit.events[] = article-metadata.delete
-audit.events[] = attachment.create
-audit.events[] = attachment.delete
-audit.events[] = author-alias.create
-audit.events[] = author-alias.delete
-audit.events[] = author-biography.create
-audit.events[] = author-biography.delete
-audit.events[] = author.create
-audit.events[] = author.delete
-audit.events[] = author-type.create
-audit.events[] = author-type.delete
-audit.events[] = county.create
-audit.events[] = county.delete
-audit.events[] = image.create
-audit.events[] = image.delete
-audit.events[] = issue.create
-audit.events[] = issue.delete
-audit.events[] = language.create
-audit.events[] = language.delete
-audit.events[] = location.create
-audit.events[] = location.delete
-audit.events[] = map.create
-audit.events[] = map.delete
-audit.events[] = plugin.create
-audit.events[] = plugin.delete
-audit.events[] = publication.create
-audit.events[] = publication.delete
-audit.events[] = section.create
-audit.events[] = section.delete
-audit.events[] = subscription.create
-audit.events[] = subscription.delete
-audit.events[] = system-preferences.create
-audit.events[] = system-preferences.delete
-audit.events[] = template.create
-audit.events[] = template.delete
-audit.events[] = topic.create
-audit.events[] = topic.delete
-audit.events[] = translation.create
-audit.events[] = translation.delete
-
-community_feed.events[] = user.register
-community_feed.events[] = print.subscribe
-community_feed.events[] = comment.recommended
-community_feed.events[] = topic.follow
-community_feed.events[] = image.approved
-community_feed.events[] = document.approved
-community_feed.events[] = blog.published
-
-user_points.events[] = image.published
-
-user_attributes.events[] = image.delivered
-user_attributes.events[] = image.approved
-user_attributes.events[] = image.published
-user_attributes.events[] = document.delivered
-user_attributes.events[] = document.approved
-
-comment.events[] = comment.create
-comment.events[] = comment.update
-comment.events[] = comment.recommended
-comment.events[] = comment.delete
-
-comment_notification.events[] = comment.create
 
 ; autoloader dirs
 autoloader.dirs[] = APPLICATION_PATH "/../classes"
@@ -239,10 +150,10 @@ phpSettings.display_startup_errors = 1
 phpSettings.display_errors = 1
 resources.frontController.params.displayExceptions = 1
 
-resources.doctrine.proxy.autogenerate = true
-resources.doctrine.database.driver = "pdo_sqlite"
-resources.doctrine.database.path = ":memory:"
-resources.doctrine.functions.rand = "Newscoop\Query\SqliteRandom"
+doctrine.proxy.autogenerate = true
+doctrine.database.driver = "pdo_sqlite"
+doctrine.database.path = ":memory:"
+doctrine.functions.rand = "Newscoop\Query\SqliteRandom"
 
 ; disable listeners during testing
 audit.events = 0
@@ -263,21 +174,21 @@ ingest_publisher.field.AuthorNames = 0
 ingest_publisher.field.deck = "getSummary"
 ingest_publisher.field.full_text = "getContent"
 
-resources.doctrine.cache = "Doctrine\Common\Cache\ArrayCache";
+doctrine.cache = "Doctrine\Common\Cache\ArrayCache";
 admin.resources.acl.cache = "Doctrine\Common\Cache\ArrayCache"
 
 [development : production]
 phpSettings.display_startup_errors = 1
 phpSettings.display_errors = 1
 resources.frontController.params.displayExceptions = 1
-resources.doctrine.proxy.autogenerate = true
+doctrine.proxy.autogenerate = true
 
-resources.doctrine.cache = "Doctrine\Common\Cache\ArrayCache";
+doctrine.cache = "Doctrine\Common\Cache\ArrayCache";
 admin.resources.acl.cache = "Doctrine\Common\Cache\ArrayCache"
 
 session.cookie_domain = ""
 
 [cli : production]
-resources.doctrine.cache = "Doctrine\Common\Cache\ArrayCache";
+doctrine.cache = "Doctrine\Common\Cache\ArrayCache";
 admin.resources.acl.cache = "Doctrine\Common\Cache\ArrayCache"
 

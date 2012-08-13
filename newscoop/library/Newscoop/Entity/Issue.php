@@ -12,9 +12,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Issue entity
  * @Entity
- * @Table(name="Issues", {@UniqueConstraint(name="issues_unique",columns={"IdPublication", "Number", "Language"})})
+ * @Table(name="Issues", uniqueConstraints={@UniqueConstraint(name="issues_unique", columns={"IdPublication", "Number", "IdLanguage"})})
  */
-class Issue extends Entity
+class Issue
 {
     /**
      * Provides the class name as a constant.
@@ -22,7 +22,14 @@ class Issue extends Entity
     const NAME = __CLASS__;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Publication")
+     * @Id @GeneratedValue
+     * @Column(type="integer")
+     * @var int
+     */
+    private $id;
+
+    /**
+     * @ManyToOne(targetEntity="Newscoop\Entity\Publication", inversedBy="issues")
      * @JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
@@ -100,6 +107,16 @@ class Issue extends Entity
             $this->language = $language !== null ? $language : $this->publication->getDefaultLanguage();
             $this->publication->addIssue($this);
         }
+    }
+
+    /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 
     /**

@@ -24,7 +24,7 @@ class Entry
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Ingest\Feed")
+     * @ManyToOne(targetEntity="Newscoop\Entity\Ingest\Feed", inversedBy="entries")
      * @var Newscoop\Entity\Ingest\Feed
      */
     private $feed;

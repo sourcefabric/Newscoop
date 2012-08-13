@@ -5,8 +5,8 @@ define('APPLICATION_ENV', 'cli');
 require_once __DIR__ . '/../application.php';
 $application->bootstrap();
 
-// Retrieve Doctrine Container resource
-$container = Zend_Registry::get('doctrine')->getEntityManager();
+// Retrieve Doctrine Entity Manager
+$em = Zend_Registry::get('container')->getService('em');
 
 // Console
 $cli = new \Symfony\Component\Console\Application(
@@ -18,7 +18,7 @@ try {
     // Bootstrapping Console HelperSet
     $helperSet = array();
 
-    if (($em = $container) !== null) {
+    if ($em !== null) {
         $helperSet['container'] = new \Newscoop\Tools\Console\Helper\ServiceContainerHelper($application->getBootstrap()->getResource('container'));
     }
 } catch (\Exception $e) {

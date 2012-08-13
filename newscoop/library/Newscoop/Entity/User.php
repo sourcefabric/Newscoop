@@ -116,7 +116,7 @@ class User implements \Zend_Acl_Role_Interface
     private $role;
 
     /**
-     * @manyToMany(targetEntity="Newscoop\Entity\User\Group")
+     * @manyToMany(targetEntity="Newscoop\Entity\User\Group", inversedBy="users")
      * @joinTable(name="liveuser_groupusers",
      *      joinColumns={@joinColumn(name="perm_user_id", referencedColumnName="Id")},
      *      inverseJoinColumns={@joinColumn(name="group_id", referencedColumnName="group_id")}

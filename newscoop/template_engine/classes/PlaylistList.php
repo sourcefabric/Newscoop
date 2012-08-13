@@ -42,7 +42,7 @@ class PlaylistList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-	    $doctrine = Zend_Registry::get('doctrine');
+	    $doctrine = Zend_Registry::get('container')->getService('doctrine');
         if (!$doctrine) {
             return false;
         }
