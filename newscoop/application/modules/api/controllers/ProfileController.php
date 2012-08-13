@@ -168,7 +168,8 @@ class Api_ProfileController extends AbstractController
      */
     private function getAvailableSubscriptions()
     {
-        return json_decode(file_get_contents($this->_helper->theme->getFilePath('subscriptions.json')), true);
+        $config = new Zend_Config_Xml(APPLICATION_PATH . '/configs/subscriptions.xml');
+        return $config->toArray();
     }
 
     /**
