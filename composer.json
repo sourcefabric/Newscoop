@@ -3,5 +3,8 @@
     "description":"The open source CMS for news",
     "keywords":["cms,journalism,publication"],
     "homepage":"http://www.sourcefabric.org/en/newscoop/",
-    "license":"GPL-3.0"
+    "license":"GPL-3.0",
+    "support": {
+        "email": "contact@sourcefabric.org"
+    }
 }
