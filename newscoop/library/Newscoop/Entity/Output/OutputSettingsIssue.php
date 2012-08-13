@@ -14,6 +14,7 @@ use Newscoop\Utils\Validation;
 use Newscoop\Entity\Entity;
 use Newscoop\Entity\Theme;
 use Newscoop\Entity\Resource;
+
 /**
  * Provides the settings for an output for an issue.
  *
@@ -28,7 +29,7 @@ class OutputSettingsIssue extends OutputSettings
 	const NAME_1 = __CLASS__;
 
 	/**
-	 * @ManyToOne(targetEntity="Newscoop\Entity\Issue")
+	 * @ManyToOne(targetEntity="Newscoop\Entity\Issue", inversedBy="outputSettingsIssues")
 	 * @JoinColumn(name="fk_issue_id", referencedColumnName="id")
 	 * @var Newscoop\Entity\Issue
 	 */

@@ -4,25 +4,26 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+
+use Newscoop\Annotations\Acl;
 use Newscoop\Service\Exception\RemoveThemeException;
 use Newscoop\Entity\OutputSettings;
-use Newscoop\Service\IArticleTypeService,
-    Newscoop\Entity\Repository\ArticleTypeRepository,
-    Newscoop\Entity\ArticleType,
-    Newscoop\Entity\Resource,
-    Newscoop\Controller\Action\Helper\Datatable\Adapter\Theme,
-    Newscoop\Controller\Action\Helper\Datatable\Adapter\ThemeFiles,
-    Newscoop\Service\IPublicationService,
-    Newscoop\Service\IThemeManagementService,
-    Newscoop\Service\Resource\ResourceId,
-    Newscoop\Service\IThemeService,
-    Newscoop\Service\Model\SearchTheme,
-    Newscoop\Service\PublicationServiceDoctrine,
-    Newscoop\Entity\Theme\Loader\LocalLoader,
-    Newscoop\Service\IOutputService,
-    Newscoop\Service\Exception\DuplicateNameException,
-    Newscoop\Entity\Output
-    ;
+use Newscoop\Service\IArticleTypeService;
+use Newscoop\Entity\Repository\ArticleTypeRepository;
+use Newscoop\Entity\ArticleType;
+use Newscoop\Entity\Resource;
+use Newscoop\Controller\Action\Helper\Datatable\Adapter\Theme;
+use Newscoop\Controller\Action\Helper\Datatable\Adapter\ThemeFiles;
+use Newscoop\Service\IPublicationService;
+use Newscoop\Service\IThemeManagementService;
+use Newscoop\Service\Resource\ResourceId;
+use Newscoop\Service\IThemeService;
+use Newscoop\Service\Model\SearchTheme;
+use Newscoop\Service\PublicationServiceDoctrine;
+use Newscoop\Entity\Theme\Loader\LocalLoader;
+use Newscoop\Service\IOutputService;
+use Newscoop\Service\Exception\DuplicateNameException;
+use Newscoop\Entity\Output;
 
 /**
  * Themes Controller

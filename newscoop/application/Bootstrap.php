@@ -65,7 +65,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         /**
          * Use cached container if exists, and env is set up on production
          */
-        if (!(defined('APPLICATION_ENV') && APPLICATION_ENV == 'development') && file_exists($file)) {
+        if (APPLICATION_ENV === 'production' && file_exists($file)) {
             require_once $file;
             $container = new NewscoopCachedContainer();
         } else {
@@ -81,7 +81,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
             $container->compile();
 
-            if (!(defined('APPLICATION_ENV') && APPLICATION_ENV == 'development')) {
+            if (APPLICATION_ENV === 'production') {
                 $dumper = new PhpDumper($container);
                 file_put_contents($file, $dumper->dump(array(
                     'class' => 'NewscoopCachedContainer',

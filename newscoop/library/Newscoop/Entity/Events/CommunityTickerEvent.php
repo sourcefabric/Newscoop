@@ -23,7 +23,7 @@ class CommunityTickerEvent
     private $id;
 
     /**
-     * @Column(type="string", length="80")
+     * @Column(type="string", length=80)
      * @var string
      */
     private $event;

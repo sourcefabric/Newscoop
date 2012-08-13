@@ -55,7 +55,8 @@ class CommunityFeedServiceTest extends \PHPUnit_Framework_TestCase
             ),
         ));
 
-        $this->service->update('event.test', $event);
+        $event->setName('event.test');
+        $this->service->update($event);
     }
 
     public function testFindBy()

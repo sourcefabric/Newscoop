@@ -30,7 +30,7 @@ class Topic
     private $language;
 
     /**
-     * @Column(type="string", length="255")
+     * @Column(type="string", length=255)
      * @var string
      */
     private $name;
