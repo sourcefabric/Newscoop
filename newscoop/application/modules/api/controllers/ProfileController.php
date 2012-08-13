@@ -33,33 +33,41 @@ class Api_ProfileController extends AbstractController
             $values['image'] = $this->getImage();
             $this->_helper->service('user')->updateProfile($values, $user);
             $this->_helper->redirector('index');
-        } else if ($this->getRequest()->isPost()) {
+        } elseif ($this->getRequest()->isPost()) {
             $this->_helper->json($form->getErrors());
         }
 
-        $this->_helper->json(array_merge(array(
-            'first_name' => $user->getFirstName(),
-            'last_name' => $user->getLastName(),
-            'birth_date' => $user->getAttribute('birth_date'),
-            'facebook' => $user->getAttribute('facebook'),
-            'google' => $user->getAttribute('google'),
-            'twitter' => $user->getAttribute('twitter'),
-            'website' => $user->getAttribute('website'),
-            'bio' => $user->getAttribute('bio'),
-            'email_public' => (bool) $user->getAttribute('email_public'),
+        $this->_helper->json(
+            array_merge(
+                array(
+                    'first_name' => $user->getFirstName(),
+                    'last_name' => $user->getLastName(),
+                    'birth_date' => $user->getAttribute('birth_date'),
+                    'facebook' => $user->getAttribute('facebook'),
+                    'google' => $user->getAttribute('google'),
+                    'twitter' => $user->getAttribute('twitter'),
+                    'website' => $user->getAttribute('website'),
+                    'bio' => $user->getAttribute('bio'),
+                    'email_public' => (bool) $user->getAttribute('email_public'),
 
-            'member_since' => $user->getCreated()->format('Y-m-d'),
-            'account_type' => $this->getUserType($user),
-            'profile_image_url' => $this->getUserImage($user),
-            'verified' => (bool) $user->getAttribute('is_verified'),
+                    'member_since' => $user->getCreated()->format('Y-m-d'),
+                    'account_type' => $this->getUserType($user),
+                    'profile_image_url' => $this->getUserImage($user),
+                    'verified' => (bool) $user->getAttribute('is_verified'),
 
-            'subscribed_topics' => array_map(function($topic) {
-                return array(
-                    'topic_id' => $topic->getTopicId(),
-                    'topic_name' => $topic->getName(),
-                );
-            }, $this->_helper->service('user.topic')->getTopics($user)),
-        ), $this->getUserSubscriptionInfo($user)));
+                    'subscribed_topics' => array_map(
+                        function ($topic) {
+                            return array(
+                                'topic_id' => $topic->getTopicId(),
+                                'topic_name' => $topic->getName(),
+                            );
+                        },
+                        $this->_helper->service('user.topic')->getTopics($user)
+                    ),
+                ),
+                $this->getUserSubscriptionInfo($user)
+            )
+        );
     }
 
     /**
@@ -90,9 +98,7 @@ class Api_ProfileController extends AbstractController
     private function getUserImage(User $user)
     {
         $image = $this->_helper->service('image')->getUserImage($user);
-        return $image ? $this->view->serverUrl($this->view->url(array(
-            'src' => $image,
-        ), 'image')) : null;
+        return $image ? $this->view->serverUrl($this->view->url(array('src' => $image), 'image')) : null;
     }
 
     /**
@@ -100,10 +106,12 @@ class Api_ProfileController extends AbstractController
     public function subscriptioninfoAction()
     {
         $this->assertIsSecure();
-        $this->_helper->json(array_merge(
-            $this->_getParam('username') !== null ? $this->getUserSubscriptionInfo($this->getUser()) : array(),
-            $this->getAvailableSubscriptions()
-        ));
+        $this->_helper->json(
+            array_merge(
+                $this->_getParam('username') !== null ? $this->getUserSubscriptionInfo($this->getUser()) : array(),
+                $this->getAvailableSubscriptions()
+            )
+        );
     }
 
     /**
@@ -117,13 +125,10 @@ class Api_ProfileController extends AbstractController
         switch($mime) {
             case 'image/jpeg':
                 return 'jpg';
-
             case 'image/png':
                 return 'png';
-
             case 'image/gif':
                 return 'gif';
-
             default:
                 throw \InvalidArgumentException("Mime not supported");
         }
@@ -147,11 +152,13 @@ class Api_ProfileController extends AbstractController
             return null;
         }
 
-        return $this->_helper->service('image')->save(array(
-            'tmp_name' => $tempnam,
-            'name' => uniqid() . '.' . $this->getImageExtension($info['mime']),
-            'type' => $info['mime'],
-        ));
+        return $this->_helper->service('image')->save(
+            array(
+                'tmp_name' => $tempnam,
+                'name' => uniqid() . '.' . $this->getImageExtension($info['mime']),
+                'type' => $info['mime'],
+            )
+        );
     }
 
     /**
@@ -161,7 +168,8 @@ class Api_ProfileController extends AbstractController
      */
     private function getAvailableSubscriptions()
     {
-        return json_decode(file_get_contents(__DIR__ . '/subscriptions.json'), true);
+        $config = new Zend_Config_Xml(APPLICATION_PATH . '/configs/subscriptions.xml');
+        return $config->toArray();
     }
 
     /**
@@ -182,3 +190,4 @@ class Api_ProfileController extends AbstractController
         );
     }
 }
+

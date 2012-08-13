@@ -68,6 +68,7 @@ class Api_OnlineController extends AbstractController
             $this->sendError('Article not found.', 404);
         }
 
+        $this->_helper->smarty->setSmartyView();
         $this->view->article = new MetaArticle($article->getLanguageId(), $article->getNumber());
     }
 

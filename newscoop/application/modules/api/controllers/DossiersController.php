@@ -16,16 +16,17 @@ class Api_DossiersController extends AbstractController
     const PUBLICATION = 5;
     const LANGUAGE = 5;
 
-    /** @var Zend_Controller_Request_Http */
-    private $request;
-
     /**
      * Init controller.
      */
     public function init()
     {
         $this->_helper->layout->disableLayout();
-        $this->request = $this->getRequest();
+        $this->params = $this->getRequest()->getParams();
+
+        if (empty($this->params['client'])) {
+            $this->sendError('Not client provided', 500);
+        }
     }
 
     /**
@@ -37,7 +38,7 @@ class Api_DossiersController extends AbstractController
     }
 
     /**
-     * Return list of dossiers.
+     * Returns list of dossiers.
      *
      * @return json
      */
@@ -49,10 +50,7 @@ class Api_DossiersController extends AbstractController
         $response = array();
         $rank = 1;
         foreach ($articles as $article) {
-            $articleData = new ArticleData(self::ARTICLE_TYPE, $article->getNumber(), self::LANGUAGE);
-            $articleImages = ArticleImage::GetImagesByArticleNumber($article->getNumber());
-            $imageUrl = isset($articleImages[0]) ? $articleImages[0]->getImage()->getImageUrl() : null;
-
+            $date = new DateTime($article->getPublishDate());
             $response[] = array(
                 'dossier_id' => $article->getNumber(),
                 'url' => $this->view->serverUrl($this->view->url(array(
@@ -60,10 +58,10 @@ class Api_DossiersController extends AbstractController
                     'controller' => 'dossiers',
                     'action' => 'articles',
                 ), 'default') . $this->getApiQueryString(array('dossier_id' => $article->getNumber()))),
-                'title' => $article->getTitle(),
-                'description' => trim(strip_tags($articleData->getFieldValue('lede'))),
-                'image_url' => $imageUrl,
-                'published' => $article->getPublishDate(),
+                'title' => trim($article->getTitle()),
+                'description' => trim(strip_tags($article->getData('lede'))),
+                'image_url' => $this->getImageUrl($article),
+                'published' => $this->formatDate($date),
                 'rank' => $rank++,
             );
         }
@@ -72,7 +70,7 @@ class Api_DossiersController extends AbstractController
     }
 
     /**
-     * Return list of articles in given dossier.
+     * Returns list of articles in given dossier.
      *
      * @return json
      */
@@ -80,11 +78,8 @@ class Api_DossiersController extends AbstractController
     {
         $this->getHelper('contextSwitch')->addActionContext('articles', 'json')->initContext();
 
-        $response = array();
-        $parameters = $this->request->getParams();
-
-        if ($parameters['dossier_id']) {
-            $dossierId = $parameters['dossier_id'];
+        if ($this->params['dossier_id']) {
+            $dossierId = $this->params['dossier_id'];
         } else {
             $articles = $this->_helper->service('article')
                 ->findBy(array('type' => self::ARTICLE_TYPE), array('published' => 'desc'));
@@ -97,6 +92,7 @@ class Api_DossiersController extends AbstractController
         $contextBox = new ContextBox(null, $dossierId);
         $articleIds = $contextBox->getArticlesList();
 
+        $response = array();
         foreach ($articleIds as $articleId) {
             $article = $this->_helper->service('article')->find($language, $articleId);
             if (!empty($article)) {

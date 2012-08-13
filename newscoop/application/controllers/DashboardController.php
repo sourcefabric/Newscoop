@@ -41,7 +41,7 @@ class DashboardController extends Zend_Controller_Action
         if ($this->getRequest()->getActionName() === 'index'
             && $this->userIsPolitician()
             && !$this->user->getAttribute(self::ATTRIBUTE_QUESTIONNAIRE)) {
-            $this->_forward('politikprofil');
+            $this->_helper->redirector('politprofil');
         }
     }
 
@@ -52,13 +52,6 @@ class DashboardController extends Zend_Controller_Action
         $this->addProfileFields($form);
         $form->setDefaultsFromEntity($this->user);
 
-        if ($this->getMailChimpListId()) {
-            $form->setMailChimpGroups(
-                $this->_helper->service('mailchimp')->getListGroups($this->getMailChimpListId()),
-                $this->_helper->service('mailchimp')->getUserGroups($this->user, $this->getMailChimpListId())
-            );
-        }
-
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
             $values = $form->getValues();
@@ -68,8 +61,8 @@ class DashboardController extends Zend_Controller_Action
                     $imageInfo = array_pop($form->image->getFileInfo());
                     $values['image'] = $this->_helper->service('image')->save($imageInfo);
                 }
+
                 $this->service->save($values, $this->user);
-                $this->saveMailchimp($values);
                 $this->_helper->redirector('index');
             } catch (\InvalidArgumentException $e) {
                 switch ($e->getMessage()) {
@@ -118,6 +111,8 @@ class DashboardController extends Zend_Controller_Action
                 $this->view->userSubscriptionKey = $userSubscriptionKey;
             }
         }
+
+        $this->view->mailChimpForm = $this->getMailChimpForm();
     }
 
     public function updateTopicsAction()
@@ -188,9 +183,17 @@ class DashboardController extends Zend_Controller_Action
         $form = new Zend_Form($this->getThemeFormConfig('questionnaire')->form);
         $form->setDefaults($this->user->getAttributes());
 
+
+        if (!$this->user->getAttribute(self::ATTRIBUTE_QUESTIONNAIRE)) {
+            $this->_helper->service('user')->save(array(
+                'attributes' => array(
+                    self::ATTRIBUTE_QUESTIONNAIRE => 1,
+                ),
+            ), $this->user);
+        }
+
         if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
             $values = $form->getValues();
-            $values[self::ATTRIBUTE_QUESTIONNAIRE] = 1;
             $this->_helper->service('user')->save(array(
                 'attributes' => $values,
             ), $this->user);
@@ -203,6 +206,16 @@ class DashboardController extends Zend_Controller_Action
         $this->view->form = $form;
     }
 
+    public function saveNewsletterAction()
+    {
+        $form = $this->getMailChimpForm();
+        if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
+            $this->_helper->service('mailchimp')->subscribe($this->user, $this->getMailChimpListId(), $form->getValues());
+        }
+
+        $this->_helper->redirector('index');
+    }
+
     /**
      * Get mailchimp list id
      *
@@ -212,20 +225,6 @@ class DashboardController extends Zend_Controller_Action
     {
         $mailchimpOptions = $this->getInvokeArg('bootstrap')->getOption('mailchimp');
         return $mailchimpOptions['list_id'];
-    }
-
-    /**
-     * Save mailchimp info
-     *
-     * @param array $values
-     * @return void
-     */
-    private function saveMailchimp(array $values)
-    {
-        if (!empty($values['mailchimp'])) {
-            $this->_helper->service('mailchimp')
-                ->subscribe($this->user, $this->getMailChimpListId(), $values['mailchimp']);
-        }
     }
 
     /**
@@ -264,5 +263,47 @@ class DashboardController extends Zend_Controller_Action
     private function userIsPolitician()
     {
         return $this->user->hasGroup($this->_helper->config('role')->politician);
+    }
+
+    /**
+     * Get mailchimp form
+     *
+     * @return Zend_Form
+     */
+    private function getMailChimpForm()
+    {
+        if (!$this->getMailChimpListId()) {
+            return null;
+        }
+
+        $form = new Zend_Form();
+        $listGroups = $this->_helper->service('mailchimp')->getListGroups($this->getMailChimpListId());
+        foreach ($listGroups as $group) {
+            $form->addElement('multiCheckbox', (string) $group['id'], array(
+                'label' => (string) $group['name'],
+                'multioptions' => $this->getMailChimpGroupOptions($group),
+            ));
+        }
+
+        $form->setDefaults($this->_helper->service('mailchimp')
+            ->getUserGroups($this->user, $this->getMailChimpListId())
+        );
+
+        return $form;
+    }
+
+    /**
+     * Get mailchimp group options
+     *
+     * @param array $group
+     * @return array
+     */
+    private function getMailChimpGroupOptions($group)
+    {
+        $groups = array_map(function($group) {
+            return $group['name'];
+        }, $group['groups']);
+
+        return array_combine($groups, $groups);
     }
 }

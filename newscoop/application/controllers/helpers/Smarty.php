@@ -23,8 +23,7 @@ class Action_Helper_Smarty extends Zend_Controller_Action_Helper_Abstract
 
         $request = $this->getRequest();
 
-        $format = $request->getParam('format', null);
-        if (isset($format) && $format == "json") {
+        if ($request->getParam('format') === 'json') {
             return;
         }
 
@@ -33,6 +32,17 @@ class Action_Helper_Smarty extends Zend_Controller_Action_Helper_Abstract
             return;
         }
 
+        $this->setSmartyView();
+    }
+
+    /**
+     * Set smarty view as view helper
+     *
+     * @return void/
+     */
+    public function setSmartyView()
+    {
+        $controller = $this->getActionController();
         $controller->view = new Newscoop\SmartyView();
         $controller->view->addScriptPath(APPLICATION_PATH . '/views/scripts/');
         $controller->view->addScriptPath($controller->getHelper('theme')->getFilePath('_views'));
@@ -48,3 +58,4 @@ class Action_Helper_Smarty extends Zend_Controller_Action_Helper_Abstract
             ->disableLayout();
     }
 }
+

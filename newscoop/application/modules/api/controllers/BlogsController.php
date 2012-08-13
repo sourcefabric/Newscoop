@@ -17,6 +17,7 @@ class Api_BlogsController extends AbstractController
     const PUBLICATION = 5;
     const LANGUAGE = 5;
     const LIST_LIMIT = 30;
+    const IMAGE_RENDITION = 'topfront';
 
     /** @var Zend_Controller_Request_Http */
     private $request;
@@ -59,11 +60,7 @@ class Api_BlogsController extends AbstractController
         foreach ($sections as $section) {
             $blogs = $this->_helper->service('article')->findBy(array('section' => $section->getNumber(), 'type' => 'bloginfo'));
             if (isset($blogs[0])) {
-                $blogData = new ArticleData('bloginfo', $blogs[0]->getNumber(), self::LANGUAGE);
-                $posts = $this->_helper->service('article')->findBy(array('section' => $section->getNumber(), 'type' => 'blog'), array('published' => 'desc'));
-                $blogImages = ArticleImage::GetImagesByArticleNumber($blogs[0]->getNumber());
-                $imageUrl = isset($blogImages[0]) ? $blogImages[0]->getImage()->getImageUrl() : null;
-
+                $published = new DateTime($blogs[0]->getPublishDate());
                 $response[] = array(
                     'blog_id' => $section->getNumber(),
                     'url' => $this->view->serverUrl($this->view->url(array(
@@ -72,17 +69,17 @@ class Api_BlogsController extends AbstractController
                         'action' => 'posts',
                     ), 'default') . $this->getApiQueryString(array('blog_id' => $section->getNumber()))),
                     'title' => $blogs[0]->getTitle(),
-                    'description' => trim(strip_tags($blogData->getFieldValue('infolong'))),
+                    'description' => trim(strip_tags($blogs[0]->getData('infolong'))),
                     'rank' => $rank++,
-                    'image_url' => $imageUrl,
-                    'published' => $blogs[0]->getPublishDate(),
+                    'image_url' => $this->getImageUrl($blogs[0], self::IMAGE_RENDITION),
+                    'published' => $this->formatDate($published),
                 );
             }
         }
 
         $this->_helper->json($response);
     }
-    
+
     /**
      * Routes to PostsList or PostsItem.
      */
@@ -143,10 +140,14 @@ class Api_BlogsController extends AbstractController
 
             $postData = new ArticleData('blog', $post->getNumber(), self::LANGUAGE);
             $postImages = ArticleImage::GetImagesByArticleNumber($post->getNumber());
-            $imageUrl = isset($postImages[0]) ? $postImages[0]->getImage()->getImageUrl() : null;
             $shortName = $postData->getFieldValue('short_name');
             if (empty($shortName)) {
                 $shortName = $post->getTitle();
+            }
+
+            $teaser = trim(strip_tags($postData->getFieldValue('lede')));
+            if (empty($teaser)) {
+                $teaser = null;
             }
 
             $normalComments = isset($this->commentStats[$post->getNumber()]) ? $this->commentStats[$post->getNumber()]['normal'] : 0;
@@ -161,8 +162,8 @@ class Api_BlogsController extends AbstractController
                 ), 'default') . sprintf('?post_id=%d', $post->getNumber()) . $this->getClientVersionParams(false)),
                 'short_name' => $shortName,
                 'author_name' => implode(',', $this->getAuthors($post)),
-                'teaser' => $this->getTeaser($post),
-                'image_url' => $imageUrl,
+                'teaser' => $teaser,
+                'image_url' => $this->getImageUrl($post),
                 'published' => $post->getPublishDate(),
                 'comment_count' => $normalComments + $recommendedComments,
                 'recommended_comment_count' => $recommendedComments,
@@ -180,7 +181,7 @@ class Api_BlogsController extends AbstractController
 
         $this->_helper->json($response);
     }
-    
+
     /**
      * Returns post.
      *
@@ -189,23 +190,22 @@ class Api_BlogsController extends AbstractController
     public function postsItemAction()
     {
         $this->getHelper('contextSwitch')->addActionContext('posts-item', 'json')->initContext();
-        
+
         $parameters = $this->request->getParams();
         $postId = $parameters['post_id'];
         $response = array();
-        
+
         $posts = $this->_helper->service('article')->findBy(array('number' => $postId, 'type' => 'blog'));
         if ($posts[0]) {
             $post = $posts[0];
             $postData = new ArticleData('blog', $post->getNumber(), self::LANGUAGE);
             $postImages = ArticleImage::GetImagesByArticleNumber($post->getNumber());
-            if ($postImages[0]) {
+            if (isset($postImages[0])) {
                 $imageUrl = $postImages[0]->getImage()->getImageUrl();
+            } else {
+                $imageUrl = null;
             }
-            else {
-                $imageUrl = '';
-            }
-            
+
             $response = array(
                 'title' => $post->getTitle(),
                 'short_name' => $postData->getFieldValue('short_name'),
@@ -217,7 +217,7 @@ class Api_BlogsController extends AbstractController
                 'last_modified' => $post->getPublishDate()
             );
         }
-        
+
         $this->_helper->json($response);
     }
 
@@ -234,15 +234,11 @@ class Api_BlogsController extends AbstractController
             $this->sendError('Blog not found', 404);
         }
 
-        $blogInfoData = new ArticleData('bloginfo', $blogInfos[0]->getNumber(), self::LANGUAGE);
-        $blogInfoImages = ArticleImage::GetImagesByArticleNumber($blogInfos[0]->getNumber());
-        $blogInfoImageUrl = isset($blogInfoImages[0]) ? $blogInfoImages[0]->getImage()->getImageUrl() : null;
-
         return array(
             'id' => $blogInfos[0]->getNumber(),
             'name' => $blogInfos[0]->getName(),
-            'image_url' => $blogInfoImageUrl,
-            'active' => $blogInfoData->getFieldValue('active') ? true : false,
+            'image_url' => $this->getImageUrl($blogInfos[0]),
+            'active' => $blogInfos[0]->getData('active') ? true : false,
         );
     }
 
