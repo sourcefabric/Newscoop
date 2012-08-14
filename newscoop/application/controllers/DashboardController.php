@@ -162,6 +162,10 @@ class DashboardController extends Zend_Controller_Action
 
     public function politprofilAction()
     {
+        if (!$this->userIsPolitician()) {
+            $this->_helper->service('user')->addUserGroup($this->user, $this->_helper->config('role')->politician);
+        }
+
         $form = new Zend_Form();
         $this->addProfileFields($form);
         $form->setDefaults(array(
