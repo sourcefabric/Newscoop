@@ -378,6 +378,7 @@ class NewsImport
         $today_date_str = date('Y-m-d');
 
         $scr_type = 'screening';
+        $evt_type = 'event';
 
         if ((!isset($g_user)) || (empty($g_user))) {
             $user_id = $p_source['admin_user_id'];
@@ -507,6 +508,12 @@ class NewsImport
             $article_data->setProperty('Fevent_id', $one_event['event_id']);
             $article_data->setProperty('Ftour_id', $one_event['tour_id']);
             $article_data->setProperty('Flocation_id', $one_event['location_id']);
+
+            if ($evt_type == $art_type) {
+                if (isset($one_event['event_location_name'])) {
+                    $article_data->setProperty('Fevent_location_name', $one_event['event_location_name']);
+                }
+            }
 
             if ($scr_type == $art_type) {
                 // date_time_data => movie_screening
