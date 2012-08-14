@@ -701,7 +701,7 @@ class EventData_Parser_SimpleXML {
                 // event location name
                 // the 'trnorg'/'tour_organization' is a similar/related info
                 $x_locnam = trim('' . $event_location->locnam);
-                $event_info['organizer'] = $x_locnam; // may be overwritten by tour_organizer
+                $event_info['event_location_name'] = $x_locnam;
 
 
                 // * minor location info
@@ -724,6 +724,7 @@ class EventData_Parser_SimpleXML {
                 $x_trnnam = trim('' . $event->trnnam);
                 $event_info['headline'] = $x_trnnam;
 
+                $event_info['organizer'] = '';
                 // tour organizer
                 $x_trnorg = trim('' . $event->trnorg);
                 if (!empty($x_trnorg)) {

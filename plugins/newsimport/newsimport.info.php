@@ -338,6 +338,7 @@ if (!defined('PLUGIN_NEWSIMPORT_FUNCTIONS')) {
             'voided' => array('type' => 'complex_date', 'params' => array(), 'hidden' => false), // what dates are canceled
             'postponed' => array('type' => 'complex_date', 'params' => array(), 'hidden' => false), // what dates are postponed
             'withdrawn' => array('type' => 'complex_date', 'params' => array(), 'hidden' => false), // what dates are gone completely
+            'event_location_name' => array('type' => 'text', 'params' => array(), 'hidden' => false),
         );
 
         $scr_fields = array(
