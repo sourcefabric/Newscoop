@@ -539,6 +539,9 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
         foreach ($rolls as $upgrade_dir_roll => $upgrade_dir_path) {
             $upgrade_dir = $upgrade_dir_path . DIRECTORY_SEPARATOR;
             $last_db_roll = $upgrade_dir_roll;
+            if (!$p_silent) {
+                echo "\n\t\t importing database roll $last_db_version / $last_db_roll";
+            }
             foreach ($sql_scripts as $index=>$script) {
                 if (!is_file($upgrade_dir . $script)) {
                     continue;
@@ -551,6 +554,11 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
                     flock($lockFile, LOCK_UN); // release the lock
                     return "$script ($db_version) errors on:\n" . implode("\n", $error_queries);
                 }
+            }
+
+            $res = camp_save_database_version($p_dbName, $last_db_version, $last_db_roll);
+            if (0 !== $res) {
+                echo $res;
             }
         }
     }
@@ -579,10 +587,10 @@ Please save the following list of skipped queries:\n";
         echo "-- end of queries list --\n";
     }
 
-    $res = camp_save_database_version($p_dbName, $last_db_version, $last_db_roll);
-    if (0 !== $res) {
-        echo $res;
-    }
+    //$res = camp_save_database_version($p_dbName, $last_db_version, $last_db_roll);
+    //if (0 !== $res) {
+    //    echo $res;
+    //}
 
     flock($lockFile, LOCK_UN); // release the lock
     return 0;
