@@ -93,25 +93,20 @@ class AuditService
     
     public function getResourceTypes()
     {
-        $resourceTypes = array();
-        $items = \Zend_Registry::get('container')->getParameter('audit');
-        
-        //var_dump($items['events']);die;
-        
-        foreach ($items['events'] as $item) {
-            $temp = explode('.', $item);
-            if (!in_array($temp[0], $resourceTypes)) {
-                $resourceTypes[] = $temp[0];
-            }
-        }
-        sort($resourceTypes);
-        return($resourceTypes);
+        $resources = $this->em->getRepository('Newscoop\Entity\AuditEvent')
+            ->createQueryBuilder('ae')
+            ->select('DISTINCT(ae.resource_type) as type')
+            ->orderBy('ae.resource_type')
+            ->getQuery()
+            ->getScalarResult();
+
+        return array_map(function($row) {
+            return $row['type'];
+        }, $resources);
     }
     
     public function getActionTypes()
     {
-        $actionTypes = array('create', 'delete', 'update');
-        
-        return($actionTypes);
+        return array('create', 'delete', 'update');
     }
 }
