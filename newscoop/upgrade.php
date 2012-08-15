@@ -18,8 +18,7 @@ if (!file_exists($upgrade_trigger_path)) {
 
 require_once __DIR__ . '/application.php';
 
-$application->bootstrap('autoloader');
-$application->bootstrap('doctrine');
+$application->bootstrap();
 
 header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
