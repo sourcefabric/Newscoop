@@ -63,9 +63,9 @@ class Admin_PlaylistController extends Zend_Controller_Action
         $playlist = null;
 
         if (is_numeric($playlistId)) {
-          $playlist = $this->playlistRepository->find($playlistId);
+            $playlist = $this->playlistRepository->find($playlistId);
         } else {
-          $playlist = new Playlist();
+            $playlist = new Playlist();
         }
 
         if ($playlist instanceof \Newscoop\Entity\Playlist) {
@@ -96,17 +96,11 @@ class Admin_PlaylistController extends Zend_Controller_Action
     public function listDataAction()
     {
         $playlist = new Playlist();
-//        $lang = null;
-//        if (isset($_SESSION['f_language_selected']))
-//        {
-//            $lang = new Language();
-//            $lang->setId((int)$_SESSION['f_language_selected']);
-        //        }
         $playlistId = $this->_request->getParam('id', null);
         if (is_numeric($playlistId)) {
-          $playlist->setId($playlistId);
-          $this->view->items = $this->playlistRepository->articles($playlist, null, false, null, null, false);
-          $this->view->code = 200;
+            $playlist->setId($playlistId);
+            $this->view->items = $this->playlistRepository->articles($playlist, null, false, null, null, false);
+            $this->view->code = 200;
         }
     }
 
