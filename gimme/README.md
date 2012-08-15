@@ -2,10 +2,8 @@
 
 Codename: Gimme
 
-Full Name: Newscoop REST API
-
-Endpoint: Example.com/api/
-
+Full Name: Newscoop REST API  
+Endpoint: example.com/api/  
 Documentation: https://wiki.sourcefabric.org/display/CS/Newscoop+REST+API+Reference
 
 ## API Resources
@@ -22,7 +20,7 @@ You can override method by providing "method" as a query parameter with option f
 
 ## BDD Testing
 
-Features directory: features/
+Features directory: features/  
 Behat bootsraped files directory: features/bootstrap/
 
 Run test:
