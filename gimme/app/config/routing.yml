@@ -1,3 +1,4 @@
-NewscoopGimmeBundle:
+users:
+    type: rest
+    prefix: /api
     resource: "@NewscoopGimmeBundle/Resources/config/routing.yml"
-    prefix:   /gimme/

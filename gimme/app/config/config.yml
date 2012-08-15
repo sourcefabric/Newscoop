@@ -4,3 +4,41 @@ framework:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: %kernel.debug%
     trust_proxy_headers:  false
+    templating:      { engines: ['twig'] }
+
+fos_rest:
+    allowed_methods_listener: true
+    routing_loader:
+        default_format: json
+    view:
+        default_engine: twig
+        view_response_listener: force
+        failed_validation: HTTP_BAD_REQUEST
+        formats:
+            json: true
+            xml: true
+        mime_types:
+            json: ['application/json', 'application/x-json', 'application/vnd.example-com.foo+json']
+    body_listener: 
+        decoders:
+            json: fos_rest.decoder.json
+    format_listener:
+        default_priorities: ["json", '*/*']
+        fallback_format: json
+        prefer_extension: true
+    exception:
+        codes:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+            'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+        messages:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
+
+sensio_framework_extra:
+    view:    { annotations: false }
+    router:  { annotations: true }
+
+# Twig Configuration
+twig:
+    debug:            %kernel.debug%
+    strict_variables: %kernel.debug%
+    exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'

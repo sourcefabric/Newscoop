@@ -1,5 +1,5 @@
 <?php
-$pos = strpos($_SERVER['REQUEST_URI'], 'gimme');
+$pos = strpos($_SERVER['REQUEST_URI'], 'api');
 
 if ($pos !== false) {
     require_once __DIR__ . '/../../gimme/web/app_dev.php';

@@ -1,3 +1,4 @@
-NewscoopGimmeBundle_homepage:
-    pattern:  /
-    defaults: { _controller: NewscoopGimmeBundle:Default:index }
+NewscoopGimmeBundle:
+    resource: "@NewscoopGimmeBundle/Controller/"
+    prefix:   /
+    type:     annotation

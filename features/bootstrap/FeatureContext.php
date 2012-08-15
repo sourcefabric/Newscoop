@@ -43,7 +43,6 @@ class FeatureContext extends BehatContext
     public function responseShouldHaveWithElements($key)
     {
         $response = json_decode($this->browser->getLastResponse()->getContent(), true);
-        $result = false;
 
         if (!array_key_exists($key, $response)) {
             throw new \Exception('key "'.$key.'" don\'t exist');
@@ -75,5 +74,24 @@ class FeatureContext extends BehatContext
         return true;
     }
 
+    /**
+     * @Given /^response should have "([^"]*)" with elements under "([^"]*)"$/
+     */
+    public function responseShouldHaveWithElementsUnder($keys, $mainKey)
+    {
+        $response = json_decode($this->browser->getLastResponse()->getContent(), true);
+
+        $this->responseShouldHaveWithElements($mainKey);
+
+        if (!array_key_exists($key, $response[$mainKey])) {
+            throw new \Exception('key "'.$key.'" don\'t exist');
+        }
+
+        if (!count($response[$mainKey][$key]) > 0) {
+            throw new \Exception('response["'.$key.'"] don\'t have elements');
+        }
+
+        return true;
+    }
 
 }

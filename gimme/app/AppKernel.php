@@ -9,6 +9,10 @@ class AppKernel extends Kernel
     {
         $bundles =  array(
         	new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\TwigBundle\TwigBundle(),
+            new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
+            new JMS\SerializerBundle\JMSSerializerBundle($this),
+            new FOS\RestBundle\FOSRestBundle(),
             new Newscoop\GimmeBundle\NewscoopGimmeBundle(),
         );
 

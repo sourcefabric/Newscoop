@@ -1,5 +1,5 @@
 {
-    "hash": "9ad861ecdb2695e4d9b305ba4f28fab6",
+    "hash": "e0945d50840dc47fc11280ecddd0b110",
     "packages": [
         {
             "package": "Smarty3",
@@ -38,6 +38,48 @@
             "commit-date": "1343560954"
         },
         {
+            "package": "friendsofsymfony/rest",
+            "version": "dev-master",
+            "alias-pretty-version": "0.7.x-dev",
+            "alias-version": "0.7.9999999.9999999-dev"
+        },
+        {
+            "package": "friendsofsymfony/rest",
+            "version": "dev-master",
+            "source-reference": "5ea703f5a3f5c7110cadeccb91b212c0eb7ea2d0",
+            "commit-date": "1339701893"
+        },
+        {
+            "package": "friendsofsymfony/rest-bundle",
+            "version": "dev-master",
+            "source-reference": "f6b31c6284a4a904b9dcd99c1e931b1967de26a7",
+            "commit-date": "1344874067"
+        },
+        {
+            "package": "jms/metadata",
+            "version": "dev-master",
+            "alias-pretty-version": "1.2.x-dev",
+            "alias-version": "1.2.9999999.9999999-dev"
+        },
+        {
+            "package": "jms/metadata",
+            "version": "dev-master",
+            "source-reference": "dbfbb15b3ffdf96c5ff14e5cd4451d78a7083a36",
+            "commit-date": "1339680164"
+        },
+        {
+            "package": "jms/serializer-bundle",
+            "version": "dev-master",
+            "alias-pretty-version": "0.9.x-dev",
+            "alias-version": "0.9.9999999.9999999-dev"
+        },
+        {
+            "package": "jms/serializer-bundle",
+            "version": "dev-master",
+            "source-reference": "1f308a587742246e87e580290f3bae23073d1d70",
+            "commit-date": "1343641450"
+        },
+        {
             "package": "kriswallsmith/buzz",
             "version": "dev-master",
             "source-reference": "2ba5da13b1b03590f0164b3fb61578078d671fcc",
@@ -46,8 +88,14 @@
         {
             "package": "sensio/distribution-bundle",
             "version": "dev-master",
-            "source-reference": "cc4eda1b49df3125fed9e440aeb49e8f057a912e",
-            "commit-date": "1344855180"
+            "source-reference": "e5e3e4758bfe4dd5fab74bccf9418888d1492691",
+            "commit-date": "1344928161"
+        },
+        {
+            "package": "sensio/framework-extra-bundle",
+            "version": "dev-master",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
         },
         {
             "package": "sensio/framework-extra-bundle",
@@ -70,8 +118,8 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "7bc6d6d18265cf76553421b41fd3b6a1d6959eb0",
-            "commit-date": "1344860541"
+            "source-reference": "fa4f9f58ff19b98cf91a60c356a7cc51e4383f9d",
+            "commit-date": "1344888947"
         },
         {
             "package": "twig/twig",
@@ -100,6 +148,7 @@
         "sensio/distribution-bundle": 20,
         "sensio/generator-bundle": 20,
         "sensio/framework-extra-bundle": 20,
-        "zendframework/zendframework1": 20
+        "zendframework/zendframework1": 20,
+        "friendsofsymfony/rest-bundle": 20
     }
 }
