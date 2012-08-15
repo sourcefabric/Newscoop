@@ -59,10 +59,18 @@ class Admin_PlaylistController extends Zend_Controller_Action
     public function popupAction()
     {
         $this->_helper->layout->setLayout('iframe');
-        $playlist = $this->playlistRepository->find($this->_request->getParam('id', null));
 
-        if ($playlist instanceof \Newscoop\Entity\Playlist)
-        {
+        // TODO make a service
+        $playlistId = $this->_request->getParam('id', null);
+        $playlist = null;
+
+        if (is_numeric($playlistId)) {
+            $playlist = $this->playlistRepository->find($playlistId);
+        } else {
+            $playlist = new Playlist();
+        }
+
+        if ($playlist instanceof \Newscoop\Entity\Playlist) {
             $this->view->playlistName = $playlist->getName();
             $this->view->playlistId = $playlist->getId();
         }
@@ -93,16 +101,12 @@ class Admin_PlaylistController extends Zend_Controller_Action
     public function listDataAction()
     {
         $playlist = new Playlist();
-//        $lang = null;
-//        if (isset($_SESSION['f_language_selected']))
-//        {
-//            $lang = new Language();
-//            $lang->setId((int)$_SESSION['f_language_selected']);
-//        }
-
-        $playlist->setId($this->_request->getParam('id'));
-        $this->view->items = $this->playlistRepository->articles($playlist, null, false, null, null, false);
-        $this->view->code = 200;
+        $playlistId = $this->_request->getParam('id', null);
+        if (is_numeric($playlistId)) {
+            $playlist->setId($playlistId);
+            $this->view->items = $this->playlistRepository->articles($playlist, null, false, null, null, false);
+            $this->view->code = 200;
+        }
     }
 
     public function saveDataAction()
