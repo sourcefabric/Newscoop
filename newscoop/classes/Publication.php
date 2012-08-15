@@ -576,6 +576,8 @@ class Publication extends DatabaseObject {
 	public static function GetPublications($p_name = null, $p_aliasId = null,
 	                                       $p_sqlOptions = null)
 	{
+        global $g_ado_db;
+
 	    if (is_null($p_sqlOptions)) {
 	        $p_sqlOptions = array();
 	    }
@@ -593,7 +595,7 @@ class Publication extends DatabaseObject {
 		            .' AND Publications.IdURLType = URLTypes.Id '
 		            .' AND Publications.IdDefaultLanguage = Languages.Id ';
 		if (is_string($p_name)) {
-			$queryStr .= " AND Publications.Name='".mysql_real_escape_string($p_name)."'";
+			$queryStr .= " AND Publications.Name=".$g_ado_db->escape($p_name);
 		}
 		if (is_numeric($p_aliasId)) {
 			$queryStr .= " AND Publications.IdDefaultAlias=$p_aliasId";

@@ -579,7 +579,7 @@ class Article extends DatabaseObject {
                         .' AND NrIssue = ' . $this->m_data['NrIssue']
                         .' AND NrSection = ' . $this->m_data['NrSection']
                         .' AND IdLanguage = ' . $this->m_data['IdLanguage']
-                        ." AND Name = '" . mysql_escape_string($newName) . "'";
+                        ." AND Name = " . $g_ado_db->escape($newName);
             $row = $g_ado_db->GetRow($queryStr);
             if (count($row) > 0) {
                 $newName = $origNewName.' '.++$count.')';
@@ -1910,7 +1910,7 @@ class Article extends DatabaseObject {
         if (!is_null($p_languageId)) {
             $whereClause[] = "IdLanguage=$p_languageId";
         }
-        $whereClause[] = "Name='" . $g_ado_db->escape($p_name) . "'";
+        $whereClause[] = "Name=" . $g_ado_db->escape($p_name);
         if (count($whereClause) > 0) {
             $queryStr .= ' WHERE ' . implode(' AND ', $whereClause);
         }
@@ -2399,8 +2399,7 @@ class Article extends DatabaseObject {
     public static function GetArticlesOfType($p_type)
     {
         global $g_ado_db;
-        $sql = "SELECT * FROM Articles WHERE Type = '"
-        . $g_ado_db->escape($p_type) . "'";
+        $sql = "SELECT * FROM Articles WHERE Type = " . $g_ado_db->escape($p_type);
         $articles = DbObjectArray::Create('Article', $sql);
         return $articles;
     } // fn GetArticlesOfType
@@ -2553,7 +2552,7 @@ class Article extends DatabaseObject {
                 // Article table fields
                 $whereCondition = Article::$s_regularParameters[$leftOperand]
                     . ' ' . $comparisonOperation['symbol']
-                    . " '" . $g_ado_db->escape($comparisonOperation['right']) . "' ";
+                    . " " . $g_ado_db->escape($comparisonOperation['right']) . " ";
                 if ($leftOperand == 'reads'
                 && strstr($comparisonOperation['symbol'], '=') !== false
                 && $comparisonOperation['right'] == 0) {
@@ -2593,8 +2592,8 @@ class Article extends DatabaseObject {
                 $symbol = $comparisonOperation['symbol'];
                 $valModifier = strtolower($symbol) == 'like' ? '%' : '';
 
-                $firstName = $g_ado_db->escape($author['first_name']);
-                $lastName = $g_ado_db->escape($author['last_name']);
+                $firstName = trim($g_ado_db->escape($author['first_name']), "'");
+                $lastName = trim($g_ado_db->escape($author['last_name']), "'");
                 $whereCondition = "ArticleAuthors.fk_author_id IN
                     (SELECT Authors.id
                      FROM Authors
@@ -2725,7 +2724,7 @@ class Article extends DatabaseObject {
                             $value = 'NULL';
                         } else {
                             $operator = $negate ? '!=' : '=';
-                            $value = "'" . $g_ado_db->escape($value) . "'";
+                            $value = $g_ado_db->escape($value);
                         }
                         $tableJoin .= "        $condOperator`$constTable`.`$constField` $operator $value\n";
                     } else {
@@ -2822,9 +2821,9 @@ class Article extends DatabaseObject {
             $query = '        SELECT NrArticle FROM `X' . $fieldObj->getArticleType()
                    . '` WHERE ' . $fieldObj->getName() . ' '
                    . $p_comparisonOperation['symbol']
-                   . " '" . $g_ado_db->escape($p_comparisonOperation['right']) . "'";
+                   . " " . $g_ado_db->escape($p_comparisonOperation['right']);
             if (!is_null($p_languageId)) {
-                $query .= " AND IdLanguage = '" . $g_ado_db->escape($p_languageId) . "'";
+                $query .= " AND IdLanguage = " . $g_ado_db->escape($p_languageId);
             }
             $query .= "\n";
             $queries[] = $query;
@@ -3017,7 +3016,7 @@ class Article extends DatabaseObject {
                 }
             }
             $symbol = $constraint->getOperator()->getSymbol('sql');
-            $rightOperand = "'" . $g_ado_db->escape($constraint->getRightOperand()) . "'";
+            $rightOperand = $g_ado_db->escape($constraint->getRightOperand());
             $selectClauseObj->addWhere("$leftOperand $symbol $rightOperand");
         }
         foreach ($joinTables as $table) {
@@ -3347,7 +3346,7 @@ class Article extends DatabaseObject {
                 }
             }
             $symbol = $constraint->getOperator()->getSymbol('sql');
-            $rightOperand = "'" . $g_ado_db->escape($constraint->getRightOperand()) . "'";
+            $rightOperand = $g_ado_db->escape($constraint->getRightOperand());
             $selectClauseObj->addWhere("$leftOperand $symbol $rightOperand");
         }
         foreach ($joinTables as $table) {

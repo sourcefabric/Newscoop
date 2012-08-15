@@ -170,7 +170,7 @@ class ArticleData extends DatabaseObject {
 		unset($tmpData['IdLanguage']);
 		$setQuery = array();
 		foreach ($tmpData as $key => $data) {
-			$setQuery[] = $key."='".mysql_real_escape_string($data)."'";
+			$setQuery[] = $g_ado_db->escapeKeyVal($key, $data);
 		}
 		$queryStr = 'UPDATE '.$this->m_dbTableName.' SET '.implode(',', $setQuery)
 				." WHERE NrArticle=$p_destArticleNumber ";
