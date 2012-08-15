@@ -1,2 +1,6 @@
 imports:
     - { resource: config.yml }
+
+framework:
+    router:
+        resource: "%kernel.root_dir%/config/routing_dev.yml"

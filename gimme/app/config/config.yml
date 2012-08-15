@@ -6,6 +6,13 @@ framework:
         strict_requirements: %kernel.debug%
     trust_proxy_headers:  false
     templating:      { engines: ['twig'] }
+    profiler: { only_exceptions: false }
+
+# enable the web profiler
+web_profiler:
+    toolbar: true
+    intercept_redirects: true
+    verbose: true
 
 # FOSRestBundle Configuration
 fos_rest:

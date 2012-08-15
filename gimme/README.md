@@ -1,7 +1,6 @@
 #Newscoop REST API
 
-Codename: Gimme
-
+Codename: Gimme  
 Full Name: Newscoop REST API  
 Endpoint: example.com/api/  
 Documentation: https://wiki.sourcefabric.org/display/CS/Newscoop+REST+API+Reference
