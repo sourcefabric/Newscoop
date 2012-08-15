@@ -10,6 +10,7 @@ namespace Newscoop\Services;
 use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\AuditEvent;
 use Newscoop\EventDispatcher\Events\GenericEvent;
+use Symfony\Component\Yaml\Parser;
 
 /**
  * Audit service
@@ -93,17 +94,17 @@ class AuditService
     
     public function getResourceTypes()
     {
+        $yaml = new Parser();
+        $audit = $yaml->parse(file_get_contents(__DIR__ .'/../../../application/configs/services/audit.yml'));
         $resourceTypes = array();
-        $items = \Zend_Registry::get('container')->getParameter('audit');
-        
-        //var_dump($items['events']);die;
-        
-        foreach ($items['events'] as $item) {
-            $temp = explode('.', $item);
+
+        foreach ($audit['services']['audit']['tags'] as $item) {
+            $temp = explode('.', $item['event']);
             if (!in_array($temp[0], $resourceTypes)) {
                 $resourceTypes[] = $temp[0];
             }
         }
+
         sort($resourceTypes);
         return($resourceTypes);
     }
