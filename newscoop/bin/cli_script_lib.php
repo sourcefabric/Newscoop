@@ -442,7 +442,7 @@ function camp_database_exists($p_dbName)
 /**
  * @param string $p_dbName
  */
-function camp_upgrade_database($p_dbName, $p_silent = false)
+function camp_upgrade_database($p_dbName, $p_silent = false, $p_showRolls = false)
 {
     global $Campsite;
 
@@ -539,8 +539,8 @@ function camp_upgrade_database($p_dbName, $p_silent = false)
         foreach ($rolls as $upgrade_dir_roll => $upgrade_dir_path) {
             $upgrade_dir = $upgrade_dir_path . DIRECTORY_SEPARATOR;
             $last_db_roll = $upgrade_dir_roll;
-            if (!$p_silent) {
-                echo "\n\t\t importing database roll $last_db_version / $last_db_roll";
+            if ($p_showRolls || (!$p_silent)) {
+                echo "\n<pre>\t\t * importing database roll $last_db_version / $last_db_roll</pre>\n";
             }
             foreach ($sql_scripts as $index=>$script) {
                 if (!is_file($upgrade_dir . $script)) {
