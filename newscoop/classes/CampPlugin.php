@@ -80,9 +80,13 @@ class CampPlugin extends DatabaseObject
 
         $CampPlugin = new CampPlugin();
         $query = "SELECT Name FROM `" . $CampPlugin->m_dbTableName . "`";
-        $res = $g_ado_db->execute($query);
-        if (!$res) {
-        	return array();
+        try {
+            $res = $g_ado_db->execute($query);
+            if (!$res) {
+        	    return array();
+            }
+        } catch (Exception $e) {
+            return array();
         }
 
         self::$m_allPlugins = array();

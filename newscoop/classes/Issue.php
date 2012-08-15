@@ -124,7 +124,7 @@ class Issue extends DatabaseObject {
 		// Copy the issue
 		$newIssue = new Issue($p_destPublicationId, $p_destLanguageId, $p_destIssueId);
 		$columns = array();
-		$columns['Name'] = mysql_real_escape_string($this->getName());
+		$columns['Name'] = $g_ado_db->escape($this->getName());
 		$columns['IssueTplId'] = $this->m_data['IssueTplId'];
 		$columns['SectionTplId'] = $this->m_data['SectionTplId'];
 		$columns['ArticleTplId'] = $this->m_data['ArticleTplId'];
@@ -674,7 +674,7 @@ class Issue extends DatabaseObject {
 			$whereClause[] = "Issues.Number=$p_issueNumber";
 		}
 		if (!is_null($p_urlName)) {
-			$whereClause[] = "Issues.ShortName='".$g_ado_db->escape($p_urlName)."'";
+			$whereClause[] = "Issues.ShortName=".$g_ado_db->escape($p_urlName);
 		}
 		if ($p_publishedOnly) {
 			$whereClause[] = "Issues.Published = 'Y'";

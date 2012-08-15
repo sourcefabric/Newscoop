@@ -908,15 +908,15 @@ class ArticleTypeField extends DatabaseObject {
 	    $whereClauses = array();
 	    if (isset($p_name)) {
 	    	$operator = $p_negateName ? '<>' : '=';
-	        $whereClauses[] = "field_name $operator '" . $g_ado_db->escape($p_name) . "'";
+	        $whereClauses[] = "field_name $operator " . $g_ado_db->escape($p_name);
 	    }
 	    if (isset($p_articleType)) {
             $operator = $p_negateArticleType ? '<>' : '=';
-	    	$whereClauses[] = "type_name $operator '" . $g_ado_db->escape($p_articleType) . "'";
+	    	$whereClauses[] = "type_name $operator " . $g_ado_db->escape($p_articleType);
 	    }
 	    if (isset($p_dataType)) {
             $operator = $p_negateDataType ? '<>' : '=';
-	    	$whereClauses[] = "field_type $operator '" . $g_ado_db->escape($p_dataType) . "'";
+	    	$whereClauses[] = "field_type $operator " . $g_ado_db->escape($p_dataType);
 	    }
 	    if (!$p_selectHidden) {
 	    	$whereClauses[] = 'is_hidden = false';
