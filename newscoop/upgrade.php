@@ -70,7 +70,7 @@ $configDb = array('hostname'=>$Campsite['db']['host'],
 $session->setData('config.db', $configDb, 'installation');
 
 // upgrading the database
-$res = camp_upgrade_database($Campsite['DATABASE_NAME'], true);
+$res = camp_upgrade_database($Campsite['DATABASE_NAME'], true, true);
 if ($res !== 0) {
     display_upgrade_error("While upgrading the database: $res");
 }
