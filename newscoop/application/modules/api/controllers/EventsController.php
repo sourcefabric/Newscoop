@@ -206,6 +206,19 @@ class Api_EventsController extends Zend_Controller_Action
                 $one_title = '';
             }
 
+            $one_latitude = null;
+            $one_longitude = null;
+
+            $one_map = $one_event->getMap();
+            if (is_object($one_map) && $one_map->exists()) {
+                $one_location_set = $one_map->getLocations();
+                if (!empty($one_location_set)) {
+                    $one_location = $one_location_set[0];
+                    $one_latitude = $one_location->getLatitude();
+                    $one_longitude = $one_location->getLongitude();
+                }
+            }
+
             $event_list_data[] = array(
                 'title' => $one_title,
                 'description' => $one_descriptions_all,
@@ -222,6 +235,8 @@ class Api_EventsController extends Zend_Controller_Action
                 'event_image_urls' => $one_image_urls,
                 'email' => $one_email,
                 'canceled' => $one_canceled,
+                'latitude' => $one_latitude,
+                'longitude' => $one_longitude,
             );
         }
 
