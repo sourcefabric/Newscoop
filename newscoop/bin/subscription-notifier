@@ -70,6 +70,11 @@ while($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
     $isn_row = mysql_fetch_array($isn_result, MYSQL_ASSOC);
     mysql_free_result($isn_result);
 
+    if (empty($isn_row['MaxNumber'])) {
+        // no issues for publication default language
+        continue;
+    }
+
     $sql_query = "SELECT COUNT(*) AS NumberOfSections "
         . "FROM Sections "
         . "WHERE IdPublication = " . $row['PubId']
@@ -262,9 +267,6 @@ function send_email($p_message)
 function init_smarty()
 {
     global $CAMPSITE_DIR;
-
-    // includes smarty main class
-    require_once __DIR__ . '/../library/smarty3/Smarty.class.php';
 
     // instantiates smarty template system
     $tpl = new Smarty();
