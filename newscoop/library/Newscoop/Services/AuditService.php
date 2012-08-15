@@ -10,7 +10,6 @@ namespace Newscoop\Services;
 use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\AuditEvent;
 use Newscoop\EventDispatcher\Events\GenericEvent;
-use Symfony\Component\Yaml\Parser;
 
 /**
  * Audit service
@@ -94,25 +93,24 @@ class AuditService
     
     public function getResourceTypes()
     {
-        $yaml = new Parser();
-        $audit = $yaml->parse(file_get_contents(__DIR__ .'/../../../application/configs/services/audit.yml'));
-        $resourceTypes = array();
+        $resources = $this->em->getRepository('Newscoop\Entity\AuditEvent')
+            ->createQueryBuilder('ae')
+            ->select('DISTINCT(ae.resource_type) as type')
+            ->getQuery()
+            ->getScalarResult();
 
-        foreach ($audit['services']['audit']['tags'] as $item) {
-            $temp = explode('.', $item['event']);
-            if (!in_array($temp[0], $resourceTypes)) {
-                $resourceTypes[] = $temp[0];
-            }
-        }
-
+        $resourceTypes = array_map(function($row){
+            return $row['type'];
+        }, $resources);
         sort($resourceTypes);
-        return($resourceTypes);
+
+        return $resourceTypes;
     }
     
     public function getActionTypes()
     {
         $actionTypes = array('create', 'delete', 'update');
         
-        return($actionTypes);
+        return $actionTypes;
     }
 }
