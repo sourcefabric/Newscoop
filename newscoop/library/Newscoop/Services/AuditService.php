@@ -100,17 +100,13 @@ class AuditService
             ->getQuery()
             ->getScalarResult();
 
-        $resourceTypes = array_map(function($row){
+        return array_map(function($row) {
             return $row['type'];
         }, $resources);
-
-        return $resourceTypes;
     }
     
     public function getActionTypes()
     {
-        $actionTypes = array('create', 'delete', 'update');
-        
-        return $actionTypes;
+        return array('create', 'delete', 'update');
     }
 }
