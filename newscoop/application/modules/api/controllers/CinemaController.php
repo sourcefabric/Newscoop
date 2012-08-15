@@ -198,6 +198,20 @@ class Api_CinemaController extends Zend_Controller_Action
 
             if (!isset($movie_locations_used[$one_location_id])) {
                 $movie_locations_used[$one_location_id] = true;
+
+                $one_latitude = null;
+                $one_longitude = null;
+
+                $one_map = $one_movie->getMap();
+                if (is_object($one_map) && $one_map->exists()) {
+                    $one_location_set = $one_map->getLocations();
+                    if (!empty($one_location_set)) {
+                        $one_location = $one_location_set[0];
+                        $one_latitude = $one_location->getLatitude();
+                        $one_longitude = $one_location->getLongitude();
+                    }
+                }
+
                 $movie_locations_data[] = array(
                     'location_id' => $one_location_id,
                     'location_name' => $this->m_service->entities2Utf8($one_data->getProperty('Forganizer')),
@@ -208,6 +222,8 @@ class Api_CinemaController extends Zend_Controller_Action
                     //'email' => $one_email,
                     'phone' => $one_phone,
                     'phone_costinformation' => $one_phone_costinformation,
+                    'latitude' => $one_latitude,
+                    'longitude' => $one_longitude,
                 );
             }
 

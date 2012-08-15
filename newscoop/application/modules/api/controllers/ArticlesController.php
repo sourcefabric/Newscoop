@@ -137,7 +137,7 @@ class Api_ArticlesController extends AbstractController
         }
 
         $smarty = CampTemplate::singleton();
-        $smarty->setTemplateDir('/var/www/tw-reloaded/application/modules/api/views');
+        $smarty->setTemplateDir('/var/www/newscoop/application/modules/api/views');
         $smarty->assign('data', $data);
         $smarty->display('scripts/articles/' . $template);
     }
