@@ -1,9 +1,11 @@
 <?php
 /**
  * @package Newscoop\Gimme
- * @copyright 2011 Sourcefabric o.p.s.
+ * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
+ * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+
 namespace Newscoop\GimmeService;
 
 /**

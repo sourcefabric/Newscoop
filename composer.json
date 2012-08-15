@@ -40,8 +40,7 @@
     ],
     "autoload":{
         "psr-0": {
-            "Newscoop": "newscoop/library",
-            "Newscoop": "gimme/src",
+            "Newscoop": ["newscoop/library", "gimme/src"],
             "Resource": "newscoop/library",
             "Nette": "newscoop/library"
         },

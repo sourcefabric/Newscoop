@@ -52,8 +52,14 @@
         {
             "package": "friendsofsymfony/rest-bundle",
             "version": "dev-master",
-            "source-reference": "f6b31c6284a4a904b9dcd99c1e931b1967de26a7",
-            "commit-date": "1344874067"
+            "alias-pretty-version": "0.8.x-dev",
+            "alias-version": "0.8.9999999.9999999-dev"
+        },
+        {
+            "package": "friendsofsymfony/rest-bundle",
+            "version": "dev-master",
+            "source-reference": "d5574c0078d2a2b46cdf696b1c328cb50b48b1f9",
+            "commit-date": "1345024001"
         },
         {
             "package": "jms/metadata",
@@ -118,8 +124,8 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "fa4f9f58ff19b98cf91a60c356a7cc51e4383f9d",
-            "commit-date": "1344888947"
+            "source-reference": "826f5122e94d9ec0ad53bdceff562dae3b7d2ac3",
+            "commit-date": "1344965670"
         },
         {
             "package": "twig/twig",

@@ -1,11 +1,13 @@
+# SymfonyFrameworkBundle Configuration
 framework:
-    secret:          sadfdsfgdsgfgdsfgdsfgdsfger3ewtr
+    secret:          pleaseChangeMe!pleaseChangeMe!
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
         strict_requirements: %kernel.debug%
     trust_proxy_headers:  false
     templating:      { engines: ['twig'] }
 
+# FOSRestBundle Configuration
 fos_rest:
     allowed_methods_listener: true
     routing_loader:
@@ -19,7 +21,7 @@ fos_rest:
             xml: true
         mime_types:
             json: ['application/json', 'application/x-json', 'application/vnd.example-com.foo+json']
-    body_listener: 
+    body_listener:
         decoders:
             json: fos_rest.decoder.json
     format_listener:
@@ -30,9 +32,12 @@ fos_rest:
         codes:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
             'Doctrine\ORM\OptimisticLockException': HTTP_CONFLICT
+            'Symfony\Component\HttpKernel\Exception\FlattenException': 404
+            'Symfony\Component\Routing\Exception\MethodNotAllowedException': 404
         messages:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
 
+# SensioExtraBundle Configuration
 sensio_framework_extra:
     view:    { annotations: false }
     router:  { annotations: true }

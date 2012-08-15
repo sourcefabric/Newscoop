@@ -1,4 +1,10 @@
 <?php
+/**
+ * @package Newscoop\Gimme
+ * @author Paweł Mikołajczuk <pawel.mikolajczuk@sourcefabric.org>
+ * @copyright 2012 Sourcefabric o.p.s.
+ * @license http://www.gnu.org/licenses/gpl-3.0.txt
+ */
 
 use Symfony\Component\HttpKernel\Kernel;
 use Symfony\Component\Config\Loader\LoaderInterface;
@@ -8,7 +14,7 @@ class AppKernel extends Kernel
     public function registerBundles()
     {
         $bundles =  array(
-        	new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
+            new Symfony\Bundle\FrameworkBundle\FrameworkBundle(),
             new Symfony\Bundle\TwigBundle\TwigBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle($this),

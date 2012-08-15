@@ -1,16 +1,13 @@
-parameters:
-#    newscoop_gimme.example.class: Newscoop\GimmeBundle\Example
-
 services:
-#    newscoop_gimme.example:
-#        class: %newscoop_gimme.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
-
     # kernel.listener.response_listener:
     #     class: Newscoop\GimmeBundle\EventListener\ParseResponseListener
     #     tags:
     #         - { name: kernel.event_listener, event: kernel.response, method: onResponse }
-    # kernel.listener.format_response_listener:
-    #     class: Newscoop\GimmeBundle\EventListener\FormatJsonResponseListener
-    #     tags:
-    #         - { name: kernel.event_listener, event: kernel.response, method: onResponse }
+    kernel.listener.format_response_listener:
+        class: Newscoop\GimmeBundle\EventListener\FormatJsonResponseListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onResponse }
+    kernel.listener.override_method_listener:
+        class: Newscoop\GimmeBundle\EventListener\OverrideMethodListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest, priority: 33 }

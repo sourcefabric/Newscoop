@@ -5,6 +5,7 @@
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
+
 namespace Newscoop\GimmeBundle\Controller;
 
 use FOS\RestBundle\Controller\FOSRestController;
@@ -19,7 +20,7 @@ class CommentsController extends FOSRestController
      * @Method("GET")
      * @View()
      */
-    public function getCommentsAction($id, $language)
+    public function getCommentsForArticleAction($id, $language)
     {
         return array('test' => 'test23');
     }
