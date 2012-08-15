@@ -96,13 +96,13 @@ class AuditService
         $resources = $this->em->getRepository('Newscoop\Entity\AuditEvent')
             ->createQueryBuilder('ae')
             ->select('DISTINCT(ae.resource_type) as type')
+            ->orderBy('ae.resource_type')
             ->getQuery()
             ->getScalarResult();
 
         $resourceTypes = array_map(function($row){
             return $row['type'];
         }, $resources);
-        sort($resourceTypes);
 
         return $resourceTypes;
     }
