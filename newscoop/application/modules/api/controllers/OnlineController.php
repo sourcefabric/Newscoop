@@ -89,6 +89,7 @@ class Api_OnlineController extends AbstractController
             ), 'api')) . $this->getClientVersionParams(),
             'cover_url' => $this->getCoverUrl($issue),
             'title' => $issue->getTitle(),
+            'description' => $this->getArticleField($issue, 'shortdescription'),
             'year' => (int) $issue->getPublished()->format('Y'),
             'month' => (int) $issue->getPublished()->format('m'),
             'rank' => $this->rank++,
@@ -104,7 +105,31 @@ class Api_OnlineController extends AbstractController
     private function getCoverUrl(Article $issue)
     {
         $image = $issue->getImage();
-        return $image ? $this->view->serverUrl($this->view->baseUrl($image->getPath())) : null;
+        if ($image) {
+            return $this->view->serverUrl($this->view->url(array(
+                'src' => $this->getHelper('service')->getService('image')->getSrc($image->getPath(), $this->getCoverImageWidth(), $this->getCoverImageHeight(), 'crop'),
+            ), 'image', false, false));
+        }
+    }
+
+    /**
+     * Get cover image width
+     *
+     * @return int
+     */
+    private function getCoverImageWidth()
+    {
+        return $this->isRetinaClient() ? 290 : 145;
+    }
+
+    /**
+     * Get cover image height
+     *
+     * @return int
+     */
+    private function getCoverImageHeight()
+    {
+        return $this->isRetinaClient() ? 402 : 201;
     }
 
     /**
@@ -122,8 +147,16 @@ class Api_OnlineController extends AbstractController
 
         $toc = array(
             'issue_id' => $issue->getNumber(),
+            'offline_url' => $this->view->serverUrl($this->view->url(array(
+                'module' => 'api',
+                'controller' => 'offline',
+                'action' => 'issues',
+                'id' => $issue->getNumber(),
+            ))) . $this->getApiQueryString(),
             'cover_url' => $this->getCoverUrl($issue),
-            'single_issue_product_id' => $issue->getData('issue_product_id'),
+            'single_issue_product_id' => sprintf('ch.tageswoche.issue.%d.%d', $issue->getPublished()->format('Y'), $this->getArticleField($issue, 'issue_number')),
+            'title' => $issue->getTitle(),
+            'description' => $this->getArticleField($issue, 'shortdescription'),
             'publication_date' => $issue->getPublished()->format('Y-m-d'),
             'last_modified' => $issue->getUpdated()->format(self::DATE_FORMAT),
             'articles' => array_map(array($this, 'formatArticle'), $articles),

@@ -471,7 +471,7 @@ abstract class AbstractController extends Zend_Controller_Action
      *
      * @return bool
      */
-    private function isRetinaClient()
+    protected function isRetinaClient()
     {
         return strpos($this->_getParam('client', self::CLIENT_DEFAULT), 'retina') !== false;
     }
@@ -489,6 +489,22 @@ abstract class AbstractController extends Zend_Controller_Action
             return !empty($shortname) ? $shortname : $article->getTitle();
         } catch (\Exception $e) {
             return $article->getTitle();
+        }
+    }
+
+    /**
+     * Get article field
+     *
+     * @param Article $article
+     * @param string $field
+     * @return mixed
+     */
+    protected function getArticleField($article, $field)
+    {
+        try {
+            return $article->getData($field);
+        } catch (Exception $e) {
+            return null;
         }
     }
 }
