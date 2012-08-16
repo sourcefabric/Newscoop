@@ -1,3 +1,10 @@
+<?php
+// check permissions
+if (!$g_user->hasPermission('CommentEnable')) {
+    return;
+}
+?>
+
 <form id="comment-add" action="../comment/add-to-article/format/json" method="POST">
     <?php echo SecurityToken::FormParameter(); ?>
     <input type="hidden" name="f_language_id" value="<?php p($f_language_id); ?>">

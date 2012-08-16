@@ -18,8 +18,7 @@ if (!file_exists($upgrade_trigger_path)) {
 
 require_once __DIR__ . '/application.php';
 
-$application->bootstrap('autoloader');
-$application->bootstrap('doctrine');
+$application->bootstrap();
 
 header("Expires: Thu, 01 Jan 1970 00:00:00 GMT");
 header("Cache-Control: no-store, no-cache, must-revalidate");
@@ -70,7 +69,7 @@ $configDb = array('hostname'=>$Campsite['db']['host'],
 $session->setData('config.db', $configDb, 'installation');
 
 // upgrading the database
-$res = camp_upgrade_database($Campsite['DATABASE_NAME'], true);
+$res = camp_upgrade_database($Campsite['DATABASE_NAME'], true, true);
 if ($res !== 0) {
     display_upgrade_error("While upgrading the database: $res");
 }

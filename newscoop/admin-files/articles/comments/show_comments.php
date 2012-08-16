@@ -1,6 +1,6 @@
 <?php
 // check permissions
-if (!$g_user->hasPermission('CommentModerate')) {
+if (!$g_user->hasPermission('CommentEnable')) {
     return;
 }
 ?>
@@ -32,13 +32,14 @@ foreach ($hiddens as $name) {
     <?php endif; //inEditMode?>
     <div class="frame clearfix">
       <dl class="inline-list" id="comment-${id}">
+        <div class="comment_status" style="display:none;">${status}</div>
         <dt><?php putGS('From'); ?></dt>
         <dd><a href="mailto:${email}">"${name}" &lt;${email}&gt;</a> (${ip})</dd>
         <dt><?php putGS('Date'); ?></dt>
         <dd>${time_created}</dd>
         <dt><?php putGS('Subject'); ?></dt>
         <dd>
-            <?php if ($inEditMode): ?>
+            <?php if ($inEditMode && $g_user->hasPermission('CommentEdit')): ?>
                 <input type="text" value="${subject}"></input>
             <?php else: ?>
                 ${subject}
@@ -46,14 +47,23 @@ foreach ($hiddens as $name) {
         </dd>
         <dt><?php putGS('Comment'); ?></dt>
         <dd>
-            <?php if ($inEditMode): ?>
+            <?php if ($inEditMode && $g_user->hasPermission('CommentEdit')): ?>
                 <textarea rows="5" cols="60">${message}</textarea>
             <?php else: ?>
                 ${message}
             <?php endif; //inEditMode?>
         </dd>
-        <?php if ($inEditMode): ?>
+        <?php if (!$inEditMode): ?>
+        <dt><?php putGS('Status'); ?></dt>
+        <dd>
+            <span class="comment-state-status comment-state-status-${status}" style="font-size:12px;">&nbsp;</span>
+            <span class="comment-recommend-status comment-recommend-status-${recommended_toggle}" style="font-size:12px;">&nbsp;</span>
+        </dd>
+        <?php else: ?>
+        <?php if ($g_user->hasPermission('CommentEdit')) { ?>
         <dt>&nbsp;</dt>
+        <?php } ?>
+        <?php if ($g_user->hasPermission('CommentModerate')) { ?>
         <dd>
             <ul class="action-list clearfix">
               <li>
@@ -77,18 +87,30 @@ foreach ($hiddens as $name) {
               </li>
             </ul>
         </dd>
+        <?php } else { ?>
+        <dt><?php putGS('Status'); ?></dt>
+        <dd>
+            <span class="comment-state-status comment-state-status-${status}" style="font-size:12px;">&nbsp;</span>
+            <span class="comment-recommend-status comment-recommend-status-${recommended_toggle}" style="font-size:12px;">&nbsp;</span>
+        </dd>
+        <?php } ?>
         <dd class="buttons">
             <?php if ($inEditMode): ?>
+            <?php if (($g_user->hasPermission('CommentEdit')) || ($g_user->hasPermission('CommentModerate'))) { ?>
             <a class="ui-state-default icon-button comment-update"><span class="ui-icon ui-icon-disk"></span><?php putGS('Save comment'); ?></a>
+            <?php } ?>
             <?php endif; //inEditMode?>
 
+            <?php if ($g_user->hasPermission('CommentModerate')) { ?>
             <a href="<?php echo $controller->view->url(array(
                 'module' => 'admin',
                 'controller' => 'comment',
                 'action' => 'set-recommended',
             )); ?>/comment/${id}/recommended/${recommended_toggle}" class="ui-state-default text-button comment-recommend status-${recommended_toggle}"><?php putGS('Recommend'); ?></a>
+            <?php } ?>
 
             <a href="<?php echo camp_html_article_url($articleObj, $f_language_selected, 'comments/reply.php', '', '&f_comment_id=${id}'); ?>" class="ui-state-default text-button"><?php putGS('Reply to comment'); ?></a>
+
         </dd>
         <?php endif; //inEditMode?>
       </dl>
@@ -104,7 +126,9 @@ function toggleCommentStatus(commentId) {
             var statusClassMap = { 'hidden': 'hide', 'approved': 'approve', 'pending': 'inbox'};
             var block = $(this);
             var status = $('input:radio:checked', block).val();
-
+            if (status === undefined) {
+                status = $('.comment_status', block).html();
+            }
             var cclass = 'comment_'+statusClassMap[status];
 
             // set class
@@ -159,6 +183,27 @@ function loadComments() {
 		if(!hasComment)
 			$('#no-comments').show();
 
+        $('.comment-state-status').each(function() {
+            $(this).html("&nbsp;");
+            if ($(this).hasClass('comment-state-status-pending')) {
+                $(this).html("<?php putGS("New"); ?>");
+            }
+            if ($(this).hasClass('comment-state-status-approved')) {
+                $(this).html("<?php putGS("Approved"); ?>");
+            }
+            if ($(this).hasClass('comment-state-status-hidden')) {
+                $(this).html("<?php putGS("Hidden"); ?>");
+            }
+        });
+
+        $('.comment-recommend-status').each(function() {
+            if ($(this).hasClass('comment-recommend-status-0')) {
+                $(this).html("<?php putGS("Recommended"); ?>");
+            }
+            else {
+                $(this).html("&nbsp;");
+            }
+        });
         $('.comment-recommend').each(function() {
              if ($(this).hasClass('status-0')) {
                  $(this).html("<?php putGS("Unrecommend"); ?>");
@@ -217,10 +262,16 @@ var updateStatus = function(button) {
 $('.comment-update').live('click',function(){
 	var comment, subject, body;
 
+    <?php if ($g_user->hasPermission('CommentModerate')) { ?>
     var wanted_status = updateStatus(this);
     if ('deleted' == wanted_status) {
         return;
     }
+    <?php } ?>
+
+    <?php if (!$g_user->hasPermission('CommentEdit')) { ?>
+        return;
+    <?php } ?>
 
     comment = $(this).parents('dl');
     subject = comment.find('input').val();
