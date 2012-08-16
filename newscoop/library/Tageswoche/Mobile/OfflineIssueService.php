@@ -157,7 +157,7 @@ class OfflineIssueService
     {
         chdir($dir);
         $url = $article->url . sprintf('%s_secret=%s', strpos($article->url, '?') !== false ? '&' : '?', $this->config['secret']);
-        system(sprintf("wget -E -H -k -p '%s'", $url));
+        system(sprintf("wget --quiet -E -H -k -p '%s'", $url));
         $parsedUrl = parse_url($url);
         $article->url = basename($dir) . '/' . $parsedUrl['host'] . $parsedUrl['path'] . '?' . $parsedUrl['query'] . '.html';
     }
