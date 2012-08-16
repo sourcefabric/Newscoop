@@ -35,7 +35,7 @@ class Api_OfflineController extends AbstractController
             $this->sendError(self::NOT_FOUND, self::NOT_FOUND_CODE);
         }
 
-        $this->sendZip($this->service->getArticleZipPath($this->_getParam('id')));
+        $this->sendZip($this->service->getArticleZipPath($this->_getParam('id'), $this->isRetinaClient()));
     }
 
     public function issuesAction()
@@ -49,7 +49,7 @@ class Api_OfflineController extends AbstractController
             $this->assertIsSubscriber();
         }
 
-        $this->sendZip($this->service->getIssueZipPath($issue));
+        $this->sendZip($this->service->getIssueZipPath($issue, $this->isRetinaClient()));
     }
 
     /**

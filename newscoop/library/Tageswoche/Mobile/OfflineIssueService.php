@@ -15,6 +15,8 @@ use Newscoop\Entity\Article,
  */
 class OfflineIssueService
 {
+    const RETINA = 'retina';
+
     /**
      * @var Newscoop\Http\ClientFactory
      */
@@ -29,6 +31,7 @@ class OfflineIssueService
      * @var array
      */
     private $config = array(
+        'path' => '/tmp/issues/',
         'site_url' => 'http://localhost/newscoop/newscoop/',
         'secret' => '',
     );
@@ -49,22 +52,36 @@ class OfflineIssueService
      * Get issue path
      *
      * @param Newscoop\Entity\Article $issue
+     * @param bool $isRetina
      * @return string
      */
-    public function getIssueZipPath(Article $issue)
+    public function getIssueZipPath(Article $issue, $isRetina = false)
     {
-        return sprintf('/tmp/issues/issue_%d.zip', $issue->getNumber());
+        return $this->getPath(sprintf('issue_%d.zip', $issue->getNumber()), $isRetina);
     }
 
     /**
      * Get article zip path
      *
      * @param Newscoop\Entity\Article $article
+     * @param bool $isRetina
      * @return string
      */
-    public function getArticleZipPath($article)
+    public function getArticleZipPath($article, $isRetina = false)
     {
-        return sprintf('/tmp/issues/article_%d.zip', is_numeric($article) ? $article : $article->article_id);
+        return $this->getPath(sprintf('article_%d.zip', is_numeric($article) ? $article : $article->article_id), $isRetina);
+    }
+
+    /**
+     * Get full path for given filename
+     *
+     * @param string $filename
+     * @param bool $isRetina
+     * @return string
+     */
+    private function getPath($filename, $isRetina)
+    {
+        return realpath($this->config['path']) . ($isRetina ? '/' . self::RETINA . '/' : '/') . $filename;
     }
 
     /**
@@ -75,22 +92,25 @@ class OfflineIssueService
      */
     public function generateIssue(Article $issue)
     {
-        $toc = $this->fetchJson($this->getApiUrl(array(
-            'controller' => 'online',
-            'action' => 'toc',
-            'id' => $issue->getNumber(),
-        )));
+        foreach (array('', self::RETINA) as $client) {
+            $toc = $this->fetchJson($this->getApiUrl(array(
+                'controller' => 'online',
+                'action' => 'toc',
+                'id' => $issue->getNumber(),
+            ), array(
+                'client' => $client,
+            )));
 
-        $dir = $this->getIssueDir($toc);
+            $dir = $this->getIssueDir($toc, $client);
+            foreach ($toc->articles as $article) {
+                $articleDir = $this->getArticleDir($article, $dir, $client);
+                $this->generateArticle($article, $articleDir, $client);
+                $this->zip($articleDir, $this->getArticleZipPath($article, $client === self::RETINA));
+            }
 
-        foreach ($toc->articles as $article) {
-            $articleDir = $this->getArticleDir($article, $dir);
-            $this->generateArticle($article, $articleDir);
-            $this->zip($articleDir, $this->getArticleZipPath($article));
+            file_put_contents("$dir/toc.json", json_encode($toc));
+            $this->zip($dir, $this->getIssueZipPath($issue, $client === self::RETINA));
         }
-
-        file_put_contents("$dir/toc.json", json_encode($toc));
-        $this->zip($dir, $this->getIssueZipPath($issue));
     }
 
     /**
@@ -135,10 +155,11 @@ class OfflineIssueService
      */
     private function generateArticleContent($article, $dir)
     {
-        $dest = "$dir/content.html";
-        file_put_contents("$dir/content.html", $this->fetch($article->url));
-        $article->url = basename(dirname($dest)) . '/' . basename($dest);
-        touch("$dir/style.css");
+        chdir($dir);
+        $url = $article->url . sprintf('%s_secret=%s', strpos($article->url, '?') !== false ? '&' : '?', $this->config['secret']);
+        system(sprintf("wget -E -H -k -p '%s'", $url));
+        $parsedUrl = parse_url($url);
+        $article->url = basename($dir) . '/' . $parsedUrl['host'] . $parsedUrl['path'] . '?' . $parsedUrl['query'] . '.html';
     }
 
     /**
@@ -202,11 +223,15 @@ class OfflineIssueService
      * Get issue dir
      *
      * @param object $toc
+     * @param string $client
      * @return string
      */
-    private function getIssueDir($toc)
+    private function getIssueDir($toc, $client)
     {
-        return $this->createDir(sprintf('/tmp/issues/issue_%d', $toc->issue_id));
+        return $this->createDir($this->getPath(sprintf(
+            'issue_%d',
+            $toc->issue_id
+        ), $client === self::RETINA));
     }
 
     /**
@@ -214,21 +239,31 @@ class OfflineIssueService
      *
      * @param object $article
      * @param object $issueDir
+     * @param string $client
      * @return string
      */
-    private function getArticleDir($article, $issueDir)
+    private function getArticleDir($article, $issueDir, $client)
     {
-        return $this->createDir(sprintf('%s/article_%d', $issueDir, $article->article_id));
+        return $this->createDir($this->getPath(sprintf(
+            '%s/article_%d',
+            basename($issueDir),
+            $article->article_id
+        ), $client === self::RETINA));
     }
 
     /**
      * Get api url
      *
      * @param array $params
+     * @param array $queryData
      * @return string
      */
-    private function getApiUrl(array $params)
+    private function getApiUrl(array $params, array $queryData = array())
     {
-        return sprintf('%s/%s', rtrim($this->config['site_url'], '/'), ltrim($this->view->url($params, 'api'), '/'));
+        return sprintf('%s/%s?%s',
+            rtrim($this->config['site_url'], '/'),
+            ltrim($this->view->url($params, 'api'), '/'),
+            http_build_query($queryData)
+        );
     }
 }
