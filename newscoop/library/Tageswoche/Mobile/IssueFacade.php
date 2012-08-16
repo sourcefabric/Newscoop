@@ -87,6 +87,32 @@ class IssueFacade
     }
 
     /**
+     * Test if given article is in current issue
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return bool
+     */
+    public function isInCurrentIssue(Article $article = null)
+    {
+        if ($article === null) {
+            return false;
+        }
+
+        $issue = $this->find(self::CURRENT_ISSUE);
+        if ($issue === null) {
+            return false;
+        }
+
+        foreach ($this->getArticles($issue) as $issueArticle) {
+            if ($issueArticle->getNumber() === $article->getNumber()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
      * Get issue repository
      *
      * @return Doctrine\ORM\EntityRepository

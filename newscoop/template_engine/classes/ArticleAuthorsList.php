@@ -62,7 +62,9 @@ class ArticleAuthorsList extends ListObject
         if (count($p_order) == 1) {
             $p_order[] = 'asc';
         }
+
         $state = 1;
+        $order = array();
         foreach ($p_order as $word) {
             switch ($state) {
             case 1: // reading the order field
@@ -83,9 +85,11 @@ class ArticleAuthorsList extends ListObject
                 break;
             }
         }
+
         if ($state != 1) {
             CampTemplate::singleton()->trigger_error('unexpected end of order parameter in list_article_authors');
         }
+
         return $order;
     }
 

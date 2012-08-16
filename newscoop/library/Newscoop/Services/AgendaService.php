@@ -155,7 +155,7 @@ class AgendaService
         $ev_skipCache = false;
         $ev_returnObjs = true;
 
-        $events = \Article::GetList($ev_parameters, $ev_order, $ev_start, $ev_limit, &$ev_count, $ev_skipCache, $ev_returnObjs);
+        $events = \Article::GetList($ev_parameters, $ev_order, $ev_start, $ev_limit, $ev_count, $ev_skipCache, $ev_returnObjs);
 
         if (empty($events)) {
             return $empty_list;

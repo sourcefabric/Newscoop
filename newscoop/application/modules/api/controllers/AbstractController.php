@@ -120,9 +120,10 @@ abstract class AbstractController extends Zend_Controller_Action
     /**
      * Assert that user is subscriber and can consume premium content
      *
+     * @param Newscoop\Entity\Article $article
      * @return void
      */
-    protected function assertIsSubscriber()
+    protected function assertIsSubscriber($article = null)
     {
         $options = $this->getInvokeArg('bootstrap')->getOption('offline');
         if (isset($options['secret']) && $this->_getParam(self::SECRET_PARAM) === $options['secret']) {
@@ -144,6 +145,10 @@ abstract class AbstractController extends Zend_Controller_Action
             if ($this->_helper->service('user_subscription')->isActiveSubscriber($user)) {
                 return;
             }
+        }
+
+        if (! $this->_helper->service('mobile.issue')->isInCurrentIssue($article)) {
+            return;
         }
 
         $this->sendError('Unauthorized.', 401);
@@ -215,7 +220,7 @@ abstract class AbstractController extends Zend_Controller_Action
             'version' => $this->_getParam('version'),
         )));
 
-        return empty($params) ? '' : '?' . implode('&', array_map(function($key) use ($params) {
+        return empty($params) ? '' : '?' . implode('&', array_map(function ($key) use ($params) {
             return sprintf('%s=%s', $key, $params[$key]);
         }, array_keys($params)));
     }
@@ -350,7 +355,6 @@ abstract class AbstractController extends Zend_Controller_Action
                 $bodyField = 'DataContent';
                 $teaserField = 'DataLead';
                 break;
-
             case 'blog':
                 $teaserField = 'lede';
                 $datelineField = 'short_name';

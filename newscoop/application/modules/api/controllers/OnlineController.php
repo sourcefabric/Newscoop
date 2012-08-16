@@ -34,6 +34,9 @@ class Api_OnlineController extends AbstractController
     /** @var array */
     private $sections = array();
 
+    /** @var array */
+    private $ids = array();
+
     public function init()
     {
         $this->service = $this->_helper->service('mobile.issue');
@@ -61,15 +64,17 @@ class Api_OnlineController extends AbstractController
 
     public function articlesAction()
     {
-        $this->assertIsSubscriber();
-
         $article = $this->_helper->service('article')->findOneByNumber($this->_getParam('id'));
         if (!$article) {
             $this->sendError('Article not found.', 404);
         }
 
+        $this->assertIsSubscriber($article);
+
         $this->_helper->smarty->setSmartyView();
-        $this->view->article = new MetaArticle($article->getLanguageId(), $article->getNumber());
+        $this->view->getGimme()->article = new MetaArticle($article->getLanguageId(), $article->getNumber());
+        $this->view->width = $this->getClientWidth();
+        $this->view->height = $this->getClientHeight();
     }
 
     /**
@@ -177,8 +182,8 @@ class Api_OnlineController extends AbstractController
      */
     protected function formatArticle(Article $article)
     {
-        $sectionId = sha1($this->getSectionName($article));
-        $storyId = sha1($sectionId . $this->getStoryName($article));
+        $sectionId = $this->getId($this->getSectionName($article));
+        $storyId = $this->getStoryName($article) !== '' ? $sectionId . $this->getStoryName($article) : null;
         return array_merge(parent::formatArticle($article), array(
             'url' => $this->view->serverUrl($this->view->url(array(
                 'controller' => 'online',
@@ -188,7 +193,7 @@ class Api_OnlineController extends AbstractController
             'section_id' => $sectionId,
             'section_name' => $this->getSectionName($article),
             'section_rank' => $this->rank++,
-            'image_url' => $this->getCoverUrl($article),
+            'image_url' => $this->getImageUrl($article, 'rubrikenseite'),
             'article_quality' => 'prominent',
             'last_modified' => $article->getUpdated()->format(self::DATE_FORMAT),
             'published' => $article->getPublished()->format(self::DATE_FORMAT),
@@ -225,5 +230,20 @@ class Api_OnlineController extends AbstractController
         } catch (Exception $e) {
             return '';
         }
+    }
+
+    /**
+     * Get id for string
+     *
+     * @param string $key
+     * @return int
+     */
+    protected function getId($key)
+    {
+        if (!isset($this->ids[$key])) {
+            $this->ids[$key] = count($this->ids) + 1;
+        }
+
+        return $this->ids[$key];
     }
 }

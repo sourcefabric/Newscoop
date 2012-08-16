@@ -21,6 +21,8 @@ class SmartyView extends \Zend_View_Abstract
     public function __construct()
     {
         $this->smarty = \CampTemplate::singleton();
+        $this->smarty->assign('gimme', $this->smarty->context());
+        $this->smarty->assign('view', $this);
     }
 
     /**
@@ -31,9 +33,6 @@ class SmartyView extends \Zend_View_Abstract
         foreach ($this->getVars() as $key => $val) {
             $this->smarty->assign($key, $val);
         }
-
-        $this->smarty->assign('view', $this);
-        $this->smarty->assign('gimme', $this->smarty->context());
 
         $file = array_shift(func_get_args());
         $this->smarty->display($file);
@@ -47,5 +46,15 @@ class SmartyView extends \Zend_View_Abstract
     public function addPath($path)
     {
         array_unshift($this->smarty->template_dir, $path);
+    }
+
+    /**
+     * Get gimme
+     *
+     * @return CampContext
+     */
+    public function getGimme()
+    {
+        return $this->smarty->getTemplateVars('gimme');
     }
 }
