@@ -169,7 +169,9 @@ class Api_ProfileController extends AbstractController
     private function getAvailableSubscriptions()
     {
         $config = new Zend_Config_Xml(APPLICATION_PATH . '/configs/subscriptions.xml');
-        return $config->toArray();
+        $array = $config->toArray();
+        $array['digital_subscriptions'] = array_values($array['digital_subscriptions']['subscription']);
+        return $array;
     }
 
     /**
