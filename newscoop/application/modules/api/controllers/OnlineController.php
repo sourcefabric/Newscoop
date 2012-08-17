@@ -159,7 +159,7 @@ class Api_OnlineController extends AbstractController
                 'id' => $issue->getNumber(),
             ))) . $this->getApiQueryString(),
             'cover_url' => $this->getCoverUrl($issue),
-            'single_issue_product_id' => sprintf('ch.tageswoche.issue.%d.%d', $issue->getPublished()->format('Y'), $this->getArticleField($issue, 'issue_number')),
+            'single_issue_product_id' => sprintf('ch.tageswoche.issue.%d.%s', $issue->getPublished()->format('Y'), trim($this->getArticleField($issue, 'issue_number'))),
             'title' => $issue->getTitle(),
             'description' => $this->getArticleField($issue, 'shortdescription'),
             'publication_date' => $issue->getPublished()->format('Y-m-d'),
