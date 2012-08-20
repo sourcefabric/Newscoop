@@ -471,7 +471,7 @@ abstract class AbstractController extends Zend_Controller_Action
      *
      * @return bool
      */
-    private function isRetinaClient()
+    protected function isRetinaClient()
     {
         return strpos($this->_getParam('client', self::CLIENT_DEFAULT), 'retina') !== false;
     }
