@@ -7,8 +7,8 @@
 
 namespace Tageswoche\Mobile;
 
-use Newscoop\Http\ClientFactory,
-    Newscoop\Entity\User;
+use Newscoop\Http\ClientFactory;
+use Newscoop\Entity\User;
 
 /**
  */
@@ -61,7 +61,7 @@ class PurchaseFacade
         );
 
         if (!empty($data->latest_receipt_info)) {
-            $return['purchase_date'] = $data->latest_receipt_info->purchase_date;
+            $return['expires_date'] = gmdate('Y-m-d H:i:s', $data->latest_receipt_info->expires_date);
         }
 
         return $return;
@@ -89,10 +89,16 @@ class PurchaseFacade
     private function getResponse($url, $receipt)
     {
         $client = $this->clientFactory->getClient();
-        $response = $client->post($url, null, json_encode(array(
-            'receipt-data' => $receipt,
-            'password' => $this->getPassword(),
-        )))->send();
+        $response = $client->post(
+            $url,
+            null,
+            json_encode(
+                array(
+                    'receipt-data' => $receipt,
+                    'password' => $this->getPassword(),
+                )
+            )
+        )->send();
 
         if (!$response->isSuccessful()) {
             return (object) array(
@@ -113,3 +119,4 @@ class PurchaseFacade
         return !empty($this->config[self::CONFIG_PASSWORD]) ? $this->config[self::CONFIG_PASSWORD] : '';
     }
 }
+
