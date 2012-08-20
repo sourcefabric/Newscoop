@@ -68,6 +68,8 @@ $(function() {
                         match.push(terms[i]);
                     }
                 }
+
+                match.sort();
                 response(match);
             },
             close: function(event, ui) {
