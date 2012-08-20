@@ -161,6 +161,7 @@ class Api_BlogsController extends AbstractController
                     'action' => 'posts',
                 ), 'default') . sprintf('?post_id=%d', $post->getNumber()) . $this->getClientVersionParams(false)),
                 'short_name' => $shortName,
+                'blog_description' => trim(strip_tags($blogInfo['infolong'])), 
                 'author_name' => implode(',', $this->getAuthors($post)),
                 'teaser' => $teaser,
                 'image_url' => $this->getImageUrl($post),
@@ -238,6 +239,7 @@ class Api_BlogsController extends AbstractController
             'id' => $blogInfos[0]->getNumber(),
             'name' => $blogInfos[0]->getName(),
             'image_url' => $this->getImageUrl($blogInfos[0]),
+            'infolong' => $blogInfos[0]->getData('infolong'),
             'active' => $blogInfos[0]->getData('active') ? true : false,
         );
     }
