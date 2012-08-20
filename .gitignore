@@ -1,0 +1,17 @@
+# Ignore rules for root folder #
+################################
+*.swp
+.DS_Store
+newscoop/.htaccess
+composer.phar
+vendor/
+newscoop/newscoop-indexer.lock
+newscoop/system_preferences.php
+newscoop/install/
+newscoop/plugins/
+newscoop/themes/
+newscoop/files/
+newscoop/cache/
+newscoop/include/
+newscoop/images/
+newscoop/conf/
