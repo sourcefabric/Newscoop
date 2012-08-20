@@ -25,10 +25,19 @@ class NewscoopGimmeExtension extends Extension
      */
     public function load(array $configs, ContainerBuilder $container)
     {
+        $this->loadNewscoop($configs, $container);
+
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
+    }
+
+    private function loadNewscoop(array $configs, ContainerBuilder $container)
+    {
+        $containerFactory = new \Newscoop\DependencyInjection\ContainerFactory();
+        $containerFactory->setContainer($container);
+        $containerFactory->mergeParameters();
     }
 }

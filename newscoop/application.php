@@ -31,7 +31,6 @@ set_include_path(implode(PATH_SEPARATOR, array(
 require_once realpath(APPLICATION_PATH . '/../../vendor/autoload.php');
 
 /** Zend_Application */
-
 if (defined('INSTALL')) {
     $oldErrorReporting = error_reporting();
     error_reporting(0);
@@ -43,23 +42,17 @@ if (defined('INSTALL')) {
     error_reporting($oldErrorReporting);
 }
 
+/**
+ * Build container
+ */
+$containerFactory = new \Newscoop\DependencyInjection\ContainerFactory();
+$container = $containerFactory->buildContainer();
+
+/**
+ * Set container to the Zend_Registry and fill zend application options
+ */
+\Zend_Registry::set('container', $container);
+$config = $container->getParameterBag()->all();
+
 // Create application, bootstrap, and run
-$application = new \Zend_Application(APPLICATION_ENV);
-
-// Set config
-$setConfig = function(\Zend_Application $application) {
-
-    $defaultConfig = new \Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini-dist', APPLICATION_ENV);
-    $config = $defaultConfig->toArray();
-    if (is_readable(APPLICATION_PATH . '/configs/application.ini')) {
-        try {
-            $userConfig = new \Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini', APPLICATION_ENV);
-            $config = $application->mergeOptions($config, $userConfig->toArray());
-        } catch (\Zend_Config_Exception $e) { // ignore missing section
-        }
-    }
-    $application->setOptions($config);
-};
-
-$setConfig($application);
-unset($setConfig);
+$application = new \Zend_Application(APPLICATION_ENV, new \Zend_Config($config));

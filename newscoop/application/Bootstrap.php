@@ -12,11 +12,7 @@ use Doctrine\MongoDB\Connection;
 use Doctrine\ODM\MongoDB\Configuration;
 use Doctrine\ODM\MongoDB\Mapping\Driver\AnnotationDriver;
 use Newscoop\Doctrine\EventDispatcherProxy;
-use Newscoop\DependencyInjection\ContainerBuilder;
-use Newscoop\DependencyInjection\Compiler\RegisterListenersPass;
-use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
-use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
+use Newscoop\DependencyInjection\ContainerFactory;
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
@@ -58,40 +54,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     protected function _initContainer()
     {
-        $this->bootstrap('autoloader');
-
-        $file = __DIR__ .'/../cache/container.php';
-
-        /**
-         * Use cached container if exists, and env is set up on production
-         */
-        if (APPLICATION_ENV === 'production' && file_exists($file)) {
-            require_once $file;
-            $container = new NewscoopCachedContainer();
-        } else {
-            $container = new ContainerBuilder($this->getOptions());
-            $container->addCompilerPass(new RegisterListenersPass());
-            $container->setParameter('config', $this->getOptions());
-
-            $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
-            $services = glob(__DIR__ ."/configs/services/*.yml");
-            foreach ($services as $service) {
-                $loader->load($service);
-            }
-
-            $container->compile();
-
-            if (APPLICATION_ENV === 'production') {
-                $dumper = new PhpDumper($container);
-                file_put_contents($file, $dumper->dump(array(
-                    'class' => 'NewscoopCachedContainer',
-                    'base_class' => 'Newscoop\DependencyInjection\ContainerBuilder'
-                )));
-            }
-        }
-
-        Zend_Registry::set('container', $container);
-        return $container;
+        return Zend_Registry::get('container');
     }
 
     protected function _initDatabaseObject() 
@@ -115,9 +78,11 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
     protected function _initRouter()
     {
+        $this->bootstrap('container');
+
+        $container = Zend_Registry::get('container');
         $front = Zend_Controller_Front::getInstance();
         $router = $front->getRouter();
-        $options = $this->getOptions();
 
         $router->addRoute(
             'content',
@@ -168,13 +133,13 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             )));
 
         $router->addRoute('image',
-            new Zend_Controller_Router_Route_Regex($options['image']['cache_url'] . '/(.*)', array(
+            new Zend_Controller_Router_Route_Regex($container->getParameter('image')['cache_url'] . '/(.*)', array(
                 'module' => 'default',
                 'controller' => 'image',
                 'action' => 'cache',
             ), array(
                 1 => 'src',
-            ), $options['image']['cache_url'] . '/%s'));
+            ), $container->getParameter('image')['cache_url'] . '/%s'));
 
          $router->addRoute('rest',
             new Zend_Rest_Route($front, array(), array(
@@ -186,14 +151,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                 ),
             ))
         );
-
-        $router->addRoute(
-            'gimmw',
-            new Zend_Controller_Router_Route('user/profile/:username/:action', array(
-                'module' => 'default',
-                'controller' => 'user',
-                'action' => 'profile',
-            )));
     }
 
     protected function _initActionHelpers()

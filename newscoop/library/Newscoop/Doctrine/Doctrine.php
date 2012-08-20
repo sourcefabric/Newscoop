@@ -22,11 +22,11 @@ class Doctrine
 
     public function __construct($options) 
     {
-        $this->options = $options['doctrine'];
+        $this->options = $options;
     }
 
     /**
-     * Get Entity Manager
+     * Get EntityManager
      *
      * @return Doctrine\ORM\EntityManager
      */
@@ -37,6 +37,16 @@ class Doctrine
         }
 
         return $this->_configureEntityManager();
+    }
+
+    /**
+     * Get used by Newscoop Doctrine Connection
+     *
+     * @return Doctrine\DBAL\Connection
+     */
+    public function getConnection()
+    {
+        return $this->getEntityManager()->getConnection();
     }
 
     /**
