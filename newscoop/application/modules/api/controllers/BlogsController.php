@@ -238,12 +238,48 @@ class Api_BlogsController extends AbstractController
         return array(
             'id' => $blogInfos[0]->getNumber(),
             'name' => $blogInfos[0]->getName(),
-            'image_url' => $this->getImageUrl($blogInfos[0]),
+            'image_url' => $this->getBlogImageUrl($blogInfos[0]),
             'infolong' => $blogInfos[0]->getData('infolong'),
             'active' => $blogInfos[0]->getData('active') ? true : false,
         );
     }
+    
+    /**
+     * Get cover image url
+     *
+     * @param Newscoop\Entity\Article $issue
+     * @return string
+     */
+    protected function getBlogImageUrl(Article $post)
+    {
+        $image = $post->getImage();
+        if ($image) {
+            return $this->view->serverUrl($this->view->url(array(
+                'src' => $this->getHelper('service')->getService('image')->getSrc($image->getPath(), $this->getImageWidth(), $this->getImageHeight(), 'crop'),
+            ), 'image', false, false));
+        }
+    }
 
+    /**
+     * Get image width
+     *
+     * @return int
+     */
+    private function getImageWidth()
+    {
+        return $this->isRetinaClient() ? 640 : 320;
+    }
+
+    /**
+     * Get image height
+     *
+     * @return int
+     */
+    private function getImageHeight()
+    {
+        return $this->isRetinaClient() ? 280 : 140;
+    }
+    
     /**
      * Returns blog author names.
      *
