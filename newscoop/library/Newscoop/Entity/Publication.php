@@ -25,7 +25,7 @@ class Publication extends Entity
     /* --------------------------------------------------------------- */
 
     /**
-     * @id @generatedValue
+     * @Id @generatedValue
      * @Column(name="Id", type="integer")
      * @var int
      */

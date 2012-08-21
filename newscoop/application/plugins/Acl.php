@@ -59,11 +59,12 @@ class Application_Plugin_Acl extends Zend_Controller_Plugin_Abstract
             return; // ignore
         }
 
-        if (!\SaaS::singleton()->hasPrivilege($resource, $action)) {
+        $hasPriv = Saas::singleton()->hasPrivilege($resource, $action);
+        if (!$hasPriv) {
             $redirector = Zend_Controller_Action_HelperBroker::getStaticHelper('redirector');
-			/* @var $redirector Zend_Controller_Action_Helper_Redirector */
-			$redirector->direct("index", "index", "admin");
-		}
+            /* @var $redirector Zend_Controller_Action_Helper_Redirector */
+            $redirector->direct("index", "index", "admin");
+        }
 
         $acl = Zend_Registry::get('acl');
         list($resource, $action) = $acl->getAccess($request->getControllerName(), $request->getActionName());

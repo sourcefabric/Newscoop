@@ -1,7 +1,7 @@
 <div class="logintop">
 {{ if ! $gimme->user->logged_in }}                                
-  {{ login_form submit_button="go" }}     
-    <a href="{{ uri options="template register.tpl" }}">Register</a> | 
+  {{ login_form submit_button="go" }} 
+    <a href="{{ $view->url(['controller' => 'register', 'action' => 'index'], 'default') }}" }}">Register</a> | 
     {{ if $gimme->login_action->is_error }}
       <div class="messagesmall messageform messageerror">{{ $gimme->login_action->error_message }}</div>
     {{ else }}Sign in:
