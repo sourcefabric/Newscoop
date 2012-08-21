@@ -29,7 +29,8 @@ function smarty_function_render($p_params, &$p_smarty)
     $cache_lifetimeBak = $smarty->cache_lifetime;
     $campsiteVectorBak = $smarty->campsiteVector;
 
-    if (SystemPref::Get('TemplateCacheHandler')) {
+    if (SystemPref::Get('TemplateCacheHandler')
+        && !Zend_Controller_Front::getInstance()->getRequest()->isSecure()) {
         $campsiteVector = $smarty->campsiteVector;
         foreach ($campsiteVector as $key => $value) {
             if (isset($p_params[$key])) {

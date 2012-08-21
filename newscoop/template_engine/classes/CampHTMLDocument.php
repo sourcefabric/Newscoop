@@ -311,7 +311,8 @@ final class CampHTMLDocument
         $tpl->assign('siteinfo', $siteinfo);
 
         // on template caching add additional info
-        if (SystemPref::Get('TemplateCacheHandler')) {
+        if (SystemPref::Get('TemplateCacheHandler')
+            && !Zend_Controller_Front::getInstance()->getRequest()->isSecure()) {
             $uri = CampSite::GetURIInstance();
             $tpl->campsiteVector = $uri->getCampsiteVector();
             $templateObj = new Template(CampSite::GetURIInstance()->getThemePath() . ltrim($template, '/'));
