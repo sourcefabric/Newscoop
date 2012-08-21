@@ -119,8 +119,11 @@ END:VCALENDAR';
 
         // http://stackoverflow.com/questions/1395151/content-dispositionwhat-are-the-differences-between-inline-and-attachment
         // header('Content-type: text/html; charset=utf-8');
-        header('Content-type: text/calendar; charset=utf-8');
-        header('Content-Disposition: inline; filename=calendar.ics');
+        //header('Content-type: text/calendar; charset=utf-8');
+        //header('Content-Disposition: inline; filename=calendar.ics');
+        $this->getResponse()->setHeader('Content-type', 'text/calendar; charset=utf-8', true);
+        $this->getResponse()->setHeader('Content-Disposition', 'inline; filename=calendar.ics');
+        $this->getResponse()->sendHeaders();
 
         echo str_replace("\n", "\r\n", $ical_str);
         exit(0);
