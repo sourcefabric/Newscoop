@@ -61,7 +61,7 @@ class PurchaseFacade
         );
 
         if (!empty($data->latest_receipt_info)) {
-            $return['expires_date'] = gmdate('Y-m-d H:i:s', $data->latest_receipt_info->expires_date);
+            $return['expires_date'] = gmdate('Y-m-d H:i:s', round($data->latest_receipt_info->expires_date / 1000.0));
         }
 
         return $return;
