@@ -13,6 +13,8 @@ use Newscoop\Entity\Acl\Role;
 use Newscoop\Entity\User\Group;
 use Newscoop\Entity\Author;
 
+require_once($GLOBALS['g_campsiteDir'].'/classes/SaaS.php');
+
 /**
  * @Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
  * @Table(name="liveuser_users", uniqueConstraints={

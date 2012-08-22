@@ -2,7 +2,7 @@
 
 namespace Gedmo\Timestampable\Mapping\Driver;
 
-use Gedmo\Mapping\Driver\AbstractAnnotationDriver,
+use Gedmo\Mapping\Driver\AnnotationDriverInterface,
     Doctrine\Common\Annotations\AnnotationReader,
     Gedmo\Exception\InvalidMappingException;
 
@@ -18,7 +18,7 @@ use Gedmo\Mapping\Driver\AbstractAnnotationDriver,
  * @link http://www.gediminasm.org
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-class Annotation extends AbstractAnnotationDriver
+class Annotation implements AnnotationDriverInterface
 {
     /**
      * Annotation field is timestampable
@@ -30,7 +30,7 @@ class Annotation extends AbstractAnnotationDriver
      *
      * @var array
      */
-    protected $validTypes = array(
+    private $validTypes = array(
         'date',
         'time',
         'datetime',
@@ -40,10 +40,36 @@ class Annotation extends AbstractAnnotationDriver
     );
 
     /**
+     * Annotation reader instance
+     *
+     * @var object
+     */
+    private $reader;
+
+    /**
+     * original driver if it is available
+     */
+    protected $_originalDriver = null;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setAnnotationReader($reader)
+    {
+        $this->reader = $reader;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function readExtendedMetadata($meta, array &$config) {
-        $class = $this->getMetaReflectionClass($meta);
+        $class = $meta->getReflectionClass();
+        if (!$class) {
+            // based on recent doctrine 2.3.0-DEV maybe will be fixed in some way
+            // this happens when running annotation driver in combination with
+            // static reflection services. This is not the nicest fix
+            $class = new \ReflectionClass($meta->name);
+        }
         // property annotations
         foreach ($class->getProperties() as $property) {
             if ($meta->isMappedSuperclass && !$property->isPrivate() ||
@@ -64,18 +90,42 @@ class Annotation extends AbstractAnnotationDriver
                     throw new InvalidMappingException("Field - [{$field}] trigger 'on' is not one of [update, create, change] in class - {$meta->name}");
                 }
                 if ($timestampable->on == 'change') {
-                    if (!isset($timestampable->field)) {
-                        throw new InvalidMappingException("Missing parameters on property - {$field}, field must be set on [change] trigger in class - {$meta->name}");
+                    if (!isset($timestampable->field) || !isset($timestampable->value)) {
+                        throw new InvalidMappingException("Missing parameters on property - {$field}, field and value must be set on [change] trigger in class - {$meta->name}");
                     }
                     $field = array(
                         'field' => $field,
                         'trackedField' => $timestampable->field,
-                        'value' => $timestampable->value,
+                        'value' => $timestampable->value
                     );
                 }
                 // properties are unique and mapper checks that, no risk here
                 $config[$timestampable->on][] = $field;
             }
         }
+    }
+
+    /**
+     * Checks if $field type is valid
+     *
+     * @param object $meta
+     * @param string $field
+     * @return boolean
+     */
+    protected function isValidField($meta, $field)
+    {
+        $mapping = $meta->getFieldMapping($field);
+        return $mapping && in_array($mapping['type'], $this->validTypes);
+    }
+
+    /**
+     * Passes in the mapping read by original driver
+     *
+     * @param $driver
+     * @return void
+     */
+    public function setOriginalDriver($driver)
+    {
+        $this->_originalDriver = $driver;
     }
 }

@@ -26,12 +26,13 @@ interface RepositoryInterface extends RepositoryUtilsInterface
      *
      * @param object $node - Root node
      * @param bool $direct - Obtain direct children?
+     * @param array $config - Metadata configuration
      * @param array $options - Options
      * @param boolean $includeNode - Include node in results?
      *
      * @return array - Array of nodes
      */
-    public function getNodesHierarchy($node = null, $direct = false, array $options = array(), $includeNode = false);
+    public function getNodesHierarchy($node = null, $direct, array $config, array $options = array(), $includeNode = false);
 
     /**
      * Get list of children followed by given $node

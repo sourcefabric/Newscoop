@@ -59,13 +59,13 @@ class Yaml extends File implements Driver
                     }
 
                     if ($mappingProperty['on'] == 'change') {
-                        if (!isset($mappingProperty['field'])) {
-                            throw new InvalidMappingException("Missing parameters on property - {$field}, field must be set on [change] trigger in class - {$meta->name}");
+                        if (!isset($mappingProperty['field']) || !isset($mappingProperty['value'])) {
+                            throw new InvalidMappingException("Missing parameters on property - {$field}, field and value must be set on [change] trigger in class - {$meta->name}");
                         }
                         $field = array(
                             'field' => $field,
                             'trackedField' => $mappingProperty['field'],
-                            'value' => isset($mappingProperty['value']) ? $mappingProperty['value'] : null,
+                            'value' => $mappingProperty['value']
                         );
                     }
                     $config[$mappingProperty['on']][] = $field;

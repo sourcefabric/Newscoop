@@ -326,10 +326,7 @@ class NestedTreeRepository extends AbstractTreeRepository
             }
         }
         if (!$sortByField) {
-            if (isset($config['root'])) {
-                $qb->addOrderBy('node.' . $config['root'], 'ASC');
-            }
-            $qb->addOrderBy('node.' . $config['left'], 'ASC', true);
+            $qb->orderBy('node.' . $config['left'], 'ASC');
         } else {
             if ($meta->hasField($sortByField) && in_array(strtolower($direction), array('asc', 'desc'))) {
                 $qb->orderBy('node.' . $sortByField, $direction);
@@ -789,11 +786,8 @@ class NestedTreeRepository extends AbstractTreeRepository
     /**
      * {@inheritDoc}
      */
-    public function getNodesHierarchyQueryBuilder($node = null, $direct = false, array $options = array(), $includeNode = false)
+    public function getNodesHierarchyQueryBuilder($node = null, $direct, array $config, array $options = array(), $includeNode = false)
     {
-        $meta = $this->getClassMetadata();
-        $config = $this->listener->getConfiguration($this->_em, $meta->name);
-
         return $this->childrenQueryBuilder(
             $node,
             $direct,
@@ -806,17 +800,17 @@ class NestedTreeRepository extends AbstractTreeRepository
     /**
      * {@inheritDoc}
      */
-    public function getNodesHierarchyQuery($node = null, $direct = false, array $options = array(), $includeNode = false)
+    public function getNodesHierarchyQuery($node = null, $direct, array $config, array $options = array(), $includeNode = false)
     {
-        return $this->getNodesHierarchyQueryBuilder($node, $direct, $options, $includeNode)->getQuery();
+        return $this->getNodesHierarchyQueryBuilder($node, $direct, $config, $options)->getQuery();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getNodesHierarchy($node = null, $direct = false, array $options = array(), $includeNode = false)
+    public function getNodesHierarchy($node = null, $direct, array $config, array $options = array(), $includeNode = false)
     {
-        return $this->getNodesHierarchyQuery($node, $direct, $options, $includeNode)->getArrayResult();
+        return $this->getNodesHierarchyQuery($node, $direct, $config, $options)->getArrayResult();
     }
 
     /**

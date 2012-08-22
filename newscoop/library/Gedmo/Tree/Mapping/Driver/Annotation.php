@@ -2,7 +2,7 @@
 
 namespace Gedmo\Tree\Mapping\Driver;
 
-use Gedmo\Mapping\Driver\AbstractAnnotationDriver,
+use Gedmo\Mapping\Driver\AnnotationDriverInterface,
     Gedmo\Exception\InvalidMappingException,
     Gedmo\Tree\Mapping\Validator;
 
@@ -18,7 +18,7 @@ use Gedmo\Mapping\Driver\AbstractAnnotationDriver,
  * @link http://www.gediminasm.org
  * @license MIT License (http://www.opensource.org/licenses/mit-license.php)
  */
-class Annotation extends AbstractAnnotationDriver
+class Annotation implements AnnotationDriverInterface
 {
     /**
      * Annotation to define the tree type
@@ -75,19 +75,46 @@ class Annotation extends AbstractAnnotationDriver
      *
      * @var array
      */
-    protected $strategies = array(
+    private $strategies = array(
         'nested',
         'closure',
         'materializedPath'
     );
 
     /**
+     * Annotation reader instance
+     *
+     * @var object
+     */
+    private $reader;
+
+    /**
+     * original driver if it is available
+     */
+    protected $_originalDriver = null;
+
+    /**
+     * {@inheritDoc}
+     */
+    public function setAnnotationReader($reader)
+    {
+        $this->reader = $reader;
+    }
+
+    /**
      * {@inheritDoc}
      */
     public function readExtendedMetadata($meta, array &$config)
     {
+        $class = $meta->getReflectionClass();
         $validator = new Validator();
-        $class = $this->getMetaReflectionClass($meta);
+        
+        if (!$class) {
+            // based on recent doctrine 2.3.0-DEV maybe will be fixed in some way
+            // this happens when running annotation driver in combination with
+            // static reflection services. This is not the nicest fix
+            $class = new \ReflectionClass($meta->name);
+        }
         // class annotations
         if ($annot = $this->reader->getClassAnnotation($class, self::TREE)) {
             if (!in_array($annot->type, $this->strategies)) {
@@ -224,5 +251,16 @@ class Annotation extends AbstractAnnotationDriver
                 throw new InvalidMappingException("Cannot find Tree type for class: {$meta->name}");
             }
         }
+    }
+
+    /**
+     * Passes in the mapping read by original driver
+     *
+     * @param $driver
+     * @return void
+     */
+    public function setOriginalDriver($driver)
+    {
+        $this->_originalDriver = $driver;
     }
 }

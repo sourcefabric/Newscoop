@@ -325,26 +325,25 @@ class ClosureTreeRepository extends AbstractTreeRepository
     /**
      * {@inheritdoc}
      */
-    public function getNodesHierarchy($node = null, $direct = false, array $options = array(), $includeNode = false)
+    public function getNodesHierarchy($node = null, $direct, array $config, array $options = array(), $includeNode = false)
     {
-        return $this->getNodesHierarchyQuery($node, $direct, $options, $includeNode)->getArrayResult();
+        return $this->getNodesHierarchyQuery($node, $direct, $config, $options, $includeNode)->getArrayResult();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getNodesHierarchyQuery($node = null, $direct = false, array $options = array(), $includeNode = false)
+    public function getNodesHierarchyQuery($node = null, $direct, array $config, array $options = array(), $includeNode = false)
     {
-        return $this->getNodesHierarchyQueryBuilder($node, $direct, $options, $includeNode)->getQuery();
+        return $this->getNodesHierarchyQueryBuilder($node, $direct, $config, $options, $includeNode)->getQuery();
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getNodesHierarchyQueryBuilder($node = null, $direct = false, array $options = array(), $includeNode = false)
+    public function getNodesHierarchyQueryBuilder($node = null, $direct, array $config, array $options = array(), $includeNode = false)
     {
         $meta = $this->getClassMetadata();
-        $config = $this->listener->getConfiguration($this->_em, $meta->name);
         $idField = $meta->getSingleIdentifierFieldName();
         $subQuery = '';
         $hasLevelProp = isset($config['level']) && $config['level'];

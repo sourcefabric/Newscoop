@@ -6,8 +6,7 @@ use Doctrine\Common\Persistence\ObjectManager,
     Doctrine\Common\Persistence\Mapping\ClassMetadata,
     Gedmo\Mapping\MappedEventSubscriber,
     Gedmo\Loggable\Mapping\Event\LoggableAdapter,
-    Doctrine\Common\EventArgs,
-    Doctrine\ORM\Event\LifecycleEventArgs;
+    Doctrine\Common\EventArgs;
 
 /**
  * SoftDeleteable listener
@@ -21,21 +20,6 @@ use Doctrine\Common\Persistence\ObjectManager,
  */
 class SoftDeleteableListener extends MappedEventSubscriber
 {
-
-    /**
-     * Pre soft-delete event
-     *
-     * @var string
-     */
-    const PRE_SOFT_DELETE = "preSoftDelete";
-
-    /**
-     * Post soft-delete event
-     *
-     * @var string
-     */
-    const POST_SOFT_DELETE = "postSoftDelete";
-
     /**
      * {@inheritdoc}
      */
@@ -59,18 +43,12 @@ class SoftDeleteableListener extends MappedEventSubscriber
         $ea = $this->getEventAdapter($args);
         $om = $ea->getObjectManager();
         $uow = $om->getUnitOfWork();
-        $evm = $om->getEventManager();
         
         foreach ($uow->getScheduledEntityDeletions() as $entity) {
             $meta = $om->getClassMetadata(get_class($entity));
             $config = $this->getConfiguration($om, $meta->name);
 
             if (isset($config['softDeleteable']) && $config['softDeleteable']) {
-                $evm->dispatchEvent(self::PRE_SOFT_DELETE, new LifecycleEventArgs(
-                    $entity,
-                    $om
-                ));
-
                 $reflProp = $meta->getReflectionProperty($config['fieldName']);
                 $date = new \DateTime();
                 $oldValue = $reflProp->getValue($entity);
@@ -80,11 +58,6 @@ class SoftDeleteableListener extends MappedEventSubscriber
                 $uow->propertyChanged($entity, $config['fieldName'], $oldValue, $date);
                 $uow->scheduleExtraUpdate($entity, array(
                     $config['fieldName'] => array($oldValue, $date)
-                ));
-
-                $evm->dispatchEvent(self::POST_SOFT_DELETE, new LifecycleEventArgs(
-                    $entity,
-                    $om
                 ));
             }
         }

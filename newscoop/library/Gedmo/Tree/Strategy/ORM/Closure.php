@@ -2,17 +2,16 @@
 
 namespace Gedmo\Tree\Strategy\ORM;
 
-use Doctrine\DBAL\Connection;
-use Doctrine\ORM\Version;
-use Doctrine\ORM\Proxy\Proxy;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Mapping\ClassMetadataInfo;
-use Doctrine\Common\Persistence\ObjectManager;
-use Gedmo\Tree\Strategy;
-use Gedmo\Tree\TreeListener;
-use Gedmo\Tool\Wrapper\AbstractWrapper;
 use Gedmo\Exception\RuntimeException;
+use Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Gedmo\Tree\Strategy;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Proxy\Proxy;
+use Gedmo\Tree\TreeListener;
+use Doctrine\ORM\Version;
+use Gedmo\Tool\Wrapper\AbstractWrapper;
 use Gedmo\Mapping\Event\AdapterInterface;
+use Doctrine\Common\Persistence\ObjectManager;
 
 /**
  * This strategy makes tree act like
@@ -313,11 +312,8 @@ class Closure implements Strategy
     {
         if (!empty($this->pendingNodesLevelProcess)) {
             $first = array_slice($this->pendingNodesLevelProcess, 0, 1);
-            $first = array_shift($first);
-            $meta = $em->getClassMetadata(get_class($first));
+            $meta = $em->getClassMetadata(get_class($first[0]));
             unset($first);
-            $identifier = $meta->getIdentifier();
-            $mapping = $meta->getFieldMapping($identifier[0]);
             $config = $this->listener->getConfiguration($em, $meta->name);
             $closureClass = $config['closure'];
             $closureMeta = $em->getClassMetadata($closureClass);
@@ -331,16 +327,13 @@ class Closure implements Strategy
                 }
             }
 
-            // Avoid type conversion performance penalty
-            $type = 'integer' === $mapping['type'] ? Connection::PARAM_INT_ARRAY : Connection::PARAM_STR_ARRAY;
-
             // We calculate levels for all nodes
             $sql = 'SELECT c.descendant, MAX(c.depth) + 1 AS level ';
             $sql .= 'FROM '.$closureMeta->getTableName().' c ';
-            $sql .= 'WHERE c.descendant IN (?) ';
+            $sql .= 'WHERE c.descendant IN ('.implode(', ', array_keys($this->pendingNodesLevelProcess)).') ';
             $sql .= 'GROUP BY c.descendant';
 
-            $levels = $em->getConnection()->executeQuery($sql, array(array_keys($this->pendingNodesLevelProcess)), array($type))->fetchAll(\PDO::FETCH_KEY_PAIR);
+            $levels = $em->getConnection()->executeQuery($sql)->fetchAll(\PDO::FETCH_KEY_PAIR);
 
             // Now we update levels
             foreach ($this->pendingNodesLevelProcess as $nodeId => $node) {

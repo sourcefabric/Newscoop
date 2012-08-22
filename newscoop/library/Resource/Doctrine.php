@@ -8,8 +8,11 @@
 use Doctrine\ORM\EntityManager;
 use Doctrine\Common\EventManager;
 use Doctrine\Common\ClassLoader;
+use Doctrine\ORM\Mapping\Driver\DriverChain;
+use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
 use Doctrine\ORM\Configuration;
 use Doctrine\Common\Annotations\AnnotationRegistry;
+use Doctrine\Common\Annotations\SimpleAnnotationReader;
 use Doctrine\DBAL\Logging\EchoSQLLogger;
 use Gedmo\Timestampable\TimestampableListener;
 use Gedmo\Sluggable\SluggableListener;
@@ -55,34 +58,56 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
         $this->evm = new EventManager();
         $config = new Configuration();
         $options = $this->getOptions();
-
-        // timestampable
-        if (!empty($options['gedmo']['timestampable'])) {
-            $this->addTimestampable();
-        }
-        // sluggable
-        if (!empty($options['gedmo']['sluggable'])) {
-            $this->addSluggable();
-        }
-        // tree
-        if (!empty($options['gedmo']['tree'])) {
-            $this->addTree();
-        }
-        // profile logger
-        if (!empty($this->options['gedmo']['profile'])) {
-            $config->setSQLLogger(new EchoSQLLogger());
-        }
-
-        // set annotations reader
-        $driverImpl = $config->newDefaultAnnotationDriver(realpath($options['entity']['dir']));
-        $config->setMetadataDriverImpl($driverImpl);
+        // standard doctrine annotations
+        AnnotationRegistry::registerFile(
+            APPLICATION_PATH . '/../library/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php'
+        );
 
         $this->registerAutoloadNamespaces();
+
+        // standard annotation reader
+        $annotationReader = new SimpleAnnotationReader();
+        $annotationReader->addNamespace('Doctrine\ORM\Mapping');
+        $annotationReader->addNamespace('Newscoop\Annotations');
+
+        // register annotation driver
+        $driverChain = new DriverChain();
+
+        Gedmo\DoctrineExtensions::registerAbstractMappingIntoDriverChainORM(
+            $driverChain, // our metadata driver chain, to hook into
+            $annotationReader // our cached annotation reader
+        );
+
+        // drivers for diferent namespaces
+        $driverChain->addDriver(new AnnotationDriver($annotationReader, array(
+            $options['entity']['dir'],
+        )), 'Newscoop\Entity');
+
+        //echo '<pre>';print_r($driverChain);echo '<pre>';die;
+        // register metadata driver
+        $config->setMetadataDriverImpl($driverChain);
 
         //set cache
         $cache = new $options['cache'];
         $config->setMetadataCacheImpl($cache);
         $config->setQueryCacheImpl($cache);
+
+        // timestampable
+        if (!empty($options['gedmo']['timestampable'])) {
+            $this->addTimestampable($annotationReader);
+        }
+        // sluggable
+        if (!empty($options['gedmo']['sluggable'])) {
+            $this->addSluggable($annotationReader);
+        }
+        // tree
+        if (!empty($options['gedmo']['tree'])) {
+            $this->addTree($annotationReader);
+        }
+        // profile logger
+        if (!empty($this->options['gedmo']['profile'])) {
+            $config->setSQLLogger(new EchoSQLLogger());
+        }
 
         // set proxy
         $config->setProxyDir(realpath($options['proxy']['dir']));
@@ -93,7 +118,6 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
         if (empty($Campsite) && file_exists($config_file)) {
             require_once $config_file;
         }
-
     
         if (isset($options['database'])) {
             $database = $options['database'];
@@ -104,11 +128,15 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
         foreach ($options['functions'] as $function => $value)
             $config->addCustomNumericFunction(strtoupper($function), $value);
 
+       // echo'<pre>';print_r($config);echo'</pre>';die;
+
         $this->em = EntityManager::create(
             $database,
             $config,
             $this->evm
         );
+
+      //  echo'<pre>';print_r($this->em);echo'</pre>';die;
 
         return $this->em;
     }
@@ -140,10 +168,10 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
      */
     protected function registerAutoloadNamespaces()
     {
+        // gedmo annotation loader
         AnnotationRegistry::registerAutoloadNamespace(
             'Gedmo\Mapping\Annotation',
-            realpath(APPLICATION_PATH . '/../../vendor/gedmo/doctrine-extensions/lib')
-        //,$this->modulePath . '/library'
+            realpath(APPLICATION_PATH . '/../library/Gedmo/doctrine-extensions/lib')
         );
     }
 
@@ -152,11 +180,12 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
      *
      * @return void
      */
-    protected function addTimestampable()
+    protected function addTimestampable($annotationReader)
     {
         if (!empty($this->evm)) {
-            $this->evm->addEventSubscriber(new TimestampableListener());
-    
+            $timestampable = new TimestampableListener();
+            $timestampable->setAnnotationReader($annotationReader);
+            $this->evm->addEventSubscriber($timestampable);
          }
     }
 
@@ -165,23 +194,26 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
      *
      * @return void
      */
-    protected function addSluggable()
+    protected function addSluggable($annotationReader)
     {
         if (!empty($this->evm)) {
-            $this->evm->addEventSubscriber(new SluggableListener());
+            $sluggable = new SluggableListener();
+            $sluggable->setAnnotationReader($annotationReader);
+            $this->evm->addEventSubscriber($sluggable);
         }
     }
-
     
     /**
      * Add Tree listener
      *
      * @return void
      */
-    protected function addTree()
+    protected function addTree($annotationReader)
     {
         if (!empty($this->evm)) {
-            $this->evm->addEventSubscriber(new TreeListener());
+            $tree = new TreeListener();
+            $tree->setAnnotationReader($annotationReader);
+            $this->evm->addEventSubscriber($tree);
         }
     }
 }

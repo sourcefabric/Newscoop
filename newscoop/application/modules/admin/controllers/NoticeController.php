@@ -5,6 +5,7 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 use \Newscoop\Entity\Notice as Notice;
+use Newscoop\Annotations\Acl;
 
 /**
  * @Acl(resource="notice", action="manage")
@@ -28,7 +29,7 @@ class Admin_NoticeController extends Zend_Controller_Action
     {
         $this->em = $this->_helper->service('em');
         // get notice repository
-        $this->noticeRepo = $repo = $this->em->getRepository('Newscoop\Entity\Notice');
+        $this->noticeRepo = $this->em->getRepository('Newscoop\Entity\Notice');
 
         camp_load_translation_strings('notices');
 
