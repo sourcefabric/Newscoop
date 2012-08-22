@@ -32,7 +32,6 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
     /** @var  */
     private $options;
 
-
     /**
      * Init doctrine
      */
@@ -83,7 +82,6 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
             $options['entity']['dir'],
         )), 'Newscoop\Entity');
 
-        //echo '<pre>';print_r($driverChain);echo '<pre>';die;
         // register metadata driver
         $config->setMetadataDriverImpl($driverChain);
 
@@ -128,15 +126,11 @@ class Resource_Doctrine extends \Zend_Application_Resource_ResourceAbstract
         foreach ($options['functions'] as $function => $value)
             $config->addCustomNumericFunction(strtoupper($function), $value);
 
-       // echo'<pre>';print_r($config);echo'</pre>';die;
-
         $this->em = EntityManager::create(
             $database,
             $config,
             $this->evm
         );
-
-      //  echo'<pre>';print_r($this->em);echo'</pre>';die;
 
         return $this->em;
     }

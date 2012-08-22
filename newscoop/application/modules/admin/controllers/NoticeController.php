@@ -28,7 +28,6 @@ class Admin_NoticeController extends Zend_Controller_Action
     public function init()
     {
         $this->em = $this->_helper->service('em');
-        // get notice repository
         $this->noticeRepo = $this->em->getRepository('Newscoop\Entity\Notice');
 
         camp_load_translation_strings('notices');
@@ -67,7 +66,6 @@ class Admin_NoticeController extends Zend_Controller_Action
                 'published' => 'Publish/Unpublish'),
             array('id' => false,'categories' => false));
 
-        //$table->setSorting(array('published' => 'desc'));
         $table->setInitialSorting(array('id' => 'desc'));
 
         $index = 1;
@@ -135,7 +133,6 @@ class Admin_NoticeController extends Zend_Controller_Action
                 'author' => null,
                 'status' => null,
                 'published' => null))
-        //->setVisible(array('actions' => false))
             ->setClasses(
             array('id' => 'noticeId',
                 'lastname' => 'noticeLastname',
@@ -167,11 +164,9 @@ class Admin_NoticeController extends Zend_Controller_Action
         //get config storage ready
         $confRepo = $this->em->getRepository('Newscoop\Entity\NoticeConf');
         $confRecord = $confRepo->findOneBy(array('conf_name'=>'notice_hidden_elements'));
-
         $noticeForm->disableFields($confRecord->getOptions());
 
         if ($request->isPost() && $noticeForm->isValid($request->getPost())) {
-
             // load notice in case a notice id is present
             if ($noticeForm->id->getValue()) {
                 $noticeRecord = $this->noticeRepo->find($noticeForm->id->getValue());
@@ -230,25 +225,23 @@ class Admin_NoticeController extends Zend_Controller_Action
 
             //load data and populate form for existing notice
             $noticeId = $this->getRequest()->getParam('id', null);
-            $repo = $this->em->getRepository('Newscoop\Entity\Notice');
-
-            $notice = $repo->find($noticeId);
+            $notice = $this->em->getRepository('Newscoop\Entity\Notice')->find($noticeId);
             if (!$notice) {
                 $notice = new \Newscoop\Entity\Notice();
             } else {
                 $noticeForm->setDefaultsFromEntity($notice);
             }
 
-            $repo = $this->em->getRepository('Newscoop\Entity\NoticeCategory');
-            $rootNodes = $this->view->categoryCollection = $repo->getRootNodes();
+            $this->view->categoryCollection = $this->em->getRepository('Newscoop\Entity\NoticeCategory')
+                ->getRootNodes();
 
             $trees = array();
-            foreach ($rootNodes as $node) {
+            foreach ($this->view->categoryCollection as $node) {
                 $treeArray = $repo->childrenHierarchy($node);
                 $trees[$node->getSlug()] = array('root' => $node, 'children' => $treeArray);
             }
-            $this->view->trees = $trees;
 
+            $this->view->trees = $trees;
             $this->view->noticeForm = $noticeForm;
             $this->view->notice = $notice;
 
@@ -262,7 +255,6 @@ class Admin_NoticeController extends Zend_Controller_Action
     public function deleteAction()
     {
         $noticeId = $this->getRequest()->getParam('id');
-
         $notice = $this->service->find($noticeId);
 
         $this->em->remove($notice);
@@ -293,14 +285,11 @@ class Admin_NoticeController extends Zend_Controller_Action
             $notices = array($notices);
         }
 
-
-        $repo = $this->em->getRepository('Newscoop\Entity\Notice');
-
         $status_enum = array_flip(Notice::$status_enum);
 
         try {
             foreach ($notices as $id) {
-                $notice = $repo->find($id);
+                $notice = $this->em->getRepository('Newscoop\Entity\Notice')->find($id);
                 $msg = getGS('Notice "$2" status was changed to $3 by $1', Zend_Registry::get('user')->getName(),
                     $notice->getTitle(), $status);
                 $this->_helper->flashMessenger($msg);
@@ -342,6 +331,7 @@ class Admin_NoticeController extends Zend_Controller_Action
                 $availableParentCategories[$category['id']] = str_repeat('-', $category['lvl']) . $category['title'];
             }
         }
+
         $categoryForm->setCategories($availableParentCategories);
         $categoryForm->setAction($this->view->baseUrl('admin/notice/category-add'));
         $this->view->categoryForm = $categoryForm;
@@ -405,8 +395,7 @@ class Admin_NoticeController extends Zend_Controller_Action
     {
         $categoryId = $this->getRequest()->getParam('id');
 
-        $repo = $this->em->getRepository('Newscoop\Entity\NoticeCategory');
-        $treeToRemove = $repo->find($categoryId);
+        $treeToRemove = $this->em->getRepository('Newscoop\Entity\NoticeCategory')->find($categoryId);
         $this->em->remove($treeToRemove);
         $this->em->flush();
         $this->_helper->redirector->gotoUrl('/admin/notice/category');
@@ -427,8 +416,8 @@ class Admin_NoticeController extends Zend_Controller_Action
         }
 
         //get config storage ready
-        $confRepo = $this->em->getRepository('Newscoop\Entity\NoticeConf');
-        $confRecord = $confRepo->findOneBy(array('conf_name'=>'notice_hidden_elements'));
+        $confRecord = $this->em->getRepository('Newscoop\Entity\NoticeConf')
+            ->findOneBy(array('conf_name'=>'notice_hidden_elements'));
 
         if(empty($confRecord)){
 
