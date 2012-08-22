@@ -15,6 +15,8 @@ require_once __DIR__ . '/AbstractController.php';
 class Api_OnlineController extends AbstractController
 {
     const LANGUAGE_ID = 1;
+    const AD_TYPE = 'iPad_Ad';
+    const AD_SECTION = 'ad_name';
 
     /**
      * @var int
@@ -186,7 +188,7 @@ class Api_OnlineController extends AbstractController
     protected function formatArticle(Article $article)
     {
         $sectionId = $this->getSectionId($article);
-        $storyId = $this->getStoryName($article) !== '' ? $sectionId . $this->getStoryName($article) : null;
+        $storyId = $this->getStoryName($article) ? $sectionId . $this->getStoryName($article) : null;
         return array_merge(parent::formatArticle($article), array(
             'url' => $this->view->serverUrl($this->view->url(array(
                 'controller' => 'online',
@@ -203,6 +205,7 @@ class Api_OnlineController extends AbstractController
             'story_name' => $this->getStoryName($article),
             'story_id' => $storyId,
             'teaser' => $this->getTeaser($article),
+            'advertisement' => $this->isAd($article),
         ));
     }
 
@@ -230,10 +233,25 @@ class Api_OnlineController extends AbstractController
     protected function getSectionName($article)
     {
         try {
-            return (string) $article->getData('printsection');
+            if ($this->isAd($article)) {
+                return (string) $article->getData(self::AD_SECTION) ?: 'Anzeige';
+            } else {
+                return (string) $article->getData('printsection');
+            }
         } catch (Exception $e) {
             return '';
         }
+    }
+
+    /**
+     * Test if article is advertisement
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return bool
+     */
+    protected function isAd($article)
+    {
+        return $article->getType() === self::AD_TYPE;
     }
 
     /**
@@ -260,7 +278,7 @@ class Api_OnlineController extends AbstractController
     protected function getStoryName($article)
     {
         try {
-            return $article->getData('printstory');
+            return (string) $article->getData('printstory');
         } catch (Exception $e) {
             return '';
         }
