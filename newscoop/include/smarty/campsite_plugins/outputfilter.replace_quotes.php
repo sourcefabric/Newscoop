@@ -10,7 +10,7 @@
     */
     function smarty_outputfilter_replace_quotes($output, &$smarty)
     {
-        return preg_replace('/(.+) \"(.+)\" /', '$1 «$2» ', $output);
+        return preg_replace('/([\s\']+){1,1}\"(.*?)\"([\s\']+){1,1}/', '$1«$2»$3', $output);
     }
 
 ?>
