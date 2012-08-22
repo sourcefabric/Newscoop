@@ -35,6 +35,9 @@ class Api_OnlineController extends AbstractController
     private $sections = array();
 
     /** @var array */
+    private $sectionRanks = array();
+
+    /** @var array */
     private $ids = array();
 
     public function init()
@@ -182,7 +185,7 @@ class Api_OnlineController extends AbstractController
      */
     protected function formatArticle(Article $article)
     {
-        $sectionId = $this->getId($this->getSectionName($article));
+        $sectionId = $this->getSectionId($article);
         $storyId = $this->getStoryName($article) !== '' ? $sectionId . $this->getStoryName($article) : null;
         return array_merge(parent::formatArticle($article), array(
             'url' => $this->view->serverUrl($this->view->url(array(
@@ -192,14 +195,30 @@ class Api_OnlineController extends AbstractController
             ), 'api')) . $this->getClientVersionParams(),
             'section_id' => $sectionId,
             'section_name' => $this->getSectionName($article),
-            'section_rank' => $this->rank++,
-            'image_url' => $this->getImageUrl($article, 'rubrikenseite'),
-            'article_quality' => 'prominent',
+            'section_rank' => $this->getSectionRank($sectionId),
+            'image_url' => $this->getArticleImageUrl($article),
+            'article_quality' => $this->isProminent($article) ? 'prominent' : 'companion',
             'last_modified' => $article->getUpdated()->format(self::DATE_FORMAT),
             'published' => $article->getPublished()->format(self::DATE_FORMAT),
             'story_name' => $this->getStoryName($article),
             'story_id' => $storyId,
+            'teaser' => $this->getTeaser($article),
         ));
+    }
+
+    /**
+     * Test if article is prominent
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return bool
+     */
+    protected function isProminent($article)
+    {
+        try {
+            return ! $article->getData('non_prominent');
+        } catch (Exception $e) {
+            return true;
+        }
     }
 
     /**
@@ -211,10 +230,25 @@ class Api_OnlineController extends AbstractController
     protected function getSectionName($article)
     {
         try {
-            return $article->getData('printsection');
+            return (string) $article->getData('printsection');
         } catch (Exception $e) {
             return '';
         }
+    }
+
+    /**
+     * Get section rank
+     *
+     * @param int $sectionId
+     * @return void
+     */
+    public function getSectionRank($sectionId)
+    {
+        if (!isset($this->sectionRanks[$sectionId])) {
+            $this->sectionRanks[$sectionId] = count($this->sectionRanks) + 1;
+        }
+
+        return $this->sectionRanks[$sectionId];
     }
 
     /**
@@ -235,15 +269,58 @@ class Api_OnlineController extends AbstractController
     /**
      * Get id for string
      *
-     * @param string $key
+     * @param Newscoop\Entity\Article $article
      * @return int
      */
-    protected function getId($key)
+    protected function getSectionId($article)
     {
+        try {
+            $key = $article->getData('printsection') ?: $article->getNumber();
+        } catch (Exception $e) {
+            $key = $article->getNumber();
+        }
+
         if (!isset($this->ids[$key])) {
             $this->ids[$key] = count($this->ids) + 1;
         }
 
         return $this->ids[$key];
+    }
+
+    /**
+     * Get article image url
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return string
+     */
+    protected function getArticleImageUrl($article)
+    {
+        list($width, $height) = $this->getArticleImageSizes($article);
+        $rendition = $this->isProminent($article) ? 'mobile_prominent' : 'mobile_non_prominent';
+        $image = $this->_helper->service('image.rendition')->getArticleRenditionImage($article->getNumber(), $rendition, $width, $height);
+        if (empty($image['src'])) {
+            return null;
+        }
+
+        $src = Zend_Registry::get('view')->url(array('src' => $image['src']), 'image', true, false);
+        return $this->view->serverUrl($src);
+    }
+
+    /**
+     * Get article image sizes
+     *
+     * @param Newscoop\Entity\Article $article
+     * @return array
+     */
+    protected function getArticleImageSizes($article)
+    {
+        $sizes = $this->isProminent($article) ? array(300, 100) : array(100, 100);
+        if ($this->isRetinaClient()) {
+            $sizes = array_map(function($size) {
+                return $size *= 2;
+            }, $sizes);
+        }
+
+        return $sizes;
     }
 }
