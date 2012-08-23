@@ -128,7 +128,9 @@ if ($articleObj->exists()) {
 	if ($publication_id > 0) {
     	$commentDefault = $publicationObj->commentsArticleDefaultEnabled();
         $articleObj->setCommentsEnabled($commentDefault);
-	}
+    } else {
+        $articleObj->setCommentsEnabled(true);
+    }
 
 	camp_html_add_msg(getGS("Article created."), "ok");
 	camp_html_goto_page(camp_html_article_url($articleObj, $f_language_id, "edit.php"), false);
