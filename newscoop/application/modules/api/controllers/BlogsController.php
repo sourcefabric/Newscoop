@@ -71,7 +71,7 @@ class Api_BlogsController extends AbstractController
                     'title' => $blogs[0]->getTitle(),
                     'description' => trim(strip_tags($blogs[0]->getData('infolong'))),
                     'rank' => $rank++,
-                    'image_url' => $this->getImageUrl($blogs[0], self::IMAGE_RENDITION),
+                    'image_url' => $this->getBlogImageUrl($blogs[0]),
                     'published' => $this->formatDate($published),
                 );
             }
@@ -173,7 +173,7 @@ class Api_BlogsController extends AbstractController
                     'controller' => 'comments',
                     'action' => 'list',
                 ), 'default') . $this->getApiQueryString(array('article_id' => $post->getNumber()))),
-                'blog_id' => $blogInfo['id'],
+                'blog_id' => $section,
                 'blog_name' => $blogInfo['name'],
                 'blog_image_url' => $blogInfo['image_url'],
                 'rank' => $rank++,
