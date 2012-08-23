@@ -17,6 +17,7 @@ class Api_OnlineController extends AbstractController
     const LANGUAGE_ID = 1;
     const AD_TYPE = 'iPad_Ad';
     const AD_SECTION = 'ad_name';
+    const PROMINENT_SWITCH = 'iPad_prominent';
 
     /**
      * @var int
@@ -218,9 +219,9 @@ class Api_OnlineController extends AbstractController
     protected function isProminent($article)
     {
         try {
-            return ! $article->getData('non_prominent');
+            return $this->isAd($article) || $article->getData(self::PROMINENT_SWITCH);
         } catch (Exception $e) {
-            return true;
+            return false;
         }
     }
 
