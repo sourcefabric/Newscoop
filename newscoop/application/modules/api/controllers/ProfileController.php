@@ -187,7 +187,7 @@ class Api_ProfileController extends AbstractController
             'customer_id' => $user->getAttribute('customer_id'),
             'print_subscription' => $validUntil !== null,
             'print_subscription_valid_until' => $validUntil !== null ? $validUntil->format('Y-m-d') : null,
-            'digital_upgrade' => (bool) $user->getAttribute(self::DIGITAL_UPGRADE),
+            'digital_upgrade' => (bool) $user->getAttribute(self::DIGITAL_UPGRADE) && $validUntil !== null,
             'free_digital_upgrade_consumed' => $this->_helper->service('mobile.free_upgrade')->isConsumed($user),
         );
     }
