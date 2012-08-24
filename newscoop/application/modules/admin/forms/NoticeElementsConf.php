@@ -11,7 +11,7 @@ class Admin_Form_NoticeElementsConf extends Zend_Form
 {
     /**
      */
-    public function init($confOptions)
+    public function init($confOptions = array())
     {
         $notice_elements = new Zend_Form_Element_MultiCheckbox('notice_elements');
         $notice_elements->setLabel(getGS('Hidden Elements'));

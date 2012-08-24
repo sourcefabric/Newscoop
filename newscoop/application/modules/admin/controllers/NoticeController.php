@@ -224,7 +224,7 @@ class Admin_NoticeController extends Zend_Controller_Action
         } else {
 
             //load data and populate form for existing notice
-            $noticeId = $this->getRequest()->getParam('id', null);
+            $noticeId = $this->getRequest()->getParam('id', 'null');
             $notice = $this->em->getRepository('Newscoop\Entity\Notice')->find($noticeId);
             if (!$notice) {
                 $notice = new \Newscoop\Entity\Notice();

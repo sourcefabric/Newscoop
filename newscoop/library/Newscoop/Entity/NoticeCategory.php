@@ -5,7 +5,7 @@ namespace Newscoop\Entity;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Tree\Entity\Repository\NestedTreeRepository;
 /**
- * @Gedmo\Tree(type="nested")
+ * @\Gedmo\Mapping\Annotation\Tree(type="nested")
  * @Table(name="notice_category")
  * use repository for handy tree functions
  * @Entity(repositoryClass="Newscoop\Entity\Repository\NoticeCategoryRepository")
@@ -32,31 +32,31 @@ class NoticeCategory
     private $slug;
 
     /**
-     * @Gedmo\TreeLeft
+     * @\Gedmo\Mapping\Annotation\TreeLeft
      * @Column(name="lft", type="integer")
      */
     private $lft;
 
     /**
-     * @Gedmo\TreeLevel
+     * @\Gedmo\Mapping\Annotation\TreeLevel
      * @Column(name="lvl", type="integer")
      */
     private $lvl;
 
     /**
-     * @Gedmo\TreeRight
+     * @\Gedmo\Mapping\Annotation\TreeRight
      * @Column(name="rgt", type="integer")
      */
     private $rgt;
 
     /**
-     * @Gedmo\TreeRoot
+     * @\Gedmo\Mapping\Annotation\TreeRoot
      * @Column(name="root", type="integer", nullable=true)
      */
     private $root;
 
     /**
-     * @Gedmo\TreeParent
+     * @\Gedmo\Mapping\Annotation\TreeParent
      * @ManyToOne(targetEntity="NoticeCategory", inversedBy="children")
      * @JoinColumn(name="parent_id", referencedColumnName="id", onDelete="SET NULL")
      */
