@@ -81,6 +81,8 @@ class Api_OnlineController extends AbstractController
         $this->view->getGimme()->article = new MetaArticle($article->getLanguageId(), $article->getNumber());
         $this->view->width = $this->getClientWidth();
         $this->view->height = $this->getClientHeight();
+
+        $this->render($this->isProminent($article) ? 'prominent' : 'companion');
     }
 
     /**
@@ -314,32 +316,7 @@ class Api_OnlineController extends AbstractController
      */
     protected function getArticleImageUrl($article)
     {
-        list($width, $height) = $this->getArticleImageSizes($article);
         $rendition = $this->isProminent($article) ? 'mobile_prominent' : 'mobile_non_prominent';
-        $image = $this->_helper->service('image.rendition')->getArticleRenditionImage($article->getNumber(), $rendition, $width, $height);
-        if (empty($image['src'])) {
-            return null;
-        }
-
-        $src = Zend_Registry::get('view')->url(array('src' => $image['src']), 'image', true, false);
-        return $this->view->serverUrl($src);
-    }
-
-    /**
-     * Get article image sizes
-     *
-     * @param Newscoop\Entity\Article $article
-     * @return array
-     */
-    protected function getArticleImageSizes($article)
-    {
-        $sizes = $this->isProminent($article) ? array(300, 100) : array(100, 100);
-        if ($this->isRetinaClient()) {
-            $sizes = array_map(function($size) {
-                return $size *= 2;
-            }, $sizes);
-        }
-
-        return $sizes;
+        return $this->getRenditionUrl($article, $rendition, array(100, 100), array(300, 100));
     }
 }

@@ -511,4 +511,25 @@ abstract class AbstractController extends Zend_Controller_Action
             return null;
         }
     }
+
+    /**
+     * Get rendition image url
+     *
+     * @param Newscoop\Entity\Article $article
+     * @param string $rendition
+     * @param array $normalSizes
+     * @param array $retinaSizes
+     * @return string
+     */
+    protected function getRenditionUrl($article, $rendition, array $normalSizes, array $retinaSizes)
+    {
+        list($width, $height) = $this->isRetinaClient() ? $retinaSizes : $normalSizes;
+        $image = $this->_helper->service('image.rendition')->getArticleRenditionImage($article->getNumber(), $rendition, $width, $height);
+        if (empty($image['src'])) {
+            return null;
+        }
+
+        $src = Zend_Registry::get('view')->url(array('src' => $image['src']), 'image', true, false);
+        return $this->view->serverUrl($src);
+    }
 }

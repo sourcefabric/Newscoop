@@ -114,8 +114,6 @@ class Api_ArticlesController extends AbstractController
      */
     public function itemAction()
     {
-        $this->getHelper('contextSwitch')->addActionContext('item', 'json')->initContext();
-
         $id = $this->request->getParam('article_id');
         if (is_null($id)) {
             print Zend_Json::encode($this->response);
@@ -127,19 +125,9 @@ class Api_ArticlesController extends AbstractController
             return $this->_helper->json($response);
         }
 
-        $articleData = new ArticleData($article->getType(), $article->getId(), self::LANGUAGE);
-        if ($this->request->getParam('side') == 'back') {
-            $data = $this->getBackside($article, $articleData);
-            $template = 'article-backside.phtml';
-        } else {
-            $data = $this->getFrontside($article, $articleData);
-            $template = 'article.phtml';
-        }
-
-        $smarty = CampTemplate::singleton();
-        $smarty->setTemplateDir('/var/www/newscoop/application/modules/api/views');
-        $smarty->assign('data', $data);
-        $smarty->display('scripts/articles/' . $template);
+        $this->_helper->smarty->setSmartyView();
+        $this->view->getGimme()->article = new MetaArticle($article->getLanguageId(), $article->getNumber());
+        $this->render($this->request->getParam('side') == 'back' ? 'backside' : 'frontsize');
     }
 
     private function getBackside(Article $article, \ArticleData $adata)
