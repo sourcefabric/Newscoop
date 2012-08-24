@@ -1,0 +1,14 @@
+{
+    "name":"sourcefabric/wobs",
+
+    "require": {
+        "php": ">=5.3.0",
+        "gedmo/doctrine-extensions": "v2.3.2"
+    },
+
+    "autoload": {
+        "psr-0": {
+            "Gedmo": "vendor/gedmo/doctrine-extensions/lib/"
+        }
+    }
+}

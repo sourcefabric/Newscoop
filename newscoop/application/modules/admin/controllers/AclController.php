@@ -61,7 +61,8 @@ class Admin_AclController extends Zend_Controller_Action
                 'topic' => getGS('Topics'),
                 'language' => getGS('Languages'),
                 'playlist' => getGS('Article Playlists'),
-                'printdesk' => getGS('Printdesk')
+                'printdesk' => getGS('Printdesk'),
+                'notice' => getGS('Notice'),
             ),
             'users' => array(
                 'user-group' => getGS('User Groups'),
