@@ -60,11 +60,8 @@ class TreeService
      */
     private function clear()
     {
-        foreach ($this->repository->findBy(array(), array('id' => 'asc')) as $item) {
-            $this->orm->remove($item);
-        }
-
-        $this->orm->flush();
+        $query = $this->orm->createQuery('DELETE FROM Newscoop\Entity\TopicTree');
+        $query->execute();
     }
 
     /**

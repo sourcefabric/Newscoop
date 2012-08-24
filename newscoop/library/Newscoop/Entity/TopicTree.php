@@ -33,7 +33,7 @@ class TopicTree
     private $node_right;
 
     /**
-     * @OneToMany(targetEntity="Newscoop\Entity\Topic", mappedBy="topic", cascade={"persist", "remove"}, indexBy="language")
+     * @OneToMany(targetEntity="Newscoop\Entity\Topic", mappedBy="topic", cascade={"persist"}, indexBy="language")
      * @var Doctrine\Common\Collections\Collection
      */
     private $names;
@@ -112,7 +112,7 @@ class TopicTree
     public function getName(Language $language = null)
     {
         if ($language === null) {
-            return $this->names->isEmpty() ? null : $this->names->first()->current()->getName();
+            return $this->names->isEmpty() ? null : $this->names->first()->getName();
         }
 
         foreach ($this->names as $name) {
@@ -137,5 +137,10 @@ class TopicTree
         if (!$this->names->contains($topicName)) {
             $this->names->add($topicName);
         }
+    }
+
+    public function __toString()
+    {
+        echo json_encode($this->getName());
     }
 }
