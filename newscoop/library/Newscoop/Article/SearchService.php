@@ -7,10 +7,12 @@
 
 namespace Newscoop\Article;
 
+use Newscoop\Search\ServiceInterface;
+
 /**
  * Search Service
  */
-class SearchService implements \Newscoop\Search\ServiceInterface
+class SearchService implements ServiceInterface
 {
     /**
      * @var Newscoop\Webcode\Mapper
@@ -134,8 +136,8 @@ class SearchService implements \Newscoop\Search\ServiceInterface
                 break;
 
             case 'dossier':
-                $doc['lead'] = strip_tags($article->getData('lede'));
-                $doc['content'] = strip_tags($article->getData('history'));
+                $doc['lead'] = strip_tags($article->getData('teaser'));
+                $doc['content'] = strip_tags($article->getData('lede') . "\n" . $article->getData('history'));
                 $doc['title'] = array(
                     'value' => $doc['title'],
                     'boost' => 1.5,
