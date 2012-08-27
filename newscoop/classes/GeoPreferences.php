@@ -64,6 +64,12 @@ public static function GetMapInfo($p_htmlDir = '', $p_websiteUrl = '', $p_mapPro
     global $Campsite;
     $cnf_html_dir = $Campsite['HTML_DIR'];
     $cnf_website_url = $Campsite['WEBSITE_URL'];
+    $cnf_https_on = $Campsite['SSL_SITE'];
+
+    $outer_http_protocol = 'http';
+    if ($cnf_https_on) {
+        $outer_http_protocol = 'https';
+    }
 
     if ('' != $p_htmlDir) {$cnf_html_dir = $p_htmlDir;}
     if ('' != $p_websiteUrl) {$cnf_website_url = $p_websiteUrl;}
@@ -136,8 +142,8 @@ public static function GetMapInfo($p_htmlDir = '', $p_websiteUrl = '', $p_mapPro
         $one_prov_include_async = '';
         if ('googlev3' == $one_prov_name)
         {
-            $one_prov_include = 'http://maps.google.com/maps/api/js?v=3.9&sensor=false';
-            $one_prov_include_async = 'http://maps.google.com/maps/api/js?v=3.9&sensor=false&callback=initialize_gv3async';
+            $one_prov_include = '' . $outer_http_protocol . '://maps.google.com/maps/api/js?v=3.9&sensor=false';
+            $one_prov_include_async = '' . $outer_http_protocol . '://maps.google.com/maps/api/js?v=3.9&sensor=false&callback=initialize_gv3async';
             $map_prov_gv3_async_method = 'initialize_gv3async';
             $map_prov_gv3_async = true;
         }
@@ -176,8 +182,8 @@ public static function GetMapInfo($p_htmlDir = '', $p_websiteUrl = '', $p_mapPro
         }
 
         $map_prov_default = 'googlev3';
-        $map_prov_includes[] = 'http://maps.google.com/maps/api/js?v=3.9&sensor=false';
-        $map_prov_includes_async[] = 'http://maps.google.com/maps/api/js?v=3.9&sensor=false&callback=initialize_gv3async';
+        $map_prov_includes[] = '' . $outer_http_protocol . '://maps.google.com/maps/api/js?v=3.9&sensor=false';
+        $map_prov_includes_async[] = '' . $outer_http_protocol . '://maps.google.com/maps/api/js?v=3.9&sensor=false&callback=initialize_gv3async';
         $map_prov_gv3_async_method = 'initialize_gv3async';
         $map_prov_gv3_async = true;
 
