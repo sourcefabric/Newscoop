@@ -13,9 +13,9 @@
 <div style="margin-top:40px;">&nbsp;</div>
 
 <div id="article-image-edit-thumbnail">
-    <?php echo $this->thumbnail($this->image, 400, 400, 'fit')->getImg($this); ?></div>
+    <?php echo $this->thumbnail($this->image, 400, 400, 'fit')->getImg($this); ?>
     <div id="article-image-edit-original">
-        <a href="/<?php echo $this->image->getPath(); ?>" target="_blank">original image</a>
+        <a href="<?php echo $this->baseUrl($this->image->getPath()); ?>" target="_blank"><?php echo getGS('Show original image'); ?></a>
     </div>
 </div>
 
