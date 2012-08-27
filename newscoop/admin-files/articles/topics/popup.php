@@ -44,7 +44,7 @@ foreach ($articleTopics as $topic) {
 <h1><?php putGS("Attach Topics"); ?></h1>
 
 <fieldset class="buttons">
-	<input type="submit" value="<?php putGS("Save and Close"); ?>" class="button right-floated"  />
+	<input type="submit" value="<?php putGS("Save and Close"); ?>" class="button right-floated" />
 	<input type="submit" value="<?php putGS("Close"); ?>" class="button right-floated" onclick="parent.$.fancybox.close(); return false;" />
     <input type="text" name="search" class="autocomplete topics input_text" />
     <input type="button" class="default-button" value="<?php putGS('Search'); ?>" />
@@ -190,7 +190,6 @@ $(document).ready(function() {
     $('#add_new_topic').click(function() {
         $('#new_topic_holder').toggle();
     });
-
 });
 
 <?php if ($g_user->hasPermission('ManageTopics')) { ?>
