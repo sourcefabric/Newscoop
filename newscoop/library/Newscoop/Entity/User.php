@@ -145,7 +145,7 @@ class User implements \Zend_Acl_Role_Interface, \Newscoop\Search\DocumentInterfa
     private $subscriber;
 
     /**
-     * @OneToOne(targetEntity="Author")
+     * @OneToOne(targetEntity="Author", inversedBy="user")
      * @var Newscoop\Entity\Author
      */
     private $author;

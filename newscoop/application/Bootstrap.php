@@ -293,6 +293,9 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('user'))
             ->addArgument(new sfServiceReference('blog'));
 
+        $container->register('debate', 'Tageswoche\Debate\DebateService')
+            ->addArgument(new sfServiceReference('em'));
+
         Zend_Registry::set('container', $container);
         return $container;
     }
