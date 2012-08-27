@@ -112,6 +112,7 @@ $(function() {
                     li.addClass('match');
                     $(this).addClass('match');
                     $(this).parentsUntil('ul.tree').addClass('match');
+                    $('#' + $(this).attr("for")).attr('checked', 'checked');
                 }
             });
         });
