@@ -53,6 +53,9 @@ class Api_ProfileController extends AbstractController
                     'member_since' => $user->getCreated()->format('Y-m-d'),
                     'account_type' => $this->getUserType($user),
                     'profile_image_url' => $this->getUserImage($user),
+                    'public_profile_url' => $this->view->serverUrl($this->view->url(array(
+                        'username' => $user->getUsername(),
+                    ), 'user')),
                     'verified' => (bool) $user->getAttribute('is_verified'),
 
                     'subscribed_topics' => array_map(
