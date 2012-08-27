@@ -111,7 +111,8 @@ class SearchServiceTest extends \TestCase
             'section_name' => 'Sport',
             'section_id' => self::SECTION,
             'keyword' => array('key', 'words'),
-            'topic' => array(1 => 'test'),
+            'topic' => array(0 => 'test'),
+            'updated' => gmdate('Y-m-d\TH:i:s\Z'),
         ), $this->service->getDocument($article));
     }
 

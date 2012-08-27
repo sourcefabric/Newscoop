@@ -7,7 +7,7 @@
 
 namespace Newscoop\Entity;
 
-use Donctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @Entity

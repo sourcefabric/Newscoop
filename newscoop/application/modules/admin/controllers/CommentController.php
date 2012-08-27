@@ -108,7 +108,7 @@ class Admin_CommentController extends Zend_Controller_Action
                 $profile = $view->url(array('username' => $commenter->getLoginName()), 'user');
                 return array('index' => $index++, 'can' => array('enable' => $acl['enable'], 'edit' => $acl['edit']),
                              'commenter' =>
-                             array('username' => $commenter->getLoginName(), 'name' => $commenter->getName(),
+                             array('username' => $commenter->getLoginName(), 
                                    'profile' => $profile,
                                    'email' => $commenter->getEmail(),
                                    'avatar' => $image,
