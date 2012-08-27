@@ -30,9 +30,16 @@ class Api_ProfileController extends AbstractController
 
         if ($this->getRequest()->isPost() && $form->isValid($this->getRequest()->getPost())) {
             $values = $form->getValues();
+
+            if (!empty($values['customer_id']) && !$this->_helper->service('user_subscription')->isValidCustomer($values['customer_id'])) {
+                $this->sendError('Not valid customer_id', 400);
+            }
+
             $values['image'] = $this->getImage();
             $this->_helper->service('user')->updateProfile($values, $user);
-            $this->_helper->redirector('index');
+            $this->getResponse()->setHttpResponseCode(200);
+            $this->getResponse()->sendResponse();
+            exit;
         } elseif ($this->getRequest()->isPost()) {
             $this->_helper->json($form->getErrors());
         }
