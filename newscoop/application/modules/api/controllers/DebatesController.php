@@ -6,8 +6,10 @@
  */
 
 use Newscoop\Entity\Article;
+use Tageswoche\Debate\VoteDebateCommand;
 
 require_once __DIR__ . '/AbstractController.php';
+require_once __DIR__ . '/../forms/Vote.php';
 
 /**
  * Api Debates service controller.
@@ -112,6 +114,29 @@ class Api_DebatesController extends AbstractController
         $this->_forward('index');
     }
 
+    public function voteAction()
+    {
+        if ($this->_getParam('username') !== null) {
+            $user = $this->getUser();
+        }
+
+        $voteDebateCommand = new VoteDebateCommand();
+        $voteDebateCommand->debateId = $this->_getParam('debate_id');
+        $voteDebateCommand->vote = $this->_getParam('vote');
+        $voteDebateCommand->deviceId = $this->_getParam('device_id');
+        $voteDebateCommand->userId = isset($user) ? $user->getId() : null;
+
+        $form = new Api_Form_Vote();
+        if ($form->isValid((array) $voteDebateCommand)) {
+            $this->_helper->service('debate')->vote($voteDebateCommand);
+            $this->getResponse()->setHttpResponseCode(200);
+            $this->getResponse()->sendResponse();
+            exit;
+        } else {
+            $this->sendError($form->getErrors());
+        }
+    }
+
     /**
      * Gets the debate publish date as DateTime object.
      *
@@ -180,7 +205,7 @@ class Api_DebatesController extends AbstractController
                 'author_name' => $author->getFullName(),
                 'author_profile_url' => null,
                 'short_bio' => $author->getBiography(),
-                'author_image_url' => $author->getImage()->getPath(),
+                'author_image_url' => $author->getImage() ? $author->getImage()->getPath() : null,
             );
         }
     }

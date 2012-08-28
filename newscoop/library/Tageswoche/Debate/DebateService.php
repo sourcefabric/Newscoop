@@ -10,6 +10,7 @@ namespace Tageswoche\Debate;
 use InvalidArgumentException;
 use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\Article;
+use Tageswoche\Entity\Vote;
 
 /**
  */
@@ -151,6 +152,40 @@ class DebateService
     }
 
     /**
+     * Cast a vote
+     *
+     * @param Tageswoche\Debate\VoteDebateCommand $command
+     * @return void
+     */
+    public function vote(VoteDebateCommand $command)
+    {
+        $criteria = array(
+            'debate' => $command->debateId,
+        );
+
+        if ($command->userId !== null) {
+            $criteria['user'] = $command->userId;
+        } else {
+            $criteris['device'] = $command->deviceId;
+        }
+
+        $vote = $this->getVoteRepository()->findOneBy($criteria);
+        if ($vote === null) {
+            $vote = new Vote();
+            $this->em->persist($vote);
+        }
+
+        $vote->cast(
+            $this->em->getReference('Tageswoche\Entity\Debate', $command->debateId),
+            $command->vote ? self::PRO_VOTE : self::CON_VOTE,
+            $command->userId ? null : $command->deviceId,
+            $command->userId ? $this->em->getReference('Newscoop\Entity\User', $command->userId) : null
+        );
+
+        $this->em->flush($vote);
+    }
+
+    /**
      * Get debate repository
      *
      * @return Doctrine\ORM\EntityRepository
@@ -168,6 +203,16 @@ class DebateService
     private function getDebateRepository()
     {
         return $this->em->getRepository('Tageswoche\Entity\Debate');
+    }
+
+    /**
+     * Get vote repository
+     *
+     * @return Doctrine\ORM\EntityRepository
+     */
+    private function getVoteRepository()
+    {
+        return $this->em->getRepository('Tageswoche\Entity\Vote');
     }
 
     /**

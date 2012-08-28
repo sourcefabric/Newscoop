@@ -7,7 +7,10 @@
 
 namespace Tageswoche\Entity;
 
+use InvalidArgumentException;
+use DateTime;
 use Doctrine\Common\Collections\ArrayCollection;
+use Newscoop\Entity\User;
 
 /**
  * @Entity
@@ -16,7 +19,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 class Vote
 {
     /**
-     * @Id @Column(type="integer", name="id_vote")
+     * @Id @GeneratedValue
+     * @Column(type="integer", name="id_vote")
      * @var int
      */
     private $id;
@@ -24,6 +28,7 @@ class Vote
     /**
      * @ManyToOne(targetEntity="Tageswoche\Entity\Debate", inversedBy="votes")
      * @JoinColumn(name="fk_debate_nr", referencedColumnName="debate_nr")
+     * @var Tageswoche\Entity\Debate
      */
     private $debate;
 
@@ -31,7 +36,20 @@ class Vote
      * @Column(type="integer", name="fk_answer_nr")
      * @var int
      */
-    private $answerId;
+    private $answer;
+
+    /**
+     * @ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @JoinColumn(name="fk_user_id", referencedColumnName="Id")
+     * @var Newscoop\Entity\User
+     */
+    private $user;
+
+    /**
+     * @Column(type="string", length=80, name="device_id")
+     * @var string
+     */
+    private $device;
 
     /**
      * @Column(type="datetime", name="added")
@@ -46,7 +64,7 @@ class Vote
      */
     public function getAnswerId()
     {
-        return $this->answerId;
+        return $this->answer;
     }
 
     /**
@@ -67,12 +85,24 @@ class Vote
     }
 
     /**
-     * Get added
+     * Cast vote
      *
-     * @return DateTime
+     * @param Tageswoche\Entity\Debate $debate
+     * @param int $answer
+     * @param string $deviceId
+     * @param Newscoop\Entity\User $user
+     * @return void
      */
-    public function getAdded()
+    public function cast(Debate $debate, $answer, $device = null, User $user = null)
     {
-        return $this->added;
+        if ($device === null && $user === null) {
+            throw InvalidArgumentException("Device or user must be set");
+        }
+
+        $this->debate = $debate;
+        $this->answer = $answer;
+        $this->device = $device;
+        $this->user = $user;
+        $this->added = new DateTime('now');
     }
 }
