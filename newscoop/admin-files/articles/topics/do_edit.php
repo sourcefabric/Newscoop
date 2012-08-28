@@ -19,6 +19,7 @@ if (!SecurityToken::isValid()) {
     exit;
 }
 
+$f_search = Input::Get('search', 'text', '');
 $f_language_selected = Input::Get('f_language_selected', 'int', 0);
 $f_article_number = Input::Get('f_article_number', 'int', 0);
 $f_topic_ids = Input::Get('f_topic_ids', 'array', array(), true);
@@ -50,6 +51,18 @@ foreach ($f_topic_ids as $topicIdString) {
     if ($tmpTopic->exists()) {
         ArticleTopic::AddTopicToArticle($topicIdString, $f_article_number);
     }
+}
+
+// add new topic 
+if ($f_search) { 
+    $tmpTopic = new Topic($f_search);
+    if (!$tmpTopic->exists()) { 
+        $tmpTopic->create(array(
+            'parent_id' => 0,
+            'names'=>array($f_language_selected=>$f_search)
+        ));
+    }
+    ArticleTopic::AddTopicToArticle($tmpTopic->getTopicId(), $f_article_number);
 }
 
 ?>
