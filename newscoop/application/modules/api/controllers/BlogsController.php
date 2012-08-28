@@ -18,6 +18,10 @@ class Api_BlogsController extends AbstractController
     const LANGUAGE = 5;
     const LIST_LIMIT = 30;
     const IMAGE_RENDITION = 'topfront';
+    const IMAGE_STANDARD_WIDTH = 320;
+    const IMAGE_STANDARD_HEIGHT = 140;
+    const IMAGE_RETINA_WIDTH = 640;
+    const IMAGE_RETINA_HEIGHT = 280;
 
     /** @var Zend_Controller_Request_Http */
     private $request;
@@ -247,7 +251,7 @@ class Api_BlogsController extends AbstractController
     /**
      * Get cover image url
      *
-     * @param Newscoop\Entity\Article $issue
+     * @param Newscoop\Entity\Article $post
      * @return string
      */
     protected function getBlogImageUrl(Article $post)
@@ -257,6 +261,8 @@ class Api_BlogsController extends AbstractController
             return $this->view->serverUrl($this->view->url(array(
                 'src' => $this->getHelper('service')->getService('image')->getSrc($image->getPath(), $this->getImageWidth(), $this->getImageHeight(), 'crop'),
             ), 'image', false, false));
+        } else {
+            return null;
         }
     }
 
@@ -267,7 +273,7 @@ class Api_BlogsController extends AbstractController
      */
     private function getImageWidth()
     {
-        return $this->isRetinaClient() ? 640 : 320;
+        return $this->isRetinaClient() ? self::IMAGE_RETINA_WIDTH : self::IMAGE_STANDARD_WIDTH;
     }
 
     /**
@@ -277,7 +283,7 @@ class Api_BlogsController extends AbstractController
      */
     private function getImageHeight()
     {
-        return $this->isRetinaClient() ? 280 : 140;
+        return $this->isRetinaClient() ? self::IMAGE_RETINA_HEIGHT : self::IMAGE_STANDARD_HEIGHT;
     }
     
     /**
