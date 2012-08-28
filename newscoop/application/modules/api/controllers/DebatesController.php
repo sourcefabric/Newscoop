@@ -87,12 +87,17 @@ class Api_DebatesController extends AbstractController
             $this->sendError('Debate not found.', 404);
         }
 
+        $user = null;
+        if ($this->_getParam('username') !== null) {
+            $user = $this->getUser();
+        }
+
         list($pro, $con) = $this->_helper->service('debate')->getVotes($debate);
         $this->_helper->json(array(
             'debate_id' => $debate->getNumber(),
             'title' => $debate->getTitle(),
             'image_url' => $this->getRenditionUrl($debate, 'topfront', array(320, 140), array(640, 280)),
-            'my_vote' => null,
+            'my_vote' => $this->_helper->service('debate')->getVote($debate->getNumber(), $this->_getParam('device_id'), $user),
             'website_url' => $this->getWebsiteUrl($debate),
             'start_date' => $this->getArticleField($debate, 'date_opening'),
             'intro_url' => $this->getWebsiteUrl($debate) . '?stage=0',
@@ -118,6 +123,10 @@ class Api_DebatesController extends AbstractController
     {
         if ($this->_getParam('username') !== null) {
             $user = $this->getUser();
+        }
+
+        if (!$this->getRequest()->isPost()) {
+            $this->sendError('POST required');
         }
 
         $voteDebateCommand = new VoteDebateCommand();

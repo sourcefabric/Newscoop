@@ -50,6 +50,16 @@ class Debate
     }
 
     /**
+     * Get id
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * Get votes
      *
      * @return array

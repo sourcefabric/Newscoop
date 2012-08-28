@@ -10,6 +10,7 @@ namespace Tageswoche\Debate;
 use InvalidArgumentException;
 use Doctrine\ORM\EntityManager;
 use Newscoop\Entity\Article;
+use Newscoop\Entity\User;
 use Tageswoche\Entity\Vote;
 
 /**
@@ -121,15 +122,7 @@ class DebateService
      */
     public function getVotes($article, $stage = null)
     {
-        $debateQuery = $this->getDebateRepository()
-            ->createQueryBuilder('d')
-            ->join('d.articles', 'a')
-            ->where('a.number = :number')
-            ->getQuery();
-
-        $debateQuery->setParameter('number', $article->getNumber());
-        $debate = $debateQuery->getSingleResult();
-
+        $debate = $this->findDebate($article);
         list($from, $to) = $this->getFromTo($article, $stage);
         $votes = array(self::PRO_VOTE => 0, self::CON_VOTE => 0);
         foreach ($debate->getVotes() as $vote) {
@@ -159,30 +152,77 @@ class DebateService
      */
     public function vote(VoteDebateCommand $command)
     {
-        $criteria = array(
-            'debate' => $command->debateId,
-        );
-
-        if ($command->userId !== null) {
-            $criteria['user'] = $command->userId;
-        } else {
-            $criteris['device'] = $command->deviceId;
-        }
-
-        $vote = $this->getVoteRepository()->findOneBy($criteria);
+        $vote = $this->findVote($command->debateId, $command->deviceId, $command->userId);
         if ($vote === null) {
             $vote = new Vote();
             $this->em->persist($vote);
         }
 
         $vote->cast(
-            $this->em->getReference('Tageswoche\Entity\Debate', $command->debateId),
+            $this->findDebate($command->debateId),
             $command->vote ? self::PRO_VOTE : self::CON_VOTE,
             $command->userId ? null : $command->deviceId,
             $command->userId ? $this->em->getReference('Newscoop\Entity\User', $command->userId) : null
         );
 
         $this->em->flush($vote);
+    }
+
+    /**
+     * Get vote
+     *
+     * @param int $debateId
+     * @param string $deviceId
+     * @param Newscoop\Entity\User $user
+     * @return bool
+     */
+    public function getVote($debateId, $deviceId, User $user = null)
+    {
+        $vote = $this->findVote($debateId, $deviceId, $user !== null ? $user->getId() : null);
+        return $vote !== null ? $vote->getAnswerId() === self::PRO_VOTE : null;
+    }
+
+    /**
+     * Find debate
+     *
+     * @param Newscoop\Entity\Article|int $article
+     * @return Tageswoche\Entity\Debate
+     */
+    private function findDebate($article)
+    {
+        $debateQuery = $this->getDebateRepository()
+            ->createQueryBuilder('d')
+            ->join('d.articles', 'a')
+            ->where('a.number = :number')
+            ->getQuery();
+
+        $debateQuery->setParameter('number', is_object($article) ? $article->getNumber() : $article);
+        return $debateQuery->getSingleResult();
+    }
+
+
+    /**
+     * Find vote
+     *
+     * @param int $article
+     * @param string $deviceId
+     * @param int $userId
+     * @return Tageswoche\Entity\Vote
+     */
+    private function findVote($article, $deviceId, $userId = null)
+    {
+        $debate = $this->findDebate($article);
+        $criteria = array(
+            'debate' => $debate->getId(),
+        );
+
+        if ($userId !== null) {
+            $criteria['user'] = $userId;
+        } else {
+            $criteria['device'] = $deviceId;
+        }
+
+        return $this->getVoteRepository()->findOneBy($criteria);
     }
 
     /**
