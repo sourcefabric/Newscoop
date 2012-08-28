@@ -193,6 +193,7 @@ class Admin_TemplateController extends Zend_Controller_Action
             ->set(getGS("Edit template: $1", $item->name));
 
         switch ($item->type) {
+            case 'jpeg':
             case 'jpg':
             case 'png':
             case 'gif':
