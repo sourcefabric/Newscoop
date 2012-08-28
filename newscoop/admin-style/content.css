@@ -1213,8 +1213,15 @@ dl.slideshow-preview figure > div > * {
     margin: 0 6px;
 }
 
+#article-image-edit-original {
+    position: absolute;
+    clear: both;
+    bottom: 0;
+}
+
 #article-image-edit-thumbnail,
 #article-image-edit-form {
+    position: relative;
     float: left;
     padding: 13px 0 13px 13px;
 }
