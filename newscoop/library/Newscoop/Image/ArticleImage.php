@@ -7,34 +7,38 @@
 
 namespace Newscoop\Image;
 
+use Doctrine\ORM\Mapping AS ORM;
+
 /**
  * Article Image
- * @Entity
- * @Table(name="ArticleImages")
+ * @ORM\Entity
+ * @ORM\Table(name="ArticleImages")
  */
 class ArticleImage implements ImageInterface
 {
     /**
-     * @Id @Column(type="integer", name="NrArticle")
+     * @ORM\Id 
+     * @ORM\Column(type="integer", name="NrArticle")
      * @var int
      */
     private $articleNumber;
 
     /**
-     * @Id @ManyToOne(targetEntity="Newscoop\Image\LocalImage", fetch="EAGER")
-     * @JoinColumn(name="IdImage", referencedColumnName="Id")
+     * @ORM\Id 
+     * @ORM\ManyToOne(targetEntity="Newscoop\Image\LocalImage", fetch="EAGER")
+     * @ORM\JoinColumn(name="IdImage", referencedColumnName="Id")
      * @var Newscoop\Image\Image
      */
     private $image;
 
     /**
-     * @Column(type="integer", name="Number", nullable=True)
+     * @ORM\Column(type="integer", name="Number", nullable=True)
      * @var int
      */
     private $number;
 
     /**
-     * @Column(type="boolean", name="is_default", nullable=True)
+     * @ORM\Column(type="boolean", name="is_default", nullable=True)
      * @var bool
      */
     private $isDefault;

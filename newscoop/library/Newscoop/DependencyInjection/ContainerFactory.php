@@ -22,18 +22,6 @@ class ContainerFactory {
     private $loader;
 
     /**
-     * Define constants used in container.
-     */
-    public function __construct()
-    {
-        // Define path to application directory
-        defined('APPLICATION_PATH') || define('APPLICATION_PATH', __DIR__ . '/../../../application');
-
-        // Define application environment
-        defined('APPLICATION_ENV') || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
-    }
-
-    /**
      * Set container to factory.
      * @param object $container Must implement Symfony\Component\DependencyInjection\ContainerBuilder
      */
@@ -104,7 +92,9 @@ class ContainerFactory {
                 $tempLoader->load($file);
             }
 
-            $parameters = $this->array_merge_recursive_distinct($this->container->getParameterBag()->all(), $tempContainer->getParameterBag()->all());
+            $containerParameters = $this->container->getParameterBag()->all();
+            $tempContainerParameters = $tempContainer->getParameterBag()->all();
+            $parameters = $this->array_merge_recursive_distinct($containerParameters, $tempContainerParameters);
 
             foreach ($parameters as $key => $value) {
                 $this->container->setParameter($key, $value);
@@ -146,14 +136,19 @@ class ContainerFactory {
      */
     private function &array_merge_recursive_distinct(array &$array1, &$array2 = null)
     {
-      $merged = $array1;
+        $merged = $array1;
      
-      if (is_array($array2))
-        foreach ($array2 as $key => $val)
-          if (is_array($array2[$key]))
-            $merged[$key] = is_array($merged[$key]) ? $this->array_merge_recursive_distinct($merged[$key], $array2[$key]) : $array2[$key];
-          else
-            $merged[$key] = $val;
+        if (is_array($array2)){
+            foreach ($array2 as $key => $val) {
+                if (is_array($array2[$key])) {
+                    $mergedKey = $merged[$key];
+                    $arrayKey = $array2[$key];
+                    $merged[$key] = is_array($mergedKey) ? $this->array_merge_recursive_distinct($mergedKey, $arrayKey) : $arrayKey;
+                } else {
+                    $merged[$key] = $val;
+                }
+            }
+        }
      
       return $merged;
     }

@@ -1,5 +1,5 @@
 {
-    "hash": "1d85bf269482da87558169f6233f829f",
+    "hash": "d31cd34eca010586b006d740f7cc766b",
     "packages": [
         {
             "package": "Smarty3",
@@ -23,13 +23,37 @@
         },
         {
             "package": "doctrine/common",
-            "version": "2.2.x-dev",
-            "source-reference": "b846809f90b35a9415910cebcfcfe51b7c9a6efc",
-            "commit-date": "1343558619"
+            "version": "2.2.2"
         },
         {
             "package": "doctrine/dbal",
-            "version": "2.2.0-RC3"
+            "version": "2.2.x-dev",
+            "source-reference": "da4b7b4d965db0c1c1d23333e87ee5ae8994e249",
+            "commit-date": "1344978731"
+        },
+        {
+            "package": "doctrine/doctrine-bundle",
+            "version": "dev-master",
+            "source-reference": "4d9bb0f3af470556983eb41a7d19ede23401ef0b",
+            "commit-date": "1344549563"
+        },
+        {
+            "package": "doctrine/mongodb",
+            "version": "dev-master",
+            "alias-pretty-version": "1.0.x-dev",
+            "alias-version": "1.0.9999999.9999999-dev"
+        },
+        {
+            "package": "doctrine/mongodb",
+            "version": "dev-master",
+            "source-reference": "fdf44d850d7482b2cea7a0793d46999641c68e4f",
+            "commit-date": "1344539108"
+        },
+        {
+            "package": "doctrine/mongodb-odm",
+            "version": "dev-master",
+            "source-reference": "43f678b345a46d8399d86305a3d6947b3d19cfca",
+            "commit-date": "1345760269"
         },
         {
             "package": "doctrine/orm",
@@ -64,8 +88,8 @@
         {
             "package": "jms/metadata",
             "version": "dev-master",
-            "source-reference": "a45716fcb7e5820f63f371be313ae8891dca3be1",
-            "commit-date": "1345148372"
+            "source-reference": "7c58d49ff13de62464837c3c7d91aff1deb2c442",
+            "commit-date": "1345552810"
         },
         {
             "package": "jms/serializer-bundle",
@@ -80,6 +104,18 @@
             "commit-date": "1343641450"
         },
         {
+            "package": "knplabs/knp-components",
+            "version": "dev-master",
+            "source-reference": "99ea408dc2a7c3616e688ffe67e3248ece69ff0e",
+            "commit-date": "1339767068"
+        },
+        {
+            "package": "knplabs/knp-paginator-bundle",
+            "version": "dev-master",
+            "source-reference": "de439d2816fe984dbe0c438fd4d0d7c67748c5ff",
+            "commit-date": "1343676956"
+        },
+        {
             "package": "kriswallsmith/buzz",
             "version": "dev-master",
             "source-reference": "988bf14201ffbed940f23b42f87302e6adec4c21",
@@ -88,8 +124,8 @@
         {
             "package": "sensio/distribution-bundle",
             "version": "dev-master",
-            "source-reference": "bd98b5fb0e4a5dddb4f7acd2e11f28c4cd7eacee",
-            "commit-date": "1345139690"
+            "source-reference": "f7e9231c36c3badc43f40d025a0ad12939b91df7",
+            "commit-date": "1345982505"
         },
         {
             "package": "sensio/framework-extra-bundle",
@@ -118,8 +154,8 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "ef29276c3a1d6ab757d894bd64391fa2ea47db0c",
-            "commit-date": "1345367019"
+            "source-reference": "2c0e851059905307e5a28ebe0b5153e8676585d1",
+            "commit-date": "1345978996"
         },
         {
             "package": "twig/twig",
@@ -130,13 +166,13 @@
         {
             "package": "twig/twig",
             "version": "dev-master",
-            "source-reference": "3e4057b4b14a2f90db7c895e3e9bcbd3d23875e8",
-            "commit-date": "1345222881"
+            "source-reference": "32c4867f68c1bacc758602d602e18a3ac1598c76",
+            "commit-date": "1345916214"
         },
         {
             "package": "zendframework/zendframework1",
             "version": "dev-release-1.11",
-            "source-reference": "/branches/release-1.11/@25000"
+            "source-reference": "/branches/release-1.11/@25037"
         }
     ],
     "packages-dev": null,
@@ -148,7 +184,9 @@
         "sensio/distribution-bundle": 20,
         "sensio/generator-bundle": 20,
         "sensio/framework-extra-bundle": 20,
+        "doctrine/mongodb-odm": 20,
         "zendframework/zendframework1": 20,
-        "friendsofsymfony/rest-bundle": 20
+        "friendsofsymfony/rest-bundle": 20,
+        "knplabs/knp-paginator-bundle": 20
     }
 }

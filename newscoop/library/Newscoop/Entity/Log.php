@@ -7,45 +7,47 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\ORM\Mapping AS ORM;
+
 /**
- * @Entity
- * @Table(name="Log")
+ * @ORM\Entity
+ * @ORM\Table(name="Log")
  */
 class Log
 {
     /**
-     * @Id @GeneratedValue
-     * @Column(type="integer")
+     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @Column(type="datetime", name="time_created")
+     * @ORM\Column(type="datetime", name="time_created")
      * @var DateTime
      */
     private $created;
 
     /**
-     * @Column(type="integer", name="fk_event_id")
+     * @ORM\Column(type="integer", name="fk_event_id")
      * @var int
      */
     private $eventId;
 
     /**
-     * @Column(type="integer", name="fk_user_id")
+     * @ORM\Column(type="integer", name="fk_user_id")
      * @var int
      */
     private $userId;
 
     /**
-     * @Column(name="text")
+     * @ORM\Column(name="text")
      * @var int
      */
     private $message;
 
     /**
-     * @Column(name="user_ip")
+     * @ORM\Column(name="user_ip")
      * @var string
      */
     private $userIp;

@@ -13,12 +13,15 @@
         "sensio/generator-bundle":          "dev-master",
         "sensio/framework-extra-bundle":    "dev-master",
         "doctrine/orm":                     "2.2.*",
+        "doctrine/mongodb-odm":             "dev-master",
+        "doctrine/doctrine-bundle":         ">=2.1",
         "zendframework/zendframework1":     "dev-release-1.11",
         "Smarty3":"                         3.0.8",
         "friendsofsymfony/rest-bundle":     "dev-master",
         "behat/behat":                      ">=2.4.0",
         "behat/common-contexts":            "*",
-        "kriswallsmith/buzz":               ">=0.7"
+        "kriswallsmith/buzz":               ">=0.7",
+        "knplabs/knp-paginator-bundle":     "dev-master"
     },
     "repositories":[
         {

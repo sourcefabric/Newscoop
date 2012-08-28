@@ -7,108 +7,109 @@
 
 namespace Newscoop\Entity\Ingest\Feed;
 
-use Newscoop\Entity\Ingest\Feed,
-    Newscoop\Ingest\Parser;
+use Doctrine\ORM\Mapping AS ORM;
+use Newscoop\Entity\Ingest\Feed;
+use Newscoop\Ingest\Parser;
 
 /**
- * @Entity(repositoryClass="Newscoop\Entity\Repository\Ingest\Feed\EntryRepository")
- * @Table(name="ingest_feed_entry")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\Ingest\Feed\EntryRepository")
+ * @ORM\Table(name="ingest_feed_entry")
  */
 class Entry
 {
     /**
-     * @Id @GeneratedValue
-     * @Column(type="integer")
+     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Ingest\Feed", inversedBy="entries")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Ingest\Feed", inversedBy="entries")
      * @var Newscoop\Entity\Ingest\Feed
      */
     private $feed;
 
     /**
-     * @Column(type="string")
+     * @ORM\Column(type="string")
      * @var string
      */
     private $title;
 
     /**
-     * @Column(type="datetime")
+     * @ORM\Column(type="datetime")
      * @var DateTime
      */
     private $updated;
 
     /**
-     * @Column(type="string", nullable=True)
+     * @ORM\Column(type="string", nullable=True)
      * @var string
      */
     private $author;
 
     /**
-     * @Column(type="text")
+     * @ORM\Column(type="text")
      * @var string
      */
     private $content;
 
     /**
-     * @Column(type="text", nullable=True)
+     * @ORM\Column(type="text", nullable=True)
      * @var string
      */
     private $summary;
 
     /**
-     * @Column(type="string", nullable=True)
+     * @ORM\Column(type="string", nullable=True)
      * @var string
      */
     private $category;
 
     /**
-     * @Column(type="datetime")
+     * @ORM\Column(type="datetime")
      * @var DateTime
      */
     private $created;
 
     /**
-     * @Column(type="datetime", nullable=True)
+     * @ORM\Column(type="datetime", nullable=True)
      * @var DateTime
      */
     private $published;
 
     /**
-     * @Column(type="datetime", nullable=True)
+     * @ORM\Column(type="datetime", nullable=True)
      * @var DateTime
      */
     private $embargoed;
 
     /**
-     * @Column(type="string", nullable=True)
+     * @ORM\Column(type="string", nullable=True)
      * @var string
      */
     private $status;
 
     /**
-     * @Column(type="integer", nullable=True)
+     * @ORM\Column(type="integer", nullable=True)
      * @var int
      */
     private $priority;
 
     /**
-     * @Column(type="string", nullable=True)
+     * @ORM\Column(type="string", nullable=True)
      * @var string
      */
     private $date_id;
 
     /**
-     * @Column(type="string", nullable=True)
+     * @ORM\Column(type="string", nullable=True)
      * @var string
      */
     private $news_item_id;
 
     /**
-     * @Column(type="array", nullable=True)
+     * @ORM\Column(type="array", nullable=True)
      * @var array
      */
     private $attributes = array();

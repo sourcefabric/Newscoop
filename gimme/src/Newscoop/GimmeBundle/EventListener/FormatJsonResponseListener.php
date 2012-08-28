@@ -10,7 +10,7 @@ namespace Newscoop\GimmeBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpFoundation\Response;
-use Newscoop\GimmeService\Json;
+use Newscoop\Gimme\Json;
 
 /**
  * Preetify json response.

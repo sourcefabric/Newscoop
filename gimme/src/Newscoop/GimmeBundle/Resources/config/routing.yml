@@ -1,4 +1,14 @@
-NewscoopGimmeBundle:
-    resource: "@NewscoopGimmeBundle/Controller/"
+NewscoopGimmeBundleArticles:
+    resource: "@NewscoopGimmeBundle/Controller/ArticlesController.php"
+    prefix:   /
+    type:     annotation
+
+NewscoopGimmeBundleAuthors:
+    resource: "@NewscoopGimmeBundle/Controller/AuthorsController.php"
+    prefix:   /
+    type:     annotation
+
+NewscoopGimmeBundleComments:
+    resource: "@NewscoopGimmeBundle/Controller/CommentsController.php"
     prefix:   /
     type:     annotation

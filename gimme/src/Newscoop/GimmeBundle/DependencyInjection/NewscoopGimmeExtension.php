@@ -35,7 +35,7 @@ class NewscoopGimmeExtension extends Extension
     }
 
     private function loadNewscoop(array $configs, ContainerBuilder $container)
-    {
+    {   
         $containerFactory = new \Newscoop\DependencyInjection\ContainerFactory();
         $containerFactory->setContainer($container);
         $containerFactory->mergeParameters();
