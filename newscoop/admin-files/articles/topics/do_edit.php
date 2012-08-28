@@ -57,8 +57,10 @@ foreach ($f_topic_ids as $topicIdString) {
 if ($f_search) { 
     $tmpTopic = new Topic($f_search);
     if (!$tmpTopic->exists()) { 
-        $created = $tmpTopic->create(array('parent_id' => 0,
-                                        'names'=>array($f_language_selected=>$f_search)));
+        $tmpTopic->create(array(
+            'parent_id' => 0,
+            'names'=>array($f_language_selected=>$f_search)
+        ));
     }
     ArticleTopic::AddTopicToArticle($tmpTopic->getTopicId(), $f_article_number);
 }
