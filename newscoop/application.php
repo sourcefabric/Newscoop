@@ -5,8 +5,8 @@ if (!defined('INSTALL') && (!file_exists(APPLICATION_PATH . '/../conf/configurat
     $subdir = substr($_SERVER['SCRIPT_NAME'], 0, strrpos($_SERVER['SCRIPT_NAME'], '/', -2));
     
     if (strpos($subdir, 'install') === false) { 
-    //    header("Location: $subdir/install/");
-    //    exit;
+        header("Location: $subdir/install/");
+        exit;
     }
 }
 

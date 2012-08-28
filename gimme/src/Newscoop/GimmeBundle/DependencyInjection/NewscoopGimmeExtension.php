@@ -34,6 +34,11 @@ class NewscoopGimmeExtension extends Extension
         $loader->load('services.yml');
     }
 
+    /**
+     * Load parameters form newscop.
+     * @param  array            $configs   existing configs
+     * @param  ContainerBuilder $container Container for Newscoop Container Factory.
+     */
     private function loadNewscoop(array $configs, ContainerBuilder $container)
     {   
         $containerFactory = new \Newscoop\DependencyInjection\ContainerFactory();

@@ -12,8 +12,6 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Symfony\Component\HttpKernel\Exception\HttpException;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 
 class DefaultController extends FOSRestController
 {
@@ -23,5 +21,6 @@ class DefaultController extends FOSRestController
      * @View()
      */
     public function optionsAction()
-    {}
+    {
+    }
 }

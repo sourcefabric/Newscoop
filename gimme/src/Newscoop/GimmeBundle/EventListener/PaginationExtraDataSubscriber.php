@@ -10,12 +10,16 @@ namespace Newscoop\GimmeBundle\EventListener;
 
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Knp\Component\Pager\Event\AfterEvent;
+use Newscoop\Gimme\PaginatorService;
 
+/**
+ * Collect data form paginator and pass them to Newscoop\Gimme\PaginatorService
+ */
 class PaginationExtraDataSubscriber implements EventSubscriberInterface
 {
     private $paginatorService;
 
-    public function __construct($paginatorService)
+    public function __construct(PaginatorService $paginatorService)
     {
         $this->paginatorService = $paginatorService;
     }

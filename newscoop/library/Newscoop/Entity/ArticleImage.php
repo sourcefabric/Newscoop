@@ -17,13 +17,15 @@ use Doctrine\ORM\Mapping AS ORM;
 class ArticleImage
 {
     /**
-     * @ORM\Id @ORM\Column(type="integer", name="NrArticle")
+     * @ORM\Id 
+     * @ORM\Column(type="integer", name="NrArticle")
      * @var int
      */
     private $articleNumber;
 
     /**
-     * @ORM\Id @ORM\Column(type="integer", name="IdImage")
+     * @ORM\Id 
+     * @ORM\Column(type="integer", name="IdImage")
      * @var int
      */
     private $imageId;

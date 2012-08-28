@@ -21,7 +21,7 @@ class ArticlesController extends FOSRestController
      * @Method("OPTION")
      * @View()
      */
-	public function optionsArticlesAction()
+    public function optionsArticlesAction()
     {
         return array(
             '/articles' => $this->generateUrl('newscoop_gimme_articles_getarticles', array(), true),
@@ -47,7 +47,7 @@ class ArticlesController extends FOSRestController
 
         /**
          * We can't use default paginator counter because composite id.
-         * It must be moved to repository
+         * TODO: It must be moved to repository
          */
         $articlesCount = $em
             ->createQuery('SELECT COUNT(a) FROM Newscoop\Entity\Article a')
@@ -58,8 +58,9 @@ class ArticlesController extends FOSRestController
             ->setHint('knp_paginator.count', $articlesCount);
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
-        $paginator->setDistinct(false);
-        $articles = $paginator->paginate($articles);
+        $articles = $paginator->paginate($articles, array(
+            'distinct' => false
+        ));
 
         return $articles;
     }

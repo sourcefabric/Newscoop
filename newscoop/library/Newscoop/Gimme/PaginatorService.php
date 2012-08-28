@@ -8,28 +8,67 @@
 
 namespace Newscoop\Gimme;
 
+use Knp\Component\Pager\Paginator;
+use Newscoop\Gimme\Pagination;
+use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 /**
- * Gimme Pagination object.
+ * Gimme Pagination service.
  */
 class PaginatorService {
+    /**
+     * Paginator class
+     * @var Knp\Component\Pager\Paginator
+     */
     private $paginator;
+
     /**
      * Pagination object with parsed data from request.
+     * @var Newscoop\Gimme\Pagination
      */
     private $pagination;
+
+    /**
+     * Router class
+     * @var Symfony\Bundle\FrameworkBundle\Routing\Router
+     */
     private $router;
-    private $distinct = true;
-    private $paginatorData;
+
+    /**
+     * Extra data injected to response when result have more items than requested.
+     * @var array
+     */
+    private $paginationData;
+
+    /**
+     * Used route name
+     * @var string
+     */
     private $route;
+
+    /**
+     * Used route params
+     * @var array
+     */
     private $routeParams = array();
 
-    public function __construct($paginator, $router)
+    /**
+     * Construct Paginator service object
+     * @param Paginator $paginator Paginator object
+     * @param Router    $router    Router object
+     */
+    public function __construct(Paginator $paginator, Router $router)
     {
         $this->paginator = $paginator;
         $this->router = $router;
     }
 
-    public function setPagination($pagination)
+    /**
+     * Set pagination object
+     * @param Pagination $pagination Pagination object
+     */
+    public function setPagination(Pagination $pagination)
     {
         $this->pagination = $pagination;
 
@@ -40,13 +79,10 @@ class PaginatorService {
         return $this;
     }
 
-    public function setDistinct($distinct)
-    {
-        $this->distinct = $distinct;
-
-        return $this;
-    }
-
+    /**
+     * Set used route
+     * @param string $route Used route in request
+     */
     public function setUsedRoute($route)
     {
         $this->route = $route;
@@ -54,6 +90,10 @@ class PaginatorService {
         return $this;
     }
 
+    /**
+     * Set parameters required by route generator for used route
+     * @param array $params Route parameters
+     */
     public function setUsedRouteParams(array $params = array())
     {
         $this->routeParams = $params;
@@ -61,59 +101,76 @@ class PaginatorService {
         return $this;
     }
 
-    public function getPaginationLinks($paginatorData)
+    /**
+     * set pagination data from paginator
+     * @param array $paginationData array with calculated pagination data
+     */
+    public function setPaginationData(array $paginationData)
     {
-        $data = array();
-
-        if ($paginatorData['current'] < $paginatorData['lastPageInRange']-1) {
-            $this->routeParams['page'] = $paginatorData['current'] + 1;
-            $data['nextPageLink'] = $this->router->generate($this->route, $this->routeParams, true);
-        }
-
-        if ($paginatorData['current'] > $paginatorData['firstPageInRange']-1) {
-            $this->routeParams['page'] = $paginatorData['current'] - 1;
-            $data['previousPageLink'] = $this->router->generate($this->route, $this->routeParams, true);
-        }
-
-        return $data;
-    }
-
-    public function setPaginationData($paginatorData)
-    {
-        $this->paginatorData = array(
-            'itemsPerPage' => $paginatorData['numItemsPerPage'],
-            'currentPage' => $paginatorData['current'],
-            'itemsCount' => $paginatorData['totalCount']
+        $this->paginationData = array(
+            'itemsPerPage' => $paginationData['numItemsPerPage'],
+            'currentPage' => $paginationData['current'],
+            'itemsCount' => $paginationData['totalCount']
         );
 
-        $this->paginatorData = array_merge(
-            $this->paginatorData, 
-            $this->getPaginationLinks($paginatorData)
+        $this->paginationData = array_merge(
+            $this->paginationData, 
+            $this->getPaginationLinks($paginationData)
         );
 
         return $this;
     }
 
-    public function paginate($data)
+    /**
+     * Paginate data
+     * @param  mixed $data   Data to paginate
+     * @param  array  $params Prameters for Paginator
+     * @return array         Paginated data
+     */
+    public function paginate($data, $params = array())
     {
         $paginator = $this->paginator->paginate(
             $data, 
             $this->pagination->getPage(), 
-            $this->pagination->getItemsPerPage(), 
-            array(
-                'distinct' => $this->distinct
-            )
+            $this->pagination->getItemsPerPage(),
+            $params
         );
-
-        /**
-         * Set pagination object
-         */
-        if ($this->paginatorData['itemsPerPage'] < $this->paginatorData['itemsCount']) {
-            $items['pagination'] = $this->paginatorData;
-        }
 
         $items['items'] = $paginator->getItems();
 
+        if (count($items['items']) == 0) {
+            throw new NotFoundHttpException('Results was not found.');
+        }
+
+        /**
+         * Set pagination object only when need
+         */
+        if ($this->paginationData['itemsPerPage'] < $this->paginationData['itemsCount']) {
+            $items['pagination'] = $this->paginationData;
+        }
+
         return $items;
+    }
+
+    /**
+     * Generate links for pagination object
+     * @param  array $paginationData Array with calculated pagination data
+     * @return array                Array with links
+     */
+    private function getPaginationLinks($paginationData)
+    {
+        $data = array();
+
+        if ($paginationData['current'] < $paginationData['lastPageInRange']-1) {
+            $this->routeParams['page'] = $paginationData['current'] + 1;
+            $data['nextPageLink'] = $this->router->generate($this->route, $this->routeParams, true);
+        }
+
+        if ($paginationData['current'] > $paginationData['firstPageInRange']-1) {
+            $this->routeParams['page'] = $paginationData['current'] - 1;
+            $data['previousPageLink'] = $this->router->generate($this->route, $this->routeParams, true);
+        }
+
+        return $data;
     }
 }

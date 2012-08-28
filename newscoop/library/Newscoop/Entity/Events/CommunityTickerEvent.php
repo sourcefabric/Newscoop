@@ -17,7 +17,8 @@ use Newscoop\Entity\User;
 class CommunityTickerEvent
 {
     /**
-     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Id 
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @var int
      */

@@ -16,6 +16,9 @@ use JMS\SerializerBundle\Serializer\XmlSerializationVisitor;
 use JMS\SerializerBundle\Serializer\VisitorInterface;
 use JMS\SerializerBundle\Serializer\Handler\SerializationHandlerInterface;
 
+/**
+ * Create simple Author object from Newscoop\Entity\Author object.
+ */
 class AuthorHandler implements SerializationHandlerInterface
 {
     protected $router;
@@ -32,7 +35,6 @@ class AuthorHandler implements SerializationHandlerInterface
         }
 
         $articleAuthors = array();
-
         foreach ($data->getArticleAuthors() as $author) {
             $articleAuthors[] = array(
                 'name' => $author->getFullName(),

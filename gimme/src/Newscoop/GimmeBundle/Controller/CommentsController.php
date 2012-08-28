@@ -22,6 +22,5 @@ class CommentsController extends FOSRestController
      */
     public function getCommentsForArticleAction($id, $language)
     {
-        return array('test' => 'test23');
     }
 }

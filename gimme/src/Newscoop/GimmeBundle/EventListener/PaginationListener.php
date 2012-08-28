@@ -10,19 +10,29 @@ namespace Newscoop\GimmeBundle\EventListener;
 
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Symfony\Component\HttpKernel\Event\GetResponseEvent;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\HttpFoundation\Request;
 use Newscoop\Gimme\Pagination;
 use Newscoop\Gimme\PartialResponse;
+use Newscoop\Gimme\PaginatorService;
 
 /**
  * Get parameters from request and set Pagination and PartialResponse objects to session
  */
 class PaginationListener
 {
+    /**
+     * Session object
+     * @var Session
+     */
     private $session;
+    /**
+     * Paginator service object
+     * @var PaginatorService
+     */
     private $paginatorService;
 
-    public function __construct($session, $paginatorService)
+    public function __construct(Session $session, PaginatorService $paginatorService)
     {
         $this->session = $session;
         $this->paginatorService = $paginatorService;
@@ -35,7 +45,6 @@ class PaginationListener
         }
 
         $request = $event->getRequest();
-
         $pagination = new Pagination();
         $partialResponse = new PartialResponse();
 

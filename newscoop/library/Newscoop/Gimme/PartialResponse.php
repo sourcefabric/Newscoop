@@ -12,14 +12,27 @@ namespace Newscoop\Gimme;
  * Gimme Pagination object.
  */
 class PartialResponse {
-
+    /**
+     * Fields property - string with comma separated fields
+     * @var string
+     */
     private $fields = null;
     
+    /**
+     * Set fields
+     * @param string $fields string with comma separated fields
+     */
     public function setFields($fields)
     {
         $this->fields = $fields;
+
+        return $this;
     }
 
+    /**
+     * Get Fields
+     * @return string string with comma separated fields
+     */
     public function getFields()
     {
         return $this->fields;

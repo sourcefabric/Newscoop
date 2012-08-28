@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
  * Create depenedency injection container object.
  */
 class ContainerFactory {
-	private $container;
+    private $container;
     private $loader;
 
     /**
@@ -34,10 +34,10 @@ class ContainerFactory {
      * Get container from factory.
      * @return Object ContainerBuilder
      */
-	public function getContainer()
-	{
+    public function getContainer()
+    {
         return $this->container;
-	}
+    }
 
     /**
      * Build container for Newscoop.
@@ -150,6 +150,6 @@ class ContainerFactory {
             }
         }
      
-      return $merged;
+        return $merged;
     }
 }

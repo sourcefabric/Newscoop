@@ -19,7 +19,8 @@ use DateTime, Newscoop\Entity\User;
 class Feedback
 {
     /**
-     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Id 
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      * @var int
      */
