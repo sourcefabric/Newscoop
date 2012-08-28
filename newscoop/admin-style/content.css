@@ -1213,6 +1213,12 @@ dl.slideshow-preview figure > div > * {
     margin: 0 6px;
 }
 
+#article-image-edit-original {
+    position: absolute;
+    margin-top: 420px;
+    margin-left: 350px;
+}
+
 #article-image-edit-thumbnail,
 #article-image-edit-form {
     float: left;
