@@ -83,6 +83,7 @@ class ContainerFactory {
          * Allways load config for env
          */
         $this->loader->load(APPLICATION_PATH . '/configs/parameters/parameters.yml');
+        $this->container->setParameter('application_path', APPLICATION_PATH);
 
         if (APPLICATION_ENV !== 'production') {
             $tempContainer = new ContainerBuilder();

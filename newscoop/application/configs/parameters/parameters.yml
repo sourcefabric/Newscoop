@@ -141,4 +141,3 @@ parameters:
     image:
         cache_url: "images/cache"
         cache_path: "%application_path%/../images/cache"
-    application_path: "/var/www/newscoop-4.0/newscoop/application"

@@ -18,11 +18,13 @@ class Pagination {
      * @var integer
      */
     private $page = 0;
+
     /**
      * Array with sorting parameters
      * @var array
      */
     private $sort = array();
+    
     /**
      * Requested number items per page.
      * @var integer
