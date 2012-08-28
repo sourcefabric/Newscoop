@@ -190,6 +190,7 @@ $(document).ready(function() {
     $('#add_new_topic').click(function() {
         $('#new_topic_holder').toggle();
     });
+
 });
 
 <?php if ($g_user->hasPermission('ManageTopics')) { ?>
