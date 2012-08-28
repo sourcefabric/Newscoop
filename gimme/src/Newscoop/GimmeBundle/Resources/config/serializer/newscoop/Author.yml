@@ -1,0 +1,25 @@
+Newscoop\Entity\Author:
+    exclusion_policy: ALL
+    exclude: false
+    properties:
+        biography:
+            expose: true
+            read_only: true
+            serialized_name: biography
+            access_type: public_method
+        first_name:
+            expose: true
+            serialized_name: firstName
+        last_name:
+            expose: true
+            read_only: true
+            serialized_name: lastName
+        types:
+            expose: true
+            read_only: true
+            serialized_name: types
+            access_type: public_method
+        image:
+            expose: true
+            read_only: true
+            serialized_name: image

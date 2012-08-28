@@ -17,4 +17,25 @@ use DateTime,
  */
 class ArticleRepository extends DatatableSource
 {
+    private $fields = array();
+
+    public function setFields($fields)
+    {
+        $this->fields = explode(',', $fieds);
+    }
+
+    public function getArticles()
+    {
+        $em = $this->getEntityManager();
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a');
+
+        if (count($this->fields) > 0) {
+            foreach ($this->fields as $field) {
+                $queryBuilder->add('select', 'a.'.$field);
+            }
+        }
+        
+        return $queryBuilder->getQuery();
+    }
 }

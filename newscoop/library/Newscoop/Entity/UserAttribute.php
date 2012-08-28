@@ -7,27 +7,31 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\ORM\Mapping AS ORM;
+
 /**
- * @Entity
- * @Table(name="user_attribute")
+ * @ORM\Entity
+ * @ORM\Table(name="user_attribute")
  */
 class UserAttribute
 {
     /**
-     * @Id @ManyToOne(targetEntity="User", inversedBy="attributes")
-     * @JoinColumn(referencedColumnName="Id")
+     * @ORM\Id 
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="attributes")
+     * @ORM\JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;
 
     /**
-     * @Id @Column(type="string", length=255)
+     * @ORM\Id 
+     * @ORM\Column(type="string", length=255)
      * @var string
      */
     private $attribute;
 
     /**
-     * @Column(type="string", length=255, nullable=True)
+     * @ORM\Column(type="string", length=255, nullable=True)
      * @var string
      */
     private $value;

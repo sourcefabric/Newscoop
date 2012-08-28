@@ -7,39 +7,41 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\ORM\Mapping AS ORM;
+
 /**
- * @Entity(repositoryClass="Newscoop\Entity\Repository\UserTopicRepository")
- * @Table(name="user_topic")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\UserTopicRepository")
+ * @ORM\Table(name="user_topic")
  */
 class UserTopic
 {
     /**
-     * @Id
-     * @ManyToOne(targetEntity="Newscoop\Entity\User")
-     * @JoinColumn(referencedColumnName="Id")
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @ORM\JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;
 
     /**
-     * @Id
-     * @Column(type="integer", name="topic_id")
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="topic_id")
      * @var int
      */
     private $topic_id;
 
     /**
-     * @Id
-     * @Column(type="integer", name="topic_language")
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="topic_language")
      * @var int
      */
     private $topic_language;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Topic")
-     * @JoinColumns({
-     *      @JoinColumn(name="topic_id", referencedColumnName="fk_topic_id"),
-     *      @JoinColumn(name="topic_language", referencedColumnName="fk_language_id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Topic")
+     * @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="topic_id", referencedColumnName="fk_topic_id"),
+     *      @ORM\JoinColumn(name="topic_language", referencedColumnName="fk_language_id")
      *  })
      * @var Newscoop\Entity\Topic
      */

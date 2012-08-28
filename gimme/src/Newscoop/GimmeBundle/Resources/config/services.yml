@@ -1,0 +1,26 @@
+services:
+    newscoop.paginator.pagination_listener:
+        class: Newscoop\GimmeBundle\EventListener\PaginationListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest, priority: 33 }
+        arguments:  ["@session", "@newscoop.paginator.paginator_service"]
+    newscoop.gimme.listener.format_json:
+        class: Newscoop\GimmeBundle\EventListener\FormatJsonResponseListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onResponse }
+    newscoop.gimme.listener.override_method:
+        class: Newscoop\GimmeBundle\EventListener\OverrideMethodListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest, priority: 34 }
+    newscoop.gimme.serializer.article_author_handler:
+        class: Newscoop\GimmeBundle\Serializer\Article\AuthorHandler
+        arguments:  ["@router"]
+    newscoop.paginator.paginator_service:
+        class: Newscoop\Gimme\PaginatorService
+        arguments:  ["@knp_paginator", "@router"]
+    newscoop.paginator.pagination_extra_data_subscriber:
+        class: Newscoop\GimmeBundle\EventListener\PaginationExtraDataSubscriber
+        scope: request
+        arguments:  ["@newscoop.paginator.paginator_service"]
+        tags:
+            - { name: kernel.event_subscriber}

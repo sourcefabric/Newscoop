@@ -7,25 +7,25 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\ORM\Collections\ArrayCollection;
 
 /**
  * Issue entity
- * @Entity
- * @Table(name="ArticleTypeMetadata")
+ * @ORM\Entity
+ * @ORM\Table(name="ArticleTypeMetadata")
  *
  * @todo check for performance issues
  */
 class ArticleTypeField
 {
     /**
-     * @Id
-     * @Column(type="string",name="field_name")
+     * @ORM\Id
+     * @ORM\Column(type="string",name="field_name")
      */
     private $name;
 
     /**
-	 * @Transient
 	 * @var Newscoop\Entity\ArticleType
 	 * (at) ManyToOne( targetEntity="Newscoop\Entity\ArticleType" )
 	 * (at) JoinColumn( name="type_id", referencedColumnName="id", nullable=FALSE )
@@ -34,53 +34,53 @@ class ArticleTypeField
     private $articleType;
 
     /**
-     * @Column(type="string",name="type_name")
+     * @ORM\Column(type="string",name="type_name")
      * @todo hack used for getting the parent article type from same table, which we will set later on into self::$type.
      */
     private $typeHack;
 
     /**
-     * @Column(type="integer", name="max_size", nullable=True)
+     * @ORM\Column(type="integer", name="max_size", nullable=True)
      */
     private $length;
 
     /**
-     * @Column(type="string",name="field_type", nullable=True)
+     * @ORM\Column(type="string",name="field_type", nullable=True)
      */
     private $type;
 
     /**
-     * @Column(type="integer", name="field_weight", nullable=True)
+     * @ORM\Column(type="integer", name="field_weight", nullable=True)
      * @var int
      */
     private $fieldWeight;
 
     /**
-     * @Column(type="integer", name="is_hidden", nullable=True)
+     * @ORM\Column(type="integer", name="is_hidden", nullable=True)
      * @var int
      */
     private $isHidden;
 
     /**
-     * @Column(type="integer", name="comments_enabled", nullable=True)
+     * @ORM\Column(type="integer", name="comments_enabled", nullable=True)
      * @var int
      */
     private $commentsEnabled;
 
     /**
-     * @Column(type="integer", name="fk_phrase_id", nullable=True)
+     * @ORM\Column(type="integer", name="fk_phrase_id", nullable=True)
      * @var int
      */
     private $phraseId;
 
     /**
-     * @Column(name="field_type_param", nullable=True)
+     * @ORM\Column(name="field_type_param", nullable=True)
      * @var string
      */
     private $fieldTypeParam;
 
     /**
-     * @Column(type="integer", name="is_content_field", nullable=True)
+     * @ORM\Column(type="integer", name="is_content_field", nullable=True)
      * @var int
      */
     private $isContentField;

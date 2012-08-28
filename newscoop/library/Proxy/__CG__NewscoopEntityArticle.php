@@ -189,10 +189,22 @@ class Article extends \Newscoop\Entity\Article implements \Doctrine\ORM\Proxy\Pr
         return parent::hasWebcode();
     }
 
+    public function setArticleAuthors($articleAuthors)
+    {
+        $this->__load();
+        return parent::setArticleAuthors($articleAuthors);
+    }
+
+    public function getArticleAuthors()
+    {
+        $this->__load();
+        return parent::getArticleAuthors();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'sectionId', 'issueId', 'number', 'name', 'shortName', 'date', 'comments_enabled', 'type', 'published', 'workflowStatus', 'articleOrder', 'public', 'onFrontPage', 'onSection', 'uploaded', 'keywords', 'isIndexed', 'lockTime', 'commentsLocked', 'objectId', 'language', 'publication', 'issue', 'section', 'creator', 'lockUser', 'webcode');
+        return array('__isInitialized__', 'sectionId', 'issueId', 'number', 'name', 'shortName', 'date', 'comments_enabled', 'type', 'published', 'workflowStatus', 'articleOrder', 'public', 'onFrontPage', 'onSection', 'uploaded', 'keywords', 'isIndexed', 'lockTime', 'commentsLocked', 'objectId', 'language', 'publication', 'issue', 'section', 'creator', 'authors', 'articleAuthorTypes', 'lockUser', 'webcode');
     }
 
     public function __clone()
