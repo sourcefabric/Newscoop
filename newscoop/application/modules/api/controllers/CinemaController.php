@@ -8,6 +8,11 @@
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleTopic.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleImage.php');
 
+require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Issue.php');
+require_once($GLOBALS['g_campsiteDir'].'/classes/Section.php');
+
+
 /**
  */
 class Api_CinemaController extends Zend_Controller_Action
@@ -52,6 +57,9 @@ class Api_CinemaController extends Zend_Controller_Action
     private $client_image_height;
     private $client_image_width;
 
+    private $m_url;
+    private $m_section_url;
+
     /**
      *
      */
@@ -59,7 +67,16 @@ class Api_CinemaController extends Zend_Controller_Action
     {
         global $Campsite;
 
-        $this->url = $Campsite['WEBSITE_URL'];
+        $this->m_url = $Campsite['WEBSITE_URL'];
+
+        $language_obj = new \Language(self::LANGUAGE);
+        $language_url_name = $language_obj->getCode();
+        $issue_obj = \Issue::GetCurrentIssue(self::PUBLICATION, self::LANGUAGE);
+        $issue_url_name = $issue_obj->getUrlName();
+        $section_obj = new \Section(self::PUBLICATION, $issue_obj->getIssueNumber(), self::LANGUAGE, self::EV_SECTION);
+        $section_url_name = $section_obj->getUrlName();
+
+        $this->m_section_url = '/' . $language_url_name . '/' . $issue_url_name . '/' . $section_url_name . '/';
 
         $this->m_service = $this->_helper->service('agenda');
 
@@ -83,7 +100,7 @@ class Api_CinemaController extends Zend_Controller_Action
 
         //$this->_helper->layout->disableLayout();
         //$this->params = $this->getRequest()->getParams();
-        //$this->url = $Campsite['WEBSITE_URL'];
+        //$this->m_url = $Campsite['WEBSITE_URL'];
 /*
         if (empty($this->params['client'])) {
             print Zend_Json::encode(array());
@@ -245,12 +262,13 @@ class Api_CinemaController extends Zend_Controller_Action
                     $one_min_age = 'ab ' . $one_min_age . ' Jahren';
                 }
 
-                $one_movie_trailer = $one_data->getProperty('Fmovie_trailer_vimeo');
-                if (!$one_movie_trailer) {
-                    $one_movie_trailer = null;
+                $one_movie_trailer_url = null;
+                $one_movie_trailer_id = $one_data->getProperty('Fmovie_trailer_vimeo');
+                if (!$one_movie_trailer_id) {
+                    $one_movie_trailer_id = null;
                 }
-                else {
-                    $one_movie_trailer = 'http://vimeo.com/' . $one_movie_trailer;
+                if ($one_movie_trailer_id) {
+                    $one_movie_trailer_url = $this->m_url . $this->m_section_url . '?vimeo=' . $one_movie_trailer_id;
                 }
 
                 $one_movie_director = $one_data->getProperty('Fmovie_director');
@@ -307,7 +325,7 @@ class Api_CinemaController extends Zend_Controller_Action
 
                 $one_image_url = null;
                 if (!empty($one_image_id)) {
-                    $one_image_url = $this->url . '/get_img?ImageHeight=300&ImageId=' . $one_image_id;
+                    $one_image_url = $this->m_url . '/get_img?ImageHeight=300&ImageId=' . $one_image_id;
                 }
 */
 
@@ -352,14 +370,14 @@ class Api_CinemaController extends Zend_Controller_Action
                 $one_poster_url = null;
                 $one_image_urls = null;
                 if (!empty($one_poster_ids)) {
-                    $one_poster_thumbnail_url = $this->url . '/get_img?ImageHeight=' . $this->client_poster_thumbnail_height . '&ImageWidth=' . $this->client_poster_thumbnail_width . '&ImageCrop=center&ImageId=' . $one_poster_ids[0];
-                    $one_poster_url = $this->url . '/get_img?ImageHeight=' . $this->client_poster_height . '&ImageWidth=' . $this->client_poster_width . '&ImageCrop=center&ImageId=' . $one_poster_ids[0];
+                    $one_poster_thumbnail_url = $this->m_url . '/get_img?ImageHeight=' . $this->client_poster_thumbnail_height . '&ImageWidth=' . $this->client_poster_thumbnail_width . '&ImageCrop=center&ImageId=' . $one_poster_ids[0];
+                    $one_poster_url = $this->m_url . '/get_img?ImageHeight=' . $this->client_poster_height . '&ImageWidth=' . $this->client_poster_width . '&ImageCrop=center&ImageId=' . $one_poster_ids[0];
                 }
 
                 if (!empty($one_image_ids)) {
                     $one_image_urls = array();
                     foreach ($one_image_ids as $cur_one_img_id) {
-                        $one_image_urls[] = $this->url . '/get_img?ImageHeight=' . $this->client_image_height . '&ImageWidth=' . $this->client_image_width . '&ImageCrop=center&ImageId=' . $cur_one_img_id;
+                        $one_image_urls[] = $this->m_url . '/get_img?ImageHeight=' . $this->client_image_height . '&ImageWidth=' . $this->client_image_width . '&ImageCrop=center&ImageId=' . $cur_one_img_id;
                     }
                 }
 
@@ -409,7 +427,8 @@ class Api_CinemaController extends Zend_Controller_Action
                     //'organizer' => $one_data->getProperty('Forganizer'),
                     'genres' => $one_movie_types,
                     'minimal_age' => $one_min_age,
-                    'trailer_url' => $one_movie_trailer,
+                    'trailer_url' => $one_movie_trailer_url,
+                    'vimeo_id' => $one_movie_trailer_id,
                     //'image_url' => $one_image_url, // 'http://www.tageswoche.ch/images/cache/555x370/crop/images%7Ccms-image-000042058.png',
                     //'movie_detail_url' => self::BASE_URL . '/movie?key=' . urlencode('' . $one_data->getProperty('Fmovie_key')),
                     'movie_poster_thumbnail_url' => $one_poster_thumbnail_url,
