@@ -149,6 +149,11 @@ class UserController extends Zend_Controller_Action
 
         $this->view->user = new MetaUser($user);
         $this->view->profile = $user->getAttributes();
+
+        if ($this->view->user->is('politician')) {
+            $this->view->questions = $this->getPoliticianQuestions();
+            $this->view->labels = $this->getFormLabels();
+        }
     }
 
     public function sendEmailAction()
@@ -202,5 +207,39 @@ class UserController extends Zend_Controller_Action
         }
 
         return $user;
+    }
+
+    /**
+     * Get questions for politicians
+     *
+     * @return array
+     */
+    private function getPoliticianQuestions()
+    {
+        $questions = array();
+        $config = new Zend_Config_Xml($this->_helper->theme->getFilePath('_forms/questionnaire.xml'));
+        foreach ($config->form->elements as $name => $element) {
+            $questions[$name] = $element->options->label;
+        }
+
+        return $questions;
+    }
+
+    /**
+     * Get form labels
+     *
+     * @return array
+     */
+    private function getFormLabels()
+    {
+        $labels = array();
+        $config = new Zend_Config_Xml($this->_helper->theme->getFilePath('_forms/profile.xml'), 'politician');
+        foreach ($config->profile->elements as $name => $element) {
+            if (isset($element->options) && isset($element->options->multioptions)) {
+                $labels[$name] = $element->options->multioptions->toArray();
+            }
+        }
+
+        return $labels;
     }
 }

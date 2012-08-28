@@ -47,9 +47,8 @@ class DashboardController extends Zend_Controller_Action
 
     public function indexAction()
     {
-        $form = new Application_Form_Profile();
+        $form = $this->getDashboardForm();
         $form->setMethod('POST');
-        $this->addProfileFields($form);
         $form->setDefaultsFromEntity($this->user);
 
         $request = $this->getRequest();
@@ -184,9 +183,8 @@ class DashboardController extends Zend_Controller_Action
 
     public function questionnaireAction()
     {
-        $form = new Zend_Form($this->getThemeFormConfig('questionnaire')->form);
+        $this->getQuestionnaireForm();
         $form->setDefaults($this->user->getAttributes());
-
 
         if (!$this->user->getAttribute(self::ATTRIBUTE_QUESTIONNAIRE)) {
             $this->_helper->service('user')->save(array(
@@ -242,7 +240,8 @@ class DashboardController extends Zend_Controller_Action
         $section = $this->userIsPolitician() ? 'politician' : 'user';
         $form->addSubForm(
             new Zend_Form_SubForm($this->getThemeFormConfig('profile', $section)->profile),
-            'attributes');
+            'attributes'
+        );
     }
 
     /**
@@ -256,7 +255,8 @@ class DashboardController extends Zend_Controller_Action
     {
         return new Zend_Config_Xml(
             $this->_helper->theme->getFilePath('_forms/' . $form . '.xml'),
-            $section);
+            $section
+        );
     }
 
     /**
@@ -309,5 +309,27 @@ class DashboardController extends Zend_Controller_Action
         }, $group['groups']);
 
         return array_combine($groups, $groups);
+    }
+
+    /**
+     * Get questionnaire form
+     *
+     * @return Zend_Form
+     */
+    private function getQuestionnaireForm()
+    {
+        return new Zend_Form($this->getThemeFormConfig('questionnaire')->form);
+    }
+
+    /**
+     * Get dashboard form
+     *
+     * @return Zend_Form
+     */
+    private function getDashboardForm()
+    {
+        $form = new Application_Form_Profile();
+        $this->addProfileFields($form);
+        return $form;
     }
 }
