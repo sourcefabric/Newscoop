@@ -326,8 +326,8 @@ session.cookie_domain = ""
 solr_select = "http://lab.sourcefabric.org/solr/select/"
 solr_update = "http://lab.sourcefabric.org/solr/update/json?commit=true"
 
-role.politician = 6
-role.allowedRoles[] = 6
+role.politician = 10
+role.allowedRoles[] = 10
 
 [cli : production]
 resources.doctrine.cache = "Doctrine\Common\Cache\ArrayCache";
