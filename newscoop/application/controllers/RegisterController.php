@@ -6,6 +6,7 @@
  */
 
 use Newscoop\Entity\User;
+use Newscoop\User\RegisterUserCommand;
 
 /**
  */
@@ -48,22 +49,15 @@ class RegisterController extends Zend_Controller_Action
 
         $request = $this->getRequest();
         if ($request->isPost() && $form->isValid($request->getPost())) {
-            $values = $form->getValues();
-            $users = $this->_helper->service('user')->findBy(array(
-                'email' => $values['email'],
-            ));
 
-            if (count($users) > 0) {
-                $user = array_pop($users);
-            } else {
-                $user = $this->_helper->service('user')->createPending($values['email']);
-            }
-
-            if (!$user->isPending()) {
-                $form->email->addError("User with email '$values[email]' is registered already.");
-            } else {
-                $this->_helper->service('email')->sendConfirmationToken($user);
+            try {
+                $values = $form->getValues();
+                $command = new RegisterUserCommand();
+                $command->email = $values['email'];
+                $this->_helper->service('user.register')->register($command);
                 $this->_helper->redirector('after');
+            } catch (Exception $e) {
+                $form->email->addError("User with email '$values[email]' is registered already.");
             }
         }
 

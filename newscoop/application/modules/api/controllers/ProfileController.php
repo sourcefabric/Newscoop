@@ -6,6 +6,7 @@
  */
 
 use Newscoop\Entity\User;
+use Newscoop\User\RegisterUserCommand;
 
 require_once __DIR__ . '/AbstractController.php';
 require_once __DIR__ . '/../forms/Profile.php';
@@ -80,6 +81,35 @@ class Api_ProfileController extends AbstractController
         );
     }
 
+    public function subscriptioninfoAction()
+    {
+        $this->assertIsSecure();
+        $this->_helper->json(
+            array_merge(
+                $this->_getParam('username') !== null ? $this->getUserSubscriptionInfo($this->getUser()) : array(),
+                $this->getAvailableSubscriptions()
+            )
+        );
+    }
+
+    public function createAction()
+    {
+        $this->assertIsSecure();
+        $this->assertIsPost();
+
+        try {
+            $command = new RegisterUserCommand();
+            $command->email = $this->_getParam('email');
+            $this->_helper->service('user.register')->register($command);
+            $this->getResponse()->setHttpResponseCode(200);
+        } catch (Exception $e) {
+            $this->sendError($e->getMessage(), 409);
+        }
+
+        $this->getResponse()->sendResponse();
+        exit;
+    }
+
     /**
      * Get user type
      *
@@ -109,19 +139,6 @@ class Api_ProfileController extends AbstractController
     {
         $image = $this->_helper->service('image')->getUserImage($user);
         return $image ? $this->view->serverUrl($this->view->url(array('src' => $image), 'image', false, false)) : null;
-    }
-
-    /**
-     */
-    public function subscriptioninfoAction()
-    {
-        $this->assertIsSecure();
-        $this->_helper->json(
-            array_merge(
-                $this->_getParam('username') !== null ? $this->getUserSubscriptionInfo($this->getUser()) : array(),
-                $this->getAvailableSubscriptions()
-            )
-        );
     }
 
     /**
