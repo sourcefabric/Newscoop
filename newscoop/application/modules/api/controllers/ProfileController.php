@@ -108,7 +108,7 @@ class Api_ProfileController extends AbstractController
     private function getUserImage(User $user)
     {
         $image = $this->_helper->service('image')->getUserImage($user);
-        return $image ? $this->view->serverUrl($this->view->url(array('src' => $image), 'image')) : null;
+        return $image ? $this->view->serverUrl($this->view->url(array('src' => $image), 'image', false, false)) : null;
     }
 
     /**
