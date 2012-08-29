@@ -161,11 +161,9 @@ final class MetaArticleBodyField {
         }
         if ($this->m_articleTypeField->isContent()) {
             $objectType = new ObjectType('article');
-            $userId = CampTemplate::singleton()->context()->user->identifier;
             $requestObjectId = $this->m_parent_article->getProperty('object_id');
             $updateArticle = empty($requestObjectId);
             try {
-                // note that an analogy to SessionRequest::Create() is run at the js-based stats now, at Statistics::WriteStats();
                 if ($updateArticle) {
                     $requestObject = new RequestObject($requestObjectId);
                     if (!$requestObject->exists()) {
@@ -177,7 +175,7 @@ final class MetaArticleBodyField {
 
                 // statistics shall be only gathered if the site admin set it on (and not for editor previews)
                 $context = CampTemplate::singleton()->context();
-                if ((SystemPref::CollectStatistics()) && (!$context->preview)) {
+                if ((SystemPref::CollectStatisticsAuto()) && (!$context->preview)) {
                     $stat_web_url = $Campsite['WEBSITE_URL'];
                     if ('/' != $stat_web_url[strlen($stat_web_url)-1]) {
                         $stat_web_url .= '/';
@@ -188,56 +186,7 @@ final class MetaArticleBodyField {
                     $name_spec = '_' . $article_number . '_' . $language_code;
                     $object_type_id = $objectType->getObjectTypeId();
 
-                    $content .= '
-                        <script type="text/javascript">
-                        <!--
-                        var stats_getHTTPObject' . $name_spec . ' = function () {
-                            var xhr = false;
-                            if (window.XMLHttpRequest) {
-                                xhr = new XMLHttpRequest();
-                            } else if (window.ActiveXObject) {
-                                try {
-                                    xhr = new ActiveXObject("Msxml2.XMLHTTP");
-                                } catch(e) {
-                                    try {
-                                        xhr = new ActiveXObject("Microsoft.XMLHTTP");
-                                    } catch(e) {
-                                        xhr = false;
-                                    }
-                                }
-                            }
-                            return xhr;
-                        };
-
-                        var stats_submit' . $name_spec . ' = function () {
-                            if (undefined !== window.statistics_request_sent_' . $name_spec . ') {
-                                return;
-                            }
-                            window.statistics_request_sent_' . $name_spec . ' = true;
-
-                            var stats_request = stats_getHTTPObject' . $name_spec . '();
-                            stats_request.onreadystatechange = function() {};
-    
-                            var read_date = new Date();
-                            var read_path = "_statistics/reader/' . $object_type_id . '/";
-                            var request_randomizer = "" + read_date.getTime() + Math.random();
-                            var stats_url = "' . $stat_web_url . '" + read_path + "' . $requestObjectId . '/";
-                            try {
-                                stats_request.open("GET", stats_url + "?randomizer=" + request_randomizer, true);
-                                stats_request.send(null);
-                                /* not everybody has jquery installed
-                                $.ajax({
-                                    url: stats_url,
-                                    data: {randomizer: request_randomizer},
-                                    success: function() {}
-                                });
-                                */
-                            } catch (e) {}
-                        };
-                        stats_submit' . $name_spec . '();
-                        -->
-                        </script>
-                    ';
+                    $content .= Statistics::JavaScriptTrigger(array('name_spec' => $name_spec, 'object_type_id' => $object_type_id, 'request_object_id' => $requestObjectId));
                 }
             } catch (Exception $ex) {
                 $content .= "<p><strong><font color=\"red\">INTERNAL ERROR! " . $ex->getMessage()
