@@ -81,8 +81,7 @@ class Api_OnlineController extends AbstractController
         $this->view->getGimme()->article = new MetaArticle($article->getLanguageId(), $article->getNumber());
         $this->view->width = $this->getClientWidth();
         $this->view->height = $this->getClientHeight();
-
-        $this->render($this->isProminent($article) ? 'prominent' : 'companion');
+        $this->render('article');
     }
 
     /**
