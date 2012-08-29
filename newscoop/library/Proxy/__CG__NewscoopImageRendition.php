@@ -129,7 +129,7 @@ class Rendition extends \Newscoop\Image\Rendition implements \Doctrine\ORM\Proxy
         return parent::isCrop();
     }
 
-    public function fits(\Newscoop\Image\ImageInterface $image)
+    public function fits(\Newscoop\Image\ImageInterface $image = NULL)
     {
         $this->__load();
         return parent::fits($image);

@@ -87,6 +87,12 @@ class TopicTree extends \Newscoop\Entity\TopicTree implements \Doctrine\ORM\Prox
         return parent::addName($name, $language);
     }
 
+    public function __toString()
+    {
+        $this->__load();
+        return parent::__toString();
+    }
+
 
     public function __sleep()
     {
