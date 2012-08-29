@@ -118,6 +118,6 @@ function smarty_function_count($p_params, &$p_smarty)
 
     return $content;
 
-} // fn smarty_function_map
+} // fn smarty_function_count
 
 ?>
