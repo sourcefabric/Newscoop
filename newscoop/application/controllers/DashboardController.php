@@ -183,7 +183,7 @@ class DashboardController extends Zend_Controller_Action
 
     public function questionnaireAction()
     {
-        $this->getQuestionnaireForm();
+        $form = $this->getQuestionnaireForm();
         $form->setDefaults($this->user->getAttributes());
 
         if (!$this->user->getAttribute(self::ATTRIBUTE_QUESTIONNAIRE)) {
