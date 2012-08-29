@@ -13,11 +13,8 @@
       <div class="comment-head">
          <div class="user-meta">
 {{* get gravatar image *}}
-{{ assign var="profile_email" value=`$gimme->comment->reader_email` }}
-{{ php }}
-$profile_email = $this->get_template_vars('profile_email');
-print "<img src=\"http://www.gravatar.com/avatar/".md5( strtolower( trim( $profile_email ) ) )."?s=60\" / class=\"commentimage\" width=60 height=60 />";
-{{ /php }}
+{{ assign var="profile_email" value=$gimme->comment->reader_email }}
+<img src="http://www.gravatar.com/avatar/{{ md5(strtolower(trim($profile_email))) }}?s=60" class="commentimage" width="60" height="60" />
              <span class="name">{{ $gimme->comment->nickname }}</span> {{ $gimme->comment->submit_date|camp_date_format:"%e.%m.%Y at %H:%i" }}
           </div>
       </div>
@@ -43,7 +40,7 @@ print "<img src=\"http://www.gravatar.com/avatar/".md5( strtolower( trim( $profi
     <p>{{ $gimme->comment->content }}</p>
 {{ /if *}}
 
-{{ if $gimme->user->blocked_from_comments }}
+{{ if $gimme->user->is_blocked_from_comments }}
     <div class="message messagecomment messageerror">This user has been banned from writing comments.</div>
 {{ else }}
 
@@ -85,6 +82,7 @@ function switchName() {
 {{ camp_edit object="comment" attribute="content" html_code="id=\"comment\" rows=\"5\" tabindex=\"4\"" }}
 </p>
 
+{{ if $gimme->publication->captcha_enabled }}
 <p>
 <label for="f_captcha_image">&nbsp;</label>
 <img src="{{ captcha_image_link }}">
@@ -94,6 +92,7 @@ function switchName() {
 <label for="f_captcha_code">Enter the code:</label>
 {{ camp_edit object="captcha" attribute="code" html_code="class=\"textfield\" id=\"comment-code\" tabindex=\"5\"" }}
 </p>
+{{ /if }}
 
 <p>{{ /comment_form }}</p>
 {{ /if }}

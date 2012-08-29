@@ -1,0 +1,122 @@
+<?php
+$headStyle = $this->headLink();
+$headStyle->appendStylesheet($this->baseUrl('/admin-style/notices.css'));
+?>
+
+<script>
+    $.extend({
+        distinct:function (anArray, elementToRemove) {
+            var result = [];
+            console.log(elementToRemove);
+            $.each(anArray, function (i, v) {
+                if ($.inArray(v, result) == -1 && v !== elementToRemove) result.push(v);
+            });
+            return result;
+        }
+    });
+
+    $(document).ready(function () {
+        $("#date").datepicker({ dateFormat:"yy-mm-dd" });
+        $("#published").datepicker({ dateFormat:"yy-mm-dd" });
+        $("#unpublished").datepicker({ dateFormat:"yy-mm-dd" });
+
+        var tagIds = $('#categories').val().split(',');
+        console.log(tagIds);
+
+        var checkboxes = $("input.category[name='category']");
+        if (tagIds) {
+            $.each(checkboxes, function (i, v) {
+                console.log(i);
+
+                //console.log($.inArray($(v).val(), tagIds));
+
+                if ($.inArray($(v).val(), tagIds) !== -1) {
+                    console.log('I found a checked box');
+
+                    $(v).attr('checked', 'checked');
+                }
+            });
+        }
+
+        checkboxes.bind("change", { c:checkboxes }, function (e) {
+
+            var cat_id = $(this).val();
+            var checked = $(this).attr('checked');
+            var csv_values = $('#categories').val();
+
+            //@todo this code sucks and needs cleaning :)
+            if (checked) {
+
+                if (csv_values != "") {
+                    var updated_values = [];
+                    csv_values.split(',').push(cat_id);
+                    updated_values = csv_values.split(',');
+                    updated_values.push(cat_id);
+
+                    //console.log($.distinct(updated_values,cat_id));
+
+                    $('#categories').val($.distinct(updated_values).join(','));
+
+                } else {
+                    $('#categories').val($(this).val());
+                }
+            } else {
+                if (csv_values != "") {
+
+                    var updated_values = [];
+
+                    csv_values.split(',').push(cat_id);
+                    updated_values = csv_values.split(',');
+                    updated_values.push(cat_id);
+
+                    $('#categories').val($.distinct(updated_values, cat_id).join(','));
+
+                } else {
+                    $('#categories').val($(this).val());
+                }
+            }
+        });
+    });
+
+
+</script>
+
+
+
+<?php $this->placeholder('title')->captureStart(); ?>
+
+<?php
+if($this->noticeForm->getValue('id')){
+    putGS('Edit Notice');
+}else{
+    putGS('Add Notice');
+}
+?>
+<?php $this->placeholder('title')->captureEnd(); ?>
+
+<?php if (count($this->trees)): ?>
+<div id="noticeCategories">
+    <?php foreach ($this->trees as $tree): ?>
+        <fieldset>
+            <legend><?php echo $tree['root']->getTitle() ?></legend>
+            <ul>
+                <?php foreach ($tree['children'] as $childNode): ?>
+                <li>
+                    <input type="checkbox" class="category" name="category" id="<?php echo $childNode['id'] ?>"
+                           value="<?php echo $childNode['id'] ?>"/>
+                    <label for="<?php echo $childNode['id'] ?>">
+                        <?php echo $childNode['title'] ?>
+                    </label>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+            <br>
+        </fieldset>
+    <?php endforeach; ?>
+</div>
+<?php endif; ?>
+<?php echo $this->categories; ?>
+
+
+
+<?php echo $this->noticeForm; ?>

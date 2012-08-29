@@ -5,6 +5,14 @@ php:
 branches:
   only:
     - next
+    - next-notice
 
 notifications:
   email: false
+
+before_script:
+  - ./scripts/ci/before_script.sh
+  - curl -s http://getcomposer.org/installer | php
+  - php composer.phar install
+
+script: "cd newscoop/tests && phpunit"

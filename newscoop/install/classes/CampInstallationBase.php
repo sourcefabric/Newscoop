@@ -370,7 +370,7 @@ XML;
         $sxml->asXML($emptyThemeDir.DIR_SEP."theme.xml");
 
         // creating preview images
-        $preview = @imagecreatetruecolor(210, 130);
+        /*$preview = @imagecreatetruecolor(210, 130);
         $logoPoints = array( 159, 9,   113, 34,   86, 99,   150, 121,   203, 99,   138, 78 );
         $textColor = imagecolorallocate($preview, 191, 191, 191);
         imagefill($preview, 0, 0, imagecolorallocate($preview, 255, 255, 255));
@@ -386,7 +386,7 @@ XML;
         file_put_contents($emptyThemeDir.DIR_SEP."section.tpl", "<!-- Section page template -->");
         file_put_contents($emptyThemeDir.DIR_SEP."article.tpl", "<!-- Article page template -->");
         file_put_contents($emptyThemeDir.DIR_SEP."404.tpl", "<!-- Error page template -->");
-
+        */
     }
 
     /**

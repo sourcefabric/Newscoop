@@ -56,7 +56,7 @@
   <META HTTP-EQUIV="Set-Cookie" CONTENT="LoginUserKey=; path=/">
   {{ $gimme->url->reset_parameter('logout') }}
   <META HTTP-EQUIV="Refresh" content="0;url={{ uri }}">
-{{ /if }} 
+{{ /if }}
 
 <!-- 1140px Grid styles for IE -->
 <!--[if lte IE 9]><link rel="stylesheet" href="css/ie.css" type="text/css" media="screen" /><![endif]-->
@@ -68,11 +68,17 @@
 <link href="{{ url static_file='_css/default-zen/general.css' }}" media="screen" rel="stylesheet" type="text/css" />
 
 <link rel="alternate" type="application/rss+xml" title="RSS 2.0" href="http://{{ $gimme->publication->site }}/?tpl=1341">
-    
+
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/jquery-ui.min.js"></script>
 
 <script type="text/javascript">
 // var tb_pathToImage = "{{ url static_file='_img/loadingAnimation.gif' }}";
 </script>
+
+{{ if isset($view) }}
+    {{ $view->headLink() }}
+    {{ $view->headScript() }}
+{{ /if }}
+
 </head>

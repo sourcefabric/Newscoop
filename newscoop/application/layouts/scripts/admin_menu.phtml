@@ -561,6 +561,43 @@ if ($showUserMenu) {
 
 // get plugins menu
 $plugin_pages = CampPlugin::CreatePluginMenu();
+
+//append notices - although they are not a plugin
+$plugin_pages[] = array(
+    'label' => getGS('Notices'),
+    'module' => 'admin',
+    'controller' => 'notice',
+    'action' => 'index',
+    'resource' => 'notice',
+    'privilege' => 'manage',
+    'pages' => array(
+        array(
+            'label' => getGS('Mangage notices'),
+            'module' => 'admin',
+            'controller' => 'notice',
+            'action' => 'index',
+            'resource' => 'notice',
+            'privilege' => 'manage'
+        ),
+        array(
+            'label' => getGS('Add notice'),
+            'module' => 'admin',
+            'controller' => 'notice',
+            'action' => 'edit',
+            'resource' => 'notice',
+            'privilege' => 'manage'
+        ),
+        array(
+            'label' => getGS('Configure notice categories'),
+            'module' => 'admin',
+            'controller' => 'notice',
+            'action' => 'category',
+            'resource' => 'notice',
+            'privilege' => 'manage'
+        )
+    )
+);
+
 if (!empty($plugin_pages)) {
     $pages[] = array(
         'label' => getGS('Plugins'),

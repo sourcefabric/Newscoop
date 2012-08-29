@@ -1,0 +1,21 @@
+{
+    "hash": "1c9379a2737f9ddee21214c3322beb70",
+    "packages": [
+        {
+            "package": "doctrine/common",
+            "version": "2.2.2"
+        },
+        {
+            "package": "gedmo/doctrine-extensions",
+            "version": "v2.3.2"
+        }
+    ],
+    "packages-dev": null,
+    "aliases": [
+
+    ],
+    "minimum-stability": "stable",
+    "stability-flags": [
+
+    ]
+}

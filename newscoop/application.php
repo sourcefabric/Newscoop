@@ -6,7 +6,7 @@ defined('APPLICATION_PATH')
 
 // Define application environment
 defined('APPLICATION_ENV')
-    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
+    || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'development'));
 
 // goes to install process if configuration files does not exist yet
 if (!defined('INSTALL') && (!file_exists(APPLICATION_PATH . '/../conf/configuration.php')
@@ -15,6 +15,8 @@ if (!defined('INSTALL') && (!file_exists(APPLICATION_PATH . '/../conf/configurat
     header("Location: $subdir/install/");
     exit;
 }
+
+require_once __DIR__ . '/vendor/autoload.php';
 
 // Ensure library/ is on include_path
 set_include_path(implode(PATH_SEPARATOR, array(
