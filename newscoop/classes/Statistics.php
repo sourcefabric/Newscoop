@@ -377,7 +377,7 @@ class Statistics {
     } // WriteStats
 
     /**
-     * Prepares JavaScript trigger for stistics requests
+     * Prepares JavaScript trigger for statistics requests
      *
      * @param int $p_params
      *      specs to distinguish the request, js variables and functions
