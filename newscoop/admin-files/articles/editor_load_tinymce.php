@@ -340,14 +340,17 @@ $().ready(function() {
                 var buttonId = ed.id.substr(0, idx);
                 var row = tinymce.DOM.get(tinyMCE.activeEditor.id + '_path_row');
 
-                if (!wordcount) {
-                    tinymce.DOM.add(row.parentNode, 'div', {'style': 'float: right'}, 'Characters: ' + '<span id="' + tinyMCE.activeEditor.id + '-wordcount">0</span>');
-                    wordcount = true;
+                if (32 == l.keyCode || 13 == l.keyCode || 46 == l.keyCode || 33 == l.keyCode || 63 == l.keyCode ) {
+                    if (!wordcount) {
+                        tinymce.DOM.add(row.parentNode, 'div', {'style': 'float: right'}, 'Characters: ' + '<span id="' + tinyMCE.activeEditor.id + '-wordcount">0</span>');
+                        wordcount = true;
+                    }
+                    text = ed.getContent().replace(/(< ([^>]+)<)/g,"").replace(/\s+/g," ");
+                    text = $.trim(text);
+                    if (row)
+                        tinymce.DOM.setHTML(tinyMCE.activeEditor.id + '-wordcount', text.length);
                 }
-                text = ed.getContent().replace(/(< ([^>]+)<)/g,"").replace(/\s+/g," ");
-                text = $.trim(text);
-                if (row)
-                    tinymce.DOM.setHTML(tinyMCE.activeEditor.id + '-wordcount', text.length);
+
             });
 
             ed.addButton('campsite-subhead', {
