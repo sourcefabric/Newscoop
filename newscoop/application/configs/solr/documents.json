@@ -1,0 +1,11 @@
+{
+    "add": {
+        "doc": {
+            "id": "wetter",
+            "title": "Wetter",
+            "type": "news",
+            "link": "http://www.tageswoche.ch/wetter",
+            "published": "2012-05-09T13:48:00Z"
+        }
+    }
+}
