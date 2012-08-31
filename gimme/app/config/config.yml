@@ -63,14 +63,14 @@ sensio_framework_extra:
 twig:
     debug:            %kernel.debug%
     strict_variables: %kernel.debug%
-    exception_controller: 'FOS\RestBundle\Controller\ExceptionController::showAction'
+    exception_controller: 'Newscoop\GimmeBundle\Controller\ExceptionController::showAction'
 
 knp_paginator:
     page_range: 5                      # default page range used in pagination control
     default_options:
-        page_name: page                # page query parameter name
-        sort_field_name: sort          # sort field query parameter name
-        sort_direction_name: direction # sort direction query parameter name
+        page_name: knp_page                # page query parameter name
+        sort_field_name: knp_sort          # sort field query parameter name
+        sort_direction_name: knp_direction # sort direction query parameter name
         distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
     template:
         pagination: KnpPaginatorBundle:Pagination:sliding.html.twig     # sliding pagination controls template

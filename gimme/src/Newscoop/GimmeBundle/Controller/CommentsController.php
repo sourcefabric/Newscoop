@@ -16,7 +16,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 class CommentsController extends FOSRestController
 {
     /**
-     * @Route("/articles/{id}/{language}/comments.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{number}/{language}/comments.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View()
      */
