@@ -347,8 +347,9 @@ $().ready(function() {
                     }
                     text = ed.getContent().replace(/(< ([^>]+)<)/g,"").replace(/\s+/g," ");
                     text = $.trim(text);
-                    if (row)
+                    if (row) {
                         tinymce.DOM.setHTML(tinyMCE.activeEditor.id + '-wordcount', text.length);
+                    }
                 }
 
             });
