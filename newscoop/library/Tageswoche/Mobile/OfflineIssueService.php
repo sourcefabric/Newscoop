@@ -144,6 +144,7 @@ class OfflineIssueService
         }
 
         file_put_contents("$dir/comments.json", $this->fetch($article->comment_url));
+        $article->comment_url = basename($dir) . '/comments.json';
     }
 
     /**
