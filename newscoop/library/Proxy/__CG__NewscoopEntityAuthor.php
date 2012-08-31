@@ -57,6 +57,18 @@ class Author extends \Newscoop\Entity\Author implements \Doctrine\ORM\Proxy\Prox
         return parent::getFullName();
     }
 
+    public function getLink()
+    {
+        $this->__load();
+        return parent::getLink();
+    }
+
+    public function setLink($link)
+    {
+        $this->__load();
+        return parent::setLink($link);
+    }
+
 
     public function __sleep()
     {

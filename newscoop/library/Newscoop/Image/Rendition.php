@@ -8,37 +8,38 @@
 namespace Newscoop\Image;
 
 use Nette\Image as NetteImage;
+use Doctrine\ORM\Mapping AS ORM;
 
 require_once __DIR__ . '/../../Nette/exceptions.php';
 
 /**
  * Rendition
- * @Entity
- * @Table(name="rendition")
+ * @ORM\Entity
+ * @ORM\Table(name="rendition")
  */
 class Rendition
 {
     /**
-     * @Id
-     * @Column(type="string")
+     * @ORM\Id
+     * @ORM\Column(type="string")
      * @var string
      */
     private $name;
 
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      * @var int
      */
     private $width;
 
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      * @var int
      */
     private $height;
 
     /**
-     * @Column
+     * @ORM\Column
      * @var string
      */
     private $specs;
@@ -49,13 +50,13 @@ class Rendition
     private $coords;
 
     /**
-     * @Column(type="integer", nullable=True)
+     * @ORM\Column(type="integer", nullable=True)
      * @var int
      */
     private $offset;
 
     /**
-     * @Column(nullable=True)
+     * @ORM\Column(nullable=True)
      * @var string
      */
     private $label;

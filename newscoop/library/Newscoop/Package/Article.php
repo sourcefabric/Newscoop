@@ -7,21 +7,24 @@
 
 namespace Newscoop\Package;
 
+use Doctrine\ORM\Mapping AS ORM;
+
 /**
- * @Entity
- * @Table(name="package_article")
+ * @ORM\Entity
+ * @ORM\Table(name="package_article")
  */
 class Article
 {
     /**
-     * @Id @Column(type="integer")
+     * @ORM\Id 
+     * @ORM\Column(type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @ManyToMany(targetEntity="Package", inversedBy="articles")
-     * @JoinTable(name="package_article_package")
+     * @ORM\ManyToMany(targetEntity="Package", inversedBy="articles")
+     * @ORM\JoinTable(name="package_article_package")
      * @var array
      */
     private $packages;

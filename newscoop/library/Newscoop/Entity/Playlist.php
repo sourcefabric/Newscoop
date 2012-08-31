@@ -6,28 +6,30 @@
  */
 namespace Newscoop\Entity;
 
+use Doctrine\ORM\Mapping AS ORM;
+
 /**
  * Playlist entity
- * @Entity(repositoryClass="Newscoop\Entity\Repository\PlaylistRepository")
- * @Table(name="playlist")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\PlaylistRepository")
+ * @ORM\Table(name="playlist")
  */
 class Playlist extends Entity
 {
 	/**
-     * @Id @GeneratedValue
-     * @Column(type="integer", name="id_playlist")
+     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Column(type="integer", name="id_playlist")
      * @var int
      */
     protected $id;
 
     /**
-     * @Column(length=256, name="name")
+     * @ORM\Column(length=256, name="name")
      * @var string
      */
     protected $name;
 
     /**
-     * @OneToMany(targetEntity="Newscoop\Entity\PlaylistArticle", mappedBy="playlist", cascade={"all"})
+     * @ORM\oneToMany(targetEntity="Newscoop\Entity\PlaylistArticle", mappedBy="playlist", cascade={"all"})
      */
     private $articles;
 

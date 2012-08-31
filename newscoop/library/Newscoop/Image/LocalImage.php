@@ -7,81 +7,85 @@
 
 namespace Newscoop\Image;
 
+use Doctrine\ORM\Mapping AS ORM;
+
 /**
  * Local Image
- * @Entity
- * @Table(name="Images")
+ * @ORM\Entity
+ * @ORM\Table(name="Images")
  */
 class LocalImage implements ImageInterface
 {
     /**
-     * @Id @Column(type="integer", name="Id") @GeneratedValue
+     * @ORM\Id 
+     * @ORM\Column(type="integer", name="Id") 
+     * @ORM\GeneratedValue
      * @var int
      */
     private $id;
 
     /**
-     * @Column(name="Location")
+     * @ORM\Column(name="Location")
      * @var string
      */
     private $location;
 
     /**
-     * @Column(name="ImageFileName", nullable=True)
+     * @ORM\Column(name="ImageFileName", nullable=True)
      * @var string
      */
     private $basename;
 
     /**
-     * @Column(name="URL", nullable=True)
+     * @ORM\Column(name="URL", nullable=True)
      * @var string
      */
     private $url;
 
     /**
-     * @Column(nullable=True, name="Description")
+     * @ORM\Column(nullable=True, name="Description")
      * @var string
      */
     private $description;
 
     /**
-     * @Column(type="integer", nullable=True)
+     * @ORM\Column(type="integer", nullable=True)
      * @var int
      */
     private $width;
 
     /**
-     * @Column(type="integer", nullable=True)
+     * @ORM\Column(type="integer", nullable=True)
      * @var int
      */
     private $height;
 
     /**
-     * @Column(nullable=True, name="Photographer")
+     * @ORM\Column(nullable=True, name="Photographer")
      * @var string
      */
     private $photographer;
     
     /**
-     * @Column(nullable=True, name="Place")
+     * @ORM\Column(nullable=True, name="Place")
      * @var string
      */
     private $place;
     
     /**
-     * @Column(nullable=True, name="Date")
+     * @ORM\Column(nullable=True, name="Date")
      * @var string
      */
     private $date;
 
     /**
-     * @OneToMany(targetEntity="Newscoop\Image\ArticleRendition", mappedBy="image", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Newscoop\Image\ArticleRendition", mappedBy="image", cascade={"remove"})
      * @var Doctrine\Common\Collections\Collection
      */
     private $renditions;
 
     /**
-     * @OneToMany(targetEntity="Newscoop\Package\Item", mappedBy="image", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Newscoop\Package\Item", mappedBy="image", cascade={"remove"})
      * @var Doctrine\Common\Collections\Collection
      */
     private $items;

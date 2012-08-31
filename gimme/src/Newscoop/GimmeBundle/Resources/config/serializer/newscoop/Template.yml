@@ -1,0 +1,4 @@
+Newscoop\Entity\Template:
+    exclusion_policy: ALL
+    exclude: true
+    access_type: public_method
