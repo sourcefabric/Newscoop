@@ -8,86 +8,87 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\ORM\Mapping AS ORM;
 use DateTime, Newscoop\Entity\User;
 
 /**
  * Feedback entity
- * @entity
- * @table(name="feedback")
- * @entity(repositoryClass="Newscoop\Entity\Repository\FeedbackRepository")
+ * @ORM\Table(name="feedback")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\FeedbackRepository")
  */
 class Feedback
 {
     /**
-     * @id @generatedValue
-     * @column(type="integer")
+     * @ORM\Id 
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      * @var int
      */
     private $id;
     
     /**
-     * @manyToOne(targetEntity="Newscoop\Entity\User")
-     * @joinColumn(name="user_id", referencedColumnName="Id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;
     
     /**
-     * @manyToOne(targetEntity="Newscoop\Entity\Section")
-     * @joinColumn(name="section_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Section")
+     * @ORM\JoinColumn(name="section_id", referencedColumnName="id")
      * @var Newscoop\Entity\Section
      */
     private $section;
     
     /**
-     * @manyToOne(targetEntity="Newscoop\Entity\Publication")
-     * @joinColumn(name="publication_id", referencedColumnName="Id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
+     * @ORM\JoinColumn(name="publication_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
     private $publication;
     
     /**
-     * @manyToOne(targetEntity="Newscoop\Entity\Article")
-     * @JoinColumns({
-     *     @JoinColumn(name="article_number", referencedColumnName="Number"),
-     *     @JoinColumn(name="article_language", referencedColumnName="IdLanguage")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
+     * @ORM\JoinColumns({
+     *     @ORM\JoinColumn(name="article_number", referencedColumnName="Number"),
+     *     @ORM\JoinColumn(name="article_language", referencedColumnName="IdLanguage")
      * })
      * @var Newscoop\Entity\Article
      */
     private $article;
     
     /**
-     * @column(length=2048)
+     * @ORM\Column(length=2048)
      * @var text
      */
     private $message;
     
     /**
-     * @column(length=128)
+     * @ORM\Column(length=128)
      * @var string
      */
     private $url;
     
     /**
-     * @column(length=128)
+     * @ORM\Column(length=128)
      * @var string
      */
     private $subject;
 
     /**
-     * @column(length=2)
+     * @ORM\Column(length=2)
      * @var int
      */
     private $status;
 
     /**
-     * @column(type="datetime")
+     * @ORM\Column(type="datetime")
      * @var DateTime
      */
     private $time_created;
 
     /*
-     * @column(type="datetime")
+     * @ORM\Column(type="datetime")
      * @var DateTime
      */
     private $time_updated;
@@ -102,13 +103,13 @@ class Feedback
     static $attachment_type_enum = array('none', 'image', 'document');
     
     /**
-     * @column(length=1)
+     * @ORM\Column(length=1)
      * @var int
      */
     private $attachment_type;
     
     /**
-     * @column(type="integer")
+     * @ORM\Column(type="integer")
      * @var int
      */
     private $attachment_id;

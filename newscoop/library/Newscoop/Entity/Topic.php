@@ -7,30 +7,32 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\ORM\Mapping AS ORM;
+
 /**
- * @Entity
- * @Table(name="TopicNames")
+ * @ORM\Entity
+ * @ORM\Table(name="TopicNames")
  */
 class Topic
 {
     /**
-     * @Id
-     * @Column(type="integer", name="fk_topic_id")
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="fk_topic_id")
      * @var int
      * @todo add reference to topic
      */
     private $id;
 
     /**
-     * @Id
-     * @Column(type="integer", name="fk_language_id")
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="fk_language_id")
      * @var int
      * @todo add reference to language
      */
     private $language;
 
     /**
-     * @Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255)
      * @var string
      */
     private $name;

@@ -7,33 +7,35 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection,
-    Newscoop\Utils\Validation;
+use Doctrine\ORM\Mapping AS ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+use Newscoop\Utils\Validation;
 
 /**
- * @Entity(repositoryClass="Newscoop\Entity\Repository\UserPointsRepository")
- * @Table(name="user_points_index")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\UserPointsRepository")
+ * @ORM\Table(name="user_points_index")
  */
 class UserPoints
 {
     /**
-     * @Id @GeneratedValue
-     * @Column(type="integer",unique=true,name="id")
+     * @ORM\Id 
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer",unique=true,name="id")
      */
     private $id;
 
     /**
-     * @Column(type="string",unique=true,name="action")
+     * @ORM\Column(type="string",unique=true,name="action")
      */
     private $action;
 
     /**
-     * @Column(type="string",unique=true,name="name")
+     * @ORM\Column(type="string",unique=true,name="name")
      */
     private $name;
 
     /**
-     * @Column(type="integer",unique=false,name="points")
+     * @ORM\Column(type="integer",unique=false,name="points")
      */
     private $points;
 

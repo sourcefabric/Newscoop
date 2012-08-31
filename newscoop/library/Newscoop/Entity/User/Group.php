@@ -7,37 +7,38 @@
 
 namespace Newscoop\Entity\User;
 
-use Newscoop\Entity\Acl\Role,
-    Doctrine\Common\Collections\ArrayCollection;
+use Newscoop\Entity\Acl\Role;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\Mapping AS ORM;
 
 /**
  * User Group entity
- * @entity(repositoryClass="Newscoop\Entity\Repository\User\GroupRepository")
- * @table(name="liveuser_groups")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\User\GroupRepository")
+ * @ORM\Table(name="liveuser_groups")
  */
 class Group implements \Zend_Acl_Role_Interface
 {
     /**
-     * @id @generatedValue
-     * @column(type="integer", name="group_id")
+     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Column(type="integer", name="group_id")
      * @var int
      */
     private $id;
 
     /**
-     * @column(name="group_define_name")
+     * @ORM\Column(name="group_define_name")
      * @var string
      */
     private $name;
 
     /**
-     * @oneToOne(targetEntity="Newscoop\Entity\Acl\Role")
+     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Acl\Role")
      * @var Newscoop\Entity\Acl\Role
      */
     private $role;
     
     /**
-     * @manyToMany(targetEntity="Newscoop\Entity\User", mappedBy="groups")
+     * @ORM\manyToMany(targetEntity="Newscoop\Entity\User", mappedBy="groups")
      */
     private $users;
 

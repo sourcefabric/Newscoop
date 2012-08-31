@@ -7,11 +7,13 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\ORM\Mapping AS ORM;
+
 /**
  * Article entity
  *
- * @Entity(repositoryClass="Newscoop\Entity\Repository\ArticleRepository")
- * @Table(name="Articles")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ArticleRepository")
+ * @ORM\Table(name="Articles")
  */
 class Article
 {
@@ -20,172 +22,209 @@ class Article
     const STATUS_SUBMITTED = 'S';
     
     /**
-     * @Id
-     * @ManyToOne(targetEntity="Newscoop\Entity\Language")
-     * @JoinColumn(name="IdLanguage", referencedColumnName="Id")
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
+     * @ORM\JoinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
     private $language;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Publication")
-     * @JoinColumn(name="IdPublication", referencedColumnName="Id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
+     * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
     private $publication;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Issue")
-     * @JoinColumn(name="NrIssue", referencedColumnName="Number")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Issue")
+     * @ORM\JoinColumn(name="NrIssue", referencedColumnName="Number")
      * @var Newscoop\Entity\Issue
      */
     private $issue;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Section")
-     * @JoinColumn(name="NrSection", referencedColumnName="Number")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Section")
+     * @ORM\JoinColumn(name="NrSection", referencedColumnName="Number")
      * @var Newscoop\Entity\Section
      */
     private $section;
     
     /**
-     * @OneToOne(targetEntity="Newscoop\Entity\User")
-     * @JoinColumn(name="IdUser", referencedColumnName="Id")
+     * @ORM\OneToOne(targetEntity="Newscoop\Entity\User")
+     * @ORM\JoinColumn(name="IdUser", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $creator;
 
     /**
-     * @column(name="NrSection", nullable=True)
+     * @ORM\ManyToMany(targetEntity="Author")
+     * @ORM\JoinTable(name="ArticleAuthors",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="fk_article_number", referencedColumnName="Number"),
+     *          @ORM\JoinColumn(name="fk_language_id", referencedColumnName="IdLanguage")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="fk_author_id", referencedColumnName="id")
+     *      }
+     *  )
+     * @var Newscoop\Entity\Authors
+     */
+    private $authors;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AuthorType")
+     * @ORM\JoinTable(name="ArticleAuthors",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="fk_article_number", referencedColumnName="Number"),
+     *          @ORM\JoinColumn(name="fk_language_id", referencedColumnName="IdLanguage"),
+     *          @ORM\JoinColumn(name="fk_author_id", referencedColumnName="IdLanguage"),
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="fk_author_id", referencedColumnName="id")
+     *      }
+     *  )
+     * @var Newscoop\Entity\Authors
+     */
+    private $articleAuthorTypes;
+
+    /**
+     * Article Authors for Newscoop\Gimme
+     * @var object
+     */
+    private $articleAuthors;
+
+    /**
+     * @ORM\Column(name="NrSection", nullable=True)
      * @var int
      */
     private $sectionId;
 
     /**
-     * @column(name="NrIssue", nullable=True)
+     * @ORM\Column(name="NrIssue", nullable=True)
      * @var int
      */
     private $issueId;
 
     /**
-     * @Id
-     * @Column(type="integer", name="Number")
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="Number")
      * @var int
      */
     private $number;
 
     /**
-     * @Column(name="Name", nullable=True)
+     * @ORM\Column(name="Name", nullable=True)
      * @var string
      */
     private $name;
 
     /**
-     * @Column(name="ShortName", nullable=True)
+     * @ORM\Column(name="ShortName", nullable=True)
      * @var string
      */
     private $shortName;
 
     /**
-     * @Column(name="time_updated", nullable=True)
+     * @ORM\Column(name="time_updated", nullable=True)
      * @var string
      */
     private $date;
 
     /**
-     * @Column(name="comments_enabled", nullable=True)
+     * @ORM\Column(name="comments_enabled", nullable=True)
      * @var int
      */
     private $comments_enabled;
     
     /**
-     * @Column(name="Type", nullable=True)
+     * @ORM\Column(name="Type", nullable=True)
      * @var string
      */
     private $type;
     
     /**
-     * @Column(name="PublishDate", nullable=True)
+     * @ORM\Column(name="PublishDate", nullable=True)
      * @var string
      */
     private $published;
     
     /**
-     * @Column(name="Published", nullable=True)
+     * @ORM\Column(name="Published", nullable=True)
      * @var string
      */
     private $workflowStatus;
 
     /**
-     * @Column(type="integer", name="ArticleOrder", nullable=True)
+     * @ORM\Column(type="integer", name="ArticleOrder", nullable=True)
      * @var int
      */
     private $articleOrder;
 
     /**
-     * @Column(name="Public", nullable=True)
+     * @ORM\Column(name="Public", nullable=True)
      * @var string
      */
     private $public;
 
     /**
-     * @Column(name="OnFrontPage", nullable=True)
+     * @ORM\Column(name="OnFrontPage", nullable=True)
      * @var string
      */
     private $onFrontPage;
 
     /**
-     * @Column(name="OnSection", nullable=True)
+     * @ORM\Column(name="OnSection", nullable=True)
      * @var string
      */
     private $onSection;
 
     /**
-     * @Column(type="datetime", name="UploadDate", nullable=True)
+     * @ORM\Column(type="datetime", name="UploadDate", nullable=True)
      * @var DateTime
      */
     private $uploaded;
 
     /**
-     * @Column(name="Keywords", nullable=True)
+     * @ORM\Column(name="Keywords", nullable=True)
      * @var string
      */
     private $keywords;
 
     /**
-     * @Column(name="IsIndexed", nullable=True)
+     * @ORM\Column(name="IsIndexed", nullable=True)
      * @var string
      */
     private $isIndexed;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\User")
-     * @JoinColumn(name="LockUser", referencedColumnName="Id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @ORM\JoinColumn(name="LockUser", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $lockUser;
 
     /**
-     * @Column(type="datetime", name="LockTime", nullable=True)
+     * @ORM\Column(type="datetime", name="LockTime", nullable=True)
      * @var DateTime
      */
     private $lockTime;
 
     /**
-     * @Column(type="integer", name="comments_locked", nullable=True)
+     * @ORM\Column(type="integer", name="comments_locked", nullable=True)
      * @var int
      */
     private $commentsLocked;
 
     /**
-     * @Column(type="integer", name="object_id", nullable=True)
+     * @ORM\Column(type="integer", name="object_id", nullable=True)
      * @var int
      */
     private $objectId;
 
     /**
-     * @OneToOne(targetEntity="Newscoop\Entity\Webcode")
-     * @JoinColumn(name="webcode", referencedColumnName="webcode")
+     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Webcode")
+     * @ORM\JoinColumn(name="webcode", referencedColumnName="webcode")
      * @var Newscoop\Entity\Webcode
      */
     private $webcode;
@@ -448,4 +487,27 @@ class Article
     {
         return isset($this->webcode);
     }
+
+    /**
+     * Set articleAuthors
+     * $articleAuthors
+     */
+    public function setArticleAuthors($articleAuthors)
+    {
+        $this->articleAuthors = $articleAuthors;
+    }
+
+    /**
+     * Get articleAuthors
+     *
+     * @return object
+     */
+    public function getArticleAuthors()
+    {
+        if (!$this->articleAuthors) {
+            $this->articleAuthors = $this->authors;
+        }
+
+        return $this->articleAuthors;
+    }    
 }
