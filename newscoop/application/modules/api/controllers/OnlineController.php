@@ -204,8 +204,8 @@ class Api_OnlineController extends AbstractController
             'article_quality' => $this->isProminent($article) ? 'prominent' : 'companion',
             'last_modified' => $article->getUpdated()->format(self::DATE_FORMAT),
             'published' => $article->getPublished()->format(self::DATE_FORMAT),
-            'story_name' => $this->getStoryName($article),
-            'story_id' => $storyId,
+            'story_name' => $this->getStoryName($article) ?: null,
+            'story_id' => $storyId ?: null,
             'teaser' => $this->getTeaser($article),
             'advertisement' => $this->isAd($article),
         ));
