@@ -226,6 +226,7 @@ var DocumentCollection = Backbone.Collection.extend({
         this.facets = this.parseFacetFields(response);
         this.sortf = response.responseHeader.params.sort;
         this.topics = response.responseHeader.params.topic;
+        this.topic = response.responseHeader.params.q_topic;
         return response.response.docs;
     },
 

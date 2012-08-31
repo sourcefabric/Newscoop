@@ -93,6 +93,11 @@ var DocumentListView = Backbone.View.extend({
             $('head > title').text(this.collection.query + ' | Tageswoche');
         }
 
+        if (this.collection.topic) {
+            var link = $('<a />').text('Themen ' + this.collection.topic).attr('href', this.options.topicLink.replace('{topic}', this.collection.topic));
+            $('<li />').prepend(link).prependTo(list);
+        }
+
         return this;
     },
 
@@ -354,7 +359,7 @@ var PaginationView = Backbone.View.extend({
  */
 var TickerFilterView = FilterView.extend({
     events: {
-        'click a': 'filter'
+        'click a[href^=#]': 'filter'
     },
 
     initialize: function() {

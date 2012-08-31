@@ -129,6 +129,15 @@ abstract class AbstractSolrController extends Zend_Controller_Action
         $decoded['responseHeader']['params']['section'] = $this->_getParam('section');
         $decoded['responseHeader']['params']['sort'] = $this->_getParam('sort');
         $decoded['responseHeader']['params']['topic'] = array_filter(explode(',', $this->_getParam('topic', '')));
+
+        $decoded['responseHeader']['params']['q_topic'] = null;
+        if ($this->_getParam('q') !== '') {
+            $topic = new Topic($this->_getParam('q') . ':de');
+            if ($topic->exists()) {
+                $decoded['responseHeader']['params']['q_topic'] = $topic->getName(5);
+            }
+        }
+
         return $decoded;
     }
 }
