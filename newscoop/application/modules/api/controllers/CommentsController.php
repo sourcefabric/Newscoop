@@ -105,63 +105,42 @@ class Api_CommentsController extends AbstractController
         $this->getHelper('contextSwitch')->addActionContext('list', 'json')->initContext('json');
 
         $parameters = $this->getRequest()->getPost();
-        if (isset($parameters['username']) && isset($parameters['password'])) {
-            $user = $this->_helper->service('user')->findOneBy(array('username' => $parameters['username']));
-            if ($user->checkPassword($parameters['password'])) {
-                if (isset($parameters['article_id']) && isset($parameters['message'])) {
-                    $acceptanceRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Comment\Acceptance');
-                    $userIp = getIp();
-                    
-                    $article = new Article(self::LANGUAGE, $parameters['article_id']);
-                    
-                    if (!$acceptanceRepository->checkParamsBanned($user->getName(), $user->getEmail(), $userIp, $article->getPublicationId())) {
-                        $commentRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
-                        $comment = new Comment();
-                        
-                        $subject = '';
-                        if (isset($parameters['subject'])) {
-                            $subject = $parameters['subject'];
-                        }
-                        
-                        $values = array(
-                            'user' => $user->getId(),
-                            'name' => '',
-                            'subject' => $subject,
-                            'message' => $parameters['message'],
-                            'language' => self::LANGUAGE,
-                            'thread' => $parameters['article_id'],
-                            'ip' => $_SERVER['REMOTE_ADDR'],
-                            'status' => 'approved',
-                            'time_created' => new DateTime(),
-                            'recommended' => '0'
-                        );
-                        
-                        $commentRepository->save($comment, $values);
-                        $commentRepository->flush();
-                        
-                        //echo('comment posted');
-                        $this->getResponse()->setHttpResponseCode(201);
-                    }
-                    else {
-                        //echo('not allowed to comment');
-                        $this->getResponse()->setHttpResponseCode(500);
-                    }
+        $user = $this->getUser();
+        if (isset($parameters['article_id']) && isset($parameters['message'])) {
+            $article = new Article(self::LANGUAGE, $parameters['article_id']);
+            $acceptanceRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Comment\Acceptance');
+            if (!$acceptanceRepository->checkParamsBanned($user->getName(), $user->getEmail(), getIp(), $article->getPublicationId())) {
+                $comment = new Comment();
+                $commentRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Comment');
+
+                $subject = '';
+                if (isset($parameters['subject'])) {
+                    $subject = $parameters['subject'];
                 }
-                else {
-                    //echo('no article and message');
-                    $this->getResponse()->setHttpResponseCode(500);
-                }
+
+                $values = array(
+                    'user' => $user->getId(),
+                    'name' => '',
+                    'subject' => $subject,
+                    'message' => $parameters['message'],
+                    'language' => self::LANGUAGE,
+                    'thread' => $parameters['article_id'],
+                    'ip' => $_SERVER['REMOTE_ADDR'],
+                    'status' => 'approved',
+                    'time_created' => new DateTime(),
+                    'recommended' => '0'
+                );
+
+                $commentRepository->save($comment, $values);
+                $commentRepository->flush();
+                $this->getResponse()->setHttpResponseCode(201);
+            } else {
+                $this->getResponse()->setHttpResponseCode(500);
             }
-            else {
-                //echo('username password wrong');
-                $this->getResponse()->setHttpResponseCode(401);
-            }
+        } else {
+            $this->getResponse()->setHttpResponseCode(500);
         }
-        else {
-            //echo('no username password');
-            $this->getResponse()->setHttpResponseCode(401);
-        }
-        
+
         $this->_helper->json(array());
     }
 }

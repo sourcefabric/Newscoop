@@ -7,13 +7,15 @@
 
 use Newscoop\Entity\Feedback;
 
+require_once __DIR__ . '/AbstractController.php';
+
 require_once($GLOBALS['g_campsiteDir']. '/classes/Plupload.php');
 require_once($GLOBALS['g_campsiteDir'].'/include/get_ip.php');
 
 /**
  * Feedback resource controller
  */
-class Api_FeedbackController extends Zend_Controller_Action
+class Api_FeedbackController extends AbstractController
 {
     const PUBLICATION = 5;
     const LANGUAGE = 5;
@@ -44,64 +46,52 @@ class Api_FeedbackController extends Zend_Controller_Action
         $acceptanceRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Comment\Acceptance');
 
         $params = $this->request->getPost();
-        if (!isset($params['username']) || !isset($params['password'])) {
+        $user = $this->getUser();
+        $userId = $user->getId();
+        $user = new User($userId);
+        $userIp = getIp();
+
+        if ($acceptanceRepository->checkParamsBanned($user->m_data['Name'], $user->m_data['EMail'], $userIp, self::PUBLICATION)) {
             $this->getResponse()->setHttpResponseCode(401);
-        }
-        else {
-            $user = $this->_helper->service('user')->findOneBy(array('username' => $params['username']));
-            if (!$user || !$user->checkPassword($params['password'])) {
-                $this->getResponse()->setHttpResponseCode(401);
-            }
-            else {
-                $userId = $user->getId();
-                $user = new User($userId);
-                $userIp = getIp();
-                if ($acceptanceRepository->checkParamsBanned($user->m_data['Name'], $user->m_data['EMail'], $userIp, self::PUBLICATION)) {
-                    $this->getResponse()->setHttpResponseCode(401);
-                }
-                else {
-                    if (!array_key_exists('message', $params) || empty($params['message'])) {
-                        $this->getResponse()->setHttpResponseCode(500);
-                    }
-                    else {
-                        $feedbackRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Feedback');
-                        $feedback = new Feedback();
+        } else {
+            if (!array_key_exists('message', $params) || empty($params['message'])) {
+                $this->getResponse()->setHttpResponseCode(500);
+            } else {
+                $feedbackRepository = $this->getHelper('entity')->getRepository('Newscoop\Entity\Feedback');
+                $feedback = new Feedback();
 
-                        $values = array(
-                            'user' => $userId,
-                            'publication' => self::PUBLICATION,
-                            'section' => '',
-                            'article' => '',
-                            'subject' => $params['subject'],
-                            'message' => $params['message'],
-                            'url' => 'API',
-                            'time_created' => new DateTime(),
-                            'language' => self::LANGUAGE,
-                            'status' => 'pending',
-                            'attachment_type' => 'none',
-                            'attachment_id' => 0
-                        );
+                $values = array(
+                    'user' => $userId,
+                    'publication' => self::PUBLICATION,
+                    'section' => '',
+                    'article' => '',
+                    'subject' => $params['subject'],
+                    'message' => $params['message'],
+                    'url' => 'API',
+                    'time_created' => new DateTime(),
+                    'language' => self::LANGUAGE,
+                    'status' => 'pending',
+                    'attachment_type' => 'none',
+                    'attachment_id' => 0
+                );
                         
-                        
-                        if (!empty($_FILES)) {
-                            $_FILES['image_data']['name'] = preg_replace('/[^\w\._]+/', '', $_FILES['image_data']['name']);
-                            
-                            $file = Plupload::OnMultiFileUploadCustom($Campsite['IMAGE_DIRECTORY']);
-                            $image = Image::ProcessFile($_FILES['image_data']['name'], $_FILES['image_data']['name'], $userId, array('Source' => 'feedback', 'Status' => 'Unapproved'));
-                            
-                            $values['attachment_type'] = 'image';
-                            $values['attachment_id'] = $image->getImageId();
-                        }
-                        
-                        $feedbackRepository->save($feedback, $values);
-                        $feedbackRepository->flush();
-                        
-                        $this->sendMail($values);
-
-                        $this->getResponse()->setHttpResponseCode(200);
-                        die;
-                    }
+                if (!empty($_FILES)) {
+                    $_FILES['image_data']['name'] = preg_replace('/[^\w\._]+/', '', $_FILES['image_data']['name']);
+                    
+                    $file = Plupload::OnMultiFileUploadCustom($Campsite['IMAGE_DIRECTORY']);
+                    $image = Image::ProcessFile($_FILES['image_data']['name'], $_FILES['image_data']['name'], $userId, array('Source' => 'feedback', 'Status' => 'Unapproved'));
+                    
+                    $values['attachment_type'] = 'image';
+                    $values['attachment_id'] = $image->getImageId();
                 }
+                        
+                $feedbackRepository->save($feedback, $values);
+                $feedbackRepository->flush();
+                
+                $this->sendMail($values);
+
+                $this->getResponse()->setHttpResponseCode(200);
+                die;
             }
         }
     }

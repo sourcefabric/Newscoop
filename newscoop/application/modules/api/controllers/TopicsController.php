@@ -58,14 +58,12 @@ class Api_TopicsController extends AbstractController
         
         $parameters = $this->request->getParams();
         
-        if (isset($parameters['username']) && isset($parameters['password'])) {
-            $user = $this->_helper->service('user')->findOneBy(array('username' => $parameters['username']));
-            if ($user->checkPassword($parameters['password'])) {
-                $topicsTemp = $this->_helper->service('user.topic')->getTopics($user);
-                $topics = array();
-                foreach ($topicsTemp as $item) {
-                    $topics[] = new Topic($item->getTopicId());
-                }
+        if ($this->hasAuthInfo()) {
+            $user = $this->getUser();
+            $topicsTemp = $this->_helper->service('user.topic')->getTopics($user);
+            $topics = array();
+            foreach ($topicsTemp as $item) {
+                $topics[] = new Topic($item->getTopicId());
             }
         } else {
             $topics = ArticleTopic::GetArticleTopics(self::ARTICLE_TOPICS);
