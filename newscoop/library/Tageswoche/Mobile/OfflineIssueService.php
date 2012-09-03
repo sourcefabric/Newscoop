@@ -137,14 +137,29 @@ class OfflineIssueService
     public function generateArticle($article, $dir)
     {
         $this->generateArticleContent($article, $dir);
-        if ($article->image_url) {
-            $ext = pathinfo($article->image_url, PATHINFO_EXTENSION);
-            file_put_contents("{$dir}/image.{$ext}", $this->fetch($article->image_url));
-            $article->image_url = basename($dir) . '/' . basename("image.{$ext}");
-        }
+
+        $this->fetchImage($article, 'image_url', $dir);
+        $this->fetchImage($article, 'story_image_url', $dir);
 
         file_put_contents("$dir/comments.json", $this->fetch($article->comment_url));
         $article->comment_url = basename($dir) . '/comments.json';
+    }
+
+    /**
+     * Fetch image into dir and update toc reference
+     *
+     * @param object $article
+     * @param string $imageProperty
+     * @param string $dir
+     * @return void
+     */
+    private function fetchImage($article, $imageProperty, $dir)
+    {
+        if ($article->$imageProperty) {
+            $ext = pathinfo($article->$imageProperty, PATHINFO_EXTENSION);
+            file_put_contents("{$dir}/{$imageProperty}.{$ext}", $this->fetch($article->$imageProperty));
+            $article->$imageProperty = basename($dir) . '/' . "{$imageProperty}.{$ext}";
+        }
     }
 
     /**
