@@ -201,7 +201,9 @@ class DashboardController extends Zend_Controller_Action
             ), $this->user);
 
             $this->_helper->flashMessenger($form->getAttrib('message'));
-            $this->_helper->redirector('questionnaire');
+            $this->_helper->redirector->gotoRoute(array(
+                'username' => $this->user->getUsername(),
+            ), 'user');
         }
 
         $this->view->messages = $this->_helper->flashMessenger->getMessages();
