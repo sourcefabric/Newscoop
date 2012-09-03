@@ -82,7 +82,7 @@ regGS("Article page template", "Шаблон страницы статьи");
 regGS("Article page", "Страница статьи");
 regGS("Are you sure you want to unassign this theme?", "Вы уверены, что хотите отменить эту тему?");
 regGS("Are you sure you want to delete this theme?", "Вы уверены, что хотите удалить эту тему?");
-regGS("Add to publication", "Добавить к публикации");
+regGS("Add to publication", "Добавить к изданию");
 regGS("'$1' is not writable", "'$1' не является перезаписываемым");
 regGS("'$1' $2", "$1' $2");
 regGS("$1 files $2", "$1 файлы $2");
