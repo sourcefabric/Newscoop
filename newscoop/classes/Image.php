@@ -923,7 +923,7 @@ class Image extends DatabaseObject
         global $g_ado_db;
         $images = array();
 
-        $queryStr = "SELECT * FROM Images WHERE UploadedByUser='".mysql_real_escape_string($user_id)."'";
+        $queryStr = "SELECT * FROM Images WHERE UploadedByUser=" . $g_ado_db->escape($user_id);
         $rows = $g_ado_db->GetAll($queryStr);
 
         foreach ( $rows as $row ) {
@@ -944,7 +944,7 @@ class Image extends DatabaseObject
 	public static function GetByUrl($p_url)
 	{
 		global $g_ado_db;
-		$queryStr = "SELECT * FROM Images WHERE URL='".mysql_real_escape_string($p_url)."'";
+		$queryStr = "SELECT * FROM Images WHERE URL=" . $g_ado_db->escape($p_url);
 		$row = $g_ado_db->GetRow($queryStr);
 		$image = new Image();
 		$image->fetch($row);
