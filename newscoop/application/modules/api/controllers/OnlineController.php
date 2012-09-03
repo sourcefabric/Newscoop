@@ -208,6 +208,7 @@ class Api_OnlineController extends AbstractController
             'story_id' => $storyId ?: null,
             'teaser' => $this->getTeaser($article),
             'advertisement' => $this->isAd($article),
+            'story_image_url' => $this->getRenditionUrl($article, 'artikelnew', array(105, 70), array(210, 140)),
         ));
     }
 
