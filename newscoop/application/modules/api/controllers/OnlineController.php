@@ -316,7 +316,10 @@ class Api_OnlineController extends AbstractController
      */
     protected function getArticleImageUrl($article)
     {
-        $rendition = $this->isProminent($article) ? 'mobile_prominent' : 'mobile_non_prominent';
-        return $this->getRenditionUrl($article, $rendition, array(100, 100), array(300, 100));
+        if ($this->isProminent($article) || $this->isAd($article)) {
+            return $this->getRenditionUrl($aricle, 'mobile_prominent', array(300, 100), array(600, 200));
+        } else {
+            return $this->getRenditionUrl($article, 'mobile_non_prominent', array(100, 100), array(200, 200));
+        }
     }
 }
