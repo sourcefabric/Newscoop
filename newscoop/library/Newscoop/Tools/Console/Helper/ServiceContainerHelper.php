@@ -8,19 +8,20 @@
 namespace Newscoop\Tools\Console\Helper;
 
 use Symfony\Component\Console\Helper\Helper;
+use Symfony\Component\DependencyInjection\Container;
 
 /**
  * Service Container Helper
  */
 class ServiceContainerHelper extends Helper
 {
-    /** @var sfServiceContainerInterface */
+    /** @var Symfony\Component\DependencyInjection\Container */
     protected $container;
 
     /**
-     * @param sfServiceContainerBuilder $container
+     * @param Symfony\Component\DependencyInjection\Container $container
      */
-    public function __construct(\sfServiceContainerInterface $container)
+    public function __construct(Container $container)
     {
         $this->container = $container;
     }

@@ -1,5 +1,5 @@
 {
-    "hash": "314acee753a94e6ebe608912a2ad0a88",
+    "hash": "43b61282b5f71be75a4653e604c877c4",
     "packages": [
         {
             "package": "Smarty3",
@@ -7,21 +7,19 @@
         },
         {
             "package": "doctrine/common",
-            "version": "2.1.x-dev",
-            "source-reference": "41794945e795e108060eddb3342c9e13524b9b3e",
-            "commit-date": "1331851788"
+            "version": "2.2.x-dev",
+            "source-reference": "b846809f90b35a9415910cebcfcfe51b7c9a6efc",
+            "commit-date": "1343558619"
         },
         {
             "package": "doctrine/dbal",
-            "version": "2.1.x-dev",
-            "source-reference": "76799960a54af583e82bedcf246e8c9c18006e94",
-            "commit-date": "1338146238"
+            "version": "2.2.0-RC3"
         },
         {
             "package": "doctrine/orm",
-            "version": "2.1.x-dev",
-            "source-reference": "1c0f88f2b398a9709d32c6d62896c4db9f9f3c9a",
-            "commit-date": "1343556552"
+            "version": "2.2.x-dev",
+            "source-reference": "7d343302a8f886be9cfb2a9c8345a95740dcfde9",
+            "commit-date": "1343560954"
         },
         {
             "package": "symfony/config",
@@ -32,8 +30,20 @@
         {
             "package": "symfony/config",
             "version": "dev-master",
-            "source-reference": "cb15ab7da9a69b123433c4edca68e23564345a31",
+            "source-reference": "v2.1.0-RC1",
             "commit-date": "1343512949"
+        },
+        {
+            "package": "symfony/console",
+            "version": "dev-master",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/console",
+            "version": "dev-master",
+            "source-reference": "d68f45aaf4f5d074c3ac7c0f2d27951a11ecc04c",
+            "commit-date": "1344326863"
         },
         {
             "package": "symfony/dependency-injection",
@@ -44,8 +54,8 @@
         {
             "package": "symfony/dependency-injection",
             "version": "dev-master",
-            "source-reference": "ea5acc90c1c1937e8574968d577a5bbe9c6f680c",
-            "commit-date": "1343512949"
+            "source-reference": "v2.1.0-RC1",
+            "commit-date": "1343997870"
         },
         {
             "package": "symfony/event-dispatcher",
@@ -56,7 +66,7 @@
         {
             "package": "symfony/event-dispatcher",
             "version": "dev-master",
-            "source-reference": "v2.1.0-BETA4",
+            "source-reference": "v2.1.0-RC1",
             "commit-date": "1342739894"
         },
         {
@@ -68,8 +78,8 @@
         {
             "package": "symfony/yaml",
             "version": "dev-master",
-            "source-reference": "v2.1.0-BETA4",
-            "commit-date": "1342347231"
+            "source-reference": "6b3eb66a7c4495dcaa35a64dd93c8ba8c29f35d8",
+            "commit-date": "1344325256"
         },
         {
             "package": "zendframework/zendframework1",

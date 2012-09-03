@@ -531,7 +531,7 @@ XML;
         }
 
         // bootstrap doctrine
-        $GLOBALS['application']->bootstrap('doctrine');
+        $GLOBALS['application']->bootstrap('container');
 
         $resourceId = new Newscoop\Service\Resource\ResourceId(__CLASS__);
         $themeService = $resourceId->getService(IThemeManagementService::NAME_1);

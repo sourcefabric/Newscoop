@@ -21,7 +21,7 @@ class Playlist extends Entity
     protected $id;
 
     /**
-     * @Column(length="256", name="name")
+     * @Column(length=256, name="name")
      * @var string
      */
     protected $name;

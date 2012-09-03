@@ -1,18 +1,17 @@
 <?php
-
 /**
  * @package Newscoop
  * @subpackage Subscriptions
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
- *
- *
  */
+
+use Newscoop\Annotations\Acl;
 use Newscoop\Entity\Comment;
 use Newscoop\EventDispatcher\Events\GenericEvent;
 
 /**
- * @Acl(resource="comment", action="moderate")
+ * @Acl(resource="comment", action="enable")
  */
 class Admin_CommentController extends Zend_Controller_Action
 {
@@ -200,6 +199,7 @@ class Admin_CommentController extends Zend_Controller_Action
 
     /**
      * Action for setting a status
+     * @Acl(action="moderate")
      */
     public function setStatusAction()
     {
@@ -248,6 +248,7 @@ class Admin_CommentController extends Zend_Controller_Action
 
     /**
      * Action for setting a status
+     * @Acl(action="moderate")
      */
     public function setRecommendedAction()
     {
@@ -482,6 +483,9 @@ class Admin_CommentController extends Zend_Controller_Action
         $this->view->comment = $comment;
     }
 
+    /**
+     * @Acl(action="moderate")
+     */
     public function deleteArticleAction()
     {
         $article = $this->getRequest()->getParam('article');
@@ -490,6 +494,9 @@ class Admin_CommentController extends Zend_Controller_Action
         $this->getHelper('viewRenderer')->setNoRender();
     }
 
+    /**
+     * @Acl(action="moderate")
+     */
     public function statusArticleAction()
     {
         $article = $this->getRequest()->getParam('article');

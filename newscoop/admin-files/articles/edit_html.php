@@ -336,7 +336,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
     </div>
   </form><!-- /form#article -->
 
-    <?php if ($showCommentControls) { ?>
+    <?php if ($showCommentControls && $g_user->hasPermission('CommentEnable')) { ?>
     <div id="comments-list" class="ui-widget-content big-block block-shadow">
       <div class="collapsible">
         <h3 class="head ui-accordion-header ui-helper-reset ui-state-default ui-widget">
@@ -349,7 +349,7 @@ if (isset($publicationObj) && $articleObj->isPublished()) {
     </div>
     <?php } ?>
 
-    <?php if ($inEditMode && $showCommentControls) { ?>
+    <?php if ($inEditMode && $showCommentControls && $g_user->hasPermission('CommentEnable')) { ?>
     <div id="comments-form" class="ui-widget-content big-block block-shadow padded-strong">
       <?php include('comments/add_comment_form.php'); ?>
     </div>

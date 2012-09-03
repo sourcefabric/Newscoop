@@ -5,9 +5,10 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
-use Newscoop\Entity\Acl\Role,
-    Newscoop\Entity\Acl\Rule,
-    Newscoop\Entity\User;
+use Newscoop\Annotations\Acl;
+use Newscoop\Entity\Acl\Role;
+use Newscoop\Entity\Acl\Rule;
+use Newscoop\Entity\User;
 
 /**
  * @Acl(ignore="1")

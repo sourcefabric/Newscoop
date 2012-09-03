@@ -67,7 +67,7 @@ echo camp_html_breadcrumbs($crumbs);
 <TR>
 	<TD COLSPAN="2">
 	<DIV ALIGN="CENTER">
-	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/admin/topics/edit.php?f_topic_language_id=<?php p($f_topic_language_id); ?>&f_topic_edit_id=<?php  p($f_topic_edit_id); ?>'">
+	<INPUT TYPE="button" class="button" NAME="OK" VALUE="<?php  putGS('OK'); ?>" ONCLICK="location.href='/<?php p($ADMIN); ?>/topics/index.php'">
 	</DIV>
 	</TD>
 </TR>

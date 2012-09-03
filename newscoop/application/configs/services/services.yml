@@ -1,0 +1,125 @@
+services:
+    doctrine:
+        class:      Newscoop\Doctrine\Doctrine
+        arguments:  ["%config%"]
+    doctrine.em:
+        class:      Newscoop\Doctrine\Doctrine
+        factory_service:  doctrine
+        factory_method:   getEntityManager
+    em:
+        alias: doctrine.em
+    doctrine.event_manager:
+        class:      Newscoop\Doctrine\Doctrine
+        factory_service:  doctrine.em
+        factory_method:   getEventManager
+    newscoop.doctrine.event_dispatcher_proxy:
+        class: Newscoop\Doctrine\EventDispatcherProxy
+        arguments:  ["@dispatcher"]
+    doctrine.event_subscriber:
+        class:      Newscoop\Doctrine\Doctrine
+        factory_service:  doctrine.event_manager
+        factory_method:   addEventSubscriber
+        arguments:  ["@newscoop.doctrine.event_dispatcher_proxy"]
+    image:
+        class:      Newscoop\Image\ImageService
+        arguments:  ["%image%", "@em"]
+    zend_auth:
+        class:      Zend_Auth
+        factory_class: Zend_Auth
+        factory_method: getInstance
+    dispatcher:
+        class:      Newscoop\EventDispatcher\EventDispatcher
+        arguments:  ["@service_container"]
+    user:
+        class:      Newscoop\Services\UserService
+        arguments:  ["@em", "@zend_auth"]
+    user.list:
+        class:      Newscoop\Services\ListUserService
+        arguments:  ["%config%", "@em"]
+    user.token:
+        class:      Newscoop\Services\UserTokenService
+        arguments:  ["@em"]
+    user_type:
+        class:      Newscoop\Services\UserTypeService
+        arguments:  ["@em"]
+    author:
+        class:      Newscoop\Services\AuthorService
+        arguments:  ["@em"]
+    audit.maintenance:
+        class:      Newscoop\Services\AuditMaintenanceService
+        arguments:  ["@em"]
+    user.topic:
+        class:      Newscoop\Services\UserTopicService
+        arguments:  ["@em", "@dispatcher"]
+    auth.adapter:
+        class:      Newscoop\Services\Auth\DoctrineAuthService
+        arguments:  ["@em"]
+    auth.adapter.social:
+        class:      Newscoop\Services\Auth\SocialAuthService
+        arguments:  ["@em"]
+    email:
+        class:      Newscoop\Services\EmailService
+        arguments:  ["%email%", "@view", "@user.token"]
+    ingest.settings:
+        class:      Newscoop\News\SettingsService
+        arguments:  ["@?odm"]
+    ingest.item:
+        class:      Newscoop\News\ItemService
+        arguments:  ["@?odm", "@ingest.settings"]
+    ingest.feed:
+        class:      Newscoop\News\FeedService
+        arguments:  ["@?odm", "@ingest.item"]
+    blog:
+        class:      Newscoop\Services\BlogService
+        arguments:  ["%blog%"]
+    user.search:
+        class:      Newscoop\Services\UserSearchService
+        arguments:  ["@em"]
+    content.publication:
+        class:      Newscoop\Content\PublicationService
+        arguments:  ["@em"]
+    content.section:
+        class:      Newscoop\Content\SectionService
+        arguments:  ["@em"]
+    content.type:
+        class:      Newscoop\Content\ContentTypeService
+        arguments:  ["@em"]
+    stat:
+        class:      Newscoop\Services\StatService
+        arguments:  ["@em"]
+    view:
+        class:      Newscoop\View\ViewFactory
+        factory_class:  Newscoop\View\ViewFactory
+        factory_method:   getView
+    view.helper.thumbnail:
+        class:      Newscoop\Image\ThumbnailViewHelper
+        arguments:  ["@image"]
+    view.helper.rendition:
+        class:      Newscoop\Image\RenditionViewHelper
+        arguments:  ["@image"]
+    image.rendition:
+        class:      Newscoop\Image\RenditionService
+        arguments:  ["%config%", "@em", "@image"]
+    image.search:
+        class:      Newscoop\Image\ImageSearchService
+        arguments:  ["@em"]
+    package:
+        class:      Newscoop\Package\PackageService
+        arguments:  ["@em", "@image"]
+    package.search:
+        class:      Newscoop\Package\PackageSearchService
+        arguments:  ["@em"]
+    subscription:
+        class:      Newscoop\Subscription\SubscriptionFacade
+        arguments:  ["@em"]
+    subscription.section:
+        class:      Newscoop\Subscription\SectionFacade
+        arguments:  ["@em"]
+    subscription.ip:
+        class:      Newscoop\Subscription\IpFacade
+        arguments:  ["@em"]
+    random:
+        class:      Newscoop\Random
+    webcode:
+        class:      Newscoop\WebcodeFacade
+        arguments:  ["@em", "@random"]

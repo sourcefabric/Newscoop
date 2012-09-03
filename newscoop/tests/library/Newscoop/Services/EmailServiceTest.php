@@ -30,7 +30,7 @@ class EmailServiceTest extends \RepositoryTestCase
 
         $this->service = new \Newscoop\Services\EmailService(
             \Zend_Registry::get('container')->getParameter('email'),
-            \Zend_Registry::get('container')->getService('view'),
+            \Zend_Registry::get('view'),
             \Zend_Registry::get('container')->getService('user.token')
         );
 
