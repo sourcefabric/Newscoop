@@ -26,18 +26,26 @@ class PaginationListener
      * @var Session
      */
     private $session;
+
     /**
      * Paginator service object
      * @var PaginatorService
      */
     private $paginatorService;
 
-    public function __construct(Session $session, PaginatorService $paginatorService)
+    /**
+     * Construct PaginationListener object   
+     * @param PaginatorService $paginatorService PaginationService object
+     */
+    public function __construct(PaginatorService $paginatorService)
     {
-        $this->session = $session;
         $this->paginatorService = $paginatorService;
     }
 
+    /**
+     * Get data from request and create Pagination and PartialResponse events.
+     * @param  GetResponseEvent $event Event object with request
+     */
     public function onRequest(GetResponseEvent $event)
     {
         if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
@@ -64,9 +72,7 @@ class PaginationListener
             $partialResponse->setFields($request->query->get('fields'));
         }
 
-        $this->session->set('pagination', $pagination);
         $this->paginatorService->setPagination($pagination);
-        
-        $this->session->set('partialResponse', $partialResponse);
+        $this->paginatorService->setPartialResponse($partialResponse);
     }
 }

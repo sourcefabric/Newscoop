@@ -10,7 +10,9 @@ namespace Newscoop\Gimme;
 
 use Knp\Component\Pager\Paginator;
 use Newscoop\Gimme\Pagination;
+use Newscoop\Gimme\PartialResponse;
 use Symfony\Bundle\FrameworkBundle\Routing\Router;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -30,10 +32,22 @@ class PaginatorService {
     private $pagination;
 
     /**
+     * PartialResponse object with parsed data from request.
+     * @var Newscoop\Gimme\PartialResponse
+     */
+    private $partialResponse;
+
+    /**
      * Router class
      * @var Symfony\Bundle\FrameworkBundle\Routing\Router
      */
     private $router;
+
+    /**
+     * Request class
+     * @var Symfony\Component\HttpFoundation\Request
+     */
+    private $request;
 
     /**
      * Extra data injected to response when result have more items than requested.
@@ -58,14 +72,23 @@ class PaginatorService {
      * @param Paginator $paginator Paginator object
      * @param Router    $router    Router object
      */
-    public function __construct(Paginator $paginator, Router $router)
+    public function __construct(Paginator $paginator, Router $router, $service_container)
     {
         $this->paginator = $paginator;
         $this->router = $router;
+        $this->request = $service_container->get('request');
+        
+        /**
+         * append all used parameters from get and post
+         */
+        $this->setUsedRouteParams(array_merge(
+            $this->request->query->all(),
+            $this->request->request->all()
+        ));
     }
 
     /**
-     * Set pagination object
+     * Set Pagination object
      * @param Pagination $pagination Pagination object
      */
     public function setPagination(Pagination $pagination)
@@ -77,6 +100,32 @@ class PaginatorService {
         $this->routeParams['items_per_page'] = $this->pagination->getItemsPerPage();
 
         return $this;
+    }
+
+    /**
+     * Get Pagination object
+     * @return Pagination Pagination object
+     */
+    public function getPagination() {
+        return $this->pagination;
+    }
+
+    /**
+     * Set PartialResponse object
+     * @param PartialResponse $partialResponse PartialResponse object
+     */
+    public function setPartialResponse($partialResponse)
+    {
+        $this->partialResponse = $partialResponse;
+    }
+
+    /**
+     * Get PartialResponse object
+     * @return PartialResponse PartialResponse object
+     */
+    public function getPartialResponse()
+    {
+        return $this->partialResponse;
     }
 
     /**
@@ -96,13 +145,16 @@ class PaginatorService {
      */
     public function setUsedRouteParams(array $params = array())
     {
-        $this->routeParams = $params;
+        $this->routeParams = array_merge(
+            $this->routeParams,
+            $params
+        );
 
         return $this;
     }
 
     /**
-     * set pagination data from paginator
+     * Set pagination data from paginator
      * @param array $paginationData array with calculated pagination data
      */
     public function setPaginationData(array $paginationData)
@@ -159,6 +211,10 @@ class PaginatorService {
      */
     private function getPaginationLinks($paginationData)
     {
+        // idea is that if you are somewhere and you use pagination 
+        // and get link to go back it should be the very same uri you've visited
+        // in general it can filter all the params with default values
+
         $data = array();
 
         if ($paginationData['current'] < $paginationData['lastPageInRange']-1) {

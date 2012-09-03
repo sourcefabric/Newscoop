@@ -1,5 +1,5 @@
 {
-    "hash": "d31cd34eca010586b006d740f7cc766b",
+    "hash": "8fe910567005c4fd7922269f7d730d73",
     "packages": [
         {
             "package": "Smarty3",
@@ -23,7 +23,7 @@
         },
         {
             "package": "doctrine/common",
-            "version": "2.2.2"
+            "version": "2.2.3"
         },
         {
             "package": "doctrine/dbal",
@@ -34,8 +34,8 @@
         {
             "package": "doctrine/doctrine-bundle",
             "version": "dev-master",
-            "source-reference": "4d9bb0f3af470556983eb41a7d19ede23401ef0b",
-            "commit-date": "1344549563"
+            "source-reference": "8e1149b0ac01e8f9441a523bec81011803485602",
+            "commit-date": "1346369162"
         },
         {
             "package": "doctrine/mongodb",
@@ -58,8 +58,8 @@
         {
             "package": "doctrine/orm",
             "version": "2.2.x-dev",
-            "source-reference": "7d343302a8f886be9cfb2a9c8345a95740dcfde9",
-            "commit-date": "1343560954"
+            "source-reference": "11faa7e49d77e559e4e376d3b927d2e742fbcf8b",
+            "commit-date": "1346246267"
         },
         {
             "package": "friendsofsymfony/rest",
@@ -76,8 +76,8 @@
         {
             "package": "friendsofsymfony/rest-bundle",
             "version": "dev-master",
-            "source-reference": "d3f15d6c913d25fe5b29185e6e6be510afd09c73",
-            "commit-date": "1345237156"
+            "source-reference": "c05cdaa35729d0719025db4f91fa35f5660d11d0",
+            "commit-date": "1346154884"
         },
         {
             "package": "jms/metadata",
@@ -88,7 +88,7 @@
         {
             "package": "jms/metadata",
             "version": "dev-master",
-            "source-reference": "7c58d49ff13de62464837c3c7d91aff1deb2c442",
+            "source-reference": "1.2.0-RC",
             "commit-date": "1345552810"
         },
         {
@@ -100,8 +100,8 @@
         {
             "package": "jms/serializer-bundle",
             "version": "dev-master",
-            "source-reference": "1f308a587742246e87e580290f3bae23073d1d70",
-            "commit-date": "1343641450"
+            "source-reference": "5a9b7e6b62143950726f642da23d7eebf850e389",
+            "commit-date": "1346073949"
         },
         {
             "package": "knplabs/knp-components",
@@ -122,10 +122,22 @@
             "commit-date": "1345206213"
         },
         {
+            "package": "monolog/monolog",
+            "version": "dev-master",
+            "alias-pretty-version": "1.3.x-dev",
+            "alias-version": "1.3.9999999.9999999-dev"
+        },
+        {
+            "package": "monolog/monolog",
+            "version": "dev-master",
+            "source-reference": "1.2.1",
+            "commit-date": "1346241200"
+        },
+        {
             "package": "sensio/distribution-bundle",
             "version": "dev-master",
-            "source-reference": "f7e9231c36c3badc43f40d025a0ad12939b91df7",
-            "commit-date": "1345982505"
+            "source-reference": "a86d2c0d7212851cc4e971abdff13b89eb063861",
+            "commit-date": "1346246961"
         },
         {
             "package": "sensio/framework-extra-bundle",
@@ -136,14 +148,26 @@
         {
             "package": "sensio/framework-extra-bundle",
             "version": "dev-master",
-            "source-reference": "ade2d53b20a9fc3428f04c863b3fd4fca0b62181",
-            "commit-date": "1344072374"
+            "source-reference": "1281f6218226ddb88df8546f28a3166e2a0cb55d",
+            "commit-date": "1346234539"
         },
         {
             "package": "sensio/generator-bundle",
             "version": "dev-master",
-            "source-reference": "d8fc1666f3cdb403f1b2d4320c45ddd6adbdf6a5",
-            "commit-date": "1343980150"
+            "source-reference": "v2.1.0-RC2",
+            "commit-date": "1346138171"
+        },
+        {
+            "package": "symfony/monolog-bundle",
+            "version": "dev-master",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/monolog-bundle",
+            "version": "dev-master",
+            "source-reference": "v2.1.0-RC2",
+            "commit-date": "1345557954"
         },
         {
             "package": "symfony/symfony",
@@ -154,8 +178,8 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "2c0e851059905307e5a28ebe0b5153e8676585d1",
-            "commit-date": "1345978996"
+            "source-reference": "c0673d77d02e9955f9e80b82478d0b7259a3fc31",
+            "commit-date": "1346413296"
         },
         {
             "package": "twig/twig",
@@ -166,13 +190,13 @@
         {
             "package": "twig/twig",
             "version": "dev-master",
-            "source-reference": "32c4867f68c1bacc758602d602e18a3ac1598c76",
-            "commit-date": "1345916214"
+            "source-reference": "459720ff3b74ee0c0d159277c6f2f5df89d8a4f6",
+            "commit-date": "1346397138"
         },
         {
             "package": "zendframework/zendframework1",
             "version": "dev-release-1.11",
-            "source-reference": "/branches/release-1.11/@25037"
+            "source-reference": "/branches/release-1.11/@25046"
         }
     ],
     "packages-dev": null,

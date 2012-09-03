@@ -24,7 +24,7 @@ class PartialResponse {
      */
     public function setFields($fields)
     {
-        $this->fields = $fields;
+        $this->fields = explode(',', $fields);
 
         return $this;
     }

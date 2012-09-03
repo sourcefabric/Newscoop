@@ -7,35 +7,79 @@
 
 namespace Newscoop\Entity\Repository;
 
-use DateTime,
-    Doctrine\ORM\EntityRepository,
-    Doctrine\ORM\QueryBuilder,
-    Newscoop\Datatable\Source as DatatableSource;
+use DateTime;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
+use Newscoop\Datatable\Source as DatatableSource;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Article repository
  */
 class ArticleRepository extends DatatableSource
 {
-    private $fields = array();
-
-    public function setFields($fields)
-    {
-        $this->fields = explode(',', $fieds);
-    }
-
-    public function getArticles()
+    public function getArticles($type = null, $language = null)
     {
         $em = $this->getEntityManager();
+
         $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a');
 
-        if (count($this->fields) > 0) {
-            foreach ($this->fields as $field) {
-                $queryBuilder->add('select', 'a.'.$field);
-            }
+        $countQueryBuilder = $em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a')
+            ->select('count(a)');
+
+        if ($type) {
+            $countQueryBuilder->andWhere('a.type = :type')
+                ->setParameter('type', $type);
+
+            $queryBuilder->andWhere('a.type = :type')
+                ->setParameter('type', $type);
         }
+
+        if ($language) {
+            $languageId = $em->getRepository('Newscoop\Entity\Language')
+                ->findOneByCode($language);
+
+            if (!$languageId) {
+                throw new NotFoundHttpException('Results with language "'.$language.'" was not found.');
+            }
+
+            $countQueryBuilder->andWhere('a.language = :languageId')
+                ->setParameter('languageId', $languageId->getId());
+
+            $queryBuilder->andWhere('a.language = :languageId')
+                ->setParameter('languageId', $languageId->getId());
+        }
+
+        $articlesCount = $countQueryBuilder->getQuery()->getSingleScalarResult();
+
+        $query = $queryBuilder->getQuery();
+        $query->setHint('knp_paginator.count', $articlesCount);
         
-        return $queryBuilder->getQuery();
+        return $query;
+    }
+
+    public function getArticle($number, $language = null)
+    {
+        $em = $this->getEntityManager();
+
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a');
+
+        $queryBuilder->where('a.number = :number')
+            ->setParameter('number', $number);
+
+        if ($language) {
+            $languageId = $em->getRepository('Newscoop\Entity\Language')
+                ->findOneByCode($language);
+
+            $queryBuilder->andWhere('a.language = :languageId')
+                ->setParameter('languageId', $languageId->getId());
+        }
+
+        $query = $queryBuilder->getQuery();
+        
+        return $query;
     }
 }

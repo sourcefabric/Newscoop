@@ -34,6 +34,11 @@ class AuthorHandler implements SerializationHandlerInterface
             return true;
         }
 
+        if (count($data->getArticleAuthors()) == 0) {
+            $data->setArticleAuthors(null);
+            return true;
+        }
+
         $articleAuthors = array();
         foreach ($data->getArticleAuthors() as $author) {
             $articleAuthors[] = array(
