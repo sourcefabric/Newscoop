@@ -714,7 +714,7 @@
        <str name="echoParams">explicit</str>
 
        <str name="defType">edismax</str>
-       <str name="qf">subject^0.2 message^0.2 keyword^0.2 topic^0.8 user^0.3 author^0.8 text^0.5 lead^0.5 title^2.1 webcode^10.0</str>
+       <str name="qf">subject^0.2 message^0.2 keyword^0.2 topic^0.8 user^0.5 author^0.8 text^0.5 lead^0.5 title^2.1 webcode^10.0</str>
        <int name="rows">12</int>
        <str name="mm">50%</str>
 
