@@ -106,6 +106,7 @@ class Api_HighlightsController extends AbstractController
                         'teaser' => $this->getTeaser($article),
                         'image_url' => $image,
                         'website_url' => $this->_helper->service('article.link')->getLink($article),
+                        'comments_enabled' => (bool) $article->commentsEnabled(),
                         'comment_count' => $this->getCommentsCount($article),
                         'recommended_comment_count' => $this->getCommentsCount($article, true),
                         'comment_url' => $this->getCommentsUrl($article),
