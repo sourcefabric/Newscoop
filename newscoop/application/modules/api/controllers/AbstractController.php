@@ -27,6 +27,8 @@ abstract class AbstractController extends Zend_Controller_Action
     const IMAGE_STANDARD_HEIGHT = 70;
     const IMAGE_RETINA_FACTOR = 2;
 
+    const FACEBOOK_AUTH_TOKEN = 'fb_access_token';
+
     /** @var int */
     private $rank = 1;
 
@@ -48,6 +50,11 @@ abstract class AbstractController extends Zend_Controller_Action
      */
     protected function getUser()
     {
+        if ($this->_getParam(self::FACEBOOK_AUTH_TOKEN)) {
+            $user = $this->_helper->service('auth.adapter.facebook')->findByAuthToken($this->_getParam(self::FACEBOOK_AUTH_TOKEN));
+            return $user !== null ? $user : $this->sendError('Invalid credentials', 401);
+        }
+
         $username = $this->_getParam('username');
         $password = $this->_getParam('password');
         if (empty($username) || empty($password)) {
@@ -55,11 +62,7 @@ abstract class AbstractController extends Zend_Controller_Action
         }
 
         $user = $this->_helper->service('auth.adapter')->findByCredentials($username, $password);
-        if (empty($user)) {
-            $this->sendError('Invalid credentials.', 401);
-        }
-
-        return $user;
+        return $user !== null ? $user : $this->sendError('Invalid credentials.', 401);
     }
 
     /**
@@ -136,7 +139,7 @@ abstract class AbstractController extends Zend_Controller_Action
             }
         }
 
-        if ($this->_getParam('username') && $this->_getParam('password')) {
+        if ($this->hasAuthInfo()) {
             $user = $this->getUser();
             if ($this->_helper->service('mobile.free_upgrade')->hasIssue($user, $this->_helper->service('mobile.issue')->getCurrentIssueId())) {
                 return;
@@ -152,6 +155,16 @@ abstract class AbstractController extends Zend_Controller_Action
         }
 
         $this->sendError('Unauthorized.', 401);
+    }
+
+    /**
+     * Test if request has auth info
+     *
+     * @return bool
+     */
+    protected function hasAuthInfo()
+    {
+        return $this->_getParam('username') || $this->_getParam(self::FACEBOOK_AUTH_TOKEN);
     }
 
     /**

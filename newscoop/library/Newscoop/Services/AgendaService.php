@@ -555,4 +555,25 @@ class AgendaService
         );
     }
 
+    public function nullOnEmpty($p_value) {
+        if (is_string($p_value)) {
+            $p_value = trim($p_value);
+            if (empty($p_value)) {
+                return null;
+            }
+            return $p_value;
+        }
+        if (is_numeric($p_value)) {
+            $p_value = 0 + $p_value;
+            if (empty($p_value)) {
+                return null;
+            }
+            return $p_value;
+        }
+        if (empty($p_value)) {
+            return null;
+        }
+        return $p_value;
+    }
+
 }

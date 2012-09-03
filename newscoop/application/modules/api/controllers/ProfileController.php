@@ -86,7 +86,7 @@ class Api_ProfileController extends AbstractController
         $this->assertIsSecure();
         $this->_helper->json(
             array_merge(
-                $this->_getParam('username') !== null ? $this->getUserSubscriptionInfo($this->getUser()) : array(),
+                $this->hasAuthInfo() ? $this->getUserSubscriptionInfo($this->getUser()) : array(),
                 $this->getAvailableSubscriptions()
             )
         );

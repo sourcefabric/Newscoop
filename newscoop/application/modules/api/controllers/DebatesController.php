@@ -88,7 +88,7 @@ class Api_DebatesController extends AbstractController
         }
 
         $user = null;
-        if ($this->_getParam('username') !== null) {
+        if ($this->hasAuthInfo()) {
             $user = $this->getUser();
         }
 
@@ -121,7 +121,7 @@ class Api_DebatesController extends AbstractController
 
     public function voteAction()
     {
-        if ($this->_getParam('username') !== null) {
+        if ($this->hasAuthInfo()) {
             $user = $this->getUser();
         }
 

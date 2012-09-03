@@ -7,16 +7,14 @@
 
 namespace Tageswoche\Mobile;
 
-use Doctrine\ORM\EntityManager,
-    Newscoop\Entity\Article;
+use Doctrine\ORM\EntityManager;
+use Newscoop\Entity\Article;
 
 /**
  */
 class IssueFacade
 {
-    const ARTICLE_TYPE = 'mobile_issue';
     const CURRENT_ISSUE = 'current';
-    const LIMIT = 200;
 
     /**
      * @var Doctrine\ORM\EntityManager
@@ -45,11 +43,18 @@ class IssueFacade
     /**
      * Find all issues
      *
+     * @param int $limit
      * @return array
      */
-    public function findAll()
+    public function findAll($limit = 100)
     {
-        return $this->getRepository()->findBy($this->getCriteria(), $this->getOrderBy(), self::LIMIT);
+        $qb = $this->createQueryBuilder();
+        $qb->setMaxResults($limit);
+        $query = $qb->getQuery();
+
+        return array_map(function ($row) {
+            return $row->getArticle();
+        }, $query->getResult());
     }
 
     /**
@@ -61,13 +66,17 @@ class IssueFacade
     public function find($id)
     {
         if ($id === self::CURRENT_ISSUE) {
-            $issues = $this->getRepository()->findBy($this->getCriteria(), $this->getOrderBy(), 1);
-            return empty($issues) ? null : $issues[0];
+            $articles = $this->findAll(1);
+            return !empty($articles) ? $articles[0] : null;
         }
 
-        return $this->getRepository()->findOneBy(array(
-            'number' => (int) $id,
-        ));
+        $qb = $this->createQueryBuilder();
+        $qb->andWhere('a.number = :number')
+            ->setParameter('number', $id);
+
+        $query = $qb->getQuery();
+        $result = $query->getSingleResult();
+        return $result ? $result->getArticle() : null;
     }
 
     /**
@@ -113,37 +122,19 @@ class IssueFacade
     }
 
     /**
-     * Get issue repository
+     * Create query builder
      *
-     * @return Doctrine\ORM\EntityRepository
+     * @return Doctrine\ORM\QueryBuilder
      */
-    private function getRepository()
+    private function createQueryBuilder()
     {
-        return $this->em->getRepository('Newscoop\Entity\Article');
-    }
-
-    /**
-     * Get criteria for issues
-     *
-     * @return array
-     */
-    private function getCriteria()
-    {
-        return array(
-            'type' => self::ARTICLE_TYPE,
-            'workflowStatus' => Article::STATUS_PUBLISHED,
-        );
-    }
-
-    /**
-     * Get order by for issues
-     *
-     * @return array
-     */
-    private function getOrderBy()
-    {
-        return array(
-            'number' => 'DESC',
-        );
+        $qb = $this->em->createQueryBuilder();
+        $qb->select('i, a')
+            ->from('Tageswoche\Entity\MobileIssueArticle', 'i')
+            ->innerJoin('i.article', 'a')
+            ->where('a.workflowStatus = :status')
+            ->orderBy('i.date', 'DESC')
+            ->setParameter('status', Article::STATUS_PUBLISHED);
+        return $qb;
     }
 }

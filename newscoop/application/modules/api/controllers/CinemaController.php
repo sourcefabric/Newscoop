@@ -231,10 +231,10 @@ class Api_CinemaController extends Zend_Controller_Action
 
                 $movie_locations_data[] = array(
                     'location_id' => $one_location_id,
-                    'location_name' => $this->m_service->entities2Utf8($one_data->getProperty('Forganizer')),
-                    'zipcode' => $one_data->getProperty('Fzipcode'),
-                    'town' => $one_data->getProperty('Ftown'),
-                    'street' => $one_data->getProperty('Fstreet'),
+                    'location_name' => $this->m_service->nullOnEmpty($this->m_service->entities2Utf8($one_data->getProperty('Forganizer'))),
+                    'zipcode' => $this->m_service->nullOnEmpty($one_data->getProperty('Fzipcode')),
+                    'town' => $this->m_service->nullOnEmpty($one_data->getProperty('Ftown')),
+                    'street' => $this->m_service->nullOnEmpty($one_data->getProperty('Fstreet')),
                     'web' => $one_web,
                     //'email' => $one_email,
                     'phone' => $one_phone,
@@ -411,12 +411,12 @@ class Api_CinemaController extends Zend_Controller_Action
                     }
                 }
 
-                $one_title = '';
+                $one_title = null;
                 try {
                     $one_title = $this->m_service->entities2Utf8($one_data->getProperty('Fheadline'));
                 }
                 catch (\Exception $exc) {
-                    $one_title = '';
+                    $one_title = null;
                 }
 
                 $one_movie_data = array(

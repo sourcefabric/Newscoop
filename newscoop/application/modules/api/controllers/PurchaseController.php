@@ -49,7 +49,7 @@ class Api_PurchaseController extends AbstractController
 
         $data = $this->_helper->service('mobile.purchase')->validate($receipt);
 
-        if ($this->_getParam('username')) {
+        if ($this->hasAuthInfo()) {
             $user = $this->getUser();
             if (!$this->_helper->service('user_subscription')->isActiveSubscriber($user)) {
                 $this->sendError('Given user is not a susbscriber');

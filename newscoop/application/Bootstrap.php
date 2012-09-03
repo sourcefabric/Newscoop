@@ -149,6 +149,10 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('auth.adapter.social', 'Newscoop\Services\Auth\SocialAuthService')
             ->addArgument(new sfServiceReference('em'));
 
+        $container->register('auth.adapter.facebook', 'Newscoop\Services\Auth\FacebookAdapter')
+            ->addArgument(new sfServiceReference('http.client_factory'))
+            ->addArgument(new sfServiceReference('em'));
+
         $container->register('email', 'Newscoop\Services\EmailService')
             ->addArgument('%email%')
             ->addArgument(new sfServiceReference('view'))
