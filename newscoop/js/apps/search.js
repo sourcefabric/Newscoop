@@ -10,6 +10,13 @@ var DocumentView = Backbone.View.extend({
 
     render: function() {
         $(this.el).html(this.template({doc: this.model})).addClass(this.model.getTemplateType());
+
+        if (this.model.id == 'wetter') {
+            var cssClass = $('#weather-link > span').attr('class');
+            $('<span />').addClass(cssClass).css('height', '19px').css('vertical-align', 'text-bottom')
+                .prependTo($(this.el).find('h3 > a').first());
+        }
+
         return this;
     }
 });
