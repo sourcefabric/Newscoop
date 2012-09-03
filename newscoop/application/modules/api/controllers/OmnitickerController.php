@@ -111,6 +111,7 @@ class Api_OmnitickerController extends OmnitickerController
             'website_url' => !empty($doc['link']) ? $doc['link'] : null,
             'section_id' => !empty($doc['section_id']) ? (int) $doc['section_id'] : null,
             'section_name' => !empty($doc['section_name']) ? $doc['section_name'] : null,
+            'comments_enabled' => isset($this->commentStats[$id]['comments_enabled']) ? $this->commentStats[$id]['comments_enabled'] : null,
             'comment_url' => $id ? $this->view->serverUrl($this->view->url(array(
                 'module' => 'api',
                 'controller' => 'comments',

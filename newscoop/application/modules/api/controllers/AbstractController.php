@@ -384,6 +384,7 @@ abstract class AbstractController extends Zend_Controller_Action
             'rank' => $this->rank++,
             'website_url' => $this->getWebsiteUrl($article),
             'image_url' => $this->getImageUrl($article),
+            'comments_enabled' => (bool) $article->commentsEnabled(),
             'comment_count' => $this->getCommentsCount($article),
             'recommended_comment_count' => $this->getCommentsCount($article, true),
             'comment_url' => $this->getCommentsUrl($article),

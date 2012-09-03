@@ -209,8 +209,20 @@ class CommentService
         }
 
         $stats = array();
+
+        $query =  $this->em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a')
+            ->select('a.comments_enabled')
+            ->where('a.number = :number')
+            ->setMaxResults(1)
+            ->getQuery();
+
         foreach ($ids as $id) {
+            $comments_enabled = $query->setParameter('number',$id)
+                ->getResult();
+
             $stats[$id] = array(
+                'comments_enabled' => (bool) $comments_enabled,
                 'normal' => 0,
                 'recommended' => 0,
             );

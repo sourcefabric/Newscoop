@@ -170,6 +170,7 @@ class Api_BlogsController extends AbstractController
                 'teaser' => $teaser,
                 'image_url' => $this->getImageUrl($post),
                 'published' => $post->getPublishDate(),
+                'comments_enabled' => (bool) $post->commentsEnabled(),
                 'comment_count' => $normalComments + $recommendedComments,
                 'recommended_comment_count' => $recommendedComments,
                 'comment_url' => $this->view->serverUrl($this->view->url(array(
