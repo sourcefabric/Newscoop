@@ -236,9 +236,9 @@ class Api_OnlineController extends AbstractController
     {
         try {
             if ($this->isAd($article)) {
-                return (string) $article->getData(self::AD_SECTION) ?: 'Anzeige';
+                return $article->getData(self::AD_SECTION) ? ucwords((string) $article->getData(self::AD_SECTION)) : 'Anzeige';
             } else {
-                return (string) $article->getData('printsection');
+                return ucwords((string) $article->getData('printsection'));
             }
         } catch (Exception $e) {
             return '';
@@ -280,7 +280,7 @@ class Api_OnlineController extends AbstractController
     protected function getStoryName($article)
     {
         try {
-            return (string) $article->getData('printstory');
+            return ucwords((string) $article->getData('printstory'));
         } catch (Exception $e) {
             return '';
         }
