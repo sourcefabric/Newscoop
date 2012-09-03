@@ -388,6 +388,7 @@ abstract class AbstractController extends Zend_Controller_Action
             'recommended_comment_count' => $this->getCommentsCount($article, true),
             'comment_url' => $this->getCommentsUrl($article),
             'topics' => $this->getTopics($article),
+            'comments_enabled' => $article->commentsEnabled() > 0,
         );
 
         if (!$this->isIphoneClient()) {
