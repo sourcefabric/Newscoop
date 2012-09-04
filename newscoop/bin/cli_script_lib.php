@@ -1,5 +1,4 @@
 <?php
-require_once('adodb/adodb.inc.php');
 
 function camp_is_readable($p_fileName)
 {

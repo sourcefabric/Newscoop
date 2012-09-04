@@ -115,6 +115,22 @@ class AdoDbAdapter
     }
 
     /**
+     * Escape comparison operation
+     *
+     * @param array $operation
+     * @return string
+     */
+    public function escapeOperation(array $operation)
+    {
+        return sprintf(
+            '%s %s %s',
+            $operation['left'],
+            $operation['symbol'],
+            $this->escape($operation['right'])
+        );
+    }
+
+    /**
      * Execute sql query and return first row of the result as an associative array.
      *
      * @param string $sql
@@ -138,15 +154,14 @@ class AdoDbAdapter
         try {
             return $this->connection->fetchAll($sql, $params);
         } catch (\Exception $e) {
-            print_r($sql);
+            print_r($e->getMessage());
             print_r($e->getTraceAsString());
             exit;
         }
     }
 
     /**
-     * Execute sql query and returns the value of first column
-     * of the first row.
+     * Execute sql query and returns the value of first column of the first row.
      *
      * @param string $sql
      * @param array $params
@@ -155,6 +170,24 @@ class AdoDbAdapter
     public function getOne($sql, array $params = array())
     {
         return $this->connection->fetchColumn($sql, $params);
+    }
+
+    /**
+     * Execute sql query and returns all elements of the first column.
+     *
+     * @param string $sql
+     * @param array $params
+     * @return array
+     */
+    public function getCol($sql, array $params = array())
+    {
+        $return = array();
+        $rows = $this->connection->fetchAll($sql, $params);
+        foreach ($rows as $row) {
+            $return[] = reset($row);
+        }
+
+        return $return;
     }
 
     /**
@@ -175,5 +208,37 @@ class AdoDbAdapter
     public function insert_id()
     {
         return $this->connection->lastInsertId();
+    }
+
+    /**
+     * Fetch extended error information associated with the last database operation.
+     *
+     * @return string
+     */
+    public function errorMsg()
+    {
+        return json_encode($this->connection->errorInfo());
+    }
+
+    /**
+     * Test if there is a database with given name
+     *
+     * @param string $database
+     * @return bool
+     */
+    public function hasDatabase($database)
+    {
+        return in_array($database, $this->connection->getSchemaManager()->listDatabases());
+    }
+
+    /**
+     * Create a new database
+     *
+     * @param string $database
+     * @return void
+     */
+    public function createDatabase($database)
+    {
+        $this->connection->getSchemaManager()->createDatabase($database);
     }
 }

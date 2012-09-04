@@ -76,9 +76,7 @@ class Doctrine
             'dbname' => $Campsite['DATABASE_NAME'],
             'user' => $Campsite['DATABASE_USER'],
             'password' => $Campsite['DATABASE_PASSWORD'],
-            'driverOptions' => array(
-                1002 => "SET NAMES 'UTF8'",
-            ),
+            'charset' => 'UTF8',
         );
 
         if (isset($this->options['database'])) {
