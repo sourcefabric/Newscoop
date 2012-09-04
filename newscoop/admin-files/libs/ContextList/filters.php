@@ -270,7 +270,7 @@ function refreshFilterIssues()
 		resetFilterIssues();
 	} else {
 		var args = handleArgs();
-		callServer(['ArticleList', 'getFilterIssues'], args, handleFilterIssues);
+		callServer(['ContextList', 'getFilterIssues'], args, handleFilterIssues);
 	}
 }
 
@@ -280,7 +280,7 @@ function refreshFilterSections()
 		resetFilterSections();
 	} else {
 		var args = handleArgs();
-		callServer(['ArticleList', 'getFilterSections'], args, handleFilterSections);
+		callServer(['ContextList', 'getFilterSections'], args, handleFilterSections);
 	}
 }
 
