@@ -157,12 +157,12 @@ class ArticleType {
 		$queryStr = "RENAME TABLE `" . $this->m_dbTableName . "` TO `X$p_newName`";
 		$success = $g_ado_db->Execute($queryStr);
 		if ($success) {
-			$queryStr = "UPDATE ArticleTypeMetadata SET type_name = '$newNameEsc' "
-			. "WHERE type_name = '$oldNameEsc'";
+			$queryStr = "UPDATE ArticleTypeMetadata SET type_name = $newNameEsc "
+			. "WHERE type_name = $oldNameEsc";
 			$success = $g_ado_db->Execute($queryStr);
 		}
         if ($success) {
-            $queryStr = "UPDATE Articles SET Type = '$newNameEsc' WHERE Type = '$oldNameEsc'";
+            $queryStr = "UPDATE Articles SET Type = $newNameEsc WHERE Type = $oldNameEsc";
             $success = $g_ado_db->Execute($queryStr);
         }
 		if ($success) {
@@ -172,9 +172,9 @@ class ArticleType {
             $queryStr = "RENAME TABLE `X$p_newName` TO `" . $this->m_dbTableName . "`";
             $g_ado_db->Execute($queryStr);
 			$queryStr = "UPDATE ArticleTypeMetadata SET type_name = '$oldName' "
-            . "WHERE type_name = '$newNameEsc'";
+            . "WHERE type_name = $newNameEsc";
             $g_ado_db->Execute($queryStr);
-            $queryStr = "UPDATE Articles SET Type = '$oldName' WHERE Type = '$newNameEsc'";
+            $queryStr = "UPDATE Articles SET Type = '$oldName' WHERE Type = $newNameEsc";
             $g_ado_db->Execute($queryStr);
 		}
 		return $success;
@@ -582,7 +582,7 @@ class ArticleType {
                 $fields[] = 'F'. $destC;
                 if ($srcC == 'NULL') $values[] = "''";
                 else if (is_numeric($row['F'. $srcC])) $values[] = $row['F'. $srcC];
-                else $values[] = "'". $g_ado_db->escape($row['F'. $srcC]) ."'";
+                else $values[] = $g_ado_db->escape($row['F'. $srcC]);
             }
             $fields[] = 'NrArticle';
             $values[] = $row['NrArticle'];

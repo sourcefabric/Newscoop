@@ -1015,12 +1015,10 @@ class Image extends DatabaseObject
             }
 
             if ($comparisonOperation['symbol'] == 'match') {
-            	$whereCondition = 'MATCH(' . $comparisonOperation['left'] . ") AGAINST('"
-            	    . $g_ado_db->escape($comparisonOperation['right']) . "' IN BOOLEAN MODE)";
+                $whereCondition = 'MATCH(' . $comparisonOperation['left'] . ") AGAINST("
+            	    . $g_ado_db->escape($comparisonOperation['right']) . " IN BOOLEAN MODE)";
             } else {
-            	$whereCondition = $comparisonOperation['left'] . ' '
-            	    . $comparisonOperation['symbol'] . " '"
-            	    . $g_ado_db->escape($comparisonOperation['right']) . "' ";
+                $whereCondition = $g_ado_db->escapeOperation($comparisonOperation);
             }
             $selectClauseObj->addWhere($whereCondition);
             $countClauseObj->addWhere($whereCondition);

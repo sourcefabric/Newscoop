@@ -3329,7 +3329,7 @@ class Article extends DatabaseObject {
         }
         $matchCond = 'MATCH (' . implode(', ', $matchFields) . ") AGAINST ('";
         foreach ($p_keywords as $keyword) {
-            $matchCond .= ($p_matchAll ? '+' : '') . $g_ado_db->escape($keyword) . ' ';
+            $matchCond .= ($p_matchAll ? '+' : '') . trim($g_ado_db->escape($keyword), "'") . ' ';
         }
         $matchCond .= "' IN BOOLEAN MODE)";
         $selectClauseObj->addWhere($matchCond);

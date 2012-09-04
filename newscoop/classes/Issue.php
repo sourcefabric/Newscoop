@@ -889,9 +889,7 @@ class Issue extends DatabaseObject {
 				$hasPublicationId = true;
 			}
 
-			$whereCondition = $comparisonOperation['left'] . ' '
-			. $comparisonOperation['symbol'] . " '"
-			. $g_ado_db->escape($comparisonOperation['right']) . "' ";
+            $whereCondition = $g_ado_db->escapeOperation($comparisonOperation);
 			$selectClauseObj->addWhere($whereCondition);
 			$countClauseObj->addWhere($whereCondition);
 		}
