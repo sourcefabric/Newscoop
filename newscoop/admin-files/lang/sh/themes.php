@@ -1,4 +1,5 @@
 <?php 
+regGS("Duplicate assignment", "");
 regGS("Templates", "");
 regGS("Import theme", "Uvezi temu");
 regGS("Import succeded!", "Uspešan uvoz!");
@@ -59,7 +60,6 @@ regGS("Failed unassigning theme", "Neusepšno uklanjanje teme");
 regGS("Export", "Izvoz");
 regGS("Error page template", "Šablon za prikaz strane o grešci");
 regGS("Edit '$1'", "Uredi '$1'");
-regGS("Duplicate assignation", "Duplirano dodeljivanje");
 regGS("Done uploading", "Aploud završen");
 regGS("Do you want to override '$1'?", "Želite li da pretabate '$1'?");
 regGS("Directory is empty", "Direktorijum je prazan");
