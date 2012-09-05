@@ -13,8 +13,7 @@ use Symfony\Component\Yaml\Parser;
 /**
  * Match Newscoop API property name from response with corresponding database field.
  */
-class PropertyMatcher
-{
+class PropertyMatcher {
 
     /**
      * Match properties with fields names
