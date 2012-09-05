@@ -12,6 +12,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class CommentsController extends FOSRestController
 {
@@ -20,7 +21,26 @@ class CommentsController extends FOSRestController
      * @Method("GET")
      * @View()
      */
-    public function getCommentsForArticleAction($id, $language)
+    public function getCommentsForArticleAction($number, $language)
     {
+        $em = $this->container->get('em');
+        $serializer = $this->get('serializer');
+        $serializer->setGroups(array('list'));
+
+        $article = $em->getRepository('Newscoop\Entity\Article')
+            ->getArticle($number, $language)
+            ->getOneOrNullResult();
+
+        if (!$article) {
+            throw new NotFoundHttpException('Article with number:"'.$number.'" and language: "'.$language.'" was not found.');
+        }
+
+        $articleComments = $em->getRepository('Newscoop\Entity\Comment')
+            ->getArticleComments($number, $language);
+
+        $paginator = $this->get('newscoop.paginator.paginator_service');
+        $articleComments = $paginator->paginate($articleComments);
+
+        return $articleComments;
     }
 }

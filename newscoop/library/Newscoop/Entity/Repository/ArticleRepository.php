@@ -18,17 +18,29 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
  */
 class ArticleRepository extends DatatableSource
 {
-    public function getArticles($type = null, $language = null)
+    public function getArticles($publication, $type = null, $language = null)
     {
         $em = $this->getEntityManager();
 
         $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
-            ->createQueryBuilder('a');
+            ->createQueryBuilder('a')
+            ->where('a.workflowStatus = :workflowStatus')
+            ->andWhere('a.publication = :publication')
+            ->setParameters(array(
+                'workflowStatus' => 'Y',
+                'publication' => $publication
+            ));
 
         $countQueryBuilder = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a')
-            ->select('count(a)');
-
+            ->select('count(a)')
+            ->where('a.workflowStatus = :workflowStatus')
+            ->andWhere('a.publication = :publication')
+            ->setParameters(array(
+                'workflowStatus' => 'Y',
+                'publication' => $publication
+            ));
+            
         if ($type) {
             $countQueryBuilder->andWhere('a.type = :type')
                 ->setParameter('type', $type);

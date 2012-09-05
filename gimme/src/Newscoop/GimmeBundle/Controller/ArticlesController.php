@@ -27,7 +27,7 @@ class ArticlesController extends FOSRestController
         return array(
             '/articles' => $this->generateUrl('newscoop_gimme_articles_getarticles', array(), true),
             '/articles/{number}' => $this->generateUrl('newscoop_gimme_articles_getarticle', array('number' => 1), true),
-            '/articles/{number}/{language}/comments' => $this->generateUrl('newscoop_gimme_comments_getcommentsforarticle', array('number' => 1, 'language' => 'en_US'), true)
+            '/articles/{number}/{language}/comments' => $this->generateUrl('newscoop_gimme_comments_getcommentsforarticle', array('number' => 1, 'language' => 'en'), true)
         );
     }
 
@@ -39,9 +39,12 @@ class ArticlesController extends FOSRestController
     public function getArticlesAction(Request $request)
     {
         $em = $this->container->get('em');
+        $publication = $this->get('newscoop.publication_service')->getPublication()->getId();
+        $serializer = $this->get('serializer');
+        $serializer->setGroups(array('list'));
 
         $articles = $em->getRepository('Newscoop\Entity\Article')
-            ->getArticles($request->get('type', null), $request->get('language', null));
+            ->getArticles($publication, $request->get('type', null), $request->get('language', null));
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articles = $paginator->paginate($articles, array(
@@ -59,6 +62,8 @@ class ArticlesController extends FOSRestController
     public function getArticleAction(Request $request, $number)
     {
         $em = $this->container->get('em');
+        $serializer = $this->get('serializer');
+        $serializer->setGroups(array('details'));
 
         $article = $em->getRepository('Newscoop\Entity\Article')
             ->getArticle($number, $request->get('language', null))

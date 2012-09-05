@@ -136,6 +136,17 @@ class Article
      * @var int
      */
     private $comments_enabled;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="thread", indexBy="language")
+     * @var Newscoop\Entity\Comments
+     */
+    private $comments;
+
+    /**
+     * @var string
+     */
+    private $comments_link;
     
     /**
      * @ORM\Column(name="Type", nullable=True)
@@ -412,6 +423,14 @@ class Article
     public function commentsEnabled()
     {
         return (int) $this->comments_enabled;
+    }
+
+    /**
+     * Set comments_link
+     * @param string $link uri for comments resource in Newscoop API
+     */
+    public function setCommentsLink($link) {
+        $this->comments_link = $link;
     }
     
     /**

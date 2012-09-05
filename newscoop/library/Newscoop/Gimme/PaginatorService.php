@@ -77,14 +77,6 @@ class PaginatorService {
         $this->paginator = $paginator;
         $this->router = $router;
         $this->request = $service_container->get('request');
-        
-        /**
-         * append all used parameters from get and post
-         */
-        $this->setUsedRouteParams(array_merge(
-            $this->request->query->all(),
-            $this->request->request->all()
-        ));
     }
 
     /**
@@ -222,7 +214,7 @@ class PaginatorService {
             $data['nextPageLink'] = $this->router->generate($this->route, $this->routeParams, true);
         }
 
-        if ($paginationData['current'] > $paginationData['firstPageInRange']-1) {
+        if ($paginationData['current'] > $paginationData['firstPageInRange']-1 && $paginationData['current'] > 1) {
             $this->routeParams['page'] = $paginationData['current'] - 1;
             $data['previousPageLink'] = $this->router->generate($this->route, $this->routeParams, true);
         }

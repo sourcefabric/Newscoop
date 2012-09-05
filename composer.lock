@@ -8,8 +8,8 @@
         {
             "package": "behat/behat",
             "version": "dev-master",
-            "source-reference": "v2.4.3",
-            "commit-date": "1343494428"
+            "source-reference": "v2.4.4",
+            "commit-date": "1346770758"
         },
         {
             "package": "behat/common-contexts",
@@ -34,8 +34,8 @@
         {
             "package": "doctrine/doctrine-bundle",
             "version": "dev-master",
-            "source-reference": "8e1149b0ac01e8f9441a523bec81011803485602",
-            "commit-date": "1346369162"
+            "source-reference": "3600872919186e1a40e8fd556e65f6dca6337cc9",
+            "commit-date": "1346617185"
         },
         {
             "package": "doctrine/mongodb",
@@ -76,8 +76,14 @@
         {
             "package": "friendsofsymfony/rest-bundle",
             "version": "dev-master",
-            "source-reference": "c05cdaa35729d0719025db4f91fa35f5660d11d0",
-            "commit-date": "1346154884"
+            "alias-pretty-version": "0.9.x-dev",
+            "alias-version": "0.9.9999999.9999999-dev"
+        },
+        {
+            "package": "friendsofsymfony/rest-bundle",
+            "version": "dev-master",
+            "source-reference": "f35ce13dbe2775b671f965dad4b1ec23647ef605",
+            "commit-date": "1346697488"
         },
         {
             "package": "jms/metadata",
@@ -136,8 +142,14 @@
         {
             "package": "sensio/distribution-bundle",
             "version": "dev-master",
-            "source-reference": "a86d2c0d7212851cc4e971abdff13b89eb063861",
-            "commit-date": "1346246961"
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "sensio/distribution-bundle",
+            "version": "dev-master",
+            "source-reference": "645f2044cce2e2382b0e0dd6d1787b3d619d7a21",
+            "commit-date": "1346834239"
         },
         {
             "package": "sensio/framework-extra-bundle",
@@ -178,8 +190,8 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "c0673d77d02e9955f9e80b82478d0b7259a3fc31",
-            "commit-date": "1346413296"
+            "source-reference": "1dd153205b1db5b9ddcb4bfd4825ce6b8c4f41e7",
+            "commit-date": "1346770195"
         },
         {
             "package": "twig/twig",

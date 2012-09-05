@@ -14,7 +14,7 @@ use JMS\SerializerBundle\Serializer\Handler\SerializationHandlerInterface;
 /**
  * Create simple Author object from Newscoop\Entity\Author object.
  */
-class AuthorHandler implements SerializationHandlerInterface
+class CommentsLinkHandler implements SerializationHandlerInterface
 {
     protected $router;
 
@@ -29,19 +29,6 @@ class AuthorHandler implements SerializationHandlerInterface
             return;
         }
 
-        if (count($data->getArticleAuthors()) == 0) {
-            $data->setArticleAuthors(null);
-            return;
-        }
-
-        $articleAuthors = array();
-        foreach ($data->getArticleAuthors() as $author) {
-            $articleAuthors[] = array(
-                'name' => $author->getFullName(),
-                'link' => $this->router->generate('newscoop_gimme_authors_getarticle', array('id' => $author->getId()), true)
-            );
-        }
-
-        $data->setArticleAuthors($articleAuthors);
+        $data->setCommentsLink($this->router->generate('newscoop_gimme_comments_getcommentsforarticle', array('number' => $data->getNumber(), 'language' => $data->getLanguage()->getCode()), true));
     }
 }

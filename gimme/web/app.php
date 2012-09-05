@@ -6,6 +6,10 @@
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
 
+/**
+ * Development prod
+ */
+require_once(__DIR__ . '/../../newscoop/constants.php');
 $loader = require_once __DIR__.'/../app/bootstrap.php.cache';
 require_once __DIR__.'/../app/AppKernel.php';
 
