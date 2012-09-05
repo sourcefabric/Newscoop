@@ -84,7 +84,8 @@ class SelectWalker extends TreeWalkerAdapter
      * @param  string $field Field name
      * @return array        array with alias or field name and class namespace
      */
-    private function findAliasForField($field) {
+    private function findAliasForField($field)
+    {
         $components = $this->_getQueryComponents();
 
         foreach (array_keys($components) as $alias) {
@@ -92,7 +93,7 @@ class SelectWalker extends TreeWalkerAdapter
             if ($meta['metadata']->hasField($field)) {
                 return array($alias, $meta['metadata']->name);
             } else {
-                 return array($field, $meta['metadata']->name);
+                return array($field, $meta['metadata']->name);
             }
         }
 

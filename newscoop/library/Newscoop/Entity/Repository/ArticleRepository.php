@@ -7,10 +7,11 @@
 
 namespace Newscoop\Entity\Repository;
 
-use DateTime,
-    Doctrine\ORM\EntityRepository,
-    Doctrine\ORM\QueryBuilder,
-    Newscoop\Datatable\Source as DatatableSource;
+use DateTime;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\QueryBuilder;
+use Newscoop\Datatable\Source as DatatableSource;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Article repository
@@ -20,35 +21,40 @@ class ArticleRepository extends DatatableSource
     public function getArticles($type = null, $language = null)
     {
         $em = $this->getEntityManager();
-        $where = 'WHERE';
 
         $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a');
 
-        $countQuery = 'SELECT COUNT(a) FROM Newscoop\Entity\Article a';
+        $countQueryBuilder = $em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a')
+            ->select('count(a)');
 
         if ($type) {
-            $countQuery .= ' '.$where.' a.type = \''.$type.'\'';
+            $countQueryBuilder->andWhere('a.type = :type')
+                ->setParameter('type', $type);
+
             $queryBuilder->andWhere('a.type = :type')
                 ->setParameter('type', $type);
-            $where = 'AND';
         }
 
         if ($language) {
             $languageId = $em->getRepository('Newscoop\Entity\Language')
                 ->findOneByCode($language);
 
-            $countQuery .= ' '.$where.' a.language = '.$languageId->getId();
+            if (!$languageId) {
+                throw new NotFoundHttpException('Results with language "'.$language.'" was not found.');
+            }
+
+            $countQueryBuilder->andWhere('a.language = :languageId')
+                ->setParameter('languageId', $languageId->getId());
+
             $queryBuilder->andWhere('a.language = :languageId')
                 ->setParameter('languageId', $languageId->getId());
         }
 
-        $articlesCount = $em
-            ->createQuery($countQuery)
-            ->getSingleScalarResult();
+        $articlesCount = $countQueryBuilder->getQuery()->getSingleScalarResult();
 
-        $query = $queryBuilder
-        ->getQuery();
+        $query = $queryBuilder->getQuery();
         $query->setHint('knp_paginator.count', $articlesCount);
         
         return $query;
