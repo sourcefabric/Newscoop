@@ -13,6 +13,7 @@ use FOS\RestBundle\Controller\Annotations\View;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ArticlesController extends FOSRestController
 {
@@ -25,8 +26,8 @@ class ArticlesController extends FOSRestController
     {
         return array(
             '/articles' => $this->generateUrl('newscoop_gimme_articles_getarticles', array(), true),
-            '/articles/get/{id}' => $this->generateUrl('newscoop_gimme_articles_getarticle', array('id' => 1), true),
-            '/articles/get/{id}/{language}/comments' => $this->generateUrl('newscoop_gimme_comments_getcommentsforarticle', array('id' => 1, 'language' => 'en_US'), true)
+            '/articles/get/{number}' => $this->generateUrl('newscoop_gimme_articles_getarticle', array('number' => 1), true),
+            '/articles/get/{number}/{language}/comments' => $this->generateUrl('newscoop_gimme_comments_getcommentsforarticle', array('number' => 1, 'language' => 'en_US'), true)
         );
     }
 
@@ -39,23 +40,8 @@ class ArticlesController extends FOSRestController
     {
         $em = $this->container->get('em');
 
-        /**
-         * Optional parameters
-         */
-        $type = $request->get('type');
-        $language = $request->get('language');
-
-        /**
-         * We can't use default paginator counter because composite id.
-         * TODO: It must be moved to repository
-         */
-        $articlesCount = $em
-            ->createQuery('SELECT COUNT(a) FROM Newscoop\Entity\Article a')
-            ->getSingleScalarResult();
-
         $articles = $em->getRepository('Newscoop\Entity\Article')
-            ->getArticles()
-            ->setHint('knp_paginator.count', $articlesCount);
+            ->getArticles($request->get('type', null), $request->get('language', null));
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articles = $paginator->paginate($articles, array(
@@ -66,12 +52,22 @@ class ArticlesController extends FOSRestController
     }
 
     /**
-     * @Route("/articles/{id}.{_format}", defaults={"_format"="json"})
+     * @Route("/articles/{number}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View()
      */
-    public function getArticleAction($id)
+    public function getArticleAction(Request $request, $number)
     {
+        $em = $this->container->get('em');
 
+        $article = $em->getRepository('Newscoop\Entity\Article')
+            ->getArticle($number, $request->get('language', null))
+            ->getOneOrNullResult();
+
+        if (!$article) {
+            throw new NotFoundHttpException('Result was not found.');
+        }
+
+        return $article;
     }
 }

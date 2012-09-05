@@ -17,25 +17,63 @@ use DateTime,
  */
 class ArticleRepository extends DatatableSource
 {
-    private $fields = array();
-
-    public function setFields($fields)
-    {
-        $this->fields = explode(',', $fieds);
-    }
-
-    public function getArticles()
+    public function getArticles($type = null, $language = null)
     {
         $em = $this->getEntityManager();
+        $where = 'WHERE';
+
         $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
             ->createQueryBuilder('a');
 
-        if (count($this->fields) > 0) {
-            foreach ($this->fields as $field) {
-                $queryBuilder->add('select', 'a.'.$field);
-            }
+        $countQuery = 'SELECT COUNT(a) FROM Newscoop\Entity\Article a';
+
+        if ($type) {
+            $countQuery .= ' '.$where.' a.type = \''.$type.'\'';
+            $queryBuilder->andWhere('a.type = :type')
+                ->setParameter('type', $type);
+            $where = 'AND';
         }
+
+        if ($language) {
+            $languageId = $em->getRepository('Newscoop\Entity\Language')
+                ->findOneByCode($language);
+
+            $countQuery .= ' '.$where.' a.language = '.$languageId->getId();
+            $queryBuilder->andWhere('a.language = :languageId')
+                ->setParameter('languageId', $languageId->getId());
+        }
+
+        $articlesCount = $em
+            ->createQuery($countQuery)
+            ->getSingleScalarResult();
+
+        $query = $queryBuilder
+        ->getQuery();
+        $query->setHint('knp_paginator.count', $articlesCount);
         
-        return $queryBuilder->getQuery();
+        return $query;
+    }
+
+    public function getArticle($number, $language = null)
+    {
+        $em = $this->getEntityManager();
+
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a');
+
+        $queryBuilder->where('a.number = :number')
+            ->setParameter('number', $number);
+
+        if ($language) {
+            $languageId = $em->getRepository('Newscoop\Entity\Language')
+                ->findOneByCode($language);
+
+            $queryBuilder->andWhere('a.language = :languageId')
+                ->setParameter('languageId', $languageId->getId());
+        }
+
+        $query = $queryBuilder->getQuery();
+        
+        return $query;
     }
 }
