@@ -8,13 +8,13 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\ORM\Mapping AS ORM;
 use Newscoop\Entity\Comment\Commenter;
 
 /**
  * Comment entity
- * @entity
- * @table(name="comment")
- * @entity(repositoryClass="Newscoop\Entity\Repository\CommentRepository")
+ * @ORM\Table(name="comment")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\CommentRepository")
  */
 class Comment
 {
@@ -61,29 +61,30 @@ class Comment
     static $status_enum = array('approved', 'pending', 'hidden', 'deleted');
 
     /**
-     * @id @generatedValue
-     * @column(type="integer")
+     * @ORM\Id 
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @manyToOne(targetEntity="Newscoop\Entity\Comment\Commenter", inversedBy="comments" )
-     * @joinColumn(name="fk_comment_commenter_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Comment\Commenter", inversedBy="comments" )
+     * @ORM\JoinColumn(name="fk_comment_commenter_id", referencedColumnName="id")
      * @var Newscoop\Entity\Comment\Commenter
      */
     private $commenter;
 
     /**
-     * @manyToOne(targetEntity="Publication")
-     * @joinColumn(name="fk_forum_id", referencedColumnName="Id")
+     * @ORM\ManyToOne(targetEntity="Publication")
+     * @ORM\JoinColumn(name="fk_forum_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
     private $forum;
 
     /**
-     * @manyToOne(targetEntity="Comment")
-     * @joinColumn(name="fk_parent_id", referencedColumnName="id", onDelete="SET NULL")
+     * @ORM\ManyToOne(targetEntity="Comment")
+     * @ORM\JoinColumn(name="fk_parent_id", referencedColumnName="id", onDelete="SET NULL")
      * @var Newscoop\Entity\Comment
      */
     private $parent;
@@ -91,87 +92,87 @@ class Comment
     /**
      * TODO get rid of this when the composite key stuff is done.
      *
-     * @column(type="integer", name="fk_thread_id")
+     * @ORM\Column(type="integer", name="fk_thread_id")
      * @var int
      */
     private $article_num;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Article")
-     * @JoinColumn(name="fk_thread_id", referencedColumnName="Number")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
+     * @ORM\JoinColumn(name="fk_thread_id", referencedColumnName="Number")
      * @var Newscoop\Entity\Article
      */
     private $thread;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Language")
-     * @JoinColumn(name="fk_language_id", referencedColumnName="Id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
+     * @ORM\JoinColumn(name="fk_language_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
     private $language;
 
     /**
-     * @column(length=140)
+     * @ORM\Column(length=140)
      * @var string
      */
     private $subject;
 
     /**
-     * @column
+     * @ORM\Column()
      * @var text
      */
     private $message;
 
     /**
-     * @column(length=4)
+     * @ORM\Column(length=4)
      * @var int
      */
     private $thread_level;
 
     /**
-     * @column(length=4)
+     * @ORM\Column(length=4)
      * @var int
      */
     private $thread_order;
 
     /**
-     * @column(length=2)
+     * @ORM\Column(length=2)
      * @var int
      */
     private $status;
 
     /**
-     * @column(length=39)
+     * @ORM\Column(length=39)
      * @var int
      */
     private $ip;
 
     /**
-     * @column(type="datetime")
+     * @ORM\Column(type="datetime")
      * @var DateTime
      */
     private $time_created;
 
     /*
-     * @column(type="datetime")
+     * @ORM\Column(type="datetime")
      * @var DateTime
      */
     private $time_updated;
 
     /**
-     * @column(length=4)
+     * @ORM\Column(length=4)
      * @var int
      */
     private $likes = 0;
 
     /**
-     * @column(length=4)
+     * @ORM\Column(length=4)
      * @var int
      */
     private $dislikes = 0;
 
     /**
-     * @column(length=1)
+     * @ORM\Column(length=1)
      * @var int
      */
     private $recommended = 0;

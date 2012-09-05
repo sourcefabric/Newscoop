@@ -27,7 +27,7 @@ class RenditionServiceTest extends \TestCase
         $this->orm = $this->setUpOrm('Newscoop\Image\LocalImage', 'Newscoop\Image\ArticleRendition', 'Newscoop\Image\ArticleImage', 'Newscoop\Image\Rendition', 'Newscoop\Package\Package');
         $this->imageService = new ImageService(array(), $this->orm);
         $this->service = new RenditionService(array(
-            'theme_path' => APPLICATION_PATH . '/../tests/fixtures/themes',
+            'theme_path' => '/../tests/fixtures/themes',
         ), $this->orm, $this->imageService);
     }
 

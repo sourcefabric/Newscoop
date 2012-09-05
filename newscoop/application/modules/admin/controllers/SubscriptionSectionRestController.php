@@ -12,6 +12,10 @@ use Newscoop\Annotations\Acl;
  */
 class Admin_SubscriptionSectionRestController extends Zend_Rest_Controller
 {
+    public function headAction()
+    {
+    }
+
     public function indexAction()
     {
     }

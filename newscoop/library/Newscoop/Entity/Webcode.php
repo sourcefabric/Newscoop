@@ -7,26 +7,28 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\ORM\Mapping AS ORM;
+
 /**
  * Webcode entity
  *
- * @Entity
- * @Table(name="webcode")
+ * @ORM\Entity
+ * @ORM\Table(name="webcode")
  */
 class Webcode
 {
     /**
-     * @Id
-     * @Column(type="string", length=80)
+     * @ORM\Id
+     * @ORM\Column(type="string", length=80)
      * @var string
      */
     private $webcode;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Article")
-     * @JoinColumns({
-     *      @JoinColumn(name="article_number", referencedColumnName="Number"),
-     *      @JoinColumn(name="language_id", referencedColumnName="IdLanguage")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
+     * @ORM\JoinColumns({
+     *      @ORM\JoinColumn(name="article_number", referencedColumnName="Number"),
+     *      @ORM\JoinColumn(name="language_id", referencedColumnName="IdLanguage")
      *  })
      */
     private $article;

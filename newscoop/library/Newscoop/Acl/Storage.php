@@ -9,20 +9,20 @@ namespace Newscoop\Acl;
 
 use Resource\Acl\StorageInterface;
 use Newscoop\Utils\PermissionToAcl;
-use Newscoop\Doctrine\Doctrine;
+use Newscoop\Doctrine\Registry;
 
 /**
  * Acl storage
  */
 class Storage implements StorageInterface
 {
-    /** @var Newscoop\Doctrine\Doctrine */
+    /** @var Newscoop\Doctrine\Registry */
     private $doctrine;
 
     /**
-     * @var Newscoop\Doctrine\Doctrine $doctrine
+     * @var Newscoop\Doctrine\Registry $doctrine
      */
-    public function __construct(Doctrine $doctrine)
+    public function __construct(Registry $doctrine)
     {
         $this->doctrine = $doctrine;
     }

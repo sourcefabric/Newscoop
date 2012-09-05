@@ -6,37 +6,39 @@
  */
 namespace Newscoop\Entity;
 
+use Doctrine\ORM\Mapping AS ORM;
+
 /**
  * Playlist entity
- * @Entity(repositoryClass="Newscoop\Entity\Repository\PlaylistArticleRepository")
- * @Table(name="playlist_article",
- * 	uniqueConstraints={@UniqueConstraint(name="playlist_article", columns={"id_playlist", "article_no"})})
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\PlaylistArticleRepository")
+ * @ORM\Table(name="playlist_article",
+ * 	uniqueConstraints={@ORM\UniqueConstraint(name="playlist_article", columns={"id_playlist", "article_no"})})
  */
 class PlaylistArticle extends Entity
 {
 	/**
-     * @Id @Column(name="id_playlist_article", type="integer")
-     * @GeneratedValue
+     * @ORM\Id @ORM\Column(name="id_playlist_article", type="integer")
+     * @ORM\GeneratedValue
      * @var int
      */
     protected $id;
 
 	/**
-     * @Column(type="integer", name="id_playlist")
+     * @ORM\Column(type="integer", name="id_playlist")
      * @var int
      */
     protected $idPlaylist;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Playlist", inversedBy="articles")
-	 * @JoinColumn(name="id_playlist", referencedColumnName="id_playlist")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Playlist", inversedBy="articles")
+	 * @ORM\JoinColumn(name="id_playlist", referencedColumnName="id_playlist")
      * @var Newscoop\Entity\Playlist
      */
     private $playlist;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Article")
-	 * @JoinColumn(name="article_no", referencedColumnName="Number")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Article")
+	 * @ORM\JoinColumn(name="article_no", referencedColumnName="Number")
      * @var Newscoop\Entity\Article
      */
     private $article;
