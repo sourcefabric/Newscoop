@@ -26,8 +26,8 @@ class ArticlesController extends FOSRestController
     {
         return array(
             '/articles' => $this->generateUrl('newscoop_gimme_articles_getarticles', array(), true),
-            '/articles/get/{number}' => $this->generateUrl('newscoop_gimme_articles_getarticle', array('number' => 1), true),
-            '/articles/get/{number}/{language}/comments' => $this->generateUrl('newscoop_gimme_comments_getcommentsforarticle', array('number' => 1, 'language' => 'en_US'), true)
+            '/articles/{number}' => $this->generateUrl('newscoop_gimme_articles_getarticle', array('number' => 1), true),
+            '/articles/{number}/{language}/comments' => $this->generateUrl('newscoop_gimme_comments_getcommentsforarticle', array('number' => 1, 'language' => 'en_US'), true)
         );
     }
 
