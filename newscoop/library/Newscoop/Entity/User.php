@@ -7,19 +7,18 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Newscoop\Utils\PermissionToAcl;
-use Newscoop\Entity\Acl\Role;
-use Newscoop\Entity\User\Group;
-use Newscoop\Entity\Author;
+use Doctrine\Common\Collections\ArrayCollection,
+    Newscoop\Utils\PermissionToAcl,
+    Newscoop\Entity\Acl\Role,
+    Newscoop\Entity\User\Group,
+    Newscoop\Entity\Author;
 
 /**
- * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
- * @ORM\Table(name="liveuser_users", uniqueConstraints={
- *      @ORM\UniqueConstraint(name="username_idx", columns={"Uname"})
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
+ * @Table(name="liveuser_users", uniqueConstraints={
+ *      @UniqueConstraint(name="username_idx", columns={"Uname"})
  *      })
- *  @ORM\HasLifecycleCallbacks
+ *  @HasLifecycleCallbacks
  */
 class User implements \Zend_Acl_Role_Interface
 {
@@ -32,120 +31,120 @@ class User implements \Zend_Acl_Role_Interface
     const HASH_ALGO = 'sha1';
 
     /**
-     * @ORM\Id @ORM\GeneratedValue
-     * @ORM\Column(type="integer", name="Id")
+     * @Id @GeneratedValue
+     * @Column(type="integer", name="Id")
      * @var int
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=80, name="EMail")
+     * @Column(type="string", length=80, name="EMail")
      * @var string
      */
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=80, nullable=TRUE, name="UName")
+     * @Column(type="string", length=80, nullable=TRUE, name="UName")
      * @var string
      */
     private $username;
 
     /**
-     * @ORM\Column(type="string", length=60, nullable=TRUE, name="Password")
+     * @Column(type="string", length=60, nullable=TRUE, name="Password")
      * @var string
      */
     private $password;
 
     /**
-     * @ORM\Column(type="string", length=80, nullable=TRUE, name="Name")
+     * @Column(type="string", length=80, nullable=TRUE, name="Name")
      * @var string
      */
     private $first_name;
 
     /**
-     * @ORM\Column(type="string", length=80, nullable=TRUE)
+     * @Column(type="string", length=80, nullable=TRUE)
      * @var string
      */
     private $last_name;
 
     /**
-     * @ORM\Column(type="datetime", name="time_created")
+     * @Column(type="datetime", name="time_created")
      * @var DateTime
      */
     private $created;
 
     /**
-     * @ORM\Column(type="datetime", name="time_updated", nullable=true)
+     * @Column(type="datetime", name="time_updated", nullable=true)
      * @var DateTime
      */
     private $updated;
 
     /**
-     * @ORM\Column(type="integer", length=1)
+     * @Column(type="integer", length=1)
      * @var int
      */
     private $status = self::STATUS_INACTIVE;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @Column(type="boolean")
      * @var bool
      */
     private $is_admin;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @Column(type="boolean")
      * @var bool
      */
     private $is_public;
 
     /**
-     * @ORM\Column(type="integer")
+     * @Column(type="integer")
      * @var int
      */
     private $points;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=TRUE)
+     * @Column(type="string", length=255, nullable=TRUE)
      * @var string
      */
     private $image;
 
     /**
-     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Acl\Role", cascade={"ALL"})
+     * @oneToOne(targetEntity="Newscoop\Entity\Acl\Role", cascade={"ALL"})
      * @var Newscoop\Entity\Acl\Role
      */
     private $role;
 
     /**
-     * @ORM\manyToMany(targetEntity="Newscoop\Entity\User\Group", inversedBy="users")
-     * @ORM\joinTable(name="liveuser_groupusers",
-     *      joinColumns={@ORM\JoinColumn(name="perm_user_id", referencedColumnName="Id")},
-     *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="group_id")}
+     * @manyToMany(targetEntity="Newscoop\Entity\User\Group", inversedBy="users")
+     * @joinTable(name="liveuser_groupusers",
+     *      joinColumns={@joinColumn(name="perm_user_id", referencedColumnName="Id")},
+     *      inverseJoinColumns={@joinColumn(name="group_id", referencedColumnName="group_id")}
      *      )
      * @var Doctrine\Common\Collections\Collection;
      */
     private $groups;
 
     /**
-     * @ORM\oneToMany(targetEntity="UserAttribute", mappedBy="user", cascade={"ALL"}, indexBy="attribute")
+     * @OneToMany(targetEntity="UserAttribute", mappedBy="user", cascade={"ALL"}, indexBy="attribute")
      * @var Doctrine\Common\Collections\Collection;
      */
     private $attributes;
 
     /**
-     * @ORM\oneToMany(targetEntity="Newscoop\Entity\Comment\Commenter", mappedBy="user", cascade={"ALL"}, indexBy="name")
+     * @OneToMany(targetEntity="Newscoop\Entity\Comment\Commenter", mappedBy="user", cascade={"ALL"}, indexBy="name")
      * @var Doctrine\Common\Collections\Collection;
      */
     private $commenters;
 
     /**
-     * @ORM\Column(type="integer", nullable=True)
+     * @Column(type="integer", nullable=True)
      * @var int
      */
     private $subscriber;
 
     /**
-     * @ORM\OneToOne(targetEntity="Author")
+     * @OneToOne(targetEntity="Author")
      * @var Newscoop\Entity\Author
      */
     private $author;
@@ -769,7 +768,7 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
-     * @ORM\PreUpdate
+     * @PreUpdate
      */
     public function preUpdate()
     {

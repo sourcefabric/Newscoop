@@ -8,7 +8,6 @@
 
 namespace Newscoop\Entity\Output;
 
-use Doctrine\ORM\Mapping AS ORM;
 use Newscoop\Entity\Section;
 use Newscoop\Entity\OutputSettings;
 use Newscoop\Utils\Validation;
@@ -18,8 +17,8 @@ use Newscoop\Entity\Theme;
 /**
  * Provides the settings for an output for a section.
  *
- * @ORM\Entity
- * @ORM\Table(name="output_section")
+ * @Entity
+ * @Table(name="output_section")
  */
 class OutputSettingsSection extends OutputSettings
 {
@@ -29,8 +28,8 @@ class OutputSettingsSection extends OutputSettings
     const NAME_1 = __CLASS__;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Section")
-     * @ORM\JoinColumn(name="fk_section_id", referencedColumnName="id")
+     * @ManyToOne(targetEntity="Newscoop\Entity\Section")
+     * @JoinColumn(name="fk_section_id", referencedColumnName="id")
      * @var Newscoop\Entity\Section
      */
     private $section;

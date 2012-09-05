@@ -7,18 +7,16 @@
 
 namespace Newscoop\Entity\Acl;
 
-use Doctrine\ORM\Mapping AS ORM;
-
 /**
  * Permission entity
- * @ORM\Entity
- * @ORM\Table(name="liveuser_rights")
+ * @Entity
+ * @Table(name="liveuser_rights")
  */
 class Permission
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(name="right_define_name")
+     * @Id
+     * @Column(name="right_define_name")
      * @var string
      */
     private $name;

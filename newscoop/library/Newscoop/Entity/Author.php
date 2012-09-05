@@ -7,59 +7,30 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-
 /**
- * @ORM\Entity
- * @ORM\Table(name="Authors")
+ * @Entity
+ * @Table(name="Authors")
  */
 class Author
 {
     /**
-     * @ORM\Id 
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @Id @GeneratedValue
+     * @Column(type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=80, nullable=True)
+     * @Column(type="string", length=80, nullable=True)
      * @var string
      */
     private $first_name;
 
     /**
-     * @ORM\Column(type="string", length=80, nullable=True)
+     * @Column(type="string", length=80, nullable=True)
      * @var string
      */
     private $last_name;
-
-    /**
-     * @ORM\Column(type="string", nullable=True, name="biography")
-     * @var string
-     */
-    private $biography;
-
-    /**
-     * @ORM\Column(type="string", length=80, nullable=True)
-     * @var string
-     */
-    private $image;
-
-    /**
-     * @ORM\ManyToMany(targetEntity="AuthorType")
-     * @ORM\JoinTable(name="ArticleAuthors",
-     *      joinColumns={
-     *          @ORM\JoinColumn(name="fk_type_id", referencedColumnName="id")
-     *      },
-     *      inverseJoinColumns={
-     *          @ORM\JoinColumn(name="fk_type_id", referencedColumnName="id")
-     *      }
-     *  )
-     * @var Newscoop\Entity\Authors
-     */
-    private $types;
 
     /**
      * @param string $firstName
@@ -89,64 +60,5 @@ class Author
     public function getFullName()
     {
         return trim("$this->first_name $this->last_name");
-    }
-
-    /**
-     * Get types
-     *
-     * @return string
-     */
-    public function getTypes()
-    {
-        if (count($this->types) == 0) {
-            return null;
-        }
-
-        return $this->types;
-    }
-
-    /**
-     * Set types
-     *
-     * @return string
-     */
-    public function setTypes($types)
-    {
-        $this->types = $types;
-
-        return $this;
-    }
-
-    /**
-     * Get biography
-     *
-     * @return string
-     */
-    public function getBiography()
-    {   
-
-        return $this->biography;
-    }
-
-    /**
-     * Set biography
-     *
-     * @return string
-     */
-    public function setBiography($biography)
-    {
-        $this->biography = $biography;
-
-        return $this;
-    }
-
-    /**
-     * Get image
-     *
-     * @return string
-     */
-    public function getImage()
-    {
-        return $this->image;
     }
 }

@@ -7,31 +7,27 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-
 /**
  * ArticleImage entity
- * @ORM\Entity
- * @ORM\Table(name="ArticleImages")
+ * @Entity
+ * @Table(name="ArticleImages")
  */
 class ArticleImage
 {
     /**
-     * @ORM\Id 
-     * @ORM\Column(type="integer", name="NrArticle")
+     * @Id @Column(type="integer", name="NrArticle")
      * @var int
      */
     private $articleNumber;
 
     /**
-     * @ORM\Id 
-     * @ORM\Column(type="integer", name="IdImage")
+     * @Id @Column(type="integer", name="IdImage")
      * @var int
      */
     private $imageId;
 
     /**
-     * @ORM\Column(type="integer", name="Number", nullable=True)
+     * @Column(type="integer", name="Number", nullable=True)
      * @var int
      */
     private $number;

@@ -8,7 +8,6 @@
 
 namespace Newscoop\Entity\Output;
 
-use Doctrine\ORM\Mapping AS ORM;
 use Newscoop\Entity\Issue;
 use Newscoop\Entity\OutputSettings;
 use Newscoop\Utils\Validation;
@@ -19,26 +18,26 @@ use Newscoop\Entity\Resource;
 /**
  * Provides the settings for an output for an issue.
  *
- * @ORM\Entity
- * @ORM\Table(name="output_issue", uniqueConstraints={@ORM\UniqueConstraint(name="publication_themes_idx", columns={"fk_output_id", "fk_issue_id"})})
+ * @Entity
+ * @Table(name="output_issue", uniqueConstraints={@UniqueConstraint(name="publication_themes_idx", columns={"fk_output_id", "fk_issue_id"})})
  */
 class OutputSettingsIssue extends OutputSettings
 {
-    /**
+        /**
 	 * Provides the class name as a constant.
 	 */
 	const NAME_1 = __CLASS__;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Issue", inversedBy="outputSettingsIssues")
-	 * @ORM\JoinColumn(name="fk_issue_id", referencedColumnName="id")
+	 * @ManyToOne(targetEntity="Newscoop\Entity\Issue", inversedBy="outputSettingsIssues")
+	 * @JoinColumn(name="fk_issue_id", referencedColumnName="id")
 	 * @var Newscoop\Entity\Issue
 	 */
 	private $issue;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Resource")
-	 * @ORM\JoinColumn(name="fk_theme_path_id", referencedColumnName="id")
+	 * @ManyToOne(targetEntity="Newscoop\Entity\Resource")
+	 * @JoinColumn(name="fk_theme_path_id", referencedColumnName="id")
 	 * @var Newscoop\Entity\Resource
 	 */
 	private $themePath;

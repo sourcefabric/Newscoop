@@ -7,38 +7,33 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-
 /**
- * @ORM\Entity
- * @ORM\Table(name="user_token")
+ * @Entity
+ * @Table(name="user_token")
  */
 class UserToken
 {
     /**
-     * @ORM\Id 
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
-     * @ORM\JoinColumn(referencedColumnName="Id")
+     * @Id @ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;
 
     /**
-     * @ORM\Id 
-     * @ORM\Column(type="string", length=40)
+     * @Id @Column(type="string", length=40)
      * @var string
      */
     private $action;
 
     /**
-     * @ORM\Id 
-     * @ORM\Column(type="string", length=40)
+     * @Id @Column(type="string", length=40)
      * @var string
      */
     private $token;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @Column(type="datetime")
      * @var DateTime
      */
     private $created;

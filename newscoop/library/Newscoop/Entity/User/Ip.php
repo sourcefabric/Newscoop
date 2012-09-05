@@ -7,32 +7,30 @@
 
 namespace Newscoop\Entity\User;
 
-use Doctrine\ORM\Mapping AS ORM;
-
 /**
  * Ip entity
- * @ORM\Entity
- * @ORM\Table(name="SubsByIP")
+ * @Entity
+ * @Table(name="SubsByIP")
  */
 class Ip
 {
     /**
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
-     * @ORM\JoinColumn(name="IdUser", referencedColumnName="Id")
+     * @Id
+     * @ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @JoinColumn(name="IdUser", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="StartIP")
+     * @Id
+     * @Column(type="integer", name="StartIP")
      * @var int
      */
     private $ip;
 
     /**
-     * @ORM\Column(type="integer", name="Addresses")
+     * @Column(type="integer", name="Addresses")
      * @var int
      */
     private $number;

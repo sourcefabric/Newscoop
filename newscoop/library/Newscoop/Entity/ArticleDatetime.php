@@ -4,17 +4,13 @@
  * @copyright 2011 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
-
 namespace Newscoop\Entity;
-
-use Doctrine\ORM\Mapping AS ORM;
 use Newscoop\Entity\Article;
-
 /**
  * ArticleDatetime entity
- * @ORM\Entity( repositoryClass="Newscoop\Entity\Repository\ArticleDatetimeRepository" )
- * @ORM\Table( name="article_datetimes",
- * 	uniqueConstraints={ @ORM\UniqueConstraint(
+ * @Entity( repositoryClass="Newscoop\Entity\Repository\ArticleDatetimeRepository" )
+ * @Table( name="article_datetimes",
+ * 	uniqueConstraints={ @UniqueConstraint(
  * 		name="search_idx",
  * 		columns={"end_date", "start_date", "end_time", "start_time", "article_id", "article_type", "field_name"}
  *  )})
@@ -22,64 +18,64 @@ use Newscoop\Entity\Article;
 class ArticleDatetime extends Entity
 {
 	/**
-	 * @ORM\Id
-	 * @ORM\GeneratedValue
-	 * @ORM\Column( type="integer", name="id_article_datetime" )
+	 * @Id
+	 * @GeneratedValue
+	 * @Column( type="integer", name="id_article_datetime" )
      * @var int
      */
     protected $id;
 
     /**
-     * @ORM\Column( type="date", name="start_date" )
+     * @Column( type="date", name="start_date" )
      * @var string
      */
     protected $startDate;
 
     /**
-     * @ORM\Column( type="date", name="end_date", nullable=True )
+     * @Column( type="date", name="end_date", nullable=True )
      * @var string
      */
     protected $endDate;
 
     /**
-     * @ORM\Column( type="time", name="start_time", nullable=True )
+     * @Column( type="time", name="start_time", nullable=True )
      * @var string
      */
     protected $startTime;
 
     /**
-     * @ORM\Column( type="time", name="end_time", nullable=True )
+     * @Column( type="time", name="end_time", nullable=True )
      * @var string
      */
     protected $endTime;
 
     /**
-     * @ORM\Column( type="string", name="recurring", nullable=True )
+     * @Column( type="string", name="recurring", nullable=True )
      * @var string
      */
     protected $recurring;
 
     /**
-     * @ORM\Column( type="integer", name="article_id" )
-     * @ORM\JoinColumn(name="article_id", referencedColumnName="id")
+     * @Column( type="integer", name="article_id" )
+     * @JoinColumn(name="article_id", referencedColumnName="id")
      * @var int
      */
     private $articleId;
 
     /**
-     * @ORM\Column( type="string", name="article_type" )
+     * @Column( type="string", name="article_type" )
      * @var string
      */
     protected $articleType;
 
     /**
-     * @ORM\Column( type="string", name="field_name" )
+     * @Column( type="string", name="field_name" )
      * @var string
      */
     protected $fieldName;
 
     /**
-     * @ORM\Column( type="string", name="event_comment" )
+     * @Column( type="string", name="event_comment" )
      * @var string
      */
     protected $eventComment;

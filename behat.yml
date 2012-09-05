@@ -1,4 +1,0 @@
-default:
-    context:
-        parameters:
-            base_url:   http://newscoop.dev/api

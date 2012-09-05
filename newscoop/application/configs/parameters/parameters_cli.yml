@@ -1,7 +1,0 @@
-parameters:
-    admin:
-        resources:
-            acl:
-                cache: "Doctrine\Common\Cache\ArrayCache"
-    doctrine:
-        cache: "Doctrine\Common\Cache\ArrayCache"

@@ -1,40 +1,22 @@
 services:
-    newscoop_doctrine:
-        class:      Newscoop\Doctrine\Doctrine
-        arguments:  ["%doctrine%"]
-    newscoop_doctrine_connection:
-        class:      Doctrine\DBAL\Connection
-        factory_service:  newscoop_doctrine
-        factory_method:   getConnection
-    newscoop_doctrine_entityManager:
-        class:      Doctrine\ORM\EntityManager
-        factory_service:  newscoop_doctrine
-        factory_method:   getEntityManager
     doctrine:
-        class:      Newscoop\Doctrine\Registry
-        arguments:
-            - "@service_container"
-            - newscoop: "newscoop_doctrine_connection"
-            - newscoop: "newscoop_doctrine_entityManager"
-            - newscoop
-            - newscoop
+        class:      Newscoop\Doctrine\Doctrine
+        arguments:  ["%config%"]
     doctrine.em:
-        class:      Doctrine\ORM\EntityManager
+        class:      Newscoop\Doctrine\Doctrine
         factory_service:  doctrine
         factory_method:   getEntityManager
-        arguments:
-            - newscoop
     em:
         alias: doctrine.em
     doctrine.event_manager:
-        class:      Doctrine\Common\EventManager
+        class:      Newscoop\Doctrine\Doctrine
         factory_service:  doctrine.em
         factory_method:   getEventManager
     newscoop.doctrine.event_dispatcher_proxy:
         class: Newscoop\Doctrine\EventDispatcherProxy
         arguments:  ["@dispatcher"]
     doctrine.event_subscriber:
-        class:      Doctrine\Common\EventSubscriber
+        class:      Newscoop\Doctrine\Doctrine
         factory_service:  doctrine.event_manager
         factory_method:   addEventSubscriber
         arguments:  ["@newscoop.doctrine.event_dispatcher_proxy"]
@@ -53,7 +35,7 @@ services:
         arguments:  ["@em", "@zend_auth"]
     user.list:
         class:      Newscoop\Services\ListUserService
-        arguments:  ["%blog%", "@em"]
+        arguments:  ["%config%", "@em"]
     user.token:
         class:      Newscoop\Services\UserTokenService
         arguments:  ["@em"]
@@ -117,7 +99,7 @@ services:
         arguments:  ["@image"]
     image.rendition:
         class:      Newscoop\Image\RenditionService
-        arguments:  ["%theme_path%", "@em", "@image"]
+        arguments:  ["%config%", "@em", "@image"]
     image.search:
         class:      Newscoop\Image\ImageSearchService
         arguments:  ["@em"]

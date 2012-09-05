@@ -7,33 +7,31 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-
 /**
  * Country entity
  *
- * @ORM\Entity
- * @ORM\Table(name="Countries")
+ * @Entity
+ * @Table(name="Countries")
  */
 class Country 
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="string", name="Code")
+     * @Id
+     * @Column(type="string", name="Code")
      * @var string
      */
     private $code;
 
     /**
-     * @ORM\Id
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
-     * @ORM\JoinColumn(name="IdLanguage", referencedColumnName="Id")
+     * @Id
+     * @ManyToOne(targetEntity="Newscoop\Entity\Language")
+     * @JoinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
     private $language;
 
     /**
-     * @ORM\Column(type="string", name="Name")
+     * @Column(type="string", name="Name")
      * @var string
      */
     private $name;

@@ -7,30 +7,27 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-
 /**
- * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\TemplateRepository")
- * @ORM\Table(name="Templates")
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\TemplateRepository")
+ * @Table(name="Templates")
  */
 class Template
 {
     /**
-     * @ORM\Id 
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer", name="Id")
+     * @Id @GeneratedValue
+     * @Column(type="integer", name="Id")
      * @var int
      */
     private $id;
 
     /**
-     * @ORM\Column(length=255, name="Name")
+     * @Column(length=255, name="Name")
      * @var string
      */
     private $key;
 
     /**
-     * @ORM\Column(type="integer", name="CacheLifetime")
+     * @Column(type="integer", name="CacheLifetime")
      * @var int
      */
     private $cache_lifetime;

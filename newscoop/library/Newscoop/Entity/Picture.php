@@ -7,11 +7,9 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-
 /**
- * @ORM\Entity
- * @ORM\Table(name="Images")
+ * @Entity
+ * @Table(name="Images")
  */
 class Picture
 {
@@ -20,99 +18,99 @@ class Picture
     const SOURCE_INGEST = 'newsfeed';
 
     /**
-     * @ORM\Id @ORM\GeneratedValue
-     * @ORM\Column(type="integer", name="Id")
+     * @Id @GeneratedValue
+     * @Column(type="integer", name="Id")
      * @var int
      */
     private $id;
 
     /**
-     * @ORM\Column(name="Photographer")
+     * @Column(name="Photographer")
      * @var string
      */
     private $photographer;
 
     /**
-     * @ORM\Column(name="Description")
+     * @Column(name="Description")
      * @var string
      */
     private $headline;
 
     /**
-     * @ORM\Column(name="Caption", nullable=True)
+     * @Column(name="Caption", nullable=True)
      * @var string
      */
     private $caption;
 
     /**
-     * @ORM\Column(name="Source")
+     * @Column(name="Source")
      * @var string
      */
     private $source;
 
     /**
-     * @ORM\Column(type="datetime", name="Date", nullable=True)
+     * @Column(type="datetime", name="Date", nullable=True)
      * @var DateTime
      */
     private $date;
 
     /**
-     * @ORM\Column(name="Place", nullable=True)
+     * @Column(name="Place", nullable=True)
      * @var string
      */
     private $place;
 
     /**
-     * @ORM\Column(name="ContentType", nullable=True)
+     * @Column(name="ContentType", nullable=True)
      * @var string
      */
     private $contentType;
 
     /**
-     * @ORM\Column(name="Location", nullable=True)
+     * @Column(name="Location", nullable=True)
      * @var string
      */
     private $location;
 
     /**
-     * @ORM\Column(name="URL", nullable=True)
+     * @Column(name="URL", nullable=True)
      * @var string
      */
     private $url;
 
     /**
-     * @ORM\Column(name="ThumbnailFileName", nullable=True)
+     * @Column(name="ThumbnailFileName", nullable=True)
      * @var string
      */
     private $thumbnailFileName;
 
     /**
-     * @ORM\Column(name="ImageFileName", nullable=True)
+     * @Column(name="ImageFileName", nullable=True)
      * @var string
      */
     private $imageFileName;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
-     * @ORM\JoinColumn(name="UploadedByUser", referencedColumnName="Id")
+     * @ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @JoinColumn(name="UploadedByUser", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $uploadedBy;
 
     /**
-     * @ORM\Column(type="datetime", name="TimeCreated", nullable=True)
+     * @Column(type="datetime", name="TimeCreated", nullable=True)
      * @var DateTime
      */
     private $created;
 
     /**
-     * @ORM\Column(type="datetime", name="LastModified", nullable=True)
+     * @Column(type="datetime", name="LastModified", nullable=True)
      * @var DateTime
      */
     private $updated;
 
     /**
-     * @ORM\Column(name="Status", nullable=True)
+     * @Column(name="Status", nullable=True)
      * @var string
      */
     private $status;

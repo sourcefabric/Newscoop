@@ -7,13 +7,13 @@
 
 namespace Newscoop\Entity\Comment;
 
-use Doctrine\ORM\Mapping AS ORM;
 use Newscoop\Entity\Publication;
 
 /**
  * Acceptance entity
- * @ORM\Table(name="comment_acceptance")
- * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\Comment\AcceptanceRepository")
+ * @entity
+ * @table(name="comment_acceptance")
+ * @entity(repositoryClass="Newscoop\Entity\Repository\Comment\AcceptanceRepository")
  */
 class Acceptance
 {
@@ -43,40 +43,39 @@ class Acceptance
     );
 
     /**
-     * @ORM\Id 
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @id @generatedValue
+     * @column(type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
-     * @ORM\JoinColumn(name="fk_forum_id", referencedColumnName="Id")
+     * @manyToOne(targetEntity="Newscoop\Entity\Publication")
+     * @joinColumn(name="fk_forum_id", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
     private $forum;
 
     /**
-     * @ORM\Column(type="integer")
+     * @column(type="integer")
      * @var int
      */
     private $for_column;
 
     /**
-     * @ORM\Column(type="integer")
+     * @column(type="integer")
      * @var int
      */
     private $type;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @column(type="string", length=255)
      * @var int
      */
     private $search;
 
     /**
-     * @ORM\Column(type="integer")
+     * @column(type="integer")
      * @var int
      */
     private $search_type;

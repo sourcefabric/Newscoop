@@ -5,7 +5,6 @@ newscoop/newscoop-indexer.lock
 newscoop/.htaccess
 newscoop/conf/configuration.php
 newscoop/conf/database_conf.php
-newscoop/templates_cache/*
 newscoop/system_preferences.php
 newscoop/themes/publication_*
 newscoop/themes/unassigned/empty/

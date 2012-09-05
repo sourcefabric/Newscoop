@@ -7,17 +7,15 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-
 /**
- * @ORM\Entity
- * @ORM\Table(name="AutoId")
+ * @Entity
+ * @Table(name="AutoId")
  */
 class AutoId
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="integer", name="ArticleId")
+     * @Id
+     * @Column(type="integer", name="ArticleId")
      * @var int
      */
     private $articleId;

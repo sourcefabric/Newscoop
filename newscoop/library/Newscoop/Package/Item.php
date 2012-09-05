@@ -8,55 +8,52 @@
 namespace Newscoop\Package;
 
 use Newscoop\Image\LocalImage;
-use Doctrine\ORM\Mapping AS ORM;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="package_item")
+ * @Entity
+ * @Table(name="package_item")
  */
 class Item
 {
     /**
-     * @ORM\Id 
-     * @ORM\Column(type="integer") 
-     * @ORM\GeneratedValue
+     * @Id @Column(type="integer") @GeneratedValue
      * @var int
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Package\Package", inversedBy="items")
+     * @ManyToOne(targetEntity="Newscoop\Package\Package", inversedBy="items")
      * @var Newscoop\Package\Package
      */
     private $package;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Image\LocalImage", inversedBy="items")
-     * @ORM\JoinColumn(referencedColumnName="Id")
+     * @ManyToOne(targetEntity="Newscoop\Image\LocalImage", inversedBy="items")
+     * @JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Image\LocalImage
      */
     private $image;
 
     /**
-     * @ORM\Column(type="integer")
+     * @Column(type="integer")
      * @var int
      */
     private $offset;
 
     /**
-     * @ORM\Column(nullable=True)
+     * @Column(nullable=True)
      * @var string
      */
     private $caption;
 
     /**
-     * @ORM\Column(nullable=True)
+     * @Column(nullable=True)
      * @var string
      */
     private $coords;
 
     /**
-     * @ORM\Column(nullable=True, name="video_url")
+     * @Column(nullable=True, name="video_url")
      * @var string
      */
     private $videoUrl;

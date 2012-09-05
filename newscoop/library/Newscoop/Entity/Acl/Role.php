@@ -7,25 +7,24 @@
 
 namespace Newscoop\Entity\Acl;
 
-use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Role entity
- * @ORM\Entity
- * @ORM\Table(name="acl_role")
+ * @entity
+ * @table(name="acl_role")
  */
 class Role
 {
     /**
-     * @ORM\Id @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @id @generatedValue
+     * @column(type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @ORM\oneToMany(targetEntity="Newscoop\Entity\Acl\Rule", mappedBy="role")
+     * @oneToMany(targetEntity="Newscoop\Entity\Acl\Rule", mappedBy="role")
      */
     private $rules;
 

@@ -7,13 +7,12 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Issue entity
- * @ORM\Entity
- * @ORM\Table(name="Issues", uniqueConstraints={@ORM\UniqueConstraint(name="issues_unique", columns={"IdPublication", "Number", "IdLanguage"})})
+ * @Entity
+ * @Table(name="Issues", uniqueConstraints={@UniqueConstraint(name="issues_unique", columns={"IdPublication", "Number", "IdLanguage"})})
  */
 class Issue
 {
@@ -23,74 +22,73 @@ class Issue
     const NAME = __CLASS__;
 
     /**
-     * @ORM\Id 
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @Id @GeneratedValue
+     * @Column(type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication", inversedBy="issues")
-     * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
+     * @ManyToOne(targetEntity="Newscoop\Entity\Publication", inversedBy="issues")
+     * @JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
     private $publication;
 
     /**
-     * @ORM\Column(type="integer", name="Number")
+     * @Column(type="integer", name="Number")
      * @var int
      */
     private $number;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
-     * @ORM\JoinColumn(name="IdLanguage", referencedColumnName="Id")
+     * @ManyToOne(targetEntity="Newscoop\Entity\Language")
+     * @JoinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
     private $language;
 
     /**
-     * @ORM\Column(name="Name")
+     * @Column(name="Name")
      * @var string
      */
     private $name = '';
 
     /**
-     * @ORM\oneToMany(targetEntity="Newscoop\Entity\Section", mappedBy="issue")
+     * @OneToMany(targetEntity="Newscoop\Entity\Section", mappedBy="issue")
      * @var array
      */
     private $sections;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Template")
-     * @ORM\JoinColumn(name="IssueTplId", referencedColumnName="Id")
+     * @ManyToOne(targetEntity="Newscoop\Entity\Template")
+     * @JoinColumn(name="IssueTplId", referencedColumnName="Id")
      * @var Newscoop\Entity\Template"
      */
     private $template;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Template")
-     * @ORM\JoinColumn(name="SectionTplId", referencedColumnName="Id")
+     * @ManyToOne(targetEntity="Newscoop\Entity\Template")
+     * @JoinColumn(name="SectionTplId", referencedColumnName="Id")
      * @var Newscoop\Entity\Template"
      */
     private $sectionTemplate;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Template")
-     * @ORM\JoinColumn(name="ArticleTplId", referencedColumnName="Id")
+     * @ManyToOne(targetEntity="Newscoop\Entity\Template")
+     * @JoinColumn(name="ArticleTplId", referencedColumnName="Id")
      * @var Newscoop\Entity\Template"
      */
     private $articleTemplate;
 
     /**
-     * @ORM\Column(name="ShortName")
+     * @Column(name="ShortName")
      * @var string
      */
     private $shortName = '';
 
     /**
-    * @ORM\oneToMany(targetEntity="Newscoop\Entity\Output\OutputSettingsIssue", mappedBy="issue")
+    * @OneToMany(targetEntity="Newscoop\Entity\Output\OutputSettingsIssue", mappedBy="issue")
     * @var Newscoop\Entity\Output\OutputSettingsIssue
     */
     private $outputSettingsIssues;

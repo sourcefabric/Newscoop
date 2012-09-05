@@ -7,31 +7,29 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-
 /**
- * @ORM\Entity
- * @ORM\Table(name="user_identity")
+ * @Entity
+ * @Table(name="user_identity")
  */
 class UserIdentity
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="string", length=80)
+     * @Id
+     * @Column(type="string", length=80)
      * @var string
      */
     private $provider;
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="string", length=255)
+     * @Id
+     * @Column(type="string", length=255)
      * @var string
      */
     private $provider_user_id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User", fetch="EAGER")
-     * @ORM\JoinColumn(referencedColumnName="Id")
+     * @ManyToOne(targetEntity="Newscoop\Entity\User", fetch="EAGER")
+     * @JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;

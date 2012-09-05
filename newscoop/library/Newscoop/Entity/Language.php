@@ -8,12 +8,10 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-
 /**
  * Language entity
- * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\LanguageRepository")
- * @ORM\Table(name="Languages")
+ * @entity(repositoryClass="Newscoop\Entity\Repository\LanguageRepository")
+ * @table(name="Languages")
  */
 class Language
 {
@@ -23,260 +21,260 @@ class Language
     const NAME = __CLASS__;
 
     /**
-     * @ORM\Id @ORM\GeneratedValue
-     * @ORM\Column(name="Id", type="integer")
+     * @id @generatedValue
+     * @column(name="Id", type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @ORM\Column(name="Name", nullable=True)
+     * @column(name="Name", nullable=True)
      * @var string
      */
     private $name;
 
     /**
-     * @ORM\Column(name="CodePage", nullable=True)
+     * @column(name="CodePage", nullable=True)
      * @var string
      */
     private $code_page;
 
     /**
-     * @ORM\Column(name="OrigName", nullable=True)
+     * @column(name="OrigName", nullable=True)
      * @var string
      */
     private $original_name;
 
     /**
-     * @ORM\Column(name="Code", nullable=True)
+     * @column(name="Code", nullable=True)
      * @var string
      */
     private $code;
 
     /**
-     * @ORM\Column(name="Month1", nullable=True)
+     * @column(name="Month1", nullable=True)
      * @var string
      */
     private $month1;
 
     /**
-     * @ORM\Column(name="Month2", nullable=True)
+     * @column(name="Month2", nullable=True)
      * @var string
      */
     private $month2;
 
     /**
-     * @ORM\Column(name="Month3", nullable=True)
+     * @column(name="Month3", nullable=True)
      * @var string
      */
     private $month3;
 
     /**
-     * @ORM\Column(name="Month4", nullable=True)
+     * @column(name="Month4", nullable=True)
      * @var string
      */
     private $month4;
 
     /**
-     * @ORM\Column(name="Month5", nullable=True)
+     * @column(name="Month5", nullable=True)
      * @var string
      */
     private $month5;
 
     /**
-     * @ORM\Column(name="Month6", nullable=True)
+     * @column(name="Month6", nullable=True)
      * @var string
      */
     private $month6;
 
     /**
-     * @ORM\Column(name="Month7", nullable=True)
+     * @column(name="Month7", nullable=True)
      * @var string
      */
     private $month7;
 
     /**
-     * @ORM\Column(name="Month8", nullable=True)
+     * @column(name="Month8", nullable=True)
      * @var string
      */
     private $month8;
 
     /**
-     * @ORM\Column(name="Month9", nullable=True)
+     * @column(name="Month9", nullable=True)
      * @var string
      */
     private $month9;
 
     /**
-     * @ORM\Column(name="Month10", nullable=True)
+     * @column(name="Month10", nullable=True)
      * @var string
      */
     private $month10;
 
     /**
-     * @ORM\Column(name="Month11", nullable=True)
+     * @column(name="Month11", nullable=True)
      * @var string
      */
     private $month11;
 
     /**
-     * @ORM\Column(name="Month12", nullable=True)
+     * @column(name="Month12", nullable=True)
      * @var string
      */
     private $month12;
 
     /**
-     * @ORM\Column(name="ShortMonth1", nullable=True)
+     * @column(name="ShortMonth1", nullable=True)
      * @var string
      */
     private $short_month1;
 
     /**
-     * @ORM\Column(name="ShortMonth2", nullable=True)
+     * @column(name="ShortMonth2", nullable=True)
      * @var string
      */
     private $short_month2;
 
     /**
-     * @ORM\Column(name="ShortMonth3", nullable=True)
+     * @column(name="ShortMonth3", nullable=True)
      * @var string
      */
     private $short_month3;
 
     /**
-     * @ORM\Column(name="ShortMonth4", nullable=True)
+     * @column(name="ShortMonth4", nullable=True)
      * @var string
      */
     private $short_month4;
 
     /**
-     * @ORM\Column(name="ShortMonth5", nullable=True)
+     * @column(name="ShortMonth5", nullable=True)
      * @var string
      */
     private $short_month5;
 
     /**
-     * @ORM\Column(name="ShortMonth6", nullable=True)
+     * @column(name="ShortMonth6", nullable=True)
      * @var string
      */
     private $short_month6;
 
     /**
-     * @ORM\Column(name="ShortMonth7", nullable=True)
+     * @column(name="ShortMonth7", nullable=True)
      * @var string
      */
     private $short_month7;
 
     /**
-     * @ORM\Column(name="ShortMonth8", nullable=True)
+     * @column(name="ShortMonth8", nullable=True)
      * @var string
      */
     private $short_month8;
 
     /**
-     * @ORM\Column(name="ShortMonth9", nullable=True)
+     * @column(name="ShortMonth9", nullable=True)
      * @var string
      */
     private $short_month9;
 
     /**
-     * @ORM\Column(name="ShortMonth10", nullable=True)
+     * @column(name="ShortMonth10", nullable=True)
      * @var string
      */
     private $short_month10;
 
     /**
-     * @ORM\Column(name="ShortMonth11", nullable=True)
+     * @column(name="ShortMonth11", nullable=True)
      * @var string
      */
     private $short_month11;
 
     /**
-     * @ORM\Column(name="ShortMonth12", nullable=True)
+     * @column(name="ShortMonth12", nullable=True)
      * @var string
      */
     private $short_month12;
 
     /**
-     * @ORM\Column(name="WDay1", nullable=True)
+     * @column(name="WDay1", nullable=True)
      * @var string
      */
     private $day1;
 
     /**
-     * @ORM\Column(name="WDay2", nullable=True)
+     * @column(name="WDay2", nullable=True)
      * @var string
      */
     private $day2;
 
     /**
-     * @ORM\Column(name="WDay3", nullable=True)
+     * @column(name="WDay3", nullable=True)
      * @var string
      */
     private $day3;
 
     /**
-     * @ORM\Column(name="WDay4", nullable=True)
+     * @column(name="WDay4", nullable=True)
      * @var string
      */
     private $day4;
 
     /**
-     * @ORM\Column(name="WDay5", nullable=True)
+     * @column(name="WDay5", nullable=True)
      * @var string
      */
     private $day5;
 
     /**
-     * @ORM\Column(name="WDay6", nullable=True)
+     * @column(name="WDay6", nullable=True)
      * @var string
      */
     private $day6;
 
     /**
-     * @ORM\Column(name="WDay7", nullable=True)
+     * @column(name="WDay7", nullable=True)
      * @var string
      */
     private $day7;
 
     /**
-     * @ORM\Column(name="ShortWDay1", nullable=True)
+     * @column(name="ShortWDay1", nullable=True)
      * @var string
      */
     private $short_day1;
 
     /**
-     * @ORM\Column(name="ShortWDay2", nullable=True)
+     * @column(name="ShortWDay2", nullable=True)
      * @var string
      */
     private $short_day2;
 
     /**
-     * @ORM\Column(name="ShortWDay3", nullable=True)
+     * @column(name="ShortWDay3", nullable=True)
      * @var string
      */
     private $short_day3;
 
     /**
-     * @ORM\Column(name="ShortWDay4", nullable=True)
+     * @column(name="ShortWDay4", nullable=True)
      * @var string
      */
     private $short_day4;
 
     /**
-     * @ORM\Column(name="ShortWDay5", nullable=True)
+     * @column(name="ShortWDay5", nullable=True)
      * @var string
      */
     private $short_day5;
 
     /**
-     * @ORM\Column(name="ShortWDay6", nullable=True)
+     * @column(name="ShortWDay6", nullable=True)
      * @var string
      */
     private $short_day6;
 
     /**
-     * @ORM\Column(name="ShortWDay7", nullable=True)
+     * @column(name="ShortWDay7", nullable=True)
      * @var string
      */
     private $short_day7;

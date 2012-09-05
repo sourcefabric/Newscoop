@@ -8,7 +8,6 @@
 
 namespace Newscoop\Entity\Output;
 
-use Doctrine\ORM\Mapping AS ORM;
 use Newscoop\Entity\Resource;
 use Newscoop\Entity\Publication;
 use Newscoop\Entity\PublicationTheme;
@@ -20,8 +19,8 @@ use Newscoop\Entity\Theme;
 /**
  * Provides the settings for an output for a theme.
  *
- * @ORM\Entity
- * @ORM\Table(name="output_theme", uniqueConstraints={@ORM\UniqueConstraint(name="publication_themes_idx", columns={"fk_output_id", "fk_publication_id", "fk_theme_path_id"})})
+ * @Entity
+ * @Table(name="output_theme", uniqueConstraints={@UniqueConstraint(name="publication_themes_idx", columns={"fk_output_id", "fk_publication_id", "fk_theme_path_id"})})
  */
 class OutputSettingsTheme extends OutputSettings
 {
@@ -34,15 +33,15 @@ class OutputSettingsTheme extends OutputSettings
 	/* --------------------------------------------------------------- */
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
-	 * @ORM\JoinColumn(name="fk_publication_id", referencedColumnName="Id")
+	 * @ManyToOne(targetEntity="Newscoop\Entity\Publication")
+	 * @JoinColumn(name="fk_publication_id", referencedColumnName="Id")
 	 *  @var Newscoop\Entity\Publication
 	 */
 	private $publication;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Resource")
-	 * @ORM\JoinColumn(name="fk_theme_path_id", referencedColumnName="id")
+	 * @ManyToOne(targetEntity="Newscoop\Entity\Resource")
+	 * @JoinColumn(name="fk_theme_path_id", referencedColumnName="id")
 	 * @var Newscoop\Entity\Resource
 	 */
 	private $themePath;

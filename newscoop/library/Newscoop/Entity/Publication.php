@@ -8,13 +8,12 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Publication entity
- * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\PublicationRepository")
- * @ORM\Table(name="Publications")
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\PublicationRepository")
+ * @Table(name="Publications")
  */
 class Publication
 {
@@ -26,147 +25,147 @@ class Publication
     /* --------------------------------------------------------------- */
 
     /**
-     * @ORM\Id @ORM\GeneratedValue
-     * @ORM\Column(name="Id", type="integer")
+     * @Id @GeneratedValue
+     * @Column(name="Id", type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @ORM\Column(name="Name", nullable=True)
+     * @Column(name="Name", nullable=True)
      * @var string
      */
     private $name;
 
     /**
-     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Language")
-     * @ORM\JoinColumn(name="IdDefaultLanguage", referencedColumnName="Id")
+     * @OneToOne(targetEntity="Newscoop\Entity\Language")
+     * @JoinColumn(name="IdDefaultLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
     private $language;
 
     /**
-     * @ORM\oneToMany(targetEntity="Newscoop\Entity\Issue", mappedBy="publication")
+     * @OneToMany(targetEntity="Newscoop\Entity\Issue", mappedBy="publication")
      * @var array
      */
     private $issues;
 
     /**
-     * @ORM\Column(name="comments_public_enabled", nullable=True)
+     * @column(name="comments_public_enabled", nullable=True)
      * @var bool
      */
     private $public_enabled;
 
     /**
-     * @ORM\Column(name="comments_moderator_to", nullable=True)
+     * @Column(name="comments_moderator_to", nullable=True)
      * @var string
      */
     private $moderator_to;
 
     /**
-     * @ORM\Column(name="comments_moderator_from", nullable=True)
+     * @Column(name="comments_moderator_from", nullable=True)
      * @var string
      */
     private $moderator_from;
 
     /**
-     * @ORM\Column(name="TimeUnit", nullable=True)
+     * @Column(name="TimeUnit", nullable=True)
      * @var string
      */
     private $timeUnit;
 
     /**
-     * @ORM\Column(type="decimal", name="UnitCost", nullable=True)
+     * @Column(type="decimal", name="UnitCost", nullable=True)
      * @var float
      */
     private $unitCost;
 
     /**
-     * @ORM\Column(type="decimal", name="UnitCostAllLang", nullable=True)
+     * @Column(type="decimal", name="UnitCostAllLang", nullable=True)
      * @var float
      */
     private $unitCostAll;
 
     /**
-     * @ORM\Column(name="Currency", nullable=True)
+     * @Column(name="Currency", nullable=True)
      * @var string
      */
     private $currency;
 
     /**
-     * @ORM\Column(type="integer", name="TrialTime", nullable=True)
+     * @Column(type="integer", name="TrialTime", nullable=True)
      * @var int
      */
     private $trialTime;
 
     /**
-     * @ORM\Column(type="integer", name="PaidTime", nullable=True)
+     * @Column(type="integer", name="PaidTime", nullable=True)
      * @var int
      */
     private $paidTime;
 
     /**
-     * @ORM\Column(type="integer", name="IdDefaultAlias", nullable=True)
+     * @Column(type="integer", name="IdDefaultAlias", nullable=True)
      * @var int
      */
     private $defaultAliasId;
 
     /**
-     * @ORM\Column(type="integer", name="IdURLType", nullable=True)
+     * @Column(type="integer", name="IdURLType", nullable=True)
      * @var int
      */
     private $urlTypeId;
 
     /**
-     * @ORM\Column(type="integer", name="fk_forum_id", nullable=True)
+     * @Column(type="integer", name="fk_forum_id", nullable=True)
      * @var int
      */
     private $forumId;
 
     /**
-     * @ORM\Column(type="boolean", name="comments_enabled", nullable=True)
+     * @Column(type="boolean", name="comments_enabled", nullable=True)
      * @var bool
      */
     private $commentsEnabled;
 
     /**
-     * @ORM\Column(type="boolean", name="comments_article_default_enabled", nullable=True)
+     * @Column(type="boolean", name="comments_article_default_enabled", nullable=True)
      * @var bool
      */
     private $commentsArticleDefaultEnabled;
 
     /**
-     * @ORM\Column(type="boolean", name="comments_subscribers_moderated", nullable=True)
+     * @Column(type="boolean", name="comments_subscribers_moderated", nullable=True)
      * @var bool
      */
     private $commentsSubscribersModerated;
 
     /**
-     * @ORM\Column(type="boolean", name="comments_public_moderated", nullable=True)
+     * @Column(type="boolean", name="comments_public_moderated", nullable=True)
      * @var bool
      */
     private $commentsPublicModerated;
 
     /**
-     * @ORM\Column(type="boolean", name="comments_captcha_enabled", nullable=True)
+     * @Column(type="boolean", name="comments_captcha_enabled", nullable=True)
      * @var bool
      */
     private $commentsCaptchaEnabled;
 
     /**
-     * @ORM\Column(type="boolean", name="comments_spam_blocking_enabled", nullable=True)
+     * @Column(type="boolean", name="comments_spam_blocking_enabled", nullable=True)
      * @var bool
      */
     private $commentsSpamBlockingEnabled;
 
     /**
-     * @ORM\Column(type="integer", name="url_error_tpl_id", nullable=True)
+     * @Column(type="integer", name="url_error_tpl_id", nullable=True)
      * @var int
      */
     private $urlErrorTemplateId;
 
     /**
-     * @ORM\Column(nullable=True)
+     * @Column(nullable=True)
      * @var int
      */
     private $seo;

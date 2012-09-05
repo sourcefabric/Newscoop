@@ -7,11 +7,9 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-
 /**
  * Notification entity
- * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\NotificationRepository")
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\NotificationRepository")
  */
 class Notification
 {
@@ -56,25 +54,25 @@ class Notification
     );
 
     /**
-     * @ORM\Id @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @Id @GeneratedValue
+     * @Column(type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @ORM\Column(name="content")
+     * @Column(name="content")
      * @var string
      */
     private $content;
 
     /**
-     * @ORM\Column(type="integer")
+     * @Column(type="integer")
      * @var int
      */
     private $type;
     /**
-     * @ORM\Column(type="integer")
+     * @Column(type="integer")
      * @var string
      */
     private $status;

@@ -7,43 +7,42 @@
 
 namespace Newscoop\Entity\Ingest;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\ORM\Mapping AS ORM;
-use Newscoop\Entity\Ingest\Feed\Entry;
+use Doctrine\Common\Collections\ArrayCollection,
+    Newscoop\Entity\Ingest\Feed\Entry;
 
 /**
- * @ORM\Entity
- * @ORM\Table(name="ingest_feed")
+ * @Entity
+ * @Table(name="ingest_feed")
  */
 class Feed
 {
     /**
-     * @ORM\Id @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @Id @GeneratedValue
+     * @Column(type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @ORM\Column(type="string")
+     * @Column(type="string")
      * @var string
      */
     private $title;
 
     /**
-     * @ORM\Column(type="datetime", nullable=True)
+     * @Column(type="datetime", nullable=True)
      * @var DateTime
      */
     private $updated;
 
     /**
-     * @ORM\Column(type="string")
+     * @Column(type="string")
      * @var string
      */
     private $mode;
 
     /**
-     * @ORM\oneToMany(targetEntity="Newscoop\Entity\Ingest\Feed\Entry", mappedBy="feed", cascade={"persist"})
+     * @OneToMany(targetEntity="Newscoop\Entity\Ingest\Feed\Entry", mappedBy="feed", cascade={"persist"})
      * @var array
      */
     private $entries;

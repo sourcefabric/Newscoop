@@ -7,26 +7,25 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
-use Doctrine\Common\Collections\ArrayCollection;
-use Newscoop\Utils\Validation;
+use Doctrine\Common\Collections\ArrayCollection,
+    Newscoop\Utils\Validation;
 
 /**
  * Issue entity
- * @ORM\Entity
- * @ORM\Table(name="ArticleTypeMetadata")
+ * @Entity
+ * @Table(name="ArticleTypeMetadata")
  */
 class ArticleType
 {
     /**
-     * @ORM\Id
-     * @ORM\Column(type="string",unique=true,name="type_name")
+     * @Id
+     * @Column(type="string",unique=true,name="type_name")
      */
     private $name;
 
     /**
-     * @ORM\Id
-     * @ORM\Column(type="string",unique=true,name="field_name")
+     * @Id
+     * @Column(type="string",unique=true,name="field_name")
      *
      * TODO MASSIVE ALERT HERE! WE HAVE THE STRING: NULL FOR NULL VALUES FROM LEGACY!!!...
      */

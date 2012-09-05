@@ -7,7 +7,6 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
 use Newscoop\Utils\Validation;
 use Newscoop\Entity\Entity;
 use Newscoop\Entity\Theme;
@@ -15,8 +14,8 @@ use Newscoop\Entity\Theme;
 /**
  * Provides the output based on the client agent.
  * 
- * @ORM\Entity
- * @ORM\Table(name="output")
+ * @Entity
+ * @Table(name="output")
  */
 class Output extends Entity
 {
@@ -29,7 +28,7 @@ class Output extends Entity
 	/* --------------------------------------------------------------- */
 	
 	/**
-	 * @ORM\Column(name="name", unique=TRUE, nullable=FALSE)
+	 * @Column(name="name", unique=TRUE, nullable=FALSE)
 	 * @var string
 	 */
 	private $name;

@@ -14,7 +14,7 @@ use Doctrine\ORM\Mapping\ClassMetadataFactory,
  */
 abstract class RepositoryTestCase extends \PHPUnit_Framework_TestCase
 {
-    /** @var Newscoop\Doctrine\Registry */
+    /** @var Newscoop\Doctrine\Doctrine */
     protected $doctrine;
 
     /** @var Doctrine\ORM\EntityManager */

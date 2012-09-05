@@ -8,7 +8,6 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\ORM\Mapping AS ORM;
 use Newscoop\Utils\Validation;
 use Newscoop\Entity\Entity;
 use Newscoop\Entity\Theme;
@@ -17,8 +16,8 @@ use Newscoop\Entity\Theme;
  * Provides the contections of database entries with file system or external resources.
  * The resources can be from the database or from the file system so whenever checking resources for equality use the path property.
  *
- * @ORM\Entity
- * @ORM\Table(name="resource")
+ * @Entity
+ * @Table(name="resource")
  */
 class Resource extends Entity
 {
@@ -30,12 +29,12 @@ class Resource extends Entity
     /* --------------------------------------------------------------- */
 
     /**
-     * @ORM\Column(name="name", nullable=FALSE)
+     * @Column(name="name", nullable=FALSE)
      * @var string
      */
     private $name;
     /**
-     * @ORM\Column(name="path", unique=TRUE, nullable=FALSE)
+     * @Column(name="path", unique=TRUE, nullable=FALSE)
      * @var string
      */
     private $path;

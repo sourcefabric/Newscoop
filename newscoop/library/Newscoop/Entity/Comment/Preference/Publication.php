@@ -7,72 +7,71 @@
 
 namespace Newscoop\Entity\Comment\Preference;
 
-use Doctrine\ORM\Mapping AS ORM;
 /**
  * Publication entity
- * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\Comment\Preference\PublicationRepository")
- * @ORM\Table(name="comment_preference_publication")
+ * @Entity(repositoryClass="Newscoop\Entity\Repository\Comment\Preference\PublicationRepository")
+ * @Table(name="comment_preference_publication")
  */
 class Publication
 {
     /**
-     * @ORM\Id
-     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Publication")
-     * @ORM\JoinColumn(name="id", referencedColumnName="Id")
+     * @Id
+     * @oneToOne(targetEntity="Newscoop\Entity\Publication")
+     * @joinColumn(name="id", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
     private $id;
 
     /**
-     * @ORM\Column(name="enabled")
+     * @column(name="enabled")
      * @var bool
      */
     private $enabled;
 
     /**
-     * @ORM\Column(name="article_default_enabled")
+     * @column(name="article_default_enabled")
      * @var bool
      */
     private $article_default_enabled;
 
     /**
-     * @ORM\Column(name="subscribers_moderated")
+     * @column(name="subscribers_moderated")
      * @var bool
      */
     private $subscribers_moderated;
 
     /**
-     * @ORM\Column(name="public_moderated")
+     * @column(name="public_moderated")
      * @var bool
      */
     private $public_moderated;
 
     /**
-     * @ORM\Column(name="public_enabled")
+     * @column(name="public_enabled")
      * @var bool
      */
     private $public_enabled;
 
     /**
-     * @ORM\Column(name="captcha_enabled")
+     * @column(name="captcha_enabled")
      * @var bool
      */
     private $captcha_enabled;
 
     /**
-     * @ORM\Column(name="spam_blocking_enabled")
+     * @column(name="spam_blocking_enabled")
      * @var bool
      */
     private $spam_blocking_enabled;
 
     /**
-     * @ORM\Column(name="moderator_to")
+     * @column(name="moderator_to")
      * @var string
      */
     private $moderator_to;
 
     /**
-     * @ORM\Column(name="moderator_from")
+     * @column(name="moderator_from")
      * @var string
      */
     private $moderator_from;

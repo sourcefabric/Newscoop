@@ -142,7 +142,7 @@ class ListUserService
      */
     public function findEditors($limit = NULL, $offset = NULL)
     {
-        return $this->getRepository()->findEditors($this->config['role'], $limit, $offset);
+        return $this->getRepository()->findEditors($this->config['blog']['role'], $limit, $offset);
     }
 
     /**
@@ -152,7 +152,7 @@ class ListUserService
      */
     public function getEditorsCount()
     {
-        return $this->getRepository()->getEditorsCount($this->config['role']);
+        return $this->getRepository()->getEditorsCount($this->config['blog']['role']);
     }
 
     /**

@@ -7,58 +7,58 @@
 
 namespace Newscoop\Entity\Comment;
 
-use DateTime;
-use Newscoop\Entity\User;
-use Doctrine\ORM\Mapping AS ORM;
+use DateTime,
+    Newscoop\Entity\User;
 
 /**
  * Commenter entity
- * @ORM\Table(name="comment_commenter")
- * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\Comment\CommenterRepository")
+ * @entity
+ * @table(name="comment_commenter")
+ * @entity(repositoryClass="Newscoop\Entity\Repository\Comment\CommenterRepository")
  */
 class Commenter
 {
 
     /**
-     * @ORM\Id @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
+     * @id @generatedValue
+     * @column(type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User", inversedBy="commenters")
-     * @ORM\JoinColumn(name="fk_user_id", referencedColumnName="Id")
+     * @manyToOne(targetEntity="Newscoop\Entity\User", inversedBy="commenters")
+     * @joinColumn(name="fk_user_id", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;
 
     /**
-     * @ORM\Column(length=100)
+     * @column(length=100)
      * @var string
      */
     private $name;
 
     /**
-     * @ORM\Column(length=100)
+     * @column(length=100)
      * @var string
      */
     private $email;
 
     /**
-     * @ORM\Column(length=255)
+     * @column(length=255)
      * @var string
      */
     private $url;
 
     /**
-     * @ORM\Column(length=39)
+     * @column(length=39)
      * @var int
      */
     private $ip;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @column(type="datetime")
      * @var DateTime
      */
     private $time_created;
@@ -66,7 +66,7 @@ class Commenter
     /**
      * Bidirectional - One-To-Many (INVERSE SIDE)
      *
-     * @ORM\oneToMany(targetEntity="Newscoop\Entity\Comment", mappedBy="commenter", cascade={"persist", "remove"})
+     * @OneToMany(targetEntity="Newscoop\Entity\Comment", mappedBy="commenter", cascade={"persist", "remove"})
      */
     private $comments;
 
