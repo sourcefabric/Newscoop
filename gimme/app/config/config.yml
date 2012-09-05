@@ -35,7 +35,6 @@ fos_rest:
     format_listener:
         default_priorities:
             - json
-            - html
         fallback_format: json
         prefer_extension: true
     exception:

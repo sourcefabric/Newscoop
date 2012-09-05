@@ -11,7 +11,6 @@ namespace Newscoop\GimmeBundle\Controller;
 use Newscoop\GimmeBundle\Util\ExceptionWrapper;
 use FOS\RestBundle\Controller\ExceptionController as FOSExceptionController;
 use FOS\RestBundle\View\ViewHandler;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\FlattenException;
 use Symfony\Component\HttpKernel\Log\DebugLoggerInterface;
 
@@ -36,18 +35,5 @@ class ExceptionController extends FOSExceptionController
         );
 
         return $parameters;
-    }
-
-    /**
-     * Determine the format to use for the response
-     *
-     * @param Request $request Request instance
-     * @param string  $format  The format to use for rendering (html, xml, ...)
-     *
-     * @return string Encoding format
-     */
-    protected function getFormat(Request $request, $format)
-    {
-        return 'json';
     }
 }
