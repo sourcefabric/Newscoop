@@ -7,6 +7,9 @@ use JMS\SerializerBundle\DependencyInjection\JMSSerializerExtension;
 use Newscoop\GimmeBundle\DependencyInjection\Factory\ArticleAuthorHandlerFactory;
 use Newscoop\GimmeBundle\DependencyInjection\Factory\ArticleCommentsLinkHandlerFactory;
 use Newscoop\GimmeBundle\DependencyInjection\Factory\AuthorImageUriHandlerFactory;
+use Newscoop\GimmeBundle\DependencyInjection\Factory\PackageItemsLinkHandlerFactory;
+use Newscoop\GimmeBundle\DependencyInjection\Factory\ItemLinkHandlerFactory;
+use Newscoop\GimmeBundle\DependencyInjection\Factory\TopicArticlesLinkHandlerFactory;
 
 class NewscoopGimmeBundle extends Bundle
 {
@@ -15,5 +18,8 @@ class NewscoopGimmeBundle extends Bundle
         $ext->addHandlerFactory(new ArticleAuthorHandlerFactory());  
         $ext->addHandlerFactory(new ArticleCommentsLinkHandlerFactory());
         $ext->addHandlerFactory(new AuthorImageUriHandlerFactory());
+        $ext->addHandlerFactory(new PackageItemsLinkHandlerFactory());
+        $ext->addHandlerFactory(new ItemLinkHandlerFactory());
+        $ext->addHandlerFactory(new TopicArticlesLinkHandlerFactory());
     }  
 }

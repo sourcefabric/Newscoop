@@ -12,3 +12,13 @@ NewscoopGimmeBundleComments:
     resource: "@NewscoopGimmeBundle/Controller/CommentsController.php"
     prefix:   /
     type:     annotation
+
+NewscoopGimmeBundleSlideshows:
+    resource: "@NewscoopGimmeBundle/Controller/SlideshowsController.php"
+    prefix:   /
+    type:     annotation
+
+NewscoopGimmeBundleTopics:
+    resource: "@NewscoopGimmeBundle/Controller/TopicsController.php"
+    prefix:   /
+    type:     annotation

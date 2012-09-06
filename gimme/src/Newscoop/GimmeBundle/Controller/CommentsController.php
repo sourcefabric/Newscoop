@@ -26,6 +26,8 @@ class CommentsController extends FOSRestController
         $em = $this->container->get('em');
         $serializer = $this->get('serializer');
         $serializer->setGroups(array('list'));
+        $paginatorService = $this->get('newscoop.paginator.paginator_service');
+        $paginatorService->setUsedRouteParams(array('number' => $number, 'language' => $language));
 
         $article = $em->getRepository('Newscoop\Entity\Article')
             ->getArticle($number, $language)

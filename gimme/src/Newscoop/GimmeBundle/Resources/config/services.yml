@@ -43,3 +43,12 @@ services:
     newscoop.gimme.serializer.author_image_uri_handler:
         class: Newscoop\GimmeBundle\Serializer\Author\ImageUriHandler
         arguments:  ["@image", "@zend_router", "@newscoop.publication_service"]
+    newscoop.gimme.serializer.package_items_link_handler:
+        class: Newscoop\GimmeBundle\Serializer\Package\ItemsLinkHandler
+        arguments:  ["@router"]
+    newscoop.gimme.serializer.item_link_handler:
+        class: Newscoop\GimmeBundle\Serializer\Item\LinkHandler
+        arguments:  ["@image", "@zend_router", "@newscoop.publication_service"]
+    newscoop.gimme.serializer.topic_articles_link_handler:
+        class: Newscoop\GimmeBundle\Serializer\Topic\ArticlesLinkHandler
+        arguments:  ["@em", "@router"]

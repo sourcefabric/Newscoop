@@ -11,7 +11,7 @@ use Newscoop\Image\LocalImage;
 use Doctrine\ORM\Mapping AS ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Newscoop\Package\ItemRepository")
  * @ORM\Table(name="package_item")
  */
 class Item
@@ -60,6 +60,18 @@ class Item
      * @var string
      */
     private $videoUrl;
+
+    /**
+     * Item type used by Newscoop API
+     * @var string
+     */
+    private $type;
+
+    /**
+     * Item link used by Newscoop API
+     * @var string
+     */
+    private $link;
 
     /**
      * @param Newscoop\Package\Package $package
@@ -234,5 +246,47 @@ class Item
     public function getPackageId()
     {
         return $this->package->getId();
+    }
+
+    /**
+     * Set Item type
+     * @param string $type "video" or "image"
+     */
+    public function setType($type)
+    {
+        $this->type = $type;
+    }
+
+    /**
+     * Get Item type
+     * @return string "video" or "image"
+     */
+    public function getType()
+    {
+        if ($this->videoUrl) {
+            return 'video';
+        } else if ($this->image){
+            return 'image';
+        }
+        
+        return null;
+    }
+
+    /**
+     * Set link for Item resource
+     * @param string $link Link to resource
+     */
+    public function setLink($link)
+    {
+        $this->link = $link;
+    }
+
+    /**
+     * Get link for Item resource
+     * @return string $link Link to resource
+     */
+    public function getLink()
+    {
+        return $this->link;
     }
 }

@@ -216,6 +216,20 @@ class Article
     private $lockUser;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Topic")
+     * @ORM\JoinTable(name="ArticleTopics",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="NrArticle", referencedColumnName="Number")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="TopicId", referencedColumnName="fk_topic_id")
+     *      }
+     *  )
+     * @var Newscoop\Entity\Topic
+     */
+    private $topics;
+
+    /**
      * @ORM\Column(type="datetime", name="LockTime", nullable=True)
      * @var DateTime
      */
@@ -232,6 +246,20 @@ class Article
      * @var int
      */
     private $objectId;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Package\Package")
+     * @ORM\JoinTable(name="package_article_package",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="article_id", referencedColumnName="Number")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="package_id", referencedColumnName="id")
+     *      }
+     *  )
+     * @var Newscoop\Package\Package
+     */
+    private $packages;
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Webcode")
@@ -528,5 +556,28 @@ class Article
         }
 
         return $this->articleAuthors;
-    }    
+    }
+
+    /**
+     * Set Packages
+     * $packages
+     */
+    public function setPackages($packages)
+    {
+        $this->packages = $packages;
+    }
+
+    /**
+     * Get packages
+     *
+     * @return object
+     */
+    public function getPackages()
+    {
+        if (count($this->packages) == 0) {
+            return null;
+        }
+        
+        return $this->packages;
+    }
 }

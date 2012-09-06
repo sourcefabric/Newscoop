@@ -77,7 +77,9 @@ class ArticleRepository extends DatatableSource
         $em = $this->getEntityManager();
 
         $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
-            ->createQueryBuilder('a');
+            ->createQueryBuilder('a')
+            ->select('a', 'p')
+            ->leftJoin('a.packages', 'p');
 
         $queryBuilder->where('a.number = :number')
             ->setParameter('number', $number);
@@ -91,6 +93,32 @@ class ArticleRepository extends DatatableSource
         }
 
         $query = $queryBuilder->getQuery();
+        
+        return $query;
+    }
+
+    public function getArticlesForTopic($publication, $topicId)
+    {
+        $em = $this->getEntityManager();
+
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a')
+            ->select('a', 'att')
+            ->where('att.id = :topicId')
+            ->join('a.topics', 'att')
+            ->setParameter('topicId', $topicId);
+
+        $countQueryBuilder = $em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a')
+            ->select('count(a)')
+            ->where('att.id = :topicId')
+            ->join('a.topics', 'att')
+            ->setParameter('topicId', $topicId);
+
+        $articlesCount = $countQueryBuilder->getQuery()->getSingleScalarResult();
+
+        $query = $queryBuilder->getQuery();
+        $query->setHint('knp_paginator.count', $articlesCount);
         
         return $query;
     }

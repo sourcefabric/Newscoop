@@ -34,7 +34,12 @@ Newscoop\Entity\Article:
         comments_link:
             expose: true
             read_only: true
-            type: string
             groups: ["list", "details"]
             type: comments_link
             serialized_name: comments
+        packages:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            access_type: public_method
+            serialized_name: slideshow
