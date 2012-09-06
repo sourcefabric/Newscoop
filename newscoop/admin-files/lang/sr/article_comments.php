@@ -1,4 +1,5 @@
 <?php 
+regGS("Recommended", "");
 regGS("Unrecommend", "Непрепоручен");
 regGS("Save comment", "Сними коментар");
 regGS("Recommend", "Препоручен");

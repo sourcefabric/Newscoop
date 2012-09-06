@@ -209,19 +209,19 @@ $('.save-button-bar input').click(function() {
             unlockArticle('close');
         }
     } else if ($(this).attr('id') == 'close') {
+        var redirect = '<?php if ($f_publication_id > 0 && $f_issue_number > 0 && $f_section_number > 0) {
+                                echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number";                              } else if ($f_publication_id > 0) {
+                                echo "/$ADMIN/pending_articles/index.php";
+                              } else {
+                                echo "/$ADMIN/";
+                              } ?>'; 
         callServer(['Article', 'setIsLocked'], [
         <?php echo $f_language_selected; ?>,
         <?php echo $articleObj->getArticleNumber(); ?>,
         0,
-        <?php echo $g_user->getUserId(); ?>]);
-        window.location.href = '<?php if ($f_publication_id > 0 && $f_issue_number > 0 && $f_section_number > 0) {
-            echo "/$ADMIN/articles/index.php?f_publication_id=$f_publication_id&f_issue_number=$f_issue_number&f_language_id=$f_language_id&f_section_number=$f_section_number";
-        } else if ($f_publication_id > 0) {
-            echo "/$ADMIN/pending_articles/index.php";
-        } else {
-            echo "/$ADMIN/";
-        }
-        ?>';
+        <?php echo $g_user->getUserId(); ?>], function() {
+            window.location.href = redirect;
+        });
         return false;
     } else if ($(this).attr('id') == 'save') {
         save_and_close = false;

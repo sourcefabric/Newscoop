@@ -181,10 +181,10 @@ class SystemPref {
      *
      * @return bool
      */
-    public static function CollectStatistics()
+    public static function CollectStatisticsAuto()
     {
         return (self::Get("CollectStatistics") == 'Y');
-    } // fn CollectStatistics
+    } // fn CollectStatisticsAuto
 
 } // class SystemPref
 

@@ -702,7 +702,7 @@ class Admin_ThemesController extends Zend_Controller_Action
 		    }
         }
         catch( DuplicateNameException $e ) {
-            $this->view->exception = array( "code" => $e->getCode(), "message" => getGS( 'Duplicate assignation' ) );
+            $this->view->exception = array( "code" => $e->getCode(), "message" => getGS( 'Duplicate assignment' ) );
         }
         catch( \Exception $e ) {
             $this->view->exception = array( "code" => $e->getCode(), "message" => getGS( 'Something broke' ) );
@@ -718,7 +718,7 @@ class Admin_ThemesController extends Zend_Controller_Action
         } catch (DuplicateNameException $e) {
             $this->view->exception = array(
                 'code' => $e->getCode(),
-                'message' => getGS('Duplicate assignation'),
+                'message' => getGS('Duplicate assignment'),
             );
         } catch(\Exception $e) {
             $this->view->exception = array(
