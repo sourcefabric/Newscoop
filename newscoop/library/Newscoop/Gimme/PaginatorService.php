@@ -209,7 +209,7 @@ class PaginatorService {
 
         $data = array();
 
-        if ($paginationData['current'] < $paginationData['lastPageInRange']-1) {
+        if ($paginationData['current'] < $paginationData['lastPageInRange']) {
             $this->routeParams['page'] = $paginationData['current'] + 1;
             $data['nextPageLink'] = $this->router->generate($this->route, $this->routeParams, true);
         }

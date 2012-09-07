@@ -16,6 +16,28 @@ use Doctrine\ORM\EntityRepository,
  */
 class SectionRepository extends EntityRepository
 {
+    public function getSections($publication)
+    {
+        $em = $this->getEntityManager();
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Section')
+            ->createQueryBuilder('s')
+            ->where('s.publication = :publication')
+            ->setParameter('publication', $publication);
+
+        $countQueryBuilder = $em->getRepository('Newscoop\Entity\Section')
+            ->createQueryBuilder('s')
+            ->select('count(s)')
+            ->where('s.publication = :publication')
+            ->setParameter('publication', $publication);
+
+        $count = $countQueryBuilder->getQuery()->getSingleScalarResult();
+
+        $query = $queryBuilder->getQuery();
+        $query->setHint('knp_paginator.count', $count);
+        
+        return $query;
+    }
+
     /**
      * Get list of publication sections
      *

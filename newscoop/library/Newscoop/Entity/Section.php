@@ -22,7 +22,8 @@ class Section
     const NAME = __CLASS__;
 
     /**
-     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Id 
+     * @ORM\GeneratedValue
      * @ORM\Column(name="id", type="integer")
      * @var int
      */
@@ -74,6 +75,32 @@ class Section
      * @var Newscoop\Entity\Template"
      */
     private $articleTemplate;
+
+    /**
+     * Link to topic articles resource
+     * @var string
+     */
+    private $articlesLink;
+    
+    /**
+     * Set link to topic articles resource
+     * @param string $articlesLink Link to topic articles resource
+     */
+    public function setArticlesLink($articlesLink)
+    {
+        $this->articlesLink = $articlesLink;
+
+        return $this;
+    }
+
+    /**
+     * Get link to topic articles resource
+     * @return string Link to topic articles resource
+     */
+    public function getArticlesLink()
+    {
+        return $this->articlesLink;
+    }
 
     /**
      * @param int $number

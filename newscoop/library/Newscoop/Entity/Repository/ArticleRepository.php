@@ -122,4 +122,54 @@ class ArticleRepository extends DatatableSource
         
         return $query;
     }
+
+    public function getArticlesForSection($publication, $sectionId)
+    {
+        $em = $this->getEntityManager();
+
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a')
+            ->select('a')
+            ->where('a.section = :sectionId')
+            ->setParameter('sectionId', $sectionId);
+
+        $countQueryBuilder = $em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a')
+            ->select('count(a)')
+            ->where('a.section = :sectionId')
+            ->setParameter('sectionId', $sectionId);
+
+        $articlesCount = $countQueryBuilder->getQuery()->getSingleScalarResult();
+
+        $query = $queryBuilder->getQuery();
+        $query->setHint('knp_paginator.count', $articlesCount);
+        
+        return $query;
+    }
+
+    public function getArticlesForPlaylist($publication, $playlistId)
+    {
+        $em = $this->getEntityManager();
+
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a')
+            ->select('a', 'ap')
+            ->where('ap.id = :playlistId')
+            ->join('a.playlists', 'ap')
+            ->setParameter('playlistId', $playlistId);
+
+        $countQueryBuilder = $em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a')
+            ->select('count(a)')
+            ->where('ap.id = :playlistId')
+            ->join('a.playlists', 'ap')
+            ->setParameter('playlistId', $playlistId);
+
+        $articlesCount = $countQueryBuilder->getQuery()->getSingleScalarResult();
+
+        $query = $queryBuilder->getQuery();
+        $query->setHint('knp_paginator.count', $articlesCount);
+        
+        return $query;
+    }
 }

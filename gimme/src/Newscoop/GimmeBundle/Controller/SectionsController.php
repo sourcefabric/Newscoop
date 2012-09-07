@@ -15,40 +15,41 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class TopicsController extends FOSRestController
+class SectionsController extends FOSRestController
 {
     /**
-     * @Route("/topics.{_format}", defaults={"_format"="json"})
+     * @Route("/sections.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View()
      */
-    public function getTopicsAction(Request $request)
+    public function getSectionsAction(Request $request)
     {
         $em = $this->container->get('em');
+        $publication = $this->get('newscoop.publication_service')->getPublication()->getId();
         $serializer = $this->get('serializer');
         $serializer->setGroups(array('list'));
 
-        $topics = $em->getRepository('Newscoop\Entity\Topic')
-            ->getTopics();
+        $sections = $em->getRepository('Newscoop\Entity\Section')
+            ->getSections($publication);
 
-        if (!$topics) {
+        if (!$sections) {
             throw new NotFoundHttpException('Result was not found.');
         }
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
-        $topics = $paginator->paginate($topics, array(
+        $sections = $paginator->paginate($sections, array(
             'distinct' => false
         ));
 
-        return $topics;
+        return $sections;
     }
 
     /**
-     * @Route("/topics/{id}/{language}/articles.{_format}", defaults={"_format"="json"})
+     * @Route("/sections/{number}/{language}/articles.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View()
      */
-    public function getTopicsArticlesAction(Request $request, $id, $language)
+    public function getSectionsArticlesAction(Request $request, $number, $language)
     {
         $em = $this->container->get('em');
         $publication = $this->get('newscoop.publication_service')->getPublication()->getId();
@@ -56,23 +57,24 @@ class TopicsController extends FOSRestController
         $serializer->setGroups(array('list'));
 
         $paginatorService = $this->get('newscoop.paginator.paginator_service');
-        $paginatorService->setUsedRouteParams(array('id' => $id, 'language' => $language));
+        $paginatorService->setUsedRouteParams(array('number' => $number, 'language' => $language));
 
         $language = $em->getRepository('Newscoop\Entity\Language')
                 ->findOneByCode($language);
 
-        $topic = $em->getRepository('Newscoop\Entity\Topic')
+        $section = $em->getRepository('Newscoop\Entity\Section')
             ->findOneBy(array(
-                'id' => $id, 
-                'language' => $language->getId()
+                'number' => $number,
+                'language' => $language,
+                'publication' => $publication
             ));
 
-        if (!$topic) {
+        if (!$section) {
             throw new NotFoundHttpException('Result was not found.');
         }
 
         $articles = $em->getRepository('Newscoop\Entity\Article')
-            ->getArticlesForTopic($publication, $id);
+            ->getArticlesForSection($publication, $number);
 
         $paginator = $this->get('newscoop.paginator.paginator_service');
         $articles = $paginator->paginate($articles, array(
@@ -80,8 +82,8 @@ class TopicsController extends FOSRestController
         ));
 
         $allItems = array_merge(array(
-            'id' => $topic->getTopicId(),
-            'title' => $topic->getName(),
+            'id' => $section->getId(),
+            'title' => $section->getName(),
         ), $articles);
 
         return $allItems;

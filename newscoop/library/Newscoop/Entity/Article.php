@@ -230,6 +230,20 @@ class Article
     private $topics;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Playlist")
+     * @ORM\JoinTable(name="playlist_article",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="article_no", referencedColumnName="Number")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="id_playlist", referencedColumnName="id_playlist")
+     *      }
+     *  )
+     * @var Newscoop\Entity\Playlist
+     */
+    private $playlists;
+
+    /**
      * @ORM\Column(type="datetime", name="LockTime", nullable=True)
      * @var DateTime
      */
