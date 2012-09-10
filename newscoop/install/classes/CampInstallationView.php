@@ -210,13 +210,6 @@ final class CampInstallationView
 			'exists' => $zendFramework
 		);
 
-		$adoDb = CampInstallationViewHelper::CheckAdoDb();
-		$success = ($adoDb == 'Yes') ? $success : false;
-        $libraryRequirements[] = array(
-			'tag' => 'AdoDB',
-			'exists' => $adoDb
-		);
-
 		$smarty = CampInstallationViewHelper::CheckSmarty();
         $success = ($smarty == 'Yes') ? $success : false;
         $libraryRequirements[] = array(

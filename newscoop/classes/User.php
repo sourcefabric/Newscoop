@@ -624,8 +624,8 @@ class User extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr = "SELECT PASSWORD('".$g_ado_db->escape($p_password)."') AS old_password_1, "
-                    ." OLD_PASSWORD('".$g_ado_db->escape($p_password)."') AS old_password_2"
+        $queryStr = "SELECT PASSWORD(".$g_ado_db->escape($p_password).") AS old_password_1, "
+                    ." OLD_PASSWORD(".$g_ado_db->escape($p_password).") AS old_password_2"
                     ." FROM liveuser_users "
                     ." WHERE Id = '".$this->m_data['Id']."' ";
         if (!($row = $g_ado_db->GetRow($queryStr))) {
@@ -656,7 +656,7 @@ class User extends DatabaseObject {
         global $g_ado_db;
 
         if (!$p_isEncrypted) {
-            $queryStr = "SELECT SHA1('".$g_ado_db->escape($p_password)."') as encrypted_password "
+            $queryStr = "SELECT SHA1(".$g_ado_db->escape($p_password).") as encrypted_password "
                        ."FROM liveuser_users "
                        ."WHERE Id = '".$this->m_data['Id']."' ";
             $encryptedPassword = $g_ado_db->GetOne($queryStr);
@@ -685,7 +685,7 @@ class User extends DatabaseObject {
     {
         global $g_ado_db;
 
-        $queryStr = "SELECT SHA1('".$g_ado_db->escape($p_password)."') AS PWD";
+        $queryStr = "SELECT SHA1(".$g_ado_db->escape($p_password).") AS PWD";
         $row = $g_ado_db->GetRow($queryStr);
         $this->setProperty('Password', $row['PWD'], $p_commit);
         $this->setProperty('password_reset_token','');
@@ -727,7 +727,7 @@ class User extends DatabaseObject {
         global $g_ado_db;
 
         $sql = "SELECT UName FROM liveuser_users "
-              ."WHERE UName='".$g_ado_db->escape($p_userName)."'";
+              ."WHERE UName=".$g_ado_db->escape($p_userName);
         if ($g_ado_db->GetOne($sql)) {
             return true;
         } else {
@@ -752,7 +752,7 @@ class User extends DatabaseObject {
         global $g_ado_db;
 
         $sql = "SELECT UName, EMail FROM liveuser_users "
-              ."WHERE EMail = '".$g_ado_db->escape($p_email)."'";
+              ."WHERE EMail = ".$g_ado_db->escape($p_email);
         $row = $g_ado_db->GetOne($sql);
         if (!$row) {
             return false;
