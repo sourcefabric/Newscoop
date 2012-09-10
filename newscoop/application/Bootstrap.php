@@ -185,6 +185,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
                      'subscription-ip-rest',
                  ),
              )));
+
+        $router->addRoute(
+            'author',
+            new Zend_Controller_Router_Route(
+                'author/:author',
+                array(
+                    'module' => 'default',
+                    'controller' => 'author',
+                    'action' => 'profile',
+                )
+            )
+        );
     }
 
     protected function _initActionHelpers()
