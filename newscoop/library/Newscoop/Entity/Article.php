@@ -282,7 +282,7 @@ class Article
     private $packages;
 
     /**
-     * Article Renditions used by Newscoop API
+     * Article renditions used by Newscoop API
      * @var array
      */
     private $renditions;
@@ -596,9 +596,9 @@ class Article
     }
 
     /**
-     * Test if article has webcode
+     * Set Keywords
      *
-     * @return bool
+     * $keywords
      */
     public function setKeywords($keywords)
     {

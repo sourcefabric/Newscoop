@@ -50,13 +50,13 @@ class RenditionsHandler implements SerializationHandlerInterface
                 'src' => $imageSrc
             ), 'image');
 
-            $temp[] = array(
+            $media[] = array(
                 'caption' => $renditionName,
                 'type' => 'image',
                 'link' => $imageUri
             );
         }
 
-        $data->setRenditions($temp);
+        $data->setRenditions($media);
     }
 }

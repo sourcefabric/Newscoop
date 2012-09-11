@@ -13,7 +13,7 @@ use Symfony\Component\Config\Definition\Builder\ArrayNodeDefinition;
 use JMS\SerializerBundle\DependencyInjection\HandlerFactoryInterface;  
 
 /**
- * Handler for simple author object in article
+ * Handler for fields in article
  */
 class ArticleFieldsHandlerFactory implements HandlerFactoryInterface  
 {  

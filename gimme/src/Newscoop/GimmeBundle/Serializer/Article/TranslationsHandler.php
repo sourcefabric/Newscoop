@@ -12,7 +12,7 @@ use JMS\SerializerBundle\Serializer\VisitorInterface;
 use JMS\SerializerBundle\Serializer\Handler\SerializationHandlerInterface;
 
 /**
- * Create simple Author object from Newscoop\Entity\Author object.
+ * Create Article translations array.
  */
 class TranslationsHandler implements SerializationHandlerInterface
 {

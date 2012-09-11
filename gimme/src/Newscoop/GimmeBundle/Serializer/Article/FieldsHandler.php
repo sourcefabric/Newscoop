@@ -12,7 +12,7 @@ use JMS\SerializerBundle\Serializer\VisitorInterface;
 use JMS\SerializerBundle\Serializer\Handler\SerializationHandlerInterface;
 
 /**
- * Create simple Author object from Newscoop\Entity\Author object.
+ * Create array of Article type fields.
  */
 class FieldsHandler implements SerializationHandlerInterface
 {
@@ -26,17 +26,16 @@ class FieldsHandler implements SerializationHandlerInterface
         $GLOBALS['g_campsiteDir'] = realpath(__DIR__ . '/../../../../../../newscoop/');
 
         $articleData = new \ArticleData($data->getType(), $data->getNumber(), $data->getLanguageId());
-
         if(count($articleData->getUserDefinedColumns()) == 0) {
-            $data->SetFields(null);
+            $data->setFields(null);
             return;
         }
 
-        $temp = array();
+        $fields = array();
         foreach($articleData->getUserDefinedColumns() as $column) {
-            $temp[$column->getPrintName()] = $articleData->getFieldValue($column->getPrintName());
+            $fields[$column->getPrintName()] = $articleData->getFieldValue($column->getPrintName());
         }
 
-        $data->setFields($temp);
+        $data->setFields($fields);
     }
 }
