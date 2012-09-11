@@ -44,7 +44,6 @@
         "classmap":[
             "vendor/Smarty3/libs", 
             "newscoop/classes",
-            "dependencies/include/adodb",
             "newscoop/template_engine",
             "newscoop/plugins"
         ]
