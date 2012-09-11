@@ -67,10 +67,12 @@ class ArticlesController extends FOSRestController
 
         $article = $em->getRepository('Newscoop\Entity\Article')
             ->getArticle($number, $request->get('language', null))
-            ->getOneOrNullResult();
+            ->getResult();
 
-        if (!$article) {
+        if (count($article) == 0) {
             throw new NotFoundHttpException('Result was not found.');
+        } else {
+            $article = $article[0];
         }
 
         return $article;

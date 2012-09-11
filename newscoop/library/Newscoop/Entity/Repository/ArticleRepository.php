@@ -172,4 +172,23 @@ class ArticleRepository extends DatatableSource
         
         return $query;
     }
+
+    public function getArticleTranslations($articleNumber, $languageId)
+    {
+        $em = $this->getEntityManager();
+
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Article')
+            ->createQueryBuilder('a')
+            ->select('a')
+            ->where('a.number = :number')
+            ->andWhere('a.language <> :language')
+            ->setParameters(array(
+                'number' => $articleNumber,
+                'language' => $languageId
+            ));
+
+        $query = $queryBuilder->getQuery();
+ 
+        return $query;
+    }
 }

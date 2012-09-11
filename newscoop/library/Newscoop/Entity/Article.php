@@ -89,6 +89,12 @@ class Article
     private $articleAuthorTypes;
 
     /**
+     * Article fields used by Newscoop API
+     * @var array
+     */
+    private $fields;
+
+    /**
      * Article Authors for Newscoop\Gimme
      * @var object
      */
@@ -276,6 +282,18 @@ class Article
     private $packages;
 
     /**
+     * Article Renditions used by Newscoop API
+     * @var array
+     */
+    private $renditions;
+
+    /**
+     * Article translations used by Newscoop API
+     * @var array
+     */
+    private $translations;
+
+    /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Webcode")
      * @ORM\JoinColumn(name="webcode", referencedColumnName="webcode")
      * @var Newscoop\Entity\Webcode
@@ -426,6 +444,16 @@ class Article
         return ($this->language) ? $this->language->getId() : null;
     }
 
+    /**
+     * Get language code
+     *
+     * @return int
+     */
+    public function getLanguageCode()
+    {
+        return ($this->language) ? $this->language->getCode() : null;
+    }
+
 
     /**
      * Get number
@@ -536,6 +564,10 @@ class Article
      */
     public function getWebcode()
     {
+        if (!$this->webcode) {
+            return null;
+        }
+
         return (string) $this->webcode;
     }
 
@@ -547,6 +579,31 @@ class Article
     public function hasWebcode()
     {
         return isset($this->webcode);
+    }
+
+    /**
+     * Get keywords
+     *
+     * @return string
+     */
+    public function getKeywords()
+    {
+        if (!$this->keywords) {
+            return null;
+        }
+
+        return (string) $this->keywords;
+    }
+
+    /**
+     * Test if article has webcode
+     *
+     * @return bool
+     */
+    public function setKeywords($keywords)
+    {
+        $this->keywords = $keywords;
+        return $this;
     }
 
     /**
@@ -593,5 +650,97 @@ class Article
         }
         
         return $this->packages;
+    }
+
+    /**
+     * Set Topics
+     * $topics
+     */
+    public function setTopics($topics)
+    {
+        $this->topics = $topics;
+    }
+
+    /**
+     * Get topics
+     *
+     * @return object
+     */
+    public function getTopics()
+    {
+        if (count($this->topics) == 0) {
+            return null;
+        }
+
+        return $this->topics;
+    }
+
+    /**
+     * Set Fields
+     * $fields
+     */
+    public function setFields($fields)
+    {
+        $this->fields = $fields;
+    }
+
+    /**
+     * Get fields
+     *
+     * @return object
+     */
+    public function getFields()
+    {
+        if (count($this->fields) == 0) {
+            return null;
+        }
+
+        return $this->fields;
+    }
+
+    /**
+     * Set translations
+     * $translations
+     */
+    public function setTranslations($translations)
+    {
+        $this->translations = $translations;
+    }
+
+    /**
+     * Get translations
+     *
+     * @return object
+     */
+    public function getTranslations()
+    {
+        if (count($this->translations) == 0) {
+            return null;
+        }
+
+        return $this->translations;
+    }
+
+    /**
+     * Set renditions
+     * $renditions
+     */
+    public function setRenditions($renditions)
+    {
+        $this->renditions = $renditions;
+    }
+
+    /**
+     * Get renditions
+     *
+     * @return object
+     */
+    public function getRenditions()
+    {
+        if (count($this->renditions) == 0) {
+            return null;
+        }
+
+        return $this->renditions;
     }
 }

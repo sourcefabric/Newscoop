@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class ArticlesListController extends FOSRestController
 {
     /**
-     * @Route("/articles-list.{_format}", defaults={"_format"="json"})
+     * @Route("/articles-lists.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View()
      */
@@ -44,7 +44,7 @@ class ArticlesListController extends FOSRestController
     }
 
     /**
-     * @Route("/articles-list/{id}/articles.{_format}", defaults={"_format"="json"})
+     * @Route("/articles-lists/{id}/articles.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View()
      */

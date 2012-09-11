@@ -10,6 +10,9 @@ use Newscoop\GimmeBundle\DependencyInjection\Factory\AuthorImageUriHandlerFactor
 use Newscoop\GimmeBundle\DependencyInjection\Factory\PackageItemsLinkHandlerFactory;
 use Newscoop\GimmeBundle\DependencyInjection\Factory\ItemLinkHandlerFactory;
 use Newscoop\GimmeBundle\DependencyInjection\Factory\TopicArticlesLinkHandlerFactory;
+use Newscoop\GimmeBundle\DependencyInjection\Factory\ArticleFieldsHandlerFactory;
+use Newscoop\GimmeBundle\DependencyInjection\Factory\ArticleTranslationsHandlerFactory;
+use Newscoop\GimmeBundle\DependencyInjection\Factory\ArticleRenditionsHandlerFactory;
 
 class NewscoopGimmeBundle extends Bundle
 {
@@ -21,5 +24,8 @@ class NewscoopGimmeBundle extends Bundle
         $ext->addHandlerFactory(new PackageItemsLinkHandlerFactory());
         $ext->addHandlerFactory(new ItemLinkHandlerFactory());
         $ext->addHandlerFactory(new TopicArticlesLinkHandlerFactory());
+        $ext->addHandlerFactory(new ArticleFieldsHandlerFactory());
+        $ext->addHandlerFactory(new ArticleTranslationsHandlerFactory());
+        $ext->addHandlerFactory(new ArticleRenditionsHandlerFactory());
     }  
 }

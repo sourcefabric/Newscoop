@@ -52,3 +52,11 @@ services:
     newscoop.gimme.serializer.topic_articles_link_handler:
         class: Newscoop\GimmeBundle\Serializer\Topic\ArticlesLinkHandler
         arguments:  ["@em", "@router"]
+    newscoop.gimme.serializer.article_fields_handler:
+        class: Newscoop\GimmeBundle\Serializer\Article\FieldsHandler
+    newscoop.gimme.serializer.article_translations_handler:
+        class: Newscoop\GimmeBundle\Serializer\Article\TranslationsHandler
+        arguments:  ["@em", "@router"]
+    newscoop.gimme.serializer.article_renditions_handler:
+        class: Newscoop\GimmeBundle\Serializer\Article\RenditionsHandler
+        arguments:  ["@image", "@zend_router", "@newscoop.publication_service", "@image.rendition"]

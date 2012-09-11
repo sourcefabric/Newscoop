@@ -21,10 +21,6 @@ Feature: Article
   Scenario: Get single article from gimme
     When I send a GET request to "/articles/74"
     Then the response code should be 200
-    And response should have keys "number, title, updated, published, authors"
-
-  Scenario: Get single article comments from gimme
-    When I send a GET request to "/articles/77/en/comments"
-    Then the response code should be 200
-    And response should have keys "items"
-    And response should have item with keys "author, subject, message, created"
+    And response should have keys "number, title, updated, published, language, comments, webcode, type"
+    And response should have "fields" with elements
+    And response should have "authors" with elements
