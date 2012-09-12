@@ -638,7 +638,7 @@ class Topic extends DatabaseObject {
 			$query->addWhere("tn.fk_language_id = '$p_languageId'");
 		}
 		if (!is_null($p_name)) {
-			$query->addWhere("tn.name = '". $g_ado_db->escape($p_name) . "'");
+			$query->addWhere("tn.name = ". $g_ado_db->escape($p_name));
 		}
 		if (!is_null($p_parentId)) {
 			$subtopicsQuery = self::BuildSubtopicsQuery($p_parentId, $p_depth, 1);

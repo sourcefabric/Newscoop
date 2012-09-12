@@ -13,7 +13,7 @@
         "symfony/yaml": "2.1.*",
         "symfony/config": "2.1.*",
         "symfony/console": "2.1.*",
-        "doctrine/orm":"2.2.*",
+        "doctrine/orm":"2.3.*",
         "zendframework/zendframework1":"dev-release-1.11",
         "Smarty3":"3.0.8"
     },
@@ -44,7 +44,6 @@
         "classmap":[
             "vendor/Smarty3/libs", 
             "newscoop/classes",
-            "dependencies/include/adodb",
             "newscoop/template_engine",
             "newscoop/plugins"
         ]

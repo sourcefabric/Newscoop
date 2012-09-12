@@ -6,6 +6,7 @@
  */
 
 use Newscoop\Utils\PermissionToAcl;
+use Newscoop\Doctrine\AdoDbAdapter;
 
 require_once(dirname(dirname(__FILE__)) . '/library/Newscoop/Utils/PermissionToAcl.php');
 
@@ -28,7 +29,7 @@ class LiveUserMock
     /**
      * @param ADOConnection $db
      */
-    public function __construct(ADOConnection $db)
+    public function __construct(AdoDbAdapter $db)
     {
         $this->db = $db;
     }
@@ -47,11 +48,11 @@ class LiveUserMock
         $nextId = $lastId + 1;
 
         $areaId = (int) $right['area_id'];
-        $permission = mysql_real_escape_string($right['right_define_name']);
+        $permission = $this->db->escape($right['right_define_name']);
 
         $sql = 'INSERT IGNORE
                 INTO ' . self::RIGHTS . " (right_id, area_id, right_define_name)
-                VALUES ($nextId, $areaId, '$permission')";
+                VALUES ($nextId, $areaId, $permission)";
         $this->db->Execute($sql);
     }
 
@@ -66,7 +67,7 @@ class LiveUserMock
         $permission = $params['filters']['right_define_name'];
         $sql = 'SELECT right_id
                 FROM ' . self::RIGHTS . "
-                WHERE right_define_name = '" . mysql_real_escape_string($permission) . "'"; 
+                WHERE right_define_name = " . $this->db->escape($permission); 
         return $this->db->GetAll($sql);
     }
 

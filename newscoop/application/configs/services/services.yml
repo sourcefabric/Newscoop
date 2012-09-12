@@ -20,6 +20,13 @@ services:
         factory_service:  doctrine.event_manager
         factory_method:   addEventSubscriber
         arguments:  ["@newscoop.doctrine.event_dispatcher_proxy"]
+    doctrine.connection:
+        class: Doctrine\DBAL\Connection
+        factory_service: doctrine.em
+        factory_method: getConnection
+    doctrine.adodb:
+        class:      Newscoop\Doctrine\AdoDbAdapter
+        arguments:  ["@doctrine.connection"]
     image:
         class:      Newscoop\Image\ImageService
         arguments:  ["%image%", "@em"]

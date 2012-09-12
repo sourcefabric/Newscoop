@@ -64,7 +64,7 @@ class AuthorType extends DatabaseObject
      * @param string $p_name
      * @return bool
      */
-    public function create($p_name)
+    public function create($p_name = null)
     {
         if (empty($p_name)) {
             return false;
