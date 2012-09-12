@@ -33,7 +33,7 @@ class ContextBoxArticle extends DatabaseObject
     public static function removeList($p_context_id) {
     	Global $g_ado_db;
         $queryStr = 'DELETE FROM context_articles'
-                    .' WHERE fk_context_id=' . $p_context_id.'';
+                    .' WHERE fk_context_id=' . intval($p_context_id);
         $g_ado_db->Execute($queryStr);
         $wasDeleted = ($g_ado_db->Affected_Rows());
         return $wasDeleted;
@@ -43,7 +43,7 @@ class ContextBoxArticle extends DatabaseObject
     	Global $g_ado_db;
     	foreach($p_article_no_array as $p_article_no) {
             $sql = 'INSERT INTO context_articles (fk_context_id, fk_article_no)
-                    VALUES ('.$p_context_id.','.$p_article_no.')';
+                    VALUES ('.intval($p_context_id).','.intval($p_article_no).')';
             $g_ado_db->Execute($sql);
     	}
     }
