@@ -7,9 +7,11 @@
 
 namespace Newscoop\Services;
 
-use Doctrine\Common\Persistence\ObjectManager,
-    Newscoop\Entity\User,
-    Newscoop\Persistence\ObjectRepository;
+use Doctrine\Common\Persistence\ObjectManager;
+use Newscoop\Entity\User;
+use Newscoop\Entity\UserAttribute;
+use Newscoop\PaginatedCollection;
+use Newscoop\Persistence\ObjectRepository;
 
 /**
  * User service
@@ -90,6 +92,46 @@ class UserService implements ObjectRepository
     {
         return $this->getRepository()
             ->findBy($criteria, $orderBy, $limit, $offset);
+    }
+
+    /**
+     * Get collection by given criteria
+     *
+     * @param array $criteria
+     * @param array $orderBy
+     * @param int $limit
+     * @param int $offset
+     * @return Newscoop\PaginatedCollection
+     */
+    public function getCollection(array $criteria, array $orderBy, $limit = null, $offset = null)
+    {
+        $qb = $this->repository->createQueryBuilder('u');
+        $qb->setFirstResult($offset);
+        $qb->setMaxResults($limit);
+
+        if (!empty($criteria['q'])) {
+            $q = $qb->expr()->literal('%' . $criteria['q'] . '%');
+            $qb->andWhere($qb->expr()->orX(
+                $qb->expr()->like('u.username', $q),
+                $qb->expr()->like('u.email', $q)
+            ));
+        }
+
+        if (!empty($criteria['groups'])) {
+            $qb->join('u.groups', 'g', 'WITH', 'g.id = :group')
+                ->setParameter('group', $criteria['groups']);
+        }
+
+        if (isset($criteria['status'])) {
+            $qb->andWhere('u.status = :status')
+                ->setParameter('status', $criteria['status']);
+        }
+
+        foreach ($orderBy as $column => $dir) {
+            $qb->addOrderBy("u.$column", $dir);
+        }
+
+        return new PaginatedCollection($qb->getQuery());
     }
 
     /**
@@ -316,5 +358,26 @@ class UserService implements ObjectRepository
     public function getClassName()
     {
         return 'Newscoop\Entity\User';
+    }
+
+    /**
+     * Get user group options
+     *
+     * @return array
+     */
+    public function getGroupOptions()
+    {
+        $query = $this->em->getRepository('Newscoop\Entity\User\Group')
+            ->createQueryBuilder('g')
+            ->select('g.id, g.name')
+            ->orderBy('g.id')
+            ->getQuery();
+
+        $groups = array();
+        foreach ($query->getResult() as $row) {
+            $groups[$row['id']] = $row['name'];
+        }
+
+        return $groups;
     }
 }

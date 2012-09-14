@@ -33,12 +33,43 @@ class Admin_UserController extends Zend_Controller_Action
         $this->userTypeService = $this->_helper->service('user_type');
 
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginator.phtml');
+
+        $this->_helper->contextSwitch
+            ->addActionContext('index', 'json')
+            ->initContext();
     }
 
     public function indexAction()
     {
-        $this->_helper->contextSwitch->addActionContext($this->_getParam('action'), 'json')->initContext();
+        $form = new Admin_Form_UserCriteria();
+        $form->setDefaults(array('status' => 1));
+        $form->groups->addMultiOptions($this->_helper->service('user')->getGroupOptions());
+        $form->isValid($this->getRequest()->getParams());
 
+        $users = $this->_helper->service('user')->getCollection(
+            $form->getValues(),
+            array('username' => 'asc', 'email' => 'asc'),
+            self::LIMIT,
+            $this->_getParam('start')
+        );
+
+        $this->view->pagination = $users;
+        $this->view->criteria = (object) array_filter($form->getValues(), function ($value) { return $value !== null; });
+        $this->view->users = array();
+        foreach ($users as $user) {
+            $this->view->users[] = $user->getEditView($this->view);
+        }
+
+        if ($this->_helper->contextSwitch->getCurrentContext() === 'json') {
+            return;
+        }
+
+        $this->view->counts = array();
+        foreach ($form->status->getMultiOptions() as $status => $label) {
+            $this->view->counts[$status] = $this->_helper->service('user')->countBy(array('status' => $status));
+        }
+
+        $this->view->form = $form;
         $this->view->actions = array(
             array(
                 'label' => getGS('Create new account'),
@@ -48,52 +79,6 @@ class Admin_UserController extends Zend_Controller_Action
                 'class' => 'add',
             ),
         );
-
-        $this->view->activeCount = $this->_helper->service('user')->countBy(array('status' => User::STATUS_ACTIVE));
-        $this->view->pendingCount = $this->_helper->service('user')->countBy(array('status' => User::STATUS_INACTIVE));
-        $this->view->inactiveCount = $this->_helper->service('user')->countBy(array('status' => User::STATUS_DELETED));
-    }
-
-    public function listAction()
-    {
-        $this->_helper->layout->disableLayout();
-
-        $filters = array(
-            'active' => User::STATUS_ACTIVE,
-            'pending' => User::STATUS_INACTIVE,
-            'inactive' => User::STATUS_DELETED,
-        );
-
-        $filter = $this->_getParam('filter', 'active');
-        if (!array_key_exists($filter, $filters)) {
-            $filter = 'active';
-        }
-
-        $page = $this->_getParam('page', 1);
-        $count = $this->_helper->service('user')->countBy(array('status' => $filters[$filter]));
-        $paginator = Zend_Paginator::factory($count);
-        $paginator->setItemCountPerPage(self::LIMIT);
-        $paginator->setCurrentPageNumber($page);
-        $paginator->setView($this->view);
-        $paginator->setDefaultScrollingStyle('Sliding');
-        $this->view->paginator = $paginator;
-
-        $this->view->users = $this->_helper->service('user')->findBy(array(
-            'status' => $filters[$filter],
-        ), array(
-            'username' => 'asc',
-            'email' => 'asc',
-        ), self::LIMIT, ($paginator->getCurrentPageNumber() - 1) * self::LIMIT);
-
-        $this->render("list-$filter");
-    }
-
-    public function searchAction()
-    {
-        $this->_helper->layout->disableLayout();
-
-        $q = $this->_getParam('q', null);
-        $this->view->users = $this->_helper->service('user.search')->find($q);
     }
 
     public function createAction()
