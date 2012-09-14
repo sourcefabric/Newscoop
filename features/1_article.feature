@@ -2,18 +2,6 @@ Feature: Article
   I need to be able list and get articles
 
   Scenario: Get articles from gimme
-    When I send a GET request to "/articles?method=option"
-    Then the response code should be 200
-    And response should contain json:
-    """
-    {
-      "/articles":"<base_url>articles",
-      "/articles/{number}":"<base_url>articles/1",
-      "/articles/{number}/{language}/comments":"<base_url>articles/1/en/comments"
-    }
-    """
-
-  Scenario: Get articles from gimme
     When I send a GET request to "/articles"
     Then the response code should be 200
     And response should have "items" with elements

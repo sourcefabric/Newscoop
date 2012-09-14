@@ -17,20 +17,6 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ArticlesController extends FOSRestController
 {
-	/**
-     * @Route("/articles.{_format}", defaults={"_format"="json"})
-     * @Method("OPTION")
-     * @View()
-     */
-    public function optionsArticlesAction()
-    {
-        return array(
-            '/articles' => $this->generateUrl('newscoop_gimme_articles_getarticles', array(), true),
-            '/articles/{number}' => $this->generateUrl('newscoop_gimme_articles_getarticle', array('number' => 1), true),
-            '/articles/{number}/{language}/comments' => $this->generateUrl('newscoop_gimme_comments_getcommentsforarticle', array('number' => 1, 'language' => 'en'), true)
-        );
-    }
-
     /**
      * @Route("/articles.{_format}", defaults={"_format"="json"})
      * @Method("GET")
@@ -62,18 +48,13 @@ class ArticlesController extends FOSRestController
     public function getArticleAction(Request $request, $number)
     {
         $em = $this->container->get('em');
+        $publication = $this->get('newscoop.publication_service')->getPublication();
         $serializer = $this->get('serializer');
         $serializer->setGroups(array('details'));
 
         $article = $em->getRepository('Newscoop\Entity\Article')
-            ->getArticle($number, $request->get('language', null))
-            ->getResult();
-
-        if (count($article) == 0) {
-            throw new NotFoundHttpException('Result was not found.');
-        } else {
-            $article = $article[0];
-        }
+            ->getArticle($number, $request->get('language', $publication->getLanguage()->getCode()))
+            ->getOneOrNullResult();
 
         return $article;
     }
