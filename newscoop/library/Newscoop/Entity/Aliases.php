@@ -48,6 +48,18 @@ class Aliases
     }
 
     /**
+     * Set name
+     *
+     * @return string
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+        
+        return $this;
+    }
+
+    /**
      * Get name
      *
      * @return string

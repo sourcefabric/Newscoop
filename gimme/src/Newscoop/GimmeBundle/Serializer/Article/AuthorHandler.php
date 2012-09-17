@@ -26,12 +26,12 @@ class AuthorHandler implements SerializationHandlerInterface
     public function serialize(VisitorInterface $visitor, $data, $type, &$visited)
     {   
         if ($type != 'Newscoop\\Entity\\Article') {
-            return;
+            return false;
         }
 
         if (count($data->getArticleAuthors()) == 0) {
             $data->setArticleAuthors(null);
-            return;
+            return null;
         }
 
         $articleAuthors = array();
@@ -43,5 +43,7 @@ class AuthorHandler implements SerializationHandlerInterface
         }
 
         $data->setArticleAuthors($articleAuthors);
+
+        return true;
     }
 }

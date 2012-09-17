@@ -6,7 +6,7 @@ services:
         arguments:  ["@newscoop.paginator.paginator_service"]
     newscoop.paginator.paginator_service:
         class: Newscoop\Gimme\PaginatorService
-        arguments:  ["@knp_paginator", "@router", "@service_container"]
+        arguments:  ["@knp_paginator", "@router"]
     newscoop.paginator.query_subscriber:
         class: Newscoop\GimmeBundle\EventListener\QuerySubscriber
         arguments:  ["@newscoop.paginator.paginator_service"]

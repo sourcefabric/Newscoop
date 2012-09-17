@@ -26,9 +26,11 @@ class CommentsLinkHandler implements SerializationHandlerInterface
     public function serialize(VisitorInterface $visitor, $data, $type, &$visited)
     {   
         if ($type != 'Newscoop\\Entity\\Article') {
-            return;
+            return false;
         }
 
         $data->setCommentsLink($this->router->generate('newscoop_gimme_comments_getcommentsforarticle', array('number' => $data->getNumber(), 'language' => $data->getLanguage()->getCode()), true));
+
+        return true;
     }
 }
