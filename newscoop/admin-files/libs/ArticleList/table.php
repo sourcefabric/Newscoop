@@ -304,13 +304,13 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
 }).css('position', 'relative').css('width', '100%').fnSetFilteringDelay(500);
 
 <?php if ($this->items === null && !isset($this->type)) { ?>
-$('<input type="checkbox" name="showtype" value="newswires" id="filter_newswires_articles_<?php echo $this->id; ?>" /> <label for="filter_newswires_articles_<?php echo $this->id; ?>"><?php putGS("Display newswires articles"); ?></label>')
+$('<input type="checkbox" name="showtype" value="with_filtered" id="display_filtered_types_<?php echo $this->id; ?>" /> <label for="display_filtered_types_<?php echo $this->id; ?>"><?php putGS("Display articles of filtered types"); ?></label>')
     .appendTo('#filter_type_<?php echo $this->id; ?>');
 
 $('#filter_type_<?php echo $this->id; ?>').css('margin-bottom', '5px');
 
-$('input#filter_newswires_articles_<?php echo $this->id; ?>').change(function() {
-    filters['<?php echo $this->id; ?>']['showtype'] = $(this).attr('checked') ? 'newswires' : '';
+$('input#display_filtered_types_<?php echo $this->id; ?>').change(function() {
+    filters['<?php echo $this->id; ?>']['showtype'] = $(this).attr('checked') ? 'with_filtered' : '';
     tables['<?php echo $this->id; ?>'].fnDraw(true);
 });
 

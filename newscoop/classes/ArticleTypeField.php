@@ -48,6 +48,7 @@ class ArticleTypeField extends DatabaseObject {
     private $m_precision = null;
     private $m_editorSize = null;
     private $m_colorValue = null;
+    private $m_filterOut = null;
 
 
 	public function __construct($p_articleTypeName = null, $p_fieldName = null)
@@ -144,6 +145,15 @@ class ArticleTypeField extends DatabaseObject {
 			    }
 			}
 		}
+        if ($success && (!$this->getType())) {
+            $params = explode(';', $this->m_data['field_type_param']);
+            foreach ($params as $one_param) {
+                $one_param_parts = explode('=', $one_param);
+                if (isset($one_param_parts[1]) && $one_param_parts[0] == 'filter') {
+                    $this->m_filterOut = (bool) ('' . $one_param_parts[1]);
+                }
+            }
+        }
 		return $success;
 	}
 
@@ -193,6 +203,36 @@ class ArticleTypeField extends DatabaseObject {
             }
             return getGS('Color saved');
         }
+
+    /**
+     * Sets whether articles of this type should be filtered out by default at listings.
+     *
+     * @return bool
+     **/
+    public function setFilter($p_filter)
+    {
+        $this->m_filterOut = (bool) ('' . $p_filter);
+        if (!$this->getType()) {
+            $filter_db_value = (int) $this->m_filterOut;
+            $this->setProperty('field_type_param', 'filter=' . $filter_db_value);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns whether articles of this type should be filtered out by default at listings.
+     *
+     * @return bool
+     **/
+    public function getFilter()
+    {
+        $filter = (bool) $this->m_filterOut;
+        if (empty($filter)) {
+            $filter = false;
+        }
+        return $filter;
+    }
 
 	/**
 	 * Create a column in the table.
