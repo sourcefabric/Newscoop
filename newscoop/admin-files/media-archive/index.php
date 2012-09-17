@@ -22,6 +22,8 @@ camp_html_content_top(getGS('Media Archive'), NULL);
 
 <div id="images">
     <fieldset class="actions">
+    <span style="margin-left:10px;"></span>
+
     <?php if ($g_user->hasPermission('AddImage')) { ?>
     <span class="actions" style="margin-right:20px;">
         <a href="/<?php echo $ADMIN; ?>/media-archive/add.php" title="<?php putGS('Add new image'); ?>"><img src="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/add.png" alt="<?php putGS('Add new image'); ?>">&nbsp;<?php putGS('Add new image'); ?></a>
@@ -35,6 +37,9 @@ camp_html_content_top(getGS('Media Archive'), NULL);
         <input type="submit" class="button" name="approve" value="<?php putGS('Approve selected'); ?>" />
         <input type="submit" class="button" name="disapprove" value="<?php putGS('Disapprove selected'); ?>" />
     <?php } ?>
+
+    <span style="float:right;margin-right:20px;" title="<?php putGS('For images automatically loaded via remote feeds'); ?>"><input type="checkbox" id="newswires-images" /> <label for="newswires-images"><?php putGS('Display newsfeed images'); ?></label></span>
+
     </fieldset>
 
     <?php
@@ -241,6 +246,12 @@ $(document).ready(function() {
         });
 
         return false;
+    });
+
+    $('#newswires-images').change(function() {
+        $.smartlist_filter = $(this).attr('checked') ? 'newsfeed' : '';
+        var smartlistId = $('.smartlist', $(this).closest('#images')).attr('id').split('-')[1];
+        tables[smartlistId].fnDraw(true);
     });
 });
 

@@ -19,6 +19,7 @@ require_once LIBS_DIR . '/ArticleList/ArticleList.php';
 require_once LIBS_DIR . '/ContextList/ContextList.php';
 require_once LIBS_DIR . '/MediaList/MediaList.php';
 require_once LIBS_DIR . '/ImageList/ImageList.php';
+require_once LIBS_DIR . '/ImageList/NewsfeedImageList.php';
 require_once WWW_DIR . '/classes/GeoNames.php';
 require_once WWW_DIR . '/classes/GeoMap.php';
 require_once WWW_DIR . '/classes/Article.php';
@@ -57,6 +58,7 @@ try {
     $serverRequest->allow('Geo_Map::StoreMapData', 'ChangeArticle');
     $serverRequest->allow('MediaList::doData');
     $serverRequest->allow('ImageList::doData');
+    $serverRequest->allow('NewsfeedImageList::doData');
     $serverRequest->allow('MediaList::doDelete');
     $serverRequest->allow('ImageList::doDelete');
     $serverRequest->allow('ImageList::doApprove');

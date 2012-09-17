@@ -2178,7 +2178,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      *
      * @return string
      */
-    public static function GetMapTagOpen($p_articleNumber, $p_languageId, $p_specifier)
+    public static function GetMapTagOpen($p_articleNumber, $p_languageId, $p_specifier = null)
     {
         global $Campsite;
         $tag_string = '';
@@ -2817,7 +2817,7 @@ var geo_on_load_proc_phase2_map' . $map_suffix . ' = function()
      *
      * @return string
      */
-    public static function GetMultiMapTagOpen($p_languageId, $p_rank = 0, $p_specifier)
+    public static function GetMultiMapTagOpen($p_languageId, $p_rank = 0, $p_specifier = null)
     {
         global $Campsite;
         $tag_string = '';

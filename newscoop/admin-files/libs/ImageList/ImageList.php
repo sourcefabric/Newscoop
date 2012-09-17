@@ -118,7 +118,7 @@ class ImageList extends BaseList
     public function doData()
     {
         $args = $this->getArgs();
-        if (!empty($args['filter']) && $args['filter'] == 'sda') {
+        if (!empty($args['filter']) && $args['filter'] == 'newsfeed') {
             $this->filters = array('1');
         }
 
