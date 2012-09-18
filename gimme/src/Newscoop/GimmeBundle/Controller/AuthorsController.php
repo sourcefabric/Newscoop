@@ -29,7 +29,7 @@ class AuthorsController extends FOSRestController
             ->getOneOrNullResult();
 
         if (!$author) {
-            throw new NotFoundHttpException('Result was not found.');
+            throw new NotFoundHttpException('Author was not found.');
         }
 
         return $author;

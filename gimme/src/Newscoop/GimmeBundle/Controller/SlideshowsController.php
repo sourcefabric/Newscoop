@@ -18,7 +18,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class SlideshowsController extends FOSRestController
 {
     /**
-     * @Route("/slideshows/{id}/items.{_format}", defaults={"_format"="json"})
+     * @Route("/slideshows/{id}.{_format}", defaults={"_format"="json"})
      * @Method("GET")
      * @View()
      */
