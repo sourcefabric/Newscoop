@@ -12,6 +12,8 @@
 require_once dirname(__FILE__) . '/ArticleList.php';
 require_once WWW_DIR . '/classes/Article.php';
 
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
+
 $list = new ArticleList(TRUE);
 
 // start >= 0
@@ -88,10 +90,15 @@ foreach ($filters as $name => $opts) {
     }
 }
 
-if (empty($_REQUEST['showtype']) || $_REQUEST['showtype'] != 'newswires') { // limit newswire articles by default
-    $articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), 'newswire');
-    $articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), 'event');
-    $articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), 'screening');
+if (empty($_REQUEST['showtype']) || $_REQUEST['showtype'] != 'with_filtered') { // limit articles of filtered types by default
+
+    foreach((array) \ArticleType::GetArticleTypes(true) as $one_art_type_name) {
+        $one_art_type = new \ArticleType($one_art_type_name);
+        if ($one_art_type->getFilterStatus()) {
+            $articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), $one_art_type->getTypeName());
+        }
+    }
+
 }
 
 // search

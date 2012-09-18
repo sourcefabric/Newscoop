@@ -94,6 +94,7 @@ if ($g_user->hasPermission("ManageArticleTypes")) { ?>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Display Name"); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Translate"); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Show/Hide"); ?></B></TD>
+	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("In Lists?"); ?></B></TD>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php putGS("Comments enabled?"); ?></B></TD>
 	<?php  if ($g_user->hasPermission("DeleteArticleTypes")) { ?>
 	<TD ALIGN="LEFT" VALIGN="TOP"><B><?php  putGS("Delete"); ?></B></TD>
@@ -121,6 +122,16 @@ foreach ($articleTypes as $articleType) {
 		$commentChangeText = getGS('activate');
 		$commentImage = "is_hidden.png";
 	}
+
+    $filterChangeValue = 1;
+    $filterChangeText = getGS('filter');
+    $filterImage = "is_shown.png";
+    if ($currentArticleType->getFilterStatus()) {
+        $filterChangeValue = 0;
+        $filterChangeText = getGS('list');
+        $filterImage = "is_hidden.png";
+    }
+
     ?>
     <TR <?php  if ($color) { $color=0; ?>class="list_row_even"<?php  } else { $color=1; ?>class="list_row_odd"<?php  } ?>>
 	<TD>
@@ -141,6 +152,10 @@ foreach ($articleTypes as $articleType) {
 	<TD ALIGN="CENTER">
 		<A HREF="/<?php p($ADMIN); ?>/article_types/do_hide.php?f_article_type=<?php  print urlencode($articleType); ?>&f_status=<?php print $hideShowStatus; ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to $1 the article type $2?', $hideShowText, "\'".htmlspecialchars($articleType)."\'"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php echo $hideShowImage; ?>" BORDER="0" ALT="<?php  putGS('$1 article type $2', ucfirst($hideShowText), htmlspecialchars($articleType)); ?>" TITLE="<?php  putGS('$1 article type $2', ucfirst($hideShowText), htmlspecialchars($articleType)); ?>" ></A>
 	</TD>
+
+    <TD ALIGN="CENTER">
+        <A HREF="/<?php p($ADMIN); ?>/article_types/do_filter.php?f_article_type=<?php print urlencode($articleType); ?>&f_filter=<?php echo($filterChangeValue); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to $1 articles of article type $2?', $filterChangeText, "\'".htmlspecialchars($articleType)."\'"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php echo $filterImage; ?>" BORDER="0" ALT="<?php  putGS('$1 articles of article type $2', ucfirst($filterChangeText), htmlspecialchars($articleType)); ?>" TITLE="<?php  putGS('$1 articles of article type $2', ucfirst($filterChangeText), htmlspecialchars($articleType)); ?>" ></A>
+    </TD>
 
 	<TD ALIGN="CENTER">
 		<A HREF="/<?php p($ADMIN); ?>/article_types/do_comment_activation.php?f_article_type=<?php  print urlencode($articleType); ?>&<?php echo SecurityToken::URLParameter(); ?>" onclick="return confirm('<?php putGS('Are you sure you want to $1 comments for article type $2?', $commentChangeText, "\'".htmlspecialchars($articleType)."\'"); ?>');"><IMG SRC="<?php echo $Campsite["ADMIN_IMAGE_BASE_URL"]; ?>/<?php echo $commentImage; ?>" BORDER="0" ALT="<?php  putGS('$1 comments for article type $1', ucfirst($commentChangeText), htmlspecialchars($articleType)); ?>" TITLE="<?php  putGS('$1 comments for article type $2', ucfirst($commentChangeText), htmlspecialchars($articleType)); ?>" ></A>

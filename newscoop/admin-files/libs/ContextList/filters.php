@@ -178,8 +178,8 @@ contextListFilters = {}
 
 </dd>
 <dd>
-    <input type="checkbox" name="show_newswires"></input>
-    <label for="show_newswires"><?php putGS('Display Newswires') ?></label>
+    <input type="checkbox" name="show_filtered" id="show_filtered"></input>
+    <label for="show_filtered"><?php putGS('Display Articles of Filtered Types') ?></label>
 </dd>
 </dl>
 </div>
