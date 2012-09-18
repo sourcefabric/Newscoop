@@ -32,6 +32,11 @@ class AllowOriginListener
 
         $response = $event->getResponse();
         $request = $event->getRequest();
+
+        if (!$this->container->hasParameter('newscoop.gimme.allow_origin')) {
+            return false;
+        }
+
         $alowedHosts = $this->container->getParameter('newscoop.gimme.allow_origin');
 
         if (count($alowedHosts) == 0) {
