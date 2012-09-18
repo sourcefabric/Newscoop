@@ -125,8 +125,20 @@ var UserListView = Backbone.View.extend({
 });
 
 var StatusFilterView = Backbone.View.extend({
+    activeClass: 'active',
+
     events: {
         'click a': 'filter'
+    },
+
+    initialize: function() {
+        this.collection.bind('reset', this.render, this);
+    },
+
+    render: function() {
+        if ('status' in this.collection.criteria) {
+            $(this.el).find('a[href="#' + this.collection.criteria.status + '"]').addClass(this.activeClass);
+        }
     },
 
     filter: function(e) {
@@ -134,8 +146,8 @@ var StatusFilterView = Backbone.View.extend({
         var data = this.collection.criteria;
         data['status'] = e.currentTarget.hash.substring(1);
         this.collection.fetch({'data': data});
-        $(this.el).find('a').removeClass('active');
-        $(e.currentTarget).addClass('active');
+        $(this.el).find('a').removeClass(this.activeClass);
+        $(e.currentTarget).addClass(this.activeClass);
     }
 });
 

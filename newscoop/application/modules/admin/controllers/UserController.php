@@ -42,19 +42,23 @@ class Admin_UserController extends Zend_Controller_Action
     public function indexAction()
     {
         $form = new Admin_Form_UserCriteria();
-        $form->setDefaults(array('status' => 1));
         $form->groups->addMultiOptions($this->_helper->service('user')->getGroupOptions());
         $form->isValid($this->getRequest()->getParams());
 
+        $criteria = $form->getValues();
+        if ($criteria['status'] === null) {
+            $criteria['status'] = 1;
+        }
+
         $users = $this->_helper->service('user')->getCollection(
-            $form->getValues(),
+            $criteria,
             array('username' => 'asc', 'email' => 'asc'),
             self::LIMIT,
             $this->_getParam('start')
         );
 
         $this->view->pagination = $users;
-        $this->view->criteria = (object) array_filter($form->getValues(), function ($value) { return $value !== null; });
+        $this->view->criteria = (object) array_filter($criteria, function ($value) { return $value !== null; });
         $this->view->users = array();
         foreach ($users as $user) {
             $this->view->users[] = $user->getEditView($this->view);
