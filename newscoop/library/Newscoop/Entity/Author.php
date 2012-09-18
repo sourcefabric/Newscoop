@@ -10,7 +10,7 @@ namespace Newscoop\Entity;
 use Doctrine\ORM\Mapping AS ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\AuthorRepository")
  * @ORM\Table(name="Authors")
  */
 class Author
@@ -108,7 +108,7 @@ class Author
     /**
      * Set types
      *
-     * @return string
+     * @return Author
      */
     public function setTypes($types)
     {
@@ -131,7 +131,7 @@ class Author
     /**
      * Set biography
      *
-     * @return string
+     * @return Author
      */
     public function setBiography($biography)
     {
@@ -148,5 +148,17 @@ class Author
     public function getImage()
     {
         return $this->image;
+    }
+
+    /**
+     * Set image
+     *
+     * @return Author
+     */
+    public function setImage($image)
+    {
+        $this->image = $image;
+
+        return $this;
     }
 }

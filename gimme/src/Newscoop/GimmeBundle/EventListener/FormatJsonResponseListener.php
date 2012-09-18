@@ -5,11 +5,11 @@
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl-3.0.txt
  */
-
 namespace Newscoop\GimmeBundle\EventListener;
 
 use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Newscoop\Gimme\Json;
 
 /**
@@ -19,9 +19,15 @@ class FormatJsonResponseListener
 {
     public function onResponse(FilterResponseEvent $event)
     {
+        if (HttpKernelInterface::MASTER_REQUEST !== $event->getRequestType()) {
+            return;
+        }
+
         $responseData = $event->getResponse()->getContent();
 
         $formatedJson = Json::indent($responseData);
-        $event->setResponse(new Response($formatedJson));
+        $newResponse = new Response($formatedJson);
+
+        $event->setResponse($newResponse);
     }
 }

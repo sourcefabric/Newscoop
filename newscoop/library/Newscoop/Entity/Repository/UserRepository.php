@@ -7,9 +7,9 @@
 
 namespace Newscoop\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository,
-    Doctrine\ORM\Query\Expr,
-    Newscoop\Entity\User;
+use Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\Query\Expr;
+use Newscoop\Entity\User;
 
 /**
  * User repository
@@ -150,6 +150,44 @@ class UserRepository extends EntityRepository
         $qb->setParameters($params);
 
         return !$qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function getActiveUsers()
+    {
+        $em = $this->getEntityManager();
+
+        $queryBuilder = $em->getRepository('Newscoop\Entity\User')
+            ->createQueryBuilder('u')
+            ->where('u.status = :status')
+            ->andWhere('u.is_public = :public')
+            ->setParameters(array(
+                'status' => User::STATUS_ACTIVE,
+                'public' => true
+            ));
+
+        $query = $queryBuilder->getQuery();
+
+        return $query;
+    }
+
+    public function getOneActiveUser($id)
+    {
+        $em = $this->getEntityManager();
+
+        $queryBuilder = $em->getRepository('Newscoop\Entity\User')
+            ->createQueryBuilder('u')
+            ->where('u.status = :status')
+            ->andWhere('u.is_public = :public')
+            ->andWhere('u.id = :id')
+            ->setParameters(array(
+                'status' => User::STATUS_ACTIVE,
+                'public' => true,
+                'id' => $id
+            ));
+
+        $query = $queryBuilder->getQuery();
+
+        return $query;
     }
 
     public function findActiveUsers($countOnly, $offset, $limit)

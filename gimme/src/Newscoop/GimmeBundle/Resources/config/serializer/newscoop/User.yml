@@ -1,0 +1,40 @@
+Newscoop\Entity\User:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["list"]
+            serialized_name: id
+        username:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list"]
+            serialized_name: username
+        email:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list"]
+            serialized_name: email
+        first_name:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list"]
+            serialized_name: firstName
+        last_name:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list"]
+            serialized_name: lastName
+        attributes:
+            expose: true
+            read_only: true
+            type: user_atributes
+            groups: ["list"]
+            access_type: public_method
+            serialized_name: attributes

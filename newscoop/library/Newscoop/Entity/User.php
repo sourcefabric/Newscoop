@@ -587,6 +587,15 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * Set User attributes
+     * @param mixed $attributes UserAttributes
+     */
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
+    }
+
+    /**
      * Get all user attributes
      *
      * @return array of all user attributes

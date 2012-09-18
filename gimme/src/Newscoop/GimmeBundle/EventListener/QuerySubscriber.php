@@ -22,9 +22,11 @@ class QuerySubscriber implements EventSubscriberInterface
         $this->paginationService = $paginationService;
     }
 
-    public function sortable(ItemsEvent $event)
+    public function serveQuery(ItemsEvent $event)
     {
         $pagination = $this->paginationService->getPagination();
+        $partialResponse = $this->paginationService->getPartialResponse();
+
         if ($event->target instanceof Query) {
             if ($pagination->getSort()) {
                 $event->target
@@ -32,13 +34,7 @@ class QuerySubscriber implements EventSubscriberInterface
 
                 QueryHelper::addCustomTreeWalker($event->target, 'Newscoop\GimmeBundle\EventListener\Sortable\Doctrine\ORM\Query\OrderByWalker');
             }
-        }
-    }
 
-    public function selectable(ItemsEvent $event)
-    {
-        $partialResponse = $this->paginationService->getPartialResponse();
-        if ($event->target instanceof Query) {
             if ($partialResponse->getFields()) {
                 $event->target
                     ->setHint('newscoop.api.fields', $partialResponse->getFields());
@@ -51,8 +47,7 @@ class QuerySubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents()
     {
         return array(
-            'knp_pager.items' => array('sortable', 2),
-            'knp_pager.items' => array('selectable', 3)
+            'knp_pager.items' => array('serveQuery', 2)
         );
     }
 }

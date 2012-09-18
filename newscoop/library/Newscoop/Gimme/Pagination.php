@@ -17,7 +17,7 @@ class Pagination {
      * Requested page number
      * @var integer
      */
-    private $page = 0;
+    private $page = 1;
 
     /**
      * Array with sorting parameters

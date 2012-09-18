@@ -44,12 +44,6 @@ class PaginatorService {
     private $router;
 
     /**
-     * Request class
-     * @var Symfony\Component\HttpFoundation\Request
-     */
-    private $request;
-
-    /**
      * Extra data injected to response when result have more items than requested.
      * @var array
      */
@@ -72,19 +66,10 @@ class PaginatorService {
      * @param Paginator $paginator Paginator object
      * @param Router    $router    Router object
      */
-    public function __construct(Paginator $paginator, Router $router, $service_container)
+    public function __construct(Paginator $paginator, Router $router)
     {
         $this->paginator = $paginator;
         $this->router = $router;
-        $this->request = $service_container->get('request');
-        
-        /**
-         * append all used parameters from get and post
-         */
-        $this->setUsedRouteParams(array_merge(
-            $this->request->query->all(),
-            $this->request->request->all()
-        ));
     }
 
     /**
@@ -217,12 +202,12 @@ class PaginatorService {
 
         $data = array();
 
-        if ($paginationData['current'] < $paginationData['lastPageInRange']-1) {
+        if ($paginationData['current'] < $paginationData['lastPageInRange']) {
             $this->routeParams['page'] = $paginationData['current'] + 1;
             $data['nextPageLink'] = $this->router->generate($this->route, $this->routeParams, true);
         }
 
-        if ($paginationData['current'] > $paginationData['firstPageInRange']-1) {
+        if ($paginationData['current'] > $paginationData['firstPageInRange']-1 && $paginationData['current'] > 1) {
             $this->routeParams['page'] = $paginationData['current'] - 1;
             $data['previousPageLink'] = $this->router->generate($this->route, $this->routeParams, true);
         }

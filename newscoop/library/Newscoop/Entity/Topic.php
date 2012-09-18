@@ -10,7 +10,7 @@ namespace Newscoop\Entity;
 use Doctrine\ORM\Mapping AS ORM;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\TopicRepository")
  * @ORM\Table(name="TopicNames")
  */
 class Topic
@@ -36,6 +36,12 @@ class Topic
      * @var string
      */
     private $name;
+
+    /**
+     * Link to topic articles resource
+     * @var string
+     */
+    private $articlesLink;
 
     /**
      * @param int $id
@@ -77,6 +83,26 @@ class Topic
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set link to topic articles resource
+     * @param string $articlesLink Link to topic articles resource
+     */
+    public function setArticlesLink($articlesLink)
+    {
+        $this->articlesLink = $articlesLink;
+
+        return $this;
+    }
+
+    /**
+     * Get link to topic articles resource
+     * @return string Link to topic articles resource
+     */
+    public function getArticlesLink()
+    {
+        return $this->articlesLink;
     }
 
     /**

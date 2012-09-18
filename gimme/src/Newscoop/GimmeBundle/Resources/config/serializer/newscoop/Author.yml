@@ -14,12 +14,8 @@ Newscoop\Entity\Author:
             expose: true
             read_only: true
             serialized_name: lastName
-        types:
-            expose: true
-            read_only: true
-            serialized_name: types
-            access_type: public_method
         image:
             expose: true
             read_only: true
+            type: image_uri
             serialized_name: image

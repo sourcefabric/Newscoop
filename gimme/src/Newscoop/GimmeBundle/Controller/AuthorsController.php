@@ -23,6 +23,15 @@ class AuthorsController extends FOSRestController
      */
     public function getArticleAction($id)
     {
+        $em = $this->container->get('em');
+        $author = $em->getRepository('Newscoop\Entity\Author')
+            ->getAuthor($id)
+            ->getOneOrNullResult();
 
+        if (!$author) {
+            throw new NotFoundHttpException('Author was not found.');
+        }
+
+        return $author;
     }
 }
