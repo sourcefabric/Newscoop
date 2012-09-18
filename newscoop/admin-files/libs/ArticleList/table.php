@@ -306,6 +306,9 @@ tables['<?php echo $this->id; ?>'] = table.dataTable({
 <?php if ($this->items === null && !isset($this->type)) { ?>
 $('<input type="checkbox" name="showtype" value="with_filtered" id="display_filtered_types_<?php echo $this->id; ?>" /> <label for="display_filtered_types_<?php echo $this->id; ?>"><?php putGS("Display articles of filtered types"); ?></label>')
     .appendTo('#filter_type_<?php echo $this->id; ?>');
+$('#filter_type_<?php echo $this->id; ?>').css('float', 'right');
+$('#filter_type_<?php echo $this->id; ?>').css('margin-right', '20px');
+$('#filter_type_<?php echo $this->id; ?>').css('margin-top', '1px');
 
 $('#filter_type_<?php echo $this->id; ?>').css('margin-bottom', '5px');
 
