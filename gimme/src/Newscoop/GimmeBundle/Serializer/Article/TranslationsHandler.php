@@ -36,7 +36,7 @@ class TranslationsHandler implements SerializationHandlerInterface
             ->getResult();
 
         $articleTranslationsArray = array();
-        foreach($articleTranslations as $article) {
+        foreach ($articleTranslations as $article) {
             $articleTranslationsArray[$article->getLanguageCode()] = $this->router->generate('newscoop_gimme_articles_getarticle', array('number' => $article->getNumber(), 'language' => $article->getLanguageCode()), true);
         }
 
