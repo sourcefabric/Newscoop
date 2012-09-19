@@ -54,16 +54,28 @@ class Admin_ImageController extends Zend_Controller_Action
         $this->_helper->layout->setLayout('iframe');
         
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginator-hash.phtml');
-        
+
+        $source_criteria = array('source' => array('local', 'feedback'));
+        $newsfeed = $this->_getParam('newsfeed', 0);
+        if ($newsfeed) {
+            $source_criteria = array();
+        }
+
         $page = $this->_getParam('page', 1);
-        $count = $this->_helper->service('image')->getCountBy(array());
+
+        $count = $this->_helper->service('image')->getCountBy($source_criteria);
         $paginator = Zend_Paginator::factory($count);
         $paginator->setItemCountPerPage(self::LIMIT);
         $paginator->setCurrentPageNumber($page);
         $paginator->setView($this->view);
         $paginator->setDefaultScrollingStyle('Sliding');
-        
         $this->view->paginator = $paginator;
+
+        $this->view->newsfeed = false;
+        if ($newsfeed) {
+            $this->view->newsfeed = true;
+        }
+
         $this->view->article = $this->_getParam('article_number');
         
         $this->view->languageId = $this->_getParam('language_id');
@@ -76,7 +88,7 @@ class Admin_ImageController extends Zend_Controller_Action
             $this->view->q = $this->_getParam('q');
         }
         else {
-            $this->view->images = $this->_helper->service('image')->findBy(array(), array('id' => 'desc'), self::LIMIT, ($paginator->getCurrentPageNumber() - 1) * self::LIMIT);
+            $this->view->images = $this->_helper->service('image')->findBy($source_criteria, array('id' => 'desc'), self::LIMIT, ($paginator->getCurrentPageNumber() - 1) * self::LIMIT);
         }
     }
     
