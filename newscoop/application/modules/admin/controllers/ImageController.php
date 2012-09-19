@@ -84,7 +84,7 @@ class Admin_ImageController extends Zend_Controller_Action
         
         $this->view->q = '';
         if ($this->_getParam('q', false)) {
-            $this->view->images = $this->_helper->service('image.search')->find($this->_getParam('q'));
+            $this->view->images = $this->_helper->service('image.search')->find($this->_getParam('q'), $source_criteria);
             $this->view->q = $this->_getParam('q');
         }
         else {

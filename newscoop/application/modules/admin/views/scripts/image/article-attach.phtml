@@ -93,7 +93,7 @@ camp_load_translation_strings("media_archive");
         <div style="margin: 8px;">
         </div>
         
-        <form method="post" action="<?php echo($this->url(array(
+        <form id="search-form" method="post" action="<?php echo($this->url(array(
             'module' => 'admin',
             'controller' => 'image',
             'action' => 'article-attach',
@@ -263,17 +263,26 @@ $('.image-detach').mouseout(function() {
 });
 
 $('#with_newsfeeds').click(function() {
-        var cur_url = window.location.href;
-        var new_url = cur_url.replace(/#.*/i, "");
-        new_url = new_url.replace(/\/page\/.*/i, "");
-        new_url = new_url.replace(/\/newsfeed\/.*/i, "");
-        new_url += "/"
-        new_url = new_url.replace(/\/\/$/, "/");
+    var q_set = <?php if($this->q) { echo 'true'; } else { echo 'false'; } ?>;
+
+    var cur_url = window.location.href;
+    var new_url = cur_url.replace(/#.*/i, "");
+    new_url = new_url.replace(/\/page\/.*/i, "");
+    new_url = new_url.replace(/\/newsfeed\/.*/i, "");
+    new_url += "/"
+    new_url = new_url.replace(/\/\/$/, "/");
 <?php if (!$this->newsfeed) { ?>
-        new_url += "newsfeed/1/";
+    new_url += "newsfeed/1/";
 <?php } ?>
+
+    if (!q_set) {
         new_url += "#media-archive";
         window.location.href = new_url;
+    }
+    else {
+        $("#search-form").attr('action', new_url);
+        $("#search-form").submit();
+    }
 });
 
 </script>

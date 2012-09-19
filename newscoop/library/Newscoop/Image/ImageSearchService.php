@@ -31,13 +31,32 @@ class ImageSearchService
      * @param string $query
      * @return array
      */
-    public function find($query)
+    public function find($query, $p_criteria = null)
     {
         $qb = $this->orm->getRepository('Newscoop\Image\LocalImage')->createQueryBuilder('i');
 
+        $tokens_spec = $qb->expr()->orx();
+
         $tokens = explode(' ', trim($query));
         foreach ($tokens as $i => $token) {
-            $qb->orWhere($qb->expr()->like('i.description', $qb->expr()->literal("%{$token}%")));
+
+            $tokens_spec->add($qb->expr()->like('i.description', $qb->expr()->literal("%{$token}%")));
+        }
+
+        if (!empty($tokens_spec)) {
+            $qb->andWhere($tokens_spec);
+        }
+
+        if (is_array($p_criteria) && isset($p_criteria['source']) && is_array($p_criteria['source']) && (!empty($p_criteria['source']))) {
+
+            $source_cases = array();
+            foreach ($p_criteria['source'] as $one_source) {
+                //$source_cases[] = $qb->expr()->literal($one_source);
+                $source_cases[] = $one_source;
+            }
+
+            $qb->andwhere('i.source IN (:source)');
+            $qb->setParameter('source', $source_cases);
         }
 
         return $qb->getQuery()->getResult();
