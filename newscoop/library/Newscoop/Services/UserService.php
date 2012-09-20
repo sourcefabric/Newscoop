@@ -16,6 +16,8 @@ use Doctrine\Common\Persistence\ObjectManager,
  */
 class UserService implements ObjectRepository
 {
+    const USER_ENTITY = 'Newscoop\Entity\User';
+
     /** @var \Doctrine\Common\Persistence\ObjectManager */
     private $em;
 
@@ -302,9 +304,19 @@ class UserService implements ObjectRepository
     private function getRepository()
     {
         if (null === $this->repository) {
-            $this->repository = $this->em->getRepository('Newscoop\Entity\User');
+            $this->repository = $this->em->getRepository(self::USER_ENTITY);
         }
 
         return $this->repository;
+    }
+
+    /**
+     * Get user entity class name
+     *
+     * @return string
+     */
+    public function getClassName()
+    {
+        return self::USER_ENTITY;
     }
 }

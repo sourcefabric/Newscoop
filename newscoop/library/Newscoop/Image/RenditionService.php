@@ -60,7 +60,7 @@ class RenditionService
         $old = $this->getArticleRendition($articleNumber, $rendition);
         if ($old !== null) {
             $this->orm->remove($old);
-            $this->orm->flush($old);
+            $this->orm->flush();
         }
 
         $articleRendition = new ArticleRendition($articleNumber, $rendition, $image, $imageSpecs);
@@ -81,7 +81,7 @@ class RenditionService
         $articleRendition = $this->getArticleRendition($articleNumber, $rendition);
         if ($articleRendition !== null) {
             $this->orm->remove($articleRendition);
-            $this->orm->flush($articleRendition);
+            $this->orm->flush();
         }
     }
 
@@ -102,7 +102,7 @@ class RenditionService
 
         foreach ($renditions as $one_rend) {
             $this->orm->remove($one_rend);
-            $this->orm->flush($one_rend);
+            $this->orm->flush();
         }
     }
 

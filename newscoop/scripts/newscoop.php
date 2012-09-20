@@ -32,6 +32,7 @@ $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\UpdateIngestCommand(),
     new \Newscoop\Tools\Console\Command\LogMaintenanceCommand(),
     new \Newscoop\Tools\Console\Command\SendStatsCommand(),
+    new \Newscoop\Tools\Console\Command\UpdateImageStorageCommand(),
 ));
 
 $cli->run();
