@@ -43,7 +43,7 @@ class UpdateStorageService
      */
     public function updateStorage($batchSize = 100)
     {
-        $images = $this->em->getRepository('Newscoop\Image\LocalImage')
+        $images = $this->getImageRepository()
             ->findImagesForStorageUpdate($batchSize);
 
         foreach ($images as $image) {
@@ -65,5 +65,27 @@ class UpdateStorageService
             $this->storage->moveImage($image->getPath()),
             $this->storage->moveThumbnail($image->getThumbnailPath())
         );
+    }
+
+    /**
+     * Test if given image can be deleted
+     *
+     * @param string $imagePath
+     * @return bool
+     */
+    public function isDeletable($imagePath)
+    {
+        return $this->getImageRepository()
+            ->getImageFileReferencesCount($imagePath) <= 1;
+    }
+
+    /**
+     * Get image repository
+     *
+     * @return Newscoop\Entity\Repository\ImageRepository
+     */
+    private function getImageRepository()
+    {
+        return $this->em->getRepository('Newscoop\Image\LocalImage');
     }
 }
