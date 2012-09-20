@@ -55,4 +55,24 @@ class ImageUpdateStorageServiceTest extends \TestCase
         $this->assertEquals('images/a/bc/abc.jpg', $image->getPath());
         $this->assertEquals('images/thumbnails/a/bc/abc.jpg', $image->getThumbnailPath());
     }
+
+    public function testIsDeletableNoReference()
+    {
+        $this->assertTrue($this->service->isDeletable('image'));
+    }
+
+    public function testIsDeletableMultiReferences()
+    {
+        $image = new LocalImage();
+        $image->updateStorage('image', 'thumb');
+        $this->em->persist($image);
+
+        $image = new LocalImage();
+        $image->updateStorage('image', 'thumb');
+        $this->em->persist($image);
+
+        $this->em->flush();
+
+        $this->assertFalse($this->service->isDeletable('image'));
+    }
 }
