@@ -516,7 +516,7 @@ class CampGetImage
     private function getLocalFileName()
     {
         if ($this->m_image->getUrl() == '') {
-            return basename($this->m_image->getImageStorageLocation());
+            return $this->m_image->getImageFileName();
         } else {
             return md5($this->m_image->getUrl()).'.'.$this->getEnding();
         }

@@ -192,6 +192,18 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         $container->register('image.search', 'Newscoop\Image\ImageSearchService')
             ->addArgument(new sfServiceReference('em'));
 
+        $container->register('storage.adapter', 'Zend_Cloud_StorageService_Adapter_FileSystem')
+            ->addArgument(array(
+                Zend_Cloud_StorageService_Adapter_FileSystem::LOCAL_DIRECTORY => APPLICATION_PATH . '/..',
+            ));
+
+        $container->register('storage', 'Newscoop\Storage\StorageService')
+            ->addArgument(new sfServiceReference('storage.adapter'));
+
+        $container->register('image.update-storage', 'Newscoop\Image\UpdateStorageService')
+            ->addArgument(new sfServiceReference('em'))
+            ->addArgument(new sfServiceReference('storage'));
+
         $container->register('package', 'Newscoop\Package\PackageService')
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('image'));
