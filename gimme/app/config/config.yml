@@ -9,12 +9,6 @@ framework:
     profiler: { only_exceptions: false }
     session : ~
 
-# enable the web profiler
-web_profiler:
-    toolbar: true
-    intercept_redirects: true
-    verbose: true
-
 # FOSRestBundle Configuration
 fos_rest:
     allowed_methods_listener: true
@@ -56,6 +50,9 @@ jms_serializer:
             Newscoop:
                 namespace_prefix: Newscoop\Entity
                 path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
+            Newscoop_Package:
+                namespace_prefix: Newscoop\Package
+                path: "@NewscoopGimmeBundle/Resources/config/serializer/newscoop"
 
 
 # SensioExtraBundle Configuration
@@ -79,3 +76,7 @@ knp_paginator:
     template:
         pagination: KnpPaginatorBundle:Pagination:sliding.html.twig     # sliding pagination controls template
         sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+
+newscoop_gimme:
+    allow_origin:
+        - "*"

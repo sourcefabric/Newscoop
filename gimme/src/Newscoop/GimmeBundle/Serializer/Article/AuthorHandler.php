@@ -8,11 +8,6 @@
 
 namespace Newscoop\GimmeBundle\Serializer\Article;  
 
-use Symfony\Component\Yaml\Inline;
-use JMS\SerializerBundle\Serializer\YamlSerializationVisitor;
-use JMS\SerializerBundle\Serializer\GenericSerializationVisitor;
-use JMS\SerializerBundle\Serializer\JsonSerializationVisitor;
-use JMS\SerializerBundle\Serializer\XmlSerializationVisitor;
 use JMS\SerializerBundle\Serializer\VisitorInterface;
 use JMS\SerializerBundle\Serializer\Handler\SerializationHandlerInterface;
 
@@ -31,12 +26,12 @@ class AuthorHandler implements SerializationHandlerInterface
     public function serialize(VisitorInterface $visitor, $data, $type, &$visited)
     {   
         if ($type != 'Newscoop\\Entity\\Article') {
-            return true;
+            return false;
         }
 
         if (count($data->getArticleAuthors()) == 0) {
             $data->setArticleAuthors(null);
-            return true;
+            return null;
         }
 
         $articleAuthors = array();
@@ -48,5 +43,7 @@ class AuthorHandler implements SerializationHandlerInterface
         }
 
         $data->setArticleAuthors($articleAuthors);
+
+        return true;
     }
 }

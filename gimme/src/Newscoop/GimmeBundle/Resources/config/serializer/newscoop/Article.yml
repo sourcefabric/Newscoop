@@ -5,24 +5,94 @@ Newscoop\Entity\Article:
             expose: true
             read_only: true
             type: string
+            groups: ["list", "details"]
             serialized_name: number
         name:
             expose: true
             read_only: true
             type: string
+            groups: ["list", "details"]
             serialized_name: title
         date:
             expose: true
             read_only: true
             type: datetime
+            groups: ["list", "details"]
             serialized_name: updated
+        type:
+            expose: true
+            read_only: true
+            type: datetime
+            groups: ["list", "details"]
+            serialized_name: type
+        webcode:
+            expose: true
+            read_only: true
+            type: datetime
+            groups: ["list", "details"]
+            access_type: public_method
+            serialized_name: webcode
+        keywords:
+            expose: true
+            read_only: true
+            type: datetime
+            groups: ["list", "details"]
+            access_type: public_method
+            serialized_name: keywords
+        language:
+            expose: true
+            read_only: true
+            type: datetime
+            groups: ["list", "details"]
+            accessor: getLanguageCode
+            serialized_name: language
         published:
             expose: true
             read_only: true
             type: string
+            groups: ["list", "details"]
             serialized_name: published
         articleAuthors:
             expose: true
             read_only: true
             type: author
+            groups: ["list", "details"]
             serialized_name: authors
+        comments_link:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            type: comments_link
+            serialized_name: comments
+        packages:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            access_type: public_method
+            serialized_name: slideshow
+        topics:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            access_type: public_method
+            serialized_name: topics
+        fields:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            type: article_fields
+            serialized_name: fields
+        translations:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            type: article_translations
+            access_type: public_method
+            serialized_name: translations
+        renditions:
+            expose: true
+            read_only: true
+            groups: ["list", "details"]
+            type: article_renditions
+            access_type: public_method
+            serialized_name: renditions

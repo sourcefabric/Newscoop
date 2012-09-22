@@ -8,8 +8,8 @@
         {
             "package": "behat/behat",
             "version": "dev-master",
-            "source-reference": "v2.4.3",
-            "commit-date": "1343494428"
+            "source-reference": "v2.4.4",
+            "commit-date": "1346770758"
         },
         {
             "package": "behat/common-contexts",
@@ -34,8 +34,8 @@
         {
             "package": "doctrine/doctrine-bundle",
             "version": "dev-master",
-            "source-reference": "8e1149b0ac01e8f9441a523bec81011803485602",
-            "commit-date": "1346369162"
+            "source-reference": "3600872919186e1a40e8fd556e65f6dca6337cc9",
+            "commit-date": "1346617185"
         },
         {
             "package": "doctrine/mongodb",
@@ -76,8 +76,14 @@
         {
             "package": "friendsofsymfony/rest-bundle",
             "version": "dev-master",
-            "source-reference": "c05cdaa35729d0719025db4f91fa35f5660d11d0",
-            "commit-date": "1346154884"
+            "alias-pretty-version": "0.9.x-dev",
+            "alias-version": "0.9.9999999.9999999-dev"
+        },
+        {
+            "package": "friendsofsymfony/rest-bundle",
+            "version": "dev-master",
+            "source-reference": "1ee6920c32ef5aa421f6c162bdc5231f0e348cb7",
+            "commit-date": "1346927289"
         },
         {
             "package": "jms/metadata",
@@ -130,14 +136,20 @@
         {
             "package": "monolog/monolog",
             "version": "dev-master",
-            "source-reference": "1.2.1",
-            "commit-date": "1346241200"
+            "source-reference": "a929570bb7688b39fefe4106f0ecf0ac35f37647",
+            "commit-date": "1346873566"
         },
         {
             "package": "sensio/distribution-bundle",
             "version": "dev-master",
-            "source-reference": "a86d2c0d7212851cc4e971abdff13b89eb063861",
-            "commit-date": "1346246961"
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "sensio/distribution-bundle",
+            "version": "dev-master",
+            "source-reference": "v2.1.0",
+            "commit-date": "1346859132"
         },
         {
             "package": "sensio/framework-extra-bundle",
@@ -148,7 +160,7 @@
         {
             "package": "sensio/framework-extra-bundle",
             "version": "dev-master",
-            "source-reference": "1281f6218226ddb88df8546f28a3166e2a0cb55d",
+            "source-reference": "v2.1.0",
             "commit-date": "1346234539"
         },
         {
@@ -178,8 +190,8 @@
         {
             "package": "symfony/symfony",
             "version": "dev-master",
-            "source-reference": "c0673d77d02e9955f9e80b82478d0b7259a3fc31",
-            "commit-date": "1346413296"
+            "source-reference": "cba2a31e3631ab9043389f8f7df873da0e6c8f47",
+            "commit-date": "1346926365"
         },
         {
             "package": "twig/twig",

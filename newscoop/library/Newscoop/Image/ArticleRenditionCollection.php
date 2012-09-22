@@ -40,10 +40,15 @@ class ArticleRenditionCollection implements \ArrayAccess
      * Test if can provide image for rendition
      *
      * @param Newscoop\Image\Rendition $rendition
+     * @param boolean $strict Check only key existing
      * @return bool
      */
-    public function offsetExists($rendition)
+    public function offsetExists($rendition, $strict = false)
     {
+        if ($strict) {
+            return array_key_exists((string) $rendition, $this->renditions);
+        }
+
         return array_key_exists((string) $rendition, $this->renditions) || ($this->defaultImage !== null && $rendition->fits($this->defaultImage));
     }
 

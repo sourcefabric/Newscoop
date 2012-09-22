@@ -89,6 +89,12 @@ class Article
     private $articleAuthorTypes;
 
     /**
+     * Article fields used by Newscoop API
+     * @var array
+     */
+    private $fields;
+
+    /**
      * Article Authors for Newscoop\Gimme
      * @var object
      */
@@ -136,6 +142,17 @@ class Article
      * @var int
      */
     private $comments_enabled;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="thread", indexBy="language")
+     * @var Newscoop\Entity\Comments
+     */
+    private $comments;
+
+    /**
+     * @var string
+     */
+    private $comments_link;
     
     /**
      * @ORM\Column(name="Type", nullable=True)
@@ -205,6 +222,34 @@ class Article
     private $lockUser;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Topic")
+     * @ORM\JoinTable(name="ArticleTopics",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="NrArticle", referencedColumnName="Number")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="TopicId", referencedColumnName="fk_topic_id")
+     *      }
+     *  )
+     * @var Newscoop\Entity\Topic
+     */
+    private $topics;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Playlist")
+     * @ORM\JoinTable(name="playlist_article",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="article_no", referencedColumnName="Number")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="id_playlist", referencedColumnName="id_playlist")
+     *      }
+     *  )
+     * @var Newscoop\Entity\Playlist
+     */
+    private $playlists;
+
+    /**
      * @ORM\Column(type="datetime", name="LockTime", nullable=True)
      * @var DateTime
      */
@@ -221,6 +266,32 @@ class Article
      * @var int
      */
     private $objectId;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Package\Package")
+     * @ORM\JoinTable(name="package_article_package",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="article_id", referencedColumnName="Number")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="package_id", referencedColumnName="id")
+     *      }
+     *  )
+     * @var Newscoop\Package\Package
+     */
+    private $packages;
+
+    /**
+     * Article renditions used by Newscoop API
+     * @var array
+     */
+    private $renditions;
+
+    /**
+     * Article translations used by Newscoop API
+     * @var array
+     */
+    private $translations;
 
     /**
      * @ORM\OneToOne(targetEntity="Newscoop\Entity\Webcode")
@@ -373,6 +444,16 @@ class Article
         return ($this->language) ? $this->language->getId() : null;
     }
 
+    /**
+     * Get language code
+     *
+     * @return int
+     */
+    public function getLanguageCode()
+    {
+        return ($this->language) ? $this->language->getCode() : null;
+    }
+
 
     /**
      * Get number
@@ -412,6 +493,14 @@ class Article
     public function commentsEnabled()
     {
         return (int) $this->comments_enabled;
+    }
+
+    /**
+     * Set comments_link
+     * @param string $link uri for comments resource in Newscoop API
+     */
+    public function setCommentsLink($link) {
+        $this->comments_link = $link;
     }
     
     /**
@@ -475,6 +564,10 @@ class Article
      */
     public function getWebcode()
     {
+        if (!$this->webcode) {
+            return null;
+        }
+
         return (string) $this->webcode;
     }
 
@@ -486,6 +579,31 @@ class Article
     public function hasWebcode()
     {
         return isset($this->webcode);
+    }
+
+    /**
+     * Get keywords
+     *
+     * @return string
+     */
+    public function getKeywords()
+    {
+        if (!$this->keywords) {
+            return null;
+        }
+
+        return (string) $this->keywords;
+    }
+
+    /**
+     * Set Keywords
+     *
+     * $keywords
+     */
+    public function setKeywords($keywords)
+    {
+        $this->keywords = $keywords;
+        return $this;
     }
 
     /**
@@ -509,5 +627,120 @@ class Article
         }
 
         return $this->articleAuthors;
-    }    
+    }
+
+    /**
+     * Set Packages
+     * $packages
+     */
+    public function setPackages($packages)
+    {
+        $this->packages = $packages;
+    }
+
+    /**
+     * Get packages
+     *
+     * @return object
+     */
+    public function getPackages()
+    {
+        if (count($this->packages) == 0) {
+            return null;
+        }
+        
+        return $this->packages;
+    }
+
+    /**
+     * Set Topics
+     * $topics
+     */
+    public function setTopics($topics)
+    {
+        $this->topics = $topics;
+    }
+
+    /**
+     * Get topics
+     *
+     * @return object
+     */
+    public function getTopics()
+    {
+        if (count($this->topics) == 0) {
+            return null;
+        }
+
+        return $this->topics;
+    }
+
+    /**
+     * Set Fields
+     * $fields
+     */
+    public function setFields($fields)
+    {
+        $this->fields = $fields;
+    }
+
+    /**
+     * Get fields
+     *
+     * @return object
+     */
+    public function getFields()
+    {
+        if (count($this->fields) == 0) {
+            return null;
+        }
+
+        return $this->fields;
+    }
+
+    /**
+     * Set translations
+     * $translations
+     */
+    public function setTranslations($translations)
+    {
+        $this->translations = $translations;
+    }
+
+    /**
+     * Get translations
+     *
+     * @return object
+     */
+    public function getTranslations()
+    {
+        if (count($this->translations) == 0) {
+            return null;
+        }
+
+        return $this->translations;
+    }
+
+    /**
+     * Set renditions
+     * $renditions
+     */
+    public function setRenditions($renditions)
+    {
+        $this->renditions = $renditions;
+    }
+
+    /**
+     * Get renditions
+     *
+     * @return object
+     */
+    public function getRenditions()
+    {
+        if (count($this->renditions) == 0) {
+            return null;
+        }
+
+        return $this->renditions;
+    }
 }

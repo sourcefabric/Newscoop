@@ -127,6 +127,11 @@ services:
     package.search:
         class:      Newscoop\Package\PackageSearchService
         arguments:  ["@em"]
+    zend_router:
+        class:      Newscoop\Router\RouterFactory
+        factory_class:  Newscoop\Router\RouterFactory
+        factory_method: initRouter
+        arguments:  ["@service_container"]
     subscription:
         class:      Newscoop\Subscription\SubscriptionFacade
         arguments:  ["@em"]

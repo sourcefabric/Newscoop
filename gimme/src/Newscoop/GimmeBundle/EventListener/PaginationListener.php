@@ -74,5 +74,13 @@ class PaginationListener
 
         $this->paginatorService->setPagination($pagination);
         $this->paginatorService->setPartialResponse($partialResponse);
+
+        /**
+         * Append all used parameters from get and post
+         */
+        $this->paginatorService->setUsedRouteParams(array_merge(
+            $request->query->all(),
+            $request->request->all()
+        ));
     }
 }
