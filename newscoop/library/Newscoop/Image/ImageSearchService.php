@@ -31,9 +31,13 @@ class ImageSearchService
      * @param string $query
      * @return array
      */
-    public function find($query, $p_criteria = null)
+    public function find($query, $p_criteria = null, $p_sort = null, $p_paging = null, &$p_count = null)
     {
+        $p_count = 0;
+
         $qb = $this->orm->getRepository('Newscoop\Image\LocalImage')->createQueryBuilder('i');
+        $qb_count = $this->orm->getRepository('Newscoop\Image\LocalImage')->createQueryBuilder('i')
+            ->select('COUNT(i)');
 
         $tokens_spec = $qb->expr()->orx();
 
@@ -45,19 +49,38 @@ class ImageSearchService
 
         if (!empty($tokens_spec)) {
             $qb->andWhere($tokens_spec);
+            $qb_count->andWhere($tokens_spec);
         }
 
         if (is_array($p_criteria) && isset($p_criteria['source']) && is_array($p_criteria['source']) && (!empty($p_criteria['source']))) {
 
             $source_cases = array();
             foreach ($p_criteria['source'] as $one_source) {
-                //$source_cases[] = $qb->expr()->literal($one_source);
                 $source_cases[] = $one_source;
             }
 
             $qb->andwhere('i.source IN (:source)');
             $qb->setParameter('source', $source_cases);
+            $qb_count->andwhere('i.source IN (:source)');
+            $qb_count->setParameter('source', $source_cases);
         }
+
+        if ((!empty($p_sort)) && is_array($p_sort)) {
+            foreach($p_sort as $sort_column => $sort_dir) {
+                $qb->addOrderBy('i.'.$sort_column, $sort_dir);
+            }
+        }
+
+        if ((!empty($p_paging)) && is_array($p_paging)) {
+            if (isset($p_paging['length'])) {
+                $qb->setMaxResults(0 + $p_paging['length']);
+            }
+            if (isset($p_paging['offset'])) {
+                $qb->setFirstResult(0 + $p_paging['offset']);
+            }
+        }
+
+        $p_count = 0 + (int) $qb_count->getQuery()->getSingleScalarResult();
 
         return $qb->getQuery()->getResult();
     }
