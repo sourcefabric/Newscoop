@@ -277,11 +277,26 @@ $(function() {
 });
 
 window.search_functor = null;
+window.check_functor = null;
 
 $(function() {
     window.last_input_search = '' + $("#search_input").val();
+});
 
-    setInterval("check_input_search();", 1000);
+$("#search_input").focus(function() {
+    if (window.check_functor) {
+        return;
+    }
+
+    window.check_functor = setInterval("check_input_search();", 500);
+});
+$("#search_input").blur(function() {
+    if (!window.check_functor) {
+        return;
+    }
+
+    clearInterval(window.check_functor);
+    check_input_search();
 });
 
 function check_input_search() {
@@ -293,7 +308,6 @@ function check_input_search() {
     }
 };
 
-/*
 $("#search_input").keydown(function() {
     check_input_search();
 });
@@ -313,7 +327,6 @@ $("#search_input").mouseup(function() {
 $("#search_input").change(function() {
     check_input_search();
 });
-*/
 
 on_input_search = function() {
 
@@ -345,7 +358,7 @@ on_input_search = function() {
     $("#search-form").attr('action', search_url);
 
     clearTimeout(window.window.search_functor);
-    window.search_functor = setTimeout("search_on_change();", 2000);
+    window.search_functor = setTimeout("search_on_change();", 1500);
 
 };
 
