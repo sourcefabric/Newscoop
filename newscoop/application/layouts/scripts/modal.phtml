@@ -17,7 +17,18 @@
     <link rel="stylesheet" href="<?php echo $this->baseUrl('/admin-style/slideshow-list.css'); ?>" />
     <?php echo $this->headStyle(); ?>
 
+<?php
+    global $Campsite;
+    if ($Campsite['SSL_SITE']) {
+?>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<?php
+    } else {
+?>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<?php
+    }
+?>
     <script type="text/javascript" src="<?php echo $this->baseUrl('/js/underscore.js'); ?>"></script>
     <script type="text/javascript" src="<?php echo $this->baseUrl('/js/backbone.js'); ?>"></script>
     <?php echo $this->headScript(); ?>

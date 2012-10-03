@@ -1,7 +1,18 @@
 <h1>Composite Zend Form Elements</h1>
 <?php echo $this->form; ?>
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.1/jquery.min.js"></script>
+<?php
+    global $Campsite;
+    if ($Campsite['SSL_SITE']) {
+?>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<?php
+    } else {
+?>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.min.js"></script>
+<?php
+    }
+?>
 <script type="text/javascript">
 $(function()
 {
