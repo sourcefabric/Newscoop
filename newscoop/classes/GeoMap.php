@@ -323,6 +323,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
     {
         global $g_ado_db;
 
+        Geo_MapLocation::CleanFound();
+
         $article_number = 0;
 
         if ($p_articleObj)
@@ -363,6 +365,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
      */
     public static function OnArticleDelete($p_articleNumber)
     {
+        Geo_MapLocation::CleanFound();
+
         return Geo_Map::UnlinkArticle(null, $p_articleNumber);
     } // fn OnArticleDelete
 
@@ -379,6 +383,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
     public static function OnLanguageDelete($p_articleNumber, $p_languageId)
     {
         global $g_ado_db;
+
+        Geo_MapLocation::CleanFound();
 
         $queryStr_sel = 'SELECT mll.id AS mll_id, mll.fk_content_id AS con_id FROM MapLocationLanguages AS mll ';
         $queryStr_sel .= 'INNER JOIN MapLocations AS ml ON mll.fk_maplocation_id = ml.id ';
@@ -457,6 +463,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
     {
         global $g_ado_db;
 
+        Geo_MapLocation::CleanFound();
+
         $queryStr_sel = 'SELECT id FROM MapLocations WHERE fk_map_id = ?';
 
         $queryStr_del = 'DELETE FROM Maps WHERE id = ?';
@@ -513,6 +521,9 @@ class Geo_Map extends DatabaseObject implements IGeoMap
     public static function OnArticleCopy($p_srcArticleNumber, $p_destArticleNumber, $p_copyTranslations, $p_userId = null)
     {
         global $g_ado_db;
+
+        Geo_MapLocation::CleanFound();
+
         $list_fill = '%%id_list%%';
         $lang_fill = '%%id_langs%%';
 
@@ -652,6 +663,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
     {
         global $g_ado_db;
 
+        Geo_MapLocation::CleanFound();
+
         $queryStr_sel = 'SELECT mll.fk_maplocation_id AS ml_id, mll.fk_content_id AS con_id, mll.poi_display AS display ';
         $queryStr_sel .= 'FROM Maps AS m INNER JOIN MapLocations AS ml ON ml.fk_map_id = m.id ';
         $queryStr_sel .= 'INNER JOIN MapLocationLanguages AS mll ON mll.fk_maplocation_id = ml.id ';
@@ -762,6 +775,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
      */
     public static function StoreMapData($p_mapId, $p_languageId, $p_articleNumber, $p_map = '', $p_remove = '', $p_insert = '', $p_locations = '', $p_contents = '', $p_order = '')
     {
+        Geo_MapLocation::CleanFound();
+
         $security_problem = array('status' => '403', 'description' => 'Invalid security token!');
         $unknown_request = array('status' => '404', 'description' => 'Unknown request!');
         $data_wrong = array('status' => '404', 'description' => 'Wrong data.');
@@ -1173,6 +1188,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
         global $g_ado_db;
         global $g_user;
 
+        Geo_MapLocation::CleanFound();
+
         if (is_object($p_map))
         {
             $p_map = get_object_vars($p_map);
@@ -1243,6 +1260,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
     public static function RemovePoints($p_mapId, $p_removal)
     {
         global $g_ado_db;
+
+        Geo_MapLocation::CleanFound();
 
 /*
     A)
@@ -1482,6 +1501,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
     {
         global $g_ado_db;
         global $g_user;
+
+        Geo_MapLocation::CleanFound();
 
         // this should not happen
         if (0 == $p_mapId) {return array();}
