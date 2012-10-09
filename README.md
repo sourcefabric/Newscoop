@@ -29,7 +29,7 @@ Only 4 steps:
  
 * Fork sourcefabric/Newscoop repository - [how to fork][2].
 * Clone your fork
-* Create new local future branch - [how to create branch][3]
+* Create new local feature branch - [how to create branch][3]
 * Create pull request with your feature/bugfix - [how to create pull request][4]
 
 ## License
