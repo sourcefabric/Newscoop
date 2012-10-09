@@ -377,7 +377,7 @@ class Article
     }
 
     /**
-     * Get data
+     * Get article type field data
      *
      * @param string $field
      * @return mixed
@@ -396,7 +396,7 @@ class Article
     }
 
     /**
-     * Set data
+     * Set article type field data
      *
      * @param string $field
      * @param string $value
