@@ -9,11 +9,10 @@ Quick links to our resources are:
 
 * Manuals for Newscoop [http://manuals.sourcefabric.org][6]
 * Forums and mailing lists: [http://forum.sourcefabric.org][7]
-* Bug Tracking: [http://dev.sourcefabric.org][8]
-* Code view/review: [http://code.sourcefabric.org][9]
-* Public source code hosting: [http://github.com/sourcefabric][10]
-* Download link: [https://sourceforge.net/projects/newscoop/][11]
-* Developer's wiki: [http://wiki.sourcefabric.org][12]
+* Bug Tracking: [http://dev.sourcefabric.org/browse/CS][8]
+* Public source code hosting: [http://github.com/sourcefabric][9]
+* Download link: [https://sourceforge.net/projects/newscoop/][10]
+* Developer's wiki: [https://wiki.sourcefabric.org/display/CS/Wiki][11]
 
 ## Installation
 
@@ -43,8 +42,7 @@ Newscoop is licensed under the GPL3 license.
 [5]: http://en.wikipedia.org/wiki/Newscoop
 [6]: http://manuals.sourcefabric.org
 [7]: http://forum.sourcefabric.org
-[8]: http://dev.sourcefabric.org
-[9]: http://code.sourcefabric.org
-[10]: http://github.com/sourcefabric
-[11]: https://sourceforge.net/projects/newscoop/
-[12]: http://wiki.sourcefabric.org
+[8]: http://dev.sourcefabric.org/browse/CS
+[9]: http://github.com/sourcefabric
+[10]: https://sourceforge.net/projects/newscoop/
+[11]: https://wiki.sourcefabric.org/display/CS/Wiki
