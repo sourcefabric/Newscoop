@@ -36,4 +36,24 @@ class AdoDbStatement
     {
         return $this->statement->fetch();
     }
+
+    /**
+     * Get record count
+     *
+     * @return int
+     */
+    public function recordCount()
+    {
+        return $this->rowCount();
+    }
+
+    /**
+     * Get row count
+     *
+     * @return int
+     */
+    public function rowCount()
+    {
+        return $this->statement->rowCount();
+    }
 }
