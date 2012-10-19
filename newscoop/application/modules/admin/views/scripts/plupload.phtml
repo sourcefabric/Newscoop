@@ -17,7 +17,7 @@ $(function() {
     uploader.pluploadQueue({
         runtimes : "html5, html4",
         unique_names : true,
-        max_file_size: '2mb',
+        max_file_size: <?php echo json_encode($this->maxFileSize()); ?>,
         chunk_size: '500kb',
 
         url : <?php echo json_encode($this->plupload->url); ?>,

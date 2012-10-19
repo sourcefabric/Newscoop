@@ -12,9 +12,9 @@ camp_load_translation_strings("media_archive");
 
 $f_image_url = Input::Get('f_image_url', 'string', '', true);
 $nrOfFiles = isset($_POST['uploader_count']) ? $_POST['uploader_count'] : 0;
-$f_article_edit = $_POST['f_article_edit'];
-$f_language_id = $_POST['f_language_id'];
-$f_article_number = $_POST['f_article_number'];
+$f_article_edit = isset($_POST['f_article_edit']) ? $_POST['f_article_edit'] : null;
+$f_language_id = isset($_POST['f_language_id']) ? $_POST['f_language_id'] : null;
+$f_article_number = isset($_POST['f_article_number']) ? $_POST['f_article_number'] : null;
 
 if (!SecurityToken::isValid()) {
     camp_html_display_error(getGS('Invalid security token!'));
