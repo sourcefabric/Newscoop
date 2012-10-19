@@ -9,6 +9,7 @@ namespace Newscoop\Doctrine;
 
 use InvalidArgumentException;
 use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DBALException;
 
 /**
  * AdoDb Adapter
@@ -240,5 +241,26 @@ class AdoDbAdapter
     public function createDatabase($database)
     {
         $this->connection->getSchemaManager()->createDatabase($database);
+    }
+
+    /**
+     * Performs select with given limit and offset params
+     *
+     * @param string $sql
+     * @param int $limit
+     * @param int $offset
+     * @return mixed
+     */
+    public function selectLimit($sql, $limit = -1, $offset = -1)
+    {
+        if ($limit > -1) {
+            $sql .= sprintf(' LIMIT %d', $limit);
+        }
+
+        if ($offset > -1) {
+            $sql .= sprintf(' OFFSET %d',  $offset);
+        }
+
+        return $this->execute($sql);
     }
 }

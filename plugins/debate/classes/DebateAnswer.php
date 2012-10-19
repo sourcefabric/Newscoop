@@ -462,9 +462,7 @@ class DebateAnswer extends DatabaseObject
             if (strpos($comparisonOperation['left'], 'language_id') !== false) {
                 $hasLanguageId = true;
             }
-            $whereCondition = $comparisonOperation['left'] . ' '
-                . $comparisonOperation['symbol'] . " '"
-                . $g_ado_db->escape($comparisonOperation['right']) . "' ";
+            $whereCondition = $g_ado_db->escapeOperation($comparisonOperation);
             $selectClauseObj->addWhere($whereCondition);
         }
 

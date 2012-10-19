@@ -289,8 +289,8 @@ class PollAnswerAttachment extends DatabaseObject {
             return;
         }
 
-        $sqlClauseObj->addWhere("fk_poll_nr = '" . $g_ado_db->escape($poll_nr) . "'");
-        $sqlClauseObj->addWhere("fk_pollanswer_nr = '" . $g_ado_db->escape($pollanswer_nr) . "'");
+        $sqlClauseObj->addWhere("fk_poll_nr = " . $g_ado_db->escape($poll_nr));
+        $sqlClauseObj->addWhere("fk_pollanswer_nr = " . $g_ado_db->escape($pollanswer_nr));
 
         if (!is_array($p_order)) {
             $p_order = array();

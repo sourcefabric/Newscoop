@@ -666,16 +666,11 @@ class Poll extends DatabaseObject {
                 $selectClauseObj->addWhere($whereCondition);
             } elseif (strpos($comparisonOperation['left'], 'language_id') !== false) {
                 $language_id = $comparisonOperation['right'];
-
-                    $whereCondition = $comparisonOperation['left'] . ' '
-                    . $comparisonOperation['symbol'] . " '"
-                    . $g_ado_db->escape($comparisonOperation['right']) . "' ";
-                    $selectClauseObj->addWhere($whereCondition);
+                $whereCondition = $g_ado_db->escapeOperation($comparisonOperation);
+                $selectClauseObj->addWhere($whereCondition);
 
             } else {
-                $whereCondition = $comparisonOperation['left'] . ' '
-                . $comparisonOperation['symbol'] . " '"
-                . $g_ado_db->escape($comparisonOperation['right']) . "' ";
+                $whereCondition = $g_ado_db->escapeOperation($comparisonOperation);
                 $selectClauseObj->addWhere($whereCondition);
             }
         }
