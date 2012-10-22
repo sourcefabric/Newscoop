@@ -1454,7 +1454,9 @@ function camp_load_geodata($p_mysqlCmd, $p_dbConf)
         $access_params .= ' -P ' . escapeshellarg('' . $db_port);
     }
     $access_params .= ' -u ' . escapeshellarg($db_user);
-    $access_params .= ' -p' . escapeshellarg($db_pass);
+    if (!empty($db_pass)) {
+        $access_params .= ' -p' . escapeshellarg($db_pass);
+    }
     $access_params .= ' -D ' . escapeshellarg($db_name);
     $cmd_string = escapeshellcmd($p_mysqlCmd) . $access_params . ' --local-infile=1 < ' . 'geonames.sql';
     $cmd_output = array();
