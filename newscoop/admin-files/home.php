@@ -27,12 +27,10 @@ if (!SystemPref::get('installation_id')) {
 }
 
 $request_only = false;
-if (!SystemPref::get('support_send') && SystemPref::get('stat_ask_time') + 60*60*24*7 <= time() && !(isset($_SESSION['statDisplayed']) && $_SESSION['statDisplayed'])) {
+if (!SystemPref::get('support_send') && SystemPref::get('stat_ask_time') <= time() && empty($_SESSION['statDisplayed'])) {
     $statUrl = $Campsite['WEBSITE_URL'].'/admin/support/popup';
     $request_only = true;
-    ?>
-    <a style="display: none;" id="dummy_stat_link" href="<?php echo($statUrl); ?>"></a>
-    <?php
+    ?><a style="display: none;" id="dummy_stat_link" href="<?php echo($statUrl); ?>"></a><?php
 }
 
 // clear cache
@@ -107,7 +105,7 @@ $(document).ready(function() {
         enableEscapeButton: false,
         centerOnScroll: true,
         onClosed: function() {
-            $.get("<?php echo($Campsite['WEBSITE_URL'].'/admin/support/close'); ?>", function(data) {
+            $.getJSON("<?php echo($Campsite['WEBSITE_URL'].'/admin/support/close'); ?>", function(data) {
                 window.location.reload();
             });
         },
