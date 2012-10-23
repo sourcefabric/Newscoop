@@ -1,104 +1,116 @@
 <?php $this->placeholder('title')->captureStart(); ?>
 <?php putGS('Users'); ?>
-<span class="inline-search">
-    <input type="text" name="q" /> <button id="user-search" class="search"><?php putGS('Search'); ?></button>
+<span id="search-view" class="inline-search">
+    <input type="text" size="34" name="q" placeholder="<?php putGS('Search for username/email'); ?>" /> <button><?php putGS('Search'); ?></button>
 </span>
 <?php $this->placeholder('title')->captureEnd(); ?>
 
 <div class="aside">
-    <ul class="filters">
+    <ul id="status-filter" class="filters">
         <li class="vspace"><?php putGS('Status'); ?></li>
-        <li><a href="#active"><?php putGS('Active'); ?> (<span id="activeCount"><?php echo $this->activeCount; ?></span>)</a></li>
-        <li><a href="#pending"><?php putGS('Pending'); ?> (<span id="pendingCount"><?php echo $this->pendingCount; ?></span>)</a></li>
-        <li><a href="#inactive"><?php putGS('Inactive'); ?> (<span id="inactiveCount"><?php echo $this->inactiveCount; ?></span>)</a></li>
+        <?php foreach ($this->form->status->getMultiOptions() as $status => $label) { ?>
+        <li><a href="#<?php echo $status; ?>"><?php echo $this->escape($label); ?> (<span><?php echo $this->counts[$status]; ?></span>)</a></li>
+        <?php } ?>
     </ul>
 
     <?php echo $this->renderActions(); ?>
+
+    <div id="chart"></div>
 </div>
 
-<div class="canvas"></div>
+<div id="list-wrapper" class="canvas">
+    <div class="controls">
+        <div id="pagination" class="paginationControl"></div>
+        <div id="filter"><dl><?php echo $this->form->groups; ?></dl></div>
+    </div>
+    <ul id="user-list" class="users"></ul>
+</div>
 
+<script type="text/html" id="user-active-template">
+<div class="inline-actions">
+    <a href="#delete" class="delete" title="<?php putGS('delete user'); ?> <%= user.escape('username') %>"><?php putGS('Delete'); ?></a>
+</div>
+<a href="<%= user.getLink('edit') %>" class="edit" title="<?php putGS('edit user'); ?> <%= user.escape('username') %>"><%= user.escape('username') %>
+<% if (user.get('is_verified')) { %><abbr title="<?php putGS('Verified profile'); ?>" class="verified">V</abbr><% } %>
+</a>
+<a href="mailto:<%= user.get('email') %>" class="mailto" title="<?php putGS('Send email to user:'); ?> <%= user.escape('username') %>"><%= user.get('email') %></a>
+<span class="created"><%= user.get('created') %></span>
+</script>
+
+<script type="text/html" id="user-inactive-template">
+<div class="inline-actions">
+    <a href="#token" class="token" title="<?php putGS('send confirmation email'); ?>"><?php putGS('Send confirm email'); ?></a> |
+    <a href="#delete" class="delete" title="<?php putGS('delete user'); ?> <%= user.escape('username') %>"><?php putGS('Delete'); ?></a>
+</div>
+<a class="edit"><%= user.escape('username') %></a>
+<span class="agent"><abbr title="<%= user.escape('http_user_agent') %>"><%= user.get('http_user_agent').split(' ').shift() %></abbr></span>
+<a href="mailto:<%= user.get('email') %>" class="mailto"><%= user.get('email') %></a>
+<span class="created"><%= user.get('created') %></span>
+</script>
+
+<script type="text/html" id="user-deleted-template">
+<a class="edit"><%= user.escape('username') %></a>
+<a class="mailto">&nbsp;</a>
+<span class="created"><%= user.get('created') %> - <%= user.get('updated') %></span>
+</script>
+
+<script type="text/javascript" src="<?php echo $this->baseUrl('js/underscore.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl('js/backbone.js'); ?>"></script>
+<script type="text/javascript" src="<?php echo $this->baseUrl('js/apps/users.js'); ?>"></script>
 <script type="text/javascript">
 $(function() {
-    var initActive = function() {
-        if (window.location.hash && $('a[href="' + window.location.hash + '"]').size()) {
-            $('a[href="' + window.location.hash + '"]').click();
-        } else if (window.location.hash && window.location.hash.search('search/')) {
-            var q = window.location.hash.replace('#search/', '');
-            $('.inline-search input:text').val(q);
-            $('#user-search').click();
-        } else {
-            $('.filters a').first().click();
-        }
-    }
+    window.translate = <?php echo json_encode(array(
+        'No users found.' => getGS('No users found.'),
+        'Are you sure you want to {action}?' => getGS('Are you sure you want to {action}?'),
+        'New confirmation email was sent to user.' => getGS('New confirmation email was sent to user.'),
+        'User was deleted.' => getGS('User was deleted.'),
+    )); ?>;
 
-    $('.filters a').click(function(e) {
-        e.preventDefault();
-
-        var filter = this.hash.slice(1);
-        $('.canvas').load("<?php echo $this->url(array(
-            'action' => 'list',
-        )); ?>" + "/filter/" + filter);
-
-        $('.filters a').not(this).removeClass('active');
-        $(this).addClass('active');
-        $('.inline-search input:text').val('');
-        window.location.hash = this.hash;
-    });
-
-    $('.paginationControl a').live('click', function(e) {
-        e.preventDefault();
-        $('.canvas').load($(this).attr('href'));
-    });
-
-    $('a.send-confirm-email').live('click', function(e) {
-        e.preventDefault();
-
-        if (!confirm(<?php echo json_encode(getGS('Do you really want to send confirmation email?')); ?>)) {
-            return;
-        }
-
-        $.getJSON(this.href, {'format': 'json'}, function(data, textStatus, jqXHR) {
-            flashMessage(<?php echo json_encode(getGS("New confirmation email was sent to user.")); ?>);
-        });
-    });
-
-    $('a.delete').live('click', function(e) {
-        e.preventDefault();
-
-        if (!confirm(<?php echo json_encode(getGS('Do you really want to delete user?')); ?>)) {
-            return;
-        }
-
-        $.getJSON(this.href, {'format': 'json'}, function(data, textStatus, jqXHR) {
-            if (data.message) {
-                flashMessage(data.message, 'error');
-                return;
-            }
-
-            flashMessage(<?php echo json_encode(getGS("User was deleted.")); ?>);
-            
-            $.getJSON("<?php echo $this->url(array('format' => 'json')); ?>", function(data, textStatus, jqXHR) {
-                $('.filters a span').each(function() {
-                    $(this).html(data[$(this).attr('id')]);
-                });
-            });
-
-            initActive();
-        });
-    });
-
-    $('#user-search').click(function() {
-        var q = $.trim($(this).prev('input:text').val());
-        q = q.replace(/\s+/g, '+');
-        window.location.hash = 'search/' + q;
-        $('.canvas').load("<?php echo $this->url(array(
-            'action' => 'search',
-        )); ?>" + "/q/" + q);
-
-        $('.filters a').removeClass('active');
-    });
-
-    initActive();
+    var users = new UserCollection();
+    var list = new UserListView({collection: users, el: $('#user-list')});
+    var statusFilter = new StatusFilterView({collection: users, el: $('#status-filter')});
+    var pagination = new PaginationView({collection: users, el: $('#pagination')});
+    var selectFilter = new SelectFilterView({collection: users, el: $('#groups')});
+    var search = new SearchView({collection: users, el: $('#search-view')});
+    users.url = <?php echo json_encode($this->url(array('action' => 'index', 'format' => 'json'))); ?>;
+    users.reset(users.parse(<?php echo json_encode($this); ?>));
 });
+</script>
+
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<script type="text/javascript">
+    // Load the Visualization API and the piechart package.
+    google.load('visualization', '1.0', {'packages':['corechart']});
+
+    // Set a callback to run when the Google Visualization API is loaded.
+    google.setOnLoadCallback(drawChart);
+
+    // Callback that creates and populates a data table,
+    // instantiates the pie chart, passes in the data and
+    // draws it.
+    function drawChart() {
+
+        // Create the data table.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Type');
+        data.addColumn('number', 'Users');
+        data.addRows([
+            ['Newscoop', <?php echo $this->newscoopLoginCount; ?>],
+            ['Facebook', <?php echo $this->facebookLoginCount; ?>]
+        ]);
+
+        // Set chart options
+        var options = {
+            'title':<?php echo json_encode(getGS('Active Logins')); ?>,
+            'width':180,
+            'height':180,
+            'legend': {
+                'position': 'bottom'
+            }
+        };
+
+        // Instantiate and draw our chart, passing in some options.
+        var chart = new google.visualization.PieChart(document.getElementById('chart'));
+        chart.draw(data, options);
+    }
 </script>

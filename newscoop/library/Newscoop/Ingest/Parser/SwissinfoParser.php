@@ -69,6 +69,14 @@ class SwissinfoParser implements Parser
         }
 
         $content = implode("", $content);
+        $content[]= '<p class="swiss-info-free">';
+        $free_section = $this->story->xpath('./property[5]');
+        if ($free_section[0]->xpath('.//content[@type="TextBlock"]/property[1]/value/string')) {
+            $content[] = (string) array_shift($free_section[0]->xpath('.//content[@type="TextBlock"]/property[1]/value/string'));
+        }
+        $content[]= '</p>';
+
+        $content = implode('', $content);
 
         return $content;
     }
