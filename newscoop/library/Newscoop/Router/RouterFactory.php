@@ -65,14 +65,15 @@ class RouterFactory
                 'action' => 'profile',
             )));
 
+        $image = $container->getParameter('image');
         $router->addRoute('image',
-            new \Zend_Controller_Router_Route_Regex($container->getParameter('image')['cache_url'] . '/(.*)', array(
+            new \Zend_Controller_Router_Route_Regex($image['cache_url'] . '/(.*)', array(
                 'module' => 'default',
                 'controller' => 'image',
                 'action' => 'cache',
             ), array(
                 1 => 'src',
-            ), $container->getParameter('image')['cache_url'] . '/%s'));
+            ), $image['cache_url'] . '/%s'));
 
          $router->addRoute('rest',
             new \Zend_Rest_Route($front, array(), array(
