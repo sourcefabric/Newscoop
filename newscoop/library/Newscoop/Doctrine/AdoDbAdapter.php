@@ -233,6 +233,17 @@ class AdoDbAdapter
     }
 
     /**
+     * Test if there is a table with given name
+     *
+     * @param string $table
+     * @return bool
+     */
+    public function hasTable($table)
+    {
+        return $this->connection->getSchemaManager()->tablesExist($table);
+    }
+
+    /**
      * Create a new database
      *
      * @param string $database
