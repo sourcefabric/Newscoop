@@ -86,23 +86,29 @@ class Image extends DatabaseObject
 			camp_load_translation_strings("api");
 		}
 
-		// Deleting the images from disk is the most common place for
-		// something to go wrong, so we do that first.
-		$thumb = $this->getThumbnailStorageLocation();
-		$imageFile = $this->getImageStorageLocation();
+        $imageStorageService = Zend_Registry::get('container')->getService('image.update-storage');
+        if ($imageStorageService->isDeletable($this->getImageFileName())) {
+            // Deleting the images from disk is the most common place for
+            // something to go wrong, so we do that first.
+            $thumb = $this->getThumbnailStorageLocation();
+            $imageFile = $this->getImageStorageLocation();
 
-		if (file_exists($thumb) && !is_writable($thumb)) {
-			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $thumb), CAMP_ERROR_DELETE_FILE);
-		}
-		if (file_exists($imageFile) && !is_writable($imageFile)) {
-			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $imageFile), CAMP_ERROR_DELETE_FILE);
-		}
-		if (file_exists($imageFile) && !unlink($imageFile)) {
-			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $imageFile), CAMP_ERROR_DELETE_FILE);
-		}
-		if (file_exists($thumb) && !unlink($thumb)) {
-			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $thumb), CAMP_ERROR_DELETE_FILE);
-		}
+            if (file_exists($thumb) && !is_writable($thumb)) {
+	            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $thumb), CAMP_ERROR_DELETE_FILE);
+            }
+
+            if (file_exists($imageFile) && !is_writable($imageFile)) {
+	            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $imageFile), CAMP_ERROR_DELETE_FILE);
+            }
+
+            if (file_exists($imageFile) && !unlink($imageFile)) {
+	            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $imageFile), CAMP_ERROR_DELETE_FILE);
+            }
+
+            if (file_exists($thumb) && !unlink($thumb)) {
+	            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $thumb), CAMP_ERROR_DELETE_FILE);
+            }
+        }
 
 		// Delete all the references to this image.
 		ArticleImage::OnImageDelete($this->getImageId());
