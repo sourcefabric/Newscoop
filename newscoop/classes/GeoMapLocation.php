@@ -19,6 +19,10 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
 {
     const TABLE = 'MapLocations';
 
+    private static $s_found_maplocations_by_map = NULL;
+    private static $s_found_maplocations_list = NULL;
+    private static $s_found_maplocations_list_ext = NULL;
+
     /** @var string */
     public $m_dbTableName = self::TABLE;
 
@@ -173,6 +177,13 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
         return $this->getLanguage($language)->isEnabled();
     }
 
+    public static function CleanFound()
+    {
+        self::$s_found_maplocations_by_map = NULL;
+        self::$s_found_maplocations_list = NULL;
+        self::$s_found_maplocations_list_ext = NULL;
+    }
+
     /**
      * Get locations by map
      * @param IGeoMap
@@ -181,6 +192,17 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
     public static function GetByMap(IGeoMap $map)
     {
         global $g_ado_db;
+
+        $list_spec = array(
+            'map_id' => $map->getId(),
+        );
+        $list_spec_str = serialize($list_spec);
+
+        if ((!empty(self::$s_found_maplocations_by_map)) && (isset(self::$s_found_maplocations_by_map[$list_spec_str]))) {
+            $list_res_data = self::$s_found_maplocations_by_map[$list_spec_str];
+            $list = $list_res_data['list'];
+            return $list;
+        }
 
         $queryStr = 'SELECT ml.*, l.*, X(l.poi_location) as latitude, Y(l.poi_location) as longitude, ml.id as id
             FROM ' . self::TABLE . ' ml
@@ -197,6 +219,14 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             $mapLocation->location = new Geo_Location($row);
             $mapLocations[] = $mapLocation;
         }
+
+        if (empty(self::$s_found_maplocations_by_map)) {
+            self::$s_found_maplocations_by_map = array();
+        }
+        self::$s_found_maplocations_by_map[$list_spec_str] = array(
+            'list' => $mapLocations,
+        );
+
         return $mapLocations;
     }
 
@@ -218,6 +248,22 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
                                    $p_start = 0, $p_limit = 0, &$p_count, $p_skipCache = false)
     {
         global $g_ado_db;
+
+        $list_spec = array(
+            'params' => $p_parameters,
+            'order' => $p_order,
+            'start' => $p_start,
+            'limit' => $p_limit,
+            'skip_cache' => $p_skipCache,
+        );
+        $list_spec_str = serialize($list_spec);
+
+        if ((!$p_skipCache) && (!empty(self::$s_found_maplocations_list)) && (isset(self::$s_found_maplocations_list[$list_spec_str]))) {
+            $list_res_data = self::$s_found_maplocations_list[$list_spec_str];
+            $p_count = $list_res_data['count'];
+            $list = $list_res_data['list'];
+            return $list;
+        }
 
         $selectClauseObj = new SQLSelectClause();
         $countClauseObj = new SQLSelectClause();
@@ -284,6 +330,14 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             }
         }
 
+        if (empty(self::$s_found_maplocations_list)) {
+            self::$s_found_maplocations_list = array();
+        }
+        self::$s_found_maplocations_list[$list_spec_str] = array(
+            'count' => $p_count,
+            'list' => $list,
+        );
+
         return $list;
     }
 
@@ -320,6 +374,28 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             $ps_saveArray = true;
             $p_rawData = array();
         }
+
+        $list_spec = array(
+            'params' => $p_parameters,
+            'order' => $p_order,
+            'start' => $p_start,
+            'limit' => $p_limit,
+            'skip_cache' => $p_skipCache,
+            'raw_data' => $p_rawData,
+        );
+        $list_spec_str = serialize($list_spec);
+
+        if ((!$p_skipCache) && (!empty(self::$s_found_maplocations_list_ext)) && (isset(self::$s_found_maplocations_list_ext[$list_spec_str]))) {
+            $list_res_data = self::$s_found_maplocations_list_ext[$list_spec_str];
+            $p_count = $list_res_data['count'];
+            $list_obj = $list_res_data['list_obj'];
+
+            if ($ps_saveArray) {
+                $p_rawData = $list_res_data['list_raw'];
+            }
+            return $list_obj;
+        }
+
         $ps_mapId = 0;
         $ps_languageId = 0;
         $ps_preview = false;
@@ -1194,6 +1270,15 @@ class Geo_MapLocation extends DatabaseObject implements IGeoMapLocation
             $cacheList_arr->storeInCache(array('count' => $p_count, 'data' => $dataArray));
             $cacheList_obj->storeInCache(array('count' => $p_count, 'data' => $objsArray));
         }
+
+        if (empty(self::$s_found_maplocations_list_ext)) {
+            self::$s_found_maplocations_list_ext = array();
+        }
+        self::$s_found_maplocations_list_ext[$list_spec_str] = array(
+            'count' => $p_count,
+            'list_raw' => $dataArray,
+            'list_obj' => $objsArray,
+        );
 
         if ($ps_saveArray) {
             $p_rawData = $dataArray;
