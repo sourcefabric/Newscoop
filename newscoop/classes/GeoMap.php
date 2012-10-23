@@ -1631,6 +1631,8 @@ class Geo_Map extends DatabaseObject implements IGeoMap
      */
     private static function GetLargeMapOpener($p_mapSuffix, $p_widthLargeMap, $p_heightLargeMap, $p_labelLargeMap, $p_tagStringPrev, $p_tagStringBody)
     {
+        global $Campsite;
+
         $tag_string_fin = '';
 
         $tag_string_fin .= '
@@ -1672,7 +1674,7 @@ window.geo_open_large_map' . $p_mapSuffix . ' = function(params)
     window.map_win_popup.document.write("<html xmlns=\"http://www.w3.org/1999/xhtml\">\n");
     window.map_win_popup.document.write("<head profile=\"http://gmpg.org/xfn/11\">\n");
     window.map_win_popup.document.write("<title>' . $p_labelLargeMap . '</title>\n");
-    window.map_win_popup.document.write("<" + "script src=\"http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js\"><" + "/script>\n");
+    window.map_win_popup.document.write("<" + "script src=\"//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js\"><" + "/script>\n");
     window.map_win_popup.document.write("\n");
     window.map_win_popup.document.write("\n");
 ';
