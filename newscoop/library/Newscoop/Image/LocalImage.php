@@ -87,6 +87,12 @@ class LocalImage implements ImageInterface
     private $items;
 
     /**
+     * @Column(name="Source")
+     * @var string
+     */
+    private $source;
+
+    /**
      * @param string $image
      */
     public function __construct($image)
@@ -297,5 +303,15 @@ class LocalImage implements ImageInterface
     public function getCaption()
     {
         return $this->getDescription();
+    }
+
+    /**
+     * Get source
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->source;
     }
 }

@@ -54,30 +54,54 @@ class Admin_ImageController extends Zend_Controller_Action
         $this->_helper->layout->setLayout('iframe');
         
         Zend_View_Helper_PaginationControl::setDefaultViewPartial('paginator-hash.phtml');
-        
-        $page = $this->_getParam('page', 1);
-        $count = $this->_helper->service('image')->getCountBy(array());
+
+        $source_criteria = array('source' => array('local', 'feedback'));
+        $newsfeed = $this->_getParam('newsfeed', 0);
+        if ($newsfeed) {
+            $source_criteria = array();
+        }
+
+        $page = (int) $this->_getParam('page', 1);
+        if (1 > $page) {
+            $page = 1;
+        }
+
+        $count = 0;
+
+        $this->view->q = $this->_getParam('search', '');
+        if (is_array($this->view->q)) {
+            $this->view->q = $this->view->q[0];
+        }
+
+        if (!empty($this->view->q)) {
+            $search_paging = array(
+                'length' => self::LIMIT,
+                'offset' => ($page - 1) * self::LIMIT,
+            );
+            $search_count = 0;
+
+            $this->view->images = $this->_helper->service('image.search')->find($this->view->q, $source_criteria, array('id' => 'desc'), $search_paging, $search_count);
+            $count = $search_count;
+        } else {
+            $count = $this->_helper->service('image')->getCountBy($source_criteria);
+            $this->view->images = $this->_helper->service('image')->findBy($source_criteria, array('id' => 'desc'), self::LIMIT, ($page - 1) * self::LIMIT);
+        }
+
         $paginator = Zend_Paginator::factory($count);
         $paginator->setItemCountPerPage(self::LIMIT);
         $paginator->setCurrentPageNumber($page);
         $paginator->setView($this->view);
         $paginator->setDefaultScrollingStyle('Sliding');
-        
         $this->view->paginator = $paginator;
-        $this->view->article = $this->_getParam('article_number');
-        
-        $this->view->languageId = $this->_getParam('language_id');
-        
-        $this->view->articleImages = $this->_helper->service('image')->findByArticle($this->_getParam('article_number'));
-        
-        $this->view->q = '';
-        if ($this->_getParam('q', false)) {
-            $this->view->images = $this->_helper->service('image.search')->find($this->_getParam('q'));
-            $this->view->q = $this->_getParam('q');
+
+        $this->view->newsfeed = false;
+        if ($newsfeed) {
+            $this->view->newsfeed = true;
         }
-        else {
-            $this->view->images = $this->_helper->service('image')->findBy(array(), array('id' => 'desc'), self::LIMIT, ($paginator->getCurrentPageNumber() - 1) * self::LIMIT);
-        }
+
+        $this->view->article = (int) $this->_getParam('article_number', 0);
+        $this->view->languageId = (int) $this->_getParam('language_id', 0);
+        $this->view->articleImages = $this->_helper->service('image')->findByArticle((int) $this->_getParam('article_number', 0));
     }
     
     public function setAttachAction()
