@@ -11,6 +11,8 @@
 require_once dirname(__FILE__) . '/ContextList.php';
 require_once WWW_DIR . '/classes/Article.php';
 
+require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleType.php');
+
 // start >= 0
 $start = max(0,
     empty($_REQUEST['iDisplayStart']) ? 0 : (int) $_REQUEST['iDisplayStart']);
@@ -76,10 +78,15 @@ foreach ($filters as $name => $opts) {
     }
 }
 
-if (empty($_REQUEST['show_newswires']) || $_REQUEST['show_newswires'] == "false") {
-    $articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), 'newswire');
-    $articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), 'event');
-    $articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), 'screening');
+if (empty($_REQUEST['show_filtered']) || $_REQUEST['show_filtered'] == "false") {
+
+    foreach((array) \ArticleType::GetArticleTypes(true) as $one_art_type_name) {
+        $one_art_type = new \ArticleType($one_art_type_name);
+        if ($one_art_type->getFilterStatus()) {
+            $articlesParams[] = new ComparisonOperation('type', new Operator('not', 'string'), $one_art_type->getTypeName());
+        }
+    }
+
 }
 
 // filter out PrintDesk articles
