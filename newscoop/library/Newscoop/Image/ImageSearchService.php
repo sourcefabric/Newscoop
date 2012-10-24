@@ -31,9 +31,9 @@ class ImageSearchService
      * @param string $query
      * @return array
      */
-    public function find($query, $p_criteria = null, $p_sort = null, $p_paging = null, &$p_count = null)
+    public function find($query, $criteria = null, $sort = null, $paging = null, &$count = null)
     {
-        $p_count = 0;
+        $count = 0;
 
         $qb = $this->orm->getRepository('Newscoop\Image\LocalImage')->createQueryBuilder('i');
         $qb_count = $this->orm->getRepository('Newscoop\Image\LocalImage')->createQueryBuilder('i')
@@ -52,10 +52,10 @@ class ImageSearchService
             $qb_count->andWhere($tokens_spec);
         }
 
-        if (is_array($p_criteria) && isset($p_criteria['source']) && is_array($p_criteria['source']) && (!empty($p_criteria['source']))) {
+        if (is_array($criteria) && isset($criteria['source']) && is_array($criteria['source']) && (!empty($criteria['source']))) {
 
             $source_cases = array();
-            foreach ($p_criteria['source'] as $one_source) {
+            foreach ($criteria['source'] as $one_source) {
                 $source_cases[] = $one_source;
             }
 
@@ -65,22 +65,22 @@ class ImageSearchService
             $qb_count->setParameter('source', $source_cases);
         }
 
-        if ((!empty($p_sort)) && is_array($p_sort)) {
-            foreach($p_sort as $sort_column => $sort_dir) {
+        if ((!empty($sort)) && is_array($sort)) {
+            foreach($sort as $sort_column => $sort_dir) {
                 $qb->addOrderBy('i.'.$sort_column, $sort_dir);
             }
         }
 
-        if ((!empty($p_paging)) && is_array($p_paging)) {
-            if (isset($p_paging['length'])) {
-                $qb->setMaxResults(0 + $p_paging['length']);
+        if ((!empty($paging)) && is_array($paging)) {
+            if (isset($paging['length'])) {
+                $qb->setMaxResults(0 + $paging['length']);
             }
-            if (isset($p_paging['offset'])) {
-                $qb->setFirstResult(0 + $p_paging['offset']);
+            if (isset($paging['offset'])) {
+                $qb->setFirstResult(0 + $paging['offset']);
             }
         }
 
-        $p_count = 0 + (int) $qb_count->getQuery()->getSingleScalarResult();
+        $count = 0 + (int) $qb_count->getQuery()->getSingleScalarResult();
 
         return $qb->getQuery()->getResult();
     }
