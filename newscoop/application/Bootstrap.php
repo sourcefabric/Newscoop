@@ -65,7 +65,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         /**
          * Use cached container if exists, and env is set up on production
          */
-        if (APPLICATION_ENV === 'production' && file_exists($file)) {
+        if (APPLICATION_ENV === 'production' && file_exists($file) && php_sapi_name() !== 'cli') {
             require_once $file;
             $container = new NewscoopCachedContainer();
         } else {
