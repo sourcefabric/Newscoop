@@ -18,6 +18,8 @@ use Newscoop\Persistence\ObjectRepository;
  */
 class UserService implements ObjectRepository
 {
+    const USER_ENTITY = 'Newscoop\Entity\User';
+
     /** @var \Doctrine\Common\Persistence\ObjectManager */
     private $em;
 
@@ -357,7 +359,7 @@ class UserService implements ObjectRepository
      */
     public function getClassName()
     {
-        return 'Newscoop\Entity\User';
+        return self::USER_ENTITY;
     }
 
     /**

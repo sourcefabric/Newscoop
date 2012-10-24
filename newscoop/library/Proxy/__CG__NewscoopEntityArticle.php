@@ -141,6 +141,24 @@ class Article extends \Newscoop\Entity\Article implements \Doctrine\ORM\Proxy\Pr
         return parent::getDate();
     }
 
+    public function setData(array $data)
+    {
+        $this->__load();
+        return parent::setData($data);
+    }
+
+    public function getData($field)
+    {
+        $this->__load();
+        return parent::getData($field);
+    }
+
+    public function setFieldData($field, $value)
+    {
+        $this->__load();
+        return parent::setFieldData($field, $value);
+    }
+
     public function commentsEnabled()
     {
         $this->__load();
@@ -157,6 +175,12 @@ class Article extends \Newscoop\Entity\Article implements \Doctrine\ORM\Proxy\Pr
     {
         $this->__load();
         return parent::getPublishDate();
+    }
+
+    public function isPublished()
+    {
+        $this->__load();
+        return parent::isPublished();
     }
 
     public function setCreator(\Newscoop\Entity\User $p_user)
