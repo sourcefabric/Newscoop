@@ -22,7 +22,7 @@
         "behat/behat":                      ">=2.4.0",
         "behat/common-contexts":            "*",
         "kriswallsmith/buzz":               ">=0.7",
-        "knplabs/knp-paginator-bundle":     "v2.2"
+        "knplabs/knp-paginator-bundle":     "dev-master"
     },
     "repositories":[
         {
