@@ -102,6 +102,12 @@ class LocalImage implements ImageInterface
     private $isUpdatedStorage = 0;
 
     /**
+     * @Column(name="Source")
+     * @var string
+     */
+    private $source;
+
+    /**
      * @param string $image
      */
     public function __construct($image = '')
@@ -361,5 +367,15 @@ class LocalImage implements ImageInterface
     public function getThumbnailPath()
     {
         return 'images/thumbnails/' . $this->thumbnailPath;
+    }
+
+    /*
+     * Get source
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->source;
     }
 }
