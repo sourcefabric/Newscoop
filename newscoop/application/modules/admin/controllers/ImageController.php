@@ -82,8 +82,7 @@ class Admin_ImageController extends Zend_Controller_Action
 
             $this->view->images = $this->_helper->service('image.search')->find($this->view->q, $source_criteria, array('id' => 'desc'), $search_paging, $search_count);
             $count = $search_count;
-        }
-        else {
+        } else {
             $count = $this->_helper->service('image')->getCountBy($source_criteria);
             $this->view->images = $this->_helper->service('image')->findBy($source_criteria, array('id' => 'desc'), self::LIMIT, ($page - 1) * self::LIMIT);
         }
