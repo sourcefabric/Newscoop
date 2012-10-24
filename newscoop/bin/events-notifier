@@ -1,11 +1,10 @@
 #!/usr/bin/env php
 <?php
 
-require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
+require_once __DIR__ . '/newscoop_bootstrap.php';
+require_once __DIR__ . '/cli_script_lib.php';
 
-$ETC_DIR = $CAMPSITE_DIR . '/conf';
-
-require_once("$CAMPSITE_DIR/bin/cli_script_lib.php");
+$ETC_DIR = __DIR__ . '/../conf';
 
 if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
 	exit;
@@ -60,6 +59,7 @@ $num_rows = mysql_num_rows($result);
 // if events log exists, inits smarty template system
 if ($num_rows > 0) {
     $tpl = init_smarty();
+    $recipients = get_users_to_notify();
 }
 
 $last_tstamp = 0;
@@ -78,7 +78,6 @@ while ($i < $num_rows && $row = mysql_fetch_array($result, MYSQL_ASSOC)) {
     $message['text'] = $tpl->fetch(NOTIFIER_TEMPLATE);
 
     // reads users emails to notify to
-    $recipients = get_users_to_notify();
     if (sizeof($recipients) <= 0) {
         continue;
     }
@@ -107,13 +106,11 @@ function get_reply_address()
 {
     $sql_query = "SELECT EMail FROM liveuser_users WHERE UName = 'admin'";
     if (!$result = mysql_query($sql_query)) {
-        msg_error('Getting reply address');
-        exit;
+        return;
     }
 
     if (mysql_num_rows($result) <= 0) {
-        msg_error('There is no reply address');
-        exit;
+        return;
     }
 
     $row = mysql_fetch_array($result, MYSQL_ASSOC);
@@ -147,64 +144,17 @@ function get_event_timestamp()
 
 
 /**
+ * Get user emails to notify
+ *
  * @return array $users
  *      An array with users emails to notify to
  */
 function get_users_to_notify()
 {
-    $sql_query = "SELECT g.group_id "
-        . "FROM liveuser_groups AS g, liveuser_rights AS r, liveuser_grouprights AS l "
-        . "WHERE g.group_id = l.group_id AND r.right_id = l.right_id AND r.right_define_name = 'MailNotify'";
-    if (!$result = mysql_query($sql_query)) {
-        msg_error('Getting groups');
-        exit;
-    }
-
-    $groups = array();
-    while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-        $groups[] = $row['group_id'];
-    }
-
-    mysql_free_result($result);
-    if (sizeof($groups) <= 0) {
-        return null;
-    }
-
-    $groups_str = implode(',', $groups);
-    $sql_query = 'SELECT u.EMail '
-        . 'FROM liveuser_users AS u, liveuser_groupusers AS g, liveuser_perm_users AS p '
-        . 'WHERE g.perm_user_id = p.perm_user_id '
-        . 'AND u.Id = p.auth_user_id AND g.group_id IN (' . $groups_str . ')';
-    if (!$result = mysql_query($sql_query)) {
-        msg_error('Getting recipients');
-        exit;
-    }
-
-    $users = array();
-    while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-        $users[] = $row['EMail'];
-    }
-    mysql_free_result($result);
-
-    $sql_query = 'SELECT u.EMail '
-        . 'FROM liveuser_users AS u, liveuser_rights AS r, '
-        . 'liveuser_userrights AS l, liveuser_perm_users AS p '
-        . 'WHERE u.Id = p.auth_user_id AND l.right_id = r.right_id '
-        . 'AND l.perm_user_id = p.perm_user_id AND r.right_id = l.right_id '
-        . "AND r.right_define_name = 'MailNotify'";
-    if (!$result = mysql_query($sql_query)) {
-        msg_error('Getting recipients');
-        exit;
-    }
-
-    while ($row = mysql_fetch_array($result, MYSQL_ASSOC)) {
-        $users[] = $row['EMail'];
-    }
-    mysql_free_result($result);
-
-    return $users;
-} // fn get_users_to_notify
-
+    global $application;
+    $container = $application->getBootstrap()->getResource('container');
+    return $container->getService('notification')->findRecipients();
+}
 
 /**
  * @return boolean
@@ -216,17 +166,16 @@ function send_email($p_message)
         return false;
     }
 
-    $to = implode(', ', $p_message['recipients']);
-    $subject = $p_message['subject'];
-    $message = $p_message['text'];
-    $headers = "From: ".$p_message['reply']."\n" .
-        'X-Mailer: PHP/' . phpversion() . "\n" .
-        "MIME-Version: 1.0\n" .
-        "Content-Type: text/plain; charset=utf-8\n" .
-        "Content-Transfer-Encoding: 8bit\n\n";
+    $mail = new Zend_Mail('utf-8');
+    $mail->addTo($p_message['recipients']);
+    $mail->setSubject($p_message['subject']);
+    $mail->setBodyText($p_message['text']);
 
-    // sends the email message
-    return mail($to, '=?UTF-8?B?'.base64_encode($subject).'?=', $message, $headers);
+    if (!empty($p_message['reply'])) {
+        $mail->setReplyTo($p_message['reply']);
+    }
+
+    return $mail->send();
 } // fn send_email
 
 
@@ -238,9 +187,6 @@ function init_smarty()
 {
     global $CAMPSITE_DIR;
 
-    // includes smarty main class
-   require_once __DIR__ . '/../library/smarty3/Smarty.class.php';
-
     // instantiates smarty template system
     $tpl = new Smarty();
 
@@ -251,6 +197,7 @@ function init_smarty()
     $tpl->config_dir = $CAMPSITE_DIR.'/include/smarty/configs';
     $tpl->template_dir = $CAMPSITE_DIR.'/themes/system_templates';
     $tpl->compile_dir = $CAMPSITE_DIR.'/cache';
+    $tpl->auto_literal = false;
 
     return $tpl;
 } // fn init_smarty

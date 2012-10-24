@@ -130,3 +130,6 @@ services:
     webcode:
         class:      Newscoop\WebcodeFacade
         arguments:  ["@em", "@random"]
+    notification:
+        class:      Newscoop\Services\NotificationService
+        arguments:  ["@em"]
