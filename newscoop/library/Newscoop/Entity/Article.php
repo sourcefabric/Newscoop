@@ -295,9 +295,35 @@ class Article
     {
         return $this->issueId;
     }
-    
-    public function getWorkflowStatus()
+
+    /**
+     * Set workflowStatus
+     *
+     * @param string $status
+     * @return void
+     */
+    public function setWorkflowStatus($workflowStatus)
     {
+        $this->workflowStatus = (string) $workflowStatus;
+    }
+    
+    /**
+     * Get workflowStatus
+     *
+     * @return string
+     */
+    public function getWorkflowStatus($readable = false)
+    {
+        $readableStatus = array(
+            self::STATUS_PUBLISHED => getGs('published'),
+            self::STATUS_NOT_PUBLISHED => getGs('unpublished'),
+            self::STATUS_SUBMITTED => getGs('submited')
+        );
+
+        if ($readable) {
+            return $readableStatus[$this->workflowStatus];
+        }
+        
         return $this->workflowStatus;
     }
 
