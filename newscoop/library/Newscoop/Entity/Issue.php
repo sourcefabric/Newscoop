@@ -16,6 +16,9 @@ use Doctrine\Common\Collections\ArrayCollection;
  */
 class Issue
 {
+    const STATUS_PUBLISHED = 'Y';
+    const STATUS_NOT_PUBLISHED = 'N';
+
     /**
      * Provides the class name as a constant.
      */
@@ -53,6 +56,12 @@ class Issue
      * @var string
      */
     private $name = '';
+
+    /**
+     * @Column(name="Published", nullable=True)
+     * @var string
+     */
+    private $workflowStatus;
 
     /**
      * @OneToMany(targetEntity="Newscoop\Entity\Section", mappedBy="issue")
@@ -236,6 +245,36 @@ class Issue
     public function getShortName()
     {
         return $this->shortName;
+    }
+
+    /**
+     * Set workflowStatus
+     *
+     * @param string $workflowStatus
+     * @return void
+     */
+    public function setWorkflowStatus($workflowStatus)
+    {
+        $this->workflowStatus = (string) $workflowStatus;
+    }
+
+    /**
+     * Get workflowStatus
+     *
+     * @return string
+     */
+    public function getWorkflowStatus($readable = false)
+    {
+        $readableStatus = array(
+            self::STATUS_PUBLISHED => getGs('published'),
+            self::STATUS_NOT_PUBLISHED => getGs('unpublished'),
+        );
+
+        if ($readable) {
+            return $readableStatus[$this->workflowStatus];
+        }
+        
+        return $this->workflowStatus;
     }
 }
 
