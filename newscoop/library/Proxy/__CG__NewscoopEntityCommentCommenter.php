@@ -147,6 +147,12 @@ class Commenter extends \Newscoop\Entity\Comment\Commenter implements \Doctrine\
         return parent::getComments();
     }
 
+    public function __toString()
+    {
+        $this->__load();
+        return parent::__toString();
+    }
+
 
     public function __sleep()
     {

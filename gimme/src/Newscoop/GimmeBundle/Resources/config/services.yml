@@ -2,11 +2,11 @@ services:
     newscoop.paginator.pagination_listener:
         class: Newscoop\GimmeBundle\EventListener\PaginationListener
         tags:
-            - { name: kernel.event_listener, event: kernel.request, method: onRequest, priority: 33 }
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest, priority: 31 }
         arguments:  ["@newscoop.paginator.paginator_service"]
     newscoop.paginator.paginator_service:
         class: Newscoop\Gimme\PaginatorService
-        arguments:  ["@knp_paginator", "@router", "@service_container"]
+        arguments:  ["@knp_paginator", "@router"]
     newscoop.paginator.query_subscriber:
         class: Newscoop\GimmeBundle\EventListener\QuerySubscriber
         arguments:  ["@newscoop.paginator.paginator_service"]
@@ -18,8 +18,21 @@ services:
         arguments:  ["@newscoop.paginator.paginator_service"]
         tags:
             - { name: kernel.event_subscriber}
+    newscoop.publication_service:
+        class: Newscoop\Gimme\PublicationService
+        arguments:  ["@em"]
+    newscoop.gimme.listener.publication:
+        class: Newscoop\GimmeBundle\EventListener\PublicationListener
+        arguments:  ["@newscoop.publication_service"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onRequest }
     newscoop.gimme.listener.format_json:
         class: Newscoop\GimmeBundle\EventListener\FormatJsonResponseListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onResponse }
+    newscoop.gimme.listener.allow_origin:
+        class: Newscoop\GimmeBundle\EventListener\AllowOriginListener
+        arguments:  ["@service_container"]
         tags:
             - { name: kernel.event_listener, event: kernel.response, method: onResponse }
     newscoop.gimme.listener.override_method:
@@ -29,3 +42,26 @@ services:
     newscoop.gimme.serializer.article_author_handler:
         class: Newscoop\GimmeBundle\Serializer\Article\AuthorHandler
         arguments:  ["@router"]
+    newscoop.gimme.serializer.article_comments_link_handler:
+        class: Newscoop\GimmeBundle\Serializer\Article\CommentsLinkHandler
+        arguments:  ["@router"]
+    newscoop.gimme.serializer.author_image_uri_handler:
+        class: Newscoop\GimmeBundle\Serializer\Author\ImageUriHandler
+        arguments:  ["@image", "@zend_router", "@newscoop.publication_service"]
+    newscoop.gimme.serializer.package_items_link_handler:
+        class: Newscoop\GimmeBundle\Serializer\Package\ItemsLinkHandler
+        arguments:  ["@router"]
+    newscoop.gimme.serializer.item_link_handler:
+        class: Newscoop\GimmeBundle\Serializer\Item\LinkHandler
+        arguments:  ["@image", "@zend_router", "@newscoop.publication_service"]
+    newscoop.gimme.serializer.topic_articles_link_handler:
+        class: Newscoop\GimmeBundle\Serializer\Topic\ArticlesLinkHandler
+        arguments:  ["@em", "@router"]
+    newscoop.gimme.serializer.article_fields_handler:
+        class: Newscoop\GimmeBundle\Serializer\Article\FieldsHandler
+    newscoop.gimme.serializer.article_translations_handler:
+        class: Newscoop\GimmeBundle\Serializer\Article\TranslationsHandler
+        arguments:  ["@em", "@router"]
+    newscoop.gimme.serializer.article_renditions_handler:
+        class: Newscoop\GimmeBundle\Serializer\Article\RenditionsHandler
+        arguments:  ["@image", "@zend_router", "@newscoop.publication_service", "@image.rendition"]

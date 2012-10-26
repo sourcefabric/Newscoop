@@ -27,8 +27,14 @@ class NewscoopGimmeExtension extends Extension
     {
         $this->loadNewscoop($configs, $container);
 
-        $configuration = new Configuration();
-        $config = $this->processConfiguration($configuration, $configs);
+        $config = array();
+        foreach ($configs as $subConfig) {
+            $config = array_merge($config, $subConfig);
+        }
+
+        if (array_key_exists('allow_origin', $config)) {
+            $container->setParameter('newscoop.gimme.allow_origin', $config['allow_origin']);
+        }
 
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');

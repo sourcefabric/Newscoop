@@ -27,14 +27,10 @@ class FeatureContext extends BehatContext
         );
 
         $this->browser = $this->getMainContext()->getSubcontext('api')->getBrowser();
-    }
-
-    /**
-     * @Given /^response should contain "code": (\d+)$/
-     */
-    public function responseShouldContainCode($code)
-    {
-        assertNotRegExp('/'.preg_quote('"code": '.$code).'/', $this->browser->getLastResponse()->getContent());
+        $this->getMainContext()->getSubcontext('api')->setPlaceholder('<base_url>', $parameters['base_url']);
+        $this->browser->addListener(new PublicationListener(array(
+            'publication' => $parameters['publication']
+        )));
     }
 
     /**
@@ -56,9 +52,26 @@ class FeatureContext extends BehatContext
     }
 
     /**
-     * @Given /^response shoud have keys "([^"]*)" under "([^"]*)"$/
+     * @Given /^response should have keys "([^"]*)"$/
      */
-    public function responseShoudHaveKeysUnder($keys, $mainKey)
+    public function responseShouldHaveKeys($keys)
+    {
+        $response = json_decode($this->browser->getLastResponse()->getContent(), true);
+        $keys = explode(', ', $keys);
+
+        foreach ($keys as $key) {
+            if (!array_key_exists($key, $response)) {
+                throw new \Exception('key "'.$key.'" don\'t exist');
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * @Given /^response should have keys "([^"]*)" under "([^"]*)"$/
+     */
+    public function responseShouldHaveKeysUnder($keys, $mainKey)
     {
         $response = json_decode($this->browser->getLastResponse()->getContent(), true);
         $keys = explode(', ', $keys);
@@ -93,5 +106,83 @@ class FeatureContext extends BehatContext
 
         return true;
     }
+
+    /**
+     * @Given /^response should have item with keys "([^"]*)"$/
+     */
+    public function responseShouldHaveItemWithKeys($keys)
+    {
+        $response = json_decode($this->browser->getLastResponse()->getContent(), true);
+        $keys = explode(', ', $keys);
+
+        $this->responseShouldHaveWithElements('items');
+
+        $haveAllKeys = false;
+        foreach ($response['items'] as $item) {
+            $itemKeys = array_keys($item);
+            foreach ($keys as $key) {
+                if (!in_array($key, $itemKeys)) {
+                    continue;
+                }
+                return true;
+            }
+        }
+
+        throw new \Exception('There is no items with all provided keys');
+    }
+
+    /**
+     * @Given /^first item from response should have key "([^"]*)" with value (\d+)$/
+     */
+    public function firstItemFromResponseShouldHaveKeyWithValue($key, $value)
+    {
+
+        $response = json_decode($this->browser->getLastResponse()->getContent(), true);
+        $this->responseShouldHaveWithElements('items');
+
+        if ($response['items'][0][$key] == $value) {
+            return true;
+        }
+
+        throw new \Exception($key.' don\'t have value '.$value);
+    }
+
+    /**
+     * @Given /^i should have only "([^"]*)" items$/
+     */
+    public function iShouldHaveOnlyItems($number)
+    {
+        $response = json_decode($this->browser->getLastResponse()->getContent(), true);
+        $this->responseShouldHaveWithElements('items');
+
+        if (count($response['items']) == $number) {
+            return true;
+        }
+
+        throw new \Exception('Items number is not equal '.$number);
+    }
+
+    /**
+     * @Given /^response should have item with only "([^"]*)" keys$/
+     */
+    public function responseShouldHaveItemWithOnlyKeys($keys)
+    {
+        $response = json_decode($this->browser->getLastResponse()->getContent(), true);
+        $keys = explode(', ', $keys);
+
+        $this->responseShouldHaveWithElements('items');
+
+        if (count(array_keys($response['items'][0])) == count($keys)) {
+            foreach ($keys as $key) {
+                if (!array_key_exists($key, $response['items'][0])) {
+                    throw new \Exception('Key '.$key.' don\'t exist');
+                }
+                return true;
+            }
+        }
+
+        throw new \Exception('Response is wrong');
+    }
+
 
 }

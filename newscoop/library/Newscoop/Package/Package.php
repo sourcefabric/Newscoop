@@ -47,6 +47,12 @@ class Package
     private $items;
 
     /**
+     * Items link used by Newscoop API
+     * @var string
+     */
+    private $itemsLink;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Image\Rendition")
      * @ORM\JoinColumn(referencedColumnName="name")
      * @var Newscoop\Image\Rendition
@@ -118,6 +124,16 @@ class Package
     }
 
     /**
+     * Get description
+     *
+     * @return string
+     */
+    public function getDescription()
+    {
+        return $this->description;
+    }
+
+    /**
      * Get items
      *
      * @return Doctrine\Common\Collections\Collection
@@ -125,6 +141,26 @@ class Package
     public function getItems()
     {
         return $this->items;
+    }
+
+    /**
+     * Set items link used by Newscoop API
+     * @param string $link Uri to Items resource
+     */
+    public function setItemsLink($link)
+    {
+        $this->itemsLink = $link;
+
+        return $this;
+    }
+
+    /**
+     * Get items link used by Newscoop API
+     * @return string $link Uri to Items resource
+     */
+    public function getItemsLink()
+    {
+        return $this->itemsLink;
     }
 
     /**

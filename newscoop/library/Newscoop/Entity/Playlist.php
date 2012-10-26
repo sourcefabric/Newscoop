@@ -16,7 +16,8 @@ use Doctrine\ORM\Mapping AS ORM;
 class Playlist extends Entity
 {
 	/**
-     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Id 
+     * @ORM\GeneratedValue
      * @ORM\Column(type="integer", name="id_playlist")
      * @var int
      */
@@ -32,6 +33,32 @@ class Playlist extends Entity
      * @ORM\oneToMany(targetEntity="Newscoop\Entity\PlaylistArticle", mappedBy="playlist", cascade={"all"})
      */
     private $articles;
+
+    /**
+     * Link to topic articles resource
+     * @var string
+     */
+    private $articlesLink;
+    
+    /**
+     * Set link to topic articles resource
+     * @param string $articlesLink Link to topic articles resource
+     */
+    public function setArticlesLink($articlesLink)
+    {
+        $this->articlesLink = $articlesLink;
+
+        return $this;
+    }
+
+    /**
+     * Get link to topic articles resource
+     * @return string Link to topic articles resource
+     */
+    public function getArticlesLink()
+    {
+        return $this->articlesLink;
+    }
 
     /**
      * Returns the name of the playlist
