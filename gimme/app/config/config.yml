@@ -19,7 +19,7 @@ web_profiler:
 fos_rest:
     allowed_methods_listener: true
     routing_loader:
-        default_format: json
+        default_format: ~
     view:
         default_engine: twig
         view_response_listener: force
@@ -33,7 +33,8 @@ fos_rest:
         decoders:
             json: fos_rest.decoder.json
     format_listener:
-        default_priorities: ["json", '*/*']
+        default_priorities:
+            - json
         fallback_format: json
         prefer_extension: true
     exception:
@@ -44,6 +45,8 @@ fos_rest:
             'Symfony\Component\Routing\Exception\MethodNotAllowedException': 404
         messages:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
+            'Symfony\Component\Routing\Exception\MethodNotAllowedException': true
+            'Symfony\Component\HttpKernel\Exception\FlattenException': true
 
 jms_serializer:
     metadata:

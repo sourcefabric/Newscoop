@@ -37,11 +37,11 @@ class QuerySubscriber implements EventSubscriberInterface
 
     public function selectable(ItemsEvent $event)
     {
-        $parialResponse = $this->paginationService->getPartialResponse();
+        $partialResponse = $this->paginationService->getPartialResponse();
         if ($event->target instanceof Query) {
-            if ($parialResponse->getFields()) {
+            if ($partialResponse->getFields()) {
                 $event->target
-                    ->setHint('newscoop.api.fields', $parialResponse->getFields());
+                    ->setHint('newscoop.api.fields', $partialResponse->getFields());
 
                 QueryHelper::addCustomTreeWalker($event->target, 'Newscoop\GimmeBundle\EventListener\Selectable\Doctrine\ORM\Query\SelectWalker');
             }
