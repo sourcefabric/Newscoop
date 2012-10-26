@@ -8,6 +8,8 @@ require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampRequest.php
  */
 class CampGetImage
 {
+    const RFC1123 = 'D, d M Y H:i:s T';
+
     /**
      * @var string $m_imageSource
      *      Path to a local file.
@@ -292,7 +294,8 @@ class CampGetImage
      */
     private function PushImage()
     {
-        header('Cache-Control: public, max-age=3600');
+        header('Expires: ' . gmdate(self::RFC1123, time() + $this->m_ttl));
+        header('Cache-Control: public, max-age=' . $this->m_ttl);
         header('Pragma: cache');
 
         if ($this->m_isLocal && $this->m_ratio == 100 && $this->m_resizeWidth == 0 && $this->m_resizeHeight == 0 && $this->m_crop == null && $this->m_resizeCrop == null) {
@@ -305,11 +308,11 @@ class CampGetImage
             // Checking if the client is validating his cache and if it is current.
             if (isset($headers['If-Modified-Since']) && (strtotime($headers['If-Modified-Since']) == $fmt)) {
                 // Client's cache IS current, so we just respond '304 Not Modified'.
-                header('Last-Modified: '.gmdate('D, d M Y H:i:s', $fmt).' GMT', true, 304);
+                header('Last-Modified: '.gmdate(self::RFC1123, $fmt), true, 304);
             }
             else {
                 // Image not cached or cache outdated, we respond '200 OK' and output the image.
-                header('Last-Modified: '.gmdate('D, d M Y H:i:s', $fmt).' GMT', true, 200);
+                header('Last-Modified: '.gmdate(self::RFC1123, $fmt), true, 200);
                 header('Content-Length: '.filesize($this->getSourcePath()));
                 header('Content-Type: '.$this->m_image->getContentType());
 
@@ -516,7 +519,7 @@ class CampGetImage
     private function getLocalFileName()
     {
         if ($this->m_image->getUrl() == '') {
-            return basename($this->m_image->getImageStorageLocation());
+            return $this->m_image->getImageFileName();
         } else {
             return md5($this->m_image->getUrl()).'.'.$this->getEnding();
         }
@@ -594,11 +597,11 @@ class CampGetImage
         // Checking if the client is validating his cache and if it is current.
         if (isset($headers['If-Modified-Since']) && (strtotime($headers['If-Modified-Since']) == $fmt)) {
             // Client's cache IS current, so we just respond '304 Not Modified'.
-            header('Last-Modified: '.gmdate('D, d M Y H:i:s', $fmt).' GMT', true, 304);
+            header('Last-Modified: '.gmdate(self::RFC1123, $fmt), true, 304);
         }
         else {
             // Image not cached or cache outdated, we respond '200 OK' and output the image.
-            header('Last-Modified: '.gmdate('D, d M Y H:i:s', $fmt).' GMT', true, 200);
+            header('Last-Modified: '.gmdate(self::RFC1123, $fmt), true, 200);
             header('Content-Length: '.filesize($this->getTargetPath()));
             header('Content-Type: '.$this->m_image->getContentType());
 
@@ -625,7 +628,7 @@ class CampGetImage
 
         if (!$p_target) {
             header('Content-type: ' . $this->m_image->getContentType());
-            header('Last-Modified: ' . gmdate("D, d M Y H:i:s") . ' GMT');
+            header('Last-Modified: ' . gmdate(self::RFC1123));
 
             header('Newscoop-Image-Cache: disabled');
             return $function($t);

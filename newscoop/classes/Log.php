@@ -61,7 +61,7 @@ class Log extends DatabaseObject {
         $userIP = substr($ip_ary[0], 0, 39); // IPv6
 
         $queryStr = "INSERT INTO Log (time_created, fk_event_id, fk_user_id, text, user_ip) VALUES
-                    (NOW(), {$p_eventId}, {$p_userId}, '" . $g_ado_db->escape($p_text) . "', '" . $g_ado_db->escape($userIP) . "')";
+                    (NOW(), {$p_eventId}, {$p_userId}, " . $g_ado_db->escape($p_text) . ", " . $g_ado_db->escape($userIP) . ")";
 		$g_ado_db->Execute($queryStr);
 	} // fn Message
 

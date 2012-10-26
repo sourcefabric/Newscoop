@@ -433,9 +433,7 @@ class ArticleImage extends DatabaseObject {
             if (strpos($comparisonOperation['left'], 'NrArticle')) {
                 $hasArticleNr = true;
             }
-            $whereCondition = $comparisonOperation['left'] . ' '
-                . $comparisonOperation['symbol'] . " '"
-                . $g_ado_db->escape($comparisonOperation['right']) . "' ";
+            $whereCondition = $g_ado_db->escapeOperation($comparisonOperation);
             $selectClauseObj->addWhere($whereCondition);
             $countClauseObj->addWhere($whereCondition);
         }

@@ -50,7 +50,7 @@ class ContainerFactory {
         /**
          * Use cached container if exists, and env is set up on production
          */
-        if (APPLICATION_ENV === 'production' && file_exists($file)) {
+        if (APPLICATION_ENV === 'production' && file_exists($file) && php_sapi_name() !== 'cli') {
             require_once $file;
             $this->container = new \NewscoopCachedContainer();
         } else {
@@ -101,6 +101,10 @@ class ContainerFactory {
                 $this->container->setParameter($key, $value);
             }
         }
+
+        $this->container->setParameter('storage', array(
+            \Zend_Cloud_StorageService_Adapter_FileSystem::LOCAL_DIRECTORY => APPLICATION_PATH . '/..',
+        ));
 
         /**
          * Load all configs from services directory.

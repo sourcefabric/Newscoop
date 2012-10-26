@@ -3,7 +3,6 @@
  * @package Campsite
  */
 
-require_once('adodb/adodb.inc.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
 
 /**

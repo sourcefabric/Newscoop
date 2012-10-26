@@ -638,11 +638,15 @@ a.view-article:hover {
 .canvas .paginationControl {
     float: right;
     clear: right;
-    margin: 0 0 3px;
-    padding: 5px 8px;
+    margin: 0;
     font-size: 1.3em;
     line-height: 1em;
     color: #333;
+}
+
+.canvas .paginationControl * {
+    margin: 0 8px 5px 0;
+    padding: 1px 8px;
 }
 
 .canvas .paginationControl .disabled {
@@ -664,6 +668,18 @@ a.view-article:hover {
 
 .canvas .status.s-2 {
     color: #cc0000;
+}
+
+.canvas > .controls dl {
+    margin: 0;
+}
+
+.canvas > .controls dt {
+    display: none;
+}
+
+.canvas > .controls dd {
+    margin-left: 0;
 }
 
 h1 {
@@ -1227,3 +1243,10 @@ dl.slideshow-preview figure > div > * {
     margin: 0 6px;
 }
 
+.users abbr.verified {
+    margin: 0 0 0 5px;
+    padding: 0 3px;
+    color: #fff;
+    background-color: #4e9a06;
+    border: none;
+}

@@ -54,6 +54,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     protected function _initContainer()
     {
+        $this->bootstrap('autoloader');
         return Zend_Registry::get('container');
     }
 
@@ -142,14 +143,25 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ), $container->getParameter('image')['cache_url'] . '/%s'));
 
          $router->addRoute('rest',
-            new Zend_Rest_Route($front, array(), array(
-                'admin' => array(
-                    'slideshow-rest',
-                    'subscription-rest',
-                    'subscription-section-rest',
-                    'subscription-ip-rest',
-                ),
-            ))
+             new Zend_Rest_Route($front, array(), array(
+                 'admin' => array(
+                     'slideshow-rest',
+                     'subscription-rest',
+                     'subscription-section-rest',
+                     'subscription-ip-rest',
+                 ),
+             )));
+
+        $router->addRoute(
+            'author',
+            new Zend_Controller_Router_Route(
+                'author/:author',
+                array(
+                    'module' => 'default',
+                    'controller' => 'author',
+                    'action' => 'profile',
+                )
+            )
         );
     }
 
