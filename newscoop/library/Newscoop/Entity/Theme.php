@@ -7,12 +7,13 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\ORM\Mapping AS ORM;
 use Newscoop\Utils\Validation;
 use Newscoop\Entity\Entity;
 
 /**
- * @Entity(repositoryClass="Newscoop\Entity\Repository\ThemeRepository")
- * @Table(name="Theme")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ThemeRepository")
+ * @ORM\Table(name="Theme")
  */
 class Theme extends Entity
 {

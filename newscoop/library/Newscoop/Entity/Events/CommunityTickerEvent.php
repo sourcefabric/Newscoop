@@ -7,42 +7,44 @@
 
 namespace Newscoop\Entity\Events;
 
+use Doctrine\ORM\Mapping AS ORM;
 use Newscoop\Entity\User;
 
 /**
- * @Entity(repositoryClass="Newscoop\Entity\Repository\Events\CommunityTickerEventRepository")
- * @Table(name="community_ticker_event")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\Events\CommunityTickerEventRepository")
+ * @ORM\Table(name="community_ticker_event")
  */
 class CommunityTickerEvent
 {
     /**
-     * @Id @GeneratedValue
-     * @Column(type="integer")
+     * @ORM\Id 
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @Column(type="string", length=80)
+     * @ORM\Column(type="string", length=80)
      * @var string
      */
     private $event;
 
     /**
-     * @Column(type="text", nullable=True)
+     * @ORM\Column(type="text", nullable=True)
      * @var string
      */
     private $params;
 
     /**
-     * @Column(type="datetime")
+     * @ORM\Column(type="datetime")
      * @var DateTime
      */
     private $created;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\User")
-     * @JoinColumn(referencedColumnName="Id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @ORM\JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;

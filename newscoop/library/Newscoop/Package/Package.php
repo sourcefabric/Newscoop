@@ -8,50 +8,53 @@
 namespace Newscoop\Package;
 
 use Newscoop\Image\Rendition;
+use Doctrine\ORM\Mapping AS ORM;
 
 /**
- * @Entity(repositoryClass="Newscoop\Package\PackageRepository")
- * @Table(name="package",
+ * @ORM\Entity(repositoryClass="Newscoop\Package\PackageRepository")
+ * @ORM\Table(name="package",
  *      uniqueConstraints={
- *          @UniqueConstraint(name="slug_idx", columns={"slug"})
+ *          @ORM\UniqueConstraint(name="slug_idx", columns={"slug"})
  *      })
  */
 class Package
 {
     /**
-     * @Id @Column(type="integer") @GeneratedValue
+     * @ORM\Id 
+     * @ORM\Column(type="integer") 
+     * @ORM\GeneratedValue
      * @var int
      */
     private $id;
 
     /**
-     * @Column
+     * @ORM\Column
      * @var string
      */
     private $headline;
 
     /**
-     * @Column(type="text", nullable=True)
+     * @ORM\Column(type="text", nullable=True)
      * @var string
      */
     private $description;
 
     /**
-     * @OneToMany(targetEntity="Newscoop\Package\Item", mappedBy="package", cascade={"remove"})
-     * @OrderBy({"offset"="ASC"})
+     * @ORM\OneToMany(targetEntity="Newscoop\Package\Item", mappedBy="package", cascade={"remove"})
+     * @ORM\OrderBy({"offset"="ASC"})
      * @return Doctrine\Common\Collections\Collection
      */
     private $items;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Image\Rendition")
-     * @JoinColumn(referencedColumnName="name")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Image\Rendition")
+     * @ORM\JoinColumn(referencedColumnName="name")
      * @var Newscoop\Image\Rendition
      */
     private $rendition;
 
     /**
-     * @Column(nullable=True)
+     * @ORM\Column(nullable=True)
      * @var string
      */
     private $slug;
@@ -62,7 +65,7 @@ class Package
     private $itemsCount;
 
     /**
-     * @ManyToMany(targetEntity="Article", mappedBy="packages", cascade={"remove"})
+     * @ORM\ManyToMany(targetEntity="Article", mappedBy="packages", cascade={"remove"})
      * @var array
      */
     private $articles;
