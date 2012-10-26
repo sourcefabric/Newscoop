@@ -44,7 +44,9 @@ Newscoop\Entity\Article:
             read_only: true
             type: datetime
             groups: ["list", "details"]
-            accessor: getLanguageCode
+            accessor: 
+                getter: getLanguageCode
+                setter: setLanguageCode
             serialized_name: language
         published:
             expose: true

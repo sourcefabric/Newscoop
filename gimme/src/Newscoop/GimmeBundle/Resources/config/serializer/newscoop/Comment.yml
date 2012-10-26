@@ -24,5 +24,7 @@ Newscoop\Entity\Comment:
             read_only: true
             groups: ["details", "list"]
             type: string
-            accessor: getCommenterName
+            accessor: 
+                getter: getCommenterName
+                setter: setCommenterName
             serialized_name: author

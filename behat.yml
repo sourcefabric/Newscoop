@@ -1,5 +1,5 @@
 default:
     context:
         parameters:
-            base_url:   http://localhost/newscoop-4.0/gimme/web/app.php/api/
+            base_url:   http://localhost/newscoop/gimme/web/app.php/api/
             publication: newscoop.dev

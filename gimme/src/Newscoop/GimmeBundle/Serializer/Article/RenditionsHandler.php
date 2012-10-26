@@ -37,7 +37,8 @@ class RenditionsHandler implements SerializationHandlerInterface
 
         $articleRenditions = $this->renditionService->getArticleRenditions($data->getNumber());
         $renditions = $this->renditionService->getRenditions();
-
+        $media = array();
+        
         foreach ($renditions as $renditionName => $rendition) {
 
             if (!$articleRenditions->offsetExists($rendition, true)) {
