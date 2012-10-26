@@ -1,0 +1,9 @@
+div#poll-box {
+     margin: 0 10px;
+}
+
+p.question {
+     color: #2996bf;
+     font-weight: bold;
+     font-size: 115%;
+}

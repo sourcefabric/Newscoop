@@ -1,0 +1,29 @@
+#bannerleaderboard {
+  display: none; /* hide this banner ON/OFF */
+  padding: 0px;
+  margin: 0px;
+  padding-bottom: 20px;
+  clear: both;
+}
+#bannerlogo {
+/*  display: none; /* hide this banner ON/OFF */
+  margin: 0px;
+  float: right;
+  width: 468px;
+  height: 60px;
+  padding: 0px;
+}
+#bannerleftcol {
+  display: none; /* hide this banner ON/OFF */
+  padding: 0px;
+  margin: 0px;
+  margin-bottom: 20px;
+  clear: both;
+}
+#bannerrightcol {
+  display: none; /* hide this banner ON/OFF */
+  padding: 0px;
+  margin: 0px;
+  margin-bottom: 20px;
+  clear: both;
+}

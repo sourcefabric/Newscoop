@@ -1,0 +1,56 @@
+div#footer {
+  padding-top: 10px;
+  margin-top: 0px;
+}
+div#block-title-mostpopular {
+  display: none;
+}
+div#block-articles-mostpopular {
+  clear: both;
+}
+div#block-articles-mostpopular-item {
+  width: 20%;
+  float: left;
+}
+div#block-articles-mostpopular-iteminner {
+  padding: 0px;
+  margin: 8px;
+}
+div#block-mostpopular-section {
+  color: #ffffff;
+  padding: 1px;
+  padding-left: 3px;
+  margin-bottom: 3px;
+  font-size: 0.8em;
+  font-weight: bold;
+}
+div#block-articles-mostpopular-item a {
+  text-decoration: none;
+  color: #333;
+}
+div#block-mostpopular-title {
+    font-weight: bold;
+}
+div#block-mostpopular-deck,
+div#block-mostpopular-counter
+{
+  text-decoration: none;
+}
+/* footerlinks */
+div#footerlinks {
+  clear: both;
+  padding-top: 6px;
+  padding-bottom: 6px;
+}
+div#footerlinksinner {
+  margin-top: 6px;
+  margin-bottom: 6px;
+  padding: 6px;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+}
+div#footerlinks a {
+  color: #aaa;
+  text-decoration: none;
+  margin-right: 12px;
+}

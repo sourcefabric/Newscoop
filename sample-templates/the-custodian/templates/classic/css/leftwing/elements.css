@@ -1,0 +1,226 @@
+/*
+This file includes:
+- navigation
+- metanavigation
+- login form
+- search
+- logo
+- breadcrumbs
+- error and system messages
+- pagination
+*/
+
+/* NAVIGATION */
+/* main */
+div#navmain {
+  width:170px;
+  position: relative;
+  left: 10px;
+  z-index: 1;
+  height: 0px;
+}
+div#navmain ul {
+  width:170px;
+  list-style:none;
+  margin: 0px;
+  padding: 0px;
+  height: 30px;
+}
+div#navmain ul li {
+  list-style:none;
+  border-bottom: 3px solid #fff;
+  background: #949494;
+}
+/* individual sections in navigation */
+div#navmain ul li a {
+  line-height: 36px;
+  display:block;
+  margin:0px;
+  color:#fff;
+  line-height: 36px;
+  text-decoration:none;
+  padding-left: 20px;
+  padding-right: 10px;
+  font-size: 19px;
+}
+div#navmain ul li div.navlink {
+  display:block;
+}
+div#navmain ul li a:hover {
+  text-decoration: underline;
+}
+div#navmain ul li.active a {
+  background: url(navbaractive.png) left top no-repeat;
+  color: #f33;
+}
+/* active home link */
+body#index div#navmain ul li#navlinksection-home a {
+  background: url(navbaractive.png) left top no-repeat;
+  color: #f33;
+}
+/* active blog link */
+body#blog div#navmain ul li#navlinksection-blogs a {
+  background: url(navbaractive.png) left top no-repeat;
+  color: #f33;
+}
+/* Section header */
+div.sectionheader {
+  clear: both;
+  background: #fff;
+  padding-left: 195px;
+  font-weight: bold;
+  display: none;
+}
+/* Breadcrumbs */
+div.breadcrumbs {
+  clear: both;
+  color: #aaa;
+  padding-bottom: 6px;
+  padding-left: 195px;
+  background: #fff;
+}
+div.breadcrumbs a,
+div.breadcrumbs a:visited {
+  color: #f33;
+  text-decoration: none;
+}
+
+/* search form in right column */
+div.searchframe .teaserheadinner {
+  padding: 1px;
+  padding-left: 5px;
+  color: #bbb;
+}
+div.searchframe {
+  background: url(bg-stripes-bright.png);
+}
+div.search {
+  border-bottom: 1px solid #ccc;
+  padding: 6px;
+  margin-bottom: 1.5em;
+}
+div.search div#topics,
+div.search div#issues {
+  padding-left: 4px;
+}
+div.search form {
+  margin-top: 6px;
+  padding-left: 4px; 
+}
+div.search form input {
+  width: 82px;
+}
+div.search form input#submit { /*  Submit-Button */
+  width: 16px;
+  position: relative;
+  top: 5px;
+}
+div.search form input.text { /*  text */
+  width: 172px;
+}
+div.search a {
+  text-decoration: none;
+}
+/* login small on top (login-top.tpl) */
+div.logintop {
+  float: right;
+  padding: 3px;
+  padding-right: 6px;
+  text-align: right;
+  color: #fff;
+}
+div.logintop form input {
+  border: 1px solid #eee;
+  color: #999;
+  width: 50px !important;
+  font-size: 11px;
+}
+div.logintop form {
+  float: left;
+  margin-left: 6px;
+}
+div.loginerror,
+div.loginerrorinner {
+  float: left;
+  margin-left: 6px;
+  color: red;
+}
+div#register,
+div#user,
+div#logout {
+  float: left;
+}
+div#singin,
+div#logout {
+  float: left;
+  margin-left: 6px;
+}
+/* LOGO */
+/* suppress the old logo */
+div#logoinner img {
+  display: none;
+}
+div#logospaceinner {
+  padding-top: 26px;
+  padding-bottom: 0px;
+}
+div#logo {
+  height: 70px;
+  padding: 6px;
+  background: #fff url(logo-red.png) no-repeat;
+  background-position: 10px 10px;
+}
+/* only with CSS off, display the publication title */
+div#logo div.publicationname {
+  display: none;
+}
+/* system pages */
+table.userform th {
+  padding-top: 1em;
+  padding-bottom: 1em;
+  text-align: left;
+}
+/* system messages */
+div.error {
+  padding: 12px;
+  border: 1px solid #e12c2c;
+  background: #ffdbdb;
+  margin-bottom: 16px;
+}
+div.errorinner {
+  padding-left: 24px;
+  background:url(icons/16/alert_round.png) no-repeat;
+}
+div.error, div.notice, div.success {
+  padding: 12px;
+  margin-bottom: 16px;
+}
+div.error {
+  border: 1px solid #e12c2c;
+  background: #ffdbdb;
+}
+div.success {
+  border: 1px solid #52e343;
+  background: #deffdb;
+}
+div.notice {
+  border: 1px solid #43b4e3;
+  background: #f4fcff;
+}
+div.errorinner, div.noticeinner, div.successinner {
+  padding-left: 24px;
+}
+div.errorinner {
+  background:url(icons/16/alert_round.png) no-repeat;
+}
+div.noticeinner {
+  background:url(icons/16/info.png) no-repeat;
+}
+div.successinner {
+  background:url(icons/16/ok.png) no-repeat;
+}
+/* pagination */
+div#pagination,
+div#pagination a {
+  color: #aaa;
+}

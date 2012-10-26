@@ -1,0 +1,1 @@
+<img src="/templates/img/ffoxbanner.gif">
