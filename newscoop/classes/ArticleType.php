@@ -440,6 +440,37 @@ class ArticleType {
 		return $displayName;
 	} // fn getDisplayName
 
+    /**
+     * Returns whether articles of this type should be filtered out by default at listings.
+     *
+     * @return bool
+     **/
+    public function getFilterStatus()
+    {
+        return $this->m_metadata->getFilter();
+    }
+
+    /**
+     * Action for setting article type filtering.
+     *
+     * @return bool
+     **/
+    public static function SetTypeFilter($p_article_type, $p_filter_value)
+    {
+        $p_filter_value = (bool) trim('' . $p_filter_value);
+
+        $field = new ArticleTypeField($p_article_type, 'NULL');
+
+        if (!$field->exists()) {
+            return getGS('No such article type');
+        }
+
+        $res = $field->setFilter($p_filter_value);
+        if (!$res) {
+            return getGS('Filter not saved');
+        }
+        return getGS('Filter saved');
+    }
 
 	/**
 	 * Returns the number of articles associated with this type.

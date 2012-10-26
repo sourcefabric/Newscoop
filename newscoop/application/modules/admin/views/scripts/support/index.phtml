@@ -4,8 +4,8 @@
     <p>
     <?php echo(getGS('Help Newscoop improve by letting us know you are using it. This info will be collected regularly in order to improve your user experience.')); ?>
     <br><br>
-    <a id="feedback_show" href="#" onClick="$('#feedback_container').toggle();$('#feedback_show').toggle();$('#feedback_hide').toggle();"><?php echo(getGS('Show feedback data to be sent')); ?></a>
-    <a id="feedback_hide" href="#" onClick="$('#feedback_container').toggle();$('#feedback_show').toggle();$('#feedback_hide').toggle();" style="display: none;"><?php echo(getGS('Hide feedback data')); ?></a>
+    <a id="feedback_show" href="#"><?php echo(getGS('Show feedback data to be sent')); ?></a>
+    <a id="feedback_hide" href="#" style="display: none;"><?php echo(getGS('Hide feedback data')); ?></a>
     <br>
     
     <div id="feedback_container" style="display: none;">
@@ -24,25 +24,43 @@
     </div>
     </p>
     
-    <?php 
-        if ($this->redirect == 0) {
-            ?><b><?php echo(getGS('Current status: ')); ?></b><?php
-            if ($this->support_send) {
-                echo(getGS('You are sending daily statistics.'));
-            } else {
-                echo(getGS('You are NOT sending daily statistics.'));
-            }
-        }
-    ?>
+    <?php if (empty($this->action)) { ?>
+    <b><?php echo(getGS('Current status: ')); ?></b>
+        <?php
+        if ($this->support_send) {
+            echo(getGS('You are sending daily statistics.'));
+        } else {
+            echo(getGS('You are NOT sending daily statistics.'));
+        } ?>
+    <?php } ?>
 
     <p><i><?php putGS('By clicking on "Yes, help Newscoop" button, I agree to $1', '<a target="_blank" href="http://www.sourcefabric.org/en/about/policy/">Sourcefabric\'s privacy policy</a>'); ?></i></p>
     
-    <form method="post" id="support_send_form" action="<?php echo($this->baseUrl('admin/support')); ?>">
-    <input type="hidden" name="redirect" value="<?php echo($this->redirect); ?>">
-    <input type="hidden" id="support_send" name="support_send" value="<?php echo($this->support_send); ?>">
-    <input type="button" style="font-size: 12px; float: right;" class="save-button" value="<?php echo(getGS('Yes, help Newscoop')); ?>" onClick="document.getElementById('support_send').value = 1;document.getElementById('support_send_form').submit();">
-    <input type="button" style="font-size: 12px; float: right;" class="save-button" value="<?php echo(getGS('Remind me in 1 week')); ?>" onClick="document.getElementById('support_send').value = 0;document.getElementById('support_send_form').submit();">
-    <div style="clear: both;"></div>
+    <form method="post" id="support_send_form" action="<?php echo $this->url(array('controller' => 'support', 'action' => $this->action), 'default'); ?>">
+        <input type="hidden" id="stat_ask_time" name="stat_ask_time" value="7 days" />
+        <input type="hidden" id="support_send" name="support_send" value="<?php echo($this->support_send); ?>">
+        <input type="button" style="font-size: 12px; float: right;" class="save-button yes" value="<?php echo $this->escape(getGS('Yes, help Newscoop')); ?>">
+        <input type="button" style="font-size: 12px; float: right;" class="save-button never" value="<?php echo $this->escape(getGS("Don't remind me")); ?>">
+        <input type="button" style="font-size: 12px; float: right;" class="save-button" value="<?php echo $this->escape(getGS('Remind me in 1 week')); ?>">
+        <div style="clear: both;"></div>
     </form>
-    
+
+    <script type="text/javascript">
+    $(function() {
+        $('#feedback_show, #feedback_hide').click(function() {
+            $('#feedback_container').toggle();
+            $('#feedback_show').toggle();
+            $('#feedback_hide').toggle();
+        });
+
+        $('.save-button').click(function(e) {
+            $('#support_send').val($(e.target).hasClass('yes') ? 1 : 0);
+            if ($(e.target).hasClass('never')) {
+                $('#stat_ask_time').val('10 years');
+            }
+
+            $('#support_send_form').submit();
+        });
+    });
+    </script>
 </dl>

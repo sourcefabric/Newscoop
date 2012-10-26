@@ -139,15 +139,14 @@ class Article extends DatabaseObject {
      */
     public function __destruct()
     {
-        if ($this->m_cacheUpdate && ($this->isPublished() || $this->m_published)
-        && CampTemplateCache::factory()) {
+        if ($this->m_cacheUpdate && CampTemplateCache::factory()) {
             CampTemplateCache::factory()->update(array(
                 'language' => $this->getLanguageId(),
                 'publication' => $this->getPublicationId(),
                 'issue' => $this->getIssueNumber(),
                 'section' => $this->getSectionNumber(),
                 'article' => $this->getArticleNumber(),
-            ));
+            ), !($this->isPublished() || $this->m_published));
         }
     }
 

@@ -65,13 +65,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         /**
          * Use cached container if exists, and env is set up on production
          */
-        if (APPLICATION_ENV === 'production' && file_exists($file)) {
+        if (APPLICATION_ENV === 'production' && file_exists($file) && php_sapi_name() !== 'cli') {
             require_once $file;
             $container = new NewscoopCachedContainer();
         } else {
             $container = new ContainerBuilder($this->getOptions());
             $container->addCompilerPass(new RegisterListenersPass());
             $container->setParameter('config', $this->getOptions());
+            $container->setParameter('storage', array(
+                Zend_Cloud_StorageService_Adapter_FileSystem::LOCAL_DIRECTORY => APPLICATION_PATH . '/..',
+            ));
 
             $loader = new YamlFileLoader($container, new FileLocator(__DIR__));
             $services = glob(__DIR__ ."/configs/services/*.yml");
