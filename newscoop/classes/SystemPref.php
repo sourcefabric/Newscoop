@@ -101,15 +101,15 @@ class SystemPref {
 
 	    if (array_key_exists($p_varName, $Campsite['system_preferences'])) {
 			if ($Campsite['system_preferences'][$p_varName] != $p_value) {
-				$sql = "UPDATE SystemPreferences SET value='".mysql_real_escape_string($p_value)."'"
-					   ." WHERE varname='".mysql_real_escape_string($p_varName)."'";
+				$sql = "UPDATE SystemPreferences SET value=".$g_ado_db->escape($p_value)
+					   ." WHERE varname=".$g_ado_db->escape($p_varName);
 				$g_ado_db->Execute($sql);
 				$Campsite['system_preferences'][$p_varName] = $p_value;
 				self::StoreSystemPrefsInCache();
 			}
 	    } else {
 	    	$sql = "INSERT INTO SystemPreferences
-				    (varname, value) VALUES ('".mysql_real_escape_string($p_varName)."', '".mysql_real_escape_string($p_value)."')";
+				    (varname, value) VALUES (".$g_ado_db->escape($p_varName).", ".$g_ado_db->escape($p_value).")";
 	    	$g_ado_db->Execute($sql);
 	    	$Campsite['system_preferences'][$p_varName] = $p_value;
 	    	self::StoreSystemPrefsInCache();
@@ -181,10 +181,10 @@ class SystemPref {
      *
      * @return bool
      */
-    public static function CollectStatistics()
+    public static function CollectStatisticsAuto()
     {
         return (self::Get("CollectStatistics") == 'Y');
-    } // fn CollectStatistics
+    } // fn CollectStatisticsAuto
 
 } // class SystemPref
 

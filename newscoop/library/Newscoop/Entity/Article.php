@@ -486,6 +486,52 @@ class Article
     }
 
     /**
+     * Set data
+     *
+     * @param array $data
+     * @return void
+     */
+    public function setData(array $data)
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * Get article type field data
+     *
+     * @param string $field
+     * @return mixed
+     */
+    public function getData($field)
+    {
+        if ($this->data === null) {
+            $this->data = new \ArticleData($this->type, $this->number, $this->getLanguageId());
+        }
+
+        if (is_array($this->data)) {
+            return array_key_exists($field, $this->data) ? $this->data[$field] : null;
+        } else {
+            return $this->data->getFieldValue($field);
+        }
+    }
+
+    /**
+     * Set article type field data
+     *
+     * @param string $field
+     * @param string $value
+     * @return mixed
+     */
+    public function setFieldData($field, $value)
+    {
+        if ($this->data === null) {
+            $this->data = new \ArticleData($this->type, $this->number, $this->getLanguageId());
+        }
+        
+        return $this->data->setProperty('F'.$field, $value);
+    }
+
+    /**
      * Get whether commenting is enabled
      *
      * @return int
@@ -521,6 +567,16 @@ class Article
     public function getPublishDate()
     {
         return $this->published;
+    }
+
+    /**
+     * Test if article is published
+     *
+     * @return bool
+     */
+    public function isPublished()
+    {
+        return $this->workflowStatus === self::STATUS_PUBLISHED;
     }
     
     /**

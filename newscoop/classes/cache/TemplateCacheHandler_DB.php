@@ -34,10 +34,12 @@ class TemplateCacheHandler_DB extends TemplateCacheHandler
     /**
      * Updates template cache storage by given campsite vector.
      */
-    public function update($campsiteVector)
+    public function update($campsiteVector, $exactUpdate = false)
     {
         $queryStr = 'UPDATE Cache SET status = "E" WHERE ' . self::vectorToWhereString($campsiteVector);
         $this->_ado_db->Execute($queryStr);
+
+        if ($exactUpdate) return;
 
         if (!empty($campsiteVector['language']) && !empty($campsiteVector['publication'])) {
             $whereStr = "language = {$campsiteVector['language']} AND "

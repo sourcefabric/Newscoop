@@ -465,4 +465,126 @@ class UserRepository extends EntityRepository
             $this->getEntityManager()->remove($attribute);
         }
     }
+
+    /**
+     * Find users for indexing
+     *
+     * @return array
+     */
+    public function getBatch()
+    {
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.indexed IS NULL OR u.indexed < u.updated')
+            ->getQuery()
+            ->setMaxResults(50)
+            ->getResult();
+    }
+
+    /**
+     * Set indexed now
+     *
+     * @param array $users
+     * @return void
+     */
+    public function setIndexedNow(array $users)
+    {
+        if (empty($users)) {
+            return;
+        }
+
+        $this->getEntityManager()->createQuery('UPDATE Newscoop\Entity\User u SET u.indexed = CURRENT_TIMESTAMP() WHERE u.id IN (:users)')
+            ->setParameter('users', array_map(function($user) { return $user->getId(); }, $users))
+            ->execute();
+    }
+
+    /**
+     * Set indexed null
+     *
+     * @return void
+     */
+    public function setIndexedNull()
+    {
+        $this->getEntityManager()->createQuery('UPDATE Newscoop\Entity\User u SET u.indexed = NULL')
+            ->execute();
+    }
+
+    /**
+     * Get newscoop login count
+     *
+     * @return int
+     */
+    public function getNewscoopLoginCount()
+    {
+        $query = $this->createQueryBuilder('u')
+            ->select('COUNT(u)')
+            ->leftJoin('u.identities', 'ui')
+            ->where('ui.user IS NULL')
+            ->andWhere('u.status = :status')
+            ->getQuery();
+
+        $query->setParameter('status', User::STATUS_ACTIVE);
+        return $query->getSingleScalarResult();
+    }
+
+    /**
+     * Get external login count
+     *
+     * @return int
+     */
+    public function getExternalLoginCount()
+    {
+        $query = $this->createQueryBuilder('u')
+            ->select('COUNT(u)')
+            ->leftJoin('u.identities', 'ui')
+            ->where('ui.user IS NOT NULL')
+            ->andWhere('u.status = :status')
+            ->getQuery();
+
+        $query->setParameter('status', User::STATUS_ACTIVE);
+        return $query->getSingleScalarResult();
+    }
+
+    /**
+     * Get user points
+     *
+     * @param Newscoop\Entity\User $user
+     * @return void
+     */
+    public function getUserPoints(User $user)
+    {
+        $query = $this->createQueryBuilder('u')
+            ->select('u.id, ' . $this->getUserPointsSelect())
+            ->where('u.id = :user')
+            ->getQuery();
+
+        $query->setParameter('user', $user->getId());
+        $result = $query->getSingleResult();
+        $user->setPoints($result['comments'] + $result['articles']);
+    }
+
+    /**
+     * Get user points select statement
+     *
+     * @return string
+     */
+    private function getUserPointsSelect()
+    {
+        $commentsCount = "(SELECT COUNT(c)";
+        $commentsCount .= " FROM Newscoop\Entity\Comment c, Newscoop\Entity\Comment\Commenter cc";
+        $commentsCount .= " WHERE c.commenter = cc AND cc.user = u) as comments";
+
+        $articlesCount = "(SELECT COUNT(a)";
+        $articlesCount .= " FROM Newscoop\Entity\Article a, Newscoop\Entity\ArticleAuthor aa";
+        $articlesCount .= " WHERE ";
+        $articlesCount .= implode(' AND ', array(
+            'a.number = aa.articleNumber',
+            'a.language = aa.languageId',
+            'aa.authorId = u.author',
+            "a.type IN ('news', 'blog')",
+            sprintf("a.workflowStatus = '%s'", Article::STATUS_PUBLISHED),
+        ));
+        $articlesCount .= ") as articles";
+
+        return "{$commentsCount}, {$articlesCount}";
+    }
 }

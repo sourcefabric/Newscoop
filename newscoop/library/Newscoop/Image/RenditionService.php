@@ -102,7 +102,7 @@ class RenditionService
 
         foreach ($renditions as $one_rend) {
             $this->orm->remove($one_rend);
-            $this->orm->flush($one_rend);
+            $this->orm->flush();
         }
     }
 

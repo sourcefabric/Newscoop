@@ -197,13 +197,13 @@ class Language extends DatabaseObject {
 	    $selectClauseObj->setTable($tmpLanguage->getDbTableName());
 
 	    if (!is_null($p_id)) {
-	    	$selectClauseObj->addWhere('Id = ' . (int)$p_id);
+	    	$selectClauseObj->addWhere($g_ado_db->escapeKeyVal('Id', (int)$p_id));
 	    }
 	    if (!is_null($p_languageCode)) {
-	    	$selectClauseObj->addWhere("Code = '" . $g_ado_db->escape($p_languageCode) . "'");
+	    	$selectClauseObj->addWhere($g_ado_db->escapeKeyVal('Code', $p_languageCode));
 	    }
 	    if (!is_null($p_name)) {
-            $selectClauseObj->addWhere("Name = '" . $g_ado_db->escape($p_name) . "'");
+            $selectClauseObj->addWhere($g_ado_db->escapeKeyVal('Name', $p_name));
 	    }
 	    if (count($p_excludedLanguages) > 0) {
 	    	$excludedLanguages = array();

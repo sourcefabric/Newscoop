@@ -14,8 +14,6 @@ PHP Libraries
 
 * Smarty v3 - (http://www.smarty.net) - GNU LESSER GENERAL PUBLIC LICENSE, Version 3 (Debian: smarty)
 
-* ADODB - (http://adodb.sourceforge.net/) - GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1 (Debian: libphp-adodb, php5-adodb)
-
 * Doctrine - (http://www.doctrine-project.org/) - GNU LESSER GENERAL PUBLIC LICENSE, Version 2.1 "sudo pear channel-discover pear.doctrine-project.org" "sudo pear install pear.doctrine-project.org/Doctrine-1.2.4"
 
 * Zend Framework - (http://framework.zend.com/license) - New BSD License

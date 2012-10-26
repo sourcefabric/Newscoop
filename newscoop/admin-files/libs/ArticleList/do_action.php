@@ -305,9 +305,10 @@ case 'context_box_update':
     if ($articleObj->userCanModify($g_user)) {
         $contextBoxObj = new ContextBox(null, $contextContent['f_article_id']);
         $contextId = $contextBoxObj->getId();
-        ContextBoxArticle::saveList($contextId, $contextContent['f_related_items']);
-
+        $relatedItems = array_filter($contextContent['f_related_items'], 'is_numeric');
+        ContextBoxArticle::saveList($contextId, $relatedItems);
     }
+
 	return json_encode(array(200));
 	break;
 

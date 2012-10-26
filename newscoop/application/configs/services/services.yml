@@ -38,6 +38,13 @@ services:
         factory_service:  doctrine.event_manager
         factory_method:   addEventSubscriber
         arguments:  ["@newscoop.doctrine.event_dispatcher_proxy"]
+    doctrine.connection:
+        class: Doctrine\DBAL\Connection
+        factory_service: doctrine.em
+        factory_method: getConnection
+    doctrine.adodb:
+        class:      Newscoop\Doctrine\AdoDbAdapter
+        arguments:  ["@doctrine.connection"]
     image:
         class:      Newscoop\Image\ImageService
         arguments:  ["%image%", "@em"]
@@ -146,3 +153,15 @@ services:
     webcode:
         class:      Newscoop\WebcodeFacade
         arguments:  ["@em", "@random"]
+    storage.adapter:
+        class:      Zend_Cloud_StorageService_Adapter_FileSystem
+        arguments:  ["%storage%"]
+    storage:
+        class:      Newscoop\Storage\StorageService
+        arguments:  ["@storage.adapter"]
+    image.update_storage:
+        class:      Newscoop\Image\UpdateStorageService
+        arguments:  ["@em", "@storage"]
+    notification:
+        class:      Newscoop\Services\NotificationService
+        arguments:  ["@em"]

@@ -287,26 +287,24 @@ class ContextList extends BaseList
             $publication = NULL;
         }
 
-        if($_REQUEST['language'] > 0) {
-            $language = $_REQUEST['language'];
-        } else {
-            $language = NULL;
-        }
-
+        $language = NULL;       
         if($_REQUEST['issue'] > 0) {
             $issueArray = explode("_",$_REQUEST['issue']);
             $issue = $issueArray[1];
+            if (isset($issueArray[2])) {
+                $language = $issueArray[2];
+            }
         } else {
             $issue = NULL;
+        }
+        
+        if($_REQUEST['language'] > 0) {
+            $language = $_REQUEST['language'];
         }
 
         // get sections
         $sections = array();
-
-
         $section_objects = Section::GetSections($publication, $issue, $language);
-
-
         foreach ($section_objects as $section) {
             if (!isset($sections[$section->getSectionNumber()])) {
                 $sections[$section->getSectionNumber()] = $section;

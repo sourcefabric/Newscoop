@@ -1,4 +1,5 @@
 <?php 
+regGS("Duplicate assignment", "");
 regGS("Templates", "Шаблоны");
 regGS("Import theme", "Импорт тем (шаблонов)");
 regGS("Import succeded!", "Импорт прошел удачно");
@@ -59,7 +60,6 @@ regGS("Failed unassigning theme", "Отмена темы не удалась");
 regGS("Export", "Экспорт");
 regGS("Error page template", "Шаблон страницы ошибки");
 regGS("Edit '$1'", "Редактировать '$1'");
-regGS("Duplicate assignation", "Дублировать назначение");
 regGS("Done uploading", "Загрузка завершена");
 regGS("Do you want to override '$1'?", "Хотите заменить '$1'?");
 regGS("Directory is empty", "Директория пуста");
@@ -82,7 +82,7 @@ regGS("Article page template", "Шаблон страницы статьи");
 regGS("Article page", "Страница статьи");
 regGS("Are you sure you want to unassign this theme?", "Вы уверены, что хотите отменить эту тему?");
 regGS("Are you sure you want to delete this theme?", "Вы уверены, что хотите удалить эту тему?");
-regGS("Add to publication", "Добавить к публикации");
+regGS("Add to publication", "Добавить к изданию");
 regGS("'$1' is not writable", "'$1' не является перезаписываемым");
 regGS("'$1' $2", "$1' $2");
 regGS("$1 files $2", "$1 файлы $2");

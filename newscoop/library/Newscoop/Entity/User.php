@@ -8,6 +8,7 @@
 namespace Newscoop\Entity;
 
 use Doctrine\ORM\Mapping AS ORM;
+use Zend_View_Abstract;
 use Doctrine\Common\Collections\ArrayCollection;
 use Newscoop\Utils\PermissionToAcl;
 use Newscoop\Entity\Acl\Role;
@@ -783,5 +784,116 @@ class User implements \Zend_Acl_Role_Interface
     public function preUpdate()
     {
         $this->updated = new \DateTime();
+    }
+
+    /**
+     * Set indexed
+     *
+     * @param DateTime $indexed
+     * @return void
+     */
+    public function setIndexed(\DateTime $indexed = null)
+    {
+        $this->indexed = $indexed;
+    }
+
+    /**
+     * Get indexed
+     *
+     * @return DateTime
+     */
+    public function getIndexed()
+    {
+        return $this->indexed;
+    }
+
+    /**
+     * Update user profile
+     *
+     * @param string $username
+     * @param string $password
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $image
+     * @param array $attributes
+     */
+    public function updateProfile($username, $password, $firstName, $lastName, $image, array $attributes)
+    {
+        if (!empty($username)) {
+            $this->setUsername($username);
+        }
+
+        if (!empty($password)) {
+            $this->setPassword($password);
+        }
+
+        if (!empty($firstName)) {
+            $this->first_name = (string) $firstName;
+        }
+
+        if (!empty($lastName)) {
+            $this->last_name = (string) $lastName;
+        }
+
+        if (!empty($image)) {
+            $this->image = (string) $image;
+        }
+
+        foreach ($attributes as $key => $val) {
+            if (isset($val)) {
+                $this->addAttribute($key, $val);
+            }
+        }
+    }
+
+    /**
+     * Get edit view
+     *
+     * @param Zend_View_Abstract $view
+     * @return object
+     */
+    public function getEditView(Zend_View_Abstract $view)
+    {
+        return (object) array(
+            'id' => $this->id,
+            'username' => $this->username ?: sprintf('<%s>', preg_replace('/@.*$/', '', $this->email)),
+            'email' => $this->email,
+            'status' => $this->status,
+            'created' => $this->created->format('d.m.Y H:i'),
+            'updated' => $this->updated->format('d.m.Y H:i'),
+            'is_verified' => (bool) $this->getAttribute(UserAttribute::IS_VERIFIED),
+            'http_user_agent' => $this->getAttribute(UserAttribute::HTTP_USER_AGENT),
+            'links' => array(
+                array(
+                    'rel' => 'edit',
+                    'href' => $this->getViewUrl('edit', $view),
+                ),
+                array(
+                    'rel' => 'delete',
+                    'href' => $this->getViewUrl('delete', $view),
+                ),
+                array(
+                    'rel' => 'token',
+                    'href' => $this->getViewUrl('send-confirm-email', $view),
+                ),
+            ),
+        );
+    }
+
+    /**
+     * Get url for given action
+     *
+     * @param string $action
+     * @param Zend_View_Abstract $view
+     * @return string
+     */
+    private function getViewUrl($action, Zend_View_Abstract $view)
+    {
+        return $view->url(array(
+            'module' => 'admin',
+            'controller' => 'user',
+            'action' => $action,
+            'user' => $this->id,
+        ), 'default', true);
     }
 }

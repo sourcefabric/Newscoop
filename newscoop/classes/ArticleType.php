@@ -157,12 +157,12 @@ class ArticleType {
 		$queryStr = "RENAME TABLE `" . $this->m_dbTableName . "` TO `X$p_newName`";
 		$success = $g_ado_db->Execute($queryStr);
 		if ($success) {
-			$queryStr = "UPDATE ArticleTypeMetadata SET type_name = '$newNameEsc' "
-			. "WHERE type_name = '$oldNameEsc'";
+			$queryStr = "UPDATE ArticleTypeMetadata SET type_name = $newNameEsc "
+			. "WHERE type_name = $oldNameEsc";
 			$success = $g_ado_db->Execute($queryStr);
 		}
         if ($success) {
-            $queryStr = "UPDATE Articles SET Type = '$newNameEsc' WHERE Type = '$oldNameEsc'";
+            $queryStr = "UPDATE Articles SET Type = $newNameEsc WHERE Type = $oldNameEsc";
             $success = $g_ado_db->Execute($queryStr);
         }
 		if ($success) {
@@ -172,9 +172,9 @@ class ArticleType {
             $queryStr = "RENAME TABLE `X$p_newName` TO `" . $this->m_dbTableName . "`";
             $g_ado_db->Execute($queryStr);
 			$queryStr = "UPDATE ArticleTypeMetadata SET type_name = '$oldName' "
-            . "WHERE type_name = '$newNameEsc'";
+            . "WHERE type_name = $newNameEsc";
             $g_ado_db->Execute($queryStr);
-            $queryStr = "UPDATE Articles SET Type = '$oldName' WHERE Type = '$newNameEsc'";
+            $queryStr = "UPDATE Articles SET Type = '$oldName' WHERE Type = $newNameEsc";
             $g_ado_db->Execute($queryStr);
 		}
 		return $success;
@@ -440,6 +440,37 @@ class ArticleType {
 		return $displayName;
 	} // fn getDisplayName
 
+    /**
+     * Returns whether articles of this type should be filtered out by default at listings.
+     *
+     * @return bool
+     **/
+    public function getFilterStatus()
+    {
+        return $this->m_metadata->getFilter();
+    }
+
+    /**
+     * Action for setting article type filtering.
+     *
+     * @return bool
+     **/
+    public static function SetTypeFilter($p_article_type, $p_filter_value)
+    {
+        $p_filter_value = (bool) trim('' . $p_filter_value);
+
+        $field = new ArticleTypeField($p_article_type, 'NULL');
+
+        if (!$field->exists()) {
+            return getGS('No such article type');
+        }
+
+        $res = $field->setFilter($p_filter_value);
+        if (!$res) {
+            return getGS('Filter not saved');
+        }
+        return getGS('Filter saved');
+    }
 
 	/**
 	 * Returns the number of articles associated with this type.
@@ -582,7 +613,7 @@ class ArticleType {
                 $fields[] = 'F'. $destC;
                 if ($srcC == 'NULL') $values[] = "''";
                 else if (is_numeric($row['F'. $srcC])) $values[] = $row['F'. $srcC];
-                else $values[] = "'". $g_ado_db->escape($row['F'. $srcC]) ."'";
+                else $values[] = $g_ado_db->escape($row['F'. $srcC]);
             }
             $fields[] = 'NrArticle';
             $values[] = $row['NrArticle'];

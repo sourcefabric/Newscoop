@@ -11,11 +11,14 @@ use Doctrine\ORM\Mapping AS ORM;
 
 /**
  * Local Image
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ImageRepository")
  * @ORM\Table(name="Images")
  */
 class LocalImage implements ImageInterface
 {
+    const LOCATION_LOCAL = 'local';
+    const LOCATION_REMOTE = 'remote';
+
     /**
      * @ORM\Id 
      * @ORM\Column(type="integer", name="Id") 
@@ -31,10 +34,16 @@ class LocalImage implements ImageInterface
     private $location;
 
     /**
-     * @ORM\Column(name="ImageFileName", nullable=True)
+     * @ORM\Column(name="ImageFileName", nullable=True, length=80)
      * @var string
      */
     private $basename;
+
+    /**
+     * @ORM\Column(name="ThumbnailFileName", nullable=True, length=80)
+     * @var string
+     */
+    private $thumbnailPath;
 
     /**
      * @ORM\Column(name="URL", nullable=True)
@@ -91,15 +100,27 @@ class LocalImage implements ImageInterface
     private $items;
 
     /**
+     * @ORM\Column(type="integer", name="is_updated_storage")
+     * @var int
+     */
+    private $isUpdatedStorage = 0;
+
+    /**
+     * @ORM\Column(name="Source")
+     * @var string
+     */
+    private $source;
+
+    /**
      * @param string $image
      */
-    public function __construct($image)
+    public function __construct($image = '')
     {
         if (strpos($image, 'http://') === 0 || strpos($image, 'https://') === 0 || strpos($image, 'file://') === 0) {
-            $this->location = 'remote';
+            $this->location = self::LOCATION_REMOTE;
             $this->url = (string) $image;
         } else {
-            $this->location = 'local';
+            $this->location = self::LOCATION_LOCAL;
             $this->basename = (string) $image;
         }
 
@@ -124,7 +145,9 @@ class LocalImage implements ImageInterface
      */
     public function getPath()
     {
-        if ($this->isLocal()) {
+        if ($this->hasUpdatedStorage()) {
+            return 'images/' . $this->basename;
+        } elseif ($this->isLocal()) {
             return basename($this->basename) === $this->basename ? 'images/' . $this->basename : $this->basename;
         } else {
             return $this->url;
@@ -181,9 +204,10 @@ class LocalImage implements ImageInterface
         $this->width = (int) $info[0];
         $this->height = (int) $info[1];
 
-        if ($this->id !== null) {
-            // @todo remove once on image upload is refactored
-            \Zend_Registry::get('container')->getService('em')->flush($this);
+        // @todo remove once on image upload is refactored
+        $em = \Zend_Registry::get('container')->getService('em');
+        if ($em->contains($this)) {
+            $em->flush($this);
         }
     }
 
@@ -301,5 +325,61 @@ class LocalImage implements ImageInterface
     public function getCaption()
     {
         return $this->getDescription();
+    }
+
+    /**
+     * Test is storage was updated
+     *
+     * @return bool
+     */
+    public function hasUpdatedStorage()
+    {
+        return (bool) $this->isUpdatedStorage;
+    }
+
+    /**
+     * Update storage
+     *
+     * @param string $path
+     * @param string $thumbnailPath
+     * @return void
+     */
+    public function updateStorage($path, $thumbnailPath)
+    {
+        $this->upload($path, $thumbnailPath);
+        $this->isUpdatedStorage = true;
+    }
+
+    /**
+     * Upload image
+     *
+     * @param string $path
+     * @param string $thumbnailpath
+     * @return void
+     */
+    public function upload($path, $thumbnailPath)
+    {
+        $this->basename = $path;
+        $this->thumbnailPath = $thumbnailPath;
+    }
+
+    /**
+     * Get thumbnail path
+     *
+     * @return string
+     */
+    public function getThumbnailPath()
+    {
+        return 'images/thumbnails/' . $this->thumbnailPath;
+    }
+
+    /*
+     * Get source
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->source;
     }
 }

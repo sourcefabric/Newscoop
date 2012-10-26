@@ -86,23 +86,29 @@ class Image extends DatabaseObject
 			camp_load_translation_strings("api");
 		}
 
-		// Deleting the images from disk is the most common place for
-		// something to go wrong, so we do that first.
-		$thumb = $this->getThumbnailStorageLocation();
-		$imageFile = $this->getImageStorageLocation();
+        $imageStorageService = Zend_Registry::get('container')->getService('image.update-storage');
+        if ($imageStorageService->isDeletable($this->getImageFileName())) {
+            // Deleting the images from disk is the most common place for
+            // something to go wrong, so we do that first.
+            $thumb = $this->getThumbnailStorageLocation();
+            $imageFile = $this->getImageStorageLocation();
 
-		if (file_exists($thumb) && !is_writable($thumb)) {
-			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $thumb), CAMP_ERROR_DELETE_FILE);
-		}
-		if (file_exists($imageFile) && !is_writable($imageFile)) {
-			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $imageFile), CAMP_ERROR_DELETE_FILE);
-		}
-		if (file_exists($imageFile) && !unlink($imageFile)) {
-			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $imageFile), CAMP_ERROR_DELETE_FILE);
-		}
-		if (file_exists($thumb) && !unlink($thumb)) {
-			return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $thumb), CAMP_ERROR_DELETE_FILE);
-		}
+            if (file_exists($thumb) && !is_writable($thumb)) {
+	            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $thumb), CAMP_ERROR_DELETE_FILE);
+            }
+
+            if (file_exists($imageFile) && !is_writable($imageFile)) {
+	            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $imageFile), CAMP_ERROR_DELETE_FILE);
+            }
+
+            if (file_exists($imageFile) && !unlink($imageFile)) {
+	            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $imageFile), CAMP_ERROR_DELETE_FILE);
+            }
+
+            if (file_exists($thumb) && !unlink($thumb)) {
+	            return new PEAR_Error(camp_get_error_message(CAMP_ERROR_DELETE_FILE, $thumb), CAMP_ERROR_DELETE_FILE);
+            }
+        }
 
 		// Delete all the references to this image.
 		ArticleImage::OnImageDelete($this->getImageId());
@@ -923,7 +929,7 @@ class Image extends DatabaseObject
         global $g_ado_db;
         $images = array();
 
-        $queryStr = "SELECT * FROM Images WHERE UploadedByUser='".mysql_real_escape_string($user_id)."'";
+        $queryStr = "SELECT * FROM Images WHERE UploadedByUser=" . $g_ado_db->escape($user_id);
         $rows = $g_ado_db->GetAll($queryStr);
 
         foreach ( $rows as $row ) {
@@ -944,7 +950,7 @@ class Image extends DatabaseObject
 	public static function GetByUrl($p_url)
 	{
 		global $g_ado_db;
-		$queryStr = "SELECT * FROM Images WHERE URL='".mysql_real_escape_string($p_url)."'";
+		$queryStr = "SELECT * FROM Images WHERE URL=" . $g_ado_db->escape($p_url);
 		$row = $g_ado_db->GetRow($queryStr);
 		$image = new Image();
 		$image->fetch($row);
@@ -1015,12 +1021,10 @@ class Image extends DatabaseObject
             }
 
             if ($comparisonOperation['symbol'] == 'match') {
-            	$whereCondition = 'MATCH(' . $comparisonOperation['left'] . ") AGAINST('"
-            	    . $g_ado_db->escape($comparisonOperation['right']) . "' IN BOOLEAN MODE)";
+                $whereCondition = 'MATCH(' . $comparisonOperation['left'] . ") AGAINST("
+            	    . $g_ado_db->escape($comparisonOperation['right']) . " IN BOOLEAN MODE)";
             } else {
-            	$whereCondition = $comparisonOperation['left'] . ' '
-            	    . $comparisonOperation['symbol'] . " '"
-            	    . $g_ado_db->escape($comparisonOperation['right']) . "' ";
+                $whereCondition = $g_ado_db->escapeOperation($comparisonOperation);
             }
             $selectClauseObj->addWhere($whereCondition);
             $countClauseObj->addWhere($whereCondition);

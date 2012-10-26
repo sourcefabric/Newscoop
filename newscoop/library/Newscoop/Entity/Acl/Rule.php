@@ -17,6 +17,9 @@ use Resource\Acl\RuleInterface;
  */
 class Rule implements RuleInterface
 {
+    const ALLOW = 'allow';
+    const DENY = 'deny';
+
     /**
      * @ORM\Id @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -31,7 +34,7 @@ class Rule implements RuleInterface
     private $type;
 
     /** @var array */
-    private $types = array('allow', 'deny');
+    private $types = array(self::ALLOW, self::DENY);
 
     /**
      * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Acl\Role", inversedBy="rules")

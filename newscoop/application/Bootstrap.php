@@ -18,19 +18,8 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 {
     protected function _initAutoloader()
     {
-        $options = $this->getOptions();
-        set_include_path(implode(PATH_SEPARATOR, array_map('realpath', $options['autoloader']['dirs'])) . PATH_SEPARATOR . get_include_path());
-        $autoloader = Zend_Loader_Autoloader::getInstance();
-        $autoloader->setFallbackAutoloader(TRUE);
-
-        // fix adodb loading error
-        $autoloader->pushAutoloader(function($class) {
-            return;
-        }, 'ADO');
-
         $GLOBALS['g_campsiteDir'] = realpath(APPLICATION_PATH . '/../');
-
-        return $autoloader;
+        return null;
     }
 
     protected function _initSession()
@@ -54,6 +43,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
      */
     protected function _initContainer()
     {
+        $this->bootstrap('autoloader');
         return Zend_Registry::get('container');
     }
 

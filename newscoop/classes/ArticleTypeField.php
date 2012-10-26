@@ -48,6 +48,7 @@ class ArticleTypeField extends DatabaseObject {
     private $m_precision = null;
     private $m_editorSize = null;
     private $m_colorValue = null;
+    private $m_filterOut = null;
 
 
 	public function __construct($p_articleTypeName = null, $p_fieldName = null)
@@ -93,8 +94,8 @@ class ArticleTypeField extends DatabaseObject {
 
 		if ($success) {
 			if ($this->getType() == self::TYPE_TOPIC) {
-				$query = "UPDATE TopicFields SET FieldName = '" . $g_ado_db->escape($p_newName)
-				. "' WHERE RootTopicId = " . $this->getTopicTypeRootElement();
+				$query = "UPDATE TopicFields SET FieldName = " . $g_ado_db->escape($p_newName)
+				. " WHERE RootTopicId = " . $this->getTopicTypeRootElement();
 				$g_ado_db->Execute($query);
 			}
 
@@ -144,6 +145,15 @@ class ArticleTypeField extends DatabaseObject {
 			    }
 			}
 		}
+        if ($success && (!$this->getType())) {
+            $params = explode(';', $this->m_data['field_type_param']);
+            foreach ($params as $one_param) {
+                $one_param_parts = explode('=', $one_param);
+                if (isset($one_param_parts[1]) && $one_param_parts[0] == 'filter') {
+                    $this->m_filterOut = (bool) ('' . $one_param_parts[1]);
+                }
+            }
+        }
 		return $success;
 	}
 
@@ -194,6 +204,36 @@ class ArticleTypeField extends DatabaseObject {
             return getGS('Color saved');
         }
 
+    /**
+     * Sets whether articles of this type should be filtered out by default at listings.
+     *
+     * @return bool
+     **/
+    public function setFilter($p_filter)
+    {
+        $this->m_filterOut = (bool) ('' . $p_filter);
+        if (!$this->getType()) {
+            $filter_db_value = (int) $this->m_filterOut;
+            $this->setProperty('field_type_param', 'filter=' . $filter_db_value);
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Returns whether articles of this type should be filtered out by default at listings.
+     *
+     * @return bool
+     **/
+    public function getFilter()
+    {
+        $filter = (bool) $this->m_filterOut;
+        if (empty($filter)) {
+            $filter = false;
+        }
+        return $filter;
+    }
+
 	/**
 	 * Create a column in the table.
 	 * @param string $p_type
@@ -216,8 +256,8 @@ class ArticleTypeField extends DatabaseObject {
 			}
 			$rootTopicId = (int)$p_params['root_topic_id'];
 			$queryStr2 = "INSERT INTO TopicFields (ArticleType, FieldName, RootTopicId) "
-			. "VALUES ('".$g_ado_db->escape($this->m_data['type_name']) . "', '"
-			. $g_ado_db->escape($this->m_data['field_name']) . "', '$rootTopicId')";
+			. "VALUES (".$g_ado_db->escape($this->m_data['type_name']) . ", "
+			. $g_ado_db->escape($this->m_data['field_name']) . ", '$rootTopicId')";
 			if (!$g_ado_db->Execute($queryStr2)) {
 				return false;
 			}
@@ -359,9 +399,9 @@ class ArticleTypeField extends DatabaseObject {
         }
 
         if ($this->getType() == self::TYPE_TOPIC) {
-        	$queryStr = "DELETE FROM TopicFields WHERE ArticleType = '"
+        	$queryStr = "DELETE FROM TopicFields WHERE ArticleType = "
         	. $g_ado_db->escape($this->m_data['type_name'])
-            ."' AND FieldName = '". $g_ado_db->escape($this->m_data['field_name']) ."'";
+            ." AND FieldName = ". $g_ado_db->escape($this->m_data['field_name']);
             if (!$g_ado_db->Execute($queryStr)) {
                 return false;
             }
@@ -409,9 +449,9 @@ class ArticleTypeField extends DatabaseObject {
 		if ($success || $this->getPrintName() == 'NULL') {
             $myType = $this->getType();
 			if ($myType == self::TYPE_TOPIC) {
-                $queryStr = "DELETE FROM TopicFields WHERE ArticleType = '"
-                . $g_ado_db->escape($this->m_data['type_name']) . "' and FieldName = '"
-                . $g_ado_db->escape($this->m_data['field_name']) . "'";
+                $queryStr = "DELETE FROM TopicFields WHERE ArticleType = "
+                . $g_ado_db->escape($this->m_data['type_name']) . " and FieldName = "
+                . $g_ado_db->escape($this->m_data['field_name']);
                 $g_ado_db->Execute($queryStr);
                 $this->m_rootTopicId = null;
             }
@@ -506,9 +546,9 @@ class ArticleTypeField extends DatabaseObject {
 		global $g_ado_db;
 
 		if ($this->getType() == self::TYPE_TOPIC && is_null($this->m_rootTopicId)) {
-    		$queryStr = "SELECT RootTopicId FROM TopicFields WHERE ArticleType = '"
-    		. $g_ado_db->escape($this->getArticleType()) . "' and FieldName = '"
-    		. $g_ado_db->escape($this->getPrintName()) . "'";
+    		$queryStr = "SELECT RootTopicId FROM TopicFields WHERE ArticleType = "
+    		. $g_ado_db->escape($this->getArticleType()) . " and FieldName = "
+    		. $g_ado_db->escape($this->getPrintName());
     		$this->m_rootTopicId = $g_ado_db->GetOne($queryStr);
 		}
 		return $this->m_rootTopicId;
@@ -772,7 +812,7 @@ class ArticleTypeField extends DatabaseObject {
 	{
 		global $g_ado_db;
 		$queryStr = "SELECT field_weight FROM `" . $this->m_dbTableName
-		. "` WHERE type_name = '" . $g_ado_db->escape($this->m_data['type_name']) . "'"
+		. "` WHERE type_name = " . $g_ado_db->escape($this->m_data['type_name'])
 		. " AND field_name != 'NULL' ORDER BY field_weight DESC";
 		$field_weight = $g_ado_db->GetOne($queryStr);
 		if (!is_null($field_weight)) {
@@ -797,8 +837,8 @@ class ArticleTypeField extends DatabaseObject {
 		global $g_ado_db;
 
 		$queryStr = "SELECT field_weight, field_name FROM `" . $this->m_dbTableName
-		. "` WHERE type_name = '" . $g_ado_db->escape($this->m_data['type_name'])
-		. "' AND field_name != 'NULL' ORDER BY field_weight DESC";
+		. "` WHERE type_name = " . $g_ado_db->escape($this->m_data['type_name'])
+		. " AND field_name != 'NULL' ORDER BY field_weight DESC";
 		$queryArray = $g_ado_db->GetAll($queryStr);
 		$orderArray = array();
 		foreach ($queryArray as $row => $values) {
@@ -908,15 +948,15 @@ class ArticleTypeField extends DatabaseObject {
 	    $whereClauses = array();
 	    if (isset($p_name)) {
 	    	$operator = $p_negateName ? '<>' : '=';
-	        $whereClauses[] = "field_name $operator '" . $g_ado_db->escape($p_name) . "'";
+	        $whereClauses[] = "field_name $operator " . $g_ado_db->escape($p_name);
 	    }
 	    if (isset($p_articleType)) {
             $operator = $p_negateArticleType ? '<>' : '=';
-	    	$whereClauses[] = "type_name $operator '" . $g_ado_db->escape($p_articleType) . "'";
+	    	$whereClauses[] = "type_name $operator " . $g_ado_db->escape($p_articleType);
 	    }
 	    if (isset($p_dataType)) {
             $operator = $p_negateDataType ? '<>' : '=';
-	    	$whereClauses[] = "field_type $operator '" . $g_ado_db->escape($p_dataType) . "'";
+	    	$whereClauses[] = "field_type $operator " . $g_ado_db->escape($p_dataType);
 	    }
 	    if (!$p_selectHidden) {
 	    	$whereClauses[] = 'is_hidden = false';

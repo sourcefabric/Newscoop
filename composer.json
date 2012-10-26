@@ -1,7 +1,7 @@
 {
     "name":"sourcefabric/newscoop",
     "description":"The open source CMS for news",
-    "keywords":["cms,journalism,publication"],
+    "keywords":["cms", "journalism", "publication"],
     "homepage":"http://www.sourcefabric.org/en/newscoop/",
     "version":"4.0",
     "license":"GPL-3.0",
@@ -13,12 +13,12 @@
         "sensio/distribution-bundle":       "2.1.*",
         "sensio/generator-bundle":          "2.1.*",
         "sensio/framework-extra-bundle":    "2.1.*",
-        "doctrine/orm":                     "2.2.*",
-        "doctrine/mongodb-odm":             "dev-master",
-        "doctrine/doctrine-bundle":         ">=2.1",
+        "doctrine/mongodb-odm":             "1.*",
+        "doctrine/orm":                     "2.3.*",
+        "doctrine/doctrine-bundle":         "1.0.*",
         "zendframework/zendframework1":     "dev-release-1.11",
-        "Smarty3":"                         3.0.8",
-        "friendsofsymfony/rest-bundle":     "0.9.0",
+        "Smarty3":                          "3.0.8",
+        "friendsofsymfony/rest-bundle":     "dev-master",
         "behat/behat":                      ">=2.4.0",
         "behat/common-contexts":            "*",
         "kriswallsmith/buzz":               ">=0.7",
@@ -51,23 +51,15 @@
         "classmap":[
             "vendor/Smarty3/libs", 
             "newscoop/classes",
-            "dependencies/include/adodb",
             "newscoop/template_engine",
-            "newscoop/plugins"
+            "newscoop/plugins",
+            "plugins"
         ]
     },
     "scripts": {
         "post-install-cmd": [
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ],
         "post-update-cmd": [
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::clearCache",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installAssets",
-            "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::installRequirementsFile"
         ]
     },
     "minimum-stability": "dev",

@@ -415,18 +415,20 @@ class ArticleList extends BaseList
 			$publication = NULL;
 		}
 
-		if($_REQUEST['language'] > 0) {
-			$language = $_REQUEST['language'];
-		} else {
-			$language = NULL;
-		}
-
+		$language = NULL;		
 		if($_REQUEST['issue'] > 0) {
 			$issueArray = explode("_",$_REQUEST['issue']);
 			$issue = $issueArray[1];
+			if (isset($issueArray[2])) {
+				$language = $issueArray[2];
+			}
 		} else {
 			$issue = NULL;
 		}
+		
+	    if($_REQUEST['language'] > 0) {
+            $language = $_REQUEST['language'];
+        }
 
 		// get sections
 		$sections = array();

@@ -15,6 +15,9 @@ use Doctrine\ORM\Mapping AS ORM;
  */
 class UserAttribute
 {
+    const HTTP_USER_AGENT = 'http_user_agent';
+    const IS_VERIFIED = 'is_verified';
+
     /**
      * @ORM\Id 
      * @ORM\ManyToOne(targetEntity="User", inversedBy="attributes")
