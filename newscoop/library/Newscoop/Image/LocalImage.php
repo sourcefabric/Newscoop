@@ -101,13 +101,13 @@ class LocalImage implements ImageInterface
     private $items;
 
     /**
-     * @Column(type="integer", name="is_updated_storage")
+     * @ORM\Column(type="integer", name="is_updated_storage")
      * @var int
      */
     private $isUpdatedStorage = 0;
 
     /**
-     * @Column(name="Source")
+     * @ORM\Column(name="Source")
      * @var string
      */
     private $source;

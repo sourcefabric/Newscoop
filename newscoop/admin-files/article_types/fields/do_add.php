@@ -63,7 +63,7 @@ if ($correct) {
     
     $params = array('root_topic_id'=>$rootTopicId, 'is_content'=>strtolower($isContent) == 'on',
 	'precision'=>$precision, 'maxsize'=>$maxsize, 'editor_size' => $editorSize, 'event_color' => $eventColor);
-	$field->create($fieldType, $params);
+	$field->create($params, $fieldType);
 	camp_html_goto_page("/$ADMIN/article_types/fields/?f_article_type=".urlencode($articleTypeName));
 }
 

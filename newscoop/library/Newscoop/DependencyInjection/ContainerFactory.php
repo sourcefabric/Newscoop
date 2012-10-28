@@ -102,6 +102,10 @@ class ContainerFactory {
             }
         }
 
+        $this->container->setParameter('storage', array(
+            \Zend_Cloud_StorageService_Adapter_FileSystem::LOCAL_DIRECTORY => APPLICATION_PATH . '/..',
+        ));
+
         /**
          * Load all configs from services directory.
          */

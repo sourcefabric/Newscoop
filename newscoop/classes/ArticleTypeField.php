@@ -239,7 +239,7 @@ class ArticleTypeField extends DatabaseObject {
 	 * @param string $p_type
 	 *		Can be one of: 'text', 'date', 'body', 'switch', 'numeric'.
 	 */
-	public function create($p_type, array $p_params = array())
+	public function create($p_params = array(), $p_type = '')
 	{
 		global $g_ado_db;
 
