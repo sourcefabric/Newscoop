@@ -1,0 +1,21 @@
+Newscoop\Entity\Playlist:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["list"]
+            serialized_name: id
+        name:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["list"]
+            serialized_name: title
+        articlesLink:
+            expose: true
+            read_only: true
+            type: articles_link
+            groups: ["list"]
+            serialized_name: articlesLink

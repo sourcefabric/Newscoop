@@ -7,13 +7,14 @@
 
 namespace Newscoop\Subscription;
 
-use Newscoop\Entity\Publication,
-    Newscoop\Entity\User;
+use Newscoop\Entity\Publication;
+use Newscoop\Entity\User;
+use Doctrine\ORM\Mapping AS ORM;
 
 /**
  * Subscription entity
- * @Entity(repositoryClass="Newscoop\Subscription\SubscriptionRepository")
- * @Table(name="Subscriptions")
+ * @ORM\Entity(repositoryClass="Newscoop\Subscription\SubscriptionRepository")
+ * @ORM\Table(name="Subscriptions")
  */
 class Subscription
 {
@@ -22,58 +23,56 @@ class Subscription
     const TYPE_TRIAL = 'T';
 
     /**
-     * @Id @GeneratedValue
-     * @Column(type="integer", name="Id")
+     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Column(type="integer", name="Id")
      * @var int
      */
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\User")
-     * @JoinColumn(name="IdUser", referencedColumnName="Id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @ORM\JoinColumn(name="IdUser", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Publication")
-     * @JoinColumn(name="IdPublication", referencedColumnName="Id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
+     * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
     private $publication;
 
     /**
-     * @Column(type="decimal", name="ToPay")
+     * @ORM\Column(type="decimal", name="ToPay")
      * @var float
      */
     private $toPay = 0.0;
 
     /**
-     * @Column(name="Type")
+     * @ORM\Column(name="Type")
      * @var string
      */
     private $type;
 
     /**
-     * @Column(name="Currency")
+     * @ORM\Column(name="Currency")
      * @var string
      */
     private $currency;
 
     /**
-     * @Column(name="Active")
+     * @ORM\Column(name="Active")
      * @var string
      */
     private $active;
 
     /**
-     * @OneToMany(targetEntity="Newscoop\Subscription\Section", mappedBy="subscription", cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Newscoop\Subscription\Section", mappedBy="subscription", cascade={"persist", "remove"})
      * @var array
      */
     private $sections;
 
-    /**
-     */
     public function __construct()
     {
         $this->sections = new \Doctrine\Common\Collections\ArrayCollection();

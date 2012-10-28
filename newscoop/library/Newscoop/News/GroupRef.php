@@ -11,7 +11,7 @@ use Doctrine\ODM\MongoDB\Mapping\Annotations as ODM;
 
 /**
  * GroupRef
- * @ODM\EmbeddedDocument
+ * @ODM\EmbeddedDocument()
  */
 class GroupRef
 {

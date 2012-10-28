@@ -7,6 +7,7 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\ORM\Mapping AS ORM;
 use Newscoop\Utils\Validation;
 use Newscoop\Entity\Entity;
 use Newscoop\Entity\Theme;
@@ -14,47 +15,47 @@ use Newscoop\Entity\Theme;
 /**
  * Provides the settings for an output in relation with the theme resources.
  *
- * @MappedSuperclass
+ * @ORM\MappedSuperclass
  */
 class OutputSettings extends Entity
 {
 
-    	/**
+    /**
 	 * Provides the class name as a constant.
 	 */
 	const NAME = __CLASS__;
 
 	/**
-	 * @ManyToOne(targetEntity="Newscoop\Entity\Output")
-	 * @JoinColumn(name="fk_output_id", referencedColumnName="id", nullable=FALSE)
+	 * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Output")
+	 * @ORM\JoinColumn(name="fk_output_id", referencedColumnName="id", nullable=FALSE)
 	 * @var Newscoop\Entity\Output
 	 */
 	private $output;
 
 	/**
-	 * @ManyToOne(targetEntity="Newscoop\Entity\Resource")
-	 * @JoinColumn(name="fk_front_page_id", referencedColumnName="id")
+	 * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Resource")
+	 * @ORM\JoinColumn(name="fk_front_page_id", referencedColumnName="id")
 	 * @var Newscoop\Entity\Resource
 	 */
 	private $frontPage;
 
 	/**
-	 * @ManyToOne(targetEntity="Newscoop\Entity\Resource")
-	 * @JoinColumn(name="fk_section_page_id", referencedColumnName="id", nullable=TRUE)
+	 * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Resource")
+	 * @ORM\JoinColumn(name="fk_section_page_id", referencedColumnName="id", nullable=TRUE)
 	 * @var Newscoop\Entity\Resource
 	 */
 	private $sectionPage;
 
 	/**
-	 * @ManyToOne(targetEntity="Newscoop\Entity\Resource")
-	 * @JoinColumn(name="fk_article_page_id", referencedColumnName="id", nullable=TRUE)
+	 * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Resource")
+	 * @ORM\JoinColumn(name="fk_article_page_id", referencedColumnName="id", nullable=TRUE)
 	 * @var Newscoop\Entity\Resource
 	 */
 	private $articlePage;
 
 	/**
-	 * @ManyToOne(targetEntity="Newscoop\Entity\Resource")
-	 * @JoinColumn(name="fk_error_page_id", referencedColumnName="id", nullable=TRUE)
+	 * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Resource")
+	 * @ORM\JoinColumn(name="fk_error_page_id", referencedColumnName="id", nullable=TRUE)
 	 * @var Newscoop\Entity\Resource
 	 */
 	private $errorPage;

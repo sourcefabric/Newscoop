@@ -7,39 +7,38 @@
 
 namespace Newscoop\Entity\Comment\Preference;
 
+use Doctrine\ORM\Mapping AS ORM;
 use Newscoop\Entity\Language;
 
 /**
  * Article entity
- * @entity
- * @table(name="Article")
- * @entity(repositoryClass="Newscoop\Entity\Repository\Comment\Preference\ArticleRepository")
- * @Table(name="comment_preference_article")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\Comment\Preference\ArticleRepository")
+ * @ORM\Table(name="comment_preference_article")
  */
 class Article
 {
     /**
-     * @id @generatedValue
-     * @column(name="Number", type="integer")
+     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Column(name="Number", type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @manyToOne(targetEntity="Newscoop\Entity\Language")
-     * @joinColumn(name="IdLanguage", referencedColumnName="Id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
+     * @ORM\JoinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
     private $language;
 
     /**
-     * @column(name="comments_enabled")
+     * @ORM\Column(name="comments_enabled")
      * @var int
      */
     private $enabled;
 
     /**
-     * @column(name="comments_locked")
+     * @ORM\Column(name="comments_locked")
      * @var int
      */
     private $locked;
