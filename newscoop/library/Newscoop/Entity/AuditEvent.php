@@ -7,64 +7,66 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\ORM\Mapping AS ORM;
+
 /**
- * @Entity(repositoryClass="Newscoop\Entity\Repository\AuditRepository")
- * @Table(name="audit_event")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\AuditRepository")
+ * @ORM\Table(name="audit_event")
  */
 class AuditEvent
 {
     /**
-     * @Id @GeneratedValue
-     * @Column(type="integer")
+     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @Column(length=80)
+     * @ORM\Column(length=80)
      * @var string
      */
     private $resource_type;
 
     /**
-     * @Column(length=80, nullable=True, name="resource_id")
+     * @ORM\Column(length=80, nullable=True, name="resource_id")
      * @var string
      */
     private $resource_id;
 
     /**
-     * @Column(length=255, nullable=True)
+     * @ORM\Column(length=255, nullable=True)
      * @var string
      */
     private $resource_title;
 
     /**
-     * @Column(type="text", nullable=True, name="resource_diff")
+     * @ORM\Column(type="text", nullable=True, name="resource_diff")
      * @var string
      */
     private $resource_diff;
 
     /**
-     * @Column(length=80)
+     * @ORM\Column(length=80)
      * @var string
      */
     private $action;
 
     /**
-     * @Column(type="datetime")
+     * @ORM\Column(type="datetime")
      * @var DateTime
      */
     private $created;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      * @var bool
      */
     private $is_public = FALSE;
 
     /**
-     * @ManyToOne(targetEntity="User")
-     * @JoinColumn(referencedColumnName="Id")
+     * @ORM\ManyToOne(targetEntity="User")
+     * @ORM\JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $user;

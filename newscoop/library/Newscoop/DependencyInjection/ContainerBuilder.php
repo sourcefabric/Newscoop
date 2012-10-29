@@ -23,7 +23,7 @@ class ContainerBuilder extends SymfonyContainerBuilder
     *
     * @param array $options The default options
     */
-    public function __construct($options)
+    public function __construct($options = array())
     {
         parent::__construct(new ParameterBag($options));
     }

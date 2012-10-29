@@ -1,0 +1,39 @@
+NewscoopGimmeBundleArticles:
+    resource: "@NewscoopGimmeBundle/Controller/ArticlesController.php"
+    prefix:   /
+    type:     annotation
+
+NewscoopGimmeBundleAuthors:
+    resource: "@NewscoopGimmeBundle/Controller/AuthorsController.php"
+    prefix:   /
+    type:     annotation
+
+NewscoopGimmeBundleComments:
+    resource: "@NewscoopGimmeBundle/Controller/CommentsController.php"
+    prefix:   /
+    type:     annotation
+
+NewscoopGimmeBundleSlideshows:
+    resource: "@NewscoopGimmeBundle/Controller/SlideshowsController.php"
+    prefix:   /
+    type:     annotation
+
+NewscoopGimmeBundleTopics:
+    resource: "@NewscoopGimmeBundle/Controller/TopicsController.php"
+    prefix:   /
+    type:     annotation
+
+NewscoopGimmeBundleUsers:
+    resource: "@NewscoopGimmeBundle/Controller/UsersController.php"
+    prefix:   /
+    type:     annotation
+
+NewscoopGimmeBundleSections:
+    resource: "@NewscoopGimmeBundle/Controller/SectionsController.php"
+    prefix:   /
+    type:     annotation
+
+NewscoopGimmeBundleArticlesList:
+    resource: "@NewscoopGimmeBundle/Controller/ArticlesListController.php"
+    prefix:   /
+    type:     annotation

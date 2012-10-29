@@ -1,6 +1,6 @@
 <?php
 
-global $g_ado_db;
+global $g_ado_db, $application;
 
 /**
  * Display error message and die.
@@ -21,7 +21,7 @@ if (empty($g_ado_db)) {
     if (Zend_Registry::isRegistered('container')) {
         $container = Zend_Registry::get('container');
     } else {
-        global $application;
+        require_once __DIR__ . '/application.php';
         $application->bootstrap('container');
         $container = $application->getBootstrap()->getResource('container');
     }

@@ -1,0 +1,22 @@
+Newscoop\Package\Item:
+    exclusion_policy: ALL
+    properties:
+        link:
+            expose: true
+            read_only: true
+            type: image_uri
+            groups: ["slideshowsDetails"]
+            serialized_name: link
+        caption:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["slideshowsDetails"]
+            serialized_name: caption
+        type:
+            expose: true
+            read_only: true
+            type: string
+            access_type: public_method
+            groups: ["slideshowsDetails"]
+            serialized_name: type

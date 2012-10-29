@@ -7,60 +7,63 @@
 
 namespace Newscoop\Subscription;
 
+use Doctrine\ORM\Mapping AS ORM;
+
 /**
  * Subscription Section relation entity
- * @Entity(repositoryClass="Newscoop\Entity\Repository\SubscriptionSectionRepository")
- * @Table(name="SubsSections")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\SubscriptionSectionRepository")
+ * @ORM\Table(name="SubsSections")
  */
 class Section
 {
     /**
-     * @Id @GeneratedValue
-     * @Column(type="integer")
+     * @ORM\Id 
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Subscription\Subscription", inversedBy="sections")
-     * @JoinColumn(name="IdSubscription", referencedColumnName="Id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Subscription\Subscription", inversedBy="sections")
+     * @ORM\JoinColumn(name="IdSubscription", referencedColumnName="Id")
      * @var Newscoop\Subscription\Subscription
      */
     private $subscription;
 
     /**
-     * @Column(type="integer", name="SectionNumber")
+     * @ORM\Column(type="integer", name="SectionNumber")
      * @var int
      */
     private $sectionNumber;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Language")
-     * @JoinColumn(name="IdLanguage", referencedColumnName="Id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
+     * @ORM\JoinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
     private $language;
 
     /**
-     * @Column(type="date", name="StartDate")
+     * @ORM\Column(type="date", name="StartDate")
      * @var DateTime
      */
     private $startDate;
 
     /**
-     * @Column(type="integer", name="Days")
+     * @ORM\Column(type="integer", name="Days")
      * @var int
      */
     private $days;
 
     /**
-     * @Column(type="integer", name="PaidDays")
+     * @ORM\Column(type="integer", name="PaidDays")
      * @var int
      */
     private $paidDays;
 
     /**
-     * @Column(name="NoticeSent")
+     * @ORM\Column(name="NoticeSent")
      * @var string
      */
     private $noticeSent;
