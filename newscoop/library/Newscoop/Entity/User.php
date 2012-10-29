@@ -7,18 +7,20 @@
 
 namespace Newscoop\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection,
-    Newscoop\Utils\PermissionToAcl,
-    Newscoop\Entity\Acl\Role,
-    Newscoop\Entity\User\Group,
-    Newscoop\Entity\Author;
+use Doctrine\ORM\Mapping AS ORM;
+use Zend_View_Abstract;
+use Doctrine\Common\Collections\ArrayCollection;
+use Newscoop\Utils\PermissionToAcl;
+use Newscoop\Entity\Acl\Role;
+use Newscoop\Entity\User\Group;
+use Newscoop\Entity\Author;
 
 /**
- * @Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
- * @Table(name="liveuser_users", uniqueConstraints={
- *      @UniqueConstraint(name="username_idx", columns={"Uname"})
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\UserRepository")
+ * @ORM\Table(name="liveuser_users", uniqueConstraints={
+ *      @ORM\UniqueConstraint(name="username_idx", columns={"Uname"})
  *      })
- *  @HasLifecycleCallbacks
+ *  @ORM\HasLifecycleCallbacks
  */
 class User implements \Zend_Acl_Role_Interface
 {
@@ -31,120 +33,120 @@ class User implements \Zend_Acl_Role_Interface
     const HASH_ALGO = 'sha1';
 
     /**
-     * @Id @GeneratedValue
-     * @Column(type="integer", name="Id")
+     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Column(type="integer", name="Id")
      * @var int
      */
     private $id;
 
     /**
-     * @Column(type="string", length=80, name="EMail")
+     * @ORM\Column(type="string", length=80, name="EMail")
      * @var string
      */
     private $email;
 
     /**
-     * @Column(type="string", length=80, nullable=TRUE, name="UName")
+     * @ORM\Column(type="string", length=80, nullable=TRUE, name="UName")
      * @var string
      */
     private $username;
 
     /**
-     * @Column(type="string", length=60, nullable=TRUE, name="Password")
+     * @ORM\Column(type="string", length=60, nullable=TRUE, name="Password")
      * @var string
      */
     private $password;
 
     /**
-     * @Column(type="string", length=80, nullable=TRUE, name="Name")
+     * @ORM\Column(type="string", length=80, nullable=TRUE, name="Name")
      * @var string
      */
     private $first_name;
 
     /**
-     * @Column(type="string", length=80, nullable=TRUE)
+     * @ORM\Column(type="string", length=80, nullable=TRUE)
      * @var string
      */
     private $last_name;
 
     /**
-     * @Column(type="datetime", name="time_created")
+     * @ORM\Column(type="datetime", name="time_created")
      * @var DateTime
      */
     private $created;
 
     /**
-     * @Column(type="datetime", name="time_updated", nullable=true)
+     * @ORM\Column(type="datetime", name="time_updated", nullable=true)
      * @var DateTime
      */
     private $updated;
 
     /**
-     * @Column(type="integer", length=1)
+     * @ORM\Column(type="integer", length=1)
      * @var int
      */
     private $status = self::STATUS_INACTIVE;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      * @var bool
      */
     private $is_admin;
 
     /**
-     * @Column(type="boolean")
+     * @ORM\Column(type="boolean")
      * @var bool
      */
     private $is_public;
 
     /**
-     * @Column(type="integer")
+     * @ORM\Column(type="integer")
      * @var int
      */
     private $points;
 
     /**
-     * @Column(type="string", length=255, nullable=TRUE)
+     * @ORM\Column(type="string", length=255, nullable=TRUE)
      * @var string
      */
     private $image;
 
     /**
-     * @oneToOne(targetEntity="Newscoop\Entity\Acl\Role", cascade={"ALL"})
+     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Acl\Role", cascade={"ALL"})
      * @var Newscoop\Entity\Acl\Role
      */
     private $role;
 
     /**
-     * @manyToMany(targetEntity="Newscoop\Entity\User\Group", inversedBy="users")
-     * @joinTable(name="liveuser_groupusers",
-     *      joinColumns={@joinColumn(name="perm_user_id", referencedColumnName="Id")},
-     *      inverseJoinColumns={@joinColumn(name="group_id", referencedColumnName="group_id")}
+     * @ORM\manyToMany(targetEntity="Newscoop\Entity\User\Group", inversedBy="users")
+     * @ORM\joinTable(name="liveuser_groupusers",
+     *      joinColumns={@ORM\JoinColumn(name="perm_user_id", referencedColumnName="Id")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="group_id", referencedColumnName="group_id")}
      *      )
      * @var Doctrine\Common\Collections\Collection;
      */
     private $groups;
 
     /**
-     * @OneToMany(targetEntity="UserAttribute", mappedBy="user", cascade={"ALL"}, indexBy="attribute")
+     * @ORM\oneToMany(targetEntity="UserAttribute", mappedBy="user", cascade={"ALL"}, indexBy="attribute")
      * @var Doctrine\Common\Collections\Collection;
      */
     private $attributes;
 
     /**
-     * @OneToMany(targetEntity="Newscoop\Entity\Comment\Commenter", mappedBy="user", cascade={"ALL"}, indexBy="name")
+     * @ORM\oneToMany(targetEntity="Newscoop\Entity\Comment\Commenter", mappedBy="user", cascade={"ALL"}, indexBy="name")
      * @var Doctrine\Common\Collections\Collection;
      */
     private $commenters;
 
     /**
-     * @Column(type="integer", nullable=True)
+     * @ORM\Column(type="integer", nullable=True)
      * @var int
      */
     private $subscriber;
 
     /**
-     * @OneToOne(targetEntity="Author")
+     * @ORM\OneToOne(targetEntity="Author")
      * @var Newscoop\Entity\Author
      */
     private $author;
@@ -586,6 +588,15 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
+     * Set User attributes
+     * @param mixed $attributes UserAttributes
+     */
+    public function setAttributes($attributes)
+    {
+        $this->attributes = $attributes;
+    }
+
+    /**
      * Get all user attributes
      *
      * @return array of all user attributes
@@ -768,10 +779,121 @@ class User implements \Zend_Acl_Role_Interface
     }
 
     /**
-     * @PreUpdate
+     * @ORM\PreUpdate
      */
     public function preUpdate()
     {
         $this->updated = new \DateTime();
+    }
+
+    /**
+     * Set indexed
+     *
+     * @param DateTime $indexed
+     * @return void
+     */
+    public function setIndexed(\DateTime $indexed = null)
+    {
+        $this->indexed = $indexed;
+    }
+
+    /**
+     * Get indexed
+     *
+     * @return DateTime
+     */
+    public function getIndexed()
+    {
+        return $this->indexed;
+    }
+
+    /**
+     * Update user profile
+     *
+     * @param string $username
+     * @param string $password
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $image
+     * @param array $attributes
+     */
+    public function updateProfile($username, $password, $firstName, $lastName, $image, array $attributes)
+    {
+        if (!empty($username)) {
+            $this->setUsername($username);
+        }
+
+        if (!empty($password)) {
+            $this->setPassword($password);
+        }
+
+        if (!empty($firstName)) {
+            $this->first_name = (string) $firstName;
+        }
+
+        if (!empty($lastName)) {
+            $this->last_name = (string) $lastName;
+        }
+
+        if (!empty($image)) {
+            $this->image = (string) $image;
+        }
+
+        foreach ($attributes as $key => $val) {
+            if (isset($val)) {
+                $this->addAttribute($key, $val);
+            }
+        }
+    }
+
+    /**
+     * Get edit view
+     *
+     * @param Zend_View_Abstract $view
+     * @return object
+     */
+    public function getEditView(Zend_View_Abstract $view)
+    {
+        return (object) array(
+            'id' => $this->id,
+            'username' => $this->username ?: sprintf('<%s>', preg_replace('/@.*$/', '', $this->email)),
+            'email' => $this->email,
+            'status' => $this->status,
+            'created' => $this->created->format('d.m.Y H:i'),
+            'updated' => $this->updated->format('d.m.Y H:i'),
+            'is_verified' => (bool) $this->getAttribute(UserAttribute::IS_VERIFIED),
+            'http_user_agent' => $this->getAttribute(UserAttribute::HTTP_USER_AGENT),
+            'links' => array(
+                array(
+                    'rel' => 'edit',
+                    'href' => $this->getViewUrl('edit', $view),
+                ),
+                array(
+                    'rel' => 'delete',
+                    'href' => $this->getViewUrl('delete', $view),
+                ),
+                array(
+                    'rel' => 'token',
+                    'href' => $this->getViewUrl('send-confirm-email', $view),
+                ),
+            ),
+        );
+    }
+
+    /**
+     * Get url for given action
+     *
+     * @param string $action
+     * @param Zend_View_Abstract $view
+     * @return string
+     */
+    private function getViewUrl($action, Zend_View_Abstract $view)
+    {
+        return $view->url(array(
+            'module' => 'admin',
+            'controller' => 'user',
+            'action' => $action,
+            'user' => $this->id,
+        ), 'default', true);
     }
 }

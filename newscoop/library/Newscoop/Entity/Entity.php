@@ -6,18 +6,19 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\ORM\Mapping AS ORM;
 use Newscoop\Utils\Validation;
 
 /**
  * Provides the basic container for an entity that has a primary key.
  *
- * @MappedSuperclass
+ * @ORM\MappedSuperclass
  */
 class Entity {
 
 	/**
-	 * @id @generatedValue
-	 * @column(name="id", type="integer")
+	 * @ORM\Id @ORM\GeneratedValue
+	 * @ORM\Column(name="id", type="integer")
 	 * @var int
 	 */
 	protected $id;

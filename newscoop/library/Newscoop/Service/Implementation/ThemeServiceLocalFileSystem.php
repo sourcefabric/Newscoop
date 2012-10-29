@@ -223,7 +223,7 @@ class ThemeServiceLocalFileSystem implements IThemeService
 								while (($file = readdir($subDh)) !== false) {
 									if ($file != "." && $file != ".."){
 										$filePath = $dir.DIR_SEP.$file.DIR_SEP.$this->themeConfigFileName;
-										if(file_exists($this->themesFolder.$filePath)){
+										if(@file_exists($this->themesFolder.$filePath)){
 											$escapedPath = $this->escapePath($filePath);
 											$this->cacheThemeConfigs[crc32($escapedPath)] = $escapedPath;
 										}

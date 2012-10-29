@@ -8,6 +8,7 @@ require_once($GLOBALS['g_campsiteDir']."/classes/Log.php");
 require_once(dirname(dirname(dirname(__FILE__))).'/classes/cache/CacheEngine.php');
 require_once($GLOBALS['g_campsiteDir']."/classes/GeoPreferences.php");
 require_once($GLOBALS['g_campsiteDir']."/classes/GeoNames.php");
+require_once($GLOBALS['g_campsiteDir'].'/bin/cli_script_lib.php');
 
 if (!$g_user->hasPermission('ChangeSystemPreferences')) {
     camp_html_display_error(getGS("You do not have the right to change system preferences."));
@@ -300,7 +301,7 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
 ?>
 <tr>
     <td align="left" width="400px">
-        <?php putGS("Collect statistics:"); ?>
+        <?php putGS("Automatic collection of statistics:"); ?>
     </td>
     <td align="left" valign="top">
         <input type="radio" name="f_collect_statistics" value="Y" <?php if (SystemPref::Get("CollectStatistics") == 'Y') p("checked"); ?> /> <?php putGS("Yes"); ?>
@@ -453,7 +454,8 @@ $availableTemplateCacheHandlers = CampTemplateCache::availableHandlers();
     </td>
 </tr>
 <?php
-    if (!Geo_Names::GeodataLoaded()) {
+    global $g_ado_db;
+    if (!camp_geodata_loaded($g_ado_db)) {
 
     $mysql_client_command_path_def = '/usr/bin/mysql';
     $mysql_client_command_path = SystemPref::Get('MysqlClientCommandPath');

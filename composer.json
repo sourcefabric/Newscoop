@@ -1,21 +1,28 @@
 {
     "name":"sourcefabric/newscoop",
     "description":"The open source CMS for news",
-    "keywords":["cms,journalism,publication"],
+    "keywords":["cms", "journalism", "publication"],
     "homepage":"http://www.sourcefabric.org/en/newscoop/",
     "version":"4.0",
     "license":"GPL-3.0",
     "authors":[],
     "require":{
-        "php": ">=5.3.0",
-        "symfony/dependency-injection": "2.1.*",
-        "symfony/event-dispatcher" : "2.1.*",
-        "symfony/yaml": "2.1.*",
-        "symfony/config": "2.1.*",
-        "symfony/console": "2.1.*",
-        "doctrine/orm":"2.2.*",
-        "zendframework/zendframework1":"dev-release-1.11",
-        "Smarty3":"3.0.8"
+        "php":                              ">=5.3.0",
+        "symfony/symfony":                  "2.1.*",
+        "symfony/monolog-bundle":           "2.1.*",
+        "sensio/distribution-bundle":       "2.1.*",
+        "sensio/generator-bundle":          "2.1.*",
+        "sensio/framework-extra-bundle":    "2.1.*",
+        "doctrine/mongodb-odm":             "1.*",
+        "doctrine/orm":                     "2.3.*",
+        "doctrine/doctrine-bundle":         "1.0.*",
+        "zendframework/zendframework1":     "dev-release-1.11",
+        "Smarty3":                          "3.0.8",
+        "friendsofsymfony/rest-bundle":     "dev-master",
+        "behat/behat":                      ">=2.4.0",
+        "behat/common-contexts":            "*",
+        "kriswallsmith/buzz":               ">=0.7",
+        "knplabs/knp-paginator-bundle":     "dev-master"
     },
     "repositories":[
         {
@@ -37,17 +44,30 @@
     ],
     "autoload":{
         "psr-0": {
-            "Newscoop": "newscoop/library",
+            "Newscoop": ["gimme/src", "newscoop/library"],
             "Resource": "newscoop/library",
             "Nette": "newscoop/library"
         },
         "classmap":[
             "vendor/Smarty3/libs", 
             "newscoop/classes",
-            "dependencies/include/adodb",
             "newscoop/template_engine",
-            "newscoop/plugins"
+            "newscoop/plugins",
+            "plugins"
         ]
     },
-    "minimum-stability":"dev"
+    "scripts": {
+        "post-install-cmd": [
+        ],
+        "post-update-cmd": [
+        ]
+    },
+    "minimum-stability": "dev",
+    "config": {
+        "bin-dir": "vendor/bin"
+    },
+    "extra": {
+        "symfony-app-dir": "gimme/app",
+        "symfony-web-dir": "gimme/web"
+    }
 }

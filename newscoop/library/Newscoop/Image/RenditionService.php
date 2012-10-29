@@ -15,7 +15,7 @@ class RenditionService
     /**
      * @var array
      */
-    protected $config;
+    protected $themePath;
 
     /**
      * @var Doctrine\ORM\EntityManager
@@ -35,9 +35,9 @@ class RenditionService
     /**
      * @param Doctrine\ORM\EntityManager $orm
      */
-    public function __construct(array $config, \Doctrine\ORM\EntityManager $orm, ImageService $imageService)
+    public function __construct($themePath, \Doctrine\ORM\EntityManager $orm, ImageService $imageService)
     {
-        $this->config = $config;
+        $this->themePath = $themePath;
         $this->orm = $orm;
         $this->imageService = $imageService;
     }
@@ -102,7 +102,7 @@ class RenditionService
 
         foreach ($renditions as $one_rend) {
             $this->orm->remove($one_rend);
-            $this->orm->flush($one_rend);
+            $this->orm->flush();
         }
     }
 
@@ -177,7 +177,7 @@ class RenditionService
     public function registerRenditions(array $existing = array())
     {
         $this->renditions = array();
-        foreach (glob($this->config['theme_path'] . '/publication_*/theme_*/theme.xml') as $themeInfo) {
+        foreach (glob($this->themePath . '/publication_*/theme_*/theme.xml') as $themeInfo) {
             $xml = simplexml_load_file($themeInfo);
             if (!$xml->renditions) {
                 continue;

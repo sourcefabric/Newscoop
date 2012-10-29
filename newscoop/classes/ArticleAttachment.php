@@ -224,18 +224,14 @@ class ArticleAttachment extends DatabaseObject {
             }
 
             if (strpos($comparisonOperation['left'], 'fk_article_number')) {
-                $whereCondition = $comparisonOperation['left'] . ' '
-                    . $comparisonOperation['symbol'] . " '"
-                    . $g_ado_db->escape($comparisonOperation['right']) . "' ";
+                $whereCondition = $g_ado_db->escapeOperation($comparisonOperation);
                 $hasArticleNr = true;
             } elseif (strpos($comparisonOperation['left'], 'fk_language_id')) {
                 $whereCondition = '('.$comparisonOperation['left'].' IS NULL OR '
-                    .$comparisonOperation['left']." = '"
-                    .$g_ado_db->escape($comparisonOperation['right'])."')";
+                    .$comparisonOperation['left']." = "
+                    .$g_ado_db->escape($comparisonOperation['right']).")";
             } else {
-                $whereCondition = $comparisonOperation['left'] . ' '
-                    . $comparisonOperation['symbol'] . " '"
-                    . $g_ado_db->escape($comparisonOperation['right']) . "' ";
+                $whereCondition = $g_ado_db->escapeOperation($comparisonOperation);
             }
             $selectClauseObj->addWhere($whereCondition);
             $countClauseObj->addWhere($whereCondition);

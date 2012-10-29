@@ -289,8 +289,8 @@ class DebateAnswerAttachment extends DatabaseObject {
             return;
         }
 
-        $sqlClauseObj->addWhere("fk_debate_nr = '" . $g_ado_db->escape($debate_nr) . "'");
-        $sqlClauseObj->addWhere("fk_debateanswer_nr = '" . $g_ado_db->escape($debateanswer_nr) . "'");
+        $sqlClauseObj->addWhere("fk_debate_nr = " . $g_ado_db->escape($debate_nr));
+        $sqlClauseObj->addWhere("fk_debateanswer_nr = " . $g_ado_db->escape($debateanswer_nr));
 
         if (!is_array($p_order)) {
             $p_order = array();

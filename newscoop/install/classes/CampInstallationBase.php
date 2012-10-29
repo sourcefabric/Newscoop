@@ -10,10 +10,10 @@
  * @link http://www.sourcefabric.org
  */
 
-use Newscoop\Entity\Resource,
-	Newscoop\Service\IThemeManagementService,
-	Newscoop\Service\IPublicationService,
-	Newscoop\Service\Implementation\ThemeManagementServiceLocal;
+use Newscoop\Entity\Resource;
+use Newscoop\Service\IThemeManagementService;
+use Newscoop\Service\IPublicationService;
+use Newscoop\Service\Implementation\ThemeManagementServiceLocal;
 
 global $g_db;
 
@@ -21,7 +21,6 @@ global $g_db;
  * Includes
  */
 require_once($GLOBALS['g_campsiteDir'].'/conf/install_conf.php');
-require_once('adodb/adodb.inc.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampRequest.php');
 require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallationView.php');
@@ -128,6 +127,7 @@ class CampInstallationBase
             $this->saveCronJobsScripts();
             if ($this->finish()) {
                 $this->saveConfiguration();
+
                 self::InstallPlugins();
 
                 $this->initRenditions();
@@ -188,8 +188,6 @@ class CampInstallationBase
         $dbhost = $db_hostname;
         if (empty($db_hostport)) {
             $db_hostport = 3306;
-        } else { // add port to hostname
-            $dbhost .= ':' . $db_hostport;
         }
 
         if (empty($db_hostname) || empty($db_hostport)
@@ -200,18 +198,29 @@ class CampInstallationBase
         }
 
         $error = false;
-        $g_db = ADONewConnection('mysql');
-        $g_db->SetFetchMode(ADODB_FETCH_ASSOC);
-        @$g_db->Connect($dbhost, $db_username, $db_userpass);
-        if (!$g_db->isConnected()) {
+
+        $connectionParams = array(
+            'dbname' => $db_database,
+            'user' => $db_username,
+            'password' => $db_userpass,
+            'host' => $db_hostname,
+            'port' => $db_hostport,
+        );
+
+        $g_db = $this->getTestDbConnection($connectionParams);
+
+        if (!$g_db->isConnected(true)) {
             $error = true;
         } else {
             $isDbEmpty = TRUE;
-            $selectDb = $g_db->SelectDB($db_database);
+
+            $selectDb = $g_db->hasDatabase($db_database);
             if ($selectDb) {
+                $g_db = $this->getDbConnection($connectionParams);
                 $dbTables = $g_db->GetAll('SHOW TABLES');
                 $isDbEmpty = empty($dbTables) ? TRUE : FALSE;
             }
+
             if (!$isDbEmpty && !$db_overwrite) {
                 $this->m_step = 'database';
                 $this->m_overwriteDb = true;
@@ -230,16 +239,12 @@ class CampInstallationBase
         }
 
         if (!$error && !$selectDb) {
-            $dict = NewDataDictionary($g_db);
-            $sql = $dict->CreateDatabase($db_database, array('MYSQL'=>'CHARACTER SET utf8'));
-            // ExecuteSQLArray() returns:
-            // 0 if failed,
-            // 1 if executed all but with errors,
-            // 2 if executed successfully
-            if ($dict->ExecuteSQLArray($sql) != 2) {
+            try {
+                $g_db->createDatabase($db_database);
+                $g_db = $this->getDbConnection($connectionParams);
+            } catch (\Exception $e) {
                 $error = true;
             }
-            $g_db->SelectDB($db_database);
         }
 
         if ($error == true) {
@@ -287,6 +292,27 @@ class CampInstallationBase
             $l_db->exec("ALTER TABLE `$table` ENABLE KEYS");
         }
 
+        require_once($GLOBALS['g_campsiteDir'].'/bin/cli_script_lib.php');
+        if (!camp_geodata_loaded($g_db)) {
+            $which_output = '';
+            $which_ret = '';
+            @exec('which mysql', $which_output, $which_ret);
+
+            if (is_array($which_output) && (isset($which_output[0]))) {
+                $mysql_client_command = $which_output[0];
+                if (0 < strlen($mysql_client_command)) {
+                    $db_conf = array(
+                        'host' => $db_hostname,
+                        'port' => $db_hostport,
+                        'user' => $db_username,
+                        'pass' => $db_userpass,
+                        'name' => $db_database,
+                    );
+                    camp_load_geodata($mysql_client_command, $db_conf);
+                }
+            }
+        }
+
         { // installing the stored function for 'point in polygon' checking
             $sqlFile = CS_INSTALL_DIR . DIR_SEP . 'sql' . DIR_SEP . "checkpp.sql";
             importSqlStoredProgram($g_db, $sqlFile);
@@ -319,6 +345,36 @@ class CampInstallationBase
 
         return true;
     } // fn databaseConfiguration
+
+    /**
+     * Get database connection
+     *
+     * @param array $params
+     * @return Newscoop\Doctrine\AdoDbAdapter
+     */
+    private function getDbConnection(array $params)
+    {
+        $params = array_merge($params, array(
+            'driver' => 'pdo_mysql',
+            'charset' => 'UTF8',
+        ));
+
+        $config = new \Doctrine\DBAL\Configuration();
+        $connection = \Doctrine\DBAL\DriverManager::getConnection($params, $config);
+        return new \Newscoop\Doctrine\AdoDbAdapter($connection);
+    }
+
+    /**
+     * Get test database connection
+     *
+     * @param array $params
+     * @return Newscoop\Doctrine\AdoDbAdapter
+     */
+    private function getTestDbConnection(array $params)
+    {
+        unset($params['dbname']);
+        return $this->getDbConnection($params);
+    }
 
     /**
      *
@@ -730,6 +786,8 @@ XML;
         file_put_contents($path2, $buffer2);
         @chmod($path2, 0600);
 
+        require_once $path2; // load saved db config for next steps
+
         // create images and files directories
         CampInstallationBase::CreateDirectory($GLOBALS['g_campsiteDir'].DIR_SEP.'images');
         CampInstallationBase::CreateDirectory($GLOBALS['g_campsiteDir'].DIR_SEP.'images'.DIR_SEP.'thumbnails');
@@ -812,7 +870,7 @@ class CampInstallationBaseHelper
     {
         global $g_db;
 
-        if (is_a($g_db, 'ADONewConnection')) {
+        if ($g_db !== null) {
             return true;
         }
 
@@ -823,16 +881,19 @@ class CampInstallationBaseHelper
             return false;
         }
 
-        $dbhost = $dbData['hostname'];
-        if (!empty($dbData['hostport'])) { // add port to hostname
-            $dbhost .= ':' . $dbData['hostport'];
-        }
+        $params = array(
+            'dbname' => $dbData['database'],
+            'user' => $dbData['username'],
+            'password' => $dbData['userpass'],
+            'host' => $dbData['hostname'],
+            'driver' => 'pdo_mysql',
+            'charset' => 'UTF8',
+        );
 
-        $g_db = ADONewConnection('mysql');
-        $g_db->SetFetchMode(ADODB_FETCH_ASSOC);
-        return @$g_db->Connect($dbhost, $dbData['username'],
-                               $dbData['userpass'], $dbData['database']);
-    } // fn ConnectDB
+        $config = new \Doctrine\DBAL\Configuration();
+        $connection = \Doctrine\DBAL\DriverManager::getConnection($params, $config);
+        return $g_db = new \Newscoop\Doctrine\AdoDbAdapter($connection);
+    }
 
 
     /**
@@ -847,8 +908,8 @@ class CampInstallationBaseHelper
         }
 
         $sqlQuery1 = "UPDATE liveuser_users SET
-            Password = SHA1('".$g_db->Escape($p_password)."'),
-            EMail = '".$g_db->Escape($p_email)."',
+            Password = SHA1(".$g_db->Escape($p_password)."),
+            EMail = ".$g_db->Escape($p_email).",
             time_updated = NOW(),
             time_created = NOW(),
             status = '1',
@@ -900,7 +961,7 @@ class CampInstallationBaseHelper
         }
 
         $p_title = $g_db->escape($p_title);
-        $sqlQuery = "UPDATE SystemPreferences SET value = '$p_title' "
+        $sqlQuery = "UPDATE SystemPreferences SET value = $p_title "
         ."WHERE varname = 'SiteTitle'";
         return $g_db->Execute($sqlQuery);
     }

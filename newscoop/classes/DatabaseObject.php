@@ -354,16 +354,9 @@ class DatabaseObject
 		foreach ($this->m_keyColumnNames as $columnName) {
             $value = isset($this->m_oldKeyValues[$columnName]) ? $this->m_oldKeyValues[$columnName]
                 : $this->m_data[$columnName];
-			if ($g_ado_db->databaseType == 'mysql') {
-			    $whereParts[] = '`' . $columnName . "`='"
-                    .mysql_real_escape_string($value) ."'";
-            } else if ($g_ado_db->databaseType === 'sqlite') {
-                $whereParts[] = "`{$columnName}` = '" . sqlite_escape_string($value) . "'";
-			} else {
-			    $whereParts[] = '`' . $columnName . "`='"
-                    .mysqli_real_escape_string($g_ado_db->_connectionID, $value) ."'";
-			}
+            $whereParts[] = $g_ado_db->escapeKeyVal($columnName, $value);
 		}
+
 		return implode(' AND ', $whereParts);
 	} // fn getKeyWhereClause
 
@@ -426,7 +419,7 @@ class DatabaseObject
 		// If so, automatically set these values when we create the row.
 		foreach ($this->m_columnNames as $columnName) {
 			if (!empty($this->m_data[$columnName])) {
-				$columns[$columnName] = "'".$g_ado_db->escape($this->m_data[$columnName])."'";
+				$columns[$columnName] = $g_ado_db->escape($this->m_data[$columnName]);
 			}
 		}
 
@@ -437,7 +430,7 @@ class DatabaseObject
 			foreach ($p_values as $columnName => $value) {
 				if (in_array($columnName, $this->m_columnNames)) {
 					// Construct value string for the SET clause.
-					$columns[$columnName] = "'".$g_ado_db->escape($value)."'";
+					$columns[$columnName] = $g_ado_db->escape($value);
 					$this->m_data[$columnName] = $value;
 				}
 			}
@@ -451,7 +444,7 @@ class DatabaseObject
 		$queryStr .= ' VALUES ('.implode(',', array_values($columns)) .')';
 
 		// Create the row.
-		$g_ado_db->Execute($queryStr);
+		$g_ado_db->executeUpdate($queryStr);
 		$success = ($g_ado_db->Affected_Rows() > 0);
 		$this->m_exists = $success;
 
@@ -486,7 +479,7 @@ class DatabaseObject
 		$queryStr = 'DELETE FROM ' . $this->m_dbTableName
 					.' WHERE ' . $this->getKeyWhereClause()
 					.' LIMIT 1';
-		$g_ado_db->Execute($queryStr);
+		$g_ado_db->executeUpdate($queryStr);
 		$wasDeleted = ($g_ado_db->Affected_Rows() > 0);
 
 		// removes object from cache
@@ -631,13 +624,13 @@ class DatabaseObject
 		if ($p_commit) {
 			$value = $p_value;
 			if (!$p_isSql) {
-				$value = is_null($p_value) ? 'NULL' : "'".$g_ado_db->escape($p_value)."'";
+				$value = is_null($p_value) ? 'NULL' : $g_ado_db->escape($p_value);
 			}
 			$queryStr = 'UPDATE '.$this->m_dbTableName
 						.' SET `'. $p_dbColumnName.'`='.$value
 						.' WHERE '.$this->getKeyWhereClause()
 						.' LIMIT 1';
-			$result = $g_ado_db->Execute($queryStr);
+			$result = $g_ado_db->executeUpdate($queryStr);
 			$success = ($result !== false && $g_ado_db->Affected_Rows() >= 0);
 			if ($result !== false) {
 				$this->m_exists = true;
@@ -736,7 +729,7 @@ class DatabaseObject
 	        	// Only set the value if it is different from the
 	        	// current value.
 	        	if ($columnValue != $this->m_data[$columnName]) {
-    	        	$setColumns[] = "`".$columnName . "`='". mysql_real_escape_string($columnValue) ."'";
+    	        	$setColumns[] = $g_ado_db->escapeKeyVal($columnName, $columnValue);
     	        	if (!$p_isSql) {
                         $diff[$columnName] = array($this->m_data[$columnName], $columnValue);
     	        		$this->m_data[$columnName] = $columnValue;
@@ -750,7 +743,7 @@ class DatabaseObject
 	        			.' SET '.implode(',', $setColumns)
 	        			.' WHERE ' . $this->getKeyWhereClause()
 	        			.' LIMIT 1';
-	        $success = $g_ado_db->Execute($queryStr);
+	        $success = $g_ado_db->executeUpdate($queryStr);
 			if ($success !== false) {
 				$this->m_exists = true;
 			}
@@ -793,14 +786,14 @@ class DatabaseObject
         $setColumns = array();
         foreach ($this->m_data as $columnName => $columnValue) {
         	if (is_null($p_ignoreColumns) || !in_array($columnName, $p_ignoreColumns)) {
-        		$setColumns[] = "`".$columnName . "`='". $g_ado_db->escape($columnValue) ."'";
+        		$setColumns[] = $g_ado_db->escapeKeyVal($columnName, $columnValue);
         	}
         }
 		$queryStr = 'UPDATE ' . $this->m_dbTableName
 	        		.' SET '.implode(',', $setColumns)
 	        		.' WHERE ' . $this->getKeyWhereClause()
 	        		.' LIMIT 1';
-        $result = $g_ado_db->Execute($queryStr);
+        $result = $g_ado_db->executeUpdate($queryStr);
 		$success = ($g_ado_db->Affected_Rows() >= 0);
 		if ($result !== false) {
 			$this->m_exists = true;
@@ -827,6 +820,8 @@ class DatabaseObject
 	 */
 	public static function Search($p_className, $p_columns = null, $p_sqlOptions = null)
 	{
+        global $g_ado_db;
+
 		if (!class_exists($p_className)) {
 			return array();
 		}
@@ -838,7 +833,7 @@ class DatabaseObject
 			foreach ($p_columns as $item) {
 				if (count($item) == 2) {
 					list($columnName, $value) = $item;
-					$contraints[] = "`$columnName`='" . mysql_real_escape_string($value) . "'";
+					$contraints[] = $g_ado_db->escapeKeyVal($columnName, $value);
 				}
 			}
 			$queryStr .= " WHERE ".implode(" AND ", $contraints);

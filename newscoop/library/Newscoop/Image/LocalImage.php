@@ -7,95 +7,120 @@
 
 namespace Newscoop\Image;
 
+use Doctrine\ORM\Mapping AS ORM;
+
 /**
  * Local Image
- * @Entity
- * @Table(name="Images")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ImageRepository")
+ * @ORM\Table(name="Images")
  */
 class LocalImage implements ImageInterface
 {
+    const LOCATION_LOCAL = 'local';
+    const LOCATION_REMOTE = 'remote';
+
     /**
-     * @Id @Column(type="integer", name="Id") @GeneratedValue
+     * @ORM\Id 
+     * @ORM\Column(type="integer", name="Id") 
+     * @ORM\GeneratedValue
      * @var int
      */
     private $id;
 
     /**
-     * @Column(name="Location")
+     * @ORM\Column(name="Location")
      * @var string
      */
     private $location;
 
     /**
-     * @Column(name="ImageFileName", nullable=True)
+     * @ORM\Column(name="ImageFileName", nullable=True, length=80)
      * @var string
      */
     private $basename;
 
     /**
-     * @Column(name="URL", nullable=True)
+     * @ORM\Column(name="ThumbnailFileName", nullable=True, length=80)
+     * @var string
+     */
+    private $thumbnailPath;
+
+    /**
+     * @ORM\Column(name="URL", nullable=True)
      * @var string
      */
     private $url;
 
     /**
-     * @Column(nullable=True, name="Description")
+     * @ORM\Column(nullable=True, name="Description")
      * @var string
      */
     private $description;
 
     /**
-     * @Column(type="integer", nullable=True)
+     * @ORM\Column(type="integer", nullable=True)
      * @var int
      */
     private $width;
 
     /**
-     * @Column(type="integer", nullable=True)
+     * @ORM\Column(type="integer", nullable=True)
      * @var int
      */
     private $height;
 
     /**
-     * @Column(nullable=True, name="Photographer")
+     * @ORM\Column(nullable=True, name="Photographer")
      * @var string
      */
     private $photographer;
     
     /**
-     * @Column(nullable=True, name="Place")
+     * @ORM\Column(nullable=True, name="Place")
      * @var string
      */
     private $place;
     
     /**
-     * @Column(nullable=True, name="Date")
+     * @ORM\Column(nullable=True, name="Date")
      * @var string
      */
     private $date;
 
     /**
-     * @OneToMany(targetEntity="Newscoop\Image\ArticleRendition", mappedBy="image", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Newscoop\Image\ArticleRendition", mappedBy="image", cascade={"remove"})
      * @var Doctrine\Common\Collections\Collection
      */
     private $renditions;
 
     /**
-     * @OneToMany(targetEntity="Newscoop\Package\Item", mappedBy="image", cascade={"remove"})
+     * @ORM\OneToMany(targetEntity="Newscoop\Package\Item", mappedBy="image", cascade={"remove"})
      * @var Doctrine\Common\Collections\Collection
      */
     private $items;
 
     /**
+     * @ORM\Column(type="integer", name="is_updated_storage")
+     * @var int
+     */
+    private $isUpdatedStorage = 0;
+
+    /**
+     * @ORM\Column(name="Source")
+     * @var string
+     */
+    private $source;
+
+    /**
      * @param string $image
      */
-    public function __construct($image)
+    public function __construct($image = '')
     {
         if (strpos($image, 'http://') === 0 || strpos($image, 'https://') === 0 || strpos($image, 'file://') === 0) {
-            $this->location = 'remote';
+            $this->location = self::LOCATION_REMOTE;
             $this->url = (string) $image;
         } else {
-            $this->location = 'local';
+            $this->location = self::LOCATION_LOCAL;
             $this->basename = (string) $image;
         }
 
@@ -120,7 +145,9 @@ class LocalImage implements ImageInterface
      */
     public function getPath()
     {
-        if ($this->isLocal()) {
+        if ($this->hasUpdatedStorage()) {
+            return 'images/' . $this->basename;
+        } elseif ($this->isLocal()) {
             return basename($this->basename) === $this->basename ? 'images/' . $this->basename : $this->basename;
         } else {
             return $this->url;
@@ -177,9 +204,10 @@ class LocalImage implements ImageInterface
         $this->width = (int) $info[0];
         $this->height = (int) $info[1];
 
-        if ($this->id !== null) {
-            // @todo remove once on image upload is refactored
-            \Zend_Registry::get('container')->getService('em')->flush($this);
+        // @todo remove once on image upload is refactored
+        $em = \Zend_Registry::get('container')->getService('em');
+        if ($em->contains($this)) {
+            $em->flush($this);
         }
     }
 
@@ -290,12 +318,68 @@ class LocalImage implements ImageInterface
     /**
      * Get caption
      *
-     * @proxy to getDescription
+     * Proxy to getDescription
      *
      * @return string
      */
     public function getCaption()
     {
         return $this->getDescription();
+    }
+
+    /**
+     * Test is storage was updated
+     *
+     * @return bool
+     */
+    public function hasUpdatedStorage()
+    {
+        return (bool) $this->isUpdatedStorage;
+    }
+
+    /**
+     * Update storage
+     *
+     * @param string $path
+     * @param string $thumbnailPath
+     * @return void
+     */
+    public function updateStorage($path, $thumbnailPath)
+    {
+        $this->upload($path, $thumbnailPath);
+        $this->isUpdatedStorage = true;
+    }
+
+    /**
+     * Upload image
+     *
+     * @param string $path
+     * @param string $thumbnailpath
+     * @return void
+     */
+    public function upload($path, $thumbnailPath)
+    {
+        $this->basename = $path;
+        $this->thumbnailPath = $thumbnailPath;
+    }
+
+    /**
+     * Get thumbnail path
+     *
+     * @return string
+     */
+    public function getThumbnailPath()
+    {
+        return 'images/thumbnails/' . $this->thumbnailPath;
+    }
+
+    /*
+     * Get source
+     *
+     * @return string
+     */
+    public function getSource()
+    {
+        return $this->source;
     }
 }

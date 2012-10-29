@@ -7,11 +7,13 @@
 
 namespace Newscoop\Entity;
 
+use Doctrine\ORM\Mapping AS ORM;
+
 /**
  * Article entity
  *
- * @Entity(repositoryClass="Newscoop\Entity\Repository\ArticleRepository")
- * @Table(name="Articles")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\ArticleRepository")
+ * @ORM\Table(name="Articles")
  */
 class Article
 {
@@ -20,172 +22,280 @@ class Article
     const STATUS_SUBMITTED = 'S';
     
     /**
-     * @Id
-     * @ManyToOne(targetEntity="Newscoop\Entity\Language")
-     * @JoinColumn(name="IdLanguage", referencedColumnName="Id")
+     * @ORM\Id
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Language")
+     * @ORM\JoinColumn(name="IdLanguage", referencedColumnName="Id")
      * @var Newscoop\Entity\Language
      */
     private $language;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Publication")
-     * @JoinColumn(name="IdPublication", referencedColumnName="Id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Publication")
+     * @ORM\JoinColumn(name="IdPublication", referencedColumnName="Id")
      * @var Newscoop\Entity\Publication
      */
     private $publication;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Issue")
-     * @JoinColumn(name="NrIssue", referencedColumnName="Number")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Issue")
+     * @ORM\JoinColumn(name="NrIssue", referencedColumnName="Number")
      * @var Newscoop\Entity\Issue
      */
     private $issue;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\Section")
-     * @JoinColumn(name="NrSection", referencedColumnName="Number")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Section")
+     * @ORM\JoinColumn(name="NrSection", referencedColumnName="Number")
      * @var Newscoop\Entity\Section
      */
     private $section;
     
     /**
-     * @OneToOne(targetEntity="Newscoop\Entity\User")
-     * @JoinColumn(name="IdUser", referencedColumnName="Id")
+     * @ORM\OneToOne(targetEntity="Newscoop\Entity\User")
+     * @ORM\JoinColumn(name="IdUser", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $creator;
 
     /**
-     * @column(name="NrSection", nullable=True)
+     * @ORM\ManyToMany(targetEntity="Author")
+     * @ORM\JoinTable(name="ArticleAuthors",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="fk_article_number", referencedColumnName="Number"),
+     *          @ORM\JoinColumn(name="fk_language_id", referencedColumnName="IdLanguage")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="fk_author_id", referencedColumnName="id")
+     *      }
+     *  )
+     * @var Newscoop\Entity\Authors
+     */
+    private $authors;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="AuthorType")
+     * @ORM\JoinTable(name="ArticleAuthors",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="fk_article_number", referencedColumnName="Number"),
+     *          @ORM\JoinColumn(name="fk_language_id", referencedColumnName="IdLanguage"),
+     *          @ORM\JoinColumn(name="fk_author_id", referencedColumnName="IdLanguage"),
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="fk_author_id", referencedColumnName="id")
+     *      }
+     *  )
+     * @var Newscoop\Entity\Authors
+     */
+    private $articleAuthorTypes;
+
+    /**
+     * Article fields used by Newscoop API
+     * @var array
+     */
+    private $fields;
+
+    /**
+     * Article Authors for Newscoop\Gimme
+     * @var object
+     */
+    private $articleAuthors;
+
+    /**
+     * @ORM\Column(name="NrSection", nullable=True)
      * @var int
      */
     private $sectionId;
 
     /**
-     * @column(name="NrIssue", nullable=True)
+     * @ORM\Column(name="NrIssue", nullable=True)
      * @var int
      */
     private $issueId;
 
     /**
-     * @Id
-     * @Column(type="integer", name="Number")
+     * @ORM\Id
+     * @ORM\Column(type="integer", name="Number")
      * @var int
      */
     private $number;
 
     /**
-     * @Column(name="Name", nullable=True)
+     * @ORM\Column(name="Name", nullable=True)
      * @var string
      */
     private $name;
 
     /**
-     * @Column(name="ShortName", nullable=True)
+     * @ORM\Column(name="ShortName", nullable=True)
      * @var string
      */
     private $shortName;
 
     /**
-     * @Column(name="time_updated", nullable=True)
+     * @ORM\Column(name="time_updated", nullable=True)
      * @var string
      */
     private $date;
 
     /**
-     * @Column(name="comments_enabled", nullable=True)
+     * @ORM\Column(name="comments_enabled", nullable=True)
      * @var int
      */
     private $comments_enabled;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="thread", indexBy="language")
+     * @var Newscoop\Entity\Comments
+     */
+    private $comments;
+
+    /**
+     * @var string
+     */
+    private $comments_link;
     
     /**
-     * @Column(name="Type", nullable=True)
+     * @ORM\Column(name="Type", nullable=True)
      * @var string
      */
     private $type;
     
     /**
-     * @Column(name="PublishDate", nullable=True)
+     * @ORM\Column(name="PublishDate", nullable=True)
      * @var string
      */
     private $published;
     
     /**
-     * @Column(name="Published", nullable=True)
+     * @ORM\Column(name="Published", nullable=True)
      * @var string
      */
     private $workflowStatus;
 
     /**
-     * @Column(type="integer", name="ArticleOrder", nullable=True)
+     * @ORM\Column(type="integer", name="ArticleOrder", nullable=True)
      * @var int
      */
     private $articleOrder;
 
     /**
-     * @Column(name="Public", nullable=True)
+     * @ORM\Column(name="Public", nullable=True)
      * @var string
      */
     private $public;
 
     /**
-     * @Column(name="OnFrontPage", nullable=True)
+     * @ORM\Column(name="OnFrontPage", nullable=True)
      * @var string
      */
     private $onFrontPage;
 
     /**
-     * @Column(name="OnSection", nullable=True)
+     * @ORM\Column(name="OnSection", nullable=True)
      * @var string
      */
     private $onSection;
 
     /**
-     * @Column(type="datetime", name="UploadDate", nullable=True)
+     * @ORM\Column(type="datetime", name="UploadDate", nullable=True)
      * @var DateTime
      */
     private $uploaded;
 
     /**
-     * @Column(name="Keywords", nullable=True)
+     * @ORM\Column(name="Keywords", nullable=True)
      * @var string
      */
     private $keywords;
 
     /**
-     * @Column(name="IsIndexed", nullable=True)
+     * @ORM\Column(name="IsIndexed", nullable=True)
      * @var string
      */
     private $isIndexed;
 
     /**
-     * @ManyToOne(targetEntity="Newscoop\Entity\User")
-     * @JoinColumn(name="LockUser", referencedColumnName="Id")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\User")
+     * @ORM\JoinColumn(name="LockUser", referencedColumnName="Id")
      * @var Newscoop\Entity\User
      */
     private $lockUser;
 
     /**
-     * @Column(type="datetime", name="LockTime", nullable=True)
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Topic")
+     * @ORM\JoinTable(name="ArticleTopics",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="NrArticle", referencedColumnName="Number")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="TopicId", referencedColumnName="fk_topic_id")
+     *      }
+     *  )
+     * @var Newscoop\Entity\Topic
+     */
+    private $topics;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Newscoop\Entity\Playlist")
+     * @ORM\JoinTable(name="playlist_article",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="article_no", referencedColumnName="Number")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="id_playlist", referencedColumnName="id_playlist")
+     *      }
+     *  )
+     * @var Newscoop\Entity\Playlist
+     */
+    private $playlists;
+
+    /**
+     * @ORM\Column(type="datetime", name="LockTime", nullable=True)
      * @var DateTime
      */
     private $lockTime;
 
     /**
-     * @Column(type="integer", name="comments_locked", nullable=True)
+     * @ORM\Column(type="integer", name="comments_locked", nullable=True)
      * @var int
      */
     private $commentsLocked;
 
     /**
-     * @Column(type="integer", name="object_id", nullable=True)
+     * @ORM\Column(type="integer", name="object_id", nullable=True)
      * @var int
      */
     private $objectId;
 
     /**
-     * @OneToOne(targetEntity="Newscoop\Entity\Webcode")
-     * @JoinColumn(name="webcode", referencedColumnName="webcode")
+     * @ORM\ManyToMany(targetEntity="Newscoop\Package\Package")
+     * @ORM\JoinTable(name="package_article_package",
+     *      joinColumns={
+     *          @ORM\JoinColumn(name="article_id", referencedColumnName="Number")
+     *      },
+     *      inverseJoinColumns={
+     *          @ORM\JoinColumn(name="package_id", referencedColumnName="id")
+     *      }
+     *  )
+     * @var Newscoop\Package\Package
+     */
+    private $packages;
+
+    /**
+     * Article renditions used by Newscoop API
+     * @var array
+     */
+    private $renditions;
+
+    /**
+     * Article translations used by Newscoop API
+     * @var array
+     */
+    private $translations;
+
+    /**
+     * @ORM\OneToOne(targetEntity="Newscoop\Entity\Webcode")
+     * @ORM\JoinColumn(name="webcode", referencedColumnName="webcode")
      * @var Newscoop\Entity\Webcode
      */
     private $webcode;
@@ -334,6 +444,16 @@ class Article
         return ($this->language) ? $this->language->getId() : null;
     }
 
+    /**
+     * Get language code
+     *
+     * @return int
+     */
+    public function getLanguageCode()
+    {
+        return ($this->language) ? $this->language->getCode() : null;
+    }
+
 
     /**
      * Get number
@@ -366,6 +486,52 @@ class Article
     }
 
     /**
+     * Set data
+     *
+     * @param array $data
+     * @return void
+     */
+    public function setData(array $data)
+    {
+        $this->data = $data;
+    }
+
+    /**
+     * Get article type field data
+     *
+     * @param string $field
+     * @return mixed
+     */
+    public function getData($field)
+    {
+        if ($this->data === null) {
+            $this->data = new \ArticleData($this->type, $this->number, $this->getLanguageId());
+        }
+
+        if (is_array($this->data)) {
+            return array_key_exists($field, $this->data) ? $this->data[$field] : null;
+        } else {
+            return $this->data->getFieldValue($field);
+        }
+    }
+
+    /**
+     * Set article type field data
+     *
+     * @param string $field
+     * @param string $value
+     * @return mixed
+     */
+    public function setFieldData($field, $value)
+    {
+        if ($this->data === null) {
+            $this->data = new \ArticleData($this->type, $this->number, $this->getLanguageId());
+        }
+        
+        return $this->data->setProperty('F'.$field, $value);
+    }
+
+    /**
      * Get whether commenting is enabled
      *
      * @return int
@@ -373,6 +539,14 @@ class Article
     public function commentsEnabled()
     {
         return (int) $this->comments_enabled;
+    }
+
+    /**
+     * Set comments_link
+     * @param string $link uri for comments resource in Newscoop API
+     */
+    public function setCommentsLink($link) {
+        $this->comments_link = $link;
     }
     
     /**
@@ -393,6 +567,16 @@ class Article
     public function getPublishDate()
     {
         return $this->published;
+    }
+
+    /**
+     * Test if article is published
+     *
+     * @return bool
+     */
+    public function isPublished()
+    {
+        return $this->workflowStatus === self::STATUS_PUBLISHED;
     }
     
     /**
@@ -436,6 +620,10 @@ class Article
      */
     public function getWebcode()
     {
+        if (!$this->webcode) {
+            return null;
+        }
+
         return (string) $this->webcode;
     }
 
@@ -447,5 +635,168 @@ class Article
     public function hasWebcode()
     {
         return isset($this->webcode);
+    }
+
+    /**
+     * Get keywords
+     *
+     * @return string
+     */
+    public function getKeywords()
+    {
+        if (!$this->keywords) {
+            return null;
+        }
+
+        return (string) $this->keywords;
+    }
+
+    /**
+     * Set Keywords
+     *
+     * $keywords
+     */
+    public function setKeywords($keywords)
+    {
+        $this->keywords = $keywords;
+        return $this;
+    }
+
+    /**
+     * Set articleAuthors
+     * $articleAuthors
+     */
+    public function setArticleAuthors($articleAuthors)
+    {
+        $this->articleAuthors = $articleAuthors;
+    }
+
+    /**
+     * Get articleAuthors
+     *
+     * @return object
+     */
+    public function getArticleAuthors()
+    {
+        if (!$this->articleAuthors) {
+            $this->articleAuthors = $this->authors;
+        }
+
+        return $this->articleAuthors;
+    }
+
+    /**
+     * Set Packages
+     * $packages
+     */
+    public function setPackages($packages)
+    {
+        $this->packages = $packages;
+    }
+
+    /**
+     * Get packages
+     *
+     * @return object
+     */
+    public function getPackages()
+    {
+        if (count($this->packages) == 0) {
+            return null;
+        }
+        
+        return $this->packages;
+    }
+
+    /**
+     * Set Topics
+     * $topics
+     */
+    public function setTopics($topics)
+    {
+        $this->topics = $topics;
+    }
+
+    /**
+     * Get topics
+     *
+     * @return object
+     */
+    public function getTopics()
+    {
+        if (count($this->topics) == 0) {
+            return null;
+        }
+
+        return $this->topics;
+    }
+
+    /**
+     * Set Fields
+     * $fields
+     */
+    public function setFields($fields)
+    {
+        $this->fields = $fields;
+    }
+
+    /**
+     * Get fields
+     *
+     * @return object
+     */
+    public function getFields()
+    {
+        if (count($this->fields) == 0) {
+            return null;
+        }
+
+        return $this->fields;
+    }
+
+    /**
+     * Set translations
+     * $translations
+     */
+    public function setTranslations($translations)
+    {
+        $this->translations = $translations;
+    }
+
+    /**
+     * Get translations
+     *
+     * @return object
+     */
+    public function getTranslations()
+    {
+        if (count($this->translations) == 0) {
+            return null;
+        }
+
+        return $this->translations;
+    }
+
+    /**
+     * Set renditions
+     * $renditions
+     */
+    public function setRenditions($renditions)
+    {
+        $this->renditions = $renditions;
+    }
+
+    /**
+     * Get renditions
+     *
+     * @return object
+     */
+    public function getRenditions()
+    {
+        if (count($this->renditions) == 0) {
+            return null;
+        }
+
+        return $this->renditions;
     }
 }

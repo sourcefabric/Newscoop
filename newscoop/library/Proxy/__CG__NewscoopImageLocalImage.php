@@ -135,10 +135,34 @@ class LocalImage extends \Newscoop\Image\LocalImage implements \Doctrine\ORM\Pro
         return parent::getCaption();
     }
 
+    public function hasUpdatedStorage()
+    {
+        $this->__load();
+        return parent::hasUpdatedStorage();
+    }
+
+    public function updateStorage($path, $thumbnailPath)
+    {
+        $this->__load();
+        return parent::updateStorage($path, $thumbnailPath);
+    }
+
+    public function upload($path, $thumbnailPath)
+    {
+        $this->__load();
+        return parent::upload($path, $thumbnailPath);
+    }
+
+    public function getThumbnailPath()
+    {
+        $this->__load();
+        return parent::getThumbnailPath();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'location', 'basename', 'url', 'description', 'width', 'height', 'photographer', 'place', 'date', 'renditions', 'items');
+        return array('__isInitialized__', 'id', 'location', 'basename', 'thumbnailPath', 'url', 'description', 'width', 'height', 'photographer', 'place', 'date', 'isUpdatedStorage', 'renditions', 'items');
     }
 
     public function __clone()
@@ -150,7 +174,7 @@ class LocalImage extends \Newscoop\Image\LocalImage implements \Doctrine\ORM\Pro
             if ($original === null) {
                 throw new \Doctrine\ORM\EntityNotFoundException();
             }
-            foreach ($class->reflFields AS $field => $reflProperty) {
+            foreach ($class->reflFields as $field => $reflProperty) {
                 $reflProperty->setValue($this, $reflProperty->getValue($original));
             }
             unset($this->_entityPersister, $this->_identifier);

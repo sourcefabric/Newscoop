@@ -189,17 +189,6 @@ final class CampSite extends CampSystem
     }// fn GetConfig
 
     /**
-     * Returns a CampDatabase instance.
-     *
-     * @return object
-     *    A CampDatabase instance.
-     */
-    public static function GetDatabaseInstance()
-    {
-        return CampDatabase::singleton();
-    }// fn GetDatabase
-
-    /**
      * Returns a CampHTMLDocument instance.
      *
      * @return object

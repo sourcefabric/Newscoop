@@ -86,7 +86,7 @@ class UrlType extends DatabaseObject {
 	public static function GetByName($p_name)
 	{
 		global $g_ado_db;
-		$sql = "SELECT * FROM URLTypes WHERE Name='".mysql_real_escape_string($p_name)."'";
+		$sql = "SELECT * FROM URLTypes WHERE Name=".$g_ado_db->escape($p_name);
 		$row = $g_ado_db->GetRow($sql);
 		if ($row && is_array($row)) {
 			$urlType = new UrlType();

@@ -17,6 +17,17 @@ use Newscoop\Entity\PlaylistArticle,
 
 class PlaylistRepository extends EntityRepository
 {
+    public function getPlaylists()
+    {
+        $em = $this->getEntityManager();
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Playlist')
+            ->createQueryBuilder('p');
+
+        $query = $queryBuilder->getQuery();
+        
+        return $query;
+    }
+
     /**
      * Returns articles for a given playlist
      * @param Newscoop\Entity\Playlist $playlist
@@ -89,21 +100,16 @@ class PlaylistRepository extends EntityRepository
     public function getArticlePlaylists($articleId)
     {
         $em = $this->getEntityManager();
-        $article = $em->getRepository('Newscoop\Entity\Article')->findOneBy(array('number' => $articleId));
         $query = $em->createQuery("SELECT pa FROM Newscoop\Entity\PlaylistArticle pa JOIN pa.playlist p WHERE pa.article = ?1");
-        $query->setParameter(1, $article);
-        try
-        {
-            $query->execute();
-        }
-        catch (\Exception $e)
-        {
+        $query->setParameter(1, $articleId);
+
+        try {
+            return $query->getResult();
+        } catch (\Exception $e) {
             echo $e->getMessage();
             // TODO log here
             return array();
         }
-        $rows = $query->getResult();
-        return $rows;
     }
 
     /**

@@ -141,10 +141,34 @@ class Article extends \Newscoop\Entity\Article implements \Doctrine\ORM\Proxy\Pr
         return parent::getDate();
     }
 
+    public function setData(array $data)
+    {
+        $this->__load();
+        return parent::setData($data);
+    }
+
+    public function getData($field)
+    {
+        $this->__load();
+        return parent::getData($field);
+    }
+
+    public function setFieldData($field, $value)
+    {
+        $this->__load();
+        return parent::setFieldData($field, $value);
+    }
+
     public function commentsEnabled()
     {
         $this->__load();
         return parent::commentsEnabled();
+    }
+
+    public function setCommentsLink($link)
+    {
+        $this->__load();
+        return parent::setCommentsLink($link);
     }
 
     public function getType()
@@ -157,6 +181,12 @@ class Article extends \Newscoop\Entity\Article implements \Doctrine\ORM\Proxy\Pr
     {
         $this->__load();
         return parent::getPublishDate();
+    }
+
+    public function isPublished()
+    {
+        $this->__load();
+        return parent::isPublished();
     }
 
     public function setCreator(\Newscoop\Entity\User $p_user)
@@ -189,10 +219,22 @@ class Article extends \Newscoop\Entity\Article implements \Doctrine\ORM\Proxy\Pr
         return parent::hasWebcode();
     }
 
+    public function setArticleAuthors($articleAuthors)
+    {
+        $this->__load();
+        return parent::setArticleAuthors($articleAuthors);
+    }
+
+    public function getArticleAuthors()
+    {
+        $this->__load();
+        return parent::getArticleAuthors();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'sectionId', 'issueId', 'number', 'name', 'shortName', 'date', 'comments_enabled', 'type', 'published', 'workflowStatus', 'articleOrder', 'public', 'onFrontPage', 'onSection', 'uploaded', 'keywords', 'isIndexed', 'lockTime', 'commentsLocked', 'objectId', 'language', 'publication', 'issue', 'section', 'creator', 'lockUser', 'webcode');
+        return array('__isInitialized__', 'sectionId', 'issueId', 'number', 'name', 'shortName', 'date', 'comments_enabled', 'type', 'published', 'workflowStatus', 'articleOrder', 'public', 'onFrontPage', 'onSection', 'uploaded', 'keywords', 'isIndexed', 'lockTime', 'commentsLocked', 'objectId', 'language', 'publication', 'issue', 'section', 'creator', 'authors', 'articleAuthorTypes', 'comments', 'lockUser', 'webcode');
     }
 
     public function __clone()
@@ -204,7 +246,7 @@ class Article extends \Newscoop\Entity\Article implements \Doctrine\ORM\Proxy\Pr
             if ($original === null) {
                 throw new \Doctrine\ORM\EntityNotFoundException();
             }
-            foreach ($class->reflFields AS $field => $reflProperty) {
+            foreach ($class->reflFields as $field => $reflProperty) {
                 $reflProperty->setValue($this, $reflProperty->getValue($original));
             }
             unset($this->_entityPersister, $this->_identifier);

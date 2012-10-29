@@ -139,15 +139,14 @@ class Article extends DatabaseObject {
      */
     public function __destruct()
     {
-        if ($this->m_cacheUpdate && ($this->isPublished() || $this->m_published)
-        && CampTemplateCache::factory()) {
+        if ($this->m_cacheUpdate && CampTemplateCache::factory()) {
             CampTemplateCache::factory()->update(array(
                 'language' => $this->getLanguageId(),
                 'publication' => $this->getPublicationId(),
                 'issue' => $this->getIssueNumber(),
                 'section' => $this->getSectionNumber(),
                 'article' => $this->getArticleNumber(),
-            ));
+            ), !($this->isPublished() || $this->m_published));
         }
     }
 
@@ -579,7 +578,7 @@ class Article extends DatabaseObject {
                         .' AND NrIssue = ' . $this->m_data['NrIssue']
                         .' AND NrSection = ' . $this->m_data['NrSection']
                         .' AND IdLanguage = ' . $this->m_data['IdLanguage']
-                        ." AND Name = '" . mysql_escape_string($newName) . "'";
+                        ." AND Name = " . $g_ado_db->escape($newName);
             $row = $g_ado_db->GetRow($queryStr);
             if (count($row) > 0) {
                 $newName = $origNewName.' '.++$count.')';
@@ -1910,7 +1909,7 @@ class Article extends DatabaseObject {
         if (!is_null($p_languageId)) {
             $whereClause[] = "IdLanguage=$p_languageId";
         }
-        $whereClause[] = "Name='" . $g_ado_db->escape($p_name) . "'";
+        $whereClause[] = "Name=" . $g_ado_db->escape($p_name);
         if (count($whereClause) > 0) {
             $queryStr .= ' WHERE ' . implode(' AND ', $whereClause);
         }
@@ -2090,80 +2089,6 @@ class Article extends DatabaseObject {
          $languages = DbObjectArray::Create('Language', $queryStr);
         return $languages;
     } // fn GetAllLanguages
-
-    /**
-     * Gets a list of articles marked as "Article of the Day"
-     *
-     * @param string $p_start_date - yyyy-mm-dd
-     *      Find articles published starting from this date.
-     *
-     * @param string $p_end_date - yyyy-mm-dd
-     *      Find articles published before or on this date..
-     *
-     * @param int $p_publicationId -
-     *      The publication ID.
-     *
-     * @param int $p_languageId -
-     *      The language ID.
-     *
-     * @return array
-     *     Return an array of Article objects with indexes in sequential order
-     *     starting from zero.
-     */
-    public static function GetArticlesOfTheDay($p_start_date=null, $p_end_date=null)
-    {
-        global $g_ado_db;
-
-        //TODO: this function shouldn't have to rely on a custom switch in the database. (FArticle_Of_The_Day)
-        //wait until Newscoop has a better architecture.
-
-        $queryStr = "SELECT *
-            FROM Articles
-            WHERE
-                Articles.Published = 'Y'
-                AND
-                    (Articles.Number IN ( SELECT NrArticle FROM `Xnewswire` WHERE FArticle_Of_The_Day = '1') OR
-                    Articles.Number IN ( SELECT NrArticle FROM `Xnews` WHERE FArticle_Of_The_Day = '1'))
-                AND DATE(Articles.PublishDate) >= '$p_start_date'
-                AND DATE(Articles.PublishDate) <= '$p_end_date'
-                AND (Articles.Type = 'news' OR Articles.Type = 'newswire' )
-            ORDER BY Articles.PublishDate asc,
-                    Articles.time_updated asc";
-
-        //echo $queryStr;
-
-        $articles = DbObjectArray::Create('Article', $queryStr);
-
-        //return an empty array if there are no articles.
-        if (count($articles) == 0) {
-            return $articles;
-        }
-
-        $filtered = array();
-        //need to perform parsing of data, make sure days only have 1 article of the day
-        //(can have multiple with the switch implementation).
-        for ($i=0; $i<count($articles)-1; $i++) {
-
-            $date_1 = $articles[$i]->getPublishDate();
-            $date_1 = explode(" ", $date_1);
-            $date_1 = $date_1[0];
-
-            $date_2 = $articles[$i+1]->getPublishDate();
-            $date_2 = explode(" ", $date_2);
-            $date_2 = $date_2[0];
-
-            $date_article1 = new DateTime($date_1);
-            $date_article2 = new DateTime($date_2);
-
-            if($date_article1 < $date_article2) {
-                $filtered[] = $articles[$i];
-            }
-        }
-        //because of how sorted in DB last article in list will always be a valid article of the day.
-        $filtered[] = $articles[count($articles)-1];
-
-        return $filtered;
-    }
 
     /**
      * Get a list of articles.  You can be as specific or as general as you
@@ -2399,8 +2324,7 @@ class Article extends DatabaseObject {
     public static function GetArticlesOfType($p_type)
     {
         global $g_ado_db;
-        $sql = "SELECT * FROM Articles WHERE Type = '"
-        . $g_ado_db->escape($p_type) . "'";
+        $sql = "SELECT * FROM Articles WHERE Type = " . $g_ado_db->escape($p_type);
         $articles = DbObjectArray::Create('Article', $sql);
         return $articles;
     } // fn GetArticlesOfType
@@ -2553,7 +2477,7 @@ class Article extends DatabaseObject {
                 // Article table fields
                 $whereCondition = Article::$s_regularParameters[$leftOperand]
                     . ' ' . $comparisonOperation['symbol']
-                    . " '" . $g_ado_db->escape($comparisonOperation['right']) . "' ";
+                    . " " . $g_ado_db->escape($comparisonOperation['right']) . " ";
                 if ($leftOperand == 'reads'
                 && strstr($comparisonOperation['symbol'], '=') !== false
                 && $comparisonOperation['right'] == 0) {
@@ -2593,8 +2517,8 @@ class Article extends DatabaseObject {
                 $symbol = $comparisonOperation['symbol'];
                 $valModifier = strtolower($symbol) == 'like' ? '%' : '';
 
-                $firstName = $g_ado_db->escape($author['first_name']);
-                $lastName = $g_ado_db->escape($author['last_name']);
+                $firstName = trim($g_ado_db->escape($author['first_name']), "'");
+                $lastName = trim($g_ado_db->escape($author['last_name']), "'");
                 $whereCondition = "ArticleAuthors.fk_author_id IN
                     (SELECT Authors.id
                      FROM Authors
@@ -2725,7 +2649,7 @@ class Article extends DatabaseObject {
                             $value = 'NULL';
                         } else {
                             $operator = $negate ? '!=' : '=';
-                            $value = "'" . $g_ado_db->escape($value) . "'";
+                            $value = $g_ado_db->escape($value);
                         }
                         $tableJoin .= "        $condOperator`$constTable`.`$constField` $operator $value\n";
                     } else {
@@ -2822,9 +2746,9 @@ class Article extends DatabaseObject {
             $query = '        SELECT NrArticle FROM `X' . $fieldObj->getArticleType()
                    . '` WHERE ' . $fieldObj->getName() . ' '
                    . $p_comparisonOperation['symbol']
-                   . " '" . $g_ado_db->escape($p_comparisonOperation['right']) . "'";
+                   . " " . $g_ado_db->escape($p_comparisonOperation['right']);
             if (!is_null($p_languageId)) {
-                $query .= " AND IdLanguage = '" . $g_ado_db->escape($p_languageId) . "'";
+                $query .= " AND IdLanguage = " . $g_ado_db->escape($p_languageId);
             }
             $query .= "\n";
             $queries[] = $query;
@@ -3017,7 +2941,7 @@ class Article extends DatabaseObject {
                 }
             }
             $symbol = $constraint->getOperator()->getSymbol('sql');
-            $rightOperand = "'" . $g_ado_db->escape($constraint->getRightOperand()) . "'";
+            $rightOperand = $g_ado_db->escape($constraint->getRightOperand());
             $selectClauseObj->addWhere("$leftOperand $symbol $rightOperand");
         }
         foreach ($joinTables as $table) {
@@ -3150,17 +3074,6 @@ class Article extends DatabaseObject {
                     $p_whereConditions[] = "`comment_ids`.`last_comment_id` IS NOT NULL";
                     break;
 
-                case 'bypriority': // @wobs
-                    $joinTable = "(SELECT NrArticle, IdLanguage, IF(FUrgency='2',2,3) as urgency FROM Xnewswire)";
-                    $p_otherTables[$joinTable] = array(
-                        '__TABLE_ALIAS' => 'newswires',
-                        'Number' => 'NrArticle',
-                        'IdLanguage' => 'IdLanguage',
-                    );
-                    $p_whereConditions[] = "Articles.Type = 'newswire'";
-                    $order[] = array('field' => 'newswires.urgency', 'dir' => 'asc');
-                    $order[] = array('field' => 'Articles.PublishDate', 'dir' => 'desc');
-                    break;
                 default: // 'bycustom.ci/cs/num.__custom_field__.__default_value__'
                     $field_parts = self::CheckCustomOrder($field);
                     if (!$field_parts['status']) {
@@ -3330,7 +3243,7 @@ class Article extends DatabaseObject {
         }
         $matchCond = 'MATCH (' . implode(', ', $matchFields) . ") AGAINST ('";
         foreach ($p_keywords as $keyword) {
-            $matchCond .= ($p_matchAll ? '+' : '') . $g_ado_db->escape($keyword) . ' ';
+            $matchCond .= ($p_matchAll ? '+' : '') . trim($g_ado_db->escape($keyword), "'") . ' ';
         }
         $matchCond .= "' IN BOOLEAN MODE)";
         $selectClauseObj->addWhere($matchCond);
@@ -3347,7 +3260,7 @@ class Article extends DatabaseObject {
                 }
             }
             $symbol = $constraint->getOperator()->getSymbol('sql');
-            $rightOperand = "'" . $g_ado_db->escape($constraint->getRightOperand()) . "'";
+            $rightOperand = $g_ado_db->escape($constraint->getRightOperand());
             $selectClauseObj->addWhere("$leftOperand $symbol $rightOperand");
         }
         foreach ($joinTables as $table) {

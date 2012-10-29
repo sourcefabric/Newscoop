@@ -16,7 +16,7 @@ class StorageTest extends \TestCase
 
     public function setUp()
     {
-        $this->doctrine = $this->getMockBuilder('Newscoop\Doctrine\Doctrine')
+        $this->doctrine = $this->getMockBuilder('Newscoop\Doctrine\Registry')
             ->disableOriginalConstructor()
             ->getMock();
 

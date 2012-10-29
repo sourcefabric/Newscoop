@@ -285,10 +285,21 @@ class ImageService
      */
     public function getCountBy(array $criteria)
     {
-        return (int) $this->orm->getRepository('Newscoop\Image\LocalImage')
+        $qb = $this->orm->getRepository('Newscoop\Image\LocalImage')
             ->createQueryBuilder('i')
-            ->select('COUNT(i)')
-            ->getQuery()
+            ->select('COUNT(i)');
+
+        if (isset($criteria['source']) && is_array($criteria['source']) && (!empty($criteria['source']))) {
+            $source_cases = array();
+            foreach ($criteria['source'] as $one_source) {
+                $source_cases[] = $qb->expr()->literal($one_source);
+            }
+
+            $qb->andwhere('i.source IN (:source)');
+            $qb->setParameter('source', $source_cases);
+        }
+
+        return (int) $qb->getQuery()
             ->getSingleScalarResult();
     }
 

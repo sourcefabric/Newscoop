@@ -7,45 +7,49 @@
 
 namespace Newscoop\Entity\Acl;
 
+use Doctrine\ORM\Mapping AS ORM;
 use Resource\Acl\RuleInterface;
 
 /**
  * Rule entity
- * @entity(repositoryClass="Newscoop\Entity\Repository\Acl\RuleRepository")
- * @table(name="acl_rule")
+ * @ORM\Entity(repositoryClass="Newscoop\Entity\Repository\Acl\RuleRepository")
+ * @ORM\Table(name="acl_rule")
  */
 class Rule implements RuleInterface
 {
+    const ALLOW = 'allow';
+    const DENY = 'deny';
+
     /**
-     * @id @generatedValue
-     * @column(type="integer")
+     * @ORM\Id @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
      * @var int
      */
     private $id;
 
     /**
-     * @column
+     * @ORM\Column
      * @var string
      */
     private $type;
 
     /** @var array */
-    private $types = array('allow', 'deny');
+    private $types = array(self::ALLOW, self::DENY);
 
     /**
-     * @manyToOne(targetEntity="Newscoop\Entity\Acl\Role", inversedBy="rules")
+     * @ORM\ManyToOne(targetEntity="Newscoop\Entity\Acl\Role", inversedBy="rules")
      * @var Newscoop\Entity\Acl\Role
      */
     private $role;
 
     /**
-     * @column(length=80)
+     * @ORM\Column(length=80)
      * @var string
      */
     private $resource;
 
     /**
-     * @column(length=80)
+     * @ORM\Column(length=80)
      * @var string
      */
     private $action;

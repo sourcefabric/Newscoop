@@ -10,6 +10,10 @@ namespace Newscoop\Doctrine;
 
 use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Mapping\Driver\AnnotationDriver;
+use Doctrine\Common\Annotations\AnnotationReader;
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Doctrine\Common\Annotations\CachedReader;
 
 /**
  * Doctrine Configuration
@@ -22,11 +26,11 @@ class Doctrine
 
     public function __construct($options) 
     {
-        $this->options = $options['doctrine'];
+        $this->options = $options;
     }
 
     /**
-     * Get Entity Manager
+     * Get EntityManager
      *
      * @return Doctrine\ORM\EntityManager
      */
@@ -40,6 +44,16 @@ class Doctrine
     }
 
     /**
+     * Get used by Newscoop Doctrine Connection
+     *
+     * @return Doctrine\DBAL\Connection
+     */
+    public function getConnection()
+    {
+        return $this->getEntityManager()->getConnection();
+    }
+
+    /**
      * Configure doctrine entity manager
      * 
      * @return Doctrine\ORM\EntityManager
@@ -50,9 +64,18 @@ class Doctrine
         
         $config = new Configuration();
         
+        AnnotationRegistry::registerFile(__DIR__ . '/../../../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
+
+        AnnotationRegistry::registerFile(__DIR__ . '/../../../../vendor/doctrine/mongodb-odm/lib/Doctrine/ODM/MongoDB/Mapping/Annotations/DoctrineAnnotations.php');
+
         // set annotations reader
-        $metadata = $config->newDefaultAnnotationDriver(realpath($this->options['entity']['dir']));
-        $config->setMetadataDriverImpl($metadata);
+        $reader = new CachedReader(
+            new AnnotationReader(),
+            new $this->options['cache'],
+            $debug = true
+        );
+        $driver = new AnnotationDriver($reader, array(realpath($this->options['entity']['dir'])));
+        $config->setMetadataDriverImpl($driver);
 
         // set proxy
         $config->setProxyDir(realpath($this->options['proxy']['dir']));
@@ -64,7 +87,7 @@ class Doctrine
         $config->setMetadataCacheImpl($cache);
         $config->setQueryCacheImpl($cache);
 
-        $config_file = APPLICATION_PATH . '/../conf/database_conf.php';
+        $config_file = __DIR__ . '/../../../conf/database_conf.php';
         if (empty($Campsite) && file_exists($config_file)) {
             require_once $config_file;
         }
@@ -76,9 +99,7 @@ class Doctrine
             'dbname' => $Campsite['DATABASE_NAME'],
             'user' => $Campsite['DATABASE_USER'],
             'password' => $Campsite['DATABASE_PASSWORD'],
-            'driverOptions' => array(
-                1002 => "SET NAMES 'UTF8'",
-            ),
+            'charset' => 'UTF8',
         );
 
         if (isset($this->options['database'])) {
