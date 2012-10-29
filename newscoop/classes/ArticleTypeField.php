@@ -997,7 +997,9 @@ class ArticleTypeField extends DatabaseObject {
 
         return array(
             self::TYPE_TEXT => 'VARCHAR(255) DEFAULT NULL',
-            self::TYPE_BODY => $g_ado_db->databaseType === 'sqlite' ? 'TEXT DEFAULT NULL' : 'MEDIUMBLOB DEFAULT NULL',
+            self::TYPE_BODY => $g_ado_db->getDriverName() === 'pdo_sqlite'
+                ? 'TEXT DEFAULT NULL'
+                : 'MEDIUMBLOB DEFAULT NULL',
             self::TYPE_DATE => 'DATE DEFAULT NULL',
             self::TYPE_TOPIC => 'INTEGER DEFAULT NULL',
             self::TYPE_SWITCH => "BOOLEAN NOT NULL DEFAULT FALSE",

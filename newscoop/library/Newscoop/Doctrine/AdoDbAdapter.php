@@ -255,6 +255,16 @@ class AdoDbAdapter
     }
 
     /**
+     * Get driver name
+     *
+     * @return string
+     */
+    public function getDriverName()
+    {
+        return (string) $this->connection->getDriver()->getName();
+    }
+
+    /**
      * Performs select with given limit and offset params
      *
      * @param string $sql
