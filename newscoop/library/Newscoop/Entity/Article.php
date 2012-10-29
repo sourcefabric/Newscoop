@@ -315,9 +315,9 @@ class Article
     public function getWorkflowStatus($readable = false)
     {
         $readableStatus = array(
-            self::STATUS_PUBLISHED => getGs('published'),
-            self::STATUS_NOT_PUBLISHED => getGs('unpublished'),
-            self::STATUS_SUBMITTED => getGs('submited')
+            self::STATUS_PUBLISHED => getGS('published'),
+            self::STATUS_NOT_PUBLISHED => getGS('unpublished'),
+            self::STATUS_SUBMITTED => getGS('submited')
         );
 
         if ($readable) {
