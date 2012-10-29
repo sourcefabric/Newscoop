@@ -1,4 +1,7 @@
 <?php
+
+require_once __DIR__ . '/constants.php';
+
 // goes to install process if configuration files does not exist yet
 if (!defined('INSTALL') && (!file_exists(APPLICATION_PATH . '/../conf/configuration.php')
     || !file_exists(APPLICATION_PATH . '/../conf/database_conf.php'))) {
