@@ -86,7 +86,7 @@ class Image extends DatabaseObject
 			camp_load_translation_strings("api");
 		}
 
-        $imageStorageService = Zend_Registry::get('container')->getService('image.update-storage');
+        $imageStorageService = Zend_Registry::get('container')->getService('image.update_storage');
         if ($imageStorageService->isDeletable($this->getImageFileName())) {
             // Deleting the images from disk is the most common place for
             // something to go wrong, so we do that first.
