@@ -1,0 +1,20 @@
+Newscoop\Package\Package:
+    exclusion_policy: ALL
+    properties:
+        id:
+            expose: true
+            read_only: true
+            type: integer
+            groups: ["details", "list"]
+        headline:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: title
+        itemsLink:
+            expose: true
+            read_only: true
+            type: items_link
+            groups: ["details", "list"]
+            serialized_name: itemsLink

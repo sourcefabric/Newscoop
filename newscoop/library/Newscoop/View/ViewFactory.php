@@ -19,6 +19,6 @@ class ViewFactory
      */
     public function getView() 
     {
-        return Zend_Registry::get('view');
+        return \Zend_Registry::get('view');
     }
 }

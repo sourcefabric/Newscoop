@@ -7,34 +7,38 @@
 
 namespace Newscoop\Image;
 
+use Doctrine\ORM\Mapping AS ORM;
+
 /**
  * Article Rendition
- * @Entity
+ * @ORM\Entity
  */
 class ArticleRendition
 {
     /**
-     * @Id @Column(type="integer")
+     * @ORM\Id 
+     * @ORM\Column(type="integer")
      * @var int
      */
     protected $articleNumber;
 
     /**
-     * @Id @ManyToOne(targetEntity="Newscoop\Image\LocalImage", fetch="EAGER", inversedBy="renditions")
-     * @JoinColumn(referencedColumnName="Id")
+     * @ORM\Id 
+     * @ORM\ManyToOne(targetEntity="Newscoop\Image\LocalImage", fetch="EAGER", inversedBy="renditions")
+     * @ORM\JoinColumn(referencedColumnName="Id")
      * @var Newscoop\Image\Image
      */
     protected $image;
 
     /**
-     * @Column(nullable=True)
+     * @ORM\Column(nullable=True)
      * @var string
      */
     protected $imageSpecs;
 
     /**
-     * @Id @ManyToOne(targetEntity="Newscoop\Image\Rendition", fetch="EAGER")
-     * @JoinColumn(referencedColumnName="name")
+     * @ORM\Id @ORM\ManyToOne(targetEntity="Newscoop\Image\Rendition", fetch="EAGER")
+     * @ORM\JoinColumn(referencedColumnName="name")
      * @var Newscoop\Image\Rendition
      */
     protected $rendition;

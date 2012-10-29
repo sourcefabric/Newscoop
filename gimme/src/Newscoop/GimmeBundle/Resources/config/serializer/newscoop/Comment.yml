@@ -1,0 +1,30 @@
+Newscoop\Entity\Comment:
+    exclusion_policy: ALL
+    properties:
+        subject:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: subject
+        message:
+            expose: true
+            read_only: true
+            type: string
+            groups: ["details", "list"]
+            serialized_name: message
+        time_created:
+            expose: true
+            read_only: true
+            type: datetime
+            groups: ["details", "list"]
+            serialized_name: created
+        commenter:
+            expose: true
+            read_only: true
+            groups: ["details", "list"]
+            type: string
+            accessor: 
+                getter: getCommenterName
+                setter: setCommenterName
+            serialized_name: author

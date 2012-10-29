@@ -16,6 +16,7 @@ if (!file_exists($upgrade_trigger_path)) {
     exit(0);
 }
 
+require_once(__DIR__ . '/constants.php');
 require_once __DIR__ . '/application.php';
 
 $application->bootstrap();

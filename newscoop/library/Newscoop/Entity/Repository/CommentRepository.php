@@ -32,6 +32,32 @@ class CommentRepository extends DatatableSource
     }
 
     /**
+     * Get comments for article
+     * @param  int $article  Article number
+     * @param  string $language Language code in format "en" for example.
+     * @return Doctrine\ORM\Query           Query
+     */
+    public function getArticleComments($article, $language)
+    {
+        $em = $this->getEntityManager();
+        $languageId = $em->getRepository('Newscoop\Entity\Language')
+                ->findOneByCode($language);
+
+        $queryBuilder = $em->getRepository('Newscoop\Entity\Comment')
+            ->createQueryBuilder('c')
+            ->where('c.thread = :thread')
+            ->andWhere('c.language = :language')
+            ->setParameters(array(
+                'thread' => $article,
+                'language' => $languageId->getId()
+            ));
+
+        $query = $queryBuilder->getQuery();
+
+        return $query;
+    }
+
+    /**
      * Method for setting status
      *
      * @param array $p_comment_ids

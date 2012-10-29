@@ -57,10 +57,40 @@ class Author extends \Newscoop\Entity\Author implements \Doctrine\ORM\Proxy\Prox
         return parent::getFullName();
     }
 
+    public function getTypes()
+    {
+        $this->__load();
+        return parent::getTypes();
+    }
+
+    public function setTypes($types)
+    {
+        $this->__load();
+        return parent::setTypes($types);
+    }
+
+    public function getBiography()
+    {
+        $this->__load();
+        return parent::getBiography();
+    }
+
+    public function setBiography($biography)
+    {
+        $this->__load();
+        return parent::setBiography($biography);
+    }
+
+    public function getImage()
+    {
+        $this->__load();
+        return parent::getImage();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'first_name', 'last_name');
+        return array('__isInitialized__', 'id', 'first_name', 'last_name', 'biography', 'image', 'types');
     }
 
     public function __clone()

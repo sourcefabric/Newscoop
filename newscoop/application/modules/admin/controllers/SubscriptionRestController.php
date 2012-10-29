@@ -14,6 +14,10 @@ use Newscoop\Package\PackageService;
  */
 class Admin_SubscriptionRestController extends Zend_Rest_Controller
 {
+    public function headAction()
+    {
+    }
+
     public function indexAction()
     {
     }
