@@ -10,9 +10,7 @@ switch (true) {
         require_once __DIR__ . '/classes/Statistics.php';
         $stats_only = false;
         Statistics::ProcessStats($stats_only);
-        if ($stats_only) {
-            exit(0);
-        }
+        exit(0);
         break;
 
     case substr($uri, 0, strlen('api')) === 'api':
