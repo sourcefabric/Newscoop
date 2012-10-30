@@ -17,6 +17,11 @@ You can override method by providing "method" as a query parameter with option f
 /api/articles?method=option
 ```
 
+## Available SDK's
+
+* [PHP SDK][1]
+* [JavaScript SDK][2]
+
 ## BDD Testing
 
 Features directory: features/  
@@ -28,3 +33,5 @@ Run test:
 php vendor/bin/behat
 ```
 
+[1]: https://github.com/sourcefabric/newscoop-api-php-sdk
+[2]: https://github.com/sourcefabric/newscoop-api-js-sdk
