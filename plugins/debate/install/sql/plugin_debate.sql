@@ -2,7 +2,7 @@
 -- Table structure for table `plugin_debate`
 --
 
-CREATE TABLE `plugin_debate` (
+CREATE TABLE IF NOT EXISTS `plugin_debate` (
   `debate_nr` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `fk_language_id` int(10) unsigned NOT NULL DEFAULT '0',
   `parent_debate_nr` int(11) NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE `plugin_debate` (
 -- Table structure for table `plugin_debateanswer_attachment`
 --
 
-CREATE TABLE `plugin_debateanswer_attachment` (
+CREATE TABLE IF NOT EXISTS `plugin_debateanswer_attachment` (
   `fk_debate_nr` int(11) NOT NULL,
   `fk_debateanswer_nr` int(11) NOT NULL,
   `fk_attachment_id` int(11) NOT NULL,
@@ -43,7 +43,7 @@ CREATE TABLE `plugin_debateanswer_attachment` (
 -- Table structure for table `plugin_debate_answer`
 --
 
-CREATE TABLE `plugin_debate_answer` (
+CREATE TABLE IF NOT EXISTS `plugin_debate_answer` (
   `fk_debate_nr` int(10) unsigned NOT NULL DEFAULT '0',
   `fk_language_id` int(10) unsigned NOT NULL DEFAULT '0',
   `nr_answer` tinyint(3) unsigned NOT NULL AUTO_INCREMENT,
@@ -64,7 +64,7 @@ CREATE TABLE `plugin_debate_answer` (
 -- Table structure for table `plugin_debate_article`
 --
 
-CREATE TABLE `plugin_debate_article` (
+CREATE TABLE IF NOT EXISTS `plugin_debate_article` (
   `fk_debate_nr` int(10) unsigned NOT NULL DEFAULT '0',
   `fk_article_nr` int(10) unsigned NOT NULL DEFAULT '0',
   `fk_article_language_id` int(10) unsigned NOT NULL,
@@ -77,7 +77,7 @@ CREATE TABLE `plugin_debate_article` (
 -- Table structure for table `plugin_debate_issue`
 --
 
-CREATE TABLE `plugin_debate_issue` (
+CREATE TABLE IF NOT EXISTS `plugin_debate_issue` (
   `fk_debate_nr` int(10) unsigned NOT NULL DEFAULT '0',
   `fk_issue_nr` int(10) unsigned NOT NULL DEFAULT '0',
   `fk_issue_language_id` int(10) unsigned NOT NULL,
@@ -91,7 +91,7 @@ CREATE TABLE `plugin_debate_issue` (
 -- Table structure for table `plugin_debate_publication`
 --
 
-CREATE TABLE `plugin_debate_publication` (
+CREATE TABLE IF NOT EXISTS `plugin_debate_publication` (
   `fk_debate_nr` int(10) unsigned NOT NULL DEFAULT '0',
   `fk_publication_id` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`fk_debate_nr`,`fk_publication_id`)
@@ -103,7 +103,7 @@ CREATE TABLE `plugin_debate_publication` (
 -- Table structure for table `plugin_debate_section`
 --
 
-CREATE TABLE `plugin_debate_section` (
+CREATE TABLE IF NOT EXISTS `plugin_debate_section` (
   `fk_debate_nr` int(10) unsigned NOT NULL DEFAULT '0',
   `fk_section_nr` int(10) unsigned NOT NULL DEFAULT '0',
   `fk_section_language_id` int(10) unsigned NOT NULL,
@@ -118,7 +118,7 @@ CREATE TABLE `plugin_debate_section` (
 -- Table structure for table `plugin_debate_vote`
 --
 
-CREATE TABLE `plugin_debate_vote` (
+CREATE TABLE IF NOT EXISTS `plugin_debate_vote` (
   `id_vote` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `fk_debate_nr` int(10) unsigned NOT NULL,
   `fk_answer_nr` int(10) unsigned NOT NULL,
@@ -126,4 +126,4 @@ CREATE TABLE `plugin_debate_vote` (
   `added` datetime NOT NULL,
   PRIMARY KEY (`id_vote`),
   UNIQUE KEY `fk_debate_nr` (`fk_debate_nr`,`fk_user_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=36 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=36 ;
