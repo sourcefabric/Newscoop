@@ -10597,97 +10597,98 @@ UNLOCK TABLES;
 
 LOCK TABLES `Images` WRITE;
 /*!40000 ALTER TABLE `Images` DISABLE KEYS */;
-INSERT INTO `Images` VALUES (3,'Lorem ipsum','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000003.jpg','cms-image-000000003.jpg',15,'2012-03-01 16:14:43','2010-12-24 11:12:54','local','approved',667,1000);
-INSERT INTO `Images` VALUES (4,'Lorem ipsum','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000004.jpg','cms-image-000000004.jpg',15,'2012-03-01 16:14:43','2010-12-24 11:13:48','local','approved',1000,667);
-INSERT INTO `Images` VALUES (7,'Airplain / Jet','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000007.jpg','cms-image-000000007.jpg',15,'2012-03-01 16:14:43','2010-12-24 11:21:26','local','approved',667,1000);
-INSERT INTO `Images` VALUES (8,'Airplain / Jet','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000008.jpg','cms-image-000000008.jpg',15,'2012-03-01 16:14:43','2010-12-24 11:22:15','local','approved',1000,667);
-INSERT INTO `Images` VALUES (9,'Legs & co','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000009.jpg','cms-image-000000009.jpg',15,'2012-03-01 16:14:43','2010-12-24 16:32:42','local','approved',1000,667);
-INSERT INTO `Images` VALUES (10,'Dolor sit Amet','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000010.jpg','cms-image-000000010.jpg',15,'2012-03-01 16:14:36','2010-12-24 16:38:21','local','approved',1000,667);
-INSERT INTO `Images` VALUES (11,'Quo Vadis','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000011.jpg','cms-image-000000011.jpg',15,'2012-03-01 16:14:36','2010-12-24 17:16:31','local','approved',667,1000);
-INSERT INTO `Images` VALUES (12,'Quo Vadis','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000012.jpg','cms-image-000000012.jpg',15,'2012-02-21 10:48:07','2010-12-24 17:18:50','local','approved',1000,667);
-INSERT INTO `Images` VALUES (13,'Vegetables, anyone?','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000013.jpg','cms-image-000000013.jpg',15,'2012-03-01 16:14:36','2010-12-24 17:24:44','local','approved',667,1000);
-INSERT INTO `Images` VALUES (14,'Vegetables, anyone?','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000014.jpg','cms-image-000000014.jpg',15,'2012-03-01 16:14:36','2010-12-24 17:26:08','local','approved',1000,667);
-INSERT INTO `Images` VALUES (15,'Wild Wood','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000015.jpg','cms-image-000000015.jpg',15,'2012-03-01 16:14:36','2010-12-24 17:30:33','local','approved',667,1000);
-INSERT INTO `Images` VALUES (16,'Wild Wood','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000016.jpg','cms-image-000000016.jpg',15,'2012-02-21 07:58:00','2010-12-24 17:33:05','local','approved',1000,667);
-INSERT INTO `Images` VALUES (17,'Vim soluta iracundia','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000017.jpg','cms-image-000000017.jpg',15,'2012-03-01 16:14:36','2010-12-24 17:40:04','local','approved',667,1000);
-INSERT INTO `Images` VALUES (18,'Vim soluta iracundia','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000018.jpg','cms-image-000000018.jpg',15,'2012-02-21 10:08:02','2010-12-24 17:42:01','local','approved',1000,667);
-INSERT INTO `Images` VALUES (19,'Tourists Lorem Ipsum','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000019.jpg','cms-image-000000019.jpg',15,'2012-03-01 16:14:32','2010-12-24 17:45:11','local','approved',667,1000);
-INSERT INTO `Images` VALUES (20,'Tourists Lorem Ipsum','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000020.jpg','cms-image-000000020.jpg',15,'2012-02-21 10:08:01','2010-12-24 17:46:38','local','approved',1000,667);
-INSERT INTO `Images` VALUES (21,'Cut amet liberum','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000021.jpg','cms-image-000000021.jpg',15,'2012-02-21 10:08:02','2010-12-25 19:55:23','local','approved',400,600);
-INSERT INTO `Images` VALUES (22,'Vis dicit reprehendunt','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000022.jpg','cms-image-000000022.jpg',15,'2012-03-01 16:14:32','2010-12-25 19:57:21','local','approved',400,600);
-INSERT INTO `Images` VALUES (23,'Vis dicit reprehendunt','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000023.jpg','cms-image-000000023.jpg',15,'2012-02-21 11:37:50','2010-12-25 19:57:39','local','approved',600,400);
-INSERT INTO `Images` VALUES (24,'Nec ne justo','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000024.jpg','cms-image-000000024.jpg',15,'2012-03-01 16:14:32','2010-12-25 19:59:10','local','approved',400,600);
-INSERT INTO `Images` VALUES (25,'Nec ne justo','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000025.jpg','cms-image-000000025.jpg',15,'2012-02-21 07:55:45','2010-12-25 19:59:28','local','approved',600,400);
-INSERT INTO `Images` VALUES (26,'Salutatus scripserit','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000026.jpg','cms-image-000000026.jpg',15,'2012-02-21 07:55:45','2010-12-25 20:02:03','local','approved',600,400);
-INSERT INTO `Images` VALUES (27,'Vis eu melius... sam u nju upada','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000027.jpg','cms-image-000000027.jpg',15,'2012-03-01 16:14:21','2010-12-25 20:03:39','local','approved',400,600);
-INSERT INTO `Images` VALUES (28,'Vis eu melius... sam u nju upada','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000028.jpg','cms-image-000000028.jpg',15,'2012-03-01 16:14:21','2010-12-25 20:04:00','local','approved',600,400);
-INSERT INTO `Images` VALUES (29,'Spring is coming','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000029.jpg','cms-image-000000029.jpg',15,'2012-03-01 16:14:21','2010-12-25 20:05:35','local','approved',400,600);
-INSERT INTO `Images` VALUES (30,'Spring is coming','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000030.jpg','cms-image-000000030.jpg',15,'2012-02-21 07:55:46','2010-12-25 20:05:55','local','approved',600,400);
-INSERT INTO `Images` VALUES (31,'Romus vic nomus','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000031.jpg','cms-image-000000031.jpg',15,'2012-03-01 16:14:21','2010-12-25 20:07:23','local','approved',400,600);
-INSERT INTO `Images` VALUES (32,'At legimus maiorum','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000032.jpg','cms-image-000000032.jpg',15,'2012-02-21 07:46:12','2010-12-25 20:10:06','local','approved',600,400);
-INSERT INTO `Images` VALUES (33,' An ius nemore pericula','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000033.jpg','cms-image-000000033.jpg',15,'2012-02-21 07:46:12','2010-12-25 20:11:53','local','approved',600,400);
-INSERT INTO `Images` VALUES (34,'Lorem ipsum dolor sit amet','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000034.jpg','cms-image-000000034.jpg',15,'2012-03-01 16:14:16','2010-12-27 08:43:09','local','approved',400,600);
-INSERT INTO `Images` VALUES (35,'Lorem ipsum dolor sit amet','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000035.jpg','cms-image-000000035.jpg',15,'2012-02-21 10:12:28','2010-12-27 08:44:03','local','approved',600,400);
-INSERT INTO `Images` VALUES (36,'Image 36','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000036.jpg','cms-image-000000036.jpg',15,'2012-02-21 10:12:28','2010-12-27 08:47:01','local','approved',600,400);
-INSERT INTO `Images` VALUES (37,'Quo id offendit','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000037.jpg','cms-image-000000037.jpg',15,'2012-03-01 16:14:16','2010-12-27 08:49:40','local','approved',400,600);
-INSERT INTO `Images` VALUES (38,' An ius nemore pericula','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000038.jpg','cms-image-000000038.jpg',15,'2012-02-21 09:35:10','2010-12-27 08:50:22','local','approved',600,400);
-INSERT INTO `Images` VALUES (39,'Kavala','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000039.jpg','cms-image-000000039.jpg',15,'2012-03-01 16:14:16','2010-12-27 08:52:06','local','approved',400,600);
-INSERT INTO `Images` VALUES (40,'Kavala','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000040.jpg','cms-image-000000040.jpg',15,'2012-02-22 11:28:06','2010-12-27 08:52:40','local','approved',600,400);
-INSERT INTO `Images` VALUES (41,'Qui sectum','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000041.jpg','cms-image-000000041.jpg',15,'2012-03-01 16:14:16','2010-12-27 08:55:14','local','approved',400,600);
-INSERT INTO `Images` VALUES (42,'Qui sectum','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000042.jpg','cms-image-000000042.jpg',15,'2012-02-21 07:46:59','2010-12-27 08:56:03','local','approved',600,400);
-INSERT INTO `Images` VALUES (43,'Maleta','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000043.jpg','cms-image-000000043.jpg',15,'2012-03-01 16:14:07','2010-12-27 08:58:12','local','approved',426,640);
-INSERT INTO `Images` VALUES (44,'Malta','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000044.jpg','cms-image-000000044.jpg',15,'2012-02-21 07:55:38','2010-12-27 08:59:15','local','approved',600,400);
-INSERT INTO `Images` VALUES (45,'Romische','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000045.jpg','cms-image-000000045.jpg',15,'2012-03-01 16:14:07','2010-12-27 17:12:17','local','approved',667,1000);
-INSERT INTO `Images` VALUES (46,'Romische','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000046.jpg','cms-image-000000046.jpg',15,'2012-03-01 16:14:07','2010-12-27 17:13:26','local','approved',1000,667);
-INSERT INTO `Images` VALUES (47,'Tara rafting','Source Fabric','','','2010-12-28','image/jpeg','local','','cms-thumb-000000047.jpg','cms-image-000000047.jpg',15,'2012-03-01 16:14:07','2010-12-28 12:09:40','local','approved',1024,768);
-INSERT INTO `Images` VALUES (48,'Tara Rafting','Source Fabric','','','2010-12-28','image/jpeg','local','','cms-thumb-000000048.jpg','cms-image-000000048.jpg',15,'2012-02-21 10:47:54','2010-12-28 13:02:31','local','approved',450,338);
-INSERT INTO `Images` VALUES (49,'Grenoble','Source Fabric','','','2010-12-28','image/jpeg','local','','cms-thumb-000000049.jpg','cms-image-000000049.jpg',15,'2012-02-21 10:47:54','2010-12-28 13:04:29','local','approved',450,300);
-INSERT INTO `Images` VALUES (50,'Home Cooking','Source Fabric','','','2010-12-28','image/jpeg','local','','cms-thumb-000000050.jpg','cms-image-000000050.jpg',15,'2012-03-01 16:13:42','2010-12-28 13:07:59','local','approved',450,300);
-INSERT INTO `Images` VALUES (51,'Old Guys','Source Fabric','','','2010-12-28','image/jpeg','local','','cms-thumb-000000051.jpg','cms-image-000000051.jpg',15,'2012-02-21 10:47:54','2010-12-28 13:11:36','local','approved',450,310);
-INSERT INTO `Images` VALUES (52,'','','','','2011-01-21','image/png','local','','cms-thumb-000000052.png','cms-image-000000052.png',0,'2012-03-01 16:13:42','2011-01-21 19:23:10','local','approved',110,130);
-INSERT INTO `Images` VALUES (53,'','','','','2011-01-21','image/jpeg','local','','cms-thumb-000000053.jpg','cms-image-000000053.jpg',0,'2012-03-01 16:13:42','2011-01-21 19:55:46','local','approved',267,400);
-INSERT INTO `Images` VALUES (54,'','','','','2011-01-21','image/jpeg','local','','cms-thumb-000000054.jpg','cms-image-000000054.jpg',0,'2012-03-01 16:13:42','2011-01-21 19:56:29','local','approved',292,400);
-INSERT INTO `Images` VALUES (55,'','','','','2011-01-21','image/jpeg','local','','cms-thumb-000000055.jpg','cms-image-000000055.jpg',0,'2012-03-01 16:13:42','2011-01-21 19:57:24','local','approved',267,400);
-INSERT INTO `Images` VALUES (56,'','','','','2011-01-21','image/jpeg','local','','cms-thumb-000000056.jpg','cms-image-000000056.jpg',0,'2012-03-01 16:13:42','2011-01-21 19:57:55','local','approved',311,400);
-INSERT INTO `Images` VALUES (57,'','','','','2011-01-21','image/jpeg','local','','cms-thumb-000000057.jpg','cms-image-000000057.jpg',0,'2012-03-01 16:13:42','2011-01-21 19:58:30','local','approved',326,400);
-INSERT INTO `Images` VALUES (58,'','','','','2011-01-21','image/jpeg','local','','cms-thumb-000000058.jpg','cms-image-000000058.jpg',0,'2012-03-01 16:10:43','2011-01-21 19:59:09','local','approved',267,400);
-INSERT INTO `Images` VALUES (59,'','','','','2011-01-21','image/jpeg','local','','cms-thumb-000000059.jpg','cms-image-000000059.jpg',0,'2012-03-01 16:10:43','2011-01-21 19:59:45','local','approved',307,400);
-INSERT INTO `Images` VALUES (60,'','','','','2011-01-21','image/jpeg','local','','cms-thumb-000000060.jpg','cms-image-000000060.jpg',0,'2012-03-01 16:10:43','2011-01-21 20:00:25','local','approved',322,400);
-INSERT INTO `Images` VALUES (61,'','','','','2011-01-21','image/jpeg','local','','cms-thumb-000000061.jpg','cms-image-000000061.jpg',0,'2012-03-01 16:10:43','2011-01-21 20:00:52','local','approved',267,400);
-INSERT INTO `Images` VALUES (62,'Grand slam','Adam Thomas','','','2011-01-27','image/jpeg','local','','cms-thumb-000000062.jpg','cms-image-000000062.jpg',25,'2012-03-01 13:35:33','2011-01-27 12:24:27','local','approved',676,841);
-INSERT INTO `Images` VALUES (63,'Grand Slam','Adam Thomas','','','2011-01-27','image/jpeg','local','','cms-thumb-000000063.jpg','cms-image-000000063.jpg',25,'2012-02-21 10:07:17','2011-01-27 12:27:06','local','approved',1000,666);
-INSERT INTO `Images` VALUES (64,'Moonwalk','Adam Thomas','','','2011-01-27','image/jpeg','local','','cms-thumb-000000064.jpg','cms-image-000000064.jpg',25,'2012-03-01 13:35:33','2011-01-27 15:36:52','local','approved',600,900);
-INSERT INTO `Images` VALUES (65,'Moonwalk','Adam Thomas','','','2011-01-27','image/jpeg','local','','cms-thumb-000000065.jpg','cms-image-000000065.jpg',25,'2012-02-21 07:58:00','2011-01-27 15:37:08','local','approved',900,600);
-INSERT INTO `Images` VALUES (66,'New York','Adam Thomas','','','2011-01-27','image/jpeg','local','','cms-thumb-000000066.jpg','cms-image-000000066.jpg',25,'2012-03-01 13:35:33','2011-01-27 16:45:57','local','approved',666,1000);
-INSERT INTO `Images` VALUES (67,'New York','Adam Thomas','','','2011-01-27','image/jpeg','local','','cms-thumb-000000067.jpg','cms-image-000000067.jpg',25,'2012-02-21 07:46:12','2011-01-27 16:46:14','local','approved',750,500);
-INSERT INTO `Images` VALUES (68,'Atos I','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000068.jpg','cms-image-000000068.jpg',1,'2012-03-01 12:54:32','2011-07-06 15:43:40','local','approved',800,534);
-INSERT INTO `Images` VALUES (69,'Atos II','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000069.jpg','cms-image-000000069.jpg',1,'2012-03-01 12:54:32','2011-07-06 15:44:08','local','approved',800,534);
-INSERT INTO `Images` VALUES (70,'Atos III','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000070.jpg','cms-image-000000070.jpg',1,'2012-03-01 12:54:32','2011-07-06 15:44:34','local','approved',800,534);
-INSERT INTO `Images` VALUES (71,'Atos IV','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000071.jpg','cms-image-000000071.jpg',1,'2012-03-01 12:54:32','2011-07-06 15:45:04','local','approved',800,534);
-INSERT INTO `Images` VALUES (72,'Atos V','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000072.jpg','cms-image-000000072.jpg',1,'2012-03-01 12:54:32','2011-07-06 15:45:33','local','approved',800,534);
-INSERT INTO `Images` VALUES (73,'Atos VI','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000073.jpg','cms-image-000000073.jpg',1,'2012-03-01 12:54:32','2011-07-06 15:46:04','local','approved',800,534);
-INSERT INTO `Images` VALUES (74,'Atos VII','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000074.jpg','cms-image-000000074.jpg',1,'2012-03-01 12:54:32','2011-07-06 15:46:40','local','approved',800,534);
-INSERT INTO `Images` VALUES (75,'Dusty street','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000075.jpg','cms-image-000000075.jpg',1,'2012-02-21 10:12:28','2011-07-06 16:01:50','local','approved',800,534);
-INSERT INTO `Images` VALUES (76,'Kitty Cat','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000076.jpg','cms-image-000000076.jpg',1,'2012-02-21 07:55:46','2011-07-06 16:03:57','local','approved',800,534);
-INSERT INTO `Images` VALUES (77,'Image 77','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000077.jpg','cms-image-000000077.jpg',1,'2012-02-21 10:22:22','2011-07-06 16:21:04','local','approved',800,534);
-INSERT INTO `Images` VALUES (78,'Image 78','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000078.jpg','cms-image-000000078.jpg',1,'2012-02-21 07:58:00','2011-07-06 16:22:48','local','approved',800,534);
-INSERT INTO `Images` VALUES (79,'Image 79','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000079.jpg','cms-image-000000079.jpg',1,'2012-02-21 09:35:10','2011-07-06 16:23:36','local','approved',800,534);
-INSERT INTO `Images` VALUES (80,'Berlin Zoo - elephant','Administrator','','','2011-07-07','image/jpeg','local','','cms-thumb-000000080.jpg','cms-image-000000080.jpg',1,'2012-02-20 14:46:06','2011-07-07 05:26:14','local','approved',640,428);
-INSERT INTO `Images` VALUES (81,'Berlin Zoo - monkey','Administrator','','','2011-07-07','image/jpeg','local','','cms-thumb-000000081.jpg','cms-image-000000081.jpg',1,'2012-02-20 14:46:06','2011-07-07 05:26:50','local','approved',428,640);
-INSERT INTO `Images` VALUES (82,'Berlin Zoo - panda','Administrator','','','2011-07-07','image/jpeg','local','','cms-thumb-000000082.jpg','cms-image-000000082.jpg',1,'2012-02-20 14:46:06','2011-07-07 05:27:28','local','approved',640,428);
-INSERT INTO `Images` VALUES (83,'Berlin Zoo - penguins','Administrator','','','2011-07-07','image/jpeg','local','','cms-thumb-000000083.jpg','cms-image-000000083.jpg',1,'2012-02-20 14:46:06','2011-07-07 05:27:58','local','approved',640,428);
-INSERT INTO `Images` VALUES (84,'Berlin Zoo - hippo','Administrator','','','2011-07-07','image/jpeg','local','','cms-thumb-000000084.jpg','cms-image-000000084.jpg',1,'2012-02-20 14:46:06','2011-07-07 05:28:42','local','approved',640,428);
-INSERT INTO `Images` VALUES (85,'Berlin Zoo - pink flamingo','Administrator','','','2011-07-07','image/jpeg','local','','cms-thumb-000000085.jpg','cms-image-000000085.jpg',1,'2012-02-20 14:46:06','2011-07-07 05:29:13','local','approved',428,640);
-INSERT INTO `Images` VALUES (86,'Berlin Zoo - bear','Administrator','','','2011-07-07','image/jpeg','local','','cms-thumb-000000086.jpg','cms-image-000000086.jpg',1,'2012-02-20 14:46:06','2011-07-07 05:29:42','local','approved',640,428);
-INSERT INTO `Images` VALUES (87,'Berlin Zoo - okapi','Administrator','','','2011-07-07','image/jpeg','local','','cms-thumb-000000087.jpg','cms-image-000000087.jpg',1,'2012-02-20 14:46:06','2011-07-07 05:30:16','local','approved',640,428);
-INSERT INTO `Images` VALUES (88,'Berlin Zoo - dragon','Administrator','','','2011-07-07','image/jpeg','local','','cms-thumb-000000088.jpg','cms-image-000000088.jpg',1,'2012-02-20 14:46:06','2011-07-07 05:30:45','local','approved',428,640);
-INSERT INTO `Images` VALUES (89,'Accra kids','Ljuba Rankovic','','','2012-02-09','image/jpeg','local','','cms-thumb-000000089.jpg','cms-image-000000089.jpg',31,'2012-02-21 06:47:48','2012-02-09 16:49:02','local','approved',800,533);
-INSERT INTO `Images` VALUES (90,'Roman head','Ljuba Rankovic','','','2012-02-09','image/jpeg','local','','cms-thumb-000000090.jpg','cms-image-000000090.jpg',31,'2012-02-20 14:46:06','2012-02-09 17:07:47','local','approved',1024,768);
-INSERT INTO `Images` VALUES (91,'Six-seater and small people','Ljuba Rankovic','','','2012-02-09','image/jpeg','local','','cms-thumb-000000091.jpg','cms-image-000000091.jpg',31,'2012-02-21 06:47:48','2012-02-09 18:59:49','local','approved',2592,1552);
-INSERT INTO `Images` VALUES (92,'Roman head','Ivan Drpa','Italy','','2012-02-21','image/jpeg','local','','cms-thumb-000000092.jpg','cms-image-000000092.jpg',31,'2012-02-21 06:52:16','2012-02-21 06:51:31','local','approved',1024,768);
-INSERT INTO `Images` VALUES (95,'Label','','','','2012-02-21','image/jpeg','local','','cms-thumb-000000095.jpg','cms-image-000000095.jpg',32,'2012-02-21 09:17:23','2012-02-21 09:17:03','local','approved',200,150);
-INSERT INTO `Images` VALUES (96,'','','','','2012-03-01','image/jpeg','local','','cms-thumb-000000096.jpg','cms-image-000000096.jpg',0,'2012-03-01 12:56:45','2012-03-01 05:36:47','local','approved',923,620);
-INSERT INTO `Images` VALUES (97,'Snowy evening at the Old Town Square, Praha 1','Haralampius Bah','Prague','','2012-03-01','image/jpeg','local','','cms-thumb-000000097.jpg','cms-image-000000097.jpg',31,'2012-03-01 15:45:12','2012-03-01 15:44:40','local','approved',2592,1552);
+INSERT INTO `Images` (`Id`, `Description`, `Photographer`, `Place`, `Caption`, `Date`, `ContentType`, `Location`, `URL`, `ThumbnailFileName`, `ImageFileName`, `UploadedByUser`, `LastModified`, `TimeCreated`, `Source`, `Status`, `width`, `height`) VALUES
+(3,'Lorem ipsum','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000003.jpg','cms-image-000000003.jpg',15,'2012-03-01 16:14:43','2010-12-24 11:12:54','local','approved',667,1000),
+(4,'Lorem ipsum','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000004.jpg','cms-image-000000004.jpg',15,'2012-03-01 16:14:43','2010-12-24 11:13:48','local','approved',1000,667),
+(7,'Airplain / Jet','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000007.jpg','cms-image-000000007.jpg',15,'2012-03-01 16:14:43','2010-12-24 11:21:26','local','approved',667,1000),
+(8,'Airplain / Jet','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000008.jpg','cms-image-000000008.jpg',15,'2012-03-01 16:14:43','2010-12-24 11:22:15','local','approved',1000,667),
+(9,'Legs & co','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000009.jpg','cms-image-000000009.jpg',15,'2012-03-01 16:14:43','2010-12-24 16:32:42','local','approved',1000,667),
+(10,'Dolor sit Amet','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000010.jpg','cms-image-000000010.jpg',15,'2012-03-01 16:14:36','2010-12-24 16:38:21','local','approved',1000,667),
+(11,'Quo Vadis','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000011.jpg','cms-image-000000011.jpg',15,'2012-03-01 16:14:36','2010-12-24 17:16:31','local','approved',667,1000),
+(12,'Quo Vadis','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000012.jpg','cms-image-000000012.jpg',15,'2012-02-21 10:48:07','2010-12-24 17:18:50','local','approved',1000,667),
+(13,'Vegetables, anyone?','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000013.jpg','cms-image-000000013.jpg',15,'2012-03-01 16:14:36','2010-12-24 17:24:44','local','approved',667,1000),
+(14,'Vegetables, anyone?','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000014.jpg','cms-image-000000014.jpg',15,'2012-03-01 16:14:36','2010-12-24 17:26:08','local','approved',1000,667),
+(15,'Wild Wood','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000015.jpg','cms-image-000000015.jpg',15,'2012-03-01 16:14:36','2010-12-24 17:30:33','local','approved',667,1000),
+(16,'Wild Wood','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000016.jpg','cms-image-000000016.jpg',15,'2012-02-21 07:58:00','2010-12-24 17:33:05','local','approved',1000,667),
+(17,'Vim soluta iracundia','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000017.jpg','cms-image-000000017.jpg',15,'2012-03-01 16:14:36','2010-12-24 17:40:04','local','approved',667,1000),
+(18,'Vim soluta iracundia','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000018.jpg','cms-image-000000018.jpg',15,'2012-02-21 10:08:02','2010-12-24 17:42:01','local','approved',1000,667),
+(19,'Tourists Lorem Ipsum','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000019.jpg','cms-image-000000019.jpg',15,'2012-03-01 16:14:32','2010-12-24 17:45:11','local','approved',667,1000),
+(20,'Tourists Lorem Ipsum','Source Fabric','','','2010-12-24','image/jpeg','local','','cms-thumb-000000020.jpg','cms-image-000000020.jpg',15,'2012-02-21 10:08:01','2010-12-24 17:46:38','local','approved',1000,667),
+(21,'Cut amet liberum','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000021.jpg','cms-image-000000021.jpg',15,'2012-02-21 10:08:02','2010-12-25 19:55:23','local','approved',400,600),
+(22,'Vis dicit reprehendunt','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000022.jpg','cms-image-000000022.jpg',15,'2012-03-01 16:14:32','2010-12-25 19:57:21','local','approved',400,600),
+(23,'Vis dicit reprehendunt','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000023.jpg','cms-image-000000023.jpg',15,'2012-02-21 11:37:50','2010-12-25 19:57:39','local','approved',600,400),
+(24,'Nec ne justo','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000024.jpg','cms-image-000000024.jpg',15,'2012-03-01 16:14:32','2010-12-25 19:59:10','local','approved',400,600),
+(25,'Nec ne justo','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000025.jpg','cms-image-000000025.jpg',15,'2012-02-21 07:55:45','2010-12-25 19:59:28','local','approved',600,400),
+(26,'Salutatus scripserit','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000026.jpg','cms-image-000000026.jpg',15,'2012-02-21 07:55:45','2010-12-25 20:02:03','local','approved',600,400),
+(27,'Vis eu melius... sam u nju upada','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000027.jpg','cms-image-000000027.jpg',15,'2012-03-01 16:14:21','2010-12-25 20:03:39','local','approved',400,600),
+(28,'Vis eu melius... sam u nju upada','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000028.jpg','cms-image-000000028.jpg',15,'2012-03-01 16:14:21','2010-12-25 20:04:00','local','approved',600,400),
+(29,'Spring is coming','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000029.jpg','cms-image-000000029.jpg',15,'2012-03-01 16:14:21','2010-12-25 20:05:35','local','approved',400,600),
+(30,'Spring is coming','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000030.jpg','cms-image-000000030.jpg',15,'2012-02-21 07:55:46','2010-12-25 20:05:55','local','approved',600,400),
+(31,'Romus vic nomus','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000031.jpg','cms-image-000000031.jpg',15,'2012-03-01 16:14:21','2010-12-25 20:07:23','local','approved',400,600),
+(32,'At legimus maiorum','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000032.jpg','cms-image-000000032.jpg',15,'2012-02-21 07:46:12','2010-12-25 20:10:06','local','approved',600,400),
+(33,' An ius nemore pericula','Source Fabric','','','2010-12-25','image/jpeg','local','','cms-thumb-000000033.jpg','cms-image-000000033.jpg',15,'2012-02-21 07:46:12','2010-12-25 20:11:53','local','approved',600,400),
+(34,'Lorem ipsum dolor sit amet','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000034.jpg','cms-image-000000034.jpg',15,'2012-03-01 16:14:16','2010-12-27 08:43:09','local','approved',400,600),
+(35,'Lorem ipsum dolor sit amet','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000035.jpg','cms-image-000000035.jpg',15,'2012-02-21 10:12:28','2010-12-27 08:44:03','local','approved',600,400),
+(36,'Image 36','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000036.jpg','cms-image-000000036.jpg',15,'2012-02-21 10:12:28','2010-12-27 08:47:01','local','approved',600,400),
+(37,'Quo id offendit','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000037.jpg','cms-image-000000037.jpg',15,'2012-03-01 16:14:16','2010-12-27 08:49:40','local','approved',400,600),
+(38,' An ius nemore pericula','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000038.jpg','cms-image-000000038.jpg',15,'2012-02-21 09:35:10','2010-12-27 08:50:22','local','approved',600,400),
+(39,'Kavala','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000039.jpg','cms-image-000000039.jpg',15,'2012-03-01 16:14:16','2010-12-27 08:52:06','local','approved',400,600),
+(40,'Kavala','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000040.jpg','cms-image-000000040.jpg',15,'2012-02-22 11:28:06','2010-12-27 08:52:40','local','approved',600,400),
+(41,'Qui sectum','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000041.jpg','cms-image-000000041.jpg',15,'2012-03-01 16:14:16','2010-12-27 08:55:14','local','approved',400,600),
+(42,'Qui sectum','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000042.jpg','cms-image-000000042.jpg',15,'2012-02-21 07:46:59','2010-12-27 08:56:03','local','approved',600,400),
+(43,'Maleta','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000043.jpg','cms-image-000000043.jpg',15,'2012-03-01 16:14:07','2010-12-27 08:58:12','local','approved',426,640),
+(44,'Malta','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000044.jpg','cms-image-000000044.jpg',15,'2012-02-21 07:55:38','2010-12-27 08:59:15','local','approved',600,400),
+(45,'Romische','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000045.jpg','cms-image-000000045.jpg',15,'2012-03-01 16:14:07','2010-12-27 17:12:17','local','approved',667,1000),
+(46,'Romische','Source Fabric','','','2010-12-27','image/jpeg','local','','cms-thumb-000000046.jpg','cms-image-000000046.jpg',15,'2012-03-01 16:14:07','2010-12-27 17:13:26','local','approved',1000,667),
+(47,'Tara rafting','Source Fabric','','','2010-12-28','image/jpeg','local','','cms-thumb-000000047.jpg','cms-image-000000047.jpg',15,'2012-03-01 16:14:07','2010-12-28 12:09:40','local','approved',1024,768),
+(48,'Tara Rafting','Source Fabric','','','2010-12-28','image/jpeg','local','','cms-thumb-000000048.jpg','cms-image-000000048.jpg',15,'2012-02-21 10:47:54','2010-12-28 13:02:31','local','approved',450,338),
+(49,'Grenoble','Source Fabric','','','2010-12-28','image/jpeg','local','','cms-thumb-000000049.jpg','cms-image-000000049.jpg',15,'2012-02-21 10:47:54','2010-12-28 13:04:29','local','approved',450,300),
+(50,'Home Cooking','Source Fabric','','','2010-12-28','image/jpeg','local','','cms-thumb-000000050.jpg','cms-image-000000050.jpg',15,'2012-03-01 16:13:42','2010-12-28 13:07:59','local','approved',450,300),
+(51,'Old Guys','Source Fabric','','','2010-12-28','image/jpeg','local','','cms-thumb-000000051.jpg','cms-image-000000051.jpg',15,'2012-02-21 10:47:54','2010-12-28 13:11:36','local','approved',450,310),
+(52,'','','','','2011-01-21','image/png','local','','cms-thumb-000000052.png','cms-image-000000052.png',0,'2012-03-01 16:13:42','2011-01-21 19:23:10','local','approved',110,130),
+(53,'','','','','2011-01-21','image/jpeg','local','','cms-thumb-000000053.jpg','cms-image-000000053.jpg',0,'2012-03-01 16:13:42','2011-01-21 19:55:46','local','approved',267,400),
+(54,'','','','','2011-01-21','image/jpeg','local','','cms-thumb-000000054.jpg','cms-image-000000054.jpg',0,'2012-03-01 16:13:42','2011-01-21 19:56:29','local','approved',292,400),
+(55,'','','','','2011-01-21','image/jpeg','local','','cms-thumb-000000055.jpg','cms-image-000000055.jpg',0,'2012-03-01 16:13:42','2011-01-21 19:57:24','local','approved',267,400),
+(56,'','','','','2011-01-21','image/jpeg','local','','cms-thumb-000000056.jpg','cms-image-000000056.jpg',0,'2012-03-01 16:13:42','2011-01-21 19:57:55','local','approved',311,400),
+(57,'','','','','2011-01-21','image/jpeg','local','','cms-thumb-000000057.jpg','cms-image-000000057.jpg',0,'2012-03-01 16:13:42','2011-01-21 19:58:30','local','approved',326,400),
+(58,'','','','','2011-01-21','image/jpeg','local','','cms-thumb-000000058.jpg','cms-image-000000058.jpg',0,'2012-03-01 16:10:43','2011-01-21 19:59:09','local','approved',267,400),
+(59,'','','','','2011-01-21','image/jpeg','local','','cms-thumb-000000059.jpg','cms-image-000000059.jpg',0,'2012-03-01 16:10:43','2011-01-21 19:59:45','local','approved',307,400),
+(60,'','','','','2011-01-21','image/jpeg','local','','cms-thumb-000000060.jpg','cms-image-000000060.jpg',0,'2012-03-01 16:10:43','2011-01-21 20:00:25','local','approved',322,400),
+(61,'','','','','2011-01-21','image/jpeg','local','','cms-thumb-000000061.jpg','cms-image-000000061.jpg',0,'2012-03-01 16:10:43','2011-01-21 20:00:52','local','approved',267,400),
+(62,'Grand slam','Adam Thomas','','','2011-01-27','image/jpeg','local','','cms-thumb-000000062.jpg','cms-image-000000062.jpg',25,'2012-03-01 13:35:33','2011-01-27 12:24:27','local','approved',676,841),
+(63,'Grand Slam','Adam Thomas','','','2011-01-27','image/jpeg','local','','cms-thumb-000000063.jpg','cms-image-000000063.jpg',25,'2012-02-21 10:07:17','2011-01-27 12:27:06','local','approved',1000,666),
+(64,'Moonwalk','Adam Thomas','','','2011-01-27','image/jpeg','local','','cms-thumb-000000064.jpg','cms-image-000000064.jpg',25,'2012-03-01 13:35:33','2011-01-27 15:36:52','local','approved',600,900),
+(65,'Moonwalk','Adam Thomas','','','2011-01-27','image/jpeg','local','','cms-thumb-000000065.jpg','cms-image-000000065.jpg',25,'2012-02-21 07:58:00','2011-01-27 15:37:08','local','approved',900,600),
+(66,'New York','Adam Thomas','','','2011-01-27','image/jpeg','local','','cms-thumb-000000066.jpg','cms-image-000000066.jpg',25,'2012-03-01 13:35:33','2011-01-27 16:45:57','local','approved',666,1000),
+(67,'New York','Adam Thomas','','','2011-01-27','image/jpeg','local','','cms-thumb-000000067.jpg','cms-image-000000067.jpg',25,'2012-02-21 07:46:12','2011-01-27 16:46:14','local','approved',750,500),
+(68,'Atos I','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000068.jpg','cms-image-000000068.jpg',1,'2012-03-01 12:54:32','2011-07-06 15:43:40','local','approved',800,534),
+(69,'Atos II','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000069.jpg','cms-image-000000069.jpg',1,'2012-03-01 12:54:32','2011-07-06 15:44:08','local','approved',800,534),
+(70,'Atos III','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000070.jpg','cms-image-000000070.jpg',1,'2012-03-01 12:54:32','2011-07-06 15:44:34','local','approved',800,534),
+(71,'Atos IV','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000071.jpg','cms-image-000000071.jpg',1,'2012-03-01 12:54:32','2011-07-06 15:45:04','local','approved',800,534),
+(72,'Atos V','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000072.jpg','cms-image-000000072.jpg',1,'2012-03-01 12:54:32','2011-07-06 15:45:33','local','approved',800,534),
+(73,'Atos VI','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000073.jpg','cms-image-000000073.jpg',1,'2012-03-01 12:54:32','2011-07-06 15:46:04','local','approved',800,534),
+(74,'Atos VII','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000074.jpg','cms-image-000000074.jpg',1,'2012-03-01 12:54:32','2011-07-06 15:46:40','local','approved',800,534),
+(75,'Dusty street','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000075.jpg','cms-image-000000075.jpg',1,'2012-02-21 10:12:28','2011-07-06 16:01:50','local','approved',800,534),
+(76,'Kitty Cat','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000076.jpg','cms-image-000000076.jpg',1,'2012-02-21 07:55:46','2011-07-06 16:03:57','local','approved',800,534),
+(77,'Image 77','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000077.jpg','cms-image-000000077.jpg',1,'2012-02-21 10:22:22','2011-07-06 16:21:04','local','approved',800,534),
+(78,'Image 78','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000078.jpg','cms-image-000000078.jpg',1,'2012-02-21 07:58:00','2011-07-06 16:22:48','local','approved',800,534),
+(79,'Image 79','Administrator','','','2011-07-06','image/jpeg','local','','cms-thumb-000000079.jpg','cms-image-000000079.jpg',1,'2012-02-21 09:35:10','2011-07-06 16:23:36','local','approved',800,534),
+(80,'Berlin Zoo - elephant','Administrator','','','2011-07-07','image/jpeg','local','','cms-thumb-000000080.jpg','cms-image-000000080.jpg',1,'2012-02-20 14:46:06','2011-07-07 05:26:14','local','approved',640,428),
+(81,'Berlin Zoo - monkey','Administrator','','','2011-07-07','image/jpeg','local','','cms-thumb-000000081.jpg','cms-image-000000081.jpg',1,'2012-02-20 14:46:06','2011-07-07 05:26:50','local','approved',428,640),
+(82,'Berlin Zoo - panda','Administrator','','','2011-07-07','image/jpeg','local','','cms-thumb-000000082.jpg','cms-image-000000082.jpg',1,'2012-02-20 14:46:06','2011-07-07 05:27:28','local','approved',640,428),
+(83,'Berlin Zoo - penguins','Administrator','','','2011-07-07','image/jpeg','local','','cms-thumb-000000083.jpg','cms-image-000000083.jpg',1,'2012-02-20 14:46:06','2011-07-07 05:27:58','local','approved',640,428),
+(84,'Berlin Zoo - hippo','Administrator','','','2011-07-07','image/jpeg','local','','cms-thumb-000000084.jpg','cms-image-000000084.jpg',1,'2012-02-20 14:46:06','2011-07-07 05:28:42','local','approved',640,428),
+(85,'Berlin Zoo - pink flamingo','Administrator','','','2011-07-07','image/jpeg','local','','cms-thumb-000000085.jpg','cms-image-000000085.jpg',1,'2012-02-20 14:46:06','2011-07-07 05:29:13','local','approved',428,640),
+(86,'Berlin Zoo - bear','Administrator','','','2011-07-07','image/jpeg','local','','cms-thumb-000000086.jpg','cms-image-000000086.jpg',1,'2012-02-20 14:46:06','2011-07-07 05:29:42','local','approved',640,428),
+(87,'Berlin Zoo - okapi','Administrator','','','2011-07-07','image/jpeg','local','','cms-thumb-000000087.jpg','cms-image-000000087.jpg',1,'2012-02-20 14:46:06','2011-07-07 05:30:16','local','approved',640,428),
+(88,'Berlin Zoo - dragon','Administrator','','','2011-07-07','image/jpeg','local','','cms-thumb-000000088.jpg','cms-image-000000088.jpg',1,'2012-02-20 14:46:06','2011-07-07 05:30:45','local','approved',428,640),
+(89,'Accra kids','Ljuba Rankovic','','','2012-02-09','image/jpeg','local','','cms-thumb-000000089.jpg','cms-image-000000089.jpg',31,'2012-02-21 06:47:48','2012-02-09 16:49:02','local','approved',800,533),
+(90,'Roman head','Ljuba Rankovic','','','2012-02-09','image/jpeg','local','','cms-thumb-000000090.jpg','cms-image-000000090.jpg',31,'2012-02-20 14:46:06','2012-02-09 17:07:47','local','approved',1024,768),
+(91,'Six-seater and small people','Ljuba Rankovic','','','2012-02-09','image/jpeg','local','','cms-thumb-000000091.jpg','cms-image-000000091.jpg',31,'2012-02-21 06:47:48','2012-02-09 18:59:49','local','approved',2592,1552),
+(92,'Roman head','Ivan Drpa','Italy','','2012-02-21','image/jpeg','local','','cms-thumb-000000092.jpg','cms-image-000000092.jpg',31,'2012-02-21 06:52:16','2012-02-21 06:51:31','local','approved',1024,768),
+(95,'Label','','','','2012-02-21','image/jpeg','local','','cms-thumb-000000095.jpg','cms-image-000000095.jpg',32,'2012-02-21 09:17:23','2012-02-21 09:17:03','local','approved',200,150),
+(96,'','','','','2012-03-01','image/jpeg','local','','cms-thumb-000000096.jpg','cms-image-000000096.jpg',0,'2012-03-01 12:56:45','2012-03-01 05:36:47','local','approved',923,620),
+(97,'Snowy evening at the Old Town Square, Praha 1','Haralampius Bah','Prague','','2012-03-01','image/jpeg','local','','cms-thumb-000000097.jpg','cms-image-000000097.jpg',31,'2012-03-01 15:45:12','2012-03-01 15:44:40','local','approved',2592,1552);
 /*!40000 ALTER TABLE `Images` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -11993,37 +11994,37 @@ UNLOCK TABLES;
 
 LOCK TABLES `Locations` WRITE;
 /*!40000 ALTER TABLE `Locations` DISABLE KEYS */;
-INSERT INTO `Locations` VALUES (1,'\0\0\0\0\0\0\0ıg?RDD@h––?¡T¿','point',0,'\0\0\0\0\0\0\0ıg?RDD@h––?¡T¿',0,15,'2011-01-04 18:11:52');
-INSERT INTO `Locations` VALUES (25,'\0\0\0\0\0\0\0,g~ëE@l[îŸ É4@','point',0,'\0\0\0\0\0\0\0,g~ëE@l[îŸ É4@',0,15,'2011-01-04 18:52:37');
-INSERT INTO `Locations` VALUES (3,'\0\0\0\0\0\0\0:XˇÁ0„B@t“˚∆◊ö^¿','point',0,'\0\0\0\0\0\0\0:XˇÁ0„B@t“˚∆◊ö^¿',0,15,'2011-01-04 18:13:03');
-INSERT INTO `Locations` VALUES (4,'\0\0\0\0\0\0\0‘`\ZÜè∏B@\"´[=\'â^¿','point',0,'\0\0\0\0\0\0\0‘`\ZÜè∏B@\"´[=\'â^¿',0,15,'2011-01-04 18:13:38');
-INSERT INTO `Locations` VALUES (5,'\0\0\0\0\0\0\0€e6XK@∫k	˘†G9@','point',0,'\0\0\0\0\0\0\0€e6XK@∫k	˘†G9@',0,15,'2011-01-04 18:14:42');
-INSERT INTO `Locations` VALUES (6,'\0\0\0\0\0\0\033333ÛJ@”ü˝Hë;@','point',0,'\0\0\0\0\0\0\033333ÛJ@”ü˝Hë;@',0,15,'2011-01-04 18:15:17');
-INSERT INTO `Locations` VALUES (7,'\0\0\0\0\0\0\0≥^ÂDI@ÓŒ⁄m◊,@','point',0,'\0\0\0\0\0\0\0≥^ÂDI@ÓŒ⁄m◊,@',0,15,'2011-01-04 18:16:19');
-INSERT INTO `Locations` VALUES (8,'\0\0\0\0\0\0\0lxz•,c-@6vâÍ≠q1¿','point',0,'\0\0\0\0\0\0\0lxz•,c-@6vâÍ≠q1¿',0,15,'2011-01-04 18:17:11');
-INSERT INTO `Locations` VALUES (9,'\0\0\0\0\0\0\0˙’ ò´@@lœ,	P3F@','point',0,'\0\0\0\0\0\0\0˙’ ò´@@lœ,	P3F@',0,15,'2011-01-04 18:18:30');
-INSERT INTO `Locations` VALUES (10,'\0\0\0\0\0\0\0ı-s∫å?@%Ã¥˝ïR@','point',0,'\0\0\0\0\0\0\0ı-s∫å?@%Ã¥˝ïR@',0,15,'2011-01-04 18:18:30');
-INSERT INTO `Locations` VALUES (11,'\0\0\0\0\0\0\0áQÖÍX¯D@„•Ω›˘(@','point',0,'\0\0\0\0\0\0\0áQÖÍX¯D@„•Ω›˘(@',0,15,'2011-01-04 18:19:36');
-INSERT INTO `Locations` VALUES (12,'\0\0\0\0\0\0\0Æqa‹õ¯D@•Ω=Ù(@','point',0,'\0\0\0\0\0\0\0Æqa‹õ¯D@•Ω=Ù(@',0,15,'2011-01-04 18:19:36');
-INSERT INTO `Locations` VALUES (13,'\0\0\0\0\0\0\0m≈˛≤{NA¿¯àòI0M¿','point',0,'\0\0\0\0\0\0\0m≈˛≤{NA¿¯àòI0M¿',0,15,'2011-01-04 18:20:36');
-INSERT INTO `Locations` VALUES (14,'\0\0\0\0\0\0\0ÑÅÁﬁ√±D@⁄ ìåúE@','point',0,'\0\0\0\0\0\0\0ÑÅÁﬁ√±D@⁄ ìåúE@',0,15,'2011-01-04 18:20:36');
-INSERT INTO `Locations` VALUES (15,'\0\0\0\0\0\0\0’≤µæH‡K@Ê\\ä´ ŒB@','point',0,'\0\0\0\0\0\0\0’≤µæH‡K@Ê\\ä´ ŒB@',0,15,'2011-01-04 18:21:38');
-INSERT INTO `Locations` VALUES (16,'\0\0\0\0\0\0\0&6◊ÜÚD@ù•Ω¡˜(@','point',0,'\0\0\0\0\0\0\0&6◊ÜÚD@ù•Ω¡˜(@',0,15,'2011-01-04 18:22:34');
-INSERT INTO `Locations` VALUES (17,'\0\0\0\0\0\0\0OŸÀ[B@MÃ‰õÒ±¿','point',0,'\0\0\0\0\0\0\0OŸÀ[B@MÃ‰õÒ±¿',0,15,'2011-01-04 18:23:21');
-INSERT INTO `Locations` VALUES (18,'\0\0\0\0\0\0\0öû^˝B@∫Ω§1Z∑7@','point',0,'\0\0\0\0\0\0\0öû^˝B@∫Ω§1Z∑7@',0,15,'2011-01-04 18:24:46');
-INSERT INTO `Locations` VALUES (19,'\0\0\0\0\0\0\0»A	3m[D@u∞˛œaÄR¿','point',0,'\0\0\0\0\0\0\0»A	3m[D@u∞˛œaÄR¿',0,15,'2011-01-04 18:25:38');
-INSERT INTO `Locations` VALUES (20,'\0\0\0\0\0\0\0UD›¨J@·E_Aö¿','point',0,'\0\0\0\0\0\0\0UD›¨J@·E_Aö¿',0,15,'2011-01-04 18:27:00');
-INSERT INTO `Locations` VALUES (21,'\0\0\0\0\0\0\0sÄ`éCJ@√\r¯¸0“*@','point',0,'\0\0\0\0\0\0\0sÄ`éCJ@√\r¯¸0“*@',0,15,'2011-01-04 18:29:22');
-INSERT INTO `Locations` VALUES (23,'\0\0\0\0\0\0\0!ÕX4ùŸE@ T¡®§⁄S¿','point',0,'\0\0\0\0\0\0\0!ÕX4ùŸE@ T¡®§⁄S¿',0,15,'2011-01-04 18:46:55');
-INSERT INTO `Locations` VALUES (24,'\0\0\0\0\0\0\0@ˆz˜«3:¿ﬁÔU+<@','point',0,'\0\0\0\0\0\0\0@ˆz˜«3:¿ﬁÔU+<@',0,15,'2011-01-04 18:51:31');
-INSERT INTO `Locations` VALUES (26,'\0\0\0\0\0\0\0í6?ÖíE@ÖÛäà4@','point',0,'\0\0\0\0\0\0\0í6?ÖíE@ÖÛäà4@',0,10,'2011-01-07 21:28:35');
-INSERT INTO `Locations` VALUES (27,'\0\0\0\0\0\0\0g∏ü“D@ÃE|\'f—D@','point',0,'\0\0\0\0\0\0\0g∏ü“D@ÃE|\'f—D@',0,10,'2011-01-11 09:15:10');
-INSERT INTO `Locations` VALUES (28,'\0\0\0\0\0\0\0pÁ¸Ì~œD@XF|\'ñŒD@','point',0,'\0\0\0\0\0\0\0pÁ¸Ì~œD@XF|\'ñŒD@',0,10,'2011-01-11 20:30:31');
-INSERT INTO `Locations` VALUES (29,'\0\0\0\0\0\0\0†‹¶;œD@ÁD|\'À’D@','point',0,'\0\0\0\0\0\0\0†‹¶;œD@ÁD|\'À’D@',0,10,'2011-01-11 20:30:31');
-INSERT INTO `Locations` VALUES (30,'\0\0\0\0\0\0\0∏JÖ´ç‘D@}D|\'Ÿ÷D@','point',0,'\0\0\0\0\0\0\0∏JÖ´ç‘D@}D|\'Ÿ÷D@',0,10,'2011-01-11 20:30:31');
-INSERT INTO `Locations` VALUES (31,'\0\0\0\0\0\0\0‘?3sˇ’D@©E|\'X–D@','point',0,'\0\0\0\0\0\0\0‘?3sˇ’D@©E|\'X–D@',0,10,'2011-01-11 20:30:31');
-INSERT INTO `Locations` VALUES (32,'\0\0\0\0\0\0\0\rv˚u÷D@G|ß˚ D@','point',0,'\0\0\0\0\0\0\0\rv˚u÷D@G|ß˚ D@',0,10,'2011-01-11 20:30:31');
-INSERT INTO `Locations` VALUES (33,'\0\0\0\0\0\0\0R9ÔìY–D@ÓF|ßÌ…D@','point',0,'\0\0\0\0\0\0\0R9ÔìY–D@ÓF|ßÌ…D@',0,10,'2011-01-11 20:30:31');
+INSERT INTO `Locations` VALUES (1,'\0\0\0\0\0\0\0\F5g?RDD@h\D0\D0?\C1T\C0','point',0,'\0\0\0\0\0\0\0\F5g?RDD@h\D0\D0?\C1T\C0',0,15,'2011-01-04 18:11:52');
+INSERT INTO `Locations` VALUES (25,'\0\0\0\0\0\0\0,g~\91E@l[\94\D9 \834@','point',0,'\0\0\0\0\0\0\0,g~\91E@l[\94\D9 \834@',0,15,'2011-01-04 18:52:37');
+INSERT INTO `Locations` VALUES (3,'\0\0\0\0\0\0\0:X\FF\E70\E3B@t\D2\FB\C6◊ö^\C0','point',0,'\0\0\0\0\0\0\0:X\FF\E70\E3B@t\D2\FB\C6◊ö^\C0',0,15,'2011-01-04 18:13:03');
+INSERT INTO `Locations` VALUES (4,'\0\0\0\0\0\0\0\D4`\Z\86\8F\B8B@\"\AB[=\'\89^\C0','point',0,'\0\0\0\0\0\0\0\D4`\Z\86\8F\B8B@\"\AB[=\'\89^\C0',0,15,'2011-01-04 18:13:38');
+INSERT INTO `Locations` VALUES (5,'\0\0\0\0\0\0\0\DBe6XK@\BAk	\F9\A0G9@','point',0,'\0\0\0\0\0\0\0\DBe6XK@\BAk	\F9\A0G9@',0,15,'2011-01-04 18:14:42');
+INSERT INTO `Locations` VALUES (6,'\0\0\0\0\0\0\033333\F3J@”ü\FDH\91;@','point',0,'\0\0\0\0\0\0\033333\F3J@”ü\FDH\91;@',0,15,'2011-01-04 18:15:17');
+INSERT INTO `Locations` VALUES (7,'\0\0\0\0\0\0\0\B3^\E5DI@\EE\CE\DAm\D7,@','point',0,'\0\0\0\0\0\0\0\B3^\E5DI@\EE\CE\DAm\D7,@',0,15,'2011-01-04 18:16:19');
+INSERT INTO `Locations` VALUES (8,'\0\0\0\0\0\0\0lxz\A5,c-@6v\89\EA\ADq1\C0','point',0,'\0\0\0\0\0\0\0lxz\A5,c-@6v\89\EA\ADq1\C0',0,15,'2011-01-04 18:17:11');
+INSERT INTO `Locations` VALUES (9,'\0\0\0\0\0\0\0\FA\D5 \98\AB@@l\CF,	P3F@','point',0,'\0\0\0\0\0\0\0\FA\D5 \98\AB@@l\CF,	P3F@',0,15,'2011-01-04 18:18:30');
+INSERT INTO `Locations` VALUES (10,'\0\0\0\0\0\0\0\F5-s\BA\8C?@%Ã¥\FD\95R@','point',0,'\0\0\0\0\0\0\0\F5-s\BA\8C?@%Ã¥\FD\95R@',0,15,'2011-01-04 18:18:30');
+INSERT INTO `Locations` VALUES (11,'\0\0\0\0\0\0\0\87Q\85\EAX\F8D@\E3\A5\BD\DD\F9(@','point',0,'\0\0\0\0\0\0\0\87Q\85\EAX\F8D@\E3\A5\BD\DD\F9(@',0,15,'2011-01-04 18:19:36');
+INSERT INTO `Locations` VALUES (12,'\0\0\0\0\0\0\0\AEqa‹õ\F8D@\A5\BD=\F4(@','point',0,'\0\0\0\0\0\0\0\AEqa‹õ\F8D@\A5\BD=\F4(@',0,15,'2011-01-04 18:19:36');
+INSERT INTO `Locations` VALUES (13,'\0\0\0\0\0\0\0m\C5\FE\B2{NA\C0\F8\88\98I0M\C0','point',0,'\0\0\0\0\0\0\0m\C5\FE\B2{NA\C0\F8\88\98I0M\C0',0,15,'2011-01-04 18:20:36');
+INSERT INTO `Locations` VALUES (14,'\0\0\0\0\0\0\0\84\81\E7\DE√±D@\DA \93\8C\9CE@','point',0,'\0\0\0\0\0\0\0\84\81\E7\DE√±D@\DA \93\8C\9CE@',0,15,'2011-01-04 18:20:36');
+INSERT INTO `Locations` VALUES (15,'\0\0\0\0\0\0\0’≤\B5\BEH\E0K@\E6\\\8A\AB\CA\CEB@','point',0,'\0\0\0\0\0\0\0’≤\B5\BEH\E0K@\E6\\\8A\AB\CA\CEB@',0,15,'2011-01-04 18:21:38');
+INSERT INTO `Locations` VALUES (16,'\0\0\0\0\0\0\0&6◊Ü\F2D@\9D\A5\BD\C1\F7(@','point',0,'\0\0\0\0\0\0\0&6◊Ü\F2D@\9D\A5\BD\C1\F7(@',0,15,'2011-01-04 18:22:34');
+INSERT INTO `Locations` VALUES (17,'\0\0\0\0\0\0\0O\D9\CB[B@M\CC\E4\9B\F1\B1\C0','point',0,'\0\0\0\0\0\0\0O\D9\CB[B@M\CC\E4\9B\F1\B1\C0',0,15,'2011-01-04 18:23:21');
+INSERT INTO `Locations` VALUES (18,'\0\0\0\0\0\0\0\9A\9E^\FDB@\BA\BD\A41Z\B77@','point',0,'\0\0\0\0\0\0\0\9A\9E^\FDB@\BA\BD\A41Z\B77@',0,15,'2011-01-04 18:24:46');
+INSERT INTO `Locations` VALUES (19,'\0\0\0\0\0\0\0\C8A	3m[D@u\B0\FE\CFa\80R\C0','point',0,'\0\0\0\0\0\0\0\C8A	3m[D@u\B0\FE\CFa\80R\C0',0,15,'2011-01-04 18:25:38');
+INSERT INTO `Locations` VALUES (20,'\0\0\0\0\0\0\0UD\DD\ACJ@\E1E_A\9A\C0','point',0,'\0\0\0\0\0\0\0UD\DD\ACJ@\E1E_A\9A\C0',0,15,'2011-01-04 18:27:00');
+INSERT INTO `Locations` VALUES (21,'\0\0\0\0\0\0\0s\80`\8ECJ@\C3\r\F8\FC0\D2*@','point',0,'\0\0\0\0\0\0\0s\80`\8ECJ@\C3\r\F8\FC0\D2*@',0,15,'2011-01-04 18:29:22');
+INSERT INTO `Locations` VALUES (23,'\0\0\0\0\0\0\0!\CDX4\9D\D9E@\CAT\C1\A8\A4\DAS\C0','point',0,'\0\0\0\0\0\0\0!\CDX4\9D\D9E@\CAT\C1\A8\A4\DAS\C0',0,15,'2011-01-04 18:46:55');
+INSERT INTO `Locations` VALUES (24,'\0\0\0\0\0\0\0@\F6z\F7\C73:\C0\DE\EFU+<@','point',0,'\0\0\0\0\0\0\0@\F6z\F7\C73:\C0\DE\EFU+<@',0,15,'2011-01-04 18:51:31');
+INSERT INTO `Locations` VALUES (26,'\0\0\0\0\0\0\0\926?\85\92E@\85\F3\8A\884@','point',0,'\0\0\0\0\0\0\0\926?\85\92E@\85\F3\8A\884@',0,10,'2011-01-07 21:28:35');
+INSERT INTO `Locations` VALUES (27,'\0\0\0\0\0\0\0g\B8\9F\D2D@\CCE|\'f\D1D@','point',0,'\0\0\0\0\0\0\0g\B8\9F\D2D@\CCE|\'f\D1D@',0,10,'2011-01-11 09:15:10');
+INSERT INTO `Locations` VALUES (28,'\0\0\0\0\0\0\0p\E7\FC\ED~\CFD@XF|\'\96\CED@','point',0,'\0\0\0\0\0\0\0p\E7\FC\ED~\CFD@XF|\'\96\CED@',0,10,'2011-01-11 20:30:31');
+INSERT INTO `Locations` VALUES (29,'\0\0\0\0\0\0\0\A0\DC\A6;\CFD@\E7D|\'\CB\D5D@','point',0,'\0\0\0\0\0\0\0\A0\DC\A6;\CFD@\E7D|\'\CB\D5D@',0,10,'2011-01-11 20:30:31');
+INSERT INTO `Locations` VALUES (30,'\0\0\0\0\0\0\0\B8J\85\AB\8D\D4D@}D|\'\D9\D6D@','point',0,'\0\0\0\0\0\0\0\B8J\85\AB\8D\D4D@}D|\'\D9\D6D@',0,10,'2011-01-11 20:30:31');
+INSERT INTO `Locations` VALUES (31,'\0\0\0\0\0\0\0\D4?3s\FF\D5D@\A9E|\'X\D0D@','point',0,'\0\0\0\0\0\0\0\D4?3s\FF\D5D@\A9E|\'X\D0D@',0,10,'2011-01-11 20:30:31');
+INSERT INTO `Locations` VALUES (32,'\0\0\0\0\0\0\0\rv\FBu\D6D@G|\A7\FB\CAD@','point',0,'\0\0\0\0\0\0\0\rv\FBu\D6D@G|\A7\FB\CAD@',0,10,'2011-01-11 20:30:31');
+INSERT INTO `Locations` VALUES (33,'\0\0\0\0\0\0\0R9\EF\93Y\D0D@\EEF|\A7\ED\C9D@','point',0,'\0\0\0\0\0\0\0R9\EF\93Y\D0D@\EEF|\A7\ED\C9D@',0,10,'2011-01-11 20:30:31');
 /*!40000 ALTER TABLE `Locations` ENABLE KEYS */;
 UNLOCK TABLES;
 
