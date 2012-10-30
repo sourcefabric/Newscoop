@@ -788,11 +788,13 @@ CREATE TABLE `Images` (
   `Status` enum('unapproved','approved') not null default 'approved',
   `width` int(5) DEFAULT NULL,
   `height` int(5) DEFAULT NULL,
+  `is_updated_storage` TINYINT( 1 ) NOT NULL DEFAULT  '0',
   PRIMARY KEY (`Id`),
   FULLTEXT KEY `Description` (`Description`),
   FULLTEXT KEY `Photographer` (`Photographer`),
   FULLTEXT KEY `Place` (`Place`),
-  FULLTEXT KEY `Caption` (`Caption`)
+  FULLTEXT KEY `Caption` (`Caption`),
+  INDEX (`is_updated_storage`, `Location`, `ImageFileName`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
