@@ -19,7 +19,6 @@ require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampTemplate.php');
 require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallationBase.php');
 require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallationView.php');
 
-
 /**
  * Class CampInstallation
  */
@@ -29,28 +28,42 @@ final class CampInstallation extends CampInstallationBase
      * @var array
      */
     private $m_steps = array(
-                             'precheck' => array('tplfile' => 'precheck.tpl',
-                                                 'title' => 'Pre-installation Check',
-                                                 'order' => 1),
-                             'license' => array('tplfile' => 'license.tpl',
-                                                'title' => 'License',
-                                                'order' => 2),
-                             'database' => array('tplfile' => 'database.tpl',
-                                                 'title' => 'Database Settings',
-                                                 'order' => 3),
-                             'mainconfig' => array('tplfile' => 'mainconfig.tpl',
-                                                   'title' => 'Main Configuration',
-                                                   'order' => 4),
-                             'loaddemo' => array('tplfile' => 'loaddemo.tpl',
-                                                 'title' => 'Sample Site',
-                                                 'order' => 5),
-                             'cronjobs' => array('tplfile' => 'cronjobs.tpl',
-                                                 'title' => 'Automated Tasks',
-                                                 'order' => 6),
-                             'finish' => array('tplfile' => 'finish.tpl',
-                                               'title' => 'Finish',
-                                               'order' => 7)
-                             );
+        'precheck' => array(
+            'tplfile' => 'precheck.tpl',
+            'title' => 'Pre-installation Check',
+            'order' => 1
+        ),
+        'license' => array(
+            'tplfile' => 'license.tpl',
+            'title' => 'License',
+            'order' => 2
+        ),
+        'database' => array(
+            'tplfile' => 'database.tpl',
+            'title' => 'Database Settings',
+            'order' => 3
+        ),
+        'mainconfig' => array(
+            'tplfile' => 'mainconfig.tpl',
+            'title' => 'Main Configuration',
+            'order' => 4
+        ),
+        'loaddemo' => array(
+            'tplfile' => 'loaddemo.tpl',
+            'title' => 'Sample Site',
+            'order' => 5
+        ),
+        'cronjobs' => array(
+            'tplfile' => 'cronjobs.tpl',
+            'title' => 'Automated Tasks',
+            'order' => 6
+        ),
+        'finish' => array(
+            'tplfile' => 'finish.tpl',
+            'title' => 'Finish',
+            'order' => 7
+        )
+     );
 
     /**
      * @var array
@@ -62,6 +75,9 @@ final class CampInstallation extends CampInstallationBase
      */
     private $m_title = null;
 
+    /**
+     * @var  object
+     */
     private $m_version = null;
 
 
@@ -72,19 +88,16 @@ final class CampInstallation extends CampInstallationBase
     {
         $this->m_os = self::GetHostOS();
         $this->m_version = new CampVersion();
-    } // fn __construct
+    }
 
 
     public function execute()
     {
         parent::execute();
+
         return $this->m_step;
-    } // fn execute
+    }
 
-
-    /**
-     *
-     */
     public function dispatch($p_step)
     {
         if (array_key_exists($p_step, $this->m_steps)) {
@@ -96,25 +109,16 @@ final class CampInstallation extends CampInstallationBase
         $cVersion = new CampVersion();
         $this->m_title = $cVersion->getPackage().' '.$cVersion->getRelease();
         $this->m_title .= (strlen($cVersion->getDevelopmentStatus()) > 0) ? '-'.$cVersion->getDevelopmentStatus() : '';
-        $this->m_title .= (strlen($cVersion->getCodeName()) > 0
-                               && $cVersion->getCodeName() != 'undefined') ?
-                          ' [ '.$cVersion->getCodeName().' ]' : '';
+        $this->m_title .= (strlen($cVersion->getCodeName()) > 0 && $cVersion->getCodeName() != 'undefined') ? ' [ '.$cVersion->getCodeName().' ]' : '';
         $this->m_title .= ' Installer';
-    } // fn dispatch
+    }
 
 
-    /**
-     *
-     */
     public function initSession()
     {
         $session = CampSession::singleton();
-    } // fn initSession
+    }
 
-
-    /**
-     *
-     */
     public function render()
     {
         $tpl = CampTemplate::singleton();
@@ -127,33 +131,33 @@ final class CampInstallation extends CampInstallationBase
         $tpl->assign('organization', $this->m_version->getOrganization());
         $tpl->assign('copyright', $this->m_version->getCopyright());
         $tpl->assign('license', $this->m_version->getLicense());
-
         $tpl->assign('host_os', $this->m_os);
-
         $tpl->assign('current_step', $this->m_step);
         $tpl->assign('current_step_title', $this->m_steps[$this->m_step]['title']);
         $tpl->assign('step_titles', $this->m_steps);
 
         $session = CampSession::singleton();
         $config_db = $session->getData('config.db', 'installation');
-        $files= array();
+
+        $files = array();
         if ($handle = opendir('./sample_templates'))
         {
             while (false !== ($file = readdir($handle))) {
-                if ($file!= '.' && $file!='..' && is_dir('./sample_templates/' . $file))
+                if ($file != '.' && $file != '..' && is_dir('./sample_templates/' . $file))
                     $files[] = $file;
             }
             closedir($handle);
         }
 
-        $tpl->assign('sample_templates',$files);
+        $tpl->assign('sample_templates', $files);
         $tpl->assign('overwrite_db', $this->m_overwriteDb);
 
         $database_conf = dirname(__FILE__) . '/../../conf/database_conf.php';
 
         if (!empty($config_db)) {
             $tpl->assign('db', $config_db);
-        } elseif (file_exists($database_conf)) { // use predefined settings
+        } elseif (file_exists($database_conf)) { 
+            // use predefined settings
             global $Campsite;
             require_once $database_conf;
             $tpl->assign('db', array(
@@ -177,49 +181,40 @@ final class CampInstallation extends CampInstallationBase
         $config_site = $session->getData('config.site', 'installation');
         if (!empty($config_site)) {
             $tpl->assign('mc', $config_site);
-        }
-        else {
+        } else {
             $tpl->assign( 'mc', array( 'sitetitle' => '', 'adminemail' => '' ) );
         }
 
         $config_demo = $session->getData('config.demo', 'installation');
         if (!empty($config_demo)) {
             $tpl->assign('dm', $config_demo);
-        }
-        else {
+        } else {
             $tpl->assign( 'dm', array( 'loaddemo' => '' ) );
         }
 
         $view = new CampInstallationView($this->m_step);
 
         $tpl->display($this->getTemplateName());
-    } // fn render
+    }
 
-
-    /**
-     *
-     */
     public static function GetHostOS()
     {
+        $os = 'unsupported';
+
         if (strtoupper(PHP_OS) === 'LINUX') {
             $os = 'linux';
         } elseif (strtoupper(PHP_OS) === 'FREEBSD') {
             $os = 'freebsd';
         } elseif (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
             $os = 'windows';
-        } else {
-            $os = 'unsupported';
         }
 
         return $os;
-    } // fn GetHostOS
-
+    }
 
     private function getTemplateName()
     {
         return $this->m_steps[$this->m_step]['tplfile'];
-    } // fn getTemplateName
+    }
 
-} // class CampInstallation
-
-?>
+}

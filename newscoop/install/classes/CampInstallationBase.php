@@ -26,7 +26,6 @@ require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampRequest.php
 require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallationView.php');
 require_once($GLOBALS['g_campsiteDir'].'/install/scripts/SQLImporting.php');
 
-
 /**
  * Class CampInstallation
  */
@@ -67,10 +66,6 @@ class CampInstallationBase
      */
     protected $m_overwriteDb = false;
 
-
-    /**
-     *
-     */
     protected function execute()
     {
         $input = CampRequest::GetInput('post');
@@ -79,69 +74,74 @@ class CampInstallationBase
         $this->m_step = (!empty($input['step'])) ? $input['step'] : $this->m_defaultStep;
 
         switch($this->m_step) {
-        case 'precheck':
-            break;
-        case 'license':
-            $session->unsetData('config.db', 'installation');
-            $session->unsetData('config.site', 'installation');
-            $session->unsetData('config.demo', 'installation');
-            $this->preInstallationCheck();
-            break;
-        case 'database':
-            $this->license();
-            break;
-        case 'mainconfig':
-            $prevStep = (isset($input['this_step'])) ? $input['this_step'] : '';
-            if ($prevStep != 'loaddemo'
-                    && $this->databaseConfiguration($input)) {
-                $session->setData('config.db', $this->m_config['database'], 'installation', true);
-            }
-            break;
-        case 'loaddemo':
-            $prevStep = (isset($input['this_step'])) ? $input['this_step'] : '';
-            if ($prevStep != 'loaddemo'
-                    && $this->generalConfiguration($input)) {
-                $session->setData('config.site', $this->m_config['mainconfig'], 'installation', true);
-            }
-            break;
-        case 'cronjobs':
-            if (isset($input['install_demo'])) {
-                $session->setData('config.demo', array('loaddemo' => $input['install_demo']), 'installation', true);
-                if ($input['install_demo'] != '0') {
-                    if (!$this->loadDemoSite()) {
-                        break;
+            case 'precheck':
+                break;
+
+            case 'license':
+                $session->unsetData('config.db', 'installation');
+                $session->unsetData('config.site', 'installation');
+                $session->unsetData('config.demo', 'installation');
+                $this->preInstallationCheck();
+                break;
+
+            case 'database':
+                $this->license();
+                break;
+
+            case 'mainconfig':
+                $prevStep = (isset($input['this_step'])) ? $input['this_step'] : '';
+                if ($prevStep != 'loaddemo'
+                        && $this->databaseConfiguration($input)) {
+                    $session->setData('config.db', $this->m_config['database'], 'installation', true);
+                }
+                break;
+
+            case 'loaddemo':
+                $prevStep = (isset($input['this_step'])) ? $input['this_step'] : '';
+                if ($prevStep != 'loaddemo'
+                        && $this->generalConfiguration($input)) {
+                    $session->setData('config.site', $this->m_config['mainconfig'], 'installation', true);
+                }
+                break;
+
+            case 'cronjobs':
+                if (isset($input['install_demo'])) {
+                    $session->setData('config.demo', array('loaddemo' => $input['install_demo']), 'installation', true);
+                    if ($input['install_demo'] != '0') {
+                        if (!$this->loadDemoSite()) {
+                            break;
+                        }
                     }
                 }
-            }
-            break;
-        case 'finish':
-            if (isset($input['install_demo'])) {
-                $session->setData('config.demo', array('loaddemo' => $input['install_demo']), 'installation', true);
-                if ($input['install_demo'] != '0') {
-                    if (!$this->loadDemoSite()) {
-                        break;
+                break;
+
+            case 'finish':
+                if (isset($input['install_demo'])) {
+                    $session->setData('config.demo', array('loaddemo' => $input['install_demo']), 'installation', true);
+                    if ($input['install_demo'] != '0') {
+                        if (!$this->loadDemoSite()) {
+                            break;
+                        }
                     }
                 }
-            }
-            $this->installEmptyTheme();
-            $this->saveCronJobsScripts();
-            if ($this->finish()) {
-                $this->saveConfiguration();
+                $this->installEmptyTheme();
+                $this->saveCronJobsScripts();
+                if ($this->finish()) {
+                    $this->saveConfiguration();
+                    self::InstallPlugins();
+                    $this->initRenditions();
 
-                self::InstallPlugins();
+                    require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
+                    SystemPref::DeleteSystemPrefsFromCache();
 
-                $this->initRenditions();
+                    // clear all cache
+                    require_once($GLOBALS['g_campsiteDir'].'/classes/CampCache.php');
+                    CampCache::singleton()->clear('user');
+                    CampCache::singleton()->clear();
+                    CampTemplate::singleton()->clearCache();
+                }
+                break;
 
-                require_once($GLOBALS['g_campsiteDir'].'/classes/SystemPref.php');
-                SystemPref::DeleteSystemPrefsFromCache();
-
-                // clear all cache
-                require_once($GLOBALS['g_campsiteDir'].'/classes/CampCache.php');
-                CampCache::singleton()->clear('user');
-                CampCache::singleton()->clear();
-                CampTemplate::singleton()->clearCache();
-            }
-            break;
         }
     } // fn execute
 
@@ -151,14 +151,14 @@ class CampInstallationBase
 
     private function license()
     {
-
     	$license_agreement = Input::Get('license_agreement', 'int', 0);
-    	if($license_agreement < 1) {
+    	if ($license_agreement < 1) {
     		$this->m_step = 'license';
 			$this->m_message = 'You must accept the terms of the License Agreement!';
-			return FALSE;
+
+			return false;
     	} else {
-    		return TRUE;
+    		return true;
     	}
     }
 
@@ -173,6 +173,7 @@ class CampInstallationBase
         	if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess-default')) {
         		@copy(CS_PATH_SITE . DIR_SEP . '.htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess-default');
         	}
+
         	@unlink(CS_PATH_SITE . DIR_SEP . '.htaccess');
         }
 
@@ -194,6 +195,7 @@ class CampInstallationBase
                 || empty($db_username) || empty($db_database)) {
             $this->m_step = 'database';
             $this->m_message = 'Error: Please input the requested data';
+
             return false;
         }
 
@@ -262,6 +264,7 @@ class CampInstallationBase
             foreach ($errorQueries as $query) {
                 $this->m_message .= "<br>$query";
             }
+
             return false;
         }
 
@@ -319,12 +322,13 @@ class CampInstallationBase
         }
 
         $this->m_config['database'] = array(
-                                            'hostname' => $db_hostname,
-                                            'hostport' => $db_hostport,
-                                            'username' => $db_username,
-                                            'userpass' => $db_userpass,
-                                            'database' => $db_database
-                                            );
+            'hostname' => $db_hostname,
+            'hostport' => $db_hostport,
+            'username' => $db_username,
+            'userpass' => $db_userpass,
+            'database' => $db_database
+        );
+
         require_once($GLOBALS['g_campsiteDir'].'/bin/cli_script_lib.php');
         camp_remove_dir(CS_PATH_TEMPLATES.DIR_SEP.'*', null, array('system_templates', 'unassigned'));
 
@@ -344,7 +348,7 @@ class CampInstallationBase
         }
 
         return true;
-    } // fn databaseConfiguration
+    }
 
     /**
      * Get database connection
@@ -376,9 +380,6 @@ class CampInstallationBase
         return $this->getDbConnection($params);
     }
 
-    /**
-     *
-     */
     private function generalConfiguration($p_input)
     {
         $mc_sitetitle = Input::Get('Site_Title', 'text');
@@ -390,6 +391,7 @@ class CampInstallationBase
                 || empty($mc_admincpsswd) || empty($mc_adminemail)) {
             $this->m_step = 'mainconfig';
             $this->m_message = 'Error: Please input the requested data';
+
             return false;
         }
 
@@ -397,17 +399,18 @@ class CampInstallationBase
         if ($psswd_validation['result'] == FALSE) {
             $this->m_step = 'mainconfig';
             $this->m_message = 'Error: ' . $psswd_validation['message'];
+
             return false;
         }
 
         $this->m_config['mainconfig'] = array(
-                                              'sitetitle' => $mc_sitetitle,
-                                              'adminemail' => $mc_adminemail,
-                                              'adminpsswd' => $mc_adminpsswd
-                                              );
+            'sitetitle' => $mc_sitetitle,
+            'adminemail' => $mc_adminemail,
+            'adminpsswd' => $mc_adminpsswd
+        );
 
         return true;
-    } // fn generalConfiguration
+    }
 
 
     private function installEmptyTheme()
@@ -416,14 +419,19 @@ class CampInstallationBase
         $templatesDir = CS_PATH_TEMPLATES;
         $unassignedTemplatesDir = $templatesDir.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED;
         $emptyThemeDir = $unassignedTemplatesDir.DIR_SEP."empty";
-
         $isWritable = true;
-        if ((!is_dir($unassignedTemplatesDir) && !mkdir($unassignedTemplatesDir)) || !is_writable($unassignedTemplatesDir))
-            $isWritable = false;
-        if ((!is_dir($emptyThemeDir) && !mkdir($emptyThemeDir)) || !is_writable($emptyThemeDir))
-            $isWritable = false;
 
-        if(!$isWritable) return false;
+        if ((!is_dir($unassignedTemplatesDir) && !mkdir($unassignedTemplatesDir)) || !is_writable($unassignedTemplatesDir)) {
+            $isWritable = false;
+        }
+
+        if ((!is_dir($emptyThemeDir) && !mkdir($emptyThemeDir)) || !is_writable($emptyThemeDir)) {
+            $isWritable = false;
+        }
+
+        if(!$isWritable) {
+            return false;
+        }
 
         // creating theme xml
         $themeXml = <<<XML
@@ -502,7 +510,6 @@ XML;
 
         require_once($GLOBALS['g_campsiteDir'].'/bin/cli_script_lib.php');
 
-        //
         if (is_dir(CS_PATH_TEMPLATES.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED)) {
 			CampInstallationBaseHelper::CopyFiles(CS_PATH_TEMPLATES.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED, CS_INSTALL_DIR.DIR_SEP.'temp');
 		}
@@ -516,6 +523,7 @@ XML;
         if (CampInstallationBaseHelper::CopyFiles($source, $target) == false) {
             $this->m_step = 'loaddemo';
             $this->m_message = 'Error: Copying sample site files';
+
             return false;
         }
 
@@ -527,6 +535,7 @@ XML;
             $this->m_step = 'loaddemo';
             $this->m_message = 'Error: Copying sample site data files';
             die('failed');
+
             return false;
         }
 
@@ -534,6 +543,7 @@ XML;
             $this->m_step = 'loaddemo';
             $this->m_message = 'Error: Database parameters invalid. Could not '
                 . 'connect to database server.';
+
             return false;
         }
 
@@ -556,6 +566,7 @@ XML;
             foreach ($errorQueries as $query) {
                 $this->m_message .= "<br>$query";
             }
+
             return false;
         }
 
@@ -567,6 +578,7 @@ XML;
             foreach ($errorQueries as $query) {
                 $this->m_message .= "<br>$query";
             }
+
             return false;
         }
 
@@ -598,42 +610,38 @@ XML;
         	}
         }
 
-        //
         if (is_dir(CS_INSTALL_DIR.DIR_SEP.'temp')) {
 			CampInstallationBaseHelper::CopyFiles(CS_INSTALL_DIR.DIR_SEP.'temp', CS_PATH_TEMPLATES.DIR_SEP.ThemeManagementServiceLocal::FOLDER_UNASSIGNED);
 			camp_remove_dir(CS_INSTALL_DIR.DIR_SEP.'temp');
 		}
 
         return true;
-    } // fn loadDemoSite
+    }
 
-
-    /**
-     *
-     */
     private function finish()
     {
         $session = CampSession::singleton();
         $dbData = $session->getData('config.db', 'installation');
         $mcData = $session->getData('config.site', 'installation');
 
-        if (is_array($mcData) && isset($mcData['sitetitle'])
-        && !CampInstallationBaseHelper::SetSiteTitle($mcData['sitetitle'])) {
+        if (is_array($mcData) && isset($mcData['sitetitle']) && !CampInstallationBaseHelper::SetSiteTitle($mcData['sitetitle'])) {
             $this->m_step = 'mainconfig';
             $this->m_message = 'Error: Could not update the site title.';
-            return false;
-        }
-        if (is_array($mcData) && isset($mcData['adminemail'])
-        && !CampInstallationBaseHelper::CreateAdminUser($mcData['adminemail'], $mcData['adminpsswd'])) {
-            $this->m_step = 'mainconfig';
-            $this->m_message = 'Error: Could not update the admin user credentials.';
+
             return false;
         }
 
-		if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess')
-        && !copy(CS_PATH_SITE . DIR_SEP . 'htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess')) {
+        if (is_array($mcData) && isset($mcData['adminemail']) && !CampInstallationBaseHelper::CreateAdminUser($mcData['adminemail'], $mcData['adminpsswd'])) {
+            $this->m_step = 'mainconfig';
+            $this->m_message = 'Error: Could not update the admin user credentials.';
+
+            return false;
+        }
+
+		if (!file_exists(CS_PATH_SITE . DIR_SEP . '.htaccess') && !copy(CS_PATH_SITE . DIR_SEP . 'htaccess', CS_PATH_SITE . DIR_SEP . '.htaccess')) {
             $this->m_step = 'mainconfig';
             $this->m_message = 'Error: Could not create the htaccess file.';
+
             return false;
         }
 
@@ -642,7 +650,7 @@ XML;
         }
 
         return true;
-    } // fn finish
+    }
 
 
     /**
@@ -652,12 +660,14 @@ XML;
     {
         global $g_db;
 
-        $cronJobs = array('newscoop_autopublish',
-                          'newscoop_indexer',
-                          'newscoop_notifyendsubs',
-                          'newscoop_notifyevents',
-                          'newscoop_statistics',
-                          'newscoop_stats');
+        $cronJobs = array(
+            'newscoop_autopublish',
+            'newscoop_indexer',
+            'newscoop_notifyendsubs',
+            'newscoop_notifyevents',
+            'newscoop_statistics',
+            'newscoop_stats'
+        );
 
         $template = CampTemplate::singleton();
         $campsiteBinDir = CS_PATH_SITE.DIR_SEP.'bin';
@@ -673,12 +683,11 @@ XML;
                 $external = false;
                 if (CampInstallationBaseHelper::ConnectDB() == false) {
                     $this->m_step = 'cronjobs';
-                    $this->m_message = 'Error: Database parameters invalid. Could not '
-                    . 'connect to database server.';
+                    $this->m_message = 'Error: Database parameters invalid. Could not connect to database server.';
+
                     return false;
                 }
-                $sqlQuery = "UPDATE SystemPreferences SET value = 'N' "
-                    ."WHERE varname = 'ExternalCronManagement'";
+                $sqlQuery = "UPDATE SystemPreferences SET value = 'N' WHERE varname = 'ExternalCronManagement'";
                 $g_db->Execute($sqlQuery);
             }
         }
@@ -742,12 +751,8 @@ XML;
         }
 
         return true;
-    } // fn saveCronJobsScripts
+    }
 
-
-    /**
-     *
-     */
     private function saveConfiguration()
     {
         $session = CampSession::singleton();
@@ -794,7 +799,7 @@ XML;
         CampInstallationBase::CreateDirectory($GLOBALS['g_campsiteDir'].DIR_SEP.'files');
 
         return true;
-    } // fn saveConfiguration
+    }
 
 
     /**
@@ -811,7 +816,7 @@ XML;
         if (!is_dir($p_directoryPath)) {
             mkdir($p_directoryPath);
         }
-    } // fn CreateDirectory
+    }
 
 
     private static function InstallPlugins()
@@ -853,8 +858,7 @@ XML;
         $application->bootstrap('container');
         $application->getBootstrap()->getResource('container')->getService('image.rendition')->reloadRenditions();
     }
-} // fn ClassInstallationBase
-
+}
 
 /**
  * Class CampInstallationBaseHelper
@@ -863,9 +867,6 @@ class CampInstallationBaseHelper
 {
     const PASSWORD_MINLENGTH = 5;
 
-    /**
-     *
-     */
     public static function ConnectDB()
     {
         global $g_db;
@@ -895,10 +896,6 @@ class CampInstallationBaseHelper
         return $g_db = new \Newscoop\Doctrine\AdoDbAdapter($connection);
     }
 
-
-    /**
-     *
-     */
     public static function CreateAdminUser($p_email, $p_password)
     {
         global $g_db;
@@ -915,17 +912,14 @@ class CampInstallationBaseHelper
             status = '1',
             is_admin = '1'
             WHERE id = 1";
+
         if (!$g_db->Execute($sqlQuery1)) {
             return false;
         }
 
         return true;
-    } // fn CreateAdminUser
+    }
 
-
-    /**
-     *
-     */
     public static function ImportDB($p_sqlFile, &$errorQueries)
     {
         global $g_db;
@@ -949,8 +943,7 @@ class CampInstallationBaseHelper
         }
 
         return $errors;
-    } // fn ImportDB
-
+    }
 
     public static function SetSiteTitle($p_title)
     {
@@ -961,15 +954,10 @@ class CampInstallationBaseHelper
         }
 
         $p_title = $g_db->escape($p_title);
-        $sqlQuery = "UPDATE SystemPreferences SET value = $p_title "
-        ."WHERE varname = 'SiteTitle'";
+        $sqlQuery = "UPDATE SystemPreferences SET value = $p_title WHERE varname = 'SiteTitle'";
         return $g_db->Execute($sqlQuery);
     }
 
-
-    /**
-     *
-     */
     public static function SplitSQL($p_sqlFile)
     {
         $p_sqlFile = trim($p_sqlFile);
@@ -1005,12 +993,8 @@ class CampInstallationBaseHelper
         }
 
         return $return;
-    } // fn SplitSQL
+    }
 
-
-    /**
-     *
-     */
     public static function ValidatePassword($p_password1, $p_password2)
     {
         $validator = array('result' => TRUE);
@@ -1025,19 +1009,15 @@ class CampInstallationBaseHelper
         }
 
         return $validator;
-    } // fn ValidatePassword
+    }
 
-
-    /**
-     *
-     */
     public static function CopyFiles($p_source, $p_target)
     {
         if (is_dir($p_source)) {
             @mkdir($p_target);
-            $d = dir($p_source);
+            $direcotry = dir($p_source);
 
-            while(($entry = $d->read()) !== false) {
+            while(($entry = $direcotry->read()) !== false) {
                 if ($entry == '.' || $entry == '..' || $entry == '.svn') {
                     continue;
                 }
@@ -1050,11 +1030,11 @@ class CampInstallationBaseHelper
                 @copy($Entry, $p_target . DIR_SEP . $entry);
             }
 
-            $d->close();
+            $direcotry->close();
         } else {
             @copy($p_source, $p_target);
         }
 
         return true;
-    } // fn CopyFiles
+    }
 }
