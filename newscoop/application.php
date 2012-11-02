@@ -8,6 +8,9 @@ defined('APPLICATION_PATH')
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 
+//require Composer autoloader
+require_once realpath(APPLICATION_PATH . '/../../vendor/autoload.php');
+
 // goes to install process if configuration files does not exist yet
 if (!defined('INSTALL') && (!file_exists(APPLICATION_PATH . '/../conf/configuration.php')
     || !file_exists(APPLICATION_PATH . '/../conf/database_conf.php'))) {
@@ -23,6 +26,7 @@ if (!defined('INSTALL') && (!file_exists(APPLICATION_PATH . '/../conf/configurat
 set_include_path(implode(PATH_SEPARATOR, array(
     realpath(APPLICATION_PATH . '/../library'),
     realpath(APPLICATION_PATH . '/../include'),
+    realpath(APPLICATION_PATH . '/../../dependencies/include'),
     get_include_path(),
 )));
 
