@@ -28,7 +28,6 @@ function fnLoadContextList(data) {
 	    var items = data.items;
 	    for(i = 0; i < items.length; i++) {
 	        var item = items[i];
-            console.log(item);
 	        appendItemToContextList(item.articleId, item.date, item.title, item.status);
 	    }
 	}
