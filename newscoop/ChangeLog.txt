@@ -1,3 +1,23 @@
+4.0.3 (November 12, 2012)
+  Improvements
+  ------------
+  CS-4419: New storage schema for Images
+  CS-4460: Add Remind me Never button to Newscoop nag screen
+
+  Bug fixes
+  ---------
+  CS-4426: Hardcoded file size limit of 2mb in plupload configuration
+  CS-4442: get_img returns wrong headers for expiration affecting caching
+  CS-4466: Some jquery resources do not load on https setups
+  CS-4420: Empty topic created on adding a new topic with a used name
+  CS-4421: Wrong link after renaming a topic to a used name
+  CS-4447: User schema contains not null columns after upgrade from 3.5
+
+  Tasks
+  -----
+  Use of composer to handle dependencies.
+  Remove Doctrine from library directory as it is now handled via composer.
+
 4.0.2 (July 12, 2012)
   Improvements
   ------------
