@@ -38,13 +38,14 @@ class PlaylistRepository extends EntityRepository
 	 * @param bool $publishedOnly
      */
     public function articles(Playlist $playlist, Language $lang = null,
-    $fullArticle = false, $limit = null, $offset = null, $publishedOnly = true)
+    $fullArticle = false, $limit = null, $offset = null, $publishedOnly = true, $humanWorkflowStatus = false)
     {
         $em = $this->getEntityManager();
         $query = $em->createQuery("
-        	SELECT ".( $fullArticle ? "pa, a" : "a.number articleId, a.name title, a.date date" )
+        	SELECT ".( $fullArticle ? "pa, a" : "a.number articleId, a.name title, a.date date, a.workflowStatus, l.id language" )
         .  	" FROM Newscoop\Entity\PlaylistArticle pa
         	JOIN pa.article a
+            JOIN a.language l
         	WHERE pa.playlist = ?1 "
         .       ($publishedOnly ? " AND a.workflowStatus = 'Y'" : "")
         .       (is_null($lang) ? " GROUP BY a.number" : " AND a.language = ?2")
@@ -63,6 +64,15 @@ class PlaylistRepository extends EntityRepository
             $query->setParameter(2, $lang->getId());
         }
         $rows = $query->getResult();
+
+        if ($humanWorkflowStatus) {
+            foreach($rows as $key => $article) {
+                $articleObj = new \Article($article['language'], $article['articleId']);
+                $article['workflowStatus'] = $articleObj->getWorkflowDisplayString();
+                $rows[$key] = $article;
+            }
+        }
+
         return $rows;
     }
 
