@@ -48,7 +48,7 @@ function loadContextList() {
 }
 
 function appendItemToContextList(article_id, article_date, article_title, status) {
-    if(typeof status != 'undefined'){
+    if (typeof status != 'undefined') {
        var articleStatus = ' ('+status+')';
     } else {
         var articleStatus = '';
@@ -60,7 +60,7 @@ function appendItemToContextList(article_id, article_date, article_title, status
 	            '<div class="context-item">'+
 	            '<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>'+
 	            '<div class="context-item-header">'+
-	                '<div class="context-item-date">'+article_date+''+articleStatus+'</div>'+
+	                '<div class="context-item-date">'+ article_date + articleStatus +'</div>'+
 	                '<a href="#" class="view-article" style="display: none" onClick="viewArticle($(this).parent(\'div\').parent(\'div\').parent(\'td\').parent(\'tr\').attr(\'id\'));"><?php echo getGS('View article') ?></a>'+
 	            '</div>'+
 	            '<a href="#" class="corner-button" style="display: block" onClick="$(this).parent(\'div\').parent(\'td\').parent(\'tr\').remove();toggleDragZonePlaceHolder();"><span class="ui-icon ui-icon-closethick"></span></a>'+

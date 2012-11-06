@@ -89,7 +89,7 @@ function appendItemToContextList(article_id, article_date, article_title, status
     	'<div class="context-item">'+
         '<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>'+
         '<div class="context-item-header">'+
-        '<div class="context-item-date">'+article_date+''+articleStatus+'</div>'+
+        '<div class="context-item-date">'+ article_date + articleStatus +'</div>'+
         '<a href="#" class="view-article" style="display: none" ' +
         	'onClick="viewArticle($(this).parent(\'div\').parent(\'div\').parent(\'li.item\').attr(\'id\'));">{$t['view-article']}</a>'+
         '</div>'+
