@@ -19,10 +19,10 @@ $cli = new \Symfony\Component\Console\Application(
     \Newscoop\Version::VERSION
 );
 
-try {
-    // Bootstrapping Console HelperSet
-    $helperSet = array();
+// Bootstrapping Console HelperSet
+$helperSet = array();
 
+try {
     if (Zend_Registry::isRegistered('container')) {
         $helperSet['container'] = new \Newscoop\Tools\Console\Helper\ServiceContainerHelper($application->getBootstrap()->getResource('container'));
     }
