@@ -1,0 +1,12 @@
+newscoop/images/*
+newscoop/cache/*
+newscoop/files/*
+newscoop/themes/*
+newscoop/install/cron_jobs/all_at_once
+newscoop/conf/database_conf.php
+newscoop/conf/configuration.php
+newscoop/system_preferences.php
+newscoop/vendor
+vendor
+.htaccess
+.htaccess-default

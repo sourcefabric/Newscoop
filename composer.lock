@@ -1,5 +1,5 @@
 {
-    "hash": "6f1bddf443bdcf2f27330db103467bb3",
+    "hash": "be952276d8a77224c221d82159dd288c",
     "packages": [
         {
             "name": "doctrine/common",
@@ -183,16 +183,16 @@
         },
         {
             "name": "zendframework/zendframework1",
-            "version": "dev-release-1.11",
+            "version": "1.11.14",
             "source": {
                 "type": "svn",
                 "url": "http://framework.zend.com/svn/framework/standard",
-                "reference": "/branches/release-1.11/@25046"
+                "reference": "/tags/release-1.11.14/@25048"
             },
             "require": {
                 "php": ">=5.2.4"
             },
-            "time": "2012-08-27 16:53:51",
+            "time": "2012-08-27 16:58:59",
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -232,7 +232,7 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "zendframework/zendframework1": 20
-    }
+    "stability-flags": [
+
+    ]
 }

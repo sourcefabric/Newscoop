@@ -8,9 +8,6 @@ defined('APPLICATION_PATH')
 defined('APPLICATION_ENV')
     || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
 
-//require Composer autoloader
-require_once realpath(APPLICATION_PATH . '/../../vendor/autoload.php');
-
 // goes to install process if configuration files does not exist yet
 if (!defined('INSTALL') && (!file_exists(APPLICATION_PATH . '/../conf/configuration.php')
     || !file_exists(APPLICATION_PATH . '/../conf/database_conf.php'))) {
@@ -22,47 +19,20 @@ if (!defined('INSTALL') && (!file_exists(APPLICATION_PATH . '/../conf/configurat
     }
 }
 
-// Ensure library/ is on include_path
-set_include_path(implode(PATH_SEPARATOR, array(
-    realpath(APPLICATION_PATH . '/../library'),
-    realpath(APPLICATION_PATH . '/../include'),
-    realpath(APPLICATION_PATH . '/../../dependencies/include'),
-    get_include_path(),
-)));
+set_include_path(__DIR__ . '/library' . PATH_SEPARATOR . get_include_path());
 
-if (!function_exists('stream_resolve_include_paths')) {
-    function stream_resolve_include_paths($filename) {
-        foreach (explode(PATH_SEPARATOR, get_include_path()) as $include_path) {
-            $realpath = realpath("{$include_path}/{$filename}");
-            if ($realpath !== false) {
-                return $realpath;
-            }
-        }
+//require Composer autoloader
+$autoload = require_once __DIR__ . '/vendor/autoload.php';
 
-        return false;
-    }
+if (is_dir(__DIR__ . '/library/Zend')) {
+    // remove vendor zend lib from include path which would cause conflicts
+    $includePaths = explode(PATH_SEPARATOR, get_include_path());
+    array_shift($includePaths);
+    set_include_path(implode(PATH_SEPARATOR, $includePaths));
 }
 
-if (!stream_resolve_include_paths('Zend/Application.php')) {
-	// include libzend if we don't have zend_application
-	set_include_path(implode(PATH_SEPARATOR, array(
-		'/usr/share/php/libzend-framework-php',
-		get_include_path(),
-	)));
-}
-
-/** Zend_Application */
-require_once 'Zend/Application.php';
-
-if (defined('INSTALL')) {
-    $oldErrorReporting = error_reporting();
-    error_reporting(0);
-
-    if (!class_exists('Zend_Application', FALSE)) {
-        die('Missing dependency! Please install Zend Framework library!');
-    }
-
-    error_reporting($oldErrorReporting);
+if (!class_exists('Zend_Application')) {
+    die('Missing dependency! Please install Zend Framework library!');
 }
 
 // Create application, bootstrap, and run
@@ -70,7 +40,6 @@ $application = new \Zend_Application(APPLICATION_ENV);
 
 // Set config
 $setConfig = function(\Zend_Application $application) {
-    require_once 'Zend/Config/Ini.php';
     $defaultConfig = new \Zend_Config_Ini(APPLICATION_PATH . '/configs/application.ini-dist', APPLICATION_ENV);
     $config = $defaultConfig->toArray();
     if (is_readable(APPLICATION_PATH . '/configs/application.ini')) {

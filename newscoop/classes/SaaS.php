@@ -4,7 +4,7 @@
 /**
  * @package Campsite
  */
-class Saas
+class SaaS
 {
     // Hold an instance of the class
     private static $instance;

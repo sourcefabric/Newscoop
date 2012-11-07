@@ -10,8 +10,6 @@
  * @link http://www.sourcefabric.org
  */
 
-require_once('smarty/libs/Smarty.class.php');
-
 /**
  * Class CampTemplate
  */
@@ -25,15 +23,16 @@ final class CampTemplate extends Smarty
 	private static $m_instance = null;
 
 
-    private function __construct()
+    public function __construct()
     {
-        parent::Smarty();
+        parent::__construct();
 
         $this->caching = false;
         $this->debugging = false;
         $this->force_compile = true;
         $this->compile_check = false;
         $this->use_sub_dirs = false;
+        $this->auto_literal = false;
 
         $this->left_delimiter = '{{';
         $this->right_delimiter = '}}';
@@ -76,7 +75,7 @@ final class CampTemplate extends Smarty
 
     public function clearCache()
     {
-    	$this->clear_compiled_tpl();
+        $this->clearCompiledTemplate();
     }
 
 
