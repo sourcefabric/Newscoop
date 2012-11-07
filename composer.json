@@ -15,7 +15,7 @@
         "sensio/framework-extra-bundle":    "2.1.*",
         "doctrine/orm":                     "2.3.*",
         "doctrine/doctrine-bundle":         "1.0.*",
-        "zendframework/zendframework1":     "dev-release-1.11",
+        "bombayworks/zendframework1":       "1.11.*",
         "Smarty3":                          "3.0.8",
         "friendsofsymfony/rest-bundle":     "dev-master",
         "behat/behat":                      ">=2.4.0",
@@ -47,13 +47,15 @@
         "psr-0": {
             "Newscoop": ["gimme/src", "newscoop/library"],
             "Resource": "newscoop/library",
-            "Nette": "newscoop/library"
+            "Nette": "newscoop/library",
+            "Zend": "newscoop/library"
         },
         "classmap":[
             "vendor/Smarty3/libs", 
             "newscoop/classes",
             "newscoop/template_engine",
             "newscoop/plugins",
+            "newscoop/include",
             "plugins"
         ]
     },

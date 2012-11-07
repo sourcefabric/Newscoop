@@ -19,7 +19,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
     protected function _initAutoloader()
     {
         $GLOBALS['g_campsiteDir'] = realpath(APPLICATION_PATH . '/../');
-        return null;
+        return;
     }
 
     protected function _initSession()
@@ -28,6 +28,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         if (!empty($options['session'])) {
             Zend_Session::setOptions($options['session']);
         }
+
         Zend_Session::start();
 
         foreach ($_COOKIE as $name => $value) { // remove unused cookies
