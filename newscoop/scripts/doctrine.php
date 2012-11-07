@@ -1,6 +1,4 @@
 <?php
-require_once(__DIR__ . '/../constants.php');
-
 // Define application environment, (I am only running this in development)
 define('APPLICATION_ENV', 'development');
 

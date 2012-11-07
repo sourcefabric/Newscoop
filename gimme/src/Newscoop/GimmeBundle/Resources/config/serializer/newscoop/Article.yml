@@ -22,27 +22,27 @@ Newscoop\Entity\Article:
         type:
             expose: true
             read_only: true
-            type: datetime
+            type: string
             groups: ["list", "details"]
             serialized_name: type
         webcode:
             expose: true
             read_only: true
-            type: datetime
+            type: string
             groups: ["list", "details"]
             access_type: public_method
             serialized_name: webcode
         keywords:
             expose: true
             read_only: true
-            type: datetime
+            type: string
             groups: ["list", "details"]
             access_type: public_method
             serialized_name: keywords
         language:
             expose: true
             read_only: true
-            type: datetime
+            type: string
             groups: ["list", "details"]
             accessor: 
                 getter: getLanguageCode

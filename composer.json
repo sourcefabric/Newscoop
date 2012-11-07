@@ -19,6 +19,7 @@
         "zendframework/zendframework1":     "dev-release-1.11",
         "Smarty3":                          "3.0.8",
         "friendsofsymfony/rest-bundle":     "dev-master",
+        "jms/serializer-bundle":            "0.9",
         "behat/behat":                      ">=2.4.0",
         "behat/common-contexts":            "*",
         "kriswallsmith/buzz":               ">=0.7",
@@ -56,6 +57,11 @@
             "plugins"
         ]
     },
+    "include-path": [
+        "newscoop/library",
+        "newscoop/include",
+        "dependencies/include"
+    ],
     "scripts": {
         "post-install-cmd": [
         ],

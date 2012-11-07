@@ -10,6 +10,7 @@
 
 define('APPLICATION_ENV', 'cli');
 
+require_once __DIR__ . '/newscoop_bootstrap.php';
 require_once __DIR__ . '/../application.php';
 $application->bootstrap();
 
@@ -38,6 +39,7 @@ $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\LogMaintenanceCommand(),
     new \Newscoop\Tools\Console\Command\SendStatsCommand(),
     new \Newscoop\Tools\Console\Command\UpdateImageStorageCommand(),
+    new \Newscoop\Tools\Console\Command\AutopublishCommand(),
 ));
 
 $cli->run();
