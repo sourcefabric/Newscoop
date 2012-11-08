@@ -20,6 +20,14 @@ class NewscoopEntityArticleDatetimeProxy extends \Newscoop\Entity\ArticleDatetim
     {
         if (!$this->__isInitialized__ && $this->_entityPersister) {
             $this->__isInitialized__ = true;
+
+            if (method_exists($this, "__wakeup")) {
+                // call this after __isInitialized__to avoid infinite recursion
+                // but before loading to emulate what ClassMetadata::newInstance()
+                // provides.
+                $this->__wakeup();
+            }
+
             if ($this->_entityPersister->load($this->_identifier, $this) === null) {
                 throw new \Doctrine\ORM\EntityNotFoundException();
             }
@@ -38,6 +46,12 @@ class NewscoopEntityArticleDatetimeProxy extends \Newscoop\Entity\ArticleDatetim
     {
         $this->__load();
         return parent::getFieldName();
+    }
+
+    public function getEventComment()
+    {
+        $this->__load();
+        return parent::getEventComment();
     }
 
     public function getArticleType()
@@ -76,10 +90,10 @@ class NewscoopEntityArticleDatetimeProxy extends \Newscoop\Entity\ArticleDatetim
         return parent::getRecurring();
     }
 
-    public function setValues($dateData, $article, $fieldName, $articleType = NULL)
+    public function setValues($dateData, $article, $fieldName, $articleType = NULL, $otherInfo = NULL)
     {
         $this->__load();
-        return parent::setValues($dateData, $article, $fieldName, $articleType);
+        return parent::setValues($dateData, $article, $fieldName, $articleType, $otherInfo);
     }
 
     public function __get($name)
@@ -136,6 +150,12 @@ class NewscoopEntityArticleDatetimeProxy extends \Newscoop\Entity\ArticleDatetim
         return parent::setFieldName($fieldName);
     }
 
+    public function setEventComment($eventComment)
+    {
+        $this->__load();
+        return parent::setEventComment($eventComment);
+    }
+
     public function getId()
     {
         $this->__load();
@@ -151,7 +171,7 @@ class NewscoopEntityArticleDatetimeProxy extends \Newscoop\Entity\ArticleDatetim
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'id', 'startDate', 'endDate', 'startTime', 'endTime', 'recurring', 'articleId', 'articleType', 'fieldName');
+        return array('__isInitialized__', 'id', 'startDate', 'endDate', 'startTime', 'endTime', 'recurring', 'articleId', 'articleType', 'fieldName', 'eventComment');
     }
 
     public function __clone()

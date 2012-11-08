@@ -1,6 +1,0 @@
-{
-    "require": {
-        "doctrine/orm":                     "2.1.*",
-        "zendframework/zendframework1":     "dev-release-1.11"
-    }
-}
