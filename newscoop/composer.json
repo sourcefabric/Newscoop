@@ -20,6 +20,9 @@
             "library/fabpot-event-dispatcher-782a5ef/lib",
             "library/smarty3",
             "plugins"
+        ],
+        "files": [
+            "include/adodb/adodb.inc.php"
         ]
     }
 }

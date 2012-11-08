@@ -19,7 +19,8 @@ if (!defined('INSTALL') && (!file_exists(APPLICATION_PATH . '/../conf/configurat
     }
 }
 
-set_include_path(__DIR__ . '/library' . PATH_SEPARATOR . get_include_path());
+// include lib + include
+set_include_path(__DIR__ . '/library' . PATH_SEPARATOR .  __DIR__  . '/include' .  PATH_SEPARATOR . '.');
 
 //require Composer autoloader
 $autoload = require_once __DIR__ . '/vendor/autoload.php';

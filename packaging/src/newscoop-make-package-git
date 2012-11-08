@@ -69,14 +69,8 @@ pushd ../..
 
 $cmd || exit 1
 
-zend_path="/usr/share/php/libzend-framework-php/Zend"
-if [ ! -d "$zend_path" ]; then
-    zend_path="/usr/share/php/Zend"
-fi
-
 mv ./plugins/* ./newscoop/plugins
 cp -fr ./dependencies/include/* ./newscoop/include
-cp -fr "$zend_path" ./newscoop/library
 rm -fr ./newscoop/tests
 find ./newscoop -name placeholder -exec rm -f {} \;
 

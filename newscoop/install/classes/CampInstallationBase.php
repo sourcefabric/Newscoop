@@ -21,7 +21,6 @@ global $g_db;
  * Includes
  */
 require_once($GLOBALS['g_campsiteDir'].'/conf/install_conf.php');
-require_once('adodb/adodb.inc.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Input.php');
 require_once($GLOBALS['g_campsiteDir'].'/template_engine/classes/CampRequest.php');
 require_once($GLOBALS['g_campsiteDir'].'/install/classes/CampInstallationView.php');
