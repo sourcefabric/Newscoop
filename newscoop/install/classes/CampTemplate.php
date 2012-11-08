@@ -29,7 +29,7 @@ final class CampTemplate extends Smarty
 
         $this->caching = false;
         $this->debugging = false;
-        $this->force_compile = false;
+        $this->force_compile = true;
         $this->compile_check = false;
         $this->use_sub_dirs = false;
         $this->auto_literal = false;

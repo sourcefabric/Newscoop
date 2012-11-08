@@ -73,6 +73,8 @@ mv ./plugins/* ./newscoop/plugins
 cp -fr ./dependencies/include/* ./newscoop/include
 rm -fr ./newscoop/tests
 find ./newscoop -name placeholder -exec rm -f {} \;
+curl -s https://getcomposer.org/installer | php
+php composer.phar install
 
 package_name="newscoop-$version"
 package_filename="newscoop-$version.$package_format"
