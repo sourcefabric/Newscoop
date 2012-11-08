@@ -20,6 +20,14 @@ class NewscoopEntityUserIpProxy extends \Newscoop\Entity\User\Ip implements \Doc
     {
         if (!$this->__isInitialized__ && $this->_entityPersister) {
             $this->__isInitialized__ = true;
+
+            if (method_exists($this, "__wakeup")) {
+                // call this after __isInitialized__to avoid infinite recursion
+                // but before loading to emulate what ClassMetadata::newInstance()
+                // provides.
+                $this->__wakeup();
+            }
+
             if ($this->_entityPersister->load($this->_identifier, $this) === null) {
                 throw new \Doctrine\ORM\EntityNotFoundException();
             }
@@ -28,10 +36,10 @@ class NewscoopEntityUserIpProxy extends \Newscoop\Entity\User\Ip implements \Doc
     }
     
     
-    public function setSubscriber(\Newscoop\Entity\User\Subscriber $subscriber)
+    public function setUser(\Newscoop\Entity\User $user)
     {
         $this->__load();
-        return parent::setSubscriber($subscriber);
+        return parent::setUser($user);
     }
 
     public function setIp($ip)
@@ -64,10 +72,16 @@ class NewscoopEntityUserIpProxy extends \Newscoop\Entity\User\Ip implements \Doc
         return parent::__toString();
     }
 
+    public function getUserId()
+    {
+        $this->__load();
+        return parent::getUserId();
+    }
+
 
     public function __sleep()
     {
-        return array('__isInitialized__', 'subscriber', 'ip', 'number');
+        return array('__isInitialized__', 'user', 'ip', 'number');
     }
 
     public function __clone()

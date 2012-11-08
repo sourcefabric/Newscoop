@@ -1,0 +1,25 @@
+{
+    "require": {
+        "doctrine/orm": "2.1.*",
+        "symfony/console": "2.1.*",
+        "symfony/yaml": "2.1.*",
+        "zendframework/zendframework1": "1.11.*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Newscoop": "library",
+            "Resource": "library",
+            "Nette": "library",
+            "Zend": "library"
+        },
+        "classmap": [
+            "classes",
+            "include",
+            "template_engine",
+            "library/fabpot-dependency-injection-07ff9ba/lib",
+            "library/fabpot-event-dispatcher-782a5ef/lib",
+            "library/smarty3",
+            "plugins"
+        ]
+    }
+}
