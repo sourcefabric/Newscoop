@@ -128,7 +128,7 @@ if ($f_publication_id > 0) {
 			camp_html_goto_page($backLink);
 		}
 		foreach ($sectionObj->getData() as $field=>$fieldValue) {
-			if ($field != 'IdLanguage') {
+			if (!in_array($field, array('IdLanguage', 'id'))) {
 				$translationSectionObj->setProperty($field, $fieldValue, false);
 			}
 		}
