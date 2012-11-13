@@ -5,14 +5,9 @@
 // read http://symfony.com/doc/current/book/installation.html#configuration-and-setup for more information
 //umask(0000);
 
-// Define path to application directory
-defined('APPLICATION_PATH') || define('APPLICATION_PATH', __DIR__ . '/../../newscoop/application');
-
-// Define application environment
-defined('APPLICATION_ENV') || define('APPLICATION_ENV', (getenv('APPLICATION_ENV') ? getenv('APPLICATION_ENV') : 'production'));
-
 set_time_limit(0);
 
+require_once(__DIR__ . '/../../newscoop/constants.php');
 require_once __DIR__.'/bootstrap.php.cache';
 require_once __DIR__.'/AppKernel.php';
 
