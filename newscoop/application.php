@@ -1,6 +1,7 @@
 <?php
 
 require_once __DIR__ . '/constants.php';
+require_once __DIR__ . '/../vendor/autoload.php';
 
 // goes to install process if configuration files does not exist yet
 if (!defined('INSTALL') && (!file_exists(APPLICATION_PATH . '/../conf/configuration.php')
@@ -13,27 +14,10 @@ if (!defined('INSTALL') && (!file_exists(APPLICATION_PATH . '/../conf/configurat
     }
 }
 
-// Ensure library/ is on include_path
-set_include_path(implode(PATH_SEPARATOR, array(
-    realpath(APPLICATION_PATH . '/../library'),
-    realpath(APPLICATION_PATH . '/../include'),
-    realpath(APPLICATION_PATH . '/../../dependencies/include'),
-    get_include_path(),
-)));
-
-//require Composer autoloader
-require_once realpath(APPLICATION_PATH . '/../../vendor/autoload.php');
-
-/** Zend_Application */
-if (defined('INSTALL')) {
-    $oldErrorReporting = error_reporting();
-    error_reporting(0);
-
-    if (!class_exists('Zend_Application', TRUE)) {
-        die('Missing dependency! Please install Zend Framework library!');
-    }
-
-    error_reporting($oldErrorReporting);
+if (!file_exists(__DIR__ . '/../vendor')) {
+    echo "Missing dependency! Please install all dependencies with composer.";
+    echo "<pre>curl -s https://getcomposer.org/installer | php <br/>php composer.phar install</pre>";
+    die;
 }
 
 /**
