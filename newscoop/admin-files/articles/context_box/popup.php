@@ -28,7 +28,7 @@ function fnLoadContextList(data) {
 	    var items = data.items;
 	    for(i = 0; i < items.length; i++) {
 	        var item = items[i];
-	        appendItemToContextList(item.articleId, item.date, item.title);
+	        appendItemToContextList(item.articleId, item.date, item.title, item.status);
 	    }
 	}
 	toggleDragZonePlaceHolder();
@@ -47,14 +47,20 @@ function loadContextList() {
     callServer(['ArticleList', 'doAction'], aoData, fnLoadContextList);
 }
 
-function appendItemToContextList(article_id, article_date, article_title) {
+function appendItemToContextList(article_id, article_date, article_title, status) {
+    if (typeof status != 'undefined') {
+       var articleStatus = ' ('+status+')';
+    } else {
+        var articleStatus = '';
+    };
+
 		$("#context_list").append(
 	            '<tr id="'+article_id+'">'+
 	            '<td>'+
 	            '<div class="context-item">'+
 	            '<div class="context-drag-topics"><a href="#" title="drag to sort"></a></div>'+
 	            '<div class="context-item-header">'+
-	                '<div class="context-item-date">'+article_date+'</div>'+
+	                '<div class="context-item-date">'+ article_date + articleStatus +'</div>'+
 	                '<a href="#" class="view-article" style="display: none" onClick="viewArticle($(this).parent(\'div\').parent(\'div\').parent(\'td\').parent(\'tr\').attr(\'id\'));"><?php echo getGS('View article') ?></a>'+
 	            '</div>'+
 	            '<a href="#" class="corner-button" style="display: block" onClick="$(this).parent(\'div\').parent(\'td\').parent(\'tr\').remove();toggleDragZonePlaceHolder();"><span class="ui-icon ui-icon-closethick"></span></a>'+
