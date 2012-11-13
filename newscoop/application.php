@@ -1,5 +1,7 @@
 <?php
 
+error_reporting(error_reporting() & ~E_STRICT & ~E_DEPRECATED);
+
 // Define path to application directory
 defined('APPLICATION_PATH')
     || define('APPLICATION_PATH', __DIR__ . '/application');
