@@ -54,9 +54,10 @@ class ImageController extends Zend_Controller_Action
      */
     private function getPath()
     {
+        $image = \Zend_Registry::get('container')->getParameter('image');
         if ($this->path === null) {
             $this->path = implode('/', array(
-                rtrim(\Zend_Registry::get('container')->getParameter('image')['cache_path'], '/'),
+                rtrim($image['cache_path'], '/'),
                 $this->_getParam('src'),
             ));
         }
