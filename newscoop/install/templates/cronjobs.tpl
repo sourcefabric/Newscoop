@@ -19,7 +19,7 @@
       </td>
     </tr>
     </table>
-    <div class="table_spacer"> </div>
+    <div class="table_spacer"></div>
     <table class="inside" cellspacing="0" cellpadding="0">
     <tr>
       <td>

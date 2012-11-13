@@ -1,1 +1,1 @@
-* * * * * {{ $CAMPSITE_BIN_DIR }}/newscoop-autopublish
+* * * * * {{ $CAMPSITE_BIN_DIR }}/console newscoop:autopublish

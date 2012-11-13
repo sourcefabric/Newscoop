@@ -12,8 +12,6 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console;
 
 require_once WWW_DIR . '/include/campsite_init.php';
-require_once WWW_DIR . '/classes/ArticlePublish.php';
-require_once WWW_DIR . '/classes/IssuePublish.php';
 
 /**
  * Update Image Storage Command
@@ -27,7 +25,8 @@ class AutopublishCommand extends Console\Command\Command
     {
         $this
             ->setName('newscoop:autopublish')
-            ->setDescription('Autopublish pending issues and articles');
+            ->setDescription('Autopublish pending issues and articles')
+            ->setHelp('Modifies the status of issues and articles scheduled for certain actions.');
     }
 
     /**
