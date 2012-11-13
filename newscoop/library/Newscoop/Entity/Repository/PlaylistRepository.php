@@ -42,14 +42,14 @@ class PlaylistRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
         $query = $em->createQuery("
-        	SELECT ".( $fullArticle ? "pa, a" : "a.number articleId, a.name title, a.date date, a.workflowStatus, l.id language" )
-        .  	" FROM Newscoop\Entity\PlaylistArticle pa
-        	JOIN pa.article a
+            SELECT ".( $fullArticle ? "pa, a" : "a.number articleId, a.name title, a.date date, a.workflowStatus, l.id language" )
+        .   " FROM Newscoop\Entity\PlaylistArticle pa
+            JOIN pa.article a
             JOIN a.language l
         	WHERE pa.playlist = ?1 "
         .       ($publishedOnly ? " AND a.workflowStatus = 'Y'" : "")
         .       (is_null($lang) ? " GROUP BY a.number" : " AND a.language = ?2")
-        .		" ORDER BY pa.id "
+        .          " ORDER BY pa.id "
         );
 
         if (!is_null($limit)) {
