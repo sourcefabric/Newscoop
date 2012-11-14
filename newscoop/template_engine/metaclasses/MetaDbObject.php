@@ -42,7 +42,6 @@ class MetaDbObject {
      */
     protected $m_skipFilter = array();
 
-
     /**
      * Returns true if the current object is the same type as the given
      * object then has the same value.
@@ -50,10 +49,18 @@ class MetaDbObject {
      * @return boolean
      */
     public function same_as($p_otherObject)
-    {
-    	return get_class($this) == get_class($p_otherObject)
-    	&& (is_null($this->m_dbObject) && is_null($p_otherObject->m_dbObject)
-    	|| $this->m_dbObject->sameAs($p_otherObject->m_dbObject));
+    {   
+        if (get_class($this) == get_class($p_otherObject)) {
+            if (is_null($this->m_dbObject) && is_null($p_otherObject->m_dbObject)) {
+                return true;
+            } else if (is_object($this->m_dbObject)) {
+                if ($this->m_dbObject->sameAs($p_otherObject->m_dbObject)) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     } // fn same_as
 
 
