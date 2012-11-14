@@ -592,7 +592,11 @@ class Comment
      */
     public function SameAs($p_comment)
     {
-        return $p_comment->getId() == $this->getId();
+        if (is_object($p_comment)) {
+            return $p_comment->getId() == $this->getId();
+        }
+        
+        return false;
     }
 
     /**
