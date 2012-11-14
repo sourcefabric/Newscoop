@@ -85,7 +85,7 @@ class Template
 
             return $items;
         } catch (\InvalidArgumentException $e) {
-            throw new \InvalidArgumentException(getGS("'$1' not found", $path), $e->getCode(), $e);
+            throw new \InvalidArgumentException(sprintf("'%s' not found", $path), $e->getCode(), $e);
         }
     }
 
@@ -115,7 +115,7 @@ class Template
             return $this->repository->flush();
         }
         catch (\InvalidArgumentException $e) {
-            throw new \InvalidArgumentException(getGS("'$1' not found", $path), $e->getCode(), $e);
+            throw new \InvalidArgumentException(sprintf("'%s' not found", $path), $e->getCode(), $e);
         }
     }
 
@@ -208,7 +208,7 @@ class Template
         $newMime = current(explode(';', $file->getMimeType()));
 
         if ($oldMime != $newMime && !(in_array($oldMime, self::$equivalentMimeTypes) && in_array($newMime, self::$equivalentMimeTypes))) {
-            throw new \InvalidArgumentException(getGS('You can only replace a file with a file of the same type.  The original file is of type "$1", and the file you uploaded was of type "$2".', $oldMime, $newMime));
+            throw new \InvalidArgumentException(sprintf('You can only replace a file with a file of the same type.  The original file is of type "%s", and the file you uploaded was of type "%s".', $oldMime, $newMime));
         }
 
         $this->storage->storeItem($key, file_get_contents($file->getFileName()));
@@ -224,14 +224,14 @@ class Template
     public function deleteItem($key)
     {
         if ($this->repository->isUsed($key) || $this->storage->isUsed($key)) {
-		    throw new \InvalidArgumentException(getGS("The template object $1 is in use and can not be deleted.", $key));
+		    throw new \InvalidArgumentException(sprintf("The template object %s is in use and can not be deleted.", $key));
         }
 
         try {
             $this->storage->deleteItem($key);
             $this->repository->delete($key);
         } catch (\InvalidArgumentException $e) {
-            throw new \InvalidArgumentException(getGS("Can't remove non empty directory '$1'", basename($key)), $e->getCode(), $e);
+            throw new \InvalidArgumentException(sprintf("Can't remove non empty directory '%s'", basename($key)), $e->getCode(), $e);
         }
     }
 
@@ -248,7 +248,7 @@ class Template
         try {
             $this->storage->copyItem($src, $dest);
         } catch (\InvalidArgumentException $e) {
-            throw new \InvalidArgumentException(getGS('The template $1 could not be created.', "<strong>$dest</strong>"), $e->getCode(), $e);
+            throw new \InvalidArgumentException(sprintf('The template %s could not be created.', "<strong>$dest</strong>"), $e->getCode(), $e);
         }
     }
 
@@ -267,7 +267,7 @@ class Template
             $this->storage->moveItem($src, $dest);
             $this->repository->updateKey($src, "$dest/$name");
         } catch (\InvalidArgumentException $e) {
-            throw new \InvalidArgumentException(getGS("Can't move file $1.", $name), $e->getCode(), $e);
+            throw new \InvalidArgumentException(sprintf("Can't move file %s.", $name), $e->getCode(), $e);
         }
     }
 
@@ -287,7 +287,7 @@ class Template
             $this->storage->renameItem($src, $name);
             $this->repository->updateKey($src, $dest);
         } catch (\InvalidArgumentException $e) {
-            throw new \InvalidArgumentException(getGS('The template object $1 could not be renamed.', basename($src)), $e->getCode(), $e);
+            throw new \InvalidArgumentException(sprintf('The template object %s could not be renamed.', basename($src)), $e->getCode(), $e);
         }
     }
 
@@ -303,7 +303,7 @@ class Template
         try {
             $this->storage->createFile($name);
         } catch (\InvalidArgumentException $e) {
-            throw new \InvalidArgumentException(getGS('A file or folder having the name $1 already exists', $name), $e->getCode(), $e);
+            throw new \InvalidArgumentException(sprintf('A file or folder having the name %s already exists', $name), $e->getCode(), $e);
         }
     }
 
@@ -319,7 +319,7 @@ class Template
         try {
             $this->storage->createDir($name);
         } catch (\InvalidArgumentException $e) {
-            throw new \InvalidArgumentException(getGS('A file or folder having the name $1 already exists', $name), $e->getCode(), $e);
+            throw new \InvalidArgumentException(sprintf('A file or folder having the name %s already exists', $name), $e->getCode(), $e);
         }
     }
 
