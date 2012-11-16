@@ -32,6 +32,6 @@ class UpdateImageStorageCommand extends Console\Command\Command
      */
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-        $this->getHelper('container')->getService('image.update-storage')->updateStorage();
+        $this->getHelper('container')->getService('image.update_storage')->updateStorage();
     }
 }

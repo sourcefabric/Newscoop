@@ -16,7 +16,7 @@
 -- Tabellenstruktur f�r Tabelle `plugin_poll`
 -- 
 
-CREATE TABLE `plugin_poll` (
+CREATE TABLE IF NOT EXISTS `plugin_poll` (
   `poll_nr` int(10) unsigned NOT NULL,
   `fk_language_id` int(10) unsigned NOT NULL default '0',
   `parent_poll_nr` int(11) NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE `plugin_poll` (
 -- Tabellenstruktur f�r Tabelle `plugin_poll_answer`
 -- 
 
-CREATE TABLE `plugin_poll_answer` (
+CREATE TABLE IF NOT EXISTS `plugin_poll_answer` (
   `fk_poll_nr` int(10) unsigned NOT NULL default '0',
   `fk_language_id` int(10) unsigned NOT NULL default '0',
   `nr_answer` tinyint(3) unsigned NOT NULL default '0',
@@ -62,7 +62,7 @@ CREATE TABLE `plugin_poll_answer` (
 -- Tabellenstruktur f�r Tabelle `plugin_poll_article`
 -- 
 
-CREATE TABLE `plugin_poll_article` (
+CREATE TABLE IF NOT EXISTS `plugin_poll_article` (
   `fk_poll_nr` int(10) unsigned NOT NULL default '0',
   `fk_article_nr` int(10) unsigned NOT NULL default '0',
   `fk_article_language_id` int(10) unsigned NOT NULL,
@@ -75,7 +75,7 @@ CREATE TABLE `plugin_poll_article` (
 -- Tabellenstruktur f�r Tabelle `plugin_poll_issue`
 -- 
 
-CREATE TABLE `plugin_poll_issue` (
+CREATE TABLE IF NOT EXISTS `plugin_poll_issue` (
   `fk_poll_nr` int(10) unsigned NOT NULL default '0',
   `fk_issue_nr` int(10) unsigned NOT NULL default '0',
   `fk_issue_language_id` int(10) unsigned NOT NULL,
@@ -89,7 +89,7 @@ CREATE TABLE `plugin_poll_issue` (
 -- Tabellenstruktur f�r Tabelle `plugin_poll_publication`
 -- 
 
-CREATE TABLE `plugin_poll_publication` (
+CREATE TABLE IF NOT EXISTS `plugin_poll_publication` (
   `fk_poll_nr` int(10) unsigned NOT NULL default '0',
   `fk_publication_id` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`fk_poll_nr`,`fk_publication_id`)
@@ -101,7 +101,7 @@ CREATE TABLE `plugin_poll_publication` (
 -- Tabellenstruktur f�r Tabelle `plugin_poll_section`
 -- 
 
-CREATE TABLE `plugin_poll_section` (
+CREATE TABLE IF NOT EXISTS `plugin_poll_section` (
   `fk_poll_nr` int(10) unsigned NOT NULL default '0',
   `fk_section_nr` int(10) unsigned NOT NULL default '0',
   `fk_section_language_id` int(10) unsigned NOT NULL,
@@ -116,7 +116,7 @@ CREATE TABLE `plugin_poll_section` (
 -- Tabellenstruktur f�r Tabelle `plugin_pollanswer_attachment`
 -- 
 
-CREATE TABLE `plugin_pollanswer_attachment` (
+CREATE TABLE IF NOT EXISTS `plugin_pollanswer_attachment` (
   `fk_poll_nr` int(11) NOT NULL,
   `fk_pollanswer_nr` int(11) NOT NULL,
   `fk_attachment_id` int(11) NOT NULL,
