@@ -99,27 +99,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
         }
 
         return null;
-
-        $config = new Configuration();
-        $config->setProxyDir(APPLICATION_PATH . '/../cache');
-        $config->setProxyNamespace('Proxies');
-
-        $config->setHydratorDir(APPLICATION_PATH . '/../cache');
-        $config->setHydratorNamespace('Hydrators');
-
-        require_once 'Doctrine/ODM/MongoDB/Mapping/Annotations/DoctrineAnnotations.php';
-
-        $reader = new AnnotationReader();
-        $config->setMetadataDriverImpl(new AnnotationDriver($reader, APPLICATION_PATH . '/../library/Newscoop/News'));
-
-        $config->setDefaultDB('newscoop');
-
-        $odm = DocumentManager::create(new Connection(), $config);
-
-        $this->bootstrap('container');
-        $this->getResource('container')->setService('odm', $odm);
-
-        return $odm;
     }
 
     /**

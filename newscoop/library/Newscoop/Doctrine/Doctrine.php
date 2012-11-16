@@ -66,8 +66,6 @@ class Doctrine
         
         AnnotationRegistry::registerFile(__DIR__ . '/../../../../vendor/doctrine/orm/lib/Doctrine/ORM/Mapping/Driver/DoctrineAnnotations.php');
 
-        AnnotationRegistry::registerFile(__DIR__ . '/../../../../vendor/doctrine/mongodb-odm/lib/Doctrine/ODM/MongoDB/Mapping/Annotations/DoctrineAnnotations.php');
-
         // set annotations reader
         $reader = new CachedReader(
             new AnnotationReader(),
