@@ -51,6 +51,8 @@
         "classmap":[
             "vendor/Smarty3/libs", 
             "newscoop/classes",
+            "newscoop/library",
+            "dependencies/include",
             "newscoop/template_engine",
             "newscoop/plugins",
             "plugins"
