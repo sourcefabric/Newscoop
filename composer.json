@@ -50,13 +50,16 @@
         "classmap":[
             "vendor/Smarty3/libs", 
             "newscoop/classes",
-            "newscoop/library",
-            "dependencies/include",
             "newscoop/template_engine",
             "newscoop/plugins",
             "plugins"
         ]
     },
+    "include-path": [
+        "newscoop/library",
+        "newscoop/include",
+        "dependencies/include"
+    ],
     "scripts": {
         "post-install-cmd": [
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap"
