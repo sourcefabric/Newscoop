@@ -21,7 +21,9 @@
         "behat/behat":                      ">=2.4.0",
         "behat/common-contexts":            "*",
         "kriswallsmith/buzz":               ">=0.7",
-        "knplabs/knp-paginator-bundle":     "dev-master"
+        "knplabs/knp-paginator-bundle":     "dev-master",
+        "friendsofsymfony/rest-bundle":     "0.9.0",
+        "jms/serializer-bundle":            "0.9.0"
     },
     "repositories":[
         {
