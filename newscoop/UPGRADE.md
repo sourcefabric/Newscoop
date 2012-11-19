@@ -6,6 +6,10 @@ version.
 
 Warning! Backup your site before performing the upgrade!
 
+Upgrading from Newscoop 4.0.x
+
+TODO!!
+
 Upgrading from Newscoop 3.5.x:
 
 Drop the new sources over the existing install, open a browser and make
