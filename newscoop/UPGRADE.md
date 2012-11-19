@@ -1,43 +1,55 @@
 UPGRADE
+=======
 
 Upgrading from version older than 3.5.0 is not supported anymore. If you
 had an older version you need to install Newscoop 3.5.0 and upgrade to this
 version.
 
-Warning! Backup your site before performing the upgrade!
+#### Warning! Backup your site before performing the upgrade!
 
-Upgrading from Newscoop 3.5.x:
+### Upgrading from Newscoop 4.0.x
 
-Drop the new sources over the existing install, open a browser and make
-a request for the publication home page:
-http://[site_name]
+TODO!!
+
+### Upgrading from Newscoop 3.5.x:
+
+Drop the new sources over the existing install, open a browser and make a request for the publication home page: ```http://[site_name]```
 
 The upgrade will be performed automatically when you make the first
 request to the publication site or to the Newscoop admin interface.
 
-After upgrading, you need to MANUALLY update .htaccess file in your 
+After upgrading, you need to MANUALLY update ```.htaccess``` file in your 
 Newscoop directory. Make the following changes:
 
-1. Template directory rewrite:
-Remove this line:
- RewriteCond %{REQUEST_URI} !/+templates
-Add this line:
- RewriteCond %{REQUEST_URI} !/+themes
+* Template directory rewrite:
 
-2. Javascript directory rewrite:
-Remove this line:
-(Depending on your Newscoop installation, it is possible that you do not
-have this line)
- RewriteCond %{REQUEST_URI} !(/+plugins/[^/]*)?/+javascript
-Add this line:
- RewriteCond %{REQUEST_URI} !(/+plugins/[^/]*)?/+js
+    Remove this line:
+
+    ```RewriteCond %{REQUEST_URI} !/+templates```
+
+    Add this line:
+
+    ```RewriteCond %{REQUEST_URI} !/+themes```
+
+* Javascript directory rewrite:
+
+    Remove this line:
+
+    (Depending on your Newscoop installation, it is possible that you do not
+    have this line)
+
+    ```RewriteCond %{REQUEST_URI} !(/+plugins/[^/]*)?/+javascript```
+
+    Add this line:
+
+    ```RewriteCond %{REQUEST_URI} !(/+plugins/[^/]*)?/+js```
 
 The reason why this is not performed during automatic upgrade is because
 almost every Newscoop installation is on a custom configuration and has a
 modified .htaccess file. Therefore, it's not a good idea to automatically
 modify the file.
 
-Compatibility issues
+##### Compatibility issues
 
 In version 3.0 the template language was modified extensively. The
 backup restore script will provide an automated conversion of the old

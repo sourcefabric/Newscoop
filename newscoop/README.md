@@ -1,28 +1,23 @@
-Newscoop
-version     : 4.0.2
-release date: July 12, 2012
-contact     : contact@sourcefabric.org
-url         : http://www.sourcefabric.org
-copyright   : (C) 2010-2012 Sourcefabric o.p.s, 2004-2009 Media Development Loan Fund
-support     : mailto: newscoop-support@lists.sourcefabric.org
-manual      : http://sourcefabric.org/en/products/newscoop_manuals/
+    Newscoop
+    version     : 4.0.2
+    release date: July 12, 2012
+    contact     : contact@sourcefabric.org
+    url         : http://www.sourcefabric.org
+    copyright   : (C) 2010-2012 Sourcefabric o.p.s, 2004-2009 Media Development Loan Fund
+    support     : mailto: newscoop-support@lists.sourcefabric.org
+    manual      : http://sourcefabric.org/en/products/newscoop_manuals/
 
-INTRODUCTION
+### INTRODUCTION
 
-Newscoop is a robust, stable, and journalist-friendly solution for
-online magazines and newspapers that speaks your language.
+Newscoop is a robust, stable, and journalist-friendly solution for online magazines and newspapers that speaks your language.
 
-Newscoop follows the print-newspaper publishing paradigm, so it
-structures sites by default as Publications > Issues > Sections >
+Newscoop follows the print-newspaper publishing paradigm, so it structures sites by default as Publications > Issues > Sections >
 Articles.
 
-Newscoop is available in: Arabic, Belarusian, Chinese, Croatian, Czech,
-Dutch, English, German, Korean, Portuguese, Romanian, Russian,
-Serbian (Cyrillic), Serbo-Croatian (Latin), Spanish, and Swedish.
-However, the interface can easily be localized to new languages using
-its built-in 'Localizer'.
+Newscoop is available in: Arabic, Belarusian, Chinese, Croatian, Czech, Dutch, English, German, Korean, Portuguese, Polish, Romanian, Russian, Serbian (Cyrillic), Serbo-Croatian (Latin), Spanish, and Swedish.
+However, the interface can easily be localized to new languages using its built-in 'Localizer'.
 
-With Newscoop you can:
+##### With Newscoop you can:
 
    1. Manage articles translated into different languages
    2. Edit articles using an advanced WYSIWYG interface
@@ -48,26 +43,25 @@ With Newscoop you can:
   13. Localize the administration interface to new languages
   14. Build third-party plugins using the PHP object-oriented API
 
-We encourage further development of this software and would like to
-make any progress accessible to all other users. Please contact us
-if you have or intend to developed this software further.
+We encourage further development of this software and would like to make any progress accessible to all other users. Please contact us if you have or intend to developed this software further.
 
 
 DEMO
 You can try Newscoop without installing it at our demo site.
 This is the URL for the backend admin:
-  http://newscoop-demo.sourcefabric.org/admin/
+  `http://newscoop-demo.sourcefabric.org/admin/`
 and you can see the frontend of the site here:
-  http://newscoop-demo.sourcefabric.org/
-Please note that the frontend can be made to look however
-you wish - you have full control over the look-and-feel.
+  `http://newscoop-demo.sourcefabric.org/`
+Please note that the frontend can be made to look however you wish - you have full control over the look-and-feel.
 
 
-INSTALLATION
+### INSTALLATION
+
 See the INSTALL.txt file
 
 
-COPYRIGHT
+### COPYRIGHT
+
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
 as published by the Free Software Foundation; either version 3
