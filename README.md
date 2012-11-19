@@ -5,6 +5,8 @@ Newscoop
 
 Features for the modern newsroom include multiple author management, issue-and-section based publishing, geolocation and multilingual content management. The enterprise-standard journalist’s dashboard and a templating engine supporting anything from HTML5 to mobile complete this fast production and publishing system. Read more about Newscoop history on his [wikipedia page][5].
 
+Short Newscoop features [overview][/newscoop/README.md].
+
 Quick links to our resources are:
 
 * Manuals for Newscoop [http://manuals.sourcefabric.org][6]

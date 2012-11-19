@@ -13,7 +13,7 @@ TODO!!
 
 ### Upgrading from Newscoop 3.5.x:
 
-Drop the new sources over the existing install, open a browser and make a request for the publication home page: ```http://\[site_name\]```
+Drop the new sources over the existing install, open a browser and make a request for the publication home page: ```http://[site_name]```
 
 The upgrade will be performed automatically when you make the first
 request to the publication site or to the Newscoop admin interface.
