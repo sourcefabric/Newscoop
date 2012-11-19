@@ -21,7 +21,9 @@
         "behat/behat":                      ">=2.4.0",
         "behat/common-contexts":            "*",
         "kriswallsmith/buzz":               ">=0.7",
-        "knplabs/knp-paginator-bundle":     "dev-master"
+        "knplabs/knp-paginator-bundle":     "dev-master",
+        "friendsofsymfony/rest-bundle":     "0.9.0",
+        "jms/serializer-bundle":            "0.9.0"
     },
     "repositories":[
         {
@@ -50,13 +52,16 @@
         "classmap":[
             "vendor/Smarty3/libs", 
             "newscoop/classes",
-            "newscoop/library",
-            "dependencies/include",
             "newscoop/template_engine",
             "newscoop/plugins",
             "plugins"
         ]
     },
+    "include-path": [
+        "newscoop/library",
+        "newscoop/include",
+        "dependencies/include"
+    ],
     "scripts": {
         "post-install-cmd": [
             "Sensio\\Bundle\\DistributionBundle\\Composer\\ScriptHandler::buildBootstrap"

@@ -94,10 +94,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
     protected function _initOdm()
     {
-        if (!extension_loaded('mongo')) {
-            return null;
-        }
-
         return null;
     }
 

@@ -15,7 +15,6 @@ switch (true) {
 
     case substr($uri, 0, strlen('api')) === 'api':
     case substr($uri, 0, strlen('_profiler')) === '_profiler':
-        require_once __DIR__ . '/constants.php';
         require_once __DIR__ . '/../gimme/web/app.php';
         break;
 
