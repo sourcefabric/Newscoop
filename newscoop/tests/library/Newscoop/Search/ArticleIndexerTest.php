@@ -101,4 +101,21 @@ class ArticleIndexerTest extends \TestCase
         $this->assertNotNull($article->getView()->indexed);
         $this->assertEquals($view->updated, $article->getView()->updated);
     }
+
+    public function testReset()
+    {
+        $article = new Article(1, $this->language);
+        $this->em->persist($article);
+        $this->em->flush();
+
+        $this->indexer->updateIndex();
+
+        $articles = $this->em->getRepository('Newscoop\Entity\Article')->getIndexBatch();
+        $this->assertEquals(0, count($articles));
+
+        $this->indexer->reset();
+
+        $articles = $this->em->getRepository('Newscoop\Entity\Article')->getIndexBatch();
+        $this->assertEquals(1, count($articles));
+    }
 }

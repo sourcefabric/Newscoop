@@ -7,6 +7,7 @@
 
 namespace Newscoop\Search;
 
+use DateTime;
 use Newscoop\View\ArticleView;
 
 /**
@@ -70,6 +71,30 @@ class SolrIndexTest extends \TestCase
                 $this->equalTo(array(self::UPDATE_URL, array('core' => 'en'))),
                 $this->equalTo(array('Content-Type' => 'text/json')),
                 $this->equalTo('{"add":{"doc":' . json_encode($doc) . '},"add":{"doc":' . json_encode($doc) . '}}')
+            )->will($this->returnValue($this->request));
+
+        $this->request->expects($this->once())
+            ->method('send')
+            ->will($this->returnValue($this->response));
+
+        $this->response->expects($this->once())
+            ->method('isSuccessful')
+            ->will($this->returnValue(true));
+
+        $this->index->commit();
+    }
+
+    public function testAddFormatDate()
+    {
+        $now = new DateTime();
+        $this->index->add(new ArticleView(array('language' => 'en', 'updated' => $now)));
+
+        $this->client->expects($this->once())
+            ->method('post')
+            ->with(
+                $this->anything(),
+                $this->anything(),
+                $this->stringContains(sprintf('"updated":"%s"', gmdate('Y-m-d\TH:i:s\Z', $now->getTimestamp())))
             )->will($this->returnValue($this->request));
 
         $this->request->expects($this->once())
