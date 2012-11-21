@@ -202,6 +202,16 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->addArgument(new sfServiceReference('em'))
             ->addArgument(new sfServiceReference('random'));
 
+        $container->register('http.client.factory', 'Newscoop\Http\ClientFactory');
+
+        $container->register('search.index', 'Newscoop\Search\SolrIndex')
+            ->addArgument(new sfServiceReference('http.client.factory'))
+            ->addArgument(array());
+
+        $container->register('search.indexer.article', 'Newscoop\Search\ArticleIndexer')
+            ->addArgument(new sfServiceReference('em'))
+            ->addArgument(new sfServiceReference('search.index'));
+
         Zend_Registry::set('container', $container);
         return $container;
     }

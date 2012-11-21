@@ -1,0 +1,1 @@
+ALTER TABLE  `Articles` ADD  `indexed` TIMESTAMP NULL DEFAULT NULL;

@@ -10,9 +10,9 @@ namespace Newscoop\Tools\Console\Command;
 use Symfony\Component\Console;
 
 /**
- * Index Update Command
+ * Index Reset Command
  */
-class UpdateIndexCommand extends Console\Command\Command
+class ResetIndexCommand extends Console\Command\Command
 {
     /**
      * @see Console\Command\Command
@@ -20,8 +20,8 @@ class UpdateIndexCommand extends Console\Command\Command
     protected function configure()
     {
         $this
-            ->setName('index:update')
-            ->setDescription('Update Search Index.')
+            ->setName('index:reset')
+            ->setDescription('Forces re-indexing of articles.')
             ->setHelp('');
     }
 
@@ -31,6 +31,6 @@ class UpdateIndexCommand extends Console\Command\Command
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
         $indexer = $this->getHelper('container')->getService('search.indexer.article');
-        $indexer->updateIndex();
+        $indexer->reset();
     }
 }

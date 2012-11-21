@@ -7,6 +7,8 @@
 
 namespace Newscoop\Entity;
 
+use Newscoop\View\TopicView;
+
 /**
  * @Entity
  * @Table(name="TopicNames")
@@ -83,5 +85,17 @@ class Topic
     public function __toString()
     {
         return (string) $this->name;
+    }
+
+    /**
+     * Get view
+     *
+     * @return Newscoop\View\TopicView
+     */
+    public function getView()
+    {
+        return new TopicView(array(
+            'name' => $this->name,
+        ));
     }
 }
