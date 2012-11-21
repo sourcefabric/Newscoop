@@ -14,7 +14,9 @@ use Newscoop\View\ArticleView;
  */
 class SolrIndexTest extends \TestCase
 {
-    const UPDATE_URL = 'localhost/{core}/update';
+    const SERVER = 'localhost:1234';
+    const UPDATE_URI = '/solr/{core}/update/json';
+    const QUERY_URI = '/solr/{core}/select{?q,fq,sort,start,rows,fl,wt,df,defType,qf}';
 
     /** @var Newscoop\Search\SolrIndex */
     protected $index;
@@ -26,7 +28,7 @@ class SolrIndexTest extends \TestCase
             ->getMock();
 
         $this->index = new SolrIndex($this->clientFactory, array(
-            'update_url' => self::UPDATE_URL,
+            'server' => self::SERVER,
         ));
 
         $this->client = $this->getMockBuilder('Newscoop\Http\Client')
@@ -35,6 +37,7 @@ class SolrIndexTest extends \TestCase
 
         $this->clientFactory->expects($this->any())
             ->method('createClient')
+            ->with(self::SERVER)
             ->will($this->returnValue($this->client));
 
         $this->response = $this->getMockBuilder('Guzzle\Http\Message\Response')
@@ -68,7 +71,7 @@ class SolrIndexTest extends \TestCase
         $this->client->expects($this->once())
             ->method('post')
             ->with(
-                $this->equalTo(array(self::UPDATE_URL, array('core' => 'en'))),
+                $this->equalTo(array(self::UPDATE_URI, array('core' => 'en'))),
                 $this->equalTo(array('Content-Type' => 'text/json')),
                 $this->equalTo('{"add":{"doc":' . json_encode($doc) . '},"add":{"doc":' . json_encode($doc) . '}}')
             )->will($this->returnValue($this->request));
@@ -151,5 +154,63 @@ class SolrIndexTest extends \TestCase
 
         $this->index->add(new ArticleView(array('language' => 'en')));
         $this->index->commit();
+    }
+
+    public function testFind()
+    {
+        $this->client->expects($this->once())
+            ->method('get')
+            ->with(
+                $this->equalTo(array(self::QUERY_URI, array(
+                    'core' => 'en',
+                    'q' => 'test',
+                    'start' => 0,
+                    'rows' => 10,
+                    'fl' => 'number',
+                    'df' => 'title',
+                    'wt' => 'json',
+                    'defType' => 'edismax',
+                    'qf' => 'title',
+                )))
+            )->will($this->returnValue($this->request));
+
+        $this->request->expects($this->once())
+            ->method('send')
+            ->will($this->returnValue($this->response));
+
+        $this->response->expects($this->once())
+            ->method('isSuccessful')
+            ->will($this->returnValue(true));
+
+        $this->response->expects($this->once())
+            ->method('getBody')
+            ->with($this->equalTo(true))
+            ->will($this->returnValue(<<<EOT
+{
+  "responseHeader":{
+    "status":0,
+    "QTime":1,
+    "params":{
+      "fl":"number",
+      "indent":"false",
+      "q":"eco*",
+      "qf":"title",
+      "wt":"json",
+      "defType":"edismax"}},
+  "response":{"numFound":1,"start":0,"docs":[
+      {
+        "number":69}]
+}}
+EOT
+            ));
+
+        $response = $this->index->find(new Query(array(
+            'core' => 'en',
+            'q' => 'test',
+            'qf' => 'title',
+        )));
+
+        $this->assertEquals(array((object) array('number' => 69)), $response->docs);
+        $this->assertEquals(1, $response->numFound);
     }
 }

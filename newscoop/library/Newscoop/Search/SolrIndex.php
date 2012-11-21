@@ -15,6 +15,9 @@ use Newscoop\Http\ClientFactory;
  */
 class SolrIndex implements Index
 {
+    const UPDATE_URI = '/solr/{core}/update/json';
+    const QUERY_URI = '/solr/{core}/select{?q,fq,sort,start,rows,fl,wt,df,defType,qf}';
+
     /**
      * @var Newscoop\Http\ClientFactory
      */
@@ -29,7 +32,7 @@ class SolrIndex implements Index
      * @var array
      */
     private $config = array(
-        'update_url' => 'http://localhost:8983/solr/{core}/update',
+        'server' => 'http://localhost:8983',
     );
 
     /**
@@ -79,9 +82,9 @@ class SolrIndex implements Index
     public function commit()
     {
         foreach (array_keys($this->commands) as $core) {
-            $client = $this->clientFactory->createClient();
+            $client = $this->clientFactory->createClient($this->config->server);
             $response = $client->post(
-                array($this->config->update_url, array('core' => $core)),
+                array(self::UPDATE_URI, array('core' => $core)),
                 array('Content-Type' => 'text/json'),
                 $this->getUpdateJson($core)
             )->send();
@@ -89,6 +92,24 @@ class SolrIndex implements Index
             if (!$response->isSuccessful()) {
                 throw new SolrException();
             }
+        }
+    }
+
+    /**
+     * @inhertdoc
+     */
+    public function find(Query $query)
+    {
+        $client = $this->clientFactory->createClient($this->config->server);
+        $response = $client->get(array(self::QUERY_URI, array_filter((array) $query, function ($val) { return $val !== null; })))
+            ->send();
+
+        if ($response->isSuccessful()) {
+            $data = json_decode($response->getBody(true));
+            return (object) array(
+                'numFound' => (int) $data->response->numFound,
+                'docs' => $data->response->docs,
+            );
         }
     }
 

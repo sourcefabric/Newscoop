@@ -7,22 +7,11 @@
 
 namespace Newscoop\View;
 
+use Newscoop\ValueObject;
+
 /**
  * Base View
  */
-abstract class View
+abstract class View extends ValueObject
 {
-    /**
-     * @param array $values
-     */
-    public function __construct($values = null)
-    {
-        if (is_array($values)) {
-            foreach ($values as $key => $val) {
-                if (property_exists($this, $key)) {
-                    $this->$key = $val;
-                }
-            }
-        }
-    }
 }

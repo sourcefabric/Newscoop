@@ -36,4 +36,12 @@ interface Index
      * @return void
      */
     public function commit();
+
+    /**
+     * Find article numbers for given query
+     *
+     * @param Newscoop\Search\Query $query
+     * @return object
+     */
+    public function find(Query $query);
 }
