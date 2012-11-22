@@ -17,6 +17,6 @@ class DeleteCommand extends AbstractCommand
      */
     public function __toString()
     {
-        return sprintf('"delete":{"number":%d}', $this->article->number);
+        return sprintf('"delete":{"query":"number:%d"}', $this->article->number);
     }
 }

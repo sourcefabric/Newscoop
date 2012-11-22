@@ -121,7 +121,7 @@ class SolrIndexTest extends \TestCase
             ->with(
                 $this->anything(),
                 $this->anything(),
-                $this->equalTo('{"delete":{"number":123}}')
+                $this->equalTo('{"delete":{"query":"number:123"}}')
             )->will($this->returnValue($this->request));
 
         $this->request->expects($this->once())

@@ -8,6 +8,8 @@
 namespace Newscoop\Search;
 
 use Doctrine\ORM\EntityManager;
+use Language;
+use Newscoop\View\ArticleView;
 
 /**
  * Article Indexer
@@ -64,6 +66,23 @@ class ArticleIndexer
     {
         $query = $this->em->createQuery('UPDATE Newscoop\Entity\Article a SET a.indexed = null, a.updated = a.updated');
         $query->execute();
+    }
+
+    /**
+     * Handle article.delete event
+     *
+     * @param Newscoop\Event
+     * @return void
+     */
+    public function update($event)
+    {
+        $article = $event->getSubject();
+        $language = new Language($article->getLanguageId());
+        $this->index->delete(new ArticleView(array(
+            'number' => $article->getArticleNumber(),
+            'language' => $language->getCode(),
+        )));
+        $this->index->commit();
     }
 
     /**

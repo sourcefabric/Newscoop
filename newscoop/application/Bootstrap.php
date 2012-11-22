@@ -97,7 +97,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
             ->setConfigurator(function($service) use ($container) {
                 foreach ($container->getParameter('listener') as $listener) {
                     $listenerService = $container->getService($listener);
-                    $listenerParams = $container->getParameter($listener);
+                    $listenerParams = $container->getParameter(str_replace('.', '_', $listener));
                     foreach ((array) $listenerParams['events'] as $event) {
                         $service->connect($event, array($listenerService, 'update'));
                     }
