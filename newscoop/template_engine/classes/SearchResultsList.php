@@ -42,7 +42,13 @@ class SearchResultsList extends ListObject
             'sort' => !empty($p_parameters['sort']) ? $p_parameters['sort'] : null,
         ));
 
-        $result = $index->find($query);
+        try {
+            $result = $index->find($query);
+        } catch (Exception $e) {
+            $p_count = 0;
+            return array();
+        }
+
         if ($result) {
             $p_count = $result->numFound;
             $languageId = Language::GetLanguageIdByCode($p_parameters['language']);
