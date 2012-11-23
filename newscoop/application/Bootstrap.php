@@ -206,7 +206,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $container->register('search.index', 'Newscoop\Search\SolrIndex')
             ->addArgument(new sfServiceReference('http.client.factory'))
-            ->addArgument(array());
+            ->addArgument('%config%');
 
         $container->register('search.indexer.article', 'Newscoop\Search\ArticleIndexer')
             ->addArgument(new sfServiceReference('em'))

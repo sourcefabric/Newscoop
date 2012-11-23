@@ -15,8 +15,8 @@ use Newscoop\Http\ClientFactory;
  */
 class SolrIndex implements Index
 {
-    const UPDATE_URI = '/solr/{core}/update/json';
-    const QUERY_URI = '/solr/{core}/select{?q,fq,sort,start,rows,fl,wt,df,defType,qf}';
+    const UPDATE_URI = '{core}/update/json';
+    const QUERY_URI = '{core}/select{?q,fq,sort,start,rows,fl,wt,df,defType,qf}';
 
     /**
      * @var Newscoop\Http\ClientFactory
@@ -32,7 +32,7 @@ class SolrIndex implements Index
      * @var array
      */
     private $config = array(
-        'server' => 'http://localhost:8983',
+        'solr_server' => 'http://localhost:8983/solr',
     );
 
     /**
@@ -81,8 +81,8 @@ class SolrIndex implements Index
      */
     public function commit()
     {
+        $client = $this->createClient();
         foreach (array_keys($this->commands) as $core) {
-            $client = $this->clientFactory->createClient($this->config->server);
             $response = $client->post(
                 array(self::UPDATE_URI, array('core' => $core)),
                 array('Content-Type' => 'text/json'),
@@ -100,7 +100,7 @@ class SolrIndex implements Index
      */
     public function find(Query $query)
     {
-        $client = $this->clientFactory->createClient($this->config->server);
+        $client = $this->createClient();
         $response = $client->get(array(self::QUERY_URI, array_filter((array) $query, function ($val) { return $val !== null; })))
             ->send();
 
@@ -111,6 +111,16 @@ class SolrIndex implements Index
                 'docs' => $data->response->docs,
             );
         }
+    }
+
+    /**
+     * Create client instance
+     *
+     * @return Newscoop\Http\Client
+     */
+    private function createClient()
+    {
+        return $this->clientFactory->createClient($this->config->solr_server);
     }
 
     /**

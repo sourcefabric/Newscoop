@@ -14,9 +14,9 @@ use Newscoop\View\ArticleView;
  */
 class SolrIndexTest extends \TestCase
 {
-    const SERVER = 'localhost:1234';
-    const UPDATE_URI = '/solr/{core}/update/json';
-    const QUERY_URI = '/solr/{core}/select{?q,fq,sort,start,rows,fl,wt,df,defType,qf}';
+    const SERVER = 'localhost:1234/solr';
+    const UPDATE_URI = '{core}/update/json';
+    const QUERY_URI = '{core}/select{?q,fq,sort,start,rows,fl,wt,df,defType,qf}';
 
     /** @var Newscoop\Search\SolrIndex */
     protected $index;
@@ -28,7 +28,7 @@ class SolrIndexTest extends \TestCase
             ->getMock();
 
         $this->index = new SolrIndex($this->clientFactory, array(
-            'server' => self::SERVER,
+            'solr_server' => self::SERVER,
         ));
 
         $this->client = $this->getMockBuilder('Newscoop\Http\Client')
