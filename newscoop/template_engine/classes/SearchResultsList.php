@@ -1,22 +1,22 @@
 <?php
 
-use Newscoop\Search\Query;
+require_once('ListObject.php');
 
-require_once __DIR__ . '/ListObject.php';
 
 /**
  * SearchResultsList class
+ *
  */
 class SearchResultsList extends ListObject
 {
     private static $s_orderFields = array(
-        'bynumber',
-        'byname',
-        'bydate',
-        'bycreationdate',
-        'bypublishdate',
-        'bylanguage',
-    );
+                                          'bynumber',
+                                          'byname',
+                                          'bydate',
+                                          'bycreationdate',
+                                          'bypublishdate',
+                                          'bylanguage'
+                                    );
 
 	/**
 	 * Creates the list of objects. Sets the parameter $p_hasNextElements to
@@ -32,36 +32,27 @@ class SearchResultsList extends ListObject
 	 */
 	protected function CreateList($p_start = 0, $p_limit = 0, array $p_parameters, &$p_count)
 	{
-        $index = Zend_Registry::get('container')->getService('search.index');
-        $query = new Query(array(
-            'core' => $p_parameters['language'],
-            'q' => $p_parameters['q'],
-            'qf' => $p_parameters['qf'],
-            'rows' => $p_parameters['length'],
-            'start' => $p_parameters['start'],
-            'sort' => !empty($p_parameters['sort']) ? $p_parameters['sort'] : null,
-        ));
+	    if ($p_parameters['scope'] == 'index') {
+	    	$articlesList = Article::SearchByKeyword($p_parameters['search_phrase'],
+	    	                $p_parameters['match_all'],
+	    	                $this->m_constraints,
+	    	                $this->m_order,
+	    	                $p_start, $p_limit, $p_count);
+	    } else {
+	        $keywords = preg_split('/[\s,.-]/', $p_parameters['search_phrase']);
+	        $articlesList = Article::SearchByField($keywords,
+                            $p_parameters['scope'],
+                            $p_parameters['match_all'],
+                            $this->m_constraints,
+                            $this->m_order,
+                            $p_start, $p_limit, $p_count);
+	    }
 
-        try {
-            $result = $index->find($query);
-        } catch (Exception $e) {
-            $p_count = 0;
-            return array();
-        }
-
-        if ($result) {
-            $p_count = $result->numFound;
-            $languageId = Language::GetLanguageIdByCode($p_parameters['language']);
-            $articles = array();
-	        foreach ($result->docs as $doc) {
-	            $articles[] = new MetaArticle($languageId, $doc->number);
-	        }
-
-            return $articles;
-        } else {
-            $p_count = 0;
-            return array();
-        }
+	    $metaArticlesList = array();
+	    foreach ($articlesList as $article) {
+	        $metaArticlesList[] = new MetaArticle($article['language_id'], $article['number']);
+	    }
+		return $metaArticlesList;
 	}
 
 	/**
@@ -122,8 +113,94 @@ class SearchResultsList extends ListObject
 	 */
 	protected function ProcessParameters(array $p_parameters)
 	{
-        return $p_parameters;
+		$parameters = array();
+    	foreach ($p_parameters as $parameter=>$value) {
+    		$parameter = strtolower($parameter);
+    		switch ($parameter) {
+    			case 'length':
+    			case 'columns':
+    			case 'name':
+    			case 'order':
+    			case 'template':
+    			case 'match_all':
+    			case 'search_level':
+    			case 'search_phrase':
+    			case 'search_results':
+                case 'search_issue':
+                case 'search_section':
+    			case 'start_date':
+                case 'end_date':
+                case 'topic_id':
+                case 'scope':
+                	if (is_null($value)) {
+                		break;
+                	}
+    				if ($parameter == 'length' || $parameter == 'columns'
+    				|| $parameter == 'search_level' || $parameter == 'search_section') {
+    					$intValue = (int)$value;
+    					if ("$intValue" != $value || $intValue < 0) {
+    						CampTemplate::singleton()->trigger_error("invalid value $value of parameter $parameter in statement list_search_results");
+    					}
+	    				$parameters[$parameter] = (int)$value;
+    				} else {
+	    				$parameters[$parameter] = $value;
+    				}
+    				break;
+    			default:
+    				CampTemplate::singleton()->trigger_error("invalid parameter $parameter in list_search_results", $p_smarty);
+    		}
+    	}
+
+        $operator = new Operator('is', 'integer');
+        $context = CampTemplate::singleton()->context();
+        if ($p_parameters['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_PUBLICATION
+        && $context->publication->defined) {
+            $this->m_constraints[] = new ComparisonOperation('Articles.IdPublication', $operator,
+                                                             $context->publication->identifier);
+        }
+        if ($p_parameters['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_ISSUE
+        && $context->issue->defined && $p_parameters['search_issue'] == 0) {
+            $this->m_constraints[] = new ComparisonOperation('Articles.NrIssue', $operator,
+                                                             $context->issue->number);
+        }
+        if ($p_parameters['search_level'] >= MetaActionSearch_Articles::SEARCH_LEVEL_SECTION
+        && $context->section->defined && $p_parameters['search_section'] == 0) {
+            $this->m_constraints[] = new ComparisonOperation('Articles.NrSection', $operator,
+                                                             $context->section->number);
+        }
+        if ($p_parameters['search_issue'] != 0) {
+            $this->m_constraints[] = new ComparisonOperation('Articles.NrIssue', $operator,
+                                                             $p_parameters['search_issue']);
+        }
+        if ($p_parameters['search_section'] != 0) {
+            $this->m_constraints[] = new ComparisonOperation('Articles.NrSection', $operator,
+                                                             $p_parameters['search_section']);
+        }
+        if (!empty($p_parameters['start_date'])) {
+            $startDateOperator = new Operator('greater_equal', 'date');
+            $this->m_constraints[] = new ComparisonOperation('Articles.PublishDate', $startDateOperator,
+                                                             $p_parameters['start_date']);
+        }
+        if (!empty($p_parameters['end_date'])) {
+            $endDateOperator = new Operator('smaller_equal', 'date');
+            $this->m_constraints[] = new ComparisonOperation('Articles.PublishDate', $endDateOperator,
+                                                             $p_parameters['end_date'] . ' 23:59:59');
+        }
+        if (!empty($p_parameters['topic_id'])) {
+            $this->m_constraints[] = new ComparisonOperation('ArticleTopics.TopicId', $operator,
+                                                             $p_parameters['topic_id']);
+        }
+        if (!$context->preview) {
+        	$this->m_constraints[] = new ComparisonOperation('Published', $operator, 'Y');
+        }
+
+        if (!empty($p_parameters['type_not'])) {
+            $this->m_constraints[] = new ComparisonOperation('Articles.Type', new Operator('not', 'string'), $p_parameters['type_not']);
+        }
+
+    	return $parameters;
 	}
+
 
     protected function getCacheKey()
     {
@@ -131,7 +208,8 @@ class SearchResultsList extends ListObject
             $this->m_cacheKey = __CLASS__ . '__' . serialize($this->m_parameters)
             . '__' . $this->m_start . '__' . $this->m_limit . '__' . $this->m_columns;
         }
-
         return $this->m_cacheKey;
     }
 }
+
+?>

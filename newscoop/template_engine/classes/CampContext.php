@@ -97,6 +97,13 @@ final class CampContext
                             'list'=>'article_topics', 'url_id'=>'atp'),
         'searchresults'=>array('class'=>'SearchResults',
                             'list'=>'search_results', 'url_id'=>'src'),
+
+        'searchresultssolr' => array(
+            'class' => 'SearchResultsSolr',
+            'list' => 'search_solr',
+            'url_id' => 'solr'
+        ),
+
         'subtopics'=>array('class'=>'Subtopics', 'list'=>'subtopics',
 				        'url_id'=>'tp'),
         'images'=>array('class'=>'Images', 'list'=>'images', 'url_id'=>'img'),
