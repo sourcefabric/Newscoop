@@ -7,14 +7,28 @@
 
 namespace Newscoop\Entity\Repository;
 
-use DateTime,
-    Doctrine\ORM\EntityRepository,
-    Doctrine\ORM\QueryBuilder,
-    Newscoop\Datatable\Source as DatatableSource;
+use Newscoop\Datatable\Source as DatatableSource;
 
 /**
  * Article repository
  */
 class ArticleRepository extends DatatableSource
 {
+    /**
+     * Get articles for indexing
+     *
+     * @param int $limit
+     * @return array
+     */
+    public function getIndexBatch($limit = 50)
+    {
+        $query = $this->createQueryBuilder('a')
+            ->where('a.indexed IS NULL')
+            ->orWhere('a.indexed < a.updated')
+            ->orderBy('a.indexed', 'asc')
+            ->setMaxResults($limit)
+            ->getQuery();
+
+        return $query->getResult();
+    }
 }
