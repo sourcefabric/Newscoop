@@ -7,6 +7,7 @@
 
 namespace Newscoop\Search;
 
+use SimpleXmlElement;
 use Newscoop\View\ArticleView;
 use Newscoop\Http\ClientFactory;
 
@@ -15,7 +16,7 @@ use Newscoop\Http\ClientFactory;
  */
 class SolrIndex implements Index
 {
-    const UPDATE_URI = '{core}/update/json';
+    const UPDATE_URI = '{core}/update';
     const QUERY_URI = '{core}/select{?q,fq,sort,start,rows,fl,wt,df,defType,qf}';
 
     /**
@@ -85,8 +86,8 @@ class SolrIndex implements Index
         foreach (array_keys($this->commands) as $core) {
             $response = $client->post(
                 array(self::UPDATE_URI, array('core' => $core)),
-                array('Content-Type' => 'text/json'),
-                $this->getUpdateJson($core)
+                array('Content-Type' => 'text/xml'),
+                $this->getUpdateBody($core)
             )->send();
 
             if (!$response->isSuccessful()) {
@@ -124,14 +125,18 @@ class SolrIndex implements Index
     }
 
     /**
-     * Get update json
+     * Get update body
      *
      * @param string $core
      * @return string
      */
-    private function getUpdateJson($core)
+    private function getUpdateBody($core)
     {
-        $commands = array_map('strval', $this->commands[$core]);
-        return sprintf('{%s}', implode(',', $commands));
+        $body = new SimpleXmlElement('<update />');
+        foreach ($this->commands[$core] as $command) {
+            $command->update($body);
+        }
+
+        return $body->asXML();
     }
 }

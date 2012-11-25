@@ -7,16 +7,20 @@
 
 namespace Newscoop\Search;
 
+use SimpleXmlElement;
+
 /**
  * Delete Command
  */
 class DeleteCommand extends AbstractCommand
 {
     /**
-     * @return string
+     * @inheritdoc
      */
-    public function __toString()
+    public function update(SimpleXmlElement $xml)
     {
-        return sprintf('"delete":{"query":"number:%d"}', $this->article->number);
+        $delete = $xml->xpath('delete');
+        $delete = !empty($delete) ? $delete[0] : $xml->addChild('delete');
+        $delete->addChild('id', $this->article->number);
     }
 }

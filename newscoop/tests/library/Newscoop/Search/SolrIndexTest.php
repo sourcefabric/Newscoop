@@ -15,8 +15,20 @@ use Newscoop\View\ArticleView;
 class SolrIndexTest extends \TestCase
 {
     const SERVER = 'localhost:1234/solr';
-    const UPDATE_URI = '{core}/update/json';
+    const UPDATE_URI = '{core}/update';
     const QUERY_URI = '{core}/select{?q,fq,sort,start,rows,fl,wt,df,defType,qf}';
+
+    const DELETE_XML = <<<EOT
+<?xml version="1.0"?>
+<update><delete><id>123</id></delete></update>
+
+EOT;
+
+    const ADD_XML = <<<EOT
+<?xml version="1.0"?>
+<update><add><doc><field name="language">en</field></doc><doc><field name="language">en</field></doc></add></update>
+
+EOT;
 
     /** @var Newscoop\Search\SolrIndex */
     protected $index;
@@ -72,8 +84,8 @@ class SolrIndexTest extends \TestCase
             ->method('post')
             ->with(
                 $this->equalTo(array(self::UPDATE_URI, array('core' => 'en'))),
-                $this->equalTo(array('Content-Type' => 'text/json')),
-                $this->equalTo('{"add":{"doc":' . json_encode($doc) . '},"add":{"doc":' . json_encode($doc) . '}}')
+                $this->equalTo(array('Content-Type' => 'text/xml')),
+                $this->equalTo(self::ADD_XML)
             )->will($this->returnValue($this->request));
 
         $this->request->expects($this->once())
@@ -97,7 +109,7 @@ class SolrIndexTest extends \TestCase
             ->with(
                 $this->anything(),
                 $this->anything(),
-                $this->stringContains(sprintf('"updated":"%s"', gmdate('Y-m-d\TH:i:s\Z', $now->getTimestamp())))
+                $this->stringContains(sprintf('<field name="updated">%s</field>', gmdate('Y-m-d\TH:i:s\Z', $now->getTimestamp())))
             )->will($this->returnValue($this->request));
 
         $this->request->expects($this->once())
@@ -121,7 +133,7 @@ class SolrIndexTest extends \TestCase
             ->with(
                 $this->anything(),
                 $this->anything(),
-                $this->equalTo('{"delete":{"query":"number:123"}}')
+                $this->equalTo(self::DELETE_XML)
             )->will($this->returnValue($this->request));
 
         $this->request->expects($this->once())

@@ -8,6 +8,7 @@
 namespace Newscoop\Search;
 
 use DateTime;
+use SimpleXmlElement;
 
 /**
  * Add Command
@@ -17,29 +18,37 @@ class AddCommand extends AbstractCommand
     const DATE_FORMAT = 'Y-m-d\TH:i:s\Z';
 
     /**
-     * @return string
+     * @inheritdoc
      */
-    public function __toString()
+    public function update(SimpleXmlElement $xml)
     {
-        return sprintf('"add":{"doc":%s}', $this->formatArticle());
+        $add = $xml->xpath('add');
+        $add = !empty($add) ? $add[0] : $xml->addChild('add');
+        $doc = $add->addChild('doc');
+        $this->addFields($doc);
     }
 
     /**
-     * Format article for solr index
+     * Add article fields
      *
-     * @param Newscoop\View\ArticleView $article
-     * @return string
+     * @param SimpleXmlElement $doc
+     * @return void
      */
-    private function formatArticle()
+    private function addFields(SimpleXmlElement $doc)
     {
-        $data = array();
         foreach ($this->article as $key => $val) {
-            $data[$key] = $val;
+            if ($val === null) {
+                continue;
+            }
+
             if ($val instanceof DateTime) {
-                $data[$key] = gmdate(self::DATE_FORMAT, $val->getTimestamp());
+                $val = gmdate(self::DATE_FORMAT, $val->getTimestamp());
+            }
+
+            foreach ((array) $val as $value) {
+                $field = $doc->addChild('field', $value);
+                $field->addAttribute('name', $key);
             }
         }
-
-        return json_encode((object) $data);
     }
 }

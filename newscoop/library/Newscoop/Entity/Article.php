@@ -8,9 +8,10 @@
 namespace Newscoop\Entity;
 
 use DateTime;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\ORM\EntityNotFoundException;
 use ArticleData;
 use Newscoop\View\ArticleView;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Article entity
@@ -542,21 +543,24 @@ class Article
      */
     public function getView()
     {
-        $language = $this->language;
-        $view = new ArticleView(array(
-            'number' => $this->number,
-            'language' => $this->language->getCode(),
-            'title' => $this->name,
-            'updated' => $this->updated,
-            'published' => $this->published,
-            'indexed' => $this->indexed,
-            'type' => $this->type,
-            'webcode' => $this->webcode ? (string) $this->webcode : null,
-            'publication_number' => $this->publication ? $this->publication->getId() : null,
-            'issue_number' => $this->issue ? $this->issue->getNumber() : null,
-            'section_number' => $this->section ? $this->section->getNumber() : null,
-            'keywords' => array_filter(explode(',', $this->keywords)),
-        ));
+        try {
+            $view = new ArticleView(array(
+                'number' => $this->number,
+                'language' => $this->language->getCode(),
+                'title' => $this->name,
+                'updated' => $this->updated,
+                'published' => $this->published,
+                'indexed' => $this->indexed,
+                'type' => $this->type,
+                'webcode' => $this->webcode ? (string) $this->webcode : null,
+                'publication_number' => $this->publication ? $this->publication->getId() : null,
+                'issue_number' => $this->issue ? $this->issue->getNumber() : null,
+                'section_number' => $this->section ? $this->section->getNumber() : null,
+                'keywords' => array_filter(explode(',', $this->keywords)),
+            ));
+        } catch (EntityNotFoundException $e) {
+            return new ArticleView();
+        }
 
         $view->authors = $this->authors->map(function ($author) { return $author->getView()->name; })
             ->toArray();

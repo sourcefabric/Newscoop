@@ -7,6 +7,7 @@
 
 namespace Newscoop\Search;
 
+use SimpleXmlElement;
 use Newscoop\View\ArticleView;
 
 /**
@@ -26,4 +27,12 @@ abstract class AbstractCommand
     {
         $this->article = $article;
     }
+
+    /**
+     * Update xml
+     *
+     * @param SimpleXmlElement $xml
+     * @return void
+     */
+    abstract public function update(SimpleXmlElement $xml);
 }

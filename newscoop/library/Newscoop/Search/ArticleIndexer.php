@@ -48,7 +48,7 @@ class ArticleIndexer
             $articleView = $article->getView();
             if ($articleView->published !== null) {
                 $this->index->add($articleView);
-            } else {
+            } elseif ($articleView->number) {
                 $this->index->delete($articleView);
             }
         }
