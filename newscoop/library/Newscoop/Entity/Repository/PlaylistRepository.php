@@ -31,7 +31,7 @@ class PlaylistRepository extends EntityRepository
     {
         $em = $this->getEntityManager();
         $query = $em->createQuery("
-        	SELECT ".( $fullArticle ? "pa, a" : "a.number articleId, a.name title, a.date date" )
+        	SELECT ".( $fullArticle ? "pa, a" : "a.number articleId, a.name title, a.updated date" )
         .  	" FROM Newscoop\Entity\PlaylistArticle pa
         	JOIN pa.article a
         	WHERE pa.playlist = ?1 "
