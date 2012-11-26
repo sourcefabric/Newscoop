@@ -374,6 +374,7 @@ case 'context_box_load_list':
         $item['title'] = $articleObj->getTitle();
         $item['articleId'] = 'article_'.$contextArticleId;
         $item['date'] = $articleObj->getCreationDate();
+        $item['status'] = $articleObj->getWorkflowDisplayString();
         $items[] = $item;
     }
 

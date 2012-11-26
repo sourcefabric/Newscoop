@@ -20,7 +20,7 @@ The recommended way to install Newscoop is [through composer](http://getcomposer
 Just run the composer:
     
     curl -s https://getcomposer.org/installer | php
-    php composer.phar create-project sourcefabric/newscoop path/to/install dev-next
+    php composer.phar create-project sourcefabric/newscoop path/to/install dev-master
 
 ## How to contribute
 

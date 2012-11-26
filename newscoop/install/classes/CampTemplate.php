@@ -24,7 +24,6 @@ final class CampTemplate extends Smarty
      */
 	private static $m_instance = null;
 
-
     private function __construct()
     {
         parent::Smarty();
@@ -49,8 +48,7 @@ final class CampTemplate extends Smarty
             CS_PATH_SITE . '/themes/unassigned/system_templates/',
         );
         $this->compile_dir = dirname(__FILE__) . '/../../cache';
-    } // fn __constructor
-
+    }
 
     /**
      * Singleton function that returns the global class object.
@@ -65,20 +63,17 @@ final class CampTemplate extends Smarty
         }
 
         return self::$m_instance;
-    } // fn singleton
-
+    }
 
     public function setTemplateDir($p_dir)
     {
         $this->template_dir = $p_dir;
-    } // fn setTemplateDir
-
+    }
 
     public function clearCache()
     {
     	$this->clear_compiled_tpl();
     }
-
 
     /**
      * Inserts an error message into the errors list.
@@ -95,8 +90,5 @@ final class CampTemplate extends Smarty
     	} else {
     		trigger_error("Newscoop error: $p_message");
     	}
-    } // fn trigger_error
-
-} // class CampTemplate
-
-?>
+    }
+}
