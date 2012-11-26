@@ -22,5 +22,8 @@
             "plugins"
         ]
     },
-    "include-path": ["library", "include"]
+    "include-path": [
+        "library", 
+        "include", 
+        "../dependencies/include"]
 }
