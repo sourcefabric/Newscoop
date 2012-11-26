@@ -39,11 +39,12 @@ class ArticleIndexer
     /**
      * Update index to reflect article changes
      *
+     * @param int $limit
      * @return void
      */
-    public function updateIndex()
+    public function updateIndex($limit = 50)
     {
-        foreach ($this->getArticleRepository()->getIndexBatch() as $article) {
+        foreach ($this->getArticleRepository()->getIndexBatch($limit) as $article) {
             $article->setIndexed();
             $articleView = $article->getView();
             if ($articleView->published !== null) {
