@@ -34,7 +34,6 @@ class SearchResultsSolrList extends ListObject
 	{
         $index = Zend_Registry::get('container')->getService('search.index');
         $p_parameters['core'] = $p_parameters['language'];
-        $p_parameters['start'] = $p_start;
         $query = new Query($p_parameters);
 
         try {
@@ -47,12 +46,9 @@ class SearchResultsSolrList extends ListObject
         if ($result) {
             $p_count = $result->numFound;
             $languageId = Language::GetLanguageIdByCode($p_parameters['language']);
-            $articles = array();
-	        foreach ($result->docs as $doc) {
-	            $articles[] = new MetaArticle($languageId, $doc->number);
-	        }
-
-            return $articles;
+            return array_map(function ($doc) use ($languageId) {
+                return new MetaArticle($languageId, $doc->number);
+            }, $result->docs);
         } else {
             $p_count = 0;
             return array();

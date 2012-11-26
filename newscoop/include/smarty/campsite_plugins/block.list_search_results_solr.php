@@ -26,7 +26,7 @@ function smarty_block_list_search_results_solr($params, $content, $smarty, &$rep
     }
 
     if (empty($content)) {
-        $start = $gimme->next_list_start('SearchResultsList');
+        $start = $gimme->next_list_start('SearchResultsSolrList');
         $searchResultsList = new SearchResultsSolrList($start, $params);
         if ($searchResultsList->isEmpty()) {
         	$gimme->setCurrentList($searchResultsList, array());
