@@ -44,6 +44,6 @@ class SmartyView extends \Zend_View_Abstract
      */
     public function addPath($path)
     {
-        array_unshift($this->smarty->template_dir, $path);
+        $this->smarty->addTemplateDir($path);
     }
 }

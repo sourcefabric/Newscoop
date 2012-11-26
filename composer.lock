@@ -1,23 +1,6 @@
 {
-    "hash": "2f7113141e66707f68dff1ad6f36828d",
+    "hash": "4908d37d06684d60faa1ff5d27b94360",
     "packages": [
-        {
-            "name": "Smarty3",
-            "version": "3.0.8",
-            "source": {
-                "type": "svn",
-                "url": "http://smarty-php.googlecode.com/svn/",
-                "reference": "tags/Smarty_3_0_8//distribution/"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "http://www.smarty.net/files/Smarty-3.0.8.zip",
-                "reference": null,
-                "shasum": null
-            },
-            "type": "library",
-            "installation-source": "dist"
-        },
         {
             "name": "behat/behat",
             "version": "dev-master",
@@ -1148,6 +1131,48 @@
                 }
             ],
             "description": "This bundle generates code for you"
+        },
+        {
+            "name": "smarty/smarty",
+            "version": "v3.1.12",
+            "source": {
+                "type": "svn",
+                "url": "http://smarty-php.googlecode.com/svn",
+                "reference": "/tags/v3.1.12/@4664"
+            },
+            "require": {
+                "php": ">=5.2"
+            },
+            "time": "2012-09-25 22:13:16",
+            "type": "library",
+            "installation-source": "source",
+            "autoload": {
+                "classmap": [
+                    "distribution/libs/Smarty.class.php"
+                ]
+            },
+            "license": [
+                "LGPL-3.0"
+            ],
+            "authors": [
+                {
+                    "name": "Monte Ohrt",
+                    "email": "monte@ohrt.com"
+                },
+                {
+                    "name": "Uwe Tews",
+                    "email": "uwe.tews@googlemail.com"
+                },
+                {
+                    "name": "Rodney Rehm",
+                    "email": "rodney.rehm@medialize.de"
+                }
+            ],
+            "description": "Smarty - the compiling PHP template engine",
+            "homepage": "http://www.smarty.net",
+            "keywords": [
+                "templating"
+            ]
         },
         {
             "name": "symfony/monolog-bundle",
