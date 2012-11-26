@@ -25,7 +25,10 @@ $helperSet = array();
 
 try {
     if (Zend_Registry::isRegistered('container')) {
-        $helperSet['container'] = new \Newscoop\Tools\Console\Helper\ServiceContainerHelper($application->getBootstrap()->getResource('container'));
+        $container = $application->getBootstrap()->getResource('container');
+        $helperSet['container'] = new \Newscoop\Tools\Console\Helper\ServiceContainerHelper($container);
+        $helperSet['db'] = new \Doctrine\DBAL\Tools\Console\Helper\ConnectionHelper($container->getService('doctrine.connection'));
+        $helperSet['em'] = new \Doctrine\ORM\Tools\Console\Helper\EntityManagerHelper($container->getService('em'));
     }
 } catch (\Exception $e) {
     $cli->renderException($e, new \Symfony\Component\Console\Output\ConsoleOutput());
@@ -34,12 +37,16 @@ try {
 $cli->setCatchExceptions(true);
 $cli->setHelperSet(new \Symfony\Component\Console\Helper\HelperSet($helperSet));
 
+// Register All Doctrine Commands
+\Doctrine\ORM\Tools\Console\ConsoleRunner::addCommands($cli);
+
 $cli->addCommands(array(
     new \Newscoop\Tools\Console\Command\UpdateIngestCommand(),
     new \Newscoop\Tools\Console\Command\LogMaintenanceCommand(),
     new \Newscoop\Tools\Console\Command\SendStatsCommand(),
     new \Newscoop\Tools\Console\Command\UpdateImageStorageCommand(),
     new \Newscoop\Tools\Console\Command\AutopublishCommand(),
+    new \Newscoop\Tools\Console\Command\ClearOldStatisticsCommand(),
 ));
 
 $cli->run();

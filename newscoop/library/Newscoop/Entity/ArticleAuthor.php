@@ -19,6 +19,14 @@ use Newscoop\Utils\Validation;
 class ArticleAuthor
 {
     /**
+     * @ORM\Id
+     * @ORM\GeneratedValue
+     * @ORM\Column(type="integer")
+     * @var integer
+     */
+    private $id;
+
+    /**
      * @ORM\ManyToOne(targetEntity="Article")
      * @ORM\JoinColumns({
      *      @ORM\JoinColumn(name="article_number", referencedColumnName="Number"),

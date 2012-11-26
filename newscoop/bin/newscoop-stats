@@ -3,4 +3,4 @@
 
 require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
 
-echo(exec('php '.$CAMPSITE_DIR.'/bin/console.php stats'));
+echo(exec('php '.$CAMPSITE_DIR.'/bin/console stats'));
