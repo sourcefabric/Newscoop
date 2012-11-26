@@ -11,8 +11,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console;
 
-//require_once WWW_DIR . '/include/campsite_init.php';
-
 /**
  * Update Image Storage Command
  */
