@@ -195,6 +195,7 @@ class RenditionServiceTest extends \TestCase
             'preview' => 'Test',
         ));
 
+        $this->assertTrue(isset($renditions['preview']));
         $this->assertEquals('Test', $renditions['preview']->getLabel());
     }
 

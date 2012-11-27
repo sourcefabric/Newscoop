@@ -109,9 +109,7 @@ class ListUserServiceTest extends \RepositoryTestCase
         $this->em->persist($blogger);
         $this->em->flush();
 
-        $service = new ListUserService(array('blog' => array(
-            'role' => $blogRole->getId(),
-        )), $this->em);
+        $service = new ListUserService(array('role' => $blogRole->getId()), $this->em);
 
         $editors = $service->findEditors();
         $this->assertEquals(1, count($editors));

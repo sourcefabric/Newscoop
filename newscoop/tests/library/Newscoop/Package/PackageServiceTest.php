@@ -187,15 +187,6 @@ class PackageServiceTest extends \TestCase
         $this->service->addItem($package, new LocalImage(self::PICTURE_LANDSCAPE));
     }
 
-    /**
-     * @expectedException InvalidArgumentException
-     */
-    public function testUniqueSlug()
-    {
-        $this->service->save(array('headline' => 'test', 'slug' => 'test'));
-        $this->service->save(array('headline' => 'test', 'slug' => 'test'));
-    }
-
     public function testFindBySlug()
     {
         $this->assertNull($this->service->findBySlug('abc'));

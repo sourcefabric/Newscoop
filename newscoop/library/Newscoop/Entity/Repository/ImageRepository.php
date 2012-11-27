@@ -33,4 +33,21 @@ class ImageRepository extends EntityRepository
 
         return $query->getResult();
     }
+
+    /**
+     * Get count of references for given file
+     *
+     * @param string $file
+     * @return int
+     */
+    public function getImageFileReferencesCount($file)
+    {
+        $query = $this->createQueryBuilder('i')
+            ->select('COUNT(i)')
+            ->where('i.basename = :file')
+            ->getQuery();
+
+        $query->setParameter('file', $file);
+        return $query->getSingleScalarResult();
+    }
 }

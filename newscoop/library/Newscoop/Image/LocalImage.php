@@ -106,7 +106,7 @@ class LocalImage implements ImageInterface
     private $isUpdatedStorage = 0;
 
     /**
-     * @ORM\Column(name="Source")
+     * @ORM\Column(name="Source", nullable=true)
      * @var string
      */
     private $source;

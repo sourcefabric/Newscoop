@@ -15,7 +15,7 @@ class RenditionService
     /**
      * @var array
      */
-    protected $themePath;
+    protected $config = array('theme_path' => '/../themes');
 
     /**
      * @var Doctrine\ORM\EntityManager
@@ -33,11 +33,13 @@ class RenditionService
     protected $renditions;
 
     /**
+     * @param array $config
      * @param Doctrine\ORM\EntityManager $orm
+     * @param Newscoop\Image\ImageService $imageService
      */
-    public function __construct($themePath, \Doctrine\ORM\EntityManager $orm, ImageService $imageService)
+    public function __construct(array $config, \Doctrine\ORM\EntityManager $orm, ImageService $imageService)
     {
-        $this->themePath = $themePath;
+        $this->config = array_merge($this->config, $config);
         $this->orm = $orm;
         $this->imageService = $imageService;
     }
@@ -177,7 +179,7 @@ class RenditionService
     public function registerRenditions(array $existing = array())
     {
         $this->renditions = array();
-        foreach (glob($this->themePath . '/publication_*/theme_*/theme.xml') as $themeInfo) {
+        foreach (glob(APPLICATION_PATH . $this->config['theme_path'] . '/publication_*/theme_*/theme.xml') as $themeInfo) {
             $xml = simplexml_load_file($themeInfo);
             if (!$xml->renditions) {
                 continue;

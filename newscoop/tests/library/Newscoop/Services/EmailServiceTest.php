@@ -24,6 +24,8 @@ class EmailServiceTest extends \RepositoryTestCase
 
     public function setUp()
     {
+        $this->markTestSkipped();
+
         global $application;
 
         parent::setUp('Newscoop\Entity\User', 'Newscoop\Entity\Acl\Role', 'Newscoop\Entity\UserToken');

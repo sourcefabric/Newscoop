@@ -12,10 +12,7 @@ use Doctrine\ORM\Mapping AS ORM;
 
 /**
  * @ORM\Entity(repositoryClass="Newscoop\Package\PackageRepository")
- * @ORM\Table(name="package",
- *      uniqueConstraints={
- *          @ORM\UniqueConstraint(name="slug_idx", columns={"slug"})
- *      })
+ * @ORM\Table(name="package")
  */
 class Package
 {

@@ -6,15 +6,12 @@
 /**
  * Includes
  */
-require_once($GLOBALS['g_campsiteDir'].'/db_connect.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DatabaseObject.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/DbObjectArray.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/ArticleData.php');
-require_once($GLOBALS['g_campsiteDir'].'/classes/GeoMap.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Log.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/Language.php');
 require_once($GLOBALS['g_campsiteDir'].'/classes/CampCacheList.php');
-require_once dirname(__FILE__) . '/GeoMap.php';
 
 /**
  * @package Campsite
