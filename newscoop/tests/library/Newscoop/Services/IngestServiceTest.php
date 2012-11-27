@@ -88,7 +88,7 @@ class IngestServiceTest extends \RepositoryTestCase
     public function testUpdateSDA()
     {
         $feed = new Feed('SDA');
-        $feed->setUpdated(new DateTime('- 10 years'));
+        $feed->setUpdated(new DateTime('-10 years'));
         $this->service->addFeed($feed);
         $this->assertEquals(0, count($feed->getEntries()));
 
@@ -107,7 +107,7 @@ class IngestServiceTest extends \RepositoryTestCase
     public function testUpdateAllUnique()
     {
         $feed = new Feed('SDA');
-        $feed->setUpdated(new DateTime('- 10 years'));
+        $feed->setUpdated(new DateTime('-10 years'));
         $this->service->addFeed($feed);
 
         $this->service->updateSDA();
@@ -119,7 +119,7 @@ class IngestServiceTest extends \RepositoryTestCase
     public function testUpdateAllTimeout()
     {
         $feed = new Feed('SDA');
-        $feed->setUpdated(new DateTime('- 10 years'));
+        $feed->setUpdated(new DateTime('-10 years'));
         $this->service->addFeed($feed);
         $tmpFile = APPLICATION_PATH . '/../tests/ingest/' . uniqid('tmp_') . '.xml';
         copy(APPLICATION_PATH . '/../tests/ingest/newsml1.xml', $tmpFile);
