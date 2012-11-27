@@ -37,7 +37,7 @@ try {
 $cli->setCatchExceptions(true);
 $cli->setHelperSet(new \Symfony\Component\Console\Helper\HelperSet($helperSet));
 
-// Register All Doctrine Commands
+// Register all Doctrine commands
 \Doctrine\ORM\Tools\Console\ConsoleRunner::addCommands($cli);
 
 $cli->addCommands(array(
