@@ -1,17 +1,5 @@
 <?php
 
-function camp_is_readable($p_fileName)
-{
-    if (!is_readable($p_fileName)) {
-        echo "\nThis script requires access to the file $p_fileName.\n";
-        echo "Please run this script as a user with appropriate privileges.\n";
-        echo "Most often this user is 'root'.\n\n";
-        return false;
-    }
-    return true;
-} // fn camp_is_readable
-
-
 /**
  * Execute a command in the shell.
  *

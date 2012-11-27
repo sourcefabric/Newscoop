@@ -6,7 +6,7 @@ require_once __DIR__ . '/cli_script_lib.php';
 
 $ETC_DIR = __DIR__ . '/../conf';
 
-if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
+if (!FilesystemService::isReadable("$ETC_DIR/install_conf.php")) {
 	exit;
 }
 

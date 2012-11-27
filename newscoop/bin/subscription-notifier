@@ -7,7 +7,7 @@ $ETC_DIR = $CAMPSITE_DIR . '/conf';
 
 require_once("cli_script_lib.php");
 
-if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
+if (!FilesystemService::isReadable("$ETC_DIR/install_conf.php")) {
 	exit(1);
 }
 

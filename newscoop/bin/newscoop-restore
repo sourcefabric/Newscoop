@@ -132,7 +132,7 @@ if ((empty($archive_file) && !in_array('l', array_keys($options))) || ($destDbSp
 require_once("cli_script_lib.php");
 
 // include the install configuration script
-if (!camp_is_readable("$ETC_DIR/install_conf.php")) {
+if (!FilesystemService::isReadable("$ETC_DIR/install_conf.php")) {
     camp_exit_with_error("Unable to read the install configuration file!");
 }
 // include install configuration file
@@ -329,7 +329,7 @@ if (!file_exists($includeFile)) {
 
 
 // Check if configuration file is readable.
-if (!camp_is_readable($includeFile)) {
+if (!FilesystemService::isReadable($includeFile)) {
     echo " * Cleaning up...";
     camp_remove_dir($tempDirName);
     echo "done.\n\n";
