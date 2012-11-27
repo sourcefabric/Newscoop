@@ -22,7 +22,7 @@ class SendStatsCommand extends Console\Command\Command
     protected function configure()
     {
         $this
-        ->setName('stats')
+        ->setName('newscoop:stats:send')
         ->setDescription('Sends stats')
         ->setHelp(<<<EOT
 Sends stats
