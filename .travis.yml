@@ -1,17 +1,7 @@
 language: php
 php:
-  - 5.3
-
-branches:
-  only:
-    - next
-
-notifications:
-  email: false
-
+  - "5.4"
+  - "5.3"
 before_script:
-  - ./scripts/ci/before_script.sh
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install
-
-script: "cd newscoop/tests && phpunit"
+  - "cp -r dependencies/include/* newscoop/include/"
+  - composer install
