@@ -1,21 +1,9 @@
 language: php
 php:
-  - 5.3
-
-branches:
-  only:
-    - next
-
+  - "5.4"
+  - "5.3"
 notifications:
   email: false
-
-before_install:
-  - sudo apt-get update
-  - sudo apt-get install libzend-framework-php
-
 before_script:
-  - ./scripts/ci/before_script.sh
-  - curl -s http://getcomposer.org/installer | php
-  - php composer.phar install
-
-script: "cd newscoop/tests && phpunit"
+  - cd newscoop
+  - composer install

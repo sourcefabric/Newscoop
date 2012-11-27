@@ -1,0 +1,23 @@
+<phpunit bootstrap="tests/application/bootstrap.php" colors="true" backupGlobals="false">
+    <testsuites>
+        <testsuite name="Library">
+            <directory>tests/library</directory>
+        </testsuite>
+    </testsuites>
+    <filter>
+        <whitelist>
+            <directory suffix=".php">library/Newscoop</directory>
+            <directory suffix=".php">library/Resource</directory>
+            <directory suffix=".php">classes</directory>
+            <directory suffix=".php">template_engine</directory>
+            <exclude>
+                <directory suffix=".php">library/Newscoop/Controller</directory>
+                <directory suffix=".php">library/Newscoop/Entity/Proxy</directory>
+                <directory suffix=".php">library/Newscoop/Entity/Output</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+    <logging>
+        <log type="coverage-html" target="/tmp/report" charset="UTF-8" you="true" hightlight="true" lowUpperBound="50" highLowerBound="80" />
+    </logging>
+</phpunit>

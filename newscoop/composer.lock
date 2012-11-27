@@ -1,6 +1,58 @@
 {
-    "hash": "37d9c5e0755791bc5b0a3663f1add381",
+    "hash": "162fc8918893c105b8f352a31c55d9ee",
     "packages": [
+        {
+            "name": "bombayworks/zendframework1",
+            "version": "v1.11.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/bombayworks/zendframework1",
+                "reference": "v1.11.14"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://github.com/bombayworks/zendframework1/zipball/v1.11.14",
+                "reference": "v1.11.14",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.4"
+            },
+            "time": "2012-10-16 16:37:45",
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-trunk": "1.12.x-dev",
+                    "dev-release-1.0": "1.0.x-dev",
+                    "dev-release-1.5": "1.5.x-dev",
+                    "dev-release-1.6": "1.6.x-dev",
+                    "dev-release-1.7": "1.7.x-dev",
+                    "dev-release-1.8": "1.8.x-dev",
+                    "dev-release-1.9": "1.9.x-dev",
+                    "dev-release-1.10": "1.10.x-dev",
+                    "dev-release-1.11": "1.11.x-dev"
+                }
+            },
+            "installation-source": "dist",
+            "autoload": {
+                "psr-0": {
+                    "Zend_": "library/",
+                    "ZendX_": "extras/library/"
+                }
+            },
+            "include-path": [
+                "library/"
+            ],
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Zend Framework 1",
+            "homepage": "http://framework.zend.com/",
+            "keywords": [
+                "framework",
+                "ZF1"
+            ]
+        },
         {
             "name": "doctrine/common",
             "version": "2.1.4",
@@ -415,51 +467,6 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com"
-        },
-        {
-            "name": "zendframework/zendframework1",
-            "version": "1.11.14",
-            "source": {
-                "type": "svn",
-                "url": "http://framework.zend.com/svn/framework/standard",
-                "reference": "/tags/release-1.11.14/@25048"
-            },
-            "require": {
-                "php": ">=5.2.4"
-            },
-            "time": "2012-08-27 16:58:59",
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-trunk": "1.12.x-dev",
-                    "dev-release-1.0": "1.0.x-dev",
-                    "dev-release-1.5": "1.5.x-dev",
-                    "dev-release-1.6": "1.6.x-dev",
-                    "dev-release-1.7": "1.7.x-dev",
-                    "dev-release-1.8": "1.8.x-dev",
-                    "dev-release-1.9": "1.9.x-dev",
-                    "dev-release-1.10": "1.10.x-dev",
-                    "dev-release-1.11": "1.11.x-dev"
-                }
-            },
-            "installation-source": "source",
-            "autoload": {
-                "psr-0": {
-                    "Zend": "library/"
-                }
-            },
-            "include-path": [
-                "library/"
-            ],
-            "license": [
-                "BSD-3-Clause"
-            ],
-            "description": "Zend Framework 1",
-            "homepage": "http://framework.zend.com/",
-            "keywords": [
-                "framework",
-                "ZF1"
-            ]
         }
     ],
     "packages-dev": null,
