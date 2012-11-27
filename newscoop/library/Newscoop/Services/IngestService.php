@@ -165,7 +165,7 @@ class IngestService
                 continue;
             }
 
-            if (time() < filectime($file) + self::IMPORT_DELAY) {
+            if ($feed->getUpdated() && time() < filectime($file) + self::IMPORT_DELAY) {
                 continue;
             }
 
