@@ -1,6 +1,9 @@
 #!/usr/bin/env php
 <?php
 
+use Symfony\Component\Filesystem\Exception\IOException;
+use Symfony\Component\Filesystem\Filesystem;
+
 require_once dirname(__FILE__) . '/newscoop_bootstrap.php';
 
 if (empty($GLOBALS['argv']) && empty($options)) {
@@ -109,7 +112,12 @@ if (!$silent) {
 }
 
 if (!file_exists($backupDirFullPath)) {
-	camp_create_dir($backupDirFullPath, $adviceOnError);
+  try {
+    $filesystem = new Filesystem();
+    $filesystem->mkdir($backupDirFullPath);
+  } catch(IOException $e) {
+    throw new IOException($adviceOnError);
+  }
 }
 
 $tmpVersion = preg_split('/ /', $Campsite["VERSION"]);

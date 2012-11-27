@@ -43,26 +43,6 @@ function camp_readline()
     return $in;
 } // fn camp_readline
 
-
-/**
- * Create a directory.  If this fails, print out the given error
- * message or a default one.
- *
- * @param string $p_dirName
- * @param string $p_msg
- * @return void
- */
-function camp_create_dir($p_dirName, $p_msg = "")
-{
-    if ($p_msg == "") {
-        $p_msg = "Unable to create directory $p_dirName.";
-    }
-    if (!is_dir($p_dirName) && !mkdir($p_dirName)) {
-        camp_exit_with_error($p_msg);
-    }
-} // fn camp_create_dir
-
-
 /**
  * @return boolean
  */
