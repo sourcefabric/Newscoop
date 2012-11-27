@@ -35,8 +35,9 @@ EOT
      */
     protected function execute(Console\Input\InputInterface $input, Console\Output\OutputInterface $output)
     {
-        $this->getHelper('container')->getService('ingest.feed')
-            ->updateAll();
-        $output->writeln('Ingest updated.');
+        $ingest = $this->getHelper('container')->getService('ingest');
+        $ingest->updateSDA();
+        $ingest->updateSwissinfo();
+        $output->writeln('Ingest Feeds updated.');
     }
 }

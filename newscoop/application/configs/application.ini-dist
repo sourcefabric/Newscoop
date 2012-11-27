@@ -222,6 +222,9 @@ ingest_publisher.field.AuthorNames = "getAuthors"
 
 ingest_publisher.image_path = ""
 
+ingest.swissinfo_sections = "http://www.swissinfo.ch/ws/sourcefabric1.0/json/rubriclist"
+ingest.swissinfo_latest = "http://www.swissinfo.ch/ws/sourcefabric1.0/request/latest/{{section_id}}"
+
 blog.role = 6
 blog.publication = 5
 blog.issue = 3
