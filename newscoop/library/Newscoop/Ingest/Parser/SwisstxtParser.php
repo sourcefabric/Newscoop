@@ -29,12 +29,11 @@ class SwisstxtParser implements Parser
         $this->story = simplexml_load_file($content);
 
         try {
-            $date_string = $this->getString($this->story->xpath('MetaData/createdDate'));
-            $this->date = new \DateTime($date_string);
+            $dateString = $this->getString($this->story->xpath('MetaData/createdDate'));
+            $this->date = new \DateTime($dateString);
         }
         catch (Exception $e) {
             $this->date = new \DateTime();
-            //echo $e->getMessage();
         }
     }
 
@@ -153,62 +152,62 @@ class SwisstxtParser implements Parser
 
     public function getSubject()
     {
-        return "";
+        return '';
     }
 
     public function getCountry()
     {
-        return "";
+        return '';
     }
 
     public function getProduct()
     {
-        return "swisstext";
+        return 'swisstext';
     }
 
     public function getSubtitle()
     {
-        return "";
+        return '';
     }
 
     public function getProviderId()
     {
-        return "";
+        return '';
     }
 
     public function getRevisionId()
     {
-        return "";
+        return '';
     }
 
     public function getLocation()
     {
-        return "";
+        return '';
     }
 
      public function getProvider()
     {
-        return "swisstext";
+        return 'swisstext';
     }
 
     public function getSource()
     {
-        return "swisstext";
+        return 'swisstext';
     }
 
     public function getCatchLine()
     {
-        return "";
+        return '';
     }
 
     public function getCatchWord()
     {
-        return "";
+        return '';
     }
 
     public function getAuthors()
     {
-        return "";
+        return '';
     }
 
     public function getImages()
