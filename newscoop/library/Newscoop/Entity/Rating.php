@@ -4,7 +4,9 @@
  * @copyright 2012 Sourcefabric o.p.s.
  * @license http://www.gnu.org/licenses/gpl.txt
  */
+
 namespace Newscoop\Entity;
+
 use Newscoop\Entity\Article;
 
 /**

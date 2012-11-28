@@ -23,7 +23,7 @@ class RatingController extends Zend_Controller_Action
     public function saveAction()
     {
         $this->_helper->layout->disableLayout();
-		$params = $this->getRequest()->getParams();
+        $params = $this->getRequest()->getParams();
         
         $errors = array();
 
@@ -93,16 +93,15 @@ class RatingController extends Zend_Controller_Action
      */
     protected function getArticleRating($articleId)
     {
-	    $ratingRepository = $this->em->getRepository('Newscoop\Entity\Rating');
+        $ratingRepository = $this->em->getRepository('Newscoop\Entity\Rating');
         $ratingScores = $ratingRepository->getArticleRating($articleId);
 
-         
-        return array('widget_id' => $articleId,
-                     'number_votes' => (int)$ratingScores[0]['number_votes'],
-                     'total_score' => (int)$ratingScores[0]['total_score'],
-                     'dec_avg' => (float)round($ratingScores[0]['avg_score'], 2),
-                     'whole_avg' => (int)round($ratingScores[0]['avg_score'])
-                    );
+        return array('widget_id' => $articleId, 
+            'number_votes' => (int)$ratingScores[0]['number_votes'],
+            'total_score' => (int)$ratingScores[0]['total_score'],
+            'dec_avg' => (float)round($ratingScores[0]['avg_score'], 2),
+            'whole_avg' => (int)round($ratingScores[0]['avg_score'])
+        );
         
     }
 }
