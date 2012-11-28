@@ -200,7 +200,7 @@ acl.ignore[] = "password_check_token.php"
 email.from = "no-reply@domain.com"
 email.contact = "info@domain.com"
 
-ingest.path = ""
+ingest.path = APPLICATION_PATH "/../../ftp"
 
 ingest_publisher.article_type = "newswire"
 ingest_publisher.section_sport = 40

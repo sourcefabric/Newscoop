@@ -13,6 +13,7 @@ use Newscoop\Entity\Ingest\Feed\Entry;
 use Newscoop\Ingest\Parser;
 use Newscoop\Ingest\Parser\NewsMlParser;
 use Newscoop\Ingest\Parser\SwissinfoParser;
+use Newscoop\Ingest\Parser\SwisstxtParser;
 use Newscoop\Ingest\Publisher;
 use Newscoop\Services\Ingest\PublisherService;
 
@@ -90,6 +91,23 @@ class IngestService
 
         if ($feed) {
             $this->updateSwissinfoFeed($feed);
+        }
+    }
+
+    /**
+     * Update swisstxt
+     *
+     * @return void
+     */
+    public function updateSTX()
+    {
+        $feed = $this->em->getRepository('Newscoop\Entity\Ingest\Feed')
+            ->findOneBy(array(
+                'title' => 'STX',
+            ));
+
+        if ($feed) {
+            $this->updateSTXFeed($feed);
         }
     }
 
@@ -192,6 +210,63 @@ class IngestService
                             break;
                     }
                 }
+
+                flock($handle, LOCK_UN);
+                fclose($handle);
+                $this->em->flush();
+            } else {
+                continue;
+            }
+        }
+
+        $feed->setUpdated(new \DateTime());
+        $this->em->persist($feed);
+
+        $this->em->getRepository('Newscoop\Entity\Ingest\Feed\Entry')->liftEmbargo();
+        $this->em->flush();
+    }
+
+     /**
+     * Update feed
+     *
+     * @param Newscoop\Entity\Ingest\Feed $feed
+     * @return void
+     */
+    private function updateSTXFeed(Feed $feed)
+    {
+        foreach (glob($this->config['path'] . '/*.xml') as $file) {
+            if ($feed->getUpdated() && $feed->getUpdated()->getTimestamp() > filectime($file) + self::IMPORT_DELAY) {
+                continue;
+            }
+
+            if (time() < filectime($file) + self::IMPORT_DELAY) {
+                continue;
+            }
+
+            $handle = fopen($file, 'r');
+            if (flock($handle, LOCK_EX | LOCK_NB)) {
+                $parser = new SwisstxtParser($file);
+                $entry = $this->getPrevious($parser, $feed);
+
+                switch ($parser->getStatus()) {
+                    case 'updated':
+                        $entry->update($parser);
+
+                    case 'created':
+                        if ($entry->isPublished()) {
+                            $this->updatePublished($entry);
+                        } else if ($feed->isAutoMode()) {
+                            $this->publish($entry);
+                        }
+                        break;
+
+                    case 'deleted':
+                        $this->deletePublished($entry);
+                        $feed->removeEntry($entry);
+                        $this->em->remove($entry);
+                        break;
+                }
+                $this->em->persist($entry);
 
                 flock($handle, LOCK_UN);
                 fclose($handle);
