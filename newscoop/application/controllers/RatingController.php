@@ -29,9 +29,9 @@ class RatingController extends Zend_Controller_Action
 
         $auth = Zend_Auth::getInstance();
 
-		if ($auth->getIdentity()) {
+        if ($auth->getIdentity()) {
             $userRepository = $this->em->getRepository('Newscoop\Entity\User');
-			$ratingRepository = $this->em->getRepository('Newscoop\Entity\Rating');
+            $ratingRepository = $this->em->getRepository('Newscoop\Entity\Rating');
             
             $user = $userRepository->find($auth->getIdentity());
 

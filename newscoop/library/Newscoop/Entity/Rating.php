@@ -16,10 +16,10 @@ use Newscoop\Entity\Article;
  */
 class Rating extends Entity
 {
-	/**
-	 * @Id
-	 * @GeneratedValue
-	 * @Column(type="integer", name="id")
+    /**
+     * @Id
+     * @GeneratedValue
+     * @Column(type="integer", name="id")
      * @Var int
      */
     protected $id;

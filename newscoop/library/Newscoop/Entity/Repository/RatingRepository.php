@@ -41,9 +41,9 @@ class RatingRepository extends DatatableSource
         $em = $this->getEntityManager();
 
         $entity->setUserId($values['userId'])
-		    ->setArticleId($values['articleId'])
-			->setRatingScore($values['ratingScore'])
-			->setTimeCreated($values['timeCreated'])
+            ->setArticleId($values['articleId'])
+            ->setRatingScore($values['ratingScore'])
+            ->setTimeCreated($values['timeCreated'])
             ->setTimeUpdated(new \DateTime);
 
         $em->persist($entity);
