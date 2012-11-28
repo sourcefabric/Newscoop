@@ -27,7 +27,7 @@ class RatingController extends Zend_Controller_Action
         
         $errors = array();
 
-		$auth = Zend_Auth::getInstance();
+        $auth = Zend_Auth::getInstance();
 
 		if ($auth->getIdentity()) {
             $userRepository = $this->em->getRepository('Newscoop\Entity\User');
